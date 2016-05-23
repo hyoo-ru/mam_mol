@@ -19,11 +19,25 @@ var __extends = ( Sub , Sup ) => {
 declare class Map<Key,Value> {
 	size : number
 	get( key : Key ) : Value
-	set( key : Key , value : Value ) : void
+	set( key : Key , value : Value ) : this
 	delete( key : Key )
 	has( key : Key )
 	clear()
 	keys() : Key[]
 	values() : Value[]
 	entries() : [ Key , Value ][]
+	forEach( handler : ( Value , Key ) => void )
+}
+
+/// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+declare class Set<Key> {
+	size : number
+	add( key : Key ) : this
+	delete( key : Key )
+	has( key : Key )
+	clear()
+	keys() : Key[]
+	values() : Key[]
+	entries() : [ Key , Key ][]
+	forEach( handler : ( key : Key , value : Key ) => void )
 }

@@ -1,5 +1,5 @@
 /// Instantiation with overloading
-new $jin2_test( test => {
+$mol_test( test => {
 	
 	class X extends $mol_object {
 		foo( ) {
@@ -16,7 +16,7 @@ new $jin2_test( test => {
 } )
 
 /// Definition of objectPath
-new $jin2_test( test => {
+$mol_test( test => {
 	
 	var x = new $mol_object
 	

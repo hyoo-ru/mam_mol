@@ -1,5 +1,5 @@
 /// Cached property with simple key
-new $jin2_test( test => {
+$mol_test( test => {
 	
 	class X extends $mol_object {
 		@ $mol_atom()
@@ -26,7 +26,7 @@ new $jin2_test( test => {
 } )
 
 /// Cached property with complex key
-new $jin2_test( test => {
+$mol_test( test => {
 	
 	class X extends $mol_object {
 		@ $mol_atom()
@@ -38,5 +38,65 @@ new $jin2_test( test => {
 	
 	test.equal( x.foo([ 0 , 1 ]) , x.foo([ 0 , 1 ]) )
 	test.unique( x.foo([ 0 , 1 ]) , x.foo([ 0 , 2 ]) )
+	
+} )
+
+/// Automatic state synchronization
+$mol_test( test => {
+	
+	class X extends $mol_object {
+		
+		@ $mol_atom()
+		foo( id : number , next? : number ) {
+			if( next !== void 0 ) return next
+			return 1
+		}
+		
+		@ $mol_atom()
+		bar( id : number ) {
+			return this.foo( id ) + 1
+		}
+		
+		@ $mol_atom()
+		xxx( id : number ) {
+			return this.bar( id ) + 1
+		}
+		
+	}
+	
+	var x = new X
+	test.equal( x.bar(0) , 2 )
+	test.equal( x.xxx(0) , 3 )
+	
+	x.foo( 0 , 5 )
+	test.equal( x.bar(0) , 2 )
+	test.equal( x.xxx(0) , 3 )
+	
+	$mol_atom_sync()
+	test.equal( x.bar(0) , 6 )
+	test.equal( x.xxx(0) , 7 )
+	
+} )
+
+/// Recursive dependency
+$mol_test( test => {
+	
+	class X extends $mol_object {
+		
+		@ $mol_atom()
+		foo( id : number ) {
+			return this.foo( id ) + 1
+		}
+		
+	}
+	
+	var x = new X
+	
+	try {
+		x.foo( 0 )
+		test.fail( 'Not tracked recursive dependency' )
+	} catch( error ) {
+		test.equal( error.message , 'Recursive dependency! undefined.foo(0)' )
+	}
 	
 } )

@@ -1,5 +1,5 @@
 /// Static initializer for subclasses
-new $jin2_test( test => {
+$mol_test( test => {
 	
 	var firstAClass : A
 	var lastBClass : B
