@@ -100,3 +100,49 @@ $mol_test( test => {
 	}
 	
 } )
+
+/// Destroy if no more reference
+$mol_test( test => {
+	
+	var destroyed = false
+	class A extends $mol_object {
+		destroy() {
+			destroyed = true
+		}
+	}
+	
+	class B extends $mol_object {
+		
+		@ $mol_atom()
+		showing( id : number , next? : boolean ) {
+			if( next !== void 0 ) return next
+			return true
+		}
+		
+		@ $mol_atom()
+		foo( id : number ) {
+			return new A
+		}
+		
+		@ $mol_atom()
+		bar( id : number ) {
+			return this.showing( id ) ? this.foo( id ) : null
+		}
+		
+	}
+	
+	var b = new B
+	
+	var bar = b.bar(0)
+	test.ok( bar )
+	
+	b.showing( 0 , false )
+	$mol_atom_sync()
+	test.ok( destroyed )
+	test.not( b.bar(0) )
+	
+	b.showing( 0 , true )
+	$mol_atom_sync()
+	test.unique( b.bar(0) , bar )
+	
+} )

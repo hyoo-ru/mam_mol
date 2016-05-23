@@ -18,4 +18,11 @@ class $mol_object {
 		return this
 	}
 	
+	destroy() {
+		$jin2_log_info( 'destroy' , this.objectPath() )
+	}
+	
+	toString() {
+		return this.objectPath()
+	}
 }

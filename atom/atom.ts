@@ -1,13 +1,31 @@
-class $mol_atom_info< Key , Value > {
+class $mol_atom_info< Key , Value > extends $mol_object {
 	
 	constructor(
 		public host : { objectPath() : string } ,
 		public field : string ,
 		public handler : ( arg? : Key , next? : Value|Error , prev? : Value )=> Value ,
 		public key : Key
-	) { }
+	) {
+		super()
+	}
 	
-	dispose() {
+	destroy() {
+		super.destroy()
+		
+		this.unlink()
+		
+		var value = this.host[ this.field ]
+		if( value instanceof $mol_object ) {
+			if( value.objectPath() === this.host.objectPath() + '.' + this.field ) {
+				value.destroy();
+			}
+		}
+		
+		this.host[ this.field ] = null
+		this.host[ '$mol_atom_state' ][ this.field ] = null
+	}
+	
+	unlink() {
 		this.disobeyAll()
 		this.notifySlaves()
 	}
@@ -65,7 +83,7 @@ class $mol_atom_info< Key , Value > {
 	push( next : Value|Error ) {
 		var prev = this.host[ this.field ]
 		if( prev !== next ) {
-			if( next && next instanceof $mol_object ) {
+			if( next instanceof $mol_object ) {
 				next['objectPath']( this.host.objectPath() + '.' + this.field ) // FIXME: type checking
 			}
 			this.host[ this.field ] = next
@@ -99,7 +117,7 @@ class $mol_atom_info< Key , Value > {
 		
 		if( !this.slaves.size ){
 			this.slaves = null
-			//$mol_atom_reap( this )
+			this.destroy()
 		}
 	}
 	
