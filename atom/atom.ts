@@ -3,7 +3,7 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 	constructor(
 		public host : { objectPath() : string } ,
 		public field : string ,
-		public handler : ( arg? : Key , diff? : (Value|Error)[] )=> Value ,
+		public handler : ( arg? : Key , ...diff : (Value|Error)[] )=> Value ,
 		public key : Key
 	) {
 		super()
@@ -79,8 +79,8 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 		return this.push( next )
 	}
 	
-	set( diff : Array<Value|Error> ) {
-		return this.push( this.handler.call( this.host , this.key , diff ) )
+	set( ...diff : (Value|Error)[] ) {
+		return this.push( this.handler.call( this.host , this.key , ...diff ) )
 	}
 	
 	push( next : Value|Error ) {
@@ -220,10 +220,10 @@ function $mol_atom( ) {
 	return function< Host extends { objectPath() : string } , Key , Value >(
 		obj : Host ,
 		name : string ,
-		descr : TypedPropertyDescriptor< ( key? : Key , diff? : Value[] ) => Value >
+		descr : TypedPropertyDescriptor< ( key? : Key , ...diff : Value[] ) => Value >
 	) {
 		var value = descr.value
-		descr.value = function( key? : Key , diff? : Value[] ) {
+		descr.value = function( key? : Key , ...diff : Value[] ) {
 			var host : Host = this
 			var field = name + "(" + ( key === void 0 ? '' : JSON.stringify( key ) ) + ")"
 			var path = host.objectPath() + '.' + field
@@ -234,12 +234,12 @@ function $mol_atom( ) {
 			var info : $mol_atom_any = atoms[ field ]
 			if( !info )	atoms[ field ] = info = new $mol_atom_info( host , field , value , key )
 			
-			if( diff ) {
-				return info.set( diff )
-			} else if( diff === null ) {
+			if( diff.length === 0 ) {
+				return info.get()
+			} else if( diff[0] === void 0 ) {
 				return info.update()
 			} else {
-				return info.get()
+				return info.set( ...diff )
 			}
 		}
 	}

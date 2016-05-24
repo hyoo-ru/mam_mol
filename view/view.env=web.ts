@@ -124,7 +124,7 @@ class $mol_view extends $mol_object {
 	attr( name : string ) { return '' }
 	
 	eventNames( key : number ) { return [] }
-	event( name : string , diff : Event[] ) { return null }
+	event( name : string , ...diff : Event[] ) { return null }
 	
 	fieldPaths( key : number ) { return [] }
 	field( path : string[] ) { return null }

@@ -1,14 +1,14 @@
 class $mol_state_arg< Value > extends $mol_object {
 	
 	@ $mol_atom()
-	static href( id : number , diff? : string[] ) {
-		if( diff ) document.location.href = diff[0]
+	static href( id : number , ...diff : string[] ) {
+		if( diff[0] !== void 0 ) document.location.href = diff[0]
 		return window.location.search + window.location.hash
 	}
 	
 	@ $mol_atom()
-	static dict( id : number , diff? : any[] ) {
-		if( diff ) this.href( 0 , [ this.make( diff[0] ) ] )
+	static dict( id : number , ...diff : any[] ) {
+		if( diff[0] !== void 0 ) this.href( 0 , this.make( diff[0] ) )
 		
 		var href = this.href(0)
 		var chunks = href.split( /[\/\?#!&;]/g )
@@ -24,9 +24,9 @@ class $mol_state_arg< Value > extends $mol_object {
 	}
 	
 	@ $mol_atom()
-	static value< Value >( key : string , diff? : Value[] ) {
-		if( !diff ) return this.dict(0)[ key ] || null
-		this.href( 0 , [ this.link({ [ key ] : diff[0] }) ] )
+	static value< Value >( key : string , ...diff : Value[] ) {
+		if( diff[0] === void 0 ) return this.dict(0)[ key ] || null
+		this.href( 0 , this.link({ [ key ] : diff[0] }) )
 		return diff[0]
 	}
 	
@@ -58,8 +58,8 @@ class $mol_state_arg< Value > extends $mol_object {
 	
 	prefix() { return '' }
 	
-	value( key : string , diff? : Value[] ) {
-		return $mol_state_local.value( this.prefix() + '.' + key , diff )
+	value( key : string , ...diff : Value[] ) {
+		return $mol_state_local.value( this.prefix() + '.' + key , ...diff )
 	}
 	
 }
