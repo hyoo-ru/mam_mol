@@ -3,9 +3,8 @@ $mol_test( test => {
 	
 	class X extends $mol_object {
 		@ $mol_atom()
-		foo( id : number , next? : Number|String ) {
-			if( next !== void 0 ) return new Number( next )
-			return new Number( 123 )
+		foo( id : number , diff? : Array<Number|String> ) {
+			return diff ? new Number( diff[0] ) : new Number( 123 )
 		}
 	}
 	var x = new X
@@ -16,11 +15,12 @@ $mol_test( test => {
 	test.unique( x.foo(0) , x.foo(1) )
 	
 	// set
-	x.foo( 0 , 321 )
+	x.foo( 0 , [ 321 ] )
 	test.equal( x.foo(0).valueOf() , 321 )
 	
 	// reset
-	x.foo( 0 , void 0 )
+	x.foo( 0 , null )
+	$mol_atom_sync()
 	test.equal( x.foo(0).valueOf() , 123 )
 	
 } )
@@ -47,9 +47,8 @@ $mol_test( test => {
 	class X extends $mol_object {
 		
 		@ $mol_atom()
-		foo( id : number , next? : number ) {
-			if( next !== void 0 ) return next
-			return 1
+		foo( id : number , diff? : number[] ) {
+			return diff ? diff[0] : 1
 		}
 		
 		@ $mol_atom()
@@ -68,7 +67,7 @@ $mol_test( test => {
 	test.equal( x.bar(0) , 2 )
 	test.equal( x.xxx(0) , 3 )
 	
-	x.foo( 0 , 5 )
+	x.foo( 0 , [ 5 ] )
 	test.equal( x.bar(0) , 2 )
 	test.equal( x.xxx(0) , 3 )
 	
@@ -114,9 +113,8 @@ $mol_test( test => {
 	class B extends $mol_object {
 		
 		@ $mol_atom()
-		showing( id : number , next? : boolean ) {
-			if( next !== void 0 ) return next
-			return true
+		showing( id : number , diff? : boolean[] ) {
+			return diff ? diff[0] : true
 		}
 		
 		@ $mol_atom()
@@ -136,12 +134,12 @@ $mol_test( test => {
 	var bar = b.bar(0)
 	test.ok( bar )
 	
-	b.showing( 0 , false )
+	b.showing( 0 , [ false ] )
 	$mol_atom_sync()
 	test.ok( destroyed )
 	test.not( b.bar(0) )
 	
-	b.showing( 0 , true )
+	b.showing( 0 , [ true ] )
 	$mol_atom_sync()
 	test.unique( b.bar(0) , bar )
 	

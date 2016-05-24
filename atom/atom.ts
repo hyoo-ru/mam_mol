@@ -3,7 +3,7 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 	constructor(
 		public host : { objectPath() : string } ,
 		public field : string ,
-		public handler : ( arg? : Key , next? : Value|Error , prev? : Value )=> Value ,
+		public handler : ( arg? : Key , diff? : (Value|Error)[] )=> Value ,
 		public key : Key
 	) {
 		super()
@@ -16,18 +16,22 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 		
 		var value = this.host[ this.field ]
 		if( value instanceof $mol_object ) {
-			if( value.objectPath() === this.host.objectPath() + '.' + this.field ) {
+			if( value.objectPath() === this.objectPath() ) {
 				value.destroy();
 			}
 		}
 		
-		this.host[ this.field ] = null
-		this.host[ '$mol_atom_state' ][ this.field ] = null
+		this.host[ this.field ] = void 0
+		this.host[ '$mol_atom_state' ][ this.field ] = void 0
 	}
 	
 	unlink() {
 		this.disobeyAll()
 		this.notifySlaves()
+	}
+	
+	objectPath() {
+		return this.host.objectPath() + '.' + this.field
 	}
 	
 	masters : Set< $mol_atom_any >
@@ -43,7 +47,7 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 		var value : Value|Error = this.host[ this.field ]
 		if( value === void 0 ) {
 			var value = this.pull()
-			if( value === void 0 ) throw $mol_atom_wait
+			if( value === void 0 ) throw new $mol_atom_wait
 		}
 		
 		if( value instanceof Error ) throw value
@@ -55,7 +59,7 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 		if( level ) level.delete( this )
 		
 		if( $mol_atom_stack.indexOf( this ) !== -1 ) {
-			throw new Error( 'Recursive dependency! ' + this.host.objectPath() + '.' + this.field )
+			throw new Error( 'Recursive dependency! ' + this.objectPath() )
 		}
 		
 		var oldMasters = this.masters
@@ -76,15 +80,15 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 		return this.push( next )
 	}
 	
-	set( next : Value|Error , prev? : Value ) {
-		return this.push( this.handler.call( this.host , this.key , next , prev ) )
+	set( diff : Array<Value|Error> ) {
+		return this.push( this.handler.call( this.host , this.key , diff ) )
 	}
 	
 	push( next : Value|Error ) {
 		var prev = this.host[ this.field ]
 		if( prev !== next ) {
 			if( next instanceof $mol_object ) {
-				next['objectPath']( this.host.objectPath() + '.' + this.field ) // FIXME: type checking
+				next['objectPath']( this.objectPath() ) // FIXME: type checking
 			}
 			this.host[ this.field ] = next
 			this.notifySlaves()
@@ -152,11 +156,15 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 type $mol_atom_any = $mol_atom_info< any , any >
 
 var $mol_atom_stack = <$mol_atom_any[]> []
-$mol_stack.set( '$mol_atom_stack' , $mol_atom_stack )
+$mol_state_stack.set( '$mol_atom_stack' , $mol_atom_stack )
 
 var $mol_atom_all = new Map< string , $mol_atom_info<any,any> >()
 
-var $mol_atom_wait = new Error( 'Wait...' )
+class $mol_atom_wait extends Error {
+	constructor( public message = 'Wait...' ) {
+		super( message )
+	}
+}
 
 var $mol_atom_plan : Array< Set< $mol_atom_any > > = []
 
@@ -212,10 +220,10 @@ function $mol_atom( ) {
 	return function< Host extends { objectPath() : string } , Key , Value >(
 		obj : Host ,
 		name : string ,
-		descr : TypedPropertyDescriptor< ( key? : Key , next? : Value , prev? : Value ) => Value >
+		descr : TypedPropertyDescriptor< ( key? : Key , diff? : Value[] ) => Value >
 	) {
 		var value = descr.value
-		descr.value = function( key? : Key , next? : Value , prev? : Value ) {
+		descr.value = function( key? : Key , diff? : Value[] ) {
 			var host : Host = this
 			var field = name + "(" + ( key === void 0 ? '' : JSON.stringify( key ) ) + ")"
 			var path = host.objectPath() + '.' + field
@@ -223,13 +231,15 @@ function $mol_atom( ) {
 			var atoms = host[ '$mol_atom_state' ]
 			if( !atoms ) atoms = host[ '$mol_atom_state' ] = {}
 			
-			var info = atoms[ field ] 
+			var info : $mol_atom_any = atoms[ field ]
 			if( !info )	atoms[ field ] = info = new $mol_atom_info( host , field , value , key )
 			
-			if( arguments.length === 1 ) {
-				return info.get()
+			if( diff ) {
+				return info.set( diff )
+			} else if( diff === null ) {
+				return info.update()
 			} else {
-				return info.set( next , prev )
+				return info.get()
 			}
 		}
 	}
