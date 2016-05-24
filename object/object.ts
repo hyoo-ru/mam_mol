@@ -19,7 +19,7 @@ class $mol_object {
 	}
 	
 	destroy() {
-		$jin2_log_info( 'destroy' , this.objectPath() )
+		$jin2_log_info( this.objectPath() , 'destroyed' )
 	}
 	
 	toString() {

@@ -10,8 +10,6 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 	}
 	
 	destroy() {
-		super.destroy()
-		
 		this.unlink()
 		
 		var value = this.host[ this.field ]
@@ -23,6 +21,7 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 		
 		this.host[ this.field ] = void 0
 		this.host[ '$mol_atom_state' ][ this.field ] = void 0
+		$jin2_log_info( this.objectPath() , void 0 , value )
 	}
 	
 	unlink() {
@@ -91,6 +90,7 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 				next['objectPath']( this.objectPath() ) // FIXME: type checking
 			}
 			this.host[ this.field ] = next
+			$jin2_log_info( this.objectPath() , next , prev )
 			this.notifySlaves()
 		}
 		return next
