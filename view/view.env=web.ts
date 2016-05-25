@@ -11,26 +11,26 @@ class $mol_view extends $mol_object {
 	}
 	
 	/// Name of element that created when element not found in DOM
-	tagName( id : number ) { return 'div' }
+	tagName() { return 'div' }
 	
 	/// NameSpace of element that created when element not found in DOM
-	nameSpace( id : number ) { return 'http://www.w3.org/1999/xhtml' }
+	nameSpace() { return 'http://www.w3.org/1999/xhtml' }
 	
 	/// Child views
 	@ $mol_atom()
-	childs( id : number ) {
+	childs() {
 		return <Array<$mol_view|Element|string|number|boolean>>[]
 	}
 	
-	childsInner( id : number ) { return this.childs( id ) }
+	childsInner() { return this.childs() }
 	
 	@ $mol_atom()
-	dom( id : number ) {
+	dom() {
 		var path = this.objectPath()
 		var prev = <Element> document.getElementById( path )
 		
 		if( !prev ) {
-			prev = document.createElementNS( this.nameSpace(0) , this.tagName(0) )
+			prev = document.createElementNS( this.nameSpace() , this.tagName() )
 			prev.setAttribute( 'id' , path )
 		}
 		
@@ -45,7 +45,7 @@ class $mol_view extends $mol_object {
 		}
 		
 		/// Update dynamic attributes
-		this.attrNames(0).forEach( name => {
+		this.attrNames().forEach( name => {
 			var n = this.attr( name )
 			if( n == null ) {
 				prev.removeAttribute( name )
@@ -55,7 +55,7 @@ class $mol_view extends $mol_object {
 		} )
 
 		/// Render child nodes
-		var childs = this.childs( id )
+		var childs = this.childs()
 		if( childs != null ) {
 			var childViews = [].concat( childs )
 			var childNodes = prev.childNodes
@@ -66,7 +66,7 @@ class $mol_view extends $mol_object {
 				
 				if( typeof view === 'object' ) {
 					if( view ) {
-						var existsNode = view.dom( id )
+						var existsNode = view.dom()
 						while( true ) {
 							if( !nextNode ) {
 								prev.appendChild(existsNode)
@@ -86,7 +86,7 @@ class $mol_view extends $mol_object {
 								}
 							}
 						}
-						view.dom( id )
+						view.dom()
 					}
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
@@ -107,7 +107,7 @@ class $mol_view extends $mol_object {
 		}
 		
 		// Update element fields
-		this.fieldPaths(0).forEach( names => {
+		this.fieldPaths().forEach( names => {
 			var obj = prev
 			for( var i = 0 ; i < names.length - 1 ; ++i ) {
 				if( names[i] ) obj = obj[ names[i] ]
@@ -120,13 +120,13 @@ class $mol_view extends $mol_object {
 		return prev
 	}
 	
-	attrNames( key : number ) { return [] }
+	attrNames() { return [] }
 	attr( name : string ) { return '' }
 	
-	eventNames( key : number ) { return [] }
+	eventNames() { return [] }
 	event( name : string , ...diff : Event[] ) { return null }
 	
-	fieldPaths( key : number ) { return [] }
+	fieldPaths() { return [] }
 	field( path : string[] ) { return null }
 	
 }
@@ -134,5 +134,5 @@ class $mol_view extends $mol_object {
 /// Automatic attach view roots to loaded DOM.
 document.addEventListener( 'DOMContentLoaded' , event => {
 	var nodes = document.querySelectorAll( '[mol_view_root]' )
-	for( var i = nodes.length - 1 ; i >= 0 ; --i ) $mol_view.root( i ).dom(0)
+	for( var i = nodes.length - 1 ; i >= 0 ; --i ) $mol_view.root( i ).dom()
 } )

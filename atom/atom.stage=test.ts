@@ -48,33 +48,33 @@ $mol_test( test => {
 	class X extends $mol_object {
 		
 		@ $mol_atom()
-		foo( id : number , ...diff : number[] ) {
+		foo( ...diff : number[] ) {
 			return diff[0] || 1
 		}
 		
 		@ $mol_atom()
-		bar( id : number ) {
-			return this.foo( id ) + 1
+		bar( ) {
+			return this.foo() + 1
 		}
 		
 		@ $mol_atom()
-		xxx( id : number ) {
-			return this.bar( id ) + 1
+		xxx( ) {
+			return this.bar() + 1
 		}
 		
 	}
 	
 	var x = new X
-	test.equal( x.bar(0) , 2 )
-	test.equal( x.xxx(0) , 3 )
+	test.equal( x.bar() , 2 )
+	test.equal( x.xxx() , 3 )
 	
-	x.foo( 0 , 5 )
-	test.equal( x.bar(0) , 2 )
-	test.equal( x.xxx(0) , 3 )
+	x.foo( 5 )
+	test.equal( x.bar() , 2 )
+	test.equal( x.xxx() , 3 )
 	
 	$mol_atom_sync()
-	test.equal( x.bar(0) , 6 )
-	test.equal( x.xxx(0) , 7 )
+	test.equal( x.bar() , 6 )
+	test.equal( x.xxx() , 7 )
 	
 } )
 
@@ -84,8 +84,8 @@ $mol_test( test => {
 	class X extends $mol_object {
 		
 		@ $mol_atom()
-		foo( id : number ) {
-			return this.foo( id ) + 1
+		foo() {
+			return this.foo() + 1
 		}
 		
 	}
@@ -93,10 +93,10 @@ $mol_test( test => {
 	var x = new X
 	
 	try {
-		x.foo( 0 )
+		x.foo()
 		test.fail( 'Not tracked recursive dependency' )
 	} catch( error ) {
-		test.equal( error.message , 'Recursive dependency! undefined.foo(0)' )
+		test.equal( error.message , 'Recursive dependency! undefined.foo()' )
 	}
 	
 } )
@@ -114,35 +114,35 @@ $mol_test( test => {
 	class B extends $mol_object {
 		
 		@ $mol_atom()
-		showing( id : number , ...diff : boolean[] ) {
+		showing( ...diff : boolean[] ) {
 			if( diff[0] === void 0 ) return true
 			return diff[0]
 		}
 		
 		@ $mol_atom()
-		foo( id : number ) {
+		foo() {
 			return new A
 		}
 		
 		@ $mol_atom()
-		bar( id : number ) {
-			return this.showing( id ) ? this.foo( id ) : null
+		bar() {
+			return this.showing() ? this.foo() : null
 		}
 		
 	}
 	
 	var b = new B
 	
-	var bar = b.bar(0)
+	var bar = b.bar()
 	test.ok( bar )
 	
-	b.showing( 0 , false )
+	b.showing( false )
 	$mol_atom_sync()
 	test.ok( destroyed )
-	test.not( b.bar(0) )
+	test.not( b.bar() )
 	
-	b.showing( 0 , true )
+	b.showing( true )
 	$mol_atom_sync()
-	test.unique( b.bar(0) , bar )
+	test.unique( b.bar() , bar )
 	
 } )

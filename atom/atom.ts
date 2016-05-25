@@ -3,8 +3,7 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 	constructor(
 		public host : { objectPath() : string } ,
 		public field : string ,
-		public handler : ( arg? : Key , ...diff : (Value|Error)[] )=> Value ,
-		public key : Key
+		public handler : ( ...diff : (Value|Error)[] )=> Value
 	) {
 		super()
 	}
@@ -68,7 +67,7 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 		
 		var index = $mol_atom_stack.length
 		$mol_atom_stack.push( this )
-		var next = this.handler.call( this.host , this.key )
+		var next = this.handler()
 		$mol_atom_stack.length = index
 		
 		if( oldMasters ) oldMasters.forEach( master => {
@@ -80,7 +79,7 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 	}
 	
 	set( ...diff : (Value|Error)[] ) {
-		return this.push( this.handler.call( this.host , this.key , ...diff ) )
+		return this.push( this.handler( ...diff ) )
 	}
 	
 	push( next : Value|Error ) {
@@ -149,6 +148,15 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 		
 		this.masters = null
 		this.mastersDeep = 0
+	}
+	
+	value( ...diff : (Value|Error)[] ) {
+		if( diff[0] === void 0 ) {
+			if( diff.length ) this.update()
+			return this.get()
+		} else {
+			return this.set( ...diff )
+		}
 	}
 	
 }
@@ -220,26 +228,44 @@ function $mol_atom( ) {
 	return function< Host extends { objectPath() : string } , Key , Value >(
 		obj : Host ,
 		name : string ,
-		descr : TypedPropertyDescriptor< ( key? : Key , ...diff : Value[] ) => Value >
+		descr : TypedPropertyDescriptor< Function > // FIXME: type checking
 	) {
 		var value = descr.value
-		descr.value = function( key? : Key , ...diff : Value[] ) {
-			var host : Host = this
-			var field = name + "(" + ( key === void 0 ? '' : JSON.stringify( key ) ) + ")"
-			var path = host.objectPath() + '.' + field
-			
-			var atoms = host[ '$mol_atom_state' ]
-			if( !atoms ) atoms = host[ '$mol_atom_state' ] = {}
-			
-			var info : $mol_atom_any = atoms[ field ]
-			if( !info )	atoms[ field ] = info = new $mol_atom_info( host , field , value , key )
-			
-			if( diff.length === 0 ) {
-				return info.get()
-			} else if( diff[0] === void 0 ) {
-				return info.update()
-			} else {
-				return info.set( ...diff )
+		if( value.length ) {
+			descr.value = function( key? : Key , ...diff : Value[] ) {
+				var host : Host = this
+				var field = name + "(" + JSON.stringify( key ) + ")"
+				var path = host.objectPath() + '.' + field
+				
+				var atoms = host[ '$mol_atom_state' ]
+				if( !atoms ) atoms = host[ '$mol_atom_state' ] = {}
+				
+				var info : $mol_atom_any = atoms[ field ]
+				if( !info )	atoms[ field ] = info = new $mol_atom_info(
+					host , 
+					field , 
+					value.bind( host , key )
+				)
+				
+				return info.value( ...diff )
+			}
+		} else {
+			descr.value = function( ...diff : Value[] ) {
+				var host : Host = this
+				var field = name + "()"
+				var path = host.objectPath() + '.' + field
+				
+				var atoms = host[ '$mol_atom_state' ]
+				if( !atoms ) atoms = host[ '$mol_atom_state' ] = {}
+				
+				var info : $mol_atom_any = atoms[ field ]
+				if( !info )	atoms[ field ] = info = new $mol_atom_info(
+					host ,
+					field ,
+					value.bind( host )
+				)
+				
+				return info.value( ...diff )
 			}
 		}
 	}

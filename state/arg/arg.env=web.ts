@@ -1,16 +1,16 @@
 class $mol_state_arg< Value > extends $mol_object {
 	
 	@ $mol_atom()
-	static href( id : number , ...diff : string[] ) {
+	static href( ...diff : string[] ) {
 		if( diff[0] !== void 0 ) document.location.href = diff[0]
 		return window.location.search + window.location.hash
 	}
 	
 	@ $mol_atom()
-	static dict( id : number , ...diff : any[] ) {
-		if( diff[0] !== void 0 ) this.href( 0 , this.make( diff[0] ) )
+	static dict( ...diff : any[] ) {
+		if( diff[0] !== void 0 ) this.href( this.make( diff[0] ) )
 		
-		var href = this.href(0)
+		var href = this.href()
 		var chunks = href.split( /[\/\?#!&;]/g )
 		
 		var params = {}
@@ -25,15 +25,15 @@ class $mol_state_arg< Value > extends $mol_object {
 	
 	@ $mol_atom()
 	static value< Value >( key : string , ...diff : Value[] ) {
-		if( diff[0] === void 0 ) return this.dict(0)[ key ] || null
-		this.href( 0 , this.link({ [ key ] : diff[0] }) )
+		if( diff[0] === void 0 ) return this.dict()[ key ] || null
+		this.href( this.link({ [ key ] : diff[0] }) )
 		return diff[0]
 	}
 	
 	static link( next : any ) {
 		var params = {}
 		
-		var prev = this.dict(0)
+		var prev = this.dict()
 		for( var key in prev ) {
 			if( key in next ) continue
 			params[ key ] = prev[ key ]
@@ -46,7 +46,7 @@ class $mol_state_arg< Value > extends $mol_object {
 		return this.make( params )
 	}
 	
-	static make( next ) {
+	static make( next : any ) {
 		var chunks = []
 		for( var key in next ) {
 			if( null == next[key] ) continue
@@ -64,4 +64,4 @@ class $mol_state_arg< Value > extends $mol_object {
 	
 }
 
-window.addEventListener( 'hashchange' , event => $mol_state_arg.href( 0 , null ) )
+window.addEventListener( 'hashchange' , event => $mol_state_arg.href( void 0 ) )
