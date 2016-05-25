@@ -86,7 +86,8 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 		var prev = this.host[ this.field ]
 		if( prev !== next ) {
 			if( next instanceof $mol_object ) {
-				next['objectPath']( this.objectPath() ) // FIXME: type checking
+				next['objectField']( this.field ) // FIXME: type checking
+				next['objectOwner']( this.host ) // FIXME: type checking
 			}
 			this.host[ this.field ] = next
 			$jin2_log_info( this.objectPath() , next , prev )

@@ -5,11 +5,31 @@ class $mol_object {
 		return this['name']
 	}
 	
+	/// Owner object.
+	private 'objectOwner()' : $mol_object
+	objectOwner( next? : $mol_object ) {
+		if( this['objectOwner()'] ) return this['objectOwner()']
+		return this['objectOwner()'] = next
+	}
+	
+	/// Field in owner where this object is stored.
+	private 'objectField()' : string
+	objectField( next? : string ) {
+		if( this['objectField()'] ) return this['objectField()'] || ''
+		return this['objectField()'] = next
+	}
+	
 	/// JS-path to this object from global scope. Can not be redefined.
-	private 'objectPath()' : string
 	objectPath( next? : string ) {
-		if( this['objectPath()'] ) return this['objectPath()']
-		return this['objectPath()'] = next
+		var path = ''
+		
+		var owner = this.objectOwner()
+		if( owner ) path = owner.objectPath()
+		
+		var field = this.objectField()
+		if( field ) path += '.' + field
+		
+		return path
 	}
 	
 	/// Helper to override fields in fluent style.

@@ -96,7 +96,7 @@ $mol_test( test => {
 		x.foo()
 		test.fail( 'Not tracked recursive dependency' )
 	} catch( error ) {
-		test.equal( error.message , 'Recursive dependency! undefined.foo()' )
+		test.equal( error.message , 'Recursive dependency! .foo()' )
 	}
 	
 } )

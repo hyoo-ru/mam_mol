@@ -35,6 +35,19 @@ class $mol_view extends $mol_object {
 		}
 		
 		/// Set BEM-like block-attributes with inheritance support
+		var proto2 = this.objectOwner()
+		if( proto2 ) {
+			while( proto2 instanceof $mol_view ) {
+				var className = proto2.constructor[ 'objectPath' ]() // FIXME: type checking
+				if( !className ) continue
+				
+				var attrName = className.replace( /\$/g , '' ) + '_' + this.objectField().replace( /\(.*/ , '' )
+				prev.setAttribute( attrName , '' )
+				proto2 = Object.getPrototypeOf( proto2 )
+			}
+		}
+		
+		/// Set BEM-like block-attributes with inheritance support
 		var proto1 = this
 		while( proto1 instanceof $mol_view ) {
 			var className = proto1.constructor['objectPath']() // FIXME: type checking

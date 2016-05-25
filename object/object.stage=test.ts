@@ -20,12 +20,12 @@ $mol_test( test => {
 	
 	var x = new $mol_object
 	
-	test.equal( x.objectPath() , void 0 )
+	test.equal( x.objectPath() , '' )
 	
-	x.objectPath( 'foo' )
-	test.equal( x.objectPath() , 'foo' )
+	x.objectField( 'foo()' )
+	test.equal( x.objectPath() , '.foo()' )
 	
-	x.objectPath( 'bar' )
-	test.equal( x.objectPath() , 'foo' )
+	x.objectField( 'bar()' )
+	test.equal( x.objectPath() , '.foo()' )
 	
 } )
