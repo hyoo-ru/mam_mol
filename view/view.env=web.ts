@@ -27,34 +27,48 @@ class $mol_view extends $mol_object {
 	@ $mol_atom()
 	dom() {
 		var path = this.objectPath()
-		var prev = <Element> document.getElementById( path )
+		var prev = <Element> this['dom()']
 		
 		if( !prev ) {
-			prev = document.createElementNS( this.nameSpace() , this.tagName() )
-			prev.setAttribute( 'id' , path )
-		}
-		
-		/// Set BEM-like block-attributes with inheritance support
-		var proto2 = this.objectOwner()
-		if( proto2 ) {
-			while( proto2 instanceof $mol_view ) {
-				var className = proto2.constructor[ 'objectPath' ]() // FIXME: type checking
+			prev = document.getElementById( path )
+			if( !prev ) {
+				prev = document.createElementNS( this.nameSpace() , this.tagName() )
+				prev.setAttribute( 'id' , path )
+			}
+			
+			/// Set BEM-like element-attributes with inheritance support
+			var proto1 = this.objectOwner()
+			while( typeof proto1 === 'object' ) {
+				var className = proto1.constructor[ 'objectPath' ]() // FIXME: type checking
 				if( !className ) continue
 				
 				var attrName = className.replace( /\$/g , '' ) + '_' + this.objectField().replace( /\(.*/ , '' )
 				prev.setAttribute( attrName , '' )
+				
+				if( proto1 === $mol_view.prototype ) break
+				proto1 = Object.getPrototypeOf( proto1 )
+			}
+			
+			/// Set BEM-like block-attributes with inheritance support
+			var proto2 = this
+			while( proto2 ) {
+				var className = proto2.constructor['objectPath']() // FIXME: type checking
+				if( !className ) continue
+				
+				prev.setAttribute( className.replace( /\$/g , '' ) , '' )
+				
+				if( proto2 === $mol_view.prototype ) break
 				proto2 = Object.getPrototypeOf( proto2 )
 			}
-		}
-		
-		/// Set BEM-like block-attributes with inheritance support
-		var proto1 = this
-		while( proto1 instanceof $mol_view ) {
-			var className = proto1.constructor['objectPath']() // FIXME: type checking
-			if( !className ) continue
 			
-			prev.setAttribute( className.replace( /\$/g , '' ) , '' )
-			proto1 = Object.getPrototypeOf( proto1 )
+			/// Bind properties to events
+			this.eventNames().forEach( name => {
+				prev.addEventListener( name , event => {
+					this.event( name , event )
+					$mol_atom_sync()
+				} )
+			} )
+			
 		}
 		
 		/// Update dynamic attributes
@@ -120,13 +134,14 @@ class $mol_view extends $mol_object {
 		}
 		
 		// Update element fields
-		this.fieldPaths().forEach( names => {
+		this.fieldPaths().forEach( path => {
+			var names = path.split( '.' )
 			var obj = prev
 			for( var i = 0 ; i < names.length - 1 ; ++i ) {
 				if( names[i] ) obj = obj[ names[i] ]
 			}
 			var field = names[ names.length - 1 ]
-			var val = this.field( names )
+			var val = this.field( path )
 			if( obj[ field ] !== val ) obj[ field ] = val
 		} )
 		
@@ -140,11 +155,11 @@ class $mol_view extends $mol_object {
 	event( name : string , ...diff : Event[] ) { return null }
 	
 	fieldPaths() { return [] }
-	field( path : string[] ) { return null }
+	field( path : string ) { return null }
 	
 }
 
-/// Automatic attach view roots to loaded DOM.
+/// Autoattach view roots to loaded DOM.
 document.addEventListener( 'DOMContentLoaded' , event => {
 	var nodes = document.querySelectorAll( '[mol_view_root]' )
 	for( var i = nodes.length - 1 ; i >= 0 ; --i ) $mol_view.root( i ).dom()

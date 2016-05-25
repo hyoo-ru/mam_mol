@@ -6,8 +6,8 @@ class $mol_object {
 	}
 	
 	/// Owner object.
-	private 'objectOwner()' : $mol_object
-	objectOwner( next? : $mol_object ) {
+	private 'objectOwner()' : { objectPath() : string }
+	objectOwner( next? : { objectPath() : string } ) {
 		if( this['objectOwner()'] ) return this['objectOwner()']
 		return this['objectOwner()'] = next
 	}
