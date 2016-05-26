@@ -9,6 +9,8 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 	}
 	
 	destroy() {
+		super.destroy()
+		
 		this.unlink()
 		
 		var value = this.host[ this.field ]
@@ -20,7 +22,6 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 		
 		this.host[ this.field ] = void 0
 		this.host[ '$mol_atom_state' ][ this.field ] = void 0
-		$jin2_log_info( this.objectPath() , void 0 , value )
 	}
 	
 	unlink() {
@@ -53,6 +54,8 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 	}
 	
 	pull() {
+		this.log( 'pull' )
+		
 		var level = $mol_atom_plan[ this.mastersDeep ]
 		if( level ) level.delete( this )
 		
@@ -90,7 +93,7 @@ class $mol_atom_info< Key , Value > extends $mol_object {
 				next['objectOwner']( this.host ) // FIXME: type checking
 			}
 			this.host[ this.field ] = next
-			$jin2_log_info( this.objectPath() , next , prev )
+			this.log( 'push' , next , prev )
 			this.notifySlaves()
 		}
 		return next
@@ -236,7 +239,6 @@ function $mol_atom( ) {
 			descr.value = function( key? : Key , ...diff : Value[] ) {
 				var host : Host = this
 				var field = name + "(" + JSON.stringify( key ) + ")"
-				var path = host.objectPath() + '.' + field
 				
 				var atoms = host[ '$mol_atom_state' ]
 				if( !atoms ) atoms = host[ '$mol_atom_state' ] = {}
@@ -254,7 +256,6 @@ function $mol_atom( ) {
 			descr.value = function( ...diff : Value[] ) {
 				var host : Host = this
 				var field = name + "()"
-				var path = host.objectPath() + '.' + field
 				
 				var atoms = host[ '$mol_atom_state' ]
 				if( !atoms ) atoms = host[ '$mol_atom_state' ] = {}

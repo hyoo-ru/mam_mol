@@ -39,7 +39,12 @@ class $mol_object {
 	}
 	
 	destroy() {
-		$jin2_log_info( this.objectPath() , 'destroyed' )
+		this.log( 'destroy' )
+	}
+	
+	log( ...values : any[] ) {
+		if( !$mol_log.enabled ) return
+		$mol_log( this.objectPath() , ...values )
 	}
 	
 	toString() {
