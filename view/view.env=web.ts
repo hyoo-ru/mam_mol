@@ -17,7 +17,6 @@ class $mol_view extends $mol_object {
 	nameSpace() { return 'http://www.w3.org/1999/xhtml' }
 	
 	/// Child views
-	@ $mol_atom()
 	childs() {
 		return <Array<$mol_view|Element|string|number|boolean>>[]
 	}
@@ -33,7 +32,7 @@ class $mol_view extends $mol_object {
 			prev = document.getElementById( path )
 			if( !prev ) {
 				prev = document.createElementNS( this.nameSpace() , this.tagName() )
-				prev.setAttribute( 'id' , path )
+				prev.id = path
 			}
 			
 			/// Set BEM-like element-attributes with inheritance support
@@ -113,7 +112,6 @@ class $mol_view extends $mol_object {
 								}
 							}
 						}
-						view.dom()
 					}
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
