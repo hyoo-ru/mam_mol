@@ -1,0 +1,14 @@
+- $mol_perf : $mol_view childs
+	< header : $mol_view childs < head
+		< titler : $mol_view child : =$mol
+		< runner : $mol_perf_runner
+			child < runnerLabel : =Run
+			clicks < runs : null
+	< rower : $mol_view child < items : null
+
+- $mol_perf_runner : $mol_view
+	*click > clicks
+
+- $mol_perf_row : $mol_view
+	@mol_perf_row_selected < selected : false
+	childs < bar : $mol_view childs < label : =
