@@ -1,6 +1,6 @@
 class $mol_state_local< Value > extends $mol_object {
 	
-	@ $mol_atom()
+	@ $mol_prop()
 	static value< Value >( key : string , ...diff : Value[] ) {
 		if( diff[0] === void 0 ) return JSON.parse( localStorage.getItem( key ) || 'null' )
 		

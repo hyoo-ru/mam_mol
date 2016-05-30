@@ -1,13 +1,9 @@
 /// Reactive statefull lazy ViewModel 
-class $mol_view extends $mol_object {
+class $mol_view extends $mol_model {
 	
-	@ $mol_atom()
+	@ $mol_prop()
 	static root( id : number ) {
-		var node = document.querySelectorAll( '[mol_view_root]' )[ id ]
-		var name = node.getAttribute( 'mol_view_root' )
-		var view = new window['$'][ name ]
-		node.id = this.objectPath() + '.root(' + id + ')'
-		return view
+		return new this
 	}
 	
 	/// Name of element that created when element not found in DOM
@@ -23,52 +19,67 @@ class $mol_view extends $mol_object {
 	
 	childsInner() { return this.childs() }
 	
-	@ $mol_atom()
-	dom() {
-		var path = this.objectPath()
-		var prev = <Element> this['dom()']
-		
-		if( !prev ) {
-			prev = document.getElementById( path )
-			if( !prev ) {
-				prev = document.createElementNS( this.nameSpace() , this.tagName() )
-				prev.id = path
+	private 'DOMNode()' : Element
+	DOMNode( ...diff : Element[] ) {
+		var next = diff[0]
+		if( !next ) {
+			next = this['DOMNode()']
+			if( next ) return next
+			
+			var path = this.objectPath()
+			next = document.getElementById( path )
+			if( !next ) {
+				next = document.createElementNS( this.nameSpace() , this.tagName() )
+				next.id = path
 			}
-			
-			/// Set BEM-like element-attributes with inheritance support
-			var proto1 = this.objectOwner()
-			while( typeof proto1 === 'object' ) {
-				var className = proto1.constructor[ 'objectPath' ]() // FIXME: type checking
-				if( !className ) continue
-				
-				var attrName = className.replace( /\$/g , '' ) + '_' + this.objectField().replace( /\(.*/ , '' )
-				prev.setAttribute( attrName , '' )
-				
-				if( proto1 === $mol_view.prototype ) break
-				proto1 = Object.getPrototypeOf( proto1 )
-			}
-			
-			/// Set BEM-like block-attributes with inheritance support
-			var proto2 = this
-			while( proto2 ) {
-				var className = proto2.constructor['objectPath']() // FIXME: type checking
-				if( !className ) continue
-				
-				prev.setAttribute( className.replace( /\$/g , '' ) , '' )
-				
-				if( proto2 === $mol_view.prototype ) break
-				proto2 = Object.getPrototypeOf( proto2 )
-			}
-			
-			/// Bind properties to events
-			this.eventNames().forEach( name => {
-				prev.addEventListener( name , event => {
-					this.event( name , event )
-					$mol_atom_sync()
-				} )
-			} )
-			
 		}
+		this['DOMNode()'] = next
+		
+		/// Set BEM-like element-attributes with inheritance support
+		var proto1 = this.objectOwner()
+		while( typeof proto1 === 'object' ) {
+			var className = proto1.constructor[ 'objectPath' ]() // FIXME: type checking
+			if( !className ) continue
+			
+			var attrName = className.replace( /\$/g , '' ) + '_' + this.objectField().replace( /\(.*/ , '' )
+			next.setAttribute( attrName , '' )
+			
+			if( proto1 === $mol_view.prototype ) break
+			proto1 = Object.getPrototypeOf( proto1 )
+		}
+		
+		/// Set BEM-like block-attributes with inheritance support
+		var proto2 = this
+		while( proto2 ) {
+			var className = proto2.constructor['objectPath']() // FIXME: type checking
+			if( !className ) continue
+			
+			next.setAttribute( className.replace( /\$/g , '' ) , '' )
+			
+			if( proto2 === $mol_view.prototype ) break
+			proto2 = Object.getPrototypeOf( proto2 )
+		}
+		
+		/// Bind properties to events
+		this.eventNames().forEach( name => {
+			next.addEventListener( name , event => {
+				this.event( name , event )
+				$mol_atom_sync()
+			} )
+		} )
+		
+		return next
+	}
+	
+	@ $mol_prop({
+		fail : ( self : $mol_view , error ) => {
+			self.attrNames()
+			var node = self.DOMNode()
+			if( node ) node.setAttribute( 'mol_view_error' , error.message )
+		}
+	})
+	DOMTree( ...diff : Element[] ) {
+		var prev = this.DOMNode()
 		
 		/// Update dynamic attributes
 		this.attrNames().forEach( name => {
@@ -81,7 +92,7 @@ class $mol_view extends $mol_object {
 		} )
 
 		/// Render child nodes
-		var childs = this.childs()
+		var childs = this.childsInner()
 		if( childs != null ) {
 			var childViews = [].concat( childs )
 			var childNodes = prev.childNodes
@@ -92,7 +103,7 @@ class $mol_view extends $mol_object {
 				
 				if( typeof view === 'object' ) {
 					if( view ) {
-						var existsNode = view.dom()
+						var existsNode = view.DOMNode()
 						while( true ) {
 							if( !nextNode ) {
 								prev.appendChild(existsNode)
@@ -112,6 +123,7 @@ class $mol_view extends $mol_object {
 								}
 							}
 						}
+						view.DOMTree( void 0 )
 					}
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
@@ -143,6 +155,8 @@ class $mol_view extends $mol_object {
 			if( obj[ field ] !== val ) obj[ field ] = val
 		} )
 		
+		prev.removeAttribute( 'mol_view_error' )
+		
 		return prev
 	}
 	
@@ -160,5 +174,9 @@ class $mol_view extends $mol_object {
 /// Autoattach view roots to loaded DOM.
 document.addEventListener( 'DOMContentLoaded' , event => {
 	var nodes = document.querySelectorAll( '[mol_view_root]' )
-	for( var i = nodes.length - 1 ; i >= 0 ; --i ) $mol_view.root( i ).dom()
+	for( var i = nodes.length - 1 ; i >= 0 ; --i ) {
+		var view = window['$'][ nodes[i].getAttribute( 'mol_view_root' ) ].root(i)
+		view.DOMNode( nodes[i] )
+		view.DOMTree( void 0 )
+	}
 } )

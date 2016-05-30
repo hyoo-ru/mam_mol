@@ -5,7 +5,7 @@ $mol_test( test => {
 	
 	class $mol_view_test_block extends $mol_view {
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		element( id : number ) {
 			return new $mol_view_test_item()
 		}
@@ -14,8 +14,8 @@ $mol_test( test => {
 	
 	var x = new $mol_view_test_block()
 	
-	test.equal( x.dom().id , '' )
-	test.equal( x.element(0).dom().id , '.element(0)' )
+	test.equal( x.DOMTree().id , '' )
+	test.equal( x.element(0).DOMTree().id , '.element(0)' )
 	
 } )
 
@@ -26,7 +26,7 @@ $mol_test( test => {
 	
 	var x = new $mol_view_test()
 	
-	test.equal( x.dom() , x.dom() )
+	test.equal( x.DOMTree() , x.DOMTree() )
 	
 } )
 
@@ -41,7 +41,7 @@ $mol_test( test => {
 	
 	var x = new $mol_view_test()
 	
-	test.equal( x.dom().innerHTML , 'lol5' )
+	test.equal( x.DOMTree().innerHTML , 'lol5' )
 		
 } )
 
@@ -52,7 +52,7 @@ $mol_test( test => {
 	
 	class $mol_view_test_block extends $mol_view {
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		element( id : number ) {
 			return new $mol_view_test_item()
 		}
@@ -61,14 +61,14 @@ $mol_test( test => {
 	
 	var x = new $mol_view_test_block()
 	
-	test.equal( x.dom().getAttribute( 'mol_view_test_block' ) , '' )
-	test.equal( x.dom().getAttribute( 'mol_view' ) , '' )
+	test.equal( x.DOMTree().getAttribute( 'mol_view_test_block' ) , '' )
+	test.equal( x.DOMTree().getAttribute( 'mol_view' ) , '' )
 	
-	test.equal( x.element(0).dom().getAttribute( 'mol_view_test_block_element' ) , '' )
-	test.equal( x.element(0).dom().getAttribute( 'mol_view_element' ) , '' )
+	test.equal( x.element(0).DOMTree().getAttribute( 'mol_view_test_block_element' ) , '' )
+	test.equal( x.element(0).DOMTree().getAttribute( 'mol_view_element' ) , '' )
 
-	test.equal( x.element(0).dom().getAttribute( 'mol_view_test_item' ) , '' )
-	test.equal( x.element(0).dom().getAttribute( 'mol_view' ) , '' )
+	test.equal( x.element(0).DOMTree().getAttribute( 'mol_view_test_item' ) , '' )
+	test.equal( x.element(0).DOMTree().getAttribute( 'mol_view' ) , '' )
 	
 } )
 
@@ -89,8 +89,8 @@ $mol_test( test => {
 	
 	var x = new $mol_view_test()
 	
-	test.equal( x.dom().getAttribute( 'href' ) , '#haha' )
-	test.equal( x.dom().getAttribute( 'required' ) , '' )
+	test.equal( x.DOMTree().getAttribute( 'href' ) , '#haha' )
+	test.equal( x.DOMTree().getAttribute( 'required' ) , '' )
 	
 } )
 
@@ -111,7 +111,7 @@ $mol_test( test => {
 	
 	var x = new $mol_view_test()
 	
-	test.equal( ( <HTMLElement> x.dom() ).style.top , '10px' )
+	test.equal( ( <HTMLElement> x.DOMTree() ).style.top , '10px' )
 	
 } )
 
@@ -136,7 +136,7 @@ $mol_test( test => {
 	}
 	
 	var x = new $mol_view_test()
-	;( <HTMLElement> x.dom() ).click()
+	;( <HTMLElement> x.DOMTree() ).click()
 	
 	test.ok( clicked )
 	

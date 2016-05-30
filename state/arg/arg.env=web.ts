@@ -1,12 +1,12 @@
 class $mol_state_arg< Value > extends $mol_object {
 	
-	@ $mol_atom()
+	@ $mol_prop()
 	static href( ...diff : string[] ) {
 		if( diff[0] !== void 0 ) document.location.href = diff[0]
 		return window.location.search + window.location.hash
 	}
 	
-	@ $mol_atom()
+	@ $mol_prop()
 	static dict( ...diff : any[] ) {
 		if( diff[0] !== void 0 ) this.href( this.make( diff[0] ) )
 		
@@ -23,7 +23,7 @@ class $mol_state_arg< Value > extends $mol_object {
 		return params
 	}
 	
-	@ $mol_atom()
+	@ $mol_prop()
 	static value< Value >( key : string , ...diff : Value[] ) {
 		if( diff[0] === void 0 ) return this.dict()[ key ] || null
 		this.href( this.link({ [ key ] : diff[0] }) )

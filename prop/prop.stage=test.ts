@@ -2,7 +2,7 @@
 $mol_test( test => {
 	
 	class X extends $mol_object {
-		@ $mol_atom()
+		@ $mol_prop()
 		foo( id : number , ...diff : Array<Number|String> ) {
 			if( diff[0] === void 0 ) return new Number( 123 )
 			return new Number( diff[0] )
@@ -30,7 +30,7 @@ $mol_test( test => {
 $mol_test( test => {
 	
 	class X extends $mol_object {
-		@ $mol_atom()
+		@ $mol_prop()
 		foo( ids : number[] ) {
 			return Math.random()
 		}
@@ -47,17 +47,17 @@ $mol_test( test => {
 	
 	class X extends $mol_object {
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		foo( ...diff : number[] ) {
 			return diff[0] || 1
 		}
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		bar( ) {
 			return this.foo() + 1
 		}
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		xxx( ) {
 			return this.bar() + 1
 		}
@@ -83,7 +83,7 @@ $mol_test( test => {
 	
 	class X extends $mol_object {
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		foo() {
 			return this.foo() + 1
 		}
@@ -96,6 +96,7 @@ $mol_test( test => {
 		x.foo()
 		test.fail( 'Not tracked recursive dependency' )
 	} catch( error ) {
+		$mol_atom_restore()
 		test.equal( error.message , 'Recursive dependency! .foo()' )
 	}
 	
@@ -113,18 +114,18 @@ $mol_test( test => {
 	
 	class B extends $mol_object {
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		showing( ...diff : boolean[] ) {
 			if( diff[0] === void 0 ) return true
 			return diff[0]
 		}
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		foo() {
 			return new A
 		}
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		bar() {
 			return this.showing() ? this.foo() : null
 		}

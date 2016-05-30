@@ -1,14 +1,11 @@
 window.addEventListener( 'error' , ( event : ErrorEvent )=> {
-	$mol_atom_schedule()
-	
 	var error = event.error
-	var stack = $mol_atom_stack
-	
-	for( var atom of stack ) {
-		console.debug( atom.objectPath() )
-	}
+	var stack = $mol_atom.stack
 	
 	while( stack.length ) {
-		stack.pop().push( error )
+		var atom = stack.pop()
+		if( error instanceof Error ) {
+			error = atom.push( error )
+		}
 	}
 })

@@ -26,7 +26,7 @@ module $.$mol {
 		
 		childs() { return [].concat( this.bar() ) }
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		bar() { return new $mol_view().setup( obj => {
 			obj.childs = () => [].concat( this.label() )
 		} ) }
@@ -35,7 +35,7 @@ module $.$mol {
 		
 		label() { return this.data().label }
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		selected( ...diff : boolean[] ) { return ( diff[0] === void 0 ) ? false : diff[0] }
 		
 		eventNames() {
@@ -70,24 +70,24 @@ module $.$mol {
 		
 		childs() { return [].concat( this.header() , this.rower() ) }
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		header() { return new $mol_view().setup( obj => {
 			obj.childs = () => [].concat( this.titler() , this.runner() )
 		} ) }
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		titler() { return new $mol_view().setup( obj => {
 			obj.tagName = () => 'h2'
 			obj.childs = () => [].concat( '$mol' )
 		} ) }
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		runner() { return new $mol_perf_runner().setup( obj => {
 			obj.childs = () => [].concat( this.runnerLabel() )
 			obj.clicks = ( ...diff ) => this.runs( ...diff )
 		} ) }
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		runnerLabel( ...diff : string[] ) { return diff[0] || 'Run' }
 		
 		runs( ...diff : Event[] ) {
@@ -101,15 +101,15 @@ module $.$mol {
 			setTimeout( () => this.runnerLabel( (Date.now() - date) + " ms" ) )
  		}
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		rower() { return new $mol_view().setup( obj => {
 			obj.childs = () => [].concat( this.rows() )
 		} ) }
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		rows() { return this.data().map( ( _ , id ) => this.row( id ) ) }
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		row( id : number ) { return new $mol_perf_row().setup( obj => {
 			obj.data = () => this.data()[ id ]
 			obj.selected = ( ...diff : boolean[] ) => {
@@ -118,10 +118,10 @@ module $.$mol {
 			}
 		} ) }
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		data( ...diff : $mol_perf_item[][] ) { return diff[0] || [] }
 		
-		@ $mol_atom()
+		@ $mol_prop()
 		selectedItem( ...diff : number[] ) { return ( diff[0] === void 0 ) ? null : diff[0] }
 		
 	}
