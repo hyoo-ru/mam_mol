@@ -76,8 +76,8 @@ $mol_test( test => {
 $mol_test( test => {
 	
 	class $mol_view_test extends $mol_view {
-		attrNames() {
-			return super.attrNames().concat( 'href' , 'required' )
+		attr_keys() {
+			return super.attr_keys().concat( 'href' , 'required' )
 		}
 		attr( name : string ) {
 			switch( name ) {
@@ -98,8 +98,8 @@ $mol_test( test => {
 $mol_test( test => {
 	
 	class $mol_view_test extends $mol_view {
-		fieldPaths() {
-			return super.fieldPaths().concat( 'style.top' )
+		field_keys() {
+			return super.field_keys().concat( 'style.top' )
 		}
 		field( name : string ) {
 			switch( name ) {
@@ -121,8 +121,8 @@ $mol_test( test => {
 	var clicked = false
 	
 	class $mol_view_test extends $mol_view {
-		eventNames() {
-			return super.eventNames().concat( 'click' )
+		event_keys() {
+			return super.event_keys().concat( 'click' )
 		}
 		event( name : string , ...diff : Event[] ) {
 			switch( name ) {

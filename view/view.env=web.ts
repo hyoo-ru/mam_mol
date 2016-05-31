@@ -61,7 +61,7 @@ class $mol_view extends $mol_model {
 		}
 		
 		/// Bind properties to events
-		this.eventNames().forEach( name => {
+		this.event_keys().forEach( name => {
 			next.addEventListener( name , event => {
 				this.event( name , event )
 				$mol_atom_sync()
@@ -73,7 +73,7 @@ class $mol_view extends $mol_model {
 	
 	@ $mol_prop({
 		fail : ( self : $mol_view , error ) => {
-			self.attrNames()
+			self.attr_keys()
 			var node = self.DOMNode()
 			if( node ) node.setAttribute( 'mol_view_error' , error.message )
 		}
@@ -82,7 +82,7 @@ class $mol_view extends $mol_model {
 		var prev = this.DOMNode()
 		
 		/// Update dynamic attributes
-		this.attrNames().forEach( name => {
+		this.attr_keys().forEach( name => {
 			var n = this.attr( name )
 			if( n == null ) {
 				prev.removeAttribute( name )
@@ -144,7 +144,7 @@ class $mol_view extends $mol_model {
 		}
 		
 		// Update element fields
-		this.fieldPaths().forEach( path => {
+		this.field_keys().forEach( path => {
 			var names = path.split( '.' )
 			var obj = prev
 			for( var i = 0 ; i < names.length - 1 ; ++i ) {
@@ -160,13 +160,13 @@ class $mol_view extends $mol_model {
 		return prev
 	}
 	
-	attrNames() { return [] }
+	attr_keys() { return [] }
 	attr( name : string ) { return '' }
 	
-	eventNames() { return [] }
+	event_keys() { return [] }
 	event( name : string , ...diff : Event[] ) { return null }
 	
-	fieldPaths() { return [] }
+	field_keys() { return [] }
 	field( path : string ) { return null }
 	
 }
