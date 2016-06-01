@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html ng-app="test">
+    <head>
+        <title>Performance Comparison for Knockout, Angular and React</title>
+        <style type="text/css">
+			[mol_perf_rower],
+			ul {
+				padding : 0;
+				display: table;
+			}
+			
+			[mol_perf_row],
+            li {
+				padding:3px 10px;
+				background:#EEE;
+				cursor:pointer;
+				list-style: none;
+			}
+			
+			[mol_perf_row_bar],
+			li span {
+				padding:3px 10px;
+				display: inline;
+			}
+			
+			[mol_perf_row]:hover,
+            li:hover {
+				background:#DDD;
+			}
+
+			[mol_perf_row_selected="true"] [mol_perf_row_bar],
+            li.selected span {
+				font-weight : bold ;
+				background:#3F7AD9;
+				color: white;
+			}
+
+        </style>
+
+        <script src="http://knockoutjs.com/downloads/knockout-3.4.0rc.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.js"></script>
+		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react-dom.js"></script>-->
+		<script type="text/javascript" src="-mix/index.env=web.stage=release.js"></script>
+        <script type="text/javascript">
+            console.timeEnd("build");
+
+            document.addEventListener("DOMContentLoaded", function() { 
+                _knockout();
+                _react();
+                _raw();
+            });
+
+            _angular();
+
+            function _buildData(count) {
+                count = count || 25 * 150;
+
+                var adjectives = ["pretty", "large", "big", "small", "tall", "short", "long", "handsome", "plain", "quaint", "clean", "elegant", "easy", "angry", "crazy", "helpful", "mushy", "odd", "unsightly", "adorable", "important", "inexpensive", "cheap", "expensive", "fancy"];
+                var colours = ["red", "yellow", "blue", "green", "pink", "brown", "purple", "brown", "white", "black", "orange"];
+                var nouns = ["table", "chair", "house", "bbq", "desk", "car", "pony", "cookie", "sandwich", "burger", "pizza", "mouse", "keyboard"];
+                var data = [];
+                for (var i = 0; i < count; i++)
+                    data.push({id: i+1, label: adjectives[_random(adjectives.length)] + " " + colours[_random(colours.length)] + " " + nouns[_random(nouns.length)] });
+                return data;
+            }
+
+            function _random(max) {
+                return Math.round(Math.random()*1000)%max;
+            }
+			
+            function _knockout() {
+                ko.applyBindings({
+                    selected: ko.observable(),
+                    data: ko.observableArray(),
+
+                    select: function(item) {
+                        this.selected(item.id);
+                    },
+
+                    run: function() {
+                        var data = _buildData(),
+                            date = Date.now();
+
+                        this.selected(null);
+                        this.data(data);
+						setTimeout( function() { document.getElementById("run-knockout").innerHTML = (Date.now() - date) + " ms"; })
+                    }
+                }, document.getElementById("knockout"));
+
+            }
+
+            function _angular(data) {
+                angular.module("test", []).controller("controller", function($scope) {
+                    $scope.run = function() {
+                        var data = _buildData(),
+                            date = Date.now();
+
+                        $scope.selected = null;
+                        $scope.$$postDigest(function() {
+							setTimeout( function() { document.getElementById("run-angular").innerHTML = (Date.now() - date) + " ms"; })
+                        });
+
+                        $scope.data = data;
+                    };
+
+                    $scope.select = function(item) {
+                        $scope.selected = item.id;
+                    };
+                });
+            }
+
+            function _react() {
+                var Class = React.createClass({
+					getDefaultProps: function(){ return { runnerLabel : 'Run' , data : [] } },
+					
+                    select: function(data) {
+						this.props.selected = data.id;
+                        this.forceUpdate();
+                    },
+
+                    render: function() {
+                        var items = [];
+                        for (var i = 0; i < this.props.data.length; i++) {
+                            items.push(React.createElement("li", { key: i,className: this.props.selected === this.props.data[i].id ? "selected" : "", onClick: this.select.bind(null, this.props.data[i]) },
+								React.createElement("span", null, this.props.data[i].label)
+                            ));
+                        }
+						var self = this
+
+                        return React.createElement("section", null,
+							React.createElement("header", {key:1}, [
+								React.createElement("h2", {key:3}, 'React' ),
+								this.runner = React.createElement("button", { key:4,onClick : function(){
+									var data = _buildData(),
+										date = Date.now();
+
+									self.setProps({ data : data , selected : null })
+									setTimeout( function() { self.setProps({ runnerLabel : (Date.now() - date) + " ms" }) })
+								}}, this.props.runnerLabel )
+							]) , 
+							React.createElement("ul", {key:2}, items)
+						)
+                    }
+                });
+				
+				var app = new Class({ data: [], selected: null })
+				React.render(app, document.getElementById("react"));
+            }
+
+            function _raw() {
+				var container = document.getElementById("raw"),
+					template = document.getElementById("raw-template").innerHTML;
+				document.getElementById("run-raw").addEventListener("click", function() {
+                    var data = _buildData(),
+                        date = Date.now(),
+                        html = "";
+
+                    for (var i = 0; i < data.length; i++) {
+                        var render = template;
+                        render = render.replace("{{className}}", "");
+                        render = render.replace("{{label}}", data[i].label);
+                        html += render;
+                    }
+
+                    container.innerHTML = html;
+
+					var spans = container.querySelectorAll("li");
+					for (var i = 0; i < spans.length; i++)
+						spans[i].addEventListener("click", function() {
+							var selected = container.querySelector(".selected");
+							if (selected)
+								selected.className = "";
+							this.className = "selected";
+						});
+
+					setTimeout( function() { document.getElementById("run-raw").innerHTML = (Date.now() - date) + " ms"; })
+                });
+            }
+
+            ko.observableArray.fn.reset = function(values) {
+                var array = this();
+                this.valueWillMutate();
+                ko.utils.arrayPushAll(array, values);
+                this.valueHasMutated();
+            };
+        </script>
+    </head>
+    <body ng-controller="controller">
+		
+		<h1 perf-header>
+			Performance Comparison of some popular frameworks
+		</h1>
+
+		<section id="react"></section>
+
+		<section>
+			<header>
+				<h2>
+					Angular
+				</h2>
+				<button id="run-angular" ng-click="run()">Run</button>
+			</header>
+			<ul>
+				<li ng-repeat="item in data track by $index" ng-class="{ selected: item.id === $parent.selected }" ng-click="select(item)">
+					<span>
+						{{item.label}}
+					</span>
+				</li>
+			</ul>
+		</section>
+
+		<section id="knockout">
+			<header>
+				<h2 class="col-md-7">
+					Knockout
+				</h2>
+				<button id="run-knockout" data-bind="click: run">Run</button>
+			</header>
+			<ul data-bind="foreach: data">
+				<li data-bind="click: $root.select.bind($root, $data), css: { selected: $data.id === $root.selected() }">
+					<span data-bind="text: $data.label"></span>
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<header>
+				<h2>
+					Raw
+				</h2>
+				<button id="run-raw">Run</button>
+			</header>
+			<ul id="raw"></ul>
+		</section>
+		
+		<section mol_view_root="$mol_perf"></section>
+
+        <script type="text/html" id="raw-template">
+            <li>
+				<span class="{{className}}">{{label}}</span>
+            </li>
+        </script>
+    </body>
+</html>

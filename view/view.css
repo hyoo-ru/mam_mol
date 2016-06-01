@@ -1,0 +1,47 @@
+[mol_view_error] {
+	background-image: repeating-linear-gradient(
+		45deg,
+		rgba(255,220,220,1),
+		rgba(255,220,220,1) 11px,
+		rgba(255,255,220,1) 10px,
+		rgba(255,255,220,1) 20px
+	) !important;
+	background-size: 28px 28px !important;
+}
+[mol_view_error]:after {
+	content: attr( mol_view_error );
+	border: 1px solid red;
+	background: pink;
+	display: inline-table;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	padding: .25em .5em;
+	transform: translate( -50% , -50% );
+}
+
+@keyframes mol_view_error_move {
+  0% {
+	background-position: 0 0;
+  }
+  100% {
+	background-position: 28px 0;
+  }
+}
+
+[mol_view_error="Wait..."] {
+	background-image: repeating-linear-gradient(
+		45deg,
+		rgba(0,0,255,.05),
+		rgba(0,0,255,.05) 11px,
+		rgba(255,255,255,.02) 10px,
+		rgba(255,255,255,.02) 20px
+	) !important;
+	background-size: 28px 28px !important;
+	animation: mol_view_show 1s linear , mol_view_error_move .25s linear infinite !important;
+	pointer-events: none;
+}
+[mol_view_error="Wait..."]:after {
+	border: 1px solid steelblue;
+	background: lightsteelblue;
+}
