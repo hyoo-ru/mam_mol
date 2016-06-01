@@ -25,7 +25,7 @@ function $mol_view_tree2ts( tree ) {
 						return JSON.stringify( value.value )
 					case '-' :
 						return null
-					case '#' :
+					case '/' :
 						var items = []
 						value.childs.forEach( function( item ) {
 							var val = getValue( item )
@@ -37,7 +37,7 @@ function $mol_view_tree2ts( tree ) {
 						var overs = []
 						value.childs.forEach( function( over ) {
 							if( /^(-|$)/.test( over.type ) ) return ''
-							overs.push( '\t\t_.' + over.type + ' = () => ' + getValue( over.childs[0] ) + '\n' )
+							overs.push( '\t\t_.' + over.type + ' = ( ...diff : any[] ) => ' + getValue( over.childs[0] ) + '\n' )
 						} )
 						return 'new ' + value.type + '().setup( _ => { \n' + overs.join( '' ) + '\t} )'
 					case '*' :

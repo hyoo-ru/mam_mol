@@ -1,10 +1,10 @@
-$mol_perf $mol_view childs #
-	< header $mol_view childs # < head #
-		< titler $mol_view childs # =$mol
+$mol_perf $mol_view childs /
+	< header $mol_view childs / < head /
+		< titler $mol_view childs / =$mol
 		< runner $mol_perf_runner
-			childs # < runnerLabel =Run
+			childs / < runnerLabel =Run
 			clicks > runs : null
-	< rower $mol_view childs # < rows #
+	< rower $mol_view childs / < rows /
 
 $mol_perf_runner $mol_view
 	tagName =button
@@ -13,4 +13,4 @@ $mol_perf_runner $mol_view
 $mol_perf_row $mol_view
 	attr * mol_perf_row_selected < selected : false
 	event * click > toggles : null
-	childs # < bar $mol_view childs # < label =
+	childs / < bar $mol_view childs / < label =

@@ -50,7 +50,6 @@ class $mol_atom< Value > extends $mol_object {
 		var value : Value|Error = this.host[ this.field ]
 		if( value === void 0 ) {
 			var value = this.pull()
-			if( value === void 0 ) throw new $mol_atom_wait
 		}
 		
 		if( value instanceof Error ) throw value

@@ -1,0 +1,49 @@
+[mol_button] {
+	user-select: none;
+	outline: 1px solid #ccc;
+	flex: 1 1 auto;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	vertical-align: middle;
+	text-align: center;
+	padding: .5rem;
+	display: flex;
+	text-decoration: inherit;
+	color: inherit;
+	cursor: default;
+}
+
+[mol_button_enabled="false"] {
+	filter: grayscale( 100% );
+	color: gray;
+}
+
+[mol_button_enabled="true"]:hover {
+	outline-color: #aaa;
+	position: relative;
+	z-index: 1;
+	cursor: pointer;
+}
+
+[mol_button_major][mol_button_enabled="true"] {
+	background: rgba( 0 , 255 , 0 , .2 );
+}
+[mol_button_major][mol_button_enabled="true"]:hover {
+	background: rgba( 0 , 255 , 0 , .3 );
+}
+
+[mol_button_warn][mol_button_enabled="true"] {
+	background: rgba( 255 , 0 , 0 , .2 );
+}
+[mol_button_warn][mol_button_enabled="true"]:hover {
+	background: rgba( 255 , 0 , 0 , .3 );
+}
+
+[mol_button_minor][mol_button_enabled="true"] {
+	background: rgba( 255 , 255 , 255 , .2 );
+}
+[mol_button_minor][mol_button_enabled="true"]:hover {
+	background: rgba( 255 , 255 , 255 , .2 );
+}
+

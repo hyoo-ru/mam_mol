@@ -1,0 +1,12 @@
+[mol_toolbar] {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	align-content: center;
+	justify-content: space-between;
+	padding: .5rem;
+}
+
+[mol_toolbar] > * {
+	margin: .5rem;
+}

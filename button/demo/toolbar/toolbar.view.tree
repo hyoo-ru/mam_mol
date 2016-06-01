@@ -1,0 +1,22 @@
+$mol_button_demo_toolbar $mol_toolbar tools /
+	< major $mol_button_major
+		childs / =Click me!
+		clicks > events : null
+	< majorDisabled $mol_button_major
+		childs / =Click me!
+		enabled : false
+		clicks > events : null
+	< minor $mol_button_minor
+		childs / =Or click me..
+		clicks > events : null
+	< minorDisabled $mol_button_minor
+		childs / =Or click me..
+		enabled : false
+		clicks > events : null
+	< warn $mol_button_warn
+		childs / =Be attentive!
+		clicks > events : null
+	< warnDisabled $mol_button_warn
+		childs / =Be attentive!
+		enabled : false
+		clicks > events : null
