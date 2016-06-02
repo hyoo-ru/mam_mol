@@ -2,14 +2,14 @@
 	display: flex;
 	flex-wrap: wrap;
 	background: steelblue;
-	padding: 1rem;
+	padding: 2vmin;
 }
 
 [mol_demo_all_item] {
 	flex: 0 1 600px;
 	height: 400px;
 	box-shadow: 0 0 1rem rgba( 0 , 0 , 0 , .5 );
-	margin: 1rem;
+	margin: 2vmin;
 	background: white;
 	overflow: auto;
 	position: relative;

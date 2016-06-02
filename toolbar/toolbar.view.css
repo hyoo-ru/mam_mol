@@ -4,9 +4,9 @@
 	align-items: center;
 	align-content: center;
 	justify-content: space-between;
-	padding: .5rem;
+	padding: 1vmin;
 }
 
-[mol_toolbar] > * {
-	margin: .5rem;
+[mol_toolbar_item] {
+	margin: 1vmin;
 }
