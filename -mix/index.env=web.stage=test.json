@@ -1,0 +1,238 @@
+[
+	{
+		"mol": {
+			":priority": 0,
+			"mol": {
+				":priority": 0,
+				"mol/test": {
+					":priority": 0,
+					"": [
+						"mol/test/test.ts",
+						"mol/test/test.env=web.stage=test.ts"
+					]
+				},
+				"": [
+					"mol/mol.ts",
+					"mol/mol.stage=test.ts",
+					"mol/index.html",
+					"mol/index2.html",
+					"mol/readme.md"
+				]
+			},
+			"": []
+		}
+	},
+	{
+		"mol/atom": {
+			":priority": 0,
+			"mol/object": {
+				":priority": 0,
+				"mol/log": {
+					":priority": 2,
+					"jin2/log": {
+						":priority": 0,
+						"jin2": {
+							"jin/dumb": {
+								":priority": 0,
+								"jin": {
+									"": [
+										"jin/jin.jam.js",
+										"jin/demo.html",
+										"jin/README.md",
+										"jin/package.json",
+										"jin/git-init.cmd"
+									]
+								},
+								"": [
+									"jin/dumb/dumb.ts"
+								]
+							},
+							"": [
+								"jin2/jin2.meta.tree"
+							]
+						},
+						"": [
+							"jin2/log/log.env=web.ts"
+						]
+					},
+					"": [
+						"mol/log/log.ts"
+					]
+				},
+				"": [
+					"mol/object/object.ts",
+					"mol/object/object.stage=test.ts"
+				]
+			},
+			"mol/state/stack": {
+				":priority": 0,
+				"": [
+					"mol/state/stack/stack.ts"
+				]
+			},
+			"": [
+				"mol/atom/atom.ts",
+				"mol/atom/atom.env=web.ts"
+			]
+		}
+	},
+	{
+		"mol/button": {
+			":priority": 0,
+			"mol/view": {
+				":priority": 0,
+				"mol/model": {
+					":priority": 0,
+					"mol/state/session": {
+						":priority": 2,
+						"mol/prop": {
+							":priority": 1,
+							"": [
+								"mol/prop/prop.ts",
+								"mol/prop/prop.stage=test.ts"
+							]
+						},
+						"mol/state/local": {
+							":priority": 2,
+							"": [
+								"mol/state/local/local.ts",
+								"mol/state/local/local.stage=test.ts"
+							]
+						},
+						"": [
+							"mol/state/session/session.ts"
+						]
+					},
+					"mol/state/arg": {
+						":priority": 2,
+						"": [
+							"mol/state/arg/arg.env=web.ts"
+						]
+					},
+					"": [
+						"mol/model/model.ts"
+					]
+				},
+				"": [
+					"mol/view/view.css",
+					"mol/view/view.env=web.ts",
+					"mol/view/view.stage=test.ts"
+				]
+			},
+			"": [
+				"mol/button/button.css",
+				"mol/button/button.view.tree",
+				"mol/button/button.view.ts",
+				"mol/button/button_types.view.tree"
+			]
+		}
+	},
+	{
+		"mol/button/demo/flow": {
+			":priority": 0,
+			"": [
+				"mol/button/demo/flow/flow.view.tree",
+				"mol/button/demo/flow/flow.view.ts"
+			]
+		}
+	},
+	{
+		"mol/button/demo/toolbar": {
+			":priority": 0,
+			"mol/toolbar": {
+				":priority": 0,
+				"mol/gallery": {
+					":priority": 0,
+					"": [
+						"mol/gallery/gallery.view.css",
+						"mol/gallery/gallery.view.tree",
+						"mol/gallery/gallery.view.ts"
+					]
+				},
+				"": [
+					"mol/toolbar/toolbar.view.css",
+					"mol/toolbar/toolbar.view.tree"
+				]
+			},
+			"": [
+				"mol/button/demo/toolbar/toolbar.view.tree",
+				"mol/button/demo/toolbar/toolbar.view.ts"
+			]
+		}
+	},
+	{
+		"mol/demo/all": {
+			":priority": 0,
+			"": [
+				"mol/demo/all/all.view.css",
+				"mol/demo/all/all.view.tree",
+				"mol/demo/all/all.view.ts"
+			]
+		}
+	},
+	{
+		"mol/demo/form": {
+			":priority": 0,
+			"mol/form": {
+				":priority": 0,
+				"": [
+					"mol/form/form.css",
+					"mol/form/form.view.tree",
+					"mol/form/form.view.ts"
+				]
+			},
+			"mol/form/field": {
+				":priority": 0,
+				"": [
+					"mol/form/field/field.view.css",
+					"mol/form/field/field.view.tree"
+				]
+			},
+			"mol/stringer": {
+				":priority": 0,
+				"": [
+					"mol/stringer/stringer.css",
+					"mol/stringer/stringer.view.tree",
+					"mol/stringer/stringer.view.ts"
+				]
+			},
+			"": [
+				"mol/demo/form/form.view.tree",
+				"mol/demo/form/form.view.ts"
+			]
+		}
+	},
+	{
+		"mol/perf": {
+			":priority": 0,
+			"": [
+				"mol/perf/perf.view.tree",
+				"mol/perf/perf.view.ts",
+				"mol/perf/index.html"
+			]
+		}
+	},
+	{
+		"mol/tree": {
+			":priority": 0,
+			"jin/type": {
+				":priority": 2,
+				"": [
+					"jin/type/type.ts"
+				]
+			},
+			"": [
+				"mol/tree/tree.ts",
+				"mol/tree/tree.stage=test.ts"
+			]
+		}
+	},
+	{
+		"mol/view/tree2ts": {
+			":priority": 0,
+			"": [
+				"mol/view/tree2ts/tree2ts.ts"
+			]
+		}
+	}
+]
