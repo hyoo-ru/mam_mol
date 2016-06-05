@@ -43,7 +43,6 @@ class $mol_object {
 	}
 	
 	log( ...values : any[] ) {
-		if( !$mol_log.enabled ) return
 		$mol_log( this.objectPath() , ...values )
 	}
 	
