@@ -4,6 +4,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 # Concepts
 
+* Zero configuration. Just checkout and use it. 
 * Full [reactive programming](https://en.wikipedia.org/wiki/Reactive_programming) in all application layers. Not only between View and ViewModel.
 * Automatic dependency tracking between reactive containers. No need to manual (un)subscribe and streams routing.
 * Cycle dependency detection.
