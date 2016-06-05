@@ -47,6 +47,8 @@ function $mol_prop< Host extends { objectPath() : string } , Key , Value >( conf
 				return info.value( ...diff )
 			}
 		}
+		
+		descr.value['value'] = value
 	}
 	
 }
