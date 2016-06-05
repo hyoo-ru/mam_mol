@@ -22,6 +22,11 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 # $mol modules
 
+## [Demo applications](demo)
+
+* [$mol_demo_all](demo/all) - demonstrates all components
+* [$mol_demo_form](demo/form) - typical form
+
 ## Benchmarks
 
 * [$mol_perf](perf) - simple benchmark of rendering
@@ -55,8 +60,3 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 ## Data formats
 
 * [$mol_tree](tree) - tree format
-
-## [Demo applications](demo)
-
-* [$mol_demo_all](demo/all) - demonstrates all components
-* [$mol_demo_form](demo/form) - typical form
