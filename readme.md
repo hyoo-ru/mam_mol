@@ -24,7 +24,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 ## [Demo applications](demo)
 
-* [$mol_demo_all](demo/all) - demonstrates all components
+* [$mol_demo_all](demo/all) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_demo_form](demo/form) - typical form
 
 ## Benchmarks
