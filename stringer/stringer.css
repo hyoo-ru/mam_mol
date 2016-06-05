@@ -1,0 +1,33 @@
+[mol_stringer] {
+	display: flex;
+	vertical-align: middle;
+	border: none;
+	outline: 1px solid #ccc;
+	white-space: nowrap;
+	overflow: hidden;
+	padding: .5rem;
+	text-align: left;
+	position: relative;
+	z-index: 0;
+	background: rgba( 255 , 255 , 255 , .2 );
+	margin: 0 1px 1px 0;
+	font: inherit;
+	align-self: auto;
+	flex: 1 1 10rem;
+}
+
+[mol_stringer]:hover ,
+[mol_stringer]:focus {
+	outline-color: #aaa;
+	outline-offset: 0;
+	background: white;
+	z-index: 1;
+}
+
+[mol_stringer]:empty:before {
+	content: attr( mol_stringer_hint );
+	display: inline;
+	color: rgba( 0 , 0 , 0 , .25 );
+	position: relative;
+	z-index: -1;
+}

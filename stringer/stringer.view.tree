@@ -1,0 +1,7 @@
+$mol_stringer $mol_view
+	attr * mol_stringer_hint < hint =
+	field *
+		tabIndex =0
+		contentEditable < editable =true
+		textContent < value =
+	event * input > changes : null
