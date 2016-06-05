@@ -26,21 +26,21 @@
 	cursor: pointer;
 }
 
-[mol_button_major][mol_button_enabled="true"] {
+[mol_button_major] {
 	background: rgba( 0 , 255 , 0 , .2 );
 }
 [mol_button_major][mol_button_enabled="true"]:hover {
 	background: rgba( 0 , 255 , 0 , .3 );
 }
 
-[mol_button_warn][mol_button_enabled="true"] {
+[mol_button_warn] {
 	background: rgba( 255 , 0 , 0 , .2 );
 }
 [mol_button_warn][mol_button_enabled="true"]:hover {
 	background: rgba( 255 , 0 , 0 , .3 );
 }
 
-[mol_button_minor][mol_button_enabled="true"] {
+[mol_button_minor] {
 	background: rgba( 255 , 255 , 255 , .2 );
 }
 [mol_button_minor][mol_button_enabled="true"]:hover {

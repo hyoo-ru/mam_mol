@@ -28,9 +28,16 @@ module $.$mol {
 			var items = this.groupItems( path )
 			if( items.length <= 2 ) return items.map( ( _ , index )=> this.item( path.concat( index ) ) )
 			return [
-				this.group( path.concat( 0 ) ) ,
-				this.group( path.concat( 1 ) ) ,
+				this.child( path.concat( 0 ) ) ,
+				this.child( path.concat( 1 ) ) ,
 			]
+		}
+		
+		@ $mol_prop()
+		child( path : number[] ) {
+			return ( this.groupItems( path ).length > 1 )
+				? this.group( path )
+				: this.item( path )
 		}
 		
 		@ $mol_prop()

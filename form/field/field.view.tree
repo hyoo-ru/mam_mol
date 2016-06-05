@@ -1,0 +1,4 @@
+$mol_form_field $mol_view childs /
+	< namer $mol_view childs / < name =
+	< control : null
+	< errorView $mol_view childs < errors /

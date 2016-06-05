@@ -1,5 +1,25 @@
-$mol_demo_form $mol_view childs / < fields /
-	- < fieldName $mol_stringer
-	< submit $mol_button_major childs / =Submit
-
-		
+$mol_demo_form $mol_form
+	formFields /
+		< nameFirstField $mol_form_field
+			name =First Name
+			errors < nameFirstErrors /
+			control < nameFirstControl $mol_stringer
+				hint =Jack
+				value > nameFirst =
+		< nameNickField $mol_form_field
+			name =Nick Name
+			errors < nameNickErrors /
+			control < nameNickControl $mol_stringer
+				hint =Capitan
+				value > nameNick =
+		< nameSecondField $mol_form_field
+			name =Second Name
+			errors < nameSecondErrors /
+			control < nameSecondControl $mol_stringer
+				hint =Sparrow
+				value > nameSecond =
+	buttons /
+		< submit $mol_button_major
+			childs / < submitText =Submit
+			clicks > submits : null
+			enabled < submitAllow

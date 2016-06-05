@@ -1,0 +1,7 @@
+[mol_form_barFields] {
+	padding: 0 1vmin;
+}
+
+[mol_form_barFields] > * {
+	margin: 1vmin;
+}

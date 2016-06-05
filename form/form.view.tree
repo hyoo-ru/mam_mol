@@ -1,0 +1,5 @@
+$mol_form $mol_view
+	submitAllow : false
+	childs /
+		< barFields $mol_view childs < formFields /
+		< barButtons $mol_toolbar items < buttons /
