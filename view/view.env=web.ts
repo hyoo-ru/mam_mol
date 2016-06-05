@@ -14,7 +14,7 @@ class $mol_view extends $mol_model {
 	
 	/// Child views
 	childs() {
-		return <Array<$mol_view|Element|string|number|boolean>>[]
+		return <Array<$mol_view|Element|string|number|boolean>> null
 	}
 	
 	childsInner() { return this.childs() }
