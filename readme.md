@@ -4,20 +4,20 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 # Concepts
 
-* Full reactive programming in all application layers. Not only between View and ViewModel.
+* Full [reactive programming](https://en.wikipedia.org/wiki/Reactive_programming) in all application layers. Not only between View and ViewModel.
 * Automatic dependency tracking between reactive containers. No need to manual (un)subscribe and streams routing.
 * Cycle dependency detection.
 * Effective state synchronization in right way. 
 * Automatic modules import at compile time. No need to import them. Just use it.
 * Very small modules. All of them are optional.
 * Cross platform. Support any environment (NodeJS, WEB).
-* Static typing (TypeScript). Full IDE support.
+* Static typing ([TypeScript](https://www.typescriptlang.org/)). Full IDE support.
 * Full customization. No realization hiding. All aspects are overridable.
 * Lifecycle management. Automatic destroy of components.
-* Easy debugging. No exception catching. User readable id's of all objects. Quick access to objects by console.
+* Easy debugging. No exception catching. User readable id's of all objects. Quick access to objects from console.
 * Easy user friendly logging of all state changes.
 * Pseudosynchronous code. Asynchrony abstracted by reactivity. No callback/promises/streams hell. No async/awiat virus.
-* Automatic BEM-attributes generation for elements.
+* Automatic [BEM](https://en.bem.info/methodology/key-concepts/)-attributes generation for elements.
 * Hot code change. Transparently to user.
 
 # $mol modules
@@ -59,4 +59,4 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 ## Data formats
 
-* [$mol_tree](tree) - tree format
+* [$mol_tree](tree) - [tree format](https://github.com/nin-jin/tree.d)
