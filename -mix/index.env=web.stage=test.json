@@ -15,7 +15,6 @@
 					"mol/mol.ts",
 					"mol/mol.stage=test.ts",
 					"mol/index.html",
-					"mol/index2.html",
 					"mol/readme.md"
 				]
 			},
@@ -61,7 +60,8 @@
 				},
 				"": [
 					"mol/object/object.ts",
-					"mol/object/object.stage=test.ts"
+					"mol/object/object.stage=test.ts",
+					"mol/object/readme.md"
 				]
 			},
 			"mol/state/stack": {
@@ -124,15 +124,6 @@
 				"mol/button/button.view.tree",
 				"mol/button/button.view.ts",
 				"mol/button/button_types.view.tree"
-			]
-		}
-	},
-	{
-		"mol/button/demo/flow": {
-			":priority": 0,
-			"": [
-				"mol/button/demo/flow/flow.view.tree",
-				"mol/button/demo/flow/flow.view.ts"
 			]
 		}
 	},
