@@ -4,27 +4,28 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 # Concepts
 
+* Zero configuration. Just checkout and use it. 
 * Full [reactive programming](https://en.wikipedia.org/wiki/Reactive_programming) in all application layers. Not only between View and ViewModel.
 * Automatic dependency tracking between reactive containers. No need to manual (un)subscribe and streams routing.
 * Cycle dependency detection.
 * Effective state synchronization in right way. 
-* Automatic modules import at compile time. No need to import them. Just use it.
+* Automatic include modules in package at compile time. No need to manual import them. Just use it.
 * Very small modules. All of them are optional.
 * Cross platform. Support any environment (NodeJS, WEB).
 * Static typing ([TypeScript](https://www.typescriptlang.org/)). Full IDE support.
 * Full customization. No realization hiding. All aspects are overridable.
 * Lifecycle management. Automatic destroy of components.
-* Easy debugging. No exception catching. User readable id's of all objects. Quick access to objects from console.
+* Easy debugging. No exception catching. User readable id's of all objects. Quick access to all objects from console.
 * Easy user friendly logging of all state changes.
-* Pseudosynchronous code. Asynchrony abstracted by reactivity. No callback/promises/streams hell. No async/awiat virus.
-* Automatic [BEM](https://en.bem.info/methodology/key-concepts/)-attributes generation for elements.
+* Pseudosynchronous code. Asynchrony is abstracted by reactivity. No callbacks/promises/streams hell. No async/awiat/yield virus.
+* Automatic [BEM](https://en.bem.info/methodology/naming-convention/)-attributes generation for elements.
 * Hot code change. Transparently to user.
 
 # $mol modules
 
 ## [Demo applications](demo)
 
-* [$mol_demo_all](demo/all) - demonstrates all components
+* [$mol_demo_all](demo/all) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_demo_form](demo/form) - typical form
 
 ## Benchmarks
