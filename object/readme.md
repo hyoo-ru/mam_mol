@@ -15,13 +15,16 @@ class $my_app extends $mol_view {
 
 Этот идентификатор используется повсеместно и в частности, автоматически выводится при [логгировании](../log):
 
+```
 10:16:43 $my_app.root(0).lister() pull
 10:16:43 $my_app.root(0).lister() push [$my_lister, undefined]
 10:16:44 $my_app.root(0).lister().DOMTree() pull
 10:16:44 $my_app.root(0).lister().DOMTree() push [div, undefined]
+```
 
 Для вывода своих сообщений в лог рекомендуется использовать метод log:
 
+```ts
 class $my_app extends $mol_view {
 
 	constructor() {
@@ -29,3 +32,4 @@ class $my_app extends $mol_view {
 	}
 
 }
+```
