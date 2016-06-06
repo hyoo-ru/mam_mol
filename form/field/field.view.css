@@ -3,8 +3,20 @@
 	flex-wrap: wrap;
 }
 
-[mol_form_field_namer] {
+[mol_form_field_label] {
 	font-size: .8rem;
-	padding: .25rem .5rem;
 	flex: 1 1 100%;
+	display: flex;
+}
+
+[mol_form_field_label] > * {
+	padding: .25rem .5rem;
+}
+
+[mol_form_field_namer]:after {
+	content: ':';
+}
+
+[mol_form_field_errorer] {
+	color: var( --mol_view_colorWarn );
 }

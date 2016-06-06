@@ -1,6 +1,7 @@
 [mol_button] {
 	user-select: none;
-	outline: 1px solid #ccc;
+	border: 1px solid var( --mol_view_colorLine );
+	border-radius: var( --mol_view_round );
 	flex: 1 1 auto;
 	justify-content: center;
 	align-content: center;
@@ -12,38 +13,33 @@
 	text-decoration: inherit;
 	color: inherit;
 	cursor: default;
+	opacity: .9;
+	font-weight: bolder;
 }
 
 [mol_button_enabled="false"] {
-	filter: grayscale( 100% );
+	background: #eee;
 	color: gray;
 }
 
-[mol_button_enabled="true"]:hover {
-	outline-color: #aaa;
+[mol_button_enabled="true"]:hover ,
+[mol_button]:focus {
+	outline: none;
+	border-color: var( --mol_view_colorBase );
 	position: relative;
 	z-index: 1;
 	cursor: pointer;
+	opacity: 1;
 }
 
-[mol_button_major] {
-	background: rgba( 0 , 255 , 0 , .2 );
-}
-[mol_button_major][mol_button_enabled="true"]:hover {
-	background: rgba( 0 , 255 , 0 , .3 );
+[mol_button_major][mol_button_enabled="true"] {
+	background: var( --mol_view_colorAccent );
 }
 
-[mol_button_warn] {
-	background: rgba( 255 , 0 , 0 , .2 );
-}
-[mol_button_warn][mol_button_enabled="true"]:hover {
-	background: rgba( 255 , 0 , 0 , .3 );
+[mol_button_warn][mol_button_enabled="true"] {
+	background: var( --mol_view_colorWarn );
 }
 
-[mol_button_minor] {
-	background: rgba( 255 , 255 , 255 , .2 );
-}
-[mol_button_minor][mol_button_enabled="true"]:hover {
-	background: rgba( 255 , 255 , 255 , .2 );
+[mol_button_minor][mol_button_enabled="true"] {
 }
 

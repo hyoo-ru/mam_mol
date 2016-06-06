@@ -1,8 +1,9 @@
 [mol_demo_all] {
 	display: flex;
 	flex-wrap: wrap;
-	background: steelblue;
+	background: var( --mol_view_colorBack );
 	padding: 2vmin;
+	height: 100%;
 }
 
 [mol_demo_all_item] {
@@ -10,7 +11,8 @@
 	height: 400px;
 	box-shadow: 0 0 1rem rgba( 0 , 0 , 0 , .5 );
 	margin: 2vmin;
-	background: white;
+	background: var( --mol_view_colorLight );
+	border-radius: var( --mol_view_round );
 	overflow: auto;
 	position: relative;
 }
