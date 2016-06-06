@@ -15,17 +15,20 @@ module $.$mol {
 			return this.local( `nameNick()` , ...diff ) || ''
 		}
 		
-		nameNickErrors() {
-			return this.nameNick() ? [] : [ 'Input required' ]
-		}
-		
 		@ $mol_prop()
 		nameSecond( ...diff : string[] ) {
 			return this.local( `nameSecond()` , ...diff ) || ''
 		}
 		
 		nameSecondErrors() {
-			return this.nameSecond() ? [] : [ 'Input required' ]
+			var value = this.nameSecond()
+			
+			if( value.length === 0 ) return [ 'Input required' ]
+			
+			var errors = []
+			if( value.length < 3 ) errors.push( 'More then 2 letter required' )
+			if( value.indexOf( ' ' ) !== -1 ) errors.push( 'Spaces are forbidden' )
+			return errors
 		}
 		
 		@ $mol_prop()
