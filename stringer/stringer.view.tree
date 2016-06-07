@@ -3,5 +3,5 @@ $mol_stringer $mol_view
 	field *
 		tabIndex =0
 		contentEditable < editable =true
-		textContent < value =
+		textContent < valueChanged < value =
 	event * input > changes : null

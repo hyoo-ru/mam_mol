@@ -65,6 +65,8 @@ class $mol_view extends $mol_model {
 			next.addEventListener( name , event => {
 				this.event( name , event )
 				$mol_atom_sync()
+				$mol_view_selection.position( null )
+				$mol_view_selection.position( $mol_view_selection.position() )
 			} )
 		} )
 		
@@ -168,6 +170,10 @@ class $mol_view extends $mol_model {
 	
 	field_keys() { return [] }
 	field( path : string ) { return null }
+	
+	focused() {
+		return $mol_view_selection.focused() === this.DOMNode()
+	}
 	
 }
 

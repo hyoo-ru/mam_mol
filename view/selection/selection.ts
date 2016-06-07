@@ -1,0 +1,96 @@
+class $mol_view_selection extends $mol_object {
+	
+	@ $mol_prop()
+	static focused( ...diff : Element[] ) {
+		return diff[0] || null
+	}
+	
+	@ $mol_prop()
+	static position( ...diff : any[] ) {
+		if( diff.length ) {
+			if( !diff[0] ) return diff[0]
+			
+			var start = diff[0].start
+			var end = diff[0].end
+			if(!( start <= end )) throw new Error( `Wrong offsets (${start},${end})` )
+			
+			var root = document.getElementById( diff[0].id )
+			root.focus()
+			
+			var range = new Range 
+			
+			var cur = root.firstChild
+			while( cur !== root ) {
+				while( cur.firstChild ) cur = cur.firstChild
+				if( cur.nodeValue ) {
+					var length = cur.nodeValue.length
+					if( length >= start )  break
+					start -= length
+				}
+				while( !cur.nextSibling ) {
+					cur = cur.parentNode
+					if( cur === root ) {
+						start = root.childNodes.length
+						break
+					}
+				}
+			}
+			range.setStart( cur , start )
+			
+			var cur = root.firstChild
+			while( cur !== root ) {
+				while( cur.firstChild ) cur = cur.firstChild
+				if( cur.nodeValue ) {
+					var length = cur.nodeValue.length
+					if( length >= end )  break
+					end -= length
+				}
+				while( !cur.nextSibling ) {
+					cur = cur.parentNode
+					if( cur === root ) {
+						end = root.childNodes.length
+						break
+					}
+				}
+			}
+			range.setEnd( cur , end )
+			
+			var sel = document.getSelection()
+			sel.removeAllRanges()
+			sel.addRange( range )
+			
+			return diff[0]
+		} else {
+			var sel = document.getSelection()
+			if( sel.rangeCount === 0 ) return null
+			var range = sel.getRangeAt( 0 )
+			
+			var el = <Element> range.commonAncestorContainer
+			while( !el.id ) el = el.parentElement
+			
+			var meter = new Range
+			meter.selectNodeContents( el )
+			
+			meter.setEnd( range.startContainer , range.startOffset )
+			var startOffset = meter.toString().length
+			
+			meter.setEnd( range.endContainer , range.endOffset )
+			var endOffset = meter.toString().length
+			
+			return { id : el.id , start : startOffset , end : endOffset }
+		}
+	} 
+	
+}
+
+document.addEventListener( 'selectionchange' , event => {
+	$mol_view_selection.position( void 0 )
+} )
+
+document.addEventListener( 'focusin' , event => {
+	$mol_view_selection.focused( event.srcElement )
+} )
+
+document.addEventListener( 'focusout' , event => {
+	$mol_view_selection.focused( null )
+} )
