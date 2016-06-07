@@ -49,7 +49,7 @@ class $mol_atom< Value > extends $mol_object {
 		
 		var value : Value|Error = this.host[ this.field ]
 		if( value === void 0 ) {
-			var value = this.pull()
+			value = this.pull()
 		}
 		
 		if( value instanceof Error ) throw value
@@ -70,6 +70,7 @@ class $mol_atom< Value > extends $mol_object {
 		var index = $mol_atom.stack.length
 		$mol_atom.stack.push( this )
 		var next = this.handler()
+		if( next === void 0 ) next = this.host[ this.field ]
 		$mol_atom.stack.length = index
 		
 		if( oldMasters ) oldMasters.forEach( master => {
