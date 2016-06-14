@@ -77,9 +77,9 @@
 		}
 	},
 	{
-		"mol/button": {
+		"mol/clicker": {
 			":priority": 0,
-			"mol/view": {
+			"mol/viewer": {
 				":priority": 0,
 				"mol/model": {
 					":priority": 0,
@@ -113,47 +113,53 @@
 						"mol/model/model.ts"
 					]
 				},
+				"mol/viewer/selection": {
+					":priority": 4,
+					"": [
+						"mol/viewer/selection/selection.ts"
+					]
+				},
 				"": [
-					"mol/view/view.css",
-					"mol/view/view.env=web.ts",
-					"mol/view/view.stage=test.ts"
+					"mol/viewer/viewer.css",
+					"mol/viewer/viewer.env=web.ts",
+					"mol/viewer/viewer.stage=test.ts"
 				]
 			},
 			"": [
-				"mol/button/button.css",
-				"mol/button/button.view.tree",
-				"mol/button/button.view.ts",
-				"mol/button/button_types.view.tree"
+				"mol/clicker/clicker.css",
+				"mol/clicker/clicker.view.tree",
+				"mol/clicker/clicker.view.ts",
+				"mol/clicker/clicker_types.view.tree"
 			]
 		}
 	},
 	{
-		"mol/button/demo/toolbar": {
+		"mol/clicker/demo/toolbar": {
 			":priority": 0,
-			"mol/toolbar": {
+			"mol/rower": {
 				":priority": 0,
-				"mol/gallery": {
-					":priority": 0,
-					"": [
-						"mol/gallery/gallery.view.css",
-						"mol/gallery/gallery.view.tree",
-						"mol/gallery/gallery.view.ts"
-					]
-				},
 				"": [
-					"mol/toolbar/toolbar.view.css",
-					"mol/toolbar/toolbar.view.tree"
+					"mol/rower/rower.view.css",
+					"mol/rower/rower.view.tree"
 				]
 			},
 			"": [
-				"mol/button/demo/toolbar/toolbar.view.tree",
-				"mol/button/demo/toolbar/toolbar.view.ts"
+				"mol/clicker/demo/toolbar/toolbar.view.tree",
+				"mol/clicker/demo/toolbar/toolbar.view.ts"
 			]
 		}
 	},
 	{
 		"mol/demo/all": {
 			":priority": 0,
+			"mol/scroller": {
+				":priority": 0,
+				"": [
+					"mol/scroller/scroller.view.css",
+					"mol/scroller/scroller.view.tree",
+					"mol/scroller/scroller.view.ts"
+				]
+			},
 			"": [
 				"mol/demo/all/all.view.css",
 				"mol/demo/all/all.view.tree",
@@ -194,12 +200,31 @@
 		}
 	},
 	{
-		"mol/perf": {
+		"mol/perf/render": {
 			":priority": 0,
 			"": [
-				"mol/perf/perf.view.tree",
-				"mol/perf/perf.view.ts",
-				"mol/perf/index.html"
+				"mol/perf/render/index.html",
+				"mol/perf/render/render.view.tree",
+				"mol/perf/render/render.view.ts"
+			]
+		}
+	},
+	{
+		"mol/rower/demo": {
+			":priority": 0,
+			"": [
+				"mol/rower/demo/demo.view.tree",
+				"mol/rower/demo/demo.view.ts"
+			]
+		}
+	},
+	{
+		"mol/tiler": {
+			":priority": 0,
+			"": [
+				"mol/tiler/tiler.view.css",
+				"mol/tiler/tiler.view.tree",
+				"mol/tiler/tiler.view.ts"
 			]
 		}
 	},
@@ -219,10 +244,10 @@
 		}
 	},
 	{
-		"mol/view/tree2ts": {
+		"mol/viewer/tree2ts": {
 			":priority": 0,
 			"": [
-				"mol/view/tree2ts/tree2ts.ts"
+				"mol/viewer/tree2ts/tree2ts.ts"
 			]
 		}
 	}
