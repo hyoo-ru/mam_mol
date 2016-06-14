@@ -1,4 +1,5 @@
 $mol_rower_demo $mol_rower tools /
+	< publisher $mol_checker childs / =Publish
 	< titler $mol_stringer
 		hint =Title
 	< addButton $mol_clicker_major
