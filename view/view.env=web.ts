@@ -14,7 +14,7 @@ class $mol_view extends $mol_model {
 	
 	/// Child views
 	childs() {
-		return <Array<$mol_view|Element|string|number|boolean>> null
+		return <Array<$mol_view|Node|string|number|boolean>> null
 	}
 	
 	childsInner() { return this.childs() }
@@ -58,15 +58,15 @@ class $mol_view extends $mol_model {
 			
 			if( proto2 === $mol_view.prototype ) break
 			proto2 = Object.getPrototypeOf( proto2 )
-		}
+	}
 		
 		/// Bind properties to events
 		this.event_keys().forEach( name => {
 			next.addEventListener( name , event => {
+				$mol_view_selection_save()
 				this.event( name , event )
 				$mol_atom_sync()
-				$mol_view_selection.position( null )
-				$mol_view_selection.position( $mol_view_selection.position() )
+				$mol_view_selection.position( void 0 )
 			} )
 		} )
 		
@@ -105,7 +105,7 @@ class $mol_view extends $mol_model {
 				
 				if( typeof view === 'object' ) {
 					if( view ) {
-						var existsNode = view.DOMNode()
+						var existsNode = view['DOMNode'] ? view.DOMNode() : view
 						while( true ) {
 							if( !nextNode ) {
 								prev.appendChild(existsNode)
@@ -125,7 +125,7 @@ class $mol_view extends $mol_model {
 								}
 							}
 						}
-						view.DOMTree( void 0 )
+						if( view['DOMTree'] ) view.DOMTree( void 0 )
 					}
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
@@ -171,8 +171,9 @@ class $mol_view extends $mol_model {
 	field_keys() { return [] }
 	field( path : string ) { return null }
 	
+	@ $mol_prop()
 	focused() {
-		return $mol_view_selection.focused() === this.DOMNode()
+		return $mol_view_selection.focusedEl() === this.DOMNode()
 	}
 	
 }
@@ -185,4 +186,6 @@ document.addEventListener( 'DOMContentLoaded' , event => {
 		view.DOMNode( nodes[i] )
 		view.DOMTree( void 0 )
 	}
+	$mol_view_selection.focusedEl()
+	$mol_view_selection.position( void 0 )
 } )
