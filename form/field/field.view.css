@@ -7,6 +7,7 @@
 	font-size: .8rem;
 	flex: 1 1 100%;
 	display: flex;
+	justify-content: space-between;
 }
 
 [mol_form_field_label] > * {

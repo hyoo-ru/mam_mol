@@ -1,1 +1,5 @@
 $mol_scroller $mol_view
+	field *
+		scrollTop < scrollTop : 0
+		scrollLeft < scrollLeft : 0
+	event * scroll > scrolls : null

@@ -45,6 +45,10 @@ class $mol_object {
 	log( ...values : any[] ) {
 		$mol_log( this.objectPath() , ...values )
 	}
+
+	static toString() {
+		return this.objectPath()
+	}
 	
 	toString() {
 		return this.objectPath()

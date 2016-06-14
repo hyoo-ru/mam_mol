@@ -1,0 +1,5 @@
+$mol_toolbar_demo $mol_toolbar tools /
+	< titler $mol_stringer
+		hint =Title
+	< addButton $mol_button_major
+		childs / =Add
