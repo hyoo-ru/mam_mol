@@ -63,13 +63,13 @@
 	   -moz-user-select: none;
 	    -ms-user-select: none;
 	        user-select: none;
-	border: 1px solid  ;
-	border: 1px solid #bbb;
+	box-shadow: 0 0 0 1px  ;
+	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .2 );
 	border-radius:  ;
 	border-radius: .25rem;
-	-webkit-box-flex: 1;
-	    -ms-flex: 1 1 auto;
-	        flex: 1 1 auto;
+	-webkit-box-flex: .001;
+	    -ms-flex: .001 1 auto;
+	        flex: .001 1 auto;
 	-webkit-box-pack: center;
 	    -ms-flex-pack: center;
 	        justify-content: center;
@@ -98,8 +98,8 @@
 [mol_clicker_enabled="true"]:hover ,
 [mol_clicker]:focus {
 	outline: none;
-	border-color:  ;
-	border-color: #1E5CA8;
+	box-shadow: 0 0 0 1px  ;
+	box-shadow: 0 0 0 1px #6694CC;
 	position: relative;
 	z-index: 1;
 	cursor: pointer;
@@ -111,9 +111,64 @@
 }
 [mol_clicker_warn][mol_clicker_enabled="true"] {
 	background:  ;
-	background: #FF7474;
+	background: #FF9E9E;
 }
 [mol_clicker_minor][mol_clicker_enabled="true"] {}
+[mol_checker] {
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-ms-flex-line-pack: center;
+	    align-content: center;
+	border: none;
+	box-shadow: none;
+	/*padding: .5rem 0;*/
+	font-weight: normal;
+}
+[mol_checker][mol_clicker_enabled="true"]:hover:before ,
+[mol_checker_checked="true"]:before {
+	background:  ;
+	background: #6694CC;
+	box-shadow: none;
+}
+[mol_checker]:before {
+	content: '';
+	border-radius:  ;
+	border-radius: .25rem;
+	color:  ;
+	color: white;
+	width: 19px;
+	width: 1.2rem;
+	height: 19px;
+	height: 1.2rem;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-line-pack: center;
+	    align-content: center;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	opacity: .75;
+}
+[mol_checker]:not(:empty):before {
+	margin-right: 8px;
+	margin-right: .5rem;
+}
+[mol_checker_checked="false"]:before {
+	background: white;
+	box-shadow: 0 0 0 1px  ;
+	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .2 );
+}
+[mol_checker_checked="true"]:before {
+	content: '✔';
+}
 [mol_rower] {
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -153,10 +208,12 @@
 }
 [mol_demo_all_item] {
 	-webkit-box-flex: 0;
-	    -ms-flex: 0 1 600px;
-	        flex: 0 1 600px;
-	height: 400px;
-	box-shadow: 0 0 .5rem rgba( 0 , 0 , 0 , .5 );
+	    -ms-flex: 0 1 auto;
+	        flex: 0 1 auto;
+	/*height: 400px;*/
+	/*box-shadow: 0 0 .5rem rgba( 0 , 0 , 0 , .5 );*/
+	box-shadow: 0 0 0 1px  ;
+	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .2 );
 	margin: 2vmin;
 	background:  ;
 	background: #F7FAFC;
@@ -167,6 +224,11 @@
 }
 [mol_form_barFields] {
 	padding: 0 1vmin;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	    flex-wrap: wrap;
 }
 [mol_form_barFields] > * {
 	margin: 1vmin;
@@ -177,10 +239,12 @@
 	display: flex;
 	-ms-flex-wrap: wrap;
 	    flex-wrap: wrap;
+	-webkit-box-flex: 1;
+	    -ms-flex: 1 1 100%;
+	        flex: 1 1 100%;
+	width: 8em;
 }
 [mol_form_field_label] {
-	font-size: 12px;
-	font-size: .8rem;
 	-webkit-box-flex: 1;
 	    -ms-flex: 1 1 100%;
 	        flex: 1 1 100%;
@@ -190,6 +254,8 @@
 	-webkit-box-pack: justify;
 	    -ms-flex-pack: justify;
 	        justify-content: space-between;
+	-ms-flex-wrap: wrap;
+	    flex-wrap: wrap;
 }
 [mol_form_field_label] > * {
 	padding: 4px 8px;
@@ -200,11 +266,11 @@
 }
 [mol_form_field_errorer] {
 	color:  ;
-	color: #FF7474;
+	color: red;
 }
 [mol_stringer] {
-	border: 1px solid  ;
-	border: 1px solid #bbb;
+	box-shadow: 0 0 0 1px  ;
+	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .2 );
 	border-radius:  ;
 	border-radius: .25rem;
 	white-space: nowrap;
@@ -216,17 +282,15 @@
 	z-index: 0;
 	background: white;
 	font: inherit;
-	-webkit-box-flex: 10;
-	    -ms-flex: 10 10 160px;
-	        flex: 10 10 160px;
-	-webkit-box-flex: 10;
-	    -ms-flex: 10 10 10rem;
-	        flex: 10 10 10rem;
+	-webkit-box-flex: 1;
+	    -ms-flex: 1 1 auto;
+	        flex: 1 1 auto;
+	width: 10em;
 }
 [mol_stringer]:hover ,
 [mol_stringer]:focus {
-	border-color:  ;
-	border-color: #1E5CA8;
+	box-shadow: 0 0 0 1px  ;
+	box-shadow: 0 0 0 1px #6694CC;
 	outline: none;
 	background: white;
 	z-index: 1;

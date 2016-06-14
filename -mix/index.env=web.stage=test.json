@@ -72,69 +72,79 @@
 			},
 			"": [
 				"mol/atom/atom.ts",
-				"mol/atom/atom.env=web.ts"
+				"mol/atom/atom.env=web.ts",
+				"mol/atom/readme.md"
 			]
 		}
 	},
 	{
-		"mol/clicker": {
+		"mol/checker": {
 			":priority": 0,
-			"mol/viewer": {
-				":priority": 0,
-				"mol/model": {
+			"mol/clicker": {
+				":priority": 1,
+				"mol/viewer": {
 					":priority": 0,
-					"mol/state/session": {
-						":priority": 2,
-						"mol/prop": {
-							":priority": 1,
+					"mol/model": {
+						":priority": 0,
+						"mol/state/session": {
+							":priority": 2,
+							"mol/prop": {
+								":priority": 1,
+								"": [
+									"mol/prop/prop.ts",
+									"mol/prop/prop.stage=test.ts",
+									"mol/prop/readme.md"
+								]
+							},
+							"mol/state/local": {
+								":priority": 2,
+								"": [
+									"mol/state/local/local.ts",
+									"mol/state/local/local.stage=test.ts"
+								]
+							},
 							"": [
-								"mol/prop/prop.ts",
-								"mol/prop/prop.stage=test.ts"
+								"mol/state/session/session.ts"
 							]
 						},
-						"mol/state/local": {
+						"mol/state/arg": {
 							":priority": 2,
 							"": [
-								"mol/state/local/local.ts",
-								"mol/state/local/local.stage=test.ts"
+								"mol/state/arg/arg.env=web.ts"
 							]
 						},
 						"": [
-							"mol/state/session/session.ts"
+							"mol/model/model.ts"
 						]
 					},
-					"mol/state/arg": {
-						":priority": 2,
+					"mol/viewer/selection": {
+						":priority": 4,
 						"": [
-							"mol/state/arg/arg.env=web.ts"
+							"mol/viewer/selection/selection.ts"
 						]
 					},
 					"": [
-						"mol/model/model.ts"
-					]
-				},
-				"mol/viewer/selection": {
-					":priority": 4,
-					"": [
-						"mol/viewer/selection/selection.ts"
+						"mol/viewer/viewer.css",
+						"mol/viewer/viewer.env=web.ts",
+						"mol/viewer/viewer.stage=test.ts"
 					]
 				},
 				"": [
-					"mol/viewer/viewer.css",
-					"mol/viewer/viewer.env=web.ts",
-					"mol/viewer/viewer.stage=test.ts"
+					"mol/clicker/clicker.css",
+					"mol/clicker/clicker.view.tree",
+					"mol/clicker/clicker.view.ts",
+					"mol/clicker/clicker_types.view.tree"
 				]
 			},
 			"": [
-				"mol/clicker/clicker.css",
-				"mol/clicker/clicker.view.tree",
-				"mol/clicker/clicker.view.ts",
-				"mol/clicker/clicker_types.view.tree"
+				"mol/checker/checker.css",
+				"mol/checker/checker.view.tree",
+				"mol/checker/checker.view.ts"
 			]
 		}
 	},
 	{
-		"mol/clicker/demo/toolbar": {
+		"mol/checker/demo": {
 			":priority": 0,
 			"mol/rower": {
 				":priority": 0,
@@ -143,6 +153,14 @@
 					"mol/rower/rower.view.tree"
 				]
 			},
+			"": [
+				"mol/checker/demo/demo.view.tree"
+			]
+		}
+	},
+	{
+		"mol/clicker/demo/toolbar": {
+			":priority": 0,
 			"": [
 				"mol/clicker/demo/toolbar/toolbar.view.tree",
 				"mol/clicker/demo/toolbar/toolbar.view.ts"
@@ -215,6 +233,14 @@
 			"": [
 				"mol/rower/demo/demo.view.tree",
 				"mol/rower/demo/demo.view.ts"
+			]
+		}
+	},
+	{
+		"mol/skin": {
+			":priority": 0,
+			"": [
+				"mol/skin/skin.view.css"
 			]
 		}
 	},

@@ -1617,6 +1617,92 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var $;
 (function ($) {
+    var $mol_checker = (function (_super) {
+        __extends($mol_checker, _super);
+        function $mol_checker() {
+            _super.apply(this, arguments);
+        }
+        $mol_checker.prototype.checked = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return false;
+        };
+        $mol_checker.prototype.attr = function (key) {
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            switch (key) {
+                case "mol_checker_checked": return String(this.checked());
+                default: return _super.prototype.attr.call(this, key);
+            }
+        };
+        $mol_checker.prototype.attr_keys = function () {
+            return (_super.prototype.attr_keys.call(this) || []).concat(["mol_checker_checked"]);
+        };
+        return $mol_checker;
+    }($.$mol_clicker));
+    $.$mol_checker = $mol_checker;
+})($ || ($ = {}));
+//# sourceMappingURL=checker.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_checker = (function (_super) {
+            __extends($mol_checker, _super);
+            function $mol_checker() {
+                _super.apply(this, arguments);
+            }
+            $mol_checker.prototype.checked = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                return diff[0] || false;
+            };
+            $mol_checker.prototype.clicks = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                this.checked(!this.checked());
+                diff[0].preventDefault();
+            };
+            __decorate([
+                $mol_prop()
+            ], $mol_checker.prototype, "checked", null);
+            __decorate([
+                $mol_prop()
+            ], $mol_checker.prototype, "clicks", null);
+            return $mol_checker;
+        }($.$mol_checker));
+        $mol.$mol_checker = $mol_checker;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//# sourceMappingURL=checker.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
     var $mol_rower = (function (_super) {
         __extends($mol_rower, _super);
         function $mol_rower() {
@@ -1641,6 +1727,159 @@ var $;
     $.$mol_rower = $mol_rower;
 })($ || ($ = {}));
 //# sourceMappingURL=rower.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_checker_demo = (function (_super) {
+        __extends($mol_checker_demo, _super);
+        function $mol_checker_demo() {
+            _super.apply(this, arguments);
+        }
+        $mol_checker_demo.prototype.one = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return new $.$mol_checker().setup(function (_) {
+            });
+        };
+        $mol_checker_demo.prototype.two = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return new $.$mol_checker().setup(function (_) {
+                _.checked = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return true;
+                };
+            });
+        };
+        $mol_checker_demo.prototype.three = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return new $.$mol_checker().setup(function (_) {
+                _.childs = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return [].concat("Unchecked");
+                };
+            });
+        };
+        $mol_checker_demo.prototype.four = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return new $.$mol_checker().setup(function (_) {
+                _.childs = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return [].concat("Checked");
+                };
+                _.checked = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return true;
+                };
+            });
+        };
+        $mol_checker_demo.prototype.five = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return new $.$mol_checker().setup(function (_) {
+                _.enabled = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return false;
+                };
+            });
+        };
+        $mol_checker_demo.prototype.six = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return new $.$mol_checker().setup(function (_) {
+                _.childs = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return [].concat("Disabled");
+                };
+                _.checked = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return true;
+                };
+                _.enabled = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return false;
+                };
+            });
+        };
+        $mol_checker_demo.prototype.childs = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return [].concat(this.one(), this.two(), this.three(), this.four(), this.five(), this.six());
+        };
+        __decorate([
+            $mol_prop()
+        ], $mol_checker_demo.prototype, "one", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_checker_demo.prototype, "two", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_checker_demo.prototype, "three", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_checker_demo.prototype, "four", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_checker_demo.prototype, "five", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_checker_demo.prototype, "six", null);
+        return $mol_checker_demo;
+    }($.$mol_rower));
+    $.$mol_checker_demo = $mol_checker_demo;
+})($ || ($ = {}));
+//# sourceMappingURL=demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3265,6 +3504,21 @@ var $;
         function $mol_rower_demo() {
             _super.apply(this, arguments);
         }
+        $mol_rower_demo.prototype.publisher = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return new $.$mol_checker().setup(function (_) {
+                _.childs = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return [].concat("Publish");
+                };
+            });
+        };
         $mol_rower_demo.prototype.titler = function () {
             var diff = [];
             for (var _i = 0; _i < arguments.length; _i++) {
@@ -3300,8 +3554,11 @@ var $;
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return [].concat(this.titler(), this.addButton());
+            return [].concat(this.publisher(), this.titler(), this.addButton());
         };
+        __decorate([
+            $mol_prop()
+        ], $mol_rower_demo.prototype, "publisher", null);
         __decorate([
             $mol_prop()
         ], $mol_rower_demo.prototype, "titler", null);
