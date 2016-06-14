@@ -1,5 +1,7 @@
 [mol_form_barFields] {
 	padding: 0 1vmin;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 [mol_form_barFields] > * {

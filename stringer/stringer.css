@@ -1,6 +1,6 @@
 [mol_stringer] {
-	border: 1px solid var( --mol_viewer_colorLine );
-	border-radius: var( --mol_viewer_round );
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	border-radius: var( --mol_skin_round );
 	white-space: nowrap;
 	overflow: hidden;
 	padding: .5rem;
@@ -9,12 +9,13 @@
 	z-index: 0;
 	background: white;
 	font: inherit;
-	flex: 10 10 10rem;
+	flex: 1 1 auto;
+	width: 10em;
 }
 
 [mol_stringer]:hover ,
 [mol_stringer]:focus {
-	border-color: var( --mol_viewer_colorBase );
+	box-shadow: 0 0 0 1px var( --mol_skin_base_back );
 	outline: none;
 	background: white;
 	z-index: 1;

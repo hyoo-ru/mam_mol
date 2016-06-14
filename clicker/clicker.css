@@ -1,8 +1,8 @@
 [mol_clicker] {
 	user-select: none;
-	border: 1px solid var( --mol_viewer_colorLine );
-	border-radius: var( --mol_viewer_round );
-	flex: 1 1 auto;
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	border-radius: var( --mol_skin_round );
+	flex: .001 1 auto;
 	justify-content: center;
 	align-content: center;
 	align-items: center;
@@ -25,7 +25,7 @@
 [mol_clicker_enabled="true"]:hover ,
 [mol_clicker]:focus {
 	outline: none;
-	border-color: var( --mol_viewer_colorBase );
+	box-shadow: 0 0 0 1px var( --mol_skin_base_back );
 	position: relative;
 	z-index: 1;
 	cursor: pointer;
@@ -33,11 +33,11 @@
 }
 
 [mol_clicker_major][mol_clicker_enabled="true"] {
-	background: var( --mol_viewer_colorAccent );
+	background: var( --mol_skin_accent_back );
 }
 
 [mol_clicker_warn][mol_clicker_enabled="true"] {
-	background: var( --mol_viewer_colorWarn );
+	background: var( --mol_skin_warn_back );
 }
 
 [mol_clicker_minor][mol_clicker_enabled="true"] {

@@ -1,13 +1,3 @@
-:root {
-	--mol_viewer_colorBase: #1E5CA8;
-	--mol_viewer_colorBack: #6694CC;
-	--mol_viewer_colorLight: #F7FAFC;
-	--mol_viewer_colorAccent: #FFC974;
-	--mol_viewer_colorWarn: #FF7474;
-	--mol_viewer_colorLine: #bbb;
-	--mol_viewer_round: .25rem;
-}
-
 [mol_viewer_error] {
 	background-image: repeating-linear-gradient(
 		45deg,

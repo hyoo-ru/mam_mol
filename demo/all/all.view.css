@@ -1,18 +1,19 @@
 [mol_demo_all] {
 	display: flex;
 	flex-wrap: wrap;
-	background: var( --mol_viewer_colorBack );
+	background: var( --mol_skin_base_back );
 	padding: 2vmin;
 	height: 100%;
 }
 
 [mol_demo_all_item] {
-	flex: 0 1 600px;
-	height: 400px;
-	box-shadow: 0 0 .5rem rgba( 0 , 0 , 0 , .5 );
+	flex: 0 1 auto;
+	/*height: 400px;*/
+	/*box-shadow: 0 0 .5rem rgba( 0 , 0 , 0 , .5 );*/
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 	margin: 2vmin;
-	background: var( --mol_viewer_colorLight );
-	border-radius: var( --mol_viewer_round );
+	background: var( --mol_skin_light_back );
+	border-radius: var( --mol_skin_round );
 	overflow: auto;
 	position: relative;
 }

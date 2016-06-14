@@ -1,0 +1,15 @@
+:root {
+	--mol_skin_base_fore: white;
+	--mol_skin_base_back: #6694CC;
+	
+	--mol_skin_light_back: #F7FAFC;
+	--mol_skin_light_fore: rgba( 0 , 0 , 0 , .2 );
+
+	--mol_skin_accent_back: #FFC974;
+	--mol_skin_accent_fore: #EFB678;
+
+	--mol_skin_warn_back: #FF9E9E;
+	--mol_skin_warn_fore: red;
+	
+	--mol_skin_round: .25rem;
+}

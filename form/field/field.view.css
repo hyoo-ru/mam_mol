@@ -1,13 +1,15 @@
 [mol_form_field] {
 	display: flex;
 	flex-wrap: wrap;
+	flex: 1 1 100%;
+	width: 8em;
 }
 
 [mol_form_field_label] {
-	font-size: .8rem;
 	flex: 1 1 100%;
 	display: flex;
 	justify-content: space-between;
+	flex-wrap: wrap;
 }
 
 [mol_form_field_label] > * {
@@ -19,5 +21,5 @@
 }
 
 [mol_form_field_errorer] {
-	color: var( --mol_viewer_colorWarn );
+	color: var( --mol_skin_warn_fore );
 }
