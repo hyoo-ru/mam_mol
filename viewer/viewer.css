@@ -1,14 +1,14 @@
 :root {
-	--mol_view_colorBase: #1E5CA8;
-	--mol_view_colorBack: #6694CC;
-	--mol_view_colorLight: #F7FAFC;
-	--mol_view_colorAccent: #FFC974;
-	--mol_view_colorWarn: #FF7474;
-	--mol_view_colorLine: #bbb;
-	--mol_view_round: .25rem;
+	--mol_viewer_colorBase: #1E5CA8;
+	--mol_viewer_colorBack: #6694CC;
+	--mol_viewer_colorLight: #F7FAFC;
+	--mol_viewer_colorAccent: #FFC974;
+	--mol_viewer_colorWarn: #FF7474;
+	--mol_viewer_colorLine: #bbb;
+	--mol_viewer_round: .25rem;
 }
 
-[mol_view_error] {
+[mol_viewer_error] {
 	background-image: repeating-linear-gradient(
 		45deg,
 		rgba(255,220,220,1),
@@ -18,8 +18,8 @@
 	) !important;
 	background-size: 28px 28px !important;
 }
-[mol_view_error]:after {
-	content: attr( mol_view_error );
+[mol_viewer_error]:after {
+	content: attr( mol_viewer_error );
 	border: 1px solid red;
 	background: pink;
 	display: inline-table;
@@ -30,7 +30,7 @@
 	transform: translate( -50% , -50% );
 }
 
-@keyframes mol_view_error_move {
+@keyframes mol_viewer_error_move {
   0% {
 	background-position: 0 0;
   }
@@ -39,7 +39,7 @@
   }
 }
 
-[mol_view_error="Wait..."] {
+[mol_viewer_error="Wait..."] {
 	background-image: repeating-linear-gradient(
 		45deg,
 		rgba(0,0,255,.05),
@@ -48,10 +48,10 @@
 		rgba(255,255,255,.02) 20px
 	) !important;
 	background-size: 28px 28px !important;
-	animation: mol_view_show 1s linear , mol_view_error_move .25s linear infinite !important;
+	animation: mol_viewer_show 1s linear , mol_viewer_error_move .25s linear infinite !important;
 	pointer-events: none;
 }
-[mol_view_error="Wait..."]:after {
+[mol_viewer_error="Wait..."]:after {
 	border: 1px solid steelblue;
 	background: lightsteelblue;
 }

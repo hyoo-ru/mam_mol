@@ -1,5 +1,5 @@
 module $.$mol {
-	export class $mol_gallery extends $.$mol_gallery {
+	export class $mol_tiler extends $.$mol_tiler {
 		
 		@ $mol_prop()
 		childs() {
@@ -42,14 +42,14 @@ module $.$mol {
 		
 		@ $mol_prop()
 		group( path : number[] ) {
-			return new $mol_view().setup( obj => {
+			return new $mol_viewer().setup( obj => {
 				obj.childs = () => this.groupChilds( path )
 			} )
 		}
 		
 		@ $mol_prop()
 		item( path : number[] ) {
-			return new $mol_view().setup( obj => {
+			return new $mol_viewer().setup( obj => {
 				obj.childs = () => this.groupItems( path )
 			} )
 		}

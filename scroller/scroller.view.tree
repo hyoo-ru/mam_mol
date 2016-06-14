@@ -1,4 +1,4 @@
-$mol_scroller $mol_view
+$mol_scroller $mol_viewer
 	field *
 		scrollTop < scrollTop : 0
 		scrollLeft < scrollLeft : 0

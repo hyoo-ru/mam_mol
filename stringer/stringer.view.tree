@@ -1,4 +1,4 @@
-$mol_stringer $mol_view
+$mol_stringer $mol_viewer
 	attr * mol_stringer_hint < hint =
 	field *
 		tabIndex =0

@@ -1,0 +1,45 @@
+[mol_clicker] {
+	user-select: none;
+	border: 1px solid var( --mol_viewer_colorLine );
+	border-radius: var( --mol_viewer_round );
+	flex: 1 1 auto;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	vertical-align: middle;
+	text-align: center;
+	padding: .5rem;
+	display: flex;
+	text-decoration: inherit;
+	color: inherit;
+	cursor: default;
+	opacity: .9;
+	font-weight: bolder;
+}
+
+[mol_clicker_enabled="false"] {
+	background: #eee;
+	color: gray;
+}
+
+[mol_clicker_enabled="true"]:hover ,
+[mol_clicker]:focus {
+	outline: none;
+	border-color: var( --mol_viewer_colorBase );
+	position: relative;
+	z-index: 1;
+	cursor: pointer;
+	opacity: 1;
+}
+
+[mol_clicker_major][mol_clicker_enabled="true"] {
+	background: var( --mol_viewer_colorAccent );
+}
+
+[mol_clicker_warn][mol_clicker_enabled="true"] {
+	background: var( --mol_viewer_colorWarn );
+}
+
+[mol_clicker_minor][mol_clicker_enabled="true"] {
+}
+

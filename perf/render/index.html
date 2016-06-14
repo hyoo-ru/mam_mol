@@ -4,13 +4,13 @@
     <head>
         <title>Performance Comparison for Knockout, Angular and React</title>
         <style type="text/css">
-			[mol_perf_rower],
+			[mol_perf_render_rower],
 			ul {
 				padding : 0;
 				display: table;
 			}
 			
-			[mol_perf_row],
+			[mol_perf_render_row],
             li {
 				padding:3px 10px;
 				background:#EEE;
@@ -18,18 +18,18 @@
 				list-style: none;
 			}
 			
-			[mol_perf_row_bar],
+			[mol_perf_render_row_bar],
 			li span {
 				padding:3px 10px;
 				display: inline;
 			}
 			
-			[mol_perf_row]:hover,
+			[mol_perf_render_row]:hover,
             li:hover {
 				background:#DDD;
 			}
 
-			[mol_perf_row_selected="true"] [mol_perf_row_bar],
+			[mol_perf_render_row_selected="true"] [mol_perf_render_row_bar],
             li.selected span {
 				font-weight : bold ;
 				background:#3F7AD9;
@@ -37,6 +37,7 @@
 			}
 
         </style>
+		<!--<link rel="stylesheet" href="-mix/index.env=web.stage=release.css" />-->
 
         <script src="http://knockoutjs.com/downloads/knockout-3.4.0rc.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
@@ -235,7 +236,7 @@
 			<ul id="raw"></ul>
 		</section>
 		
-		<section mol_view_root="$mol_perf"></section>
+		<section mol_viewer_root="$mol_perf_render"></section>
 
         <script type="text/html" id="raw-template">
             <li>

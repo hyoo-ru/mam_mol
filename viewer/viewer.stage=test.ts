@@ -1,18 +1,18 @@
 /// Autogenerating id
 $mol_test( test => {
 	
-	class $mol_view_test_item extends $mol_view { }
+	class $mol_viewer_test_item extends $mol_viewer { }
 	
-	class $mol_view_test_block extends $mol_view {
+	class $mol_viewer_test_block extends $mol_viewer {
 		
 		@ $mol_prop()
 		element( id : number ) {
-			return new $mol_view_test_item()
+			return new $mol_viewer_test_item()
 		}
 		
 	}
 	
-	var x = new $mol_view_test_block()
+	var x = new $mol_viewer_test_block()
 	
 	test.equal( x.DOMTree().id , '' )
 	test.equal( x.element(0).DOMTree().id , '.element(0)' )
@@ -22,9 +22,9 @@ $mol_test( test => {
 /// Caching link to node
 $mol_test( test => {
 	
-	class $mol_view_test extends $mol_view { }
+	class $mol_viewer_test extends $mol_viewer { }
 	
-	var x = new $mol_view_test()
+	var x = new $mol_viewer_test()
 	
 	test.equal( x.DOMTree() , x.DOMTree() )
 	
@@ -33,13 +33,13 @@ $mol_test( test => {
 /// Content rendering
 $mol_test( test => {
 	
-	class $mol_view_test extends $mol_view {
+	class $mol_viewer_test extends $mol_viewer {
 		childs() {
 			return [ 'lol' , 5 ]
 		}
 	}
 	
-	var x = new $mol_view_test()
+	var x = new $mol_viewer_test()
 	
 	test.equal( x.DOMTree().innerHTML , 'lol5' )
 		
@@ -48,34 +48,34 @@ $mol_test( test => {
 /// BEM attributes
 $mol_test( test => {
 	
-	class $mol_view_test_item extends $mol_view { }
+	class $mol_viewer_test_item extends $mol_viewer { }
 	
-	class $mol_view_test_block extends $mol_view {
+	class $mol_viewer_test_block extends $mol_viewer {
 		
 		@ $mol_prop()
 		element( id : number ) {
-			return new $mol_view_test_item()
+			return new $mol_viewer_test_item()
 		}
 		
 	}
 	
-	var x = new $mol_view_test_block()
+	var x = new $mol_viewer_test_block()
 	
-	test.equal( x.DOMTree().getAttribute( 'mol_view_test_block' ) , '' )
-	test.equal( x.DOMTree().getAttribute( 'mol_view' ) , '' )
+	test.equal( x.DOMTree().getAttribute( 'mol_viewer_test_block' ) , '' )
+	test.equal( x.DOMTree().getAttribute( 'mol_viewer' ) , '' )
 	
-	test.equal( x.element(0).DOMTree().getAttribute( 'mol_view_test_block_element' ) , '' )
-	test.equal( x.element(0).DOMTree().getAttribute( 'mol_view_element' ) , '' )
+	test.equal( x.element(0).DOMTree().getAttribute( 'mol_viewer_test_block_element' ) , '' )
+	test.equal( x.element(0).DOMTree().getAttribute( 'mol_viewer_element' ) , '' )
 
-	test.equal( x.element(0).DOMTree().getAttribute( 'mol_view_test_item' ) , '' )
-	test.equal( x.element(0).DOMTree().getAttribute( 'mol_view' ) , '' )
+	test.equal( x.element(0).DOMTree().getAttribute( 'mol_viewer_test_item' ) , '' )
+	test.equal( x.element(0).DOMTree().getAttribute( 'mol_viewer' ) , '' )
 	
 } )
 
 /// Custom attributes
 $mol_test( test => {
 	
-	class $mol_view_test extends $mol_view {
+	class $mol_viewer_test extends $mol_viewer {
 		attr_keys() {
 			return super.attr_keys().concat( 'href' , 'required' )
 		}
@@ -87,7 +87,7 @@ $mol_test( test => {
 		}
 	}
 	
-	var x = new $mol_view_test()
+	var x = new $mol_viewer_test()
 	
 	test.equal( x.DOMTree().getAttribute( 'href' ) , '#haha' )
 	test.equal( x.DOMTree().getAttribute( 'required' ) , '' )
@@ -97,7 +97,7 @@ $mol_test( test => {
 /// Custom fields
 $mol_test( test => {
 	
-	class $mol_view_test extends $mol_view {
+	class $mol_viewer_test extends $mol_viewer {
 		field_keys() {
 			return super.field_keys().concat( 'style.top' )
 		}
@@ -109,7 +109,7 @@ $mol_test( test => {
 		}
 	}
 	
-	var x = new $mol_view_test()
+	var x = new $mol_viewer_test()
 	
 	test.equal( ( <HTMLElement> x.DOMTree() ).style.top , '10px' )
 	
@@ -120,7 +120,7 @@ $mol_test( test => {
 	
 	var clicked = false
 	
-	class $mol_view_test extends $mol_view {
+	class $mol_viewer_test extends $mol_viewer {
 		event_keys() {
 			return super.event_keys().concat( 'click' )
 		}
@@ -135,7 +135,7 @@ $mol_test( test => {
 		}
 	}
 	
-	var x = new $mol_view_test()
+	var x = new $mol_viewer_test()
 	;( <HTMLElement> x.DOMTree() ).click()
 	
 	test.ok( clicked )

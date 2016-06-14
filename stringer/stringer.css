@@ -1,6 +1,6 @@
 [mol_stringer] {
-	border: 1px solid var( --mol_view_colorLine );
-	border-radius: var( --mol_view_round );
+	border: 1px solid var( --mol_viewer_colorLine );
+	border-radius: var( --mol_viewer_round );
 	white-space: nowrap;
 	overflow: hidden;
 	padding: .5rem;
@@ -14,7 +14,7 @@
 
 [mol_stringer]:hover ,
 [mol_stringer]:focus {
-	border-color: var( --mol_view_colorBase );
+	border-color: var( --mol_viewer_colorBase );
 	outline: none;
 	background: white;
 	z-index: 1;

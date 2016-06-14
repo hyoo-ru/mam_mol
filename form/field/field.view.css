@@ -19,5 +19,5 @@
 }
 
 [mol_form_field_errorer] {
-	color: var( --mol_view_colorWarn );
+	color: var( --mol_viewer_colorWarn );
 }

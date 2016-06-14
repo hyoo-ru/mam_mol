@@ -1,4 +1,4 @@
-function $mol_view_tree2ts( tree ) {
+function $mol_viewer_tree2ts( tree ) {
 	
 	var content = ''
 	

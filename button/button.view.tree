@@ -1,4 +1,0 @@
-$mol_button $mol_view
-	field * tabIndex =0
-	event * click > everyClicks > clicks : null
-	attr * mol_button_enabled < enabled : true

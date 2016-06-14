@@ -1,22 +1,22 @@
-$mol_button_demo_toolbar $mol_toolbar tools /
-	< major $mol_button_major
+$mol_clicker_demo_toolbar $mol_rower tools /
+	< major $mol_clicker_major
 		childs / =Click me!
 		clicks > events : null
-	< majorDisabled $mol_button_major
+	< majorDisabled $mol_clicker_major
 		childs / =Click me!
 		enabled : false
 		clicks > events : null
-	< minor $mol_button_minor
+	< minor $mol_clicker_minor
 		childs / =Or click me..
 		clicks > events : null
-	< minorDisabled $mol_button_minor
+	< minorDisabled $mol_clicker_minor
 		childs / =Or click me..
 		enabled : false
 		clicks > events : null
-	< warn $mol_button_warn
+	< warn $mol_clicker_warn
 		childs / =Be attentive!
 		clicks > events : null
-	< warnDisabled $mol_button_warn
+	< warnDisabled $mol_clicker_warn
 		childs / =Be attentive!
 		enabled : false
 		clicks > events : null

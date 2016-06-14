@@ -19,7 +19,7 @@ $mol_demo_form $mol_form
 				hint =Sparrow
 				value > nameSecond =
 	buttons /
-		< submit $mol_button_major
+		< submit $mol_clicker_major
 			childs / < submitText =Submit
 			clicks > submits : null
 			enabled < submitAllow

@@ -1,5 +1,5 @@
 /// Reactive statefull lazy ViewModel 
-class $mol_view extends $mol_model {
+class $mol_viewer extends $mol_model {
 	
 	@ $mol_prop()
 	static root( id : number ) {
@@ -14,7 +14,7 @@ class $mol_view extends $mol_model {
 	
 	/// Child views
 	childs() {
-		return <Array<$mol_view|Element|string|number|boolean>> null
+		return <Array<$mol_viewer|Element|string|number|boolean>> null
 	}
 	
 	childsInner() { return this.childs() }
@@ -44,7 +44,7 @@ class $mol_view extends $mol_model {
 			var attrName = className.replace( /\$/g , '' ) + '_' + this.objectField().replace( /\(.*/ , '' )
 			next.setAttribute( attrName , '' )
 			
-			if( proto1 === $mol_view.prototype ) break
+			if( proto1 === $mol_viewer.prototype ) break
 			proto1 = Object.getPrototypeOf( proto1 )
 		}
 		
@@ -56,7 +56,7 @@ class $mol_view extends $mol_model {
 			
 			next.setAttribute( className.replace( /\$/g , '' ) , '' )
 			
-			if( proto2 === $mol_view.prototype ) break
+			if( proto2 === $mol_viewer.prototype ) break
 			proto2 = Object.getPrototypeOf( proto2 )
 		}
 		
@@ -65,8 +65,8 @@ class $mol_view extends $mol_model {
 			next.addEventListener( name , event => {
 				this.event( name , event )
 				$mol_atom_sync()
-				$mol_view_selection.position( null )
-				$mol_view_selection.position( $mol_view_selection.position() )
+				$mol_viewer_selection.position( null )
+				$mol_viewer_selection.position( $mol_viewer_selection.position() )
 			} )
 		} )
 		
@@ -74,10 +74,10 @@ class $mol_view extends $mol_model {
 	}
 	
 	@ $mol_prop({
-		fail : ( self : $mol_view , error ) => {
+		fail : ( self : $mol_viewer , error ) => {
 			self.attr_keys()
 			var node = self.DOMNode()
-			if( node ) node.setAttribute( 'mol_view_error' , error.message )
+			if( node ) node.setAttribute( 'mol_viewer_error' , error.message )
 		}
 	})
 	DOMTree( ...diff : Element[] ) {
@@ -157,7 +157,7 @@ class $mol_view extends $mol_model {
 			if( obj[ field ] !== val ) obj[ field ] = val
 		} )
 		
-		prev.removeAttribute( 'mol_view_error' )
+		prev.removeAttribute( 'mol_viewer_error' )
 		
 		return prev
 	}
@@ -172,16 +172,16 @@ class $mol_view extends $mol_model {
 	field( path : string ) { return null }
 	
 	focused() {
-		return $mol_view_selection.focused() === this.DOMNode()
+		return $mol_viewer_selection.focused() === this.DOMNode()
 	}
 	
 }
 
 /// Autoattach view roots to loaded DOM.
 document.addEventListener( 'DOMContentLoaded' , event => {
-	var nodes = document.querySelectorAll( '[mol_view_root]' )
+	var nodes = document.querySelectorAll( '[mol_viewer_root]' )
 	for( var i = nodes.length - 1 ; i >= 0 ; --i ) {
-		var view = window['$'][ nodes[i].getAttribute( 'mol_view_root' ) ].root(i)
+		var view = window['$'][ nodes[i].getAttribute( 'mol_viewer_root' ) ].root(i)
 		view.DOMNode( nodes[i] )
 		view.DOMTree( void 0 )
 	}

@@ -1,16 +1,16 @@
-[mol_gallery] {
+[mol_tiler] {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
 }
 
-[mol_gallery_group] {
+[mol_tiler_group] {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
 	flex: 1 1 auto;
 }
 
-[mol_gallery_item] {
+[mol_tiler_item] {
 	flex: 1 1 auto;
 }

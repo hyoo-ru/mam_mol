@@ -1,4 +1,4 @@
-class $mol_view_selection extends $mol_object {
+class $mol_viewer_selection extends $mol_object {
 	
 	@ $mol_prop()
 	static focused( ...diff : Element[] ) {
@@ -84,13 +84,13 @@ class $mol_view_selection extends $mol_object {
 }
 
 document.addEventListener( 'selectionchange' , event => {
-	$mol_view_selection.position( void 0 )
+	$mol_viewer_selection.position( void 0 )
 } )
 
 document.addEventListener( 'focusin' , event => {
-	$mol_view_selection.focused( event.srcElement )
+	$mol_viewer_selection.focused( event.srcElement )
 } )
 
 document.addEventListener( 'focusout' , event => {
-	$mol_view_selection.focused( null )
+	$mol_viewer_selection.focused( null )
 } )

@@ -1,4 +1,4 @@
-[mol_toolbar] {
+[mol_rower] {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -7,6 +7,6 @@
 	padding: 1vmin;
 }
 
-[mol_toolbar] > * {
+[mol_rower] > * {
 	margin: 1vmin;
 }
