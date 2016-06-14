@@ -2,7 +2,7 @@
 
 ## One-value properties
 
-Свойства одного значения, в терминологии [$mol](..), - это полиморфные функции со следующего вида интерфейсом:
+Свойства одного значения, в терминологии $mol, - это полиморфные функции со следующего вида интерфейсом:
 
 ```ts
 myProperty< Value >() : Value
@@ -128,7 +128,10 @@ usersSearch( query : { name? : string , minAge? : number } ) {
 ```
 
 ```ts
-usersAdult() {
+adults() {
 	return this.usersSearch({ minAge : 18 })
+}
+jins() {
+	return this.usersSearch({ name : 'jin' })
 }
 ```
