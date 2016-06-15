@@ -15,9 +15,9 @@
 }
 
 [mol_checker]:before {
-	content: '';
+	content: '✔';
+	color: transparent;
 	border-radius: var( --mol_skin_round );
-	color: var( --mol_skin_base_fore );
 	width: 1.2rem;
 	height: 1.2rem;
 	display: flex;
@@ -37,5 +37,5 @@
 }
 
 [mol_checker_checked="true"]:before {
-	content: '✔';
+	color: var( --mol_skin_base_fore );
 }

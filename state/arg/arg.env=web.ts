@@ -59,7 +59,7 @@ class $mol_state_arg< Value > extends $mol_object {
 	prefix() { return '' }
 	
 	value( key : string , ...diff : Value[] ) {
-		return $mol_state_local.value( this.prefix() + '.' + key , ...diff )
+		return $mol_state_arg.value( this.prefix() + '.' + key , ...diff )
 	}
 	
 }
