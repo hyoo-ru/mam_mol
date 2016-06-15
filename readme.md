@@ -26,7 +26,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 ## [Demo applications](demo)
 
 * [$mol_demo_all](demo/all) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
-* [$mol_demo_form](demo/form) - typical form
+* [$mol_demo_signup](demo/signup) - typical form
 
 ## [Benchmarks](perf)
 
@@ -41,6 +41,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_viewer](viewer) - reactive view model base class
 * [$mol_log](log) - logging
 * [$mol_test](test) - unit testing
+* [$mol_skin](skin) - theming
 
 ## [State modules](state)
 
@@ -51,12 +52,19 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 ## Simple controls
 
 * [$mol_clicker](clicker) - buttons
+* [$mol_checker](checker) - check boxes
+* [$mol_switcher](switcher) - radio buttons
 * [$mol_stringer](stringer) - one string input control
 
 ## Layout components
 
+* [$mol_scroller](scroller) - scroll pane with position saving
 * [$mol_tiler](tiler) - items in row with wrapping
 * [$mol_rower](rower) - items in row with wrapping and padding between
+
+## Complex components
+
+* [$mol_form](form) - forms with validators
 
 ## Data formats
 

@@ -1,5 +1,5 @@
 module $.$mol {
-	export class $mol_demo_form extends $.$mol_demo_form {
+	export class $mol_demo_signup extends $.$mol_demo_signup {
 		
 		@ $mol_prop()
 		nameFirst( ...diff : string[] ) {
