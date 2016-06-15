@@ -51,7 +51,7 @@ function $mol_viewer_tree2ts( tree ) {
 						} )
 						return 'switch( key ){\n' + opts.join( '' ) + '\t\tdefault: return super.' + param.type + '( key )\n\t}'
 					case ':' :
-						return JSON.stringify( value.childs[0] )
+						return '( ' + JSON.stringify( value.childs[0] ) + ' )'
 					case '>' :
 						needSet = true
 						if( value.childs.length === 1 ) {

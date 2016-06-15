@@ -1,4 +1,4 @@
-$mol_clicker_demo_toolbar $mol_rower tools /
+$mol_clicker_demo_toolbar $mol_rower childs /
 	< major $mol_clicker_major
 		childs / =Click me!
 		clicks > events : null

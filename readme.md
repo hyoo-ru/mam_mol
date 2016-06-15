@@ -51,6 +51,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 ## Simple controls
 
+* [$mol_linker](linker) - navigation links
 * [$mol_clicker](clicker) - buttons
 * [$mol_checker](checker) - check boxes
 * [$mol_switcher](switcher) - radio buttons

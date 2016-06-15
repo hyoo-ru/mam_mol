@@ -1,0 +1,6 @@
+$mol_linker $mol_viewer
+	tagName =a
+	attr *
+		href < uri =
+		mol_linker_current < current : false
+	patch : null
