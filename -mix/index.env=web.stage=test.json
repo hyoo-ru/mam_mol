@@ -271,6 +271,15 @@
 		}
 	},
 	{
+		"mol/stringer/demo": {
+			":priority": 0,
+			"": [
+				"mol/stringer/demo/demo.view.tree",
+				"mol/stringer/demo/demo.view.ts"
+			]
+		}
+	},
+	{
 		"mol/switcher/demo": {
 			":priority": 0,
 			"": [
