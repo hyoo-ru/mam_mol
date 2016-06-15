@@ -47,7 +47,7 @@ function $mol_viewer_tree2ts( tree ) {
 						value.childs.forEach( function( opt ) {
 							if( /^(-|$)/.test( opt.type ) ) return ''
 							keys.push( opt.type )
-							opts.push( '\t\tcase "' + opt.type + '" : return String( ' + getValue( opt.childs[0] ) + ' )\n' )
+							opts.push( '\t\tcase "' + opt.type + '" : return ' + getValue( opt.childs[0] ) + '\n' )
 						} )
 						return 'switch( key ){\n' + opts.join( '' ) + '\t\tdefault: return super.' + param.type + '( key )\n\t}'
 					case ':' :

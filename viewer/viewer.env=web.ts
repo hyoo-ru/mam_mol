@@ -164,7 +164,7 @@ class $mol_viewer extends $mol_model {
 	}
 	
 	attr_keys() { return [] }
-	attr( name : string ) { return '' }
+	attr( name : string ) : any { return '' }
 	
 	event_keys() { return [] }
 	event( name : string , ...diff : Event[] ) { return null }
