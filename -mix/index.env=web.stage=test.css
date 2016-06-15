@@ -317,6 +317,22 @@
 	font-size: 2rem;
 	border-radius: 50%;
 }
+[mol_linker] {
+	color: inherit;
+	font-weight: bold;
+	text-decoration: none;
+	cursor: default;
+}
+[mol_linker_current="false"] {
+	color:  ;
+	color: #6694CC;
+	cursor: pointer;
+}
+[mol_linker]:focus ,
+[mol_linker_current="false"]:hover {
+	outline: none;
+	text-decoration: underline;
+}
 [mol_tiler] {
 	display: -webkit-box;
 	display: -ms-flexbox;

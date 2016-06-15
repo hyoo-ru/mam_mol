@@ -186,7 +186,7 @@
 		}
 	},
 	{
-		"mol/demo/form": {
+		"mol/demo/signup": {
 			":priority": 0,
 			"mol/form": {
 				":priority": 0,
@@ -220,8 +220,26 @@
 				]
 			},
 			"": [
-				"mol/demo/form/form.view.tree",
-				"mol/demo/form/form.view.ts"
+				"mol/demo/signup/signup.view.tree",
+				"mol/demo/signup/signup.view.ts"
+			]
+		}
+	},
+	{
+		"mol/linker": {
+			":priority": 0,
+			"": [
+				"mol/linker/linker.view.css",
+				"mol/linker/linker.view.tree",
+				"mol/linker/linker.view.ts"
+			]
+		}
+	},
+	{
+		"mol/linker/demo": {
+			":priority": 0,
+			"": [
+				"mol/linker/demo/demo.view.tree"
 			]
 		}
 	},
@@ -232,15 +250,6 @@
 				"mol/perf/render/index.html",
 				"mol/perf/render/render.view.tree",
 				"mol/perf/render/render.view.ts"
-			]
-		}
-	},
-	{
-		"mol/range": {
-			":priority": 0,
-			"": [
-				"mol/range/range.ts",
-				"mol/range/range.stage=test.ts"
 			]
 		}
 	},
