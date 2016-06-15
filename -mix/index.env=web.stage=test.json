@@ -211,6 +211,14 @@
 					"mol/stringer/stringer.view.ts"
 				]
 			},
+			"mol/switcher": {
+				":priority": 0,
+				"": [
+					"mol/switcher/switcher.css",
+					"mol/switcher/switcher.view.tree",
+					"mol/switcher/switcher.view.ts"
+				]
+			},
 			"": [
 				"mol/demo/form/form.view.tree",
 				"mol/demo/form/form.view.ts"
@@ -228,6 +236,15 @@
 		}
 	},
 	{
+		"mol/range": {
+			":priority": 0,
+			"": [
+				"mol/range/range.ts",
+				"mol/range/range.stage=test.ts"
+			]
+		}
+	},
+	{
 		"mol/rower/demo": {
 			":priority": 0,
 			"": [
@@ -241,6 +258,15 @@
 			":priority": 0,
 			"": [
 				"mol/skin/skin.view.css"
+			]
+		}
+	},
+	{
+		"mol/switcher/demo": {
+			":priority": 0,
+			"": [
+				"mol/switcher/demo/demo.view.tree",
+				"mol/switcher/demo/demo.view.ts"
 			]
 		}
 	},
