@@ -30,10 +30,19 @@ module $.$mol {
 			if( value.indexOf( ' ' ) !== -1 ) errors.push( 'Spaces are forbidden' )
 			return errors
 		}
-		
+
+		@ $mol_prop()
+		sex( ...diff : string[] ) {
+			return this.local( `sex()` , ...diff ) || ''
+		}
+
+		sexErrors() {
+			return this.sex() ? [] : [ 'Input required' ]
+		}
+
 		@ $mol_prop()
 		submits( ...diff : Event[] ) {
-			alert( this.nameFirst() + ' (' + this.nameNick() + ') ' + this.nameSecond() )
+			alert( `Hello, ${this.sex()} ${this.nameFirst()} (${this.nameNick()}) ${this.nameSecond()}!` )
 		}
 		
 	}

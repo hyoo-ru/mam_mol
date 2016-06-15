@@ -7,3 +7,12 @@
 [mol_form_barFields] > * {
 	margin: 1vmin;
 }
+
+[mol_form_barButtons] {
+	justify-content: center;
+	padding: 0 1vmin;
+}
+
+[mol_form_barButtons] > * {
+	margin: 1vmin;
+}

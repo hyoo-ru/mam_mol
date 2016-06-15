@@ -18,8 +18,21 @@ $mol_demo_form $mol_form
 			control < nameSecondControl $mol_stringer
 				hint =Sparrow
 				value > nameSecond =
+		< sexField $mol_form_field
+			name =Sex
+			errors < sexErrors /
+			control /
+				< sexOptionMale $mol_switcher
+					valueSelf =male
+					value > sex =
+				< sexOptionFemale $mol_switcher
+					valueSelf =female
+					value > sex =
+				< sexOptionCastrate $mol_switcher
+					valueSelf =castrate
+					value > sex =
 	buttons /
 		< submit $mol_clicker_major
-			childs / < submitText =Submit
+			childs / < submitText =Sign Up
 			clicks > submits : null
 			enabled < submitAllow

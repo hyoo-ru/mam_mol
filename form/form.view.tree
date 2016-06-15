@@ -2,4 +2,4 @@ $mol_form $mol_viewer
 	submitAllow : false
 	childs /
 		< barFields $mol_viewer childs < formFields /
-		< barButtons $mol_rower tools < buttons /
+		< barButtons $mol_viewer childs < buttons /
