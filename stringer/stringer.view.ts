@@ -10,5 +10,9 @@ module $.$mol {
 			this.value( diff[0].srcElement.textContent.trim() )
 		}
 		
+		tabIndex() {
+			return this.editable() ? 0 : null
+		}
+		
 	}
 }

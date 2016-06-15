@@ -12,3 +12,7 @@ $mol_switcher_demo $mol_rower
 		< three $mol_switcher
 			value > color
 			valueSelf =
+		< four $mol_switcher
+			value > color
+			valueSelf =black
+			enabled : false

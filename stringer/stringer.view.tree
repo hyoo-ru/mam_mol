@@ -1,7 +1,8 @@
 $mol_stringer $mol_viewer
-	attr * mol_stringer_hint < hint =
+	attr *
+		mol_stringer_hint < hint =
+		tabindex < tabIndex : 0
 	field *
-		tabIndex =0
-		contentEditable < editable =true
+		contentEditable < editable : true
 		textContent < valueChanged < value =
 	event * input > changes : null

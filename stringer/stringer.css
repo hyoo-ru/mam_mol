@@ -7,24 +7,29 @@
 	text-align: left;
 	position: relative;
 	z-index: 0;
-	background: white;
 	font: inherit;
 	flex: 1 1 auto;
 	width: 10em;
+	background: #eee;
+	color: gray;
 }
 
-[mol_stringer]:hover ,
+[mol_stringer][contentEditable="true"] {
+	background: white;
+	color: inherit;
+}
+
+[mol_stringer][contentEditable="true"]:hover ,
 [mol_stringer]:focus {
 	box-shadow: 0 0 0 1px var( --mol_skin_base_back );
 	outline: none;
-	background: white;
 	z-index: 1;
 }
 
 [mol_stringer]:empty:before {
 	content: attr( mol_stringer_hint );
 	display: inline;
-	color: rgba( 0 , 0 , 0 , .25 );
+	color: var( --mol_skin_light_fore );
 	position: relative;
 	z-index: -1;
 }
