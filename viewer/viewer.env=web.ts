@@ -34,6 +34,7 @@ class $mol_viewer extends $mol_model {
 			}
 		}
 		this['DOMNode()'] = next
+		next['$mol_viewer'] = this
 		
 		/// Set BEM-like element-attributes with inheritance support
 		var proto1 = this.objectOwner()
