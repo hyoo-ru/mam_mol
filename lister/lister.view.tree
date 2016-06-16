@@ -1,0 +1,9 @@
+$mol_lister $mol_scroller
+	rowHeightMin : 32
+	childs /
+		< rowsVisible < rows /
+		< gapper $mol_lister_gapper size < gap : 0
+
+$mol_lister_gapper $mol_viewer
+	size : 0
+	field * style.height < heightStyle =0
