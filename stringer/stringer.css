@@ -9,7 +9,7 @@
 	z-index: 0;
 	font: inherit;
 	flex: 1 1 auto;
-	width: 10em;
+	min-width: 4em;
 	background: #eee;
 	color: gray;
 }

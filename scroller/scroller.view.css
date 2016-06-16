@@ -1,10 +1,10 @@
 [mol_scroller] {
 	overflow: scroll;
-	overflow: overlay;
+	/*overflow: overlay;*/
 	overflow-x: auto;
 	flex: 1 1 auto;
 	box-sizing: border-box;
-	will-change: scroll-position;
+	/*will-change: scroll-position;*/
 }
 
 @media print {
