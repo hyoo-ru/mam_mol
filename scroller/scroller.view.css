@@ -1,5 +1,31 @@
 [mol_scroller] {
-	overflow: auto;
+	overflow: scroll;
+	overflow: overlay;
+	overflow-x: auto;
 	flex: 1 1 auto;
 	box-sizing: border-box;
+	will-change: scroll-position;
+}
+
+@media print {
+	[mol_scroller] {
+		overflow: visible;
+	}
+}
+
+[mol_scroller]::-webkit-scrollbar {
+	width: 2vmin;
+	height: 2vmin;
+	max-width: 10px;
+	max-height: 10px;
+}
+
+[mol_scroller]::-webkit-scrollbar-track {
+	/*background: var( --mol_skin_light_back );*/
+	background: transparent;
+}
+
+[mol_scroller]::-webkit-scrollbar-thumb {
+	background: var( --mol_skin_accent_fore );
+	border-radius: var( --mol_skin_round );
 }

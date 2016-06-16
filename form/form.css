@@ -10,7 +10,7 @@
 
 [mol_form_barButtons] {
 	justify-content: center;
-	padding: 0 1vmin;
+	padding: 1vmin;
 }
 
 [mol_form_barButtons] > * {

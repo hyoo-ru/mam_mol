@@ -19,21 +19,19 @@ module $.$mol {
 			diff[0].preventDefault()
 		}
 
-		// @ $jin2_grab
-		// wheels() {
-		// 	return this.prop<Event>(null, (event:MouseWheelEvent) => {
-		// 		if (event.defaultPrevented) return
-        //
-		// 		var target = <HTMLElement> this.node().get()
-        //
-		// 		if (( target.scrollHeight > target.offsetHeight ) || ( target.scrollWidth > target.offsetWidth )) {
-		// 			event.preventDefault()
-        //
-		// 			target.scrollTop -= event.wheelDeltaY
-		// 			target.scrollLeft -= event.wheelDeltaX
-		// 		}
-		// 	})
-		// }
+		@ $mol_prop()
+		wheels( ...diff : MouseWheelEvent[] ) {
+			if( diff[0].defaultPrevented ) return
+	
+			var target = <HTMLElement> this.DOMNode()
+	
+			if(( target.scrollHeight > target.offsetHeight ) || ( target.scrollWidth > target.offsetWidth )) {
+				diff[0].preventDefault()
+	
+				target.scrollTop -= diff[0].wheelDeltaY
+				target.scrollLeft -= diff[0].wheelDeltaX
+			}
+		}
 
 	}
 }
