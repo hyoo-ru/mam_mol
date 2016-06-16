@@ -189,11 +189,35 @@
 	margin: 1vmin;
 }
 [mol_scroller] {
-	overflow: auto;
+	overflow: scroll;
+	overflow: overlay;
+	overflow-x: auto;
 	-webkit-box-flex: 1;
 	    -ms-flex: 1 1 auto;
 	        flex: 1 1 auto;
 	box-sizing: border-box;
+	will-change: scroll-position;
+}
+@media print {
+	[mol_scroller] {
+		overflow: visible;
+	}
+}
+[mol_scroller]::-webkit-scrollbar {
+	width: 2vmin;
+	height: 2vmin;
+	max-width: 10px;
+	max-height: 10px;
+}
+[mol_scroller]::-webkit-scrollbar-track {
+	/*background: var( --mol_skin_light_back );*/
+	background: none;
+}
+[mol_scroller]::-webkit-scrollbar-thumb {
+	background:  ;
+	background: #EFB678;
+	border-radius:  ;
+	border-radius: .25rem;
 }
 [mol_demo_all] {
 	display: -webkit-box;
@@ -250,7 +274,7 @@
 	-webkit-box-pack: center;
 	    -ms-flex-pack: center;
 	        justify-content: center;
-	padding: 0 1vmin;
+	padding: 1vmin;
 }
 [mol_form_barButtons] > * {
 	margin: 1vmin;

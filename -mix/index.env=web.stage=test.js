@@ -2170,6 +2170,13 @@ var $;
             }
             return (null);
         };
+        $mol_scroller.prototype.wheels = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (null);
+        };
         $mol_scroller.prototype.event = function (key) {
             var diff = [];
             for (var _i = 1; _i < arguments.length; _i++) {
@@ -2177,11 +2184,14 @@ var $;
             }
             switch (key) {
                 case "scroll": return this.scrolls.apply(this, diff);
+                case "overflow": return this.scrolls.apply(this, diff);
+                case "underflow": return this.scrolls.apply(this, diff);
+                case "wheel": return this.wheels.apply(this, diff);
                 default: return _super.prototype.event.call(this, key);
             }
         };
         $mol_scroller.prototype.event_keys = function () {
-            return (_super.prototype.event_keys.call(this) || []).concat(["scroll"]);
+            return (_super.prototype.event_keys.call(this) || []).concat(["scroll", "overflow", "underflow", "wheel"]);
         };
         return $mol_scroller;
     }($mol_viewer));
@@ -2233,6 +2243,20 @@ var $;
                 this.scrollLeft(el.scrollLeft);
                 diff[0].preventDefault();
             };
+            $mol_scroller.prototype.wheels = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                if (diff[0].defaultPrevented)
+                    return;
+                var target = this.DOMNode();
+                if ((target.scrollHeight > target.offsetHeight) || (target.scrollWidth > target.offsetWidth)) {
+                    diff[0].preventDefault();
+                    target.scrollTop -= diff[0].wheelDeltaY;
+                    target.scrollLeft -= diff[0].wheelDeltaX;
+                }
+            };
             __decorate([
                 $mol_prop()
             ], $mol_scroller.prototype, "scrollTop", null);
@@ -2242,6 +2266,9 @@ var $;
             __decorate([
                 $mol_prop()
             ], $mol_scroller.prototype, "scrolls", null);
+            __decorate([
+                $mol_prop()
+            ], $mol_scroller.prototype, "wheels", null);
             return $mol_scroller;
         }($.$mol_scroller));
         $mol.$mol_scroller = $mol_scroller;
@@ -4032,7 +4059,7 @@ var $;
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return (100);
+            return (50);
         };
         return $mol_lister_demo;
     }($.$mol_lister));
