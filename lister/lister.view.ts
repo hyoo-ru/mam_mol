@@ -7,8 +7,8 @@ module $.$mol {
 		}
 		
 		gap() {
-			var all = $mol_range( this.rows() ).count()
-			var visible = $mol_range( this.rowsVisible() ).count()
+			var all = this.rows().length
+			var visible = this.rowsVisible().length
 			return ( all - visible ) * this.rowHeightMin()
 		}
 		

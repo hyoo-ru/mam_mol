@@ -1,44 +1,52 @@
-class $mol_range_base< Value > {
-	
-	value( id : number ) : Value { return void 0 }
-	count() { return Number.POSITIVE_INFINITY }
+class $mol_range_common< Value > extends Array< Value > {
 
-	slice( start = 0 , end? : number ) {
-		return new $mol_range_lazy({
-			value: id => this.value( id + start ),
-			count: () => Math.min( end , this.count() ) - start
-		})
+	get( id : number ) : Value {
+		return
 	}
 
-	concat( ...args ) {
-		var ranges = [ this ].concat( args ).map( $mol_range )
-		return new $mol_range_lazy({
-			value: id => {
-				var subId = id
-				for( var range of ranges ) {
-					var nextId = subId - range.count()
-					if( nextId < 0 ) return range.value( subId )
-					subId = nextId
-				}
-				return
-			} ,
-			count: () => {
-				var count = 0
-				ranges.forEach( range => {
-					count += range.count()
-				} )
-				return count
-			} ,
-		})
+	length = 0
+
+	get '0'() : Value {
+		throw new Error( 'Direct access to items not supported. Use get( id : number ) method instead.' )
 	}
-    
+
 	forEach( handle : ( value : Value , id : number ) => void ) {
-		var count = this.count() 
-		for( var i = 0 ; i < count ; ++i ) {
-			handle( this.value( i ) , i )
+		var length = this.length
+		for( var i = 0 ; i < length ; ++i ) {
+			handle( this.get( i ) , i )
 		}
 	}
 	
+	valueOf() : Value[] {
+		var list = []
+		this.forEach( val => list.push( val ) )
+		return list
+	}
+
+	concat( ...args ) : Value[] {
+		var ranges = args.map( range => range.valueOf() )
+		return this.valueOf().concat( ...ranges )
+		//return new $mol_range_list( [ this ].concat( args ) )
+	}
+
+	slice( start = 0 , end? : number ) {
+		var source = this
+		return new $mol_range_lazy<Value>({
+			get( id ){
+				return source.get( id + start )
+			} ,
+			get length() {
+				return Math.min( end , source.length ) - start
+			}
+		})
+	}
+
+	join( delim = ',' ) {
+		var list = []
+		this.forEach( val => list.push( val ) )
+		return list.join( delim )
+	}
+
 	every( check : ( value : Value , id : number ) => boolean ) {
 		var res = true
 		this.forEach( ( val , id ) => {
@@ -47,56 +55,59 @@ class $mol_range_base< Value > {
 		} )
 		return res
 	}
-	
-	join( delim = ',' ) {
-		var list = []
-		this.forEach( val => list.push( val ) )
-		return list.join( delim )
-	}
-	
-}
 
-class $mol_range_array< Value > extends $mol_range_base< Value > {
-
-	constructor( private list : Value[] ) {
-		super()
-	}
-	
-	value( id : number ) {
-		return this.list[ id ]
-	}
-	
-	count() {
-		return this.list.length
+	some( check : ( value : Value , id : number ) => boolean ) {
+		var res = false
+		this.forEach( ( val , id ) => {
+			if( res ) return
+			res = check( val , id )
+		} )
+		return res
 	}
 
 }
 
-class $mol_range_lazy< Value > extends $mol_range_base< Value > {
-
-	constructor( private source : {
-		value? : ( id : number )=> Value
-		count? : ()=> number
+class $mol_range_lazy< Value > extends $mol_range_common< Value > {
+	
+	constructor( private source = {
+		get( id : number ) : Value { return } ,
+		length : 0
 	} ) {
 		super()
 	}
 
-	value( id : number ) : Value {
-		return this.source.value( id )
+	get( id : number ) : Value {
+		return this.source.get( id )
 	}
 	
-	count() {
-		return this.source.count()
+	get length() {
+		return this.source.length
 	}
 	
 }
 
-type $mol_range_initializer< Value > = Value | Value[] | {
-	value? : ( id : number )=> Value
-	count? : ()=> number
-}
-
-function $mol_range< Value >( arg : $mol_range_initializer< Value > ) : $mol_range_base< Value > {
-	if( typeof arg['value'] === 'function' && typeof arg['count'] === 'function' ) return new $mol_range_lazy( arg )
-	return new $mol_range_array( [].concat( arg ) )
-}
+// class $mol_range_list< Value > extends $mol_range_common< Value > {
+//
+// 	constructor( private list : Value[][] ) {
+// 		super()
+// 	}
+//
+// 	get( id : number ) {
+// 		var subId = id
+// 		for( var range of this.list ) {
+// 			var nextId = subId - range.length
+// 			if( nextId < 0 ) return range.get( subId )
+// 			subId = nextId
+// 		}
+// 		return
+// 	}
+//
+// 	get length () {
+// 		var length = 0
+// 		this.list.forEach( range => {
+// 			length += range.length
+// 		} )
+// 		return length
+// 	}
+//
+// }

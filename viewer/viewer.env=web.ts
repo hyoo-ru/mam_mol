@@ -97,7 +97,7 @@ class $mol_viewer extends $mol_model {
 		/// Render child nodes
 		var childs = this.childsInner()
 		if( childs != null ) {
-			var childViews = $mol_range( childs )
+			var childViews = childs
 			var childNodes = prev.childNodes
 			
 			var nextNode = prev.firstChild

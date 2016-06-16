@@ -46,6 +46,10 @@ module $.$mol {
 		data() { return { id : 0 , label : '' } }
 
 		label() { return this.data().label }
+		
+		toggles( ...diff : Event[] ) {
+			this.selected( !this.selected() )
+		}
 
 	}
 
