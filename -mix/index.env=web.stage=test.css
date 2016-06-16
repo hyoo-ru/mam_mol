@@ -210,6 +210,19 @@
 	-webkit-box-flex: 0;
 	    -ms-flex: 0 1 auto;
 	        flex: 0 1 auto;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-line-pack: start;
+	    align-content: flex-start;
+	-webkit-box-align: start;
+	    -ms-flex-align: start;
+	        align-items: flex-start;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	max-height: 50%;
 	/*height: 400px;*/
 	/*box-shadow: 0 0 .5rem rgba( 0 , 0 , 0 , .5 );*/
 	box-shadow: 0 0 0 1px  ;

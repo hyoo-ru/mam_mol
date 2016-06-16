@@ -244,21 +244,45 @@
 		}
 	},
 	{
+		"mol/lister": {
+			":priority": 0,
+			"": [
+				"mol/lister/lister.view.tree",
+				"mol/lister/lister.view.ts"
+			]
+		}
+	},
+	{
+		"mol/lister/demo": {
+			":priority": 0,
+			"mol/range": {
+				":priority": 3,
+				"": [
+					"mol/range/range.ts",
+					"mol/range/range.stage=test.ts"
+				]
+			},
+			"mol/rower/demo": {
+				":priority": 3,
+				"": [
+					"mol/rower/demo/demo.view.tree",
+					"mol/rower/demo/demo.view.ts"
+				]
+			},
+			"": [
+				"mol/lister/demo/demo.view.tree",
+				"mol/lister/demo/demo.view.ts",
+				"mol/lister/demo/lister.view.css"
+			]
+		}
+	},
+	{
 		"mol/perf/render": {
 			":priority": 0,
 			"": [
 				"mol/perf/render/index.html",
 				"mol/perf/render/render.view.tree",
 				"mol/perf/render/render.view.ts"
-			]
-		}
-	},
-	{
-		"mol/rower/demo": {
-			":priority": 0,
-			"": [
-				"mol/rower/demo/demo.view.tree",
-				"mol/rower/demo/demo.view.ts"
 			]
 		}
 	},
