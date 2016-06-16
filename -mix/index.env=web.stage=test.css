@@ -197,6 +197,8 @@
 	        flex: 1 1 auto;
 	box-sizing: border-box;
 	/*will-change: scroll-position;*/
+	-webkit-transform: translateZ(0);
+	        transform: translateZ(0);
 }
 @media print {
 	[mol_scroller] {
