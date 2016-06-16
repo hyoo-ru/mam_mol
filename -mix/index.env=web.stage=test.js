@@ -2328,7 +2328,7 @@ var $;
             return [].concat(this.widget().valueOf());
         };
         return $mol_demo_all_item;
-    }($mol_viewer));
+    }($.$mol_scroller));
     $.$mol_demo_all_item = $mol_demo_all_item;
 })($ || ($ = {}));
 //# sourceMappingURL=all.view.tree.js.map

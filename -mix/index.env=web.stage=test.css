@@ -190,13 +190,13 @@
 }
 [mol_scroller] {
 	overflow: scroll;
-	overflow: overlay;
+	/*overflow: overlay;*/
 	overflow-x: auto;
 	-webkit-box-flex: 1;
 	    -ms-flex: 1 1 auto;
 	        flex: 1 1 auto;
 	box-sizing: border-box;
-	will-change: scroll-position;
+	/*will-change: scroll-position;*/
 }
 @media print {
 	[mol_scroller] {
@@ -211,7 +211,7 @@
 }
 [mol_scroller]::-webkit-scrollbar-track {
 	/*background: var( --mol_skin_light_back );*/
-	background: none;
+	background: transparent;
 }
 [mol_scroller]::-webkit-scrollbar-thumb {
 	background:  ;
@@ -330,7 +330,7 @@
 	-webkit-box-flex: 1;
 	    -ms-flex: 1 1 auto;
 	        flex: 1 1 auto;
-	width: 10em;
+	min-width: 4em;
 	background: #eee;
 	color: gray;
 }
