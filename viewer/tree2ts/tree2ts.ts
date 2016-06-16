@@ -31,7 +31,7 @@ function $mol_viewer_tree2ts( tree ) {
 							var val = getValue( item )
 							if( val ) items.push( val )
 						} )
-						return '[].concat( ' + items.join(' , ') + ' )'
+						return '$'+'mol_range([]).concat( ' + items.join(' , ') + ' )'
 					case '$' :
 						needCache = true
 						var overs = []

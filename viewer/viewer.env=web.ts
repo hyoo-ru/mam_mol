@@ -14,7 +14,7 @@ class $mol_viewer extends $mol_model {
 	
 	/// Child views
 	childs() {
-		return <Array<$mol_viewer|Element|string|number|boolean>> null
+		return <Array<$mol_viewer|Node|string|number|boolean>> null
 	}
 	
 	childsInner() { return this.childs() }
@@ -97,16 +97,14 @@ class $mol_viewer extends $mol_model {
 		/// Render child nodes
 		var childs = this.childsInner()
 		if( childs != null ) {
-			var childViews = [].concat( childs )
+			var childViews = $mol_range( childs )
 			var childNodes = prev.childNodes
 			
 			var nextNode = prev.firstChild
-			for( var i = 0 ; i < childViews.length ; ++i ) {
-				var view = childViews[i]
-				
+			childViews.forEach( view => {
 				if( typeof view === 'object' ) {
 					if( view ) {
-						var existsNode = view.DOMNode()
+						var existsNode = view['DOMNode']()
 						while( true ) {
 							if( !nextNode ) {
 								prev.appendChild(existsNode)
@@ -116,17 +114,17 @@ class $mol_viewer extends $mol_model {
 								nextNode = nextNode.nextSibling
 								break
 							} else {
-								if( childViews.indexOf( nextNode ) === -1 ) {
-									var nn = nextNode.nextSibling
-									prev.removeChild( nextNode )
-									nextNode = nn
-								} else {
+								// if( childViews.indexOf( nextNode ) === -1 ) {
+								// 	var nn = nextNode.nextSibling
+								// 	prev.removeChild( nextNode )
+								// 	nextNode = nn
+								// } else {
 									prev.insertBefore(existsNode, nextNode)
 									break
-								}
+								// }
 							}
 						}
-						view.DOMTree( void 0 )
+						view['DOMTree']( void 0 )
 					}
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
@@ -137,7 +135,7 @@ class $mol_viewer extends $mol_model {
 						prev.insertBefore( textNode , nextNode )
 					}
 				}
-			}
+			} )
 			
 			while( nextNode ) {
 				var currNode = nextNode
