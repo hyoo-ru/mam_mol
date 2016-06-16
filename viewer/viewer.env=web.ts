@@ -101,10 +101,12 @@ class $mol_viewer extends $mol_model {
 			var childNodes = prev.childNodes
 			
 			var nextNode = prev.firstChild
-			childViews.forEach( view => {
+			for( var i = 0 ; i < childViews.length ; ++i ) {
+				var view = childViews[i]
+				
 				if( typeof view === 'object' ) {
 					if( view ) {
-						var existsNode = view['DOMNode']()
+						var existsNode = ( view instanceof $mol_viewer ) ? view.DOMNode() : view
 						while( true ) {
 							if( !nextNode ) {
 								prev.appendChild(existsNode)
@@ -114,17 +116,17 @@ class $mol_viewer extends $mol_model {
 								nextNode = nextNode.nextSibling
 								break
 							} else {
-								// if( childViews.indexOf( nextNode ) === -1 ) {
-								// 	var nn = nextNode.nextSibling
-								// 	prev.removeChild( nextNode )
-								// 	nextNode = nn
-								// } else {
+								if( childViews.indexOf( nextNode ) === -1 ) {
+									var nn = nextNode.nextSibling
+									prev.removeChild( nextNode )
+									nextNode = nn
+								} else {
 									prev.insertBefore(existsNode, nextNode)
 									break
-								// }
+								}
 							}
 						}
-						view['DOMTree']()
+						if( view instanceof $mol_viewer ) view.DOMTree()
 					}
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
@@ -135,7 +137,7 @@ class $mol_viewer extends $mol_model {
 						prev.insertBefore( textNode , nextNode )
 					}
 				}
-			} )
+			}
 			
 			while( nextNode ) {
 				var currNode = nextNode
