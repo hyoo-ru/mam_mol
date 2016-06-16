@@ -43,6 +43,7 @@ class $mol_object {
 	}
 	
 	log( values : any[] ) {
+		if( !$mol_log.filter() ) return
 		$mol_log( this.objectPath() , values )
 	}
 
