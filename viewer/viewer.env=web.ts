@@ -124,7 +124,7 @@ class $mol_viewer extends $mol_model {
 								// }
 							}
 						}
-						view['DOMTree']( void 0 )
+						view['DOMTree']()
 					}
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
