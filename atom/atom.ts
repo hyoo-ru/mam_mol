@@ -57,7 +57,7 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	pull() {
-		this.log( 'pull' )
+		this.log([ 'pull' ])
 		
 		var level = $mol_atom.plan[ this.mastersDeep ]
 		if( level ) level.delete( this )
@@ -94,7 +94,7 @@ class $mol_atom< Value > extends $mol_object {
 				next['objectOwner']( this.host ) // FIXME: type checking
 			}
 			this.host[ this.field ] = next
-			this.log( 'push' , [ next , prev ] )
+			this.log([ 'push' , next , prev ])
 			this.notifySlaves()
 		}
 		return next

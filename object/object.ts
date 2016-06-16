@@ -39,11 +39,11 @@ class $mol_object {
 	}
 	
 	destroy() {
-		this.log( 'destroy' )
+		this.log([ 'destroy' ])
 	}
 	
-	log( ...values : any[] ) {
-		$mol_log( this.objectPath() , ...values )
+	log( values : any[] ) {
+		$mol_log( this.objectPath() , values )
 	}
 
 	static toString() {
