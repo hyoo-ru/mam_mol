@@ -56,10 +56,25 @@ class $mol_state_arg< Value > extends $mol_object {
 		return '#' + chunks.join( '#' )
 	}
 	
-	prefix() { return '' }
+	constructor( public prefix = '' ) {
+		super()
+	}
 	
 	value( key : string , ...diff : Value[] ) {
-		return $mol_state_arg.value( this.prefix() + '.' + key , ...diff )
+		return $mol_state_arg.value( this.prefix + '.' + key , ...diff )
+	}
+	
+	sub( postfix ) {
+		return new $mol_state_arg( this.prefix + postfix + '.' )
+	}
+	
+	link( next : any ) {
+		var prefix = this.prefix
+		var dict = {}
+		for (var key in next) {
+			dict[ prefix + key ] = next[ key ]
+		}
+		return $mol_state_arg.link( dict )
 	}
 	
 }

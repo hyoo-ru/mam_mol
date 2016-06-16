@@ -4,6 +4,10 @@ module $.$mol {
 		everyClicks( ...diff : Event[] ) {
 			if( this.enabled() ) this.clicks( ...diff )
 		}
-		
+
+		tabIndex() {
+			return this.enabled() ? 0 : null
+		}
+
 	}
 }

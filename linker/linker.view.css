@@ -1,0 +1,17 @@
+[mol_linker] {
+	color: inherit;
+	font-weight: bold;
+	text-decoration: none;
+	cursor: default;
+}
+
+[mol_linker_current="false"] {
+	color: var( --mol_skin_base_back );
+	cursor: pointer;
+}
+
+[mol_linker]:focus ,
+[mol_linker_current="false"]:hover {
+	outline: none;
+	text-decoration: underline;
+}

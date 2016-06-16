@@ -8,7 +8,7 @@ module $.$mol {
 				if( !/^\$.*_demo($|_)/.test( name ) ) continue
 				if( /^\$mol_demo_all/.test( name ) ) continue
 				if( typeof $[ name ] !== 'function' ) continue
-				demos.push( this.item( name ) )
+				demos.push( this.item( name.substring( 1 ) ) )
 			}
 			return demos
 		}
@@ -22,8 +22,10 @@ module $.$mol {
 		
 		@ $mol_prop()
 		widget( name : string ) {
-			var Demo = $[ name ]
-			return new Demo
+			var Demo = $[ '$' + name ]
+			return new Demo().setup( obj => {
+				obj.argument = () => this.argument().sub( name )
+			} )
 		}
 		
 	}
