@@ -178,6 +178,14 @@
 					"mol/scroller/scroller.view.ts"
 				]
 			},
+			"mol/linker": {
+				":priority": 3,
+				"": [
+					"mol/linker/linker.view.css",
+					"mol/linker/linker.view.tree",
+					"mol/linker/linker.view.ts"
+				]
+			},
 			"": [
 				"mol/demo/all/all.view.css",
 				"mol/demo/all/all.view.tree",
@@ -222,16 +230,6 @@
 			"": [
 				"mol/demo/signup/signup.view.tree",
 				"mol/demo/signup/signup.view.ts"
-			]
-		}
-	},
-	{
-		"mol/linker": {
-			":priority": 0,
-			"": [
-				"mol/linker/linker.view.css",
-				"mol/linker/linker.view.tree",
-				"mol/linker/linker.view.ts"
 			]
 		}
 	},

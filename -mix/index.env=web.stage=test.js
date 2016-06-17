@@ -914,7 +914,7 @@ var $mol_state_arg = (function (_super) {
         for (var _i = 1; _i < arguments.length; _i++) {
             diff[_i - 1] = arguments[_i];
         }
-        return $mol_state_arg.value.apply($mol_state_arg, [this.prefix + '.' + key].concat(diff));
+        return $mol_state_arg.value.apply($mol_state_arg, [this.prefix + key].concat(diff));
     };
     $mol_state_arg.prototype.sub = function (postfix) {
         return new $mol_state_arg(this.prefix + postfix + '.');
@@ -2283,11 +2283,136 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var $;
 (function ($) {
+    var $mol_linker = (function (_super) {
+        __extends($mol_linker, _super);
+        function $mol_linker() {
+            _super.apply(this, arguments);
+        }
+        $mol_linker.prototype.tagName = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return "a";
+        };
+        $mol_linker.prototype.uri = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return "";
+        };
+        $mol_linker.prototype.current = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (false);
+        };
+        $mol_linker.prototype.attr = function (key) {
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            switch (key) {
+                case "href": return this.uri();
+                case "mol_linker_current": return this.current();
+                default: return _super.prototype.attr.call(this, key);
+            }
+        };
+        $mol_linker.prototype.attr_keys = function () {
+            return (_super.prototype.attr_keys.call(this) || []).concat(["href", "mol_linker_current"]);
+        };
+        $mol_linker.prototype.patch = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (null);
+        };
+        return $mol_linker;
+    }($mol_viewer));
+    $.$mol_linker = $mol_linker;
+})($ || ($ = {}));
+//# sourceMappingURL=linker.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_linker = (function (_super) {
+            __extends($mol_linker, _super);
+            function $mol_linker() {
+                _super.apply(this, arguments);
+            }
+            $mol_linker.prototype.uri = function () {
+                return this.argument().link(this.patch());
+            };
+            $mol_linker.prototype.current = function () {
+                return this.uri() === $mol_state_arg.link({});
+            };
+            __decorate([
+                $mol_prop()
+            ], $mol_linker.prototype, "uri", null);
+            return $mol_linker;
+        }($.$mol_linker));
+        $mol.$mol_linker = $mol_linker;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//# sourceMappingURL=linker.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
     var $mol_demo_all = (function (_super) {
         __extends($mol_demo_all, _super);
         function $mol_demo_all() {
             _super.apply(this, arguments);
         }
+        $mol_demo_all.prototype.options = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return [].concat();
+        };
+        $mol_demo_all.prototype.selector = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return new $mol_viewer().setup(function (_) {
+                _.childs = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.options();
+                };
+            });
+        };
         $mol_demo_all.prototype.items = function () {
             var diff = [];
             for (var _i = 0; _i < arguments.length; _i++) {
@@ -2295,15 +2420,37 @@ var $;
             }
             return [].concat();
         };
+        $mol_demo_all.prototype.lister = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return new $.$mol_scroller().setup(function (_) {
+                _.childs = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.items();
+                };
+            });
+        };
         $mol_demo_all.prototype.childs = function () {
             var diff = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return [].concat(this.items().valueOf());
+            return [].concat(this.selector().valueOf(), this.lister().valueOf());
         };
+        __decorate([
+            $mol_prop()
+        ], $mol_demo_all.prototype, "selector", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_demo_all.prototype, "lister", null);
         return $mol_demo_all;
-    }($.$mol_scroller));
+    }($mol_viewer));
     $.$mol_demo_all = $mol_demo_all;
 })($ || ($ = {}));
 var $;
@@ -2353,8 +2500,8 @@ var $;
             function $mol_demo_all() {
                 _super.apply(this, arguments);
             }
-            $mol_demo_all.prototype.items = function () {
-                var demos = [];
+            $mol_demo_all.prototype.names = function () {
+                var names = [];
                 for (var name in $) {
                     if (!/^\$.*_demo($|_)/.test(name))
                         continue;
@@ -2362,9 +2509,36 @@ var $;
                         continue;
                     if (typeof $[name] !== 'function')
                         continue;
-                    demos.push(this.item(name.substring(1)));
+                    names.push(name.substring(1));
                 }
-                return demos;
+                return names;
+            };
+            $mol_demo_all.prototype.options = function () {
+                var _this = this;
+                return [null].concat(this.names()).map(function (name) { return _this.option(name); });
+            };
+            $mol_demo_all.prototype.items = function () {
+                var _this = this;
+                var selected = this.selected();
+                if (selected) {
+                    return [
+                        this.itemMedium(selected),
+                        this.itemSmall(selected),
+                        this.itemLarge(selected),
+                    ];
+                }
+                else {
+                    return this.names().map(function (name) { return _this.item(name); });
+                }
+            };
+            $mol_demo_all.prototype.selected = function () {
+                return this.argument().value('details');
+            };
+            $mol_demo_all.prototype.option = function (name) {
+                return new $mol.$mol_linker().setup(function (obj) {
+                    obj.childs = function () { return [name ? ('$' + name) : 'All']; };
+                    obj.patch = function () { return ({ details: name }); };
+                });
             };
             $mol_demo_all.prototype.item = function (name) {
                 var _this = this;
@@ -2372,19 +2546,55 @@ var $;
                     obj.widget = function () { return [].concat(_this.widget(name)); };
                 });
             };
+            $mol_demo_all.prototype.itemLarge = function (name) {
+                var _this = this;
+                return new $.$mol_demo_all_item().setup(function (obj) {
+                    obj.widget = function () { return [].concat(_this.widget(name + ':large')); };
+                });
+            };
+            $mol_demo_all.prototype.itemMedium = function (name) {
+                var _this = this;
+                return new $.$mol_demo_all_item().setup(function (obj) {
+                    obj.widget = function () { return [].concat(_this.widget(name + ':medium')); };
+                });
+            };
+            $mol_demo_all.prototype.itemSmall = function (name) {
+                var _this = this;
+                return new $.$mol_demo_all_item().setup(function (obj) {
+                    obj.widget = function () { return [].concat(_this.widget(name + ':small')); };
+                });
+            };
             $mol_demo_all.prototype.widget = function (name) {
                 var _this = this;
-                var Demo = $['$' + name];
+                var Demo = $['$' + name.split(':')[0]];
                 return new Demo().setup(function (obj) {
                     obj.argument = function () { return _this.argument().sub(name); };
                 });
             };
             __decorate([
                 $mol_prop()
+            ], $mol_demo_all.prototype, "names", null);
+            __decorate([
+                $mol_prop()
+            ], $mol_demo_all.prototype, "options", null);
+            __decorate([
+                $mol_prop()
             ], $mol_demo_all.prototype, "items", null);
             __decorate([
                 $mol_prop()
+            ], $mol_demo_all.prototype, "option", null);
+            __decorate([
+                $mol_prop()
             ], $mol_demo_all.prototype, "item", null);
+            __decorate([
+                $mol_prop()
+            ], $mol_demo_all.prototype, "itemLarge", null);
+            __decorate([
+                $mol_prop()
+            ], $mol_demo_all.prototype, "itemMedium", null);
+            __decorate([
+                $mol_prop()
+            ], $mol_demo_all.prototype, "itemSmall", null);
             __decorate([
                 $mol_prop()
             ], $mol_demo_all.prototype, "widget", null);
@@ -3378,102 +3588,6 @@ var $;
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));
 //# sourceMappingURL=signup.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol_linker = (function (_super) {
-        __extends($mol_linker, _super);
-        function $mol_linker() {
-            _super.apply(this, arguments);
-        }
-        $mol_linker.prototype.tagName = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return "a";
-        };
-        $mol_linker.prototype.uri = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return "";
-        };
-        $mol_linker.prototype.current = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (false);
-        };
-        $mol_linker.prototype.attr = function (key) {
-            var diff = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                diff[_i - 1] = arguments[_i];
-            }
-            switch (key) {
-                case "href": return this.uri();
-                case "mol_linker_current": return this.current();
-                default: return _super.prototype.attr.call(this, key);
-            }
-        };
-        $mol_linker.prototype.attr_keys = function () {
-            return (_super.prototype.attr_keys.call(this) || []).concat(["href", "mol_linker_current"]);
-        };
-        $mol_linker.prototype.patch = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (null);
-        };
-        return $mol_linker;
-    }($mol_viewer));
-    $.$mol_linker = $mol_linker;
-})($ || ($ = {}));
-//# sourceMappingURL=linker.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_linker = (function (_super) {
-            __extends($mol_linker, _super);
-            function $mol_linker() {
-                _super.apply(this, arguments);
-            }
-            $mol_linker.prototype.uri = function () {
-                return this.argument().link(this.patch());
-            };
-            $mol_linker.prototype.current = function () {
-                return this.uri() === $mol_state_arg.href();
-            };
-            __decorate([
-                $mol_prop()
-            ], $mol_linker.prototype, "uri", null);
-            return $mol_linker;
-        }($.$mol_linker));
-        $mol.$mol_linker = $mol_linker;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//# sourceMappingURL=linker.view.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
