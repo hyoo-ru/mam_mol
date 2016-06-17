@@ -4096,7 +4096,7 @@ var $;
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return new $.$mol_clicker_major().setup(function (_) {
+            return new $.$mol_clicker_minor().setup(function (_) {
                 _.childs = function () {
                     var diff = [];
                     for (var _i = 0; _i < arguments.length; _i++) {
