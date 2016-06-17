@@ -83,7 +83,7 @@
 	box-shadow: 0 0 0 1px  ;
 	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .25 );
 	border-radius:  ;
-	border-radius: .25rem;
+	border-radius: 2px;
 	-webkit-box-flex: .001;
 	    -ms-flex: .001 1 auto;
 	        flex: .001 1 auto;
@@ -154,7 +154,7 @@
 	content: '✔';
 	color: transparent;
 	border-radius:  ;
-	border-radius: .25rem;
+	border-radius: 2px;
 	width: 19px;
 	width: 1.2rem;
 	height: 19px;
@@ -242,10 +242,10 @@
 	background: rgba( 0 , 0 , 0 , .1 );
 }
 [mol_scroller]::-webkit-scrollbar-thumb {
-	background:  ;
-	background: #EFB678;
+	background: rgba( 0 , 0 , 0 , .4 );
+	/*background: var( --mol_skin_accent_fore );*/
 	border-radius:  ;
-	border-radius: .25rem;
+	border-radius: 2px;
 	/*border: 1px solid var( --mol_skin_light_fore );*/
 }
 [mol_linker] {
@@ -286,7 +286,7 @@
 	background:  ;
 	background: #F7FAFC;
 	border-radius:  ;
-	border-radius: .25rem;
+	border-radius: 2px;
 	margin: 2vmin 0 2vmin 2vmin;
 }
 [mol_demo_all_selector] > * {
@@ -328,7 +328,7 @@
 	background:  ;
 	background: #F7FAFC;
 	border-radius:  ;
-	border-radius: .25rem;
+	border-radius: 2px;
 	overflow: auto;
 	position: relative;
 }
@@ -406,7 +406,7 @@
 	box-shadow: 0 0 0 1px  ;
 	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .25 );
 	border-radius:  ;
-	border-radius: .25rem;
+	border-radius: 2px;
 	white-space: nowrap;
 	overflow: hidden;
 	padding: 8px;
