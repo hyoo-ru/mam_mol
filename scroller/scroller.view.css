@@ -26,7 +26,8 @@
 }
 
 [mol_scroller]::-webkit-scrollbar-thumb {
-	background: var( --mol_skin_accent_fore );
+	background: rgba( 0 , 0 , 0 , .4 );
+	/*background: var( --mol_skin_accent_fore );*/
 	border-radius: var( --mol_skin_round );
 	/*border: 1px solid var( --mol_skin_light_fore );*/
 }
