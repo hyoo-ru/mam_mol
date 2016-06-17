@@ -1,3 +1,13 @@
+@keyframes mol_viewer_show {
+	from {
+		opacity: 0;
+	}
+}
+
+[mol_viewer] {
+	animation: mol_viewer_show .1s ease;
+}
+
 [mol_viewer_error] {
 	background-image: repeating-linear-gradient(
 		45deg,
