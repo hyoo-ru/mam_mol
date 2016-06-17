@@ -10,3 +10,7 @@
 [mol_rower] > * {
 	margin: 1vmin;
 }
+
+[mol_rower]:nth-child(even) {
+	background: rgba( 0 , 0 , 0 , .025 );
+}

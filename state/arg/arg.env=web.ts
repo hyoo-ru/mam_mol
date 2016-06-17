@@ -61,7 +61,7 @@ class $mol_state_arg< Value > extends $mol_object {
 	}
 	
 	value( key : string , ...diff : Value[] ) {
-		return $mol_state_arg.value( this.prefix + '.' + key , ...diff )
+		return $mol_state_arg.value( this.prefix + key , ...diff )
 	}
 	
 	sub( postfix ) {

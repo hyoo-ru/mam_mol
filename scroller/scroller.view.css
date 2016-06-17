@@ -5,6 +5,7 @@
 	flex: 1 1 auto;
 	box-sizing: border-box;
 	/*will-change: scroll-position;*/
+	transform: translateZ(0);
 }
 
 @media print {
@@ -21,11 +22,11 @@
 }
 
 [mol_scroller]::-webkit-scrollbar-track {
-	/*background: var( --mol_skin_light_back );*/
-	background: transparent;
+	background: rgba( 0 , 0 , 0 , .1 );
 }
 
 [mol_scroller]::-webkit-scrollbar-thumb {
 	background: var( --mol_skin_accent_fore );
 	border-radius: var( --mol_skin_round );
+	/*border: 1px solid var( --mol_skin_light_fore );*/
 }
