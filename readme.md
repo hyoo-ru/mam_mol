@@ -42,6 +42,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_log](log) - logging
 * [$mol_test](test) - unit testing
 * [$mol_skin](skin) - theming
+* [$mol_range](range) - lazy array
 
 ## [State modules](state)
 
@@ -62,6 +63,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_scroller](scroller) - scroll pane with position saving
 * [$mol_tiler](tiler) - items in row with wrapping
 * [$mol_rower](rower) - items in row with wrapping and padding between
+* [$mol_lister](lister) - vertical list of rows with lazy rendering support
 
 ## Complex components
 
