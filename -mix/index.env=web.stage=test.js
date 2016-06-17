@@ -4204,7 +4204,7 @@ var $;
             $mol_lister_demo.prototype.rows = function () {
                 var _this = this;
                 return new $mol_range_lazy({
-                    get: function (id) { return _this.rower(id); },
+                    get: function (id) { return _this.rower(id + 1); },
                     length: 1000,
                 });
             };

@@ -1,3 +1,20 @@
+@-webkit-keyframes mol_viewer_show {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes mol_viewer_show {
+	from {
+		opacity: 0;
+	}
+}
+
+[mol_viewer] {
+	-webkit-animation: mol_viewer_show .1s ease;
+	        animation: mol_viewer_show .1s ease;
+}
+
 [mol_viewer_error] {
 	background-image: -webkit-repeating-linear-gradient(45deg, rgba(255,220,220,1), rgba(255,220,220,1) 11px, rgba(255,255,220,1) 10px, rgba(255,255,220,1) 20px) !important;
 	background-image: repeating-linear-gradient(
@@ -142,6 +159,12 @@
 	width: 1.2rem;
 	height: 19px;
 	height: 1.2rem;
+	-webkit-box-flex: 0;
+	    -ms-flex: 0 0 19px;
+	        flex: 0 0 19px;
+	-webkit-box-flex: 0;
+	    -ms-flex: 0 0 1.2rem;
+	        flex: 0 0 1.2rem;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -154,6 +177,8 @@
 	    -ms-flex-align: center;
 	        align-items: center;
 	opacity: .75;
+	-webkit-transform: translateZ(0);
+	        transform: translateZ(0);
 }
 [mol_checker]:not(:empty):before {
 	margin-right: 8px;
@@ -417,9 +442,7 @@
 	z-index: -1;
 }
 [mol_switcher]:before {
-	content: '•';
-	font-size: 32px;
-	font-size: 2rem;
+	content: '⚫';
 	border-radius: 50%;
 }
 [mol_tiler] {
