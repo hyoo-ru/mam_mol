@@ -1,5 +1,4 @@
 [mol_switcher]:before {
-	content: '•';
-	font-size: 2rem;
+	content: '⚫';
 	border-radius: 50%;
 }

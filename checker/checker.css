@@ -20,11 +20,13 @@
 	border-radius: var( --mol_skin_round );
 	width: 1.2rem;
 	height: 1.2rem;
+	flex: 0 0 1.2rem;
 	display: flex;
 	align-content: center;
 	justify-content: center;
 	align-items: center;
 	opacity: .75;
+	transform: translateZ(0);
 }
 
 [mol_checker]:not(:empty):before {
