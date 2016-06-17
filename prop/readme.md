@@ -37,10 +37,10 @@ userName() // "jin" - get user name
 ```
 
 ```ts
-userName( 'mar' , 'mary' ) // "jiny" - patch user name
+userName( 'mary' , 'mar' ) // set to "jiny" if patch supported, or "mary" if not
 ```
 
-Чтобы сделать свойство реактивным (кешируемым с автоматической инвалидацией), достаточно воспользоваться декоратором, использующим под капотом [$mol_atom](../atom):
+Чтобы сделать свойство реактивным (кешируемым с автоматической инвалидацией), достаточно воспользоваться декоратором [$mol_prop](../prop), использующим под капотом [$mol_atom](../atom):
 
 ```ts
 @ $mol_prop()
@@ -63,7 +63,7 @@ userName( ...diff : string[] ) { // getter/setter
 @ $mol_prop()
 userName( ...diff : string[] ) { // getter/setter
 	var next = $mol_state_local.value( 'name' , ...diff ) // delegate getter/setter
-	return next[0] // return next value
+	return next // return next value
 }
 ```
 
@@ -112,7 +112,7 @@ userName( 0 ) // "jin" - get user#0 name
 ```
 
 ```ts
-userName( 0 , 'mar' , 'mary' ) // "jiny" - patch user#0 name
+userName( 0 , 'mary' , 'mar' ) // set user#0 name to "jiny" if patch supported, or "mary" if not. 
 ```
 
 В качестве ключа можно использовать любое, сериализуемое в JSON значение, например:
