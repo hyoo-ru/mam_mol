@@ -54,27 +54,27 @@ module $.$mol {
 		@ $mol_prop()
 		itemLarge( name : string ) {
 			return new $mol_demo_all_item().setup( obj => {
-				obj.widget = () => [].concat( this.widget( name + ':large' ) )
+				obj.widget = () => [].concat( this.widget( name + '-large' ) )
 			} )
 		}
 
 		@ $mol_prop()
 		itemMedium( name : string ) {
 			return new $mol_demo_all_item().setup( obj => {
-				obj.widget = () => [].concat( this.widget( name + ':medium' ) )
+				obj.widget = () => [].concat( this.widget( name + '-medium' ) )
 			} )
 		}
 
 		@ $mol_prop()
 		itemSmall( name : string ) {
 			return new $mol_demo_all_item().setup( obj => {
-				obj.widget = () => [].concat( this.widget( name + ':small' ) )
+				obj.widget = () => [].concat( this.widget( name + '-small' ) )
 			} )
 		}
 
 		@ $mol_prop()
 		widget( name : string ) {
-			var Demo = $[ '$' + name.split( ':' )[0] ]
+			var Demo = $[ '$' + name.split( '-' )[0] ]
 			return new Demo().setup( obj => {
 				obj.argument = () => this.argument().sub( name )
 			} )

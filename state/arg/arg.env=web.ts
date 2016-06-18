@@ -35,7 +35,6 @@ class $mol_state_arg< Value > extends $mol_object {
 		
 		var prev = this.dict()
 		for( var key in prev ) {
-			if( key in next ) continue
 			params[ key ] = prev[ key ]
 		}
 		
