@@ -774,7 +774,7 @@ var $mol_state_local = (function (_super) {
     ], $mol_state_local, "value", null);
     return $mol_state_local;
 }($mol_object));
-window.addEventListener('storage', function (event) { return $mol_state_local.value(event.key, null); });
+window.addEventListener('storage', function (event) { return $mol_state_local.value(event.key, void 0); });
 //# sourceMappingURL=local.js.map
 ;
 $mol_test(function (test) {
@@ -891,8 +891,6 @@ var $mol_state_arg = (function (_super) {
         var params = {};
         var prev = this.dict();
         for (var key in prev) {
-            if (key in next)
-                continue;
             params[key] = prev[key];
         }
         for (var key in next) {
@@ -2549,24 +2547,24 @@ var $;
             $mol_demo_all.prototype.itemLarge = function (name) {
                 var _this = this;
                 return new $.$mol_demo_all_item().setup(function (obj) {
-                    obj.widget = function () { return [].concat(_this.widget(name + ':large')); };
+                    obj.widget = function () { return [].concat(_this.widget(name + '-large')); };
                 });
             };
             $mol_demo_all.prototype.itemMedium = function (name) {
                 var _this = this;
                 return new $.$mol_demo_all_item().setup(function (obj) {
-                    obj.widget = function () { return [].concat(_this.widget(name + ':medium')); };
+                    obj.widget = function () { return [].concat(_this.widget(name + '-medium')); };
                 });
             };
             $mol_demo_all.prototype.itemSmall = function (name) {
                 var _this = this;
                 return new $.$mol_demo_all_item().setup(function (obj) {
-                    obj.widget = function () { return [].concat(_this.widget(name + ':small')); };
+                    obj.widget = function () { return [].concat(_this.widget(name + '-small')); };
                 });
             };
             $mol_demo_all.prototype.widget = function (name) {
                 var _this = this;
-                var Demo = $['$' + name.split(':')[0]];
+                var Demo = $['$' + name.split('-')[0]];
                 return new Demo().setup(function (obj) {
                     obj.argument = function () { return _this.argument().sub(name); };
                 });
