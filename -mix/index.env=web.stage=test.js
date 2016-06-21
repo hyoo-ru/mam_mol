@@ -2135,6 +2135,26 @@ var $;
         function $mol_stacker() {
             _super.apply(this, arguments);
         }
+        $mol_stacker.prototype.addonerBlures = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (null);
+        };
+        $mol_stacker.prototype.event = function (key) {
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            switch (key) {
+                case "click": return this.addonerBlures.apply(this, diff);
+                default: return _super.prototype.event.call(this, key);
+            }
+        };
+        $mol_stacker.prototype.event_keys = function () {
+            return (_super.prototype.event_keys.call(this) || []).concat(["click"]);
+        };
         $mol_stacker.prototype.main = function () {
             var diff = [];
             for (var _i = 0; _i < arguments.length; _i++) {
@@ -2148,7 +2168,7 @@ var $;
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return new $mol_viewer().setup(function (_) {
+            return new $.$mol_stacker_mainer().setup(function (_) {
                 _.childs = function () {
                     var diff = [];
                     for (var _i = 0; _i < arguments.length; _i++) {
@@ -2157,6 +2177,13 @@ var $;
                     return [].concat(_this.main().valueOf());
                 };
             });
+        };
+        $mol_stacker.prototype.addonerFocused = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (false);
         };
         $mol_stacker.prototype.addon = function () {
             var diff = [];
@@ -2171,7 +2198,14 @@ var $;
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return new $mol_viewer().setup(function (_) {
+            return new $.$mol_stacker_addoner().setup(function (_) {
+                _.focused = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.addonerFocused.apply(_this, diff);
+                };
                 _.childs = function () {
                     var diff = [];
                     for (var _i = 0; _i < arguments.length; _i++) {
@@ -2198,7 +2232,137 @@ var $;
     }($mol_viewer));
     $.$mol_stacker = $mol_stacker;
 })($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_stacker_mainer = (function (_super) {
+        __extends($mol_stacker_mainer, _super);
+        function $mol_stacker_mainer() {
+            _super.apply(this, arguments);
+        }
+        return $mol_stacker_mainer;
+    }($mol_viewer));
+    $.$mol_stacker_mainer = $mol_stacker_mainer;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_stacker_addoner = (function (_super) {
+        __extends($mol_stacker_addoner, _super);
+        function $mol_stacker_addoner() {
+            _super.apply(this, arguments);
+        }
+        $mol_stacker_addoner.prototype.focused = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (false);
+        };
+        $mol_stacker_addoner.prototype.attr = function (key) {
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            switch (key) {
+                case "mol_stacker_focused": return this.focused();
+                default: return _super.prototype.attr.call(this, key);
+            }
+        };
+        $mol_stacker_addoner.prototype.attr_keys = function () {
+            return (_super.prototype.attr_keys.call(this) || []).concat(["mol_stacker_focused"]);
+        };
+        $mol_stacker_addoner.prototype.focuses = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (null);
+        };
+        $mol_stacker_addoner.prototype.event = function (key) {
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            switch (key) {
+                case "mousemove": return this.focuses.apply(this, diff);
+                case "touchmove": return this.focuses.apply(this, diff);
+                case "pointermove": return this.focuses.apply(this, diff);
+                default: return _super.prototype.event.call(this, key);
+            }
+        };
+        $mol_stacker_addoner.prototype.event_keys = function () {
+            return (_super.prototype.event_keys.call(this) || []).concat(["mousemove", "touchmove", "pointermove"]);
+        };
+        return $mol_stacker_addoner;
+    }($mol_viewer));
+    $.$mol_stacker_addoner = $mol_stacker_addoner;
+})($ || ($ = {}));
 //# sourceMappingURL=stacker.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_stacker = (function (_super) {
+            __extends($mol_stacker, _super);
+            function $mol_stacker() {
+                _super.apply(this, arguments);
+            }
+            $mol_stacker.prototype.addonerBlures = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                this.addonerFocused(false);
+            };
+            $mol_stacker.prototype.addonerFocused = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                this.main();
+                return diff[0] || false;
+            };
+            __decorate([
+                $mol_prop()
+            ], $mol_stacker.prototype, "addonerFocused", null);
+            return $mol_stacker;
+        }($.$mol_stacker));
+        $mol.$mol_stacker = $mol_stacker;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_stacker_addoner = (function (_super) {
+            __extends($mol_stacker_addoner, _super);
+            function $mol_stacker_addoner() {
+                _super.apply(this, arguments);
+            }
+            $mol_stacker_addoner.prototype.focuses = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                this.focused(true);
+            };
+            return $mol_stacker_addoner;
+        }($.$mol_stacker_addoner));
+        $mol.$mol_stacker_addoner = $mol_stacker_addoner;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//# sourceMappingURL=stacker.view.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2467,29 +2631,6 @@ var $;
         function $mol_demo_all() {
             _super.apply(this, arguments);
         }
-        $mol_demo_all.prototype.options = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return [].concat();
-        };
-        $mol_demo_all.prototype.addoner = function () {
-            var _this = this;
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return new $.$mol_scroller().setup(function (_) {
-                _.childs = function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    return _this.options();
-                };
-            });
-        };
         $mol_demo_all.prototype.items = function () {
             var diff = [];
             for (var _i = 0; _i < arguments.length; _i++) {
@@ -2520,12 +2661,42 @@ var $;
             }
             return this.lister();
         };
-        __decorate([
-            $mol_prop()
-        ], $mol_demo_all.prototype, "addoner", null);
+        $mol_demo_all.prototype.options = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return [].concat();
+        };
+        $mol_demo_all.prototype.optioner = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return new $.$mol_scroller().setup(function (_) {
+                _.childs = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.options();
+                };
+            });
+        };
+        $mol_demo_all.prototype.addon = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return this.optioner();
+        };
         __decorate([
             $mol_prop()
         ], $mol_demo_all.prototype, "lister", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_demo_all.prototype, "optioner", null);
         return $mol_demo_all;
     }($.$mol_stacker));
     $.$mol_demo_all = $mol_demo_all;
