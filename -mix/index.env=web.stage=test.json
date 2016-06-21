@@ -170,6 +170,13 @@
 	{
 		"mol/demo/all": {
 			":priority": 0,
+			"mol/stacker": {
+				":priority": 0,
+				"": [
+					"mol/stacker/stacker.view.css",
+					"mol/stacker/stacker.view.tree"
+				]
+			},
 			"mol/scroller": {
 				":priority": 0,
 				"": [
@@ -289,6 +296,15 @@
 			":priority": 0,
 			"": [
 				"mol/skin/skin.view.css"
+			]
+		}
+	},
+	{
+		"mol/stacker/demo": {
+			":priority": 0,
+			"": [
+				"mol/stacker/demo/demo.view.css",
+				"mol/stacker/demo/demo.view.tree"
 			]
 		}
 	},
