@@ -1,5 +1,5 @@
-$mol_demo_all $mol_viewer childs /
-	< selector $mol_viewer childs < options /
-	< lister $mol_scroller childs < items /
+$mol_demo_all $mol_stacker
+	addoner $mol_scroller childs < options /
+	main < lister $mol_scroller childs < items /
 
 $mol_demo_all_item $mol_scroller childs / < widget : null

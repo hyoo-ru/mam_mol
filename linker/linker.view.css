@@ -6,7 +6,7 @@
 }
 
 [mol_linker_current="false"] {
-	color: var( --mol_skin_base_back );
+	color: var( --mol_skin_focus_back );
 	cursor: pointer;
 }
 

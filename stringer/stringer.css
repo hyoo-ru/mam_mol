@@ -21,7 +21,7 @@
 
 [mol_stringer][contentEditable="true"]:hover ,
 [mol_stringer]:focus {
-	box-shadow: 0 0 0 1px var( --mol_skin_base_back );
+	box-shadow: 0 0 0 1px var( --mol_skin_focus_back );
 	outline: none;
 	z-index: 1;
 }

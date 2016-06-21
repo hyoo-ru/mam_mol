@@ -1,0 +1,3 @@
+$mol_stacker $mol_viewer childs /
+	< mainer $mol_viewer childs / < main : null
+	< addoner $mol_viewer childs / < addon : null

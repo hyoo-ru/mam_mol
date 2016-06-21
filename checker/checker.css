@@ -10,7 +10,7 @@
 
 [mol_checker][mol_clicker_enabled="true"]:hover:before ,
 [mol_checker_checked="true"]:before {
-	background: var( --mol_skin_base_back );
+	background: var( --mol_skin_focus_back );
 	box-shadow: none;
 }
 
@@ -39,5 +39,5 @@
 }
 
 [mol_checker_checked="true"]:before {
-	color: var( --mol_skin_base_fore );
+	color: var( --mol_skin_focus_fore );
 }

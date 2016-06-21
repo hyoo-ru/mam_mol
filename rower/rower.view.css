@@ -8,7 +8,7 @@
 }
 
 [mol_rower] > * {
-	margin: 1vmin;
+	margin: .5rem;
 }
 
 [mol_rower]:nth-child(even) {
