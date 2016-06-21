@@ -21,20 +21,20 @@ class $mol_viewer extends $mol_model {
 	
 	private 'DOMNode()' : Element
 	DOMNode( ...diff : Element[] ) {
+		var path = this.objectPath()
+		
 		var next = diff[0]
 		if( !next ) {
 			next = this['DOMNode()']
 			if( next ) return next
 			
-			var path = this.objectPath()
 			next = document.getElementById( path )
 			if( !next ) {
 				next = document.createElementNS( this.nameSpace() , this.tagName() )
-				next.id = path
 			}
 		}
+		next.id = path
 		this['DOMNode()'] = next
-		next['$mol_viewer'] = this
 		
 		/// Set BEM-like element-attributes with inheritance support
 		var proto1 = this.objectOwner()
@@ -105,7 +105,7 @@ class $mol_viewer extends $mol_model {
 				
 				if( typeof view === 'object' ) {
 					if( view ) {
-						var existsNode = ( view instanceof $mol_viewer ) ? view.DOMNode() : view
+						var existsNode = ( view instanceof $mol_viewer ) ? view.DOMTree() : view
 						while( true ) {
 							if( !nextNode ) {
 								prev.appendChild(existsNode)
@@ -125,7 +125,7 @@ class $mol_viewer extends $mol_model {
 								}
 							}
 						}
-						if( view instanceof $mol_viewer ) view.DOMTree()
+						// if( view instanceof $mol_viewer ) view.DOMTree()
 					}
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
@@ -154,7 +154,8 @@ class $mol_viewer extends $mol_model {
 			}
 			var field = names[ names.length - 1 ]
 			var val = this.field( path )
-			if( obj[ field ] !== val ) obj[ field ] = val
+			//if( obj[ field ] !== val ) 
+			obj[ field ] = val
 		} )
 		
 		prev.removeAttribute( 'mol_viewer_error' )
