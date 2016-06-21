@@ -3,13 +3,13 @@
 	height: 100%;
 }
 
-[mol_demo_all_addoner] {
+[mol_demo_all_optioner] {
 	display: flex;
 	flex-direction: column;
 	padding: 1vmin;
 }
 
-[mol_demo_all_addoner] > * {
+[mol_demo_all_optioner] > * {
 	margin: .5rem;
 }
 

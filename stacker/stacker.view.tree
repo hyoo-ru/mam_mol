@@ -1,3 +1,13 @@
 $mol_stacker $mol_viewer childs /
-	< mainer $mol_viewer childs / < main : null
-	< addoner $mol_viewer childs / < addon : null
+	< mainer $mol_stacker_panel
+		focused > mainerFocused : true
+		childs / < main : null
+	< addoner $mol_stacker_panel
+		focused > addonerFocused : false
+		childs / < addon : null
+
+$mol_stacker_panel $mol_viewer
+	attr * mol_stacker_focused < focused : false
+	event *
+		click > focuses : null
+		touchmove > focuses : null

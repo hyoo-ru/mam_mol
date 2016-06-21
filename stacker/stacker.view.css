@@ -32,9 +32,12 @@
 	background: var( --mol_skin_base_back );
 	color: var( --mol_skin_base_fore );
 	flex: 0 1 auto;
+	display: flex;
 	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	z-index: 0;
+	max-width: calc( 100% - 1rem );
 }
 
-[mol_stacker_addoner]:hover {
+[mol_stacker_focused="true"] {
 	z-index: 1;
 }
