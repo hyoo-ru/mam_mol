@@ -274,8 +274,13 @@
 	-webkit-box-flex: 0;
 	    -ms-flex: 0 1 auto;
 	        flex: 0 1 auto;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
 	box-shadow: 0 0 0 1px  ;
 	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .2 );
+	z-index: 0;
+	max-width: calc( 100% - 1rem );
 }
 [mol_stacker_focused="true"] {
 	z-index: 1;
