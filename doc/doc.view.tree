@@ -1,0 +1,5 @@
+$mol_doc $mol_viewer childs /
+	< header $mol_viewer childs < head / < title =
+	< body /
+
+$mol_doc_text $mol_viewer

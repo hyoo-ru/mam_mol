@@ -103,12 +103,12 @@ class $mol_viewer extends $mol_model {
 			for( var i = 0 ; i < childViews.length ; ++i ) {
 				var view = childViews[i]
 				
-				if( typeof view === 'object' ) {
-					if( view ) {
+				if( view != null ) {
+					if( typeof view === 'object' ) {
 						var existsNode = ( view instanceof $mol_viewer ) ? view.DOMTree() : view
 						while( true ) {
 							if( !nextNode ) {
-								prev.appendChild(existsNode)
+								prev.appendChild( existsNode )
 								break
 							}
 							if( nextNode == existsNode ) {
@@ -120,22 +120,22 @@ class $mol_viewer extends $mol_model {
 									prev.removeChild( nextNode )
 									nextNode = nn
 								} else {
-									prev.insertBefore(existsNode, nextNode)
+									prev.insertBefore( existsNode , nextNode )
 									break
 								}
 							}
 						}
 						// if( view instanceof $mol_viewer ) view.DOMTree()
-					}
-				} else {
-					if( nextNode && nextNode.nodeName === '#text' ) {
-						nextNode.nodeValue = String( view )
-						nextNode = nextNode.nextSibling
 					} else {
-						var textNode = document.createTextNode( String( view ) )
-						prev.insertBefore( textNode , nextNode )
+						if( nextNode && nextNode.nodeName === '#text' ) {
+							nextNode.nodeValue = String( view )
+							nextNode = nextNode.nextSibling
+						} else {
+							var textNode = document.createTextNode( String( view ) )
+							prev.insertBefore( textNode , nextNode )
+						}
 					}
-				}
+				}	
 			}
 			
 			while( nextNode ) {

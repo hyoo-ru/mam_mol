@@ -24,7 +24,7 @@
 [mol_clicker_enabled="true"]:hover ,
 [mol_clicker]:focus {
 	outline: none;
-	box-shadow: 0 0 0 1px var( --mol_skin_focus_back );
+	box-shadow: 0 0 0 2px var( --mol_skin_focus_back );
 	position: relative;
 	z-index: 1;
 	cursor: pointer;

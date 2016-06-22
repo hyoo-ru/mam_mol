@@ -1,0 +1,6 @@
+$mol_checker_doc $mol_doc body /
+	< description $mol_doc_text childs /
+		= Кнопка, переключающая состояние булевого свойства checked().
+		= Визуально показывает это состояние.
+		= Изменяемость состояния определяется свойством enabled().
+	< screens $mol_doc_screen_all name =$mol_checker_demo

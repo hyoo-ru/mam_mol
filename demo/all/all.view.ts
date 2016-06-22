@@ -2,20 +2,34 @@ module $.$mol {
 	export class $mol_demo_all extends $.$mol_demo_all {
 		
 		@ $mol_prop()
-		names() {
+		namesDemo() {
 			var names = []
 			for( var name in $ ) {
 				if( !/^\$.*_demo($|_)/.test( name ) ) continue
 				if( /^\$mol_demo_all/.test( name ) ) continue
+				if( /^\$mol_doc/.test( name ) ) continue
 				if( typeof $[ name ] !== 'function' ) continue
 				names.push( name.substring( 1 ) )
 			}
 			return names
 		}
-
+		
+		@ $mol_prop()
+		namesDoc() {
+			var names = []
+			for( var name in $ ) {
+				if( !/^\$.*_doc($|_)/.test( name ) ) continue
+				if( /^\$mol_demo_all/.test( name ) ) continue
+				if( /^\$mol_doc/.test( name ) ) continue
+				if( typeof $[ name ] !== 'function' ) continue
+				names.push( name.substring( 1 ) )
+			}
+			return names
+		}
+		
 		@ $mol_prop()
 		options() {
-			return [ null ].concat( this.names() ).map( name => this.option( name ) )
+			return [ null ].concat( this.namesDoc() ).map( name => this.option( name ) )
 		}
 
 		@ $mol_prop()
@@ -23,12 +37,13 @@ module $.$mol {
 			var selected = this.selected()
 			if( selected ) {
 				return [
-					this.itemMedium( selected ) ,
-					this.itemSmall( selected ) ,
-					this.itemLarge( selected ) ,
+					this.widget( selected[0] )
+					// this.itemMedium( selected ) ,
+					// this.itemSmall( selected ) ,
+					// this.itemLarge( selected ) ,
 				]
 			} else {
-				return this.names().map(name => this.item(name))
+				return this.namesDemo().map(name => this.item(name))
 			}
 		}
 		

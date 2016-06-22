@@ -1,0 +1,28 @@
+[mol_doc_screen] {
+	flex: 1 1 auto;
+	display: flex;
+	align-content: flex-start;
+	align-items: stretch;
+	flex-direction: column;
+	max-height: 90vh;
+	/*height: 400px;*/
+	/*box-shadow: 0 0 .5rem rgba( 0 , 0 , 0 , .5 );*/
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	margin: .5rem;
+	background: var( --mol_skin_light_back );
+	border-radius: var( --mol_skin_round );
+	overflow: auto;
+	position: relative;
+}
+
+[mol_doc_screen_large] {
+	flex: 1 1 100%;
+}
+
+[mol_doc_screen_medium] {
+	flex: 0 1 auto;
+}
+
+[mol_doc_screen_small] {
+	flex: 0 1 320px;
+}

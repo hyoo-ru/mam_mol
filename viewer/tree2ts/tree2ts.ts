@@ -29,7 +29,7 @@ function $mol_viewer_tree2ts( tree ) {
 						var items = []
 						value.childs.forEach( function( item ) {
 							var val = getValue( item )
-							if( val ) items.push( val + '.valueOf()' )
+							if( val ) items.push( '$'+'mol_maybe(' + val + ').map( val => val.valueOf() )[0]' )
 						} )
 						return '[].concat( ' + items.join(' , ') + ' )'
 					case '$' :
@@ -76,7 +76,7 @@ function $mol_viewer_tree2ts( tree ) {
 				if( needKey ) args.push( ' key : any ' )
 				if( needSet ) args.push( ' ...diff : any[] ' )
 				if( needReturn ) val = 'return ' + val
-				var decl = '\t' + param.type +'(' + args.join(',') + ') { ' + val + ' }\n\n'
+				var decl = '\t' + param.type +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
 				if( needCache ) decl = '\t@ $' + 'mol_prop()\n' + decl
 				members[ param.type ] = decl
 				if( needKey ) {
