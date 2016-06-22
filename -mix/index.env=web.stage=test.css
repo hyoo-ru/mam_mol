@@ -346,8 +346,8 @@
 	background:  ;
 	background: #F7FAFC;
 	-webkit-box-flex: 1000;
-	    -ms-flex: 1000 1 33%;
-	        flex: 1000 1 33%;
+	    -ms-flex: 1000 1 66%;
+	        flex: 1000 1 66%;
 	box-shadow: 0 0 0 1px  ;
 	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .2 );
 }
