@@ -1,3 +1,3 @@
 $mol_stacker_demo $mol_stacker
 	main $mol_lister_demo
-	addon $mol_rower childs / = Navigation menu
+	addon $mol_rower_demo

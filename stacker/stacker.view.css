@@ -20,7 +20,7 @@
 	position: relative;
 	z-index: 1;
 	background: var( --mol_skin_light_back );
-	flex: 1000 1 50%;
+	flex: 1000 1 66%;
 	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 }
 
