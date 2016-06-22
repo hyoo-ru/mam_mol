@@ -5537,14 +5537,7 @@ var $;
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return new $.$mol_rower().setup(function (_) {
-                _.childs = function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    return [].concat($mol_maybe(" Navigation menu").map(function (val) { return val.valueOf(); })[0]);
-                };
+            return new $.$mol_rower_demo().setup(function (_) {
             });
         };
         __decorate([
