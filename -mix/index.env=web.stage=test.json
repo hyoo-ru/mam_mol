@@ -159,11 +159,50 @@
 		}
 	},
 	{
+		"mol/checker/doc": {
+			":priority": 0,
+			"mol/doc": {
+				":priority": 0,
+				"": [
+					"mol/doc/doc.view.css",
+					"mol/doc/doc.view.tree",
+					"mol/doc/doc.view.ts"
+				]
+			},
+			"mol/doc/screen/all": {
+				":priority": 0,
+				"mol/doc/screen": {
+					"": [
+						"mol/doc/screen/screen.view.css",
+						"mol/doc/screen/screen.view.tree",
+						"mol/doc/screen/screen.view.ts",
+						"mol/doc/screen/screen_types.view.tree"
+					]
+				},
+				"": [
+					"mol/doc/screen/all/all.view.css",
+					"mol/doc/screen/all/all.view.tree"
+				]
+			},
+			"": [
+				"mol/checker/doc/doc.view.tree"
+			]
+		}
+	},
+	{
 		"mol/clicker/demo/toolbar": {
 			":priority": 0,
 			"": [
 				"mol/clicker/demo/toolbar/toolbar.view.tree",
 				"mol/clicker/demo/toolbar/toolbar.view.ts"
+			]
+		}
+	},
+	{
+		"mol/clicker/doc": {
+			":priority": 0,
+			"": [
+				"mol/clicker/doc/doc.view.tree"
 			]
 		}
 	},
@@ -250,6 +289,14 @@
 		}
 	},
 	{
+		"mol/linker/doc": {
+			":priority": 0,
+			"": [
+				"mol/linker/doc/doc.view.tree"
+			]
+		}
+	},
+	{
 		"mol/lister": {
 			":priority": 0,
 			"": [
@@ -283,12 +330,37 @@
 		}
 	},
 	{
+		"mol/lister/doc": {
+			":priority": 0,
+			"": [
+				"mol/lister/doc/doc.view.tree"
+			]
+		}
+	},
+	{
+		"mol/maybe": {
+			":priority": 0,
+			"": [
+				"mol/maybe/maybe.ts",
+				"mol/maybe/maybe.stage=test.ts"
+			]
+		}
+	},
+	{
 		"mol/perf/render": {
 			":priority": 0,
 			"": [
 				"mol/perf/render/index.html",
 				"mol/perf/render/render.view.tree",
 				"mol/perf/render/render.view.ts"
+			]
+		}
+	},
+	{
+		"mol/rower/doc": {
+			":priority": 0,
+			"": [
+				"mol/rower/doc/doc.view.tree"
 			]
 		}
 	},
@@ -310,6 +382,14 @@
 		}
 	},
 	{
+		"mol/stacker/doc": {
+			":priority": 0,
+			"": [
+				"mol/stacker/doc/doc.view.tree"
+			]
+		}
+	},
+	{
 		"mol/stringer/demo": {
 			":priority": 0,
 			"": [
@@ -319,11 +399,27 @@
 		}
 	},
 	{
+		"mol/stringer/doc": {
+			":priority": 0,
+			"": [
+				"mol/stringer/doc/doc.view.tree"
+			]
+		}
+	},
+	{
 		"mol/switcher/demo": {
 			":priority": 0,
 			"": [
 				"mol/switcher/demo/demo.view.tree",
 				"mol/switcher/demo/demo.view.ts"
+			]
+		}
+	},
+	{
+		"mol/switcher/doc": {
+			":priority": 0,
+			"": [
+				"mol/switcher/doc/doc.view.tree"
 			]
 		}
 	},
