@@ -34,30 +34,49 @@
 							":priority": 0,
 							"mol/log": {
 								":priority": 2,
-								"jin2/log": {
-									":priority": 0,
-									"jin2": {
-										"jin/dumb": {
-											":priority": 0,
-											"jin": {
-												"": [
-													"jin/jin.jam.js",
-													"jin/demo.html",
-													"jin/README.md",
-													"jin/package.json",
-													"jin/git-init.cmd"
-												]
-											},
+								"jin/time/moment": {
+									":priority": 1,
+									"jin/time": {
+										":priority": 0,
+										"jin": {
 											"": [
-												"jin/dumb/dumb.ts"
+												"jin/jin.jam.js",
+												"jin/demo.html",
+												"jin/README.md",
+												"jin/package.json",
+												"jin/git-init.cmd"
 											]
 										},
 										"": [
-											"jin2/jin2.meta.tree"
+											"jin/time/readme.md"
+										]
+									},
+									"jin/time/duration": {
+										":priority": 2,
+										"jin/time/base": {
+											":priority": 1,
+											"jin/concater": {
+												":priority": 3,
+												"": [
+													"jin/concater/jin-concater.ts"
+												]
+											},
+											"": [
+												"jin/time/base/base.ts"
+											]
+										},
+										"jin/type": {
+											":priority": 3,
+											"": [
+												"jin/type/type.ts"
+											]
+										},
+										"": [
+											"jin/time/duration/duration.ts"
 										]
 									},
 									"": [
-										"jin2/log/log.env=web.ts"
+										"jin/time/moment/moment.ts"
 									]
 								},
 								"": [
@@ -369,12 +388,6 @@
 	{
 		"mol/tree": {
 			":priority": 0,
-			"jin/type": {
-				":priority": 2,
-				"": [
-					"jin/type/type.ts"
-				]
-			},
 			"": [
 				"mol/tree/tree.ts",
 				"mol/tree/tree.stage=test.ts"

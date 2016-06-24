@@ -16,9 +16,9 @@
 }
 
 [mol_viewer_error] {
-	background-image: -webkit-repeating-linear-gradient(45deg, rgba(255,220,220,1), rgba(255,220,220,1) 11px, rgba(255,255,220,1) 10px, rgba(255,255,220,1) 20px) !important;
+	background-image: -webkit-repeating-linear-gradient(315deg, rgba(255,220,220,1), rgba(255,220,220,1) 11px, rgba(255,255,220,1) 10px, rgba(255,255,220,1) 20px) !important;
 	background-image: repeating-linear-gradient(
-		45deg,
+		135deg,
 		rgba(255,220,220,1),
 		rgba(255,220,220,1) 11px,
 		rgba(255,255,220,1) 10px,
@@ -28,15 +28,13 @@
 }
 [mol_viewer_error]:after {
 	content: attr( mol_viewer_error );
-	border: 1px solid red;
+	box-shadow: 0 0 0 1px  ;
+	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .2 );
 	background: pink;
 	display: inline-table;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	padding: .25em .5em;
-	-webkit-transform: translate( -50% , -50% );
-	        transform: translate( -50% , -50% );
+	margin: auto;
+	padding: 8px;
+	padding: .5rem;
 }
 
 @-webkit-keyframes mol_viewer_error_move {
@@ -279,6 +277,9 @@
 	padding: 1vmin;
 	-ms-flex-line-pack: start;
 	    align-content: flex-start;
+	-webkit-box-align: start;
+	    -ms-flex-align: start;
+	        align-items: flex-start;
 	background: white;
 }
 [mol_app_demo_screen] {
