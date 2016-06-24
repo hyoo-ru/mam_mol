@@ -19,6 +19,7 @@
 	height: 100%;
 	padding: 1vmin;
 	align-content: flex-start;
+	align-items: flex-start;
 	background: white;
 }
 
