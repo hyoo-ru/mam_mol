@@ -10,7 +10,7 @@
 
 [mol_viewer_error] {
 	background-image: repeating-linear-gradient(
-		45deg,
+		135deg,
 		rgba(255,220,220,1),
 		rgba(255,220,220,1) 11px,
 		rgba(255,255,220,1) 10px,
@@ -20,14 +20,11 @@
 }
 [mol_viewer_error]:after {
 	content: attr( mol_viewer_error );
-	border: 1px solid red;
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 	background: pink;
 	display: inline-table;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	padding: .25em .5em;
-	transform: translate( -50% , -50% );
+	margin: auto;
+	padding: .5rem;
 }
 
 @keyframes mol_viewer_error_move {
