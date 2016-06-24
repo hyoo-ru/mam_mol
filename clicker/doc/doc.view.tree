@@ -1,6 +1,0 @@
-$mol_clicker_doc $mol_doc body /
-	< description $mol_doc_text childs /
-		= Кнопка.
-		= Имеет различные вариации: major, minor, warn.
-		= Кликабельность определяется своством enabled().
-	< screens $mol_doc_screen_all name =$mol_clicker_demo_toolbar

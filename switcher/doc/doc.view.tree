@@ -1,6 +1,0 @@
-$mol_switcher_doc $mol_doc body /
-	< description $mol_doc_text childs /
-		= Кнопки, переключающие состояние свойства value() на основе собственного значения valueSelf().
-		= Визуально показывают, эквивалентны ли эти два значения друг другу.
-		= Изменяемость состояния определяется свойством editable().
-	< screens $mol_doc_screen_all name =$mol_switcher_demo

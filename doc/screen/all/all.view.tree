@@ -1,4 +1,0 @@
-$mol_doc_screen_all $mol_viewer childs /
-	< small $mol_doc_screen_medium name < name =$mol_viewer
-	< medium $mol_doc_screen_small name < name =$mol_viewer
-	< large $mol_doc_screen_large name < name =$mol_viewer

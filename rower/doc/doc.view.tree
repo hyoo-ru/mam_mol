@@ -1,4 +1,0 @@
-$mol_rower_doc $mol_doc body /
-	< description $mol_doc_text childs /
-		= Горизонтальный список блоков с отступами между элементами.
-	< screens $mol_doc_screen_all name =$mol_rower_demo

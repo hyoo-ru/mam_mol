@@ -1,0 +1,27 @@
+[mol_app_demo] {
+	display: flex;
+	height: 100%;
+}
+
+[mol_app_demo_optioner] {
+	display: flex;
+	flex-direction: column;
+	padding: 1vmin;
+}
+
+[mol_app_demo_optioner] > * {
+	margin: .5rem;
+}
+
+[mol_app_demo_lister] {
+	display: flex;
+	flex-wrap: wrap;
+	height: 100%;
+	padding: 1vmin;
+	align-content: flex-start;
+	background: white;
+}
+
+[mol_app_demo_screen] {
+	max-height: 45%;
+}

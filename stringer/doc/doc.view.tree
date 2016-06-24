@@ -1,7 +1,0 @@
-$mol_stringer_doc $mol_doc body /
-	< description $mol_doc_text childs /
-		= Поле ввода одной строки текста.
-		= Текущее значение доступно через свойство value().
-		= Пустому полю можно задать подсказку через свойство hint().
-		= Редактируемость определяется свойством editable().
-	< screens $mol_doc_screen_all name =$mol_stringer_demo

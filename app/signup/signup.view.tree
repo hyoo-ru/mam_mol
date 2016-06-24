@@ -1,4 +1,4 @@
-$mol_demo_signup $mol_form
+$mol_app_signup $mol_form
 	formFields /
 		< nameFirstField $mol_form_field
 			name =First Name

@@ -1,0 +1,3 @@
+$mol_app_demo $mol_stacker
+	main < lister $mol_scroller childs < items /
+	addon < optioner $mol_scroller childs < options /

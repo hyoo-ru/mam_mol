@@ -1,4 +1,4 @@
-$mol_doc_screen $mol_viewer
+$mol_demo $mol_viewer
 	name =$mol_viewer
 	childs /
 		< widget : null

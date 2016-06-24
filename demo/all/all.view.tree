@@ -1,5 +1,4 @@
-$mol_demo_all $mol_stacker
-	main < lister $mol_scroller childs < items /
-	addon < optioner $mol_scroller childs < options /
-
-$mol_demo_all_item $mol_scroller childs / < widget : null
+$mol_demo_all $mol_viewer childs /
+	< small $mol_demo_medium name < name =$mol_viewer
+	< medium $mol_demo_small name < name =$mol_viewer
+	< large $mol_demo_large name < name =$mol_viewer
