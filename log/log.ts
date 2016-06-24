@@ -1,8 +1,7 @@
 function $mol_log( path : string , values : any[] ) {
 	var filter = $mol_log.filter() 
 	if( !filter || !filter.test( path ) ) return
-	var date = new Date
-	console.log( date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() , path , ...values )
+	console.log( $jin.time.moment().toString( 'hh:mm:ss' ) , path , ...values )
 	return path
 }
 module $mol_log {
@@ -21,5 +20,3 @@ module $mol_log {
 		return _filter = RegExp( source , 'i' )
 	}
 }
-
-$jin2_log /// fake dependency
