@@ -73,3 +73,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 ## Data formats
 
 * [$mol_tree](tree) - [tree format](https://github.com/nin-jin/tree.d)
+
+## Shims
+
+* [$mol_set](set) - [Set API](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Set)

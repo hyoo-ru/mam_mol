@@ -33,10 +33,10 @@ class $mol_atom< Value > extends $mol_object {
 		return this.host.objectPath() + '.' + this.field
 	}
 	
-	masters : Set< $mol_atom<any> >
+	masters : $mol_set< $mol_atom<any> >
 	mastersDeep = 0
 	
-	slaves : Set< $mol_atom<any> >
+	slaves : $mol_set< $mol_atom<any> >
 	
 	get() {
 		if( $mol_atom.stack.indexOf( this ) !== -1 ) {
@@ -114,7 +114,7 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	lead( slave : $mol_atom<any> ) {
-		if( !this.slaves ) this.slaves = new Set< $mol_atom<any> >()
+		if( !this.slaves ) this.slaves = new $mol_set< $mol_atom<any> >()
 		this.slaves.add( slave )
 	}
 	
@@ -130,7 +130,7 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	obey( master : $mol_atom<any> ) {
-		if( !this.masters ) this.masters = new Set< $mol_atom<any> >()
+		if( !this.masters ) this.masters = new $mol_set< $mol_atom<any> >()
 		
 		this.masters.add( master )
 		
@@ -166,7 +166,7 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	static stack = <$mol_atom<any>[]> []
-	static plan : Array< Set< $mol_atom<any> > > = []
+	static plan : Array< $mol_set< $mol_atom<any> > > = []
 	static scheduled = false
 	
 	static actualize( atom : $mol_atom<any> ) {
@@ -174,7 +174,7 @@ class $mol_atom< Value > extends $mol_object {
 		var plan = $mol_atom.plan
 		
 		var level = plan[ deep ]
-		if( !level ) level = plan[ deep ] = new Set< $mol_atom<any> >()
+		if( !level ) level = plan[ deep ] = new $mol_set< $mol_atom<any> >()
 		
 		level.add( atom )
 		

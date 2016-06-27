@@ -28,16 +28,3 @@ declare class Map<Key,Value> {
 	entries() : [ Key , Value ][]
 	forEach( handler : ( Value , Key ) => void )
 }
-
-/// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
-declare class Set<Key> {
-	size : number
-	add( key : Key ) : this
-	delete( key : Key )
-	has( key : Key )
-	clear()
-	keys() : Key[]
-	values() : Key[]
-	entries() : [ Key , Key ][]
-	forEach( handler : ( key : Key , value : Key ) => void )
-}
