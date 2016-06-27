@@ -1,3 +1,5 @@
+$mol_maybe
+
 /// Reactive statefull lazy ViewModel 
 class $mol_viewer extends $mol_model {
 	

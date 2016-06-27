@@ -76,4 +76,5 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 ## Shims
 
-* [$mol_set](set) - [Set API](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Set)
+* [$mol_set](set) - [Set API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
+* [$mol_dict](dict) - [Map API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)

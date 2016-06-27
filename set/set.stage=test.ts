@@ -9,6 +9,7 @@ $mol_test( test => {
 	set.add( obj1 )
 	set.add( obj2 )
 	
+	test.equal( set.size , 2 )
 	test.ok( set.has( obj1 ) )
 	test.ok( set.has( obj2 ) )
 	test.not( set.has( obj3 ) )
