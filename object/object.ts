@@ -3,6 +3,8 @@ class $mol_object {
 	
 	static objectPath() {
 		return this['name']
+			|| this['displayName']
+			|| ( this['displayName'] = Function.prototype.toString.call( this ).match(/^function ([a-z0-9_$]*)/)[1] )
 	}
 	
 	/// Owner object.
