@@ -7,7 +7,10 @@ $mol_stacker $mol_viewer childs /
 		childs / < addon : null
 
 $mol_stacker_panel $mol_viewer
+	focuses : null
 	attr * mol_stacker_focused < focused : false
 	event *
-		click > focuses : null
-		touchmove > focuses : null
+		click > focuses
+		touchmove > focuses
+		scroll > focuses
+		wheel > focuses
