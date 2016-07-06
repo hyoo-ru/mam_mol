@@ -1,6 +1,9 @@
 [mol_clicker] {
 	user-select: none;
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	border: none;
+	font: inherit;
+	background: none;
+	outline: 1px solid var( --mol_skin_light_fore );
 	border-radius: var( --mol_skin_round );
 	flex: .001 1 auto;
 	justify-content: center;
@@ -16,29 +19,28 @@
 	opacity: .9;
 }
 
-[mol_clicker_enabled="false"] {
+[mol_clicker]:disabled {
 	background: #eee;
 	color: gray;
 }
 
-[mol_clicker_enabled="true"]:hover ,
+[mol_clicker]:enabled:hover ,
 [mol_clicker]:focus {
-	outline: none;
-	box-shadow: 0 0 0 2px var( --mol_skin_focus_back );
+	outline: 2px solid var( --mol_skin_focus_back );
 	position: relative;
 	z-index: 1;
 	cursor: pointer;
 	opacity: 1;
 }
 
-[mol_clicker_major][mol_clicker_enabled="true"] {
+[mol_clicker_major]:enabled {
 	background: var( --mol_skin_accent_back );
 }
 
-[mol_clicker_warn][mol_clicker_enabled="true"] {
+[mol_clicker_warn]:enabled {
 	background: var( --mol_skin_warn_back );
 }
 
-[mol_clicker_minor][mol_clicker_enabled="true"] {
+[mol_clicker_minor]:enabled {
 }
 

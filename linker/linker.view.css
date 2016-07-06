@@ -1,17 +1,17 @@
 [mol_linker] {
-	color: inherit;
 	font-weight: bold;
 	text-decoration: none;
-	cursor: default;
-}
-
-[mol_linker_current="false"] {
 	color: var( --mol_skin_focus_back );
 	cursor: pointer;
 }
 
+[mol_linker_current] {
+	color: inherit;
+	cursor: default;
+}
+
 [mol_linker]:focus ,
-[mol_linker_current="false"]:hover {
+[mol_linker]:not([mol_linker_current]):hover {
 	outline: none;
 	text-decoration: underline;
 }

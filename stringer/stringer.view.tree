@@ -1,8 +1,9 @@
 $mol_stringer $mol_viewer
+	tagName =input
 	attr *
-		mol_stringer_hint < hint =
-		tabindex < tabIndex : 0
+		placeholder < hint =
+		type < type =text
 	field *
-		contentEditable < editable : true
-		textContent < valueChanged < value =
+		disabled < disabled : false
+		value < valueChanged < value =
 	event * input > changes : null

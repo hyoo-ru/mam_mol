@@ -4,19 +4,19 @@ $mol_clicker_demo_toolbar $mol_rower childs /
 		clicks > events : null
 	< majorDisabled $mol_clicker_major
 		childs / =Click me!
-		enabled : false
+		disabled : true
 		clicks > events : null
 	< minor $mol_clicker_minor
 		childs / =Or click me..
 		clicks > events : null
 	< minorDisabled $mol_clicker_minor
 		childs / =Or click me..
-		enabled : false
+		disabled : true
 		clicks > events : null
 	< warn $mol_clicker_warn
 		childs / =Be attentive!
 		clicks > events : null
 	< warnDisabled $mol_clicker_warn
 		childs / =Be attentive!
-		enabled : false
+		disabled : true
 		clicks > events : null

@@ -5,8 +5,7 @@
 	align-items: stretch;
 	flex-direction: column;
 	max-height: 90vh;
-	/*box-shadow: 0 0 .5rem rgba( 0 , 0 , 0 , .5 );*/
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	outline: 1px solid var( --mol_skin_light_fore );
 	margin: .5rem;
 	background: var( --mol_skin_light_back );
 	border-radius: var( --mol_skin_round );

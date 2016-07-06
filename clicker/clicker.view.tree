@@ -1,5 +1,5 @@
 $mol_clicker $mol_viewer
+	tagName =button
 	event * click > everyClicks > clicks : null
 	attr *
-		mol_clicker_enabled < enabled : true
-		tabindex < tabIndex : 0
+		disabled < disabled : false

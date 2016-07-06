@@ -1,5 +1,7 @@
 [mol_stringer] {
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	outline: 1px solid var( --mol_skin_light_fore );
+	outline-offset: 0;
+	border: none;
 	border-radius: var( --mol_skin_round );
 	white-space: nowrap;
 	overflow: hidden;
@@ -9,27 +11,19 @@
 	z-index: 0;
 	font: inherit;
 	flex: 1 1 auto;
-	min-width: 4em;
+	width: 4em;
 	background: #eee;
 	color: gray;
 }
 
-[mol_stringer][contentEditable="true"] {
+[mol_stringer]:enabled {
 	background: white;
 	color: inherit;
 }
 
-[mol_stringer][contentEditable="true"]:hover ,
+[mol_stringer]:enabled:hover ,
 [mol_stringer]:focus {
-	box-shadow: 0 0 0 2px var( --mol_skin_focus_back );
-	outline: none;
+	outline: 2px solid var( --mol_skin_focus_back );
 	z-index: 1;
 }
 
-[mol_stringer]:empty:before {
-	content: attr( mol_stringer_hint );
-	display: inline;
-	color: var( --mol_skin_light_fore );
-	position: relative;
-	z-index: -1;
-}

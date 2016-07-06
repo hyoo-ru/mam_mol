@@ -8,8 +8,8 @@ $mol_checker_demo $mol_rower childs /
 		childs / =Checked
 		checked : true
 	< five $mol_checker
-		enabled : false
+		disabled : true
 	< six $mol_checker
 		childs / =Disabled
 		checked : true
-		enabled : false
+		disabled : true

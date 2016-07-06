@@ -38,6 +38,6 @@
 	max-width: calc( 100% - 1rem );
 }
 
-[mol_stacker_focused="true"] {
+[mol_stacker_focused] {
 	z-index: 1;
 }

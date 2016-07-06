@@ -35,7 +35,9 @@ class $mol_viewer extends $mol_model {
 				next = document.createElementNS( this.nameSpace() , this.tagName() )
 			}
 		}
+		
 		next.id = path
+		next['$mol_viewer'] = this
 		this['DOMNode()'] = next
 		
 		/// Set BEM-like element-attributes with inheritance support
@@ -68,8 +70,6 @@ class $mol_viewer extends $mol_model {
 			next.addEventListener( name , event => {
 				this.event( name , event )
 				$mol_atom_sync()
-				$mol_viewer_selection.position( null )
-				$mol_viewer_selection.position( $mol_viewer_selection.position() )
 			} )
 		} )
 		
@@ -80,7 +80,7 @@ class $mol_viewer extends $mol_model {
 		fail : ( self : $mol_viewer , error ) => {
 			self.attr_keys()
 			var node = self.DOMNode()
-			if( node ) node.setAttribute( 'mol_viewer_error' , error.message )
+			if( node ) node.setAttribute( 'mol_viewer_error' , error.name )
 		}
 	})
 	DOMTree( ...diff : Element[] ) {
@@ -89,8 +89,10 @@ class $mol_viewer extends $mol_model {
 		/// Update dynamic attributes
 		this.attr_keys().forEach( name => {
 			var n = this.attr( name )
-			if( n == null ) {
+			if(( n == null )||( n === false )) {
 				prev.removeAttribute( name )
+			} else if( n === true ) {
+				prev.setAttribute( name , name )
 			} else {
 				prev.setAttribute( name , String( n ) )
 			}

@@ -35,4 +35,4 @@ $mol_app_signup $mol_form
 		< submit $mol_clicker_major
 			childs / < submitText =Sign Up
 			clicks > submits : null
-			enabled < submitAllow
+			disabled < submitBlocked

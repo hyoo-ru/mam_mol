@@ -1,5 +1,5 @@
 $mol_form $mol_viewer
-	submitAllow : false
+	submitBlocked : false
 	childs /
 		< barFields $mol_viewer childs < formFields /
 		< barButtons $mol_viewer childs < buttons /

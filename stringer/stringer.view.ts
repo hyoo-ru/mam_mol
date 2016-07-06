@@ -3,15 +3,13 @@ module $.$mol {
 		
 		@ $mol_prop()
 		valueChanged( ...diff : string[] ) {
-			return this.focused() ? void 0 : this.value()
+			var value = this.value( ...diff )
+			var focused = this.focused()
+			return focused ? diff[0] : value
 		}
 		
 		changes( ...diff : Event[] ) {
-			this.value( diff[0].srcElement.textContent.trim() )
-		}
-		
-		tabIndex() {
-			return this.editable() ? 0 : null
+			this.valueChanged( ( diff[0].srcElement as HTMLInputElement ).value.trim() )
 		}
 		
 	}

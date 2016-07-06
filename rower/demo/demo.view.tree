@@ -1,6 +1,5 @@
 $mol_rower_demo $mol_rower childs /
-	< publisher $mol_checker childs / =Publish
-	< titler $mol_stringer
-		hint < hint =Title
+	< titler $mol_stringer hint < hint =Title
+	< publisher $mol_checker childs / =Shared
 	< addButton $mol_clicker_minor
-		childs / =Add
+		childs / =Drop

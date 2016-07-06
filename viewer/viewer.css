@@ -18,14 +18,6 @@
 	) !important;
 	background-size: 28px 28px !important;
 }
-[mol_viewer_error]:after {
-	content: attr( mol_viewer_error );
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
-	background: pink;
-	display: inline-table;
-	margin: auto;
-	padding: .5rem;
-}
 
 @keyframes mol_viewer_error_move {
   0% {
@@ -36,7 +28,7 @@
   }
 }
 
-[mol_viewer_error="Wait..."] {
+[mol_viewer_error="mol_atom_wait"] {
 	background-image: repeating-linear-gradient(
 		45deg,
 		rgba(0,0,255,.05),
@@ -47,8 +39,4 @@
 	background-size: 28px 28px !important;
 	animation: mol_viewer_show 1s linear , mol_viewer_error_move .25s linear infinite !important;
 	pointer-events: none;
-}
-[mol_viewer_error="Wait..."]:after {
-	border: 1px solid steelblue;
-	background: lightsteelblue;
 }
