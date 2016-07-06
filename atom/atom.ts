@@ -111,6 +111,7 @@ class $mol_atom< Value > extends $mol_object {
 	
 	update() {
 		$mol_atom.actualize( this )
+		return void 0
 	}
 	
 	lead( slave : $mol_atom<any> ) {
@@ -158,7 +159,7 @@ class $mol_atom< Value > extends $mol_object {
 	value( ...diff : (Value|Error)[] ) {
 		if( diff[0] === void 0 ) {
 			if( diff.length > 1 ) return this.push( diff[1] )
-			if( diff.length > 0 ) this.update()
+			if( diff.length > 0 ) return this.update()
 			return this.get()
 		} else {
 			return this.set( ...diff )
@@ -197,6 +198,7 @@ class $mol_atom< Value > extends $mol_object {
 $mol_state_stack.set( '$mol_atom.stack' , $mol_atom.stack )
 
 class $mol_atom_wait extends Error {
+	name = 'mol_atom_wait'
 	constructor( public message = 'Wait...' ) {
 		super( message )
 	}
