@@ -38,7 +38,6 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_prop](prop) - reactive property decorator
 * [$mol_object](object) - components base class
 * [$mol_model](model) - reactive model base class
-* [$mol_viewer](viewer) - reactive view model base class
 * [$mol_log](log) - logging
 * [$mol_test](test) - unit testing
 * [$mol_skin](skin) - theming
@@ -49,6 +48,11 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_state_arg](state/arg) - arguments state (location/argv)
 * [$mol_state_local](state/local) - persistent local state (localStorage)
 * [$mol_state_session](state/session) - session temporaty state (sessionStorage)
+
+## Simple components
+
+* [$mol_viewer](viewer) - reactive view model base class
+* [$mol_filler](filler) - lorem ipsum
 
 ## Simple controls
 
