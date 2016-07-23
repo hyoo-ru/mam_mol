@@ -5,12 +5,25 @@
 	align-items: stretch;
 	flex-direction: column;
 	max-height: 90vh;
-	outline: 1px solid var( --mol_skin_light_fore );
 	margin: 1rem;
+}
+
+[mol_demo_titler] {
+	font-size: .8rem;
+	font-weight: bold;
+}
+
+[mol_demo_screener] {
+	outline: 1px solid var( --mol_skin_light_fore );
 	background: var( --mol_skin_light_back );
 	border-radius: var( --mol_skin_round );
 	overflow: auto;
 	position: relative;
+	flex: 1 1 auto;
+	display: flex;
+	align-content: flex-start;
+	align-items: stretch;
+	flex-direction: column;
 }
 
 [mol_demo_large] {
