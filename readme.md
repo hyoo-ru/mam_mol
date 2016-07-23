@@ -49,6 +49,10 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_state_local](state/local) - persistent local state (localStorage)
 * [$mol_state_session](state/session) - session temporaty state (sessionStorage)
 
+## Communication modules
+* [$mol_http_request](http/request) - Reactive HTTP Request
+* [$mol_http_resource](http/resource) - Reactive REST HTTP resource
+
 ## Simple components
 
 * [$mol_viewer](viewer) - reactive view model base class
