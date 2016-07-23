@@ -1,0 +1,5 @@
+$mol_perf_render_lazy $mol_perf_render
+	title =$mol lazy
+	rower $mol_lister
+		rowHeightMin : 20
+		rows < rows

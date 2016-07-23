@@ -10,12 +10,11 @@ function $mol_viewer_tree2ts( tree ) {
 		var members = {}
 		parent.childs.forEach( function( param ) { addProp( param ) } )
 		
-		function addProp( param ) {
+		function addProp( param , needCache = false ) {
 			if( !param.type || /^-/.test( param.type ) ) return
 			
 			var needKey = false
 			var needSet = true
-			var needCache = false
 			var needReturn = true
 			var keys = []
 			
@@ -37,9 +36,9 @@ function $mol_viewer_tree2ts( tree ) {
 						var overs = []
 						value.childs.forEach( function( over ) {
 							if( /^(-|$)/.test( over.type ) ) return ''
-							overs.push( '\t\t_.' + over.type + ' = ( ...diff : any[] ) => ' + getValue( over.childs[0] ) + '\n' )
+							overs.push( '\t\t\t__.' + over.type + ' = ( ...diff ) => ' + getValue( over.childs[0] ) + '\n' )
 						} )
-						return 'new ' + value.type + '().setup( _ => { \n' + overs.join( '' ) + '\t} )'
+						return 'new ' + value.type + '().setup( __ => { \n' + overs.join( '' ) + '\t\t} )'
 					case '*' :
 						needKey = true
 						needReturn = false
@@ -47,21 +46,21 @@ function $mol_viewer_tree2ts( tree ) {
 						value.childs.forEach( function( opt ) {
 							if( /^(-|$)/.test( opt.type ) ) return ''
 							keys.push( opt.type )
-							opts.push( '\t\tcase "' + opt.type + '" : return ' + getValue( opt.childs[0] ) + '\n' )
+							opts.push( '\t\t\tcase "' + opt.type + '" : return ' + getValue( opt.childs[0] ) + '\n' )
 						} )
-						return 'switch( key ){\n' + opts.join( '' ) + '\t\tdefault: return super.' + param.type + '( key )\n\t}'
+						return 'switch( key ){\n' + opts.join( '' ) + '\t\t\tdefault: return super["' + param.type + '"] && super["' + param.type + '"]( key )\n\t\t}'
 					case ':' :
 						return '( ' + JSON.stringify( value.childs[0] ) + ' )'
 					case '>' :
 						needSet = true
 						if( value.childs.length === 1 ) {
-							addProp( value.childs[0] )
+							addProp( value.childs[0] , true )
 							return 'this.' + value.childs[0].type + '( ...diff )'
 						}
 					case '<' :
 						if( value.childs.length === 1 ) {
 							addProp( value.childs[0] )
-							return 'this.' + value.childs[0].type + '()'
+							return 'this.' + value.childs[0].type + '( ...diff )'
 						}
 					default :
 						throw new Error( 'Wrong value: ' + value + value.uri )
@@ -73,14 +72,17 @@ function $mol_viewer_tree2ts( tree ) {
 			param.childs.forEach( function( child ) {
 				var val = getValue( child )
 				var args = []
-				if( needKey ) args.push( ' key : any ' )
-				if( needSet ) args.push( ' ...diff : any[] ' )
+				if( needKey ) args.push( ' key ' )
+				if( needSet ) {
+					args.push( ' ...diff ' )
+					if( needCache ) val = ( needReturn ? '( diff[0] !== void 0 ) ? diff[0] : ' : 'if( diff[0] !== void 0 ) return diff[0]\n\t\t' ) + val
+				}
 				if( needReturn ) val = 'return ' + val
 				var decl = '\t' + param.type +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
 				if( needCache ) decl = '\t@ $' + 'mol_prop()\n' + decl
 				members[ param.type ] = decl
 				if( needKey ) {
-					members[ param.type + '_keys' ] = '\t' + param.type +'_keys(){\n\t\treturn ( super.' + param.type +'_keys() || [] ).concat( ' + JSON.stringify( keys ) + ' )\n\t}\n\n'
+					members[ param.type + '_keys' ] = '\t' + param.type +'_keys(){\n\t\treturn ( super["' + param.type +'_keys"] && super["' + param.type +'_keys"]() || [] ).concat( ' + JSON.stringify( keys ) + ' )\n\t}\n\n'
 				}
 			} )
 		}

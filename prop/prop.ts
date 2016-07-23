@@ -22,8 +22,9 @@ function $mol_prop< Host extends { objectPath() : string } , Key , Value >( conf
 				if( !info )	atoms[ field ] = info = new $mol_atom(
 					host ,
 					field ,
-					value.bind( host , key ) ,
-					config && config.fail.bind( null , host )
+					value as any , // FIXME: type checking
+					config && config.fail ,
+					key
 				)
 				
 				return info.value( ...diff )
@@ -40,8 +41,8 @@ function $mol_prop< Host extends { objectPath() : string } , Key , Value >( conf
 				if( !info )	atoms[ field ] = info = new $mol_atom(
 					host ,
 					field ,
-					value.bind( host ) ,
-					config && config.fail.bind( null , host )
+					value as any , // FIXME: type checking
+					config && config.fail
 				)
 				
 				return info.value( ...diff )
