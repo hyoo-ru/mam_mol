@@ -4,24 +4,33 @@ class $mol_atom< Value > extends $mol_object {
 		public host : { objectPath() : string } ,
 		public field : string ,
 		public handler : ( ...diff : (Value|Error)[] )=> Value ,
-		public fail? : ( error : Error )=> Value|Error
+		public fail? : ( host : any , error : Error )=> Value|Error ,
+		public key? : any
 	) {
 		super()
 	}
 	
-	destroy() {
-		super.destroy()
-		
-		this.unlink()
-		
-		var value = this.host[ this.field ]
-		if( value instanceof $mol_object ) {
-			if( value.objectPath() === this.objectPath() ) {
-				value.destroy();
+	destroyed( ...diff : boolean[] ) {
+		if( diff[0] ) {
+			this.unlink()
+			
+			var value = this.host[ this.field ]
+			if( value instanceof $mol_object ) {
+				if( ( value.objectOwner() === this.host ) && ( value.objectField() === this.field ) ) {
+					value.destroyed( true );
+				}
 			}
+			
+			this.host[ this.field ] = void 0
+			this.host[ '$mol_atom_state' ][ this.field ] = void 0
+			
+			this['destroyed()'] = true
+			this.log([ '.destroyed()' , true , 'atom' ])
+			
+			return true
+		} else {
+			return this['destroyed()']
 		}
-		
-		this.host[ this.field ] = void 0
 	}
 	
 	unlink() {
@@ -35,6 +44,7 @@ class $mol_atom< Value > extends $mol_object {
 	
 	masters : $mol_set< $mol_atom<any> >
 	mastersDeep = 0
+	planned = false
 	
 	slaves : $mol_set< $mol_atom<any> >
 	
@@ -57,37 +67,59 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	pull() {
-		this.log([ 'pull' ])
+		this.log( [ 'pull' ] )
 		
-		var level = $mol_atom.plan[ this.mastersDeep ]
-		if( level ) level.delete( this )
+		if( this.planned ) {
+			var level = $mol_atom.plan[ this.mastersDeep ]
+			if( level ) {
+				var index = level.indexOf( this )
+				if( index !== -1 ) level.splice( index , 1 )
+			}
+			this.planned = false
+		}
 		
 		var oldMasters = this.masters
+		
+		if( oldMasters ) oldMasters.forEach( master => {
+			//if( this.masters && this.masters.has( master ) ) return
+			master.dislead( this )
+		} )
 		
 		this.masters = null
 		this.mastersDeep = 0
 		
 		var index = $mol_atom.stack.length
 		$mol_atom.stack.push( this )
-		var next = this.handler()
+		if( this.key !== void 0 ) {
+			var next = this.handler.call( this.host , this.key )
+		} else {
+			var next = this.handler.call( this.host )
+		}
 		if( next === void 0 ) next = this.host[ this.field ]
 		$mol_atom.stack.length = index
-		
-		if( oldMasters ) oldMasters.forEach( master => {
-			if( this.masters && this.masters.has( master ) ) return
-			master.dislead( this )
-		} )
 		
 		return this.push( next )
 	}
 	
 	set( ...diff : (Value|Error)[] ) {
-		return this.push( this.handler( ...diff ) )
+		if( this.key !== void 0 ) {
+			var next = this.handler.call( this.host , this.key , ...diff )
+		} else {
+			var next = this.handler.call( this.host , ...diff )
+		}
+		if( next === void 0 ) return this.host[ this.field ]
+		return this.push( next )
 	}
 	
 	push( next : Value|Error ) {
 		var prev = this.host[ this.field ]
-		if( next instanceof Error && this.fail ) next = this.fail( <Error> next )
+		if( next instanceof Error && this.fail ) {
+			if( this.key !== void 0 ) {
+				next = this.fail.call( this.host , this.key , this.host , <Error> next )
+			} else {
+				next = this.fail.call( this.host , this.host , <Error> next )
+			}
+		}
 		if( prev !== next ) {
 			if( next instanceof $mol_object ) {
 				next['objectField']( this.field ) // FIXME: type checking
@@ -110,7 +142,12 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	update() {
+		if( this.planned ) return
+		this.planned = true
+		
+		this.log( [ 'update' ] )
 		$mol_atom.actualize( this )
+		
 		return void 0
 	}
 	
@@ -126,7 +163,7 @@ class $mol_atom< Value > extends $mol_object {
 		
 		if( !this.slaves.size ){
 			this.slaves = null
-			this.destroy()
+			$mol_atom.reaping.add( this )
 		}
 	}
 	
@@ -166,8 +203,10 @@ class $mol_atom< Value > extends $mol_object {
 		}
 	}
 	
-	static stack = <$mol_atom<any>[]> []
-	static plan : Array< $mol_set< $mol_atom<any> > > = []
+	static stack = [] as $mol_atom<any>[]
+	static plan : $mol_atom<any>[][] = []
+	static planStart = 0
+	static reaping = new $mol_set< $mol_atom<any> >()
 	static scheduled = false
 	
 	static actualize( atom : $mol_atom<any> ) {
@@ -175,53 +214,62 @@ class $mol_atom< Value > extends $mol_object {
 		var plan = $mol_atom.plan
 		
 		var level = plan[ deep ]
-		if( !level ) level = plan[ deep ] = new $mol_set< $mol_atom<any> >()
+		if( !level ) level = plan[ deep ] = []
 		
-		level.add( atom )
+		level.push( atom )
+		if( deep < this.planStart ) this.planStart = deep
 		
 		$mol_atom.schedule()
 	}
 	
 	static schedule( ) {
-		if( $mol_atom.scheduled ) return
+		if( this.scheduled ) return
 		
-		requestAnimationFrame( () => {
-			$mol_atom.scheduled = false
-			$mol_atom_sync()
+		new $mol_defer( () => {
+			if( !this.scheduled ) return
+			this.scheduled = false
+			this.sync()
 		} )
 		
-		$mol_atom.scheduled = true
+		this.scheduled = true
 	}
+	
+	static sync() {
+		$mol_log( '$mol_atom.sync' , [] )
+		this.schedule()
 		
+		for( var i = this.planStart ; i < this.plan.length ; ++i ) {
+			var level = this.plan[ i ]
+			if( !level ) continue
+			if( level.length === 0 ) continue
+			
+			var atom = level.pop()
+			if( !atom.destroyed() ) {
+				atom.planned = false
+				atom.pull()
+			}
+			
+			i = this.planStart - 1
+		}
+		
+		this.reaping.forEach( atom => {
+			this.reaping.delete( atom )
+			if( !atom.slaves ) atom.destroyed( true )
+		} )
+		
+		this.scheduled = false
+	}
+	
+	static restore() {
+		this.stack.splice( 0 , this.stack.length )
+	}
 }
 
 $mol_state_stack.set( '$mol_atom.stack' , $mol_atom.stack )
 
 class $mol_atom_wait extends Error {
-	name = 'mol_atom_wait'
+	name = '$mol_atom_wait'
 	constructor( public message = 'Wait...' ) {
 		super( message )
 	}
-}
-
-function $mol_atom_sync() {
-	for( var i = 0 ; i < $mol_atom.plan.length ; ++ i ) {
-		var level = $mol_atom.plan[ i ]
-		if( !level ) continue
-		
-		while( level.size ) {
-			level.forEach(
-				atom => {
-					level.delete( atom )
-					atom.pull()
-				}
-			)
-		}
-		
-		$mol_atom.plan[ i ] = null
-	}
-}
-
-function $mol_atom_restore() {
-	$mol_atom.stack.splice( 0 , $mol_atom.stack.length )
 }

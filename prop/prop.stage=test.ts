@@ -21,7 +21,7 @@ $mol_test( test => {
 	
 	// reset
 	x.foo( 0 , void 0 )
-	$mol_atom_sync()
+	$mol_defer.run()
 	test.equal( x.foo(0).valueOf() , 123 )
 	
 } )
@@ -72,7 +72,7 @@ $mol_test( test => {
 	test.equal( x.bar() , 2 )
 	test.equal( x.xxx() , 3 )
 	
-	$mol_atom_sync()
+	$mol_defer.run()
 	test.equal( x.bar() , 6 )
 	test.equal( x.xxx() , 7 )
 	
@@ -96,7 +96,7 @@ $mol_test( test => {
 		x.foo()
 		test.fail( 'Not tracked recursive dependency' )
 	} catch( error ) {
-		$mol_atom_restore()
+		$mol_atom.restore()
 		test.equal( error.message , 'Recursive dependency! .foo()' )
 	}
 	
@@ -105,12 +105,7 @@ $mol_test( test => {
 /// Destroy if no more reference
 $mol_test( test => {
 	
-	var destroyed = false
-	class A extends $mol_object {
-		destroy() {
-			destroyed = true
-		}
-	}
+	var foo
 	
 	class B extends $mol_object {
 		
@@ -122,7 +117,7 @@ $mol_test( test => {
 		
 		@ $mol_prop()
 		foo() {
-			return new A
+			return foo = new $mol_object
 		}
 		
 		@ $mol_prop()
@@ -138,12 +133,13 @@ $mol_test( test => {
 	test.ok( bar )
 	
 	b.showing( false )
-	$mol_atom_sync()
-	test.ok( destroyed )
+	$mol_defer.run()
+	test.ok( foo.destroyed() )
+	test.ok( bar.destroyed() )
 	test.not( b.bar() )
 	
 	b.showing( true )
-	$mol_atom_sync()
+	$mol_defer.run()
 	test.unique( b.bar() , bar )
 	
 } )

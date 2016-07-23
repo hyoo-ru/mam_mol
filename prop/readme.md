@@ -12,12 +12,14 @@ myProperty< Vlaue >( ...diff : Value[] ) : Value
 Пример объявления некешируемого свойства:
 
 ```ts
-userName() { return 'jin' } // getter
+/// getter
+userName() { return 'jin' }
 ```
 
 ```ts
-userName( ...diff : string[] ) { // getter/setter
-	if( diff[0] === void ) { // check for undefined is important
+/// getter/setter
+userName( ...diff : string[] ) {
+	if( diff[0] === void 0 ) { // check for undefined is important
 		return localStorage.getItem( 'name' ) // pull value
 	} else {
 		localStorage.setItem( 'name' , diff[0] ) // put value, patch not supported
@@ -29,27 +31,32 @@ userName( ...diff : string[] ) { // getter/setter
 Примеры использования:
 
 ```ts
-userName( 'jin' ) // "jin" - set user name
+// Set user name 'jin'
+userName( 'jin' )
 ```
 
 ```ts
-userName() // "jin" - get user name
+// Get user name 'jin'
+userName()
 ```
 
 ```ts
-userName( 'mary' , 'mar' ) // set to "jiny" if patch supported, or "mary" if not
+// Set to "jiny" if patch supported, or "mary" if not
+userName( 'mary' , 'mar' )
 ```
 
 Чтобы сделать свойство реактивным (кешируемым с автоматической инвалидацией), достаточно воспользоваться декоратором [$mol_prop](../prop), использующим под капотом [$mol_atom](../atom):
 
 ```ts
+/// Getter
 @ $mol_prop()
-userName() { return $mol_state_local.value( 'name' ) } // getter
+userName() { return $mol_state_local.value( 'name' ) }
 ```
 
 ```ts
+/// Getter/setter
 @ $mol_prop()
-userName( ...diff : string[] ) { // getter/setter
+userName( ...diff : string[] ) {
 	if( diff[0] === void ) { // check for undefined is important
 		return $mol_state_local.value( 'name' ) // pull value
 	} else {
@@ -60,21 +67,24 @@ userName( ...diff : string[] ) { // getter/setter
 ```
 
 ```ts
+/// Delegated getter/setter
 @ $mol_prop()
-userName( ...diff : string[] ) { // getter/setter
-	var next = $mol_state_local.value( 'name' , ...diff ) // delegate getter/setter
+userName( ...diff : string[] ) {
+	var next = $mol_state_local.value( 'name' , ...diff )
 	return next // return next value
 }
 ```
 
-Дополнительные примеры использования рекатиыных свойств:
+Дополнительные примеры использования рекативных свойств:
 
 ```ts
-userName( void 0 ) // invalidate cache
+// Invalidate cache
+userName( void 0 )
 ```
 
 ```ts
-userName( void 0 , 'jin' ) // force push value to cache
+// Force push value to cache
+userName( void 0 , 'jin' )
 ```
 
 ## Multi-value properties
@@ -104,25 +114,31 @@ userNames( pos : number , ...diff : string[] ) {
 Примеры использования:
 
 ```ts
-userName( 0 , 'jin' ) // "jin" - set user#0 name
+// Set user#0 name to 'jin'
+userName( 0 , 'jin' )
 ```
 
 ```ts
-userName( 0 ) // "jin" - get user#0 name
+// Get user#0 name 'jin'
+userName( 0 )
 ```
 
 ```ts
-userName( 0 , 'mary' , 'mar' ) // set user#0 name to "jiny" if patch supported, or "mary" if not. 
+// Set user#0 name to "jiny" if patch supported, or "mary" if not.
+userName( 0 , 'mary' , 'mar' ) 
 ```
 
 В качестве ключа можно использовать любое, сериализуемое в JSON значение, например:
 
 ```ts
 @ $mol_prop()
-usersSearch( query : { name? : string , minAge? : number } ) {
+usersSearch( query : {
+	name? : string
+	minAge? : number
+} ) {
 	var users = this.users()
-	if( query.name ) users = users.filter( user => !!query.name.match( user.name ) )
-	if( query.minAge ) users = users.filter( user => user.age > query.minAge )
+	if( query.name ) users = users.filter( ({ name })=> !!name.match( query.name ) )
+	if( query.minAge ) users = users.filter( ({ age })=> age > query.minAge )
 	return users
 }
 ```

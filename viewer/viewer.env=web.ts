@@ -41,134 +41,140 @@ class $mol_viewer extends $mol_model {
 		this['DOMNode()'] = next
 		
 		/// Set BEM-like element-attributes with inheritance support
-		var proto1 = this.objectOwner()
-		while( typeof proto1 === 'object' ) {
-			var className = proto1.constructor[ 'objectPath' ]() // FIXME: type checking
-			if( !className ) continue
-			
-			var attrName = className.replace( /\$/g , '' ) + '_' + this.objectField().replace( /\(.*/ , '' )
-			next.setAttribute( attrName , '' )
-			
-			if( proto1 === $mol_viewer.prototype ) break
-			proto1 = Object.getPrototypeOf( proto1 )
+		var ownerProto = this.objectOwner() && Object.getPrototypeOf( this.objectOwner() )
+		if( ownerProto && ownerProto['objectClassNames'] ) {
+			for( var className of ownerProto[ 'objectClassNames' ]() ) {
+				var attrName = className.replace( /\$/g , '' ) + '_' + this.objectField().replace( /\(.*/ , '' )
+				next.setAttribute( attrName , '' )
+				if( className === '$mol_viewer' ) break
+			}
 		}
 		
 		/// Set BEM-like block-attributes with inheritance support
-		var proto2 = this
-		while( proto2 ) {
-			var className = proto2.constructor['objectPath']() // FIXME: type checking
-			if( !className ) continue
-			
+		var proto = Object.getPrototypeOf( this )
+		for( var className of proto[ 'objectClassNames' ]() ) {
 			next.setAttribute( className.replace( /\$/g , '' ) , '' )
-			
-			if( proto2 === $mol_viewer.prototype ) break
-			proto2 = Object.getPrototypeOf( proto2 )
+			if( className === '$mol_viewer' ) break
 		}
 		
 		/// Bind properties to events
 		this.event_keys().forEach( name => {
 			next.addEventListener( name , event => {
 				this.event( name , event )
-				$mol_atom_sync()
+				$mol_defer.run()
 			} )
 		} )
+		
+		// When node defined then deferred render child nodes then deferred update state of this node
+		this.DOMNodeState( void 0 )
+		this.DOMNodeContent( void 0 )
 		
 		return next
 	}
 	
-	@ $mol_prop({
-		fail : ( self : $mol_viewer , error ) => {
-			self.attr_keys()
-			var node = self.DOMNode()
-			if( node ) node.setAttribute( 'mol_viewer_error' , error.name )
-		}
-	})
-	DOMTree( ...diff : Element[] ) {
-		var prev = this.DOMNode()
+	@ $mol_prop()
+	DOMNodeContent( ...diff : void[] ) {
+		var node = this.DOMNode()
 		
-		/// Update dynamic attributes
-		this.attr_keys().forEach( name => {
-			var n = this.attr( name )
-			if(( n == null )||( n === false )) {
-				prev.removeAttribute( name )
-			} else if( n === true ) {
-				prev.setAttribute( name , name )
-			} else {
-				prev.setAttribute( name , String( n ) )
-			}
-		} )
-
 		/// Render child nodes
 		var childs = this.childsInner()
 		if( childs != null ) {
 			var childViews = childs
 			
-			var nextNode = prev.firstChild
+			var nextNode = node.firstChild
 			for( var i = 0 ; i < childViews.length ; ++i ) {
-				var view = childViews[i]
+				let view = childViews[i]
+				if( view == null ) continue
 				
-				if( view != null ) {
-					if( typeof view === 'object' ) {
-						var existsNode = ( view instanceof $mol_viewer ) ? view.DOMNode() : view
-						while( true ) {
-							if( !nextNode ) {
-								prev.appendChild( existsNode )
-								break
-							}
-							if( nextNode == existsNode ) {
-								nextNode = nextNode.nextSibling
-								break
-							} else {
-								if( childViews.indexOf( nextNode ) === -1 ) {
-									var nn = nextNode.nextSibling
-									prev.removeChild( nextNode )
-									nextNode = nn
-								} else {
-									prev.insertBefore( existsNode , nextNode )
-									break
-								}
-							}
+				if( typeof view === 'object' ) {
+					var existsNode = ( view instanceof $mol_viewer ) ? view.DOMNode() : view
+					while( true ) {
+						if( !nextNode ) {
+							node.appendChild( existsNode )
+							break
 						}
-						if( view instanceof $mol_viewer ) view.DOMTree( void 0 )
-					} else {
-						if( nextNode && nextNode.nodeName === '#text' ) {
-							nextNode.nodeValue = String( view )
+						if( nextNode == existsNode ) {
 							nextNode = nextNode.nextSibling
+							break
 						} else {
-							var textNode = document.createTextNode( String( view ) )
-							prev.insertBefore( textNode , nextNode )
+							//if( childViews.indexOf( nextNode ) === -1 ) {
+							//	var nn = nextNode.nextSibling
+							//	prev.removeChild( nextNode )
+							//	nextNode = nn
+							//} else {
+								node.insertBefore( existsNode , nextNode )
+								break
+							//}
 						}
 					}
-				}	
+					//if( view instanceof $mol_viewer ) new $mol_defer( ()=> view.DOMTree() )
+				} else {
+					if( nextNode && nextNode.nodeName === '#text' ) {
+						nextNode.nodeValue = String( view )
+						nextNode = nextNode.nextSibling
+					} else {
+						var textNode = document.createTextNode( String( view ) )
+						node.insertBefore( textNode , nextNode )
+					}
+				}
+				
 			}
 			
 			while( nextNode ) {
 				var currNode = nextNode
 				nextNode = currNode.nextSibling
-				prev.removeChild( currNode )
+				node.removeChild( currNode )
 			}
 		}
 		
-		// Update element fields
+		return null
+	}
+	
+	@ $mol_prop({
+		fail : ( self : $mol_viewer , error ) => {
+			var node = self.DOMNode()
+			if( node ) {
+				node.setAttribute( 'mol_viewer_error' , error.name )
+				// if( error.name !== '$mol_atom_wait' ) node.innerHTML = error.message
+			}
+			return error
+		}
+	})
+	DOMNodeState( ...diff : void[] ) {
+		var childs = this.DOMNodeContent()
+		
+		var node = this.DOMNode()
+		
+		this.attr_keys().forEach( name => {
+			var n = this.attr( name )
+			if(( n == null )||( n === false )) {
+				node.removeAttribute( name )
+			} else if( n === true ) {
+				node.setAttribute( name , name )
+			} else {
+				node.setAttribute( name , String( n ) )
+			}
+		} )
+		
 		this.field_keys().forEach( path => {
 			var names = path.split( '.' )
-			var obj = prev
+			var obj = node
 			for( var i = 0 ; i < names.length - 1 ; ++i ) {
 				if( names[i] ) obj = obj[ names[i] ]
 			}
 			var field = names[ names.length - 1 ]
 			var val = this.field( path )
-			//if( obj[ field ] !== val ) 
-			obj[ field ] = val
+			if( obj[ field ] !== val ) obj[ field ] = val
 		} )
 		
-		prev.removeAttribute( 'mol_viewer_error' )
-		
-		return prev
+		return null
 	}
 	
-	attr_keys() { return [] }
-	attr( name : string ) : any { return '' }
+	attr_keys() { return [ 'mol_viewer_error' ] }
+	attr( name : string ) : any {
+		if( name === 'mol_viewer_error' ) return false
+		return ''
+	}
 	
 	event_keys() { return [] }
 	event( name : string , ...diff : Event[] ) { return null }
@@ -180,6 +186,20 @@ class $mol_viewer extends $mol_model {
 		return $mol_viewer_selection.focused() === this.DOMNode()
 	}
 	
+	destroyed( ...diff : boolean[] ) {
+		if( diff[0] ) {
+			var atoms = this[ '$mol_atom_state' ]
+			if( atoms ) {
+				for( var key in atoms ) {
+					if( !atoms.hasOwnProperty( key ) ) continue
+					if( !atoms[ key ] ) continue
+					atoms[ key ].destroyed( true )
+				}
+			}
+		}
+		return super.destroyed( ...diff )
+	}
+	
 }
 
 /// Autoattach view roots to loaded DOM.
@@ -188,6 +208,6 @@ document.addEventListener( 'DOMContentLoaded' , event => {
 	for( var i = nodes.length - 1 ; i >= 0 ; --i ) {
 		var view = window['$'][ nodes[i].getAttribute( 'mol_viewer_root' ) ].root(i)
 		view.DOMNode( nodes[i] )
-		view.DOMTree( void 0 )
 	}
+	$mol_defer.run()
 } )

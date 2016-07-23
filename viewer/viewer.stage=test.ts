@@ -14,8 +14,8 @@ $mol_test( test => {
 	
 	var x = new $mol_viewer_test_block()
 	
-	test.equal( x.DOMTree().id , '' )
-	test.equal( x.element(0).DOMTree().id , '.element(0)' )
+	test.equal( x.DOMNode().id , '' )
+	test.equal( x.element(0).DOMNode().id , '.element(0)' )
 	
 } )
 
@@ -26,7 +26,7 @@ $mol_test( test => {
 	
 	var x = new $mol_viewer_test()
 	
-	test.equal( x.DOMTree() , x.DOMTree() )
+	test.equal( x.DOMNode() , x.DOMNode() )
 	
 } )
 
@@ -41,7 +41,11 @@ $mol_test( test => {
 	
 	var x = new $mol_viewer_test()
 	
-	test.equal( x.DOMTree().innerHTML , 'lol5' )
+	var node = x.DOMNode()
+	
+	$mol_defer.run()
+	
+	test.equal( node.innerHTML , 'lol5' )
 		
 } )
 
@@ -61,14 +65,14 @@ $mol_test( test => {
 	
 	var x = new $mol_viewer_test_block()
 	
-	test.equal( x.DOMTree().getAttribute( 'mol_viewer_test_block' ) , '' )
-	test.equal( x.DOMTree().getAttribute( 'mol_viewer' ) , '' )
+	test.equal( x.DOMNode().getAttribute( 'mol_viewer_test_block' ) , '' )
+	test.equal( x.DOMNode().getAttribute( 'mol_viewer' ) , '' )
 	
-	test.equal( x.element(0).DOMTree().getAttribute( 'mol_viewer_test_block_element' ) , '' )
-	test.equal( x.element(0).DOMTree().getAttribute( 'mol_viewer_element' ) , '' )
+	test.equal( x.element(0).DOMNode().getAttribute( 'mol_viewer_test_block_element' ) , '' )
+	test.equal( x.element(0).DOMNode().getAttribute( 'mol_viewer_element' ) , '' )
 
-	test.equal( x.element(0).DOMTree().getAttribute( 'mol_viewer_test_item' ) , '' )
-	test.equal( x.element(0).DOMTree().getAttribute( 'mol_viewer' ) , '' )
+	test.equal( x.element(0).DOMNode().getAttribute( 'mol_viewer_test_item' ) , '' )
+	test.equal( x.element(0).DOMNode().getAttribute( 'mol_viewer' ) , '' )
 	
 } )
 
@@ -89,8 +93,11 @@ $mol_test( test => {
 	
 	var x = new $mol_viewer_test()
 	
-	test.equal( x.DOMTree().getAttribute( 'href' ) , '#haha' )
-	test.equal( x.DOMTree().getAttribute( 'required' ) , '' )
+	var node = x.DOMNode()
+	$mol_defer.run()
+	
+	test.equal( node.getAttribute( 'href' ) , '#haha' )
+	test.equal( node.getAttribute( 'required' ) , '' )
 	
 } )
 
@@ -111,7 +118,10 @@ $mol_test( test => {
 	
 	var x = new $mol_viewer_test()
 	
-	test.equal( ( <HTMLElement> x.DOMTree() ).style.top , '10px' )
+	var node = x.DOMNode() as HTMLElement
+	$mol_defer.run()
+	
+	test.equal( node.style.top , '10px' )
 	
 } )
 
@@ -126,17 +136,19 @@ $mol_test( test => {
 		}
 		event( name : string , ...diff : Event[] ) {
 			switch( name ) {
-				case 'click' : return this.clicks( ...diff )
+				case 'click' : return this.eventClick( ...diff )
 			}
 			return super.event( name , ...diff )
 		}
-		clicks( ...diff : Event[] ) {
+		eventClick( ...diff : Event[] ) {
 			clicked = true
 		}
 	}
 	
 	var x = new $mol_viewer_test()
-	;( <HTMLElement> x.DOMTree() ).click()
+	
+	var node = x.DOMNode() as HTMLElement
+	node.click()
 	
 	test.ok( clicked )
 	
