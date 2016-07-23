@@ -1,22 +1,29 @@
 function $mol_log( path : string , values : any[] ) {
-	var filter = $mol_log.filter() 
-	if( !filter || !filter.test( path ) ) return
+	
+	var filter = $mol_log.filter()
+	if( filter == null ) return
+	if( path.indexOf( filter ) === -1 ) return
+	
 	console.log( $jin.time.moment().toString( 'hh:mm:ss' ) , path , ...values )
-	return path
 }
 module $mol_log {
-	var _filter : RegExp
-	export function filter( ...diff : RegExp[] ) {
-		if( diff.length ) {
-			sessionStorage[ '$mol_log.filter()' ] = diff[0].source
+	
+	var _filter : string
+	export function filter( ...diff : string[] ) {
+		if( diff[0] !== void 0 ) {
+			if( diff[0] == null ) {
+				sessionStorage.removeItem( '$mol_log.filter()' )
+			} else {
+				sessionStorage.setItem( '$mol_log.filter()' , diff[ 0 ] )
+			}
 			_filter = diff[0]
 		}
 		
-		if( _filter ) return _filter
+		if( _filter !== void 0 ) return _filter
 		
-		var source = sessionStorage[ '$mol_log.filter()' ]
-		if( !source ) return null
-		
-		return _filter = RegExp( source , 'i' )
+		return _filter = sessionStorage.getItem( '$mol_log.filter()' )
 	}
+	
 }
+
+
