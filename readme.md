@@ -43,6 +43,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_skin](skin) - theming
 * [$mol_range](range) - lazy array
 * [$mol_defer](defer) - deferred but immediate execution
+* [$mol_maybe](maybe) - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
 
 ## [State modules](state)
 

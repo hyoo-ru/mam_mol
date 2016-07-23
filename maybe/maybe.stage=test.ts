@@ -4,6 +4,6 @@ $mol_test( test => {
 	test.equal( $mol_maybe( null )[0] , void 0 )
 	test.equal( $mol_maybe( void 0 )[0] , void 0 )
 
-	test.equal( $mol_maybe( void 0 ).map( String )[0] , void 0 )
+	test.equal( $mol_maybe( void 0 ).map( v => v.toString() )[0] , void 0 )
 	test.equal( $mol_maybe( 0 ).map( v => v.toString() )[0] , '0' )
 } )
