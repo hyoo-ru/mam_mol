@@ -1,0 +1,202 @@
+[
+	{
+		"mol/perf/render": {
+			":priority": 0,
+			"mol/viewer": {
+				":priority": 0,
+				"mol": {
+					"": [
+						"mol/mol.ts",
+						"mol/index.html",
+						"mol/readme.md"
+					]
+				},
+				"mol/atom": {
+					":priority": 1,
+					"mol/object": {
+						":priority": 0,
+						"mol/log": {
+							":priority": 2,
+							"jin/time/moment": {
+								":priority": 1,
+								"jin/time": {
+									":priority": 0,
+									"jin": {
+										"": [
+											"jin/jin.jam.js",
+											"jin/demo.html",
+											"jin/README.md",
+											"jin/package.json",
+											"jin/git-init.cmd"
+										]
+									},
+									"": [
+										"jin/time/readme.md"
+									]
+								},
+								"jin/time/duration": {
+									":priority": 2,
+									"jin/time/base": {
+										":priority": 1,
+										"jin/concater": {
+											":priority": 3,
+											"": [
+												"jin/concater/jin-concater.ts"
+											]
+										},
+										"": [
+											"jin/time/base/base.ts"
+										]
+									},
+									"jin/type": {
+										":priority": 3,
+										"": [
+											"jin/type/type.ts"
+										]
+									},
+									"": [
+										"jin/time/duration/duration.ts"
+									]
+								},
+								"": [
+									"jin/time/moment/moment.ts"
+								]
+							},
+							"": [
+								"mol/log/log.ts"
+							]
+						},
+						"": [
+							"mol/object/object.ts",
+							"mol/object/readme.md"
+						]
+					},
+					"mol/set": {
+						":priority": 1,
+						"": [
+							"mol/set/set.ts",
+							"mol/set/set_select.js"
+						]
+					},
+					"mol/defer": {
+						":priority": 2,
+						"": [
+							"mol/defer/defer.ts"
+						]
+					},
+					"mol/state/stack": {
+						":priority": 0,
+						"mol/dict": {
+							":priority": 0,
+							"": [
+								"mol/dict/dict.ts",
+								"mol/dict/dict_select.js"
+							]
+						},
+						"": [
+							"mol/state/stack/stack.ts"
+						]
+					},
+					"": [
+						"mol/atom/atom.ts",
+						"mol/atom/atom.env=web.ts",
+						"mol/atom/readme.md"
+					]
+				},
+				"mol/maybe": {
+					":priority": 0,
+					"": [
+						"mol/maybe/maybe.ts"
+					]
+				},
+				"mol/model": {
+					":priority": 0,
+					"mol/state/session": {
+						":priority": 2,
+						"mol/prop": {
+							":priority": 1,
+							"": [
+								"mol/prop/prop.ts",
+								"mol/prop/readme.md"
+							]
+						},
+						"mol/state/local": {
+							":priority": 2,
+							"": [
+								"mol/state/local/local.ts"
+							]
+						},
+						"": [
+							"mol/state/session/session.ts"
+						]
+					},
+					"mol/state/arg": {
+						":priority": 2,
+						"": [
+							"mol/state/arg/arg.env=web.ts"
+						]
+					},
+					"": [
+						"mol/model/model.ts"
+					]
+				},
+				"mol/viewer/selection": {
+					":priority": 2,
+					"": [
+						"mol/viewer/selection/selection.ts"
+					]
+				},
+				"": [
+					"mol/viewer/viewer.css",
+					"mol/viewer/viewer.env=web.ts"
+				]
+			},
+			"mol/clicker": {
+				":priority": 0,
+				"mol/skin": {
+					":priority": 1,
+					"": [
+						"mol/skin/skin.view.css"
+					]
+				},
+				"": [
+					"mol/clicker/readme.md",
+					"mol/clicker/clicker.css",
+					"mol/clicker/clicker.view.tree",
+					"mol/clicker/clicker.view.ts",
+					"mol/clicker/clicker_types.view.tree"
+				]
+			},
+			"": [
+				"mol/perf/render/index.html",
+				"mol/perf/render/render.view.tree",
+				"mol/perf/render/render.view.ts"
+			]
+		}
+	},
+	{
+		"mol/perf/render/lazy": {
+			":priority": 0,
+			"mol/lister": {
+				":priority": 0,
+				"mol/scroller": {
+					":priority": 0,
+					"": [
+						"mol/scroller/scroller.view.css",
+						"mol/scroller/scroller.view.tree",
+						"mol/scroller/scroller.view.ts"
+					]
+				},
+				"": [
+					"mol/lister/lister.view.css",
+					"mol/lister/lister.view.tree",
+					"mol/lister/lister.view.ts",
+					"mol/lister/readme.md"
+				]
+			},
+			"": [
+				"mol/perf/render/lazy/lazy.view.tree"
+			]
+		}
+	}
+]

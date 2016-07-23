@@ -1,0 +1,162 @@
+@-webkit-keyframes mol_viewer_show {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes mol_viewer_show {
+	from {
+		opacity: 0;
+	}
+}
+
+[mol_viewer] {
+	-webkit-animation: mol_viewer_show .1s ease;
+	        animation: mol_viewer_show .1s ease;
+}
+
+[mol_viewer_error] {
+	background-image: -webkit-repeating-linear-gradient(315deg, rgba(255,220,220,1), rgba(255,220,220,1) 11px, rgba(255,255,220,1) 10px, rgba(255,255,220,1) 20px) !important;
+	background-image: repeating-linear-gradient(
+		135deg,
+		rgba(255,220,220,1),
+		rgba(255,220,220,1) 11px,
+		rgba(255,255,220,1) 10px,
+		rgba(255,255,220,1) 20px
+	) !important;
+	background-size: 28px 28px !important;
+}
+
+@-webkit-keyframes mol_viewer_error_move {
+  0% {
+	background-position: 0 0;
+  }
+  100% {
+	background-position: 28px 0;
+  }
+}
+
+@keyframes mol_viewer_error_move {
+  0% {
+	background-position: 0 0;
+  }
+  100% {
+	background-position: 28px 0;
+  }
+}
+
+[mol_viewer_error="$mol_atom_wait"] {
+	background-image: -webkit-repeating-linear-gradient(45deg, rgba(0,0,255,.05), rgba(0,0,255,.05) 11px, rgba(255,255,255,.02) 10px, rgba(255,255,255,.02) 20px) !important;
+	background-image: repeating-linear-gradient(
+		45deg,
+		rgba(0,0,255,.05),
+		rgba(0,0,255,.05) 11px,
+		rgba(255,255,255,.02) 10px,
+		rgba(255,255,255,.02) 20px
+	) !important;
+	background-size: 28px 28px !important;
+	-webkit-animation: mol_viewer_show 1s linear , mol_viewer_error_move .25s linear infinite !important;
+	        animation: mol_viewer_show 1s linear , mol_viewer_error_move .25s linear infinite !important;
+	pointer-events: none;
+}
+
+[mol_clicker] {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+	border: none;
+	font: inherit;
+	background: none;
+	outline: 1px solid  ;
+	outline: 1px solid rgba( 0 , 0 , 0 , .2 );
+	border-radius:  ;
+	border-radius: 2px;
+	-webkit-box-flex: .001;
+	    -ms-flex: .001 1 auto;
+	        flex: .001 1 auto;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	-ms-flex-line-pack: center;
+	    align-content: center;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	vertical-align: middle;
+	text-align: center;
+	padding: 8px;
+	padding: .5rem;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	text-decoration: inherit;
+	color: inherit;
+	cursor: default;
+	opacity: .9;
+}
+
+[mol_clicker]:disabled {
+	background: #eee;
+	color: gray;
+}
+
+[mol_clicker]:enabled:hover ,
+[mol_clicker]:focus {
+	outline: 2px solid  ;
+	outline: 2px solid #6694CC;
+	position: relative;
+	z-index: 1;
+	cursor: pointer;
+	opacity: 1;
+}
+
+[mol_clicker_major]:enabled {
+	background:  ;
+	background: #FFE2B3;
+}
+
+[mol_clicker_warn]:enabled {
+	background:  ;
+	background: #FFD6D6;
+}
+
+[mol_clicker_minor]:enabled {}
+
+[mol_scroller] {
+	overflow: auto;
+	overflow-y: scroll;
+	-webkit-box-flex: 1;
+	    -ms-flex: 1 1 auto;
+	        flex: 1 1 auto;
+	box-sizing: border-box;
+	/*will-change: scroll-position;*/
+	-webkit-transform: translateZ(0);
+	        transform: translateZ(0);
+}
+
+@media print {
+	[mol_scroller] {
+		overflow: visible;
+	}
+}
+
+[mol_scroller]::-webkit-scrollbar {
+	width: 8px;
+	width: .5rem;
+	height: 8px;
+	height: .5rem;
+}
+
+[mol_scroller]::-webkit-scrollbar-track {
+	background: rgba( 0 , 0 , 0 , .1 );
+}
+
+[mol_scroller]::-webkit-scrollbar-thumb {
+	background: rgba( 0 , 0 , 0 , .25 );
+	/*background: var( --mol_skin_accent_fore );*/
+	/*border-radius: var( --mol_skin_round );*/
+	/*border: 1px solid var( --mol_skin_light_fore );*/
+}
+
+/*# sourceMappingURL=index.env=web.stage=release.css.map */
