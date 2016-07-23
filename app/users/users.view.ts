@@ -1,5 +1,4 @@
 /// GitHub users API.
-import $mol_app_users = $.$mol_app_users
 class $mol_app_users_github extends $mol_http_resource {
 	
 	/// Get resource by query string.
