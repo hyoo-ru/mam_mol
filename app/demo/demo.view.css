@@ -6,7 +6,7 @@
 [mol_app_demo_optioner] {
 	display: flex;
 	flex-direction: column;
-	padding: 1vmin;
+	padding: .5rem;
 }
 
 [mol_app_demo_optioner] > * {
@@ -17,7 +17,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	height: 100%;
-	padding: 1vmin;
+	padding: .5rem;
 	align-content: flex-start;
 	align-items: flex-start;
 	background: white;
