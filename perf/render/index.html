@@ -4,10 +4,26 @@
     <head>
         <title>Performance Comparison for Knockout, Angular and React</title>
         <style type="text/css">
+			body {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			
+			h1 {
+				width: 100%;
+			}
+			
+			section {
+				flex: 15%;
+			}
+			
 			[mol_perf_render_rower],
 			ul {
 				padding : 0;
-				display: table;
+				margin: 0;
+				display: block;
+				overflow: auto;
+				height: 50vh;
 			}
 			
 			[mol_perf_render_row],
@@ -39,7 +55,7 @@
         </style>
 		<!--<link rel="stylesheet" href="-mix/index.env=web.stage=release.css" />-->
 
-        <script src="http://knockoutjs.com/downloads/knockout-3.4.0rc.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.js"></script>
 		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react-dom.js"></script>-->
@@ -235,8 +251,9 @@
 			</header>
 			<ul id="raw"></ul>
 		</section>
-		
+
 		<section mol_viewer_root="$mol_perf_render"></section>
+		<section mol_viewer_root="$mol_perf_render_lazy"></section>
 
         <script type="text/html" id="raw-template">
             <li>
