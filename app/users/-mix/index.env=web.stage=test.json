@@ -1,0 +1,246 @@
+[
+	{
+		"mol/app/users": {
+			":priority": 0,
+			"mol/skin": {
+				":priority": 1,
+				"mol": {
+					"mol/test": {
+						":priority": 0,
+						"": [
+							"mol/test/test.ts",
+							"mol/test/test.env=web.stage=test.ts"
+						]
+					},
+					"": [
+						"mol/mol.ts",
+						"mol/mol.stage=test.ts",
+						"mol/index.html",
+						"mol/readme.md"
+					]
+				},
+				"": [
+					"mol/skin/skin.view.css"
+				]
+			},
+			"mol/viewer": {
+				":priority": 0,
+				"mol/atom": {
+					":priority": 1,
+					"mol/object": {
+						":priority": 0,
+						"mol/log": {
+							":priority": 2,
+							"jin/time/moment": {
+								":priority": 1,
+								"jin/time": {
+									":priority": 0,
+									"jin": {
+										"": [
+											"jin/jin.jam.js",
+											"jin/demo.html",
+											"jin/README.md",
+											"jin/package.json",
+											"jin/git-init.cmd"
+										]
+									},
+									"": [
+										"jin/time/readme.md"
+									]
+								},
+								"jin/time/duration": {
+									":priority": 2,
+									"jin/time/base": {
+										":priority": 1,
+										"jin/concater": {
+											":priority": 3,
+											"": [
+												"jin/concater/jin-concater.ts"
+											]
+										},
+										"": [
+											"jin/time/base/base.ts"
+										]
+									},
+									"jin/type": {
+										":priority": 3,
+										"": [
+											"jin/type/type.ts"
+										]
+									},
+									"": [
+										"jin/time/duration/duration.ts"
+									]
+								},
+								"": [
+									"jin/time/moment/moment.ts"
+								]
+							},
+							"": [
+								"mol/log/log.ts"
+							]
+						},
+						"": [
+							"mol/object/object.ts",
+							"mol/object/object.stage=test.ts",
+							"mol/object/readme.md"
+						]
+					},
+					"mol/set": {
+						":priority": 1,
+						"": [
+							"mol/set/set.ts",
+							"mol/set/set.stage=test.ts",
+							"mol/set/set_select.js"
+						]
+					},
+					"mol/defer": {
+						":priority": 2,
+						"": [
+							"mol/defer/defer.ts"
+						]
+					},
+					"mol/state/stack": {
+						":priority": 0,
+						"mol/dict": {
+							":priority": 0,
+							"": [
+								"mol/dict/dict.ts",
+								"mol/dict/dict.stage=test.ts",
+								"mol/dict/dict_select.js"
+							]
+						},
+						"": [
+							"mol/state/stack/stack.ts"
+						]
+					},
+					"": [
+						"mol/atom/atom.ts",
+						"mol/atom/atom.env=web.ts",
+						"mol/atom/readme.md"
+					]
+				},
+				"mol/maybe": {
+					":priority": 0,
+					"": [
+						"mol/maybe/maybe.ts",
+						"mol/maybe/maybe.stage=test.ts"
+					]
+				},
+				"mol/model": {
+					":priority": 0,
+					"mol/state/session": {
+						":priority": 2,
+						"mol/prop": {
+							":priority": 1,
+							"": [
+								"mol/prop/prop.ts",
+								"mol/prop/prop.stage=test.ts",
+								"mol/prop/readme.md"
+							]
+						},
+						"mol/state/local": {
+							":priority": 2,
+							"": [
+								"mol/state/local/local.ts",
+								"mol/state/local/local.stage=test.ts"
+							]
+						},
+						"": [
+							"mol/state/session/session.ts"
+						]
+					},
+					"mol/state/arg": {
+						":priority": 2,
+						"": [
+							"mol/state/arg/arg.env=web.ts"
+						]
+					},
+					"": [
+						"mol/model/model.ts"
+					]
+				},
+				"mol/viewer/selection": {
+					":priority": 2,
+					"": [
+						"mol/viewer/selection/selection.ts"
+					]
+				},
+				"": [
+					"mol/viewer/viewer.css",
+					"mol/viewer/viewer.env=web.ts",
+					"mol/viewer/viewer.stage=test.ts"
+				]
+			},
+			"mol/stringer": {
+				":priority": 0,
+				"": [
+					"mol/stringer/readme.md",
+					"mol/stringer/stringer.css",
+					"mol/stringer/stringer.view.tree",
+					"mol/stringer/stringer.view.ts"
+				]
+			},
+			"mol/lister": {
+				":priority": 0,
+				"mol/scroller": {
+					":priority": 0,
+					"": [
+						"mol/scroller/scroller.view.css",
+						"mol/scroller/scroller.view.tree",
+						"mol/scroller/scroller.view.ts"
+					]
+				},
+				"": [
+					"mol/lister/lister.view.css",
+					"mol/lister/lister.view.tree",
+					"mol/lister/lister.view.ts",
+					"mol/lister/readme.md"
+				]
+			},
+			"mol/rower": {
+				":priority": 0,
+				"": [
+					"mol/rower/rower.view.css",
+					"mol/rower/rower.view.tree",
+					"mol/rower/readme.md"
+				]
+			},
+			"mol/clicker": {
+				":priority": 0,
+				"": [
+					"mol/clicker/readme.md",
+					"mol/clicker/clicker.css",
+					"mol/clicker/clicker.view.tree",
+					"mol/clicker/clicker.view.ts",
+					"mol/clicker/clicker_types.view.tree"
+				]
+			},
+			"mol/http/resource": {
+				":priority": 0,
+				"mol/http/request": {
+					":priority": 1,
+					"": [
+						"mol/http/request/request.env=web.ts"
+					]
+				},
+				"": [
+					"mol/http/resource/resource.env=web.ts"
+				]
+			},
+			"mol/range": {
+				":priority": 3,
+				"": [
+					"mol/range/range.ts",
+					"mol/range/range.stage=test.ts"
+				]
+			},
+			"": [
+				"mol/app/users/index.html",
+				"mol/app/users/users.view.css",
+				"mol/app/users/users.view.tree",
+				"mol/app/users/users.view.ts"
+			]
+		}
+	}
+]
