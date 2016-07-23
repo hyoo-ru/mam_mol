@@ -59,12 +59,12 @@ class $mol_state_arg< Value > extends $mol_object {
 		super()
 	}
 	
-	value( key : string , ...diff : Value[] ) {
-		return $mol_state_arg.value( this.prefix + key , ...diff )
+	value< Value >( key : string , ...diff : Value[] ) {
+		return $mol_state_arg.value< Value >( this.prefix + key , ...diff )
 	}
 	
-	sub( postfix ) {
-		return new $mol_state_arg( this.prefix + postfix + '.' )
+	sub< Value >( postfix ) {
+		return new $mol_state_arg< Value >( this.prefix + postfix + '.' )
 	}
 	
 	link( next : any ) {
