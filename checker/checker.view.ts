@@ -7,7 +7,7 @@ module $.$mol {
 		}
 		
 		@ $mol_prop()
-		clicks( ...diff : Event[] ) {
+		eventClick( ...diff : Event[] ) {
 			this.checked( !this.checked() )
 			diff[0].preventDefault()
 		}

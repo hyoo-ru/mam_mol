@@ -41,7 +41,7 @@ module $.$mol {
 		}
 
 		@ $mol_prop()
-		submits( ...diff : Event[] ) {
+		eventSubmit( ...diff : Event[] ) {
 			alert( `Hello, ${this.sex()} ${this.nameFirst()} (${this.nameNick()}) ${this.nameSecond()}!` )
 		}
 		

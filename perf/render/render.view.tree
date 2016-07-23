@@ -1,19 +1,14 @@
 $mol_perf_render $mol_viewer childs /
 	< header $mol_viewer childs / < head /
-		< titler $mol_perf_render_titler
-		< runner $mol_perf_render_runner
+		< titler $mol_viewer
+			tagName =h2
+			childs / < title =$mol
+		< runner $mol_clicker_major
 			childs / < runnerLabel =Run
-			clicks > runs : null
-	< rower $mol_viewer childs / < rows /
-
-$mol_perf_render_titler $mol_viewer
-	tagName =h2
-	childs / =$mol
-
-$mol_perf_render_runner $mol_clicker_major
-	tagName =button
+			eventClick > eventRun : null
+	< rower $mol_viewer childs < rows /
 
 $mol_perf_render_row $mol_viewer
 	attr * mol_perf_render_row_selected < selected : false
-	event * click > toggles : null
+	event * click > eventToggle : null
 	childs / < bar $mol_viewer childs / < label =

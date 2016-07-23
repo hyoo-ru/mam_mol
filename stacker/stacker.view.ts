@@ -17,7 +17,7 @@ module $.$mol {
 module $.$mol {
 	export class $mol_stacker_panel extends $.$mol_stacker_panel {
 
-		focuses( ...diff : Event[] ) {
+		eventFocus( ...diff : Event[] ) {
 			this.focused( true )
 		}
 

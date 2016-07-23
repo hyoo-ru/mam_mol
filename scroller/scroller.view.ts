@@ -12,7 +12,7 @@ module $.$mol {
 		}
 
 		@ $mol_prop()
-		scrolls( ...diff : Event[] ) {
+		eventScroll( ...diff : Event[] ) {
 			var el = ( diff[0].target as HTMLElement )
 			this.scrollTop( el.scrollTop )
 			this.scrollLeft( el.scrollLeft )
@@ -20,7 +20,7 @@ module $.$mol {
 		}
 
 		@ $mol_prop()
-		wheels( ...diff : MouseWheelEvent[] ) {
+		eventWheel( ...diff : MouseWheelEvent[] ) {
 			if( diff[0].defaultPrevented ) return
 	
 			var target = <HTMLElement> this.DOMNode()

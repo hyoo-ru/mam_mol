@@ -10,7 +10,7 @@ module $.$mol {
 		@ $mol_prop()
 		runnerLabel( ...diff : string[] ) { return diff[0] || 'Run' }
 		
-		runs( ...diff : Event[] ) {
+		eventRun( ...diff : Event[] ) {
 			var data = window['_buildData']()
 			
 			var date = Date.now()
@@ -47,7 +47,7 @@ module $.$mol {
 
 		label() { return this.data().label }
 		
-		toggles( ...diff : Event[] ) {
+		eventToggle( ...diff : Event[] ) {
 			this.selected( !this.selected() )
 		}
 

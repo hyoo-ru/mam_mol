@@ -1,22 +1,22 @@
 $mol_clicker_demo_toolbar $mol_rower childs /
 	< major $mol_clicker_major
 		childs / =Click me!
-		clicks > events : null
+		eventClick > events : null
 	< majorDisabled $mol_clicker_major
 		childs / =Click me!
 		disabled : true
-		clicks > events : null
+		eventClick > events : null
 	< minor $mol_clicker_minor
 		childs / =Or click me..
-		clicks > events : null
+		eventClick > events : null
 	< minorDisabled $mol_clicker_minor
 		childs / =Or click me..
 		disabled : true
-		clicks > events : null
+		eventClick > events : null
 	< warn $mol_clicker_warn
 		childs / =Be attentive!
-		clicks > events : null
+		eventClick > events : null
 	< warnDisabled $mol_clicker_warn
 		childs / =Be attentive!
 		disabled : true
-		clicks > events : null
+		eventClick > events : null

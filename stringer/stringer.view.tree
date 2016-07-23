@@ -6,4 +6,4 @@ $mol_stringer $mol_viewer
 	field *
 		disabled < disabled : false
 		value < valueChanged < value =
-	event * input > changes : null
+	event * input > eventChange : null

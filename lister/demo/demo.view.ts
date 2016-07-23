@@ -11,7 +11,7 @@ module $.$mol {
 		@ $mol_prop()
 		rower( id : number ) {
 			return new $mol_rower_demo().setup( obj => {
-				obj.hint = ()=> `Title #${id}`
+				obj.title = ()=> `Title #${id}`
 			} )
 		}
 		

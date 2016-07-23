@@ -3,7 +3,7 @@ $mol_scroller $mol_viewer
 		scrollTop < scrollTop : 0
 		scrollLeft < scrollLeft : 0
 	event *
-		scroll > scrolls : null
-		overflow > scrolls : null
-		underflow > scrolls : null
-		wheel > wheels : null
+		scroll > eventScroll : null
+		overflow > eventScroll : null
+		underflow > eventScroll : null
+		wheel > eventWheel : null

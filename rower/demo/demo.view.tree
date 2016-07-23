@@ -1,5 +1,10 @@
 $mol_rower_demo $mol_rower childs /
-	< titler $mol_stringer hint < hint =Title
-	< publisher $mol_checker childs / =Shared
-	< addButton $mol_clicker_minor
+	< titler $mol_stringer
+		hint =Title
+		value > title =
+	< publisher $mol_checker
+		childs / =Shared
+		checked > publish : false
+	< buttonDrop $mol_clicker_minor
 		childs / =Drop
+		eventClick > eventLog : null
