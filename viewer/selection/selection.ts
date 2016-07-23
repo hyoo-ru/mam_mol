@@ -66,7 +66,9 @@ class $mol_viewer_selection extends $mol_object {
 			var range = sel.getRangeAt( 0 )
 			
 			var el = <Element> range.commonAncestorContainer
-			while( !el.id ) el = el.parentElement
+			while( el && !el.id ) el = el.parentElement
+			
+			if( !el ) return { id : null , start : 0 , end : 0 }
 			
 			var meter = new Range
 			meter.selectNodeContents( el )
