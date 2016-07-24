@@ -11,14 +11,18 @@ module $.$mol {
 		runnerLabel( ...diff : string[] ) { return diff[0] || 'Run' }
 		
 		eventRun( ...diff : Event[] ) {
-			var data = window['_buildData']()
-			
-			var date = Date.now()
-			
-			this.data( data )
-			this.selectedItem( null )
-			
-			setTimeout( () => this.runnerLabel( (Date.now() - date) + " ms" ) )
+			requestAnimationFrame( ()=> {
+				var data = window[ '_buildData' ]()
+				
+				var date = Date.now()
+				
+				this.data( data )
+				this.selectedItem( null )
+				
+				$mol_defer.run()
+				
+				setTimeout( () => this.runnerLabel( (Date.now() - date) + " ms" ) )
+			} )
  		}
 		
 		@ $mol_prop()
