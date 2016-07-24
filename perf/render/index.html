@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html ng-app="test">
+<html>
     <head>
         <title>Performance Comparison for Knockout, Angular and React</title>
         <style type="text/css">
@@ -60,6 +60,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.js"></script>
 		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react-dom.js"></script>-->
 		<script type="text/javascript" src="-mix/index.env=web.stage=release.js"></script>
+        <script type="text/javascript" src="//angularlight.org/bin/alight_0.13.last.min.js"></script>
         <script type="text/javascript">
             console.timeEnd("build");
 
@@ -210,9 +211,27 @@
                 });
             }
 
+            function alight0(scope) {
+                scope.run = function() {
+                    requestAnimationFrame( function() {
+                        var data = _buildData(),
+                            date = Date.now();
+
+                        scope.selected = null;
+                        scope.data = data;
+
+                        scope.$scan();
+
+                        setTimeout(function () {
+                            document.getElementById("run-alight").innerHTML = (Date.now() - date) + " ms";
+                        })
+                    } )
+                };
+            }
+
         </script>
     </head>
-    <body ng-controller="controller">
+    <body>
 		
 		<h1 perf-header>
 			Performance comparison of some popular frameworks
@@ -220,7 +239,7 @@
 
 		<section id="react"></section>
 
-		<section>
+		<section ng-app="test" ng-controller="controller">
 			<header>
 				<h2>
 					Angular
@@ -235,6 +254,22 @@
 				</li>
 			</ul>
 		</section>
+
+        <section al-app="alight0">
+            <header>
+                <h2>
+                    Alight
+                </h2>
+                <button id="run-alight" @click="run()">Run</button>
+            </header>
+            <ul>
+                <li al-repeat="item in data track by $index" @click="selected=item" class="{{(selected === item)?'selected':''}}">
+                    <span>
+                        {{item.label}}
+                    </span>
+                </li>
+            </ul>
+        </section>
 
 		<section id="knockout">
 			<header>
