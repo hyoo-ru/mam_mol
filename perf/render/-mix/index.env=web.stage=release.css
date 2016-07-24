@@ -159,4 +159,8 @@
 	/*border: 1px solid var( --mol_skin_light_fore );*/
 }
 
+[mol_lister] > *:nth-of-type(odd) {
+	background: rgba( 0 , 0 , 0 , .025 );
+}
+
 /*# sourceMappingURL=index.env=web.stage=release.css.map */

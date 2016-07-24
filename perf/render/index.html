@@ -97,12 +97,14 @@
                     },
 
                     run: function() {
-                        var data = _buildData(),
-                            date = Date.now();
-
-                        this.selected(null);
-                        this.data(data);
-						setTimeout( function() { document.getElementById("run-knockout").innerHTML = (Date.now() - date) + " ms"; })
+                    	requestAnimationFrame( function() {
+							var data = _buildData(),
+								date = Date.now();
+	
+							this.selected(null);
+							this.data(data);
+							setTimeout( function() { document.getElementById("run-knockout").innerHTML = (Date.now() - date) + " ms"; })
+						}.bind( this ) )
                     }
                 }, document.getElementById("knockout"));
 
@@ -111,15 +113,19 @@
             function _angular(data) {
                 angular.module("test", []).controller("controller", function($scope) {
                     $scope.run = function() {
-                        var data = _buildData(),
-                            date = Date.now();
+						requestAnimationFrame( function() {
+							var data = _buildData(),
+								date = Date.now();
 
-                        $scope.selected = null;
-                        $scope.$$postDigest(function() {
-							setTimeout( function() { document.getElementById("run-angular").innerHTML = (Date.now() - date) + " ms"; })
-                        });
+							$scope.selected = null;
+							$scope.data = data;
 
-                        $scope.data = data;
+							$scope.$digest()
+							
+							setTimeout(function () {
+								document.getElementById("run-angular").innerHTML = (Date.now() - date) + " ms";
+							})
+						} )
                     };
 
                     $scope.select = function(item) {
@@ -150,11 +156,15 @@
 							React.createElement("header", {key:1}, [
 								React.createElement("h2", {key:3}, 'React' ),
 								this.runner = React.createElement("button", { key:4,onClick : function(){
-									var data = _buildData(),
-										date = Date.now();
+									requestAnimationFrame( function() {
+										var data = _buildData(),
+											date = Date.now();
 
-									self.setProps({ data : data , selected : null })
-									setTimeout( function() { self.setProps({ runnerLabel : (Date.now() - date) + " ms" }) })
+										self.setProps({data: data, selected: null})
+										setTimeout(function () {
+											self.setProps({runnerLabel: (Date.now() - date) + " ms"})
+										})
+									} )
 								}}, this.props.runnerLabel )
 							]) , 
 							React.createElement("ul", {key:2}, items)
@@ -170,38 +180,36 @@
 				var container = document.getElementById("raw"),
 					template = document.getElementById("raw-template").innerHTML;
 				document.getElementById("run-raw").addEventListener("click", function() {
-                    var data = _buildData(),
-                        date = Date.now(),
-                        html = "";
+					requestAnimationFrame( function() {
+						var data = _buildData(),
+							date = Date.now(),
+							html = "";
 
-                    for (var i = 0; i < data.length; i++) {
-                        var render = template;
-                        render = render.replace("{{className}}", "");
-                        render = render.replace("{{label}}", data[i].label);
-                        html += render;
-                    }
+						for (var i = 0; i < data.length; i++) {
+							var render = template;
+							render = render.replace("{{className}}", "");
+							render = render.replace("{{label}}", data[i].label);
+							html += render;
+						}
 
-                    container.innerHTML = html;
+						container.innerHTML = html;
 
-					var spans = container.querySelectorAll("li");
-					for (var i = 0; i < spans.length; i++)
-						spans[i].addEventListener("click", function() {
-							var selected = container.querySelector(".selected");
-							if (selected)
-								selected.className = "";
-							this.className = "selected";
-						});
+						var spans = container.querySelectorAll("li");
+						for (var i = 0; i < spans.length; i++)
+							spans[i].addEventListener("click", function () {
+								var selected = container.querySelector(".selected");
+								if (selected)
+									selected.className = "";
+								this.className = "selected";
+							});
 
-					setTimeout( function() { document.getElementById("run-raw").innerHTML = (Date.now() - date) + " ms"; })
+						setTimeout(function () {
+							document.getElementById("run-raw").innerHTML = (Date.now() - date) + " ms";
+						})
+					} )
                 });
             }
 
-            ko.observableArray.fn.reset = function(values) {
-                var array = this();
-                this.valueWillMutate();
-                ko.utils.arrayPushAll(array, values);
-                this.valueHasMutated();
-            };
         </script>
     </head>
     <body ng-controller="controller">

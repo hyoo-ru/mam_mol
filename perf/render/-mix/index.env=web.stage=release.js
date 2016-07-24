@@ -2400,11 +2400,14 @@ var $;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     diff[_i - 0] = arguments[_i];
                 }
-                var data = window['_buildData']();
-                var date = Date.now();
-                this.data(data);
-                this.selectedItem(null);
-                setTimeout(function () { return _this.runnerLabel((Date.now() - date) + " ms"); });
+                requestAnimationFrame(function () {
+                    var data = window['_buildData']();
+                    var date = Date.now();
+                    _this.data(data);
+                    _this.selectedItem(null);
+                    $mol_defer.run();
+                    setTimeout(function () { return _this.runnerLabel((Date.now() - date) + " ms"); });
+                });
             };
             $mol_perf_render.prototype.rows = function () {
                 var _this = this;
