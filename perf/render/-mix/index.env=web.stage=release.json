@@ -188,7 +188,6 @@
 					]
 				},
 				"": [
-					"mol/lister/lister.view.css",
 					"mol/lister/lister.view.tree",
 					"mol/lister/lister.view.ts",
 					"mol/lister/readme.md"

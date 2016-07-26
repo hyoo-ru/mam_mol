@@ -2292,38 +2292,12 @@ var $;
             }
             return (false);
         };
-        $mol_perf_render_row.prototype.attr = function (key) {
-            var diff = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                diff[_i - 1] = arguments[_i];
-            }
-            switch (key) {
-                case "mol_perf_render_row_selected": return this.selected.apply(this, diff);
-                default: return _super.prototype["attr"] && _super.prototype["attr"].call(this, key);
-            }
-        };
-        $mol_perf_render_row.prototype.attr_keys = function () {
-            return (_super.prototype["attr_keys"] && _super.prototype["attr_keys"].call(this) || []).concat(["mol_perf_render_row_selected"]);
-        };
         $mol_perf_render_row.prototype.eventToggle = function () {
             var diff = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return (diff[0] !== void 0) ? diff[0] : (null);
-        };
-        $mol_perf_render_row.prototype.event = function (key) {
-            var diff = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                diff[_i - 1] = arguments[_i];
-            }
-            switch (key) {
-                case "click": return this.eventToggle.apply(this, diff);
-                default: return _super.prototype["event"] && _super.prototype["event"].call(this, key);
-            }
-        };
-        $mol_perf_render_row.prototype.event_keys = function () {
-            return (_super.prototype["event_keys"] && _super.prototype["event_keys"].call(this) || []).concat(["click"]);
+            return (null);
         };
         $mol_perf_render_row.prototype.label = function () {
             var diff = [];
@@ -2355,9 +2329,6 @@ var $;
             }
             return [].concat($mol_maybe(this.bar.apply(this, diff)).map(function (val) { return val.valueOf(); })[0]);
         };
-        __decorate([
-            $mol_prop()
-        ], $mol_perf_render_row.prototype, "eventToggle", null);
         __decorate([
             $mol_prop()
         ], $mol_perf_render_row.prototype, "bar", null);
