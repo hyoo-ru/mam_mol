@@ -14,21 +14,24 @@ function $mol_viewer_tree2ts( tree ) {
 			if( !param.type || /^-/.test( param.type ) ) return
 			
 			var needKey = false
-			var needSet = true
+			var needSet = false
 			var needReturn = true
 			var keys = []
 			
 			function getValue( value ) {
 				switch( value.type[0] ) {
 					case void 0 :
+						needCache = true
 						return JSON.stringify( value.value )
 					case '-' :
 						return null
 					case '/' :
 						var items = []
 						value.childs.forEach( function( item ) {
+							if( item.type === '-' ) return
 							var val = getValue( item )
-							if( val ) items.push( '$'+'mol_maybe(' + val + ').map( val => val.valueOf() )[0]' )
+							if( [ '<' , '>' , 'null' ].indexOf( item.type ) !== -1 ) val = '$'+'mol_maybe(' + val + ').map( val => val.valueOf() )[0]'
+							if( val ) items.push( val )
 						} )
 						return '[].concat( ' + items.join(' , ') + ' )'
 					case '$' :
@@ -36,7 +39,10 @@ function $mol_viewer_tree2ts( tree ) {
 						var overs = []
 						value.childs.forEach( function( over ) {
 							if( /^(-|$)/.test( over.type ) ) return ''
-							overs.push( '\t\t\t__.' + over.type + ' = ( ...diff ) => ' + getValue( over.childs[0] ) + '\n' )
+							var ns = needSet
+							var v = getValue( over.childs[0] )
+							overs.push( '\t\t\t__.' + over.type + ' = (' + ( needSet ? ' ...diff ' : '' ) + ') => ' + v + '\n' )
+							needSet = ns
 						} )
 						return 'new ' + value.type + '().setup( __ => { \n' + overs.join( '' ) + '\t\t} )'
 					case '*' :
@@ -48,8 +54,9 @@ function $mol_viewer_tree2ts( tree ) {
 							keys.push( opt.type )
 							opts.push( '\t\t\tcase "' + opt.type + '" : return ' + getValue( opt.childs[0] ) + '\n' )
 						} )
-						return 'switch( key ){\n' + opts.join( '' ) + '\t\t\tdefault: return super["' + param.type + '"] && super["' + param.type + '"]( key )\n\t\t}'
+						return 'switch( key ){\n' + opts.join( '' ) + '\t\t\tdefault: return super["' + param.type + '"] && super["' + param.type + '"]( key' + ( needSet ? ' , ...diff' : '' ) + ' )\n\t\t}'
 					case ':' :
+						needCache = true
 						return '( ' + JSON.stringify( value.childs[0] ) + ' )'
 					case '>' :
 						needSet = true
@@ -60,11 +67,20 @@ function $mol_viewer_tree2ts( tree ) {
 					case '<' :
 						if( value.childs.length === 1 ) {
 							addProp( value.childs[0] )
-							return 'this.' + value.childs[0].type + '( ...diff )'
+							return 'this.' + value.childs[0].type + '()'
 						}
-					default :
-						throw new Error( 'Wrong value: ' + value + value.uri )
 				}
+				
+				switch( value.type ) {
+					case 'true' :
+					case 'false' :
+					case 'null' :
+						return value.type
+				}
+				
+				if( Number( value.type ) == value.type ) return value.type
+				
+				throw new Error( 'Wrong value: ' + value + value.uri )
 			}
 			
 			if( param.childs.length > 1 ) throw new Error( 'Too more childs: ' + param + param.uri )
@@ -73,18 +89,19 @@ function $mol_viewer_tree2ts( tree ) {
 				var val = getValue( child )
 				var args = []
 				if( needKey ) args.push( ' key ' )
-				if( needSet ) {
-					args.push( ' ...diff ' )
-					if( needCache ) val = ( needReturn ? '( diff[0] !== void 0 ) ? diff[0] : ' : 'if( diff[0] !== void 0 ) return diff[0]\n\t\t' ) + val
-				}
+				if( needCache || needSet ) args.push( ' ...diff ' )
+				if( needCache ) val = ( needReturn ? '( diff[0] !== void 0 ) ? diff[0] : ' : 'if( diff[0] !== void 0 ) return diff[0]\n\t\t' ) + val
 				if( needReturn ) val = 'return ' + val
 				var decl = '\t' + param.type +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
 				if( needCache ) decl = '\t@ $' + 'mol_prop()\n' + decl
+				decl = param.toString().trim().replace( /^/gm , '\t/// ' ) + '\n' + decl
 				members[ param.type ] = decl
 				if( needKey ) {
-					members[ param.type + '_keys' ] = '\t' + param.type +'_keys(){\n\t\treturn ( super["' + param.type +'_keys"] && super["' + param.type +'_keys"]() || [] ).concat( ' + JSON.stringify( keys ) + ' )\n\t}\n\n'
+					members[ param.type + '_keys' ] = '\t' + param.type +'_keys(){\n\t\treturn ' + JSON.stringify( keys ) + '.concat( super["' + param.type +'_keys"] && super["' + param.type +'_keys"]() || [] )\n\t}\n\n'
 				}
 			} )
+			
+			return needSet
 		}
 		
 		var body = Object.keys( members ).map( function( name ) {

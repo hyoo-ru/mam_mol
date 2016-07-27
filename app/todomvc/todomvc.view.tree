@@ -1,0 +1,56 @@
+$mol_app_todomvc $mol_viewer childs /
+	< titler $mol_viewer childs / < title =todos
+	< paneler $mol_viewer childs /
+		< header $mol_rower childs < headerContent /
+			< allCompleter $mol_checker
+				checked > allCompleted false
+				childs / =❯
+			< adder $mol_app_todomvc_taskRow_adder
+				value > taskNewTitle =
+				eventDone > eventAdd null
+		< lister $mol_lister
+			rowHeightMin 60
+			rows < taskRows /
+		< footer $mol_rower childs < footerContent /
+			< pendinger $mol_viewer childs < pendingMessage /
+				< pendingCounter $mol_viewer childs / < pendingCount 0
+				< pendingTail = items left
+			< filter $mol_rower childs < filterOptions /
+				< filterAll $mol_linker
+					childs / =All
+					patch : dict
+						=completed
+							: null
+				< filterActive $mol_linker
+					childs / =Active
+					patch : dict
+						=completed
+							: false
+				< filterCompleted $mol_linker
+					childs / =Completed
+					patch : dict
+						=completed
+							: true
+			< sanitizer $mol_clicker_minor
+				enabled < sanitizerEnabled true
+				eventClick < eventSanitize null
+				childs / < sanitizerMessage =Clear completed
+
+$mol_app_todomvc_ghost $mol_viewer
+	attr * mol_app_todomvc_ghost_visible < visible true
+
+$mol_app_todomvc_taskRow_adder $mol_stringer
+	hint =What needs to be done?
+	event * keyup > eventPress null
+	eventDone : null
+
+$mol_app_todomvc_taskRow $mol_rower
+	childs /
+		< completer $mol_checker checked > completed false
+		< titler $mol_stringer
+			hint =Task title
+			value > title =
+		< dropper $mol_clicker
+			childs / =✖
+			eventClick > eventDrop null
+	attr * mol_app_todomvc_taskRow_completed < completed

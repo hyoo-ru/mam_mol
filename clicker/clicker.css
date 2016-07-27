@@ -5,7 +5,7 @@
 	background: none;
 	outline: 1px solid var( --mol_skin_light_fore );
 	border-radius: var( --mol_skin_round );
-	flex: .001 1 auto;
+	flex: 0 1 auto;
 	justify-content: center;
 	align-content: center;
 	align-items: center;

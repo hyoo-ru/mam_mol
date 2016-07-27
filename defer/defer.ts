@@ -11,20 +11,22 @@ class $mol_defer extends $mol_object {
 	}
 	
 	static all : $mol_defer[] = []
-	static scheduled = false
-	
-	static nativeSchedule : () => void
+	static timer = 0
 	
 	static schedule() {
-		if( this.scheduled ) return
-		this.scheduled = true
+		if( this.timer ) return
 		
-		this.nativeSchedule()
+		this.timer = requestAnimationFrame( ()=> {
+			this.timer = 0
+			this.run()
+		} )
 	}
 	
-	static onSchedule() {
-		this.scheduled = false
-		this.run()
+	static unschedule() {
+		if( !this.timer ) return
+		
+		cancelAnimationFrame( this.timer )
+		this.timer = 0
 	}
 	
 	static add( defer : $mol_defer ) {
@@ -41,25 +43,7 @@ class $mol_defer extends $mol_object {
 		if( this.all.length === 0 ) return
 		this.schedule()
 		for( var defer ; defer = this.all.pop() ; ) defer.run()
+		//this.unschedule()
 	}
 	
-}
-
-switch( 'function' ) {
-	
-	case typeof setImmediate :
-		$mol_defer.nativeSchedule = ()=> setImmediate( ()=> $mol_defer.onSchedule() )
-		break
-	
-	case typeof postMessage :
-		addEventListener( 'message' , event => {
-			if( event.data !== '$mol_defer' ) return
-			$mol_defer.onSchedule()
-		} )
-		$mol_defer.nativeSchedule = () => postMessage( '$mol_defer' , '*' )
-		break
-	
-	default:
-		$mol_defer.nativeSchedule = () => setTimeout( ()=> $mol_defer.onSchedule() )
-		break
 }

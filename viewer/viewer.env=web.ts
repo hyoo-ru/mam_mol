@@ -61,7 +61,7 @@ class $mol_viewer extends $mol_model {
 		this.event_keys().forEach( name => {
 			next.addEventListener( name , event => {
 				this.event( name , event )
-				$mol_defer.run()
+				//$mol_defer.run()
 			} )
 		} )
 		
