@@ -94,12 +94,23 @@ function $mol_viewer_tree2ts( tree ) {
 				if( needReturn ) val = 'return ' + val
 				var decl = '\t' + param.type +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
 				if( needCache ) decl = '\t@ $' + 'mol_prop()\n' + decl
-				decl = param.toString().trim().replace( /^/gm , '\t/// ' ) + '\n' + decl
+				decl = source( param ).toString().trim().replace( /^/gm , '\t/// ' ) + '\n' + decl
 				members[ param.type ] = decl
 				if( needKey ) {
 					members[ param.type + '_keys' ] = '\t' + param.type +'_keys(){\n\t\treturn ' + JSON.stringify( keys ) + '.concat( super["' + param.type +'_keys"] && super["' + param.type +'_keys"]() || [] )\n\t}\n\n'
 				}
 			} )
+			
+			function source( root : $mol_tree ) {
+				if( [ '>' , '<' ].indexOf( root.type ) !== -1 ) {
+					return root.clone({
+						childs : root.childs.map( name => name.clone({
+							childs : []
+						}) )
+					})
+				}
+				return root.clone({ childs : root.childs.map( source ) })
+			}
 			
 			return needSet
 		}
