@@ -62,12 +62,14 @@ function $mol_viewer_tree2ts( tree ) {
 						needSet = true
 						if( value.childs.length === 1 ) {
 							addProp( value.childs[0] , true )
-							return 'this.' + value.childs[0].type + '( ...diff )'
+							var type = /(.*?)(#?)$/.exec( value.childs[0].type )
+							return 'this.' + type[1] + '( ' + ( type[2] ? 'key ,' : '' ) + ' ...diff )'
 						}
 					case '<' :
 						if( value.childs.length === 1 ) {
 							addProp( value.childs[0] )
-							return 'this.' + value.childs[0].type + '()'
+							var type = /(.*?)(#?)$/.exec( value.childs[0].type )
+							return 'this.' + type[1] + '(' + ( type[2] ? ' key ' : '' ) + ')'
 						}
 				}
 				
@@ -87,17 +89,19 @@ function $mol_viewer_tree2ts( tree ) {
 			
 			param.childs.forEach( function( child ) {
 				var val = getValue( child )
+				//if( !child.type ) val = 'this.text( ' + JSON.stringify(def.type+'_'+param.type) + ' )'
+				var propName = /(.*?)(#?)$/.exec( param.type )
 				var args = []
-				if( needKey ) args.push( ' key ' )
+				if( needKey || propName[2] ) args.push( ' key ' )
 				if( needCache || needSet ) args.push( ' ...diff ' )
 				if( needCache ) val = ( needReturn ? '( diff[0] !== void 0 ) ? diff[0] : ' : 'if( diff[0] !== void 0 ) return diff[0]\n\t\t' ) + val
 				if( needReturn ) val = 'return ' + val
-				var decl = '\t' + param.type +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
+				var decl = '\t' + propName[1] +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
 				if( needCache ) decl = '\t@ $' + 'mol_prop()\n' + decl
 				decl = source( param ).toString().trim().replace( /^/gm , '\t/// ' ) + '\n' + decl
-				members[ param.type ] = decl
+				members[ propName[1] ] = decl
 				if( needKey ) {
-					members[ param.type + '_keys' ] = '\t' + param.type +'_keys(){\n\t\treturn ' + JSON.stringify( keys ) + '.concat( super["' + param.type +'_keys"] && super["' + param.type +'_keys"]() || [] )\n\t}\n\n'
+					members[ propName[1] + '_keys' ] = '\t' + propName[1] +'_keys(){\n\t\treturn ' + JSON.stringify( keys ) + '.concat( super["' + propName[1] +'_keys"] && super["' + propName[1] +'_keys"]() || [] )\n\t}\n\n'
 				}
 			} )
 			

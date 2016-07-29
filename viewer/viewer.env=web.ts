@@ -200,6 +200,10 @@ class $mol_viewer extends $mol_model {
 		return super.destroyed( ...diff )
 	}
 	
+	text( text : string ) {
+		return text
+	}
+	
 }
 
 /// Autoattach view roots to loaded DOM.

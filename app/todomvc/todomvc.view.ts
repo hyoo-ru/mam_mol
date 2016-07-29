@@ -92,15 +92,6 @@ module $.$mol {
 			})
 		}
 
-		@$mol_prop()
-		taskRow( id : number ) {
-			return new $mol_app_todomvc_taskRow().setup( obj => {
-				obj.completed = ( ...diff : boolean[] ) => this.taskCompleted( id , ...diff )
-				obj.title = ( ...diff : string[] ) => this.taskTitle( id , ...diff )
-				obj.eventDrop = ( ...diff : Event[] ) => this.eventTaskDrop( id , ...diff )
-			} )
-		}
-		
 		task( id : number , ...diff : $mol_app_todomvc_task[] ) {
 			if( diff[0] === void 0 ) return this.tasksAll()[ id ] || { title : '' , completed : false }
 			
