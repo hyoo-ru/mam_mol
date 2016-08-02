@@ -196,6 +196,14 @@
 					"mol/scroller/scroller.view.ts"
 				]
 			},
+			"mol/lister": {
+				":priority": 0,
+				"": [
+					"mol/lister/lister.view.tree",
+					"mol/lister/lister.view.ts",
+					"mol/lister/readme.md"
+				]
+			},
 			"mol/demo": {
 				":priority": 4,
 				"": [
@@ -283,22 +291,15 @@
 				]
 			},
 			"": [
+				"mol/app/signup/index.html",
 				"mol/app/signup/signup.view.tree",
 				"mol/app/signup/signup.view.ts"
 			]
 		}
 	},
 	{
-		"mol/app/users": {
+		"mol/app/todomvc": {
 			":priority": 0,
-			"mol/lister": {
-				":priority": 0,
-				"": [
-					"mol/lister/lister.view.tree",
-					"mol/lister/lister.view.ts",
-					"mol/lister/readme.md"
-				]
-			},
 			"mol/rower": {
 				":priority": 0,
 				"": [
@@ -307,6 +308,17 @@
 					"mol/rower/readme.md"
 				]
 			},
+			"": [
+				"mol/app/todomvc/index.html",
+				"mol/app/todomvc/todomvc.css",
+				"mol/app/todomvc/todomvc.view.tree",
+				"mol/app/todomvc/todomvc.view.ts"
+			]
+		}
+	},
+	{
+		"mol/app/users": {
+			":priority": 0,
 			"mol/http/resource": {
 				":priority": 0,
 				"mol/http/request": {
@@ -317,13 +329,6 @@
 				},
 				"": [
 					"mol/http/resource/resource.env=web.ts"
-				]
-			},
-			"mol/range": {
-				":priority": 3,
-				"": [
-					"mol/range/range.ts",
-					"mol/range/range.stage=test.ts"
 				]
 			},
 			"": [
@@ -343,11 +348,11 @@
 		}
 	},
 	{
-		"mol/clicker/demo/toolbar": {
+		"mol/clicker/demo": {
 			":priority": 0,
 			"": [
-				"mol/clicker/demo/toolbar/toolbar.view.tree",
-				"mol/clicker/demo/toolbar/toolbar.view.ts"
+				"mol/clicker/demo/demo.view.tree",
+				"mol/clicker/demo/demo.view.ts"
 			]
 		}
 	},
@@ -404,10 +409,11 @@
 		}
 	},
 	{
-		"mol/perf/render/lazy": {
+		"mol/range": {
 			":priority": 0,
 			"": [
-				"mol/perf/render/lazy/lazy.view.tree"
+				"mol/range/range.ts",
+				"mol/range/range.stage=test.ts"
 			]
 		}
 	},
@@ -415,7 +421,6 @@
 		"mol/stacker/demo": {
 			":priority": 0,
 			"": [
-				"mol/stacker/demo/demo.view.css",
 				"mol/stacker/demo/demo.view.tree"
 			]
 		}
