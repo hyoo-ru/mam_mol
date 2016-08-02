@@ -5,7 +5,8 @@
 	align-content: center;
 	justify-content: space-between;
 	padding: .5rem;
-	flex: 0 0 auto;
+	flex: 1 0 auto;
+	outline: 1px solid var( --mol_skin_light_fore );
 }
 
 [mol_rower] > * {

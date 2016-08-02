@@ -1,5 +1,5 @@
 [mol_stringer] {
-	outline: 1px solid var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 	outline-offset: 0;
 	border: none;
 	border-radius: var( --mol_skin_round );
@@ -10,7 +10,7 @@
 	position: relative;
 	z-index: 0;
 	font: inherit;
-	flex: 1 1 auto;
+	flex: 1000 1 auto;
 	width: 4em;
 	background: #eee;
 	color: gray;
@@ -23,7 +23,8 @@
 
 [mol_stringer]:enabled:hover ,
 [mol_stringer]:focus {
-	outline: 2px solid var( --mol_skin_focus_back );
+	outline: none;
+	box-shadow: 0 0 0 2px var( --mol_skin_focus_back );
 	z-index: 1;
 }
 

@@ -14,12 +14,34 @@ class $mol_viewer extends $mol_model {
 	/// NameSpace of element that created when element not found in DOM
 	nameSpace() { return 'http://www.w3.org/1999/xhtml' }
 	
-	/// Child views
+	/// Raw child views
 	childs() {
 		return <Array<$mol_viewer|Node|string|number|boolean>> null
 	}
 	
-	childsInner() { return this.childs() }
+	/// Visible child views with defined heightAvailable()
+	/// Render all by default
+	childsVisible() {
+		var heightAvailable = this.heightAvailable()
+		var childs = this.childs()
+		if( !childs ) return childs
+		return childs.filter( child => {
+			if( child == null ) return false
+			if( child instanceof $mol_viewer ) child.heightAvailable( heightAvailable )
+			return true
+		} )
+	}
+	
+	/// Available height to render
+	@ $mol_prop()
+	heightAvailable( ...diff : number[] ) {
+		return diff[0] || window.innerHeight
+	}
+	
+	/// Minimal height that used for lazy rendering
+	heightMinimal() {
+		return 0
+	}
 	
 	private 'DOMNode()' : Element
 	DOMNode( ...diff : Element[] ) {
@@ -77,14 +99,13 @@ class $mol_viewer extends $mol_model {
 		var node = this.DOMNode()
 		
 		/// Render child nodes
-		var childs = this.childsInner()
+		var childs = this.childsVisible()
 		if( childs != null ) {
 			var childViews = childs
 			
 			var nextNode = node.firstChild
 			for( var i = 0 ; i < childViews.length ; ++i ) {
 				let view = childViews[i]
-				if( view == null ) continue
 				
 				if( typeof view === 'object' ) {
 					var existsNode = ( view instanceof $mol_viewer ) ? view.DOMNode() : view

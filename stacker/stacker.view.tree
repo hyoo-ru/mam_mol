@@ -1,10 +1,10 @@
 $mol_stacker $mol_viewer childs /
 	< mainer $mol_stacker_panel
 		focused > mainerFocused : true
-		childs / < main : null
+		childs / < main /
 	< addoner $mol_stacker_panel
 		focused > addonerFocused : false
-		childs / < addon : null
+		childs / < addon /
 
 $mol_stacker_panel $mol_viewer
 	eventFocus : null

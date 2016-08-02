@@ -1,15 +1,15 @@
 $mol_checker_demo $mol_rower childs /
-	< one $mol_checker
-	< two $mol_checker
-		checked : true
-	< three $mol_checker
+	< c1 $mol_checker
 		childs / =Unchecked
-	< four $mol_checker
+	< c2 $mol_checker
 		childs / =Checked
 		checked : true
-	< five $mol_checker
+	< c3 $mol_checker
+	< c4 $mol_checker
+		checked : true
+	< c5 $mol_checker
 		disabled : true
-	< six $mol_checker
+	< c6 $mol_checker
 		childs / =Disabled
 		checked : true
 		disabled : true

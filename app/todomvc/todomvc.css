@@ -1,9 +1,4 @@
 [mol_app_todomvc] {
-	margin: 0 auto;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
 }
 
 [mol_app_todomvc_allCompleter] {
@@ -24,7 +19,7 @@
 [mol_app_todomvc_adder] {
 	margin: 0;
 	padding: 1rem;
-	outline: none;
+	box-shadow: none;
 }
 
 [mol_app_todomvc_lister] {
@@ -50,21 +45,21 @@
 
 [mol_app_todo_task_view_row_title] {
 	padding: 1rem;
-	outline: none;
+	box-shadow: none;
 	flex: 1;
 }
 
 [mol_app_todomvc_taskRow_dropper] {
-	outline: none;
+	box-shadow: none;
 }
 
 [mol_app_todomvc_paneler] {
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
-	width: 34rem;
+	max-width: 34rem;
 	background: white;
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 2rem;
+	margin: 0 auto 2rem;
 }
 
 [mol_app_todomvc_header] {
@@ -81,8 +76,8 @@
 	text-rendering: optimizeLegibility;
 }
 
-[mol_app_todomvc_taskRow_titler]:not(:hover):not(:focus) {
-	outline: none;
+[mol_app_todomvc_taskRow_titler] {
+	box-shadow: none;
 	background: none;
 }
 
@@ -114,13 +109,14 @@
 
 [mol_app_todomvc_filter] {
 	padding: 0;
+	flex: 0 1 auto;
 }
 
 [mol_app_todo_actioner] {
 	padding: .5rem;	
 }
 
-[mol_app_todo_sanitizer] {
+[mol_app_todomvc_sanitizer] {
 	flex: 0 1 auto;
 }
 

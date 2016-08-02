@@ -6,9 +6,10 @@ $mol_perf_render $mol_viewer childs /
 		< runner $mol_clicker_major
 			childs / < runnerLabel =Run
 			eventClick > eventRun : null
-	< rower $mol_viewer childs < rows /
+	< contenter $mol_scroller childs / < lister $mol_lister rows < rows /
 
 $mol_perf_render_row $mol_viewer
+	heightMinimal 24
 	attr * mol_perf_render_row_selected < selected : false
 	event * click > eventToggle : null
 	childs / < bar $mol_viewer childs / < label =

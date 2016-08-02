@@ -2,9 +2,7 @@ $mol_app_users $mol_viewer childs /
 	< filter $mol_stringer
 		hint =Search users on GitHub
 		value > searchQuery =
-	< lister $mol_lister
-		rowHeightMin : 65
-		rows < userRows /
+	< bodier $mol_scroller childs < body / < lister $mol_lister rows < userRows /
 	< controller $mol_rower childs /
 		< reloader $mol_clicker_minor
 			childs / =Reload

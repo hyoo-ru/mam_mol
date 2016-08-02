@@ -3,9 +3,9 @@
 	border: none;
 	font: inherit;
 	background: none;
-	outline: 1px solid var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 	border-radius: var( --mol_skin_round );
-	flex: 0 1 auto;
+	flex: 1 1 auto;
 	justify-content: center;
 	align-content: center;
 	align-items: center;
@@ -26,7 +26,8 @@
 
 [mol_clicker]:enabled:hover ,
 [mol_clicker]:focus {
-	outline: 2px solid var( --mol_skin_focus_back );
+	outline: none;
+	box-shadow: 0 0 0 2px var( --mol_skin_focus_back );
 	position: relative;
 	z-index: 1;
 	cursor: pointer;

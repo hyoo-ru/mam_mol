@@ -5,6 +5,7 @@
 	box-sizing: border-box;
 	/*will-change: scroll-position;*/
 	transform: translateZ(0);
+	outline: 1px solid var( --mol_skin_light_fore );
 }
 
 @media print {
@@ -23,8 +24,5 @@
 }
 
 [mol_scroller]::-webkit-scrollbar-thumb {
-	background: rgba( 0 , 0 , 0 , .25 );
-	/*background: var( --mol_skin_accent_fore );*/
-	/*border-radius: var( --mol_skin_round );*/
-	/*border: 1px solid var( --mol_skin_light_fore );*/
+	background: rgba( 0 , 0 , 0 , .2 );
 }

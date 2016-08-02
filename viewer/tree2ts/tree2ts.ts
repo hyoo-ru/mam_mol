@@ -30,7 +30,6 @@ function $mol_viewer_tree2ts( tree ) {
 						value.childs.forEach( function( item ) {
 							if( item.type === '-' ) return
 							var val = getValue( item )
-							if( [ '<' , '>' , 'null' ].indexOf( item.type ) !== -1 ) val = '$'+'mol_maybe(' + val + ').map( val => val.valueOf() )[0]'
 							if( val ) items.push( val )
 						} )
 						return '[].concat( ' + items.join(' , ') + ' )'

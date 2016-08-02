@@ -1,9 +1,10 @@
 [mol_checker] {
+	flex: 0 1 auto;
 	justify-content: center;
 	align-items: center;
 	align-content: center;
 	border: none;
-	outline: none;
+	box-shadow: none;
 	/*padding: .5rem 0;*/
 	font-weight: normal;
 }
@@ -23,13 +24,13 @@
 	opacity: .75;
 	transform: translateZ(0);
 	background: white;
-	outline: 1px solid var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 }
 
 [mol_checker_checked]:before {
 	background: var( --mol_skin_focus_back );
 	color: var( --mol_skin_focus_fore );
-	outline: none;
+	box-shadow: none;
 }
 
 [mol_checker]:not(:empty):before {

@@ -2,10 +2,11 @@ module $.$mol {
 	export class $mol_lister_demo extends $.$mol_lister_demo {
 		
 		rows() {
-			return new $mol_range_lazy({
-				get : id => this.rower( id + 1 ) ,
-				length : 1000 ,
-			})
+			var next = []
+			for( var id = 0 ; id < 256 ; ++id ) {
+				next.push( this.rower( id ) )
+			}
+			return next
 		}
 		
 		@ $mol_prop()

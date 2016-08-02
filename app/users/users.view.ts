@@ -47,7 +47,7 @@ module $.$mol {
 		/// List of child views. Show users and controls only when this.searchQuery() is not empty.
 		childs() {
 			var next = [ this.filter() ]
-			if( this.master() ) next = [].concat( next , this.lister() , this.controller() )
+			if( this.master() ) next = [].concat( next , this.bodier() , this.controller() )
 			return next
 		}
 		
@@ -109,13 +109,18 @@ module $.$mol {
 			this.usersMaster( this.users() )
 		}
 		
+		body() : any[] {
+			if( this.users().length ) {
+				return [ this.lister() ]
+			} else {
+				return [ 'Users not found' ]
+			}
+		}
+		
 		/// Lazy list of user view models. Items are created only when they fits to viewport.
 		@ $mol_prop()
 		userRows() {
-			return new $mol_range_lazy({
-				get : id => this.userRow( id ) ,
-				length : this.users().length ,
-			})
+			return this.users().map( ( user , id )=> this.userRow( id ) )
 		}
 		
 		/// One user view model with injected behaviour.

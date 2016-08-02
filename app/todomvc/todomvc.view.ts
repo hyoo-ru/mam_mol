@@ -86,10 +86,7 @@ module $.$mol {
 
 		@ $mol_prop()
 		taskRows() {
-			return new $mol_range_lazy({
-				get : id => this.taskRow( id ) ,
-				length : this.tasks().length ,
-			})
+			return this.tasks().map( ( task , id ) => this.taskRow( id ) )
 		}
 
 		task( id : number , ...diff : $mol_app_todomvc_task[] ) {

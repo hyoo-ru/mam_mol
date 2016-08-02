@@ -13,6 +13,10 @@
 	margin: .5rem;
 }
 
+[mol_app_demo_mainer] {
+	background: white;
+}
+
 [mol_app_demo_lister] {
 	display: flex;
 	flex-wrap: wrap;
@@ -20,7 +24,6 @@
 	padding: .5rem;
 	align-content: flex-start;
 	align-items: flex-start;
-	background: white;
 }
 
 [mol_app_demo_screen] {

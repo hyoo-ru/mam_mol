@@ -1,7 +1,7 @@
-$mol_app_todomvc $mol_viewer
+$mol_app_todomvc $mol_scroller
 	childs /
 		< titler $mol_viewer childs / < title =todos
-		< paneler $mol_viewer childs /
+		< paneler $mol_lister rows /
 			< header $mol_rower childs < headerContent /
 				< allCompleter $mol_checker
 					checked > allCompleted false
@@ -9,9 +9,7 @@ $mol_app_todomvc $mol_viewer
 				< adder $mol_app_todomvc_taskRow_adder
 					value > taskNewTitle =
 					eventDone > eventAdd null
-			< lister $mol_lister
-				rowHeightMin 60
-				rows < taskRows /
+			< lister $mol_lister rows < taskRows /
 			< footer $mol_rower childs < footerContent /
 				< pendinger $mol_viewer childs < pendingMessage /
 					< pendingCounter $mol_viewer childs / < pendingCount 0
@@ -50,6 +48,7 @@ $mol_app_todomvc_taskRow_adder $mol_stringer
 	eventDone : null
 
 $mol_app_todomvc_taskRow $mol_rower
+	heightMinimal 60
 	childs /
 		< completer $mol_checker checked > completed false
 		< titler $mol_stringer

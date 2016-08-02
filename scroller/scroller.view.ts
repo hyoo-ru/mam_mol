@@ -32,6 +32,21 @@ module $.$mol {
 				target.scrollLeft -= diff[0].wheelDeltaX
 			}
 		}
-
+		
+		childsVisible() {
+			var heightAvailable = this.heightAvailable() + this.scrollTop()
+			var childs = this.childs()
+			if( !childs ) return childs
+			var next = []
+			for( var child of childs ) {
+				if( child == null ) continue
+				if( child instanceof $mol_viewer ) {
+					child.heightAvailable( heightAvailable )
+				}
+				next.push( child )
+			}
+			return next
+		}
+		
 	}
 }

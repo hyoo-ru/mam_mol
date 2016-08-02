@@ -1,26 +1,37 @@
 module $.$mol {
 	export class $mol_lister extends $.$mol_lister {
 		
-		rowsVisible() {
-			var count = Math.ceil( ( this.scrollTop() + screen.height ) / this.rowHeightMin() )
-			return this.rows().slice( 0 , count )
+		childsVisible() {
+			var heightAvailable = this.heightAvailable()
+			var childs = this.childs()
+			if( !childs ) return childs
+			var next = []
+			for( var child of childs ) {
+				if( child == null ) continue 
+				if( child instanceof $mol_viewer ) {
+					child.heightAvailable( heightAvailable )
+					heightAvailable -= child.heightMinimal()
+				}
+				next.push( child )
+				if( heightAvailable < 0 ) break
+			}
+			return next
 		}
 		
-		gap() {
-			var all = this.rows().length
-			var visible = this.rowsVisible().length
-			return ( all - visible ) * this.rowHeightMin()
+		heightMinimal() {
+			var height = 0
+			var childs = this.childs()
+			if( childs ) childs.forEach( child => {
+				if( child instanceof $mol_viewer ) {
+					height += child.heightMinimal()
+				}
+			} )
+			return height
 		}
 		
-	}
-}
-
-module $.$mol {
-	export class $mol_lister_gapper extends $.$mol_lister_gapper {
-
-		heightStyle() {
-			return this.size() + 'px'
+		minHeightStyle() {
+			return this.heightMinimal() + 'px'
 		}
-
+		
 	}
 }
