@@ -15,6 +15,7 @@
 
 [mol_app_demo_mainer] {
 	background: white;
+	overflow: auto;
 }
 
 [mol_app_demo_lister] {
