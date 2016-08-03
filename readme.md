@@ -6,6 +6,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 * Zero configuration. Just checkout and use it. 
 * Full [reactive programming](https://en.wikipedia.org/wiki/Reactive_programming) in all application layers. Not only between View and ViewModel.
+* Lazy rendering/evaluating/loading etc.
 * Automatic dependency tracking between reactive containers. No need to manual (un)subscribe and streams routing.
 * Cycle dependency detection.
 * Effective state synchronization in right way. 
@@ -26,24 +27,28 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 ## [Demo applications](demo)
 
 * [$mol_app_demo](app/demo) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
-* [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/app/signup/))
-* [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/app/users/))
+* [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
+* [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) realization ([online](http://eigenmethod.github.io/mol/#demo=mol_app_todomvc), [benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark))
+* [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
 
 ## [Benchmarks](perf)
 
 * [$mol_perf_render](perf/render) - simple benchmark of rendering ([online](http://eigenmethod.github.io/mol/perf/render/))
+* [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)
 
-## Core modules
+## Object model
 
-* [$mol_atom](atom) - reactive containers
+* [$mol_atom](atom) - reactive container
 * [$mol_prop](prop) - reactive property decorator
 * [$mol_object](object) - components base class
 * [$mol_model](model) - reactive model base class
 * [$mol_log](log) - logging
-* [$mol_test](test) - unit testing
-* [$mol_skin](skin) - theming
+
+## Collections
+
 * [$mol_range](range) - lazy array
-* [$mol_defer](defer) - deferred but immediate execution
+* [$mol_set](set) - [Set API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
+* [$mol_dict](dict) - [Map API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
 * [$mol_maybe](maybe) - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
 
 ## [State modules](state)
@@ -51,41 +56,55 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_state_arg](state/arg) - arguments state (location/argv)
 * [$mol_state_local](state/local) - persistent local state (localStorage)
 * [$mol_state_session](state/session) - session temporaty state (sessionStorage)
+* [$mol_state_stack](state/stack) - state of current stack of execution
 
 ## Communication modules
+
 * [$mol_http_request](http/request) - Reactive HTTP Request
 * [$mol_http_resource](http/resource) - Reactive REST HTTP resource
 
 ## Simple components
 
-* [$mol_viewer](viewer) - reactive view model base class
+* [$mol_viewer](viewer) - reactive view model base class with lazy error-proof renderer
 * [$mol_filler](filler) - lorem ipsum
 
 ## Simple controls
 
-* [$mol_linker](linker) - navigation links
-* [$mol_clicker](clicker) - buttons
-* [$mol_checker](checker) - check boxes
-* [$mol_switcher](switcher) - radio buttons
+* [$mol_linker](linker) - navigation link
+* [$mol_clicker](clicker) - button
+* [$mol_checker](checker) - check boxe
+* [$mol_switcher](switcher) - radio button
 * [$mol_stringer](stringer) - one string input control
 
 ## Layout components
 
 * [$mol_scroller](scroller) - scroll pane with position saving
-* [$mol_tiler](tiler) - items in row with wrapping
+* [$mol_tiler](tiler) - items in row with balanced wrapping
 * [$mol_rower](rower) - items in row with wrapping and padding between
-* [$mol_lister](lister) - vertical list of rows with lazy rendering support
+* [$mol_lister](lister) - vertical list of rows
 * [$mol_stacker](stacker) - horizontal stack of panels
 
 ## Complex components
 
 * [$mol_form](form) - forms with validators
+* [$mol_demo](demo) - demonstrates widget in various screens
 
 ## Data formats
 
 * [$mol_tree](tree) - [tree format](https://github.com/nin-jin/tree.d)
 
-## Shims
+## Resources
 
-* [$mol_set](set) - [Set API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
-* [$mol_dict](dict) - [Map API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+* [$mol_logo](logo) - $mol logotypes
+* [$mol_skin](skin) - theming
+
+## Testing
+
+* [$mol_test](test) - unit testing
+
+## Flow
+
+* [$mol_defer](defer) - deferred but immediate execution
+
+
+
