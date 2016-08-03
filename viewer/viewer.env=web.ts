@@ -35,7 +35,7 @@ class $mol_viewer extends $mol_model {
 	/// Available height to render
 	@ $mol_prop()
 	heightAvailable( ...diff : number[] ) {
-		return diff[0] || window.innerHeight
+		return diff[0] || $mol_window.size()[1]
 	}
 	
 	/// Minimal height that used for lazy rendering
