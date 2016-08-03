@@ -140,6 +140,12 @@
 						"mol/model/model.ts"
 					]
 				},
+				"mol/window": {
+					":priority": 2,
+					"": [
+						"mol/window/window.ts"
+					]
+				},
 				"mol/viewer/selection": {
 					":priority": 2,
 					"": [
@@ -167,26 +173,16 @@
 					"mol/clicker/clicker_types.view.tree"
 				]
 			},
-			"": [
-				"mol/perf/render/index.html",
-				"mol/perf/render/render.view.tree",
-				"mol/perf/render/render.view.ts"
-			]
-		}
-	},
-	{
-		"mol/perf/render/lazy": {
-			":priority": 0,
+			"mol/scroller": {
+				":priority": 0,
+				"": [
+					"mol/scroller/scroller.view.css",
+					"mol/scroller/scroller.view.tree",
+					"mol/scroller/scroller.view.ts"
+				]
+			},
 			"mol/lister": {
 				":priority": 0,
-				"mol/scroller": {
-					":priority": 0,
-					"": [
-						"mol/scroller/scroller.view.css",
-						"mol/scroller/scroller.view.tree",
-						"mol/scroller/scroller.view.ts"
-					]
-				},
 				"": [
 					"mol/lister/lister.view.tree",
 					"mol/lister/lister.view.ts",
@@ -194,7 +190,9 @@
 				]
 			},
 			"": [
-				"mol/perf/render/lazy/lazy.view.tree"
+				"mol/perf/render/index.html",
+				"mol/perf/render/render.view.tree",
+				"mol/perf/render/render.view.ts"
 			]
 		}
 	}

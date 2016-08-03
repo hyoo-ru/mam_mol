@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Performance Comparison for Knockout, Angular and React</title>
+        <title>Performance Comparison for Knockout, Angular, Angular Light, React, Raw HTML, $mol</title>
         <style type="text/css">
 			body {
 				display: flex;
@@ -17,7 +17,7 @@
 				flex: 10%;
 			}
 			
-			[mol_perf_render_rower],
+			[mol_perf_render_contenter],
 			ul {
 				padding : 0;
 				margin: 0;
@@ -73,7 +73,7 @@
             _angular();
 
             function _buildData(count) {
-                count = count || 25 * 150;
+                count = count || 1000;
 
                 var adjectives = ["pretty", "large", "big", "small", "tall", "short", "long", "handsome", "plain", "quaint", "clean", "elegant", "easy", "angry", "crazy", "helpful", "mushy", "odd", "unsightly", "adorable", "important", "inexpensive", "cheap", "expensive", "fancy"];
                 var colours = ["red", "yellow", "blue", "green", "pink", "brown", "purple", "brown", "white", "black", "orange"];
@@ -288,7 +288,7 @@
 		<section>
 			<header>
 				<h2>
-					Raw
+					Raw HTML
 				</h2>
 				<button id="run-raw">Run</button>
 			</header>
@@ -296,7 +296,6 @@
 		</section>
 
 		<section mol_viewer_root="$mol_perf_render"></section>
-		<section mol_viewer_root="$mol_perf_render_lazy"></section>
 
         <script type="text/html" id="raw-template">
             <li>
