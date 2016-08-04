@@ -1,6 +1,10 @@
 /// Common superclass that provides base functionality.
 class $mol_object {
 	
+	Class<Class extends this>() {
+		return this.constructor as Class
+	}
+	
 	static objectPath() {
 		return this['name']
 			|| this['displayName']
