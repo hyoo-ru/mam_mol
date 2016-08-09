@@ -1,7 +1,7 @@
 [mol_tiler] {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: baseline;
+	align-items: stretch;
 }
 
 [mol_tiler_group] {
