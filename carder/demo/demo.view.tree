@@ -1,0 +1,7 @@
+$mol_carder_demo $mol_scroller childs / < rower $mol_rower childs /
+	< card1 $mol_carder
+		content < signup1 $mol_rower_demo
+		status =Unauthorized
+	< card2 $mol_carder
+		content < signup2 $mol_rower_demo
+		status =Unauthorized

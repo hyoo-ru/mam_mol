@@ -1,0 +1,3 @@
+$mol_carder $mol_viewer childs /
+	< contenter $mol_viewer childs / < content null
+	< statuser $mol_viewer childs / < status =
