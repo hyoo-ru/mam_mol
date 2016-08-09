@@ -1,8 +1,8 @@
 /// Common superclass that provides base functionality.
 class $mol_object {
 	
-	Class<Class extends this>() {
-		return this.constructor as Class
+	Class() {
+		return this.constructor as any
 	}
 	
 	static objectPath() {
