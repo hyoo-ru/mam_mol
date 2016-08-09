@@ -1,0 +1,21 @@
+$mol_app_agreement_carder_demo $mol_scroller childs / < titler $mol_tiler childs /
+	< card_1 $mol_app_agreement_carder
+		supplier =327836275 - NorNikel
+		cost =1 000 000 р.
+		stock =21323 - Pulkovo 10
+		status =Pending
+	< card_2 $mol_app_agreement_carder
+		supplier =43434232 - Gazprom
+		cost =3 000 000 р.
+		stock =21323 - Domodedovo 10
+		status =Approved
+	< card_3 $mol_app_agreement_carder
+		supplier =43434232 - Gazprom
+		cost =32 000 000 р.
+		stock =4323 - Sheremet'evo 1
+		status =Declined
+	< card_4 $mol_app_agreement_carder
+		supplier =327836275 - NorNikel
+		cost =900 000 р.
+		stock =21323 Pulkovo 10
+		status =Selected

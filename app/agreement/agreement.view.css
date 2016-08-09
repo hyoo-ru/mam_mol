@@ -1,0 +1,29 @@
+[mol_app_agreement] {
+	flex: 1 1 auto;
+}
+
+[mol_app_agreement_carder] {
+	flex: 0 1 32rem;
+}
+
+[mol_app_agreement_carder_mainer] {
+	display: flex;
+}
+
+[mol_app_agreement_carder_addoner] {
+	display: flex;
+}
+
+[mol_app_agreement_carder_supplierItem] {
+	padding: 1rem;
+	flex: 1 1 auto;
+}
+
+[mol_app_agreement_carder_costItem] {
+	padding: 1rem;
+}
+
+[mol_app_agreement_carder_stockItem] {
+	padding: 1rem;
+	flex: 1 1 auto;
+}

@@ -1,0 +1,7 @@
+$mol_app_agreement_detailer $mol_rower childs /
+	< mainer $mol_carder content < mainContent /
+		< supplierRow $mol_viewer childs / < supplierName =
+		< productRow $mol_viewer childs / < productName =
+		< quantityRow $mol_viewer childs / < quantityValue =
+		< costRow $mol_viewer childs / < cost =
+		< stockRow $mol_viewer childs / < stockName =

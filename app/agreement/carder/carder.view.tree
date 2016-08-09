@@ -1,0 +1,6 @@
+$mol_app_agreement_carder $mol_carder content / < lister $mol_lister rows < rows /
+	< mainer $mol_viewer childs /
+		< supplierItem $mol_viewer childs / < supplier =
+		< costItem $mol_viewer childs / < cost =
+	< addoner $mol_viewer childs /
+		< stockItem $mol_viewer childs / < stock =

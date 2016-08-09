@@ -1,0 +1,3 @@
+$mol_app_agreement $mol_scroller childs /
+	< enter $mol_app_agreement_enter
+	< lister $mol_app_agreement_lister
