@@ -42,6 +42,7 @@ class $mol_build extends $mol_object {
 		}
 	}
 	
+	static dependors : { [ index : string ] : ( source : $mol_file )=> { [ index : string ] : number } } = {}
 	dependencies( path : string ) {
 		var mod = this.mod( path )
 	    switch( mod.type() ) {
@@ -58,6 +59,14 @@ class $mol_build extends $mol_object {
 	            }
 	            return deps
 	    }
+	}
+	
+	static bundlers : { [ index : string ] : ( build : $mol_build )=> $mol_file[] } = {}
+	@ $mol_prop()
+	bundle( bundle : string ) {
+		var bundler = this.Class().bundlers[ bundle ]
+		if( !bundler ) throw new Error( `Unknow bundle: ${bundle}` )
+		return bundler( this )
 	}
 	
 	//get graph() {
@@ -100,33 +109,31 @@ class $mol_build extends $mol_object {
 	//    return sorted
 	//}
 	
-	@ $mol_prop()
-	bundle( bundle : string ) {
-		var bundler = this.Class().bundlers[ bundle ]
-		if( !bundler ) throw new Error( `Unknow bundle: ${bundle}` )
-		return bundler( this )
-	}
-	
-	static dependors : { [ index : string ] : ( source : $mol_file )=> $mol_file[] } = {}
-	static bundlers : { [ index : string ] : ( build : $mol_build )=> $mol_file[] } = {}
-
 }
 
 $mol_build.dependors[ 'ts' ] = source => {
-	var deps = []
-	var root = this.root()
-	var lexer = /\$[a-z]\w*([._][a-z]\w*|\[\s*(?:'[\w-]+'|"[\w-]+")\s*\])+/gi
-	source.toString().replace( lexer , found => {
-		var path = found.replace( /([._-]|\[\s*'|\[\s*")/g , '/' ).replace( /(\$|'\s*\]|"\s*\])/g , '' )
-		var dep = root.resolve( path )
-		while( dep !== root ) {
-			if( deps.indexOf( dep ) !== -1 ) break
-			deps.push( dep )
-			dep = dep.parent
-		}
-		return found
-	} )
-	return deps
+	var depends : { [ index : string ] : number } = {}
+	
+	var lines = String( this.content())
+	.replace( /\/\*[^]*?\*\//g, '' ) // drop block comments
+	.replace( /\/\/.*$/gm, '' ) // drop inline comments
+	.split( '\n' )
+	
+	lines.forEach( function( line ){
+		var indent = /^([\s\t]*)/.exec( line )
+		var priority = - indent[0].replace( /\t/g, '    ' ).length / 4
+		
+		line.replace( /\$([a-z][a-z0-9]+(?:[._][a-z0-9]+)*)/ig , ( str, name )=> {
+			var sources = this.sources( this.mod( name.replace( /[._-]/g, '/' ) ).path() )
+			sources.forEach( src => {
+				var path = src.path()
+				depends[ path ] = ( depends[ path ] > priority ) ? depends[ path ] : priority
+			} )
+			return str
+		} )
+	})
+	
+	return depends
 }
 
 $mol_build.bundlers[ 'web.js' ] = build => {
