@@ -33,9 +33,9 @@ class $mol_build extends $mol_object {
 		return this.mod( path ).childs().filter( child => this.checkName( child.name() ) )
 	}
 	
-	sources( path : string ) {
+	sources( path : string ) : $mol_file[] {
 		switch( this.mod( path ).type() ) {
-			case 'file' : return [ this ]
+			case 'file' : return [ this.mod( path ) ]
 			case 'dir' :
 				return this.mods( path ).filter( mod => mod.type() === 'file' )
 			default: throw new Error( `Unsupported file type (${path})` )
@@ -130,19 +130,31 @@ $mol_build.dependors[ 'ts' ] = source => {
 }
 
 $mol_build.bundlers[ 'web.js' ] = build => {
-	
-	var content = ''
-	
 	var sources = build.sources( build.target().path() )
-	.forEach( src => {
-		if( [ 'js' , 'ts' ].indexOf( src.ext() ) === -1 ) return
-		content += src.content()
+	.filter( src => [ 'js' , 'ts' ].indexOf( src.ext() ) >= 0 )
+	
+	var bundle = build.target().resolve( `-/web.js` )
+	var bundleMap = bundle.parent().resolve( `${bundle.name()}.map` )
+	
+	var concater = new $node[ 'concat-with-sourcemaps' ]( true, bundle.name(), '\n;\n' )
+	
+	sources.forEach( function( src ){
+		var srcMap = src.parent().resolve( src.name() + '.map' )
+		var content = src.content().toString().replace( /^#\ssourceMappingURL=/g , '' )
+		if( srcMap.exists() ) {
+			var json = JSON.parse( srcMap.content() )
+			json.sources = json.sources.map( function( source ){
+				return src.parent().resolve( source ).relate( bundle.parent() )
+			})
+			concater.add( src.relate(), content, JSON.stringify( json ) )
+		} else {
+			concater.add( src.relate( bundle.parent() ) , content )
+		}
 	} )
 	
-	var target = build.target().resolve( `-/web.js` )
+	bundle.content( concater.content + '\n//# sourceMappingURL=' + bundleMap.relate( bundle.parent() ) )
+	bundleMap.content( concater.sourceMap )
 	
-	target.content( content )
-	
-	return [ target ]
+	return [ bundle , bundleMap ]
 }
-
+$mol_build.bundlers[ 'web.js.map' ] = build => build.bundle( 'web.js' )
