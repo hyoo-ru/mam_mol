@@ -1,0 +1,6 @@
+$mol_coster $mol_viewer
+	value null
+	childs /
+		< prefix =
+		< mainer $mol_viewer childs / < valueView =
+		< postfix =
