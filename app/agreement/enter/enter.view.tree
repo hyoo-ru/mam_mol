@@ -1,4 +1,5 @@
 $mol_app_agreement_enter $mol_form
+	entered false
 	formFields /
 		< loginField $mol_form_field
 			name =Login

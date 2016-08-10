@@ -1,7 +1,13 @@
 $mol_carder_demo $mol_scroller childs / < rower $mol_rower childs /
+	< card0 $mol_carder
+		content < content0 $mol_rower_demo
+		status =pending
 	< card1 $mol_carder
-		content < signup1 $mol_rower_demo
-		status =Unauthorized
+		content < content1 $mol_rower_demo
+		status =approved
 	< card2 $mol_carder
-		content < signup2 $mol_rower_demo
-		status =Unauthorized
+		content < content2 $mol_rower_demo
+		status =rejected
+	< card3 $mol_carder
+		content < content3 $mol_rower_demo
+		status =selected

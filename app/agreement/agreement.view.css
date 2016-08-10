@@ -6,6 +6,10 @@
 	flex: 0 1 32rem;
 }
 
+[mol_app_agreement_carder_contenter] {
+	padding: .5rem;
+}
+
 [mol_app_agreement_carder_mainer] {
 	display: flex;
 }
@@ -15,15 +19,17 @@
 }
 
 [mol_app_agreement_carder_supplierItem] {
-	padding: 1rem;
+	font-weight: bolder;
+	margin: .5rem;
 	flex: 1 1 auto;
 }
 
 [mol_app_agreement_carder_costItem] {
-	padding: 1rem;
+	margin: .5rem;
 }
 
 [mol_app_agreement_carder_stockItem] {
-	padding: 1rem;
+	font-weight: bolder;
+	margin: .5rem;
 	flex: 1 1 auto;
 }

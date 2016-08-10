@@ -1,5 +1,5 @@
 [mol_carder] {
-	border: 2px solid var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 2px var( --mol_skin_light_fore );
 	background: var( --mol_skin_light_back );
 	border-radius: var( --mol_skin_round );
 	display: flex;
@@ -14,5 +14,30 @@
 
 [mol_carder_statuser] {
 	background: var( --mol_skin_light_fore );
-	padding: 0 1rem;
+	text-transform: capitalize;
+	padding: .25rem 1rem;
+}
+
+[mol_carder_status="approved"] {
+	box-shadow: 0 0 0 2px var( --mol_skin_good_back );
+}
+[mol_carder_status="approved"] [mol_carder_statuser] {
+	background: var( --mol_skin_good_back );
+	color: var( --mol_skin_good_fore );
+}
+
+[mol_carder_status="rejected"] {
+	box-shadow: 0 0 0 2px var( --mol_skin_bad_back );
+}
+[mol_carder_status="rejected"] [mol_carder_statuser] {
+	background: var( --mol_skin_bad_back );
+	color: var( --mol_skin_bad_fore );
+}
+
+[mol_carder_status="selected"] {
+	box-shadow: 0 0 0 2px var( --mol_skin_focus_back );
+}
+[mol_carder_status="selected"] [mol_carder_statuser] {
+	background: var( --mol_skin_focus_back );
+	color: var( --mol_skin_focus_fore );
 }

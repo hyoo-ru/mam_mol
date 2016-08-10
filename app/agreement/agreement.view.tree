@@ -1,3 +1,4 @@
-$mol_app_agreement $mol_scroller childs /
-	< enter $mol_app_agreement_enter
-	< lister $mol_app_agreement_lister
+$mol_app_agreement $mol_scroller
+	childs / < page null
+	enter $mol_app_agreement_enter entered > entered false
+	lister $mol_app_agreement_lister requests < requestsAll /

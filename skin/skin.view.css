@@ -13,6 +13,12 @@
 
 	--mol_skin_warn_back: #FFD6D6;
 	--mol_skin_warn_fore: red;
-	
+
+	--mol_skin_good_back: #4DC36E;
+	--mol_skin_good_fore: white;
+
+	--mol_skin_bad_back: #CC5252;
+	--mol_skin_bad_fore: white;
+
 	--mol_skin_round: 4px;
 }
