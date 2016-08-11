@@ -1,24 +1,24 @@
 module $.$mol {
 	export class $mol_app_agreement_carder extends $.$mol_app_agreement_carder {
 		
-		request() {
-			return null as $mol_app_agreement_request
+		supply() {
+			return null as $mol_app_agreement_supply
 		}
 		
-		supplier() {
-			return this.request().supplier().name()
+		providerName() {
+			return this.supply().provider().name()
 		}
 		
-		stock() {
-			return this.request().stock().name()
+		consumerName() {
+			return this.supply().consumer().name()
 		}
 		
 		cost() {
-			return this.request().cost()
+			return this.supply().cost()
 		}
 		
 		status() {
-			return String( this.request().status() )
+			return String( this.supply().status() )
 		}
 		
 	}

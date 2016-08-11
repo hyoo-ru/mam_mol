@@ -8,7 +8,7 @@
 [mol_tiler_group] {
 	display: flex;
 	flex-wrap: wrap;
-	flex: 1 1 auto;
+	flex: 1 1 50%;
 	align-items: stretch;
 }
 

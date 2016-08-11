@@ -1,21 +1,21 @@
 $mol_app_agreement_carder_demo $mol_scroller childs / < titler $mol_tiler items /
 	< card_1 $mol_app_agreement_carder
-		supplier =327836275 - NorNikel
+		providerName =327836275 - NorNikel
 		cost $mol_unit_money_usd valueOf 1000000
-		stock =21323 - Pulkovo 10
+		consumerName =343 - ACME
 		status =pending
 	< card_2 $mol_app_agreement_carder
-		supplier =43434232 - Gazprom
+		providerName =43434232 - Gazprom
 		cost $mol_unit_money_rur valueOf 3000000
-		stock =21323 - Domodedovo 10
+		consumerName =312 - ACME Inc.
 		status =approved
 	< card_3 $mol_app_agreement_carder
-		supplier =43434232 - Gazprom
+		providerName =43434232 - Gazprom
+		consumerName =343 - ACME
 		cost $mol_unit_money_rur valueOf 32000000
-		stock =4323 - Sheremet'evo 1
 		status =rejected
 	< card_4 $mol_app_agreement_carder
-		supplier =327836275 - NorNikel
+		providerName =327836275 - NorNikel
+		consumerName =312 - ACME Inc.
 		cost $mol_unit_money_usd valueOf 900000
-		stock =21323 Pulkovo 10
 		status =selected

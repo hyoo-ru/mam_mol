@@ -1,6 +1,6 @@
 $mol_app_agreement_detailer $mol_rower childs /
 	< mainer $mol_carder content < mainContent /
-		< supplierRow $mol_viewer childs / < supplierName =
+		< providerRow $mol_viewer childs / < providerName =
 		< productRow $mol_viewer childs / < productName =
 		< quantityRow $mol_viewer childs / < quantityValue =
 		< costRow $mol_viewer childs / < cost =

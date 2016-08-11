@@ -1,7 +1,3 @@
-[mol_app_agreement] {
-	flex: 1 1 auto;
-}
-
 [mol_app_agreement_carder] {
 	flex: 0 1 32rem;
 }
@@ -18,7 +14,7 @@
 	display: flex;
 }
 
-[mol_app_agreement_carder_supplierItem] {
+[mol_app_agreement_carder_providerItem] {
 	font-weight: bolder;
 	margin: .5rem;
 	flex: 1 1 auto;
@@ -28,7 +24,7 @@
 	margin: .5rem;
 }
 
-[mol_app_agreement_carder_stockItem] {
+[mol_app_agreement_carder_consumerItem] {
 	font-weight: bolder;
 	margin: .5rem;
 	flex: 1 1 auto;

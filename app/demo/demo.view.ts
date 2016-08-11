@@ -27,7 +27,7 @@ module $.$mol {
 		namesApp() {
 			var next = []
 			for( var name in $ ) {
-				if( !/^\$.*_app_[a-z0-9]+$/i.test( name ) ) continue
+				if( !/^\$.*_app(_[a-z0-9]+)?$/i.test( name ) ) continue
 				if( /^\$mol_demo/.test( name ) ) continue
 				if( /^\$mol_app_demo/.test( name ) ) continue
 				if( typeof $[ name ] !== 'function' ) continue

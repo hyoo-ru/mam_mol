@@ -2,18 +2,18 @@ module $.$mol {
 	export class $mol_app_agreement_lister extends $.$mol_app_agreement_lister {
 		
 		requests() {
-			return [] as $mol_app_agreement_request[]
+			return [] as $mol_app_agreement_supply[]
 		}
 		
 		@ $mol_prop()
-		requestRows() {
-			return this.requests().map( ( request  , id ) => this.requestRow( id ) )
+		supplyRows() {
+			return this.supplies().map( ( supply , id ) => this.supplyRow( id ) )
 		}
 		
 		@ $mol_prop()
-		requestRow( id : number ) {
+		supplyRow( id : number ) {
 			return new $mol_app_agreement_carder().setup( obj => {
-				obj.request = ()=> this.requests()[ id ]
+				obj.supply = ()=> this.supplies()[ id ]
 			} )
 		}
 		

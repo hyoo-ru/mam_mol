@@ -1,8 +1,8 @@
 $mol_app_agreement_carder $mol_carder
-	request null
+	supply null
 	content / < lister $mol_lister rows < rows /
 		< mainer $mol_viewer childs /
-			< supplierItem $mol_viewer childs / < supplier =
+			< providerItem $mol_viewer childs / < providerName =
 			< costItem $mol_coster value < cost null
 		< addoner $mol_viewer childs /
-			< stockItem $mol_viewer childs / < stock =
+			< consumerItem $mol_viewer childs / < consumerName =

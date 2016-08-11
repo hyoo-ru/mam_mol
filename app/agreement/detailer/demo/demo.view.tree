@@ -1,5 +1,5 @@
 $mol_app_agreement_detailer_demo $mol_scroller childs / < detailer $mol_app_agreement_detailer
-	supplierName =НорНикель
+	providerName =НорНикель
 	productName =Слиток никеля
 	quantityValue 10
 	cost =1000000 р.
