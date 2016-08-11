@@ -1,5 +1,14 @@
 [mol_app_agreement_carder] {
 	flex: 0 1 32rem;
+	position: relative;
+}
+
+[mol_app_agreement_carder_linker] {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
 }
 
 [mol_app_agreement_carder_contenter] {

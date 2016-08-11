@@ -7,13 +7,16 @@ module $.$mol {
 		
 		@ $mol_prop()
 		supplyRows() {
-			return this.supplies().map( ( supply , id ) => this.supplyRow( id ) )
+			return this.supplies().map( ( supply , index ) => this.supplyRow( index ) )
 		}
 		
 		@ $mol_prop()
-		supplyRow( id : number ) {
+		supplyRow( index : number ) {
 			return new $mol_app_agreement_carder().setup( obj => {
-				obj.supply = ()=> this.supplies()[ id ]
+				obj.supply = ()=> this.supplies()[ index ]
+				obj.patch = ()=> ({
+					supply : this.supplies()[ index ].id()
+				})
 			} )
 		}
 		

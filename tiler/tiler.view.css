@@ -8,12 +8,12 @@
 [mol_tiler_group] {
 	display: flex;
 	flex-wrap: wrap;
-	flex: 1 1 50%;
+	flex: 1 1 auto;
 	align-items: stretch;
 }
 
 [mol_tiler_item] {
-	flex: 1 1 10%;
+	flex: 1 1 auto;
 	margin: .5rem;
 	align-items: stretch;
 	display: flex;

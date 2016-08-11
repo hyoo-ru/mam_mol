@@ -3,6 +3,7 @@ module $.$mol {
 		
 		page() {
 			if( !this.entered() ) return this.enter()
+			if( this.supplyCurrent() ) return this.detailer()
 			return this.lister()
 		}
 		
@@ -13,6 +14,11 @@ module $.$mol {
 		
 		supplies() {
 			return this.domain().supplies()
+		}
+		
+		supplyCurrent() {
+			var id = this.argument().value( 'supply' )
+			return id && this.domain().supply( id )
 		}
 		
 	}

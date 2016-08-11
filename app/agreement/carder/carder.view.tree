@@ -1,5 +1,9 @@
 $mol_app_agreement_carder $mol_carder
 	supply null
+	childs /
+		< linker $mol_linker patch < patch : dict
+		< contenter
+		< statuser
 	content / < lister $mol_lister rows < rows /
 		< mainer $mol_viewer childs /
 			< providerItem $mol_viewer childs / < providerName =

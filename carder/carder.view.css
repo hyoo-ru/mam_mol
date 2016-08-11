@@ -15,7 +15,8 @@
 [mol_carder_statuser] {
 	background: var( --mol_skin_light_fore );
 	text-transform: capitalize;
-	padding: .25rem 1rem;
+	padding: 0 1rem;
+	line-height: 2;
 }
 
 [mol_carder_status="approved"] {

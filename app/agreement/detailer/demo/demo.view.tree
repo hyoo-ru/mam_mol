@@ -1,6 +1,5 @@
 $mol_app_agreement_detailer_demo $mol_scroller childs / < detailer $mol_app_agreement_detailer
-	providerName =НорНикель
-	productName =Слиток никеля
+	providerName =Nor Nickel
+	customerName =ACME Resources
 	quantityValue 10
-	cost =1000000 р.
-	stockName =Пулково 10
+	cost $mol_unit_money_rur valueOf 0
