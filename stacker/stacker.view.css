@@ -29,13 +29,12 @@
 	margin-right: -.5rem;
 	margin-bottom: -100vh;
 	position: relative;
-	background: var( --mol_skin_base_back );
-	color: var( --mol_skin_base_fore );
-	flex: 0 1 auto;
+	background: var( --mol_skin_light_back );
+	flex: 1 1 auto;
 	display: flex;
 	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 	z-index: 0;
-	max-width: calc( 100% - 1rem );
+	max-width: 100%;
 }
 
 [mol_stacker_focused] {
