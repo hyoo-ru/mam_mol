@@ -3,6 +3,7 @@ module $.$mol {
 
 		@ $mol_prop()
 		addonerFocused( ...diff : boolean[] ) {
+			if( !this.main() ) return true
 			this.argument().link({})
 			return diff[0] || false
 		}
