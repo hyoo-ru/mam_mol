@@ -5,11 +5,11 @@
 	display: flex;
 	flex: 1 1 auto;
 	flex-direction: column;
-	overflow: hidden;
 }
 
 [mol_carder_contenter] {
 	flex: 1 1 auto;
+	overflow: hidden;
 }
 
 [mol_carder_statuser] {
