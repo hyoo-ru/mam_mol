@@ -1,0 +1,4 @@
+$mol_pager_demo $mol_pager
+	title =Sign Up
+	body $mol_app_signup
+	foot $mol_rower_demo
