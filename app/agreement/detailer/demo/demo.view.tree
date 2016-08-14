@@ -1,4 +1,5 @@
-$mol_app_agreement_detailer_demo $mol_scroller childs / < detailer $mol_app_agreement_detailer
+$mol_app_agreement_detailer_demo $mol_app_agreement_detailer
+	title =Supply 31337
 	providerName =Nor Nickel
 	customerName =ACME Resources
 	quantityValue 10

@@ -14,15 +14,15 @@
 	}
 }
 
-[mol_scroller]::-webkit-scrollbar {
-	width: .5rem;
-	height: .5rem;
-}
+/*[mol_scroller]::-webkit-scrollbar {*/
+	/*width: .5rem;*/
+	/*height: .5rem;*/
+/*}*/
 
-[mol_scroller]::-webkit-scrollbar-track {
-	background: rgba( 0 , 0 , 0 , .1 );
-}
+/*[mol_scroller]::-webkit-scrollbar-track {*/
+	/*background: #eee;*/
+/*}*/
 
-[mol_scroller]::-webkit-scrollbar-thumb {
-	background: rgba( 0 , 0 , 0 , .2 );
-}
+/*[mol_scroller]::-webkit-scrollbar-thumb {*/
+	/*background: #ccc;*/
+/*}*/

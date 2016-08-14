@@ -1,10 +1,14 @@
 module $.$mol {
 	export class $mol_app_agreement_app extends $.$mol_app_agreement_app {
 		
-		page() {
+		main() {
+			if( !this.supplyCurrent() ) return null
+			return super.main()
+		}
+		
+		addon() {
 			if( !this.entered() ) return this.enter()
-			if( this.supplyCurrent() ) return this.detailer()
-			return this.lister()
+			return super.addon()
 		}
 		
 		@ $mol_prop()

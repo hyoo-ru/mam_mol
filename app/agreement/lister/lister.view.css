@@ -1,0 +1,7 @@
+[mol_app_agreement_lister] {
+	align-items: flex-start;
+}
+
+[mol_app_agreement_lister] > * {
+	margin: 1rem;
+}

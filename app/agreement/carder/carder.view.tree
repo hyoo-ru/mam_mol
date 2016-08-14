@@ -1,5 +1,6 @@
 $mol_app_agreement_carder $mol_carder
 	supply null
+	heightMinimal 120
 	childs /
 		< linker $mol_linker patch < patch : dict
 		< contenter

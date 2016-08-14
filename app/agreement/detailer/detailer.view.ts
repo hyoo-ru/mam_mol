@@ -5,6 +5,10 @@ module $.$mol {
 			return null as $mol_app_agreement_supply
 		}
 		
+		title() {
+			return `${super.title()} ${this.supply().id()}` 
+		}
+		
 		providerName() {
 			return this.supply().provider().name()
 		}

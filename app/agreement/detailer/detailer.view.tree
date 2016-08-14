@@ -1,7 +1,9 @@
-$mol_app_agreement_detailer $mol_rower
+$mol_app_agreement_detailer $mol_pager
 	supply null
-	childs / < mainer $mol_carder content < mainContent /
-		< providerRow $mol_viewer childs / < providerName =
-		< quantityRow $mol_viewer childs / < quantityValue =
-		< costRow $mol_coster value < cost $mol_unit_money valueOf 0
-		< customerRow $mol_viewer childs / < customerName =
+	title =Supply
+	body $mol_rower childs /
+		< mainer $mol_carder content < mainContent /
+			< providerRow $mol_viewer childs / < providerName =
+			< quantityRow $mol_viewer childs / < quantityValue =
+			< costRow $mol_coster value < cost $mol_unit_money valueOf 0
+			< customerRow $mol_viewer childs / < customerName =
