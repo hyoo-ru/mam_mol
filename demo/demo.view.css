@@ -14,16 +14,16 @@
 }
 
 [mol_demo_screener] {
-	overflow: hidden;
-	outline: 1px solid var( --mol_skin_light_fore );
-	background: var( --mol_skin_light_back );
-	border-radius: var( --mol_skin_round );
+	/*overflow: hidden;*/
+	/*outline: 1px solid var( --mol_skin_light_fore );*/
+	/*background: var( --mol_skin_light_back );*/
+	/*border-radius: var( --mol_skin_round );*/
 	position: relative;
 	flex: 1 1 auto;
 	display: flex;
 	align-content: flex-start;
 	align-items: stretch;
-	flex-direction: column;
+	/*flex-direction: column;*/
 }
 
 [mol_demo_large] {
