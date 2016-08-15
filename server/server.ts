@@ -55,7 +55,8 @@ class $mol_server extends $mol_object {
 		var [ path , module , bundle ] = matched
 		var build = $mol_build.relative({ path : `.${module}` })
 		build.bundle( bundle )
-		console.log( `Builded .${path}` )
+		console.log( `Generated .${path}` )
+		return null
 	}
 	
 	bodyLimit() {

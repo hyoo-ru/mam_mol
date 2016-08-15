@@ -27,27 +27,43 @@ class $mol_file extends $mol_object {
         return this.objectPath()
     }
 
-    stat() {
-        return $node.fs.statSync( this.path() )
+    @ $mol_prop()
+    watcher() {
+		return $node.fs.watch( this.path() , { persistent : false } , ( type , name )=> {
+			this.stat( void 0 )
+			if( name && !/(^\.|___$)/.test( name ) ) {
+				var file = this.resolve( name )
+				file.stat( void 0 )
+			}
+		} )
+	}
+    
+	@ $mol_prop()
+    stat( ...diff : void[] ) {
+		var path = this.path()
+		
+		this.parent().watcher()
+		
+		try {
+			return $node.fs.statSync( path )
+		} catch( error ) {
+			if( error.code === 'ENOENT' ) return null
+			throw error
+		}
     }
 
+    @ $mol_prop()
     version() {
         return this.stat().mtime.getTime().toString( 36 ).toUpperCase()
     }
 	
     exists( ...diff : boolean[] ) {
-		this.changeTime()
+		var exists = !!this.stat()
 		
     	if( diff[0] === void 0 ) {
-			try {
-				$node.fs.accessSync( this.path() )
-				return true
-			} catch( error ) {
-				if( error.code === 'ENOENT' ) return false
-				throw error
-			}
+			return exists
 		} else {
-			if( diff[0] == this.exists() ) return
+			if( diff[0] == exists ) return exists
 		
 			if( diff[0] ){
 				this.parent().exists( true )
@@ -55,6 +71,8 @@ class $mol_file extends $mol_object {
 			} else {
 				$node.fs.unlinkSync( this.path() )
 			}
+			
+			return diff[0]
 		}
     }
 
@@ -62,6 +80,7 @@ class $mol_file extends $mol_object {
         return this.resolve( '..' )
     }
 
+    @ $mol_prop()
     type() {
         var stat = this.stat()
 
@@ -86,28 +105,16 @@ class $mol_file extends $mol_object {
 
     @ $mol_prop()
     content( ...diff : string[] ) {
-    	this.changeTime()
-		
     	if( diff[0] === void 0 ) {
-    		return $node.fs.readFileSync( this.path() )
+    		return this.stat() && $node.fs.readFileSync( this.path() )
 		}
 
 		this.parent().exists( true )
 		$node.fs.writeFileSync( this.path() , diff[0] )
+		
+		return diff[0]
     }
 	
-	@ $mol_prop()
-	changeTime( ...diff : number[] ) {
-		//if( this.type() === 'file' ) return this.parent().changeTime()
-		//
-		//$node.fs.watch( this.path() , { persistent : false } , ( type , name )=> {
-		//	var file = name ? this.resolve( name ) : this
-		//	this.changeTime( Date.now() )
-		//} )
-		
-		return Date.now()
-	}
-
     reader() {
         return $node.fs.createReadStream( this.path() )
     }
@@ -116,12 +123,16 @@ class $mol_file extends $mol_object {
         return $node.fs.createWriteStream( this.path() )
     }
 
+    @ $mol_prop()
     childs() {
-    	this.changeTime()
+    	switch( this.type() ) {
+			case 'dir' :
+				return $node.fs.readdirSync( this.path() )
+				.filter( name => !/^\.+$/.test( name ) )
+				.map( name => this.resolve( name ) )
+		}
 		
-        return $node.fs.readdirSync( this.path() )
-		.filter( name => !/^\.+$/.test( name ) )
-		.map( name => this.resolve( name ) )
+		return []
     }
 
     resolve( path : string ) {

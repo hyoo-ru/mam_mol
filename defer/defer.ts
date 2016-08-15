@@ -13,10 +13,14 @@ class $mol_defer extends $mol_object {
 	static all : $mol_defer[] = []
 	static timer = 0
 	
+	static scheduleNative = ( typeof requestAnimationFrame == 'function' )
+		? requestAnimationFrame
+		: handler => setTimeout( handler , 16 )
+	
 	static schedule() {
 		if( this.timer ) return
 		
-		this.timer = requestAnimationFrame( ()=> {
+		this.timer = this.scheduleNative( ()=> {
 			this.timer = 0
 			this.run()
 		} )
