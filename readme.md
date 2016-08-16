@@ -75,6 +75,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_checker](checker) - check boxe
 * [$mol_switcher](switcher) - radio button
 * [$mol_stringer](stringer) - one string input control
+* [$mol_coder](coder) - bar code scanner
 
 ## Layout components
 
@@ -107,5 +108,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 * [$mol_defer](defer) - deferred but immediate execution
 
+## API
 
+* [$mol_cordova](cordova) - [Apache Cordova](https://cordova.apache.org) API
 
