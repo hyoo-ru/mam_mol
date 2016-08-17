@@ -3,4 +3,7 @@ $mol_app_agreement_app $mol_stacker
 	addon $mol_pager
 		title < listerTitle =Supplies
 		body / < lister $mol_app_agreement_lister supplies < supplies /
-	main < detailer $mol_app_agreement_detailer supply < supplyCurrent null
+		foot / < tooler $mol_rower childs / < searcher $mol_coder
+			hint < searcherHint =Search by bar code
+			value > supplyId =
+	main < detailer $mol_app_agreement_detailer supply < supply null

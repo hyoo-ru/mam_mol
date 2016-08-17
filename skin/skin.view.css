@@ -7,6 +7,7 @@
 	
 	--mol_skin_light_back: #F7FAFC;
 	--mol_skin_light_fore: rgba( 0 , 0 , 0 , .15 );
+	--mol_skin_light_text: rgba( 0 , 0 , 0 , .85 );
 
 	--mol_skin_accent_back: #FFE2B3;
 	--mol_skin_accent_fore: #EFB678;

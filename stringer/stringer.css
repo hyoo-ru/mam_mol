@@ -19,7 +19,7 @@
 
 [mol_stringer]:enabled {
 	background: white;
-	color: inherit;
+	color: var( --mol_skin_light_text );
 }
 
 [mol_stringer]:enabled:hover ,

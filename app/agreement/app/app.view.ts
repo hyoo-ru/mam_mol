@@ -2,7 +2,7 @@ module $.$mol {
 	export class $mol_app_agreement_app extends $.$mol_app_agreement_app {
 		
 		main() {
-			if( !this.supplyCurrent() ) return null
+			if( !this.supply() ) return null
 			return super.main()
 		}
 		
@@ -19,11 +19,14 @@ module $.$mol {
 		supplies() {
 			return this.domain().supplies()
 		}
-		
-		supplyCurrent() {
-			var id = this.argument().value( 'supply' )
-			return id && this.domain().supply( id )
+
+		supplyId( ...diff : string[] ) {
+			return this.argument().value( 'supply' , ...diff )
 		}
 		
+		supply() {
+			return this.domain().supply( this.supplyId() )
+		}
+
 	}
 }
