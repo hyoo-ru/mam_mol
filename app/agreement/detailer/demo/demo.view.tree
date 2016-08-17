@@ -1,6 +1,13 @@
 $mol_app_agreement_detailer_demo $mol_app_agreement_detailer
 	title =Supply 31337
-	providerName =Nor Nickel
-	customerName =ACME Resources
-	quantityValue 10
-	cost $mol_unit_money_rur valueOf 0
+	- org
+	providerName =ACME Provider Inc.
+	cost $mol_unit_money_rur valueOf 1234567
+	consumerName =ACME Consumer Inc.
+	supplyGroupName =Ivanov PI
+	ballanceUnitName =ACME Consumer Inc.
+	- cons
+	contractId =123675234
+	payMethodName =Accounting
+	managerName =Petrov IV
+	debitorName =12432311 - ACME Finance
