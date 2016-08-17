@@ -1,0 +1,3 @@
+$mol_labeler $mol_viewer childs /
+	< titler $mol_viewer childs / < title =
+	< contenter $mol_viewer childs / < content =

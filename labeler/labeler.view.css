@@ -1,0 +1,15 @@
+[mol_labeler] {
+	display: inline-flex;
+	flex-direction: column;
+}
+
+[mol_labeler_titler] {
+	color: #888;
+	font-size: .85rem;
+}
+
+[mol_labeler_contenter] {
+	font-weight: bolder;
+	flex: 1 1 auto;
+	display: flex;
+}

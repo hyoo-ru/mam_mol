@@ -85,6 +85,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_lister](lister) - vertical list of rows
 * [$mol_stacker](stacker) - horizontal stack of panels
 * [$mol_pager](pager) - page with header, body and footer
+* [$mol_labeler](labeler) - labeled content
 
 ## Complex components
 
