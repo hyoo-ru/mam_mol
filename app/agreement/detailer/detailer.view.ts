@@ -49,5 +49,16 @@ module $.$mol {
 			return String( this.supply().status() )
 		}
 		
+		positions() {
+			return this.supply().positions().map( ( pos , index )=> this.position( index ) )
+		}
+		
+		@ $mol_prop()
+		position( index : number ) {
+			return new $mol_app_agreement_positioner().setup( obj => {
+				obj.position = ()=> this.supply().positions()[ index ]
+			} )
+		}
+		
 	}
 }

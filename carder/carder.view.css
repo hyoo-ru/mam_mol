@@ -1,15 +1,15 @@
 [mol_carder] {
-	box-shadow: 0 0 0 2px var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 	background: var( --mol_skin_light_back );
 	border-radius: var( --mol_skin_round );
 	display: flex;
 	flex: 1 1 auto;
 	flex-direction: column;
+	overflow: hidden;
 }
 
 [mol_carder_contenter] {
 	flex: 1 1 auto;
-	overflow: hidden;
 }
 
 [mol_carder_statuser] {

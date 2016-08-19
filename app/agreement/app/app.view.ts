@@ -25,7 +25,8 @@ module $.$mol {
 		}
 		
 		supply() {
-			return this.domain().supply( this.supplyId() )
+			var id = String( this.supplyId() )
+			return id ? this.domain().supply( id ) : null
 		}
 
 	}

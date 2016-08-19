@@ -11,3 +11,10 @@ $mol_app_agreement_detailer_demo $mol_app_agreement_detailer
 	payMethodName =Accounting
 	managerName =Petrov IV
 	debitorName =12432311 - ACME Finance
+	-
+	positions /
+		< pos1 $mol_app_agreement_positioner_demo
+		< pos2 $mol_app_agreement_positioner_demo
+		< pos3 $mol_app_agreement_positioner_demo
+		< pos4 $mol_app_agreement_positioner_demo
+		< pos5 $mol_app_agreement_positioner_demo

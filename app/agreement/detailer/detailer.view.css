@@ -1,0 +1,15 @@
+[mol_app_agreement_detailer_contenter] {
+	/*display: flex;*/
+	/*flex-wrap: wrap;*/
+	max-width: 80rem;
+	padding: 0 1rem;
+}
+
+[mol_app_agreement_detailer_contenter] > * {
+	margin: 1rem 0;
+	/*flex: 1 1 100%;*/
+}
+
+[mol_app_agreement_detailer_posLister] > * {
+	margin: 1rem 0;
+}

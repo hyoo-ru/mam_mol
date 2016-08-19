@@ -1,6 +1,7 @@
 [mol_labeler] {
-	display: inline-flex;
-	flex-direction: column;
+	/*display: inline-flex;*/
+	/*align-items: baseline;*/
+	/*flex-wrap: wrap;*/
 }
 
 [mol_labeler_titler] {
@@ -10,6 +11,6 @@
 
 [mol_labeler_contenter] {
 	font-weight: bolder;
-	flex: 1 1 auto;
-	display: flex;
+	/*flex: 0 1 auto;*/
+	/*display: flex;*/
 }

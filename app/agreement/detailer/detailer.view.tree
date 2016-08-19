@@ -1,7 +1,7 @@
 $mol_app_agreement_detailer $mol_pager
 	supply null
 	title =Supply
-	body $mol_rower childs /
+	body $mol_lister rows / < contenter $mol_lister rows < content /
 		< orgCarder $mol_carder content < orgContent $mol_rower childs < orgItems /
 			< providerItem $mol_labeler
 				title =Provider
@@ -31,3 +31,6 @@ $mol_app_agreement_detailer $mol_pager
 			< debitorItem $mol_labeler
 				title =Debitor
 				content < debitorName =
+		< posLister $mol_sectioner
+			title < posListerTitle =Positions
+			content < positions /
