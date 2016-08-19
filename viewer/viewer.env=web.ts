@@ -128,7 +128,7 @@ class $mol_viewer extends $mol_model {
 							//}
 						}
 					}
-					if( view instanceof $mol_viewer ) view.DOMNodeContent()
+					//if( view instanceof $mol_viewer ) new $mol_defer( ()=> view.DOMTree() )
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
 						nextNode.nodeValue = String( view )
