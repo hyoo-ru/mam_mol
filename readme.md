@@ -43,6 +43,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_object](object) - components base class
 * [$mol_model](model) - reactive model base class
 * [$mol_log](log) - logging
+* [$mol_const](const) - const value returning function
 
 ## Collections
 
