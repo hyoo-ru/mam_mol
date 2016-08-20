@@ -15,7 +15,8 @@ module $.$mol {
 			return new $mol_app_agreement_carder().setup( obj => {
 				obj.supply = ()=> this.supplies()[ index ]
 				obj.patch = ()=> ({
-					supply : this.supplies()[ index ].id()
+					supply : this.supplies()[ index ].id() ,
+					side : null
 				})
 			} )
 		}

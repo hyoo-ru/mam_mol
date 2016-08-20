@@ -1,16 +1,6 @@
-$mol_stacker $mol_viewer childs /
-	< mainer $mol_stacker_panel
-		focused > mainerFocused : true
-		childs / < main /
-	< addoner $mol_stacker_panel
-		focused > addonerFocused : false
-		childs / < addon /
-
-$mol_stacker_panel $mol_viewer
-	eventFocus : null
-	attr * mol_stacker_focused < focused : false
-	event *
-		click > eventFocus
-		touchmove > eventFocus
-		scroll > eventFocus
-		wheel > eventFocus
+$mol_stacker $mol_viewer
+	attr * mol_stacker_side < side false
+	childs /
+		< mainer $mol_viewer childs / < main /
+		< addoner $mol_viewer childs / < addon /
+	
