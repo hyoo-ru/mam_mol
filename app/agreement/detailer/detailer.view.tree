@@ -1,14 +1,20 @@
 $mol_app_agreement_detailer $mol_pager
 	supply null
 	title =Supply
+	headerItems /
+		< backer $mol_linker
+			childs / =‹
+			patch < backPatch : dict
+				=side
+					: null
+				=supply
+					: null
+		< titler
 	body $mol_lister rows / < contenter $mol_lister rows < content /
 		< orgCarder $mol_carder content < orgContent $mol_rower childs < orgItems /
 			< providerItem $mol_labeler
 				title =Provider
 				content < providerName =
-			< costItem $mol_labeler
-				title =Cost
-				content < coster $mol_coster value < cost $mol_unit_money valueOf 0
 			< consumerItem $mol_labeler
 				title =Consumer
 				content < consumerName =
@@ -32,5 +38,12 @@ $mol_app_agreement_detailer $mol_pager
 				title =Debitor
 				content < debitorName =
 		< posLister $mol_sectioner
-			title < posListerTitle =Positions
+			title < posListerTitle /
+				=Positions
+				< costItem $mol_labeler
+					title =Cost
+					content < coster $mol_coster value < cost $mol_unit_money valueOf 0
 			content < positions /
+	foot $mol_rower childs < tools / < approver $mol_checker
+		checked > approved false
+		childs / =Approved

@@ -1,4 +1,4 @@
 $mol_pager $mol_viewer childs /
-	< header $mol_viewer childs / < head $mol_rower_demo childs / < titler $mol_viewer childs / < title =
+	< header $mol_viewer childs < head / < headerPanel $mol_rower_demo childs < headerItems / < titler $mol_viewer childs / < title =
 	< bodier $mol_scroller childs / < body null
 	< footer $mol_viewer childs / < foot null

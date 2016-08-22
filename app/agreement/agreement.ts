@@ -71,25 +71,38 @@ class $mol_app_agreement_stock extends $mol_model {
 
 /// Заявка на закупку
 class $mol_app_agreement_supply extends $mol_model {
+	
 	id() : string { return void 0 }
+	
 	provider() : $mol_app_agreement_provider { return void 0 }
+	
 	consumer() : $mol_app_agreement_consumer { return void 0 }
+	
 	group() : $mol_app_agreement_supply_group { return void 0 }
-	status() : $mol_app_agreement_supply_status { return void 0 }
+	
+	@ $mol_prop()
+	status( ...diff : $mol_app_agreement_supply_status[] ) { return diff[0] }
+	
 	ballanceUnit() : $mol_app_agreement_ballanceUnit { return void 0 }
+	
 	manager() : $mol_app_agreement_person { return void 0 }
+	
 	contract() : $mol_app_agreement_contract { return void 0 }
+	
 	payMethod() : $mol_app_agreement_payMethod { return void 0 }
+	
 	debitor() : $mol_app_agreement_debitor { return void 0 }
+	
 	positions() : $mol_app_agreement_supply_position[] { return void 0 }
+	
 	cost() : $mol_unit_money { return void 0 }
+	
 }
 
 /// Статус заявки на закупку
 enum $mol_app_agreement_supply_status {
 	pending = 'pending' as any ,
 	approved = 'approved' as any ,
-	rejected = 'rejected' as any ,
 }
 
 /// Демонстрационный бизнес домен
@@ -105,7 +118,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 		return new $mol_app_agreement_supply().setup( obj => {
 			obj.id = $mol_const( id )
 			obj.cost = $mol_const( new $mol_unit_money_rur( x ) )
-			obj.status = $mol_const( $mol_app_agreement_supply_status[ [ 'pending' , 'approved' , 'rejected' ][ Math.floor( Math.random() * 3 ) ] ] )
+			obj.status( $mol_app_agreement_supply_status[ [ 'pending' , 'approved' ][ Math.floor( Math.random() * 2 ) ] ] )
 			obj.provider = $mol_const( this.provider( Math.random().toString( 16 ).substring( 2 ) ) )
 			obj.consumer = $mol_const( this.consumer( Math.random().toString( 16 ).substring( 2 ) ) )
 			obj.group = $mol_const( this.supplyGroup( Math.random().toString( 16 ).substring( 2 ) ) )

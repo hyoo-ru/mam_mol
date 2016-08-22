@@ -9,6 +9,15 @@ module $.$mol {
 			return `${super.title()} ${this.supply().id()}` 
 		}
 		
+		approved( ...diff : boolean[] ) {
+			if( diff[0] === void 0 ) return this.supply().status() === $mol_app_agreement_supply_status.approved
+			this.supply().status( diff[0]
+				? $mol_app_agreement_supply_status.approved
+				: $mol_app_agreement_supply_status.pending
+			)
+			return diff[0]
+		}
+		
 		providerName() {
 			return this.supply().provider().name()
 		}
