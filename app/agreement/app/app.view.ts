@@ -21,7 +21,8 @@ module $.$mol {
 		}
 
 		supplyId( ...diff : string[] ) {
-			return this.argument().value( 'supply' , ...diff )
+			var next = this.argument().value( 'supply' , ...diff )
+			return next && String( next )
 		}
 		
 		supply() {

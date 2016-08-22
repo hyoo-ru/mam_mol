@@ -10,9 +10,5 @@
 
 [mol_form_barButtons] {
 	justify-content: center;
-	padding: .5rem;
-}
-
-[mol_form_barButtons] > * {
-	margin: .5rem;
+	box-shadow: none;
 }

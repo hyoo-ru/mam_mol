@@ -9,8 +9,8 @@
 	--mol_skin_light_fore: rgba( 0 , 0 , 0 , .15 );
 	--mol_skin_light_text: rgba( 0 , 0 , 0 , .85 );
 
-	--mol_skin_accent_back: #FFE2B3;
-	--mol_skin_accent_fore: #EFB678;
+	--mol_skin_accent_back: #5988C8;
+	--mol_skin_accent_fore: white;
 
 	--mol_skin_warn_back: #FFD6D6;
 	--mol_skin_warn_fore: red;
