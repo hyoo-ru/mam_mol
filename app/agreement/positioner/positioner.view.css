@@ -10,48 +10,48 @@
 	align-items: baseline;
 }
 
-[mol_app_agreement_positioner_productGroup] {
-	flex: 1 1 22rem;
-	background: hsla(216,50%,96%,1);
+[mol_app_agreement_positioner_mainGroup] {
+	flex: 1 1 16rem;
+	background: hsla(137,50%,98%,1);
 }
 
-[mol_app_agreement_positioner_divisionItem] {
-	flex: 1 1 6rem;
-}
-
-[mol_app_agreement_positioner_productItem] {
-	flex: 1 1 10rem;
-}
-
-[mol_app_agreement_positioner_costGroup] {
-	flex: 1 1 19rem;
-	background: hsla(137,50%,91%,1);
-}
-
-[mol_app_agreement_positioner_priceItem] {
-	flex: 1 1 6rem;
-	text-align: right;
-}
-
-[mol_app_agreement_positioner_quantityItem] {
-	flex: 1 1 2rem;
-	text-align: right;
-}
-
-[mol_app_agreement_positioner_costItem] {
-	flex: 1 1 6rem;
-	text-align: right;
+[mol_app_agreement_positioner_addonGroup] {
+	flex: 1 1 16rem;
+	background: hsla(216,50%,98%,1);
 }
 
 [mol_app_agreement_positioner_supplyGroup] {
 	flex: 1 1 22rem;
-	background: hsla(0,55%,94%,1);
+	background: hsla(0,50%,98%,1);
+}
+
+[mol_app_agreement_positioner_divisionItem] {
+	flex: 1 1 8rem;
+}
+
+[mol_app_agreement_positioner_productItem] {
+	flex: 1 1 8rem;
+}
+
+[mol_app_agreement_positioner_priceItem] {
+	flex: 1 0 5rem;
+	text-align: right;
+}
+
+[mol_app_agreement_positioner_quantityItem] {
+	flex: 1 0 2rem;
+	text-align: right;
+}
+
+[mol_app_agreement_positioner_costItem] {
+	flex: 1 0 5rem;
+	text-align: right;
 }
 
 [mol_app_agreement_positioner_supplyDateItem] {
-	flex: 1 1 6rem;
+	flex: 0 0 6rem;
 }
 
 [mol_app_agreement_positioner_stockItem] {
-	flex: 1 1 10rem;
+	flex: 1 1 8rem;
 }

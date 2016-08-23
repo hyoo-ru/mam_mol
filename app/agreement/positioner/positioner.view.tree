@@ -1,27 +1,27 @@
 $mol_app_agreement_positioner $mol_carder
 	heightMinimal 80
 	content < grouper $mol_viewer childs /
-		< productGroup $mol_rower childs /
-			< divisionItem $mol_labeler
-				title =Division
-				content < divisionName =
+		< mainGroup $mol_rower childs /
 			< productItem $mol_labeler
 				title =Product
 				content < productName =
-		< supplyGroup $mol_rower childs /
-			< supplyDateItem $mol_labeler
-				title =Sypply date
-				content < supplyDate =
-			< stockItem $mol_labeler
-				title =Stock
-				content < stockName =
-		< costGroup $mol_rower childs /
-			< priceItem $mol_labeler
-				title =Price
-				content < pricer $mol_coster value < price $mol_unit_money valueOf 0
-			< quantityItem $mol_labeler
-				title =Quantity
-				content < quantity 0
 			< costItem $mol_labeler
 				title =Cost
 				content < coster $mol_coster value < cost $mol_unit_money valueOf 0
+		< addonGroup $mol_rower childs /
+			< divisionItem $mol_labeler
+				title =Division
+				content < divisionName =
+			< priceItem $mol_labeler
+				title =Price
+				content < pricer $mol_coster value < price $mol_unit_money valueOf 0
+		< supplyGroup $mol_rower childs /
+			< stockItem $mol_labeler
+				title =Stock
+				content < stockName =
+			< supplyDateItem $mol_labeler
+				title =Supply date
+				content < supplyDate =
+			< quantityItem $mol_labeler
+				title =Quantity
+				content < quantity 0
