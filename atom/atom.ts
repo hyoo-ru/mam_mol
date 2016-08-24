@@ -1,5 +1,17 @@
+enum $mol_atom_status {
+	obsolete = 'obsolete' as any ,
+	checking = 'checking' as any ,
+	actual = 'actual' as any ,
+} 
+
 class $mol_atom< Value > extends $mol_object {
-	
+
+	masters : $mol_set< $mol_atom<any> > = null
+	slaves : Array< $mol_atom<any> > = null
+
+	status = $mol_atom_status.obsolete
+	planned = false
+
 	constructor(
 		public host : { objectPath() : string } ,
 		public field : string ,
@@ -35,18 +47,12 @@ class $mol_atom< Value > extends $mol_object {
 	
 	unlink() {
 		this.disobeyAll()
-		this.notifySlaves()
+		this.checkSlaves()
 	}
 	
 	objectPath() {
 		return this.host.objectPath() + '.' + this.field
 	}
-	
-	masters : $mol_set< $mol_atom<any> >
-	mastersDeep = 0
-	planned = false
-	
-	slaves : $mol_set< $mol_atom<any> >
 	
 	get() {
 		if( $mol_atom.stack.indexOf( this ) !== -1 ) {
@@ -57,26 +63,34 @@ class $mol_atom< Value > extends $mol_object {
 		if( slave ) this.lead( slave )
 		if( slave ) slave.obey( this )
 		
+		this.actualize()
+		
 		var value : Value|Error = this.host[ this.field ]
-		if( value === void 0 ) {
-			value = this.pull()
-		}
 		
 		if( value instanceof Error ) throw value
-		else return value
+		return value
+	}
+	
+	actualize() {
+		if( this.status === $mol_atom_status.actual ) return false
+
+		var obsolete = this.status === $mol_atom_status.obsolete
+		if( !obsolete ) {
+			this.masters.forEach( master => {
+				if( !obsolete && master.actualize() ) obsolete = true
+			} )
+			if( !obsolete ) {
+				this.status = $mol_atom_status.actual
+				return false
+			} 
+		}
+		
+		var value = this.host[ this.field ]
+		return this.pull() !== value
 	}
 	
 	pull() {
-		this.log( [ 'pull' ] )
-		
-		if( this.planned ) {
-			var level = $mol_atom.plan[ this.mastersDeep ]
-			if( level ) {
-				var index = level.indexOf( this )
-				if( index !== -1 ) level.splice( index , 1 )
-			}
-			this.planned = false
-		}
+		this.log([ 'pull' ])
 		
 		var oldMasters = this.masters
 		
@@ -86,7 +100,6 @@ class $mol_atom< Value > extends $mol_object {
 		} )
 		
 		this.masters = null
-		this.mastersDeep = 0
 		
 		var index = $mol_atom.stack.length
 		$mol_atom.stack.push( this )
@@ -127,41 +140,65 @@ class $mol_atom< Value > extends $mol_object {
 			}
 			this.host[ this.field ] = next
 			this.log([ 'push' , next , prev ])
-			this.notifySlaves()
+			this.obsoleteSlaves()
 		}
+		this.status = $mol_atom_status.actual
 		return next
 	}
-	
-	notifySlaves( ) {
-		if( this.slaves ){
-			this.slaves.forEach( slave => {
-				if( $mol_atom.stack[ $mol_atom.stack.length - 1 ] === slave ) return
-				slave.update()
-			} )
+
+	obsoleteSlaves( ) {
+		if( !this.slaves ) return
+
+		this.slaves.forEach(slave => {
+			if ($mol_atom.stack[$mol_atom.stack.length - 1] === slave) return
+			slave.obsolete()
+		})
+	}
+
+	checkSlaves( ) {
+		if( this.slaves ) {
+			this.slaves.forEach(slave => {
+				if ($mol_atom.stack[$mol_atom.stack.length - 1] === slave) return
+				slave.check()
+			})
+		} else {
+			$mol_atom.actualize( this )
 		}
 	}
 	
-	update() {
-		if( this.planned ) return
-		this.planned = true
+	check() {
+		if( this.status === $mol_atom_status.actual ) {
+			this.status = $mol_atom_status.checking
+
+			this.checkSlaves()
+		}
+	}
+	
+	obsolete() {
+		if( this.status === $mol_atom_status.obsolete ) return
 		
-		this.log( [ 'update' ] )
-		$mol_atom.actualize( this )
+		this.log([ 'obsolete' ])
+
+		this.status = $mol_atom_status.obsolete
+
+		this.checkSlaves()
 		
 		return void 0
 	}
 	
 	lead( slave : $mol_atom<any> ) {
-		if( !this.slaves ) this.slaves = new $mol_set< $mol_atom<any> >()
-		this.slaves.add( slave )
+		if( !this.slaves ) this.slaves = []
+		if( this.slaves.indexOf( slave ) !== -1 ) return
+		this.slaves.push( slave )
 	}
 	
 	dislead( slave : $mol_atom<any> ){
 		if( !this.slaves ) return
 		
-		this.slaves.delete( slave )
+		var index = this.slaves.indexOf( slave )
+		if( index !== -1 ) this.slaves.splice( index , 1 )
 		
-		if( !this.slaves.size ){
+		if( !this.slaves.length ){
 			this.slaves = null
 			$mol_atom.reaping.add( this )
 		}
@@ -169,19 +206,12 @@ class $mol_atom< Value > extends $mol_object {
 	
 	obey( master : $mol_atom<any> ) {
 		if( !this.masters ) this.masters = new $mol_set< $mol_atom<any> >()
-		
 		this.masters.add( master )
-		
-		var masterDeep = master.mastersDeep
-		if( this.mastersDeep <= masterDeep ) {
-			this.mastersDeep = masterDeep + 1
-		}
 	}
 	
 	disobey( master : $mol_atom<any> ){
 		if( !this.masters ) return
 		this.masters.delete( master )
-		if( !this.masters.size ) this.masters = null
 	}
 	
 	disobeyAll( ) {
@@ -190,13 +220,12 @@ class $mol_atom< Value > extends $mol_object {
 		this.masters.forEach( master => master.dislead( this ) )
 		
 		this.masters = null
-		this.mastersDeep = 0
 	}
 	
 	value( ...diff : (Value|Error)[] ) {
 		if( diff[0] === void 0 ) {
 			if( diff.length > 1 ) return this.push( diff[1] )
-			if( diff.length > 0 ) return this.update()
+			if( diff.length > 0 ) return this.obsolete()
 			return this.get()
 		} else {
 			return this.set( ...diff )
@@ -204,21 +233,12 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	static stack = [] as $mol_atom<any>[]
-	static plan : $mol_atom<any>[][] = []
-	static planStart = 0
+	static updating : $mol_atom<any>[] = []
 	static reaping = new $mol_set< $mol_atom<any> >()
 	static scheduled = false
 	
 	static actualize( atom : $mol_atom<any> ) {
-		var deep = atom.mastersDeep
-		var plan = $mol_atom.plan
-		
-		var level = plan[ deep ]
-		if( !level ) level = plan[ deep ] = []
-		
-		level.push( atom )
-		if( deep < this.planStart ) this.planStart = deep
-		
+		$mol_atom.updating.push( atom )
 		$mol_atom.schedule()
 	}
 	
@@ -238,24 +258,17 @@ class $mol_atom< Value > extends $mol_object {
 		$mol_log( '$mol_atom.sync' , [] )
 		this.schedule()
 		
-		for( var i = this.planStart ; i < this.plan.length ; ++i ) {
-			var level = this.plan[ i ]
-			if( !level ) continue
-			if( level.length === 0 ) continue
-			
-			var atom = level.pop()
-			if( !atom.destroyed() ) {
-				atom.planned = false
-				atom.pull()
-			}
-			
-			i = this.planStart - 1
+		while( this.updating.length ) {
+			var atom = this.updating.shift()
+			if( !atom.destroyed() ) atom.actualize()
 		}
 		
-		this.reaping.forEach( atom => {
-			this.reaping.delete( atom )
-			if( !atom.slaves ) atom.destroyed( true )
-		} )
+		while( this.reaping.size ) {
+			this.reaping.forEach(atom => {
+				this.reaping.delete(atom)
+				if (!atom.slaves) atom.destroyed(true)
+			})
+		}
 		
 		this.scheduled = false
 	}

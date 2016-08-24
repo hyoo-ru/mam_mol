@@ -88,13 +88,13 @@ class $mol_viewer extends $mol_model {
 		} )
 		
 		// When node defined then deferred render child nodes then deferred update state of this node
-		this.DOMNodeState( void 0 )
-		this.DOMNodeContent( void 0 )
+		// this.DOMNodeState( void 0 )
+		// this.DOMNodeContent( void 0 )
 		
 		return next
 	}
 	
-	@ $mol_prop()
+	// @ $mol_prop()
 	DOMNodeContent( ...diff : void[] ) {
 		var node = this.DOMNode()
 		
@@ -128,7 +128,7 @@ class $mol_viewer extends $mol_model {
 							//}
 						}
 					}
-					//if( view instanceof $mol_viewer ) new $mol_defer( ()=> view.DOMTree() )
+					if( view instanceof $mol_viewer ) view.DOMNodeState()
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
 						nextNode.nodeValue = String( view )
@@ -233,6 +233,7 @@ document.addEventListener( 'DOMContentLoaded' , event => {
 	for( var i = nodes.length - 1 ; i >= 0 ; --i ) {
 		var view = window['$'][ nodes[i].getAttribute( 'mol_viewer_root' ) ].root(i)
 		view.DOMNode( nodes[i] )
+		view.DOMNodeState()
 	}
 	$mol_defer.run()
 } )
