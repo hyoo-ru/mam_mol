@@ -10,12 +10,6 @@ $mol_app_agreement_carder_demo_approved $mol_rower childs / < carder $mol_app_ag
 	consumerName =312 - ACME Inc.
 	status =approved
 
-$mol_app_agreement_carder_demo_rejected $mol_rower childs / < carder $mol_app_agreement_carder
-	providerName =43434232 - Gazprom
-	consumerName =343 - ACME
-	cost $mol_unit_money_rur valueOf 32000000
-	status =rejected
-
 $mol_app_agreement_carder_demo_selected $mol_rower childs / < carder $mol_app_agreement_carder
 	providerName =327836275 - NorNikel
 	consumerName =312 - ACME Inc.
