@@ -1,7 +1,11 @@
-[mol_app_agreement_lister] {
+[mol_app_agreement_lister_header] {
+	flex-direction: column;
+}
+
+[mol_app_agreement_lister_body] {
 	align-items: flex-start;
 }
 
-[mol_app_agreement_lister] > * {
+[mol_app_agreement_lister_body] > * {
 	margin: 1rem;
 }
