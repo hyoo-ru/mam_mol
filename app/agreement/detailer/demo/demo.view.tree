@@ -1,5 +1,6 @@
 $mol_app_agreement_detailer_demo $mol_app_agreement_detailer
 	title =Supply 31337
+	approved false
 	- org
 	providerName =ACME Provider Inc.
 	cost $mol_unit_money_rur valueOf 1234567

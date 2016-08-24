@@ -34,7 +34,7 @@ class $mol_app_agreement_supply_position extends $mol_model {
 	name() : string { return void 0 }
 	supplyMoment() : $jin.time.moment_class { return void 0 }
 	division() : $mol_app_agreement_supply_division { return void 0 }
-	stock() : $mol_app_agreement_stock { return void 0 }
+	store() : $mol_app_agreement_store { return void 0 }
 	price() : $mol_unit_money { return void 0 }
 	quantity() : number { return void 0 }
 	cost() : $mol_unit_money { return void 0 }
@@ -64,7 +64,7 @@ class $mol_app_agreement_consumer extends $mol_model {
 }
 
 /// Склад для доставки
-class $mol_app_agreement_stock extends $mol_model {
+class $mol_app_agreement_store extends $mol_model {
 	id() : string { return void 0 }
 	name() : string { return void 0 }
 }
@@ -172,8 +172,8 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	}
 
 	@ $mol_prop()
-	stock( id : string ) {
-		return new $mol_app_agreement_stock().setup( obj => {
+	store( id : string ) {
+		return new $mol_app_agreement_store().setup( obj => {
 			obj.id = $mol_const( id )
 			obj.name = $mol_const([ 'Riga#10' , 'Moscow#123' , 'Saint-Petersburg#42' ][ Math.floor( Math.random() * 3 ) ])
 		} )
@@ -215,7 +215,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 		return new $mol_app_agreement_supply_position().setup( obj => {
 			obj.name = $mol_const([ 'Work Station, 4 cores, 16GB' , 'ZX Spectrum' , 'ACMEbook' ][ Math.floor( Math.random() * 3 ) ])
 			obj.supplyMoment = $mol_const( $jin.time.moment().shift({ day : Math.round( Math.random() * 100 ) }) )
-			obj.stock = $mol_const( this.stock( Math.random().toString( 16 ).substring( 2 ) ) )
+			obj.store = $mol_const( this.store( Math.random().toString( 16 ).substring( 2 ) ) )
 			obj.division = $mol_const( this.division( Math.random().toString( 16 ).substring( 2 ) ) )
 			obj.price = $mol_const( new $mol_unit_money_rur( Math.round( Math.random() * 2000000 ) ) )
 			obj.quantity = $mol_const( Math.round( Math.random() * 30 ) )

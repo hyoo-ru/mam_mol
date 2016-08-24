@@ -29,8 +29,8 @@ module $.$mol {
 			return this.position().division().name()
 		}
 
-		stockName() {
-			return this.position().stock().name()
+		storeName() {
+			return this.position().store().name()
 		}
 
 	}

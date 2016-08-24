@@ -1,9 +1,6 @@
 $mol_app_agreement_app $mol_stacker
 	enter $mol_app_agreement_enter entered > entered false
-	addon $mol_pager
-		title < listerTitle =Supplies
-		body / < lister $mol_app_agreement_lister supplies < supplies /
-		foot / < tooler $mol_rower childs / < searcher $mol_coder
-			hint < searcherHint =Search by bar code
-			value > supplyId =
-	main < detailer $mol_app_agreement_detailer supply < supply null
+	lister $mol_app_agreement_lister
+		supplies < supplies /
+		supplyId > supplyId =
+	detailer $mol_app_agreement_detailer supply < supply null

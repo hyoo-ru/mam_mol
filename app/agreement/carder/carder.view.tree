@@ -2,9 +2,9 @@ $mol_app_agreement_carder $mol_carder
 	supply null
 	heightMinimal 120
 	childs /
-		< linker $mol_linker patch < patch : dict
 		< contenter
 		< statuser
+		< linker $mol_linker patch < patch : dict
 	content / < lister $mol_lister rows < rows /
 		< mainer $mol_viewer childs /
 			< providerItem $mol_viewer childs / < providerName =

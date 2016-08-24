@@ -16,9 +16,9 @@ $mol_app_agreement_positioner $mol_carder
 				title =Price
 				content < pricer $mol_coster value < price $mol_unit_money valueOf 0
 		< supplyGroup $mol_rower childs /
-			< stockItem $mol_labeler
-				title =Stock
-				content < stockName =
+			< storeItem $mol_labeler
+				title =store
+				content < storeName =
 			< supplyDateItem $mol_labeler
 				title =Supply date
 				content < supplyDate =
