@@ -2,6 +2,8 @@
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
+	position: relative;
+	align-self: stretch;
 }
 
 [mol_pager_header] {

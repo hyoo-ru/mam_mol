@@ -1,10 +1,7 @@
-$mol_carder_demo $mol_scroller childs / < rower $mol_rower childs /
-	< card0 $mol_carder
-		content < content0 $mol_rower_demo
-		status =pending
-	< card1 $mol_carder
-		content < content1 $mol_rower_demo
-		status =approved
-	< card3 $mol_carder
-		content < content3 $mol_rower_demo
-		status =selected
+$mol_carder_demo_base $mol_carder
+	content $mol_rower_demo
+	status =pending
+
+$mol_carder_demo_selected $mol_carder
+	content $mol_rower_demo
+	status =selected

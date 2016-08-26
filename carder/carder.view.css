@@ -3,7 +3,7 @@
 	background: white;
 	border-radius: var( --mol_skin_round );
 	display: flex;
-	flex: 1 1 auto;
+	flex: 0 1 auto;
 	flex-direction: column;
 	/*overflow: hidden;*/
 }

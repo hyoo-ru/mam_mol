@@ -30,3 +30,18 @@
 [mol_app_demo_screen] {
 	max-height: 45%;
 }
+
+[mol_app_demo_pager_bodier] {
+	padding: .5rem;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+[mol_app_demo_pager_bodier] > * {
+	margin: .5rem;
+}
+
+[mol_app_demo_pager_backer] {
+	color: var( --mol_skin_base_fore );
+}
