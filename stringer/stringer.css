@@ -11,7 +11,7 @@
 	z-index: 0;
 	font: inherit;
 	flex: 1000 1 auto;
-	width: 4em;
+	/*width: 4em;*/
 	background: #eee;
 	color: gray;
 }
