@@ -102,7 +102,7 @@ class $mol_app_agreement_supply extends $mol_model {
 	positions() : $mol_app_agreement_supply_position[] { return void 0 }
 
 	@ $mol_prop()
-	attachments( ...diff : $mol_app_agreement_attachment[][] ) { return diff[0] }
+	attachments( ...diff : $mol_app_agreement_attachment[][] ) { return diff[0] || [] }
 
 	cost() : $mol_unit_money { return void 0 }
 	
@@ -137,7 +137,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 			obj.payMethod = $mol_const( this.payMethod( Math.random().toString( 16 ).substring( 2 ) ) )
 			obj.debitor = $mol_const( this.debitor( Math.random().toString( 16 ).substring( 2 ) ) )
 			obj.positions = $mol_const( 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split( '' ).map( id2 => this.position({ supply : id , position : id2 }) ) )
-			obj.attachments( void 0 , 'ABCDEFG'.split( '' ).map( id2 => this.attachment({ supply : id , attachment : id2 }) ) )
+			obj.attachments = ( ...diff : $mol_app_agreement_attachment[][] )=> this.attachments( id , ...diff )
 		} )
 	}
 	
@@ -231,6 +231,11 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 			obj.quantity = $mol_const( Math.round( Math.random() * 30 ) )
 			obj.cost = $mol_const( obj.price().mult( obj.quantity() ) )
 		} )
+	}
+	
+	@ $mol_prop()
+	attachments( id : string , ...diff : $mol_app_agreement_attachment[][] ) {
+		return diff[0] || 'ABCDEFG'.split( '' ).map( id2 => this.attachment({ supply : id , attachment : id2 }) )
 	}
 
 	@ $mol_prop()
