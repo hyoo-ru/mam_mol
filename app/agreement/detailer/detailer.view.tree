@@ -6,7 +6,7 @@ $mol_app_agreement_detailer $mol_pager
 			childs / =‹
 			patch < backPatch : dict
 				=side
-					: null
+					: list
 				=supply
 					: null
 		< titler
@@ -37,6 +37,11 @@ $mol_app_agreement_detailer $mol_pager
 			< debitorItem $mol_labeler
 				title =Debitor
 				content < debitorName =
+		< attachCarder $mol_sectioner
+			title < attachTitle =Attachments
+			content < attacher $mol_attacher
+				items < attachments /
+				attachNew > attachNew null
 		< posLister $mol_sectioner
 			title < posListerTitle /
 				=Positions

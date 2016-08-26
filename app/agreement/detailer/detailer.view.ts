@@ -68,6 +68,28 @@ module $.$mol {
 				obj.position = ()=> this.supply().positions()[ index ]
 			} )
 		}
-		
+
+		attachments() {
+			return this.supply().attachments().map( ( pos , index )=> this.attachment( index ) )
+		}
+
+		@ $mol_prop()
+		attachment( index : number ) {
+			return new $mol_attacher_item().setup( obj => {
+				obj.urlThumb = ()=> this.supply().attachments()[ index ].urlThumb()
+				obj.urlLoad = ()=> this.supply().attachments()[ index ].urlLoad()
+			} )
+		}
+
+		attachNew( ...diff : string[] ) {
+			var supply = this.supply()
+			var list = supply.attachments()
+			var url = $mol_const( diff[0] )
+			list = list.concat( new $mol_app_agreement_attachment().setup( obj => {
+				obj.urlThumb = obj.urlLoad = url
+			} ) )
+			supply.attachments( list )
+		}
+
 	}
 }
