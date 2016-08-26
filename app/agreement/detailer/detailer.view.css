@@ -21,3 +21,13 @@
 	top: 0;
 	font-size: 1.5em;
 }
+
+[mol_app_agreement_detailer_consContent] > * {
+	flex: 1 1 10rem;
+	align-items: baseline;
+}
+
+[mol_app_agreement_detailer_orgContent] > * {
+	flex: 1 1 10rem;
+	align-items: baseline;
+}
