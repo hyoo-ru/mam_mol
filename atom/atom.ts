@@ -10,16 +10,26 @@ class $mol_atom< Value > extends $mol_object {
 	slaves : Array< $mol_atom<any> > = null
 
 	status = $mol_atom_status.obsolete
-	planned = false
+
+	host : { objectPath() : string } = this
 
 	constructor(
-		public host : { objectPath() : string } ,
-		public field : string ,
+		host : { objectPath() : string } ,
+		public field = 'value()' ,
 		public handler : ( ...diff : (Value|Error)[] )=> Value ,
 		public fail? : ( host : any , error : Error )=> Value|Error ,
 		public key? : any
 	) {
 		super()
+		
+		this.host = host || this
+	}
+	
+	static make( handler , fail? , key? ) {
+		var atom = new $mol_atom( null , null , handler , fail , key )
+		var accessor = ( ...diff )=> atom.value( ...diff )
+		accessor['atom'] = atom
+		return accessor
 	}
 	
 	destroyed( ...diff : boolean[] ) {
@@ -74,12 +84,12 @@ class $mol_atom< Value > extends $mol_object {
 	actualize() {
 		if( this.status === $mol_atom_status.actual ) return false
 
-		var obsolete = this.status === $mol_atom_status.obsolete
-		if( !obsolete ) {
+		if( this.status === $mol_atom_status.checking ) {
 			this.masters.forEach( master => {
-				if( !obsolete && master.actualize() ) obsolete = true
+				if( this.status !== $mol_atom_status.checking ) return
+				master.actualize()
 			} )
-			if( !obsolete ) {
+			if( this.status === $mol_atom_status.checking ) {
 				this.status = $mol_atom_status.actual
 				return false
 			} 
@@ -150,7 +160,7 @@ class $mol_atom< Value > extends $mol_object {
 		if( !this.slaves ) return
 
 		this.slaves.forEach(slave => {
-			if ($mol_atom.stack[$mol_atom.stack.length - 1] === slave) return
+			// if ($mol_atom.stack[$mol_atom.stack.length - 1] === slave) return
 			slave.obsolete()
 		})
 	}
@@ -158,7 +168,7 @@ class $mol_atom< Value > extends $mol_object {
 	checkSlaves( ) {
 		if( this.slaves ) {
 			this.slaves.forEach(slave => {
-				if ($mol_atom.stack[$mol_atom.stack.length - 1] === slave) return
+				// if ($mol_atom.stack[$mol_atom.stack.length - 1] === slave) return
 				slave.check()
 			})
 		} else {
