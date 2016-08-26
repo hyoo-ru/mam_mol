@@ -43,7 +43,7 @@ class $mol_test_case {
 		throw new Error( message )
 	}
 	
-	equal( a , b ) {
+	equal< Value >( a : Value , b : Value ) {
 		if( a === b ) return 
 		throw new Error( `Not equal (${a},${b})` )
 	}

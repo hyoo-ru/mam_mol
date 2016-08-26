@@ -1,0 +1,6 @@
+$mol_app_agreement_app $mol_stacker
+	enter $mol_app_agreement_enter entered > entered false
+	lister $mol_app_agreement_lister
+		supplies < supplies /
+		supplyId > supplyId =
+	detailer $mol_app_agreement_detailer supply < supply null

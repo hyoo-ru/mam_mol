@@ -1,8 +1,8 @@
 [mol_linker] {
-	font-weight: bold;
 	text-decoration: none;
 	color: var( --mol_skin_focus_back );
 	cursor: pointer;
+	border-radius: var( --mol_skin_round );
 }
 
 [mol_linker_current] {
@@ -13,5 +13,5 @@
 [mol_linker]:focus ,
 [mol_linker]:not([mol_linker_current]):hover {
 	outline: none;
-	text-decoration: underline;
+	box-shadow: 0 0 0 2px var( --mol_skin_focus_back )
 }

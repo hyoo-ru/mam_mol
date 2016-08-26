@@ -1,3 +1,14 @@
 $mol_app_demo $mol_stacker
 	main / < lister $mol_scroller childs < items /
-	addon $mol_scroller childs / < optioner $mol_lister rows < options /
+	addon $mol_pager
+		title =Demos
+		body < optioner $mol_lister rows < options /
+
+$mol_app_demo_pager $mol_pager
+	headerItems /
+		< backer $mol_linker
+			childs / =‹
+			patch < backPatch : dict
+				=demo
+					: null
+		< titler

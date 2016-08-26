@@ -1,0 +1,9 @@
+$mol_app_agreement_lister $mol_pager
+	supplies /
+	title =Supplies
+	head /
+		< headerPanel
+		< searchPanel $mol_rower childs / < searcher $mol_coder
+			hint < searcherHint =Search by bar code
+			value > supplyId =
+	body $mol_lister rows < supplyRows /

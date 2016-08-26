@@ -69,11 +69,6 @@ $mol_test( test => {
 	test.equal( x.xxx() , 3 )
 	
 	x.foo( 5 )
-	test.equal( x.bar() , 2 )
-	test.equal( x.xxx() , 3 )
-	
-	$mol_defer.run()
-	test.equal( x.bar() , 6 )
 	test.equal( x.xxx() , 7 )
 	
 } )

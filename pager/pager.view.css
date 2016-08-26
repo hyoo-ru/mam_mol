@@ -1,0 +1,35 @@
+[mol_pager] {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	position: relative;
+	align-self: stretch;
+}
+
+[mol_pager_header] {
+	background: var( --mol_skin_base_back );
+	color: var( --mol_skin_base_fore );
+	display: flex;
+	justify-content: space-between;
+	flex: 0 0 auto;
+	overflow: hidden;
+}
+
+[mol_pager_titler] {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+}
+
+[mol_pager_bodier] {
+	flex: 1 1 auto;
+}
+
+[mol_pager_footer] {
+	background: var( --mol_skin_base_back );
+	color: var( --mol_skin_base_fore );
+	display: flex;
+	justify-content: space-between;
+	flex: 0 0 auto;
+	overflow: hidden;
+}

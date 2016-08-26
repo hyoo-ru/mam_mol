@@ -6,9 +6,17 @@
 	justify-content: space-between;
 	padding: .5rem;
 	flex: 1 1 auto;
-	outline: 1px solid var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 }
 
-[mol_rower] > * {
+[mol_rower] > * ,
+[mol_rower_sub] > * {
 	margin: .5rem;
+}
+
+[mol_rower_sub] {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	flex: 1 1 auto;
 }

@@ -6,7 +6,8 @@ module $.$mol {
 			if( diff[0] === void 0 ) {
 				return this.value() === this.valueSelf() 
 			} else {
-				return this.value( diff[0] ? this.valueSelf() : null)
+				this.value( diff[0] ? this.valueSelf() : null )
+				return diff[0]
 			}
 		}
 

@@ -1,6 +1,9 @@
 [mol_stacker] {
-	width: 100%;
-	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
 	flex: 1 1 100%;
 	display: flex;
 	flex-direction: row-reverse;
@@ -8,36 +11,41 @@
 	flex-wrap: wrap;
 	align-items: stretch;
 	align-content: flex-start;
-	justify-content: flex-end;
 	overflow: hidden;
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 }
 
 [mol_stacker_mainer] {
 	height: 100%;
-	margin-left: .5rem;
+	margin-left: -150%;
 	margin-bottom: -100vh;
-	display: flex;
+	transition: .25s ease margin;
 	position: relative;
-	z-index: 1;
+	display: flex;
 	background: var( --mol_skin_light_back );
 	flex: 1000 1 66%;
 	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	max-width: 100%;
 }
 
 [mol_stacker_addoner] {
 	height: 100%;
-	margin-right: -.5rem;
+	margin-right: 150%;
 	margin-bottom: -100vh;
+	transition: .25s ease margin;
 	position: relative;
-	background: var( --mol_skin_base_back );
-	color: var( --mol_skin_base_fore );
-	flex: 0 1 auto;
+	background: var( --mol_skin_light_back );
+	flex: 1 1 auto;
 	display: flex;
 	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
 	z-index: 0;
-	max-width: calc( 100% - 1rem );
+	max-width: 100%;
 }
 
-[mol_stacker_focused] {
-	z-index: 1;
+[mol_stacker_side] > [mol_stacker_mainer] {
+	margin-left: 0;
+}
+
+[mol_stacker_side] > [mol_stacker_addoner] {
+	margin-right: 0;
 }

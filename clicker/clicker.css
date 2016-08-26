@@ -36,6 +36,7 @@
 
 [mol_clicker_major]:enabled {
 	background: var( --mol_skin_accent_back );
+	color: var( --mol_skin_accent_fore );
 }
 
 [mol_clicker_warn]:enabled {

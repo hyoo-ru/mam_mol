@@ -1,0 +1,5 @@
+$mol_carder $mol_viewer
+	attr * mol_carder_status < status =
+	childs /
+		< contenter $mol_viewer childs / < content null
+		< statuser $mol_viewer childs / < statusText < status

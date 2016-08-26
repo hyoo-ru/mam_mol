@@ -1,0 +1,22 @@
+[mol_attacher_contenter] {
+	justify-content: flex-start;
+}
+
+[mol_attacher_item] {
+	width: 5rem;
+	height: 5rem;
+	background: center no-repeat;
+	border-radius: var( --mol_skin_round );
+	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	background-size: cover;
+}
+
+[mol_attacher_adder] {
+	width: 5rem;
+	height: 5rem;
+	text-indent: 10rem;
+	overflow: hidden;
+	display: inline-block;
+	flex: 0 0 auto;
+	padding: 0;
+}

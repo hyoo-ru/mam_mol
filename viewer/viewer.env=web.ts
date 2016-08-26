@@ -88,27 +88,36 @@ class $mol_viewer extends $mol_model {
 		} )
 		
 		// When node defined then deferred render child nodes then deferred update state of this node
-		this.DOMNodeState( void 0 )
-		this.DOMNodeContent( void 0 )
+		// this.DOMNodeState( void 0 )
+		// this.DOMNodeContent( void 0 )
 		
 		return next
 	}
 	
-	@ $mol_prop()
-	DOMNodeContent( ...diff : void[] ) {
+	@ $mol_prop({
+		fail : ( self : $mol_viewer , error ) => {
+			var node = self.DOMNode()
+			if( node ) {
+				node.setAttribute( 'mol_viewer_error' , error.name )
+				// if( error.name !== '$mol_atom_wait' ) node.innerHTML = error.message
+			}
+			return error
+		}
+	})
+	DOMTree( ...diff : void[] ) {
 		var node = this.DOMNode()
-		
+
 		/// Render child nodes
 		var childs = this.childsVisible()
 		if( childs != null ) {
 			var childViews = childs
-			
+
 			var nextNode = node.firstChild
 			for( var i = 0 ; i < childViews.length ; ++i ) {
 				let view = childViews[i]
-				
+
 				if( typeof view === 'object' ) {
-					var existsNode = ( view instanceof $mol_viewer ) ? view.DOMNode() : view
+					var existsNode = ( view instanceof $mol_viewer ) ? view.DOMTree() : view
 					while( true ) {
 						if( !nextNode ) {
 							node.appendChild( existsNode )
@@ -123,12 +132,12 @@ class $mol_viewer extends $mol_model {
 							//	prev.removeChild( nextNode )
 							//	nextNode = nn
 							//} else {
-								node.insertBefore( existsNode , nextNode )
-								break
+							node.insertBefore( existsNode , nextNode )
+							break
 							//}
 						}
 					}
-					//if( view instanceof $mol_viewer ) new $mol_defer( ()=> view.DOMTree() )
+					// if( view instanceof $mol_viewer ) view.DOMTree()
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
 						nextNode.nodeValue = String( view )
@@ -138,9 +147,9 @@ class $mol_viewer extends $mol_model {
 						node.insertBefore( textNode , nextNode )
 					}
 				}
-				
+
 			}
-			
+
 			while( nextNode ) {
 				var currNode = nextNode
 				nextNode = currNode.nextSibling
@@ -148,24 +157,7 @@ class $mol_viewer extends $mol_model {
 			}
 		}
 		
-		return null
-	}
-	
-	@ $mol_prop({
-		fail : ( self : $mol_viewer , error ) => {
-			var node = self.DOMNode()
-			if( node ) {
-				node.setAttribute( 'mol_viewer_error' , error.name )
-				// if( error.name !== '$mol_atom_wait' ) node.innerHTML = error.message
-			}
-			return error
-		}
-	})
-	DOMNodeState( ...diff : void[] ) {
-		var childs = this.DOMNodeContent()
-		
-		var node = this.DOMNode()
-		
+		// Set attributes
 		this.attr_keys().forEach( name => {
 			var n = this.attr( name )
 			if(( n == null )||( n === false )) {
@@ -177,6 +169,7 @@ class $mol_viewer extends $mol_model {
 			}
 		} )
 		
+		// Set field values
 		this.field_keys().forEach( path => {
 			var names = path.split( '.' )
 			var obj = node
@@ -188,7 +181,7 @@ class $mol_viewer extends $mol_model {
 			if( obj[ field ] !== val ) obj[ field ] = val
 		} )
 		
-		return null
+		return node
 	}
 	
 	attr_keys() { return [ 'mol_viewer_error' ] }
@@ -207,20 +200,6 @@ class $mol_viewer extends $mol_model {
 		return $mol_viewer_selection.focused() === this.DOMNode()
 	}
 	
-	destroyed( ...diff : boolean[] ) {
-		if( diff[0] ) {
-			var atoms = this[ '$mol_atom_state' ]
-			if( atoms ) {
-				for( var key in atoms ) {
-					if( !atoms.hasOwnProperty( key ) ) continue
-					if( !atoms[ key ] ) continue
-					atoms[ key ].destroyed( true )
-				}
-			}
-		}
-		return super.destroyed( ...diff )
-	}
-	
 	text( text : string ) {
 		return text
 	}
@@ -233,6 +212,7 @@ document.addEventListener( 'DOMContentLoaded' , event => {
 	for( var i = nodes.length - 1 ; i >= 0 ; --i ) {
 		var view = window['$'][ nodes[i].getAttribute( 'mol_viewer_root' ) ].root(i)
 		view.DOMNode( nodes[i] )
+		view.DOMTree()
 	}
 	$mol_defer.run()
 } )

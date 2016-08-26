@@ -41,9 +41,7 @@ $mol_test( test => {
 	
 	var x = new $mol_viewer_test()
 	
-	var node = x.DOMNode()
-	
-	$mol_defer.run()
+	var node = x.DOMTree()
 	
 	test.equal( node.innerHTML , 'lol5' )
 		
@@ -93,8 +91,7 @@ $mol_test( test => {
 	
 	var x = new $mol_viewer_test()
 	
-	var node = x.DOMNode()
-	$mol_defer.run()
+	var node = x.DOMTree()
 	
 	test.equal( node.getAttribute( 'href' ) , '#haha' )
 	test.equal( node.getAttribute( 'required' ) , '' )
@@ -118,8 +115,7 @@ $mol_test( test => {
 	
 	var x = new $mol_viewer_test()
 	
-	var node = x.DOMNode() as HTMLElement
-	$mol_defer.run()
+	var node = x.DOMTree() as HTMLElement
 	
 	test.equal( node.style.top , '10px' )
 	

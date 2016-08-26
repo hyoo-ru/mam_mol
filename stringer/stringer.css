@@ -11,14 +11,14 @@
 	z-index: 0;
 	font: inherit;
 	flex: 1000 1 auto;
-	width: 4em;
+	/*width: 4em;*/
 	background: #eee;
 	color: gray;
 }
 
 [mol_stringer]:enabled {
 	background: white;
-	color: inherit;
+	color: var( --mol_skin_light_text );
 }
 
 [mol_stringer]:enabled:hover ,

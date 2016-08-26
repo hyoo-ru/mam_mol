@@ -1,16 +1,20 @@
 [mol_tiler] {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: baseline;
+	align-items: stretch;
+	padding: .5rem;
 }
 
 [mol_tiler_group] {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: baseline;
 	flex: 1 1 auto;
+	align-items: stretch;
 }
 
 [mol_tiler_item] {
 	flex: 1 1 auto;
+	margin: .5rem;
+	align-items: stretch;
+	display: flex;
 }

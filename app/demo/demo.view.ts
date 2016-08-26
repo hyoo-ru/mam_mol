@@ -4,10 +4,14 @@ module $.$mol {
 		main() {
 			var selected = this.selected()
 			if( selected ) {
-				return [ this.widget( selected[0] ) ]
+				return [ this.detailer( selected ) ]
 			} else {
-				return [ this.lister() ]
+				return [ ]
 			}
+		}
+		
+		side() {
+			return this.selected() ? false : true
 		}
 		
 		@ $mol_prop()
@@ -27,7 +31,7 @@ module $.$mol {
 		namesApp() {
 			var next = []
 			for( var name in $ ) {
-				if( !/^\$.*_app_[a-z0-9]+$/i.test( name ) ) continue
+				if( !/^\$.*_app(_[a-z0-9]+)?$/i.test( name ) ) continue
 				if( /^\$mol_demo/.test( name ) ) continue
 				if( /^\$mol_app_demo/.test( name ) ) continue
 				if( typeof $[ name ] !== 'function' ) continue
@@ -38,7 +42,7 @@ module $.$mol {
 		
 		@ $mol_prop()
 		options() {
-			return [ null ].concat( this.namesDemo() ).concat( this.namesApp() ).map( name => this.option( name ) )
+			return this.namesDemo().concat( this.namesApp() ).map( name => this.option( name ) )
 		}
 
 		@ $mol_prop()
@@ -47,7 +51,7 @@ module $.$mol {
 		}
 		
 		selected() {
-			return this.argument().value( 'demo' )
+			return $mol_maybe( this.argument().value( 'demo' ) )[0]
 		}
 
 		@ $mol_prop()
@@ -73,7 +77,7 @@ module $.$mol {
 				obj.argument = () => this.argument().sub( name )
 			} )
 		}
-		
+
 		@ $mol_prop()
 		widget( name : string ) {
 			var Class = $[ '$' + name ]
@@ -81,6 +85,14 @@ module $.$mol {
 				obj.argument = () => this.argument().sub( name )
 			} )
 		}
-		
+
+		@ $mol_prop()
+		detailer( name : string ) {
+			return new $mol_app_demo_pager().setup( obj => {
+				obj.title = $mol_const( '$' + name )
+				obj.body = ()=> [ this.widget( name ) ]
+			} )
+		}
+
 	}
 }

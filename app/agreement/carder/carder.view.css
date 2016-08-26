@@ -1,0 +1,43 @@
+[mol_app_agreement_carder] {
+	flex: 0 1 32rem;
+	position: relative;
+}
+
+[mol_app_agreement_carder_linker] {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+[mol_app_agreement_carder_linker][mol_linker_current] {
+	box-shadow: 0 0 0 1px var( --mol_skin_focus_back );
+}
+
+[mol_app_agreement_carder_contenter] {
+	padding: .5rem;
+}
+
+[mol_app_agreement_carder_mainer] {
+	display: flex;
+}
+
+[mol_app_agreement_carder_addoner] {
+	display: flex;
+}
+
+[mol_app_agreement_carder_providerItem] {
+	margin: .5rem;
+	flex: 1 1 auto;
+}
+
+[mol_app_agreement_carder_costItem] {
+	font-weight: bolder;
+	margin: .5rem;
+}
+
+[mol_app_agreement_carder_consumerItem] {
+	margin: .5rem;
+	flex: 1 1 auto;
+}
