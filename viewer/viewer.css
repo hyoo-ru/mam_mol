@@ -37,6 +37,6 @@
 		rgba(255,255,255,.02) 20px
 	) !important;
 	background-size: 28px 28px !important;
-	animation: /*mol_viewer_show 1s linear ,*/ mol_viewer_error_move .25s linear infinite !important;
+	animation: /*mol_viewer_show 1s linear ,*/ mol_viewer_error_move .25s steps(6) infinite !important;
 	pointer-events: none;
 }
