@@ -19,3 +19,5 @@ $mol_app_agreement_detailer_demo $mol_app_agreement_detailer
 		< pos3 $mol_app_agreement_positioner_demo
 		< pos4 $mol_app_agreement_positioner_demo
 		< pos5 $mol_app_agreement_positioner_demo
+	-
+	attachments /
