@@ -1,7 +1,7 @@
 [mol_carder] {
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
 	background: white;
-	border-radius: var( --mol_skin_round );
+	border-radius: var(--mol_skin_round);
 	display: flex;
 	flex: 0 1 auto;
 	flex-direction: column;
@@ -10,12 +10,12 @@
 
 [mol_carder_contenter] {
 	flex: 1 1 auto;
-	border-radius: var( --mol_skin_round );
+	border-radius: var(--mol_skin_round);
 	overflow: hidden;
 }
 
 [mol_carder_statuser] {
-	background: var( --mol_skin_light_fore );
+	background: var(--mol_skin_light_fore);
 	text-transform: capitalize;
 	padding: 0 1rem;
 	line-height: 2;
@@ -23,16 +23,16 @@
 }
 
 [mol_carder_status="approved"] {
-	box-shadow: 0 0 0 1px var( --mol_skin_good_back );
+	box-shadow: 0 0 0 1px var(--mol_skin_good_back);
 }
 [mol_carder_status="approved"] [mol_carder_statuser] {
 	background: #D6F1DD;
 }
 
 [mol_carder_status="selected"] {
-	box-shadow: 0 0 0 2px var( --mol_skin_focus_back );
+	box-shadow: 0 0 0 2px var(--mol_skin_focus_back);
 }
 [mol_carder_status="selected"] [mol_carder_statuser] {
-	background: var( --mol_skin_focus_back );
-	color: var( --mol_skin_focus_fore );
+	background: var(--mol_skin_focus_back);
+	color: var(--mol_skin_focus_fore);
 }

@@ -1,8 +1,8 @@
 [mol_stringer] {
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
 	outline-offset: 0;
 	border: none;
-	border-radius: var( --mol_skin_round );
+	border-radius: var(--mol_skin_round);
 	white-space: nowrap;
 	overflow: hidden;
 	padding: .5rem;
@@ -18,13 +18,13 @@
 
 [mol_stringer]:enabled {
 	background: white;
-	color: var( --mol_skin_light_text );
+	color: var(--mol_skin_light_text);
 }
 
 [mol_stringer]:enabled:hover ,
 [mol_stringer]:focus {
 	outline: none;
-	box-shadow: 0 0 0 2px var( --mol_skin_focus_back );
+	box-shadow: 0 0 0 2px var(--mol_skin_focus_back);
 	z-index: 1;
 }
 

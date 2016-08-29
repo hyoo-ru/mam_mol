@@ -6,7 +6,7 @@
 	justify-content: space-between;
 	padding: .5rem;
 	flex: 1 1 auto;
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
 }
 
 [mol_rower] > * ,

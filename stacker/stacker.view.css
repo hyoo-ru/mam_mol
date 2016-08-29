@@ -12,7 +12,7 @@
 	align-items: stretch;
 	align-content: flex-start;
 	overflow: hidden;
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
 }
 
 [mol_stacker_mainer] {
@@ -22,9 +22,9 @@
 	transition: .25s ease margin;
 	position: relative;
 	display: flex;
-	background: var( --mol_skin_light_back );
+	background: var(--mol_skin_light_back);
 	flex: 1000 1 66%;
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
 	max-width: 100%;
 }
 
@@ -34,10 +34,10 @@
 	margin-bottom: -100vh;
 	transition: .25s ease margin;
 	position: relative;
-	background: var( --mol_skin_light_back );
+	background: var(--mol_skin_light_back);
 	flex: 1 1 auto;
 	display: flex;
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
+	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
 	z-index: 0;
 	max-width: 100%;
 }

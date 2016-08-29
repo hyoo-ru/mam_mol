@@ -4,7 +4,7 @@
 	width: 100%;
 	/*height: 100%;*/
 	margin: auto;
-	background: var( --mol_skin_light_back );
+	background: var(--mol_skin_light_back);
 	display: flex;
 	flex-direction: column;
 }
@@ -25,11 +25,11 @@
 [mol_app_users_lister] {
 	align-self: stretch;
 	flex: 1 0 auto;
-	background: var( --mol_skin_light_back );
+	background: var(--mol_skin_light_back);
 }
 
 [mol_app_users_controller] {
-	background: var( --mol_skin_light_back );
+	background: var(--mol_skin_light_back);
 }
 
 [mol_app_users_messager] {
@@ -38,5 +38,5 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: var( --mol_skin_warn_fore );
+	color: var(--mol_skin_warn_fore);
 }

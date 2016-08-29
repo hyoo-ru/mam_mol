@@ -3,8 +3,8 @@
 	border: none;
 	font: inherit;
 	background: none;
-	box-shadow: 0 0 0 1px var( --mol_skin_light_fore );
-	border-radius: var( --mol_skin_round );
+	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
+	border-radius: var(--mol_skin_round);
 	flex: 1 1 auto;
 	justify-content: center;
 	align-content: center;
@@ -27,7 +27,7 @@
 [mol_clicker]:enabled:hover ,
 [mol_clicker]:focus {
 	outline: none;
-	box-shadow: 0 0 0 2px var( --mol_skin_focus_back );
+	box-shadow: 0 0 0 2px var(--mol_skin_focus_back);
 	position: relative;
 	z-index: 1;
 	cursor: pointer;
@@ -35,12 +35,12 @@
 }
 
 [mol_clicker_major]:enabled {
-	background: var( --mol_skin_accent_back );
-	color: var( --mol_skin_accent_fore );
+	background: var(--mol_skin_accent_back);
+	color: var(--mol_skin_accent_fore);
 }
 
 [mol_clicker_warn]:enabled {
-	background: var( --mol_skin_warn_back );
+	background: var(--mol_skin_warn_back);
 }
 
 [mol_clicker_minor]:enabled {

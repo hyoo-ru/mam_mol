@@ -12,7 +12,7 @@
 }
 
 [mol_app_agreement_carder_linker][mol_linker_current] {
-	box-shadow: 0 0 0 1px var( --mol_skin_focus_back );
+	box-shadow: 0 0 0 1px var(--mol_skin_focus_back);
 }
 
 [mol_app_agreement_carder_contenter] {
