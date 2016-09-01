@@ -16,28 +16,21 @@
 }
 
 [mol_app_agreement_carder_contenter] {
-	padding: .5rem;
 }
 
-[mol_app_agreement_carder_mainer] {
-	display: flex;
+[mol_app_agreement_carder_grouper] {
+	align-items: flex-start;
 }
 
-[mol_app_agreement_carder_addoner] {
-	display: flex;
-}
-
-[mol_app_agreement_carder_providerItem] {
-	margin: .5rem;
-	flex: 1 1 auto;
+[mol_app_agreement_carder_codeItem] {
+	flex: 1 1 5rem;
 }
 
 [mol_app_agreement_carder_costItem] {
-	font-weight: bolder;
-	margin: .5rem;
+	flex: 1 1 5rem;
+	text-align: right;
 }
 
-[mol_app_agreement_carder_consumerItem] {
-	margin: .5rem;
-	flex: 1 1 auto;
+[mol_app_agreement_carder_providerItem] {
+	flex: 2 1 10rem;
 }

@@ -4,15 +4,15 @@ module $.$mol {
 		supply() {
 			return null as $mol_app_agreement_supply
 		}
-		
+
+		code() {
+			return this.supply().id()
+		}
+
 		providerName() {
 			return this.supply().provider().name()
 		}
-		
-		consumerName() {
-			return this.supply().consumer().name()
-		}
-		
+
 		cost() {
 			return this.supply().cost()
 		}

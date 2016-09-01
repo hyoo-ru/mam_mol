@@ -1,17 +1,17 @@
 $mol_app_agreement_carder_demo_pending $mol_app_agreement_carder
-	providerName =327836275 - NorNikel
+	code =327836275
+	providerName =NorNikel
 	cost $mol_unit_money_usd valueOf 1000000
-	consumerName =343 - ACME
 	status =pending
 
 $mol_app_agreement_carder_demo_approved $mol_app_agreement_carder
-	providerName =43434232 - Gazprom
+	code =43434232
+	providerName =Gazprom
 	cost $mol_unit_money_rur valueOf 3000000
-	consumerName =312 - ACME Inc.
 	status =approved
 
 $mol_app_agreement_carder_demo_selected $mol_app_agreement_carder
-	providerName =327836275 - NorNikel
-	consumerName =312 - ACME Inc.
+	code =327836275
+	providerName =NorNikel
 	cost $mol_unit_money_usd valueOf 900000
 	status =selected

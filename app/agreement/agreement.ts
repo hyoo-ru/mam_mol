@@ -119,7 +119,11 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	
 	@ $mol_prop()
 	supplies() {
-		return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split( '' ).map( id => this.supply( id ) )
+		var next = []
+		for( var i = 1 ; i <= 100 ; ++i ) {
+			next.push( this.supply( ( i * 123456789 % 987654321 ).toString( 16 ).toUpperCase() ) )
+		}
+		return next
 	}
 	
 	@ $mol_prop()
