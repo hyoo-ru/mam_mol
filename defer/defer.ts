@@ -14,7 +14,7 @@ class $mol_defer extends $mol_object {
 	static timer = 0
 	
 	static scheduleNative = ( typeof requestAnimationFrame == 'function' )
-		? requestAnimationFrame
+		? handler => requestAnimationFrame( handler )
 		: handler => setTimeout( handler , 16 )
 	
 	static schedule() {
