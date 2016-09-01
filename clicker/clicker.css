@@ -24,7 +24,7 @@
 	color: gray;
 }
 
-[mol_clicker]:enabled:hover ,
+[mol_clicker]:not(:disabled):hover ,
 [mol_clicker]:focus {
 	outline: none;
 	box-shadow: 0 0 0 2px var( --mol_skin_focus_back );
@@ -34,15 +34,15 @@
 	opacity: 1;
 }
 
-[mol_clicker_major]:enabled {
+[mol_clicker_major]:not(:disabled) {
 	background: var( --mol_skin_accent_back );
 	color: var( --mol_skin_accent_fore );
 }
 
-[mol_clicker_warn]:enabled {
+[mol_clicker_warn]:not(:disabled) {
 	background: var( --mol_skin_warn_back );
 }
 
-[mol_clicker_minor]:enabled {
+[mol_clicker_minor]:not(:disabled) {
 }
 
