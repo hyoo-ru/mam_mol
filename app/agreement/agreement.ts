@@ -125,7 +125,16 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 		}
 		return next
 	}
-	
+
+	@ $mol_prop()
+	positions( supply : string ) {
+		var next = []
+		for( var i = 1 ; i <= Math.floor( Math.random() * 50 ) ; ++i ) {
+			next.push( this.position( { supply , position : ( i * 123456789 % 987654321 ).toString( 16 ).toUpperCase() } ) )
+		}
+		return next
+	}
+
 	@ $mol_prop()
 	supply( id : string ) {var x = Math.round( Math.random() * 1000000 )
 		return new $mol_app_agreement_supply().setup( obj => {
@@ -140,7 +149,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 			obj.ballanceUnit = $mol_const( this.ballanceUnit( Math.random().toString( 16 ).substring( 2 ) ) )
 			obj.payMethod = $mol_const( this.payMethod( Math.random().toString( 16 ).substring( 2 ) ) )
 			obj.debitor = $mol_const( this.debitor( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.positions = $mol_const( 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split( '' ).map( id2 => this.position({ supply : id , position : id2 }) ) )
+			obj.positions = ()=> this.positions( id )
 			obj.attachments = ( ...diff : $mol_app_agreement_attachment[][] )=> this.attachments( id , ...diff )
 		} )
 	}
@@ -239,7 +248,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	
 	@ $mol_prop()
 	attachments( id : string , ...diff : $mol_app_agreement_attachment[][] ) {
-		return diff[0] || 'ABCDEFG'.split( '' ).map( id2 => this.attachment({ supply : id , attachment : id2 }) )
+		return diff[0] || []
 	}
 
 	@ $mol_prop()
