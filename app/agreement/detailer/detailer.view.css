@@ -28,3 +28,7 @@
 	flex: 1 1 10rem;
 	align-items: baseline;
 }
+
+[mol_app_agreement_detailer_costItem] {
+	text-align: right;
+}
