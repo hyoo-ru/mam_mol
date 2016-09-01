@@ -1,0 +1,7 @@
+$mol_svg $mol_viewer
+	tagName =svg
+	nameSpace =http://www.w3.org/2000/svg
+
+$mol_svg_path $mol_svg
+	tagName =path
+	attr * d < geometry =
