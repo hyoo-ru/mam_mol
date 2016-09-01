@@ -2,13 +2,13 @@ class $mol_file extends $mol_object {
 	
 	@ $mol_prop()
     static absolute( path : string ) {
-		return new this().setup( obj => {
+		return new $mol_file().setup( obj => {
 			obj.path = ()=> path
 		} )
     }
 	
 	static relative( path : string ) {
-		return this.absolute( $node.path.resolve( path ).replace( /\\/g, '/' ) )
+		return $mol_file.absolute( $node.path.resolve( path ).replace( /\\/g, '/' ) )
 	}
 	
 	mime() {
@@ -42,15 +42,17 @@ class $mol_file extends $mol_object {
     stat( ...diff : void[] ) {
 		var path = this.path()
 		
-		this.parent().watcher()
-		
 		try {
-			return $node.fs.statSync( path )
+			var stat = $node.fs.statSync( path )
 		} catch( error ) {
 			if( error.code === 'ENOENT' ) return null
 			throw error
 		}
-    }
+		
+		this.parent().watcher()
+		
+		return stat
+	}
 
     @ $mol_prop()
     version() {
@@ -83,15 +85,17 @@ class $mol_file extends $mol_object {
     @ $mol_prop()
     type() {
         var stat = this.stat()
-
-        if( stat.isFile() ) return 'file'
-        if( stat.isDirectory() ) return 'dir'
-        if( stat.isBlockDevice() ) return 'blocks'
-        if( stat.isCharacterDevice() ) return 'chars'
-        if( stat.isSymbolicLink() ) return 'link'
-        if( stat.isFIFO() ) return 'fifo'
-        if( stat.isSocket() ) return 'socket'
-
+		
+		if( stat ) {
+			if (stat.isFile()) return 'file'
+			if (stat.isDirectory()) return 'dir'
+			if (stat.isBlockDevice()) return 'blocks'
+			if (stat.isCharacterDevice()) return 'chars'
+			if (stat.isSymbolicLink()) return 'link'
+			if (stat.isFIFO()) return 'fifo'
+			if (stat.isSocket()) return 'socket'
+		}
+		
         throw new Error( `Unknown file type ${this.path()}` )
     }
 
@@ -100,7 +104,8 @@ class $mol_file extends $mol_object {
     }
 
     ext() {
-        return $node.path.extname( this.path() ).substring( 1 )
+    	var match = /((?:\.\w+)+)$/.exec( this.path() )
+        return match && match[1].substring( 1 )
     }
 
     @ $mol_prop()
