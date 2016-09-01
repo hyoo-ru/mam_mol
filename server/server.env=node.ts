@@ -43,19 +43,25 @@ class $mol_server extends $mol_object {
 	
 	expressGenerator() {
 		return ( req , res , next )=> {
-			return this.generator( req.url ) || next()
+			try {
+				return this.generator(req.url) || next()
+			} catch( error ) {
+				$mol_atom_restore( error )
+				throw error
+			}
 		}
 	}
 	
 	@ $mol_prop()
 	generator( path : string ) {
-		var matched = path.match( /^((?:\/\w+)+)\/-\/(\w+.\w+)$/ )
+		var matched = path.match( /^((?:\/\w+)+)\/-\/(\w+(?:.\w+)+)$/ )
 		if( !matched ) return null
 		
 		var [ path , module , bundle ] = matched
 		var build = $mol_build.relative({ path : `.${module}` })
+		
 		build.bundle( bundle )
-		console.log( `Generated .${path}` )
+		
 		return null
 	}
 	
