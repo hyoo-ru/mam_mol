@@ -9,7 +9,15 @@ $mol_attacher_item $mol_linker
 	attr * download < loadable true
 
 $mol_attacher_adder $mol_clicker
+	tagName =div
 	fileNew =
+	childs /
+		< icon $mol_icon_attach
+		< input $mol_attacher_adder_input
+			eventCapture > eventCapture null
+			eventPicked > eventPicked null
+
+$mol_attacher_adder_input $mol_viewer
 	tagName =input
 	attr *
 		type < type =file

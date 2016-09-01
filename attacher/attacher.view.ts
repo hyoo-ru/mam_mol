@@ -46,7 +46,7 @@ module $.$mol {
 		}
 
 		eventPicked( ...diff : Event[] ) {
-			var files = [].slice.call( ( this.DOMNode() as HTMLInputElement ).files )
+			var files = [].slice.call( ( diff[0].target as HTMLInputElement ).files )
 			for( var file of files ) {
 				this.fileNew( URL.createObjectURL( file ) )
 			}
