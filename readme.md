@@ -101,6 +101,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 ## Resources
 
 * [$mol_logo](logo) - $mol logotypes
+* [$mol_icon](icon) - css styled icons
 * [$mol_skin](skin) - theming
 
 ## Testing
