@@ -3,7 +3,7 @@ module $.$mol {
 		
 		rows() {
 			var next = []
-			for( var id = 0 ; id < 256 ; ++id ) {
+			for( var id = 0 ; id < 1000 ; ++id ) {
 				next.push( this.rower( id ) )
 			}
 			return next
