@@ -26,6 +26,7 @@
 [mol_app_agreement_positioner_supplyGroup] {
 	flex: 1 1 22rem;
 	background: hsla(0,50%,98%,1);
+	flex-direction: row-reverse;
 }
 
 [mol_app_agreement_positioner_divisionItem] {

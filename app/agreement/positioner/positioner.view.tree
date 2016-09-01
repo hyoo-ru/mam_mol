@@ -16,12 +16,12 @@ $mol_app_agreement_positioner $mol_carder
 				title =Price
 				content < pricer $mol_coster value < price $mol_unit_money valueOf 0
 		< supplyGroup $mol_rower childs /
-			< storeItem $mol_labeler
-				title =Store
-				content < storeName =
-			< supplyDateItem $mol_labeler
-				title =Supply date
-				content < supplyDate =
 			< quantityItem $mol_labeler
 				title =Quantity
 				content < quantity 0
+			< supplyDateItem $mol_labeler
+				title =Supply date
+				content < supplyDate =
+			< storeItem $mol_labeler
+				title =Store
+				content < storeName =
