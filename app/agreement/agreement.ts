@@ -137,10 +137,11 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	}
 
 	@ $mol_prop()
-	supply( id : string ) {var x = Math.round( Math.random() * 1000000 )
+	supply( id : string ) {
+		var cost = Math.round( Math.random() * 10000000 )
 		return new $mol_app_agreement_supply().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.cost = $mol_const( new $mol_unit_money_rur( x ) )
+			obj.cost = ()=> new $mol_unit_money_rur( this.positions( id ).reduce( ( sum , pos )=> sum + pos.cost().valueOf() , 0 ) )
 			obj.status( void 0 , $mol_app_agreement_supply_status[ [ 'pending' , 'approved' ][ Math.floor( Math.random() * 2 ) ] ] )
 			obj.provider = $mol_const( this.provider( Math.random().toString( 16 ).substring( 2 ) ) )
 			obj.consumer = $mol_const( this.consumer( Math.random().toString( 16 ).substring( 2 ) ) )
@@ -241,7 +242,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 			obj.supplyMoment = $mol_const( $jin.time.moment().shift({ day : Math.round( Math.random() * 100 ) }) )
 			obj.store = $mol_const( this.store( Math.random().toString( 16 ).substring( 2 ) ) )
 			obj.division = $mol_const( this.division( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.price = $mol_const( new $mol_unit_money_rur( Math.round( Math.random() * 2000000 ) ) )
+			obj.price = $mol_const( new $mol_unit_money_rur( Math.round( Math.random() * 20000 ) ) )
 			obj.quantity = $mol_const( Math.round( Math.random() * 30 ) )
 			obj.cost = $mol_const( obj.price().mult( obj.quantity() ) )
 		} )
