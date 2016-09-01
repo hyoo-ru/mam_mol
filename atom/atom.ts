@@ -10,6 +10,7 @@ class $mol_atom< Value > extends $mol_object {
 	slaves : Array< $mol_atom<any> > = null
 
 	status = $mol_atom_status.obsolete
+	autoFresh = false
 
 	host : { objectPath() : string } = this
 
@@ -23,13 +24,6 @@ class $mol_atom< Value > extends $mol_object {
 		super()
 		
 		this.host = host || this
-	}
-	
-	static make( handler , fail? , key? ) {
-		var atom = new $mol_atom( null , null , handler , fail , key )
-		var accessor = ( ...diff )=> atom.value( ...diff )
-		accessor['atom'] = atom
-		return accessor
 	}
 	
 	destroyed( ...diff : boolean[] ) {
@@ -85,10 +79,12 @@ class $mol_atom< Value > extends $mol_object {
 		if( this.status === $mol_atom_status.actual ) return false
 
 		if( this.status === $mol_atom_status.checking ) {
+			
 			this.masters.forEach( master => {
 				if( this.status !== $mol_atom_status.checking ) return
 				master.actualize()
 			} )
+			
 			if( this.status === $mol_atom_status.checking ) {
 				this.status = $mol_atom_status.actual
 				return false
@@ -143,6 +139,12 @@ class $mol_atom< Value > extends $mol_object {
 				next = this.fail.call( this.host , this.host , <Error> next )
 			}
 		}
+		comparing: if(( next instanceof Array )&&( prev instanceof Array )&&( next.length === prev.length )) {
+			for( var i = 0 ; i < next.length ; ++i ) {
+				if( next[i] !== prev[i] ) break comparing
+			}
+			next = prev
+		}
 		if( prev !== next ) {
 			if( next instanceof $mol_object ) {
 				next['objectField']( this.field ) // FIXME: type checking
@@ -159,20 +161,14 @@ class $mol_atom< Value > extends $mol_object {
 	obsoleteSlaves( ) {
 		if( !this.slaves ) return
 
-		this.slaves.forEach(slave => {
-			// if ($mol_atom.stack[$mol_atom.stack.length - 1] === slave) return
-			slave.obsolete()
-		})
+		this.slaves.forEach(slave => slave.obsolete() )
 	}
 
 	checkSlaves( ) {
 		if( this.slaves ) {
-			this.slaves.forEach(slave => {
-				// if ($mol_atom.stack[$mol_atom.stack.length - 1] === slave) return
-				slave.check()
-			})
+			this.slaves.forEach(slave => slave.check() )
 		} else {
-			$mol_atom.actualize( this )
+			if( this.autoFresh ) $mol_atom.actualize( this )
 		}
 	}
 	
@@ -210,7 +206,7 @@ class $mol_atom< Value > extends $mol_object {
 		
 		if( !this.slaves.length ){
 			this.slaves = null
-			$mol_atom.reaping.add( this )
+			$mol_atom.reap( this )
 		}
 	}
 	
@@ -246,12 +242,17 @@ class $mol_atom< Value > extends $mol_object {
 	static updating : $mol_atom<any>[] = []
 	static reaping = new $mol_set< $mol_atom<any> >()
 	static scheduled = false
-	
+
 	static actualize( atom : $mol_atom<any> ) {
 		$mol_atom.updating.push( atom )
 		$mol_atom.schedule()
 	}
-	
+
+	static reap( atom : $mol_atom<any> ) {
+		$mol_atom.reaping.add( atom )
+		$mol_atom.schedule()
+	}
+
 	static schedule( ) {
 		if( this.scheduled ) return
 		
@@ -283,8 +284,14 @@ class $mol_atom< Value > extends $mol_object {
 		this.scheduled = false
 	}
 	
-	static restore() {
-		this.stack.splice( 0 , this.stack.length )
+}
+
+function $mol_atom_restore( error : Error ) {
+	while( $mol_atom.stack.length ) {
+		var atom = $mol_atom.stack.pop()
+		if( error instanceof Error ) {
+			error = atom.push( error )
+		}
 	}
 }
 
@@ -296,3 +303,15 @@ class $mol_atom_wait extends Error {
 		super( message )
 	}
 }
+
+function $mol_atom_task< Value >(
+	handler : ()=> Value ,
+	fail? : ( error : Error )=> Error|Value ,
+	autoFresh = true
+) {
+	var atom = new $mol_atom( null , null , handler , fail )
+	atom.autoFresh = autoFresh
+	$mol_atom.actualize( atom )
+	return atom
+}
+

@@ -6,10 +6,6 @@ window.addEventListener( 'error' , ( event : ErrorEvent )=> {
 		event.preventDefault()
 	}
 	
-	while( stack.length ) {
-		var atom = stack.pop()
-		if( error instanceof Error ) {
-			error = atom.push( error )
-		}
-	}
-})
+	$mol_atom_restore( error )
+} )
+

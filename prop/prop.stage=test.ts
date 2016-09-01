@@ -91,7 +91,7 @@ $mol_test( test => {
 		x.foo()
 		test.fail( 'Not tracked recursive dependency' )
 	} catch( error ) {
-		$mol_atom.restore()
+		$mol_atom_restore( error )
 		test.equal( error.message , 'Recursive dependency! .foo()' )
 	}
 	
@@ -128,6 +128,7 @@ $mol_test( test => {
 	test.ok( bar )
 	
 	b.showing( false )
+	b.bar()
 	$mol_defer.run()
 	test.ok( foo.destroyed() )
 	test.ok( bar.destroyed() )
