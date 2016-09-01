@@ -1,9 +1,9 @@
 $mol_app_agreement_detailer $mol_pager
 	supply null
 	title =Supply
-	headerItems /
+	head /
 		< backer $mol_linker
-			childs / =‹
+			childs / < backIcon $mol_icon_chevron_left
 			patch < backPatch : dict
 				=side
 					: list

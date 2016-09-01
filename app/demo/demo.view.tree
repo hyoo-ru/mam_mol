@@ -5,9 +5,9 @@ $mol_app_demo $mol_stacker
 		body < optioner $mol_lister rows < options /
 
 $mol_app_demo_pager $mol_pager
-	headerItems /
+	head /
 		< backer $mol_linker
-			childs / =‹
+			childs / < backerIcon $mol_icon_chevron_left
 			patch < backPatch : dict
 				=demo
 					: null

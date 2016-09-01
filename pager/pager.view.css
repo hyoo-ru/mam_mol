@@ -19,6 +19,7 @@
 	flex: 1;
 	display: flex;
 	justify-content: center;
+	padding: 1rem;
 }
 
 [mol_pager_bodier] {

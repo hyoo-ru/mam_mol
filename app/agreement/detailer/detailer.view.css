@@ -15,11 +15,8 @@
 
 [mol_app_agreement_detailer_backer] {
 	color: var( --mol_skin_base_fore );
-	padding: 0 .5rem;
-	position: absolute;
-	left: 0;
-	top: 0;
-	font-size: 1.5em;
+	display: flex;
+	align-items: center;
 }
 
 [mol_app_agreement_detailer_consContent] > * {
