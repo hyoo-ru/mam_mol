@@ -129,7 +129,8 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	@ $mol_prop()
 	positions( supply : string ) {
 		var next = []
-		for( var i = 1 ; i <= Math.floor( Math.random() * 50 ) ; ++i ) {
+		var count = 10 + Math.floor( Math.random() * 30 )
+		for( var i = 1 ; i <= count ; ++i ) {
 			next.push( this.position( { supply , position : ( i * 123456789 % 987654321 ).toString( 16 ).toUpperCase() } ) )
 		}
 		return next
