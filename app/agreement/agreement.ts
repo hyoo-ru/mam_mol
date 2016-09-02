@@ -138,19 +138,18 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 
 	@ $mol_prop()
 	supply( id : string ) {
-		var cost = Math.round( Math.random() * 10000000 )
 		return new $mol_app_agreement_supply().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.cost = ()=> new $mol_unit_money_rur( this.positions( id ).reduce( ( sum , pos )=> sum + pos.cost().valueOf() , 0 ) )
-			obj.status( void 0 , $mol_app_agreement_supply_status[ [ 'pending' , 'approved' ][ Math.floor( Math.random() * 2 ) ] ] )
-			obj.provider = $mol_const( this.provider( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.consumer = $mol_const( this.consumer( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.group = $mol_const( this.supplyGroup( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.contract = $mol_const( this.contract( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.manager = $mol_const( this.person( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.ballanceUnit = $mol_const( this.ballanceUnit( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.payMethod = $mol_const( this.payMethod( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.debitor = $mol_const( this.debitor( Math.random().toString( 16 ).substring( 2 ) ) )
+			obj.cost = ()=> new $mol_unit_money_usd( this.positions( id ).reduce( ( sum , pos )=> sum + pos.cost().valueOf() , 0 ) )
+			obj.status( void 0 , $mol_app_agreement_supply_status[ $mol_stub_selectRandom([ 'pending' , 'approved' ]) ] )
+			obj.provider = $mol_const( this.provider( $mol_stub_code( 2 ) ) )
+			obj.consumer = $mol_const( this.consumer( $mol_stub_code( 2 ) ) )
+			obj.group = $mol_const( this.supplyGroup( $mol_stub_code( 2 ) ) )
+			obj.contract = $mol_const( this.contract( $mol_stub_code( 8 ) ) )
+			obj.manager = $mol_const( this.person( $mol_stub_code( 2 ) ) )
+			obj.ballanceUnit = $mol_const( this.ballanceUnit( $mol_stub_code( 2 ) ) )
+			obj.payMethod = $mol_const( this.payMethod( $mol_stub_code( 1 ) ) )
+			obj.debitor = $mol_const( this.debitor( $mol_stub_code( 2 ) ) )
 			obj.positions = ()=> this.positions( id )
 			obj.attachments = ( ...diff : $mol_app_agreement_attachment[][] )=> this.attachments( id , ...diff )
 		} )
@@ -160,7 +159,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	provider( id : string ) {
 		return new $mol_app_agreement_provider().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.name = $mol_const([ 'ACME Human Resources' , 'ACME' , 'ACME Mobility' ][ Math.floor( Math.random() * 3 ) ])
+			obj.name = $mol_const( $mol_stub_companyName() )
 		} )
 	}
 
@@ -168,7 +167,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	consumer( id : string ) {
 		return new $mol_app_agreement_consumer().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.name = $mol_const([ 'ACME Product Placement' , 'ACME Direct' , 'ACME Learning' ][ Math.floor( Math.random() * 3 ) ])
+			obj.name = $mol_const( $mol_stub_companyName() )
 		} )
 	}
 
@@ -176,7 +175,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	ballanceUnit( id : string ) {
 		return new $mol_app_agreement_ballanceUnit().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.name = $mol_const([ 'ACME Enterprise' , 'ACME Customer' , 'ACME Inside' ][ Math.floor( Math.random() * 3 ) ])
+			obj.name = $mol_const( $mol_stub_selectRandom([ 'ACME Enterprise' , 'ACME Customer' , 'ACME Inside' ]) )
 		} )
 	}
 
@@ -184,7 +183,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	division( id : string ) {
 		return new $mol_app_agreement_supply_division().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.name = $mol_const([ 'Food' , 'Tech' , 'Humans' ][ Math.floor( Math.random() * 3 ) ])
+			obj.name = $mol_const( $mol_stub_code( 4 ) )
 		} )
 	}
 
@@ -192,7 +191,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	supplyGroup( id : string ) {
 		return new $mol_app_agreement_supply_group().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.name = $mol_const([ 'Ivanov Group' , 'Petrov Group' , 'Sidorov Group' ][ Math.floor( Math.random() * 3 ) ])
+			obj.name = $mol_const( $mol_stub_personName() + ' Group' )
 		} )
 	}
 
@@ -200,7 +199,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	store( id : string ) {
 		return new $mol_app_agreement_store().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.name = $mol_const([ 'Riga#10' , 'Moscow#123' , 'Saint-Petersburg#42' ][ Math.floor( Math.random() * 3 ) ])
+			obj.name = $mol_const( $mol_stub_city() + ' #' + $mol_stub_code(2) )
 		} )
 	}
 
@@ -208,7 +207,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	person( id : string ) {
 		return new $mol_app_agreement_person().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.name = $mol_const([ 'Ivanov AB' , 'Petrov BC' , 'Sidorov CD' ][ Math.floor( Math.random() * 3 ) ])
+			obj.name = $mol_const( $mol_stub_personName() )
 		} )
 	}
 	
@@ -223,7 +222,7 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	payMethod( id : string ) {
 		return new $mol_app_agreement_payMethod().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.name = $mol_const([ 'Accounting' , 'Cash' ][ Math.floor( Math.random() * 2 ) ])
+			obj.name = $mol_const( $mol_stub_selectRandom([ 'Accounting' , 'Cash' ]) )
 		} )
 	}
 
@@ -231,18 +230,18 @@ class $mol_app_agreement_domain_mock extends $mol_model {
 	debitor( id : string ) {
 		return new $mol_app_agreement_payMethod().setup( obj => {
 			obj.id = $mol_const( id )
-			obj.name = $mol_const([ 'ACME Finance' , 'ACME Credit Systems' , 'ACME $' ][ Math.floor( Math.random() * 3 ) ])
+			obj.name = $mol_const( $mol_stub_companyName() )
 		} )
 	}
 
 	@ $mol_prop()
 	position( id : { supply : string , position : string } ) {
 		return new $mol_app_agreement_supply_position().setup( obj => {
-			obj.name = $mol_const([ 'Work Station, 4 cores, 16GB' , 'ZX Spectrum' , 'ACMEbook' ][ Math.floor( Math.random() * 3 ) ])
-			obj.supplyMoment = $mol_const( $jin.time.moment().shift({ day : Math.round( Math.random() * 100 ) }) )
-			obj.store = $mol_const( this.store( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.division = $mol_const( this.division( Math.random().toString( 16 ).substring( 2 ) ) )
-			obj.price = $mol_const( new $mol_unit_money_rur( Math.round( Math.random() * 20000 ) ) )
+			obj.name = $mol_const( $mol_stub_productName() )
+			obj.supplyMoment = $mol_const( $mol_stub_time( 60 * 24 * 365 ) )
+			obj.store = $mol_const( this.store( $mol_stub_code( 2 ) ) )
+			obj.division = $mol_const( this.division( $mol_stub_code( 2 ) ) )
+			obj.price = $mol_const( $mol_stub_price( 1000 ) )
 			obj.quantity = $mol_const( Math.round( Math.random() * 30 ) )
 			obj.cost = $mol_const( obj.price().mult( obj.quantity() ) )
 		} )

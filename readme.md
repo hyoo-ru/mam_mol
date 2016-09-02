@@ -72,7 +72,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_linker](linker) - navigation link
 * [$mol_clicker](clicker) - button
 * [$mol_checker](checker) - check boxe
-* [$mol_switcher](switcher) - radio button
+* [$mol_switcher](switcher) - radio buttons
 * [$mol_stringer](stringer) - one string input control
 * [$mol_coder](coder) - bar code scanner
 
@@ -105,6 +105,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 ## Testing
 
 * [$mol_test](test) - unit testing
+* [$mol_stub](stub) - stub data generators
 
 ## Flow
 
