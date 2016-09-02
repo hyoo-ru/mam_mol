@@ -9,7 +9,9 @@ $mol_app_agreement_enter $mol_viewer
 			< passwordField $mol_form_field
 				name =Password
 				errors < passwordErrors /
-				control < passControl $mol_stringer value > password =
+				control < passControl $mol_stringer
+					value > password =
+					type =password
 		buttons /
 			< submit $mol_clicker_major
 				childs / < submitText =Log In
