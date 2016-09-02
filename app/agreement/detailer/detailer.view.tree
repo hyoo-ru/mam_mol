@@ -1,4 +1,4 @@
-$mol_app_agreement_detailer $mol_pager
+$mol_app_supplies_detailer $mol_pager
 	supply null
 	title =Supply
 	head /

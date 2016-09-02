@@ -1,5 +1,5 @@
 module $.$mol {
-	export class $mol_app_agreement_app extends $.$mol_app_agreement_app {
+	export class $mol_app_supplies extends $.$mol_app_supplies {
 
 		childs() {
 			return [
@@ -24,7 +24,7 @@ module $.$mol {
 		
 		@ $mol_prop()
 		domain() {
-			return new $mol_app_agreement_domain_mock()
+			return new $mol_app_supplies_domain_mock()
 		}
 
 		supplies() {

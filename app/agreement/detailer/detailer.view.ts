@@ -1,8 +1,8 @@
 module $.$mol {
-	export class $mol_app_agreement_detailer extends $.$mol_app_agreement_detailer {
+	export class $mol_app_supplies_detailer extends $.$mol_app_supplies_detailer {
 		
 		supply() {
-			return null as $mol_app_agreement_supply
+			return null as $mol_app_supplies_domain_supply
 		}
 		
 		title() {
@@ -10,10 +10,10 @@ module $.$mol {
 		}
 		
 		approved( ...diff : boolean[] ) {
-			if( diff[0] === void 0 ) return this.supply().status() === $mol_app_agreement_supply_status.approved
+			if( diff[0] === void 0 ) return this.supply().status() === $mol_app_supplies_domain_supply_status.approved
 			this.supply().status( diff[0]
-				? $mol_app_agreement_supply_status.approved
-				: $mol_app_agreement_supply_status.pending
+				? $mol_app_supplies_domain_supply_status.approved
+				: $mol_app_supplies_domain_supply_status.pending
 			)
 			return diff[0]
 		}
@@ -64,7 +64,7 @@ module $.$mol {
 		
 		@ $mol_prop()
 		position( index : number ) {
-			return new $mol_app_agreement_positioner().setup( obj => {
+			return new $mol_app_supplies_positioner().setup( obj => {
 				obj.position = ()=> this.supply().positions()[ index ]
 			} )
 		}
@@ -85,7 +85,7 @@ module $.$mol {
 			var supply = this.supply()
 			var list = supply.attachments()
 			var url = $mol_const( diff[0] )
-			list = list.concat( new $mol_app_agreement_attachment().setup( obj => {
+			list = list.concat( new $mol_app_supplies_domain_attachment().setup( obj => {
 				obj.urlThumb = obj.urlLoad = url
 			} ) )
 			supply.attachments( list )

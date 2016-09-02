@@ -1,4 +1,4 @@
-$mol_app_agreement_enter $mol_viewer
+$mol_app_supplies_enter $mol_viewer
 	entered false
 	childs / < form $mol_form
 		formFields /

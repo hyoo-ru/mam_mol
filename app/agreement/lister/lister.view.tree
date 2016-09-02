@@ -1,4 +1,4 @@
-$mol_app_agreement_lister $mol_pager
+$mol_app_supplies_lister $mol_pager
 	supplies /
 	title =Supplies
 	childs /

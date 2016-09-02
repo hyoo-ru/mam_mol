@@ -1,13 +1,13 @@
-[mol_app_agreement_lister_searchPanel] {
+[mol_app_supplies_lister_searchPanel] {
 	flex: 0 0 auto;
 	background: var(--mol_skin_base_back);
 	position: relative;
 }
 
-[mol_app_agreement_lister_body] {
+[mol_app_supplies_lister_body] {
 	align-items: flex-start;
 }
 
-[mol_app_agreement_lister_body] > * {
+[mol_app_supplies_lister_body] > * {
 	margin: 1rem;
 }

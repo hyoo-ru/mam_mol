@@ -1,4 +1,4 @@
-$mol_app_agreement_positioner $mol_carder
+$mol_app_supplies_positioner $mol_carder
 	heightMinimal 80
 	content < grouper $mol_viewer childs /
 		< mainGroup $mol_rower childs /

@@ -1,5 +1,5 @@
 module $.$mol {
-	export class $mol_app_agreement_enter extends $.$mol_app_agreement_enter {
+	export class $mol_app_supplies_enter extends $.$mol_app_supplies_enter {
 		
 		@ $mol_prop()
 		entered( ...diff : boolean[] ) {
