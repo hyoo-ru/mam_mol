@@ -22,179 +22,151 @@
 		}
 	},
 	{
-		"mol/app/agreement": {
+		"mol/app/demo": {
 			":priority": 0,
-			"mol/model": {
+			"mol/skin": {
+				":priority": 1,
+				"": [
+					"mol/skin/skin.view.css"
+				]
+			},
+			"mol/stacker": {
 				":priority": 0,
-				"mol/object": {
+				"mol/viewer": {
 					":priority": 0,
-					"mol/log": {
-						":priority": 2,
-						"jin/time/moment": {
-							":priority": 1,
-							"jin/time": {
-								":priority": 0,
-								"jin": {
-									"": [
-										"jin/jin.jam.js",
-										"jin/demo.html",
-										"jin/README.md",
-										"jin/package.json",
-										"jin/git-init.cmd"
-									]
-								},
-								"": [
-									"jin/time/readme.md"
-								]
-							},
-							"jin/time/duration": {
+					"mol/atom": {
+						":priority": 1,
+						"mol/object": {
+							":priority": 0,
+							"mol/log": {
 								":priority": 2,
-								"jin/time/base": {
+								"jin/time/moment": {
 									":priority": 1,
-									"jin/concater": {
-										":priority": 3,
+									"jin/time": {
+										":priority": 0,
+										"jin": {
+											"": [
+												"jin/jin.jam.js",
+												"jin/demo.html",
+												"jin/README.md",
+												"jin/package.json",
+												"jin/git-init.cmd"
+											]
+										},
 										"": [
-											"jin/concater/jin-concater.ts"
+											"jin/time/readme.md"
+										]
+									},
+									"jin/time/duration": {
+										":priority": 2,
+										"jin/time/base": {
+											":priority": 1,
+											"jin/concater": {
+												":priority": 3,
+												"": [
+													"jin/concater/jin-concater.ts"
+												]
+											},
+											"": [
+												"jin/time/base/base.ts"
+											]
+										},
+										"jin/type": {
+											":priority": 3,
+											"": [
+												"jin/type/type.ts"
+											]
+										},
+										"": [
+											"jin/time/duration/duration.ts"
 										]
 									},
 									"": [
-										"jin/time/base/base.ts"
-									]
-								},
-								"jin/type": {
-									":priority": 3,
-									"": [
-										"jin/type/type.ts"
+										"jin/time/moment/moment.ts"
 									]
 								},
 								"": [
-									"jin/time/duration/duration.ts"
+									"mol/log/log.env=web.ts"
 								]
 							},
 							"": [
-								"jin/time/moment/moment.ts"
+								"mol/object/object.ts",
+								"mol/object/object.stage=test.ts",
+								"mol/object/readme.md"
 							]
 						},
-						"": [
-							"mol/log/log.env=web.ts"
-						]
-					},
-					"": [
-						"mol/object/object.ts",
-						"mol/object/object.stage=test.ts",
-						"mol/object/readme.md"
-					]
-				},
-				"mol/state/session": {
-					":priority": 2,
-					"mol/prop": {
-						":priority": 1,
-						"mol/atom": {
-							":priority": 4,
-							"mol/set": {
-								":priority": 1,
-								"": [
-									"mol/set/set.ts",
-									"mol/set/set.stage=test.ts",
-									"mol/set/set_select.js"
-								]
-							},
-							"mol/defer": {
-								":priority": 2,
-								"": [
-									"mol/defer/defer.ts"
-								]
-							},
-							"mol/state/stack": {
+						"mol/set": {
+							":priority": 1,
+							"": [
+								"mol/set/set.ts",
+								"mol/set/set.stage=test.ts",
+								"mol/set/set_select.js"
+							]
+						},
+						"mol/defer": {
+							":priority": 2,
+							"": [
+								"mol/defer/defer.ts"
+							]
+						},
+						"mol/state/stack": {
+							":priority": 0,
+							"mol/dict": {
 								":priority": 0,
-								"mol/dict": {
-									":priority": 0,
-									"": [
-										"mol/dict/dict.ts",
-										"mol/dict/dict.stage=test.ts",
-										"mol/dict/dict_select.js"
-									]
-								},
 								"": [
-									"mol/state/stack/stack.ts"
+									"mol/dict/dict.ts",
+									"mol/dict/dict.stage=test.ts",
+									"mol/dict/dict_select.js"
 								]
 							},
 							"": [
-								"mol/atom/atom.ts",
-								"mol/atom/atom.env=web.ts",
-								"mol/atom/readme.md"
+								"mol/state/stack/stack.ts"
 							]
 						},
 						"": [
-							"mol/prop/prop.ts",
-							"mol/prop/prop.stage=test.ts",
-							"mol/prop/readme.md"
+							"mol/atom/atom.ts",
+							"mol/atom/atom.env=web.ts",
+							"mol/atom/readme.md"
 						]
 					},
-					"mol/state/local": {
-						":priority": 2,
-						"": [
-							"mol/state/local/local.ts",
-							"mol/state/local/local.stage=test.ts"
-						]
-					},
-					"": [
-						"mol/state/session/session.ts"
-					]
-				},
-				"mol/state/arg": {
-					":priority": 2,
-					"": [
-						"mol/state/arg/arg.env=web.ts"
-					]
-				},
-				"": [
-					"mol/model/model.ts"
-				]
-			},
-			"mol/unit/money": {
-				":priority": 1,
-				"mol/unit": {
-					":priority": 0,
-					"": [
-						"mol/unit/unit.ts",
-						"mol/unit/unit.stage=test.ts"
-					]
-				},
-				"": [
-					"mol/unit/money/money.ts"
-				]
-			},
-			"mol/const": {
-				":priority": 3,
-				"": [
-					"mol/const/const.ts"
-				]
-			},
-			"": [
-				"mol/app/agreement/index.html",
-				"mol/app/agreement/agreement.ts"
-			]
-		}
-	},
-	{
-		"mol/app/agreement/app": {
-			":priority": 0,
-			"mol/stacker": {
-				":priority": 0,
-				"mol/skin": {
-					":priority": 1,
-					"": [
-						"mol/skin/skin.view.css"
-					]
-				},
-				"mol/viewer": {
-					":priority": 0,
 					"mol/maybe": {
 						":priority": 0,
 						"": [
 							"mol/maybe/maybe.ts",
 							"mol/maybe/maybe.stage=test.ts"
+						]
+					},
+					"mol/model": {
+						":priority": 0,
+						"mol/state/session": {
+							":priority": 2,
+							"mol/prop": {
+								":priority": 1,
+								"": [
+									"mol/prop/prop.ts",
+									"mol/prop/prop.stage=test.ts",
+									"mol/prop/readme.md"
+								]
+							},
+							"mol/state/local": {
+								":priority": 2,
+								"": [
+									"mol/state/local/local.ts",
+									"mol/state/local/local.stage=test.ts"
+								]
+							},
+							"": [
+								"mol/state/session/session.ts"
+							]
+						},
+						"mol/state/arg": {
+							":priority": 2,
+							"": [
+								"mol/state/arg/arg.env=web.ts"
+							]
+						},
+						"": [
+							"mol/model/model.ts"
 						]
 					},
 					"mol/window": {
@@ -222,219 +194,57 @@
 					"mol/stacker/stacker.view.ts"
 				]
 			},
-			"mol/app/agreement/enter": {
+			"mol/scroller": {
 				":priority": 0,
-				"mol/form": {
+				"": [
+					"mol/scroller/scroller.view.css",
+					"mol/scroller/scroller.view.tree",
+					"mol/scroller/scroller.view.ts"
+				]
+			},
+			"mol/pager": {
+				":priority": 0,
+				"": [
+					"mol/pager/pager.view.css",
+					"mol/pager/pager.view.tree"
+				]
+			},
+			"mol/lister": {
+				":priority": 0,
+				"": [
+					"mol/lister/lister.view.tree",
+					"mol/lister/lister.view.ts",
+					"mol/lister/readme.md"
+				]
+			},
+			"mol/linker": {
+				":priority": 0,
+				"": [
+					"mol/linker/linker.view.css",
+					"mol/linker/linker.view.tree",
+					"mol/linker/linker.view.ts",
+					"mol/linker/readme.md"
+				]
+			},
+			"mol/icon/chevron/left": {
+				":priority": 0,
+				"mol/icon": {
 					":priority": 0,
-					"mol/rower": {
+					"mol/svg": {
 						":priority": 0,
 						"": [
-							"mol/rower/rower.view.css",
-							"mol/rower/rower.view.tree",
-							"mol/rower/readme.md"
+							"mol/svg/svg.view.tree"
 						]
 					},
 					"": [
-						"mol/form/form.css",
-						"mol/form/form.view.tree",
-						"mol/form/form.view.ts"
-					]
-				},
-				"mol/form/field": {
-					":priority": 0,
-					"": [
-						"mol/form/field/field.view.css",
-						"mol/form/field/field.view.tree"
-					]
-				},
-				"mol/stringer": {
-					":priority": 0,
-					"": [
-						"mol/stringer/readme.md",
-						"mol/stringer/stringer.css",
-						"mol/stringer/stringer.view.tree",
-						"mol/stringer/stringer.view.ts"
-					]
-				},
-				"mol/clicker": {
-					":priority": 0,
-					"": [
-						"mol/clicker/readme.md",
-						"mol/clicker/clicker.css",
-						"mol/clicker/clicker.view.tree",
-						"mol/clicker/clicker.view.ts",
-						"mol/clicker/clicker_types.view.tree"
+						"mol/icon/icon.view.css",
+						"mol/icon/icon.view.tree"
 					]
 				},
 				"": [
-					"mol/app/agreement/enter/enter.view.css",
-					"mol/app/agreement/enter/enter.view.tree",
-					"mol/app/agreement/enter/enter.view.ts"
+					"mol/icon/chevron/left/left.view.tree"
 				]
 			},
-			"mol/app/agreement/lister": {
-				":priority": 0,
-				"mol/pager": {
-					":priority": 0,
-					"mol/rower/demo": {
-						":priority": 0,
-						"mol/checker": {
-							":priority": 0,
-							"": [
-								"mol/checker/readme.md",
-								"mol/checker/checker.css",
-								"mol/checker/checker.view.tree",
-								"mol/checker/checker.view.ts"
-							]
-						},
-						"": [
-							"mol/rower/demo/demo.view.tree",
-							"mol/rower/demo/demo.view.ts"
-						]
-					},
-					"mol/scroller": {
-						":priority": 0,
-						"": [
-							"mol/scroller/scroller.view.css",
-							"mol/scroller/scroller.view.tree",
-							"mol/scroller/scroller.view.ts"
-						]
-					},
-					"": [
-						"mol/pager/pager.view.css",
-						"mol/pager/pager.view.tree"
-					]
-				},
-				"mol/coder": {
-					":priority": 0,
-					"mol/cordova": {
-						":priority": 3,
-						"": [
-							"mol/cordova/cordova.ts"
-						]
-					},
-					"": [
-						"mol/coder/coder.view.css",
-						"mol/coder/coder.view.tree",
-						"mol/coder/coder.view.ts"
-					]
-				},
-				"mol/lister": {
-					":priority": 0,
-					"": [
-						"mol/lister/lister.view.tree",
-						"mol/lister/lister.view.ts",
-						"mol/lister/readme.md"
-					]
-				},
-				"mol/app/agreement/carder": {
-					":priority": 3,
-					"mol/linker": {
-						":priority": 1,
-						"": [
-							"mol/linker/linker.view.css",
-							"mol/linker/linker.view.tree",
-							"mol/linker/linker.view.ts",
-							"mol/linker/readme.md"
-						]
-					},
-					"mol/carder": {
-						":priority": 0,
-						"": [
-							"mol/carder/carder.view.css",
-							"mol/carder/carder.view.tree"
-						]
-					},
-					"mol/coster": {
-						":priority": 0,
-						"": [
-							"mol/coster/coster.view.css",
-							"mol/coster/coster.view.tree",
-							"mol/coster/coster.view.ts"
-						]
-					},
-					"": [
-						"mol/app/agreement/carder/carder.view.css",
-						"mol/app/agreement/carder/carder.view.tree",
-						"mol/app/agreement/carder/carder.view.ts"
-					]
-				},
-				"": [
-					"mol/app/agreement/lister/lister.view.css",
-					"mol/app/agreement/lister/lister.view.tree",
-					"mol/app/agreement/lister/lister.view.ts"
-				]
-			},
-			"mol/app/agreement/detailer": {
-				":priority": 0,
-				"mol/labeler": {
-					":priority": 0,
-					"": [
-						"mol/labeler/labeler.view.css",
-						"mol/labeler/labeler.view.tree"
-					]
-				},
-				"mol/sectioner": {
-					":priority": 0,
-					"": [
-						"mol/sectioner/sectioner.view.css",
-						"mol/sectioner/sectioner.view.tree"
-					]
-				},
-				"mol/attacher": {
-					":priority": 0,
-					"": [
-						"mol/attacher/attacher.view.css",
-						"mol/attacher/attacher.view.tree",
-						"mol/attacher/attacher.view.ts"
-					]
-				},
-				"mol/app/agreement/positioner": {
-					":priority": 3,
-					"": [
-						"mol/app/agreement/positioner/positioner.view.css",
-						"mol/app/agreement/positioner/positioner.view.tree",
-						"mol/app/agreement/positioner/positioner.view.ts"
-					]
-				},
-				"": [
-					"mol/app/agreement/detailer/detailer.view.css",
-					"mol/app/agreement/detailer/detailer.view.tree",
-					"mol/app/agreement/detailer/detailer.view.ts"
-				]
-			},
-			"": [
-				"mol/app/agreement/app/app.view.css",
-				"mol/app/agreement/app/app.view.tree",
-				"mol/app/agreement/app/app.view.ts"
-			]
-		}
-	},
-	{
-		"mol/app/agreement/carder/demo": {
-			":priority": 0,
-			"": [
-				"mol/app/agreement/carder/demo/demo.view.tree"
-			]
-		}
-	},
-	{
-		"mol/app/agreement/detailer/demo": {
-			":priority": 0,
-			"mol/app/agreement/positioner/demo": {
-				":priority": 0,
-				"": [
-					"mol/app/agreement/positioner/demo/demo.view.tree"
-				]
-			},
-			"": [
-				"mol/app/agreement/detailer/demo/demo.view.tree"
-			]
-		}
-	},
-	{
-		"mol/app/demo": {
-			":priority": 0,
 			"mol/demo": {
 				":priority": 4,
 				"": [
@@ -451,6 +261,12 @@
 					"mol/demo/all/all.view.tree"
 				]
 			},
+			"mol/const": {
+				":priority": 4,
+				"": [
+					"mol/const/const.ts"
+				]
+			},
 			"": [
 				"mol/app/demo/demo.view.css",
 				"mol/app/demo/demo.view.tree",
@@ -461,10 +277,62 @@
 	{
 		"mol/app/signup": {
 			":priority": 0,
-			"mol/switcher": {
+			"mol/form": {
+				":priority": 0,
+				"mol/rower": {
+					":priority": 0,
+					"": [
+						"mol/rower/rower.view.css",
+						"mol/rower/rower.view.tree",
+						"mol/rower/readme.md"
+					]
+				},
+				"": [
+					"mol/form/form.css",
+					"mol/form/form.view.tree",
+					"mol/form/form.view.ts"
+				]
+			},
+			"mol/form/field": {
 				":priority": 0,
 				"": [
+					"mol/form/field/field.view.css",
+					"mol/form/field/field.view.tree"
+				]
+			},
+			"mol/stringer": {
+				":priority": 0,
+				"": [
+					"mol/stringer/readme.md",
+					"mol/stringer/stringer.css",
+					"mol/stringer/stringer.view.tree",
+					"mol/stringer/stringer.view.ts"
+				]
+			},
+			"mol/clicker": {
+				":priority": 0,
+				"": [
+					"mol/clicker/readme.md",
+					"mol/clicker/clicker.css",
+					"mol/clicker/clicker.view.tree",
+					"mol/clicker/clicker.view.ts",
+					"mol/clicker/clicker_types.view.tree"
+				]
+			},
+			"mol/switcher": {
+				":priority": 0,
+				"mol/checker": {
+					":priority": 1,
+					"": [
+						"mol/checker/readme.md",
+						"mol/checker/checker.css",
+						"mol/checker/checker.view.tree",
+						"mol/checker/checker.view.ts"
+					]
+				},
+				"": [
 					"mol/switcher/readme.md",
+					"mol/switcher/switcher.view.css",
 					"mol/switcher/switcher.view.tree",
 					"mol/switcher/switcher.view.ts"
 				]
@@ -473,6 +341,177 @@
 				"mol/app/signup/index.html",
 				"mol/app/signup/signup.view.tree",
 				"mol/app/signup/signup.view.ts"
+			]
+		}
+	},
+	{
+		"mol/app/supplies": {
+			":priority": 0,
+			"mol/app/supplies/enter": {
+				":priority": 0,
+				"": [
+					"mol/app/supplies/enter/enter.view.css",
+					"mol/app/supplies/enter/enter.view.tree",
+					"mol/app/supplies/enter/enter.view.ts"
+				]
+			},
+			"mol/app/supplies/lister": {
+				":priority": 0,
+				"mol/coder": {
+					":priority": 0,
+					"mol/cordova": {
+						":priority": 3,
+						"": [
+							"mol/cordova/cordova.ts"
+						]
+					},
+					"": [
+						"mol/coder/coder.view.css",
+						"mol/coder/coder.view.tree",
+						"mol/coder/coder.view.ts"
+					]
+				},
+				"mol/app/supplies/domain": {
+					":priority": 3,
+					"mol/unit/money": {
+						":priority": 1,
+						"mol/unit": {
+							":priority": 0,
+							"": [
+								"mol/unit/unit.ts",
+								"mol/unit/unit.stage=test.ts"
+							]
+						},
+						"": [
+							"mol/unit/money/money.ts"
+						]
+					},
+					"mol/stub": {
+						":priority": 3,
+						"": [
+							"mol/stub/stub.ts"
+						]
+					},
+					"": [
+						"mol/app/supplies/domain/domain.ts"
+					]
+				},
+				"mol/app/supplies/carder": {
+					":priority": 3,
+					"mol/carder": {
+						":priority": 0,
+						"": [
+							"mol/carder/carder.view.css",
+							"mol/carder/carder.view.tree"
+						]
+					},
+					"mol/labeler": {
+						":priority": 0,
+						"": [
+							"mol/labeler/labeler.view.css",
+							"mol/labeler/labeler.view.tree"
+						]
+					},
+					"mol/coster": {
+						":priority": 0,
+						"": [
+							"mol/coster/coster.view.css",
+							"mol/coster/coster.view.tree",
+							"mol/coster/coster.view.ts"
+						]
+					},
+					"": [
+						"mol/app/supplies/carder/carder.view.css",
+						"mol/app/supplies/carder/carder.view.tree",
+						"mol/app/supplies/carder/carder.view.ts"
+					]
+				},
+				"": [
+					"mol/app/supplies/lister/lister.view.css",
+					"mol/app/supplies/lister/lister.view.tree",
+					"mol/app/supplies/lister/lister.view.ts"
+				]
+			},
+			"mol/app/supplies/detailer": {
+				":priority": 0,
+				"mol/decker": {
+					":priority": 0,
+					"": [
+						"mol/decker/decker.view.css",
+						"mol/decker/decker.view.tree",
+						"mol/decker/decker.view.ts"
+					]
+				},
+				"mol/sectioner": {
+					":priority": 0,
+					"": [
+						"mol/sectioner/sectioner.view.css",
+						"mol/sectioner/sectioner.view.tree"
+					]
+				},
+				"mol/attacher": {
+					":priority": 0,
+					"mol/tiler": {
+						":priority": 0,
+						"": [
+							"mol/tiler/tiler.view.css",
+							"mol/tiler/tiler.view.tree",
+							"mol/tiler/tiler.view.ts"
+						]
+					},
+					"mol/icon/attach": {
+						":priority": 0,
+						"": [
+							"mol/icon/attach/attach.view.tree"
+						]
+					},
+					"": [
+						"mol/attacher/attacher.view.css",
+						"mol/attacher/attacher.view.tree",
+						"mol/attacher/attacher.view.ts"
+					]
+				},
+				"mol/app/supplies/positioner": {
+					":priority": 3,
+					"": [
+						"mol/app/supplies/positioner/positioner.view.css",
+						"mol/app/supplies/positioner/positioner.view.tree",
+						"mol/app/supplies/positioner/positioner.view.ts"
+					]
+				},
+				"": [
+					"mol/app/supplies/detailer/detailer.view.css",
+					"mol/app/supplies/detailer/detailer.view.tree",
+					"mol/app/supplies/detailer/detailer.view.ts"
+				]
+			},
+			"": [
+				"mol/app/supplies/app.view.css",
+				"mol/app/supplies/app.view.tree",
+				"mol/app/supplies/app.view.ts",
+				"mol/app/supplies/index.html"
+			]
+		}
+	},
+	{
+		"mol/app/supplies/carder/demo": {
+			":priority": 0,
+			"": [
+				"mol/app/supplies/carder/demo/demo.view.tree"
+			]
+		}
+	},
+	{
+		"mol/app/supplies/detailer/demo": {
+			":priority": 0,
+			"mol/app/supplies/positioner/demo": {
+				":priority": 0,
+				"": [
+					"mol/app/supplies/positioner/demo/demo.view.tree"
+				]
+			},
+			"": [
+				"mol/app/supplies/detailer/demo/demo.view.tree"
 			]
 		}
 	},
@@ -521,6 +560,13 @@
 	{
 		"mol/carder/demo": {
 			":priority": 0,
+			"mol/rower/demo": {
+				":priority": 0,
+				"": [
+					"mol/rower/demo/demo.view.tree",
+					"mol/rower/demo/demo.view.ts"
+				]
+			},
 			"": [
 				"mol/carder/demo/demo.view.tree"
 			]
@@ -552,11 +598,42 @@
 		}
 	},
 	{
+		"mol/decker/demo": {
+			":priority": 0,
+			"mol/stringer/demo": {
+				":priority": 0,
+				"": [
+					"mol/stringer/demo/demo.view.tree",
+					"mol/stringer/demo/demo.view.ts"
+				]
+			},
+			"mol/switcher/demo": {
+				":priority": 0,
+				"": [
+					"mol/switcher/demo/demo.view.tree"
+				]
+			},
+			"": [
+				"mol/decker/demo/demo.view.tree"
+			]
+		}
+	},
+	{
 		"mol/filler": {
 			":priority": 0,
 			"": [
 				"mol/filler/filler.css",
 				"mol/filler/filler.view.tree"
+			]
+		}
+	},
+	{
+		"mol/icon/demo": {
+			":priority": 0,
+			"": [
+				"mol/icon/demo/demo.view.css",
+				"mol/icon/demo/demo.view.tree",
+				"mol/icon/demo/demo.view.ts"
 			]
 		}
 	},
@@ -636,34 +713,6 @@
 			":priority": 0,
 			"": [
 				"mol/stacker/demo/demo.view.tree"
-			]
-		}
-	},
-	{
-		"mol/stringer/demo": {
-			":priority": 0,
-			"": [
-				"mol/stringer/demo/demo.view.tree",
-				"mol/stringer/demo/demo.view.ts"
-			]
-		}
-	},
-	{
-		"mol/switcher/demo": {
-			":priority": 0,
-			"": [
-				"mol/switcher/demo/demo.view.tree",
-				"mol/switcher/demo/demo.view.ts"
-			]
-		}
-	},
-	{
-		"mol/tiler": {
-			":priority": 0,
-			"": [
-				"mol/tiler/tiler.view.css",
-				"mol/tiler/tiler.view.tree",
-				"mol/tiler/tiler.view.ts"
 			]
 		}
 	},
