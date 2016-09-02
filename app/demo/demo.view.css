@@ -41,4 +41,6 @@
 	color: var( --mol_skin_base_fore );
 	display: flex;
 	align-items: center;
+	position: absolute;
+	height: 100%;
 }

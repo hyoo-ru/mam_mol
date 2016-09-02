@@ -1,6 +1,7 @@
 [mol_app_agreement_lister_searchPanel] {
 	flex: 0 0 auto;
 	background: var(--mol_skin_base_back);
+	position: relative;
 }
 
 [mol_app_agreement_lister_body] {
