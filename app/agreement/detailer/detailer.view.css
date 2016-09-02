@@ -17,16 +17,26 @@
 	color: var( --mol_skin_base_fore );
 	display: flex;
 	align-items: center;
+	position: absolute;
+	height: 100%;
+}
+
+[mol_app_agreement_detailer_consContent] {
+	align-items: baseline;
+	background: white;
 }
 
 [mol_app_agreement_detailer_consContent] > * {
 	flex: 1 1 10rem;
+}
+
+[mol_app_agreement_detailer_orgContent] {
 	align-items: baseline;
+	background: white;
 }
 
 [mol_app_agreement_detailer_orgContent] > * {
 	flex: 1 1 10rem;
-	align-items: baseline;
 }
 
 [mol_app_agreement_detailer_costItem] {

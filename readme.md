@@ -82,13 +82,14 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_tiler](tiler) - items in row with balanced wrapping
 * [$mol_rower](rower) - items in row with wrapping and padding between
 * [$mol_lister](lister) - vertical list of rows
-* [$mol_stacker](stacker) - horizontal stack of panels
-* [$mol_pager](pager) - page with header, body and footer
-* [$mol_labeler](labeler) - labeled content
-* [$mol_sectioner](sectioner) - section with header
 
 ## Complex components
 
+* [$mol_labeler](labeler) - labeled content
+* [$mol_sectioner](sectioner) - section with header
+* [$mol_stacker](stacker) - horizontal stack of panels
+* [$mol_pager](pager) - page with header, body and footer
+* [$mol_decker](decker) - deck of panels with tab bar
 * [$mol_form](form) - forms with validators
 * [$mol_demo](demo) - demonstrates widget in various screens
 
