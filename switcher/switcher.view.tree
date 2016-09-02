@@ -1,3 +1,4 @@
-$mol_switcher $mol_checker
-	childs / < valueSelf : null
-	value : null
+$mol_switcher $mol_viewer
+	value null
+	option *
+	childs < items /

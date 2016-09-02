@@ -21,18 +21,16 @@ $mol_app_signup $mol_form
 		< sexField $mol_form_field
 			name =Sex
 			errors < sexErrors /
-			control /
-				< sexOptionMale $mol_switcher
-					valueSelf =male
-					value > sex =
-				< sexOptionFemale $mol_switcher
-					valueSelf =female
-					value > sex =
-				< sexOptionCastrate $mol_switcher
-					valueSelf =castrate
-					value > sex =
+			control / < sexControl $mol_app_signup_sexer sex > sex =
 	buttons /
 		< submit $mol_clicker_major
 			childs / < submitText =Sign Up
 			eventClick > eventSubmit : null
 			disabled < submitBlocked
+
+$mol_app_signup_sexer $mol_switcher
+	value > sex =
+	option *
+		male =Male
+		intersex =Intersex
+		female =Female

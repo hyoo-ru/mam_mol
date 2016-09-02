@@ -1,18 +1,6 @@
-$mol_switcher_demo $mol_rower
-	color =
-	childs /
-		< one $mol_switcher
-			value > color
-			valueSelf =red
-			childs / =red (default)
-		< two $mol_switcher
-			value > color
-			valueSelf =green
-			childs / =green
-		< three $mol_switcher
-			value > color
-			valueSelf =
-		< four $mol_switcher
-			value > color
-			valueSelf =black
-			disabled : true
+$mol_switcher_demo $mol_switcher
+	value > color =
+	option *
+		red =Red
+		green =Green
+		blue =Blue
