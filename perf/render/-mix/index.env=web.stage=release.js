@@ -725,12 +725,15 @@ var $mol_log;
     }
     $mol_log.filter = filter;
 })($mol_log || ($mol_log = {}));
-//# sourceMappingURL=log.js.map
+//# sourceMappingURL=log.env=web.js.map
 ;
 var $mol_object = (function () {
     function $mol_object() {
         this['destroyed()'] = false;
     }
+    $mol_object.prototype.Class = function () {
+        return this.constructor;
+    };
     $mol_object.objectPath = function () {
         return this['name']
             || this['displayName']
@@ -1043,18 +1046,39 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var $mol_atom_status;
+(function ($mol_atom_status) {
+    $mol_atom_status[$mol_atom_status["obsolete"] = 'obsolete'] = "obsolete";
+    $mol_atom_status[$mol_atom_status["checking"] = 'checking'] = "checking";
+    $mol_atom_status[$mol_atom_status["actual"] = 'actual'] = "actual";
+})($mol_atom_status || ($mol_atom_status = {}));
 var $mol_atom = (function (_super) {
     __extends($mol_atom, _super);
     function $mol_atom(host, field, handler, fail, key) {
+        if (field === void 0) { field = 'value()'; }
         _super.call(this);
-        this.host = host;
         this.field = field;
         this.handler = handler;
         this.fail = fail;
         this.key = key;
-        this.mastersDeep = 0;
-        this.planned = false;
+        this.masters = null;
+        this.slaves = null;
+        this.status = $mol_atom_status.obsolete;
+        this.host = this;
+        this.host = host || this;
     }
+    $mol_atom.make = function (handler, fail, key) {
+        var atom = new $mol_atom(null, null, handler, fail, key);
+        var accessor = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return atom.value.apply(atom, diff);
+        };
+        accessor['atom'] = atom;
+        return accessor;
+    };
     $mol_atom.prototype.destroyed = function () {
         var diff = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -1080,7 +1104,7 @@ var $mol_atom = (function (_super) {
     };
     $mol_atom.prototype.unlink = function () {
         this.disobeyAll();
-        this.notifySlaves();
+        this.checkSlaves();
     };
     $mol_atom.prototype.objectPath = function () {
         return this.host.objectPath() + '.' + this.field;
@@ -1094,34 +1118,39 @@ var $mol_atom = (function (_super) {
             this.lead(slave);
         if (slave)
             slave.obey(this);
+        this.actualize();
         var value = this.host[this.field];
-        if (value === void 0) {
-            value = this.pull();
-        }
         if (value instanceof Error)
             throw value;
-        else
-            return value;
+        return value;
+    };
+    $mol_atom.prototype.actualize = function () {
+        var _this = this;
+        if (this.status === $mol_atom_status.actual)
+            return false;
+        if (this.status === $mol_atom_status.checking) {
+            this.masters.forEach(function (master) {
+                if (_this.status !== $mol_atom_status.checking)
+                    return;
+                master.actualize();
+            });
+            if (this.status === $mol_atom_status.checking) {
+                this.status = $mol_atom_status.actual;
+                return false;
+            }
+        }
+        var value = this.host[this.field];
+        return this.pull() !== value;
     };
     $mol_atom.prototype.pull = function () {
         var _this = this;
         this.log(['pull']);
-        if (this.planned) {
-            var level = $mol_atom.plan[this.mastersDeep];
-            if (level) {
-                var index = level.indexOf(this);
-                if (index !== -1)
-                    level.splice(index, 1);
-            }
-            this.planned = false;
-        }
         var oldMasters = this.masters;
         if (oldMasters)
             oldMasters.forEach(function (master) {
                 master.dislead(_this);
             });
         this.masters = null;
-        this.mastersDeep = 0;
         var index = $mol_atom.stack.length;
         $mol_atom.stack.push(this);
         if (this.key !== void 0) {
@@ -1168,37 +1197,56 @@ var $mol_atom = (function (_super) {
             }
             this.host[this.field] = next;
             this.log(['push', next, prev]);
-            this.notifySlaves();
+            this.obsoleteSlaves();
         }
+        this.status = $mol_atom_status.actual;
         return next;
     };
-    $mol_atom.prototype.notifySlaves = function () {
+    $mol_atom.prototype.obsoleteSlaves = function () {
+        if (!this.slaves)
+            return;
+        this.slaves.forEach(function (slave) {
+            slave.obsolete();
+        });
+    };
+    $mol_atom.prototype.checkSlaves = function () {
         if (this.slaves) {
             this.slaves.forEach(function (slave) {
-                if ($mol_atom.stack[$mol_atom.stack.length - 1] === slave)
-                    return;
-                slave.update();
+                slave.check();
             });
         }
+        else {
+            $mol_atom.actualize(this);
+        }
     };
-    $mol_atom.prototype.update = function () {
-        if (this.planned)
+    $mol_atom.prototype.check = function () {
+        if (this.status === $mol_atom_status.actual) {
+            this.status = $mol_atom_status.checking;
+            this.checkSlaves();
+        }
+    };
+    $mol_atom.prototype.obsolete = function () {
+        if (this.status === $mol_atom_status.obsolete)
             return;
-        this.planned = true;
-        this.log(['update']);
-        $mol_atom.actualize(this);
+        this.log(['obsolete']);
+        this.status = $mol_atom_status.obsolete;
+        this.checkSlaves();
         return void 0;
     };
     $mol_atom.prototype.lead = function (slave) {
         if (!this.slaves)
-            this.slaves = new $mol_set();
-        this.slaves.add(slave);
+            this.slaves = [];
+        if (this.slaves.indexOf(slave) !== -1)
+            return;
+        this.slaves.push(slave);
     };
     $mol_atom.prototype.dislead = function (slave) {
         if (!this.slaves)
             return;
-        this.slaves.delete(slave);
-        if (!this.slaves.size) {
+        var index = this.slaves.indexOf(slave);
+        if (index !== -1)
+            this.slaves.splice(index, 1);
+        if (!this.slaves.length) {
             this.slaves = null;
             $mol_atom.reaping.add(this);
         }
@@ -1207,17 +1255,11 @@ var $mol_atom = (function (_super) {
         if (!this.masters)
             this.masters = new $mol_set();
         this.masters.add(master);
-        var masterDeep = master.mastersDeep;
-        if (this.mastersDeep <= masterDeep) {
-            this.mastersDeep = masterDeep + 1;
-        }
     };
     $mol_atom.prototype.disobey = function (master) {
         if (!this.masters)
             return;
         this.masters.delete(master);
-        if (!this.masters.size)
-            this.masters = null;
     };
     $mol_atom.prototype.disobeyAll = function () {
         var _this = this;
@@ -1225,7 +1267,6 @@ var $mol_atom = (function (_super) {
             return;
         this.masters.forEach(function (master) { return master.dislead(_this); });
         this.masters = null;
-        this.mastersDeep = 0;
     };
     $mol_atom.prototype.value = function () {
         var diff = [];
@@ -1236,7 +1277,7 @@ var $mol_atom = (function (_super) {
             if (diff.length > 1)
                 return this.push(diff[1]);
             if (diff.length > 0)
-                return this.update();
+                return this.obsolete();
             return this.get();
         }
         else {
@@ -1244,14 +1285,7 @@ var $mol_atom = (function (_super) {
         }
     };
     $mol_atom.actualize = function (atom) {
-        var deep = atom.mastersDeep;
-        var plan = $mol_atom.plan;
-        var level = plan[deep];
-        if (!level)
-            level = plan[deep] = [];
-        level.push(atom);
-        if (deep < this.planStart)
-            this.planStart = deep;
+        $mol_atom.updating.push(atom);
         $mol_atom.schedule();
     };
     $mol_atom.schedule = function () {
@@ -1270,32 +1304,25 @@ var $mol_atom = (function (_super) {
         var _this = this;
         $mol_log('$mol_atom.sync', []);
         this.schedule();
-        for (var i = this.planStart; i < this.plan.length; ++i) {
-            var level = this.plan[i];
-            if (!level)
-                continue;
-            if (level.length === 0)
-                continue;
-            var atom = level.pop();
-            if (!atom.destroyed()) {
-                atom.planned = false;
-                atom.pull();
-            }
-            i = this.planStart - 1;
+        while (this.updating.length) {
+            var atom = this.updating.shift();
+            if (!atom.destroyed())
+                atom.actualize();
         }
-        this.reaping.forEach(function (atom) {
-            _this.reaping.delete(atom);
-            if (!atom.slaves)
-                atom.destroyed(true);
-        });
+        while (this.reaping.size) {
+            this.reaping.forEach(function (atom) {
+                _this.reaping.delete(atom);
+                if (!atom.slaves)
+                    atom.destroyed(true);
+            });
+        }
         this.scheduled = false;
     };
     $mol_atom.restore = function () {
         this.stack.splice(0, this.stack.length);
     };
     $mol_atom.stack = [];
-    $mol_atom.plan = [];
-    $mol_atom.planStart = 0;
+    $mol_atom.updating = [];
     $mol_atom.reaping = new $mol_set();
     $mol_atom.scheduled = false;
     return $mol_atom;
@@ -1869,11 +1896,10 @@ var $mol_viewer = (function (_super) {
                 _this.event(name, event);
             });
         });
-        this.DOMNodeState(void 0);
-        this.DOMNodeContent(void 0);
         return next;
     };
-    $mol_viewer.prototype.DOMNodeContent = function () {
+    $mol_viewer.prototype.DOMTree = function () {
+        var _this = this;
         var diff = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             diff[_i - 0] = arguments[_i];
@@ -1886,7 +1912,7 @@ var $mol_viewer = (function (_super) {
             for (var i = 0; i < childViews.length; ++i) {
                 var view = childViews[i];
                 if (typeof view === 'object') {
-                    var existsNode = (view instanceof $mol_viewer) ? view.DOMNode() : view;
+                    var existsNode = (view instanceof $mol_viewer) ? view.DOMTree() : view;
                     while (true) {
                         if (!nextNode) {
                             node.appendChild(existsNode);
@@ -1919,16 +1945,6 @@ var $mol_viewer = (function (_super) {
                 node.removeChild(currNode);
             }
         }
-        return null;
-    };
-    $mol_viewer.prototype.DOMNodeState = function () {
-        var _this = this;
-        var diff = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            diff[_i - 0] = arguments[_i];
-        }
-        var childs = this.DOMNodeContent();
-        var node = this.DOMNode();
         this.attr_keys().forEach(function (name) {
             var n = _this.attr(name);
             if ((n == null) || (n === false)) {
@@ -1953,7 +1969,7 @@ var $mol_viewer = (function (_super) {
             if (obj[field] !== val)
                 obj[field] = val;
         });
-        return null;
+        return node;
     };
     $mol_viewer.prototype.attr_keys = function () { return ['mol_viewer_error']; };
     $mol_viewer.prototype.attr = function (name) {
@@ -1974,34 +1990,12 @@ var $mol_viewer = (function (_super) {
     $mol_viewer.prototype.focused = function () {
         return $mol_viewer_selection.focused() === this.DOMNode();
     };
-    $mol_viewer.prototype.destroyed = function () {
-        var diff = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            diff[_i - 0] = arguments[_i];
-        }
-        if (diff[0]) {
-            var atoms = this['$mol_atom_state'];
-            if (atoms) {
-                for (var key in atoms) {
-                    if (!atoms.hasOwnProperty(key))
-                        continue;
-                    if (!atoms[key])
-                        continue;
-                    atoms[key].destroyed(true);
-                }
-            }
-        }
-        return _super.prototype.destroyed.apply(this, diff);
-    };
     $mol_viewer.prototype.text = function (text) {
         return text;
     };
     __decorate([
         $mol_prop()
     ], $mol_viewer.prototype, "heightAvailable", null);
-    __decorate([
-        $mol_prop()
-    ], $mol_viewer.prototype, "DOMNodeContent", null);
     __decorate([
         $mol_prop({
             fail: function (self, error) {
@@ -2012,7 +2006,7 @@ var $mol_viewer = (function (_super) {
                 return error;
             }
         })
-    ], $mol_viewer.prototype, "DOMNodeState", null);
+    ], $mol_viewer.prototype, "DOMTree", null);
     __decorate([
         $mol_prop()
     ], $mol_viewer, "root", null);
@@ -2023,6 +2017,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     for (var i = nodes.length - 1; i >= 0; --i) {
         var view = window['$'][nodes[i].getAttribute('mol_viewer_root')].root(i);
         view.DOMNode(nodes[i]);
+        view.DOMTree();
     }
     $mol_defer.run();
 });
@@ -2196,38 +2191,7 @@ var $;
         function $mol_scroller() {
             _super.apply(this, arguments);
         }
-        $mol_scroller.prototype.scrollTop = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : (0);
-        };
-        $mol_scroller.prototype.scrollLeft = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : (0);
-        };
-        $mol_scroller.prototype.field = function (key) {
-            switch (key) {
-                case "scrollTop": return this.scrollTop();
-                case "scrollLeft": return this.scrollLeft();
-                default: return _super.prototype["field"] && _super.prototype["field"].call(this, key);
-            }
-        };
-        $mol_scroller.prototype.field_keys = function () {
-            return ["scrollTop", "scrollLeft"].concat(_super.prototype["field_keys"] && _super.prototype["field_keys"].call(this) || []);
-        };
         $mol_scroller.prototype.eventScroll = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : (null);
-        };
-        $mol_scroller.prototype.eventWheel = function () {
             var diff = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
@@ -2243,25 +2207,15 @@ var $;
                 case "scroll": return this.eventScroll.apply(this, diff);
                 case "overflow": return this.eventScroll.apply(this, diff);
                 case "underflow": return this.eventScroll.apply(this, diff);
-                case "wheel": return this.eventWheel.apply(this, diff);
                 default: return _super.prototype["event"] && _super.prototype["event"].apply(this, [key].concat(diff));
             }
         };
         $mol_scroller.prototype.event_keys = function () {
-            return ["scroll", "overflow", "underflow", "wheel"].concat(_super.prototype["event_keys"] && _super.prototype["event_keys"].call(this) || []);
+            return ["scroll", "overflow", "underflow"].concat(_super.prototype["event_keys"] && _super.prototype["event_keys"].call(this) || []);
         };
         __decorate([
             $mol_prop()
-        ], $mol_scroller.prototype, "scrollTop", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_scroller.prototype, "scrollLeft", null);
-        __decorate([
-            $mol_prop()
         ], $mol_scroller.prototype, "eventScroll", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_scroller.prototype, "eventWheel", null);
         return $mol_scroller;
     }($mol_viewer));
     $.$mol_scroller = $mol_scroller;
@@ -2293,38 +2247,22 @@ var $;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     diff[_i - 0] = arguments[_i];
                 }
-                return this.local.apply(this, ['scrollTop()'].concat(diff)) || 0;
+                return this.DOMNode().scrollTop;
             };
             $mol_scroller.prototype.scrollLeft = function () {
                 var diff = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     diff[_i - 0] = arguments[_i];
                 }
-                return this.local.apply(this, ['scrollLeft()'].concat(diff)) || 0;
+                return this.DOMNode().scrollLeft;
             };
             $mol_scroller.prototype.eventScroll = function () {
                 var diff = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     diff[_i - 0] = arguments[_i];
                 }
-                var el = diff[0].target;
-                this.scrollTop(el.scrollTop);
-                this.scrollLeft(el.scrollLeft);
-                diff[0].preventDefault();
-            };
-            $mol_scroller.prototype.eventWheel = function () {
-                var diff = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    diff[_i - 0] = arguments[_i];
-                }
-                if (diff[0].defaultPrevented)
-                    return;
-                var target = this.DOMNode();
-                if ((target.scrollHeight > target.offsetHeight) || (target.scrollWidth > target.offsetWidth)) {
-                    diff[0].preventDefault();
-                    target.scrollTop -= diff[0].wheelDeltaY;
-                    target.scrollLeft -= diff[0].wheelDeltaX;
-                }
+                this.scrollTop(void 0);
+                this.scrollLeft(void 0);
             };
             $mol_scroller.prototype.childsVisible = function () {
                 var heightAvailable = this.heightAvailable() + this.scrollTop();
@@ -2352,9 +2290,6 @@ var $;
             __decorate([
                 $mol_prop()
             ], $mol_scroller.prototype, "eventScroll", null);
-            __decorate([
-                $mol_prop()
-            ], $mol_scroller.prototype, "eventWheel", null);
             return $mol_scroller;
         }($.$mol_scroller));
         $mol.$mol_scroller = $mol_scroller;

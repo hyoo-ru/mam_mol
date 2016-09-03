@@ -63,7 +63,7 @@
 								]
 							},
 							"": [
-								"mol/log/log.ts"
+								"mol/log/log.env=web.ts"
 							]
 						},
 						"": [
