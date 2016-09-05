@@ -13,12 +13,14 @@
 	justify-content: space-between;
 	flex: 0 0 auto;
 	overflow: hidden;
+	position: relative;
 }
 
 [mol_pager_titler] {
 	flex: 1;
 	display: flex;
 	justify-content: center;
+	padding: 1rem;
 }
 
 [mol_pager_bodier] {

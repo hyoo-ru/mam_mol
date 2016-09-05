@@ -1,0 +1,9 @@
+$mol_decker $mol_lister
+	items /
+	rows /
+		< switcher $mol_switcher value > itemCurrent null
+		< content null
+
+$mol_decker_item $mol_object
+	title =
+	content null

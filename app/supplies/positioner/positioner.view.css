@@ -1,0 +1,61 @@
+[mol_app_supplies_positioner] {
+	flex: 1 1 auto;
+}
+[mol_app_supplies_positioner_grouper] {
+	align-items: stretch;
+	padding: 0;
+	box-shadow: none;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[mol_app_supplies_positioner_grouper] > * {
+	align-items: baseline;
+}
+
+[mol_app_supplies_positioner_mainGroup] {
+	flex: 1 1 16rem;
+	background: hsla(137,50%,98%,1);
+}
+
+[mol_app_supplies_positioner_addonGroup] {
+	flex: 1 1 16rem;
+	background: hsla(216,50%,98%,1);
+}
+
+[mol_app_supplies_positioner_supplyGroup] {
+	flex: 1 1 22rem;
+	background: hsla(0,50%,98%,1);
+	flex-direction: row-reverse;
+}
+
+[mol_app_supplies_positioner_divisionItem] {
+	flex: 1 1 8rem;
+}
+
+[mol_app_supplies_positioner_productItem] {
+	flex: 1 1 8rem;
+}
+
+[mol_app_supplies_positioner_priceItem] {
+	flex: 1 0 5rem;
+	text-align: right;
+}
+
+[mol_app_supplies_positioner_quantityItem] {
+	flex: 1 0 2rem;
+	text-align: right;
+}
+
+[mol_app_supplies_positioner_costItem] {
+	flex: 1 0 5rem;
+	text-align: right;
+}
+
+[mol_app_supplies_positioner_supplyDateItem] {
+	flex: 0 0 6rem;
+}
+
+[mol_app_supplies_positioner_storeItem] {
+	flex: 1 1 8rem;
+}

@@ -39,4 +39,8 @@
 
 [mol_app_demo_pager_backer] {
 	color: var(--mol_skin_base_fore);
+	display: flex;
+	align-items: center;
+	position: absolute;
+	height: 100%;
 }

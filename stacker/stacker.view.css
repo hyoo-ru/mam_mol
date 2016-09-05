@@ -23,7 +23,7 @@
 	position: relative;
 	display: flex;
 	background: var(--mol_skin_light_back);
-	flex: 1000 1 66%;
+	flex: 1000 1 50%;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
 	max-width: 100%;
 }

@@ -1,0 +1,26 @@
+[mol_switcher] {
+	display: flex;
+	flex-wrap: wrap;
+	flex: 1 1 auto;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
+	border-radius: var(--mol_skin_round);
+	background: rgba(0,0,0,.05);
+	padding: .125rem;
+}
+
+[mol_switcher_optioner] {
+	padding: .5rem .75rem;
+	margin: .125rem;
+	flex: 1 1 auto;
+}
+
+[mol_switcher_optioner]:before {
+	display: none;
+}
+
+[mol_switcher_optioner][mol_checker_checked] {
+	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
+	background: white;
+	/*background: var(--mol_skin_focus_back);*/
+	/*color: var(--mol_skin_focus_fore);*/
+}
