@@ -74,6 +74,8 @@ class $mol_file extends $mol_object {
 				$node.fs.unlinkSync( this.path() )
 			}
 			
+			this.stat( void 0 )
+			
 			return diff[0]
 		}
     }
