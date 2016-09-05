@@ -7,6 +7,6 @@ $mol_test( test => {
 	graph.link( 'C' , 'D' , { priority : 0 } )
 	graph.link( 'D' , 'A' , { priority : -1 } )
 
-	test.equal( graph.sorted( edge => edge.priority ).join(''), 'CDAB' )
+	test.equal( graph.sorted( edge => edge.priority ).join(''), 'BADC' )
 	
 } )

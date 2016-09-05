@@ -55,8 +55,10 @@ class $mol_graph< Node , Edge > {
 				if( weight <= weights[ index + 1 ] ) return
 			}
 
-			visited.push( id )
-			weights.push( weight )
+			if( weight != null ) {
+				visited.push(id)
+				weights.push(weight)
+			}
 
 			var deps = this.edgesOut[ id ];
 			for( var dep in deps ) {
@@ -66,7 +68,7 @@ class $mol_graph< Node , Edge > {
 			if( sorted.indexOf( id ) === -1 ) sorted.push( id )
 		}
 		
-		pending.forEach( id => visit( id , 0 ) )
+		pending.forEach( id => visit( id , null ) )
 		
 		return sorted
 	}
