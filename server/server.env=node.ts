@@ -1,28 +1,28 @@
 class $mol_server extends $mol_object {
 
-    @ $mol_prop()
-    express() {
-    	var express = $node.express()
+	@ $mol_prop()
+	express() {
+		var express = $node.express()
 	
 		this.expressHandlers().forEach( plugin => express.use( plugin ) )
 
 		express.listen( this.port() )
-		console.log( `${this.messageStart()} at ${this.port()} port.` )
+		console.log( this.messageStart() )
 
 		return express
-    }
-    
-    messageStart() {
-    	return 'Server started'
 	}
 	
-    expressHandlers() {
-    	return [
+	messageStart() {
+		return `${this.objectPath()} started at http://127.0.0.1:${this.port()}/`
+	}
+	
+	expressHandlers() {
+		return [].concat.apply( [] , [
 			this.expressCompressor() ,
 			this.expressBodier() ,
 			this.expressGenerator() ,
 			this.expressFiler() ,
-		]
+		] )
 	}
 	
 	expressCompressor() {
@@ -42,27 +42,7 @@ class $mol_server extends $mol_object {
 	}
 	
 	expressGenerator() {
-		return ( req , res , next )=> {
-			try {
-				return this.generator(req.url) || next()
-			} catch( error ) {
-				$mol_atom_restore( error )
-				throw error
-			}
-		}
-	}
-	
-	@ $mol_prop()
-	generator( path : string ) {
-		var matched = path.match( /^((?:\/\w+)+)\/-\/(\w+(?:.\w+)+)$/ )
-		if( !matched ) return null
-		
-		var [ path , module , bundle ] = matched
-		var build = $mol_build.relative({ path : `.${module}` })
-		
-		build.bundle( bundle )
-		
-		return null
+		return ( req , res , next )=> next()
 	}
 	
 	bodyLimit() {
@@ -73,15 +53,12 @@ class $mol_server extends $mol_object {
 		return 1000 * 60 * 60 * 24 * 365 * 1000
 	}
 	
-    port() {
-    	return 80
-    }
+	port() {
+		return 80
+	}
 
-    rootPublic() {
-    	return '.'
-    }
-    
+	rootPublic() {
+		return '.'
+	}
+	
 }
-
-var server = new $mol_server()
-server.express()
