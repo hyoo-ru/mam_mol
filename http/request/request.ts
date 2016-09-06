@@ -1,5 +1,7 @@
 class $mol_http_request extends $mol_object {
 	
+	static XMLHttpRequest = XMLHttpRequest
+	
 	uri() { return '' }
 	method() { return 'get' }
 	body() { return null }
@@ -8,7 +10,7 @@ class $mol_http_request extends $mol_object {
 	native() {
 		if( this['native()'] ) return this['native()']
 		
-		var next = this['native()'] = new XMLHttpRequest
+		var next = this['native()'] = new (this.Class().XMLHttpRequest)
 		next.open( this.method() , this.uri() )
 		
 		next.onload = event => {

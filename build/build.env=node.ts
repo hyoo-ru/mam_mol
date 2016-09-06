@@ -209,7 +209,7 @@ class $mol_build extends $mol_object {
 
 		bundle = bundle && bundle.replace( /\.map$/ , '' )
 		
-		var envsDef = [ 'node' , 'web' ]
+		var envsDef = [ 'web' , 'node' ]
 		var envs = envsDef.slice()
 		var stages = [ 'test' , 'dev' ]
 		
