@@ -143,7 +143,7 @@ class $mol_atom< Value > extends $mol_object {
 			for( var i = 0 ; i < next.length ; ++i ) {
 				if( next[i] !== prev[i] ) break comparing
 			}
-			next = prev
+			next = <any> prev
 		}
 		if( prev !== next ) {
 			if( next instanceof $mol_object ) {

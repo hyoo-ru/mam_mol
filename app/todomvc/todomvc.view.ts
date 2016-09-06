@@ -3,10 +3,6 @@ interface $mol_app_todomvc_task {
 	title : string
 }
 
-interface KeyboardEvent {
-	code : string
-}
-
 module $.$mol {
 	
 	export class $mol_app_todomvc_taskRow_adder extends $.$mol_app_todomvc_taskRow_adder {
