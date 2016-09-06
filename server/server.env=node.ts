@@ -6,14 +6,20 @@ class $mol_server extends $mol_object {
 	
 		this.expressHandlers().forEach( plugin => express.use( plugin ) )
 
-		express.listen( this.port() )
-		console.log( this.messageStart() )
+		$node.portastic.find({
+			min : this.port() ,
+			max : this.port() + 1000 ,
+			retrieve : 1
+		}).then( ports => {
+			express.listen( ports[0] )
+			console.log( this.messageStart( ports[0] ) )
+		} )
 
 		return express
 	}
 	
-	messageStart() {
-		return `${this.objectPath()} started at http://127.0.0.1:${this.port()}/`
+	messageStart( port : number ) {
+		return `${this.objectPath()} started at http://127.0.0.1:${port}/`
 	}
 	
 	expressHandlers() {
