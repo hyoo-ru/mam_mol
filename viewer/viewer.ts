@@ -135,7 +135,6 @@ class $mol_viewer extends $mol_model {
 							//}
 						}
 					}
-					if( view instanceof $mol_viewer ) view.DOMTree()
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
 						nextNode.nodeValue = String( view )
@@ -152,6 +151,11 @@ class $mol_viewer extends $mol_model {
 				var currNode = nextNode
 				nextNode = currNode.nextSibling
 				node.removeChild( currNode )
+			}
+			
+			for( var i = 0 ; i < childViews.length ; ++i ) {
+				let view = childViews[i]
+				if( view instanceof $mol_viewer ) view.DOMTree()
 			}
 		}
 		
