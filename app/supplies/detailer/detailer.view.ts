@@ -90,6 +90,17 @@ module $.$mol {
 			} ) )
 			supply.attachments( list )
 		}
+		
+		bodier() {
+			return new $mol_scroller().setup( obj => {
+				obj.childs = ()=> [ this.body() ]
+				obj.scrollTop = ( ...diff )=> this.scrollTop( this.supply().id() , ...diff )
+			} )
+		}
+		
+		scrollTop( supplyId : string , ...diff : number[] ) {
+			return this.session( `scrollTop("${supplyId}")` , ...diff )
+		}
 
 	}
 }
