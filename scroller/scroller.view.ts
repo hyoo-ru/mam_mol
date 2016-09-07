@@ -3,21 +3,21 @@ module $.$mol {
 
 		@ $mol_prop()
 		scrollTop( ...diff : number[] ) {
-			return this.DOMNode().scrollTop
-			// return this.local<number>( 'scrollTop()' , ...diff ) || 0
+			// return this.DOMNode().scrollTop
+			return this.history<number>( 'scrollTop()' , ...diff ) || 0
 		}
 
 		@ $mol_prop()
 		scrollLeft( ...diff : number[] ) {
-			return this.DOMNode().scrollLeft
-			// return this.local<number>( 'scrollLeft()' , ...diff ) || 0
+			// return this.DOMNode().scrollLeft
+			return this.history<number>( 'scrollLeft()' , ...diff ) || 0
 		}
 
 		@ $mol_prop()
 		eventScroll( ...diff : Event[] ) {
-			// var el = ( diff[0].target as HTMLElement )
-			this.scrollTop( void 0 )
-			this.scrollLeft( void 0 )
+			var el = ( diff[0].target as HTMLElement )
+			this.scrollTop( el.scrollTop )
+			this.scrollLeft( el.scrollLeft )
 			// diff[0].preventDefault()
 		}
 
