@@ -1,5 +1,12 @@
 class $mol_model extends $mol_object {
 
+	static history< Value >( key : string , ...diff : Value[] ) {
+		return $mol_state_history.value( `${this}.${key}` , ...diff )
+	}
+	history< Value >( key : string , ...diff : Value[] ) {
+		return $mol_state_history.value( `${this}.${key}` , ...diff )
+	}
+
 	static session< Value >( key : string , ...diff : Value[] ) {
 		return $mol_state_session.value( `${this}.${key}` , ...diff )
 	}
