@@ -115,7 +115,7 @@ class $mol_viewer extends $mol_model {
 				let view = childViews[i]
 
 				if( typeof view === 'object' ) {
-					var existsNode = ( view instanceof $mol_viewer ) ? view.DOMTree() : view
+					var existsNode = ( view instanceof $mol_viewer ) ? view.DOMNode() : view
 					while( true ) {
 						if( !nextNode ) {
 							node.appendChild( existsNode )
@@ -135,7 +135,7 @@ class $mol_viewer extends $mol_model {
 							//}
 						}
 					}
-					// if( view instanceof $mol_viewer ) view.DOMTree()
+					if( view instanceof $mol_viewer ) view.DOMTree()
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
 						nextNode.nodeValue = String( view )
