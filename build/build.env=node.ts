@@ -328,7 +328,7 @@ class $mol_build extends $mol_object {
 			root = root ? root.append( root2 ) : root2
 		} )
 
-		var cssnext = $node.cssnext
+		var cssnext = $node['postcss-cssnext']
 		var processor = $node.postcss( cssnext( null , {
 			features : {
 				customProperties: {
