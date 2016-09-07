@@ -12,33 +12,30 @@ class $mol_atom< Value > extends $mol_object {
 	status = $mol_atom_status.obsolete
 	autoFresh = false
 
-	host : { objectPath() : string } = this
-
 	constructor(
-		host : { objectPath() : string } ,
+		public host : { objectPath() : string } ,
 		public field = 'value()' ,
 		public handler : ( ...diff : (Value|Error)[] )=> Value ,
 		public fail? : ( host : any , error : Error )=> Value|Error ,
 		public key? : any
 	) {
 		super()
-		
-		this.host = host || this
 	}
 	
 	destroyed( ...diff : boolean[] ) {
 		if( diff[0] ) {
 			this.unlink()
 			
-			var value = this.host[ this.field ]
+			var host = this.host || this
+			var value = host[ this.field ]
 			if( value instanceof $mol_object ) {
-				if( ( value.objectOwner() === this.host ) && ( value.objectField() === this.field ) ) {
+				if( ( value.objectOwner() === host ) && ( value.objectField() === this.field ) ) {
 					value.destroyed( true );
 				}
 			}
 			
-			this.host[ this.field ] = void 0
-			this.host[ '$mol_atom_state' ][ this.field ] = void 0
+			host[ this.field ] = void 0
+			host[ '$mol_atom_state' ][ this.field ] = void 0
 			
 			this['destroyed()'] = true
 			this.log([ '.destroyed()' , true , 'atom' ])
@@ -55,7 +52,7 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	objectPath() {
-		return this.host.objectPath() + '.' + this.field
+		return this.host ? this.host.objectPath() + '.' + this.field : this.field
 	}
 	
 	get() {
@@ -69,7 +66,7 @@ class $mol_atom< Value > extends $mol_object {
 		
 		this.actualize()
 		
-		var value : Value|Error = this.host[ this.field ]
+		var value : Value|Error = ( this.host || this )[ this.field ]
 		
 		if( value instanceof Error ) throw value
 		return value
@@ -91,7 +88,7 @@ class $mol_atom< Value > extends $mol_object {
 			} 
 		}
 		
-		var value = this.host[ this.field ]
+		var value = ( this.host || this )[ this.field ]
 		return this.pull() !== value
 	}
 	
@@ -109,34 +106,38 @@ class $mol_atom< Value > extends $mol_object {
 		
 		var index = $mol_atom.stack.length
 		$mol_atom.stack.push( this )
+		
+		var host = this.host || this
 		if( this.key !== void 0 ) {
-			var next = this.handler.call( this.host , this.key )
+			var next = this.handler.call( host , this.key )
 		} else {
-			var next = this.handler.call( this.host )
+			var next = this.handler.call( host )
 		}
-		if( next === void 0 ) next = this.host[ this.field ]
+		if( next === void 0 ) next = host[ this.field ]
 		$mol_atom.stack.length = index
 		
 		return this.push( next )
 	}
 	
 	set( ...diff : (Value|Error)[] ) {
+		var host  =this.host || this
 		if( this.key !== void 0 ) {
-			var next = this.handler.call( this.host , this.key , ...diff )
+			var next = this.handler.call( host , this.key , ...diff )
 		} else {
-			var next = this.handler.call( this.host , ...diff )
+			var next = this.handler.call( host , ...diff )
 		}
-		if( next === void 0 ) return this.host[ this.field ]
+		if( next === void 0 ) return host[ this.field ]
 		return this.push( next )
 	}
 	
 	push( next : Value|Error ) {
-		var prev = this.host[ this.field ]
+		var host = this.host || this
+		var prev = host[ this.field ]
 		if( next instanceof Error && this.fail ) {
 			if( this.key !== void 0 ) {
-				next = this.fail.call( this.host , this.key , this.host , <Error> next )
+				next = this.fail.call( host , this.key , host , <Error> next )
 			} else {
-				next = this.fail.call( this.host , this.host , <Error> next )
+				next = this.fail.call( host , host , <Error> next )
 			}
 		}
 		comparing: if(( next instanceof Array )&&( prev instanceof Array )&&( next.length === prev.length )) {
@@ -148,9 +149,9 @@ class $mol_atom< Value > extends $mol_object {
 		if( prev !== next ) {
 			if( next instanceof $mol_object ) {
 				next['objectField']( this.field ) // FIXME: type checking
-				next['objectOwner']( this.host ) // FIXME: type checking
+				next['objectOwner']( host ) // FIXME: type checking
 			}
-			this.host[ this.field ] = next
+			host[ this.field ] = next
 			this.log([ 'push' , next , prev ])
 			this.obsoleteSlaves()
 		}
@@ -309,7 +310,7 @@ function $mol_atom_task< Value >(
 	fail? : ( error : Error )=> Error|Value ,
 	autoFresh = true
 ) {
-	var atom = new $mol_atom( null , null , handler , fail )
+	var atom = new $mol_atom( null , 'value()' , handler , fail )
 	atom.autoFresh = autoFresh
 	$mol_atom.actualize( atom )
 	return atom
