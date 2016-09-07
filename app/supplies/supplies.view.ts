@@ -1,5 +1,9 @@
 module $.$mol {
 	export class $mol_app_supplies extends $.$mol_app_supplies {
+		
+		entered( ...diff : boolean[] ) {
+			return this.session( 'entered()' , ...diff ) || false
+		}
 
 		childs() {
 			return [
@@ -12,7 +16,7 @@ module $.$mol {
 		
 		main() {
 			return this.supply()
-				? this.detailer()
+				? [ this.detailer() ]
 				: null
 		}
 
