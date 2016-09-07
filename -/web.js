@@ -2006,8 +2006,6 @@ var $mol_viewer = (function (_super) {
                             break;
                         }
                     }
-                    if (view instanceof $mol_viewer)
-                        view.DOMTree();
                 }
                 else {
                     if (nextNode && nextNode.nodeName === '#text') {
@@ -2024,6 +2022,11 @@ var $mol_viewer = (function (_super) {
                 var currNode = nextNode;
                 nextNode = currNode.nextSibling;
                 node.removeChild(currNode);
+            }
+            for (var i = 0; i < childViews.length; ++i) {
+                var view = childViews[i];
+                if (view instanceof $mol_viewer)
+                    view.DOMTree();
             }
         }
         this.attr_keys().forEach(function (name) {
@@ -2296,14 +2299,14 @@ var $;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     diff[_i - 0] = arguments[_i];
                 }
-                return this.history.apply(this, ['scrollTop()'].concat(diff)) || 0;
+                return this.session.apply(this, ['scrollTop()'].concat(diff)) || 0;
             };
             $mol_scroller.prototype.scrollLeft = function () {
                 var diff = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     diff[_i - 0] = arguments[_i];
                 }
-                return this.history.apply(this, ['scrollLeft()'].concat(diff)) || 0;
+                return this.session.apply(this, ['scrollLeft()'].concat(diff)) || 0;
             };
             $mol_scroller.prototype.eventScroll = function () {
                 var diff = [];
@@ -7709,6 +7712,26 @@ var $;
                     obj.urlThumb = obj.urlLoad = url;
                 }));
                 supply.attachments(list);
+            };
+            $mol_app_supplies_detailer.prototype.bodier = function () {
+                var _this = this;
+                return new $mol.$mol_scroller().setup(function (obj) {
+                    obj.childs = function () { return [_this.body()]; };
+                    obj.scrollTop = function () {
+                        var diff = [];
+                        for (var _i = 0; _i < arguments.length; _i++) {
+                            diff[_i - 0] = arguments[_i];
+                        }
+                        return _this.scrollTop.apply(_this, [_this.supply().id()].concat(diff));
+                    };
+                });
+            };
+            $mol_app_supplies_detailer.prototype.scrollTop = function (supplyId) {
+                var diff = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    diff[_i - 1] = arguments[_i];
+                }
+                return this.session.apply(this, ["scrollTop(\"" + supplyId + "\")"].concat(diff));
             };
             __decorate([
                 $mol_prop()

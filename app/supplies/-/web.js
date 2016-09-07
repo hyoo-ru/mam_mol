@@ -3040,14 +3040,14 @@ var $;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     diff[_i - 0] = arguments[_i];
                 }
-                return this.history.apply(this, ['scrollTop()'].concat(diff)) || 0;
+                return this.session.apply(this, ['scrollTop()'].concat(diff)) || 0;
             };
             $mol_scroller.prototype.scrollLeft = function () {
                 var diff = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     diff[_i - 0] = arguments[_i];
                 }
-                return this.history.apply(this, ['scrollLeft()'].concat(diff)) || 0;
+                return this.session.apply(this, ['scrollLeft()'].concat(diff)) || 0;
             };
             $mol_scroller.prototype.eventScroll = function () {
                 var diff = [];
@@ -4978,6 +4978,9 @@ var $;
         function $mol_switcher() {
             _super.apply(this, arguments);
         }
+        $mol_switcher.prototype.heightMinimal = function () {
+            return 44;
+        };
         $mol_switcher.prototype.value = function () {
             return null;
         };
@@ -6818,6 +6821,26 @@ var $;
                     obj.urlThumb = obj.urlLoad = url;
                 }));
                 supply.attachments(list);
+            };
+            $mol_app_supplies_detailer.prototype.bodier = function () {
+                var _this = this;
+                return new $mol.$mol_scroller().setup(function (obj) {
+                    obj.childs = function () { return [_this.body()]; };
+                    obj.scrollTop = function () {
+                        var diff = [];
+                        for (var _i = 0; _i < arguments.length; _i++) {
+                            diff[_i - 0] = arguments[_i];
+                        }
+                        return _this.scrollTop.apply(_this, [_this.supply().id()].concat(diff));
+                    };
+                });
+            };
+            $mol_app_supplies_detailer.prototype.scrollTop = function (supplyId) {
+                var diff = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    diff[_i - 1] = arguments[_i];
+                }
+                return this.session.apply(this, ["scrollTop(\"" + supplyId + "\")"].concat(diff));
             };
             __decorate([
                 $mol_prop()
