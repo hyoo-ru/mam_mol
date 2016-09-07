@@ -96,6 +96,8 @@ class $mol_file extends $mol_object {
 			if (stat.isSymbolicLink()) return 'link'
 			if (stat.isFIFO()) return 'fifo'
 			if (stat.isSocket()) return 'socket'
+		} else {
+			return null
 		}
 		
         throw new Error( `Unknown file type ${this.path()}` )
