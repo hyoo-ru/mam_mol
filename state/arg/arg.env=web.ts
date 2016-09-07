@@ -2,7 +2,7 @@ class $mol_state_arg< Value > extends $mol_object {
 	
 	@ $mol_prop()
 	static href( ...diff : string[] ) {
-		if( diff[0] !== void 0 ) history.replaceState( null , document.title , diff[0] )
+		if( diff[0] !== void 0 ) history.replaceState( history.state , document.title , diff[0] )
 		return window.location.search + window.location.hash
 	}
 	
