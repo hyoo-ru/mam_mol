@@ -3,7 +3,7 @@ module $.$mol {
 
 		@ $mol_prop()
 		value( ...diff : any[] ) {
-			return diff[0]
+			return this.session( 'value()' , ...diff )
 		}
 		
 		@ $mol_prop()
