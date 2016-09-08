@@ -11049,12 +11049,15 @@ var $;
         $mol_perf_uibench_table_row.prototype.tagName = function () {
             return "tr";
         };
+        $mol_perf_uibench_table_row.prototype.className = function () {
+            return "TableRow";
+        };
         $mol_perf_uibench_table_row.prototype.id = function () {
             return 0;
         };
         $mol_perf_uibench_table_row.prototype.attr = function (key) {
             switch (key) {
-                case "class": return "TableRow";
+                case "class": return this.className();
                 case "data-id": return this.id();
                 default: return _super.prototype["attr"] && _super.prototype["attr"].call(this, key);
             }
@@ -11394,7 +11397,7 @@ var $;
             };
             $mol_perf_uibench_table.prototype.dict = function () {
                 var dict = {};
-                this.state().items.forEach(function (val) { return dict[val.id] = val.props; });
+                this.state().items.forEach(function (val) { return dict[val.id] = val; });
                 return dict;
             };
             $mol_perf_uibench_table.prototype.rows = function () {
@@ -11404,7 +11407,6 @@ var $;
             $mol_perf_uibench_table.prototype.row = function (id) {
                 var _this = this;
                 return new $mol_perf_uibench_table_row().setup(function (obj) {
-                    obj.id = $mol_const(id);
                     obj.state = function () { return _this.dict()[id] || []; };
                 });
             };
@@ -11429,19 +11431,28 @@ var $;
                 _super.apply(this, arguments);
             }
             $mol_perf_uibench_table_row.prototype.state = function () {
-                return [];
+                return { props: [], active: false, id: 0 };
             };
             $mol_perf_uibench_table_row.prototype.headerText = function () {
                 return '#' + this.id();
             };
+            $mol_perf_uibench_table_row.prototype.id = function () {
+                return this.state().id;
+            };
+            $mol_perf_uibench_table_row.prototype.active = function () {
+                return false;
+            };
+            $mol_perf_uibench_table_row.prototype.className = function () {
+                return _super.prototype.className.call(this) + (this.state().active ? ' active' : '');
+            };
             $mol_perf_uibench_table_row.prototype.cells = function () {
                 var _this = this;
-                return (this.state() || []).map(function (v, j) { return _this.cell(j); });
+                return (this.state().props || []).map(function (v, j) { return _this.cell(j); });
             };
             $mol_perf_uibench_table_row.prototype.cell = function (id) {
                 var _this = this;
                 return new $mol_perf_uibench_table_cell().setup(function (obj) {
-                    obj.text = function () { return _this.state()[id]; };
+                    obj.text = function () { return _this.state().props[id]; };
                 });
             };
             __decorate([
