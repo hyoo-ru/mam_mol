@@ -11,17 +11,26 @@ function $mol_viewer_tree2ts( tree ) {
 		parent.childs.forEach( function( param ) { addProp( param ) } )
 		
 		function addProp( param , needCache = false ) {
-			if( !param.type || /^-/.test( param.type ) ) return
-			
 			var needKey = false
 			var needSet = false
 			var needReturn = true
 			var keys = []
+
+			if( param.type === '>' ) {
+				needCache = true
+				param = param.childs[0]
+			}
+
+			if( param.type === '<' ) {
+				needCache = false
+				param = param.childs[0]
+			}
+
+			if( !param.type || /^-/.test( param.type ) ) return
 			
 			function getValue( value ) {
 				switch( value.type[0] ) {
 					case void 0 :
-						needCache = true
 						return JSON.stringify( value.value )
 					case '-' :
 						return null
@@ -55,7 +64,6 @@ function $mol_viewer_tree2ts( tree ) {
 						} )
 						return 'switch( key ){\n' + opts.join( '' ) + '\t\t\tdefault: return super["' + param.type + '"] && super["' + param.type + '"]( key' + ( needSet ? ' , ...diff' : '' ) + ' )\n\t\t}'
 					case ':' :
-						needCache = true
 						return '( ' + JSON.stringify( value.childs[0] ) + ' )'
 					case '>' :
 						needSet = true

@@ -142,13 +142,15 @@ $mol_test( test => {
 
 /// Wait for data
 $mol_test( test => {
+	
+	var name = 'Jin'
 
 	class Test extends $mol_object {
 
 		@ $mol_prop()
 		source( ...diff : string[] ) : string {
 			new $mol_defer( () => {
-				this.source( void 0 , 'Jin' )
+				this.source( void 0 , name )
 			} )
 			throw new $mol_atom_wait( 'Wait!' )
 		}
@@ -177,5 +179,19 @@ $mol_test( test => {
 	$mol_defer.run()
 
 	test.equal( t.target() , 'Jin' )
+	
+	name = 'John'
+	t.source( void 0 )
+
+	try {
+		t.target()
+	} catch( error ) {
+		test.ok( error instanceof $mol_atom_wait )
+		$mol_atom_restore( error )
+	}
+
+	$mol_defer.run()
+
+	test.equal( t.target() , 'John' )
 	
 } )

@@ -5,5 +5,5 @@ $mol_stringer $mol_viewer
 		type < type =text
 	field *
 		disabled < disabled : false
-		value < valueChanged < value =
+		value < valueChanged > value =
 	event * input > eventChange : null

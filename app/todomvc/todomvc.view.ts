@@ -8,7 +8,7 @@ module $.$mol {
 	export class $mol_app_todomvc_taskRow_adder extends $.$mol_app_todomvc_taskRow_adder {
 		
 		eventPress( ...diff : KeyboardEvent[] ) {
-			switch( diff[0].code || diff[0].key ) {
+			switch( diff[0]['code'] || diff[0].key ) {
 				case 'Enter' : return this.eventDone( event )
 			}
 		}

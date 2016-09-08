@@ -14,7 +14,7 @@ module $.$mol {
 		}
 
 		quantity() {
-			return this.position().quantity()
+			return this.position().quantity().toString()
 		}
 
 		cost() {

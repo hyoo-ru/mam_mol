@@ -94,11 +94,12 @@ module $.$mol {
 		bodier() {
 			return new $mol_scroller().setup( obj => {
 				obj.childs = ()=> [ this.body() ]
-				obj.scrollTop = ( ...diff )=> this.scrollTop( this.supply().id() , ...diff )
+				obj.scrollTop = ( ...diff )=> this.scrollTop( ...diff )
 			} )
 		}
 		
-		scrollTop( supplyId : string , ...diff : number[] ) {
+		scrollTop( ...diff : number[] ) {
+			var supplyId = this.supply() && this.supply().id()
 			return this.session( `scrollTop("${supplyId}")` , ...diff )
 		}
 

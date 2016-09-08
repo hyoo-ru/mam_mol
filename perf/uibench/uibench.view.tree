@@ -15,12 +15,10 @@ $mol_perf_uibench_table_row $mol_viewer
 	heightMinimal 20
 	tagName =tr
 	attr *
-		class =TableRow
+		class < className =TableRow
 		data-id < id 0
 	childs /
-		< header $mol_perf_uibench_table_cell text /
-			=#
-			< id
+		< header $mol_perf_uibench_table_cell text < headerText =
 		< cells /
 
 $mol_perf_uibench_table_cell $mol_viewer

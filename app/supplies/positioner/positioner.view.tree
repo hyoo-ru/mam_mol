@@ -18,7 +18,7 @@ $mol_app_supplies_positioner $mol_carder
 		< supplyGroup $mol_rower childs /
 			< quantityItem $mol_labeler
 				title =Quantity
-				content < quantity 0
+				content < quantity =
 			< supplyDateItem $mol_labeler
 				title =Supply date
 				content < supplyDate =

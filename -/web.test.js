@@ -3,15 +3,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
 });
 //test.env=web.stage=test.js.map
 ;
-$mol_test(function (test) {
-    test.ok(1);
-    test.not(0);
-    test.equal(2, 2);
-    test.unique([3], [3]);
-    test.done();
-});
-//test.stage=test.js.map
-;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -376,6 +367,63 @@ $mol_test(function (test) {
     b.showing(true);
     $mol_defer.run();
     test.unique(b.bar(), bar);
+});
+$mol_test(function (test) {
+    var name = 'Jin';
+    var Test = (function (_super) {
+        __extends(Test, _super);
+        function Test() {
+            _super.apply(this, arguments);
+        }
+        Test.prototype.source = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            new $mol_defer(function () {
+                _this.source(void 0, name);
+            });
+            throw new $mol_atom_wait('Wait!');
+        };
+        Test.prototype.middle = function () {
+            return this.source();
+        };
+        Test.prototype.target = function () {
+            return this.middle();
+        };
+        __decorate([
+            $mol_prop()
+        ], Test.prototype, "source", null);
+        __decorate([
+            $mol_prop()
+        ], Test.prototype, "middle", null);
+        __decorate([
+            $mol_prop()
+        ], Test.prototype, "target", null);
+        return Test;
+    }($mol_object));
+    var t = new Test;
+    try {
+        t.target();
+    }
+    catch (error) {
+        test.ok(error instanceof $mol_atom_wait);
+        $mol_atom_restore(error);
+    }
+    $mol_defer.run();
+    test.equal(t.target(), 'Jin');
+    name = 'John';
+    t.source(void 0);
+    try {
+        t.target();
+    }
+    catch (error) {
+        test.ok(error instanceof $mol_atom_wait);
+        $mol_atom_restore(error);
+    }
+    $mol_defer.run();
+    test.equal(t.target(), 'John');
 });
 //prop.stage=test.js.map
 ;

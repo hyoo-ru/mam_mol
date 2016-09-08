@@ -3,8 +3,8 @@ $mol_attacher $mol_carder contenter $mol_tiler items < content /
 	< adder $mol_attacher_adder fileNew > attachNew =
 
 $mol_attacher_item $mol_linker
-	urlThumb =
-	uri < urlLoad =
+	> urlThumb =
+	uri > urlLoad =
 	field * style.backgroundImage < styleBG =
 	attr * download < loadable true
 

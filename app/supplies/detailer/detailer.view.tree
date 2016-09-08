@@ -43,12 +43,12 @@ $mol_app_supplies_detailer $mol_pager
 						title =Debitor
 						content < debitorName =
 		< attachCarder $mol_sectioner
-			title < attachTitle =Attachments
+			head < attachHead =Attachments
 			content < attacher $mol_attacher
 				items < attachments /
 				attachNew > attachNew null
 		< posLister $mol_sectioner
-			title < posListerTitle /
+			head < posListerHead /
 				=Positions
 				< costItem $mol_labeler
 					title =Cost

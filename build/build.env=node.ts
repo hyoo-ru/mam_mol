@@ -116,9 +116,9 @@ class $mol_build extends $mol_object {
 		sources = sources.map( src => {
 			if( !/(view\.tree)$/.test( src.ext() ) ) return src
 
-			var target = src.parent().resolve( src.name() + '.ts' )
+			var target = src.parent().resolve( `-/${src.name()}.ts` )
 			var tree = $jin_tree2.fromString( String( src.content() ) , src.relate( this.root() ) )
-			target.content( void 0 , $mol_viewer_tree2ts( tree ) )
+			target.content( $mol_viewer_tree2ts( tree ) )
 
 			return target
 		} )
@@ -264,15 +264,8 @@ class $mol_build extends $mol_object {
 		var target = pack.resolve( `-/${bundle}.js` )
 		var targetMap = pack.resolve( `-/${bundle}.js.map` )
 
-		try {
-			var sources = this.sourcesJS({path, exclude})
-			if (!sources.length) return []
-		} catch( error ) {
-			$mol_atom_restore( error )
-			target.content( `console.error( ${ JSON.stringify( error.message ) } )` )
-			this.logBundle( target )
-			return [ target ]
-		}
+		var sources = this.sourcesJS({path, exclude})
+		if (!sources.length) return []
 		
 		var concater = new $node[ 'concat-with-sourcemaps' ]( true, target.name(), '\n;\n' )
 
@@ -303,17 +296,10 @@ class $mol_build extends $mol_object {
 		var target = pack.resolve( `-/${bundle}.test.js` )
 		var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 
-		try {
-			var sourcesAll = this.sourcesJS({ path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) })
-			var sourcesNoTest = this.sourcesJS({ path , exclude })
-			var sources = sourcesAll.filter( src => sourcesNoTest.indexOf( src ) === -1 )
-			if( !sources.length ) return []
-		} catch( error ) {
-			$mol_atom_restore( error )
-			target.content( `console.error( ${ JSON.stringify( error.message ) } )` )
-			this.logBundle( target )
-			return [ target ]
-		}
+		var sourcesAll = this.sourcesJS({ path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) })
+		var sourcesNoTest = this.sourcesJS({ path , exclude })
+		var sources = sourcesAll.filter( src => sourcesNoTest.indexOf( src ) === -1 )
+		if( !sources.length ) return []
 		
 		var concater = new $node[ 'concat-with-sourcemaps' ]( true, target.name(), '\n;\n' )
 

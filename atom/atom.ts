@@ -73,7 +73,13 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	actualize() {
-		if( this.status === $mol_atom_status.actual ) return false
+
+		this.log([ 'actualize' ])
+
+		if( this.status === $mol_atom_status.actual ) return
+		
+		var index = $mol_atom.stack.length
+		$mol_atom.stack.push(this)
 
 		if( this.status === $mol_atom_status.checking ) {
 			
@@ -84,39 +90,31 @@ class $mol_atom< Value > extends $mol_object {
 			
 			if( this.status === $mol_atom_status.checking ) {
 				this.status = $mol_atom_status.actual
-				return false
 			} 
 		}
-		
-		var value = ( this.host || this )[ this.field ]
-		return this.pull() !== value
-	}
-	
-	pull() {
-		this.log([ 'pull' ])
-		
-		var oldMasters = this.masters
-		
-		if( oldMasters ) oldMasters.forEach( master => {
-			//if( this.masters && this.masters.has( master ) ) return
-			master.dislead( this )
-		} )
-		
-		this.masters = null
-		
-		var index = $mol_atom.stack.length
-		$mol_atom.stack.push( this )
-		
-		var host = this.host || this
-		if( this.key !== void 0 ) {
-			var next = this.handler.call( host , this.key )
-		} else {
-			var next = this.handler.call( host )
+
+		if( this.status !== $mol_atom_status.actual ) {
+			this.log(['pull'])
+
+			var oldMasters = this.masters
+			this.masters = null
+
+			if (oldMasters) oldMasters.forEach(master => {
+				master.dislead(this)
+			})
+			
+			var host = this.host || this
+			if( this.key !== void 0 ) {
+				var next = this.handler.call( host , this.key )
+			} else {
+				var next = this.handler.call( host )
+			}
+			if( next === void 0 ) next = host[ this.field ]
+
+			this.push( next )
 		}
-		if( next === void 0 ) next = host[ this.field ]
-		$mol_atom.stack.length = index
 		
-		return this.push( next )
+		$mol_atom.stack.length = index
 	}
 	
 	set( ...diff : (Value|Error)[] ) {
@@ -141,7 +139,7 @@ class $mol_atom< Value > extends $mol_object {
 			}
 		}
 		comparing: if(( next instanceof Array )&&( prev instanceof Array )&&( next.length === prev.length )) {
-			for( var i = 0 ; i < next.length ; ++i ) {
+			for( var i = 0 ; i < next['length'] ; ++i ) {
 				if( next[i] !== prev[i] ) break comparing
 			}
 			next = <any> prev
@@ -175,6 +173,7 @@ class $mol_atom< Value > extends $mol_object {
 	
 	check() {
 		if( this.status === $mol_atom_status.actual ) {
+			this.log([ 'checking' ])
 			this.status = $mol_atom_status.checking
 
 			this.checkSlaves()

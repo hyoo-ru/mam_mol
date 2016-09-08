@@ -43,7 +43,7 @@ module $.$mol {
 			for( var child of childs ) {
 				if( child == null ) continue
 				if( child instanceof $mol_viewer ) {
-					child.heightAvailable( heightAvailable )
+					void ( child as $mol_viewer ).heightAvailable( heightAvailable )
 				}
 				next.push( child )
 			}

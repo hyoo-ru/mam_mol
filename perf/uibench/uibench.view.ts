@@ -44,7 +44,7 @@ module $.$mol {
 		@ $mol_prop()
 		dict() {
 			var dict = {}
-			this.state().items.forEach( val => dict[ val.id ] = val.props )
+			this.state().items.forEach( val => dict[ val.id ] = val )
 			return dict
 		}
 
@@ -56,7 +56,6 @@ module $.$mol {
 		@ $mol_prop()
 		row( id : number ) {
 			return new $mol_perf_uibench_table_row().setup( obj => {
-				obj.id = $mol_const( id )
 				obj.state = ()=> this.dict()[ id ] || []
 			} )
 		}
@@ -66,18 +65,34 @@ module $.$mol {
 	export class $mol_perf_uibench_table_row extends $.$mol_perf_uibench_table_row {
 
 		state() {
-			return []
+			return { props : [] , active : false , id : 0 }
+		}
+		
+		headerText() {
+			return '#' + this.id()
+		}
+
+		id() {
+			return this.state().id
+		}
+
+		active() {
+			return false
+		}
+
+		className() {
+			return super.className() + ( this.state().active ? ' active' : '' )
 		}
 		
 		@ $mol_prop()
 		cells() {
-			return ( this.state() || [] ).map( ( v , j )=> this.cell( j ) )
+			return ( this.state().props || [] ).map( ( v , j )=> this.cell( j ) )
 		}
 
 		@ $mol_prop()
 		cell( id : number ) {
 			return new $mol_perf_uibench_table_cell().setup( obj => {
-				obj.text = ()=> this.state()[ id ]
+				obj.text = ()=> this.state().props[ id ]
 			} )
 		}
 		
