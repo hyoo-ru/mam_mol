@@ -139,3 +139,43 @@ $mol_test( test => {
 	test.unique( b.bar() , bar )
 	
 } )
+
+/// Wait for data
+$mol_test( test => {
+
+	class Test extends $mol_object {
+
+		@ $mol_prop()
+		source( ...diff : string[] ) : string {
+			new $mol_defer( () => {
+				this.source( void 0 , 'Jin' )
+			} )
+			throw new $mol_atom_wait( 'Wait!' )
+		}
+
+		@ $mol_prop()
+		middle() {
+			return this.source()
+		}
+
+		@ $mol_prop()
+		target() {
+			return this.middle()
+		}
+
+	}
+
+	var t = new Test
+
+	try {
+		t.target()
+	} catch( error ) {
+		test.ok( error instanceof $mol_atom_wait )
+		$mol_atom_restore( error )
+	}
+
+	$mol_defer.run()
+
+	test.equal( t.target() , 'Jin' )
+	
+} )
