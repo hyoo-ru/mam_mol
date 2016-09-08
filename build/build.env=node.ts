@@ -162,17 +162,25 @@ class $mol_build extends $mol_object {
 	static dependors : { [ index : string ] : ( source : $mol_file )=> { [ index : string ] : number } } = {}
 	dependencies( { path , exclude } : { path : string , exclude? : string[] } ) {
 		var mod = $mol_file.absolute( path )
-	    switch( mod.type() ) {
-	        case 'file' :
-	            var dependencies = this.Class().dependors[ mod.ext() ]
-	            return dependencies ? dependencies( mod ) : {}
-	        case 'dir' :
-	            var depends = {}
-	            for( var src of this.sources({ path , exclude }) ) {
-	            	$mol_build_depsMerge( depends , this.dependencies({ path : src.path() , exclude }) )
-	            }
-	            return depends
-	    }
+		switch( mod.type() ) {
+			case 'file' :
+				var ext = mod.ext()
+				var dependencies = null
+				while( !dependencies ) {
+					dependencies = this.Class().dependors[ ext ]
+					if( dependencies ) break
+					var extShort = ext.replace( /^\w+\./ , '' )
+					if( ext === extShort ) break
+					ext = extShort
+				}
+				return dependencies ? dependencies( mod ) : {}
+			case 'dir' :
+				var depends = {}
+				for( var src of this.sources({ path , exclude }) ) {
+					$mol_build_depsMerge( depends , this.dependencies({ path : src.path() , exclude }) )
+				}
+				return depends
+		}
 	}
 	
 	@ $mol_prop()
@@ -252,12 +260,19 @@ class $mol_build extends $mol_object {
 	@ $mol_prop()
 	bundleJS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 		var pack = $mol_file.absolute( path )
-		var sources = this.sourcesJS({ path , exclude })
-		if( !sources.length ) return []
 
 		var target = pack.resolve( `-/${bundle}.js` )
 		var targetMap = pack.resolve( `-/${bundle}.js.map` )
 
+		try {
+			var sources = this.sourcesJS({path, exclude})
+			if (!sources.length) return []
+		} catch( error ) {
+			target.content( `console.error( ${ JSON.stringify( error.message ) } )` )
+			this.logBundle( target )
+			return [ target ]
+		}
+		
 		var concater = new $node[ 'concat-with-sourcemaps' ]( true, target.name(), '\n;\n' )
 
 		sources.forEach( function( src ){
@@ -283,14 +298,21 @@ class $mol_build extends $mol_object {
 	@ $mol_prop()
 	bundleTestJS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 		var pack = $mol_file.absolute( path )
-		var sourcesAll = this.sourcesJS({ path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) })
-		var sourcesNoTest = this.sourcesJS({ path , exclude })
-		var sources = sourcesAll.filter( src => sourcesNoTest.indexOf( src ) === -1 )
-		if( !sources.length ) return []
 
 		var target = pack.resolve( `-/${bundle}.test.js` )
 		var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 
+		try {
+			var sourcesAll = this.sourcesJS({ path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) })
+			var sourcesNoTest = this.sourcesJS({ path , exclude })
+			var sources = sourcesAll.filter( src => sourcesNoTest.indexOf( src ) === -1 )
+			if( !sources.length ) return []
+		} catch( error ) {
+			target.content( `console.error( ${ JSON.stringify( error.message ) } )` )
+			this.logBundle( target )
+			return [ target ]
+		}
+		
 		var concater = new $node[ 'concat-with-sourcemaps' ]( true, target.name(), '\n;\n' )
 
 		sources.forEach( function( src ){
@@ -381,7 +403,7 @@ function $mol_build_depsMerge(
 	return target
 }
 
-$mol_build.dependors[ 'ts' ] = $mol_build.dependors[ 'tsx' ] = $mol_build.dependors[ 'view.ts' ] = $mol_build.dependors[ 'jam.js' ] = source => {
+$mol_build.dependors[ 'ts' ] = $mol_build.dependors[ 'tsx' ] = $mol_build.dependors[ 'jam.js' ] = source => {
 	var depends : { [ index : string ] : number } = {}
 	
 	var lines = String( source.content())
@@ -391,7 +413,7 @@ $mol_build.dependors[ 'ts' ] = $mol_build.dependors[ 'tsx' ] = $mol_build.depend
 	
 	lines.forEach( function( line ){
 		var indent = /^([\s\t]*)/.exec( line )
-		var priority = - indent[0].replace( /\t/g, '    ' ).length / 4
+		var priority = - indent[0].replace( /\t/g, '	' ).length / 4
 		 
 		line.replace( /\$([a-z][a-z0-9]+(?:[._][a-z0-9]+)*)/ig , ( str, name )=> {
 			$mol_build_depsMerge( depends , { [ name.replace( /[._-]/g, '/' ) ] : priority } )
@@ -412,7 +434,7 @@ $mol_build.dependors[ 'css' ] = $mol_build.dependors[ 'view.css' ] = source => {
 
 	lines.forEach( function( line ){
 		var indent = /^([\s\t]*)/.exec( line )
-		var priority = - indent[0].replace( /\t/g, '    ' ).length / 4
+		var priority = - indent[0].replace( /\t/g, '	' ).length / 4
 
 		line.replace( /(?:--|[\[\.#])([a-z][a-z0-9]+(?:[-_][a-z0-9]+)+)/ig , ( str, name )=> {
 			$mol_build_depsMerge( depends , { [ name.replace( /[._-]/g, '/' ) ] : priority } )
@@ -431,7 +453,7 @@ $mol_build.dependors[ 'view.tree' ] = source => {
 
 	lines.forEach( function( line ){
 		var indent = /^([\s\t]*)/.exec( line )
-		var priority = - indent[0].replace( /\t/g, '    ' ).length / 4
+		var priority = - indent[0].replace( /\t/g, '	' ).length / 4
 
 		line.replace( /[\$@\.\*]([a-z][a-z0-9]+(?:[-_][a-z0-9]+)*)/ig , ( str, name )=> {
 			$mol_build_depsMerge( depends , { [ name.replace( /[._-]/g, '/' ) ] : priority } )
