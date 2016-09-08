@@ -268,6 +268,7 @@ class $mol_build extends $mol_object {
 			var sources = this.sourcesJS({path, exclude})
 			if (!sources.length) return []
 		} catch( error ) {
+			$mol_atom_restore( error )
 			target.content( `console.error( ${ JSON.stringify( error.message ) } )` )
 			this.logBundle( target )
 			return [ target ]
@@ -308,6 +309,7 @@ class $mol_build extends $mol_object {
 			var sources = sourcesAll.filter( src => sourcesNoTest.indexOf( src ) === -1 )
 			if( !sources.length ) return []
 		} catch( error ) {
+			$mol_atom_restore( error )
 			target.content( `console.error( ${ JSON.stringify( error.message ) } )` )
 			this.logBundle( target )
 			return [ target ]
