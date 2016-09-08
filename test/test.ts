@@ -2,7 +2,7 @@ function $mol_test( code : string | { ( test : $mol_test_case ) : void } ) {
 	$mol_test_all.push( new $mol_test_case( code ) )
 }
 
-var $mol_test_all = []
+var $mol_test_all : $mol_test_case[] = []
 
 var $mol_test_run = () => {
 	for( var test of $mol_test_all ) {
@@ -29,17 +29,17 @@ class $mol_test_case {
 	done() {
 	}
 	
-	ok( value ) {
+	ok( value : any ) {
 		if( value ) return
 		throw new Error( `Not true (${value})` )
 	}
 	
-	not( value ) {
+	not( value : any ) {
 		if( !value ) return
 		throw new Error( `Not false (${value})` )
 	}
 	
-	fail( message ) {
+	fail( message : string ) {
 		throw new Error( message )
 	}
 	
@@ -48,7 +48,7 @@ class $mol_test_case {
 		throw new Error( `Not equal (${a},${b})` )
 	}
 	
-	unique( a , b ) {
+	unique< Value >( a : Value , b : Value ) {
 		if( a !== b ) return
 		throw new Error( `Not unique (${a},${b})` )
 	}

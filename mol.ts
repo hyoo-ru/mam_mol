@@ -8,7 +8,10 @@ this['$'] = this['$'] || this
 this['$']['$mol'] = this['$']
 
 /// Support for static constructors
-var __extends = ( Sub , Sup ) => {
+var __extends = (
+	Sub : Function & { [ key : string ] : any } ,
+	Sup : Function & { [ key : string ] : any }
+) => {
 	for( var prop in Sup ) if( Sup.hasOwnProperty( prop ) ) Sub[ prop ] = Sup[ prop ]
 	Sub.prototype = Object.create( Sup.prototype , {
 		constructor : {
@@ -17,6 +20,6 @@ var __extends = ( Sub , Sup ) => {
 			value : Sub ,
 		}
 	} )
-	if( Sub.initializer ) Sub.initializer()
+	if( Sub['initializer'] ) Sub['initializer']()
 }
 
