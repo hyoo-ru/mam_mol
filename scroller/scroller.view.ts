@@ -36,7 +36,7 @@ module $.$mol {
 		// }
 		
 		childsVisible() {
-			var heightAvailable = this.heightAvailable() + this.scrollTop()
+			var heightAvailable = Math.ceil( ( this.heightAvailable() + this.scrollTop() ) / 20 ) * 20 
 			var childs = this.childs()
 			if( !childs ) return childs
 			var next = []
