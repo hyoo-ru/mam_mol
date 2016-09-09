@@ -47,9 +47,13 @@ function $mol_viewer_tree2ts( tree ) {
 						var overs = []
 						value.childs.forEach( function( over ) {
 							if( /^(-|$)/.test( over.type ) ) return ''
+							var overName = /(.*?)(#?)$/.exec( over.type )
 							var ns = needSet
 							var v = getValue( over.childs[0] )
-							overs.push( '\t\t\t__.' + over.type + ' = (' + ( needSet ? ' ...diff ' : '' ) + ') => ' + v + '\n' )
+							let args = []
+							if( overName[2] ) args.push( ' key ' )
+							if( needSet ) args.push( ' ...diff ' )
+							overs.push( '\t\t\t__.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
 							needSet = ns
 						} )
 						return 'new ' + value.type + '().setup( __ => { \n' + overs.join( '' ) + '\t\t} )'
@@ -99,7 +103,7 @@ function $mol_viewer_tree2ts( tree ) {
 				//if( !child.type ) val = 'this.text( ' + JSON.stringify(def.type+'_'+param.type) + ' )'
 				var propName = /(.*?)(#?)$/.exec( param.type )
 				var args = []
-				if( needKey || propName[2] ) args.push( ' key ' )
+				if( needKey || propName[2] ) args.push( ' key : any ' )
 				if( needCache || needSet ) args.push( ' ...diff ' )
 				if( needCache ) val = ( needReturn ? '( diff[0] !== void 0 ) ? diff[0] : ' : 'if( diff[0] !== void 0 ) return diff[0]\n\t\t' ) + val
 				if( needReturn ) val = 'return ' + val
