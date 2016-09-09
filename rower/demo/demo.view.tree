@@ -2,11 +2,11 @@ $mol_rower_demo $mol_rower
 	heightMinimal 50
 	childs /
 		< titler $mol_stringer
-			hint =Title
-			value > title =
+			hint \Title
+			value > title \
 		< publisher $mol_checker
-			childs / =Shared
+			childs / \Shared
 			checked > publish false
 		< buttonDrop $mol_clicker_minor
-			childs / =Drop
+			childs / \Drop
 			eventClick > eventLog null

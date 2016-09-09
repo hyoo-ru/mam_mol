@@ -6,55 +6,55 @@ $mol_perf_uibench $mol_scroller
 
 $mol_perf_uibench_table $mol_lister
 	state null
-	tagName =table
-	attr * class =Table
+	tagName \table
+	attr * class \Table
 	childs < rows /
 
 $mol_perf_uibench_table_row $mol_viewer
 	state null
 	heightMinimal 20
-	tagName =tr
+	tagName \tr
 	attr *
-		class < className =TableRow
+		class < className \TableRow
 		data-id < id 0
 	childs /
-		< header $mol_perf_uibench_table_cell text < headerText =
+		< header $mol_perf_uibench_table_cell text < headerText \
 		< cells /
 
 $mol_perf_uibench_table_cell $mol_viewer
-	tagName =td
+	tagName \td
 	attr *
-		class =TableCell
-		data-text < text =
+		class \TableCell
+		data-text < text \
 	event * click > eventClick null
 	childs / < text
 
 $mol_perf_uibench_anim $mol_viewer
 	state null
-	attr * class =Anim
+	attr * class \Anim
 	childs < items /
 
 $mol_perf_uibench_anim_box $mol_viewer
 	attr *
-		class =AnimBox
-		data-id < id =
+		class \AnimBox
+		data-id < id \
 	field *
-		style.borderRadius < styleRadius =
-		style.background < styleColor =
+		style.borderRadius < styleRadius \
+		style.background < styleColor \
 	childs < items /
 
 $mol_perf_uibench_tree $mol_viewer
 	state null
-	attr * class =Tree
+	attr * class \Tree
 	childs / < root $mol_perf_uibench_tree_branch state < stateRoot null
 
 $mol_perf_uibench_tree_branch $mol_lister
 	state null
-	tagName =ul
-	attr * class =TreeNode
+	tagName \ul
+	attr * class \TreeNode
 
 $mol_perf_uibench_tree_leaf $mol_viewer
 	heightMinimal 25
-	tagName =li
-	attr * class =TreeLeaf
-	childs / < text =
+	tagName \li
+	attr * class \TreeLeaf
+	childs / < text \

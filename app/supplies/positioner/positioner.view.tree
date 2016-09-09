@@ -3,25 +3,25 @@ $mol_app_supplies_positioner $mol_carder
 	content < grouper $mol_viewer childs /
 		< mainGroup $mol_rower childs /
 			< productItem $mol_labeler
-				title =Product
-				content < productName =
+				title \Product
+				content < productName \
 			< costItem $mol_labeler
-				title =Cost
+				title \Cost
 				content < coster $mol_coster value < cost $mol_unit_money valueOf 0
 		< addonGroup $mol_rower childs /
 			< divisionItem $mol_labeler
-				title =Division
-				content < divisionName =
+				title \Division
+				content < divisionName \
 			< priceItem $mol_labeler
-				title =Price
+				title \Price
 				content < pricer $mol_coster value < price $mol_unit_money valueOf 0
 		< supplyGroup $mol_rower childs /
 			< quantityItem $mol_labeler
-				title =Quantity
-				content < quantity =
+				title \Quantity
+				content < quantity \
 			< supplyDateItem $mol_labeler
-				title =Supply date
-				content < supplyDate =
+				title \Supply date
+				content < supplyDate \
 			< storeItem $mol_labeler
-				title =Store
-				content < storeName =
+				title \Store
+				content < storeName \

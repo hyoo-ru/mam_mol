@@ -11848,7 +11848,7 @@ var $mol_tree = (function () {
         var lines = String(str).split(/\n/);
         lines.forEach(function (line) {
             ++row;
-            var chunks = /^(\t*)((?:[^\n\t= ]+ *)*)(=[^\n]*)?/.exec(line);
+            var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?/.exec(line);
             if (!chunks)
                 new Error("Syntax error at " + baseUri + "#" + row + "\n" + line);
             var indent = chunks[1];
@@ -11916,7 +11916,7 @@ var $mol_tree = (function () {
                 for (var key in json) {
                     if (json[key] === undefined)
                         continue;
-                    if (/^[^\n\t= ]+$/.test(key)) {
+                    if (/^[^\n\t\\ ]+$/.test(key)) {
                         var child = new $mol_tree({
                             type: key,
                             baseUri: baseUri
@@ -11965,7 +11965,7 @@ var $mol_tree = (function () {
             output += "\n";
         }
         else if (this.data.length || prefix.length) {
-            output += "=" + this.data + "\n";
+            output += "\\" + this.data + "\n";
         }
         for (var _i = 0, _a = this.childs; _i < _a.length; _i++) {
             var child = _a[_i];

@@ -117,7 +117,7 @@ class $mol_build extends $mol_object {
 			if( !/(view\.tree)$/.test( src.ext() ) ) return src
 
 			var target = src.parent().resolve( `-/${src.name()}.ts` )
-			var tree = $jin_tree2.fromString( String( src.content() ) , src.relate( this.root() ) )
+			var tree = $mol_tree.fromString( String( src.content() ) , src.relate( this.root() ) )
 			target.content( $mol_viewer_tree2ts( tree ) )
 
 			return target

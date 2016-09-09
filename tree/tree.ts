@@ -73,7 +73,7 @@ class $mol_tree {
 		lines.forEach( line => {
 			++ row
 			
-			var chunks = /^(\t*)((?:[^\n\t= ]+ *)*)(=[^\n]*)?/.exec( line )
+			var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?/.exec( line )
 			if( !chunks ) new Error( `Syntax error at ${baseUri}#${row}\n${line}` )
 			
 			var indent = chunks[1]
@@ -146,7 +146,7 @@ class $mol_tree {
 				var childs = []
 				for( var key in json ) {
 					if( json[key] === undefined ) continue
-					if( /^[^\n\t= ]+$/.test( key ) ) {
+					if( /^[^\n\t\\ ]+$/.test( key ) ) {
 						var child = new $mol_tree({
 							type : key ,
 							baseUri : baseUri
@@ -191,7 +191,7 @@ class $mol_tree {
 			}
 			output += "\n"
 		} else if( this.data.length || prefix.length ) {
-			output += "=" + this.data + "\n"
+			output += "\\" + this.data + "\n"
 		}
 		for( var child of this.childs ) {
 			output += prefix

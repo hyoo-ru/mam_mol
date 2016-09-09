@@ -1,6 +1,6 @@
 $mol_linker $mol_viewer
-	tagName =a
+	tagName \a
 	attr *
-		href < uri =
+		href < uri \
 		mol_linker_current < current : false
 	patch : null

@@ -1,7 +1,7 @@
 $mol_app_demo $mol_stacker
 	main / < lister $mol_scroller childs < items /
 	addon $mol_pager
-		title =Demos
+		title \Demos
 		body < optioner $mol_lister rows < options /
 
 $mol_app_demo_pager $mol_pager
@@ -9,6 +9,6 @@ $mol_app_demo_pager $mol_pager
 		< backer $mol_linker
 			childs / < backerIcon $mol_icon_chevron_left
 			patch < backPatch : dict
-				=demo
+				\demo
 					: null
 		< titler

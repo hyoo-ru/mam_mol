@@ -1,10 +1,10 @@
 $mol_perf_render $mol_viewer childs /
 	< header $mol_viewer childs / < head /
 		< titler $mol_viewer
-			tagName =h2
-			childs / < title =$mol
+			tagName \h2
+			childs / < title \$mol
 		< runner $mol_clicker_major
-			childs / < runnerLabel =Run
+			childs / < runnerLabel \Run
 			eventClick > eventRun null
 	< contenter $mol_scroller childs / < lister $mol_lister rows < rows /
 
@@ -13,4 +13,4 @@ $mol_perf_render_row $mol_viewer
 	heightMinimal 24
 	attr * mol_perf_render_row_selected < selected
 	event * click > eventToggle null
-	childs / < bar $mol_viewer childs / < label =
+	childs / < bar $mol_viewer childs / < label \

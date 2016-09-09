@@ -3,17 +3,17 @@ $mol_app_supplies_enter $mol_viewer
 	childs / < form $mol_form
 		formFields /
 			< loginField $mol_form_field
-				name =Login
+				name \Login
 				errors < loginErrors /
-				control < loginControl $mol_stringer value > login =
+				control < loginControl $mol_stringer value > login \
 			< passwordField $mol_form_field
-				name =Password
+				name \Password
 				errors < passwordErrors /
 				control < passControl $mol_stringer
-					value > password =
-					type =password
+					value > password \
+					type \password
 		buttons /
 			< submit $mol_clicker_major
-				childs / < submitText =Log In
+				childs / < submitText \Log In
 				eventClick > eventSubmit null
 				disabled < submitBlocked false

@@ -1,7 +1,7 @@
 $mol_carder_demo_base $mol_carder
 	content $mol_rower_demo
-	status =pending
+	status \pending
 
 $mol_carder_demo_selected $mol_carder
 	content $mol_rower_demo
-	status =selected
+	status \selected

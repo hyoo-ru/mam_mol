@@ -7,11 +7,11 @@ $mol_app_supplies_carder $mol_carder
 		< linker $mol_linker patch < patch : dict
 	content < grouper $mol_rower childs / < items /
 		< codeItem $mol_labeler
-			title =Code
-			content < code =
+			title \Code
+			content < code \
 		< costItem $mol_labeler
-			title =Cost
+			title \Cost
 			content < coster $mol_coster value < cost $mol_unit_money valueOf 0
 		< providerItem $mol_labeler
-			title =Provider
-			content < providerName =
+			title \Provider
+			content < providerName \

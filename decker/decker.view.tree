@@ -5,5 +5,5 @@ $mol_decker $mol_lister
 		< content null
 
 $mol_decker_item $mol_object
-	title =
+	title \
 	content null
