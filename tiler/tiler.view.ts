@@ -7,7 +7,7 @@ module $.$mol {
 		}
 		
 		@ $mol_prop()
-		groupItems( path : number[] ) {
+		groupItems( path : number[] ) : $mol_viewer[] {
 			var items = ( path.length === 0 )
 				? this.items()
 				: this.groupItems( path.slice( 0 , path.length - 1 ) ) 

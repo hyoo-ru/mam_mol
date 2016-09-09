@@ -3,11 +3,11 @@ module $.$mol {
 
 		@ $mol_prop()
 		names() {
-			var next = []
+			var next : string[] = []
 			for( var name in $ ) {
 				if( !/^\$mol_icon_/i.test( name ) ) continue
 				if( /^\$mol_icon_demo/.test( name ) ) continue
-				if( typeof $[ name ] !== 'function' ) continue
+				if( typeof (<any>$)[ name ] !== 'function' ) continue
 				next.push( name.substring( 1 ) )
 			}
 			return next
@@ -20,7 +20,7 @@ module $.$mol {
 
 		@ $mol_prop()
 		icon( name : string ) {
-			var Class = $[ '$' + name ]
+			var Class : typeof $mol_viewer = (<any>$)[ '$' + name ]
 			return new Class()
 		}
 		

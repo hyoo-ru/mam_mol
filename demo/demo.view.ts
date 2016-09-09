@@ -3,7 +3,7 @@ module $.$mol {
 		
 		@ $mol_prop()
 		widget() {
-			var Class = $[ this.name() ]
+			var Class : typeof $mol_viewer = (<any>$)[ this.name() ]
 			return new Class()
 		}
 		

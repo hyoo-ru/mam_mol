@@ -12,7 +12,7 @@ module $.$mol {
 		
 		eventRun( ...diff : Event[] ) {
 			requestAnimationFrame( ()=> {
-				var data = window[ '_buildData' ]()
+				var data = (<any>window)[ '_buildData' ]()
 				
 				var date = Date.now()
 				

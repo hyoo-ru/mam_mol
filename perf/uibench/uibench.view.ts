@@ -43,14 +43,14 @@ module $.$mol {
 		
 		@ $mol_prop()
 		dict() {
-			var dict = {}
-			this.state().items.forEach( val => dict[ val.id ] = val )
+			var dict : any = {}
+			this.state().items.forEach( ( val : any )=> dict[ val.id ] = val )
 			return dict
 		}
 
 		@ $mol_prop()
 		rows() {
-			return this.state().items.map( ( v , i )=> this.row( v.id ) )
+			return this.state().items.map( ( v : any )=> this.row( v.id ) )
 		}
 
 		@ $mol_prop()
@@ -65,7 +65,7 @@ module $.$mol {
 	export class $mol_perf_uibench_table_row extends $.$mol_perf_uibench_table_row {
 
 		state() {
-			return { props : [] , active : false , id : 0 }
+			return { props : <any[]>[] , active : false , id : 0 }
 		}
 		
 		headerText() {
@@ -86,7 +86,7 @@ module $.$mol {
 		
 		@ $mol_prop()
 		cells() {
-			return ( this.state().props || [] ).map( ( v , j )=> this.cell( j ) )
+			return ( this.state().props || [] ).map( ( v : any , j : number )=> this.cell( j ) )
 		}
 
 		@ $mol_prop()
@@ -111,11 +111,11 @@ module $.$mol {
 	export class $mol_perf_uibench_anim extends $.$mol_perf_uibench_anim {
 		
 		state() {
-			return { items : [] }
+			return { items : <any[]>[] }
 		}
 		
 		items() {
-			return this.state().items.map( ( v , i )=> this.item( i ) )
+			return this.state().items.map( ( v : any , i : number )=> this.item( i ) )
 		}
 		
 		@ $mol_prop()
@@ -154,7 +154,7 @@ module $.$mol {
 	export class $mol_perf_uibench_tree extends $.$mol_perf_uibench_tree {
 
 		state() {
-			return { root : null }
+			return { root : <any>null }
 		}
 
 		stateRoot() {
@@ -166,11 +166,11 @@ module $.$mol {
 	export class $mol_perf_uibench_tree_branch extends $.$mol_perf_uibench_tree_branch {
 
 		state() {
-			return { children : [] }
+			return { children : <any[]>[] }
 		}
 
 		childs() {
-			return ( this.state().children || [] ).map( ( child , i )=> {
+			return ( this.state().children || [] ).map( ( child : any , i : number )=> {
 				return child.container ? this.branch( i ) : this.leaf( i )
 			} )
 		}

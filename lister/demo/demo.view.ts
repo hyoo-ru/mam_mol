@@ -2,7 +2,7 @@ module $.$mol {
 	export class $mol_lister_demo extends $.$mol_lister_demo {
 		
 		rows() {
-			var next = []
+			var next : $mol_viewer[] = []
 			for( var id = 0 ; id < 1000 ; ++id ) {
 				next.push( this.rower( id ) )
 			}

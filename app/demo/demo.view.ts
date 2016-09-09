@@ -16,12 +16,12 @@ module $.$mol {
 		
 		@ $mol_prop()
 		namesDemo() {
-			var next = []
+			var next : string[] = []
 			for( var name in $ ) {
 				if( !/^\$.*_demo($|_)/i.test( name ) ) continue
 				if( /^\$mol_demo/.test( name ) ) continue
 				if( /^\$mol_app_demo/.test( name ) ) continue
-				if( typeof $[ name ] !== 'function' ) continue
+				if( typeof (<{[index : string]:any}>$)[ name ] !== 'function' ) continue
 				next.push( name.substring( 1 ) )
 			}
 			return next
@@ -29,12 +29,12 @@ module $.$mol {
 		
 		@ $mol_prop()
 		namesApp() {
-			var next = []
+			var next : string[] = []
 			for( var name in $ ) {
 				if( !/^\$.*_app(_[a-z0-9]+)?$/i.test( name ) ) continue
 				if( /^\$mol_demo/.test( name ) ) continue
 				if( /^\$mol_app_demo/.test( name ) ) continue
-				if( typeof $[ name ] !== 'function' ) continue
+				if( typeof (<{[index : string]:any}>$)[ name ] !== 'function' ) continue
 				next.push( name.substring( 1 ) )
 			}
 			return next
@@ -80,7 +80,7 @@ module $.$mol {
 
 		@ $mol_prop()
 		widget( name : string ) {
-			var Class = $[ '$' + name ]
+			var Class : typeof $mol_viewer = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class().setup( obj => {
 				obj.argument = () => this.argument().sub( name )
 			} )

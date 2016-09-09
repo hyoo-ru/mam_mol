@@ -25,7 +25,7 @@ module $.$mol {
 			
 			if( value.length === 0 ) return [ 'Input required' ]
 			
-			var errors = []
+			var errors : string[] = []
 			if( value.length < 3 ) errors.push( 'More then 2 letter required' )
 			if( value.indexOf( ' ' ) !== -1 ) errors.push( 'Spaces are forbidden' )
 			return errors

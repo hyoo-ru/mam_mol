@@ -116,7 +116,7 @@ class $mol_tree {
 		return root
 	}
 	
-	static fromJSON( json : any , baseUri = '' ) {
+	static fromJSON( json : any , baseUri = '' ) : $mol_tree {
 		var type = $jin_type( json )
 		switch( type ) {
 			case 'Boolean' :
@@ -134,7 +134,7 @@ class $mol_tree {
 			case 'Array' :
 				return new $mol_tree({
 					type : "list" ,
-					childs : json.map( json => $mol_tree.fromJSON( json , baseUri ) )
+					childs : ( <any[]> json ).map( json => $mol_tree.fromJSON( json , baseUri ) )
 				})
 			case 'Date' :
 				return new $mol_tree({
@@ -143,7 +143,7 @@ class $mol_tree {
 					baseUri : baseUri
 				})
 			case 'Object' :
-				var childs = []
+				var childs : $mol_tree[] = []
 				for( var key in json ) {
 					if( json[key] === undefined ) continue
 					if( /^[^\n\t\\ ]+$/.test( key ) ) {
@@ -169,16 +169,15 @@ class $mol_tree {
 					childs : childs ,
 					baseUri : baseUri
 				})
-			default:
-				throw new Error( `Unsupported type (${type}) at ${baseUri}` )
 		}
+		throw new Error( `Unsupported type (${type}) at ${baseUri}` )
 	}
 	
 	get uri() {
 		return this.baseUri + '#' + this.row + ':' + this.col
 	}
 	
-	toString( prefix = '' ) {
+	toString( prefix = '' ) : string {
 		var output = ''
 		
 		if( this.type.length ) {
@@ -217,13 +216,13 @@ class $mol_tree {
 				var colon = child.select([ ':' ]).childs[0]
 				if( !colon ) throw new Error( `Required colon after key at ${child.uri}` )
 				var val = colon.childs[0].toJSON()
-				if( val !== undefined ) obj[ key ] = val
+				if( val !== undefined ) (<any>obj)[ key ] = val
 			}
 			return obj
 		}
 		
 		if( this.type === 'list' ) {
-			var res = []
+			var res : any[] = []
 			this.childs.forEach( child => {
 				var val = child.toJSON()
 				if( val !== undefined ) res.push( val )
@@ -241,7 +240,7 @@ class $mol_tree {
 	}
 	
 	get value() {
-		var  values = []
+		var values : string[] = []
 		for( var child of this.childs ) {
 			if( child.type ) continue
 			values.push( child.value )

@@ -18,12 +18,12 @@ class $mol_range_common< Value > extends Array< Value > {
 	}
 	
 	valueOf() : Value[] {
-		var list = []
+		var list : Value[] = []
 		this.forEach( val => list.push( val ) )
 		return list
 	}
 
-	concat( ...args ) : Value[] {
+	concat( ...args : any[] ) : Value[] {
 		var ranges = args.map( range => range.valueOf() )
 		return this.valueOf().concat( ...ranges )
 		//return new $mol_range_list( [ this ].concat( args ) )
@@ -42,7 +42,7 @@ class $mol_range_common< Value > extends Array< Value > {
 	}
 
 	join( delim = ',' ) {
-		var list = []
+		var list : Value[] = []
 		this.forEach( val => list.push( val ) )
 		return list.join( delim )
 	}

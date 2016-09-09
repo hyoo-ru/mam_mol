@@ -13,7 +13,7 @@ class $mol_app_users_github extends $mol_http_resource {
 	@ $mol_prop()
 	users( ...diff : string[][] ) {
 		if( diff.length === 0 ) {
-			return this.json().items.map( ({ login }) => login ) as string[]
+			return this.json().items.map( ( item : { login : string } )=> item.login ) as string[]
 		}
 		this.json( diff[0] && { items : diff[0].map( login => ({ login }) ) } )
 	}

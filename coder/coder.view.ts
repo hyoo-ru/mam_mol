@@ -11,11 +11,11 @@ module $.$mol {
 		
 		eventScan() {
 			$mol_cordova.plugins.barcodeScanner.scan(
-				result => {
+				( result : { cancelled : boolean , text : string } )=> {
 					if( result.cancelled ) return
 					this.value( result.text )
 				} ,
-				error => {
+				( error : Error )=> {
 					alert( "Scanning failed: " + error )
 				}
 			);

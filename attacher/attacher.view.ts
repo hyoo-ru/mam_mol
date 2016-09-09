@@ -36,10 +36,10 @@ module $.$mol {
 			
 			diff[0].preventDefault()
 			
-			$mol_cordova_camera().getPicture( url => {
+			$mol_cordova_camera().getPicture( ( url : string )=> {
 				this.fileNew( url )
-			}, error => {
-				this.fileNew( error )
+			}, ( error : Error )=> {
+				this.fileNew( <any> error )
 			}, {
 				quality: 50
 			} )

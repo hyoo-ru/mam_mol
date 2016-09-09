@@ -27,10 +27,10 @@ class $mol_model extends $mol_object {
 	// argument< Value >( key : string , ...diff : Value[] ) {
 	// 	return $mol_state_arg.value( `${this}.${key}` , ...diff )
 	// }
-	argument< Value >() {
+	argument< Value >() : $mol_state_arg< Value > {
 		var owner = this.objectOwner()
 		if( owner instanceof $mol_model ) return owner.argument()
-		return new $mol_state_arg
+		return new $mol_state_arg< Value >()
 	}
 
 }

@@ -4,7 +4,7 @@ class $mol_http_request extends $mol_object {
 	
 	uri() { return '' }
 	method() { return 'get' }
-	body() { return null }
+	body() { return <any> null }
 	
 	'native()' : XMLHttpRequest
 	native() {
@@ -13,7 +13,7 @@ class $mol_http_request extends $mol_object {
 		var next = this['native()'] = new (this.Class().XMLHttpRequest)
 		next.open( this.method() , this.uri() )
 		
-		next.onload = event => {
+		next.onload = ( event : Event )=> {
 			if( Math.floor( next.status / 100 ) === 2 ) {
 				this.response( void 0 , next )
 			} else {
@@ -62,10 +62,10 @@ class $mol_http_request extends $mol_object {
 	csv() {
 		var lines = this.text().split( /\r?\n/g )
 		var header = lines.shift().split( ';' )
-		var next = []
+		var next : { [ key : string ] : any }[] = []
 		lines.forEach( line => {
 			if( !line ) return
-			var row = {}
+			var row : { [ key : string ] : any } = {}
 			line.split( ';' ).forEach( ( val , index ) => {
 				row[ header[ index ] ] = val
 			})

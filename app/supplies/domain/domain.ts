@@ -119,7 +119,7 @@ class $mol_app_supplies_domain_mock extends $mol_model {
 	
 	@ $mol_prop()
 	supplies() {
-		var next = []
+		var next : $mol_app_supplies_domain_supply[] = []
 		for( var i = 1 ; i <= 100 ; ++i ) {
 			next.push( this.supply( ( i * 123456789 % 987654321 ).toString( 16 ).toUpperCase() ) )
 		}
@@ -128,7 +128,7 @@ class $mol_app_supplies_domain_mock extends $mol_model {
 
 	@ $mol_prop()
 	positions( supply : string ) {
-		var next = []
+		var next : $mol_app_supplies_domain_supply_position[] = []
 		var count = 10 + Math.floor( Math.random() * 30 )
 		for( var i = 1 ; i <= count ; ++i ) {
 			next.push( this.position( { supply , position : ( i * 123456789 % 987654321 ).toString( 16 ).toUpperCase() } ) )
@@ -141,7 +141,7 @@ class $mol_app_supplies_domain_mock extends $mol_model {
 		return new $mol_app_supplies_domain_supply().setup( obj => {
 			obj.id = $mol_const( id )
 			obj.cost = ()=> new $mol_unit_money_usd( this.positions( id ).reduce( ( sum , pos )=> sum + pos.cost().valueOf() , 0 ) )
-			obj.status( void 0 , $mol_app_supplies_domain_supply_status[ $mol_stub_selectRandom([ 'pending' , 'approved' ]) ] )
+			obj.status( void 0 , $mol_stub_selectRandom([ $mol_app_supplies_domain_supply_status.pending , $mol_app_supplies_domain_supply_status.approved ]) )
 			obj.provider = $mol_const( this.provider( $mol_stub_code( 2 ) ) )
 			obj.consumer = $mol_const( this.consumer( $mol_stub_code( 2 ) ) )
 			obj.group = $mol_const( this.supplyGroup( $mol_stub_code( 2 ) ) )

@@ -5,7 +5,7 @@ module $.$mol {
 			var heightAvailable = this.heightAvailable()
 			var childs = this.childs()
 			if( !childs ) return childs
-			var next = []
+			var next : $mol_viewer[] = []
 			for( var child of childs ) {
 				if( child == null ) continue 
 				if( child instanceof $mol_viewer ) {

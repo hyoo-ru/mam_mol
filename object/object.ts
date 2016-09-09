@@ -6,22 +6,23 @@ class $mol_object {
 	}
 	
 	static objectPath() {
-		return this['name']
-			|| this['displayName']
-			|| ( this['displayName'] = Function.prototype.toString.call( this ).match(/^function ([a-z0-9_$]*)/)[1] )
+		let self = <any> this
+		return self['name']
+			|| self['displayName']
+			|| ( self['displayName'] = Function.prototype.toString.call( self ).match(/^function ([a-z0-9_$]*)/)[1] )
 	}
 	
 	'objectClassNames()' : string[]
 	objectClassNames() {
 		if( this.hasOwnProperty( 'objectClassNames()' ) ) return this[ 'objectClassNames()' ]
 		
-		var names = []
+		var names : string[] = []
 		var current = this
 		
 		while( typeof current === 'object' ) {
-			if( !current.constructor[ 'objectPath' ] ) break
+			if( !(<typeof $mol_object>current.constructor).objectPath ) break
 			
-			var name = current.constructor[ 'objectPath' ]() // FIXME: type checking
+			var name = (<typeof $mol_object>current.constructor).objectPath()
 			if( !name ) continue
 			
 			names.push( name )

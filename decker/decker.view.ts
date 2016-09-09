@@ -11,7 +11,7 @@ module $.$mol {
 			return new $mol_switcher().setup( obj => {
 				obj.value = ( ...diff )=> this.current( ...diff )
 				obj.option_keys = ()=> this.items().map( ( item , index )=> String( index ) )
-				obj.option = ( key : string )=> this.items()[ key ].title()
+				obj.option = ( key : number )=> this.items()[ key ].title()
 			} )
 		}
 		

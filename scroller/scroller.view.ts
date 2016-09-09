@@ -39,7 +39,7 @@ module $.$mol {
 			var heightAvailable = Math.ceil( ( this.heightAvailable() + this.scrollTop() ) / 20 ) * 20 
 			var childs = this.childs()
 			if( !childs ) return childs
-			var next = []
+			var next : typeof childs = []
 			for( var child of childs ) {
 				if( child == null ) continue
 				if( child instanceof $mol_viewer ) {

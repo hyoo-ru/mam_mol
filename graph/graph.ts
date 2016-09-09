@@ -28,11 +28,11 @@ class $mol_graph< Node , Edge > {
 		this.nodeEnsure( from )
 	}
 
-	edgeOut( from , to ) {
+	edgeOut( from : string , to : string ) {
 		return this.edgesOut[ from ] && this.edgesOut[ from ][ to ]
 	}
 
-	edgeIn( to , from ) {
+	edgeIn( to : string , from : string ) {
 		return this.edgesIn[ to ] && this.edgesIn[ to ][ from ]
 	}
 
@@ -43,11 +43,11 @@ class $mol_graph< Node , Edge > {
 
 	sorted( getWeight : ( edge : Edge )=> number  ) {
 		var pending = Object.keys( this.nodes )
-		var visited = []
-		var weights = []
-		var sorted = []
+		var visited : string[] = []
+		var weights : number[] = []
+		var sorted : string[] = []
 		
-		var visit = ( id , weight )=> {
+		var visit = ( id : string , weight : number )=> {
 			
 			var index = visited.lastIndexOf( id )
 			if( index >= 0 ) {

@@ -57,7 +57,7 @@ class $mol_viewer extends $mol_model {
 		}
 		
 		next.id = path
-		next['$mol_viewer'] = this
+		void( (<any>next)['$mol_viewer'] = this )
 		this['DOMNode()'] = next
 		
 		/// Set BEM-like element-attributes with inheritance support
@@ -93,7 +93,7 @@ class $mol_viewer extends $mol_model {
 	}
 	
 	@ $mol_prop({
-		fail : ( self : $mol_viewer , error ) => {
+		fail : ( self : $mol_viewer , error : Error ) => {
 			var node = self.DOMNode()
 			if( node ) {
 				node.setAttribute( 'mol_viewer_error' , error.name )
@@ -174,7 +174,7 @@ class $mol_viewer extends $mol_model {
 		// Set field values
 		this.field_keys().forEach( path => {
 			var names = path.split( '.' )
-			var obj = node
+			var obj : any = node
 			for( var i = 0 ; i < names.length - 1 ; ++i ) {
 				if( names[i] ) obj = obj[ names[i] ]
 			}
@@ -192,11 +192,11 @@ class $mol_viewer extends $mol_model {
 		return ''
 	}
 	
-	event_keys() { return [] }
-	event( name : string , ...diff : Event[] ) { return null }
+	event_keys() { return <any[]> [] }
+	event( name : string , ...diff : Event[] ) { return <any> null }
 	
-	field_keys() { return [] }
-	field( path : string ) { return null }
+	field_keys() { return <any[]>[] }
+	field( path : string ) { return <any>null }
 	
 	focused() {
 		return $mol_viewer_selection.focused() === this.DOMNode()

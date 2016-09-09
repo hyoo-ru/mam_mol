@@ -13,7 +13,7 @@ class $mol_atom< Value > extends $mol_object {
 	autoFresh = false
 
 	constructor(
-		public host : { objectPath() : string } ,
+		public host : { objectPath() : string , [ key : string ] : any } ,
 		public field = 'value()' ,
 		public handler : ( ...diff : (Value|Error)[] )=> Value ,
 		public fail? : ( host : any , error : Error )=> Value|Error ,
@@ -180,7 +180,7 @@ class $mol_atom< Value > extends $mol_object {
 		}
 	}
 	
-	obsolete() {
+	obsolete() : Value {
 		if( this.status === $mol_atom_status.obsolete ) return
 		
 		this.log([ 'obsolete' ])

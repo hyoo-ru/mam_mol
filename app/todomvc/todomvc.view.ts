@@ -18,7 +18,7 @@ module $.$mol {
 	export class $mol_app_todomvc extends $.$mol_app_todomvc {
 		
 		@ $mol_prop()
-		tasksAll( ...diff : $mol_app_todomvc_task[][] ) {
+		tasksAll( ...diff : $mol_app_todomvc_task[][] ) : $mol_app_todomvc_task[] {
 			return this.local( 'tasksAll' , ...diff ) || [ { completed : false , title : 'hello' } ]
 		}
 

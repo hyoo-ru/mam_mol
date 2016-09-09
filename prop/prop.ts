@@ -15,8 +15,8 @@ function $mol_prop< Host extends { objectPath() : string } , Key , Value >( conf
 				var host : Host = this
 				var field = name + "(" + JSON.stringify( key ) + ")"
 				
-				var atoms = host[ '$mol_atom_state' ]
-				if( !atoms ) atoms = host[ '$mol_atom_state' ] = {}
+				var atoms = (<any>host)[ '$mol_atom_state' ]
+				if( !atoms ) atoms = (<any>host)[ '$mol_atom_state' ] = {}
 				
 				var info : $mol_atom<any> = atoms[ field ]
 				if( !info )	atoms[ field ] = info = new $mol_atom(
@@ -34,8 +34,8 @@ function $mol_prop< Host extends { objectPath() : string } , Key , Value >( conf
 				var host : Host = this
 				var field = name + "()"
 				
-				var atoms = host[ '$mol_atom_state' ]
-				if( !atoms ) atoms = host[ '$mol_atom_state' ] = {}
+				var atoms = (<any>host)[ '$mol_atom_state' ]
+				if( !atoms ) atoms = (<any>host)[ '$mol_atom_state' ] = {}
 				
 				var info : $mol_atom<any> = atoms[ field ]
 				if( !info )	atoms[ field ] = info = new $mol_atom(
@@ -49,7 +49,7 @@ function $mol_prop< Host extends { objectPath() : string } , Key , Value >( conf
 			}
 		}
 		
-		descr.value['value'] = value
+		void( (<any>descr.value)['value'] = value )
 	}
 	
 }

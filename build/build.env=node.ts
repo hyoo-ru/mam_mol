@@ -76,7 +76,7 @@ class $mol_build extends $mol_object {
 		var options = {
 			experimentalDecorators : true ,
 			noEmitOnError : false ,
-			noImplicitAny : false ,
+			noImplicitAny : true ,
 			target : $node.typescript.ScriptTarget.ES5 ,
 			removeComments : true ,
 			sourceMap : true ,

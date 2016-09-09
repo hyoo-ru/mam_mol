@@ -1,13 +1,13 @@
-declare class $mol_set< Key > {
+declare class $mol_set< Value > {
 	size : number
-	add( key : Key ) : this
-	delete( key : Key )
-	has( key : Key )
-	clear()
-	keys() : Key[]
-	values() : Key[]
-	entries() : [ Key , Key ][]
-	forEach( handler : ( key : Key , value : Key ) => void )
+	add( key : Value ) : this
+	delete( key : Value ) : void
+	has( key : Value ) : boolean
+	clear() : void
+	keys() : Value[]
+	values() : Value[]
+	entries() : [ Value , Value ][]
+	forEach( handler : ( key : Value , value : Value ) => void ) : void
 }
 
 class $mol_set_shim< Value > implements $mol_set< Value > {
@@ -53,7 +53,7 @@ class $mol_set_shim< Value > implements $mol_set< Value > {
 		-- this.size
 	}
 	
-	forEach( handle : ( val , key )=> void ) {
+	forEach( handle : ( val : Value , key : Value )=> void ) {
 		for( var key in this._index ) {
 			if( !this._index.hasOwnProperty( key ) ) continue
 			this._index[ key ].forEach( ( val , index ) => handle( val , val ) )
@@ -61,7 +61,7 @@ class $mol_set_shim< Value > implements $mol_set< Value > {
 	}
 	
 	keys() {
-		var keys = []
+		var keys : Value[] = []
 		this.forEach( ( val , key ) => {
 			keys.push( key )
 		} )
@@ -69,7 +69,7 @@ class $mol_set_shim< Value > implements $mol_set< Value > {
 	}
 	
 	values() {
-		var values = []
+		var values : Value[] = []
 		this.forEach( ( val , key ) => {
 			values.push( val )
 		} )
@@ -77,7 +77,7 @@ class $mol_set_shim< Value > implements $mol_set< Value > {
 	}
 	
 	entries() {
-		var entries = []
+		var entries : [ Value , Value ][] = []
 		this.forEach( ( val , key ) => {
 			entries.push( [ val , key ] )
 		} )

@@ -13,7 +13,7 @@ class $mol_state_arg< Value > extends $mol_object {
 		var href = this.href()
 		var chunks = href.split( /[\/\?#!&;]/g )
 		
-		var params = {}
+		var params : { [ key : string ] : any } = {}
 		chunks.forEach( chunk => {
 			if( !chunk ) return
 			var vals = chunk.split( /[:=]/ ).map( decodeURIComponent )
@@ -31,7 +31,7 @@ class $mol_state_arg< Value > extends $mol_object {
 	}
 	
 	static link( next : any ) {
-		var params = {}
+		var params : { [ key : string ] : any } = {}
 		
 		var prev = this.dict()
 		for( var key in prev ) {
@@ -46,7 +46,7 @@ class $mol_state_arg< Value > extends $mol_object {
 	}
 	
 	static make( next : any ) {
-		var chunks = []
+		var chunks : string[] = []
 		for( var key in next ) {
 			if( null == next[key] ) continue
 			chunks.push( [ key ].concat( next[key] ).map( encodeURIComponent ).join( '=' ) )
@@ -63,13 +63,13 @@ class $mol_state_arg< Value > extends $mol_object {
 		return $mol_state_arg.value< Value >( this.prefix + key , ...diff )
 	}
 	
-	sub< Value >( postfix ) {
+	sub< Value >( postfix : string ) {
 		return new $mol_state_arg< Value >( this.prefix + postfix + '.' )
 	}
 	
 	link( next : any ) {
 		var prefix = this.prefix
-		var dict = {}
+		var dict : { [ key : string ] : any } = {}
 		for (var key in next) {
 			dict[ prefix + key ] = next[ key ]
 		}

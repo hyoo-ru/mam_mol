@@ -2,13 +2,13 @@ declare class $mol_dict< Key , Value > {
 	size : number
 	get( key : Key ) : Value
 	set( key : Key , value : Value ) : this
-	delete( key : Key )
-	has( key : Key )
-	clear()
+	delete( key : Key ) : void
+	has( key : Key ) : boolean
+	clear() : void
 	keys() : Key[]
 	values() : Value[]
 	entries() : [ Key , Value ][]
-	forEach( handler : ( Value , Key ) => void )
+	forEach( handler : ( value : Value , key : Key ) => void ) : void
 }
 
 class $mol_dict_shim< Key , Value > implements $mol_dict< Key , Value > {
@@ -85,7 +85,7 @@ class $mol_dict_shim< Key , Value > implements $mol_dict< Key , Value > {
 	}
 	
 	keys() {
-		var keys = []
+		var keys : Key[] = []
 		this.forEach( ( val , key ) => {
 			keys.push( key )
 		} )
@@ -93,7 +93,7 @@ class $mol_dict_shim< Key , Value > implements $mol_dict< Key , Value > {
 	}
 	
 	values() {
-		var values = []
+		var values : Value[] = []
 		this.forEach( ( val , key ) => {
 			values.push( val )
 		} )
@@ -101,9 +101,9 @@ class $mol_dict_shim< Key , Value > implements $mol_dict< Key , Value > {
 	}
 	
 	entries() {
-		var entries = []
+		var entries : [ Key , Value ][] = []
 		this.forEach( ( val , key ) => {
-			entries.push([ val , key ])
+			entries.push([ key , val ])
 		} )
 		return entries
 	}

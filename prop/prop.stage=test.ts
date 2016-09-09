@@ -79,7 +79,7 @@ $mol_test( test => {
 	class X extends $mol_object {
 		
 		@ $mol_prop()
-		foo() {
+		foo() : number {
 			return this.foo() + 1
 		}
 		
@@ -100,7 +100,7 @@ $mol_test( test => {
 /// Destroy if no more reference
 $mol_test( test => {
 	
-	var foo
+	var foo : any
 	
 	class B extends $mol_object {
 		
