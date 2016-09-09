@@ -12119,9 +12119,15 @@ function $mol_viewer_tree2ts(tree) {
                         value.childs.forEach(function (over) {
                             if (/^(-|$)/.test(over.type))
                                 return '';
+                            var overName = /(.*?)(#?)$/.exec(over.type);
                             var ns = needSet;
                             var v = getValue(over.childs[0]);
-                            overs.push('\t\t\t__.' + over.type + ' = (' + (needSet ? ' ...diff ' : '') + ') => ' + v + '\n');
+                            var args = [];
+                            if (overName[2])
+                                args.push(' key ');
+                            if (needSet)
+                                args.push(' ...diff ');
+                            overs.push('\t\t\t__.' + overName[1] + ' = (' + args.join(',') + ') => ' + v + '\n');
                             needSet = ns;
                         });
                         return 'new ' + value.type + '().setup( __ => { \n' + overs.join('') + '\t\t} )';
@@ -12169,7 +12175,7 @@ function $mol_viewer_tree2ts(tree) {
                 var propName = /(.*?)(#?)$/.exec(param.type);
                 var args = [];
                 if (needKey || propName[2])
-                    args.push(' key ');
+                    args.push(' key : any ');
                 if (needCache || needSet)
                     args.push(' ...diff ');
                 if (needCache)
