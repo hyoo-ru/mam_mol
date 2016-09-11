@@ -7,7 +7,7 @@ class $mol_file extends $mol_object {
 		} )
 	}
 	
-	static relative( path : string ) {
+	static relative( path : string ) : $mol_file {
 		return $mol_file.absolute( $node.path.resolve( path ).replace( /\\/g, '/' ) )
 	}
 	
