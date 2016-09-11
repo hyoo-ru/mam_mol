@@ -29,7 +29,7 @@ class $mol_file extends $mol_object {
 
 	@ $mol_prop()
 	watcher() {
-		return $node.fs.watch( this.path() , { persistent : false } , ( type , name )=> {
+		return $node.fs.watch( this.path() , { persistent : false } , ( type : string , name : string )=> {
 			this.stat( void 0 )
 			if( name && !/(^\.|___$)/.test( name ) ) {
 				var file = this.resolve( name )
@@ -132,12 +132,12 @@ class $mol_file extends $mol_object {
 	}
 
 	@ $mol_prop()
-	childs() {
+	childs() : $mol_file[] {
 		this.stat()
 		
 		switch( this.type() ) {
 			case 'dir' :
-				return $node.fs.readdirSync( this.path() )
+				return ( <string[]> $node.fs.readdirSync( this.path() ) )
 				.filter( name => !/^\.+$/.test( name ) )
 				.map( name => this.resolve( name ) )
 		}
@@ -158,15 +158,15 @@ class $mol_file extends $mol_object {
 	}
 
 	find(
-		include? : { test : ( path : string ) => boolean } ,
-		exclude? : { test : ( path : string ) => boolean }
+		include? : RegExp ,
+		exclude? : RegExp
 	) {
 
-		var found = []
+		var found : $mol_file[] = []
 		this.childs().forEach( child => {
 			if( exclude && child.path().match( exclude ) ) return
 			if( !include || child.path().match( include ) ) found.push( child )
-			if( child.type === 'dir' ) found = found.concat( child.find( include , exclude ) )
+			if( child.type() === 'dir' ) found = found.concat( child.find( include , exclude ) )
 		} )
 
 		return found

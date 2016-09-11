@@ -10,7 +10,7 @@ class $mol_server extends $mol_object {
 			min : this.port() ,
 			max : this.port() + 1000 ,
 			retrieve : 1
-		}).then( ports => {
+		}).then( ( ports : number[] ) => {
 			express.listen( ports[0] )
 			console.log( this.messageStart( ports[0] ) )
 		} )
@@ -22,7 +22,7 @@ class $mol_server extends $mol_object {
 		return `${this.objectPath()} started at http://127.0.0.1:${port}/`
 	}
 	
-	expressHandlers() {
+	expressHandlers() : any[] {
 		return [].concat.apply( [] , [
 			this.expressCompressor() ,
 			this.expressBodier() ,
@@ -48,7 +48,7 @@ class $mol_server extends $mol_object {
 	}
 	
 	expressGenerator() {
-		return ( req , res , next )=> next()
+		return ( req : any , res : any , next : () => void )=> next()
 	}
 	
 	bodyLimit() {

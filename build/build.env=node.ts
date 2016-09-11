@@ -133,23 +133,23 @@ class $mol_build extends $mol_object {
 
 		var host = {
 			// getScriptFileNames : () => [] ,
-			getScriptVersion : path => $mol_file.absolute( path ).version() ,
-			getScriptSnapshot : path => $mol_file.absolute( path ).content().toString() ,
+			getScriptVersion : ( path : string )=> $mol_file.absolute( path ).version() ,
+			getScriptSnapshot : ( path : string )=> $mol_file.absolute( path ).content().toString() ,
 			getCurrentDirectory : ()=> this.root().path() ,
 			getCompilationSettings : ()=> options ,
 			useCaseSensitiveFileNames : ()=> false ,
-			getCanonicalFileName : path => path.toLowerCase() ,
-			getDefaultLibFileName : options => $node.typescript.getDefaultLibFilePath( options ) ,
+			getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
+			getDefaultLibFileName : ( options : any )=> $node.typescript.getDefaultLibFilePath( options ) ,
 			getCommonSourceDirectory : ()=> this.root().path() ,
 			getNewLine : ()=> '\n' ,
-			getSourceFile : ( path , target , fail )=> {
+			getSourceFile : ( path : string , target : any , fail : any )=> {
 				var content = $mol_file.absolute( path ).content().toString()
 				return $node.typescript.createSourceFile( path , content , target )
 			} ,
-			fileExists : path => {
+			fileExists : ( path : string )=> {
 				return $mol_file.absolute( path ).exists()
 			},
-			writeFile : ( path , content )=> {
+			writeFile : ( path : string , content : string )=> {
 				$mol_file.absolute( path ).content( void 0 , content )
 			},
 		}
@@ -173,7 +173,7 @@ class $mol_build extends $mol_object {
 			return target
 		} )
 
-		var sourcesTS = []
+		var sourcesTS : $mol_file[] = []
 		sources = sources.map( src => {
 			if( !/tsx?$/.test( src.ext() ) ) return src
 
@@ -189,7 +189,7 @@ class $mol_build extends $mol_object {
 			var program = $node.typescript.createProgram( sourcesTS.map( src => src.path() ) , options , host )
 			var result = program.emit()
 
-			var errors = $node.typescript.getPreEmitDiagnostics( program ).concat( result.diagnostics )
+			var errors : any[] = $node.typescript.getPreEmitDiagnostics( program ).concat( result.diagnostics )
 			var logs = errors.map( error => {
 				var message = $node.typescript.flattenDiagnosticMessageText( error.messageText , '\n' )
 				if( !error.file ) return message
@@ -216,7 +216,7 @@ class $mol_build extends $mol_object {
 		var src = $mol_file.absolute( path )
 		var ext = src.ext()
 		
-		var dependencies = null
+		var dependencies : ( src : $mol_file ) => { [ path : string ] : number } = null
 		while( !dependencies ) {
 			dependencies = this.Class().dependors[ ext ]
 			if( dependencies ) break
@@ -274,9 +274,9 @@ class $mol_build extends $mol_object {
 	@ $mol_prop()
 	graph( { path , exclude } : { path : string , exclude? : string[] } ) {
 		let graph = new $mol_graph< {} , { priority : number } >()
-		let added = {}
+		let added : { [ path : string ] : boolean } = {}
 
-		var addMod = mod => {
+		var addMod = ( mod : $mol_file )=> {
 			if( added[ mod.path() ] ) return
 			added[ mod.path() ] = true
 
@@ -423,7 +423,7 @@ class $mol_build extends $mol_object {
 		var target = pack.resolve( `-/${bundle}.css` )
 		var targetMap = pack.resolve( `-/${bundle}.css.map` )
 
-		var root = null //$node.postcss.root({})
+		var root : any = null //$node.postcss.root({})
 		sources.forEach( src => {
 			var root2 = $node.postcss.parse( src.content() , { from : src.path() } )
 			root = root ? root.append( root2 ) : root2

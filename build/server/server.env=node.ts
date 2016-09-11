@@ -1,7 +1,7 @@
 class $mol_build_server extends $mol_server {
 	
 	expressGenerator() {
-		return ( req , res , next )=> {
+		return ( req : any , res : any , next : () => void )=> {
 			try {
 				return this.generator( req.url ) || next()
 			} catch( error ) {
@@ -27,7 +27,11 @@ class $mol_build_server extends $mol_server {
 
 		build.bundle({ path , bundle })
 
-		return null
+		return <void> null
+	}
+	
+	port() {
+		return 80
 	}
 
 }
