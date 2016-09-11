@@ -247,28 +247,32 @@ class $mol_build extends $mol_object {
 		}
 	}
 	
-	packEnsure( path : string ) {
-		var file = $mol_file.absolute( path )
-		var sub = file.relate( this.root() )
-		var name = sub.replace( /\/.*$/ , '' )
+	@ $mol_prop()
+	packEnsure( name : string ) {
 		var pack = this.root().resolve( name )
-		if( pack.exists() ) return true
+		if( pack.exists() ) return
 		
 		var mapping = this.packMapping()
 		for( let repo of mapping.select( 'pack' , name , 'git' ).childs ) {
-			$mol_exec( this.root().path() , 'git' , 'init' , name )
-			$mol_exec( pack.path() , 'git' , 'remote' , 'add' , '--track' , 'master' , 'origin' , repo.value )
-			$mol_exec( pack.path() , 'git' , 'pull' )
+			$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
 			pack.stat( void 0 )
 			return true
 		}
 		
 		throw new Error( `Package "${name}" not found` )
 	}
+
+	modEnsure( path : string ) {
+		var file = $mol_file.absolute( path )
+		var sub = file.relate( this.root() )
+		var name = sub.replace( /\/.*$/ , '' )
+		
+		return this.packEnsure( name )
+	}
 	
 	@ $mol_prop()
 	packMapping() {
-		return $mol_tree.fromString( $mol_file.relative( 'pms.tree' ).content() )
+		return $mol_tree.fromString( $mol_file.relative( '.pms.tree' ).content() )
 	}
 	
 	@ $mol_prop()
@@ -286,6 +290,7 @@ class $mol_build extends $mol_object {
 			for( let p in deps ) {
 
 				var dep = this.root().resolve( p )
+				this.modEnsure( dep.path() )
 
 				while( !dep.exists() ) dep = dep.parent()
 				if( mod === dep ) continue
@@ -297,7 +302,7 @@ class $mol_build extends $mol_object {
 			}
 		}
 		
-		this.packEnsure( path )
+		this.modEnsure( path )
 		this.modsRecursive({ path , exclude }).forEach( mod => addMod( mod ) )
 		
 		return graph
