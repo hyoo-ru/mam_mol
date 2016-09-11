@@ -1,11 +1,11 @@
 class $mol_file extends $mol_object {
 	
 	@ $mol_prop()
-    static absolute( path : string ) {
+	static absolute( path : string ) {
 		return new $mol_file().setup( obj => {
 			obj.path = ()=> path
 		} )
-    }
+	}
 	
 	static relative( path : string ) {
 		return $mol_file.absolute( $node.path.resolve( path ).replace( /\\/g, '/' ) )
@@ -15,20 +15,20 @@ class $mol_file extends $mol_object {
 		return 'application/octet-stream'
 	}
 	
-    path() {
-        return '.'
-    }
+	path() {
+		return '.'
+	}
 
-    toString() {
-        return this.path()
-    }
+	toString() {
+		return this.path()
+	}
 
-    inspect() {
-        return this.objectPath()
-    }
+	inspect() {
+		return this.objectPath()
+	}
 
-    @ $mol_prop()
-    watcher() {
+	@ $mol_prop()
+	watcher() {
 		return $node.fs.watch( this.path() , { persistent : false } , ( type , name )=> {
 			this.stat( void 0 )
 			if( name && !/(^\.|___$)/.test( name ) ) {
@@ -37,9 +37,9 @@ class $mol_file extends $mol_object {
 			}
 		} )
 	}
-    
+	
 	@ $mol_prop()
-    stat( ...diff : void[] ) {
+	stat( ...diff : void[] ) {
 		var path = this.path()
 		
 		try {
@@ -54,15 +54,15 @@ class $mol_file extends $mol_object {
 		return stat
 	}
 
-    @ $mol_prop()
-    version() {
-        return this.stat().mtime.getTime().toString( 36 ).toUpperCase()
-    }
+	@ $mol_prop()
+	version() {
+		return this.stat().mtime.getTime().toString( 36 ).toUpperCase()
+	}
 	
-    exists( ...diff : boolean[] ) {
+	exists( ...diff : boolean[] ) {
 		var exists = !!this.stat()
 		
-    	if( diff[0] === void 0 ) {
+		if( diff[0] === void 0 ) {
 			return exists
 		} else {
 			if( diff[0] == exists ) return exists
@@ -78,15 +78,14 @@ class $mol_file extends $mol_object {
 			
 			return diff[0]
 		}
-    }
+	}
 
-    parent() {
-        return this.resolve( '..' )
-    }
+	parent() {
+		return this.resolve( '..' )
+	}
 
-    @ $mol_prop()
-    type() {
-        var stat = this.stat()
+	type() {
+		var stat = this.stat()
 		
 		if( stat ) {
 			if (stat.isFile()) return 'file'
@@ -100,41 +99,43 @@ class $mol_file extends $mol_object {
 			return null
 		}
 		
-        throw new Error( `Unknown file type ${this.path()}` )
-    }
+		throw new Error( `Unknown file type ${this.path()}` )
+	}
 
-    name() {
-        return $node.path.basename( this.path() )
-    }
+	name() {
+		return $node.path.basename( this.path() )
+	}
 
-    ext() {
-    	var match = /((?:\.\w+)+)$/.exec( this.path() )
-        return match && match[1].substring( 1 )
-    }
+	ext() {
+		var match = /((?:\.\w+)+)$/.exec( this.path() )
+		return match && match[1].substring( 1 )
+	}
 
-    @ $mol_prop()
-    content( ...diff : string[] ) {
-    	if( diff[0] === void 0 ) {
-    		return this.stat() && $node.fs.readFileSync( this.path() )
+	@ $mol_prop()
+	content( ...diff : string[] ) {
+		if( diff[0] === void 0 ) {
+			return this.stat() && $node.fs.readFileSync( this.path() )
 		}
 
 		this.parent().exists( true )
 		$node.fs.writeFileSync( this.path() , diff[0] )
 		
 		return diff[0]
-    }
+	}
 	
-    reader() {
-        return $node.fs.createReadStream( this.path() )
-    }
+	reader() {
+		return $node.fs.createReadStream( this.path() )
+	}
 
-    writer() {
-        return $node.fs.createWriteStream( this.path() )
-    }
+	writer() {
+		return $node.fs.createWriteStream( this.path() )
+	}
 
-    @ $mol_prop()
-    childs() {
-    	switch( this.type() ) {
+	@ $mol_prop()
+	childs() {
+		this.stat()
+		
+		switch( this.type() ) {
 			case 'dir' :
 				return $node.fs.readdirSync( this.path() )
 				.filter( name => !/^\.+$/.test( name ) )
@@ -142,33 +143,33 @@ class $mol_file extends $mol_object {
 		}
 		
 		return []
-    }
+	}
 
-    resolve( path : string ) {
-        return this.Class().relative( $node.path.join( this.path() , path ) )
-    }
+	resolve( path : string ) {
+		return this.Class().relative( $node.path.join( this.path() , path ) )
+	}
 
-    relate( base = this.Class().relative( '.' ) ) {
-        return $node.path.relative( base.path() , this.path() ).replace( /\\/g, '/' )
-    }
+	relate( base = this.Class().relative( '.' ) ) {
+		return $node.path.relative( base.path() , this.path() ).replace( /\\/g, '/' )
+	}
 
-    append( next : string ) {
-        $node.fs.appendFileSync( this.path() , next )
-    }
+	append( next : string ) {
+		$node.fs.appendFileSync( this.path() , next )
+	}
 
-    find(
-        include? : { test : ( path : string ) => boolean } ,
-        exclude? : { test : ( path : string ) => boolean }
-    ) {
+	find(
+		include? : { test : ( path : string ) => boolean } ,
+		exclude? : { test : ( path : string ) => boolean }
+	) {
 
-        var found = []
-        this.childs().forEach( child => {
-            if( exclude && child.path().match( exclude ) ) return
-            if( !include || child.path().match( include ) ) found.push( child )
-            if( child.type === 'dir' ) found = found.concat( child.find( include , exclude ) )
-        } )
+		var found = []
+		this.childs().forEach( child => {
+			if( exclude && child.path().match( exclude ) ) return
+			if( !include || child.path().match( include ) ) found.push( child )
+			if( child.type === 'dir' ) found = found.concat( child.find( include , exclude ) )
+		} )
 
-        return found
-    }
+		return found
+	}
 
 }
