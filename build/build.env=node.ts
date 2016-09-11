@@ -61,13 +61,60 @@ class $mol_build extends $mol_object {
 			case 'file' : return [ mod ]
 			case 'dir' :
 				return this.mods({ path , exclude }).filter( mod => mod.type() === 'file' )
-			default: throw new Error( `Unsupported file type (${path})` )
+			default: return []
 		}
 	}
 
 	@ $mol_prop()
+	sourcesSorted( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		const mod = $mol_file.absolute( path )
+		const graph = new $mol_graph< void , { priority : number } >()
+		const sources = this.sources({ path , exclude })
+		for( let src of sources ) {
+			graph.nodeEnsure( src.relate( this.root() ) )
+		}
+		for( let src of sources ) {
+			let deps = this.srcDeps( src.path() )
+			for( let p in deps ) {
+				
+				var names : string[]
+				if( p[0] === '/' ) names = p.substring( 1 ).split( '/' )
+				else names = mod.resolve( p ).relate( this.root() ).split( '/' )
+
+				let files = [ this.root() ]
+				for( let name of names ) {
+					let nextFiles : $mol_file[] = []
+					for( let file of files ) {
+						let validName = new RegExp( `^(${file.name()})?${name}(?![a-z0-9])` , 'i' )
+						for( let child of this.mods({ path : file.path() , exclude }) ) {
+							if( !child.name().match( validName ) ) continue
+							nextFiles.push( child )
+						}
+					}
+					if( nextFiles.length === 0 ) break
+					files = nextFiles
+				}
+
+				for( let file of files ) {
+					if( file === this.root() ) continue
+
+					if( file.relate( this.root() ) in graph.nodes ) {
+						graph.link( src.relate( this.root() ) , file.relate( this.root() ), { priority : deps[p] } )
+					}
+				}
+				
+			}
+		}
+		
+		let next = graph.sorted( edge => edge.priority ).map( name => this.root().resolve( name ) )
+		return next
+	}
+	
+
+	@ $mol_prop()
 	sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
-		return [].concat.apply( [] , this.graph({ path , exclude }).sorted( edge => edge.priority ).map( path => this.sources({ path , exclude }) ) )
+		var sortedPaths = this.graph({ path , exclude }).sorted( edge => edge.priority )
+		return [].concat.apply( [] , sortedPaths.map( path => this.sourcesSorted({ path : this.root().resolve( path ).path() , exclude }) ) )
 	}
 	
 	@ $mol_prop()
@@ -99,6 +146,9 @@ class $mol_build extends $mol_object {
 				var content = $mol_file.absolute( path ).content().toString()
 				return $node.typescript.createSourceFile( path , content , target )
 			} ,
+			fileExists : path => {
+				return $mol_file.absolute( path ).exists()
+			},
 			writeFile : ( path , content )=> {
 				$mol_file.absolute( path ).content( void 0 , content )
 			},
@@ -116,9 +166,9 @@ class $mol_build extends $mol_object {
 		sources = sources.map( src => {
 			if( !/(view\.tree)$/.test( src.ext() ) ) return src
 
-			var target = src.parent().resolve( `-/${src.name()}.ts` )
+			var target = src.parent().resolve( `-${src.name()}.ts` )
 			var tree = $mol_tree.fromString( String( src.content() ) , src.relate( this.root() ) )
-			target.content( $mol_viewer_tree2ts( tree ) )
+			target.content( void 0 , $mol_viewer_tree2ts( tree ) )
 
 			return target
 		} )
@@ -160,33 +210,47 @@ class $mol_build extends $mol_object {
 	}
 	
 	static dependors : { [ index : string ] : ( source : $mol_file )=> { [ index : string ] : number } } = {}
+
+	@ $mol_prop()
+	srcDeps( path : string ) {
+		var src = $mol_file.absolute( path )
+		var ext = src.ext()
+		
+		var dependencies = null
+		while( !dependencies ) {
+			dependencies = this.Class().dependors[ ext ]
+			if( dependencies ) break
+			var extShort = ext.replace( /^\w+\./ , '' )
+			if( ext === extShort ) break
+			ext = extShort
+		}
+		
+		return dependencies ? dependencies( src ) : {}
+	}
+
+	@ $mol_prop()
+	modDeps( { path , exclude } : { path : string , exclude? : string[] } ) {
+		var mod = $mol_file.absolute( path )
+		var depends : { [ index : string ] : number } = {}
+		for( var src of this.sources({ path , exclude }) ) {
+			$mol_build_depsMerge( depends , this.srcDeps( src.path() ) )
+		}
+		return depends
+	}
+	
+	@ $mol_prop()
 	dependencies( { path , exclude } : { path : string , exclude? : string[] } ) {
 		var mod = $mol_file.absolute( path )
 		switch( mod.type() ) {
-			case 'file' :
-				var ext = mod.ext()
-				var dependencies = null
-				while( !dependencies ) {
-					dependencies = this.Class().dependors[ ext ]
-					if( dependencies ) break
-					var extShort = ext.replace( /^\w+\./ , '' )
-					if( ext === extShort ) break
-					ext = extShort
-				}
-				return dependencies ? dependencies( mod ) : {}
-			case 'dir' :
-				var depends = {}
-				for( var src of this.sources({ path , exclude }) ) {
-					$mol_build_depsMerge( depends , this.dependencies({ path : src.path() , exclude }) )
-				}
-				return depends
+			case 'file' : return this.srcDeps( path )
+			case 'dir' : return this.modDeps({ path , exclude })
 		}
 	}
 	
 	@ $mol_prop()
 	graph( { path , exclude } : { path : string , exclude? : string[] } ) {
-		var graph = new $mol_graph< {} , { priority : number } >()
-		var added = {}
+		let graph = new $mol_graph< {} , { priority : number } >()
+		let added = {}
 
 		var addMod = mod => {
 			if( added[ mod.path() ] ) return
@@ -194,15 +258,17 @@ class $mol_build extends $mol_object {
 
 			graph.nodes[ mod.relate( this.root() ) ] = null
 			
-			var deps = this.dependencies({ path : mod.path() , exclude })
-			for( var p in deps ) {
+			let deps = this.dependencies({ path : mod.path() , exclude })
+			for( let p in deps ) {
+
 				var dep = this.root().resolve( p )
-				
+
 				while( !dep.exists() ) dep = dep.parent()
+				if( mod === dep ) continue
 				if( dep === this.root() ) continue
-				
+
 				graph.link( mod.relate( this.root() ) , dep.relate( this.root() ) , { priority : deps[ p ] } )
-				
+
 				addMod( dep )
 			}
 		}
@@ -222,7 +288,7 @@ class $mol_build extends $mol_object {
 		var stages = [ 'test' , 'dev' ]
 		
 		if( bundle ) {
-			var [ bundle , tags , type ] = /^(.*?)(?:\.(test\.js|js|css|dep\.json))?$/.exec( bundle )
+			var [ bundle , tags , type ] = /^(.*?)(?:\.(test\.js|js|css|deps\.json))?$/.exec( bundle )
 	
 			tags.split( '.' ).forEach( tag => {
 				if( envs.indexOf( tag ) !== -1 ) envs = [ tag ]
@@ -364,11 +430,17 @@ class $mol_build extends $mol_object {
 		if( !list.length ) return []
 		
 		var graph = this.graph({ path , exclude })
+		
+		var deps : any = {}
+		for( let dep in graph.nodes ) {
+			deps[ dep ] = this.dependencies({ path : this.root().resolve( dep ).path() , exclude })
+		}
 
 		var data = {
 			files : list.map( src => src.relate( this.root() ) ) ,
 			edgesIn : graph.edgesIn ,
 			edgesOut : graph.edgesOut ,
+			deps
 		}
 
 		var target = pack.resolve( `-/${bundle}.deps.json` )
@@ -401,14 +473,21 @@ $mol_build.dependors[ 'ts' ] = $mol_build.dependors[ 'tsx' ] = $mol_build.depend
 	
 	lines.forEach( function( line ){
 		var indent = /^([\s\t]*)/.exec( line )
-		var priority = - indent[0].replace( /\t/g, '	' ).length / 4
+		var priority = - indent[0].replace( /\t/g, '    ' ).length / 4
 		 
 		line.replace( /\$([a-z][a-z0-9]+(?:[._][a-z0-9]+)*)/ig , ( str, name )=> {
-			$mol_build_depsMerge( depends , { [ name.replace( /[._-]/g, '/' ) ] : priority } )
+			$mol_build_depsMerge( depends , { [ '/' + name.replace( /[._-]/g, '/' ) ] : priority } )
 			return str
 		} )
 	} )
 	
+	return depends
+}
+
+$mol_build.dependors[ 'view.ts' ] = source => {
+	var treeName = source.name().replace( /ts$/ , 'tree' )
+	var depends : { [ index : string ] : number } = { [ treeName ] : 0 }
+	$mol_build_depsMerge( depends , $mol_build.dependors[ 'ts' ]( source ) )
 	return depends
 }
 
@@ -422,10 +501,10 @@ $mol_build.dependors[ 'css' ] = $mol_build.dependors[ 'view.css' ] = source => {
 
 	lines.forEach( function( line ){
 		var indent = /^([\s\t]*)/.exec( line )
-		var priority = - indent[0].replace( /\t/g, '	' ).length / 4
+		var priority = - indent[0].replace( /\t/g, '    ' ).length / 4
 
 		line.replace( /(?:--|[\[\.#])([a-z][a-z0-9]+(?:[-_][a-z0-9]+)+)/ig , ( str, name )=> {
-			$mol_build_depsMerge( depends , { [ name.replace( /[._-]/g, '/' ) ] : priority } )
+			$mol_build_depsMerge( depends , { [ '/' + name.replace( /[._-]/g, '/' ) ] : priority } )
 			return str
 		} )
 	} )
@@ -441,10 +520,10 @@ $mol_build.dependors[ 'view.tree' ] = source => {
 
 	lines.forEach( function( line ){
 		var indent = /^([\s\t]*)/.exec( line )
-		var priority = - indent[0].replace( /\t/g, '	' ).length / 4
+		var priority = - indent[0].replace( /\t/g, '    ' ).length / 4
 
 		line.replace( /[\$@\.\*]([a-z][a-z0-9]+(?:[-_][a-z0-9]+)*)/ig , ( str, name )=> {
-			$mol_build_depsMerge( depends , { [ name.replace( /[._-]/g, '/' ) ] : priority } )
+			$mol_build_depsMerge( depends , { [ '/' + name.replace( /[._-]/g, '/' ) ] : priority } )
 			return str
 		} )
 	} )
