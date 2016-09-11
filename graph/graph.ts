@@ -46,30 +46,35 @@ class $mol_graph< Node , Edge > {
 		var visited : string[] = []
 		var weights : number[] = []
 		var sorted : string[] = []
-		
+
 		var visit = ( id : string , weight : number )=> {
-			
+
 			var index = visited.lastIndexOf( id )
 			if( index >= 0 ) {
-				if( index === visited.length - 1 ) return
-				if( weight <= weights[ index + 1 ] ) return
+				if( index === visited.length - 1 ) return false
+				if( weight <= weights[ index + 1 ] ) return false
 			}
 
 			if( weight != null ) {
-				visited.push(id)
-				weights.push(weight)
+				visited.push( id )
+				weights.push( weight )
 			}
 
 			var deps = this.edgesOut[ id ];
 			for( var dep in deps ) {
+				if( dep === id ) continue
 				visit( dep , getWeight( deps[ dep ] ) )
 			}
+
+			if( sorted.indexOf( id ) !== -1 ) return false
 			
-			if( sorted.indexOf( id ) === -1 ) sorted.push( id )
+			sorted.push( id )
+
+			return true
 		}
-		
+
 		pending.forEach( id => visit( id , null ) )
-		
+
 		return sorted
 	}
 
