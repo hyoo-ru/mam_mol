@@ -45,10 +45,10 @@ module $.$mol {
 			return this.namesDemo().concat( this.namesApp() ).map( name => this.option( name ) )
 		}
 
-		@ $mol_prop()
-		items() : $mol_viewer[] {
-			return this.namesDemo().map( name => this.screen( name ) )
-		}
+		// @ $mol_prop()
+		// items() : $mol_viewer[] {
+		// 	return this.namesDemo().map( name => this.screen( name ) )
+		// }
 		
 		selected() {
 			return $mol_maybe( this.argument().value( 'demo' ) )[0]
@@ -62,21 +62,21 @@ module $.$mol {
 			} )
 		}
 		
-		@ $mol_prop()
-		screen( name : string ) {
-			return new $mol_demo_medium().setup( obj => {
-				obj.name = () => '$' + name
-				obj.argument = () => this.argument().sub( name )
-			} )
-		}
+		// @ $mol_prop()
+		// screen( name : string ) {
+		// 	return new $mol_demo_medium().setup( obj => {
+		// 		obj.name = () => '$' + name
+		// 		obj.argument = () => this.argument().sub( name )
+		// 	} )
+		// }
 		
-		@ $mol_prop()
-		screens( name : string ) {
-			return new $mol_demo_all().setup( obj => {
-				obj.name = () => '$' + name
-				obj.argument = () => this.argument().sub( name )
-			} )
-		}
+		// @ $mol_prop()
+		// screens( name : string ) {
+		// 	return new $mol_demo_all().setup( obj => {
+		// 		obj.name = () => '$' + name
+		// 		obj.argument = () => this.argument().sub( name )
+		// 	} )
+		// }
 
 		@ $mol_prop()
 		widget( name : string ) {
