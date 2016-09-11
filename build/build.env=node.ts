@@ -289,10 +289,11 @@ class $mol_build extends $mol_object {
 			let deps = this.dependencies({ path : mod.path() , exclude })
 			for( let p in deps ) {
 
-				var dep = this.root().resolve( p )
+				var dep = ( p[0] === '/' ) ? this.root().resolve( p ) : mod.resolve( p )
 				this.modEnsure( dep.path() )
 
 				while( !dep.exists() ) dep = dep.parent()
+				if( dep.type() === 'file' ) dep = dep.parent()
 				if( mod === dep ) continue
 				if( dep === this.root() ) continue
 
@@ -552,7 +553,7 @@ $mol_build.dependors[ 'view.tree' ] = source => {
 		var indent = /^([\s\t]*)/.exec( line )
 		var priority = - indent[0].replace( /\t/g, '    ' ).length / 4
 
-		line.replace( /[\$@\.\*]([a-z][a-z0-9]+(?:[-_][a-z0-9]+)*)/ig , ( str, name )=> {
+		line.replace( /\$([a-z][a-z0-9]+(?:[-_][a-z0-9]+)*)/ig , ( str, name )=> {
 			$mol_build_depsMerge( depends , { [ '/' + name.replace( /[._-]/g, '/' ) ] : priority } )
 			return str
 		} )
