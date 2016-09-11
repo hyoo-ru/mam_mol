@@ -213,7 +213,7 @@ class $mol_tree {
 			for( var child of this.childs ) {
 				var key = child.type || child.value
 				if( key === '//' ) continue
-				var colon = child.select([ ':' ]).childs[0]
+				var colon = child.select( ':' ).childs[0]
 				if( !colon ) throw new Error( `Required colon after key at ${child.uri}` )
 				var val = colon.childs[0].toJSON()
 				if( val !== undefined ) (<any>obj)[ key ] = val
@@ -248,7 +248,7 @@ class $mol_tree {
 		return this.data + values.join( "\n" )
 	}
 	
-	select( path : string[] | string ) {
+	select( ...path : string[] ) {
 		if( typeof path === 'string' ) path = (<string>path).split( / +/ )
 		
 		var next = [ <$mol_tree>this ]
@@ -267,12 +267,12 @@ class $mol_tree {
 		return new $mol_tree({ childs : next })
 	}
 	
-	filter( path : string[] | string , value? : string ) {
+	filter( path : string[] , value? : string ) {
 		if( typeof path === 'string' ) path = (<string>path).split( / +/ )
 		
 		var childs = this.childs.filter( function( item ){
 			
-			var found= item.select( path )
+			var found= item.select( ...path )
 			
 			if( value == null ){
 				return Boolean( found.childs.length )
