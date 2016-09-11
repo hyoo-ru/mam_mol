@@ -247,6 +247,30 @@ class $mol_build extends $mol_object {
 		}
 	}
 	
+	packEnsure( path : string ) {
+		var file = $mol_file.absolute( path )
+		var sub = file.relate( this.root() )
+		var name = sub.replace( /\/.*$/ , '' )
+		var pack = this.root().resolve( name )
+		if( pack.exists() ) return true
+		
+		var mapping = this.packMapping()
+		for( let repo of mapping.select( 'pack' , name , 'git' ).childs ) {
+			$mol_exec( this.root().path() , 'git' , 'init' , name )
+			$mol_exec( pack.path() , 'git' , 'remote' , 'add' , '--track' , 'master' , 'origin' , repo.value )
+			$mol_exec( pack.path() , 'git' , 'pull' )
+			pack.stat( void 0 )
+			return true
+		}
+		
+		throw new Error( `Package "${name}" not found` )
+	}
+	
+	@ $mol_prop()
+	packMapping() {
+		return $mol_tree.fromString( $mol_file.relative( 'pms.tree' ).content() )
+	}
+	
 	@ $mol_prop()
 	graph( { path , exclude } : { path : string , exclude? : string[] } ) {
 		let graph = new $mol_graph< {} , { priority : number } >()
@@ -273,6 +297,7 @@ class $mol_build extends $mol_object {
 			}
 		}
 		
+		this.packEnsure( path )
 		this.modsRecursive({ path , exclude }).forEach( mod => addMod( mod ) )
 		
 		return graph
