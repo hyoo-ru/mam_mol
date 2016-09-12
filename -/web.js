@@ -10571,6 +10571,9 @@ var $;
         $mol_number.prototype.disabled = function () {
             return false;
         };
+        $mol_number.prototype.disabledDec = function () {
+            return this.disabled();
+        };
         $mol_number.prototype.decrementer = function () {
             var _this = this;
             var diff = [];
@@ -10585,7 +10588,7 @@ var $;
                     }
                     return _this.eventDec.apply(_this, diff);
                 };
-                __.disabled = function () { return _this.disabled(); };
+                __.disabled = function () { return _this.disabledDec(); };
                 __.childs = function () { return [].concat("−"); };
             });
         };
@@ -10598,6 +10601,9 @@ var $;
         };
         $mol_number.prototype.hint = function () {
             return "";
+        };
+        $mol_number.prototype.disabledStringer = function () {
+            return this.disabled();
         };
         $mol_number.prototype.stringer = function () {
             var _this = this;
@@ -10615,7 +10621,7 @@ var $;
                     return _this.value.apply(_this, diff);
                 };
                 __.hint = function () { return _this.hint(); };
-                __.disabled = function () { return _this.disabled(); };
+                __.disabled = function () { return _this.disabledStringer(); };
             });
         };
         $mol_number.prototype.eventInc = function () {
@@ -10624,6 +10630,9 @@ var $;
                 diff[_i - 0] = arguments[_i];
             }
             return (diff[0] !== void 0) ? diff[0] : null;
+        };
+        $mol_number.prototype.disabledInc = function () {
+            return this.disabled();
         };
         $mol_number.prototype.incrementer = function () {
             var _this = this;
@@ -10639,7 +10648,7 @@ var $;
                     }
                     return _this.eventInc.apply(_this, diff);
                 };
-                __.disabled = function () { return _this.disabled(); };
+                __.disabled = function () { return _this.disabledInc(); };
                 __.childs = function () { return [].concat("+"); };
             });
         };
@@ -10781,8 +10790,59 @@ var $;
                 __.disabled = function () { return true; };
             });
         };
+        $mol_number_demo.prototype.four = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_number().setup(function (__) {
+                __.value = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.year.apply(_this, diff);
+                };
+                __.disabledStringer = function () { return true; };
+            });
+        };
+        $mol_number_demo.prototype.five = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_number().setup(function (__) {
+                __.value = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.year.apply(_this, diff);
+                };
+                __.disabledDec = function () { return true; };
+            });
+        };
+        $mol_number_demo.prototype.six = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_number().setup(function (__) {
+                __.value = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.year.apply(_this, diff);
+                };
+                __.disabledInc = function () { return true; };
+            });
+        };
         $mol_number_demo.prototype.childs = function () {
-            return [].concat(this.one(), this.two(), this.three());
+            return [].concat(this.one(), this.two(), this.three(), this.four(), this.five(), this.six());
         };
         __decorate([
             $mol_prop()
@@ -10796,6 +10856,15 @@ var $;
         __decorate([
             $mol_prop()
         ], $mol_number_demo.prototype, "three", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number_demo.prototype, "four", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number_demo.prototype, "five", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number_demo.prototype, "six", null);
         return $mol_number_demo;
     }($.$mol_rower));
     $.$mol_number_demo = $mol_number_demo;

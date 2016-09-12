@@ -1,14 +1,14 @@
 $mol_number $mol_viewer childs /
 	< decrementer $mol_clicker
 		eventClick > eventDec null
-		disabled < disabled false
+		disabled < disabledDec < disabled false
 		childs / \−
 	< stringer $mol_stringer
 		type \number
 		value > value \
 		hint < hint \
-		disabled < disabled false
+		disabled < disabledStringer < disabled false
 	< incrementer $mol_clicker
 		eventClick > eventInc null
-		disabled < disabled false
+		disabled < disabledInc < disabled false
 		childs / \+

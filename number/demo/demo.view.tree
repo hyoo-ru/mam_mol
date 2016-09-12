@@ -8,3 +8,12 @@ $mol_number_demo $mol_rower childs /
 		value > year \
 		hint \2035
 		disabled true
+	< four $mol_number
+		value > year \
+		disabledStringer true
+	< five $mol_number
+		value > year \
+		disabledDec true
+	< six $mol_number
+		value > year \
+		disabledInc true
