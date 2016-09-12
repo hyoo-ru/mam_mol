@@ -1280,10 +1280,9 @@
 [mol_number_stringer] {
     -webkit-appearance: textfield;
        -moz-appearance: textfield;
-            appearance: textfield
-}
-[mol_number_stringer ] {
-    margin: 0 1px
+            appearance: textfield;
+    margin: 0 1px;
+    text-align: right
 }
 [mol_number_incrementer], [mol_number_decrementer] {
     font-size: 20px;

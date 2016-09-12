@@ -1,14 +1,18 @@
-$mol_number $mol_viewer childs /
-	< decrementer $mol_clicker
-		eventClick > eventDec null
-		disabled < disabledDec < disabled false
-		childs / \−
-	< stringer $mol_stringer
-		type \number
-		value > value \
-		hint < hint \
-		disabled < disabledStringer < disabled false
-	< incrementer $mol_clicker
-		eventClick > eventInc null
-		disabled < disabledInc < disabled false
-		childs / \+
+$mol_number $mol_viewer
+	precisionView < precision 1
+	precisionChange < precision 1
+	> value 0
+	childs /
+		< decrementer $mol_clicker
+			eventClick > eventDec null
+			disabled < disabledDec < disabled false
+			childs / \−
+		< stringer $mol_stringer
+			type \number
+			value > valueFixed \
+			hint < hint \
+			disabled < disabledStringer < disabled false
+		< incrementer $mol_clicker
+			eventClick > eventInc null
+			disabled < disabledInc < disabled false
+			childs / \+

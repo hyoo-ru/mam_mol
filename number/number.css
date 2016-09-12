@@ -10,9 +10,8 @@
 
 [mol_number_stringer] {
 	appearance:textfield;
-}
-[mol_number_stringer ] {
 	margin: 0 1px;
+	text-align: right;
 }
 
 [mol_number_incrementer], [mol_number_decrementer] {

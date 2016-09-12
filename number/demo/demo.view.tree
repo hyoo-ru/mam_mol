@@ -1,19 +1,28 @@
 $mol_number_demo $mol_rower childs /
 	< one $mol_number
-		value > year \
+		value > year null
 	< two $mol_number
-		value > year \
+		value > year null
 		hint \2016
 	< three $mol_number
-		value > year \
+		value > year null
 		hint \2035
 		disabled true
 	< four $mol_number
-		value > year \
+		value > year null
 		disabledStringer true
 	< five $mol_number
-		value > year \
+		value > year null
 		disabledDec true
 	< six $mol_number
-		value > year \
+		value > year null
 		disabledInc true
+	< seven $mol_number
+		value > year null
+		precisionChange 10
+	< eight $mol_number
+		value > year null
+		precisionView 0.01
+	< nine $mol_number
+		value > year null
+		precision 1000
