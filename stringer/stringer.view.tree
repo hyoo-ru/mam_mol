@@ -4,6 +4,6 @@ $mol_stringer $mol_viewer
 		placeholder < hint \
 		type < type \text
 	field *
-		disabled < disabled : false
+		disabled < disabled false
 		value < valueChanged > value \
-	event * input > eventChange : null
+	event * input > eventChange null

@@ -1,0 +1,23 @@
+[mol_number] {
+	display: flex;
+}
+
+[mol_number_stringer]::-webkit-outer-spin-button,
+[mol_number_stringer]::-webkit-inner-spin-button {
+	appearance: none;
+	margin: 0;
+}
+
+[mol_number_stringer] {
+	appearance:textfield;
+}
+[mol_number_stringer ] {
+	margin: 0 1px;
+}
+
+[mol_number_incrementer], [mol_number_decrementer] {
+	font-size: 1.25rem;
+	width: 2rem;
+	padding-top: 0;
+	padding-bottom: 0;
+}

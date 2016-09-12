@@ -2172,7 +2172,7 @@ var $;
     }($mol_viewer));
     $.$mol_stacker = $mol_stacker;
 })($ || ($ = {}));
-//-stacker.view.tree.js.map
+//stacker.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2277,7 +2277,7 @@ var $;
     }($mol_viewer));
     $.$mol_scroller = $mol_scroller;
 })($ || ($ = {}));
-//-scroller.view.tree.js.map
+//scroller.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2444,7 +2444,7 @@ var $;
     }($mol_viewer));
     $.$mol_pager = $mol_pager;
 })($ || ($ = {}));
-//-pager.view.tree.js.map
+//pager.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2480,7 +2480,7 @@ var $;
     }($mol_viewer));
     $.$mol_lister = $mol_lister;
 })($ || ($ = {}));
-//-lister.view.tree.js.map
+//lister.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2575,7 +2575,7 @@ var $;
     }($mol_viewer));
     $.$mol_linker = $mol_linker;
 })($ || ($ = {}));
-//-linker.view.tree.js.map
+//linker.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2661,7 +2661,7 @@ var $;
     }($.$mol_svg));
     $.$mol_svg_path = $mol_svg_path;
 })($ || ($ = {}));
-//-svg.view.tree.js.map
+//svg.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2716,7 +2716,7 @@ var $;
     }($.$mol_svg));
     $.$mol_icon = $mol_icon;
 })($ || ($ = {}));
-//-icon.view.tree.js.map
+//icon.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2737,7 +2737,7 @@ var $;
     }($.$mol_icon));
     $.$mol_icon_chevron_left = $mol_icon_chevron_left;
 })($ || ($ = {}));
-//-left.view.tree.js.map
+//left.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2799,7 +2799,7 @@ var $;
     }($mol_viewer));
     $.$mol_demo = $mol_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2873,7 +2873,7 @@ var $;
     }($.$mol_demo));
     $.$mol_demo_large = $mol_demo_large;
 })($ || ($ = {}));
-//-demo_types.view.tree.js.map
+//demo_types.view.tree.js.map
 ;
 function $mol_maybe(value) {
     return (value == null) ? [] : [value];
@@ -3000,7 +3000,7 @@ var $;
     }($.$mol_pager));
     $.$mol_app_demo_pager = $mol_app_demo_pager;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3143,7 +3143,7 @@ var $;
     }($mol_viewer));
     $.$mol_rower_sub = $mol_rower_sub;
 })($ || ($ = {}));
-//-rower.view.tree.js.map
+//rower.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3205,7 +3205,7 @@ var $;
     }($mol_viewer));
     $.$mol_form = $mol_form;
 })($ || ($ = {}));
-//-form.view.tree.js.map
+//form.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3313,7 +3313,7 @@ var $;
     }($mol_viewer));
     $.$mol_form_field = $mol_form_field;
 })($ || ($ = {}));
-//-field.view.tree.js.map
+//field.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3409,7 +3409,7 @@ var $;
     }($mol_viewer));
     $.$mol_stringer = $mol_stringer;
 })($ || ($ = {}));
-//-stringer.view.tree.js.map
+//stringer.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3502,7 +3502,7 @@ var $;
     }($mol_viewer));
     $.$mol_clicker = $mol_clicker;
 })($ || ($ = {}));
-//-clicker.view.tree.js.map
+//clicker.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3566,7 +3566,7 @@ var $;
     }($.$mol_clicker));
     $.$mol_clicker_warn = $mol_clicker_warn;
 })($ || ($ = {}));
-//-clicker_types.view.tree.js.map
+//clicker_types.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3602,7 +3602,7 @@ var $;
     }($.$mol_clicker));
     $.$mol_checker = $mol_checker;
 })($ || ($ = {}));
-//-checker.view.tree.js.map
+//checker.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3688,7 +3688,7 @@ var $;
     }($mol_viewer));
     $.$mol_switcher = $mol_switcher;
 })($ || ($ = {}));
-//-switcher.view.tree.js.map
+//switcher.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -4051,7 +4051,7 @@ var $;
     }($.$mol_switcher));
     $.$mol_app_signup_sexer = $mol_app_signup_sexer;
 })($ || ($ = {}));
-//-signup.view.tree.js.map
+//signup.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -4321,7 +4321,7 @@ var $;
     }($mol_viewer));
     $.$mol_app_supplies_enter = $mol_app_supplies_enter;
 })($ || ($ = {}));
-//-enter.view.tree.js.map
+//enter.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -4465,7 +4465,7 @@ var $;
     }($mol_viewer));
     $.$mol_coder = $mol_coder;
 })($ || ($ = {}));
-//-coder.view.tree.js.map
+//coder.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5043,7 +5043,7 @@ var $;
     }($mol_viewer));
     $.$mol_carder = $mol_carder;
 })($ || ($ = {}));
-//-carder.view.tree.js.map
+//carder.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5102,7 +5102,7 @@ var $;
     }($mol_viewer));
     $.$mol_labeler = $mol_labeler;
 })($ || ($ = {}));
-//-labeler.view.tree.js.map
+//labeler.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5180,7 +5180,7 @@ var $;
     }($mol_viewer));
     $.$mol_coster = $mol_coster;
 })($ || ($ = {}));
-//-coster.view.tree.js.map
+//coster.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5354,7 +5354,7 @@ var $;
     }($.$mol_carder));
     $.$mol_app_supplies_carder = $mol_app_supplies_carder;
 })($ || ($ = {}));
-//-carder.view.tree.js.map
+//carder.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5485,7 +5485,7 @@ var $;
     }($.$mol_pager));
     $.$mol_app_supplies_lister = $mol_app_supplies_lister;
 })($ || ($ = {}));
-//-lister.view.tree.js.map
+//lister.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5614,7 +5614,7 @@ var $;
     }($mol_object));
     $.$mol_decker_item = $mol_decker_item;
 })($ || ($ = {}));
-//-decker.view.tree.js.map
+//decker.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5720,7 +5720,7 @@ var $;
     }($.$mol_lister));
     $.$mol_sectioner = $mol_sectioner;
 })($ || ($ = {}));
-//-sectioner.view.tree.js.map
+//sectioner.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5744,7 +5744,7 @@ var $;
     }($mol_viewer));
     $.$mol_tiler = $mol_tiler;
 })($ || ($ = {}));
-//-tiler.view.tree.js.map
+//tiler.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5854,7 +5854,7 @@ var $;
     }($.$mol_icon));
     $.$mol_icon_attach = $mol_icon_attach;
 })($ || ($ = {}));
-//-attach.view.tree.js.map
+//attach.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -6150,7 +6150,7 @@ var $;
     }($mol_viewer));
     $.$mol_attacher_adder_input = $mol_attacher_adder_input;
 })($ || ($ = {}));
-//-attacher.view.tree.js.map
+//attacher.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -6493,7 +6493,7 @@ var $;
     }($.$mol_carder));
     $.$mol_app_supplies_positioner = $mol_app_supplies_positioner;
 })($ || ($ = {}));
-//-positioner.view.tree.js.map
+//positioner.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -7005,7 +7005,7 @@ var $;
     }($.$mol_pager));
     $.$mol_app_supplies_detailer = $mol_app_supplies_detailer;
 })($ || ($ = {}));
-//-detailer.view.tree.js.map
+//detailer.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -7243,7 +7243,7 @@ var $;
     }($.$mol_stacker));
     $.$mol_app_supplies = $mol_app_supplies;
 })($ || ($ = {}));
-//-supplies.view.tree.js.map
+//supplies.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -7428,7 +7428,7 @@ var $;
     }($.$mol_app_supplies_carder));
     $.$mol_app_supplies_carder_demo_selected = $mol_app_supplies_carder_demo_selected;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -7491,7 +7491,7 @@ var $;
     }($.$mol_app_supplies_positioner));
     $.$mol_app_supplies_positioner_demo = $mol_app_supplies_positioner_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -7618,7 +7618,7 @@ var $;
     }($.$mol_app_supplies_detailer));
     $.$mol_app_supplies_detailer_demo = $mol_app_supplies_detailer_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -8160,7 +8160,7 @@ var $;
     }($.$mol_rower));
     $.$mol_app_todomvc_taskRow = $mol_app_todomvc_taskRow;
 })($ || ($ = {}));
-//-todomvc.view.tree.js.map
+//todomvc.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -8843,7 +8843,7 @@ var $;
     }($.$mol_rower));
     $.$mol_app_users_item = $mol_app_users_item;
 })($ || ($ = {}));
-//-users.view.tree.js.map
+//users.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -9122,7 +9122,7 @@ var $;
     }($.$mol_attacher));
     $.$mol_attacher_demo_filled = $mol_attacher_demo_filled;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -9242,7 +9242,7 @@ var $;
     }($.$mol_rower));
     $.$mol_rower_demo = $mol_rower_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -9333,7 +9333,7 @@ var $;
     }($.$mol_carder));
     $.$mol_carder_demo_selected = $mol_carder_demo_selected;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -9434,7 +9434,7 @@ var $;
     }($.$mol_rower));
     $.$mol_checker_demo = $mol_checker_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -9594,7 +9594,7 @@ var $;
     }($.$mol_rower));
     $.$mol_clicker_demo = $mol_clicker_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -9757,7 +9757,7 @@ var $;
     }($.$mol_rower));
     $.$mol_coder_demo = $mol_coder_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -9854,7 +9854,7 @@ var $;
     }($.$mol_rower));
     $.$mol_stringer_demo = $mol_stringer_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -9943,7 +9943,7 @@ var $;
     }($.$mol_switcher));
     $.$mol_switcher_demo = $mol_switcher_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -10070,7 +10070,7 @@ var $;
     }($.$mol_decker));
     $.$mol_decker_demo = $mol_decker_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -10142,7 +10142,7 @@ var $;
     }($mol_viewer));
     $.$mol_demo_all = $mol_demo_all;
 })($ || ($ = {}));
-//-all.view.tree.js.map
+//all.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -10163,7 +10163,7 @@ var $;
     }($mol_viewer));
     $.$mol_filler = $mol_filler;
 })($ || ($ = {}));
-//-filler.view.tree.js.map
+//filler.view.tree.js.map
 ;
 var $mol_graph = (function () {
     function $mol_graph() {
@@ -10260,7 +10260,7 @@ var $;
     }($.$mol_rower));
     $.$mol_icon_demo = $mol_icon_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -10402,7 +10402,7 @@ var $;
     }($.$mol_rower));
     $.$mol_labeler_demo = $mol_labeler_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -10481,7 +10481,7 @@ var $;
     }($.$mol_rower));
     $.$mol_linker_demo = $mol_linker_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -10499,7 +10499,7 @@ var $;
     }($.$mol_lister));
     $.$mol_lister_demo = $mol_lister_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -10556,6 +10556,265 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
+    var $mol_number = (function (_super) {
+        __extends($mol_number, _super);
+        function $mol_number() {
+            _super.apply(this, arguments);
+        }
+        $mol_number.prototype.eventDec = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : null;
+        };
+        $mol_number.prototype.disabled = function () {
+            return false;
+        };
+        $mol_number.prototype.decrementer = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_clicker().setup(function (__) {
+                __.eventClick = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.eventDec.apply(_this, diff);
+                };
+                __.disabled = function () { return _this.disabled(); };
+                __.childs = function () { return [].concat("-"); };
+            });
+        };
+        $mol_number.prototype.value = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : "";
+        };
+        $mol_number.prototype.hint = function () {
+            return "";
+        };
+        $mol_number.prototype.stringer = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_stringer().setup(function (__) {
+                __.type = function () { return "number"; };
+                __.value = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.value.apply(_this, diff);
+                };
+                __.hint = function () { return _this.hint(); };
+                __.disabled = function () { return _this.disabled(); };
+            });
+        };
+        $mol_number.prototype.eventInc = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : null;
+        };
+        $mol_number.prototype.incrementer = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_clicker().setup(function (__) {
+                __.eventClick = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.eventInc.apply(_this, diff);
+                };
+                __.disabled = function () { return _this.disabled(); };
+                __.childs = function () { return [].concat("+"); };
+            });
+        };
+        $mol_number.prototype.childs = function () {
+            return [].concat(this.decrementer(), this.stringer(), this.incrementer());
+        };
+        __decorate([
+            $mol_prop()
+        ], $mol_number.prototype, "eventDec", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number.prototype, "decrementer", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number.prototype, "value", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number.prototype, "stringer", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number.prototype, "eventInc", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number.prototype, "incrementer", null);
+        return $mol_number;
+    }($mol_viewer));
+    $.$mol_number = $mol_number;
+})($ || ($ = {}));
+//number.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_number = (function (_super) {
+            __extends($mol_number, _super);
+            function $mol_number() {
+                _super.apply(this, arguments);
+            }
+            $mol_number.prototype.eventDec = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                this.value(+this.value() - 1);
+            };
+            $mol_number.prototype.eventInc = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                this.value(+this.value() + 1);
+            };
+            return $mol_number;
+        }($.$mol_number));
+        $mol.$mol_number = $mol_number;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//number.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_number_demo = (function (_super) {
+        __extends($mol_number_demo, _super);
+        function $mol_number_demo() {
+            _super.apply(this, arguments);
+        }
+        $mol_number_demo.prototype.year = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : "";
+        };
+        $mol_number_demo.prototype.one = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_number().setup(function (__) {
+                __.value = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.year.apply(_this, diff);
+                };
+            });
+        };
+        $mol_number_demo.prototype.two = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_number().setup(function (__) {
+                __.value = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.year.apply(_this, diff);
+                };
+                __.hint = function () { return "2016"; };
+            });
+        };
+        $mol_number_demo.prototype.three = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_number().setup(function (__) {
+                __.value = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.year.apply(_this, diff);
+                };
+                __.hint = function () { return "2035"; };
+                __.disabled = function () { return true; };
+            });
+        };
+        $mol_number_demo.prototype.childs = function () {
+            return [].concat(this.one(), this.two(), this.three());
+        };
+        __decorate([
+            $mol_prop()
+        ], $mol_number_demo.prototype, "year", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number_demo.prototype, "one", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number_demo.prototype, "two", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_number_demo.prototype, "three", null);
+        return $mol_number_demo;
+    }($.$mol_rower));
+    $.$mol_number_demo = $mol_number_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
     var $mol_pager_demo = (function (_super) {
         __extends($mol_pager_demo, _super);
         function $mol_pager_demo() {
@@ -10590,7 +10849,7 @@ var $;
     }($.$mol_pager));
     $.$mol_pager_demo = $mol_pager_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -10787,7 +11046,7 @@ var $;
     }($mol_viewer));
     $.$mol_perf_render_row = $mol_perf_render_row;
 })($ || ($ = {}));
-//-render.view.tree.js.map
+//render.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -11297,7 +11556,7 @@ var $;
     }($mol_viewer));
     $.$mol_perf_uibench_tree_leaf = $mol_perf_uibench_tree_leaf;
 })($ || ($ = {}));
-//-uibench.view.tree.js.map
+//uibench.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -11719,7 +11978,7 @@ var $;
     }($.$mol_stacker));
     $.$mol_stacker_demo = $mol_stacker_demo;
 })($ || ($ = {}));
-//-demo.view.tree.js.map
+//demo.view.tree.js.map
 ;
 function $mol_test(code) {
     $mol_test_all.push(new $mol_test_case(code));
@@ -11969,7 +12228,7 @@ var $mol_tree = (function () {
                 var key = child.type || child.value;
                 if (key === '//')
                     continue;
-                var colon = child.select([':']).childs[0];
+                var colon = child.select(':').childs[0];
                 if (!colon)
                     throw new Error("Required colon after key at " + child.uri);
                 var val = colon.childs[0].toJSON();
@@ -12008,20 +12267,24 @@ var $mol_tree = (function () {
         enumerable: true,
         configurable: true
     });
-    $mol_tree.prototype.select = function (path) {
+    $mol_tree.prototype.select = function () {
+        var path = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            path[_i - 0] = arguments[_i];
+        }
         if (typeof path === 'string')
             path = path.split(/ +/);
         var next = [this];
-        for (var _i = 0, path_1 = path; _i < path_1.length; _i++) {
-            var type = path_1[_i];
+        for (var _a = 0, path_1 = path; _a < path_1.length; _a++) {
+            var type = path_1[_a];
             if (!next.length)
                 break;
             var prev = next;
             next = [];
-            for (var _a = 0, prev_1 = prev; _a < prev_1.length; _a++) {
-                var item = prev_1[_a];
-                for (var _b = 0, _c = item.childs; _b < _c.length; _b++) {
-                    var child = _c[_b];
+            for (var _b = 0, prev_1 = prev; _b < prev_1.length; _b++) {
+                var item = prev_1[_b];
+                for (var _c = 0, _d = item.childs; _c < _d.length; _c++) {
+                    var child = _d[_c];
                     if (child.type == type) {
                         next.push(child);
                     }
@@ -12034,7 +12297,7 @@ var $mol_tree = (function () {
         if (typeof path === 'string')
             path = path.split(/ +/);
         var childs = this.childs.filter(function (item) {
-            var found = item.select(path);
+            var found = item.select.apply(item, path);
             if (value == null) {
                 return Boolean(found.childs.length);
             }

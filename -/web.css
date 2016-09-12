@@ -1266,5 +1266,32 @@
 [mol_icon_demo_icon]:hover {
     color: #5988C8
 }
+[mol_number] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+}
+[mol_number_stringer]::-webkit-outer-spin-button,
+[mol_number_stringer]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+            appearance: none;
+    margin: 0
+}
+[mol_number_stringer] {
+    -webkit-appearance: textfield;
+       -moz-appearance: textfield;
+            appearance: textfield
+}
+[mol_number_stringer ] {
+    margin: 0 1px
+}
+[mol_number_incrementer], [mol_number_decrementer] {
+    font-size: 20px;
+    font-size: 1.25rem;
+    width: 32px;
+    width: 2rem;
+    padding-top: 0;
+    padding-bottom: 0
+}
 
 /*# sourceMappingURL=web.css.map */

@@ -1,0 +1,10 @@
+$mol_number_demo $mol_rower childs /
+	< one $mol_number
+		value > year \
+	< two $mol_number
+		value > year \
+		hint \2016
+	< three $mol_number
+		value > year \
+		hint \2035
+		disabled true
