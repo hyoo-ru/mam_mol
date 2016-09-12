@@ -5,7 +5,7 @@
 }
 
 [mol_labeler_titler] {
-	color: #999;
+	color: var(--mol_skin_passive_text);
 	font-size: .85rem;
 }
 

@@ -12,11 +12,11 @@
 }
 
 [mol_app_supplies_carder_linker][mol_linker_current] {
-	box-shadow: 0 0 0 1px var(--mol_skin_focus_back);
+	box-shadow: 0 0 0 1px var(--mol_skin_focus);
 }
 
 [mol_app_supplies_carder_linker][mol_linker_current] {
-	box-shadow: 0 0 0 1px var(--mol_skin_focus_back);
+	box-shadow: 0 0 0 1px var(--mol_skin_focus);
 }
 
 [mol_app_supplies_carder_contenter] {

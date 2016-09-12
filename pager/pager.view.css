@@ -7,8 +7,8 @@
 }
 
 [mol_pager_header] {
-	background: var(--mol_skin_base_back);
-	color: var(--mol_skin_base_fore);
+	background: var(--mol_skin_base);
+	color: var(--mol_skin_base_text);
 	display: flex;
 	justify-content: space-between;
 	flex: 0 0 auto;
@@ -28,8 +28,8 @@
 }
 
 [mol_pager_footer] {
-	background: var(--mol_skin_base_back);
-	color: var(--mol_skin_base_fore);
+	background: var(--mol_skin_base);
+	color: var(--mol_skin_base_text);
 	display: flex;
 	justify-content: space-between;
 	flex: 0 0 auto;

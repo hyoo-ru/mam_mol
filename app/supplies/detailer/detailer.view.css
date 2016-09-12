@@ -14,7 +14,7 @@
 }
 
 [mol_app_supplies_detailer_backer] {
-	color: var(--mol_skin_base_fore);
+	color: var(--mol_skin_base_text);
 	display: flex;
 	align-items: center;
 	position: absolute;
@@ -23,7 +23,7 @@
 
 [mol_app_supplies_detailer_consContent] {
 	align-items: baseline;
-	background: white;
+	background: var(--mol_skin_card);
 }
 
 [mol_app_supplies_detailer_consContent] > * {
@@ -32,7 +32,7 @@
 
 [mol_app_supplies_detailer_orgContent] {
 	align-items: baseline;
-	background: white;
+	background: var(--mol_skin_card);
 }
 
 [mol_app_supplies_detailer_orgContent] > * {

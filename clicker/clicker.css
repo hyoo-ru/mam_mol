@@ -3,7 +3,7 @@
 	border: none;
 	font: inherit;
 	background: none;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_fore);
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
 	flex: 1 1 auto;
 	justify-content: center;
@@ -20,14 +20,14 @@
 }
 
 [mol_clicker]:disabled {
-	background: #eee;
-	color: gray;
+	background: var(--mol_skin_passive);
+	color: var(--mol_skin_passive_text);
 }
 
 [mol_clicker]:not(:disabled):hover ,
 [mol_clicker]:focus {
 	outline: none;
-	box-shadow: 0 0 0 2px var(--mol_skin_focus_back);
+	box-shadow: 0 0 0 2px var(--mol_skin_focus);
 	position: relative;
 	z-index: 1;
 	cursor: pointer;
@@ -40,7 +40,7 @@
 }
 
 [mol_clicker_warn]:not(:disabled) {
-	background: var(--mol_skin_warn_back);
+	background: var(--mol_skin_warn);
 }
 
 [mol_clicker_minor]:not(:disabled) {

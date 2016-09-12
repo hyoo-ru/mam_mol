@@ -1,6 +1,6 @@
 [mol_app_supplies_lister_searchPanel] {
 	flex: 0 0 auto;
-	background: var(--mol_skin_base_back);
+	background: var(--mol_skin_base);
 	position: relative;
 }
 

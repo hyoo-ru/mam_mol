@@ -16,7 +16,7 @@
 }
 
 [mol_form_field_errorer] {
-	color: var(--mol_skin_warn_fore);
+	color: var(--mol_skin_warn_text);
 }
 
 [mol_form_field_errorer]:not(:empty):before {

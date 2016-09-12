@@ -640,7 +640,7 @@
 }
 [mol_switcher_optioner][mol_checker_checked] {
     box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
-    background: white/*background: var(--mol_skin_focus_back);*//*color: var(--mol_skin_focus_fore);*/
+    background: white/*background: var(--mol_skin_focus);*//*color: var(--mol_skin_focus_fore);*/
 }
 [mol_decker_optioner] {
     display: -webkit-box;

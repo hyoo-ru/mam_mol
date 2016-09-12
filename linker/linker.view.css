@@ -1,6 +1,6 @@
 [mol_linker] {
 	text-decoration: none;
-	color: var(--mol_skin_focus_back);
+	color: var(--mol_skin_focus);
 	cursor: pointer;
 	border-radius: var(--mol_skin_round);
 }
@@ -13,5 +13,5 @@
 [mol_linker]:focus ,
 [mol_linker]:not([mol_linker_current]):hover {
 	outline: none;
-	box-shadow: 0 0 0 2px var(--mol_skin_focus_back)
+	box-shadow: 0 0 0 2px var(--mol_skin_focus)
 }

@@ -9,7 +9,7 @@
 }
 
 [mol_app_demo_mainer] {
-	background: white;
+	background: var(--mol_skin_light);
 	overflow: auto;
 }
 
@@ -38,7 +38,7 @@
 }
 
 [mol_app_demo_pager_backer] {
-	color: var(--mol_skin_base_fore);
+	color: var(--mol_skin_base_text);
 	display: flex;
 	align-items: center;
 	position: absolute;

@@ -5,7 +5,7 @@
 	box-sizing: border-box;
 	will-change: scroll-position;
 	transform: translateZ(0);
-	outline: 1px solid var(--mol_skin_light_fore);
+	outline: 1px solid var(--mol_skin_light_line);
 }
 
 @media print {
