@@ -75,6 +75,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * [$mol_checker](checker) - check boxe
 * [$mol_switcher](switcher) - radio buttons
 * [$mol_stringer](stringer) - one string input control
+* [$mol_number](number) - one number input control
 * [$mol_coder](coder) - bar code scanner
 
 ## Layout components

@@ -2,7 +2,7 @@ $mol_number $mol_viewer childs /
 	< decrementer $mol_clicker
 		eventClick > eventDec null
 		disabled < disabled false
-		childs / \-
+		childs / \−
 	< stringer $mol_stringer
 		type \number
 		value > value \

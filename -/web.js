@@ -10586,7 +10586,7 @@ var $;
                     return _this.eventDec.apply(_this, diff);
                 };
                 __.disabled = function () { return _this.disabled(); };
-                __.childs = function () { return [].concat("-"); };
+                __.childs = function () { return [].concat("−"); };
             });
         };
         $mol_number.prototype.value = function () {
