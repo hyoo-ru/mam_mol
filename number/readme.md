@@ -8,6 +8,8 @@ To start using the $mol_number component you need to add this one to your view.t
 $mol_number
 	value > value null
 ```
+Current value of input available through `value()`.
+
 Here we add the component and bind the value param of $mol_number component to our property ```value```. By default we set 
 null to this one. If we set something like ``` value > value 2016``` this number will be rendered on input element 
 at the beginning of loading page.

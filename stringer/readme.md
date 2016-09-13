@@ -9,8 +9,7 @@ To start using the $mol_stinger component you need to add this one to your view.
 $mol_stringer
 	value > value \
 ```
-Current value of input available through `value()`. 
-There is an possibility to get state of input field, to get known editable or not this one by using `editable()`.
+Current value of input available through `value()`.
 
 ## Options
 ### value
