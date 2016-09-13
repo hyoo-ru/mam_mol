@@ -6,7 +6,12 @@ class $mol_build_server extends $mol_server {
 				return this.generator( req.url ) || next()
 			} catch( error ) {
 				$mol_atom_restore( error )
-				throw error
+				if( req.url.match( /\.js$/ ) ) {
+					console.error( error )
+					res.send( `console.error( ${ JSON.stringify( error.message ) } )` ).end()
+				} else {
+					throw error
+				}
 			}
 		}
 	}
