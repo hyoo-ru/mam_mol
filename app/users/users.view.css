@@ -1,0 +1,42 @@
+[mol_app_users] {
+	max-width: 30rem;
+	max-height: 100%;
+	width: 100%;
+	/*height: 100%;*/
+	margin: auto;
+	background: var(--mol_skin_light);
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_app_users_filter] {
+	flex: 0 0 auto;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+[mol_app_users_bodier] {
+	flex: 1 1 40rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+[mol_app_users_lister] {
+	align-self: stretch;
+	flex: 1 0 auto;
+	background: var(--mol_skin_light);
+}
+
+[mol_app_users_controller] {
+	background: var(--mol_skin_light);
+}
+
+[mol_app_users_messager] {
+	flex: 1 1 auto;
+	align-self: stretch;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--mol_skin_warn_text);
+}

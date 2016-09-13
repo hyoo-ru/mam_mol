@@ -1,0 +1,10 @@
+$mol_demo_all $mol_viewer childs /
+	< medium $mol_demo_medium
+		name < name \$mol_viewer
+		title \Fit to content
+	< small $mol_demo_small
+		name < name \$mol_viewer
+		title \Minimum screen
+	< large $mol_demo_large
+		name < name \$mol_viewer
+		title \Maximize to screen

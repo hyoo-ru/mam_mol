@@ -1,0 +1,10 @@
+$mol_coder_demo $mol_rower childs /
+	< coder1 $mol_coder format \QR_CODE
+	< coder2 $mol_coder format \DATA_MATRIX
+	< coder3 $mol_coder format \UPC_E
+	< coder4 $mol_coder format \UPC_A
+	< coder5 $mol_coder format \EAN_8
+	< coder6 $mol_coder format \EAN_13
+	< coder7 $mol_coder format \CODE_128
+	< coder8 $mol_coder format \CODE_39
+	< coder9 $mol_coder format \ITF

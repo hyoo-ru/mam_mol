@@ -1,0 +1,22 @@
+[mol_rower] {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	align-content: center;
+	justify-content: space-between;
+	padding: .5rem;
+	flex: 1 1 auto;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+}
+
+[mol_rower] > * ,
+[mol_rower_sub] > * {
+	margin: .5rem;
+}
+
+[mol_rower_sub] {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	flex: 1 1 auto;
+}

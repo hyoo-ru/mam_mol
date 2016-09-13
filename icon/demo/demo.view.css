@@ -1,0 +1,7 @@
+[mol_icon_demo] {
+	justify-content: flex-start;
+}
+
+[mol_icon_demo_icon]:hover {
+	color: var(--mol_skin_base);
+}

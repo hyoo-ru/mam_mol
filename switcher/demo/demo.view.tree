@@ -1,0 +1,6 @@
+$mol_switcher_demo $mol_switcher
+	value > color \
+	option *
+		red \Red
+		green \Green
+		blue \Blue

@@ -1,0 +1,10 @@
+$mol_stringer $mol_viewer
+	tagName \input
+	enabled true
+	attr *
+		placeholder < hint \
+		type < type \text
+	field *
+		disabled < disabled false
+		value < valueChanged > value \
+	event * input > eventChange null

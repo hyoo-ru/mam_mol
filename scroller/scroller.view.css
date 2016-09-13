@@ -1,0 +1,28 @@
+[mol_scroller] {
+	overflow: auto;
+	overflow-y: scroll;
+	flex: 1 1 auto;
+	box-sizing: border-box;
+	will-change: scroll-position;
+	transform: translateZ(0);
+	outline: 1px solid var(--mol_skin_light_line);
+}
+
+@media print {
+	[mol_scroller] {
+		overflow: visible;
+	}
+}
+
+/*[mol_scroller]::-webkit-scrollbar {*/
+	/*width: .5rem;*/
+	/*height: .5rem;*/
+/*}*/
+
+/*[mol_scroller]::-webkit-scrollbar-track {*/
+	/*background: #eee;*/
+/*}*/
+
+/*[mol_scroller]::-webkit-scrollbar-thumb {*/
+	/*background: #ccc;*/
+/*}*/

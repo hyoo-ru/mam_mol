@@ -3,6 +3,7 @@
 <html>
     <head>
         <title>Performance Comparison for Knockout, Angular, Angular Light, React, Raw HTML, $mol</title>
+		<!--<link rel="stylesheet" href="-/web.css" />-->
         <style type="text/css">
 			body {
 				display: flex;
@@ -14,7 +15,8 @@
 			}
 			
 			section {
-				flex: 10%;
+				flex: 1 1 10%;
+				margin: .25rem;
 			}
 			
 			[mol_perf_render_contenter],
@@ -24,12 +26,14 @@
 				display: block;
 				overflow: auto;
 				height: 50vh;
+				transform: translateZ(0);
+				background:#EEE;
+				border: 1px solid #999;
 			}
 			
 			[mol_perf_render_row],
             li {
 				padding:3px 10px;
-				background:#EEE;
 				cursor:pointer;
 				list-style: none;
 			}
@@ -59,7 +63,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.js"></script>
 		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react-dom.js"></script>-->
-		<script type="text/javascript" src="-mix/index.env=web.stage=release.js"></script>
+		<script type="text/javascript" src="-/web.js"></script>
         <script type="text/javascript" src="//angularlight.org/bin/alight_0.13.last.min.js"></script>
         <script type="text/javascript">
             console.timeEnd("build");

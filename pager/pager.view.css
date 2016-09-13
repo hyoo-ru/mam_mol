@@ -1,0 +1,39 @@
+[mol_pager] {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	position: relative;
+	align-self: stretch;
+}
+
+[mol_pager_header] {
+	background: var(--mol_skin_base);
+	color: var(--mol_skin_base_text);
+	display: flex;
+	justify-content: space-between;
+	flex: 0 0 auto;
+	overflow: hidden;
+	position: relative;
+}
+
+[mol_pager_titler] {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	padding: 1rem;
+}
+
+[mol_pager_bodier] {
+	flex: 1 1 auto;
+	background: var(--mol_skin_light);
+	color: var(--mol_skin_light_text);
+}
+
+[mol_pager_footer] {
+	background: var(--mol_skin_base);
+	color: var(--mol_skin_base_text);
+	display: flex;
+	justify-content: space-between;
+	flex: 0 0 auto;
+	overflow: hidden;
+}

@@ -1,0 +1,14 @@
+[mol_form_barFields] {
+	padding: 0 .5rem;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[mol_form_barFields] > * {
+	margin: .5rem;
+}
+
+[mol_form_barButtons] {
+	justify-content: center;
+	box-shadow: none;
+}

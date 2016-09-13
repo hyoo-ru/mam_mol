@@ -1,0 +1,3 @@
+$mol_sectioner $mol_lister rows /
+	< header $mol_viewer childs / < head null
+	< content null

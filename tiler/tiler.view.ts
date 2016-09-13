@@ -1,0 +1,58 @@
+module $.$mol {
+	export class $mol_tiler extends $.$mol_tiler {
+		
+		@ $mol_prop()
+		childs() {
+			return this.groupChilds([ ])
+		}
+		
+		@ $mol_prop()
+		groupItems( path : number[] ) : $mol_viewer[] {
+			var items = ( path.length === 0 )
+				? this.items()
+				: this.groupItems( path.slice( 0 , path.length - 1 ) ) 
+			if( items.length < 2  ) return items
+			
+			if( path.length != 0 ) {
+				var cut = Math.floor( items.length / 2 )
+				items = path[ path.length  -1 ]
+					? items.slice( cut )
+					: items.slice( 0 , cut )
+			}
+			
+			return items
+		}
+		
+		@ $mol_prop()
+		groupChilds( path : number[] ) {
+			var items = this.groupItems( path )
+			if( items.length <= 2 ) return items.map( ( _ , index )=> this.item( path.concat( index ) ) )
+			return [
+				this.child( path.concat( 0 ) ) ,
+				this.child( path.concat( 1 ) ) ,
+			]
+		}
+		
+		@ $mol_prop()
+		child( path : number[] ) {
+			return ( this.groupItems( path ).length > 1 )
+				? this.group( path )
+				: this.item( path )
+		}
+		
+		@ $mol_prop()
+		group( path : number[] ) {
+			return new $mol_viewer().setup( obj => {
+				obj.childs = () => this.groupChilds( path )
+			} )
+		}
+		
+		@ $mol_prop()
+		item( path : number[] ) {
+			return new $mol_viewer().setup( obj => {
+				obj.childs = () => this.groupItems( path )
+			} )
+		}
+		
+	}
+}

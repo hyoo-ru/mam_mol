@@ -1,0 +1,30 @@
+[mol_stringer] {
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	outline-offset: 0;
+	border: none;
+	border-radius: var(--mol_skin_round);
+	white-space: nowrap;
+	overflow: hidden;
+	padding: .5rem;
+	text-align: left;
+	position: relative;
+	z-index: 0;
+	font: inherit;
+	flex: 1000 1 auto;
+	/*width: 4em;*/
+	background: var(--mol_skin_passive);
+	color: var(--mol_skin_passive_text);
+}
+
+[mol_stringer]:enabled {
+	background: var(--mol_skin_card);
+	color: var(--mol_skin_light_text);
+}
+
+[mol_stringer]:enabled:hover ,
+[mol_stringer]:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px var(--mol_skin_focus);
+	z-index: 1;
+}
+

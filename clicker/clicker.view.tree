@@ -1,0 +1,6 @@
+$mol_clicker $mol_viewer
+	tagName \button
+	enabled : true
+	event * click > eventClick : null
+	attr *
+		disabled < disabled : false

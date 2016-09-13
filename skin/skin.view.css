@@ -1,0 +1,29 @@
+:root {
+	--mol_skin_base: #5988C8;
+	--mol_skin_base_text: white;
+
+	--mol_skin_focus: var(--mol_skin_base);
+	
+	--mol_skin_passive: #eee;
+	--mol_skin_passive_text: gray;
+	
+	--mol_skin_light: #fcfcfc;
+	--mol_skin_light_line: rgba( 0 , 0 , 0 , .1 );
+	--mol_skin_light_text: rgba( 0 , 0 , 0 , .9 );
+
+	--mol_skin_card: white;
+	
+	--mol_skin_accent: var(--mol_skin_base);
+	--mol_skin_accent_text: var(--mol_skin_base_text);
+
+	--mol_skin_warn: #FFD6D6;
+	--mol_skin_warn_text: red;
+
+	--mol_skin_good: #96DAA9;
+	--mol_skin_good_text: white;
+
+	--mol_skin_bad: #CC5252;
+	--mol_skin_bad_text: white;
+
+	--mol_skin_round: 4px;
+}
