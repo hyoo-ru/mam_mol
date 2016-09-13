@@ -25,6 +25,8 @@
 
 [mol_pager_bodier] {
 	flex: 1 1 auto;
+	background: var(--mol_skin_light);
+	color: var(--mol_skin_light_text);
 }
 
 [mol_pager_footer] {

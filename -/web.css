@@ -183,7 +183,9 @@
 [mol_pager_bodier] {
     -webkit-box-flex: 1;
         -ms-flex: 1 1 auto;
-            flex: 1 1 auto
+            flex: 1 1 auto;
+    background: #fcfcfc;
+    color: rgba( 0 , 0 , 0 , .9 )
 }
 [mol_pager_footer] {
     background: #5988C8;
@@ -455,7 +457,7 @@
 }
 [mol_stringer]:enabled {
     background: white;
-    color: rgb(137, 137, 137)
+    color: rgba( 0 , 0 , 0 , .9 )
 }
 [mol_stringer]:enabled:hover ,
 [mol_stringer]:focus {
@@ -510,8 +512,8 @@
     opacity: 1
 }
 [mol_clicker_major]:not(:disabled) {
-    background: var(--mol_skin_accent_back);
-    color: var(--mol_skin_accent_fore)
+    background: #5988C8;
+    color: white
 }
 [mol_clicker_warn]:not(:disabled) {
     background: #FFD6D6

@@ -35,8 +35,8 @@
 }
 
 [mol_clicker_major]:not(:disabled) {
-	background: var(--mol_skin_accent_back);
-	color: var(--mol_skin_accent_fore);
+	background: var(--mol_skin_accent);
+	color: var(--mol_skin_accent_text);
 }
 
 [mol_clicker_warn]:not(:disabled) {
