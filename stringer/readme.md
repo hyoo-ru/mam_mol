@@ -13,6 +13,8 @@ Current value of input available through `value()`.
 There is an possibility to get state of input field, to get known editable or not this one by using `editable()`.
 
 ## Options
+### value
+Property `value` is a currently displayed string. Type of `value` property is `string`.
 ### hint
 To display placeholder text on our $mol_stringer element we should use ```hint``` property. To use it we can just add 
 setting of hint in our example:

@@ -13,6 +13,8 @@ null to this one. If we set something like ``` value > value 2016``` this number
 at the beginning of loading page.
 
 ## Options
+### value
+Property `value` is a currently displayed number. Type of `value` property is `number`.
 ### hint
 Property ```hint``` inherits from $mol_stringer component
 ### disabled
