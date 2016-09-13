@@ -1,0 +1,17 @@
+[mol_barer] {
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	border-radius: var(--mol_skin_round);
+}
+
+[mol_barer] > *:first-child {
+	border-radius: var(--mol_skin_round) 0 0 var(--mol_skin_round);
+}
+
+[mol_barer] > *:not(:first-child):not(:last-child) {
+	border-radius: 0;
+	margin: 0 1px;
+}
+
+[mol_barer] > *:last-child {
+	border-radius: 0 var(--mol_skin_round) var(--mol_skin_round) 0;
+}

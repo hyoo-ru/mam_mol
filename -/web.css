@@ -1244,6 +1244,20 @@
             justify-content: center;
     color: red
 }
+[mol_barer] {
+    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+    border-radius: 4px
+}
+[mol_barer] > *:first-child {
+    border-radius: 4px 0 0 4px
+}
+[mol_barer] > *:not(:first-child):not(:last-child) {
+    border-radius: 0;
+    margin: 0 1px
+}
+[mol_barer] > *:last-child {
+    border-radius: 0 4px 4px 0
+}
 [mol_demo_all] {
     -webkit-box-flex: 1;
         -ms-flex: 1 1 100%;
@@ -1266,6 +1280,35 @@
 }
 [mol_icon_demo_icon]:hover {
     color: #5988C8
+}
+[mol_number] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1000;
+        -ms-flex: 1000 1 auto;
+            flex: 1000 1 auto;
+    position: relative
+}
+[mol_number_stringer]::-webkit-outer-spin-button,
+[mol_number_stringer]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+            appearance: none;
+    margin: 0
+}
+[mol_number_stringer] {
+    -webkit-appearance: textfield;
+       -moz-appearance: textfield;
+            appearance: textfield;
+    text-align: right
+}
+[mol_number_incrementer], [mol_number_decrementer] {
+    font-size: 20px;
+    font-size: 1.25rem;
+    width: 32px;
+    width: 2rem;
+    padding-top: 0;
+    padding-bottom: 0
 }
 
 /*# sourceMappingURL=web.css.map */
