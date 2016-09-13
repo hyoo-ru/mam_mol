@@ -7,16 +7,16 @@ $mol_number_demo $mol_rower childs /
 	< three $mol_number
 		value > year null
 		hint \2035
-		disabled true
+		enabled false
 	< four $mol_number
 		value > year null
-		disabledStringer true
+		enabledStringer false
 	< five $mol_number
 		value > year null
-		disabledDec true
+		enabledDec false
 	< six $mol_number
 		value > year null
-		disabledInc true
+		enabledInc false
 	< seven $mol_number
 		value > year null
 		precisionChange 10

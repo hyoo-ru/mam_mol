@@ -5,14 +5,14 @@ $mol_number $mol_viewer
 	childs /
 		< decrementer $mol_clicker
 			eventClick > eventDec null
-			disabled < disabledDec < disabled false
+			enabled < enabledDec < enabled true
 			childs / \−
 		< stringer $mol_stringer
 			type \number
 			value > valueFixed \
 			hint < hint \
-			disabled < disabledStringer < disabled false
+			enabled < enabledStringer < enabled true
 		< incrementer $mol_clicker
 			eventClick > eventInc null
-			disabled < disabledInc < disabled false
+			enabled < enabledInc < enabled true
 			childs / \+

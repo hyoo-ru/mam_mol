@@ -3336,6 +3336,9 @@ var $;
         $mol_stringer.prototype.tagName = function () {
             return "input";
         };
+        $mol_stringer.prototype.enabled = function () {
+            return true;
+        };
         $mol_stringer.prototype.hint = function () {
             return "";
         };
@@ -3431,6 +3434,9 @@ var $;
                     diff[_i - 0] = arguments[_i];
                 }
                 this.value(diff[0].srcElement.value.trim());
+            };
+            $mol_stringer.prototype.disabled = function () {
+                return !this.enabled();
             };
             return $mol_stringer;
         }($.$mol_stringer));
@@ -10584,11 +10590,11 @@ var $;
             }
             return (diff[0] !== void 0) ? diff[0] : null;
         };
-        $mol_number.prototype.disabled = function () {
-            return false;
+        $mol_number.prototype.enabled = function () {
+            return true;
         };
-        $mol_number.prototype.disabledDec = function () {
-            return this.disabled();
+        $mol_number.prototype.enabledDec = function () {
+            return this.enabled();
         };
         $mol_number.prototype.decrementer = function () {
             var _this = this;
@@ -10604,7 +10610,7 @@ var $;
                     }
                     return _this.eventDec.apply(_this, diff);
                 };
-                __.disabled = function () { return _this.disabledDec(); };
+                __.enabled = function () { return _this.enabledDec(); };
                 __.childs = function () { return [].concat("−"); };
             });
         };
@@ -10618,8 +10624,8 @@ var $;
         $mol_number.prototype.hint = function () {
             return "";
         };
-        $mol_number.prototype.disabledStringer = function () {
-            return this.disabled();
+        $mol_number.prototype.enabledStringer = function () {
+            return this.enabled();
         };
         $mol_number.prototype.stringer = function () {
             var _this = this;
@@ -10637,7 +10643,7 @@ var $;
                     return _this.valueFixed.apply(_this, diff);
                 };
                 __.hint = function () { return _this.hint(); };
-                __.disabled = function () { return _this.disabledStringer(); };
+                __.enabled = function () { return _this.enabledStringer(); };
             });
         };
         $mol_number.prototype.eventInc = function () {
@@ -10647,8 +10653,8 @@ var $;
             }
             return (diff[0] !== void 0) ? diff[0] : null;
         };
-        $mol_number.prototype.disabledInc = function () {
-            return this.disabled();
+        $mol_number.prototype.enabledInc = function () {
+            return this.enabled();
         };
         $mol_number.prototype.incrementer = function () {
             var _this = this;
@@ -10664,7 +10670,7 @@ var $;
                     }
                     return _this.eventInc.apply(_this, diff);
                 };
-                __.disabled = function () { return _this.disabledInc(); };
+                __.enabled = function () { return _this.enabledInc(); };
                 __.childs = function () { return [].concat("+"); };
             });
         };
@@ -10733,7 +10739,6 @@ var $;
                 }
                 if (diff[0] !== void 0) {
                     this.value(diff[0] === '' ? null : +diff[0]);
-                    return void 0;
                 }
                 var precisionView = this.precisionView();
                 var value = diff[0] ? +diff[0] : this.value();
@@ -10828,7 +10833,7 @@ var $;
                     return _this.year.apply(_this, diff);
                 };
                 __.hint = function () { return "2035"; };
-                __.disabled = function () { return true; };
+                __.enabled = function () { return false; };
             });
         };
         $mol_number_demo.prototype.four = function () {
@@ -10845,7 +10850,7 @@ var $;
                     }
                     return _this.year.apply(_this, diff);
                 };
-                __.disabledStringer = function () { return true; };
+                __.enabledStringer = function () { return false; };
             });
         };
         $mol_number_demo.prototype.five = function () {
@@ -10862,7 +10867,7 @@ var $;
                     }
                     return _this.year.apply(_this, diff);
                 };
-                __.disabledDec = function () { return true; };
+                __.enabledDec = function () { return false; };
             });
         };
         $mol_number_demo.prototype.six = function () {
@@ -10879,7 +10884,7 @@ var $;
                     }
                     return _this.year.apply(_this, diff);
                 };
-                __.disabledInc = function () { return true; };
+                __.enabledInc = function () { return false; };
             });
         };
         $mol_number_demo.prototype.seven = function () {

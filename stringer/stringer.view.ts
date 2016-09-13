@@ -5,5 +5,8 @@ module $.$mol {
 			this.value( ( diff[0].srcElement as HTMLInputElement ).value.trim() )
 		}
 		
+		disabled() {
+			return !this.enabled()
+		}
 	}
 }

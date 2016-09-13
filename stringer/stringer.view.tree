@@ -1,5 +1,6 @@
 $mol_stringer $mol_viewer
 	tagName \input
+	enabled : true
 	attr *
 		placeholder < hint \
 		type < type \text
