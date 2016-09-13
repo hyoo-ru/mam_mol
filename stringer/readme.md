@@ -22,10 +22,11 @@ $mol_stringer
 	value > value \
 	hint \Enter text here
 ```
-### disabled
-To turn off $mol_stringer we should use ```disabled``` property and set it to ```true```. Next example illustrates it
+### enabled
+To turn off $mol_stringer we should use ```enabled``` property and set it to ```false```. Next example illustrates it
 ```
 $mol_stringer
 	value > value \
-	disabled true
+	enabled false
 ```
+And if you don't want to turn off any element of $mol_stringer just write nothing.

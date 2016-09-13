@@ -19,14 +19,14 @@ at the beginning of loading page.
 Property `value` is a currently displayed number. Type of `value` property is `number`.
 ### hint
 Property ```hint``` inherits from $mol_stringer component
-### disabled
-Property ```disabled``` inherits from $mol_stringer component
+### enabled
+Property ```enabled``` inherits from $mol_stringer component
 
-But in $mol_number added some features to disabled part of component like any button or input
+But in $mol_number added some features to manage states of any part of component like buttons or input field.
 We can turn off $mol_number component separately. To do it we should use some of the following properties:
-* ```disabledDec``` - property responds for state of decrease button
-* ```disabledInc``` - property responds for state of increase button
-* ```disabledStringer``` - property responds for state of input
+* ```enabledDec``` - property responds for state of decrease button
+* ```enabledInc``` - property responds for state of increase button
+* ```enabledStringer``` - property responds for state of input
 
 ### precision
 $mol_number can display numbers in any format user select for.  
