@@ -26,12 +26,12 @@ module $.$mol {
 				return value.toFixed( fixedNumber )
 			}
 		}
-		eventWheel(...diff: WheelEvent[]) {
-			var event = diff.shift();
-			
-			var sign = event.wheelDelta > 0;
-			
-			sign ? this.eventInc( event ) : this.eventDec( event );
+		eventWheel(...diff: MouseWheelEvent[]) {
+			if( diff[0].wheelDelta > 0 ) {
+				this.eventInc( ...diff )
+			} else {
+				this.eventDec( ...diff )
+			}
 		}
 	}
 }
