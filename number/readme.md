@@ -10,7 +10,7 @@ $mol_number
 	value > fees null
 	hint \0.01 .. 10.00
 	enabled < feesChangeable true
-	precission .01
+	precision .01
 ```
 
 ## Properties
