@@ -27,11 +27,11 @@ module $.$mol {
 			}
 		}
 		eventWheel(...diff: WheelEvent[]) {
-			var event = diff.pop();
+			var event = diff.shift();
 			
 			var sign = event.wheelDelta > 0;
 			
-			sign ? this.eventInc.call(this, event) : this.eventDec.call(this, event);
+			sign ? this.eventInc( event ) : this.eventDec( event );
 		}
 	}
 }
