@@ -26,6 +26,12 @@ module $.$mol {
 				return value.toFixed( fixedNumber )
 			}
 		}
-		
+		eventWheel(...diff: WheelEvent[]) {
+			var event = diff.pop();
+			
+			var sign = event.wheelDelta > 0;
+			
+			sign ? this.eventInc.call(this, event) : this.eventDec.call(this, event);
+		}
 	}
 }

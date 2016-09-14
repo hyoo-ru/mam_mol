@@ -2,6 +2,7 @@ $mol_number $mol_barer
 	precisionView < precision 1
 	precisionChange < precision 1
 	> value 0
+	event * wheel > eventWheel : null
 	childs /
 		< decrementer $mol_clicker
 			eventClick > eventDec null
