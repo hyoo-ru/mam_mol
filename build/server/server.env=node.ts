@@ -36,7 +36,7 @@ class $mol_build_server extends $mol_server {
 	}
 	
 	port() {
-		return 80
+		return 8080
 	}
 
 }
