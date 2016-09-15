@@ -18,31 +18,32 @@ module $.$mol {
 	export class $mol_app_todomvc extends $.$mol_app_todomvc {
 		
 		@ $mol_prop()
-		tasksAll( ...diff : $mol_app_todomvc_task[][] ) : $mol_app_todomvc_task[] {
-			return this.local( 'tasksAll' , ...diff ) || [ { completed : false , title : 'hello' } ]
+		taskIds( ...diff : number[][] ) : number[] {
+			return this.local( 'taskIds()' , ...diff ) || []
 		}
-
+		
 		argCompleted() {
 			var val = this.argument().value( 'completed' )
-			return val && ( val[0] )
+			return val && val[0]
 		}
 
 		@ $mol_prop()
 		groupsByCompleted() {
-			var groups : { [ index : string ] : $mol_app_todomvc_task[] } = { 'true' : [] , 'false' : [] }
-			this.tasksAll().forEach( task => {
-				groups[ String( task.completed ) ].push( task )
+			var groups : { [ index : string ] : number[] } = { 'true' : [] , 'false' : [] }
+			this.taskIds().forEach( id => {
+				var task = this.task( id )
+				groups[ String( task.completed ) ].push( id )
 			} )
 			return groups
 		}
 
 		@ $mol_prop()
-		tasks() {
+		tasksFiltered() {
 			var completed = this.argCompleted()
 			if( completed ) {
 				return this.groupsByCompleted()[ completed ] || []
 			} else {
-				return this.tasksAll()
+				return this.taskIds()
 			}
 		}
 
@@ -58,10 +59,11 @@ module $.$mol {
 		allCompleted( ...diff : boolean[] ) {
 			if( diff[0] === void 0 ) return this.pendingCount() === 0
 			
-			this.tasksAll( this.tasksAll().map( task => {
-				if( task.completed === diff[0] ) return task
-				return { title : task.title , completed : diff[0] }
-			} ) )
+			for( let id of this.taskIds() ) {
+				var task = this.task( id )
+				if( task.completed === diff[0] ) continue
+				this.task( id , { title : task.title , completed : diff[0] } )
+			}
 			
 			return diff[0]
 		}
@@ -76,26 +78,30 @@ module $.$mol {
 			var title = this.taskNewTitle() 
 			if( !title ) return
 			
-			this.tasksAll( this.tasksAll().concat({ completed : false , title }) )
+			var id = Date.now()
+			var task = { completed : false , title }
+			this.task( id , task )
+			
+			this.taskIds( this.taskIds().concat( id ) )
 			this.taskNewTitle( '' )
 		}
 
 		@ $mol_prop()
 		taskRows() {
-			return this.tasks().map( ( task , id ) => this.taskRow( id ) )
-		}
-
-		task( id : number , ...diff : $mol_app_todomvc_task[] ) {
-			if( diff[0] === void 0 ) return this.tasksAll()[ id ] || { title : '' , completed : false }
-			
-			var tasks = this.tasksAll()
-			tasks = tasks.slice( 0 , id ).concat( $mol_maybe( diff[0] ) ).concat( tasks.slice( id + 1 , tasks.length ) )
-			this.tasksAll( tasks )
-			
-			return diff[0]
+			return this.tasksFiltered().map( ( id , index )=> this.taskRow( index ) )
 		}
 		
-		taskCompleted( id : number , ...diff : boolean[] ) {
+		@ $mol_prop()
+		task( id : number , ...diff : $mol_app_todomvc_task[] ) {
+			if( diff[0] === void 0 ) return this.local( `task(${id})` ) || { title : '' , completed : false }
+			
+			this.local( `task(${id})` , ...diff )
+			
+			return diff[0] || void 0
+		}
+		
+		taskCompleted( index : number , ...diff : boolean[] ) {
+			var id = this.taskIds()[ index ]
 			var task = this.task( id )
 			if( diff[0] === void 0 ) return task.completed
 			if( diff[0] === task.completed ) return task.completed
@@ -105,7 +111,8 @@ module $.$mol {
 			return diff[0]
 		}
 		
-		taskTitle( id : number , ...diff : string[] ) {
+		taskTitle( index : number , ...diff : string[] ) {
+			var id = this.taskIds()[ index ]
 			var task = this.task( id )
 			if( diff[0] === void 0 ) return task.title
 			if( diff[0] === task.title ) return task.title
@@ -116,12 +123,20 @@ module $.$mol {
 		}
 		
 		@$mol_prop()
-		eventTaskDrop( id : number , ...diff : Event[] ) {
+		eventTaskDrop( index : number , ...diff : Event[] ) {
+			var tasks = this.taskIds()
+			var id = tasks[index]
+			tasks = tasks.slice( 0 , index ).concat( tasks.slice( index + 1 , tasks.length ) )
+			this.taskIds( tasks )
 			this.task( id , null )
 		}
 
 		eventSanitize() {
-			this.tasksAll( this.tasksAll().filter( task => !task.completed ) )
+			this.taskIds( this.taskIds().filter( id => {
+				if( !this.task( id ).completed ) return true
+				this.task( id , null )
+				return false
+			} ) )
 		}
 		
 		sanitizerMessage() {
@@ -132,7 +147,7 @@ module $.$mol {
 		}
 
 		footerVisible() {
-			return this.tasksAll().length > 0
+			return this.taskIds().length > 0
 		}
 
 		sanitizerEnabled() {
