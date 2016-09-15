@@ -1,17 +1,13 @@
 [mol_progress] {
 	background-color: var(--mol_skin_light);
-	height: 1.25rem;
-	padding: 0.625rem;
-	width: 21.875rem;
-	border-radius: 0.1875rem;
-	border: 0.625rem solid var(--mol_skin_base);
+	height: 20px;
+	width: 100%;
+	border-radius: var(--mol_skin_round);
+	border: 1px solid var(--mol_skin_base);
 }
 
 [mol_progress_indicator] {
 	background-color: var(--mol_skin_base);
-	display: inline-block;
-	height: 1.25rem;
-	border-radius: 0.1875rem;
-	transition: width .4s ease-in-out;
-	box-shadow: 0 0.625rem 0 rgba(255, 255, 255, .5) inset;
+	height: 20px;
+	border-radius: var(--mol_skin_round);
 }

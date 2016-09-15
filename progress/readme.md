@@ -12,7 +12,5 @@ $mol_progress
 
 ## Properties
 
-**`indWidthStyle : string`**
-
-Property `portion` is a currently displayed portion in percent. Can be from 0 till 1 it means 
-that progress indicator will be from 0 till 100 accordingly.
+Property `portioner` is a currently displayed portion in percent. Can be from 0 till 1 and it would be meant 
+portion of filling `$mol_progress` indicator.
