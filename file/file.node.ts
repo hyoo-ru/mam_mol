@@ -145,7 +145,7 @@ class $mol_file extends $mol_object {
 		return []
 	}
 
-	resolve( path : string ) {
+	resolve( path : string ) : $mol_file {
 		return this.Class().relative( $node.path.join( this.path() , path ) )
 	}
 
