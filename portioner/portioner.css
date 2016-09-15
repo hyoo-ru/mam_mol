@@ -4,11 +4,11 @@
 	height: 1.25rem;
 	flex: 1 1 10rem;
 	border-radius: var(--mol_skin_round);
-	border: 1px solid var(--mol_skin_base);
+	box-shadow: 0 0 0 1px var(--mol_skin_base);
 }
 
 [mol_portioner_indicator] {
 	background-color: var(--mol_skin_base);
-	color: var(--mol_skin_base_text)
+	color: var(--mol_skin_base_text);
 	border-radius: var(--mol_skin_round);
 }

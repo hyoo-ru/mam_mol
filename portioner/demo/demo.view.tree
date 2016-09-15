@@ -1,4 +1,4 @@
-$mol_progress_demo $mol_rower childs /
+$mol_portioner_demo $mol_rower childs /
 	< one $mol_portioner
 		portion 0
 	< two $mol_portioner
