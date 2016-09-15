@@ -1,13 +1,13 @@
-[mol_progress] {
+[mol_portioner] {
+	display: flex;
 	background-color: var(--mol_skin_light);
 	height: 1.25rem;
-	width: 100%;
+	flex: 1 1 10rem;
 	border-radius: var(--mol_skin_round);
 	border: 1px solid var(--mol_skin_base);
 }
 
-[mol_progress_indicator] {
+[mol_portioner_indicator] {
 	background-color: var(--mol_skin_base);
-	height: 100%;
 	border-radius: var(--mol_skin_round);
 }

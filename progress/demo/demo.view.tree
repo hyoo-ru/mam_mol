@@ -1,7 +1,0 @@
-$mol_progress_demo $mol_rower childs /
-	< one $mol_progress
-		portioner 0
-	< two $mol_progress
-		portioner 0.5
-	< three $mol_progress
-		portioner 1
