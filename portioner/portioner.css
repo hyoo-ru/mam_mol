@@ -9,5 +9,6 @@
 
 [mol_portioner_indicator] {
 	background-color: var(--mol_skin_base);
+	color: var(--mol_skin_base_text)
 	border-radius: var(--mol_skin_round);
 }
