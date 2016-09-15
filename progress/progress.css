@@ -1,6 +1,6 @@
 [mol_progress] {
 	background-color: var(--mol_skin_light);
-	height: 20px;
+	height: 1.25rem;
 	width: 100%;
 	border-radius: var(--mol_skin_round);
 	border: 1px solid var(--mol_skin_base);
@@ -8,6 +8,6 @@
 
 [mol_progress_indicator] {
 	background-color: var(--mol_skin_base);
-	height: 20px;
+	height: 100%;
 	border-radius: var(--mol_skin_round);
 }
