@@ -1,2 +1,8 @@
-$mol_progress $mol_viewer childs /
-	< inner $mol_viewer
+$mol_progress_indicator $mol_viewer
+	field * style.width < widthStyle \0
+
+$mol_progress $mol_viewer
+	portion 0
+	childs /
+		< indicator $mol_progress_indicator
+			widthStyle < indWidthStyle \0
