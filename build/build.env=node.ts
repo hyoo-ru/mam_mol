@@ -197,7 +197,7 @@ class $mol_build extends $mol_object {
 				var pos = error.file.getLineAndCharacterOfPosition( error.start )
 				return error.file.fileName + ':' + (pos.line+1) + ':' + pos.character + '\n ' + message
 			} )
-			if( logs.length ) throw new Error( logs.join( '\n' ) )
+			if( logs.length ) throw new Error( '\n' + logs.join( '\n' ) )
 
 		}
 		
