@@ -72,18 +72,19 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 * [$mol_linker](linker) - navigation link
 * [$mol_clicker](clicker) - button
-* [$mol_checker](checker) - check boxe
+* [$mol_checker](checker) - check box
 * [$mol_switcher](switcher) - radio buttons
 * [$mol_stringer](stringer) - one string input control
 * [$mol_number](number) - one number input control
 * [$mol_coder](coder) - bar code scanner
+* [$mol_portioner](portioner) - portion visualizer
 
 ## Layout components
 
 * [$mol_scroller](scroller) - scroll pane with position saving
 * [$mol_tiler](tiler) - items in row with balanced wrapping
 * [$mol_rower](rower) - items in row with wrapping and padding between
-* [$mol_barer](barer) - group of controls as onw control
+* [$mol_barer](barer) - group of controls as own control
 * [$mol_lister](lister) - vertical list of rows
 
 ## Complex components

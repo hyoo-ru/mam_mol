@@ -8,7 +8,7 @@
 	--mol_skin_passive_text: gray;
 	
 	--mol_skin_light: #fcfcfc;
-	--mol_skin_light_line: rgba( 0 , 0 , 0 , .1 );
+	--mol_skin_light_line: #ddd;
 	--mol_skin_light_text: rgba( 0 , 0 , 0 , .9 );
 
 	--mol_skin_card: white;
