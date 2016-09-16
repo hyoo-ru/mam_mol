@@ -10,3 +10,5 @@ $mol_rower_demo $mol_rower
 		< buttonDrop $mol_clicker_minor
 			childs / \Drop
 			eventClick > eventLog null
+		< portioner $mol_portioner
+			portion 0.5

@@ -7,7 +7,7 @@ Component to see progress state of any operation.
 ## Usage example
 ```
 $mol_portioner
-	portioner 0
+	portioner 0.44
 ```
 
 ## Properties
