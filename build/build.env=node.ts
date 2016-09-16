@@ -166,7 +166,7 @@ class $mol_build extends $mol_object {
 		sources = sources.map( src => {
 			if( !/(view\.tree)$/.test( src.ext() ) ) return src
 
-			var target = src.parent().resolve( `-/tree.ts/${src.name()}.ts` )
+			var target = src.parent().resolve( `-/view.tree.ts/${src.name()}.ts` )
 			var tree = $mol_tree.fromString( String( src.content() ) , src.relate( this.root() ) )
 			target.content( $mol_viewer_tree2ts( tree ) )
 
@@ -230,7 +230,6 @@ class $mol_build extends $mol_object {
 
 	@ $mol_prop()
 	modDeps( { path , exclude } : { path : string , exclude? : string[] } ) {
-		var mod = $mol_file.absolute( path )
 		var depends : { [ index : string ] : number } = {}
 		for( var src of this.sources({ path , exclude }) ) {
 			$mol_build_depsMerge( depends , this.srcDeps( src.path() ) )

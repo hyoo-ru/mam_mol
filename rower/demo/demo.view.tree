@@ -4,6 +4,11 @@ $mol_rower_demo $mol_rower
 		< titler $mol_stringer
 			hint \Title
 			value > title \
+		< counter $mol_number
+			hint \Count
+			value > count null
+		< progresser $mol_portioner
+			portion < progress 0.33
 		< publisher $mol_checker
 			childs / \Shared
 			checked > publish false

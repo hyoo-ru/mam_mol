@@ -7,7 +7,7 @@ enum $mol_atom_status {
 class $mol_atom< Value > extends $mol_object {
 
 	masters : $mol_set< $mol_atom<any> > = null
-	slaves : Array< $mol_atom<any> > = null
+	slaves : $mol_set< $mol_atom<any> > = null
 
 	status = $mol_atom_status.obsolete
 	autoFresh = false
@@ -160,12 +160,12 @@ class $mol_atom< Value > extends $mol_object {
 	obsoleteSlaves( ) {
 		if( !this.slaves ) return
 
-		this.slaves.forEach(slave => slave.obsolete() )
+		this.slaves.forEach( slave => slave.obsolete() )
 	}
 
 	checkSlaves( ) {
 		if( this.slaves ) {
-			this.slaves.forEach(slave => slave.check() )
+			this.slaves.forEach( slave => slave.check() )
 		} else {
 			if( this.autoFresh ) $mol_atom.actualize( this )
 		}
@@ -193,18 +193,16 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	lead( slave : $mol_atom<any> ) {
-		if( !this.slaves ) this.slaves = []
-		if( this.slaves.indexOf( slave ) !== -1 ) return
-		this.slaves.push( slave )
+		if( !this.slaves ) this.slaves = new $mol_set<$mol_atom<any>>()
+		this.slaves.add( slave )
 	}
 	
 	dislead( slave : $mol_atom<any> ){
 		if( !this.slaves ) return
 		
-		var index = this.slaves.indexOf( slave )
-		if( index !== -1 ) this.slaves.splice( index , 1 )
+		this.slaves.delete( slave )
 		
-		if( !this.slaves.length ){
+		if( !this.slaves.size ){
 			this.slaves = null
 			$mol_atom.reap( this )
 		}

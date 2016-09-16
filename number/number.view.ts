@@ -20,12 +20,19 @@ module $.$mol {
 			if( value === null ) return ''
 			
 			if( precisionView >= 1 ) {
-				return (value / precisionView).toFixed()
+				return ( value / precisionView ).toFixed()
 			} else {
 				var fixedNumber = Math.log( 1 / precisionView ) / Math.log( 10 )
 				return value.toFixed( fixedNumber )
 			}
 		}
 		
+		eventWheel( ...diff : MouseWheelEvent[] ) {
+			if( diff[0].wheelDelta > 0 ) {
+				this.eventInc( ...diff )
+			} else {
+				this.eventDec( ...diff )
+			}
+		}
 	}
 }
