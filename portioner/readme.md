@@ -12,5 +12,5 @@ $mol_portioner
 
 ## Properties
 
-Property `portioner` is a currently displayed portion in percent. Can be from 0 till 1 and it would be meant 
-portion of filling `$mol_portioner` indicator.
+Property `portion` is a value would be displayed on to an indicator of `$mol_portion` component.   
+`portion` value can be from 0 till 1.
