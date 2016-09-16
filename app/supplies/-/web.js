@@ -1228,18 +1228,14 @@ var $mol_atom = (function (_super) {
     };
     $mol_atom.prototype.lead = function (slave) {
         if (!this.slaves)
-            this.slaves = [];
-        if (this.slaves.indexOf(slave) !== -1)
-            return;
-        this.slaves.push(slave);
+            this.slaves = new $mol_set();
+        this.slaves.add(slave);
     };
     $mol_atom.prototype.dislead = function (slave) {
         if (!this.slaves)
             return;
-        var index = this.slaves.indexOf(slave);
-        if (index !== -1)
-            this.slaves.splice(index, 1);
-        if (!this.slaves.length) {
+        this.slaves.delete(slave);
+        if (!this.slaves.size) {
             this.slaves = null;
             $mol_atom.reap(this);
         }

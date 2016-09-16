@@ -61,7 +61,7 @@
     will-change: scroll-position;
     -webkit-transform: translateZ(0);
             transform: translateZ(0);
-    outline: 1px solid rgba( 0 , 0 , 0 , .1 )
+    outline: 1px solid #ddd
 }
 @media print {
     [mol_scroller] {

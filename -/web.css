@@ -77,7 +77,7 @@
     -ms-flex-line-pack: start;
         align-content: flex-start;
     overflow: hidden;
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 )
+    box-shadow: 0 0 0 1px #ddd
 }
 [mol_stacker_mainer] {
     height: 100%;
@@ -93,7 +93,7 @@
     -webkit-box-flex: 1000;
         -ms-flex: 1000 1 50%;
             flex: 1000 1 50%;
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+    box-shadow: 0 0 0 1px #ddd;
     max-width: 100%
 }
 [mol_stacker_addoner] {
@@ -110,7 +110,7 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+    box-shadow: 0 0 0 1px #ddd;
     z-index: 0;
     max-width: 100%
 }
@@ -130,7 +130,7 @@
     will-change: scroll-position;
     -webkit-transform: translateZ(0);
             transform: translateZ(0);
-    outline: 1px solid rgba( 0 , 0 , 0 , .1 )
+    outline: 1px solid #ddd
 }
 @media print {
     [mol_scroller] {
@@ -365,7 +365,7 @@
     -webkit-box-flex: 1;
         -ms-flex: 1 1 auto;
             flex: 1 1 auto;
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 )
+    box-shadow: 0 0 0 1px #ddd
 }
 [mol_rower] > * ,
 [mol_rower_sub] > * {
@@ -437,7 +437,7 @@
     content: ')'
 }
 [mol_stringer] {
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+    box-shadow: 0 0 0 1px #ddd;
     outline-offset: 0;
     border: none;
     border-radius: 4px;
@@ -473,7 +473,7 @@
     border: none;
     font: inherit;
     background: none;
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+    box-shadow: 0 0 0 1px #ddd;
     border-radius: 4px;
     -webkit-box-flex: 1;
         -ms-flex: 1 1 auto;
@@ -561,9 +561,8 @@
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    opacity: .75;
     background: white;
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 )
+    box-shadow: 0 0 0 1px #ddd
 }
 [mol_checker]:not([mol_checker_checked]):before {
     color: transparent
@@ -583,7 +582,7 @@
     -webkit-box-flex: 1;
         -ms-flex: 1 1 auto;
             flex: 1 1 auto;
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+    box-shadow: 0 0 0 1px #ddd;
     border-radius: 4px;
     background: #eee;
     padding: 2px;
@@ -602,7 +601,7 @@
     display: none
 }
 [mol_switcher_optioner][mol_checker_checked] {
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+    box-shadow: 0 0 0 1px #ddd;
     background: white
 }
 [mol_app_supplies_enter] {
@@ -630,7 +629,7 @@
         flex: 1 1 8rem
 }
 [mol_carder] {
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+    box-shadow: 0 0 0 1px #ddd;
     background: white;
     border-radius: 4px;
     display: -webkit-box;
@@ -652,7 +651,7 @@
     overflow: hidden
 }
 [mol_carder_statuser] {
-    background: rgba( 0 , 0 , 0 , .1 );
+    background: #ddd;
     text-transform: capitalize;
     padding: 0 16px;
     padding: 0 1rem;
@@ -833,7 +832,7 @@
     height: 5rem;
     background: center no-repeat;
     border-radius: 4px;
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+    box-shadow: 0 0 0 1px #ddd;
     background-size: cover;
     -webkit-box-flex: 1;
         -ms-flex: 1 0 80px;
@@ -1245,7 +1244,7 @@
     color: red
 }
 [mol_barer] {
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+    box-shadow: 0 0 0 1px #ddd;
     border-radius: 4px
 }
 [mol_barer] > *:first-child {
@@ -1257,29 +1256,6 @@
 }
 [mol_barer] > *:last-child {
     border-radius: 0 4px 4px 0
-}
-[mol_demo_all] {
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 100%;
-            flex: 1 1 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -ms-flex-line-pack: start;
-        align-content: flex-start
-}
-[mol_filler] {
-    text-align: left
-}
-[mol_icon_demo] {
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start
-}
-[mol_icon_demo_icon]:hover {
-    color: #5988C8
 }
 [mol_number] {
     display: -webkit-box;
@@ -1309,6 +1285,50 @@
     width: 2rem;
     padding-top: 0;
     padding-bottom: 0
+}
+[mol_portioner] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 20px;
+    height: 1.25rem;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 128px;
+            flex: 1 1 128px;
+    -ms-flex: 1 1 8rem;
+        flex: 1 1 8rem;
+    width: 128px;
+    width: 8rem;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px #ddd
+}
+[mol_portioner_indicator] {
+    background-color: #5988C8;
+    color: white;
+    border-radius: 4px
+}
+[mol_demo_all] {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 100%;
+            flex: 1 1 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -ms-flex-line-pack: start;
+        align-content: flex-start
+}
+[mol_filler] {
+    text-align: left
+}
+[mol_icon_demo] {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start
+}
+[mol_icon_demo_icon]:hover {
+    color: #5988C8
 }
 
 /*# sourceMappingURL=web.css.map */
