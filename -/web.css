@@ -451,7 +451,8 @@
     font: inherit;
     -webkit-box-flex: 1000;
         -ms-flex: 1000 1 auto;
-            flex: 1000 1 auto;/*width: 4em;*/
+            flex: 1000 1 auto;
+    width: 8em;
     background: #eee;
     color: gray
 }
