@@ -406,7 +406,11 @@
     text-decoration: none;
     color: #5988C8;
     cursor: pointer;
-    border-radius: 4px
+    border-radius: 4px;
+    display: inline-block;
+    padding: 8px;
+    padding: .5rem;
+    box-sizing: border-box
 }
 [mol_linker_current] {
     color: inherit;
