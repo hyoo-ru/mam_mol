@@ -1,7 +1,9 @@
 $mol_decker $mol_lister
 	items /
 	rows /
-		< switcher $mol_switcher value > itemCurrent null
+		< switcher $mol_switcher
+			value > current \0
+			options < switcherOptions *
 		< content null
 
 $mol_decker_item $mol_object

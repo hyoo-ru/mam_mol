@@ -44,7 +44,7 @@ $mol_app_todomvc_ghost $mol_viewer
 
 $mol_app_todomvc_taskRow_adder $mol_stringer
 	hint \What needs to be done?
-	< event * keyup > eventPress null
+	event * keyup > eventPress null
 	> eventDone null
 
 $mol_app_todomvc_taskRow $mol_rower

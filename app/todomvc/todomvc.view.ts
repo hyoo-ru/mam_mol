@@ -95,7 +95,7 @@ module $.$mol {
 			if( diff[0] === void 0 ) return this.local( `task(${id})` ) || { title : '' , completed : false }
 			
 			var task = diff[0]
-			if( task && diff[1] ) task = (<any>Object).assign( {} , this.task( id ) , diff[0] )
+			if( task && diff[1] ) task = $mol_merge_dict( this.task( id ) , diff[0] )
 			this.local( `task(${id})` , task )
 			
 			return task || void 0
