@@ -14,7 +14,7 @@ $mol_app_todomvc $mol_scroller
 				< pendinger $mol_viewer childs < pendingMessage /
 					< pendingCounter $mol_viewer childs / < pendingCount 0
 					< pendingTail \ items left
-				< filter $mol_rower childs < filterOptions /
+				< filter $mol_barer childs < filterOptions /
 					< filterAll $mol_linker
 						childs / \All
 						patch : dict
