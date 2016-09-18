@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"sources": [
+		"../../../viewer/viewer.css"
+	],
+	"names": [],
+	"mappings": "AAAA,gCAAgC;CAC/B,UAAU;EACT,eAAe;CAChB,KAAK;AACN,KAAK;;AAEL,kBAAkB;CACjB,wCAAwC;AACzC,KAAK;;AAEL;CACC;;;;;;cAMa;CANb;;;;;;cAMa;CACb,sCAAsC;CACtC;;AAED;EACE;CACD,yBAAyB;GACvB;EACD;CACD,4BAA4B;GAC1B;CACF;;AAPD;EACE;CACD,yBAAyB;GACvB;EACD;CACD,4BAA4B;GAC1B;CACF;;AAED;CACC;;;;;;cAMa;CANb;;;;;;cAMa;CACb,sCAAsC;CACtC,2GAAmG;SAAnG,mGAAmG;CACnG",
+	"file": "web.css",
+	"sourcesContent": [
+		"/*@keyframes mol_viewer_show {*/\n\t/*from {*/\n\t\t/*opacity: 0;*/\n\t/*}*/\n/*}*/\n\n/*[mol_viewer] {*/\n\t/*animation: mol_viewer_show .1s ease;*/\n/*}*/\n\n[mol_viewer_error] {\n\tbackground-image: repeating-linear-gradient(\n\t\t135deg,\n\t\trgba(255,220,220,1),\n\t\trgba(255,220,220,1) 11px,\n\t\trgba(255,255,220,1) 10px,\n\t\trgba(255,255,220,1) 20px\n\t) !important;\n\tbackground-size: 28px 28px !important;\n}\n\n@keyframes mol_viewer_error_move {\n  0% {\n\tbackground-position: 0 0;\n  }\n  100% {\n\tbackground-position: 28px 0;\n  }\n}\n\n[mol_viewer_error=\"$mol_atom_wait\"] {\n\tbackground-image: repeating-linear-gradient(\n\t\t45deg,\n\t\trgba(0,0,255,.05),\n\t\trgba(0,0,255,.05) 11px,\n\t\trgba(255,255,255,.02) 10px,\n\t\trgba(255,255,255,.02) 20px\n\t) !important;\n\tbackground-size: 28px 28px !important;\n\tanimation: /*mol_viewer_show 1s linear ,*/ mol_viewer_error_move .25s steps(6) infinite !important;\n}\n"
+	]
+}
