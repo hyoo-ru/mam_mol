@@ -1,6 +1,6 @@
 $mol_app_supplies_enter $mol_viewer
-	entered false
-	childs / < form $mol_form
+	> entered false
+	< childs / < form $mol_form
 		formFields /
 			< loginField $mol_form_field
 				name \Login
