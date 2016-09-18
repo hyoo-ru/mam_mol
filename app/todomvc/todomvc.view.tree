@@ -2,38 +2,39 @@ $mol_app_todomvc $mol_scroller
 	childs /
 		< titler $mol_viewer childs / < title \todos
 		< paneler $mol_lister rows /
-			< header $mol_rower childs < headerContent /
+			< header $mol_viewer childs < headerContent /
 				< allCompleter $mol_checker
+					enabled < allCompleterEnabled false
 					checked > allCompleted false
 					childs / \❯
 				< adder $mol_app_todomvc_taskRow_adder
 					value > taskNewTitle \
 					eventDone > eventAdd null
 			< lister $mol_lister rows < taskRows /
-			< footer $mol_rower childs < footerContent /
-				< pendinger $mol_viewer childs < pendingMessage /
-					< pendingCounter $mol_viewer childs / < pendingCount 0
-					< pendingTail \ items left
-				< filter $mol_barer childs < filterOptions /
-					< filterAll $mol_linker
-						childs / \All
-						patch : dict
-							\completed
-								: null
-					< filterActive $mol_linker
-						childs / \Active
-						patch : dict
-							\completed
-								: false
-					< filterCompleted $mol_linker
-						childs / \Completed
-						patch : dict
-							\completed
-								: true
-				< sanitizer $mol_clicker_minor
-					enabled < sanitizerEnabled true
-					eventClick < eventSanitize null
-					childs / < sanitizerMessage \Clear completed
+			< footer $mol_app_todomvc_ghost
+				visible < footerVisible false
+				childs < footerContent /
+					< pendinger $mol_viewer childs / < pendingMessage \0 items left 
+					< filter $mol_barer childs < filterOptions /
+						< filterAll $mol_linker
+							childs / \All
+							patch : dict
+								\completed
+									: null
+						< filterActive $mol_linker
+							childs / \Active
+							patch : dict
+								\completed
+									: false
+						< filterCompleted $mol_linker
+							childs / \Completed
+							patch : dict
+								\completed
+									: true
+					< sanitizer $mol_clicker_minor
+						enabled < sanitizerEnabled true
+						eventClick < eventSanitize null
+						childs / \Clear completed
 	taskRow# $mol_app_todomvc_taskRow
 		completed > taskCompleted# false
 		title > taskTitle# \
@@ -47,8 +48,8 @@ $mol_app_todomvc_taskRow_adder $mol_stringer
 	event * keyup > eventPress null
 	> eventDone null
 
-$mol_app_todomvc_taskRow $mol_rower
-	heightMinimal 60
+$mol_app_todomvc_taskRow $mol_viewer
+	heightMinimal 64
 	childs /
 		< completer $mol_checker checked > completed false
 		< titler $mol_stringer

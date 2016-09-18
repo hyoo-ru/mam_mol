@@ -47,17 +47,9 @@ module $.$mol {
 			}
 		}
 
-		pendingCount() {
-			return this.groupsByCompleted()[ 'false' ].length
-		}
-
-		completedCount() {
-			return this.groupsByCompleted()[ 'true' ].length
-		}
-
 		@ $mol_prop()
 		allCompleted( ...diff : boolean[] ) {
-			if( diff[0] === void 0 ) return this.pendingCount() === 0
+			if( diff[0] === void 0 ) return this.groupsByCompleted()[ 'false' ].length === 0
 			
 			for( let id of this.groupsByCompleted()[ String( !diff[0] ) ] ) {
 				var task = this.task( id )
@@ -66,10 +58,15 @@ module $.$mol {
 			
 			return diff[0]
 		}
+		
+		allCompleterEnabled() {
+			return this.taskIds().length > 0 
+		}
 
 		@ $mol_prop()
-		pendingTail() {
-			return ( this.pendingCount() === 1 ) ? ' item left' : ' items left'
+		pendingMessage() {
+			let count = this.groupsByCompleted()[ 'false' ].length
+			return ( count === 1 ) ? '1 item left' : `${count} items left`
 		}
 
 		@ $mol_prop()
@@ -136,19 +133,12 @@ module $.$mol {
 			} ) )
 		}
 		
-		sanitizerMessage() {
-			var count = this.completedCount()
-			var message = `Clear completed`
-			if( count ) message += ` (${count})`
-			return message
-		}
-
 		footerVisible() {
 			return this.taskIds().length > 0
 		}
 
 		sanitizerEnabled() {
-			return this.completedCount() > 0
+			return this.groupsByCompleted()[ 'true' ].length > 0
 		}
 		
 	}
