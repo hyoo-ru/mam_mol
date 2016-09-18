@@ -543,7 +543,7 @@ $mol_build.dependors[ 'css' ] = $mol_build.dependors[ 'view.css' ] = source => {
 }
 
 $mol_build.dependors[ 'view.tree' ] = source => {
-	var depends : { [ index : string ] : number } = {}
+	var depends : { [ index : string ] : number } = { '/mol/merge/dict' : 3 }
 
 	var lines = String( source.content())
 		.split( '\n' )
