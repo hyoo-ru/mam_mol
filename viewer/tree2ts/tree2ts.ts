@@ -2,9 +2,13 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 	
 	var content = ''
 	
+	function error( message : string , tree : $mol_tree ) {
+		return new Error( `${message}: ${tree} ${tree.baseUri}:${tree.row}:${tree.col}` )
+	}
+	
 	tree.childs.forEach( function( def : $mol_tree ) {
 		if( !def.type || /^-/.test( def.type ) ) return
-		if( !/^\$\w+$/.test( def.type ) ) throw new Error( 'Wrong component name: ' + def + def.uri )
+		if( !/^\$\w+$/.test( def.type ) ) throw error( 'Wrong component name' , def )
 		var parent = def.childs[0]
 		
 		var members : { [ key : string ] : string } = {}
@@ -99,10 +103,10 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 				
 				if( Number( value.type ).toString() == value.type ) return value.type
 				
-				throw new Error( 'Wrong value: ' + value + value.uri )
+				throw error( 'Wrong value' , value )
 			}
 			
-			if( param.childs.length > 1 ) throw new Error( 'Too more childs: ' + param + param.uri )
+			if( param.childs.length > 1 ) throw error( 'Too more childs' , param )
 			
 			param.childs.forEach( child => {
 				var val = getValue( child )
