@@ -40,7 +40,6 @@ module $.$mol {
 			return this.sex() ? [] : [ 'Input required' ]
 		}
 
-		@ $mol_prop()
 		eventSubmit( ...diff : Event[] ) {
 			alert( `Hello, ${this.sex()} ${this.nameFirst()} (${this.nameNick()}) ${this.nameSecond()}!` )
 		}
