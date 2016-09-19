@@ -78,14 +78,12 @@ $mol_test( test => {
 $mol_test( test => {
 	
 	class $mol_viewer_test extends $mol_viewer {
-		attr_keys() {
-			return super.attr_keys().concat( 'href' , 'required' )
-		}
-		attr( name : string ) {
-			switch( name ) {
-				case 'href' : return '#haha'
+		attr() {
+			return {
+				'href' : ()=> <any> '#haha' ,
+				'required' : ()=> <any> true ,
+				'hidden' : ()=> <any> null ,
 			}
-			return super.attr( name )
 		}
 	}
 	
@@ -94,7 +92,7 @@ $mol_test( test => {
 	var node = x.DOMTree()
 	
 	test.equal( node.getAttribute( 'href' ) , '#haha' )
-	test.equal( node.getAttribute( 'required' ) , '' )
+	test.equal( node.getAttribute( 'hidden' ) , null )
 	
 } )
 
@@ -102,14 +100,10 @@ $mol_test( test => {
 $mol_test( test => {
 	
 	class $mol_viewer_test extends $mol_viewer {
-		field_keys() {
-			return super.field_keys().concat( 'style.top' )
-		}
-		field( name : string ) {
-			switch( name ) {
-				case 'style.top' : return '10px'
+		field() {
+			return {
+				'style.top' : ()=> '10px'
 			}
-			return super.field( name )
 		}
 	}
 	
@@ -127,14 +121,10 @@ $mol_test( test => {
 	var clicked = false
 	
 	class $mol_viewer_test extends $mol_viewer {
-		event_keys() {
-			return super.event_keys().concat( 'click' )
-		}
-		event( name : string , ...diff : Event[] ) {
-			switch( name ) {
-				case 'click' : return this.eventClick( ...diff )
+		event() {
+			return {
+				'click' : ( ...diff : Event[] ) => this.eventClick( ...diff )
 			}
-			return super.event( name , ...diff )
 		}
 		eventClick( ...diff : Event[] ) {
 			clicked = true

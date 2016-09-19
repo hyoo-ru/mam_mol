@@ -166,8 +166,8 @@ class $mol_build extends $mol_object {
 		sources = sources.map( src => {
 			if( !/(view\.tree)$/.test( src.ext() ) ) return src
 
-			var target = src.parent().resolve( `-/tree.ts/${src.name()}.ts` )
-			var tree = $mol_tree.fromString( String( src.content() ) , src.relate( this.root() ) )
+			var target = src.parent().resolve( `-/view.tree.ts/${src.name()}.ts` )
+			var tree = $mol_tree.fromString( String( src.content() ) , src.path() )
 			target.content( $mol_viewer_tree2ts( tree ) )
 
 			return target
@@ -197,7 +197,7 @@ class $mol_build extends $mol_object {
 				var pos = error.file.getLineAndCharacterOfPosition( error.start )
 				return error.file.fileName + ':' + (pos.line+1) + ':' + pos.character + '\n ' + message
 			} )
-			if( logs.length ) throw new Error( logs.join( '\n' ) )
+			if( logs.length ) throw new Error( '\n' + logs.join( '\n' ) )
 
 		}
 		
@@ -230,7 +230,6 @@ class $mol_build extends $mol_object {
 
 	@ $mol_prop()
 	modDeps( { path , exclude } : { path : string , exclude? : string[] } ) {
-		var mod = $mol_file.absolute( path )
 		var depends : { [ index : string ] : number } = {}
 		for( var src of this.sources({ path , exclude }) ) {
 			$mol_build_depsMerge( depends , this.srcDeps( src.path() ) )
@@ -544,7 +543,7 @@ $mol_build.dependors[ 'css' ] = $mol_build.dependors[ 'view.css' ] = source => {
 }
 
 $mol_build.dependors[ 'view.tree' ] = source => {
-	var depends : { [ index : string ] : number } = {}
+	var depends : { [ index : string ] : number } = { '/mol/merge/dict' : 3 }
 
 	var lines = String( source.content())
 		.split( '\n' )

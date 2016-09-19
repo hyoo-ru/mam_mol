@@ -4,7 +4,8 @@ function $mol_log( path : string , values : any[] ) {
 	if( filter == null ) return
 	if( path.indexOf( filter ) === -1 ) return
 	
-	console.log( $jin.time.moment().toString( 'hh:mm:ss' ) , path , ...values )
+	var time = new Date().toISOString().substring( 11 , 19 )
+	console.log( time , path , ...values )
 }
 module $mol_log {
 	

@@ -78,12 +78,13 @@ class $mol_viewer extends $mol_model {
 		}
 		
 		/// Bind properties to events
-		this.event_keys().forEach( name => {
+		var events = this.event()
+		for( let name in events ) {
+			let handle = events[ name ]
 			next.addEventListener( name , event => {
-				this.event( name , event )
-				//$mol_defer.run()
+				handle( event )
 			} )
-		} )
+		}
 		
 		// When node defined then deferred render child nodes then deferred update state of this node
 		// this.DOMNodeState( void 0 )
@@ -160,43 +161,37 @@ class $mol_viewer extends $mol_model {
 		}
 		
 		// Set attributes
-		this.attr_keys().forEach( name => {
-			var n = this.attr( name )
-			if(( n == null )||( n === false )) {
+		var attrs = this.attr()
+		for( let name in attrs ) {
+			let val = attrs[ name ]()
+			if(( val == null )||( val === false )) {
 				node.removeAttribute( name )
-			} else if( n === true ) {
+			} else if( val === true ) {
 				node.setAttribute( name , name )
 			} else {
-				node.setAttribute( name , String( n ) )
+				node.setAttribute( name , String( val ) )
 			}
-		} )
+		}
 		
 		// Set field values
-		this.field_keys().forEach( path => {
+		var fields = this.field()
+		for( let path in fields ) {
 			var names = path.split( '.' )
 			var obj : any = node
 			for( var i = 0 ; i < names.length - 1 ; ++i ) {
 				if( names[i] ) obj = obj[ names[i] ]
 			}
 			var field = names[ names.length - 1 ]
-			var val = this.field( path )
+			var val = fields[ path ]()
 			if( obj[ field ] !== val ) obj[ field ] = val
-		} )
+		}
 		
 		return node
 	}
 	
-	attr_keys() { return [ 'mol_viewer_error' ] }
-	attr( name : string ) : any {
-		if( name === 'mol_viewer_error' ) return false
-		return ''
-	}
-	
-	event_keys() { return <any[]> [] }
-	event( name : string , ...diff : Event[] ) { return <any> null }
-	
-	field_keys() { return <any[]>[] }
-	field( path : string ) { return <any>null }
+	attr() : { [ key : string ] : ()=> string|number|boolean } { return { 'mol_viewer_error' : ()=> false } }
+	field() : { [ key : string ] : ()=> any } { return {} }
+	event() : { [ key : string ] : ( event : Event )=> void } { return {} }
 	
 	focused() {
 		return $mol_viewer_selection.focused().indexOf(this.DOMNode()) !== -1;
