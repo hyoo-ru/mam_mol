@@ -11,6 +11,7 @@
 	flex-wrap: wrap;
 	position: absolute;
 	background-color: var(--mol_skin_card);
+	min-width: 100px;
 }
 [mol_suggester_rower] {
 	width: 100%;
