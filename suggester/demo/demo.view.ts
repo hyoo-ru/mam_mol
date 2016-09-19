@@ -4,15 +4,7 @@ module $.$mol {
 		
 		@ $mol_prop()
 		threeSuggests() {
-			const length = 10;
-			
-			let text = this.threeCode();
-			
-			if(text.length > length) {
-				return [];
-			}
-			
-			return $mol_stub_strings(text, 30);
+			return this.threeCode().length > 10 ? [] : $mol_stub_strings(this.threeCode(), 30)
 		}
 	}
 	
