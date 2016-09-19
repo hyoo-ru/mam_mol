@@ -199,7 +199,7 @@ class $mol_viewer extends $mol_model {
 	field( path : string ) { return <any>null }
 	
 	focused() {
-		return $mol_viewer_selection.focused() === this.DOMNode()
+		return $mol_viewer_selection.focused().indexOf(this.DOMNode()) !== -1;
 	}
 	
 	text( text : string ) {

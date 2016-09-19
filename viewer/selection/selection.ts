@@ -1,7 +1,7 @@
 class $mol_viewer_selection extends $mol_object {
 	
 	@ $mol_prop()
-	static focused( ...diff : Element[] ) {
+	static focused( ...diff : Element[][] ) {
 		return diff[0] || null
 	}
 	
@@ -90,9 +90,19 @@ document.addEventListener( 'selectionchange' , event => {
 } )
 
 document.addEventListener( 'focusin' , event => {
-	$mol_viewer_selection.focused( event.srcElement )
+	let parents : Element[] = [],
+		element : Element
+	
+	element = event.srcElement
+	
+	while(element) {
+		parents.push(element)
+		element = element.parentElement ? element.parentElement : null
+	}
+	
+	$mol_viewer_selection.focused( parents )
 } )
 
 document.addEventListener( 'focusout' , event => {
-	$mol_viewer_selection.focused( null )
+	$mol_viewer_selection.focused( [] )
 } )
