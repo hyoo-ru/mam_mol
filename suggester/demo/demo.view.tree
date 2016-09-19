@@ -1,6 +1,6 @@
 $mol_suggester_demo $mol_rower childs /
 	< one $mol_suggester
-		focused true
+		focused false
 		suggests /
 	< two $mol_suggester
 		focused true
@@ -11,4 +11,5 @@ $mol_suggester_demo $mol_rower childs /
 			\Yuriy
 			\Nataliya
 	< three $mol_suggester
-		suggests < generateDictionary /
+		suggests < threeSuggests /
+		value > threeCode \

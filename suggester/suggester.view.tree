@@ -6,7 +6,7 @@ $mol_suggester $mol_viewer
 	suggests /
 	childs /
 		< suggester_stringer $mol_suggester_stringer
-			eventChange > eventChangeHandler null
+			value > value \
 		< suggester_lister $mol_suggester_lister
 			childs < suggestRows /
 
