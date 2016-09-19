@@ -9,6 +9,13 @@ module $.$mol {
 			return this.suggests().map((suggest, index) => this.rower(index));
 		}
 		
+		childs() {
+			return [
+				this.suggester_stringer(), this.focused() ?
+					this.suggester_lister() : null
+			];
+		}
+		
 		@ $mol_prop()
 		rower(index : number) {
 			return new $mol_viewer().setup(obj => {

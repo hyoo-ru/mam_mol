@@ -1,7 +1,9 @@
 $mol_suggester_demo $mol_rower childs /
 	< one $mol_suggester
+		focused true
 		suggests /
 	< two $mol_suggester
+		focused true
 		suggests /
 			\Evgeny
 			\Alexander
