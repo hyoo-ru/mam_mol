@@ -1,0 +1,12 @@
+$mol_suggester_demo $mol_rower childs /
+	< one $mol_suggester
+		suggests /
+	< two $mol_suggester
+		suggests /
+			\Evgeny
+			\Alexander
+			\Dmitriy
+			\Yuriy
+			\Nataliya
+	< three $mol_suggester
+		suggests < generateDictionary /

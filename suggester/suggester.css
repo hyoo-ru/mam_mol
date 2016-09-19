@@ -1,0 +1,22 @@
+[mol_suggester]:empty {
+	display: none;
+}
+[mol_suggester_lister] {
+	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
+	min-height: 0px;
+	max-height: 50vh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	position: absolute;
+	background-color: var(--mol_skin_card);
+}
+[mol_suggester_rower] {
+	width: 100%;
+	box-sizing: border-box;
+}
+[mol_suggester_lister] [mol_suggester_rower] {
+	padding: 0.5rem;
+	box-shadow: 0 1px 1px 0 rgba( 0 , 0 , 0 , .1 );
+}

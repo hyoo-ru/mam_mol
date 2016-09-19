@@ -1,0 +1,12 @@
+$mol_suggester_stringer $mol_stringer
+$mol_suggester_lister $mol_lister
+
+$mol_suggester $mol_viewer
+	searchHandler null
+	suggests /
+	childs /
+		< suggester_stringer $mol_suggester_stringer
+			eventChange > eventChangeHandler null
+		< suggester_lister $mol_suggester_lister
+			childs < suggestRows /
+
