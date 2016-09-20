@@ -1,5 +1,5 @@
-[mol_suggester]:empty {
-	display: none;
+[mol_suggester_stringer] {
+	margin-bottom: 2px;
 }
 [mol_suggester_lister] {
 	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
@@ -12,12 +12,24 @@
 	position: absolute;
 	background-color: var(--mol_skin_card);
 	min-width: 100px;
+	z-index: 1;
 }
 [mol_suggester_rower] {
 	width: 100%;
 	box-sizing: border-box;
+	justify-content: flex-start;
 }
 [mol_suggester_lister] [mol_suggester_rower] {
 	padding: 0.5rem;
+	border-radius: 0;
 	box-shadow: 0 1px 1px 0 rgba( 0 , 0 , 0 , .1 );
+}
+
+[mol_suggester_rower][mol_clicker]:hover,
+[mol_suggester_rower][mol_clicker]:focus {
+	box-shadow: 0 1px 1px 0 rgba( 0 , 0 , 0 , .1 );
+}
+
+[mol_suggester_rower][mol_suggester_selected] {
+	box-shadow: 0 0 0 2px #5988C8;
 }

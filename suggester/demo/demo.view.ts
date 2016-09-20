@@ -4,7 +4,7 @@ module $.$mol {
 		
 		@ $mol_prop()
 		threeSuggests() {
-			return this.threeCode().length > 10 ? [] : $mol_stub_strings(this.threeCode(), 30)
+			return this.threeCode().length >= 10 ? [] : $mol_stub_strings(this.threeCode(), 30)
 		}
 	}
 	
