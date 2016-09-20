@@ -32,7 +32,7 @@ module $.$mol {
 			}
 			
 			if(e.keyCode === 38) {
-				selectedRow = selectedRow === 0 ? this.suggests().length : --selectedRow;
+				selectedRow = selectedRow === 0 ? suggestsLength : --selectedRow;
 				this.selectedRow(selectedRow);
 			}
 			
