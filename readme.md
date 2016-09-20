@@ -357,4 +357,4 @@ $mol_app_todomvc
 
 # Cool stuff
 
-[Commits visualization](http://ghv.artzub.com/#repo=mol&climit=200&user=eigenmethod)
+[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)
