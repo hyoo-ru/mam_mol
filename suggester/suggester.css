@@ -25,8 +25,8 @@
 	box-shadow: 0 1px 1px 0 rgba( 0 , 0 , 0 , .1 );
 }
 
-[mol_suggester_rower][mol_clicker]:hover,
-[mol_suggester_rower][mol_clicker]:focus {
+[mol_suggester_rower][mol_clicker]:not([mol_suggester_selected]):hover,
+[mol_suggester_rower][mol_clicker]:not([mol_suggester_selected]):focus {
 	box-shadow: 0 1px 1px 0 rgba( 0 , 0 , 0 , .1 );
 }
 

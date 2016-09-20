@@ -15,6 +15,7 @@ module $.$mol {
 		
 		eventClick(index : number, e : MouseEvent) {
 			this.value(this.suggests()[index]);
+			this.selectedRow(0);
 		}
 		
 		eventDown(e: KeyboardEvent) {
