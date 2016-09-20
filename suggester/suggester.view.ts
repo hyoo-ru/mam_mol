@@ -20,8 +20,9 @@ module $.$mol {
 		eventDown(e: KeyboardEvent) {
 			let selectedRow:number = this.selectedRow();
 			let suggestsLength = this.suggests().length;
+			let isSelectedKey = e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 39;
 			
-			if(e.keyCode === 13) {
+			if(isSelectedKey) {
 				this.value(this.suggests()[selectedRow - 1]);
 				this.selectedRow(0);
 			}
