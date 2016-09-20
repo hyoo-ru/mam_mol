@@ -23,9 +23,11 @@
 
 [mol_suggester_rower][mol_clicker]:not([mol_suggester_selected]):hover,
 [mol_suggester_rower][mol_clicker]:not([mol_suggester_selected]):focus {
-	box-shadow: 0 1px 1px 0 rgba( 0 , 0 , 0 , .1 );
+	background-color: var(--mol_skin_base);
+	color: var(--mol_skin_base_text);
 }
 
 [mol_suggester_rower][mol_suggester_selected] {
-	box-shadow: 0 0 0 2px #5988C8;
+	background-color: var(--mol_skin_base);
+	color: var(--mol_skin_base_text);
 }
