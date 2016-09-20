@@ -4,11 +4,7 @@
 [mol_suggester_lister] {
 	box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .1 );
 	min-height: 0px;
-	max-height: 50vh;
 	overflow: hidden;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
 	position: absolute;
 	background-color: var(--mol_skin_card);
 	min-width: 100px;

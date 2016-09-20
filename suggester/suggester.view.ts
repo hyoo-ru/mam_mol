@@ -1,4 +1,12 @@
 module $.$mol {
+	
+	export class $mol_suggester_lister extends $.$mol_suggester_lister {
+		@ $mol_prop()
+		heightAvailable( ...diff : number[] ) {
+			return diff[0] / 3
+		}
+	}
+	
 	export class $mol_suggester extends $.$mol_suggester {
 		
 		suggestRows() {
@@ -22,7 +30,7 @@ module $.$mol {
 		
 		eventDown(e: KeyboardEvent) {
 			let selectedRow:number = this.selectedRow();
-			let suggestsLength = this.suggests().length;
+			let suggestsLength = this.suggester_lister().childsVisible().length;
 			let isSelectedKey = e.keyCode === 13 || e.keyCode === 39;
 			
 			if(isSelectedKey) {
@@ -49,6 +57,7 @@ module $.$mol {
 		@ $mol_prop()
 		rower(index : number) {
 			return new $mol_suggester_rower().setup(obj => {
+				obj.heightMinimal = () => 36;
 				obj.childs = () => [this.suggests()[index]];
 				obj.eventMouseDown = e => this.eventMouseDown(index, e);
 				obj.selected = () => this.selected(index)
