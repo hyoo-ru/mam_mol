@@ -13,9 +13,11 @@ module $.$mol {
 			];
 		}
 		
-		eventClick(index : number, e : MouseEvent) {
+		eventMouseDown(index : number, e : MouseEvent) {
 			this.value(this.suggests()[index]);
 			this.selectedRow(0);
+			
+			e.preventDefault();
 		}
 		
 		eventDown(e: KeyboardEvent) {
@@ -48,7 +50,7 @@ module $.$mol {
 		rower(index : number) {
 			return new $mol_suggester_rower().setup(obj => {
 				obj.childs = () => [this.suggests()[index]];
-				obj.eventClick = e => this.eventClick(index, e);
+				obj.eventMouseDown = e => this.eventMouseDown(index, e);
 				obj.selected = () => this.selected(index)
 			});
 		}

@@ -1,6 +1,7 @@
 $mol_suggester_stringer $mol_stringer
 $mol_suggester_lister $mol_viewer
 $mol_suggester_rower $mol_clicker
+	event * mousedown > eventMouseDown null
 	attr * mol_suggester_selected < selected false
 
 $mol_suggester $mol_viewer
