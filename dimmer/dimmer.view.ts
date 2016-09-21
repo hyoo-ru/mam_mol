@@ -21,12 +21,33 @@ module $.$mol {
 			let splits = this.haystack().split(this.needle());
 			
 			for(let index = 0; index < splits.length; index++) {
-				if(splits[index] === '' && index !== 0) continue;
+				let current = splits[index],
+					next = splits[index + 1];
 				
-				chunks.push(this.low(splits[index]), (index !== splits.length - 1) ? this.needle() : null);
+				if(this.isEmpty(current) && !this.isEmpty(next) && index === 0) {
+					chunks.push(this.needle());
+					continue;
+				}
+				if(this.isEmpty(current) && !this.isEmpty(next) && index !== 0) {
+					chunks.push(this.low(current), this.needle());
+					continue;
+				}
+				if(this.isEmpty(current) && (index === splits.length - 1)) {
+					continue;
+				}
+				if(!this.isEmpty(current) && (index === splits.length - 1)) {
+					chunks.push(this.low(current));
+					continue;
+				}
+				
+				chunks.push(this.low(current), this.needle());
 			}
 			
 			return chunks;
+		}
+		
+		isEmpty(str: string) {
+			return typeof str === "string" ? str === '' : true;
 		}
 		
 		low(str : string) {

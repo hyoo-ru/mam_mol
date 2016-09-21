@@ -1,11 +1,11 @@
 $mol_dimmer_demo $mol_rower
 	childs /
 		< one $mol_dimmer
-			haystack \SAPRUN
-			needle \SAP
+			haystack \Don't put all your eggs in one basket
+			needle \eggs
 		< two $mol_dimmer
-			haystack \Javascript framework
-			needle \framework
+			haystack \Don't look a gift horse in the mouth.
+			needle \o
 		< three $mol_dimmer
-			haystack \highlight anything
-			needle \light
+			haystack \There is no word you are looking for
+			needle \luck
