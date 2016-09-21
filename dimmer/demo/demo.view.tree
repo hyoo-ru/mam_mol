@@ -1,3 +1,11 @@
-$mol_dimmer_demo $mol_dimmer
-	haystack \bomba
-	needle \b
+$mol_dimmer_demo $mol_rower
+	childs /
+		< one $mol_dimmer
+			haystack \SAPRUN
+			needle \SAP
+		< two $mol_dimmer
+			haystack \Javascript framework
+			needle \framework
+		< three $mol_dimmer
+			haystack \highlight anything
+			needle \light
