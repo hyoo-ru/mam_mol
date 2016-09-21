@@ -285,13 +285,16 @@ $mol_app_todomvc
 
 * **[$mol_defer](defer)** - deferred but immediate execution
 * **[$mol_atom](atom)** - reactive container
+* **[$mol_log](log)** - logging
 
 ## Object model
 
 * **[$mol_prop](prop)** - reactive property decorator
 * **[$mol_object](object)** - components base class
 * **[$mol_model](model)** - reactive model base class
-* **[$mol_log](log)** - logging
+
+## Functions
+
 * **[$mol_const](const)** - const value returning function
 
 ## Collections
@@ -306,6 +309,7 @@ $mol_app_todomvc
 * **[$mol_state_arg](state/arg)** - arguments state (location/argv)
 * **[$mol_state_local](state/local)** - persistent local state (localStorage)
 * **[$mol_state_session](state/session)** - session temporaty state (sessionStorage)
+* **[$mol_state_history](state/history)** - browser history bound state
 * **[$mol_state_stack](state/stack)** - state of current stack of execution
 
 ## Communication modules
@@ -317,6 +321,7 @@ $mol_app_todomvc
 
 * **[$mol_viewer](viewer)** - reactive view model base class with lazy error-proof renderer
 * **[$mol_filler](filler)** - lorem ipsum
+* **[$mol_svg](svg)** - svg base components
 
 ## Simple controls
 
@@ -336,20 +341,29 @@ $mol_app_todomvc
 * **[$mol_rower](rower)** - items in row with wrapping and padding between
 * **[$mol_barer](barer)** - group of controls as own control
 * **[$mol_lister](lister)** - vertical list of rows
-
-## Complex components
-
 * **[$mol_labeler](labeler)** - labeled content
 * **[$mol_sectioner](sectioner)** - section with header
 * **[$mol_stacker](stacker)** - horizontal stack of panels
 * **[$mol_pager](pager)** - page with header, body and footer
 * **[$mol_decker](decker)** - deck of panels with tab bar
+* **[$mol_carder](carder)** - card whit content
+
+## Complex components
+
 * **[$mol_form](form)** - forms with validators
 * **[$mol_demo](demo)** - demonstrates widget in various screens
+* **[$mol_attacher](attacher)** - preview list and attach button
+* **[$mol_coster](coster)** - prints currency values
 
 ## Data formats
 
 * **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d)
+
+## Math
+
+* **[$mol_graph](graph)** - graph algorithms
+* **[$mol_unit](unit)** - typed number value
+* **[$mol_merge_dict](merge/dict)** - merge two dictionaries to new one
 
 ## Resources
 
@@ -365,6 +379,14 @@ $mol_app_todomvc
 ## API
 
 * **[$mol_cordova](cordova)** - [Apache Cordova](https://cordova.apache.org) API
+* **[$mol_exec](exec)** - synchronous execute of system command
+* **[$mol_file](file)** - reactive file system wrapper
+* **[$mol_window](window)** - reactive view port configuration
+
+## Building
+
+* **[$mol_build](build)** - pms builder
+* **[$mol_build_server](build/server)** - pms developer server
 
 # Cool stuff
 
