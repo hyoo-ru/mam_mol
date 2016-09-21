@@ -1,8 +1,6 @@
-# $mol
+# $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
 
 Reactive micro-modular ui framework. Very simple, but very powerful.
-
-[![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
 
 # Features
 
