@@ -1,0 +1,7 @@
+$mol_lowlighter_text $mol_viewer
+	tagName \span
+
+$mol_highlighter $mol_viewer
+	> haystack \
+	> needle \
+	childs /
