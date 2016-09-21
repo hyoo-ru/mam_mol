@@ -361,9 +361,12 @@ class $mol_build extends $mol_object {
 		var targetMap = pack.resolve( `-/${bundle}.js.map` )
 
 		var sources = this.sourcesJS({path, exclude})
-		if (!sources.length) return []
+		if( sources.length === 0 ) return []
 		
 		var concater = new $node[ 'concat-with-sourcemaps' ]( true, target.name(), '\n;\n' )
+		if( bundle === 'node' ) {
+			concater.add( '' , 'require( "source-map-support" ).install()\n' )
+		} 
 
 		sources.forEach( function( src ){
 			var content = src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
@@ -391,14 +394,18 @@ class $mol_build extends $mol_object {
 
 		var target = pack.resolve( `-/${bundle}.test.js` )
 		var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
-
-		var sourcesAll = this.sourcesJS({ path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) })
-		var sourcesNoTest = this.sourcesJS({ path , exclude })
-		var sources = sourcesAll.filter( src => sourcesNoTest.indexOf( src ) === -1 )
-		if( !sources.length ) return []
 		
 		var concater = new $node[ 'concat-with-sourcemaps' ]( true, target.name(), '\n;\n' )
-
+		
+		var sources = this.sourcesJS({ path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) })
+		if( bundle === 'node' ) {
+			concater.add( '' , 'require( "source-map-support" ).install()\n' )
+		} else {
+			var sourcesNoTest = this.sourcesJS( { path , exclude } )
+			sources = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
+		}
+		if( sources.length === 0 ) return []
+		
 		sources.forEach( function( src ){
 			var content = src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
 
