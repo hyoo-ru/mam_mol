@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "6"
+install:
+  - cd ..
+  - git clone https://github.com/nin-jin/pms.git .
+  - npm install
+script:
+  - npm start mol
