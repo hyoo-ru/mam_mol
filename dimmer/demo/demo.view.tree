@@ -5,7 +5,10 @@ $mol_dimmer_demo $mol_rower
 			needle \eggs
 		< two $mol_dimmer
 			haystack \Don't look a gift horse in the mouth.
-			needle \o
+			needle \oo
 		< three $mol_dimmer
 			haystack \There is no word you are looking for
 			needle \luck
+		< four $mol_dimmer
+			haystack \ooAAooAAoo
+			needle \oo

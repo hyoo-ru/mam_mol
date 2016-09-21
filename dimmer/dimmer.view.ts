@@ -9,50 +9,38 @@ module $.$mol {
 			isEqual = this.haystack() === this.needle();
 			
 			if(isEqual) {
-				chunks.push(this.haystack());
+				chunks.push(this.low(0));
 				return chunks;
 			}
 			
 			if(!this.needle() || !isMatched) {
-				chunks.push(this.low(this.haystack()));
+				chunks.push(this.low(0));
 				return chunks;
 			}
 			
-			let splits = this.haystack().split(this.needle());
+			let splits = this.splits();
 			
 			for(let index = 0; index < splits.length; index++) {
-				let current = splits[index],
-					next = splits[index + 1];
-				
-				if(this.isEmpty(current) && !this.isEmpty(next) && index === 0) {
+				if(index) {
 					chunks.push(this.needle());
-					continue;
-				}
-				if(this.isEmpty(current) && !this.isEmpty(next) && index !== 0) {
-					chunks.push(this.low(current), this.needle());
-					continue;
-				}
-				if(this.isEmpty(current) && (index === splits.length - 1)) {
-					continue;
-				}
-				if(!this.isEmpty(current) && (index === splits.length - 1)) {
-					chunks.push(this.low(current));
-					continue;
 				}
 				
-				chunks.push(this.low(current), this.needle());
+				if(splits[index]) {
+					chunks.push(this.low(index));
+				}
 			}
 			
 			return chunks;
 		}
 		
-		isEmpty(str: string) {
-			return typeof str === "string" ? str === '' : true;
+		splits() {
+			return this.haystack().split(this.needle());
 		}
 		
-		low(str : string) {
+		@ $mol_prop()
+		low(index : number) {
 			return new $mol_dimmer_text().setup(obj => {
-				obj.childs = () => [str];
+				obj.childs = () => [this.splits()[index]];
 			});
 		}
 	}
