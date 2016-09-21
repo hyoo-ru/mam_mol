@@ -56,7 +56,7 @@ Add **web entry point** at `./my/hello/index.html`:`
 	<!-- page title -->
 	<title>Hello World!</title>
 	
-	<!-- Force utf-8 encoding -->
+	<!-- Force utf-8 dencoding -->
 	<meta charset="utf-8" />
 	
 	<!-- Disable modile browser auto zoom, $mol is adaptive -->
