@@ -1,5 +1,5 @@
 module $.$mol {
-	export class $mol_highlighter extends $.$mol_highlighter {
+	export class $mol_dimmer extends $.$mol_dimmer {
 		childs() {
 			let chunks: any[] = [];
 			let isMatched: any;
@@ -14,7 +14,7 @@ module $.$mol {
 			}
 			
 			if(!this.needle() || !isMatched) {
-				chunks.push(this.shadow(this.haystack()));
+				chunks.push(this.low(this.haystack()));
 				return chunks;
 			}
 			
@@ -23,14 +23,14 @@ module $.$mol {
 			for(let index = 0; index < splits.length; index++) {
 				if(splits[index] === '' && index !== 0) continue;
 				
-				chunks.push(this.shadow(splits[index]), (index !== splits.length - 1) ? this.needle() : null);
+				chunks.push(this.low(splits[index]), (index !== splits.length - 1) ? this.needle() : null);
 			}
 			
 			return chunks;
 		}
 		
-		shadow(str : string) {
-			return new $mol_lowlighter_text().setup(obj => {
+		low(str : string) {
+			return new $mol_dimmer_text().setup(obj => {
 				obj.childs = () => [str];
 			});
 		}

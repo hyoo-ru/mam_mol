@@ -1,0 +1,7 @@
+$mol_dimmer_text $mol_viewer
+	tagName \span
+
+$mol_dimmer $mol_viewer
+	> haystack \
+	> needle \
+	childs /
