@@ -1,1 +1,5 @@
-$mol_app_hello $mol_viewer childs / \Hello World!
+$mol_app_hello $mol_viewer childs /
+	< input $mol_stringer
+		hint \Name
+		value > name \
+	< message \
