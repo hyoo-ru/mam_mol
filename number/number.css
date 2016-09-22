@@ -40,14 +40,14 @@
 }
 
 [mol_number_decrementer] {
-	transition: margin .3s cubic-bezier(0, .69, .44, .91), opacity .3s cubic-bezier(0, 1, 0, 1);
+	transition: all .2s ease-out;
 	right: 100%;
 	margin-right: -1.75rem;
 	opacity: 0;
 }
 
 [mol_number_incrementer] {
-	transition: margin .3s cubic-bezier(0, .69, .44, .91), opacity .3s cubic-bezier(0, 1, 0, 1);
+	transition: all .2s ease-out;
 	left: 100%;
 	margin-left: -1.75rem;
 	opacity: 0;
