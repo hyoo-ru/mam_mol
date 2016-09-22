@@ -13,11 +13,42 @@
 [mol_number_stringer] {
 	appearance:textfield;
 	text-align: right;
+	z-index: 1;
 }
 
 [mol_number_incrementer], [mol_number_decrementer] {
+	background-color: var(--mol_skin_light);
 	font-size: 1.25rem;
-	width: 2rem;
+	width: 1.7rem;
 	padding-top: 0;
 	padding-bottom: 0;
+	position: absolute!important;
+	height: 100%;
+}
+
+[mol_number]:hover [mol_number_decrementer],
+[mol_number_decrementer]:focus {
+	margin-right: 0.1rem;
+	z-index: 2;
+	opacity: 1;
+}
+[mol_number]:hover [mol_number_incrementer],
+[mol_number_incrementer]:focus {
+	margin-left: 0.1rem;
+	z-index: 2;
+	opacity: 1;
+}
+
+[mol_number_decrementer] {
+	transition: margin .3s cubic-bezier(0, .69, .44, .91), opacity .3s cubic-bezier(0, 1, 0, 1);
+	right: 100%;
+	margin-right: -1.75rem;
+	opacity: 0;
+}
+
+[mol_number_incrementer] {
+	transition: margin .3s cubic-bezier(0, .69, .44, .91), opacity .3s cubic-bezier(0, 1, 0, 1);
+	left: 100%;
+	margin-left: -1.75rem;
+	opacity: 0;
 }
