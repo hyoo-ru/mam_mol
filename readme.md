@@ -22,7 +22,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # [Demo applications](demo)
 
-* [$mol_app_hello](app/demo/hello) - very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
+* [$mol_app_hello](app/hello) - very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
 * [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) realization ([online](http://eigenmethod.github.io/mol/#demo=mol_app_todomvc), [benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark))
