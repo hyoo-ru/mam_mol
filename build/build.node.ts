@@ -342,6 +342,9 @@ class $mol_build extends $mol_object {
 			if (!type || type === 'test.js') {
 				res = res.concat(this.bundleTestJS({ path, exclude, bundle: env }))
 			}
+			if( env === 'node' && ( !bundle || bundle === 'package.json' ) ) {
+				res = res.concat(this.bundlePackageJSON({ path , exclude }))
+			}
 		} )
 		
 		return res
@@ -425,7 +428,38 @@ class $mol_build extends $mol_object {
 
 		return [ target , targetMap ]
 	}
-
+	
+	@ $mol_prop()
+	bundlePackageJSON( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		var pack = $mol_file.absolute( path )
+		
+		var target = pack.resolve( `-/package.json` )
+		var targetMap = pack.resolve( `-/package.json` )
+		
+		var sources = this.sourcesAll({ path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) })
+		
+		var json = {
+			name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
+			version : '0.0.0' ,
+			dependencies : <{ [ key : string ] : string }>{}
+		}
+		
+		for( let src of sources ) {
+			let deps = this.srcDeps( src.path() )
+			for( let dep in deps ) {
+				if( !/^\/node\//.test( dep ) ) continue
+				let mod = dep.replace( /^\/node\// , '' ).replace( /\/.*/g , '' )
+				json.dependencies[ mod ] = '*'
+			}
+		}
+		
+		target.content( JSON.stringify( json , null , '  ' ) )
+		
+		this.logBundle( target )
+		
+		return [ target ]
+	}
+	
 	@ $mol_prop()
 	bundleCSS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 		var pack = $mol_file.absolute( path )
