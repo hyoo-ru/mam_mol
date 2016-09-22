@@ -248,10 +248,21 @@ class $mol_build extends $mol_object {
 	
 	@ $mol_prop()
 	packEnsure( name : string ) {
-		var pack = this.root().resolve( name )
-		if( pack.exists() ) return
-		
 		var mapping = this.packMapping()
+		
+		var pack = this.root().resolve( name )
+		if( pack.exists() ) {
+			if( pack.resolve( '.git' ).exists() ) {
+				try {
+					$mol_exec( pack.path() , 'git' , 'fetch' )
+					$mol_exec( pack.path() , 'git' , 'log' , '--oneline' , 'HEAD..origin/master' )
+				} catch( error ) {
+					console.error( error.message )
+				}
+			}
+			return
+		}
+		
 		for( let repo of mapping.select( 'pack' , name , 'git' ).childs ) {
 			$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
 			pack.stat( void 0 )
