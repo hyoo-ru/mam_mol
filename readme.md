@@ -14,7 +14,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * Cross platform. [Support any environment](#zero-configuration) (NodeJS, Web, Cordova).
 * Static typing ([TypeScript](https://www.typescriptlang.org/)). Full IDE support.
 * Full customization. No implementation hiding. [All aspects are overridable](#lego-components).
-* [Lifecycle management](#reactivity). Automatic destroy of components.
+* [Lifecycle management](#reactivity). Automatic destroy of unnecessary objects.
 * [Easy debugging](#debugging). No exception catching. User readable id's of all objects. Quick access to all objects from console.
 * Easy [user friendly logging](#debugging) of all state changes.
 * Pseudosynchronous code. [Asynchrony is abstracted by reactivity](#reactivity). No callbacks/promises/streams hell. No async/awiat/yield virus.
