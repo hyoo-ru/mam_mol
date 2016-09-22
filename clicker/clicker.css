@@ -17,6 +17,7 @@
 	color: inherit;
 	cursor: default;
 	opacity: .9;
+	position: relative;
 }
 
 [mol_clicker]:disabled {
@@ -28,7 +29,6 @@
 [mol_clicker]:focus {
 	outline: none;
 	box-shadow: 0 0 0 2px var(--mol_skin_focus);
-	position: relative;
 	z-index: 1;
 	cursor: pointer;
 	opacity: 1;
