@@ -54,27 +54,8 @@ module $.$mol {
 			return this.selectedRow() ? index === (this.selectedRow() - 1) : false;
 		}
 		
-		
-		@ $mol_prop()
-		dimmer( index: number ) {
-			return new $mol_dimmer().setup(
-				obj => {
-					obj.haystack = () => this.suggests()[ index ];
-					obj.needle = () => this.suggester_stringer().value();
-				}
-			)
-		}
-		
-		@ $mol_prop()
-		rower( index : number ) {
-			return new $mol_suggester_rower().setup(
-				obj => {
-					obj.heightMinimal = () => 36;
-					obj.childs = () => [ this.dimmer(index) ];
-					obj.eventMouseDown = e => this.eventMouseDown( index , e );
-					obj.selected = () => this.selected( index )
-				}
-			);
+		suggest(index: number) {
+			return this.suggests()[index];
 		}
 	}
 }
