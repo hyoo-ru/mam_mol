@@ -2,18 +2,13 @@ module $.$mol {
 	export class $mol_dimmer extends $.$mol_dimmer {
 		childs() {
 			let chunks: any[] = [];
-			let isMatched: any;
-			let isEqual: boolean;
 			
-			isMatched = !!this.haystack().match(new RegExp(this.needle(), 'g'));
-			isEqual = this.haystack() === this.needle();
-			
-			if(isEqual) {
-				chunks.push(this.low(0));
+			if(this.isEqual()) {
+				chunks.push(this.haystack());
 				return chunks;
 			}
 			
-			if(!this.needle() || !isMatched) {
+			if(!this.needle()) {
 				chunks.push(this.low(0));
 				return chunks;
 			}
@@ -34,7 +29,14 @@ module $.$mol {
 		}
 		
 		splits() {
+			if(!this.needle()) {
+				return [this.haystack()];
+			}
 			return this.haystack().split(this.needle());
+		}
+		
+		isEqual() {
+			return this.haystack() === this.needle();
 		}
 		
 		@ $mol_prop()
