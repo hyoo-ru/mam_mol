@@ -3,6 +3,9 @@
 	color: var(--mol_skin_focus);
 	cursor: pointer;
 	border-radius: var(--mol_skin_round);
+	display: inline-block;
+	padding: .5rem;
+	box-sizing: border-box;
 }
 
 [mol_linker_current] {

@@ -6,13 +6,12 @@ module $.$mol {
 			return this.session( 'value()' , ...diff ) || '0'
 		}
 		
-		@ $mol_prop()
-		switcher() {
-			return new $mol_switcher().setup( obj => {
-				obj.value = ( ...diff )=> this.current( ...diff )
-				obj.option_keys = ()=> this.items().map( ( item , index )=> String( index ) )
-				obj.option = ( key : number )=> this.items()[ key ].title()
+		switcherOptions() {
+			let options : { [ key : string ] : ()=> string } = {}
+			this.items().forEach( ( item , index ) => {
+				options[ String( index ) ] = ()=> item.title()
 			} )
+			return options
 		}
 		
 		@ $mol_prop()

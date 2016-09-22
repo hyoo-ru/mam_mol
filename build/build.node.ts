@@ -166,8 +166,8 @@ class $mol_build extends $mol_object {
 		sources = sources.map( src => {
 			if( !/(view\.tree)$/.test( src.ext() ) ) return src
 
-			var target = src.parent().resolve( `-/tree.ts/${src.name()}.ts` )
-			var tree = $mol_tree.fromString( String( src.content() ) , src.relate( this.root() ) )
+			var target = src.parent().resolve( `-/view.tree.ts/${src.name()}.ts` )
+			var tree = $mol_tree.fromString( String( src.content() ) , src.path() )
 			target.content( $mol_viewer_tree2ts( tree ) )
 
 			return target
@@ -197,7 +197,7 @@ class $mol_build extends $mol_object {
 				var pos = error.file.getLineAndCharacterOfPosition( error.start )
 				return error.file.fileName + ':' + (pos.line+1) + ':' + pos.character + '\n ' + message
 			} )
-			if( logs.length ) throw new Error( logs.join( '\n' ) )
+			if( logs.length ) throw new Error( '\n' + logs.join( '\n' ) )
 
 		}
 		
@@ -230,7 +230,6 @@ class $mol_build extends $mol_object {
 
 	@ $mol_prop()
 	modDeps( { path , exclude } : { path : string , exclude? : string[] } ) {
-		var mod = $mol_file.absolute( path )
 		var depends : { [ index : string ] : number } = {}
 		for( var src of this.sources({ path , exclude }) ) {
 			$mol_build_depsMerge( depends , this.srcDeps( src.path() ) )
@@ -362,9 +361,12 @@ class $mol_build extends $mol_object {
 		var targetMap = pack.resolve( `-/${bundle}.js.map` )
 
 		var sources = this.sourcesJS({path, exclude})
-		if (!sources.length) return []
+		if( sources.length === 0 ) return []
 		
 		var concater = new $node[ 'concat-with-sourcemaps' ]( true, target.name(), '\n;\n' )
+		if( bundle === 'node' ) {
+			concater.add( '' , 'require( "source-map-support" ).install()\n' )
+		} 
 
 		sources.forEach( function( src ){
 			var content = src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
@@ -392,14 +394,18 @@ class $mol_build extends $mol_object {
 
 		var target = pack.resolve( `-/${bundle}.test.js` )
 		var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
-
-		var sourcesAll = this.sourcesJS({ path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) })
-		var sourcesNoTest = this.sourcesJS({ path , exclude })
-		var sources = sourcesAll.filter( src => sourcesNoTest.indexOf( src ) === -1 )
-		if( !sources.length ) return []
 		
 		var concater = new $node[ 'concat-with-sourcemaps' ]( true, target.name(), '\n;\n' )
-
+		
+		var sources = this.sourcesJS({ path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) })
+		if( bundle === 'node' ) {
+			concater.add( '' , 'require( "source-map-support" ).install()\n' )
+		} else {
+			var sourcesNoTest = this.sourcesJS( { path , exclude } )
+			sources = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
+		}
+		if( sources.length === 0 ) return []
+		
 		sources.forEach( function( src ){
 			var content = src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
 
@@ -544,7 +550,7 @@ $mol_build.dependors[ 'css' ] = $mol_build.dependors[ 'view.css' ] = source => {
 }
 
 $mol_build.dependors[ 'view.tree' ] = source => {
-	var depends : { [ index : string ] : number } = {}
+	var depends : { [ index : string ] : number } = { '/mol/merge/dict' : 3 }
 
 	var lines = String( source.content())
 		.split( '\n' )

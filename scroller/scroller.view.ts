@@ -3,13 +3,11 @@ module $.$mol {
 
 		@ $mol_prop()
 		scrollTop( ...diff : number[] ) {
-			// return this.DOMNode().scrollTop
 			return this.session<number>( 'scrollTop()' , ...diff ) || 0
 		}
 
 		@ $mol_prop()
 		scrollLeft( ...diff : number[] ) {
-			// return this.DOMNode().scrollLeft
 			return this.session<number>( 'scrollLeft()' , ...diff ) || 0
 		}
 

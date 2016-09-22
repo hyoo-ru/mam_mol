@@ -1,4 +1,4 @@
-var $mol_cordova = (<any>window)[ 'cordova' ] || { plugins : {
+var $mol_cordova = (<any>this)[ 'cordova' ] || { plugins : {
 	barcodeScanner : null
 } }
 

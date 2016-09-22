@@ -20,10 +20,10 @@ $mol_test( test => {
 	
 	var entries = dict.entries()
 	test.equal( entries.length , 2 )
-	test.equal( entries[0][0] , 1 )
-	test.equal( entries[0][1] , obj1 )
-	test.equal( entries[1][0] , 2 )
-	test.equal( entries[1][1] , obj2 )
+	test.equal( entries[0][0] , obj1 )
+	test.equal( entries[0][1] , 1 )
+	test.equal( entries[1][0] , obj2 )
+	test.equal( entries[1][1] , 2 )
 	
 	dict.delete( obj2 )
 	test.not( dict.has( obj2 ) )

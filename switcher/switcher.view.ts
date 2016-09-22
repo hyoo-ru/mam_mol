@@ -6,16 +6,20 @@ module $.$mol {
 			return this.session( 'value()' , ...diff )
 		}
 		
+		options() : { [ key : string ] : () => string } {
+			return {}
+		}
+
 		@ $mol_prop()
 		items() {
-			return this.option_keys().map( key => this.optioner( key ) )
+			return Object.keys( this.options() ).map( key => this.optioner( key ) )
 		}
 		
 		@ $mol_prop()
 		optioner( key : string ) {
 			return new $mol_checker().setup( obj => {
 				obj.checked = ( ...diff )=> this.optionChecked( key , ...diff )
-				obj.label = ()=> this.option( key )
+				obj.label = ()=> this.options()[ key ]()
 			} )
 		}
 		

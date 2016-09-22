@@ -8,7 +8,7 @@ module $.$mol {
 		}
 		
 		current() {
-			return this.uri() === $mol_state_arg.link({})
+			return this.uri() === this.argument().link( {} )
 		}
 		
 	}

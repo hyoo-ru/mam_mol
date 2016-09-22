@@ -4,10 +4,6 @@
 	padding: .5rem;
 }
 
-[mol_app_demo_optioner] > * {
-	margin: .5rem;
-}
-
 [mol_app_demo_mainer] {
 	background: var(--mol_skin_light);
 	overflow: auto;

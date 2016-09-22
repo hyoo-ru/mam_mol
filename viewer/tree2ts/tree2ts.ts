@@ -2,9 +2,13 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 	
 	var content = ''
 	
+	function error( message : string , tree : $mol_tree ) {
+		return new Error( `${message}: ${tree} ${tree.baseUri}:${tree.row}:${tree.col}` )
+	}
+	
 	tree.childs.forEach( function( def : $mol_tree ) {
 		if( !def.type || /^-/.test( def.type ) ) return
-		if( !/^\$\w+$/.test( def.type ) ) throw new Error( 'Wrong component name: ' + def + def.uri )
+		if( !/^\$\w+$/.test( def.type ) ) throw error( 'Wrong component name' , def )
 		var parent = def.childs[0]
 		
 		var members : { [ key : string ] : string } = {}
@@ -15,18 +19,18 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 			var needSet = false
 			var needReturn = true
 			var needCache = false
-			var isOverride = false
+			var isOverride = true
 			var keys : string[] = []
 
 			if( param.type === '>' ) {
 				needCache = true
-				isOverride = true
+				isOverride = false
 				param = param.childs[0]
 			}
 
 			if( param.type === '<' ) {
 				needCache = false
-				isOverride = true
+				isOverride = false
 				param = param.childs[0]
 			}
 
@@ -62,16 +66,20 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 						} )
 						return 'new ' + value.type + '().setup( __ => { \n' + overs.join( '' ) + '\t\t} )'
 					case '*' :
-						needKey = true
-						needReturn = false
+						//needKey = true
+						//needReturn = false
 						var opts : string[] = []
 						value.childs.forEach( opt => {
 							if( /^(-|$)/.test( opt.type ) ) return ''
 							keys.push( opt.type )
-							opts.push( '\t\t\tcase "' + opt.type + '" : return ' + getValue( opt.childs[0] ) + '\n' )
+							var ns = needSet
+							var v = getValue( opt.childs[0] )
+							var arg = needSet ? ' ...diff : any[] ' : ''
+							opts.push( '\t\t\t"' + opt.type + '" : (' + arg + ')=> <any> ' + v + ' ,\n' )
+							needSet = ns
 						} )
-						if( !isOverride ) return 'switch( key ){\n' + opts.join( '' ) + '\t\t}\n\t\treturn <any>null'
-						else return 'switch( key ){\n' + opts.join( '' ) + '\t\t\tdefault: return super.' + param.type + '( key' + ( needSet ? ' , ...diff' : '' ) + ' )\n\t\t}'
+						if( !isOverride ) return '{\n' + opts.join( '' ) + '\t\t}'
+						else return  `$`+`mol_merge_dict( super.${ param.type }() , {\n${ opts.join( '' )}\t\t} )`
 					case ':' :
 						return '( <any> ' + JSON.stringify( value.childs[0] ) + ' )'
 					case '>' :
@@ -99,10 +107,10 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 				
 				if( Number( value.type ).toString() == value.type ) return value.type
 				
-				throw new Error( 'Wrong value: ' + value + value.uri )
+				throw error( 'Wrong value' , value )
 			}
 			
-			if( param.childs.length > 1 ) throw new Error( 'Too more childs: ' + param + param.uri )
+			if( param.childs.length > 1 ) throw error( 'Too more childs' , param )
 			
 			param.childs.forEach( child => {
 				var val = getValue( child )
