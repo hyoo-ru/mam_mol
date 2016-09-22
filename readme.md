@@ -163,11 +163,14 @@ That is all!
 # Rationale
 
 ## Zero configuration
-Вместо обеспечения конфигурируемости под любую хотелку, мы концентрируемся на том, чтобы всё работало как следует сразу из коробки и не напрягало разработчика необходимостью типовой настройки (что, однако, не исключает возможности подстроить под себя, если требуется).
+Instead of creating configuration files for an application you want, we better concentrate on working the application 
+at one from the box and don't bothers mol's developer creating configuration. 
+But of course you could setup for you needs if you want.
 
-Например, скачав **[базовый PMS-проект](http://github.com/nin-jin/pms/)** вы сразу получаете:
+For example if you download **[базовый PMS-проект](http://github.com/nin-jin/pms/)** you'd have got that:
 
-**Сборку JS и CSS бандлов под разные платформы.** Бандл можно собрать для любого модуля и в него войдут как собственно исходники этого модуля, так и исходники всех модулей, от которых тот зависит и ничего лишнего.
+**An assembly of JS and CSS bundles for any platforms.** A bundle can be assembled for any module and there are sources 
+of that module and sources all other modules from witch this module depends and no redundant modules would be there.  
 
 There are full set of supports bundles:
 
@@ -179,15 +182,24 @@ There are full set of supports bundles:
 * `-/node.test.js` - JS with tests for NodeJS
 * `-/node.deps.json` - a map of dependencies modules for NodeJS
 
-**Поддержку Source Maps**. Исходники вкомпиливаются в сами карты, так что они вполне себе самодостаточны.
+**Support of Source Maps**. Sources are compiled and integrate to maps, they are fully self-sufficient.
 
-**Девелоперский сервер**, который собирает нужные бандлы по мере необходимости. Например, при запросе `http://localhost:8080/mol/app/todomvc/-/web.js` происходит сборка `js` бандла пакета `mol/app/todomvc` для `web` окружения. Пересборка будет произведена только при изменении файлов-исходников.
+**development server**, witch would be compile bundles as needed. For example, 
+when requested `http://localhost:8080/mol/app/todomvc/-/web.js` a build is being assembled `js` of `mol/app/todomvc` project 
+and `web` environment. Rebuilding would be occur only if some source file would be changed.
 
-**Трансляцию современного CSS в CSS поддерживаемый браузерами** ([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): расстановка префиксов, разворачивание переменных и тд.
+**Translating of modern CSS into CSS supported by browsers** 
+([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): arrange prefixes and variables etc.
 
-**Трансляцию [TypeScript](https://github.com/Microsoft/TypeScript) в JS**. В TS включена поддержка аннотаций и выключена поддержка автоматической расстановки типа any, чтобы случайно не терять типизацию.
+**Translating [TypeScript](https://github.com/Microsoft/TypeScript) into JS**. 
+In TS configuration enabled support annotation and automatic arrangement any types, 
+for prevent a missing typing by change.
 
-**Отслеживание зависимостей по факту использования** и автоматическое включение необходимых модулей в результирующий бандл. То есть не надо писать никакие `include` или `require` - достаточно обращаться к сущности по полному имени вида `$mol_state_arg` или `$mol.state.arg` (смотря как она определена) в `*.ts`, `*.view.ts` и `*.view.tree` файлах. В CSS зависимости ищутся по вхождениям вида `[mol_checker_checked]` , `[mol_checker_checked=` или `.mol_checker_checked`.
+**Watching dependencies by fact of using** and inclusion needed modules automatically at further bundle.
+You don't need to write `include` and `require` everything you need is to refer for essence by full name 
+like `$mol_state_arg` and `$mol.state.arg` (looking at its definition) in `*.ts`, `*.view.ts` и `*.view.tree` files. 
+At CSS files its dependencies are looked for by entries 
+like `[mol_checker_checked]` , `[mol_checker_checked=` and `.mol_checker_checked`.
 
 ## Lego components
 
