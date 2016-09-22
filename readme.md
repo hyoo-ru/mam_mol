@@ -163,22 +163,21 @@ That is all!
 # Rationale
 
 ## Zero configuration
-
 Вместо обеспечения конфигурируемости под любую хотелку, мы концентрируемся на том, чтобы всё работало как следует сразу из коробки и не напрягало разработчика необходимостью типовой настройки (что, однако, не исключает возможности подстроить под себя, если требуется).
 
 Например, скачав **[базовый PMS-проект](http://github.com/nin-jin/pms/)** вы сразу получаете:
 
 **Сборку JS и CSS бандлов под разные платформы.** Бандл можно собрать для любого модуля и в него войдут как собственно исходники этого модуля, так и исходники всех модулей, от которых тот зависит и ничего лишнего.
 
-Полный набор поддерживаемых бандлов:
+There are full set of supports bundles:
 
-* `-/web.js` - JS для браузера
-* `-/web.test.js` - JS с тестами для браузера
-* `-/web.css` - CSS для браузера
-* `-/web.deps.json` - карта зависимостей модулей для браузера
-* `-/node.js` - JS для NodeJS
-* `-/node.test.js` - JS с тестами для NodeJS
-* `-/node.deps.json` - карта зависимостей модулей для NodeJS
+* `-/web.js` - JS for browser
+* `-/web.test.js` - JS with tests for a browser
+* `-/web.css` - CSS styles for a browser
+* `-/web.deps.json` - a map of dependencies modules for browser
+* `-/node.js` - JS for NodeJS
+* `-/node.test.js` - JS with tests for NodeJS
+* `-/node.deps.json` - a map of dependencies modules for NodeJS
 
 **Поддержку Source Maps**. Исходники вкомпиливаются в сами карты, так что они вполне себе самодостаточны.
 
