@@ -203,11 +203,14 @@ like `[mol_checker_checked]` , `[mol_checker_checked=` and `.mol_checker_checked
 
 ## Lego components
 
-В $mol используется компонентный подход к построению интерфейса, при этом **каждая компонента самодостаточна** и может быть использована как самостоятельное приложение. Мелкие компоненты собираются вместе под крылом более крупной компоненты, и так далее по нарастающей.
+A component approach is used by $mol to building an interface, but **every component is self-sufficient** and can be used 
+as a self-sufficient application. Small component are collected inside of larger components etc.
 
-В отличие от многих других фреймворков, $mol не стремится изолировать внутренности компонент. Наоборот, предоставляется удобный механизм настройки их поведения, не требуя от создателя компоненты дополнительных телодвижений.
- 
- Например, чтобы задать список дочерних копонент для заданной, нужно просто переопределить свойство `childs` во view.tree:
+Unlike of another frameworks the $mol does not seek to isolate insides of components. Vice versa, there are comfortable 
+mechanism for configuration them is provided for developers, and there are not any gestures is required from creator 
+of the component.
+
+For example, to set a list of childs components you need to redefine `childs` property in view.tree
  
  ```tree
 $mol_viewer childs /
@@ -215,15 +218,16 @@ $mol_viewer childs /
 	< button2
  ```
 
- Или то же самое через TypeScript:
+Or the same through TypeScript:
  
  ```typescript
  new $mol_viewer().setup( obj => {
  	obj.childs = ()=> [ this.button1() , this.button2() ]
  } )
  ```
-
-В обоих вариантах компилятор проверит существование свойства и соответствие сигнатуры. В норме, вам не требуется работать с полями объекта напрямую, поэтому все определяемые свойства являются публичными и могут быть безопасно перегружены.
+In both variants a compiler verify existing of property and signature of it.
+In normal mode working with properties of object is not required, therefore all defining properties 
+are public and can be safely overloaded.
 
 ## Lazyness
 
