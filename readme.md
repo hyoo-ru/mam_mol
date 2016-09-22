@@ -5,7 +5,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 # Features
 
 * [Zero configuration](#zero-configuration). Just checkout and use it. 
-* [Lazy rendering/evaluating/loading etc.](#lazyness)
+* [Lazy rendering/evaluating/loading etc](#lazyness).
 * [Full reactivity](#reactivity) in all application layers. Not only between View and ViewModel.
 * [Automatic dependency tracking](#reactivity) between reactive containers. No need to manual (un)subscribe and streams routing.
 * [Effective state synchronization](atom) in right way. 
