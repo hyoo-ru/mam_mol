@@ -1,4 +1,4 @@
-$mol_number $mol_barer
+$mol_number $mol_viewer
 	precisionView < precision 1
 	precisionChange < precision 1
 	> value 0
