@@ -276,11 +276,11 @@ Details: [$mol_prop](prop), [$mol_atom](atom).
 
 ## Debugging
 
-Особое внимание при разработке $mol уделяется возможностям отладки и исследования работы кода. Например, 
-для обработки исключительных ситуаций нигде не используется перехват их с пробросом (`try-catch-throw`), 
-так как это маскирует истинное место возникновения исключительной ситуации, усложняя отладку. 
+$mol pays special attention while implementation process to debugging possibilities and researching of code working process. For example for handling exceptions nowhere is used intercepting them with forwarding (`try-catch-throw`),
+ because it masks a real places where exceptions were arisen, it complicates debugging. 
 
-Для каждого DOM-элемента автоматически формируется человекопонятный идентификатор вида `$mol_app_todomvc.root(0).taskRow(0).titler()`, который является валидным яваскриптом, который можно исполнить в консоли, получив ссылку на компонент, которому этот элемент соответствует. Развернув содержимое компонента вы получие имена и значения его полей вида:
+For any DOM-element automatically forming a people friendly indicator like `$mol_app_todomvc.root(0).taskRow(0).titler()`,
+which is valid javascript code, that could be executed in console, if it's got a link to a component, whom this component is corresponds to. Unfolding a content of a component you'd see names and properties its fields like:
 
 ```
 $mol_app_todomvc
@@ -291,10 +291,7 @@ $mol_app_todomvc
     taskRow(1) : $mol_app_todomvc_taskRow
     taskRows() : Array[2]
 ```
-
-Имя поля соответствует вызову свойства, через которое доступно содержимое этого поля. А благодаря именованию 
-классов и функций через подчёркивания вы всегда можете понять инстанс какого именно класса перед вами и можете 
-быстро найти его в коде обычным поиском по подстроке. 
+A name of a field corresponds to calling this property, and the content would be available through. And thanks to naming classes and functions through underscoring you always would know witch class instance in front of you and could briefly find it at code by default searching by the substring.
 
 # Modules
 
@@ -325,7 +322,7 @@ $mol_app_todomvc
 
 * **[$mol_state_arg](state/arg)** - arguments state (location/argv)
 * **[$mol_state_local](state/local)** - persistent local state (localStorage)
-* **[$mol_state_session](state/session)** - session temporaty state (sessionStorage)
+* **[$mol_state_session](state/session)** - session temporary state (sessionStorage)
 * **[$mol_state_history](state/history)** - browser history bound state
 * **[$mol_state_stack](state/stack)** - state of current stack of execution
 
