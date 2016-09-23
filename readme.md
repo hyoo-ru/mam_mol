@@ -230,20 +230,14 @@ In normal mode working with properties of object is not required, therefore all 
 are public and can be safely overloaded.
 
 ## Lazyness
-
-[$mol_viewer](viewer) реализует концепцию ленивого рендеринга. [$mol_scroller](scroller) отслеживает позицию скролла и 
-подсказывает вложенным компонентам о размере видимой области. [$mol_lister](lister) зная размер видимой области и 
-минимальные размеры вложенных компонент, исключает из рендеринга те компоненты, которые точно не попадают в видимую область. 
-А все остальные компоненты могут подсказывать ему о своём минимальном размере через свойство `heightMinimal`:
+[$mol_viewer](viewer) realizes the conception of lazy rendering. [$mol_scroller](scroller) is watching a scrolling position and suggest embedded components about viewport size. [$mol_lister](lister) knowing about viewport size and minimal sizes of embedded components, excludes from rendering process the components that is not got into viewport for sure. And all other components could suggest him about its minimal size through `heightMinimal` property.
 
 ```
 $my_icon $mol_viewer
 	heightMinimal 16
 ```
-
-В результате, получается, что открытие любого экрана происходит практически мгновенно, независимо от объёмов выводимых 
-данных. А раз данные не выводятся, то и запросов за ними произведено не будет, что позволяет загружать их не все сразу, 
-а по мере необходимости. Всё это возможно благодаря реактивной архитектуре, пронизывающей все слои приложения.
+At the result it come out than opening any window occur while instant time. It's independent of output data size.
+And since data would not be rendered, then any requests would not be proceeded. It's allowed us to download them partly, when they are needed. That features are possible due to reactive architecture, that are penetrated all layers of application.
 
 ## Reactivity
 
