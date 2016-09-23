@@ -1,3 +1,5 @@
+declare var process : any
+
 class $mol_state_arg< Value > extends $mol_object {
 
 	@ $mol_prop()

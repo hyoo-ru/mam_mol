@@ -51,7 +51,10 @@ class $mol_build extends $mol_object {
 					}
 				}
 				return mods
+			case null :
+				throw new Error( `Module not found: "${mod.relate()}"` )
 		}
+		throw new Error( `Unsopported type "${mod.type()}" of "${mod.relate()}"` )
 	}
 	
 	@ $mol_prop()
