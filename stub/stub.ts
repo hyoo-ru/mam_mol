@@ -2,20 +2,21 @@ function $mol_stub_selectRandom< Value >( list : Value[] ) {
 	return list[ Math.floor( Math.random() * list.length ) ]
 }
 
-function $mol_stub_strings(prefix = '', count = 10, length = 10) {
-	let text = "",
-		possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split(''),
-		dictionary: any[] = [];
+function $mol_stub_strings( prefix = '' , count = 10 , length = 10 ) {
+	if( prefix.length >= length ) return []
 	
-	for(let i = 0; i < count; i++) {
-		text = prefix;
-		for(let j = 0; j < length; j++ ) {
-			text += $mol_stub_selectRandom(possible);
+	let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split( '' )
+	let strings : any[] = []
+	
+	for( let i = 0 ; i < count ; i++ ) {
+		let text = prefix
+		for( let j = prefix.length ; j < length ; j++ ) {
+			text += $mol_stub_selectRandom( possible )
 		}
-		dictionary.push(text.substring(0, length));
+		strings.push( text )
 	}
 	
-	return dictionary;
+	return strings
 }
 
 function $mol_stub_code( length = 8 ) {
