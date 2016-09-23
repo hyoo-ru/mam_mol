@@ -194,7 +194,7 @@ class $mol_viewer extends $mol_model {
 	event() : { [ key : string ] : ( event : Event )=> void } { return {} }
 	
 	focused() {
-		return $mol_viewer_selection.focused().indexOf(this.DOMNode()) !== -1;
+		return $mol_viewer_selection.focused().indexOf( this.DOMNode() ) !== -1
 	}
 	
 	text( text : string ) {
