@@ -1,9 +1,12 @@
 $mol_rower_demo $mol_rower
 	heightMinimal 50
 	childs /
-		< titler $mol_stringer
+		< titler $mol_suggester
 			hint \Title
 			value > title \
+			suggests /
+				\Hello
+				\World
 		< counter $mol_number
 			hint \Count
 			value > count null
