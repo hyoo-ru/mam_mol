@@ -3,7 +3,7 @@ $mol_suggester_demo $mol_rower childs /
 		focused false
 		suggests /
 	< two $mol_suggester
-		hint \Search...
+		hint \Name
 		focused true
 		suggests /
 			\Evgeny
