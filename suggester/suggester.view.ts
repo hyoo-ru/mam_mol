@@ -43,6 +43,10 @@ module $.$mol {
 			
 			if( isSelectedKey || spaceKey) {
 				
+				if(!selectedRow) {
+					return;
+				}
+				
 				if(spaceKey) {
 					diff[0].preventDefault();
 				}
