@@ -21,29 +21,41 @@ module $.$mol {
 			];
 		}
 		
-		eventMouseDown( index : number , e : MouseEvent ) {
+		eventRowerSelect( index : number , e : MouseEvent ) {
 			this.value( this.suggests()[ index ] );
 			this.selectedRow( 0 );
 			
 			e.preventDefault();
 		}
 		
-		eventDown( e : KeyboardEvent ) {
+		@ $mol_prop()
+		selectedRow( ...diff : any[] ) {
+			this.value();
+			return ( diff[0] !== void 0 ) ? diff[0] : 0
+		}
+		
+		eventPress(  ...diff : KeyboardEvent[] ) {
+			let code = diff[0]['code'] || diff[0].key;
 			let selectedRow : number = this.selectedRow();
 			let suggestsLength = this.suggester_lister().childsVisible().length;
-			let isSelectedKey = e.keyCode === 13 || e.keyCode === 39;
+			let isSelectedKey = code === 'Enter' || code === 'ArrowRight';
+			let spaceKey = code === 'Space' ? ' ' : '';
 			
-			if( isSelectedKey ) {
-				this.value( this.suggests()[ selectedRow - 1 ] );
-				this.selectedRow( 0 );
+			if( isSelectedKey || spaceKey) {
+				
+				if(spaceKey) {
+					diff[0].preventDefault();
+				}
+				
+				this.value( this.suggests()[ selectedRow - 1 ] + spaceKey);
 			}
 			
-			if( e.keyCode === 40 ) {
+			if( code === 'ArrowDown' ) {
 				selectedRow = selectedRow === suggestsLength ? 0 : ++selectedRow;
 				this.selectedRow( selectedRow );
 			}
 			
-			if( e.keyCode === 38 ) {
+			if( code === 'ArrowUp' ) {
 				selectedRow = selectedRow === 0 ? suggestsLength : --selectedRow;
 				this.selectedRow( selectedRow );
 			}

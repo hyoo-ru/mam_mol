@@ -12,7 +12,7 @@ function $mol_stub_strings(prefix = '', count = 10, length = 10) {
 		for(let j = 0; j < length; j++ ) {
 			text += $mol_stub_selectRandom(possible);
 		}
-		dictionary.push(text.toLowerCase().substring(0, length));
+		dictionary.push(text.substring(0, length));
 	}
 	
 	return dictionary;
