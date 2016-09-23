@@ -1,3 +1,5 @@
+declare var process : any
+
 function $mol_build_start( paths : string[] ) {
 	var build = $mol_build.relative( '.' )
 	if( paths.length > 0 ) {
@@ -10,4 +12,6 @@ function $mol_build_start( paths : string[] ) {
 	}
 }
 
-$mol_build_start( process.argv.slice( 2 ) )
+setImmediate( ()=> {
+	$mol_build_start( process.argv.slice( 2 ) )
+} )
