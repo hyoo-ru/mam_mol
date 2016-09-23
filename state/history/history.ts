@@ -20,5 +20,3 @@ class $mol_state_history< Value > extends $mol_object {
 	}
 	
 }
-
-window.addEventListener( 'hashchange' , event => $mol_state_history.id( void 0 ) )

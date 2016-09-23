@@ -1,6 +1,6 @@
 class $mol_http_request extends $mol_object {
 	
-	static XMLHttpRequest = XMLHttpRequest
+	static XMLHttpRequest : typeof XMLHttpRequest
 	
 	uri() { return '' }
 	method() { return 'get' }

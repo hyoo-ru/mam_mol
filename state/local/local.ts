@@ -1,3 +1,5 @@
+var localStorage = localStorage || <Storage> {}
+
 class $mol_state_local< Value > extends $mol_object {
 	
 	@ $mol_prop()
@@ -17,5 +19,3 @@ class $mol_state_local< Value > extends $mol_object {
 	}
 	
 }
-
-window.addEventListener( 'storage' , event => $mol_state_local.value( event.key , void 0 ) )

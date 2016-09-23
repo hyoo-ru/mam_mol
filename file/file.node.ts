@@ -29,17 +29,26 @@ class $mol_file extends $mol_object {
 
 	@ $mol_prop()
 	watcher() {
-		return $node.fs.watch( this.path() , { persistent : false } , ( type : string , name : string )=> {
-			this.stat( void 0 )
-			if( name && !/(^\.|___$)/.test( name ) ) {
-				var file = this.resolve( name )
-				file.stat( void 0 )
+		const watcher = $node.fs.watch(
+			this.path() ,
+			{ persistent : false } ,
+			( type : string , name : string )=> {
+				this.stat( void 0 )
+				if( name && !/(^\.|___$)/.test( name ) ) {
+					var file = this.resolve( name )
+					file.stat( void 0 )
+				}
 			}
+		)
+		watcher.on( 'error' , ( error : Error )=> {
+			this.stat( void 0 , error )
 		} )
+		
+		return watcher
 	}
 	
 	@ $mol_prop()
-	stat( ...diff : void[] ) {
+	stat( ...diff : any[] ) {
 		var path = this.path()
 		
 		try {
