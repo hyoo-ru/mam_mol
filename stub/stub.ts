@@ -2,6 +2,23 @@ function $mol_stub_selectRandom< Value >( list : Value[] ) {
 	return list[ Math.floor( Math.random() * list.length ) ]
 }
 
+function $mol_stub_strings( prefix = '' , count = 10 , length = 10 ) {
+	if( prefix.length >= length ) return []
+	
+	let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split( '' )
+	let strings : any[] = []
+	
+	for( let i = 0 ; i < count ; i++ ) {
+		let text = prefix
+		for( let j = prefix.length ; j < length ; j++ ) {
+			text += $mol_stub_selectRandom( possible )
+		}
+		strings.push( text )
+	}
+	
+	return strings
+}
+
 function $mol_stub_code( length = 8 ) {
 	var max = Math.pow( 16 , length )
 	var min = Math.pow( 16 , length - 1 )

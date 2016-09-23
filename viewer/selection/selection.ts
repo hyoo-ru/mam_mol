@@ -1,8 +1,8 @@
 class $mol_viewer_selection extends $mol_object {
 	
 	@ $mol_prop()
-	static focused( ...diff : Element[] ) {
-		return diff[0] || null
+	static focused( ...diff : Element[][] ) {
+		return diff[0] || []
 	}
 	
 	@ $mol_prop()
