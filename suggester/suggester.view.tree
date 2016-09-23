@@ -1,0 +1,26 @@
+$mol_suggester $mol_viewer
+	suggests /
+	event * keydown > eventPress null
+	> selectedRow 0
+	rower# $mol_suggester_rower
+		text < suggest# \
+		prefix < value
+		eventSelected > eventRowerSelected# null
+		selected < selected# false
+	childs /
+		< stringer $mol_stringer
+			value > value \
+			hint < hint \
+		< lister $mol_lister
+			heightMinimal 0
+			childs < suggestRows /
+
+$mol_suggester_rower $mol_clicker
+	tagName \div
+	event * mousedown > eventSelected null
+	attr * mol_suggester_selected < selected false
+	heightMinimal 36
+	childs /
+		< dimmer $mol_dimmer
+			haystack < text \
+			needle < prefix \

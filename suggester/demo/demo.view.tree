@@ -1,0 +1,16 @@
+$mol_suggester_demo $mol_rower childs /
+	< one $mol_suggester
+		focused false
+		suggests /
+	< two $mol_suggester
+		hint \Name
+		focused true
+		suggests /
+			\Evgeny
+			\Alexander
+			\Dmitriy
+			\Yuriy
+			\Nataliya
+	< three $mol_suggester
+		suggests < threeSuggests /
+		value > threeCode \

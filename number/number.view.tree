@@ -1,10 +1,10 @@
-$mol_number $mol_barer
+$mol_number $mol_viewer
 	precisionView < precision 1
 	precisionChange < precision 1
 	> value 0
 	event * wheel > eventWheel null
 	childs /
-		< decrementer $mol_clicker
+		< decrementer $mol_number_clicker
 			eventClick > eventDec null
 			enabled < enabledDec < enabled true
 			childs / \−
@@ -13,7 +13,9 @@ $mol_number $mol_barer
 			value > valueString \
 			hint < hint \
 			enabled < enabledStringer < enabled true
-		< incrementer $mol_clicker
+		< incrementer $mol_number_clicker
 			eventClick > eventInc null
 			enabled < enabledInc < enabled true
 			childs / \+
+
+$mol_number_clicker $mol_clicker

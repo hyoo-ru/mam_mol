@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "6"
+install:
+  - cd ..
+  - git init
+  - git remote add origin https://github.com/nin-jin/pms.git
+  - git pull origin master
+  - npm install
+script:
+  - npm start mol
