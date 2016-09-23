@@ -1,49 +1,29 @@
 module $.$mol {
 	export class $mol_dimmer extends $.$mol_dimmer {
-		childs() {
-			let chunks: any[] = [];
-			
-			if(this.isEqual()) {
-				chunks.push(this.haystack());
-				return chunks;
-			}
-			
-			if(!this.needle()) {
-				chunks.push(this.low(0));
-				return chunks;
-			}
-			
-			let splits = this.splits();
-			
-			for(let index = 0; index < splits.length; index++) {
-				if(index) {
-					chunks.push(this.needle());
-				}
-				
-				if(splits[index]) {
-					chunks.push(this.low(index));
-				}
-			}
-			
-			return chunks;
-		}
 		
-		splits() {
-			if(!this.needle()) {
-				return [this.haystack()];
+		parts() {
+			const needle = this.needle()
+			if( !needle ) return [ this.haystack() ]
+			
+			let chunks : any[] = []
+			let strings = this.strings()
+			
+			for( let index = 0 ; index < strings.length ; index++ ) {
+				if( index > 0 ) chunks.push( this.needle() )
+				if( strings[ index ] !== '' ) chunks.push( this.low( index ) )
 			}
-			return this.haystack().split(this.needle());
-		}
-		
-		isEqual() {
-			return this.haystack() === this.needle();
+			
+			return chunks
 		}
 		
 		@ $mol_prop()
-		low(index : number) {
-			return new $mol_dimmer_text().setup(obj => {
-				obj.childs = () => [this.splits()[index]];
-			});
+		strings() {
+			return this.haystack().split( this.needle() )
 		}
+		
+		string( index: number ) {
+			return this.strings()[ index ]
+		}
+		
 	}
 }

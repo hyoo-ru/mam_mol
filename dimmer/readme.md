@@ -1,11 +1,12 @@
 # $mol_dimmer
-Dim anything you like.
+
+Output text with dimmed not matched substrings.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_dimmer_demo)
 
 ## Usage example
 ```
-$mol_dimmer_demo $mol_dimmer
+$my_eggs $mol_dimmer
 	haystack \Don't put all your eggs in one basket
 	needle \eggs
 ```
