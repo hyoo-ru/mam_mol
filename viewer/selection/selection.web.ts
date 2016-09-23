@@ -3,9 +3,19 @@ document.addEventListener( 'selectionchange' , event => {
 } )
 
 document.addEventListener( 'focusin' , event => {
-	$mol_viewer_selection.focused( event.srcElement )
+	let parents : Element[] = [],
+		element : Element
+	
+	element = event.srcElement
+	
+	while(element) {
+		parents.push(element)
+		element = element.parentElement ? element.parentElement : null
+	}
+	
+	$mol_viewer_selection.focused( parents )
 } )
 
 document.addEventListener( 'focusout' , event => {
-	$mol_viewer_selection.focused( null )
+	$mol_viewer_selection.focused( [] )
 } )
