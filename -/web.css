@@ -1341,6 +1341,53 @@
             justify-content: center;
     color: red
 }
+[mol_dimmer_low] {
+    opacity: 0.66
+}
+[mol_suggester] {
+    -webkit-box-flex: 1000;
+        -ms-flex: 1000 1 auto;
+            flex: 1000 1 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative
+}
+[mol_suggester_lister] {
+    top: 36px;
+    top: 2.25rem;
+    margin-top: 1px;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px #ddd;
+    min-height: 0px;
+    position: absolute;
+    background-color: white;
+    min-width: 96px;
+    min-width: 6rem;
+    z-index: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column
+}
+[mol_suggester_rower] {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    border-radius: 0
+}
+[mol_suggester_rower] + [mol_suggester_rower] {
+    margin-top: 1px
+}
+[mol_suggester_rower]:hover ,
+[mol_suggester_rower][mol_suggester_selected] {
+    background-color: #5988C8;
+    color: white
+}
 [mol_number] {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1423,9 +1470,6 @@
     -ms-flex-line-pack: start;
         align-content: flex-start
 }
-[mol_dimmer_low] {
-    opacity: 0.66
-}
 [mol_filler] {
     text-align: left
 }
@@ -1436,50 +1480,6 @@
 }
 [mol_icon_demo_icon]:hover {
     color: #5988C8
-}
-[mol_suggester] {
-    -webkit-box-flex: 1000;
-        -ms-flex: 1000 1 auto;
-            flex: 1000 1 auto;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    position: relative
-}
-[mol_suggester_lister] {
-    top: 36px;
-    top: 2.25rem;
-    margin-top: 1px;
-    overflow: hidden;
-    border-radius: 4px;
-    box-shadow: 0 0 0 1px #ddd;
-    min-height: 0px;
-    position: absolute;
-    background-color: white;
-    min-width: 96px;
-    min-width: 6rem;
-    z-index: 1;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column
-}
-[mol_suggester_rower] {
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
-    border-radius: 0
-}
-[mol_suggester_rower] + [mol_suggester_rower] {
-    margin-top: 1px
-}
-[mol_suggester_rower]:hover ,
-[mol_suggester_rower][mol_suggester_selected] {
-    background-color: #5988C8;
-    color: white
 }
 
 /*# sourceMappingURL=web.css.map */

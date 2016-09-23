@@ -9196,6 +9196,456 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
+    var $mol_dimmer = (function (_super) {
+        __extends($mol_dimmer, _super);
+        function $mol_dimmer() {
+            _super.apply(this, arguments);
+        }
+        $mol_dimmer.prototype.haystack = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : "";
+        };
+        $mol_dimmer.prototype.needle = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : "";
+        };
+        $mol_dimmer.prototype.parts = function () {
+            return [].concat();
+        };
+        $mol_dimmer.prototype.childs = function () {
+            return this.parts();
+        };
+        $mol_dimmer.prototype.string = function (key) {
+            return "";
+        };
+        $mol_dimmer.prototype.low = function (key) {
+            var _this = this;
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_dimmer_low().setup(function (__) {
+                __.childs = function () { return [].concat(_this.string(key)); };
+            });
+        };
+        __decorate([
+            $mol_prop()
+        ], $mol_dimmer.prototype, "haystack", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_dimmer.prototype, "needle", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_dimmer.prototype, "low", null);
+        return $mol_dimmer;
+    }($mol_viewer));
+    $.$mol_dimmer = $mol_dimmer;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_dimmer_low = (function (_super) {
+        __extends($mol_dimmer_low, _super);
+        function $mol_dimmer_low() {
+            _super.apply(this, arguments);
+        }
+        $mol_dimmer_low.prototype.tagName = function () {
+            return "span";
+        };
+        return $mol_dimmer_low;
+    }($mol_viewer));
+    $.$mol_dimmer_low = $mol_dimmer_low;
+})($ || ($ = {}));
+//dimmer.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_dimmer = (function (_super) {
+            __extends($mol_dimmer, _super);
+            function $mol_dimmer() {
+                _super.apply(this, arguments);
+            }
+            $mol_dimmer.prototype.parts = function () {
+                var needle = this.needle();
+                if (!needle)
+                    return [this.haystack()];
+                var chunks = [];
+                var strings = this.strings();
+                for (var index = 0; index < strings.length; index++) {
+                    if (index > 0)
+                        chunks.push(this.needle());
+                    if (strings[index] !== '')
+                        chunks.push(this.low(index));
+                }
+                return chunks;
+            };
+            $mol_dimmer.prototype.strings = function () {
+                return this.haystack().split(this.needle());
+            };
+            $mol_dimmer.prototype.string = function (index) {
+                return this.strings()[index];
+            };
+            __decorate([
+                $mol_prop()
+            ], $mol_dimmer.prototype, "strings", null);
+            return $mol_dimmer;
+        }($.$mol_dimmer));
+        $mol.$mol_dimmer = $mol_dimmer;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//dimmer.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_suggester = (function (_super) {
+        __extends($mol_suggester, _super);
+        function $mol_suggester() {
+            _super.apply(this, arguments);
+        }
+        $mol_suggester.prototype.suggests = function () {
+            return [].concat();
+        };
+        $mol_suggester.prototype.eventPress = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : null;
+        };
+        $mol_suggester.prototype.event = function () {
+            var _this = this;
+            return $mol_merge_dict(_super.prototype.event.call(this), {
+                "keydown": function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.eventPress.apply(_this, diff);
+                },
+            });
+        };
+        $mol_suggester.prototype.selectedRow = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : 0;
+        };
+        $mol_suggester.prototype.suggest = function (key) {
+            return "";
+        };
+        $mol_suggester.prototype.eventRowerSelected = function (key) {
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : null;
+        };
+        $mol_suggester.prototype.selected = function (key) {
+            return false;
+        };
+        $mol_suggester.prototype.rower = function (key) {
+            var _this = this;
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_suggester_rower().setup(function (__) {
+                __.text = function () { return _this.suggest(key); };
+                __.prefix = function () { return _this.value(); };
+                __.eventSelected = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.eventRowerSelected.apply(_this, [key].concat(diff));
+                };
+                __.selected = function () { return _this.selected(key); };
+            });
+        };
+        $mol_suggester.prototype.value = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : "";
+        };
+        $mol_suggester.prototype.hint = function () {
+            return "";
+        };
+        $mol_suggester.prototype.stringer = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_stringer().setup(function (__) {
+                __.value = function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.value.apply(_this, diff);
+                };
+                __.hint = function () { return _this.hint(); };
+            });
+        };
+        $mol_suggester.prototype.suggestRows = function () {
+            return [].concat();
+        };
+        $mol_suggester.prototype.lister = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_lister().setup(function (__) {
+                __.heightMinimal = function () { return 0; };
+                __.childs = function () { return _this.suggestRows(); };
+            });
+        };
+        $mol_suggester.prototype.childs = function () {
+            return [].concat(this.stringer(), this.lister());
+        };
+        __decorate([
+            $mol_prop()
+        ], $mol_suggester.prototype, "eventPress", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_suggester.prototype, "selectedRow", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_suggester.prototype, "eventRowerSelected", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_suggester.prototype, "rower", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_suggester.prototype, "value", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_suggester.prototype, "stringer", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_suggester.prototype, "lister", null);
+        return $mol_suggester;
+    }($mol_viewer));
+    $.$mol_suggester = $mol_suggester;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_suggester_rower = (function (_super) {
+        __extends($mol_suggester_rower, _super);
+        function $mol_suggester_rower() {
+            _super.apply(this, arguments);
+        }
+        $mol_suggester_rower.prototype.tagName = function () {
+            return "div";
+        };
+        $mol_suggester_rower.prototype.eventSelected = function () {
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : null;
+        };
+        $mol_suggester_rower.prototype.event = function () {
+            var _this = this;
+            return $mol_merge_dict(_super.prototype.event.call(this), {
+                "mousedown": function () {
+                    var diff = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        diff[_i - 0] = arguments[_i];
+                    }
+                    return _this.eventSelected.apply(_this, diff);
+                },
+            });
+        };
+        $mol_suggester_rower.prototype.selected = function () {
+            return false;
+        };
+        $mol_suggester_rower.prototype.attr = function () {
+            var _this = this;
+            return $mol_merge_dict(_super.prototype.attr.call(this), {
+                "mol_suggester_selected": function () { return _this.selected(); },
+            });
+        };
+        $mol_suggester_rower.prototype.heightMinimal = function () {
+            return 36;
+        };
+        $mol_suggester_rower.prototype.text = function () {
+            return "";
+        };
+        $mol_suggester_rower.prototype.prefix = function () {
+            return "";
+        };
+        $mol_suggester_rower.prototype.dimmer = function () {
+            var _this = this;
+            var diff = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                diff[_i - 0] = arguments[_i];
+            }
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_dimmer().setup(function (__) {
+                __.haystack = function () { return _this.text(); };
+                __.needle = function () { return _this.prefix(); };
+            });
+        };
+        $mol_suggester_rower.prototype.childs = function () {
+            return [].concat(this.dimmer());
+        };
+        __decorate([
+            $mol_prop()
+        ], $mol_suggester_rower.prototype, "eventSelected", null);
+        __decorate([
+            $mol_prop()
+        ], $mol_suggester_rower.prototype, "dimmer", null);
+        return $mol_suggester_rower;
+    }($.$mol_clicker));
+    $.$mol_suggester_rower = $mol_suggester_rower;
+})($ || ($ = {}));
+//suggester.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_suggester = (function (_super) {
+            __extends($mol_suggester, _super);
+            function $mol_suggester() {
+                _super.apply(this, arguments);
+            }
+            $mol_suggester.prototype.heightAvailable = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                return diff[0] / 3;
+            };
+            $mol_suggester.prototype.suggestRows = function () {
+                var _this = this;
+                return this.suggests().map(function (suggest, index) { return _this.rower(index); });
+            };
+            $mol_suggester.prototype.childs = function () {
+                return [
+                    this.stringer(),
+                    (this.focused() && this.suggests().length)
+                        ? this.lister()
+                        : null
+                ];
+            };
+            $mol_suggester.prototype.eventRowerSelected = function (index) {
+                var diff = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    diff[_i - 1] = arguments[_i];
+                }
+                this.value(this.suggests()[index]);
+            };
+            $mol_suggester.prototype.selectedRow = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                this.value();
+                return (diff[0] !== void 0) ? diff[0] : 0;
+            };
+            $mol_suggester.prototype.eventPress = function () {
+                var diff = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    diff[_i - 0] = arguments[_i];
+                }
+                var code = diff[0]['code'] || diff[0].key;
+                var selectedRow = this.selectedRow();
+                var suggestsLength = this.lister().childsVisible().length;
+                var isSelectedKey = code === 'Enter' || code === 'ArrowRight';
+                var spaceKey = (code === 'Space') ? ' ' : '';
+                if (isSelectedKey || spaceKey) {
+                    if (!selectedRow)
+                        return;
+                    if (spaceKey)
+                        diff[0].preventDefault();
+                    this.value(this.suggests()[selectedRow - 1] + spaceKey);
+                }
+                if (code === 'ArrowDown') {
+                    selectedRow = selectedRow === suggestsLength ? 0 : selectedRow + 1;
+                    this.selectedRow(selectedRow);
+                }
+                if (code === 'ArrowUp') {
+                    selectedRow = selectedRow === 0 ? suggestsLength : selectedRow - 1;
+                    this.selectedRow(selectedRow);
+                }
+            };
+            $mol_suggester.prototype.selected = function (index) {
+                return index === (this.selectedRow() - 1);
+            };
+            $mol_suggester.prototype.suggest = function (index) {
+                return this.suggests()[index];
+            };
+            __decorate([
+                $mol_prop()
+            ], $mol_suggester.prototype, "heightAvailable", null);
+            __decorate([
+                $mol_prop()
+            ], $mol_suggester.prototype, "selectedRow", null);
+            return $mol_suggester;
+        }($.$mol_suggester));
+        $mol.$mol_suggester = $mol_suggester;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//suggester.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
     var $mol_number = (function (_super) {
         __extends($mol_number, _super);
         function $mol_number() {
@@ -9216,25 +9666,6 @@ var $;
                 diff[_i - 0] = arguments[_i];
             }
             return (diff[0] !== void 0) ? diff[0] : 0;
-        };
-        $mol_number.prototype.eventWheel = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : null;
-        };
-        $mol_number.prototype.event = function () {
-            var _this = this;
-            return $mol_merge_dict(_super.prototype.event.call(this), {
-                "wheel": function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    return _this.eventWheel.apply(_this, diff);
-                },
-            });
         };
         $mol_number.prototype.eventDec = function () {
             var diff = [];
@@ -9333,9 +9764,6 @@ var $;
         __decorate([
             $mol_prop()
         ], $mol_number.prototype, "value", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_number.prototype, "eventWheel", null);
         __decorate([
             $mol_prop()
         ], $mol_number.prototype, "eventDec", null);
@@ -9562,7 +9990,7 @@ var $;
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return (diff[0] !== void 0) ? diff[0] : new $.$mol_stringer().setup(function (__) {
+            return (diff[0] !== void 0) ? diff[0] : new $.$mol_suggester().setup(function (__) {
                 __.hint = function () { return "Title"; };
                 __.value = function () {
                     var diff = [];
@@ -9571,6 +9999,7 @@ var $;
                     }
                     return _this.title.apply(_this, diff);
                 };
+                __.suggests = function () { return [].concat("Hello", "World"); };
             });
         };
         $mol_rower_demo.prototype.count = function () {
@@ -10589,136 +11018,6 @@ var $;
     $.$mol_demo_all = $mol_demo_all;
 })($ || ($ = {}));
 //all.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_dimmer = (function (_super) {
-        __extends($mol_dimmer, _super);
-        function $mol_dimmer() {
-            _super.apply(this, arguments);
-        }
-        $mol_dimmer.prototype.haystack = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : "";
-        };
-        $mol_dimmer.prototype.needle = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : "";
-        };
-        $mol_dimmer.prototype.parts = function () {
-            return [].concat();
-        };
-        $mol_dimmer.prototype.childs = function () {
-            return this.parts();
-        };
-        $mol_dimmer.prototype.string = function (key) {
-            return "";
-        };
-        $mol_dimmer.prototype.low = function (key) {
-            var _this = this;
-            var diff = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                diff[_i - 1] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : new $.$mol_dimmer_low().setup(function (__) {
-                __.childs = function () { return [].concat(_this.string(key)); };
-            });
-        };
-        __decorate([
-            $mol_prop()
-        ], $mol_dimmer.prototype, "haystack", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_dimmer.prototype, "needle", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_dimmer.prototype, "low", null);
-        return $mol_dimmer;
-    }($mol_viewer));
-    $.$mol_dimmer = $mol_dimmer;
-})($ || ($ = {}));
-var $;
-(function ($) {
-    var $mol_dimmer_low = (function (_super) {
-        __extends($mol_dimmer_low, _super);
-        function $mol_dimmer_low() {
-            _super.apply(this, arguments);
-        }
-        $mol_dimmer_low.prototype.tagName = function () {
-            return "span";
-        };
-        return $mol_dimmer_low;
-    }($mol_viewer));
-    $.$mol_dimmer_low = $mol_dimmer_low;
-})($ || ($ = {}));
-//dimmer.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_dimmer = (function (_super) {
-            __extends($mol_dimmer, _super);
-            function $mol_dimmer() {
-                _super.apply(this, arguments);
-            }
-            $mol_dimmer.prototype.parts = function () {
-                var needle = this.needle();
-                if (!needle)
-                    return [this.haystack()];
-                var chunks = [];
-                var strings = this.strings();
-                for (var index = 0; index < strings.length; index++) {
-                    if (index > 0)
-                        chunks.push(this.needle());
-                    if (strings[index] !== '')
-                        chunks.push(this.low(index));
-                }
-                return chunks;
-            };
-            $mol_dimmer.prototype.strings = function () {
-                return this.haystack().split(this.needle());
-            };
-            $mol_dimmer.prototype.string = function (index) {
-                return this.strings()[index];
-            };
-            __decorate([
-                $mol_prop()
-            ], $mol_dimmer.prototype, "strings", null);
-            return $mol_dimmer;
-        }($.$mol_dimmer));
-        $mol.$mol_dimmer = $mol_dimmer;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//dimmer.view.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -12654,326 +12953,6 @@ var $;
     $.$mol_stacker_demo = $mol_stacker_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_suggester = (function (_super) {
-        __extends($mol_suggester, _super);
-        function $mol_suggester() {
-            _super.apply(this, arguments);
-        }
-        $mol_suggester.prototype.suggests = function () {
-            return [].concat();
-        };
-        $mol_suggester.prototype.eventPress = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : null;
-        };
-        $mol_suggester.prototype.event = function () {
-            var _this = this;
-            return $mol_merge_dict(_super.prototype.event.call(this), {
-                "keydown": function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    return _this.eventPress.apply(_this, diff);
-                },
-            });
-        };
-        $mol_suggester.prototype.selectedRow = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : 0;
-        };
-        $mol_suggester.prototype.suggest = function (key) {
-            return "";
-        };
-        $mol_suggester.prototype.eventRowerSelected = function (key) {
-            var diff = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                diff[_i - 1] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : null;
-        };
-        $mol_suggester.prototype.selected = function (key) {
-            return false;
-        };
-        $mol_suggester.prototype.rower = function (key) {
-            var _this = this;
-            var diff = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                diff[_i - 1] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : new $.$mol_suggester_rower().setup(function (__) {
-                __.text = function () { return _this.suggest(key); };
-                __.prefix = function () { return _this.value(); };
-                __.eventSelected = function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    return _this.eventRowerSelected.apply(_this, [key].concat(diff));
-                };
-                __.selected = function () { return _this.selected(key); };
-            });
-        };
-        $mol_suggester.prototype.value = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : "";
-        };
-        $mol_suggester.prototype.hint = function () {
-            return "";
-        };
-        $mol_suggester.prototype.stringer = function () {
-            var _this = this;
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : new $.$mol_stringer().setup(function (__) {
-                __.value = function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    return _this.value.apply(_this, diff);
-                };
-                __.hint = function () { return _this.hint(); };
-            });
-        };
-        $mol_suggester.prototype.suggestRows = function () {
-            return [].concat();
-        };
-        $mol_suggester.prototype.lister = function () {
-            var _this = this;
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : new $.$mol_lister().setup(function (__) {
-                __.heightMinimal = function () { return 0; };
-                __.childs = function () { return _this.suggestRows(); };
-            });
-        };
-        $mol_suggester.prototype.childs = function () {
-            return [].concat(this.stringer(), this.lister());
-        };
-        __decorate([
-            $mol_prop()
-        ], $mol_suggester.prototype, "eventPress", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_suggester.prototype, "selectedRow", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_suggester.prototype, "eventRowerSelected", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_suggester.prototype, "rower", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_suggester.prototype, "value", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_suggester.prototype, "stringer", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_suggester.prototype, "lister", null);
-        return $mol_suggester;
-    }($mol_viewer));
-    $.$mol_suggester = $mol_suggester;
-})($ || ($ = {}));
-var $;
-(function ($) {
-    var $mol_suggester_rower = (function (_super) {
-        __extends($mol_suggester_rower, _super);
-        function $mol_suggester_rower() {
-            _super.apply(this, arguments);
-        }
-        $mol_suggester_rower.prototype.tagName = function () {
-            return "div";
-        };
-        $mol_suggester_rower.prototype.eventSelected = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : null;
-        };
-        $mol_suggester_rower.prototype.event = function () {
-            var _this = this;
-            return $mol_merge_dict(_super.prototype.event.call(this), {
-                "mousedown": function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    return _this.eventSelected.apply(_this, diff);
-                },
-            });
-        };
-        $mol_suggester_rower.prototype.selected = function () {
-            return false;
-        };
-        $mol_suggester_rower.prototype.attr = function () {
-            var _this = this;
-            return $mol_merge_dict(_super.prototype.attr.call(this), {
-                "mol_suggester_selected": function () { return _this.selected(); },
-            });
-        };
-        $mol_suggester_rower.prototype.heightMinimal = function () {
-            return 36;
-        };
-        $mol_suggester_rower.prototype.text = function () {
-            return "";
-        };
-        $mol_suggester_rower.prototype.prefix = function () {
-            return "";
-        };
-        $mol_suggester_rower.prototype.dimmer = function () {
-            var _this = this;
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            return (diff[0] !== void 0) ? diff[0] : new $.$mol_dimmer().setup(function (__) {
-                __.haystack = function () { return _this.text(); };
-                __.needle = function () { return _this.prefix(); };
-            });
-        };
-        $mol_suggester_rower.prototype.childs = function () {
-            return [].concat(this.dimmer());
-        };
-        __decorate([
-            $mol_prop()
-        ], $mol_suggester_rower.prototype, "eventSelected", null);
-        __decorate([
-            $mol_prop()
-        ], $mol_suggester_rower.prototype, "dimmer", null);
-        return $mol_suggester_rower;
-    }($.$mol_clicker));
-    $.$mol_suggester_rower = $mol_suggester_rower;
-})($ || ($ = {}));
-//suggester.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_suggester = (function (_super) {
-            __extends($mol_suggester, _super);
-            function $mol_suggester() {
-                _super.apply(this, arguments);
-            }
-            $mol_suggester.prototype.heightAvailable = function () {
-                var diff = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    diff[_i - 0] = arguments[_i];
-                }
-                return diff[0] / 3;
-            };
-            $mol_suggester.prototype.suggestRows = function () {
-                var _this = this;
-                return this.suggests().map(function (suggest, index) { return _this.rower(index); });
-            };
-            $mol_suggester.prototype.childs = function () {
-                return [
-                    this.stringer(),
-                    (this.focused() && this.suggests().length)
-                        ? this.lister()
-                        : null
-                ];
-            };
-            $mol_suggester.prototype.eventRowerSelected = function (index) {
-                var diff = [];
-                for (var _i = 1; _i < arguments.length; _i++) {
-                    diff[_i - 1] = arguments[_i];
-                }
-                this.value(this.suggests()[index]);
-            };
-            $mol_suggester.prototype.selectedRow = function () {
-                var diff = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    diff[_i - 0] = arguments[_i];
-                }
-                this.value();
-                return (diff[0] !== void 0) ? diff[0] : 0;
-            };
-            $mol_suggester.prototype.eventPress = function () {
-                var diff = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    diff[_i - 0] = arguments[_i];
-                }
-                var code = diff[0]['code'] || diff[0].key;
-                var selectedRow = this.selectedRow();
-                var suggestsLength = this.lister().childsVisible().length;
-                var isSelectedKey = code === 'Enter' || code === 'ArrowRight';
-                var spaceKey = (code === 'Space') ? ' ' : '';
-                if (isSelectedKey || spaceKey) {
-                    if (!selectedRow)
-                        return;
-                    if (spaceKey)
-                        diff[0].preventDefault();
-                    this.value(this.suggests()[selectedRow - 1] + spaceKey);
-                }
-                if (code === 'ArrowDown') {
-                    selectedRow = selectedRow === suggestsLength ? 0 : selectedRow + 1;
-                    this.selectedRow(selectedRow);
-                }
-                if (code === 'ArrowUp') {
-                    selectedRow = selectedRow === 0 ? suggestsLength : selectedRow - 1;
-                    this.selectedRow(selectedRow);
-                }
-            };
-            $mol_suggester.prototype.selected = function (index) {
-                return index === (this.selectedRow() - 1);
-            };
-            $mol_suggester.prototype.suggest = function (index) {
-                return this.suggests()[index];
-            };
-            __decorate([
-                $mol_prop()
-            ], $mol_suggester.prototype, "heightAvailable", null);
-            __decorate([
-                $mol_prop()
-            ], $mol_suggester.prototype, "selectedRow", null);
-            return $mol_suggester;
-        }($.$mol_suggester));
-        $mol.$mol_suggester = $mol_suggester;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//suggester.view.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
