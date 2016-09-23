@@ -1,7 +1,8 @@
 $mol_suggester_stringer $mol_stringer
 $mol_suggester_lister $mol_lister
 $mol_suggester_rower $mol_clicker
-	event * mousedown > eventMouseDown null
+	tagName \div
+	event * mousedown > eventSelect null
 	attr * mol_suggester_selected < selected false
 	heightMinimal 36
 	childs /
@@ -11,11 +12,13 @@ $mol_suggester_rower $mol_clicker
 
 $mol_suggester $mol_viewer	
 	suggests /
-	event * keydown > eventDown null
+	event * keydown > eventPress null
 	> selectedRow 0
 	rower# $mol_suggester_rower
 		text < suggest# \
 		prefix < value
+		eventSelect > eventRowerSelect# null
+		selected < selected# false
 	childs /
 		< suggester_stringer $mol_suggester_stringer
 			value > value \

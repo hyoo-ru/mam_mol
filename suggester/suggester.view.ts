@@ -21,21 +21,32 @@ module $.$mol {
 			];
 		}
 		
-		eventMouseDown( index : number , e : MouseEvent ) {
+		eventRowerSelect( index : number , e : MouseEvent ) {
 			this.value( this.suggests()[ index ] );
 			this.selectedRow( 0 );
 			
 			e.preventDefault();
 		}
 		
-		eventDown( e : KeyboardEvent ) {
+		@ $mol_prop()
+		selectedRow( ...diff : any[] ) {
+			this.value();
+			return ( diff[0] !== void 0 ) ? diff[0] : 0
+		}
+		
+		eventPress( e : KeyboardEvent ) {
 			let selectedRow : number = this.selectedRow();
 			let suggestsLength = this.suggester_lister().childsVisible().length;
 			let isSelectedKey = e.keyCode === 13 || e.keyCode === 39;
+			let spaceKey = e.keyCode === 32 ? ' ' : '';
 			
-			if( isSelectedKey ) {
-				this.value( this.suggests()[ selectedRow - 1 ] );
-				this.selectedRow( 0 );
+			if( isSelectedKey || spaceKey) {
+				
+				if(spaceKey) {
+					e.preventDefault();
+				}
+				
+				this.value( this.suggests()[ selectedRow - 1 ] + spaceKey);
 			}
 			
 			if( e.keyCode === 40 ) {
