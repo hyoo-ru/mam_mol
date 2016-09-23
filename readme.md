@@ -240,23 +240,11 @@ At the result it come out than opening any window occur while instant time. It's
 And since data would not be rendered, then any requests would not be proceeded. It's allowed us to download them partly, when they are needed. That features are possible due to reactive architecture, that are penetrated all layers of application.
 
 ## Reactivity
+Unlike of the control-flow architecture, at $mol is realized data-flow architecture. All applications are described as a set of classes, having properties. Every property is described as some function from another property ( and properties other classes too). Properties, to which were appealed while function processing were saving as dependencies of our property. In case of changing their values, all dependant properties would be invalidated cascaded. And appealing to property which is not actual would be lead to actualization process previously.
 
-В отличие от control-flow архитектур, в $mol реализована data-flow архитектура. Всё приложение описывается как набор 
-классов, имеющих свойства. Каждое свойство описывается как некоторая функция от других свойства (и свойств других 
-классов в том числе). Свойства, к которым было обращение в процессе выполнения функции запоминаются как зависимости 
-нашего свойства. В случае изменения их значения, все зависимые от них свойства каскадно инвалидируются. А обращение
- к не актуальному свойству приводит к его предварительной актуализации.
+In this way all application at the execution stage is represented a huge tree of dependencies, at the root of this tree is located a special property, which in case of invalidation would automatically actualize itself. And as any property always knows, whether somebody depends from him or not, then it give us a simple and reliable mechanism of control lifecycle of objects - they are created if any dependence would be appear and destroy if there would be no dependencies of it. It solves two fundamental problem: resources leaks and cache invalidation. 
 
-Таким образом всё приложение на этапе исполнения представляет собой огромное дерево зависимостей, в корне которого 
-находится особое свойство, которое в случае инвалидации автоматические себя актуализирует. А так как любое свойство 
-всегда знает, зависит ли от него кто-нибудь или нет, то это даёт простой и надёжный механизм контроля жизненного 
-цикла объектов - они создаются при появлении зависимости и уничтожаются, когда от них никто не зависит. Это в 
-корне решает две фундаментальные проблемы: утечки ресурсов и инвалидация кеша.
-
-Кроме того, реактивная архитектура позволяет элегантно абстрагировать код от асинхронных операций. Если функция 
-не может вернуть значение сразу, она может кинуть `$mol_atom_wait` исключение, что пометит часть дерева состояний 
-как "ожидающие результата". Когда результат будет получен - можно вставить его непосредственно в свойство и 
-приложение перестроится под новое состояние.
+Besides the reactive architecture is allowed abstract code elegantly from asynchronous operations. If a function can't return value at once, it can throws an exception `$mol_atom_wait`, than mark part of the states tree as "waiting of results". When the result would be retrieved - it can be inserted into property directly and an application would be reconstructed for the new state.
 
 ```typescript
 class Greeter {
@@ -284,7 +272,7 @@ class Greeter {
 }
 ```
 
-Подробности: [$mol_prop](prop), [$mol_atom](atom).
+Details: [$mol_prop](prop), [$mol_atom](atom).
 
 ## Debugging
 
