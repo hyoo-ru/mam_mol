@@ -16,5 +16,5 @@ $mol_dimmer_demo $mol_rower
 			haystack \Let's search this string
 			needle \Let's search this string
 		< six $mol_dimmer
-			haystack \Let's search this nothing
+			haystack \Let's search nothing
 			needle \
