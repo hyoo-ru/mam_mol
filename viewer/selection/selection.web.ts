@@ -3,14 +3,12 @@ document.addEventListener( 'selectionchange' , event => {
 } )
 
 document.addEventListener( 'focusin' , event => {
-	let parents : Element[] = [],
-		element : Element
+	const parents : Element[] = []
+	let element = event.srcElement
 	
-	element = event.srcElement
-	
-	while(element) {
-		parents.push(element)
-		element = element.parentElement ? element.parentElement : null
+	while( element ) {
+		parents.push( element )
+		element = element.parentElement
 	}
 	
 	$mol_viewer_selection.focused( parents )
