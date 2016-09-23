@@ -1,11 +1,11 @@
 # $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
 
-Reactive micro-modular ui framework. Very simple, but very powerful.
+Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Features
 
 * [Zero configuration](#zero-configuration). Just checkout and use it. 
-* [Lazy rendering/evaluating/loading etc.](#lazyness)
+* [Lazy rendering/evaluating/loading etc](#lazyness).
 * [Full reactivity](#reactivity) in all application layers. Not only between View and ViewModel.
 * [Automatic dependency tracking](#reactivity) between reactive containers. No need to manual (un)subscribe and streams routing.
 * [Effective state synchronization](atom) in right way. 
@@ -14,7 +14,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 * Cross platform. [Support any environment](#zero-configuration) (NodeJS, Web, Cordova).
 * Static typing ([TypeScript](https://www.typescriptlang.org/)). Full IDE support.
 * Full customization. No implementation hiding. [All aspects are overridable](#lego-components).
-* [Lifecycle management](#reactivity). Automatic destroy of components.
+* [Lifecycle management](#reactivity). Automatic destroy of unnecessary objects.
 * [Easy debugging](#debugging). No exception catching. User readable id's of all objects. Quick access to all objects from console.
 * Easy [user friendly logging](#debugging) of all state changes.
 * Pseudosynchronous code. [Asynchrony is abstracted by reactivity](#reactivity). No callbacks/promises/streams hell. No async/awiat/yield virus.
@@ -22,10 +22,11 @@ Reactive micro-modular ui framework. Very simple, but very powerful.
 
 # [Demo applications](demo)
 
+* [$mol_app_hello](app/hello) - very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
 * [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) realization ([online](http://eigenmethod.github.io/mol/#demo=mol_app_todomvc), [benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark))
-* [$mol_app_supplies](app/supplies) - Supplies management tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_supplies))
+* [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
 * [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
 
 # [Benchmarks](perf)
@@ -75,7 +76,7 @@ Add **web entry point** at `./my/hello/index.html`:`
 </body>
 ```
 
-Your application will be served at **`http://localhost:8080/my/`**.
+Your application will be served at **`http://localhost:8080/my/hello/`**.
 
 Add **declarative component description** at `./my/hello/hello.view.tree` with string input field and greeting message:
 ```tree
@@ -158,7 +159,7 @@ Add **styles** at `./my/hello/hello.view.css`:
 }
 ```
 
-That is all!
+[That is all!](https://eigenmethod.github.io/mol/app/hello/)
 
 # Rationale
 
@@ -404,4 +405,4 @@ A name of a field corresponds to calling this property, and the content would be
 
 # Cool stuff
 
-[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)
+* **[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)**

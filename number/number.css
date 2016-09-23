@@ -4,20 +4,45 @@
 	position: relative;
 }
 
-[mol_number_stringer]::-webkit-outer-spin-button,
-[mol_number_stringer]::-webkit-inner-spin-button {
-	appearance: none;
-	margin: 0;
+[mol_number]:hover {
+	z-index: 2;
 }
 
 [mol_number_stringer] {
-	appearance:textfield;
+	appearance: textfield;
 	text-align: right;
+	position: relative;
 }
 
-[mol_number_incrementer], [mol_number_decrementer] {
-	font-size: 1.25rem;
-	width: 2rem;
-	padding-top: 0;
-	padding-bottom: 0;
+[mol_number_stringer]::-webkit-inner-spin-button {
+	display: none;
+}
+
+[mol_number_clicker] {
+	background-color: var(--mol_skin_light);
+	font-size: 1.5rem;
+	width: 1.75rem;
+	padding: 0;
+	position: absolute;
+	height: 100%;
+	opacity: 0;
+	z-index: -1;
+}
+
+[mol_number]:hover > [mol_number_clicker]:not([disabled]) {
+	opacity: 1;
+	transition: opacity .2s .5s ease-out;
+}
+
+[mol_number_clicker]:focus {
+	z-index: 1;
+	opacity: 1;
+}
+
+[mol_number_decrementer] {
+	right: 100%;
+}
+
+[mol_number_incrementer] {
+	left: 100%;
 }
