@@ -35,7 +35,7 @@ var $mol_log;
     }
     $mol_log.filter = filter;
 })($mol_log || ($mol_log = {}));
-//log.env=web.js.map
+//log.web.js.map
 ;
 var $mol_object = (function () {
     function $mol_object() {
@@ -355,16 +355,6 @@ var $mol_dict = ( typeof Map === 'function' ) ? Map : $mol_dict_shim
 var $mol_state_stack = new $mol_dict();
 //stack.js.map
 ;
-window.addEventListener('error', function (event) {
-    var error = event.error;
-    var stack = $mol_atom.stack;
-    if (error instanceof $mol_atom_wait) {
-        event.preventDefault();
-    }
-    $mol_atom_restore(error);
-});
-//atom.env=web.js.map
-;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -670,6 +660,16 @@ function $mol_atom_task(handler, fail, autoFresh) {
 }
 //atom.js.map
 ;
+window.addEventListener('error', function (event) {
+    var error = event.error;
+    var stack = $mol_atom.stack;
+    if (error instanceof $mol_atom_wait) {
+        event.preventDefault();
+    }
+    $mol_atom_restore(error);
+});
+//atom.web.js.map
+;
 function $mol_prop(config) {
     return function (obj, name, descr) {
         var value = descr.value;
@@ -723,6 +723,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var localStorage = localStorage || {};
 var $mol_state_local = (function (_super) {
     __extends($mol_state_local, _super);
     function $mol_state_local() {
@@ -754,8 +755,10 @@ var $mol_state_local = (function (_super) {
     ], $mol_state_local, "value", null);
     return $mol_state_local;
 }($mol_object));
-window.addEventListener('storage', function (event) { return $mol_state_local.value(event.key, void 0); });
 //local.js.map
+;
+window.addEventListener('storage', function (event) { return $mol_state_local.value(event.key, void 0); });
+//local.web.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -851,8 +854,10 @@ var $mol_state_history = (function (_super) {
     ], $mol_state_history, "id", null);
     return $mol_state_history;
 }($mol_object));
-window.addEventListener('hashchange', function (event) { return $mol_state_history.id(void 0); });
 //history.js.map
+;
+window.addEventListener('hashchange', function (event) { return $mol_state_history.id(void 0); });
+//history.web.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -960,7 +965,7 @@ var $mol_state_arg = (function (_super) {
     return $mol_state_arg;
 }($mol_object));
 window.addEventListener('hashchange', function (event) { return $mol_state_arg.href(void 0); });
-//arg.env=web.js.map
+//arg.web.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -1062,7 +1067,7 @@ var $mol_window = (function (_super) {
 window.addEventListener('resize', function () {
     $mol_window.size(void 0);
 });
-//window.js.map
+//window.web.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -1085,7 +1090,7 @@ var $mol_viewer_selection = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             diff[_i - 0] = arguments[_i];
         }
-        return diff[0] || null;
+        return diff[0] || [];
     };
     $mol_viewer_selection.position = function () {
         var diff = [];
@@ -1172,27 +1177,24 @@ var $mol_viewer_selection = (function (_super) {
     ], $mol_viewer_selection, "position", null);
     return $mol_viewer_selection;
 }($mol_object));
+//selection.js.map
+;
 document.addEventListener('selectionchange', function (event) {
     $mol_viewer_selection.position(void 0);
 });
 document.addEventListener('focusin', function (event) {
-    $mol_viewer_selection.focused(event.srcElement);
+    var parents = [];
+    var element = event.srcElement;
+    while (element) {
+        parents.push(element);
+        element = element.parentElement;
+    }
+    $mol_viewer_selection.focused(parents);
 });
 document.addEventListener('focusout', function (event) {
-    $mol_viewer_selection.focused(null);
+    $mol_viewer_selection.focused([]);
 });
-//selection.js.map
-;
-document.addEventListener('DOMContentLoaded', function (event) {
-    var nodes = document.querySelectorAll('[mol_viewer_root]');
-    for (var i = nodes.length - 1; i >= 0; --i) {
-        var view = $[nodes.item(i).getAttribute('mol_viewer_root')].root(i);
-        view.DOMNode(nodes.item(i));
-        $mol_atom_task(function () { return view.DOMTree(); });
-    }
-    $mol_defer.run();
-});
-//viewer.env=web.js.map
+//selection.web.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -1372,7 +1374,7 @@ var $mol_viewer = (function (_super) {
     $mol_viewer.prototype.field = function () { return {}; };
     $mol_viewer.prototype.event = function () { return {}; };
     $mol_viewer.prototype.focused = function () {
-        return $mol_viewer_selection.focused() === this.DOMNode();
+        return $mol_viewer_selection.focused().indexOf(this.DOMNode()) !== -1;
     };
     $mol_viewer.prototype.text = function (text) {
         return text;
@@ -1397,6 +1399,17 @@ var $mol_viewer = (function (_super) {
     return $mol_viewer;
 }($mol_model));
 //viewer.js.map
+;
+document.addEventListener('DOMContentLoaded', function (event) {
+    var nodes = document.querySelectorAll('[mol_viewer_root]');
+    for (var i = nodes.length - 1; i >= 0; --i) {
+        var view = $[nodes.item(i).getAttribute('mol_viewer_root')].root(i);
+        view.DOMNode(nodes.item(i));
+        $mol_atom_task(function () { return view.DOMTree(); });
+    }
+    $mol_defer.run();
+});
+//viewer.web.js.map
 ;
 this['$'] = this['$'] || this;
 this['$']['$mol'] = this['$'];

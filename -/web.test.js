@@ -1,8 +1,3 @@
-document.addEventListener('DOMContentLoaded', function (event) {
-    $mol_test_run();
-});
-//test.env=web.stage=test.js.map
-;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -78,7 +73,7 @@ $mol_test(function (test) {
     x.objectField('bar()');
     test.equal(x.objectPath(), '.foo()');
 });
-//object.stage=test.js.map
+//object.test.js.map
 ;
 $mol_test(function (test) {
     var set = new $mol_set_shim;
@@ -100,7 +95,7 @@ $mol_test(function (test) {
     set.delete(obj2);
     test.not(set.has(obj2));
 });
-//set.stage=test.js.map
+//set.test.js.map
 ;
 $mol_test(function (test) {
     var dict = new $mol_dict_shim;
@@ -118,14 +113,14 @@ $mol_test(function (test) {
     test.equal(dict.get(obj3), void 0);
     var entries = dict.entries();
     test.equal(entries.length, 2);
-    test.equal(entries[0][0], 1);
-    test.equal(entries[0][1], obj1);
-    test.equal(entries[1][0], 2);
-    test.equal(entries[1][1], obj2);
+    test.equal(entries[0][0], obj1);
+    test.equal(entries[0][1], 1);
+    test.equal(entries[1][0], obj2);
+    test.equal(entries[1][1], 2);
     dict.delete(obj2);
     test.not(dict.has(obj2));
 });
-//dict.stage=test.js.map
+//dict.test.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -349,7 +344,7 @@ $mol_test(function (test) {
     $mol_defer.run();
     test.equal(t.target(), 'John');
 });
-//prop.stage=test.js.map
+//prop.test.js.map
 ;
 $mol_test(function (test) {
     var key = '$mol_state_local_test:' + Math.random();
@@ -359,7 +354,7 @@ $mol_test(function (test) {
     $mol_state_local.value(key, null);
     test.equal($mol_state_local.value(key), null);
 });
-//local.stage=test.js.map
+//local.test.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -522,7 +517,7 @@ $mol_test(function (test) {
     node.click();
     test.ok(clicked);
 });
-//viewer.stage=test.js.map
+//viewer.test.js.map
 ;
 $mol_test(function (test) {
     test.equal($mol_maybe(0)[0], 0);
@@ -532,7 +527,7 @@ $mol_test(function (test) {
     test.equal($mol_maybe(void 0).map(function (v) { return v.toString(); })[0], void 0);
     test.equal($mol_maybe(0).map(function (v) { return v.toString(); })[0], '0');
 });
-//maybe.stage=test.js.map
+//maybe.test.js.map
 ;
 $mol_test(function scalars(test) {
     test.equal($jin_type(void 0), 'Undefined');
@@ -626,7 +621,7 @@ $mol_test(function (test) {
     test.equal($mol_unit.summ(usd1, usd2).toString(), '$15');
     test.equal(usd1.mult(2).toString(), '$10');
 });
-//unit.stage=test.js.map
+//unit.test.js.map
 ;
 $mol_test(function (test) {
     var graph = new $mol_graph();
@@ -636,7 +631,7 @@ $mol_test(function (test) {
     graph.link('D', 'A', { priority: -1 });
     test.equal(graph.sorted(function (edge) { return edge.priority; }).join(''), 'BADC');
 });
-//graph.stage=test.js.map
+//graph.test.js.map
 ;
 $mol_test(function (test) {
     var list = new $mol_range_lazy({
@@ -685,7 +680,7 @@ $mol_test(function (test) {
     test.equal(list.some(function (v) { return v > 100; }), false);
     test.equal(list.some(function (v) { return v === 0; }), true);
 });
-//range.stage=test.js.map
+//range.test.js.map
 ;
 $mol_test(function (test) {
     test.equal($mol_tree.fromString("foo\nbar\n").childs.length, 2);
@@ -695,7 +690,7 @@ $mol_test(function (test) {
     test.equal($mol_tree.fromString("=foo\n\\bar\n").childs[1].data, "bar");
     test.equal($mol_tree.fromString("foo bar \\pol").childs[0].childs[0].childs[0].data, "pol");
     test.equal($mol_tree.fromString("foo bar\n\t\\pol\n\t\\men").childs[0].childs[0].childs[1].data, "men");
-    test.equal($mol_tree.fromString('foo bar \\text\n').toString(), 'foo bar =text\n');
+    test.equal($mol_tree.fromString('foo bar \\text\n').toString(), 'foo bar \\text\n');
 });
-//tree.stage=test.js.map
+//tree.test.js.map
 //# sourceMappingURL=web.test.js.map

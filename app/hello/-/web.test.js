@@ -1,8 +1,3 @@
-document.addEventListener('DOMContentLoaded', function (event) {
-    $mol_test_run();
-});
-//test.env=web.stage=test.js.map
-;
 function $mol_test(code) {
     $mol_test_all.push(new $mol_test_case(code));
 }
@@ -61,6 +56,11 @@ $mol_test(function (test) {
 });
 //test.js.map
 ;
+document.addEventListener('DOMContentLoaded', function (event) {
+    $mol_test_run();
+});
+//test.web.js.map
+;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -90,7 +90,7 @@ $mol_test(function (test) {
     x.objectField('bar()');
     test.equal(x.objectPath(), '.foo()');
 });
-//object.stage=test.js.map
+//object.test.js.map
 ;
 $mol_test(function (test) {
     var set = new $mol_set_shim;
@@ -112,7 +112,7 @@ $mol_test(function (test) {
     set.delete(obj2);
     test.not(set.has(obj2));
 });
-//set.stage=test.js.map
+//set.test.js.map
 ;
 $mol_test(function (test) {
     var dict = new $mol_dict_shim;
@@ -130,14 +130,14 @@ $mol_test(function (test) {
     test.equal(dict.get(obj3), void 0);
     var entries = dict.entries();
     test.equal(entries.length, 2);
-    test.equal(entries[0][0], 1);
-    test.equal(entries[0][1], obj1);
-    test.equal(entries[1][0], 2);
-    test.equal(entries[1][1], obj2);
+    test.equal(entries[0][0], obj1);
+    test.equal(entries[0][1], 1);
+    test.equal(entries[1][0], obj2);
+    test.equal(entries[1][1], 2);
     dict.delete(obj2);
     test.not(dict.has(obj2));
 });
-//dict.stage=test.js.map
+//dict.test.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -361,7 +361,7 @@ $mol_test(function (test) {
     $mol_defer.run();
     test.equal(t.target(), 'John');
 });
-//prop.stage=test.js.map
+//prop.test.js.map
 ;
 $mol_test(function (test) {
     var key = '$mol_state_local_test:' + Math.random();
@@ -371,7 +371,7 @@ $mol_test(function (test) {
     $mol_state_local.value(key, null);
     test.equal($mol_state_local.value(key), null);
 });
-//local.stage=test.js.map
+//local.test.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -534,5 +534,51 @@ $mol_test(function (test) {
     node.click();
     test.ok(clicked);
 });
-//viewer.stage=test.js.map
+//viewer.test.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+$mol_test(function (test) {
+    var firstAClass;
+    var lastBClass;
+    var A = (function () {
+        function A() {
+        }
+        A.initializer = function () {
+            firstAClass = firstAClass || this;
+        };
+        return A;
+    }());
+    var B = (function (_super) {
+        __extends(B, _super);
+        function B() {
+            _super.apply(this, arguments);
+        }
+        B.initializer = function () {
+            _super.initializer.call(this);
+            lastBClass = this;
+        };
+        return B;
+    }(A));
+    var C = (function (_super) {
+        __extends(C, _super);
+        function C() {
+            _super.apply(this, arguments);
+        }
+        return C;
+    }(B));
+    var D = (function (_super) {
+        __extends(D, _super);
+        function D() {
+            _super.apply(this, arguments);
+        }
+        return D;
+    }(C));
+    test.equal(firstAClass, B);
+    test.equal(lastBClass, D);
+});
+//mol.stage=test.js.map
 //# sourceMappingURL=web.test.js.map
