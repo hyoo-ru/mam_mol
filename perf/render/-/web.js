@@ -429,7 +429,6 @@ var $mol_atom = (function (_super) {
     };
     $mol_atom.prototype.actualize = function () {
         var _this = this;
-        this.log(['actualize']);
         if (this.status === $mol_atom_status.actual)
             return;
         var index = $mol_atom.stack.length;
@@ -445,7 +444,6 @@ var $mol_atom = (function (_super) {
             }
         }
         if (this.status !== $mol_atom_status.actual) {
-            this.log(['pull']);
             var oldMasters = this.masters;
             this.masters = null;
             if (oldMasters)
@@ -528,7 +526,6 @@ var $mol_atom = (function (_super) {
     };
     $mol_atom.prototype.check = function () {
         if (this.status === $mol_atom_status.actual) {
-            this.log(['checking']);
             this.status = $mol_atom_status.checking;
             this.checkSlaves();
         }
@@ -542,17 +539,21 @@ var $mol_atom = (function (_super) {
         return void 0;
     };
     $mol_atom.prototype.lead = function (slave) {
-        if (!this.slaves)
+        if (!this.slaves) {
             this.slaves = new $mol_set();
+            $mol_atom.unreap(this);
+        }
         this.slaves.add(slave);
     };
     $mol_atom.prototype.dislead = function (slave) {
         if (!this.slaves)
             return;
-        this.slaves.delete(slave);
-        if (!this.slaves.size) {
+        if (this.slaves.size === 1) {
             this.slaves = null;
             $mol_atom.reap(this);
+        }
+        else {
+            this.slaves.delete(slave);
         }
     };
     $mol_atom.prototype.obey = function (master) {
@@ -595,6 +596,9 @@ var $mol_atom = (function (_super) {
     $mol_atom.reap = function (atom) {
         $mol_atom.reaping.add(atom);
         $mol_atom.schedule();
+    };
+    $mol_atom.unreap = function (atom) {
+        $mol_atom.reaping.delete(atom);
     };
     $mol_atom.schedule = function () {
         var _this = this;
@@ -711,6 +715,39 @@ function $mol_prop(config) {
     };
 }
 //prop.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $mol_window = (function (_super) {
+    __extends($mol_window, _super);
+    function $mol_window() {
+        _super.apply(this, arguments);
+    }
+    $mol_window.size = function () {
+        var diff = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            diff[_i - 0] = arguments[_i];
+        }
+        return [window.innerWidth, window.innerHeight];
+    };
+    __decorate([
+        $mol_prop()
+    ], $mol_window, "size", null);
+    return $mol_window;
+}($mol_object));
+window.addEventListener('resize', function () {
+    $mol_window.size(void 0);
+});
+//window.web.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -1047,39 +1084,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var $mol_window = (function (_super) {
-    __extends($mol_window, _super);
-    function $mol_window() {
-        _super.apply(this, arguments);
-    }
-    $mol_window.size = function () {
-        var diff = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            diff[_i - 0] = arguments[_i];
-        }
-        return [window.innerWidth, window.innerHeight];
-    };
-    __decorate([
-        $mol_prop()
-    ], $mol_window, "size", null);
-    return $mol_window;
-}($mol_object));
-window.addEventListener('resize', function () {
-    $mol_window.size(void 0);
-});
-//window.web.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var $mol_viewer_selection = (function (_super) {
     __extends($mol_viewer_selection, _super);
     function $mol_viewer_selection() {
@@ -1207,6 +1211,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var $mol_viewer_context = {};
+$mol_viewer_context.$mol_viewer_heightLimit = function () { return $mol_window.size()[1]; };
 var $mol_viewer = (function (_super) {
     __extends($mol_viewer, _super);
     function $mol_viewer() {
@@ -1215,30 +1221,33 @@ var $mol_viewer = (function (_super) {
     $mol_viewer.root = function (id) {
         return new this;
     };
+    $mol_viewer.prototype.context = function () {
+        var diff = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            diff[_i - 0] = arguments[_i];
+        }
+        return diff[0] || $mol_viewer_context;
+    };
+    $mol_viewer.prototype.contextSub = function () {
+        return this.context();
+    };
     $mol_viewer.prototype.tagName = function () { return 'div'; };
     $mol_viewer.prototype.nameSpace = function () { return 'http://www.w3.org/1999/xhtml'; };
     $mol_viewer.prototype.childs = function () {
         return null;
     };
     $mol_viewer.prototype.childsVisible = function () {
-        var heightAvailable = this.heightAvailable();
         var childs = this.childs();
         if (!childs)
             return childs;
-        return childs.filter(function (child) {
-            if (child == null)
-                return false;
-            if (child instanceof $mol_viewer)
-                child.heightAvailable(heightAvailable);
-            return true;
-        });
-    };
-    $mol_viewer.prototype.heightAvailable = function () {
-        var diff = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            diff[_i - 0] = arguments[_i];
+        var context = this.contextSub();
+        for (var i = 0; i < childs.length; ++i) {
+            var child = childs[i];
+            if (child instanceof $mol_viewer) {
+                child.context(context);
+            }
         }
-        return diff[0] || $mol_window.size()[1];
+        return childs;
     };
     $mol_viewer.prototype.heightMinimal = function () {
         return 0;
@@ -1299,11 +1308,12 @@ var $mol_viewer = (function (_super) {
         var node = this.DOMNode();
         var childs = this.childsVisible();
         if (childs != null) {
-            var childViews = childs;
             var nextNode = node.firstChild;
-            for (var i = 0; i < childViews.length; ++i) {
-                var view = childViews[i];
-                if (typeof view === 'object') {
+            for (var _a = 0, childs_1 = childs; _a < childs_1.length; _a++) {
+                var view = childs_1[_a];
+                if (view == null) {
+                }
+                else if (typeof view === 'object') {
                     var existsNode = (view instanceof $mol_viewer) ? view.DOMNode() : view;
                     while (true) {
                         if (!nextNode) {
@@ -1336,8 +1346,8 @@ var $mol_viewer = (function (_super) {
                 nextNode = currNode.nextSibling;
                 node.removeChild(currNode);
             }
-            for (var i = 0; i < childViews.length; ++i) {
-                var view = childViews[i];
+            for (var _b = 0, childs_2 = childs; _b < childs_2.length; _b++) {
+                var view = childs_2[_b];
                 if (view instanceof $mol_viewer)
                     view.DOMTree();
             }
@@ -1381,7 +1391,7 @@ var $mol_viewer = (function (_super) {
     };
     __decorate([
         $mol_prop()
-    ], $mol_viewer.prototype, "heightAvailable", null);
+    ], $mol_viewer.prototype, "context", null);
     __decorate([
         $mol_prop({
             fail: function (self, error) {
@@ -1670,32 +1680,16 @@ var $;
                 this.scrollTop(el.scrollTop);
                 this.scrollLeft(el.scrollLeft);
             };
-            $mol_scroller.prototype.childsVisible = function () {
-                var heightAvailable = Math.ceil((this.heightAvailable() + this.scrollTop()) / 20) * 20;
-                var childs = this.childs();
-                if (!childs)
-                    return childs;
-                var next = [];
-                for (var _i = 0, childs_1 = childs; _i < childs_1.length; _i++) {
-                    var child = childs_1[_i];
-                    if (child == null)
-                        continue;
-                    if (child instanceof $mol_viewer) {
-                        void child.heightAvailable(heightAvailable);
-                    }
-                    next.push(child);
-                }
-                return next;
+            $mol_scroller.prototype.contextSub = function () {
+                var _this = this;
+                var context = this.context();
+                var subContext = Object.create(context);
+                subContext.$mol_viewer_heightLimit = function () { return context.$mol_viewer_heightLimit() + _this.scrollTop(); };
+                return subContext;
             };
             __decorate([
                 $mol_prop()
-            ], $mol_scroller.prototype, "scrollTop", null);
-            __decorate([
-                $mol_prop()
-            ], $mol_scroller.prototype, "scrollLeft", null);
-            __decorate([
-                $mol_prop()
-            ], $mol_scroller.prototype, "eventScroll", null);
+            ], $mol_scroller.prototype, "contextSub", null);
             return $mol_scroller;
         }($.$mol_scroller));
         $mol.$mol_scroller = $mol_scroller;
@@ -1741,6 +1735,12 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var $;
 (function ($) {
     var $mol;
@@ -1750,23 +1750,45 @@ var $;
             function $mol_lister() {
                 _super.apply(this, arguments);
             }
-            $mol_lister.prototype.childsVisible = function () {
-                var heightAvailable = this.heightAvailable();
+            $mol_lister.prototype.rowOffsets = function () {
                 var childs = this.childs();
                 if (!childs)
-                    return childs;
+                    return null;
+                var heightLimit = this.contextSub().$mol_viewer_heightLimit();
+                var offset = 0;
                 var next = [];
                 for (var _i = 0, childs_1 = childs; _i < childs_1.length; _i++) {
                     var child = childs_1[_i];
+                    next.push(offset);
+                    if (child instanceof $mol_viewer) {
+                        offset += child.heightMinimal();
+                    }
+                    if (offset > heightLimit)
+                        break;
+                }
+                return next;
+            };
+            $mol_lister.prototype.rowContext = function (index) {
+                var _this = this;
+                var context = this.contextSub();
+                var next = Object.create(context);
+                next.$mol_viewer_heightLimit = function () { return context.$mol_viewer_heightLimit() - _this.rowOffsets()[index]; };
+                return next;
+            };
+            $mol_lister.prototype.childsVisible = function () {
+                var childs = this.childs();
+                if (!childs)
+                    return childs;
+                var limit = this.rowOffsets().length;
+                var next = [];
+                for (var i = 0; i < limit; ++i) {
+                    var child = childs[i];
                     if (child == null)
                         continue;
                     if (child instanceof $mol_viewer) {
-                        child.heightAvailable(heightAvailable);
-                        heightAvailable -= child.heightMinimal();
+                        child.context(this.rowContext(i));
                     }
                     next.push(child);
-                    if (heightAvailable < 0)
-                        break;
                 }
                 return next;
             };
@@ -1784,6 +1806,15 @@ var $;
             $mol_lister.prototype.minHeightStyle = function () {
                 return this.heightMinimal() + 'px';
             };
+            __decorate([
+                $mol_prop()
+            ], $mol_lister.prototype, "rowOffsets", null);
+            __decorate([
+                $mol_prop()
+            ], $mol_lister.prototype, "rowContext", null);
+            __decorate([
+                $mol_prop()
+            ], $mol_lister.prototype, "childsVisible", null);
             return $mol_lister;
         }($.$mol_lister));
         $mol.$mol_lister = $mol_lister;
