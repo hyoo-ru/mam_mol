@@ -74,7 +74,7 @@ class $mol_atom< Value > extends $mol_object {
 	
 	actualize() {
 
-		this.log([ 'actualize' ])
+		//this.log([ 'actualize' ])
 
 		if( this.status === $mol_atom_status.actual ) return
 		
@@ -94,7 +94,7 @@ class $mol_atom< Value > extends $mol_object {
 		}
 
 		if( this.status !== $mol_atom_status.actual ) {
-			this.log(['pull'])
+			//this.log(['t'])
 
 			var oldMasters = this.masters
 			this.masters = null
@@ -173,7 +173,7 @@ class $mol_atom< Value > extends $mol_object {
 	
 	check() {
 		if( this.status === $mol_atom_status.actual ) {
-			this.log([ 'checking' ])
+			//this.log([ 'checking' ])
 			this.status = $mol_atom_status.checking
 
 			this.checkSlaves()
@@ -193,18 +193,21 @@ class $mol_atom< Value > extends $mol_object {
 	}
 	
 	lead( slave : $mol_atom<any> ) {
-		if( !this.slaves ) this.slaves = new $mol_set<$mol_atom<any>>()
+		if( !this.slaves ) {
+			this.slaves = new $mol_set<$mol_atom<any>>()
+			$mol_atom.unreap( this )
+		}
 		this.slaves.add( slave )
 	}
 	
 	dislead( slave : $mol_atom<any> ){
 		if( !this.slaves ) return
 		
-		this.slaves.delete( slave )
-		
-		if( !this.slaves.size ){
+		if( this.slaves.size === 1 ){
 			this.slaves = null
 			$mol_atom.reap( this )
+		} else {
+			this.slaves.delete( slave )
 		}
 	}
 	
@@ -245,12 +248,16 @@ class $mol_atom< Value > extends $mol_object {
 		$mol_atom.updating.push( atom )
 		$mol_atom.schedule()
 	}
-
+	
 	static reap( atom : $mol_atom<any> ) {
 		$mol_atom.reaping.add( atom )
 		$mol_atom.schedule()
 	}
-
+	
+	static unreap( atom : $mol_atom<any> ) {
+		$mol_atom.reaping.delete( atom )
+	}
+	
 	static schedule( ) {
 		if( this.scheduled ) return
 		

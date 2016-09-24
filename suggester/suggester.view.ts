@@ -3,8 +3,11 @@ module $.$mol {
 	export class $mol_suggester extends $.$mol_suggester {
 		
 		@ $mol_prop()
-		heightAvailable( ...diff : number[] ) {
-			return diff[ 0 ] / 3
+		contextSub( ) {
+			var context = this.context()
+			var subContext = Object.create( context )
+			subContext.$mol_viewer_heightLimit = ()=> context.$mol_viewer_heightLimit() / 3
+			return subContext
 		}
 		
 		suggestRows() {

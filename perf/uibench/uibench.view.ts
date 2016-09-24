@@ -36,27 +36,18 @@ module $.$mol {
 
 	export class $mol_perf_uibench_table extends $.$mol_perf_uibench_table {
 
-		@ $mol_prop()
-		state( ...diff : any[] ) {
-			return diff[0] || { items : [] }
+		state() {
+			return { items : <any[]>[] }
 		}
 		
-		@ $mol_prop()
-		dict() {
-			var dict : any = {}
-			this.state().items.forEach( ( val : any )=> dict[ val.id ] = val )
-			return dict
-		}
-
-		@ $mol_prop()
 		rows() {
-			return this.state().items.map( ( v : any )=> this.row( v.id ) )
+			return this.state().items.map( ( v : any , i : number )=> this.row( i ) )
 		}
 
 		@ $mol_prop()
 		row( id : number ) {
 			return new $mol_perf_uibench_table_row().setup( obj => {
-				obj.state = ()=> this.dict()[ id ] || []
+				obj.state = ()=> this.state().items[ id ] || []
 			} )
 		}
 
@@ -76,15 +67,10 @@ module $.$mol {
 			return this.state().id
 		}
 
-		active() {
-			return false
-		}
-
 		className() {
 			return super.className() + ( this.state().active ? ' active' : '' )
 		}
 		
-		@ $mol_prop()
 		cells() {
 			return ( this.state().props || [] ).map( ( v : any , j : number )=> this.cell( j ) )
 		}

@@ -17,7 +17,6 @@ module $.$mol {
 	
 	export class $mol_app_todomvc extends $.$mol_app_todomvc {
 		
-		@ $mol_prop()
 		taskIds( ...diff : number[][] ) : number[] {
 			return this.local( 'taskIds()' , ...diff ) || []
 		}
@@ -30,10 +29,10 @@ module $.$mol {
 		@ $mol_prop()
 		groupsByCompleted() {
 			var groups : { [ index : string ] : number[] } = { 'true' : [] , 'false' : [] }
-			this.taskIds().forEach( id => {
+			for( let id of this.taskIds() ) {
 				var task = this.task( id )
 				groups[ String( task.completed ) ].push( id )
-			} )
+			}
 			return groups
 		}
 
@@ -87,7 +86,6 @@ module $.$mol {
 			return this.tasksFiltered().map( ( id , index )=> this.taskRow( index ) )
 		}
 		
-		@ $mol_prop()
 		task( id : number , ...diff : $mol_app_todomvc_task[] ) {
 			if( diff[0] === void 0 ) return this.local( `task(${id})` ) || { title : '' , completed : false }
 			
@@ -98,6 +96,7 @@ module $.$mol {
 			return task || void 0
 		}
 		
+		@ $mol_prop()
 		taskCompleted( index : number , ...diff : boolean[] ) {
 			var id = this.tasksFiltered()[ index ]
 			if( diff[0] === void 0 ) return this.task( id ).completed
@@ -107,6 +106,7 @@ module $.$mol {
 			return diff[0]
 		}
 		
+		@ $mol_prop()
 		taskTitle( index : number , ...diff : string[] ) {
 			var id = this.tasksFiltered()[ index ]
 			if( diff[0] === void 0 ) return this.task( id ).title
