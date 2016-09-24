@@ -1,7 +1,7 @@
 /// Creates the decorator for caching result value by json-key passed as first argument.
 /// Method must be a polymorphic property (getter/setter/getter+setter).
 function $mol_prop< Host extends { objectPath() : string } , Key , Value >( config? : {
-	fail : ( host : Host , error : Error ) => Value|Error
+	fail? : ( host : Host , error : Error ) => Value|Error
 } ) {
 	
 	return function(
