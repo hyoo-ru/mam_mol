@@ -20,19 +20,13 @@ $mol_app_todomvc $mol_scroller
 					< filter $mol_barer childs < filterOptions /
 						< filterAll $mol_linker
 							childs / \All
-							patch : dict
-								\completed
-									: null
+							arg * completed null
 						< filterActive $mol_linker
 							childs / \Active
-							patch : dict
-								\completed
-									: false
+							arg * completed false
 						< filterCompleted $mol_linker
 							childs / \Completed
-							patch : dict
-								\completed
-									: true
+							arg * completed true
 					< sanitizer $mol_clicker_minor
 						enabled < sanitizerEnabled true
 						eventClick < eventSanitize null

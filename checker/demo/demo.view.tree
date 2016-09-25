@@ -3,13 +3,13 @@ $mol_checker_demo $mol_rower childs /
 		childs / \Unchecked
 	< c2 $mol_checker
 		childs / \Checked
-		checked : true
+		checked true
 	< c3 $mol_checker
 	< c4 $mol_checker
-		checked : true
+		checked true
 	< c5 $mol_checker
-		disabled : true
+		disabled true
 	< c6 $mol_checker
 		childs / \Disabled
-		checked : true
-		disabled : true
+		checked true
+		disabled true

@@ -1,22 +1,22 @@
 $mol_clicker_demo $mol_rower childs /
 	< major $mol_clicker_major
 		childs / \Click me!
-		eventClick > events : null
+		eventClick > events null
 	< majorDisabled $mol_clicker_major
 		childs / \Click me!
-		disabled : true
-		eventClick > events : null
+		disabled true
+		eventClick > events null
 	< minor $mol_clicker_minor
 		childs / \Or click me..
-		eventClick > events : null
+		eventClick > events null
 	< minorDisabled $mol_clicker_minor
 		childs / \Or click me..
-		disabled : true
-		eventClick > events : null
+		disabled true
+		eventClick > events null
 	< warn $mol_clicker_warn
 		childs / \Be attentive!
-		eventClick > events : null
+		eventClick > events null
 	< warnDisabled $mol_clicker_warn
 		childs / \Be attentive!
-		disabled : true
-		eventClick > events : null
+		disabled true
+		eventClick > events null

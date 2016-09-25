@@ -7,4 +7,4 @@ $mol_stringer_demo $mol_rower childs /
 	< three $mol_stringer
 		value > name \
 		hint \Jocker
-		disabled : true
+		disabled true

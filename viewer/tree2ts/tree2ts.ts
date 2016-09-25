@@ -78,10 +78,8 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 							opts.push( '\t\t\t"' + opt.type + '" : (' + arg + ')=> <any> ' + v + ' ,\n' )
 							needSet = ns
 						} )
-						if( !isOverride ) return '{\n' + opts.join( '' ) + '\t\t}'
+						if( !isOverride ) return '({\n' + opts.join( '' ) + '\t\t})'
 						else return  `$`+`mol_merge_dict( super.${ param.type }() , {\n${ opts.join( '' )}\t\t} )`
-					case ':' :
-						return '( <any> ' + JSON.stringify( value.childs[0] ) + ' )'
 					case '>' :
 						needSet = true
 						if( value.childs.length === 1 ) {

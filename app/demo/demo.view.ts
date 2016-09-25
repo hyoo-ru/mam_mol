@@ -58,7 +58,7 @@ module $.$mol {
 		option( name : string ) {
 			return new $mol_linker().setup( obj => {
 				obj.childs = () => [ name ? ( '$' + name ) : 'All' ]
-				obj.patch = () => ({ demo : name })
+				obj.arg = () => ({ demo : ()=> name })
 			} )
 		}
 		
