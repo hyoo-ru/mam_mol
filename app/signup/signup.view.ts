@@ -1,7 +1,6 @@
 module $.$mol {
 	export class $mol_app_signup extends $.$mol_app_signup {
 		
-		@ $mol_prop()
 		nameFirst( ...diff : string[] ) {
 			return $mol_state_local.value( this.stateKey( 'nameFirst' ) , ...diff ) || ''
 		}
@@ -10,12 +9,10 @@ module $.$mol {
 			return this.nameFirst() ? [] : [ 'Input required' ]
 		}
 		
-		@ $mol_prop()
 		nameNick( ...diff : string[] ) {
 			return $mol_state_local.value( this.stateKey( 'nameNick' ) , ...diff ) || ''
 		}
 		
-		@ $mol_prop()
 		nameSecond( ...diff : string[] ) {
 			return $mol_state_local.value( this.stateKey( 'nameSecond' ) , ...diff ) || ''
 		}
@@ -31,7 +28,6 @@ module $.$mol {
 			return errors
 		}
 
-		@ $mol_prop()
 		sex( ...diff : string[] ) {
 			return $mol_state_local.value( this.stateKey( 'sex' ) , ...diff ) || ''
 		}

@@ -1,7 +1,6 @@
 module $.$mol {
 	export class $mol_decker extends $.$mol_decker {
 		
-		@ $mol_prop()
 		current( ...diff : string[] ) {
 			return $mol_state_session.value( this.objectPath() + '.current()' , ...diff ) || '0'
 		}

@@ -1,7 +1,6 @@
 module $.$mol {
 	export class $mol_stacker extends $.$mol_stacker {
 
-		@ $mol_prop()
 		side( ...diff : boolean[] ) {
 			if( !this.main() ) return true
 			const args = diff.map( v => v ? '' : null )
