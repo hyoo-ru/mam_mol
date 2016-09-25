@@ -2,7 +2,7 @@ module $.$mol {
 	export class $mol_app_supplies extends $.$mol_app_supplies {
 		
 		entered( ...diff : boolean[] ) {
-			return this.session( 'entered()' , ...diff ) || false
+			return $mol_state_session.value( this.objectPath() + '.entered()' , ...diff ) || false
 		}
 
 		childs() {
@@ -36,8 +36,7 @@ module $.$mol {
 		}
 
 		supplyId( ...diff : string[] ) {
-			var next = this.argument().value( 'supply' , ...diff )
-			return next && String( next )
+			return $mol_state_arg.value( this.stateKey( 'supply' ) , ...diff )
 		}
 
 		supply() {

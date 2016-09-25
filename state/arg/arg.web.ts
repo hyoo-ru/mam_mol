@@ -7,49 +7,38 @@ class $mol_state_arg< Value > extends $mol_object {
 	}
 	
 	@ $mol_prop()
-	static dict( ...diff : any[] ) {
+	static dict( ...diff : { [ key : string ] : string }[] ) {
 		if( diff[0] !== void 0 ) this.href( this.make( diff[0] ) )
 		
 		var href = this.href()
 		var chunks = href.split( /[\/\?#!&;]/g )
 		
-		var params : { [ key : string ] : any } = {}
+		var params : { [ key : string ] : string } = {}
 		chunks.forEach( chunk => {
 			if( !chunk ) return
-			var vals = chunk.split( /[:=]/ ).map( decodeURIComponent )
-			params[ vals.shift() ] = vals
+			var vals = chunk.split( '=' ).map( decodeURIComponent )
+			params[ vals.shift() ] = vals.join( '=' )
 		})
 		
 		return params
 	}
 	
 	@ $mol_prop()
-	static value< Value >( key : string , ...diff : Value[] ) {
+	static value( key : string , ...diff : string[] ) {
 		if( diff[0] === void 0 ) return this.dict()[ key ] || null
 		this.href( this.link({ [ key ] : diff[0] }) )
 		return diff[0]
 	}
 	
-	static link( next : any ) {
-		var params : { [ key : string ] : any } = {}
-		
-		var prev = this.dict()
-		for( var key in prev ) {
-			params[ key ] = prev[ key ]
-		}
-		
-		for( var key in next ) {
-			params[ key ] = next[ key ]
-		}
-		
-		return this.make( params )
+	static link( next : { [ key : string ] : string } ) {
+		return this.make( $mol_merge_dict( this.dict() , next ) )
 	}
 	
-	static make( next : any ) {
+	static make( next : { [ key : string ] : string } ) {
 		var chunks : string[] = []
 		for( var key in next ) {
-			if( null == next[key] ) continue
-			chunks.push( [ key ].concat( next[key] ).map( encodeURIComponent ).join( '=' ) )
+			if( null == next[ key ] ) continue
+			chunks.push( [ key ].concat( next[ key ] ).map( encodeURIComponent ).join( '=' ) )
 		}
 		
 		return '#' + chunks.join( '#' )
@@ -59,17 +48,17 @@ class $mol_state_arg< Value > extends $mol_object {
 		super()
 	}
 	
-	value< Value >( key : string , ...diff : Value[] ) {
-		return $mol_state_arg.value< Value >( this.prefix + key , ...diff )
+	value( key : string , ...diff : string[] ) {
+		return $mol_state_arg.value( this.prefix + key , ...diff )
 	}
 	
-	sub< Value >( postfix : string ) {
-		return new $mol_state_arg< Value >( this.prefix + postfix + '.' )
+	sub( postfix : string ) {
+		return new $mol_state_arg( this.prefix + postfix + '.' )
 	}
 	
-	link( next : any ) {
+	link( next : { [ key : string ] : string } ) {
 		var prefix = this.prefix
-		var dict : { [ key : string ] : any } = {}
+		var dict : { [ key : string ] : string } = {}
 		for (var key in next) {
 			dict[ prefix + key ] = next[ key ]
 		}

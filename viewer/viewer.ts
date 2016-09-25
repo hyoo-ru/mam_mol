@@ -7,11 +7,23 @@ interface $mol_viewer_context {
 $mol_viewer_context.$mol_viewer_heightLimit = () => $mol_window.size()[1]
 
 /// Reactive statefull lazy ViewModel 
-class $mol_viewer extends $mol_model {
+class $mol_viewer extends $mol_object {
 	
 	@ $mol_prop()
 	static root( id : number ) {
 		return new this
+	}
+	
+	static statePrefix() {
+		return ''
+	}
+	statePrefix() {
+		const owner = this.objectOwner()
+		return owner ? (<any>owner).statePrefix() : ''
+	}
+	
+	stateKey( postfix : string ) {
+		return this.statePrefix() + postfix
 	}
 	
 	@ $mol_prop()

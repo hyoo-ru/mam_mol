@@ -51,7 +51,7 @@ module $.$mol {
 		// }
 		
 		selected() {
-			return $mol_maybe( this.argument().value( 'demo' ) )[0]
+			return $mol_state_arg.value( this.stateKey( 'demo' ) )
 		}
 
 		@ $mol_prop()
@@ -82,7 +82,7 @@ module $.$mol {
 		widget( name : string ) {
 			var Class : typeof $mol_viewer = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class().setup( obj => {
-				obj.argument = () => this.argument().sub( name )
+				obj.statePrefix = () => this.statePrefix() + name + '.'
 			} )
 		}
 

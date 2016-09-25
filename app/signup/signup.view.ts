@@ -3,7 +3,7 @@ module $.$mol {
 		
 		@ $mol_prop()
 		nameFirst( ...diff : string[] ) {
-			return this.local( `nameFirst()` , ...diff ) || ''
+			return $mol_state_local.value( this.stateKey( 'nameFirst' ) , ...diff ) || ''
 		}
 		
 		nameFirstErrors() {
@@ -12,12 +12,12 @@ module $.$mol {
 		
 		@ $mol_prop()
 		nameNick( ...diff : string[] ) {
-			return this.local( `nameNick()` , ...diff ) || ''
+			return $mol_state_local.value( this.stateKey( 'nameNick' ) , ...diff ) || ''
 		}
 		
 		@ $mol_prop()
 		nameSecond( ...diff : string[] ) {
-			return this.local( `nameSecond()` , ...diff ) || ''
+			return $mol_state_local.value( this.stateKey( 'nameSecond' ) , ...diff ) || ''
 		}
 		
 		nameSecondErrors() {
@@ -33,7 +33,7 @@ module $.$mol {
 
 		@ $mol_prop()
 		sex( ...diff : string[] ) {
-			return this.local( `sex()` , ...diff ) || ''
+			return $mol_state_local.value( this.stateKey( 'sex' ) , ...diff ) || ''
 		}
 
 		sexErrors() {

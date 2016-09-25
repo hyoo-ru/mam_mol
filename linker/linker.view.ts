@@ -4,11 +4,11 @@ module $.$mol {
 		
 		@ $mol_prop()
 		uri() {
-			return this.argument().link( this.patch() )
+			return new $mol_state_arg( this.statePrefix() ).link( this.patch() )
 		}
 		
 		current() {
-			return this.uri() === this.argument().link( {} )
+			return this.uri() === $mol_state_arg.link( {} )
 		}
 		
 	}

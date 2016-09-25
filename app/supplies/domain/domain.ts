@@ -1,36 +1,36 @@
 /// Поставщик
-class $mol_app_supplies_domain_provider extends $mol_model {
+class $mol_app_supplies_domain_provider extends $mol_object {
 	id() : string { return void 0 }
 	name() : string { return void 0 }
 }
 
 /// Группа закупок
-class $mol_app_supplies_domain_supply_group extends $mol_model {
+class $mol_app_supplies_domain_supply_group extends $mol_object {
 	id() : string { return void 0 }
 	name() : string { return void 0 }
 	manager() : $mol_app_supplies_domain_person { return void 0 }
 }
 
 /// Закупочный дивизион
-class $mol_app_supplies_domain_supply_division extends $mol_model {
+class $mol_app_supplies_domain_supply_division extends $mol_object {
 	id() : string { return void 0 }
 	name() : string { return void 0 }
 }
 
 /// Способ оплаты
-class $mol_app_supplies_domain_payMethod extends $mol_model {
+class $mol_app_supplies_domain_payMethod extends $mol_object {
 	id() : string { return void 0 }
 	name() : string { return void 0 }
 }
 
 /// Дебитор
-class $mol_app_supplies_domain_debitor extends $mol_model {
+class $mol_app_supplies_domain_debitor extends $mol_object {
 	id() : string { return void 0 }
 	name() : string { return void 0 }
 }
 
 /// Продукт
-class $mol_app_supplies_domain_supply_position extends $mol_model {
+class $mol_app_supplies_domain_supply_position extends $mol_object {
 	name() : string { return void 0 }
 	supplyMoment() : $jin.time.moment_class { return void 0 }
 	division() : $mol_app_supplies_domain_supply_division { return void 0 }
@@ -41,42 +41,42 @@ class $mol_app_supplies_domain_supply_position extends $mol_model {
 }
 
 /// Вложение
-class $mol_app_supplies_domain_attachment extends $mol_model {
+class $mol_app_supplies_domain_attachment extends $mol_object {
 	urlThumb() : string { return void 0 }
 	urlLoad() : string { return void 0 }
 }
 
 /// Работник
-class $mol_app_supplies_domain_person extends $mol_model {
+class $mol_app_supplies_domain_person extends $mol_object {
 	id() : string { return void 0 }
 	name() : string { return void 0 }
 }
 
 /// Договор
-class $mol_app_supplies_domain_contract extends $mol_model {
+class $mol_app_supplies_domain_contract extends $mol_object {
 	id() : string { return void 0 }
 }
 
 /// Балансовая единица
-class $mol_app_supplies_domain_ballanceUnit extends $mol_model {
+class $mol_app_supplies_domain_ballanceUnit extends $mol_object {
 	id() : string { return void 0 }
 	name() : string { return void 0 }
 }
 
 /// Закупочная организация
-class $mol_app_supplies_domain_consumer extends $mol_model {
+class $mol_app_supplies_domain_consumer extends $mol_object {
 	id() : string { return void 0 }
 	name() : string { return void 0 }
 }
 
 /// Склад для доставки
-class $mol_app_supplies_domain_store extends $mol_model {
+class $mol_app_supplies_domain_store extends $mol_object {
 	id() : string { return void 0 }
 	name() : string { return void 0 }
 }
 
 /// Заявка на закупку
-class $mol_app_supplies_domain_supply extends $mol_model {
+class $mol_app_supplies_domain_supply extends $mol_object {
 	
 	id() : string { return void 0 }
 	
@@ -115,7 +115,7 @@ enum $mol_app_supplies_domain_supply_status {
 }
 
 /// Демонстрационный бизнес домен
-class $mol_app_supplies_domain_mock extends $mol_model {
+class $mol_app_supplies_domain_mock extends $mol_object {
 	
 	@ $mol_prop()
 	supplies() {

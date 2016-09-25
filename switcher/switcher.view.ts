@@ -3,7 +3,7 @@ module $.$mol {
 
 		@ $mol_prop()
 		value( ...diff : any[] ) {
-			return this.session( 'value()' , ...diff )
+			return $mol_state_session.value( this.objectPath() + '.value()' , ...diff )
 		}
 		
 		options() : { [ key : string ] : () => string } {

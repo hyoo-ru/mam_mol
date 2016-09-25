@@ -3,7 +3,7 @@ module $.$mol {
 		
 		@ $mol_prop()
 		current( ...diff : string[] ) {
-			return this.session( 'value()' , ...diff ) || '0'
+			return $mol_state_session.value( this.objectPath() + '.current()' , ...diff ) || '0'
 		}
 		
 		switcherOptions() {

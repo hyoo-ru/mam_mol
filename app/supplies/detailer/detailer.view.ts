@@ -100,7 +100,7 @@ module $.$mol {
 		
 		scrollTop( ...diff : number[] ) {
 			var supplyId = this.supply() && this.supply().id()
-			return this.session( `scrollTop("${supplyId}")` , ...diff )
+			return $mol_state_session.value( this.objectPath() + `.scrollTop(${supplyId})` , ...diff )
 		}
 
 	}
