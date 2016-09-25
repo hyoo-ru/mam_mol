@@ -263,7 +263,7 @@ class $mol_build extends $mol_object {
 					console.error( error.message )
 				}
 			}
-			return
+			return false
 		}
 		
 		for( let repo of mapping.select( 'pack' , name , 'git' ).childs ) {
