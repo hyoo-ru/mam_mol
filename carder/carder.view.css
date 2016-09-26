@@ -5,7 +5,7 @@
 	display: flex;
 	flex: 0 1 auto;
 	flex-direction: column;
-
+}
 
 [mol_carder_contenter] {
 	flex: 1 1 auto;
