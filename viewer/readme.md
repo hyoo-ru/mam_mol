@@ -1,44 +1,43 @@
 # $mol_viewer
 
-Базовый класс для всех визуальных компонент. Обеспечивает инфраструктуру для ленивого реактивного рендеринга, обработку исключительных ситуаций.
+The base class for all visual components. It provides an infrastructure for reactive lazy rendering, handling exceptional situations. 
 
-## Свойства
+## Properties
 
 **`tagName()' = 'div'`**
-
-Задаёт имя DOM-элемента, создаваемого для компонента, если элемент с соответствующим идентификатором ещё не присутствует в DOM.
+It sets a name of DOM-element, creating for component, if the element with appropriate id is not presented at DOM yet.
 
 **`nameSpace() = 'http://www.w3.org/1999/xhtml'`**
 
-Задаёт пространство имён для DOM-элемента. 
+It sets namespace for a DOM element. 
 
 **`childs() = null `**
-
-Задаёт список дочерних элементов. В списке могут быть экземпляры `$mol_viewer`, DOM-элементы, примитивы (строки, числа). Если список не задан (по умолчанию), то содержимое DOM-элемента никак меняться не будет, что полезно, при ручной работе с DOM. 
+It sets a list of child elements. At the list could be instances of `$mol_viewer`,
+DOM-elements, primitives (strings, numbers etc.). If the list is not set (by default), then the content of the DOM-element would not be changed in way, it's helpful for manual operating with DOM.  
 
 **`heightAvailable( ...diff : number[] ) = 0`**
-
-Доступная компоненту высота, дальше которой точно не будет видно пользователю. Позволяет рендерить не всё своё содержимое, а только видимую его часть. Задаётся автоматически родительским компонентом.
+A height which is accessible to component, a user would not see anything beyond this height. It is allowed to render not all own content, but only visible part of this one. It is set by parent component.
 
 **`heightMinimal()` = 0**
 
-Минимально возможная высота компонента. Задаётся вручную константой или формулой. Используется для ленивого рендеринга.
+It's a minimum possible height of a component. It's set by hand with constants or any expression, It's used for lazy rendering. 
 
 **`DOMNode() : Element`**
 
-Возвращает DOM-элемент, к которому привязан компонент. Сперва пытается найти его по идентификатору в DOM и только если не находит - создаёт и запоминает новый.
+This property returns a DOM-element, witch a component bound to. At first it tries to find element by id at DOM and only if it fails - it would created and remembered a new one. 
 
 **`DOMTree() : Element`**
 
-То же, что и `DOMNode`, но гарантирует, что содержимое, атрибуты и свойства DOM-элемента имеют актуальное состояние.
+The same as `DOMNode`, but its guarantee, that a content, attributes and properties of DOM-element should be in actual state.
 
 **`attr() : { [ key : string ] : ()=> string|number|boolean }`**
 
-Возвращает словарь DOM-атрибутов, значения которым будут заданы при рендеринге. Передача `null` или `false` в качестве значения атрибута, приводит к его полному удалению. Передача `true` эквивалентна передаче его имени в качестве значения. `undefined` просто игнорируется.
+It returns a dictionary of DOM-attributes, values which would be set before rendering. Passing `null` or `false` as a value to attribute would lead to removing this attribute.
+Passing `true` is an equivalent to passing its name as value. `undefined` is just ignored.
 
 **`field() : { [ key : string ] : ()=> any }`**
 
-Возвращает словарь полей, которые необходимо задать DOM-элементу после рендеринга. В качестве имени поля можно задавать пути. Например, `scrollTop` задаст позицию скроллинга, а `style.backgroundPosition` задаст позицию фона.
+It returns a dictionary of fields, which is necessary to set to DOM-element after rendering. By way of name of field a path could be set to. For example `scrollTop` would be set a position of scrolling, or `style.backgroundPosition` would be set a position of background.
 
 **`event() : { [ key : string ] : ( event : Event )=> void }`**
 
