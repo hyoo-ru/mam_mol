@@ -24,6 +24,13 @@ $my_attacher $mol_clicker
 }
 ```
 
+## Define custom icon
+
+```
+$my_plus $mol_icon
+	path \M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z
+```
+
 ## Properties
 
 **`path() : stirng`**
