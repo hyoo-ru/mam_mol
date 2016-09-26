@@ -378,14 +378,12 @@ module $ { export class $my_tasks extends $mol_lister {
 
 } }
 ```
-
-Тут мы объявили свойтсво `taskRow`, которое принимает на вход некоторый ключ и возвращает для каждого ключа уникальный экземпляр `$mol_viewer`, у которого перегружено свойство `childs`, которое выводит для каждого `taskRow`, соответствующий ему `taskTitle`, а вот `taskTitle` независимо от ключа возвращает по умолчанию содержимое свойства `defaultTitle`, которое изначатльно равно пустой строке. В дальнейшем, перегружая любое из этих свойств, мы можем менять любой аспект поведения компонента.
+Here we declared the property `taskRow`, which takes on input some key and returns an unique instance of `$mol_viewer` for every key, with overloaded property `childs`, which outputs appropriate `taskTitle` for every `taskRow`, and in its turn `taskTitle` returns the content of property `defaultTitle` independently of the key, which is equal to empty string initially. Further overloading any of these properties, we could change any aspect of component behavior.
 
 ## view.ts
+In addition to declarative description of component, next to it could be created a file of the same name with `view.ts` extension, where a behavior could be described. Using a special construction, it could be inherited from realization obtained of `view.tree` and it would be overloaded automatically by heir:  
 
-В дополнение к декларативному описанию компонент, рядом можно создать одноимённый файл с расширением `view.ts`, где описать его поведение. Используя специальную конструкцию, можно отнаследоваться от реализации, полученной из `view.tree` и она автоматически будет перегружена наследником:
-
-Например, у нас есть следующее описание во `./my/hello/hello.view.tree`:
+For example we have following description into `./my/hello/hello.view.tree`:
 
 ```tree
 $my_hello $mol_viewer childs /
@@ -394,8 +392,7 @@ $my_hello $mol_viewer childs /
 		value > name \
 	< message \
 ```
-
-Тут мы объявили 2 свойства: `name` для получения значения из `input` и `message` для вывода значения. Транслируется это в следующий `./my/hello/-/view.tree.ts/hello.view.tree.ts`:
+Here we declared 2 properties: `name` for getting value from `input` and `message` for output the value. It would be translated into following file `./my/hello/-/view.tree.ts/hello.view.tree.ts`: 
 
 ```typescript
 module $ { export class $my_hello extends $mol_viewer {
@@ -423,8 +420,7 @@ module $ { export class $my_hello extends $mol_viewer {
 
 } }
 ```
-
-Теперь мы можем "подмешать" в этот класс своё поведение через `./my/hello/hello.view.ts`:
+For now we could "mix" into this class our behavior through `./my/hello/hello.view.ts`:
 
 ```typescript
 module $.$mol {
@@ -438,5 +434,4 @@ module $.$mol {
 	}
 }
 ```
-
-Тут мы связали наши свойства `message` и `name` через формулу. Так что теперь, где бы мы ни использовали `$my_hello`, значение `message` будет зависеть от введёного пользователем `name`.
+Here we linked our properties `message` and `name` through the expression. So now wherever we use `$my_hello`, the value `message` would be depend on `name` property entered by a user.
