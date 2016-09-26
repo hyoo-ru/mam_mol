@@ -9,7 +9,7 @@ module $.$mol {
 		
 		eventPress( ...diff : KeyboardEvent[] ) {
 			switch( diff[0]['code'] || diff[0].key ) {
-				case 'Enter' : return this.eventDone( event )
+				case 'Enter' : return this.eventDone( diff[0] )
 			}
 		}
 		

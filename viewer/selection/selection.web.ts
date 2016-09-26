@@ -4,7 +4,7 @@ document.addEventListener( 'selectionchange' , event => {
 
 document.addEventListener( 'focusin' , event => {
 	const parents : Element[] = []
-	let element = event.srcElement
+	let element = event.target as HTMLElement
 	
 	while( element ) {
 		parents.push( element )

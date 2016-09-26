@@ -10,10 +10,11 @@ module $.$mol {
 		}
 
 		eventScroll( ...diff : Event[] ) {
-			var el = ( diff[0].target as HTMLElement )
-			this.scrollTop( el.scrollTop )
-			this.scrollLeft( el.scrollLeft )
-			// diff[0].preventDefault()
+			new $mol_defer( ()=> {
+				var el = this.DOMNode()
+				this.scrollTop( el.scrollTop )
+				this.scrollLeft( el.scrollLeft )
+			} )
 		}
 
 		@ $mol_prop()
