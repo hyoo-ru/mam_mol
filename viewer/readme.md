@@ -41,29 +41,27 @@ It returns a dictionary of fields, which is necessary to set to DOM-element afte
 
 **`event() : { [ key : string ] : ( event : Event )=> void }`**
 
-Возвращает словарь обработчиков событий. Обработчики событий привязываются к DOM-элементу один раз, когда задаётся значение свойству `DOMNode`.
+It returns a dictionary of event handlers. The event handlers are bind to DOM-element once, when a value is set to property `DOMNode`.
 
 **`focused() : boolean`**
 
-Определяет, находится ли сейчас компонент в фокусе или нет. Если какой-либо вложенный компонент находится в фокусе, то и текущий считается сфокусированным.
+It determines, whether a component on focus or not at this time. If some inserted component would be focused, then wrapped component would be focused also.
 
 ## view.tree
-
-*view.tree* - декларативный язык описания компонент, основанный на [формате tree](https://github.com/nin-jin/tree.d). В одном файле может быть последовательно определено сколько угодно компонент, но лучше каждую компоненту помещать в отдельный файл, кроме совсем уж тривиальных случаев.
-
-Чтобы создать новую компоненту достаточно отнаследовать её от любой уже существующей. Имена компонент должны начинаться с символа `$` и быть глобально уникальными в соответствии с принципами [PMS](https://github.com/nin-jin/pms). Например, объявим компоненту `$my_button` как наследника от `$mol_viewer`:
+*view.tree* - is a declarative language of describing components, based on [формате tree](https://github.com/nin-jin/tree.d). In one file there are plenty of components defined in series, but better put every component in a separate file, except very trivial cases. 
+To create a new component it's enough to inherit this from any existing one.
+Names of components should begin with `$` symbol and be unique globally accordance with principals presented on [PMS](https://github.com/nin-jin/pms). For example, lets declare a component `$my_button` as a child from `$mol_viewer`:
 
 ```tree
 $my_button $mol_viewer
 ```
 
-Транслируется это в (далее для каждого *.view.tree кода будет приводиться результат трансляции во *.view.tree.ts):
+It translates to (every *.view.tree code would be translated to *.view.tree.ts):
 
 ```typescript
 module $ { export class $my_button extends $mol_viewer {} }
 ```
-
-При наследовании есть возможность объявлять дополнительные свойства или перегружать уже существующие (при этом типы свойств должны совпадать). Например, перегрузим свойство `uri` строкой `"https://example.org"`, а `childs` - массивом из одной строки `"Click me!"`, кроме того, объявляем новое свойство `target` со значением `"_top"` по умолчанию (важно отметить, что значение по умолчанию обязательно при объявлении свойств):
+While inheritance there is a possibility to declare additional properties or overload existing (but types of properties should match). For example lets overload a `uri` property with `"https://example.org"` string, and `childs` - with array of one string `"Click me!"`, besides, lets declare a new property `target` with `"_top"` value by default. (it's important to mark that a value by default is necessary when declaring a property):  
 
 ```tree
 $my_exampler $mol_linker
@@ -90,8 +88,7 @@ module $ { export class $my_exampler extends $mol_linker {
 
 } }
 ```
-
-Узлы, начинающиеся на `-` - игнорируются, что позволяет использовать их для комментирования и временного выключения поддерева. Начинающиеся на `$` - имена компонент. `/` - так опозначаются списки. `\` - предваряет сырые данные, которые до конца строки могут содержать совершенно любые символы. Числа, булевы значения и `null` пишутся как есть, без каких либо префиксов:
+Nodes beginning with `-` - would be ignored, it allows to use them for commenting and temporary inserting subtree. Nodes beginning with `$` - is name of component. `/` - any list should begin with this symbol. `\` - should be preceded any hard-code data, which can contain entirely any data until the end of the line. Numbers, booleans values and `null` is being wrote as it is, without any prefixes:
 
 ```tree
 $my_values $mol_viewer
@@ -116,8 +113,7 @@ module $ { export class $my_values extends $mol_viewer {
 
 } }
 ````
-
-Словари (соответствия ключей значениям) можно объявлять через узел `*`, через который задаются, например, значения для атрибутов DOM-элемента:
+Dictionary (correspondence keys to their values) could be declared through a node `*`, through which are set values of attributes to DOM-element:
 
 ```tree
 $my_number $mol_viewer
@@ -146,8 +142,7 @@ module $ { export class $my_number extends $mol_viewer {
 
 } }
 ```
-
-Аналогичным образом можно задавать значения для полей DOM-элемента:
+We could set value in the same way for fields of a DOM-element:
 
 ```tree
 $my_wonder $mol_viewer
@@ -173,8 +168,7 @@ module $ { export class $my_wonder extends $mol_viewer {
 
 } }
 ```
-
-В качестве значений мы можем брать не только константы, но и содержимое других свойств через одностороннее связывание. Например, объявим два текстовых совйства `hint` и `text`, а потом воспользуемся ими для формирования словаря `field` и списка `childs`:
+As a value we could bring not only constants, but also a content of another properties through one-way binding. For example, lets declare two text properties `hint` and `text`, and then use them for forming a dictionary `field` and a list `childs`:
 
 ```tree
 $my_hint $mol_viewer
@@ -209,8 +203,7 @@ module $ { export class $my_hint extends $mol_viewer {
 
 } }
 ```
-
-Зачастую удобно совмещать объявление свойства и его использование. Следующий пример полностью эквивалентен предыдущему:
+Often it is convenient to combine declaration of property and usage of this one. The next example is equals to the previous completely:
 
 ```tree
 $my_hint $mol_viewer
@@ -219,8 +212,7 @@ $my_hint $mol_viewer
 	childs /
 		< text \Default text
 ```
-
-Реакции на DOM-события уже требуют двустороннее связывание. Например, укажем, что объекты события `click` необходимо помещать в свойство eventRemove, которое мы тут же объявили задав значением по умолчанию `null`:
+Reactions on DOM-events are required for two-way binding. For example, lets point out, that objects of `click` event is necessary to put in eventRemove property, which we declare right here and set it a default value `null`:
 
 ```tree
 $my_remover $mol_viewer
@@ -250,8 +242,7 @@ module $ { export class $my_remover extends $mol_viewer {
 
 } }
 ```
-
-Непосредственным значением свойства можно объявить экземпляр другого класса. В следующем примере у нас объявляется свойство `lister`, значением которого будет являться компонента типа `$mol_lister_demo`, а потом она помещается в список дочерних комонент `childs`:
+We could declare as value an instance of another class directly. In the next example it is being declared a property `lister`, and which value would be a component type of `$mol_lister_demo`, and then it put into a list of child components `childs`:
 
 ```tree
 $my_app $mol_viewer
@@ -275,8 +266,7 @@ module $ { export class $my_app extends $mol_viewer {
 
 } }
 ```
-
-У вложенных компонент также можно перегружать любое их свойство:
+A property of a nested component could be overloaded also: 
 
 ```tree
 $my_name $mol_viewer
@@ -303,8 +293,7 @@ module $ { export class $my_name extends $mol_viewer {
 
 } }
 ```
-
-Свойства родительской и дочерней компоненты можно связывать. В следующем примере мы объявляем изменяемое свойство `name`, дочерней компоненте `input` говорим использовать наше свойство `name` в качестве своего свойства `value`, а компоненте `output` указываем выводить внутри себя значение `name`. Таким образом компоненты `input` и `output` становятся связаны через свойство родителя `name`  и изменение значения в `input` приводит к обновлению output:
+Properties of parent and child component could be linked. At the following example we declare reactive property `name`, and we say to child component `input` use property `name` as its own property `value`, we also say to a child component `output` we want to property `name` to be outputted at inside of this one. In this way components `input` and `output` are become linked through parent's property `name` and changing value in `input` would lead to updating output:
 
 ```tree
 $my_greeter $mol_viewer
