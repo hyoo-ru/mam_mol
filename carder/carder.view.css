@@ -5,13 +5,11 @@
 	display: flex;
 	flex: 0 1 auto;
 	flex-direction: column;
-	/*overflow: hidden;*/
-}
+
 
 [mol_carder_contenter] {
 	flex: 1 1 auto;
 	border-radius: var(--mol_skin_round);
-	overflow: hidden;
 }
 
 [mol_carder_statuser] {

@@ -81,6 +81,21 @@ class $mol_viewer_selection extends $mol_object {
 			
 			return { id : el.id , start : startOffset , end : endOffset }
 		}
-	} 
+	}
 	
+	static onFocus( event : FocusEvent ) {
+		const parents : Element[] = []
+		let element = event.target as HTMLElement
+		
+		while( element ) {
+			parents.push( element )
+			element = element.parentElement
+		}
+		
+		$mol_viewer_selection.focused( parents )
+	}
+	
+	static onBlur( event : FocusEvent ) {
+		$mol_viewer_selection.focused( [] )
+	}
 }
