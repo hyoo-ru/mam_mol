@@ -28,24 +28,24 @@ It returns the DOM-element, to which the component is bounded to. At first the m
 
 **`DOMTree() : Element`**
 
-The same as `DOMNode`, but its guarantee, that a content, attributes and properties of DOM-element should be in actual state.
+It is the same as `DOMNode`, but its guarantee, that the content, attributes and properties of the DOM-element should be in actual state.
 
 **`attr() : { [ key : string ] : ()=> string|number|boolean }`**
 
-It returns a dictionary of DOM-attributes, values which would be set before rendering. Passing `null` or `false` as a value to attribute would lead to removing this attribute.
+It returns the dictionary of the DOM-attributes, which values would be set while rendering. Passing `null` or `false` as the value to the attribute would lead to removing the attribute.
 Passing `true` is an equivalent to passing its name as value. `undefined` is just ignored.
 
 **`field() : { [ key : string ] : ()=> any }`**
 
-It returns a dictionary of fields, which is necessary to set to DOM-element after rendering. By way of name of field a path could be set to. For example `scrollTop` would be set a position of scrolling, or `style.backgroundPosition` would be set a position of background.
+It returns the dictionary of fields, which is necessary to set to the DOM-element after rendering. By way of name of the field a path could be set to. For example `scrollTop` would be set scroll's position, or `style.backgroundPosition` would be set background's position.
 
 **`event() : { [ key : string ] : ( event : Event )=> void }`**
 
-It returns a dictionary of event handlers. The event handlers are bind to DOM-element once, when a value is set to property `DOMNode`.
+It returns the dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `DOMNode` property.
 
 **`focused() : boolean`**
 
-It determines, whether a component on focus or not at this time. If some inserted component would be focused, then wrapped component would be focused also.
+It determines, whether the component is focused or not at this time. If any inserted component would be focused, then its parent component would be focused also.
 
 ## view.tree
 *view.tree* - is a declarative language of describing components, based on [формате tree](https://github.com/nin-jin/tree.d). In one file there are plenty of components defined in series, but better put every component in a separate file, except very trivial cases. 
