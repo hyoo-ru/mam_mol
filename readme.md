@@ -231,7 +231,7 @@ In normal mode working with properties of object is not required, therefore all 
 are public and can be safely overloaded.
 
 ## Lazyness
-[$mol_viewer](viewer) realizes the conception of lazy rendering. [$mol_scroller](scroller) is watching a scrolling position and suggest embedded components about viewport size. [$mol_lister](lister) knowing about viewport size and minimal sizes of embedded components, excludes from rendering process the components that is not got into viewport for sure. And all other components could suggest him about its minimal size through `heightMinimal` property.
+[$mol_viewer](viewer) realizes the conception of lazy rendering. [$mol_scroller](scroller) is watching scroll's position and suggest to the embedded components about the viewport size. [$mol_lister](lister) knowing about the viewport size and minimal sizes of the embedded components, it excludes from rendering process the components that is not got into viewport for sure. And all other components can suggest it about their minimal size through `heightMinimal` property.
 
 ```
 $my_icon $mol_viewer
