@@ -48,9 +48,9 @@ It returns the dictionary of event handlers. The event handlers are bind to the 
 It determines, whether the component is focused or not at this time. If any inserted component would be focused, then its parent component would be focused also.
 
 ## view.tree
-*view.tree* - is a declarative language of describing components, based on [формате tree](https://github.com/nin-jin/tree.d). In one file there are plenty of components defined in series, but better put every component in a separate file, except very trivial cases. 
+*view.tree* - is a declarative language of describing components, based on [format tree](https://github.com/nin-jin/tree.d). In a file could be plenty of components defined in series, but better way is put every component in a separate file, except very trivial cases.
 To create a new component it's enough to inherit this from any existing one.
-Names of components should begin with `$` symbol and be unique globally accordance with principals presented on [PMS](https://github.com/nin-jin/pms). For example, lets declare a component `$my_button` as a child from `$mol_viewer`:
+Names of the components should begin with `$` and be unique globally accordance with principals presented on [PMS](https://github.com/nin-jin/pms). For example, lets declare a component `$my_button` as a child from `$mol_viewer`:
 
 ```tree
 $my_button $mol_viewer
