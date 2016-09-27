@@ -14,7 +14,7 @@ The patch could be set as the dictionary like `{ page : 'main' }`.
 $mol_linker
 	patch : dict
 		\color
-			: \red
+			\red
 	childs / \Red
 ```
 

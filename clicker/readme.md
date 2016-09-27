@@ -8,7 +8,7 @@ Button with many variations.
 ```
 $mol_clicker_major
 	childs / \Click me!
-	eventClick > events : null
+	eventClick > events null
 ```
 
 ## Variations

@@ -12,7 +12,7 @@ childs /
 		childs / \Unchecked
 	$mol_checker
 		childs / \Checked
-		checked : true	
+		checked true	
 ```
 ## Properties
 
