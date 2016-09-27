@@ -276,12 +276,11 @@ class Greeter {
 Details: [$mol_prop](prop), [$mol_atom](atom).
 
 ## Debugging
+A special attention is payed while developing $mol to debugging possibilities and researching of code's working process. For example for handling exceptions nowhere is used intercepting them with forwarding (`try-catch-throw`),
+ because it masks the true place where exceptions were arisen, it complicates debugging. 
 
-$mol pays special attention while implementation process to debugging possibilities and researching of code working process. For example for handling exceptions nowhere is used intercepting them with forwarding (`try-catch-throw`),
- because it masks a real places where exceptions were arisen, it complicates debugging. 
-
-For any DOM-element automatically forming a people friendly indicator like `$mol_app_todomvc.root(0).taskRow(0).titler()`,
-which is valid javascript code, that could be executed in console, if it's got a link to a component, whom this component is corresponds to. Unfolding a content of a component you'd see names and properties its fields like:
+For every DOM-element is formed a people friendly `id` automatically like `$mol_app_todomvc.root(0).taskRow(0).titler()`,
+which is valid javascript code, this one could be executed at a console, received a link to the component, whom the component is corresponds to. Unfolding the content of the component you'd see names and values its fields like:
 
 ```
 $mol_app_todomvc
@@ -292,7 +291,7 @@ $mol_app_todomvc
     taskRow(1) : $mol_app_todomvc_taskRow
     taskRows() : Array[2]
 ```
-A name of a field corresponds to calling this property, and the content would be available through. And thanks to naming classes and functions through underscoring you always would know witch class instance in front of you and could briefly find it at code by default searching by the substring.
+The name of the field corresponds to calling the property, the content of the field would be available through. And thanks to naming classes and functions through underscoring you'd always get to know witch class instance in front of you and could briefly find it at code by default searching by the substring.
 
 # Modules
 
