@@ -204,14 +204,13 @@ like `[mol_checker_checked]` , `[mol_checker_checked=` and `.mol_checker_checked
 
 ## Lego components
 
-A component approach is used by $mol to building an interface, but **every component is self-sufficient** and can be used 
-as a self-sufficient application. Small component are collected inside of larger components etc.
+At $mol is used the component approach to the building of interface, but **every component is self-sufficient** and can be used as the self-sufficient application. Small components are assembled inside of larger components etc.
 
-Unlike of another frameworks the $mol does not seek to isolate insides of components. Vice versa, there are comfortable 
-mechanism for configuration them is provided for developers, and there are not any gestures is required from creator 
-of the component.
+Unlike another frameworks the $mol does not seek to isolate the insides of the components. Vice versa, there is comfortable 
+mechanism is provided for developers for configuration them, it is not required from the creator 
+of the component to do any additional gestures.
 
-For example, to set a list of childs components you need to redefine `childs` property in view.tree
+For example, to set the list of childs components you need to redefine `childs` property in view.tree
  
  ```tree
 $mol_viewer childs /
@@ -219,15 +218,15 @@ $mol_viewer childs /
 	< button2
  ```
 
-Or the same through TypeScript:
+Or the same code through TypeScript would be:
  
  ```typescript
  new $mol_viewer().setup( obj => {
  	obj.childs = ()=> [ this.button1() , this.button2() ]
  } )
  ```
-In both variants a compiler verify existing of property and signature of it.
-In normal mode working with properties of object is not required, therefore all defining properties 
+In both variants the compiler would verify existence of the property and accordance of the signature.
+In normal mode you don't need to work with fields of the object directly, so all definable properties 
 are public and can be safely overloaded.
 
 ## Lazyness
