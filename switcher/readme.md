@@ -4,6 +4,17 @@ Buttons which switching the sate;
 
 ## [Online demo](http://eigenmethod.github.io/mol//#demo=mol_switcher_demo)
 
+## Usage example
+
+```
+$mol_switcher
+	value > color \
+	options *
+		red \Red
+		green \Green
+		blue \Blue
+```
+
 ## Properties
 
 **`value()`**
