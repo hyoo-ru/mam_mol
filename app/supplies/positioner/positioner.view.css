@@ -14,12 +14,12 @@
 }
 
 [mol_app_supplies_positioner_mainGroup] {
-	flex: 1 1 16rem;
+	flex: 1 1 12rem;
 	background: hsla(137,50%,98%,1);
 }
 
 [mol_app_supplies_positioner_addonGroup] {
-	flex: 1 1 16rem;
+	flex: 1 1 12rem;
 	background: hsla(216,50%,98%,1);
 }
 
@@ -30,15 +30,15 @@
 }
 
 [mol_app_supplies_positioner_divisionItem] {
-	flex: 1 1 8rem;
+	flex: 1000 1 6rem;
 }
 
 [mol_app_supplies_positioner_productItem] {
-	flex: 1 1 8rem;
+	flex: 1000 1 6rem;
 }
 
 [mol_app_supplies_positioner_priceItem] {
-	flex: 1 0 5rem;
+	flex: 1 0 3rem;
 	text-align: right;
 }
 
@@ -48,7 +48,7 @@
 }
 
 [mol_app_supplies_positioner_costItem] {
-	flex: 1 0 5rem;
+	flex: 1 0 3rem;
 	text-align: right;
 }
 

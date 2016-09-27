@@ -30,6 +30,6 @@ $mol_app_signup $mol_form
 	buttons /
 		< submit $mol_clicker_major
 			childs / < submitText \Sign Up
-			eventClick > eventSubmit : null
+			eventClick > eventSubmit null
 			disabled < submitBlocked
 

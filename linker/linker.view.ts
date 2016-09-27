@@ -4,11 +4,15 @@ module $.$mol {
 		
 		@ $mol_prop()
 		uri() {
-			return this.argument().link( this.patch() )
+			const patch : { [ key : string ] : string } = {}
+			const arg : any = this.arg()
+			for( let key in arg ) patch[ key ] = arg[ key ]()			
+			
+			return new $mol_state_arg( this.statePrefix() ).link( patch )
 		}
 		
 		current() {
-			return this.uri() === this.argument().link( {} )
+			return this.uri() === $mol_state_arg.link( {} )
 		}
 		
 	}

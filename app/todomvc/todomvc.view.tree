@@ -1,15 +1,17 @@
 $mol_app_todomvc $mol_scroller
-	childs /
-		< titler $mol_viewer childs / < title \todos
+	childs / < pager $mol_lister childs /
+		< titler $mol_app_todomvc_titler
 		< paneler $mol_lister rows /
-			< header $mol_viewer childs < headerContent /
-				< allCompleter $mol_checker
-					enabled < allCompleterEnabled false
-					checked > allCompleted false
-					childs / \❯
-				< adder $mol_app_todomvc_taskRow_adder
-					value > taskNewTitle \
-					eventDone > eventAdd null
+			< header $mol_viewer
+				heightMinimal 64
+				childs < headerContent /
+					< allCompleter $mol_checker
+						enabled < allCompleterEnabled false
+						checked > allCompleted false
+						childs / \❯
+					< adder $mol_app_todomvc_taskRow_adder
+						value > taskNewTitle \
+						eventDone > eventAdd null
 			< lister $mol_lister rows < taskRows /
 			< footer $mol_app_todomvc_ghost
 				visible < footerVisible false
@@ -18,19 +20,13 @@ $mol_app_todomvc $mol_scroller
 					< filter $mol_barer childs < filterOptions /
 						< filterAll $mol_linker
 							childs / \All
-							patch : dict
-								\completed
-									: null
+							arg * completed null
 						< filterActive $mol_linker
 							childs / \Active
-							patch : dict
-								\completed
-									: false
+							arg * completed false
 						< filterCompleted $mol_linker
 							childs / \Completed
-							patch : dict
-								\completed
-									: true
+							arg * completed true
 					< sanitizer $mol_clicker_minor
 						enabled < sanitizerEnabled true
 						eventClick < eventSanitize null
@@ -39,6 +35,10 @@ $mol_app_todomvc $mol_scroller
 		completed > taskCompleted# false
 		title > taskTitle# \
 		eventDrop > eventTaskDrop# null
+
+$mol_app_todomvc_titler $mol_viewer
+	heightMinimal 142
+	childs / < title \todos
 
 $mol_app_todomvc_ghost $mol_viewer
 	attr * mol_app_todomvc_ghost_visible < visible true

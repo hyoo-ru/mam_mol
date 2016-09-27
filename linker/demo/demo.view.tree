@@ -1,18 +1,12 @@
 $mol_linker_demo $mol_rower childs /
 	< linkRed $mol_linker
-		patch : dict
-			\color
-				: \red
+		arg * color \red
 		childs / \Red
 	< linkGreen $mol_linker
-		patch : dict
-			\color
-				: \green
+		arg * color \green
 		childs / \Green
 	< linkBlue $mol_linker
-		patch : dict
-			\color
-				: \blue
+		arg * color \blue
 		childs / \Blue
 	< linkExternal $mol_linker
 		uri \http://example.org

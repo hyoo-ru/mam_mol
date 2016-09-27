@@ -51,7 +51,10 @@ class $mol_build extends $mol_object {
 					}
 				}
 				return mods
+			case null :
+				throw new Error( `Module not found: "${mod.relate()}"` )
 		}
+		throw new Error( `Unsopported type "${mod.type()}" of "${mod.relate()}"` )
 	}
 	
 	@ $mol_prop()
@@ -260,7 +263,7 @@ class $mol_build extends $mol_object {
 					console.error( error.message )
 				}
 			}
-			return
+			return false
 		}
 		
 		for( let repo of mapping.select( 'pack' , name , 'git' ).childs ) {

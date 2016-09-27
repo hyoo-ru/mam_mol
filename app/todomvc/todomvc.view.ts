@@ -9,7 +9,7 @@ module $.$mol {
 		
 		eventPress( ...diff : KeyboardEvent[] ) {
 			switch( diff[0]['code'] || diff[0].key ) {
-				case 'Enter' : return this.eventDone( event )
+				case 'Enter' : return this.eventDone( diff[0] )
 			}
 		}
 		
@@ -17,23 +17,21 @@ module $.$mol {
 	
 	export class $mol_app_todomvc extends $.$mol_app_todomvc {
 		
-		@ $mol_prop()
 		taskIds( ...diff : number[][] ) : number[] {
-			return this.local( 'taskIds()' , ...diff ) || []
+			return $mol_state_local.value( this.stateKey( 'taskIds' ) , ...diff ) || []
 		}
 		
 		argCompleted() {
-			var val = this.argument().value( 'completed' )
-			return val && val[0]
+			return $mol_state_arg.value( this.stateKey( 'completed' ) )
 		}
 
 		@ $mol_prop()
 		groupsByCompleted() {
 			var groups : { [ index : string ] : number[] } = { 'true' : [] , 'false' : [] }
-			this.taskIds().forEach( id => {
+			for( let id of this.taskIds() ) {
 				var task = this.task( id )
 				groups[ String( task.completed ) ].push( id )
-			} )
+			}
 			return groups
 		}
 
@@ -87,17 +85,18 @@ module $.$mol {
 			return this.tasksFiltered().map( ( id , index )=> this.taskRow( index ) )
 		}
 		
-		@ $mol_prop()
 		task( id : number , ...diff : $mol_app_todomvc_task[] ) {
-			if( diff[0] === void 0 ) return this.local( `task(${id})` ) || { title : '' , completed : false }
+			const key = this.stateKey( `task=${id}` )
+			if( diff[0] === void 0 ) return $mol_state_local.value( key ) || { title : '' , completed : false }
 			
 			var task = diff[0]
 			if( task && diff[1] ) task = $mol_merge_dict( this.task( id ) , diff[0] )
-			this.local( `task(${id})` , task )
+			$mol_state_local.value( key , task )
 			
 			return task || void 0
 		}
 		
+		@ $mol_prop()
 		taskCompleted( index : number , ...diff : boolean[] ) {
 			var id = this.tasksFiltered()[ index ]
 			if( diff[0] === void 0 ) return this.task( id ).completed
@@ -107,6 +106,7 @@ module $.$mol {
 			return diff[0]
 		}
 		
+		@ $mol_prop()
 		taskTitle( index : number , ...diff : string[] ) {
 			var id = this.tasksFiltered()[ index ]
 			if( diff[0] === void 0 ) return this.task( id ).title

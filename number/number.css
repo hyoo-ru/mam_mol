@@ -20,13 +20,17 @@
 
 [mol_number_clicker] {
 	background-color: var(--mol_skin_light);
-	font-size: 1.5rem;
 	width: 1.75rem;
-	padding: 0;
+	padding: .25rem;
 	position: absolute;
 	height: 100%;
 	opacity: 0;
 	z-index: -1;
+}
+
+[mol_number_clicker] [mol_icon] {
+	width: 1rem;
+	height: 1rem;
 }
 
 [mol_number]:hover > [mol_number_clicker]:not([disabled]) {

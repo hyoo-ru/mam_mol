@@ -1,9 +1,38 @@
+var $mol_viewer_context = <$mol_viewer_context> {}
+
+interface $mol_viewer_context {
+	$mol_viewer_heightLimit() : number
+}
+
+$mol_viewer_context.$mol_viewer_heightLimit = () => $mol_window.size()[1]
+
 /// Reactive statefull lazy ViewModel 
-class $mol_viewer extends $mol_model {
+class $mol_viewer extends $mol_object {
 	
 	@ $mol_prop()
 	static root( id : number ) {
 		return new this
+	}
+	
+	static statePrefix() {
+		return ''
+	}
+	statePrefix() {
+		const owner = this.objectOwner()
+		return owner ? (<any>owner).statePrefix() : ''
+	}
+	
+	stateKey( postfix : string ) {
+		return this.statePrefix() + postfix
+	}
+	
+	@ $mol_prop()
+	context( ...diff : $mol_viewer_context[] ) {
+		return diff[0] || $mol_viewer_context
+	}
+	
+	contextSub() {
+		return this.context()
 	}
 	
 	/// Name of element that created when element not found in DOM
@@ -20,20 +49,18 @@ class $mol_viewer extends $mol_model {
 	/// Visible child views with defined heightAvailable()
 	/// Render all by default
 	childsVisible() {
-		var heightAvailable = this.heightAvailable()
 		var childs = this.childs()
 		if( !childs ) return childs
-		return childs.filter( child => {
-			if( child == null ) return false
-			if( child instanceof $mol_viewer ) child.heightAvailable( heightAvailable )
-			return true
-		} )
-	}
-	
-	/// Available height to render
-	@ $mol_prop()
-	heightAvailable( ...diff : number[] ) {
-		return diff[0] || $mol_window.size()[1]
+		
+		var context = this.contextSub()
+		for( let i = 0 ; i < childs.length ; ++i ) {
+			let child = childs[ i ]
+			if( child instanceof $mol_viewer ) {
+				child.context( context )
+			}
+		}
+		
+		return childs
 	}
 	
 	/// Minimal height that used for lazy rendering
@@ -109,13 +136,12 @@ class $mol_viewer extends $mol_model {
 		/// Render child nodes
 		var childs = this.childsVisible()
 		if( childs != null ) {
-			var childViews = childs
 
 			var nextNode = node.firstChild
-			for( var i = 0 ; i < childViews.length ; ++i ) {
-				let view = childViews[i]
-
-				if( typeof view === 'object' ) {
+			for( let view of childs ) {
+				
+				if( view == null ) {
+				} else if( typeof view === 'object' ) {
 					var existsNode = ( view instanceof $mol_viewer ) ? view.DOMNode() : view
 					while( true ) {
 						if( !nextNode ) {
@@ -154,8 +180,7 @@ class $mol_viewer extends $mol_model {
 				node.removeChild( currNode )
 			}
 			
-			for( var i = 0 ; i < childViews.length ; ++i ) {
-				let view = childViews[i]
+			for( let view of childs ) {
 				if( view instanceof $mol_viewer ) view.DOMTree()
 			}
 		}

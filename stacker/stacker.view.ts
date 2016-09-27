@@ -1,10 +1,10 @@
 module $.$mol {
 	export class $mol_stacker extends $.$mol_stacker {
 
-		@ $mol_prop()
 		side( ...diff : boolean[] ) {
 			if( !this.main() ) return true
-			return Boolean( this.argument().value( 'side' , ...diff ) )
+			const args = diff.map( v => v ? '' : null )
+			return $mol_state_arg.value( this.stateKey( 'side' ) , ...args ) != null
 		}
 
 	}

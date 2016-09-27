@@ -1,51 +1,28 @@
 module $.$mol {
 	export class $mol_scroller extends $.$mol_scroller {
 
-		@ $mol_prop()
 		scrollTop( ...diff : number[] ) {
-			return this.session<number>( 'scrollTop()' , ...diff ) || 0
+			return $mol_state_session.value( this.objectPath() + '.scrollTop()' , ...diff ) || 0
 		}
 
-		@ $mol_prop()
 		scrollLeft( ...diff : number[] ) {
-			return this.session<number>( 'scrollLeft()' , ...diff ) || 0
+			return $mol_state_session.value( this.objectPath() + '.scrollLeft()' , ...diff ) || 0
+		}
+
+		eventScroll( ...diff : Event[] ) {
+			new $mol_defer( ()=> {
+				var el = this.DOMNode()
+				this.scrollTop( el.scrollTop )
+				this.scrollLeft( el.scrollLeft )
+			} )
 		}
 
 		@ $mol_prop()
-		eventScroll( ...diff : Event[] ) {
-			var el = ( diff[0].target as HTMLElement )
-			this.scrollTop( el.scrollTop )
-			this.scrollLeft( el.scrollLeft )
-			// diff[0].preventDefault()
-		}
-
-		// @ $mol_prop()
-		// eventWheel( ...diff : MouseWheelEvent[] ) {
-		// 	if( diff[0].defaultPrevented ) return
-        //
-		// 	var target = <HTMLElement> this.DOMNode()
-        //
-		// 	if(( target.scrollHeight > target.offsetHeight ) || ( target.scrollWidth > target.offsetWidth )) {
-		// 		diff[0].preventDefault()
-        //
-		// 		target.scrollTop -= diff[0].wheelDeltaY
-		// 		target.scrollLeft -= diff[0].wheelDeltaX
-		// 	}
-		// }
-		
-		childsVisible() {
-			var heightAvailable = Math.ceil( ( this.heightAvailable() + this.scrollTop() ) / 20 ) * 20 
-			var childs = this.childs()
-			if( !childs ) return childs
-			var next : typeof childs = []
-			for( var child of childs ) {
-				if( child == null ) continue
-				if( child instanceof $mol_viewer ) {
-					void ( child as $mol_viewer ).heightAvailable( heightAvailable )
-				}
-				next.push( child )
-			}
-			return next
+		contextSub( ) {
+			var context = this.context()
+			var subContext = Object.create( context )
+			subContext.$mol_viewer_heightLimit = ()=> context.$mol_viewer_heightLimit() + this.scrollTop()
+			return subContext
 		}
 		
 	}

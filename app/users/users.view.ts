@@ -33,7 +33,7 @@ module $.$mol {
 		
 		/// Search query string synchronized with argument from URL.
 		searchQuery( ...diff : string[] ) {
-			return String( this.argument().value( 'query' , ...diff ) || '' )
+			return $mol_state_arg.value( this.stateKey( 'query' ) , ...diff )
 		}
 		
 		/// Data source resource based on this.searchQuery()

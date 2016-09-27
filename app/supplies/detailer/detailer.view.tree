@@ -4,11 +4,9 @@ $mol_app_supplies_detailer $mol_pager
 	head /
 		< backer $mol_linker
 			childs / < backIcon $mol_icon_chevron_left
-			patch < backPatch : dict
-				\side
-					: list
-				\supply
-					: null
+			arg < backArg *
+				side \
+				supply null
 		< titler
 	body $mol_lister rows / < contenter $mol_lister rows < content /
 		< descrCarder $mol_carder content < descrDecker $mol_decker items /
