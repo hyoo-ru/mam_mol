@@ -4,6 +4,13 @@ Button with many variations.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_clicker_demo)
 
+## Usage example
+```
+$mol_clicker_major
+	childs / \Click me!
+	eventClick > events : null
+```
+
 ## Variations
 
 **`$mol_clicker_major`**
