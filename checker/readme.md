@@ -7,12 +7,11 @@ A typical Checkbox element.
 ## Usage example
 ```
 ...
-childs /
-	$mol_checker
-		childs / \Unchecked
+childs /	
 	$mol_checker
 		childs / \Checked
-		checked true	
+		checked true
+		disabled true
 ```
 ## Properties
 
@@ -22,4 +21,4 @@ Property which state can be switched if a user clicked on element
 
 **`enabled()`**
 
-Property that changes element's condition.
+Property is determine an ability of interacting to the component.
