@@ -1,30 +1,30 @@
 # $mol_viewer
 
-The base class for all visual components. It provides an infrastructure for reactive lazy rendering, handling exceptional situations. 
+The base class for all visual components. It provides the infrastructure for reactive lazy rendering, handling exceptions. 
 
 ## Properties
 
 **`tagName()' = 'div'`**
-It sets a name of DOM-element, creating for component, if the element with appropriate id is not presented at DOM yet.
+It sets the name of the DOM-element creating for component, if the element with appropriate id is not presented at DOM yet.
 
 **`nameSpace() = 'http://www.w3.org/1999/xhtml'`**
 
-It sets namespace for a DOM element. 
+It sets the namespace for the DOM element. 
 
 **`childs() = null `**
-It sets a list of child elements. At the list could be instances of `$mol_viewer`,
-DOM-elements, primitives (strings, numbers etc.). If the list is not set (by default), then the content of the DOM-element would not be changed in way, it's helpful for manual operating with DOM.  
+It sets the list of their child elements. In this list could be instances of `$mol_viewer`,
+any DOM-elements or primitives like strings, numbers etc. If the list have not been set (by default), then the content of the DOM-element would not be changed in way, it's helpful for manual operating with DOM.
 
 **`heightAvailable( ...diff : number[] ) = 0`**
-A height which is accessible to component, a user would not see anything beyond this height. It is allowed to render not all own content, but only visible part of this one. It is set by parent component.
+The available height for the component, a user would not see anything beyond the height. It is allowed to render not the whole component's content, but only visible part of this one. This property is set by its parent component.
 
 **`heightMinimal()` = 0**
 
-It's a minimum possible height of a component. It's set by hand with constants or any expression, It's used for lazy rendering. 
+It is the minimum possible height of the component. It's set by hand with constant or some expression.This property is used for lazy rendering.
 
 **`DOMNode() : Element`**
 
-This property returns a DOM-element, witch a component bound to. At first it tries to find element by id at DOM and only if it fails - it would created and remembered a new one. 
+It returns the DOM-element, to which the component is bounded to. At first the method tries to find the element by its id at DOM and only if it would have not been found - the method would create and remember a new one. 
 
 **`DOMTree() : Element`**
 
