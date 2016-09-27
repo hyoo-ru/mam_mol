@@ -55,7 +55,7 @@ class $mol_http_request extends $mol_object {
 		return this.response().responseXML.documentElement
 	}
 	
-	json() {
+	json< Value >() : Value {
 		return JSON.parse( this.text() )
 	}
 	

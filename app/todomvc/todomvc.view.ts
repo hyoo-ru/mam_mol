@@ -5,7 +5,7 @@ interface $mol_app_todomvc_task {
 
 module $.$mol {
 	
-	export class $mol_app_todomvc_taskRow_adder extends $.$mol_app_todomvc_taskRow_adder {
+	export class $mol_app_todomvc_adder extends $.$mol_app_todomvc_adder {
 		
 		eventPress( ...diff : KeyboardEvent[] ) {
 			switch( diff[0]['code'] || diff[0].key ) {

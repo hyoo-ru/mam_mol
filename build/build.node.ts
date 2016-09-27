@@ -116,8 +116,25 @@ class $mol_build extends $mol_object {
 
 	@ $mol_prop()
 	sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
-		var sortedPaths = this.graph({ path , exclude }).sorted( edge => edge.priority )
-		return [].concat.apply( [] , sortedPaths.map( path => this.sourcesSorted({ path : this.root().resolve( path ).path() , exclude }) ) )
+		const sortedPaths = this.graph({ path , exclude }).sorted( edge => edge.priority )
+		let sources : $mol_file[] = [].concat.apply( [] , sortedPaths.map( path => this.sourcesSorted({ path : this.root().resolve( path ).path() , exclude }) ) )
+		
+		let sources2 : $mol_file[] = []
+		sources.forEach( src => {
+			if( !/(view\.tree)$/.test( src.ext() ) ) return sources2.push( src )
+			
+			var targetScript = src.parent().resolve( `-/view.tree/${src.name()}.ts` )
+			var targetLocale = src.parent().resolve( `-/view.tree/${src.name()}.locale.json` )
+			
+			var tree = $mol_tree.fromString( String( src.content() ) , src.path() )
+			var res = $mol_viewer_tree2ts( tree )
+			targetScript.content( res.script )
+			targetLocale.content( JSON.stringify( res.locales , null , '\t' ) )
+			
+			sources2.push( targetScript , targetLocale )
+		} )
+		
+		return sources2
 	}
 	
 	@ $mol_prop()
@@ -165,16 +182,6 @@ class $mol_build extends $mol_object {
 		var sources = this.sourcesAll({ path , exclude })
 			.filter( src => /(jam\.js|tsx?|view\.tree)$/.test( src.ext() ) )
 		if( !sources.length ) return []
-
-		sources = sources.map( src => {
-			if( !/(view\.tree)$/.test( src.ext() ) ) return src
-
-			var target = src.parent().resolve( `-/view.tree.ts/${src.name()}.ts` )
-			var tree = $mol_tree.fromString( String( src.content() ) , src.path() )
-			target.content( $mol_viewer_tree2ts( tree ) )
-
-			return target
-		} )
 
 		var sourcesTS : $mol_file[] = []
 		sources = sources.map( src => {
@@ -332,7 +339,7 @@ class $mol_build extends $mol_object {
 		var stages = [ 'test' , 'dev' ]
 		
 		if( bundle ) {
-			var [ bundle , tags , type ] = /^(.*?)(?:\.(test\.js|js|css|deps\.json))?$/.exec( bundle )
+			var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(test\.js|js|css|deps\.json|locale(?:=(.*))?\.json))?$/.exec( bundle )
 	
 			tags.split( '.' ).forEach( tag => {
 				if( envs.indexOf( tag ) !== -1 ) envs = [ tag ]
@@ -344,17 +351,20 @@ class $mol_build extends $mol_object {
 		envs.forEach( env => {
 			var exclude = envsDef.filter( e => e !== env ).concat( stages )
 
-			if (!type || type === 'deps.json') {
+			if( !type || type === 'deps.json' ) {
 				res = res.concat(this.bundleDepsJSON({ path, exclude, bundle: env }))
 			}
-			if (!type || type === 'css') {
+			if( !type || type === 'css' ) {
 				res = res.concat(this.bundleCSS({ path, exclude, bundle: env }))
 			}
-			if (!type || type === 'js') {
+			if( !type || type === 'js' ) {
 				res = res.concat(this.bundleJS({ path, exclude, bundle: env }))
 			}
-			if (!type || type === 'test.js') {
+			if( !type || type === 'test.js' ) {
 				res = res.concat(this.bundleTestJS({ path, exclude, bundle: env }))
+			}
+			if( !type || /^locale(?:=.*)?.json$/.test( type ) ) {
+				res = res.concat(this.bundleLocale({ path, exclude, bundle: env , locale : type ? locale : 'en' }))
 			}
 			if( env === 'node' && ( !bundle || bundle === 'package.json' ) ) {
 				res = res.concat(this.bundlePackageJSON({ path , exclude }))
@@ -506,7 +516,30 @@ class $mol_build extends $mol_object {
 
 		return [ target , targetMap ]
 	}
-
+	
+	@ $mol_prop()
+	bundleLocale( { path , exclude , bundle , locale } : { path : string , exclude? : string[] , bundle : string , locale : string } ) : $mol_file[] {
+		const pack = $mol_file.absolute( path )
+		
+		const sources = this.sourcesAll({ path , exclude }).filter( src => /(locale\.json)$/.test( src.ext() ) )
+		if( !sources.length ) return []
+		
+		const locales : { [ key :string ] : string } = {}
+		
+		sources.forEach( src => {
+			const loc = JSON.parse( src.content() )
+			for( let key in loc ) locales[ key ] = loc[ key ]
+		} )
+		
+		const ext = locale ? `locale=${ locale }.json` : `locale.json`
+		const target = pack.resolve( `-/${bundle}.${ ext }` )
+		target.content( JSON.stringify( locales , null , '\t' ) )
+		
+		this.logBundle( target )
+		
+		return [ target ]
+	}
+	
 	@ $mol_prop()
 	bundleDepsJSON( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 		var pack = $mol_file.absolute( path )

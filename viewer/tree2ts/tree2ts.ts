@@ -1,6 +1,7 @@
 function $mol_viewer_tree2ts( tree : $mol_tree ) {
 	
 	var content = ''
+	var locales : { [ key : string ] : string } = {}
 	
 	function error( message : string , tree : $mol_tree ) {
 		return new Error( `${message}: ${tree} ${tree.baseUri}:${tree.row}:${tree.col}` )
@@ -40,6 +41,9 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 				switch( value.type[0] ) {
 					case void 0 :
 						return JSON.stringify( value.value )
+					case '@' :
+						locales[ `${ def.type }_${ param.type }` ] = value.value
+						return`this.text( ${ JSON.stringify( param.type ) } )`
 					case '-' :
 						return null
 					case '/' :
@@ -84,14 +88,14 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 						needSet = true
 						if( value.childs.length === 1 ) {
 							addProp( value )
-							var type = /(.*?)(#?)$/.exec( value.childs[0].type )
-							return 'this.' + type[1] + '( ' + ( type[2] ? 'key ,' : '' ) + ' ...diff )'
+							var type = /(.*?)(?:(#)(.*))?$/.exec( value.childs[0].type )
+							return 'this.' + type[1] + '( ' + ( type[3] ? JSON.stringify( type[3] ) + ' ,' : type[2] ? 'key ,' : '' ) + ' ...diff )'
 						}
 					case '<' :
 						if( value.childs.length === 1 ) {
 							addProp( value )
-							var type = /(.*?)(#?)$/.exec( value.childs[0].type )
-							return 'this.' + type[1] + '(' + ( type[2] ? ' key ' : '' ) + ')'
+							var type = /(.*?)(?:(#)(.*))?$/.exec( value.childs[0].type )
+							return 'this.' + type[1] + '(' + (  type[3] ? JSON.stringify( type[3] ) : type[2] ? ' key ' : '' ) + ')'
 						}
 				}
 				
@@ -112,8 +116,7 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 			
 			param.childs.forEach( child => {
 				var val = getValue( child )
-				//if( !child.type ) val = 'this.text( ' + JSON.stringify(def.type+'_'+param.type) + ' )'
-				var propName = /(.*?)(#?)$/.exec( param.type )
+				var propName = /(.*?)(?:(#)(.*))?$/.exec( param.type )
 				var args : string[] = []
 				if( needKey || propName[2] ) args.push( ' key : any ' )
 				if( needCache || needSet ) args.push( ' ...diff : any[] ' )
@@ -152,5 +155,5 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 		content += classes + '\n'
 	})
 	
-	return content
+	return { script : content , locales : locales }
 }

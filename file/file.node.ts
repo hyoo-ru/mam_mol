@@ -33,8 +33,8 @@ class $mol_file extends $mol_object {
 			this.path() ,
 			{ persistent : false } ,
 			( type : string , name : string )=> {
-				this.stat( void 0 )
-				if( name && !/(^\.|___$)/.test( name ) ) {
+				if( !name ) this.stat( void 0 )
+				else if( !/(^\.|___$)/.test( name ) ) {
 					var file = this.resolve( name )
 					file.stat( void 0 )
 				}

@@ -222,8 +222,13 @@ class $mol_viewer extends $mol_object {
 		return $mol_viewer_selection.focused().indexOf( this.DOMNode() ) !== -1
 	}
 	
-	text( text : string ) {
-		return text
+	text( postfix : string ) : string {
+		let contexts = Object.getPrototypeOf( this ).objectClassNames()
+		for( let context of contexts ) {
+			let text = $mol_locale.text( context , postfix )
+			if( text != null ) return text
+		} 
+		throw new Error( `Locale text not found: [${ contexts.join( '|' ) }]_${ postfix }` )
 	}
 	
 }

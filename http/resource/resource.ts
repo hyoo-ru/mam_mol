@@ -48,16 +48,16 @@ class $mol_http_resource extends $mol_object {
 	@ $mol_prop()
 	text( ...diff : any[] ) {
 		if( diff[0] === void 0 ) {
-			return this.downloader( ...diff ).text()
+			return this.downloader().text()
 		} else {
 			this.dataNext( diff[0] )
 		}
 	}
 	
 	@ $mol_prop()
-	json( ...diff : any[] ) {
+	json< Value >( ...diff : Value[] ) {
 		if( diff[0] === void 0 ) {
-			return this.downloader( ...diff ).json()
+			return this.downloader().json< Value >()
 		} else {
 			this.dataNext( diff[0] )
 		}
