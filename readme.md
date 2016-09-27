@@ -164,16 +164,15 @@ Add **styles** at `./my/hello/hello.view.css`:
 # Rationale
 
 ## Zero configuration
-Instead of creating configuration files for an application you want, we better concentrate on working the application 
-at one from the box and don't bothers mol's developer creating configuration. 
-But of course you could setup for you needs if you want.
+Instead of ensuring configurable under any wanting, we better concentrate on, that all would worked good directly from the box and does not bother $mol's developer by a typical configure. 
+(But, nevertheless it does not excludes setup for your needs if it is required)
 
 For example if you download **[базовый PMS-проект](http://github.com/nin-jin/pms/)** you'd have got that:
 
-**An assembly of JS and CSS bundles for any platforms.** A bundle can be assembled for any module and there are sources 
-of that module and sources all other modules from witch this module depends and no redundant modules would be there.  
+**Building of JS and CSS bundles for different platforms.** A bundle can be built for any module. In this bundle would be sources 
+of that module and sources all other modules from which the module depends on. Also there would not redundant modules in the bundle.  
 
-There are full set of supports bundles:
+There are the full set of supports bundles:
 
 * `-/web.js` - JS for browser
 * `-/web.test.js` - JS with tests for a browser
@@ -185,18 +184,17 @@ There are full set of supports bundles:
 
 **Support of Source Maps**. Sources are compiled and integrate to maps, they are fully self-sufficient.
 
-**development server**, witch would be compile bundles as needed. For example, 
-when requested `http://localhost:8080/mol/app/todomvc/-/web.js` a build is being assembled `js` of `mol/app/todomvc` project 
-and `web` environment. Rebuilding would be occur only if some source file would be changed.
+**Development server**, witch would be compile bundles as needed. For example, 
+when requested `http://localhost:8080/mol/app/todomvc/-/web.js` the `js` bundle is being built of `mol/app/todomvc` for `web` environment. Rebuilding would be occur only if some source file would be changed.
 
 **Translating of modern CSS into CSS supported by browsers** 
 ([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): arrange prefixes and variables etc.
 
 **Translating [TypeScript](https://github.com/Microsoft/TypeScript) into JS**. 
 In TS configuration enabled support annotation and automatic arrangement any types, 
-for prevent a missing typing by change.
+for prevent missing typing by change.
 
-**Watching dependencies by fact of using** and inclusion needed modules automatically at further bundle.
+**Watching dependencies by fact of using** and inclusion the needed modules automatically at further bundle.
 You don't need to write `include` and `require` everything you need is to refer for essence by full name 
 like `$mol_state_arg` and `$mol.state.arg` (looking at its definition) in `*.ts`, `*.view.ts` и `*.view.tree` files. 
 At CSS files its dependencies are looked for by entries 
@@ -204,7 +202,7 @@ like `[mol_checker_checked]` , `[mol_checker_checked=` and `.mol_checker_checked
 
 ## Lego components
 
-At $mol is used the component approach to the building of interface, but **every component is self-sufficient** and can be used as the self-sufficient application. Small components are assembled inside of larger components etc.
+At $mol is used the component approach to the building of interface, but **every component is self-sufficient** and can be used as the self-sufficient application. Small components are aggregated inside of larger components etc.
 
 Unlike another frameworks the $mol does not seek to isolate the insides of the components. Vice versa, there is comfortable 
 mechanism is provided for developers for configuration them, it is not required from the creator 
