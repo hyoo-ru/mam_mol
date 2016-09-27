@@ -1,5 +1,11 @@
 # $mol_rower
 
-Горизонтальный список блоков с отступами между элементами.
+Horizontal list of blocks with indents between the elements.
 
-[Online demo](http://eigenmethod.github.io/mol/#demo=mol_rower_demo)
+## Usage example
+
+$mol_rower	
+	childs /
+		\John
+
+## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_rower_demo)
