@@ -15,15 +15,15 @@ $mol_clicker_major
 
 **`$mol_clicker_major`**
 
-The default $mol button colored in blue color.
+The button for common uses colored in base color.
 
 **`$mol_clicker_minor`**
 
-The transparent button.
+The default button.
 
-**`$mol_clicker_warn`**
+**`$mol_clicker_danger`**
 
-The button colored in scarlet color.
+The button for danger cases.
 
 ## Properties
 
