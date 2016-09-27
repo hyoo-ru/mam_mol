@@ -1,7 +1,16 @@
 # $mol_switcher
 
-Кнопки, переключающие состояние свойства `value()` на основе собственного значения `valueSelf()`.
-Визуально показывают, эквивалентны ли эти два значения друг другу.
-Изменяемость состояния определяется свойством `editable()`.
+Buttons which switching the sate;
 
-[Online demo](http://eigenmethod.github.io/mol/#demo=mol_switcher_demo)
+## [Online demo](http://eigenmethod.github.io/mol//#demo=mol_switcher_demo)
+
+## Properties
+
+**`value()`**
+
+The property which should be changed `value()` by buttons based on their own values `valueSelf()`
+
+**`editable`**
+
+The property that visually shows whether is equivalent these two values each others.
+
