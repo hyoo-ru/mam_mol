@@ -4,6 +4,16 @@ A typical Checkbox element.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_checker_demo)
 
+## Usage example
+```
+...
+childs /
+	$mol_checker
+		childs / \Unchecked
+	$mol_checker
+		childs / \Checked
+		checked : true	
+```
 ## Properties
 
 **`checked()`**
