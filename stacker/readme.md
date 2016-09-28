@@ -15,9 +15,11 @@ $mol_stacker_demo $mol_stacker
 
 ## Properties
 
-`mainer()`
+`main() : Array`
+The content of the main panel.
 
-`addoner()`
+`addon() : Array`
+The content of the the additional panel.
 
 If it lacks of area then the additional panel collapses into narrow strip.
 To expand addition panel and roll back you can click or swipe it.
