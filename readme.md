@@ -166,7 +166,7 @@ Add **styles** at `./my/hello/hello.view.css`:
 ## Zero configuration
 Instead of ensuring configurable under any wanting, we better concentrate on, that all would worked good directly from the box and does not bother $mol's developer by a typical configure. (But, nevertheless it does not excludes setup for your needs if it is required)
 
-For example if you download **[базовый PMS-проект](http://github.com/nin-jin/pms/)** you'd have got that:
+For example if you download **[base PMS-project](http://github.com/nin-jin/pms/)** you'd have got that:
 
 **Building of JS and CSS bundles for different platforms.** A bundle can be built for any module. In this bundle would be sources 
 of that module and sources all other modules from which the module depends on. Also there would not redundant modules in the bundle.  
