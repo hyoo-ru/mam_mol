@@ -13,7 +13,7 @@ class $my_app extends $mol_viewer {
 
 }
 ```
-This idetificator is used everywhere, in particular is outputted automatically while logging [логгировании](../log):
+This idetificator is used everywhere, in particular is outputted automatically while logging [logging](../log):
 
 ```
 10:16:43 $my_app.root(0).lister() pull
