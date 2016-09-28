@@ -1,5 +1,13 @@
-$mol_switcher_demo $mol_switcher
+$mol_switcher_demo_enabled $mol_switcher
+	value > color \	
+	options *
+		red \Red
+		green \Green
+		blue \Blue
+
+$mol_switcher_demo_disabled $mol_switcher
 	value > color \
+	enabled false
 	options *
 		red \Red
 		green \Green
