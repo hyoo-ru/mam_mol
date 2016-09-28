@@ -1,7 +1,15 @@
-var $mol_cordova = (<any>this)[ 'cordova' ] || { plugins : {
-	barcodeScanner : null
-} }
+var cordova : any
 
-function $mol_cordova_camera() {
-	return (<any>navigator)['camera']
+module $ {
+	
+	export var $mol_cordova = cordova || {
+		plugins : {
+			barcodeScanner : null
+		}
+	}
+	
+	export function $mol_cordova_camera() {
+		return (<any>navigator)[ 'camera' ]
+	}
+	
 }

@@ -1,4 +1,6 @@
-function $mol_viewer_tree2ts( tree : $mol_tree ) {
+module $ {
+
+export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 	
 	var content = ''
 	var locales : { [ key : string ] : string } = {}
@@ -156,4 +158,6 @@ function $mol_viewer_tree2ts( tree : $mol_tree ) {
 	})
 	
 	return { script : content , locales : locales }
+}
+
 }

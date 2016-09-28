@@ -1,29 +1,33 @@
-/// GitHub users API.
-class $mol_app_users_github extends $mol_http_resource {
+module $ {
 	
-	/// Get resource by query string.
-	@ $mol_prop()
-	static search( query : string ) {
-		return new this().setup( obj => {
-			obj.uri = ()=> 'https://api.github.com/search/users?per_page=100&q=' + encodeURIComponent( query )
-		} )
-	}
-	
-	/// Read/write access to list of users as array of strings.
-	@ $mol_prop()
-	users( ...diff : string[][] ) {
-		if( diff.length === 0 ) {
-			return this.json<{ items : { login : string }[] }>().items.map( item => item.login ) as string[]
+	/// GitHub users API.
+	export class $mol_app_users_github extends $mol_http_resource {
+		
+		/// Get resource by query string.
+		@ $mol_prop()
+		static search( query : string ) {
+			return new this().setup( obj => {
+				obj.uri = ()=> 'https://api.github.com/search/users?per_page=100&q=' + encodeURIComponent( query )
+			} )
 		}
-		this.json( diff[0] && { items : diff[0].map( login => ({ login }) ) } )
+		
+		/// Read/write access to list of users as array of strings.
+		@ $mol_prop()
+		users( ...diff : string[][] ) {
+			if( diff.length === 0 ) {
+				return this.json<{ items : { login : string }[] }>().items.map( item => item.login ) as string[]
+			}
+			this.json( diff[ 0 ] && { items : diff[ 0 ].map( login => ({ login }) ) } )
+		}
+		
+		/// GitHub has very strong limits to frequency of requests.
+		/// Increase download throttling to 1 second.
+		latency() {
+			return 1000
+		}
+		
 	}
-	
-	/// GitHub has very strong limits to frequency of requests.
-	/// Increase download throttling to 1 second.
-	latency() {
-		return 1000
-	}
-	
+
 }
 
 module $.$mol {
