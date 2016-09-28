@@ -126,18 +126,17 @@ module $ {
 			return next
 		}
 		
-		@ $mol_prop(
-			{
-				fail : ( self : $mol_viewer , error : Error ) => {
-					var node = self.DOMNode()
-					if( node ) {
-						node.setAttribute( 'mol_viewer_error' , error.name )
-						// if( error.name !== '$mol_atom_wait' ) node.innerHTML = error.message
-					}
-					return error
+		@ $mol_prop( {
+			fail : ( self : $mol_viewer , error : any ) => {
+				var node = self.DOMNode()
+				if( node && !error['$mol_viewer_catched'] ) {
+					node.setAttribute( 'mol_viewer_error' , error.name )
+					// if( error.name !== '$mol_atom_wait' ) node.innerHTML = error.message
 				}
+				error['$mol_viewer_catched'] = true
+				return error
 			}
-		)
+		} )
 		DOMTree( ...diff : void[] ) {
 			var node = this.DOMNode()
 			
