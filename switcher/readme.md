@@ -25,7 +25,7 @@ $mol_switcher
 Key value property.
 
 
-**`editable`**
+**`enabled()`**
 
-Property that visually shows whether is equivalent these two values each others.
+Property that turning on or off our switcher.
 

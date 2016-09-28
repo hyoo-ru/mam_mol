@@ -50,7 +50,7 @@ It determines, whether the component is focused or not at this time. If any inse
 ## view.tree
 *view.tree* - is a declarative language of describing components, based on [format tree](https://github.com/nin-jin/tree.d). In a file could be plenty of components defined in series, but better way is put every component in a separate file, except very trivial cases.
 To create a new component it's enough to inherit this from any existing one.
-Names of the components should begin with `$` and be unique globally accordance with principals presented on [PMS](https://github.com/nin-jin/pms). For example, lets declare a component `$my_button` as a child from `$mol_viewer`:
+Names of the components should begin with `$` and be unique globally accordance with principles presented on [PMS](https://github.com/nin-jin/pms). For example, lets declare a component `$my_button` as a child from `$mol_viewer`:
 
 ```tree
 $my_button $mol_viewer
@@ -88,7 +88,7 @@ module $ { export class $my_exampler extends $mol_linker {
 
 } }
 ```
-Nodes beginning with `-` - would be ignored, it allows to use them for commenting and temporary inserting subtree. Nodes beginning with `$` - is name of component. `/` - any list should begin with this symbol. `\` - should be preceded any hard-code data, which can contain entirely any data until the end of the line. Numbers, booleans values and `null` is being wrote as it is, without any prefixes:
+Nodes beginning with `-` - would be ignored, it allows to use them for commenting and temporary disable subtree. Nodes beginning with `$` - is name of component. `/` - any list should begin with this symbol. `\` - should be preceded any  raw data, which can contain entirely any data until the end of the line. Numbers, booleans values and `null` is being wrote as it is, without any prefixes:
 
 ```tree
 $my_values $mol_viewer
