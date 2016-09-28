@@ -164,8 +164,7 @@ Add **styles** at `./my/hello/hello.view.css`:
 # Rationale
 
 ## Zero configuration
-Instead of ensuring configurable under any wanting, we better concentrate on, that all would worked good directly from the box and does not bother $mol's developer by a typical configure. 
-(But, nevertheless it does not excludes setup for your needs if it is required)
+Instead of ensuring configurable under any wanting, we better concentrate on, that all would worked good directly from the box and does not bother $mol's developer by a typical configure. (But, nevertheless it does not excludes setup for your needs if it is required)
 
 For example if you download **[базовый PMS-проект](http://github.com/nin-jin/pms/)** you'd have got that:
 
