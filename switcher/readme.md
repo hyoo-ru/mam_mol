@@ -19,7 +19,7 @@ $mol_switcher
 
 **`value()`**
 
-Зroperty which should be changed `value()` by buttons based on their own property `options`.
+Property which should be changed `value()` by buttons based on their own property `options`.
 
 **`options()`**
 Key value property.
