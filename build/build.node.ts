@@ -240,7 +240,8 @@ class $mol_build extends $mol_object {
 
 	@ $mol_prop()
 	modDeps( { path , exclude } : { path : string , exclude? : string[] } ) {
-		var depends : { [ index : string ] : number } = {}
+		const mod = $mol_file.absolute( path )
+		const depends : { [ index : string ] : number } = { '..' : 0 }
 		for( var src of this.sources({ path , exclude }) ) {
 			$mol_build_depsMerge( depends , this.srcDeps( src.path() ) )
 		}
