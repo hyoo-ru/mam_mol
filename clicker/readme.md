@@ -15,7 +15,7 @@ $mol_clicker_major
 
 **`$mol_clicker_major`**
 
-The button for common uses colored in base color.
+The button for common cases colored in base color.
 
 **`$mol_clicker_minor`**
 

@@ -1,6 +1,6 @@
 # $mol_linker
 
-The component could patch a link to the current page adding to it the parameters. 
+The component have an ability to patch the link leading to the current page. It can to add, change or remove parameters.
 
 ## [Online demo](http://eigenmethod.github.io/mol//#demo=mol_linker_demo)
 
@@ -12,9 +12,7 @@ The patch could be set as the dictionary like `{ page : 'main' }`.
 
 ```
 $mol_linker
-	patch : dict
-		\color
-			\red
+	arg * color \red
 	childs / \Red
 ```
 
@@ -28,4 +26,4 @@ $mol_linker
 	childs / \example.org
 ```
 
-The link leads to current page would be non clickable.
+The link leads to current page would be stylized in other way.
