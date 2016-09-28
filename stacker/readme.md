@@ -22,5 +22,5 @@ The content of the main panel.
 The content of the the additional panel.
 
 If it lacks of area then the additional panel collapses into narrow strip.
-To expand addition panel and roll back you can click or swipe it.
+To expand addition panel and roll back you can click or swipe it. (Swiping is not supported yet)
 The size of the additional panel is adjusted for the content size, but not to exceeds the half of the display.
