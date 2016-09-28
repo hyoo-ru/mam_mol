@@ -416,7 +416,7 @@ module $ {
 		}
 		
 		logBundle( target : $mol_file ) {
-			var time = $jin.time.moment().toString( 'hh:mm' )
+			var time = new Date().toISOString().substring( 11 , 19 )
 			var path = target.relate( this.root() )
 			console.log( `${time} Builded ${path}` )
 		}

@@ -5,6 +5,7 @@ module $ {
 	export function $mol_prop< Host extends { objectPath() : string } , Key , Value >(
 		config? : {
 			fail? : ( host : Host , error : Error ) => Value|Error
+			lazy? : boolean
 		}
 	) {
 		
@@ -23,13 +24,16 @@ module $ {
 					if( !atoms ) atoms = (<any>host)[ '$mol_atom_state' ] = {}
 					
 					var info : $mol_atom<any> = atoms[ field ]
-					if( !info )    atoms[ field ] = info = new $mol_atom(
-						host ,
-						field ,
-						value as any , // FIXME: type checking
-						config && config.fail ,
-						key
-					)
+					if( !info ) {
+						atoms[ field ] = info = new $mol_atom(
+							host ,
+							field ,
+							value as any , // FIXME: type checking
+							config && config.fail ,
+							key
+						)
+						if( config ) info.autoFresh = !config.lazy
+					}
 					
 					return info.value( ...diff )
 				}
@@ -42,12 +46,15 @@ module $ {
 					if( !atoms ) atoms = (<any>host)[ '$mol_atom_state' ] = {}
 					
 					var info : $mol_atom<any> = atoms[ field ]
-					if( !info )    atoms[ field ] = info = new $mol_atom(
-						host ,
-						field ,
-						value as any , // FIXME: type checking
-						config && config.fail
-					)
+					if( !info ) {
+						atoms[ field ] = info = new $mol_atom(
+							host ,
+							field ,
+							value as any , // FIXME: type checking
+							config && config.fail
+						)
+						if( config ) info.autoFresh = !config.lazy
+					}
 					
 					return info.value( ...diff )
 				}

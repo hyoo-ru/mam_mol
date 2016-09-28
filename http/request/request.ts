@@ -2,7 +2,7 @@ module $ {
 	
 	export class $mol_http_request extends $mol_object {
 		
-		static XMLHttpRequest : typeof XMLHttpRequest
+		static native : () => XMLHttpRequest
 		
 		uri() { return '' }
 		
@@ -15,8 +15,7 @@ module $ {
 		native() {
 			if( this[ 'native()' ] ) return this[ 'native()' ]
 			
-			var next = this[ 'native()' ] = new (this.Class().XMLHttpRequest)
-			next.open( this.method() , this.uri() )
+			var next = this[ 'native()' ] = this.Class().native()
 			
 			next.onload = ( event : Event )=> {
 				if( Math.floor( next.status / 100 ) === 2 ) {
@@ -24,15 +23,11 @@ module $ {
 				} else {
 					this.response( void 0 , new Error( next.responseText ) as any )
 				}
-				$mol_defer.run()
 			}
 			
 			next.onerror = ( event : ErrorEvent ) => {
 				this.response( void 0 , event.error || new Error( 'Unknown HTTP error' ) )
-				$mol_defer.run()
 			}
-			
-			next.send( this.body() )
 			
 			return next
 		}
@@ -48,7 +43,11 @@ module $ {
 		@ $mol_prop()
 		response( ...diff : XMLHttpRequest[] ) : XMLHttpRequest {
 			if( diff[ 0 ] !== void 0 ) return diff[ 0 ]
-			this.native()
+			
+			const native = this.native()
+			native.open( this.method() , this.uri() )
+			native.send( this.body() )
+			
 			throw new $mol_atom_wait( `${this.method()} ${this.uri()}` )
 		}
 		
@@ -56,32 +55,14 @@ module $ {
 			return this.response().responseText
 		}
 		
-		xml() {
-			return this.response().responseXML.documentElement
-		}
+		//xml() {
+		//	return this.response().responseXML.documentElement
+		//}
+		//
+		//json< Value >() : Value {
+		//	return JSON.parse( this.text() )
+		//}
 		
-		json< Value >() : Value {
-			return JSON.parse( this.text() )
-		}
-		
-		csv() {
-			var lines = this.text().split( /\r?\n/g )
-			var header = lines.shift().split( ';' )
-			var next : { [ key : string ] : any }[] = []
-			lines.forEach(
-				line => {
-					if( !line ) return
-					var row : { [ key : string ] : any } = {}
-					line.split( ';' ).forEach(
-						( val , index ) => {
-							row[ header[ index ] ] = val
-						}
-					)
-					next.push( row )
-				}
-			)
-			return next
-		}
 	}
 	
 }

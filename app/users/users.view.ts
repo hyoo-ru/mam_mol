@@ -1,35 +1,3 @@
-module $ {
-	
-	/// GitHub users API.
-	export class $mol_app_users_github extends $mol_http_resource {
-		
-		/// Get resource by query string.
-		@ $mol_prop()
-		static search( query : string ) {
-			return new this().setup( obj => {
-				obj.uri = ()=> 'https://api.github.com/search/users?per_page=100&q=' + encodeURIComponent( query )
-			} )
-		}
-		
-		/// Read/write access to list of users as array of strings.
-		@ $mol_prop()
-		users( ...diff : string[][] ) {
-			if( diff.length === 0 ) {
-				return this.json<{ items : { login : string }[] }>().items.map( item => item.login ) as string[]
-			}
-			this.json( diff[ 0 ] && { items : diff[ 0 ].map( login => ({ login }) ) } )
-		}
-		
-		/// GitHub has very strong limits to frequency of requests.
-		/// Increase download throttling to 1 second.
-		latency() {
-			return 1000
-		}
-		
-	}
-
-}
-
 module $.$mol {
 	
 	/// GitHub users View Model
@@ -41,11 +9,16 @@ module $.$mol {
 		}
 		
 		/// Data source resource based on this.searchQuery()
+		@ $mol_prop()
 		master( ) {
 			var query = this.searchQuery()
 			if( !query ) return null
 			
-			return $mol_app_users_github.search( query )
+			const uri = `https://api.github.com/search/users?per_page=100&q=${ encodeURIComponent( query ) }`
+			const resource = $mol_http_resource.item( uri )
+			resource.latency = ()=> 1000
+			
+			return resource
 		}
 		
 		/// List of child views. Show users and controls only when this.searchQuery() is not empty.
@@ -62,9 +35,17 @@ module $.$mol {
 		}
 		
 		/// List of users loaded from server.
+		@ $mol_prop()
 		usersMaster( ...diff : string[][] ) {
 			if( !this.searchQuery() ) return []
-			return this.master().users( ...diff )
+			
+			const master = this.master()
+			
+			if( diff.length === 0 ) {
+				return master.json<{ items : { login : string }[] }>().items.map( item => item.login ) as string[]
+			}
+			
+			master.json( diff[ 0 ] && { items : diff[ 0 ].map( login => ({ login }) ) } )
 		}
 		
 		/// Status of net communication. Shows errors of downloading|uploading. 

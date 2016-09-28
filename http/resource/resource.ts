@@ -4,11 +4,9 @@ module $ {
 		
 		@ $mol_prop()
 		static item( uri : string ) {
-			return new this().setup(
-				obj => {
-					obj.uri = ()=> uri
-				}
-			)
+			return new this().setup( obj => {
+				obj.uri = ()=> uri
+			} )
 		}
 		
 		uri() { return '' }
@@ -31,7 +29,8 @@ module $ {
 			setTimeout(
 				()=> {
 					this.downloader( void 0 , this.request( 'get' ) )
-				} , this.latency()
+				} ,
+				this.latency()
 			)
 			throw new $mol_atom_wait( 'Throttling...' )
 		}
@@ -52,7 +51,7 @@ module $ {
 		uploaded( ...diff : any[] ) {
 			if( !this.uploader() ) return null
 			
-			return this.json( void 0 , this.uploader().json() )
+			return this.json( void 0 , JSON.parse( this.uploader().text() ) )
 		}
 		
 		@ $mol_prop()
@@ -65,9 +64,9 @@ module $ {
 		}
 		
 		@ $mol_prop()
-		json< Value >( ...diff : Value[] ) {
+		json< Value >( ...diff : Value[] ) : Value {
 			if( diff[ 0 ] === void 0 ) {
-				return this.downloader().json< Value >()
+				return JSON.parse( this.downloader().text() )
 			} else {
 				this.dataNext( diff[ 0 ] )
 			}
@@ -84,5 +83,17 @@ module $ {
 		}
 		
 	}
-
+	
+	//export class $mol_http_resource_json extends $mol_object {
+	//	
+	//	static content< Content >( uri : string , ...diff : Content[] ) {
+	//		if( diff[0] === void 0 ) {
+	//			return JSON.parse( $mol_http_resource.item( uri ).text() )
+	//		} else {
+	//			$mol_http_resource.item( uri ).text()
+	//		}
+	//	}
+	//	
+	//}
+	
 }

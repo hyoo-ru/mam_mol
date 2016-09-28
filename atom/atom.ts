@@ -12,7 +12,7 @@ module $ {
 		slaves : $mol_set< $mol_atom<any> > = null
 		
 		status = $mol_atom_status.obsolete
-		autoFresh = false
+		autoFresh = true
 		
 		constructor(
 			public host : { objectPath() : string , [ key : string ] : any } ,
@@ -36,8 +36,10 @@ module $ {
 					}
 				}
 				
-				host[ this.field ] = void 0
-				host[ '$mol_atom_state' ][ this.field ] = void 0
+				if( this.host ) {
+					host[ this.field ] = void 0
+					host[ '$mol_atom_state' ][ this.field ] = void 0
+				}
 				
 				this[ 'destroyed()' ] = true
 				this.log( [ '.destroyed()' , true , 'atom' ] )
@@ -322,12 +324,15 @@ module $ {
 	
 	export function $mol_atom_task< Value >(
 		handler : ()=> Value ,
-		fail? : ( error : Error )=> Error|Value ,
-		autoFresh = true
+		fail? : ( error : Error )=> Error|Value
 	) {
-		var atom = new $mol_atom( null , 'value()' , handler , fail )
-		atom.autoFresh = autoFresh
+		var atom = new $mol_atom<any>( null , 'value()' , () => {
+			handler()
+			atom.destroyed( true )
+		} , fail )
+		
 		$mol_atom.actualize( atom )
+		
 		return atom
 	}
 	

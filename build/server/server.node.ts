@@ -22,7 +22,9 @@ module $ {
 			return null
 		}
 		
-		@ $mol_prop()
+		@ $mol_prop({
+			lazy : true
+		})
 		generator( path : string ) {
 			var matched = path.match( /^((?:\/\w+)+)\/-\/(\w+(?:.\w+)+)$/ )
 			if( !matched ) return null

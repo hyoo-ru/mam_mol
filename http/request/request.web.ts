@@ -1,1 +1,1 @@
-$.$mol_http_request.XMLHttpRequest = XMLHttpRequest;
+$.$mol_http_request.native = ()=> new XMLHttpRequest;
