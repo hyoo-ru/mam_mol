@@ -190,18 +190,17 @@ when requested `http://localhost:8080/mol/app/todomvc/-/web.js` the `js` bundle 
 ([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): vendor prefixes and variables etc.
 
 **Transpilling [TypeScript](https://github.com/Microsoft/TypeScript) into JS**. 
-In TS configuration enabled support annotation and automatic arrangement any types, 
-for prevent missing typing by change.
+In TS configuration enabled support annotation and automatic arrangement `any` type, for prevent missing typing by change.
 
 **Watching dependencies by fact of using** and inclusion the needed modules automatically at further bundle.
 You don't need to write `include` and `require` everything you need is to refer for essence by full name 
-like `$mol_state_arg` and `$mol.state.arg` (looking at its definition) in `*.ts`, `*.view.ts` и `*.view.tree` files. 
+like `$mol_state_arg` and `$mol.state.arg` (looking at its definition) in `*.ts`, `*.view.ts`, `*.view.tree` and `*.jam.js` files. 
 At CSS files its dependencies are looked for by entries 
 like `[mol_checker_checked]` , `[mol_checker_checked=` and `.mol_checker_checked`.
 
 ## Lego components
 
-At $mol is used the component approach to the building of interface, but **every component is self-sufficient** and can be used as the self-sufficient application. Small components are aggregated inside of larger components etc.
+At $mol is used the component approach to the building of interface, however **every component is self-sufficient** and can be used as the self-sufficient application. Small components are aggregated inside of larger components etc.
 
 Unlike another frameworks the $mol does not seek to isolate the insides of the components. Vice versa, there is comfortable 
 mechanism is provided for developers for configuration them, it is not required from the creator 
@@ -227,7 +226,7 @@ In normal mode you don't need to work with fields of the object directly, so all
 are public and can be safely overloaded.
 
 ## Lazyness
-[$mol_viewer](viewer) realizes the conception of lazy rendering. [$mol_scroller](scroller) is watching scroll's position and suggest to the embedded components about the viewport size. [$mol_lister](lister) knowing about the viewport size and minimal sizes of the embedded components, it excludes from rendering process the components that is not got into viewport for sure. And all other components can suggest it about their minimal size through `heightMinimal` property.
+[$mol_viewer](viewer) realizes the conception of lazy rendering. [$mol_scroller](scroller) is watching scroll's position and suggest to the embedded components about the view height. [$mol_lister](lister) knowing about the view height and minimal sizes of the embedded components, it excludes from rendering process the components that is not got into viewport for sure. And all other components can suggest it about their minimal size through `heightMinimal` property.
 
 ```
 $my_icon $mol_viewer
@@ -237,11 +236,11 @@ At the result it come out than opening any window occur while instant time. It's
 And since data would not be rendered, then any requests would not be proceeded. It's allowed us to download them partly, when they are needed. That features are possible due to reactive architecture, that are penetrated all layers of application.
 
 ## Reactivity
-Unlike the control-flow architectures, in $mol was realized the data-flow architecture. All applications are described as a set of classes, having properties. Every property is described as some function from another property ( and properties another classes too). Properties, to which were appealed while function processing were saved as dependencies of our property. In case of changing their values, all dependant on them properties would be invalidated cascaded. And appealing to non relevant property would lead to its pre-actualization.
+Unlike the control-flow architectures, in $mol was implemented the data-flow architecture. All applications are described as a set of classes, having properties. Every property is described as some function from another property ( and properties another classes too). Properties, to which were appealed while function processing were saved as dependencies of our property. In case of changing their values, all dependant on them properties would be invalidated cascaded. And appealing to non relevant property would lead to its pre-actualization.
 
 In this way the whole application at the execution stage represents a huge tree of dependencies, at the root of the tree is located the special property, which in case of invalidation would actualize itself automatically. And as any property always knows, whether something depends from it or not, then it is given a simple and reliable mechanism of controlling lifecycle of objects - they creates if the dependence appears and are destroyed when nothing depend from it. It's solved two fundamental problem: resources leaks and cache invalidation. 
 
-Besides, the reactive architecture allows us to abstract code elegantly from asynchronous operations. If the function can't return value at once, it can throws the exception `$mol_atom_wait`, it is marked part of the tree of states as "waiting of results". When the result would be retrieved - it could be inserted into property directly and an application would be reconstructed under the new state.
+Besides, the reactive architecture allows us to abstract code elegantly from asynchronous operations. If the function can't return value at once, it can throws the exception `$mol_atom_wait`, it is marked part of the tree of states as "waiting of results". When the result would be retrieved - it could be inserted into property directly and an application would be reconstructed for the new state.
 
 ```typescript
 class Greeter {
@@ -272,8 +271,8 @@ class Greeter {
 Details: [$mol_prop](prop), [$mol_atom](atom).
 
 ## Debugging
-A special attention is payed while developing $mol to debugging possibilities and researching of code's working process. For example for handling exceptions nowhere is used intercepting them with forwarding (`try-catch-throw`),
- because it masks the true place where exceptions were arisen, it complicates debugging. 
+A special attention is payed while developing $mol to debugging possibilities and researching of code's working process. For example for handling exceptions we trying not to use (`try-catch-throw`),
+ because it masks the true place where exceptions were thrown, it complicates debugging. 
 
 For every DOM-element is formed a people friendly `id` automatically like `$mol_app_todomvc.root(0).taskRow(0).titler()`,
 which is valid javascript code, this one could be executed at a console, received a link to the component, whom the component is corresponds to. Unfolding the content of the component you'd see names and values its fields like:
@@ -287,7 +286,7 @@ $mol_app_todomvc
     taskRow(1) : $mol_app_todomvc_taskRow
     taskRows() : Array[2]
 ```
-The name of the field corresponds to calling the property, the content of the field would be available through. And thanks to naming classes and functions through underscoring you'd always get to know witch class instance in front of you and could briefly find it at code by default searching by the substring.
+The name of the field corresponds to calling the property, the content of the field would be available through. And thanks to naming classes and functions through underscoring you'd always get to know which class instance in front of you and could briefly find it at code by default searching by the substring.
 
 # Modules
 

@@ -19,9 +19,13 @@ $mol_switcher
 
 **`value()`**
 
-The property which should be changed `value()` by buttons based on their own values `valueSelf()`
+Зroperty which should be changed `value()` by buttons based on their own property `options`.
+
+**`options()`**
+Key value property.
+
 
 **`editable`**
 
-The property that visually shows whether is equivalent these two values each others.
+Property that visually shows whether is equivalent these two values each others.
 
