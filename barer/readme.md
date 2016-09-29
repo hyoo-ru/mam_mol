@@ -2,6 +2,8 @@
 
 The component for location content with rounded borders.
 
+##[Online demo](http://eigenmethod.github.io/mol/#demo=mol_barer_demo_search)
+
 ## Usage examples
 ```
 $mol_barer
