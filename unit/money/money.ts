@@ -1,14 +1,18 @@
-class $mol_unit_money extends $mol_unit {
-}
-
-class $mol_unit_money_usd extends $mol_unit_money {
-	prefix() {
-		return '$'
+module $ {
+	
+	export class $mol_unit_money extends $mol_unit {
 	}
-}
-
-class $mol_unit_money_rur extends $mol_unit_money {
-	postfix() {
-		return ' ₽'
+	
+	export class $mol_unit_money_usd extends $mol_unit_money {
+		prefix() {
+			return '$'
+		}
 	}
+	
+	export class $mol_unit_money_rur extends $mol_unit_money {
+		postfix() {
+			return ' ₽'
+		}
+	}
+	
 }

@@ -1,17 +1,17 @@
 $mol_app_supplies_detailer_demo $mol_app_supplies_detailer
-	title \Supply 31337
+	title @ \Supply 31337
 	approved false
 	- org
-	providerName \ACME Provider Inc.
+	providerName @ \ACME Provider Inc.
 	cost $mol_unit_money_rur valueOf 1234567
-	consumerName \ACME Consumer Inc.
-	supplyGroupName \Ivanov PI
-	ballanceUnitName \ACME Consumer Inc.
+	consumerName @ \ACME Consumer Inc.
+	supplyGroupName @ \Ivanov PI
+	ballanceUnitName @ \ACME Consumer Inc.
 	- cons
 	contractId \123675234
-	payMethodName \Accounting
-	managerName \Petrov IV
-	debitorName \12432311 - ACME Finance
+	payMethodName @ \Accounting
+	managerName @ \Petrov IV
+	debitorName @ \12432311 - ACME Finance
 	-
 	positions /
 		< pos1 $mol_app_supplies_positioner_demo
