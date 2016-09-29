@@ -271,7 +271,7 @@ class Greeter {
 Details: [$mol_prop](prop), [$mol_atom](atom).
 
 ## Debugging
-A special attention is payed while developing $mol to debugging possibilities and researching of code's working process. For example for handling exceptions we trying not to use (`try-catch-throw`),
+A special attention is payed while developing $mol to debugging possibilities and researching of code's working process. For example for handling exceptions we don't use (`try-catch-throw`),
  because it masks the true place where exceptions were thrown, it complicates debugging. 
 
 For every DOM-element is formed a people friendly `id` automatically like `$mol_app_todomvc.root(0).taskRow(0).titler()`,
