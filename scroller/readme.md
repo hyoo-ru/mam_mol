@@ -9,3 +9,7 @@ Scroller component
 `scrollTop`
 
 Value which would be set to container scrollTop property.
+
+`scrollLeft`
+
+Value which would be set to container scrollLeft property.
