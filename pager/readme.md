@@ -6,13 +6,17 @@ The component for creating page layout.
 
 ## Properties
 
-`title`  
+`title() : string`  
 Property for setting page title.
 
-`body`  
+`head() : Array`
+
+Property which wraps subhead elements like title and so on.
+
+`body : Array`  
 In body can be placed the content.
 
-`foot`
+`foot : Array`
 Here can be placed the footer content
 
 ## Usage examples
