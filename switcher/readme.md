@@ -22,7 +22,7 @@ $mol_switcher
 Property which should be changed `value()` by buttons based on their own property `options`.
 
 **`options()`**
-Key value property.
+Keys are possible values of `value` property. That options are labels which would be visible to user.
 
 
 **`enabled()`**
