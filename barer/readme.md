@@ -1,6 +1,6 @@
 # $mol_barer
 
-The component for location content with rounded borders.
+The component for grouping several components in one composite control with rounded borders.
 
 ##[Online demo](http://eigenmethod.github.io/mol/#demo=mol_barer_demo_search)
 
