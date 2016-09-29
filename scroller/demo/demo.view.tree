@@ -1,15 +1,13 @@
-$mol_scroller_demo_top $mol_scroller	
+$mol_scroller_demo $mol_scroller	
 	scrollTop 0
 	childs /
 		< one $mol_filler
 
-$mol_scroller_demo_middle $mol_scroller	
-	scrollTop 1500
-	childs /
-		< one $mol_filler
+$mol_scroller_demo_top $mol_scroller_demo
 
-$mol_scroller_demo_bottom $mol_scroller	
+$mol_scroller_demo_middle $mol_scroller_demo	
+	scrollTop 1500	
+
+$mol_scroller_demo_bottom $mol_scroller_demo
 	scrollTop 10000
-	childs /
-		< one $mol_filler
 
