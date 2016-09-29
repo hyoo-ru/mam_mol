@@ -3,25 +3,47 @@ module $.$mol {
 	/// GitHub users View Model
 	export class $mol_app_users extends $.$mol_app_users {
 		
-		/// Search query string synchronized with argument from URL.
-		searchQuery( ...diff : string[] ) {
+		queryArg( ...diff : string[] ) {
 			return $mol_state_arg.value( this.stateKey( 'query' ) , ...diff )
 		}
 		
-		/// Data source resource based on this.searchQuery()
+		/// Search query string synchronized with argument from URL.
+		@ $mol_prop()
+		query( ...diff : string[] ) : string {
+			const arg = this.queryArg()
+			
+			if( diff[0] === void 0 ) {
+				return arg
+			} else {
+				const query = this.query()
+				
+				this.queryArg( ...diff )
+				
+				if( this._queryTimer ) clearTimeout( this._queryTimer )
+				this._queryTimer = setTimeout( ()=> { this.query( void 0 ) } , 500 )
+				
+				return query
+			}
+		}
+		
+		_queryTimer = 0
+		
+		/// Data source resource based on this.query()
 		@ $mol_prop()
 		master( ) {
-			var query = this.searchQuery()
-			if( !query ) return null
+			var query = this.query()
 			
-			const uri = `https://api.github.com/search/users?per_page=100&q=${ encodeURIComponent( query ) }`
-			const resource = $mol_http_resource.item( uri )
-			resource.latency = ()=> 1000
+			if( query ) {
+				var uri = `https://api.github.com/search/users?per_page=100&q=${ encodeURIComponent( query ) }`
+				var resource = $mol_http_resource_json.item<{ items : { login : string }[] }>( uri )
+			} else {
+				resource = null
+			}
 			
 			return resource
 		}
 		
-		/// List of child views. Show users and controls only when this.searchQuery() is not empty.
+		/// List of child views. Show users and controls only when this.query() is not empty.
 		childs() {
 			var next = [ this.filter() ]
 			if( this.master() ) next = [].concat( next , this.bodier() , this.controller() )
@@ -37,12 +59,12 @@ module $.$mol {
 		/// List of users loaded from server.
 		@ $mol_prop()
 		usersMaster( ...diff : string[][] ) {
-			if( !this.searchQuery() ) return []
+			if( !this.query() ) return []
 			
 			const master = this.master()
 			
 			if( diff.length === 0 ) {
-				return master.json<{ items : { login : string }[] }>().items.map( item => item.login ) as string[]
+				return master.json().items.map( item => item.login ) as string[]
 			}
 			
 			master.json( diff[ 0 ] && { items : diff[ 0 ].map( login => ({ login }) ) } )
@@ -118,7 +140,6 @@ module $.$mol {
 		}
 		
 		/// Read/write accessor to user name by id.
-		@ $mol_prop()
 		userName( id : number , ...diff : string[] ) {
 			if( diff[0] === void 0 ) return this.users()[ id ] || ''
 			

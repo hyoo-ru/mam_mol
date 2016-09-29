@@ -33,10 +33,10 @@
 [mol_viewer_error="$mol_atom_wait"] * {
 	background-image: repeating-linear-gradient(
 		45deg,
-		rgba(0,0,255,.02),
-		rgba(0,0,255,.02) 11px,
-		rgba(255,255,255,.01) 10px,
-		rgba(255,255,255,.01) 20px
+		rgba(0,0,255,.025),
+		rgba(0,0,255,.025) 11px,
+		rgba(255,255,255,.025) 10px,
+		rgba(255,255,255,.025) 20px
 	) !important;
 	background-size: 28px 28px !important;
 	animation: mol_viewer_wait_show .5s linear , mol_viewer_wait_move .25s steps(6) infinite !important;

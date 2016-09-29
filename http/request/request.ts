@@ -6,12 +6,11 @@ module $ {
 		
 		uri() { return '' }
 		
-		method() { return 'get' }
+		method() { return 'Get' }
 		
 		body() { return <any> null }
 		
 		'native()' : XMLHttpRequest
-		
 		native() {
 			if( this[ 'native()' ] ) return this[ 'native()' ]
 			
@@ -34,7 +33,7 @@ module $ {
 		
 		destroyed( ...diff : boolean[] ) {
 			if( diff[ 0 ] ) {
-				var native = this[ 'native()' ]
+				const native = this[ 'native()' ]
 				if( native ) native.abort()
 			}
 			return super.destroyed( ...diff )
@@ -51,8 +50,9 @@ module $ {
 			throw new $mol_atom_wait( `${this.method()} ${this.uri()}` )
 		}
 		
-		text() {
-			return this.response().responseText
+		text( ...diff : void[] ) : string {
+			if( diff.length === 1 ) this.response( void 0 )
+			else return this.response().responseText
 		}
 		
 		//xml() {

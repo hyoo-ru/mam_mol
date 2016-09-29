@@ -6,6 +6,7 @@ module $ {
 		
 		if( error instanceof $mol_atom_wait ) {
 			event.preventDefault()
+			console.debug( '' , error )
 		}
 		
 		$mol_atom_restore( error )

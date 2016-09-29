@@ -159,7 +159,11 @@ module $ {
 				}
 				host[ this.field ] = next
 				this.log( [ 'push' , next , prev ] )
-				this.obsoleteSlaves()
+				if( next instanceof Error ) {
+					if( this.slaves ) this.slaves.forEach( slave => slave.push( next ) )
+				} else {
+					this.obsoleteSlaves()
+				}
 			}
 			this.status = $mol_atom_status.actual
 			return next
@@ -304,12 +308,13 @@ module $ {
 	}
 	
 	export function $mol_atom_restore( error : Error ) {
-		while( $mol_atom.stack.length ) {
+		if( $mol_atom.stack.length ) {
 			var atom = $mol_atom.stack.pop()
 			if( error instanceof Error ) {
 				error = atom.push( error )
 			}
 		}
+		$mol_atom.stack.splice( 0 , $mol_atom.stack.length )
 	}
 	
 	$mol_state_stack.set( '$mol_atom.stack' , $mol_atom.stack )

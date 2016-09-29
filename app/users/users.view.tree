@@ -1,7 +1,7 @@
 $mol_app_users $mol_viewer childs /
 	< filter $mol_stringer
 		hint < filterHint @ \Search users on GitHub
-		value > searchQuery \
+		value > query \
 	< bodier $mol_scroller childs < body / < lister $mol_lister rows < userRows /
 	< controller $mol_rower childs /
 		< reloader $mol_clicker_minor
@@ -17,8 +17,10 @@ $mol_app_users $mol_viewer childs /
 			eventClick > eventSave null
 		< messager $mol_viewer childs / < saverResult \
 
-$mol_app_users_item $mol_rower childs /
-	< titler $mol_stringer value > title \
-	< dropper $mol_clicker_minor
-		childs / < dropLabel \Drop
-		eventClick > eventDrop null
+$mol_app_users_item $mol_rower
+	heightMinimal 68
+	childs /
+		< titler $mol_stringer value > title \
+		< dropper $mol_clicker_minor
+			childs / < dropLabel \Drop
+			eventClick > eventDrop null
