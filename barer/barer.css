@@ -1,4 +1,5 @@
 [mol_barer] {
+	display: flex;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
 }
@@ -9,7 +10,10 @@
 
 [mol_barer] > *:not(:first-child):not(:last-child) {
 	border-radius: 0;
-	margin: 0 1px;
+}
+
+[mol_barer] > *:not(:first-child) {
+	margin-left: 1px;
 }
 
 [mol_barer] > *:last-child {
