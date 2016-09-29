@@ -1,1 +1,1 @@
-$mol_http_request.XMLHttpRequest = $node.xmlhttprequest.XMLHttpRequest;
+$.$mol_http_request.native = ()=> <any> new $node.xmlhttprequest.XMLHttpRequest;

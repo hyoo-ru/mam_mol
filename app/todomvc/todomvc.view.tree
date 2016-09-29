@@ -9,28 +9,28 @@ $mol_app_todomvc $mol_scroller
 						enabled < allCompleterEnabled false
 						checked > allCompleted false
 						childs / \❯
-					< adder $mol_app_todomvc_taskRow_adder
+					< adder $mol_app_todomvc_adder
 						value > taskNewTitle \
 						eventDone > eventAdd null
 			< lister $mol_lister rows < taskRows /
 			< footer $mol_app_todomvc_ghost
 				visible < footerVisible false
 				childs < footerContent /
-					< pendinger $mol_viewer childs / < pendingMessage \0 items left 
+					< pendinger $mol_viewer childs / < pendingMessage @ \0 items left 
 					< filter $mol_barer childs < filterOptions /
 						< filterAll $mol_linker
-							childs / \All
+							childs / < filterAllLabel @ \All
 							arg * completed null
 						< filterActive $mol_linker
-							childs / \Active
+							childs / < filterActiveLabel @ \Active
 							arg * completed false
 						< filterCompleted $mol_linker
-							childs / \Completed
+							childs / < filterCompletedLabel @ \Completed
 							arg * completed true
 					< sanitizer $mol_clicker_minor
 						enabled < sanitizerEnabled true
 						eventClick < eventSanitize null
-						childs / \Clear completed
+						childs / < sanitizerLabel @ \Clear completed
 	taskRow# $mol_app_todomvc_taskRow
 		completed > taskCompleted# false
 		title > taskTitle# \
@@ -38,13 +38,13 @@ $mol_app_todomvc $mol_scroller
 
 $mol_app_todomvc_titler $mol_viewer
 	heightMinimal 142
-	childs / < title \todos
+	childs / < title @ \todos
 
 $mol_app_todomvc_ghost $mol_viewer
 	attr * mol_app_todomvc_ghost_visible < visible true
 
-$mol_app_todomvc_taskRow_adder $mol_stringer
-	hint \What needs to be done?
+$mol_app_todomvc_adder $mol_stringer
+	hint @ \What needs to be done?
 	event * keyup > eventPress null
 	> eventDone null
 
@@ -53,7 +53,7 @@ $mol_app_todomvc_taskRow $mol_viewer
 	childs /
 		< completer $mol_checker checked > completed false
 		< titler $mol_stringer
-			hint \Task title
+			hint < titleHint @ \Task title
 			value > title \
 		< dropper $mol_clicker
 			childs / \✖

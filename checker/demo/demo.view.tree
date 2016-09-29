@@ -1,8 +1,8 @@
 $mol_checker_demo $mol_rower childs /
 	< c1 $mol_checker
-		childs / \Unchecked
+		childs / < c1Label @ \Unchecked
 	< c2 $mol_checker
-		childs / \Checked
+		childs / < c2Label @ \Checked
 		checked true
 	< c3 $mol_checker
 	< c4 $mol_checker
@@ -10,6 +10,6 @@ $mol_checker_demo $mol_rower childs /
 	< c5 $mol_checker
 		disabled true
 	< c6 $mol_checker
-		childs / \Disabled
+		childs / < c6Label @ \Disabled
 		checked true
 		disabled true
