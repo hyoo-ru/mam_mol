@@ -1,37 +1,33 @@
 module $ {
-
-	/// Instantiation with overloading
-	$mol_test( test => {
-			
-		class X extends $mol_object {
-			foo() {
-				return 1
+	$mol_test( {
+		
+		'init with overload'() {
+			class X extends $mol_object {
+				foo() {
+					return 1
+				}
 			}
-		}
-		
-		var x = new X().setup(
-			obj => {
-				obj.foo = () => 2
-			}
-		)
-		
-		test.equal( x.foo() , 2 )
 			
-	} )
-
-	/// Definition of objectPath
-	$mol_test( test => {
+			var x = new X().setup(
+				obj => {
+					obj.foo = () => 2
+				}
+			)
 			
-		var x = new $mol_object
+			$mol_assert_equal( x.foo() , 2 )
+		} ,
 		
-		test.equal( x.objectPath() , '' )
-		
-		x.objectField( 'foo()' )
-		test.equal( x.objectPath() , '.foo()' )
-		
-		x.objectField( 'bar()' )
-		test.equal( x.objectPath() , '.foo()' )
-		
-	} )
+		'objectPath generation'() {
+			var x = new $mol_object
+			
+			$mol_assert_equal( x.objectPath() , '' )
+			
+			x.objectField( 'foo()' )
+			$mol_assert_equal( x.objectPath() , '.foo()' )
+			
+			x.objectField( 'bar()' )
+			$mol_assert_equal( x.objectPath() , '.foo()' )
+		} ,
 	
+	} )
 }
