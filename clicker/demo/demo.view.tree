@@ -13,10 +13,10 @@ $mol_clicker_demo $mol_rower childs /
 		childs / < minorLabel @ \Or click me..
 		disabled true
 		eventClick > events null
-	< warn $mol_clicker_warn
-		childs / < warnLabel @ \Be attentive!
+	< danger $mol_clicker_danger
+		childs / < dangerLabel @ \Be attentive!
 		eventClick > events null
-	< warnDisabled $mol_clicker_warn
-		childs / < warnLabel @ \Be attentive!
+	< dangerDisabled $mol_clicker_danger
+		childs / < dangerLabel @ \Be attentive!
 		disabled true
 		eventClick > events null

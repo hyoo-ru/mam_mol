@@ -2,14 +2,13 @@
 
 ## One-value properties
 
-Свойства одного значения, в терминологии $mol, - это полиморфные функции со следующего вида интерфейсом:
+Properties of a the same values, in terminology of mol is polymorphic methods with the following type of interface:
 
 ```ts
 myProperty< Value >() : Value
 myProperty< Vlaue >( ...diff : Value[] ) : Value
 ```
-
-Пример объявления некешируемого свойства:
+The example of declaring a not cached property:
 
 ```ts
 /// getter
@@ -27,8 +26,7 @@ userName( ...diff : string[] ) {
 	}
 }
 ```
-
-Примеры использования:
+Examples of usage:
 
 ```ts
 // Set user name 'jin'
@@ -44,8 +42,7 @@ userName()
 // Set to "jiny" if patch supported, or "mary" if not
 userName( 'mary' , 'mar' )
 ```
-
-Чтобы сделать свойство реактивным (кешируемым с автоматической инвалидацией), достаточно воспользоваться декоратором [$mol_prop](../prop), использующим под капотом [$mol_atom](../atom):
+To do a property is reactive (cached with automatic invalidation) it is enough to use decorator [$mol_prop](../prop), which uses under the hood [$mol_atom](../atom):
 
 ```ts
 /// Getter
@@ -74,8 +71,7 @@ userName( ...diff : string[] ) {
 	return next // return next value
 }
 ```
-
-Дополнительные примеры использования рекативных свойств:
+Additional examples of usage reactive properties:
 
 ```ts
 // Invalidate cache
@@ -89,14 +85,14 @@ userName( void 0 , 'jin' )
 
 ## Multi-value properties
 
-Свойства множественных значений имеют следующий интерфейc:
+Multi-value properties has the following interface:
 
 ```ts
 myProperty< Key , Value >( key : Key ) : Value
 myProperty< Key , Value >( key : Key , ...diff : Value[] ) : Value
 ```
 
-Примеры объявления:
+Examples of declarations:
 
 ```ts
 userName( pos : number ) {
@@ -110,8 +106,7 @@ userNames( pos : number , ...diff : string[] ) {
 	return $mol_state_local.value( 'name' , ...diff ) || `User #${pos}`
 }
 ```
-
-Примеры использования:
+Examples of usages:
 
 ```ts
 // Set user#0 name to 'jin'
@@ -127,8 +122,7 @@ userName( 0 )
 // Set user#0 name to "jiny" if patch supported, or "mary" if not.
 userName( 0 , 'mary' , 'mar' ) 
 ```
-
-В качестве ключа можно использовать любое, сериализуемое в JSON значение, например:
+As a key it is allowed to use any value, which can be serialized into JSON, for example:
 
 ```ts
 @ $mol_prop()

@@ -10,4 +10,4 @@ $mol_decker_demo $mol_decker items /
 		content < checkerContent $mol_checker_demo
 	< switcherItem $mol_decker_item
 		title < radioLabel @ \Radio buttons
-		content < switcherContent $mol_switcher_demo
+		content < switcherContent $mol_switcher_demo_enabled

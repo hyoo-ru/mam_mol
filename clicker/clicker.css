@@ -39,7 +39,7 @@
 	color: var(--mol_skin_accent_text);
 }
 
-[mol_clicker_warn]:not(:disabled) {
+[mol_clicker_danger]:not(:disabled) {
 	background: var(--mol_skin_warn);
 }
 
