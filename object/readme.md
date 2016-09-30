@@ -1,7 +1,7 @@
 # $mol_object
 
 The base class for long living objects. Every such object has an unique user friendly id like `$my_app.root(0).lister().task("123")`. This id, is a script simultaneously, by its helping we can get a link to an object from a browser console,
-it's very convenience while debugging. To have a correct identificators, it's recommended to create an object through a fabric wrapped by decorator [$mol_prop](../prop) at "owns" object:
+it's very convenience while debugging. To have a correct identificators, it's recommended to create an object through a factory wrapped by decorator [$mol_prop](../prop) at "owns" object:
 
 ```typescript
 module $ {
