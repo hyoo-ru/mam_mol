@@ -15,8 +15,8 @@ It sets the namespace for the DOM element.
 It sets the list of their child elements. In this list could be instances of `$mol_viewer`,
 any DOM-elements or primitives like strings, numbers etc. If the list have not been set (by default), then the content of the DOM-element would not be changed in way, it's helpful for manual operating with DOM.
 
-**`heightAvailable( ...diff : number[] ) = 0`**
-The available height for the component, a user would not see anything beyond the height. It is allowed to render not the whole component's content, but only visible part of this one. This property is set by its parent component.
+**`context( ...diff : $mol_viewer_context[] ) : $mol_viewer_context`**
+Some rendering context. Parent node injects context to all rendered child components.
 
 **`heightMinimal()` = 0**
 
