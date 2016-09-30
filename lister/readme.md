@@ -2,24 +2,20 @@
 
 ##[Online demo](http://eigenmethod.github.io/mol/#demo=mol_lister_demo)
 
-The list of strings with lazy rendering.
+The list of rows with lazy rendering. 
 
 ## Usage example
 
 ```
-$mol_lister
-	rows
-		\John
+$mol_lister rows /
+	< header $mol_viewer
+	< bodier $mol_scroller
+	< footer $mol_viewer
 ```
 ## Properties
 
-`rowHeightMin()`
-
-The minimal height of the string
-Based on this value it is determined how many stings would be rendered, to fill viewport taking into account scrolling size.
-
 `rows()`
 
-Property by which we set the list of strings. It can be of an Array or a lazy range type. ([$mol_range](../range)).
+Property by which we set the list of rows.
 
 
