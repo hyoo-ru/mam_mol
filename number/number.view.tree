@@ -7,7 +7,7 @@ $mol_number $mol_viewer
 		< decrementer $mol_number_clicker
 			eventClick > eventDec null
 			enabled < enabledDec < enabled true
-			childs / \−
+			childs / < decIcon $mol_icon_minus
 		< stringer $mol_stringer
 			type \number
 			value > valueString \
@@ -16,6 +16,6 @@ $mol_number $mol_viewer
 		< incrementer $mol_number_clicker
 			eventClick > eventInc null
 			enabled < enabledInc < enabled true
-			childs / \+
+			childs / < incIcon $mol_icon_plus
 
 $mol_number_clicker $mol_clicker

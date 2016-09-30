@@ -27,3 +27,7 @@
 
 	--mol_skin_round: 4px;
 }
+
+[mol_skin_root] {
+	font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}

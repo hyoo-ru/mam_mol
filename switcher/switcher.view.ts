@@ -1,9 +1,8 @@
 module $.$mol {
 	export class $mol_switcher extends $.$mol_switcher {
 
-		@ $mol_prop()
 		value( ...diff : any[] ) {
-			return this.session( 'value()' , ...diff )
+			return $mol_state_session.value( this.objectPath() + '.value()' , ...diff )
 		}
 		
 		options() : { [ key : string ] : () => string } {
@@ -15,12 +14,8 @@ module $.$mol {
 			return Object.keys( this.options() ).map( key => this.optioner( key ) )
 		}
 		
-		@ $mol_prop()
-		optioner( key : string ) {
-			return new $mol_checker().setup( obj => {
-				obj.checked = ( ...diff )=> this.optionChecked( key , ...diff )
-				obj.label = ()=> this.options()[ key ]()
-			} )
+		optionLabel(key : string) {
+			return this.options()[key]();
 		}
 		
 		optionChecked( key : string , ...diff : boolean[] ) {

@@ -28,6 +28,10 @@
 	background: var(--mol_skin_light);
 }
 
+[mol_app_users_item] {
+	margin-bottom: 1px;
+}
+
 [mol_app_users_controller] {
 	background: var(--mol_skin_light);
 }

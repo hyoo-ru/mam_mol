@@ -1,13 +1,16 @@
 [mol_suggester] {
 	flex: 1000 1 auto;
-	display: flex;
 	position: relative;
 }
 
+[mol_suggester_stringer] {
+	width: 100%;
+	box-sizing: border-box;
+}
+
 [mol_suggester_lister] {
-	top: 2.25rem;
-	margin-top: 1px;
 	overflow: hidden;
+	margin-top: 1px;
 	border-radius: var(--mol_skin_round);
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	min-height: 0px;

@@ -2,18 +2,19 @@ module $.$mol {
 	export class $mol_scroller extends $.$mol_scroller {
 
 		scrollTop( ...diff : number[] ) {
-			return this.session<number>( 'scrollTop()' , ...diff ) || 0
+			return $mol_state_session.value( this.objectPath() + '.scrollTop()' , ...diff ) || 0
 		}
 
 		scrollLeft( ...diff : number[] ) {
-			return this.session<number>( 'scrollLeft()' , ...diff ) || 0
+			return $mol_state_session.value( this.objectPath() + '.scrollLeft()' , ...diff ) || 0
 		}
 
 		eventScroll( ...diff : Event[] ) {
-			var el = ( diff[0].target as HTMLElement )
-			this.scrollTop( el.scrollTop )
-			this.scrollLeft( el.scrollLeft )
-			// diff[0].preventDefault()
+			new $mol_defer( ()=> {
+				var el = this.DOMNode()
+				this.scrollTop( el.scrollTop )
+				this.scrollLeft( el.scrollLeft )
+			} )
 		}
 
 		@ $mol_prop()

@@ -1,70 +1,67 @@
 # $mol_viewer
 
-Базовый класс для всех визуальных компонент. Обеспечивает инфраструктуру для ленивого реактивного рендеринга, обработку исключительных ситуаций.
+The base class for all visual components. It provides the infrastructure for reactive lazy rendering, handling exceptions. 
 
-## Свойства
+## Properties
 
 **`tagName()' = 'div'`**
-
-Задаёт имя DOM-элемента, создаваемого для компонента, если элемент с соответствующим идентификатором ещё не присутствует в DOM.
+It sets the name of the DOM-element creating for component, if the element with appropriate id is not presented at DOM yet.
 
 **`nameSpace() = 'http://www.w3.org/1999/xhtml'`**
 
-Задаёт пространство имён для DOM-элемента. 
+It sets the namespace for the DOM element. 
 
 **`childs() = null `**
+It sets the list of their child elements. In this list could be instances of `$mol_viewer`,
+any DOM-elements or primitives like strings, numbers etc. If the list have not been set (by default), then the content of the DOM-element would not be changed in way, it's helpful for manual operating with DOM.
 
-Задаёт список дочерних элементов. В списке могут быть экземпляры `$mol_viewer`, DOM-элементы, примитивы (строки, числа). Если список не задан (по умолчанию), то содержимое DOM-элемента никак меняться не будет, что полезно, при ручной работе с DOM. 
-
-**`heightAvailable( ...diff : number[] ) = 0`**
-
-Доступная компоненту высота, дальше которой точно не будет видно пользователю. Позволяет рендерить не всё своё содержимое, а только видимую его часть. Задаётся автоматически родительским компонентом.
+**`context( ...diff : $mol_viewer_context[] ) : $mol_viewer_context`**
+Some rendering context. Parent node injects context to all rendered child components.
 
 **`heightMinimal()` = 0**
 
-Минимально возможная высота компонента. Задаётся вручную константой или формулой. Используется для ленивого рендеринга.
+It is the minimum possible height of the component. It's set by hand with constant or some expression.This property is used for lazy rendering.
 
 **`DOMNode() : Element`**
 
-Возвращает DOM-элемент, к которому привязан компонент. Сперва пытается найти его по идентификатору в DOM и только если не находит - создаёт и запоминает новый.
+It returns the DOM-element, to which the component is bounded to. At first the method tries to find the element by its id at DOM and only if it would have not been found - the method would create and remember a new one. 
 
 **`DOMTree() : Element`**
 
-То же, что и `DOMNode`, но гарантирует, что содержимое, атрибуты и свойства DOM-элемента имеют актуальное состояние.
+It is the same as `DOMNode`, but its guarantee, that the content, attributes and properties of the DOM-element should be in actual state.
 
 **`attr() : { [ key : string ] : ()=> string|number|boolean }`**
 
-Возвращает словарь DOM-атрибутов, значения которым будут заданы при рендеринге. Передача `null` или `false` в качестве значения атрибута, приводит к его полному удалению. Передача `true` эквивалентна передаче его имени в качестве значения. `undefined` просто игнорируется.
+It returns the dictionary of the DOM-attributes, which values would be set while rendering. Passing `null` or `false` as the value to the attribute would lead to removing the attribute.
+Passing `true` is an equivalent to passing its name as value. `undefined` is just ignored.
 
 **`field() : { [ key : string ] : ()=> any }`**
 
-Возвращает словарь полей, которые необходимо задать DOM-элементу после рендеринга. В качестве имени поля можно задавать пути. Например, `scrollTop` задаст позицию скроллинга, а `style.backgroundPosition` задаст позицию фона.
+It returns the dictionary of fields, which is necessary to set to the DOM-element after rendering. By way of name of the field a path could be set to. For example `scrollTop` would be set scroll's position, or `style.backgroundPosition` would be set background's position.
 
 **`event() : { [ key : string ] : ( event : Event )=> void }`**
 
-Возвращает словарь обработчиков событий. Обработчики событий привязываются к DOM-элементу один раз, когда задаётся значение свойству `DOMNode`.
+It returns the dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `DOMNode` property.
 
 **`focused() : boolean`**
 
-Определяет, находится ли сейчас компонент в фокусе или нет. Если какой-либо вложенный компонент находится в фокусе, то и текущий считается сфокусированным.
+It determines, whether the component is focused or not at this time. If any inserted component would be focused, then its parent component would be focused also.
 
 ## view.tree
-
-*view.tree* - декларативный язык описания компонент, основанный на [формате tree](https://github.com/nin-jin/tree.d). В одном файле может быть последовательно определено сколько угодно компонент, но лучше каждую компоненту помещать в отдельный файл, кроме совсем уж тривиальных случаев.
-
-Чтобы создать новую компоненту достаточно отнаследовать её от любой уже существующей. Имена компонент должны начинаться с символа `$` и быть глобально уникальными в соответствии с принципами [PMS](https://github.com/nin-jin/pms). Например, объявим компоненту `$my_button` как наследника от `$mol_viewer`:
+*view.tree* - is a declarative language of describing components, based on [format tree](https://github.com/nin-jin/tree.d). In a file could be plenty of components defined in series, but better way is put every component in a separate file, except very trivial cases.
+To create a new component it's enough to inherit this from any existing one.
+Names of the components should begin with `$` and be unique globally accordance with principles presented on [PMS](https://github.com/nin-jin/pms). For example, lets declare a component `$my_button` as a child from `$mol_viewer`:
 
 ```tree
 $my_button $mol_viewer
 ```
 
-Транслируется это в (далее для каждого *.view.tree кода будет приводиться результат трансляции во *.view.tree.ts):
+It translates to (every *.view.tree code would be translated to *.view.tree.ts):
 
 ```typescript
 module $ { export class $my_button extends $mol_viewer {} }
 ```
-
-При наследовании есть возможность объявлять дополнительные свойства или перегружать уже существующие (при этом типы свойств должны совпадать). Например, перегрузим свойство `uri` строкой `"https://example.org"`, а `childs` - массивом из одной строки `"Click me!"`, кроме того, объявляем новое свойство `target` со значением `"_top"` по умолчанию (важно отметить, что значение по умолчанию обязательно при объявлении свойств):
+While inheritance there is a possibility to declare additional properties or overload existing (but types of properties should match). For example lets overload a `uri` property with `"https://example.org"` string, and `childs` - with array of one string `"Click me!"`, besides, lets declare a new property `target` with `"_top"` value by default. (it's important to mark that a value by default is necessary when declaring a property):  
 
 ```tree
 $my_exampler $mol_linker
@@ -91,8 +88,7 @@ module $ { export class $my_exampler extends $mol_linker {
 
 } }
 ```
-
-Узлы, начинающиеся на `-` - игнорируются, что позволяет использовать их для комментирования и временного выключения поддерева. Начинающиеся на `$` - имена компонент. `/` - так опозначаются списки. `\` - предваряет сырые данные, которые до конца строки могут содержать совершенно любые символы. Числа, булевы значения и `null` пишутся как есть, без каких либо префиксов:
+Nodes beginning with `-` - would be ignored, it allows to use them for commenting and temporary disable subtree. Nodes beginning with `$` - is name of component. `/` - any list should begin with this symbol. `\` - should be preceded any  raw data, which can contain entirely any data until the end of the line. Numbers, booleans values and `null` is being wrote as it is, without any prefixes:
 
 ```tree
 $my_values $mol_viewer
@@ -117,8 +113,7 @@ module $ { export class $my_values extends $mol_viewer {
 
 } }
 ````
-
-Словари (соответствия ключей значениям) можно объявлять через узел `*`, через который задаются, например, значения для атрибутов DOM-элемента:
+Dictionary (correspondence keys to their values) could be declared through a node `*`, through which are set values of attributes to DOM-element:
 
 ```tree
 $my_number $mol_viewer
@@ -147,8 +142,7 @@ module $ { export class $my_number extends $mol_viewer {
 
 } }
 ```
-
-Аналогичным образом можно задавать значения для полей DOM-элемента:
+We could set value in the same way for fields of a DOM-element:
 
 ```tree
 $my_wonder $mol_viewer
@@ -174,8 +168,7 @@ module $ { export class $my_wonder extends $mol_viewer {
 
 } }
 ```
-
-В качестве значений мы можем брать не только константы, но и содержимое других свойств через одностороннее связывание. Например, объявим два текстовых совйства `hint` и `text`, а потом воспользуемся ими для формирования словаря `field` и списка `childs`:
+As a value we could bring not only constants, but also a content of another properties through one-way binding. For example, lets declare two text properties `hint` and `text`, and then use them for forming a dictionary `field` and a list `childs`:
 
 ```tree
 $my_hint $mol_viewer
@@ -210,8 +203,7 @@ module $ { export class $my_hint extends $mol_viewer {
 
 } }
 ```
-
-Зачастую удобно совмещать объявление свойства и его использование. Следующий пример полностью эквивалентен предыдущему:
+Often it is convenient to combine declaration of property and usage of this one. The next example is equals to the previous completely:
 
 ```tree
 $my_hint $mol_viewer
@@ -220,8 +212,7 @@ $my_hint $mol_viewer
 	childs /
 		< text \Default text
 ```
-
-Реакции на DOM-события уже требуют двустороннее связывание. Например, укажем, что объекты события `click` необходимо помещать в свойство eventRemove, которое мы тут же объявили задав значением по умолчанию `null`:
+Reactions on DOM-events are required for two-way binding. For example, lets point out, that objects of `click` event is necessary to put in eventRemove property, which we declare right here and set it a default value `null`:
 
 ```tree
 $my_remover $mol_viewer
@@ -251,8 +242,7 @@ module $ { export class $my_remover extends $mol_viewer {
 
 } }
 ```
-
-Непосредственным значением свойства можно объявить экземпляр другого класса. В следующем примере у нас объявляется свойство `lister`, значением которого будет являться компонента типа `$mol_lister_demo`, а потом она помещается в список дочерних комонент `childs`:
+We could declare as value an instance of another class directly. In the next example it is being declared a property `lister`, and which value would be a component type of `$mol_lister_demo`, and then it put into a list of child components `childs`:
 
 ```tree
 $my_app $mol_viewer
@@ -276,8 +266,7 @@ module $ { export class $my_app extends $mol_viewer {
 
 } }
 ```
-
-У вложенных компонент также можно перегружать любое их свойство:
+A property of a nested component could be overloaded also: 
 
 ```tree
 $my_name $mol_viewer
@@ -304,8 +293,7 @@ module $ { export class $my_name extends $mol_viewer {
 
 } }
 ```
-
-Свойства родительской и дочерней компоненты можно связывать. В следующем примере мы объявляем изменяемое свойство `name`, дочерней компоненте `input` говорим использовать наше свойство `name` в качестве своего свойства `value`, а компоненте `output` указываем выводить внутри себя значение `name`. Таким образом компоненты `input` и `output` становятся связаны через свойство родителя `name`  и изменение значения в `input` приводит к обновлению output:
+Properties of parent and child component could be linked. At the following example we declare reactive property `name`, and we say to child component `input` use property `name` as its own property `value`, we also say to a child component `output` we want to property `name` to be outputted at inside of this one. In this way components `input` and `output` are become linked through parent's property `name` and changing value in `input` would lead to updating output:
 
 ```tree
 $my_greeter $mol_viewer
@@ -390,14 +378,12 @@ module $ { export class $my_tasks extends $mol_lister {
 
 } }
 ```
-
-Тут мы объявили свойтсво `taskRow`, которое принимает на вход некоторый ключ и возвращает для каждого ключа уникальный экземпляр `$mol_viewer`, у которого перегружено свойство `childs`, которое выводит для каждого `taskRow`, соответствующий ему `taskTitle`, а вот `taskTitle` независимо от ключа возвращает по умолчанию содержимое свойства `defaultTitle`, которое изначатльно равно пустой строке. В дальнейшем, перегружая любое из этих свойств, мы можем менять любой аспект поведения компонента.
+Here we declared the property `taskRow`, which takes on input some key and returns an unique instance of `$mol_viewer` for every key, with overloaded property `childs`, which outputs appropriate `taskTitle` for every `taskRow`, and in its turn `taskTitle` returns the content of property `defaultTitle` independently of the key, which is equal to empty string initially. Further overloading any of these properties, we could change any aspect of component behavior.
 
 ## view.ts
+In addition to declarative description of component, next to it could be created a file of the same name with `view.ts` extension, where a behavior could be described. Using a special construction, it could be inherited from realization obtained of `view.tree` and it would be overloaded automatically by heir:  
 
-В дополнение к декларативному описанию компонент, рядом можно создать одноимённый файл с расширением `view.ts`, где описать его поведение. Используя специальную конструкцию, можно отнаследоваться от реализации, полученной из `view.tree` и она автоматически будет перегружена наследником:
-
-Например, у нас есть следующее описание во `./my/hello/hello.view.tree`:
+For example we have following description into `./my/hello/hello.view.tree`:
 
 ```tree
 $my_hello $mol_viewer childs /
@@ -406,8 +392,7 @@ $my_hello $mol_viewer childs /
 		value > name \
 	< message \
 ```
-
-Тут мы объявили 2 свойства: `name` для получения значения из `input` и `message` для вывода значения. Транслируется это в следующий `./my/hello/-/view.tree.ts/hello.view.tree.ts`:
+Here we declared 2 properties: `name` for getting value from `input` and `message` for output the value. It would be translated into following file `./my/hello/-/view.tree.ts/hello.view.tree.ts`: 
 
 ```typescript
 module $ { export class $my_hello extends $mol_viewer {
@@ -435,8 +420,7 @@ module $ { export class $my_hello extends $mol_viewer {
 
 } }
 ```
-
-Теперь мы можем "подмешать" в этот класс своё поведение через `./my/hello/hello.view.ts`:
+For now we could "mix" into this class our behavior through `./my/hello/hello.view.ts`:
 
 ```typescript
 module $.$mol {
@@ -450,5 +434,4 @@ module $.$mol {
 	}
 }
 ```
-
-Тут мы связали наши свойства `message` и `name` через формулу. Так что теперь, где бы мы ни использовали `$my_hello`, значение `message` будет зависеть от введёного пользователем `name`.
+Here we linked our properties `message` and `name` through the expression. So now wherever we use `$my_hello`, the value `message` would be depend on `name` property entered by a user.

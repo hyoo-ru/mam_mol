@@ -4,14 +4,14 @@ $mol_app_supplies_carder $mol_carder
 	childs /
 		< contenter
 		< statuser
-		< linker $mol_linker patch < patch : dict
+		< linker $mol_linker arg < arg *
 	content < grouper $mol_rower childs / < items /
 		< codeItem $mol_labeler
-			title \Code
+			title < codeTitle @ \Code
 			content < code \
 		< costItem $mol_labeler
-			title \Cost
+			title < costTitle @ \Cost
 			content < coster $mol_coster value < cost $mol_unit_money valueOf 0
 		< providerItem $mol_labeler
-			title \Provider
+			title < providerTitle @ \Provider
 			content < providerName \

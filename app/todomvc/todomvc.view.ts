@@ -5,11 +5,11 @@ interface $mol_app_todomvc_task {
 
 module $.$mol {
 	
-	export class $mol_app_todomvc_taskRow_adder extends $.$mol_app_todomvc_taskRow_adder {
+	export class $mol_app_todomvc_adder extends $.$mol_app_todomvc_adder {
 		
 		eventPress( ...diff : KeyboardEvent[] ) {
 			switch( diff[0]['code'] || diff[0].key ) {
-				case 'Enter' : return this.eventDone( event )
+				case 'Enter' : return this.eventDone( diff[0] )
 			}
 		}
 		
@@ -18,12 +18,11 @@ module $.$mol {
 	export class $mol_app_todomvc extends $.$mol_app_todomvc {
 		
 		taskIds( ...diff : number[][] ) : number[] {
-			return this.local( 'taskIds()' , ...diff ) || []
+			return $mol_state_local.value( this.stateKey( 'taskIds' ) , ...diff ) || []
 		}
 		
 		argCompleted() {
-			var val = this.argument().value( 'completed' )
-			return val && val[0]
+			return $mol_state_arg.value( this.stateKey( 'completed' ) )
 		}
 
 		@ $mol_prop()
@@ -87,11 +86,12 @@ module $.$mol {
 		}
 		
 		task( id : number , ...diff : $mol_app_todomvc_task[] ) {
-			if( diff[0] === void 0 ) return this.local( `task(${id})` ) || { title : '' , completed : false }
+			const key = this.stateKey( `task=${id}` )
+			if( diff[0] === void 0 ) return $mol_state_local.value( key ) || { title : '' , completed : false }
 			
 			var task = diff[0]
 			if( task && diff[1] ) task = $mol_merge_dict( this.task( id ) , diff[0] )
-			this.local( `task(${id})` , task )
+			$mol_state_local.value( key , task )
 			
 			return task || void 0
 		}

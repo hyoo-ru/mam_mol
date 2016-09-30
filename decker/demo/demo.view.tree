@@ -1,13 +1,13 @@
 $mol_decker_demo $mol_decker items /
 	< stringerItem $mol_decker_item
-		title \String fields
+		title < stringerLabel @ \String fields
 		content < stringerContent $mol_stringer_demo
 	< clickerItem $mol_decker_item
-		title \Buttons
+		title < buttonsLabel @ \Buttons
 		content < clickerContent $mol_clicker_demo
 	< checkerItem $mol_decker_item
-		title \Check boxes
+		title < checkerLabel @ \Check boxes
 		content < checkerContent $mol_checker_demo
 	< switcherItem $mol_decker_item
-		title \Radio buttons
-		content < switcherContent $mol_switcher_demo
+		title < radioLabel @ \Radio buttons
+		content < switcherContent $mol_switcher_demo_enabled

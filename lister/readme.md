@@ -1,8 +1,21 @@
 # $mol_lister
 
-Спискок строк с ленивым рендерингом.
-Минимальная высота строки задаётся свойством `rowHeightMin()`.
-На его основе определяется сколько рендерить строк, чтобы заполнить видимую область с учётом скроллинга.
-Список строк задаётся свойством `rows()` и может представлять из себя как массив так и ленивый диапазон ([$mol_range](../range)).
+##[Online demo](http://eigenmethod.github.io/mol/#demo=mol_lister_demo)
 
-[Online demo](http://eigenmethod.github.io/mol/#demo=mol_lister_demo)
+The list of rows with lazy rendering. 
+
+## Usage example
+
+```
+$mol_lister rows /
+	< header $mol_viewer
+	< bodier $mol_scroller
+	< footer $mol_viewer
+```
+## Properties
+
+`rows()`
+
+Property by which we set the list of rows.
+
+

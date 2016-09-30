@@ -1,19 +1,13 @@
 $mol_linker_demo $mol_rower childs /
 	< linkRed $mol_linker
-		patch : dict
-			\color
-				: \red
-		childs / \Red
+		arg * color \red
+		childs / < labelRed @ \Red
 	< linkGreen $mol_linker
-		patch : dict
-			\color
-				: \green
-		childs / \Green
+		arg * color \green
+		childs / < labelGreen @ \Green
 	< linkBlue $mol_linker
-		patch : dict
-			\color
-				: \blue
-		childs / \Blue
+		arg * color \blue
+		childs / < labelBlue @ \Blue
 	< linkExternal $mol_linker
 		uri \http://example.org
 		childs / \example.org

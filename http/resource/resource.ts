@@ -1,76 +1,97 @@
-class $mol_http_resource extends $mol_object {
+module $ {
 	
-	@ $mol_prop()
-	static item( uri : string ) {
-		return new this().setup( obj => {
-			obj.uri = ()=> uri
-		} )
-	}
-	
-	uri() { return '' }
-	
-	request( method : string ) {
-		return new $mol_http_request().setup( obj => {
-			obj.method = () => method
-			obj.uri = () => this.uri()
-		} )
-	}
-	
-	latency() {
-		return 200
-	}
-	
-	@ $mol_prop()
-	downloader( ...diff : $mol_http_request[] ) : $mol_http_request {
-		setTimeout( ()=> {
-			this.downloader( void 0 , this.request( 'get' ) )
-		}, this.latency() )
-		throw new $mol_atom_wait( 'Throttling...' )
-	}
-	
-	@ $mol_prop()
-	uploader( ) {
-		var body = this.dataNext()
-		if( body === void 0 ) return null
+	export class $mol_http_resource extends $mol_object {
 		
-		return this.request( 'put' ).setup( obj => {
-			obj.body = () => body
-		} )
-	}
-	
-	@ $mol_prop()
-	uploaded( ...diff : any[] ) {
-		if( !this.uploader() ) return null
+		@ $mol_prop()
+		static item( uri : string ) {
+			return new $mol_http_resource().setup( obj => {
+				obj.uri = ()=> uri
+			} )
+		}
 		
-		return this.json( void 0 , this.uploader().json() )
-	}
-	
-	@ $mol_prop()
-	text( ...diff : any[] ) {
-		if( diff[0] === void 0 ) {
-			return this.downloader( ...diff ).text()
-		} else {
-			this.dataNext( diff[0] )
+		uri() { return '' }
+		
+		request( method : string ) {
+			const request = new $mol_http_request()
+			request.method = () => method
+			request.uri = () => this.uri()
+			return request
 		}
-	}
-	
-	@ $mol_prop()
-	json( ...diff : any[] ) {
-		if( diff[0] === void 0 ) {
-			return this.downloader( ...diff ).json()
-		} else {
-			this.dataNext( diff[0] )
+		
+		@ $mol_prop()
+		downloader( ...diff : $mol_http_request[] ) : $mol_http_request {
+			this.dataNext( void 0 , void 0 )
+			return this.request( 'Get' )
 		}
+		
+		@ $mol_prop()
+		uploader() {
+			var body = this.dataNext()
+			if( body === void 0 ) return null
+			
+			const request = this.request( 'Put' )
+			request.body = () => body
+			
+			return request
+		}
+		
+		@ $mol_prop()
+		uploaded( ...diff : boolean[] ) : boolean {
+			if( !this.uploader() ) return null
+			
+			this.text( void 0 , this.uploader().text() )
+			
+			return true
+		}
+		
+		@ $mol_prop()
+		text( ...diff : string[] ) {
+			if( diff.length === 0 ) {
+				return this.downloader().text()
+			} else if( diff[ 0 ] === void 0 ) {
+				this.downloader( void 0 )
+			} else {
+				this.dataNext( diff[ 0 ] )
+			}
+		}
+		
+		@ $mol_prop()
+		dataNext( ...diff : any[] ) {
+			return diff[ 0 ]
+		}
+		
+		refresh() {
+			this.downloader( void 0 )
+		}
+		
+		//put( task : ( request : $mol_http_request )=> void ) {
+		//	const request = this.request( 'put' )
+		//	return $mol_atom_task( ()=> {
+		//		task( request )
+		//	} )
+		//}
+		
 	}
 	
-	@ $mol_prop()
-	dataNext( ...diff : any[] ) {
-		return diff[0]
-	}
-	
-	refresh() {
-		this.downloader( void 0 )
-		this.dataNext( void 0 , void 0 )
+	export class $mol_http_resource_json< Content > extends $mol_http_resource {
+		
+		@ $mol_prop()
+		static item< Content >( uri : string ) {
+			return new $mol_http_resource_json< Content >().setup( obj => {
+				obj.uri = ()=> uri
+			} )
+		}
+		
+		json( ...diff : Content[] ) : Content {
+			if( diff.length === 0 ) {
+				return JSON.parse( this.text() )
+			} else if( diff[0] === void 0 ) {
+				this.text( void 0 )
+			} else {
+				this.text( ...diff.map( val => JSON.stringify( val , null , '\t' ) ) )
+			}
+		}
+
 	}
 	
 }

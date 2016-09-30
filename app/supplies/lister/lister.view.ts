@@ -14,9 +14,9 @@ module $.$mol {
 		supplyRow( index : number ) {
 			return new $mol_app_supplies_carder().setup( obj => {
 				obj.supply = ()=> this.supplies()[ index ]
-				obj.patch = ()=> ({
-					supply : this.supplies()[ index ].id() ,
-					side : null
+				obj.arg = ()=> ({
+					supply : ()=> this.supplies()[ index ].id() ,
+					side : ()=> <string> null
 				})
 			} )
 		}

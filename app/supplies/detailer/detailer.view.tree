@@ -1,59 +1,57 @@
 $mol_app_supplies_detailer $mol_pager
 	supply null
-	title \Supply
+	title @ \Supply
 	head /
 		< backer $mol_linker
 			childs / < backIcon $mol_icon_chevron_left
-			patch < backPatch : dict
-				\side
-					: list
-				\supply
-					: null
+			arg < backArg *
+				side \
+				supply null
 		< titler
 	body $mol_lister rows / < contenter $mol_lister rows < content /
 		< descrCarder $mol_carder content < descrDecker $mol_decker items /
 			< orgItem $mol_decker_item
-				title \Organization
+				title < orgLabel \Organization
 				content < orgContent $mol_rower childs < orgItems /
 					< providerItem $mol_labeler
-						title \Provider
+						title < providerLabel @ \Provider
 						content < providerName \
 					< consumerItem $mol_labeler
-						title \Consumer
+						title < customerLabel @ \Consumer
 						content < consumerName \
 					< supplyGroupItem $mol_labeler
-						title \Supply Group
+						title < supplyGroupLabel @ \Supply Group
 						content < supplyGroupName \
 					< ballanceUnitItem $mol_labeler
-						title \Ballance Unit
+						title < ballanceUnitLabel @ \Ballance Unit
 						content < ballanceUnitName \
 			< consItem $mol_decker_item
-				title \Consumer
+				title < consLabel @ \Consumer
 				content < consContent $mol_rower childs < consItems /
 					< contractItem $mol_labeler
-						title \Contract
+						title < contractLabel @ \Contract
 						content < contractId \
 					< payMethodItem $mol_labeler
-						title \Pay Method
+						title < payMethodLabel @ \Pay Method
 						content < payMethodName \
 					< managerItem $mol_labeler
-						title \Manager
+						title < managerLabel @ \Manager
 						content < managerName \
 					< debitorItem $mol_labeler
-						title \Debitor
+						title < debitodLabel @ \Debitor
 						content < debitorName \
 		< attachCarder $mol_sectioner
-			head < attachHead \Attachments
+			head < attachTitle @ \Attachments
 			content < attacher $mol_attacher
 				items < attachments /
 				attachNew > attachNew null
 		< posLister $mol_sectioner
 			head < posListerHead /
-				\Positions
+				< positionsTitle @ \Positions
 				< costItem $mol_labeler
-					title \Cost
+					title < costLabel @ \Cost
 					content < coster $mol_coster value < cost $mol_unit_money valueOf 0
 			content < positions /
 	foot $mol_rower childs < tools / < approver $mol_checker
 		checked > approved false
-		childs / \Approved
+		childs / < approvedLabel @ \Approved

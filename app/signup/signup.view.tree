@@ -1,35 +1,35 @@
 $mol_app_signup $mol_form
 	formFields /
 		< nameFirstField $mol_form_field
-			name \First Name
+			name < nameFirstLabel @ \First Name
 			errors < nameFirstErrors /
 			control < nameFirstControl $mol_stringer
-				hint \Jack
+				hint < nameFirstHint @ \Jack
 				value > nameFirst \
 		< nameNickField $mol_form_field
-			name \Nick Name
+			name < nameNickLabel @ \Nick Name
 			errors < nameNickErrors /
 			control < nameNickControl $mol_stringer
-				hint \Capitan
+				hint < nameNickHint @ \Capitan
 				value > nameNick \
 		< nameSecondField $mol_form_field
-			name \Second Name
+			name < nameSecondLabel @ \Second Name
 			errors < nameSecondErrors /
 			control < nameSecondControl $mol_stringer
-				hint \Sparrow
+				hint < nameSecondHint @ \Sparrow
 				value > nameSecond \
 		< sexField $mol_form_field
-			name \Sex
+			name < sexLabel @ \Sex
 			errors < sexErrors /
 			control / < sexControl $mol_switcher
 				value > sex \
 				options < sexOptions *
-					male \Male
-					intersex \Intersex
-					female \Female
+					male < sexOptionMale @ \Male
+					intersex < sexOptionIntersex @ \Intersex
+					female < sexOptionFemale @ \Female
 	buttons /
 		< submit $mol_clicker_major
-			childs / < submitText \Sign Up
-			eventClick > eventSubmit : null
+			childs / < submitText @ \Sign Up
+			eventClick > eventSubmit null
 			disabled < submitBlocked
 

@@ -3,14 +3,14 @@ $mol_suggester_demo $mol_rower childs /
 		focused false
 		suggests /
 	< two $mol_suggester
-		hint \Name
+		hint < twoHint @ \Name
 		focused true
 		suggests /
-			\Evgeny
-			\Alexander
-			\Dmitriy
-			\Yuriy
-			\Nataliya
+			< suggest1 @ \Evgeny
+			< suggest2 @ \Alexander
+			< suggest3 @ \Dmitriy
+			< suggest4 @ \Yuriy
+			< suggest5 @ \Nataliya
 	< three $mol_suggester
 		suggests < threeSuggests /
 		value > threeCode \

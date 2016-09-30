@@ -1,13 +1,13 @@
 $mol_labeler_demo $mol_rower childs /
 	< labeler1 $mol_labeler
-		title \Provider
-		content \ACME Provider Inc.
+		title < providerLabel @ \Provider
+		content < providerName @ \ACME Provider Inc.
 	< labeler2 $mol_labeler
-		title \Cost
+		title < costLabel @ \Cost
 		content $mol_coster value $mol_unit_money_usd valueOf 1234567
 	< labeler3 $mol_labeler
-		title \Consumer
-		content \ACME Consumer Inc.
+		title < consumerLabel @ \Consumer
+		content < consumerName @ \ACME Consumer Inc.
 	< labeler4 $mol_labeler
-		title \Remark
-		content $mol_stringer value \Remind me later
+		title < remarkLabel @ \Remark
+		content $mol_stringer value < remarkValue @ \Remind me later

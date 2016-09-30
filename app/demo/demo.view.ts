@@ -51,14 +51,14 @@ module $.$mol {
 		// }
 		
 		selected() {
-			return $mol_maybe( this.argument().value( 'demo' ) )[0]
+			return $mol_state_arg.value( this.stateKey( 'demo' ) )
 		}
 
 		@ $mol_prop()
 		option( name : string ) {
 			return new $mol_linker().setup( obj => {
 				obj.childs = () => [ name ? ( '$' + name ) : 'All' ]
-				obj.patch = () => ({ demo : name })
+				obj.arg = () => ({ demo : ()=> name })
 			} )
 		}
 		
@@ -82,7 +82,7 @@ module $.$mol {
 		widget( name : string ) {
 			var Class : typeof $mol_viewer = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class().setup( obj => {
-				obj.argument = () => this.argument().sub( name )
+				obj.statePrefix = () => this.statePrefix() + name + '.'
 			} )
 		}
 

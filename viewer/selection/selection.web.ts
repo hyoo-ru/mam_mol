@@ -1,19 +1,13 @@
-document.addEventListener( 'selectionchange' , event => {
-	$mol_viewer_selection.position( void 0 )
-} )
-
-document.addEventListener( 'focusin' , event => {
-	const parents : Element[] = []
-	let element = event.srcElement
+module $ {
 	
-	while( element ) {
-		parents.push( element )
-		element = element.parentElement
-	}
+	document.addEventListener( 'selectionchange' , event => {
+		$mol_viewer_selection.position( void 0 )
+	} )
 	
-	$mol_viewer_selection.focused( parents )
-} )
-
-document.addEventListener( 'focusout' , event => {
-	$mol_viewer_selection.focused( [] )
-} )
+	document.addEventListener( 'focusin' , $mol_viewer_selection.onFocus )
+	document.addEventListener( 'focus' , $mol_viewer_selection.onFocus , true ) // FF
+	
+	document.addEventListener( 'focusout' , $mol_viewer_selection.onBlur )
+	document.addEventListener( 'blur' , $mol_viewer_selection.onBlur , true ) // FF
+	
+}

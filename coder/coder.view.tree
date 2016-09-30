@@ -4,4 +4,4 @@ $mol_coder $mol_viewer childs /
 		hint < hint < format \
 	< scanner $mol_clicker
 		eventClick > eventScan null
-		childs / < labelScan \Scan
+		childs / < labelScan @ \Scan

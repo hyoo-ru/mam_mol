@@ -4,7 +4,7 @@ $mol_perf_render $mol_viewer childs /
 			tagName \h2
 			childs / < title \$mol
 		< runner $mol_clicker_major
-			childs / < runnerLabel \Run
+			childs / < runnerLabel @ \Run
 			eventClick > eventRun null
 	< contenter $mol_scroller childs / < lister $mol_lister rows < rows /
 

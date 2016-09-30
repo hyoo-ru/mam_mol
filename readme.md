@@ -25,7 +25,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol_app_hello](app/hello) - very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
-* [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) realization ([online](http://eigenmethod.github.io/mol/#demo=mol_app_todomvc), [benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark))
+* [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/#demo=mol_app_todomvc), [benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark), [video comparison](https://www.webpagetest.org/video/view.php?id=160515_4f193e07f4c37dc3b72dd3799dd27397551690a2))
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
 * [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
 
@@ -164,40 +164,43 @@ Add **styles** at `./my/hello/hello.view.css`:
 # Rationale
 
 ## Zero configuration
+Instead of ensuring configurable under any wanting, we better concentrate on, that all would worked good directly from the box and does not bother $mol's developer by a typical configure. (But, nevertheless it does not excludes setup for your needs if it is required)
 
-Вместо обеспечения конфигурируемости под любую хотелку, мы концентрируемся на том, чтобы всё работало как следует сразу из коробки и не напрягало разработчика необходимостью типовой настройки (что, однако, не исключает возможности подстроить под себя, если требуется).
+For example if you download **[base PMS-project](http://github.com/nin-jin/pms/)** you'd have got that:
 
-Например, скачав **[базовый PMS-проект](http://github.com/nin-jin/pms/)** вы сразу получаете:
+**Building of JS and CSS bundles for different platforms.** A bundle can be built for any module. In this bundle would be sources of that module and sources all other modules from which the module depends on. Also there would not redundant modules in the bundle.  
 
-**Сборку JS и CSS бандлов под разные платформы.** Бандл можно собрать для любого модуля и в него войдут как собственно исходники этого модуля, так и исходники всех модулей, от которых тот зависит и ничего лишнего.
+There are the full set of supports bundles:
 
-Полный набор поддерживаемых бандлов:
+* `-/web.js` - JS for browser
+* `-/web.test.js` - JS with tests for a browser
+* `-/web.css` - CSS styles for a browser
+* `-/web.deps.json` - a map of dependencies modules for browser
+* `-/web.locale=en.json` - strings pulled from view.tree sources
+* `-/node.js` - JS for NodeJS
+* `-/node.test.js` - JS with tests for NodeJS
+* `-/node.deps.json` - a map of dependencies modules for NodeJS
 
-* `-/web.js` - JS для браузера
-* `-/web.test.js` - JS с тестами для браузера
-* `-/web.css` - CSS для браузера
-* `-/web.deps.json` - карта зависимостей модулей для браузера
-* `-/node.js` - JS для NodeJS
-* `-/node.test.js` - JS с тестами для NodeJS
-* `-/node.deps.json` - карта зависимостей модулей для NodeJS
+**Support of Source Maps**. Sources are compiled and integrate to maps, they are fully self-sufficient.
 
-**Поддержку Source Maps**. Исходники вкомпиливаются в сами карты, так что они вполне себе самодостаточны.
+**Development server**, witch would be compile bundles as needed. For example, 
+when requested `http://localhost:8080/mol/app/todomvc/-/web.js` the `js` bundle is being built of `mol/app/todomvc` for `web` environment. Rebuilding would be occur only if some source file would be changed.
 
-**Девелоперский сервер**, который собирает нужные бандлы по мере необходимости. Например, при запросе `http://localhost:8080/mol/app/todomvc/-/web.js` происходит сборка `js` бандла пакета `mol/app/todomvc` для `web` окружения. Пересборка будет произведена только при изменении файлов-исходников.
+**Transpilling of modern CSS into CSS supported by browsers** 
+([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): vendor prefixes and variables etc.
 
-**Трансляцию современного CSS в CSS поддерживаемый браузерами** ([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): расстановка префиксов, разворачивание переменных и тд.
+**Transpilling [TypeScript](https://github.com/Microsoft/TypeScript) into JS**. 
+In TS configuration enabled support decorators and disabled implicit `any` type, for prevent missing typing by change.
 
-**Трансляцию [TypeScript](https://github.com/Microsoft/TypeScript) в JS**. В TS включена поддержка аннотаций и выключена поддержка автоматической расстановки типа any, чтобы случайно не терять типизацию.
-
-**Отслеживание зависимостей по факту использования** и автоматическое включение необходимых модулей в результирующий бандл. То есть не надо писать никакие `include` или `require` - достаточно обращаться к сущности по полному имени вида `$mol_state_arg` или `$mol.state.arg` (смотря как она определена) в `*.ts`, `*.view.ts` и `*.view.tree` файлах. В CSS зависимости ищутся по вхождениям вида `[mol_checker_checked]` , `[mol_checker_checked=` или `.mol_checker_checked`.
+**Watching dependencies by fact of using** and inclusion the needed modules automatically at further bundle. You don't need to write `include` and `require` everything you need is to refer for essence by full name like `$mol_state_arg` and `$mol.state.arg` (looking at its definition) in `*.ts`, `*.view.ts`, `*.view.tree` and `*.jam.js` files. At CSS files its dependencies are looked for by entries like `[mol_checker_checked]` , `[mol_checker_checked=` and `.mol_checker_checked`.
 
 ## Lego components
 
-В $mol используется компонентный подход к построению интерфейса, при этом **каждая компонента самодостаточна** и может быть использована как самостоятельное приложение. Мелкие компоненты собираются вместе под крылом более крупной компоненты, и так далее по нарастающей.
+At $mol is used the component approach to the building of interface, however **every component is self-sufficient** and can be used as the self-sufficient application. Small components are aggregated inside of larger components etc.
 
-В отличие от многих других фреймворков, $mol не стремится изолировать внутренности компонент. Наоборот, предоставляется удобный механизм настройки их поведения, не требуя от создателя компоненты дополнительных телодвижений.
- 
- Например, чтобы задать список дочерних копонент для заданной, нужно просто переопределить свойство `childs` во view.tree:
+Unlike another frameworks the $mol does not seek to isolate the insides of the components. Vice versa, there is comfortable mechanism is provided for developers for configuration them, it is not required from the creator of the component to do any additional gestures.
+
+For example, to set the list of childs components you need to redefine `childs` property in view.tree
  
  ```tree
 $mol_viewer childs /
@@ -205,68 +208,69 @@ $mol_viewer childs /
 	< button2
  ```
 
- Или то же самое через TypeScript:
+Or the same code through TypeScript would be:
  
  ```typescript
  new $mol_viewer().setup( obj => {
  	obj.childs = ()=> [ this.button1() , this.button2() ]
  } )
  ```
+In both variants the compiler would verify existence of the property and accordance of the signature. In normal mode you don't need to work with fields of the object directly, so all definable properties 
+are public and can be safely overloaded.
 
-В обоих вариантах компилятор проверит существование свойства и соответствие сигнатуры. В норме, вам не требуется работать с полями объекта напрямую, поэтому все определяемые свойства являются публичными и могут быть безопасно перегружены.
+Details: [$mol_viewer](viewer).
 
 ## Lazyness
-
-[$mol_viewer](viewer) реализует концепцию ленивого рендеринга. [$mol_scroller](scroller) отслеживает позицию скролла и подсказывает вложенным компонентам о размере видимой области. [$mol_lister](lister) зная размер видимой области и минимальные размеры вложенных компонент, исключает из рендеринга те компоненты, которые точно не попадают в видимую область. А все остальные компоненты могут подсказывать ему о своём минимальном размере через свойство `heightMinimal`:
+[$mol_viewer](viewer) implements lazy rendering. [$mol_scroller](scroller) is watching scroll's position and suggest to the embedded components about the view height. [$mol_lister](lister) knowing about the view height and minimal sizes of the embedded components, it excludes from rendering process the components that is not got into viewport for sure. And all other components can suggest it about their minimal size through `heightMinimal` property.
 
 ```
 $my_icon $mol_viewer
 	heightMinimal 16
 ```
-
-В результате, получается, что открытие любого экрана происходит практически мгновенно, независимо от объёмов выводимых данных. А раз данные не выводятся, то и запросов за ними произведено не будет, что позволяет загружать их не все сразу, а по мере необходимости. Всё это возможно благодаря реактивной архитектуре, пронизывающей все слои приложения.
+At the result it come out than opening any window occur while instant time. It's independent of output data size. And since data would not be rendered, then any requests would not be proceeded. It's allowed us to download them partly, when they are needed. That features are possible due to reactive architecture, that are penetrated all layers of application.
 
 ## Reactivity
+Unlike the control-flow architectures, in $mol was implemented the data-flow architecture. All applications are described as a set of classes, having properties. Every property is described as some function from another property (and properties of another classes too). Properties, to which were appealed while function processing were saved as dependencies of our property. In case of changing their values, all dependant on them properties would be invalidated cascaded. And appealing to non relevant property would lead to its pre-actualization.
 
-В отличие от control-flow архитектур, в $mol реализована data-flow архитектура. Всё приложение описывается как набор классов, имеющих свойства. Каждое свойство описывается как некоторая функция от других свойства (и свойств других классов в том числе). Свойства, к которым было обращение в процессе выполнения функции запоминаются как зависимости нашего свойства. В случае изменения их значения, все зависимые от них свойства каскадно инвалидируются. А обращение к не актуальному свойству приводит к его предварительной актуализации.
+In this way the whole application at the execution stage represents a huge tree of dependencies, at the root of the tree is located the special property, which in case of invalidation would actualize itself automatically. And as any property always knows, whether something depends from it or not, then it is given a simple and reliable mechanism of controlling lifecycle of objects - they creates if the dependence appears and are destroyed when nothing depend from it. It's solved two fundamental problem: resources leaks and cache invalidation. 
 
-Таким образом всё приложение на этапе исполнения представляет собой огромное дерево зависимостей, в корне которого находится особое свойство, которое в случае инвалидации автоматические себя актуализирует. А так как любое свойство всегда знает, зависит ли от него кто-нибудь или нет, то это даёт простой и надёжный механизм контроля жизненного цикла объектов - они создаются при появлении зависимости и уничтожаются, когда от них никто не зависит. Это в корне решает две фундаментальные проблемы: утечки ресурсов и инвалидация кеша.
-
-Кроме того, реактивная архитектура позволяет элегантно абстрагировать код от асинхронных операций. Если функция не может вернуть значение сразу, она может кинуть `$mol_atom_wait` исключение, что пометит часть дерева состояний как "ожидающие результата". Когда результат будет получен - можно вставить его непосредственно в свойство и приложение перестроится под новое состояние.
+Besides, the reactive architecture allows us to abstract code elegantly from asynchronous operations. If the function can't return value at once, it can throws the exception `$mol_atom_wait`, it is marked part of the tree of states as "waiting of results". When the result would be retrieved - it could be inserted into property directly and application would be reconstructed for the new state.
 
 ```typescript
-class Greeter {
-	
-	// Define memoized property with push support
-	@ $mol_prop()
-	greeting( ...diff : string[] ) : string {
+module $ {
+	export class $my_greeter {
 		
-		// Defered push value to property
-		setTimeout( () => {
-			this.greeting( void 0 , 'Hello!' )
-		} , 1000 )
+		// Define memoized property with push support
+		@ $mol_prop()
+		greeting( ...diff : string[] ) : string {
+			
+			// Defered push value to property
+			setTimeout( () => {
+				this.greeting( void 0 , 'Hello!' )
+			} , 1000 )
+			
+			// throw special error to notify about waiting
+			throw new $mol_atom_wait( 'Wait!' )
+		}
 		
-		// throw special error to notify about waiting
-		throw new $mol_atom_wait( 'Wait!' )
+		// Define memoized property without push support
+		@ $mol_prop()
+		greetingLength() {
+			// Using other properties in synchronous style
+			return this.greeting().length
+		}
+		
 	}
-	
-	// Define memoized property without push support
-	@ $mol_prop()
-	greetingLength() {
-		// Using other properties in synchronous style
-		return this.greeting().length
-	}
-	
 }
 ```
 
-Подробности: [$mol_prop](prop), [$mol_atom](atom).
+Details: [$mol_prop](prop), [$mol_atom](atom).
 
 ## Debugging
+A special attention is payed while developing $mol to debugging possibilities and researching of code's working process. For example for handling exceptions we don't using (`try-catch-throw`),
+ because it masks the true place where exceptions were thrown, it complicates debugging. 
 
-Особое внимание при разработке $mol уделяется возможностям отладки и исследования работы кода. Например, для обработки исключительных ситуаций нигде не используется перехват их с пробросом (`try-catch-throw`), так как это маскирует истинное место возникновения исключительной ситуации, усложняя отладку. 
-
-Для каждого DOM-элемента автоматически формируется человекопонятный идентификатор вида `$mol_app_todomvc.root(0).taskRow(0).titler()`, который является валидным яваскриптом, который можно исполнить в консоли, получив ссылку на компонент, которому этот элемент соответствует. Развернув содержимое компонента вы получие имена и значения его полей вида:
+For every DOM-element is formed a people friendly `id` automatically like `$mol_app_todomvc.root(0).taskRow(0).titler()`, which is valid javascript code, this one could be executed at a console, received a link to the component, whom the component is corresponds to. Unfolding the content of the component you'd see names and values its fields like:
 
 ```
 $mol_app_todomvc
@@ -277,8 +281,7 @@ $mol_app_todomvc
     taskRow(1) : $mol_app_todomvc_taskRow
     taskRows() : Array[2]
 ```
-
-Имя поля соответствует вызову свойства, через которое доступно содержимое этого поля. А благодаря именованию классов и функций через подчёркивания вы всегда можете понять инстанс какого именно класса перед вами и можете быстро найти его в коде обычным поиском по подстроке. 
+The name of the field corresponds to calling the property, the content of the field would be available through. And thanks to naming classes and functions through underscoring you'd always get to know which class instance in front of you and could briefly find it at code by default searching by the substring.
 
 # Modules
 
@@ -309,7 +312,7 @@ $mol_app_todomvc
 
 * **[$mol_state_arg](state/arg)** - arguments state (location/argv)
 * **[$mol_state_local](state/local)** - persistent local state (localStorage)
-* **[$mol_state_session](state/session)** - session temporaty state (sessionStorage)
+* **[$mol_state_session](state/session)** - session temporary state (sessionStorage)
 * **[$mol_state_history](state/history)** - browser history bound state
 * **[$mol_state_stack](state/stack)** - state of current stack of execution
 
@@ -392,3 +395,4 @@ $mol_app_todomvc
 # Cool stuff
 
 * **[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)**
+* **[Sources visualization](http://veniversum.me/git-visualizer/?owner=eigenmethod&repo=mol)**

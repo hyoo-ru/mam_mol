@@ -34,10 +34,10 @@ module $.$mol {
 		}
 		
 		eventPress( ...diff : KeyboardEvent[] ) {
-			let code = diff[ 0 ][ 'code' ] || diff[ 0 ].key
+			let code = ( diff[ 0 ][ 'code' ] || diff[ 0 ].key ).replace( /^Arrow|bar$/ , '' )
 			let selectedRow = this.selectedRow()
 			let suggestsLength = this.lister().childsVisible().length
-			let isSelectedKey = code === 'Enter' || code === 'ArrowRight'
+			let isSelectedKey = code === 'Enter' || code === 'Right'
 			let spaceKey = ( code === 'Space' ) ? ' ' : ''
 			
 			if( isSelectedKey || spaceKey ) {
@@ -49,12 +49,12 @@ module $.$mol {
 				this.value( this.suggests()[ selectedRow - 1 ] + spaceKey )
 			}
 			
-			if( code === 'ArrowDown' ) {
+			if( code === 'Down' ) {
 				selectedRow = selectedRow === suggestsLength ? 0 : selectedRow + 1
 				this.selectedRow( selectedRow )
 			}
 			
-			if( code === 'ArrowUp' ) {
+			if( code === 'Up' ) {
 				selectedRow = selectedRow === 0 ? suggestsLength : selectedRow - 1
 				this.selectedRow( selectedRow )
 			}
