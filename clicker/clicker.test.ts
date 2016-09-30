@@ -1,30 +1,32 @@
 module $.$mol {
 	
-	/// Handle clicks by default
-	$mol_test( test => {
-		let clicked = false
+	$mol_test({
 		
-		const clicker = new $mol_clicker
-		clicker.eventClick = event => { clicked = true }
+		'handle clicks by default'() {
+			let clicked = false
+			
+			const clicker = new $mol_clicker
+			clicker.eventClick = event => { clicked = true }
+			
+			const element = <HTMLButtonElement> clicker.DOMTree()
+			element.click()
+			
+			$mol_assert_ok( clicked )
+		} ,
 		
-		const element = <HTMLButtonElement> clicker.DOMTree()
-		element.click()
-		
-		test.ok( clicked )
-	} )
+		'no handle clicks if disabled'() {
+			let clicked = false
+			
+			const clicker = new $mol_clicker
+			clicker.eventClick = event => { clicked = true }
+			clicker.enabled = ()=> false
+			
+			const element = <HTMLButtonElement> clicker.DOMTree()
+			element.click()
+			
+			$mol_assert_not( clicked )
+		} , 
 	
-	/// Not handle clicks if disabled
-	$mol_test( test => {
-		let clicked = false
-		
-		const clicker = new $mol_clicker
-		clicker.eventClick = event => { clicked = true }
-		clicker.enabled = ()=> false
-		
-		const element = <HTMLButtonElement> clicker.DOMTree()
-		element.click()
-		
-		test.not( clicked )
-	} )
+	})
 	
 }
