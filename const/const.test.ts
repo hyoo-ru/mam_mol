@@ -1,12 +1,14 @@
 module $ {
-	
-	$mol_test( test => {
+	$mol_test( { 
 		
-		const foo = { bar : $mol_const( Math.random() ) }
+		'const returns stored value'() {
 		
-		test.equal( foo.bar() , foo.bar() )
-		test.equal( foo.bar() , foo.bar['()'] )
-		
+			const foo = { bar : $mol_const( Math.random() ) }
+			
+			$mol_assert_equal( foo.bar() , foo.bar() )
+			$mol_assert_equal( foo.bar() , foo.bar['()'] )
+			
+		} ,
+
 	} )
-	
 }
