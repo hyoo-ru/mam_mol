@@ -177,6 +177,7 @@ There are the full set of supports bundles:
 * `-/web.test.js` - JS with tests for a browser
 * `-/web.css` - CSS styles for a browser
 * `-/web.deps.json` - a map of dependencies modules for browser
+* `-/web.locale=en.json` - strings pulled from view.tree sources
 * `-/node.js` - JS for NodeJS
 * `-/node.test.js` - JS with tests for NodeJS
 * `-/node.deps.json` - a map of dependencies modules for NodeJS
