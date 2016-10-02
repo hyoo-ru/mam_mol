@@ -1,0 +1,6 @@
+$mol_texter_demo $mol_texter text \
+	\# Hello!
+	\I'am some **text**!
+	\```typescript
+	\some("code")
+	\```

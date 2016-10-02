@@ -1,0 +1,10 @@
+$mol_texter $mol_viewer
+	text \
+	childs < blockers /
+	blocker# $mol_texter_blocker
+		childs < blockContent# /
+		type < blockType# \
+
+$mol_texter_blocker $mol_viewer
+	heightMinimal 20
+	attr * mol_texter_blocker_type < type \

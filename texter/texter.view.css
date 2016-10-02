@@ -1,0 +1,15 @@
+[mol_texter] {
+	white-space: pre-line;
+}
+
+[mol_texter_blocker] {
+	margin: 1rem 0;
+}
+
+[mol_texter_blocker_type="header"] {
+	font-size: 2rem;
+}
+
+[mol_texter_blocker_type="code"] {
+	font-family: monospace;
+}
