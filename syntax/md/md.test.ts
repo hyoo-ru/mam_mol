@@ -1,6 +1,15 @@
 module $ {
 	$mol_test({
 		
+		'only text'() {
+			
+			const tokens = $mol_syntax_md_flow.tokenize( 'Hello,\nWorld..\n\nof Love!' )
+			
+			$mol_assert_equal( tokens.length , 4 )
+			$mol_assert_equal( tokens.map( token => token.found ).join( '|' ) , 'Hello,\n|World..\n|\n|of Love!' )
+			
+		} ,
+		
 		'headers and text'() {
 			
 			const tokens = $mol_syntax_md_flow.tokenize( '# Header1\nHello!\n## Header2' )
