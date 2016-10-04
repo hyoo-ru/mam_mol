@@ -218,7 +218,7 @@ new $mol_viewer().setup( obj => {
 In both variants the compiler would verify existence of the property and accordance of the signature. In normal mode you don't need to work with fields of the object directly, so all definable properties 
 are public and can be safely overloaded.
 
-Details: [$mol_viewer](viewer).
+Details about viewers and `view.tree` language: [$mol_viewer](viewer).
 
 ## Lazyness
 [$mol_viewer](viewer) implements lazy rendering. [$mol_scroller](scroller) is watching scroll's position and suggest to the embedded components about the view height. [$mol_lister](lister) knowing about the view height and minimal sizes of the embedded components, it excludes from rendering process the components that is not got into viewport for sure. And all other components can suggest it about their minimal size through `heightMinimal` property.
@@ -320,8 +320,8 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## Communication modules
 
-* **[$mol_http_request](http/request)** - Reactive HTTP Request
 * **[$mol_http_resource](http/resource)** - Reactive REST HTTP resource
+* **[$mol_http_request](http/request)** - Reactive HTTP Request
 
 ## Simple components
 
@@ -363,7 +363,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## Data formats
 
-* **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d)
+* **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d) (`view.tree` language descripted at [$mol_viewer](viewer))
 
 ## Math
 
