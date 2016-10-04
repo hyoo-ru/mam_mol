@@ -1,0 +1,31 @@
+$mol_texter $mol_lister
+	text \
+	rower# $mol_texter_rower
+		childs < blockContent# /
+		type < blockType# \
+	spanner# $mol_texter_spanner
+	linker# $mol_texter_linker
+	imager# $mol_texter_imager
+
+$mol_texter_rower $mol_viewer
+	heightMinimal 40
+	attr * mol_texter_type < type \
+
+$mol_texter_spanner $mol_viewer
+	tagName \span
+	attr * mol_texter_type > type \
+	> childs /
+
+$mol_texter_linker $mol_viewer
+	tagName \a
+	attr *
+		mol_texter_type > type \
+		href > link \
+	> childs /
+
+$mol_texter_imager $mol_viewer
+	tagName \img
+	attr *
+		mol_texter_type > type \
+		src > link \
+		alt > title \

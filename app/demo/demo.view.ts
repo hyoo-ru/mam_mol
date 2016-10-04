@@ -1,13 +1,18 @@
 module $.$mol {
 	export class $mol_app_demo extends $.$mol_app_demo {
 		
-		main() {
+		main() : $mol_viewer[] {
 			var selected = this.selected()
 			if( selected ) {
 				return [ this.detailer( selected ) ]
 			} else {
-				return [ ]
+				return [ this.welcomer() ]
 			}
+		}
+		
+		@ $mol_prop()
+		welcomeText() {
+			return $mol_http_resource.item( 'readme.md' ).text()
 		}
 		
 		side() {
