@@ -35,6 +35,7 @@ module $ {
 					this.expressBodier() ,
 					this.expressGenerator() ,
 					this.expressFiler() ,
+					this.expressDirector() ,
 				]
 			)
 		}
@@ -57,6 +58,10 @@ module $ {
 					maxAge : this.cacheTime()
 				}
 			)
+		}
+		
+		expressDirector() {
+			return $node['serve-index']( this.rootPublic() , { icons : true } )
 		}
 		
 		expressGenerator() {
