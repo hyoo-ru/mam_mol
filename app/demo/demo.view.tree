@@ -3,6 +3,9 @@ $mol_app_demo $mol_stacker
 	addon $mol_pager
 		title < title @ \Demos
 		body < optioner $mol_lister rows < options /
+	welcomer $mol_scroller
+		childs / < welcomeTexter $mol_texter
+			text < welcomeText \
 
 $mol_app_demo_pager $mol_pager
 	head /
