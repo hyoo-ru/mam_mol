@@ -1,0 +1,3 @@
+$mol_sectioner_demo $mol_sectioner
+	head \Section header
+	content $mol_filler
