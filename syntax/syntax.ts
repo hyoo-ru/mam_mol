@@ -58,7 +58,9 @@ module $ {
 			parsing : while( position < text.length ) {
 				
 				regExp.lastIndex = position
-				var found= regExp.exec( text )
+				var found = regExp.exec( text )
+				
+				if( position === regExp.lastIndex ) throw new Error( 'Empty token' )
 				position = regExp.lastIndex
 				
 				var prefix = found[ 1 ]
