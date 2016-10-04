@@ -24,9 +24,9 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 * [$mol_app_hello](app/hello) - very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
-* [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
 * [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/#demo=mol_app_todomvc), [benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark), [video comparison](https://www.webpagetest.org/video/view.php?id=160515_4f193e07f4c37dc3b72dd3799dd27397551690a2))
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
+* [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
 * [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
 
 # [Benchmarks](perf)
@@ -79,6 +79,7 @@ Add **web entry point** at `./my/hello/index.html`:`
 Your application will be served at **`http://localhost:8080/my/hello/`**.
 
 Add **declarative component description** at `./my/hello/hello.view.tree` with string input field and greeting message:
+
 ```tree
 $my_hello $mol_viewer childs /
 	< input $mol_stringer
@@ -183,11 +184,9 @@ There are the full set of supports bundles:
 
 **Support of Source Maps**. Sources are compiled and integrate to maps, they are fully self-sufficient.
 
-**Development server**, witch would be compile bundles as needed. For example, 
-when requested `http://localhost:8080/mol/app/todomvc/-/web.js` the `js` bundle is being built of `mol/app/todomvc` for `web` environment. Rebuilding would be occur only if some source file would be changed.
+**Development server**, witch would be compile bundles as needed. For example, when requested `http://localhost:8080/mol/app/todomvc/-/web.js` the `js` bundle is being built of `mol/app/todomvc` for `web` environment. Rebuilding would be occur only if some source file would be changed.
 
-**Transpilling of modern CSS into CSS supported by browsers** 
-([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): vendor prefixes and variables etc.
+**Transpilling of modern CSS into CSS supported by browsers** ([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): vendor prefixes and variables etc.
 
 **Transpilling [TypeScript](https://github.com/Microsoft/TypeScript) into JS**. 
 In TS configuration enabled support decorators and disabled implicit `any` type, for prevent missing typing by change.
@@ -201,20 +200,21 @@ At $mol is used the component approach to the building of interface, however **e
 Unlike another frameworks the $mol does not seek to isolate the insides of the components. Vice versa, there is comfortable mechanism is provided for developers for configuration them, it is not required from the creator of the component to do any additional gestures.
 
 For example, to set the list of childs components you need to redefine `childs` property in view.tree
- 
- ```tree
+
+```tree
 $mol_viewer childs /
 	< button1
 	< button2
- ```
+```
 
 Or the same code through TypeScript would be:
- 
- ```typescript
- new $mol_viewer().setup( obj => {
- 	obj.childs = ()=> [ this.button1() , this.button2() ]
- } )
- ```
+
+```typescript
+new $mol_viewer().setup( obj => {
+	obj.childs = ()=> [ this.button1() , this.button2() ]
+} )
+```
+
 In both variants the compiler would verify existence of the property and accordance of the signature. In normal mode you don't need to work with fields of the object directly, so all definable properties 
 are public and can be safely overloaded.
 
@@ -227,6 +227,7 @@ Details: [$mol_viewer](viewer).
 $my_icon $mol_viewer
 	heightMinimal 16
 ```
+
 At the result it come out than opening any window occur while instant time. It's independent of output data size. And since data would not be rendered, then any requests would not be proceeded. It's allowed us to download them partly, when they are needed. That features are possible due to reactive architecture, that are penetrated all layers of application.
 
 ## Reactivity
@@ -281,6 +282,7 @@ $mol_app_todomvc
     taskRow(1) : $mol_app_todomvc_taskRow
     taskRows() : Array[2]
 ```
+
 The name of the field corresponds to calling the property, the content of the field would be available through. And thanks to naming classes and functions through underscoring you'd always get to know which class instance in front of you and could briefly find it at code by default searching by the substring.
 
 # Modules
