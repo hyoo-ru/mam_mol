@@ -82,7 +82,7 @@ Add **declarative component description** at `./my/hello/hello.view.tree` with s
 
 ```tree
 $my_hello $mol_viewer childs /
-	< input $mol_stringer
+	< namer $mol_stringer
 		hint \Name
 		value > name \
 	< message \
@@ -103,7 +103,7 @@ module $ { export class $my_hello extends $mol_viewer {
 	/// 	hint \Name
 	/// 	value > name
 	@ $mol_prop()
-	input( ...diff : any[] ) {
+	namer( ...diff : any[] ) {
 		return ( diff[0] !== void 0 ) ? diff[0] : new $mol_stringer().setup( __ => { 
 			__.hint = () => "Name"
 			__.value = ( ...diff : any[] ) => this.name(  ...diff )
@@ -119,7 +119,7 @@ module $ { export class $my_hello extends $mol_viewer {
 	/// 	< input 
 	/// 	< message
 	childs() {
-		return [].concat( this.input() , this.message() )
+		return [].concat( this.namer() , this.message() )
 	}
 
 } }
