@@ -1,3 +1,9 @@
-# $mol_filter
+# $mol_filler
 
-Component to filter the text.
+Component to print large bulk of text.
+
+## Usage example
+
+```tree
+$mol_filler
+```

@@ -168,8 +168,7 @@ Instead of ensuring configurable under any wanting, we better concentrate on, th
 
 For example if you download **[base PMS-project](http://github.com/nin-jin/pms/)** you'd have got that:
 
-**Building of JS and CSS bundles for different platforms.** A bundle can be built for any module. In this bundle would be sources 
-of that module and sources all other modules from which the module depends on. Also there would not redundant modules in the bundle.  
+**Building of JS and CSS bundles for different platforms.** A bundle can be built for any module. In this bundle would be sources of that module and sources all other modules from which the module depends on. Also there would not redundant modules in the bundle.  
 
 There are the full set of supports bundles:
 
@@ -177,6 +176,7 @@ There are the full set of supports bundles:
 * `-/web.test.js` - JS with tests for a browser
 * `-/web.css` - CSS styles for a browser
 * `-/web.deps.json` - a map of dependencies modules for browser
+* `-/web.locale=en.json` - strings pulled from view.tree sources
 * `-/node.js` - JS for NodeJS
 * `-/node.test.js` - JS with tests for NodeJS
 * `-/node.deps.json` - a map of dependencies modules for NodeJS
@@ -190,21 +190,15 @@ when requested `http://localhost:8080/mol/app/todomvc/-/web.js` the `js` bundle 
 ([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): vendor prefixes and variables etc.
 
 **Transpilling [TypeScript](https://github.com/Microsoft/TypeScript) into JS**. 
-In TS configuration enabled support annotation and automatic arrangement `any` type, for prevent missing typing by change.
+In TS configuration enabled support decorators and disabled implicit `any` type, for prevent missing typing by change.
 
-**Watching dependencies by fact of using** and inclusion the needed modules automatically at further bundle.
-You don't need to write `include` and `require` everything you need is to refer for essence by full name 
-like `$mol_state_arg` and `$mol.state.arg` (looking at its definition) in `*.ts`, `*.view.ts`, `*.view.tree` and `*.jam.js` files. 
-At CSS files its dependencies are looked for by entries 
-like `[mol_checker_checked]` , `[mol_checker_checked=` and `.mol_checker_checked`.
+**Watching dependencies by fact of using** and inclusion the needed modules automatically at further bundle. You don't need to write `include` and `require` everything you need is to refer for essence by full name like `$mol_state_arg` and `$mol.state.arg` (looking at its definition) in `*.ts`, `*.view.ts`, `*.view.tree` and `*.jam.js` files. At CSS files its dependencies are looked for by entries like `[mol_checker_checked]` , `[mol_checker_checked=` and `.mol_checker_checked`.
 
 ## Lego components
 
 At $mol is used the component approach to the building of interface, however **every component is self-sufficient** and can be used as the self-sufficient application. Small components are aggregated inside of larger components etc.
 
-Unlike another frameworks the $mol does not seek to isolate the insides of the components. Vice versa, there is comfortable 
-mechanism is provided for developers for configuration them, it is not required from the creator 
-of the component to do any additional gestures.
+Unlike another frameworks the $mol does not seek to isolate the insides of the components. Vice versa, there is comfortable mechanism is provided for developers for configuration them, it is not required from the creator of the component to do any additional gestures.
 
 For example, to set the list of childs components you need to redefine `childs` property in view.tree
  
@@ -221,61 +215,62 @@ Or the same code through TypeScript would be:
  	obj.childs = ()=> [ this.button1() , this.button2() ]
  } )
  ```
-In both variants the compiler would verify existence of the property and accordance of the signature.
-In normal mode you don't need to work with fields of the object directly, so all definable properties 
+In both variants the compiler would verify existence of the property and accordance of the signature. In normal mode you don't need to work with fields of the object directly, so all definable properties 
 are public and can be safely overloaded.
 
+Details: [$mol_viewer](viewer).
+
 ## Lazyness
-[$mol_viewer](viewer) realizes the conception of lazy rendering. [$mol_scroller](scroller) is watching scroll's position and suggest to the embedded components about the view height. [$mol_lister](lister) knowing about the view height and minimal sizes of the embedded components, it excludes from rendering process the components that is not got into viewport for sure. And all other components can suggest it about their minimal size through `heightMinimal` property.
+[$mol_viewer](viewer) implements lazy rendering. [$mol_scroller](scroller) is watching scroll's position and suggest to the embedded components about the view height. [$mol_lister](lister) knowing about the view height and minimal sizes of the embedded components, it excludes from rendering process the components that is not got into viewport for sure. And all other components can suggest it about their minimal size through `heightMinimal` property.
 
 ```
 $my_icon $mol_viewer
 	heightMinimal 16
 ```
-At the result it come out than opening any window occur while instant time. It's independent of output data size.
-And since data would not be rendered, then any requests would not be proceeded. It's allowed us to download them partly, when they are needed. That features are possible due to reactive architecture, that are penetrated all layers of application.
+At the result it come out than opening any window occur while instant time. It's independent of output data size. And since data would not be rendered, then any requests would not be proceeded. It's allowed us to download them partly, when they are needed. That features are possible due to reactive architecture, that are penetrated all layers of application.
 
 ## Reactivity
-Unlike the control-flow architectures, in $mol was implemented the data-flow architecture. All applications are described as a set of classes, having properties. Every property is described as some function from another property ( and properties another classes too). Properties, to which were appealed while function processing were saved as dependencies of our property. In case of changing their values, all dependant on them properties would be invalidated cascaded. And appealing to non relevant property would lead to its pre-actualization.
+Unlike the control-flow architectures, in $mol was implemented the data-flow architecture. All applications are described as a set of classes, having properties. Every property is described as some function from another property (and properties of another classes too). Properties, to which were appealed while function processing were saved as dependencies of our property. In case of changing their values, all dependant on them properties would be invalidated cascaded. And appealing to non relevant property would lead to its pre-actualization.
 
 In this way the whole application at the execution stage represents a huge tree of dependencies, at the root of the tree is located the special property, which in case of invalidation would actualize itself automatically. And as any property always knows, whether something depends from it or not, then it is given a simple and reliable mechanism of controlling lifecycle of objects - they creates if the dependence appears and are destroyed when nothing depend from it. It's solved two fundamental problem: resources leaks and cache invalidation. 
 
-Besides, the reactive architecture allows us to abstract code elegantly from asynchronous operations. If the function can't return value at once, it can throws the exception `$mol_atom_wait`, it is marked part of the tree of states as "waiting of results". When the result would be retrieved - it could be inserted into property directly and an application would be reconstructed for the new state.
+Besides, the reactive architecture allows us to abstract code elegantly from asynchronous operations. If the function can't return value at once, it can throws the exception `$mol_atom_wait`, it is marked part of the tree of states as "waiting of results". When the result would be retrieved - it could be inserted into property directly and application would be reconstructed for the new state.
 
 ```typescript
-class Greeter {
-	
-	// Define memoized property with push support
-	@ $mol_prop()
-	greeting( ...diff : string[] ) : string {
+module $ {
+	export class $my_greeter {
 		
-		// Defered push value to property
-		setTimeout( () => {
-			this.greeting( void 0 , 'Hello!' )
-		} , 1000 )
+		// Define memoized property with push support
+		@ $mol_prop()
+		greeting( ...diff : string[] ) : string {
+			
+			// Defered push value to property
+			setTimeout( () => {
+				this.greeting( void 0 , 'Hello!' )
+			} , 1000 )
+			
+			// throw special error to notify about waiting
+			throw new $mol_atom_wait( 'Wait!' )
+		}
 		
-		// throw special error to notify about waiting
-		throw new $mol_atom_wait( 'Wait!' )
+		// Define memoized property without push support
+		@ $mol_prop()
+		greetingLength() {
+			// Using other properties in synchronous style
+			return this.greeting().length
+		}
+		
 	}
-	
-	// Define memoized property without push support
-	@ $mol_prop()
-	greetingLength() {
-		// Using other properties in synchronous style
-		return this.greeting().length
-	}
-	
 }
 ```
 
 Details: [$mol_prop](prop), [$mol_atom](atom).
 
 ## Debugging
-A special attention is payed while developing $mol to debugging possibilities and researching of code's working process. For example for handling exceptions we don't use (`try-catch-throw`),
+A special attention is payed while developing $mol to debugging possibilities and researching of code's working process. For example for handling exceptions we don't using (`try-catch-throw`),
  because it masks the true place where exceptions were thrown, it complicates debugging. 
 
-For every DOM-element is formed a people friendly `id` automatically like `$mol_app_todomvc.root(0).taskRow(0).titler()`,
-which is valid javascript code, this one could be executed at a console, received a link to the component, whom the component is corresponds to. Unfolding the content of the component you'd see names and values its fields like:
+For every DOM-element is formed a people friendly `id` automatically like `$mol_app_todomvc.root(0).taskRow(0).titler()`, which is valid javascript code, this one could be executed at a console, received a link to the component, whom the component is corresponds to. Unfolding the content of the component you'd see names and values its fields like:
 
 ```
 $mol_app_todomvc

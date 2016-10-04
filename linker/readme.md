@@ -6,13 +6,15 @@ The component have an ability to patch the link leading to the current page. It 
 
 ## Properties
 
-**`patch()`**
+**`arg()`**
 
-The patch could be set as the dictionary like `{ page : 'main' }`. 
+The patch could be set as the dictionary like `{ color : ()=> 'red' , sidebar : null }`. 
 
 ```
 $mol_linker
-	arg * color \red
+	arg *
+		color \red
+		sidebar null
 	childs / \Red
 ```
 

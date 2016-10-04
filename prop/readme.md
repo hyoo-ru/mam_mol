@@ -2,7 +2,7 @@
 
 ## One-value properties
 
-Properties of a the same values, in terminology of mol is polymorphic functions with the following type of interface:
+Properties of a the same values, in terminology of mol is polymorphic methods with the following type of interface:
 
 ```ts
 myProperty< Value >() : Value
