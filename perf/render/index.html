@@ -141,39 +141,41 @@
 
             function _react() {
                 var Class = React.createClass({
-					getDefaultProps: function(){ return { runnerLabel : 'Run' , data : [] } },
+					getInitialState: function() {
+						return {data: [], selected: null, runnerLabel: "Run"}
+		    		},
 					
                     select: function(data) {
-						this.props.selected = data.id;
-                        this.forceUpdate();
+						this.setState({selected: data.id})
                     },
+			
+		    		onRunClick: function() {
+						requestAnimationFrame( function() {
+							var data = _buildData(),
+							date = Date.now();
+							self.setState({data: data, selected: null})
+							setTimeout(function () {
+								self.setState({runnerLabel: (Date.now() - date) + " ms"})
+							})
+						} )
+		    		},
 
                     render: function() {
                         var items = [];
                         for (var i = 0; i < this.props.data.length; i++) {
-                            items.push(React.createElement("li", { key: i,className: this.props.selected === this.props.data[i].id ? "selected" : "", onClick: this.select.bind(null, this.props.data[i]) },
+                            items.push(React.createElement("li", { key: i,className: this.state.selected === this.props.data[i].id ? "selected" : "", onClick: this.select.bind(this, this.props.data[i]) },
 								React.createElement("span", null, this.props.data[i].label)
                             ));
                         }
 						var self = this
 
                         return React.createElement("section", null,
-							React.createElement("header", {key:1}, [
-								React.createElement("h2", {key:3}, 'React' ),
-								this.runner = React.createElement("button", { key:4,onClick : function(){
-									requestAnimationFrame( function() {
-										var data = _buildData(),
-											date = Date.now();
-
-										self.setProps({data: data, selected: null})
-										setTimeout(function () {
-											self.setProps({runnerLabel: (Date.now() - date) + " ms"})
-										})
-									} )
-								}}, this.props.runnerLabel )
-							]) , 
-							React.createElement("ul", {key:2}, items)
-						)
+							React.createElement("header", null,
+								React.createElement("h2", 'React'),
+								React.createElement("button", {onClick : this.onRunClick}, this.state.runnerLabel )
+							),
+							React.createElement("ul", items)
+						);
                     }
                 });
 				
