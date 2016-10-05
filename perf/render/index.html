@@ -144,12 +144,13 @@
 					getInitialState: function() {
 						return {data: [], selected: null, runnerLabel: "Run"}
 		    		},
-					
+
                     select: function(data) {
 						this.setState({selected: data.id})
                     },
-			
+
 		    		onRunClick: function() {
+                        var self = this;
 						requestAnimationFrame( function() {
 							var data = _buildData(),
 							date = Date.now();
@@ -162,23 +163,23 @@
 
                     render: function() {
                         var items = [];
-                        for (var i = 0; i < this.props.data.length; i++) {
-                            items.push(React.createElement("li", { key: i,className: this.state.selected === this.props.data[i].id ? "selected" : "", onClick: this.select.bind(this, this.props.data[i]) },
-								React.createElement("span", null, this.props.data[i].label)
+                        for (var i = 0; i < this.state.data.length; i++) {
+                            items.push(React.createElement("li", { key: i,className: this.state.selected === this.state.data[i].id ? "selected" : "", onClick: this.select.bind(this, this.props.data[i]) },
+								React.createElement("span", null, this.state.data[i].label)
                             ));
                         }
 						var self = this
 
                         return React.createElement("section", null,
 							React.createElement("header", null,
-								React.createElement("h2", 'React'),
+								React.createElement("h2", null, "React"),
 								React.createElement("button", {onClick : this.onRunClick}, this.state.runnerLabel )
 							),
-							React.createElement("ul", items)
+							React.createElement("ul", null, items)
 						);
                     }
                 });
-				
+
 				var app = new Class({ data: [], selected: null })
 				React.render(app, document.getElementById("react"));
             }
