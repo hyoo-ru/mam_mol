@@ -2,8 +2,6 @@ module $ {
 	
 	export class $mol_http_request extends $mol_object {
 		
-		static native : () => XMLHttpRequest
-		
 		uri() { return '' }
 		
 		method() { return 'Get' }
@@ -14,7 +12,7 @@ module $ {
 		native() {
 			if( this[ 'native()' ] ) return this[ 'native()' ]
 			
-			var next = this[ 'native()' ] = this.Class().native()
+			var next = this[ 'native()' ] = $mol_http_request_native()
 			
 			next.onload = ( event : Event )=> {
 				if( Math.floor( next.status / 100 ) === 2 ) {

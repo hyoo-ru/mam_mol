@@ -1,0 +1,19 @@
+$mol_texter_demo $mol_texter text \
+	\# [Benchmarks](perf)
+	\
+	\* $mol_perf_render - simple benchmark of rendering ([online](http://eigenmethod.github.io/mol/perf/render/))
+	\* [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)
+	\
+	\# Quick start
+	\
+	\**Create PMS project**
+	\
+	\Easy way is checkout [this preconfigured PMS repository](http://github.com/nin-jin/pms/) and start dev server:
+	\
+	\```sh
+	\git clone https://github.com/nin-jin/pms.git ./pms && cd pms
+	\npm start
+	\```
+	\
+	\ [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
+

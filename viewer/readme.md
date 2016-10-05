@@ -1,6 +1,6 @@
 # $mol_viewer
 
-The base class for all visual components. It provides the infrastructure for reactive lazy rendering, handling exceptions. 
+The base class for all visual components. It provides the infrastructure for reactive lazy rendering, handling exceptions. By default it finds or creates a `div` without child node changing and additional attributes, fields and event handler creation. You can customize it by inheritance or properties overriding at instantiating.
 
 ## Properties
 
