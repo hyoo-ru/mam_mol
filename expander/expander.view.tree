@@ -1,0 +1,12 @@
+$mol_expander $mol_viewer
+	> expanded false		
+	childs /
+		< header $mol_viewer
+			childs /
+				< stater $mol_checker					
+					checked > expanded
+				< labeler $mol_clicker					
+					eventClick > eventExpand null
+					childs /
+						< label \
+		< content null
