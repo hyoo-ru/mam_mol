@@ -560,6 +560,7 @@
 [mol_app_supplies_carder_grouper] {
 	-webkit-box-align: start;
 	    -ms-flex-align: start;
+	            -ms-grid-row-align: flex-start;
 	        align-items: flex-start;
 }
 
@@ -599,6 +600,7 @@
 [mol_app_supplies_lister_body] {
 	-webkit-box-align: start;
 	    -ms-flex-align: start;
+	            -ms-grid-row-align: flex-start;
 	        align-items: flex-start;
 }
 
@@ -624,6 +626,7 @@
 	        justify-content: center;
 	-webkit-box-align: center;
 	    -ms-flex-align: center;
+	            -ms-grid-row-align: center;
 	        align-items: center;
 	-ms-flex-line-pack: center;
 	    align-content: center;
@@ -859,6 +862,7 @@
 [mol_app_supplies_positioner_grouper] > * {
 	-webkit-box-align: baseline;
 	    -ms-flex-align: baseline;
+	            -ms-grid-row-align: baseline;
 	        align-items: baseline;
 }
 
@@ -988,6 +992,7 @@
 [mol_app_supplies_detailer_consContent] {
 	-webkit-box-align: baseline;
 	    -ms-flex-align: baseline;
+	            -ms-grid-row-align: baseline;
 	        align-items: baseline;
 	background: white;
 }
@@ -1003,6 +1008,7 @@
 [mol_app_supplies_detailer_orgContent] {
 	-webkit-box-align: baseline;
 	    -ms-flex-align: baseline;
+	            -ms-grid-row-align: baseline;
 	        align-items: baseline;
 	background: white;
 }
