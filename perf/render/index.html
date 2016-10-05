@@ -61,14 +61,14 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.min.js"></script>
-		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react-dom.js"></script>-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script>
 		<script type="text/javascript" src="-/web.js"></script>
         <script type="text/javascript" src="//angularlight.org/bin/alight_0.13.last.min.js"></script>
         <script type="text/javascript">
             console.timeEnd("build");
 
-            document.addEventListener("DOMContentLoaded", function() { 
+            document.addEventListener("DOMContentLoaded", function() {
                 _knockout();
                 _react();
                 _raw();
@@ -164,7 +164,7 @@
                     render: function() {
                         var items = [];
                         for (var i = 0; i < this.state.data.length; i++) {
-                            items.push(React.createElement("li", { key: i,className: this.state.selected === this.state.data[i].id ? "selected" : "", onClick: this.select.bind(this, this.props.data[i]) },
+                            items.push(React.createElement("li", { key: i,className: this.state.selected === this.state.data[i].id ? "selected" : "", onClick: this.select.bind(this, this.state.data[i]) },
 								React.createElement("span", null, this.state.data[i].label)
                             ));
                         }
@@ -180,8 +180,7 @@
                     }
                 });
 
-				var app = new Class({ data: [], selected: null })
-				React.render(app, document.getElementById("react"));
+				ReactDOM.render(React.createElement(Class), document.getElementById("react"));
             }
 
             function _raw() {
