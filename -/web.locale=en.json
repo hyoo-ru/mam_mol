@@ -1,6 +1,6 @@
 {
 	"$mol_app_demo_title": "Demos",
-	"$mol_app_hello_input": "Name",
+	"$mol_app_hello_namer": "Name",
 	"$mol_app_signup_nameFirstLabel": "First Name",
 	"$mol_app_signup_nameFirstHint": "Jack",
 	"$mol_app_signup_nameNickLabel": "Nick Name",

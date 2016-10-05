@@ -525,6 +525,61 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
+        'search numbers': function () {
+            var syntax = new $.$mol_syntax({
+                'number': /[+-]?\d+(?:\.\d+)?/
+            });
+            var serial = function (tokens) {
+                return tokens.map(function (token) { return (token.name + "=" + token.found); }).join('|');
+            };
+            $.$mol_assert_equal(serial(syntax.tokenize('')), '');
+            $.$mol_assert_equal(serial(syntax.tokenize('foo')), '=foo');
+            $.$mol_assert_equal(serial(syntax.tokenize('123')), 'number=123');
+            $.$mol_assert_equal(serial(syntax.tokenize('foo123bar')), '=foo|number=123|=bar');
+            $.$mol_assert_equal(serial(syntax.tokenize('foo123bar456')), '=foo|number=123|=bar|number=456');
+            $.$mol_assert_equal(serial(syntax.tokenize('foo123\n\nbar456\n')), '=foo|number=123|=\n\nbar|number=456|=\n');
+        }
+    });
+})($ || ($ = {}));
+//syntax.test.js.map
+;
+var $;
+(function ($) {
+    $.$mol_test({
+        'only text': function () {
+            var tokens = $.$mol_syntax_md_flow.tokenize('Hello,\nWorld..\r\n\r\n\nof Love!');
+            $.$mol_assert_equal(tokens.map(function (token) { return token.found; }).join('|'), 'Hello,\nWorld..\r\n\r\n\n|of Love!');
+        },
+        'headers and text': function () {
+            var tokens = $.$mol_syntax_md_flow.tokenize('# Header1\n\nHello!\n\n## Header2');
+            $.$mol_assert_equal(tokens.length, 3);
+            $.$mol_assert_equal(tokens[0].name, 'header');
+            $.$mol_assert_equal(tokens[0].chunks.join('|'), '#| |Header1|\n\n');
+            $.$mol_assert_equal(tokens[1].name, 'block');
+            $.$mol_assert_equal(tokens[1].chunks.join('|'), 'Hello!|\n\n');
+            $.$mol_assert_equal(tokens[2].name, 'header');
+            $.$mol_assert_equal(tokens[2].found, '## Header2');
+            $.$mol_assert_equal(tokens[2].chunks.join('|'), '##| |Header2|');
+        },
+        'codes and text': function () {
+            var tokens = $.$mol_syntax_md_flow.tokenize('```\nstart()\n```\n\n```js\nrestart()\n```\n\nHello!\n\n```\nstop()\n```');
+            $.$mol_assert_equal(tokens.length, 4);
+            $.$mol_assert_equal(tokens[0].name, 'code');
+            $.$mol_assert_equal(tokens[0].chunks.join('|'), '```||start()\n|```|\n\n');
+            $.$mol_assert_equal(tokens[1].name, 'code');
+            $.$mol_assert_equal(tokens[1].chunks.join('|'), '```|js|restart()\n|```|\n\n');
+            $.$mol_assert_equal(tokens[2].name, 'block');
+            $.$mol_assert_equal(tokens[2].chunks.join('|'), 'Hello!|\n\n');
+            $.$mol_assert_equal(tokens[3].name, 'code');
+            $.$mol_assert_equal(tokens[3].chunks.join('|'), '```||stop()\n|```|');
+        },
+    });
+})($ || ($ = {}));
+//md.test.js.map
+;
+var $;
+(function ($) {
+    $.$mol_test({
         'const returns stored value': function () {
             var foo = { bar: $.$mol_const(Math.random()) };
             $.$mol_assert_equal(foo.bar(), foo.bar());

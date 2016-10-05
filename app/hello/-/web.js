@@ -846,7 +846,7 @@ var $;
             var _this = this;
             if (this['native()'])
                 return this['native()'];
-            var next = this['native()'] = this.Class().native();
+            var next = this['native()'] = $.$mol_http_request_native();
             next.onload = function (event) {
                 if (Math.floor(next.status / 100) === 2) {
                     _this.response(void 0, next);
@@ -903,7 +903,10 @@ var $;
 })($ || ($ = {}));
 //request.js.map
 ;
-$.$mol_http_request.native = function () { return new XMLHttpRequest; };
+var $;
+(function ($) {
+    $.$mol_http_request_native = function () { return new XMLHttpRequest; };
+})($ || ($ = {}));
 //request.web.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
@@ -1620,14 +1623,14 @@ var $;
             }
             return (diff[0] !== void 0) ? diff[0] : "";
         };
-        $mol_app_hello.prototype.input = function () {
+        $mol_app_hello.prototype.namer = function () {
             var _this = this;
             var diff = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
             return (diff[0] !== void 0) ? diff[0] : new $.$mol_stringer().setup(function (__) {
-                __.hint = function () { return _this.text("input"); };
+                __.hint = function () { return _this.text("namer"); };
                 __.value = function () {
                     var diff = [];
                     for (var _i = 0; _i < arguments.length; _i++) {
@@ -1641,14 +1644,14 @@ var $;
             return "";
         };
         $mol_app_hello.prototype.childs = function () {
-            return [].concat(this.input(), this.message());
+            return [].concat(this.namer(), this.message());
         };
         __decorate([
             $.$mol_prop()
         ], $mol_app_hello.prototype, "name", null);
         __decorate([
             $.$mol_prop()
-        ], $mol_app_hello.prototype, "input", null);
+        ], $mol_app_hello.prototype, "namer", null);
         return $mol_app_hello;
     }($.$mol_viewer));
     $.$mol_app_hello = $mol_app_hello;

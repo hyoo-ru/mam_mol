@@ -846,7 +846,7 @@ var $;
             var _this = this;
             if (this['native()'])
                 return this['native()'];
-            var next = this['native()'] = this.Class().native();
+            var next = this['native()'] = $.$mol_http_request_native();
             next.onload = function (event) {
                 if (Math.floor(next.status / 100) === 2) {
                     _this.response(void 0, next);
@@ -903,7 +903,10 @@ var $;
 })($ || ($ = {}));
 //request.js.map
 ;
-$.$mol_http_request.native = function () { return new XMLHttpRequest; };
+var $;
+(function ($) {
+    $.$mol_http_request_native = function () { return new XMLHttpRequest; };
+})($ || ($ = {}));
 //request.web.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {

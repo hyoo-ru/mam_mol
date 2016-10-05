@@ -287,7 +287,7 @@
 	    -ms-flex: 1 1 auto;
 	        flex: 1 1 auto;
 	box-shadow: 0 0 0 1px #ddd;
-	border-radius: 4px;
+	border-radius: 2px;
 }
 
 [mol_rower] > * ,
@@ -312,7 +312,7 @@
 	box-shadow: 0 0 0 1px #ddd;
 	outline-offset: 0;
 	border: none;
-	border-radius: 4px;
+	border-radius: 2px;
 	white-space: nowrap;
 	overflow: hidden;
 	padding: 8px;
@@ -350,7 +350,7 @@
 	font: inherit;
 	background: none;
 	box-shadow: 0 0 0 1px #ddd;
-	border-radius: 4px;
+	border-radius: 2px;
 	-webkit-box-flex: 1;
 	    -ms-flex: 1 1 auto;
 	        flex: 1 1 auto;
@@ -420,7 +420,7 @@
 	text-decoration: none;
 	color: #5988C8;
 	cursor: pointer;
-	border-radius: 4px;
+	border-radius: 2px;
 	display: inline-block;
 	padding: 8px;
 	padding: .5rem;
@@ -441,7 +441,7 @@
 [mol_carder] {
 	box-shadow: 0 0 0 1px #ddd;
 	background: white;
-	border-radius: 4px;
+	border-radius: 2px;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -458,7 +458,7 @@
 	-webkit-box-flex: 1;
 	    -ms-flex: 1 1 auto;
 	        flex: 1 1 auto;
-	border-radius: 4px;
+	border-radius: 2px;
 }
 
 [mol_carder_statuser] {
@@ -639,7 +639,7 @@
 
 [mol_checker]:before {
 	content: '✔';
-	border-radius: 4px;
+	border-radius: 2px;
 	font-size: 16px;
 	font-size: 1rem;
 	width: 19.2px;
@@ -694,7 +694,7 @@
 	    -ms-flex: 1 1 auto;
 	        flex: 1 1 auto;
 	box-shadow: 0 0 0 1px #ddd;
-	border-radius: 4px;
+	border-radius: 2px;
 	background: #eee;
 	padding: 2px;
 	padding: .125rem;
@@ -794,7 +794,7 @@
 	height: 80px;
 	height: 5rem;
 	background: center no-repeat;
-	border-radius: 4px;
+	border-radius: 2px;
 	box-shadow: 0 0 0 1px #ddd;
 	background-size: cover;
 	-webkit-box-flex: 1;
