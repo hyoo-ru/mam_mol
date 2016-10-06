@@ -49,7 +49,7 @@ npm start
 
 In examples we will use namespace `my` and application name `hello`, but you must use your own namespace and application name.
 
-Add **web entry point** at `./my/hello/index.html`:`
+Add **web entry point** at `./my/hello/index.html`:
 
 ```html
 <!doctype html>
