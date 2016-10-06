@@ -277,13 +277,13 @@
 	max-width: 60rem;
 	background: white;
 	box-shadow: 0 0 0 1px #ddd;
-	padding: 8px;
-	padding: .5rem;
+	padding: 16px;
+	padding: 1rem;
 }
 
 [mol_texter_rower] {
-	padding: 8px;
-	padding: .5rem;
+	margin: 16px;
+	margin: 1rem;
 }
 
 [mol_texter_type="block"] {}
@@ -307,8 +307,8 @@
 	color: rgba( 0 , 0 , 0 , .9 );
 	box-shadow: 0 0 0 1px #ddd;
 	border-radius: 2px;
-	margin: 8px;
-	margin: .5rem;
+	padding: 4px;
+	padding: .25rem;
 }
 
 [mol_texter_type="text-link"] {
@@ -563,6 +563,8 @@
 	-webkit-box-align: center;
 	    -ms-flex-align: center;
 	        align-items: center;
+	min-height: 16px;
+	min-height: 1rem;
 }
 
 [mol_app_habhub_gister] {

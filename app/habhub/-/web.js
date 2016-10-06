@@ -24,7 +24,7 @@ var $;
             return;
         if (path.indexOf(filter) === -1)
             return;
-        var time = new Date().toISOString().substring(11, 19);
+        var time = new Date().toLocaleTimeString();
         console.log.apply(console, [time, path].concat(values));
     }
     $.$mol_log = $mol_log;
