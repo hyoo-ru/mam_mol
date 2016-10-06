@@ -6,7 +6,7 @@ module $ {
 		if( filter == null ) return
 		if( path.indexOf( filter ) === -1 ) return
 		
-		var time = new Date().toISOString().substring( 11 , 19 )
+		var time = new Date().toLocaleTimeString()
 		console.log( time , path , ...values )
 	}
 	
