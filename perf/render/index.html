@@ -124,25 +124,21 @@
             }
             
             function _sap() {
-				var date,
-					oModel = new sap.ui.model.json.JSONModel();
-				
-				oModel.setData({ 
-					'data': _buildData() 
-				});
+				var oModel = new sap.ui.model.json.JSONModel();
 
 				var labelContent = new sap.m.FormattedText({
 					htmlText: '<h2>SAPUI5</h2>'
 				})
 				
 				var listItem = new sap.m.DisplayListItem({
-					key: "{id}", label: "{label}"
+					key: "{id}", label: "{label}", selected: true
 				});
-
+				
 				var listContent = new sap.m.List({
 					growing: true,
 					growingThreshold: 2000,
-					showNoData: false
+					showNoData: false,
+					mode: sap.m.ListMode.SingleSelectMaster
 				});
 				
 				listContent.setModel(oModel);
@@ -151,7 +147,10 @@
 					text:'Run',
 					press: function() {
 						requestAnimationFrame( function() {
-							date = Date.now();
+							var data = _buildData(),
+								date = Date.now();
+							
+							oModel.setData({ 'data': data });
 							
 							listContent.bindItems('/data', listItem);
 							
@@ -302,8 +301,6 @@
 		</h1>
 
 		<section id="react"></section>
-
-		<section id="sap"></section>
 		
 		<section ng-app="test" ng-controller="controller">
 			<header>
@@ -362,6 +359,8 @@
 		</section>
 
 		<section mol_viewer_root="$mol_perf_render"></section>
+
+		<section id="sap"></section>
 
         <script type="text/html" id="raw-template">
             <li>
