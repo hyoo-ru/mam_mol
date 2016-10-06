@@ -146,6 +146,7 @@
             }
             
             function _sap() {
+            	var isRendered = false;
 				var oModel = new sap.ui.model.json.JSONModel();
 
 				var labelContent = new sap.m.FormattedText({
@@ -174,7 +175,10 @@
 							
 							oModel.setData({ 'data': data });
 							
-							listContent.bindItems('/data', listItem);
+							if(!isRendered) {
+								listContent.bindItems('/data', listItem);
+								isRendered = true;
+							}
 							
 							setTimeout(function() {
 								document.querySelector(".sapMBtnContent").innerHTML = (Date.now() - date) + " ms";	
