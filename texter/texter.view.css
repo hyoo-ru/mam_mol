@@ -3,11 +3,11 @@
 	max-width: 60rem;
 	background: var(--mol_skin_card);
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
-	padding: .5rem;
+	padding: 1rem;
 }
 
 [mol_texter_rower] {
-	padding: .5rem;
+	margin: 1rem;
 }
 
 [mol_texter_type="block"] {
@@ -30,7 +30,7 @@
 	color: var(--mol_skin_light_text);
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
-	margin: .5rem;
+	padding: .25rem;
 }
 
 [mol_texter_type="text-link"] {
