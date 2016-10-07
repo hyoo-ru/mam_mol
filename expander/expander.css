@@ -1,0 +1,8 @@
+[mol_expander] {
+	flex-direction: column;
+	flex: 1 1 auto;
+}
+[mol_expander_header] {
+	display: flex;
+	align-items: baseline;
+}

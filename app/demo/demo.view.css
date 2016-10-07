@@ -23,7 +23,6 @@
 }
 
 [mol_app_demo_pager_bodier] {
-	padding: .5rem;
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
