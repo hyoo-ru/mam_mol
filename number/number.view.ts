@@ -6,7 +6,7 @@ module $.$mol {
 		}
 		
 		eventInc( ...diff : Event[] ) {
-			this.value( this.value() + this.precisionChange() )
+			this.value( Number( this.value() ) + this.precisionChange() )
 		}
 		
 		valueString( ...diff : string[] ) {
