@@ -36,12 +36,12 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Quick start
 
-**Create PMS project**
+**Create MAM project**
 
-Easy way is checkout [this preconfigured PMS repository](http://github.com/nin-jin/pms/) and start dev server:
+Easy way is checkout [this preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
 
 ```sh
-git clone https://github.com/nin-jin/pms.git ./pms && cd pms
+git clone https://github.com/nin-jin/mam.git ./mam && cd mam
 npm start
 ```
 
@@ -49,7 +49,7 @@ npm start
 
 In examples we will use namespace `my` and application name `hello`, but you must use your own namespace and application name.
 
-Add **web entry point** at `./my/hello/index.html`:`
+Add **web entry point** at `./my/hello/index.html`:
 
 ```html
 <!doctype html>
@@ -167,7 +167,7 @@ Add **styles** at `./my/hello/hello.view.css`:
 ## Zero configuration
 Instead of ensuring configurable under any wanting, we better concentrate on, that all would worked good directly from the box and does not bother $mol's developer by a typical configure. (But, nevertheless it does not excludes setup for your needs if it is required)
 
-For example if you download **[base PMS-project](http://github.com/nin-jin/pms/)** you'd have got that:
+For example if you download **[base MAM-project](http://github.com/eigenmethod/mam)** you'd have got that:
 
 **Building of JS and CSS bundles for different platforms.** A bundle can be built for any module. In this bundle would be sources of that module and sources all other modules from which the module depends on. Also there would not redundant modules in the bundle.  
 
@@ -391,8 +391,8 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## Building
 
-* **[$mol_build](build)** - pms builder
-* **[$mol_build_server](build/server)** - pms developer server
+* **[$mol_build](build)** - MAM builder
+* **[$mol_build_server](build/server)** - MAM developer server
 
 # Cool stuff
 

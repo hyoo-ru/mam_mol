@@ -4,7 +4,7 @@ node_js:
 install:
   - cd ..
   - git init
-  - git remote add origin https://github.com/nin-jin/pms.git
+  - git remote add origin https://github.com/eigenmethod/mam.git
   - git pull origin master
   - npm install
 script:

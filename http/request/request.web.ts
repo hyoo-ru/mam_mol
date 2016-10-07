@@ -1,1 +1,3 @@
-$.$mol_http_request.native = ()=> new XMLHttpRequest;
+module $ {
+	export var $mol_http_request_native = ()=> new XMLHttpRequest;
+}
