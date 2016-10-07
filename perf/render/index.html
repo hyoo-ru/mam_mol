@@ -6,8 +6,6 @@
 		<!--<link rel="stylesheet" href="-/web.css" />-->
         <style type="text/css">
 			body {
-				display: flex;
-				flex-wrap: wrap;
 			}
 			
 			h1 {
@@ -15,8 +13,8 @@
 			}
 			
 			section {
-				flex: 1 1 10%;
 				margin: .25rem;
+				display: inline-block;
 			}
 			
 			[mol_perf_render_contenter],
@@ -29,6 +27,7 @@
 				transform: translateZ(0);
 				background:#EEE;
 				border: 1px solid #999;
+				width: 20rem;
 			}
 			
 			[mol_perf_render_row],
@@ -36,6 +35,9 @@
 				padding:3px 10px;
 				cursor:pointer;
 				list-style: none;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
 			}
 			
 			[mol_perf_render_row_bar],
