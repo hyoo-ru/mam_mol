@@ -1,0 +1,35 @@
+[mol_app_report_tabler] {
+	margin: 1rem auto;
+	border-collapse: collapse;
+}
+
+[mol_app_report_descriptor] {
+	margin: 1rem auto;
+	white-space: pre-line;
+	text-align: center;
+	line-height: 2rem;
+}
+
+[mol_app_report_tabler] {
+}
+
+[mol_app_report_headRower] {
+	text-align: center;
+}
+
+[mol_app_report_celler] {
+	border: 1px solid var(--mol_skin_light_line);
+}
+
+[mol_app_report_celler]:not( [colspan="1"] ) {
+	font-weight: 500;
+}
+
+[mol_app_report_texter] {
+	padding: .5rem;
+}
+
+[mol_app_report_stringer] ,
+[mol_app_report_number] [mol_number_stringer] {
+	box-shadow: none;
+}
