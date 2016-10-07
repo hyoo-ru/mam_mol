@@ -1,4 +1,5 @@
 [mol_stringer] {
+	box-sizing: border-box;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	outline-offset: 0;
 	border: none;
