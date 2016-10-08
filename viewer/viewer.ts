@@ -6,7 +6,7 @@ module $ {
 		$mol_viewer_heightLimit() : number
 	}
 	
-	$mol_viewer_context.$mol_viewer_heightLimit = () => $mol_window.size()[ 1 ]
+	$mol_viewer_context.$mol_viewer_heightLimit = () => $mol_window.size()[ 1 ] * 1.5
 
 	/// Reactive statefull lazy ViewModel 
 	export class $mol_viewer extends $mol_object {
