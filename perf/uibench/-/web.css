@@ -95,6 +95,7 @@
 	-webkit-transform: translateZ(0);
 	        transform: translateZ(0);
 	outline: 1px solid #ddd;
+	max-height: 100%;
 }
 
 @media print {

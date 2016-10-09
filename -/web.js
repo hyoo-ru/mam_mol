@@ -832,6 +832,58 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var localStorage = localStorage || {};
+var $;
+(function ($) {
+    var $mol_state_local = (function (_super) {
+        __extends($mol_state_local, _super);
+        function $mol_state_local() {
+            _super.apply(this, arguments);
+        }
+        $mol_state_local.value = function (key) {
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            if (diff[0] === void 0)
+                return JSON.parse(localStorage.getItem(key) || 'null');
+            if (diff[0] === null)
+                localStorage.removeItem(key);
+            else
+                localStorage.setItem(key, JSON.stringify(diff[0]));
+            return diff[0];
+        };
+        $mol_state_local.prototype.prefix = function () { return ''; };
+        $mol_state_local.prototype.value = function (key) {
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            return $mol_state_local.value.apply($mol_state_local, [this.prefix() + '.' + key].concat(diff));
+        };
+        __decorate([
+            $.$mol_prop()
+        ], $mol_state_local, "value", null);
+        return $mol_state_local;
+    }($.$mol_object));
+    $.$mol_state_local = $mol_state_local;
+})($ || ($ = {}));
+//local.js.map
+;
+window.addEventListener('storage', function (event) { return $.$mol_state_local.value(event.key, void 0); });
+//local.web.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var $;
 (function ($) {
     var $mol_http_request = (function (_super) {
@@ -1069,7 +1121,7 @@ var $;
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return diff[0] || 'en';
+            return $.$mol_state_local.value.apply($.$mol_state_local, ['locale'].concat(diff)) || 'en';
         };
         $mol_locale.texts = function () {
             var uri = "-/web.locale=" + this.lang() + ".json";
@@ -1102,7 +1154,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     $.$mol_viewer_context = {};
-    $.$mol_viewer_context.$mol_viewer_heightLimit = function () { return $.$mol_window.size()[1]; };
+    $.$mol_viewer_context.$mol_viewer_heightLimit = function () { return $.$mol_window.size()[1] * 1.5; };
     var $mol_viewer = (function (_super) {
         __extends($mol_viewer, _super);
         function $mol_viewer() {
@@ -1689,58 +1741,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var localStorage = localStorage || {};
-var $;
-(function ($) {
-    var $mol_state_local = (function (_super) {
-        __extends($mol_state_local, _super);
-        function $mol_state_local() {
-            _super.apply(this, arguments);
-        }
-        $mol_state_local.value = function (key) {
-            var diff = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                diff[_i - 1] = arguments[_i];
-            }
-            if (diff[0] === void 0)
-                return JSON.parse(localStorage.getItem(key) || 'null');
-            if (diff[0] === null)
-                localStorage.removeItem(key);
-            else
-                localStorage.setItem(key, JSON.stringify(diff[0]));
-            return diff[0];
-        };
-        $mol_state_local.prototype.prefix = function () { return ''; };
-        $mol_state_local.prototype.value = function (key) {
-            var diff = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                diff[_i - 1] = arguments[_i];
-            }
-            return $mol_state_local.value.apply($mol_state_local, [this.prefix() + '.' + key].concat(diff));
-        };
-        __decorate([
-            $.$mol_prop()
-        ], $mol_state_local, "value", null);
-        return $mol_state_local;
-    }($.$mol_object));
-    $.$mol_state_local = $mol_state_local;
-})($ || ($ = {}));
-//local.js.map
-;
-window.addEventListener('storage', function (event) { return $.$mol_state_local.value(event.key, void 0); });
-//local.web.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var $;
 (function ($) {
     var $mol_state_session = (function (_super) {
@@ -1864,6 +1864,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
+    $.$mol_viewer_context.$mol_scroller_scrollTop = function () { return 0; };
+})($ || ($ = {}));
+var $;
+(function ($) {
     var $mol;
     (function ($mol) {
         var $mol_scroller = (function (_super) {
@@ -1902,6 +1906,7 @@ var $;
                 var context = this.context();
                 var subContext = Object.create(context);
                 subContext.$mol_viewer_heightLimit = function () { return context.$mol_viewer_heightLimit() + _this.scrollTop(); };
+                subContext.$mol_scroller_scrollTop = function () { return _this.scrollTop(); };
                 return subContext;
             };
             __decorate([
@@ -3395,7 +3400,7 @@ var $;
                 _super.apply(this, arguments);
             }
             $mol_app_habhub.prototype.gistNews = function () {
-                var uri = 'https://api.github.com/search/issues?q=label:HabHub+label:ru+is:open&sort=reactions';
+                var uri = 'https://api.github.com/search/issues?q=label:HabHub+is:open&sort=reactions';
                 var resource = $.$mol_http_resource_json.item(uri);
                 return resource.json().items;
             };
@@ -4341,53 +4346,86 @@ var $;
                                 title: 'Габаритный размер',
                                 childs: [
                                     {
-                                        field: 'fundament_length',
+                                        field: 'base_length',
                                         title: 'Длинна',
                                     },
                                     {
-                                        field: 'fundament_width',
+                                        field: 'base_width',
                                         title: 'Ширина',
                                     },
                                     {
-                                        field: 'fundament_height',
+                                        field: 'base_height',
                                         title: 'Высота',
                                     },
                                 ]
                             },
                             {
-                                field: 'fundament_kind',
+                                field: 'base_kind',
                                 title: 'Вид',
                             },
                             {
-                                field: 'fundament_type',
+                                field: 'base_type',
                                 title: 'Тип',
                             },
+                            {
+                                field: 'base_release_year',
+                                title: 'Год ввода в эксплуатацию',
+                            },
+                            {
+                                field: 'base_weight_max',
+                                title: 'Несущая способность',
+                            },
                         ]
-                    }
+                    },
+                    {
+                        title: 'Кровля',
+                        childs: [
+                            {
+                                title: 'Габаритный размер',
+                                childs: [
+                                    {
+                                        field: 'roof_length',
+                                        title: 'Длинна',
+                                    },
+                                    {
+                                        field: 'roof_width',
+                                        title: 'Ширина',
+                                    },
+                                    {
+                                        field: 'roof_height',
+                                        title: 'Высота',
+                                    },
+                                ]
+                            },
+                        ]
+                    },
                 ];
             };
             $mol_app_report.prototype.scheme = function () {
                 return {
-                    'fundament_length': {
+                    'base_length': {
                         type: 'number',
+                        mask: 'XX',
                         unit: 'мм',
                     },
-                    'fundament_width': {
+                    'base_width': {
                         type: 'number',
+                        mask: 'XX',
                         unit: 'мм',
                     },
-                    'fundament_height': {
+                    'base_height': {
                         type: 'number',
+                        mask: 'XX',
                         unit: 'мм',
                     },
-                    'fundament_kind': {
+                    'base_kind': {
                         type: 'enum',
                         options: {
                             union: 'Единый',
                             separated: 'Раздельный насос и электродвигатель',
                         },
                     },
-                    'fundament_type': {
+                    'base_type': {
                         type: 'enum',
                         options: {
                             ribbon: 'Ленточный',
@@ -4395,15 +4433,45 @@ var $;
                             pile: 'Свайный',
                         },
                     },
+                    'base_release_year': {
+                        type: 'number',
+                        mask: 'гггг',
+                        unit: 'г.'
+                    },
+                    'base_weight_max': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'кг',
+                    },
+                    'roof_length': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'мм',
+                    },
+                    'roof_width': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'мм',
+                    },
+                    'roof_height': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'мм',
+                    },
                 };
             };
             $mol_app_report.prototype.data = function () {
                 return {
-                    fundament_length: '403300',
-                    fundament_width: '22000',
-                    fundament_height: '25000',
-                    fundament_kind: 'union',
-                    fundament_type: 'ribbon',
+                    base_length: '403300',
+                    base_width: '22000',
+                    base_height: '25000',
+                    base_kind: 'union',
+                    base_type: 'ribbon',
+                    base_release_year: '1993',
+                    base_weight_max: '30000',
+                    roof_length: '413300',
+                    roof_width: '23000',
+                    roof_height: '26000',
                 };
             };
             $mol_app_report.prototype.description = function () {
@@ -4513,7 +4581,7 @@ var $;
                     return '';
                 var scheme = this.scheme()[field];
                 switch (scheme.type) {
-                    case 'number': return 'XX';
+                    case 'number': return scheme.mask;
                     case 'enum': return Object.keys(scheme.options).map(function (key) { return scheme.options[key]; }).join(' / ');
                 }
                 return '';

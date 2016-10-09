@@ -832,6 +832,58 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var localStorage = localStorage || {};
+var $;
+(function ($) {
+    var $mol_state_local = (function (_super) {
+        __extends($mol_state_local, _super);
+        function $mol_state_local() {
+            _super.apply(this, arguments);
+        }
+        $mol_state_local.value = function (key) {
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            if (diff[0] === void 0)
+                return JSON.parse(localStorage.getItem(key) || 'null');
+            if (diff[0] === null)
+                localStorage.removeItem(key);
+            else
+                localStorage.setItem(key, JSON.stringify(diff[0]));
+            return diff[0];
+        };
+        $mol_state_local.prototype.prefix = function () { return ''; };
+        $mol_state_local.prototype.value = function (key) {
+            var diff = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                diff[_i - 1] = arguments[_i];
+            }
+            return $mol_state_local.value.apply($mol_state_local, [this.prefix() + '.' + key].concat(diff));
+        };
+        __decorate([
+            $.$mol_prop()
+        ], $mol_state_local, "value", null);
+        return $mol_state_local;
+    }($.$mol_object));
+    $.$mol_state_local = $mol_state_local;
+})($ || ($ = {}));
+//local.js.map
+;
+window.addEventListener('storage', function (event) { return $.$mol_state_local.value(event.key, void 0); });
+//local.web.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var $;
 (function ($) {
     var $mol_http_request = (function (_super) {
@@ -1069,7 +1121,7 @@ var $;
             for (var _i = 0; _i < arguments.length; _i++) {
                 diff[_i - 0] = arguments[_i];
             }
-            return diff[0] || 'en';
+            return $.$mol_state_local.value.apply($.$mol_state_local, ['locale'].concat(diff)) || 'en';
         };
         $mol_locale.texts = function () {
             var uri = "-/web.locale=" + this.lang() + ".json";
@@ -1102,7 +1154,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     $.$mol_viewer_context = {};
-    $.$mol_viewer_context.$mol_viewer_heightLimit = function () { return $.$mol_window.size()[1]; };
+    $.$mol_viewer_context.$mol_viewer_heightLimit = function () { return $.$mol_window.size()[1] * 1.5; };
     var $mol_viewer = (function (_super) {
         __extends($mol_viewer, _super);
         function $mol_viewer() {
@@ -1689,58 +1741,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var localStorage = localStorage || {};
-var $;
-(function ($) {
-    var $mol_state_local = (function (_super) {
-        __extends($mol_state_local, _super);
-        function $mol_state_local() {
-            _super.apply(this, arguments);
-        }
-        $mol_state_local.value = function (key) {
-            var diff = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                diff[_i - 1] = arguments[_i];
-            }
-            if (diff[0] === void 0)
-                return JSON.parse(localStorage.getItem(key) || 'null');
-            if (diff[0] === null)
-                localStorage.removeItem(key);
-            else
-                localStorage.setItem(key, JSON.stringify(diff[0]));
-            return diff[0];
-        };
-        $mol_state_local.prototype.prefix = function () { return ''; };
-        $mol_state_local.prototype.value = function (key) {
-            var diff = [];
-            for (var _i = 1; _i < arguments.length; _i++) {
-                diff[_i - 1] = arguments[_i];
-            }
-            return $mol_state_local.value.apply($mol_state_local, [this.prefix() + '.' + key].concat(diff));
-        };
-        __decorate([
-            $.$mol_prop()
-        ], $mol_state_local, "value", null);
-        return $mol_state_local;
-    }($.$mol_object));
-    $.$mol_state_local = $mol_state_local;
-})($ || ($ = {}));
-//local.js.map
-;
-window.addEventListener('storage', function (event) { return $.$mol_state_local.value(event.key, void 0); });
-//local.web.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var $;
 (function ($) {
     var $mol_state_session = (function (_super) {
@@ -1864,6 +1864,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
+    $.$mol_viewer_context.$mol_scroller_scrollTop = function () { return 0; };
+})($ || ($ = {}));
+var $;
+(function ($) {
     var $mol;
     (function ($mol) {
         var $mol_scroller = (function (_super) {
@@ -1902,6 +1906,7 @@ var $;
                 var context = this.context();
                 var subContext = Object.create(context);
                 subContext.$mol_viewer_heightLimit = function () { return context.$mol_viewer_heightLimit() + _this.scrollTop(); };
+                subContext.$mol_scroller_scrollTop = function () { return _this.scrollTop(); };
                 return subContext;
             };
             __decorate([
