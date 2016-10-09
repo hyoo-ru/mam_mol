@@ -1,5 +1,5 @@
 $mol_scroller $mol_viewer
-	heightMinimal null
+	heightMinimal 0
 	field *
 		scrollTop < scrollTop 0
 		scrollLeft < scrollLeft 0
