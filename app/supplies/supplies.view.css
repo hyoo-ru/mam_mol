@@ -4,3 +4,7 @@
 	max-width: 100rem;
 	margin: auto;
 }
+
+[mol_app_supplies_addoner] {
+	flex: 1 1 24rem;
+}
