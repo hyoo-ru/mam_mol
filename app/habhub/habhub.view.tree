@@ -6,8 +6,6 @@ $mol_app_habhub $mol_pager
 	gister# $mol_app_habhub_gister
 		content < gistContent# \
 
-$mol_app_habhub_gister $mol_viewer
-	childs /
-		< carder $mol_carder
-			content < texter $mol_texter
-				text < content \
+$mol_app_habhub_gister $mol_carder
+	contenter < texter $mol_texter
+		text < content \
