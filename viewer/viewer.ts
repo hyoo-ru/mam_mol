@@ -16,6 +16,10 @@ module $ {
 			return new this
 		}
 		
+		title() : string {
+			return this.Class().objectPath()
+		}
+		
 		static statePrefix() {
 			return ''
 		}

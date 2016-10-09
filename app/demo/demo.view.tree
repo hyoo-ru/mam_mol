@@ -1,7 +1,7 @@
 $mol_app_demo $mol_stacker
 	main / < lister $mol_scroller childs < items /
 	addon $mol_pager
-		title < title @ \Demos
+		title < titleAddon @ \Demos
 		body < optioner $mol_lister rows < options /
 	welcomer $mol_scroller
 		childs / < welcomeTexter $mol_texter

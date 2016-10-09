@@ -1,6 +1,15 @@
 module $.$mol {
 	export class $mol_app_demo extends $.$mol_app_demo {
 		
+		title() {
+			let next = this.titleAddon()
+			
+			const selected = this.selected()
+			if( selected ) next = `$${ selected } - ${ next }`
+			
+			return next
+		}
+		
 		main() : $mol_viewer[] {
 			var selected = this.selected()
 			if( selected ) {

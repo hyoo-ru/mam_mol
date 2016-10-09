@@ -16,7 +16,7 @@ module $.$mol {
 		
 		main() {
 			return this.supply()
-				? [ this.detailer() ]
+				? this.detailer()
 				: null
 		}
 
@@ -24,6 +24,10 @@ module $.$mol {
 			return this.entered()
 				? this.lister()
 				: this.enter()
+		}
+		
+		title() {
+			return ( this.main() || this.addon() ).title()
 		}
 		
 		@ $mol_prop()

@@ -1,6 +1,8 @@
 $mol_app_todomvc $mol_scroller
 	childs / < pager $mol_lister childs /
-		< titler $mol_app_todomvc_titler
+		< titler $mol_viewer
+			heightMinimal 142
+			childs / < title @ \todos
 		< paneler $mol_lister rows /
 			< header $mol_viewer
 				heightMinimal 64
@@ -35,10 +37,6 @@ $mol_app_todomvc $mol_scroller
 		completed > taskCompleted# false
 		title > taskTitle# \
 		eventDrop > eventTaskDrop# null
-
-$mol_app_todomvc_titler $mol_viewer
-	heightMinimal 142
-	childs / < title @ \todos
 
 $mol_app_todomvc_ghost $mol_viewer
 	attr * mol_app_todomvc_ghost_visible < visible true
