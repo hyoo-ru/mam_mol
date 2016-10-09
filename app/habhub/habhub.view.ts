@@ -9,7 +9,7 @@ module $.$mol {
 	export class $mol_app_habhub extends $.$mol_app_habhub {
 		
 		gistNews() {
-			const uri = 'https://api.github.com/search/issues?q=label:HabHub+label:ru+is:open&sort=reactions'
+			const uri = 'https://api.github.com/search/issues?q=label:HabHub+is:open&sort=reactions'
 			const resource = $mol_http_resource_json.item<{ items : $mol_app_habhub_gist[] }>( uri )
 			return resource.json().items
 		}
