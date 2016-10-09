@@ -72,7 +72,19 @@ module $ {
 		
 		/// Minimal height that used for lazy rendering
 		heightMinimal() {
-			return 0
+			let min = 0
+			
+			const childs = this.childs()
+			if( !childs ) return null
+			
+			for( let child of childs ) {
+				if( child instanceof $mol_viewer ) {
+					const childMin = child.heightMinimal() 
+					if( min < childMin ) min = childMin
+				}
+			}
+			
+			return min || null
 		}
 		
 		private 'DOMNode()' : Element
@@ -225,9 +237,13 @@ module $ {
 			return node
 		}
 		
-		attr() : { [ key : string ] : ()=> string|number|boolean } { return { 'mol_viewer_error' : ()=> false } }
+		attr() : { [ key : string ] : ()=> string|number|boolean } { return {
+			'mol_viewer_error' : ()=> false
+		} }
 		
-		field() : { [ key : string ] : ()=> any } { return {} }
+		field() : { [ key : string ] : ()=> any } { return {
+			'style.minHeight' : ()=> this.heightMinimal() + 'px'
+		} }
 		
 		event() : { [ key : string ] : ( event : Event )=> void } { return {} }
 		
