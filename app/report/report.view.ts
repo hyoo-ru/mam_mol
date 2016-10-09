@@ -14,6 +14,7 @@ module $.$mol {
 	
 	export interface $mol_app_report_scheme {
 		type : string
+		mask? : string
 		unit? : string
 		options? : { [ name : string ] : string }
 	}
@@ -46,54 +47,87 @@ module $.$mol {
 							title : 'Габаритный размер' ,
 							childs : [
 								{
-									field : 'fundament_length' ,
+									field : 'base_length' ,
 									title : 'Длинна' ,
 								} ,
 								{
-									field : 'fundament_width' ,
+									field : 'base_width' ,
 									title : 'Ширина' ,
 								} ,
 								{
-									field : 'fundament_height' , 
+									field : 'base_height' , 
 									title : 'Высота' ,
 								} ,
 							]
 						} ,
 						{
-							field : 'fundament_kind' ,
+							field : 'base_kind' ,
 							title : 'Вид' ,
 						} ,
 						{
-							field : 'fundament_type' ,
+							field : 'base_type' ,
 							title : 'Тип' ,
 						} ,
+						{
+							field : 'base_release_year' ,
+							title : 'Год ввода в эксплуатацию' ,
+						} ,
+						{
+							field : 'base_weight_max' ,
+							title : 'Несущая способность' ,
+						} ,
 					]
-				}
+				} ,
+				{
+					title : 'Кровля' ,
+					childs : [
+						{
+							title : 'Габаритный размер' ,
+							childs : [
+								{
+									field : 'roof_length' ,
+									title : 'Длинна' ,
+								} ,
+								{
+									field : 'roof_width' ,
+									title : 'Ширина' ,
+								} ,
+								{
+									field : 'roof_height' ,
+									title : 'Высота' ,
+								} ,
+							]
+						} ,
+					]
+				} ,
 			]
 		}
 		
 		scheme() : { [ field : string ] : $mol_app_report_scheme } {
 			return {
-				'fundament_length' : {
+				'base_length' : {
 					type : 'number' ,
+					mask : 'XX' ,
 					unit : 'мм' ,
 				} ,
-				'fundament_width' : {
+				'base_width' : {
 					type : 'number' ,
+					mask : 'XX' ,
 					unit : 'мм' ,
 				} ,
-				'fundament_height' : {
+				'base_height' : {
 					type : 'number' ,
+					mask : 'XX' ,
 					unit : 'мм' ,
 				} ,
-				'fundament_kind' : {
+				'base_kind' : {
 					type : 'enum' ,
 					options : {
 						union : 'Единый' ,
 						separated : 'Раздельный насос и электродвигатель' ,
 					} ,
 				} ,
-				'fundament_type' : {
+				'base_type' : {
 					type : 'enum' ,
 					options : {
 						ribbon : 'Ленточный' ,
@@ -101,16 +135,46 @@ module $.$mol {
 						pile : 'Свайный' ,
 					} ,
 				} ,
+				'base_release_year' : {
+					type : 'number' ,
+					mask : 'гггг' ,
+					unit : 'г.'
+				} ,
+				'base_weight_max' : {
+					type : 'number' ,
+					mask : 'XX' ,
+					unit : 'кг' ,
+				} ,
+				'roof_length' : {
+					type : 'number' ,
+					mask : 'XX' ,
+					unit : 'мм' ,
+				} ,
+				'roof_width' : {
+					type : 'number' ,
+					mask : 'XX' ,
+					unit : 'мм' ,
+				} ,
+				'roof_height' : {
+					type : 'number' ,
+					mask : 'XX' ,
+					unit : 'мм' ,
+				} ,
 			}
 		}
 		
 		data() : { [ field : string ] : string } {
 			return {
-				fundament_length : '403300' ,
-				fundament_width : '22000' ,
-				fundament_height : '25000' ,
-				fundament_kind : 'union' ,
-				fundament_type : 'ribbon' ,
+				base_length : '403300' ,
+				base_width : '22000' ,
+				base_height : '25000' ,
+				base_kind : 'union' ,
+				base_type : 'ribbon' ,
+				base_release_year : '1993' ,
+				base_weight_max : '30000' ,
+				roof_length : '413300' ,
+				roof_width : '23000' ,
+				roof_height : '26000' ,
 			}
 		}
 		
@@ -233,7 +297,7 @@ module $.$mol {
 			const scheme = this.scheme()[ field ]
 			
 			switch( scheme.type ) {
-				case 'number' : return 'XX'
+				case 'number' : return scheme.mask
 				case 'enum' : return Object.keys( scheme.options ).map( key => scheme.options[ key ] ).join( ' / ' )
 			}
 			

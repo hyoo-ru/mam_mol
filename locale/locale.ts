@@ -8,7 +8,7 @@ module $ {
 		
 		@ $mol_prop()
 		static lang( ...diff : string[] ) {
-			return diff[ 0 ] || 'en'
+			return $mol_state_local.value( 'locale' , ...diff ) || 'en'
 		}
 		
 		static texts() {
