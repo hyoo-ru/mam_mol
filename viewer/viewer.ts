@@ -230,7 +230,7 @@ module $ {
 		} }
 		
 		field() : { [ key : string ] : ()=> any } { return {
-			'style.minHeight' : ()=> this.heightMinimal() + 'px'
+			//'style.minHeight' : ()=> this.heightMinimal() + 'px'
 		} }
 		
 		event() : { [ key : string ] : ( event : Event )=> void } { return {} }
