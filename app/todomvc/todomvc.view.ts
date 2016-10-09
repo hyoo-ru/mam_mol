@@ -133,6 +133,14 @@ module $.$mol {
 			} ) )
 		}
 		
+		panels() {
+			return [
+				this.header() , 
+				this.lister() ,
+				this.footerVisible() ? this.footer() : null ,
+			]
+		}
+		
 		footerVisible() {
 			return this.taskIds().length > 0
 		}

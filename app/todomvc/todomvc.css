@@ -148,6 +148,3 @@
 	text-decoration: underline;
 }
 
-[mol_app_todomvc_ghost]:not([mol_app_todomvc_ghost_visible]) {
-	display: none;
-}

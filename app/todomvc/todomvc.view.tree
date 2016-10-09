@@ -3,7 +3,7 @@ $mol_app_todomvc $mol_scroller
 		< titler $mol_viewer
 			heightMinimal 142
 			childs / < title @ \todos
-		< paneler $mol_lister rows /
+		< paneler $mol_lister rows < panels /
 			< header $mol_viewer
 				heightMinimal 64
 				childs < headerContent /
@@ -15,8 +15,7 @@ $mol_app_todomvc $mol_scroller
 						value > taskNewTitle \
 						eventDone > eventAdd null
 			< lister $mol_lister rows < taskRows /
-			< footer $mol_app_todomvc_ghost
-				visible < footerVisible false
+			< footer $mol_viewer
 				childs < footerContent /
 					< pendinger $mol_viewer childs / < pendingMessage @ \0 items left 
 					< filter $mol_barer childs < filterOptions /
@@ -37,9 +36,6 @@ $mol_app_todomvc $mol_scroller
 		completed > taskCompleted# false
 		title > taskTitle# \
 		eventDrop > eventTaskDrop# null
-
-$mol_app_todomvc_ghost $mol_viewer
-	attr * mol_app_todomvc_ghost_visible < visible true
 
 $mol_app_todomvc_adder $mol_stringer
 	hint @ \What needs to be done?
