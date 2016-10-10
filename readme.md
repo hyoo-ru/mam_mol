@@ -353,7 +353,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_stacker](stacker)** - horizontal stack of panels
 * **[$mol_pager](pager)** - page with header, body and footer
 * **[$mol_decker](decker)** - deck of panels with tab bar
-* **[$mol_carder](carder)** - card whit content
+* **[$mol_carder](carder)** - card with content
 
 ## Complex components
 
