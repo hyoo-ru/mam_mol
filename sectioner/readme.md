@@ -1,6 +1,6 @@
 # $mol_sectioner
 
-The component which contains head and content (2 sections)
+The component which contains head and content.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_sectioner_demo)
 
