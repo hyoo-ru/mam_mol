@@ -8,12 +8,12 @@ module $ {
 		for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
 			let view = (<any>$)[ nodes.item( i ).getAttribute( 'mol_viewer_root' ) ].root( i )
 			view.DOMNode( nodes.item( i ) )
-			new $mol_defer( ()=> view.DOMTree() )
 			let win = new $mol_atom( null , 'window' , ()=> {
 				document.title = view.title()
 			} )
 			new $mol_defer( ()=> {
-				 win.get()
+				view.DOMTree()
+				win.get()
 			} )
 		}
 		
