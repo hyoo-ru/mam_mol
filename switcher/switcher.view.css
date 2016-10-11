@@ -4,7 +4,6 @@
 	flex: 1 1 auto;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
-	background: var(--mol_skin_passive);
 	padding: .125rem;
 }
 
@@ -21,4 +20,5 @@
 [mol_switcher_optioner][mol_checker_checked] {
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	background: var(--mol_skin_card);
+	color: black;
 }

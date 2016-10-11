@@ -29,7 +29,6 @@ namespace $ {
 			}
 			
 			this.isLoggedIn(authenticated);
-			
 		}
 		
 		logout() {

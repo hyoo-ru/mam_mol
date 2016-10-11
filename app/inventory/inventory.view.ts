@@ -13,5 +13,10 @@ module $.$mol {
 				return [this.login()]
 			}
 		}
+		@ $mol_prop()
+		role(...diff: string[]) {
+			// if diff logout => logout
+			return $mol_state_arg.value( 'role' , ...diff ) || 'stockman';
+		}
 	}
 }

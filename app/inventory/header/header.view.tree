@@ -1,0 +1,12 @@
+$mol_app_inventory_header $mol_viewer
+	childs /
+		< titler $mol_viewer 
+			childs /
+				< title \
+		< switcher $mol_switcher
+			value > role \	
+			options *
+				inspector \Inspector
+				stockman \Stockman
+				logout \Logout
+

@@ -1,3 +1,7 @@
-$mol_app_inventory_stockman $mol_viewer
+$mol_app_inventory_stockman $mol_pager
 	model null
-	childs < inventoryItems /
+	head /
+		< header $mol_app_inventory_header
+			title \Инветоризация
+			role > role \
+	body < inventoryItems /
