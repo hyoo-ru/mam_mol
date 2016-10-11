@@ -1,0 +1,3 @@
+$mol_app_inventory_stockman_demo $mol_app_inventory_stockman
+	inventoryItems /
+		\hello items

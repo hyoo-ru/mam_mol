@@ -1,4 +1,8 @@
-$mol_app_inventory $mol_viewer childs /
-	< login $mol_app_inventory_login
-		model < model null
-	
+$mol_app_inventory $mol_viewer 
+	childs /
+		< login $mol_app_inventory_login
+			model < model null
+		< stockman $mol_app_inventory_stockman
+			model < model null
+			inventoryItems /
+				\hello items
