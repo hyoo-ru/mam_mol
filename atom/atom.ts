@@ -14,11 +14,13 @@ module $ {
 		status = $mol_atom_status.obsolete
 		autoFresh = true
 		
+		'value()' = <Value> void 0
+		
 		constructor(
-			public host : { objectPath() : string , [ key : string ] : any } ,
-			public field = 'value()' ,
 			public handler : ( ...diff : (Value|Error)[] )=> Value ,
 			public fail? : ( host : any , error : Error )=> Value|Error ,
+			public host? : { objectPath() : string , [ key : string ] : any } ,
+			public field = 'value()' ,
 			public key? : any
 		) {
 			super()
@@ -331,10 +333,13 @@ module $ {
 		handler : ()=> Value ,
 		fail? : ( error : Error )=> Error|Value
 	) {
-		var atom = new $mol_atom<any>( null , 'value()' , () => {
-			handler()
-			atom.destroyed( true )
-		} , fail )
+		var atom = new $mol_atom<any>(
+			() => {
+				handler()
+				atom.destroyed( true )
+			} ,
+			fail ,
+		)
 		
 		$mol_atom.actualize( atom )
 		
