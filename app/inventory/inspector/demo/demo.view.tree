@@ -1,0 +1,3 @@
+$mol_app_inventory_inspector_demo $mol_app_inventory_inspector
+	inventoryItems /
+		\hello items

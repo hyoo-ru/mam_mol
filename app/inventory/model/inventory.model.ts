@@ -1,6 +1,11 @@
 namespace $ {
 	export class $mol_app_inventory_model extends $mol_object {
 		
+		@ $mol_prop()
+		inventoryData(...diff: Object[]) {
+			return diff[0] || [];
+		}
+		
 		username()  {
 			return 'demo';
 		}

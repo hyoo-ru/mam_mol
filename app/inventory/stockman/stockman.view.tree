@@ -5,3 +5,6 @@ $mol_app_inventory_stockman $mol_pager
 			title \Инветоризация
 			role > role \
 	body < inventoryItems /
+	foot /
+		< coderRower $mol_rower childs /
+			< coder $mol_coder		

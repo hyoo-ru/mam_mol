@@ -5,6 +5,10 @@ $mol_app_inventory $mol_viewer
 			model < model null
 		< stockman $mol_app_inventory_stockman
 			model < model null
+			role > role			
+		< inspector $mol_app_inventory_inspector
+			model < model null
 			role > role
-			inventoryItems /
-				\hello items
+		< statistics $mol_app_inventory_statistics
+			model < model null
+			role > role
