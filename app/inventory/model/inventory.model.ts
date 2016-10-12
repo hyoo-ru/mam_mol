@@ -40,7 +40,7 @@ namespace $ {
 		}
 		
 		@ $mol_prop()
-		productsStore(...diff: StoreItem[][]) {
+		productsStore(...diff: StoreItem[][]) : StoreItem[] {
 			return diff[0] || [];
 		}
 		
@@ -64,7 +64,7 @@ namespace $ {
 		
 		@ $mol_prop()
 		addProduct(...diff: string[]) {
-			let product: any;
+			let product: Product;
 			
 			if(diff[0]) {
 				product = this.productsList().filter(product => product.code === diff[0])[0];
@@ -76,16 +76,15 @@ namespace $ {
 				
 				if(storeItem) {
 					storeItem.count++;
-					store = store.concat(storeItem);
 				} else {
-					product.count = 1;
-					store = store.concat(product);	
+					store = store.concat({
+						count: 1,
+						code: product.code
+					});
 				}
 				
 				this.productsStore(store);
 			}
-			
-			console.log(this.productsStore());
 		}
 				
 		login(username: string, password: string) {

@@ -6,6 +6,18 @@ module $.$mol {
 			this.model().addProduct(diff[0]);
 			
 			return diff[0] || '';
+		}			
+		
+		storeItems() {
+			console.log(this.model().productsStore());
+			return this.model().productsStore().map((product, index) => this.rower(index));
+		}
+		
+		@ $mol_prop()
+		rower(index: number) {
+			return new $mol_carder().setup(obj => {
+				obj.status = () => 'pending'
+			});
 		}
 		
 		@ $mol_prop()
