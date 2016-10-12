@@ -4,5 +4,6 @@
 /// 	module $.$mol { export var x = 2 } // overrides
 /// 	module $.$mol { console.log( x , y ) } // usage
 ///
-this['$'] = this['$'] || this
-this['$']['$mol'] = this['$']
+this.$ = this.$ || this
+var $ = this.$
+$.$mol = $
