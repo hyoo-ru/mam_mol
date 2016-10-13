@@ -23,7 +23,7 @@ namespace $ {
 			const authenticated = username === this.username() && password === this.password() 
 			
 			if(!authenticated) {
-				this.message('Access is denied forever.');
+				this.message('Access denied');
 			} else {
 				this.message('');
 			}
