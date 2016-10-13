@@ -4,36 +4,26 @@
 	align-items: center;
 	align-content: center;
 	border: none;
-	box-shadow: none;
-	/*padding: .5rem 0;*/
 	font-weight: normal;
-}
-
-[mol_checker]:before {
-	content: '✔';
 	border-radius: var(--mol_skin_round);
-	font-size: 1rem;
-	width: 1.2rem;
-	height: 1.2rem;
-	flex: 0 0 1.2rem;
-	display: flex;
-	align-content: center;
-	justify-content: center;
-	align-items: center;
 	background: var(--mol_skin_card);
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 }
 
-[mol_checker]:not([mol_checker_checked]):before {
-	color: transparent;
+[mol_checker_icon] {
+	width: 1.3rem;
+	height: 1.3rem;
+	left: 0;
 }
 
-[mol_checker_checked]:before {
-	/*background: var(--mol_skin_focus);*/
-	/*color: var(--mol_skin_focus_fore);*/
-	/*box-shadow: none;*/
+[mol_checker_icon] + div:not(:empty) {
+	margin-left: .5rem;
 }
 
-[mol_checker]:not(:empty):before {
-	margin-right: .5rem;
+[mol_checker] [mol_checker_icon] > path {
+	opacity:0;
+}
+
+[mol_checker][mol_checker_checked] > [mol_checker_icon] > path {
+	opacity:1;
 }
