@@ -1,0 +1,24 @@
+$mol_grider $mol_viewer
+	tagName \table
+	rowHeight 0
+	childs /
+		< header null
+		< rows /
+	gaperTop $mol_grider_gaper
+		height < gapTop 0 
+	gaperBottom $mol_grider_gaper
+		height < gapBottom 0 
+
+$mol_grider_gaper $mol_viewer
+	height 0
+	field * style.height < heightStyle \0px
+
+$mol_grider_rower $mol_viewer
+	tagName \tr
+	childs / < cells /
+
+$mol_grider_header $mol_grider_rower
+	field * style.transform < shiftStyle \
+
+$mol_grider_celler $mol_viewer
+	tagName \td

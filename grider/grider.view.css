@@ -1,0 +1,19 @@
+[mol_grider] {
+	border-spacing: 0;
+	margin: -1px;
+}
+
+[mol_grider] > * {
+	display: table-row;
+}
+
+[mol_grider] > * > * {
+	display: table-cell;
+	padding: .5rem;
+	white-space: nowrap;
+}
+
+[mol_grider_header] > * {
+	background: var(--mol_skin_light);
+	border-bottom: 1px solid var(--mol_skin_light_line);
+}

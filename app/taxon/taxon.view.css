@@ -1,0 +1,12 @@
+[mol_app_taxon] {
+	height: 100%;
+}
+
+[mol_app_taxon_branch_contenter] {
+	display: flex;
+	align-items: baseline;
+}
+
+[mol_app_taxon_cellerNumber] {
+	text-align: right;
+}
