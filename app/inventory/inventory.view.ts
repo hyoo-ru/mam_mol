@@ -7,15 +7,26 @@ module $.$mol {
 		}
 		
 		childs() {
-			if(this.model().isLoggedIn()) {
-				return [this.stockman()]
-			} else {
-				return [this.login()]
+			let content: Array<$mol_viewer> = [];
+			
+			if(!this.model().isLoggedIn()) {
+				return [this.login()] 
 			}
+			
+			switch(this.role()) {
+				case 'stockman': content = [this.stockman()]; break;
+				case 'inspector': content = [this.inspector()]; break;
+				case 'statistics': content = [this.statistics()]; break;
+			}
+			
+			return content;
 		}
+		
 		@ $mol_prop()
 		role(...diff: string[]) {
-			// if diff logout => logout
+			if(diff[0] === 'logout') {
+				return this.model().isLoggedIn(false);
+			}
 			return $mol_state_arg.value( 'role' , ...diff ) || 'stockman';
 		}
 	}

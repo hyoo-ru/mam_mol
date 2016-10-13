@@ -1,7 +1,11 @@
 $mol_app_inventory_stockman $mol_pager
-	model null
+	model null	
 	head /
 		< header $mol_app_inventory_header
 			title \Инветоризация
 			role > role \
-	body < inventoryItems /
+	body < storeItems /
+	foot /
+		< coderRower $mol_rower childs /
+			< coder $mol_coder
+				value > coderValue \
