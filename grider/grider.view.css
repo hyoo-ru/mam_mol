@@ -1,6 +1,7 @@
 [mol_grider] {
 	border-spacing: 0;
-	margin: -1px;
+	margin: auto;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 }
 
 [mol_grider] > * {
