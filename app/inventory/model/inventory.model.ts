@@ -1,12 +1,12 @@
 namespace $ {
-
-	interface Product {
+	
+	export interface $mol_app_inventory_product {
 		title: string,
 		description: string,
 		code: string
 	}
 	
-	interface StoreItem {
+	export interface $mol_app_inventory_store_item {
 		code: string,
 		count: number
 	}
@@ -14,7 +14,7 @@ namespace $ {
 	export class $mol_app_inventory_model extends $mol_object {
 		
 		@ $mol_prop()
-		productsList(): Array<Product> {
+		productsList(): Array<$mol_app_inventory_product> {
 			return [
 				{
 					title: 'Bread with poppy seeds',
@@ -40,8 +40,8 @@ namespace $ {
 		}
 		
 		@ $mol_prop()
-		productsStore(...diff: StoreItem[][]) : StoreItem[] {
-			return diff[0] || [];
+		productsStore(...diff: $mol_app_inventory_store_item[][]) : $mol_app_inventory_store_item[] {
+			return $mol_state_session.value( 'productsStore' , ...diff ) || [];
 		}
 		
 		username()  {
@@ -64,7 +64,7 @@ namespace $ {
 		
 		@ $mol_prop()
 		addProduct(...diff: string[]) {
-			let product: Product;
+			let product: $mol_app_inventory_product;
 			
 			if(diff[0]) {
 				product = this.productsList().filter(product => product.code === diff[0])[0];
