@@ -42,12 +42,12 @@ Easy way is checkout [this preconfigured MAM repository](http://github.com/eigen
 
 ```sh
 git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
-npm start
+npm install && npm start
 ```
 
 **Create your application component**
 
-In examples we will use namespace `my` and application name `hello`, but you must use your own namespace and application name.
+In examples we will use namespace `my` and application name `hello`, but you could use your own namespace and application name.
 
 Add **web entry point** at `./my/hello/index.html`:
 
