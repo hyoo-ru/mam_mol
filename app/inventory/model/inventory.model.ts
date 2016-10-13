@@ -8,7 +8,8 @@ namespace $ {
 	
 	export interface $mol_app_inventory_store_item {
 		code: string,
-		count: number
+		count: number,
+		state: string
 	}
 	
 	export class $mol_app_inventory_model extends $mol_object {
@@ -37,6 +38,11 @@ namespace $ {
 					code: '04'
 				}
 			];	
+		}
+		
+		@ $mol_prop()
+		productStates() {
+			return [ 'Correction', 'Entered' ]
 		}
 		
 		@ $mol_prop()
@@ -79,7 +85,8 @@ namespace $ {
 				} else {
 					store = store.concat({
 						count: 1,
-						code: product.code
+						code: product.code,
+						state: 'Entered'
 					});
 				}
 				

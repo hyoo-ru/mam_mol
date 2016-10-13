@@ -4,6 +4,8 @@ $mol_app_inventory_item $mol_viewer
 			< titler $mol_viewer childs / < title \
 			< descriptioner $mol_viewer childs / < description \
 		< state $mol_viewer childs /
-			< stateChanger $mol_clicker_major childs / < majorLabel @ \Correction
+			< stateChanger $mol_clicker_major
+				eventClick > onStateChange null
+				childs / > stateLabel \
 		< count $mol_viewer childs /
 			< countValue 0
