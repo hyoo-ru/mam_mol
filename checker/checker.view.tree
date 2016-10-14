@@ -1,5 +1,5 @@
 $mol_checker $mol_clicker
 	attr * mol_checker_checked > checked false
 	childs /
-		< icon $mol_icon_check
+		< icon null
 		< labeler $mol_viewer childs / < label \
