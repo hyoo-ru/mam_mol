@@ -12,11 +12,28 @@ module $.$mol {
 				birthDay : $mol_stub_time( - 60 * 24 * 365 * 50 ).toString( 'YYYY-MM-DD' ) ,
 				birthCity : $mol_stub_city() ,
 				deathDay : $mol_stub_time( 60 * 24 * 365 * 50 ).toString( 'YYYY-MM-DD' ) ,
-				deatchCity : $mol_stub_city() ,
+				deathCity : $mol_stub_city() ,
 				cityWork : $mol_stub_city() ,
 				company : $mol_stub_companyName() ,
 			}
 		}
+		
+		@ $mol_prop()
+		nodeTitles() {
+			return <{ [key: string] : string}> {
+				name : 'Имя' ,
+				age : 'Год' ,
+				sex : 'Пол' ,
+				sexPrefer : 'Предпочтение' ,
+				birthDay : 'День рождения' ,
+				birthCity : 'Город' ,
+				deathDay : 'Год смерти' ,
+				deathCity : 'Город смерти' ,
+				cityWork : 'Город работы' ,
+				company : 'Компания' ,
+			}
+		}
+		
 		
 		@ $mol_prop()
 		pathsSub( path : number[] ) : number[][] {
@@ -70,7 +87,7 @@ module $.$mol {
 			for( let name in node ) {
 				if( name === 'name' ) continue
 				if( typeof (<any>node)[ name ] === 'number' ) {
-					next.push( this.cellerNumber({ path , field : name }) )
+					next.push( this.cellerNumber({ path , field : name }) ) 
 				} else {
 					next.push( this.cellerText({ path , field : name }) )
 				}
@@ -89,20 +106,26 @@ module $.$mol {
 		}
 		
 		rowTitle( path : number[] ) {
-			if( path.length == 0 ) return 'name'
+			if( path.length == 0 ) {
+				return this.nodeTitles()[ 'name' ];
+			}
 			
 			return this.node( path ).name
 		}
 		
 		cellText( id : { path : number[] , field : string } ) {
-			if( id.path.length == 0 ) return [ id.field ]
+			if( id.path.length == 0 ) {
+				return [this.nodeTitles()[ id.field ]];
+			}
 			
 			const node : any = this.node( id.path )
 			return [ `${ node[ id.field ] }` ]
 		}
 		
 		cellNumber( id : { path : number[] , field : string } ) {
-			if( id.path.length == 0 ) return [ id.field ]
+			if( id.path.length == 0 ) {
+				return [this.nodeTitles()[ id.field ]];
+			}
 			
 			const node : any = this.node( id.path )
 			return [ `${ node[ id.field ] }` ]
