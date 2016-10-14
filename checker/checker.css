@@ -11,23 +11,3 @@
 [mol_checker]:disabled {
 	background: transparent;
 }
-
-[mol_checker]:disabled > [mol_checker_icon] {
-	background-color: var(--mol_skin_passive);
-}
-
-[mol_checker_icon] {
-	width: 1.3rem;
-	height: 1.3rem;
-	left: 0;
-	border-radius: var(--mol_skin_round);
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
-}
-
-[mol_checker_icon] + div:not(:empty) {
-	margin-left: .5rem;
-}
-
-[mol_checker]:not([mol_checker_checked]) > [mol_checker_icon] {
-	fill: transparent;
-}
