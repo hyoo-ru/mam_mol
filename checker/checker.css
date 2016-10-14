@@ -7,7 +7,3 @@
 	font-weight: normal;
 	box-shadow: none;
 }
-
-[mol_checker]:disabled {
-	background: transparent;
-}
