@@ -1,8 +1,0 @@
-[mol_app_inventory_header] {
-	display: flex;
-	align-items: baseline;
-}
-
-[mol_app_inventory_header_titler] {
-	flex-grow: 1000;
-}

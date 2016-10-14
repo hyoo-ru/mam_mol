@@ -1,6 +1,0 @@
-$mol_app_inventory_inspector $mol_pager
-	model null
-	head /
-		< header $mol_app_inventory_header			
-			role > role \
-	body < inventoryItems /

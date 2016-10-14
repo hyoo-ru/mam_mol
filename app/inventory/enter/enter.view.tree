@@ -1,6 +1,5 @@
-$mol_app_inventory_login $mol_viewer
-	model null
-	message \
+$mol_app_inventory_enter $mol_viewer
+	domain null
 	> entered false
 	< childs / 
 		< form $mol_form
@@ -8,7 +7,8 @@ $mol_app_inventory_login $mol_viewer
 				< loginField $mol_form_field
 					name < loginLabel @ \Login
 					errors < loginErrors /
-					control < loginControl $mol_stringer value > username \
+					control < loginControl $mol_stringer
+						value > login \
 				< passwordField $mol_form_field
 					name < passwordLabel @ \Password
 					errors < passwordErrors /
@@ -20,4 +20,5 @@ $mol_app_inventory_login $mol_viewer
 					childs / < submitLabel @ \Log In
 					eventClick > eventSubmit null
 					disabled < submitBlocked false
-		< message
+		< message \
+	messageNoAccess @ \Access denied

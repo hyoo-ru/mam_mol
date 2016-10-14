@@ -1,0 +1,17 @@
+$mol_app_inventory_position $mol_rower
+	position null
+	childs /
+		< producter $mol_viewer childs /
+			< titler $mol_viewer childs / < title \
+			< descriptioner $mol_viewer childs / < description \
+		< counter $mol_number
+			value > count 0
+			enabledInc false
+			enabledDec false
+		< statuser $mol_switcher
+			value > status null
+			options *
+				pending < statusLabelPending @ \Ожидает
+				approved < statusLabelApproved @ \Подтверждено
+				rejected < statusLabelRejected @ \Корректировка
+		- < commenter $mol_viewer childs /

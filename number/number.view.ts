@@ -34,5 +34,14 @@ module $.$mol {
 				this.eventDec( ...diff )
 			}
 		}
+		
+		incrementer() {
+			return this.enabledInc() ? super.incrementer() : null
+		}
+		
+		decrementer() {
+			return this.enabledDec() ? super.decrementer() : null
+		}
+		
 	}
 }

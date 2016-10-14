@@ -1,5 +1,6 @@
 $mol_coder $mol_viewer childs /
 	< manualer $mol_stringer
+		type \number
 		value > value \
 		hint < hint < format \
 	< scanner $mol_clicker

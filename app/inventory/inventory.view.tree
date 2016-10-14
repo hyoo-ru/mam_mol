@@ -1,14 +1,25 @@
 $mol_app_inventory $mol_viewer
-	> role \
-	childs /
-		< login $mol_app_inventory_login
-			model < model null
-		< stockman $mol_app_inventory_stockman
-			model < model null
-			role > role			
-		< inspector $mol_app_inventory_inspector
-			model < model null
-			role > role
-		< statistics $mol_app_inventory_statistics
-			model < model null
-			role > role
+	childs / < page null
+	header $mol_app_inventory_header
+	enter $mol_app_inventory_enter
+		domain < domain null
+	controller $mol_app_inventory_controller
+		header < header
+		domain < domain null
+	keeper $mol_app_inventory_keeper
+		header < header
+		domain < domain null
+	stats $mol_app_inventory_stats
+		header < header
+		domain < domain null
+
+$mol_app_inventory_header $mol_rower childs /
+	< keeperLink $mol_linker
+		arg * page \keeper
+		childs / < keeperLabel @ \Списания
+	< controlLink $mol_linker
+		arg * page \controller
+		childs / < controlLabel @ \Проверка
+	< statsLink $mol_linker
+		arg * page \stats
+		childs / < statsLabel @ \Статистика

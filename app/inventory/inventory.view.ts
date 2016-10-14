@@ -2,32 +2,28 @@ module $.$mol {
 	export class $mol_app_inventory extends $.$mol_app_inventory {
 		
 		@ $mol_prop()
-		model() {
-			return new $mol_app_inventory_model()
+		domain() {
+			return new $mol_app_inventory_domain_mock()
 		}
 		
-		childs() {
-			let content: Array<$mol_viewer> = [];
-			
-			if(!this.model().isLoggedIn()) {
-				return [this.login()] 
+		page() {
+			if( !this.domain().authentificated() ) {
+				return this.enter()
 			}
 			
-			switch(this.role()) {
-				case 'stockman': content = [this.stockman()]; break;
-				case 'inspector': content = [this.inspector()]; break;
-				case 'statistics': content = [this.statistics()]; break;
+			switch( this.pageName() ) {
+				case 'keeper': return this.keeper()
+				case 'controller': return this.controller()
+				case 'stats': return this.stats()
 			}
 			
-			return content;
+			return this.stats()
 		}
 		
 		@ $mol_prop()
-		role(...diff: string[]) {
-			if(diff[0] === 'logout') {
-				return this.model().isLoggedIn(false);
-			}
-			return $mol_state_arg.value( 'role' , ...diff ) || 'stockman';
+		pageName( ...diff : string[] ) {
+			return $mol_state_arg.value( 'page' , ...diff ) || 'keeper'
 		}
+		
 	}
 }

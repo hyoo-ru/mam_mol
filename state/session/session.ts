@@ -3,7 +3,7 @@ module $ {
 	export class $mol_state_session< Value > extends $mol_object {
 		
 		@ $mol_prop()
-		static value< Value >( key : string , ...diff : Value[] ) {
+		static value< Value >( key : string , ...diff : Value[] ) : Value {
 			if( diff[ 0 ] === void 0 ) return JSON.parse( sessionStorage.getItem( key ) || 'null' )
 			
 			if( diff[ 0 ] === null ) localStorage.removeItem( key )

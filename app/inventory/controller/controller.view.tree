@@ -1,0 +1,5 @@
+$mol_app_inventory_controller $mol_pager
+	domain null
+	body < positioners /
+	positioner# $mol_app_inventory_position
+		position < position# null

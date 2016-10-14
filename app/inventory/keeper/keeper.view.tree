@@ -1,0 +1,11 @@
+$mol_app_inventory_keeper $mol_pager
+	domain null
+	body < positioners /
+	positioner# $mol_app_inventory_position
+		statuser null
+		position < position# null
+	foot /
+		< coderRower $mol_rower childs /
+			< coder $mol_coder
+				value > newCode \
+				hint < newCodeHint @ \Add position by bar code
