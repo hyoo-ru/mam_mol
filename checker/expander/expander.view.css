@@ -1,3 +1,12 @@
+[mol_checker_expander]:disabled {
+	background: transparent;
+	color: var(--mol_skin_light_text);
+}
+
+[mol_checker_expander]:disabled > [mol_checker_expander_icon] {
+	display: none;
+}
+
 [mol_checker_expander_icon] {
 	width: 1.4rem;
 	height: 1.4rem;
