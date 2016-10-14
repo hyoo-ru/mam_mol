@@ -12,7 +12,7 @@ $mol_rower_demo $mol_rower
 			value > count null
 		< progresser $mol_portioner
 			portion < progress 0.33
-		< publisher $mol_checker
+		< publisher $mol_checker_ticker
 			label < publishLabel @ \Shared
 			checked > publish false
 		< buttonDrop $mol_clicker_minor

@@ -24,7 +24,7 @@ $mol_app_taxon_branch $mol_grider_celler
 	field * style.paddingLeft < levelStyle \0px
 	childs /
 		< contenter $mol_viewer childs /
-			< expander $mol_checker
+			< expander $mol_checker_ticker
 				checked > expanded false
 				enabled < expandable false
 			< titler $mol_viewer

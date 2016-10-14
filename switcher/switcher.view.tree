@@ -1,7 +1,7 @@
 $mol_switcher $mol_viewer
 	heightMinimal 44
 	enabled true
-	optioner# $mol_checker
+	optioner# $mol_checker_ticker
 		checked > optionChecked# false
 		label < optionLabel# \
 		enabled < enabled

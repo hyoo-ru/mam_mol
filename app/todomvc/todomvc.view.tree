@@ -7,7 +7,7 @@ $mol_app_todomvc $mol_scroller
 			< header $mol_viewer
 				heightMinimal 64
 				childs < headerContent /
-					< allCompleter $mol_checker
+					< allCompleter $mol_checker_ticker
 						enabled < allCompleterEnabled false
 						checked > allCompleted false
 						childs / \❯
@@ -45,7 +45,7 @@ $mol_app_todomvc_adder $mol_stringer
 $mol_app_todomvc_taskRow $mol_viewer
 	heightMinimal 64
 	childs /
-		< completer $mol_checker checked > completed false
+		< completer $mol_checker_ticker checked > completed false
 		< titler $mol_stringer
 			hint < titleHint @ \Task title
 			value > title \

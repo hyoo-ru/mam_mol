@@ -1,4 +1,4 @@
-$mol_checker_demo $mol_rower childs /
+$mol_checker_ticker_demo $mol_rower childs /
 	< c1 $mol_checker_ticker
 		label < c1Label @ \Unchecked
 	< c2 $mol_checker_ticker

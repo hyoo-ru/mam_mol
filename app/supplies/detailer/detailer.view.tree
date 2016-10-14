@@ -52,6 +52,6 @@ $mol_app_supplies_detailer $mol_pager
 					title < costLabel @ \Cost
 					content < coster $mol_coster value < cost $mol_unit_money valueOf 0
 			content < positions /
-	foot $mol_rower childs < tools / < approver $mol_checker
+	foot $mol_rower childs < tools / < approver $mol_checker_ticker
 		checked > approved false
 		childs / < approvedLabel @ \Approved
