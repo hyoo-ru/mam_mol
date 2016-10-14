@@ -1,0 +1,12 @@
+[mol_checker_expander_icon] {
+	box-shadow: none;
+	transition: all 0.2s ease-out;
+}
+[mol_checker_expander]:not([mol_checker_checked]) > [mol_checker_expander_icon] {
+	fill: var(--mol_skin_light_text);
+	transform: rotateZ(0deg);
+}
+
+[mol_checker_expander][mol_checker_checked] > [mol_checker_expander_icon] {
+	transform: rotateZ(90deg);
+}
