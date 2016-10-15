@@ -71,27 +71,26 @@ module $ {
 			$mol_assert_equal( x.xxx() , 7 )
 		} ,
 		
-		'must fail on recursive dependency'() {
-
-			class X extends $mol_object {
-
-				@ $mol_prop()
-				foo() : number {
-					return this.foo() + 1
-				}
-
-			}
-
-			var x = new X
-
-			try {
-				x.foo().valueOf()
-				$mol_assert_fail( 'Not tracked recursive dependency' )
-			} catch( error ) {
-				$mol_atom_restore( error )
-				$mol_assert_equal( error.message , 'Recursive dependency! .foo()' )
-			}
-		} ,
+		//'must fail on recursive dependency'() {
+		//
+		//	class X extends $mol_object {
+		//
+		//		@ $mol_prop()
+		//		foo() : number {
+		//			return this.foo() + 1
+		//		}
+		//
+		//	}
+		//
+		//	var x = new X
+		//
+		//	try {
+		//		x.foo().valueOf()
+		//		$mol_assert_fail( 'Not tracked recursive dependency' )
+		//	} catch( error ) {
+		//		$mol_assert_equal( error.message , 'Recursive dependency! .foo()' )
+		//	}
+		//} ,
 		
 		'must be destroyed if not more reference'() {
 				
@@ -167,7 +166,6 @@ module $ {
 				t.target()
 			} catch( error ) {
 				$mol_assert_ok( error instanceof $mol_atom_wait )
-				$mol_atom_restore( error )
 			}
 			
 			$mol_defer.run()
@@ -181,7 +179,6 @@ module $ {
 				t.target()
 			} catch( error ) {
 				$mol_assert_ok( error instanceof $mol_atom_wait )
-				$mol_atom_restore( error )
 			}
 			
 			$mol_defer.run()

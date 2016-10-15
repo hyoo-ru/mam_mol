@@ -64,11 +64,7 @@ module $ {
 		}
 		
 		get() {
-			if( $mol_atom.stack.indexOf( this ) !== -1 ) {
-				throw new Error( 'Recursive dependency! ' + this.objectPath() )
-			}
-			
-			var slave = $mol_atom.stack[ $mol_atom.stack.length - 1 ]
+			var slave = $mol_atom.stack[0]
 			if( slave ) this.lead( slave )
 			if( slave ) slave.obey( this )
 			
@@ -90,8 +86,8 @@ module $ {
 			
 			if( this.status === $mol_atom_status.actual ) return
 			
-			var index = $mol_atom.stack.length
-			$mol_atom.stack.push( this )
+			const slave = $mol_atom.stack[0]
+			$mol_atom.stack[0] = this
 			
 			if( this.status === $mol_atom_status.checking ) {
 				
@@ -132,7 +128,7 @@ module $ {
 				if( next !== void 0 ) this.push( next )
 			}
 			
-			$mol_atom.stack.length = index
+			$mol_atom.stack[0] = slave
 		}
 		
 		set( ...diff : (Value|Error)[] ) {
@@ -265,7 +261,7 @@ module $ {
 			}
 		}
 		
-		static stack = [] as $mol_atom<any>[]
+		static stack = [ null ] as $mol_atom<any>[]
 		static updating : $mol_atom<any>[] = []
 		static reaping = new $mol_set< $mol_atom<any> >()
 		static scheduled = false
@@ -319,16 +315,6 @@ module $ {
 			this.scheduled = false
 		}
 		
-	}
-	
-	export function $mol_atom_restore( error : Error ) {
-		if( $mol_atom.stack.length ) {
-			var atom = $mol_atom.stack.pop()
-			if( error instanceof Error ) {
-				error = atom.push( error )
-			}
-		}
-		$mol_atom.stack.splice( 0 , $mol_atom.stack.length )
 	}
 	
 	$mol_state_stack.set( '$mol_atom.stack' , $mol_atom.stack )
