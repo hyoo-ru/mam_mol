@@ -5,7 +5,7 @@ module $ {
 		expressGenerator() {
 			return ( req : any , res : any , next : () => void )=> {
 				try {
-					return this.generator( req.url ) || next()
+					return this.generator( req.url ).valueOf() && next()
 				} catch( error ) {
 					$mol_atom_restore( error )
 					if( req.url.match( /\.js$/ ) ) {
@@ -27,16 +27,14 @@ module $ {
 		})
 		generator( path : string ) {
 			var matched = path.match( /^((?:\/\w+)+)\/-\/(\w+(?:.\w+)+)$/ )
-			if( !matched ) return null
+			if( !matched ) return <$mol_file[]>[]
 			
 			var build = this.build()
 			
 			var [ path , path , bundle ] = matched
 			path = build.root().resolve( path ).path()
 			
-			build.bundle( { path , bundle } )
-			
-			return <void> null
+			return build.bundle( { path , bundle } )
 		}
 		
 		port() {

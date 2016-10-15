@@ -72,20 +72,20 @@ module $ {
 		} ,
 		
 		'must fail on recursive dependency'() {
-				
+
 			class X extends $mol_object {
-				
+
 				@ $mol_prop()
 				foo() : number {
 					return this.foo() + 1
 				}
-				
+
 			}
-			
+
 			var x = new X
-			
+
 			try {
-				x.foo()
+				x.foo().valueOf()
 				$mol_assert_fail( 'Not tracked recursive dependency' )
 			} catch( error ) {
 				$mol_atom_restore( error )

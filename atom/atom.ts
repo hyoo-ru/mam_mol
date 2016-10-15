@@ -1,3 +1,5 @@
+declare var Proxy : any
+
 module $ {
 	
 	export enum $mol_atom_status {
@@ -74,7 +76,11 @@ module $ {
 			
 			var value : Value|Error = ( this.host || this )[ this.field ]
 			
-			if( value instanceof Error ) throw value
+			if( value instanceof Error ) {
+				if( typeof Proxy !== 'function' ) throw value
+				if(!( value instanceof $mol_atom_wait )) throw value
+			}
+			
 			return value
 		}
 		
@@ -102,7 +108,6 @@ module $ {
 			}
 			
 			if( this.status !== $mol_atom_status.actual ) {
-				//this.log(['t'])
 				
 				var oldMasters = this.masters
 				this.masters = null
@@ -113,15 +118,18 @@ module $ {
 					}
 				)
 				
-				var host = this.host || this
-				if( this.key !== void 0 ) {
-					var next = this.handler.call( host , this.key )
-				} else {
-					var next = this.handler.call( host )
+				try {
+					var host = this.host || this
+					if( this.key !== void 0 ) {
+						var next = this.handler.call( host , this.key )
+					} else {
+						var next = this.handler.call( host )
+					}
+				} catch( error ) {
+					next = error
 				}
-				if( next === void 0 ) next = host[ this.field ]
 				
-				this.push( next )
+				if( next !== void 0 ) this.push( next )
 			}
 			
 			$mol_atom.stack.length = index
@@ -159,13 +167,17 @@ module $ {
 					next[ 'objectField' ]( this.field ) // FIXME: type checking
 					next[ 'objectOwner' ]( host ) // FIXME: type checking
 				}
+				if(( typeof Proxy === 'function' )&&( next instanceof $mol_atom_wait )) {
+					next = new Proxy( next , {
+						get( target : Error ) {
+							throw target.valueOf()
+						}
+					} )
+				}
 				host[ this.field ] = next
 				this.log( [ 'push' , next , prev ] )
-				if( next instanceof Error ) {
-					if( this.slaves ) this.slaves.forEach( slave => slave.push( next ) )
-				} else {
-					this.obsoleteSlaves()
-				}
+				
+				this.obsoleteSlaves()
 			}
 			this.status = $mol_atom_status.actual
 			return next
@@ -326,6 +338,7 @@ module $ {
 		
 		constructor( public message = 'Wait...' ) {
 			super( message )
+			this.stack = new Error( message ).stack
 		}
 	}
 	

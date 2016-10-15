@@ -132,13 +132,10 @@ module $ {
 		
 		@ $mol_prop( {
 			fail : ( self : $mol_viewer , error : any ) => {
-				var node = self.DOMNode()
-				if( node && !error['$mol_viewer_catched'] ) {
-					node.setAttribute( 'mol_viewer_error' , error.name )
-					// if( error.name !== '$mol_atom_wait' ) node.innerHTML = error.message
-				}
-				error['$mol_viewer_catched'] = true
-				return error
+				const node = self.DOMNode()
+				if( !node ) return
+				
+				node.setAttribute( 'mol_viewer_error' , error.name )
 			}
 		} )
 		DOMTree( ...diff : void[] ) {
@@ -153,7 +150,7 @@ module $ {
 					
 					if( view == null ) {
 					} else if( typeof view === 'object' ) {
-						var existsNode = ( view instanceof $mol_viewer ) ? view.DOMNode() : view
+						var existsNode = ( ( view instanceof $mol_viewer ) ? view.DOMNode() : view )
 						while( true ) {
 							if( !nextNode ) {
 								node.appendChild( existsNode )
