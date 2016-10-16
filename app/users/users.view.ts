@@ -3,24 +3,24 @@ module $.$mol {
 	/// GitHub users View Model
 	export class $mol_app_users extends $.$mol_app_users {
 		
-		queryArg( ...diff : string[] ) {
-			return $mol_state_arg.value( this.stateKey( 'query' ) , ...diff )
+		queryArg( next? : string , prev? : string ) {
+			return $mol_state_arg.value( this.stateKey( 'query' ) , next , prev )
 		}
 		
 		/// Search query string synchronized with argument from URL.
-		@ $mol_prop()
-		query( ...diff : string[] ) : string {
+		@ $mol_mem()
+		query( next? : string , prev? : string ) : string {
 			const arg = this.queryArg()
 			
-			if( diff[0] === void 0 ) {
+			if( next == null ) {
 				return arg
 			} else {
 				const query = this.query()
 				
-				this.queryArg( ...diff )
+				this.queryArg( next , prev )
 				
 				if( this._queryTimer ) clearTimeout( this._queryTimer )
-				this._queryTimer = setTimeout( ()=> { this.query( void 0 ) } , 500 )
+				this._queryTimer = setTimeout( ()=> { this.query( null ) } , 500 )
 				
 				return query
 			}
@@ -29,8 +29,8 @@ module $.$mol {
 		_queryTimer = 0
 		
 		/// Data source resource based on this.query()
-		@ $mol_prop()
-		master( ) {
+		@ $mol_mem()
+		master() {
 			var query = this.query()
 			
 			if( query ) {
@@ -51,27 +51,27 @@ module $.$mol {
 		}
 		
 		/// Current list of users. May be changed by user.
-		@ $mol_prop()
-		users( ...diff : string[][] ) {
-			return diff[0] || this.usersMaster()
+		@ $mol_mem()
+		users( next? : string[] ) {
+			return next || this.usersMaster()
 		}
 		
 		/// List of users loaded from server.
-		@ $mol_prop()
-		usersMaster( ...diff : string[][] ) {
+		@ $mol_mem()
+		usersMaster( next? : string[] ) {
 			if( !this.query() ) return []
 			
 			const master = this.master()
 			
-			if( diff.length === 0 ) {
+			if( next === void 0 ) {
 				return master.json().items.map( item => item.login ) as string[]
 			}
 			
-			master.json( diff[ 0 ] && { items : diff[ 0 ].map( login => ({ login }) ) } )
+			master.json( next && { items : next.map( login => ({ login }) ) } )
 		}
 		
 		/// Status of net communication. Shows errors of downloading|uploading. 
-		@ $mol_prop({
+		@ $mol_mem({
 			fail : ( view : $mol_app_users , error : Error ) => {
 				if( error instanceof $mol_atom_wait ) return error
 				return error.message
@@ -86,17 +86,17 @@ module $.$mol {
 		}
 		
 		/// Reload data from server and discard changes.
-		eventReload( ...diff : Event[] ) {
+		eventReload( next? : Event ) {
 			this.master().refresh()
 		}
 		
 		/// Add user with empty name at the end of list.
-		eventAdd( ...diff : Event[] ) {
+		eventAdd( next? : Event ) {
 			this.users( this.users().concat( '' ) )
 		}
 		
 		/// Remove user from list by id.
-		eventUserDrop( id : number , ...diff : Event[] ) {
+		eventUserDrop( id : number , next? : Event ) {
 			this.users( this.users().filter( ( name , i )=> ( i !== id ) ) )
 		}
 		
@@ -111,7 +111,7 @@ module $.$mol {
 		}
 		
 		/// Initiates current user list to upload. 
-		eventSave( ...diff : Event[] ) {
+		eventSave( next? : Event ) {
 			if( !this.changed() ) return
 			this.usersMaster( this.users() )
 		}
@@ -125,26 +125,27 @@ module $.$mol {
 		}
 		
 		/// Lazy list of user view models. Items are created only when they fits to viewport.
-		@ $mol_prop()
+		@ $mol_mem()
 		userRows() {
 			return this.users().map( ( user , id )=> this.userRow( id ) )
 		}
 		
 		/// One user view model with injected behaviour.
-		@ $mol_prop()
+		@ $mol_mem_key()
 		userRow( id : number ) {
 			return new $mol_app_users_item().setup( obj => {
-				obj.title = ( ...diff )=> this.userName( id , ...diff )
-				obj.eventDrop = ( ...diff )=> this.eventUserDrop( id , ...diff )
+				obj.title = ( next? )=> this.userName( id , next )
+				obj.eventDrop = ( next? )=> this.eventUserDrop( id , next )
 			} )
 		}
 		
 		/// Read/write accessor to user name by id.
-		userName( id : number , ...diff : string[] ) {
-			if( diff[0] === void 0 ) return this.users()[ id ] || ''
+		userName( id : number , next? : string ) {
+			if( next === void 0 ) return this.users()[ id ] || ''
 			
-			this.users( this.users().map( ( name , i )=> ( i === id ) ? diff[0] : name ) )
-			return diff[0]
+			this.users( this.users().map( ( name , i )=> ( i === id ) ? next : name ) )
+			
+			return next
 		}
 		
 	}

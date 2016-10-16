@@ -1,7 +1,7 @@
 module $.$mol {
 	export class $mol_texter extends $.$mol_texter {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		tokensFlow() {
 			return $mol_syntax_md_flow.tokenize( this.text() )
 		}

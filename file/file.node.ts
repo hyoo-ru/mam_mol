@@ -2,7 +2,7 @@ module $ {
 	
 	export class $mol_file extends $mol_object {
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		static absolute( path : string ) {
 			return new $mol_file().setup(
 				obj => {
@@ -31,7 +31,7 @@ module $ {
 			return this.objectPath()
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		watcher() {
 			const watcher = $node.fs.watch(
 				this.path() ,
@@ -40,7 +40,7 @@ module $ {
 					if( !name ) this.stat( void 0 )
 					else if( !/(^\.|___$)/.test( name ) ) {
 						var file = this.resolve( name )
-						file.stat( void 0 )
+						file.stat( null )
 					}
 				}
 			)
@@ -53,12 +53,12 @@ module $ {
 			return watcher
 		}
 		
-		@ $mol_prop()
-		stat( ...diff : any[] ) {
+		@ $mol_mem()
+		stat( next? : any , prev? : any ) {
 			var path = this.path()
 			
 			try {
-				var stat = $node.fs.statSync( path )
+				var stat = next || $node.fs.statSync( path )
 			} catch( error ) {
 				if( error.code === 'ENOENT' ) return null
 				throw error
@@ -69,29 +69,29 @@ module $ {
 			return stat
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		version() {
 			return this.stat().mtime.getTime().toString( 36 ).toUpperCase()
 		}
 		
-		exists( ...diff : boolean[] ) {
+		exists( next? : boolean ) {
 			var exists = !!this.stat()
 			
-			if( diff[ 0 ] === void 0 ) {
+			if( next === void 0 ) {
 				return exists
 			} else {
-				if( diff[ 0 ] == exists ) return exists
+				if( next == exists ) return exists
 				
-				if( diff[ 0 ] ) {
+				if( next ) {
 					this.parent().exists( true )
 					$node.fs.mkdirSync( this.path() )
 				} else {
 					$node.fs.unlinkSync( this.path() )
 				}
 				
-				this.stat( void 0 )
+				this.stat( null )
 				
-				return diff[ 0 ]
+				return next
 			}
 		}
 		
@@ -126,16 +126,16 @@ module $ {
 			return match && match[ 1 ].substring( 1 )
 		}
 		
-		@ $mol_prop()
-		content( ...diff : string[] ) {
-			if( diff[ 0 ] === void 0 ) {
+		@ $mol_mem()
+		content( next? : string , prev? : string ) {
+			if( next === void 0 ) {
 				return this.stat() && $node.fs.readFileSync( this.path() )
 			}
 			
 			this.parent().exists( true )
-			$node.fs.writeFileSync( this.path() , diff[ 0 ] )
+			$node.fs.writeFileSync( this.path() , next )
 			
-			return diff[ 0 ]
+			return next
 		}
 		
 		reader() {
@@ -146,7 +146,7 @@ module $ {
 			return $node.fs.createWriteStream( this.path() )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		childs() : $mol_file[] {
 			this.stat()
 			

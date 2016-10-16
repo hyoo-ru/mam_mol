@@ -21,7 +21,7 @@ module $ {
 			return null
 		}
 		
-		@ $mol_prop({
+		@ $mol_mem_key({
 			lazy : true
 		})
 		generator( path : string ) {

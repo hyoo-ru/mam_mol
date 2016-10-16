@@ -7,9 +7,9 @@ module $ {
 			$mol_defer.add( this )
 		}
 		
-		destroyed( ...diff : boolean[] ) {
-			if( diff[ 0 ] ) $mol_defer.drop( this )
-			return super.destroyed( ...diff )
+		destroyed( next? : boolean ) {
+			if( next ) $mol_defer.drop( this )
+			return super.destroyed( next )
 		}
 		
 		static all : $mol_defer[] = []

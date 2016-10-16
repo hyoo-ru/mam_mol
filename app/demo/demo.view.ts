@@ -19,7 +19,7 @@ module $.$mol {
 			}
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		welcomeText() {
 			return $mol_http_resource.item( 'readme.md' ).text()
 		}
@@ -28,7 +28,7 @@ module $.$mol {
 			return this.selected() ? false : true
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		namesDemo() {
 			var next : string[] = []
 			for( var name in $ ) {
@@ -41,7 +41,7 @@ module $.$mol {
 			return next
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		namesApp() {
 			var next : string[] = []
 			for( var name in $ ) {
@@ -54,7 +54,7 @@ module $.$mol {
 			return next
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		options() {
 			return this.namesDemo().concat( this.namesApp() ).map( name => this.option( name ) )
 		}
@@ -68,7 +68,7 @@ module $.$mol {
 			return $mol_state_arg.value( this.stateKey( 'demo' ) )
 		}
 
-		@ $mol_prop()
+		@ $mol_mem_key()
 		option( name : string ) {
 			return new $mol_linker().setup( obj => {
 				obj.childs = () => [ name ? ( '$' + name ) : 'All' ]
@@ -92,7 +92,7 @@ module $.$mol {
 		// 	} )
 		// }
 
-		@ $mol_prop()
+		@ $mol_mem_key()
 		widget( name : string ) {
 			var Class : typeof $mol_viewer = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class().setup( obj => {
@@ -100,7 +100,7 @@ module $.$mol {
 			} )
 		}
 
-		@ $mol_prop()
+		@ $mol_mem_key()
 		detailer( name : string ) {
 			return new $mol_app_demo_pager().setup( obj => {
 				obj.title = $mol_const( '$' + name )

@@ -13,7 +13,7 @@ $mol_stringer
 
 ## Properties
 
-**`value( ...diff : string[] ) : string`**
+**`value( next? : string ) : string`**
 
 Property `value` is a currently displayed string.
 

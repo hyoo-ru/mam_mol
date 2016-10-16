@@ -15,7 +15,7 @@ It sets the namespace for the DOM element.
 It sets the list of their child elements. In this list could be instances of `$mol_viewer`,
 any DOM-elements or primitives like strings, numbers etc. If the list have not been set (by default), then the content of the DOM-element would not be changed in way, it's helpful for manual operating with DOM.
 
-**`context( ...diff : $mol_viewer_context[] ) : $mol_viewer_context`**
+**`context( next? : $mol_viewer_context ) : $mol_viewer_context`**
 Some rendering context. Parent node injects context to all rendered child components.
 
 **`heightMinimal()` = 0**

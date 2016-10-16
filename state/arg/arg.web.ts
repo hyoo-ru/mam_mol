@@ -2,15 +2,15 @@ module $ {
 	
 	export class $mol_state_arg< Value > extends $mol_object {
 		
-		@ $mol_prop()
-		static href( ...diff : string[] ) {
-			if( diff[ 0 ] !== void 0 ) history.replaceState( history.state , document.title , diff[ 0 ] )
+		@ $mol_mem()
+		static href( next? : string ) {
+			if( next ) history.replaceState( history.state , document.title , next )
 			return window.location.search + window.location.hash
 		}
 		
-		@ $mol_prop()
-		static dict( ...diff : { [ key : string ] : string }[] ) {
-			if( diff[ 0 ] !== void 0 ) this.href( this.make( diff[ 0 ] ) )
+		@ $mol_mem()
+		static dict( next? : { [ key : string ] : string } ) {
+			if( next !== void 0 ) this.href( this.make( next ) )
 			
 			var href = this.href()
 			var chunks = href.split( /[\/\?#!&;]/g )
@@ -27,11 +27,11 @@ module $ {
 			return params
 		}
 		
-		@ $mol_prop()
-		static value( key : string , ...diff : string[] ) {
-			if( diff[ 0 ] === void 0 ) return this.dict()[ key ] || null
-			this.href( this.link( { [ key ] : diff[ 0 ] } ) )
-			return diff[ 0 ]
+		@ $mol_mem_key()
+		static value( key : string , next? : string , prev? : string ) {
+			if( next === void 0 ) return this.dict()[ key ] || null
+			this.href( this.link( { [ key ] : next } ) )
+			return next
 		}
 		
 		static link( next : { [ key : string ] : string } ) {
@@ -52,8 +52,8 @@ module $ {
 			super()
 		}
 		
-		value( key : string , ...diff : string[] ) {
-			return $mol_state_arg.value( this.prefix + key , ...diff )
+		value( key : string , next? : string ) {
+			return $mol_state_arg.value( this.prefix + key , next )
 		}
 		
 		sub( postfix : string ) {
@@ -71,6 +71,6 @@ module $ {
 		
 	}
 	
-	window.addEventListener( 'hashchange' , event => $mol_state_arg.href( void 0 ) )
+	window.addEventListener( 'hashchange' , event => $mol_state_arg.href( null ) )
 	
 }

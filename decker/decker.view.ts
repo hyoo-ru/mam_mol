@@ -1,8 +1,8 @@
 module $.$mol {
 	export class $mol_decker extends $.$mol_decker {
 		
-		current( ...diff : string[] ) {
-			return $mol_state_session.value( this.objectPath() + '.current()' , ...diff ) || '0'
+		current( next? : string ) {
+			return $mol_state_session.value( this.objectPath() + '.current()' , next ) || '0'
 		}
 		
 		switcherOptions() {
@@ -13,7 +13,7 @@ module $.$mol {
 			return options
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		content() {
 			return this.items()[ this.current() ].content()
 		}

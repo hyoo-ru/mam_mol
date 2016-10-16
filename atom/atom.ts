@@ -19,7 +19,7 @@ module $ {
 		'value()' = <Value> void 0
 		
 		constructor(
-			public handler : ( ...diff : (Value|Error)[] )=> Value ,
+			public handler : ( next? : Value|Error , prev? : Value|Error )=> Value ,
 			public fail? : ( host : any , error : Error )=> Value|Error ,
 			public host? : { objectPath() : string , [ key : string ] : any } ,
 			public field = 'value()' ,
@@ -28,8 +28,8 @@ module $ {
 			super()
 		}
 		
-		destroyed( ...diff : boolean[] ) {
-			if( diff[ 0 ] ) {
+		destroyed( next? : boolean ) {
+			if( next ) {
 				this.unlink()
 				
 				var host = this.host || this
@@ -114,16 +114,7 @@ module $ {
 					}
 				)
 				
-				try {
-					var host = this.host || this
-					if( this.key !== void 0 ) {
-						var next = this.handler.call( host , this.key )
-					} else {
-						var next = this.handler.call( host )
-					}
-				} catch( error ) {
-					next = error
-				}
+				const next = this.pull()
 				
 				if( next !== void 0 ) this.push( next )
 			}
@@ -131,15 +122,29 @@ module $ {
 			$mol_atom.stack[0] = slave
 		}
 		
-		set( ...diff : (Value|Error)[] ) {
+		pull() {
 			var host = this.host || this
-			if( this.key !== void 0 ) {
-				var next = this.handler.call( host , this.key , ...diff )
-			} else {
-				var next = this.handler.call( host , ...diff )
+			try {
+				if( this.key !== void 0 ) {
+					return this.handler.call( host , this.key )
+				} else {
+					return this.handler.call( host )
+				}
+			} catch( error ) {
+				return error
 			}
-			if( next === void 0 ) return host[ this.field ]
-			return this.push( next )
+		}
+		
+		set( next : Value|Error , prev? : Value|Error ) {
+			var host = this.host || this
+			let next2 : Value|Error
+			if( this.key !== void 0 ) {
+				next2 = this.handler.call( host , this.key , next , prev )
+			} else {
+				next2 = this.handler.call( host , next , prev )
+			}
+			if( next2 === void 0 ) return host[ this.field ]
+			return this.push( next2 )
 		}
 		
 		push( next : Value|Error ) {
@@ -251,15 +256,15 @@ module $ {
 			this.masters = null
 		}
 		
-		value( ...diff : (Value|Error)[] ) {
-			if( diff[ 0 ] === void 0 ) {
-				if( diff.length > 1 ) return this.push( diff[ 1 ] )
-				if( diff.length > 0 ) return this.obsolete()
-				return this.get()
-			} else {
-				return this.set( ...diff )
-			}
-		}
+		//value( ...diff : (Value|Error)[] ) {
+		//	if( diff[ 0 ] === void 0 ) {
+		//		if( diff.length > 1 ) return this.push( diff[ 1 ] )
+		//		if( diff.length > 0 ) return this.obsolete()
+		//		return this.get()
+		//	} else {
+		//		return this.set( ...diff )
+		//	}
+		//}
 		
 		static stack = [ null ] as $mol_atom<any>[]
 		static updating : $mol_atom<any>[] = []

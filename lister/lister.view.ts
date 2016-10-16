@@ -1,7 +1,7 @@
 module $.$mol {
 	export class $mol_lister extends $.$mol_lister {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		rowOffsets() : number[] {
 			var childs = this.childs()
 			if( !childs ) return null
@@ -23,7 +23,7 @@ module $.$mol {
 			return next
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		rowContext( index : number ) {
 			let context = this.contextSub()
 			let next = Object.create( context )
@@ -31,7 +31,7 @@ module $.$mol {
 			return next
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		childsVisible() {
 			var childs = this.childs()
 			if( !childs ) return childs

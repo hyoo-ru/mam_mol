@@ -11,7 +11,7 @@ module $ {
 	/// Reactive statefull lazy ViewModel 
 	export class $mol_viewer extends $mol_object {
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		static root( id : number ) {
 			return new this
 		}
@@ -33,9 +33,9 @@ module $ {
 			return this.statePrefix() + postfix
 		}
 		
-		@ $mol_prop()
-		context( ...diff : $mol_viewer_context[] ) {
-			return diff[ 0 ] || $mol_viewer_context
+		@ $mol_mem()
+		context( next? : $mol_viewer_context ) {
+			return next || $mol_viewer_context
 		}
 		
 		contextSub() {
@@ -77,30 +77,34 @@ module $ {
 		
 		private 'DOMNode()' : Element
 		
-		DOMNode( ...diff : Element[] ) {
+		DOMNode( next? : Element ) {
 			var path = this.objectPath()
 			
-			var next = diff[ 0 ]
-			if( !next ) {
-				next = this[ 'DOMNode()' ]
-				if( next ) return next
+			var next2 = next
+			if( !next2 ) {
+				next2 = this[ 'DOMNode()' ]
+				if( next2 ) return next2
 				
-				next = document.getElementById( path )
-				if( !next ) {
-					next = document.createElementNS( this.nameSpace() , this.tagName() )
+				next2 = document.getElementById( path )
+				if( next2 ) {
+					if( (<any>next2)[ '$mol_viewer' ] ) {
+						return this[ 'DOMNode()' ] = next2
+					}
+				} else {
+					next2 = document.createElementNS( this.nameSpace() , this.tagName() )
 				}
 			}
 			
-			next.id = path
-			void( (<any>next)[ '$mol_viewer' ] = this )
-			this[ 'DOMNode()' ] = next
+			next2.id = path
+			void( (<any>next2)[ '$mol_viewer' ] = this )
+			this[ 'DOMNode()' ] = next2
 			
 			/// Set BEM-like element-attributes with inheritance support
 			var ownerProto = this.objectOwner() && Object.getPrototypeOf( this.objectOwner() )
 			if( ownerProto && ownerProto[ 'objectClassNames' ] ) {
 				for( var className of ownerProto[ 'objectClassNames' ]() ) {
 					var attrName = className.replace( /\$/g , '' ) + '_' + this.objectField().replace( /\(.*/ , '' )
-					next.setAttribute( attrName , '' )
+					next2.setAttribute( attrName , '' )
 					if( className === '$mol_viewer' ) break
 				}
 			}
@@ -108,7 +112,7 @@ module $ {
 			/// Set BEM-like block-attributes with inheritance support
 			var proto = Object.getPrototypeOf( this )
 			for( var className of proto[ 'objectClassNames' ]() ) {
-				next.setAttribute( className.replace( /\$/g , '' ) , '' )
+				next2.setAttribute( className.replace( /\$/g , '' ) , '' )
 				if( className === '$mol_viewer' ) break
 			}
 			
@@ -116,29 +120,24 @@ module $ {
 			var events = this.event()
 			for( let name in events ) {
 				let handle = events[ name ]
-				next.addEventListener(
+				next2.addEventListener(
 					name , event => {
 						handle( event )
 					}
 				)
 			}
 			
-			// When node defined then deferred render child nodes then deferred update state of this node
-			// this.DOMNodeState( void 0 )
-			// this.DOMNodeContent( void 0 )
-			
-			return next
+			return next2
 		}
 		
-		@ $mol_prop( {
+		@ $mol_mem( {
 			fail : ( self : $mol_viewer , error : any ) => {
 				const node = self.DOMNode()
-				if( !node ) return
-				
-				node.setAttribute( 'mol_viewer_error' , error.name )
+				if( node ) node.setAttribute( 'mol_viewer_error' , error.name )
+				return error
 			}
 		} )
-		DOMTree( ...diff : void[] ) {
+		DOMTree( next? : Element ) {
 			var node = this.DOMNode()
 			
 			/// Render child nodes

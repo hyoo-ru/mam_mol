@@ -43,7 +43,7 @@ module $ {
 
 URI of resource.
 
-**`text( ...diff : string[] ) : string`**
+**`text( next? : string ) : string`**
 
 Text content of resource. Uses 'Get' and 'Put' http requests on getting and setting value.
 
@@ -65,6 +65,6 @@ Request for upload content.
 
 # $mol_http_resource_json
 
-**`json< Data >( ...diff : Data[] ) : Data`**
+**`json< Data >( next? : Data ) : Data`**
 
 JSON representation of resource.
