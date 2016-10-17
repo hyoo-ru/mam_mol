@@ -1,0 +1,2 @@
+$mol_floater $mol_viewer
+	field * style.top < shiftStyle \
