@@ -23,7 +23,7 @@ module $.$mol {
 		}
 
 		@ $mol_mem()
-		page() {
+		page() : $mol_viewer {
 			switch( this.state().location ) {
 				case 'table' : return this.table()
 				case 'anim' : return this.anim()

@@ -3,11 +3,6 @@ module $.$mol {
 	
 	export class $mol_app_inventory_keeper extends $.$mol_app_inventory_keeper {
 		
-		@ $mol_mem()
-		domain() {
-			return new $mol_app_inventory_domain_mock();
-		}
-		
 		position( code : string ) {
 			return this.domain().position( code )
 		}

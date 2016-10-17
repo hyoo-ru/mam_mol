@@ -2,12 +2,13 @@ module $.$mol {
 
 	export class $mol_attacher extends $.$mol_attacher {
 
-		attachNew( next? : string ) {
+		attachNew( next? : string ) : string {
 			var items = this.items()
 			var itemer = this.itemer( items.length )
 			itemer.urlThumb( next )
 			itemer.urlLoad( next )
 			this.items( items.concat( itemer ) )
+			return void 0
 		}
 		
 		@ $mol_mem_key()

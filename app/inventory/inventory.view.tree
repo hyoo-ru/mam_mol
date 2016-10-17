@@ -1,17 +1,18 @@
 $mol_app_inventory $mol_viewer
+	domain $mol_app_inventory_domain_mock
 	childs / < page null
 	header $mol_app_inventory_header
 	enter $mol_app_inventory_enter
-		domain < domain null
+		domain < domain
 	controller $mol_app_inventory_controller
 		header < header
-		domain < domain null
+		domain < domain
 	keeper $mol_app_inventory_keeper
 		header < header
-		domain < domain null
+		domain < domain
 	stats $mol_app_inventory_stats
 		header < header
-		domain < domain null
+		domain < domain
 
 $mol_app_inventory_header $mol_rower childs /
 	< keeperLink $mol_linker

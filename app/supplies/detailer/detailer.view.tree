@@ -8,7 +8,7 @@ $mol_app_supplies_detailer $mol_pager
 				side \
 				supply null
 		< titler
-	body $mol_lister rows / < contenter $mol_lister rows < content /
+	body / < lister $mol_lister rows / < contenter $mol_lister rows < content /
 		< descrCarder $mol_carder content < descrDecker $mol_decker items /
 			< orgItem $mol_decker_item
 				title < orgLabel \Organization
@@ -52,6 +52,6 @@ $mol_app_supplies_detailer $mol_pager
 					title < costLabel @ \Cost
 					content < coster $mol_coster value < cost $mol_unit_money valueOf 0
 			content < positions /
-	foot $mol_rower childs < tools / < approver $mol_checker
+	foot / < controller $mol_rower childs < tools / < approver $mol_checker
 		checked > approved false
 		childs / < approvedLabel @ \Approved

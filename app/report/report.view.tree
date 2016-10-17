@@ -15,11 +15,11 @@ $mol_app_report $mol_pager
 		rows < cellRows# 1
 		cols < cellCols# 1
 	texter# $mol_viewer
-		childs / < cellValue# \
+		childs / < cellValue# null
 	stringer# $mol_stringer
-		value > cellValue# \
+		value > cellValue# null
 	number# $mol_number
-		value > cellValue# \
+		value > cellValue# null
 
 $mol_app_report_tabler $mol_viewer
 	tagName \table

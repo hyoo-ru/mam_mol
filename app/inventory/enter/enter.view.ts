@@ -3,11 +3,6 @@ declare var cpprun : any
 module $.$mol {
 	export class $mol_app_inventory_enter extends $.$mol_app_inventory_enter {
 		
-		@ $mol_mem()
-		domain() {
-			return new $mol_app_inventory_domain_mock()
-		}
-		
 		eventSubmit() {
 			this.domain().credentials({
 				login : this.login() ,

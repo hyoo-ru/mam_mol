@@ -97,7 +97,7 @@ module $.$mol {
 		
 		bodier() {
 			return new $mol_scroller().setup( obj => {
-				obj.childs = ()=> [ this.body() ]
+				obj.childs = ()=> this.body()
 				obj.scrollTop = ( next? )=> this.scrollTop( next )
 			} )
 		}

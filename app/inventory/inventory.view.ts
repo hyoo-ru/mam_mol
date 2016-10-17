@@ -6,7 +6,7 @@ module $.$mol {
 			return new $mol_app_inventory_domain_mock()
 		}
 		
-		page() {
+		page() : $mol_viewer {
 			if( !this.domain().authentificated() ) {
 				return this.enter()
 			}
@@ -22,7 +22,7 @@ module $.$mol {
 		
 		@ $mol_mem()
 		pageName( next? : string ) {
-			return $mol_state_arg.value( 'page' , next ) || 'keeper'
+			return $mol_state_arg.value( this.stateKey( 'page' ) , next ) || 'keeper'
 		}
 		
 	}

@@ -246,7 +246,7 @@ module $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		cellContent( pos : number[] ) {
+		cellContent( pos : number[] ) : $mol_viewer {
 			if( pos[0] === 0 ) {
 				return this.texter( pos )
 			}
@@ -311,7 +311,7 @@ module $.$mol {
 			const scheme = this.scheme()[ field ]
 			
 			switch( scheme.type ) {
-				case 'number' : return `${ this.data()[ field ] }`
+				case 'number' : return this.data()[ field ]
 				case 'enum' : return scheme.options[ this.data()[ field ] ]
 			}
 			

@@ -16,18 +16,18 @@ module $.$mol {
 		
 		main() {
 			return this.supply()
-				? this.detailer()
-				: null
+				? [ this.detailer() ]
+				: []
 		}
 
 		addon() {
 			return this.entered()
-				? this.lister()
-				: this.enter()
+				? [ this.lister() ]
+				: [ this.enter() ]
 		}
 		
 		title() {
-			return ( this.main() || this.addon() ).title()
+			return ( this.main()[0] || this.addon()[0] ).title()
 		}
 		
 		@ $mol_mem()

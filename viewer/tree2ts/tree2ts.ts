@@ -26,6 +26,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 
 			if( param.type === '>' ) {
 				needCache = true
+				needSet = true
 				isOverride = false
 				param = param.childs[0]
 			}
@@ -120,7 +121,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 				var args : string[] = []
 				if( propName[2] ) args.push( ' key : any ' )
 				if( needCache || needSet ) args.push( ' next? : any , prev? : any ' )
-				if( needCache ) val = ( needReturn ? '( next !== void 0 ) ? next : ' : 'if( next !== void 0 ) return next\n\t\t' ) + val
+				if( needSet ) val = ( needReturn ? '( next !== void 0 ) ? next : ' : 'if( next !== void 0 ) return next\n\t\t' ) + val
 				if( needReturn ) val = 'return ' + val
 				var decl = '\t' + propName[1] +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
 				if( needCache ) {

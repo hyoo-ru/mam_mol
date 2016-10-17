@@ -1,5 +1,5 @@
 $mol_app_inventory_keeper $mol_pager
-	domain null
+	domain $mol_app_inventory_domain
 	body < positioners /
 	positioner# $mol_app_inventory_position
 		statuser null
