@@ -5,7 +5,7 @@ module $ {
 	export class $mol_state_arg< Value > extends $mol_object {
 		
 		@ $mol_mem()
-		static href( next? : string ) {
+		static href( next? : string ) : string {
 			return next || process.argv.slice( 2 ).join( ' ' )
 		}
 		
@@ -64,7 +64,7 @@ module $ {
 			super()
 		}
 		
-		static value( key : string , next? : string , prev? : string ) {
+		value( key : string , next? : string , prev? : string ) {
 			return $mol_state_arg.value( this.prefix + key , next )
 		}
 		
