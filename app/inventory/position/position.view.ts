@@ -2,7 +2,7 @@ module $.$mol {
 	
 	export class $mol_app_inventory_position extends $.$mol_app_inventory_position {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		position() {
 			return new $mol_app_inventory_domain_position();
 		}
@@ -15,13 +15,13 @@ module $.$mol {
 			return this.position().product().description()
 		}
 		
-		count( ...diff : number[] ) {
-			return this.position().count( ...diff )
+		count( next? : number ) {
+			return this.position().count( next )
 		}
 		
-		@ $mol_prop()
-		status( ...diff : $mol_app_inventory_domain_position_status[] ) {
-			return this.position().status( ...diff )
+		@ $mol_mem()
+		status( next? : $mol_app_inventory_domain_position_status ) {
+			return this.position().status( next )
 		}
 		
 	} 

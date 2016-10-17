@@ -2,12 +2,12 @@ namespace $ {
 	
 	export class $mol_app_inventory_domain_mock extends $mol_object {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		products() {
 			return [ '01' , '02' , '03' ].map( code => this.product( code ) )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		product( code : string ) {
 			if( code.length !== 5 ) return null
 			
@@ -20,40 +20,40 @@ namespace $ {
 			return next
 		}
 		
-		@ $mol_prop()
-		positions( ...diff : $mol_app_inventory_domain_position[][] ) : $mol_app_inventory_domain_position[] {
+		@ $mol_mem()
+		positions( next? : $mol_app_inventory_domain_position[] ) : $mol_app_inventory_domain_position[] {
 			
-			const args = diff.map( positions => {
-				return positions.map( position => {
-					return position.product().code()
-				} )
+			const codes = next && next.map( position => {
+				return position.product().code()
 			} )
 			
-			return ( $mol_state_session.value<string[]>( 'positions' , ...args ) || <string[]>[] ).map( code => this.position( code ) )
+			const codes2 = $mol_state_session.value<string[]>( 'positions' , codes ) || <string[]>[]
+			
+			return codes2.map( code => this.position( code ) )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		position( productCode : string ) {
 			const next = new $mol_app_inventory_domain_position()
 			next.product = ()=> this.product( productCode )
-			next.count = ( ...diff )=> this.positionCount( productCode , ...diff )
-			next.status = ( ...diff )=> this.positionStatus( productCode , ...diff )
+			next.count = ( next? )=> this.positionCount( productCode , next )
+			next.status = ( next? )=> this.positionStatus( productCode , next )
 			return next
 		}
 		
-		positionCount( productCode : string , ...diff : number[] ) {
+		positionCount( productCode : string , next? : number ) {
 			const key = `positionCount(${ JSON.stringify( productCode ) })`
-			return $mol_state_session.value( key , ...diff ) || 0
+			return $mol_state_session.value( key , next ) || 0
 		}
 		
-		positionStatus( productCode : string , ...diff : $mol_app_inventory_domain_position_status[] ) {
+		positionStatus( productCode : string , next? : $mol_app_inventory_domain_position_status ) {
 			const key = `positionStatus(${ JSON.stringify( productCode ) })`
-			return $mol_state_session.value( key , ...diff ) || $mol_app_inventory_domain_position_status.pending
+			return $mol_state_session.value( key , next ) || $mol_app_inventory_domain_position_status.pending
 		}
 		
-		@ $mol_prop()
-		credentials( ...diff : { login : string , password : string }[] ) {
-			return $mol_state_session.value( 'credentials' , ...diff )
+		@ $mol_mem()
+		credentials( next? : { login : string , password : string } ) {
+			return $mol_state_session.value( 'credentials' , next )
 		}
 		
 		authentificated() {

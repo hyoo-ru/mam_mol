@@ -11,6 +11,7 @@ module $ {
 			let win = new $mol_atom( ()=> {
 				view.DOMTree()
 				document.title = view.title()
+				return null
 			} )
 			new $mol_defer( ()=> win.get() )
 		}

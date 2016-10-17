@@ -7,9 +7,9 @@ module $.$mol {
 	
 	export class $mol_app_todomvc_adder extends $.$mol_app_todomvc_adder {
 		
-		eventPress( ...diff : KeyboardEvent[] ) {
-			switch( diff[0]['code'] || diff[0].key ) {
-				case 'Enter' : return this.eventDone( diff[0] )
+		eventPress( next? : KeyboardEvent ) {
+			switch( next['code'] || next.key ) {
+				case 'Enter' : return this.eventDone( next )
 			}
 		}
 		
@@ -17,15 +17,15 @@ module $.$mol {
 	
 	export class $mol_app_todomvc extends $.$mol_app_todomvc {
 		
-		taskIds( ...diff : number[][] ) : number[] {
-			return $mol_state_local.value( this.stateKey( 'taskIds' ) , ...diff ) || []
+		taskIds( next? : number[] ) : number[] {
+			return $mol_state_local.value( this.stateKey( 'taskIds' ) , next ) || []
 		}
 		
 		argCompleted() {
 			return $mol_state_arg.value( this.stateKey( 'completed' ) )
 		}
 
-		@ $mol_prop()
+		@ $mol_mem()
 		groupsByCompleted() {
 			var groups : { [ index : string ] : number[] } = { 'true' : [] , 'false' : [] }
 			for( let id of this.taskIds() ) {
@@ -35,7 +35,7 @@ module $.$mol {
 			return groups
 		}
 
-		@ $mol_prop()
+		@ $mol_mem()
 		tasksFiltered() {
 			var completed = this.argCompleted()
 			if( completed ) {
@@ -45,30 +45,29 @@ module $.$mol {
 			}
 		}
 
-		@ $mol_prop()
-		allCompleted( ...diff : boolean[] ) {
-			if( diff[0] === void 0 ) return this.groupsByCompleted()[ 'false' ].length === 0
+		@ $mol_mem()
+		allCompleted( next? : boolean ) {
+			if( next === void 0 ) return this.groupsByCompleted()[ 'false' ].length === 0
 			
-			for( let id of this.groupsByCompleted()[ String( !diff[0] ) ] ) {
+			for( let id of this.groupsByCompleted()[ String( !next ) ] ) {
 				var task = this.task( id )
-				this.task( id , { title : task.title , completed : diff[0] } )
+				this.task( id , { title : task.title , completed : next } )
 			}
 			
-			return diff[0]
+			return next
 		}
 		
 		allCompleterEnabled() {
 			return this.taskIds().length > 0 
 		}
 
-		@ $mol_prop()
+		@ $mol_mem()
 		pendingMessage() {
 			let count = this.groupsByCompleted()[ 'false' ].length
 			return ( count === 1 ) ? '1 item left' : `${count} items left`
 		}
 
-		@ $mol_prop()
-		eventAdd( ...diff : Event[] ) {
+		eventAdd( next : Event ) {
 			var title = this.taskNewTitle() 
 			if( !title ) return
 			
@@ -80,44 +79,43 @@ module $.$mol {
 			this.taskNewTitle( '' )
 		}
 
-		@ $mol_prop()
+		@ $mol_mem()
 		taskRows() {
 			return this.tasksFiltered().map( ( id , index )=> this.taskRow( index ) )
 		}
 		
-		task( id : number , ...diff : $mol_app_todomvc_task[] ) {
+		task( id : number , next? : $mol_app_todomvc_task , prev? : $mol_app_todomvc_task ) {
 			const key = this.stateKey( `task=${id}` )
-			if( diff[0] === void 0 ) return $mol_state_local.value( key ) || { title : '' , completed : false }
+			if( next === void 0 ) return $mol_state_local.value( key ) || { title : '' , completed : false }
 			
-			var task = diff[0]
-			if( task && diff[1] ) task = $mol_merge_dict( this.task( id ) , diff[0] )
+			var task = next
+			if( task && prev ) task = $mol_merge_dict( this.task( id ) , next )
 			$mol_state_local.value( key , task )
 			
 			return task || void 0
 		}
 		
-		@ $mol_prop()
-		taskCompleted( index : number , ...diff : boolean[] ) {
+		@ $mol_mem_key()
+		taskCompleted( index : number , next? : boolean ) {
 			var id = this.tasksFiltered()[ index ]
-			if( diff[0] === void 0 ) return this.task( id ).completed
+			if( next === void 0 ) return this.task( id ).completed
 			
-			this.task( id , { completed : diff[0] } , {} )
+			this.task( id , { completed : next } , {} )
 			
-			return diff[0]
+			return next
 		}
 		
-		@ $mol_prop()
-		taskTitle( index : number , ...diff : string[] ) {
+		@ $mol_mem_key()
+		taskTitle( index : number , next? : string ) {
 			var id = this.tasksFiltered()[ index ]
-			if( diff[0] === void 0 ) return this.task( id ).title
+			if( next === void 0 ) return this.task( id ).title
 			
-			this.task( id , { title : diff[0] } , {} )
+			this.task( id , { title : next } , {} )
 			
-			return diff[0]
+			return next
 		}
 		
-		@$mol_prop()
-		eventTaskDrop( index : number , ...diff : Event[] ) {
+		eventTaskDrop( index : number , next? : Event ) {
 			var tasks = this.tasksFiltered()
 			var id = tasks[index]
 			tasks = tasks.slice( 0 , index ).concat( tasks.slice( index + 1 , tasks.length ) )

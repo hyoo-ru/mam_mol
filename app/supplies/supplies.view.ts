@@ -1,8 +1,8 @@
 module $.$mol {
 	export class $mol_app_supplies extends $.$mol_app_supplies {
 		
-		entered( ...diff : boolean[] ) {
-			return $mol_state_session.value( this.objectPath() + '.entered()' , ...diff ) || false
+		entered( next? : boolean ) {
+			return $mol_state_session.value( this.objectPath() + '.entered()' , next ) || false
 		}
 
 		childs() {
@@ -30,7 +30,7 @@ module $.$mol {
 			return ( this.main() || this.addon() ).title()
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		domain() {
 			return new $mol_app_supplies_domain_mock()
 		}
@@ -39,8 +39,8 @@ module $.$mol {
 			return this.domain().supplies()
 		}
 
-		supplyId( ...diff : string[] ) {
-			return $mol_state_arg.value( this.stateKey( 'supply' ) , ...diff )
+		supplyId( next? : string ) {
+			return $mol_state_arg.value( this.stateKey( 'supply' ) , next )
 		}
 
 		supply() {

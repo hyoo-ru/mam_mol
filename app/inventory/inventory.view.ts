@@ -1,7 +1,7 @@
 module $.$mol {
 	export class $mol_app_inventory extends $.$mol_app_inventory {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		domain() {
 			return new $mol_app_inventory_domain_mock()
 		}
@@ -20,9 +20,9 @@ module $.$mol {
 			return this.stats()
 		}
 		
-		@ $mol_prop()
-		pageName( ...diff : string[] ) {
-			return $mol_state_arg.value( 'page' , ...diff ) || 'keeper'
+		@ $mol_mem()
+		pageName( next? : string ) {
+			return $mol_state_arg.value( 'page' , next ) || 'keeper'
 		}
 		
 	}

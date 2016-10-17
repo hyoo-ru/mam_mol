@@ -105,8 +105,8 @@ module $ {
 		
 		group() : $mol_app_supplies_domain_supply_group { return void 0 }
 		
-		@ $mol_prop()
-		status( ...diff : $mol_app_supplies_domain_supply_status[] ) { return diff[ 0 ] }
+		@ $mol_mem()
+		status( next? : $mol_app_supplies_domain_supply_status , prev? : $mol_app_supplies_domain_supply_status ) { return next }
 		
 		ballanceUnit() : $mol_app_supplies_domain_ballanceUnit { return void 0 }
 		
@@ -120,8 +120,8 @@ module $ {
 		
 		positions() : $mol_app_supplies_domain_supply_position[] { return void 0 }
 		
-		@ $mol_prop()
-		attachments( ...diff : $mol_app_supplies_domain_attachment[][] ) { return diff[ 0 ] || [] }
+		@ $mol_mem()
+		attachments( next? : $mol_app_supplies_domain_attachment[] ) { return next || [] }
 		
 		cost() : $mol_unit_money { return void 0 }
 		
@@ -136,7 +136,7 @@ module $ {
 	/// Демонстрационный бизнес домен
 	export class $mol_app_supplies_domain_mock extends $mol_object {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		supplies() {
 			var next : $mol_app_supplies_domain_supply[] = []
 			for( var i = 1 ; i <= 100 ; ++i ) {
@@ -145,7 +145,7 @@ module $ {
 			return next
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		positions( supply : string ) {
 			var next : $mol_app_supplies_domain_supply_position[] = []
 			var count = 10 + Math.floor( Math.random() * 30 )
@@ -158,7 +158,7 @@ module $ {
 			return next
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		supply( id : string ) {
 			return new $mol_app_supplies_domain_supply().setup( obj => {
 				obj.id = $mol_const( id )
@@ -177,11 +177,11 @@ module $ {
 				obj.payMethod = $mol_const( this.payMethod( $mol_stub_code( 1 ) ) )
 				obj.debitor = $mol_const( this.debitor( $mol_stub_code( 2 ) ) )
 				obj.positions = ()=> this.positions( id )
-				obj.attachments = ( ...diff : $mol_app_supplies_domain_attachment[][] )=> this.attachments( id , ...diff )
+				obj.attachments = ( next? : $mol_app_supplies_domain_attachment[] )=> this.attachments( id , next )
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		provider( id : string ) {
 			return new $mol_app_supplies_domain_provider().setup( obj => {
 				obj.id = $mol_const( id )
@@ -189,7 +189,7 @@ module $ {
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		consumer( id : string ) {
 			return new $mol_app_supplies_domain_consumer().setup( obj => {
 				obj.id = $mol_const( id )
@@ -197,7 +197,7 @@ module $ {
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		ballanceUnit( id : string ) {
 			return new $mol_app_supplies_domain_ballanceUnit().setup( obj => {
 				obj.id = $mol_const( id )
@@ -209,7 +209,7 @@ module $ {
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		division( id : string ) {
 			return new $mol_app_supplies_domain_supply_division().setup( obj => {
 				obj.id = $mol_const( id )
@@ -217,7 +217,7 @@ module $ {
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		supplyGroup( id : string ) {
 			return new $mol_app_supplies_domain_supply_group().setup( obj => {
 				obj.id = $mol_const( id )
@@ -225,7 +225,7 @@ module $ {
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		store( id : string ) {
 			return new $mol_app_supplies_domain_store().setup( obj => {
 				obj.id = $mol_const( id )
@@ -233,7 +233,7 @@ module $ {
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		person( id : string ) {
 			return new $mol_app_supplies_domain_person().setup( obj => {
 				obj.id = $mol_const( id )
@@ -241,14 +241,14 @@ module $ {
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		contract( id : string ) {
 			return new $mol_app_supplies_domain_person().setup( obj => {
 				obj.id = $mol_const( id )
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		payMethod( id : string ) {
 			return new $mol_app_supplies_domain_payMethod().setup( obj => {
 				obj.id = $mol_const( id )
@@ -256,7 +256,7 @@ module $ {
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		debitor( id : string ) {
 			return new $mol_app_supplies_domain_payMethod().setup( obj => {
 				obj.id = $mol_const( id )
@@ -264,7 +264,7 @@ module $ {
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		position( id : { supply : string , position : string } ) {
 			return new $mol_app_supplies_domain_supply_position().setup( obj => {
 				obj.name = $mol_const( $mol_stub_productName() )
@@ -277,12 +277,12 @@ module $ {
 			} )
 		}
 		
-		@ $mol_prop()
-		attachments( id : string , ...diff : $mol_app_supplies_domain_attachment[][] ) {
-			return diff[ 0 ] || []
+		@ $mol_mem_key()
+		attachments( id : string , next? : $mol_app_supplies_domain_attachment[] , prev? : $mol_app_supplies_domain_attachment[] ) {
+			return next || []
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		attachment( id : { supply : string , attachment : string } ) {
 			return new $mol_app_supplies_domain_attachment().setup( obj => {
 				obj.urlThumb = obj.urlLoad = $mol_const( 'data:image/svg+xml;base64,PHN2ZyBpZD0i0KHQu9C+0LlfMSIgZGF0YS1uYW1lPSLQodC70L7QuSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjUuNyA2NDUuNDQiPgoJPGRlZnM+CgkJPHN0eWxlPi5jbHMtMXtmaWxsOiM0YzdjNGQ7fS5jbHMtMntmaWxsOiM2ZmMwNTg7fTwvc3R5bGU+Cgk8L2RlZnM+Cgk8dGl0bGU+JG1vbF9zeW1ib2w8L3RpdGxlPgoJPHBvbHlnb24gY2xhc3M9ImNscy0xIgoJCQkgcG9pbnRzPSI4MC43OCAyMTcuNTYgMjE0LjAzIDExNC42MSAzNTEuMTIgMjIwLjUzIDQyNS43IDE2Mi45MSAyMTQuODQgMCAzLjk4IDE2Mi45MSA0LjM1IDE2My4xOSAzLjM1IDE2My45NiAzNDQuOTMgNDI3Ljg3IDIxMS42NyA1MzAuODMgNzQuNTggNDI0LjkxIDAgNDgyLjUzIDIxMC44NiA2NDUuNDQgNDIxLjcyIDQ4Mi41MyA0MjEuMDIgNDgxLjk5IDQyMi4wMyA0ODEuMjEgODAuNzggMjE3LjU2Ii8+Cgk8cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMjA5LjU0IDQ0MC44MyA1OC4zNiAzMjIuNzIgMjA5LjU0IDIwNC42MSAzNjcuMzQgMzIyLjcyIDIwOS41NCA0NDAuODMiLz4KPC9zdmc+Cg==' )

@@ -1,5 +1,5 @@
 $mol_app_supplies_positioner $mol_carder
-	heightMinimal 80
+	heightMinimal 68
 	
 	content < grouper $mol_viewer childs /
 		

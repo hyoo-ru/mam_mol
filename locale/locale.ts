@@ -6,9 +6,9 @@ module $ {
 	
 	export class $mol_locale extends $mol_object {
 		
-		@ $mol_prop()
-		static lang( ...diff : string[] ) {
-			return $mol_state_local.value( 'locale' , ...diff ) || 'en'
+		@ $mol_mem()
+		static lang( next? : string ) {
+			return $mol_state_local.value( 'locale' , next ) || 'en'
 		}
 		
 		static texts() {

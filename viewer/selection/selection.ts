@@ -2,12 +2,12 @@ module $ {
 	
 	export class $mol_viewer_selection extends $mol_object {
 		
-		@ $mol_prop()
-		static focused( ...diff : Element[][] ) {
-			return diff[ 0 ] || []
+		@ $mol_mem()
+		static focused( next? : Element[] ) {
+			return next || []
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		static position( ...diff : any[] ) {
 			if( diff.length ) {
 				if( !diff[ 0 ] ) return diff[ 0 ]

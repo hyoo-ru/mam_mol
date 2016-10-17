@@ -29,17 +29,17 @@ module $ {
 			return next
 		}
 		
-		destroyed( ...diff : boolean[] ) {
-			if( diff[ 0 ] ) {
+		destroyed( next? : boolean ) {
+			if( next ) {
 				const native = this[ 'native()' ]
 				if( native ) native.abort()
 			}
-			return super.destroyed( ...diff )
+			return super.destroyed( next )
 		}
 		
-		@ $mol_prop()
-		response( ...diff : XMLHttpRequest[] ) : XMLHttpRequest {
-			if( diff[ 0 ] !== void 0 ) return diff[ 0 ]
+		@ $mol_mem()
+		response( next? : XMLHttpRequest , prev? : XMLHttpRequest ) : XMLHttpRequest {
+			if( next !== void 0 ) return next
 			
 			const native = this.native()
 			native.open( this.method() , this.uri() )
@@ -48,8 +48,8 @@ module $ {
 			throw new $mol_atom_wait( `${this.method()} ${this.uri()}` )
 		}
 		
-		text( ...diff : void[] ) : string {
-			if( diff.length === 1 ) this.response( void 0 )
+		text( next? : string ) : string {
+			if( next === null ) this.response( null )
 			else return this.response().responseText
 		}
 		

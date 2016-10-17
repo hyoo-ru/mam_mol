@@ -3,7 +3,7 @@ module $.$mol {
 	
 	export class $mol_app_inventory_keeper extends $.$mol_app_inventory_keeper {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		domain() {
 			return new $mol_app_inventory_domain_mock();
 		}
@@ -12,19 +12,19 @@ module $.$mol {
 			return this.domain().position( code )
 		}
 		
-		@$mol_prop()
-		newCode( ...diff: string[] ) {
-			if( diff[0] === void 0 ) return ''
+		@$mol_mem()
+		newCode( next? : string ) {
+			if( next === void 0 ) return ''
 			
 			const domain = this.domain()
 
-			const product = domain.product( diff[0] )
-			if( !product ) return diff[0]
+			const product = domain.product( next )
+			if( !product ) return next
 			
 			
 			
 			let positions = domain.positions()
-			const position = domain.position( diff[0] )
+			const position = domain.position( next )
 			
 			if( positions.indexOf( position ) === -1 ) {
 				positions = positions.concat( position )
@@ -36,7 +36,7 @@ module $.$mol {
 			return '';
 		}			
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		positioners() {
 			return this.domain().positions().map( position => this.positioner( position.product().code() ) )
 		}
