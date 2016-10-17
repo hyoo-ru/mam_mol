@@ -26,11 +26,11 @@ module $ {
 					var info : $mol_atom<any> = atoms[ field ]
 					if( !info ) {
 						atoms[ field ] = info = new $mol_atom(
-							host ,
-							field ,
 							value as any , // FIXME: type checking
 							config && config.fail ,
-							key
+							host ,
+							field ,
+							key ,
 						)
 						if( config ) info.autoFresh = !config.lazy
 					}
@@ -48,10 +48,10 @@ module $ {
 					var info : $mol_atom<any> = atoms[ field ]
 					if( !info ) {
 						atoms[ field ] = info = new $mol_atom(
+							value as any , // FIXME: type checking
+							config && config.fail ,
 							host ,
 							field ,
-							value as any , // FIXME: type checking
-							config && config.fail
 						)
 						if( config ) info.autoFresh = !config.lazy
 					}
