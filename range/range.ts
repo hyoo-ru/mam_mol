@@ -9,7 +9,7 @@ module $ {
 		length = 0
 		
 		get '0'() : Value {
-			throw new Error( 'Direct access to items not supported. Use get( id : number ) method instead.' )
+			throw new Error( 'Direct access to items not supported. Use item( id : number ) method instead.' )
 		}
 		
 		forEach( handle : ( value : Value , id : number ) => void ) {
@@ -39,6 +39,18 @@ module $ {
 				} ,
 				get length() {
 					return Math.min( end , source.length ) - start
+				}
+			} )
+		}
+		
+		map< ResValue > ( proceed : ( val : Value )=> ResValue ) {
+			const source = this
+			return new $mol_range_lazy<ResValue>( {
+				item( id ){
+					return proceed( source.item( id ) )
+				} ,
+				get length() {
+					return source.length
 				}
 			} )
 		}
