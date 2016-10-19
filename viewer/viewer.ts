@@ -60,12 +60,11 @@ module $ {
 			if( !childs ) return childs
 			
 			var context = this.contextSub()
-			for( let i = 0 ; i < childs.length ; ++i ) {
-				let child = childs[ i ]
+			childs.forEach( child => {
 				if( child instanceof $mol_viewer ) {
 					child.context( context )
 				}
-			}
+			} )
 			
 			return childs
 		}
