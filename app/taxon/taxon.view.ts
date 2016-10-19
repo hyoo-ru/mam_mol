@@ -148,7 +148,7 @@ module $.$mol {
 			const key = `rowExpanded(${ JSON.stringify( path ) })`
 			const next = $mol_state_session.value( key , ...diff )
 			
-			return ( next === null ) ? true : next
+			return ( next === null ) ? false : next
 		}
 		
 	}
@@ -156,7 +156,7 @@ module $.$mol {
 	export class $mol_app_taxon_branch extends $.$mol_app_taxon_branch {
 		
 		levelStyle() {
-			return `${ (this.level() - 1) * 2 }rem`
+			return `${ (this.level() - 1) * 1 }rem`
 		}
 		
 		expandable() {
