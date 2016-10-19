@@ -4,8 +4,12 @@
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 }
 
+[mol_grider] tr:nth-child(even) {
+	background-color: var(--mol_skin_card);
+}
+
 [mol_grider] tr:nth-child(odd) {
-	background-color: var(--mol_skin_light_line);
+	background-color: var(--mol_skin_light);
 }
 
 [mol_grider] > * {
