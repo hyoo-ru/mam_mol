@@ -4,7 +4,11 @@
 
 [mol_app_taxon_branch_contenter] {
 	display: flex;
-	align-items: baseline;
+	align-items: center;
+}
+
+[mol_app_taxon_branch_expander] {
+	padding: 0;
 }
 
 [mol_app_taxon_cellerNumber] {

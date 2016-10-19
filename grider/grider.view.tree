@@ -18,7 +18,6 @@ $mol_grider_rower $mol_viewer
 	childs / < cells /
 
 $mol_grider_header $mol_grider_rower
-	field * style.transform < shiftStyle \
 
 $mol_grider_celler $mol_viewer
 	tagName \td

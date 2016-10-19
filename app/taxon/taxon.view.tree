@@ -18,6 +18,8 @@ $mol_app_taxon $mol_pager
 		level < rowLevel# 0
 		title < rowTitle# \
 		expanded > rowExpanded# false
+	cellerFloater# $mol_floater
+		childs / < columnTitle# \
 
 $mol_app_taxon_branch $mol_grider_celler
 	level 0

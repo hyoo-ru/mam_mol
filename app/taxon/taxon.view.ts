@@ -75,7 +75,18 @@ module $.$mol {
 		
 		@ $mol_prop()
 		headCells() {
-			return this.rowCells( this.pathRoot() )
+			const next : $mol_viewer[] = []
+			
+			const node = this.node( [] )
+			for( let name in node ) {
+				next.push(this.cellerFloater(name));
+			}
+			return next
+		}
+		
+		@ $mol_prop()
+		columnTitle(key: string) {
+			return this.nodeTitles()[key];
 		}
 		
 		@ $mol_prop()
@@ -145,7 +156,7 @@ module $.$mol {
 	export class $mol_app_taxon_branch extends $.$mol_app_taxon_branch {
 		
 		levelStyle() {
-			return `${ this.level() * 2 }rem`
+			return `${ (this.level() - 1) * 2 }rem`
 		}
 		
 		expandable() {
