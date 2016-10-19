@@ -1,3 +1,4 @@
 [mol_floater] {
 	position: relative;
+	z-index: 1;
 }

@@ -2,6 +2,5 @@ $mol_floater_demo $mol_viewer
 	childs /
 		< floater $mol_floater
 			childs /
-				< input $mol_stringer
-		< content $mol_filler
-			field * style.width \300px
+				< floaterContent $mol_app_supplies_positioner_demo
+		< contenter $mol_lister_demo
