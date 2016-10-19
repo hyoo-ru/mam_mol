@@ -21,16 +21,16 @@ module $.$mol {
 		@ $mol_prop()
 		nodeTitles() {
 			return <{ [key: string] : string}> {
-				name : 'Имя' ,
-				age : 'Год' ,
-				sex : 'Пол' ,
-				sexPrefer : 'Предпочтение' ,
-				birthDay : 'День рождения' ,
-				birthCity : 'Город' ,
-				deathDay : 'Год смерти' ,
-				deathCity : 'Город смерти' ,
-				cityWork : 'Город работы' ,
-				company : 'Компания' ,
+				name : 'Name' ,
+				age : 'Age' ,
+				sex : 'Sex' ,
+				sexPrefer : 'Prefer' ,
+				birthDay : 'Birth day' ,
+				birthCity : 'Birth city' ,
+				deathDay : 'Death day' ,
+				deathCity : 'Death city' ,
+				cityWork : 'Work city' ,
+				company : 'Work company' ,
 			}
 		}
 		
