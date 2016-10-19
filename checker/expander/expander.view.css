@@ -1,10 +1,5 @@
 [mol_checker_expander]:disabled {
-	background: transparent;
-	color: var(--mol_skin_light_text);
-}
-
-[mol_checker_expander]:disabled > [mol_checker_expander_icon] {
-	display: none;
+	visibility: hidden;
 }
 
 [mol_checker_expander_icon] {
