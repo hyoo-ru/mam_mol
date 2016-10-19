@@ -3,3 +3,8 @@ $mol_app_inventory_controller $mol_pager
 	body < positioners /
 	positioner# $mol_app_inventory_position
 		position < position# null
+	foot /
+		< controlsRower $mol_rower childs /
+			< submitter $mol_clicker_major
+				eventClick > eventSubmit null
+				childs / < submitLabel @ \Удалить подтверждённое

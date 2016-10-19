@@ -8,4 +8,7 @@ $mol_app_inventory_keeper $mol_pager
 		< coderRower $mol_rower childs /
 			< coder $mol_coder
 				value > newCode \
-				hint < newCodeHint @ \Add position by bar code
+				hint < newCodeHint @ \Штрих-код товара
+			< submitter $mol_clicker_major
+				eventClick > eventSubmit null
+				childs / < submitLabel @ \Списать

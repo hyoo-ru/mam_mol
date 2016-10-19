@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export class $mol_app_inventory_domain_mock extends $mol_object {
+	export class $mol_app_inventory_domain_mock extends $mol_app_inventory_domain {
 		
 		@ $mol_mem()
 		products() {
@@ -18,6 +18,10 @@ namespace $ {
 			next.description = $mol_const( 'some description' )
 			
 			return next
+		}
+		
+		productByCode( code : string ) {
+			return this.product( code )
 		}
 		
 		@ $mol_mem()
@@ -48,12 +52,7 @@ namespace $ {
 		
 		positionStatus( productCode : string , next? : $mol_app_inventory_domain_position_status ) {
 			const key = `positionStatus(${ JSON.stringify( productCode ) })`
-			return $mol_state_session.value( key , next ) || $mol_app_inventory_domain_position_status.pending
-		}
-		
-		@ $mol_mem()
-		credentials( next? : { login : string , password : string } ) {
-			return $mol_state_session.value( 'credentials' , next )
+			return $mol_state_session.value( key , next ) || $mol_app_inventory_domain_position_status.draft
 		}
 		
 		authentificated() {

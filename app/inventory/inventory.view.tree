@@ -1,5 +1,5 @@
 $mol_app_inventory $mol_viewer
-	domain $mol_app_inventory_domain_mock
+	domain $mol_app_inventory_domain
 	childs / < page null
 	header $mol_app_inventory_header
 	enter $mol_app_inventory_enter

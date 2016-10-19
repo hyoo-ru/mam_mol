@@ -8,7 +8,6 @@ module $.$mol {
 				login : this.login() ,
 				password : this.password() ,
 			})
-			alert(cpprun)
 		}
 		
 		message() {

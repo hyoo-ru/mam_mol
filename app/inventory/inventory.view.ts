@@ -1,11 +1,6 @@
 module $.$mol {
 	export class $mol_app_inventory extends $.$mol_app_inventory {
 		
-		@ $mol_mem()
-		domain() {
-			return new $mol_app_inventory_domain_mock()
-		}
-		
 		page() : $mol_viewer {
 			if( !this.domain().authentificated() ) {
 				return this.enter()
