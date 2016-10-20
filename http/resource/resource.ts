@@ -11,10 +11,16 @@ module $ {
 		
 		uri() { return '' }
 		
+		credentials() { return {
+			login : null as string ,
+			password : null as string ,
+		} }
+		
 		request( method : string ) {
 			const request = new $mol_http_request()
 			request.method = () => method
 			request.uri = () => this.uri()
+			request.credentials = () => this.credentials()
 			return request
 		}
 		

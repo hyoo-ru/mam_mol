@@ -6,6 +6,11 @@ module $ {
 		
 		method() { return 'Get' }
 		
+		credentials() { return {
+			login : null as string , 
+			password : null as string ,
+		} }
+		
 		body() { return <any> null }
 		
 		'native()' : XMLHttpRequest
@@ -41,8 +46,11 @@ module $ {
 		response( ...diff : XMLHttpRequest[] ) : XMLHttpRequest {
 			if( diff[ 0 ] !== void 0 ) return diff[ 0 ]
 			
+			const creds = this.credentials()
 			const native = this.native()
-			native.open( this.method() , this.uri() )
+			
+			native.withCredentials = Boolean( creds )
+			native.open( this.method() , this.uri() , true , creds && creds.login , creds && creds.password )
 			native.send( this.body() )
 			
 			throw new $mol_atom_wait( `${this.method()} ${this.uri()}` )
