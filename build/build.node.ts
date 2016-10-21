@@ -510,6 +510,7 @@ module $ {
 			var json = {
 				name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
 				version : '0.0.0' ,
+				main : 'node.js' ,
 				dependencies : <{ [ key : string ] : string }>{}
 			}
 			
