@@ -114,9 +114,8 @@ module $ {
 					}
 				)
 				
-				const next = this.pull()
+				this.push( this.pull() )
 				
-				if( next !== void 0 ) this.push( next )
 			}
 			
 			$mol_atom.stack[0] = slave
