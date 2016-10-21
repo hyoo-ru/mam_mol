@@ -3,8 +3,6 @@
 }
 
 [mol_checker_expander_icon] {
-	width: 1.4rem;
-	height: 1.4rem;
 	box-shadow: none;
 	transition: all 0.2s ease-out;
 }

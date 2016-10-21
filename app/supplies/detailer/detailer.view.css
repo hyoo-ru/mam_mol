@@ -21,6 +21,10 @@
 	height: 100%;
 }
 
+[mol_app_supplies_detailer_backer_icon] {
+	transform: rotateZ(180deg);
+}
+
 [mol_app_supplies_detailer_consContent] {
 	align-items: baseline;
 	background: var(--mol_skin_card);

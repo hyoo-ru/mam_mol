@@ -34,3 +34,7 @@
 	position: absolute;
 	height: 100%;
 }
+
+[mol_app_demo_pager_backer_icon] {
+	transform: rotateZ(180deg);
+}

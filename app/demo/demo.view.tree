@@ -10,6 +10,6 @@ $mol_app_demo $mol_stacker
 $mol_app_demo_pager $mol_pager
 	head /
 		< backer $mol_linker
-			childs / < backerIcon $mol_icon_chevron_left
+			childs / < backer_icon $mol_icon_chevron
 			arg < backArg * demo null
 		< titler
