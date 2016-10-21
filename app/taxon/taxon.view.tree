@@ -1,33 +1,23 @@
 $mol_app_taxon $mol_pager
 	title \Taxon!
+	hierarhyField \title
+	-
 	body /
 		< grider $mol_grider
-			rowHeight 51
-			header < gridHeader $mol_grider_header
-				cells < headCells /
-			rows < gridRows /
-	rower# $mol_grider_rower
-		cells < rowCells# /
-	cellerText# $mol_grider_celler
-		childs / < cellText# /
-	cellerNumber# $mol_grider_celler
-		childs / < cellNumber# /
-	cellerPath# $mol_grider_celler
-		childs / < pathView# \
-	cellerBranch# $mol_app_taxon_branch
+			rowHeight 40
+			rowers < rowers /
+			cellers# < cellers# /
+	-
+	cellerBranch# $mol_app_grider_branch
+		title \Title
 		level < rowLevel# 0
-		title < rowTitle# \
+		name < rowTitle# \
 		expanded > rowExpanded# false
-	cellerFloater# $mol_floater
-		childs / < columnTitle# \
-
-$mol_app_taxon_branch $mol_grider_celler
-	level 0
-	field * style.paddingLeft < levelStyle \0px
-	childs /
-		< contenter $mol_viewer childs /
-			< expander $mol_checker_expander
-				checked > expanded false
-				enabled < expandable false
-			< titler $mol_viewer
-				childs / < title \
+	-
+	cellerText# $mol_grider_celler
+		title < cellerTitle# \
+		childs / < valueText# \
+	-
+	cellerNumber# $mol_grider_number
+		title < cellerTitle# \
+		childs / < valueNumber# 0

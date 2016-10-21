@@ -2,7 +2,7 @@ module $.$mol {
 	export class $mol_grider_demo extends $.$mol_grider_demo {
 		
 		@ $mol_prop()
-		rows() {
+		rowers() {
 			return new $mol_range_lazy( {
 				length : 30000 ,
 				get : row => this.rower([ row ])

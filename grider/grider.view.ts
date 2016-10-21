@@ -4,31 +4,31 @@ module $.$mol {
 		
 		@ $mol_prop()
 		childs() {
-			const rows = this.rows()
-			if( !rows ) return null
+			const rowers = this.rowers()
+			if( !rowers ) return null
 			
 			const viewWindow = this.viewWindow()
 			
 			return [].concat(
 				this.header() ,
 				( viewWindow.top > 0 ) ? this.gaperTop() : null ,
-				rows.slice( viewWindow.top , viewWindow.bottom ).valueOf() ,
+				rowers.slice( viewWindow.top , viewWindow.bottom ).valueOf() ,
 				( viewWindow.bottom < viewWindow.count ) ? this.gaperBottom() : null ,
 			)
 		}
 		
 		@ $mol_prop()
 		viewWindow() {
-			const rows = this.rows()
-			if( !rows ) return null
+			const rowers = this.rowers()
+			if( !rowers ) return null
 			
-			const count = rows.length
+			const count = rowers.length
 			const context = this.context()
 			const scrollTop = context.$mol_scroller_scrollTop()
 			const heightLimit = context.$mol_viewer_heightLimit()
 			const rowHeight = this.rowHeight()
 			
-			const top = Math.max( 0 , Math.floor( ( scrollTop * 1.5 - heightLimit / 2 ) / rowHeight ) )
+			const top = Math.max( 0 , Math.floor( ( scrollTop ) / rowHeight ) )
 			const bottom = Math.min( Math.ceil( heightLimit / rowHeight ) , count )
 			
 			return { top , bottom , count }
@@ -44,6 +44,16 @@ module $.$mol {
 			return ( viewWindow.count - viewWindow.bottom ) * this.rowHeight()
 		}
 		
+		@ $mol_prop()
+		headerCellers() {
+			return this.cellers( [] ).map( ( celler , index )=> this.cellerHeader( index ) )
+		}
+		
+		@ $mol_prop()
+		cellerTitle( index : number ) {
+			return this.cellers( [] )[ index ].title();
+		}
+		
 	}
 	
 	export class $mol_grider_gaper extends $.$mol_grider_gaper {
@@ -54,11 +64,22 @@ module $.$mol {
 		
 	}
 	
-	export class $mol_grider_header extends $.$mol_grider_header {
+	export class $mol_grider_rower extends $.$mol_grider_rower {
 		
-		shiftStyle() {
-			const offset = this.context().$mol_scroller_scrollTop()
-			return `translateY( ${ offset }px )`
+		heightStyle() {
+			return `${ this.height() - 1 }px`
+		}
+		
+	}
+	
+	export class $mol_app_grider_branch extends $.$mol_app_grider_branch {
+		
+		levelStyle() {
+			return `${ this.level() * 1.2 - 2.2 }rem`
+		}
+		
+		expandable() {
+			return this.expanded() !== null
 		}
 		
 	}

@@ -2,15 +2,7 @@
 	height: 100%;
 }
 
-[mol_app_taxon_branch_contenter] {
-	display: flex;
-	align-items: center;
-}
-
-[mol_app_taxon_branch_expander] {
-	padding: 0;
-}
-
-[mol_app_taxon_cellerNumber] {
-	text-align: right;
+[mol_app_taxon_grider] {
+	min-height: 1rem;
+	min-width: 5rem;
 }
