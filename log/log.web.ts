@@ -7,7 +7,7 @@ module $ {
 		if( path.indexOf( filter ) === -1 ) return
 		
 		var time = new Date().toLocaleTimeString()
-		console.log( time , path , ...values )
+		console.log( time , path , values )
 	}
 	
 	export module $mol_log {
