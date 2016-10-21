@@ -11,9 +11,9 @@ module $ {
 		
 		uri() { return '' }
 		
-		credentials() { return {
-			login : null as string ,
-			password : null as string ,
+		credentials() { return null as {
+			login? : string
+			password? : string
 		} }
 		
 		request( method : string ) {
