@@ -2,7 +2,7 @@ module $.$mol {
 	
 	export class $mol_app_taxon_demo extends $.$mol_app_taxon_demo {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		hierarhy() {
 			const dict : { [ key : number ] : $mol_app_taxon_hierarhy_node } = {}
 			dict[ 0 ] = {
@@ -22,7 +22,7 @@ module $.$mol {
 			return dict
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		row( path : number[] ) {
 			return {
 				name : $mol_stub_personName() ,

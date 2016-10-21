@@ -1,6 +1,6 @@
 $mol_app_taxon $mol_pager
 	title \Taxon!
-	hierarhyField \title
+	hierarhyField \Butxt
 	-
 	body /
 		< grider $mol_grider

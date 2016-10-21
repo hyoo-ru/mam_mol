@@ -2,7 +2,7 @@ module $.$mol {
 	
 	export class $mol_grider extends $.$mol_grider {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		childs() {
 			const rowers = this.rowers()
 			if( !rowers ) return null
@@ -17,7 +17,7 @@ module $.$mol {
 			)
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		viewWindow() {
 			const rowers = this.rowers()
 			if( !rowers ) return null
@@ -44,12 +44,12 @@ module $.$mol {
 			return ( viewWindow.count - viewWindow.bottom ) * this.rowHeight()
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		headerCellers() {
 			return this.cellers( [] ).map( ( celler , index )=> this.cellerHeader( index ) )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		cellerTitle( index : number ) {
 			return this.cellers( [] )[ index ].title();
 		}

@@ -7,36 +7,26 @@ module $.$mol {
 	}
 	
 	export interface $mol_app_taxon_data_row {
-		id : number
-		title : string
-		countryName : string
-		currency : string
-		grade : string
-		date : string
-		cost : string
+		KeyId : number
 	}
 	
 	export class $mol_app_taxon extends $.$mol_app_taxon {
 		
 		hierarhyUri() {
-			return 'http://justine.saprun.com:8000/fmcall/ZTRNF_FM_TEST?format=json'
+			return 'http://justine.saprun.com:8000/sap/opu/odata/sap/ZTRNF_TEST_DATA_SRV/TRNF_TREESet?$'+'format=json'
 		}
 		
-		dataUri() {
-			return 'http://justine.saprun.com:8000/fmcall/ZTRNF_FM_TEST_DATA?format=json'
-		}
-		
-		@ $mol_prop()
+		@ $mol_mem()
 		hierarhy() {
-			type response = {
-				ET_DATA : {
-					KEY_ID : number
-					PARENT_ID : number
+			type response = { d : {
+				results : {
+					KeyId : number
+					ParentId : number
 				}[]
-			}
+			} }
 
 			const resource = $mol_http_resource_json.item< response >( this.hierarhyUri() ) 
-			resource.credentials = ()=> ({})
+			resource.credentials = $mol_const({})
 
 			const hierarhy : { [ key : number ] : $mol_app_taxon_hierarhy_node } = {}
 				hierarhy[ 0 ] = {
@@ -45,10 +35,10 @@ module $.$mol {
 					childs : []
 				}
 			
-			resource.json().ET_DATA.forEach( row => {
-				const parent = hierarhy[ row.PARENT_ID ]
-				const node = hierarhy[ row.KEY_ID ] = {
-					id : row.KEY_ID ,
+			resource.json().d.results.forEach( row => {
+				const parent = hierarhy[ row.ParentId ]
+				const node = hierarhy[ row.KeyId ] = {
+					id : row.KeyId ,
 					parent ,
 					childs : [] as $mol_app_taxon_hierarhy_node[] ,
 				}
@@ -58,49 +48,34 @@ module $.$mol {
 			return hierarhy
 		}
 		
-		@ $mol_prop()
-		dataTable() {
-			type response = {
-				ET_DATA : {
-					KEY_ID : number
-					BUKRS : string
-					BUTXT : string
-					FMHRDATE : string
-					FSTVA : string
-					KTOP2 : string
-					KTOPL : string
-					LAND1 : string
-					MANDT : string
-					OPVAR : string
-					ORT01 : string
-					PERIV : string
-					WAERS : string
-				}[]
-			}
-			
-			const resource = $mol_http_resource_json.item< response >( this.dataUri() )
-			resource.credentials = ()=> ({})
-			
-			const dataTable : { [ key : number ] : $mol_app_taxon_data_row } = {}
-			
-			resource.json().ET_DATA.forEach( row => {
-				dataTable[ row.KEY_ID ] = {
-					id : row.KEY_ID ,
-					title : row.BUTXT ,
-					countryName : row.ORT01 ,
-					currency : row.WAERS ,
-					grade : row.PERIV ,
-					date : row.FMHRDATE ,
-					cost : row.MANDT ,
-				}
-			} )
-			
-			return dataTable
+		dataUri() {
+			return 'http://justine.saprun.com:8000/sap/opu/odata/sap/ZTRNF_TEST_DATA_SRV/TRNF_DATASet?$'+'format=json'
 		}
 		
-		@ $mol_prop()
+		dataResource( id : number ) {
+			const uri = this.dataUri() + '&$' + 'filter=' + encodeURIComponent( `KeyId eq ${ id }` )
+			const resource = $mol_http_resource_json.item<any>( uri )
+			resource.credentials = $mol_const({})
+			return resource
+		}
+		
+		@ $mol_mem()
+		dataTable() {
+			return [] as $mol_app_taxon_data_row[]
+		}
+		
+		@ $mol_mem()
 		row( path : number[] ) {
-			return this.dataTable()[ path[ path.length - 1 ] ]
+			const id = path[ path.length - 1 ]
+			if( !id ) return {} as $mol_app_taxon_data_row
+			
+			const cache = this.dataTable()
+			if( cache[ id ] ) return cache[ id ]
+			
+			const next = this.dataResource( id ).json().d.results[0] as $mol_app_taxon_data_row
+			delete ( next as any ).__metadata
+			
+			return cache[ id ] = next 
 		}
 		
 		pathsSub( path : number[] ) : number[][] {
@@ -111,7 +86,7 @@ module $.$mol {
 			return [0]
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		pathsAll() {
 			const next : number[][] = []
 			
@@ -127,23 +102,23 @@ module $.$mol {
 			return next
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		rowers() {
 			const paths = this.pathsAll()
 			return new $mol_range_lazy( {
 				length : paths.length ,
-				get : index => this.grider().rower( paths[ index ] ) ,
+				item : index => this.grider().rower( paths[ index ] ) ,
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		cellers( path : number[] ) {
 			const next : $mol_viewer[] = []
 			const hierarhyField = this.hierarhyField() 
 			
 			next.push( this.cellerBranch( path ) )
 			
-			const row : any = this.row( path )
+			const row : any = this.row( [1] )
 			for( let field in row ) {
 				if( field === hierarhyField ) continue
 				if( typeof row[ field ] === 'number' ) {
@@ -172,13 +147,13 @@ module $.$mol {
 			return path.length
 		}
 		
-		rowExpanded( path : number[] , ...diff : boolean[] ) {
+		rowExpanded( path : number[] , next? : boolean ) {
 			if( !this.pathsSub( path ).length ) return null
 			
 			const key = `rowExpanded(${ JSON.stringify( path ) })`
-			const next = $mol_state_session.value( key , ...diff )
+			const next2 = $mol_state_session.value( key , next )
 			
-			return ( next === null ) ? false : next
+			return ( next2 === null ) ? false : next2
 		}
 		
 		rowTitle( path : number[] ) {

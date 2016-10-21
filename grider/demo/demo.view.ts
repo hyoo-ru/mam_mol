@@ -1,19 +1,19 @@
 module $.$mol {
 	export class $mol_grider_demo extends $.$mol_grider_demo {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		rowers() {
 			return new $mol_range_lazy( {
 				length : 30000 ,
-				get : row => this.rower([ row ])
+				item : row => this.rower([ row ])
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		rowCells( row : number ) {
 			return new $mol_range_lazy( {
 				length : 30 ,
-				get : col => this.celler([ row , col ])
+				item : col => this.celler([ row , col ])
 			} ).valueOf()
 		}
 		
