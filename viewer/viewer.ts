@@ -101,8 +101,9 @@ module $ {
 			/// Set BEM-like element-attributes with inheritance support
 			var ownerProto = this.objectOwner() && Object.getPrototypeOf( this.objectOwner() )
 			if( ownerProto && ownerProto[ 'objectClassNames' ] ) {
+				const suffix = '_' + this.objectField().replace( /\(.*/ , '' )
 				for( var className of ownerProto[ 'objectClassNames' ]() ) {
-					var attrName = className.replace( /\$/g , '' ) + '_' + this.objectField().replace( /\(.*/ , '' )
+					var attrName = className.replace( /\$/g , '' ) + suffix
 					next2.setAttribute( attrName , '' )
 					if( className === '$mol_viewer' ) break
 				}

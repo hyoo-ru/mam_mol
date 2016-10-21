@@ -4,6 +4,8 @@
 	flex: 1 1 auto;
 	position: relative;
 	align-self: stretch;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 [mol_pager_header] {
@@ -25,6 +27,7 @@
 
 [mol_pager_bodier] {
 	flex: 1 1 auto;
+	height: 100%;
 	background: var(--mol_skin_light);
 	color: var(--mol_skin_light_text);
 }

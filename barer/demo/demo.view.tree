@@ -10,7 +10,7 @@ $mol_barer_demo_login $mol_barer
 	childs /
 		< stringer $mol_stringer
 			value > value \
-		< rememberer $mol_checker
+		< rememberer $mol_checker_ticker
 			childs /
 				\Remember me
 		< submitter $mol_clicker
