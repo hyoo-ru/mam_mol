@@ -1,5 +1,4 @@
 $mol_app_taxon $mol_pager
-	title \Taxon!
 	hierarhyField \Butxt
 	-
 	body /
