@@ -3,8 +3,6 @@
 }
 
 [mol_checker_ticker_icon] {
-	width: 1.3rem;
-	height: 1.3rem;
 	left: 0;
 	border-radius: var(--mol_skin_round);
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
