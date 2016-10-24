@@ -21,7 +21,6 @@
 [mol_pager_titler] {
 	flex: 1;
 	display: flex;
-	justify-content: center;
 	padding: 1rem;
 }
 

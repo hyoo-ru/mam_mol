@@ -31,8 +31,7 @@
 	color: var(--mol_skin_base_text);
 	display: flex;
 	align-items: center;
-	position: absolute;
-	height: 100%;
+	margin-right: -1rem;
 }
 
 [mol_app_demo_pager_backer_icon] {
