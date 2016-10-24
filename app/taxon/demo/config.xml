@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.eigenmethod.taxon" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>$mol_app_taxon_demo</name>
+    <name>mol_app_taxon_demo</name>
     <description>
         Hierarchical table demo
     </description>
