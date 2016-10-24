@@ -235,7 +235,7 @@ module $ {
 			return $mol_viewer_selection.focused().indexOf( this.DOMNode() ) !== -1
 		}
 		
-		text( postfix : string ) : string {
+		localizedText( postfix : string ) : string {
 			let contexts = Object.getPrototypeOf( this ).objectClassNames()
 			for( let context of contexts ) {
 				let text = $mol_locale.text( context , postfix )

@@ -45,7 +45,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 						return JSON.stringify( value.value )
 					case '@' :
 						locales[ `${ def.type }_${ param.type }` ] = value.value
-						return`this.text( ${ JSON.stringify( param.type ) } )`
+						return`this.localizedText( ${ JSON.stringify( param.type ) } )`
 					case '-' :
 						return null
 					case '/' :
@@ -55,7 +55,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 							var val = getValue( item )
 							if( val ) items.push( val )
 						} )
-						return '[].concat( ' + items.join(' , ') + ' )'
+						return '[]' + ( items.length ? '.concat( ' + items.join(' , ') + ' )' : ' as any[]' )
 					case '$' :
 						needCache = true
 						var overs : string[] = []
@@ -67,10 +67,10 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 							let args : string[] = []
 							if( overName[2] ) args.push( ' key : any ' )
 							if( needSet ) args.push( ' next? , prev? ' )
-							overs.push( '\t\t\t__.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
+							overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
 							needSet = ns
 						} )
-						return 'new ' + value.type + '().setup( __ => { \n' + overs.join( '' ) + '\t\t} )'
+						return 'new ' + value.type + '()' + ( overs.length ? '.setup( obj => { \n' + overs.join( '' ) + '\t\t} )' : '' )
 					case '*' :
 						//needReturn = false
 						var opts : string[] = []
