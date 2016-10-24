@@ -75,7 +75,7 @@ module $.$mol {
 	export class $mol_app_grider_branch extends $.$mol_app_grider_branch {
 		
 		levelStyle() {
-			return `${ this.level() * 1 - 1.75 }rem`
+			return `${ this.level() - 1.75 }rem`
 		}
 		
 		expandable() {

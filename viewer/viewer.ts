@@ -130,70 +130,58 @@ module $ {
 			return next2
 		}
 		
-		@ $mol_mem( {
-			fail : ( self : $mol_viewer , error : any ) => {
-				const node = self.DOMNode()
-				if( node ) node.setAttribute( 'mol_viewer_error' , error.name )
-				return error
-			}
-		} )
-		DOMTree( next? : Element ) {
-			var node = this.DOMNode()
-			
-			/// Render child nodes
-			var childs = this.childsVisible()
-			if( childs != null ) {
+		static renderChilds( node : Element , childs : ($mol_viewer|Node|string|number|boolean)[] ) {
+			if( childs == null ) return
 				
-				var nextNode = node.firstChild
-				for( let view of childs ) {
-					
-					if( view == null ) {
-					} else if( typeof view === 'object' ) {
-						var existsNode = ( ( view instanceof $mol_viewer ) ? view.DOMNode() : view )
-						while( true ) {
-							if( !nextNode ) {
-								node.appendChild( existsNode )
-								break
-							}
-							if( nextNode == existsNode ) {
-								nextNode = nextNode.nextSibling
-								break
-							} else {
-								//if( childViews.indexOf( nextNode ) === -1 ) {
-								//	var nn = nextNode.nextSibling
-								//	prev.removeChild( nextNode )
-								//	nextNode = nn
-								//} else {
-								node.insertBefore( existsNode , nextNode )
-								break
-								//}
-							}
+			var nextNode = node.firstChild
+			for( let view of childs ) {
+				
+				if( view == null ) {
+				} else if( typeof view === 'object' ) {
+					var existsNode = ( ( view instanceof $mol_viewer ) ? view.DOMNode() : view )
+					while( true ) {
+						if( !nextNode ) {
+							node.appendChild( existsNode )
+							break
 						}
-					} else {
-						if( nextNode && nextNode.nodeName === '#text' ) {
-							nextNode.nodeValue = String( view )
+						if( nextNode == existsNode ) {
 							nextNode = nextNode.nextSibling
+							break
 						} else {
-							var textNode = document.createTextNode( String( view ) )
-							node.insertBefore( textNode , nextNode )
+							//if( childViews.indexOf( nextNode ) === -1 ) {
+							//	var nn = nextNode.nextSibling
+							//	prev.removeChild( nextNode )
+							//	nextNode = nn
+							//} else {
+							node.insertBefore( existsNode , nextNode )
+							break
+							//}
 						}
 					}
-					
+				} else {
+					if( nextNode && nextNode.nodeName === '#text' ) {
+						nextNode.nodeValue = String( view )
+						nextNode = nextNode.nextSibling
+					} else {
+						var textNode = document.createTextNode( String( view ) )
+						node.insertBefore( textNode , nextNode )
+					}
 				}
 				
-				while( nextNode ) {
-					var currNode = nextNode
-					nextNode = currNode.nextSibling
-					node.removeChild( currNode )
-				}
-				
-				for( let view of childs ) {
-					if( view instanceof $mol_viewer ) view.DOMTree()
-				}
 			}
 			
-			// Set attributes
-			var attrs = this.attr()
+			while( nextNode ) {
+				var currNode = nextNode
+				nextNode = currNode.nextSibling
+				node.removeChild( currNode )
+			}
+			
+			for( let view of childs ) {
+				if( view instanceof $mol_viewer ) view.DOMTree()
+			}
+		}
+		
+		static renderAttrs( node : Element , attrs : { [ key : string ] : ()=> string|number|boolean } ) {
 			for( let name in attrs ) {
 				let val = attrs[ name ]()
 				if( ( val == null ) || ( val === false ) ) {
@@ -204,9 +192,9 @@ module $ {
 					node.setAttribute( name , String( val ) )
 				}
 			}
-			
-			// Set field values
-			var fields = this.field()
+		}
+		
+		static renderFields( node : Element , fields : { [ key : string ] : ()=> any } ) {
 			for( let path in fields ) {
 				var names = path.split( '.' )
 				var obj : any = node
@@ -215,8 +203,25 @@ module $ {
 				}
 				var field = names[ names.length - 1 ]
 				var val = fields[ path ]()
-				if( obj[ field ] !== val ) obj[ field ] = val
+				if( obj[ field ] !== val ) {
+					obj[ field ] = val
+				}
 			}
+		}
+		
+		@ $mol_mem( {
+			fail : ( self : $mol_viewer , error : any ) => {
+				const node = self.DOMNode()
+				if( node ) node.setAttribute( 'mol_viewer_error' , error.name )
+				return error
+			}
+		} )
+		DOMTree( next? : Element ) {
+			var node = this.DOMNode()
+			
+			$mol_viewer.renderChilds( node , this.childsVisible() )
+			$mol_viewer.renderAttrs( node , this.attr() )
+			$mol_viewer.renderFields( node , this.field() )
 			
 			return node
 		}
