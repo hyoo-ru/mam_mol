@@ -37,7 +37,7 @@ module $.$mol {
 						case 'code' : {
 							const span = this.spanner( id )
 							span.type( token.name )
-							span.childs( token.chunks[ 0 ] )
+							span.content([ token.chunks[ 0 ] ])
 							return span
 						}
 					}
