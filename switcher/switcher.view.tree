@@ -5,6 +5,6 @@ $mol_switcher $mol_viewer
 		checked > optionChecked# false
 		label < optionLabel# \
 		enabled < enabled
-	value null
+	> value null
 	< options *
 	childs < items /

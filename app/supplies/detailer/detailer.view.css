@@ -17,8 +17,11 @@
 	color: var(--mol_skin_base_text);
 	display: flex;
 	align-items: center;
-	position: absolute;
-	height: 100%;
+	margin-right: -1rem;
+}
+
+[mol_app_supplies_detailer_backer_icon] {
+	transform: rotateZ(180deg);
 }
 
 [mol_app_supplies_detailer_consContent] {
@@ -41,4 +44,5 @@
 
 [mol_app_supplies_detailer_costItem] {
 	text-align: right;
+	margin: 0;
 }

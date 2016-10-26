@@ -5,7 +5,7 @@ module $ {
 			
 			var list = new $mol_range_lazy(
 				{
-					get : id => id * 2 ,
+					item : id => id * 2 ,
 					get length() { return 5 } ,
 				}
 			)
@@ -18,7 +18,7 @@ module $ {
 			
 			var list = new $mol_range_lazy(
 				{
-					get : id => id * 2 ,
+					item : id => id * 2 ,
 					get length() { return Number.POSITIVE_INFINITY } ,
 				}
 			)
@@ -31,19 +31,19 @@ module $ {
 			
 			var list1 = new $mol_range_lazy(
 				{
-					get( id ){ return id * 2 } ,
+					item( id ){ return id * 2 } ,
 					get length() { return 3 } ,
 				}
 			)
 			var list2 = new $mol_range_lazy(
 				{
-					get( id ){ return id * 3 } ,
+					item( id ){ return id * 3 } ,
 					get length() { return 3 } ,
 				}
 			)
 			var list3 = new $mol_range_lazy(
 				{
-					get( id ){ return id * 4 } ,
+					item( id ){ return id * 4 } ,
 					get length() { return 3 } ,
 				}
 			)
@@ -55,7 +55,7 @@ module $ {
 			
 			var list = new $mol_range_lazy(
 				{
-					get( id ){ return id * 2 } ,
+					item( id ){ return id * 2 } ,
 					get length() { return 3 }
 				}
 			)
@@ -68,7 +68,7 @@ module $ {
 			
 			var list = new $mol_range_lazy(
 				{
-					get( id ){ return id * 2 } ,
+					item( id ){ return id * 2 } ,
 					get length() { return 3 }
 				}
 			)

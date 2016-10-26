@@ -14,14 +14,14 @@ $mol_texter_rower $mol_viewer
 $mol_texter_spanner $mol_viewer
 	tagName \span
 	attr * mol_texter_type > type \
-	> childs /
+	childs > content /
 
 $mol_texter_linker $mol_viewer
 	tagName \a
 	attr *
 		mol_texter_type > type \
 		href > link \
-	> childs /
+	childs > content /
 
 $mol_texter_imager $mol_viewer
 	tagName \img

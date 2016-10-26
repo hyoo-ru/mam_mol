@@ -1,21 +1,21 @@
 module $.$mol {
 	export class $mol_number extends $.$mol_number {
 		
-		eventDec( ...diff : Event[] ) {
+		eventDec( next? : Event ) {
 			this.value( this.value() - this.precisionChange() )
 		}
 		
-		eventInc( ...diff : Event[] ) {
+		eventInc( next? : Event ) {
 			this.value( Number( this.value() ) + this.precisionChange() )
 		}
 		
-		valueString( ...diff : string[] ) {
-			if( diff[ 0 ] !== void 0 ) {
-				this.value( diff[ 0 ] === '' ? null : Number( diff[ 0 ] ) )
+		valueString( next? : string ) {
+			if( next !== void 0 ) {
+				this.value( next === '' ? null : Number( next ) )
 			}
 			
 			var precisionView = this.precisionView()
-			var value = diff[ 0 ] ? Number( diff[ 0 ] ) : this.value()
+			var value = next ? Number( next ) : this.value()
 			
 			if( value === null ) return ''
 			
@@ -27,12 +27,21 @@ module $.$mol {
 			}
 		}
 		
-		eventWheel( ...diff : MouseWheelEvent[] ) {
-			if( diff[0].wheelDelta > 0 ) {
-				this.eventInc( ...diff )
+		eventWheel( next? : MouseWheelEvent ) {
+			if( next.wheelDelta > 0 ) {
+				this.eventInc( next )
 			} else {
-				this.eventDec( ...diff )
+				this.eventDec( next )
 			}
 		}
+		
+		incrementer() {
+			return this.enabledInc() ? super.incrementer() : null
+		}
+		
+		decrementer() {
+			return this.enabledDec() ? super.decrementer() : null
+		}
+		
 	}
 }

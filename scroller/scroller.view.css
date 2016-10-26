@@ -15,16 +15,3 @@
 		overflow: visible;
 	}
 }
-
-/*[mol_scroller]::-webkit-scrollbar {*/
-	/*width: .5rem;*/
-	/*height: .5rem;*/
-/*}*/
-
-/*[mol_scroller]::-webkit-scrollbar-track {*/
-	/*background: #eee;*/
-/*}*/
-
-/*[mol_scroller]::-webkit-scrollbar-thumb {*/
-	/*background: #ccc;*/
-/*}*/

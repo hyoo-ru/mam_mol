@@ -2,7 +2,7 @@ module $ {
 	
 	export class $mol_http_resource extends $mol_object {
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		static item( uri : string ) {
 			return new $mol_http_resource().setup( obj => {
 				obj.uri = ()=> uri
@@ -11,23 +11,29 @@ module $ {
 		
 		uri() { return '' }
 		
+		credentials() { return null as {
+			login? : string
+			password? : string
+		} }
+		
 		request( method : string ) {
 			const request = new $mol_http_request()
 			request.method = () => method
 			request.uri = () => this.uri()
+			request.credentials = () => this.credentials()
 			return request
 		}
 		
-		@ $mol_prop()
-		downloader( ...diff : $mol_http_request[] ) : $mol_http_request {
-			this.dataNext( void 0 , void 0 )
+		@ $mol_mem()
+		downloader( next? : $mol_http_request[] ) {
+			this.dataNext( null )
 			return this.request( 'Get' )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		uploader() {
 			var body = this.dataNext()
-			if( body === void 0 ) return null
+			if( body == null ) return null
 			
 			const request = this.request( 'Put' )
 			request.body = () => body
@@ -35,8 +41,8 @@ module $ {
 			return request
 		}
 		
-		@ $mol_prop()
-		uploaded( ...diff : boolean[] ) : boolean {
+		@ $mol_mem()
+		uploaded() {
 			if( !this.uploader() ) return null
 			
 			this.text( void 0 , this.uploader().text() )
@@ -44,24 +50,24 @@ module $ {
 			return true
 		}
 		
-		@ $mol_prop()
-		text( ...diff : string[] ) {
-			if( diff.length === 0 ) {
+		@ $mol_mem()
+		text( next? : string , prev? : string ) {
+			if( next === void 0 ) {
 				return this.downloader().text()
-			} else if( diff[ 0 ] === void 0 ) {
-				this.downloader( void 0 )
+			} else if( next === null ) {
+				this.downloader( null )
 			} else {
-				this.dataNext( diff[ 0 ] )
+				this.dataNext( next )
 			}
 		}
 		
-		@ $mol_prop()
-		dataNext( ...diff : any[] ) {
-			return diff[ 0 ]
+		@ $mol_mem()
+		dataNext( next? : any ) {
+			return next
 		}
 		
 		refresh() {
-			this.downloader( void 0 )
+			this.downloader( null )
 		}
 		
 		//put( task : ( request : $mol_http_request )=> void ) {
@@ -75,23 +81,23 @@ module $ {
 	
 	export class $mol_http_resource_json< Content > extends $mol_http_resource {
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		static item< Content >( uri : string ) {
 			return new $mol_http_resource_json< Content >().setup( obj => {
 				obj.uri = ()=> uri
 			} )
 		}
 		
-		json( ...diff : Content[] ) : Content {
-			if( diff.length === 0 ) {
+		json( next? : Content , prev? : Content ) : Content {
+			if( next === void 0 ) {
 				return JSON.parse( this.text() )
-			} else if( diff[0] === void 0 ) {
-				this.text( void 0 )
+			} else if( next === null ) {
+				this.text( null )
 			} else {
-				this.text( ...diff.map( val => JSON.stringify( val , null , '\t' ) ) )
+				this.text( JSON.stringify( next , null , '\t' ) )
 			}
 		}
-
+		
 	}
 	
 }

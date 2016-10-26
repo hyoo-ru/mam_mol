@@ -7,7 +7,7 @@ module $ {
 			
 			class $mol_viewer_test_block extends $mol_viewer {
 				
-				@ $mol_prop()
+				@ $mol_mem_key()
 				element( id : number ) {
 					return new $mol_viewer_test_item()
 				}
@@ -53,7 +53,7 @@ module $ {
 			
 			class $mol_viewer_test_block extends $mol_viewer {
 				
-				@ $mol_prop()
+				@ $mol_mem_key()
 				element( id : number ) {
 					return new $mol_viewer_test_item()
 				}
@@ -119,11 +119,11 @@ module $ {
 			class $mol_viewer_test extends $mol_viewer {
 				event() {
 					return {
-						'click' : ( ...diff : Event[] ) => this.eventClick( ...diff )
+						'click' : ( next? : Event ) => this.eventClick( next )
 					}
 				}
 				
-				eventClick( ...diff : Event[] ) {
+				eventClick( next? : Event ) {
 					clicked = true
 				}
 			}

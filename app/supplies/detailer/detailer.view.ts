@@ -9,13 +9,17 @@ module $.$mol {
 			return `${super.title()} ${this.supply().id()}` 
 		}
 		
-		approved( ...diff : boolean[] ) {
-			if( diff[0] === void 0 ) return this.supply().status() === $mol_app_supplies_domain_supply_status.approved
-			this.supply().status( diff[0]
+		approved( next? : boolean ) {
+			if( next === void 0 ) {
+				return this.supply().status() === $mol_app_supplies_domain_supply_status.approved
+			}
+			
+			this.supply().status( next
 				? $mol_app_supplies_domain_supply_status.approved
 				: $mol_app_supplies_domain_supply_status.pending
 			)
-			return diff[0]
+			
+			return next
 		}
 		
 		providerName() {
@@ -62,7 +66,7 @@ module $.$mol {
 			return this.supply().positions().map( ( pos , index )=> this.position( index ) )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		position( index : number ) {
 			return new $mol_app_supplies_positioner().setup( obj => {
 				obj.position = ()=> this.supply().positions()[ index ]
@@ -73,7 +77,7 @@ module $.$mol {
 			return this.supply().attachments().map( ( pos , index )=> this.attachment( index ) )
 		}
 
-		@ $mol_prop()
+		@ $mol_mem_key()
 		attachment( index : number ) {
 			return new $mol_attacher_item().setup( obj => {
 				obj.urlThumb = ()=> this.supply().attachments()[ index ].urlThumb()
@@ -81,10 +85,10 @@ module $.$mol {
 			} )
 		}
 
-		attachNew( ...diff : string[] ) {
+		attachNew( next? : string ) {
 			var supply = this.supply()
 			var list = supply.attachments()
-			var url = $mol_const( diff[0] )
+			var url = $mol_const( next )
 			list = list.concat( new $mol_app_supplies_domain_attachment().setup( obj => {
 				obj.urlThumb = obj.urlLoad = url
 			} ) )
@@ -93,14 +97,14 @@ module $.$mol {
 		
 		bodier() {
 			return new $mol_scroller().setup( obj => {
-				obj.childs = ()=> [ this.body() ]
-				obj.scrollTop = ( ...diff )=> this.scrollTop( ...diff )
+				obj.childs = ()=> this.body()
+				obj.scrollTop = ( next? )=> this.scrollTop( next )
 			} )
 		}
 		
-		scrollTop( ...diff : number[] ) {
+		scrollTop( next? : number ) {
 			var supplyId = this.supply() && this.supply().id()
-			return $mol_state_session.value( this.objectPath() + `.scrollTop(${supplyId})` , ...diff )
+			return $mol_state_session.value( this.objectPath() + `.scrollTop(${supplyId})` , next )
 		}
 
 	}

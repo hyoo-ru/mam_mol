@@ -1,12 +1,12 @@
 module $.$mol {
 	export class $mol_tiler extends $.$mol_tiler {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		childs() {
 			return this.groupChilds([ ])
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		groupItems( path : number[] ) : $mol_viewer[] {
 			var items = ( path.length === 0 )
 				? this.items()
@@ -23,7 +23,7 @@ module $.$mol {
 			return items
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		groupChilds( path : number[] ) {
 			var items = this.groupItems( path )
 			if( items.length <= 2 ) return items.map( ( _ , index )=> this.item( path.concat( index ) ) )
@@ -33,21 +33,21 @@ module $.$mol {
 			]
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		child( path : number[] ) {
 			return ( this.groupItems( path ).length > 1 )
 				? this.group( path )
 				: this.item( path )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		group( path : number[] ) {
 			return new $mol_viewer().setup( obj => {
 				obj.childs = () => this.groupChilds( path )
 			} )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		item( path : number[] ) {
 			return new $mol_viewer().setup( obj => {
 				obj.childs = () => this.groupItems( path )
