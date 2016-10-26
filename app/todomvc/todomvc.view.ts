@@ -149,6 +149,4 @@ module $.$mol {
 		
 	}
 	
-	$mol_atom2
-	
 }
