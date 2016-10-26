@@ -8,6 +8,3 @@ $mol_decker_demo $mol_decker items /
 	< checkerItem $mol_decker_item
 		title < checkerLabel @ \Check boxes
 		content < checkerContent $mol_checker_ticker_demo
-	< switcherItem $mol_decker_item
-		title < radioLabel @ \Radio buttons
-		content < switcherContent $mol_switcher_demo_enabled
