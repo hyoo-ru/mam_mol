@@ -10,3 +10,9 @@ $mol_form_demo $mol_form
 			control < passControl $mol_stringer
 				value > password \
 				type \password
+	buttons /
+		< submit $mol_clicker_major
+			childs / < submitText @ \Sign In
+			eventClick > eventSubmit null
+			disabled < submitBlocked
+
