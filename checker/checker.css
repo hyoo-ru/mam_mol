@@ -7,3 +7,12 @@
 	font-weight: normal;
 	box-shadow: none;
 }
+
+[mol_checker_icon] {
+	display: inline-flex;
+	vertical-align: -10%;
+}
+
+[mol_checker_labeler] {
+	display: inline-flex;
+}
