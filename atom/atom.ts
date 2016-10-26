@@ -133,7 +133,7 @@ module $ {
 				if( !error['$mol_atom_catched'] ) {
 					if( error instanceof $mol_atom_wait ) {
 					} else {
-						console.error( error )
+						console.error( error.stack )
 					}
 					error['$mol_atom_catched'] = true
 				}
