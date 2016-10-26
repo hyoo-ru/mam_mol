@@ -42,21 +42,8 @@ module $.$mol {
 		}
 		
 		@ $mol_mem()
-		namesApp() {
-			var next : string[] = []
-			for( var name in $ ) {
-				if( !/^\$.*_app(_[a-z0-9]+)?$/i.test( name ) ) continue
-				if( /^\$mol_demo/.test( name ) ) continue
-				if( /^\$mol_app_demo/.test( name ) ) continue
-				if( typeof (<{[index : string]:any}>$)[ name ] !== 'function' ) continue
-				next.push( name.substring( 1 ) )
-			}
-			return next
-		}
-		
-		@ $mol_mem()
 		options() {
-			return this.namesDemo().concat( this.namesApp() ).map( name => this.option( name ) )
+			return this.namesDemo().map( name => this.option( name ) )
 		}
 
 		// @ $mol_prop()

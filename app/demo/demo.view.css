@@ -27,6 +27,10 @@
 	align-items: flex-start;
 }
 
+[mol_app_demo_pager_bodier] > * {
+	margin: auto;
+}
+
 [mol_app_demo_pager_backer] {
 	color: var(--mol_skin_base_text);
 	display: flex;

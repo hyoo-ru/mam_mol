@@ -5,7 +5,6 @@
 	display: flex;
 	flex: 0 1 auto;
 	flex-direction: column;
-	margin: auto;
 }
 
 [mol_carder_contenter] {

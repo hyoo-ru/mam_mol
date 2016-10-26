@@ -1,4 +1,4 @@
-$mol_app_supplies $mol_stacker
+$mol_app_supplies_root $mol_stacker
 	enter $mol_app_supplies_enter entered > entered false
 	lister $mol_app_supplies_lister
 		supplies < supplies /

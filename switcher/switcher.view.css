@@ -2,7 +2,6 @@
 	display: flex;
 	flex-wrap: wrap;
 	flex: 1 1 auto;
-	margin: auto;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
 	background: var(--mol_skin_light_line);

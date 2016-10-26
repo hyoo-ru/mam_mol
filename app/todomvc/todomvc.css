@@ -1,5 +1,7 @@
 [mol_app_todomvc] {
 	align-self: stretch;
+	width: 100%;
+	height: 100%;
 }
 
 [mol_app_todomvc] [mol_stringer] ,
