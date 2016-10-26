@@ -20,12 +20,12 @@
 	position: relative;
 }
 
-[mol_clicker]:disabled {
+[mol_clicker_button][disabled] {
 	background: var(--mol_skin_passive);
 	color: var(--mol_skin_passive_text);
 }
 
-[mol_clicker]:not(:disabled):hover ,
+[mol_clicker]:not([disabled]):hover ,
 [mol_clicker]:focus {
 	outline: none;
 	box-shadow: 0 0 0 2px var(--mol_skin_focus);
@@ -34,15 +34,12 @@
 	opacity: 1;
 }
 
-[mol_clicker_major]:not(:disabled) {
+[mol_clicker_major]:not([disabled]) {
 	background: var(--mol_skin_accent);
 	color: var(--mol_skin_accent_text);
 }
 
-[mol_clicker_danger]:not(:disabled) {
+[mol_clicker_danger]:not([disabled]) {
 	background: var(--mol_skin_warn);
-}
-
-[mol_clicker_minor]:not(:disabled) {
 }
 
