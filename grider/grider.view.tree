@@ -31,13 +31,9 @@ $mol_grider_celler $mol_viewer
 
 $mol_grider_number $mol_grider_celler
 
-$mol_app_grider_branch $mol_grider_celler
+$mol_app_grider_branch $mol_checker_expander
 	level 0
 	field * style.paddingLeft < levelStyle \0px
-	childs /
-		< contenter $mol_viewer childs /
-			< expander $mol_checker_expander
-				checked > expanded false
-				enabled < expandable false
-			< namer $mol_viewer
-				childs / < name \
+	checked > expanded false
+	enabled < expandable false
+	label < name \

@@ -1,6 +1,5 @@
 $mol_grider_demo $mol_grider
 	rowHeight 37
-	rower# $mol_grider_rower
-		cellers < rowerCells# /
 	celler# $mol_grider_celler
+		title < cellTitle# \
 		childs / < cellContent# \

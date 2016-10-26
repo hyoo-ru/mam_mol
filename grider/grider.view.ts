@@ -28,7 +28,7 @@ module $.$mol {
 			const heightLimit = context.$mol_viewer_heightLimit()
 			const rowHeight = this.rowHeight()
 			
-			const top = Math.max( 0 , Math.floor( ( scrollTop ) / rowHeight ) )
+			const top = Math.max( 0 , Math.floor( ( scrollTop ) / rowHeight ) - 3 )
 			const bottom = Math.min( Math.ceil( heightLimit / rowHeight ) , count )
 			
 			return { top , bottom , count }
@@ -75,7 +75,7 @@ module $.$mol {
 	export class $mol_app_grider_branch extends $.$mol_app_grider_branch {
 		
 		levelStyle() {
-			return `${ this.level() - 1.75 }rem`
+			return `${ this.level() *.75 - 1.5 }rem`
 		}
 		
 		expandable() {

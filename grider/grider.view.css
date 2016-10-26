@@ -10,7 +10,7 @@
 
 [mol_grider] > * > * {
 	display: table-cell;
-	padding: 0 .5rem;
+	padding: 0 1rem;
 	white-space: nowrap;
 	vertical-align: middle;
 }
@@ -32,15 +32,8 @@
 	text-align: right;
 }
 
-[mol_app_grider_branch_contenter] {
-	display: flex;
-	align-items: center;
-}
-
-[mol_app_grider_branch_expander] {
-	padding: 0;
-}
-
-[mol_app_grider_branch_namer] {
-	margin-left: .1rem;
+[mol_app_grider_branch] {
+	text-align: left;
+	width: 100%;
+	height: 100%;
 }
