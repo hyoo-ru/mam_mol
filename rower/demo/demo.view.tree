@@ -1,5 +1,5 @@
 $mol_rower_demo $mol_rower
-	heightMinimal 50
+	heightMinimal 68
 	childs /
 		< titler $mol_suggester
 			hint < helloHint @ \Title
