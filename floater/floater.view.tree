@@ -1,2 +1,3 @@
 $mol_floater $mol_viewer
-	field * style.top < shiftStyle \
+	field * style.transform < shiftStyle \
+	attr * mol_floater_scrolling < scrolling false
