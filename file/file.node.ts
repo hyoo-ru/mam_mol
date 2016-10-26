@@ -61,7 +61,7 @@ module $ {
 				var stat = next || $node.fs.statSync( path )
 			} catch( error ) {
 				if( error.code === 'ENOENT' ) return null
-				throw error
+				return error
 			}
 			
 			this.parent().watcher()
