@@ -1,9 +1,14 @@
 [mol_viewer_root] {
 	margin: 0;
 	padding: 0;
+	width: 100%;
 	height: 100%;
 	font: var(--mol_skin_font);
 }
+
+/*body[mol_viewer_root] {*/
+	/*position: fixed;*/
+/*}*/
 
 /*[mol_viewer] {*/
 	/*animation: mol_viewer_show .1s ease;*/
