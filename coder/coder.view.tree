@@ -1,8 +1,9 @@
 $mol_coder $mol_viewer childs /
-	< manualer $mol_stringer
-		type \number
+	< manualer $mol_number
 		value > value \
 		hint < hint < format \
+		enabledInc false
+		enabledDec false
 	< scanner $mol_clicker
 		eventClick > eventScan null
 		childs / < labelScan @ \Scan
