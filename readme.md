@@ -242,8 +242,8 @@ module $ {
 	export class $my_greeter {
 		
 		// Define memoized property with push support
-		@ $mol_prop()
-		greeting( ...diff : string[] ) : string {
+		@ $mol_mem()
+		greeting( next? : string , prev? : string ) : string {
 			
 			// Defered push value to property
 			setTimeout( () => {
@@ -255,7 +255,7 @@ module $ {
 		}
 		
 		// Define memoized property without push support
-		@ $mol_prop()
+		@ $mol_mem()
 		greetingLength() {
 			// Using other properties in synchronous style
 			return this.greeting().length
