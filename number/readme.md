@@ -15,7 +15,7 @@ $mol_number
 
 ## Properties
 
-**`value( ...diff : number[] ) : number`**
+**`value( next? : number ) : number`**
 
 Property `value` is a currently displayed number.
 

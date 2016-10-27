@@ -11,7 +11,7 @@ module $ {
 	/// Reactive statefull lazy ViewModel 
 	export class $mol_viewer extends $mol_object {
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		static root( id : number ) {
 			return new this
 		}
@@ -33,9 +33,9 @@ module $ {
 			return this.statePrefix() + postfix
 		}
 		
-		@ $mol_prop()
-		context( ...diff : $mol_viewer_context[] ) {
-			return diff[ 0 ] || $mol_viewer_context
+		@ $mol_mem()
+		context( next? : $mol_viewer_context ) {
+			return next || $mol_viewer_context
 		}
 		
 		contextSub() {
@@ -60,12 +60,11 @@ module $ {
 			if( !childs ) return childs
 			
 			var context = this.contextSub()
-			for( let i = 0 ; i < childs.length ; ++i ) {
-				let child = childs[ i ]
+			childs.forEach( child => {
 				if( child instanceof $mol_viewer ) {
 					child.context( context )
 				}
-			}
+			} )
 			
 			return childs
 		}
@@ -77,30 +76,35 @@ module $ {
 		
 		private 'DOMNode()' : Element
 		
-		DOMNode( ...diff : Element[] ) {
+		DOMNode( next? : Element ) {
 			var path = this.objectPath()
 			
-			var next = diff[ 0 ]
-			if( !next ) {
-				next = this[ 'DOMNode()' ]
-				if( next ) return next
+			var next2 = next
+			if( !next2 ) {
+				next2 = this[ 'DOMNode()' ]
+				if( next2 ) return next2
 				
-				next = document.getElementById( path )
-				if( !next ) {
-					next = document.createElementNS( this.nameSpace() , this.tagName() )
+				next2 = document.getElementById( path )
+				if( next2 ) {
+					if( (<any>next2)[ '$mol_viewer' ] ) {
+						return this[ 'DOMNode()' ] = next2
+					}
+				} else {
+					next2 = document.createElementNS( this.nameSpace() , this.tagName() )
 				}
 			}
 			
-			next.id = path
-			void( (<any>next)[ '$mol_viewer' ] = this )
-			this[ 'DOMNode()' ] = next
+			next2.id = path
+			void( (<any>next2)[ '$mol_viewer' ] = this )
+			this[ 'DOMNode()' ] = next2
 			
 			/// Set BEM-like element-attributes with inheritance support
 			var ownerProto = this.objectOwner() && Object.getPrototypeOf( this.objectOwner() )
 			if( ownerProto && ownerProto[ 'objectClassNames' ] ) {
+				const suffix = '_' + this.objectField().replace( /\(.*/ , '' )
 				for( var className of ownerProto[ 'objectClassNames' ]() ) {
-					var attrName = className.replace( /\$/g , '' ) + '_' + this.objectField().replace( /\(.*/ , '' )
-					next.setAttribute( attrName , '' )
+					var attrName = className.replace( /\$/g , '' ) + suffix
+					next2.setAttribute( attrName , '' )
 					if( className === '$mol_viewer' ) break
 				}
 			}
@@ -108,7 +112,7 @@ module $ {
 			/// Set BEM-like block-attributes with inheritance support
 			var proto = Object.getPrototypeOf( this )
 			for( var className of proto[ 'objectClassNames' ]() ) {
-				next.setAttribute( className.replace( /\$/g , '' ) , '' )
+				next2.setAttribute( className.replace( /\$/g , '' ) , '' )
 				if( className === '$mol_viewer' ) break
 			}
 			
@@ -116,88 +120,68 @@ module $ {
 			var events = this.event()
 			for( let name in events ) {
 				let handle = events[ name ]
-				next.addEventListener(
+				next2.addEventListener(
 					name , event => {
 						handle( event )
 					}
 				)
 			}
 			
-			// When node defined then deferred render child nodes then deferred update state of this node
-			// this.DOMNodeState( void 0 )
-			// this.DOMNodeContent( void 0 )
-			
-			return next
+			return next2
 		}
 		
-		@ $mol_prop( {
-			fail : ( self : $mol_viewer , error : any ) => {
-				var node = self.DOMNode()
-				if( node && !error['$mol_viewer_catched'] ) {
-					node.setAttribute( 'mol_viewer_error' , error.name )
-					// if( error.name !== '$mol_atom_wait' ) node.innerHTML = error.message
-				}
-				error['$mol_viewer_catched'] = true
-				return error
-			}
-		} )
-		DOMTree( ...diff : void[] ) {
-			var node = this.DOMNode()
-			
-			/// Render child nodes
-			var childs = this.childsVisible()
-			if( childs != null ) {
+		static renderChilds( node : Element , childs : ($mol_viewer|Node|string|number|boolean)[] ) {
+			if( childs == null ) return
 				
-				var nextNode = node.firstChild
-				for( let view of childs ) {
-					
-					if( view == null ) {
-					} else if( typeof view === 'object' ) {
-						var existsNode = ( view instanceof $mol_viewer ) ? view.DOMNode() : view
-						while( true ) {
-							if( !nextNode ) {
-								node.appendChild( existsNode )
-								break
-							}
-							if( nextNode == existsNode ) {
-								nextNode = nextNode.nextSibling
-								break
-							} else {
-								//if( childViews.indexOf( nextNode ) === -1 ) {
-								//	var nn = nextNode.nextSibling
-								//	prev.removeChild( nextNode )
-								//	nextNode = nn
-								//} else {
-								node.insertBefore( existsNode , nextNode )
-								break
-								//}
-							}
+			var nextNode = node.firstChild
+			for( let view of childs ) {
+				
+				if( view == null ) {
+				} else if( typeof view === 'object' ) {
+					var existsNode = ( ( view instanceof $mol_viewer ) ? view.DOMNode() : view )
+					while( true ) {
+						if( !nextNode ) {
+							node.appendChild( existsNode )
+							break
 						}
-					} else {
-						if( nextNode && nextNode.nodeName === '#text' ) {
-							nextNode.nodeValue = String( view )
+						if( nextNode == existsNode ) {
 							nextNode = nextNode.nextSibling
+							break
 						} else {
-							var textNode = document.createTextNode( String( view ) )
-							node.insertBefore( textNode , nextNode )
+							//if( childViews.indexOf( nextNode ) === -1 ) {
+							//	var nn = nextNode.nextSibling
+							//	prev.removeChild( nextNode )
+							//	nextNode = nn
+							//} else {
+							node.insertBefore( existsNode , nextNode )
+							break
+							//}
 						}
 					}
-					
+				} else {
+					if( nextNode && nextNode.nodeName === '#text' ) {
+						nextNode.nodeValue = String( view )
+						nextNode = nextNode.nextSibling
+					} else {
+						var textNode = document.createTextNode( String( view ) )
+						node.insertBefore( textNode , nextNode )
+					}
 				}
 				
-				while( nextNode ) {
-					var currNode = nextNode
-					nextNode = currNode.nextSibling
-					node.removeChild( currNode )
-				}
-				
-				for( let view of childs ) {
-					if( view instanceof $mol_viewer ) view.DOMTree()
-				}
 			}
 			
-			// Set attributes
-			var attrs = this.attr()
+			while( nextNode ) {
+				var currNode = nextNode
+				nextNode = currNode.nextSibling
+				node.removeChild( currNode )
+			}
+			
+			for( let view of childs ) {
+				if( view instanceof $mol_viewer ) view.DOMTree()
+			}
+		}
+		
+		static renderAttrs( node : Element , attrs : { [ key : string ] : ()=> string|number|boolean } ) {
 			for( let name in attrs ) {
 				let val = attrs[ name ]()
 				if( ( val == null ) || ( val === false ) ) {
@@ -208,9 +192,9 @@ module $ {
 					node.setAttribute( name , String( val ) )
 				}
 			}
-			
-			// Set field values
-			var fields = this.field()
+		}
+		
+		static renderFields( node : Element , fields : { [ key : string ] : ()=> any } ) {
 			for( let path in fields ) {
 				var names = path.split( '.' )
 				var obj : any = node
@@ -219,8 +203,25 @@ module $ {
 				}
 				var field = names[ names.length - 1 ]
 				var val = fields[ path ]()
-				if( obj[ field ] !== val ) obj[ field ] = val
+				if( obj[ field ] !== val ) {
+					obj[ field ] = val
+				}
 			}
+		}
+		
+		@ $mol_mem( {
+			fail : ( self : $mol_viewer , error : any ) => {
+				const node = self.DOMNode()
+				if( node ) node.setAttribute( 'mol_viewer_error' , error.name )
+				return error
+			}
+		} )
+		DOMTree( next? : Element ) {
+			var node = this.DOMNode()
+			
+			$mol_viewer.renderChilds( node , this.childsVisible() )
+			$mol_viewer.renderAttrs( node , this.attr() )
+			$mol_viewer.renderFields( node , this.field() )
 			
 			return node
 		}
@@ -239,7 +240,7 @@ module $ {
 			return $mol_viewer_selection.focused().indexOf( this.DOMNode() ) !== -1
 		}
 		
-		text( postfix : string ) : string {
+		localizedText( postfix : string ) : string {
 			let contexts = Object.getPrototypeOf( this ).objectClassNames()
 			for( let context of contexts ) {
 				let text = $mol_locale.text( context , postfix )

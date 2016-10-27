@@ -2,7 +2,7 @@ module $.$mol {
 	
 	export class $mol_suggester extends $.$mol_suggester {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		contextSub( ) {
 			var context = this.context()
 			var subContext = Object.create( context )
@@ -23,18 +23,18 @@ module $.$mol {
 			]
 		}
 		
-		eventRowerSelected( index : number , ...diff : MouseEvent[] ) {
+		eventRowerSelected( index : number , next? : MouseEvent ) {
 			this.value( this.suggests()[ index ] );
 		}
 		
-		@ $mol_prop()
-		selectedRow( ...diff : any[] ) {
+		@ $mol_mem()
+		selectedRow( next? : any , prev? : any ) {
 			this.value()
-			return ( diff[ 0 ] !== void 0 ) ? diff[ 0 ] : 0
+			return ( next !== void 0 ) ? next : 0
 		}
 		
-		eventPress( ...diff : KeyboardEvent[] ) {
-			let code = ( diff[ 0 ][ 'code' ] || diff[ 0 ].key ).replace( /^Arrow|bar$/ , '' )
+		eventPress( next? : KeyboardEvent ) {
+			let code = ( next[ 'code' ] || next.key ).replace( /^Arrow|bar$/ , '' )
 			let selectedRow = this.selectedRow()
 			let suggestsLength = this.lister().childsVisible().length
 			let isSelectedKey = code === 'Enter' || code === 'Right'
@@ -44,7 +44,7 @@ module $.$mol {
 				
 				if( !selectedRow ) return
 				
-				if( spaceKey ) diff[ 0 ].preventDefault()
+				if( spaceKey ) next.preventDefault()
 				
 				this.value( this.suggests()[ selectedRow - 1 ] + spaceKey )
 			}

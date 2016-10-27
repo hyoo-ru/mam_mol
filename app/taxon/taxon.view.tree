@@ -1,0 +1,22 @@
+$mol_app_taxon $mol_pager
+	hierarhyField \Butxt
+	-
+	body /
+		< grider $mol_grider
+			rowHeight 40
+			rowers < rowers /
+			cellers# < cellers# /
+	-
+	cellerBranch# $mol_app_grider_branch
+		title \Title
+		level < rowLevel# 0
+		name < rowTitle# \
+		expanded > rowExpanded# false
+	-
+	cellerText# $mol_grider_celler
+		title < cellerTitle# \
+		childs / < valueText# \
+	-
+	cellerNumber# $mol_grider_number
+		title < cellerTitle# \
+		childs / < valueNumber# 0

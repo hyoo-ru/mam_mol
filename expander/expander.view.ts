@@ -1,15 +1,11 @@
 module $.$mol {
 	export class $mol_expander extends $.$mol_expander {
 		
-		childs() {
+		rows() {
 			return [
-				this.header(),
+				this.labeler(),
 				this.expanded() ? this.content() : null	
 			]
-		}
-		
-		eventExpand() {
-			this.expanded(true)
 		}
 		
 	}

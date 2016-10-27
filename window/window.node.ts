@@ -2,8 +2,8 @@ module $ {
 	
 	export class $mol_window extends $mol_object {
 		
-		static size( ...diff : number[][] ) {
-			return [ 1024 , 768 ]
+		static size( next? : number[] ) {
+			return next || [ 1024 , 768 ]
 		}
 		
 	}

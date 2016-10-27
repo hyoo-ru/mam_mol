@@ -4,14 +4,14 @@ module $ {
 
 	export class $mol_state_arg< Value > extends $mol_object {
 		
-		@ $mol_prop()
-		static href( ...diff : string[] ) : string {
-			return process.argv.slice( 2 ).join( ' ' )
+		@ $mol_mem()
+		static href( next? : string ) : string {
+			return next || process.argv.slice( 2 ).join( ' ' )
 		}
 		
-		@ $mol_prop()
-		static dict( ...diff : any[] ) {
-			if( diff[ 0 ] !== void 0 ) this.href( this.make( diff[ 0 ] ) )
+		@ $mol_mem()
+		static dict( next? : { [ key : string ] : string } ) {
+			if( next !== void 0 ) this.href( this.make( next ) )
 			
 			var href = this.href()
 			var chunks = href.split( /[\/\?#!&; ]/g )
@@ -28,11 +28,11 @@ module $ {
 			return params
 		}
 		
-		@ $mol_prop()
-		static value< Value >( key : string , ...diff : Value[] ) {
-			if( diff[ 0 ] === void 0 ) return this.dict()[ key ] || null
-			this.href( this.link( { [ key ] : diff[ 0 ] } ) )
-			return diff[ 0 ]
+		@ $mol_mem_key()
+		static value( key : string , next? : string ) {
+			if( next === void 0 ) return this.dict()[ key ] || null
+			this.href( this.link( { [ key ] : next } ) )
+			return next
 		}
 		
 		static link( next : any ) {
@@ -64,15 +64,15 @@ module $ {
 			super()
 		}
 		
-		value< Value >( key : string , ...diff : Value[] ) {
-			return $mol_state_arg.value< Value >( this.prefix + key , ...diff )
+		value( key : string , next? : string , prev? : string ) {
+			return $mol_state_arg.value( this.prefix + key , next )
 		}
 		
-		sub< Value >( postfix : string ) {
-			return new $mol_state_arg< Value >( this.prefix + postfix + '.' )
+		sub( postfix : string ) {
+			return new $mol_state_arg( this.prefix + postfix + '.' )
 		}
 		
-		link( next : any ) {
+		link( next : { [ key : string ] : string } ) {
 			var prefix = this.prefix
 			var dict : { [ key : string ] : any } = {}
 			for( var key in next ) {

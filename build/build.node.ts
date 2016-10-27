@@ -2,7 +2,7 @@ module $ {
 	
 	export class $mol_build extends $mol_object {
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		static root( path : string ) {
 			return new this().setup(
 				obj => {
@@ -15,7 +15,7 @@ module $ {
 			return $mol_build.root( $mol_file.relative( path ).path() )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		server() {
 			return new $mol_build_server().setup(
 				obj => {
@@ -28,7 +28,7 @@ module $ {
 			return $mol_file.relative( '.' )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		mods( { path , exclude } : { path : string , exclude? : string[] } ) {
 			return $mol_file.absolute( path ).childs()
 			.filter(
@@ -43,7 +43,7 @@ module $ {
 			// .sort( ( a , b )=> a.path().length - b.path().length )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		modsRecursive( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var mod = $mol_file.absolute( path )
 			switch( mod.type() ) {
@@ -65,7 +65,7 @@ module $ {
 			throw new Error( `Unsopported type "${mod.type()}" of "${mod.relate()}"` )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		sources( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var mod = $mol_file.absolute( path )
 			switch( mod.type() ) {
@@ -78,7 +78,7 @@ module $ {
 			}
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		sourcesSorted( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const mod = $mol_file.absolute( path )
 			const graph = new $mol_graph< void , { priority : number } >()
@@ -128,7 +128,7 @@ module $ {
 		}
 		
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const sortedPaths = this.graph( { path , exclude } ).sorted( edge => edge.priority )
 			let sources : $mol_file[] = [].concat.apply(
@@ -156,7 +156,7 @@ module $ {
 			return sources2
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		tsHost() {
 			
 			var options = {
@@ -196,7 +196,7 @@ module $ {
 			return host
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var sources = this.sourcesAll( { path , exclude } )
 			.filter( src => /(jam\.js|tsx?|view\.tree)$/.test( src.ext() ) )
@@ -237,14 +237,14 @@ module $ {
 			return sources
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		sourcesCSS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			return this.sourcesAll( { path , exclude } ).filter( src => /(css)$/.test( src.ext() ) )
 		}
 		
 		static dependors : { [ index : string ] : ( source : $mol_file )=> { [ index : string ] : number } } = {}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		srcDeps( path : string ) {
 			var src = $mol_file.absolute( path )
 			var ext = src.ext()
@@ -261,7 +261,7 @@ module $ {
 			return dependencies ? dependencies( src ) : {}
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		modDeps( { path , exclude } : { path : string , exclude? : string[] } ) {
 			const mod = $mol_file.absolute( path )
 			const depends : { [ index : string ] : number } = { '..' : 0 }
@@ -271,7 +271,7 @@ module $ {
 			return depends
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		dependencies( { path , exclude } : { path : string , exclude? : string[] } ) {
 			var mod = $mol_file.absolute( path )
 			switch( mod.type() ) {
@@ -282,7 +282,7 @@ module $ {
 			}
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		packEnsure( name : string ) {
 			var mapping = this.packMapping()
 			
@@ -316,12 +316,12 @@ module $ {
 			return this.packEnsure( name )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		packMapping() {
 			return $mol_tree.fromString( $mol_file.relative( '.pms.tree' ).content() )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		graph( { path , exclude } : { path : string , exclude? : string[] } ) {
 			let graph = new $mol_graph< {} , { priority : number } >()
 			let added : { [ path : string ] : boolean } = {}
@@ -355,7 +355,7 @@ module $ {
 			return graph
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		bundle( { path , bundle } : { path : string , bundle? : string } ) {
 			
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
@@ -421,7 +421,7 @@ module $ {
 			console.log( `${time} Builded ${path}` )
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		bundleJS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
@@ -458,7 +458,7 @@ module $ {
 			return [ target , targetMap ]
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		bundleTestJS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
@@ -498,7 +498,7 @@ module $ {
 			return [ target , targetMap ]
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		bundlePackageJSON( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
@@ -510,6 +510,7 @@ module $ {
 			var json = {
 				name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
 				version : '0.0.0' ,
+				main : 'node.js' ,
 				dependencies : <{ [ key : string ] : string }>{}
 			}
 			
@@ -529,7 +530,7 @@ module $ {
 			return [ target ]
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		bundleCSS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			var sources = this.sourcesCSS( { path , exclude } )
@@ -568,7 +569,7 @@ module $ {
 			return [ target , targetMap ]
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		bundleLocale( { path , exclude , bundle , locale } : { path : string , exclude? : string[] , bundle : string , locale : string } ) : $mol_file[] {
 			const pack = $mol_file.absolute( path )
 			
@@ -593,7 +594,7 @@ module $ {
 			return [ target ]
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		bundleDepsJSON( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			

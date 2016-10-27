@@ -1,4 +1,4 @@
-# $mol_prop
+# $mol_mem
 
 ## One-value properties
 
@@ -42,17 +42,17 @@ userName()
 // Set to "jiny" if patch supported, or "mary" if not
 userName( 'mary' , 'mar' )
 ```
-To do a property is reactive (cached with automatic invalidation) it is enough to use decorator [$mol_prop](../prop), which uses under the hood [$mol_atom](../atom):
+To do a property is reactive (cached with automatic invalidation) it is enough to use decorator [$mol_mem](../prop), which uses under the hood [$mol_atom](../atom):
 
 ```ts
 /// Getter
-@ $mol_prop()
+@ $mol_mem()
 userName() { return $mol_state_local.value( 'name' ) }
 ```
 
 ```ts
 /// Getter/setter
-@ $mol_prop()
+@ $mol_mem()
 userName( ...diff : string[] ) {
 	if( diff[0] === void ) { // check for undefined is important
 		return $mol_state_local.value( 'name' ) // pull value
@@ -65,7 +65,7 @@ userName( ...diff : string[] ) {
 
 ```ts
 /// Delegated getter/setter
-@ $mol_prop()
+@ $mol_mem()
 userName( ...diff : string[] ) {
 	var next = $mol_state_local.value( 'name' , ...diff )
 	return next // return next value
@@ -101,7 +101,7 @@ userName( pos : number ) {
 ```
 
 ```ts
-@ $mol_prop()
+@ $mol_mem_key()
 userNames( pos : number , ...diff : string[] ) {
 	return $mol_state_local.value( 'name' , ...diff ) || `User #${pos}`
 }
@@ -125,7 +125,7 @@ userName( 0 , 'mary' , 'mar' )
 As a key it is allowed to use any value, which can be serialized into JSON, for example:
 
 ```ts
-@ $mol_prop()
+@ $mol_mem_key()
 usersSearch( query : {
 	name? : string
 	minAge? : number

@@ -245,8 +245,8 @@ module $.$mol {
 			return 1
 		}
 		
-		@ $mol_prop()
-		cellContent( pos : number[] ) {
+		@ $mol_mem_key()
+		cellContent( pos : number[] ) : $mol_viewer {
 			if( pos[0] === 0 ) {
 				return this.texter( pos )
 			}
@@ -266,9 +266,9 @@ module $.$mol {
 			}
 		}
 		
-		@ $mol_prop()
-		cellValue( pos : number[] , ...diff : any[] ) {
-			if( diff[0] !== void 0 ) return diff[0]
+		@ $mol_mem_key()
+		cellValue( pos : number[] , next : any ) {
+			if( next !== void 0 ) return next
 			
 			if( pos[0] === 0 ) {
 				return this.formatCols()[ pos[1] ].title
@@ -311,7 +311,7 @@ module $.$mol {
 			const scheme = this.scheme()[ field ]
 			
 			switch( scheme.type ) {
-				case 'number' : return `${ this.data()[ field ] }`
+				case 'number' : return this.data()[ field ]
 				case 'enum' : return scheme.options[ this.data()[ field ] ]
 			}
 			

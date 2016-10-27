@@ -18,7 +18,6 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 		parent.childs.forEach( param => addProp( param ) )
 		
 		function addProp( param : $mol_tree ) {
-			var needKey = false
 			var needSet = false
 			var needReturn = true
 			var needCache = false
@@ -27,6 +26,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 
 			if( param.type === '>' ) {
 				needCache = true
+				needSet = true
 				isOverride = false
 				param = param.childs[0]
 			}
@@ -45,7 +45,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 						return JSON.stringify( value.value )
 					case '@' :
 						locales[ `${ def.type }_${ param.type }` ] = value.value
-						return`this.text( ${ JSON.stringify( param.type ) } )`
+						return`this.localizedText( ${ JSON.stringify( param.type ) } )`
 					case '-' :
 						return null
 					case '/' :
@@ -55,7 +55,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 							var val = getValue( item )
 							if( val ) items.push( val )
 						} )
-						return '[].concat( ' + items.join(' , ') + ' )'
+						return '[]' + ( items.length ? '.concat( ' + items.join(' , ') + ' )' : ' as any[]' )
 					case '$' :
 						needCache = true
 						var overs : string[] = []
@@ -66,13 +66,12 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 							var v = getValue( over.childs[0] )
 							let args : string[] = []
 							if( overName[2] ) args.push( ' key : any ' )
-							if( needSet ) args.push( ' ...diff : any[] ' )
-							overs.push( '\t\t\t__.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
+							if( needSet ) args.push( ' next? , prev? ' )
+							overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
 							needSet = ns
 						} )
-						return 'new ' + value.type + '().setup( __ => { \n' + overs.join( '' ) + '\t\t} )'
+						return 'new ' + value.type + '()' + ( overs.length ? '.setup( obj => { \n' + overs.join( '' ) + '\t\t} )' : '' )
 					case '*' :
-						//needKey = true
 						//needReturn = false
 						var opts : string[] = []
 						value.childs.forEach( opt => {
@@ -80,7 +79,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 							keys.push( opt.type )
 							var ns = needSet
 							var v = getValue( opt.childs[0] )
-							var arg = needSet ? ' ...diff : any[] ' : ''
+							var arg = needSet ? ' next? : any , prev? : any ' : ''
 							opts.push( '\t\t\t"' + opt.type + '" : (' + arg + ')=> <any> ' + v + ' ,\n' )
 							needSet = ns
 						} )
@@ -91,7 +90,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 						if( value.childs.length === 1 ) {
 							addProp( value )
 							var type = /(.*?)(?:(#)(.*))?$/.exec( value.childs[0].type )
-							return 'this.' + type[1] + '( ' + ( type[3] ? JSON.stringify( type[3] ) + ' ,' : type[2] ? 'key ,' : '' ) + ' ...diff )'
+							return 'this.' + type[1] + '(' + ( type[3] ? JSON.stringify( type[3] ) + ' ,' : type[2] ? ' key ,' : '' ) + ' next , prev )'
 						}
 					case '<' :
 						if( value.childs.length === 1 ) {
@@ -120,18 +119,17 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 				var val = getValue( child )
 				var propName = /(.*?)(?:(#)(.*))?$/.exec( param.type )
 				var args : string[] = []
-				if( needKey || propName[2] ) args.push( ' key : any ' )
-				if( needCache || needSet ) args.push( ' ...diff : any[] ' )
-				if( needCache ) val = ( needReturn ? '( diff[0] !== void 0 ) ? diff[0] : ' : 'if( diff[0] !== void 0 ) return diff[0]\n\t\t' ) + val
+				if( propName[2] ) args.push( ' key : any ' )
+				if( needCache || needSet ) args.push( ' next? : any , prev? : any ' )
+				if( needSet && param.childs[0].type !== '>' ) val = ( needReturn ? '( next !== void 0 ) ? next : ' : 'if( next !== void 0 ) return next\n\t\t' ) + val
 				if( needReturn ) val = 'return ' + val
 				var decl = '\t' + propName[1] +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
-				if( needCache ) decl = '\t@ $' + 'mol_prop()\n' + decl
+				if( needCache ) {
+					if( propName[2] ) decl = '\t@ $' + 'mol_mem_key()\n' + decl
+					else decl = '\t@ $' + 'mol_mem()\n' + decl
+				}
 				decl = source( param ).toString().trim().replace( /^/gm , '\t/// ' ) + '\n' + decl
 				members[ propName[1] ] = decl
-				if( needKey ) {
-					if( isOverride ) members[ propName[1] + '_keys' ] = '\t' + propName[1] +'_keys(){\n\t\treturn <string[]>' + JSON.stringify( keys ) + '.concat( super.' + propName[1] +'_keys() || [] )\n\t}\n\n'
-					else members[ propName[1] + '_keys' ] = '\t' + propName[1] +'_keys(){\n\t\treturn <string[]>' + JSON.stringify( keys ) + '\n\t}\n\n'
-				}
 			} )
 			
 			function source( root : $mol_tree ) : $mol_tree {

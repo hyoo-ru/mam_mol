@@ -1,3 +1,5 @@
+declare var Proxy : any
+
 module $ {
 	
 	export enum $mol_atom_status {
@@ -17,7 +19,7 @@ module $ {
 		'value()' = <Value> void 0
 		
 		constructor(
-			public handler : ( ...diff : (Value|Error)[] )=> Value ,
+			public handler : ( next? : Value|Error , prev? : Value|Error )=> Value ,
 			public fail? : ( host : any , error : Error )=> Value|Error ,
 			public host? : { objectPath() : string , [ key : string ] : any } ,
 			public field = 'value()' ,
@@ -26,12 +28,12 @@ module $ {
 			super()
 		}
 		
-		destroyed( ...diff : boolean[] ) {
-			if( diff[ 0 ] ) {
+		destroyed( next? : boolean ) {
+			if( next ) {
 				this.unlink()
 				
-				var host = this.host || this
-				var value = host[ this.field ]
+				const host = this.host || this
+				const value = host[ this.field ]
 				if( value instanceof $mol_object ) {
 					if( ( value.objectOwner() === host ) && ( value.objectField() === this.field ) ) {
 						value.destroyed( true );
@@ -62,19 +64,19 @@ module $ {
 		}
 		
 		get() {
-			if( $mol_atom.stack.indexOf( this ) !== -1 ) {
-				throw new Error( 'Recursive dependency! ' + this.objectPath() )
-			}
-			
-			var slave = $mol_atom.stack[ $mol_atom.stack.length - 1 ]
+			const slave = $mol_atom.stack[0]
 			if( slave ) this.lead( slave )
 			if( slave ) slave.obey( this )
 			
 			this.actualize()
 			
-			var value : Value|Error = ( this.host || this )[ this.field ]
+			const value : Value|Error = ( this.host || this )[ this.field ]
 			
-			if( value instanceof Error ) throw value
+			if( value instanceof Error ) {
+				if( typeof Proxy !== 'function' ) throw value
+				//if(!( value instanceof $mol_atom_wait )) throw value
+			}
+			
 			return value
 		}
 		
@@ -84,8 +86,8 @@ module $ {
 			
 			if( this.status === $mol_atom_status.actual ) return
 			
-			var index = $mol_atom.stack.length
-			$mol_atom.stack.push( this )
+			const slave = $mol_atom.stack[0]
+			$mol_atom.stack[0] = this
 			
 			if( this.status === $mol_atom_status.checking ) {
 				
@@ -102,9 +104,8 @@ module $ {
 			}
 			
 			if( this.status !== $mol_atom_status.actual ) {
-				//this.log(['t'])
 				
-				var oldMasters = this.masters
+				const oldMasters = this.masters
 				this.masters = null
 				
 				if( oldMasters ) oldMasters.forEach(
@@ -113,34 +114,48 @@ module $ {
 					}
 				)
 				
-				var host = this.host || this
-				if( this.key !== void 0 ) {
-					var next = this.handler.call( host , this.key )
-				} else {
-					var next = this.handler.call( host )
-				}
-				if( next === void 0 ) next = host[ this.field ]
+				this.push( this.pull() )
 				
-				this.push( next )
 			}
 			
-			$mol_atom.stack.length = index
+			$mol_atom.stack[0] = slave
 		}
 		
-		set( ...diff : (Value|Error)[] ) {
-			var host = this.host || this
-			if( this.key !== void 0 ) {
-				var next = this.handler.call( host , this.key , ...diff )
-			} else {
-				var next = this.handler.call( host , ...diff )
+		pull() {
+			const host = this.host || this
+			try {
+				if( this.key !== void 0 ) {
+					return this.handler.call( host , this.key )
+				} else {
+					return this.handler.call( host )
+				}
+			} catch( error ) {
+				if( !error['$mol_atom_catched'] ) {
+					if( error instanceof $mol_atom_wait ) {
+					} else {
+						console.error( error.stack )
+					}
+					error['$mol_atom_catched'] = true
+				}
+				return error
 			}
-			if( next === void 0 ) return host[ this.field ]
-			return this.push( next )
+		}
+		
+		set( next : Value|Error , prev? : Value|Error ) {
+			const host = this.host || this
+			let next2 : Value|Error
+			if( this.key !== void 0 ) {
+				next2 = this.handler.call( host , this.key , next , prev )
+			} else {
+				next2 = this.handler.call( host , next , prev )
+			}
+			if( next2 === void 0 ) return host[ this.field ]
+			return this.push( next2 )
 		}
 		
 		push( next : Value|Error ) {
-			var host = this.host || this
-			var prev = host[ this.field ]
+			const host = this.host || this
+			const prev = host[ this.field ]
 			if( next instanceof Error && this.fail ) {
 				if( this.key !== void 0 ) {
 					next = this.fail.call( host , this.key , host , <Error> next )
@@ -149,7 +164,7 @@ module $ {
 				}
 			}
 			comparing: if( ( next instanceof Array ) && ( prev instanceof Array ) && ( next.length === prev.length ) ) {
-				for( var i = 0 ; i < next[ 'length' ] ; ++i ) {
+				for( let i = 0 ; i < next[ 'length' ] ; ++i ) {
 					if( next[ i ] !== prev[ i ] ) break comparing
 				}
 				next = <any> prev
@@ -159,13 +174,17 @@ module $ {
 					next[ 'objectField' ]( this.field ) // FIXME: type checking
 					next[ 'objectOwner' ]( host ) // FIXME: type checking
 				}
+				if(( typeof Proxy === 'function' )&&( next instanceof Error )) {
+					next = new Proxy( next , {
+						get( target : Error ) {
+							throw target.valueOf()
+						}
+					} )
+				}
 				host[ this.field ] = next
 				this.log( [ 'push' , next , prev ] )
-				if( next instanceof Error ) {
-					if( this.slaves ) this.slaves.forEach( slave => slave.push( next ) )
-				} else {
-					this.obsoleteSlaves()
-				}
+				
+				this.obsoleteSlaves()
 			}
 			this.status = $mol_atom_status.actual
 			return next
@@ -243,17 +262,17 @@ module $ {
 			this.masters = null
 		}
 		
-		value( ...diff : (Value|Error)[] ) {
-			if( diff[ 0 ] === void 0 ) {
-				if( diff.length > 1 ) return this.push( diff[ 1 ] )
-				if( diff.length > 0 ) return this.obsolete()
-				return this.get()
-			} else {
-				return this.set( ...diff )
-			}
-		}
+		//value( ...diff : (Value|Error)[] ) {
+		//	if( diff[ 0 ] === void 0 ) {
+		//		if( diff.length > 1 ) return this.push( diff[ 1 ] )
+		//		if( diff.length > 0 ) return this.obsolete()
+		//		return this.get()
+		//	} else {
+		//		return this.set( ...diff )
+		//	}
+		//}
 		
-		static stack = [] as $mol_atom<any>[]
+		static stack = [ null ] as $mol_atom<any>[]
 		static updating : $mol_atom<any>[] = []
 		static reaping = new $mol_set< $mol_atom<any> >()
 		static scheduled = false
@@ -291,8 +310,8 @@ module $ {
 			this.schedule()
 			
 			while( this.updating.length ) {
-				var atom = this.updating.shift()
-				if( !atom.destroyed() ) atom.actualize()
+				const atom = this.updating.shift()
+				if( !atom.destroyed() ) atom.get()
 			}
 			
 			while( this.reaping.size ) {
@@ -309,16 +328,6 @@ module $ {
 		
 	}
 	
-	export function $mol_atom_restore( error : Error ) {
-		if( $mol_atom.stack.length ) {
-			var atom = $mol_atom.stack.pop()
-			if( error instanceof Error ) {
-				error = atom.push( error )
-			}
-		}
-		$mol_atom.stack.splice( 0 , $mol_atom.stack.length )
-	}
-	
 	$mol_state_stack.set( '$mol_atom.stack' , $mol_atom.stack )
 	
 	export class $mol_atom_wait extends Error {
@@ -326,6 +335,10 @@ module $ {
 		
 		constructor( public message = 'Wait...' ) {
 			super( message )
+			const error : any = new Error( message )
+			error.name = this.name
+			error['__proto__'] = $mol_atom_wait.prototype
+			return error
 		}
 	}
 	
@@ -333,7 +346,7 @@ module $ {
 		handler : ()=> Value ,
 		fail? : ( error : Error )=> Error|Value
 	) {
-		var atom = new $mol_atom<any>(
+		const atom = new $mol_atom<any>(
 			() => {
 				handler()
 				atom.destroyed( true )

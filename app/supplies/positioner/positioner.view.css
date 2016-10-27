@@ -11,6 +11,7 @@
 
 [mol_app_supplies_positioner_grouper] > * {
 	align-items: baseline;
+	margin: 0;
 }
 
 [mol_app_supplies_positioner_mainGroup] {

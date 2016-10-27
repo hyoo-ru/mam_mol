@@ -1,12 +1,12 @@
 $mol_switcher_demo_enabled $mol_switcher
-	value > color \	
+	value > color \red
 	options *
 		red \Red
 		green \Green
 		blue \Blue
 
 $mol_switcher_demo_disabled $mol_switcher
-	value > color \
+	value > color \red
 	enabled false
 	options *
 		red < optionRed @ \Red

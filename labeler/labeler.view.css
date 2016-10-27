@@ -1,16 +1,4 @@
-[mol_labeler] {
-	/*display: inline-flex;*/
-	/*align-items: baseline;*/
-	/*flex-wrap: wrap;*/
-}
-
 [mol_labeler_titler] {
 	color: var(--mol_skin_passive_text);
-	font-size: .85rem;
-}
-
-[mol_labeler_contenter] {
-	/*font-weight: bolder;*/
-	/*flex: 0 1 auto;*/
-	/*display: flex;*/
+	font-size: .75rem;
 }

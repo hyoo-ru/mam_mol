@@ -75,11 +75,11 @@ module $ {
 		
 		'destroyed()' = false
 		
-		destroyed( ...diff : boolean[] ) {
-			if( diff[ 0 ] === void 0 ) return this[ 'destroyed()' ]
-			this[ 'destroyed()' ] = diff[ 0 ]
-			this.log( [ '.destroyed()' , diff[ 0 ] ] )
-			return diff[ 0 ]
+		destroyed( next? : boolean ) {
+			if( next === void 0 ) return this[ 'destroyed()' ]
+			this[ 'destroyed()' ] = next
+			this.log( [ '.destroyed()' , next ] )
+			return next
 		}
 		
 		log( values : any[] ) {
