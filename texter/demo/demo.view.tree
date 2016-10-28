@@ -15,5 +15,11 @@ $mol_texter_demo $mol_texter text \
 	\npm start
 	\```
 	\
-	\ [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
+	\Build status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
+	\
+	\|       | Columnt 1 | Column 2
+	\|-------|-----------|---------
+	\| Row 1 | Cell 1x1  | Cell 2x1
+	\| Row 2 | Cell 1x2  | Cell 2x2
+	\
 
