@@ -29,7 +29,7 @@ module $ {
 		}
 		
 		@ $mol_mem_key()
-		static value( key : string , next? : string ) {
+		static value( key : string , next? : string , prev? : string ) {
 			if( next === void 0 ) return this.dict()[ key ] || null
 			this.href( this.link( { [ key ] : next } ) )
 			return next
