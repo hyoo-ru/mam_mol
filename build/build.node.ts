@@ -290,8 +290,8 @@ module $ {
 			if( pack.exists() ) {
 				if( pack.resolve( '.git' ).exists() ) {
 					try {
-						$mol_exec( pack.path() , 'git' , 'fetch' )
-						$mol_exec( pack.path() , 'git' , 'log' , '--oneline' , 'HEAD..origin/master' )
+						$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
+						$mol_exec( pack.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' )
 					} catch( error ) {
 						console.error( error.message )
 					}
