@@ -1,5 +1,19 @@
-/*[mol_viewer] {*/
-	/*animation: mol_viewer_show .1s ease;*/
+[mol_skin_root] {
+	font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+[mol_viewer_root] {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/*body[mol_viewer_root] {*/
+
+/*position: fixed;*/
+
 /*}*/
 
 [mol_viewer_error] ,
@@ -22,33 +36,39 @@
 }
 
 @-webkit-keyframes mol_viewer_wait_show {
+
 	from {
 		background-image: none;
 	}
 }
 
 @keyframes mol_viewer_wait_show {
+
 	from {
 		background-image: none;
 	}
 }
 
 @-webkit-keyframes mol_viewer_wait_move {
-  0% {
-	background-position: 0 0;
-  }
-  100% {
-	background-position: 28px 0;
-  }
+
+	0% {
+		background-position: 0 0;
+	}
+
+	100% {
+		background-position: 28px 0;
+	}
 }
 
 @keyframes mol_viewer_wait_move {
-  0% {
-	background-position: 0 0;
-  }
-  100% {
-	background-position: 28px 0;
-  }
+
+	0% {
+		background-position: 0 0;
+	}
+
+	100% {
+		background-position: 28px 0;
+	}
 }
 
 [mol_viewer_error="$mol_atom_wait"] ,
@@ -70,10 +90,6 @@
 	background-size: 28px 28px !important;
 	-webkit-animation: mol_viewer_wait_show .5s linear , mol_viewer_wait_move .25s steps(6) infinite !important;
 	        animation: mol_viewer_wait_show .5s linear , mol_viewer_wait_move .25s steps(6) infinite !important;
-}
-
-[mol_skin_root] {
-	font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 [mol_stringer] {

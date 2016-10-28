@@ -130,17 +130,13 @@ var $;
                 function X() {
                     _super.apply(this, arguments);
                 }
-                X.prototype.foo = function (id) {
-                    var diff = [];
-                    for (var _i = 1; _i < arguments.length; _i++) {
-                        diff[_i - 1] = arguments[_i];
-                    }
-                    if (diff[0] === void 0)
+                X.prototype.foo = function (id, next) {
+                    if (next == null)
                         return new Number(123);
-                    return new Number(diff[0]);
+                    return new Number(next);
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem_key()
                 ], X.prototype, "foo", null);
                 return X;
             }($.$mol_object));
@@ -150,8 +146,7 @@ var $;
             $.$mol_assert_unique(x.foo(0), x.foo(1));
             x.foo(0, 321);
             $.$mol_assert_equal(x.foo(0).valueOf(), 321);
-            x.foo(0, void 0);
-            $.$mol_defer.run();
+            x.foo(0, null);
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
         },
         'cached property with complex key': function () {
@@ -164,7 +159,7 @@ var $;
                     return Math.random();
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem_key()
                 ], X.prototype, "foo", null);
                 return X;
             }($.$mol_object));
@@ -178,12 +173,8 @@ var $;
                 function X() {
                     _super.apply(this, arguments);
                 }
-                X.prototype.foo = function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    return diff[0] || 1;
+                X.prototype.foo = function (next) {
+                    return next || 1;
                 };
                 X.prototype.bar = function () {
                     return this.foo() + 1;
@@ -192,13 +183,13 @@ var $;
                     return this.bar() + 1;
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], X.prototype, "foo", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], X.prototype, "bar", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], X.prototype, "xxx", null);
                 return X;
             }($.$mol_object));
@@ -208,30 +199,6 @@ var $;
             x.foo(5);
             $.$mol_assert_equal(x.xxx(), 7);
         },
-        'must fail on recursive dependency': function () {
-            var X = (function (_super) {
-                __extends(X, _super);
-                function X() {
-                    _super.apply(this, arguments);
-                }
-                X.prototype.foo = function () {
-                    return this.foo() + 1;
-                };
-                __decorate([
-                    $.$mol_prop()
-                ], X.prototype, "foo", null);
-                return X;
-            }($.$mol_object));
-            var x = new X;
-            try {
-                x.foo();
-                $.$mol_assert_fail('Not tracked recursive dependency');
-            }
-            catch (error) {
-                $.$mol_atom_restore(error);
-                $.$mol_assert_equal(error.message, 'Recursive dependency! .foo()');
-            }
-        },
         'must be destroyed if not more reference': function () {
             var foo;
             var B = (function (_super) {
@@ -239,14 +206,10 @@ var $;
                 function B() {
                     _super.apply(this, arguments);
                 }
-                B.prototype.showing = function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    if (diff[0] === void 0)
+                B.prototype.showing = function (next) {
+                    if (next === void 0)
                         return true;
-                    return diff[0];
+                    return next;
                 };
                 B.prototype.foo = function () {
                     return foo = new $.$mol_object;
@@ -255,13 +218,13 @@ var $;
                     return this.showing() ? this.foo() : null;
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], B.prototype, "showing", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], B.prototype, "foo", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], B.prototype, "bar", null);
                 return B;
             }($.$mol_object));
@@ -285,12 +248,8 @@ var $;
                 function Test() {
                     _super.apply(this, arguments);
                 }
-                Test.prototype.source = function () {
+                Test.prototype.source = function (next, prev) {
                     var _this = this;
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
                     new $.$mol_defer(function () {
                         _this.source(void 0, name);
                     });
@@ -303,13 +262,13 @@ var $;
                     return this.middle();
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], Test.prototype, "source", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], Test.prototype, "middle", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], Test.prototype, "target", null);
                 return Test;
             }($.$mol_object));
@@ -319,25 +278,13 @@ var $;
             }
             catch (error) {
                 $.$mol_assert_ok(error instanceof $.$mol_atom_wait);
-                $.$mol_atom_restore(error);
             }
             $.$mol_defer.run();
             $.$mol_assert_equal(t.target(), 'Jin');
-            name = 'John';
-            t.source(void 0);
-            try {
-                t.target();
-            }
-            catch (error) {
-                $.$mol_assert_ok(error instanceof $.$mol_atom_wait);
-                $.$mol_atom_restore(error);
-            }
-            $.$mol_defer.run();
-            $.$mol_assert_equal(t.target(), 'John');
         },
     });
 })($ || ($ = {}));
-//prop.test.js.map
+//mem.test.js.map
 ;
 var $;
 (function ($) {
@@ -385,7 +332,7 @@ var $;
                     return new $mol_viewer_test_item();
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem_key()
                 ], $mol_viewer_test_block.prototype, "element", null);
                 return $mol_viewer_test_block;
             }($.$mol_viewer));
@@ -436,7 +383,7 @@ var $;
                     return new $mol_viewer_test_item();
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem_key()
                 ], $mol_viewer_test_block.prototype, "element", null);
                 return $mol_viewer_test_block;
             }($.$mol_viewer));
@@ -495,20 +442,10 @@ var $;
                 $mol_viewer_test.prototype.event = function () {
                     var _this = this;
                     return {
-                        'click': function () {
-                            var diff = [];
-                            for (var _i = 0; _i < arguments.length; _i++) {
-                                diff[_i - 0] = arguments[_i];
-                            }
-                            return _this.eventClick.apply(_this, diff);
-                        }
+                        'click': function (next) { return _this.eventClick(next); }
                     };
                 };
-                $mol_viewer_test.prototype.eventClick = function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
+                $mol_viewer_test.prototype.eventClick = function (next) {
                     clicked = true;
                 };
                 return $mol_viewer_test;
@@ -594,6 +531,27 @@ var $;
     var $mol;
     (function ($mol) {
         $.$mol_test({
+            'gist content is title + body': function () {
+                var app = new $mol.$mol_app_habhub;
+                app.gists = function () { return [
+                    {
+                        id: 1,
+                        title: 'hello',
+                        body: 'world',
+                    }
+                ]; };
+                $.$mol_assert_equal(app.gistContent(0), '# hello\nworld');
+            }
+        });
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//habhub.test.js.map
+;
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        $.$mol_test({
             'handle clicks by default': function () {
                 var clicked = false;
                 var clicker = new $mol.$mol_clicker;
@@ -615,6 +573,29 @@ var $;
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));
 //clicker.test.js.map
+;
+var $;
+(function ($) {
+    $.$mol_test({
+        'convertion to primitives': function () {
+            var unit = new $.$mol_unit_money_usd(5);
+            $.$mol_assert_equal(unit.valueOf(), 5);
+            $.$mol_assert_equal(unit * 2, 10);
+            $.$mol_assert_equal(unit + '', '5');
+            $.$mol_assert_equal("" + unit, '5');
+            $.$mol_assert_equal(unit.toString(), '$5');
+            $.$mol_assert_equal(String(unit), '$5');
+        },
+        'arithmetic': function () {
+            var usd1 = new $.$mol_unit_money_usd(5);
+            var usd2 = new $.$mol_unit_money_usd(10);
+            var rur = new $.$mol_unit_money_rur(5);
+            $.$mol_assert_equal($.$mol_unit.summ(usd1, usd2).toString(), '$15');
+            $.$mol_assert_equal(usd1.mult(2).toString(), '$10');
+        },
+    });
+})($ || ($ = {}));
+//unit.test.js.map
 ;
 var $;
 (function ($) {
@@ -710,25 +691,56 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
-        'convertion to primitives': function () {
-            var unit = new $.$mol_unit_money_usd(5);
-            $.$mol_assert_equal(unit.valueOf(), 5);
-            $.$mol_assert_equal(unit * 2, 10);
-            $.$mol_assert_equal(unit + '', '5');
-            $.$mol_assert_equal("" + unit, '5');
-            $.$mol_assert_equal(unit.toString(), '$5');
-            $.$mol_assert_equal(String(unit), '$5');
+        'materialization': function () {
+            var list = new $.$mol_range_lazy({
+                item: function (id) { return id * 2; },
+                get length() { return 5; },
+            });
+            $.$mol_assert_equal(list.valueOf()[2], 4);
+            $.$mol_assert_equal(list.valueOf()[5], void 0);
         },
-        'arithmetic': function () {
-            var usd1 = new $.$mol_unit_money_usd(5);
-            var usd2 = new $.$mol_unit_money_usd(10);
-            var rur = new $.$mol_unit_money_rur(5);
-            $.$mol_assert_equal($.$mol_unit.summ(usd1, usd2).toString(), '$15');
-            $.$mol_assert_equal(usd1.mult(2).toString(), '$10');
+        'lazy slicing': function () {
+            var list = new $.$mol_range_lazy({
+                item: function (id) { return id * 2; },
+                get length() { return Number.POSITIVE_INFINITY; },
+            });
+            list = list.slice(2, 5);
+            $.$mol_assert_equal(list.join(), '4,6,8');
+        },
+        'lazy concatenation': function () {
+            var list1 = new $.$mol_range_lazy({
+                item: function (id) { return id * 2; },
+                get length() { return 3; },
+            });
+            var list2 = new $.$mol_range_lazy({
+                item: function (id) { return id * 3; },
+                get length() { return 3; },
+            });
+            var list3 = new $.$mol_range_lazy({
+                item: function (id) { return id * 4; },
+                get length() { return 3; },
+            });
+            $.$mol_assert_equal(list1.concat(list2, list3).join(), '0,2,4,0,3,6,0,4,8');
+        },
+        'every': function () {
+            var list = new $.$mol_range_lazy({
+                item: function (id) { return id * 2; },
+                get length() { return 3; }
+            });
+            $.$mol_assert_equal(list.every(function (v) { return v >= 0; }), true);
+            $.$mol_assert_equal(list.every(function (v) { return v > 0; }), false);
+        },
+        'some': function () {
+            var list = new $.$mol_range_lazy({
+                item: function (id) { return id * 2; },
+                get length() { return 3; }
+            });
+            $.$mol_assert_equal(list.some(function (v) { return v > 100; }), false);
+            $.$mol_assert_equal(list.some(function (v) { return v === 0; }), true);
         },
     });
 })($ || ($ = {}));
-//unit.test.js.map
+//range.test.js.map
 ;
 var $;
 (function ($) {
@@ -759,60 +771,6 @@ var $;
     });
 })($ || ($ = {}));
 //maybe.test.js.map
-;
-var $;
-(function ($) {
-    $.$mol_test({
-        'materialization': function () {
-            var list = new $.$mol_range_lazy({
-                get: function (id) { return id * 2; },
-                get length() { return 5; },
-            });
-            $.$mol_assert_equal(list.valueOf()[2], 4);
-            $.$mol_assert_equal(list.valueOf()[5], void 0);
-        },
-        'lazy slicing': function () {
-            var list = new $.$mol_range_lazy({
-                get: function (id) { return id * 2; },
-                get length() { return Number.POSITIVE_INFINITY; },
-            });
-            list = list.slice(2, 5);
-            $.$mol_assert_equal(list.join(), '4,6,8');
-        },
-        'lazy concatenation': function () {
-            var list1 = new $.$mol_range_lazy({
-                get: function (id) { return id * 2; },
-                get length() { return 3; },
-            });
-            var list2 = new $.$mol_range_lazy({
-                get: function (id) { return id * 3; },
-                get length() { return 3; },
-            });
-            var list3 = new $.$mol_range_lazy({
-                get: function (id) { return id * 4; },
-                get length() { return 3; },
-            });
-            $.$mol_assert_equal(list1.concat(list2, list3).join(), '0,2,4,0,3,6,0,4,8');
-        },
-        'every': function () {
-            var list = new $.$mol_range_lazy({
-                get: function (id) { return id * 2; },
-                get length() { return 3; }
-            });
-            $.$mol_assert_equal(list.every(function (v) { return v >= 0; }), true);
-            $.$mol_assert_equal(list.every(function (v) { return v > 0; }), false);
-        },
-        'some': function () {
-            var list = new $.$mol_range_lazy({
-                get: function (id) { return id * 2; },
-                get length() { return 3; }
-            });
-            $.$mol_assert_equal(list.some(function (v) { return v > 100; }), false);
-            $.$mol_assert_equal(list.some(function (v) { return v === 0; }), true);
-        },
-    });
-})($ || ($ = {}));
-//range.test.js.map
 ;
 var $;
 (function ($) {

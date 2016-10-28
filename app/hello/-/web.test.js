@@ -200,17 +200,13 @@ var $;
                 function X() {
                     _super.apply(this, arguments);
                 }
-                X.prototype.foo = function (id) {
-                    var diff = [];
-                    for (var _i = 1; _i < arguments.length; _i++) {
-                        diff[_i - 1] = arguments[_i];
-                    }
-                    if (diff[0] === void 0)
+                X.prototype.foo = function (id, next) {
+                    if (next == null)
                         return new Number(123);
-                    return new Number(diff[0]);
+                    return new Number(next);
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem_key()
                 ], X.prototype, "foo", null);
                 return X;
             }($.$mol_object));
@@ -220,8 +216,7 @@ var $;
             $.$mol_assert_unique(x.foo(0), x.foo(1));
             x.foo(0, 321);
             $.$mol_assert_equal(x.foo(0).valueOf(), 321);
-            x.foo(0, void 0);
-            $.$mol_defer.run();
+            x.foo(0, null);
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
         },
         'cached property with complex key': function () {
@@ -234,7 +229,7 @@ var $;
                     return Math.random();
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem_key()
                 ], X.prototype, "foo", null);
                 return X;
             }($.$mol_object));
@@ -248,12 +243,8 @@ var $;
                 function X() {
                     _super.apply(this, arguments);
                 }
-                X.prototype.foo = function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    return diff[0] || 1;
+                X.prototype.foo = function (next) {
+                    return next || 1;
                 };
                 X.prototype.bar = function () {
                     return this.foo() + 1;
@@ -262,13 +253,13 @@ var $;
                     return this.bar() + 1;
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], X.prototype, "foo", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], X.prototype, "bar", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], X.prototype, "xxx", null);
                 return X;
             }($.$mol_object));
@@ -278,30 +269,6 @@ var $;
             x.foo(5);
             $.$mol_assert_equal(x.xxx(), 7);
         },
-        'must fail on recursive dependency': function () {
-            var X = (function (_super) {
-                __extends(X, _super);
-                function X() {
-                    _super.apply(this, arguments);
-                }
-                X.prototype.foo = function () {
-                    return this.foo() + 1;
-                };
-                __decorate([
-                    $.$mol_prop()
-                ], X.prototype, "foo", null);
-                return X;
-            }($.$mol_object));
-            var x = new X;
-            try {
-                x.foo();
-                $.$mol_assert_fail('Not tracked recursive dependency');
-            }
-            catch (error) {
-                $.$mol_atom_restore(error);
-                $.$mol_assert_equal(error.message, 'Recursive dependency! .foo()');
-            }
-        },
         'must be destroyed if not more reference': function () {
             var foo;
             var B = (function (_super) {
@@ -309,14 +276,10 @@ var $;
                 function B() {
                     _super.apply(this, arguments);
                 }
-                B.prototype.showing = function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
-                    if (diff[0] === void 0)
+                B.prototype.showing = function (next) {
+                    if (next === void 0)
                         return true;
-                    return diff[0];
+                    return next;
                 };
                 B.prototype.foo = function () {
                     return foo = new $.$mol_object;
@@ -325,13 +288,13 @@ var $;
                     return this.showing() ? this.foo() : null;
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], B.prototype, "showing", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], B.prototype, "foo", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], B.prototype, "bar", null);
                 return B;
             }($.$mol_object));
@@ -355,12 +318,8 @@ var $;
                 function Test() {
                     _super.apply(this, arguments);
                 }
-                Test.prototype.source = function () {
+                Test.prototype.source = function (next, prev) {
                     var _this = this;
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
                     new $.$mol_defer(function () {
                         _this.source(void 0, name);
                     });
@@ -373,13 +332,13 @@ var $;
                     return this.middle();
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], Test.prototype, "source", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], Test.prototype, "middle", null);
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem()
                 ], Test.prototype, "target", null);
                 return Test;
             }($.$mol_object));
@@ -389,25 +348,13 @@ var $;
             }
             catch (error) {
                 $.$mol_assert_ok(error instanceof $.$mol_atom_wait);
-                $.$mol_atom_restore(error);
             }
             $.$mol_defer.run();
             $.$mol_assert_equal(t.target(), 'Jin');
-            name = 'John';
-            t.source(void 0);
-            try {
-                t.target();
-            }
-            catch (error) {
-                $.$mol_assert_ok(error instanceof $.$mol_atom_wait);
-                $.$mol_atom_restore(error);
-            }
-            $.$mol_defer.run();
-            $.$mol_assert_equal(t.target(), 'John');
         },
     });
 })($ || ($ = {}));
-//prop.test.js.map
+//mem.test.js.map
 ;
 var $;
 (function ($) {
@@ -455,7 +402,7 @@ var $;
                     return new $mol_viewer_test_item();
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem_key()
                 ], $mol_viewer_test_block.prototype, "element", null);
                 return $mol_viewer_test_block;
             }($.$mol_viewer));
@@ -506,7 +453,7 @@ var $;
                     return new $mol_viewer_test_item();
                 };
                 __decorate([
-                    $.$mol_prop()
+                    $.$mol_mem_key()
                 ], $mol_viewer_test_block.prototype, "element", null);
                 return $mol_viewer_test_block;
             }($.$mol_viewer));
@@ -565,20 +512,10 @@ var $;
                 $mol_viewer_test.prototype.event = function () {
                     var _this = this;
                     return {
-                        'click': function () {
-                            var diff = [];
-                            for (var _i = 0; _i < arguments.length; _i++) {
-                                diff[_i - 0] = arguments[_i];
-                            }
-                            return _this.eventClick.apply(_this, diff);
-                        }
+                        'click': function (next) { return _this.eventClick(next); }
                     };
                 };
-                $mol_viewer_test.prototype.eventClick = function () {
-                    var diff = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        diff[_i - 0] = arguments[_i];
-                    }
+                $mol_viewer_test.prototype.eventClick = function (next) {
                     clicked = true;
                 };
                 return $mol_viewer_test;
