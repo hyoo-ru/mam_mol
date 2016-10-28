@@ -329,6 +329,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_viewer](viewer)** - reactive view model base class with lazy error-proof renderer
 * **[$mol_filler](filler)** - lorem ipsum
 * **[$mol_svg](svg)** - svg base components
+* **[$mol_statuser](statuser)** - prints error status of some property
 
 ## Simple controls
 
