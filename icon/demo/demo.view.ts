@@ -1,7 +1,7 @@
 module $.$mol {
 	export class $mol_icon_demo extends $.$mol_icon_demo {
 
-		@ $mol_prop()
+		@ $mol_mem()
 		names() {
 			var next : string[] = []
 			for( var name in $ ) {
@@ -13,12 +13,12 @@ module $.$mol {
 			return next
 		}
 
-		@ $mol_prop()
+		@ $mol_mem()
 		icons() {
 			return this.names().map( name => this.icon( name ) )
 		}
 
-		@ $mol_prop()
+		@ $mol_mem_key()
 		icon( name : string ) {
 			var Class : typeof $mol_viewer = (<any>$)[ '$' + name ]
 			return new Class()

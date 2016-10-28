@@ -1,9 +1,9 @@
 module $.$mol {
 	export class $mol_checker extends $.$mol_checker {
 
-		eventClick( ...diff : Event[] ) {
+		eventClick( next? : Event ) {
 			this.checked( !this.checked() )
-			diff[0].preventDefault()
+			next.preventDefault()
 		}
 
 	}

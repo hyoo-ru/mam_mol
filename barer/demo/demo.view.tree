@@ -10,9 +10,8 @@ $mol_barer_demo_login $mol_barer
 	childs /
 		< stringer $mol_stringer
 			value > value \
-		< rememberer $mol_checker
-			childs /
-				\Remember me
+		< rememberer $mol_checker_ticker
+			label \Remember me
 		< submitter $mol_clicker
 			childs /
 				\Submit

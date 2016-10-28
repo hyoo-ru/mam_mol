@@ -7,10 +7,10 @@ module $.$mol {
 
 	export class $mol_perf_render extends $.$mol_perf_render {
 		
-		@ $mol_prop()
-		runnerLabel( ...diff : string[] ) { return diff[0] || 'Run' }
+		@ $mol_mem()
+		runnerLabel( next? : string ) { return next || 'Run' }
 		
-		eventRun( ...diff : Event[] ) {
+		eventRun( next? : Event ) {
 			requestAnimationFrame( ()=> {
 				var data = (<any>window)[ '_buildData' ]()
 				
@@ -25,23 +25,23 @@ module $.$mol {
 			} )
  		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		rows() { return this.data().map( ( _ , id ) => this.row( id ) ) }
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		row( id : number ) { return new $mol_perf_render_row().setup( obj => {
 			obj.data = () => this.data()[ id ]
-			obj.selected = ( ...diff : boolean[] ) => {
-				if( diff[0] !== void 0 ) this.selectedItem( diff[0] === void 0 ? null : id )
+			obj.selected = ( next? : boolean ) => {
+				if( next !== void 0 ) this.selectedItem( next ? id : null )
 				return this.selectedItem() === id
 			}
 		} ) }
 		
-		@ $mol_prop()
-		data( ...diff : $mol_perf_render_item[][] ) { return diff[0] || [] }
+		@ $mol_mem()
+		data( next? : $mol_perf_render_item[] ) { return next || [] }
 		
-		@ $mol_prop()
-		selectedItem( ...diff : number[] ) { return ( diff[0] === void 0 ) ? null : diff[0] }
+		@ $mol_mem()
+		selectedItem( next? : number ) { return next || null }
 		
 	}
 
@@ -51,7 +51,7 @@ module $.$mol {
 
 		label() { return this.data().label }
 		
-		eventToggle( ...diff : Event[] ) {
+		eventToggle( next? : Event ) {
 			this.selected( !this.selected() )
 		}
 

@@ -7,6 +7,7 @@
 	transform: translateZ(0);
 	outline: 1px solid var(--mol_skin_light_line);
 	max-height: 100%;
+	-webkit-overflow-scrolling: touch;
 }
 
 @media print {
@@ -14,16 +15,3 @@
 		overflow: visible;
 	}
 }
-
-/*[mol_scroller]::-webkit-scrollbar {*/
-	/*width: .5rem;*/
-	/*height: .5rem;*/
-/*}*/
-
-/*[mol_scroller]::-webkit-scrollbar-track {*/
-	/*background: #eee;*/
-/*}*/
-
-/*[mol_scroller]::-webkit-scrollbar-thumb {*/
-	/*background: #ccc;*/
-/*}*/

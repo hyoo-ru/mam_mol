@@ -1,7 +1,9 @@
 $mol_app_todomvc $mol_scroller
 	childs / < pager $mol_lister childs /
-		< titler $mol_app_todomvc_titler
-		< paneler $mol_lister rows /
+		< titler $mol_viewer
+			heightMinimal 142
+			childs / < title @ \todos
+		< paneler $mol_lister rows < panels /
 			< header $mol_viewer
 				heightMinimal 64
 				childs < headerContent /
@@ -13,8 +15,7 @@ $mol_app_todomvc $mol_scroller
 						value > taskNewTitle \
 						eventDone > eventAdd null
 			< lister $mol_lister rows < taskRows /
-			< footer $mol_app_todomvc_ghost
-				visible < footerVisible false
+			< footer $mol_viewer
 				childs < footerContent /
 					< pendinger $mol_viewer childs / < pendingMessage @ \0 items left 
 					< filter $mol_barer childs < filterOptions /
@@ -36,13 +37,6 @@ $mol_app_todomvc $mol_scroller
 		title > taskTitle# \
 		eventDrop > eventTaskDrop# null
 
-$mol_app_todomvc_titler $mol_viewer
-	heightMinimal 142
-	childs / < title @ \todos
-
-$mol_app_todomvc_ghost $mol_viewer
-	attr * mol_app_todomvc_ghost_visible < visible true
-
 $mol_app_todomvc_adder $mol_stringer
 	hint @ \What needs to be done?
 	event * keyup > eventPress null
@@ -51,7 +45,9 @@ $mol_app_todomvc_adder $mol_stringer
 $mol_app_todomvc_taskRow $mol_viewer
 	heightMinimal 64
 	childs /
-		< completer $mol_checker checked > completed false
+		< completer $mol_checker
+			checked > completed false
+			childs /
 		< titler $mol_stringer
 			hint < titleHint @ \Task title
 			value > title \

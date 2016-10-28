@@ -1,0 +1,18 @@
+$mol_form_demo $mol_form
+	formFields /
+		< loginField $mol_form_field
+			name < loginLabel @ \Login
+			errors < loginErrors /
+			control < loginControl $mol_stringer value > login \
+		< passwordField $mol_form_field
+			name < passwordLabel @ \Password
+			errors < passwordErrors /
+			control < passControl $mol_stringer
+				value > password \
+				type \password
+	buttons /
+		< submit $mol_clicker_major
+			childs / < submitText @ \Sign In
+			eventClick > eventSubmit null
+			disabled < submitBlocked
+

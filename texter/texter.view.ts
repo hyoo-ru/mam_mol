@@ -1,7 +1,7 @@
 module $.$mol {
 	export class $mol_texter extends $.$mol_texter {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		tokensFlow() {
 			return $mol_syntax_md_flow.tokenize( this.text() )
 		}
@@ -14,7 +14,7 @@ module $.$mol {
 			return this.tokensFlow()[ index ].name
 		}
 		
-		blockContent( indexBlock : number ) {
+		blockContent( indexBlock : number ) : ($mol_viewer|string)[] {
 			const text2spans = ( prefix : string , text : string )=> {
 				return $mol_syntax_md_line.tokenize( text ).map( ( token , index )=> {
 					const id = `${prefix}/${index}`
@@ -24,7 +24,7 @@ module $.$mol {
 							const span = this.linker( id )
 							span.type( token.name )
 							span.link( token.chunks[ 1 ] )
-							span.childs( text2spans( id , token.chunks[ 0 ] ) )
+							span.content( text2spans( id , token.chunks[ 0 ] ) )
 							return span
 						}
 						case 'image-link' : {
@@ -37,14 +37,14 @@ module $.$mol {
 						case 'code' : {
 							const span = this.spanner( id )
 							span.type( token.name )
-							span.childs( token.chunks[ 0 ] )
+							span.content([ token.chunks[ 0 ] ])
 							return span
 						}
 					}
 					
 					const span = this.spanner( id )
 					span.type( token.name )
-					span.childs(
+					span.content(
 						token.name
 							? [].concat.apply( [] , token.chunks.map( ( text , index )=> text2spans( `${id}/${index}` , text ) ) )
 							: [ token.found ]

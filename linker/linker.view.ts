@@ -2,7 +2,7 @@ module $.$mol {
 	
 	export class $mol_linker extends $.$mol_linker {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		uri() {
 			const patch : { [ key : string ] : string } = {}
 			const arg : any = this.arg()

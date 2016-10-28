@@ -1,5 +1,6 @@
-$mol_app_hello $mol_viewer childs /
-	< namer $mol_stringer
-		hint @ \Name
-		value > name \
-	< message \
+$mol_app_hello $mol_viewer
+	childs /
+		< namer $mol_stringer
+			hint < namerHint @ \Name
+			value > name \
+		< message \

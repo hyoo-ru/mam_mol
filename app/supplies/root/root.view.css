@@ -1,0 +1,10 @@
+[mol_app_supplies_root] {
+	flex: 1 1 auto;
+	display: flex;
+	max-width: 100rem;
+	margin: auto;
+}
+
+[mol_app_supplies_root_addoner] {
+	flex: 1 1 24rem;
+}

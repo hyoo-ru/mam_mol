@@ -1,0 +1,6 @@
+$mol_floater_demo $mol_viewer
+	childs /
+		< floater $mol_floater
+			childs /
+				< floaterContent $mol_carder_demo_base
+		< contenter $mol_lister_demo

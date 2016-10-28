@@ -2,15 +2,16 @@ module $.$mol {
 
 	export class $mol_attacher extends $.$mol_attacher {
 
-		attachNew( ...diff : string[] ) {
+		attachNew( next? : string ) : string {
 			var items = this.items()
 			var itemer = this.itemer( items.length )
-			itemer.urlThumb( diff[0] )
-			itemer.urlLoad( diff[0] )
+			itemer.urlThumb( next )
+			itemer.urlLoad( next )
 			this.items( items.concat( itemer ) )
+			return void 0
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem_key()
 		itemer( id : number ) {
 			return new $mol_attacher_item()
 		}
@@ -27,14 +28,14 @@ module $.$mol {
 
 	export class $mol_attacher_adder extends $.$mol_attacher_adder {
 
-		fileNew( ...diff : string[] ) {
-			return diff[0]
+		fileNew( next? : string ) {
+			return next
 		}
 		
-		eventCapture( ...diff : Event[] ) {
+		eventCapture( next? : Event ) {
 			if( !$mol_cordova_camera() ) return
 			
-			diff[0].preventDefault()
+			next.preventDefault()
 			
 			$mol_cordova_camera().getPicture( ( url : string )=> {
 				this.fileNew( url )
@@ -45,8 +46,8 @@ module $.$mol {
 			} )
 		}
 
-		eventPicked( ...diff : Event[] ) {
-			var files = [].slice.call( ( diff[0].target as HTMLInputElement ).files )
+		eventPicked( next? : Event ) {
+			var files = [].slice.call( ( next.target as HTMLInputElement ).files )
 			for( var file of files ) {
 				this.fileNew( URL.createObjectURL( file ) )
 			}

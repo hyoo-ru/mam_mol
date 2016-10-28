@@ -2,7 +2,7 @@ module $ {
 	
 	export class $mol_server extends $mol_object {
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		express() {
 			var express = $node.express()
 			

@@ -1,5 +1,5 @@
-$mol_carder $mol_viewer
+$mol_carder $mol_lister
 	attr * mol_carder_status < status \
-	childs /
+	rows /
 		< contenter $mol_viewer childs / < content null
 		< statuser $mol_viewer childs / < statusText < status

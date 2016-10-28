@@ -32,4 +32,3 @@ $mol_app_signup $mol_form
 			childs / < submitText @ \Sign Up
 			eventClick > eventSubmit null
 			disabled < submitBlocked
-

@@ -1,6 +1,15 @@
 module $.$mol {
 	export class $mol_app_demo extends $.$mol_app_demo {
 		
+		title() {
+			let next = this.titleAddon()
+			
+			const selected = this.selected()
+			if( selected ) next = `$${ selected } - ${ next }`
+			
+			return next
+		}
+		
 		main() : $mol_viewer[] {
 			var selected = this.selected()
 			if( selected ) {
@@ -10,7 +19,7 @@ module $.$mol {
 			}
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		welcomeText() {
 			return $mol_http_resource.item( 'readme.md' ).text()
 		}
@@ -19,7 +28,7 @@ module $.$mol {
 			return this.selected() ? false : true
 		}
 		
-		@ $mol_prop()
+		@ $mol_mem()
 		namesDemo() {
 			var next : string[] = []
 			for( var name in $ ) {
@@ -32,22 +41,9 @@ module $.$mol {
 			return next
 		}
 		
-		@ $mol_prop()
-		namesApp() {
-			var next : string[] = []
-			for( var name in $ ) {
-				if( !/^\$.*_app(_[a-z0-9]+)?$/i.test( name ) ) continue
-				if( /^\$mol_demo/.test( name ) ) continue
-				if( /^\$mol_app_demo/.test( name ) ) continue
-				if( typeof (<{[index : string]:any}>$)[ name ] !== 'function' ) continue
-				next.push( name.substring( 1 ) )
-			}
-			return next
-		}
-		
-		@ $mol_prop()
+		@ $mol_mem()
 		options() {
-			return this.namesDemo().concat( this.namesApp() ).map( name => this.option( name ) )
+			return this.namesDemo().map( name => this.option( name ) )
 		}
 
 		// @ $mol_prop()
@@ -59,7 +55,7 @@ module $.$mol {
 			return $mol_state_arg.value( this.stateKey( 'demo' ) )
 		}
 
-		@ $mol_prop()
+		@ $mol_mem_key()
 		option( name : string ) {
 			return new $mol_linker().setup( obj => {
 				obj.childs = () => [ name ? ( '$' + name ) : 'All' ]
@@ -83,7 +79,7 @@ module $.$mol {
 		// 	} )
 		// }
 
-		@ $mol_prop()
+		@ $mol_mem_key()
 		widget( name : string ) {
 			var Class : typeof $mol_viewer = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class().setup( obj => {
@@ -91,7 +87,7 @@ module $.$mol {
 			} )
 		}
 
-		@ $mol_prop()
+		@ $mol_mem_key()
 		detailer( name : string ) {
 			return new $mol_app_demo_pager().setup( obj => {
 				obj.title = $mol_const( '$' + name )

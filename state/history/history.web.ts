@@ -1,1 +1,1 @@
-window.addEventListener( 'hashchange' , event => $.$mol_state_history.id( void 0 ) )
+window.addEventListener( 'hashchange' , event => $.$mol_state_history.id( null ) )
