@@ -1,6 +1,6 @@
 module $.$mol {
 	
-	export interface $mol_app_habhub_gist {
+	interface Gist {
 		id : number
 		title : string
 		body : string
@@ -8,19 +8,21 @@ module $.$mol {
 	
 	export class $mol_app_habhub extends $.$mol_app_habhub {
 		
-		gistNews() {
-			const uri = 'https://api.github.com/search/issues?q=label:HabHub+is:open&sort=reactions'
-			const resource = $mol_http_resource_json.item<{ items : $mol_app_habhub_gist[] }>( uri )
-			return resource.json().items
+		uriSource(){
+			return 'https://api.github.com/search/issues?q=label:HabHub+is:open&sort=reactions'
 		}
 		
-		gisters() {
-			return this.gistNews().map( ( gist , index ) => this.gister( index ) )
+		gists() {
+			return $mol_http_resource_json.item<{ items : Gist[] }>( this.uriSource() ).json().items
+		}
+		
+		gisters() : $mol_viewer[] {
+			return this.gists().map( ( gist , index ) => this.gister( index ) )
 		}
 		
 		gistContent( index : number ) {
-			const gist = this.gistNews()[ index ]
-			return `#${gist.title}\n${gist.body}`
+			const gist = this.gists()[ index ]
+			return `# ${ gist.title }\n${ gist.body }`
 		}
 		
 	}

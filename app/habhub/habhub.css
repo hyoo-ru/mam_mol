@@ -1,14 +1,7 @@
-[mol_app_habhub_streamer] {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	min-height: 1rem;
+[mol_app_habhub_titler] {
+	justify-content: center;
 }
 
 [mol_app_habhub_gister] {
-	margin: 1rem;
-}
-
-[mol_app_habhub_gister_sectioner] {
-	margin: 1rem;
+	margin: 1rem auto;
 }
