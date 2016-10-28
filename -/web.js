@@ -2085,11 +2085,13 @@ var $;
         'header': /^(#+)(\s*)(.*?)$([\n\r]*)/,
         'list-item': /^(\s?\*\s+)(.*?)$([\n\r]*)/,
         'code': /^(```)(\w*)[\r\n]+([^]*?)^(```)$([\n\r]*)/,
+        'table': /((?:^\|.+?$\r?\n)+)([\n\r]*)/,
         'block': /^(.*?(?:\r?\n.+?)*)$((?:\r?\n)*)/,
     });
     $.$mol_syntax_md_line = new $.$mol_syntax({
         'strong': /\*\*(.+?)\*\*/,
         'emphasis': /\*(.+?)\*/,
+        'code3': /```(.+?)```/,
         'code': /`(.+?)`/,
         'text-link': /\[(.*?(?:\[.*?\].*?)*)\]\((.*?)\)/,
         'image-link': /!\[([^\[\]]*?)\]\((.*?)\)/,
@@ -2348,9 +2350,10 @@ var $;
                                 span_2.title(token.chunks[0]);
                                 return span_2;
                             }
+                            case 'code3':
                             case 'code': {
                                 var span_3 = _this.spanner(id);
-                                span_3.type(token.name);
+                                span_3.type('code');
                                 span_3.content([token.chunks[0]]);
                                 return span_3;
                             }
@@ -2363,10 +2366,26 @@ var $;
                         return span;
                     });
                 };
+                var table2spans = function (table) {
+                    return table.split(/\r?\n/g).filter(function (row) { return !/\|--/.test(row); }).map(function (row, rowId) {
+                        var cells = row.split(/\|/g).filter(function (cell) { return cell; }).map(function (cell, cellId) {
+                            var id = indexBlock + "/" + rowId + "/" + cellId;
+                            var spanner = _this.spanner(id);
+                            spanner.type('table-cell');
+                            spanner.content(text2spans(id, cell));
+                            return spanner;
+                        });
+                        var spanner = _this.spanner(indexBlock + "/" + rowId);
+                        spanner.type('table-row');
+                        spanner.content(cells);
+                        return spanner;
+                    });
+                };
                 var token = this.tokensFlow()[indexBlock];
                 switch (token.name) {
                     case 'header': return text2spans("" + indexBlock, token.chunks[2]);
                     case 'list-item': return text2spans("" + indexBlock, token.chunks[1]);
+                    case 'table': return table2spans(token.chunks[0]);
                     case 'code': return [token.chunks[2]];
                 }
                 return text2spans("" + indexBlock, token.chunks[0]);
@@ -14563,7 +14582,7 @@ var $;
             _super.apply(this, arguments);
         }
         $mol_texter_demo.prototype.text = function () {
-            return "# [Benchmarks](perf)\n\n* $mol_perf_render - simple benchmark of rendering ([online](http://eigenmethod.github.io/mol/perf/render/))\n* [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)\n\n# Quick start\n\n**Create PMS project**\n\nEasy way is checkout [this preconfigured PMS repository](http://github.com/nin-jin/pms/) and start dev server:\n\n```sh\ngit clone https://github.com/nin-jin/pms.git ./pms && cd pms\nnpm start\n```\n\n [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)";
+            return "# [Benchmarks](perf)\n\n* $mol_perf_render - simple benchmark of rendering ([online](http://eigenmethod.github.io/mol/perf/render/))\n* [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)\n\n# Quick start\n\n**Create PMS project**\n\nEasy way is checkout [this preconfigured PMS repository](http://github.com/nin-jin/pms/) and start dev server:\n\n```sh\ngit clone https://github.com/nin-jin/pms.git ./pms && cd pms\nnpm start\n```\n\nBuild status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)\n\n|       | Columnt 1 | Column 2\n|-------|-----------|---------\n| Row 1 | Cell 1x1  | Cell 2x1\n| Row 2 | Cell 1x2  | Cell 2x2\n";
         };
         return $mol_texter_demo;
     }($.$mol_texter));

@@ -510,6 +510,14 @@ var $;
             $.$mol_assert_equal(tokens[3].name, 'code');
             $.$mol_assert_equal(tokens[3].chunks.join('|'), '```||stop()\n|```|');
         },
+        'table': function () {
+            var tokens = $.$mol_syntax_md_flow.tokenize('| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n| Cell11 | Cell12\n| Cell21 | Cell22\n');
+            $.$mol_assert_equal(tokens.length, 2);
+            $.$mol_assert_equal(tokens[0].name, 'table');
+            $.$mol_assert_equal(tokens[0].chunks[0], '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n');
+            $.$mol_assert_equal(tokens[1].name, 'table');
+            $.$mol_assert_equal(tokens[1].chunks[0], '| Cell11 | Cell12\n| Cell21 | Cell22\n');
+        }
     });
 })($ || ($ = {}));
 //md.test.js.map
