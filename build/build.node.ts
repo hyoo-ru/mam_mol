@@ -131,10 +131,13 @@ module $ {
 		@ $mol_mem_key()
 		sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const sortedPaths = this.graph( { path , exclude } ).sorted( edge => edge.priority )
-			let sources : $mol_file[] = [].concat.apply(
-				[] ,
-				sortedPaths.map( path => this.sourcesSorted( { path : this.root().resolve( path ).path() , exclude } ) )
-			)
+			
+			let sources : $mol_file[] = []
+			sortedPaths.forEach( path => {
+				this.sourcesSorted( { path : this.root().resolve( path ).path() , exclude } ).forEach( src => {
+					if( sources.indexOf( src ) === -1 ) sources.push( src )
+				} )
+			} )
 			
 			let sources2 : $mol_file[] = []
 			sources.forEach(
