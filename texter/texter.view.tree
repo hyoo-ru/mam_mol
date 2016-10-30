@@ -6,6 +6,17 @@ $mol_texter $mol_lister
 	spanner# $mol_texter_spanner
 	linker# $mol_texter_linker
 	imager# $mol_texter_imager
+	tabler# $mol_scroller
+		childs /
+			< tablerGrider# $mol_grider
+				headerCellers < tablerHeaderCellers# /
+				rowers < tablerRowers# /
+	tablerRower# $mol_grider_rower
+		cellers < tablerCellers# /
+	tablerCeller# $mol_grider_celler
+		childs < tablerCellerContent# /
+	tablerCellerHeader# $mol_floater
+		childs < tablerCellerContent# /
 
 $mol_texter_rower $mol_viewer
 	heightMinimal 40
