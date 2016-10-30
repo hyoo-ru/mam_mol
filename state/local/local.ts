@@ -1,6 +1,6 @@
 var localStorage = localStorage || <Storage> {}
 
-module $ {
+namespace $ {
 	
 	export class $mol_state_local< Value > extends $mol_object {
 		

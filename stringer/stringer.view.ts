@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_stringer extends $.$mol_stringer {
 		
 		eventChange( next? : Event ) {

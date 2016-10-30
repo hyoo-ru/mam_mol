@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_number extends $.$mol_number {
 		
 		eventDec( next? : Event ) {

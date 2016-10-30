@@ -59,7 +59,7 @@ $my_button $mol_viewer
 It translates to (every *.view.tree code would be translated to *.view.tree.ts):
 
 ```typescript
-module $ { export class $my_button extends $mol_viewer {} }
+namespace $ { export class $my_button extends $mol_viewer {} }
 ```
 While inheritance there is a possibility to declare additional properties or overload existing (but types of properties should match). For example lets overload a `uri` property with `"https://example.org"` string, and `childs` - with array of one string `"Click me!"`, besides, lets declare a new property `target` with `"_top"` value by default. (it's important to mark that a value by default is necessary when declaring a property):  
 
@@ -72,7 +72,7 @@ $my_exampler $mol_linker
 ```
 
 ```typescript
-module $ { export class $my_exampler extends $mol_linker {
+namespace $ { export class $my_exampler extends $mol_linker {
 
 	uri() {
 		return "https://example.org"
@@ -105,7 +105,7 @@ $my_values $mol_viewer
 ```
 
 ```typescript
-module $ { export class $my_values extends $mol_viewer {
+namespace $ { export class $my_values extends $mol_viewer {
 
 	childs() {
 		return [].concat( 0 , 1.1 , true , false , <any> null , "I can contain any character! \\(\"o\")/" )
@@ -126,7 +126,7 @@ $my_number $mol_viewer
 ```
 
 ```typescript
-module $ { export class $my_number extends $mol_viewer {
+namespace $ { export class $my_number extends $mol_viewer {
 
 	tagName() {
 		return "input"
@@ -153,7 +153,7 @@ $my_wonder $mol_viewer
 ```
 
 ```typescript
-module $ { export class $my_wonder extends $mol_viewer {
+namespace $ { export class $my_wonder extends $mol_viewer {
 
 	tagName() {
 		return "input"
@@ -181,7 +181,7 @@ $my_hint $mol_viewer
 ```
 
 ```typescript
-module $ { export class $my_hint extends $mol_viewer {
+namespace $ { export class $my_hint extends $mol_viewer {
 
 	hint() {
 		return "Default hint"
@@ -223,7 +223,7 @@ $my_remover $mol_viewer
 ```
 
 ```typescript
-module $ { export class $my_remover extends $mol_viewer {
+namespace $ { export class $my_remover extends $mol_viewer {
 
 	@ $mol_prop()
 	eventRemove( ...diff : any[] ) {
@@ -252,7 +252,7 @@ $my_app $mol_viewer
 ```
 
 ```typescript
-module $ { export class $my_app extends $mol_viewer {
+namespace $ { export class $my_app extends $mol_viewer {
 
 	@ $mol_prop()
 	lister( ...diff : any[] ) {
@@ -277,7 +277,7 @@ $my_name $mol_viewer
 ```
 
 ```typescript
-module $ { export class $my_name extends $mol_viewer {
+namespace $ { export class $my_name extends $mol_viewer {
 
 	@ $mol_prop()
 	info( ...diff : any[] ) {
@@ -309,7 +309,7 @@ $my_greeter $mol_viewer
 ```
 
 ```typescript
-module $ { export class $my_greeter extends $mol_viewer {
+namespace $ { export class $my_greeter extends $mol_viewer {
 
 	@ $mol_prop()
 	name( ...diff : any[] ) {
@@ -351,7 +351,7 @@ $my_tasks $mol_lister
 ```
 
 ```typescript
-module $ { export class $my_tasks extends $mol_lister {
+namespace $ { export class $my_tasks extends $mol_lister {
 
 	childs() {
 		return this.taskRows()
@@ -395,7 +395,7 @@ $my_hello $mol_viewer childs /
 Here we declared 2 properties: `name` for getting value from `input` and `message` for output the value. It would be translated into following file `./my/hello/-/view.tree.ts/hello.view.tree.ts`: 
 
 ```typescript
-module $ { export class $my_hello extends $mol_viewer {
+namespace $ { export class $my_hello extends $mol_viewer {
 
 	@ $mol_prop()
 	name( ...diff : any[] ) {
@@ -423,7 +423,7 @@ module $ { export class $my_hello extends $mol_viewer {
 For now we could "mix" into this class our behavior through `./my/hello/hello.view.ts`:
 
 ```typescript
-module $.$mol {
+namespace $.$mol {
 	export class $my_hello extends $.$my_hello {
 		
 		message() {

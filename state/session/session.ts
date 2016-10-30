@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_state_session< Value > extends $mol_object {
 		

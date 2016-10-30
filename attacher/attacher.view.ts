@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 
 	export class $mol_attacher extends $.$mol_attacher {
 

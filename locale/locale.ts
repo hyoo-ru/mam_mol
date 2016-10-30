@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export interface $mol_locale_dict {
 		[ key : string ] : string

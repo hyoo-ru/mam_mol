@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export function $mol_csv_parse( text : string , delimiter = ';' ) {
 		var lines = text.split( /\r?\n/g )

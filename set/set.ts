@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export declare class $mol_set< Value > {
 		size : number

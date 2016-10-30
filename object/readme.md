@@ -4,7 +4,7 @@ The base class for long living objects. Every such object has an unique user fri
 it's very convenience while debugging. To have a correct identificators, it's recommended to create an object through a factory wrapped by decorator [$mol_mem](../mem) at "owns" object:
 
 ```typescript
-module $ {
+namespace $ {
 	export class $my_app extends $mol_viewer {
 	
 		@ $mol_prop()
@@ -26,7 +26,7 @@ This idetificator is used everywhere, in particular is outputted automatically w
 For outputting own messages into log, it is recommended to use `log` method:
 
 ```typescript
-module $ {
+namespace $ {
 	export class $my_app extends $mol_viewer {
 	
 		constructor() {

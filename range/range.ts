@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_range_common< Value > extends Array< Value > {
 		

@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_texter extends $.$mol_texter {
 		
 		@ $mol_mem()

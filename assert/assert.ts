@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export function $mol_assert_ok( value : any ) {
 		if( value ) return

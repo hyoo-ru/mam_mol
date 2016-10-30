@@ -5,7 +5,7 @@ Execute callback deferred but immediately.
 ## Usage example
 
 ```typescript
-module $ {
+namespace $ {
 	
 	new $mol_defer( ()=> {
 		console.log( 1 )

@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export interface $mol_viewer_context {
 		$mol_scroller_scrollTop() : number
@@ -10,7 +10,7 @@ module $ {
 	
 }
 
-module $.$mol {
+namespace $.$mol {
 	
 	export class $mol_scroller extends $.$mol_scroller {
 

@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	/// Creates the decorator for caching result value by json-key passed as first argument.
 	/// Method must be a polymorphic property (getter/setter/getter+setter).

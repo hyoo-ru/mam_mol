@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	
 	export interface $mol_app_report_formatCol {
 		title : string

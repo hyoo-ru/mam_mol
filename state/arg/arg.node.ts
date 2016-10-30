@@ -1,6 +1,6 @@
 declare var process : any
 
-module $ {
+namespace $ {
 
 	export class $mol_state_arg< Value > extends $mol_object {
 		

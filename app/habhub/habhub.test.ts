@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	
 	$mol_test({
 		'gist content is title + body'() {

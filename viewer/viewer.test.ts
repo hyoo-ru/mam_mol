@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	$mol_test( {
 		
 		'id auto generation'() {

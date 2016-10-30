@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 
 	/// Поставщик
 	export class $mol_app_supplies_domain_provider extends $mol_object {

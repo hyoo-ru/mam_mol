@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export function $mol_stub_selectRandom< Value >( list : Value[] ) {
 		return list[ Math.floor( Math.random() * list.length ) ]

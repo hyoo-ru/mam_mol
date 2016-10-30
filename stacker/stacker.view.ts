@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_stacker extends $.$mol_stacker {
 
 		side( next? : boolean ) {

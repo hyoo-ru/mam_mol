@@ -2,7 +2,7 @@ interface Window {
 	cordova : any
 }
 
-module $ {
+namespace $ {
 
 	/// Autoattach view roots to loaded DOM.
 	document.addEventListener( window.cordova ? 'deviceready' : 'DOMContentLoaded' , event => {

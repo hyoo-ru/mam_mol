@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_http_resource extends $mol_object {
 		
