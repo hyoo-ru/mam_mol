@@ -3,7 +3,7 @@
 	max-width: 60rem;
 	background: var(--mol_skin_card);
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
-	padding: 1rem;
+	padding: 1rem 2rem;
 	border-radius: var(--mol_skin_round);
 	white-space: pre-line;
 	display: flex;
@@ -12,7 +12,7 @@
 }
 
 [mol_texter_rower] {
-	margin: .5rem;
+	margin: .5rem 0;
 	overflow: auto;
 	max-width: 100%;
 }
@@ -33,7 +33,7 @@
 	max-width: 100%;
 	max-height: 50vh;
 	overflow: auto;
-	margin: .5rem;
+	margin: .5rem 0;
 	flex-grow: 0;
 }
 
