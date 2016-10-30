@@ -1,4 +1,14 @@
-var localStorage = localStorage || <Storage> {}
+var localStorage = localStorage || <Storage> {
+	getItem( key : string ) {
+		return this[ ':' + key ]
+	} ,
+	setItem( key : string , value : string ) {
+		this[ ':' + key ] = value
+	} ,
+	removeItem( key : string ) {
+		this[ ':' + key ] = void 0
+	}
+}
 
 namespace $ {
 	
