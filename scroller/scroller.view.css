@@ -5,7 +5,7 @@
 	box-sizing: border-box;
 	will-change: scroll-position;
 	transform: translateZ(0);
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	outline: 1px solid var(--mol_skin_light_line);
 	max-height: 100%;
 	-webkit-overflow-scrolling: touch;
 }
