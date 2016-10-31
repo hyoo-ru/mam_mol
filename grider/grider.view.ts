@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	
 	export class $mol_grider extends $.$mol_grider {
 		

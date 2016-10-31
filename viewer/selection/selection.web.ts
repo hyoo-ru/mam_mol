@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	document.addEventListener( 'selectionchange' , event => {
 		$mol_viewer_selection.position( void 0 )

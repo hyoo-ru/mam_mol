@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export function $mol_log( path : string , values : any[] ) {
 		
@@ -10,7 +10,7 @@ module $ {
 		console.log( time , path , values )
 	}
 	
-	export module $mol_log {
+	export namespace $mol_log {
 		
 		var _filter : string
 		

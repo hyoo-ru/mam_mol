@@ -1,6 +1,6 @@
 var cordova : any
 
-module $ {
+namespace $ {
 	
 	export var $mol_cordova = cordova || {
 		plugins : {

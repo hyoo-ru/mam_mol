@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	$mol_test( {
 		
 		'all cases of using maybe'() {

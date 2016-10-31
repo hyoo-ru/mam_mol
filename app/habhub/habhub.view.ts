@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	
 	interface Gist {
 		id : number

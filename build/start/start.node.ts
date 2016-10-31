@@ -1,6 +1,6 @@
 declare var process : any
 
-module $ {
+namespace $ {
 
 	export function $mol_build_start( paths : string[] ) {
 		var build = $mol_build.relative( '.' )

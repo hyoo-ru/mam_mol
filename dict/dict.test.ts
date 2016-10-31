@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	$mol_test({
 		
 		'dict shim must have equal api to native Map'() {

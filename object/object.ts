@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 
 	/// Common superclass that provides base functionality.
 	export class $mol_object {

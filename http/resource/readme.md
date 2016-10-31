@@ -5,7 +5,7 @@ Reactive HTTP resource.
 ## Usage example
 
 ```typescript
-module $ {
+namespace $ {
 	export interface $my_data {
 		login? : string
 		password? : string

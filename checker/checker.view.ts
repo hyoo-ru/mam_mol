@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_checker extends $.$mol_checker {
 
 		eventClick( next? : Event ) {

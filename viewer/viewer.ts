@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export var $mol_viewer_context = <$mol_viewer_context> {}
 	

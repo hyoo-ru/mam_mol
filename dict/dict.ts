@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export declare class $mol_dict< Key , Value > {
 		size : number

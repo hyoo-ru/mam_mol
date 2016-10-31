@@ -91,7 +91,7 @@ $my_hello $mol_viewer childs /
 That will be compiled to typescript code like this:
 
 ```typescript
-module $ { export class $my_hello extends $mol_viewer {
+namespace $ { export class $my_hello extends $mol_viewer {
 
 	/// name \
 	@ $mol_mem()
@@ -128,7 +128,7 @@ module $ { export class $my_hello extends $mol_viewer {
 Add **your behaviour** at `./my/hello/hello.view.ts` by extending generated class:
 
 ```typescript
-module $.$mol {
+namespace $.$mol {
 	export class $my_hello extends $.$my_hello {
 		
 		message() {
@@ -238,7 +238,7 @@ In this way the whole application at the execution stage represents a huge tree 
 Besides, the reactive architecture allows us to abstract code elegantly from asynchronous operations. If the function can't return value at once, it can throws the exception `$mol_atom_wait`, it is marked part of the tree of states as "waiting of results". When the result would be retrieved - it could be inserted into property directly and application would be reconstructed for the new state.
 
 ```typescript
-module $ {
+namespace $ {
 	export class $my_greeter {
 		
 		// Define memoized property with push support

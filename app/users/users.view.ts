@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	
 	/// GitHub users View Model
 	export class $mol_app_users extends $.$mol_app_users {

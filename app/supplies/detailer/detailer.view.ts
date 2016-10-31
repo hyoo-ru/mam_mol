@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_app_supplies_detailer extends $.$mol_app_supplies_detailer {
 		
 		supply() {

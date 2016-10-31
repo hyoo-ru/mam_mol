@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_server extends $mol_object {
 		

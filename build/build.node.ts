@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_build extends $mol_object {
 		
@@ -131,10 +131,13 @@ module $ {
 		@ $mol_mem_key()
 		sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const sortedPaths = this.graph( { path , exclude } ).sorted( edge => edge.priority )
-			let sources : $mol_file[] = [].concat.apply(
-				[] ,
-				sortedPaths.map( path => this.sourcesSorted( { path : this.root().resolve( path ).path() , exclude } ) )
-			)
+			
+			let sources : $mol_file[] = []
+			sortedPaths.forEach( path => {
+				this.sourcesSorted( { path : this.root().resolve( path ).path() , exclude } ).forEach( src => {
+					if( sources.indexOf( src ) === -1 ) sources.push( src )
+				} )
+			} )
 			
 			let sources2 : $mol_file[] = []
 			sources.forEach(
@@ -199,7 +202,7 @@ module $ {
 		@ $mol_mem_key()
 		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var sources = this.sourcesAll( { path , exclude } )
-			.filter( src => /(jam\.js|tsx?|view\.tree)$/.test( src.ext() ) )
+			.filter( src => /(js|tsx?|view\.tree)$/.test( src.ext() ) )
 			if( !sources.length ) return []
 			
 			var sourcesTS : $mol_file[] = []
@@ -339,7 +342,7 @@ module $ {
 					this.modEnsure( dep.path() )
 					
 					while( !dep.exists() ) dep = dep.parent()
-					if( dep.type() === 'file' ) dep = dep.parent()
+					//if( dep.type() === 'file' ) dep = dep.parent()
 					if( mod === dep ) continue
 					if( dep === this.root() ) continue
 					
@@ -433,7 +436,7 @@ module $ {
 			
 			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
 			if( bundle === 'node' ) {
-				concater.add( '' , 'require( "source-map-support" ).install()\n' )
+				concater.add( '' , 'require( "source-map-support" ).install(); var exports = void 0;\n' )
 			}
 			
 			sources.forEach(
@@ -651,6 +654,13 @@ module $ {
 				line.replace(
 					/\$([a-z][a-z0-9]+(?:[._][a-z0-9]+)*)/ig , ( str , name )=> {
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[._-]/g , '/' ) ] : priority } )
+						return str
+					}
+				)
+				
+				line.replace(
+					/require\(\s*['"](.*?)['"]\s*\)/ig , ( str , path )=> {
+						$mol_build_depsMerge( depends , { [ path ] : priority } )
 						return str
 					}
 				)

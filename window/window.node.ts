@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_window extends $mol_object {
 		

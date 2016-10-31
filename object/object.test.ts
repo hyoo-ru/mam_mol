@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	$mol_test( {
 		
 		'init with overload'() {

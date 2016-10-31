@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	
 	export class $mol_rower_demo extends $.$mol_rower_demo {
 		

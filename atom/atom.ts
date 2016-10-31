@@ -1,6 +1,6 @@
 declare var Proxy : any
 
-module $ {
+namespace $ {
 	
 	export enum $mol_atom_status {
 		obsolete = 'obsolete' as any ,

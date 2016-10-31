@@ -5,7 +5,7 @@ Returns closure that returns constant value. Value can be accessed by `"()"` fie
 ## Usage example
 
 ```typescript
-module $ {
+namespace $ {
 	
 	const foo = { bar : $mol_const( Math.random() ) }
 	
