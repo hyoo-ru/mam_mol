@@ -13613,7 +13613,11 @@ var $;
                 });
             };
             $mol_perf_render.prototype.data = function (next) { return next || []; };
-            $mol_perf_render.prototype.selectedItem = function (next) { return next || null; };
+            $mol_perf_render.prototype.selectedItem = function (next) {
+                if (next === void 0)
+                    return null;
+                return next;
+            };
             __decorate([
                 $.$mol_mem()
             ], $mol_perf_render.prototype, "runnerLabel", null);
