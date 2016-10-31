@@ -1,8 +1,8 @@
 /// Fake namespace for optional overrides
 ///
-/// 	module $ { export var x = 1 , y = 1 } // defaults
-/// 	module $.$mol { export var x = 2 } // overrides
-/// 	module $.$mol { console.log( x , y ) } // usage
+/// 	namespace $ { export var x = 1 , y = 1 } // defaults
+/// 	namespace $.$mol { export var x = 2 } // overrides
+/// 	namespace $.$mol { console.log( x , y ) } // usage
 ///
 this.$ = this.$ || this
 var $ = this.$
@@ -796,7 +796,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var localStorage = localStorage || {};
+var localStorage = localStorage || {
+    getItem: function (key) {
+        return this[':' + key];
+    },
+    setItem: function (key, value) {
+        this[':' + key] = value;
+    },
+    removeItem: function (key) {
+        this[':' + key] = void 0;
+    }
+};
 var $;
 (function ($) {
     var $mol_state_local = (function (_super) {

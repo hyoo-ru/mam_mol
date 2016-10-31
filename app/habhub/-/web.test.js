@@ -531,6 +531,33 @@ var $;
 ;
 var $;
 (function ($) {
+    var $mol;
+    (function ($mol) {
+        $.$mol_test({
+            'handle clicks by default': function () {
+                var clicked = false;
+                var clicker = new $mol.$mol_clicker;
+                clicker.eventClick = function (event) { clicked = true; };
+                var element = clicker.DOMTree();
+                element.click();
+                $.$mol_assert_ok(clicked);
+            },
+            'no handle clicks if disabled': function () {
+                var clicked = false;
+                var clicker = new $mol.$mol_clicker;
+                clicker.eventClick = function (event) { clicked = true; };
+                clicker.enabled = function () { return false; };
+                var element = clicker.DOMTree();
+                element.click();
+                $.$mol_assert_not(clicked);
+            },
+        });
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//clicker.test.js.map
+;
+var $;
+(function ($) {
     $.$mol_test({
         'search numbers': function () {
             var syntax = new $.$mol_syntax({

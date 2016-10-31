@@ -1,8 +1,8 @@
 /// Fake namespace for optional overrides
 ///
-/// 	module $ { export var x = 1 , y = 1 } // defaults
-/// 	module $.$mol { export var x = 2 } // overrides
-/// 	module $.$mol { console.log( x , y ) } // usage
+/// 	namespace $ { export var x = 1 , y = 1 } // defaults
+/// 	namespace $.$mol { export var x = 2 } // overrides
+/// 	namespace $.$mol { console.log( x , y ) } // usage
 ///
 this.$ = this.$ || this
 var $ = this.$
@@ -796,7 +796,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var localStorage = localStorage || {};
+var localStorage = localStorage || {
+    getItem: function (key) {
+        return this[':' + key];
+    },
+    setItem: function (key, value) {
+        this[':' + key] = value;
+    },
+    removeItem: function (key) {
+        this[':' + key] = void 0;
+    }
+};
 var $;
 (function ($) {
     var $mol_state_local = (function (_super) {
@@ -1899,6 +1909,72 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_coster = (function (_super) {
+        __extends($mol_coster, _super);
+        function $mol_coster() {
+            _super.apply(this, arguments);
+        }
+        $mol_coster.prototype.value = function () {
+            return null;
+        };
+        $mol_coster.prototype.prefix = function () {
+            return "";
+        };
+        $mol_coster.prototype.prefixer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.prefix()); };
+            });
+        };
+        $mol_coster.prototype.valueView = function () {
+            return "";
+        };
+        $mol_coster.prototype.mainer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.valueView()); };
+            });
+        };
+        $mol_coster.prototype.postfix = function () {
+            return "";
+        };
+        $mol_coster.prototype.postfixer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.postfix()); };
+            });
+        };
+        $mol_coster.prototype.childs = function () {
+            return [].concat(this.prefixer(), this.mainer(), this.postfixer());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_coster.prototype, "prefixer", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_coster.prototype, "mainer", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_coster.prototype, "postfixer", null);
+        return $mol_coster;
+    }($.$mol_viewer));
+    $.$mol_coster = $mol_coster;
+})($ || ($ = {}));
+//coster.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var $;
 (function ($) {
     var $mol_unit = (function (_super) {
@@ -1980,72 +2056,6 @@ var $;
     $.$mol_unit_money_rur = $mol_unit_money_rur;
 })($ || ($ = {}));
 //money.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_coster = (function (_super) {
-        __extends($mol_coster, _super);
-        function $mol_coster() {
-            _super.apply(this, arguments);
-        }
-        $mol_coster.prototype.value = function () {
-            return null;
-        };
-        $mol_coster.prototype.prefix = function () {
-            return "";
-        };
-        $mol_coster.prototype.prefixer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.prefix()); };
-            });
-        };
-        $mol_coster.prototype.valueView = function () {
-            return "";
-        };
-        $mol_coster.prototype.mainer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.valueView()); };
-            });
-        };
-        $mol_coster.prototype.postfix = function () {
-            return "";
-        };
-        $mol_coster.prototype.postfixer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.postfix()); };
-            });
-        };
-        $mol_coster.prototype.childs = function () {
-            return [].concat(this.prefixer(), this.mainer(), this.postfixer());
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_coster.prototype, "prefixer", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_coster.prototype, "mainer", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_coster.prototype, "postfixer", null);
-        return $mol_coster;
-    }($.$mol_viewer));
-    $.$mol_coster = $mol_coster;
-})($ || ($ = {}));
-//coster.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -2142,6 +2152,15 @@ var $jin;
     })(time = $jin.time || ($jin.time = {}));
 })($jin || ($jin = {}));
 //base.js.map
+;
+function $jin_type(value) {
+    var str = {}.toString.apply(value);
+    var type = str.substring(8, str.length - 1);
+    if (['Window', 'global'].indexOf(type) >= 0)
+        type = 'Global';
+    return type;
+}
+//type.js.map
 ;
 function $jin_type(value) {
     var str = {}.toString.apply(value);
@@ -4110,6 +4129,64 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
+    var $mol_scroller = (function (_super) {
+        __extends($mol_scroller, _super);
+        function $mol_scroller() {
+            _super.apply(this, arguments);
+        }
+        $mol_scroller.prototype.heightMinimal = function () {
+            return 0;
+        };
+        $mol_scroller.prototype.scrollTop = function () {
+            return 0;
+        };
+        $mol_scroller.prototype.scrollLeft = function () {
+            return 0;
+        };
+        $mol_scroller.prototype.shadowStyle = function () {
+            return "";
+        };
+        $mol_scroller.prototype.field = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.field.call(this), {
+                "scrollTop": function () { return _this.scrollTop(); },
+                "scrollLeft": function () { return _this.scrollLeft(); },
+                "style.boxShadow": function () { return _this.shadowStyle(); },
+            });
+        };
+        $mol_scroller.prototype.eventScroll = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_scroller.prototype.event = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.event.call(this), {
+                "scroll": function (next, prev) { return _this.eventScroll(next, prev); },
+                "overflow": function (next, prev) { return _this.eventScroll(next, prev); },
+                "underflow": function (next, prev) { return _this.eventScroll(next, prev); },
+            });
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_scroller.prototype, "eventScroll", null);
+        return $mol_scroller;
+    }($.$mol_viewer));
+    $.$mol_scroller = $mol_scroller;
+})($ || ($ = {}));
+//scroller.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
     var $mol_state_session = (function (_super) {
         __extends($mol_state_session, _super);
         function $mol_state_session() {
@@ -4150,60 +4227,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_scroller = (function (_super) {
-        __extends($mol_scroller, _super);
-        function $mol_scroller() {
-            _super.apply(this, arguments);
-        }
-        $mol_scroller.prototype.heightMinimal = function () {
-            return 0;
-        };
-        $mol_scroller.prototype.scrollTop = function () {
-            return 0;
-        };
-        $mol_scroller.prototype.scrollLeft = function () {
-            return 0;
-        };
-        $mol_scroller.prototype.field = function () {
-            var _this = this;
-            return $.$mol_merge_dict(_super.prototype.field.call(this), {
-                "scrollTop": function () { return _this.scrollTop(); },
-                "scrollLeft": function () { return _this.scrollLeft(); },
-            });
-        };
-        $mol_scroller.prototype.eventScroll = function (next, prev) {
-            return (next !== void 0) ? next : null;
-        };
-        $mol_scroller.prototype.event = function () {
-            var _this = this;
-            return $.$mol_merge_dict(_super.prototype.event.call(this), {
-                "scroll": function (next, prev) { return _this.eventScroll(next, prev); },
-                "overflow": function (next, prev) { return _this.eventScroll(next, prev); },
-                "underflow": function (next, prev) { return _this.eventScroll(next, prev); },
-            });
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_scroller.prototype, "eventScroll", null);
-        return $mol_scroller;
-    }($.$mol_viewer));
-    $.$mol_scroller = $mol_scroller;
-})($ || ($ = {}));
-//scroller.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
     $.$mol_viewer_context.$mol_scroller_scrollTop = function () { return 0; };
     $.$mol_viewer_context.$mol_scroller_moving = function () { return false; };
 })($ || ($ = {}));
@@ -4224,6 +4247,12 @@ var $;
             $mol_scroller.prototype.scrollLeft = function (next) {
                 return $.$mol_state_session.value(this.objectPath() + '.scrollLeft()', next) || 0;
             };
+            $mol_scroller.prototype.scrollBottom = function (next) {
+                return next || 0;
+            };
+            $mol_scroller.prototype.scrollRight = function (next) {
+                return next || 0;
+            };
             $mol_scroller.prototype.eventScroll = function (next) {
                 var _this = this;
                 this.moving(true);
@@ -4231,6 +4260,8 @@ var $;
                     var el = _this.DOMNode();
                     _this.scrollTop(el.scrollTop);
                     _this.scrollLeft(el.scrollLeft);
+                    _this.scrollBottom(Math.max(0, el.scrollHeight - el.scrollTop - el.offsetHeight));
+                    _this.scrollRight(Math.max(0, el.scrollWidth - el.scrollLeft - el.offsetWidth));
                 });
             };
             $mol_scroller.prototype.moving = function (next) {
@@ -4250,12 +4281,33 @@ var $;
                 subContext.$mol_scroller_moving = function () { return _this.moving(); };
                 return subContext;
             };
+            $mol_scroller.prototype.shadowStyle = function () {
+                var shadows = [];
+                if (this.scrollTop() > 0)
+                    shadows.push('inset 0 6px 6px -6px rgba( 0 , 0 , 0 , .25 )');
+                if (this.scrollLeft() > 0)
+                    shadows.push('inset 6px 0 6px -6px rgba( 0 , 0 , 0 , .25 )');
+                if (this.scrollBottom() > 0)
+                    shadows.push('inset 0 -6px 6px -6px rgba( 0 , 0 , 0 , .25 )');
+                if (this.scrollRight() > 0)
+                    shadows.push('inset -6px 0 6px -6px rgba( 0 , 0 , 0 , .25 )');
+                return shadows.join(' , ');
+            };
+            __decorate([
+                $.$mol_mem()
+            ], $mol_scroller.prototype, "scrollBottom", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_scroller.prototype, "scrollRight", null);
             __decorate([
                 $.$mol_mem()
             ], $mol_scroller.prototype, "moving", null);
             __decorate([
                 $.$mol_mem()
             ], $mol_scroller.prototype, "contextSub", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_scroller.prototype, "shadowStyle", null);
             return $mol_scroller;
         }($.$mol_scroller));
         $mol.$mol_scroller = $mol_scroller;
@@ -4661,21 +4713,6 @@ var $;
 })($ || ($ = {}));
 //number.view.js.map
 ;
-var cordova;
-var $;
-(function ($) {
-    $.$mol_cordova = cordova || {
-        plugins: {
-            barcodeScanner: null
-        }
-    };
-    function $mol_cordova_camera() {
-        return navigator['camera'];
-    }
-    $.$mol_cordova_camera = $mol_cordova_camera;
-})($ || ($ = {}));
-//cordova.js.map
-;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -4745,6 +4782,21 @@ var $;
     $.$mol_coder = $mol_coder;
 })($ || ($ = {}));
 //coder.view.tree.js.map
+;
+var cordova;
+var $;
+(function ($) {
+    $.$mol_cordova = cordova || {
+        plugins: {
+            barcodeScanner: null
+        }
+    };
+    function $mol_cordova_camera() {
+        return navigator['camera'];
+    }
+    $.$mol_cordova_camera = $mol_cordova_camera;
+})($ || ($ = {}));
+//cordova.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5758,257 +5810,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_app_supplies_positioner = (function (_super) {
-        __extends($mol_app_supplies_positioner, _super);
-        function $mol_app_supplies_positioner() {
-            _super.apply(this, arguments);
-        }
-        $mol_app_supplies_positioner.prototype.heightMinimal = function () {
-            return 51;
-        };
-        $mol_app_supplies_positioner.prototype.productLabel = function () {
-            return this.localizedText("productLabel");
-        };
-        $mol_app_supplies_positioner.prototype.productName = function () {
-            return "";
-        };
-        $mol_app_supplies_positioner.prototype.productItem = function (next, prev) {
-            var _this = this;
-            return new $.$mol_labeler().setup(function (obj) {
-                obj.title = function () { return _this.productLabel(); };
-                obj.content = function () { return _this.productName(); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.costlabel = function () {
-            return this.localizedText("costlabel");
-        };
-        $mol_app_supplies_positioner.prototype.cost = function (next, prev) {
-            return new $.$mol_unit_money().setup(function (obj) {
-                obj.valueOf = function () { return 0; };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.coster = function (next, prev) {
-            var _this = this;
-            return new $.$mol_coster().setup(function (obj) {
-                obj.value = function () { return _this.cost(); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.costItem = function (next, prev) {
-            var _this = this;
-            return new $.$mol_labeler().setup(function (obj) {
-                obj.title = function () { return _this.costlabel(); };
-                obj.content = function () { return _this.coster(); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.mainGroup = function (next, prev) {
-            var _this = this;
-            return new $.$mol_rower().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.productItem(), _this.costItem()); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.divisionLabel = function () {
-            return this.localizedText("divisionLabel");
-        };
-        $mol_app_supplies_positioner.prototype.divisionName = function () {
-            return "";
-        };
-        $mol_app_supplies_positioner.prototype.divisionItem = function (next, prev) {
-            var _this = this;
-            return new $.$mol_labeler().setup(function (obj) {
-                obj.title = function () { return _this.divisionLabel(); };
-                obj.content = function () { return _this.divisionName(); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.priceLabel = function () {
-            return this.localizedText("priceLabel");
-        };
-        $mol_app_supplies_positioner.prototype.price = function (next, prev) {
-            return new $.$mol_unit_money().setup(function (obj) {
-                obj.valueOf = function () { return 0; };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.pricer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_coster().setup(function (obj) {
-                obj.value = function () { return _this.price(); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.priceItem = function (next, prev) {
-            var _this = this;
-            return new $.$mol_labeler().setup(function (obj) {
-                obj.title = function () { return _this.priceLabel(); };
-                obj.content = function () { return _this.pricer(); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.addonGroup = function (next, prev) {
-            var _this = this;
-            return new $.$mol_rower().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.divisionItem(), _this.priceItem()); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.quantityLabel = function () {
-            return this.localizedText("quantityLabel");
-        };
-        $mol_app_supplies_positioner.prototype.quantity = function () {
-            return "";
-        };
-        $mol_app_supplies_positioner.prototype.quantityItem = function (next, prev) {
-            var _this = this;
-            return new $.$mol_labeler().setup(function (obj) {
-                obj.title = function () { return _this.quantityLabel(); };
-                obj.content = function () { return _this.quantity(); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.supplyDateLabel = function () {
-            return this.localizedText("supplyDateLabel");
-        };
-        $mol_app_supplies_positioner.prototype.supplyDate = function () {
-            return "";
-        };
-        $mol_app_supplies_positioner.prototype.supplyDateItem = function (next, prev) {
-            var _this = this;
-            return new $.$mol_labeler().setup(function (obj) {
-                obj.title = function () { return _this.supplyDateLabel(); };
-                obj.content = function () { return _this.supplyDate(); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.storeLabel = function () {
-            return this.localizedText("storeLabel");
-        };
-        $mol_app_supplies_positioner.prototype.storeName = function () {
-            return "";
-        };
-        $mol_app_supplies_positioner.prototype.storeItem = function (next, prev) {
-            var _this = this;
-            return new $.$mol_labeler().setup(function (obj) {
-                obj.title = function () { return _this.storeLabel(); };
-                obj.content = function () { return _this.storeName(); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.supplyGroup = function (next, prev) {
-            var _this = this;
-            return new $.$mol_rower().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.quantityItem(), _this.supplyDateItem(), _this.storeItem()); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.grouper = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.mainGroup(), _this.addonGroup(), _this.supplyGroup()); };
-            });
-        };
-        $mol_app_supplies_positioner.prototype.content = function () {
-            return this.grouper();
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "productItem", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "cost", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "coster", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "costItem", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "mainGroup", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "divisionItem", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "price", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "pricer", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "priceItem", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "addonGroup", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "quantityItem", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "supplyDateItem", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "storeItem", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "supplyGroup", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_supplies_positioner.prototype, "grouper", null);
-        return $mol_app_supplies_positioner;
-    }($.$mol_carder));
-    $.$mol_app_supplies_positioner = $mol_app_supplies_positioner;
-})($ || ($ = {}));
-//positioner.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_app_supplies_positioner = (function (_super) {
-            __extends($mol_app_supplies_positioner, _super);
-            function $mol_app_supplies_positioner() {
-                _super.apply(this, arguments);
-            }
-            $mol_app_supplies_positioner.prototype.position = function () {
-                return null;
-            };
-            $mol_app_supplies_positioner.prototype.productName = function () {
-                return this.position().name();
-            };
-            $mol_app_supplies_positioner.prototype.price = function () {
-                return this.position().price();
-            };
-            $mol_app_supplies_positioner.prototype.quantity = function () {
-                return this.position().quantity().toString();
-            };
-            $mol_app_supplies_positioner.prototype.cost = function () {
-                return this.position().cost();
-            };
-            $mol_app_supplies_positioner.prototype.supplyDate = function () {
-                return this.position().supplyMoment().toString('YYYY-MM-DD');
-            };
-            $mol_app_supplies_positioner.prototype.divisionName = function () {
-                return this.position().division().name();
-            };
-            $mol_app_supplies_positioner.prototype.storeName = function () {
-                return this.position().store().name();
-            };
-            return $mol_app_supplies_positioner;
-        }($.$mol_app_supplies_positioner));
-        $mol.$mol_app_supplies_positioner = $mol_app_supplies_positioner;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//positioner.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
     var $mol_app_supplies_detailer = (function (_super) {
         __extends($mol_app_supplies_detailer, _super);
         function $mol_app_supplies_detailer() {
@@ -6385,6 +6186,257 @@ var $;
     $.$mol_app_supplies_detailer = $mol_app_supplies_detailer;
 })($ || ($ = {}));
 //detailer.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_supplies_positioner = (function (_super) {
+        __extends($mol_app_supplies_positioner, _super);
+        function $mol_app_supplies_positioner() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_supplies_positioner.prototype.heightMinimal = function () {
+            return 51;
+        };
+        $mol_app_supplies_positioner.prototype.productLabel = function () {
+            return this.localizedText("productLabel");
+        };
+        $mol_app_supplies_positioner.prototype.productName = function () {
+            return "";
+        };
+        $mol_app_supplies_positioner.prototype.productItem = function (next, prev) {
+            var _this = this;
+            return new $.$mol_labeler().setup(function (obj) {
+                obj.title = function () { return _this.productLabel(); };
+                obj.content = function () { return _this.productName(); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.costlabel = function () {
+            return this.localizedText("costlabel");
+        };
+        $mol_app_supplies_positioner.prototype.cost = function (next, prev) {
+            return new $.$mol_unit_money().setup(function (obj) {
+                obj.valueOf = function () { return 0; };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.coster = function (next, prev) {
+            var _this = this;
+            return new $.$mol_coster().setup(function (obj) {
+                obj.value = function () { return _this.cost(); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.costItem = function (next, prev) {
+            var _this = this;
+            return new $.$mol_labeler().setup(function (obj) {
+                obj.title = function () { return _this.costlabel(); };
+                obj.content = function () { return _this.coster(); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.mainGroup = function (next, prev) {
+            var _this = this;
+            return new $.$mol_rower().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.productItem(), _this.costItem()); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.divisionLabel = function () {
+            return this.localizedText("divisionLabel");
+        };
+        $mol_app_supplies_positioner.prototype.divisionName = function () {
+            return "";
+        };
+        $mol_app_supplies_positioner.prototype.divisionItem = function (next, prev) {
+            var _this = this;
+            return new $.$mol_labeler().setup(function (obj) {
+                obj.title = function () { return _this.divisionLabel(); };
+                obj.content = function () { return _this.divisionName(); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.priceLabel = function () {
+            return this.localizedText("priceLabel");
+        };
+        $mol_app_supplies_positioner.prototype.price = function (next, prev) {
+            return new $.$mol_unit_money().setup(function (obj) {
+                obj.valueOf = function () { return 0; };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.pricer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_coster().setup(function (obj) {
+                obj.value = function () { return _this.price(); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.priceItem = function (next, prev) {
+            var _this = this;
+            return new $.$mol_labeler().setup(function (obj) {
+                obj.title = function () { return _this.priceLabel(); };
+                obj.content = function () { return _this.pricer(); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.addonGroup = function (next, prev) {
+            var _this = this;
+            return new $.$mol_rower().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.divisionItem(), _this.priceItem()); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.quantityLabel = function () {
+            return this.localizedText("quantityLabel");
+        };
+        $mol_app_supplies_positioner.prototype.quantity = function () {
+            return "";
+        };
+        $mol_app_supplies_positioner.prototype.quantityItem = function (next, prev) {
+            var _this = this;
+            return new $.$mol_labeler().setup(function (obj) {
+                obj.title = function () { return _this.quantityLabel(); };
+                obj.content = function () { return _this.quantity(); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.supplyDateLabel = function () {
+            return this.localizedText("supplyDateLabel");
+        };
+        $mol_app_supplies_positioner.prototype.supplyDate = function () {
+            return "";
+        };
+        $mol_app_supplies_positioner.prototype.supplyDateItem = function (next, prev) {
+            var _this = this;
+            return new $.$mol_labeler().setup(function (obj) {
+                obj.title = function () { return _this.supplyDateLabel(); };
+                obj.content = function () { return _this.supplyDate(); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.storeLabel = function () {
+            return this.localizedText("storeLabel");
+        };
+        $mol_app_supplies_positioner.prototype.storeName = function () {
+            return "";
+        };
+        $mol_app_supplies_positioner.prototype.storeItem = function (next, prev) {
+            var _this = this;
+            return new $.$mol_labeler().setup(function (obj) {
+                obj.title = function () { return _this.storeLabel(); };
+                obj.content = function () { return _this.storeName(); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.supplyGroup = function (next, prev) {
+            var _this = this;
+            return new $.$mol_rower().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.quantityItem(), _this.supplyDateItem(), _this.storeItem()); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.grouper = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.mainGroup(), _this.addonGroup(), _this.supplyGroup()); };
+            });
+        };
+        $mol_app_supplies_positioner.prototype.content = function () {
+            return this.grouper();
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "productItem", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "cost", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "coster", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "costItem", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "mainGroup", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "divisionItem", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "price", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "pricer", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "priceItem", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "addonGroup", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "quantityItem", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "supplyDateItem", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "storeItem", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "supplyGroup", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_supplies_positioner.prototype, "grouper", null);
+        return $mol_app_supplies_positioner;
+    }($.$mol_carder));
+    $.$mol_app_supplies_positioner = $mol_app_supplies_positioner;
+})($ || ($ = {}));
+//positioner.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_supplies_positioner = (function (_super) {
+            __extends($mol_app_supplies_positioner, _super);
+            function $mol_app_supplies_positioner() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_supplies_positioner.prototype.position = function () {
+                return null;
+            };
+            $mol_app_supplies_positioner.prototype.productName = function () {
+                return this.position().name();
+            };
+            $mol_app_supplies_positioner.prototype.price = function () {
+                return this.position().price();
+            };
+            $mol_app_supplies_positioner.prototype.quantity = function () {
+                return this.position().quantity().toString();
+            };
+            $mol_app_supplies_positioner.prototype.cost = function () {
+                return this.position().cost();
+            };
+            $mol_app_supplies_positioner.prototype.supplyDate = function () {
+                return this.position().supplyMoment().toString('YYYY-MM-DD');
+            };
+            $mol_app_supplies_positioner.prototype.divisionName = function () {
+                return this.position().division().name();
+            };
+            $mol_app_supplies_positioner.prototype.storeName = function () {
+                return this.position().store().name();
+            };
+            return $mol_app_supplies_positioner;
+        }($.$mol_app_supplies_positioner));
+        $mol.$mol_app_supplies_positioner = $mol_app_supplies_positioner;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//positioner.view.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

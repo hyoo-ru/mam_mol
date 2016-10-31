@@ -1,8 +1,8 @@
 /// Fake namespace for optional overrides
 ///
-/// 	module $ { export var x = 1 , y = 1 } // defaults
-/// 	module $.$mol { export var x = 2 } // overrides
-/// 	module $.$mol { console.log( x , y ) } // usage
+/// 	namespace $ { export var x = 1 , y = 1 } // defaults
+/// 	namespace $.$mol { export var x = 2 } // overrides
+/// 	namespace $.$mol { console.log( x , y ) } // usage
 ///
 this.$ = this.$ || this
 var $ = this.$
@@ -796,7 +796,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var localStorage = localStorage || {};
+var localStorage = localStorage || {
+    getItem: function (key) {
+        return this[':' + key];
+    },
+    setItem: function (key, value) {
+        this[':' + key] = value;
+    },
+    removeItem: function (key) {
+        this[':' + key] = void 0;
+    }
+};
 var $;
 (function ($) {
     var $mol_state_local = (function (_super) {
@@ -1531,11 +1541,15 @@ var $;
         $mol_scroller.prototype.scrollLeft = function () {
             return 0;
         };
+        $mol_scroller.prototype.shadowStyle = function () {
+            return "";
+        };
         $mol_scroller.prototype.field = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.field.call(this), {
                 "scrollTop": function () { return _this.scrollTop(); },
                 "scrollLeft": function () { return _this.scrollLeft(); },
+                "style.boxShadow": function () { return _this.shadowStyle(); },
             });
         };
         $mol_scroller.prototype.eventScroll = function (next, prev) {
@@ -1591,6 +1605,12 @@ var $;
             $mol_scroller.prototype.scrollLeft = function (next) {
                 return $.$mol_state_session.value(this.objectPath() + '.scrollLeft()', next) || 0;
             };
+            $mol_scroller.prototype.scrollBottom = function (next) {
+                return next || 0;
+            };
+            $mol_scroller.prototype.scrollRight = function (next) {
+                return next || 0;
+            };
             $mol_scroller.prototype.eventScroll = function (next) {
                 var _this = this;
                 this.moving(true);
@@ -1598,6 +1618,8 @@ var $;
                     var el = _this.DOMNode();
                     _this.scrollTop(el.scrollTop);
                     _this.scrollLeft(el.scrollLeft);
+                    _this.scrollBottom(Math.max(0, el.scrollHeight - el.scrollTop - el.offsetHeight));
+                    _this.scrollRight(Math.max(0, el.scrollWidth - el.scrollLeft - el.offsetWidth));
                 });
             };
             $mol_scroller.prototype.moving = function (next) {
@@ -1617,12 +1639,33 @@ var $;
                 subContext.$mol_scroller_moving = function () { return _this.moving(); };
                 return subContext;
             };
+            $mol_scroller.prototype.shadowStyle = function () {
+                var shadows = [];
+                if (this.scrollTop() > 0)
+                    shadows.push('inset 0 6px 6px -6px rgba( 0 , 0 , 0 , .25 )');
+                if (this.scrollLeft() > 0)
+                    shadows.push('inset 6px 0 6px -6px rgba( 0 , 0 , 0 , .25 )');
+                if (this.scrollBottom() > 0)
+                    shadows.push('inset 0 -6px 6px -6px rgba( 0 , 0 , 0 , .25 )');
+                if (this.scrollRight() > 0)
+                    shadows.push('inset -6px 0 6px -6px rgba( 0 , 0 , 0 , .25 )');
+                return shadows.join(' , ');
+            };
+            __decorate([
+                $.$mol_mem()
+            ], $mol_scroller.prototype, "scrollBottom", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_scroller.prototype, "scrollRight", null);
             __decorate([
                 $.$mol_mem()
             ], $mol_scroller.prototype, "moving", null);
             __decorate([
                 $.$mol_mem()
             ], $mol_scroller.prototype, "contextSub", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_scroller.prototype, "shadowStyle", null);
             return $mol_scroller;
         }($.$mol_scroller));
         $mol.$mol_scroller = $mol_scroller;
