@@ -7,16 +7,16 @@
         <style type="text/css">
 			body {
 			}
-			
+
 			h1 {
 				width: 100%;
 			}
-			
+
 			section {
 				margin: .25rem;
 				display: inline-block;
 			}
-			
+
 			[mol_perf_render_contenter],
 			ul {
 				padding : 0;
@@ -29,7 +29,7 @@
 				background:#EEE;
 				border: 1px solid #999;
 			}
-			
+
 			[mol_perf_render_row],
             li {
 				padding:3px 10px;
@@ -39,13 +39,13 @@
 				text-overflow: ellipsis;
 				overflow: hidden;
 			}
-			
+
 			[mol_perf_render_row_bar],
 			li span {
 				padding:3px 10px;
 				display: inline;
 			}
-			
+
 			[mol_perf_render_row]:hover,
             li:hover {
 				background:#DDD;
@@ -57,7 +57,7 @@
 				background:#3F7AD9;
 				color: white;
 			}
-			
+
 			.sapMDLI {
 				height: 24px!important;
 			}
@@ -123,7 +123,7 @@
             function _random(max) {
                 return Math.round(Math.random()*1000)%max;
             }
-			
+
             function _knockout() {
                 ko.applyBindings({
                     selected: ko.observable(),
@@ -137,7 +137,7 @@
                     	requestAnimationFrame( function() {
 							var data = _buildData(),
 								date = Date.now();
-	
+
 							this.selected(null);
 							this.data(data);
 							setTimeout( function() { document.getElementById("run-knockout").innerHTML = (Date.now() - date) + " ms"; })
@@ -146,7 +146,7 @@
                 }, document.getElementById("knockout"));
 
             }
-            
+
             function _sap() {
             	var isRendered = false;
 				var oModel = new sap.ui.model.json.JSONModel();
@@ -183,7 +183,7 @@
 							}
 
 							setTimeout(function() {
-								document.querySelector(".sapMBtnContent").innerHTML = (Date.now() - date) + " ms";	
+								document.querySelector(".sapMBtnContent").innerHTML = (Date.now() - date) + " ms";
 							})
 						})
 					}
@@ -211,7 +211,7 @@
 							$scope.data = data;
 
 							$scope.$digest()
-							
+
 							setTimeout(function () {
 								document.getElementById("run-angular").innerHTML = (Date.now() - date) + " ms";
 							})
@@ -275,10 +275,12 @@
 					requestAnimationFrame( function() {
 						var data = _buildData(),
 							date = Date.now(),
-							html = "";
+							html = "",
+							i,
+							render;
 
-						for (var i = 0; i < data.length; i++) {
-							var render = template;
+						for (i = 0; i < data.length; i++) {
+							render = template;
 							render = render.replace("{{className}}", "");
 							render = render.replace("{{label}}", data[i].label);
 							html += render;
@@ -286,18 +288,21 @@
 
 						container.innerHTML = html;
 
-						var spans = container.querySelectorAll("li");
-						for (var i = 0; i < spans.length; i++)
-							spans[i].addEventListener("click", function () {
-								var selected = container.querySelector(".selected");
-								if (selected)
-									selected.className = "";
-								this.className = "selected";
-							});
+						container.addEventListener("click", function (e) {
+							var selected = container.querySelector(".selected");
+							var target = e.target;
+							if (selected) {
+								selected.className = "";
+							}
+							if (target.nodeName != 'LI') {
+								target = target.parentNode;
+							}
+							if (target.nodeName == 'LI') {
+								target.className = "selected";
+							}
+						});
 
-						setTimeout(function () {
-							document.getElementById("run-raw").innerHTML = (Date.now() - date) + " ms";
-						})
+						document.getElementById("run-raw").innerHTML = (Date.now() - date) + " ms";
 					} )
                 });
             }
@@ -323,13 +328,13 @@
         </script>
     </head>
     <body>
-		
+
 		<h1 perf-header>
 			Performance comparison of some popular frameworks
 		</h1>
 
 		<section id="react"></section>
-		
+
 		<section ng-app="test" ng-controller="controller">
 			<header>
 				<h2>
