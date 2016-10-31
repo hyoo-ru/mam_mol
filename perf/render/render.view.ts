@@ -41,7 +41,10 @@ namespace $.$mol {
 		data( next? : $mol_perf_render_item[] ) { return next || [] }
 		
 		@ $mol_mem()
-		selectedItem( next? : number ) { return next || null }
+		selectedItem( next? : number ) { 
+			if( next === void 0 ) return null
+			return next
+		}
 		
 	}
 
