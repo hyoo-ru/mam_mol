@@ -421,7 +421,7 @@ namespace $ {
 		logBundle( target : $mol_file ) {
 			var time = new Date().toLocaleTimeString()
 			var path = target.relate( this.root() )
-			console.log( `${time} Builded ${path}` )
+			console.log( `${time} Built ${path}` )
 		}
 		
 		@ $mol_mem_key()
