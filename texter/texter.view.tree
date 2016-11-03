@@ -6,6 +6,9 @@ $mol_texter $mol_lister
 	spanner# $mol_texter_spanner
 	linker# $mol_texter_linker
 	imager# $mol_texter_imager
+	header# $mol_texter_header
+		level < headerLevel# 0
+		content < headerContent# /
 	tabler# $mol_scroller
 		childs /
 			< tablerGrider# $mol_grider
@@ -21,6 +24,11 @@ $mol_texter $mol_lister
 $mol_texter_rower $mol_viewer
 	heightMinimal 40
 	attr * mol_texter_type < type \
+
+$mol_texter_header $mol_viewer
+	tagName \h
+	attr * mol_texter_header_level > level 0
+	childs < content /
 
 $mol_texter_spanner $mol_viewer
 	tagName \span

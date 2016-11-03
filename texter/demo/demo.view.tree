@@ -1,5 +1,9 @@
 $mol_texter_demo $mol_texter text \
 	\# [Benchmarks](perf)
+	\## Benchmark 1
+	\### Benchmark 1.1
+	\#### Benchmark 1.1.1
+	\##### Benchmark 1.1.1.1
 	\
 	\* $mol_perf_render - simple benchmark of rendering ([online](http://eigenmethod.github.io/mol/perf/render/))
 	\* [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)

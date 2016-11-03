@@ -20,8 +20,33 @@
 [mol_texter_type="block"] {
 }
 
-[mol_texter_type="header"] {
+[mol_texter_header] {
+	display: block;
+	padding: .5rem 0;
+	font-weight: 500;
+}
+
+[mol_texter_header_level="1"] {
 	font-size: 1.5rem;
+}
+
+[mol_texter_header_level="2"] {
+	font-size: 1.3rem;
+}
+
+[mol_texter_header_level="3"] {
+	font-size: 1.1rem;
+}
+
+[mol_texter_header_level="4"] {
+	font-size: 1.1rem;
+	font-style: italic;
+}
+
+[mol_texter_header_level="5"] {
+	font-size: 1.1rem;
+	font-weight: normal;
+	font-style: italic;
 }
 
 [mol_texter_type="list-item"] {
