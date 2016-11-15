@@ -20,7 +20,7 @@
 }
 
 [mol_pager_titler] {
-	flex: 1;
+	flex: 1000 1 auto;
 	display: flex;
 	padding: 1rem;
 }
