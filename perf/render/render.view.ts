@@ -1,6 +1,6 @@
 namespace $.$mol {
 
-	interface $mol_perf_render_item {
+	export interface $mol_perf_render_item {
 		id : number
 		label : string
 	}
