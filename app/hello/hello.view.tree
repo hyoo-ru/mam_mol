@@ -3,4 +3,6 @@ $mol_app_hello $mol_viewer
 		< namer $mol_stringer
 			hint < namerHint @ \Name
 			value > name \
-		< message \
+		< greeter $mol_viewer
+			childs /
+				< greeting \
