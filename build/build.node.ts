@@ -162,7 +162,7 @@ namespace $ {
 		@ $mol_mem()
 		tsHost() {
 			
-			var options = {
+			const options = {
 				experimentalDecorators : true ,
 				noEmitOnError : false ,
 				noImplicitAny : true ,
@@ -171,9 +171,10 @@ namespace $ {
 				sourceMap : true ,
 				inlineSources : true ,
 				allowJS : true ,
+				declaration : true ,
 			}
 			
-			var host = {
+			const host = {
 				// getScriptFileNames : () => [] ,
 				getScriptVersion : ( path : string )=> $mol_file.absolute( path ).version() ,
 				getScriptSnapshot : ( path : string )=> $mol_file.absolute( path ).content().toString() ,
@@ -185,7 +186,7 @@ namespace $ {
 				getCommonSourceDirectory : ()=> this.root().path() ,
 				getNewLine : ()=> '\n' ,
 				getSourceFile : ( path : string , target : any , fail : any )=> {
-					var content = $mol_file.absolute( path ).content().toString()
+					const content = $mol_file.absolute( path ).content().toString()
 					return $node.typescript.createSourceFile( path , content , target )
 				} ,
 				fileExists : ( path : string )=> {
@@ -236,6 +237,20 @@ namespace $ {
 				if( logs.length ) throw new Error( '\n' + logs.join( '\n' ) )
 				
 			}
+			
+			return sources
+		}
+		
+		@ $mol_mem_key()
+		sourcesDTS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+			
+			let sources = this.sourcesAll( { path , exclude } )
+			
+			sources = sources.filter( src => /(tsx?)$/.test( src.ext() ) )
+			
+			sources = sources.map(
+				src => src.parent().resolve( src.name().replace( /(\.d)?\.tsx?$/ , '.d.ts' ) )
+			)
 			
 			return sources
 		}
@@ -397,6 +412,9 @@ namespace $ {
 					if( !type || type === 'test.js' ) {
 						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
 					}
+					if( !type || type === 'd.ts' ) {
+						res = res.concat( this.bundleDTS( { path , exclude , bundle : env } ) )
+					}
 					if( !type || /^locale(?:=.*)?.json$/.test( type ) ) {
 						res = res.concat(
 							this.bundleLocale(
@@ -499,6 +517,31 @@ namespace $ {
 			this.logBundle( target )
 			
 			return [ target , targetMap ]
+		}
+		
+		@ $mol_mem_key()
+		bundleDTS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+			var pack = $mol_file.absolute( path )
+			
+			var target = pack.resolve( `-/${bundle}.d.ts` )
+			
+			var sources = this.sourcesDTS( { path , exclude } )
+			if( sources.length === 0 ) return []
+			
+			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() )
+			
+			sources.forEach(
+				function( src ) {
+					var content = src.content().toString()
+					concater.add( src.relate( target.parent() ) , content )
+				}
+			)
+			
+			target.content( concater.content )
+			
+			this.logBundle( target )
+			
+			return [ target ]
 		}
 		
 		@ $mol_mem_key()
