@@ -41,5 +41,6 @@
 
 [mol_clicker_danger]:not([disabled]) {
 	background: var(--mol_skin_warn);
+	color: var(--mol_skin_warn_text);
 }
 
