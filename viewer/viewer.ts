@@ -194,17 +194,20 @@ namespace $ {
 			}
 		}
 		
-		static renderFields( node : Element , fields : { [ key : string ] : ()=> any } ) {
+		static renderFields( node : Element , fields : { [ key : string ] : ( next? : any )=> any } ) {
 			for( let path in fields ) {
-				var names = path.split( '.' )
-				var obj : any = node
-				for( var i = 0 ; i < names.length - 1 ; ++i ) {
+				const names = path.split( '.' )
+				let obj : any = node
+				for( let i = 0 ; i < names.length - 1 ; ++i ) {
 					if( names[ i ] ) obj = obj[ names[ i ] ]
 				}
-				var field = names[ names.length - 1 ]
-				var val = fields[ path ]()
+				const field = names[ names.length - 1 ]
+				const val = fields[ path ]()
 				if( obj[ field ] !== val ) {
 					obj[ field ] = val
+					if( obj[ field ] !== val ) {
+						new $mol_defer( ()=> fields[ path ]( obj[ field ] ) )
+					}
 				}
 			}
 		}
@@ -230,7 +233,7 @@ namespace $ {
 			'mol_viewer_error' : ()=> false
 		} }
 		
-		field() : { [ key : string ] : ()=> any } { return {
+		field() : { [ key : string ] : ( next? : any )=> any } { return {
 			//'style.minHeight' : ()=> this.heightMinimal() + 'px'
 		} }
 		
