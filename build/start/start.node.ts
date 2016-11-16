@@ -8,7 +8,7 @@ namespace $ {
 			process.argv.slice( 2 ).forEach(
 				( path : string )=> {
 					path = build.root().resolve( path ).path()
-					build.bundle( { path } )
+					build.bundle( { path } ).valueOf()
 				}
 			)
 		} else {
