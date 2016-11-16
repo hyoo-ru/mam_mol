@@ -92,7 +92,7 @@ namespace $ {
 		//	}
 		//} ,
 
-		'must be destroyed if not more reference'() {
+		'must be deferred destroyed when no longer referenced'() {
 
 			var foo : any
 
@@ -134,16 +134,15 @@ namespace $ {
 		} ,
 
 		'wait for data'() {
-			var name = 'Jin'
 
 			class Test extends $mol_object {
 
 				@ $mol_mem()
 				source( next? : string , prev? : string ) : string {
 					new $mol_defer( () => {
-						this.source( void 0 , name )
+						this.source( void 0 , 'Jin' )
 					} )
-					throw new $mol_atom_wait( 'Wait!' )
+					throw new $mol_atom_wait( 'Wait for data!' )
 				}
 
 				@ $mol_mem()
@@ -158,13 +157,9 @@ namespace $ {
 
 			}
 
-			var t = new Test
+			const t = new Test
 
-			try {
-				t.target()
-			} catch( error ) {
-				$mol_assert_ok( error instanceof $mol_atom_wait )
-			}
+			$mol_assert_fail( ()=> t.target().valueOf() , $mol_atom_wait )
 
 			$mol_defer.run()
 

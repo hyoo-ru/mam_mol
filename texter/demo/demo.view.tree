@@ -1,14 +1,18 @@
 $mol_texter_demo $mol_texter text \
 	\# [Benchmarks](perf)
+	\## Benchmark 1
+	\### Benchmark 1.1
+	\#### Benchmark 1.1.1
+	\##### Benchmark 1.1.1.1
 	\
 	\* $mol_perf_render - simple benchmark of rendering ([online](http://eigenmethod.github.io/mol/perf/render/))
 	\* [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)
 	\
 	\# Quick start
 	\
-	\**Create PMS project**
+	\**Create MAM project**
 	\
-	\Easy way is checkout [this preconfigured MAM repository](http://github.com/eigenmethod/mam/) and start dev server:
+	\Easy way is checkout [this preconfigured ~~PMS~~MAM repository](http://github.com/eigenmethod/mam/) and start dev server:
 	\
 	\```sh
 	\git clone https://github.com/eigenmethod/mam.git ./mam && cd mam

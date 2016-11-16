@@ -91,7 +91,8 @@
 			var toggleButton = document.querySelector('.toggle:not(:checked),[mol_app_todomvc_allCompleter]:not([mol_checker_checked]),.sapUiRrRow input[type="CheckBox"]:not(:checked)');
 
 			if( toggleButton ) {
-				toggleButton.click()
+				toggleButton.dispatchEvent( new Event( 'mousedown' , {} ) )
+				toggleButton.dispatchEvent( new Event( 'mouseup' , {} ) )
 				setImmediate(step,0)
 			} else {
 				done()
@@ -105,7 +106,8 @@
 			var deleteButton = document.querySelector('.destroy,[mol_app_todomvc_taskRow_dropper]');
 
 			if( deleteButton ) {
-				deleteButton.click()
+				deleteButton.dispatchEvent( new Event( 'mousedown' , {} ) )
+				deleteButton.dispatchEvent( new Event( 'mouseup' , {} ) )
 				setImmediate(step,0)
 			} else {
 				done()

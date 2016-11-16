@@ -1,6 +1,6 @@
 namespace $.$mol {
 	
-	interface Gist {
+	export interface $mol_app_habhub_gist {
 		id : number
 		title : string
 		body : string
@@ -13,7 +13,7 @@ namespace $.$mol {
 		}
 		
 		gists() {
-			return $mol_http_resource_json.item<{ items : Gist[] }>( this.uriSource() ).json().items
+			return $mol_http_resource_json.item<{ items : $mol_app_habhub_gist[] }>( this.uriSource() ).json().items
 		}
 		
 		gisters() : $mol_viewer[] {

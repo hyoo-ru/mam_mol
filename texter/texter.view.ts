@@ -10,9 +10,18 @@ namespace $.$mol {
 			return this.tokensFlow().map( ( token , index )=> {
 				switch( token.name ) {
 					case 'table' : return this.tabler( index )
+					case 'header' : return this.header( index )
 				}
 				return this.rower( index )
 			} )
+		}
+		
+		headerLevel( index : number ) {
+			return this.tokensFlow()[ index ].chunks[0].length
+		}
+		
+		headerContent( index : number ) {
+			return this.text2spans( `${ index }` , this.tokensFlow()[ index ].chunks[2] )
 		}
 		
 		blockType( index : number ) {
@@ -57,11 +66,17 @@ namespace $.$mol {
 				
 				switch( token.name ) {
 					case 'text-link' : {
-						const span = this.linker( id )
-						span.type( token.name )
-						span.link( token.chunks[ 1 ] )
-						span.content( this.text2spans( id , token.chunks[ 0 ] ) )
-						return span
+						if( token.chunks[ 1 ][ 0 ] === '#' ) {
+							const span = this.spanner( id )
+							span.content( this.text2spans( id , token.chunks[ 0 ] ) )
+							return span
+						} else {
+							const span = this.linker( id )
+							span.type( token.name )
+							span.link( token.chunks[ 1 ] )
+							span.content( this.text2spans( id , token.chunks[ 0 ] ) )
+							return span
+						}
 					}
 					case 'image-link' : {
 						const span = this.imager( id )
