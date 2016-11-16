@@ -94,3 +94,8 @@
 [mol_texter_type="emphasis"] {
 	font-style: italic;
 }
+
+[mol_texter_type="strike"] {
+	text-decoration: line-through;
+	color: var(--mol_skin_passive_text);
+}
