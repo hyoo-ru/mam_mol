@@ -319,7 +319,7 @@ namespace $ {
 			
 			for( let repo of mapping.select( 'pack' , name , 'git' ).childs ) {
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
-				pack.stat( void 0 )
+				pack.stat( null )
 				return true
 			}
 			
