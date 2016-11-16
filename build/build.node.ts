@@ -144,8 +144,8 @@ namespace $ {
 				src => {
 					if( !/(view\.tree)$/.test( src.ext() ) ) return sources2.push( src )
 					
-					var targetScript = src.parent().resolve( `-/view.tree/${src.name()}.ts` )
-					var targetLocale = src.parent().resolve( `-/view.tree/${src.name()}.locale.json` )
+					var targetScript = src.parent().resolve( `-view.tree/${src.name()}.ts` )
+					var targetLocale = src.parent().resolve( `-view.tree/${src.name()}.locale.json` )
 					
 					var tree = $mol_tree.fromString( String( src.content() ) , src.path() )
 					var res = $mol_viewer_tree2ts( tree )
