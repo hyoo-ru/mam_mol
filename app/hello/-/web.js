@@ -1253,7 +1253,7 @@ var $;
             }
         };
         $mol_viewer.renderFields = function (node, fields) {
-            for (var path in fields) {
+            var _loop_2 = function(path) {
                 var names = path.split('.');
                 var obj = node;
                 for (var i = 0; i < names.length - 1; ++i) {
@@ -1264,7 +1264,13 @@ var $;
                 var val = fields[path]();
                 if (obj[field] !== val) {
                     obj[field] = val;
+                    if (obj[field] !== val) {
+                        new $.$mol_defer(function () { return fields[path](obj[field]); });
+                    }
                 }
+            };
+            for (var path in fields) {
+                _loop_2(path);
             }
         };
         $mol_viewer.prototype.DOMTree = function (next) {
@@ -1606,11 +1612,17 @@ var $;
                 obj.value = function (next, prev) { return _this.name(next, prev); };
             });
         };
-        $mol_app_hello.prototype.message = function () {
+        $mol_app_hello.prototype.greeting = function () {
             return "";
         };
+        $mol_app_hello.prototype.greeter = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.greeting()); };
+            });
+        };
         $mol_app_hello.prototype.childs = function () {
-            return [].concat(this.namer(), this.message());
+            return [].concat(this.namer(), this.greeter());
         };
         __decorate([
             $.$mol_mem()
@@ -1618,6 +1630,9 @@ var $;
         __decorate([
             $.$mol_mem()
         ], $mol_app_hello.prototype, "namer", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_hello.prototype, "greeter", null);
         return $mol_app_hello;
     }($.$mol_viewer));
     $.$mol_app_hello = $mol_app_hello;
@@ -1638,7 +1653,7 @@ var $;
             function $mol_app_hello() {
                 _super.apply(this, arguments);
             }
-            $mol_app_hello.prototype.message = function () {
+            $mol_app_hello.prototype.greeting = function () {
                 var name = this.name();
                 return name && "Hello, " + name + "!";
             };

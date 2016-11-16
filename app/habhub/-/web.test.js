@@ -68,8 +68,15 @@ var $;
         throw new Error("Not false (" + value + ")");
     }
     $.$mol_assert_not = $mol_assert_not;
-    function $mol_assert_fail(message) {
-        throw new Error(message);
+    function $mol_assert_fail(handler, ErrorRight) {
+        try {
+            handler();
+        }
+        catch (error) {
+            $mol_assert_ok(error instanceof ErrorRight);
+            return error;
+        }
+        throw new Error('Not failed');
     }
     $.$mol_assert_fail = $mol_assert_fail;
     function $mol_assert_equal(a, b) {
@@ -269,7 +276,7 @@ var $;
             x.foo(5);
             $.$mol_assert_equal(x.xxx(), 7);
         },
-        'must be destroyed if not more reference': function () {
+        'must be deferred destroyed when no longer referenced': function () {
             var foo;
             var B = (function (_super) {
                 __extends(B, _super);
@@ -312,7 +319,6 @@ var $;
             $.$mol_assert_unique(b.bar(), bar);
         },
         'wait for data': function () {
-            var name = 'Jin';
             var Test = (function (_super) {
                 __extends(Test, _super);
                 function Test() {
@@ -321,9 +327,9 @@ var $;
                 Test.prototype.source = function (next, prev) {
                     var _this = this;
                     new $.$mol_defer(function () {
-                        _this.source(void 0, name);
+                        _this.source(void 0, 'Jin');
                     });
-                    throw new $.$mol_atom_wait('Wait!');
+                    throw new $.$mol_atom_wait('Wait for data!');
                 };
                 Test.prototype.middle = function () {
                     return this.source();
@@ -343,12 +349,7 @@ var $;
                 return Test;
             }($.$mol_object));
             var t = new Test;
-            try {
-                t.target();
-            }
-            catch (error) {
-                $.$mol_assert_ok(error instanceof $.$mol_atom_wait);
-            }
+            $.$mol_assert_fail(function () { return t.target().valueOf(); }, $.$mol_atom_wait);
             $.$mol_defer.run();
             $.$mol_assert_equal(t.target(), 'Jin');
         },
@@ -539,7 +540,8 @@ var $;
                 var clicker = new $mol.$mol_clicker;
                 clicker.eventClick = function (event) { clicked = true; };
                 var element = clicker.DOMTree();
-                element.click();
+                element.dispatchEvent(new Event('mousedown', {}));
+                element.dispatchEvent(new Event('mouseup', {}));
                 $.$mol_assert_ok(clicked);
             },
             'no handle clicks if disabled': function () {
@@ -548,7 +550,19 @@ var $;
                 clicker.eventClick = function (event) { clicked = true; };
                 clicker.enabled = function () { return false; };
                 var element = clicker.DOMTree();
-                element.click();
+                element.dispatchEvent(new Event('mousedown', {}));
+                element.dispatchEvent(new Event('mouseup', {}));
+                $.$mol_assert_not(clicked);
+            },
+            'no handle is moved while click': function () {
+                var clicked = false;
+                var clicker = new $mol.$mol_clicker;
+                clicker.eventClick = function (event) { clicked = true; };
+                clicker.enabled = function () { return false; };
+                var element = clicker.DOMTree();
+                element.dispatchEvent(new Event('mousedown', {}));
+                element.dispatchEvent(new Event('mousemove', {}));
+                element.dispatchEvent(new Event('mouseup', {}));
                 $.$mol_assert_not(clicked);
             },
         });

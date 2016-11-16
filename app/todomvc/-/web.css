@@ -182,6 +182,7 @@
 
 [mol_clicker_danger]:not([disabled]) {
 	background: #FFD6D6;
+	color: red;
 }
 
 [mol_linker] {
@@ -215,7 +216,6 @@
 	        justify-content: center;
 	-webkit-box-align: center;
 	    -ms-flex-align: center;
-	            -ms-grid-row-align: center;
 	        align-items: center;
 	-ms-flex-line-pack: center;
 	    align-content: center;
@@ -289,6 +289,7 @@
 
 [mol_app_todomvc] {
 	-ms-flex-item-align: stretch;
+	    -ms-grid-row-align: stretch;
 	    align-self: stretch;
 	width: 100%;
 	height: 100%;

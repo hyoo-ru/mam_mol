@@ -1253,7 +1253,7 @@ var $;
             }
         };
         $mol_viewer.renderFields = function (node, fields) {
-            for (var path in fields) {
+            var _loop_2 = function(path) {
                 var names = path.split('.');
                 var obj = node;
                 for (var i = 0; i < names.length - 1; ++i) {
@@ -1264,7 +1264,13 @@ var $;
                 var val = fields[path]();
                 if (obj[field] !== val) {
                     obj[field] = val;
+                    if (obj[field] !== val) {
+                        new $.$mol_defer(function () { return fields[path](obj[field]); });
+                    }
                 }
+            };
+            for (var path in fields) {
+                _loop_2(path);
             }
         };
         $mol_viewer.prototype.DOMTree = function (next) {
@@ -1535,11 +1541,11 @@ var $;
         $mol_scroller.prototype.heightMinimal = function () {
             return 0;
         };
-        $mol_scroller.prototype.scrollTop = function () {
-            return 0;
+        $mol_scroller.prototype.scrollTop = function (next, prev) {
+            return (next !== void 0) ? next : 0;
         };
-        $mol_scroller.prototype.scrollLeft = function () {
-            return 0;
+        $mol_scroller.prototype.scrollLeft = function (next, prev) {
+            return (next !== void 0) ? next : 0;
         };
         $mol_scroller.prototype.shadowStyle = function () {
             return "";
@@ -1547,8 +1553,8 @@ var $;
         $mol_scroller.prototype.field = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.field.call(this), {
-                "scrollTop": function () { return _this.scrollTop(); },
-                "scrollLeft": function () { return _this.scrollLeft(); },
+                "scrollTop": function (next, prev) { return _this.scrollTop(next, prev); },
+                "scrollLeft": function (next, prev) { return _this.scrollLeft(next, prev); },
                 "style.boxShadow": function () { return _this.shadowStyle(); },
             });
         };
@@ -1563,6 +1569,12 @@ var $;
                 "underflow": function (next, prev) { return _this.eventScroll(next, prev); },
             });
         };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_scroller.prototype, "scrollTop", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_scroller.prototype, "scrollLeft", null);
         __decorate([
             $.$mol_mem()
         ], $mol_scroller.prototype, "eventScroll", null);

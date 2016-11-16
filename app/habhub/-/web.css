@@ -150,9 +150,9 @@
 }
 
 [mol_pager_titler] {
-	-webkit-box-flex: 1;
-	    -ms-flex: 1;
-	        flex: 1;
+	-webkit-box-flex: 1000;
+	    -ms-flex: 1000 1 auto;
+	        flex: 1000 1 auto;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -269,6 +269,7 @@
 
 [mol_clicker_danger]:not([disabled]) {
 	background: #FFD6D6;
+	color: red;
 }
 
 [mol_checker] {
@@ -280,7 +281,6 @@
 	        justify-content: center;
 	-webkit-box-align: center;
 	    -ms-flex-align: center;
-	            -ms-grid-row-align: center;
 	        align-items: center;
 	-ms-flex-line-pack: center;
 	    align-content: center;
@@ -400,9 +400,39 @@
 
 [mol_texter_type="block"] {}
 
-[mol_texter_type="header"] {
+[mol_texter_header] {
+	display: block;
+	padding: 8px 0;
+	padding: .5rem 0;
+	font-weight: 500;
+}
+
+[mol_texter_header_level="1"] {
 	font-size: 24px;
 	font-size: 1.5rem;
+}
+
+[mol_texter_header_level="2"] {
+	font-size: 20.8px;
+	font-size: 1.3rem;
+}
+
+[mol_texter_header_level="3"] {
+	font-size: 17.6px;
+	font-size: 1.1rem;
+}
+
+[mol_texter_header_level="4"] {
+	font-size: 17.6px;
+	font-size: 1.1rem;
+	font-style: italic;
+}
+
+[mol_texter_header_level="5"] {
+	font-size: 17.6px;
+	font-size: 1.1rem;
+	font-weight: normal;
+	font-style: italic;
 }
 
 [mol_texter_type="list-item"] {
@@ -453,6 +483,11 @@
 
 [mol_texter_type="emphasis"] {
 	font-style: italic;
+}
+
+[mol_texter_type="strike"] {
+	text-decoration: line-through;
+	color: gray;
 }
 
 [mol_app_habhub_titler] {
