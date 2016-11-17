@@ -1,12 +1,7 @@
 $mol_clicker $mol_viewer
 	tagName \button
 	enabled true
-	> activated false
-	> eventClick null
-	event *
-		mousedown > eventActiveStart null
-		mousemove > eventActiveCancel null
-		mouseup > eventActiveDone null
+	event * click > eventActivate > eventClick null
 	attr *
 		disabled < disabled false
 		tabindex \0

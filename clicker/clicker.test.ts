@@ -9,8 +9,7 @@ namespace $.$mol {
 			clicker.eventClick = event => { clicked = true }
 			
 			const element = <HTMLButtonElement> clicker.DOMTree()
-			element.dispatchEvent( new Event( 'mousedown' , {} ) )
-			element.dispatchEvent( new Event( 'mouseup' , {} ) )
+			element.dispatchEvent( new Event( 'click' , {} ) )
 			
 			$mol_assert_ok( clicked )
 		} ,
@@ -23,23 +22,7 @@ namespace $.$mol {
 			clicker.enabled = ()=> false
 			
 			const element = <HTMLButtonElement> clicker.DOMTree()
-			element.dispatchEvent( new Event( 'mousedown' , {} ) )
-			element.dispatchEvent( new Event( 'mouseup' , {} ) )
-			
-			$mol_assert_not( clicked )
-		} ,
-		
-		'no handle is moved while click'() {
-			let clicked = false
-			
-			const clicker = new $mol_clicker
-			clicker.eventClick = event => { clicked = true }
-			clicker.enabled = ()=> false
-			
-			const element = <HTMLButtonElement> clicker.DOMTree()
-			element.dispatchEvent( new Event( 'mousedown' , {} ) )
-			element.dispatchEvent( new Event( 'mousemove' , {} ) )
-			element.dispatchEvent( new Event( 'mouseup' , {} ) )
+			element.dispatchEvent( new Event( 'click' , {} ) )
 			
 			$mol_assert_not( clicked )
 		} ,
