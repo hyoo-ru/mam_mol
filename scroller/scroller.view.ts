@@ -33,15 +33,32 @@ namespace $.$mol {
 			return next || 0
 		}
 		
+		@ $mol_mem()
+		tracking( next? : boolean ) {
+			return next === void 0 ? true : next
+		}
+		
+		eventBlockTracking( next? : Event ) {
+			this.tracking( false )
+		}
+		
+		eventFreeTracking( next? : Event ) {
+			this.tracking( true )
+			this.eventScroll( next )
+		}
+		
 		eventScroll( next? : Event ) {
 			this.moving( true )
-			new $mol_defer( ()=> {
-				const el = this.DOMNode() as HTMLElement
-				this.scrollTop( el.scrollTop )
-				this.scrollLeft( el.scrollLeft )
-				this.scrollBottom( Math.max( 0 , el.scrollHeight - el.scrollTop - el.offsetHeight ) )
-				this.scrollRight( Math.max( 0 , el.scrollWidth - el.scrollLeft - el.offsetWidth ) )
-			} )
+			if( !this.tracking() ) return
+			new $mol_defer(
+				() => {
+					const el = this.DOMNode() as HTMLElement
+					this.scrollTop( el.scrollTop )
+					this.scrollLeft( el.scrollLeft )
+					this.scrollBottom( Math.max( 0 , el.scrollHeight - el.scrollTop - el.offsetHeight ) )
+					this.scrollRight( Math.max( 0 , el.scrollWidth - el.scrollLeft - el.offsetWidth ) )
+				}
+			)
 		}
 		
 		@ $mol_mem()
@@ -59,7 +76,7 @@ namespace $.$mol {
 			const subContext : $mol_viewer_context = Object.create( this.context() )
 			subContext.$mol_viewer_heightLimit = ()=> this.context().$mol_viewer_heightLimit() + this.scrollTop()
 			subContext.$mol_scroller_scrollTop = ()=> this.scrollTop()
-			subContext.$mol_scroller_moving = ()=> this.moving()
+			//subContext.$mol_scroller_moving = ()=> this.moving()
 			return subContext
 		}
 		
