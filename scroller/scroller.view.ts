@@ -40,10 +40,12 @@ namespace $.$mol {
 		
 		eventBlockTracking( next? : Event ) {
 			this.tracking( false )
+			this.moving( true )
 		}
 		
 		eventFreeTracking( next? : Event ) {
 			this.tracking( true )
+			this.moving( null )
 			this.eventScroll( next )
 		}
 		
@@ -65,6 +67,7 @@ namespace $.$mol {
 		moving( next? : boolean ) {
 			if( next ) {
 				setTimeout( ()=> {
+					if( !this.tracking() ) return
 					this.moving( false )
 				} )
 			}				
