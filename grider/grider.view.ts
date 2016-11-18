@@ -67,7 +67,7 @@ namespace $.$mol {
 	export class $mol_grider_rower extends $.$mol_grider_rower {
 		
 		heightStyle() {
-			return `${ this.height() - 1 }px`
+			return `${ this.height() }px`
 		}
 		
 	}
