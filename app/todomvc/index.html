@@ -92,10 +92,9 @@
 
 			if( toggleButton ) {
 				toggleButton.dispatchEvent( new Event( 'click' , {} ) )
-				setImmediate(step,0)
-			} else {
-				done()
 			}
+			
+			done()
 		}
 	}
 
