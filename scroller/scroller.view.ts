@@ -77,7 +77,7 @@ namespace $.$mol {
 		@ $mol_mem()
 		contextSub( ) {
 			const subContext : $mol_viewer_context = Object.create( this.context() )
-			subContext.$mol_viewer_heightLimit = ()=> this.context().$mol_viewer_heightLimit() + this.scrollTop()
+			subContext.$mol_viewer_heightLimit = ()=> this.context().$mol_viewer_heightLimit() + Math.max( 0 , this.scrollTop() )
 			subContext.$mol_scroller_scrollTop = ()=> this.scrollTop()
 			subContext.$mol_scroller_moving = ()=> this.moving()
 			return subContext
