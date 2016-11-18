@@ -55,8 +55,8 @@ namespace $.$mol {
 			new $mol_defer(
 				() => {
 					const el = this.DOMNode() as HTMLElement
-					this.scrollTop( el.scrollTop )
-					this.scrollLeft( el.scrollLeft )
+					this.scrollTop( Math.max( 0 , el.scrollTop ) )
+					this.scrollLeft( Math.max( 0 , el.scrollLeft ) )
 					this.scrollBottom( Math.max( 0 , el.scrollHeight - el.scrollTop - el.offsetHeight ) )
 					this.scrollRight( Math.max( 0 , el.scrollWidth - el.scrollLeft - el.offsetWidth ) )
 				}
