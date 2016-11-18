@@ -11,8 +11,8 @@ namespace $.$mol {
 			
 			return [].concat(
 				this.header() ,
-				( viewWindow.top > 0 ) ? this.gaperTop() : null ,
-				rowers.slice( viewWindow.top , viewWindow.bottom ).valueOf() ,
+				//( viewWindow.top > 0 ) ? this.gaperTop() : null ,
+				rowers.slice( 0 , viewWindow.bottom ).valueOf() ,
 				( viewWindow.bottom < viewWindow.count ) ? this.gaperBottom() : null ,
 			)
 		}
