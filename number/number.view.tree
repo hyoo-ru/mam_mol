@@ -1,7 +1,7 @@
 $mol_number $mol_viewer
 	precisionView < precision 1
 	precisionChange < precision 1
-	> value 0
+	> value null
 	- event * wheel > eventWheel null - speed down scroll when many numbers rendered.
 	childs /
 		< decrementer $mol_number_clicker
