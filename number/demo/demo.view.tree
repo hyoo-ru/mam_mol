@@ -1,4 +1,5 @@
 $mol_number_demo $mol_rower childs /
+	< zero $mol_number
 	< one $mol_number
 		value > year null
 	< two $mol_number

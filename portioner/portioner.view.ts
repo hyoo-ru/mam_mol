@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_portioner extends $.$mol_portioner {
 		
 		indWidthStyle() {

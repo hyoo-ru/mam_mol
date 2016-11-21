@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 
 export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 	
@@ -150,7 +150,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 			return members[ name ] || '\t' + name +'() { return <any>null }\n\t}\n'
 		}).join( '' )
 		
-		var classes = 'module $ { export class ' + def.type + ' extends ' + parent.type + ' {\n\n' + body + '} }\n'
+		var classes = 'namespace $ { export class ' + def.type + ' extends ' + parent.type + ' {\n\n' + body + '} }\n'
 		
 		content += classes + '\n'
 	})

@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export function $mol_assert_ok( value : any ) {
 		if( value ) return
@@ -10,8 +10,14 @@ module $ {
 		throw new Error( `Not false (${value})` )
 	}
 	
-	export function $mol_assert_fail( message : string ) {
-		throw new Error( message )
+	export function $mol_assert_fail( handler : ()=> any , ErrorRight? : any ) {
+		try {
+			handler()
+		} catch( error ) {
+			if( ErrorRight ) $mol_assert_ok( error instanceof ErrorRight )
+			return error
+		}
+		throw new Error( 'Not failed' )
 	}
 	
 	export function $mol_assert_equal< Value >( a : Value , b : Value ) {

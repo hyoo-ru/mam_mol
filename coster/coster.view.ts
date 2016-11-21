@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_coster extends $.$mol_coster {
 		
 		value() {

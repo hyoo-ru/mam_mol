@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_lister_demo extends $.$mol_lister_demo {
 		
 		rows() {

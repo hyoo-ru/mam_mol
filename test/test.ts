@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export function $mol_test( set : { [ name : string ] : string | ( ()=> void ) } ) {
 		for( let name in set ) $mol_test_all.push( new $mol_test_case( set[ name ] ) )

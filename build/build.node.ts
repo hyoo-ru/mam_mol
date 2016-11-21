@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_build extends $mol_object {
 		
@@ -131,18 +131,21 @@ module $ {
 		@ $mol_mem_key()
 		sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const sortedPaths = this.graph( { path , exclude } ).sorted( edge => edge.priority )
-			let sources : $mol_file[] = [].concat.apply(
-				[] ,
-				sortedPaths.map( path => this.sourcesSorted( { path : this.root().resolve( path ).path() , exclude } ) )
-			)
+			
+			let sources : $mol_file[] = []
+			sortedPaths.forEach( path => {
+				this.sourcesSorted( { path : this.root().resolve( path ).path() , exclude } ).forEach( src => {
+					if( sources.indexOf( src ) === -1 ) sources.push( src )
+				} )
+			} )
 			
 			let sources2 : $mol_file[] = []
 			sources.forEach(
 				src => {
 					if( !/(view\.tree)$/.test( src.ext() ) ) return sources2.push( src )
 					
-					var targetScript = src.parent().resolve( `-/view.tree/${src.name()}.ts` )
-					var targetLocale = src.parent().resolve( `-/view.tree/${src.name()}.locale.json` )
+					var targetScript = src.parent().resolve( `-view.tree/${src.name()}.ts` )
+					var targetLocale = src.parent().resolve( `-view.tree/${src.name()}.locale.json` )
 					
 					var tree = $mol_tree.fromString( String( src.content() ) , src.path() )
 					var res = $mol_viewer_tree2ts( tree )
@@ -159,7 +162,7 @@ module $ {
 		@ $mol_mem()
 		tsHost() {
 			
-			var options = {
+			const options = {
 				experimentalDecorators : true ,
 				noEmitOnError : false ,
 				noImplicitAny : true ,
@@ -168,9 +171,10 @@ module $ {
 				sourceMap : true ,
 				inlineSources : true ,
 				allowJS : true ,
+				declaration : true ,
 			}
 			
-			var host = {
+			const host = {
 				// getScriptFileNames : () => [] ,
 				getScriptVersion : ( path : string )=> $mol_file.absolute( path ).version() ,
 				getScriptSnapshot : ( path : string )=> $mol_file.absolute( path ).content().toString() ,
@@ -182,7 +186,7 @@ module $ {
 				getCommonSourceDirectory : ()=> this.root().path() ,
 				getNewLine : ()=> '\n' ,
 				getSourceFile : ( path : string , target : any , fail : any )=> {
-					var content = $mol_file.absolute( path ).content().toString()
+					const content = $mol_file.absolute( path ).content().toString()
 					return $node.typescript.createSourceFile( path , content , target )
 				} ,
 				fileExists : ( path : string )=> {
@@ -199,7 +203,7 @@ module $ {
 		@ $mol_mem_key()
 		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var sources = this.sourcesAll( { path , exclude } )
-			.filter( src => /(jam\.js|tsx?|view\.tree)$/.test( src.ext() ) )
+			.filter( src => /(js|tsx?|view\.tree)$/.test( src.ext() ) )
 			if( !sources.length ) return []
 			
 			var sourcesTS : $mol_file[] = []
@@ -233,6 +237,20 @@ module $ {
 				if( logs.length ) throw new Error( '\n' + logs.join( '\n' ) )
 				
 			}
+			
+			return sources
+		}
+		
+		@ $mol_mem_key()
+		sourcesDTS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+			
+			let sources = this.sourcesAll( { path , exclude } )
+			
+			sources = sources.filter( src => /(tsx?)$/.test( src.ext() ) )
+			
+			sources = sources.map(
+				src => src.parent().resolve( src.name().replace( /(\.d)?\.tsx?$/ , '.d.ts' ) )
+			)
 			
 			return sources
 		}
@@ -301,7 +319,7 @@ module $ {
 			
 			for( let repo of mapping.select( 'pack' , name , 'git' ).childs ) {
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
-				pack.stat( void 0 )
+				pack.stat( null )
 				return true
 			}
 			
@@ -339,7 +357,7 @@ module $ {
 					this.modEnsure( dep.path() )
 					
 					while( !dep.exists() ) dep = dep.parent()
-					if( dep.type() === 'file' ) dep = dep.parent()
+					//if( dep.type() === 'file' ) dep = dep.parent()
 					if( mod === dep ) continue
 					if( dep === this.root() ) continue
 					
@@ -394,6 +412,9 @@ module $ {
 					if( !type || type === 'test.js' ) {
 						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
 					}
+					if( !type || type === 'd.ts' ) {
+						res = res.concat( this.bundleDTS( { path , exclude , bundle : env } ) )
+					}
 					if( !type || /^locale(?:=.*)?.json$/.test( type ) ) {
 						res = res.concat(
 							this.bundleLocale(
@@ -418,7 +439,7 @@ module $ {
 		logBundle( target : $mol_file ) {
 			var time = new Date().toLocaleTimeString()
 			var path = target.relate( this.root() )
-			console.log( `${time} Builded ${path}` )
+			console.log( `${time} Built ${path}` )
 		}
 		
 		@ $mol_mem_key()
@@ -433,7 +454,7 @@ module $ {
 			
 			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
 			if( bundle === 'node' ) {
-				concater.add( '' , 'require( "source-map-support" ).install()\n' )
+				concater.add( '' , 'require( "source-map-support" ).install(); var exports = void 0;\n' )
 			}
 			
 			sources.forEach(
@@ -496,6 +517,31 @@ module $ {
 			this.logBundle( target )
 			
 			return [ target , targetMap ]
+		}
+		
+		@ $mol_mem_key()
+		bundleDTS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+			var pack = $mol_file.absolute( path )
+			
+			var target = pack.resolve( `-/${bundle}.d.ts` )
+			
+			var sources = this.sourcesDTS( { path , exclude } )
+			if( sources.length === 0 ) return []
+			
+			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() )
+			
+			sources.forEach(
+				function( src ) {
+					var content = src.content().toString()
+					concater.add( src.relate( target.parent() ) , content )
+				}
+			)
+			
+			target.content( concater.content )
+			
+			this.logBundle( target )
+			
+			return [ target ]
 		}
 		
 		@ $mol_mem_key()
@@ -651,6 +697,13 @@ module $ {
 				line.replace(
 					/\$([a-z][a-z0-9]+(?:[._][a-z0-9]+)*)/ig , ( str , name )=> {
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[._-]/g , '/' ) ] : priority } )
+						return str
+					}
+				)
+				
+				line.replace(
+					/require\(\s*['"](.*?)['"]\s*\)/ig , ( str , path )=> {
+						$mol_build_depsMerge( depends , { [ path ] : priority } )
 						return str
 					}
 				)

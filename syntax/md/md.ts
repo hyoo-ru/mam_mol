@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export var $mol_syntax_md_flow = new $mol_syntax({
 		'header' : /^(#+)(\s*)(.*?)$([\n\r]*)/ ,
@@ -13,6 +13,7 @@ module $ {
 		'emphasis' : /\*(.+?)\*/ ,
 		'code3' : /```(.+?)```/ ,
 		'code' : /`(.+?)`/ ,
+		'strike' : /~~(.+?)~~/ ,
 		'text-link' : /\[(.*?(?:\[.*?\].*?)*)\]\((.*?)\)/ ,
 		'image-link' : /!\[([^\[\]]*?)\]\((.*?)\)/ ,
 	})

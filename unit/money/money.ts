@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_unit_money extends $mol_unit {
 	}

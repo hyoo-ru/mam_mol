@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export var $mol_viewer_context = <$mol_viewer_context> {}
 	
@@ -6,7 +6,7 @@ module $ {
 		$mol_viewer_heightLimit() : number
 	}
 	
-	$mol_viewer_context.$mol_viewer_heightLimit = () => $mol_window.size()[ 1 ] * 1.5
+	$mol_viewer_context.$mol_viewer_heightLimit = () => $mol_window.size().height
 
 	/// Reactive statefull lazy ViewModel 
 	export class $mol_viewer extends $mol_object {
@@ -194,43 +194,45 @@ module $ {
 			}
 		}
 		
-		static renderFields( node : Element , fields : { [ key : string ] : ()=> any } ) {
+		static renderFields( node : Element , fields : { [ key : string ] : ( next? : any )=> any } ) {
 			for( let path in fields ) {
-				var names = path.split( '.' )
-				var obj : any = node
-				for( var i = 0 ; i < names.length - 1 ; ++i ) {
+				const names = path.split( '.' )
+				let obj : any = node
+				for( let i = 0 ; i < names.length - 1 ; ++i ) {
 					if( names[ i ] ) obj = obj[ names[ i ] ]
 				}
-				var field = names[ names.length - 1 ]
-				var val = fields[ path ]()
+				const field = names[ names.length - 1 ]
+				const val = fields[ path ]()
 				if( obj[ field ] !== val ) {
 					obj[ field ] = val
+					if( obj[ field ] !== val ) {
+						new $mol_defer( ()=> fields[ path ]( obj[ field ] ) )
+					}
 				}
 			}
 		}
 		
-		@ $mol_mem( {
-			fail : ( self : $mol_viewer , error : any ) => {
-				const node = self.DOMNode()
-				if( node ) node.setAttribute( 'mol_viewer_error' , error.name )
+		@ $mol_mem()
+		DOMTree( next? : Element ) {
+			let node = this.DOMNode()
+			
+			try {
+				$mol_viewer.renderChilds( node , this.childsVisible() )
+				$mol_viewer.renderAttrs( node , this.attr() )
+				$mol_viewer.renderFields( node , this.field() )
+				
+				return node
+			} catch( error ) {
+				node.setAttribute( 'mol_viewer_error' , error.name )
 				return error
 			}
-		} )
-		DOMTree( next? : Element ) {
-			var node = this.DOMNode()
-			
-			$mol_viewer.renderChilds( node , this.childsVisible() )
-			$mol_viewer.renderAttrs( node , this.attr() )
-			$mol_viewer.renderFields( node , this.field() )
-			
-			return node
 		}
 		
 		attr() : { [ key : string ] : ()=> string|number|boolean } { return {
 			'mol_viewer_error' : ()=> false
 		} }
 		
-		field() : { [ key : string ] : ()=> any } { return {
+		field() : { [ key : string ] : ( next? : any )=> any } { return {
 			//'style.minHeight' : ()=> this.heightMinimal() + 'px'
 		} }
 		

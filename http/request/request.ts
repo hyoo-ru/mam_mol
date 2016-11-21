@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_http_request extends $mol_object {
 		

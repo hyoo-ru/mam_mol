@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_decker extends $.$mol_decker {
 		
 		current( next? : string ) {

@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	
 	/// GitHub users View Model
 	export class $mol_app_users extends $.$mol_app_users {
@@ -71,18 +71,10 @@ module $.$mol {
 		}
 		
 		/// Status of net communication. Shows errors of downloading|uploading. 
-		@ $mol_mem({
-			fail : ( view : $mol_app_users , error : Error ) => {
-				if( error instanceof $mol_atom_wait ) return error
-				return error.message
-			}
-		})
+		@ $mol_mem()
 		saverResult() {
-			if( !this.master() ) return null
-			if( !this.master().uploaded() ) return null
-			if( this.changed() ) return null
-			
-			return 'Saved.'
+			let master = this.master()
+			return master && master.uploaded()
 		}
 		
 		/// Reload data from server and discard changes.

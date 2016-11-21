@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	
 	export class $mol_grider extends $.$mol_grider {
 		
@@ -28,8 +28,8 @@ module $.$mol {
 			const heightLimit = context.$mol_viewer_heightLimit()
 			const rowHeight = this.rowHeight()
 			
-			const top = Math.max( 0 , Math.floor( ( scrollTop ) / rowHeight ) - 3 )
-			const bottom = Math.min( Math.ceil( heightLimit / rowHeight ) , count )
+			const top = Math.max( 0 , Math.floor( scrollTop / rowHeight ) - 2 )
+			const bottom = Math.min( count , Math.ceil( heightLimit / rowHeight ) + 2 )
 			
 			return { top , bottom , count }
 		}
@@ -67,7 +67,7 @@ module $.$mol {
 	export class $mol_grider_rower extends $.$mol_grider_rower {
 		
 		heightStyle() {
-			return `${ this.height() - 1 }px`
+			return `${ this.height() }px`
 		}
 		
 	}

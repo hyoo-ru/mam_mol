@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	
 	$mol_test({
 		
@@ -9,7 +9,7 @@ module $.$mol {
 			clicker.eventClick = event => { clicked = true }
 			
 			const element = <HTMLButtonElement> clicker.DOMTree()
-			element.click()
+			element.dispatchEvent( new Event( 'click' , {} ) )
 			
 			$mol_assert_ok( clicked )
 		} ,
@@ -22,11 +22,12 @@ module $.$mol {
 			clicker.enabled = ()=> false
 			
 			const element = <HTMLButtonElement> clicker.DOMTree()
-			element.click()
+			element.dispatchEvent( new Event( 'click' , {} ) )
 			
 			$mol_assert_not( clicked )
-		} , 
-	
+		} ,
+		
 	})
 	
 }
+

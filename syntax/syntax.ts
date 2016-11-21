@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	export interface $mol_syntax_token {
 		name : string
 		found : string

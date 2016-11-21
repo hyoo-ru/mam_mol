@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_viewer_selection extends $mol_object {
 		

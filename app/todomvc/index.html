@@ -91,11 +91,10 @@
 			var toggleButton = document.querySelector('.toggle:not(:checked),[mol_app_todomvc_allCompleter]:not([mol_checker_checked]),.sapUiRrRow input[type="CheckBox"]:not(:checked)');
 
 			if( toggleButton ) {
-				toggleButton.click()
-				setImmediate(step,0)
-			} else {
-				done()
+				toggleButton.dispatchEvent( new Event( 'click' , {} ) )
 			}
+			
+			done()
 		}
 	}
 
@@ -105,7 +104,7 @@
 			var deleteButton = document.querySelector('.destroy,[mol_app_todomvc_taskRow_dropper]');
 
 			if( deleteButton ) {
-				deleteButton.click()
+				deleteButton.dispatchEvent( new Event( 'click' , {} ) )
 				setImmediate(step,0)
 			} else {
 				done()

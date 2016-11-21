@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	export function $mol_exec( dir : string , command : string , ...args : string[] ) {
 		
 		console.log( `${dir}> ${command} ${args.join( ' ' )}` )

@@ -1,4 +1,4 @@
-module $.$mol {
+namespace $.$mol {
 	export class $mol_app_supplies_root extends $.$mol_app_supplies_root {
 		
 		entered( next? : boolean ) {

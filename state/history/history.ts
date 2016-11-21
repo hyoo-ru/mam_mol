@@ -1,4 +1,4 @@
-module $ {
+namespace $ {
 	
 	export class $mol_state_history< Value > extends $mol_object {
 		

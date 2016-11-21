@@ -1,6 +1,6 @@
 declare var process : any
 
-module $ {
+namespace $ {
 
 	export function $mol_build_start( paths : string[] ) {
 		var build = $mol_build.relative( '.' )
@@ -8,7 +8,7 @@ module $ {
 			process.argv.slice( 2 ).forEach(
 				( path : string )=> {
 					path = build.root().resolve( path ).path()
-					build.bundle( { path } )
+					build.bundle( { path } ).valueOf()
 				}
 			)
 		} else {
