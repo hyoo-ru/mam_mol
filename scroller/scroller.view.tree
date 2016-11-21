@@ -8,5 +8,3 @@ $mol_scroller $mol_viewer
 		scroll > eventScroll null
 		overflow > eventScroll null
 		underflow > eventScroll null
-		- touchstart > eventBlockTracking null
-		- touchend > eventFreeTracking null

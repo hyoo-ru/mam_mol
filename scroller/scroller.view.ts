@@ -33,41 +33,21 @@ namespace $.$mol {
 			return next || 0
 		}
 		
-		@ $mol_mem()
-		tracking( next? : boolean ) {
-			return next === void 0 ? true : next
-		}
-		
-		eventBlockTracking( next? : Event ) {
-			this.tracking( false )
-			this.moving( true )
-		}
-		
-		eventFreeTracking( next? : Event ) {
-			this.tracking( true )
-			this.moving( null )
-			this.eventScroll( next )
-		}
-		
 		eventScroll( next? : Event ) {
 			this.moving( true )
-			if( !this.tracking() ) return
-			new $mol_defer(
-				() => {
-					const el = this.DOMNode() as HTMLElement
-					this.scrollTop( Math.max( 0 , el.scrollTop ) )
-					this.scrollLeft( Math.max( 0 , el.scrollLeft ) )
-					this.scrollBottom( Math.max( 0 , el.scrollHeight - el.scrollTop - el.offsetHeight ) )
-					this.scrollRight( Math.max( 0 , el.scrollWidth - el.scrollLeft - el.offsetWidth ) )
-				}
-			)
+			new $mol_defer( () => {
+				const el = this.DOMNode() as HTMLElement
+				this.scrollTop( Math.max( 0 , el.scrollTop ) )
+				this.scrollLeft( Math.max( 0 , el.scrollLeft ) )
+				this.scrollBottom( Math.max( 0 , el.scrollHeight - el.scrollTop - el.offsetHeight ) )
+				this.scrollRight( Math.max( 0 , el.scrollWidth - el.scrollLeft - el.offsetWidth ) )
+			} )
 		}
 		
 		@ $mol_mem()
 		moving( next? : boolean ) {
 			if( next ) {
 				setTimeout( ()=> {
-					if( !this.tracking() ) return
 					this.moving( false )
 				} )
 			}				
