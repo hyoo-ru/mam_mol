@@ -68,7 +68,7 @@ namespace $ {
 			
 			this.actualize()
 			
-			const value : Value|Error = ( this.host || this )[ this.field ]
+			const value : Value = ( this.host || this )[ this.field ]
 			
 			if( value instanceof Error ) {
 				if( typeof Proxy !== 'function' ) throw value
