@@ -5,8 +5,9 @@
 Properties of a the same values, in terminology of mol is polymorphic methods with the following type of interface:
 
 ```ts
-myProperty< Value >() : Value
-myProperty< Vlaue >( ...diff : Value[] ) : Value
+myProperty< Value >() : Value // getter
+myProperty< Vlaue >( next? : Value ) : Value // getter/setter
+myProperty< Vlaue >( next? : Value , prev? : Value ) : Value // getter/setter/patcher
 ```
 The example of declaring a not cached property:
 
@@ -17,15 +18,32 @@ userName() { return 'jin' }
 
 ```ts
 /// getter/setter
-userName( ...diff : string[] ) {
-	if( diff[0] === void 0 ) { // check for undefined is important
+userName( next? : string ) {
+	if( next === void 0 ) { // check for undefined is important
 		return localStorage.getItem( 'name' ) // pull value
 	} else {
-		localStorage.setItem( 'name' , diff[0] ) // put value, patch not supported
-		return diff[0] // return next value
+		localStorage.setItem( 'name' , next ) // put value
+		return next // return next value
 	}
 }
 ```
+
+```ts
+type UserData = { name? : string , age? : number }
+
+/// getter/setter/patcher
+userData( next? : UserData , prev? : UserData ) {
+	if( next === void 0 ) { // getter
+		return $mol_state_local.value< UserData >( 'userData' )
+	} else if( prev === void 0 ) { // setter
+		return $mol_state_local.value< UserData >( 'userData' , next )
+	} else { // patcher
+		return this.useData( $mol_merge_dict( this.userData() , next ) ) 
+	}
+}
+```
+
+
 Examples of usage:
 
 ```ts
@@ -39,9 +57,15 @@ userName()
 ```
 
 ```ts
-// Set to "jiny" if patch supported, or "mary" if not
-userName( 'mary' , 'mar' )
+// Set user data to { name : 'jin' , age : 32 }
+userData({ name : 'jin' , age : 32 })
 ```
+
+```ts
+// Patch user data to { name : 'jin' , age : 33 }
+userData( { age : 33 } , { age : 32 } )
+```
+
 To do a property is reactive (cached with automatic invalidation) it is enough to use decorator [$mol_mem](../prop), which uses under the hood [$mol_atom](../atom):
 
 ```ts
@@ -53,12 +77,12 @@ userName() { return $mol_state_local.value( 'name' ) }
 ```ts
 /// Getter/setter
 @ $mol_mem()
-userName( ...diff : string[] ) {
-	if( diff[0] === void ) { // check for undefined is important
+userName( next? : string ) {
+	if( next === void ) { // check for undefined is important
 		return $mol_state_local.value( 'name' ) // pull value
 	} else {
-		$mol_state_local.value( 'name' , diff[0] ) // put value 
-		return diff[0] // return next value
+		$mol_state_local.value( 'name' , next ) // put value 
+		return next // return next value
 	}
 }
 ```
@@ -66,17 +90,11 @@ userName( ...diff : string[] ) {
 ```ts
 /// Delegated getter/setter
 @ $mol_mem()
-userName( ...diff : string[] ) {
-	var next = $mol_state_local.value( 'name' , ...diff )
-	return next // return next value
+userName( next? : string ) {
+	return $mol_state_local.value( 'name' , next )
 }
 ```
 Additional examples of usage reactive properties:
-
-```ts
-// Invalidate cache
-userName( void 0 )
-```
 
 ```ts
 // Force push value to cache
@@ -88,8 +106,9 @@ userName( void 0 , 'jin' )
 Multi-value properties has the following interface:
 
 ```ts
-myProperty< Key , Value >( key : Key ) : Value
-myProperty< Key , Value >( key : Key , ...diff : Value[] ) : Value
+myProperty< Key , Value >( key : Key ) : Value // getter
+myProperty< Key , Value >( key : Key , next? : Value ) : Value // getter/setter
+myProperty< Key , Value >( key : Key , next? : Value , prev? : Value ) : Value // getter/setter/patcher
 ```
 
 Examples of declarations:
@@ -102,10 +121,11 @@ userName( pos : number ) {
 
 ```ts
 @ $mol_mem_key()
-userNames( pos : number , ...diff : string[] ) {
-	return $mol_state_local.value( 'name' , ...diff ) || `User #${pos}`
+userNames( pos : number , next? : string , prev? : string ) {
+	return $mol_state_local.value( 'name' , next , prev ) || `User #${pos}`
 }
 ```
+
 Examples of usages:
 
 ```ts
@@ -118,10 +138,6 @@ userName( 0 , 'jin' )
 userName( 0 )
 ```
 
-```ts
-// Set user#0 name to "jiny" if patch supported, or "mary" if not.
-userName( 0 , 'mary' , 'mar' ) 
-```
 As a key it is allowed to use any value, which can be serialized into JSON, for example:
 
 ```ts

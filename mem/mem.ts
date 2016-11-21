@@ -4,7 +4,6 @@ namespace $ {
 	/// Method must be a polymorphic property (getter/setter/getter+setter).
 	export function $mol_mem< Host extends { objectPath() : string } , Value >(
 		config? : {
-			fail? : ( host : Host , error : Error ) => Value|Error
 			lazy? : boolean
 		}
 	) {
@@ -26,17 +25,14 @@ namespace $ {
 				var info : $mol_atom<any> = atoms[ field ]
 				if( !info ) {
 					atoms[ field ] = info = new $mol_atom(
-						value as any , // FIXME: type checking
-						config && config.fail ,
+						value.bind( host ) as any , // FIXME: type checking
 						host ,
 						field ,
 					)
 					if( config ) info.autoFresh = !config.lazy
 				}
 				
-				if( next !== void 0 ) return info.set( next , prev )
-				if( prev !== void 0 ) return info.push( prev )
-				return info.get()
+				return info.value( next , prev )
 			}
 			
 			void( (<any>descr.value)[ 'value' ] = value )
@@ -46,7 +42,6 @@ namespace $ {
 	
 	export function $mol_mem_key< Host extends { objectPath() : string } , Key , Value >(
 		config? : {
-			fail? : ( host : Host , error : Error ) => Value|Error
 			lazy? : boolean
 		}
 	) {
@@ -68,18 +63,14 @@ namespace $ {
 				var info : $mol_atom<any> = atoms[ field ]
 				if( !info ) {
 					atoms[ field ] = info = new $mol_atom(
-						value as any , // FIXME: type checking
-						config && config.fail ,
+						value.bind( host , key ) as any , // FIXME: type checking
 						host ,
 						field ,
-						key ,
 					)
 					if( config ) info.autoFresh = !config.lazy
 				}
 				
-				if( next !== void 0 ) return info.set( next , prev )
-				if( prev !== void 0 ) return info.push( prev )
-				return info.get()
+				return info.value( next , prev )
 			}
 			
 			void( (<any>descr.value)[ 'value' ] = value )

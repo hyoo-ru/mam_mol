@@ -15,7 +15,7 @@ $mol_app_users $mol_viewer childs /
 			enabled < changed false 
 			childs / < saveLabel @ \Save
 			eventClick > eventSave null
-		< messager $mol_viewer childs / < saverResult \
+		< messager $mol_statuser status < saverResult null
 
 $mol_app_users_item $mol_rower
 	heightMinimal 68
