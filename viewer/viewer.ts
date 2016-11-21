@@ -212,21 +212,20 @@ namespace $ {
 			}
 		}
 		
-		@ $mol_mem( {
-			fail : ( self : $mol_viewer , error : any ) => {
-				const node = self.DOMNode()
-				if( node ) node.setAttribute( 'mol_viewer_error' , error.name )
+		@ $mol_mem()
+		DOMTree( next? : Element ) {
+			let node = this.DOMNode()
+			
+			try {
+				$mol_viewer.renderChilds( node , this.childsVisible() )
+				$mol_viewer.renderAttrs( node , this.attr() )
+				$mol_viewer.renderFields( node , this.field() )
+				
+				return node
+			} catch( error ) {
+				node.setAttribute( 'mol_viewer_error' , error.name )
 				return error
 			}
-		} )
-		DOMTree( next? : Element ) {
-			var node = this.DOMNode()
-			
-			$mol_viewer.renderChilds( node , this.childsVisible() )
-			$mol_viewer.renderAttrs( node , this.attr() )
-			$mol_viewer.renderFields( node , this.field() )
-			
-			return node
 		}
 		
 		attr() : { [ key : string ] : ()=> string|number|boolean } { return {

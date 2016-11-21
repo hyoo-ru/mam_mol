@@ -4,7 +4,8 @@ namespace $.$mol {
 		
 		message() {
 			try {
-				this.status()
+				let status = this.status()
+				if( status ) status.valueOf()
 				return null
 			} catch( error ) {
 				if( error instanceof $mol_atom_wait ) throw error

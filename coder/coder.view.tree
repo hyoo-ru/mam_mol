@@ -1,6 +1,6 @@
 $mol_coder $mol_viewer childs /
 	< manualer $mol_number
-		value > value \
+		value > value null
 		hint < hint < format \
 		enabledInc false
 		enabledDec false
