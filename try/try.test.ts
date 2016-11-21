@@ -7,12 +7,12 @@ namespace $ {
 			
 		} ,
 		
-		'return error if thrown'() {
-			
-			const error = new Error( '$mol_try test error' )
-			$mol_assert_equal( $mol_try( ()=> { throw error } ) , error )
-			
-		} ,
+		//'return error if thrown'() {
+		//	
+		//	const error = new Error( '$mol_try test error' )
+		//	$mol_assert_equal( $mol_try( ()=> { throw error } ) , error )
+		//	
+		//} ,
 		
 	})	
 }
