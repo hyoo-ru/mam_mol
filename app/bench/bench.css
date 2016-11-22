@@ -1,0 +1,26 @@
+[mol_app_bench_mainer_runner] {
+	margin: .5rem;
+}
+
+[mol_app_bench_mainer_bodier] {
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_app_bench_tester] {
+	border: none;
+	flex: 1 0 100%;
+}
+
+[mol_app_bench_tester][src="about:blank"] {
+	display: none;
+}
+
+[mol_app_bench_resulter] {
+	margin: auto;
+	flex: 0 1 auto;
+}
+
+[mol_app_bench_resulter][mol_viewer_error] {
+	display: none;
+}

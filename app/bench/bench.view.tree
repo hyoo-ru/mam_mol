@@ -1,0 +1,19 @@
+$mol_app_bench $mol_stacker
+	addon / < addonPage $mol_pager title < addonerTitle @ \Variants
+	main / < mainPage $mol_app_bench_mainer
+		title < title
+		eventRun > eventRun null
+		body < content /
+			< tester $mol_app_bench_tester
+			< resulter $mol_grider
+				rows < results /
+
+$mol_app_bench_mainer $mol_pager
+	head /
+		< titler
+		< runner $mol_clicker_major
+			eventClick > eventRun null
+			childs / < runnerLabel @ \Measure
+
+$mol_app_bench_tester $mol_viewer
+	tagName \iframe
