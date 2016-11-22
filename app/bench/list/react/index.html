@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script>
+<script>
+	
+	var Test = React.createClass( {
+	
+		getInitialState : function() {
+			this.onMessage = this.onMessage.bind( this )
+			return {
+				data : [] ,
+				selected : null
+			}
+		} ,
+	
+		select : function( data ) {
+			this.setState( {
+				selected : data.id
+			} )
+		} ,
+	
+		componentWillMount : function() {
+			window.addEventListener( 'message' , this.onMessage )
+		} ,
+	
+		componentDidUnmount : function() {
+			window.removeEventListener( 'message' , this.onMessage )
+		} ,
+	
+		onMessage : function( event ) {
+			switch( event.data[ 0 ] ) {
+				case 'setData' :
+					this.setState( { data : event.data[ 1 ] , selected : null } )
+					break
+			}
+		} ,
+	
+		render : function() {
+			var items = []
+			for( var i = 0 ; i < this.state.data.length ; i++ ) {
+				items.push(
+					React.createElement(
+						"div" ,
+						{
+							key : i ,
+							className : this.state.selected === this.state.data[ i ].id ? "selected" : "" ,
+							onClick : this.select.bind( this , this.state.data[ i ] )
+						} ,
+						React.createElement( "div" , null , this.state.data[ i ].label )
+					)
+				);
+			}
+			var self = this
+			return React.createElement( "div" , null , items )
+		}
+	
+	} )
+	
+	var test = new Test
+	
+	ReactDOM.render( React.createElement( Test ) , document.body )
+
+</script>
