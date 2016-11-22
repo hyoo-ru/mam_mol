@@ -1,0 +1,16 @@
+$mol_app_bench_list_mol $mol_scroller
+	childs /
+		< lister $mol_lister
+			rows < rowers /
+	rower# $mol_app_bench_list_mol_rower
+		selected > rowerSelected# false
+		label < rowerLabel# \
+
+$mol_app_bench_list_mol_rower $mol_viewer
+	> selected false
+	heightMinimal 20
+	attr * mol_perf_render_row_selected < selected
+	event * click > eventToggle null
+	childs /
+		< titler $mol_viewer
+			childs / < label \
