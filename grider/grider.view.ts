@@ -46,12 +46,32 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		headerCellers() {
-			return this.cellers( [] ).map( ( celler , index )=> this.cellerHeader( index ) )
+			return this.cols().map( colId => this.columnHeader( colId ) )
 		}
 		
 		@ $mol_mem()
-		cellerTitle( index : number ) {
-			return this.cellers( [] )[ index ].title();
+		columnTitle( colId : string ) {
+			return colId
+		}
+		
+		rowers() {
+			return this.rows().map( ( row , index )=> this.rower( index ) )
+		}
+		
+		cellers( rowId : number ) {
+			return this.cols().map( colId => this.celler({ row : rowId , col : colId }) )
+		}
+		
+		cellerContent( id : { row : number , col : string } ) {
+			return [ this.rows()[ id.row ][ id.col ] ]
+		}
+		
+		cols() {
+			const rows = this.rows()
+			if( !rows ) return []
+			if( rows.length === 0 ) return []
+			
+			return Object.keys( rows[0] )
 		}
 		
 	}

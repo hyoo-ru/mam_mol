@@ -1,5 +1,6 @@
 $mol_grider $mol_viewer
 	tagName \table
+	rows /
 	childs /
 		< header $mol_grider_rower
 			height < rowHeight 40
@@ -12,9 +13,10 @@ $mol_grider $mol_viewer
 	rower# $mol_grider_rower
 		height < rowHeight 40
 		cellers < cellers# /
-	cellerHeader# $mol_floater
-		childs / < cellerTitle# \
-
+	celler# $mol_grider_celler
+		childs / < cellerContent# /
+	columnHeader# $mol_floater
+		childs / < columnTitle# \
 
 $mol_grider_gaper $mol_viewer
 	height 0
