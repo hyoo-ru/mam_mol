@@ -1,0 +1,21 @@
+[mol_app_inventory] {
+	width: 100%;
+	height: 100%;
+	display: flex;
+}
+
+[mol_app_inventory_header] {
+	flex: 0 0 auto;
+	background: var(--mol_skin_base);
+	color: var(--mol_skin_base_text);
+}
+
+[mol_app_inventory_header] [mol_linker] {
+	margin: 0;
+	color: inherit;
+}
+
+[mol_app_inventory_header] [mol_linker_current] {
+	background: var(--mol_skin_light);
+	color: var(--mol_skin_light_text);
+}
