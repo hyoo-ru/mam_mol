@@ -42,6 +42,14 @@ namespace $.$mol {
 		supplyId( next? : string ) {
 			return $mol_state_arg.value( this.stateKey( 'supply' ) , next )
 		}
+		
+		@ $mol_mem()
+		searchQuery( next? : string ) {
+			if( !next ) return ''
+			if( next.length < 7 ) return next
+			this.supplyId( next )
+			return ''
+		}
 
 		supply() {
 			if( !this.entered() ) return null

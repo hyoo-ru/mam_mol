@@ -17,3 +17,7 @@
 	background: var(--mol_skin_card);
 	color: black;
 }
+
+[mol_switcher_optioner][disabled] {
+	color: var(--mol_skin_passive_text);
+}

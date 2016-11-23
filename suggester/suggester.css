@@ -15,7 +15,8 @@
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	min-height: 0px;
 	position: absolute;
-	background-color: var(--mol_skin_card);
+	color: var(--mol_skin_light_text);
+	background: var(--mol_skin_card);
 	min-width: 6rem;
 	z-index: 1;
 	display: flex;
