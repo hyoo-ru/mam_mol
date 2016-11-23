@@ -19,13 +19,13 @@
 }
 
 [mol_number_clicker] {
-	background-color: var(--mol_skin_light);
+	color: var(--mol_skin_light_text);
+	background: var(--mol_skin_light);
 	width: 1.75rem;
 	padding: .25rem;
 	position: absolute;
 	height: 100%;
 	opacity: 0;
-	z-index: -1;
 }
 
 [mol_number_clicker] [mol_icon] {
@@ -36,11 +36,6 @@
 [mol_number]:hover > [mol_number_clicker] {
 	opacity: 1;
 	transition: opacity .2s .5s ease-out;
-}
-
-[mol_number_clicker]:focus {
-	z-index: 1;
-	opacity: 1;
 }
 
 [mol_number_decrementer] {

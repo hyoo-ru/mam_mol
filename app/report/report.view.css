@@ -19,6 +19,8 @@
 
 [mol_app_report_celler] {
 	border: 1px solid var(--mol_skin_light_line);
+	padding: 0;
+	vertical-align: baseline;
 }
 
 [mol_app_report_celler]:not( [colspan="1"] ) {
@@ -27,9 +29,4 @@
 
 [mol_app_report_texter] {
 	padding: .5rem;
-}
-
-[mol_app_report_stringer] ,
-[mol_app_report_number] [mol_number_stringer] {
-	box-shadow: none;
 }

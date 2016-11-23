@@ -11,7 +11,7 @@ $mol_app_supplies_detailer $mol_pager
 	body / < lister $mol_lister rows / < contenter $mol_lister rows < content /
 		< descrCarder $mol_carder content < descrDecker $mol_decker items /
 			< orgItem $mol_decker_item
-				title < orgLabel \Organization
+				title < orgLabel @ \Organization
 				content < orgContent $mol_rower childs < orgItems /
 					< providerItem $mol_labeler
 						title < providerLabel @ \Provider
@@ -54,4 +54,4 @@ $mol_app_supplies_detailer $mol_pager
 			content < positions /
 	foot / < controller $mol_rower childs < tools / < approver $mol_checker_ticker
 		checked > approved false
-		childs / < approvedLabel @ \Approved
+		label < approvedLabel @ \Approved
