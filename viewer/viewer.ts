@@ -187,7 +187,7 @@ namespace $ {
 				if( ( val == null ) || ( val === false ) ) {
 					node.removeAttribute( name )
 				} else if( val === true ) {
-					node.setAttribute( name , name )
+					node.setAttribute( name , 'true' )
 				} else {
 					node.setAttribute( name , String( val ) )
 				}
