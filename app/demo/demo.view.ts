@@ -38,7 +38,7 @@ namespace $.$mol {
 				if( typeof (<{[index : string]:any}>$)[ name ] !== 'function' ) continue
 				next.push( name.substring( 1 ) )
 			}
-			return next
+		return next.sort()
 		}
 		
 		@ $mol_mem()
