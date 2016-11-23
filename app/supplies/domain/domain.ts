@@ -159,15 +159,20 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key()
+		supplyStatus( id : string , next? : $mol_app_supplies_domain_supply_status ) {
+			return next || $mol_stub_selectRandom( [
+				$mol_app_supplies_domain_supply_status.pending ,
+				$mol_app_supplies_domain_supply_status.approved
+			] )
+		}
+		
+		@ $mol_mem_key()
 		supply( id : string ) {
 			return new $mol_app_supplies_domain_supply().setup( obj => {
 				obj.id = $mol_const( id )
 				obj.cost = ()=> new $mol_unit_money_usd( this.positions( id )
 				.reduce( ( sum , pos )=> sum + pos.cost().valueOf() , 0 ) )
-				obj.status( void 0 , $mol_stub_selectRandom( [
-					$mol_app_supplies_domain_supply_status.pending ,
-					$mol_app_supplies_domain_supply_status.approved
-				] ) )
+				obj.status = ( next? )=> this.supplyStatus( id , next )
 				obj.provider = $mol_const( this.provider( $mol_stub_code( 2 ) ) )
 				obj.consumer = $mol_const( this.consumer( $mol_stub_code( 2 ) ) )
 				obj.group = $mol_const( this.supplyGroup( $mol_stub_code( 2 ) ) )
