@@ -12,7 +12,7 @@ namespace $ {
 			throw new Error( 'Direct access to items not supported. Use item( id : number ) method instead.' )
 		}
 		
-		forEach( handle : ( value : Value , id : number ) => void ) {
+		forEach( handle : ( value? : Value , id? : number ) => void ) {
 			const length = this.length
 			for( let i = 0 ; i < length ; ++i ) {
 				handle( this.item( i ) , i )
@@ -43,11 +43,11 @@ namespace $ {
 			} )
 		}
 		
-		map< ResValue > ( proceed : ( val : Value )=> ResValue ) {
+		map< ResValue > ( proceed : ( val : Value , id? : number )=> ResValue ) {
 			const source = this
 			return new $mol_range_lazy<ResValue>( {
 				item( id ){
-					return proceed( source.item( id ) )
+					return proceed( source.item( id ) , id )
 				} ,
 				get length() {
 					return source.length

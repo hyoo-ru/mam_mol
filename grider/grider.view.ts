@@ -62,16 +62,22 @@ namespace $.$mol {
 			return this.cols().map( colId => this.celler({ row : rowId , col : colId }) )
 		}
 		
+		celler( id : { row : number , col : string } ) {
+			const val = this.row( id.row )[ id.col ]
+			if( typeof val === 'number' ) return this.cellerNumber( id )
+			return this.cellerText( id )
+		}
+		
 		cellerContent( id : { row : number , col : string } ) {
-			return [ this.rows()[ id.row ][ id.col ] ]
+			return [ this.row( id.row )[ id.col ] ]
+		}
+		
+		row( index : number ) {
+			return ( this.rows().slice( index , index + 1 ).valueOf() as any[] )[0]
 		}
 		
 		cols() {
-			const rows = this.rows()
-			if( !rows ) return []
-			if( rows.length === 0 ) return []
-			
-			return Object.keys( rows[0] )
+			return Object.keys( this.row( 0 ) || {} )
 		}
 		
 	}
@@ -92,7 +98,7 @@ namespace $.$mol {
 		
 	}
 	
-	export class $mol_app_grider_branch extends $.$mol_app_grider_branch {
+	export class $mol_grider_branch extends $.$mol_grider_branch {
 		
 		levelStyle() {
 			return `${ this.level() *.75 - 1.5 }rem`

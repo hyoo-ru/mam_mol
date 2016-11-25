@@ -11,7 +11,7 @@ $mol_barer_demo_login $mol_barer
 		< stringer $mol_stringer
 			value > value \
 		< rememberer $mol_checker_ticker
-			label \Remember me
+			label / \Remember me
 		< submitter $mol_clicker
 			childs /
 				\Submit

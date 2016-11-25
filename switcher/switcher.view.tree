@@ -3,7 +3,7 @@ $mol_switcher $mol_viewer
 	enabled true
 	optioner# $mol_checker
 		checked > optionChecked# false
-		label < optionLabel# \
+		label / < optionLabel# \
 		enabled < enabled
 	> value null
 	< options *

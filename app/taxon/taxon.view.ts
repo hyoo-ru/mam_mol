@@ -103,44 +103,12 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		rowers() {
+		rows() {
 			const paths = this.pathsAll()
 			return new $mol_range_lazy( {
 				length : paths.length ,
-				item : index => this.grider().rower( paths[ index ] ) ,
+				item : index => this.row( paths[ index ] ) ,
 			} )
-		}
-		
-		@ $mol_mem_key()
-		cellers( path : number[] ) {
-			const next : $mol_viewer[] = []
-			const hierarhyField = this.hierarhyField() 
-			
-			next.push( this.cellerBranch( path ) )
-			
-			const row : any = this.row( [1] )
-			for( let field in row ) {
-				if( field === hierarhyField ) continue
-				if( typeof row[ field ] === 'number' ) {
-					next.push( this.cellerNumber({ path : path , field }) )
-				} else {
-					next.push( this.cellerText({ path : path , field }) )
-				}
-			}
-			
-			return next
-		}
-		
-		cellerTitle( id : { path : number[] , field : string } ) {
-			return id.field;
-		}
-		
-		valueText( id : { path : number[] , field : string } ) : string {
-			return ( this.row( id.path ) as any )[ id.field ];
-		}
-		
-		valueNumber( id : { path : number[] , field : string } ) : number {
-			return ( this.row( id.path ) as any )[ id.field ];
 		}
 		
 		rowLevel( path : number[] ) {

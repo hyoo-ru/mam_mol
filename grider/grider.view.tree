@@ -1,6 +1,7 @@
 $mol_grider $mol_viewer
 	tagName \table
 	rows /
+	row# null
 	childs /
 		< header $mol_grider_rower
 			height < rowHeight 40
@@ -13,10 +14,17 @@ $mol_grider $mol_viewer
 	rower# $mol_grider_rower
 		height < rowHeight 40
 		cellers < cellers# /
-	celler# $mol_grider_celler
+	celler# null
+	cellerText# $mol_grider_celler
+		childs / < cellerContent# /
+	cellerNumber# $mol_grider_number
 		childs / < cellerContent# /
 	columnHeader# $mol_floater
 		childs / < columnTitle# \
+	cellerBranch# $mol_grider_branch
+		level < rowLevel# 0
+		content < cellerContent# /
+		expanded > rowExpanded# false
 
 $mol_grider_gaper $mol_viewer
 	height 0
@@ -33,9 +41,9 @@ $mol_grider_celler $mol_viewer
 
 $mol_grider_number $mol_grider_celler
 
-$mol_app_grider_branch $mol_checker_expander
+$mol_grider_branch $mol_checker_expander
 	level 0
 	field * style.paddingLeft < levelStyle \0px
 	checked > expanded false
 	enabled < expandable false
-	label < name \
+	label < content /
