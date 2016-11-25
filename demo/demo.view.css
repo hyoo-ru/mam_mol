@@ -1,5 +1,6 @@
 :root {
 	--mol_skin_base: hsl( 140 , 35% , 50% );
+	--mol_skin_round: .25rem;
 }
 
 [mol_demo] {
