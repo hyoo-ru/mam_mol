@@ -9,7 +9,7 @@
 
 [mol_switcher_optioner] {
 	padding: .5rem .75rem;
-	flex: 1 1 0;
+	flex: 1 1 0%;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 }
 
