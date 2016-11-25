@@ -224,7 +224,7 @@ namespace $ {
 				return node
 			} catch( error ) {
 				node.setAttribute( 'mol_viewer_error' , error.name )
-				return error
+				throw error
 			}
 		}
 		
