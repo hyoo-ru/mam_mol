@@ -66,7 +66,7 @@ namespace $.$mol {
 				
 				switch( token.name ) {
 					case 'text-link' : {
-						if( token.chunks[ 1 ][ 0 ] === '#' ) {
+						if( /^#|(\w+script+:)+/.test( token.chunks[ 1 ] ) ) {
 							const span = this.spanner( id )
 							span.content( this.text2spans( id , token.chunks[ 0 ] ) )
 							return span
