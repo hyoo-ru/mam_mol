@@ -2,103 +2,126 @@ namespace $.$mol {
 	
 	export class $mol_app_bench extends $.$mol_app_bench {
 		
-		data( count : number ) {
-			const adjectives = ["pretty", "large", "big", "small", "tall", "short", "long", "handsome", "plain", "quaint", "clean", "elegant", "easy", "angry", "crazy", "helpful", "mushy", "odd", "unsightly", "adorable", "important", "inexpensive", "cheap", "expensive", "fancy"]
-			const colours = ["red", "yellow", "blue", "green", "pink", "brown", "purple", "brown", "white", "black", "orange"]
-			const nouns = ["table", "chair", "house", "bbq", "desk", "car", "pony", "cookie", "sandwich", "burger", "pizza", "mouse", "keyboard"]
-			return new $mol_range_lazy({
-				length : count ,
-				item : id => ({
-					id: id ,
-					label: $mol_stub_selectRandom(adjectives) + " " + $mol_stub_selectRandom(colours) + " " + $mol_stub_selectRandom(nouns) ,
-				})
-			}).valueOf()
-		}
-		
-		eventRun() {
-			return this.sampleIds().map( id => {
-				this.measureInit( id , null )
-				this.measureFill( { sample : id , count : 100 } , null )
-				this.measureFill( { sample : id , count : 1000 } , null )
-				this.measureFill( { sample : id , count : 10000 } , null )
-				this.measureFill( { sample : id , count : 0 } , null )
-			} )
+		@ $mol_mem()
+		bench( next? : string , prev? : string ) {
+			return $mol_state_arg.value( this.stateKey( 'bench' ) , next , prev ) || 'list'
 		}
 		
 		@ $mol_mem()
-		sandbox() {
-			return this.tester().DOMNode() as HTMLIFrameElement
-		}
-		
-		@ $mol_mem_key()
-		measureInit( sampleId : string , next? : number , prev? : number ) : number {
-			const sandbox = this.sandbox()
-			sandbox.src = this.sampleUri( sampleId )
+		sandbox( next? : HTMLIFrameElement , prev? : HTMLIFrameElement ) : HTMLIFrameElement {
+			const next2 = this.tester().DOMNode() as HTMLIFrameElement
 			
-			const start = Date.now()
-			sandbox.onload = ()=> {
-				this.measureInit( sampleId , void 0 , Date.now() - start )
-				sandbox.onload = null
+			next2.src = this.bench()
+			
+			next2.onload = event => {
+				next2.onload = null
+				this.sandbox( void 0 , next2 )
 			}
 			
-			throw new $mol_atom_wait( 'Sample init...' )
+			throw new $mol_atom_wait( `Loading sandbox...` )
 		}
 		
+		_taskActive : $mol_atom<any>
+		
 		@ $mol_mem_key()
-		measureFill( config : { sample : string , count : number } , next? : number , prev? : number ) : number {
-			
-			this.measureInit( config.sample )
-			
-			requestAnimationFrame( ()=> {
+		commandResult< Result >( command : any[] , next? : number , prev? : number ) : Result {
+			const task = $mol_atom_task( ()=> {
+				if( this._taskActive && ( this._taskActive !== task ) ) this._taskActive.get().valueOf()
+				this._taskActive = task
+				
 				const sandbox = this.sandbox()
+				sandbox.contentWindow.postMessage( command , '*' )
 				
-				sandbox.contentWindow.postMessage( [ 'setData' , this.data( config.count ) ] , '*' )
+				window.onmessage = event => {
+					if( event.data[0] !== 'done' ) return
+					window.onmessage = null
+					
+					this.commandResult( command , void 0 , event.data[1] )
+					this._taskActive = null
+					task.push( true )
+				}
 				
-				const start = Date.now()
-				setTimeout( () => {
-					this.measureFill( config , void 0 , Date.now() - start )
-				} )
+				throw new $mol_atom_wait( `Running ${ command }...` )
 			} )
 			
-			throw new $mol_atom_wait( 'Sample init...' )
+			throw new $mol_atom_wait( `Running ${ command }...` )
+		}
+		
+		samplesAll( next? : string[] , prev? : string[] ) {
+			return this.commandResult<string[]>( [ 'get samples' ] ).slice().sort()
+		}
+		
+		samples( next? : string[] , prev? : string[] ) {
+			const arg = $mol_state_arg.value( this.stateKey( 'sample' ) , next && next.join( '~' ) )
+			return arg ? arg.split( '~' ).sort() : []
+		}
+		
+		steps( next? : string[] , prev? : string[] ) {
+			return this.commandResult<string[]>( [ 'get steps' ] ).valueOf() as string[]
 		}
 		
 		@ $mol_mem()
-		measure( sampleId : string )  {
-			return {
+		resultsSample( sampleId : string )  {
+			const results : { [ key : string ] : any } = {
 				sample : sampleId ,
-				init : this.measureInit( sampleId ).valueOf() ,
-				fill_100 : this.measureFill({ sample : sampleId , count : 100 }).valueOf() ,
-				fill_1K : this.measureFill({ sample : sampleId , count : 1000 }).valueOf() ,
-				fill_10K : this.measureFill({ sample : sampleId , count : 10000 }).valueOf() ,
-				clear : this.measureFill({ sample : sampleId , count : 0 }).valueOf() ,
 			}
-		}
-		
-		sampleUrisDefault() {
-			return 'react'
-		}
-		
-		sampleIds() {
-			return ( $mol_state_arg.value( this.stateKey( 'sample' ) ) || this.sampleUrisDefault() )
-			.split( '~' )
-		}
-		
-		sampleUri( sampleId : string ) {
-			return `list/${ sampleId }/`
+			
+			this.steps().forEach( step => {
+				results[ step ] = this.commandResult<number>([ step , sampleId ]).valueOf()
+			} )
+			
+			return results
 		}
 		
 		@ $mol_mem()
 		results()  {
-			const next = this.sampleIds().map( id => this.measure( id ).valueOf() )
-			this.sandbox().src = 'about:blank'
+			const results : { [ key : string ] : any }[] = []
+			
+			this.samples().forEach( sample => {
+				results.push( this.resultsSample( sample ).valueOf() )
+			} )
+			
+			return results
+		}
+		
+		menuOptions() {
+			return this.samplesAll().map( sample => this.menuOptioner( sample ) )
+		}
+		
+		menuOptionerTitle( sample : string ) {
+			return sample
+		}
+		
+		@ $mol_mem()
+		menuOptionerChecked( sample : string , next? : boolean , prev? : boolean ) {
+			if( next === void 0 ) return this.samples().indexOf( sample ) !== -1
+			
+			if( next ) this.samples( this.samples().concat( sample ) )
+			else this.samples( this.samples().filter( s => s !== sample ) )
+			
 			return next
 		}
 		
-		content() : $mol_viewer[] {
-			return [ this.tester() , this.resulter() ]
+		griderCeller( id : { row : number , col : string } ) {
+			if( id.col === 'sample' ) return this.resulter().cellerText( id )
+			return this.resulterCellerNumber( id )
 		}
 		
+		resultValue( id : { row : number , col : string } ) {
+			return this.results()[ id.row ][ id.col ]
+		}
+		
+		resultMaxValue( col : string ) {
+			let max = 0
+			this.results().forEach( measure => {
+				if( measure[ col ] > max ) max = measure[ col ]
+			} )
+			return max
+		}
+		
+		resultPortion( id : { row : number , col : string } ) {
+			return this.resultValue( id ) / this.resultMaxValue( id.col )
+		}
 	}
 	
 }

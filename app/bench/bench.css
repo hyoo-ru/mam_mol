@@ -1,26 +1,39 @@
-[mol_app_bench_mainer_runner] {
-	margin: .5rem;
-}
-
 [mol_app_bench_mainer_bodier] {
 	display: flex;
 	flex-direction: column;
+	height: auto;
+	flex: 0 1 auto;
+}
+
+[mol_app_bench_menu] {
+	padding: .5rem;
 }
 
 [mol_app_bench_tester] {
 	border: none;
-	flex: 1 0 100%;
-}
-
-[mol_app_bench_tester][src="about:blank"] {
-	display: none;
+	flex: 1 0 50%;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	position: relative;
 }
 
 [mol_app_bench_resulter] {
 	margin: auto;
-	flex: 0 1 auto;
+	flex: 0 0 50%;
 }
 
-[mol_app_bench_resulter][mol_viewer_error] {
-	display: none;
+[mol_app_bench_menu] {
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_app_bench_resulterCellerNumber] {
+	white-space: nowrap;
+	text-align: right;
+}
+
+[mol_app_bench_resultPortioner] {
+	display: inline-flex;
+	vertical-align: bottom;
+	margin-left: .5rem;
+	width: 5vw;
 }

@@ -1,6 +1,32 @@
 <!DOCTYPE html>
 <html>
 
+<style>
+	html {
+		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+	}
+	
+	body {
+		margin: 0;
+	}
+	
+	.list {
+		padding: .5rem;
+	}
+	
+	.list-item {
+		padding: .5rem;
+	}
+	
+	.list-item-selected {
+		background: #eee;
+	}
+	
+	.list-item-title {
+		font-weight: bold;
+	}
+</style>
+
 <body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
@@ -33,7 +59,7 @@
 	
 		onMessage : function( event ) {
 			switch( event.data[ 0 ] ) {
-				case 'setData' :
+				case 'set data' :
 					this.setState( { data : event.data[ 1 ] , selected : null } )
 					break
 			}
@@ -42,20 +68,42 @@
 		render : function() {
 			var items = []
 			for( var i = 0 ; i < this.state.data.length ; i++ ) {
+				var selectedClass = this.state.selected === this.state.data[ i ].id ? " list-item-selected " : ""
 				items.push(
 					React.createElement(
 						"div" ,
 						{
 							key : i ,
-							className : this.state.selected === this.state.data[ i ].id ? "selected" : "" ,
+							className : "list-item" + selectedClass ,
 							onClick : this.select.bind( this , this.state.data[ i ] )
 						} ,
-						React.createElement( "div" , null , this.state.data[ i ].label )
+						[
+							React.createElement(
+								"div" ,
+								{
+									className : 'list-item-title'
+								} ,
+								this.state.data[ i ].title
+							) ,
+							React.createElement(
+								"div" ,
+								{
+									className : 'list-item-content'
+								} ,
+								this.state.data[ i ].content
+							)
+						]
 					)
 				);
 			}
 			var self = this
-			return React.createElement( "div" , null , items )
+			return React.createElement(
+				"div" ,
+				{
+					className : 'list'
+				} ,
+				items
+			)
 		}
 	
 	} )

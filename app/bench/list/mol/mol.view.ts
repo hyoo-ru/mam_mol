@@ -2,7 +2,8 @@ namespace $.$mol {
 
 	export interface $mol_app_bench_list_mol_row {
 		id : number
-		label : string
+		title : string
+		content : string
 	}
 
 	export class $mol_app_bench_list_mol extends $.$mol_app_bench_list_mol {
@@ -10,7 +11,7 @@ namespace $.$mol {
 		@ $mol_mem()
 		static rows( next? : $mol_app_bench_list_mol_row[] , prev? : $mol_app_bench_list_mol_row[] ) : $mol_app_bench_list_mol_row[] {
 			window.addEventListener( 'message' , event => {
-				if( event.data[0] !== 'setData' ) return
+				if( event.data[0] !== 'set data' ) return
 				this.rows( void 0 , event.data[1] )
 			} )
 			return []
@@ -19,8 +20,14 @@ namespace $.$mol {
 		@ $mol_mem()
 		rowers() { return $mol_app_bench_list_mol.rows().map( ( row , id ) => this.rower( id ) ) }
 		
-		rowerLabel( id : number ) {
-			return $mol_app_bench_list_mol.rows()[ id ].label
+		@ $mol_mem()
+		rowerTitle( id : number ) {
+			return $mol_app_bench_list_mol.rows()[ id ].title
+		}
+		
+		@ $mol_mem()
+		rowerContent( id : number ) {
+			return $mol_app_bench_list_mol.rows()[ id ].content
 		}
 		
 		rowerSelected( id : number , next? : boolean ) {

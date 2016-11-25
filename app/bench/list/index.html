@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+
+<meta charset="utf-8" />
+
+<style>
+	html , body {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+	}
+	
+	#sandbox {
+		border: none;
+		flex: 1 0 50%;
+	}
+	
+	#descr {
+		flex: 0 1 40rem;
+		padding: .5rem;
+	}
+
+	#descr h1 {
+		margin: 0;
+		padding: .5rem;
+		font-size: 2em;
+		font-weight: normal;
+	}
+
+	#descr p {
+		margin: 0;
+		padding: .5rem;
+	}
+
+	#descr dl {
+		display: table-row;
+	}
+	
+	#descr dl > * {
+		display: table-cell;
+		padding: .5rem;
+	}
+
+	#descr dt {
+		font-weight: bolder;
+	}
+	
+	#descr b {
+		font-weight: bolder;
+		display: inline-block;
+	}
+</style>
+
+<div id="descr">
+	<h1>List rendering</h1>
+	<p>
+		Sample application outputs list of blocks with title and content.
+		Blocks has <b>variable height</b>.
+		Block can <b>selected by clicking</b> on them.
+		Dataset has <b>2000 items</b>.
+	</p>
+	<h1>Steps</h1>
+	<dl>
+		<dt>start</dt>
+		<dd>Time from url changing to loading complete.</dd>
+	</dl>
+	<dl>
+		<dt>fill</dt>
+		<dd>Time from receiving full dataset to rendering complete.</dd>
+	</dl>
+	<dl>
+		<dt>update</dt>
+		<dd>Time from receiving new full dataset to rerendering complete.</dd>
+	</dl>
+	<h1>Results</h1>
+	<p>Results in <b>milliseconds</b>. Lower is better.</p>
+</div>
+
+<iframe id="sandbox"></iframe>
+
+<script>
+	
+	var sandbox = document.getElementById( 'sandbox' )
+	
+	var samples = [ 'mol' , 'react-15-3-2' , 'angular-1-5-5' , 'alight-0-12' ]
+	var steps = [ 'start' , 'fill' , 'update' ]
+	
+	var handlers = {
+		
+		'get samples' : function( ) {
+			done( samples )
+		} ,
+		
+		'get steps' : function( ) {
+			done( steps )
+		} ,
+
+		'start' : function( sample ) {
+			var start = Date.now()
+			sandbox.src = sample
+			sandbox.onload = function() {
+				sandbox.onload = null
+				done( Date.now() - start )
+			}
+		} ,
+
+		'set data' : function( data ) {
+			sandbox.contentWindow.postMessage( [ 'set data' , data ] , '*' )
+			var start = Date.now()
+			requestAnimationFrame( function() {
+				requestAnimationFrame( function() { // wait for message receive
+					requestAnimationFrame( function() { // wait for rendering complete
+						done( Date.now() - start )
+					} )
+				} )
+			} )
+		} ,
+
+		'fill' : function( sample ) {
+			handlers['set data']( getData( 2000 ) )
+		} ,
+
+		'update' : function( sample ) {
+			handlers['set data']( getData( 2000 ) )
+		} ,
+
+		'done' : function( result ) {
+			done( result )
+		} ,
+	
+	}
+	
+	function getData( count ) {
+		var lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+		var result = []
+		for( var i = 0 ; i < count ; ++i ) {
+			result.push({
+				id: i ,
+				title: "#" + ( i + 1 ) ,
+				content: lorem.substring( 0 , Math.ceil( Math.random() * lorem.length ) ) ,
+			})
+		}
+		return result
+	}
+
+	function selectRandom( list ) {
+		return list[ Math.floor( Math.random() * list.length ) ]
+	}
+
+	function done( result ) {
+		if( parent === window ) return console.log( result )
+		parent.postMessage( [ 'done' , result ] , '*' )
+	}
+	
+	window.addEventListener( 'message' , function( event ) {
+		var method = event.data[0]
+		var handler = handlers[ method ]
+		if( !handler ) throw new Error( 'Unknown message: ' + method )
+		var args = event.data.slice( 1 )
+		handler.apply( null , args )
+	} )
+	
+</script>
