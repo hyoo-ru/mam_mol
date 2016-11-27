@@ -66,12 +66,14 @@ namespace $.$mol {
 			let count = this.groupsByCompleted()[ 'false' ].length
 			return ( count === 1 ) ? '1 item left' : `${count} items left`
 		}
+		
+		_idSeed = 0
 
 		eventAdd( next : Event ) {
 			var title = this.taskNewTitle() 
 			if( !title ) return
 			
-			var id = Date.now()
+			var id = ++ this._idSeed
 			var task = { completed : false , title }
 			this.task( id , task )
 			
