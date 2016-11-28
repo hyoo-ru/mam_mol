@@ -3,6 +3,9 @@ namespace $ {
 	/// Creates the decorator for caching result value by json-key passed as first argument.
 	/// Method must be a polymorphic property (getter/setter/getter+setter).
 	export function $mol_mem< Host extends { objectPath() : string } , Value >(
+		config? : {
+			lazy? : boolean
+		}
 	) {
 		
 		return function(
@@ -26,6 +29,7 @@ namespace $ {
 						host ,
 						field ,
 					)
+					if( config ) info.autoFresh = !config.lazy
 				}
 				
 				return info.value( next , prev )
@@ -37,6 +41,9 @@ namespace $ {
 	}
 	
 	export function $mol_mem_key< Host extends { objectPath() : string } , Key , Value >(
+		config? : {
+			lazy? : boolean
+		}
 	) {
 		
 		return function(
@@ -60,6 +67,7 @@ namespace $ {
 						host ,
 						field ,
 					)
+					if( config ) info.autoFresh = !config.lazy
 				}
 				
 				return info.value( next , prev )
