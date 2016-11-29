@@ -120,11 +120,11 @@ namespace $ {
 			var events = this.event()
 			for( let name in events ) {
 				let handle = events[ name ]
-				next2.addEventListener(
-					name , event => {
+				next2.addEventListener( name , event => {
+					$mol_atom_task( ()=> {
 						handle( event )
-					}
-				)
+					} ).get()
+				} )
 			}
 			
 			return next2
@@ -138,7 +138,7 @@ namespace $ {
 				
 				if( view == null ) {
 				} else if( typeof view === 'object' ) {
-					var existsNode = ( ( view instanceof $mol_viewer ) ? view.DOMNode() : view )
+					var existsNode = ( ( view instanceof $mol_viewer ) ? view.DOMNode() : view.valueOf() as Node )
 					while( true ) {
 						if( !nextNode ) {
 							node.appendChild( existsNode )
