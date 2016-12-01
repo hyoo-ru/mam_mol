@@ -1518,7 +1518,7 @@ var $;
         }
         $mol_state_arg.href = function (next) {
             if (next)
-                history.replaceState(history.state, document.title, next + "#");
+                history.replaceState(history.state, document.title, "" + next);
             return window.location.search + window.location.hash;
         };
         $mol_state_arg.dict = function (next) {
@@ -1549,7 +1549,7 @@ var $;
                 chunks.push([key].concat(next[key]).map(encodeURIComponent).join('='));
             }
             var hash = chunks.join('#');
-            return hash ? '#' + hash : '';
+            return hash ? '#' + hash + '#' : '#';
         };
         $mol_state_arg.prototype.value = function (key, next) {
             return $mol_state_arg.value(this.prefix + key, next);
@@ -3234,7 +3234,7 @@ var $;
                 return this.commandResult(['samples']).slice().sort();
             };
             $mol_app_bench.prototype.samples = function (next, prev) {
-                var arg = $.$mol_state_arg.value(this.stateKey('sample'), next ? next.join('~') : null);
+                var arg = $.$mol_state_arg.value(this.stateKey('sample'), next && next.join('~'));
                 return arg ? arg.split('~').sort() : [];
             };
             $mol_app_bench.prototype.steps = function (next, prev) {

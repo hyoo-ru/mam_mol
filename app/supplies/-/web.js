@@ -1458,7 +1458,7 @@ var $;
         }
         $mol_state_arg.href = function (next) {
             if (next)
-                history.replaceState(history.state, document.title, next + "#");
+                history.replaceState(history.state, document.title, "" + next);
             return window.location.search + window.location.hash;
         };
         $mol_state_arg.dict = function (next) {
@@ -1489,7 +1489,7 @@ var $;
                 chunks.push([key].concat(next[key]).map(encodeURIComponent).join('='));
             }
             var hash = chunks.join('#');
-            return hash ? '#' + hash : '';
+            return hash ? '#' + hash + '#' : '#';
         };
         $mol_state_arg.prototype.value = function (key, next) {
             return $mol_state_arg.value(this.prefix + key, next);
