@@ -56,7 +56,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		samples( next? : string[] , prev? : string[] ) {
-			const arg = $mol_state_arg.value( this.stateKey( 'sample' ) , next && next.join( '~' ) )
+			const arg = $mol_state_arg.value( this.stateKey( 'sample' ) , next ? next.join( '~' ) : null )
 			return arg ? arg.split( '~' ).sort() : []
 		}
 		
