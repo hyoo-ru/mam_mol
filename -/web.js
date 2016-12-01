@@ -397,19 +397,18 @@ var $;
     (function ($mol_atom_status) {
         $mol_atom_status[$mol_atom_status["obsolete"] = 'obsolete'] = "obsolete";
         $mol_atom_status[$mol_atom_status["checking"] = 'checking'] = "checking";
+        $mol_atom_status[$mol_atom_status["pulling"] = 'pulling'] = "pulling";
         $mol_atom_status[$mol_atom_status["actual"] = 'actual'] = "actual";
     })($.$mol_atom_status || ($.$mol_atom_status = {}));
     var $mol_atom_status = $.$mol_atom_status;
     var $mol_atom = (function (_super) {
         __extends($mol_atom, _super);
-        function $mol_atom(handler, fail, host, field, key) {
+        function $mol_atom(handler, host, field) {
             if (field === void 0) { field = 'value()'; }
             _super.call(this);
             this.handler = handler;
-            this.fail = fail;
             this.host = host;
             this.field = field;
-            this.key = key;
             this.masters = null;
             this.slaves = null;
             this.status = $mol_atom_status.obsolete;
@@ -446,12 +445,15 @@ var $;
             return this.host ? this.host.objectPath() + '.' + this.field : this.field;
         };
         $mol_atom.prototype.get = function () {
+            if (this.status === $mol_atom_status.pulling) {
+                throw new Error("Cyclic atom dependency of " + this.objectPath());
+            }
+            this.actualize();
             var slave = $mol_atom.stack[0];
             if (slave)
                 this.lead(slave);
             if (slave)
                 slave.obey(this);
-            this.actualize();
             var value = (this.host || this)[this.field];
             if (value instanceof Error) {
                 if (typeof Proxy !== 'function')
@@ -482,57 +484,45 @@ var $;
                     oldMasters.forEach(function (master) {
                         master.dislead(_this);
                     });
-                this.push(this.pull());
+                this.status = $mol_atom_status.pulling;
+                var next = this.pull();
+                this.push(next);
             }
             $mol_atom.stack[0] = slave;
         };
         $mol_atom.prototype.pull = function () {
             var host = this.host || this;
             try {
-                if (this.key !== void 0) {
-                    return this.handler.call(host, this.key);
-                }
-                else {
-                    return this.handler.call(host);
-                }
+                return this.handler(this._next);
             }
             catch (error) {
                 if (!error['$mol_atom_catched']) {
                     if (error instanceof $mol_atom_wait) {
                     }
                     else {
-                        console.error(error.stack);
+                        if (error instanceof Error) {
+                            console.error(error.stack);
+                        }
+                        else {
+                            throw error;
+                        }
                     }
-                    error['$mol_atom_catched'] = true;
+                    void (error['$mol_atom_catched'] = true);
                 }
                 return error;
             }
         };
         $mol_atom.prototype.set = function (next, prev) {
-            var host = this.host || this;
-            var next2;
-            if (this.key !== void 0) {
-                next2 = this.handler.call(host, this.key, next, prev);
-            }
-            else {
-                next2 = this.handler.call(host, next, prev);
-            }
-            if (next2 === void 0)
-                return host[this.field];
-            return this.push(next2);
+            this._next = next;
+            this.obsolete();
+            return this.get();
         };
         $mol_atom.prototype.push = function (next) {
             var host = this.host || this;
             var prev = host[this.field];
-            if (next instanceof Error && this.fail) {
-                if (this.key !== void 0) {
-                    next = this.fail.call(host, this.key, host, next);
-                }
-                else {
-                    next = this.fail.call(host, host, next);
-                }
-            }
-            comparing: if ((next instanceof Array) && (prev instanceof Array) && (next.length === prev.length)) {
+            if (next === void 0)
+                next = prev;
+            comparing: if ((next !== prev) && (next instanceof Array) && (prev instanceof Array) && (next.length === prev.length)) {
                 for (var i = 0; i < next['length']; ++i) {
                     if (next[i] !== prev[i])
                         break comparing;
@@ -548,7 +538,10 @@ var $;
                     next = new Proxy(next, {
                         get: function (target) {
                             throw target.valueOf();
-                        }
+                        },
+                        ownKeys: function (target) {
+                            throw target.valueOf();
+                        },
                     });
                 }
                 host[this.field] = next;
@@ -556,6 +549,7 @@ var $;
                 this.obsoleteSlaves();
             }
             this.status = $mol_atom_status.actual;
+            this._next = void 0;
             return next;
         };
         $mol_atom.prototype.obsoleteSlaves = function () {
@@ -621,6 +615,13 @@ var $;
             this.masters.forEach(function (master) { return master.dislead(_this); });
             this.masters = null;
         };
+        $mol_atom.prototype.value = function (next, prev) {
+            if (next !== void 0)
+                return this.set(next, prev);
+            if (prev !== void 0)
+                return this.push(prev);
+            return this.get();
+        };
         $mol_atom.actualize = function (atom) {
             $mol_atom.updating.push(atom);
             $mol_atom.schedule();
@@ -650,6 +651,8 @@ var $;
             this.schedule();
             while (this.updating.length) {
                 var atom = this.updating.shift();
+                if (this.reaping.has(atom))
+                    continue;
                 if (!atom.destroyed())
                     atom.get();
             }
@@ -685,11 +688,18 @@ var $;
         return $mol_atom_wait;
     }(Error));
     $.$mol_atom_wait = $mol_atom_wait;
-    function $mol_atom_task(handler, fail) {
+    function $mol_atom_task(handler) {
         var atom = new $mol_atom(function () {
-            handler();
+            try {
+                handler();
+            }
+            catch (error) {
+                if (!(error instanceof $mol_atom_wait))
+                    atom.destroyed(true);
+                throw error;
+            }
             atom.destroyed(true);
-        }, fail);
+        });
         $mol_atom.actualize(atom);
         return atom;
     }
@@ -710,15 +720,11 @@ var $;
                     atoms = host['$mol_atom_state'] = {};
                 var info = atoms[field];
                 if (!info) {
-                    atoms[field] = info = new $.$mol_atom(value, config && config.fail, host, field);
+                    atoms[field] = info = new $.$mol_atom(value.bind(host), host, field);
                     if (config)
                         info.autoFresh = !config.lazy;
                 }
-                if (next !== void 0)
-                    return info.set(next, prev);
-                if (prev !== void 0)
-                    return info.push(prev);
-                return info.get();
+                return info.value(next, prev);
             };
             void (descr.value['value'] = value);
         };
@@ -735,15 +741,11 @@ var $;
                     atoms = host['$mol_atom_state'] = {};
                 var info = atoms[field];
                 if (!info) {
-                    atoms[field] = info = new $.$mol_atom(value, config && config.fail, host, field, key);
+                    atoms[field] = info = new $.$mol_atom(value.bind(host, key), host, field);
                     if (config)
                         info.autoFresh = !config.lazy;
                 }
-                if (next !== void 0)
-                    return info.set(next, prev);
-                if (prev !== void 0)
-                    return info.push(prev);
-                return info.get();
+                return info.value(next, prev);
             };
             void (descr.value['value'] = value);
         };
@@ -771,7 +773,10 @@ var $;
             _super.apply(this, arguments);
         }
         $mol_window.size = function (next) {
-            return next || [window.innerWidth, window.innerHeight];
+            return next || {
+                width: window.innerWidth,
+                height: window.innerHeight,
+            };
         };
         __decorate([
             $.$mol_mem()
@@ -868,9 +873,10 @@ var $;
             if (this['native()'])
                 return this['native()'];
             var next = this['native()'] = $.$mol_http_request_native();
+            next.withCredentials = Boolean(this.credentials());
             next.onload = function (event) {
                 if (Math.floor(next.status / 100) === 2) {
-                    _this.response(void 0, next);
+                    _this.response(void 0, next.responseText);
                 }
                 else {
                     _this.response(void 0, new Error(next.responseText));
@@ -890,20 +896,15 @@ var $;
             return _super.prototype.destroyed.call(this, next);
         };
         $mol_http_request.prototype.response = function (next, prev) {
-            if (next !== void 0)
-                return next;
             var creds = this.credentials();
             var native = this.native();
-            native.withCredentials = Boolean(creds);
-            native.open(this.method(), this.uri(), true, creds && creds.login, creds && creds.password);
-            native.send(this.body());
+            var method = (next === void 0) ? 'Get' : this.method();
+            native.open(method, this.uri(), true, creds && creds.login, creds && creds.password);
+            native.send(next);
             throw new $.$mol_atom_wait(this.method() + " " + this.uri());
         };
         $mol_http_request.prototype.text = function (next) {
-            if (next === null)
-                this.response(null);
-            else
-                return this.response().responseText;
+            return this.response(next);
         };
         __decorate([
             $.$mol_mem()
@@ -947,64 +948,26 @@ var $;
         $mol_http_resource.prototype.credentials = function () {
             return null;
         };
-        $mol_http_resource.prototype.request = function (method) {
+        $mol_http_resource.prototype.request = function (fresh) {
             var _this = this;
             var request = new $.$mol_http_request();
-            request.method = function () { return method; };
+            request.method = function () { return 'Put'; };
             request.uri = function () { return _this.uri(); };
             request.credentials = function () { return _this.credentials(); };
             return request;
         };
-        $mol_http_resource.prototype.downloader = function (next) {
-            this.dataNext(null);
-            return this.request('Get');
-        };
-        $mol_http_resource.prototype.uploader = function () {
-            var body = this.dataNext();
-            if (body == null)
-                return null;
-            var request = this.request('Put');
-            request.body = function () { return body; };
-            return request;
-        };
-        $mol_http_resource.prototype.uploaded = function () {
-            if (!this.uploader())
-                return null;
-            this.text(void 0, this.uploader().text());
-            return true;
-        };
         $mol_http_resource.prototype.text = function (next, prev) {
-            if (next === void 0) {
-                return this.downloader().text();
-            }
-            else if (next === null) {
-                this.downloader(null);
-            }
-            else {
-                this.dataNext(next);
-            }
-        };
-        $mol_http_resource.prototype.dataNext = function (next) {
-            return next;
+            return this.request().text(next);
         };
         $mol_http_resource.prototype.refresh = function () {
-            this.downloader(null);
+            this.request(!!'fresh');
         };
         __decorate([
             $.$mol_mem()
-        ], $mol_http_resource.prototype, "downloader", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_http_resource.prototype, "uploader", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_http_resource.prototype, "uploaded", null);
+        ], $mol_http_resource.prototype, "request", null);
         __decorate([
             $.$mol_mem()
         ], $mol_http_resource.prototype, "text", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_http_resource.prototype, "dataNext", null);
         __decorate([
             $.$mol_mem_key()
         ], $mol_http_resource, "item", null);
@@ -1022,15 +985,7 @@ var $;
             });
         };
         $mol_http_resource_json.prototype.json = function (next, prev) {
-            if (next === void 0) {
-                return JSON.parse(this.text());
-            }
-            else if (next === null) {
-                this.text(null);
-            }
-            else {
-                this.text(JSON.stringify(next, null, '\t'));
-            }
+            return JSON.parse(this.text(next && JSON.stringify(next, null, '\t')));
         };
         __decorate([
             $.$mol_mem_key()
@@ -1093,7 +1048,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     $.$mol_viewer_context = {};
-    $.$mol_viewer_context.$mol_viewer_heightLimit = function () { return $.$mol_window.size()[1] * 1.5; };
+    $.$mol_viewer_context.$mol_viewer_heightLimit = function () { return $.$mol_window.size().height; };
     var $mol_viewer = (function (_super) {
         __extends($mol_viewer, _super);
         function $mol_viewer() {
@@ -1183,7 +1138,9 @@ var $;
             var _loop_1 = function(name_1) {
                 var handle = events[name_1];
                 next2.addEventListener(name_1, function (event) {
-                    handle(event);
+                    $.$mol_atom_task(function () {
+                        handle(event);
+                    }).get();
                 });
             };
             for (var name_1 in events) {
@@ -1200,7 +1157,7 @@ var $;
                 if (view == null) {
                 }
                 else if (typeof view === 'object') {
-                    var existsNode = ((view instanceof $mol_viewer) ? view.DOMNode() : view);
+                    var existsNode = ((view instanceof $mol_viewer) ? view.DOMNode() : view.valueOf());
                     while (true) {
                         if (!nextNode) {
                             node.appendChild(existsNode);
@@ -1245,7 +1202,7 @@ var $;
                     node.removeAttribute(name_2);
                 }
                 else if (val === true) {
-                    node.setAttribute(name_2, name_2);
+                    node.setAttribute(name_2, 'true');
                 }
                 else {
                     node.setAttribute(name_2, String(val));
@@ -1275,10 +1232,16 @@ var $;
         };
         $mol_viewer.prototype.DOMTree = function (next) {
             var node = this.DOMNode();
-            $mol_viewer.renderChilds(node, this.childsVisible());
-            $mol_viewer.renderAttrs(node, this.attr());
-            $mol_viewer.renderFields(node, this.field());
-            return node;
+            try {
+                $mol_viewer.renderChilds(node, this.childsVisible());
+                $mol_viewer.renderAttrs(node, this.attr());
+                $mol_viewer.renderFields(node, this.field());
+                return node;
+            }
+            catch (error) {
+                node.setAttribute('mol_viewer_error', error.name);
+                throw error;
+            }
         };
         $mol_viewer.prototype.attr = function () {
             return {
@@ -1306,14 +1269,7 @@ var $;
             $.$mol_mem()
         ], $mol_viewer.prototype, "context", null);
         __decorate([
-            $.$mol_mem({
-                fail: function (self, error) {
-                    var node = self.DOMNode();
-                    if (node)
-                        node.setAttribute('mol_viewer_error', error.name);
-                    return error;
-                }
-            })
+            $.$mol_mem()
         ], $mol_viewer.prototype, "DOMTree", null);
         __decorate([
             $.$mol_mem_key()
@@ -1562,13 +1518,11 @@ var $;
         }
         $mol_state_arg.href = function (next) {
             if (next)
-                history.replaceState(history.state, document.title, next);
+                history.replaceState(history.state, document.title, next + "#");
             return window.location.search + window.location.hash;
         };
         $mol_state_arg.dict = function (next) {
-            if (next !== void 0)
-                this.href(this.make(next));
-            var href = this.href();
+            var href = this.href(next && this.make(next));
             var chunks = href.split(/[\/\?#!&;]/g);
             var params = {};
             chunks.forEach(function (chunk) {
@@ -1580,10 +1534,8 @@ var $;
             return params;
         };
         $mol_state_arg.value = function (key, next, prev) {
-            if (next === void 0)
-                return this.dict()[key] || null;
-            this.href(this.link((_a = {}, _a[key] = next, _a)));
-            return next;
+            var nextDict = (next === void 0) ? void 0 : $.$mol_merge_dict(this.dict(), (_a = {}, _a[key] = next, _a));
+            return this.dict(nextDict)[key] || null;
             var _a;
         };
         $mol_state_arg.link = function (next) {
@@ -1596,7 +1548,8 @@ var $;
                     continue;
                 chunks.push([key].concat(next[key]).map(encodeURIComponent).join('='));
             }
-            return '#' + chunks.join('#');
+            var hash = chunks.join('#');
+            return hash ? '#' + hash : '';
         };
         $mol_state_arg.prototype.value = function (key, next) {
             return $mol_state_arg.value(this.prefix + key, next);
@@ -1645,7 +1598,8 @@ var $;
             $mol_stacker.prototype.side = function (next) {
                 if (!this.main())
                     return true;
-                return $.$mol_state_arg.value(this.stateKey('side'), next ? '' : null) != null;
+                var arg = (next === void 0) ? void 0 : next ? '' : null;
+                return $.$mol_state_arg.value(this.stateKey('side'), arg) != null;
             };
             return $mol_stacker;
         }($.$mol_stacker));
@@ -1653,6 +1607,42 @@ var $;
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));
 //stacker.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol_floater = (function (_super) {
+        __extends($mol_floater, _super);
+        function $mol_floater() {
+            _super.apply(this, arguments);
+        }
+        $mol_floater.prototype.shiftStyle = function () {
+            return "";
+        };
+        $mol_floater.prototype.field = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.field.call(this), {
+                "style.transform": function () { return _this.shiftStyle(); },
+            });
+        };
+        $mol_floater.prototype.scrolling = function () {
+            return false;
+        };
+        $mol_floater.prototype.attr = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
+                "mol_floater_scrolling": function () { return _this.scrolling(); },
+            });
+        };
+        return $mol_floater;
+    }($.$mol_viewer));
+    $.$mol_floater = $mol_floater;
+})($ || ($ = {}));
+//floater.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -1681,15 +1671,11 @@ var $;
         $mol_scroller.prototype.scrollLeft = function (next, prev) {
             return (next !== void 0) ? next : 0;
         };
-        $mol_scroller.prototype.shadowStyle = function () {
-            return "";
-        };
         $mol_scroller.prototype.field = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.field.call(this), {
                 "scrollTop": function (next, prev) { return _this.scrollTop(next, prev); },
                 "scrollLeft": function (next, prev) { return _this.scrollLeft(next, prev); },
-                "style.boxShadow": function () { return _this.shadowStyle(); },
             });
         };
         $mol_scroller.prototype.eventScroll = function (next, prev) {
@@ -1784,8 +1770,6 @@ var $;
                 _super.apply(this, arguments);
             }
             $mol_scroller.prototype.scrollTop = function (next) {
-                if (next)
-                    this.moving(true);
                 return $.$mol_state_session.value(this.objectPath() + '.scrollTop()', next) || 0;
             };
             $mol_scroller.prototype.scrollLeft = function (next) {
@@ -1802,8 +1786,8 @@ var $;
                 this.moving(true);
                 new $.$mol_defer(function () {
                     var el = _this.DOMNode();
-                    _this.scrollTop(el.scrollTop);
-                    _this.scrollLeft(el.scrollLeft);
+                    _this.scrollTop(Math.max(0, el.scrollTop));
+                    _this.scrollLeft(Math.max(0, el.scrollLeft));
                     _this.scrollBottom(Math.max(0, el.scrollHeight - el.scrollTop - el.offsetHeight));
                     _this.scrollRight(Math.max(0, el.scrollWidth - el.scrollLeft - el.offsetWidth));
                 });
@@ -1864,239 +1848,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_pager = (function (_super) {
-        __extends($mol_pager, _super);
-        function $mol_pager() {
-            _super.apply(this, arguments);
-        }
-        $mol_pager.prototype.titler = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.title()); };
-            });
-        };
-        $mol_pager.prototype.head = function () {
-            return [].concat(this.titler());
-        };
-        $mol_pager.prototype.header = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return _this.head(); };
-            });
-        };
-        $mol_pager.prototype.body = function () {
-            return [];
-        };
-        $mol_pager.prototype.bodier = function (next, prev) {
-            var _this = this;
-            return new $.$mol_scroller().setup(function (obj) {
-                obj.childs = function () { return _this.body(); };
-            });
-        };
-        $mol_pager.prototype.foot = function () {
-            return [];
-        };
-        $mol_pager.prototype.footer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return _this.foot(); };
-            });
-        };
-        $mol_pager.prototype.childs = function () {
-            return [].concat(this.header(), this.bodier(), this.footer());
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_pager.prototype, "titler", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_pager.prototype, "header", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_pager.prototype, "bodier", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_pager.prototype, "footer", null);
-        return $mol_pager;
-    }($.$mol_viewer));
-    $.$mol_pager = $mol_pager;
-})($ || ($ = {}));
-//pager.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol_lister = (function (_super) {
-        __extends($mol_lister, _super);
-        function $mol_lister() {
-            _super.apply(this, arguments);
-        }
-        $mol_lister.prototype.minHeightStyle = function () {
-            return "";
-        };
-        $mol_lister.prototype.field = function () {
-            var _this = this;
-            return $.$mol_merge_dict(_super.prototype.field.call(this), {
-                "style.minHeight": function () { return _this.minHeightStyle(); },
-            });
-        };
-        $mol_lister.prototype.rows = function () {
-            return [];
-        };
-        $mol_lister.prototype.childs = function () {
-            return this.rows();
-        };
-        return $mol_lister;
-    }($.$mol_viewer));
-    $.$mol_lister = $mol_lister;
-})($ || ($ = {}));
-//lister.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_lister = (function (_super) {
-            __extends($mol_lister, _super);
-            function $mol_lister() {
-                _super.apply(this, arguments);
-            }
-            $mol_lister.prototype.rowOffsets = function () {
-                var childs = this.childs();
-                if (!childs)
-                    return null;
-                var heightLimit = this.contextSub().$mol_viewer_heightLimit();
-                var offset = 0;
-                var next = [];
-                for (var _i = 0, childs_1 = childs; _i < childs_1.length; _i++) {
-                    var child = childs_1[_i];
-                    next.push(offset);
-                    if (child instanceof $.$mol_viewer) {
-                        offset += child.heightMinimal();
-                    }
-                    if (offset > heightLimit)
-                        break;
-                }
-                return next;
-            };
-            $mol_lister.prototype.rowContext = function (index) {
-                var _this = this;
-                var context = this.contextSub();
-                var next = Object.create(context);
-                next.$mol_viewer_heightLimit = function () { return context.$mol_viewer_heightLimit() - _this.rowOffsets()[index]; };
-                return next;
-            };
-            $mol_lister.prototype.childsVisible = function () {
-                var childs = this.childs();
-                if (!childs)
-                    return childs;
-                var limit = this.rowOffsets().length;
-                var next = [];
-                for (var i = 0; i < limit; ++i) {
-                    var child = childs[i];
-                    if (child == null)
-                        continue;
-                    if (child instanceof $.$mol_viewer) {
-                        child.context(this.rowContext(i));
-                    }
-                    next.push(child);
-                }
-                return next;
-            };
-            $mol_lister.prototype.heightMinimal = function () {
-                var height = 0;
-                var childs = this.childs();
-                if (childs)
-                    childs.forEach(function (child) {
-                        if (child instanceof $.$mol_viewer) {
-                            height += child.heightMinimal();
-                        }
-                    });
-                return height;
-            };
-            $mol_lister.prototype.minHeightStyle = function () {
-                return this.heightMinimal() + 'px';
-            };
-            __decorate([
-                $.$mol_mem()
-            ], $mol_lister.prototype, "rowOffsets", null);
-            __decorate([
-                $.$mol_mem_key()
-            ], $mol_lister.prototype, "rowContext", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_lister.prototype, "childsVisible", null);
-            return $mol_lister;
-        }($.$mol_lister));
-        $mol.$mol_lister = $mol_lister;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//lister.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol_floater = (function (_super) {
-        __extends($mol_floater, _super);
-        function $mol_floater() {
-            _super.apply(this, arguments);
-        }
-        $mol_floater.prototype.shiftStyle = function () {
-            return "";
-        };
-        $mol_floater.prototype.field = function () {
-            var _this = this;
-            return $.$mol_merge_dict(_super.prototype.field.call(this), {
-                "style.transform": function () { return _this.shiftStyle(); },
-            });
-        };
-        $mol_floater.prototype.scrolling = function () {
-            return false;
-        };
-        $mol_floater.prototype.attr = function () {
-            var _this = this;
-            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
-                "mol_floater_scrolling": function () { return _this.scrolling(); },
-            });
-        };
-        return $mol_floater;
-    }($.$mol_viewer));
-    $.$mol_floater = $mol_floater;
-})($ || ($ = {}));
-//floater.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var $;
 (function ($) {
     var $mol;
@@ -2109,7 +1860,7 @@ var $;
             $mol_floater.prototype.shiftStyle = function () {
                 var context = this.context();
                 var offset = context.$mol_scroller_scrollTop();
-                return "translateY( " + offset + "px )";
+                return "translateY(" + offset + "px)";
             };
             $mol_floater.prototype.scrolling = function () {
                 return this.context().$mol_scroller_moving();
@@ -2145,27 +1896,16 @@ var $;
         $mol_clicker.prototype.enabled = function () {
             return true;
         };
-        $mol_clicker.prototype.activated = function (next, prev) {
-            return (next !== void 0) ? next : false;
-        };
         $mol_clicker.prototype.eventClick = function (next, prev) {
             return (next !== void 0) ? next : null;
         };
-        $mol_clicker.prototype.eventActiveStart = function (next, prev) {
-            return (next !== void 0) ? next : null;
-        };
-        $mol_clicker.prototype.eventActiveCancel = function (next, prev) {
-            return (next !== void 0) ? next : null;
-        };
-        $mol_clicker.prototype.eventActiveDone = function (next, prev) {
-            return (next !== void 0) ? next : null;
+        $mol_clicker.prototype.eventActivate = function (next, prev) {
+            return this.eventClick(next, prev);
         };
         $mol_clicker.prototype.event = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.event.call(this), {
-                "mousedown": function (next, prev) { return _this.eventActiveStart(next, prev); },
-                "mousemove": function (next, prev) { return _this.eventActiveCancel(next, prev); },
-                "mouseup": function (next, prev) { return _this.eventActiveDone(next, prev); },
+                "click": function (next, prev) { return _this.eventActivate(next, prev); },
             });
         };
         $mol_clicker.prototype.disabled = function () {
@@ -2180,19 +1920,10 @@ var $;
         };
         __decorate([
             $.$mol_mem()
-        ], $mol_clicker.prototype, "activated", null);
-        __decorate([
-            $.$mol_mem()
         ], $mol_clicker.prototype, "eventClick", null);
         __decorate([
             $.$mol_mem()
-        ], $mol_clicker.prototype, "eventActiveStart", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_clicker.prototype, "eventActiveCancel", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_clicker.prototype, "eventActiveDone", null);
+        ], $mol_clicker.prototype, "eventActivate", null);
         return $mol_clicker;
     }($.$mol_viewer));
     $.$mol_clicker = $mol_clicker;
@@ -2216,19 +1947,10 @@ var $;
             $mol_clicker.prototype.disabled = function () {
                 return !this.enabled();
             };
-            $mol_clicker.prototype.eventActiveStart = function (next) {
+            $mol_clicker.prototype.eventActivate = function (next) {
                 if (!this.enabled())
                     return;
-                this.activated(true);
-            };
-            $mol_clicker.prototype.eventActiveCancel = function (next) {
-                this.activated(false);
-            };
-            $mol_clicker.prototype.eventActiveDone = function (next) {
-                var activated = this.activated();
-                this.eventActiveCancel(next);
-                if (activated)
-                    this.eventClick(next);
+                this.eventClick(next);
             };
             return $mol_clicker;
         }($.$mol_clicker));
@@ -2319,7 +2041,7 @@ var $;
             return null;
         };
         $mol_checker.prototype.label = function () {
-            return "";
+            return [];
         };
         $mol_checker.prototype.labeler = function (next, prev) {
             var _this = this;
@@ -2534,6 +2256,24 @@ var $;
         $mol_grider.prototype.tagName = function () {
             return "table";
         };
+        $mol_grider.prototype.rows = function () {
+            return [];
+        };
+        $mol_grider.prototype.cols = function () {
+            return [];
+        };
+        $mol_grider.prototype.records = function () {
+            return [];
+        };
+        $mol_grider.prototype.record = function (key) {
+            return null;
+        };
+        $mol_grider.prototype.hierarhyColumn = function () {
+            return "";
+        };
+        $mol_grider.prototype.rowers = function () {
+            return [];
+        };
         $mol_grider.prototype.rowHeight = function () {
             return 40;
         };
@@ -2546,12 +2286,6 @@ var $;
                 obj.height = function () { return _this.rowHeight(); };
                 obj.cellers = function () { return _this.headerCellers(); };
             });
-        };
-        $mol_grider.prototype.rowers = function () {
-            return [];
-        };
-        $mol_grider.prototype.childs = function () {
-            return [].concat(this.header(), this.rowers());
         };
         $mol_grider.prototype.gapTop = function () {
             return 0;
@@ -2581,13 +2315,45 @@ var $;
                 obj.cellers = function () { return _this.cellers(key); };
             });
         };
-        $mol_grider.prototype.cellerTitle = function (key) {
-            return "";
+        $mol_grider.prototype.celler = function (key) {
+            return null;
         };
-        $mol_grider.prototype.cellerHeader = function (key, next, prev) {
+        $mol_grider.prototype.cellerContent = function (key) {
+            return [];
+        };
+        $mol_grider.prototype.cellerText = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_grider_celler().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.cellerContent(key)); };
+            });
+        };
+        $mol_grider.prototype.cellerNumber = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_grider_number().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.cellerContent(key)); };
+            });
+        };
+        $mol_grider.prototype.columnHeaderContent = function (key) {
+            return [];
+        };
+        $mol_grider.prototype.columnHeader = function (key, next, prev) {
             var _this = this;
             return new $.$mol_floater().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.cellerTitle(key)); };
+                obj.childs = function () { return [].concat(_this.columnHeaderContent(key)); };
+            });
+        };
+        $mol_grider.prototype.rowLevel = function (key) {
+            return 0;
+        };
+        $mol_grider.prototype.rowExpanded = function (key, next, prev) {
+            return (next !== void 0) ? next : false;
+        };
+        $mol_grider.prototype.cellerBranch = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_grider_branch().setup(function (obj) {
+                obj.level = function () { return _this.rowLevel(key); };
+                obj.content = function () { return _this.cellerContent(key); };
+                obj.expanded = function (next, prev) { return _this.rowExpanded(key, next, prev); };
             });
         };
         __decorate([
@@ -2604,7 +2370,19 @@ var $;
         ], $mol_grider.prototype, "rower", null);
         __decorate([
             $.$mol_mem_key()
-        ], $mol_grider.prototype, "cellerHeader", null);
+        ], $mol_grider.prototype, "cellerText", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_grider.prototype, "cellerNumber", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_grider.prototype, "columnHeader", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_grider.prototype, "rowExpanded", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_grider.prototype, "cellerBranch", null);
         return $mol_grider;
     }($.$mol_viewer));
     $.$mol_grider = $mol_grider;
@@ -2691,47 +2469,50 @@ var $;
 })($ || ($ = {}));
 var $;
 (function ($) {
-    var $mol_app_grider_branch = (function (_super) {
-        __extends($mol_app_grider_branch, _super);
-        function $mol_app_grider_branch() {
+    var $mol_grider_branch = (function (_super) {
+        __extends($mol_grider_branch, _super);
+        function $mol_grider_branch() {
             _super.apply(this, arguments);
         }
-        $mol_app_grider_branch.prototype.level = function () {
+        $mol_grider_branch.prototype.tagName = function () {
+            return "div";
+        };
+        $mol_grider_branch.prototype.level = function () {
             return 0;
         };
-        $mol_app_grider_branch.prototype.levelStyle = function () {
+        $mol_grider_branch.prototype.levelStyle = function () {
             return "0px";
         };
-        $mol_app_grider_branch.prototype.field = function () {
+        $mol_grider_branch.prototype.field = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.field.call(this), {
                 "style.paddingLeft": function () { return _this.levelStyle(); },
             });
         };
-        $mol_app_grider_branch.prototype.expanded = function (next, prev) {
+        $mol_grider_branch.prototype.expanded = function (next, prev) {
             return (next !== void 0) ? next : false;
         };
-        $mol_app_grider_branch.prototype.checked = function (next, prev) {
+        $mol_grider_branch.prototype.checked = function (next, prev) {
             return this.expanded(next, prev);
         };
-        $mol_app_grider_branch.prototype.expandable = function () {
+        $mol_grider_branch.prototype.expandable = function () {
             return false;
         };
-        $mol_app_grider_branch.prototype.enabled = function () {
+        $mol_grider_branch.prototype.enabled = function () {
             return this.expandable();
         };
-        $mol_app_grider_branch.prototype.name = function () {
-            return "";
+        $mol_grider_branch.prototype.content = function () {
+            return [];
         };
-        $mol_app_grider_branch.prototype.label = function () {
-            return this.name();
+        $mol_grider_branch.prototype.label = function () {
+            return this.content();
         };
         __decorate([
             $.$mol_mem()
-        ], $mol_app_grider_branch.prototype, "expanded", null);
-        return $mol_app_grider_branch;
+        ], $mol_grider_branch.prototype, "expanded", null);
+        return $mol_grider_branch;
     }($.$mol_checker_expander));
-    $.$mol_app_grider_branch = $mol_app_grider_branch;
+    $.$mol_grider_branch = $mol_grider_branch;
 })($ || ($ = {}));
 //grider.view.tree.js.map
 ;
@@ -2760,7 +2541,7 @@ var $;
                 if (!rowers)
                     return null;
                 var viewWindow = this.viewWindow();
-                return [].concat(this.header(), (viewWindow.top > 0) ? this.gaperTop() : null, rowers.slice(viewWindow.top, viewWindow.bottom).valueOf(), (viewWindow.bottom < viewWindow.count) ? this.gaperBottom() : null);
+                return [].concat(this.cols() && this.header(), (viewWindow.top > 0) ? this.gaperTop() : null, rowers.slice(viewWindow.top, viewWindow.bottom).valueOf(), (viewWindow.bottom < viewWindow.count) ? this.gaperBottom() : null);
             };
             $mol_grider.prototype.viewWindow = function () {
                 var rowers = this.rowers();
@@ -2771,8 +2552,8 @@ var $;
                 var scrollTop = context.$mol_scroller_scrollTop();
                 var heightLimit = context.$mol_viewer_heightLimit();
                 var rowHeight = this.rowHeight();
-                var top = Math.max(0, Math.floor((scrollTop) / rowHeight) - 3);
-                var bottom = Math.min(Math.ceil(heightLimit / rowHeight), count);
+                var top = Math.max(0, Math.floor(scrollTop / rowHeight) - 2);
+                var bottom = Math.min(count, Math.ceil(heightLimit / rowHeight) + 2);
                 return { top: top, bottom: bottom, count: count };
             };
             $mol_grider.prototype.gapTop = function () {
@@ -2785,10 +2566,54 @@ var $;
             };
             $mol_grider.prototype.headerCellers = function () {
                 var _this = this;
-                return this.cellers([]).map(function (celler, index) { return _this.cellerHeader(index); });
+                return this.cols().map(function (colId) { return _this.columnHeader(colId); });
             };
-            $mol_grider.prototype.cellerTitle = function (index) {
-                return this.cellers([])[index].title();
+            $mol_grider.prototype.columnHeaderContent = function (colId) {
+                return [colId];
+            };
+            $mol_grider.prototype.rowers = function () {
+                var _this = this;
+                return this.rows().map(function (row) { return _this.rower(row); });
+            };
+            $mol_grider.prototype.cellers = function (row) {
+                var _this = this;
+                return this.cols().map(function (col) { return _this.celler({ row: row, col: col }); });
+            };
+            $mol_grider.prototype.colType = function (col) {
+                if (col === this.hierarhyColumn())
+                    return 'branch';
+                var val = this.record(this.row(0))[col];
+                if (typeof val === 'number')
+                    return 'number';
+                return 'text';
+            };
+            $mol_grider.prototype.celler = function (id) {
+                switch (this.colType(id.col)) {
+                    case 'branch': return this.cellerBranch(id);
+                    case 'number': return this.cellerNumber(id);
+                }
+                return this.cellerText(id);
+            };
+            $mol_grider.prototype.cellerContent = function (id) {
+                return [this.record(id.row)[id.col]];
+            };
+            $mol_grider.prototype.records = function () {
+                return [];
+            };
+            $mol_grider.prototype.record = function (row) {
+                return this.records()[row];
+            };
+            $mol_grider.prototype.rows = function () {
+                return Object.keys(this.records());
+            };
+            $mol_grider.prototype.row = function (row) {
+                return this.rows().slice(0, 1).valueOf()[0];
+            };
+            $mol_grider.prototype.cols = function () {
+                var rowFirst = this.row(0);
+                if (rowFirst === void 0)
+                    return null;
+                return Object.keys(this.record(rowFirst));
             };
             __decorate([
                 $.$mol_mem()
@@ -2801,7 +2626,13 @@ var $;
             ], $mol_grider.prototype, "headerCellers", null);
             __decorate([
                 $.$mol_mem()
-            ], $mol_grider.prototype, "cellerTitle", null);
+            ], $mol_grider.prototype, "columnHeaderContent", null);
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_grider.prototype, "colType", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_grider.prototype, "rows", null);
             return $mol_grider;
         }($.$mol_grider));
         $mol.$mol_grider = $mol_grider;
@@ -2822,28 +2653,915 @@ var $;
                 _super.apply(this, arguments);
             }
             $mol_grider_rower.prototype.heightStyle = function () {
-                return (this.height() - 1) + "px";
+                return this.height() + "px";
             };
             return $mol_grider_rower;
         }($.$mol_grider_rower));
         $mol.$mol_grider_rower = $mol_grider_rower;
-        var $mol_app_grider_branch = (function (_super) {
-            __extends($mol_app_grider_branch, _super);
-            function $mol_app_grider_branch() {
+        var $mol_grider_branch = (function (_super) {
+            __extends($mol_grider_branch, _super);
+            function $mol_grider_branch() {
                 _super.apply(this, arguments);
             }
-            $mol_app_grider_branch.prototype.levelStyle = function () {
+            $mol_grider_branch.prototype.levelStyle = function () {
                 return (this.level() * .75 - 1.5) + "rem";
             };
-            $mol_app_grider_branch.prototype.expandable = function () {
+            $mol_grider_branch.prototype.expandable = function () {
                 return this.expanded() !== null;
             };
-            return $mol_app_grider_branch;
-        }($.$mol_app_grider_branch));
-        $mol.$mol_app_grider_branch = $mol_app_grider_branch;
+            return $mol_grider_branch;
+        }($.$mol_grider_branch));
+        $mol.$mol_grider_branch = $mol_grider_branch;
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));
 //grider.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_pager = (function (_super) {
+        __extends($mol_pager, _super);
+        function $mol_pager() {
+            _super.apply(this, arguments);
+        }
+        $mol_pager.prototype.titler = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.title()); };
+            });
+        };
+        $mol_pager.prototype.head = function () {
+            return [].concat(this.titler());
+        };
+        $mol_pager.prototype.header = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return _this.head(); };
+            });
+        };
+        $mol_pager.prototype.body = function () {
+            return [];
+        };
+        $mol_pager.prototype.bodier = function (next, prev) {
+            var _this = this;
+            return new $.$mol_scroller().setup(function (obj) {
+                obj.childs = function () { return _this.body(); };
+            });
+        };
+        $mol_pager.prototype.foot = function () {
+            return [];
+        };
+        $mol_pager.prototype.footer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return _this.foot(); };
+            });
+        };
+        $mol_pager.prototype.childs = function () {
+            return [].concat(this.header(), this.bodier(), this.footer());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_pager.prototype, "titler", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_pager.prototype, "header", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_pager.prototype, "bodier", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_pager.prototype, "footer", null);
+        return $mol_pager;
+    }($.$mol_viewer));
+    $.$mol_pager = $mol_pager;
+})($ || ($ = {}));
+//pager.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol_lister = (function (_super) {
+        __extends($mol_lister, _super);
+        function $mol_lister() {
+            _super.apply(this, arguments);
+        }
+        $mol_lister.prototype.minHeightStyle = function () {
+            return "";
+        };
+        $mol_lister.prototype.field = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.field.call(this), {
+                "style.minHeight": function () { return _this.minHeightStyle(); },
+            });
+        };
+        $mol_lister.prototype.rows = function () {
+            return [];
+        };
+        $mol_lister.prototype.childs = function () {
+            return this.rows();
+        };
+        return $mol_lister;
+    }($.$mol_viewer));
+    $.$mol_lister = $mol_lister;
+})($ || ($ = {}));
+//lister.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_lister = (function (_super) {
+            __extends($mol_lister, _super);
+            function $mol_lister() {
+                _super.apply(this, arguments);
+            }
+            $mol_lister.prototype.rowOffsets = function () {
+                var childs = this.childs();
+                if (!childs)
+                    return null;
+                var heightLimit = this.contextSub().$mol_viewer_heightLimit();
+                var offset = 0;
+                var next = [];
+                for (var _i = 0, childs_1 = childs; _i < childs_1.length; _i++) {
+                    var child = childs_1[_i];
+                    next.push(offset);
+                    if (child instanceof $.$mol_viewer) {
+                        offset += child.heightMinimal();
+                    }
+                    if (offset > heightLimit)
+                        break;
+                }
+                return next;
+            };
+            $mol_lister.prototype.rowContext = function (index) {
+                var _this = this;
+                var context = this.contextSub();
+                var next = Object.create(context);
+                next.$mol_viewer_heightLimit = function () { return context.$mol_viewer_heightLimit() - _this.rowOffsets()[index]; };
+                return next;
+            };
+            $mol_lister.prototype.childsVisible = function () {
+                var childs = this.childs();
+                if (!childs)
+                    return childs;
+                var limit = this.rowOffsets().length;
+                var next = [];
+                for (var i = 0; i < limit; ++i) {
+                    var child = childs[i];
+                    if (child == null)
+                        continue;
+                    if (child instanceof $.$mol_viewer) {
+                        child.context(this.rowContext(i));
+                    }
+                    next.push(child);
+                }
+                return next;
+            };
+            $mol_lister.prototype.heightMinimal = function () {
+                var height = 0;
+                var childs = this.childs();
+                if (childs)
+                    childs.forEach(function (child) {
+                        if (child instanceof $.$mol_viewer) {
+                            height += child.heightMinimal();
+                        }
+                    });
+                return height;
+            };
+            $mol_lister.prototype.minHeightStyle = function () {
+                return this.heightMinimal() + 'px';
+            };
+            __decorate([
+                $.$mol_mem()
+            ], $mol_lister.prototype, "rowOffsets", null);
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_lister.prototype, "rowContext", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_lister.prototype, "childsVisible", null);
+            return $mol_lister;
+        }($.$mol_lister));
+        $mol.$mol_lister = $mol_lister;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//lister.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol_icon_tick = (function (_super) {
+        __extends($mol_icon_tick, _super);
+        function $mol_icon_tick() {
+            _super.apply(this, arguments);
+        }
+        $mol_icon_tick.prototype.path = function () {
+            return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
+        };
+        return $mol_icon_tick;
+    }($.$mol_icon));
+    $.$mol_icon_tick = $mol_icon_tick;
+})($ || ($ = {}));
+//tick.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_checker_ticker = (function (_super) {
+        __extends($mol_checker_ticker, _super);
+        function $mol_checker_ticker() {
+            _super.apply(this, arguments);
+        }
+        $mol_checker_ticker.prototype.icon = function (next, prev) {
+            return new $.$mol_icon_tick();
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_checker_ticker.prototype, "icon", null);
+        return $mol_checker_ticker;
+    }($.$mol_checker));
+    $.$mol_checker_ticker = $mol_checker_ticker;
+})($ || ($ = {}));
+//ticker.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_portioner_indicator = (function (_super) {
+        __extends($mol_portioner_indicator, _super);
+        function $mol_portioner_indicator() {
+            _super.apply(this, arguments);
+        }
+        $mol_portioner_indicator.prototype.widthStyle = function () {
+            return "0";
+        };
+        $mol_portioner_indicator.prototype.field = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.field.call(this), {
+                "style.width": function () { return _this.widthStyle(); },
+            });
+        };
+        return $mol_portioner_indicator;
+    }($.$mol_viewer));
+    $.$mol_portioner_indicator = $mol_portioner_indicator;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_portioner = (function (_super) {
+        __extends($mol_portioner, _super);
+        function $mol_portioner() {
+            _super.apply(this, arguments);
+        }
+        $mol_portioner.prototype.portion = function () {
+            return 0;
+        };
+        $mol_portioner.prototype.indWidthStyle = function () {
+            return "0";
+        };
+        $mol_portioner.prototype.indicator = function (next, prev) {
+            var _this = this;
+            return new $.$mol_portioner_indicator().setup(function (obj) {
+                obj.widthStyle = function () { return _this.indWidthStyle(); };
+            });
+        };
+        $mol_portioner.prototype.childs = function () {
+            return [].concat(this.indicator());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_portioner.prototype, "indicator", null);
+        return $mol_portioner;
+    }($.$mol_viewer));
+    $.$mol_portioner = $mol_portioner;
+})($ || ($ = {}));
+//portioner.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_portioner = (function (_super) {
+            __extends($mol_portioner, _super);
+            function $mol_portioner() {
+                _super.apply(this, arguments);
+            }
+            $mol_portioner.prototype.indWidthStyle = function () {
+                return this.portion() * 100 + '%';
+            };
+            return $mol_portioner;
+        }($.$mol_portioner));
+        $mol.$mol_portioner = $mol_portioner;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//portioner.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_bench = (function (_super) {
+        __extends($mol_app_bench, _super);
+        function $mol_app_bench() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_bench.prototype.tester = function (next, prev) {
+            return new $.$mol_app_bench_tester();
+        };
+        $mol_app_bench.prototype.results = function () {
+            return null;
+        };
+        $mol_app_bench.prototype.griderCeller = function (key) {
+            return null;
+        };
+        $mol_app_bench.prototype.resulter = function (next, prev) {
+            var _this = this;
+            return new $.$mol_grider().setup(function (obj) {
+                obj.records = function () { return _this.results(); };
+                obj.celler = function (key) { return _this.griderCeller(key); };
+            });
+        };
+        $mol_app_bench.prototype.mainPage = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_bench_mainer().setup(function (obj) {
+                obj.title = function () { return _this.title(); };
+                obj.tester = function () { return _this.tester(); };
+                obj.body = function () { return [].concat(_this.resulter()); };
+            });
+        };
+        $mol_app_bench.prototype.main = function () {
+            return [].concat(this.mainPage());
+        };
+        $mol_app_bench.prototype.addonerTitle = function () {
+            return this.localizedText("addonerTitle");
+        };
+        $mol_app_bench.prototype.menuOptions = function () {
+            return [];
+        };
+        $mol_app_bench.prototype.menu = function (next, prev) {
+            var _this = this;
+            return new $.$mol_lister().setup(function (obj) {
+                obj.rows = function () { return _this.menuOptions(); };
+            });
+        };
+        $mol_app_bench.prototype.addonPage = function (next, prev) {
+            var _this = this;
+            return new $.$mol_pager().setup(function (obj) {
+                obj.title = function () { return _this.addonerTitle(); };
+                obj.body = function () { return [].concat(_this.menu()); };
+            });
+        };
+        $mol_app_bench.prototype.addon = function () {
+            return [].concat(this.addonPage());
+        };
+        $mol_app_bench.prototype.menuOptionerChecked = function (key, next, prev) {
+            return (next !== void 0) ? next : false;
+        };
+        $mol_app_bench.prototype.menuOptionerTitle = function (key) {
+            return "";
+        };
+        $mol_app_bench.prototype.menuOptioner = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_checker_ticker().setup(function (obj) {
+                obj.heightMinimal = function () { return 36; };
+                obj.checked = function (next, prev) { return _this.menuOptionerChecked(key, next, prev); };
+                obj.label = function () { return [].concat(_this.menuOptionerTitle(key)); };
+            });
+        };
+        $mol_app_bench.prototype.resultValue = function (key) {
+            return 0;
+        };
+        $mol_app_bench.prototype.resultPortion = function (key) {
+            return 0;
+        };
+        $mol_app_bench.prototype.resultPortioner = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_portioner().setup(function (obj) {
+                obj.portion = function () { return _this.resultPortion(key); };
+            });
+        };
+        $mol_app_bench.prototype.resulterCellerNumber = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.tagName = function () { return "td"; };
+                obj.childs = function () { return [].concat(_this.resultValue(key), _this.resultPortioner(key)); };
+            });
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench.prototype, "tester", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench.prototype, "resulter", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench.prototype, "mainPage", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench.prototype, "menu", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench.prototype, "addonPage", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_bench.prototype, "menuOptionerChecked", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_bench.prototype, "menuOptioner", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_bench.prototype, "resultPortioner", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_bench.prototype, "resulterCellerNumber", null);
+        return $mol_app_bench;
+    }($.$mol_stacker));
+    $.$mol_app_bench = $mol_app_bench;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_app_bench_mainer = (function (_super) {
+        __extends($mol_app_bench_mainer, _super);
+        function $mol_app_bench_mainer() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_bench_mainer.prototype.tester = function () {
+            return null;
+        };
+        $mol_app_bench_mainer.prototype.childs = function () {
+            return [].concat(this.header(), this.tester(), this.bodier());
+        };
+        return $mol_app_bench_mainer;
+    }($.$mol_pager));
+    $.$mol_app_bench_mainer = $mol_app_bench_mainer;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_app_bench_tester = (function (_super) {
+        __extends($mol_app_bench_tester, _super);
+        function $mol_app_bench_tester() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_bench_tester.prototype.tagName = function () {
+            return "iframe";
+        };
+        return $mol_app_bench_tester;
+    }($.$mol_viewer));
+    $.$mol_app_bench_tester = $mol_app_bench_tester;
+})($ || ($ = {}));
+//bench.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_bench = (function (_super) {
+            __extends($mol_app_bench, _super);
+            function $mol_app_bench() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_bench.prototype.bench = function (next, prev) {
+                return $.$mol_state_arg.value(this.stateKey('bench'), next, prev) || 'list';
+            };
+            $mol_app_bench.prototype.sandbox = function (next, prev) {
+                var _this = this;
+                var next2 = this.tester().DOMNode();
+                next2.src = this.bench();
+                next2.onload = function (event) {
+                    next2.onload = null;
+                    _this.sandbox(void 0, next2);
+                };
+                throw new $.$mol_atom_wait("Loading sandbox...");
+            };
+            $mol_app_bench.prototype.commandCurrent = function (next, prev) {
+                if (this['commandCurrent()'])
+                    return;
+                return next;
+            };
+            $mol_app_bench.prototype.commandResult = function (command, next, prev) {
+                var _this = this;
+                if (next !== void 0)
+                    return next;
+                var current = this.commandCurrent(command);
+                if (current !== command)
+                    throw new $.$mol_atom_wait("Waiting for " + JSON.stringify(current) + "...");
+                var sandbox = this.sandbox();
+                sandbox.contentWindow.postMessage(command, '*');
+                window.onmessage = function (event) {
+                    if (event.data[0] !== 'done')
+                        return;
+                    window.onmessage = null;
+                    _this.commandCurrent(void 0, null);
+                    _this.commandResult(command, event.data[1]);
+                };
+                throw new $.$mol_atom_wait("Running " + command + "...");
+            };
+            $mol_app_bench.prototype.samplesAll = function (next, prev) {
+                return this.commandResult(['samples']).slice().sort();
+            };
+            $mol_app_bench.prototype.samples = function (next, prev) {
+                var arg = $.$mol_state_arg.value(this.stateKey('sample'), next ? next.join('~') : null);
+                return arg ? arg.split('~').sort() : [];
+            };
+            $mol_app_bench.prototype.steps = function (next, prev) {
+                return this.commandResult(['steps']);
+            };
+            $mol_app_bench.prototype.resultsSample = function (sampleId) {
+                var _this = this;
+                var results = {
+                    sample: sampleId,
+                };
+                this.steps().forEach(function (step) {
+                    results[step] = _this.commandResult([step, sampleId]);
+                });
+                return results;
+            };
+            $mol_app_bench.prototype.results = function () {
+                var _this = this;
+                var results = {};
+                this.samples().forEach(function (sample) {
+                    results[sample] = _this.resultsSample(sample);
+                });
+                return results;
+            };
+            $mol_app_bench.prototype.menuOptions = function () {
+                var _this = this;
+                return this.samplesAll().map(function (sample) { return _this.menuOptioner(sample); });
+            };
+            $mol_app_bench.prototype.menuOptionerTitle = function (sample) {
+                return sample;
+            };
+            $mol_app_bench.prototype.menuOptionerChecked = function (sample, next, prev) {
+                if (next === void 0)
+                    return this.samples().indexOf(sample) !== -1;
+                if (next)
+                    this.samples(this.samples().concat(sample));
+                else
+                    this.samples(this.samples().filter(function (s) { return s !== sample; }));
+                return next;
+            };
+            $mol_app_bench.prototype.griderCeller = function (id) {
+                if (id.col === 'sample')
+                    return this.resulter().cellerText(id);
+                return this.resulterCellerNumber(id);
+            };
+            $mol_app_bench.prototype.resultValue = function (id) {
+                return this.results()[id.row][id.col];
+            };
+            $mol_app_bench.prototype.resultNumber = function (id) {
+                return parseInt(this.resultValue(id), 10);
+            };
+            $mol_app_bench.prototype.resultMaxValue = function (col) {
+                var max = 0;
+                var results = this.results();
+                for (var sample in results) {
+                    var numb = this.resultNumber({ row: sample, col: col });
+                    if (numb > max)
+                        max = numb;
+                }
+                return max;
+            };
+            $mol_app_bench.prototype.resultPortion = function (id) {
+                return this.resultNumber(id) / this.resultMaxValue(id.col);
+            };
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench.prototype, "bench", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench.prototype, "sandbox", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench.prototype, "commandCurrent", null);
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_app_bench.prototype, "commandResult", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench.prototype, "samples", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench.prototype, "steps", null);
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_app_bench.prototype, "resultsSample", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench.prototype, "results", null);
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_app_bench.prototype, "menuOptionerChecked", null);
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_app_bench.prototype, "resultMaxValue", null);
+            return $mol_app_bench;
+        }($.$mol_app_bench));
+        $mol.$mol_app_bench = $mol_app_bench;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//bench.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_bench_list_mol = (function (_super) {
+        __extends($mol_app_bench_list_mol, _super);
+        function $mol_app_bench_list_mol() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_bench_list_mol.prototype.sample = function () {
+            return "";
+        };
+        $mol_app_bench_list_mol.prototype.header = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.sample()); };
+            });
+        };
+        $mol_app_bench_list_mol.prototype.rowers = function () {
+            return [];
+        };
+        $mol_app_bench_list_mol.prototype.lister = function (next, prev) {
+            var _this = this;
+            return new $.$mol_lister().setup(function (obj) {
+                obj.rows = function () { return [].concat(_this.header(), _this.rowers()); };
+            });
+        };
+        $mol_app_bench_list_mol.prototype.childs = function () {
+            return [].concat(this.lister());
+        };
+        $mol_app_bench_list_mol.prototype.rowerSelected = function (key, next, prev) {
+            return (next !== void 0) ? next : false;
+        };
+        $mol_app_bench_list_mol.prototype.rowerTitle = function (key) {
+            return "";
+        };
+        $mol_app_bench_list_mol.prototype.rowerContent = function (key) {
+            return "";
+        };
+        $mol_app_bench_list_mol.prototype.rower = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_app_bench_list_mol_rower().setup(function (obj) {
+                obj.selected = function (next, prev) { return _this.rowerSelected(key, next, prev); };
+                obj.title = function () { return _this.rowerTitle(key); };
+                obj.content = function () { return _this.rowerContent(key); };
+            });
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench_list_mol.prototype, "header", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench_list_mol.prototype, "lister", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_bench_list_mol.prototype, "rowerSelected", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_bench_list_mol.prototype, "rower", null);
+        return $mol_app_bench_list_mol;
+    }($.$mol_scroller));
+    $.$mol_app_bench_list_mol = $mol_app_bench_list_mol;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_app_bench_list_mol_rower = (function (_super) {
+        __extends($mol_app_bench_list_mol_rower, _super);
+        function $mol_app_bench_list_mol_rower() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_bench_list_mol_rower.prototype.selected = function (next, prev) {
+            return (next !== void 0) ? next : false;
+        };
+        $mol_app_bench_list_mol_rower.prototype.heightMinimal = function () {
+            return 56;
+        };
+        $mol_app_bench_list_mol_rower.prototype.attr = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
+                "mol_app_bench_list_mol_rower_selected": function () { return _this.selected(); },
+            });
+        };
+        $mol_app_bench_list_mol_rower.prototype.eventToggle = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_app_bench_list_mol_rower.prototype.event = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.event.call(this), {
+                "click": function (next, prev) { return _this.eventToggle(next, prev); },
+            });
+        };
+        $mol_app_bench_list_mol_rower.prototype.title = function () {
+            return "";
+        };
+        $mol_app_bench_list_mol_rower.prototype.titler = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.title()); };
+            });
+        };
+        $mol_app_bench_list_mol_rower.prototype.content = function () {
+            return "";
+        };
+        $mol_app_bench_list_mol_rower.prototype.contenter = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.content()); };
+            });
+        };
+        $mol_app_bench_list_mol_rower.prototype.childs = function () {
+            return [].concat(this.titler(), this.contenter());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench_list_mol_rower.prototype, "selected", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench_list_mol_rower.prototype, "eventToggle", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench_list_mol_rower.prototype, "titler", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench_list_mol_rower.prototype, "contenter", null);
+        return $mol_app_bench_list_mol_rower;
+    }($.$mol_viewer));
+    $.$mol_app_bench_list_mol_rower = $mol_app_bench_list_mol_rower;
+})($ || ($ = {}));
+//mol.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_bench_list_mol = (function (_super) {
+            __extends($mol_app_bench_list_mol, _super);
+            function $mol_app_bench_list_mol() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_bench_list_mol.data = function (next, prev) {
+                var _this = this;
+                window.addEventListener('message', function (event) {
+                    if (event.data[0] !== 'set data')
+                        return;
+                    _this.data(void 0, event.data[1]);
+                });
+                return { sample: '', items: [] };
+            };
+            $mol_app_bench_list_mol.prototype.sample = function () {
+                return $mol_app_bench_list_mol.data().sample;
+            };
+            $mol_app_bench_list_mol.prototype.items = function () {
+                return $mol_app_bench_list_mol.data().items;
+            };
+            $mol_app_bench_list_mol.prototype.rowers = function () {
+                var _this = this;
+                return this.items().map(function (row, id) { return _this.rower(id); });
+            };
+            $mol_app_bench_list_mol.prototype.rowerTitle = function (id) {
+                return this.items()[id].title;
+            };
+            $mol_app_bench_list_mol.prototype.rowerContent = function (id) {
+                return this.items()[id].content;
+            };
+            $mol_app_bench_list_mol.prototype.rowerSelected = function (id, next) {
+                if (next !== void 0)
+                    this.selectedId(next ? id : null);
+                return this.selectedId() === id;
+            };
+            $mol_app_bench_list_mol.prototype.selectedId = function (next) {
+                this.items();
+                if (next === void 0)
+                    return null;
+                return next;
+            };
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench_list_mol.prototype, "rowers", null);
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_app_bench_list_mol.prototype, "rowerTitle", null);
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_app_bench_list_mol.prototype, "rowerContent", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench_list_mol.prototype, "selectedId", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench_list_mol, "data", null);
+            return $mol_app_bench_list_mol;
+        }($.$mol_app_bench_list_mol));
+        $mol.$mol_app_bench_list_mol = $mol_app_bench_list_mol;
+        var $mol_app_bench_list_mol_rower = (function (_super) {
+            __extends($mol_app_bench_list_mol_rower, _super);
+            function $mol_app_bench_list_mol_rower() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_bench_list_mol_rower.prototype.eventToggle = function (next) {
+                this.selected(!this.selected());
+            };
+            return $mol_app_bench_list_mol_rower;
+        }($.$mol_app_bench_list_mol_rower));
+        $mol.$mol_app_bench_list_mol_rower = $mol_app_bench_list_mol_rower;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//mol.view.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3328,7 +4046,7 @@ var $;
                     var id = prefix + "/" + index;
                     switch (token.name) {
                         case 'text-link': {
-                            if (token.chunks[1][0] === '#') {
+                            if (/^#|(\w+script+:)+/.test(token.chunks[1])) {
                                 var span_1 = _this.spanner(id);
                                 span_1.content(_this.text2spans(id, token.chunks[0]));
                                 return span_1;
@@ -3783,7 +4501,7 @@ var $;
                         continue;
                     next.push(name.substring(1));
                 }
-                return next;
+                return next.sort();
             };
             $mol_app_demo.prototype.options = function () {
                 var _this = this;
@@ -3880,7 +4598,9 @@ var $;
             }
             $mol_statuser.prototype.message = function () {
                 try {
-                    this.status();
+                    var status_1 = this.status();
+                    if (status_1)
+                        status_1.valueOf();
                     return null;
                 }
                 catch (error) {
@@ -4222,859 +4942,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_app_quine = (function (_super) {
-        __extends($mol_app_quine, _super);
-        function $mol_app_quine() {
-            _super.apply(this, arguments);
-        }
-        $mol_app_quine.prototype.content = function () {
-            return "";
-        };
-        $mol_app_quine.prototype.texter = function (next, prev) {
-            var _this = this;
-            return new $.$mol_texter().setup(function (obj) {
-                obj.text = function () { return _this.content(); };
-            });
-        };
-        $mol_app_quine.prototype.body = function () {
-            return [].concat(this.texter());
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_quine.prototype, "texter", null);
-        return $mol_app_quine;
-    }($.$mol_pager));
-    $.$mol_app_quine = $mol_app_quine;
-})($ || ($ = {}));
-//quine.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_app_quine = (function (_super) {
-            __extends($mol_app_quine, _super);
-            function $mol_app_quine() {
-                _super.apply(this, arguments);
-            }
-            $mol_app_quine.prototype.content = function () {
-                var paths = [
-                    '/mol/app/quine/quine.view.tree',
-                    '/mol/app/quine/quine.view.ts',
-                    '/mol/app/quine/quine.view.css',
-                    '/mol/app/quine/index.html',
-                ];
-                var sources = paths.map(function (path) {
-                    return $.$mol_http_resource.item(path).text();
-                });
-                var content = sources.map(function (source, index) {
-                    var header = "# " + paths[index] + "\n";
-                    var code = '```\n' + source.replace(/\n+$/, '') + '\n```\n';
-                    return header + "\n" + code;
-                }).join('\n');
-                return content;
-            };
-            return $mol_app_quine;
-        }($.$mol_app_quine));
-        $mol.$mol_app_quine = $mol_app_quine;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//quine.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol_app_quine_demo = (function (_super) {
-        __extends($mol_app_quine_demo, _super);
-        function $mol_app_quine_demo() {
-            _super.apply(this, arguments);
-        }
-        return $mol_app_quine_demo;
-    }($.$mol_app_quine));
-    $.$mol_app_quine_demo = $mol_app_quine_demo;
-})($ || ($ = {}));
-//demo.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol_icon_minus = (function (_super) {
-        __extends($mol_icon_minus, _super);
-        function $mol_icon_minus() {
-            _super.apply(this, arguments);
-        }
-        $mol_icon_minus.prototype.path = function () {
-            return "M19 13H5v-2h14v2z";
-        };
-        return $mol_icon_minus;
-    }($.$mol_icon));
-    $.$mol_icon_minus = $mol_icon_minus;
-})($ || ($ = {}));
-//minus.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol_icon_plus = (function (_super) {
-        __extends($mol_icon_plus, _super);
-        function $mol_icon_plus() {
-            _super.apply(this, arguments);
-        }
-        $mol_icon_plus.prototype.path = function () {
-            return "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z";
-        };
-        return $mol_icon_plus;
-    }($.$mol_icon));
-    $.$mol_icon_plus = $mol_icon_plus;
-})($ || ($ = {}));
-//plus.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_number = (function (_super) {
-        __extends($mol_number, _super);
-        function $mol_number() {
-            _super.apply(this, arguments);
-        }
-        $mol_number.prototype.precision = function () {
-            return 1;
-        };
-        $mol_number.prototype.precisionView = function () {
-            return this.precision();
-        };
-        $mol_number.prototype.precisionChange = function () {
-            return this.precision();
-        };
-        $mol_number.prototype.value = function (next, prev) {
-            return (next !== void 0) ? next : 0;
-        };
-        $mol_number.prototype.eventDec = function (next, prev) {
-            return (next !== void 0) ? next : null;
-        };
-        $mol_number.prototype.enabled = function () {
-            return true;
-        };
-        $mol_number.prototype.enabledDec = function () {
-            return this.enabled();
-        };
-        $mol_number.prototype.decIcon = function (next, prev) {
-            return new $.$mol_icon_minus();
-        };
-        $mol_number.prototype.decrementer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_number_clicker().setup(function (obj) {
-                obj.eventClick = function (next, prev) { return _this.eventDec(next, prev); };
-                obj.enabled = function () { return _this.enabledDec(); };
-                obj.childs = function () { return [].concat(_this.decIcon()); };
-            });
-        };
-        $mol_number.prototype.valueString = function (next, prev) {
-            return (next !== void 0) ? next : "";
-        };
-        $mol_number.prototype.hint = function () {
-            return "";
-        };
-        $mol_number.prototype.enabledStringer = function () {
-            return this.enabled();
-        };
-        $mol_number.prototype.stringer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_stringer().setup(function (obj) {
-                obj.type = function () { return "number"; };
-                obj.value = function (next, prev) { return _this.valueString(next, prev); };
-                obj.hint = function () { return _this.hint(); };
-                obj.enabled = function () { return _this.enabledStringer(); };
-            });
-        };
-        $mol_number.prototype.eventInc = function (next, prev) {
-            return (next !== void 0) ? next : null;
-        };
-        $mol_number.prototype.enabledInc = function () {
-            return this.enabled();
-        };
-        $mol_number.prototype.incIcon = function (next, prev) {
-            return new $.$mol_icon_plus();
-        };
-        $mol_number.prototype.incrementer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_number_clicker().setup(function (obj) {
-                obj.eventClick = function (next, prev) { return _this.eventInc(next, prev); };
-                obj.enabled = function () { return _this.enabledInc(); };
-                obj.childs = function () { return [].concat(_this.incIcon()); };
-            });
-        };
-        $mol_number.prototype.childs = function () {
-            return [].concat(this.decrementer(), this.stringer(), this.incrementer());
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_number.prototype, "value", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_number.prototype, "eventDec", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_number.prototype, "decIcon", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_number.prototype, "decrementer", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_number.prototype, "valueString", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_number.prototype, "stringer", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_number.prototype, "eventInc", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_number.prototype, "incIcon", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_number.prototype, "incrementer", null);
-        return $mol_number;
-    }($.$mol_viewer));
-    $.$mol_number = $mol_number;
-})($ || ($ = {}));
-var $;
-(function ($) {
-    var $mol_number_clicker = (function (_super) {
-        __extends($mol_number_clicker, _super);
-        function $mol_number_clicker() {
-            _super.apply(this, arguments);
-        }
-        return $mol_number_clicker;
-    }($.$mol_clicker));
-    $.$mol_number_clicker = $mol_number_clicker;
-})($ || ($ = {}));
-//number.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_number = (function (_super) {
-            __extends($mol_number, _super);
-            function $mol_number() {
-                _super.apply(this, arguments);
-            }
-            $mol_number.prototype.eventDec = function (next) {
-                this.value(this.value() - this.precisionChange());
-            };
-            $mol_number.prototype.eventInc = function (next) {
-                this.value(Number(this.value()) + this.precisionChange());
-            };
-            $mol_number.prototype.valueString = function (next) {
-                if (next !== void 0) {
-                    this.value(next === '' ? null : Number(next));
-                }
-                var precisionView = this.precisionView();
-                var value = next ? Number(next) : this.value();
-                if (value === null)
-                    return '';
-                if (precisionView >= 1) {
-                    return (value / precisionView).toFixed();
-                }
-                else {
-                    var fixedNumber = Math.log(1 / precisionView) / Math.log(10);
-                    return value.toFixed(fixedNumber);
-                }
-            };
-            $mol_number.prototype.eventWheel = function (next) {
-                if (next.wheelDelta > 0) {
-                    this.eventInc(next);
-                }
-                else {
-                    this.eventDec(next);
-                }
-            };
-            $mol_number.prototype.incrementer = function () {
-                return this.enabledInc() ? _super.prototype.incrementer.call(this) : null;
-            };
-            $mol_number.prototype.decrementer = function () {
-                return this.enabledDec() ? _super.prototype.decrementer.call(this) : null;
-            };
-            return $mol_number;
-        }($.$mol_number));
-        $mol.$mol_number = $mol_number;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//number.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_app_report = (function (_super) {
-        __extends($mol_app_report, _super);
-        function $mol_app_report() {
-            _super.apply(this, arguments);
-        }
-        $mol_app_report.prototype.title = function () {
-            return "Pump #1337";
-        };
-        $mol_app_report.prototype.description = function () {
-            return "";
-        };
-        $mol_app_report.prototype.descriptor = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.description()); };
-            });
-        };
-        $mol_app_report.prototype.headCells = function () {
-            return [];
-        };
-        $mol_app_report.prototype.headRower = function (next, prev) {
-            var _this = this;
-            return new $.$mol_app_report_rower().setup(function (obj) {
-                obj.cells = function () { return _this.headCells(); };
-            });
-        };
-        $mol_app_report.prototype.rows = function () {
-            return [];
-        };
-        $mol_app_report.prototype.tabler = function (next, prev) {
-            var _this = this;
-            return new $.$mol_app_report_tabler().setup(function (obj) {
-                obj.rows = function () { return [].concat(_this.headRower(), _this.rows()); };
-            });
-        };
-        $mol_app_report.prototype.body = function () {
-            return [].concat(this.descriptor(), this.tabler());
-        };
-        $mol_app_report.prototype.rowerCells = function (key) {
-            return [];
-        };
-        $mol_app_report.prototype.rower = function (key, next, prev) {
-            var _this = this;
-            return new $.$mol_app_report_rower().setup(function (obj) {
-                obj.cells = function () { return _this.rowerCells(key); };
-            });
-        };
-        $mol_app_report.prototype.cellContent = function (key) {
-            return null;
-        };
-        $mol_app_report.prototype.cellRows = function (key) {
-            return 1;
-        };
-        $mol_app_report.prototype.cellCols = function (key) {
-            return 1;
-        };
-        $mol_app_report.prototype.celler = function (key, next, prev) {
-            var _this = this;
-            return new $.$mol_app_report_celler().setup(function (obj) {
-                obj.content = function () { return _this.cellContent(key); };
-                obj.rows = function () { return _this.cellRows(key); };
-                obj.cols = function () { return _this.cellCols(key); };
-            });
-        };
-        $mol_app_report.prototype.cellValue = function (key, next, prev) {
-            return (next !== void 0) ? next : null;
-        };
-        $mol_app_report.prototype.texter = function (key, next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.cellValue(key)); };
-            });
-        };
-        $mol_app_report.prototype.stringer = function (key, next, prev) {
-            var _this = this;
-            return new $.$mol_stringer().setup(function (obj) {
-                obj.value = function (next, prev) { return _this.cellValue(key, next, prev); };
-            });
-        };
-        $mol_app_report.prototype.number = function (key, next, prev) {
-            var _this = this;
-            return new $.$mol_number().setup(function (obj) {
-                obj.value = function (next, prev) { return _this.cellValue(key, next, prev); };
-            });
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_report.prototype, "descriptor", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_report.prototype, "headRower", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_report.prototype, "tabler", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_app_report.prototype, "rower", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_app_report.prototype, "celler", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_app_report.prototype, "cellValue", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_app_report.prototype, "texter", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_app_report.prototype, "stringer", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_app_report.prototype, "number", null);
-        return $mol_app_report;
-    }($.$mol_pager));
-    $.$mol_app_report = $mol_app_report;
-})($ || ($ = {}));
-var $;
-(function ($) {
-    var $mol_app_report_tabler = (function (_super) {
-        __extends($mol_app_report_tabler, _super);
-        function $mol_app_report_tabler() {
-            _super.apply(this, arguments);
-        }
-        $mol_app_report_tabler.prototype.tagName = function () {
-            return "table";
-        };
-        $mol_app_report_tabler.prototype.rows = function () {
-            return [];
-        };
-        $mol_app_report_tabler.prototype.childs = function () {
-            return this.rows();
-        };
-        return $mol_app_report_tabler;
-    }($.$mol_viewer));
-    $.$mol_app_report_tabler = $mol_app_report_tabler;
-})($ || ($ = {}));
-var $;
-(function ($) {
-    var $mol_app_report_rower = (function (_super) {
-        __extends($mol_app_report_rower, _super);
-        function $mol_app_report_rower() {
-            _super.apply(this, arguments);
-        }
-        $mol_app_report_rower.prototype.tagName = function () {
-            return "tr";
-        };
-        $mol_app_report_rower.prototype.cells = function () {
-            return [];
-        };
-        $mol_app_report_rower.prototype.childs = function () {
-            return this.cells();
-        };
-        return $mol_app_report_rower;
-    }($.$mol_viewer));
-    $.$mol_app_report_rower = $mol_app_report_rower;
-})($ || ($ = {}));
-var $;
-(function ($) {
-    var $mol_app_report_celler = (function (_super) {
-        __extends($mol_app_report_celler, _super);
-        function $mol_app_report_celler() {
-            _super.apply(this, arguments);
-        }
-        $mol_app_report_celler.prototype.tagName = function () {
-            return "td";
-        };
-        $mol_app_report_celler.prototype.cols = function () {
-            return 1;
-        };
-        $mol_app_report_celler.prototype.rows = function () {
-            return 1;
-        };
-        $mol_app_report_celler.prototype.attr = function () {
-            var _this = this;
-            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
-                "colspan": function () { return _this.cols(); },
-                "rowspan": function () { return _this.rows(); },
-            });
-        };
-        $mol_app_report_celler.prototype.content = function () {
-            return null;
-        };
-        $mol_app_report_celler.prototype.childs = function () {
-            return [].concat(this.content());
-        };
-        return $mol_app_report_celler;
-    }($.$mol_viewer));
-    $.$mol_app_report_celler = $mol_app_report_celler;
-})($ || ($ = {}));
-//report.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_app_report = (function (_super) {
-            __extends($mol_app_report, _super);
-            function $mol_app_report() {
-                _super.apply(this, arguments);
-            }
-            $mol_app_report.prototype.formatCols = function () {
-                return [
-                    {
-                        title: '№ п/п',
-                    },
-                    {
-                        title: 'Наименование',
-                    },
-                    {
-                        title: 'Форма записи',
-                    },
-                    {
-                        title: 'Значение',
-                    },
-                ];
-            };
-            $mol_app_report.prototype.formatRows = function () {
-                return [
-                    {
-                        title: 'Фундамент',
-                        childs: [
-                            {
-                                title: 'Габаритный размер',
-                                childs: [
-                                    {
-                                        field: 'base_length',
-                                        title: 'Длинна',
-                                    },
-                                    {
-                                        field: 'base_width',
-                                        title: 'Ширина',
-                                    },
-                                    {
-                                        field: 'base_height',
-                                        title: 'Высота',
-                                    },
-                                ]
-                            },
-                            {
-                                field: 'base_kind',
-                                title: 'Вид',
-                            },
-                            {
-                                field: 'base_type',
-                                title: 'Тип',
-                            },
-                            {
-                                field: 'base_release_year',
-                                title: 'Год ввода в эксплуатацию',
-                            },
-                            {
-                                field: 'base_weight_max',
-                                title: 'Несущая способность',
-                            },
-                        ]
-                    },
-                    {
-                        title: 'Кровля',
-                        childs: [
-                            {
-                                title: 'Габаритный размер',
-                                childs: [
-                                    {
-                                        field: 'roof_length',
-                                        title: 'Длинна',
-                                    },
-                                    {
-                                        field: 'roof_width',
-                                        title: 'Ширина',
-                                    },
-                                    {
-                                        field: 'roof_height',
-                                        title: 'Высота',
-                                    },
-                                ]
-                            },
-                        ]
-                    },
-                ];
-            };
-            $mol_app_report.prototype.scheme = function () {
-                return {
-                    'base_length': {
-                        type: 'number',
-                        mask: 'XX',
-                        unit: 'мм',
-                    },
-                    'base_width': {
-                        type: 'number',
-                        mask: 'XX',
-                        unit: 'мм',
-                    },
-                    'base_height': {
-                        type: 'number',
-                        mask: 'XX',
-                        unit: 'мм',
-                    },
-                    'base_kind': {
-                        type: 'enum',
-                        options: {
-                            union: 'Единый',
-                            separated: 'Раздельный насос и электродвигатель',
-                        },
-                    },
-                    'base_type': {
-                        type: 'enum',
-                        options: {
-                            ribbon: 'Ленточный',
-                            ring: 'Кольцевой',
-                            pile: 'Свайный',
-                        },
-                    },
-                    'base_release_year': {
-                        type: 'number',
-                        mask: 'гггг',
-                        unit: 'г.'
-                    },
-                    'base_weight_max': {
-                        type: 'number',
-                        mask: 'XX',
-                        unit: 'кг',
-                    },
-                    'roof_length': {
-                        type: 'number',
-                        mask: 'XX',
-                        unit: 'мм',
-                    },
-                    'roof_width': {
-                        type: 'number',
-                        mask: 'XX',
-                        unit: 'мм',
-                    },
-                    'roof_height': {
-                        type: 'number',
-                        mask: 'XX',
-                        unit: 'мм',
-                    },
-                };
-            };
-            $mol_app_report.prototype.data = function () {
-                return {
-                    base_length: '403300',
-                    base_width: '22000',
-                    base_height: '25000',
-                    base_kind: 'union',
-                    base_type: 'ribbon',
-                    base_release_year: '1993',
-                    base_weight_max: '30000',
-                    roof_length: '413300',
-                    roof_width: '23000',
-                    roof_height: '26000',
-                };
-            };
-            $mol_app_report.prototype.description = function () {
-                return "\u041F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0435 \u21161\n\u041F\u0430\u0441\u0441\u043F\u043E\u0440-\u0444\u043E\u0440\u043C\u0443\u043B\u044F\u0440\n\u041C\u0430\u0433\u0438\u0441\u0442\u0440\u0430\u043B\u044C\u043D\u044B\u0439 \u043D\u0430\u0441\u043E\u0441\u043D\u044B\u0439 \u0430\u0433\u0440\u0435\u0433\u0430\u0442\nMHA-1";
-            };
-            $mol_app_report.prototype.headCells = function () {
-                return [
-                    this.celler([0, 0]),
-                    this.celler([0, 1]),
-                    this.celler([0, 2]),
-                    this.celler([0, 3]),
-                ];
-            };
-            $mol_app_report.prototype.rows = function () {
-                var _this = this;
-                var rows = [];
-                var visit = function (pos, format) {
-                    rows.push(_this.rower(pos));
-                    if (format.childs)
-                        format.childs.forEach(function (format, index) {
-                            visit(pos.concat(index + 1), format);
-                        });
-                };
-                this.formatRows().forEach(function (format, index) {
-                    visit([index + 1], format);
-                });
-                return rows;
-            };
-            $mol_app_report.prototype.formatRow = function (pos) {
-                var formatRows = this.formatRows();
-                var next = null;
-                for (var _i = 0, pos_1 = pos; _i < pos_1.length; _i++) {
-                    var index = pos_1[_i];
-                    next = formatRows[index - 1];
-                    formatRows = next.childs;
-                }
-                return next;
-            };
-            $mol_app_report.prototype.rowerCells = function (pos) {
-                var formatRow = this.formatRow(pos);
-                return [
-                    this.celler(pos.concat(0)),
-                    this.celler(pos.concat(1)),
-                    formatRow.field ? this.celler(pos.concat(2)) : null,
-                    formatRow.field ? this.celler(pos.concat(3)) : null,
-                ];
-            };
-            $mol_app_report.prototype.cellCols = function (pos) {
-                if (pos[0] === 0) {
-                    return 1;
-                }
-                var col = pos[pos.length - 1];
-                if (col === 0)
-                    return 1;
-                var formatRow = this.formatRow(pos.slice(0, pos.length - 1));
-                if (!formatRow.field) {
-                    if (col === 1)
-                        return 3;
-                    else
-                        return 0;
-                }
-                return 1;
-            };
-            $mol_app_report.prototype.cellContent = function (pos) {
-                if (pos[0] === 0) {
-                    return this.texter(pos);
-                }
-                var col = pos[pos.length - 1];
-                if (col === 3) {
-                    var field = this.formatRow(pos.slice(0, pos.length - 1)).field;
-                    var scheme = this.scheme()[field];
-                    switch (scheme.type) {
-                        case 'number': return this.number(pos);
-                        case 'enum': return this.stringer(pos);
-                    }
-                }
-                else {
-                    return this.texter(pos);
-                }
-            };
-            $mol_app_report.prototype.cellValue = function (pos, next) {
-                if (next !== void 0)
-                    return next;
-                if (pos[0] === 0) {
-                    return this.formatCols()[pos[1]].title;
-                }
-                var col = pos[pos.length - 1];
-                switch (col) {
-                    case 0: return pos.slice(0, pos.length - 1).join('.');
-                    case 1: return this.cellContentName(pos.slice(0, pos.length - 1));
-                    case 2: return this.cellContentType(pos.slice(0, pos.length - 1));
-                    case 3: return this.cellContentValue(pos.slice(0, pos.length - 1));
-                }
-                return '';
-            };
-            $mol_app_report.prototype.cellContentName = function (pos) {
-                var formatRow = this.formatRow(pos);
-                return formatRow.title;
-            };
-            $mol_app_report.prototype.cellContentType = function (pos) {
-                var field = this.formatRow(pos).field;
-                if (!field)
-                    return '';
-                var scheme = this.scheme()[field];
-                switch (scheme.type) {
-                    case 'number': return scheme.mask;
-                    case 'enum': return Object.keys(scheme.options).map(function (key) { return scheme.options[key]; }).join(' / ');
-                }
-                return '';
-            };
-            $mol_app_report.prototype.cellContentValue = function (pos) {
-                var field = this.formatRow(pos).field;
-                if (!field)
-                    return '';
-                var scheme = this.scheme()[field];
-                switch (scheme.type) {
-                    case 'number': return this.data()[field];
-                    case 'enum': return scheme.options[this.data()[field]];
-                }
-                return '';
-            };
-            __decorate([
-                $.$mol_mem_key()
-            ], $mol_app_report.prototype, "cellContent", null);
-            __decorate([
-                $.$mol_mem_key()
-            ], $mol_app_report.prototype, "cellValue", null);
-            return $mol_app_report;
-        }($.$mol_app_report));
-        $mol.$mol_app_report = $mol_app_report;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//report.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol_app_report_demo = (function (_super) {
-        __extends($mol_app_report_demo, _super);
-        function $mol_app_report_demo() {
-            _super.apply(this, arguments);
-        }
-        return $mol_app_report_demo;
-    }($.$mol_app_report));
-    $.$mol_app_report_demo = $mol_app_report_demo;
-})($ || ($ = {}));
-//demo.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var $;
 (function ($) {
     var $mol_rower = (function (_super) {
@@ -5262,6 +5129,414 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
+    var $mol_app_inventory_enter = (function (_super) {
+        __extends($mol_app_inventory_enter, _super);
+        function $mol_app_inventory_enter() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_enter.prototype.domain = function (next, prev) {
+            return new $.$mol_app_inventory_domain();
+        };
+        $mol_app_inventory_enter.prototype.entered = function (next, prev) {
+            return (next !== void 0) ? next : false;
+        };
+        $mol_app_inventory_enter.prototype.loginLabel = function () {
+            return this.localizedText("loginLabel");
+        };
+        $mol_app_inventory_enter.prototype.loginErrors = function () {
+            return [];
+        };
+        $mol_app_inventory_enter.prototype.login = function (next, prev) {
+            return (next !== void 0) ? next : "";
+        };
+        $mol_app_inventory_enter.prototype.loginControl = function (next, prev) {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.value = function (next, prev) { return _this.login(next, prev); };
+            });
+        };
+        $mol_app_inventory_enter.prototype.loginField = function (next, prev) {
+            var _this = this;
+            return new $.$mol_form_field().setup(function (obj) {
+                obj.name = function () { return _this.loginLabel(); };
+                obj.errors = function () { return _this.loginErrors(); };
+                obj.control = function () { return _this.loginControl(); };
+            });
+        };
+        $mol_app_inventory_enter.prototype.passwordLabel = function () {
+            return this.localizedText("passwordLabel");
+        };
+        $mol_app_inventory_enter.prototype.passwordErrors = function () {
+            return [];
+        };
+        $mol_app_inventory_enter.prototype.password = function (next, prev) {
+            return (next !== void 0) ? next : "";
+        };
+        $mol_app_inventory_enter.prototype.passControl = function (next, prev) {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.value = function (next, prev) { return _this.password(next, prev); };
+                obj.type = function () { return "password"; };
+            });
+        };
+        $mol_app_inventory_enter.prototype.passwordField = function (next, prev) {
+            var _this = this;
+            return new $.$mol_form_field().setup(function (obj) {
+                obj.name = function () { return _this.passwordLabel(); };
+                obj.errors = function () { return _this.passwordErrors(); };
+                obj.control = function () { return _this.passControl(); };
+            });
+        };
+        $mol_app_inventory_enter.prototype.submitLabel = function () {
+            return this.localizedText("submitLabel");
+        };
+        $mol_app_inventory_enter.prototype.eventSubmit = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_app_inventory_enter.prototype.submitBlocked = function () {
+            return false;
+        };
+        $mol_app_inventory_enter.prototype.submit = function (next, prev) {
+            var _this = this;
+            return new $.$mol_clicker_major().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.submitLabel()); };
+                obj.eventClick = function (next, prev) { return _this.eventSubmit(next, prev); };
+                obj.disabled = function () { return _this.submitBlocked(); };
+            });
+        };
+        $mol_app_inventory_enter.prototype.form = function (next, prev) {
+            var _this = this;
+            return new $.$mol_form().setup(function (obj) {
+                obj.formFields = function () { return [].concat(_this.loginField(), _this.passwordField()); };
+                obj.buttons = function () { return [].concat(_this.submit()); };
+            });
+        };
+        $mol_app_inventory_enter.prototype.message = function () {
+            return "";
+        };
+        $mol_app_inventory_enter.prototype.childs = function () {
+            return [].concat(this.form(), this.message());
+        };
+        $mol_app_inventory_enter.prototype.messageNoAccess = function () {
+            return this.localizedText("messageNoAccess");
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "domain", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "entered", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "login", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "loginControl", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "loginField", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "password", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "passControl", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "passwordField", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "eventSubmit", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "submit", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_enter.prototype, "form", null);
+        return $mol_app_inventory_enter;
+    }($.$mol_viewer));
+    $.$mol_app_inventory_enter = $mol_app_inventory_enter;
+})($ || ($ = {}));
+//enter.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_inventory_enter = (function (_super) {
+            __extends($mol_app_inventory_enter, _super);
+            function $mol_app_inventory_enter() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_inventory_enter.prototype.eventSubmit = function () {
+                this.domain().credentials({
+                    login: this.login(),
+                    password: this.password(),
+                });
+            };
+            $mol_app_inventory_enter.prototype.message = function () {
+                var domain = this.domain();
+                if (domain.credentials() && !domain.authentificated()) {
+                    return this.messageNoAccess();
+                }
+                return '';
+            };
+            return $mol_app_inventory_enter;
+        }($.$mol_app_inventory_enter));
+        $mol.$mol_app_inventory_enter = $mol_app_inventory_enter;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//enter.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol_icon_minus = (function (_super) {
+        __extends($mol_icon_minus, _super);
+        function $mol_icon_minus() {
+            _super.apply(this, arguments);
+        }
+        $mol_icon_minus.prototype.path = function () {
+            return "M19 13H5v-2h14v2z";
+        };
+        return $mol_icon_minus;
+    }($.$mol_icon));
+    $.$mol_icon_minus = $mol_icon_minus;
+})($ || ($ = {}));
+//minus.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol_icon_plus = (function (_super) {
+        __extends($mol_icon_plus, _super);
+        function $mol_icon_plus() {
+            _super.apply(this, arguments);
+        }
+        $mol_icon_plus.prototype.path = function () {
+            return "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z";
+        };
+        return $mol_icon_plus;
+    }($.$mol_icon));
+    $.$mol_icon_plus = $mol_icon_plus;
+})($ || ($ = {}));
+//plus.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_number = (function (_super) {
+        __extends($mol_number, _super);
+        function $mol_number() {
+            _super.apply(this, arguments);
+        }
+        $mol_number.prototype.precision = function () {
+            return 1;
+        };
+        $mol_number.prototype.precisionView = function () {
+            return this.precision();
+        };
+        $mol_number.prototype.precisionChange = function () {
+            return this.precision();
+        };
+        $mol_number.prototype.value = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_number.prototype.eventDec = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_number.prototype.enabled = function () {
+            return true;
+        };
+        $mol_number.prototype.enabledDec = function () {
+            return this.enabled();
+        };
+        $mol_number.prototype.decIcon = function (next, prev) {
+            return new $.$mol_icon_minus();
+        };
+        $mol_number.prototype.decrementer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_number_clicker().setup(function (obj) {
+                obj.eventClick = function (next, prev) { return _this.eventDec(next, prev); };
+                obj.enabled = function () { return _this.enabledDec(); };
+                obj.childs = function () { return [].concat(_this.decIcon()); };
+            });
+        };
+        $mol_number.prototype.valueString = function (next, prev) {
+            return (next !== void 0) ? next : "";
+        };
+        $mol_number.prototype.hint = function () {
+            return "";
+        };
+        $mol_number.prototype.enabledStringer = function () {
+            return this.enabled();
+        };
+        $mol_number.prototype.stringer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.type = function () { return "number"; };
+                obj.value = function (next, prev) { return _this.valueString(next, prev); };
+                obj.hint = function () { return _this.hint(); };
+                obj.enabled = function () { return _this.enabledStringer(); };
+            });
+        };
+        $mol_number.prototype.eventInc = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_number.prototype.enabledInc = function () {
+            return this.enabled();
+        };
+        $mol_number.prototype.incIcon = function (next, prev) {
+            return new $.$mol_icon_plus();
+        };
+        $mol_number.prototype.incrementer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_number_clicker().setup(function (obj) {
+                obj.eventClick = function (next, prev) { return _this.eventInc(next, prev); };
+                obj.enabled = function () { return _this.enabledInc(); };
+                obj.childs = function () { return [].concat(_this.incIcon()); };
+            });
+        };
+        $mol_number.prototype.childs = function () {
+            return [].concat(this.decrementer(), this.stringer(), this.incrementer());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_number.prototype, "value", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_number.prototype, "eventDec", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_number.prototype, "decIcon", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_number.prototype, "decrementer", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_number.prototype, "valueString", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_number.prototype, "stringer", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_number.prototype, "eventInc", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_number.prototype, "incIcon", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_number.prototype, "incrementer", null);
+        return $mol_number;
+    }($.$mol_viewer));
+    $.$mol_number = $mol_number;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_number_clicker = (function (_super) {
+        __extends($mol_number_clicker, _super);
+        function $mol_number_clicker() {
+            _super.apply(this, arguments);
+        }
+        return $mol_number_clicker;
+    }($.$mol_clicker));
+    $.$mol_number_clicker = $mol_number_clicker;
+})($ || ($ = {}));
+//number.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_number = (function (_super) {
+            __extends($mol_number, _super);
+            function $mol_number() {
+                _super.apply(this, arguments);
+            }
+            $mol_number.prototype.eventDec = function (next) {
+                this.value(this.value() - this.precisionChange());
+            };
+            $mol_number.prototype.eventInc = function (next) {
+                this.value(Number(this.value()) + this.precisionChange());
+            };
+            $mol_number.prototype.valueString = function (next) {
+                if (next !== void 0) {
+                    this.value(next === '' ? null : Number(next));
+                }
+                var precisionView = this.precisionView();
+                var value = next ? Number(next) : this.value();
+                if (value === null)
+                    return '';
+                if (precisionView >= 1) {
+                    return (value / precisionView).toFixed();
+                }
+                else {
+                    var fixedNumber = Math.log(1 / precisionView) / Math.log(10);
+                    return value.toFixed(fixedNumber);
+                }
+            };
+            $mol_number.prototype.eventWheel = function (next) {
+                if (next.wheelDelta > 0) {
+                    this.eventInc(next);
+                }
+                else {
+                    this.eventDec(next);
+                }
+            };
+            $mol_number.prototype.incrementer = function () {
+                return this.enabledInc() ? _super.prototype.incrementer.call(this) : null;
+            };
+            $mol_number.prototype.decrementer = function () {
+                return this.enabledDec() ? _super.prototype.decrementer.call(this) : null;
+            };
+            return $mol_number;
+        }($.$mol_number));
+        $mol.$mol_number = $mol_number;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//number.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
     var $mol_switcher = (function (_super) {
         __extends($mol_switcher, _super);
         function $mol_switcher() {
@@ -5283,7 +5558,7 @@ var $;
             var _this = this;
             return new $.$mol_checker().setup(function (obj) {
                 obj.checked = function (next, prev) { return _this.optionChecked(key, next, prev); };
-                obj.label = function () { return _this.optionLabel(key); };
+                obj.label = function () { return [].concat(_this.optionLabel(key)); };
                 obj.enabled = function () { return _this.enabled(); };
             });
         };
@@ -5375,200 +5650,365 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_app_signup = (function (_super) {
-        __extends($mol_app_signup, _super);
-        function $mol_app_signup() {
+    var $mol_app_inventory_positioner = (function (_super) {
+        __extends($mol_app_inventory_positioner, _super);
+        function $mol_app_inventory_positioner() {
             _super.apply(this, arguments);
         }
-        $mol_app_signup.prototype.nameFirstLabel = function () {
-            return this.localizedText("nameFirstLabel");
+        $mol_app_inventory_positioner.prototype.position = function () {
+            return null;
         };
-        $mol_app_signup.prototype.nameFirstErrors = function () {
-            return [];
+        $mol_app_inventory_positioner.prototype.title = function () {
+            return "";
         };
-        $mol_app_signup.prototype.nameFirstHint = function () {
-            return this.localizedText("nameFirstHint");
-        };
-        $mol_app_signup.prototype.nameFirst = function (next, prev) {
-            return (next !== void 0) ? next : "";
-        };
-        $mol_app_signup.prototype.nameFirstControl = function (next, prev) {
+        $mol_app_inventory_positioner.prototype.titler = function (next, prev) {
             var _this = this;
-            return new $.$mol_stringer().setup(function (obj) {
-                obj.hint = function () { return _this.nameFirstHint(); };
-                obj.value = function (next, prev) { return _this.nameFirst(next, prev); };
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.title()); };
             });
         };
-        $mol_app_signup.prototype.nameFirstField = function (next, prev) {
+        $mol_app_inventory_positioner.prototype.description = function () {
+            return "";
+        };
+        $mol_app_inventory_positioner.prototype.descriptioner = function (next, prev) {
             var _this = this;
-            return new $.$mol_form_field().setup(function (obj) {
-                obj.name = function () { return _this.nameFirstLabel(); };
-                obj.errors = function () { return _this.nameFirstErrors(); };
-                obj.control = function () { return _this.nameFirstControl(); };
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.description()); };
             });
         };
-        $mol_app_signup.prototype.nameNickLabel = function () {
-            return this.localizedText("nameNickLabel");
-        };
-        $mol_app_signup.prototype.nameNickErrors = function () {
-            return [];
-        };
-        $mol_app_signup.prototype.nameNickHint = function () {
-            return this.localizedText("nameNickHint");
-        };
-        $mol_app_signup.prototype.nameNick = function (next, prev) {
-            return (next !== void 0) ? next : "";
-        };
-        $mol_app_signup.prototype.nameNickControl = function (next, prev) {
+        $mol_app_inventory_positioner.prototype.producter = function (next, prev) {
             var _this = this;
-            return new $.$mol_stringer().setup(function (obj) {
-                obj.hint = function () { return _this.nameNickHint(); };
-                obj.value = function (next, prev) { return _this.nameNick(next, prev); };
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.titler(), _this.descriptioner()); };
             });
         };
-        $mol_app_signup.prototype.nameNickField = function (next, prev) {
+        $mol_app_inventory_positioner.prototype.count = function (next, prev) {
+            return (next !== void 0) ? next : 0;
+        };
+        $mol_app_inventory_positioner.prototype.counter = function (next, prev) {
             var _this = this;
-            return new $.$mol_form_field().setup(function (obj) {
-                obj.name = function () { return _this.nameNickLabel(); };
-                obj.errors = function () { return _this.nameNickErrors(); };
-                obj.control = function () { return _this.nameNickControl(); };
+            return new $.$mol_number().setup(function (obj) {
+                obj.value = function (next, prev) { return _this.count(next, prev); };
+                obj.enabledInc = function () { return false; };
+                obj.enabledDec = function () { return false; };
             });
         };
-        $mol_app_signup.prototype.nameSecondLabel = function () {
-            return this.localizedText("nameSecondLabel");
-        };
-        $mol_app_signup.prototype.nameSecondErrors = function () {
-            return [];
-        };
-        $mol_app_signup.prototype.nameSecondHint = function () {
-            return this.localizedText("nameSecondHint");
-        };
-        $mol_app_signup.prototype.nameSecond = function (next, prev) {
-            return (next !== void 0) ? next : "";
-        };
-        $mol_app_signup.prototype.nameSecondControl = function (next, prev) {
-            var _this = this;
-            return new $.$mol_stringer().setup(function (obj) {
-                obj.hint = function () { return _this.nameSecondHint(); };
-                obj.value = function (next, prev) { return _this.nameSecond(next, prev); };
-            });
-        };
-        $mol_app_signup.prototype.nameSecondField = function (next, prev) {
-            var _this = this;
-            return new $.$mol_form_field().setup(function (obj) {
-                obj.name = function () { return _this.nameSecondLabel(); };
-                obj.errors = function () { return _this.nameSecondErrors(); };
-                obj.control = function () { return _this.nameSecondControl(); };
-            });
-        };
-        $mol_app_signup.prototype.sexLabel = function () {
-            return this.localizedText("sexLabel");
-        };
-        $mol_app_signup.prototype.sexErrors = function () {
-            return [];
-        };
-        $mol_app_signup.prototype.sex = function (next, prev) {
-            return (next !== void 0) ? next : "";
-        };
-        $mol_app_signup.prototype.sexOptionMale = function () {
-            return this.localizedText("sexOptionMale");
-        };
-        $mol_app_signup.prototype.sexOptionIntersex = function () {
-            return this.localizedText("sexOptionIntersex");
-        };
-        $mol_app_signup.prototype.sexOptionFemale = function () {
-            return this.localizedText("sexOptionFemale");
-        };
-        $mol_app_signup.prototype.sexOptions = function () {
-            var _this = this;
-            return ({
-                "male": function () { return _this.sexOptionMale(); },
-                "intersex": function () { return _this.sexOptionIntersex(); },
-                "female": function () { return _this.sexOptionFemale(); },
-            });
-        };
-        $mol_app_signup.prototype.sexControl = function (next, prev) {
-            var _this = this;
-            return new $.$mol_switcher().setup(function (obj) {
-                obj.value = function (next, prev) { return _this.sex(next, prev); };
-                obj.options = function () { return _this.sexOptions(); };
-            });
-        };
-        $mol_app_signup.prototype.sexField = function (next, prev) {
-            var _this = this;
-            return new $.$mol_form_field().setup(function (obj) {
-                obj.name = function () { return _this.sexLabel(); };
-                obj.errors = function () { return _this.sexErrors(); };
-                obj.control = function () { return [].concat(_this.sexControl()); };
-            });
-        };
-        $mol_app_signup.prototype.formFields = function () {
-            return [].concat(this.nameFirstField(), this.nameNickField(), this.nameSecondField(), this.sexField());
-        };
-        $mol_app_signup.prototype.submitText = function () {
-            return this.localizedText("submitText");
-        };
-        $mol_app_signup.prototype.eventSubmit = function (next, prev) {
+        $mol_app_inventory_positioner.prototype.status = function (next, prev) {
             return (next !== void 0) ? next : null;
         };
-        $mol_app_signup.prototype.submit = function (next, prev) {
+        $mol_app_inventory_positioner.prototype.statusLabelPending = function () {
+            return this.localizedText("statusLabelPending");
+        };
+        $mol_app_inventory_positioner.prototype.statusLabelApproved = function () {
+            return this.localizedText("statusLabelApproved");
+        };
+        $mol_app_inventory_positioner.prototype.statusLabelRejected = function () {
+            return this.localizedText("statusLabelRejected");
+        };
+        $mol_app_inventory_positioner.prototype.statuser = function (next, prev) {
             var _this = this;
-            return new $.$mol_clicker_major().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.submitText()); };
-                obj.eventClick = function (next, prev) { return _this.eventSubmit(next, prev); };
-                obj.disabled = function () { return _this.submitBlocked(); };
+            return new $.$mol_switcher().setup(function (obj) {
+                obj.value = function (next, prev) { return _this.status(next, prev); };
+                obj.options = function () { return ({
+                    "pending": function () { return _this.statusLabelPending(); },
+                    "approved": function () { return _this.statusLabelApproved(); },
+                    "rejected": function () { return _this.statusLabelRejected(); },
+                }); };
             });
         };
-        $mol_app_signup.prototype.buttons = function () {
-            return [].concat(this.submit());
+        $mol_app_inventory_positioner.prototype.childs = function () {
+            return [].concat(this.producter(), this.counter(), this.statuser());
         };
         __decorate([
             $.$mol_mem()
-        ], $mol_app_signup.prototype, "nameFirst", null);
+        ], $mol_app_inventory_positioner.prototype, "titler", null);
         __decorate([
             $.$mol_mem()
-        ], $mol_app_signup.prototype, "nameFirstControl", null);
+        ], $mol_app_inventory_positioner.prototype, "descriptioner", null);
         __decorate([
             $.$mol_mem()
-        ], $mol_app_signup.prototype, "nameFirstField", null);
+        ], $mol_app_inventory_positioner.prototype, "producter", null);
         __decorate([
             $.$mol_mem()
-        ], $mol_app_signup.prototype, "nameNick", null);
+        ], $mol_app_inventory_positioner.prototype, "count", null);
         __decorate([
             $.$mol_mem()
-        ], $mol_app_signup.prototype, "nameNickControl", null);
+        ], $mol_app_inventory_positioner.prototype, "counter", null);
         __decorate([
             $.$mol_mem()
-        ], $mol_app_signup.prototype, "nameNickField", null);
+        ], $mol_app_inventory_positioner.prototype, "status", null);
         __decorate([
             $.$mol_mem()
-        ], $mol_app_signup.prototype, "nameSecond", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_signup.prototype, "nameSecondControl", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_signup.prototype, "nameSecondField", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_signup.prototype, "sex", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_signup.prototype, "sexControl", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_signup.prototype, "sexField", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_signup.prototype, "eventSubmit", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_signup.prototype, "submit", null);
-        return $mol_app_signup;
-    }($.$mol_form));
-    $.$mol_app_signup = $mol_app_signup;
+        ], $mol_app_inventory_positioner.prototype, "statuser", null);
+        return $mol_app_inventory_positioner;
+    }($.$mol_rower));
+    $.$mol_app_inventory_positioner = $mol_app_inventory_positioner;
 })($ || ($ = {}));
-//signup.view.tree.js.map
+//positioner.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_inventory_positioner = (function (_super) {
+            __extends($mol_app_inventory_positioner, _super);
+            function $mol_app_inventory_positioner() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_inventory_positioner.prototype.position = function () {
+                return new $.$mol_app_inventory_domain_position();
+            };
+            $mol_app_inventory_positioner.prototype.title = function () {
+                return this.position().product().title();
+            };
+            $mol_app_inventory_positioner.prototype.description = function () {
+                return this.position().product().description();
+            };
+            $mol_app_inventory_positioner.prototype.count = function (next) {
+                return this.position().count(next);
+            };
+            $mol_app_inventory_positioner.prototype.status = function (next) {
+                return this.position().status(next);
+            };
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_inventory_positioner.prototype, "position", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_inventory_positioner.prototype, "status", null);
+            return $mol_app_inventory_positioner;
+        }($.$mol_app_inventory_positioner));
+        $mol.$mol_app_inventory_positioner = $mol_app_inventory_positioner;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//positioner.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_inventory_controller = (function (_super) {
+        __extends($mol_app_inventory_controller, _super);
+        function $mol_app_inventory_controller() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_controller.prototype.domain = function (next, prev) {
+            return new $.$mol_app_inventory_domain();
+        };
+        $mol_app_inventory_controller.prototype.positioners = function () {
+            return [];
+        };
+        $mol_app_inventory_controller.prototype.body = function () {
+            return this.positioners();
+        };
+        $mol_app_inventory_controller.prototype.position = function (key) {
+            return null;
+        };
+        $mol_app_inventory_controller.prototype.positioner = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_app_inventory_positioner().setup(function (obj) {
+                obj.position = function () { return _this.position(key); };
+            });
+        };
+        $mol_app_inventory_controller.prototype.eventSubmit = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_app_inventory_controller.prototype.submitLabel = function () {
+            return this.localizedText("submitLabel");
+        };
+        $mol_app_inventory_controller.prototype.submitter = function (next, prev) {
+            var _this = this;
+            return new $.$mol_clicker_major().setup(function (obj) {
+                obj.eventClick = function (next, prev) { return _this.eventSubmit(next, prev); };
+                obj.childs = function () { return [].concat(_this.submitLabel()); };
+            });
+        };
+        $mol_app_inventory_controller.prototype.controlsRower = function (next, prev) {
+            var _this = this;
+            return new $.$mol_rower().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.submitter()); };
+            });
+        };
+        $mol_app_inventory_controller.prototype.foot = function () {
+            return [].concat(this.controlsRower());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_controller.prototype, "domain", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_inventory_controller.prototype, "positioner", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_controller.prototype, "eventSubmit", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_controller.prototype, "submitter", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_controller.prototype, "controlsRower", null);
+        return $mol_app_inventory_controller;
+    }($.$mol_pager));
+    $.$mol_app_inventory_controller = $mol_app_inventory_controller;
+})($ || ($ = {}));
+//controller.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_inventory_controller = (function (_super) {
+            __extends($mol_app_inventory_controller, _super);
+            function $mol_app_inventory_controller() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_inventory_controller.prototype.position = function (code) {
+                return this.domain().position(code);
+            };
+            $mol_app_inventory_controller.prototype.positioners = function () {
+                var _this = this;
+                return this.positions().map(function (position) { return _this.positioner(position.product().code()); });
+            };
+            $mol_app_inventory_controller.prototype.positions = function () {
+                return this.domain().positions().filter(function (position) {
+                    switch (position.status()) {
+                        case $.$mol_app_inventory_domain_position_status.pending: return true;
+                        case $.$mol_app_inventory_domain_position_status.rejected: return true;
+                        case $.$mol_app_inventory_domain_position_status.approved: return true;
+                    }
+                    return false;
+                });
+            };
+            $mol_app_inventory_controller.prototype.eventSubmit = function (next) {
+                this.positions().forEach(function (position) {
+                    if (position.status() === $.$mol_app_inventory_domain_position_status.approved) {
+                        position.status($.$mol_app_inventory_domain_position_status.completed);
+                    }
+                });
+            };
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_inventory_controller.prototype, "positioners", null);
+            return $mol_app_inventory_controller;
+        }($.$mol_app_inventory_controller));
+        $mol.$mol_app_inventory_controller = $mol_app_inventory_controller;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//controller.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_coder = (function (_super) {
+        __extends($mol_coder, _super);
+        function $mol_coder() {
+            _super.apply(this, arguments);
+        }
+        $mol_coder.prototype.value = function (next, prev) {
+            return (next !== void 0) ? next : "";
+        };
+        $mol_coder.prototype.format = function () {
+            return "";
+        };
+        $mol_coder.prototype.hint = function () {
+            return this.format();
+        };
+        $mol_coder.prototype.manualer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.value = function (next, prev) { return _this.value(next, prev); };
+                obj.hint = function () { return _this.hint(); };
+            });
+        };
+        $mol_coder.prototype.eventScan = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_coder.prototype.labelScan = function () {
+            return this.localizedText("labelScan");
+        };
+        $mol_coder.prototype.scanner = function (next, prev) {
+            var _this = this;
+            return new $.$mol_clicker().setup(function (obj) {
+                obj.eventClick = function (next, prev) { return _this.eventScan(next, prev); };
+                obj.childs = function () { return [].concat(_this.labelScan()); };
+            });
+        };
+        $mol_coder.prototype.childs = function () {
+            return [].concat(this.manualer(), this.scanner());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_coder.prototype, "value", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_coder.prototype, "manualer", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_coder.prototype, "eventScan", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_coder.prototype, "scanner", null);
+        return $mol_coder;
+    }($.$mol_viewer));
+    $.$mol_coder = $mol_coder;
+})($ || ($ = {}));
+//coder.view.tree.js.map
+;
+var cordova;
+var $;
+(function ($) {
+    $.$mol_cordova = cordova || {
+        plugins: {
+            barcodeScanner: null
+        }
+    };
+    function $mol_cordova_camera() {
+        return navigator['camera'];
+    }
+    $.$mol_cordova_camera = $mol_cordova_camera;
+})($ || ($ = {}));
+//cordova.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5579,49 +6019,402 @@ var $;
 (function ($) {
     var $mol;
     (function ($mol) {
-        var $mol_app_signup = (function (_super) {
-            __extends($mol_app_signup, _super);
-            function $mol_app_signup() {
+        var $mol_coder = (function (_super) {
+            __extends($mol_coder, _super);
+            function $mol_coder() {
                 _super.apply(this, arguments);
             }
-            $mol_app_signup.prototype.nameFirst = function (next) {
-                return $.$mol_state_local.value(this.stateKey('nameFirst'), next) || '';
+            $mol_coder.prototype.supportScan = function () {
+                return Boolean($.$mol_cordova.plugins.barcodeScanner);
             };
-            $mol_app_signup.prototype.nameFirstErrors = function () {
-                return this.nameFirst() ? [] : ['Input required'];
+            $mol_coder.prototype.scanner = function () {
+                return this.supportScan() ? _super.prototype.scanner.call(this) : null;
             };
-            $mol_app_signup.prototype.nameNick = function (next) {
-                return $.$mol_state_local.value(this.stateKey('nameNick'), next) || '';
+            $mol_coder.prototype.eventScan = function () {
+                var _this = this;
+                $.$mol_cordova.plugins.barcodeScanner.scan(function (result) {
+                    if (result.cancelled)
+                        return;
+                    _this.value(result.text);
+                }, function (error) {
+                    alert("Scanning failed: " + error);
+                });
             };
-            $mol_app_signup.prototype.nameSecond = function (next) {
-                return $.$mol_state_local.value(this.stateKey('nameSecond'), next) || '';
-            };
-            $mol_app_signup.prototype.nameSecondErrors = function () {
-                var value = this.nameSecond();
-                if (value.length === 0)
-                    return ['Input required'];
-                var errors = [];
-                if (value.length < 3)
-                    errors.push('More then 2 letter required');
-                if (value.indexOf(' ') !== -1)
-                    errors.push('Spaces are forbidden');
-                return errors;
-            };
-            $mol_app_signup.prototype.sex = function (next) {
-                return $.$mol_state_local.value(this.stateKey('sex'), next) || '';
-            };
-            $mol_app_signup.prototype.sexErrors = function () {
-                return this.sex() ? [] : ['Input required'];
-            };
-            $mol_app_signup.prototype.eventSubmit = function (next) {
-                alert("Hello, " + this.sex() + " " + this.nameFirst() + " (" + this.nameNick() + ") " + this.nameSecond() + "!");
-            };
-            return $mol_app_signup;
-        }($.$mol_app_signup));
-        $mol.$mol_app_signup = $mol_app_signup;
+            return $mol_coder;
+        }($.$mol_coder));
+        $mol.$mol_coder = $mol_coder;
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));
-//signup.view.js.map
+//coder.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_inventory_keeper = (function (_super) {
+        __extends($mol_app_inventory_keeper, _super);
+        function $mol_app_inventory_keeper() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_keeper.prototype.domain = function (next, prev) {
+            return new $.$mol_app_inventory_domain();
+        };
+        $mol_app_inventory_keeper.prototype.positioners = function () {
+            return [];
+        };
+        $mol_app_inventory_keeper.prototype.body = function () {
+            return this.positioners();
+        };
+        $mol_app_inventory_keeper.prototype.position = function (key) {
+            return null;
+        };
+        $mol_app_inventory_keeper.prototype.positioner = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_app_inventory_positioner().setup(function (obj) {
+                obj.statuser = function () { return null; };
+                obj.position = function () { return _this.position(key); };
+            });
+        };
+        $mol_app_inventory_keeper.prototype.newCode = function (next, prev) {
+            return (next !== void 0) ? next : "";
+        };
+        $mol_app_inventory_keeper.prototype.newCodeHint = function () {
+            return this.localizedText("newCodeHint");
+        };
+        $mol_app_inventory_keeper.prototype.coder = function (next, prev) {
+            var _this = this;
+            return new $.$mol_coder().setup(function (obj) {
+                obj.value = function (next, prev) { return _this.newCode(next, prev); };
+                obj.hint = function () { return _this.newCodeHint(); };
+            });
+        };
+        $mol_app_inventory_keeper.prototype.eventSubmit = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_app_inventory_keeper.prototype.submitLabel = function () {
+            return this.localizedText("submitLabel");
+        };
+        $mol_app_inventory_keeper.prototype.submitter = function (next, prev) {
+            var _this = this;
+            return new $.$mol_clicker_major().setup(function (obj) {
+                obj.eventClick = function (next, prev) { return _this.eventSubmit(next, prev); };
+                obj.childs = function () { return [].concat(_this.submitLabel()); };
+            });
+        };
+        $mol_app_inventory_keeper.prototype.coderRower = function (next, prev) {
+            var _this = this;
+            return new $.$mol_rower().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.coder(), _this.submitter()); };
+            });
+        };
+        $mol_app_inventory_keeper.prototype.foot = function () {
+            return [].concat(this.coderRower());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper.prototype, "domain", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_inventory_keeper.prototype, "positioner", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper.prototype, "newCode", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper.prototype, "coder", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper.prototype, "eventSubmit", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper.prototype, "submitter", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper.prototype, "coderRower", null);
+        return $mol_app_inventory_keeper;
+    }($.$mol_pager));
+    $.$mol_app_inventory_keeper = $mol_app_inventory_keeper;
+})($ || ($ = {}));
+//keeper.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_inventory_keeper = (function (_super) {
+            __extends($mol_app_inventory_keeper, _super);
+            function $mol_app_inventory_keeper() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_inventory_keeper.prototype.position = function (code) {
+                return this.domain().position(code);
+            };
+            $mol_app_inventory_keeper.prototype.newCode = function (next) {
+                if (next === void 0)
+                    return '';
+                var domain = this.domain();
+                var product = domain.productByCode(next);
+                if (!product)
+                    return next;
+                var positions = domain.positions();
+                var position = domain.position(product.code());
+                if (positions.indexOf(position) === -1) {
+                    positions = positions.concat(position);
+                    domain.positions(positions);
+                }
+                position.count(position.count() + 1);
+                position.status($.$mol_app_inventory_domain_position_status.draft);
+                return '';
+            };
+            $mol_app_inventory_keeper.prototype.positioners = function () {
+                var _this = this;
+                return this.positions().map(function (position) { return _this.positioner(position.product().code()); });
+            };
+            $mol_app_inventory_keeper.prototype.positions = function () {
+                return this.domain().positions().filter(function (position) {
+                    switch (position.status()) {
+                        case $.$mol_app_inventory_domain_position_status.draft: return true;
+                        case $.$mol_app_inventory_domain_position_status.rejected: return true;
+                    }
+                    return false;
+                });
+            };
+            $mol_app_inventory_keeper.prototype.eventSubmit = function (next) {
+                this.positions().forEach(function (position) {
+                    position.status($.$mol_app_inventory_domain_position_status.pending);
+                });
+            };
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_inventory_keeper.prototype, "newCode", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_inventory_keeper.prototype, "positioners", null);
+            return $mol_app_inventory_keeper;
+        }($.$mol_app_inventory_keeper));
+        $mol.$mol_app_inventory_keeper = $mol_app_inventory_keeper;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//keeper.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_inventory_stats = (function (_super) {
+        __extends($mol_app_inventory_stats, _super);
+        function $mol_app_inventory_stats() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_stats.prototype.domain = function (next, prev) {
+            return new $.$mol_app_inventory_domain();
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_stats.prototype, "domain", null);
+        return $mol_app_inventory_stats;
+    }($.$mol_pager));
+    $.$mol_app_inventory_stats = $mol_app_inventory_stats;
+})($ || ($ = {}));
+//stats.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_inventory = (function (_super) {
+        __extends($mol_app_inventory, _super);
+        function $mol_app_inventory() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory.prototype.domain = function (next, prev) {
+            return new $.$mol_app_inventory_domain();
+        };
+        $mol_app_inventory.prototype.page = function () {
+            return null;
+        };
+        $mol_app_inventory.prototype.childs = function () {
+            return [].concat(this.page());
+        };
+        $mol_app_inventory.prototype.header = function (next, prev) {
+            return new $.$mol_app_inventory_header();
+        };
+        $mol_app_inventory.prototype.enter = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_inventory_enter().setup(function (obj) {
+                obj.domain = function () { return _this.domain(); };
+            });
+        };
+        $mol_app_inventory.prototype.controller = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_inventory_controller().setup(function (obj) {
+                obj.header = function () { return _this.header(); };
+                obj.domain = function () { return _this.domain(); };
+            });
+        };
+        $mol_app_inventory.prototype.keeper = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_inventory_keeper().setup(function (obj) {
+                obj.header = function () { return _this.header(); };
+                obj.domain = function () { return _this.domain(); };
+            });
+        };
+        $mol_app_inventory.prototype.stats = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_inventory_stats().setup(function (obj) {
+                obj.header = function () { return _this.header(); };
+                obj.domain = function () { return _this.domain(); };
+            });
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory.prototype, "domain", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory.prototype, "header", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory.prototype, "enter", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory.prototype, "controller", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory.prototype, "keeper", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory.prototype, "stats", null);
+        return $mol_app_inventory;
+    }($.$mol_viewer));
+    $.$mol_app_inventory = $mol_app_inventory;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_app_inventory_header = (function (_super) {
+        __extends($mol_app_inventory_header, _super);
+        function $mol_app_inventory_header() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_header.prototype.keeperLabel = function () {
+            return this.localizedText("keeperLabel");
+        };
+        $mol_app_inventory_header.prototype.keeperLink = function (next, prev) {
+            var _this = this;
+            return new $.$mol_linker().setup(function (obj) {
+                obj.arg = function () { return ({
+                    "page": function () { return "keeper"; },
+                }); };
+                obj.childs = function () { return [].concat(_this.keeperLabel()); };
+            });
+        };
+        $mol_app_inventory_header.prototype.controlLabel = function () {
+            return this.localizedText("controlLabel");
+        };
+        $mol_app_inventory_header.prototype.controlLink = function (next, prev) {
+            var _this = this;
+            return new $.$mol_linker().setup(function (obj) {
+                obj.arg = function () { return ({
+                    "page": function () { return "controller"; },
+                }); };
+                obj.childs = function () { return [].concat(_this.controlLabel()); };
+            });
+        };
+        $mol_app_inventory_header.prototype.childs = function () {
+            return [].concat(this.keeperLink(), this.controlLink());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_header.prototype, "keeperLink", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_header.prototype, "controlLink", null);
+        return $mol_app_inventory_header;
+    }($.$mol_rower));
+    $.$mol_app_inventory_header = $mol_app_inventory_header;
+})($ || ($ = {}));
+//inventory.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_inventory = (function (_super) {
+            __extends($mol_app_inventory, _super);
+            function $mol_app_inventory() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_inventory.prototype.page = function () {
+                if (!this.domain().authentificated()) {
+                    return this.enter();
+                }
+                switch (this.pageName()) {
+                    case 'keeper': return this.keeper();
+                    case 'controller': return this.controller();
+                    case 'stats': return this.stats();
+                }
+                return this.stats();
+            };
+            $mol_app_inventory.prototype.pageName = function (next) {
+                return $.$mol_state_arg.value(this.stateKey('page'), next) || 'keeper';
+            };
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_inventory.prototype, "pageName", null);
+            return $mol_app_inventory;
+        }($.$mol_app_inventory));
+        $mol.$mol_app_inventory = $mol_app_inventory;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//inventory.view.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5630,190 +6423,438 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var $;
 (function ($) {
-    var $mol_app_signup_dmeo = (function (_super) {
-        __extends($mol_app_signup_dmeo, _super);
-        function $mol_app_signup_dmeo() {
+    var $mol_range_common = (function (_super) {
+        __extends($mol_range_common, _super);
+        function $mol_range_common() {
+            _super.apply(this, arguments);
+            this.length = 0;
+        }
+        $mol_range_common.prototype.item = function (id) {
+            return;
+        };
+        Object.defineProperty($mol_range_common.prototype, '0', {
+            get: function () {
+                throw new Error('Direct access to items not supported. Use item( id : number ) method instead.');
+            },
+            enumerable: true,
+            configurable: true
+        });
+        $mol_range_common.prototype.forEach = function (handle) {
+            var length = this.length;
+            for (var i = 0; i < length; ++i) {
+                handle(this.item(i), i);
+            }
+        };
+        $mol_range_common.prototype.valueOf = function () {
+            var list = [];
+            this.forEach(function (val) { return list.push(val); });
+            return list;
+        };
+        $mol_range_common.prototype.concat = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
+            }
+            var ranges = args.map(function (range) { return range.valueOf(); });
+            return (_a = this.valueOf()).concat.apply(_a, ranges);
+            var _a;
+        };
+        $mol_range_common.prototype.slice = function (start, end) {
+            if (start === void 0) { start = 0; }
+            var source = this;
+            return new $mol_range_lazy({
+                item: function (id) {
+                    return source.item(id + start);
+                },
+                get length() {
+                    return Math.min(end, source.length) - start;
+                }
+            });
+        };
+        $mol_range_common.prototype.map = function (proceed) {
+            var source = this;
+            return new $mol_range_lazy({
+                item: function (id) {
+                    return proceed(source.item(id), id);
+                },
+                get length() {
+                    return source.length;
+                }
+            });
+        };
+        $mol_range_common.prototype.join = function (delim) {
+            if (delim === void 0) { delim = ','; }
+            var list = [];
+            this.forEach(function (val) { return list.push(val); });
+            return list.join(delim);
+        };
+        $mol_range_common.prototype.every = function (check) {
+            var res = true;
+            this.forEach(function (val, id) {
+                if (!res)
+                    return;
+                res = check(val, id);
+            });
+            return res;
+        };
+        $mol_range_common.prototype.some = function (check) {
+            var res = false;
+            this.forEach(function (val, id) {
+                if (res)
+                    return;
+                res = check(val, id);
+            });
+            return res;
+        };
+        return $mol_range_common;
+    }(Array));
+    $.$mol_range_common = $mol_range_common;
+    var $mol_range_lazy = (function (_super) {
+        __extends($mol_range_lazy, _super);
+        function $mol_range_lazy(source) {
+            if (source === void 0) { source = {
+                item: function (id) { return void 0; },
+                length: 0
+            }; }
+            _super.call(this);
+            this.source = source;
+        }
+        $mol_range_lazy.prototype.item = function (id) {
+            return this.source.item(id);
+        };
+        Object.defineProperty($mol_range_lazy.prototype, "length", {
+            get: function () {
+                return this.source.length;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return $mol_range_lazy;
+    }($mol_range_common));
+    $.$mol_range_lazy = $mol_range_lazy;
+})($ || ($ = {}));
+//range.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_hyperhive = (function (_super) {
+        __extends($mol_hyperhive, _super);
+        function $mol_hyperhive() {
             _super.apply(this, arguments);
         }
-        return $mol_app_signup_dmeo;
-    }($.$mol_app_signup));
-    $.$mol_app_signup_dmeo = $mol_app_signup_dmeo;
+        $mol_hyperhive.data = function (resource, next, prev) {
+            if (typeof hhfw === 'undefined') {
+                var uri = "" + resource.uri + resource.table + "/table/" + resource.table + "/";
+                var res = $.$mol_http_resource_json.item(uri);
+                res.credentials = $.$mol_const({});
+                return res.json();
+            }
+            var handleError = function (message) {
+                var error = new Error(JSON.stringify(resource) + " " + message);
+                $mol_hyperhive.data(resource, void 0, error);
+            };
+            document.addEventListener('deviceready', function () {
+                hhfw.GetDeltaStream(resource.uri, resource.table, function (result) {
+                    var db = sqlitePlugin.openDatabase({
+                        name: "cpprun.db",
+                        location: 'default',
+                    });
+                    hhfw.ReadFromStorage(db, resource.table + "_$_" + resource.table, function (result2) {
+                        var range = new $.$mol_range_lazy(result2.rows);
+                        $mol_hyperhive.data(resource, void 0, range);
+                    }, handleError);
+                }, handleError);
+            });
+            throw new $.$mol_atom_wait("Loading " + resource.table + " from " + resource.uri);
+        };
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_hyperhive, "data", null);
+        return $mol_hyperhive;
+    }($.$mol_object));
+    $.$mol_hyperhive = $mol_hyperhive;
+})($ || ($ = {}));
+//hyperhive.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_inventory_domain = (function (_super) {
+        __extends($mol_app_inventory_domain, _super);
+        function $mol_app_inventory_domain() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_domain.prototype.rawTable = function (name) {
+            var creds = this.credentials();
+            var uri = "http://" + creds.login + ":" + creds.password + "@hh.saprun.com/sync/v0.4/dev-env/dev-prj/app/";
+            return $.$mol_hyperhive.data({
+                uri: uri,
+                table: name,
+            });
+        };
+        $mol_app_inventory_domain.prototype.productsTable = function () {
+            return this.rawTable('GET_MATERIALS');
+        };
+        $mol_app_inventory_domain.prototype.positionsTable = function () {
+            return this.rawTable('GET_MOVEMENTS');
+        };
+        $mol_app_inventory_domain.prototype.productRowsById = function () {
+            var table = this.productsTable();
+            var dict = {};
+            table.forEach(function (row) {
+                dict[row.R_MATERIAL_ID] = row;
+            });
+            return dict;
+        };
+        $mol_app_inventory_domain.prototype.productByCode = function (code) {
+            return this.product(this.productRowsByCode()[code].R_MATERIAL_ID);
+        };
+        $mol_app_inventory_domain.prototype.productRowsByCode = function () {
+            var table = this.productsTable();
+            var dict = {};
+            table.forEach(function (row) {
+                dict[row.R_BARCODE] = row;
+            });
+            return dict;
+        };
+        $mol_app_inventory_domain.prototype.positionsDict = function () {
+            var table = this.positionsTable();
+            var dict = {};
+            table.forEach(function (row) {
+                dict[row.R_MATERIAL_ID] = row;
+            });
+            return dict;
+        };
+        $mol_app_inventory_domain.prototype.products = function () {
+            var _this = this;
+            return this.productsTable().map(function (row) { return _this.product(row.R_MATERIAL_ID); });
+        };
+        $mol_app_inventory_domain.prototype.product = function (code) {
+            var _this = this;
+            var next = new $mol_app_inventory_domain_product;
+            next.code = $.$mol_const(code);
+            next.title = function () { return _this.productRowsById()[code].R_NAME; };
+            return next;
+        };
+        $mol_app_inventory_domain.prototype.positions = function (next) {
+            var _this = this;
+            var codes = next && next.map(function (position) {
+                return position.product().code();
+            });
+            var codes2 = $.$mol_state_local.value('positions', codes) || [];
+            return codes2.map(function (code) { return _this.position(code); });
+        };
+        $mol_app_inventory_domain.prototype.position = function (productCode) {
+            var _this = this;
+            var next = new $mol_app_inventory_domain_position();
+            next.product = function () { return _this.product(productCode); };
+            next.count = function (next) { return _this.positionCount(productCode, next); };
+            next.status = function (next) { return _this.positionStatus(productCode, next); };
+            return next;
+        };
+        $mol_app_inventory_domain.prototype.positionCount = function (productCode, next) {
+            var key = "positionCount(" + JSON.stringify(productCode) + ")";
+            return $.$mol_state_local.value(key, next) || 0;
+        };
+        $mol_app_inventory_domain.prototype.positionStatus = function (productCode, next) {
+            var key = "positionStatus(" + JSON.stringify(productCode) + ")";
+            return $.$mol_state_local.value(key, next) || $mol_app_inventory_domain_position_status.draft;
+        };
+        $mol_app_inventory_domain.prototype.credentials = function (next) {
+            return $.$mol_state_session.value('credentials', next);
+        };
+        $mol_app_inventory_domain.prototype.authentificated = function () {
+            var creds = this.credentials();
+            if (!creds)
+                return false;
+            return true;
+        };
+        $mol_app_inventory_domain.prototype.message = function () {
+            return void 0;
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain.prototype, "productsTable", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain.prototype, "positionsTable", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain.prototype, "productRowsById", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain.prototype, "productRowsByCode", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain.prototype, "positionsDict", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain.prototype, "products", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain.prototype, "product", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain.prototype, "positions", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_inventory_domain.prototype, "position", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain.prototype, "credentials", null);
+        return $mol_app_inventory_domain;
+    }($.$mol_object));
+    $.$mol_app_inventory_domain = $mol_app_inventory_domain;
+    var $mol_app_inventory_domain_product = (function (_super) {
+        __extends($mol_app_inventory_domain_product, _super);
+        function $mol_app_inventory_domain_product() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_domain_product.prototype.code = function () { return void 0; };
+        $mol_app_inventory_domain_product.prototype.title = function () { return void 0; };
+        $mol_app_inventory_domain_product.prototype.description = function () { return void 0; };
+        return $mol_app_inventory_domain_product;
+    }($.$mol_object));
+    $.$mol_app_inventory_domain_product = $mol_app_inventory_domain_product;
+    var $mol_app_inventory_domain_position = (function (_super) {
+        __extends($mol_app_inventory_domain_position, _super);
+        function $mol_app_inventory_domain_position() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_domain_position.prototype.product = function () { return void 0; };
+        $mol_app_inventory_domain_position.prototype.count = function (next) {
+            return next || 0;
+        };
+        $mol_app_inventory_domain_position.prototype.status = function (next) {
+            return next || $mol_app_inventory_domain_position_status.draft;
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain_position.prototype, "count", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain_position.prototype, "status", null);
+        return $mol_app_inventory_domain_position;
+    }($.$mol_object));
+    $.$mol_app_inventory_domain_position = $mol_app_inventory_domain_position;
+    (function ($mol_app_inventory_domain_position_status) {
+        $mol_app_inventory_domain_position_status[$mol_app_inventory_domain_position_status["draft"] = 'draft'] = "draft";
+        $mol_app_inventory_domain_position_status[$mol_app_inventory_domain_position_status["pending"] = 'pending'] = "pending";
+        $mol_app_inventory_domain_position_status[$mol_app_inventory_domain_position_status["rejected"] = 'rejected'] = "rejected";
+        $mol_app_inventory_domain_position_status[$mol_app_inventory_domain_position_status["approved"] = 'approved'] = "approved";
+        $mol_app_inventory_domain_position_status[$mol_app_inventory_domain_position_status["completed"] = 'completed'] = "completed";
+    })($.$mol_app_inventory_domain_position_status || ($.$mol_app_inventory_domain_position_status = {}));
+    var $mol_app_inventory_domain_position_status = $.$mol_app_inventory_domain_position_status;
+})($ || ($ = {}));
+//domain.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_inventory_controller_demo = (function (_super) {
+        __extends($mol_app_inventory_controller_demo, _super);
+        function $mol_app_inventory_controller_demo() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_controller_demo.prototype.title1 = function () {
+            return this.localizedText("title1");
+        };
+        $mol_app_inventory_controller_demo.prototype.description1 = function () {
+            return this.localizedText("description1");
+        };
+        $mol_app_inventory_controller_demo.prototype.count1 = function (next, prev) {
+            return (next !== void 0) ? next : 1;
+        };
+        $mol_app_inventory_controller_demo.prototype.status1 = function (next, prev) {
+            return (next !== void 0) ? next : "pending";
+        };
+        $mol_app_inventory_controller_demo.prototype.positioner1 = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_inventory_positioner().setup(function (obj) {
+                obj.title = function () { return _this.title1(); };
+                obj.description = function () { return _this.description1(); };
+                obj.count = function (next, prev) { return _this.count1(next, prev); };
+                obj.status = function (next, prev) { return _this.status1(next, prev); };
+            });
+        };
+        $mol_app_inventory_controller_demo.prototype.title2 = function () {
+            return this.localizedText("title2");
+        };
+        $mol_app_inventory_controller_demo.prototype.description2 = function () {
+            return this.localizedText("description2");
+        };
+        $mol_app_inventory_controller_demo.prototype.count2 = function (next, prev) {
+            return (next !== void 0) ? next : 10;
+        };
+        $mol_app_inventory_controller_demo.prototype.status2 = function (next, prev) {
+            return (next !== void 0) ? next : "approved";
+        };
+        $mol_app_inventory_controller_demo.prototype.positioner2 = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_inventory_positioner().setup(function (obj) {
+                obj.title = function () { return _this.title2(); };
+                obj.description = function () { return _this.description2(); };
+                obj.count = function (next, prev) { return _this.count2(next, prev); };
+                obj.status = function (next, prev) { return _this.status2(next, prev); };
+            });
+        };
+        $mol_app_inventory_controller_demo.prototype.positioners = function () {
+            return [].concat(this.positioner1(), this.positioner2());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_controller_demo.prototype, "count1", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_controller_demo.prototype, "status1", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_controller_demo.prototype, "positioner1", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_controller_demo.prototype, "count2", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_controller_demo.prototype, "status2", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_controller_demo.prototype, "positioner2", null);
+        return $mol_app_inventory_controller_demo;
+    }($.$mol_app_inventory_controller));
+    $.$mol_app_inventory_controller_demo = $mol_app_inventory_controller_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_carder = (function (_super) {
-        __extends($mol_carder, _super);
-        function $mol_carder() {
-            _super.apply(this, arguments);
-        }
-        $mol_carder.prototype.status = function () {
-            return "";
-        };
-        $mol_carder.prototype.attr = function () {
-            var _this = this;
-            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
-                "mol_carder_status": function () { return _this.status(); },
-            });
-        };
-        $mol_carder.prototype.content = function () {
-            return null;
-        };
-        $mol_carder.prototype.contenter = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.content()); };
-            });
-        };
-        $mol_carder.prototype.statusText = function () {
-            return this.status();
-        };
-        $mol_carder.prototype.statuser = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.statusText()); };
-            });
-        };
-        $mol_carder.prototype.rows = function () {
-            return [].concat(this.contenter(), this.statuser());
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_carder.prototype, "contenter", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_carder.prototype, "statuser", null);
-        return $mol_carder;
-    }($.$mol_lister));
-    $.$mol_carder = $mol_carder;
-})($ || ($ = {}));
-//carder.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_labeler = (function (_super) {
-        __extends($mol_labeler, _super);
-        function $mol_labeler() {
-            _super.apply(this, arguments);
-        }
-        $mol_labeler.prototype.titler = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.title()); };
-            });
-        };
-        $mol_labeler.prototype.content = function () {
-            return null;
-        };
-        $mol_labeler.prototype.contenter = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.content()); };
-            });
-        };
-        $mol_labeler.prototype.childs = function () {
-            return [].concat(this.titler(), this.contenter());
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_labeler.prototype, "titler", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_labeler.prototype, "contenter", null);
-        return $mol_labeler;
-    }($.$mol_viewer));
-    $.$mol_labeler = $mol_labeler;
-})($ || ($ = {}));
-//labeler.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_coster = (function (_super) {
-        __extends($mol_coster, _super);
-        function $mol_coster() {
-            _super.apply(this, arguments);
-        }
-        $mol_coster.prototype.value = function () {
-            return null;
-        };
-        $mol_coster.prototype.prefix = function () {
-            return "";
-        };
-        $mol_coster.prototype.prefixer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.prefix()); };
-            });
-        };
-        $mol_coster.prototype.valueView = function () {
-            return "";
-        };
-        $mol_coster.prototype.mainer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.valueView()); };
-            });
-        };
-        $mol_coster.prototype.postfix = function () {
-            return "";
-        };
-        $mol_coster.prototype.postfixer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.postfix()); };
-            });
-        };
-        $mol_coster.prototype.childs = function () {
-            return [].concat(this.prefixer(), this.mainer(), this.postfixer());
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_coster.prototype, "prefixer", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_coster.prototype, "mainer", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_coster.prototype, "postfixer", null);
-        return $mol_coster;
-    }($.$mol_viewer));
-    $.$mol_coster = $mol_coster;
-})($ || ($ = {}));
-//coster.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -5902,39 +6943,6 @@ var $;
 })($ || ($ = {}));
 //money.js.map
 ;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_coster = (function (_super) {
-            __extends($mol_coster, _super);
-            function $mol_coster() {
-                _super.apply(this, arguments);
-            }
-            $mol_coster.prototype.value = function () {
-                return null;
-            };
-            $mol_coster.prototype.prefix = function () {
-                return this.value().prefix();
-            };
-            $mol_coster.prototype.valueView = function () {
-                return this.value().valueView();
-            };
-            $mol_coster.prototype.postfix = function () {
-                return this.value().postfix();
-            };
-            return $mol_coster;
-        }($.$mol_coster));
-        $mol.$mol_coster = $mol_coster;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//coster.view.js.map
-;
 var $jin = this.$jin = {}
 
 ;
@@ -5997,15 +7005,6 @@ var $jin;
     })(time = $jin.time || ($jin.time = {}));
 })($jin || ($jin = {}));
 //base.js.map
-;
-function $jin_type(value) {
-    var str = {}.toString.apply(value);
-    var type = str.substring(8, str.length - 1);
-    if (['Window', 'global'].indexOf(type) >= 0)
-        type = 'Global';
-    return type;
-}
-//type.js.map
 ;
 function $jin_type(value) {
     var str = {}.toString.apply(value);
@@ -6722,6 +7721,1347 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
+    var $mol_app_inventory_domain_mock = (function (_super) {
+        __extends($mol_app_inventory_domain_mock, _super);
+        function $mol_app_inventory_domain_mock() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_domain_mock.prototype.products = function () {
+            var _this = this;
+            return ['111', '222', '333'].map(function (code) { return _this.product(code); });
+        };
+        $mol_app_inventory_domain_mock.prototype.product = function (code) {
+            if (code.length !== 5)
+                return null;
+            var next = new $.$mol_app_inventory_domain_product();
+            next.code = $.$mol_const(code);
+            next.title = $.$mol_const($.$mol_stub_productName());
+            next.description = $.$mol_const('some description');
+            return next;
+        };
+        $mol_app_inventory_domain_mock.prototype.productByCode = function (code) {
+            return this.product(code);
+        };
+        $mol_app_inventory_domain_mock.prototype.positions = function (next) {
+            var _this = this;
+            var codes = next && next.map(function (position) {
+                return position.product().code();
+            });
+            var codes2 = $.$mol_state_session.value('positions', codes) || [];
+            return codes2.map(function (code) { return _this.position(code); });
+        };
+        $mol_app_inventory_domain_mock.prototype.position = function (productCode) {
+            var _this = this;
+            var next = new $.$mol_app_inventory_domain_position();
+            next.product = function () { return _this.product(productCode); };
+            next.count = function (next) { return _this.positionCount(productCode, next); };
+            next.status = function (next) { return _this.positionStatus(productCode, next); };
+            return next;
+        };
+        $mol_app_inventory_domain_mock.prototype.positionCount = function (productCode, next) {
+            var key = "positionCount(" + JSON.stringify(productCode) + ")";
+            return $.$mol_state_session.value(key, next) || 0;
+        };
+        $mol_app_inventory_domain_mock.prototype.positionStatus = function (productCode, next) {
+            var key = "positionStatus(" + JSON.stringify(productCode) + ")";
+            return $.$mol_state_session.value(key, next) || $.$mol_app_inventory_domain_position_status.draft;
+        };
+        $mol_app_inventory_domain_mock.prototype.authentificated = function () {
+            var creds = this.credentials();
+            if (!creds)
+                return false;
+            if (creds.login === 'demo')
+                return true;
+            return false;
+        };
+        $mol_app_inventory_domain_mock.prototype.message = function () {
+            return '';
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain_mock.prototype, "products", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_inventory_domain_mock.prototype, "product", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_domain_mock.prototype, "positions", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_inventory_domain_mock.prototype, "position", null);
+        return $mol_app_inventory_domain_mock;
+    }($.$mol_app_inventory_domain));
+    $.$mol_app_inventory_domain_mock = $mol_app_inventory_domain_mock;
+})($ || ($ = {}));
+//mock.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_inventory_demo = (function (_super) {
+        __extends($mol_app_inventory_demo, _super);
+        function $mol_app_inventory_demo() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_demo.prototype.domain = function (next, prev) {
+            return new $.$mol_app_inventory_domain_mock();
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_demo.prototype, "domain", null);
+        return $mol_app_inventory_demo;
+    }($.$mol_app_inventory));
+    $.$mol_app_inventory_demo = $mol_app_inventory_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol_app_inventory_enter_demo = (function (_super) {
+        __extends($mol_app_inventory_enter_demo, _super);
+        function $mol_app_inventory_enter_demo() {
+            _super.apply(this, arguments);
+        }
+        return $mol_app_inventory_enter_demo;
+    }($.$mol_app_inventory_enter));
+    $.$mol_app_inventory_enter_demo = $mol_app_inventory_enter_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_inventory_keeper_demo = (function (_super) {
+        __extends($mol_app_inventory_keeper_demo, _super);
+        function $mol_app_inventory_keeper_demo() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_inventory_keeper_demo.prototype.domain = function (next, prev) {
+            return new $.$mol_app_inventory_domain_mock();
+        };
+        $mol_app_inventory_keeper_demo.prototype.title1 = function () {
+            return this.localizedText("title1");
+        };
+        $mol_app_inventory_keeper_demo.prototype.description1 = function () {
+            return this.localizedText("description1");
+        };
+        $mol_app_inventory_keeper_demo.prototype.count1 = function (next, prev) {
+            return (next !== void 0) ? next : 1;
+        };
+        $mol_app_inventory_keeper_demo.prototype.status1 = function (next, prev) {
+            return (next !== void 0) ? next : "pending";
+        };
+        $mol_app_inventory_keeper_demo.prototype.positioner1 = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_inventory_positioner().setup(function (obj) {
+                obj.statuser = function () { return null; };
+                obj.title = function () { return _this.title1(); };
+                obj.description = function () { return _this.description1(); };
+                obj.count = function (next, prev) { return _this.count1(next, prev); };
+                obj.status = function (next, prev) { return _this.status1(next, prev); };
+            });
+        };
+        $mol_app_inventory_keeper_demo.prototype.title2 = function () {
+            return this.localizedText("title2");
+        };
+        $mol_app_inventory_keeper_demo.prototype.description2 = function () {
+            return this.localizedText("description2");
+        };
+        $mol_app_inventory_keeper_demo.prototype.count2 = function (next, prev) {
+            return (next !== void 0) ? next : 10;
+        };
+        $mol_app_inventory_keeper_demo.prototype.status2 = function (next, prev) {
+            return (next !== void 0) ? next : "approved";
+        };
+        $mol_app_inventory_keeper_demo.prototype.positioner2 = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_inventory_positioner().setup(function (obj) {
+                obj.statuser = function () { return null; };
+                obj.title = function () { return _this.title2(); };
+                obj.description = function () { return _this.description2(); };
+                obj.count = function (next, prev) { return _this.count2(next, prev); };
+                obj.status = function (next, prev) { return _this.status2(next, prev); };
+            });
+        };
+        $mol_app_inventory_keeper_demo.prototype.positioners = function (next, prev) {
+            return (next !== void 0) ? next : [].concat(this.positioner1(), this.positioner2());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper_demo.prototype, "domain", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper_demo.prototype, "count1", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper_demo.prototype, "status1", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper_demo.prototype, "positioner1", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper_demo.prototype, "count2", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper_demo.prototype, "status2", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper_demo.prototype, "positioner2", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_inventory_keeper_demo.prototype, "positioners", null);
+        return $mol_app_inventory_keeper_demo;
+    }($.$mol_app_inventory_keeper));
+    $.$mol_app_inventory_keeper_demo = $mol_app_inventory_keeper_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_quine = (function (_super) {
+        __extends($mol_app_quine, _super);
+        function $mol_app_quine() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_quine.prototype.content = function () {
+            return "";
+        };
+        $mol_app_quine.prototype.texter = function (next, prev) {
+            var _this = this;
+            return new $.$mol_texter().setup(function (obj) {
+                obj.text = function () { return _this.content(); };
+            });
+        };
+        $mol_app_quine.prototype.body = function () {
+            return [].concat(this.texter());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_quine.prototype, "texter", null);
+        return $mol_app_quine;
+    }($.$mol_pager));
+    $.$mol_app_quine = $mol_app_quine;
+})($ || ($ = {}));
+//quine.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_quine = (function (_super) {
+            __extends($mol_app_quine, _super);
+            function $mol_app_quine() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_quine.prototype.content = function () {
+                var paths = [
+                    '/mol/app/quine/quine.view.tree',
+                    '/mol/app/quine/quine.view.ts',
+                    '/mol/app/quine/quine.view.css',
+                    '/mol/app/quine/index.html',
+                ];
+                var sources = paths.map(function (path) {
+                    return $.$mol_http_resource.item(path).text();
+                });
+                var content = sources.map(function (source, index) {
+                    var header = "# " + paths[index] + "\n";
+                    var code = '```\n' + source.replace(/\n+$/, '') + '\n```\n';
+                    return header + "\n" + code;
+                }).join('\n');
+                return content;
+            };
+            return $mol_app_quine;
+        }($.$mol_app_quine));
+        $mol.$mol_app_quine = $mol_app_quine;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//quine.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol_app_quine_demo = (function (_super) {
+        __extends($mol_app_quine_demo, _super);
+        function $mol_app_quine_demo() {
+            _super.apply(this, arguments);
+        }
+        return $mol_app_quine_demo;
+    }($.$mol_app_quine));
+    $.$mol_app_quine_demo = $mol_app_quine_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_report = (function (_super) {
+        __extends($mol_app_report, _super);
+        function $mol_app_report() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_report.prototype.title = function () {
+            return "Pump #1337";
+        };
+        $mol_app_report.prototype.description = function () {
+            return "";
+        };
+        $mol_app_report.prototype.descriptor = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.description()); };
+            });
+        };
+        $mol_app_report.prototype.headCells = function () {
+            return [];
+        };
+        $mol_app_report.prototype.headRower = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_report_rower().setup(function (obj) {
+                obj.cells = function () { return _this.headCells(); };
+            });
+        };
+        $mol_app_report.prototype.rows = function () {
+            return [];
+        };
+        $mol_app_report.prototype.tabler = function (next, prev) {
+            var _this = this;
+            return new $.$mol_app_report_tabler().setup(function (obj) {
+                obj.rows = function () { return [].concat(_this.headRower(), _this.rows()); };
+            });
+        };
+        $mol_app_report.prototype.body = function () {
+            return [].concat(this.descriptor(), this.tabler());
+        };
+        $mol_app_report.prototype.rowerCells = function (key) {
+            return [];
+        };
+        $mol_app_report.prototype.rower = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_app_report_rower().setup(function (obj) {
+                obj.cells = function () { return _this.rowerCells(key); };
+            });
+        };
+        $mol_app_report.prototype.cellContent = function (key) {
+            return null;
+        };
+        $mol_app_report.prototype.cellRows = function (key) {
+            return 1;
+        };
+        $mol_app_report.prototype.cellCols = function (key) {
+            return 1;
+        };
+        $mol_app_report.prototype.celler = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_app_report_celler().setup(function (obj) {
+                obj.content = function () { return _this.cellContent(key); };
+                obj.rows = function () { return _this.cellRows(key); };
+                obj.cols = function () { return _this.cellCols(key); };
+            });
+        };
+        $mol_app_report.prototype.cellValue = function (key, next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_app_report.prototype.texter = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.cellValue(key)); };
+            });
+        };
+        $mol_app_report.prototype.stringer = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.value = function (next, prev) { return _this.cellValue(key, next, prev); };
+            });
+        };
+        $mol_app_report.prototype.number = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_number().setup(function (obj) {
+                obj.value = function (next, prev) { return _this.cellValue(key, next, prev); };
+            });
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_report.prototype, "descriptor", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_report.prototype, "headRower", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_report.prototype, "tabler", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_report.prototype, "rower", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_report.prototype, "celler", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_report.prototype, "cellValue", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_report.prototype, "texter", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_report.prototype, "stringer", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_report.prototype, "number", null);
+        return $mol_app_report;
+    }($.$mol_pager));
+    $.$mol_app_report = $mol_app_report;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_app_report_tabler = (function (_super) {
+        __extends($mol_app_report_tabler, _super);
+        function $mol_app_report_tabler() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_report_tabler.prototype.tagName = function () {
+            return "table";
+        };
+        $mol_app_report_tabler.prototype.rows = function () {
+            return [];
+        };
+        $mol_app_report_tabler.prototype.childs = function () {
+            return this.rows();
+        };
+        return $mol_app_report_tabler;
+    }($.$mol_viewer));
+    $.$mol_app_report_tabler = $mol_app_report_tabler;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_app_report_rower = (function (_super) {
+        __extends($mol_app_report_rower, _super);
+        function $mol_app_report_rower() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_report_rower.prototype.tagName = function () {
+            return "tr";
+        };
+        $mol_app_report_rower.prototype.cells = function () {
+            return [];
+        };
+        $mol_app_report_rower.prototype.childs = function () {
+            return this.cells();
+        };
+        return $mol_app_report_rower;
+    }($.$mol_viewer));
+    $.$mol_app_report_rower = $mol_app_report_rower;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_app_report_celler = (function (_super) {
+        __extends($mol_app_report_celler, _super);
+        function $mol_app_report_celler() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_report_celler.prototype.tagName = function () {
+            return "td";
+        };
+        $mol_app_report_celler.prototype.cols = function () {
+            return 1;
+        };
+        $mol_app_report_celler.prototype.rows = function () {
+            return 1;
+        };
+        $mol_app_report_celler.prototype.attr = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
+                "colspan": function () { return _this.cols(); },
+                "rowspan": function () { return _this.rows(); },
+            });
+        };
+        $mol_app_report_celler.prototype.content = function () {
+            return null;
+        };
+        $mol_app_report_celler.prototype.childs = function () {
+            return [].concat(this.content());
+        };
+        return $mol_app_report_celler;
+    }($.$mol_viewer));
+    $.$mol_app_report_celler = $mol_app_report_celler;
+})($ || ($ = {}));
+//report.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_report = (function (_super) {
+            __extends($mol_app_report, _super);
+            function $mol_app_report() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_report.prototype.formatCols = function () {
+                return [
+                    {
+                        title: '№ п/п',
+                    },
+                    {
+                        title: 'Наименование',
+                    },
+                    {
+                        title: 'Форма записи',
+                    },
+                    {
+                        title: 'Значение',
+                    },
+                ];
+            };
+            $mol_app_report.prototype.formatRows = function () {
+                return [
+                    {
+                        title: 'Фундамент',
+                        childs: [
+                            {
+                                title: 'Габаритный размер',
+                                childs: [
+                                    {
+                                        field: 'base_length',
+                                        title: 'Длинна',
+                                    },
+                                    {
+                                        field: 'base_width',
+                                        title: 'Ширина',
+                                    },
+                                    {
+                                        field: 'base_height',
+                                        title: 'Высота',
+                                    },
+                                ]
+                            },
+                            {
+                                field: 'base_kind',
+                                title: 'Вид',
+                            },
+                            {
+                                field: 'base_type',
+                                title: 'Тип',
+                            },
+                            {
+                                field: 'base_release_year',
+                                title: 'Год ввода в эксплуатацию',
+                            },
+                            {
+                                field: 'base_weight_max',
+                                title: 'Несущая способность',
+                            },
+                        ]
+                    },
+                    {
+                        title: 'Кровля',
+                        childs: [
+                            {
+                                title: 'Габаритный размер',
+                                childs: [
+                                    {
+                                        field: 'roof_length',
+                                        title: 'Длинна',
+                                    },
+                                    {
+                                        field: 'roof_width',
+                                        title: 'Ширина',
+                                    },
+                                    {
+                                        field: 'roof_height',
+                                        title: 'Высота',
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                ];
+            };
+            $mol_app_report.prototype.scheme = function () {
+                return {
+                    'base_length': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'мм',
+                    },
+                    'base_width': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'мм',
+                    },
+                    'base_height': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'мм',
+                    },
+                    'base_kind': {
+                        type: 'enum',
+                        options: {
+                            union: 'Единый',
+                            separated: 'Раздельный насос и электродвигатель',
+                        },
+                    },
+                    'base_type': {
+                        type: 'enum',
+                        options: {
+                            ribbon: 'Ленточный',
+                            ring: 'Кольцевой',
+                            pile: 'Свайный',
+                        },
+                    },
+                    'base_release_year': {
+                        type: 'number',
+                        mask: 'гггг',
+                        unit: 'г.'
+                    },
+                    'base_weight_max': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'кг',
+                    },
+                    'roof_length': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'мм',
+                    },
+                    'roof_width': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'мм',
+                    },
+                    'roof_height': {
+                        type: 'number',
+                        mask: 'XX',
+                        unit: 'мм',
+                    },
+                };
+            };
+            $mol_app_report.prototype.data = function () {
+                return {
+                    base_length: '403300',
+                    base_width: '22000',
+                    base_height: '25000',
+                    base_kind: 'union',
+                    base_type: 'ribbon',
+                    base_release_year: '1993',
+                    base_weight_max: '30000',
+                    roof_length: '413300',
+                    roof_width: '23000',
+                    roof_height: '26000',
+                };
+            };
+            $mol_app_report.prototype.description = function () {
+                return "\u041F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0435 \u21161\n\u041F\u0430\u0441\u0441\u043F\u043E\u0440-\u0444\u043E\u0440\u043C\u0443\u043B\u044F\u0440\n\u041C\u0430\u0433\u0438\u0441\u0442\u0440\u0430\u043B\u044C\u043D\u044B\u0439 \u043D\u0430\u0441\u043E\u0441\u043D\u044B\u0439 \u0430\u0433\u0440\u0435\u0433\u0430\u0442\nMHA-1";
+            };
+            $mol_app_report.prototype.headCells = function () {
+                return [
+                    this.celler([0, 0]),
+                    this.celler([0, 1]),
+                    this.celler([0, 2]),
+                    this.celler([0, 3]),
+                ];
+            };
+            $mol_app_report.prototype.rows = function () {
+                var _this = this;
+                var rows = [];
+                var visit = function (pos, format) {
+                    rows.push(_this.rower(pos));
+                    if (format.childs)
+                        format.childs.forEach(function (format, index) {
+                            visit(pos.concat(index + 1), format);
+                        });
+                };
+                this.formatRows().forEach(function (format, index) {
+                    visit([index + 1], format);
+                });
+                return rows;
+            };
+            $mol_app_report.prototype.formatRow = function (pos) {
+                var formatRows = this.formatRows();
+                var next = null;
+                for (var _i = 0, pos_1 = pos; _i < pos_1.length; _i++) {
+                    var index = pos_1[_i];
+                    next = formatRows[index - 1];
+                    formatRows = next.childs;
+                }
+                return next;
+            };
+            $mol_app_report.prototype.rowerCells = function (pos) {
+                var formatRow = this.formatRow(pos);
+                return [
+                    this.celler(pos.concat(0)),
+                    this.celler(pos.concat(1)),
+                    formatRow.field ? this.celler(pos.concat(2)) : null,
+                    formatRow.field ? this.celler(pos.concat(3)) : null,
+                ];
+            };
+            $mol_app_report.prototype.cellCols = function (pos) {
+                if (pos[0] === 0) {
+                    return 1;
+                }
+                var col = pos[pos.length - 1];
+                if (col === 0)
+                    return 1;
+                var formatRow = this.formatRow(pos.slice(0, pos.length - 1));
+                if (!formatRow.field) {
+                    if (col === 1)
+                        return 3;
+                    else
+                        return 0;
+                }
+                return 1;
+            };
+            $mol_app_report.prototype.cellContent = function (pos) {
+                if (pos[0] === 0) {
+                    return this.texter(pos);
+                }
+                var col = pos[pos.length - 1];
+                if (col === 3) {
+                    var field = this.formatRow(pos.slice(0, pos.length - 1)).field;
+                    var scheme = this.scheme()[field];
+                    switch (scheme.type) {
+                        case 'number': return this.number(pos);
+                        case 'enum': return this.stringer(pos);
+                    }
+                }
+                else {
+                    return this.texter(pos);
+                }
+            };
+            $mol_app_report.prototype.cellValue = function (pos, next) {
+                if (next !== void 0)
+                    return next;
+                if (pos[0] === 0) {
+                    return this.formatCols()[pos[1]].title;
+                }
+                var col = pos[pos.length - 1];
+                switch (col) {
+                    case 0: return pos.slice(0, pos.length - 1).join('.');
+                    case 1: return this.cellContentName(pos.slice(0, pos.length - 1));
+                    case 2: return this.cellContentType(pos.slice(0, pos.length - 1));
+                    case 3: return this.cellContentValue(pos.slice(0, pos.length - 1));
+                }
+                return '';
+            };
+            $mol_app_report.prototype.cellContentName = function (pos) {
+                var formatRow = this.formatRow(pos);
+                return formatRow.title;
+            };
+            $mol_app_report.prototype.cellContentType = function (pos) {
+                var field = this.formatRow(pos).field;
+                if (!field)
+                    return '';
+                var scheme = this.scheme()[field];
+                switch (scheme.type) {
+                    case 'number': return scheme.mask;
+                    case 'enum': return Object.keys(scheme.options).map(function (key) { return scheme.options[key]; }).join(' / ');
+                }
+                return '';
+            };
+            $mol_app_report.prototype.cellContentValue = function (pos) {
+                var field = this.formatRow(pos).field;
+                if (!field)
+                    return '';
+                var scheme = this.scheme()[field];
+                switch (scheme.type) {
+                    case 'number': return this.data()[field];
+                    case 'enum': return scheme.options[this.data()[field]];
+                }
+                return '';
+            };
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_app_report.prototype, "cellContent", null);
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_app_report.prototype, "cellValue", null);
+            return $mol_app_report;
+        }($.$mol_app_report));
+        $mol.$mol_app_report = $mol_app_report;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//report.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol_app_report_demo = (function (_super) {
+        __extends($mol_app_report_demo, _super);
+        function $mol_app_report_demo() {
+            _super.apply(this, arguments);
+        }
+        return $mol_app_report_demo;
+    }($.$mol_app_report));
+    $.$mol_app_report_demo = $mol_app_report_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_app_signup = (function (_super) {
+        __extends($mol_app_signup, _super);
+        function $mol_app_signup() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_signup.prototype.nameFirstLabel = function () {
+            return this.localizedText("nameFirstLabel");
+        };
+        $mol_app_signup.prototype.nameFirstErrors = function () {
+            return [];
+        };
+        $mol_app_signup.prototype.nameFirstHint = function () {
+            return this.localizedText("nameFirstHint");
+        };
+        $mol_app_signup.prototype.nameFirst = function (next, prev) {
+            return (next !== void 0) ? next : "";
+        };
+        $mol_app_signup.prototype.nameFirstControl = function (next, prev) {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.hint = function () { return _this.nameFirstHint(); };
+                obj.value = function (next, prev) { return _this.nameFirst(next, prev); };
+            });
+        };
+        $mol_app_signup.prototype.nameFirstField = function (next, prev) {
+            var _this = this;
+            return new $.$mol_form_field().setup(function (obj) {
+                obj.name = function () { return _this.nameFirstLabel(); };
+                obj.errors = function () { return _this.nameFirstErrors(); };
+                obj.control = function () { return _this.nameFirstControl(); };
+            });
+        };
+        $mol_app_signup.prototype.nameNickLabel = function () {
+            return this.localizedText("nameNickLabel");
+        };
+        $mol_app_signup.prototype.nameNickErrors = function () {
+            return [];
+        };
+        $mol_app_signup.prototype.nameNickHint = function () {
+            return this.localizedText("nameNickHint");
+        };
+        $mol_app_signup.prototype.nameNick = function (next, prev) {
+            return (next !== void 0) ? next : "";
+        };
+        $mol_app_signup.prototype.nameNickControl = function (next, prev) {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.hint = function () { return _this.nameNickHint(); };
+                obj.value = function (next, prev) { return _this.nameNick(next, prev); };
+            });
+        };
+        $mol_app_signup.prototype.nameNickField = function (next, prev) {
+            var _this = this;
+            return new $.$mol_form_field().setup(function (obj) {
+                obj.name = function () { return _this.nameNickLabel(); };
+                obj.errors = function () { return _this.nameNickErrors(); };
+                obj.control = function () { return _this.nameNickControl(); };
+            });
+        };
+        $mol_app_signup.prototype.nameSecondLabel = function () {
+            return this.localizedText("nameSecondLabel");
+        };
+        $mol_app_signup.prototype.nameSecondErrors = function () {
+            return [];
+        };
+        $mol_app_signup.prototype.nameSecondHint = function () {
+            return this.localizedText("nameSecondHint");
+        };
+        $mol_app_signup.prototype.nameSecond = function (next, prev) {
+            return (next !== void 0) ? next : "";
+        };
+        $mol_app_signup.prototype.nameSecondControl = function (next, prev) {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.hint = function () { return _this.nameSecondHint(); };
+                obj.value = function (next, prev) { return _this.nameSecond(next, prev); };
+            });
+        };
+        $mol_app_signup.prototype.nameSecondField = function (next, prev) {
+            var _this = this;
+            return new $.$mol_form_field().setup(function (obj) {
+                obj.name = function () { return _this.nameSecondLabel(); };
+                obj.errors = function () { return _this.nameSecondErrors(); };
+                obj.control = function () { return _this.nameSecondControl(); };
+            });
+        };
+        $mol_app_signup.prototype.sexLabel = function () {
+            return this.localizedText("sexLabel");
+        };
+        $mol_app_signup.prototype.sexErrors = function () {
+            return [];
+        };
+        $mol_app_signup.prototype.sex = function (next, prev) {
+            return (next !== void 0) ? next : "";
+        };
+        $mol_app_signup.prototype.sexOptionMale = function () {
+            return this.localizedText("sexOptionMale");
+        };
+        $mol_app_signup.prototype.sexOptionIntersex = function () {
+            return this.localizedText("sexOptionIntersex");
+        };
+        $mol_app_signup.prototype.sexOptionFemale = function () {
+            return this.localizedText("sexOptionFemale");
+        };
+        $mol_app_signup.prototype.sexOptions = function () {
+            var _this = this;
+            return ({
+                "male": function () { return _this.sexOptionMale(); },
+                "intersex": function () { return _this.sexOptionIntersex(); },
+                "female": function () { return _this.sexOptionFemale(); },
+            });
+        };
+        $mol_app_signup.prototype.sexControl = function (next, prev) {
+            var _this = this;
+            return new $.$mol_switcher().setup(function (obj) {
+                obj.value = function (next, prev) { return _this.sex(next, prev); };
+                obj.options = function () { return _this.sexOptions(); };
+            });
+        };
+        $mol_app_signup.prototype.sexField = function (next, prev) {
+            var _this = this;
+            return new $.$mol_form_field().setup(function (obj) {
+                obj.name = function () { return _this.sexLabel(); };
+                obj.errors = function () { return _this.sexErrors(); };
+                obj.control = function () { return [].concat(_this.sexControl()); };
+            });
+        };
+        $mol_app_signup.prototype.formFields = function () {
+            return [].concat(this.nameFirstField(), this.nameNickField(), this.nameSecondField(), this.sexField());
+        };
+        $mol_app_signup.prototype.submitText = function () {
+            return this.localizedText("submitText");
+        };
+        $mol_app_signup.prototype.eventSubmit = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_app_signup.prototype.submit = function (next, prev) {
+            var _this = this;
+            return new $.$mol_clicker_major().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.submitText()); };
+                obj.eventClick = function (next, prev) { return _this.eventSubmit(next, prev); };
+                obj.disabled = function () { return _this.submitBlocked(); };
+            });
+        };
+        $mol_app_signup.prototype.buttons = function () {
+            return [].concat(this.submit());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "nameFirst", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "nameFirstControl", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "nameFirstField", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "nameNick", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "nameNickControl", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "nameNickField", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "nameSecond", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "nameSecondControl", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "nameSecondField", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "sex", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "sexControl", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "sexField", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "eventSubmit", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_signup.prototype, "submit", null);
+        return $mol_app_signup;
+    }($.$mol_form));
+    $.$mol_app_signup = $mol_app_signup;
+})($ || ($ = {}));
+//signup.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_app_signup = (function (_super) {
+            __extends($mol_app_signup, _super);
+            function $mol_app_signup() {
+                _super.apply(this, arguments);
+            }
+            $mol_app_signup.prototype.nameFirst = function (next) {
+                return $.$mol_state_local.value(this.stateKey('nameFirst'), next) || '';
+            };
+            $mol_app_signup.prototype.nameFirstErrors = function () {
+                return this.nameFirst() ? [] : ['Input required'];
+            };
+            $mol_app_signup.prototype.nameNick = function (next) {
+                return $.$mol_state_local.value(this.stateKey('nameNick'), next) || '';
+            };
+            $mol_app_signup.prototype.nameSecond = function (next) {
+                return $.$mol_state_local.value(this.stateKey('nameSecond'), next) || '';
+            };
+            $mol_app_signup.prototype.nameSecondErrors = function () {
+                var value = this.nameSecond();
+                if (value.length === 0)
+                    return ['Input required'];
+                var errors = [];
+                if (value.length < 3)
+                    errors.push('More then 2 letter required');
+                if (value.indexOf(' ') !== -1)
+                    errors.push('Spaces are forbidden');
+                return errors;
+            };
+            $mol_app_signup.prototype.sex = function (next) {
+                return $.$mol_state_local.value(this.stateKey('sex'), next) || '';
+            };
+            $mol_app_signup.prototype.sexErrors = function () {
+                return this.sex() ? [] : ['Input required'];
+            };
+            $mol_app_signup.prototype.eventSubmit = function (next) {
+                alert("Hello, " + this.sex() + " " + this.nameFirst() + " (" + this.nameNick() + ") " + this.nameSecond() + "!");
+            };
+            return $mol_app_signup;
+        }($.$mol_app_signup));
+        $mol.$mol_app_signup = $mol_app_signup;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//signup.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol_app_signup_dmeo = (function (_super) {
+        __extends($mol_app_signup_dmeo, _super);
+        function $mol_app_signup_dmeo() {
+            _super.apply(this, arguments);
+        }
+        return $mol_app_signup_dmeo;
+    }($.$mol_app_signup));
+    $.$mol_app_signup_dmeo = $mol_app_signup_dmeo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_carder = (function (_super) {
+        __extends($mol_carder, _super);
+        function $mol_carder() {
+            _super.apply(this, arguments);
+        }
+        $mol_carder.prototype.status = function () {
+            return "";
+        };
+        $mol_carder.prototype.attr = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
+                "mol_carder_status": function () { return _this.status(); },
+            });
+        };
+        $mol_carder.prototype.content = function () {
+            return null;
+        };
+        $mol_carder.prototype.contenter = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.content()); };
+            });
+        };
+        $mol_carder.prototype.statusText = function () {
+            return this.status();
+        };
+        $mol_carder.prototype.statuser = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.statusText()); };
+            });
+        };
+        $mol_carder.prototype.rows = function () {
+            return [].concat(this.contenter(), this.statuser());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_carder.prototype, "contenter", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_carder.prototype, "statuser", null);
+        return $mol_carder;
+    }($.$mol_lister));
+    $.$mol_carder = $mol_carder;
+})($ || ($ = {}));
+//carder.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_labeler = (function (_super) {
+        __extends($mol_labeler, _super);
+        function $mol_labeler() {
+            _super.apply(this, arguments);
+        }
+        $mol_labeler.prototype.titler = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.title()); };
+            });
+        };
+        $mol_labeler.prototype.content = function () {
+            return null;
+        };
+        $mol_labeler.prototype.contenter = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.content()); };
+            });
+        };
+        $mol_labeler.prototype.childs = function () {
+            return [].concat(this.titler(), this.contenter());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_labeler.prototype, "titler", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_labeler.prototype, "contenter", null);
+        return $mol_labeler;
+    }($.$mol_viewer));
+    $.$mol_labeler = $mol_labeler;
+})($ || ($ = {}));
+//labeler.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_coster = (function (_super) {
+        __extends($mol_coster, _super);
+        function $mol_coster() {
+            _super.apply(this, arguments);
+        }
+        $mol_coster.prototype.value = function () {
+            return null;
+        };
+        $mol_coster.prototype.prefix = function () {
+            return "";
+        };
+        $mol_coster.prototype.prefixer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.prefix()); };
+            });
+        };
+        $mol_coster.prototype.valueView = function () {
+            return "";
+        };
+        $mol_coster.prototype.mainer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.valueView()); };
+            });
+        };
+        $mol_coster.prototype.postfix = function () {
+            return "";
+        };
+        $mol_coster.prototype.postfixer = function (next, prev) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.postfix()); };
+            });
+        };
+        $mol_coster.prototype.childs = function () {
+            return [].concat(this.prefixer(), this.mainer(), this.postfixer());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_coster.prototype, "prefixer", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_coster.prototype, "mainer", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_coster.prototype, "postfixer", null);
+        return $mol_coster;
+    }($.$mol_viewer));
+    $.$mol_coster = $mol_coster;
+})($ || ($ = {}));
+//coster.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_coster = (function (_super) {
+            __extends($mol_coster, _super);
+            function $mol_coster() {
+                _super.apply(this, arguments);
+            }
+            $mol_coster.prototype.value = function () {
+                return null;
+            };
+            $mol_coster.prototype.prefix = function () {
+                return this.value().prefix();
+            };
+            $mol_coster.prototype.valueView = function () {
+                return this.value().valueView();
+            };
+            $mol_coster.prototype.postfix = function () {
+                return this.value().postfix();
+            };
+            return $mol_coster;
+        }($.$mol_coster));
+        $mol.$mol_coster = $mol_coster;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//coster.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
     var $mol_app_supplies_domain_provider = (function (_super) {
         __extends($mol_app_supplies_domain_provider, _super);
         function $mol_app_supplies_domain_provider() {
@@ -6902,16 +9242,19 @@ var $;
             }
             return next;
         };
+        $mol_app_supplies_domain_mock.prototype.supplyStatus = function (id, next) {
+            return next || $.$mol_stub_selectRandom([
+                $mol_app_supplies_domain_supply_status.pending,
+                $mol_app_supplies_domain_supply_status.approved
+            ]);
+        };
         $mol_app_supplies_domain_mock.prototype.supply = function (id) {
             var _this = this;
             return new $mol_app_supplies_domain_supply().setup(function (obj) {
                 obj.id = $.$mol_const(id);
                 obj.cost = function () { return new $.$mol_unit_money_usd(_this.positions(id)
                     .reduce(function (sum, pos) { return sum + pos.cost().valueOf(); }, 0)); };
-                obj.status(void 0, $.$mol_stub_selectRandom([
-                    $mol_app_supplies_domain_supply_status.pending,
-                    $mol_app_supplies_domain_supply_status.approved
-                ]));
+                obj.status = function (next) { return _this.supplyStatus(id, next); };
                 obj.provider = $.$mol_const(_this.provider($.$mol_stub_code(2)));
                 obj.consumer = $.$mol_const(_this.consumer($.$mol_stub_code(2)));
                 obj.group = $.$mol_const(_this.supplyGroup($.$mol_stub_code(2)));
@@ -7013,6 +9356,9 @@ var $;
         __decorate([
             $.$mol_mem_key()
         ], $mol_app_supplies_domain_mock.prototype, "positions", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_supplies_domain_mock.prototype, "supplyStatus", null);
         __decorate([
             $.$mol_mem_key()
         ], $mol_app_supplies_domain_mock.prototype, "supply", null);
@@ -7499,128 +9845,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_coder = (function (_super) {
-        __extends($mol_coder, _super);
-        function $mol_coder() {
-            _super.apply(this, arguments);
-        }
-        $mol_coder.prototype.value = function (next, prev) {
-            return (next !== void 0) ? next : "";
-        };
-        $mol_coder.prototype.format = function () {
-            return "";
-        };
-        $mol_coder.prototype.hint = function () {
-            return this.format();
-        };
-        $mol_coder.prototype.manualer = function (next, prev) {
-            var _this = this;
-            return new $.$mol_number().setup(function (obj) {
-                obj.value = function (next, prev) { return _this.value(next, prev); };
-                obj.hint = function () { return _this.hint(); };
-                obj.enabledInc = function () { return false; };
-                obj.enabledDec = function () { return false; };
-            });
-        };
-        $mol_coder.prototype.eventScan = function (next, prev) {
-            return (next !== void 0) ? next : null;
-        };
-        $mol_coder.prototype.labelScan = function () {
-            return this.localizedText("labelScan");
-        };
-        $mol_coder.prototype.scanner = function (next, prev) {
-            var _this = this;
-            return new $.$mol_clicker().setup(function (obj) {
-                obj.eventClick = function (next, prev) { return _this.eventScan(next, prev); };
-                obj.childs = function () { return [].concat(_this.labelScan()); };
-            });
-        };
-        $mol_coder.prototype.childs = function () {
-            return [].concat(this.manualer(), this.scanner());
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_coder.prototype, "value", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_coder.prototype, "manualer", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_coder.prototype, "eventScan", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_coder.prototype, "scanner", null);
-        return $mol_coder;
-    }($.$mol_viewer));
-    $.$mol_coder = $mol_coder;
-})($ || ($ = {}));
-//coder.view.tree.js.map
-;
-var cordova;
-var $;
-(function ($) {
-    $.$mol_cordova = cordova || {
-        plugins: {
-            barcodeScanner: null
-        }
-    };
-    function $mol_cordova_camera() {
-        return navigator['camera'];
-    }
-    $.$mol_cordova_camera = $mol_cordova_camera;
-})($ || ($ = {}));
-//cordova.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_coder = (function (_super) {
-            __extends($mol_coder, _super);
-            function $mol_coder() {
-                _super.apply(this, arguments);
-            }
-            $mol_coder.prototype.supportScan = function () {
-                return Boolean($.$mol_cordova.plugins.barcodeScanner);
-            };
-            $mol_coder.prototype.scanner = function () {
-                return this.supportScan() ? _super.prototype.scanner.call(this) : null;
-            };
-            $mol_coder.prototype.eventScan = function () {
-                var _this = this;
-                $.$mol_cordova.plugins.barcodeScanner.scan(function (result) {
-                    if (result.cancelled)
-                        return;
-                    _this.value(result.text);
-                }, function (error) {
-                    alert("Scanning failed: " + error);
-                });
-            };
-            return $mol_coder;
-        }($.$mol_coder));
-        $mol.$mol_coder = $mol_coder;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//coder.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
     var $mol_app_supplies_lister = (function (_super) {
         __extends($mol_app_supplies_lister, _super);
         function $mol_app_supplies_lister() {
@@ -7635,14 +9859,14 @@ var $;
         $mol_app_supplies_lister.prototype.searcherHint = function () {
             return this.localizedText("searcherHint");
         };
-        $mol_app_supplies_lister.prototype.supplyId = function (next, prev) {
+        $mol_app_supplies_lister.prototype.searchQuery = function (next, prev) {
             return (next !== void 0) ? next : "";
         };
         $mol_app_supplies_lister.prototype.searcher = function (next, prev) {
             var _this = this;
             return new $.$mol_coder().setup(function (obj) {
                 obj.hint = function () { return _this.searcherHint(); };
-                obj.value = function (next, prev) { return _this.supplyId(next, prev); };
+                obj.value = function (next, prev) { return _this.searchQuery(next, prev); };
             });
         };
         $mol_app_supplies_lister.prototype.searchPanel = function (next, prev) {
@@ -7668,7 +9892,7 @@ var $;
         };
         __decorate([
             $.$mol_mem()
-        ], $mol_app_supplies_lister.prototype, "supplyId", null);
+        ], $mol_app_supplies_lister.prototype, "searchQuery", null);
         __decorate([
             $.$mol_mem()
         ], $mol_app_supplies_lister.prototype, "searcher", null);
@@ -8311,57 +10535,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var $;
-(function ($) {
-    var $mol_icon_tick = (function (_super) {
-        __extends($mol_icon_tick, _super);
-        function $mol_icon_tick() {
-            _super.apply(this, arguments);
-        }
-        $mol_icon_tick.prototype.path = function () {
-            return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
-        };
-        return $mol_icon_tick;
-    }($.$mol_icon));
-    $.$mol_icon_tick = $mol_icon_tick;
-})($ || ($ = {}));
-//tick.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_checker_ticker = (function (_super) {
-        __extends($mol_checker_ticker, _super);
-        function $mol_checker_ticker() {
-            _super.apply(this, arguments);
-        }
-        $mol_checker_ticker.prototype.icon = function (next, prev) {
-            return new $.$mol_icon_tick();
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_checker_ticker.prototype, "icon", null);
-        return $mol_checker_ticker;
-    }($.$mol_checker));
-    $.$mol_checker_ticker = $mol_checker_ticker;
-})($ || ($ = {}));
-//ticker.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8401,7 +10574,7 @@ var $;
             return [].concat(this.backer(), this.titler());
         };
         $mol_app_supplies_detailer.prototype.orgLabel = function () {
-            return "Organization";
+            return this.localizedText("orgLabel");
         };
         $mol_app_supplies_detailer.prototype.providerLabel = function () {
             return this.localizedText("providerLabel");
@@ -8642,7 +10815,7 @@ var $;
             var _this = this;
             return new $.$mol_checker_ticker().setup(function (obj) {
                 obj.checked = function (next, prev) { return _this.approved(next, prev); };
-                obj.childs = function () { return [].concat(_this.approvedLabel()); };
+                obj.label = function () { return [].concat(_this.approvedLabel()); };
             });
         };
         $mol_app_supplies_detailer.prototype.tools = function () {
@@ -9147,14 +11320,14 @@ var $;
         $mol_app_supplies_root.prototype.supplies = function () {
             return [];
         };
-        $mol_app_supplies_root.prototype.supplyId = function (next, prev) {
+        $mol_app_supplies_root.prototype.searchQuery = function (next, prev) {
             return (next !== void 0) ? next : "";
         };
         $mol_app_supplies_root.prototype.lister = function (next, prev) {
             var _this = this;
             return new $.$mol_app_supplies_lister().setup(function (obj) {
                 obj.supplies = function () { return _this.supplies(); };
-                obj.supplyId = function (next, prev) { return _this.supplyId(next, prev); };
+                obj.searchQuery = function (next, prev) { return _this.searchQuery(next, prev); };
             });
         };
         $mol_app_supplies_root.prototype.supply = function () {
@@ -9174,7 +11347,7 @@ var $;
         ], $mol_app_supplies_root.prototype, "enter", null);
         __decorate([
             $.$mol_mem()
-        ], $mol_app_supplies_root.prototype, "supplyId", null);
+        ], $mol_app_supplies_root.prototype, "searchQuery", null);
         __decorate([
             $.$mol_mem()
         ], $mol_app_supplies_root.prototype, "lister", null);
@@ -9229,7 +11402,7 @@ var $;
                     : [this.enter()];
             };
             $mol_app_supplies_root.prototype.title = function () {
-                return (this.main()[0] || this.addon()[0]).title();
+                return (this.main() || this.addon())[0].title();
             };
             $mol_app_supplies_root.prototype.domain = function () {
                 return new $.$mol_app_supplies_domain_mock();
@@ -9240,6 +11413,14 @@ var $;
             $mol_app_supplies_root.prototype.supplyId = function (next) {
                 return $.$mol_state_arg.value(this.stateKey('supply'), next);
             };
+            $mol_app_supplies_root.prototype.searchQuery = function (next) {
+                if (!next)
+                    return '';
+                if (next.length < 7)
+                    return next;
+                this.supplyId(next);
+                return '';
+            };
             $mol_app_supplies_root.prototype.supply = function () {
                 if (!this.entered())
                     return null;
@@ -9249,6 +11430,9 @@ var $;
             __decorate([
                 $.$mol_mem()
             ], $mol_app_supplies_root.prototype, "domain", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_supplies_root.prototype, "searchQuery", null);
             return $mol_app_supplies_root;
         }($.$mol_app_supplies_root));
         $mol.$mol_app_supplies_root = $mol_app_supplies_root;
@@ -9350,8 +11534,8 @@ var $;
         $mol_app_supplies_detailer_demo.prototype.title = function () {
             return this.localizedText("title");
         };
-        $mol_app_supplies_detailer_demo.prototype.approved = function () {
-            return false;
+        $mol_app_supplies_detailer_demo.prototype.approved = function (next, prev) {
+            return (next !== void 0) ? next : false;
         };
         $mol_app_supplies_detailer_demo.prototype.providerName = function () {
             return this.localizedText("providerName");
@@ -9405,6 +11589,9 @@ var $;
         };
         __decorate([
             $.$mol_mem()
+        ], $mol_app_supplies_detailer_demo.prototype, "approved", null);
+        __decorate([
+            $.$mol_mem()
         ], $mol_app_supplies_detailer_demo.prototype, "cost", null);
         __decorate([
             $.$mol_mem()
@@ -9432,125 +11619,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var $;
-(function ($) {
-    var $mol_range_common = (function (_super) {
-        __extends($mol_range_common, _super);
-        function $mol_range_common() {
-            _super.apply(this, arguments);
-            this.length = 0;
-        }
-        $mol_range_common.prototype.item = function (id) {
-            return;
-        };
-        Object.defineProperty($mol_range_common.prototype, '0', {
-            get: function () {
-                throw new Error('Direct access to items not supported. Use item( id : number ) method instead.');
-            },
-            enumerable: true,
-            configurable: true
-        });
-        $mol_range_common.prototype.forEach = function (handle) {
-            var length = this.length;
-            for (var i = 0; i < length; ++i) {
-                handle(this.item(i), i);
-            }
-        };
-        $mol_range_common.prototype.valueOf = function () {
-            var list = [];
-            this.forEach(function (val) { return list.push(val); });
-            return list;
-        };
-        $mol_range_common.prototype.concat = function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i - 0] = arguments[_i];
-            }
-            var ranges = args.map(function (range) { return range.valueOf(); });
-            return (_a = this.valueOf()).concat.apply(_a, ranges);
-            var _a;
-        };
-        $mol_range_common.prototype.slice = function (start, end) {
-            if (start === void 0) { start = 0; }
-            var source = this;
-            return new $mol_range_lazy({
-                item: function (id) {
-                    return source.item(id + start);
-                },
-                get length() {
-                    return Math.min(end, source.length) - start;
-                }
-            });
-        };
-        $mol_range_common.prototype.map = function (proceed) {
-            var source = this;
-            return new $mol_range_lazy({
-                item: function (id) {
-                    return proceed(source.item(id));
-                },
-                get length() {
-                    return source.length;
-                }
-            });
-        };
-        $mol_range_common.prototype.join = function (delim) {
-            if (delim === void 0) { delim = ','; }
-            var list = [];
-            this.forEach(function (val) { return list.push(val); });
-            return list.join(delim);
-        };
-        $mol_range_common.prototype.every = function (check) {
-            var res = true;
-            this.forEach(function (val, id) {
-                if (!res)
-                    return;
-                res = check(val, id);
-            });
-            return res;
-        };
-        $mol_range_common.prototype.some = function (check) {
-            var res = false;
-            this.forEach(function (val, id) {
-                if (res)
-                    return;
-                res = check(val, id);
-            });
-            return res;
-        };
-        return $mol_range_common;
-    }(Array));
-    $.$mol_range_common = $mol_range_common;
-    var $mol_range_lazy = (function (_super) {
-        __extends($mol_range_lazy, _super);
-        function $mol_range_lazy(source) {
-            if (source === void 0) { source = {
-                item: function (id) { return void 0; },
-                length: 0
-            }; }
-            _super.call(this);
-            this.source = source;
-        }
-        $mol_range_lazy.prototype.item = function (id) {
-            return this.source.item(id);
-        };
-        Object.defineProperty($mol_range_lazy.prototype, "length", {
-            get: function () {
-                return this.source.length;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return $mol_range_lazy;
-    }($mol_range_common));
-    $.$mol_range_lazy = $mol_range_lazy;
-})($ || ($ = {}));
-//range.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9567,79 +11635,41 @@ var $;
         $mol_app_taxon.prototype.hierarhyField = function () {
             return "Butxt";
         };
-        $mol_app_taxon.prototype.rowers = function () {
+        $mol_app_taxon.prototype.records = function () {
             return [];
         };
-        $mol_app_taxon.prototype.cellers = function (key) {
+        $mol_app_taxon.prototype.record = function (key) {
+            return null;
+        };
+        $mol_app_taxon.prototype.rows = function () {
             return [];
+        };
+        $mol_app_taxon.prototype.rowExpanded = function (key, next, prev) {
+            return (next !== void 0) ? next : false;
+        };
+        $mol_app_taxon.prototype.rowLevel = function (key) {
+            return 0;
         };
         $mol_app_taxon.prototype.grider = function (next, prev) {
             var _this = this;
             return new $.$mol_grider().setup(function (obj) {
-                obj.rowHeight = function () { return 40; };
-                obj.rowers = function () { return _this.rowers(); };
-                obj.cellers = function (key) { return _this.cellers(key); };
+                obj.hierarhyColumn = function () { return _this.hierarhyField(); };
+                obj.records = function () { return _this.records(); };
+                obj.record = function (key) { return _this.record(key); };
+                obj.rows = function () { return _this.rows(); };
+                obj.rowExpanded = function (key, next, prev) { return _this.rowExpanded(key, next, prev); };
+                obj.rowLevel = function (key) { return _this.rowLevel(key); };
             });
         };
         $mol_app_taxon.prototype.body = function () {
             return [].concat(this.grider());
         };
-        $mol_app_taxon.prototype.rowLevel = function (key) {
-            return 0;
-        };
-        $mol_app_taxon.prototype.rowTitle = function (key) {
-            return "";
-        };
-        $mol_app_taxon.prototype.rowExpanded = function (key, next, prev) {
-            return (next !== void 0) ? next : false;
-        };
-        $mol_app_taxon.prototype.cellerBranch = function (key, next, prev) {
-            var _this = this;
-            return new $.$mol_app_grider_branch().setup(function (obj) {
-                obj.title = function () { return "Title"; };
-                obj.level = function () { return _this.rowLevel(key); };
-                obj.name = function () { return _this.rowTitle(key); };
-                obj.expanded = function (next, prev) { return _this.rowExpanded(key, next, prev); };
-            });
-        };
-        $mol_app_taxon.prototype.cellerTitle = function (key) {
-            return "";
-        };
-        $mol_app_taxon.prototype.valueText = function (key) {
-            return "";
-        };
-        $mol_app_taxon.prototype.cellerText = function (key, next, prev) {
-            var _this = this;
-            return new $.$mol_grider_celler().setup(function (obj) {
-                obj.title = function () { return _this.cellerTitle(key); };
-                obj.childs = function () { return [].concat(_this.valueText(key)); };
-            });
-        };
-        $mol_app_taxon.prototype.valueNumber = function (key) {
-            return 0;
-        };
-        $mol_app_taxon.prototype.cellerNumber = function (key, next, prev) {
-            var _this = this;
-            return new $.$mol_grider_number().setup(function (obj) {
-                obj.title = function () { return _this.cellerTitle(key); };
-                obj.childs = function () { return [].concat(_this.valueNumber(key)); };
-            });
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_taxon.prototype, "grider", null);
         __decorate([
             $.$mol_mem_key()
         ], $mol_app_taxon.prototype, "rowExpanded", null);
         __decorate([
-            $.$mol_mem_key()
-        ], $mol_app_taxon.prototype, "cellerBranch", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_app_taxon.prototype, "cellerText", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_app_taxon.prototype, "cellerNumber", null);
+            $.$mol_mem()
+        ], $mol_app_taxon.prototype, "grider", null);
         return $mol_app_taxon;
     }($.$mol_pager));
     $.$mol_app_taxon = $mol_app_taxon;
@@ -9701,7 +11731,7 @@ var $;
             $mol_app_taxon.prototype.dataTable = function () {
                 return [];
             };
-            $mol_app_taxon.prototype.row = function (path) {
+            $mol_app_taxon.prototype.record = function (path) {
                 var id = path[path.length - 1];
                 if (!id)
                     return {};
@@ -9712,70 +11742,44 @@ var $;
                 delete next.__metadata;
                 return cache[id] = next;
             };
-            $mol_app_taxon.prototype.pathsSub = function (path) {
+            $mol_app_taxon.prototype.rowsSub = function (path) {
                 return this.hierarhy()[path[path.length - 1]].childs.map(function (child) { return path.concat(child.id); });
             };
-            $mol_app_taxon.prototype.pathRoot = function () {
+            $mol_app_taxon.prototype.rowRoot = function () {
                 return [0];
             };
-            $mol_app_taxon.prototype.pathsAll = function () {
+            $mol_app_taxon.prototype.rows = function () {
                 var _this = this;
                 var next = [];
                 var add = function (path) {
                     next.push(path);
-                    if (_this.rowExpanded(path)) {
-                        _this.pathsSub(path).forEach(function (path) { return add(path); });
+                    if (_this.branchExpanded(path)) {
+                        _this.rowsSub(path).forEach(function (path) { return add(path); });
                     }
                 };
-                this.pathsSub(this.pathRoot()).forEach(function (path) { return add(path); });
+                this.rowsSub(this.rowRoot()).forEach(function (path) { return add(path); });
                 return next;
             };
-            $mol_app_taxon.prototype.rowers = function () {
+            $mol_app_taxon.prototype.records = function () {
                 var _this = this;
-                var paths = this.pathsAll();
+                var paths = this.rows();
                 return new $.$mol_range_lazy({
                     length: paths.length,
-                    item: function (index) { return _this.grider().rower(paths[index]); },
+                    item: function (index) { return _this.record(paths[index]); },
                 });
             };
-            $mol_app_taxon.prototype.cellers = function (path) {
-                var next = [];
-                var hierarhyField = this.hierarhyField();
-                next.push(this.cellerBranch(path));
-                var row = this.row([1]);
-                for (var field in row) {
-                    if (field === hierarhyField)
-                        continue;
-                    if (typeof row[field] === 'number') {
-                        next.push(this.cellerNumber({ path: path, field: field }));
-                    }
-                    else {
-                        next.push(this.cellerText({ path: path, field: field }));
-                    }
-                }
-                return next;
-            };
-            $mol_app_taxon.prototype.cellerTitle = function (id) {
-                return id.field;
-            };
-            $mol_app_taxon.prototype.valueText = function (id) {
-                return this.row(id.path)[id.field];
-            };
-            $mol_app_taxon.prototype.valueNumber = function (id) {
-                return this.row(id.path)[id.field];
-            };
-            $mol_app_taxon.prototype.rowLevel = function (path) {
-                return path.length;
-            };
-            $mol_app_taxon.prototype.rowExpanded = function (path, next) {
-                if (!this.pathsSub(path).length)
+            $mol_app_taxon.prototype.branchExpanded = function (path, next) {
+                if (!this.rowsSub(path).length)
                     return null;
-                var key = "rowExpanded(" + JSON.stringify(path) + ")";
+                var key = "branchExpanded(" + JSON.stringify(path) + ")";
                 var next2 = $.$mol_state_session.value(key, next);
-                return (next2 === null) ? false : next2;
+                return (next2 == null) ? false : next2;
             };
-            $mol_app_taxon.prototype.rowTitle = function (path) {
-                return this.row(path) && this.row(path)[this.hierarhyField()];
+            $mol_app_taxon.prototype.rowLevel = function (id) {
+                return id.row.length;
+            };
+            $mol_app_taxon.prototype.rowExpanded = function (id, next) {
+                return this.branchExpanded(id.row, next);
             };
             __decorate([
                 $.$mol_mem()
@@ -9784,17 +11788,14 @@ var $;
                 $.$mol_mem()
             ], $mol_app_taxon.prototype, "dataTable", null);
             __decorate([
-                $.$mol_mem()
-            ], $mol_app_taxon.prototype, "row", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_app_taxon.prototype, "pathsAll", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_app_taxon.prototype, "rowers", null);
-            __decorate([
                 $.$mol_mem_key()
-            ], $mol_app_taxon.prototype, "cellers", null);
+            ], $mol_app_taxon.prototype, "record", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_taxon.prototype, "rows", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_taxon.prototype, "records", null);
             return $mol_app_taxon;
         }($.$mol_app_taxon));
         $mol.$mol_app_taxon = $mol_app_taxon;
@@ -9861,7 +11862,7 @@ var $;
                 }
                 return dict;
             };
-            $mol_app_taxon_demo.prototype.row = function (path) {
+            $mol_app_taxon_demo.prototype.record = function (path) {
                 return {
                     name: $.$mol_stub_personName(),
                     age: Math.ceil(Math.random() * 50),
@@ -9882,7 +11883,7 @@ var $;
             ], $mol_app_taxon_demo.prototype, "hierarhy", null);
             __decorate([
                 $.$mol_mem_key()
-            ], $mol_app_taxon_demo.prototype, "row", null);
+            ], $mol_app_taxon_demo.prototype, "record", null);
             return $mol_app_taxon_demo;
         }($.$mol_app_taxon_demo));
         $mol.$mol_app_taxon_demo = $mol_app_taxon_demo;
@@ -10304,6 +12305,7 @@ var $;
             __extends($mol_app_todomvc, _super);
             function $mol_app_todomvc() {
                 _super.apply(this, arguments);
+                this._idSeed = 0;
             }
             $mol_app_todomvc.prototype.taskIds = function (next) {
                 return $.$mol_state_local.value(this.stateKey('taskIds'), next) || [];
@@ -10350,7 +12352,7 @@ var $;
                 var title = this.taskNewTitle();
                 if (!title)
                     return;
-                var id = Date.now();
+                var id = ++this._idSeed;
                 var task = { completed: false, title: title };
                 this.task(id, task);
                 this.taskIds(this.taskIds().concat(id));
@@ -10360,36 +12362,33 @@ var $;
                 var _this = this;
                 return this.tasksFiltered().map(function (id, index) { return _this.taskRow(index); });
             };
-            $mol_app_todomvc.prototype.task = function (id, next, prev) {
+            $mol_app_todomvc.prototype.task = function (id, next) {
                 var key = this.stateKey("task=" + id);
                 if (next === void 0)
                     return $.$mol_state_local.value(key) || { title: '', completed: false };
-                var task = next;
-                if (task && prev)
-                    task = $.$mol_merge_dict(this.task(id), next);
-                $.$mol_state_local.value(key, task);
-                return task || void 0;
+                $.$mol_state_local.value(key, next);
+                return next || void 0;
             };
             $mol_app_todomvc.prototype.taskCompleted = function (index, next) {
                 var id = this.tasksFiltered()[index];
                 if (next === void 0)
                     return this.task(id).completed;
-                this.task(id, { completed: next }, {});
+                this.task(id, $.$mol_merge_dict(this.task(id), { completed: next }));
                 return next;
             };
             $mol_app_todomvc.prototype.taskTitle = function (index, next) {
                 var id = this.tasksFiltered()[index];
                 if (next === void 0)
                     return this.task(id).title;
-                this.task(id, { title: next }, {});
+                this.task(id, $.$mol_merge_dict(this.task(id), { title: next }));
                 return next;
             };
             $mol_app_todomvc.prototype.eventTaskDrop = function (index, next) {
                 var tasks = this.tasksFiltered();
                 var id = tasks[index];
                 tasks = tasks.slice(0, index).concat(tasks.slice(index + 1, tasks.length));
-                this.taskIds(tasks);
                 this.task(id, null);
+                this.taskIds(tasks);
             };
             $mol_app_todomvc.prototype.eventSanitize = function () {
                 var _this = this;
@@ -10556,12 +12555,12 @@ var $;
             });
         };
         $mol_app_users.prototype.saverResult = function () {
-            return "";
+            return null;
         };
         $mol_app_users.prototype.messager = function (next, prev) {
             var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.saverResult()); };
+            return new $.$mol_statuser().setup(function (obj) {
+                obj.status = function () { return _this.saverResult(); };
             });
         };
         $mol_app_users.prototype.controller = function (next, prev) {
@@ -10692,17 +12691,14 @@ var $;
             };
             $mol_app_users.prototype.query = function (next, prev) {
                 var _this = this;
-                var arg = this.queryArg();
                 if (next == null) {
-                    return arg;
+                    return this.queryArg();
                 }
                 else {
-                    var query = this.query();
                     this.queryArg(next, prev);
                     if (this._queryTimer)
                         clearTimeout(this._queryTimer);
                     this._queryTimer = setTimeout(function () { _this.query(null); }, 500);
-                    return query;
                 }
             };
             $mol_app_users.prototype.master = function () {
@@ -10723,7 +12719,8 @@ var $;
                 return next;
             };
             $mol_app_users.prototype.users = function (next) {
-                return next || this.usersMaster();
+                var usersMaster = this.usersMaster();
+                return next || usersMaster;
             };
             $mol_app_users.prototype.usersMaster = function (next) {
                 if (!this.query())
@@ -10733,15 +12730,10 @@ var $;
                     return master.json().items.map(function (item) { return item.login; });
                 }
                 master.json(next && { items: next.map(function (login) { return ({ login: login }); }) });
+                return next;
             };
             $mol_app_users.prototype.saverResult = function () {
-                if (!this.master())
-                    return null;
-                if (!this.master().uploaded())
-                    return null;
-                if (this.changed())
-                    return null;
-                return 'Saved.';
+                return this.usersMaster();
             };
             $mol_app_users.prototype.eventReload = function (next) {
                 this.master().refresh();
@@ -10756,12 +12748,19 @@ var $;
                 return JSON.stringify(this.usersMaster()) !== JSON.stringify(this.users());
             };
             $mol_app_users.prototype.loaded = function () {
-                return Boolean(this.users());
+                return Boolean(this.users().valueOf());
             };
             $mol_app_users.prototype.eventSave = function (next) {
                 if (!this.changed())
                     return;
-                this.usersMaster(this.users());
+                try {
+                    this.usersMaster(this.users()).valueOf();
+                }
+                catch (error) {
+                    if (error instanceof $.$mol_atom_wait)
+                        throw error;
+                    console.log('---', error);
+                }
             };
             $mol_app_users.prototype.body = function () {
                 if (this.users().length) {
@@ -10801,13 +12800,7 @@ var $;
                 $.$mol_mem()
             ], $mol_app_users.prototype, "usersMaster", null);
             __decorate([
-                $.$mol_mem({
-                    fail: function (view, error) {
-                        if (error instanceof $.$mol_atom_wait)
-                            return error;
-                        return error.message;
-                    }
-                })
+                $.$mol_mem()
             ], $mol_app_users.prototype, "saverResult", null);
             __decorate([
                 $.$mol_mem()
@@ -10859,7 +12852,8 @@ var $;
             handler();
         }
         catch (error) {
-            $mol_assert_ok(error instanceof ErrorRight);
+            if (ErrorRight)
+                $mol_assert_ok(error instanceof ErrorRight);
             return error;
         }
         throw new Error('Not failed');
@@ -11011,7 +13005,7 @@ var $;
         };
         $mol_barer_demo_login.prototype.rememberer = function (next, prev) {
             return new $.$mol_checker_ticker().setup(function (obj) {
-                obj.label = function () { return "Remember me"; };
+                obj.label = function () { return [].concat("Remember me"); };
             });
         };
         $mol_barer_demo_login.prototype.submitter = function (next, prev) {
@@ -11418,92 +13412,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_portioner_indicator = (function (_super) {
-        __extends($mol_portioner_indicator, _super);
-        function $mol_portioner_indicator() {
-            _super.apply(this, arguments);
-        }
-        $mol_portioner_indicator.prototype.widthStyle = function () {
-            return "0";
-        };
-        $mol_portioner_indicator.prototype.field = function () {
-            var _this = this;
-            return $.$mol_merge_dict(_super.prototype.field.call(this), {
-                "style.width": function () { return _this.widthStyle(); },
-            });
-        };
-        return $mol_portioner_indicator;
-    }($.$mol_viewer));
-    $.$mol_portioner_indicator = $mol_portioner_indicator;
-})($ || ($ = {}));
-var $;
-(function ($) {
-    var $mol_portioner = (function (_super) {
-        __extends($mol_portioner, _super);
-        function $mol_portioner() {
-            _super.apply(this, arguments);
-        }
-        $mol_portioner.prototype.portion = function () {
-            return 0;
-        };
-        $mol_portioner.prototype.indWidthStyle = function () {
-            return "0";
-        };
-        $mol_portioner.prototype.indicator = function (next, prev) {
-            var _this = this;
-            return new $.$mol_portioner_indicator().setup(function (obj) {
-                obj.widthStyle = function () { return _this.indWidthStyle(); };
-            });
-        };
-        $mol_portioner.prototype.childs = function () {
-            return [].concat(this.indicator());
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_portioner.prototype, "indicator", null);
-        return $mol_portioner;
-    }($.$mol_viewer));
-    $.$mol_portioner = $mol_portioner;
-})($ || ($ = {}));
-//portioner.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_portioner = (function (_super) {
-            __extends($mol_portioner, _super);
-            function $mol_portioner() {
-                _super.apply(this, arguments);
-            }
-            $mol_portioner.prototype.indWidthStyle = function () {
-                return this.portion() * 100 + '%';
-            };
-            return $mol_portioner;
-        }($.$mol_portioner));
-        $mol.$mol_portioner = $mol_portioner;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//portioner.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
     var $mol_rower_demo = (function (_super) {
         __extends($mol_rower_demo, _super);
         function $mol_rower_demo() {
@@ -11563,7 +13471,7 @@ var $;
         $mol_rower_demo.prototype.publisher = function (next, prev) {
             var _this = this;
             return new $.$mol_checker_ticker().setup(function (obj) {
-                obj.label = function () { return _this.publishLabel(); };
+                obj.label = function () { return [].concat(_this.publishLabel()); };
                 obj.checked = function (next, prev) { return _this.publish(next, prev); };
             });
         };
@@ -11653,43 +13561,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_carder_demo_base = (function (_super) {
-        __extends($mol_carder_demo_base, _super);
-        function $mol_carder_demo_base() {
+    var $mol_carder_demo = (function (_super) {
+        __extends($mol_carder_demo, _super);
+        function $mol_carder_demo() {
             _super.apply(this, arguments);
         }
-        $mol_carder_demo_base.prototype.content = function (next, prev) {
+        $mol_carder_demo.prototype.content = function (next, prev) {
             return new $.$mol_rower_demo();
         };
-        $mol_carder_demo_base.prototype.status = function () {
+        $mol_carder_demo.prototype.status = function () {
             return "pending";
         };
         __decorate([
             $.$mol_mem()
-        ], $mol_carder_demo_base.prototype, "content", null);
-        return $mol_carder_demo_base;
+        ], $mol_carder_demo.prototype, "content", null);
+        return $mol_carder_demo;
     }($.$mol_carder));
-    $.$mol_carder_demo_base = $mol_carder_demo_base;
-})($ || ($ = {}));
-var $;
-(function ($) {
-    var $mol_carder_demo_selected = (function (_super) {
-        __extends($mol_carder_demo_selected, _super);
-        function $mol_carder_demo_selected() {
-            _super.apply(this, arguments);
-        }
-        $mol_carder_demo_selected.prototype.content = function (next, prev) {
-            return new $.$mol_rower_demo();
-        };
-        $mol_carder_demo_selected.prototype.status = function () {
-            return "selected";
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_carder_demo_selected.prototype, "content", null);
-        return $mol_carder_demo_selected;
-    }($.$mol_carder));
-    $.$mol_carder_demo_selected = $mol_carder_demo_selected;
+    $.$mol_carder_demo = $mol_carder_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
 ;
@@ -11717,7 +13605,7 @@ var $;
         $mol_checker_expander_demo.prototype.c1 = function (next, prev) {
             var _this = this;
             return new $.$mol_checker_expander().setup(function (obj) {
-                obj.label = function () { return _this.c1Label(); };
+                obj.label = function () { return [].concat(_this.c1Label()); };
             });
         };
         $mol_checker_expander_demo.prototype.c2Label = function () {
@@ -11726,7 +13614,7 @@ var $;
         $mol_checker_expander_demo.prototype.c2 = function (next, prev) {
             var _this = this;
             return new $.$mol_checker_expander().setup(function (obj) {
-                obj.label = function () { return _this.c2Label(); };
+                obj.label = function () { return [].concat(_this.c2Label()); };
                 obj.checked = function () { return true; };
             });
         };
@@ -11744,7 +13632,7 @@ var $;
         $mol_checker_expander_demo.prototype.c5 = function (next, prev) {
             var _this = this;
             return new $.$mol_checker_expander().setup(function (obj) {
-                obj.label = function () { return _this.c5Label(); };
+                obj.label = function () { return [].concat(_this.c5Label()); };
                 obj.checked = function () { return true; };
                 obj.disabled = function () { return true; };
             });
@@ -11797,7 +13685,7 @@ var $;
         $mol_checker_ticker_demo.prototype.c1 = function (next, prev) {
             var _this = this;
             return new $.$mol_checker_ticker().setup(function (obj) {
-                obj.label = function () { return _this.c1Label(); };
+                obj.label = function () { return [].concat(_this.c1Label()); };
             });
         };
         $mol_checker_ticker_demo.prototype.c2Label = function () {
@@ -11806,7 +13694,7 @@ var $;
         $mol_checker_ticker_demo.prototype.c2 = function (next, prev) {
             var _this = this;
             return new $.$mol_checker_ticker().setup(function (obj) {
-                obj.label = function () { return _this.c2Label(); };
+                obj.label = function () { return [].concat(_this.c2Label()); };
                 obj.checked = function () { return true; };
             });
         };
@@ -11829,7 +13717,7 @@ var $;
         $mol_checker_ticker_demo.prototype.c6 = function (next, prev) {
             var _this = this;
             return new $.$mol_checker_ticker().setup(function (obj) {
-                obj.label = function () { return _this.c6Label(); };
+                obj.label = function () { return [].concat(_this.c6Label()); };
                 obj.checked = function () { return true; };
                 obj.disabled = function () { return true; };
             });
@@ -12473,7 +14361,7 @@ var $;
             return (next !== void 0) ? next : false;
         };
         $mol_expander.prototype.label = function () {
-            return "";
+            return [];
         };
         $mol_expander.prototype.labeler = function (next, prev) {
             var _this = this;
@@ -12567,7 +14455,7 @@ var $;
             _super.apply(this, arguments);
         }
         $mol_expander_demo.prototype.label = function () {
-            return "Lorem Ipsum";
+            return [].concat("Lorem Ipsum");
         };
         $mol_expander_demo.prototype.content = function (next, prev) {
             return new $.$mol_filler();
@@ -12660,7 +14548,7 @@ var $;
             _super.apply(this, arguments);
         }
         $mol_floater_demo.prototype.floaterContent = function (next, prev) {
-            return new $.$mol_carder_demo_base();
+            return new $.$mol_carder_demo();
         };
         $mol_floater_demo.prototype.floater = function (next, prev) {
             var _this = this;
@@ -12889,12 +14777,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var $;
 (function ($) {
     var $mol_grider_demo = (function (_super) {
@@ -12905,22 +14787,6 @@ var $;
         $mol_grider_demo.prototype.rowHeight = function () {
             return 37;
         };
-        $mol_grider_demo.prototype.cellTitle = function (key) {
-            return "";
-        };
-        $mol_grider_demo.prototype.cellContent = function (key) {
-            return "";
-        };
-        $mol_grider_demo.prototype.celler = function (key, next, prev) {
-            var _this = this;
-            return new $.$mol_grider_celler().setup(function (obj) {
-                obj.title = function () { return _this.cellTitle(key); };
-                obj.childs = function () { return [].concat(_this.cellContent(key)); };
-            });
-        };
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_grider_demo.prototype, "celler", null);
         return $mol_grider_demo;
     }($.$mol_grider));
     $.$mol_grider_demo = $mol_grider_demo;
@@ -12947,36 +14813,27 @@ var $;
             function $mol_grider_demo() {
                 _super.apply(this, arguments);
             }
-            $mol_grider_demo.prototype.rowers = function () {
-                var _this = this;
+            $mol_grider_demo.prototype.records = function () {
                 return new $.$mol_range_lazy({
-                    length: 30000,
-                    item: function (row) { return _this.rower(row); }
-                });
-            };
-            $mol_grider_demo.prototype.cellers = function (row) {
-                var _this = this;
-                return new $.$mol_range_lazy({
-                    length: 30,
-                    item: function (col) { return _this.celler({ row: row, col: col }); }
+                    length: 10000,
+                    item: function (index) {
+                        return new $.$mol_range_lazy({
+                            length: 15,
+                            item: function (colId) { return colId === 0
+                                ? "Row " + (index + 1)
+                                : "Cell " + colId + "\u00D7" + (index + 1); }
+                        }).valueOf();
+                    }
                 }).valueOf();
             };
-            $mol_grider_demo.prototype.cellTitle = function (id) {
-                if (id.col === 0)
-                    return "";
-                return "Col " + id.col;
-            };
-            $mol_grider_demo.prototype.cellContent = function (id) {
-                if (id.col === 0)
-                    return "Row " + (id.row + 1);
-                return "Cell " + id.col + "\u00D7" + (id.row + 1);
+            $mol_grider_demo.prototype.columnHeaderContent = function (id) {
+                if (id == '0')
+                    return [];
+                return [("Col " + id)];
             };
             __decorate([
                 $.$mol_mem()
-            ], $mol_grider_demo.prototype, "rowers", null);
-            __decorate([
-                $.$mol_mem_key()
-            ], $mol_grider_demo.prototype, "cellers", null);
+            ], $mol_grider_demo.prototype, "records", null);
             return $mol_grider_demo;
         }($.$mol_grider_demo));
         $mol.$mol_grider_demo = $mol_grider_demo;
@@ -13096,52 +14953,6 @@ var $;
     $.$mol_html_link = $mol_html_link;
 })($ || ($ = {}));
 //html.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_hyperhive = (function (_super) {
-        __extends($mol_hyperhive, _super);
-        function $mol_hyperhive() {
-            _super.apply(this, arguments);
-        }
-        $mol_hyperhive.data = function (resource, next, prev) {
-            document.addEventListener('deviceready', function () {
-                hhfw.GetDeltaStream(resource.uri, resource.table, function (result) {
-                    var db = sqlitePlugin.openDatabase({
-                        name: "cpprun.db",
-                        location: 'default',
-                    });
-                    hhfw.ReadFromStorage(db, resource.table + "_$_" + resource.table, function (result2) {
-                        var range = new $.$mol_range_lazy(result2.rows);
-                        $mol_hyperhive.data(resource, void 0, range);
-                    }, handleError);
-                }, handleError);
-            });
-            function handleError(message) {
-                var error = new Error(JSON.stringify(resource) + " " + message);
-                $mol_hyperhive.data(resource, void 0, error);
-            }
-            throw new $.$mol_atom_wait("Loading " + resource.table + " from " + resource.uri);
-        };
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_hyperhive, "data", null);
-        return $mol_hyperhive;
-    }($.$mol_object));
-    $.$mol_hyperhive = $mol_hyperhive;
-})($ || ($ = {}));
-//hyperhive.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -13395,6 +15206,9 @@ var $;
         function $mol_number_demo() {
             _super.apply(this, arguments);
         }
+        $mol_number_demo.prototype.zero = function (next, prev) {
+            return new $.$mol_number();
+        };
         $mol_number_demo.prototype.year = function (next, prev) {
             return (next !== void 0) ? next : null;
         };
@@ -13465,8 +15279,11 @@ var $;
             });
         };
         $mol_number_demo.prototype.childs = function () {
-            return [].concat(this.one(), this.two(), this.three(), this.four(), this.five(), this.six(), this.seven(), this.eight(), this.nine());
+            return [].concat(this.zero(), this.one(), this.two(), this.three(), this.four(), this.five(), this.six(), this.seven(), this.eight(), this.nine());
         };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_number_demo.prototype, "zero", null);
         __decorate([
             $.$mol_mem()
         ], $mol_number_demo.prototype, "year", null);
@@ -14849,7 +16666,7 @@ var $;
             _super.apply(this, arguments);
         }
         $mol_texter_demo.prototype.text = function () {
-            return "# [Benchmarks](perf)\n## Benchmark 1\n### Benchmark 1.1\n#### Benchmark 1.1.1\n##### Benchmark 1.1.1.1\n\n* $mol_perf_render - simple benchmark of rendering ([online](http://eigenmethod.github.io/mol/perf/render/))\n* [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)\n\n# Quick start\n\n**Create MAM project**\n\nEasy way is checkout [this preconfigured ~~PMS~~MAM repository](http://github.com/eigenmethod/mam/) and start dev server:\n\n```sh\ngit clone https://github.com/eigenmethod/mam.git ./mam && cd mam\nnpm start\n```\n\n|       | Column 1 | Column 2 | Column 3\n|-------|----------|----------|---------\n| Row 1 | Cell 1x1 | Cell 2x1 | Cell 3x1\n| Row 2 | Cell 1x2 | Cell 2x2 | Cell 3x2\n| Row 3 | Cell 1x3 | Cell 2x3 | Cell 3x3\n| Row 4 | Cell 1x4 | Cell 2x4 | Cell 3x4\n| Row 5 | Cell 1x5 | Cell 2x5 | Cell 3x5\n| Row 6 | Cell 1x6 | Cell 2x6 | Cell 3x6\n| Row 7 | Cell 1x7 | Cell 2x7 | Cell 3x7\n| Row 8 | Cell 1x8 | Cell 2x8 | Cell 3x8\n| Row 9 | Cell 1x9 | Cell 2x9 | Cell 3x9\n\nBuild status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)\n";
+            return "# [Benchmarks](perf)\n## Benchmark 1\n### Benchmark 1.1\n#### Benchmark 1.1.1\n##### Benchmark 1.1.1.1\n\n* $mol_perf_render - simple benchmark of rendering ([online](http://eigenmethod.github.io/mol/perf/render/))\n* [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)\n\n# Quick start\n\n**Create MAM project**\n\nEasy way is checkout [this preconfigured ~~PMS~~MAM repository](http://github.com/eigenmethod/mam/) and start dev server:\n\n```sh\ngit clone https://github.com/eigenmethod/mam.git ./mam && cd mam\nnpm start\n```\n\n|           | Column 1 | Column 2 | Column 3\n|-----------|----------|----------|---------\n| **Row 1** | Cell 1x1 | Cell 2x1 | Cell 3x1\n| **Row 2** | Cell 1x2 | Cell 2x2 | Cell 3x2\n| **Row 3** | Cell 1x3 | Cell 2x3 | Cell 3x3\n| **Row 4** | Cell 1x4 | Cell 2x4 | Cell 3x4\n| **Row 5** | Cell 1x5 | Cell 2x5 | Cell 3x5\n| **Row 6** | Cell 1x6 | Cell 2x6 | Cell 3x6\n| **Row 7** | Cell 1x7 | Cell 2x7 | Cell 3x7\n| **Row 8** | Cell 1x8 | Cell 2x8 | Cell 3x8\n| **Row 9** | Cell 1x9 | Cell 2x9 | Cell 3x9\n\nBuild status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)\n";
         };
         return $mol_texter_demo;
     }($.$mol_texter));
@@ -15136,6 +16953,32 @@ var $;
 ;
 var $;
 (function ($) {
+    var error;
+    var result;
+    var handler;
+    function $mol_try(handler2) {
+        handler = handler2;
+        error = void 0;
+        result = void 0;
+        window.dispatchEvent(new Event('$mol_try'));
+        var error2 = error;
+        var result2 = result;
+        error = void 0;
+        result = void 0;
+        return error2 || result2;
+    }
+    $.$mol_try = $mol_try;
+    window.addEventListener('$mol_try', function (event) {
+        result = handler();
+    }, true);
+    window.addEventListener('error', function (event) {
+        error = event.error;
+    }, true);
+})($ || ($ = {}));
+//try.web.js.map
+;
+var $;
+(function ($) {
     function $mol_viewer_tree2ts(tree) {
         var content = '';
         var locales = {};
@@ -15201,7 +17044,7 @@ var $;
                                 if (overName[2])
                                     args.push(' key : any ');
                                 if (needSet)
-                                    args.push(' next? , prev? ');
+                                    args.push(' next? : any , prev? : any ');
                                 overs.push('\t\t\tobj.' + overName[1] + ' = (' + args.join(',') + ') => ' + v + '\n');
                                 needSet = ns;
                             });

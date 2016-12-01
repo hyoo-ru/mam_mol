@@ -12,6 +12,7 @@
 	"$mol_app_supplies_lister_title": "Supplies",
 	"$mol_app_supplies_lister_searcherHint": "Search by bar code",
 	"$mol_app_supplies_detailer_title": "Supply",
+	"$mol_app_supplies_detailer_orgLabel": "Organization",
 	"$mol_app_supplies_detailer_providerLabel": "Provider",
 	"$mol_app_supplies_detailer_customerLabel": "Consumer",
 	"$mol_app_supplies_detailer_supplyGroupLabel": "Supply Group",

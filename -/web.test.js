@@ -110,6 +110,43 @@ var $;
 })($ || ($ = {}));
 //dict.test.js.map
 ;
+var $;
+(function ($) {
+    $.$mol_test({
+        'caching': function () {
+            var random = new $.$mol_atom(function () { return Math.random(); });
+            $.$mol_assert_equal(random.get(), random.get());
+        },
+        'lazyness': function () {
+            var value = 0;
+            var prop = new $.$mol_atom(function () { return value = 1; });
+            $.$mol_defer.run();
+            $.$mol_assert_equal(value, 0);
+        },
+        'instant actualization': function () {
+            var source = new $.$mol_atom(function (next) { return next || 1; });
+            var middle = new $.$mol_atom(function () { return source.get() + 1; });
+            var target = new $.$mol_atom(function () { return middle.get() + 1; });
+            $.$mol_assert_equal(target.get(), 3);
+            source.set(2);
+            $.$mol_assert_equal(target.get(), 4);
+        },
+        'automatic deferred restart': function () {
+            var targetValue;
+            var source = new $.$mol_atom(function (next) { return next || 1; });
+            var middle = new $.$mol_atom(function () { return source.get() + 1; });
+            var target = new $.$mol_atom(function () { return targetValue = middle.get() + 1; });
+            target.get();
+            $.$mol_assert_equal(targetValue, 3);
+            source.set(2);
+            $.$mol_assert_equal(targetValue, 3);
+            $.$mol_defer.run();
+            $.$mol_assert_equal(targetValue, 4);
+        },
+    });
+})($ || ($ = {}));
+//atom.test.js.map
+;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -463,8 +500,7 @@ var $;
                 var clicker = new $mol.$mol_clicker;
                 clicker.eventClick = function (event) { clicked = true; };
                 var element = clicker.DOMTree();
-                element.dispatchEvent(new Event('mousedown', {}));
-                element.dispatchEvent(new Event('mouseup', {}));
+                element.dispatchEvent(new Event('click', {}));
                 $.$mol_assert_ok(clicked);
             },
             'no handle clicks if disabled': function () {
@@ -473,19 +509,7 @@ var $;
                 clicker.eventClick = function (event) { clicked = true; };
                 clicker.enabled = function () { return false; };
                 var element = clicker.DOMTree();
-                element.dispatchEvent(new Event('mousedown', {}));
-                element.dispatchEvent(new Event('mouseup', {}));
-                $.$mol_assert_not(clicked);
-            },
-            'no handle is moved while click': function () {
-                var clicked = false;
-                var clicker = new $mol.$mol_clicker;
-                clicker.eventClick = function (event) { clicked = true; };
-                clicker.enabled = function () { return false; };
-                var element = clicker.DOMTree();
-                element.dispatchEvent(new Event('mousedown', {}));
-                element.dispatchEvent(new Event('mousemove', {}));
-                element.dispatchEvent(new Event('mouseup', {}));
+                element.dispatchEvent(new Event('click', {}));
                 $.$mol_assert_not(clicked);
             },
         });
@@ -592,6 +616,60 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
+        'materialization': function () {
+            var list = new $.$mol_range_lazy({
+                item: function (id) { return id * 2; },
+                get length() { return 5; },
+            });
+            $.$mol_assert_equal(list.valueOf()[2], 4);
+            $.$mol_assert_equal(list.valueOf()[5], void 0);
+        },
+        'lazy slicing': function () {
+            var list = new $.$mol_range_lazy({
+                item: function (id) { return id * 2; },
+                get length() { return Number.POSITIVE_INFINITY; },
+            });
+            list = list.slice(2, 5);
+            $.$mol_assert_equal(list.join(), '4,6,8');
+        },
+        'lazy concatenation': function () {
+            var list1 = new $.$mol_range_lazy({
+                item: function (id) { return id * 2; },
+                get length() { return 3; },
+            });
+            var list2 = new $.$mol_range_lazy({
+                item: function (id) { return id * 3; },
+                get length() { return 3; },
+            });
+            var list3 = new $.$mol_range_lazy({
+                item: function (id) { return id * 4; },
+                get length() { return 3; },
+            });
+            $.$mol_assert_equal(list1.concat(list2, list3).join(), '0,2,4,0,3,6,0,4,8');
+        },
+        'every': function () {
+            var list = new $.$mol_range_lazy({
+                item: function (id) { return id * 2; },
+                get length() { return 3; }
+            });
+            $.$mol_assert_equal(list.every(function (v) { return v >= 0; }), true);
+            $.$mol_assert_equal(list.every(function (v) { return v > 0; }), false);
+        },
+        'some': function () {
+            var list = new $.$mol_range_lazy({
+                item: function (id) { return id * 2; },
+                get length() { return 3; }
+            });
+            $.$mol_assert_equal(list.some(function (v) { return v > 100; }), false);
+            $.$mol_assert_equal(list.some(function (v) { return v === 0; }), true);
+        },
+    });
+})($ || ($ = {}));
+//range.test.js.map
+;
+var $;
+(function ($) {
+    $.$mol_test({
         'convertion to primitives': function () {
             var unit = new $.$mol_unit_money_usd(5);
             $.$mol_assert_equal(unit.valueOf(), 5);
@@ -628,7 +706,6 @@ var $;
             $.$mol_assert_equal($jin_type(arguments), 'Arguments');
         },
         'special objects': function () {
-            $.$mol_assert_equal($jin_type(function () { return this; }()), 'Global');
             $.$mol_assert_equal($jin_type(new Date), 'Date');
             $.$mol_assert_equal($jin_type(new RegExp('')), 'RegExp');
         },
@@ -706,60 +783,6 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
-        'materialization': function () {
-            var list = new $.$mol_range_lazy({
-                item: function (id) { return id * 2; },
-                get length() { return 5; },
-            });
-            $.$mol_assert_equal(list.valueOf()[2], 4);
-            $.$mol_assert_equal(list.valueOf()[5], void 0);
-        },
-        'lazy slicing': function () {
-            var list = new $.$mol_range_lazy({
-                item: function (id) { return id * 2; },
-                get length() { return Number.POSITIVE_INFINITY; },
-            });
-            list = list.slice(2, 5);
-            $.$mol_assert_equal(list.join(), '4,6,8');
-        },
-        'lazy concatenation': function () {
-            var list1 = new $.$mol_range_lazy({
-                item: function (id) { return id * 2; },
-                get length() { return 3; },
-            });
-            var list2 = new $.$mol_range_lazy({
-                item: function (id) { return id * 3; },
-                get length() { return 3; },
-            });
-            var list3 = new $.$mol_range_lazy({
-                item: function (id) { return id * 4; },
-                get length() { return 3; },
-            });
-            $.$mol_assert_equal(list1.concat(list2, list3).join(), '0,2,4,0,3,6,0,4,8');
-        },
-        'every': function () {
-            var list = new $.$mol_range_lazy({
-                item: function (id) { return id * 2; },
-                get length() { return 3; }
-            });
-            $.$mol_assert_equal(list.every(function (v) { return v >= 0; }), true);
-            $.$mol_assert_equal(list.every(function (v) { return v > 0; }), false);
-        },
-        'some': function () {
-            var list = new $.$mol_range_lazy({
-                item: function (id) { return id * 2; },
-                get length() { return 3; }
-            });
-            $.$mol_assert_equal(list.some(function (v) { return v > 100; }), false);
-            $.$mol_assert_equal(list.some(function (v) { return v === 0; }), true);
-        },
-    });
-})($ || ($ = {}));
-//range.test.js.map
-;
-var $;
-(function ($) {
-    $.$mol_test({
         'sorting must cut cycles at low priority edges': function () {
             var graph = new $.$mol_graph();
             graph.link('A', 'B', { priority: 0 });
@@ -803,4 +826,14 @@ var $;
     });
 })($ || ($ = {}));
 //tree.test.js.map
+;
+var $;
+(function ($) {
+    $.$mol_test({
+        'return result without errors': function () {
+            $.$mol_assert_equal($.$mol_try(function () { return false; }), false);
+        },
+    });
+})($ || ($ = {}));
+//try.test.js.map
 //# sourceMappingURL=web.test.js.map
