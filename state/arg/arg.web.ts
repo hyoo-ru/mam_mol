@@ -4,7 +4,7 @@ namespace $ {
 		
 		@ $mol_mem()
 		static href( next? : string ) {
-			if( next ) history.replaceState( history.state , document.title , `${ next }#` )
+			if( next ) history.replaceState( history.state , document.title , `${ next }` )
 			return window.location.search + window.location.hash
 		}
 		
@@ -44,7 +44,7 @@ namespace $ {
 			
 			const hash = chunks.join( '#' )
 			
-			return hash ? '#' + hash : ''
+			return hash ? '#' + hash + '#' : '#'
 		}
 		
 		constructor( public prefix = '' ) {
