@@ -433,7 +433,7 @@ namespace $ {
 				}
 			)
 			
-			return res
+			return res.map( r => r.valueOf() )
 		}
 		
 		logBundle( target : $mol_file ) {
