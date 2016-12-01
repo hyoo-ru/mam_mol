@@ -1,6 +1,9 @@
 $mol_app_taxon $mol_pager
-	hierarhyField \Butxt
-	-
 	body /
 		< grider $mol_grider
+			hierarhyColumn < hierarhyField \Butxt
+			records < records /
+			record# < record# null
 			rows < rows /
+			rowExpanded# > rowExpanded# false
+			rowLevel# < rowLevel# 0

@@ -19,9 +19,11 @@ namespace $ {
 			
 			var next = this[ 'native()' ] = $mol_http_request_native()
 			
+			next.withCredentials = Boolean( this.credentials() )
+			
 			next.onload = ( event : Event )=> {
 				if( Math.floor( next.status / 100 ) === 2 ) {
-					this.response( void 0 , next )
+					this.response( void 0 , next.responseText )
 				} else {
 					this.response( void 0 , new Error( next.responseText ) as any )
 				}
@@ -43,31 +45,20 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		response( next? : XMLHttpRequest , prev? : XMLHttpRequest ) : XMLHttpRequest {
-			if( next !== void 0 ) return next
-			
+		response( next? : any , prev? : any ) : any {
 			const creds = this.credentials()
 			const native = this.native()
+			const method = ( next === void 0 ) ? 'Get' : this.method()
 			
-			native.withCredentials = Boolean( creds )
-			native.open( this.method() , this.uri() , true , creds && creds.login , creds && creds.password )
-			native.send( this.body() )
+			native.open( method , this.uri() , true , creds && creds.login , creds && creds.password )
+			native.send( next )
 			
 			throw new $mol_atom_wait( `${this.method()} ${this.uri()}` )
 		}
 		
 		text( next? : string ) : string {
-			if( next === null ) this.response( null )
-			else return this.response().responseText
+			return this.response( next )
 		}
-		
-		//xml() {
-		//	return this.response().responseXML.documentElement
-		//}
-		//
-		//json< Value >() : Value {
-		//	return JSON.parse( this.text() )
-		//}
 		
 	}
 	

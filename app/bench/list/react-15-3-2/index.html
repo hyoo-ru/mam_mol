@@ -13,7 +13,14 @@
 	.list {
 		padding: .5rem;
 	}
-	
+
+	.list-header {
+		padding: .5rem;
+		margin: 0;
+		font-size: 1.5em;
+		font-weight: normal;
+	}
+
 	.list-item {
 		padding: .5rem;
 	}
@@ -38,7 +45,10 @@
 		getInitialState : function() {
 			this.onMessage = this.onMessage.bind( this )
 			return {
-				data : [] ,
+				data : {
+					sample : '' ,
+					items : []
+				} ,
 				selected : null
 			}
 		} ,
@@ -66,16 +76,24 @@
 		} ,
 	
 		render : function() {
-			var items = []
-			for( var i = 0 ; i < this.state.data.length ; i++ ) {
-				var selectedClass = this.state.selected === this.state.data[ i ].id ? " list-item-selected " : ""
+			var items = [
+				React.createElement(
+					"h1" ,
+					{
+						className : 'list-header'
+					} ,
+					this.state.data.sample
+				)
+			]
+			for( var i = 0 ; i < this.state.data.items.length ; i++ ) {
+				var selectedClass = this.state.selected === this.state.data.items[ i ].id ? " list-item-selected " : ""
 				items.push(
 					React.createElement(
 						"div" ,
 						{
 							key : i ,
 							className : "list-item" + selectedClass ,
-							onClick : this.select.bind( this , this.state.data[ i ] )
+							onClick : this.select.bind( this , this.state.data.items[ i ] )
 						} ,
 						[
 							React.createElement(
@@ -83,14 +101,14 @@
 								{
 									className : 'list-item-title'
 								} ,
-								this.state.data[ i ].title
+								this.state.data.items[ i ].title
 							) ,
 							React.createElement(
 								"div" ,
 								{
 									className : 'list-item-content'
 								} ,
-								this.state.data[ i ].content
+								this.state.data.items[ i ].content
 							)
 						]
 					)

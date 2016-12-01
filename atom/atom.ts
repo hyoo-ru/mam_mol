@@ -5,6 +5,7 @@ namespace $ {
 	export enum $mol_atom_status {
 		obsolete = 'obsolete' as any ,
 		checking = 'checking' as any ,
+		pulling = 'pulling' as any ,
 		actual = 'actual' as any ,
 	}
 	
@@ -62,11 +63,15 @@ namespace $ {
 		}
 		
 		get() {
+			if( this.status === $mol_atom_status.pulling ) {
+				throw new Error( `Cyclic atom dependency of ${ this.objectPath() }` )
+			}
+			
+			this.actualize()
+			
 			const slave = $mol_atom.stack[0]
 			if( slave ) this.lead( slave )
 			if( slave ) slave.obey( this )
-			
-			this.actualize()
 			
 			const value : Value = ( this.host || this )[ this.field ]
 			
@@ -112,7 +117,10 @@ namespace $ {
 					}
 				)
 				
-				this.push( this.pull() )
+				this.status = $mol_atom_status.pulling
+				const next = this.pull()
+				
+				this.push( next )
 				
 			}
 			
@@ -122,30 +130,40 @@ namespace $ {
 		pull() {
 			const host = this.host || this
 			try {
-				return this.handler()
+				return this.handler( this._next )
 			} catch( error ) {
 				if( !error['$mol_atom_catched'] ) {
 					if( error instanceof $mol_atom_wait ) {
 					} else {
-						console.error( error.stack )
+						if( error instanceof Error ) {
+							console.error( error.stack )
+						} else {
+							throw error
+						}
 					}
-					error['$mol_atom_catched'] = true
+					void( ( error as any )['$mol_atom_catched'] = true )
 				}
 				return error
 			}
 		}
 		
-		set( next : Value|Error , prev? : Value|Error ) {
-			const host = this.host || this
-			let next2 = this.handler( next , prev )
-			if( next2 === void 0 ) return host[ this.field ]
-			return this.push( next2 )
+		_next : Value
+		
+		set( next : Value , prev? : Value|Error ) : Value {
+			this._next = next
+			this.obsolete()
+			return this.get()
+			//const host = this.host || this
+			//let next2 = this.handler( next , prev )
+			//if( next2 === void 0 ) return host[ this.field ]
+			//return this.push( next2 )
 		}
 		
 		push( next : Value|Error ) {
 			const host = this.host || this
 			const prev = host[ this.field ]
-			comparing: if( ( next instanceof Array ) && ( prev instanceof Array ) && ( next.length === prev.length ) ) {
+			if( next === void 0 ) next = prev
+			comparing: if( ( next !== prev ) && ( next instanceof Array ) && ( prev instanceof Array ) && ( next.length === prev.length ) ) {
 				for( let i = 0 ; i < next[ 'length' ] ; ++i ) {
 					if( next[ i ] !== prev[ i ] ) break comparing
 				}
@@ -160,7 +178,10 @@ namespace $ {
 					next = new Proxy( next , {
 						get( target : Error ) {
 							throw target.valueOf()
-						}
+						} ,
+						ownKeys( target : Error ) {
+							throw target.valueOf()
+						} ,
 					} )
 				}
 				host[ this.field ] = next
@@ -169,6 +190,7 @@ namespace $ {
 				this.obsoleteSlaves()
 			}
 			this.status = $mol_atom_status.actual
+			this._next = void 0
 			return next
 		}
 		
@@ -187,6 +209,10 @@ namespace $ {
 		}
 		
 		check() {
+			//if( this.status === $mol_atom_status.pulling ) {
+			//	throw new Error( `May be obsolated while pulling ${ this.objectPath() }` )
+			//}
+			
 			if( this.status === $mol_atom_status.actual ) {
 				//this.log([ 'checking' ])
 				this.status = $mol_atom_status.checking
@@ -197,6 +223,10 @@ namespace $ {
 		
 		obsolete() : Value {
 			if( this.status === $mol_atom_status.obsolete ) return
+			
+			//if( this.status === $mol_atom_status.pulling ) {
+			//	throw new Error( `Obsolated while pulling ${ this.objectPath() }` )
+			//} 
 			
 			this.log( [ 'obsolete' ] )
 			
@@ -289,6 +319,7 @@ namespace $ {
 			
 			while( this.updating.length ) {
 				const atom = this.updating.shift()
+				if( this.reaping.has( atom ) ) continue
 				if( !atom.destroyed() ) atom.get()
 			}
 			
@@ -325,7 +356,12 @@ namespace $ {
 	) {
 		const atom = new $mol_atom<any>(
 			() => {
-				handler()
+				try {
+					handler()
+				} catch( error ) {
+					if(!( error instanceof $mol_atom_wait )) atom.destroyed( true )
+					throw error
+				}
 				atom.destroyed( true )
 			} ,
 		)

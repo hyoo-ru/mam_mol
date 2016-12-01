@@ -5,7 +5,7 @@ namespace $.$mol {
 			const context = this.context()
 			const offset = context.$mol_scroller_scrollTop()
 			
-			return `translateY( ${ offset }px )`
+			return `translateY(${ offset }px)`
 		}
 		
 		scrolling() {

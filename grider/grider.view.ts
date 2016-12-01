@@ -10,7 +10,7 @@ namespace $.$mol {
 			const viewWindow = this.viewWindow()
 			
 			return [].concat(
-				this.header() ,
+				this.cols() && this.header() ,
 				( viewWindow.top > 0 ) ? this.gaperTop() : null ,
 				rowers.slice( viewWindow.top , viewWindow.bottom ).valueOf() ,
 				( viewWindow.bottom < viewWindow.count ) ? this.gaperBottom() : null ,
@@ -50,34 +50,63 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		columnTitle( colId : string ) {
-			return colId
+		columnHeaderContent( colId : string ) {
+			return [ colId ]
 		}
 		
 		rowers() {
-			return this.rows().map( ( row , index )=> this.rower( index ) )
+			return this.rows().map( row => this.rower( row ) )
 		}
 		
-		cellers( rowId : number ) {
-			return this.cols().map( colId => this.celler({ row : rowId , col : colId }) )
+		cellers( row : string ) {
+			return this.cols().map( col => this.celler({ row , col }) )
 		}
 		
-		celler( id : { row : number , col : string } ) {
-			const val = this.row( id.row )[ id.col ]
-			if( typeof val === 'number' ) return this.cellerNumber( id )
+		@ $mol_mem_key()
+		colType( col : string ) {
+			if( col === this.hierarhyColumn() ) return 'branch'
+			
+			const val = this.record( this.row(0) )[ col ]
+			if( typeof val === 'number' ) return 'number'
+			
+			return 'text'
+		}
+		
+		celler( id : { row : string , col : string } ) : $mol_viewer {
+			switch( this.colType( id.col ) ) {
+				case 'branch' : return this.cellerBranch( id )
+				case 'number' : return this.cellerNumber( id )
+			}
+			
 			return this.cellerText( id )
 		}
 		
-		cellerContent( id : { row : number , col : string } ) {
-			return [ this.row( id.row )[ id.col ] ]
+		cellerContent( id : { row : string , col : string } ) {
+			return [ this.record( id.row )[ id.col ] ]
 		}
 		
-		row( index : number ) {
-			return ( this.rows().slice( index , index + 1 ).valueOf() as any[] )[0]
+		records() : any {
+			return []
+		}
+		
+		record( row : string ) {
+			return this.records()[ row ]
+		}
+		
+		@ $mol_mem()
+		rows() {
+			return Object.keys( this.records() )
+		}
+		
+		row( row : number ) {
+			return ( this.rows().slice( 0 , 1 ).valueOf() as string[] )[0]
 		}
 		
 		cols() {
-			return Object.keys( this.row( 0 ) || {} )
+			const rowFirst = this.row(0)
+			if( rowFirst === void 0 ) return null
+			
+			return Object.keys( this.record( rowFirst ) )
 		}
 		
 	}

@@ -3,7 +3,7 @@ $mol_app_bench $mol_stacker
 		title < title
 		tester < tester $mol_app_bench_tester
 		body / < resulter $mol_grider
-			rows < results /
+			records < results null
 			celler# < griderCeller# null
 	addon / < addonPage $mol_pager
 		title < addonerTitle @ \Samples

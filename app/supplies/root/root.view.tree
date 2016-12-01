@@ -1,6 +1,11 @@
 $mol_app_supplies_root $mol_stacker
-	enter $mol_app_supplies_enter entered > entered false
+	-
+	enter $mol_app_supplies_enter
+		entered > entered false
+	-
 	lister $mol_app_supplies_lister
 		supplies < supplies /
 		searchQuery > searchQuery \
-	detailer $mol_app_supplies_detailer supply < supply null
+	-
+	detailer $mol_app_supplies_detailer
+		supply < supply null

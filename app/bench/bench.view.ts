@@ -21,53 +21,58 @@ namespace $.$mol {
 			throw new $mol_atom_wait( `Loading sandbox...` )
 		}
 		
-		_taskActive : $mol_atom<any>
+		'commandCurrent()' : any[]
+		
+		@ $mol_mem()
+		commandCurrent( next? : any[] , prev? : any[] ) {
+			if( this['commandCurrent()'] ) return
+			return next
+		}
 		
 		@ $mol_mem_key()
-		commandResult< Result >( command : any[] , next? : number , prev? : number ) : Result {
-			const task = $mol_atom_task( ()=> {
-				if( this._taskActive && ( this._taskActive !== task ) ) this._taskActive.get().valueOf()
-				this._taskActive = task
+		commandResult< Result >( command : any[] , next? : Result , prev? : Result ) : Result {
+			if( next !== void 0 ) return next
+			
+			const current = this.commandCurrent( command )
+			if( current !== command ) throw new $mol_atom_wait( `Waiting for ${ JSON.stringify( current ) }...` )
 				
-				const sandbox = this.sandbox()
-				sandbox.contentWindow.postMessage( command , '*' )
+			const sandbox = this.sandbox()
+			sandbox.contentWindow.postMessage( command , '*' )
 				
-				window.onmessage = event => {
-					if( event.data[0] !== 'done' ) return
-					window.onmessage = null
-					
-					this.commandResult( command , void 0 , event.data[1] )
-					this._taskActive = null
-					task.push( true )
-				}
+			window.onmessage = event => {
+				if( event.data[0] !== 'done' ) return
+				window.onmessage = null
 				
-				throw new $mol_atom_wait( `Running ${ command }...` )
-			} )
+				this.commandCurrent( void 0 , null )
+				this.commandResult( command , event.data[1] )
+			}
 			
 			throw new $mol_atom_wait( `Running ${ command }...` )
 		}
 		
 		samplesAll( next? : string[] , prev? : string[] ) {
-			return this.commandResult<string[]>( [ 'get samples' ] ).slice().sort()
+			return this.commandResult<string[]>( [ 'samples' ] ).slice().sort()
 		}
 		
+		@ $mol_mem()
 		samples( next? : string[] , prev? : string[] ) {
 			const arg = $mol_state_arg.value( this.stateKey( 'sample' ) , next && next.join( '~' ) )
 			return arg ? arg.split( '~' ).sort() : []
 		}
 		
+		@ $mol_mem()
 		steps( next? : string[] , prev? : string[] ) {
-			return this.commandResult<string[]>( [ 'get steps' ] ).valueOf() as string[]
+			return this.commandResult<string[]>( [ 'steps' ] ) as string[]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem_key()
 		resultsSample( sampleId : string )  {
 			const results : { [ key : string ] : any } = {
 				sample : sampleId ,
 			}
 			
 			this.steps().forEach( step => {
-				results[ step ] = this.commandResult<number>([ step , sampleId ]).valueOf()
+				results[ step ] = this.commandResult<string>([ step , sampleId ])
 			} )
 			
 			return results
@@ -75,10 +80,10 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		results()  {
-			const results : { [ key : string ] : any }[] = []
+			const results : { [ sample : string ] : { [ step : string ] : any } } = {}
 			
 			this.samples().forEach( sample => {
-				results.push( this.resultsSample( sample ).valueOf() )
+				results[ sample ] = this.resultsSample( sample )
 			} )
 			
 			return results
@@ -92,7 +97,7 @@ namespace $.$mol {
 			return sample
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem_key()
 		menuOptionerChecked( sample : string , next? : boolean , prev? : boolean ) {
 			if( next === void 0 ) return this.samples().indexOf( sample ) !== -1
 			
@@ -102,25 +107,34 @@ namespace $.$mol {
 			return next
 		}
 		
-		griderCeller( id : { row : number , col : string } ) {
+		griderCeller( id : { row : string , col : string } ) {
 			if( id.col === 'sample' ) return this.resulter().cellerText( id )
 			return this.resulterCellerNumber( id )
 		}
 		
-		resultValue( id : { row : number , col : string } ) {
+		resultValue( id : { row : string , col : string } ) {
 			return this.results()[ id.row ][ id.col ]
 		}
 		
+		resultNumber( id : { row : string , col : string } ) {
+			return parseInt( this.resultValue( id ) , 10 )
+		}
+		
+		@ $mol_mem_key()
 		resultMaxValue( col : string ) {
 			let max = 0
-			this.results().forEach( measure => {
-				if( measure[ col ] > max ) max = measure[ col ]
-			} )
+			
+			const results = this.results()
+			for( let sample in results ) {
+				const numb = this.resultNumber({ row : sample , col })
+				if( numb > max ) max = numb
+			}
+			
 			return max
 		}
 		
-		resultPortion( id : { row : number , col : string } ) {
-			return this.resultValue( id ) / this.resultMaxValue( id.col )
+		resultPortion( id : { row : string , col : string } ) {
+			return this.resultNumber( id ) / this.resultMaxValue( id.col )
 		}
 	}
 	

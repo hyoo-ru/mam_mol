@@ -2,6 +2,13 @@
 	padding: .5rem;
 }
 
+[mol_app_bench_list_mol_header] {
+	padding: .5rem;
+	margin: 0;
+	font-size: 1.5em;
+	font-weight: normal;
+}
+
 [mol_app_bench_list_mol_rower] {
 	padding: .5rem;
 }

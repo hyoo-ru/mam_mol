@@ -86,15 +86,13 @@ namespace $.$mol {
 			return this.tasksFiltered().map( ( id , index )=> this.taskRow( index ) )
 		}
 		
-		task( id : number , next? : $mol_app_todomvc_task , prev? : $mol_app_todomvc_task ) {
+		task( id : number , next? : $mol_app_todomvc_task ) {
 			const key = this.stateKey( `task=${id}` )
 			if( next === void 0 ) return $mol_state_local.value( key ) || { title : '' , completed : false }
 			
-			var task = next
-			if( task && prev ) task = $mol_merge_dict( this.task( id ) , next )
-			$mol_state_local.value( key , task )
+			$mol_state_local.value( key , next )
 			
-			return task || void 0
+			return next || void 0
 		}
 		
 		@ $mol_mem_key()
@@ -102,7 +100,7 @@ namespace $.$mol {
 			var id = this.tasksFiltered()[ index ]
 			if( next === void 0 ) return this.task( id ).completed
 			
-			this.task( id , { completed : next } , {} )
+			this.task( id , $mol_merge_dict( this.task( id ) , { completed : next } ) )
 			
 			return next
 		}
@@ -112,7 +110,7 @@ namespace $.$mol {
 			var id = this.tasksFiltered()[ index ]
 			if( next === void 0 ) return this.task( id ).title
 			
-			this.task( id , { title : next } , {} )
+			this.task( id , $mol_merge_dict( this.task( id ) , { title : next } ) )
 			
 			return next
 		}
@@ -121,8 +119,8 @@ namespace $.$mol {
 			var tasks = this.tasksFiltered()
 			var id = tasks[index]
 			tasks = tasks.slice( 0 , index ).concat( tasks.slice( index + 1 , tasks.length ) )
-			this.taskIds( tasks )
 			this.task( id , null )
+			this.taskIds( tasks )
 		}
 
 		eventSanitize() {

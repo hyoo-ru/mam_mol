@@ -1,7 +1,10 @@
 $mol_app_bench_list_mol $mol_scroller
 	childs /
 		< lister $mol_lister
-			rows < rowers /
+			rows /
+				< header $mol_viewer
+					childs / < sample \
+				< rowers /
 	rower# $mol_app_bench_list_mol_rower
 		selected > rowerSelected# false
 		title < rowerTitle# \

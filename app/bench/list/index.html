@@ -55,13 +55,15 @@
 </style>
 
 <div id="descr">
+	
 	<h1>List rendering</h1>
 	<p>
-		Sample application outputs list of blocks with title and content.
+		Sample applications outputs list of blocks with title and content.
 		Blocks has <b>variable height</b>.
 		Block can <b>selected by clicking</b> on them.
 		Dataset has <b>2000 items</b>.
 	</p>
+	
 	<h1>Steps</h1>
 	<dl>
 		<dt>start</dt>
@@ -75,8 +77,10 @@
 		<dt>update</dt>
 		<dd>Time from receiving new full dataset to rerendering complete.</dd>
 	</dl>
+	
 	<h1>Results</h1>
-	<p>Results in <b>milliseconds</b>. Lower is better.</p>
+	<p>Lower is better.</p>
+
 </div>
 
 <iframe id="sandbox"></iframe>
@@ -86,15 +90,27 @@
 	var sandbox = document.getElementById( 'sandbox' )
 	
 	var samples = [ 'mol' , 'react-15-3-2' , 'angular-1-5-5' , 'alight-0-12' ]
-	var steps = [ 'start' , 'fill' , 'update' ]
+	var weights = {
+		'alight-0-12' : '22.1 KB' ,
+		'angular-1-5-5' : '55.4 KB' ,
+		'mol' : '19.2 KB' ,
+		'react-15-3-2' : '45.6 KB' ,
+	}
+
+	var steps = [ 'start' , 'fill' , 'update' , 'weight' ]
+	
+	var items = {
+		fill : getItems( 2000 ) ,
+		update : getItems( 2000 )
+	}
 	
 	var handlers = {
 		
-		'get samples' : function( ) {
+		'samples' : function( ) {
 			done( samples )
 		} ,
 		
-		'get steps' : function( ) {
+		'steps' : function( ) {
 			done( steps )
 		} ,
 
@@ -103,28 +119,26 @@
 			sandbox.src = sample
 			sandbox.onload = function() {
 				sandbox.onload = null
-				done( Date.now() - start )
+				done( Date.now() - start + ' ms' )
 			}
 		} ,
 
-		'set data' : function( data ) {
-			sandbox.contentWindow.postMessage( [ 'set data' , data ] , '*' )
-			var start = Date.now()
-			requestAnimationFrame( function() {
-				requestAnimationFrame( function() { // wait for message receive
-					requestAnimationFrame( function() { // wait for rendering complete
-						done( Date.now() - start )
-					} )
-				} )
-			} )
+		'weight' : function( sample ) {
+			done( weights[ sample ] || Number.POSITIVE_INFINITY )
 		} ,
-
+		
 		'fill' : function( sample ) {
-			handlers['set data']( getData( 2000 ) )
+			measure( [ 'set data' , {
+				sample : sample ,
+				items : items.fill
+			} ] )
 		} ,
 
 		'update' : function( sample ) {
-			handlers['set data']( getData( 2000 ) )
+			measure( [ 'set data' , {
+				sample : sample ,
+				items : items.update
+			} ] )
 		} ,
 
 		'done' : function( result ) {
@@ -132,8 +146,23 @@
 		} ,
 	
 	}
-	
-	function getData( count ) {
+
+	function measure( message ) {
+		requestAnimationFrame( function() { // begin at next frame start for measure stability reason
+			var command = JSON.stringify( message )
+			console.timeStamp( 'begin ' + command )
+			sandbox.contentWindow.postMessage( message , '*' )
+			var start = Date.now()
+			requestAnimationFrame( function() { // wait for message processed
+				setTimeout( function() { // wait for painting completed
+					done( Date.now() - start + ' ms' )
+					console.timeStamp( 'end ' + command )
+				} )
+			} )
+		} )
+	}
+
+	function getItems( count ) {
 		var lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 		var result = []
 		for( var i = 0 ; i < count ; ++i ) {
@@ -157,6 +186,7 @@
 	
 	window.addEventListener( 'message' , function( event ) {
 		var method = event.data[0]
+		console.debug( 'Message' , event.data )
 		var handler = handlers[ method ]
 		if( !handler ) throw new Error( 'Unknown message: ' + method )
 		var args = event.data.slice( 1 )

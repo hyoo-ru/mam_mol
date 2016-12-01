@@ -1,33 +1,44 @@
 namespace $.$mol {
 
-	export interface $mol_app_bench_list_mol_row {
-		id : number
-		title : string
-		content : string
+	export interface $mol_app_bench_list_mol_data {
+		sample : string
+		items : {
+			id : number
+			title : string
+			content : string
+		}[]
 	}
 
 	export class $mol_app_bench_list_mol extends $.$mol_app_bench_list_mol {
 		
 		@ $mol_mem()
-		static rows( next? : $mol_app_bench_list_mol_row[] , prev? : $mol_app_bench_list_mol_row[] ) : $mol_app_bench_list_mol_row[] {
+		static data( next? : $mol_app_bench_list_mol_data , prev? : $mol_app_bench_list_mol_data ) : $mol_app_bench_list_mol_data {
 			window.addEventListener( 'message' , event => {
 				if( event.data[0] !== 'set data' ) return
-				this.rows( void 0 , event.data[1] )
+				this.data( void 0 , event.data[1] )
 			} )
-			return []
+			return { sample : '' , items : [] }
+		}
+		
+		sample() {
+			return $mol_app_bench_list_mol.data().sample
+		}
+		
+		items() {
+			return $mol_app_bench_list_mol.data().items
 		}
 		
 		@ $mol_mem()
-		rowers() { return $mol_app_bench_list_mol.rows().map( ( row , id ) => this.rower( id ) ) }
+		rowers() { return this.items().map( ( row , id ) => this.rower( id ) ) }
 		
-		@ $mol_mem()
+		@ $mol_mem_key()
 		rowerTitle( id : number ) {
-			return $mol_app_bench_list_mol.rows()[ id ].title
+			return this.items()[ id ].title
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem_key()
 		rowerContent( id : number ) {
-			return $mol_app_bench_list_mol.rows()[ id ].content
+			return this.items()[ id ].content
 		}
 		
 		rowerSelected( id : number , next? : boolean ) {
@@ -37,7 +48,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		selectedId( next? : number ) {
-			$mol_app_bench_list_mol.rows()
+			this.items()
 			if( next === void 0 ) return null
 			return next
 		}

@@ -4,15 +4,13 @@ namespace $ {
 		
 		@ $mol_mem()
 		static href( next? : string ) {
-			if( next ) history.replaceState( history.state , document.title , next )
+			if( next ) history.replaceState( history.state , document.title , `${ next }#` )
 			return window.location.search + window.location.hash
 		}
 		
 		@ $mol_mem()
 		static dict( next? : { [ key : string ] : string } ) {
-			if( next !== void 0 ) this.href( this.make( next ) )
-			
-			var href = this.href()
+			var href = this.href( next && this.make( next ) )
 			var chunks = href.split( /[\/\?#!&;]/g )
 			
 			var params : { [ key : string ] : string } = {}
@@ -29,9 +27,8 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		static value( key : string , next? : string , prev? : string ) {
-			if( next === void 0 ) return this.dict()[ key ] || null
-			this.href( this.link( { [ key ] : next } ) )
-			return next
+			const nextDict = ( next === void 0 ) ? void 0 : $mol_merge_dict( this.dict() , { [ key ] : next } ) 
+			return this.dict( nextDict )[ key ] || null
 		}
 		
 		static link( next : { [ key : string ] : string } ) {
@@ -39,13 +36,15 @@ namespace $ {
 		}
 		
 		static make( next : { [ key : string ] : string } ) {
-			var chunks : string[] = []
-			for( var key in next ) {
+			const chunks : string[] = []
+			for( let key in next ) {
 				if( null == next[ key ] ) continue
 				chunks.push( [ key ].concat( next[ key ] ).map( encodeURIComponent ).join( '=' ) )
 			}
 			
-			return '#' + chunks.join( '#' )
+			const hash = chunks.join( '#' )
+			
+			return hash ? '#' + hash : ''
 		}
 		
 		constructor( public prefix = '' ) {
