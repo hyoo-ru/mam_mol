@@ -1,6 +1,6 @@
 [mol_checker] {
 	flex: 0 1 auto;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	align-content: center;
 	border: none;

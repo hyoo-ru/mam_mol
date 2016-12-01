@@ -19,17 +19,17 @@ $mol_texter_demo $mol_texter text \
 	\npm start
 	\```
 	\
-	\|       | Column 1 | Column 2 | Column 3
-	\|-------|----------|----------|---------
-	\| Row 1 | Cell 1x1 | Cell 2x1 | Cell 3x1
-	\| Row 2 | Cell 1x2 | Cell 2x2 | Cell 3x2
-	\| Row 3 | Cell 1x3 | Cell 2x3 | Cell 3x3
-	\| Row 4 | Cell 1x4 | Cell 2x4 | Cell 3x4
-	\| Row 5 | Cell 1x5 | Cell 2x5 | Cell 3x5
-	\| Row 6 | Cell 1x6 | Cell 2x6 | Cell 3x6
-	\| Row 7 | Cell 1x7 | Cell 2x7 | Cell 3x7
-	\| Row 8 | Cell 1x8 | Cell 2x8 | Cell 3x8
-	\| Row 9 | Cell 1x9 | Cell 2x9 | Cell 3x9
+	\|           | Column 1 | Column 2 | Column 3
+	\|-----------|----------|----------|---------
+	\| **Row 1** | Cell 1x1 | Cell 2x1 | Cell 3x1
+	\| **Row 2** | Cell 1x2 | Cell 2x2 | Cell 3x2
+	\| **Row 3** | Cell 1x3 | Cell 2x3 | Cell 3x3
+	\| **Row 4** | Cell 1x4 | Cell 2x4 | Cell 3x4
+	\| **Row 5** | Cell 1x5 | Cell 2x5 | Cell 3x5
+	\| **Row 6** | Cell 1x6 | Cell 2x6 | Cell 3x6
+	\| **Row 7** | Cell 1x7 | Cell 2x7 | Cell 3x7
+	\| **Row 8** | Cell 1x8 | Cell 2x8 | Cell 3x8
+	\| **Row 9** | Cell 1x9 | Cell 2x9 | Cell 3x9
 	\
 	\Build status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
 	\

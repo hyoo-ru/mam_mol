@@ -64,8 +64,8 @@ namespace $.$mol {
 			return [] as $mol_app_taxon_data_row[]
 		}
 		
-		@ $mol_mem()
-		row( path : number[] ) {
+		@ $mol_mem_key()
+		record( path : number[] ) {
 			const id = path[ path.length - 1 ]
 			if( !id ) return {} as $mol_app_taxon_data_row
 			
@@ -78,86 +78,54 @@ namespace $.$mol {
 			return cache[ id ] = next 
 		}
 		
-		pathsSub( path : number[] ) : number[][] {
+		rowsSub( path : number[] ) : number[][] {
 			return this.hierarhy()[ path[ path.length - 1 ] ].childs.map( child => path.concat( child.id ) )
 		}
 
-		pathRoot() : number[] {
+		rowRoot() : number[] {
 			return [0]
 		}
 		
 		@ $mol_mem()
-		pathsAll() {
+		rows() {
 			const next : number[][] = []
 			
 			const add = ( path : number[] )=> {
 				next.push( path )
-				if( this.rowExpanded( path ) ) {
-					this.pathsSub( path ).forEach( path => add( path ) )
+				if( this.branchExpanded( path ) ) {
+					this.rowsSub( path ).forEach( path => add( path ) )
 				}
 			}
 			
-			this.pathsSub( this.pathRoot() ).forEach( path => add( path ) )
+			this.rowsSub( this.rowRoot() ).forEach( path => add( path ) )
 			
 			return next
 		}
 		
 		@ $mol_mem()
-		rowers() {
-			const paths = this.pathsAll()
+		records() {
+			const paths = this.rows()
 			return new $mol_range_lazy( {
 				length : paths.length ,
-				item : index => this.grider().rower( paths[ index ] ) ,
+				item : index => this.record( paths[ index ] ) ,
 			} )
 		}
 		
-		@ $mol_mem_key()
-		cellers( path : number[] ) {
-			const next : $mol_viewer[] = []
-			const hierarhyField = this.hierarhyField() 
+		branchExpanded( path : number[] , next? : boolean ) {
+			if( !this.rowsSub( path ).length ) return null
 			
-			next.push( this.cellerBranch( path ) )
-			
-			const row : any = this.row( [1] )
-			for( let field in row ) {
-				if( field === hierarhyField ) continue
-				if( typeof row[ field ] === 'number' ) {
-					next.push( this.cellerNumber({ path : path , field }) )
-				} else {
-					next.push( this.cellerText({ path : path , field }) )
-				}
-			}
-			
-			return next
-		}
-		
-		cellerTitle( id : { path : number[] , field : string } ) {
-			return id.field;
-		}
-		
-		valueText( id : { path : number[] , field : string } ) : string {
-			return ( this.row( id.path ) as any )[ id.field ];
-		}
-		
-		valueNumber( id : { path : number[] , field : string } ) : number {
-			return ( this.row( id.path ) as any )[ id.field ];
-		}
-		
-		rowLevel( path : number[] ) {
-			return path.length
-		}
-		
-		rowExpanded( path : number[] , next? : boolean ) {
-			if( !this.pathsSub( path ).length ) return null
-			
-			const key = `rowExpanded(${ JSON.stringify( path ) })`
+			const key = `branchExpanded(${ JSON.stringify( path ) })`
 			const next2 = $mol_state_session.value( key , next )
 			
-			return ( next2 === null ) ? false : next2
+			return ( next2 == null ) ? false : next2
 		}
 		
-		rowTitle( path : number[] ) {
-			return this.row( path ) && ( this.row( path ) as any )[ this.hierarhyField() ]
+		rowLevel( id : { row : number[] } ) {
+			return id.row.length
+		}
+		
+		rowExpanded( id : { row : number[] } , next? : boolean ) {
+			return this.branchExpanded( id.row , next )
 		}
 		
 	}

@@ -2,29 +2,23 @@ namespace $.$mol {
 	export class $mol_grider_demo extends $.$mol_grider_demo {
 		
 		@ $mol_mem()
-		rowers() {
+		records() {
 			return new $mol_range_lazy( {
-				length : 30000 ,
-				item : row => this.rower( row )
-			} )
-		}
-		
-		@ $mol_mem_key()
-		cellers( row : number ) {
-			return new $mol_range_lazy( {
-				length : 30 ,
-				item : col => this.celler({ row , col })
+				length : 10000 ,
+				item : index => {
+					return new $mol_range_lazy( {
+						length : 15 ,
+						item : colId => colId === 0
+							? `Row ${ index + 1 }`
+							: `Cell ${ colId }×${ index + 1 }`
+					} ).valueOf()
+				}
 			} ).valueOf()
 		}
 		
-		cellTitle( id : { row : number , col : number } ) {
-			if( id.col === 0 ) return ``
-			return `Col ${ id.col }`
-		}
-		
-		cellContent( id : { row : number , col : number } ) {
-			if( id.col === 0 ) return `Row ${ id.row + 1 }`
-			return `Cell ${ id.col }×${ id.row + 1 }`
+		columnHeaderContent( id : string ) {
+			if( id == '0' ) return []
+			return [ `Col ${ id }` ]
 		}
 		
 	}

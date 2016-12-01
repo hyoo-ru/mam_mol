@@ -54,4 +54,4 @@ $mol_app_supplies_detailer $mol_pager
 			content < positions /
 	foot / < controller $mol_rower childs < tools / < approver $mol_checker_ticker
 		checked > approved false
-		label < approvedLabel @ \Approved
+		label / < approvedLabel @ \Approved

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+	html {
+		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+	}
+	
+	html , body {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+	}
+	
+	#picture {
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+	
+</style>
+
+<body>
+
+<canvas id="picture"></canvas>
+
+<script>
+
+	var picture = document.getElementById( 'picture' )
+	var context = picture.getContext( '2d' )
+	
+	var count = 0
+	var style = {}
+	
+	window.addEventListener( 'message' , function onMessage( event ) {
+		switch( event.data[ 0 ] ) {
+			case 'render' :
+				count = event.data[ 1 ].count
+				render()
+				break
+			case 'restyle' :
+				style = event.data[ 1 ]
+				render()
+				break
+		}
+	} )
+	
+	function render() {
+		var size = [
+			picture.width = picture.offsetWidth ,
+			picture.height = picture.offsetHeight
+		]
+		var center = [ size[0] / 2 , size[1] / 2 ]
+		var zoom = Math.min( size[0] , size[1] ) / 2
+
+		var prev = center
+		for( var i = 0 ; i < count ; ++i ) {
+			var radius = zoom * i / count
+			var angle = i * Math.PI / 100
+			var next = [ center[0] + radius * Math.cos( angle ) , center[1] + radius * Math.sin( angle ) ]
+			context.beginPath()
+			context.strokeStyle = style.color
+			context.setLineDash( style.dashed ? [ 5 , 5 ] : [] )
+			context.moveTo( prev[0] , prev[1] )
+			context.lineTo( next[0] , next[1] )
+			context.stroke()
+			prev = next
+		}
+	}
+	
+</script>

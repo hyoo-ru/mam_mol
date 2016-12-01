@@ -31,6 +31,7 @@
 	transform: rotate( 90deg );
 	opacity: .5;
 	padding: 0;
+	justify-content: center;
 }
 [mol_app_todomvc_allCompleter]:disabled {
 	visibility: hidden;

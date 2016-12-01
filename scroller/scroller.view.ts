@@ -15,7 +15,6 @@ namespace $.$mol {
 	export class $mol_scroller extends $.$mol_scroller {
 
 		scrollTop( next? : number ) {
-			if( next ) this.moving( true )
 			return $mol_state_session.value( this.objectPath() + '.scrollTop()' , next ) || 0
 		}
 		
