@@ -10,19 +10,13 @@ namespace $.$mol {
 		/// Search query string synchronized with argument from URL.
 		@ $mol_mem()
 		query( next? : string , prev? : string ) : string {
-			const arg = this.queryArg()
-			
 			if( next == null ) {
-				return arg
+				return this.queryArg()
 			} else {
-				const query = this.query()
-				
 				this.queryArg( next , prev )
 				
 				if( this._queryTimer ) clearTimeout( this._queryTimer )
 				this._queryTimer = setTimeout( ()=> { this.query( null ) } , 500 )
-				
-				return query
 			}
 		}
 		
@@ -53,7 +47,8 @@ namespace $.$mol {
 		/// Current list of users. May be changed by user.
 		@ $mol_mem()
 		users( next? : string[] ) {
-			return next || this.usersMaster()
+			let usersMaster = this.usersMaster()
+			return next || usersMaster
 		}
 		
 		/// List of users loaded from server.
@@ -68,21 +63,14 @@ namespace $.$mol {
 			}
 			
 			master.json( next && { items : next.map( login => ({ login }) ) } )
+			
+			return next
 		}
 		
 		/// Status of net communication. Shows errors of downloading|uploading. 
-		@ $mol_mem({
-			fail : ( view : $mol_app_users , error : Error ) => {
-				if( error instanceof $mol_atom_wait ) return error
-				return error.message
-			}
-		})
+		@ $mol_mem()
 		saverResult() {
-			if( !this.master() ) return null
-			if( !this.master().uploaded() ) return null
-			if( this.changed() ) return null
-			
-			return 'Saved.'
+			return this.usersMaster()
 		}
 		
 		/// Reload data from server and discard changes.
@@ -107,13 +95,18 @@ namespace $.$mol {
 		
 		/// Flag to enable some controls when user list loaded.
 		loaded() {
-			return Boolean( this.users() )
+			return Boolean( this.users().valueOf() )
 		}
 		
 		/// Initiates current user list to upload. 
 		eventSave( next? : Event ) {
 			if( !this.changed() ) return
-			this.usersMaster( this.users() )
+			try {
+				this.usersMaster( this.users() ).valueOf()
+			} catch( error ) {
+				if( error instanceof $mol_atom_wait ) throw error
+				console.log( '---' , error )
+			}
 		}
 		
 		body() : any[] {

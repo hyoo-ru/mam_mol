@@ -25,18 +25,10 @@
 	color: var(--mol_skin_passive_text);
 }
 
-[mol_clicker]:not([disabled]):hover ,
-[mol_clicker]:focus {
-	outline: none;
-	box-shadow: 0 0 0 2px var(--mol_skin_focus);
-	z-index: 1;
-	cursor: pointer;
-	opacity: 1;
-}
-
 [mol_clicker_major]:not([disabled]) {
 	background: var(--mol_skin_accent);
 	color: var(--mol_skin_accent_text);
+	box-shadow: 0 0 1px 0 var(--mol_skin_light_line);
 }
 
 [mol_clicker_danger]:not([disabled]) {
@@ -44,3 +36,11 @@
 	color: var(--mol_skin_warn_text);
 }
 
+[mol_clicker]:not([disabled]):hover ,
+[mol_clicker]:focus {
+	outline: none;
+	z-index: 2;
+	cursor: pointer;
+	opacity: 1;
+	box-shadow: 0 0 1px 1px var(--mol_skin_focus);
+}

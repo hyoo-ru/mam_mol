@@ -2,5 +2,5 @@ $mol_expander $mol_lister
 	rows /
 		< labeler $mol_checker_expander
 			checked > expanded false
-			label < label \
+			label < label /
 		< content null

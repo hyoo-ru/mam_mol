@@ -66,7 +66,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 							var v = getValue( over.childs[0] )
 							let args : string[] = []
 							if( overName[2] ) args.push( ' key : any ' )
-							if( needSet ) args.push( ' next? , prev? ' )
+							if( needSet ) args.push( ' next? : any , prev? : any ' )
 							overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
 							needSet = ns
 						} )

@@ -3,7 +3,9 @@ namespace $.$mol {
 
 		side( next? : boolean ) {
 			if( !this.main() ) return true
-			return $mol_state_arg.value( this.stateKey( 'side' ) , next ? '' : null ) != null
+			
+			const arg = ( next === void 0 ) ? void 0 : next ? '' : null
+			return $mol_state_arg.value( this.stateKey( 'side' ) , arg ) != null
 		}
 
 	}

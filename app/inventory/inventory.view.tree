@@ -1,0 +1,26 @@
+$mol_app_inventory $mol_viewer
+	domain $mol_app_inventory_domain
+	childs / < page null
+	header $mol_app_inventory_header
+	enter $mol_app_inventory_enter
+		domain < domain
+	controller $mol_app_inventory_controller
+		header < header
+		domain < domain
+	keeper $mol_app_inventory_keeper
+		header < header
+		domain < domain
+	stats $mol_app_inventory_stats
+		header < header
+		domain < domain
+
+$mol_app_inventory_header $mol_rower childs /
+	< keeperLink $mol_linker
+		arg * page \keeper
+		childs / < keeperLabel @ \Keeper
+	< controlLink $mol_linker
+		arg * page \controller
+		childs / < controlLabel @ \Controller
+	- < statsLink $mol_linker
+		arg * page \stats
+		childs / < statsLabel @ \Stats

@@ -10,11 +10,11 @@ namespace $ {
 		throw new Error( `Not false (${value})` )
 	}
 	
-	export function $mol_assert_fail( handler : ()=> any , ErrorRight : any ) {
+	export function $mol_assert_fail( handler : ()=> any , ErrorRight? : any ) {
 		try {
 			handler()
 		} catch( error ) {
-			$mol_assert_ok( error instanceof ErrorRight )
+			if( ErrorRight ) $mol_assert_ok( error instanceof ErrorRight )
 			return error
 		}
 		throw new Error( 'Not failed' )

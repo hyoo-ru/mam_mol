@@ -10,7 +10,7 @@ namespace $.$mol {
 			const viewWindow = this.viewWindow()
 			
 			return [].concat(
-				this.header() ,
+				this.cols() && this.header() ,
 				( viewWindow.top > 0 ) ? this.gaperTop() : null ,
 				rowers.slice( viewWindow.top , viewWindow.bottom ).valueOf() ,
 				( viewWindow.bottom < viewWindow.count ) ? this.gaperBottom() : null ,
@@ -28,8 +28,8 @@ namespace $.$mol {
 			const heightLimit = context.$mol_viewer_heightLimit()
 			const rowHeight = this.rowHeight()
 			
-			const top = Math.max( 0 , Math.floor( ( scrollTop ) / rowHeight ) - 3 )
-			const bottom = Math.min( Math.ceil( heightLimit / rowHeight ) , count )
+			const top = Math.max( 0 , Math.floor( scrollTop / rowHeight ) - 2 )
+			const bottom = Math.min( count , Math.ceil( heightLimit / rowHeight ) + 2 )
 			
 			return { top , bottom , count }
 		}
@@ -46,12 +46,67 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		headerCellers() {
-			return this.cellers( [] ).map( ( celler , index )=> this.cellerHeader( index ) )
+			return this.cols().map( colId => this.columnHeader( colId ) )
 		}
 		
 		@ $mol_mem()
-		cellerTitle( index : number ) {
-			return this.cellers( [] )[ index ].title();
+		columnHeaderContent( colId : string ) {
+			return [ colId ]
+		}
+		
+		rowers() {
+			return this.rows().map( row => this.rower( row ) )
+		}
+		
+		cellers( row : string ) {
+			return this.cols().map( col => this.celler({ row , col }) )
+		}
+		
+		@ $mol_mem_key()
+		colType( col : string ) {
+			if( col === this.hierarhyColumn() ) return 'branch'
+			
+			const val = this.record( this.row(0) )[ col ]
+			if( typeof val === 'number' ) return 'number'
+			
+			return 'text'
+		}
+		
+		celler( id : { row : string , col : string } ) : $mol_viewer {
+			switch( this.colType( id.col ) ) {
+				case 'branch' : return this.cellerBranch( id )
+				case 'number' : return this.cellerNumber( id )
+			}
+			
+			return this.cellerText( id )
+		}
+		
+		cellerContent( id : { row : string , col : string } ) {
+			return [ this.record( id.row )[ id.col ] ]
+		}
+		
+		records() : any {
+			return []
+		}
+		
+		record( row : string ) {
+			return this.records()[ row ]
+		}
+		
+		@ $mol_mem()
+		rows() {
+			return Object.keys( this.records() )
+		}
+		
+		row( row : number ) {
+			return ( this.rows().slice( 0 , 1 ).valueOf() as string[] )[0]
+		}
+		
+		cols() {
+			const rowFirst = this.row(0)
+			if( rowFirst === void 0 ) return null
+			
+			return Object.keys( this.record( rowFirst ) )
 		}
 		
 	}
@@ -67,12 +122,12 @@ namespace $.$mol {
 	export class $mol_grider_rower extends $.$mol_grider_rower {
 		
 		heightStyle() {
-			return `${ this.height() - 1 }px`
+			return `${ this.height() }px`
 		}
 		
 	}
 	
-	export class $mol_app_grider_branch extends $.$mol_app_grider_branch {
+	export class $mol_grider_branch extends $.$mol_grider_branch {
 		
 		levelStyle() {
 			return `${ this.level() *.75 - 1.5 }rem`

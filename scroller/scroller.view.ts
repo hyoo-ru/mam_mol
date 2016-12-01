@@ -15,7 +15,6 @@ namespace $.$mol {
 	export class $mol_scroller extends $.$mol_scroller {
 
 		scrollTop( next? : number ) {
-			if( next ) this.moving( true )
 			return $mol_state_session.value( this.objectPath() + '.scrollTop()' , next ) || 0
 		}
 		
@@ -37,8 +36,8 @@ namespace $.$mol {
 			this.moving( true )
 			new $mol_defer( ()=> {
 				const el = this.DOMNode() as HTMLElement
-				this.scrollTop( el.scrollTop )
-				this.scrollLeft( el.scrollLeft )
+				this.scrollTop( Math.max( 0 , el.scrollTop ) )
+				this.scrollLeft( Math.max( 0 , el.scrollLeft ) )
 				this.scrollBottom( Math.max( 0 , el.scrollHeight - el.scrollTop - el.offsetHeight ) )
 				this.scrollRight( Math.max( 0 , el.scrollWidth - el.scrollLeft - el.offsetWidth ) )
 			} )

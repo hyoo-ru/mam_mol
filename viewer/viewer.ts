@@ -6,7 +6,7 @@ namespace $ {
 		$mol_viewer_heightLimit() : number
 	}
 	
-	$mol_viewer_context.$mol_viewer_heightLimit = () => $mol_window.size()[ 1 ] * 1.5
+	$mol_viewer_context.$mol_viewer_heightLimit = () => $mol_window.size().height
 
 	/// Reactive statefull lazy ViewModel 
 	export class $mol_viewer extends $mol_object {
@@ -120,11 +120,11 @@ namespace $ {
 			var events = this.event()
 			for( let name in events ) {
 				let handle = events[ name ]
-				next2.addEventListener(
-					name , event => {
+				next2.addEventListener( name , event => {
+					$mol_atom_task( ()=> {
 						handle( event )
-					}
-				)
+					} ).get()
+				} )
 			}
 			
 			return next2
@@ -138,7 +138,7 @@ namespace $ {
 				
 				if( view == null ) {
 				} else if( typeof view === 'object' ) {
-					var existsNode = ( ( view instanceof $mol_viewer ) ? view.DOMNode() : view )
+					var existsNode = ( ( view instanceof $mol_viewer ) ? view.DOMNode() : view.valueOf() as Node )
 					while( true ) {
 						if( !nextNode ) {
 							node.appendChild( existsNode )
@@ -187,7 +187,7 @@ namespace $ {
 				if( ( val == null ) || ( val === false ) ) {
 					node.removeAttribute( name )
 				} else if( val === true ) {
-					node.setAttribute( name , name )
+					node.setAttribute( name , 'true' )
 				} else {
 					node.setAttribute( name , String( val ) )
 				}
@@ -212,21 +212,20 @@ namespace $ {
 			}
 		}
 		
-		@ $mol_mem( {
-			fail : ( self : $mol_viewer , error : any ) => {
-				const node = self.DOMNode()
-				if( node ) node.setAttribute( 'mol_viewer_error' , error.name )
-				return error
-			}
-		} )
+		@ $mol_mem()
 		DOMTree( next? : Element ) {
-			var node = this.DOMNode()
+			let node = this.DOMNode()
 			
-			$mol_viewer.renderChilds( node , this.childsVisible() )
-			$mol_viewer.renderAttrs( node , this.attr() )
-			$mol_viewer.renderFields( node , this.field() )
-			
-			return node
+			try {
+				$mol_viewer.renderChilds( node , this.childsVisible() )
+				$mol_viewer.renderAttrs( node , this.attr() )
+				$mol_viewer.renderFields( node , this.field() )
+				
+				return node
+			} catch( error ) {
+				node.setAttribute( 'mol_viewer_error' , error.name )
+				throw error
+			}
 		}
 		
 		attr() : { [ key : string ] : ()=> string|number|boolean } { return {

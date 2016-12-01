@@ -27,7 +27,7 @@ namespace $.$mol {
 		}
 		
 		title() {
-			return ( this.main()[0] || this.addon()[0] ).title()
+			return ( this.main() || this.addon() )[0].title()
 		}
 		
 		@ $mol_mem()
@@ -41,6 +41,14 @@ namespace $.$mol {
 
 		supplyId( next? : string ) {
 			return $mol_state_arg.value( this.stateKey( 'supply' ) , next )
+		}
+		
+		@ $mol_mem()
+		searchQuery( next? : string ) {
+			if( !next ) return ''
+			if( next.length < 7 ) return next
+			this.supplyId( next )
+			return ''
 		}
 
 		supply() {

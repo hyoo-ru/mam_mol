@@ -23,7 +23,7 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		row( path : number[] ) {
+		record( path : number[] ) {
 			return {
 				name : $mol_stub_personName() ,
 				age : Math.ceil( Math.random() * 50 ) ,

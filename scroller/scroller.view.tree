@@ -3,7 +3,7 @@ $mol_scroller $mol_viewer
 	field *
 		scrollTop > scrollTop 0
 		scrollLeft > scrollLeft 0
-		style.boxShadow < shadowStyle \
+		- style.boxShadow < shadowStyle \
 	event *
 		scroll > eventScroll null
 		overflow > eventScroll null

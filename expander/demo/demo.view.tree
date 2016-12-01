@@ -1,4 +1,4 @@
 $mol_expander_demo $mol_expander
-	label \Lorem Ipsum
+	label / \Lorem Ipsum
 	content $mol_filler
 	
