@@ -80,7 +80,7 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		results()  {
+		results() {
 			const results : { [ sample : string ] : { [ step : string ] : any } } = {}
 			
 			this.samples().forEach( sample => {
@@ -88,6 +88,26 @@ namespace $.$mol {
 			} )
 			
 			return results
+		}
+		
+		@ $mol_mem()
+		resultsSortCol( next? : string ) {
+			return $mol_state_arg.value( this.stateKey( 'sort' ) , next )
+		}
+		
+		@ $mol_mem()
+		resultsSorted() {
+			const prev = this.results()
+			const col = this.resultsSortCol()
+			if( !col ) return prev
+			
+			const next : { [ sample : string ] : { [ step : string ] : any } } = {}
+			
+			const keys = Object.keys( prev )
+			keys.sort( ( a , b )=> this.resultNumber({ row : a , col }) - this.resultNumber({ row : b , col }) )
+			keys.forEach( row => next[ row ] = prev[ row ] )
+			
+			return next
 		}
 		
 		menuOptions() {
@@ -136,6 +156,14 @@ namespace $.$mol {
 		
 		resultPortion( id : { row : string , col : string } ) {
 			return this.resultNumber( id ) / this.resultMaxValue( id.col )
+		}
+		
+		resulterHeaderTitle( col : string ) {
+			return col
+		}
+		
+		eventResulterSortToggle( col : string , next? : Event ) {
+			this.resultsSortCol( col )
 		}
 	}
 	
