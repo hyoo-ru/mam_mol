@@ -26,6 +26,10 @@
 	flex-direction: column;
 }
 
+[mol_app_bench_resulterHeader] {
+	cursor: pointer;
+}
+
 [mol_app_bench_resulterCellerNumber] {
 	white-space: nowrap;
 	text-align: right;
