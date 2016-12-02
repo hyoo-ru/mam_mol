@@ -706,8 +706,11 @@ declare namespace $.$mol {
 declare namespace $ {
     class $mol_app_bench extends $mol_stacker {
         tester(next?: any, prev?: any): $mol_app_bench_tester;
-        results(): any;
+        resultsSorted(): any;
         griderCeller(key: any): any;
+        eventResulterSortToggle(key: any, next?: any, prev?: any): any;
+        resulterHeaderTitle(key: any): string;
+        resulterHeader(key: any, next?: any, prev?: any): $mol_app_bench_resulter_header;
         resulter(next?: any, prev?: any): $mol_grider;
         mainPage(next?: any, prev?: any): $mol_app_bench_mainer;
         main(): any[];
@@ -736,6 +739,18 @@ declare namespace $ {
         tagName(): string;
     }
 }
+declare namespace $ {
+    class $mol_app_bench_resulter_header extends $mol_floater {
+        eventClick(next?: any, prev?: any): any;
+        event(): {
+            [key: string]: (event: Event) => void;
+        } & {
+            "click": (next?: any, prev?: any) => any;
+        };
+        title(): string;
+        childs(): any[];
+    }
+}
 declare namespace $.$mol {
     class $mol_app_bench extends $.$mol_app_bench {
         bench(next?: string, prev?: string): any;
@@ -750,6 +765,12 @@ declare namespace $.$mol {
             [key: string]: any;
         };
         results(): {
+            [sample: string]: {
+                [step: string]: any;
+            };
+        };
+        resultsSortCol(next?: string): any;
+        resultsSorted(): {
             [sample: string]: {
                 [step: string]: any;
             };
@@ -774,6 +795,8 @@ declare namespace $.$mol {
             row: string;
             col: string;
         }): number;
+        resulterHeaderTitle(col: string): string;
+        eventResulterSortToggle(col: string, next?: Event): void;
     }
 }
 declare namespace $ {

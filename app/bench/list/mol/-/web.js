@@ -3031,17 +3031,31 @@ var $;
         $mol_app_bench.prototype.tester = function (next, prev) {
             return new $.$mol_app_bench_tester();
         };
-        $mol_app_bench.prototype.results = function () {
+        $mol_app_bench.prototype.resultsSorted = function () {
             return null;
         };
         $mol_app_bench.prototype.griderCeller = function (key) {
             return null;
         };
+        $mol_app_bench.prototype.eventResulterSortToggle = function (key, next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_app_bench.prototype.resulterHeaderTitle = function (key) {
+            return "";
+        };
+        $mol_app_bench.prototype.resulterHeader = function (key, next, prev) {
+            var _this = this;
+            return new $.$mol_app_bench_resulter_header().setup(function (obj) {
+                obj.eventClick = function (next, prev) { return _this.eventResulterSortToggle(key, next, prev); };
+                obj.title = function () { return _this.resulterHeaderTitle(key); };
+            });
+        };
         $mol_app_bench.prototype.resulter = function (next, prev) {
             var _this = this;
             return new $.$mol_grider().setup(function (obj) {
-                obj.records = function () { return _this.results(); };
+                obj.records = function () { return _this.resultsSorted(); };
                 obj.celler = function (key) { return _this.griderCeller(key); };
+                obj.columnHeader = function (key) { return _this.resulterHeader(key); };
             });
         };
         $mol_app_bench.prototype.mainPage = function (next, prev) {
@@ -3114,6 +3128,12 @@ var $;
             $.$mol_mem()
         ], $mol_app_bench.prototype, "tester", null);
         __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_bench.prototype, "eventResulterSortToggle", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_bench.prototype, "resulterHeader", null);
+        __decorate([
             $.$mol_mem()
         ], $mol_app_bench.prototype, "resulter", null);
         __decorate([
@@ -3172,6 +3192,35 @@ var $;
     }($.$mol_viewer));
     $.$mol_app_bench_tester = $mol_app_bench_tester;
 })($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_app_bench_resulter_header = (function (_super) {
+        __extends($mol_app_bench_resulter_header, _super);
+        function $mol_app_bench_resulter_header() {
+            _super.apply(this, arguments);
+        }
+        $mol_app_bench_resulter_header.prototype.eventClick = function (next, prev) {
+            return (next !== void 0) ? next : null;
+        };
+        $mol_app_bench_resulter_header.prototype.event = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.event.call(this), {
+                "click": function (next, prev) { return _this.eventClick(next, prev); },
+            });
+        };
+        $mol_app_bench_resulter_header.prototype.title = function () {
+            return "";
+        };
+        $mol_app_bench_resulter_header.prototype.childs = function () {
+            return [].concat(this.title());
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_bench_resulter_header.prototype, "eventClick", null);
+        return $mol_app_bench_resulter_header;
+    }($.$mol_floater));
+    $.$mol_app_bench_resulter_header = $mol_app_bench_resulter_header;
+})($ || ($ = {}));
 //bench.view.tree.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
@@ -3214,12 +3263,12 @@ var $;
             };
             $mol_app_bench.prototype.commandResult = function (command, next, prev) {
                 var _this = this;
+                var sandbox = this.sandbox();
                 if (next !== void 0)
                     return next;
                 var current = this.commandCurrent(command);
                 if (current !== command)
                     throw new $.$mol_atom_wait("Waiting for " + JSON.stringify(current) + "...");
-                var sandbox = this.sandbox();
                 sandbox.contentWindow.postMessage(command, '*');
                 window.onmessage = function (event) {
                     if (event.data[0] !== 'done')
@@ -3257,6 +3306,21 @@ var $;
                     results[sample] = _this.resultsSample(sample);
                 });
                 return results;
+            };
+            $mol_app_bench.prototype.resultsSortCol = function (next) {
+                return $.$mol_state_arg.value(this.stateKey('sort'), next);
+            };
+            $mol_app_bench.prototype.resultsSorted = function () {
+                var _this = this;
+                var prev = this.results();
+                var col = this.resultsSortCol();
+                if (!col)
+                    return prev;
+                var next = {};
+                var keys = Object.keys(prev);
+                keys.sort(function (a, b) { return _this.resultNumber({ row: a, col: col }) - _this.resultNumber({ row: b, col: col }); });
+                keys.forEach(function (row) { return next[row] = prev[row]; });
+                return next;
             };
             $mol_app_bench.prototype.menuOptions = function () {
                 var _this = this;
@@ -3298,6 +3362,12 @@ var $;
             $mol_app_bench.prototype.resultPortion = function (id) {
                 return this.resultNumber(id) / this.resultMaxValue(id.col);
             };
+            $mol_app_bench.prototype.resulterHeaderTitle = function (col) {
+                return col;
+            };
+            $mol_app_bench.prototype.eventResulterSortToggle = function (col, next) {
+                this.resultsSortCol(col);
+            };
             __decorate([
                 $.$mol_mem()
             ], $mol_app_bench.prototype, "bench", null);
@@ -3322,6 +3392,12 @@ var $;
             __decorate([
                 $.$mol_mem()
             ], $mol_app_bench.prototype, "results", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench.prototype, "resultsSortCol", null);
+            __decorate([
+                $.$mol_mem()
+            ], $mol_app_bench.prototype, "resultsSorted", null);
             __decorate([
                 $.$mol_mem_key()
             ], $mol_app_bench.prototype, "menuOptionerChecked", null);
