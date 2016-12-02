@@ -31,12 +31,13 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		commandResult< Result >( command : any[] , next? : Result , prev? : Result ) : Result {
+			const sandbox = this.sandbox()
+			
 			if( next !== void 0 ) return next
 			
 			const current = this.commandCurrent( command )
 			if( current !== command ) throw new $mol_atom_wait( `Waiting for ${ JSON.stringify( current ) }...` )
 				
-			const sandbox = this.sandbox()
 			sandbox.contentWindow.postMessage( command , '*' )
 				
 			window.onmessage = event => {
