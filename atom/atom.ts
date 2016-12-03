@@ -20,7 +20,7 @@ namespace $ {
 		'value()' = <Value> void 0
 		
 		constructor(
-			public handler : ( next? : Value|Error , prev? : Value|Error )=> Value ,
+			public handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value ,
 			public host? : { objectPath() : string , [ key : string ] : any } ,
 			public field = 'value()'
 		) {
@@ -62,12 +62,12 @@ namespace $ {
 			return this.host ? this.host.objectPath() + '.' + this.field : this.field
 		}
 		
-		get() {
+		get( force? : $mol_atom_force ) {
 			if( this.status === $mol_atom_status.pulling ) {
 				throw new Error( `Cyclic atom dependency of ${ this.objectPath() }` )
 			}
 			
-			this.actualize()
+			this.actualize( force )
 			
 			const slave = $mol_atom.stack[0]
 			if( slave ) this.lead( slave )
@@ -83,16 +83,16 @@ namespace $ {
 			return value
 		}
 		
-		actualize() {
+		actualize( force? : $mol_atom_force ) {
 			
 			//this.log([ 'actualize' ])
 			
-			if( this.status === $mol_atom_status.actual ) return
+			if( !force && this.status === $mol_atom_status.actual ) return
 			
 			const slave = $mol_atom.stack[0]
 			$mol_atom.stack[0] = this
 			
-			if( this.status === $mol_atom_status.checking ) {
+			if( !force && this.status === $mol_atom_status.checking ) {
 				
 				this.masters.forEach(
 					master => {
@@ -106,7 +106,7 @@ namespace $ {
 				}
 			}
 			
-			if( this.status !== $mol_atom_status.actual ) {
+			if( force || this.status !== $mol_atom_status.actual ) {
 				
 				const oldMasters = this.masters
 				this.masters = null
@@ -118,7 +118,7 @@ namespace $ {
 				)
 				
 				this.status = $mol_atom_status.pulling
-				const next = this.pull()
+				const next = this.pull( force )
 				
 				this.push( next )
 				
@@ -127,10 +127,10 @@ namespace $ {
 			$mol_atom.stack[0] = slave
 		}
 		
-		pull() {
+		pull( force? : $mol_atom_force ) {
 			const host = this.host || this
 			try {
-				return this.handler( this._next )
+				return this.handler( this._next , force )
 			} catch( error ) {
 				if( !error['$mol_atom_catched'] ) {
 					if( error instanceof $mol_atom_wait ) {
@@ -149,14 +149,10 @@ namespace $ {
 		
 		_next : Value
 		
-		set( next : Value , prev? : Value|Error ) : Value {
+		set( next : Value ) : Value {
 			this._next = next
 			this.obsolete()
 			return this.get()
-			//const host = this.host || this
-			//let next2 = this.handler( next , prev )
-			//if( next2 === void 0 ) return host[ this.field ]
-			//return this.push( next2 )
 		}
 		
 		push( next : Value|Error ) {
@@ -274,10 +270,16 @@ namespace $ {
 			this.masters = null
 		}
 		
-		value( next? : Value , prev? : Value ) {
-			if( next !== void 0 ) return this.set( next , prev )
-			if( prev !== void 0 ) return this.push( prev )
-			return this.get()
+		value( next? : Value , force? : $mol_atom_force ) {
+			if( next === void 0 ) {
+				return this.get( force )
+			} else {
+				if( force ) {
+					return this.push( next )
+				} else {
+					return this.set( next )
+				}
+			}
 		}
 		
 		static stack = [ null ] as $mol_atom<any>[]
@@ -349,6 +351,11 @@ namespace $ {
 			error['__proto__'] = $mol_atom_wait.prototype
 			return error
 		}
+	}
+	
+	export class $mol_atom_force extends Object {
+		$mol_atom_force : boolean
+		static $mol_atom_force : boolean
 	}
 	
 	export function $mol_atom_task< Value >(

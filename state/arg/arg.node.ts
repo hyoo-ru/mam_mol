@@ -29,7 +29,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key()
-		static value( key : string , next? : string , prev? : string ) {
+		static value( key : string , next? : string ) {
 			if( next === void 0 ) return this.dict()[ key ] || null
 			this.href( this.link( { [ key ] : next } ) )
 			return next
@@ -64,7 +64,7 @@ namespace $ {
 			super()
 		}
 		
-		value( key : string , next? : string , prev? : string ) {
+		value( key : string , next? : string ) {
 			return $mol_state_arg.value( this.prefix + key , next )
 		}
 		

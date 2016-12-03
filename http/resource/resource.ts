@@ -17,7 +17,7 @@ namespace $ {
 		} }
 		
 		@ $mol_mem()
-		request( fresh? : boolean ) {
+		request() {
 			const request = new $mol_http_request()
 			request.method = () => 'Put'
 			request.uri = () => this.uri()
@@ -26,12 +26,8 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		text( next? : string , prev? : string ) {
-			return this.request().text( next )
-		}
-		
-		refresh() {
-			this.request( !!'fresh' )
+		text( next? : string , force? : $mol_atom_force ) {
+			return this.request().text( next , force )
 		}
 		
 	}
@@ -45,8 +41,8 @@ namespace $ {
 			} )
 		}
 		
-		json( next? : Content , prev? : Content ) : Content {
-			return JSON.parse( this.text( next && JSON.stringify( next , null , '\t' ) ) )
+		json( next? : Content , force? : $mol_atom_force ) : Content {
+			return JSON.parse( this.text( next && JSON.stringify( next , null , '\t' ) , force ) )
 		}
 		
 	}

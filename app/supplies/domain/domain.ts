@@ -106,7 +106,7 @@ namespace $ {
 		group() : $mol_app_supplies_domain_supply_group { return void 0 }
 		
 		@ $mol_mem()
-		status( next? : $mol_app_supplies_domain_supply_status , prev? : $mol_app_supplies_domain_supply_status ) { return next }
+		status( next? : $mol_app_supplies_domain_supply_status ) { return next }
 		
 		ballanceUnit() : $mol_app_supplies_domain_ballanceUnit { return void 0 }
 		
@@ -283,7 +283,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key()
-		attachments( id : string , next? : $mol_app_supplies_domain_attachment[] , prev? : $mol_app_supplies_domain_attachment[] ) {
+		attachments( id : string , next? : $mol_app_supplies_domain_attachment[] ) {
 			return next || []
 		}
 		

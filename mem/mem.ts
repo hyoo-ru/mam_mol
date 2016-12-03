@@ -11,11 +11,11 @@ namespace $ {
 		return function(
 			obj : Host ,
 			name : string ,
-			descr : TypedPropertyDescriptor< ( next? : Value , prev? : Value )=> Value >
+			descr : TypedPropertyDescriptor< ( next? : Value , force? : $mol_atom_force )=> Value >
 		) {
 			var value = descr.value
 			
-			descr.value = function( next? : Value , prev? : Value ) {
+			descr.value = function( next? : Value , force? : $mol_atom_force ) {
 				var host : Host = this
 				var field = name + "()"
 				
@@ -32,7 +32,7 @@ namespace $ {
 					if( config ) info.autoFresh = !config.lazy
 				}
 				
-				return info.value( next , prev )
+				return info.value( next , force )
 			}
 			
 			void( (<any>descr.value)[ 'value' ] = value )
@@ -49,11 +49,11 @@ namespace $ {
 		return function(
 			obj : Host ,
 			name : string ,
-			descr : TypedPropertyDescriptor< ( key : Key , next? : Value , prev? : Value )=> Value >
+			descr : TypedPropertyDescriptor< ( key : Key , next? : Value , force? : $mol_atom_force )=> Value >
 		) {
 			const value = descr.value
 
-			descr.value = function( key : Key , next? : Value , prev? : Value ) {
+			descr.value = function( key : Key , next? : Value , force? : $mol_atom_force ) {
 				var host : Host = this
 				var field = name + "(" + JSON.stringify( key ) + ")"
 				
@@ -70,7 +70,7 @@ namespace $ {
 					if( config ) info.autoFresh = !config.lazy
 				}
 				
-				return info.value( next , prev )
+				return info.value( next , force )
 			}
 			
 			void( (<any>descr.value)[ 'value' ] = value )

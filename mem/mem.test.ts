@@ -10,7 +10,7 @@ namespace $ {
 					return new Number( next )
 				}
 			}
-			var x = new X
+			const x = new X
 
 			// get
 			$mol_assert_equal( x.foo( 0 ).valueOf() , 123 )
@@ -36,7 +36,7 @@ namespace $ {
 					return Math.random()
 				}
 			}
-			var x = new X
+			const x = new X
 
 			$mol_assert_equal( x.foo( [ 0 , 1 ] ) , x.foo( [ 0 , 1 ] ) )
 			$mol_assert_unique( x.foo( [ 0 , 1 ] ) , x.foo( [ 0 , 2 ] ) )
@@ -63,7 +63,7 @@ namespace $ {
 
 			}
 
-			var x = new X
+			const x = new X
 			$mol_assert_equal( x.bar() , 2 )
 			$mol_assert_equal( x.xxx() , 3 )
 
@@ -94,7 +94,7 @@ namespace $ {
 
 		'must be deferred destroyed when no longer referenced'() {
 
-			var foo : any
+			let foo : any
 
 			class B extends $mol_object {
 
@@ -138,9 +138,9 @@ namespace $ {
 			class Test extends $mol_object {
 
 				@ $mol_mem()
-				source( next? : string , prev? : string ) : string {
+				source( next? : string , force? : $mol_atom_force ) : string {
 					new $mol_defer( () => {
-						this.source( void 0 , 'Jin' )
+						this.source( 'Jin' , $mol_atom_force )
 					} )
 					throw new $mol_atom_wait( 'Wait for data!' )
 				}

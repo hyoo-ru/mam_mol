@@ -23,14 +23,14 @@ namespace $ {
 			
 			next.onload = ( event : Event )=> {
 				if( Math.floor( next.status / 100 ) === 2 ) {
-					this.response( void 0 , next.responseText )
+					this.response( next.responseText , $mol_atom_force )
 				} else {
-					this.response( void 0 , new Error( next.responseText ) as any )
+					this.response( new Error( next.responseText ) as any , $mol_atom_force )
 				}
 			}
 			
 			next.onerror = ( event : ErrorEvent ) => {
-				this.response( void 0 , event.error || new Error( 'Unknown HTTP error' ) )
+				this.response( event.error || new Error( 'Unknown HTTP error' ) , $mol_atom_force )
 			}
 			
 			return next
@@ -45,7 +45,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		response( next? : any , prev? : any ) : any {
+		response( next? : any , force? : $mol_atom_force ) : any {
 			const creds = this.credentials()
 			const native = this.native()
 			const method = ( next === void 0 ) ? 'Get' : this.method()
@@ -56,8 +56,8 @@ namespace $ {
 			throw new $mol_atom_wait( `${this.method()} ${this.uri()}` )
 		}
 		
-		text( next? : string ) : string {
-			return this.response( next )
+		text( next? : string , force? : $mol_atom_force ) : string {
+			return this.response( next , force )
 		}
 		
 	}

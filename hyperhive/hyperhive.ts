@@ -5,7 +5,7 @@ namespace $ {
 	export class $mol_hyperhive extends $mol_object {
 		
 		@ $mol_mem_key()
-		static data< Value >( resource : { uri : string , table : string } , next? : Value , prev? : Value|Error ) : Value {
+		static data< Value >( resource : { uri : string , table : string } , next? : Value , force? : $mol_atom_force ) : Value {
 			
 			if( typeof hhfw === 'undefined' ) {
 				const uri = `${ resource.uri }${ resource.table }/table/${ resource.table }/`
@@ -16,7 +16,7 @@ namespace $ {
 			
 			const handleError = ( message : string ) => {
 				const error = new Error( `${ JSON.stringify( resource ) } ${ message }` )
-				$mol_hyperhive.data( resource , void 0 , error )
+				$mol_hyperhive.data( resource , error , $mol_atom_force )
 			}
 			
 			document.addEventListener(
@@ -37,7 +37,7 @@ namespace $ {
 								`${ resource.table }_$_${ resource.table }` ,
 								( result2 : any ) => {
 									const range = new $mol_range_lazy( result2.rows )
-									$mol_hyperhive.data( resource , void 0 , range )
+									$mol_hyperhive.data( resource , range , $mol_atom_force )
 								} ,
 								handleError ,
 							)

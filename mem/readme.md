@@ -1,14 +1,15 @@
 # $mol_mem
 
-## One-value properties
+## Single-value properties
 
 Properties of a the same values, in terminology of mol is polymorphic methods with the following type of interface:
 
 ```ts
 myProperty< Value >() : Value // getter
 myProperty< Vlaue >( next? : Value ) : Value // getter/setter
-myProperty< Vlaue >( next? : Value , prev? : Value ) : Value // getter/setter/patcher
+myProperty< Vlaue >( next? : Value , force? : $mol_atom_force ) : Value // getter/setter with force support
 ```
+
 The example of declaring a not cached property:
 
 ```ts
@@ -19,7 +20,8 @@ userName() { return 'jin' }
 ```ts
 /// getter/setter
 userName( next? : string ) {
-	if( next === void 0 ) { // check for undefined is important
+
+	if( next === void 0 ) { // check for undefined for switch between getter and setter
 		return localStorage.getItem( 'name' ) // pull value
 	} else {
 		localStorage.setItem( 'name' , next ) // put value
@@ -27,22 +29,6 @@ userName( next? : string ) {
 	}
 }
 ```
-
-```ts
-type UserData = { name? : string , age? : number }
-
-/// getter/setter/patcher
-userData( next? : UserData , prev? : UserData ) {
-	if( next === void 0 ) { // getter
-		return $mol_state_local.value< UserData >( 'userData' )
-	} else if( prev === void 0 ) { // setter
-		return $mol_state_local.value< UserData >( 'userData' , next )
-	} else { // patcher
-		return this.useData( $mol_merge_dict( this.userData() , next ) ) 
-	}
-}
-```
-
 
 Examples of usage:
 
@@ -56,29 +42,19 @@ userName( 'jin' )
 userName()
 ```
 
-```ts
-// Set user data to { name : 'jin' , age : 32 }
-userData({ name : 'jin' , age : 32 })
-```
+To do a property is cached it is enough to use decorator [$mol_mem](../prop), which uses under the hood [$mol_atom](../atom) for automatic invalidation of cache:
 
 ```ts
-// Patch user data to { name : 'jin' , age : 33 }
-userData( { age : 33 } , { age : 32 } )
-```
-
-To do a property is reactive (cached with automatic invalidation) it is enough to use decorator [$mol_mem](../prop), which uses under the hood [$mol_atom](../atom):
-
-```ts
-/// Getter
+/// getter
 @ $mol_mem()
 userName() { return $mol_state_local.value( 'name' ) }
 ```
 
 ```ts
-/// Getter/setter
+/// getter/setter
 @ $mol_mem()
 userName( next? : string ) {
-	if( next === void ) { // check for undefined is important
+	if( next === void ) { // check for undefined for switch between getter and setter
 		return $mol_state_local.value( 'name' ) // pull value
 	} else {
 		$mol_state_local.value( 'name' , next ) // put value 
@@ -94,11 +70,26 @@ userName( next? : string ) {
 	return $mol_state_local.value( 'name' , next )
 }
 ```
+
 Additional examples of usage reactive properties:
 
 ```ts
-// Force push value to cache
-userName( void 0 , 'jin' )
+@ $mol_mem()
+userName( next? : string , force? : $mol_atom_force ) { // Added force support
+	return 'mary'
+}
+
+/// Try to set new value
+userName( 'jin' ) // returns 'mary'
+
+/// Force push value to cache 
+userName( 'jin' , $mol_atom_force ) // returns 'jin'
+
+/// Force cache ignoring and pulling fresh value
+userName( void 0 , $mol_atom_force ) // returns 'mary'
+
+/// Cache are placed in object field (use this for debugging only!)
+this['userName()'] // returns 'mary'
 ```
 
 ## Multi-value properties
@@ -108,7 +99,7 @@ Multi-value properties has the following interface:
 ```ts
 myProperty< Key , Value >( key : Key ) : Value // getter
 myProperty< Key , Value >( key : Key , next? : Value ) : Value // getter/setter
-myProperty< Key , Value >( key : Key , next? : Value , prev? : Value ) : Value // getter/setter/patcher
+myProperty< Key , Value >( key : Key , next? : Value , force? : $mol_atom_force ) : Value // getter/setter with force support
 ```
 
 Examples of declarations:
@@ -121,20 +112,20 @@ userName( pos : number ) {
 
 ```ts
 @ $mol_mem_key()
-userNames( pos : number , next? : string , prev? : string ) {
-	return $mol_state_local.value( 'name' , next , prev ) || `User #${pos}`
+userNames( pos : number , next? : string ) {
+	return $mol_state_local.value( 'name' , next ) || `User #${pos}`
 }
 ```
 
 Examples of usages:
 
 ```ts
-// Set user#0 name to 'jin'
+/// Set user#0 name to 'jin'
 userName( 0 , 'jin' )
 ```
 
 ```ts
-// Get user#0 name 'jin'
+/// Get user#0 name 'jin'
 userName( 0 )
 ```
 

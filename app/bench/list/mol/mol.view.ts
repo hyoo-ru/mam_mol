@@ -12,10 +12,10 @@ namespace $.$mol {
 	export class $mol_app_bench_list_mol extends $.$mol_app_bench_list_mol {
 		
 		@ $mol_mem()
-		static data( next? : $mol_app_bench_list_mol_data , prev? : $mol_app_bench_list_mol_data ) : $mol_app_bench_list_mol_data {
+		static data( next? : $mol_app_bench_list_mol_data , force? : $mol_atom_force ) : $mol_app_bench_list_mol_data {
 			window.addEventListener( 'message' , event => {
 				if( event.data[0] !== 'set data' ) return
-				this.data( void 0 , event.data[1] )
+				this.data( event.data[1] , $mol_atom_force )
 			} )
 			return { sample : '' , items : [] }
 		}
