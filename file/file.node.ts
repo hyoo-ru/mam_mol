@@ -46,7 +46,7 @@ namespace $ {
 			)
 			watcher.on(
 				'error' , ( error : Error )=> {
-					this.stat( void 0 , error )
+					this.stat( error , $mol_atom_force )
 				}
 			)
 			
@@ -54,7 +54,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		stat( next? : any , prev? : any ) {
+		stat( next? : any , force? : $mol_atom_force ) {
 			var path = this.path()
 			
 			try {
@@ -127,7 +127,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		content( next? : string , prev? : string ) {
+		content( next? : string , force? : $mol_atom_force ) {
 			if( next === void 0 ) {
 				return this.stat() && $node.fs.readFileSync( this.path() )
 			}

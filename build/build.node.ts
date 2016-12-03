@@ -193,7 +193,7 @@ namespace $ {
 					return $mol_file.absolute( path ).exists()
 				} ,
 				writeFile : ( path : string , content : string )=> {
-					$mol_file.absolute( path ).content( void 0 , content )
+					$mol_file.absolute( path ).content( content , $mol_atom_force )
 				} ,
 			}
 			

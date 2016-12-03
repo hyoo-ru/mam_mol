@@ -15,7 +15,7 @@ namespace $ {
 	export class $mol_state_local< Value > extends $mol_object {
 		
 		@ $mol_mem_key()
-		static value< Value >( key : string , next? : Value , prev? : Value ) {
+		static value< Value >( key : string , next? : Value , force? : $mol_atom_force ) {
 			if( next === void 0 ) return JSON.parse( localStorage.getItem( key ) || 'null' )
 			
 			if( next === null ) localStorage.removeItem( key )

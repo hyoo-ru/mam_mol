@@ -3,19 +3,19 @@ namespace $.$mol {
 	export class $mol_app_bench extends $.$mol_app_bench {
 		
 		@ $mol_mem()
-		bench( next? : string , prev? : string ) {
-			return $mol_state_arg.value( this.stateKey( 'bench' ) , next , prev ) || 'list'
+		bench( next? : string ) {
+			return $mol_state_arg.value( this.stateKey( 'bench' ) , next ) || 'list'
 		}
 		
 		@ $mol_mem()
-		sandbox( next? : HTMLIFrameElement , prev? : HTMLIFrameElement ) : HTMLIFrameElement {
+		sandbox( next? : HTMLIFrameElement , force? : $mol_atom_force ) : HTMLIFrameElement {
 			const next2 = this.tester().DOMNode() as HTMLIFrameElement
 			
 			next2.src = this.bench()
 			
 			next2.onload = event => {
 				next2.onload = null
-				this.sandbox( void 0 , next2 )
+				this.sandbox( next2 , $mol_atom_force )
 			}
 			
 			throw new $mol_atom_wait( `Loading sandbox...` )
@@ -24,13 +24,13 @@ namespace $.$mol {
 		'commandCurrent()' : any[]
 		
 		@ $mol_mem()
-		commandCurrent( next? : any[] , prev? : any[] ) {
+		commandCurrent( next? : any[] , force? : $mol_atom_force ) {
 			if( this['commandCurrent()'] ) return
 			return next
 		}
 		
 		@ $mol_mem_key()
-		commandResult< Result >( command : any[] , next? : Result , prev? : Result ) : Result {
+		commandResult< Result >( command : any[] , next? : Result ) : Result {
 			const sandbox = this.sandbox()
 			
 			if( next !== void 0 ) return next
@@ -44,25 +44,25 @@ namespace $.$mol {
 				if( event.data[0] !== 'done' ) return
 				window.onmessage = null
 				
-				this.commandCurrent( void 0 , null )
+				this.commandCurrent( null , $mol_atom_force )
 				this.commandResult( command , event.data[1] )
 			}
 			
 			throw new $mol_atom_wait( `Running ${ command }...` )
 		}
 		
-		samplesAll( next? : string[] , prev? : string[] ) {
+		samplesAll( next? : string[] ) {
 			return this.commandResult<string[]>( [ 'samples' ] ).slice().sort()
 		}
 		
 		@ $mol_mem()
-		samples( next? : string[] , prev? : string[] ) : string[] {
+		samples( next? : string[] ) : string[] {
 			const arg = $mol_state_arg.value( this.stateKey( 'sample' ) , next && next.join( '~' ) )
 			return arg ? arg.split( '~' ).sort() : []
 		}
 		
 		@ $mol_mem()
-		steps( next? : string[] , prev? : string[] ) {
+		steps( next? : string[] ) {
 			return this.commandResult<string[]>( [ 'steps' ] ) as string[]
 		}
 		
@@ -119,7 +119,7 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		menuOptionerChecked( sample : string , next? : boolean , prev? : boolean ) {
+		menuOptionerChecked( sample : string , next? : boolean ) {
 			if( next === void 0 ) return this.samples().indexOf( sample ) !== -1
 			
 			if( next ) this.samples( this.samples().concat( sample ) )
