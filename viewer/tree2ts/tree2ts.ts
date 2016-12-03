@@ -66,7 +66,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 							var v = getValue( over.childs[0] )
 							let args : string[] = []
 							if( overName[2] ) args.push( ' key : any ' )
-							if( needSet ) args.push( ' next? : any , prev? : any ' )
+							if( needSet ) args.push( ' next? : any ' )
 							overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
 							needSet = ns
 						} )
@@ -79,7 +79,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 							keys.push( opt.type )
 							var ns = needSet
 							var v = getValue( opt.childs[0] )
-							var arg = needSet ? ' next? : any , prev? : any ' : ''
+							var arg = needSet ? ' next? : any ' : ''
 							opts.push( '\t\t\t"' + opt.type + '" : (' + arg + ')=> <any> ' + v + ' ,\n' )
 							needSet = ns
 						} )
@@ -90,7 +90,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 						if( value.childs.length === 1 ) {
 							addProp( value )
 							var type = /(.*?)(?:(#)(.*))?$/.exec( value.childs[0].type )
-							return 'this.' + type[1] + '(' + ( type[3] ? JSON.stringify( type[3] ) + ' ,' : type[2] ? ' key ,' : '' ) + ' next , prev )'
+							return 'this.' + type[1] + '(' + ( type[3] ? JSON.stringify( type[3] ) + ' ,' : type[2] ? ' key ,' : '' ) + ' next )'
 						}
 					case '<' :
 						if( value.childs.length === 1 ) {
@@ -120,7 +120,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 				var propName = /(.*?)(?:(#)(.*))?$/.exec( param.type )
 				var args : string[] = []
 				if( propName[2] ) args.push( ' key : any ' )
-				if( needCache || needSet ) args.push( ' next? : any , prev? : any ' )
+				if( needCache || needSet ) args.push( ' next? : any ' )
 				if( needSet && param.childs[0].type !== '>' ) val = ( needReturn ? '( next !== void 0 ) ? next : ' : 'if( next !== void 0 ) return next\n\t\t' ) + val
 				if( needReturn ) val = 'return ' + val
 				var decl = '\t' + propName[1] +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'

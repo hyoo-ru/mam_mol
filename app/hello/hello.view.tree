@@ -1,7 +1,7 @@
 $mol_app_hello $mol_viewer
 	childs /
 		< namer $mol_stringer
-			hint < namerHint @ \Name
+			hint < namerHint \Name
 			value > name \
 		< greeter $mol_viewer
 			childs /

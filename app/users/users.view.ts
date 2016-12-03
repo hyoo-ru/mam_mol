@@ -3,17 +3,17 @@ namespace $.$mol {
 	/// GitHub users View Model
 	export class $mol_app_users extends $.$mol_app_users {
 		
-		queryArg( next? : string , prev? : string ) {
-			return $mol_state_arg.value( this.stateKey( 'query' ) , next , prev )
+		queryArg( next? : string ) {
+			return $mol_state_arg.value( this.stateKey( 'query' ) , next )
 		}
 		
 		/// Search query string synchronized with argument from URL.
 		@ $mol_mem()
-		query( next? : string , prev? : string ) : string {
+		query( next? : string ) : string {
 			if( next == null ) {
 				return this.queryArg()
 			} else {
-				this.queryArg( next , prev )
+				this.queryArg( next )
 				
 				if( this._queryTimer ) clearTimeout( this._queryTimer )
 				this._queryTimer = setTimeout( ()=> { this.query( null ) } , 500 )
@@ -53,13 +53,13 @@ namespace $.$mol {
 		
 		/// List of users loaded from server.
 		@ $mol_mem()
-		usersMaster( next? : string[] ) {
+		usersMaster( next? : string[] , force? : $mol_atom_force ) {
 			if( !this.query() ) return []
 			
 			const master = this.master()
 			
 			if( next === void 0 ) {
-				return master.json().items.map( item => item.login ) as string[]
+				return master.json( void 0 , force ).items.map( item => item.login ) as string[]
 			}
 			
 			master.json( next && { items : next.map( login => ({ login }) ) } )
@@ -75,7 +75,7 @@ namespace $.$mol {
 		
 		/// Reload data from server and discard changes.
 		eventReload( next? : Event ) {
-			this.master().refresh()
+			this.usersMaster( void 0 , $mol_atom_force )
 		}
 		
 		/// Add user with empty name at the end of list.

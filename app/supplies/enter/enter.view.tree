@@ -3,11 +3,11 @@ $mol_app_supplies_enter $mol_viewer
 	< childs / < form $mol_form
 		formFields /
 			< loginField $mol_form_field
-				name < loginLabel @ \Login
+				name < loginLabel @ \User name
 				errors < loginErrors /
 				control < loginControl $mol_stringer value > login \
 			< passwordField $mol_form_field
-				name < passwordLabel @ \Password
+				name < passwordLabel @ \Pass word
 				errors < passwordErrors /
 				control < passControl $mol_stringer
 					value > password \

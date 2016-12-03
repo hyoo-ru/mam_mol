@@ -96,7 +96,7 @@ namespace $ { export class $my_hello extends $mol_viewer {
 
 	/// name \
 	@ $mol_mem()
-	name( next? : any , prev? : any ) {
+	name( next? : any ) {
 		return ( next !== void 0 ) ? next : ""
 	}
 
@@ -244,11 +244,11 @@ namespace $ {
 		
 		// Define memoized property with push support
 		@ $mol_mem()
-		greeting( next? : string , prev? : string ) : string {
+		greeting( next? : string , force? : $mol_atom_force ) : string {
 			
 			// Defered push value to property
 			setTimeout( () => {
-				this.greeting( void 0 , 'Hello!' )
+				this.greeting( 'Hello!' , $mol_atom_force )
 			} , 1000 )
 			
 			// throw special error to notify about waiting

@@ -28,7 +28,7 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		selectedRow( next? : any , prev? : any ) {
+		selectedRow( next? : any ) {
 			this.value()
 			return ( next !== void 0 ) ? next : 0
 		}
