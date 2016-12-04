@@ -2,7 +2,7 @@ namespace $ {
 	
 	/// Creates the decorator for caching result value by json-key passed as first argument.
 	/// Method must be a polymorphic property (getter/setter/getter+setter).
-	export function $mol_mem< Host extends { objectPath() : string } , Value >(
+	export function $mol_mem< Host , Value >(
 		config? : {
 			lazy? : boolean
 		}
@@ -40,7 +40,7 @@ namespace $ {
 		
 	}
 	
-	export function $mol_mem_key< Host extends { objectPath() : string } , Key , Value >(
+	export function $mol_mem_key< Host , Key , Value >(
 		config? : {
 			lazy? : boolean
 		}
