@@ -56,10 +56,10 @@ namespace $ {
 		/// Visible child views with defined heightAvailable()
 		/// Render all by default
 		childsVisible() {
-			var childs = this.childs()
+			const childs = this.childs()
 			if( !childs ) return childs
 			
-			var context = this.contextSub()
+			const context = this.contextSub()
 			childs.forEach( child => {
 				if( child instanceof $mol_viewer ) {
 					child.context( context )
@@ -77,9 +77,9 @@ namespace $ {
 		private 'DOMNode()' : Element
 		
 		DOMNode( next? : Element ) {
-			var path = this.objectPath()
+			const path = this.objectPath()
 			
-			var next2 = next
+			let next2 = next
 			if( !next2 ) {
 				next2 = this[ 'DOMNode()' ]
 				if( next2 ) return next2
@@ -99,29 +99,29 @@ namespace $ {
 			this[ 'DOMNode()' ] = next2
 			
 			/// Set BEM-like element-attributes with inheritance support
-			var ownerProto = this.objectOwner() && Object.getPrototypeOf( this.objectOwner() )
+			const ownerProto = this.objectOwner() && Object.getPrototypeOf( this.objectOwner() )
 			if( ownerProto && ownerProto[ 'objectClassNames' ] ) {
 				const suffix = '_' + this.objectField().replace( /\(.*/ , '' )
-				for( var className of ownerProto[ 'objectClassNames' ]() ) {
-					var attrName = className.replace( /\$/g , '' ) + suffix
+				for( let className of ownerProto[ 'objectClassNames' ]() ) {
+					const attrName = className.replace( /\$/g , '' ) + suffix
 					next2.setAttribute( attrName , '' )
 					if( className === '$mol_viewer' ) break
 				}
 			}
 			
 			/// Set BEM-like block-attributes with inheritance support
-			var proto = Object.getPrototypeOf( this )
-			for( var className of proto[ 'objectClassNames' ]() ) {
+			const proto = Object.getPrototypeOf( this )
+			for( let className of proto[ 'objectClassNames' ]() ) {
 				next2.setAttribute( className.replace( /\$/g , '' ) , '' )
 				if( className === '$mol_viewer' ) break
 			}
 			
 			/// Bind properties to events
-			var events = this.event()
+			const events = this.event()
 			for( let name in events ) {
 				let handle = events[ name ]
 				next2.addEventListener( name , event => {
-					$mol_atom_task( ()=> {
+					$mol_atom_task( `${ this }.event()['${ name }']` , ()=> {
 						handle( event )
 					} ).get()
 				} )
@@ -133,12 +133,12 @@ namespace $ {
 		static renderChilds( node : Element , childs : ($mol_viewer|Node|string|number|boolean)[] ) {
 			if( childs == null ) return
 				
-			var nextNode = node.firstChild
+			let nextNode = node.firstChild
 			for( let view of childs ) {
 				
 				if( view == null ) {
 				} else if( typeof view === 'object' ) {
-					var existsNode = ( ( view instanceof $mol_viewer ) ? view.DOMNode() : view.valueOf() as Node )
+					const existsNode = ( ( view instanceof $mol_viewer ) ? view.DOMNode() : view.valueOf() as Node )
 					while( true ) {
 						if( !nextNode ) {
 							node.appendChild( existsNode )
@@ -163,7 +163,7 @@ namespace $ {
 						nextNode.nodeValue = String( view )
 						nextNode = nextNode.nextSibling
 					} else {
-						var textNode = document.createTextNode( String( view ) )
+						const textNode = document.createTextNode( String( view ) )
 						node.insertBefore( textNode , nextNode )
 					}
 				}
@@ -171,7 +171,7 @@ namespace $ {
 			}
 			
 			while( nextNode ) {
-				var currNode = nextNode
+				const currNode = nextNode
 				nextNode = currNode.nextSibling
 				node.removeChild( currNode )
 			}
@@ -213,7 +213,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		DOMTree( next? : Element ) {
+		DOMTree() {
 			let node = this.DOMNode()
 			
 			try {

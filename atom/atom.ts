@@ -22,8 +22,8 @@ namespace $ {
 		field : string
 		
 		constructor(
+			host : any ,
 			handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value ,
-			host? : { [ key : string ] : any } ,
 			field = 'value()'
 		) {
 			super()
@@ -362,9 +362,11 @@ namespace $ {
 	}
 	
 	export function $mol_atom_task< Value >(
+		host : any ,
 		handler : ()=> Value ,
 	) {
 		const atom = new $mol_atom<any>(
+			host ,
 			() => {
 				try {
 					handler()

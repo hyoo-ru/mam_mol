@@ -25,8 +25,8 @@ namespace $ {
 				var info : $mol_atom<any> = atoms[ field ]
 				if( !info ) {
 					atoms[ field ] = info = new $mol_atom(
-						value.bind( host ) as any , // FIXME: type checking
 						host ,
+						value.bind( host ) as any , // FIXME: type checking
 						field ,
 					)
 					if( config ) info.autoFresh = !config.lazy
@@ -63,8 +63,8 @@ namespace $ {
 				var info : $mol_atom<any> = atoms[ field ]
 				if( !info ) {
 					atoms[ field ] = info = new $mol_atom(
-						value.bind( host , key ) as any , // FIXME: type checking
 						host ,
+						value.bind( host , key ) as any , // FIXME: type checking
 						field ,
 					)
 					if( config ) info.autoFresh = !config.lazy
