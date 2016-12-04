@@ -46,7 +46,7 @@ namespace $ {
 				}
 				
 				host[ this.field ] = void null
-				if( host[ '$mol_atom_state' ] ) host[ '$mol_atom_state' ][ this.field ] = void null
+				host[ this.field + '@' ] = void null
 				
 				this[ 'destroyed()' ] = true
 				this.log( [ '.destroyed()' , true , 'atom' ] )
@@ -190,7 +190,7 @@ namespace $ {
 			}
 			this.status = $mol_atom_status.actual
 			this._next = void null
-			return next
+			return next as Value
 		}
 		
 		obsoleteSlaves() {
