@@ -308,7 +308,7 @@ namespace $ {
 			if( pack.exists() ) {
 				if( pack.resolve( '.git' ).exists() ) {
 					try {
-						$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
+						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
 						$mol_exec( pack.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' )
 					} catch( error ) {
 						console.error( error.message )
@@ -633,6 +633,16 @@ namespace $ {
 			
 			const ext = locale ? `locale=${ locale }.json` : `locale.json`
 			const target = pack.resolve( `-/${bundle}.${ ext }` )
+			
+			if( target.exists() ) {
+				const prevLocales = JSON.parse( target.content() )
+				for( let key in locales ) {
+					if( locales[ key ] && prevLocales[ key ] ) {
+						locales[ key ] = prevLocales[ key ]
+					}
+				}
+			}
+			
 			target.content( JSON.stringify( locales , null , '\t' ) )
 			
 			this.logBundle( target )
