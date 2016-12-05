@@ -24,14 +24,15 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 * [$mol_app_hello](app/hello) - very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
-* [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/#demo=mol_app_todomvc), [benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark), [video comparison](https://www.webpagetest.org/video/view.php?id=160515_4f193e07f4c37dc3b72dd3799dd27397551690a2))
+* [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/), [benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark), [video comparison](https://www.webpagetest.org/video/view.php?id=160515_4f193e07f4c37dc3b72dd3799dd27397551690a2))
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
 * [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
 * [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
+* [$mol_app_taxon](app/taxon) - Displays big hierarchical table from database ([online](http://eigenmethod.github.io/mol/#demo=mol_app_taxon_demo))
 
-# [Benchmarks](perf)
+# Benchmarks
 
-* [$mol_perf_render](perf/render) - simple benchmark of rendering ([online](http://eigenmethod.github.io/mol/perf/render/))
+* [$mol_app_bench](app/bench) - frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/))
 * [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)
 
 # Quick start
