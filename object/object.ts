@@ -39,9 +39,9 @@ namespace $ {
 		}
 		
 		/// Owner object.
-		private 'objectOwner()' : { objectPath() : string }
+		private 'objectOwner()' : Object
 		
-		objectOwner( next? : { objectPath() : string } ) {
+		objectOwner( next? : Object ) {
 			if( this[ 'objectOwner()' ] ) return this[ 'objectOwner()' ]
 			return this[ 'objectOwner()' ] = next
 		}
@@ -59,7 +59,7 @@ namespace $ {
 			var path = ''
 			
 			var owner = this.objectOwner()
-			if( owner ) path = owner.objectPath()
+			if( owner ) path = owner.toString()
 			
 			var field = this.objectField()
 			if( field ) path += '.' + field

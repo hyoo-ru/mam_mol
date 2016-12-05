@@ -17,21 +17,27 @@ namespace $ {
 		status = $mol_atom_status.obsolete
 		autoFresh = true
 		
-		'value()' = <Value> void 0
+		handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value
+		host : { [ key : string ] : any }
+		field : string
 		
 		constructor(
-			public handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value ,
-			public host? : { objectPath() : string , [ key : string ] : any } ,
-			public field = 'value()'
+			host : any ,
+			handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value ,
+			field = 'value()'
 		) {
 			super()
+			
+			this.handler = handler
+			this.host = Object( host )
+			this.field = field || 'value()'
 		}
 		
 		destroyed( next? : boolean ) {
 			if( next ) {
 				this.unlink()
 				
-				const host = this.host || this
+				const host = this.host
 				const value = host[ this.field ]
 				if( value instanceof $mol_object ) {
 					if( ( value.objectOwner() === host ) && ( value.objectField() === this.field ) ) {
@@ -39,10 +45,8 @@ namespace $ {
 					}
 				}
 				
-				if( this.host ) {
-					host[ this.field ] = void 0
-					host[ '$mol_atom_state' ][ this.field ] = void 0
-				}
+				host[ this.field ] = void null
+				host[ this.field + '@' ] = void null
 				
 				this[ 'destroyed()' ] = true
 				this.log( [ '.destroyed()' , true , 'atom' ] )
@@ -59,12 +63,12 @@ namespace $ {
 		}
 		
 		objectPath() {
-			return this.host ? this.host.objectPath() + '.' + this.field : this.field
+			return `${ this.host }.${ this.field }`
 		}
 		
 		get( force? : $mol_atom_force ) {
 			if( this.status === $mol_atom_status.pulling ) {
-				throw new Error( `Cyclic atom dependency of ${ this.objectPath() }` )
+				throw new Error( `Cyclic atom dependency of ${ this }` )
 			}
 			
 			this.actualize( force )
@@ -73,7 +77,7 @@ namespace $ {
 			if( slave ) this.lead( slave )
 			if( slave ) slave.obey( this )
 			
-			const value : Value = ( this.host || this )[ this.field ]
+			const value : Value = this.host[ this.field ]
 			
 			if( value instanceof Error ) {
 				if( typeof Proxy !== 'function' ) throw value
@@ -128,7 +132,6 @@ namespace $ {
 		}
 		
 		pull( force? : $mol_atom_force ) {
-			const host = this.host || this
 			try {
 				return this.handler( this._next , force )
 			} catch( error ) {
@@ -156,9 +159,9 @@ namespace $ {
 		}
 		
 		push( next : Value|Error ) {
-			const host = this.host || this
+			const host = this.host
 			const prev = host[ this.field ]
-			if( next === void 0 ) next = prev
+			if( next === void null ) next = prev
 			comparing: if( ( next !== prev ) && ( next instanceof Array ) && ( prev instanceof Array ) && ( next.length === prev.length ) ) {
 				for( let i = 0 ; i < next[ 'length' ] ; ++i ) {
 					if( next[ i ] !== prev[ i ] ) break comparing
@@ -186,8 +189,8 @@ namespace $ {
 				this.obsoleteSlaves()
 			}
 			this.status = $mol_atom_status.actual
-			this._next = void 0
-			return next
+			this._next = void null
+			return next as Value
 		}
 		
 		obsoleteSlaves() {
@@ -206,7 +209,7 @@ namespace $ {
 		
 		check() {
 			//if( this.status === $mol_atom_status.pulling ) {
-			//	throw new Error( `May be obsolated while pulling ${ this.objectPath() }` )
+			//	throw new Error( `May be obsolated while pulling ${ this }` )
 			//}
 			
 			if( this.status === $mol_atom_status.actual ) {
@@ -221,7 +224,7 @@ namespace $ {
 			if( this.status === $mol_atom_status.obsolete ) return
 			
 			//if( this.status === $mol_atom_status.pulling ) {
-			//	throw new Error( `Obsolated while pulling ${ this.objectPath() }` )
+			//	throw new Error( `Obsolated while pulling ${ this }` )
 			//} 
 			
 			this.log( [ 'obsolete' ] )
@@ -230,7 +233,7 @@ namespace $ {
 			
 			this.checkSlaves()
 			
-			return void 0
+			return void null
 		}
 		
 		lead( slave : $mol_atom<any> ) {
@@ -271,7 +274,7 @@ namespace $ {
 		}
 		
 		value( next? : Value , force? : $mol_atom_force ) {
-			if( next === void 0 ) {
+			if( next === void null ) {
 				return this.get( force )
 			} else {
 				if( force ) {
@@ -359,9 +362,11 @@ namespace $ {
 	}
 	
 	export function $mol_atom_task< Value >(
+		host : any ,
 		handler : ()=> Value ,
 	) {
 		const atom = new $mol_atom<any>(
+			host ,
 			() => {
 				try {
 					handler()
