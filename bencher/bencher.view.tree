@@ -17,3 +17,4 @@ $mol_bencher $mol_grider
 
 $mol_bencher_header $mol_floater
 	event * click > eventClick null
+	attr * title < hint @ \Click to sort by this column
