@@ -51,8 +51,23 @@ namespace $.$mol {
 			throw new $mol_atom_wait( `Running ${ command }...` )
 		}
 		
+		meta() {
+			type meta = {
+				title : { [ lang : string ] : string }
+				descr : { [ lang : string ] : string }
+				samples : { [ step : string ] : {
+					title : { [ lang : string ] : string }
+				} }
+				steps : { [ step : string ] : {
+					title : { [ lang : string ] : string }
+				} }
+			}
+			return this.commandResult< meta >( [ 'meta' ] )
+		}
+		
+		@ $mol_mem()
 		samplesAll( next? : string[] ) {
-			return this.commandResult<string[]>( [ 'samples' ] ).slice().sort()
+			return Object.keys( this.meta().samples ).sort()
 		}
 		
 		@ $mol_mem()
@@ -63,7 +78,19 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		steps( next? : string[] ) {
-			return this.commandResult<string[]>( [ 'steps' ] ) as string[]
+			return Object.keys( this.meta().steps )
+		}
+		
+		@ $mol_mem()
+		title() {
+			const title = this.meta().title 
+			return title[ $mol_locale.lang() ] || title[ 'en' ] || super.title()
+		}
+		
+		@ $mol_mem()
+		description() {
+			const descr = this.meta().descr
+			return descr[ $mol_locale.lang() ] || descr[ 'en' ] || ''
 		}
 		
 		@ $mol_mem_key()

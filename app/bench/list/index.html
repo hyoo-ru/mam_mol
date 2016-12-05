@@ -17,103 +17,82 @@
 		border: none;
 		flex: 1 0 50%;
 	}
-	
-	#descr {
-		flex: 0 1 40rem;
-		padding: .5rem;
-	}
-
-	#descr h1 {
-		margin: 0;
-		padding: .5rem;
-		font-size: 2em;
-		font-weight: normal;
-	}
-
-	#descr p {
-		margin: 0;
-		padding: .5rem;
-	}
-
-	#descr dl {
-		display: table-row;
-	}
-	
-	#descr dl > * {
-		display: table-cell;
-		padding: .5rem;
-	}
-
-	#descr dt {
-		font-weight: bolder;
-	}
-	
-	#descr b {
-		font-weight: bolder;
-		display: inline-block;
-	}
 </style>
-
-<div id="descr">
-	
-	<h1>List rendering</h1>
-	<p>
-		Sample applications outputs list of blocks with title and content.
-		Blocks has <b>variable height</b>.
-		Block can <b>selected by clicking</b> on them.
-		Dataset has <b>2000 items</b>.
-	</p>
-	
-	<h1>Steps</h1>
-	<dl>
-		<dt>start</dt>
-		<dd>Time from url changing to loading complete.</dd>
-	</dl>
-	<dl>
-		<dt>fill</dt>
-		<dd>Time from receiving full dataset to rendering complete.</dd>
-	</dl>
-	<dl>
-		<dt>update</dt>
-		<dd>Time from receiving new full dataset to rerendering complete.</dd>
-	</dl>
-	
-	<h1>Results</h1>
-	<p>Lower is better.</p>
-
-</div>
 
 <iframe id="sandbox"></iframe>
 
 <script>
 	
-	var sandbox = document.getElementById( 'sandbox' )
-	
-	var samples = [ 'mol' , 'react-15-3-2' , 'angular-1-5-5' , 'alight-0-12' ]
-	var weights = {
-		'alight-0-12' : '22.1 KB' ,
-		'angular-1-5-5' : '55.4 KB' ,
-		'mol' : '19.2 KB' ,
-		'react-15-3-2' : '45.6 KB' ,
-	}
+	var size = 2000
 
-	var steps = [ 'start' , 'fill' , 'update' , 'weight' ]
-	
 	var items = {
-		fill : getItems( 2000 ) ,
-		update : getItems( 2000 )
+		fill : getItems( size ) ,
+		update : getItems( size )
 	}
-	
-	var handlers = {
-		
-		'samples' : function( ) {
-			done( samples )
-		} ,
-		
-		'steps' : function( ) {
-			done( steps )
-		} ,
 
+	var meta = {
+		title : {
+			'en' : 'List rendering benchmark' ,
+			'ru' : 'Производительность вывода больших объёмов данных' ,
+		} ,
+		descr : {
+			'en' : 'Sample applications outputs list of blocks with title and content. Blocks has **variable height**. Block **can selected** by clicking on them. Dataset has **' + size + ' items**.' ,
+			'ru' : 'Варианты приложений выводят списки для данных из **' + size + ' элементов**. Каждый выводимый блок имеет заголовок и **контент переменной высоты**. При щелчке по блоку - **он выделяется**.' ,
+		} ,
+		samples : {
+			'mol' : {
+				title : { 'en' : '$mol' } ,
+				weight : '19.2 KB' ,
+			} ,
+			'react-15-3-2' : {
+				title : { 'en' : 'ReactJS 15.3.2' } ,
+				weight : '45.6 KB' ,
+			} ,
+			'angular-1-5-5' : {
+				title : { 'en' : 'AngularJS 1.5.5' } ,
+				weight : '55.4 KB' ,
+			} ,
+			'alight-0-12' : {
+				title : { 'en' : 'ALight 0.12' } ,
+				weight : '22.1 KB' ,
+			} ,
+		} ,
+		steps : {
+			'start' : {
+				title : {
+					'en' : 'Load and init' ,
+					'ru' : 'Загрузка и запуск' ,
+				} ,
+			} ,
+			'weight' : {
+				title : {
+					'en' : 'Size of app' ,
+					'ru' : 'Размер приложения' ,
+				} ,
+			} ,
+			'fill' : {
+				title : {
+					'en' : 'Data filling' ,
+					'ru' : 'Заполнение данными' ,
+				} ,
+			} ,
+			'update' : {
+				title : {
+					'en' : 'Data updating' ,
+					'ru' : 'Обновление данных' ,
+				} ,
+			} ,
+		} ,
+	}
+
+	var sandbox = document.getElementById( 'sandbox' )
+
+	var handlers = {
+
+		'meta' : function() {
+			done( meta )
+		} ,
+		
 		'start' : function( sample ) {
 			var start = Date.now()
 			sandbox.src = sample
@@ -124,7 +103,7 @@
 		} ,
 
 		'weight' : function( sample ) {
-			done( weights[ sample ] || Number.POSITIVE_INFINITY )
+			done( meta.samples[ sample ].weight || Number.POSITIVE_INFINITY )
 		} ,
 		
 		'fill' : function( sample ) {

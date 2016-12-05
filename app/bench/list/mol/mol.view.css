@@ -11,6 +11,7 @@
 
 [mol_app_bench_list_mol_rower] {
 	padding: .5rem;
+	cursor: pointer;
 }
 
 [mol_app_bench_list_mol_rower_selected] {
