@@ -135,8 +135,10 @@
 			var start = Date.now()
 			requestAnimationFrame( function() { // wait for message processed
 				setTimeout( function() { // wait for painting completed
-					done( Date.now() - start + ' ms' )
-//					console.timeStamp( 'end ' + command )
+					requestAnimationFrame( function() { // For IE :(
+						done( Date.now() - start + ' ms' )
+//						console.timeStamp( 'end ' + command )
+					} )
 				} )
 			} )
 		} )
