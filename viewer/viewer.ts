@@ -223,7 +223,10 @@ namespace $ {
 				
 				return node
 			} catch( error ) {
-				node.setAttribute( 'mol_viewer_error' , error.name )
+				if( !error['$mol_viewer_catched'] ) {
+					node.setAttribute( 'mol_viewer_error' , error.name )
+					error['$mol_viewer_catched'] = true
+				}
 				throw error
 			}
 		}

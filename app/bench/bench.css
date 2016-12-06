@@ -50,6 +50,6 @@
 [mol_app_bench_descriptioner] {
 	margin: .5rem;
 	padding: .5rem 1rem;
-	flex: 1 1 15em;
+	flex: 1 1 100%;
 	max-width: 40em;
 }
