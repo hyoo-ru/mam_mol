@@ -104,7 +104,7 @@ namespace $ {
 				const suffix = '_' + this.objectField().replace( /\(.*/ , '' )
 				for( let className of ownerProto[ 'objectClassNames' ]() ) {
 					const attrName = className.replace( /\$/g , '' ) + suffix
-					next2.setAttribute( attrName.toLowerCase() , '' )
+					next2.setAttribute( attrName , '' )
 					if( className === '$mol_viewer' ) break
 				}
 			}
@@ -112,7 +112,7 @@ namespace $ {
 			/// Set BEM-like block-attributes with inheritance support
 			const proto = Object.getPrototypeOf( this )
 			for( let className of proto[ 'objectClassNames' ]() ) {
-				next2.setAttribute( className.replace( /\$/g , '' ).toLowerCase() , '' )
+				next2.setAttribute( className.replace( /\$/g , '' ) , '' )
 				if( className === '$mol_viewer' ) break
 			}
 			
