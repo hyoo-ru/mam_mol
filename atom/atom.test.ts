@@ -4,7 +4,7 @@ module $ {
 		
 		'caching'() {
 			
-			let random = new $mol_atom( ()=> Math.random() )
+			let random = new $mol_atom( 'random' , ()=> Math.random() )
 			
 			$mol_assert_equal( random.get() , random.get() )
 			
@@ -13,7 +13,7 @@ module $ {
 		'lazyness'() {
 			
 			let value = 0
-			let prop = new $mol_atom( ()=> value = 1 )
+			let prop = new $mol_atom( 'prop' , ()=> value = 1 )
 			
 			$mol_defer.run()
 			
@@ -23,9 +23,9 @@ module $ {
 		
 		'instant actualization'() {
 			
-			let source = new $mol_atom( ( next? : number )=> next || 1 )
-			let middle = new $mol_atom( ()=> source.get() + 1 )
-			let target = new $mol_atom( ()=> middle.get() + 1 )
+			let source = new $mol_atom( 'source' , ( next? : number )=> next || 1 )
+			let middle = new $mol_atom( 'middle' , ()=> source.get() + 1 )
+			let target = new $mol_atom( 'target' , ()=> middle.get() + 1 )
 			
 			$mol_assert_equal( target.get() , 3 )
 			
@@ -39,9 +39,9 @@ module $ {
 			
 			let targetValue : number
 			
-			let source = new $mol_atom( ( next? : number )=> next || 1 )
-			let middle = new $mol_atom( ()=> source.get() + 1 )
-			let target = new $mol_atom( ()=> targetValue = middle.get() + 1 )
+			let source = new $mol_atom( 'source' , ( next? : number )=> next || 1 )
+			let middle = new $mol_atom( 'middle' , ()=> source.get() + 1 )
+			let target = new $mol_atom( 'target' , ()=> targetValue = middle.get() + 1 )
 			
 			target.get()
 			$mol_assert_equal( targetValue , 3 )
