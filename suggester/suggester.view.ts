@@ -61,6 +61,10 @@ namespace $.$mol {
 			
 		}
 		
+		focused() {
+			return $mol_viewer_selection.focused().indexOf( this.DOMNode() ) !== -1
+		}
+		
 		selected( index : number ) {
 			return index === ( this.selectedRow() - 1 )
 		}

@@ -241,10 +241,6 @@ namespace $ {
 		
 		event() : { [ key : string ] : ( event : Event )=> void } { return {} }
 		
-		focused() {
-			return $mol_viewer_selection.focused().indexOf( this.DOMNode() ) !== -1
-		}
-		
 		localizationContexts() {
 			return Object.getPrototypeOf( this ).objectClassNames()
 		}
