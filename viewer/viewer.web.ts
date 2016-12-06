@@ -12,7 +12,7 @@ namespace $ {
 		for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
 			let view = (<any>$)[ nodes.item( i ).getAttribute( 'mol_viewer_root' ) ].root( i )
 			view.DOMNode( nodes.item( i ) )
-			let win = new $mol_atom( ()=> {
+			let win = new $mol_atom( `$mol_viewer.root(${ i })` , ()=> {
 				view.DOMTree()
 				document.title = view.title()
 				return null

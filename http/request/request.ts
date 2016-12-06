@@ -49,11 +49,12 @@ namespace $ {
 			const creds = this.credentials()
 			const native = this.native()
 			const method = ( next === void 0 ) ? 'Get' : this.method()
+			const uri = this.uri()
 			
-			native.open( method , this.uri() , true , creds && creds.login , creds && creds.password )
+			native.open( method , uri , true , creds && creds.login , creds && creds.password )
 			native.send( next )
 			
-			throw new $mol_atom_wait( `${this.method()} ${this.uri()}` )
+			throw new $mol_atom_wait( `${ method } ${ uri }` )
 		}
 		
 		text( next? : string , force? : $mol_atom_force ) : string {

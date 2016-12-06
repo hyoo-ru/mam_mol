@@ -9,13 +9,14 @@
 		padding: 0;
 		width: 100%;
 		height: 100%;
-		display: flex;
+		overflow: hidden;
 		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
 	}
 	
 	#sandbox {
 		border: none;
-		flex: 1 0 50%;
+		width: 100%;
+		height: 100%;
 	}
 </style>
 
@@ -23,7 +24,7 @@
 
 <script>
 	
-	var size = 2000
+	var size = 1000
 
 	var items = {
 		fill : getItems( size ) ,
@@ -33,11 +34,11 @@
 	var meta = {
 		title : {
 			'en' : 'List rendering benchmark' ,
-			'ru' : 'Производительность вывода больших объёмов данных' ,
+			'ru' : 'Время вывода значительных объёмов данных в WEB приложениях' ,
 		} ,
 		descr : {
 			'en' : 'Sample applications outputs list of blocks with title and content. Blocks has **variable height**. Block **can selected** by clicking on them. Dataset has **' + size + ' items**.' ,
-			'ru' : 'Варианты приложений выводят списки для данных из **' + size + ' элементов**. Каждый выводимый блок имеет заголовок и **контент переменной высоты**. При щелчке по блоку - **он выделяется**.' ,
+			'ru' : 'Минимальное время визуализации данных на экране пользователя - важнейший параметр для современных WEB приложений. Реализованные примеры визуализируют для пользователя одинаковый объём данных, состоящий из списка в **' + size + ' элементов**. Представляется элемент данных в виде блока **переменной высоты**, содержащего заголовок с порядковым номером и текст. Каждый блок имеет обработчик действий пользователя, который **выделяет блок при нажатии** на него.' ,
 		} ,
 		samples : {
 			'mol' : {
@@ -129,13 +130,15 @@
 	function measure( message ) {
 		requestAnimationFrame( function() { // begin at next frame start for measure stability reason
 			var command = JSON.stringify( message )
-			console.timeStamp( 'begin ' + command )
+//			console.timeStamp( 'begin ' + command )
 			sandbox.contentWindow.postMessage( message , '*' )
 			var start = Date.now()
 			requestAnimationFrame( function() { // wait for message processed
 				setTimeout( function() { // wait for painting completed
-					done( Date.now() - start + ' ms' )
-					console.timeStamp( 'end ' + command )
+					requestAnimationFrame( function() { // For IE :(
+						done( Date.now() - start + ' ms' )
+//						console.timeStamp( 'end ' + command )
+					} )
 				} )
 			} )
 		} )

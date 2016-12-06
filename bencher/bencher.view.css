@@ -14,9 +14,8 @@
 	width: 5vw;
 }
 
-[mol_bencher_columnHeaderSorter] {
-	vertical-align: middle;
-	margin-left: .5rem;
+[mol_bencher_columnHeader] > * {
+	margin: 0 .5rem;
 }
 
 [mol_bencher_header] + [mol_bencher_rower] [mol_portioner_indicator] {

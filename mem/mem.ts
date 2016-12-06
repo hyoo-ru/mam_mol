@@ -2,7 +2,7 @@ namespace $ {
 	
 	/// Creates the decorator for caching result value by json-key passed as first argument.
 	/// Method must be a polymorphic property (getter/setter/getter+setter).
-	export function $mol_mem< Host extends { objectPath() : string } , Value >(
+	export function $mol_mem< Host , Value >(
 		config? : {
 			lazy? : boolean
 		}
@@ -13,26 +13,24 @@ namespace $ {
 			name : string ,
 			descr : TypedPropertyDescriptor< ( next? : Value , force? : $mol_atom_force )=> Value >
 		) {
-			var value = descr.value
+			const value = descr.value
 			
 			descr.value = function( next? : Value , force? : $mol_atom_force ) {
-				var host : Host = this
-				var field = name + "()"
+				const host : any = this
+				const field = name + "()"
+				const fieldA = field + '@'
 				
-				var atoms = (<any>host)[ '$mol_atom_state' ]
-				if( !atoms ) atoms = (<any>host)[ '$mol_atom_state' ] = {}
-				
-				var info : $mol_atom<any> = atoms[ field ]
-				if( !info ) {
-					atoms[ field ] = info = new $mol_atom(
-						value.bind( host ) as any , // FIXME: type checking
+				let atom : $mol_atom<Value> = host[ fieldA ]
+				if( !atom ) {
+					host[ fieldA ] = atom = new $mol_atom<Value>(
 						host ,
+						value.bind( host ) as any , // FIXME: type checking
 						field ,
 					)
-					if( config ) info.autoFresh = !config.lazy
+					if( config ) atom.autoFresh = !config.lazy
 				}
 				
-				return info.value( next , force )
+				return atom.value( next , force )
 			}
 			
 			void( (<any>descr.value)[ 'value' ] = value )
@@ -40,7 +38,7 @@ namespace $ {
 		
 	}
 	
-	export function $mol_mem_key< Host extends { objectPath() : string } , Key , Value >(
+	export function $mol_mem_key< Host , Key , Value >(
 		config? : {
 			lazy? : boolean
 		}
@@ -54,23 +52,21 @@ namespace $ {
 			const value = descr.value
 
 			descr.value = function( key : Key , next? : Value , force? : $mol_atom_force ) {
-				var host : Host = this
-				var field = name + "(" + JSON.stringify( key ) + ")"
+				const host : any = this
+				const field = name + "(" + JSON.stringify( key ) + ")"
+				const fieldA = field + '@'
 				
-				var atoms = (<any>host)[ '$mol_atom_state' ]
-				if( !atoms ) atoms = (<any>host)[ '$mol_atom_state' ] = {}
-				
-				var info : $mol_atom<any> = atoms[ field ]
-				if( !info ) {
-					atoms[ field ] = info = new $mol_atom(
-						value.bind( host , key ) as any , // FIXME: type checking
+				let atom : $mol_atom<Value> = host[ fieldA ]
+				if( !atom ) {
+					host[ fieldA ] = atom = new $mol_atom<Value>(
 						host ,
+						value.bind( host , key ) as any , // FIXME: type checking
 						field ,
 					)
-					if( config ) info.autoFresh = !config.lazy
+					if( config ) atom.autoFresh = !config.lazy
 				}
 				
-				return info.value( next , force )
+				return atom.value( next , force )
 			}
 			
 			void( (<any>descr.value)[ 'value' ] = value )
