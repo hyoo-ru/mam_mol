@@ -117,6 +117,12 @@ namespace $.$mol {
 			return results
 		}
 		
+		columnHeaderLabel( col : string ) {
+			if( col === 'sample' ) return [ this.columnHeaderLabelSample() ]
+			const title = this.meta().steps[ col ].title
+			return [ title[ $mol_locale.lang() ] || title[ 'en' ] ]
+		}
+		
 		@ $mol_mem()
 		resultsColSort( next? : string ) {
 			return $mol_state_arg.value( this.stateKey( 'sort' ) , next )

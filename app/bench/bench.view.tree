@@ -5,6 +5,7 @@ $mol_app_bench $mol_stacker
 		body /
 			< resulter $mol_bencher
 				results < results null
+				columnHeaderLabel# < columnHeaderLabel# / 
 				colSort > resultsColSort \
 			< descriptioner $mol_texter
 				text < description \
@@ -16,6 +17,7 @@ $mol_app_bench $mol_stacker
 		heightMinimal 36
 		checked > menuOptionerChecked# false
 		label / < menuOptionerTitle# \
+	columnHeaderLabelSample @ \Sample
 
 $mol_app_bench_mainer $mol_pager
 	childs /

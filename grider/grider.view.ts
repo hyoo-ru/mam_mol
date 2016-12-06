@@ -73,7 +73,7 @@ namespace $.$mol {
 		}
 		
 		celler( id : { row : string , col : string } ) : $mol_viewer {
-			switch( this.colType( id.col ) ) {
+			switch( this.colType( id.col ).valueOf() ) {
 				case 'branch' : return this.cellerBranch( id )
 				case 'number' : return this.cellerNumber( id )
 			}
