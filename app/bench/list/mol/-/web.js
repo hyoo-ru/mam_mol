@@ -2750,7 +2750,7 @@ var $;
                 return 'text';
             };
             $mol_grider.prototype.celler = function (id) {
-                switch (this.colType(id.col)) {
+                switch (this.colType(id.col).valueOf()) {
                     case 'branch': return this.cellerBranch(id);
                     case 'number': return this.cellerNumber(id);
                 }
@@ -3886,6 +3886,9 @@ var $;
         $mol_app_bench.prototype.results = function () {
             return null;
         };
+        $mol_app_bench.prototype.columnHeaderLabel = function (key) {
+            return [];
+        };
         $mol_app_bench.prototype.resultsColSort = function (next) {
             return (next !== void 0) ? next : "";
         };
@@ -3893,6 +3896,7 @@ var $;
             var _this = this;
             return new $.$mol_bencher().setup(function (obj) {
                 obj.results = function () { return _this.results(); };
+                obj.columnHeaderLabel = function (key) { return _this.columnHeaderLabel(key); };
                 obj.colSort = function (next) { return _this.resultsColSort(next); };
             });
         };
@@ -3951,6 +3955,9 @@ var $;
                 obj.checked = function (next) { return _this.menuOptionerChecked(key, next); };
                 obj.label = function () { return [].concat(_this.menuOptionerTitle(key)); };
             });
+        };
+        $mol_app_bench.prototype.columnHeaderLabelSample = function () {
+            return this.localizedText("columnHeaderLabelSample");
         };
         __decorate([
             $.$mol_mem()
@@ -4110,6 +4117,12 @@ var $;
                     results[sample] = _this.resultsSample(sample);
                 });
                 return results;
+            };
+            $mol_app_bench.prototype.columnHeaderLabel = function (col) {
+                if (col === 'sample')
+                    return [this.columnHeaderLabelSample()];
+                var title = this.meta().steps[col].title;
+                return [title[$.$mol_locale.lang()] || title['en']];
             };
             $mol_app_bench.prototype.resultsColSort = function (next) {
                 return $.$mol_state_arg.value(this.stateKey('sort'), next);
