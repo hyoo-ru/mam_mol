@@ -9,13 +9,14 @@
 		padding: 0;
 		width: 100%;
 		height: 100%;
-		display: flex;
+		overflow: hidden;
 		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
 	}
 	
 	#sandbox {
 		border: none;
-		flex: 1 0 50%;
+		width: 100%;
+		height: 100%;
 	}
 </style>
 
@@ -23,7 +24,7 @@
 
 <script>
 	
-	var size = 2000
+	var size = 1000
 
 	var items = {
 		fill : getItems( size ) ,
@@ -129,13 +130,13 @@
 	function measure( message ) {
 		requestAnimationFrame( function() { // begin at next frame start for measure stability reason
 			var command = JSON.stringify( message )
-			console.timeStamp( 'begin ' + command )
+//			console.timeStamp( 'begin ' + command )
 			sandbox.contentWindow.postMessage( message , '*' )
 			var start = Date.now()
 			requestAnimationFrame( function() { // wait for message processed
 				setTimeout( function() { // wait for painting completed
 					done( Date.now() - start + ' ms' )
-					console.timeStamp( 'end ' + command )
+//					console.timeStamp( 'end ' + command )
 				} )
 			} )
 		} )
