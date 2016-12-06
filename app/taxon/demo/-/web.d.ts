@@ -116,7 +116,7 @@ declare namespace $ {
         actual,
     }
     class $mol_atom<Value> extends $mol_object {
-        handler: (next?: Value | Error, prev?: Value | Error) => Value;
+        handler: (next?: Value | Error, force?: $mol_atom_force) => Value;
         host: {
             objectPath(): string;
             [key: string]: any;
@@ -127,18 +127,18 @@ declare namespace $ {
         status: $mol_atom_status;
         autoFresh: boolean;
         'value()': Value;
-        constructor(handler: (next?: Value | Error, prev?: Value | Error) => Value, host?: {
+        constructor(handler: (next?: Value | Error, force?: $mol_atom_force) => Value, host?: {
             objectPath(): string;
             [key: string]: any;
         }, field?: string);
         destroyed(next?: boolean): boolean;
         unlink(): void;
         objectPath(): string;
-        get(): Value;
-        actualize(): void;
-        pull(): any;
+        get(force?: $mol_atom_force): Value;
+        actualize(force?: $mol_atom_force): void;
+        pull(force?: $mol_atom_force): any;
         _next: Value;
-        set(next: Value, prev?: Value | Error): Value;
+        set(next: Value): Value;
         push(next: Value | Error): Error | Value;
         obsoleteSlaves(): void;
         checkSlaves(): void;
@@ -149,7 +149,7 @@ declare namespace $ {
         obey(master: $mol_atom<any>): void;
         disobey(master: $mol_atom<any>): void;
         disobeyAll(): void;
-        value(next?: Value, prev?: Value): Error | Value;
+        value(next?: Value, force?: $mol_atom_force): Error | Value;
         static stack: $mol_atom<any>[];
         static updating: $mol_atom<any>[];
         static reaping: $mol_set<$mol_atom<any>>;
@@ -165,6 +165,10 @@ declare namespace $ {
         name: string;
         constructor(message?: string);
     }
+    class $mol_atom_force extends Object {
+        $mol_atom_force: boolean;
+        static $mol_atom_force: boolean;
+    }
     function $mol_atom_task<Value>(handler: () => Value): $mol_atom<any>;
 }
 declare namespace $ {
@@ -172,12 +176,12 @@ declare namespace $ {
         objectPath(): string;
     }, Value>(config?: {
         lazy?: boolean;
-    }): (obj: Host, name: string, descr: TypedPropertyDescriptor<(next?: Value, prev?: Value) => Value>) => void;
+    }): (obj: Host, name: string, descr: TypedPropertyDescriptor<(next?: Value, force?: $mol_atom_force) => Value>) => void;
     function $mol_mem_key<Host extends {
         objectPath(): string;
     }, Key, Value>(config?: {
         lazy?: boolean;
-    }): (obj: Host, name: string, descr: TypedPropertyDescriptor<(key: Key, next?: Value, prev?: Value) => Value>) => void;
+    }): (obj: Host, name: string, descr: TypedPropertyDescriptor<(key: Key, next?: Value, force?: $mol_atom_force) => Value>) => void;
 }
 declare namespace $ {
     class $mol_window extends $mol_object {
@@ -193,9 +197,35 @@ declare namespace $ {
 declare var localStorage: Storage;
 declare namespace $ {
     class $mol_state_local<Value> extends $mol_object {
-        static value<Value>(key: string, next?: Value, prev?: Value): any;
+        static value<Value>(key: string, next?: Value, force?: $mol_atom_force): any;
         prefix(): string;
         value(key: string, next?: Value): any;
+    }
+}
+declare namespace $ {
+}
+declare namespace $ {
+    class $mol_state_arg<Value> extends $mol_object {
+        prefix: string;
+        static href(next?: string): string;
+        static dict(next?: {
+            [key: string]: string;
+        }): {
+            [key: string]: string;
+        };
+        static value(key: string, next?: string): string;
+        static link(next: {
+            [key: string]: string;
+        }): string;
+        static make(next: {
+            [key: string]: string;
+        }): string;
+        constructor(prefix?: string);
+        value(key: string, next?: string): string;
+        sub(postfix: string): $mol_state_arg<{}>;
+        link(next: {
+            [key: string]: string;
+        }): string;
     }
 }
 declare namespace $ {
@@ -210,8 +240,8 @@ declare namespace $ {
         'native()': XMLHttpRequest;
         native(): XMLHttpRequest;
         destroyed(next?: boolean): boolean;
-        response(next?: any, prev?: any): any;
-        text(next?: string): string;
+        response(next?: any, force?: $mol_atom_force): any;
+        text(next?: string, force?: $mol_atom_force): string;
     }
 }
 declare namespace $ {
@@ -225,13 +255,12 @@ declare namespace $ {
             login?: string;
             password?: string;
         };
-        request(fresh?: boolean): $mol_http_request;
-        text(next?: string, prev?: string): string;
-        refresh(): void;
+        request(): $mol_http_request;
+        text(next?: string, force?: $mol_atom_force): string;
     }
     class $mol_http_resource_json<Content> extends $mol_http_resource {
         static item<Content>(uri: string): $mol_http_resource_json<Content>;
-        json(next?: Content, prev?: Content): Content;
+        json(next?: Content, force?: $mol_atom_force): Content;
     }
 }
 declare namespace $ {
@@ -303,29 +332,29 @@ declare namespace $ {
 declare namespace $ {
     class $mol_scroller extends $mol_viewer {
         heightMinimal(): number;
-        scrollTop(next?: any, prev?: any): any;
-        scrollLeft(next?: any, prev?: any): any;
+        scrollTop(next?: any): any;
+        scrollLeft(next?: any): any;
         field(): {
             [key: string]: (next?: any) => any;
         } & {
-            "scrollTop": (next?: any, prev?: any) => any;
-            "scrollLeft": (next?: any, prev?: any) => any;
+            "scrollTop": (next?: any) => any;
+            "scrollLeft": (next?: any) => any;
         };
-        eventScroll(next?: any, prev?: any): any;
+        eventScroll(next?: any): any;
         event(): {
             [key: string]: (event: Event) => void;
         } & {
-            "scroll": (next?: any, prev?: any) => any;
-            "overflow": (next?: any, prev?: any) => any;
-            "underflow": (next?: any, prev?: any) => any;
+            "scroll": (next?: any) => any;
+            "overflow": (next?: any) => any;
+            "underflow": (next?: any) => any;
         };
     }
 }
 declare namespace $ {
     class $mol_state_session<Value> extends $mol_object {
-        static value<Value>(key: string, next?: Value, prev?: Value): Value;
+        static value<Value>(key: string, next?: Value): Value;
         prefix(): string;
-        value(key: string, next?: Value, prev?: Value): any;
+        value(key: string, next?: Value): Value;
     }
 }
 declare namespace $ {
@@ -348,13 +377,13 @@ declare namespace $.$mol {
 }
 declare namespace $ {
     class $mol_pager extends $mol_viewer {
-        titler(next?: any, prev?: any): $mol_viewer;
+        titler(next?: any): $mol_viewer;
         head(): any[];
-        header(next?: any, prev?: any): $mol_viewer;
+        header(next?: any): $mol_viewer;
         body(): any[];
-        bodier(next?: any, prev?: any): $mol_scroller;
+        bodier(next?: any): $mol_scroller;
         foot(): any[];
-        footer(next?: any, prev?: any): $mol_viewer;
+        footer(next?: any): $mol_viewer;
         childs(): any[];
     }
 }
@@ -384,12 +413,12 @@ declare namespace $ {
     class $mol_clicker extends $mol_viewer {
         tagName(): string;
         enabled(): boolean;
-        eventClick(next?: any, prev?: any): any;
-        eventActivate(next?: any, prev?: any): any;
+        eventClick(next?: any): any;
+        eventActivate(next?: any): any;
         event(): {
             [key: string]: (event: Event) => void;
         } & {
-            "click": (next?: any, prev?: any) => any;
+            "click": (next?: any) => any;
         };
         disabled(): boolean;
         attr(): {
@@ -424,18 +453,18 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_checker extends $mol_clicker {
-        checked(next?: any, prev?: any): any;
+        checked(next?: any): any;
         attr(): {
             [key: string]: () => string | number | boolean;
         } & {
             "disabled": () => any;
             "tabindex": () => any;
         } & {
-            "mol_checker_checked": (next?: any, prev?: any) => any;
+            "mol_checker_checked": (next?: any) => any;
         };
         icon(): any;
         label(): any[];
-        labeler(next?: any, prev?: any): $mol_viewer;
+        labeler(next?: any): $mol_viewer;
         childs(): any[];
     }
 }
@@ -470,7 +499,7 @@ declare namespace $ {
             "viewBox": () => any;
         };
         path(): string;
-        pather(next?: any, prev?: any): $mol_svg_path;
+        pather(next?: any): $mol_svg_path;
         childs(): any[];
     }
 }
@@ -481,13 +510,14 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_checker_expander extends $mol_checker {
-        icon(next?: any, prev?: any): $mol_icon_chevron;
+        icon(next?: any): $mol_icon_chevron;
     }
 }
 declare namespace $ {
     class $mol_grider extends $mol_viewer {
         tagName(): string;
         rows(): any[];
+        row(key: any): any;
         cols(): any[];
         records(): any[];
         record(key: any): any;
@@ -495,22 +525,24 @@ declare namespace $ {
         rowers(): any[];
         rowHeight(): number;
         headerCellers(): any[];
-        header(next?: any, prev?: any): $mol_grider_rower;
+        header(next?: any): $mol_grider_rower;
         gapTop(): number;
-        gaperTop(next?: any, prev?: any): $mol_grider_gaper;
+        gaperTop(next?: any): $mol_grider_gaper;
         gapBottom(): number;
-        gaperBottom(next?: any, prev?: any): $mol_grider_gaper;
+        gaperBottom(next?: any): $mol_grider_gaper;
         cellers(key: any): any[];
-        rower(key: any, next?: any, prev?: any): $mol_grider_rower;
+        rower(key: any, next?: any): $mol_grider_rower;
         celler(key: any): any;
         cellerContent(key: any): any[];
-        cellerText(key: any, next?: any, prev?: any): $mol_grider_celler;
-        cellerNumber(key: any, next?: any, prev?: any): $mol_grider_number;
+        cellerContentText(key: any): any[];
+        cellerText(key: any, next?: any): $mol_grider_celler;
+        cellerContentNumber(key: any): any[];
+        cellerNumber(key: any, next?: any): $mol_grider_number;
         columnHeaderContent(key: any): any[];
-        columnHeader(key: any, next?: any, prev?: any): $mol_floater;
+        columnHeader(key: any, next?: any): $mol_floater;
         rowLevel(key: any): number;
-        rowExpanded(key: any, next?: any, prev?: any): any;
-        cellerBranch(key: any, next?: any, prev?: any): $mol_grider_branch;
+        rowExpanded(key: any, next?: any): any;
+        cellerBranch(key: any, next?: any): $mol_grider_branch;
     }
 }
 declare namespace $ {
@@ -557,8 +589,8 @@ declare namespace $ {
         } & {
             "style.paddingLeft": () => any;
         };
-        expanded(next?: any, prev?: any): any;
-        checked(next?: any, prev?: any): any;
+        expanded(next?: any): any;
+        checked(next?: any): any;
         expandable(): boolean;
         enabled(): boolean;
         content(): any[];
@@ -611,9 +643,9 @@ declare namespace $ {
         records(): any[];
         record(key: any): any;
         rows(): any[];
-        rowExpanded(key: any, next?: any, prev?: any): any;
+        rowExpanded(key: any, next?: any): any;
         rowLevel(key: any): number;
-        grider(next?: any, prev?: any): $mol_grider;
+        grider(next?: any): $mol_grider;
         body(): any[];
     }
 }

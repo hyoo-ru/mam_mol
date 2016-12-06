@@ -284,10 +284,10 @@ var $;
                 function Test() {
                     _super.apply(this, arguments);
                 }
-                Test.prototype.source = function (next, prev) {
+                Test.prototype.source = function (next, force) {
                     var _this = this;
                     new $.$mol_defer(function () {
-                        _this.source(void 0, 'Jin');
+                        _this.source('Jin', $.$mol_atom_force);
                     });
                     throw new $.$mol_atom_wait('Wait for data!');
                 };

@@ -116,7 +116,7 @@ declare namespace $ {
         actual,
     }
     class $mol_atom<Value> extends $mol_object {
-        handler: (next?: Value | Error, prev?: Value | Error) => Value;
+        handler: (next?: Value | Error, force?: $mol_atom_force) => Value;
         host: {
             objectPath(): string;
             [key: string]: any;
@@ -127,18 +127,18 @@ declare namespace $ {
         status: $mol_atom_status;
         autoFresh: boolean;
         'value()': Value;
-        constructor(handler: (next?: Value | Error, prev?: Value | Error) => Value, host?: {
+        constructor(handler: (next?: Value | Error, force?: $mol_atom_force) => Value, host?: {
             objectPath(): string;
             [key: string]: any;
         }, field?: string);
         destroyed(next?: boolean): boolean;
         unlink(): void;
         objectPath(): string;
-        get(): Value;
-        actualize(): void;
-        pull(): any;
+        get(force?: $mol_atom_force): Value;
+        actualize(force?: $mol_atom_force): void;
+        pull(force?: $mol_atom_force): any;
         _next: Value;
-        set(next: Value, prev?: Value | Error): Value;
+        set(next: Value): Value;
         push(next: Value | Error): Error | Value;
         obsoleteSlaves(): void;
         checkSlaves(): void;
@@ -149,7 +149,7 @@ declare namespace $ {
         obey(master: $mol_atom<any>): void;
         disobey(master: $mol_atom<any>): void;
         disobeyAll(): void;
-        value(next?: Value, prev?: Value): Error | Value;
+        value(next?: Value, force?: $mol_atom_force): Error | Value;
         static stack: $mol_atom<any>[];
         static updating: $mol_atom<any>[];
         static reaping: $mol_set<$mol_atom<any>>;
@@ -165,6 +165,10 @@ declare namespace $ {
         name: string;
         constructor(message?: string);
     }
+    class $mol_atom_force extends Object {
+        $mol_atom_force: boolean;
+        static $mol_atom_force: boolean;
+    }
     function $mol_atom_task<Value>(handler: () => Value): $mol_atom<any>;
 }
 declare namespace $ {
@@ -172,12 +176,12 @@ declare namespace $ {
         objectPath(): string;
     }, Value>(config?: {
         lazy?: boolean;
-    }): (obj: Host, name: string, descr: TypedPropertyDescriptor<(next?: Value, prev?: Value) => Value>) => void;
+    }): (obj: Host, name: string, descr: TypedPropertyDescriptor<(next?: Value, force?: $mol_atom_force) => Value>) => void;
     function $mol_mem_key<Host extends {
         objectPath(): string;
     }, Key, Value>(config?: {
         lazy?: boolean;
-    }): (obj: Host, name: string, descr: TypedPropertyDescriptor<(key: Key, next?: Value, prev?: Value) => Value>) => void;
+    }): (obj: Host, name: string, descr: TypedPropertyDescriptor<(key: Key, next?: Value, force?: $mol_atom_force) => Value>) => void;
 }
 declare namespace $ {
     class $mol_window extends $mol_object {
@@ -193,9 +197,35 @@ declare namespace $ {
 declare var localStorage: Storage;
 declare namespace $ {
     class $mol_state_local<Value> extends $mol_object {
-        static value<Value>(key: string, next?: Value, prev?: Value): any;
+        static value<Value>(key: string, next?: Value, force?: $mol_atom_force): any;
         prefix(): string;
         value(key: string, next?: Value): any;
+    }
+}
+declare namespace $ {
+}
+declare namespace $ {
+    class $mol_state_arg<Value> extends $mol_object {
+        prefix: string;
+        static href(next?: string): string;
+        static dict(next?: {
+            [key: string]: string;
+        }): {
+            [key: string]: string;
+        };
+        static value(key: string, next?: string): string;
+        static link(next: {
+            [key: string]: string;
+        }): string;
+        static make(next: {
+            [key: string]: string;
+        }): string;
+        constructor(prefix?: string);
+        value(key: string, next?: string): string;
+        sub(postfix: string): $mol_state_arg<{}>;
+        link(next: {
+            [key: string]: string;
+        }): string;
     }
 }
 declare namespace $ {
@@ -210,8 +240,8 @@ declare namespace $ {
         'native()': XMLHttpRequest;
         native(): XMLHttpRequest;
         destroyed(next?: boolean): boolean;
-        response(next?: any, prev?: any): any;
-        text(next?: string): string;
+        response(next?: any, force?: $mol_atom_force): any;
+        text(next?: string, force?: $mol_atom_force): string;
     }
 }
 declare namespace $ {
@@ -225,13 +255,12 @@ declare namespace $ {
             login?: string;
             password?: string;
         };
-        request(fresh?: boolean): $mol_http_request;
-        text(next?: string, prev?: string): string;
-        refresh(): void;
+        request(): $mol_http_request;
+        text(next?: string, force?: $mol_atom_force): string;
     }
     class $mol_http_resource_json<Content> extends $mol_http_resource {
         static item<Content>(uri: string): $mol_http_resource_json<Content>;
-        json(next?: Content, prev?: Content): Content;
+        json(next?: Content, force?: $mol_atom_force): Content;
     }
 }
 declare namespace $ {
@@ -313,19 +342,19 @@ declare namespace $ {
             "type": () => any;
         };
         disabled(): boolean;
-        value(next?: any, prev?: any): any;
-        valueChanged(next?: any, prev?: any): any;
+        value(next?: any): any;
+        valueChanged(next?: any): any;
         field(): {
             [key: string]: (next?: any) => any;
         } & {
             "disabled": () => any;
             "value": () => any;
         };
-        eventChange(next?: any, prev?: any): any;
+        eventChange(next?: any): any;
         event(): {
             [key: string]: (event: Event) => void;
         } & {
-            "input": (next?: any, prev?: any) => any;
+            "input": (next?: any) => any;
         };
     }
 }
@@ -338,10 +367,10 @@ declare namespace $.$mol {
 declare namespace $ {
     class $mol_app_hello extends $mol_viewer {
         namerHint(): string;
-        name(next?: any, prev?: any): any;
-        namer(next?: any, prev?: any): $mol_stringer;
+        name(next?: any): any;
+        namer(next?: any): $mol_stringer;
         greeting(): string;
-        greeter(next?: any, prev?: any): $mol_viewer;
+        greeter(next?: any): $mol_viewer;
         childs(): any[];
     }
 }

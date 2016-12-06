@@ -141,6 +141,28 @@
 [mol_stacker_side] > [mol_stacker_addoner] {
     margin-right: 0
 }
+[mol_portioner] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 20px;
+    height: 1.25rem;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 128px;
+            flex: 1 1 128px;
+    -ms-flex: 1 1 8rem;
+        flex: 1 1 8rem;
+    width: 128px;
+    width: 8rem;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
+    background: #fcfcfc
+}
+[mol_portioner_indicator] {
+    background-color: hsl( 215 , 50% , 57% );
+    color: rgb(254, 253, 251);
+    border-radius: 2px
+}
 [mol_scroller] {
     overflow: auto;
     overflow-y: scroll;
@@ -310,6 +332,136 @@
     /*width: 100%;*/
     /*height: 100%;*/
 }
+[mol_bencher_columnHeader] {
+    cursor: pointer
+}
+[mol_bencher_cellerNumber] {
+    white-space: nowrap;
+    text-align: right
+}
+[mol_bencher_resultPortioner] {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    vertical-align: bottom;
+    margin-left: 8px;
+    margin-left: .5rem;
+    width: 5vw
+}
+[mol_bencher_columnHeaderSorter] {
+    vertical-align: middle;
+    margin-left: 8px;
+    margin-left: .5rem
+}
+[mol_bencher_header] + [mol_bencher_rower] [mol_portioner_indicator] {
+    background: rgb(255, 164, 36)
+}
+[mol_lister] {
+    will-change: contents
+}
+[mol_texter] {
+    line-height: 1.5;
+    max-width: 960px;
+    max-width: 60rem;
+    background: white;
+    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
+    padding: 16px 32px;
+    padding: 1rem 2rem;
+    border-radius: 2px;
+    white-space: pre-line;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start
+}
+[mol_texter_rower] {
+    margin: 8px 0;
+    margin: .5rem 0;
+    overflow: auto;
+    max-width: 100%
+}
+[mol_texter_type="block"] {}
+[mol_texter_header] {
+    display: block;
+    padding: 8px 0;
+    padding: .5rem 0;
+    font-weight: 500
+}
+[mol_texter_header_level="1"] {
+    font-size: 24px;
+    font-size: 1.5rem
+}
+[mol_texter_header_level="2"] {
+    font-size: 20.8px;
+    font-size: 1.3rem
+}
+[mol_texter_header_level="3"] {
+    font-size: 17.6px;
+    font-size: 1.1rem
+}
+[mol_texter_header_level="4"] {
+    font-size: 17.6px;
+    font-size: 1.1rem;
+    font-style: italic
+}
+[mol_texter_header_level="5"] {
+    font-size: 17.6px;
+    font-size: 1.1rem;
+    font-weight: normal;
+    font-style: italic
+}
+[mol_texter_type="list-item"] {
+    list-style: inside;
+    display: list-item
+}
+[mol_texter_tabler] {
+    max-width: 100%;
+    max-height: 50vh;
+    overflow: auto;
+    margin: 8px 0;
+    margin: .5rem 0;
+    -webkit-box-flex: 0;
+        -ms-flex-positive: 0;
+            flex-grow: 0
+}
+[mol_texter_type="code"] {
+    font-family: monospace;
+    white-space: pre;
+    font-size: 14.4px;
+    font-size: .9rem;
+    background: #fcfcfc;
+    color: rgba( 0 , 0 , 0 , .9 );
+    border-radius: 2px;
+    padding: 1px
+}
+[mol_texter_type="text-link"] {
+    color: hsl( 215 , 50% , 57% );
+    text-decoration: none
+}
+[mol_texter_linker]:hover ,
+[mol_texter_linker]:focus {
+    text-decoration: underline;
+    outline: none
+}
+[mol_texter_imager] {
+    max-width: 100%
+}
+[mol_texter_type="strong"] {
+    font-weight: bolder
+}
+[mol_texter_type="emphasis"] {
+    font-style: italic
+}
+[mol_texter_type="strike"] {
+    text-decoration: line-through;
+    color: gray
+}
 [mol_pager] {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -375,9 +527,6 @@
             flex: 0 0 auto;
     overflow: hidden
 }
-[mol_lister] {
-    will-change: contents
-}
 [mol_checker]:disabled > [mol_checker_ticker_icon] {
     background-color: #eee
 }
@@ -393,40 +542,25 @@
 [mol_checker]:not([mol_checker_checked]) > [mol_checker_ticker_icon] {
     fill: transparent
 }
-[mol_portioner] {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    height: 20px;
-    height: 1.25rem;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 128px;
-            flex: 1 1 128px;
-    -ms-flex: 1 1 8rem;
-        flex: 1 1 8rem;
-    width: 128px;
-    width: 8rem;
-    border-radius: 2px;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
-    background: #fcfcfc
-}
-[mol_portioner_indicator] {
-    background-color: hsl( 215 , 50% , 57% );
-    color: rgb(254, 253, 251);
-    border-radius: 2px
-}
 [mol_app_bench_mainer_bodier] {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
     height: auto;
     -webkit-box-flex: 0;
         -ms-flex: 0 1 auto;
-            flex: 0 1 auto
+            flex: 0 1 auto;
+    padding: 8px;
+    padding: .5rem;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse
 }
 [mol_app_bench_menu] {
     padding: 8px;
@@ -437,14 +571,15 @@
     -webkit-box-flex: 1;
         -ms-flex: 1 0 50%;
             flex: 1 0 50%;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
     position: relative
 }
 [mol_app_bench_resulter] {
-    margin: auto;
+    margin: 8px;
+    margin: .5rem;
     -webkit-box-flex: 0;
-        -ms-flex: 0 0 50%;
-            flex: 0 0 50%
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+    background: white
 }
 [mol_app_bench_menu] {
     display: -webkit-box;
@@ -471,6 +606,16 @@
     margin-left: .5rem;
     width: 5vw
 }
+[mol_app_bench_descriptioner] {
+    margin: 8px;
+    margin: .5rem;
+    padding: 8px 16px;
+    padding: .5rem 1rem;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 15em;
+            flex: 1 1 15em;
+    max-width: 40em
+}
 [mol_app_bench_list_mol] {
     padding: 8px;
     padding: .5rem
@@ -484,7 +629,8 @@
 }
 [mol_app_bench_list_mol_rower] {
     padding: 8px;
-    padding: .5rem
+    padding: .5rem;
+    cursor: pointer
 }
 [mol_app_bench_list_mol_rower_selected] {
     background: #eee

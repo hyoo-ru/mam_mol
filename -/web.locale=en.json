@@ -1,7 +1,7 @@
 {
+	"$mol_bencher_header_hint": "Click to sort by this column",
 	"$mol_app_bench_addonerTitle": "Samples",
 	"$mol_app_demo_titleAddon": "Demos",
-	"$mol_app_hello_namerHint": "Name",
 	"$mol_app_inventory_enter_loginLabel": "User name",
 	"$mol_app_inventory_enter_passwordLabel": "Pass word",
 	"$mol_app_inventory_enter_submitLabel": "Log in",

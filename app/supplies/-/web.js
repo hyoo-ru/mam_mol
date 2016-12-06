@@ -444,11 +444,11 @@ var $;
         $mol_atom.prototype.objectPath = function () {
             return this.host ? this.host.objectPath() + '.' + this.field : this.field;
         };
-        $mol_atom.prototype.get = function () {
+        $mol_atom.prototype.get = function (force) {
             if (this.status === $mol_atom_status.pulling) {
                 throw new Error("Cyclic atom dependency of " + this.objectPath());
             }
-            this.actualize();
+            this.actualize(force);
             var slave = $mol_atom.stack[0];
             if (slave)
                 this.lead(slave);
@@ -461,13 +461,13 @@ var $;
             }
             return value;
         };
-        $mol_atom.prototype.actualize = function () {
+        $mol_atom.prototype.actualize = function (force) {
             var _this = this;
-            if (this.status === $mol_atom_status.actual)
+            if (!force && this.status === $mol_atom_status.actual)
                 return;
             var slave = $mol_atom.stack[0];
             $mol_atom.stack[0] = this;
-            if (this.status === $mol_atom_status.checking) {
+            if (!force && this.status === $mol_atom_status.checking) {
                 this.masters.forEach(function (master) {
                     if (_this.status !== $mol_atom_status.checking)
                         return;
@@ -477,7 +477,7 @@ var $;
                     this.status = $mol_atom_status.actual;
                 }
             }
-            if (this.status !== $mol_atom_status.actual) {
+            if (force || this.status !== $mol_atom_status.actual) {
                 var oldMasters = this.masters;
                 this.masters = null;
                 if (oldMasters)
@@ -485,15 +485,15 @@ var $;
                         master.dislead(_this);
                     });
                 this.status = $mol_atom_status.pulling;
-                var next = this.pull();
+                var next = this.pull(force);
                 this.push(next);
             }
             $mol_atom.stack[0] = slave;
         };
-        $mol_atom.prototype.pull = function () {
+        $mol_atom.prototype.pull = function (force) {
             var host = this.host || this;
             try {
-                return this.handler(this._next);
+                return this.handler(this._next, force);
             }
             catch (error) {
                 if (!error['$mol_atom_catched']) {
@@ -512,7 +512,7 @@ var $;
                 return error;
             }
         };
-        $mol_atom.prototype.set = function (next, prev) {
+        $mol_atom.prototype.set = function (next) {
             this._next = next;
             this.obsolete();
             return this.get();
@@ -615,12 +615,18 @@ var $;
             this.masters.forEach(function (master) { return master.dislead(_this); });
             this.masters = null;
         };
-        $mol_atom.prototype.value = function (next, prev) {
-            if (next !== void 0)
-                return this.set(next, prev);
-            if (prev !== void 0)
-                return this.push(prev);
-            return this.get();
+        $mol_atom.prototype.value = function (next, force) {
+            if (next === void 0) {
+                return this.get(force);
+            }
+            else {
+                if (force) {
+                    return this.push(next);
+                }
+                else {
+                    return this.set(next);
+                }
+            }
         };
         $mol_atom.actualize = function (atom) {
             $mol_atom.updating.push(atom);
@@ -688,6 +694,14 @@ var $;
         return $mol_atom_wait;
     }(Error));
     $.$mol_atom_wait = $mol_atom_wait;
+    var $mol_atom_force = (function (_super) {
+        __extends($mol_atom_force, _super);
+        function $mol_atom_force() {
+            _super.apply(this, arguments);
+        }
+        return $mol_atom_force;
+    }(Object));
+    $.$mol_atom_force = $mol_atom_force;
     function $mol_atom_task(handler) {
         var atom = new $mol_atom(function () {
             try {
@@ -712,7 +726,7 @@ var $;
     function $mol_mem(config) {
         return function (obj, name, descr) {
             var value = descr.value;
-            descr.value = function (next, prev) {
+            descr.value = function (next, force) {
                 var host = this;
                 var field = name + "()";
                 var atoms = host['$mol_atom_state'];
@@ -724,7 +738,7 @@ var $;
                     if (config)
                         info.autoFresh = !config.lazy;
                 }
-                return info.value(next, prev);
+                return info.value(next, force);
             };
             void (descr.value['value'] = value);
         };
@@ -733,7 +747,7 @@ var $;
     function $mol_mem_key(config) {
         return function (obj, name, descr) {
             var value = descr.value;
-            descr.value = function (key, next, prev) {
+            descr.value = function (key, next, force) {
                 var host = this;
                 var field = name + "(" + JSON.stringify(key) + ")";
                 var atoms = host['$mol_atom_state'];
@@ -745,7 +759,7 @@ var $;
                     if (config)
                         info.autoFresh = !config.lazy;
                 }
-                return info.value(next, prev);
+                return info.value(next, force);
             };
             void (descr.value['value'] = value);
         };
@@ -819,7 +833,7 @@ var $;
         function $mol_state_local() {
             _super.apply(this, arguments);
         }
-        $mol_state_local.value = function (key, next, prev) {
+        $mol_state_local.value = function (key, next, force) {
             if (next === void 0)
                 return JSON.parse(localStorage.getItem(key) || 'null');
             if (next === null)
@@ -841,8 +855,98 @@ var $;
 })($ || ($ = {}));
 //local.js.map
 ;
-window.addEventListener('storage', function (event) { return $.$mol_state_local.value(event.key, void 0, JSON.parse(localStorage.getItem(event.key) || 'null')); });
+var $;
+(function ($) {
+    window.addEventListener('storage', function (event) {
+        $.$mol_state_local.value(event.key, void 0, $.$mol_atom_force);
+    });
+})($ || ($ = {}));
 //local.web.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_state_arg = (function (_super) {
+        __extends($mol_state_arg, _super);
+        function $mol_state_arg(prefix) {
+            if (prefix === void 0) { prefix = ''; }
+            _super.call(this);
+            this.prefix = prefix;
+        }
+        $mol_state_arg.href = function (next) {
+            if (next)
+                history.replaceState(history.state, document.title, "" + next);
+            return window.location.search + window.location.hash;
+        };
+        $mol_state_arg.dict = function (next) {
+            var href = this.href(next && this.make(next));
+            var chunks = href.split(/[\/\?#!&;]/g);
+            var params = {};
+            chunks.forEach(function (chunk) {
+                if (!chunk)
+                    return;
+                var vals = chunk.split('=').map(decodeURIComponent);
+                params[vals.shift()] = vals.join('=');
+            });
+            return params;
+        };
+        $mol_state_arg.value = function (key, next) {
+            var nextDict = (next === void 0) ? void 0 : $.$mol_merge_dict(this.dict(), (_a = {}, _a[key] = next, _a));
+            return this.dict(nextDict)[key] || null;
+            var _a;
+        };
+        $mol_state_arg.link = function (next) {
+            return this.make($.$mol_merge_dict(this.dict(), next));
+        };
+        $mol_state_arg.make = function (next) {
+            var chunks = [];
+            for (var key in next) {
+                if (null == next[key])
+                    continue;
+                chunks.push([key].concat(next[key]).map(encodeURIComponent).join('='));
+            }
+            var hash = chunks.join('#');
+            return hash ? '#' + hash + '#' : '#';
+        };
+        $mol_state_arg.prototype.value = function (key, next) {
+            return $mol_state_arg.value(this.prefix + key, next);
+        };
+        $mol_state_arg.prototype.sub = function (postfix) {
+            return new $mol_state_arg(this.prefix + postfix + '.');
+        };
+        $mol_state_arg.prototype.link = function (next) {
+            var prefix = this.prefix;
+            var dict = {};
+            for (var key in next) {
+                dict[prefix + key] = next[key];
+            }
+            return $mol_state_arg.link(dict);
+        };
+        __decorate([
+            $.$mol_mem()
+        ], $mol_state_arg, "href", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_state_arg, "dict", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_state_arg, "value", null);
+        return $mol_state_arg;
+    }($.$mol_object));
+    $.$mol_state_arg = $mol_state_arg;
+    window.addEventListener('hashchange', function (event) { return $mol_state_arg.href(null); });
+})($ || ($ = {}));
+//arg.web.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -876,14 +980,14 @@ var $;
             next.withCredentials = Boolean(this.credentials());
             next.onload = function (event) {
                 if (Math.floor(next.status / 100) === 2) {
-                    _this.response(void 0, next.responseText);
+                    _this.response(next.responseText, $.$mol_atom_force);
                 }
                 else {
-                    _this.response(void 0, new Error(next.responseText));
+                    _this.response(new Error(next.responseText), $.$mol_atom_force);
                 }
             };
             next.onerror = function (event) {
-                _this.response(void 0, event.error || new Error('Unknown HTTP error'));
+                _this.response(event.error || new Error('Unknown HTTP error'), $.$mol_atom_force);
             };
             return next;
         };
@@ -895,7 +999,7 @@ var $;
             }
             return _super.prototype.destroyed.call(this, next);
         };
-        $mol_http_request.prototype.response = function (next, prev) {
+        $mol_http_request.prototype.response = function (next, force) {
             var creds = this.credentials();
             var native = this.native();
             var method = (next === void 0) ? 'Get' : this.method();
@@ -903,8 +1007,8 @@ var $;
             native.send(next);
             throw new $.$mol_atom_wait(this.method() + " " + this.uri());
         };
-        $mol_http_request.prototype.text = function (next) {
-            return this.response(next);
+        $mol_http_request.prototype.text = function (next, force) {
+            return this.response(next, force);
         };
         __decorate([
             $.$mol_mem()
@@ -948,7 +1052,7 @@ var $;
         $mol_http_resource.prototype.credentials = function () {
             return null;
         };
-        $mol_http_resource.prototype.request = function (fresh) {
+        $mol_http_resource.prototype.request = function () {
             var _this = this;
             var request = new $.$mol_http_request();
             request.method = function () { return 'Put'; };
@@ -956,11 +1060,8 @@ var $;
             request.credentials = function () { return _this.credentials(); };
             return request;
         };
-        $mol_http_resource.prototype.text = function (next, prev) {
-            return this.request().text(next);
-        };
-        $mol_http_resource.prototype.refresh = function () {
-            this.request(!!'fresh');
+        $mol_http_resource.prototype.text = function (next, force) {
+            return this.request().text(next, force);
         };
         __decorate([
             $.$mol_mem()
@@ -984,8 +1085,8 @@ var $;
                 obj.uri = function () { return uri; };
             });
         };
-        $mol_http_resource_json.prototype.json = function (next, prev) {
-            return JSON.parse(this.text(next && JSON.stringify(next, null, '\t')));
+        $mol_http_resource_json.prototype.json = function (next, force) {
+            return JSON.parse(this.text(next && JSON.stringify(next, null, '\t'), force));
         };
         __decorate([
             $.$mol_mem_key()
@@ -1015,7 +1116,7 @@ var $;
             _super.apply(this, arguments);
         }
         $mol_locale.lang = function (next) {
-            return $.$mol_state_local.value('locale', next) || 'en';
+            return $.$mol_state_local.value('locale', next) || $.$mol_state_arg.value('locale') || 'en';
         };
         $mol_locale.texts = function () {
             var uri = "-/web.locale=" + this.lang() + ".json";
@@ -1122,7 +1223,7 @@ var $;
                 for (var _i = 0, _a = ownerProto['objectClassNames'](); _i < _a.length; _i++) {
                     var className = _a[_i];
                     var attrName = className.replace(/\$/g, '') + suffix;
-                    next2.setAttribute(attrName, '');
+                    next2.setAttribute(attrName.toLowerCase(), '');
                     if (className === '$mol_viewer')
                         break;
                 }
@@ -1130,7 +1231,7 @@ var $;
             var proto = Object.getPrototypeOf(this);
             for (var _b = 0, _c = proto['objectClassNames'](); _b < _c.length; _b++) {
                 var className = _c[_b];
-                next2.setAttribute(className.replace(/\$/g, ''), '');
+                next2.setAttribute(className.replace(/\$/g, '').toLowerCase(), '');
                 if (className === '$mol_viewer')
                     break;
             }
@@ -1441,91 +1542,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_state_arg = (function (_super) {
-        __extends($mol_state_arg, _super);
-        function $mol_state_arg(prefix) {
-            if (prefix === void 0) { prefix = ''; }
-            _super.call(this);
-            this.prefix = prefix;
-        }
-        $mol_state_arg.href = function (next) {
-            if (next)
-                history.replaceState(history.state, document.title, "" + next);
-            return window.location.search + window.location.hash;
-        };
-        $mol_state_arg.dict = function (next) {
-            var href = this.href(next && this.make(next));
-            var chunks = href.split(/[\/\?#!&;]/g);
-            var params = {};
-            chunks.forEach(function (chunk) {
-                if (!chunk)
-                    return;
-                var vals = chunk.split('=').map(decodeURIComponent);
-                params[vals.shift()] = vals.join('=');
-            });
-            return params;
-        };
-        $mol_state_arg.value = function (key, next, prev) {
-            var nextDict = (next === void 0) ? void 0 : $.$mol_merge_dict(this.dict(), (_a = {}, _a[key] = next, _a));
-            return this.dict(nextDict)[key] || null;
-            var _a;
-        };
-        $mol_state_arg.link = function (next) {
-            return this.make($.$mol_merge_dict(this.dict(), next));
-        };
-        $mol_state_arg.make = function (next) {
-            var chunks = [];
-            for (var key in next) {
-                if (null == next[key])
-                    continue;
-                chunks.push([key].concat(next[key]).map(encodeURIComponent).join('='));
-            }
-            var hash = chunks.join('#');
-            return hash ? '#' + hash + '#' : '#';
-        };
-        $mol_state_arg.prototype.value = function (key, next) {
-            return $mol_state_arg.value(this.prefix + key, next);
-        };
-        $mol_state_arg.prototype.sub = function (postfix) {
-            return new $mol_state_arg(this.prefix + postfix + '.');
-        };
-        $mol_state_arg.prototype.link = function (next) {
-            var prefix = this.prefix;
-            var dict = {};
-            for (var key in next) {
-                dict[prefix + key] = next[key];
-            }
-            return $mol_state_arg.link(dict);
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_state_arg, "href", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_state_arg, "dict", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_state_arg, "value", null);
-        return $mol_state_arg;
-    }($.$mol_object));
-    $.$mol_state_arg = $mol_state_arg;
-    window.addEventListener('hashchange', function (event) { return $mol_state_arg.href(null); });
-})($ || ($ = {}));
-//arg.web.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var $;
 (function ($) {
     var $mol_linker = (function (_super) {
@@ -1756,7 +1772,7 @@ var $;
         $mol_carder.prototype.content = function () {
             return null;
         };
-        $mol_carder.prototype.contenter = function (next, prev) {
+        $mol_carder.prototype.contenter = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.content()); };
@@ -1765,7 +1781,7 @@ var $;
         $mol_carder.prototype.statusText = function () {
             return this.status();
         };
-        $mol_carder.prototype.statuser = function (next, prev) {
+        $mol_carder.prototype.statuser = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.statusText()); };
@@ -1833,7 +1849,7 @@ var $;
         function $mol_labeler() {
             _super.apply(this, arguments);
         }
-        $mol_labeler.prototype.titler = function (next, prev) {
+        $mol_labeler.prototype.titler = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.title()); };
@@ -1842,7 +1858,7 @@ var $;
         $mol_labeler.prototype.content = function () {
             return null;
         };
-        $mol_labeler.prototype.contenter = function (next, prev) {
+        $mol_labeler.prototype.contenter = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.content()); };
@@ -1887,7 +1903,7 @@ var $;
         $mol_coster.prototype.prefix = function () {
             return "";
         };
-        $mol_coster.prototype.prefixer = function (next, prev) {
+        $mol_coster.prototype.prefixer = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.prefix()); };
@@ -1896,7 +1912,7 @@ var $;
         $mol_coster.prototype.valueView = function () {
             return "";
         };
-        $mol_coster.prototype.mainer = function (next, prev) {
+        $mol_coster.prototype.mainer = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.valueView()); };
@@ -1905,7 +1921,7 @@ var $;
         $mol_coster.prototype.postfix = function () {
             return "";
         };
-        $mol_coster.prototype.postfixer = function (next, prev) {
+        $mol_coster.prototype.postfixer = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.postfix()); };
@@ -2972,7 +2988,7 @@ var $;
         $mol_app_supplies_domain_supply.prototype.provider = function () { return void 0; };
         $mol_app_supplies_domain_supply.prototype.consumer = function () { return void 0; };
         $mol_app_supplies_domain_supply.prototype.group = function () { return void 0; };
-        $mol_app_supplies_domain_supply.prototype.status = function (next, prev) { return next; };
+        $mol_app_supplies_domain_supply.prototype.status = function (next) { return next; };
         $mol_app_supplies_domain_supply.prototype.ballanceUnit = function () { return void 0; };
         $mol_app_supplies_domain_supply.prototype.manager = function () { return void 0; };
         $mol_app_supplies_domain_supply.prototype.contract = function () { return void 0; };
@@ -3118,7 +3134,7 @@ var $;
                 obj.cost = $.$mol_const(obj.price().mult(obj.quantity()));
             });
         };
-        $mol_app_supplies_domain_mock.prototype.attachments = function (id, next, prev) {
+        $mol_app_supplies_domain_mock.prototype.attachments = function (id, next) {
             return next || [];
         };
         $mol_app_supplies_domain_mock.prototype.attachment = function (id) {
@@ -3210,7 +3226,7 @@ var $;
         $mol_app_supplies_carder.prototype.arg = function () {
             return ({});
         };
-        $mol_app_supplies_carder.prototype.linker = function (next, prev) {
+        $mol_app_supplies_carder.prototype.linker = function (next) {
             var _this = this;
             return new $.$mol_linker().setup(function (obj) {
                 obj.arg = function () { return _this.arg(); };
@@ -3225,7 +3241,7 @@ var $;
         $mol_app_supplies_carder.prototype.code = function () {
             return "";
         };
-        $mol_app_supplies_carder.prototype.codeItem = function (next, prev) {
+        $mol_app_supplies_carder.prototype.codeItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.codeTitle(); };
@@ -3235,18 +3251,18 @@ var $;
         $mol_app_supplies_carder.prototype.costTitle = function () {
             return this.localizedText("costTitle");
         };
-        $mol_app_supplies_carder.prototype.cost = function (next, prev) {
+        $mol_app_supplies_carder.prototype.cost = function (next) {
             return new $.$mol_unit_money().setup(function (obj) {
                 obj.valueOf = function () { return 0; };
             });
         };
-        $mol_app_supplies_carder.prototype.coster = function (next, prev) {
+        $mol_app_supplies_carder.prototype.coster = function (next) {
             var _this = this;
             return new $.$mol_coster().setup(function (obj) {
                 obj.value = function () { return _this.cost(); };
             });
         };
-        $mol_app_supplies_carder.prototype.costItem = function (next, prev) {
+        $mol_app_supplies_carder.prototype.costItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.costTitle(); };
@@ -3259,7 +3275,7 @@ var $;
         $mol_app_supplies_carder.prototype.providerName = function () {
             return "";
         };
-        $mol_app_supplies_carder.prototype.providerItem = function (next, prev) {
+        $mol_app_supplies_carder.prototype.providerItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.providerTitle(); };
@@ -3269,7 +3285,7 @@ var $;
         $mol_app_supplies_carder.prototype.items = function () {
             return [].concat(this.codeItem(), this.costItem(), this.providerItem());
         };
-        $mol_app_supplies_carder.prototype.grouper = function (next, prev) {
+        $mol_app_supplies_carder.prototype.grouper = function (next) {
             var _this = this;
             return new $.$mol_rower().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.items()); };
@@ -3365,7 +3381,7 @@ var $;
         $mol_app_supplies_carder_demo_pending.prototype.providerName = function () {
             return this.localizedText("providerName");
         };
-        $mol_app_supplies_carder_demo_pending.prototype.cost = function (next, prev) {
+        $mol_app_supplies_carder_demo_pending.prototype.cost = function (next) {
             return new $.$mol_unit_money_usd().setup(function (obj) {
                 obj.valueOf = function () { return 1000000; };
             });
@@ -3398,7 +3414,7 @@ var $;
         $mol_app_supplies_carder_demo_approved.prototype.providerName = function () {
             return this.localizedText("providerName");
         };
-        $mol_app_supplies_carder_demo_approved.prototype.cost = function (next, prev) {
+        $mol_app_supplies_carder_demo_approved.prototype.cost = function (next) {
             return new $.$mol_unit_money_rur().setup(function (obj) {
                 obj.valueOf = function () { return 3000000; };
             });
@@ -3431,7 +3447,7 @@ var $;
         $mol_app_supplies_carder_demo_selected.prototype.providerName = function () {
             return this.localizedText("providerName");
         };
-        $mol_app_supplies_carder_demo_selected.prototype.cost = function (next, prev) {
+        $mol_app_supplies_carder_demo_selected.prototype.cost = function (next) {
             return new $.$mol_unit_money_usd().setup(function (obj) {
                 obj.valueOf = function () { return 900000; };
             });
@@ -3483,7 +3499,7 @@ var $;
         $mol_stacker.prototype.main = function () {
             return [];
         };
-        $mol_stacker.prototype.mainer = function (next, prev) {
+        $mol_stacker.prototype.mainer = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return _this.main(); };
@@ -3492,7 +3508,7 @@ var $;
         $mol_stacker.prototype.addon = function () {
             return [];
         };
-        $mol_stacker.prototype.addoner = function (next, prev) {
+        $mol_stacker.prototype.addoner = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return _this.addon(); };
@@ -3564,7 +3580,7 @@ var $;
         $mol_form.prototype.formFields = function () {
             return [];
         };
-        $mol_form.prototype.barFields = function (next, prev) {
+        $mol_form.prototype.barFields = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return _this.formFields(); };
@@ -3573,7 +3589,7 @@ var $;
         $mol_form.prototype.buttons = function () {
             return [];
         };
-        $mol_form.prototype.barButtons = function (next, prev) {
+        $mol_form.prototype.barButtons = function (next) {
             var _this = this;
             return new $.$mol_rower().setup(function (obj) {
                 obj.childs = function () { return _this.buttons(); };
@@ -3648,7 +3664,7 @@ var $;
         $mol_form_field.prototype.name = function () {
             return "";
         };
-        $mol_form_field.prototype.namer = function (next, prev) {
+        $mol_form_field.prototype.namer = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.name()); };
@@ -3657,13 +3673,13 @@ var $;
         $mol_form_field.prototype.errors = function () {
             return [];
         };
-        $mol_form_field.prototype.errorer = function (next, prev) {
+        $mol_form_field.prototype.errorer = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return _this.errors(); };
             });
         };
-        $mol_form_field.prototype.label = function (next, prev) {
+        $mol_form_field.prototype.label = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.namer(), _this.errorer()); };
@@ -3730,11 +3746,11 @@ var $;
         $mol_stringer.prototype.disabled = function () {
             return false;
         };
-        $mol_stringer.prototype.value = function (next, prev) {
+        $mol_stringer.prototype.value = function (next) {
             return (next !== void 0) ? next : "";
         };
-        $mol_stringer.prototype.valueChanged = function (next, prev) {
-            return this.value(next, prev);
+        $mol_stringer.prototype.valueChanged = function (next) {
+            return this.value(next);
         };
         $mol_stringer.prototype.field = function () {
             var _this = this;
@@ -3743,13 +3759,13 @@ var $;
                 "value": function () { return _this.valueChanged(); },
             });
         };
-        $mol_stringer.prototype.eventChange = function (next, prev) {
+        $mol_stringer.prototype.eventChange = function (next) {
             return (next !== void 0) ? next : null;
         };
         $mol_stringer.prototype.event = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.event.call(this), {
-                "input": function (next, prev) { return _this.eventChange(next, prev); },
+                "input": function (next) { return _this.eventChange(next); },
             });
         };
         __decorate([
@@ -3815,16 +3831,16 @@ var $;
         $mol_clicker.prototype.enabled = function () {
             return true;
         };
-        $mol_clicker.prototype.eventClick = function (next, prev) {
+        $mol_clicker.prototype.eventClick = function (next) {
             return (next !== void 0) ? next : null;
         };
-        $mol_clicker.prototype.eventActivate = function (next, prev) {
-            return this.eventClick(next, prev);
+        $mol_clicker.prototype.eventActivate = function (next) {
+            return this.eventClick(next);
         };
         $mol_clicker.prototype.event = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.event.call(this), {
-                "click": function (next, prev) { return _this.eventActivate(next, prev); },
+                "click": function (next) { return _this.eventActivate(next); },
             });
         };
         $mol_clicker.prototype.disabled = function () {
@@ -3947,7 +3963,7 @@ var $;
         function $mol_app_supplies_enter() {
             _super.apply(this, arguments);
         }
-        $mol_app_supplies_enter.prototype.entered = function (next, prev) {
+        $mol_app_supplies_enter.prototype.entered = function (next) {
             return (next !== void 0) ? next : false;
         };
         $mol_app_supplies_enter.prototype.loginLabel = function () {
@@ -3956,16 +3972,16 @@ var $;
         $mol_app_supplies_enter.prototype.loginErrors = function () {
             return [];
         };
-        $mol_app_supplies_enter.prototype.login = function (next, prev) {
+        $mol_app_supplies_enter.prototype.login = function (next) {
             return (next !== void 0) ? next : "";
         };
-        $mol_app_supplies_enter.prototype.loginControl = function (next, prev) {
+        $mol_app_supplies_enter.prototype.loginControl = function (next) {
             var _this = this;
             return new $.$mol_stringer().setup(function (obj) {
-                obj.value = function (next, prev) { return _this.login(next, prev); };
+                obj.value = function (next) { return _this.login(next); };
             });
         };
-        $mol_app_supplies_enter.prototype.loginField = function (next, prev) {
+        $mol_app_supplies_enter.prototype.loginField = function (next) {
             var _this = this;
             return new $.$mol_form_field().setup(function (obj) {
                 obj.name = function () { return _this.loginLabel(); };
@@ -3979,17 +3995,17 @@ var $;
         $mol_app_supplies_enter.prototype.passwordErrors = function () {
             return [];
         };
-        $mol_app_supplies_enter.prototype.password = function (next, prev) {
+        $mol_app_supplies_enter.prototype.password = function (next) {
             return (next !== void 0) ? next : "";
         };
-        $mol_app_supplies_enter.prototype.passControl = function (next, prev) {
+        $mol_app_supplies_enter.prototype.passControl = function (next) {
             var _this = this;
             return new $.$mol_stringer().setup(function (obj) {
-                obj.value = function (next, prev) { return _this.password(next, prev); };
+                obj.value = function (next) { return _this.password(next); };
                 obj.type = function () { return "password"; };
             });
         };
-        $mol_app_supplies_enter.prototype.passwordField = function (next, prev) {
+        $mol_app_supplies_enter.prototype.passwordField = function (next) {
             var _this = this;
             return new $.$mol_form_field().setup(function (obj) {
                 obj.name = function () { return _this.passwordLabel(); };
@@ -4000,21 +4016,21 @@ var $;
         $mol_app_supplies_enter.prototype.submitLabel = function () {
             return this.localizedText("submitLabel");
         };
-        $mol_app_supplies_enter.prototype.eventSubmit = function (next, prev) {
+        $mol_app_supplies_enter.prototype.eventSubmit = function (next) {
             return (next !== void 0) ? next : null;
         };
         $mol_app_supplies_enter.prototype.submitBlocked = function () {
             return false;
         };
-        $mol_app_supplies_enter.prototype.submit = function (next, prev) {
+        $mol_app_supplies_enter.prototype.submit = function (next) {
             var _this = this;
             return new $.$mol_clicker_major().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.submitLabel()); };
-                obj.eventClick = function (next, prev) { return _this.eventSubmit(next, prev); };
+                obj.eventClick = function (next) { return _this.eventSubmit(next); };
                 obj.disabled = function () { return _this.submitBlocked(); };
             });
         };
-        $mol_app_supplies_enter.prototype.form = function (next, prev) {
+        $mol_app_supplies_enter.prototype.form = function (next) {
             var _this = this;
             return new $.$mol_form().setup(function (obj) {
                 obj.formFields = function () { return [].concat(_this.loginField(), _this.passwordField()); };
@@ -4105,28 +4121,28 @@ var $;
         $mol_scroller.prototype.heightMinimal = function () {
             return 0;
         };
-        $mol_scroller.prototype.scrollTop = function (next, prev) {
+        $mol_scroller.prototype.scrollTop = function (next) {
             return (next !== void 0) ? next : 0;
         };
-        $mol_scroller.prototype.scrollLeft = function (next, prev) {
+        $mol_scroller.prototype.scrollLeft = function (next) {
             return (next !== void 0) ? next : 0;
         };
         $mol_scroller.prototype.field = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.field.call(this), {
-                "scrollTop": function (next, prev) { return _this.scrollTop(next, prev); },
-                "scrollLeft": function (next, prev) { return _this.scrollLeft(next, prev); },
+                "scrollTop": function (next) { return _this.scrollTop(next); },
+                "scrollLeft": function (next) { return _this.scrollLeft(next); },
             });
         };
-        $mol_scroller.prototype.eventScroll = function (next, prev) {
+        $mol_scroller.prototype.eventScroll = function (next) {
             return (next !== void 0) ? next : null;
         };
         $mol_scroller.prototype.event = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.event.call(this), {
-                "scroll": function (next, prev) { return _this.eventScroll(next, prev); },
-                "overflow": function (next, prev) { return _this.eventScroll(next, prev); },
-                "underflow": function (next, prev) { return _this.eventScroll(next, prev); },
+                "scroll": function (next) { return _this.eventScroll(next); },
+                "overflow": function (next) { return _this.eventScroll(next); },
+                "underflow": function (next) { return _this.eventScroll(next); },
             });
         };
         __decorate([
@@ -4162,18 +4178,18 @@ var $;
         function $mol_state_session() {
             _super.apply(this, arguments);
         }
-        $mol_state_session.value = function (key, next, prev) {
+        $mol_state_session.value = function (key, next) {
             if (next === void 0)
                 return JSON.parse(sessionStorage.getItem(key) || 'null');
             if (next === null)
-                localStorage.removeItem(key);
+                sessionStorage.removeItem(key);
             else
                 sessionStorage.setItem(key, JSON.stringify(next));
             return next;
         };
         $mol_state_session.prototype.prefix = function () { return ''; };
-        $mol_state_session.prototype.value = function (key, next, prev) {
-            return $.$mol_state_local.value(this.prefix() + '.' + key, next, prev);
+        $mol_state_session.prototype.value = function (key, next) {
+            return $mol_state_session.value(this.prefix() + '.' + key, next);
         };
         __decorate([
             $.$mol_mem_key()
@@ -4301,7 +4317,7 @@ var $;
         function $mol_pager() {
             _super.apply(this, arguments);
         }
-        $mol_pager.prototype.titler = function (next, prev) {
+        $mol_pager.prototype.titler = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.title()); };
@@ -4310,7 +4326,7 @@ var $;
         $mol_pager.prototype.head = function () {
             return [].concat(this.titler());
         };
-        $mol_pager.prototype.header = function (next, prev) {
+        $mol_pager.prototype.header = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return _this.head(); };
@@ -4319,7 +4335,7 @@ var $;
         $mol_pager.prototype.body = function () {
             return [];
         };
-        $mol_pager.prototype.bodier = function (next, prev) {
+        $mol_pager.prototype.bodier = function (next) {
             var _this = this;
             return new $.$mol_scroller().setup(function (obj) {
                 obj.childs = function () { return _this.body(); };
@@ -4328,7 +4344,7 @@ var $;
         $mol_pager.prototype.foot = function () {
             return [];
         };
-        $mol_pager.prototype.footer = function (next, prev) {
+        $mol_pager.prototype.footer = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return _this.foot(); };
@@ -4373,7 +4389,7 @@ var $;
         function $mol_coder() {
             _super.apply(this, arguments);
         }
-        $mol_coder.prototype.value = function (next, prev) {
+        $mol_coder.prototype.value = function (next) {
             return (next !== void 0) ? next : "";
         };
         $mol_coder.prototype.format = function () {
@@ -4382,23 +4398,23 @@ var $;
         $mol_coder.prototype.hint = function () {
             return this.format();
         };
-        $mol_coder.prototype.manualer = function (next, prev) {
+        $mol_coder.prototype.manualer = function (next) {
             var _this = this;
             return new $.$mol_stringer().setup(function (obj) {
-                obj.value = function (next, prev) { return _this.value(next, prev); };
+                obj.value = function (next) { return _this.value(next); };
                 obj.hint = function () { return _this.hint(); };
             });
         };
-        $mol_coder.prototype.eventScan = function (next, prev) {
+        $mol_coder.prototype.eventScan = function (next) {
             return (next !== void 0) ? next : null;
         };
         $mol_coder.prototype.labelScan = function () {
             return this.localizedText("labelScan");
         };
-        $mol_coder.prototype.scanner = function (next, prev) {
+        $mol_coder.prototype.scanner = function (next) {
             var _this = this;
             return new $.$mol_clicker().setup(function (obj) {
-                obj.eventClick = function (next, prev) { return _this.eventScan(next, prev); };
+                obj.eventClick = function (next) { return _this.eventScan(next); };
                 obj.childs = function () { return [].concat(_this.labelScan()); };
             });
         };
@@ -4502,17 +4518,17 @@ var $;
         $mol_app_supplies_lister.prototype.searcherHint = function () {
             return this.localizedText("searcherHint");
         };
-        $mol_app_supplies_lister.prototype.searchQuery = function (next, prev) {
+        $mol_app_supplies_lister.prototype.searchQuery = function (next) {
             return (next !== void 0) ? next : "";
         };
-        $mol_app_supplies_lister.prototype.searcher = function (next, prev) {
+        $mol_app_supplies_lister.prototype.searcher = function (next) {
             var _this = this;
             return new $.$mol_coder().setup(function (obj) {
                 obj.hint = function () { return _this.searcherHint(); };
-                obj.value = function (next, prev) { return _this.searchQuery(next, prev); };
+                obj.value = function (next) { return _this.searchQuery(next); };
             });
         };
-        $mol_app_supplies_lister.prototype.searchPanel = function (next, prev) {
+        $mol_app_supplies_lister.prototype.searchPanel = function (next) {
             var _this = this;
             return new $.$mol_rower().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.searcher()); };
@@ -4524,7 +4540,7 @@ var $;
         $mol_app_supplies_lister.prototype.supplyRows = function () {
             return [];
         };
-        $mol_app_supplies_lister.prototype.lister = function (next, prev) {
+        $mol_app_supplies_lister.prototype.lister = function (next) {
             var _this = this;
             return new $.$mol_lister().setup(function (obj) {
                 obj.rows = function () { return _this.supplyRows(); };
@@ -4678,7 +4694,7 @@ var $;
         $mol_icon.prototype.path = function () {
             return "";
         };
-        $mol_icon.prototype.pather = function (next, prev) {
+        $mol_icon.prototype.pather = function (next) {
             var _this = this;
             return new $.$mol_svg_path().setup(function (obj) {
                 obj.geometry = function () { return _this.path(); };
@@ -4735,13 +4751,13 @@ var $;
         function $mol_checker() {
             _super.apply(this, arguments);
         }
-        $mol_checker.prototype.checked = function (next, prev) {
+        $mol_checker.prototype.checked = function (next) {
             return (next !== void 0) ? next : false;
         };
         $mol_checker.prototype.attr = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.attr.call(this), {
-                "mol_checker_checked": function (next, prev) { return _this.checked(next, prev); },
+                "mol_checker_checked": function (next) { return _this.checked(next); },
             });
         };
         $mol_checker.prototype.icon = function () {
@@ -4750,7 +4766,7 @@ var $;
         $mol_checker.prototype.label = function () {
             return [];
         };
-        $mol_checker.prototype.labeler = function (next, prev) {
+        $mol_checker.prototype.labeler = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.label()); };
@@ -4820,21 +4836,21 @@ var $;
         $mol_switcher.prototype.enabled = function () {
             return true;
         };
-        $mol_switcher.prototype.optionChecked = function (key, next, prev) {
+        $mol_switcher.prototype.optionChecked = function (key, next) {
             return (next !== void 0) ? next : false;
         };
         $mol_switcher.prototype.optionLabel = function (key) {
             return "";
         };
-        $mol_switcher.prototype.optioner = function (key, next, prev) {
+        $mol_switcher.prototype.optioner = function (key, next) {
             var _this = this;
             return new $.$mol_checker().setup(function (obj) {
-                obj.checked = function (next, prev) { return _this.optionChecked(key, next, prev); };
+                obj.checked = function (next) { return _this.optionChecked(key, next); };
                 obj.label = function () { return [].concat(_this.optionLabel(key)); };
                 obj.enabled = function () { return _this.enabled(); };
             });
         };
-        $mol_switcher.prototype.value = function (next, prev) {
+        $mol_switcher.prototype.value = function (next) {
             return (next !== void 0) ? next : null;
         };
         $mol_switcher.prototype.options = function () {
@@ -4930,16 +4946,16 @@ var $;
         $mol_decker.prototype.items = function () {
             return [];
         };
-        $mol_decker.prototype.current = function (next, prev) {
+        $mol_decker.prototype.current = function (next) {
             return (next !== void 0) ? next : "0";
         };
         $mol_decker.prototype.switcherOptions = function () {
             return ({});
         };
-        $mol_decker.prototype.switcher = function (next, prev) {
+        $mol_decker.prototype.switcher = function (next) {
             var _this = this;
             return new $.$mol_switcher().setup(function (obj) {
-                obj.value = function (next, prev) { return _this.current(next, prev); };
+                obj.value = function (next) { return _this.current(next); };
                 obj.options = function () { return _this.switcherOptions(); };
             });
         };
@@ -5042,7 +5058,7 @@ var $;
         $mol_sectioner.prototype.head = function () {
             return null;
         };
-        $mol_sectioner.prototype.header = function (next, prev) {
+        $mol_sectioner.prototype.header = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.head()); };
@@ -5215,22 +5231,22 @@ var $;
         function $mol_attacher() {
             _super.apply(this, arguments);
         }
-        $mol_attacher.prototype.items = function (next, prev) {
+        $mol_attacher.prototype.items = function (next) {
             return (next !== void 0) ? next : [];
         };
-        $mol_attacher.prototype.attachNew = function (next, prev) {
+        $mol_attacher.prototype.attachNew = function (next) {
             return (next !== void 0) ? next : "";
         };
-        $mol_attacher.prototype.adder = function (next, prev) {
+        $mol_attacher.prototype.adder = function (next) {
             var _this = this;
             return new $.$mol_attacher_adder().setup(function (obj) {
-                obj.fileNew = function (next, prev) { return _this.attachNew(next, prev); };
+                obj.fileNew = function (next) { return _this.attachNew(next); };
             });
         };
-        $mol_attacher.prototype.content = function (next, prev) {
-            return (next !== void 0) ? next : [].concat(this.items(next, prev), this.adder());
+        $mol_attacher.prototype.content = function (next) {
+            return (next !== void 0) ? next : [].concat(this.items(next), this.adder());
         };
-        $mol_attacher.prototype.contenter = function (next, prev) {
+        $mol_attacher.prototype.contenter = function (next) {
             var _this = this;
             return new $.$mol_tiler().setup(function (obj) {
                 obj.items = function () { return _this.content(); };
@@ -5259,14 +5275,14 @@ var $;
         function $mol_attacher_item() {
             _super.apply(this, arguments);
         }
-        $mol_attacher_item.prototype.urlThumb = function (next, prev) {
+        $mol_attacher_item.prototype.urlThumb = function (next) {
             return (next !== void 0) ? next : "";
         };
-        $mol_attacher_item.prototype.urlLoad = function (next, prev) {
+        $mol_attacher_item.prototype.urlLoad = function (next) {
             return (next !== void 0) ? next : "";
         };
-        $mol_attacher_item.prototype.uri = function (next, prev) {
-            return this.urlLoad(next, prev);
+        $mol_attacher_item.prototype.uri = function (next) {
+            return this.urlLoad(next);
         };
         $mol_attacher_item.prototype.styleBG = function () {
             return "";
@@ -5309,20 +5325,20 @@ var $;
         $mol_attacher_adder.prototype.fileNew = function () {
             return "";
         };
-        $mol_attacher_adder.prototype.icon = function (next, prev) {
+        $mol_attacher_adder.prototype.icon = function (next) {
             return new $.$mol_icon_attach();
         };
-        $mol_attacher_adder.prototype.eventCapture = function (next, prev) {
+        $mol_attacher_adder.prototype.eventCapture = function (next) {
             return (next !== void 0) ? next : null;
         };
-        $mol_attacher_adder.prototype.eventPicked = function (next, prev) {
+        $mol_attacher_adder.prototype.eventPicked = function (next) {
             return (next !== void 0) ? next : null;
         };
-        $mol_attacher_adder.prototype.input = function (next, prev) {
+        $mol_attacher_adder.prototype.input = function (next) {
             var _this = this;
             return new $.$mol_attacher_adder_input().setup(function (obj) {
-                obj.eventCapture = function (next, prev) { return _this.eventCapture(next, prev); };
-                obj.eventPicked = function (next, prev) { return _this.eventPicked(next, prev); };
+                obj.eventCapture = function (next) { return _this.eventCapture(next); };
+                obj.eventPicked = function (next) { return _this.eventPicked(next); };
             });
         };
         $mol_attacher_adder.prototype.childs = function () {
@@ -5371,19 +5387,19 @@ var $;
                 "multiple": function () { return _this.multiple(); },
             });
         };
-        $mol_attacher_adder_input.prototype.eventCapture = function (next, prev) {
+        $mol_attacher_adder_input.prototype.eventCapture = function (next) {
             return (next !== void 0) ? next : null;
         };
-        $mol_attacher_adder_input.prototype.eventClick = function (next, prev) {
-            return this.eventCapture(next, prev);
+        $mol_attacher_adder_input.prototype.eventClick = function (next) {
+            return this.eventCapture(next);
         };
-        $mol_attacher_adder_input.prototype.eventPicked = function (next, prev) {
+        $mol_attacher_adder_input.prototype.eventPicked = function (next) {
             return (next !== void 0) ? next : null;
         };
         $mol_attacher_adder_input.prototype.event = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.event.call(this), {
-                "change": function (next, prev) { return _this.eventPicked(next, prev); },
+                "change": function (next) { return _this.eventPicked(next); },
             });
         };
         __decorate([
@@ -5520,7 +5536,7 @@ var $;
         function $mol_checker_ticker() {
             _super.apply(this, arguments);
         }
-        $mol_checker_ticker.prototype.icon = function (next, prev) {
+        $mol_checker_ticker.prototype.icon = function (next) {
             return new $.$mol_icon_tick();
         };
         __decorate([
@@ -5556,7 +5572,7 @@ var $;
         $mol_app_supplies_detailer.prototype.title = function () {
             return this.localizedText("title");
         };
-        $mol_app_supplies_detailer.prototype.backer_icon = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.backer_icon = function (next) {
             return new $.$mol_icon_chevron();
         };
         $mol_app_supplies_detailer.prototype.backArg = function () {
@@ -5565,7 +5581,7 @@ var $;
                 "supply": function () { return null; },
             });
         };
-        $mol_app_supplies_detailer.prototype.backer = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.backer = function (next) {
             var _this = this;
             return new $.$mol_linker().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.backer_icon()); };
@@ -5584,7 +5600,7 @@ var $;
         $mol_app_supplies_detailer.prototype.providerName = function () {
             return "";
         };
-        $mol_app_supplies_detailer.prototype.providerItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.providerItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.providerLabel(); };
@@ -5597,7 +5613,7 @@ var $;
         $mol_app_supplies_detailer.prototype.consumerName = function () {
             return "";
         };
-        $mol_app_supplies_detailer.prototype.consumerItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.consumerItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.customerLabel(); };
@@ -5610,7 +5626,7 @@ var $;
         $mol_app_supplies_detailer.prototype.supplyGroupName = function () {
             return "";
         };
-        $mol_app_supplies_detailer.prototype.supplyGroupItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.supplyGroupItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.supplyGroupLabel(); };
@@ -5623,7 +5639,7 @@ var $;
         $mol_app_supplies_detailer.prototype.ballanceUnitName = function () {
             return "";
         };
-        $mol_app_supplies_detailer.prototype.ballanceUnitItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.ballanceUnitItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.ballanceUnitLabel(); };
@@ -5633,13 +5649,13 @@ var $;
         $mol_app_supplies_detailer.prototype.orgItems = function () {
             return [].concat(this.providerItem(), this.consumerItem(), this.supplyGroupItem(), this.ballanceUnitItem());
         };
-        $mol_app_supplies_detailer.prototype.orgContent = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.orgContent = function (next) {
             var _this = this;
             return new $.$mol_rower().setup(function (obj) {
                 obj.childs = function () { return _this.orgItems(); };
             });
         };
-        $mol_app_supplies_detailer.prototype.orgItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.orgItem = function (next) {
             var _this = this;
             return new $.$mol_decker_item().setup(function (obj) {
                 obj.title = function () { return _this.orgLabel(); };
@@ -5655,7 +5671,7 @@ var $;
         $mol_app_supplies_detailer.prototype.contractId = function () {
             return "";
         };
-        $mol_app_supplies_detailer.prototype.contractItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.contractItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.contractLabel(); };
@@ -5668,7 +5684,7 @@ var $;
         $mol_app_supplies_detailer.prototype.payMethodName = function () {
             return "";
         };
-        $mol_app_supplies_detailer.prototype.payMethodItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.payMethodItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.payMethodLabel(); };
@@ -5681,7 +5697,7 @@ var $;
         $mol_app_supplies_detailer.prototype.managerName = function () {
             return "";
         };
-        $mol_app_supplies_detailer.prototype.managerItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.managerItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.managerLabel(); };
@@ -5694,7 +5710,7 @@ var $;
         $mol_app_supplies_detailer.prototype.debitorName = function () {
             return "";
         };
-        $mol_app_supplies_detailer.prototype.debitorItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.debitorItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.debitodLabel(); };
@@ -5704,26 +5720,26 @@ var $;
         $mol_app_supplies_detailer.prototype.consItems = function () {
             return [].concat(this.contractItem(), this.payMethodItem(), this.managerItem(), this.debitorItem());
         };
-        $mol_app_supplies_detailer.prototype.consContent = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.consContent = function (next) {
             var _this = this;
             return new $.$mol_rower().setup(function (obj) {
                 obj.childs = function () { return _this.consItems(); };
             });
         };
-        $mol_app_supplies_detailer.prototype.consItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.consItem = function (next) {
             var _this = this;
             return new $.$mol_decker_item().setup(function (obj) {
                 obj.title = function () { return _this.consLabel(); };
                 obj.content = function () { return _this.consContent(); };
             });
         };
-        $mol_app_supplies_detailer.prototype.descrDecker = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.descrDecker = function (next) {
             var _this = this;
             return new $.$mol_decker().setup(function (obj) {
                 obj.items = function () { return [].concat(_this.orgItem(), _this.consItem()); };
             });
         };
-        $mol_app_supplies_detailer.prototype.descrCarder = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.descrCarder = function (next) {
             var _this = this;
             return new $.$mol_carder().setup(function (obj) {
                 obj.content = function () { return _this.descrDecker(); };
@@ -5735,17 +5751,17 @@ var $;
         $mol_app_supplies_detailer.prototype.attachments = function () {
             return [];
         };
-        $mol_app_supplies_detailer.prototype.attachNew = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.attachNew = function (next) {
             return (next !== void 0) ? next : null;
         };
-        $mol_app_supplies_detailer.prototype.attacher = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.attacher = function (next) {
             var _this = this;
             return new $.$mol_attacher().setup(function (obj) {
                 obj.items = function () { return _this.attachments(); };
-                obj.attachNew = function (next, prev) { return _this.attachNew(next, prev); };
+                obj.attachNew = function (next) { return _this.attachNew(next); };
             });
         };
-        $mol_app_supplies_detailer.prototype.attachCarder = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.attachCarder = function (next) {
             var _this = this;
             return new $.$mol_sectioner().setup(function (obj) {
                 obj.head = function () { return _this.attachTitle(); };
@@ -5758,18 +5774,18 @@ var $;
         $mol_app_supplies_detailer.prototype.costLabel = function () {
             return this.localizedText("costLabel");
         };
-        $mol_app_supplies_detailer.prototype.cost = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.cost = function (next) {
             return new $.$mol_unit_money().setup(function (obj) {
                 obj.valueOf = function () { return 0; };
             });
         };
-        $mol_app_supplies_detailer.prototype.coster = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.coster = function (next) {
             var _this = this;
             return new $.$mol_coster().setup(function (obj) {
                 obj.value = function () { return _this.cost(); };
             });
         };
-        $mol_app_supplies_detailer.prototype.costItem = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.costItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.costLabel(); };
@@ -5782,7 +5798,7 @@ var $;
         $mol_app_supplies_detailer.prototype.positions = function () {
             return [];
         };
-        $mol_app_supplies_detailer.prototype.posLister = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.posLister = function (next) {
             var _this = this;
             return new $.$mol_sectioner().setup(function (obj) {
                 obj.head = function () { return _this.posListerHead(); };
@@ -5792,13 +5808,13 @@ var $;
         $mol_app_supplies_detailer.prototype.content = function () {
             return [].concat(this.descrCarder(), this.attachCarder(), this.posLister());
         };
-        $mol_app_supplies_detailer.prototype.contenter = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.contenter = function (next) {
             var _this = this;
             return new $.$mol_lister().setup(function (obj) {
                 obj.rows = function () { return _this.content(); };
             });
         };
-        $mol_app_supplies_detailer.prototype.lister = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.lister = function (next) {
             var _this = this;
             return new $.$mol_lister().setup(function (obj) {
                 obj.rows = function () { return [].concat(_this.contenter()); };
@@ -5807,23 +5823,23 @@ var $;
         $mol_app_supplies_detailer.prototype.body = function () {
             return [].concat(this.lister());
         };
-        $mol_app_supplies_detailer.prototype.approved = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.approved = function (next) {
             return (next !== void 0) ? next : false;
         };
         $mol_app_supplies_detailer.prototype.approvedLabel = function () {
             return this.localizedText("approvedLabel");
         };
-        $mol_app_supplies_detailer.prototype.approver = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.approver = function (next) {
             var _this = this;
             return new $.$mol_checker_ticker().setup(function (obj) {
-                obj.checked = function (next, prev) { return _this.approved(next, prev); };
+                obj.checked = function (next) { return _this.approved(next); };
                 obj.label = function () { return [].concat(_this.approvedLabel()); };
             });
         };
         $mol_app_supplies_detailer.prototype.tools = function () {
             return [].concat(this.approver());
         };
-        $mol_app_supplies_detailer.prototype.controller = function (next, prev) {
+        $mol_app_supplies_detailer.prototype.controller = function (next) {
             var _this = this;
             return new $.$mol_rower().setup(function (obj) {
                 obj.childs = function () { return _this.tools(); };
@@ -5949,7 +5965,7 @@ var $;
         $mol_app_supplies_positioner.prototype.productName = function () {
             return "";
         };
-        $mol_app_supplies_positioner.prototype.productItem = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.productItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.productLabel(); };
@@ -5959,25 +5975,25 @@ var $;
         $mol_app_supplies_positioner.prototype.costlabel = function () {
             return this.localizedText("costlabel");
         };
-        $mol_app_supplies_positioner.prototype.cost = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.cost = function (next) {
             return new $.$mol_unit_money().setup(function (obj) {
                 obj.valueOf = function () { return 0; };
             });
         };
-        $mol_app_supplies_positioner.prototype.coster = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.coster = function (next) {
             var _this = this;
             return new $.$mol_coster().setup(function (obj) {
                 obj.value = function () { return _this.cost(); };
             });
         };
-        $mol_app_supplies_positioner.prototype.costItem = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.costItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.costlabel(); };
                 obj.content = function () { return _this.coster(); };
             });
         };
-        $mol_app_supplies_positioner.prototype.mainGroup = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.mainGroup = function (next) {
             var _this = this;
             return new $.$mol_rower().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.productItem(), _this.costItem()); };
@@ -5989,7 +6005,7 @@ var $;
         $mol_app_supplies_positioner.prototype.divisionName = function () {
             return "";
         };
-        $mol_app_supplies_positioner.prototype.divisionItem = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.divisionItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.divisionLabel(); };
@@ -5999,25 +6015,25 @@ var $;
         $mol_app_supplies_positioner.prototype.priceLabel = function () {
             return this.localizedText("priceLabel");
         };
-        $mol_app_supplies_positioner.prototype.price = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.price = function (next) {
             return new $.$mol_unit_money().setup(function (obj) {
                 obj.valueOf = function () { return 0; };
             });
         };
-        $mol_app_supplies_positioner.prototype.pricer = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.pricer = function (next) {
             var _this = this;
             return new $.$mol_coster().setup(function (obj) {
                 obj.value = function () { return _this.price(); };
             });
         };
-        $mol_app_supplies_positioner.prototype.priceItem = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.priceItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.priceLabel(); };
                 obj.content = function () { return _this.pricer(); };
             });
         };
-        $mol_app_supplies_positioner.prototype.addonGroup = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.addonGroup = function (next) {
             var _this = this;
             return new $.$mol_rower().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.divisionItem(), _this.priceItem()); };
@@ -6029,7 +6045,7 @@ var $;
         $mol_app_supplies_positioner.prototype.quantity = function () {
             return "";
         };
-        $mol_app_supplies_positioner.prototype.quantityItem = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.quantityItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.quantityLabel(); };
@@ -6042,7 +6058,7 @@ var $;
         $mol_app_supplies_positioner.prototype.supplyDate = function () {
             return "";
         };
-        $mol_app_supplies_positioner.prototype.supplyDateItem = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.supplyDateItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.supplyDateLabel(); };
@@ -6055,20 +6071,20 @@ var $;
         $mol_app_supplies_positioner.prototype.storeName = function () {
             return "";
         };
-        $mol_app_supplies_positioner.prototype.storeItem = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.storeItem = function (next) {
             var _this = this;
             return new $.$mol_labeler().setup(function (obj) {
                 obj.title = function () { return _this.storeLabel(); };
                 obj.content = function () { return _this.storeName(); };
             });
         };
-        $mol_app_supplies_positioner.prototype.supplyGroup = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.supplyGroup = function (next) {
             var _this = this;
             return new $.$mol_rower().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.quantityItem(), _this.supplyDateItem(), _this.storeItem()); };
             });
         };
-        $mol_app_supplies_positioner.prototype.grouper = function (next, prev) {
+        $mol_app_supplies_positioner.prototype.grouper = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return [].concat(_this.mainGroup(), _this.addonGroup(), _this.supplyGroup()); };
@@ -6310,32 +6326,32 @@ var $;
         function $mol_app_supplies_root() {
             _super.apply(this, arguments);
         }
-        $mol_app_supplies_root.prototype.entered = function (next, prev) {
+        $mol_app_supplies_root.prototype.entered = function (next) {
             return (next !== void 0) ? next : false;
         };
-        $mol_app_supplies_root.prototype.enter = function (next, prev) {
+        $mol_app_supplies_root.prototype.enter = function (next) {
             var _this = this;
             return new $.$mol_app_supplies_enter().setup(function (obj) {
-                obj.entered = function (next, prev) { return _this.entered(next, prev); };
+                obj.entered = function (next) { return _this.entered(next); };
             });
         };
         $mol_app_supplies_root.prototype.supplies = function () {
             return [];
         };
-        $mol_app_supplies_root.prototype.searchQuery = function (next, prev) {
+        $mol_app_supplies_root.prototype.searchQuery = function (next) {
             return (next !== void 0) ? next : "";
         };
-        $mol_app_supplies_root.prototype.lister = function (next, prev) {
+        $mol_app_supplies_root.prototype.lister = function (next) {
             var _this = this;
             return new $.$mol_app_supplies_lister().setup(function (obj) {
                 obj.supplies = function () { return _this.supplies(); };
-                obj.searchQuery = function (next, prev) { return _this.searchQuery(next, prev); };
+                obj.searchQuery = function (next) { return _this.searchQuery(next); };
             });
         };
         $mol_app_supplies_root.prototype.supply = function () {
             return null;
         };
-        $mol_app_supplies_root.prototype.detailer = function (next, prev) {
+        $mol_app_supplies_root.prototype.detailer = function (next) {
             var _this = this;
             return new $.$mol_app_supplies_detailer().setup(function (obj) {
                 obj.supply = function () { return _this.supply(); };
@@ -6481,7 +6497,7 @@ var $;
         $mol_app_supplies_positioner_demo.prototype.productName = function () {
             return this.localizedText("productName");
         };
-        $mol_app_supplies_positioner_demo.prototype.price = function (next, prev) {
+        $mol_app_supplies_positioner_demo.prototype.price = function (next) {
             return new $.$mol_unit_money_usd().setup(function (obj) {
                 obj.valueOf = function () { return 1; };
             });
@@ -6489,7 +6505,7 @@ var $;
         $mol_app_supplies_positioner_demo.prototype.quantity = function () {
             return "100";
         };
-        $mol_app_supplies_positioner_demo.prototype.cost = function (next, prev) {
+        $mol_app_supplies_positioner_demo.prototype.cost = function (next) {
             return new $.$mol_unit_money_usd().setup(function (obj) {
                 obj.valueOf = function () { return 100; };
             });
@@ -6536,13 +6552,13 @@ var $;
         $mol_app_supplies_detailer_demo.prototype.title = function () {
             return this.localizedText("title");
         };
-        $mol_app_supplies_detailer_demo.prototype.approved = function (next, prev) {
+        $mol_app_supplies_detailer_demo.prototype.approved = function (next) {
             return (next !== void 0) ? next : false;
         };
         $mol_app_supplies_detailer_demo.prototype.providerName = function () {
             return this.localizedText("providerName");
         };
-        $mol_app_supplies_detailer_demo.prototype.cost = function (next, prev) {
+        $mol_app_supplies_detailer_demo.prototype.cost = function (next) {
             return new $.$mol_unit_money_rur().setup(function (obj) {
                 obj.valueOf = function () { return 1234567; };
             });
@@ -6568,19 +6584,19 @@ var $;
         $mol_app_supplies_detailer_demo.prototype.debitorName = function () {
             return this.localizedText("debitorName");
         };
-        $mol_app_supplies_detailer_demo.prototype.pos1 = function (next, prev) {
+        $mol_app_supplies_detailer_demo.prototype.pos1 = function (next) {
             return new $.$mol_app_supplies_positioner_demo();
         };
-        $mol_app_supplies_detailer_demo.prototype.pos2 = function (next, prev) {
+        $mol_app_supplies_detailer_demo.prototype.pos2 = function (next) {
             return new $.$mol_app_supplies_positioner_demo();
         };
-        $mol_app_supplies_detailer_demo.prototype.pos3 = function (next, prev) {
+        $mol_app_supplies_detailer_demo.prototype.pos3 = function (next) {
             return new $.$mol_app_supplies_positioner_demo();
         };
-        $mol_app_supplies_detailer_demo.prototype.pos4 = function (next, prev) {
+        $mol_app_supplies_detailer_demo.prototype.pos4 = function (next) {
             return new $.$mol_app_supplies_positioner_demo();
         };
-        $mol_app_supplies_detailer_demo.prototype.pos5 = function (next, prev) {
+        $mol_app_supplies_detailer_demo.prototype.pos5 = function (next) {
             return new $.$mol_app_supplies_positioner_demo();
         };
         $mol_app_supplies_detailer_demo.prototype.positions = function () {
