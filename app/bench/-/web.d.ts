@@ -723,7 +723,7 @@ declare namespace $ {
 }
 declare namespace $.$mol {
     class $mol_bencher extends $.$mol_bencher {
-        colSort(next?: string): any;
+        colSort(next?: string): string;
         resultsSorted(): any;
         resultValue(id: {
             row: string;
@@ -972,7 +972,7 @@ declare namespace $ {
 }
 declare namespace $.$mol {
     class $mol_app_bench extends $.$mol_app_bench {
-        bench(next?: string): any;
+        bench(next?: string): string;
         sandbox(next?: HTMLIFrameElement, force?: $mol_atom_force): HTMLIFrameElement;
         'commandCurrent()': any[];
         commandCurrent(next?: any[], force?: $mol_atom_force): any[];
@@ -1012,7 +1012,7 @@ declare namespace $.$mol {
                 [step: string]: any;
             };
         };
-        resultsColSort(next?: string): any;
+        resultsColSort(next?: string): string;
         menuOptions(): $mol_checker_ticker[];
         menuOptionerTitle(sample: string): string;
         menuOptionerChecked(sample: string, next?: boolean): boolean;
