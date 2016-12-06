@@ -9,11 +9,9 @@ $mol_texter $mol_lister
 	header# $mol_texter_header
 		level < headerLevel# 0
 		content < headerContent# /
-	tabler# $mol_scroller
-		childs /
-			< tablerGrider# $mol_grider
-				headerCellers < tablerHeaderCellers# /
-				rowers < tablerRowers# /
+	tabler# $mol_grider
+		headerCellers < tablerHeaderCellers# /
+		rowers < tablerRowers# /
 	tablerRower# $mol_grider_rower
 		cellers < tablerCellers# /
 	tablerCeller# $mol_grider_celler

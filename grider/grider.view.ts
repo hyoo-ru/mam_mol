@@ -3,7 +3,7 @@ namespace $.$mol {
 	export class $mol_grider extends $.$mol_grider {
 		
 		@ $mol_mem()
-		childs() {
+		rowersVisible() {
 			const rowers = this.rowers()
 			if( !rowers ) return null
 			
@@ -23,7 +23,7 @@ namespace $.$mol {
 			if( !rowers ) return null
 			
 			const count = rowers.length
-			const context = this.context()
+			const context = this.contextSub()
 			const scrollTop = context.$mol_scroller_scrollTop()
 			const heightLimit = context.$mol_viewer_heightLimit()
 			const rowHeight = this.rowHeight()

@@ -1,6 +1,4 @@
-$mol_grider $mol_viewer
-	tagName \table
-	-
+$mol_grider $mol_scroller
 	rows /
 	row# null
 	cols /
@@ -8,6 +6,11 @@ $mol_grider $mol_viewer
 	record# null
 	hierarhyColumn \
 	-
+	childs /
+		< tabler $mol_viewer
+			tagName \table
+			childs /
+				< rowersVisible /
 	rowers /
 	header $mol_grider_rower
 		height < rowHeight 40
