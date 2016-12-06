@@ -415,14 +415,13 @@ namespace $ {
 					if( !type || type === 'd.ts' ) {
 						res = res.concat( this.bundleDTS( { path , exclude , bundle : env } ) )
 					}
-					if( !type || /^locale(?:=.*)?.json$/.test( type ) ) {
+					if( !type || /^locale(?:=\w+)?.json$/.test( type ) ) {
 						res = res.concat(
 							this.bundleLocale(
 								{
 									path ,
 									exclude ,
-									bundle : env ,
-									locale : type ? locale : 'en'
+									bundle : env
 								}
 							)
 						)
@@ -616,38 +615,47 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key()
-		bundleLocale( { path , exclude , bundle , locale } : { path : string , exclude? : string[] , bundle : string , locale : string } ) : $mol_file[] {
+		bundleLocale( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			const pack = $mol_file.absolute( path )
 			
-			const sources = this.sourcesAll( { path , exclude } ).filter( src => /(locale\.json)$/.test( src.ext() ) )
+			const sources = this.sourcesAll( { path , exclude } ).filter( src => /(locale(?:=\w+)?\.json)$/.test( src.name() ) )
 			if( !sources.length ) return []
 			
-			const locales : { [ key : string ] : string } = {}
+			const locales : { [ key : string ] : { [ key : string ] : string } } = { 'en' : {} }
 			
 			sources.forEach(
 				src => {
+					const [ ext , lang = '' ] = /locale(?:=(\w+))?\.json$/.exec( src.name() )
+					
+					if( !locales[ lang ] ) locales[ lang ] = {}
+					
 					const loc = JSON.parse( src.content() )
-					for( let key in loc ) locales[ key ] = loc[ key ]
+					for( let key in loc ) {
+						locales[ lang ][ key ] = loc[ key ]
+					}
 				}
 			)
 			
-			const ext = locale ? `locale=${ locale }.json` : `locale.json`
-			const target = pack.resolve( `-/${bundle}.${ ext }` )
-			
-			if( target.exists() ) {
-				const prevLocales = JSON.parse( target.content() )
-				for( let key in locales ) {
-					if( locales[ key ] && prevLocales[ key ] ) {
-						locales[ key ] = prevLocales[ key ]
+			const targets = Object.keys( locales ).map( lang => {
+				const ext = lang ? `locale=${ lang }.json` : `locale.json`
+				const target = pack.resolve( `-/${bundle}.${ ext }` )
+				
+				const locale = locales[ lang ]
+				if( locales[''] ) {
+					for( let key in locales[''] ) {
+						if( locale[ key ] ) continue
+						locale[ key ] = locales[''][ key ] 
 					}
 				}
-			}
+				
+				target.content( JSON.stringify( locales[ lang ] , null , '\t' ) )
+				
+				this.logBundle( target )
+				
+				return target
+			} )
 			
-			target.content( JSON.stringify( locales , null , '\t' ) )
-			
-			this.logBundle( target )
-			
-			return [ target ]
+			return targets
 		}
 		
 		@ $mol_mem_key()
