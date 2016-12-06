@@ -91,7 +91,7 @@ var $;
             var path = '';
             var owner = this.objectOwner();
             if (owner)
-                path = owner.objectPath();
+                path = owner.toString();
             var field = this.objectField();
             if (field)
                 path += '.' + field;
@@ -389,32 +389,29 @@ var $;
     var $mol_atom_status = $.$mol_atom_status;
     var $mol_atom = (function (_super) {
         __extends($mol_atom, _super);
-        function $mol_atom(handler, host, field) {
+        function $mol_atom(host, handler, field) {
             if (field === void 0) { field = 'value()'; }
             _super.call(this);
-            this.handler = handler;
-            this.host = host;
-            this.field = field;
             this.masters = null;
             this.slaves = null;
             this.status = $mol_atom_status.obsolete;
             this.autoFresh = true;
-            this['value()'] = void 0;
+            this.handler = handler;
+            this.host = Object(host);
+            this.field = field || 'value()';
         }
         $mol_atom.prototype.destroyed = function (next) {
             if (next) {
                 this.unlink();
-                var host = this.host || this;
+                var host = this.host;
                 var value = host[this.field];
                 if (value instanceof $.$mol_object) {
                     if ((value.objectOwner() === host) && (value.objectField() === this.field)) {
                         value.destroyed(true);
                     }
                 }
-                if (this.host) {
-                    host[this.field] = void 0;
-                    host['$mol_atom_state'][this.field] = void 0;
-                }
+                host[this.field] = void null;
+                host[this.field + '@'] = void null;
                 this['destroyed()'] = true;
                 this.log(['.destroyed()', true, 'atom']);
                 return true;
@@ -428,11 +425,11 @@ var $;
             this.checkSlaves();
         };
         $mol_atom.prototype.objectPath = function () {
-            return this.host ? this.host.objectPath() + '.' + this.field : this.field;
+            return this.host + "." + this.field;
         };
         $mol_atom.prototype.get = function (force) {
             if (this.status === $mol_atom_status.pulling) {
-                throw new Error("Cyclic atom dependency of " + this.objectPath());
+                throw new Error("Cyclic atom dependency of " + this);
             }
             this.actualize(force);
             var slave = $mol_atom.stack[0];
@@ -440,7 +437,7 @@ var $;
                 this.lead(slave);
             if (slave)
                 slave.obey(this);
-            var value = (this.host || this)[this.field];
+            var value = this.host[this.field];
             if (value instanceof Error) {
                 if (typeof Proxy !== 'function')
                     throw value;
@@ -477,7 +474,6 @@ var $;
             $mol_atom.stack[0] = slave;
         };
         $mol_atom.prototype.pull = function (force) {
-            var host = this.host || this;
             try {
                 return this.handler(this._next, force);
             }
@@ -504,9 +500,9 @@ var $;
             return this.get();
         };
         $mol_atom.prototype.push = function (next) {
-            var host = this.host || this;
+            var host = this.host;
             var prev = host[this.field];
-            if (next === void 0)
+            if (next === void null)
                 next = prev;
             comparing: if ((next !== prev) && (next instanceof Array) && (prev instanceof Array) && (next.length === prev.length)) {
                 for (var i = 0; i < next['length']; ++i) {
@@ -535,7 +531,7 @@ var $;
                 this.obsoleteSlaves();
             }
             this.status = $mol_atom_status.actual;
-            this._next = void 0;
+            this._next = void null;
             return next;
         };
         $mol_atom.prototype.obsoleteSlaves = function () {
@@ -564,7 +560,7 @@ var $;
             this.log(['obsolete']);
             this.status = $mol_atom_status.obsolete;
             this.checkSlaves();
-            return void 0;
+            return void null;
         };
         $mol_atom.prototype.lead = function (slave) {
             if (!this.slaves) {
@@ -602,7 +598,7 @@ var $;
             this.masters = null;
         };
         $mol_atom.prototype.value = function (next, force) {
-            if (next === void 0) {
+            if (next === void null) {
                 return this.get(force);
             }
             else {
@@ -688,8 +684,8 @@ var $;
         return $mol_atom_force;
     }(Object));
     $.$mol_atom_force = $mol_atom_force;
-    function $mol_atom_task(handler) {
-        var atom = new $mol_atom(function () {
+    function $mol_atom_task(host, handler) {
+        var atom = new $mol_atom(host, function () {
             try {
                 handler();
             }
@@ -715,16 +711,14 @@ var $;
             descr.value = function (next, force) {
                 var host = this;
                 var field = name + "()";
-                var atoms = host['$mol_atom_state'];
-                if (!atoms)
-                    atoms = host['$mol_atom_state'] = {};
-                var info = atoms[field];
-                if (!info) {
-                    atoms[field] = info = new $.$mol_atom(value.bind(host), host, field);
+                var fieldA = field + '@';
+                var atom = host[fieldA];
+                if (!atom) {
+                    host[fieldA] = atom = new $.$mol_atom(host, value.bind(host), field);
                     if (config)
-                        info.autoFresh = !config.lazy;
+                        atom.autoFresh = !config.lazy;
                 }
-                return info.value(next, force);
+                return atom.value(next, force);
             };
             void (descr.value['value'] = value);
         };
@@ -736,16 +730,14 @@ var $;
             descr.value = function (key, next, force) {
                 var host = this;
                 var field = name + "(" + JSON.stringify(key) + ")";
-                var atoms = host['$mol_atom_state'];
-                if (!atoms)
-                    atoms = host['$mol_atom_state'] = {};
-                var info = atoms[field];
-                if (!info) {
-                    atoms[field] = info = new $.$mol_atom(value.bind(host, key), host, field);
+                var fieldA = field + '@';
+                var atom = host[fieldA];
+                if (!atom) {
+                    host[fieldA] = atom = new $.$mol_atom(host, value.bind(host, key), field);
                     if (config)
-                        info.autoFresh = !config.lazy;
+                        atom.autoFresh = !config.lazy;
                 }
-                return info.value(next, force);
+                return atom.value(next, force);
             };
             void (descr.value['value'] = value);
         };

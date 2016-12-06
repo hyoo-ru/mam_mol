@@ -28,27 +28,27 @@
 }
 @-webkit-keyframes mol_viewer_wait_show {
     from {
-        background-image: none
+        background: none
     }
 }
 @keyframes mol_viewer_wait_show {
     from {
-        background-image: none
+        background: none
     }
 }
 @-webkit-keyframes mol_viewer_wait_move {
-    0% {
+    from {
         background-position: 0 0
     }
-    100% {
+    to {
         background-position: 28px 0
     }
 }
 @keyframes mol_viewer_wait_move {
-    0% {
+    from {
         background-position: 0 0
     }
-    100% {
+    to {
         background-position: 28px 0
     }
 }
@@ -56,21 +56,21 @@
 [mol_viewer_error="$mol_atom_wait"] * {
     background-image: -webkit-repeating-linear-gradient(
 		45deg,
-		rgba(0,0,0,.02),
-		rgba(0,0,0,.02) 9px,
-		rgba(255,255,255,.02) 10px,
-		rgba(255,255,255,.02) 20px
+		rgba(0,0,0,.01),
+		rgba(0,0,0,.01) 9px,
+		rgba(255,255,255,.01) 10px,
+		rgba(255,255,255,.01) 20px
 	) !important;
     background-image: repeating-linear-gradient(
 		45deg,
-		rgba(0,0,0,.02),
-		rgba(0,0,0,.02) 9px,
-		rgba(255,255,255,.02) 10px,
-		rgba(255,255,255,.02) 20px
+		rgba(0,0,0,.01),
+		rgba(0,0,0,.01) 9px,
+		rgba(255,255,255,.01) 10px,
+		rgba(255,255,255,.01) 20px
 	) !important;
     background-size: 28px 28px !important;
-    -webkit-animation: mol_viewer_wait_show .5s linear , mol_viewer_wait_move .25s steps(6) infinite !important;
-            animation: mol_viewer_wait_show .5s linear , mol_viewer_wait_move .25s steps(6) infinite !important
+    -webkit-animation: mol_viewer_wait_show .5s ease-in , mol_viewer_wait_move .25s steps(6) infinite !important;
+            animation: mol_viewer_wait_show .5s ease-in , mol_viewer_wait_move .25s steps(6) infinite !important
 }
 [mol_stacker] {
     position: absolute;
@@ -279,7 +279,8 @@
 [mol_icon] {
     fill: currentColor;
     width: 1em;
-    height: 1em
+    height: 1em;
+    vertical-align: -10%
 }
 [mol_checker_expander][disabled] [mol_checker_expander_icon] {
     visibility: hidden
@@ -348,10 +349,9 @@
     margin-left: .5rem;
     width: 5vw
 }
-[mol_bencher_columnHeaderSorter] {
-    vertical-align: middle;
-    margin-left: 8px;
-    margin-left: .5rem
+[mol_bencher_columnHeader] > * {
+    margin: 0 8px;
+    margin: 0 .5rem
 }
 [mol_bencher_header] + [mol_bencher_rower] [mol_portioner_indicator] {
     background: rgb(236, 19, 164)
@@ -571,7 +571,9 @@
     -webkit-box-flex: 1;
         -ms-flex: 1 0 50%;
             flex: 1 0 50%;
-    position: relative
+    position: relative;
+    width: 100%;
+    height: 100%
 }
 [mol_app_bench_resulter] {
     margin: 8px;
@@ -612,8 +614,8 @@
     padding: 8px 16px;
     padding: .5rem 1rem;
     -webkit-box-flex: 1;
-        -ms-flex: 1 1 15em;
-            flex: 1 1 15em;
+        -ms-flex: 1 1 100%;
+            flex: 1 1 100%;
     max-width: 40em
 }
 [mol_app_bench_list_mol] {

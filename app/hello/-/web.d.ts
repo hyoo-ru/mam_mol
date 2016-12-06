@@ -14,11 +14,7 @@ declare namespace $ {
         'objectClassNames()': string[];
         objectClassNames(): string[];
         private 'objectOwner()';
-        objectOwner(next?: {
-            objectPath(): string;
-        }): {
-            objectPath(): string;
-        };
+        objectOwner(next?: Object): Object;
         private 'objectField()';
         objectField(next?: string): string;
         objectPath(next?: string): string;
@@ -116,21 +112,16 @@ declare namespace $ {
         actual,
     }
     class $mol_atom<Value> extends $mol_object {
-        handler: (next?: Value | Error, force?: $mol_atom_force) => Value;
-        host: {
-            objectPath(): string;
-            [key: string]: any;
-        };
-        field: string;
         masters: $mol_set<$mol_atom<any>>;
         slaves: $mol_set<$mol_atom<any>>;
         status: $mol_atom_status;
         autoFresh: boolean;
-        'value()': Value;
-        constructor(handler: (next?: Value | Error, force?: $mol_atom_force) => Value, host?: {
-            objectPath(): string;
+        handler: (next?: Value | Error, force?: $mol_atom_force) => Value;
+        host: {
             [key: string]: any;
-        }, field?: string);
+        };
+        field: string;
+        constructor(host: any, handler: (next?: Value | Error, force?: $mol_atom_force) => Value, field?: string);
         destroyed(next?: boolean): boolean;
         unlink(): void;
         objectPath(): string;
@@ -139,7 +130,7 @@ declare namespace $ {
         pull(force?: $mol_atom_force): any;
         _next: Value;
         set(next: Value): Value;
-        push(next: Value | Error): Error | Value;
+        push(next: Value | Error): Value;
         obsoleteSlaves(): void;
         checkSlaves(): void;
         check(): void;
@@ -149,7 +140,7 @@ declare namespace $ {
         obey(master: $mol_atom<any>): void;
         disobey(master: $mol_atom<any>): void;
         disobeyAll(): void;
-        value(next?: Value, force?: $mol_atom_force): Error | Value;
+        value(next?: Value, force?: $mol_atom_force): Value;
         static stack: $mol_atom<any>[];
         static updating: $mol_atom<any>[];
         static reaping: $mol_set<$mol_atom<any>>;
@@ -169,17 +160,13 @@ declare namespace $ {
         $mol_atom_force: boolean;
         static $mol_atom_force: boolean;
     }
-    function $mol_atom_task<Value>(handler: () => Value): $mol_atom<any>;
+    function $mol_atom_task<Value>(host: any, handler: () => Value): $mol_atom<any>;
 }
 declare namespace $ {
-    function $mol_mem<Host extends {
-        objectPath(): string;
-    }, Value>(config?: {
+    function $mol_mem<Host, Value>(config?: {
         lazy?: boolean;
     }): (obj: Host, name: string, descr: TypedPropertyDescriptor<(next?: Value, force?: $mol_atom_force) => Value>) => void;
-    function $mol_mem_key<Host extends {
-        objectPath(): string;
-    }, Key, Value>(config?: {
+    function $mol_mem_key<Host, Key, Value>(config?: {
         lazy?: boolean;
     }): (obj: Host, name: string, descr: TypedPropertyDescriptor<(key: Key, next?: Value, force?: $mol_atom_force) => Value>) => void;
 }
@@ -300,7 +287,7 @@ declare namespace $ {
         static renderFields(node: Element, fields: {
             [key: string]: (next?: any) => any;
         }): void;
-        DOMTree(next?: Element): Element;
+        DOMTree(): Element;
         attr(): {
             [key: string]: () => string | number | boolean;
         };

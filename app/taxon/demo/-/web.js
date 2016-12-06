@@ -105,7 +105,7 @@ var $;
             var path = '';
             var owner = this.objectOwner();
             if (owner)
-                path = owner.objectPath();
+                path = owner.toString();
             var field = this.objectField();
             if (field)
                 path += '.' + field;
@@ -403,32 +403,29 @@ var $;
     var $mol_atom_status = $.$mol_atom_status;
     var $mol_atom = (function (_super) {
         __extends($mol_atom, _super);
-        function $mol_atom(handler, host, field) {
+        function $mol_atom(host, handler, field) {
             if (field === void 0) { field = 'value()'; }
             _super.call(this);
-            this.handler = handler;
-            this.host = host;
-            this.field = field;
             this.masters = null;
             this.slaves = null;
             this.status = $mol_atom_status.obsolete;
             this.autoFresh = true;
-            this['value()'] = void 0;
+            this.handler = handler;
+            this.host = Object(host);
+            this.field = field || 'value()';
         }
         $mol_atom.prototype.destroyed = function (next) {
             if (next) {
                 this.unlink();
-                var host = this.host || this;
+                var host = this.host;
                 var value = host[this.field];
                 if (value instanceof $.$mol_object) {
                     if ((value.objectOwner() === host) && (value.objectField() === this.field)) {
                         value.destroyed(true);
                     }
                 }
-                if (this.host) {
-                    host[this.field] = void 0;
-                    host['$mol_atom_state'][this.field] = void 0;
-                }
+                host[this.field] = void null;
+                host[this.field + '@'] = void null;
                 this['destroyed()'] = true;
                 this.log(['.destroyed()', true, 'atom']);
                 return true;
@@ -442,11 +439,11 @@ var $;
             this.checkSlaves();
         };
         $mol_atom.prototype.objectPath = function () {
-            return this.host ? this.host.objectPath() + '.' + this.field : this.field;
+            return this.host + "." + this.field;
         };
         $mol_atom.prototype.get = function (force) {
             if (this.status === $mol_atom_status.pulling) {
-                throw new Error("Cyclic atom dependency of " + this.objectPath());
+                throw new Error("Cyclic atom dependency of " + this);
             }
             this.actualize(force);
             var slave = $mol_atom.stack[0];
@@ -454,7 +451,7 @@ var $;
                 this.lead(slave);
             if (slave)
                 slave.obey(this);
-            var value = (this.host || this)[this.field];
+            var value = this.host[this.field];
             if (value instanceof Error) {
                 if (typeof Proxy !== 'function')
                     throw value;
@@ -491,7 +488,6 @@ var $;
             $mol_atom.stack[0] = slave;
         };
         $mol_atom.prototype.pull = function (force) {
-            var host = this.host || this;
             try {
                 return this.handler(this._next, force);
             }
@@ -518,9 +514,9 @@ var $;
             return this.get();
         };
         $mol_atom.prototype.push = function (next) {
-            var host = this.host || this;
+            var host = this.host;
             var prev = host[this.field];
-            if (next === void 0)
+            if (next === void null)
                 next = prev;
             comparing: if ((next !== prev) && (next instanceof Array) && (prev instanceof Array) && (next.length === prev.length)) {
                 for (var i = 0; i < next['length']; ++i) {
@@ -549,7 +545,7 @@ var $;
                 this.obsoleteSlaves();
             }
             this.status = $mol_atom_status.actual;
-            this._next = void 0;
+            this._next = void null;
             return next;
         };
         $mol_atom.prototype.obsoleteSlaves = function () {
@@ -578,7 +574,7 @@ var $;
             this.log(['obsolete']);
             this.status = $mol_atom_status.obsolete;
             this.checkSlaves();
-            return void 0;
+            return void null;
         };
         $mol_atom.prototype.lead = function (slave) {
             if (!this.slaves) {
@@ -616,7 +612,7 @@ var $;
             this.masters = null;
         };
         $mol_atom.prototype.value = function (next, force) {
-            if (next === void 0) {
+            if (next === void null) {
                 return this.get(force);
             }
             else {
@@ -702,8 +698,8 @@ var $;
         return $mol_atom_force;
     }(Object));
     $.$mol_atom_force = $mol_atom_force;
-    function $mol_atom_task(handler) {
-        var atom = new $mol_atom(function () {
+    function $mol_atom_task(host, handler) {
+        var atom = new $mol_atom(host, function () {
             try {
                 handler();
             }
@@ -729,16 +725,14 @@ var $;
             descr.value = function (next, force) {
                 var host = this;
                 var field = name + "()";
-                var atoms = host['$mol_atom_state'];
-                if (!atoms)
-                    atoms = host['$mol_atom_state'] = {};
-                var info = atoms[field];
-                if (!info) {
-                    atoms[field] = info = new $.$mol_atom(value.bind(host), host, field);
+                var fieldA = field + '@';
+                var atom = host[fieldA];
+                if (!atom) {
+                    host[fieldA] = atom = new $.$mol_atom(host, value.bind(host), field);
                     if (config)
-                        info.autoFresh = !config.lazy;
+                        atom.autoFresh = !config.lazy;
                 }
-                return info.value(next, force);
+                return atom.value(next, force);
             };
             void (descr.value['value'] = value);
         };
@@ -750,16 +744,14 @@ var $;
             descr.value = function (key, next, force) {
                 var host = this;
                 var field = name + "(" + JSON.stringify(key) + ")";
-                var atoms = host['$mol_atom_state'];
-                if (!atoms)
-                    atoms = host['$mol_atom_state'] = {};
-                var info = atoms[field];
-                if (!info) {
-                    atoms[field] = info = new $.$mol_atom(value.bind(host, key), host, field);
+                var fieldA = field + '@';
+                var atom = host[fieldA];
+                if (!atom) {
+                    host[fieldA] = atom = new $.$mol_atom(host, value.bind(host, key), field);
                     if (config)
-                        info.autoFresh = !config.lazy;
+                        atom.autoFresh = !config.lazy;
                 }
-                return info.value(next, force);
+                return atom.value(next, force);
             };
             void (descr.value['value'] = value);
         };
@@ -1003,9 +995,10 @@ var $;
             var creds = this.credentials();
             var native = this.native();
             var method = (next === void 0) ? 'Get' : this.method();
-            native.open(method, this.uri(), true, creds && creds.login, creds && creds.password);
+            var uri = this.uri();
+            native.open(method, uri, true, creds && creds.login, creds && creds.password);
             native.send(next);
-            throw new $.$mol_atom_wait(this.method() + " " + this.uri());
+            throw new $.$mol_atom_wait(method + " " + uri);
         };
         $mol_http_request.prototype.text = function (next, force) {
             return this.response(next, force);
@@ -1198,6 +1191,7 @@ var $;
             return 0;
         };
         $mol_viewer.prototype.DOMNode = function (next) {
+            var _this = this;
             var path = this.objectPath();
             var next2 = next;
             if (!next2) {
@@ -1223,7 +1217,7 @@ var $;
                 for (var _i = 0, _a = ownerProto['objectClassNames'](); _i < _a.length; _i++) {
                     var className = _a[_i];
                     var attrName = className.replace(/\$/g, '') + suffix;
-                    next2.setAttribute(attrName.toLowerCase(), '');
+                    next2.setAttribute(attrName, '');
                     if (className === '$mol_viewer')
                         break;
                 }
@@ -1231,7 +1225,7 @@ var $;
             var proto = Object.getPrototypeOf(this);
             for (var _b = 0, _c = proto['objectClassNames'](); _b < _c.length; _b++) {
                 var className = _c[_b];
-                next2.setAttribute(className.replace(/\$/g, '').toLowerCase(), '');
+                next2.setAttribute(className.replace(/\$/g, ''), '');
                 if (className === '$mol_viewer')
                     break;
             }
@@ -1239,7 +1233,7 @@ var $;
             var _loop_1 = function(name_1) {
                 var handle = events[name_1];
                 next2.addEventListener(name_1, function (event) {
-                    $.$mol_atom_task(function () {
+                    $.$mol_atom_task(_this + ".event()['" + name_1 + "']", function () {
                         handle(event);
                     }).get();
                 });
@@ -1331,7 +1325,7 @@ var $;
                 _loop_2(path);
             }
         };
-        $mol_viewer.prototype.DOMTree = function (next) {
+        $mol_viewer.prototype.DOMTree = function () {
             var node = this.DOMNode();
             try {
                 $mol_viewer.renderChilds(node, this.childsVisible());
@@ -1340,7 +1334,10 @@ var $;
                 return node;
             }
             catch (error) {
-                node.setAttribute('mol_viewer_error', error.name);
+                if (!error['$mol_viewer_catched']) {
+                    node.setAttribute('mol_viewer_error', error.name);
+                    error['$mol_viewer_catched'] = true;
+                }
                 throw error;
             }
         };
@@ -1388,7 +1385,7 @@ var $;
         var _loop_1 = function(i) {
             var view = $[nodes.item(i).getAttribute('mol_viewer_root')].root(i);
             view.DOMNode(nodes.item(i));
-            var win = new $.$mol_atom(function () {
+            var win = new $.$mol_atom("$mol_viewer.root(" + i + ")", function () {
                 view.DOMTree();
                 document.title = view.title();
                 return null;
@@ -2114,6 +2111,29 @@ var $;
 })($ || ($ = {}));
 var $;
 (function ($) {
+    var $mol_svg_root = (function (_super) {
+        __extends($mol_svg_root, _super);
+        function $mol_svg_root() {
+            _super.apply(this, arguments);
+        }
+        $mol_svg_root.prototype.tagName = function () {
+            return "svg";
+        };
+        $mol_svg_root.prototype.viewBox = function () {
+            return "0 0 100 100 ";
+        };
+        $mol_svg_root.prototype.attr = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
+                "viewBox": function () { return _this.viewBox(); },
+            });
+        };
+        return $mol_svg_root;
+    }($.$mol_viewer));
+    $.$mol_svg_root = $mol_svg_root;
+})($ || ($ = {}));
+var $;
+(function ($) {
     var $mol_svg_path = (function (_super) {
         __extends($mol_svg_path, _super);
         function $mol_svg_path() {
@@ -2134,6 +2154,37 @@ var $;
         return $mol_svg_path;
     }($.$mol_svg));
     $.$mol_svg_path = $mol_svg_path;
+})($ || ($ = {}));
+var $;
+(function ($) {
+    var $mol_svg_circle = (function (_super) {
+        __extends($mol_svg_circle, _super);
+        function $mol_svg_circle() {
+            _super.apply(this, arguments);
+        }
+        $mol_svg_circle.prototype.tagName = function () {
+            return "circle";
+        };
+        $mol_svg_circle.prototype.radius = function () {
+            return "";
+        };
+        $mol_svg_circle.prototype.posX = function () {
+            return "";
+        };
+        $mol_svg_circle.prototype.posY = function () {
+            return "";
+        };
+        $mol_svg_circle.prototype.attr = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
+                "r": function () { return _this.radius(); },
+                "cx": function () { return _this.posX(); },
+                "cy": function () { return _this.posY(); },
+            });
+        };
+        return $mol_svg_circle;
+    }($.$mol_svg));
+    $.$mol_svg_circle = $mol_svg_circle;
 })($ || ($ = {}));
 //svg.view.tree.js.map
 ;

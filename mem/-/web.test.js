@@ -192,28 +192,28 @@ var $;
 (function ($) {
     $.$mol_test({
         'caching': function () {
-            var random = new $.$mol_atom(function () { return Math.random(); });
+            var random = new $.$mol_atom('random', function () { return Math.random(); });
             $.$mol_assert_equal(random.get(), random.get());
         },
         'lazyness': function () {
             var value = 0;
-            var prop = new $.$mol_atom(function () { return value = 1; });
+            var prop = new $.$mol_atom('prop', function () { return value = 1; });
             $.$mol_defer.run();
             $.$mol_assert_equal(value, 0);
         },
         'instant actualization': function () {
-            var source = new $.$mol_atom(function (next) { return next || 1; });
-            var middle = new $.$mol_atom(function () { return source.get() + 1; });
-            var target = new $.$mol_atom(function () { return middle.get() + 1; });
+            var source = new $.$mol_atom('source', function (next) { return next || 1; });
+            var middle = new $.$mol_atom('middle', function () { return source.get() + 1; });
+            var target = new $.$mol_atom('target', function () { return middle.get() + 1; });
             $.$mol_assert_equal(target.get(), 3);
             source.set(2);
             $.$mol_assert_equal(target.get(), 4);
         },
         'automatic deferred restart': function () {
             var targetValue;
-            var source = new $.$mol_atom(function (next) { return next || 1; });
-            var middle = new $.$mol_atom(function () { return source.get() + 1; });
-            var target = new $.$mol_atom(function () { return targetValue = middle.get() + 1; });
+            var source = new $.$mol_atom('source', function (next) { return next || 1; });
+            var middle = new $.$mol_atom('middle', function () { return source.get() + 1; });
+            var target = new $.$mol_atom('target', function () { return targetValue = middle.get() + 1; });
             target.get();
             $.$mol_assert_equal(targetValue, 3);
             source.set(2);
