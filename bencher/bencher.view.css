@@ -1,0 +1,24 @@
+[mol_bencher_columnHeader] {
+	cursor: pointer;
+}
+
+[mol_bencher_cellerNumber] {
+	white-space: nowrap;
+	text-align: right;
+}
+
+[mol_bencher_resultPortioner] {
+	display: inline-flex;
+	vertical-align: bottom;
+	margin-left: .5rem;
+	width: 5vw;
+}
+
+[mol_bencher_columnHeaderSorter] {
+	vertical-align: middle;
+	margin-left: .5rem;
+}
+
+[mol_bencher_header] + [mol_bencher_rower] [mol_portioner_indicator] {
+	background: var(--mol_skin_accent);
+}

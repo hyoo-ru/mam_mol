@@ -1,0 +1,20 @@
+$mol_bencher $mol_grider
+	results null
+	records < resultsSorted null
+	colSort \
+	-
+	columnHeader# $mol_bencher_header
+		eventClick > eventSortToggle# null
+		childs < columnHeaderContent# /
+			< columnHeaderLabel# /
+			< columnHeaderSorter# $mol_icon_sort_asc
+	-
+	cellerContentNumber# /
+		< resultValue# \
+		< resultPortioner# $mol_portioner
+			portion < resultPortion# 0
+
+
+$mol_bencher_header $mol_floater
+	event * click > eventClick null
+	attr * title < hint @ \Click to sort by this column

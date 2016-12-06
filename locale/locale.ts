@@ -8,7 +8,7 @@ namespace $ {
 		
 		@ $mol_mem()
 		static lang( next? : string ) {
-			return $mol_state_local.value( 'locale' , next ) || 'en'
+			return $mol_state_local.value( 'locale' , next ) || $mol_state_arg.value( 'locale' ) || 'en'
 		}
 		
 		static texts() {

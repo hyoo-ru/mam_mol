@@ -51,8 +51,23 @@ namespace $.$mol {
 			throw new $mol_atom_wait( `Running ${ command }...` )
 		}
 		
+		meta() {
+			type meta = {
+				title : { [ lang : string ] : string }
+				descr : { [ lang : string ] : string }
+				samples : { [ step : string ] : {
+					title : { [ lang : string ] : string }
+				} }
+				steps : { [ step : string ] : {
+					title : { [ lang : string ] : string }
+				} }
+			}
+			return this.commandResult< meta >( [ 'meta' ] )
+		}
+		
+		@ $mol_mem()
 		samplesAll( next? : string[] ) {
-			return this.commandResult<string[]>( [ 'samples' ] ).slice().sort()
+			return Object.keys( this.meta().samples ).sort()
 		}
 		
 		@ $mol_mem()
@@ -63,7 +78,19 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		steps( next? : string[] ) {
-			return this.commandResult<string[]>( [ 'steps' ] ) as string[]
+			return Object.keys( this.meta().steps )
+		}
+		
+		@ $mol_mem()
+		title() {
+			const title = this.meta().title 
+			return title[ $mol_locale.lang() ] || title[ 'en' ] || super.title()
+		}
+		
+		@ $mol_mem()
+		description() {
+			const descr = this.meta().descr
+			return descr[ $mol_locale.lang() ] || descr[ 'en' ] || ''
 		}
 		
 		@ $mol_mem_key()
@@ -91,23 +118,8 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		resultsSortCol( next? : string ) {
+		resultsColSort( next? : string ) {
 			return $mol_state_arg.value( this.stateKey( 'sort' ) , next )
-		}
-		
-		@ $mol_mem()
-		resultsSorted() {
-			const prev = this.results()
-			const col = this.resultsSortCol()
-			if( !col ) return prev
-			
-			const next : { [ sample : string ] : { [ step : string ] : any } } = {}
-			
-			const keys = Object.keys( prev )
-			keys.sort( ( a , b )=> this.resultNumber({ row : a , col }) - this.resultNumber({ row : b , col }) )
-			keys.forEach( row => next[ row ] = prev[ row ] )
-			
-			return next
 		}
 		
 		menuOptions() {
@@ -128,43 +140,6 @@ namespace $.$mol {
 			return next
 		}
 		
-		griderCeller( id : { row : string , col : string } ) {
-			if( id.col === 'sample' ) return this.resulter().cellerText( id )
-			return this.resulterCellerNumber( id )
-		}
-		
-		resultValue( id : { row : string , col : string } ) {
-			return this.results()[ id.row ][ id.col ]
-		}
-		
-		resultNumber( id : { row : string , col : string } ) {
-			return parseInt( this.resultValue( id ) , 10 )
-		}
-		
-		@ $mol_mem_key()
-		resultMaxValue( col : string ) {
-			let max = 0
-			
-			const results = this.results()
-			for( let sample in results ) {
-				const numb = this.resultNumber({ row : sample , col })
-				if( numb > max ) max = numb
-			}
-			
-			return max
-		}
-		
-		resultPortion( id : { row : string , col : string } ) {
-			return this.resultNumber( id ) / this.resultMaxValue( id.col )
-		}
-		
-		resulterHeaderTitle( col : string ) {
-			return col
-		}
-		
-		eventResulterSortToggle( col : string , next? : Event ) {
-			this.resultsSortCol( col )
-		}
 	}
 	
 }

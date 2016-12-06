@@ -2,6 +2,7 @@ $mol_grider $mol_viewer
 	tagName \table
 	-
 	rows /
+	row# null
 	cols /
 	records /
 	record# null
@@ -21,9 +22,9 @@ $mol_grider $mol_viewer
 	-
 	celler# null
 	cellerText# $mol_grider_celler
-		childs / < cellerContent# /
+		childs / < cellerContentText# < cellerContent# /
 	cellerNumber# $mol_grider_number
-		childs / < cellerContent# /
+		childs / < cellerContentNumber# < cellerContent# /
 	columnHeader# $mol_floater
 		childs / < columnHeaderContent# /
 	cellerBranch# $mol_grider_branch
