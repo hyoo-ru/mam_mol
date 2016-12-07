@@ -30,17 +30,35 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		mods( { path , exclude } : { path : string , exclude? : string[] } ) {
-			return $mol_file.absolute( path ).childs()
-			.filter(
+			const mods : $mol_file[] = []
+			
+			$mol_file.absolute( path ).childs()
+			.forEach(
 				child => {
-					var name = child.name()
+					const name = child.name()
 					if( !/^[a-z]/.test( name ) ) return false
 					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
+					
+					if( /(view\.tree)$/.test( name ) ) {
+						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
+						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale.json` )
+						
+						const tree = $mol_tree.fromString( String( child.content() ) , child.path() )
+						const res = $mol_viewer_tree2ts( tree )
+						script.content( res.script )
+						locale.content( JSON.stringify( res.locales , null , '\t' ) )
+						
+						mods.push( script , locale )
+					} else {
+						mods.push( child )
+					}
 					
 					return true
 				}
 			)
 			// .sort( ( a , b )=> a.path().length - b.path().length )
+			
+			return mods
 		}
 		
 		@ $mol_mem_key()
@@ -67,7 +85,7 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		sources( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
-			var mod = $mol_file.absolute( path )
+			const mod = $mol_file.absolute( path )
 			switch( mod.type() ) {
 				case 'file' :
 					return [ mod ]
@@ -139,24 +157,7 @@ namespace $ {
 				} )
 			} )
 			
-			let sources2 : $mol_file[] = []
-			sources.forEach(
-				src => {
-					if( !/(view\.tree)$/.test( src.ext() ) ) return sources2.push( src )
-					
-					var targetScript = src.parent().resolve( `-view.tree/${src.name()}.ts` )
-					var targetLocale = src.parent().resolve( `-view.tree/${src.name()}.locale.json` )
-					
-					var tree = $mol_tree.fromString( String( src.content() ) , src.path() )
-					var res = $mol_viewer_tree2ts( tree )
-					targetScript.content( res.script )
-					targetLocale.content( JSON.stringify( res.locales , null , '\t' ) )
-					
-					sources2.push( targetScript , targetLocale )
-				}
-			)
-			
-			return sources2
+			return sources
 		}
 		
 		@ $mol_mem()
@@ -203,7 +204,7 @@ namespace $ {
 		@ $mol_mem_key()
 		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var sources = this.sourcesAll( { path , exclude } )
-			.filter( src => /(js|tsx?|view\.tree)$/.test( src.ext() ) )
+			.filter( src => /(js|tsx?)$/.test( src.ext() ) )
 			if( !sources.length ) return []
 			
 			var sourcesTS : $mol_file[] = []
@@ -753,29 +754,6 @@ namespace $ {
 				
 				line.replace(
 					/(?:--|[\[\.#])([a-z][a-z0-9]+(?:[-_][a-z0-9]+)+)/ig , ( str , name )=> {
-						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[._-]/g , '/' ) ] : priority } )
-						return str
-					}
-				)
-			}
-		)
-		
-		return depends
-	}
-	
-	$mol_build.dependors[ 'view.tree' ] = source => {
-		var depends : { [ index : string ] : number } = { '/mol/merge/dict' : 3 }
-		
-		var lines = String( source.content() )
-		.split( '\n' )
-		
-		lines.forEach(
-			function( line ) {
-				var indent = /^([\s\t]*)/.exec( line )
-				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
-				
-				line.replace(
-					/\$([a-z][a-z0-9]+(?:[-_][a-z0-9]+)*)/ig , ( str , name )=> {
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[._-]/g , '/' ) ] : priority } )
 						return str
 					}
