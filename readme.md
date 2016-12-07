@@ -40,6 +40,9 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/)
 * [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/)
 * [React'ивные Panel'и](https://habrahabr.ru/post/314752/)
+* [Tree — убийца JSON, XML, YAML и иже с ними](https://habrahabr.ru/post/248147/)
+* [Атом — минимальный кирпичик FRP приложения](https://habrahabr.ru/post/235121/)
+* [Принципы написания кода](https://habrahabr.ru/post/236785/)
 
 # Quick start
 
