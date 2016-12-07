@@ -35,6 +35,12 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol_app_bench](app/bench) - frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/))
 * [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)
 
+# Articles
+
+* [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/)
+* [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/)
+* [React'ивные Panel'и](https://habrahabr.ru/post/314752/)
+
 # Quick start
 
 **Create MAM project**
