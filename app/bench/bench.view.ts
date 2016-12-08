@@ -32,21 +32,24 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		commandResult< Result >( command : any[] , next? : Result ) : Result {
 			const sandbox = this.sandbox()
+			sandbox.valueOf()
 			
 			if( next !== void 0 ) return next
 			
 			const current = this.commandCurrent( command )
 			if( current !== command ) throw new $mol_atom_wait( `Waiting for ${ JSON.stringify( current ) }...` )
+			
+			requestAnimationFrame( ()=> {
+				sandbox.contentWindow.postMessage( command , '*' )
 				
-			sandbox.contentWindow.postMessage( command , '*' )
-				
-			window.onmessage = event => {
-				if( event.data[0] !== 'done' ) return
-				window.onmessage = null
-				
-				this.commandCurrent( null , $mol_atom_force )
-				this.commandResult( command , event.data[1] )
-			}
+				window.onmessage = event => {
+					if( event.data[ 0 ] !== 'done' ) return
+					window.onmessage = null
+					
+					this.commandCurrent( null , $mol_atom_force )
+					this.commandResult( command , event.data[ 1 ] )
+				}
+			} )
 			
 			throw new $mol_atom_wait( `Running ${ command }...` )
 		}

@@ -11,7 +11,7 @@
 
 [mol_app_bench_tester] {
 	border: none;
-	flex: 1 0 50%;
+	flex: 1 0 33%;
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -25,7 +25,7 @@
 
 [mol_app_bench_resulter] {
 	background: var(--mol_skin_card);
-	flex: 0 1 50%;
+	flex: 0 1 66%;
 }
 
 [mol_app_bench_menu] {
