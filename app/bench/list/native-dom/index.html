@@ -5,11 +5,11 @@
 	html {
 		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
 	}
-	
+
 	body {
 		margin: 0;
 	}
-	
+
 	.list {
 		padding: .5rem;
 	}
@@ -25,15 +25,15 @@
 		padding: .5rem;
 		cursor: pointer;
 	}
-	
+
 	.list-item-selected {
 		background: #eee;
 	}
-	
+
 	.list-item-title {
 		font-weight: bold;
 	}
-	
+
 </style>
 
 <body>
@@ -46,7 +46,7 @@
 		sample : '' ,
 		items : []
 	}
-	
+
 	var selected = null
 
 	render()
@@ -60,7 +60,7 @@
 		}
 		render()
 	} )
-	
+
 	function render() {
 		dom( {
 			id : 'list' ,
@@ -97,7 +97,7 @@
 			)
 		} )
 	}
-	
+
 	function dom( props ) {
 		var el = document.getElementById( props.id ) || document.createElement( props.tagName || 'div' )
 		for( var key in props ) {
