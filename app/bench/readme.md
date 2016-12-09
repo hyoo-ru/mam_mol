@@ -4,8 +4,8 @@ Common benchmarking interface, that can be added to any of benchmarks.
 
 # Known benchmarks
 
-* [list](list) - Rendering of lists by frameworks ([online](//eigenmethod.github.io/mol/app/bench/#bench=list#sort=fill#))
-* [geometry](geometry) - Rendering of simple geometry by graphics libraries ([online](//eigenmethod.github.io/mol/app/bench/#bench=geometry#sort=render#))
+* [list](list) - Rendering of lists by frameworks ([online](http://eigenmethod.github.io/mol/app/bench/#bench=list#sort=fill#))
+* [geometry](geometry) - Rendering of simple geometry by graphics libraries ([online](http://eigenmethod.github.io/mol/app/bench/#bench=geometry#sort=render#))
 
 # Create your benchmark
 
@@ -47,7 +47,7 @@ Description supports markdown. For every sample and step benchmark will receive 
 
 Deploy benchmark to web server. In example: ```//localhost:8080/mol/app/bench/geometry/```
 
-Open [$mol_app_bench](//eigenmethod.github.io/mol/app/bench/) and type in developer console command like this to switch to your benchmark:
+Open [$mol_app_bench](http://eigenmethod.github.io/mol/app/bench/) and type in developer console command like this to switch to your benchmark:
 
 ```
 $mol_app_bench.root(0).bench( '//localhost:8080/mol/app/bench/geometry/' )
