@@ -5,7 +5,7 @@ namespace $ {
 	export class $mol_hyperhive extends $mol_object {
 		
 		@ $mol_mem_key()
-		static data< Value >( resource : { uri : string , table : string } , next? : Value , force? : $mol_atom_force ) : Value {
+		static data< Value >( resource : { uri : string , table : string } , next? : any , force? : $mol_atom_force ) : Value {
 			
 			if( typeof hhfw === 'undefined' ) {
 				const uri = `${ resource.uri }${ resource.table }/table/${ resource.table }/`
@@ -22,29 +22,47 @@ namespace $ {
 			document.addEventListener(
 				'deviceready' , () => {
 					
-					hhfw.GetDeltaStream(
-						resource.uri ,
-						resource.table ,
-						( result : any ) => {
-							const db = sqlitePlugin.openDatabase(
-								{
-									name : "cpprun.db" ,
-									location : 'default' ,
-								}
+					if( next === void 0 ) {
+						hhfw.GetDeltaStream(
+							resource.uri ,
+							resource.table ,
+							( result : any ) => {
+								const db = sqlitePlugin.openDatabase(
+									{
+										name : "cpprun.db" ,
+										location : 'default' ,
+									}
+								)
+								hhfw.ReadFromStorage(
+									db ,
+									`${ resource.table }_$_${ resource.table }` ,
+									( result2 : any ) => {
+										const range = $mol_range_in( result2.rows )
+										$mol_hyperhive.data( resource , range , $mol_atom_force )
+									} ,
+									handleError ,
+								)
+							} ,
+							handleError ,
+						)
+					} else {
+						for( let key in next ) {
+							hhfw.AddPostParameter(
+								key ,
+								JSON.stringify( next[ key ] ) ,
+								()=> console.log ,
+								handleError
 							)
-							hhfw.ReadFromStorage(
-								db ,
-								`${ resource.table }_$_${ resource.table }` ,
-								( result2 : any ) => {
-									const range = new $mol_range_lazy( result2.rows )
-									$mol_hyperhive.data( resource , range , $mol_atom_force )
-								} ,
-								handleError ,
-							)
-						} ,
-						handleError ,
-					)
-					
+						}
+						hhfw.Post(
+							`${ resource.uri }${ resource.table }/post/` ,
+							( resp : any )=> {
+								console.log( resp )
+								$mol_hyperhive.data( resource , void 0 , $mol_atom_force )
+							} ,
+							handleError
+						)
+					}
 				}
 			)
 			

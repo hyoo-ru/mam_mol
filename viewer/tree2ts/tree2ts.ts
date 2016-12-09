@@ -45,7 +45,7 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 						return JSON.stringify( value.value )
 					case '@' :
 						locales[ `${ def.type }_${ param.type }` ] = value.value
-						return`this.localizedText( ${ JSON.stringify( param.type ) } )`
+						return`$mol_locale.text( this.localizationContexts() , ${ JSON.stringify( param.type ) } )`
 					case '-' :
 						return null
 					case '/' :

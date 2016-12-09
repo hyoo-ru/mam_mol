@@ -2,10 +2,7 @@
 	display: flex;
 	height: auto;
 	flex: 0 1 auto;
-	padding: .5rem;
-	flex-wrap: wrap;
-	justify-content: flex-end;
-	flex-direction: row-reverse;
+	overflow: hidden;
 }
 
 [mol_app_bench_menu] {
@@ -14,16 +11,21 @@
 
 [mol_app_bench_tester] {
 	border: none;
-	flex: 1 0 50%;
+	flex: 1 0 33%;
 	position: relative;
 	width: 100%;
 	height: 100%;
 }
 
+[mol_app_bench_descriptioner] {
+	padding: .5rem 1rem;
+	flex: 0 2 50%;
+	max-width: none;
+}
+
 [mol_app_bench_resulter] {
-	margin: .5rem;
-	flex: 0 0 auto;
 	background: var(--mol_skin_card);
+	flex: 0 1 66%;
 }
 
 [mol_app_bench_menu] {
@@ -45,11 +47,4 @@
 	vertical-align: bottom;
 	margin-left: .5rem;
 	width: 5vw;
-}
-
-[mol_app_bench_descriptioner] {
-	margin: .5rem;
-	padding: .5rem 1rem;
-	flex: 1 1 100%;
-	max-width: 40em;
 }

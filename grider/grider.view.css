@@ -1,14 +1,14 @@
-[mol_grider] {
+[mol_grider_tabler] {
 	border-spacing: 0;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	transform: translateZ(0);
 }
 
-[mol_grider] > * {
+[mol_grider_tabler] > * {
 	display: table-row;
 }
 
-[mol_grider] > * > * {
+[mol_grider_tabler] > * > * {
 	display: table-cell;
 	padding: 0 1rem;
 	white-space: nowrap;
@@ -19,11 +19,11 @@
 	border-bottom: 1px solid color( var(--mol_skin_light_line) lightness(+8%) );
 }
 
-[mol_grider] > * > *:not(:last-child)  {
+[mol_grider_tabler] > * > *:not(:last-child)  {
 	border-right: 1px solid color( var(--mol_skin_light_line) lightness(+8%) );
 }
 
-[mol_grider] > [mol_grider_header] > * {
+[mol_grider_tabler] > [mol_grider_header] > * {
 	background: var(--mol_skin_light);
 	border-bottom: 1px solid var(--mol_skin_light_line);
 }

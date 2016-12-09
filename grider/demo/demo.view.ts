@@ -3,17 +3,17 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		records() {
-			return new $mol_range_lazy( {
+			return $mol_range_in( {
 				length : 10000 ,
 				item : index => {
-					return new $mol_range_lazy( {
+					return $mol_range_in( {
 						length : 15 ,
 						item : colId => colId === 0
 							? `Row ${ index + 1 }`
 							: `Cell ${ colId }×${ index + 1 }`
-					} ).valueOf()
+					} ).valueOf() as string[]
 				}
-			} ).valueOf()
+			} ).valueOf() as string[][]
 		}
 		
 		columnHeaderContent( id : string ) {
