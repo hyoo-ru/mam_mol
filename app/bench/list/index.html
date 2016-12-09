@@ -31,7 +31,7 @@
 		update : getItems( size )
 	}
 
-	var meta = {
+	var metaData = {
 		title : {
 			'en' : 'List rendering benchmark' ,
 			'ru' : 'Время вывода значительных объёмов данных в WEB приложениях' ,
@@ -67,7 +67,7 @@
 			} ,
 			'sapui5' : {
 				title : { 'en' : 'SAPUI5' } ,
-				weight : '' ,
+				weight : '1100.0 KB' ,
 			} ,
 		} ,
 		steps : {
@@ -99,44 +99,36 @@
 	}
 
 	var sandbox = document.getElementById( 'sandbox' )
-
-	var handlers = {
-
-		'meta' : function() {
-			done( meta )
-		} ,
-		
-		'start' : function( sample ) {
-			var start = Date.now()
-			sandbox.src = sample
-			sandbox.onload = function() {
-				sandbox.onload = null
-				done( Date.now() - start + ' ms' )
-			}
-		} ,
-
-		'weight' : function( sample ) {
-			done( meta.samples[ sample ].weight || Number.POSITIVE_INFINITY )
-		} ,
-		
-		'fill' : function( sample ) {
-			measure( [ 'set data' , {
-				sample : sample ,
-				items : items.fill
-			} ] )
-		} ,
-
-		'update' : function( sample ) {
-			measure( [ 'set data' , {
-				sample : sample ,
-				items : items.update
-			} ] )
-		} ,
-
-		'done' : function( result ) {
-			done( result )
-		} ,
 	
+	function meta() {
+		done( metaData )
+	}
+
+	function start( sample ) {
+		var start = Date.now()
+		sandbox.src = sample
+		sandbox.onload = function() {
+			sandbox.onload = null
+			done( Date.now() - start + ' ms' )
+		}
+	}
+
+	function weight( sample ) {
+		done( metaData.samples[ sample ].weight || Number.POSITIVE_INFINITY )
+	}
+		
+	function fill( sample ) {
+		measure( [ 'set data' , {
+			sample : sample ,
+			items : items.fill
+		} ] )
+	}
+
+	function update( sample ) {
+		measure( [ 'set data' , {
+			sample : sample ,
+			items : items.update
+		} ] )
 	}
 
 	function measure( message ) {
@@ -174,17 +166,12 @@
 	}
 
 	function done( result ) {
-		if( parent === window ) return console.log( result )
-		parent.postMessage( [ 'done' , result ] , '*' )
+		if( parent === window ) console.log( result )
+		else parent.postMessage( [ 'done' , result ] , '*' )
 	}
-	
+
 	window.addEventListener( 'message' , function( event ) {
-		var method = event.data[0]
-		console.debug( 'Message' , event.data )
-		var handler = handlers[ method ]
-		if( !handler ) throw new Error( 'Unknown message: ' + method )
-		var args = event.data.slice( 1 )
-		handler.apply( null , args )
+		window[ event.data[0] ].apply( null , event.data.slice( 1 ) )
 	} )
 	
 </script>

@@ -24,96 +24,86 @@
 <script>
 	
 	var size = 10000
-	
-	var meta = {
-		title : {
-			'en' : 'Geometry rendering benchmark' ,
-			'ru' : 'Производительность вариантов рендеринга линий' ,
-		} ,
-		descr : {
-			'en' : 'Sample applications renders styled spiral. Spiral has **' + size + ' parts**.' ,
-			'ru' : 'Варианты приложений отображают спираль из **' + size + ' линий**, а потом меняют её стиль штриха. ' ,
-		} ,
-		samples : {
-			'svg-lines' : {
-				title : {
-					'en' : 'SVG separate lines' ,
-					'ru' : 'SVG отдельными линиями' ,
+
+	function meta() {
+		done( {
+			title : {
+				'en' : 'Geometry rendering benchmark' ,
+				'ru' : 'Производительность вариантов рендеринга линий' ,
+			} ,
+			descr : {
+				'en' : 'Sample applications renders styled spiral. Spiral has **' + size + ' parts**.' ,
+				'ru' : 'Варианты приложений отображают спираль из **' + size + ' линий**, а потом меняют её стиль штриха. ' ,
+			} ,
+			samples : {
+				'svg-lines' : {
+					title : {
+						'en' : 'SVG separate lines' ,
+						'ru' : 'SVG отдельными линиями' ,
+					} ,
+				} ,
+				'svg-path' : {
+					title : {
+						'en' : 'SVG single path' ,
+						'ru' : 'SVG одной кривой' ,
+					} ,
+				} ,
+				'canvas-lines' : {
+					title : {
+						'en' : 'Canvas separate lines' ,
+						'ru' : 'Canvas отдельными линиями' ,
+					} ,
+				} ,
+				'canvas-path' : {
+					title : {
+						'en' : 'Canvas single path' ,
+						'ru' : 'Canvas одной кривой' ,
+					} ,
 				} ,
 			} ,
-			'svg-path' : {
-				title : {
-					'en' : 'SVG single path' ,
-					'ru' : 'SVG одной кривой' ,
+			steps : {
+				'start' : {
+					title : {
+						'en' : 'Load and init' ,
+						'ru' : 'Загрузка и запуск' ,
+					} ,
+				} ,
+				'render' : {
+					title : {
+						'en' : 'Draw solid spiral' ,
+						'ru' : 'Отображение спирали' ,
+					} ,
+				} ,
+				'restyle' : {
+					title : {
+						'en' : 'Update stroke style' ,
+						'ru' : 'Изменение стиля штриха' ,
+					} ,
 				} ,
 			} ,
-			'canvas-lines' : {
-				title : {
-					'en' : 'Canvas separate lines' ,
-					'ru' : 'Canvas отдельными линиями' ,
-				} ,
-			} ,
-			'canvas-path' : {
-				title : {
-					'en' : 'Canvas single path' ,
-					'ru' : 'Canvas одной кривой' ,
-				} ,
-			} ,
-		} ,
-		steps : {
-			'start' : {
-				title : {
-					'en' : 'Load and init' ,
-					'ru' : 'Загрузка и запуск' ,
-				} ,
-			} ,
-			'render' : {
-				title : {
-					'en' : 'Draw solid spiral' ,
-					'ru' : 'Отображение спирали' ,
-				} ,
-			} ,
-			'restyle' : {
-				title : {
-					'en' : 'Update stroke style' ,
-					'ru' : 'Изменение стиля штриха' ,
-				} ,
-			} ,
-		} ,
+		} )
 	}
-
-	var sandbox = document.getElementById( 'sandbox' )
-
-	var handlers = {
-
-		'meta' : function() {
-			done( meta )
-		} ,
-
-		'start' : function( sample ) {
-			var start = Date.now()
-			sandbox.src = sample
-			sandbox.onload = function() {
-				sandbox.onload = null
-				done( Date.now() - start + ' ms' )
-			}
-		} ,
-
-		'render' : function( sample ) {
-			measure( [ 'render' , { sample : sample , count : size } ] , '*' )
-		} ,
-
-		'restyle' : function( sample ) {
-			measure( [ 'restyle' , { sample : sample , color : 'steelblue' , dashed : true } ] , '*' )
-		} ,
-
-		'done' : function( result ) {
-			done( result )
-		} ,
 	
+	function start( sample ) {
+		var sandbox = document.getElementById( 'sandbox' )
+		var start = Date.now()
+		sandbox.src = sample
+		sandbox.onload = function() {
+			sandbox.onload = null
+			done( Date.now() - start + ' ms' )
+		}
 	}
-
+	
+	function render( sample ) {
+		measure( [ 'render' , { sample : sample , count : size } ] , '*' )
+	}
+	
+	function restyle( sample ) {
+		measure( [ 'restyle' , { sample : sample , color : 'steelblue' , dashed : true } ] , '*' )
+	}
+	
 	function measure( message ) {
+		var sandbox = document.getElementById( 'sandbox' )
 		requestAnimationFrame( function() { // begin at next frame start for measure stability reason
 			var command = JSON.stringify( message )
 			console.timeStamp( 'begin ' + command )
@@ -127,19 +117,14 @@
 			} )
 		} )
 	}
-	
+
 	function done( result ) {
-		if( parent === window ) return console.log( result )
-		parent.postMessage( [ 'done' , result ] , '*' )
+		if( parent === window ) console.log( result )
+		else parent.postMessage( [ 'done' , result ] , '*' )
 	}
-	
+
 	window.addEventListener( 'message' , function( event ) {
-		var method = event.data[0]
-		console.debug( 'Message' , event.data )
-		var handler = handlers[ method ]
-		if( !handler ) throw new Error( 'Unknown message: ' + method )
-		var args = event.data.slice( 1 )
-		handler.apply( null , args )
+		window[ event.data[0] ].apply( null , event.data.slice( 1 ) )
 	} )
 	
 </script>

@@ -58,7 +58,7 @@ namespace $.$mol {
 			type meta = {
 				title : { [ lang : string ] : string }
 				descr : { [ lang : string ] : string }
-				samples : { [ step : string ] : {
+				samples : { [ sample : string ] : {
 					title : { [ lang : string ] : string }
 				} }
 				steps : { [ step : string ] : {
