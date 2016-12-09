@@ -29,7 +29,7 @@ var $;
             var X = (function (_super) {
                 __extends(X, _super);
                 function X() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 X.prototype.foo = function () {
                     return 1;
@@ -165,18 +165,18 @@ var $;
             var X = (function (_super) {
                 __extends(X, _super);
                 function X() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 X.prototype.foo = function (id, next) {
                     if (next == null)
                         return new Number(123);
                     return new Number(next);
                 };
-                __decorate([
-                    $.$mol_mem_key()
-                ], X.prototype, "foo", null);
                 return X;
             }($.$mol_object));
+            __decorate([
+                $.$mol_mem_key()
+            ], X.prototype, "foo", null);
             var x = new X;
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
             $.$mol_assert_equal(x.foo(0), x.foo(0));
@@ -190,16 +190,16 @@ var $;
             var X = (function (_super) {
                 __extends(X, _super);
                 function X() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 X.prototype.foo = function (ids) {
                     return Math.random();
                 };
-                __decorate([
-                    $.$mol_mem_key()
-                ], X.prototype, "foo", null);
                 return X;
             }($.$mol_object));
+            __decorate([
+                $.$mol_mem_key()
+            ], X.prototype, "foo", null);
             var x = new X;
             $.$mol_assert_equal(x.foo([0, 1]), x.foo([0, 1]));
             $.$mol_assert_unique(x.foo([0, 1]), x.foo([0, 2]));
@@ -208,7 +208,7 @@ var $;
             var X = (function (_super) {
                 __extends(X, _super);
                 function X() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 X.prototype.foo = function (next) {
                     return next || 1;
@@ -219,17 +219,17 @@ var $;
                 X.prototype.xxx = function () {
                     return this.bar() + 1;
                 };
-                __decorate([
-                    $.$mol_mem()
-                ], X.prototype, "foo", null);
-                __decorate([
-                    $.$mol_mem()
-                ], X.prototype, "bar", null);
-                __decorate([
-                    $.$mol_mem()
-                ], X.prototype, "xxx", null);
                 return X;
             }($.$mol_object));
+            __decorate([
+                $.$mol_mem()
+            ], X.prototype, "foo", null);
+            __decorate([
+                $.$mol_mem()
+            ], X.prototype, "bar", null);
+            __decorate([
+                $.$mol_mem()
+            ], X.prototype, "xxx", null);
             var x = new X;
             $.$mol_assert_equal(x.bar(), 2);
             $.$mol_assert_equal(x.xxx(), 3);
@@ -241,7 +241,7 @@ var $;
             var B = (function (_super) {
                 __extends(B, _super);
                 function B() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 B.prototype.showing = function (next) {
                     if (next === void 0)
@@ -254,17 +254,17 @@ var $;
                 B.prototype.bar = function () {
                     return this.showing() ? this.foo() : null;
                 };
-                __decorate([
-                    $.$mol_mem()
-                ], B.prototype, "showing", null);
-                __decorate([
-                    $.$mol_mem()
-                ], B.prototype, "foo", null);
-                __decorate([
-                    $.$mol_mem()
-                ], B.prototype, "bar", null);
                 return B;
             }($.$mol_object));
+            __decorate([
+                $.$mol_mem()
+            ], B.prototype, "showing", null);
+            __decorate([
+                $.$mol_mem()
+            ], B.prototype, "foo", null);
+            __decorate([
+                $.$mol_mem()
+            ], B.prototype, "bar", null);
             var b = new B;
             var bar = b.bar();
             $.$mol_assert_ok(bar);
@@ -282,7 +282,7 @@ var $;
             var Test = (function (_super) {
                 __extends(Test, _super);
                 function Test() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 Test.prototype.source = function (next, force) {
                     var _this = this;
@@ -297,17 +297,17 @@ var $;
                 Test.prototype.target = function () {
                     return this.middle();
                 };
-                __decorate([
-                    $.$mol_mem()
-                ], Test.prototype, "source", null);
-                __decorate([
-                    $.$mol_mem()
-                ], Test.prototype, "middle", null);
-                __decorate([
-                    $.$mol_mem()
-                ], Test.prototype, "target", null);
                 return Test;
             }($.$mol_object));
+            __decorate([
+                $.$mol_mem()
+            ], Test.prototype, "source", null);
+            __decorate([
+                $.$mol_mem()
+            ], Test.prototype, "middle", null);
+            __decorate([
+                $.$mol_mem()
+            ], Test.prototype, "target", null);
             var t = new Test;
             $.$mol_assert_fail(function () { return t.target().valueOf(); }, $.$mol_atom_wait);
             $.$mol_defer.run();
@@ -316,21 +316,6 @@ var $;
     });
 })($ || ($ = {}));
 //mem.test.js.map
-;
-var $;
-(function ($) {
-    $.$mol_test({
-        'local get set delete': function () {
-            var key = '$mol_state_local_test:' + Math.random();
-            $.$mol_assert_equal($.$mol_state_local.value(key), null);
-            $.$mol_state_local.value(key, 123);
-            $.$mol_assert_equal($.$mol_state_local.value(key), 123);
-            $.$mol_state_local.value(key, null);
-            $.$mol_assert_equal($.$mol_state_local.value(key), null);
-        },
-    });
-})($ || ($ = {}));
-//local.test.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -350,23 +335,23 @@ var $;
             var $mol_viewer_test_item = (function (_super) {
                 __extends($mol_viewer_test_item, _super);
                 function $mol_viewer_test_item() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 return $mol_viewer_test_item;
             }($.$mol_viewer));
             var $mol_viewer_test_block = (function (_super) {
                 __extends($mol_viewer_test_block, _super);
                 function $mol_viewer_test_block() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 $mol_viewer_test_block.prototype.element = function (id) {
                     return new $mol_viewer_test_item();
                 };
-                __decorate([
-                    $.$mol_mem_key()
-                ], $mol_viewer_test_block.prototype, "element", null);
                 return $mol_viewer_test_block;
             }($.$mol_viewer));
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_viewer_test_block.prototype, "element", null);
             var x = new $mol_viewer_test_block();
             $.$mol_assert_equal(x.DOMNode().id, '');
             $.$mol_assert_equal(x.element(0).DOMNode().id, '.element(0)');
@@ -375,7 +360,7 @@ var $;
             var $mol_viewer_test = (function (_super) {
                 __extends($mol_viewer_test, _super);
                 function $mol_viewer_test() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 return $mol_viewer_test;
             }($.$mol_viewer));
@@ -386,7 +371,7 @@ var $;
             var $mol_viewer_test = (function (_super) {
                 __extends($mol_viewer_test, _super);
                 function $mol_viewer_test() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 $mol_viewer_test.prototype.childs = function () {
                     return ['lol', 5];
@@ -401,23 +386,23 @@ var $;
             var $mol_viewer_test_item = (function (_super) {
                 __extends($mol_viewer_test_item, _super);
                 function $mol_viewer_test_item() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 return $mol_viewer_test_item;
             }($.$mol_viewer));
             var $mol_viewer_test_block = (function (_super) {
                 __extends($mol_viewer_test_block, _super);
                 function $mol_viewer_test_block() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 $mol_viewer_test_block.prototype.element = function (id) {
                     return new $mol_viewer_test_item();
                 };
-                __decorate([
-                    $.$mol_mem_key()
-                ], $mol_viewer_test_block.prototype, "element", null);
                 return $mol_viewer_test_block;
             }($.$mol_viewer));
+            __decorate([
+                $.$mol_mem_key()
+            ], $mol_viewer_test_block.prototype, "element", null);
             var x = new $mol_viewer_test_block();
             $.$mol_assert_equal(x.DOMNode().getAttribute('mol_viewer_test_block'), '');
             $.$mol_assert_equal(x.DOMNode().getAttribute('mol_viewer'), '');
@@ -430,7 +415,7 @@ var $;
             var $mol_viewer_test = (function (_super) {
                 __extends($mol_viewer_test, _super);
                 function $mol_viewer_test() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 $mol_viewer_test.prototype.attr = function () {
                     return {
@@ -450,7 +435,7 @@ var $;
             var $mol_viewer_test = (function (_super) {
                 __extends($mol_viewer_test, _super);
                 function $mol_viewer_test() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 $mol_viewer_test.prototype.field = function () {
                     return {
@@ -468,7 +453,7 @@ var $;
             var $mol_viewer_test = (function (_super) {
                 __extends($mol_viewer_test, _super);
                 function $mol_viewer_test() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 $mol_viewer_test.prototype.event = function () {
                     var _this = this;
@@ -525,7 +510,7 @@ var $;
                 'number': /[+-]?\d+(?:\.\d+)?/
             });
             var serial = function (tokens) {
-                return tokens.map(function (token) { return (token.name + "=" + token.found); }).join('|');
+                return tokens.map(function (token) { return token.name + "=" + token.found; }).join('|');
             };
             $.$mol_assert_equal(serial(syntax.tokenize('')), '');
             $.$mol_assert_equal(serial(syntax.tokenize('foo')), '=foo');
@@ -583,6 +568,21 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
+        'local get set delete': function () {
+            var key = '$mol_state_local_test:' + Math.random();
+            $.$mol_assert_equal($.$mol_state_local.value(key), null);
+            $.$mol_state_local.value(key, 123);
+            $.$mol_assert_equal($.$mol_state_local.value(key), 123);
+            $.$mol_state_local.value(key, null);
+            $.$mol_assert_equal($.$mol_state_local.value(key), null);
+        },
+    });
+})($ || ($ = {}));
+//local.test.js.map
+;
+var $;
+(function ($) {
+    $.$mol_test({
         'const returns stored value': function () {
             var foo = { bar: $.$mol_const(Math.random()) };
             $.$mol_assert_equal(foo.bar(), foo.bar());
@@ -617,15 +617,16 @@ var $;
 (function ($) {
     $.$mol_test({
         'materialization': function () {
-            var list = new $.$mol_range_lazy({
+            var list = $.$mol_range_in({
                 item: function (id) { return id * 2; },
                 get length() { return 5; },
             });
-            $.$mol_assert_equal(list.valueOf()[2], 4);
-            $.$mol_assert_equal(list.valueOf()[5], void 0);
+            var list2 = list.valueOf();
+            $.$mol_assert_equal(list2[2], 4);
+            $.$mol_assert_equal(list2[5], void 0);
         },
         'lazy slicing': function () {
-            var list = new $.$mol_range_lazy({
+            var list = $.$mol_range_in({
                 item: function (id) { return id * 2; },
                 get length() { return Number.POSITIVE_INFINITY; },
             });
@@ -633,22 +634,22 @@ var $;
             $.$mol_assert_equal(list.join(), '4,6,8');
         },
         'lazy concatenation': function () {
-            var list1 = new $.$mol_range_lazy({
+            var list1 = $.$mol_range_in({
                 item: function (id) { return id * 2; },
                 get length() { return 3; },
             });
-            var list2 = new $.$mol_range_lazy({
+            var list2 = $.$mol_range_in({
                 item: function (id) { return id * 3; },
                 get length() { return 3; },
             });
-            var list3 = new $.$mol_range_lazy({
+            var list3 = $.$mol_range_in({
                 item: function (id) { return id * 4; },
                 get length() { return 3; },
             });
             $.$mol_assert_equal(list1.concat(list2, list3).join(), '0,2,4,0,3,6,0,4,8');
         },
         'every': function () {
-            var list = new $.$mol_range_lazy({
+            var list = $.$mol_range_in({
                 item: function (id) { return id * 2; },
                 get length() { return 3; }
             });
@@ -656,7 +657,7 @@ var $;
             $.$mol_assert_equal(list.every(function (v) { return v > 0; }), false);
         },
         'some': function () {
-            var list = new $.$mol_range_lazy({
+            var list = $.$mol_range_in({
                 item: function (id) { return id * 2; },
                 get length() { return 3; }
             });

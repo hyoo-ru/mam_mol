@@ -11,20 +11,6 @@ $.$mol = $
 ;
 var $;
 (function ($) {
-    function $mol_merge_dict(target, source) {
-        var result = {};
-        for (var key in target)
-            result[key] = target[key];
-        for (var key in source)
-            result[key] = source[key];
-        return result;
-    }
-    $.$mol_merge_dict = $mol_merge_dict;
-})($ || ($ = {}));
-//dict.js.map
-;
-var $;
-(function ($) {
     function $mol_log(path, values) {
         var filter = $mol_log.filter();
         if (filter == null)
@@ -35,7 +21,6 @@ var $;
         console.log(time, path, values);
     }
     $.$mol_log = $mol_log;
-    var $mol_log;
     (function ($mol_log) {
         var _filter;
         function filter(next) {
@@ -229,9 +214,10 @@ var $;
     var $mol_defer = (function (_super) {
         __extends($mol_defer, _super);
         function $mol_defer(run) {
-            _super.call(this);
-            this.run = run;
-            $mol_defer.add(this);
+            var _this = _super.call(this) || this;
+            _this.run = run;
+            $mol_defer.add(_this);
+            return _this;
         }
         $mol_defer.prototype.destroyed = function (next) {
             if (next)
@@ -269,13 +255,13 @@ var $;
             for (var defer; defer = this.all.pop();)
                 defer.run();
         };
-        $mol_defer.all = [];
-        $mol_defer.timer = 0;
-        $mol_defer.scheduleNative = (typeof requestAnimationFrame == 'function')
-            ? function (handler) { return requestAnimationFrame(handler); }
-            : function (handler) { return setTimeout(handler, 16); };
         return $mol_defer;
     }($.$mol_object));
+    $mol_defer.all = [];
+    $mol_defer.timer = 0;
+    $mol_defer.scheduleNative = (typeof requestAnimationFrame == 'function')
+        ? function (handler) { return requestAnimationFrame(handler); }
+        : function (handler) { return setTimeout(handler, 16); };
     $.$mol_defer = $mol_defer;
 })($ || ($ = {}));
 //defer.js.map
@@ -394,25 +380,26 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var $;
 (function ($) {
+    var $mol_atom_status;
     (function ($mol_atom_status) {
         $mol_atom_status[$mol_atom_status["obsolete"] = 'obsolete'] = "obsolete";
         $mol_atom_status[$mol_atom_status["checking"] = 'checking'] = "checking";
         $mol_atom_status[$mol_atom_status["pulling"] = 'pulling'] = "pulling";
         $mol_atom_status[$mol_atom_status["actual"] = 'actual'] = "actual";
-    })($.$mol_atom_status || ($.$mol_atom_status = {}));
-    var $mol_atom_status = $.$mol_atom_status;
+    })($mol_atom_status = $.$mol_atom_status || ($.$mol_atom_status = {}));
     var $mol_atom = (function (_super) {
         __extends($mol_atom, _super);
         function $mol_atom(host, handler, field) {
             if (field === void 0) { field = 'value()'; }
-            _super.call(this);
-            this.masters = null;
-            this.slaves = null;
-            this.status = $mol_atom_status.obsolete;
-            this.autoFresh = true;
-            this.handler = handler;
-            this.host = Object(host);
-            this.field = field || 'value()';
+            var _this = _super.call(this) || this;
+            _this.masters = null;
+            _this.slaves = null;
+            _this.status = $mol_atom_status.obsolete;
+            _this.autoFresh = true;
+            _this.handler = handler;
+            _this.host = Object(host);
+            _this.field = field || 'value()';
+            return _this;
         }
         $mol_atom.prototype.destroyed = function (next) {
             if (next) {
@@ -667,23 +654,23 @@ var $;
             }
             this.scheduled = false;
         };
-        $mol_atom.stack = [null];
-        $mol_atom.updating = [];
-        $mol_atom.reaping = new $.$mol_set();
-        $mol_atom.scheduled = false;
         return $mol_atom;
     }($.$mol_object));
+    $mol_atom.stack = [null];
+    $mol_atom.updating = [];
+    $mol_atom.reaping = new $.$mol_set();
+    $mol_atom.scheduled = false;
     $.$mol_atom = $mol_atom;
     $.$mol_state_stack.set('$mol_atom.stack', $mol_atom.stack);
     var $mol_atom_wait = (function (_super) {
         __extends($mol_atom_wait, _super);
         function $mol_atom_wait(message) {
             if (message === void 0) { message = 'Wait...'; }
-            _super.call(this, message);
-            this.message = message;
-            this.name = '$mol_atom_wait';
+            var _this = _super.call(this, message) || this;
+            _this.message = message;
+            _this.name = '$mol_atom_wait';
             var error = new Error(message);
-            error.name = this.name;
+            error.name = _this.name;
             error['__proto__'] = $mol_atom_wait.prototype;
             return error;
         }
@@ -693,7 +680,7 @@ var $;
     var $mol_atom_force = (function (_super) {
         __extends($mol_atom_force, _super);
         function $mol_atom_force() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         return $mol_atom_force;
     }(Object));
@@ -776,7 +763,7 @@ var $;
     var $mol_window = (function (_super) {
         __extends($mol_window, _super);
         function $mol_window() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_window.size = function (next) {
             return next || {
@@ -784,349 +771,17 @@ var $;
                 height: window.innerHeight,
             };
         };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_window, "size", null);
         return $mol_window;
     }($.$mol_object));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_window, "size", null);
     $.$mol_window = $mol_window;
     window.addEventListener('resize', function () {
         $mol_window.size(null);
     });
 })($ || ($ = {}));
 //window.web.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var localStorage = localStorage || {
-    getItem: function (key) {
-        return this[':' + key];
-    },
-    setItem: function (key, value) {
-        this[':' + key] = value;
-    },
-    removeItem: function (key) {
-        this[':' + key] = void 0;
-    }
-};
-var $;
-(function ($) {
-    var $mol_state_local = (function (_super) {
-        __extends($mol_state_local, _super);
-        function $mol_state_local() {
-            _super.apply(this, arguments);
-        }
-        $mol_state_local.value = function (key, next, force) {
-            if (next === void 0)
-                return JSON.parse(localStorage.getItem(key) || 'null');
-            if (next === null)
-                localStorage.removeItem(key);
-            else
-                localStorage.setItem(key, JSON.stringify(next));
-            return next;
-        };
-        $mol_state_local.prototype.prefix = function () { return ''; };
-        $mol_state_local.prototype.value = function (key, next) {
-            return $mol_state_local.value(this.prefix() + '.' + key, next);
-        };
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_state_local, "value", null);
-        return $mol_state_local;
-    }($.$mol_object));
-    $.$mol_state_local = $mol_state_local;
-})($ || ($ = {}));
-//local.js.map
-;
-var $;
-(function ($) {
-    window.addEventListener('storage', function (event) {
-        $.$mol_state_local.value(event.key, void 0, $.$mol_atom_force);
-    });
-})($ || ($ = {}));
-//local.web.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_state_arg = (function (_super) {
-        __extends($mol_state_arg, _super);
-        function $mol_state_arg(prefix) {
-            if (prefix === void 0) { prefix = ''; }
-            _super.call(this);
-            this.prefix = prefix;
-        }
-        $mol_state_arg.href = function (next) {
-            if (next)
-                history.replaceState(history.state, document.title, "" + next);
-            return window.location.search + window.location.hash;
-        };
-        $mol_state_arg.dict = function (next) {
-            var href = this.href(next && this.make(next));
-            var chunks = href.split(/[\/\?#!&;]/g);
-            var params = {};
-            chunks.forEach(function (chunk) {
-                if (!chunk)
-                    return;
-                var vals = chunk.split('=').map(decodeURIComponent);
-                params[vals.shift()] = vals.join('=');
-            });
-            return params;
-        };
-        $mol_state_arg.value = function (key, next) {
-            var nextDict = (next === void 0) ? void 0 : $.$mol_merge_dict(this.dict(), (_a = {}, _a[key] = next, _a));
-            return this.dict(nextDict)[key] || null;
-            var _a;
-        };
-        $mol_state_arg.link = function (next) {
-            return this.make($.$mol_merge_dict(this.dict(), next));
-        };
-        $mol_state_arg.make = function (next) {
-            var chunks = [];
-            for (var key in next) {
-                if (null == next[key])
-                    continue;
-                chunks.push([key].concat(next[key]).map(encodeURIComponent).join('='));
-            }
-            var hash = chunks.join('#');
-            return hash ? '#' + hash + '#' : '#';
-        };
-        $mol_state_arg.prototype.value = function (key, next) {
-            return $mol_state_arg.value(this.prefix + key, next);
-        };
-        $mol_state_arg.prototype.sub = function (postfix) {
-            return new $mol_state_arg(this.prefix + postfix + '.');
-        };
-        $mol_state_arg.prototype.link = function (next) {
-            var prefix = this.prefix;
-            var dict = {};
-            for (var key in next) {
-                dict[prefix + key] = next[key];
-            }
-            return $mol_state_arg.link(dict);
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_state_arg, "href", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_state_arg, "dict", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_state_arg, "value", null);
-        return $mol_state_arg;
-    }($.$mol_object));
-    $.$mol_state_arg = $mol_state_arg;
-    window.addEventListener('hashchange', function (event) { return $mol_state_arg.href(null); });
-})($ || ($ = {}));
-//arg.web.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_http_request = (function (_super) {
-        __extends($mol_http_request, _super);
-        function $mol_http_request() {
-            _super.apply(this, arguments);
-        }
-        $mol_http_request.prototype.uri = function () { return ''; };
-        $mol_http_request.prototype.method = function () { return 'Get'; };
-        $mol_http_request.prototype.credentials = function () {
-            return null;
-        };
-        $mol_http_request.prototype.body = function () { return null; };
-        $mol_http_request.prototype.native = function () {
-            var _this = this;
-            if (this['native()'])
-                return this['native()'];
-            var next = this['native()'] = $.$mol_http_request_native();
-            next.withCredentials = Boolean(this.credentials());
-            next.onload = function (event) {
-                if (Math.floor(next.status / 100) === 2) {
-                    _this.response(next.responseText, $.$mol_atom_force);
-                }
-                else {
-                    _this.response(new Error(next.responseText), $.$mol_atom_force);
-                }
-            };
-            next.onerror = function (event) {
-                _this.response(event.error || new Error('Unknown HTTP error'), $.$mol_atom_force);
-            };
-            return next;
-        };
-        $mol_http_request.prototype.destroyed = function (next) {
-            if (next) {
-                var native = this['native()'];
-                if (native)
-                    native.abort();
-            }
-            return _super.prototype.destroyed.call(this, next);
-        };
-        $mol_http_request.prototype.response = function (next, force) {
-            var creds = this.credentials();
-            var native = this.native();
-            var method = (next === void 0) ? 'Get' : this.method();
-            var uri = this.uri();
-            native.open(method, uri, true, creds && creds.login, creds && creds.password);
-            native.send(next);
-            throw new $.$mol_atom_wait(method + " " + uri);
-        };
-        $mol_http_request.prototype.text = function (next, force) {
-            return this.response(next, force);
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_http_request.prototype, "response", null);
-        return $mol_http_request;
-    }($.$mol_object));
-    $.$mol_http_request = $mol_http_request;
-})($ || ($ = {}));
-//request.js.map
-;
-var $;
-(function ($) {
-    $.$mol_http_request_native = function () { return new XMLHttpRequest; };
-})($ || ($ = {}));
-//request.web.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_http_resource = (function (_super) {
-        __extends($mol_http_resource, _super);
-        function $mol_http_resource() {
-            _super.apply(this, arguments);
-        }
-        $mol_http_resource.item = function (uri) {
-            return new $mol_http_resource().setup(function (obj) {
-                obj.uri = function () { return uri; };
-            });
-        };
-        $mol_http_resource.prototype.uri = function () { return ''; };
-        $mol_http_resource.prototype.credentials = function () {
-            return null;
-        };
-        $mol_http_resource.prototype.request = function () {
-            var _this = this;
-            var request = new $.$mol_http_request();
-            request.method = function () { return 'Put'; };
-            request.uri = function () { return _this.uri(); };
-            request.credentials = function () { return _this.credentials(); };
-            return request;
-        };
-        $mol_http_resource.prototype.text = function (next, force) {
-            return this.request().text(next, force);
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_http_resource.prototype, "request", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_http_resource.prototype, "text", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_http_resource, "item", null);
-        return $mol_http_resource;
-    }($.$mol_object));
-    $.$mol_http_resource = $mol_http_resource;
-    var $mol_http_resource_json = (function (_super) {
-        __extends($mol_http_resource_json, _super);
-        function $mol_http_resource_json() {
-            _super.apply(this, arguments);
-        }
-        $mol_http_resource_json.item = function (uri) {
-            return new $mol_http_resource_json().setup(function (obj) {
-                obj.uri = function () { return uri; };
-            });
-        };
-        $mol_http_resource_json.prototype.json = function (next, force) {
-            return JSON.parse(this.text(next && JSON.stringify(next, null, '\t'), force));
-        };
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_http_resource_json, "item", null);
-        return $mol_http_resource_json;
-    }($mol_http_resource));
-    $.$mol_http_resource_json = $mol_http_resource_json;
-})($ || ($ = {}));
-//resource.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_locale = (function (_super) {
-        __extends($mol_locale, _super);
-        function $mol_locale() {
-            _super.apply(this, arguments);
-        }
-        $mol_locale.lang = function (next) {
-            return $.$mol_state_local.value('locale', next) || $.$mol_state_arg.value('locale') || 'en';
-        };
-        $mol_locale.texts = function () {
-            var uri = "-/web.locale=" + this.lang() + ".json";
-            var resource = $.$mol_http_resource_json.item(uri);
-            return resource.json();
-        };
-        $mol_locale.text = function (context, key) {
-            return this.texts()[(context + "_" + key)];
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_locale, "lang", null);
-        return $mol_locale;
-    }($.$mol_object));
-    $.$mol_locale = $mol_locale;
-})($ || ($ = {}));
-//locale.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -1146,7 +801,7 @@ var $;
     var $mol_viewer = (function (_super) {
         __extends($mol_viewer, _super);
         function $mol_viewer() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_viewer.root = function (id) {
             return new this;
@@ -1230,7 +885,7 @@ var $;
                     break;
             }
             var events = this.event();
-            var _loop_1 = function(name_1) {
+            var _loop_1 = function (name_1) {
                 var handle = events[name_1];
                 next2.addEventListener(name_1, function (event) {
                     $.$mol_atom_task(_this + ".event()['" + name_1 + "']", function () {
@@ -1305,7 +960,7 @@ var $;
             }
         };
         $mol_viewer.renderFields = function (node, fields) {
-            var _loop_2 = function(path) {
+            var _loop_2 = function (path) {
                 var names = path.split('.');
                 var obj = node;
                 for (var i = 0; i < names.length - 1; ++i) {
@@ -1350,30 +1005,20 @@ var $;
             return {};
         };
         $mol_viewer.prototype.event = function () { return {}; };
-        $mol_viewer.prototype.focused = function () {
-            return $.$mol_viewer_selection.focused().indexOf(this.DOMNode()) !== -1;
+        $mol_viewer.prototype.localizationContexts = function () {
+            return Object.getPrototypeOf(this).objectClassNames();
         };
-        $mol_viewer.prototype.localizedText = function (postfix) {
-            var contexts = Object.getPrototypeOf(this).objectClassNames();
-            for (var _i = 0, contexts_1 = contexts; _i < contexts_1.length; _i++) {
-                var context = contexts_1[_i];
-                var text = $.$mol_locale.text(context, postfix);
-                if (text != null)
-                    return text;
-            }
-            throw new Error("Locale text not found: [" + contexts.join('|') + "]_" + postfix);
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_viewer.prototype, "context", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_viewer.prototype, "DOMTree", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_viewer, "root", null);
         return $mol_viewer;
     }($.$mol_object));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_viewer.prototype, "context", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_viewer.prototype, "DOMTree", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_viewer, "root", null);
     $.$mol_viewer = $mol_viewer;
 })($ || ($ = {}));
 //viewer.js.map
@@ -1382,7 +1027,7 @@ var $;
 (function ($) {
     document.addEventListener(window.cordova ? 'deviceready' : 'DOMContentLoaded', function (event) {
         var nodes = document.querySelectorAll('[mol_viewer_root]');
-        var _loop_1 = function(i) {
+        var _loop_1 = function (i) {
             var view = $[nodes.item(i).getAttribute('mol_viewer_root')].root(i);
             view.DOMNode(nodes.item(i));
             var win = new $.$mol_atom("$mol_viewer.root(" + i + ")", function () {
@@ -1400,6 +1045,20 @@ var $;
 })($ || ($ = {}));
 //viewer.web.js.map
 ;
+var $;
+(function ($) {
+    function $mol_merge_dict(target, source) {
+        var result = {};
+        for (var key in target)
+            result[key] = target[key];
+        for (var key in source)
+            result[key] = source[key];
+        return result;
+    }
+    $.$mol_merge_dict = $mol_merge_dict;
+})($ || ($ = {}));
+//dict.js.map
+;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -1413,126 +1072,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_viewer_selection = (function (_super) {
-        __extends($mol_viewer_selection, _super);
-        function $mol_viewer_selection() {
-            _super.apply(this, arguments);
+    var $mol_state_session = (function (_super) {
+        __extends($mol_state_session, _super);
+        function $mol_state_session() {
+            return _super.apply(this, arguments) || this;
         }
-        $mol_viewer_selection.focused = function (next) {
-            return next || [];
+        $mol_state_session.value = function (key, next) {
+            if (next === void 0)
+                return JSON.parse(sessionStorage.getItem(key) || 'null');
+            if (next === null)
+                sessionStorage.removeItem(key);
+            else
+                sessionStorage.setItem(key, JSON.stringify(next));
+            return next;
         };
-        $mol_viewer_selection.position = function () {
-            var diff = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                diff[_i - 0] = arguments[_i];
-            }
-            if (diff.length) {
-                if (!diff[0])
-                    return diff[0];
-                var start = diff[0].start;
-                var end = diff[0].end;
-                if (!(start <= end))
-                    throw new Error("Wrong offsets (" + start + "," + end + ")");
-                var root = document.getElementById(diff[0].id);
-                root.focus();
-                var range = new Range;
-                var cur = root.firstChild;
-                while (cur !== root) {
-                    while (cur.firstChild)
-                        cur = cur.firstChild;
-                    if (cur.nodeValue) {
-                        var length = cur.nodeValue.length;
-                        if (length >= start)
-                            break;
-                        start -= length;
-                    }
-                    while (!cur.nextSibling) {
-                        cur = cur.parentNode;
-                        if (cur === root) {
-                            start = root.childNodes.length;
-                            break;
-                        }
-                    }
-                }
-                range.setStart(cur, start);
-                var cur = root.firstChild;
-                while (cur !== root) {
-                    while (cur.firstChild)
-                        cur = cur.firstChild;
-                    if (cur.nodeValue) {
-                        var length = cur.nodeValue.length;
-                        if (length >= end)
-                            break;
-                        end -= length;
-                    }
-                    while (!cur.nextSibling) {
-                        cur = cur.parentNode;
-                        if (cur === root) {
-                            end = root.childNodes.length;
-                            break;
-                        }
-                    }
-                }
-                range.setEnd(cur, end);
-                var sel = document.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(range);
-                return diff[0];
-            }
-            else {
-                var sel = document.getSelection();
-                if (sel.rangeCount === 0)
-                    return null;
-                var range = sel.getRangeAt(0);
-                var el = range.commonAncestorContainer;
-                while (el && !el.id)
-                    el = el.parentElement;
-                if (!el)
-                    return { id: null, start: 0, end: 0 };
-                var meter = new Range;
-                meter.selectNodeContents(el);
-                meter.setEnd(range.startContainer, range.startOffset);
-                var startOffset = meter.toString().length;
-                meter.setEnd(range.endContainer, range.endOffset);
-                var endOffset = meter.toString().length;
-                return { id: el.id, start: startOffset, end: endOffset };
-            }
+        $mol_state_session.prototype.prefix = function () { return ''; };
+        $mol_state_session.prototype.value = function (key, next) {
+            return $mol_state_session.value(this.prefix() + '.' + key, next);
         };
-        $mol_viewer_selection.onFocus = function (event) {
-            var parents = [];
-            var element = event.target;
-            while (element) {
-                parents.push(element);
-                element = element.parentElement;
-            }
-            $mol_viewer_selection.focused(parents);
-        };
-        $mol_viewer_selection.onBlur = function (event) {
-            $mol_viewer_selection.focused([]);
-        };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_viewer_selection, "focused", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_viewer_selection, "position", null);
-        return $mol_viewer_selection;
+        return $mol_state_session;
     }($.$mol_object));
-    $.$mol_viewer_selection = $mol_viewer_selection;
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_state_session, "value", null);
+    $.$mol_state_session = $mol_state_session;
 })($ || ($ = {}));
-//selection.js.map
-;
-var $;
-(function ($) {
-    document.addEventListener('selectionchange', function (event) {
-        $.$mol_viewer_selection.position(void 0);
-    });
-    document.addEventListener('focusin', $.$mol_viewer_selection.onFocus);
-    document.addEventListener('focus', $.$mol_viewer_selection.onFocus, true);
-    document.addEventListener('focusout', $.$mol_viewer_selection.onBlur);
-    document.addEventListener('blur', $.$mol_viewer_selection.onBlur, true);
-})($ || ($ = {}));
-//selection.web.js.map
+//session.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -1550,7 +1115,7 @@ var $;
     var $mol_scroller = (function (_super) {
         __extends($mol_scroller, _super);
         function $mol_scroller() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_scroller.prototype.heightMinimal = function () {
             return 0;
@@ -1579,17 +1144,17 @@ var $;
                 "underflow": function (next) { return _this.eventScroll(next); },
             });
         };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_scroller.prototype, "scrollTop", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_scroller.prototype, "scrollLeft", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_scroller.prototype, "eventScroll", null);
         return $mol_scroller;
     }($.$mol_viewer));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_scroller.prototype, "scrollTop", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_scroller.prototype, "scrollLeft", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_scroller.prototype, "eventScroll", null);
     $.$mol_scroller = $mol_scroller;
 })($ || ($ = {}));
 //scroller.view.tree.js.map
@@ -1607,57 +1172,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_state_session = (function (_super) {
-        __extends($mol_state_session, _super);
-        function $mol_state_session() {
-            _super.apply(this, arguments);
-        }
-        $mol_state_session.value = function (key, next) {
-            if (next === void 0)
-                return JSON.parse(sessionStorage.getItem(key) || 'null');
-            if (next === null)
-                sessionStorage.removeItem(key);
-            else
-                sessionStorage.setItem(key, JSON.stringify(next));
-            return next;
-        };
-        $mol_state_session.prototype.prefix = function () { return ''; };
-        $mol_state_session.prototype.value = function (key, next) {
-            return $mol_state_session.value(this.prefix() + '.' + key, next);
-        };
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_state_session, "value", null);
-        return $mol_state_session;
-    }($.$mol_object));
-    $.$mol_state_session = $mol_state_session;
-})($ || ($ = {}));
-//session.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
     $.$mol_viewer_context.$mol_scroller_scrollTop = function () { return 0; };
     $.$mol_viewer_context.$mol_scroller_moving = function () { return false; };
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol;
     (function ($mol) {
         var $mol_scroller = (function (_super) {
             __extends($mol_scroller, _super);
             function $mol_scroller() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             $mol_scroller.prototype.scrollTop = function (next) {
                 return $.$mol_state_session.value(this.objectPath() + '.scrollTop()', next) || 0;
@@ -1711,23 +1235,23 @@ var $;
                     shadows.push('inset -6px 0 6px -6px rgba( 0 , 0 , 0 , .25 )');
                 return shadows.join(' , ');
             };
-            __decorate([
-                $.$mol_mem()
-            ], $mol_scroller.prototype, "scrollBottom", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_scroller.prototype, "scrollRight", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_scroller.prototype, "moving", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_scroller.prototype, "contextSub", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_scroller.prototype, "shadowStyle", null);
             return $mol_scroller;
         }($.$mol_scroller));
+        __decorate([
+            $.$mol_mem()
+        ], $mol_scroller.prototype, "scrollBottom", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_scroller.prototype, "scrollRight", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_scroller.prototype, "moving", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_scroller.prototype, "contextSub", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_scroller.prototype, "shadowStyle", null);
         $mol.$mol_scroller = $mol_scroller;
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));
@@ -1749,7 +1273,7 @@ var $;
     var $mol_pager = (function (_super) {
         __extends($mol_pager, _super);
         function $mol_pager() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_pager.prototype.titler = function (next) {
             var _this = this;
@@ -1787,20 +1311,20 @@ var $;
         $mol_pager.prototype.childs = function () {
             return [].concat(this.header(), this.bodier(), this.footer());
         };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_pager.prototype, "titler", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_pager.prototype, "header", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_pager.prototype, "bodier", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_pager.prototype, "footer", null);
         return $mol_pager;
     }($.$mol_viewer));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_pager.prototype, "titler", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_pager.prototype, "header", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_pager.prototype, "bodier", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_pager.prototype, "footer", null);
     $.$mol_pager = $mol_pager;
 })($ || ($ = {}));
 //pager.view.tree.js.map
@@ -1815,7 +1339,7 @@ var $;
     var $mol_floater = (function (_super) {
         __extends($mol_floater, _super);
         function $mol_floater() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_floater.prototype.shiftStyle = function () {
             return "";
@@ -1853,7 +1377,7 @@ var $;
         var $mol_floater = (function (_super) {
             __extends($mol_floater, _super);
             function $mol_floater() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             $mol_floater.prototype.shiftStyle = function () {
                 var context = this.context();
@@ -1886,7 +1410,7 @@ var $;
     var $mol_clicker = (function (_super) {
         __extends($mol_clicker, _super);
         function $mol_clicker() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_clicker.prototype.tagName = function () {
             return "button";
@@ -1916,14 +1440,14 @@ var $;
                 "tabindex": function () { return "0"; },
             });
         };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_clicker.prototype, "eventClick", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_clicker.prototype, "eventActivate", null);
         return $mol_clicker;
     }($.$mol_viewer));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_clicker.prototype, "eventClick", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_clicker.prototype, "eventActivate", null);
     $.$mol_clicker = $mol_clicker;
 })($ || ($ = {}));
 //clicker.view.tree.js.map
@@ -1940,7 +1464,7 @@ var $;
         var $mol_clicker = (function (_super) {
             __extends($mol_clicker, _super);
             function $mol_clicker() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             $mol_clicker.prototype.disabled = function () {
                 return !this.enabled();
@@ -1967,40 +1491,37 @@ var $;
     var $mol_clicker_button = (function (_super) {
         __extends($mol_clicker_button, _super);
         function $mol_clicker_button() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         return $mol_clicker_button;
     }($.$mol_clicker));
     $.$mol_clicker_button = $mol_clicker_button;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_clicker_major = (function (_super) {
         __extends($mol_clicker_major, _super);
         function $mol_clicker_major() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         return $mol_clicker_major;
     }($.$mol_clicker_button));
     $.$mol_clicker_major = $mol_clicker_major;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_clicker_minor = (function (_super) {
         __extends($mol_clicker_minor, _super);
         function $mol_clicker_minor() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         return $mol_clicker_minor;
     }($.$mol_clicker_button));
     $.$mol_clicker_minor = $mol_clicker_minor;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_clicker_danger = (function (_super) {
         __extends($mol_clicker_danger, _super);
         function $mol_clicker_danger() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         return $mol_clicker_danger;
     }($.$mol_clicker_button));
@@ -2024,7 +1545,7 @@ var $;
     var $mol_checker = (function (_super) {
         __extends($mol_checker, _super);
         function $mol_checker() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_checker.prototype.checked = function (next) {
             return (next !== void 0) ? next : false;
@@ -2050,14 +1571,14 @@ var $;
         $mol_checker.prototype.childs = function () {
             return [].concat(this.icon(), this.labeler());
         };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_checker.prototype, "checked", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_checker.prototype, "labeler", null);
         return $mol_checker;
     }($.$mol_clicker));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_checker.prototype, "checked", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_checker.prototype, "labeler", null);
     $.$mol_checker = $mol_checker;
 })($ || ($ = {}));
 //checker.view.tree.js.map
@@ -2074,7 +1595,7 @@ var $;
         var $mol_checker = (function (_super) {
             __extends($mol_checker, _super);
             function $mol_checker() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             $mol_checker.prototype.eventClick = function (next) {
                 this.checked(!this.checked());
@@ -2097,7 +1618,7 @@ var $;
     var $mol_svg = (function (_super) {
         __extends($mol_svg, _super);
         function $mol_svg() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_svg.prototype.tagName = function () {
             return "svg";
@@ -2109,12 +1630,11 @@ var $;
     }($.$mol_viewer));
     $.$mol_svg = $mol_svg;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_svg_root = (function (_super) {
         __extends($mol_svg_root, _super);
         function $mol_svg_root() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_svg_root.prototype.tagName = function () {
             return "svg";
@@ -2132,12 +1652,11 @@ var $;
     }($.$mol_viewer));
     $.$mol_svg_root = $mol_svg_root;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_svg_path = (function (_super) {
         __extends($mol_svg_path, _super);
         function $mol_svg_path() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_svg_path.prototype.tagName = function () {
             return "path";
@@ -2155,12 +1674,11 @@ var $;
     }($.$mol_svg));
     $.$mol_svg_path = $mol_svg_path;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_svg_circle = (function (_super) {
         __extends($mol_svg_circle, _super);
         function $mol_svg_circle() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_svg_circle.prototype.tagName = function () {
             return "circle";
@@ -2204,7 +1722,7 @@ var $;
     var $mol_icon = (function (_super) {
         __extends($mol_icon, _super);
         function $mol_icon() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_icon.prototype.viewBox = function () {
             return "0 0 24 24";
@@ -2227,11 +1745,11 @@ var $;
         $mol_icon.prototype.childs = function () {
             return [].concat(this.pather());
         };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_icon.prototype, "pather", null);
         return $mol_icon;
     }($.$mol_svg));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_icon.prototype, "pather", null);
     $.$mol_icon = $mol_icon;
 })($ || ($ = {}));
 //icon.view.tree.js.map
@@ -2246,7 +1764,7 @@ var $;
     var $mol_icon_chevron = (function (_super) {
         __extends($mol_icon_chevron, _super);
         function $mol_icon_chevron() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_icon_chevron.prototype.path = function () {
             return "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z";
@@ -2273,16 +1791,16 @@ var $;
     var $mol_checker_expander = (function (_super) {
         __extends($mol_checker_expander, _super);
         function $mol_checker_expander() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_checker_expander.prototype.icon = function (next) {
             return new $.$mol_icon_chevron();
         };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_checker_expander.prototype, "icon", null);
         return $mol_checker_expander;
     }($.$mol_checker));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_checker_expander.prototype, "icon", null);
     $.$mol_checker_expander = $mol_checker_expander;
 })($ || ($ = {}));
 //expander.view.tree.js.map
@@ -2303,11 +1821,8 @@ var $;
     var $mol_grider = (function (_super) {
         __extends($mol_grider, _super);
         function $mol_grider() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
-        $mol_grider.prototype.tagName = function () {
-            return "table";
-        };
         $mol_grider.prototype.rows = function () {
             return [];
         };
@@ -2325,6 +1840,19 @@ var $;
         };
         $mol_grider.prototype.hierarhyColumn = function () {
             return "";
+        };
+        $mol_grider.prototype.rowersVisible = function () {
+            return [];
+        };
+        $mol_grider.prototype.tabler = function (next) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.tagName = function () { return "table"; };
+                obj.childs = function () { return [].concat(_this.rowersVisible()); };
+            });
+        };
+        $mol_grider.prototype.childs = function () {
+            return [].concat(this.tabler());
         };
         $mol_grider.prototype.rowers = function () {
             return [];
@@ -2417,43 +1945,45 @@ var $;
                 obj.expanded = function (next) { return _this.rowExpanded(key, next); };
             });
         };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_grider.prototype, "header", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_grider.prototype, "gaperTop", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_grider.prototype, "gaperBottom", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_grider.prototype, "rower", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_grider.prototype, "cellerText", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_grider.prototype, "cellerNumber", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_grider.prototype, "columnHeader", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_grider.prototype, "rowExpanded", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_grider.prototype, "cellerBranch", null);
         return $mol_grider;
-    }($.$mol_viewer));
+    }($.$mol_scroller));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_grider.prototype, "tabler", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_grider.prototype, "header", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_grider.prototype, "gaperTop", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_grider.prototype, "gaperBottom", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_grider.prototype, "rower", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_grider.prototype, "cellerText", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_grider.prototype, "cellerNumber", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_grider.prototype, "columnHeader", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_grider.prototype, "rowExpanded", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_grider.prototype, "cellerBranch", null);
     $.$mol_grider = $mol_grider;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_grider_gaper = (function (_super) {
         __extends($mol_grider_gaper, _super);
         function $mol_grider_gaper() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_grider_gaper.prototype.height = function () {
             return 0;
@@ -2471,12 +2001,11 @@ var $;
     }($.$mol_viewer));
     $.$mol_grider_gaper = $mol_grider_gaper;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_grider_rower = (function (_super) {
         __extends($mol_grider_rower, _super);
         function $mol_grider_rower() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_grider_rower.prototype.tagName = function () {
             return "tr";
@@ -2503,12 +2032,11 @@ var $;
     }($.$mol_viewer));
     $.$mol_grider_rower = $mol_grider_rower;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_grider_celler = (function (_super) {
         __extends($mol_grider_celler, _super);
         function $mol_grider_celler() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_grider_celler.prototype.tagName = function () {
             return "td";
@@ -2517,23 +2045,21 @@ var $;
     }($.$mol_viewer));
     $.$mol_grider_celler = $mol_grider_celler;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_grider_number = (function (_super) {
         __extends($mol_grider_number, _super);
         function $mol_grider_number() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         return $mol_grider_number;
     }($.$mol_grider_celler));
     $.$mol_grider_number = $mol_grider_number;
 })($ || ($ = {}));
-var $;
 (function ($) {
     var $mol_grider_branch = (function (_super) {
         __extends($mol_grider_branch, _super);
         function $mol_grider_branch() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_grider_branch.prototype.tagName = function () {
             return "div";
@@ -2568,11 +2094,11 @@ var $;
         $mol_grider_branch.prototype.label = function () {
             return this.content();
         };
-        __decorate([
-            $.$mol_mem()
-        ], $mol_grider_branch.prototype, "expanded", null);
         return $mol_grider_branch;
     }($.$mol_checker_expander));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_grider_branch.prototype, "expanded", null);
     $.$mol_grider_branch = $mol_grider_branch;
 })($ || ($ = {}));
 //grider.view.tree.js.map
@@ -2595,9 +2121,9 @@ var $;
         var $mol_grider = (function (_super) {
             __extends($mol_grider, _super);
             function $mol_grider() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
-            $mol_grider.prototype.childs = function () {
+            $mol_grider.prototype.rowersVisible = function () {
                 var rowers = this.rowers();
                 if (!rowers)
                     return null;
@@ -2609,7 +2135,7 @@ var $;
                 if (!rowers)
                     return null;
                 var count = rowers.length;
-                var context = this.context();
+                var context = this.contextSub();
                 var scrollTop = context.$mol_scroller_scrollTop();
                 var heightLimit = context.$mol_viewer_heightLimit();
                 var rowHeight = this.rowHeight();
@@ -2649,7 +2175,7 @@ var $;
                 return 'text';
             };
             $mol_grider.prototype.celler = function (id) {
-                switch (this.colType(id.col)) {
+                switch (this.colType(id.col).valueOf()) {
                     case 'branch': return this.cellerBranch(id);
                     case 'number': return this.cellerNumber(id);
                 }
@@ -2676,31 +2202,31 @@ var $;
                     return null;
                 return Object.keys(this.record(rowFirst));
             };
-            __decorate([
-                $.$mol_mem()
-            ], $mol_grider.prototype, "childs", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_grider.prototype, "viewWindow", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_grider.prototype, "headerCellers", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_grider.prototype, "columnHeaderContent", null);
-            __decorate([
-                $.$mol_mem_key()
-            ], $mol_grider.prototype, "colType", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_grider.prototype, "rows", null);
             return $mol_grider;
         }($.$mol_grider));
+        __decorate([
+            $.$mol_mem()
+        ], $mol_grider.prototype, "rowersVisible", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_grider.prototype, "viewWindow", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_grider.prototype, "headerCellers", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_grider.prototype, "columnHeaderContent", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_grider.prototype, "colType", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_grider.prototype, "rows", null);
         $mol.$mol_grider = $mol_grider;
         var $mol_grider_gaper = (function (_super) {
             __extends($mol_grider_gaper, _super);
             function $mol_grider_gaper() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             $mol_grider_gaper.prototype.heightStyle = function () {
                 return this.height() + "px";
@@ -2711,7 +2237,7 @@ var $;
         var $mol_grider_rower = (function (_super) {
             __extends($mol_grider_rower, _super);
             function $mol_grider_rower() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             $mol_grider_rower.prototype.heightStyle = function () {
                 return this.height() + "px";
@@ -2722,10 +2248,10 @@ var $;
         var $mol_grider_branch = (function (_super) {
             __extends($mol_grider_branch, _super);
             function $mol_grider_branch() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             $mol_grider_branch.prototype.levelStyle = function () {
-                return (this.level() * .75 - 1.5) + "rem";
+                return this.level() * .75 - 1.5 + "rem";
             };
             $mol_grider_branch.prototype.expandable = function () {
                 return this.expanded() !== null;
@@ -2750,54 +2276,142 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_app_taxon = (function (_super) {
-        __extends($mol_app_taxon, _super);
-        function $mol_app_taxon() {
-            _super.apply(this, arguments);
+    var $mol_http_request = (function (_super) {
+        __extends($mol_http_request, _super);
+        function $mol_http_request() {
+            return _super.apply(this, arguments) || this;
         }
-        $mol_app_taxon.prototype.hierarhyField = function () {
-            return "Butxt";
-        };
-        $mol_app_taxon.prototype.records = function () {
-            return [];
-        };
-        $mol_app_taxon.prototype.record = function (key) {
+        $mol_http_request.prototype.uri = function () { return ''; };
+        $mol_http_request.prototype.method = function () { return 'Get'; };
+        $mol_http_request.prototype.credentials = function () {
             return null;
         };
-        $mol_app_taxon.prototype.rows = function () {
-            return [];
-        };
-        $mol_app_taxon.prototype.rowExpanded = function (key, next) {
-            return (next !== void 0) ? next : false;
-        };
-        $mol_app_taxon.prototype.rowLevel = function (key) {
-            return 0;
-        };
-        $mol_app_taxon.prototype.grider = function (next) {
+        $mol_http_request.prototype.body = function () { return null; };
+        $mol_http_request.prototype.native = function () {
             var _this = this;
-            return new $.$mol_grider().setup(function (obj) {
-                obj.hierarhyColumn = function () { return _this.hierarhyField(); };
-                obj.records = function () { return _this.records(); };
-                obj.record = function (key) { return _this.record(key); };
-                obj.rows = function () { return _this.rows(); };
-                obj.rowExpanded = function (key, next) { return _this.rowExpanded(key, next); };
-                obj.rowLevel = function (key) { return _this.rowLevel(key); };
+            if (this['native()'])
+                return this['native()'];
+            var next = this['native()'] = $.$mol_http_request_native();
+            next.withCredentials = Boolean(this.credentials());
+            next.onload = function (event) {
+                if (Math.floor(next.status / 100) === 2) {
+                    _this.response(next.responseText, $.$mol_atom_force);
+                }
+                else {
+                    _this.response(new Error(next.responseText), $.$mol_atom_force);
+                }
+            };
+            next.onerror = function (event) {
+                _this.response(event.error || new Error('Unknown HTTP error'), $.$mol_atom_force);
+            };
+            return next;
+        };
+        $mol_http_request.prototype.destroyed = function (next) {
+            if (next) {
+                var native = this['native()'];
+                if (native)
+                    native.abort();
+            }
+            return _super.prototype.destroyed.call(this, next);
+        };
+        $mol_http_request.prototype.response = function (next, force) {
+            var creds = this.credentials();
+            var native = this.native();
+            var method = (next === void 0) ? 'Get' : this.method();
+            var uri = this.uri();
+            native.open(method, uri, true, creds && creds.login, creds && creds.password);
+            native.send(next);
+            throw new $.$mol_atom_wait(method + " " + uri);
+        };
+        $mol_http_request.prototype.text = function (next, force) {
+            return this.response(next, force);
+        };
+        return $mol_http_request;
+    }($.$mol_object));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_http_request.prototype, "response", null);
+    $.$mol_http_request = $mol_http_request;
+})($ || ($ = {}));
+//request.js.map
+;
+var $;
+(function ($) {
+    $.$mol_http_request_native = function () { return new XMLHttpRequest; };
+})($ || ($ = {}));
+//request.web.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_http_resource = (function (_super) {
+        __extends($mol_http_resource, _super);
+        function $mol_http_resource() {
+            return _super.apply(this, arguments) || this;
+        }
+        $mol_http_resource.item = function (uri) {
+            return new $mol_http_resource().setup(function (obj) {
+                obj.uri = function () { return uri; };
             });
         };
-        $mol_app_taxon.prototype.body = function () {
-            return [].concat(this.grider());
+        $mol_http_resource.prototype.uri = function () { return ''; };
+        $mol_http_resource.prototype.credentials = function () {
+            return null;
         };
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_app_taxon.prototype, "rowExpanded", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_app_taxon.prototype, "grider", null);
-        return $mol_app_taxon;
-    }($.$mol_pager));
-    $.$mol_app_taxon = $mol_app_taxon;
+        $mol_http_resource.prototype.request = function () {
+            var _this = this;
+            var request = new $.$mol_http_request();
+            request.method = function () { return 'Put'; };
+            request.uri = function () { return _this.uri(); };
+            request.credentials = function () { return _this.credentials(); };
+            return request;
+        };
+        $mol_http_resource.prototype.text = function (next, force) {
+            return this.request().text(next, force);
+        };
+        return $mol_http_resource;
+    }($.$mol_object));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_http_resource.prototype, "request", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_http_resource.prototype, "text", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_http_resource, "item", null);
+    $.$mol_http_resource = $mol_http_resource;
+    var $mol_http_resource_json = (function (_super) {
+        __extends($mol_http_resource_json, _super);
+        function $mol_http_resource_json() {
+            return _super.apply(this, arguments) || this;
+        }
+        $mol_http_resource_json.item = function (uri) {
+            return new $mol_http_resource_json().setup(function (obj) {
+                obj.uri = function () { return uri; };
+            });
+        };
+        $mol_http_resource_json.prototype.json = function (next, force) {
+            return JSON.parse(this.text(next && JSON.stringify(next, null, '\t'), force));
+        };
+        return $mol_http_resource_json;
+    }($mol_http_resource));
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_http_resource_json, "item", null);
+    $.$mol_http_resource_json = $mol_http_resource_json;
 })($ || ($ = {}));
-//taxon.view.tree.js.map
+//resource.js.map
 ;
 var $;
 (function ($) {
@@ -2817,10 +2431,12 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var $;
 (function ($) {
-    var $mol_range_common = (function (_super) {
-        __extends($mol_range_common, _super);
+    function $mol_range_in(source) {
+        return new $mol_range_lazy(source);
+    }
+    $.$mol_range_in = $mol_range_in;
+    var $mol_range_common = (function () {
         function $mol_range_common() {
-            _super.apply(this, arguments);
             this.length = 0;
         }
         $mol_range_common.prototype.item = function (id) {
@@ -2847,7 +2463,7 @@ var $;
         $mol_range_common.prototype.concat = function () {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i - 0] = arguments[_i];
+                args[_i] = arguments[_i];
             }
             var ranges = args.map(function (range) { return range.valueOf(); });
             return (_a = this.valueOf()).concat.apply(_a, ranges);
@@ -2901,7 +2517,7 @@ var $;
             return res;
         };
         return $mol_range_common;
-    }(Array));
+    }());
     $.$mol_range_common = $mol_range_common;
     var $mol_range_lazy = (function (_super) {
         __extends($mol_range_lazy, _super);
@@ -2910,8 +2526,9 @@ var $;
                 item: function (id) { return void 0; },
                 length: 0
             }; }
-            _super.call(this);
-            this.source = source;
+            var _this = _super.call(this) || this;
+            _this.source = source;
+            return _this;
         }
         $mol_range_lazy.prototype.item = function (id) {
             return this.source.item(id);
@@ -2942,12 +2559,74 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
+    var $mol_app_taxon = (function (_super) {
+        __extends($mol_app_taxon, _super);
+        function $mol_app_taxon() {
+            return _super.apply(this, arguments) || this;
+        }
+        $mol_app_taxon.prototype.hierarhyField = function () {
+            return "Butxt";
+        };
+        $mol_app_taxon.prototype.records = function () {
+            return [];
+        };
+        $mol_app_taxon.prototype.record = function (key) {
+            return null;
+        };
+        $mol_app_taxon.prototype.rows = function () {
+            return [];
+        };
+        $mol_app_taxon.prototype.rowExpanded = function (key, next) {
+            return (next !== void 0) ? next : false;
+        };
+        $mol_app_taxon.prototype.rowLevel = function (key) {
+            return 0;
+        };
+        $mol_app_taxon.prototype.grider = function (next) {
+            var _this = this;
+            return new $.$mol_grider().setup(function (obj) {
+                obj.hierarhyColumn = function () { return _this.hierarhyField(); };
+                obj.records = function () { return _this.records(); };
+                obj.record = function (key) { return _this.record(key); };
+                obj.rows = function () { return _this.rows(); };
+                obj.rowExpanded = function (key, next) { return _this.rowExpanded(key, next); };
+                obj.rowLevel = function (key) { return _this.rowLevel(key); };
+            });
+        };
+        $mol_app_taxon.prototype.bodier = function () {
+            return this.grider();
+        };
+        return $mol_app_taxon;
+    }($.$mol_pager));
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_app_taxon.prototype, "rowExpanded", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_app_taxon.prototype, "grider", null);
+    $.$mol_app_taxon = $mol_app_taxon;
+})($ || ($ = {}));
+//taxon.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
     var $mol;
     (function ($mol) {
         var $mol_app_taxon = (function (_super) {
             __extends($mol_app_taxon, _super);
             function $mol_app_taxon() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             $mol_app_taxon.prototype.hierarhyUri = function () {
                 return 'http://justine.saprun.com:8000/sap/opu/odata/sap/ZTRNF_TEST_DATA_SRV/TRNF_TREESet?$' + 'format=json';
@@ -3016,7 +2695,7 @@ var $;
             $mol_app_taxon.prototype.records = function () {
                 var _this = this;
                 var paths = this.rows();
-                return new $.$mol_range_lazy({
+                return $.$mol_range_in({
                     length: paths.length,
                     item: function (index) { return _this.record(paths[index]); },
                 });
@@ -3034,23 +2713,23 @@ var $;
             $mol_app_taxon.prototype.rowExpanded = function (id, next) {
                 return this.branchExpanded(id.row, next);
             };
-            __decorate([
-                $.$mol_mem()
-            ], $mol_app_taxon.prototype, "hierarhy", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_app_taxon.prototype, "dataTable", null);
-            __decorate([
-                $.$mol_mem_key()
-            ], $mol_app_taxon.prototype, "record", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_app_taxon.prototype, "rows", null);
-            __decorate([
-                $.$mol_mem()
-            ], $mol_app_taxon.prototype, "records", null);
             return $mol_app_taxon;
         }($.$mol_app_taxon));
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_taxon.prototype, "hierarhy", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_taxon.prototype, "dataTable", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_taxon.prototype, "record", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_taxon.prototype, "rows", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_taxon.prototype, "records", null);
         $mol.$mol_app_taxon = $mol_app_taxon;
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));
@@ -3066,8 +2745,9 @@ var $;
     var $mol_unit = (function (_super) {
         __extends($mol_unit, _super);
         function $mol_unit(value) {
-            _super.call(this);
-            this['valueOf()'] = value;
+            var _this = _super.call(this) || this;
+            _this['valueOf()'] = value;
+            return _this;
         }
         $mol_unit.prototype.prefix = function () {
             return '';
@@ -3113,7 +2793,7 @@ var $;
     var $mol_unit_money = (function (_super) {
         __extends($mol_unit_money, _super);
         function $mol_unit_money() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         return $mol_unit_money;
     }($.$mol_unit));
@@ -3121,7 +2801,7 @@ var $;
     var $mol_unit_money_usd = (function (_super) {
         __extends($mol_unit_money_usd, _super);
         function $mol_unit_money_usd() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_unit_money_usd.prototype.prefix = function () {
             return '$';
@@ -3132,7 +2812,7 @@ var $;
     var $mol_unit_money_rur = (function (_super) {
         __extends($mol_unit_money_rur, _super);
         function $mol_unit_money_rur() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_unit_money_rur.prototype.postfix = function () {
             return ' ₽';
@@ -3198,9 +2878,9 @@ var $jin;
                 var formatter = Base.formatter(pattern);
                 return formatter.call(Base, this);
             };
-            base_class.patterns = {};
             return base_class;
         }());
+        base_class.patterns = {};
         time.base_class = base_class;
     })(time = $jin.time || ($jin.time = {}));
 })($jin || ($jin = {}));
@@ -3227,13 +2907,14 @@ var $jin;
         var duration_class = (function (_super) {
             __extends(duration_class, _super);
             function duration_class(config) {
-                _super.call(this);
-                this._year = config.year && Number(config.year) || 0;
-                this._month = config.month && Number(config.month) || 0;
-                this._day = config.day && Number(config.day) || 0;
-                this._hour = config.hour && Number(config.hour) || 0;
-                this._minute = config.minute && Number(config.minute) || 0;
-                this._second = config.second && Number(config.second) || 0;
+                var _this = _super.call(this) || this;
+                _this._year = config.year && Number(config.year) || 0;
+                _this._month = config.month && Number(config.month) || 0;
+                _this._day = config.day && Number(config.day) || 0;
+                _this._hour = config.hour && Number(config.hour) || 0;
+                _this._minute = config.minute && Number(config.minute) || 0;
+                _this._second = config.second && Number(config.second) || 0;
+                return _this;
             }
             duration_class.make = function (duration) {
                 if (!arguments.length)
@@ -3349,56 +3030,56 @@ var $jin;
                 if (pattern === void 0) { pattern = 'P#Y#M#DT#h#m#s'; }
                 return _super.prototype.toString.call(this, pattern);
             };
-            duration_class.patterns = {
-                '#Y': function (duration) {
-                    if (!duration.year)
-                        return '';
-                    return duration.year + 'Y';
-                },
-                '#M': function (duration) {
-                    if (!duration.month)
-                        return '';
-                    return duration.month + 'M';
-                },
-                '#D': function (duration) {
-                    if (!duration.day)
-                        return '';
-                    return duration.day + 'D';
-                },
-                '#h': function (duration) {
-                    if (!duration.hour)
-                        return '';
-                    return duration.hour + 'H';
-                },
-                '#m': function (duration) {
-                    if (!duration.minute)
-                        return '';
-                    return duration.minute + 'M';
-                },
-                '#s': function (duration) {
-                    if (!duration.second)
-                        return '';
-                    return duration.second + 'S';
-                },
-                '+hh': function (duration) {
-                    var hour = duration.hour;
-                    var sign = '+';
-                    if (hour < 0) {
-                        sign = '-';
-                        hour = -hour;
-                    }
-                    return (hour < 10)
-                        ? (sign + '0' + hour)
-                        : (sign + hour);
-                },
-                'mm': function (duration) {
-                    return (duration.minute < 10)
-                        ? ('0' + duration.minute)
-                        : String(duration.minute);
-                },
-            };
             return duration_class;
         }($jin.time.base_class));
+        duration_class.patterns = {
+            '#Y': function (duration) {
+                if (!duration.year)
+                    return '';
+                return duration.year + 'Y';
+            },
+            '#M': function (duration) {
+                if (!duration.month)
+                    return '';
+                return duration.month + 'M';
+            },
+            '#D': function (duration) {
+                if (!duration.day)
+                    return '';
+                return duration.day + 'D';
+            },
+            '#h': function (duration) {
+                if (!duration.hour)
+                    return '';
+                return duration.hour + 'H';
+            },
+            '#m': function (duration) {
+                if (!duration.minute)
+                    return '';
+                return duration.minute + 'M';
+            },
+            '#s': function (duration) {
+                if (!duration.second)
+                    return '';
+                return duration.second + 'S';
+            },
+            '+hh': function (duration) {
+                var hour = duration.hour;
+                var sign = '+';
+                if (hour < 0) {
+                    sign = '-';
+                    hour = -hour;
+                }
+                return (hour < 10)
+                    ? (sign + '0' + hour)
+                    : (sign + hour);
+            },
+            'mm': function (duration) {
+                return (duration.minute < 10)
+                    ? ('0' + duration.minute)
+                    : String(duration.minute);
+            },
+        };
         time.duration_class = duration_class;
         time.duration = duration_class.make.bind(duration_class);
     })(time = $jin.time || ($jin.time = {}));
@@ -3417,15 +3098,16 @@ var $jin;
         var moment_class = (function (_super) {
             __extends(moment_class, _super);
             function moment_class(config) {
-                _super.call(this);
-                this._year = config.year && Number(config.year);
-                this._month = config.month && Number(config.month);
-                this._day = config.day && Number(config.day);
-                this._hour = config.hour && Number(config.hour);
-                this._minute = config.minute && Number(config.minute);
-                this._second = config.second && Number(config.second);
-                this._offset = config.offset && this.constructor.duration_class.make(config.offset);
-                this._native = null;
+                var _this = _super.call(this) || this;
+                _this._year = config.year && Number(config.year);
+                _this._month = config.month && Number(config.month);
+                _this._day = config.day && Number(config.day);
+                _this._hour = config.hour && Number(config.hour);
+                _this._minute = config.minute && Number(config.minute);
+                _this._second = config.second && Number(config.second);
+                _this._offset = config.offset && _this.constructor.duration_class.make(config.offset);
+                _this._native = null;
+                return _this;
             }
             moment_class.make = function (moment) {
                 if (!arguments.length)
@@ -3649,175 +3331,175 @@ var $jin;
                 if (pattern === void 0) { pattern = 'YYYY-MM-DDThh:mm:ss.sssZ'; }
                 return _super.prototype.toString.call(this, pattern);
             };
-            moment_class.duration_class = $jin.time.duration_class;
-            moment_class.patterns = {
-                'YYYY': function (moment) {
-                    if (moment.year == null)
-                        return '';
-                    return String(moment.year);
-                },
-                'AD': function (moment) {
-                    if (moment.year == null)
-                        return '';
-                    return String(Math.floor(moment.year / 100) + 1);
-                },
-                'YY': function (moment) {
-                    if (moment.year == null)
-                        return '';
-                    return String(moment.year % 100);
-                },
-                'Month': function (moment) {
-                    if (moment.month == null)
-                        return '';
-                    return moment.constructor.monthLong[moment.month];
-                },
-                'Mon': function (moment) {
-                    if (moment.month == null)
-                        return '';
-                    return moment.constructor.monthShort[moment.month];
-                },
-                '-MM': function (moment) {
-                    if (moment.month == null)
-                        return '';
-                    return '-' + moment.constructor.patterns['MM'](moment);
-                },
-                'MM': function (moment) {
-                    if (moment.month == null)
-                        return '';
-                    var month = moment.month + 1;
-                    return (month < 10)
-                        ? ('0' + month)
-                        : ('' + month);
-                },
-                'M': function (moment) {
-                    if (moment.month == null)
-                        return '';
-                    return String(moment.month + 1);
-                },
-                'WeekDay': function (moment) {
-                    if (moment.weekDay == null)
-                        return '';
-                    return moment.constructor.weekDayLong[moment.weekDay];
-                },
-                'WD': function (moment) {
-                    if (moment.weekDay == null)
-                        return '';
-                    return moment.constructor.weekDayShort[moment.weekDay];
-                },
-                '-DD': function (moment) {
-                    if (moment.day == null)
-                        return '';
-                    return '-' + moment.constructor.patterns['DD'](moment);
-                },
-                'DD': function (moment) {
-                    if (moment.day == null)
-                        return '';
-                    var day = moment.day + 1;
-                    return (day < 10)
-                        ? ('0' + day)
-                        : String(day);
-                },
-                'D': function (moment) {
-                    if (moment.day == null)
-                        return '';
-                    return String(moment.day + 1);
-                },
-                'Thh': function (moment) {
-                    if (moment.hour == null)
-                        return '';
-                    return 'T' + moment.constructor.patterns['hh'](moment);
-                },
-                'hh': function (moment) {
-                    if (moment.hour == null)
-                        return '';
-                    return (moment.hour < 10)
-                        ? ('0' + moment.hour)
-                        : String(moment.hour);
-                },
-                'h': function (moment) {
-                    if (moment.hour == null)
-                        return '';
-                    return String(moment.hour);
-                },
-                ':mm': function (moment) {
-                    if (moment.minute == null)
-                        return '';
-                    return ':' + moment.constructor.patterns['mm'](moment);
-                },
-                'mm': function (moment) {
-                    if (moment.minute == null)
-                        return '';
-                    return (moment.minute < 10)
-                        ? ('0' + moment.minute)
-                        : String(moment.minute);
-                },
-                'm': function (moment) {
-                    if (moment.minute == null)
-                        return '';
-                    return String(moment.minute);
-                },
-                ':ss': function (moment) {
-                    if (moment.second == null)
-                        return '';
-                    return ':' + moment.constructor.patterns['ss'](moment);
-                },
-                'ss': function (moment) {
-                    if (moment.second == null)
-                        return '';
-                    var second = Math.floor(moment.second);
-                    return (second < 10)
-                        ? ('0' + second)
-                        : String(second);
-                },
-                's': function (moment) {
-                    if (moment.second == null)
-                        return '';
-                    return String(Math.floor(moment.second));
-                },
-                '.sss': function (moment) {
-                    if (moment.second == null)
-                        return '';
-                    if (moment.second - Math.floor(moment.second) === 0)
-                        return '';
-                    return '.' + moment.constructor.patterns['sss'](moment);
-                },
-                'sss': function (moment) {
-                    if (moment.second == null)
-                        return '';
-                    var millisecond = Math.floor((moment.second - Math.floor(moment.second)) * 1000);
-                    return (millisecond < 10)
-                        ? ('00' + millisecond)
-                        : (millisecond < 100)
-                            ? ('0' + millisecond)
-                            : String(millisecond);
-                },
-                'Z': function (moment) {
-                    var offset = moment.offset;
-                    if (!offset)
-                        return '';
-                    return offset.toString('+hh:mm');
-                }
-            };
-            moment_class.monthLong = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            moment_class.monthShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            moment_class.weekDayLong = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            moment_class.weekDayShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             return moment_class;
         }($jin.time.base_class));
+        moment_class.duration_class = $jin.time.duration_class;
+        moment_class.patterns = {
+            'YYYY': function (moment) {
+                if (moment.year == null)
+                    return '';
+                return String(moment.year);
+            },
+            'AD': function (moment) {
+                if (moment.year == null)
+                    return '';
+                return String(Math.floor(moment.year / 100) + 1);
+            },
+            'YY': function (moment) {
+                if (moment.year == null)
+                    return '';
+                return String(moment.year % 100);
+            },
+            'Month': function (moment) {
+                if (moment.month == null)
+                    return '';
+                return moment.constructor.monthLong[moment.month];
+            },
+            'Mon': function (moment) {
+                if (moment.month == null)
+                    return '';
+                return moment.constructor.monthShort[moment.month];
+            },
+            '-MM': function (moment) {
+                if (moment.month == null)
+                    return '';
+                return '-' + moment.constructor.patterns['MM'](moment);
+            },
+            'MM': function (moment) {
+                if (moment.month == null)
+                    return '';
+                var month = moment.month + 1;
+                return (month < 10)
+                    ? ('0' + month)
+                    : ('' + month);
+            },
+            'M': function (moment) {
+                if (moment.month == null)
+                    return '';
+                return String(moment.month + 1);
+            },
+            'WeekDay': function (moment) {
+                if (moment.weekDay == null)
+                    return '';
+                return moment.constructor.weekDayLong[moment.weekDay];
+            },
+            'WD': function (moment) {
+                if (moment.weekDay == null)
+                    return '';
+                return moment.constructor.weekDayShort[moment.weekDay];
+            },
+            '-DD': function (moment) {
+                if (moment.day == null)
+                    return '';
+                return '-' + moment.constructor.patterns['DD'](moment);
+            },
+            'DD': function (moment) {
+                if (moment.day == null)
+                    return '';
+                var day = moment.day + 1;
+                return (day < 10)
+                    ? ('0' + day)
+                    : String(day);
+            },
+            'D': function (moment) {
+                if (moment.day == null)
+                    return '';
+                return String(moment.day + 1);
+            },
+            'Thh': function (moment) {
+                if (moment.hour == null)
+                    return '';
+                return 'T' + moment.constructor.patterns['hh'](moment);
+            },
+            'hh': function (moment) {
+                if (moment.hour == null)
+                    return '';
+                return (moment.hour < 10)
+                    ? ('0' + moment.hour)
+                    : String(moment.hour);
+            },
+            'h': function (moment) {
+                if (moment.hour == null)
+                    return '';
+                return String(moment.hour);
+            },
+            ':mm': function (moment) {
+                if (moment.minute == null)
+                    return '';
+                return ':' + moment.constructor.patterns['mm'](moment);
+            },
+            'mm': function (moment) {
+                if (moment.minute == null)
+                    return '';
+                return (moment.minute < 10)
+                    ? ('0' + moment.minute)
+                    : String(moment.minute);
+            },
+            'm': function (moment) {
+                if (moment.minute == null)
+                    return '';
+                return String(moment.minute);
+            },
+            ':ss': function (moment) {
+                if (moment.second == null)
+                    return '';
+                return ':' + moment.constructor.patterns['ss'](moment);
+            },
+            'ss': function (moment) {
+                if (moment.second == null)
+                    return '';
+                var second = Math.floor(moment.second);
+                return (second < 10)
+                    ? ('0' + second)
+                    : String(second);
+            },
+            's': function (moment) {
+                if (moment.second == null)
+                    return '';
+                return String(Math.floor(moment.second));
+            },
+            '.sss': function (moment) {
+                if (moment.second == null)
+                    return '';
+                if (moment.second - Math.floor(moment.second) === 0)
+                    return '';
+                return '.' + moment.constructor.patterns['sss'](moment);
+            },
+            'sss': function (moment) {
+                if (moment.second == null)
+                    return '';
+                var millisecond = Math.floor((moment.second - Math.floor(moment.second)) * 1000);
+                return (millisecond < 10)
+                    ? ('00' + millisecond)
+                    : (millisecond < 100)
+                        ? ('0' + millisecond)
+                        : String(millisecond);
+            },
+            'Z': function (moment) {
+                var offset = moment.offset;
+                if (!offset)
+                    return '';
+                return offset.toString('+hh:mm');
+            }
+        };
+        moment_class.monthLong = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        moment_class.monthShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        moment_class.weekDayLong = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        moment_class.weekDayShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         time.moment_class = moment_class;
         time.moment = moment_class.make.bind(moment_class);
         time.moment['en'] = moment_class.make.bind(moment_class);
         var moment_class_ru = (function (_super) {
             __extends(moment_class_ru, _super);
             function moment_class_ru() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
-            moment_class_ru.monthLong = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-            moment_class_ru.monthShort = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
-            moment_class_ru.weekDayLong = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
-            moment_class_ru.weekDayShort = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
             return moment_class_ru;
         }(moment_class));
+        moment_class_ru.monthLong = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+        moment_class_ru.monthShort = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+        moment_class_ru.weekDayLong = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+        moment_class_ru.weekDayShort = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
         time.moment_class_ru = moment_class_ru;
         time.moment['ru'] = moment_class_ru.make.bind(moment_class_ru);
     })(time = $jin.time || ($jin.time = {}));
@@ -3918,7 +3600,7 @@ var $;
     var $mol_app_taxon_demo = (function (_super) {
         __extends($mol_app_taxon_demo, _super);
         function $mol_app_taxon_demo() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         $mol_app_taxon_demo.prototype.hierarhyField = function () {
             return "name";
@@ -3947,7 +3629,7 @@ var $;
         var $mol_app_taxon_demo = (function (_super) {
             __extends($mol_app_taxon_demo, _super);
             function $mol_app_taxon_demo() {
-                _super.apply(this, arguments);
+                return _super.apply(this, arguments) || this;
             }
             $mol_app_taxon_demo.prototype.hierarhy = function () {
                 var dict = {};
@@ -3983,14 +3665,14 @@ var $;
                     fingersCount: 7 + Math.ceil(Math.random() * 3)
                 };
             };
-            __decorate([
-                $.$mol_mem()
-            ], $mol_app_taxon_demo.prototype, "hierarhy", null);
-            __decorate([
-                $.$mol_mem_key()
-            ], $mol_app_taxon_demo.prototype, "record", null);
             return $mol_app_taxon_demo;
         }($.$mol_app_taxon_demo));
+        __decorate([
+            $.$mol_mem()
+        ], $mol_app_taxon_demo.prototype, "hierarhy", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_app_taxon_demo.prototype, "record", null);
         $mol.$mol_app_taxon_demo = $mol_app_taxon_demo;
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));

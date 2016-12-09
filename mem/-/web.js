@@ -21,7 +21,6 @@ var $;
         console.log(time, path, values);
     }
     $.$mol_log = $mol_log;
-    var $mol_log;
     (function ($mol_log) {
         var _filter;
         function filter(next) {
@@ -215,9 +214,10 @@ var $;
     var $mol_defer = (function (_super) {
         __extends($mol_defer, _super);
         function $mol_defer(run) {
-            _super.call(this);
-            this.run = run;
-            $mol_defer.add(this);
+            var _this = _super.call(this) || this;
+            _this.run = run;
+            $mol_defer.add(_this);
+            return _this;
         }
         $mol_defer.prototype.destroyed = function (next) {
             if (next)
@@ -255,13 +255,13 @@ var $;
             for (var defer; defer = this.all.pop();)
                 defer.run();
         };
-        $mol_defer.all = [];
-        $mol_defer.timer = 0;
-        $mol_defer.scheduleNative = (typeof requestAnimationFrame == 'function')
-            ? function (handler) { return requestAnimationFrame(handler); }
-            : function (handler) { return setTimeout(handler, 16); };
         return $mol_defer;
     }($.$mol_object));
+    $mol_defer.all = [];
+    $mol_defer.timer = 0;
+    $mol_defer.scheduleNative = (typeof requestAnimationFrame == 'function')
+        ? function (handler) { return requestAnimationFrame(handler); }
+        : function (handler) { return setTimeout(handler, 16); };
     $.$mol_defer = $mol_defer;
 })($ || ($ = {}));
 //defer.js.map
@@ -380,25 +380,26 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var $;
 (function ($) {
+    var $mol_atom_status;
     (function ($mol_atom_status) {
         $mol_atom_status[$mol_atom_status["obsolete"] = 'obsolete'] = "obsolete";
         $mol_atom_status[$mol_atom_status["checking"] = 'checking'] = "checking";
         $mol_atom_status[$mol_atom_status["pulling"] = 'pulling'] = "pulling";
         $mol_atom_status[$mol_atom_status["actual"] = 'actual'] = "actual";
-    })($.$mol_atom_status || ($.$mol_atom_status = {}));
-    var $mol_atom_status = $.$mol_atom_status;
+    })($mol_atom_status = $.$mol_atom_status || ($.$mol_atom_status = {}));
     var $mol_atom = (function (_super) {
         __extends($mol_atom, _super);
         function $mol_atom(host, handler, field) {
             if (field === void 0) { field = 'value()'; }
-            _super.call(this);
-            this.masters = null;
-            this.slaves = null;
-            this.status = $mol_atom_status.obsolete;
-            this.autoFresh = true;
-            this.handler = handler;
-            this.host = Object(host);
-            this.field = field || 'value()';
+            var _this = _super.call(this) || this;
+            _this.masters = null;
+            _this.slaves = null;
+            _this.status = $mol_atom_status.obsolete;
+            _this.autoFresh = true;
+            _this.handler = handler;
+            _this.host = Object(host);
+            _this.field = field || 'value()';
+            return _this;
         }
         $mol_atom.prototype.destroyed = function (next) {
             if (next) {
@@ -653,23 +654,23 @@ var $;
             }
             this.scheduled = false;
         };
-        $mol_atom.stack = [null];
-        $mol_atom.updating = [];
-        $mol_atom.reaping = new $.$mol_set();
-        $mol_atom.scheduled = false;
         return $mol_atom;
     }($.$mol_object));
+    $mol_atom.stack = [null];
+    $mol_atom.updating = [];
+    $mol_atom.reaping = new $.$mol_set();
+    $mol_atom.scheduled = false;
     $.$mol_atom = $mol_atom;
     $.$mol_state_stack.set('$mol_atom.stack', $mol_atom.stack);
     var $mol_atom_wait = (function (_super) {
         __extends($mol_atom_wait, _super);
         function $mol_atom_wait(message) {
             if (message === void 0) { message = 'Wait...'; }
-            _super.call(this, message);
-            this.message = message;
-            this.name = '$mol_atom_wait';
+            var _this = _super.call(this, message) || this;
+            _this.message = message;
+            _this.name = '$mol_atom_wait';
             var error = new Error(message);
-            error.name = this.name;
+            error.name = _this.name;
             error['__proto__'] = $mol_atom_wait.prototype;
             return error;
         }
@@ -679,7 +680,7 @@ var $;
     var $mol_atom_force = (function (_super) {
         __extends($mol_atom_force, _super);
         function $mol_atom_force() {
-            _super.apply(this, arguments);
+            return _super.apply(this, arguments) || this;
         }
         return $mol_atom_force;
     }(Object));

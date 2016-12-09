@@ -12,17 +12,17 @@
 [mol_viewer_error] * {
     background-image: -webkit-repeating-linear-gradient(
 		315deg,
-		rgba(255,220,220,1),
-		rgba(255,220,220,1) 11px,
-		rgba(255,255,220,1) 10px,
-		rgba(255,255,220,1) 20px
+		rgba(255, 220, 220, 1),
+		rgba(255, 220, 220, 1) 11px,
+		rgba(255, 255, 220, 1) 10px,
+		rgba(255, 255, 220, 1) 20px
 	) !important;
     background-image: repeating-linear-gradient(
 		135deg,
-		rgba(255,220,220,1),
-		rgba(255,220,220,1) 11px,
-		rgba(255,255,220,1) 10px,
-		rgba(255,255,220,1) 20px
+		rgba(255, 220, 220, 1),
+		rgba(255, 220, 220, 1) 11px,
+		rgba(255, 255, 220, 1) 10px,
+		rgba(255, 255, 220, 1) 20px
 	) !important;
     background-size: 28px 28px !important
 }
@@ -56,17 +56,17 @@
 [mol_viewer_error="$mol_atom_wait"] * {
     background-image: -webkit-repeating-linear-gradient(
 		45deg,
-		rgba(0,0,0,.01),
-		rgba(0,0,0,.01) 9px,
-		rgba(255,255,255,.01) 10px,
-		rgba(255,255,255,.01) 20px
+		rgba(0, 0, 0, .01),
+		rgba(0, 0, 0, .01) 9px,
+		rgba(255, 255, 255, .01) 10px,
+		rgba(255, 255, 255, .01) 20px
 	) !important;
     background-image: repeating-linear-gradient(
 		45deg,
-		rgba(0,0,0,.01),
-		rgba(0,0,0,.01) 9px,
-		rgba(255,255,255,.01) 10px,
-		rgba(255,255,255,.01) 20px
+		rgba(0, 0, 0, .01),
+		rgba(0, 0, 0, .01) 9px,
+		rgba(255, 255, 255, .01) 10px,
+		rgba(255, 255, 255, .01) 20px
 	) !important;
     background-size: 28px 28px !important;
     -webkit-animation: mol_viewer_wait_show .5s ease-in , mol_viewer_wait_move .25s steps(6) infinite !important;
@@ -74,7 +74,7 @@
 }
 [mol_linker] {
     text-decoration: none;
-    color: hsl( 215 , 50% , 57% );
+    color: hsl(215, 50%, 57%);
     cursor: pointer;
     border-radius: 2px;
     display: inline-block;
@@ -89,13 +89,13 @@
 [mol_linker]:focus ,
 [mol_linker]:not([mol_linker_current]):hover {
     outline: none;
-    box-shadow: 0 0 1px 1px rgba( 0 , 0 , 0 , .5 )
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5)
 }
 [mol_lister] {
     will-change: contents
 }
 [mol_carder] {
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
     background: white;
     border-radius: 2px;
     display: -webkit-box;
@@ -116,7 +116,7 @@
     border-radius: 2px
 }
 [mol_carder_statuser] {
-    background: rgba( 220 , 220 , 220 , 1 );
+    background: rgba(220, 220, 220, 1);
     text-transform: capitalize;
     padding: 0 16px;
     padding: 0 1rem;
@@ -128,44 +128,6 @@
 }
 [mol_carder_status="approved"] [mol_carder_statuser] {
     background: #96DAA9
-}
-[mol_rower] {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -ms-flex-line-pack: center;
-        align-content: center;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    padding: 8px;
-    padding: .5rem;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
-    border-radius: 2px
-}
-[mol_rower] > * ,
-[mol_rower_sub] > * {
-    margin: 8px;
-    margin: .5rem
-}
-[mol_rower_sub] {
-    margin: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 auto;
-            flex: 1 1 auto
 }
 [mol_labeler_titler] {
     color: gray;
@@ -187,6 +149,44 @@
     font-weight: lighter;
     display: inline
 }
+[mol_rower] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    padding: 8px;
+    padding: .5rem;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
+    border-radius: 2px
+}
+[mol_rower] > * ,
+[mol_rower_sub] > * {
+    margin: 8px;
+    margin: .5rem
+}
+[mol_rower_sub] {
+    margin: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto
+}
 [mol_app_supplies_carder] {
     -webkit-box-flex: 0;
         -ms-flex: 0 1 512px;
@@ -203,10 +203,10 @@
     height: 100%
 }
 [mol_app_supplies_carder_linker][mol_linker_current] {
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .5 )
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .5)
 }
 [mol_app_supplies_carder_linker][mol_linker_current] {
-    box-shadow: 0 0 0 1px rgba( 0 , 0 , 0 , .5 )
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .5)
 }
 [mol_app_supplies_carder_contenter] {}
 [mol_app_supplies_carder_grouper] {
@@ -262,7 +262,7 @@
     -ms-flex-line-pack: start;
         align-content: flex-start;
     overflow: hidden;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 )
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1)
 }
 [mol_stacker_mainer] {
     height: 100%;
@@ -278,7 +278,7 @@
     -webkit-box-flex: 1000;
         -ms-flex: 1000 1 50%;
             flex: 1000 1 50%;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
     max-width: 100%
 }
 [mol_stacker_addoner] {
@@ -295,7 +295,7 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
     z-index: 0;
     max-width: 100%
 }
@@ -304,6 +304,37 @@
 }
 [mol_stacker_side] > [mol_stacker_addoner] {
     margin-right: 0
+}
+[mol_stringer] {
+    box-sizing: border-box;
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
+    outline-offset: 0;
+    border: none;
+    border-radius: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 8px;
+    padding: .5rem;
+    text-align: left;
+    position: relative;
+    z-index: 0;
+    font: inherit;
+    -webkit-box-flex: 1000;
+        -ms-flex: 1000 1 auto;
+            flex: 1000 1 auto;
+    width: 8em;
+    background: #eee;
+    color: gray
+}
+[mol_stringer]:enabled {
+    background: white;
+    color: rgba(0, 0, 0, .9)
+}
+[mol_stringer]:enabled:hover ,
+[mol_stringer]:focus {
+    outline: none;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5);
+    z-index: 1
 }
 [mol_form_barFields] {
     padding: 0 8px;
@@ -358,37 +389,6 @@
 [mol_form_field_errorer]:not(:empty):after {
     content: ')'
 }
-[mol_stringer] {
-    box-sizing: border-box;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
-    outline-offset: 0;
-    border: none;
-    border-radius: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    padding: 8px;
-    padding: .5rem;
-    text-align: left;
-    position: relative;
-    z-index: 0;
-    font: inherit;
-    -webkit-box-flex: 1000;
-        -ms-flex: 1000 1 auto;
-            flex: 1000 1 auto;
-    width: 8em;
-    background: #eee;
-    color: gray
-}
-[mol_stringer]:enabled {
-    background: white;
-    color: rgba( 0 , 0 , 0 , .9 )
-}
-[mol_stringer]:enabled:hover ,
-[mol_stringer]:focus {
-    outline: none;
-    box-shadow: 0 0 1px 1px rgba( 0 , 0 , 0 , .5 );
-    z-index: 1
-}
 [mol_clicker] {
     -webkit-user-select: none;
        -moz-user-select: none;
@@ -397,7 +397,7 @@
     border: none;
     font: inherit;
     background: none;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
     border-radius: 2px;
     -webkit-box-flex: 1;
         -ms-flex: 1 1 auto;
@@ -430,10 +430,10 @@
 [mol_clicker_major]:not([disabled]) {
     background: rgb(255, 164, 36);
     color: rgb(250, 252, 255);
-    box-shadow: 0 0 1px 0 rgba( 220 , 220 , 220 , 1 )
+    box-shadow: 0 0 1px 0 rgba(220, 220, 220, 1)
 }
 [mol_clicker_danger]:not([disabled]) {
-    background: rgba(255, 0, 0, 0.51);
+    background: rgba(255, 0, 0, .51);
     color: white
 }
 [mol_clicker]:not([disabled]):hover ,
@@ -442,7 +442,7 @@
     z-index: 2;
     cursor: pointer;
     opacity: 1;
-    box-shadow: 0 0 1px 1px rgba( 0 , 0 , 0 , .5 )
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5)
 }
 [mol_app_supplies_enter] {
     -webkit-box-flex: 1;
@@ -468,7 +468,7 @@
     will-change: scroll-position;
     -webkit-transform: translateZ(0);
             transform: translateZ(0);
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
     max-height: 100%;
     -webkit-overflow-scrolling: touch
 }
@@ -496,7 +496,7 @@
     box-sizing: border-box
 }
 [mol_pager_header] {
-    background: hsl( 215 , 50% , 57% );
+    background: hsl(215, 50%, 57%);
     color: rgb(254, 253, 251);
     display: -webkit-box;
     display: -ms-flexbox;
@@ -526,10 +526,10 @@
             flex: 1 1 auto;
     height: 100%;
     background: #fcfcfc;
-    color: rgba( 0 , 0 , 0 , .9 )
+    color: rgba(0, 0, 0, .9)
 }
 [mol_pager_footer] {
-    background: hsl( 215 , 50% , 57% );
+    background: hsl(215, 50%, 57%);
     color: rgb(254, 253, 251);
     display: -webkit-box;
     display: -ms-flexbox;
@@ -556,7 +556,7 @@
     -webkit-box-flex: 0;
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
-    background: hsl( 215 , 50% , 57% );
+    background: hsl(215, 50%, 57%);
     position: relative;
     margin: 0
 }
@@ -611,9 +611,9 @@
     -webkit-box-flex: 1;
         -ms-flex: 1 1 auto;
             flex: 1 1 auto;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
     border-radius: 2px;
-    background: rgba( 220 , 220 , 220 , 1 )
+    background: rgba(220, 220, 220, 1)
 }
 [mol_switcher_optioner] {
     padding: 8px 12px;
@@ -621,7 +621,7 @@
     -webkit-box-flex: 1;
         -ms-flex: 1 1 0%;
             flex: 1 1 0%;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 )
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1)
 }
 [mol_switcher_optioner][mol_checker_checked] {
     background: white;
@@ -634,23 +634,6 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex
-}
-[mol_sectioner_header] {
-    font-size: 20px;
-    font-size: 1.25rem;
-    margin: 8px 0;
-    margin: .5rem 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    -webkit-box-align: end;
-        -ms-flex-align: end;
-            align-items: flex-end;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap
 }
 [mol_tiler] {
     display: -webkit-box;
@@ -702,7 +685,7 @@
     height: 5rem;
     background: center no-repeat;
     border-radius: 2px;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 );
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
     background-size: cover;
     -webkit-box-flex: 1;
         -ms-flex: 1 0 80px;
@@ -742,13 +725,30 @@
     cursor: pointer;
     opacity: 0
 }
+[mol_sectioner_header] {
+    font-size: 20px;
+    font-size: 1.25rem;
+    margin: 8px 0;
+    margin: .5rem 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap
+}
 [mol_checker]:disabled > [mol_checker_ticker_icon] {
     background-color: #eee
 }
 [mol_checker_ticker_icon] {
     left: 0;
     border-radius: 2px;
-    box-shadow: 0 0 0 1px rgba( 220 , 220 , 220 , 1 )
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1)
 }
 [mol_checker_ticker_icon] + div:not(:empty) {
     margin-left: 8px;
@@ -786,7 +786,7 @@
             flex: 1 1 192px;
     -ms-flex: 1 1 12rem;
         flex: 1 1 12rem;
-    background: hsla(137,50%,98%,1)
+    background: hsla(137, 50%, 98%, 1)
 }
 [mol_app_supplies_positioner_addonGroup] {
     -webkit-box-flex: 1;
@@ -794,7 +794,7 @@
             flex: 1 1 192px;
     -ms-flex: 1 1 12rem;
         flex: 1 1 12rem;
-    background: hsla(216,50%,98%,1)
+    background: hsla(216, 50%, 98%, 1)
 }
 [mol_app_supplies_positioner_supplyGroup] {
     -webkit-box-flex: 1;
@@ -802,7 +802,7 @@
             flex: 1 1 352px;
     -ms-flex: 1 1 22rem;
         flex: 1 1 22rem;
-    background: hsla(0,50%,98%,1);
+    background: hsla(0, 50%, 98%, 1);
     -webkit-box-orient: horizontal;
     -webkit-box-direction: reverse;
         -ms-flex-direction: row-reverse;

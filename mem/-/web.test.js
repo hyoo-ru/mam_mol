@@ -107,7 +107,7 @@ var $;
             var X = (function (_super) {
                 __extends(X, _super);
                 function X() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 X.prototype.foo = function () {
                     return 1;
@@ -243,18 +243,18 @@ var $;
             var X = (function (_super) {
                 __extends(X, _super);
                 function X() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 X.prototype.foo = function (id, next) {
                     if (next == null)
                         return new Number(123);
                     return new Number(next);
                 };
-                __decorate([
-                    $.$mol_mem_key()
-                ], X.prototype, "foo", null);
                 return X;
             }($.$mol_object));
+            __decorate([
+                $.$mol_mem_key()
+            ], X.prototype, "foo", null);
             var x = new X;
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
             $.$mol_assert_equal(x.foo(0), x.foo(0));
@@ -268,16 +268,16 @@ var $;
             var X = (function (_super) {
                 __extends(X, _super);
                 function X() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 X.prototype.foo = function (ids) {
                     return Math.random();
                 };
-                __decorate([
-                    $.$mol_mem_key()
-                ], X.prototype, "foo", null);
                 return X;
             }($.$mol_object));
+            __decorate([
+                $.$mol_mem_key()
+            ], X.prototype, "foo", null);
             var x = new X;
             $.$mol_assert_equal(x.foo([0, 1]), x.foo([0, 1]));
             $.$mol_assert_unique(x.foo([0, 1]), x.foo([0, 2]));
@@ -286,7 +286,7 @@ var $;
             var X = (function (_super) {
                 __extends(X, _super);
                 function X() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 X.prototype.foo = function (next) {
                     return next || 1;
@@ -297,17 +297,17 @@ var $;
                 X.prototype.xxx = function () {
                     return this.bar() + 1;
                 };
-                __decorate([
-                    $.$mol_mem()
-                ], X.prototype, "foo", null);
-                __decorate([
-                    $.$mol_mem()
-                ], X.prototype, "bar", null);
-                __decorate([
-                    $.$mol_mem()
-                ], X.prototype, "xxx", null);
                 return X;
             }($.$mol_object));
+            __decorate([
+                $.$mol_mem()
+            ], X.prototype, "foo", null);
+            __decorate([
+                $.$mol_mem()
+            ], X.prototype, "bar", null);
+            __decorate([
+                $.$mol_mem()
+            ], X.prototype, "xxx", null);
             var x = new X;
             $.$mol_assert_equal(x.bar(), 2);
             $.$mol_assert_equal(x.xxx(), 3);
@@ -319,7 +319,7 @@ var $;
             var B = (function (_super) {
                 __extends(B, _super);
                 function B() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 B.prototype.showing = function (next) {
                     if (next === void 0)
@@ -332,17 +332,17 @@ var $;
                 B.prototype.bar = function () {
                     return this.showing() ? this.foo() : null;
                 };
-                __decorate([
-                    $.$mol_mem()
-                ], B.prototype, "showing", null);
-                __decorate([
-                    $.$mol_mem()
-                ], B.prototype, "foo", null);
-                __decorate([
-                    $.$mol_mem()
-                ], B.prototype, "bar", null);
                 return B;
             }($.$mol_object));
+            __decorate([
+                $.$mol_mem()
+            ], B.prototype, "showing", null);
+            __decorate([
+                $.$mol_mem()
+            ], B.prototype, "foo", null);
+            __decorate([
+                $.$mol_mem()
+            ], B.prototype, "bar", null);
             var b = new B;
             var bar = b.bar();
             $.$mol_assert_ok(bar);
@@ -360,7 +360,7 @@ var $;
             var Test = (function (_super) {
                 __extends(Test, _super);
                 function Test() {
-                    _super.apply(this, arguments);
+                    return _super.apply(this, arguments) || this;
                 }
                 Test.prototype.source = function (next, force) {
                     var _this = this;
@@ -375,17 +375,17 @@ var $;
                 Test.prototype.target = function () {
                     return this.middle();
                 };
-                __decorate([
-                    $.$mol_mem()
-                ], Test.prototype, "source", null);
-                __decorate([
-                    $.$mol_mem()
-                ], Test.prototype, "middle", null);
-                __decorate([
-                    $.$mol_mem()
-                ], Test.prototype, "target", null);
                 return Test;
             }($.$mol_object));
+            __decorate([
+                $.$mol_mem()
+            ], Test.prototype, "source", null);
+            __decorate([
+                $.$mol_mem()
+            ], Test.prototype, "middle", null);
+            __decorate([
+                $.$mol_mem()
+            ], Test.prototype, "target", null);
             var t = new Test;
             $.$mol_assert_fail(function () { return t.target().valueOf(); }, $.$mol_atom_wait);
             $.$mol_defer.run();

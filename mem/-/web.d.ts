@@ -7,7 +7,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_object {
         Class(): any;
-        static objectPath(): any;
+        static objectPath(): string;
         'objectClassNames()': string[];
         objectClassNames(): string[];
         private 'objectOwner()';
@@ -19,7 +19,7 @@ declare namespace $ {
         'destroyed()': boolean;
         destroyed(next?: boolean): boolean;
         log(values: any[]): void;
-        static toString(): any;
+        static toString(): string;
         toString(): string;
     }
 }

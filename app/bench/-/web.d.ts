@@ -1,7 +1,4 @@
 declare namespace $ {
-    function $mol_merge_dict<Target, Source>(target: Target, source: Source): Target & Source;
-}
-declare namespace $ {
     function $mol_log(path: string, values: any[]): void;
     namespace $mol_log {
         function filter(next?: string): string;
@@ -10,7 +7,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_object {
         Class(): any;
-        static objectPath(): any;
+        static objectPath(): string;
         'objectClassNames()': string[];
         objectClassNames(): string[];
         private 'objectOwner()';
@@ -22,7 +19,7 @@ declare namespace $ {
         'destroyed()': boolean;
         destroyed(next?: boolean): boolean;
         log(values: any[]): void;
-        static toString(): any;
+        static toString(): string;
         toString(): string;
     }
 }
@@ -181,85 +178,6 @@ declare namespace $ {
         };
     }
 }
-declare var localStorage: Storage;
-declare namespace $ {
-    class $mol_state_local<Value> extends $mol_object {
-        static value<Value>(key: string, next?: Value, force?: $mol_atom_force): any;
-        prefix(): string;
-        value(key: string, next?: Value): any;
-    }
-}
-declare namespace $ {
-}
-declare namespace $ {
-    class $mol_state_arg<Value> extends $mol_object {
-        prefix: string;
-        static href(next?: string): string;
-        static dict(next?: {
-            [key: string]: string;
-        }): {
-            [key: string]: string;
-        };
-        static value(key: string, next?: string): string;
-        static link(next: {
-            [key: string]: string;
-        }): string;
-        static make(next: {
-            [key: string]: string;
-        }): string;
-        constructor(prefix?: string);
-        value(key: string, next?: string): string;
-        sub(postfix: string): $mol_state_arg<{}>;
-        link(next: {
-            [key: string]: string;
-        }): string;
-    }
-}
-declare namespace $ {
-    class $mol_http_request extends $mol_object {
-        uri(): string;
-        method(): string;
-        credentials(): {
-            login?: string;
-            password?: string;
-        };
-        body(): any;
-        'native()': XMLHttpRequest;
-        native(): XMLHttpRequest;
-        destroyed(next?: boolean): boolean;
-        response(next?: any, force?: $mol_atom_force): any;
-        text(next?: string, force?: $mol_atom_force): string;
-    }
-}
-declare namespace $ {
-    var $mol_http_request_native: () => XMLHttpRequest;
-}
-declare namespace $ {
-    class $mol_http_resource extends $mol_object {
-        static item(uri: string): $mol_http_resource;
-        uri(): string;
-        credentials(): {
-            login?: string;
-            password?: string;
-        };
-        request(): $mol_http_request;
-        text(next?: string, force?: $mol_atom_force): string;
-    }
-    class $mol_http_resource_json<Content> extends $mol_http_resource {
-        static item<Content>(uri: string): $mol_http_resource_json<Content>;
-        json(next?: Content, force?: $mol_atom_force): Content;
-    }
-}
-declare namespace $ {
-    interface $mol_locale_dict {
-        [key: string]: string;
-    }
-    class $mol_locale extends $mol_object {
-        static lang(next?: string): any;
-        static texts(): $mol_locale_dict;
-        static text(context: string, key: string): string;
-    }
-}
 declare namespace $ {
     var $mol_viewer_context: $mol_viewer_context;
     interface $mol_viewer_context {
@@ -297,8 +215,7 @@ declare namespace $ {
         event(): {
             [key: string]: (event: Event) => void;
         };
-        focused(): boolean;
-        localizedText(postfix: string): string;
+        localizationContexts(): any;
     }
 }
 interface Window {
@@ -307,14 +224,31 @@ interface Window {
 declare namespace $ {
 }
 declare namespace $ {
-    class $mol_viewer_selection extends $mol_object {
-        static focused(next?: Element[]): Element[];
-        static position(...diff: any[]): any;
-        static onFocus(event: FocusEvent): void;
-        static onBlur(event: FocusEvent): void;
-    }
+    function $mol_merge_dict<Target, Source>(target: Target, source: Source): Target & Source;
 }
 declare namespace $ {
+    class $mol_state_arg<Value> extends $mol_object {
+        prefix: string;
+        static href(next?: string): string;
+        static dict(next?: {
+            [key: string]: string;
+        }): {
+            [key: string]: string;
+        };
+        static value(key: string, next?: string): string;
+        static link(next: {
+            [key: string]: string;
+        }): string;
+        static make(next: {
+            [key: string]: string;
+        }): string;
+        constructor(prefix?: string);
+        value(key: string, next?: string): string;
+        sub(postfix: string): $mol_state_arg<{}>;
+        link(next: {
+            [key: string]: string;
+        }): string;
+    }
 }
 declare namespace $ {
     class $mol_stacker extends $mol_viewer {
@@ -337,42 +271,31 @@ declare namespace $.$mol {
     }
 }
 declare namespace $ {
-    class $mol_portioner_indicator extends $mol_viewer {
-        widthStyle(): string;
+    class $mol_lister extends $mol_viewer {
+        minHeightStyle(): string;
         field(): {
             [key: string]: (next?: any) => any;
         } & {
-            "style.width": () => any;
+            "style.minHeight": () => any;
         };
-    }
-}
-declare namespace $ {
-    class $mol_portioner extends $mol_viewer {
-        portion(): number;
-        indWidthStyle(): string;
-        indicator(next?: any): $mol_portioner_indicator;
+        rows(): any[];
         childs(): any[];
     }
 }
 declare namespace $.$mol {
-    class $mol_portioner extends $.$mol_portioner {
-        indWidthStyle(): string;
+    class $mol_lister extends $.$mol_lister {
+        rowOffsets(): number[];
+        rowContext(index: number): $mol_viewer_context;
+        childsVisible(): any[];
+        heightMinimal(): number;
+        minHeightStyle(): string;
     }
 }
 declare namespace $ {
-    class $mol_floater extends $mol_viewer {
-        shiftStyle(): string;
-        field(): {
-            [key: string]: (next?: any) => any;
-        } & {
-            "style.transform": () => any;
-        };
-        scrolling(): boolean;
-        attr(): {
-            [key: string]: () => string | number | boolean;
-        } & {
-            "mol_floater_scrolling": () => any;
-        };
+    class $mol_state_session<Value> extends $mol_object {
+        static value<Value>(key: string, next?: Value): Value;
+        prefix(): string;
+        value(key: string, next?: Value): Value;
     }
 }
 declare namespace $ {
@@ -397,13 +320,6 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    class $mol_state_session<Value> extends $mol_object {
-        static value<Value>(key: string, next?: Value): Value;
-        prefix(): string;
-        value(key: string, next?: Value): Value;
-    }
-}
-declare namespace $ {
     interface $mol_viewer_context {
         $mol_scroller_scrollTop(): number;
         $mol_scroller_moving(): boolean;
@@ -419,6 +335,22 @@ declare namespace $.$mol {
         moving(next?: boolean): boolean;
         contextSub(): $mol_viewer_context;
         shadowStyle(): string;
+    }
+}
+declare namespace $ {
+    class $mol_floater extends $mol_viewer {
+        shiftStyle(): string;
+        field(): {
+            [key: string]: (next?: any) => any;
+        } & {
+            "style.transform": () => any;
+        };
+        scrolling(): boolean;
+        attr(): {
+            [key: string]: () => string | number | boolean;
+        } & {
+            "mol_floater_scrolling": () => any;
+        };
     }
 }
 declare namespace $.$mol {
@@ -558,14 +490,16 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    class $mol_grider extends $mol_viewer {
-        tagName(): string;
+    class $mol_grider extends $mol_scroller {
         rows(): any[];
         row(key: any): any;
         cols(): any[];
         records(): any[];
         record(key: any): any;
         hierarhyColumn(): string;
+        rowersVisible(): any[];
+        tabler(next?: any): $mol_viewer;
+        childs(): any[];
         rowers(): any[];
         rowHeight(): number;
         headerCellers(): any[];
@@ -643,7 +577,7 @@ declare namespace $ {
 }
 declare namespace $.$mol {
     class $mol_grider extends $.$mol_grider {
-        childs(): any[];
+        rowersVisible(): any[];
         viewWindow(): {
             top: number;
             bottom: number;
@@ -655,7 +589,7 @@ declare namespace $.$mol {
         columnHeaderContent(colId: string): string[];
         rowers(): $.$mol_grider_rower[];
         cellers(row: string): $mol_viewer[];
-        colType(col: string): string;
+        colType(col: string): "text" | "branch" | "number";
         celler(id: {
             row: string;
             col: string;
@@ -682,92 +616,39 @@ declare namespace $.$mol {
     }
 }
 declare namespace $ {
-    class $mol_icon_sort_asc extends $mol_icon {
-        path(): string;
+    interface $mol_syntax_token {
+        name: string;
+        found: string;
+        chunks: string[];
+    }
+    class $mol_syntax {
+        constructor(lexems: {
+            [name: string]: RegExp;
+        });
+        'lexems()': {
+            [name: string]: RegExp;
+        };
+        lexems(): {
+            [name: string]: RegExp;
+        };
+        'rules()': {
+            regExp: RegExp;
+            name: string;
+            size: number;
+        }[];
+        rules(): {
+            regExp: RegExp;
+            name: string;
+            size: number;
+        }[];
+        'regExp()': RegExp;
+        regExp(): RegExp;
+        tokenize(text: string): $mol_syntax_token[];
     }
 }
 declare namespace $ {
-    class $mol_bencher extends $mol_grider {
-        results(): any;
-        resultsSorted(): any;
-        records(): any;
-        colSort(): string;
-        eventSortToggle(key: any, next?: any): any;
-        columnHeaderLabel(key: any): any[];
-        columnHeaderSorter(key: any, next?: any): $mol_icon_sort_asc;
-        columnHeaderContent(key: any): any[];
-        columnHeader(key: any, next?: any): $mol_bencher_header;
-        resultValue(key: any): string;
-        resultPortion(key: any): number;
-        resultPortioner(key: any, next?: any): $mol_portioner;
-        cellerContentNumber(key: any): any[];
-    }
-}
-declare namespace $ {
-    class $mol_bencher_header extends $mol_floater {
-        eventClick(next?: any): any;
-        event(): {
-            [key: string]: (event: Event) => void;
-        } & {
-            "click": (next?: any) => any;
-        };
-        hint(): string;
-        attr(): {
-            [key: string]: () => string | number | boolean;
-        } & {
-            "mol_floater_scrolling": () => any;
-        } & {
-            "title": () => any;
-        };
-    }
-}
-declare namespace $.$mol {
-    class $mol_bencher extends $.$mol_bencher {
-        colSort(next?: string): string;
-        resultsSorted(): any;
-        resultValue(id: {
-            row: string;
-            col: string;
-        }): any;
-        resultNumber(id: {
-            row: string;
-            col: string;
-        }): number;
-        resultMaxValue(col: string): number;
-        resultPortion(id: {
-            row: string;
-            col: string;
-        }): number;
-        columnHeaderLabel(col: string): string[];
-        eventSortToggle(col: string, next?: Event): void;
-        colType(col: string): string;
-        cellerContentNumber(id: {
-            row: string;
-            col: string;
-        }): any[];
-        columnHeaderContent(col: string): any[];
-    }
-}
-declare namespace $ {
-    class $mol_lister extends $mol_viewer {
-        minHeightStyle(): string;
-        field(): {
-            [key: string]: (next?: any) => any;
-        } & {
-            "style.minHeight": () => any;
-        };
-        rows(): any[];
-        childs(): any[];
-    }
-}
-declare namespace $.$mol {
-    class $mol_lister extends $.$mol_lister {
-        rowOffsets(): number[];
-        rowContext(index: number): $mol_viewer_context;
-        childsVisible(): any[];
-        heightMinimal(): number;
-        minHeightStyle(): string;
-    }
+    var $mol_syntax_md_flow: $mol_syntax;
+    var $mol_syntax_md_line: $mol_syntax;
 }
 declare namespace $ {
     class $mol_texter extends $mol_lister {
@@ -783,8 +664,7 @@ declare namespace $ {
         header(key: any, next?: any): $mol_texter_header;
         tablerHeaderCellers(key: any): any[];
         tablerRowers(key: any): any[];
-        tablerGrider(key: any, next?: any): $mol_grider;
-        tabler(key: any, next?: any): $mol_scroller;
+        tabler(key: any, next?: any): $mol_grider;
         tablerCellers(key: any): any[];
         tablerRower(key: any, next?: any): $mol_grider_rower;
         tablerCellerContent(key: any): any[];
@@ -859,45 +739,10 @@ declare namespace $ {
         };
     }
 }
-declare namespace $ {
-    interface $mol_syntax_token {
-        name: string;
-        found: string;
-        chunks: string[];
-    }
-    class $mol_syntax {
-        constructor(lexems: {
-            [name: string]: RegExp;
-        });
-        'lexems()': {
-            [name: string]: RegExp;
-        };
-        lexems(): {
-            [name: string]: RegExp;
-        };
-        'rules()': {
-            regExp: RegExp;
-            name: string;
-            size: number;
-        }[];
-        rules(): {
-            regExp: RegExp;
-            name: string;
-            size: number;
-        }[];
-        'regExp()': RegExp;
-        regExp(): RegExp;
-        tokenize(text: string): $mol_syntax_token[];
-    }
-}
-declare namespace $ {
-    var $mol_syntax_md_flow: $mol_syntax;
-    var $mol_syntax_md_line: $mol_syntax;
-}
 declare namespace $.$mol {
     class $mol_texter extends $.$mol_texter {
         tokensFlow(): $mol_syntax_token[];
-        rows(): ($.$mol_scroller | $mol_texter_rower | $mol_texter_header)[];
+        rows(): ($.$mol_grider | $mol_texter_rower | $mol_texter_header)[];
         headerLevel(index: number): number;
         headerContent(index: number): ($mol_texter_spanner | $mol_texter_imager)[];
         blockType(index: number): string;
@@ -915,6 +760,151 @@ declare namespace $.$mol {
         }): ($mol_texter_spanner | $mol_texter_imager)[];
         text2spans(prefix: string, text: string): ($mol_texter_spanner | $mol_texter_imager)[];
         blockContent(indexBlock: number): ($mol_viewer | string)[];
+    }
+}
+declare namespace $ {
+    class $mol_portioner_indicator extends $mol_viewer {
+        widthStyle(): string;
+        field(): {
+            [key: string]: (next?: any) => any;
+        } & {
+            "style.width": () => any;
+        };
+    }
+}
+declare namespace $ {
+    class $mol_portioner extends $mol_viewer {
+        portion(): number;
+        indWidthStyle(): string;
+        indicator(next?: any): $mol_portioner_indicator;
+        childs(): any[];
+    }
+}
+declare namespace $.$mol {
+    class $mol_portioner extends $.$mol_portioner {
+        indWidthStyle(): string;
+    }
+}
+declare namespace $ {
+    class $mol_icon_sort_asc extends $mol_icon {
+        path(): string;
+    }
+}
+declare var localStorage: Storage;
+declare namespace $ {
+    class $mol_state_local<Value> extends $mol_object {
+        static value<Value>(key: string, next?: Value, force?: $mol_atom_force): any;
+        prefix(): string;
+        value(key: string, next?: Value): any;
+    }
+}
+declare namespace $ {
+}
+declare namespace $ {
+    class $mol_http_request extends $mol_object {
+        uri(): string;
+        method(): string;
+        credentials(): {
+            login?: string;
+            password?: string;
+        };
+        body(): any;
+        'native()': XMLHttpRequest;
+        native(): XMLHttpRequest;
+        destroyed(next?: boolean): boolean;
+        response(next?: any, force?: $mol_atom_force): any;
+        text(next?: string, force?: $mol_atom_force): string;
+    }
+}
+declare namespace $ {
+    var $mol_http_request_native: () => XMLHttpRequest;
+}
+declare namespace $ {
+    class $mol_http_resource extends $mol_object {
+        static item(uri: string): $mol_http_resource;
+        uri(): string;
+        credentials(): {
+            login?: string;
+            password?: string;
+        };
+        request(): $mol_http_request;
+        text(next?: string, force?: $mol_atom_force): string;
+    }
+    class $mol_http_resource_json<Content> extends $mol_http_resource {
+        static item<Content>(uri: string): $mol_http_resource_json<Content>;
+        json(next?: Content, force?: $mol_atom_force): Content;
+    }
+}
+declare namespace $ {
+    interface $mol_locale_dict {
+        [key: string]: string;
+    }
+    class $mol_locale extends $mol_object {
+        static lang(next?: string): any;
+        static texts(): $mol_locale_dict;
+        static text(contexts: string[], key: string): string;
+    }
+}
+declare namespace $ {
+    class $mol_bencher extends $mol_grider {
+        results(): any;
+        resultsSorted(): any;
+        records(): any;
+        colSort(): string;
+        eventSortToggle(key: any, next?: any): any;
+        columnHeaderLabel(key: any): any[];
+        columnHeaderSorter(key: any, next?: any): $mol_icon_sort_asc;
+        columnHeaderContent(key: any): any[];
+        columnHeader(key: any, next?: any): $mol_bencher_header;
+        resultValue(key: any): string;
+        resultPortion(key: any): number;
+        resultPortioner(key: any, next?: any): $mol_portioner;
+        cellerContentNumber(key: any): any[];
+    }
+}
+declare namespace $ {
+    class $mol_bencher_header extends $mol_floater {
+        eventClick(next?: any): any;
+        event(): {
+            [key: string]: (event: Event) => void;
+        } & {
+            "click": (next?: any) => any;
+        };
+        hint(): string;
+        attr(): {
+            [key: string]: () => string | number | boolean;
+        } & {
+            "mol_floater_scrolling": () => any;
+        } & {
+            "title": () => any;
+        };
+    }
+}
+declare namespace $.$mol {
+    class $mol_bencher extends $.$mol_bencher {
+        colSort(next?: string): any;
+        resultsSorted(): any;
+        resultValue(id: {
+            row: string;
+            col: string;
+        }): any;
+        resultNumber(id: {
+            row: string;
+            col: string;
+        }): number;
+        resultMaxValue(col: string): number;
+        resultPortion(id: {
+            row: string;
+            col: string;
+        }): number;
+        columnHeaderLabel(col: string): string[];
+        eventSortToggle(col: string, next?: Event): void;
+        colType(col: string): "text" | "branch" | "number";
+        cellerContentNumber(id: {
+            row: string;
+            col: string;
+        }): any[];
+        columnHeaderContent(col: string): any[];
     }
 }
 declare namespace $ {
@@ -942,11 +932,12 @@ declare namespace $ {
 declare namespace $ {
     class $mol_app_bench extends $mol_stacker {
         tester(next?: any): $mol_app_bench_tester;
-        results(): any;
-        resultsColSort(next?: any): any;
-        resulter(next?: any): $mol_bencher;
         description(): string;
         descriptioner(next?: any): $mol_texter;
+        results(): any;
+        columnHeaderLabel(key: any): any[];
+        resultsColSort(next?: any): any;
+        resulter(next?: any): $mol_bencher;
         mainPage(next?: any): $mol_app_bench_mainer;
         main(): any[];
         addonerTitle(): string;
@@ -957,6 +948,7 @@ declare namespace $ {
         menuOptionerChecked(key: any, next?: any): any;
         menuOptionerTitle(key: any): string;
         menuOptioner(key: any, next?: any): $mol_checker_ticker;
+        columnHeaderLabelSample(): string;
     }
 }
 declare namespace $ {
@@ -972,7 +964,7 @@ declare namespace $ {
 }
 declare namespace $.$mol {
     class $mol_app_bench extends $.$mol_app_bench {
-        bench(next?: string): string;
+        bench(next?: string): any;
         sandbox(next?: HTMLIFrameElement, force?: $mol_atom_force): HTMLIFrameElement;
         'commandCurrent()': any[];
         commandCurrent(next?: any[], force?: $mol_atom_force): any[];
@@ -985,7 +977,7 @@ declare namespace $.$mol {
                 [lang: string]: string;
             };
             samples: {
-                [step: string]: {
+                [sample: string]: {
                     title: {
                         [lang: string]: string;
                     };
@@ -1012,7 +1004,8 @@ declare namespace $.$mol {
                 [step: string]: any;
             };
         };
-        resultsColSort(next?: string): string;
+        columnHeaderLabel(col: string): string[];
+        resultsColSort(next?: string): any;
         menuOptions(): $mol_checker_ticker[];
         menuOptionerTitle(sample: string): string;
         menuOptionerChecked(sample: string, next?: boolean): boolean;
