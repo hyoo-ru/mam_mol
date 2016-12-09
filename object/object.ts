@@ -7,8 +7,8 @@ namespace $ {
 			return this.constructor as any
 		}
 		
-		static objectPath() {
-			let self = <any> this
+		static objectPath() : string {
+			let self : any = this
 			return self[ 'name' ]
 				|| self[ 'displayName' ]
 				|| ( self[ 'displayName' ] = Function.prototype.toString.call( self )
@@ -90,7 +90,7 @@ namespace $ {
 		static toString() {
 			return this.objectPath()
 		}
-		
+
 		toString() {
 			return this.objectPath()
 		}
