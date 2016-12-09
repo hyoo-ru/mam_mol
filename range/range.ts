@@ -1,6 +1,15 @@
 namespace $ {
 	
-	export class $mol_range_common< Value > extends Array< Value > {
+	export function $mol_range_in< Item > (
+		source : {
+			item : ( id : number ) => Item
+			length : number
+		}
+	) {
+		return <Item[]> <any> new $mol_range_lazy< Item >( source )
+	}
+	
+	export class $mol_range_common< Value > /*implements ReadonlyArray< Value >*/ {
 		
 		item( id : number ) : Value {
 			return
@@ -105,7 +114,7 @@ namespace $ {
 		}
 		
 	}
-
+	
 	// export class $mol_range_list< Value > extends $mol_range_common< Value > {
 	//
 	// 	constructor( private list : Value[][] ) {

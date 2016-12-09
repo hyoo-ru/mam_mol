@@ -37,7 +37,7 @@ namespace $ {
 									db ,
 									`${ resource.table }_$_${ resource.table }` ,
 									( result2 : any ) => {
-										const range = new $mol_range_lazy( result2.rows )
+										const range = $mol_range_in( result2.rows )
 										$mol_hyperhive.data( resource , range , $mol_atom_force )
 									} ,
 									handleError ,

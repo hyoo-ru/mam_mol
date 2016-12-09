@@ -105,7 +105,7 @@ namespace $.$mol {
 		@ $mol_mem()
 		records() {
 			const paths = this.rows()
-			return new $mol_range_lazy( {
+			return $mol_range_in( {
 				length : paths.length ,
 				item : index => this.record( paths[ index ] ) ,
 			} )
