@@ -50,6 +50,7 @@ namespace $ {
 				
 				this[ 'destroyed()' ] = true
 				this.log( [ '.destroyed()' , true , 'atom' ] )
+				this.status = $mol_atom_status.obsolete
 				
 				return true
 			} else {
