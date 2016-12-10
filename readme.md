@@ -28,11 +28,12 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
 * [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
 * [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
-* [$mol_app_taxon](app/taxon) - Displays big hierarchical table from database ([online](http://eigenmethod.github.io/mol/#demo=mol_app_taxon_demo))
+* [$mol_app_taxon](app/taxon) - Displays big hierarchical table from database ([online](http://eigenmethod.github.io/mol/app/taxon/demo/))
+* [$mol_app_bench](app/bench) - abstract benchmarking interface ([online](http://eigenmethod.github.io/mol/app/bench/))
 
 # Benchmarks
 
-* [$mol_app_bench](app/bench) - frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/))
+* [$mol_app_bench_list](app/bench/list) - frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/#becnh=list#sort=fill#))
 * [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)
 
 # Articles
