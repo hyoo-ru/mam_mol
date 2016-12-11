@@ -2,7 +2,7 @@ namespace $.$mol {
 	export class $mol_switcher extends $.$mol_switcher {
 
 		value( next? : any ) {
-			return $mol_state_session.value( this.objectPath() + '.value()' , next )
+			return $mol_state_session.value( `${ this }.value()` , next )
 		}
 		
 		options() : { [ key : string ] : () => string } {

@@ -15,11 +15,11 @@ namespace $.$mol {
 	export class $mol_scroller extends $.$mol_scroller {
 
 		scrollTop( next? : number ) {
-			return $mol_state_session.value( this.objectPath() + '.scrollTop()' , next ) || 0
+			return $mol_state_session.value( `${ this }.scrollTop()` , next ) || 0
 		}
 		
 		scrollLeft( next? : number ) {
-			return $mol_state_session.value( this.objectPath() + '.scrollLeft()' , next ) || 0
+			return $mol_state_session.value( `${ this }.scrollLeft()` , next ) || 0
 		}
 		
 		@ $mol_mem()

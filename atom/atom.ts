@@ -63,7 +63,7 @@ namespace $ {
 			this.checkSlaves()
 		}
 		
-		objectPath() {
+		toString() {
 			return `${ this.host }.${ this.field }`
 		}
 		

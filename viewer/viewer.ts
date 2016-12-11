@@ -17,7 +17,7 @@ namespace $ {
 		}
 		
 		title() : string {
-			return this.Class().objectPath()
+			return this.Class().toString()
 		}
 		
 		static statePrefix() {
@@ -77,7 +77,7 @@ namespace $ {
 		private 'DOMNode()' : Element
 		
 		DOMNode( next? : Element ) {
-			const path = this.objectPath()
+			const path = this.toString()
 			
 			let next2 = next
 			if( !next2 ) {

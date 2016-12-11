@@ -2,7 +2,7 @@ namespace $.$mol {
 	export class $mol_decker extends $.$mol_decker {
 		
 		current( next? : string ) {
-			return $mol_state_session.value( this.objectPath() + '.current()' , next ) || '0'
+			return $mol_state_session.value( `${ this }.current()` , next ) || '0'
 		}
 		
 		switcherOptions() {

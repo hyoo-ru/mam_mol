@@ -7,7 +7,7 @@ namespace $ {
 			return this.constructor as any
 		}
 		
-		static objectPath() : string {
+		static toString() : string {
 			let self : any = this
 			return self[ 'name' ]
 				|| self[ 'displayName' ]
@@ -23,15 +23,12 @@ namespace $ {
 			var names : string[] = []
 			var current = this
 			
-			while( typeof current === 'object' ) {
-				if( !(<typeof $mol_object>current.constructor).objectPath ) break
-				
-				var name = (<typeof $mol_object>current.constructor).objectPath()
+			while( current ) {
+				var name = current.constructor.toString()
 				if( !name ) continue
 				
 				names.push( name )
 				
-				if( current === null ) break
 				current = Object.getPrototypeOf( current )
 			}
 			
@@ -55,7 +52,7 @@ namespace $ {
 		}
 		
 		/// JS-path to this object from global scope. Can not be redefined.
-		objectPath( next? : string ) {
+		toString() {
 			var path = ''
 			
 			var owner = this.objectOwner()
@@ -84,16 +81,9 @@ namespace $ {
 		
 		log( values : any[] ) {
 			if( $mol_log.filter() == null ) return
-			$mol_log( this.objectPath() , values )
+			$mol_log( this.toString() , values )
 		}
 		
-		static toString() {
-			return this.objectPath()
-		}
-
-		toString() {
-			return this.objectPath()
-		}
 	}
 	
 }
