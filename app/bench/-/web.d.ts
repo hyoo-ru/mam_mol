@@ -7,20 +7,18 @@ declare namespace $ {
 declare namespace $ {
     class $mol_object {
         Class(): any;
-        static objectPath(): string;
+        static toString(): string;
         'objectClassNames()': string[];
         objectClassNames(): string[];
         private 'objectOwner()';
         objectOwner(next?: Object): Object;
         private 'objectField()';
         objectField(next?: string): string;
-        objectPath(next?: string): string;
+        toString(): string;
         setup(script: (obj: this) => void): this;
         'destroyed()': boolean;
         destroyed(next?: boolean): boolean;
         log(values: any[]): void;
-        static toString(): string;
-        toString(): string;
     }
 }
 declare namespace $ {
@@ -121,7 +119,7 @@ declare namespace $ {
         constructor(host: any, handler: (next?: Value | Error, force?: $mol_atom_force) => Value, field?: string);
         destroyed(next?: boolean): boolean;
         unlink(): void;
-        objectPath(): string;
+        toString(): string;
         get(force?: $mol_atom_force): Value;
         actualize(force?: $mol_atom_force): void;
         pull(force?: $mol_atom_force): any;

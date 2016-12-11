@@ -41,13 +41,13 @@ var $;
             });
             $.$mol_assert_equal(x.foo(), 2);
         },
-        'objectPath generation': function () {
+        'object path generation': function () {
             var x = new $.$mol_object;
-            $.$mol_assert_equal(x.objectPath(), '');
+            $.$mol_assert_equal("" + x, '');
             x.objectField('foo()');
-            $.$mol_assert_equal(x.objectPath(), '.foo()');
+            $.$mol_assert_equal("" + x, '.foo()');
             x.objectField('bar()');
-            $.$mol_assert_equal(x.objectPath(), '.foo()');
+            $.$mol_assert_equal("" + x, '.foo()');
         },
     });
 })($ || ($ = {}));

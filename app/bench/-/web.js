@@ -51,7 +51,7 @@ var $;
         $mol_object.prototype.Class = function () {
             return this.constructor;
         };
-        $mol_object.objectPath = function () {
+        $mol_object.toString = function () {
             var self = this;
             return self['name']
                 || self['displayName']
@@ -63,15 +63,11 @@ var $;
                 return this['objectClassNames()'];
             var names = [];
             var current = this;
-            while (typeof current === 'object') {
-                if (!current.constructor.objectPath)
-                    break;
-                var name = current.constructor.objectPath();
+            while (current) {
+                var name = current.constructor.toString();
                 if (!name)
                     continue;
                 names.push(name);
-                if (current === null)
-                    break;
                 current = Object.getPrototypeOf(current);
             }
             return this['objectClassNames()'] = names;
@@ -86,7 +82,7 @@ var $;
                 return this['objectField()'] || '';
             return this['objectField()'] = next;
         };
-        $mol_object.prototype.objectPath = function (next) {
+        $mol_object.prototype.toString = function () {
             var path = '';
             var owner = this.objectOwner();
             if (owner)
@@ -110,13 +106,7 @@ var $;
         $mol_object.prototype.log = function (values) {
             if ($.$mol_log.filter() == null)
                 return;
-            $.$mol_log(this.objectPath(), values);
-        };
-        $mol_object.toString = function () {
-            return this.objectPath();
-        };
-        $mol_object.prototype.toString = function () {
-            return this.objectPath();
+            $.$mol_log(this.toString(), values);
         };
         return $mol_object;
     }());
@@ -426,7 +416,7 @@ var $;
             this.disobeyAll();
             this.checkSlaves();
         };
-        $mol_atom.prototype.objectPath = function () {
+        $mol_atom.prototype.toString = function () {
             return this.host + "." + this.field;
         };
         $mol_atom.prototype.get = function (force) {
@@ -808,7 +798,7 @@ var $;
             return new this;
         };
         $mol_viewer.prototype.title = function () {
-            return this.Class().objectPath();
+            return this.Class().toString();
         };
         $mol_viewer.statePrefix = function () {
             return '';
@@ -848,7 +838,7 @@ var $;
         };
         $mol_viewer.prototype.DOMNode = function (next) {
             var _this = this;
-            var path = this.objectPath();
+            var path = this.toString();
             var next2 = next;
             if (!next2) {
                 next2 = this['DOMNode()'];
@@ -1483,10 +1473,10 @@ var $;
                 return _super.apply(this, arguments) || this;
             }
             $mol_scroller.prototype.scrollTop = function (next) {
-                return $.$mol_state_session.value(this.objectPath() + '.scrollTop()', next) || 0;
+                return $.$mol_state_session.value(this + ".scrollTop()", next) || 0;
             };
             $mol_scroller.prototype.scrollLeft = function (next) {
-                return $.$mol_state_session.value(this.objectPath() + '.scrollLeft()', next) || 0;
+                return $.$mol_state_session.value(this + ".scrollLeft()", next) || 0;
             };
             $mol_scroller.prototype.scrollBottom = function (next) {
                 return next || 0;
