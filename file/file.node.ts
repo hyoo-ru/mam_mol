@@ -23,13 +23,9 @@ namespace $ {
 			return '.'
 		}
 		
-		toString() {
-			return this.path()
-		}
-		
-		inspect() {
-			return this.objectPath()
-		}
+		//toString() {
+		//	return this.path()
+		//}
 		
 		@ $mol_mem()
 		watcher() {

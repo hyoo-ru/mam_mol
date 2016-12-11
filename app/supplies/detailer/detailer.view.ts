@@ -104,7 +104,7 @@ namespace $.$mol {
 		
 		scrollTop( next? : number ) {
 			var supplyId = this.supply() && this.supply().id()
-			return $mol_state_session.value( this.objectPath() + `.scrollTop(${supplyId})` , next )
+			return $mol_state_session.value( `${ this }.scrollTop(${supplyId})` , next )
 		}
 
 	}

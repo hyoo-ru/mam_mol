@@ -2,7 +2,7 @@ namespace $.$mol {
 	export class $mol_app_supplies_root extends $.$mol_app_supplies_root {
 		
 		entered( next? : boolean ) {
-			return $mol_state_session.value( this.objectPath() + '.entered()' , next ) || false
+			return $mol_state_session.value( `${ this }.entered()` , next ) || false
 		}
 
 		childs() {

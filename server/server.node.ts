@@ -25,7 +25,7 @@ namespace $ {
 		}
 		
 		messageStart( port : number ) {
-			return `${this.objectPath()} started at http://127.0.0.1:${port}/`
+			return `${ this } started at http://127.0.0.1:${ port }/`
 		}
 		
 		expressHandlers() : any[] {
