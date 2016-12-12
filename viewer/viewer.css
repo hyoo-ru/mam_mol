@@ -11,8 +11,7 @@
 /*}*/
 
 
-[mol_viewer_error] ,
-[mol_viewer_error] * {
+[mol_viewer_error] {
 	background-image: repeating-linear-gradient(
 		135deg,
 		rgba(255,220,220,1),
@@ -21,6 +20,9 @@
 		rgba(255,255,220,1) 20px
 	) !important;
 	background-size: 28px 28px !important;
+}
+[mol_viewer_error] * {
+	background: none !important;
 }
 
 @keyframes mol_viewer_wait_show {
