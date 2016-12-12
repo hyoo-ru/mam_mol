@@ -6,5 +6,5 @@
 	"$mol_app_todomvc_filterCompletedLabel": "Completed",
 	"$mol_app_todomvc_sanitizerLabel": "Clear completed",
 	"$mol_app_todomvc_adder_hint": "What needs to be done?",
-	"$mol_app_todomvc_taskRow_titleHint": "Task title"
+	"$mol_app_todomvc_tasker_titleHint": "Task title"
 }

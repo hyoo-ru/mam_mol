@@ -478,7 +478,7 @@ var $;
                             console.error(error.stack);
                         }
                         else {
-                            throw error;
+                            return error;
                         }
                     }
                     void (error['$mol_atom_catched'] = true);

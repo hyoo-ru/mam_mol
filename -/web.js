@@ -478,7 +478,7 @@ var $;
                             console.error(error.stack);
                         }
                         else {
-                            throw error;
+                            return error;
                         }
                     }
                     void (error['$mol_atom_catched'] = true);
@@ -12133,13 +12133,13 @@ var $;
                 obj.childs = function () { return _this.headerContent(); };
             });
         };
-        $mol_app_todomvc.prototype.taskRows = function () {
+        $mol_app_todomvc.prototype.taskers = function () {
             return [];
         };
         $mol_app_todomvc.prototype.lister = function (next) {
             var _this = this;
             return new $.$mol_lister().setup(function (obj) {
-                obj.rows = function () { return _this.taskRows(); };
+                obj.rows = function () { return _this.taskers(); };
             });
         };
         $mol_app_todomvc.prototype.pendingMessage = function () {
@@ -12249,9 +12249,9 @@ var $;
         $mol_app_todomvc.prototype.eventTaskDrop = function (key, next) {
             return (next !== void 0) ? next : null;
         };
-        $mol_app_todomvc.prototype.taskRow = function (key, next) {
+        $mol_app_todomvc.prototype.tasker = function (key, next) {
             var _this = this;
-            return new $.$mol_app_todomvc_taskRow().setup(function (obj) {
+            return new $.$mol_app_todomvc_tasker().setup(function (obj) {
                 obj.completed = function (next) { return _this.taskCompleted(key, next); };
                 obj.title = function (next) { return _this.taskTitle(key, next); };
                 obj.eventDrop = function (next) { return _this.eventTaskDrop(key, next); };
@@ -12321,7 +12321,7 @@ var $;
     ], $mol_app_todomvc.prototype, "eventTaskDrop", null);
     __decorate([
         $.$mol_mem_key()
-    ], $mol_app_todomvc.prototype, "taskRow", null);
+    ], $mol_app_todomvc.prototype, "tasker", null);
     $.$mol_app_todomvc = $mol_app_todomvc;
 })($ || ($ = {}));
 (function ($) {
@@ -12356,77 +12356,77 @@ var $;
     $.$mol_app_todomvc_adder = $mol_app_todomvc_adder;
 })($ || ($ = {}));
 (function ($) {
-    var $mol_app_todomvc_taskRow = (function (_super) {
-        __extends($mol_app_todomvc_taskRow, _super);
-        function $mol_app_todomvc_taskRow() {
+    var $mol_app_todomvc_tasker = (function (_super) {
+        __extends($mol_app_todomvc_tasker, _super);
+        function $mol_app_todomvc_tasker() {
             return _super.apply(this, arguments) || this;
         }
-        $mol_app_todomvc_taskRow.prototype.heightMinimal = function () {
+        $mol_app_todomvc_tasker.prototype.heightMinimal = function () {
             return 64;
         };
-        $mol_app_todomvc_taskRow.prototype.completed = function (next) {
+        $mol_app_todomvc_tasker.prototype.completed = function (next) {
             return (next !== void 0) ? next : false;
         };
-        $mol_app_todomvc_taskRow.prototype.completer = function (next) {
+        $mol_app_todomvc_tasker.prototype.completer = function (next) {
             var _this = this;
             return new $.$mol_checker().setup(function (obj) {
                 obj.checked = function (next) { return _this.completed(next); };
                 obj.childs = function () { return []; };
             });
         };
-        $mol_app_todomvc_taskRow.prototype.titleHint = function () {
+        $mol_app_todomvc_tasker.prototype.titleHint = function () {
             return $.$mol_locale.text(this.localizationContexts(), "titleHint");
         };
-        $mol_app_todomvc_taskRow.prototype.title = function (next) {
+        $mol_app_todomvc_tasker.prototype.title = function (next) {
             return (next !== void 0) ? next : "";
         };
-        $mol_app_todomvc_taskRow.prototype.titler = function (next) {
+        $mol_app_todomvc_tasker.prototype.titler = function (next) {
             var _this = this;
             return new $.$mol_stringer().setup(function (obj) {
                 obj.hint = function () { return _this.titleHint(); };
                 obj.value = function (next) { return _this.title(next); };
             });
         };
-        $mol_app_todomvc_taskRow.prototype.eventDrop = function (next) {
+        $mol_app_todomvc_tasker.prototype.eventDrop = function (next) {
             return (next !== void 0) ? next : null;
         };
-        $mol_app_todomvc_taskRow.prototype.dropper = function (next) {
+        $mol_app_todomvc_tasker.prototype.dropper = function (next) {
             var _this = this;
             return new $.$mol_clicker().setup(function (obj) {
                 obj.childs = function () { return [].concat("✖"); };
                 obj.eventClick = function (next) { return _this.eventDrop(next); };
             });
         };
-        $mol_app_todomvc_taskRow.prototype.childs = function () {
+        $mol_app_todomvc_tasker.prototype.childs = function () {
             return [].concat(this.completer(), this.titler(), this.dropper());
         };
-        $mol_app_todomvc_taskRow.prototype.attr = function () {
+        $mol_app_todomvc_tasker.prototype.attr = function () {
             var _this = this;
             return $.$mol_merge_dict(_super.prototype.attr.call(this), {
-                "mol_app_todomvc_taskRow_completed": function () { return _this.completed(); },
+                "mol_app_todomvc_tasker_completed": function () { return _this.completed(); },
             });
         };
-        return $mol_app_todomvc_taskRow;
+        return $mol_app_todomvc_tasker;
     }($.$mol_viewer));
     __decorate([
         $.$mol_mem()
-    ], $mol_app_todomvc_taskRow.prototype, "completed", null);
+    ], $mol_app_todomvc_tasker.prototype, "completed", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_app_todomvc_taskRow.prototype, "completer", null);
+    ], $mol_app_todomvc_tasker.prototype, "completer", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_app_todomvc_taskRow.prototype, "title", null);
+    ], $mol_app_todomvc_tasker.prototype, "title", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_app_todomvc_taskRow.prototype, "titler", null);
+    ], $mol_app_todomvc_tasker.prototype, "titler", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_app_todomvc_taskRow.prototype, "eventDrop", null);
+    ], $mol_app_todomvc_tasker.prototype, "eventDrop", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_app_todomvc_taskRow.prototype, "dropper", null);
-    $.$mol_app_todomvc_taskRow = $mol_app_todomvc_taskRow;
+    ], $mol_app_todomvc_tasker.prototype, "dropper", null);
+    $.$mol_app_todomvc_tasker = $mol_app_todomvc_tasker;
 })($ || ($ = {}));
 //todomvc.view.tree.js.map
 ;
@@ -12516,9 +12516,9 @@ var $;
                 this.taskIds(this.taskIds().concat(id));
                 this.taskNewTitle('');
             };
-            $mol_app_todomvc.prototype.taskRows = function () {
+            $mol_app_todomvc.prototype.taskers = function () {
                 var _this = this;
-                return this.tasksFiltered().map(function (id, index) { return _this.taskRow(index); });
+                return this.tasksFiltered().map(function (id, index) { return _this.tasker(index); });
             };
             $mol_app_todomvc.prototype.task = function (id, next) {
                 var key = this.stateKey("task=" + id);
@@ -12586,7 +12586,7 @@ var $;
         ], $mol_app_todomvc.prototype, "pendingMessage", null);
         __decorate([
             $.$mol_mem()
-        ], $mol_app_todomvc.prototype, "taskRows", null);
+        ], $mol_app_todomvc.prototype, "taskers", null);
         __decorate([
             $.$mol_mem_key()
         ], $mol_app_todomvc.prototype, "taskCompleted", null);

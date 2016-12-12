@@ -2687,7 +2687,7 @@ declare namespace $ {
         adder(next?: any): $mol_app_todomvc_adder;
         headerContent(): any[];
         header(next?: any): $mol_viewer;
-        taskRows(): any[];
+        taskers(): any[];
         lister(next?: any): $mol_lister;
         pendingMessage(): string;
         pendinger(next?: any): $mol_viewer;
@@ -2712,7 +2712,7 @@ declare namespace $ {
         taskCompleted(key: any, next?: any): any;
         taskTitle(key: any, next?: any): any;
         eventTaskDrop(key: any, next?: any): any;
-        taskRow(key: any, next?: any): $mol_app_todomvc_taskRow;
+        tasker(key: any, next?: any): $mol_app_todomvc_tasker;
     }
 }
 declare namespace $ {
@@ -2730,7 +2730,7 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    class $mol_app_todomvc_taskRow extends $mol_viewer {
+    class $mol_app_todomvc_tasker extends $mol_viewer {
         heightMinimal(): number;
         completed(next?: any): any;
         completer(next?: any): $mol_checker;
@@ -2743,7 +2743,7 @@ declare namespace $ {
         attr(): {
             [key: string]: () => string | number | boolean;
         } & {
-            "mol_app_todomvc_taskRow_completed": () => any;
+            "mol_app_todomvc_tasker_completed": () => any;
         };
     }
 }
@@ -2767,7 +2767,7 @@ declare namespace $.$mol {
         pendingMessage(): string;
         _idSeed: number;
         eventAdd(next: Event): void;
-        taskRows(): $mol_app_todomvc_taskRow[];
+        taskers(): $mol_app_todomvc_tasker[];
         task(id: number, next?: $mol_app_todomvc_task): any;
         taskCompleted(index: number, next?: boolean): any;
         taskTitle(index: number, next?: string): any;
