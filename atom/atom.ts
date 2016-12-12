@@ -142,7 +142,7 @@ namespace $ {
 						if( error instanceof Error ) {
 							console.error( error.stack )
 						} else {
-							throw error
+							return error
 						}
 					}
 					void( ( error as any )['$mol_atom_catched'] = true )

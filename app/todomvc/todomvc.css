@@ -73,36 +73,39 @@
 	text-rendering: optimizeLegibility;
 }
 
-[mol_app_todomvc_taskRow] {
+[mol_app_todomvc_tasker] {
 	display: flex;
 	background: white;
 	box-shadow: 0 -1px 0 0 #ededed;
 	height: 4rem;
 }
 
-[mol_app_todomvc_taskRow_completer] {
+[mol_app_todomvc_tasker_completer] {
 	flex: 0 0 4rem;
 	background: no-repeat center center url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
 }
-[mol_app_todomvc_taskRow_completer][mol_checker_checked] {
+[mol_app_todomvc_tasker_completer][mol_checker_checked] {
 	background: no-repeat center center url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>')
 }
 
-[mol_app_todomvc_taskRow_titler] {
+[mol_app_todomvc_tasker_titler] {
 	padding: 0;
 	transition: all 0.4s;
 }
+[mol_app_todomvc_tasker_titler]::-ms-clear {
+	display: none;
+}
 
-[mol_app_todomvc_taskRow_completed] [mol_app_todomvc_taskRow_titler] {
+[mol_app_todomvc_tasker_completed] [mol_app_todomvc_tasker_titler] {
 	color: #d9d9d9;
 	text-decoration: line-through;
 }
 
-[mol_app_todomvc_taskRow_dropper] {
+[mol_app_todomvc_tasker_dropper] {
 	font-size: 1.25rem;
 	flex:  0 04rem;
 }
-[mol_app_todomvc_taskRow]:not(:hover) [mol_app_todomvc_taskRow_dropper]:not(:focus) {
+[mol_app_todomvc_tasker]:not(:hover) [mol_app_todomvc_tasker_dropper]:not(:focus) {
 	opacity: 0;
 	color: #cc9a9a;
 	transition: all 0.2s ease-out;

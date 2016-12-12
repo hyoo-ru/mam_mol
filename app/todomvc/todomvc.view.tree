@@ -14,7 +14,7 @@ $mol_app_todomvc $mol_scroller
 					< adder $mol_app_todomvc_adder
 						value > taskNewTitle \
 						eventDone > eventAdd null
-			< lister $mol_lister rows < taskRows /
+			< lister $mol_lister rows < taskers /
 			< footer $mol_viewer
 				childs < footerContent /
 					< pendinger $mol_viewer childs / < pendingMessage @ \0 items left 
@@ -32,7 +32,7 @@ $mol_app_todomvc $mol_scroller
 						enabled < sanitizerEnabled true
 						eventClick < eventSanitize null
 						childs / < sanitizerLabel @ \Clear completed
-	taskRow# $mol_app_todomvc_taskRow
+	tasker# $mol_app_todomvc_tasker
 		completed > taskCompleted# false
 		title > taskTitle# \
 		eventDrop > eventTaskDrop# null
@@ -42,7 +42,7 @@ $mol_app_todomvc_adder $mol_stringer
 	event * keyup > eventPress null
 	> eventDone null
 
-$mol_app_todomvc_taskRow $mol_viewer
+$mol_app_todomvc_tasker $mol_viewer
 	heightMinimal 64
 	childs /
 		< completer $mol_checker
@@ -54,4 +54,4 @@ $mol_app_todomvc_taskRow $mol_viewer
 		< dropper $mol_clicker
 			childs / \✖
 			eventClick > eventDrop null
-	attr * mol_app_todomvc_taskRow_completed < completed
+	attr * mol_app_todomvc_tasker_completed < completed

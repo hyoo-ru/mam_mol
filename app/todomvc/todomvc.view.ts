@@ -82,8 +82,8 @@ namespace $.$mol {
 		}
 
 		@ $mol_mem()
-		taskRows() {
-			return this.tasksFiltered().map( ( id , index )=> this.taskRow( index ) )
+		taskers() {
+			return this.tasksFiltered().map( ( id , index )=> this.tasker( index ) )
 		}
 		
 		task( id : number , next? : $mol_app_todomvc_task ) {
