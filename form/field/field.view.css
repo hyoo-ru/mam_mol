@@ -1,8 +1,6 @@
 [mol_form_field] {
 	display: flex;
 	flex-wrap: wrap;
-	flex: 1 1 100%;
-	width: 6em;
 }
 
 [mol_form_field_label] {
