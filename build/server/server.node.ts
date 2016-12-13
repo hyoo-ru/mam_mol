@@ -8,8 +8,13 @@ namespace $ {
 					return this.generator( req.url ).valueOf() && next()
 				} catch( error ) {
 					if( req.url.match( /\.js$/ ) ) {
-						console.error( error )
 						res.send( `console.error( ${ JSON.stringify( error.message ) } )` ).end()
+					} else if( req.url.match( /\.css$/ ) ) {
+						const message = JSON.stringify( error.message.replace( /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g , '' ) )
+							.replace( /\\n/g , '\\a' )
+							.replace( /\\t/g , '\\9' )
+						res.setHeader( 'content-type' , 'text/css' )
+						res.send( `body:before{ display: block; font: 1em monospace; white-space: pre-wrap; color: red; content : ${ message } }` ).end()
 					} else {
 						throw error
 					}
