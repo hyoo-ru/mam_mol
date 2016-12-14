@@ -5,6 +5,7 @@ $mol_suggester_demo $mol_rower childs /
 	< two $mol_suggester
 		hint < twoHint @ \Name
 		focused true
+		selectedRow 2
 		suggests /
 			< suggest1 @ \Evgeny
 			< suggest2 @ \Alexander

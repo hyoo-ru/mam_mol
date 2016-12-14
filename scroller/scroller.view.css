@@ -1,7 +1,7 @@
 [mol_scroller] {
 	overflow: auto;
 	overflow-y: scroll;
-	flex: 1 1 auto;
+	flex: 0 1 auto;
 	box-sizing: border-box;
 	will-change: scroll-position;
 	transform: translateZ(0);
