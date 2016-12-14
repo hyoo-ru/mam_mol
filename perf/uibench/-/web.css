@@ -77,9 +77,9 @@
 [mol_scroller] {
     overflow: auto;
     overflow-y: scroll;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
     box-sizing: border-box;
     will-change: scroll-position;
     -webkit-transform: translateZ(0);

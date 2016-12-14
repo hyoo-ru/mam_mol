@@ -678,7 +678,6 @@ declare namespace $ {
 declare namespace $ {
     class $mol_app_supplies_carder extends $mol_carder {
         supply(): any;
-        heightMinimal(): number;
         arg(): {};
         linker(next?: any): $mol_linker;
         childs(): any[];

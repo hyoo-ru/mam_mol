@@ -1138,6 +1138,8 @@ declare namespace $ {
         welcomeText(): string;
         welcomeTexter(next?: any): $mol_texter;
         welcomer(next?: any): $mol_scroller;
+        widget(key: any): any;
+        sample(key: any, next?: any): $mol_viewer;
     }
 }
 declare namespace $ {
@@ -2160,7 +2162,6 @@ declare namespace $ {
 declare namespace $ {
     class $mol_app_supplies_carder extends $mol_carder {
         supply(): any;
-        heightMinimal(): number;
         arg(): {};
         linker(next?: any): $mol_linker;
         childs(): any[];

@@ -149,9 +149,9 @@
 [mol_scroller] {
     overflow: auto;
     overflow-y: scroll;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
     box-sizing: border-box;
     will-change: scroll-position;
     -webkit-transform: translateZ(0);
@@ -216,9 +216,9 @@
     color: gray
 }
 [mol_clicker_major]:not([disabled]) {
-    background: rgb(255, 164, 36);
-    color: rgb(250, 252, 255);
-    box-shadow: 0 0 1px 0 rgba(220, 220, 220, 1)
+    background: rgb(211, 80, 91);
+    color: rgb(251, 254, 254);
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1)
 }
 [mol_clicker_danger]:not([disabled]) {
     background: rgba(255, 0, 0, .51);
@@ -230,7 +230,7 @@
     z-index: 2;
     cursor: pointer;
     opacity: 1;
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5)
+    box-shadow: 0 0 0 1px rgb(211, 80, 91)
 }
 [mol_checker] {
     -webkit-box-flex: 0;
@@ -438,7 +438,7 @@
 }
 [mol_portioner_indicator] {
     background-color: hsl(215, 50%, 57%);
-    color: rgb(254, 253, 251);
+    color: rgb(251, 252, 254);
     border-radius: 2px
 }
 [mol_bencher_columnHeader] {
@@ -461,7 +461,7 @@
     margin: 0 .5rem
 }
 [mol_bencher_header] + [mol_bencher_rower] [mol_portioner_indicator] {
-    background: rgb(255, 164, 36)
+    background: rgb(211, 80, 91)
 }
 [mol_pager] {
     display: -webkit-box;
@@ -483,7 +483,7 @@
 }
 [mol_pager_header] {
     background: hsl(215, 50%, 57%);
-    color: rgb(254, 253, 251);
+    color: rgb(251, 252, 254);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -516,7 +516,7 @@
 }
 [mol_pager_footer] {
     background: hsl(215, 50%, 57%);
-    color: rgb(254, 253, 251);
+    color: rgb(251, 252, 254);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

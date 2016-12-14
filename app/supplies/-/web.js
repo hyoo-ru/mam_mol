@@ -470,19 +470,15 @@ var $;
                 return this.handler(this._next, force);
             }
             catch (error) {
-                if (!error['$mol_atom_catched']) {
-                    if (error instanceof $mol_atom_wait) {
-                    }
-                    else {
-                        if (error instanceof Error) {
-                            console.error(error.stack);
-                        }
-                        else {
-                            return error;
-                        }
-                    }
-                    void (error['$mol_atom_catched'] = true);
+                if (error['$mol_atom_catched'])
+                    return error;
+                if (error instanceof $mol_atom_wait)
+                    return error;
+                console.error(error.stack || error);
+                if (!(error instanceof Error)) {
+                    error = new Error(error.stack || error);
                 }
+                error['$mol_atom_catched'] = true;
                 return error;
             }
         };
@@ -1383,6 +1379,7 @@ var $;
         $mol_carder.prototype.statuser = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
+                obj.heightMinimal = function () { return 30; };
                 obj.childs = function () { return [].concat(_this.statusText()); };
             });
         };
@@ -3077,9 +3074,6 @@ var $;
         }
         $mol_app_supplies_carder.prototype.supply = function () {
             return null;
-        };
-        $mol_app_supplies_carder.prototype.heightMinimal = function () {
-            return 100;
         };
         $mol_app_supplies_carder.prototype.arg = function () {
             return ({});

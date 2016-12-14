@@ -470,19 +470,15 @@ var $;
                 return this.handler(this._next, force);
             }
             catch (error) {
-                if (!error['$mol_atom_catched']) {
-                    if (error instanceof $mol_atom_wait) {
-                    }
-                    else {
-                        if (error instanceof Error) {
-                            console.error(error.stack);
-                        }
-                        else {
-                            return error;
-                        }
-                    }
-                    void (error['$mol_atom_catched'] = true);
+                if (error['$mol_atom_catched'])
+                    return error;
+                if (error instanceof $mol_atom_wait)
+                    return error;
+                console.error(error.stack || error);
+                if (!(error instanceof Error)) {
+                    error = new Error(error.stack || error);
                 }
+                error['$mol_atom_catched'] = true;
                 return error;
             }
         };

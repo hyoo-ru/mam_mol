@@ -91,7 +91,7 @@
 [mol_linker]:focus ,
 [mol_linker]:not([mol_linker_current]):hover {
     outline: none;
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5)
+    box-shadow: 0 0 0 1px rgb(211, 80, 91)
 }
 [mol_lister] {
     will-change: contents
@@ -201,14 +201,11 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%
+    right: 0;
+    bottom: 0
 }
 [mol_app_supplies_carder_linker][mol_linker_current] {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .5)
-}
-[mol_app_supplies_carder_linker][mol_linker_current] {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .5)
+    box-shadow: 0 0 0 1px rgb(211, 80, 91)
 }
 [mol_app_supplies_carder_contenter] {}
 [mol_app_supplies_carder_grouper] {
@@ -335,8 +332,11 @@
 [mol_stringer]:enabled:hover ,
 [mol_stringer]:focus {
     outline: none;
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 0 1px rgb(211, 80, 91);
     z-index: 1
+}
+[mol_stringer]::-ms-clear {
+    display: none
 }
 [mol_form_barFields] {
     padding: 0 8px;
@@ -344,8 +344,10 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column
 }
 [mol_form_barFields] > * {
     margin: 8px;
@@ -362,11 +364,7 @@
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 100%;
-            flex: 1 1 100%;
-    width: 6em
+        flex-wrap: wrap
 }
 [mol_form_field_label] {
     -webkit-box-flex: 1;
@@ -430,9 +428,9 @@
     color: gray
 }
 [mol_clicker_major]:not([disabled]) {
-    background: rgb(255, 164, 36);
-    color: rgb(250, 252, 255);
-    box-shadow: 0 0 1px 0 rgba(220, 220, 220, 1)
+    background: rgb(211, 80, 91);
+    color: rgb(251, 254, 254);
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1)
 }
 [mol_clicker_danger]:not([disabled]) {
     background: rgba(255, 0, 0, .51);
@@ -444,7 +442,7 @@
     z-index: 2;
     cursor: pointer;
     opacity: 1;
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, .5)
+    box-shadow: 0 0 0 1px rgb(211, 80, 91)
 }
 [mol_app_supplies_enter] {
     -webkit-box-flex: 1;
@@ -463,9 +461,9 @@
 [mol_scroller] {
     overflow: auto;
     overflow-y: scroll;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
     box-sizing: border-box;
     will-change: scroll-position;
     -webkit-transform: translateZ(0);
@@ -499,7 +497,7 @@
 }
 [mol_pager_header] {
     background: hsl(215, 50%, 57%);
-    color: rgb(254, 253, 251);
+    color: rgb(251, 252, 254);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -532,7 +530,7 @@
 }
 [mol_pager_footer] {
     background: hsl(215, 50%, 57%);
-    color: rgb(254, 253, 251);
+    color: rgb(251, 252, 254);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -623,11 +621,13 @@
     -webkit-box-flex: 1;
         -ms-flex: 1 1 0%;
             flex: 1 1 0%;
-    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1)
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
+    background: #eee
 }
 [mol_switcher_optioner][mol_checker_checked] {
     background: white;
-    color: black
+    color: black;
+    z-index: 1
 }
 [mol_switcher_optioner][disabled] {
     color: gray
@@ -878,7 +878,7 @@
     margin: 1rem 0
 }
 [mol_app_supplies_detailer_backer] {
-    color: rgb(254, 253, 251);
+    color: rgb(251, 252, 254);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

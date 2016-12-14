@@ -470,19 +470,15 @@ var $;
                 return this.handler(this._next, force);
             }
             catch (error) {
-                if (!error['$mol_atom_catched']) {
-                    if (error instanceof $mol_atom_wait) {
-                    }
-                    else {
-                        if (error instanceof Error) {
-                            console.error(error.stack);
-                        }
-                        else {
-                            return error;
-                        }
-                    }
-                    void (error['$mol_atom_catched'] = true);
+                if (error['$mol_atom_catched'])
+                    return error;
+                if (error instanceof $mol_atom_wait)
+                    return error;
+                console.error(error.stack || error);
+                if (!(error instanceof Error)) {
+                    error = new Error(error.stack || error);
                 }
+                error['$mol_atom_catched'] = true;
                 return error;
             }
         };
@@ -4545,6 +4541,15 @@ var $;
                 obj.childs = function () { return [].concat(_this.welcomeTexter()); };
             });
         };
+        $mol_app_demo.prototype.widget = function (key) {
+            return null;
+        };
+        $mol_app_demo.prototype.sample = function (key, next) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.widget(key)); };
+            });
+        };
         return $mol_app_demo;
     }($.$mol_stacker));
     __decorate([
@@ -4562,6 +4567,9 @@ var $;
     __decorate([
         $.$mol_mem()
     ], $mol_app_demo.prototype, "welcomer", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_app_demo.prototype, "sample", null);
     $.$mol_app_demo = $mol_app_demo;
 })($ || ($ = {}));
 (function ($) {
@@ -4681,7 +4689,7 @@ var $;
                 var _this = this;
                 return new $.$mol_app_demo_pager().setup(function (obj) {
                     obj.title = $.$mol_const('$' + name);
-                    obj.body = function () { return [_this.widget(name)]; };
+                    obj.body = function () { return [_this.sample(name)]; };
                 });
             };
             return $mol_app_demo;
@@ -9049,6 +9057,7 @@ var $;
         $mol_carder.prototype.statuser = function (next) {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
+                obj.heightMinimal = function () { return 30; };
                 obj.childs = function () { return [].concat(_this.statusText()); };
             });
         };
@@ -9592,9 +9601,6 @@ var $;
         }
         $mol_app_supplies_carder.prototype.supply = function () {
             return null;
-        };
-        $mol_app_supplies_carder.prototype.heightMinimal = function () {
-            return 100;
         };
         $mol_app_supplies_carder.prototype.arg = function () {
             return ({});
@@ -16810,6 +16816,7 @@ var $;
             return new $.$mol_suggester().setup(function (obj) {
                 obj.hint = function () { return _this.twoHint(); };
                 obj.focused = function () { return true; };
+                obj.selectedRow = function () { return 2; };
                 obj.suggests = function () { return [].concat(_this.suggest1(), _this.suggest2(), _this.suggest3(), _this.suggest4(), _this.suggest5()); };
             });
         };
