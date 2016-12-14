@@ -2,6 +2,7 @@
 	display: flex;
 	flex: 1000 1 auto;
 	position: relative;
+	align-items: stretch;
 }
 
 [mol_number]:hover {
@@ -21,14 +22,14 @@
 [mol_number_clicker] {
 	color: var(--mol_skin_light_text);
 	background: var(--mol_skin_light);
-	width: 1.75rem;
-	padding: .25rem;
+	width: 2rem;
 	position: absolute;
 	height: 100%;
 	opacity: 0;
 }
 
 [mol_number_clicker] [mol_icon] {
+	display: block;
 	width: 1rem;
 	height: 1rem;
 }

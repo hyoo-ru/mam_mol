@@ -6,6 +6,9 @@ $mol_app_demo $mol_stacker
 	welcomer $mol_scroller
 		childs / < welcomeTexter $mol_texter
 			text < welcomeText \
+	sample# $mol_viewer
+		childs /
+			< widget# null
 
 $mol_app_demo_pager $mol_pager
 	head /

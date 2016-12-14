@@ -9,14 +9,13 @@
 }
 
 [mol_suggester_lister] {
-	overflow: hidden;
 	margin-top: 1px;
 	border-radius: var(--mol_skin_round);
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	min-height: 0px;
 	position: absolute;
 	color: var(--mol_skin_light_text);
-	background: var(--mol_skin_card);
+	background: var(--mol_skin_light);
 	min-width: 6rem;
 	z-index: 1;
 	display: flex;
@@ -25,7 +24,7 @@
 
 [mol_suggester_rower] {
 	justify-content: flex-start;
-	border-radius: 0;
+	border-radius: var(--mol_skin_round);
 }
 
 [mol_suggester_rower] + [mol_suggester_rower] {
@@ -34,6 +33,6 @@
 
 [mol_suggester_rower]:hover ,
 [mol_suggester_rower][mol_suggester_selected] {
-	background-color: var(--mol_skin_base);
-	color: var(--mol_skin_base_text);
+	box-shadow: 0 0 0 1px var(--mol_skin_focus);
+	z-index: 1;
 }

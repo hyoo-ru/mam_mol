@@ -1,6 +1,5 @@
 $mol_app_supplies_carder $mol_carder
 	supply null
-	heightMinimal 100
 	childs /
 		< contenter
 		< statuser

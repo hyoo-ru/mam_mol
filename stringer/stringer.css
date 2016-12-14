@@ -11,7 +11,7 @@
 	position: relative;
 	z-index: 0;
 	font: inherit;
-	flex: 1000 1 8rem;
+	flex: 1000 1 auto;
 	width: 8em;
 	background: var(--mol_skin_passive);
 	color: var(--mol_skin_passive_text);
@@ -25,7 +25,10 @@
 [mol_stringer]:enabled:hover ,
 [mol_stringer]:focus {
 	outline: none;
-	box-shadow: 0 0 1px 1px var(--mol_skin_focus);
+	box-shadow: 0 0 0 1px var(--mol_skin_focus);
 	z-index: 1;
 }
 
+[mol_stringer]::-ms-clear {
+	display: none;
+}

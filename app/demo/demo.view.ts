@@ -86,12 +86,12 @@ namespace $.$mol {
 				obj.statePrefix = () => this.statePrefix() + name + '.'
 			} )
 		}
-
+		
 		@ $mol_mem_key()
 		detailer( name : string ) {
 			return new $mol_app_demo_pager().setup( obj => {
 				obj.title = $mol_const( '$' + name )
-				obj.body = ()=> [ this.widget( name ) ]
+				obj.body = ()=> [ this.sample( name ) ]
 			} )
 		}
 

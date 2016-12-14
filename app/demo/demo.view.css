@@ -1,3 +1,8 @@
+:root {
+	--mol_skin_base: hsl( 140 , 35% , 50% );
+	--mol_skin_round: .25rem;
+}
+
 [mol_app_demo_optioner] {
 	display: flex;
 	flex-direction: column;
@@ -25,10 +30,7 @@
 [mol_app_demo_pager_bodier] {
 	display: flex;
 	align-items: flex-start;
-}
-
-[mol_app_demo_pager_bodier] > * {
-	margin: auto;
+	padding: 1rem;
 }
 
 [mol_app_demo_pager_backer] {
@@ -40,4 +42,12 @@
 
 [mol_app_demo_pager_backer_icon] {
 	transform: rotateZ(180deg);
+}
+
+[mol_app_demo_sample] {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: flex-start;
 }

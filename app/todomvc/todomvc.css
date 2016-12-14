@@ -92,9 +92,6 @@
 	padding: 0;
 	transition: all 0.4s;
 }
-[mol_app_todomvc_tasker_titler]::-ms-clear {
-	display: none;
-}
 
 [mol_app_todomvc_tasker_completed] [mol_app_todomvc_tasker_titler] {
 	color: #d9d9d9;
