@@ -3,6 +3,7 @@
 	max-width: 60rem;
 	height: 100%;
 	display: flex;
+	margin: auto;
 }
 
 [mol_app_inventory_header] {
