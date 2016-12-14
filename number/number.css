@@ -13,6 +13,7 @@
 	appearance: textfield;
 	text-align: right;
 	position: relative;
+	max-width: 100%;
 }
 
 [mol_number_stringer]::-webkit-inner-spin-button {
