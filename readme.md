@@ -24,7 +24,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 * [$mol_app_hello](app/hello) - very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
-* [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/), [benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark), [video comparison](https://www.webpagetest.org/video/view.php?id=160515_4f193e07f4c37dc3b72dd3799dd27397551690a2))
+* [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/)
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
 * [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
 * [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
@@ -34,7 +34,9 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 # Benchmarks
 
 * [$mol_app_bench_list](app/bench/list) - frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/#becnh=list#sort=fill#))
-* [ToDoMVC benchmark](https://github.com/nin-jin/todomvc/tree/master/benchmark)
+* [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark)
+([online](https://eigenmethod.github.io/mol/app/bench/#bench=%2Ftodomvc%2Fbenchmark%2F#sample=angular2~angularjs~knockoutjs~mol~polymer~react-alt~vanillajs~vue#sort=fill#))
+([video comparison](https://www.webpagetest.org/video/view.php?id=160515_4f193e07f4c37dc3b72dd3799dd27397551690a2))
 
 # Articles
 

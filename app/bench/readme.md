@@ -6,6 +6,7 @@ Common benchmarking interface, that can be added to any of benchmarks.
 
 * [list](list) - Rendering of lists by frameworks ([online](http://eigenmethod.github.io/mol/app/bench/#bench=list#sort=fill#))
 * [geometry](geometry) - Rendering of simple geometry by graphics libraries ([online](http://eigenmethod.github.io/mol/app/bench/#bench=geometry#sort=render#))
+* [todomvc](https://github.com/eigenmethod/todomvc/tree/master/benchmark) - ToDoMVC workflow by frameworks ([online](https://eigenmethod.github.io/mol/app/bench/#bench=%2Ftodomvc%2Fbenchmark%2F#sample=angular2~angularjs~knockoutjs~mol~polymer~react-alt~vanillajs~vue#sort=fill#)) 
 
 # Create your benchmark
 
