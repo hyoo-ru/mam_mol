@@ -3,6 +3,7 @@
 	height: auto;
 	flex: 0 1 auto;
 	overflow: hidden;
+	z-index: 1;
 }
 
 [mol_app_bench_menu] {
