@@ -22,6 +22,8 @@ namespace $ {
 				
 				let atom : $mol_atom<Value> = host[ fieldA ]
 				if( !atom ) {
+					if( force && ( next === void null ) ) return next
+					
 					host[ fieldA ] = atom = new $mol_atom<Value>(
 						host ,
 						value.bind( host ) as any , // FIXME: type checking
@@ -58,6 +60,8 @@ namespace $ {
 				
 				let atom : $mol_atom<Value> = host[ fieldA ]
 				if( !atom ) {
+					if( force && ( next === void null ) ) return next
+					
 					host[ fieldA ] = atom = new $mol_atom<Value>(
 						host ,
 						value.bind( host , key ) as any , // FIXME: type checking
