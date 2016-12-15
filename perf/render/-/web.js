@@ -702,6 +702,8 @@ var $;
                 var fieldA = field + '@';
                 var atom = host[fieldA];
                 if (!atom) {
+                    if (force && (next === void null))
+                        return next;
                     host[fieldA] = atom = new $.$mol_atom(host, value.bind(host), field);
                     if (config)
                         atom.autoFresh = !config.lazy;
@@ -721,6 +723,8 @@ var $;
                 var fieldA = field + '@';
                 var atom = host[fieldA];
                 if (!atom) {
+                    if (force && (next === void null))
+                        return next;
                     host[fieldA] = atom = new $.$mol_atom(host, value.bind(host, key), field);
                     if (config)
                         atom.autoFresh = !config.lazy;
