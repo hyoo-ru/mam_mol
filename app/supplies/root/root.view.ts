@@ -27,7 +27,7 @@ namespace $.$mol {
 		}
 		
 		title() {
-			return ( this.main() || this.addon() )[0].title()
+			return ( this.main()[0] || this.addon()[0] ).title()
 		}
 		
 		@ $mol_mem()
