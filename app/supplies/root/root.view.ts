@@ -17,7 +17,7 @@ namespace $.$mol {
 		main() {
 			return this.supply()
 				? [ this.detailer() ]
-				: null
+				: []
 		}
 
 		addon() {
