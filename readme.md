@@ -311,7 +311,6 @@ The name of the field corresponds to calling the property, the content of the fi
 
 * **[$mol_mem](mem)** - reactive property decorator
 * **[$mol_object](object)** - components base class
-* **[$mol_model](model)** - reactive model base class
 
 ## Functions
 
