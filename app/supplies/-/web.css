@@ -270,6 +270,7 @@
     -webkit-transition: .25s ease margin;
     transition: .25s ease margin;
     position: relative;
+    z-index: 1;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -302,7 +303,8 @@
     margin-left: 0
 }
 [mol_stacker_side] > [mol_stacker_addoner] {
-    margin-right: 0
+    margin-right: 0;
+    z-index: 2
 }
 [mol_stringer] {
     box-sizing: border-box;
@@ -619,8 +621,8 @@
     padding: 8px 12px;
     padding: .5rem .75rem;
     -webkit-box-flex: 1;
-        -ms-flex: 1 1 0%;
-            flex: 1 1 0%;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
     box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
     background: #eee
 }

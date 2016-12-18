@@ -225,6 +225,64 @@ declare namespace $ {
     function $mol_merge_dict<Target, Source>(target: Target, source: Source): Target & Source;
 }
 declare namespace $ {
+    class $mol_state_session<Value> extends $mol_object {
+        static value<Value>(key: string, next?: Value): Value;
+        prefix(): string;
+        value(key: string, next?: Value): Value;
+    }
+}
+declare namespace $ {
+    class $mol_scroller extends $mol_viewer {
+        heightMinimal(): number;
+        scrollTop(next?: any): any;
+        scrollLeft(next?: any): any;
+        field(): {
+            [key: string]: (next?: any) => any;
+        } & {
+            "scrollTop": (next?: any) => any;
+            "scrollLeft": (next?: any) => any;
+        };
+        eventScroll(next?: any): any;
+        event(): {
+            [key: string]: (event: Event) => void;
+        } & {
+            "scroll": (next?: any) => any;
+            "overflow": (next?: any) => any;
+            "underflow": (next?: any) => any;
+        };
+    }
+}
+declare namespace $ {
+    interface $mol_viewer_context {
+        $mol_scroller_scrollTop(): number;
+        $mol_scroller_moving(): boolean;
+    }
+}
+declare namespace $.$mol {
+    class $mol_scroller extends $.$mol_scroller {
+        scrollTop(next?: number): number;
+        scrollLeft(next?: number): number;
+        scrollBottom(next?: number): number;
+        scrollRight(next?: number): number;
+        eventScroll(next?: Event): void;
+        moving(next?: boolean): boolean;
+        contextSub(): $mol_viewer_context;
+        shadowStyle(): string;
+    }
+}
+declare namespace $ {
+    class $mol_pager extends $mol_viewer {
+        titler(next?: any): $mol_viewer;
+        head(): any[];
+        header(next?: any): $mol_viewer;
+        body(): any[];
+        bodier(next?: any): $mol_scroller;
+        foot(): any[];
+        footer(next?: any): $mol_viewer;
+        childs(): any[];
+    }
+}
+declare namespace $ {
     class $mol_state_arg<Value> extends $mol_object {
         prefix: string;
         static href(next?: string): string;
@@ -287,52 +345,6 @@ declare namespace $.$mol {
         childsVisible(): any[];
         heightMinimal(): number;
         minHeightStyle(): string;
-    }
-}
-declare namespace $ {
-    class $mol_state_session<Value> extends $mol_object {
-        static value<Value>(key: string, next?: Value): Value;
-        prefix(): string;
-        value(key: string, next?: Value): Value;
-    }
-}
-declare namespace $ {
-    class $mol_scroller extends $mol_viewer {
-        heightMinimal(): number;
-        scrollTop(next?: any): any;
-        scrollLeft(next?: any): any;
-        field(): {
-            [key: string]: (next?: any) => any;
-        } & {
-            "scrollTop": (next?: any) => any;
-            "scrollLeft": (next?: any) => any;
-        };
-        eventScroll(next?: any): any;
-        event(): {
-            [key: string]: (event: Event) => void;
-        } & {
-            "scroll": (next?: any) => any;
-            "overflow": (next?: any) => any;
-            "underflow": (next?: any) => any;
-        };
-    }
-}
-declare namespace $ {
-    interface $mol_viewer_context {
-        $mol_scroller_scrollTop(): number;
-        $mol_scroller_moving(): boolean;
-    }
-}
-declare namespace $.$mol {
-    class $mol_scroller extends $.$mol_scroller {
-        scrollTop(next?: number): number;
-        scrollLeft(next?: number): number;
-        scrollBottom(next?: number): number;
-        scrollRight(next?: number): number;
-        eventScroll(next?: Event): void;
-        moving(next?: boolean): boolean;
-        contextSub(): $mol_viewer_context;
-        shadowStyle(): string;
     }
 }
 declare namespace $ {
@@ -906,18 +918,6 @@ declare namespace $.$mol {
     }
 }
 declare namespace $ {
-    class $mol_pager extends $mol_viewer {
-        titler(next?: any): $mol_viewer;
-        head(): any[];
-        header(next?: any): $mol_viewer;
-        body(): any[];
-        bodier(next?: any): $mol_scroller;
-        foot(): any[];
-        footer(next?: any): $mol_viewer;
-        childs(): any[];
-    }
-}
-declare namespace $ {
     class $mol_icon_tick extends $mol_icon {
         path(): string;
     }
@@ -929,14 +929,15 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_app_bench extends $mol_stacker {
-        tester(next?: any): $mol_app_bench_tester;
         description(): string;
         descriptioner(next?: any): $mol_texter;
         results(): any;
         columnHeaderLabel(key: any): any[];
         resultsColSort(next?: any): any;
         resulter(next?: any): $mol_bencher;
-        mainPage(next?: any): $mol_app_bench_mainer;
+        informator(next?: any): $mol_viewer;
+        tester(next?: any): $mol_app_bench_tester;
+        mainPage(next?: any): $mol_pager;
         main(): any[];
         addonerTitle(): string;
         menuOptions(): any[];
@@ -947,12 +948,6 @@ declare namespace $ {
         menuOptionerTitle(key: any): string;
         menuOptioner(key: any, next?: any): $mol_checker_ticker;
         columnHeaderLabelSample(): string;
-    }
-}
-declare namespace $ {
-    class $mol_app_bench_mainer extends $mol_pager {
-        tester(): any;
-        childs(): any[];
     }
 }
 declare namespace $ {

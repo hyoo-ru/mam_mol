@@ -1063,304 +1063,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_state_arg = (function (_super) {
-        __extends($mol_state_arg, _super);
-        function $mol_state_arg(prefix) {
-            if (prefix === void 0) { prefix = ''; }
-            var _this = _super.call(this) || this;
-            _this.prefix = prefix;
-            return _this;
-        }
-        $mol_state_arg.href = function (next) {
-            if (next)
-                history.replaceState(history.state, document.title, "" + next);
-            return window.location.search + window.location.hash;
-        };
-        $mol_state_arg.dict = function (next) {
-            var href = this.href(next && this.make(next));
-            var chunks = href.split(/[\/\?#!&;]/g);
-            var params = {};
-            chunks.forEach(function (chunk) {
-                if (!chunk)
-                    return;
-                var vals = chunk.split('=').map(decodeURIComponent);
-                params[vals.shift()] = vals.join('=');
-            });
-            return params;
-        };
-        $mol_state_arg.value = function (key, next) {
-            var nextDict = (next === void 0) ? void 0 : $.$mol_merge_dict(this.dict(), (_a = {}, _a[key] = next, _a));
-            return this.dict(nextDict)[key] || null;
-            var _a;
-        };
-        $mol_state_arg.link = function (next) {
-            return this.make($.$mol_merge_dict(this.dict(), next));
-        };
-        $mol_state_arg.make = function (next) {
-            var chunks = [];
-            for (var key in next) {
-                if (null == next[key])
-                    continue;
-                chunks.push([key].concat(next[key]).map(encodeURIComponent).join('='));
-            }
-            var hash = chunks.join('#');
-            return hash ? '#' + hash + '#' : '#';
-        };
-        $mol_state_arg.prototype.value = function (key, next) {
-            return $mol_state_arg.value(this.prefix + key, next);
-        };
-        $mol_state_arg.prototype.sub = function (postfix) {
-            return new $mol_state_arg(this.prefix + postfix + '.');
-        };
-        $mol_state_arg.prototype.link = function (next) {
-            var prefix = this.prefix;
-            var dict = {};
-            for (var key in next) {
-                dict[prefix + key] = next[key];
-            }
-            return $mol_state_arg.link(dict);
-        };
-        return $mol_state_arg;
-    }($.$mol_object));
-    __decorate([
-        $.$mol_mem()
-    ], $mol_state_arg, "href", null);
-    __decorate([
-        $.$mol_mem()
-    ], $mol_state_arg, "dict", null);
-    __decorate([
-        $.$mol_mem_key()
-    ], $mol_state_arg, "value", null);
-    $.$mol_state_arg = $mol_state_arg;
-    window.addEventListener('hashchange', function (event) { return $mol_state_arg.href(null); });
-})($ || ($ = {}));
-//arg.web.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_stacker = (function (_super) {
-        __extends($mol_stacker, _super);
-        function $mol_stacker() {
-            return _super.apply(this, arguments) || this;
-        }
-        $mol_stacker.prototype.side = function () {
-            return false;
-        };
-        $mol_stacker.prototype.attr = function () {
-            var _this = this;
-            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
-                "mol_stacker_side": function () { return _this.side(); },
-            });
-        };
-        $mol_stacker.prototype.main = function () {
-            return [];
-        };
-        $mol_stacker.prototype.mainer = function (next) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return _this.main(); };
-            });
-        };
-        $mol_stacker.prototype.addon = function () {
-            return [];
-        };
-        $mol_stacker.prototype.addoner = function (next) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return _this.addon(); };
-            });
-        };
-        $mol_stacker.prototype.childs = function () {
-            return [].concat(this.mainer(), this.addoner());
-        };
-        return $mol_stacker;
-    }($.$mol_viewer));
-    __decorate([
-        $.$mol_mem()
-    ], $mol_stacker.prototype, "mainer", null);
-    __decorate([
-        $.$mol_mem()
-    ], $mol_stacker.prototype, "addoner", null);
-    $.$mol_stacker = $mol_stacker;
-})($ || ($ = {}));
-//stacker.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_stacker = (function (_super) {
-            __extends($mol_stacker, _super);
-            function $mol_stacker() {
-                return _super.apply(this, arguments) || this;
-            }
-            $mol_stacker.prototype.side = function (next) {
-                if (!this.main())
-                    return true;
-                var arg = (next === void 0) ? void 0 : next ? '' : null;
-                return $.$mol_state_arg.value(this.stateKey('side'), arg) != null;
-            };
-            return $mol_stacker;
-        }($.$mol_stacker));
-        $mol.$mol_stacker = $mol_stacker;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//stacker.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var $;
-(function ($) {
-    var $mol_lister = (function (_super) {
-        __extends($mol_lister, _super);
-        function $mol_lister() {
-            return _super.apply(this, arguments) || this;
-        }
-        $mol_lister.prototype.minHeightStyle = function () {
-            return "";
-        };
-        $mol_lister.prototype.field = function () {
-            var _this = this;
-            return $.$mol_merge_dict(_super.prototype.field.call(this), {
-                "style.minHeight": function () { return _this.minHeightStyle(); },
-            });
-        };
-        $mol_lister.prototype.rows = function () {
-            return [];
-        };
-        $mol_lister.prototype.childs = function () {
-            return this.rows();
-        };
-        return $mol_lister;
-    }($.$mol_viewer));
-    $.$mol_lister = $mol_lister;
-})($ || ($ = {}));
-//lister.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_lister = (function (_super) {
-            __extends($mol_lister, _super);
-            function $mol_lister() {
-                return _super.apply(this, arguments) || this;
-            }
-            $mol_lister.prototype.rowOffsets = function () {
-                var childs = this.childs();
-                if (!childs)
-                    return null;
-                var heightLimit = this.contextSub().$mol_viewer_heightLimit();
-                var offset = 0;
-                var next = [];
-                for (var _i = 0, childs_1 = childs; _i < childs_1.length; _i++) {
-                    var child = childs_1[_i];
-                    next.push(offset);
-                    if (child instanceof $.$mol_viewer) {
-                        offset += child.heightMinimal();
-                    }
-                    if (offset > heightLimit)
-                        break;
-                }
-                return next;
-            };
-            $mol_lister.prototype.rowContext = function (index) {
-                var _this = this;
-                var context = this.contextSub();
-                var next = Object.create(context);
-                next.$mol_viewer_heightLimit = function () { return context.$mol_viewer_heightLimit() - _this.rowOffsets()[index]; };
-                return next;
-            };
-            $mol_lister.prototype.childsVisible = function () {
-                var childs = this.childs();
-                if (!childs)
-                    return childs;
-                var limit = this.rowOffsets().length;
-                var next = [];
-                for (var i = 0; i < limit; ++i) {
-                    var child = childs[i];
-                    if (child == null)
-                        continue;
-                    if (child instanceof $.$mol_viewer) {
-                        child.context(this.rowContext(i));
-                    }
-                    next.push(child);
-                }
-                return next;
-            };
-            $mol_lister.prototype.heightMinimal = function () {
-                var height = 0;
-                var childs = this.childs();
-                if (childs)
-                    childs.forEach(function (child) {
-                        if (child instanceof $.$mol_viewer) {
-                            height += child.heightMinimal();
-                        }
-                    });
-                return height;
-            };
-            $mol_lister.prototype.minHeightStyle = function () {
-                return this.heightMinimal() + 'px';
-            };
-            return $mol_lister;
-        }($.$mol_lister));
-        __decorate([
-            $.$mol_mem()
-        ], $mol_lister.prototype, "rowOffsets", null);
-        __decorate([
-            $.$mol_mem_key()
-        ], $mol_lister.prototype, "rowContext", null);
-        __decorate([
-            $.$mol_mem()
-        ], $mol_lister.prototype, "childsVisible", null);
-        $mol.$mol_lister = $mol_lister;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//lister.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
     var $mol_state_session = (function (_super) {
         __extends($mol_state_session, _super);
         function $mol_state_session() {
@@ -1545,6 +1247,378 @@ var $;
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));
 //scroller.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_pager = (function (_super) {
+        __extends($mol_pager, _super);
+        function $mol_pager() {
+            return _super.apply(this, arguments) || this;
+        }
+        $mol_pager.prototype.titler = function (next) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.title()); };
+            });
+        };
+        $mol_pager.prototype.head = function () {
+            return [].concat(this.titler());
+        };
+        $mol_pager.prototype.header = function (next) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return _this.head(); };
+            });
+        };
+        $mol_pager.prototype.body = function () {
+            return [];
+        };
+        $mol_pager.prototype.bodier = function (next) {
+            var _this = this;
+            return new $.$mol_scroller().setup(function (obj) {
+                obj.childs = function () { return _this.body(); };
+            });
+        };
+        $mol_pager.prototype.foot = function () {
+            return [];
+        };
+        $mol_pager.prototype.footer = function (next) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return _this.foot(); };
+            });
+        };
+        $mol_pager.prototype.childs = function () {
+            return [].concat(this.header(), this.bodier(), this.footer());
+        };
+        return $mol_pager;
+    }($.$mol_viewer));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_pager.prototype, "titler", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_pager.prototype, "header", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_pager.prototype, "bodier", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_pager.prototype, "footer", null);
+    $.$mol_pager = $mol_pager;
+})($ || ($ = {}));
+//pager.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_state_arg = (function (_super) {
+        __extends($mol_state_arg, _super);
+        function $mol_state_arg(prefix) {
+            if (prefix === void 0) { prefix = ''; }
+            var _this = _super.call(this) || this;
+            _this.prefix = prefix;
+            return _this;
+        }
+        $mol_state_arg.href = function (next) {
+            if (next)
+                history.replaceState(history.state, document.title, "" + next);
+            return window.location.search + window.location.hash;
+        };
+        $mol_state_arg.dict = function (next) {
+            var href = this.href(next && this.make(next));
+            var chunks = href.split(/[\/\?#!&;]/g);
+            var params = {};
+            chunks.forEach(function (chunk) {
+                if (!chunk)
+                    return;
+                var vals = chunk.split('=').map(decodeURIComponent);
+                params[vals.shift()] = vals.join('=');
+            });
+            return params;
+        };
+        $mol_state_arg.value = function (key, next) {
+            var nextDict = (next === void 0) ? void 0 : $.$mol_merge_dict(this.dict(), (_a = {}, _a[key] = next, _a));
+            return this.dict(nextDict)[key] || null;
+            var _a;
+        };
+        $mol_state_arg.link = function (next) {
+            return this.make($.$mol_merge_dict(this.dict(), next));
+        };
+        $mol_state_arg.make = function (next) {
+            var chunks = [];
+            for (var key in next) {
+                if (null == next[key])
+                    continue;
+                chunks.push([key].concat(next[key]).map(encodeURIComponent).join('='));
+            }
+            var hash = chunks.join('#');
+            return hash ? '#' + hash + '#' : '#';
+        };
+        $mol_state_arg.prototype.value = function (key, next) {
+            return $mol_state_arg.value(this.prefix + key, next);
+        };
+        $mol_state_arg.prototype.sub = function (postfix) {
+            return new $mol_state_arg(this.prefix + postfix + '.');
+        };
+        $mol_state_arg.prototype.link = function (next) {
+            var prefix = this.prefix;
+            var dict = {};
+            for (var key in next) {
+                dict[prefix + key] = next[key];
+            }
+            return $mol_state_arg.link(dict);
+        };
+        return $mol_state_arg;
+    }($.$mol_object));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_state_arg, "href", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_state_arg, "dict", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_state_arg, "value", null);
+    $.$mol_state_arg = $mol_state_arg;
+    window.addEventListener('hashchange', function (event) { return $mol_state_arg.href(null); });
+})($ || ($ = {}));
+//arg.web.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_stacker = (function (_super) {
+        __extends($mol_stacker, _super);
+        function $mol_stacker() {
+            return _super.apply(this, arguments) || this;
+        }
+        $mol_stacker.prototype.side = function () {
+            return false;
+        };
+        $mol_stacker.prototype.attr = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.attr.call(this), {
+                "mol_stacker_side": function () { return _this.side(); },
+            });
+        };
+        $mol_stacker.prototype.main = function () {
+            return [];
+        };
+        $mol_stacker.prototype.mainer = function (next) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return _this.main(); };
+            });
+        };
+        $mol_stacker.prototype.addon = function () {
+            return [];
+        };
+        $mol_stacker.prototype.addoner = function (next) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return _this.addon(); };
+            });
+        };
+        $mol_stacker.prototype.childs = function () {
+            return [].concat(this.mainer(), this.addoner());
+        };
+        return $mol_stacker;
+    }($.$mol_viewer));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_stacker.prototype, "mainer", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_stacker.prototype, "addoner", null);
+    $.$mol_stacker = $mol_stacker;
+})($ || ($ = {}));
+//stacker.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_stacker = (function (_super) {
+            __extends($mol_stacker, _super);
+            function $mol_stacker() {
+                return _super.apply(this, arguments) || this;
+            }
+            $mol_stacker.prototype.side = function (next) {
+                if (!this.main())
+                    return true;
+                if (this.main().length === 0)
+                    return true;
+                var arg = (next === void 0) ? void 0 : next ? '' : null;
+                return $.$mol_state_arg.value(this.stateKey('side'), arg) != null;
+            };
+            return $mol_stacker;
+        }($.$mol_stacker));
+        $mol.$mol_stacker = $mol_stacker;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//stacker.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var $;
+(function ($) {
+    var $mol_lister = (function (_super) {
+        __extends($mol_lister, _super);
+        function $mol_lister() {
+            return _super.apply(this, arguments) || this;
+        }
+        $mol_lister.prototype.minHeightStyle = function () {
+            return "";
+        };
+        $mol_lister.prototype.field = function () {
+            var _this = this;
+            return $.$mol_merge_dict(_super.prototype.field.call(this), {
+                "style.minHeight": function () { return _this.minHeightStyle(); },
+            });
+        };
+        $mol_lister.prototype.rows = function () {
+            return [];
+        };
+        $mol_lister.prototype.childs = function () {
+            return this.rows();
+        };
+        return $mol_lister;
+    }($.$mol_viewer));
+    $.$mol_lister = $mol_lister;
+})($ || ($ = {}));
+//lister.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_lister = (function (_super) {
+            __extends($mol_lister, _super);
+            function $mol_lister() {
+                return _super.apply(this, arguments) || this;
+            }
+            $mol_lister.prototype.rowOffsets = function () {
+                var childs = this.childs();
+                if (!childs)
+                    return null;
+                var heightLimit = this.contextSub().$mol_viewer_heightLimit();
+                var offset = 0;
+                var next = [];
+                for (var _i = 0, childs_1 = childs; _i < childs_1.length; _i++) {
+                    var child = childs_1[_i];
+                    next.push(offset);
+                    if (child instanceof $.$mol_viewer) {
+                        offset += child.heightMinimal();
+                    }
+                    if (offset > heightLimit)
+                        break;
+                }
+                return next;
+            };
+            $mol_lister.prototype.rowContext = function (index) {
+                var _this = this;
+                var context = this.contextSub();
+                var next = Object.create(context);
+                next.$mol_viewer_heightLimit = function () { return context.$mol_viewer_heightLimit() - _this.rowOffsets()[index]; };
+                return next;
+            };
+            $mol_lister.prototype.childsVisible = function () {
+                var childs = this.childs();
+                if (!childs)
+                    return childs;
+                var limit = this.rowOffsets().length;
+                var next = [];
+                for (var i = 0; i < limit; ++i) {
+                    var child = childs[i];
+                    if (child == null)
+                        continue;
+                    if (child instanceof $.$mol_viewer) {
+                        child.context(this.rowContext(i));
+                    }
+                    next.push(child);
+                }
+                return next;
+            };
+            $mol_lister.prototype.heightMinimal = function () {
+                var height = 0;
+                var childs = this.childs();
+                if (childs)
+                    childs.forEach(function (child) {
+                        if (child instanceof $.$mol_viewer) {
+                            height += child.heightMinimal();
+                        }
+                    });
+                return height;
+            };
+            $mol_lister.prototype.minHeightStyle = function () {
+                return this.heightMinimal() + 'px';
+            };
+            return $mol_lister;
+        }($.$mol_lister));
+        __decorate([
+            $.$mol_mem()
+        ], $mol_lister.prototype, "rowOffsets", null);
+        __decorate([
+            $.$mol_mem_key()
+        ], $mol_lister.prototype, "rowContext", null);
+        __decorate([
+            $.$mol_mem()
+        ], $mol_lister.prototype, "childsVisible", null);
+        $mol.$mol_lister = $mol_lister;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//lister.view.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -3588,78 +3662,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol_pager = (function (_super) {
-        __extends($mol_pager, _super);
-        function $mol_pager() {
-            return _super.apply(this, arguments) || this;
-        }
-        $mol_pager.prototype.titler = function (next) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.title()); };
-            });
-        };
-        $mol_pager.prototype.head = function () {
-            return [].concat(this.titler());
-        };
-        $mol_pager.prototype.header = function (next) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return _this.head(); };
-            });
-        };
-        $mol_pager.prototype.body = function () {
-            return [];
-        };
-        $mol_pager.prototype.bodier = function (next) {
-            var _this = this;
-            return new $.$mol_scroller().setup(function (obj) {
-                obj.childs = function () { return _this.body(); };
-            });
-        };
-        $mol_pager.prototype.foot = function () {
-            return [];
-        };
-        $mol_pager.prototype.footer = function (next) {
-            var _this = this;
-            return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return _this.foot(); };
-            });
-        };
-        $mol_pager.prototype.childs = function () {
-            return [].concat(this.header(), this.bodier(), this.footer());
-        };
-        return $mol_pager;
-    }($.$mol_viewer));
-    __decorate([
-        $.$mol_mem()
-    ], $mol_pager.prototype, "titler", null);
-    __decorate([
-        $.$mol_mem()
-    ], $mol_pager.prototype, "header", null);
-    __decorate([
-        $.$mol_mem()
-    ], $mol_pager.prototype, "bodier", null);
-    __decorate([
-        $.$mol_mem()
-    ], $mol_pager.prototype, "footer", null);
-    $.$mol_pager = $mol_pager;
-})($ || ($ = {}));
-//pager.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var $;
 (function ($) {
     var $mol_icon_tick = (function (_super) {
@@ -3724,9 +3726,6 @@ var $;
         function $mol_app_bench() {
             return _super.apply(this, arguments) || this;
         }
-        $mol_app_bench.prototype.tester = function (next) {
-            return new $.$mol_app_bench_tester();
-        };
         $mol_app_bench.prototype.description = function () {
             return "";
         };
@@ -3753,12 +3752,20 @@ var $;
                 obj.colSort = function (next) { return _this.resultsColSort(next); };
             });
         };
+        $mol_app_bench.prototype.informator = function (next) {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.descriptioner(), _this.resulter()); };
+            });
+        };
+        $mol_app_bench.prototype.tester = function (next) {
+            return new $.$mol_app_bench_tester();
+        };
         $mol_app_bench.prototype.mainPage = function (next) {
             var _this = this;
-            return new $.$mol_app_bench_mainer().setup(function (obj) {
+            return new $.$mol_pager().setup(function (obj) {
                 obj.title = function () { return _this.title(); };
-                obj.tester = function () { return _this.tester(); };
-                obj.body = function () { return [].concat(_this.descriptioner(), _this.resulter()); };
+                obj.body = function () { return [].concat(_this.informator(), _this.tester()); };
             });
         };
         $mol_app_bench.prototype.main = function () {
@@ -3807,9 +3814,6 @@ var $;
     }($.$mol_stacker));
     __decorate([
         $.$mol_mem()
-    ], $mol_app_bench.prototype, "tester", null);
-    __decorate([
-        $.$mol_mem()
     ], $mol_app_bench.prototype, "descriptioner", null);
     __decorate([
         $.$mol_mem()
@@ -3817,6 +3821,12 @@ var $;
     __decorate([
         $.$mol_mem()
     ], $mol_app_bench.prototype, "resulter", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_app_bench.prototype, "informator", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_app_bench.prototype, "tester", null);
     __decorate([
         $.$mol_mem()
     ], $mol_app_bench.prototype, "mainPage", null);
@@ -3833,22 +3843,6 @@ var $;
         $.$mol_mem_key()
     ], $mol_app_bench.prototype, "menuOptioner", null);
     $.$mol_app_bench = $mol_app_bench;
-})($ || ($ = {}));
-(function ($) {
-    var $mol_app_bench_mainer = (function (_super) {
-        __extends($mol_app_bench_mainer, _super);
-        function $mol_app_bench_mainer() {
-            return _super.apply(this, arguments) || this;
-        }
-        $mol_app_bench_mainer.prototype.tester = function () {
-            return null;
-        };
-        $mol_app_bench_mainer.prototype.childs = function () {
-            return [].concat(this.header(), this.bodier(), this.tester());
-        };
-        return $mol_app_bench_mainer;
-    }($.$mol_pager));
-    $.$mol_app_bench_mainer = $mol_app_bench_mainer;
 })($ || ($ = {}));
 (function ($) {
     var $mol_app_bench_tester = (function (_super) {

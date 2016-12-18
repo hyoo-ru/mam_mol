@@ -3400,6 +3400,8 @@ var $;
             $mol_stacker.prototype.side = function (next) {
                 if (!this.main())
                     return true;
+                if (this.main().length === 0)
+                    return true;
                 var arg = (next === void 0) ? void 0 : next ? '' : null;
                 return $.$mol_state_arg.value(this.stateKey('side'), arg) != null;
             };
@@ -6309,7 +6311,7 @@ var $;
             $mol_app_supplies_root.prototype.main = function () {
                 return this.supply()
                     ? [this.detailer()]
-                    : null;
+                    : [];
             };
             $mol_app_supplies_root.prototype.addon = function () {
                 return this.entered()
@@ -6317,7 +6319,7 @@ var $;
                     : [this.enter()];
             };
             $mol_app_supplies_root.prototype.title = function () {
-                return (this.main() || this.addon())[0].title();
+                return (this.main()[0] || this.addon()[0]).title();
             };
             $mol_app_supplies_root.prototype.domain = function () {
                 return new $.$mol_app_supplies_domain_mock();
