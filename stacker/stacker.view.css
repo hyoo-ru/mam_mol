@@ -21,6 +21,7 @@
 	margin-bottom: -100vh;
 	transition: .25s ease margin;
 	position: relative;
+	z-index: 1;
 	display: flex;
 	background: var(--mol_skin_light);
 	flex: 1000 1 50%;
@@ -48,4 +49,5 @@
 
 [mol_stacker_side] > [mol_stacker_addoner] {
 	margin-right: 0;
+	z-index: 2;
 }
