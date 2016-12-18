@@ -1,8 +1,6 @@
-[mol_app_bench_mainer_bodier] {
+[mol_app_bench_mainPage] > [mol_pager_bodier] {
 	display: flex;
-	height: auto;
-	flex: 0 1 auto;
-	overflow: hidden;
+	overflow: auto;
 	z-index: 1;
 }
 
@@ -10,12 +8,17 @@
 	padding: .5rem;
 }
 
+[mol_app_bench_informator] {
+	flex: 0 1 auto;
+	overflow: auto;
+}
 [mol_app_bench_tester] {
 	border: none;
 	flex: 1 0 33%;
 	position: relative;
-	width: 100%;
+	width: 50%;
 	height: 100%;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 }
 
 [mol_app_bench_descriptioner] {
@@ -26,7 +29,6 @@
 
 [mol_app_bench_resulter] {
 	background: var(--mol_skin_card);
-	flex: 0 1 66%;
 }
 
 [mol_app_bench_menu] {
