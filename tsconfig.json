@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"experimentalDecorators": true,
+		"noImplicitAny": true,
+		"allowJs" : true
+	},
+	"filesGlob": [
+		"**/*.ts"
+	],
+	"atom": {
+		"rewriteTsconfig": false,
+		"compileOnSave": false
+	}
+}
