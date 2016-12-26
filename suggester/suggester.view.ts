@@ -3,7 +3,7 @@ namespace $.$mol {
 	export class $mol_suggester extends $.$mol_suggester {
 
 		@ $mol_mem()
-		contextSub( ) {
+		contextSub() {
 			var context = this.context()
 			var subContext = Object.create( context )
 			subContext.$mol_viewer_heightLimit = ()=> context.$mol_viewer_heightLimit() / 3
@@ -34,33 +34,29 @@ namespace $.$mol {
 		}
 
 		eventPress( next? : KeyboardEvent ) {
-			const keyCodes = $mol_keyboard_code;
 			let selectedRow = this.selectedRow()
 			let suggestsLength = this.lister().childsVisible().length
-			let isSelectedKey = next.keyCode === keyCodes.enter || next.keyCode === keyCodes.right
-			let spaceKey = ( next.keyCode === keyCodes.space ) ? ' ' : ''
-			let upKey = next.keyCode === keyCodes.up
-			let downKey = next.keyCode === keyCodes.down
 
-			if( isSelectedKey || spaceKey ) {
+			switch(next.keyCode) {
+				case $mol_keyCodes.down :
+					selectedRow = selectedRow === suggestsLength ? 0 : selectedRow + 1
+					this.selectedRow( selectedRow )
+					break
 
-				if( !selectedRow ) return
+				case $mol_keyCodes.up :
+					selectedRow = selectedRow === 0 ? suggestsLength : selectedRow - 1
+					this.selectedRow( selectedRow )
+					break
 
-				if( spaceKey ) next.preventDefault()
-
-				this.value( this.suggests()[ selectedRow - 1 ] + spaceKey )
+				case $mol_keyCodes.enter :
+				case $mol_keyCodes.right :
+				case $mol_keyCodes.space :
+					if( !selectedRow ) return
+					let spaceKey = (next.keyCode == $mol_keyCodes.enter) ? ' ' : ''
+					if( spaceKey ) next.preventDefault()
+					this.value( this.suggests()[ selectedRow - 1 ] + spaceKey )
+					break
 			}
-
-			if( downKey ) {
-				selectedRow = selectedRow === suggestsLength ? 0 : selectedRow + 1
-				this.selectedRow( selectedRow )
-			}
-
-			if( upKey ) {
-				selectedRow = selectedRow === 0 ? suggestsLength : selectedRow - 1
-				this.selectedRow( selectedRow )
-			}
-
 		}
 
 		focused() {

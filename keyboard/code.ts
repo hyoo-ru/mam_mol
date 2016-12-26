@@ -1,5 +1,5 @@
 namespace $ {
-  export enum $mol_keyboard_code {
+  export enum $mol_keyCodes {
     backspace = 8,
     tab = 9,
     enter = 13,
