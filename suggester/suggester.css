@@ -34,5 +34,4 @@
 [mol_suggester_rower]:hover ,
 [mol_suggester_rower][mol_suggester_selected] {
 	box-shadow: 0 0 0 1px var(--mol_skin_focus);
-	z-index: 1;
 }
