@@ -95,9 +95,9 @@ namespace $ {
     period = 190,
     forwardSlash = 191,
     graveAccent = 192,
-    openBracket = 219,
-    backSlach = 220,
-    closeBracket = 221,
-    singleQuote = 222
+    bracketOpen = 219,
+    slashBack = 220,
+    bracketClose = 221,
+    quoteSingle = 222
   }
 }
