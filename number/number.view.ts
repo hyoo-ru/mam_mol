@@ -28,7 +28,6 @@ namespace $.$mol {
 		}
 
 		eventWheel( next? : MouseWheelEvent ) {
-			next.preventDefault();
 			if( next.wheelDelta > 0 ) {
 				this.eventInc( next )
 			} else {
