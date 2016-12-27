@@ -1,3 +1,6 @@
 [mol_lister] {
 	will-change: contents;
 }
+[mol_lister_rower] {
+	margin: 10px 0;
+}

@@ -38,23 +38,26 @@ namespace $.$mol {
 			let suggestsLength = this.lister().childsVisible().length
 
 			switch(next.keyCode) {
-				case $mol_keyCodes.down :
+				case $mol_keyboard_code.down :
 					selectedRow = selectedRow === suggestsLength ? 0 : selectedRow + 1
 					this.selectedRow( selectedRow )
 					break
 
-				case $mol_keyCodes.up :
+				case $mol_keyboard_code.up :
 					selectedRow = selectedRow === 0 ? suggestsLength : selectedRow - 1
 					this.selectedRow( selectedRow )
 					break
 
-				case $mol_keyCodes.enter :
-				case $mol_keyCodes.right :
-				case $mol_keyCodes.space :
+				case $mol_keyboard_code.enter :
+				case $mol_keyboard_code.right :
 					if( !selectedRow ) return
-					let spaceKey = (next.keyCode == $mol_keyCodes.enter) ? ' ' : ''
-					if( spaceKey ) next.preventDefault()
-					this.value( this.suggests()[ selectedRow - 1 ] + spaceKey )
+					this.value( this.suggests()[ selectedRow - 1 ] )
+					break
+
+				case $mol_keyboard_code.space :
+					if( !selectedRow ) return
+					next.preventDefault()
+					this.value( this.suggests()[ selectedRow - 1 ] + ' ' )
 					break
 			}
 		}
