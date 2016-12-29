@@ -1,0 +1,33 @@
+$mol_selecter $mol_viewer
+	> expanded false
+	selectedRow 0
+	event * 
+		keydown > eventPress null
+	optioner# $mol_selecter_optioner
+		text < optionText# \
+		prefix < stringerValue
+		eventSelected > eventOptionSelect# null
+		selected < selected# false
+	< options *
+	> value null
+	childs /
+		< inputer $mol_barer
+			childs /
+				< stringer $mol_stringer
+					value > stringerValue \
+					value < value
+				< trigger $mol_checker_expander
+					checked > expanded
+		< lister $mol_lister
+			heightMinimal 0
+			childs < items /
+
+$mol_selecter_optioner $mol_clicker
+	tagName \div
+	event * mousedown > eventSelected null
+	attr * mol_selecter_selected < selected false
+	heightMinimal 36
+	childs /
+		< dimmer $mol_dimmer
+			haystack < text \
+			needle < prefix \

@@ -1,0 +1,8 @@
+$mol_selecter_demo $mol_selecter
+	value > color \purple
+	expanded true
+	options * 
+		red < optionRed @ \Red
+		green < optionGreen @ \Green
+		blue < optionBlue @ \Blue
+		purple < optionPurple @ \Purple
