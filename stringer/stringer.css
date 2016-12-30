@@ -15,6 +15,7 @@
 	width: 8em;
 	background: var(--mol_skin_passive);
 	color: var(--mol_skin_passive_text);
+	transition: box-shadow .25s;
 }
 
 [mol_stringer]:enabled {
@@ -22,8 +23,12 @@
 	color: var(--mol_skin_light_text);
 }
 
-[mol_stringer]:enabled:hover ,
-[mol_stringer]:focus {
+[mol_stringer]:enabled:hover {
+	outline: none;
+	box-shadow: 0 0 0 1px var(--mol_skin_focus);
+}
+
+[mol_stringer]:enabled:focus {
 	outline: none;
 	box-shadow: 0 0 0 1px var(--mol_skin_focus);
 }
