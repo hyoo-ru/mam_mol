@@ -24,7 +24,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 * [$mol_app_hello](app/hello) - very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
-* [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/)
+* [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/))
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
 * [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
 * [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
@@ -36,11 +36,12 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol_app_bench_list](app/bench/list) - frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/#becnh=list#sort=fill#))
 * [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark)
 ([online](https://eigenmethod.github.io/mol/app/bench/#bench=%2Ftodomvc%2Fbenchmark%2F#sample=angular2~angularjs~knockoutjs~mol~polymer~react-alt~vanillajs~vue#sort=fill#))
-* WebPageTest - loading progress of ToDOMVC applications on some frameworks ([analitics](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)) ([video](https://www.webpagetest.org/video/view.php?id=161217_c1e034dfcdad5b981ade8fbb0774ce6b4f3d251e))
+* [WebPageTest - loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
 
 # Articles
 
 * [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/)
+* [$mol_atom: теория и практика реактивности](https://habrahabr.ru/post/317360/)
 * [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/)
 * [React'ивные Panel'и](https://habrahabr.ru/post/314752/)
 * [Tree — убийца JSON, XML, YAML и иже с ними](https://habrahabr.ru/post/248147/)
