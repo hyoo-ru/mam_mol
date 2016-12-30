@@ -4,12 +4,13 @@
 	border-radius: var(--mol_skin_round);
 }
 
-[mol_barer] > *:first-child {
-	border-radius: var(--mol_skin_round) 0 0 var(--mol_skin_round);
-}
-
 [mol_barer] > *:not(:first-child):not(:last-child) {
 	border-radius: 0;
+}
+
+[mol_barer] > *:first-child {
+	border-top-left-radius: var(--mol_skin_round);
+	border-bottom-left-radius: var(--mol_skin_round);
 }
 
 [mol_barer] > *:not(:first-child) {
@@ -17,5 +18,6 @@
 }
 
 [mol_barer] > *:last-child {
-	border-radius: 0 var(--mol_skin_round) var(--mol_skin_round) 0;
+	border-top-right-radius: var(--mol_skin_round);
+	border-bottom-right-radius: var(--mol_skin_round);
 }
