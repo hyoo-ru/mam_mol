@@ -30,6 +30,15 @@ namespace $.$mol {
 					: null
 			]
 		}
+		
+		inputerChilds () {
+			return [
+				( this.optionsKeys().length > this.minRowsToSearch() )
+				? this.stringer()
+				: null,
+				this.trigger()
+			]
+		}
 
 		eventOptionSelect( key : string , next? : MouseEvent ) {
 			this.value( this.options()[key]() );
@@ -68,7 +77,6 @@ namespace $.$mol {
 
 				case $mol_keyboard_code.enter :
 				case $mol_keyboard_code.right :
-					console.log(this.options()[ this.optionsKeys()[ selectedRow ]]())
 					if( !selectedRow ) return
 					this.value( this.options()[ this.optionsKeys()[ selectedRow ]]())
 					break

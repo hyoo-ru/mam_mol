@@ -1,6 +1,7 @@
 $mol_selecter $mol_viewer
 	> expanded false
 	selectedRow 0
+	minRowsToSearch 3
 	event * 
 		keydown > eventPress null
 	optioner# $mol_selecter_optioner
@@ -12,7 +13,7 @@ $mol_selecter $mol_viewer
 	> value null
 	childs /
 		< inputer $mol_barer
-			childs /
+			childs < inputerChilds /
 				< stringer $mol_stringer
 					value > stringerValue \
 					value < value
