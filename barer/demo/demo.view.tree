@@ -1,17 +1,17 @@
 $mol_barer_demo_search $mol_barer
 	childs /
-		< stringer $mol_stringer
-			value > value \
-		< submitter $mol_clicker
+		<= stringer $mol_stringer
+			value <=> value \
+		<= submitter $mol_clicker
 			childs /
 				\Submit
 
 $mol_barer_demo_login $mol_barer
 	childs /
-		< stringer $mol_stringer
-			value > value \
-		< rememberer $mol_checker_ticker
+		<= stringer $mol_stringer
+			value <=> value \
+		<= rememberer $mol_checker_ticker
 			label / \Remember me
-		< submitter $mol_clicker
+		<= submitter $mol_clicker
 			childs /
 				\Submit

@@ -1,17 +1,17 @@
 $mol_suggester_demo $mol_rower childs /
-	< one $mol_suggester
+	<= one $mol_suggester
 		focused false
 		suggests /
-	< two $mol_suggester
-		hint < twoHint @ \Name
+	<= two $mol_suggester
+		hint <= twoHint @ \Name
 		focused true
 		selectedRow 2
 		suggests /
-			< suggest1 @ \Evgeny
-			< suggest2 @ \Alexander
-			< suggest3 @ \Dmitriy
-			< suggest4 @ \Yuriy
-			< suggest5 @ \Nataliya
-	< three $mol_suggester
-		suggests < threeSuggests /
-		value > threeCode \
+			<= suggest1 @ \Evgeny
+			<= suggest2 @ \Alexander
+			<= suggest3 @ \Dmitriy
+			<= suggest4 @ \Yuriy
+			<= suggest5 @ \Nataliya
+	<= three $mol_suggester
+		suggests <= threeSuggests /
+		value <=> threeCode \

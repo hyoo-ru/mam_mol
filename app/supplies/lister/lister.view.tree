@@ -2,9 +2,9 @@ $mol_app_supplies_lister $mol_pager
 	supplies /
 	title @ \Supplies
 	childs /
-		< header
-		< searchPanel $mol_rower childs / < searcher $mol_coder
-			hint < searcherHint @ \Search by bar code
-			value > searchQuery \
-		< bodier
-	body / < lister $mol_lister rows < supplyRows /
+		<= header
+		<= searchPanel $mol_rower childs / <= searcher $mol_coder
+			hint <= searcherHint @ \Search by bar code
+			value <=> searchQuery \
+		<= bodier
+	body / <= lister $mol_lister rows <= supplyRows /

@@ -1,7 +1,7 @@
 $mol_portioner_demo $mol_rower childs /
-	< one $mol_portioner
+	<= one $mol_portioner
 		portion 0
-	< two $mol_portioner
+	<= two $mol_portioner
 		portion 0.5
-	< three $mol_portioner
+	<= three $mol_portioner
 		portion 1

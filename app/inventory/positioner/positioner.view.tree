@@ -1,16 +1,16 @@
 $mol_app_inventory_positioner $mol_rower
 	position null
 	childs /
-		< producter $mol_viewer childs /
-			< titler $mol_viewer childs / < title \
-			< descriptioner $mol_viewer childs / < description \
-		< counter $mol_number
-			value > count 0
+		<= producter $mol_viewer childs /
+			<= titler $mol_viewer childs / <= title \
+			<= descriptioner $mol_viewer childs / <= description \
+		<= counter $mol_number
+			value <=> count 0
 			enabledInc false
 			enabledDec false
-		< statuser $mol_switcher
-			value > status null
+		<= statuser $mol_switcher
+			value <=> status null
 			options *
-				pending < statusLabelPending @ \Pending
-				approved < statusLabelApproved @ \Approved
-				rejected < statusLabelRejected @ \Rejected
+				pending <= statusLabelPending @ \Pending
+				approved <= statusLabelApproved @ \Approved
+				rejected <= statusLabelRejected @ \Rejected

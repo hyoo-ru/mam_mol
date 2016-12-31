@@ -1,10 +1,10 @@
 $mol_scroller $mol_viewer
 	heightMinimal 0
 	field *
-		scrollTop > scrollTop 0
-		scrollLeft > scrollLeft 0
-		- style.boxShadow < shadowStyle \
+		scrollTop <=> scrollTop 0
+		scrollLeft <=> scrollLeft 0
+		- style.boxShadow <= shadowStyle \
 	event *
-		scroll > eventScroll null
-		overflow > eventScroll null
-		underflow > eventScroll null
+		scroll <=> eventScroll null
+		overflow <=> eventScroll null
+		underflow <=> eventScroll null

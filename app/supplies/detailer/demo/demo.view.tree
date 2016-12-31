@@ -1,6 +1,6 @@
 $mol_app_supplies_detailer_demo $mol_app_supplies_detailer
 	title @ \Supply 31337
-	> approved false
+	<=> approved false
 	- org
 	providerName @ \ACME Provider Inc.
 	cost $mol_unit_money_rur valueOf 1234567
@@ -14,10 +14,10 @@ $mol_app_supplies_detailer_demo $mol_app_supplies_detailer
 	debitorName @ \12432311 - ACME Finance
 	-
 	positions /
-		< pos1 $mol_app_supplies_positioner_demo
-		< pos2 $mol_app_supplies_positioner_demo
-		< pos3 $mol_app_supplies_positioner_demo
-		< pos4 $mol_app_supplies_positioner_demo
-		< pos5 $mol_app_supplies_positioner_demo
+		<= pos1 $mol_app_supplies_positioner_demo
+		<= pos2 $mol_app_supplies_positioner_demo
+		<= pos3 $mol_app_supplies_positioner_demo
+		<= pos4 $mol_app_supplies_positioner_demo
+		<= pos5 $mol_app_supplies_positioner_demo
 	-
 	attachments /

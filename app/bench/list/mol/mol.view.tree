@@ -1,22 +1,22 @@
 $mol_app_bench_list_mol $mol_scroller
 	childs /
-		< lister $mol_lister
+		<= lister $mol_lister
 			rows /
-				< header $mol_viewer
-					childs / < sample \
-				< rowers /
+				<= header $mol_viewer
+					childs / <= sample \
+				<= rowers /
 	rower# $mol_app_bench_list_mol_rower
-		selected > rowerSelected# false
-		title < rowerTitle# \
-		content < rowerContent# \
+		selected <=> rowerSelected# false
+		title <= rowerTitle# \
+		content <= rowerContent# \
 
 $mol_app_bench_list_mol_rower $mol_viewer
-	> selected false
+	<=> selected false
 	heightMinimal 56
-	attr * mol_app_bench_list_mol_rower_selected < selected
-	event * click > eventToggle null
+	attr * mol_app_bench_list_mol_rower_selected <= selected
+	event * click <=> eventToggle null
 	childs /
-		< titler $mol_viewer
-			childs / < title \
-		< contenter $mol_viewer
-			childs / < content \
+		<= titler $mol_viewer
+			childs / <= title \
+		<= contenter $mol_viewer
+			childs / <= content \

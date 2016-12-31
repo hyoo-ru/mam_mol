@@ -5,5 +5,5 @@ $mol_labeler_demo_text $mol_labeler
 $mol_labeler_demo_stringer $mol_labeler
 	title @ \User name
 	content $mol_stringer
-		hint < hint @ \Jack Sparrow
-		value > userName \
+		hint <= hint @ \Jack Sparrow
+		value <=> userName \

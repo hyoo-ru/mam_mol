@@ -1,48 +1,48 @@
 $mol_texter $mol_lister
 	text \
 	rower# $mol_texter_rower
-		childs < blockContent# /
-		type < blockType# \
+		childs <= blockContent# /
+		type <= blockType# \
 	spanner# $mol_texter_spanner
 	linker# $mol_texter_linker
 	imager# $mol_texter_imager
 	header# $mol_texter_header
-		level < headerLevel# 0
-		content < headerContent# /
+		level <= headerLevel# 0
+		content <= headerContent# /
 	tabler# $mol_grider
-		headerCellers < tablerHeaderCellers# /
-		rowers < tablerRowers# /
+		headerCellers <= tablerHeaderCellers# /
+		rowers <= tablerRowers# /
 	tablerRower# $mol_grider_rower
-		cellers < tablerCellers# /
+		cellers <= tablerCellers# /
 	tablerCeller# $mol_grider_celler
-		childs < tablerCellerContent# /
+		childs <= tablerCellerContent# /
 	tablerCellerHeader# $mol_floater
-		childs < tablerCellerContent# /
+		childs <= tablerCellerContent# /
 
 $mol_texter_rower $mol_viewer
 	heightMinimal 40
-	attr * mol_texter_type < type \
+	attr * mol_texter_type <= type \
 
 $mol_texter_header $mol_viewer
 	tagName \h
-	attr * mol_texter_header_level > level 0
-	childs < content /
+	attr * mol_texter_header_level <=> level 0
+	childs <= content /
 
 $mol_texter_spanner $mol_viewer
 	tagName \span
-	attr * mol_texter_type > type \
-	childs > content /
+	attr * mol_texter_type <=> type \
+	childs <=> content /
 
 $mol_texter_linker $mol_viewer
 	tagName \a
 	attr *
-		mol_texter_type > type \
-		href > link \
-	childs > content /
+		mol_texter_type <=> type \
+		href <=> link \
+	childs <=> content /
 
 $mol_texter_imager $mol_viewer
 	tagName \img
 	attr *
-		mol_texter_type > type \
-		src > link \
-		alt > title \
+		mol_texter_type <=> type \
+		src <=> link \
+		alt <=> title \

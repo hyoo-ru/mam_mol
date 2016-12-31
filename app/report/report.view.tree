@@ -1,37 +1,37 @@
 $mol_app_report $mol_pager
 	title \Pump #1337
 	body /
-		< descriptor $mol_viewer
-			childs / < description \
-		< tabler $mol_app_report_tabler
+		<= descriptor $mol_viewer
+			childs / <= description \
+		<= tabler $mol_app_report_tabler
 			rows /
-				< headRower $mol_app_report_rower
-					cells < headCells /
-				< rows /
+				<= headRower $mol_app_report_rower
+					cells <= headCells /
+				<= rows /
 	rower# $mol_app_report_rower
-		cells < rowerCells# /
+		cells <= rowerCells# /
 	celler# $mol_app_report_celler
-		content < cellContent# null
-		rows < cellRows# 1
-		cols < cellCols# 1
+		content <= cellContent# null
+		rows <= cellRows# 1
+		cols <= cellCols# 1
 	texter# $mol_viewer
-		childs / < cellValue# null
+		childs / <= cellValue# null
 	stringer# $mol_stringer
-		value > cellValue# null
+		value <=> cellValue# null
 	number# $mol_number
-		value > cellValue# null
+		value <=> cellValue# null
 
 $mol_app_report_tabler $mol_viewer
 	tagName \table
-	childs < rows /
+	childs <= rows /
 	
 $mol_app_report_rower $mol_viewer
 	tagName \tr
-	childs < cells /
+	childs <= cells /
 
 $mol_app_report_celler $mol_viewer
 	tagName \td
 	attr *
-		colspan < cols 1
-		rowspan < rows 1
-	childs / < content null
+		colspan <= cols 1
+		rowspan <= rows 1
+	childs / <= content null

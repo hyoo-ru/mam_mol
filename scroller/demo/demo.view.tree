@@ -1,6 +1,6 @@
 $mol_scroller_demo $mol_scroller
 	childs /
-		< one $mol_filler
+		<= one $mol_filler
 
 $mol_scroller_demo_top $mol_scroller_demo
 	scrollTop 0
