@@ -161,26 +161,22 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
+		tsOptions() {
+			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() ).compilerOptions
+			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
+			if( res.errors.length ) throw res.errors
+			return res.options
+		}
+		
+		@ $mol_mem()
 		tsHost() {
-			
-			const options = {
-				experimentalDecorators : true ,
-				noEmitOnError : false ,
-				noImplicitAny : true ,
-				target : $node.typescript.ScriptTarget.ES5 ,
-				removeComments : true ,
-				sourceMap : true ,
-				inlineSources : true ,
-				allowJS : true ,
-				declaration : true ,
-			}
-			
+
 			const host = {
 				// getScriptFileNames : () => [] ,
 				getScriptVersion : ( path : string )=> $mol_file.absolute( path ).version() ,
 				getScriptSnapshot : ( path : string )=> $mol_file.absolute( path ).content().toString() ,
 				getCurrentDirectory : ()=> this.root().path() ,
-				getCompilationSettings : ()=> options ,
+				getCompilationSettings : ()=> this.tsOptions() ,
 				useCaseSensitiveFileNames : ()=> false ,
 				getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
 				getDefaultLibFileName : ( options : any )=> $node.typescript.getDefaultLibFilePath( options ) ,
