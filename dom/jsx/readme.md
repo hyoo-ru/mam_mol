@@ -16,4 +16,4 @@ namespace $ {
 }
 ```
 
-[More examples in tests.](jsx.test.ts)
+[More examples in tests.](jsx.test.tsx)
