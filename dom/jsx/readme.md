@@ -9,7 +9,7 @@ namespace $ {
 		<div id="example"> <!-- Generate Global Unique IDentifier here -->
 			Content is text nodes mixed with
 			<strong id="example.strong(0)"> <!-- Generate another GUID here -->
-				elements.
+				elements
 			</strong>
 			!
 		</div>
