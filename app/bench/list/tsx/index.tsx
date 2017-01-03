@@ -31,7 +31,7 @@ namespace $ {
 						<div
 							id={ 'list-item#' + item.id }
 							className={ `list-item list-item-selected-${ this.selected === item.id }`  }
-							onclick={ this.onClick.bind( item ) }
+							onclick={ this.onClick.bind( this , item ) }
 							>
 							<div
 								id={ 'list-item#' + item.id + '-title' }
