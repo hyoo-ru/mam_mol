@@ -15,7 +15,7 @@ namespace $ {
 				id : 'example.strong(0)' , // Generate another GUID here
 				tagName : 'strong' ,
 				childNodes : [
-					'DOM nodes.'
+					'DOM nodes'
 				]
 			} ,
 			'!' ,
