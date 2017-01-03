@@ -62,17 +62,17 @@
 	} )
 
 	function render() {
-		dom( {
+		$mol_dom_make( {
 			id : 'list' ,
 			className : 'list' ,
 			childNodes : [].concat(
-				dom( {
+				{
 					id : 'list-header' ,
 					className : 'list-header' ,
 					innerText : data.sample
-				} ) ,
+				} ,
 				data.items.map( function( item ) {
-					return dom( {
+					return {
 						id : 'list-item#' + item.id ,
 						className : 'list-item' ,
 						onclick : function( event ) {
@@ -81,55 +81,76 @@
 							this.classList.add( 'list-item-selected' )
 						} ,
 						childNodes : [
-							dom( {
+							{
 								id : 'list-item#' + item.id + '-title' ,
 								className : 'list-item-title' ,
 								innerText : item.title
-							} ) ,
-							dom( {
+							} ,
+							{
 								id : 'list-item#' + item.id + '-content' ,
 								className : 'list-item-content' ,
 								innerText : item.content
-							} ) ,
+							} ,
 						]
-					} )
+					}
 				} )
 			)
 		} )
 	}
 
-	function dom( props ) {
-		var el = document.getElementById( props.id ) || document.createElement( props.tagName || 'div' )
-		for( var key in props ) {
+	function $mol_dom_make( config ) {
+		const tag = config.tagName || 'div'
+		const ns = config.namespaceURI || 'http://www.w3.org/1999/xhtml'
+		const el = document.getElementById( config.id ) || document.createElementNS( ns , tag )
+
+		for( var key in config ) {
 			switch( key ) {
-				case( 'tagName' ) :
-				case( 'childNodes' ) :
-					continue
+				case 'tagName' :
+				case 'namespaceURI' :
+					break
+				case 'childNodes' :
+					let i = 0
+					while( true ) {
+
+						if( i >= config.childNodes.length ) {
+							for( var child ; child = el.childNodes[ i ] ; ) {
+								el.removeChild( child )
+							}
+							break
+						}
+
+						if( i >= el.childNodes.length ) {
+							for( ; i < config.childNodes.length ; ++ i ) {
+								const child = config.childNodes[ i ]
+								if( typeof child === 'string' ) {
+									el.appendChild( document.createTextNode( child ) )
+								} else {
+									el.appendChild( child instanceof Node ? child : $mol_dom_make( child ) )
+								}
+							}
+							break
+						}
+
+						let childNext = config.childNodes[ i ]
+						if( typeof childNext === 'string' ) {
+							childNext = document.createTextNode( childNext )
+						} else if(!( childNext instanceof Node )) {
+							childNext = $mol_dom_make( childNext )
+						}
+
+						let childPrev = el.childNodes[ i ] || null
+						if( childNext !== childPrev ) {
+							el.insertBefore( childNext , childPrev )
+						}
+
+						++i
+					}
+					break
 				default :
-					el[ key ] = props[ key ]
+					el[ key ] = config[ key ]
 			}
 		}
-		if( props.childNodes ) {
-			var i = 0
-			while( true ) {
-				if( i >= props.childNodes.length ) {
-					for( var child ; child = el.childNodes[ i ] ; ) {
-						el.removeChild( child )
-					}
-					break
-				}
-				if( i >= el.childNodes.length ) {
-					for( ; i < props.childNodes.length ; ++ i ) {
-						el.appendChild( props.childNodes[ i ] )
-					}
-					break
-				}
-				if( props.childNodes[ i ] !== el.childNodes[ i ] ) {
-					el.insertBefore( props.childNodes[ i ] , el.childNodes[ i ] )
-				}
-				++i
-			}
-		}
+
 		return el
 	}
 
