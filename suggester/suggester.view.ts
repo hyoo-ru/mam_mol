@@ -6,7 +6,7 @@ namespace $.$mol {
 		contextSub() {
 			var context = this.context()
 			var subContext = Object.create( context )
-			subContext.$mol_viewer_heightLimit = ()=> context.$mol_viewer_heightLimit() / 3
+			subContext.$mol_viewer_visibleHeight = ()=> context.$mol_viewer_visibleHeight() / 3
 			return subContext
 		}
 

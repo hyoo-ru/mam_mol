@@ -1,9 +1,9 @@
 namespace $.$mol {
 	export class $mol_lister_demo extends $.$mol_lister_demo {
 		
-		rows() {
+		rowers() {
 			var next : $mol_viewer[] = []
-			for( var id = 0 ; id < 1000 ; ++id ) {
+			for( var id = 0 ; id < 100 ; ++id ) {
 				next.push( this.rower( id ) )
 			}
 			return next

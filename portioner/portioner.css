@@ -1,7 +1,8 @@
 [mol_portioner] {
+	margin: auto;
 	display: flex;
 	height: 1.25rem;
-	flex: 1 1 8rem;
+	flex: 0 1 8rem;
 	width: 8rem;
 	border-radius: var(--mol_skin_round);
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);

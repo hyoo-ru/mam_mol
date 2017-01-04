@@ -4,6 +4,7 @@
 	--mol_skin_base: hsl( 215 , 50% , 57% );
 	--mol_skin_base_text: color( var(--mol_skin_base) lightness(99%) );
 
+	--mol_skin_hover: rgba( 0 , 0 , 0 , .03 );
 	--mol_skin_focus: var(--mol_skin_accent);
 	
 	--mol_skin_passive: #eee;
@@ -18,7 +19,7 @@
 	--mol_skin_accent: color( var(--mol_skin_base) hue(+140deg) saturation(+10%) );
 	--mol_skin_accent_text: color( var(--mol_skin_accent) hue(+180deg) lightness(99%) );
 
-	--mol_skin_warn: rgba(255, 0, 0, 0.51);
+	--mol_skin_warn: rgba( 255 , 0 , 0 , 0.5 );
 	--mol_skin_warn_text: white;
 
 	--mol_skin_good: #96DAA9;

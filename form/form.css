@@ -1,3 +1,7 @@
+[mol_form] {
+	margin: auto;
+}
+
 [mol_form_barFields] {
 	padding: 0 .5rem;
 	display: flex;
@@ -11,4 +15,8 @@
 [mol_form_barButtons] {
 	justify-content: center;
 	box-shadow: none;
+}
+
+[mol_form_barButtons] > * {
+	flex: 1 1 auto;
 }

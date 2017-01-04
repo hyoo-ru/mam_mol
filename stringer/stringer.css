@@ -15,6 +15,7 @@
 	width: 8em;
 	background: var(--mol_skin_passive);
 	color: var(--mol_skin_passive_text);
+	margin: auto;
 }
 
 [mol_stringer]:enabled {
@@ -26,9 +27,6 @@
 [mol_stringer]:focus {
 	outline: none;
 	box-shadow: 0 0 0 1px var(--mol_skin_focus);
-}
-
-[mol_stringer]:focus {
 	z-index: 1;
 }
 

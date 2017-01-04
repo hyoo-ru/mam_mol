@@ -6,7 +6,7 @@ $mol_perf_render $mol_viewer childs /
 		< runner $mol_clicker_major
 			childs / < runnerLabel @ \Run
 			eventClick > eventRun null
-	< contenter $mol_scroller childs / < lister $mol_lister rows < rows /
+	< contenter $mol_scroller childs / < lister $mol_lister rowers < rowers /
 
 $mol_perf_render_row $mol_viewer
 	> selected false

@@ -7,4 +7,4 @@ $mol_app_supplies_lister $mol_pager
 			hint < searcherHint @ \Search by bar code
 			value > searchQuery \
 		< bodier
-	body / < lister $mol_lister rows < supplyRows /
+	body / < lister $mol_lister rowers < supplyRows /

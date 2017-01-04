@@ -3,9 +3,10 @@
 	color: var(--mol_skin_base);
 	cursor: pointer;
 	border-radius: var(--mol_skin_round);
-	display: inline-block;
+	display: inline-flex;
 	padding: .5rem;
 	box-sizing: border-box;
+	align-items: baseline;
 }
 
 [mol_linker_current] {
@@ -13,8 +14,12 @@
 	cursor: default;
 }
 
-[mol_linker]:focus ,
 [mol_linker]:not([mol_linker_current]):hover {
+	background-color: var(--mol_skin_hover);
+	box-shadow: 0 0 0 1px var(--mol_skin_focus);
+}
+
+[mol_linker]:focus {
 	outline: none;
 	box-shadow: 0 0 0 1px var(--mol_skin_focus);
 }

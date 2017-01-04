@@ -6,7 +6,7 @@ namespace $.$mol {
 			return $mol_syntax_md_flow.tokenize( this.text() )
 		}
 		
-		rows() {
+		rowers() {
 			return this.tokensFlow().map( ( token , index )=> {
 				switch( token.name ) {
 					case 'table' : return this.tabler( index )

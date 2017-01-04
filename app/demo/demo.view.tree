@@ -1,14 +1,17 @@
 $mol_app_demo $mol_stacker
-	main / < lister $mol_scroller childs < items /
+	main / < detailer $mol_app_demo_pager
+		title < detailerTitle \
+		body /
+			< detailerRower $mol_rower
+				childs < samples /
 	addon / < menu $mol_pager
 		title < titleAddon @ \Demos
-		body / < optioner $mol_lister rows < options /
+		bodier < navigator $mol_app_demo_navigator
+			hierarchy < navigatorHierarchy null
+			record# < navigatorOption# null
 	welcomer $mol_scroller
 		childs / < welcomeTexter $mol_texter
 			text < welcomeText \
-	sample# $mol_viewer
-		childs /
-			< widget# null
 
 $mol_app_demo_pager $mol_pager
 	head /
@@ -16,3 +19,15 @@ $mol_app_demo_pager $mol_pager
 			childs / < backer_icon $mol_icon_chevron
 			arg < backArg * demo null
 		< titler
+
+$mol_app_demo_navigator $mol_grider
+	rowHeight 32
+	hierarchyColumn \title
+	header null
+	linker# $mol_linker
+		arg < arg# *
+		childs /
+			< expander# $mol_checker_expander
+				expanded > cellerExpanded#
+				level < cellerLevel#
+			< cellerContent#
