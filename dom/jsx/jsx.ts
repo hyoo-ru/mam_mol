@@ -126,9 +126,11 @@ namespace $ {
 		props : $mol_dom_make_config ,
 		...childNodes : Array< Node | string | $mol_dom_make_config >
 	) {
-		let config = props && { ...props } || {} as typeof props
-		if( !config.tagName ) config.tagName = tagName
-		if( !config.childNodes ) config.childNodes = childNodes
+		let config = {
+			tagName ,
+			childNodes : [].concat.apply( [] , childNodes ) ,
+			...props
+		}
 		
 		return $mol_dom_make( config )
 	}

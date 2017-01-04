@@ -36,14 +36,20 @@ namespace $ {
 					break
 				}
 				
+				let childPrev = el.childNodes[ i ] || null
 				let childNext = config.childNodes[ i ]
+				
 				if( typeof childNext === 'string' ) {
-					childNext = document.createTextNode( childNext )
+					if( childPrev instanceof Text ) {
+						childPrev.nodeValue = childNext
+						childNext = childPrev
+					} else {
+						childNext = document.createTextNode( childNext )
+					}
 				} else if(!( childNext instanceof Node )) {
 					childNext = $mol_dom_make( childNext )
 				}
 				
-				let childPrev = el.childNodes[ i ] || null
 				if( childNext !== childPrev ) {
 					el.insertBefore( childNext as Node , childPrev )
 				}
@@ -56,6 +62,7 @@ namespace $ {
 			switch( key ) {
 				case 'tagName' :
 				case 'namespaceURI' :
+				case 'childNodes' :
 					break 
 				default :
 					( el as any )[ key ] = config[ key ]

@@ -1,6 +1,6 @@
 $mol_carder $mol_lister
 	attr * mol_carder_status < status \
-	rows /
+	rowers /
 		< contenter $mol_viewer
 			childs /
 				< content null

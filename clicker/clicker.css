@@ -5,19 +5,21 @@
 	background: none;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
-	flex: 1 1 auto;
+	flex: 0 1 auto;
 	justify-content: center;
 	align-content: center;
 	align-items: center;
 	vertical-align: middle;
 	text-align: center;
 	padding: .5rem;
-	display: flex;
+	display: inline-flex;
 	text-decoration: inherit;
 	color: inherit;
-	cursor: default;
+	cursor: inherit;
 	opacity: .9;
 	position: relative;
+	box-sizing: border-box;
+	margin: auto;
 }
 
 [mol_clicker_button][disabled] {
@@ -39,7 +41,7 @@
 [mol_clicker]:not([disabled]):hover ,
 [mol_clicker]:focus {
 	outline: none;
-	z-index: 2;
+	z-index: 1;
 	cursor: pointer;
 	opacity: 1;
 	box-shadow: 0 0 0 1px var(--mol_skin_focus);

@@ -4,7 +4,7 @@ namespace $.$mol {
 		@ $mol_mem()
 		records() {
 			return $mol_range_in( {
-				length : 10000 ,
+				length : 1000 ,
 				item : index => {
 					return $mol_range_in( {
 						length : 15 ,

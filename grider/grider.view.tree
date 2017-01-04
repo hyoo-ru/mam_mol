@@ -4,7 +4,10 @@ $mol_grider $mol_scroller
 	cols /
 	records /
 	record# null
-	hierarhyColumn \
+	hierarchy null
+	hierarchyColumn \
+	fieldId \
+	fieldParent \
 	-
 	childs /
 		< tabler $mol_viewer
@@ -30,10 +33,10 @@ $mol_grider $mol_scroller
 		childs / < cellerContentNumber# < cellerContent# /
 	columnHeader# $mol_floater
 		childs / < columnHeaderContent# /
-	cellerBranch# $mol_grider_branch
-		level < rowLevel# 0
-		content < cellerContent# /
-		expanded > rowExpanded# false
+	cellerBranch# $mol_checker_expander
+		level < cellerLevel# 0
+		label < cellerContent# /
+		expanded > cellerExpanded# false
 
 $mol_grider_gaper $mol_viewer
 	height 0
@@ -49,11 +52,3 @@ $mol_grider_celler $mol_viewer
 	tagName \td
 
 $mol_grider_number $mol_grider_celler
-
-$mol_grider_branch $mol_checker_expander
-	tagName \div
-	level 0
-	field * style.paddingLeft < levelStyle \0px
-	checked > expanded false
-	enabled < expandable false
-	label < content /

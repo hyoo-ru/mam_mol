@@ -1,5 +1,5 @@
 [mol_stacker] {
-	position: absolute;
+	position: relative;
 	left: 0;
 	top: 0;
 	right: 0;
@@ -13,25 +13,24 @@
 	align-content: flex-start;
 	overflow: hidden;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	margin: 0;
 }
 
 [mol_stacker_mainer] {
 	height: 100%;
-	margin-left: -150%;
-	margin-bottom: -100vh;
+	margin: 0 0 -100vh -150%;
 	position: relative;
 	z-index: 1;
 	display: flex;
 	background: var(--mol_skin_light);
-	flex: 1000 1 50%;
+	flex: 1000 1 640px;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	max-width: 100%;
 }
 
 [mol_stacker_addoner] {
 	height: 100%;
-	margin-right: 150%;
-	margin-bottom: -100vh;
+	margin: 0 150% -100vh 0;
 	position: relative;
 	background: var(--mol_skin_light);
 	flex: 1 1 auto;

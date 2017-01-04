@@ -11,7 +11,6 @@
 [mol_suggester_lister] {
 	margin-top: 1px;
 	border-radius: var(--mol_skin_round);
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	min-height: 0px;
 	position: absolute;
 	color: var(--mol_skin_light_text);
@@ -25,6 +24,7 @@
 [mol_suggester_rower] {
 	justify-content: flex-start;
 	border-radius: var(--mol_skin_round);
+	margin: 0;
 }
 
 [mol_suggester_rower] + [mol_suggester_rower] {
@@ -34,4 +34,5 @@
 [mol_suggester_rower]:hover ,
 [mol_suggester_rower][mol_suggester_selected] {
 	box-shadow: 0 0 0 1px var(--mol_skin_focus);
+	z-index: 1;
 }

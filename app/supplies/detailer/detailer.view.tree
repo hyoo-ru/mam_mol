@@ -8,7 +8,7 @@ $mol_app_supplies_detailer $mol_pager
 				side \
 				supply null
 		< titler
-	body / < lister $mol_lister rows / < contenter $mol_lister rows < content /
+	body / < lister $mol_lister rowers / < contenter $mol_lister rowers < content /
 		< descrCarder $mol_carder content < descrDecker $mol_decker items /
 			< orgItem $mol_decker_item
 				title < orgLabel @ \Organization

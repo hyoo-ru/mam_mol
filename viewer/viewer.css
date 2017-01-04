@@ -1,5 +1,5 @@
 [mol_viewer] {
-	transition: all .25s;
+	transition: all .25s ease-in;
 }
 
 [mol_viewer_root] {
@@ -9,11 +9,6 @@
 	height: 100%;
 	font: var(--mol_skin_font);
 }
-
-/*body[mol_viewer_root] {*/
-	/*position: fixed;*/
-/*}*/
-
 
 [mol_viewer_error] {
 	background-image: repeating-linear-gradient(

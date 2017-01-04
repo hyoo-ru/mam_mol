@@ -1,22 +1,22 @@
-$mol_clicker_demo $mol_rower childs /
-	< major $mol_clicker_major
-		childs / < majorLabel @ \Click me!
-		eventClick > events null
-	< majorDisabled $mol_clicker_major
-		childs / < majorLabel @ \Click me!
-		disabled true
-		eventClick > events null
-	< minor $mol_clicker_minor
-		childs / < minorLabel @ \Or click me..
-		eventClick > events null
-	< minorDisabled $mol_clicker_minor
-		childs / < minorLabel @ \Or click me..
-		disabled true
-		eventClick > events null
-	< danger $mol_clicker_danger
-		childs / < dangerLabel @ \Be attentive!
-		eventClick > events null
-	< dangerDisabled $mol_clicker_danger
-		childs / < dangerLabel @ \Be attentive!
-		disabled true
-		eventClick > events null
+$mol_clicker_demo_major_enabled $mol_clicker_major
+	childs / < label @ \Click me!
+
+$mol_clicker_demo_minor_enabled $mol_clicker_minor
+	childs / < label @ \Or click me..
+
+
+$mol_clicker_demo_major_disabled $mol_clicker_major
+	childs / < label @ \Click me!
+	enabled false
+
+$mol_clicker_demo_minor_disabled $mol_clicker_minor
+	childs / < label @ \Or click me..
+	enabled false
+
+
+$mol_clicker_demo_danger_enabled $mol_clicker_danger
+	childs / < label @ \Be attentive!
+
+$mol_clicker_demo_danger_disabled $mol_clicker_danger
+	childs / < label @ \Be attentive!
+	enabled false

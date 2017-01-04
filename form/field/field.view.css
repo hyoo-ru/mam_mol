@@ -24,3 +24,7 @@
 [mol_form_field_errorer]:not(:empty):after {
 	content: ')';
 }
+
+[mol_form_field] > * {
+	margin: 0;
+}

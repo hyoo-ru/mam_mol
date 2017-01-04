@@ -16,17 +16,17 @@ namespace $.$mol {
 			const next : { [ sample : string ] : { [ step : string ] : any } } = {}
 			
 			const keys = Object.keys( prev )
-			keys.sort( ( a , b )=> this.resultNumber({ row : a , col }) - this.resultNumber({ row : b , col }) )
+			keys.sort( ( a , b )=> this.resultNumber({ row : [ '' , a ] , col }) - this.resultNumber({ row : [ '' , b ] , col }) )
 			keys.forEach( row => next[ row ] = prev[ row ] )
 			
 			return next
 		}
 		
-		resultValue( id : { row : string , col : string } ) {
-			return this.results()[ id.row ][ id.col ]
+		resultValue( id : { row : string[] , col : string } ) {
+			return this.results()[ id.row[ id.row.length - 1 ] ][ id.col ]
 		}
 		
-		resultNumber( id : { row : string , col : string } ) {
+		resultNumber( id : { row : string[] , col : string } ) {
 			return parseInt( this.resultValue( id ) , 10 )
 		}
 		
@@ -34,16 +34,16 @@ namespace $.$mol {
 		resultMaxValue( col : string ) {
 			let max = 0
 			
-			const results = this.results()
-			for( let sample in results ) {
-				const numb = this.resultNumber({ row : sample , col })
+			const rows = this.rows()
+			rows.forEach( row => {
+				const numb = this.resultNumber({ row , col })
 				if( numb > max ) max = numb
-			}
+			} )
 			
 			return max
 		}
 		
-		resultPortion( id : { row : string , col : string } ) {
+		resultPortion( id : { row : string[] , col : string } ) {
 			return this.resultNumber( id ) / this.resultMaxValue( id.col )
 		}
 		
@@ -57,15 +57,16 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		colType( col : string ) {
-			if( col === this.hierarhyColumn() ) return 'branch'
+			if( col === this.hierarchyColumn() ) return 'branch'
 			
-			const val = this.record( this.row(0) )[ col ]
+			const rowFirst = this.row(0)
+			const val = this.record( rowFirst[ rowFirst.length - 1 ] )[ col ]
 			if( !isNaN( parseFloat( val ) ) ) return 'number'
 			
 			return 'text'
 		}
 		
-		cellerContentNumber( id : { row : string , col : string } ) {
+		cellerContentNumber( id : { row : string[] , col : string } ) {
 			return [
 				this.resultValue( id ) ,
 				( this.colSort() === id.col )
