@@ -18,7 +18,6 @@
 	cursor: default;
 	opacity: .9;
 	position: relative;
-	transition: box-shadow .25s, background .25s;
 }
 
 [mol_clicker_button][disabled] {

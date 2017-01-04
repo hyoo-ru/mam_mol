@@ -19,7 +19,6 @@
 	height: 100%;
 	margin-left: -150%;
 	margin-bottom: -100vh;
-	transition: .25s ease margin;
 	position: relative;
 	z-index: 1;
 	display: flex;
@@ -33,7 +32,6 @@
 	height: 100%;
 	margin-right: 150%;
 	margin-bottom: -100vh;
-	transition: .25s ease margin;
 	position: relative;
 	background: var(--mol_skin_light);
 	flex: 1 1 auto;

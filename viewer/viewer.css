@@ -1,3 +1,7 @@
+[mol_viewer] {
+	transition: all .25s;
+}
+
 [mol_viewer_root] {
 	margin: 0;
 	padding: 0;
