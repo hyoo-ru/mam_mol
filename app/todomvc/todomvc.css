@@ -91,7 +91,6 @@
 
 [mol_app_todomvc_tasker_titler] {
 	padding: 0;
-	transition: all 0.4s;
 }
 
 [mol_app_todomvc_tasker_completed] [mol_app_todomvc_tasker_titler] {
@@ -106,7 +105,6 @@
 [mol_app_todomvc_tasker]:not(:hover) [mol_app_todomvc_tasker_dropper]:not(:focus) {
 	opacity: 0;
 	color: #cc9a9a;
-	transition: all 0.2s ease-out;
 }
 
 [mol_app_todomvc_footer] {
@@ -145,4 +143,3 @@
 [mol_app_todomvc_sanitizer]:focus {
 	text-decoration: underline;
 }
-
