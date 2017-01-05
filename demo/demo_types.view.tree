@@ -1,3 +1,5 @@
 $mol_demo_small $mol_demo
+	heightMinimal 240
+	widthMinimal 440
 $mol_demo_medium $mol_demo
 $mol_demo_large $mol_demo

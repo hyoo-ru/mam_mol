@@ -1,3 +1,6 @@
-$mol_carder_demo $mol_carder
-	content $mol_rower_demo
+$mol_carder_demo_status $mol_carder
+	content $mol_rower childs / \Hello pending!
 	status \pending
+
+$mol_carder_demo_hello $mol_carder
+	content $mol_rower childs / \Hello world!

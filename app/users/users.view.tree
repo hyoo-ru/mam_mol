@@ -2,7 +2,7 @@ $mol_app_users $mol_viewer childs /
 	<= filter $mol_stringer
 		hint <= filterHint @ \Search users on GitHub
 		value <=> query \
-	<= bodier $mol_scroller childs <= body / <= lister $mol_lister rows <= userRows /
+	<= bodier $mol_scroller childs <= body / <= lister $mol_lister rowers <= userRows /
 	<= controller $mol_rower childs /
 		<= reloader $mol_clicker_minor
 			childs / <= reloadLabel @ \Reload

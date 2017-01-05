@@ -3,7 +3,7 @@ $mol_app_todomvc $mol_scroller
 		<= titler $mol_viewer
 			heightMinimal 142
 			childs / <= title @ \todos
-		<= paneler $mol_lister rows <= panels /
+		<= paneler $mol_lister rowers <= panels /
 			<= header $mol_viewer
 				heightMinimal 64
 				childs <= headerContent /
@@ -14,7 +14,7 @@ $mol_app_todomvc $mol_scroller
 					<= adder $mol_app_todomvc_adder
 						value <=> taskNewTitle \
 						eventDone <=> eventAdd null
-			<= lister $mol_lister rows <= taskers /
+			<= lister $mol_lister rowers <= taskers /
 			<= footer $mol_viewer
 				childs <= footerContent /
 					<= pendinger $mol_viewer childs / <= pendingMessage @ \0 items left 

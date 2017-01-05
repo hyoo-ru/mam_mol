@@ -1,3 +1,9 @@
+[mol_grider] {
+	display: block;
+	flex: 0 1 auto;
+	margin: auto;
+}
+
 [mol_grider_tabler] {
 	border-spacing: 0;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
@@ -5,11 +11,15 @@
 }
 
 [mol_grider_tabler] > * {
-	display: table-row;
+	display: table-row !important;
+	transition: none;
 }
 
 [mol_grider_tabler] > * > * {
-	display: table-cell;
+	display: table-cell !important;
+}
+
+[mol_grider_tabler] > * > * {
 	padding: 0 1rem;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -30,10 +40,4 @@
 
 [mol_grider_number] {
 	text-align: right;
-}
-
-[mol_grider_branch] {
-	text-align: left;
-	/*width: 100%;*/
-	/*height: 100%;*/
 }

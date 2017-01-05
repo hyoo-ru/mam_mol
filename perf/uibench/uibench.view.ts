@@ -40,12 +40,12 @@ namespace $.$mol {
 			return { items : <any[]>[] }
 		}
 		
-		rows() {
-			return this.state().items.map( ( v : any , i : number )=> this.row( i ) )
+		rowers() {
+			return this.state().items.map( ( v : any , i : number )=> this.rower( i ) )
 		}
 
 		@ $mol_mem_key()
-		row( id : number ) {
+		rower( id : number ) {
 			return new $mol_perf_uibench_table_row().setup( obj => {
 				obj.state = ()=> this.state().items[ id ] || []
 			} )

@@ -3,8 +3,8 @@ $mol_decker_demo $mol_decker items /
 		title <= stringerLabel @ \String fields
 		content <= stringerContent $mol_stringer_demo
 	<= clickerItem $mol_decker_item
-		title <= buttonsLabel @ \Buttons
-		content <= clickerContent $mol_clicker_demo
+		title <= buttonsLabel @ \Button
+		content <= clickerContent $mol_clicker_demo_major_enabled
 	<= checkerItem $mol_decker_item
-		title <= checkerLabel @ \Check boxes
-		content <= checkerContent $mol_checker_ticker_demo
+		title <= checkerLabel @ \Check box
+		content <= checkerContent $mol_checker_ticker_demo_labeled_base

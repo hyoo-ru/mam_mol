@@ -2,10 +2,12 @@ namespace $ {
 	
 	export interface $mol_viewer_context {
 		$mol_scroller_scrollTop() : number
+		$mol_scroller_scrollLeft() : number
 		$mol_scroller_moving() : boolean
 	}
-	
+
 	$mol_viewer_context.$mol_scroller_scrollTop = () => 0
+	$mol_viewer_context.$mol_scroller_scrollLeft = () => 0
 	$mol_viewer_context.$mol_scroller_moving = () => false
 	
 }
@@ -55,9 +57,20 @@ namespace $.$mol {
 
 		@ $mol_mem()
 		contextSub( ) {
-			const subContext : $mol_viewer_context = Object.create( this.context() )
-			subContext.$mol_viewer_heightLimit = ()=> this.context().$mol_viewer_heightLimit() + this.scrollTop()
+			const context = this.context()
+			const subContext : $mol_viewer_context = Object.create( context )
+			subContext.$mol_viewer_visibleHeight = ()=> {
+				const sizeWin = $mol_window.size()
+				const limit = context.$mol_viewer_visibleHeight()
+				return this.scrollTop() + Math.min( sizeWin.height , limit )
+			}
+			subContext.$mol_viewer_visibleWidth = ()=> {
+				const sizeWin = $mol_window.size()
+				const limit = context.$mol_viewer_visibleWidth()
+				return this.scrollLeft() + Math.min( sizeWin.width , limit )
+			}
 			subContext.$mol_scroller_scrollTop = ()=> this.scrollTop()
+			subContext.$mol_scroller_scrollLeft = ()=> this.scrollLeft()
 			subContext.$mol_scroller_moving = ()=> this.moving()
 			return subContext
 		}

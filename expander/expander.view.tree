@@ -1,5 +1,5 @@
 $mol_expander $mol_lister
-	rows /
+	rowers /
 		<= labeler $mol_checker_expander
 			checked <=> expanded false
 			label <= label /

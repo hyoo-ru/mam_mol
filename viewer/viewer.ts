@@ -1,12 +1,14 @@
 namespace $ {
 	
-	export var $mol_viewer_context = <$mol_viewer_context> {}
+	export let $mol_viewer_context = <$mol_viewer_context> {}
 	
 	export interface $mol_viewer_context {
-		$mol_viewer_heightLimit() : number
+		$mol_viewer_visibleWidth() : number
+		$mol_viewer_visibleHeight() : number
 	}
 	
-	$mol_viewer_context.$mol_viewer_heightLimit = () => $mol_window.size().height
+	$mol_viewer_context.$mol_viewer_visibleWidth = () => $mol_window.size().width
+	$mol_viewer_context.$mol_viewer_visibleHeight = () => $mol_window.size().height
 
 	/// Reactive statefull lazy ViewModel 
 	export class $mol_viewer extends $mol_object {
@@ -71,6 +73,11 @@ namespace $ {
 		
 		/// Minimal height that used for lazy rendering
 		heightMinimal() {
+			return 0
+		}
+		
+		/// Minimal width that used for lazy rendering
+		widthMinimal() {
 			return 0
 		}
 		

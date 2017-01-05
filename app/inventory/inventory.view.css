@@ -8,6 +8,7 @@
 
 [mol_app_inventory_header] {
 	flex: 0 0 auto;
+	margin: 0;
 	background: var(--mol_skin_base);
 	color: var(--mol_skin_base_text);
 }

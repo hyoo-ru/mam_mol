@@ -46,3 +46,7 @@
 	text-align: right;
 	margin: 0;
 }
+
+[mol_app_supplies_detailer_controller] {
+	padding: 0;
+}

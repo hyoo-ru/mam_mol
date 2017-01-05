@@ -24,6 +24,7 @@
 	display: block;
 	padding: .5rem 0;
 	font-weight: 500;
+	margin: 0;
 }
 
 [mol_texter_header_level="1"] {
@@ -58,7 +59,7 @@
 	max-width: 100%;
 	max-height: 50vh;
 	overflow: auto;
-	margin: .5rem 0;
+	margin: .5rem auto .5rem 0;
 	flex-grow: 0;
 }
 

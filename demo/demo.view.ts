@@ -3,8 +3,12 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		widget() {
-			var Class : typeof $mol_viewer = (<any>$)[ this.name() ]
+			var Class : typeof $mol_viewer = (<any>$)[ `$${ this.name() }` ]
 			return new Class()
+		}
+		
+		title() {
+			return `$${ this.name() }`
 		}
 		
 	}

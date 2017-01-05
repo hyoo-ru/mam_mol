@@ -13,7 +13,7 @@ $mol_app_bench $mol_stacker
 	addon / <= addonPage $mol_pager
 		title <= addonerTitle @ \Samples
 		body / <= menu $mol_lister
-			rows <= menuOptions /
+			rowers <= menuOptions /
 	menuOptioner# $mol_checker_ticker
 		heightMinimal 36
 		checked <=> menuOptionerChecked# false

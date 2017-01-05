@@ -1,6 +1,6 @@
 $mol_decker $mol_lister
 	items /
-	rows /
+	rowers /
 		<= switcher $mol_switcher
 			value <=> current \0
 			options <= switcherOptions *

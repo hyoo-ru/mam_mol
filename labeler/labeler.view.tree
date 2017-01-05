@@ -1,4 +1,5 @@
 $mol_labeler $mol_viewer
+	tagName \label
 	childs /
 		<= titler $mol_viewer
 			childs /

@@ -8,7 +8,6 @@ $mol_perf_uibench_table $mol_lister
 	state null
 	tagName \table
 	attr * class \Table
-	childs <= rows /
 
 $mol_perf_uibench_table_row $mol_viewer
 	state null

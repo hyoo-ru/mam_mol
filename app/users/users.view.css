@@ -1,12 +1,11 @@
 [mol_app_users] {
-	max-width: 30rem;
+	max-width: 28rem;
 	max-height: 100%;
 	width: 100%;
 	margin: auto;
 	background: var(--mol_skin_light);
 	display: flex;
 	flex-direction: column;
-	padding: 1rem;
 	box-sizing: border-box;
 }
 
@@ -37,6 +36,7 @@
 [mol_app_users_controller] {
 	background: var(--mol_skin_light);
 	flex: 0 0 auto;
+	margin: 0;
 }
 
 [mol_app_users_messager] {
