@@ -44,7 +44,7 @@ $mol_app_supplies_detailer $mol_pager
 			head <= attachTitle @ \Attachments
 			content <= attacher $mol_attacher
 				items <= attachments /
-				attachNew <=> attachNew null
+				attachNew?val <=> attachNew?val null
 		<= posLister $mol_sectioner
 			head <= posListerHead /
 				<= positionsTitle @ \Positions
@@ -53,5 +53,5 @@ $mol_app_supplies_detailer $mol_pager
 					content <= coster $mol_coster value <= cost $mol_unit_money valueOf 0
 			content <= positions /
 	foot / <= controller $mol_rower childs <= tools / <= approver $mol_checker_ticker
-		checked <=> approved false
+		checked?val <=> approved?val false
 		label / <= approvedLabel @ \Approved

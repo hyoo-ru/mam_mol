@@ -8,7 +8,7 @@ $mol_app_demo $mol_stacker
 		title <= titleAddon @ \Demos
 		bodier <= navigator $mol_app_demo_navigator
 			hierarchy <= navigatorHierarchy null
-			record# <= navigatorOption# null
+			record!id <= navigatorOption!id null
 	welcomer $mol_scroller
 		childs / <= welcomeTexter $mol_texter
 			text <= welcomeText \
@@ -24,10 +24,10 @@ $mol_app_demo_navigator $mol_grider
 	rowHeight 32
 	hierarchyColumn \title
 	header null
-	linker# $mol_linker
-		arg <= arg# *
+	linker!id $mol_linker
+		arg <= arg!id *
 		childs /
-			<= expander# $mol_checker_expander
-				expanded <=> cellerExpanded#
-				level <= cellerLevel#
-			<= cellerContent#
+			<= expander!id $mol_checker_expander
+				expanded?val <=> cellerExpanded!id?val
+				level <= cellerLevel!id
+			<= cellerContent!id

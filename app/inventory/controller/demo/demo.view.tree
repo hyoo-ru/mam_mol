@@ -3,10 +3,10 @@ $mol_app_inventory_controller_demo $mol_app_inventory_controller
 		<= positioner1 $mol_app_inventory_positioner
 			title <= title1 @ \Notebook
 			description <= description1 @ \Fast, compact and lightweight
-			count <=> count1 1
-			status <=> status1 \pending
+			count?val <=> count1?val 1
+			status?val <=> status1?val \pending
 		<= positioner2 $mol_app_inventory_positioner
 			title <= title2 @ \Mouse
 			description <= description2 @ \Laser 1000dpi!!!
-			count <=> count2 10
-			status <=> status2 \approved
+			count?val <=> count2?val 10
+			status?val <=> status2?val \approved

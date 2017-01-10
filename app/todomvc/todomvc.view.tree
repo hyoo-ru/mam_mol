@@ -9,11 +9,11 @@ $mol_app_todomvc $mol_scroller
 				childs <= headerContent /
 					<= allCompleter $mol_checker
 						enabled <= allCompleterEnabled false
-						checked <=> allCompleted false
+						checked?val <=> allCompleted?val false
 						childs / \❯
 					<= adder $mol_app_todomvc_adder
-						value <=> taskNewTitle \
-						eventDone <=> eventAdd null
+						value?val <=> taskNewTitle?val \
+						eventDone?event <=> eventAdd?event null
 			<= lister $mol_lister rowers <= taskers /
 			<= footer $mol_viewer
 				childs <= footerContent /
@@ -30,28 +30,28 @@ $mol_app_todomvc $mol_scroller
 							arg * completed true
 					<= sanitizer $mol_clicker_minor
 						enabled <= sanitizerEnabled true
-						eventClick <= eventSanitize null
+						eventClick?event <=> eventSanitize?event null
 						childs / <= sanitizerLabel @ \Clear completed
-	tasker# $mol_app_todomvc_tasker
-		completed <=> taskCompleted# false
-		title <=> taskTitle# \
-		eventDrop <=> eventTaskDrop# null
+	tasker!id $mol_app_todomvc_tasker
+		completed?val <=> taskCompleted!id?val false
+		title?val <=> taskTitle!id?val \
+		eventDrop?event <=> eventTaskDrop!id?event null
 
 $mol_app_todomvc_adder $mol_stringer
 	hint @ \What needs to be done?
-	event * keyup <=> eventPress null
-	<=> eventDone null
+	event * keyup?event <=> eventPress?event null
+	eventDone?event null
 
 $mol_app_todomvc_tasker $mol_viewer
 	heightMinimal 64
 	childs /
 		<= completer $mol_checker
-			checked <=> completed false
+			checked?val <=> completed?val false
 			childs /
 		<= titler $mol_stringer
 			hint <= titleHint @ \Task title
-			value <=> title \
+			value?val <=> title?val \
 		<= dropper $mol_clicker
 			childs / \✖
-			eventClick <=> eventDrop null
+			eventClick?event <=> eventDrop?event null
 	attr * mol_app_todomvc_tasker_completed <= completed

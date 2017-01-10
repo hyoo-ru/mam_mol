@@ -5,6 +5,6 @@ $mol_app_habhub $mol_pager
 			status <= gisters /
 		<= lister $mol_lister
 			rowers <= gisters /
-	gister# $mol_texter
-		text <= gistContent# \
+	gister!id $mol_texter
+		text <= gistContent!id \
 	footer null

@@ -4,13 +4,14 @@ $mol_perf_render $mol_viewer childs /
 			tagName \h2
 			childs / <= title \$mol
 		<= runner $mol_clicker_major
+			tagName \button
 			childs / <= runnerLabel @ \Run
-			eventClick <=> eventRun null
+			eventClick?val <=> eventRun?val null
 	<= contenter $mol_scroller childs / <= lister $mol_lister rowers <= rowers /
 
 $mol_perf_render_row $mol_viewer
-	<=> selected false
+	selected?val false
 	heightMinimal 24
 	attr * mol_perf_render_row_selected <= selected
-	event * click <=> eventToggle null
+	event * click?val <=> eventToggle?val null
 	childs / <= bar $mol_viewer childs / <= label \

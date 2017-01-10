@@ -2,7 +2,7 @@ $mol_app_hello $mol_viewer
 	childs /
 		<= namer $mol_stringer
 			hint <= namerHint \Name
-			value <=> name \
+			value?val <=> name?val \
 		<= greeter $mol_viewer
 			childs /
 				<= greeting \

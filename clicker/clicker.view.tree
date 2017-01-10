@@ -1,6 +1,6 @@
 $mol_clicker $mol_viewer
 	enabled true
-	event * click <=> eventActivate <=> eventClick null
+	event * click?event <=> eventActivate?event <=> eventClick?event null
 	attr *
 		disabled <= disabled false
 		role \button

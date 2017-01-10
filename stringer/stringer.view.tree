@@ -3,8 +3,8 @@ $mol_stringer $mol_viewer
 	enabled true
 	attr *
 		placeholder <= hint \
-		type <= type \text
+		type <= type?val \text
 	field *
 		disabled <= disabled false
-		value <= valueChanged <=> value \
-	event * input <=> eventChange null
+		value <= valueChanged?val <=> value?val \
+	event * input?event <=> eventChange?event null

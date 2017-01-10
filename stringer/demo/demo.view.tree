@@ -1,10 +1,10 @@
 $mol_stringer_demo $mol_rower childs /
 	<= one $mol_stringer
-		value <=> name \
+		value?val <=> name?val \
 	<= two $mol_stringer
-		value <=> name \
+		value?val <=> name?val \
 		hint <= twoHint @ \Batman
 	<= three $mol_stringer
-		value <=> name \
+		value?val <=> name?val \
 		hint <= threeHint @ \Jocker
 		disabled true

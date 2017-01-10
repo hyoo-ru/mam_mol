@@ -14,4 +14,4 @@ $mol_suggester_demo $mol_rower childs /
 			<= suggest5 @ \Nataliya
 	<= three $mol_suggester
 		suggests <= threeSuggests /
-		value <=> threeCode \
+		value?val <=> threeCode?val \

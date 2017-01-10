@@ -7,17 +7,17 @@ $mol_app_bench $mol_stacker
 					text <= description \
 				<= resulter $mol_bencher
 					results <= results null
-					columnHeaderLabel# <= columnHeaderLabel# / 
-					colSort <=> resultsColSort \
+					columnHeaderLabel!id <= columnHeaderLabel!id / 
+					colSort?val <=> resultsColSort?val \
 			<= tester $mol_app_bench_tester
 	addon / <= addonPage $mol_pager
 		title <= addonerTitle @ \Samples
 		body / <= menu $mol_lister
 			rowers <= menuOptions /
-	menuOptioner# $mol_checker_ticker
+	menuOptioner!id $mol_checker_ticker
 		heightMinimal 36
-		checked <=> menuOptionerChecked# false
-		label / <= menuOptionerTitle# \
+		checked?val <=> menuOptionerChecked!id?val false
+		label / <= menuOptionerTitle!id \
 	columnHeaderLabelSample @ \Sample
 
 $mol_app_bench_tester $mol_viewer

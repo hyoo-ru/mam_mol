@@ -5,6 +5,6 @@ $mol_app_supplies_lister $mol_pager
 		<= header
 		<= searchPanel $mol_rower childs / <= searcher $mol_coder
 			hint <= searcherHint @ \Search by bar code
-			value <=> searchQuery \
+			value?val <=> searchQuery?val \
 		<= bodier
 	body / <= lister $mol_lister rowers <= supplyRows /

@@ -1,26 +1,26 @@
 $mol_app_users $mol_viewer childs /
 	<= filter $mol_stringer
 		hint <= filterHint @ \Search users on GitHub
-		value <=> query \
+		value?val <=> query?val \
 	<= bodier $mol_scroller childs <= body / <= lister $mol_lister rowers <= userRows /
 	<= controller $mol_rower childs /
 		<= reloader $mol_clicker_minor
 			childs / <= reloadLabel @ \Reload
-			eventClick <=> eventReload null
+			eventClick?val <=> eventReload?val null
 		<= adder $mol_clicker_minor
 			enabled <= loaded false 
 			childs / <= addLabel @ \Add
-			eventClick <=> eventAdd null
+			eventClick?val <=> eventAdd?val null
 		<= saver $mol_clicker_major
 			enabled <= changed false 
 			childs / <= saveLabel @ \Save
-			eventClick <=> eventSave null
+			eventClick?val <=> eventSave?val null
 		<= messager $mol_statuser status <= saverResult null
 
 $mol_app_users_item $mol_rower
 	heightMinimal 68
 	childs /
-		<= titler $mol_stringer value <=> title \
+		<= titler $mol_stringer value?val <=> title?val \
 		<= dropper $mol_clicker_minor
 			childs / <= dropLabel \Drop
-			eventClick <=> eventDrop null
+			eventClick?val <=> eventDrop?val null

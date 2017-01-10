@@ -1,7 +1,7 @@
 $mol_coder $mol_viewer childs /
 	<= manualer $mol_stringer
-		value <=> value \
+		value?val <=> value?val \
 		hint <= hint <= format \
 	<= scanner $mol_clicker
-		eventClick <=> eventScan null
+		eventClick?val <=> eventScan?val null
 		childs / <= labelScan @ \Scan

@@ -8,18 +8,18 @@ $mol_app_report $mol_pager
 				<= headRower $mol_app_report_rower
 					cells <= headCells /
 				<= rows /
-	rower# $mol_app_report_rower
-		cells <= rowerCells# /
-	celler# $mol_app_report_celler
-		content <= cellContent# null
-		rows <= cellRows# 1
-		cols <= cellCols# 1
-	texter# $mol_viewer
-		childs / <= cellValue# null
-	stringer# $mol_stringer
-		value <=> cellValue# null
-	number# $mol_number
-		value <=> cellValue# null
+	rower!id $mol_app_report_rower
+		cells <= rowerCells!id /
+	celler!id $mol_app_report_celler
+		content <= cellContent!id null
+		rows <= cellRows!id 1
+		cols <= cellCols!id 1
+	texter!id $mol_viewer
+		childs / <= cellValue!id null
+	stringer!id $mol_stringer
+		value?val <=> cellValue!id?val null
+	number!id $mol_number
+		value?val <=> cellValue!id?val null
 
 $mol_app_report_tabler $mol_viewer
 	tagName \table

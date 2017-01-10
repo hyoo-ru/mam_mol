@@ -6,7 +6,18 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 	var locales : { [ key : string ] : string } = {}
 	
 	function error( message : string , tree : $mol_tree ) {
-		return new Error( `${message}: ${tree} ${tree.baseUri}:${tree.row}:${tree.col}` )
+		return new Error( `${message}:\n${source( tree )} ${tree.baseUri}:${tree.row}:${tree.col}` )
+	}
+	
+	function source( root : $mol_tree ) : $mol_tree {
+		if( [ '<=>' , '<=' ].indexOf( root.type ) !== -1 ) {
+			return root.clone({
+				childs : root.childs.map( name => name.clone({
+					childs : []
+				}) )
+			})
+		}
+		return root.clone({ childs : root.childs.map( source ) })
 	}
 	
 	tree.childs.forEach( function( def : $mol_tree ) {
@@ -17,36 +28,33 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 		var members : { [ key : string ] : string } = {}
 		parent.childs.forEach( param => addProp( param ) )
 		
-		function addProp( param : $mol_tree ) {
+		function addProp( param : $mol_tree ) { try {
 			var needSet = false
 			var needReturn = true
 			var needCache = false
 			var isOverride = true
 			var keys : string[] = []
 
-			if( param.type === '>' ) {
-				throw new Error( `Deprecated syntax. Use <=> instead.\n${ source( param ) }${ param.uri }` )
-			}
-			if( param.type === '<' ) {
-				throw new Error( `Deprecated syntax. Use <= instead.\n${ source( param ) }${ param.uri }` )
-			}
-			
 			if( param.type === '<=>' ) {
-				needCache = true
-				needSet = true
 				isOverride = false
 				param = param.childs[0]
 			}
 
 			if( param.type === '<=' ) {
-				needCache = false
 				isOverride = false
 				param = param.childs[0]
 			}
 
+			var propName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( param.type )
+			
+			if( propName[3] ) {
+				needSet = true
+				needCache = true
+			}
+			
 			if( !param.type || param.type === '-' ) return
 			
-			function getValue( value : $mol_tree ) {
+			function getValue( value : $mol_tree ) { try {
 				switch( true ) {
 					case( value.type === '' ) :
 						return JSON.stringify( value.value )
@@ -68,12 +76,12 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 						var overs : string[] = []
 						value.childs.forEach( over => {
 							if( /^-?$/.test( over.type ) ) return ''
-							var overName = /(.*?)(#?)$/.exec( over.type )
+							var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )
 							var ns = needSet
 							var v = getValue( over.childs[0] )
 							let args : string[] = []
-							if( overName[2] ) args.push( ' key : any ' )
-							if( needSet ) args.push( ' next? : any ' )
+							if( overName[2] ) args.push( ` ${ overName[2] } : any ` )
+							if( overName[3] ) args.push( ` ${ overName[3] } : any ` )
 							overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
 							needSet = ns
 						} )
@@ -83,30 +91,33 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 						var opts : string[] = []
 						value.childs.forEach( opt => {
 							if( /^-?$/.test( opt.type ) ) return ''
-							keys.push( opt.type )
+							var key = /(.*?)(?:\?(\w+))?$/.exec( opt.type )
+							keys.push( key[1] )
 							var ns = needSet
 							var v = getValue( opt.childs[0] )
-							var arg = needSet ? ' next? : any ' : ''
-							opts.push( '\t\t\t"' + opt.type + '" : (' + arg + ')=> <any> ' + v + ' ,\n' )
+							var arg = key[2] ? ` ${ key[2] }? : any ` : ''
+							opts.push( '\t\t\t"' + key[1] + '" : (' + arg + ')=> <any> ' + v + ' ,\n' )
 							needSet = ns
 						} )
 						if( !isOverride ) return '({\n' + opts.join( '' ) + '\t\t})'
 						else return  `$`+`mol_merge_dict( super.${ param.type }() , {\n${ opts.join( '' )}\t\t} )`
 					case( value.type === '>' ) :
+						throw new Error( 'Deprecated syntax. Use <=> instead.' )
 					case( value.type === '<=>' ) :
 						needSet = true
 						if( value.childs.length === 1 ) {
 							addProp( value )
-							var type = /(.*?)(?:(#)(.*))?$/.exec( value.childs[0].type )
-							return 'this.' + type[1] + '(' + ( type[3] ? JSON.stringify( type[3] ) + ' ,' : type[2] ? ' key ,' : '' ) + ' next )'
+							var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))$/.exec( value.childs[0].type )
+							return 'this.' + type[1] + '(' + ( type[2] ? type[2] + ' ,' : '' ) + ' ' + type[3] + ' )'
 						}
 						break
 					case( value.type === '<' ) :
+						throw new Error( 'Deprecated syntax. Use <= instead.' )
 					case( value.type === '<=' ) :
 						if( value.childs.length === 1 ) {
 							addProp( value )
-							var type = /(.*?)(?:(#)(.*))?$/.exec( value.childs[0].type )
-							return 'this.' + type[1] + '(' + (  type[3] ? JSON.stringify( type[3] ) : type[2] ? ' key ' : '' ) + ')'
+							var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( value.childs[0].type )
+							return 'this.' + type[1] + '(' + (  type[2] ? type[2] : '' ) + ')'
 						}
 						break
 				}
@@ -122,17 +133,19 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 				if( Number( value.type ).toString() == value.type ) return value.type
 				
 				throw error( 'Wrong value' , value )
-			}
+			} catch ( err ) {
+				err.message += `\n${value.baseUri}:${value.row}:${value.col}\n${source( value )}`
+				throw err
+			} }
 			
-			if( param.childs.length > 1 ) throw error( 'Too more childs' , param )
+			if( param.childs.length > 1 ) throw new Error( 'Too more childs' )
 			
 			param.childs.forEach( child => {
 				var val = getValue( child )
-				var propName = /(.*?)(?:(#)(.*))?$/.exec( param.type )
 				var args : string[] = []
-				if( propName[2] ) args.push( ' key : any ' )
-				if( needCache || needSet ) args.push( ' next? : any ' )
-				if( needSet && param.childs[0].type !== '<=>' ) val = ( needReturn ? '( next !== void 0 ) ? next : ' : 'if( next !== void 0 ) return next\n\t\t' ) + val
+				if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
+				if( propName[3] ) args.push( ` ${ propName[3] }? : any ` )
+				if( needSet && param.childs[0].type !== '<=>' ) val = ( needReturn ? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : ` : `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t` ) + val
 				if( needReturn ) val = 'return ' + val
 				var decl = '\t' + propName[1] +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
 				if( needCache ) {
@@ -143,19 +156,11 @@ export function $mol_viewer_tree2ts( tree : $mol_tree ) {
 				members[ propName[1] ] = decl
 			} )
 			
-			function source( root : $mol_tree ) : $mol_tree {
-				if( [ '<=>' , '<=' ].indexOf( root.type ) !== -1 ) {
-					return root.clone({
-						childs : root.childs.map( name => name.clone({
-							childs : []
-						}) )
-					})
-				}
-				return root.clone({ childs : root.childs.map( source ) })
-			}
-			
 			return needSet
-		}
+		} catch ( err ) {
+			err.message += `\n${param.baseUri}:${param.row}:${param.col}\n${source( param )}`
+			throw err
+		} }
 		
 		var body = Object.keys( members ).map( function( name ) {
 			return members[ name ] || '\t' + name +'() { return <any>null }\n\t}\n'
