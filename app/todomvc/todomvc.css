@@ -143,3 +143,9 @@
 [mol_app_todomvc_sanitizer]:focus {
 	text-decoration: underline;
 }
+
+[mol_app_todomvc_adderbutton] {
+	display: inline-flex;
+	flex-basis: 64px;
+	opacity: .5;
+}
