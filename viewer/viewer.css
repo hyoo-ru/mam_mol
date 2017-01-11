@@ -1,5 +1,6 @@
 [mol_viewer] {
 	transition: all .25s ease-in;
+	-webkit-appearance: none;
 }
 
 [mol_viewer_root] {
