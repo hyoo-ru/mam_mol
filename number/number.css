@@ -37,7 +37,6 @@
 
 [mol_number]:hover > [mol_number_clicker] {
 	opacity: 1;
-	transition: opacity .2s .5s ease-out;
 }
 
 [mol_number_decrementer] {

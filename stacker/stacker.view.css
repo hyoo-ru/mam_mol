@@ -19,7 +19,6 @@
 [mol_stacker_mainer] {
 	height: 100%;
 	margin: 0 0 -100vh -150%;
-	transition: .25s ease margin;
 	position: relative;
 	z-index: 1;
 	display: flex;
@@ -32,7 +31,6 @@
 [mol_stacker_addoner] {
 	height: 100%;
 	margin: 0 150% -100vh 0;
-	transition: .25s ease margin;
 	position: relative;
 	background: var(--mol_skin_light);
 	flex: 1 1 auto;
