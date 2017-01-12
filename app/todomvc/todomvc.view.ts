@@ -8,8 +8,8 @@ namespace $.$mol {
 	export class $mol_app_todomvc_adder extends $.$mol_app_todomvc_adder {
 		
 		eventPress( next? : KeyboardEvent ) {
-			switch( next['code'] || next.key ) {
-				case 'Enter' : return this.eventDone( next )
+			switch( next.keyCode ) {
+				case $mol_keyboard_code.enter : return this.eventDone( next )
 			}
 		}
 		
