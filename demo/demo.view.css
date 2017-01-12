@@ -34,9 +34,6 @@
 [mol_demo_large] {
 	flex: 1 1 100%;
 	align-self: stretch;
-	height: 100%;
-	top: 0;
-	left: 0;
 }
 
 [mol_demo_medium] {
