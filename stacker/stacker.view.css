@@ -18,7 +18,7 @@
 
 [mol_stacker_mainer] {
 	height: 100%;
-	margin: 0 0 -100vh 150%;
+	margin: 0 0 -100vh -150%;
 	position: relative;
 	z-index: 1;
 	display: flex;
