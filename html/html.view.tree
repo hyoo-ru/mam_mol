@@ -3,17 +3,17 @@ $mol_html_body $mol_viewer tagName \body
 
 $mol_html_title $mol_viewer
 	tagName \title
-	childs / < title \
+	childs / <= title \
 
 $mol_html_meta $mol_viewer
 	tagName \meta
 	attr *
-		name < name \
-		content < content \
-		charset < charset \utf-8
+		name <= name \
+		content <= content \
+		charset <= charset \utf-8
 
 $mol_html_link $mol_viewer
 	tagName \link
 	attr *
-		rel < rel \
-		href < href \
+		rel <= rel \
+		href <= href \

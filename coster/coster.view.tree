@@ -1,6 +1,6 @@
 $mol_coster $mol_viewer
 	value null
 	childs /
-		< prefixer $mol_viewer childs / < prefix \
-		< mainer $mol_viewer childs / < valueView \
-		< postfixer $mol_viewer childs / < postfix \
+		<= prefixer $mol_viewer childs / <= prefix \
+		<= mainer $mol_viewer childs / <= valueView \
+		<= postfixer $mol_viewer childs / <= postfix \

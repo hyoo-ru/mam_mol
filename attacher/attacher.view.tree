@@ -1,27 +1,27 @@
-$mol_attacher $mol_carder contenter $mol_tiler items < content /
-	> items /
-	< adder $mol_attacher_adder fileNew > attachNew \
+$mol_attacher $mol_carder contenter $mol_tiler items <= content /
+	<= items?val /
+	<= adder $mol_attacher_adder fileNew?val <=> attachNew?val \
 
 $mol_attacher_item $mol_linker
-	> urlThumb \
-	uri > urlLoad \
-	field * style.backgroundImage < styleBG \
-	attr * download < loadable true
+	urlThumb?val \
+	uri?val <=> urlLoad?val \
+	field * style.backgroundImage <= styleBG \
+	attr * download <= loadable true
 
 $mol_attacher_adder $mol_clicker
 	tagName \div
-	fileNew \
+	fileNew?val \
 	childs /
-		< icon $mol_icon_attach
-		< input $mol_attacher_adder_input
-			eventCapture > eventCapture null
-			eventPicked > eventPicked null
+		<= icon $mol_icon_attach
+		<= input $mol_attacher_adder_input
+			eventCapture?val <=> eventCapture?val null
+			eventPicked?val <=> eventPicked?val null
 
 $mol_attacher_adder_input $mol_viewer
 	tagName \input
 	attr *
-		type < type \file
-		accept < accept \image/*;capture=camera
-		multiple < multiple true
-	eventClick > eventCapture null
-	event * change > eventPicked null
+		type <= type \file
+		accept <= accept \image/*;capture=camera
+		multiple <= multiple true
+	eventClick?val <=> eventCapture?val null
+	event * change?val <=> eventPicked?val null

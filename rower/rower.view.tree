@@ -1,4 +1,4 @@
 $mol_rower $mol_viewer
-	field * style.minHeight < minHeightStyle \
+	field * style.minHeight <= minHeightStyle \
 
 $mol_rower_sub $mol_viewer

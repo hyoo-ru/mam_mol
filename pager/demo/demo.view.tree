@@ -1,4 +1,4 @@
 $mol_pager_demo $mol_pager
 	title @ \Sign Up
-	body / < signup $mol_app_signup
-	foot / < rower $mol_rower_demo
+	body / <= signup $mol_app_signup
+	foot / <= rower $mol_rower_demo

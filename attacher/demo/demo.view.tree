@@ -1,12 +1,12 @@
 $mol_attacher_demo_empty $mol_attacher
 
 $mol_attacher_demo_filled $mol_attacher items /
-	< item0 $mol_attacher_item
+	<= item0 $mol_attacher_item
 		urlThumb \/mol/logo/logo.svg
 		urlLoad \/mol/logo/logo.svg
-	< item1 $mol_attacher_item
+	<= item1 $mol_attacher_item
 		urlThumb \/mol/logo/logo.svg
 		urlLoad \/mol/logo/logo.svg
-	< item2 $mol_attacher_item
+	<= item2 $mol_attacher_item
 		urlThumb \/mol/logo/logo.svg
 		urlLoad \/mol/logo/logo.svg

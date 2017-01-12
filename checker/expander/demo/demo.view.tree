@@ -1,8 +1,8 @@
 $mol_checker_expander_demo_labeled_base $mol_checker_expander
-	label / < c1Label @ \Base
+	label / <= c1Label @ \Base
 
 $mol_checker_expander_demo_labeled_expanded $mol_checker_expander
-	label / < c2Label @ \Expanded
+	label / <= c2Label @ \Expanded
 	checked true
 
 $mol_checker_expander_demo_empty_base $mol_checker_expander
@@ -11,5 +11,5 @@ $mol_checker_expander_demo_empty_expanded $mol_checker_expander
 	checked true
 	
 $mol_checker_expander_demo_disabled $mol_checker_expander
-	label / < c5Label @ \Non expandable
+	label / <= c5Label @ \Non expandable
 	disabled true
