@@ -15,7 +15,7 @@ $mol_app_todomvc $mol_scroller
 						value?val <=> taskNewTitle?val \
 						eventDone?event <=> eventAdd?event null
 					<= adderButton $mol_clicker
-						eventActivate <=> eventAdd null
+						eventActivate?event <=> eventAdd?event null
 						childs / \+
 			<= lister $mol_lister rowers <= taskers /
 			<= footer $mol_viewer

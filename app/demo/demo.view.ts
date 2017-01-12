@@ -116,7 +116,7 @@ namespace $.$mol {
 				case 1 :
 					return [ this.sampleLarge( this.names()[0] ) ]
 				default :
-					return [ this.smallRower() ]
+					return [ this.detailerRower() ]
 			}
 		}
 		
