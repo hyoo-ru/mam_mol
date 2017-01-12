@@ -1,4 +1,4 @@
 $mol_statuser $mol_viewer
 	status null
 	childs /
-		< message \
+		<= message \

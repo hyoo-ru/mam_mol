@@ -1,6 +1,6 @@
 $mol_expander $mol_lister
 	rowers /
-		< labeler $mol_checker_expander
-			checked > expanded false
-			label < label /
-		< content null
+		<= labeler $mol_checker_expander
+			checked?val <=> expanded?val false
+			label <= label /
+		<= content null

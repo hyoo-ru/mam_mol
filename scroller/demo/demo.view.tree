@@ -1,5 +1,5 @@
 $mol_scroller_demo $mol_scroller
-	childs / < rower $mol_rower childs /
-		< one $mol_filler
-		< two $mol_filler
-		< tree $mol_filler
+	childs / <= rower $mol_rower childs /
+		<= one $mol_filler
+		<= two $mol_filler
+		<= tree $mol_filler

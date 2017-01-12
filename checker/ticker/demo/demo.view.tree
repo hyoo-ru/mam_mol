@@ -1,12 +1,12 @@
 $mol_checker_ticker_demo_labeled_base $mol_checker_ticker
-	label / < c1Label @ \Base
+	label / <= c1Label @ \Base
 
 $mol_checker_ticker_demo_labeled_checked $mol_checker_ticker
-	label / < c2Label @ \Checked
+	label / <= c2Label @ \Checked
 	checked true
 
 $mol_checker_ticker_demo_labeled_disabled $mol_checker_ticker
-	label / < c6Label @ \Disabled
+	label / <= c6Label @ \Disabled
 	checked true
 	enabled false
 
