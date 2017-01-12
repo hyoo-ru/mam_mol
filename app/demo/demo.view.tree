@@ -13,7 +13,12 @@ $mol_app_demo $mol_stacker
 	detailerRower $mol_rower
 		childs /
 			<= samples /
-
+	emptyDemoMessager $mol_statuser
+		childs /
+			<= emptyDemoPrefix @ \No one demo with prefix "
+			<= selected \
+			<= emptyDemoPostfix @ \"
+	
 $mol_app_demo_pager $mol_pager
 	head /
 		<= backer $mol_linker

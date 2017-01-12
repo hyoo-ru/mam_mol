@@ -112,7 +112,7 @@ namespace $.$mol {
 		mainerContent() {
 			switch (this.names().length) {
 				case 0 :
-					return
+					return [ this.emptyDemoMessager() ]
 				case 1 :
 					return [ this.sampleLarge( this.names()[0] ) ]
 				default :
