@@ -1,6 +1,6 @@
 $mol_stacker $mol_viewer
-	attr * mol_stacker_side < side false
+	attr * mol_stacker_side <= side false
 	childs /
-		< mainer $mol_viewer childs < main /
-		< addoner $mol_viewer childs < addon /
+		<= mainer $mol_viewer childs <= main /
+		<= addoner $mol_viewer childs <= addon /
 	

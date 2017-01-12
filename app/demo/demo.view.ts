@@ -101,13 +101,28 @@ namespace $.$mol {
 			return '$' + this.selected()
 		}
 		
-		@ $mol_mem()
-		samples() {
+		names() {
 			const prefix = this.selected()
 			const namesAll = this.namesDemo()
 			const names = namesAll.filter( name => name.substring( 0 , prefix.length ) === prefix )
-			if( names.length === 1 ) return [ this.sampleLarge( names[0] ) ]
-			const samples = names.map( name => this.sampleSmall( name ) )
+			return names
+		}
+		
+		@$mol_mem() 
+		mainerContent() {
+			switch (this.names().length) {
+				case 0 :
+					return [ this.emptyDemoMessager() ]
+				case 1 :
+					return [ this.sampleLarge( this.names()[0] ) ]
+				default :
+					return [ this.detailerRower() ]
+			}
+		}
+		
+		@ $mol_mem() 
+		samples () {
+			const samples = this.names().map( name => this.sampleSmall( name ) )
 			return samples
 		}
 		

@@ -1,20 +1,20 @@
 $mol_bencher $mol_grider
 	results null
-	records < resultsSorted null
-	colSort \
+	records <= resultsSorted null
+	colSort?val \
 	-
-	columnHeader# $mol_bencher_header
-		eventClick > eventSortToggle# null
-		childs < columnHeaderContent# /
-			< columnHeaderLabel# /
-			< columnHeaderSorter# $mol_icon_sort_asc
+	columnHeader!id $mol_bencher_header
+		eventClick?val <=> eventSortToggle!id?val null
+		childs <= columnHeaderContent!id /
+			<= columnHeaderLabel!id /
+			<= columnHeaderSorter!id $mol_icon_sort_asc
 	-
-	cellerContentNumber# /
-		< resultValue# \
-		< resultPortioner# $mol_portioner
-			portion < resultPortion# 0
+	cellerContentNumber!id /
+		<= resultValue!id \
+		<= resultPortioner!id $mol_portioner
+			portion <= resultPortion!id 0
 
 
 $mol_bencher_header $mol_floater
-	event * click > eventClick null
-	attr * title < hint @ \Click to sort by this column
+	event * click?val <=> eventClick?val null
+	attr * title <= hint @ \Click to sort by this column

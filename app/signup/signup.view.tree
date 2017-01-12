@@ -1,34 +1,34 @@
 $mol_app_signup $mol_form
 	formFields /
-		< nameFirstField $mol_form_field
-			name < nameFirstLabel @ \First Name
-			errors < nameFirstErrors /
-			control < nameFirstControl $mol_stringer
-				hint < nameFirstHint @ \Jack
-				value > nameFirst \
-		< nameNickField $mol_form_field
-			name < nameNickLabel @ \Nick Name
-			errors < nameNickErrors /
-			control < nameNickControl $mol_stringer
-				hint < nameNickHint @ \Capitan
-				value > nameNick \
-		< nameSecondField $mol_form_field
-			name < nameSecondLabel @ \Second Name
-			errors < nameSecondErrors /
-			control < nameSecondControl $mol_stringer
-				hint < nameSecondHint @ \Sparrow
-				value > nameSecond \
-		< sexField $mol_form_field
-			name < sexLabel @ \Sex
-			errors < sexErrors /
-			control / < sexControl $mol_switcher
-				value > sex \
-				options < sexOptions *
-					male < sexOptionMale @ \Male
-					intersex < sexOptionIntersex @ \Intersex
-					female < sexOptionFemale @ \Female
+		<= nameFirstField $mol_form_field
+			name <= nameFirstLabel @ \First Name
+			errors <= nameFirstErrors /
+			control <= nameFirstControl $mol_stringer
+				hint <= nameFirstHint @ \Jack
+				value?val <=> nameFirst?val \
+		<= nameNickField $mol_form_field
+			name <= nameNickLabel @ \Nick Name
+			errors <= nameNickErrors /
+			control <= nameNickControl $mol_stringer
+				hint <= nameNickHint @ \Capitan
+				value?val <=> nameNick?val \
+		<= nameSecondField $mol_form_field
+			name <= nameSecondLabel @ \Second Name
+			errors <= nameSecondErrors /
+			control <= nameSecondControl $mol_stringer
+				hint <= nameSecondHint @ \Sparrow
+				value?val <=> nameSecond?val \
+		<= sexField $mol_form_field
+			name <= sexLabel @ \Sex
+			errors <= sexErrors /
+			control / <= sexControl $mol_switcher
+				value?val <=> sex?val \
+				options <= sexOptions *
+					male <= sexOptionMale @ \Male
+					intersex <= sexOptionIntersex @ \Intersex
+					female <= sexOptionFemale @ \Female
 	buttons /
-		< submit $mol_clicker_major
-			childs / < submitText @ \Sign Up
-			eventClick > eventSubmit null
-			disabled < submitBlocked
+		<= submit $mol_clicker_major
+			childs / <= submitText @ \Sign Up
+			eventClick?val <=> eventSubmit?val null
+			disabled <= submitBlocked
