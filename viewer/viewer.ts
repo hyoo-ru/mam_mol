@@ -184,7 +184,13 @@ namespace $ {
 			}
 			
 			for( let view of childs ) {
-				if( view instanceof $mol_viewer ) view.DOMTree()
+				if( view instanceof $mol_viewer ) {
+					try {
+						view.DOMTree()
+					} catch( e ) {
+						console.error(e)
+					}
+				}
 			}
 		}
 		
