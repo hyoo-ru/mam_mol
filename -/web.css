@@ -1241,6 +1241,9 @@
             flex-direction: column;
     box-shadow: 0 0 0 1px rgba(220, 220, 220, 1)
 }
+[mol_app_inventory_enter_form] {
+    margin: 0
+}
 [mol_app_quine_texter] {
     margin: auto
 }
@@ -1410,6 +1413,11 @@
     background: hsl(140, 35%, 50%);
     position: relative;
     margin: 0
+}
+[mol_app_supplies_lister_searcher] {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto
 }
 [mol_app_supplies_lister_lister] {
     -webkit-box-align: start;

@@ -607,6 +607,11 @@
     position: relative;
     margin: 0
 }
+[mol_app_supplies_lister_searcher] {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto
+}
 [mol_app_supplies_lister_lister] {
     -webkit-box-align: start;
         -ms-flex-align: start;

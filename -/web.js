@@ -8459,7 +8459,7 @@ var $;
             var creds = this.credentials();
             if (!creds)
                 return false;
-            if (creds.login === 'demo')
+            if (creds.login && creds.password)
                 return true;
             return false;
         };
@@ -9517,14 +9517,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var $;
 (function ($) {
-    var $mol_app_signup_dmeo = (function (_super) {
-        __extends($mol_app_signup_dmeo, _super);
-        function $mol_app_signup_dmeo() {
+    var $mol_app_signup_demo = (function (_super) {
+        __extends($mol_app_signup_demo, _super);
+        function $mol_app_signup_demo() {
             return _super.apply(this, arguments) || this;
         }
-        return $mol_app_signup_dmeo;
+        return $mol_app_signup_demo;
     }($.$mol_app_signup));
-    $.$mol_app_signup_dmeo = $mol_app_signup_dmeo;
+    $.$mol_app_signup_demo = $mol_app_signup_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
 ;
@@ -14354,175 +14354,118 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    var $mol_stringer_demo = (function (_super) {
-        __extends($mol_stringer_demo, _super);
-        function $mol_stringer_demo() {
-            return _super.apply(this, arguments) || this;
-        }
-        $mol_stringer_demo.prototype.name = function (val) {
-            return (val !== void 0) ? val : "";
-        };
-        $mol_stringer_demo.prototype.one = function () {
-            var _this = this;
-            return new $.$mol_stringer().setup(function (obj) {
-                obj.value = function (val) { return _this.name(val); };
-            });
-        };
-        $mol_stringer_demo.prototype.twoHint = function () {
-            return $.$mol_locale.text(this.localizationContexts(), "twoHint");
-        };
-        $mol_stringer_demo.prototype.two = function () {
-            var _this = this;
-            return new $.$mol_stringer().setup(function (obj) {
-                obj.value = function (val) { return _this.name(val); };
-                obj.hint = function () { return _this.twoHint(); };
-            });
-        };
-        $mol_stringer_demo.prototype.threeHint = function () {
-            return $.$mol_locale.text(this.localizationContexts(), "threeHint");
-        };
-        $mol_stringer_demo.prototype.three = function () {
-            var _this = this;
-            return new $.$mol_stringer().setup(function (obj) {
-                obj.value = function (val) { return _this.name(val); };
-                obj.hint = function () { return _this.threeHint(); };
-                obj.disabled = function () { return true; };
-            });
-        };
-        $mol_stringer_demo.prototype.childs = function () {
-            return [].concat(this.one(), this.two(), this.three());
-        };
-        return $mol_stringer_demo;
-    }($.$mol_rower));
-    __decorate([
-        $.$mol_mem()
-    ], $mol_stringer_demo.prototype, "name", null);
-    __decorate([
-        $.$mol_mem()
-    ], $mol_stringer_demo.prototype, "one", null);
-    __decorate([
-        $.$mol_mem()
-    ], $mol_stringer_demo.prototype, "two", null);
-    __decorate([
-        $.$mol_mem()
-    ], $mol_stringer_demo.prototype, "three", null);
-    $.$mol_stringer_demo = $mol_stringer_demo;
-})($ || ($ = {}));
-//demo.view.tree.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $mol;
-    (function ($mol) {
-        var $mol_stringer_demo = (function (_super) {
-            __extends($mol_stringer_demo, _super);
-            function $mol_stringer_demo() {
-                return _super.apply(this, arguments) || this;
-            }
-            $mol_stringer_demo.prototype.name = function (next) {
-                return next || '';
-            };
-            return $mol_stringer_demo;
-        }($.$mol_stringer_demo));
-        __decorate([
-            $.$mol_mem()
-        ], $mol_stringer_demo.prototype, "name", null);
-        $mol.$mol_stringer_demo = $mol_stringer_demo;
-    })($mol = $.$mol || ($.$mol = {}));
-})($ || ($ = {}));
-//demo.view.js.map
-;
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
     var $mol_decker_demo = (function (_super) {
         __extends($mol_decker_demo, _super);
         function $mol_decker_demo() {
             return _super.apply(this, arguments) || this;
         }
-        $mol_decker_demo.prototype.stringerLabel = function () {
-            return $.$mol_locale.text(this.localizationContexts(), "stringerLabel");
+        $mol_decker_demo.prototype.greeterLabel = function () {
+            return $.$mol_locale.text(this.localizationContexts(), "greeterLabel");
         };
-        $mol_decker_demo.prototype.stringerContent = function () {
-            return new $.$mol_stringer_demo();
+        $mol_decker_demo.prototype.greeterMessage = function () {
+            return $.$mol_locale.text(this.localizationContexts(), "greeterMessage");
         };
-        $mol_decker_demo.prototype.stringerItem = function () {
+        $mol_decker_demo.prototype.greeterMessager = function () {
             var _this = this;
-            return new $.$mol_decker_item().setup(function (obj) {
-                obj.title = function () { return _this.stringerLabel(); };
-                obj.content = function () { return _this.stringerContent(); };
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.greeterMessage()); };
             });
         };
-        $mol_decker_demo.prototype.buttonsLabel = function () {
-            return $.$mol_locale.text(this.localizationContexts(), "buttonsLabel");
-        };
-        $mol_decker_demo.prototype.clickerContent = function () {
-            return new $.$mol_clicker_demo_major_enabled();
-        };
-        $mol_decker_demo.prototype.clickerItem = function () {
+        $mol_decker_demo.prototype.greeterContent = function () {
             var _this = this;
-            return new $.$mol_decker_item().setup(function (obj) {
-                obj.title = function () { return _this.buttonsLabel(); };
-                obj.content = function () { return _this.clickerContent(); };
+            return new $.$mol_rower().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.greeterMessager()); };
             });
         };
-        $mol_decker_demo.prototype.checkerLabel = function () {
-            return $.$mol_locale.text(this.localizationContexts(), "checkerLabel");
-        };
-        $mol_decker_demo.prototype.checkerContent = function () {
-            return new $.$mol_checker_ticker_demo_labeled_base();
-        };
-        $mol_decker_demo.prototype.checkerItem = function () {
+        $mol_decker_demo.prototype.greeterItem = function () {
             var _this = this;
             return new $.$mol_decker_item().setup(function (obj) {
-                obj.title = function () { return _this.checkerLabel(); };
-                obj.content = function () { return _this.checkerContent(); };
+                obj.title = function () { return _this.greeterLabel(); };
+                obj.content = function () { return _this.greeterContent(); };
+            });
+        };
+        $mol_decker_demo.prototype.questerLabel = function () {
+            return $.$mol_locale.text(this.localizationContexts(), "questerLabel");
+        };
+        $mol_decker_demo.prototype.questerMessage = function () {
+            return $.$mol_locale.text(this.localizationContexts(), "questerMessage");
+        };
+        $mol_decker_demo.prototype.questerMessager = function () {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.questerMessage()); };
+            });
+        };
+        $mol_decker_demo.prototype.questerContent = function () {
+            var _this = this;
+            return new $.$mol_rower().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.questerMessager()); };
+            });
+        };
+        $mol_decker_demo.prototype.questerItem = function () {
+            var _this = this;
+            return new $.$mol_decker_item().setup(function (obj) {
+                obj.title = function () { return _this.questerLabel(); };
+                obj.content = function () { return _this.questerContent(); };
+            });
+        };
+        $mol_decker_demo.prototype.commanderLabel = function () {
+            return $.$mol_locale.text(this.localizationContexts(), "commanderLabel");
+        };
+        $mol_decker_demo.prototype.commanderMessage = function () {
+            return $.$mol_locale.text(this.localizationContexts(), "commanderMessage");
+        };
+        $mol_decker_demo.prototype.commanderMessager = function () {
+            var _this = this;
+            return new $.$mol_viewer().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.commanderMessage()); };
+            });
+        };
+        $mol_decker_demo.prototype.commanderContent = function () {
+            var _this = this;
+            return new $.$mol_rower().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.commanderMessager()); };
+            });
+        };
+        $mol_decker_demo.prototype.commanderItem = function () {
+            var _this = this;
+            return new $.$mol_decker_item().setup(function (obj) {
+                obj.title = function () { return _this.commanderLabel(); };
+                obj.content = function () { return _this.commanderContent(); };
             });
         };
         $mol_decker_demo.prototype.items = function () {
-            return [].concat(this.stringerItem(), this.clickerItem(), this.checkerItem());
+            return [].concat(this.greeterItem(), this.questerItem(), this.commanderItem());
         };
         return $mol_decker_demo;
     }($.$mol_decker));
     __decorate([
         $.$mol_mem()
-    ], $mol_decker_demo.prototype, "stringerContent", null);
+    ], $mol_decker_demo.prototype, "greeterMessager", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_decker_demo.prototype, "stringerItem", null);
+    ], $mol_decker_demo.prototype, "greeterContent", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_decker_demo.prototype, "clickerContent", null);
+    ], $mol_decker_demo.prototype, "greeterItem", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_decker_demo.prototype, "clickerItem", null);
+    ], $mol_decker_demo.prototype, "questerMessager", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_decker_demo.prototype, "checkerContent", null);
+    ], $mol_decker_demo.prototype, "questerContent", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_decker_demo.prototype, "checkerItem", null);
+    ], $mol_decker_demo.prototype, "questerItem", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_decker_demo.prototype, "commanderMessager", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_decker_demo.prototype, "commanderContent", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_decker_demo.prototype, "commanderItem", null);
     $.$mol_decker_demo = $mol_decker_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
@@ -17426,6 +17369,108 @@ var $;
 ;
 window.addEventListener('hashchange', function (event) { return $.$mol_state_history.id(null); });
 //history.web.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_stringer_demo = (function (_super) {
+        __extends($mol_stringer_demo, _super);
+        function $mol_stringer_demo() {
+            return _super.apply(this, arguments) || this;
+        }
+        $mol_stringer_demo.prototype.name = function (val) {
+            return (val !== void 0) ? val : "";
+        };
+        $mol_stringer_demo.prototype.one = function () {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.value = function (val) { return _this.name(val); };
+            });
+        };
+        $mol_stringer_demo.prototype.twoHint = function () {
+            return $.$mol_locale.text(this.localizationContexts(), "twoHint");
+        };
+        $mol_stringer_demo.prototype.two = function () {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.value = function (val) { return _this.name(val); };
+                obj.hint = function () { return _this.twoHint(); };
+            });
+        };
+        $mol_stringer_demo.prototype.threeHint = function () {
+            return $.$mol_locale.text(this.localizationContexts(), "threeHint");
+        };
+        $mol_stringer_demo.prototype.three = function () {
+            var _this = this;
+            return new $.$mol_stringer().setup(function (obj) {
+                obj.value = function (val) { return _this.name(val); };
+                obj.hint = function () { return _this.threeHint(); };
+                obj.disabled = function () { return true; };
+            });
+        };
+        $mol_stringer_demo.prototype.childs = function () {
+            return [].concat(this.one(), this.two(), this.three());
+        };
+        return $mol_stringer_demo;
+    }($.$mol_rower));
+    __decorate([
+        $.$mol_mem()
+    ], $mol_stringer_demo.prototype, "name", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_stringer_demo.prototype, "one", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_stringer_demo.prototype, "two", null);
+    __decorate([
+        $.$mol_mem()
+    ], $mol_stringer_demo.prototype, "three", null);
+    $.$mol_stringer_demo = $mol_stringer_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_stringer_demo = (function (_super) {
+            __extends($mol_stringer_demo, _super);
+            function $mol_stringer_demo() {
+                return _super.apply(this, arguments) || this;
+            }
+            $mol_stringer_demo.prototype.name = function (next) {
+                return next || '';
+            };
+            return $mol_stringer_demo;
+        }($.$mol_stringer_demo));
+        __decorate([
+            $.$mol_mem()
+        ], $mol_stringer_demo.prototype, "name", null);
+        $mol.$mol_stringer_demo = $mol_stringer_demo;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//demo.view.js.map
 ;
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

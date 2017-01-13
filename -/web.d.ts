@@ -2248,7 +2248,7 @@ declare namespace $.$mol {
     }
 }
 declare namespace $ {
-    class $mol_app_signup_dmeo extends $mol_app_signup {
+    class $mol_app_signup_demo extends $mol_app_signup {
     }
 }
 declare namespace $ {
@@ -3396,32 +3396,22 @@ declare namespace $ {
     }[];
 }
 declare namespace $ {
-    class $mol_stringer_demo extends $mol_rower {
-        name(val?: any): any;
-        one(): $mol_stringer;
-        twoHint(): string;
-        two(): $mol_stringer;
-        threeHint(): string;
-        three(): $mol_stringer;
-        childs(): any[];
-    }
-}
-declare namespace $.$mol {
-    class $mol_stringer_demo extends $.$mol_stringer_demo {
-        name(next?: string): string;
-    }
-}
-declare namespace $ {
     class $mol_decker_demo extends $mol_decker {
-        stringerLabel(): string;
-        stringerContent(): $mol_stringer_demo;
-        stringerItem(): $mol_decker_item;
-        buttonsLabel(): string;
-        clickerContent(): $mol_clicker_demo_major_enabled;
-        clickerItem(): $mol_decker_item;
-        checkerLabel(): string;
-        checkerContent(): $mol_checker_ticker_demo_labeled_base;
-        checkerItem(): $mol_decker_item;
+        greeterLabel(): string;
+        greeterMessage(): string;
+        greeterMessager(): $mol_viewer;
+        greeterContent(): $mol_rower;
+        greeterItem(): $mol_decker_item;
+        questerLabel(): string;
+        questerMessage(): string;
+        questerMessager(): $mol_viewer;
+        questerContent(): $mol_rower;
+        questerItem(): $mol_decker_item;
+        commanderLabel(): string;
+        commanderMessage(): string;
+        commanderMessager(): $mol_viewer;
+        commanderContent(): $mol_rower;
+        commanderItem(): $mol_decker_item;
         items(): any[];
     }
 }
@@ -4086,6 +4076,22 @@ declare namespace $ {
         prefix(): string;
         value(key: string, next?: Value): any;
         static id(next?: string): string;
+    }
+}
+declare namespace $ {
+    class $mol_stringer_demo extends $mol_rower {
+        name(val?: any): any;
+        one(): $mol_stringer;
+        twoHint(): string;
+        two(): $mol_stringer;
+        threeHint(): string;
+        three(): $mol_stringer;
+        childs(): any[];
+    }
+}
+declare namespace $.$mol {
+    class $mol_stringer_demo extends $.$mol_stringer_demo {
+        name(next?: string): string;
     }
 }
 declare namespace $ {
