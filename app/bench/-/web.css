@@ -356,6 +356,9 @@
     -webkit-transform: rotateZ(90deg);
             transform: rotateZ(90deg)
 }
+[mol_dimmer_low] {
+    opacity: 0.66
+}
 [mol_grider] {
     display: block;
     -webkit-box-flex: 0;
@@ -395,6 +398,10 @@
 }
 [mol_grider_number] {
     text-align: right
+}
+[mol_grider_cellerDimmer] {
+    display: inline-block;
+    vertical-align: inherit
 }
 [mol_texter] {
     line-height: 1.5;

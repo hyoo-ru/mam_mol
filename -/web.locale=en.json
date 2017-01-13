@@ -2,7 +2,7 @@
 	"$mol_bencher_header_hint": "Click to sort by this column",
 	"$mol_app_bench_addonerTitle": "Samples",
 	"$mol_app_bench_columnHeaderLabelSample": "Sample",
-	"$mol_app_demo_titleAddon": "Demos",
+	"$mol_app_demo_filterHint": "Search demo..",
 	"$mol_app_demo_emptyDemoPrefix": "No one demo with prefix \"",
 	"$mol_app_demo_emptyDemoPostfix": "\"",
 	"$mol_app_inventory_header_keeperLabel": "Keeper",

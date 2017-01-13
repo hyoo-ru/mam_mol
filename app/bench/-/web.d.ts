@@ -523,6 +523,28 @@ declare namespace $.$mol {
     }
 }
 declare namespace $ {
+    class $mol_dimmer extends $mol_viewer {
+        haystack(): string;
+        needle(): string;
+        parts(): any[];
+        childs(): any[];
+        string(id: any): string;
+        low(id: any): $mol_dimmer_low;
+    }
+}
+declare namespace $ {
+    class $mol_dimmer_low extends $mol_viewer {
+        tagName(): string;
+    }
+}
+declare namespace $.$mol {
+    class $mol_dimmer extends $.$mol_dimmer {
+        parts(): any[];
+        strings(): string[];
+        string(index: number): string;
+    }
+}
+declare namespace $ {
     class $mol_grider extends $mol_scroller {
         rows(): any[];
         row(id: any): any;
@@ -557,6 +579,9 @@ declare namespace $ {
         cellerLevel(id: any): number;
         cellerExpanded(id: any, val?: any): any;
         cellerBranch(id: any): $mol_checker_expander;
+        needle(): string;
+        cellerValue(id: any): string;
+        cellerDimmer(id: any): $mol_dimmer;
     }
 }
 declare namespace $ {
@@ -617,10 +642,10 @@ declare namespace $.$mol {
             row: string[];
             col: string;
         }): $mol_viewer;
-        cellerContent(id: {
+        cellerValue(id: {
             row: string[];
             col: string;
-        }): any[];
+        }): any;
         records(): any;
         record(id: string): any;
         ids(): string[];

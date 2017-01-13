@@ -523,6 +523,28 @@ declare namespace $.$mol {
     }
 }
 declare namespace $ {
+    class $mol_dimmer extends $mol_viewer {
+        haystack(): string;
+        needle(): string;
+        parts(): any[];
+        childs(): any[];
+        string(id: any): string;
+        low(id: any): $mol_dimmer_low;
+    }
+}
+declare namespace $ {
+    class $mol_dimmer_low extends $mol_viewer {
+        tagName(): string;
+    }
+}
+declare namespace $.$mol {
+    class $mol_dimmer extends $.$mol_dimmer {
+        parts(): any[];
+        strings(): string[];
+        string(index: number): string;
+    }
+}
+declare namespace $ {
     class $mol_grider extends $mol_scroller {
         rows(): any[];
         row(id: any): any;
@@ -557,6 +579,9 @@ declare namespace $ {
         cellerLevel(id: any): number;
         cellerExpanded(id: any, val?: any): any;
         cellerBranch(id: any): $mol_checker_expander;
+        needle(): string;
+        cellerValue(id: any): string;
+        cellerDimmer(id: any): $mol_dimmer;
     }
 }
 declare namespace $ {
@@ -617,10 +642,10 @@ declare namespace $.$mol {
             row: string[];
             col: string;
         }): $mol_viewer;
-        cellerContent(id: {
+        cellerValue(id: {
             row: string[];
             col: string;
-        }): any[];
+        }): any;
         records(): any;
         record(id: string): any;
         ids(): string[];
@@ -1246,6 +1271,41 @@ declare namespace $ {
     }
 }
 declare namespace $ {
+    class $mol_stringer extends $mol_viewer {
+        tagName(): string;
+        enabled(): boolean;
+        hint(): string;
+        type(val?: any): any;
+        attr(): {
+            [key: string]: () => string | number | boolean;
+        } & {
+            "placeholder": () => any;
+            "type": () => any;
+        };
+        disabled(): boolean;
+        value(val?: any): any;
+        valueChanged(val?: any): any;
+        field(): {
+            [key: string]: (next?: any) => any;
+        } & {
+            "disabled": () => any;
+            "value": () => any;
+        };
+        eventChange(event?: any): any;
+        event(): {
+            [key: string]: (event: Event) => void;
+        } & {
+            "input": (event?: any) => any;
+        };
+    }
+}
+declare namespace $.$mol {
+    class $mol_stringer extends $.$mol_stringer {
+        eventChange(next?: Event): void;
+        disabled(): boolean;
+    }
+}
+declare namespace $ {
     class $mol_rower extends $mol_viewer {
         minHeightStyle(): string;
         field(): {
@@ -1337,7 +1397,10 @@ declare namespace $ {
         mainerContent(): any[];
         detailer(): $mol_app_demo_pager;
         main(): any[];
-        titleAddon(): string;
+        filterHint(): string;
+        filterString(val?: any): any;
+        filterStringer(): $mol_stringer;
+        navigatorHeader(): $mol_rower;
         navigatorHierarchy(): any;
         navigatorOption(id: any): any;
         navigator(): $mol_app_demo_navigator;
@@ -1378,7 +1441,8 @@ declare namespace $.$mol {
     class $mol_app_demo extends $.$mol_app_demo {
         title(): string;
         welcomeText(): string;
-        namesDemo(): string[];
+        namesDemoAll(): string[];
+        namesDemoFiltered(): string[];
         navigatorHierarchy(): {
             [prefix: string]: $mol_grider_node;
         };
@@ -1389,11 +1453,11 @@ declare namespace $.$mol {
         option(name: string): $mol_linker;
         widget(name: string): $mol_viewer;
         detailerTitle(): string;
-        names(): string[];
+        namesDemo(): string[];
         mainerContent(): $.$mol_statuser[] | $mol_demo_large[] | $.$mol_rower[];
         samples(): $mol_demo_small[];
         sampleSmall(name: string): $mol_demo_small;
-        sampleLarge(name: string): $mol_demo_large;
+        sampleLarge(): $mol_demo_large;
     }
     class $mol_app_demo_navigator extends $.$mol_app_demo_navigator {
         celler(id: {
@@ -1435,41 +1499,6 @@ declare namespace $.$mol {
 }
 declare namespace $ {
     class $mol_app_habhub_demo extends $mol_app_habhub {
-    }
-}
-declare namespace $ {
-    class $mol_stringer extends $mol_viewer {
-        tagName(): string;
-        enabled(): boolean;
-        hint(): string;
-        type(val?: any): any;
-        attr(): {
-            [key: string]: () => string | number | boolean;
-        } & {
-            "placeholder": () => any;
-            "type": () => any;
-        };
-        disabled(): boolean;
-        value(val?: any): any;
-        valueChanged(val?: any): any;
-        field(): {
-            [key: string]: (next?: any) => any;
-        } & {
-            "disabled": () => any;
-            "value": () => any;
-        };
-        eventChange(event?: any): any;
-        event(): {
-            [key: string]: (event: Event) => void;
-        } & {
-            "input": (event?: any) => any;
-        };
-    }
-}
-declare namespace $.$mol {
-    class $mol_stringer extends $.$mol_stringer {
-        eventChange(next?: Event): void;
-        disabled(): boolean;
     }
 }
 declare namespace $ {
@@ -3425,28 +3454,6 @@ declare namespace $ {
         largeLabel(): string;
         large(): $mol_demo_large;
         childs(): any[];
-    }
-}
-declare namespace $ {
-    class $mol_dimmer extends $mol_viewer {
-        haystack(): string;
-        needle(): string;
-        parts(): any[];
-        childs(): any[];
-        string(id: any): string;
-        low(id: any): $mol_dimmer_low;
-    }
-}
-declare namespace $ {
-    class $mol_dimmer_low extends $mol_viewer {
-        tagName(): string;
-    }
-}
-declare namespace $.$mol {
-    class $mol_dimmer extends $.$mol_dimmer {
-        parts(): any[];
-        strings(): string[];
-        string(index: number): string;
     }
 }
 declare namespace $ {

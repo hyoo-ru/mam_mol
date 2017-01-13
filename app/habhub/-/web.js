@@ -2081,6 +2081,117 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
+    var $mol_dimmer = (function (_super) {
+        __extends($mol_dimmer, _super);
+        function $mol_dimmer() {
+            return _super.apply(this, arguments) || this;
+        }
+        $mol_dimmer.prototype.haystack = function () {
+            return "";
+        };
+        $mol_dimmer.prototype.needle = function () {
+            return "";
+        };
+        $mol_dimmer.prototype.parts = function () {
+            return [];
+        };
+        $mol_dimmer.prototype.childs = function () {
+            return this.parts();
+        };
+        $mol_dimmer.prototype.string = function (id) {
+            return "";
+        };
+        $mol_dimmer.prototype.low = function (id) {
+            var _this = this;
+            return new $.$mol_dimmer_low().setup(function (obj) {
+                obj.childs = function () { return [].concat(_this.string(id)); };
+            });
+        };
+        return $mol_dimmer;
+    }($.$mol_viewer));
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_dimmer.prototype, "low", null);
+    $.$mol_dimmer = $mol_dimmer;
+})($ || ($ = {}));
+(function ($) {
+    var $mol_dimmer_low = (function (_super) {
+        __extends($mol_dimmer_low, _super);
+        function $mol_dimmer_low() {
+            return _super.apply(this, arguments) || this;
+        }
+        $mol_dimmer_low.prototype.tagName = function () {
+            return "span";
+        };
+        return $mol_dimmer_low;
+    }($.$mol_viewer));
+    $.$mol_dimmer_low = $mol_dimmer_low;
+})($ || ($ = {}));
+//dimmer.view.tree.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol;
+    (function ($mol) {
+        var $mol_dimmer = (function (_super) {
+            __extends($mol_dimmer, _super);
+            function $mol_dimmer() {
+                return _super.apply(this, arguments) || this;
+            }
+            $mol_dimmer.prototype.parts = function () {
+                var needle = this.needle();
+                if (!needle)
+                    return [this.haystack()];
+                var chunks = [];
+                var strings = this.strings();
+                for (var index = 0; index < strings.length; index++) {
+                    if (index > 0)
+                        chunks.push(this.needle());
+                    if (strings[index] !== '')
+                        chunks.push(this.low(index));
+                }
+                return chunks;
+            };
+            $mol_dimmer.prototype.strings = function () {
+                return this.haystack().split(this.needle());
+            };
+            $mol_dimmer.prototype.string = function (index) {
+                return this.strings()[index];
+            };
+            return $mol_dimmer;
+        }($.$mol_dimmer));
+        __decorate([
+            $.$mol_mem()
+        ], $mol_dimmer.prototype, "strings", null);
+        $mol.$mol_dimmer = $mol_dimmer;
+    })($mol = $.$mol || ($.$mol = {}));
+})($ || ($ = {}));
+//dimmer.view.js.map
+;
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
     var $mol_grider = (function (_super) {
         __extends($mol_grider, _super);
         function $mol_grider() {
@@ -2174,7 +2285,7 @@ var $;
             return null;
         };
         $mol_grider.prototype.cellerContent = function (id) {
-            return [];
+            return [].concat(this.cellerDimmer(id));
         };
         $mol_grider.prototype.cellerContentText = function (id) {
             return this.cellerContent(id);
@@ -2217,6 +2328,19 @@ var $;
                 obj.expanded = function (val) { return _this.cellerExpanded(id, val); };
             });
         };
+        $mol_grider.prototype.needle = function () {
+            return "";
+        };
+        $mol_grider.prototype.cellerValue = function (id) {
+            return "";
+        };
+        $mol_grider.prototype.cellerDimmer = function (id) {
+            var _this = this;
+            return new $.$mol_dimmer().setup(function (obj) {
+                obj.needle = function () { return _this.needle(); };
+                obj.haystack = function () { return _this.cellerValue(id); };
+            });
+        };
         return $mol_grider;
     }($.$mol_scroller));
     __decorate([
@@ -2249,6 +2373,9 @@ var $;
     __decorate([
         $.$mol_mem_key()
     ], $mol_grider.prototype, "cellerBranch", null);
+    __decorate([
+        $.$mol_mem_key()
+    ], $mol_grider.prototype, "cellerDimmer", null);
     $.$mol_grider = $mol_grider;
 })($ || ($ = {}));
 (function ($) {
@@ -2408,8 +2535,8 @@ var $;
                 }
                 return this.cellerText(id);
             };
-            $mol_grider.prototype.cellerContent = function (id) {
-                return [this.record(id.row[id.row.length - 1])[id.col]];
+            $mol_grider.prototype.cellerValue = function (id) {
+                return this.record(id.row[id.row.length - 1])[id.col];
             };
             $mol_grider.prototype.records = function () {
                 return [];
