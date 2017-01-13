@@ -1,6 +1,6 @@
 {
   "short_name": "$Mol Demo",
-  "name": "Molecule Demo",
+  "name": "$mol Demo",
   "icons": [
     {
       "src": "standalone_statics/icon-1x.png",
