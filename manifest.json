@@ -3,17 +3,17 @@
   "name": "$mol Demo",
   "icons": [
     {
-      "src": "standalone_statics/icon-1x.png",
+      "src": "logo/icon-1x.png",
       "type": "image/png",
       "sizes": "48x48"
     },
     {
-      "src": "standalone_statics/icon-2x.png",
+      "src": "logo/icon-2x.png",
       "type": "image/png",
       "sizes": "96x96"
     },
     {
-      "src": "standalone_statics/icon-4x.png",
+      "src": "logo/icon-4x.png",
       "type": "image/png",
       "sizes": "192x192"
     }
