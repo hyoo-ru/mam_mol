@@ -6867,7 +6867,7 @@ var $;
         $mol_form_field.prototype.errors = function () {
             return [];
         };
-        $mol_form_field.prototype.errorer = function () {
+        $mol_form_field.prototype.bider = function () {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
                 obj.childs = function () { return _this.errors(); };
@@ -6876,7 +6876,7 @@ var $;
         $mol_form_field.prototype.label = function () {
             var _this = this;
             return new $.$mol_viewer().setup(function (obj) {
-                obj.childs = function () { return [].concat(_this.namer(), _this.errorer()); };
+                obj.childs = function () { return [].concat(_this.namer(), _this.bider()); };
             });
         };
         $mol_form_field.prototype.control = function () {
@@ -6892,7 +6892,7 @@ var $;
     ], $mol_form_field.prototype, "namer", null);
     __decorate([
         $.$mol_mem()
-    ], $mol_form_field.prototype, "errorer", null);
+    ], $mol_form_field.prototype, "bider", null);
     __decorate([
         $.$mol_mem()
     ], $mol_form_field.prototype, "label", null);

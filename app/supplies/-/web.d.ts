@@ -830,7 +830,7 @@ declare namespace $ {
         name(): string;
         namer(): $mol_viewer;
         errors(): any[];
-        errorer(): $mol_viewer;
+        bider(): $mol_viewer;
         label(): $mol_viewer;
         control(): any;
         childs(): any[];
