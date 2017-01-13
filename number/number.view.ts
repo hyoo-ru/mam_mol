@@ -29,11 +29,10 @@ namespace $.$mol {
 
 		eventWheel( next? : MouseWheelEvent ) {
 			next.preventDefault();
-			if( next.wheelDelta > 0 ) {
+			if( next.wheelDelta < 0 && this.enabledInc() )
 				this.eventInc( next )
-			} else {
+			if( next.wheelDelta > 0 && this.enabledDec())
 				this.eventDec( next )
-			}
 		}
 
 		incrementer() {
