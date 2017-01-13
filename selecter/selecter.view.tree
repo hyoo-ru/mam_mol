@@ -1,17 +1,18 @@
 $mol_selecter $mol_viewer
-	selected \
-	options *
+	options /
+	value \
+	optioner!id $mol_clicker
+		eventClick?event <=> eventSelect!id?event null
+		childs <= optionerContent!id /
+			<= dimmer!id $mol_dimmer
+				haystack <= optionLabel!id \
+				needle <= prefix?val \
 	childs /
 		<= header $mol_barer
 			childs /
-				<= selectedOption  $mol_stringer
+				<= selectedOption $mol_stringer
+					value?val <=> prefix?val \
 				<= trigger $mol_checker_expander
 		<= lister $mol_lister
 			heightMinimal 0
-			childs <= optionList
-
-$mol_selecter_optioner $mol_clicker
-	value \
-	event *
-		mousedown?event <=> selectEvent?event null
-	childs /
+			childs <= optioners /

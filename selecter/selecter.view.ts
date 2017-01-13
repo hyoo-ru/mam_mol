@@ -1,8 +1,12 @@
 namespace $.$mol {
 
 	export class $mol_selecter extends $.$mol_selecter {
-		expanded() {
-			return $mol_viewer_selection.focused().indexOf( this.DOMNode() ) !== -1
+		optionLabel( id: string ) {
+			return id;
+		}
+		
+		optioners() {
+			return this.options().map( ( option: string ) => this.optioner( option ) )
 		}
 	}
 }
