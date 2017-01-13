@@ -177,9 +177,10 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    var $mol_viewer_context: $mol_viewer_context;
+    let $mol_viewer_context: $mol_viewer_context;
     interface $mol_viewer_context {
-        $mol_viewer_heightLimit(): number;
+        $mol_viewer_visibleWidth(): number;
+        $mol_viewer_visibleHeight(): number;
     }
     class $mol_viewer extends $mol_object {
         static root(id: number): $mol_viewer;
@@ -194,6 +195,7 @@ declare namespace $ {
         childs(): (string | number | boolean | Node | $mol_viewer)[];
         childsVisible(): (string | number | boolean | Node | $mol_viewer)[];
         heightMinimal(): number;
+        widthMinimal(): number;
         private 'DOMNode()';
         DOMNode(next?: Element): Element;
         static renderChilds(node: Element, childs: ($mol_viewer | Node | string | number | boolean)[]): void;
@@ -277,14 +279,14 @@ declare namespace $ {
         } & {
             "style.minHeight": () => any;
         };
-        rows(): any[];
+        rowers(): any[];
         childs(): any[];
     }
 }
 declare namespace $.$mol {
     class $mol_lister extends $.$mol_lister {
-        rowOffsets(): number[];
-        rowContext(index: number): $mol_viewer_context;
+        rowerOffsets(): number[];
+        rowerContext(index: number): $mol_viewer_context;
         childsVisible(): any[];
         heightMinimal(): number;
         minHeightStyle(): string;
@@ -299,10 +301,10 @@ declare namespace $ {
             "mol_carder_status": () => any;
         };
         content(): any;
-        contenter(next?: any): $mol_viewer;
+        contenter(): $mol_viewer;
         statusText(): string;
-        statuser(next?: any): $mol_viewer;
-        rows(): any[];
+        statuser(): $mol_viewer;
+        rowers(): any[];
     }
 }
 declare var localStorage: Storage;
@@ -362,9 +364,10 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_labeler extends $mol_viewer {
-        titler(next?: any): $mol_viewer;
+        tagName(): string;
+        titler(): $mol_viewer;
         content(): any;
-        contenter(next?: any): $mol_viewer;
+        contenter(): $mol_viewer;
         childs(): any[];
     }
 }
@@ -396,11 +399,11 @@ declare namespace $ {
     class $mol_coster extends $mol_viewer {
         value(): any;
         prefix(): string;
-        prefixer(next?: any): $mol_viewer;
+        prefixer(): $mol_viewer;
         valueView(): string;
-        mainer(next?: any): $mol_viewer;
+        mainer(): $mol_viewer;
         postfix(): string;
-        postfixer(next?: any): $mol_viewer;
+        postfixer(): $mol_viewer;
         childs(): any[];
     }
 }
@@ -414,10 +417,24 @@ declare namespace $.$mol {
 }
 declare namespace $ {
     class $mol_rower extends $mol_viewer {
+        minHeightStyle(): string;
+        field(): {
+            [key: string]: (next?: any) => any;
+        } & {
+            "style.minHeight": () => any;
+        };
     }
 }
 declare namespace $ {
     class $mol_rower_sub extends $mol_viewer {
+    }
+}
+declare namespace $.$mol {
+    class $mol_rower extends $.$mol_rower {
+        itemOffsetsTop(): number[];
+        childsVisible(): (string | number | boolean | Node | $mol_viewer)[];
+        heightMinimal(): number;
+        minHeightStyle(): string;
     }
 }
 declare module $jin {
@@ -679,20 +696,20 @@ declare namespace $ {
     class $mol_app_supplies_carder extends $mol_carder {
         supply(): any;
         arg(): {};
-        linker(next?: any): $mol_linker;
+        linker(): $mol_linker;
         childs(): any[];
         codeTitle(): string;
         code(): string;
-        codeItem(next?: any): $mol_labeler;
+        codeItem(): $mol_labeler;
         costTitle(): string;
-        cost(next?: any): $mol_unit_money;
-        coster(next?: any): $mol_coster;
-        costItem(next?: any): $mol_labeler;
+        cost(): $mol_unit_money;
+        coster(): $mol_coster;
+        costItem(): $mol_labeler;
         providerTitle(): string;
         providerName(): string;
-        providerItem(next?: any): $mol_labeler;
+        providerItem(): $mol_labeler;
         items(): any[];
-        grouper(next?: any): $mol_rower;
+        grouper(): $mol_rower;
         content(): $mol_rower;
     }
 }
@@ -709,9 +726,9 @@ declare namespace $ {
     class $mol_app_supplies_carder_demo_pending extends $mol_app_supplies_carder {
         code(): string;
         providerName(): string;
-        cost(next?: any): $mol_unit_money_usd;
+        cost(): $mol_unit_money_usd;
         status(): string;
-        arg(): {
+        arg(): {} & {
             "supply": () => any;
         };
     }
@@ -720,9 +737,9 @@ declare namespace $ {
     class $mol_app_supplies_carder_demo_approved extends $mol_app_supplies_carder {
         code(): string;
         providerName(): string;
-        cost(next?: any): $mol_unit_money_rur;
+        cost(): $mol_unit_money_rur;
         status(): string;
-        arg(): {
+        arg(): {} & {
             "supply": () => any;
         };
     }
@@ -731,9 +748,9 @@ declare namespace $ {
     class $mol_app_supplies_carder_demo_selected extends $mol_app_supplies_carder {
         code(): string;
         providerName(): string;
-        cost(next?: any): $mol_unit_money_usd;
+        cost(): $mol_unit_money_usd;
         status(): string;
-        arg(): {
+        arg(): {} & {
             "supply": () => any;
         };
     }
@@ -747,9 +764,9 @@ declare namespace $ {
             "mol_stacker_side": () => any;
         };
         main(): any[];
-        mainer(next?: any): $mol_viewer;
+        mainer(): $mol_viewer;
         addon(): any[];
-        addoner(next?: any): $mol_viewer;
+        addoner(): $mol_viewer;
         childs(): any[];
     }
 }
@@ -763,7 +780,7 @@ declare namespace $ {
         tagName(): string;
         enabled(): boolean;
         hint(): string;
-        type(): string;
+        type(val?: any): any;
         attr(): {
             [key: string]: () => string | number | boolean;
         } & {
@@ -771,19 +788,19 @@ declare namespace $ {
             "type": () => any;
         };
         disabled(): boolean;
-        value(next?: any): any;
-        valueChanged(next?: any): any;
+        value(val?: any): any;
+        valueChanged(val?: any): any;
         field(): {
             [key: string]: (next?: any) => any;
         } & {
             "disabled": () => any;
             "value": () => any;
         };
-        eventChange(next?: any): any;
+        eventChange(event?: any): any;
         event(): {
             [key: string]: (event: Event) => void;
         } & {
-            "input": (next?: any) => any;
+            "input": (event?: any) => any;
         };
     }
 }
@@ -797,9 +814,9 @@ declare namespace $ {
     class $mol_form extends $mol_viewer {
         submitBlocked(): boolean;
         formFields(): any[];
-        barFields(next?: any): $mol_viewer;
+        barFields(): $mol_viewer;
         buttons(): any[];
-        barButtons(next?: any): $mol_rower;
+        barButtons(): $mol_rower;
         childs(): any[];
     }
 }
@@ -811,30 +828,31 @@ declare namespace $.$mol {
 declare namespace $ {
     class $mol_form_field extends $mol_viewer {
         name(): string;
-        namer(next?: any): $mol_viewer;
+        namer(): $mol_viewer;
         errors(): any[];
-        errorer(next?: any): $mol_viewer;
-        label(next?: any): $mol_viewer;
+        errorer(): $mol_viewer;
+        label(): $mol_viewer;
         control(): any;
         childs(): any[];
     }
 }
 declare namespace $ {
     class $mol_clicker extends $mol_viewer {
-        tagName(): string;
         enabled(): boolean;
-        eventClick(next?: any): any;
-        eventActivate(next?: any): any;
+        eventClick(event?: any): any;
+        eventActivate(event?: any): any;
         event(): {
             [key: string]: (event: Event) => void;
         } & {
-            "click": (next?: any) => any;
+            "click": (event?: any) => any;
         };
         disabled(): boolean;
+        tabIndex(): string;
         attr(): {
             [key: string]: () => string | number | boolean;
         } & {
             "disabled": () => any;
+            "role": () => any;
             "tabindex": () => any;
         };
     }
@@ -843,6 +861,7 @@ declare namespace $.$mol {
     class $mol_clicker extends $.$mol_clicker {
         disabled(): boolean;
         eventActivate(next: Event): void;
+        tabIndex(): string;
     }
 }
 declare namespace $ {
@@ -863,22 +882,22 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_app_supplies_enter extends $mol_viewer {
-        entered(next?: any): any;
+        entered(val?: any): any;
         loginLabel(): string;
         loginErrors(): any[];
-        login(next?: any): any;
-        loginControl(next?: any): $mol_stringer;
-        loginField(next?: any): $mol_form_field;
+        login(val?: any): any;
+        loginControl(): $mol_stringer;
+        loginField(): $mol_form_field;
         passwordLabel(): string;
         passwordErrors(): any[];
-        password(next?: any): any;
-        passControl(next?: any): $mol_stringer;
-        passwordField(next?: any): $mol_form_field;
+        password(val?: any): any;
+        passControl(): $mol_stringer;
+        passwordField(): $mol_form_field;
         submitLabel(): string;
-        eventSubmit(next?: any): any;
+        eventSubmit(val?: any): any;
         submitBlocked(): boolean;
-        submit(next?: any): $mol_clicker_major;
-        form(next?: any): $mol_form;
+        submit(): $mol_clicker_major;
+        form(): $mol_form;
         childs(): any[];
     }
 }
@@ -897,27 +916,28 @@ declare namespace $ {
 declare namespace $ {
     class $mol_scroller extends $mol_viewer {
         heightMinimal(): number;
-        scrollTop(next?: any): any;
-        scrollLeft(next?: any): any;
+        scrollTop(val?: any): any;
+        scrollLeft(val?: any): any;
         field(): {
             [key: string]: (next?: any) => any;
         } & {
-            "scrollTop": (next?: any) => any;
-            "scrollLeft": (next?: any) => any;
+            "scrollTop": (val?: any) => any;
+            "scrollLeft": (val?: any) => any;
         };
-        eventScroll(next?: any): any;
+        eventScroll(event?: any): any;
         event(): {
             [key: string]: (event: Event) => void;
         } & {
-            "scroll": (next?: any) => any;
-            "overflow": (next?: any) => any;
-            "underflow": (next?: any) => any;
+            "scroll": (event?: any) => any;
+            "overflow": (event?: any) => any;
+            "underflow": (event?: any) => any;
         };
     }
 }
 declare namespace $ {
     interface $mol_viewer_context {
         $mol_scroller_scrollTop(): number;
+        $mol_scroller_scrollLeft(): number;
         $mol_scroller_moving(): boolean;
     }
 }
@@ -935,13 +955,13 @@ declare namespace $.$mol {
 }
 declare namespace $ {
     class $mol_pager extends $mol_viewer {
-        titler(next?: any): $mol_viewer;
+        titler(): $mol_viewer;
         head(): any[];
-        header(next?: any): $mol_viewer;
+        header(): $mol_viewer;
         body(): any[];
-        bodier(next?: any): $mol_scroller;
+        bodier(): $mol_scroller;
         foot(): any[];
-        footer(next?: any): $mol_viewer;
+        footer(): $mol_viewer;
         childs(): any[];
     }
 }
@@ -952,13 +972,13 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_coder extends $mol_viewer {
-        value(next?: any): any;
+        value(val?: any): any;
         format(): string;
         hint(): string;
-        manualer(next?: any): $mol_stringer;
-        eventScan(next?: any): any;
+        manualer(): $mol_stringer;
+        eventScan(val?: any): any;
         labelScan(): string;
-        scanner(next?: any): $mol_clicker;
+        scanner(): $mol_clicker;
         childs(): any[];
     }
 }
@@ -974,12 +994,12 @@ declare namespace $ {
         supplies(): any[];
         title(): string;
         searcherHint(): string;
-        searchQuery(next?: any): any;
-        searcher(next?: any): $mol_coder;
-        searchPanel(next?: any): $mol_rower;
+        searchQuery(val?: any): any;
+        searcher(): $mol_coder;
+        searchPanel(): $mol_rower;
         childs(): any[];
         supplyRows(): any[];
-        lister(next?: any): $mol_lister;
+        lister(): $mol_lister;
         body(): any[];
     }
 }
@@ -1042,7 +1062,7 @@ declare namespace $ {
             "viewBox": () => any;
         };
         path(): string;
-        pather(next?: any): $mol_svg_path;
+        pather(): $mol_svg_path;
         childs(): any[];
     }
 }
@@ -1053,18 +1073,19 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_checker extends $mol_clicker {
-        checked(next?: any): any;
+        checked(val?: any): any;
         attr(): {
             [key: string]: () => string | number | boolean;
         } & {
             "disabled": () => any;
+            "role": () => any;
             "tabindex": () => any;
         } & {
-            "mol_checker_checked": (next?: any) => any;
+            "mol_checker_checked": () => any;
         };
         icon(): any;
         label(): any[];
-        labeler(next?: any): $mol_viewer;
+        labeler(): $mol_viewer;
         childs(): any[];
     }
 }
@@ -1077,10 +1098,10 @@ declare namespace $ {
     class $mol_switcher extends $mol_viewer {
         heightMinimal(): number;
         enabled(): boolean;
-        optionChecked(key: any, next?: any): any;
-        optionLabel(key: any): string;
-        optioner(key: any, next?: any): $mol_checker;
-        value(next?: any): any;
+        optionChecked(id: any, val?: any): any;
+        optionLabel(id: any): string;
+        optioner(id: any): $mol_checker;
+        value(val?: any): any;
         options(): {};
         items(): any[];
         childs(): any[];
@@ -1100,11 +1121,11 @@ declare namespace $.$mol {
 declare namespace $ {
     class $mol_decker extends $mol_lister {
         items(): any[];
-        current(next?: any): any;
+        current(val?: any): any;
         switcherOptions(): {};
-        switcher(next?: any): $mol_switcher;
+        switcher(): $mol_switcher;
         content(): any;
-        rows(): any[];
+        rowers(): any[];
     }
 }
 declare namespace $ {
@@ -1145,18 +1166,18 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_attacher extends $mol_carder {
-        items(next?: any): any;
-        attachNew(next?: any): any;
-        adder(next?: any): $mol_attacher_adder;
-        content(next?: any): any;
-        contenter(next?: any): $mol_tiler;
+        items(val?: any): any;
+        attachNew(val?: any): any;
+        adder(): $mol_attacher_adder;
+        content(): any[];
+        contenter(): $mol_tiler;
     }
 }
 declare namespace $ {
     class $mol_attacher_item extends $mol_linker {
-        urlThumb(next?: any): any;
-        urlLoad(next?: any): any;
-        uri(next?: any): any;
+        urlThumb(val?: any): any;
+        urlLoad(val?: any): any;
+        uri(val?: any): any;
         styleBG(): string;
         field(): {
             [key: string]: (next?: any) => any;
@@ -1177,11 +1198,11 @@ declare namespace $ {
 declare namespace $ {
     class $mol_attacher_adder extends $mol_clicker {
         tagName(): string;
-        fileNew(): string;
-        icon(next?: any): $mol_icon_attach;
-        eventCapture(next?: any): any;
-        eventPicked(next?: any): any;
-        input(next?: any): $mol_attacher_adder_input;
+        fileNew(val?: any): any;
+        icon(): $mol_icon_attach;
+        eventCapture(val?: any): any;
+        eventPicked(val?: any): any;
+        input(): $mol_attacher_adder_input;
         childs(): any[];
     }
 }
@@ -1198,13 +1219,13 @@ declare namespace $ {
             "accept": () => any;
             "multiple": () => any;
         };
-        eventCapture(next?: any): any;
-        eventClick(next?: any): any;
-        eventPicked(next?: any): any;
+        eventCapture(val?: any): any;
+        eventClick(val?: any): any;
+        eventPicked(val?: any): any;
         event(): {
             [key: string]: (event: Event) => void;
         } & {
-            "change": (next?: any) => any;
+            "change": (val?: any) => any;
         };
     }
 }
@@ -1225,9 +1246,9 @@ declare namespace $.$mol {
 declare namespace $ {
     class $mol_sectioner extends $mol_lister {
         head(): any;
-        header(next?: any): $mol_viewer;
+        header(): $mol_viewer;
         content(): any;
-        rows(): any[];
+        rowers(): any[];
     }
 }
 declare namespace $ {
@@ -1237,7 +1258,7 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_checker_ticker extends $mol_checker {
-        icon(next?: any): $mol_icon_tick;
+        icon(): $mol_icon_tick;
     }
 }
 declare namespace $ {
@@ -1245,31 +1266,31 @@ declare namespace $ {
         heightMinimal(): number;
         productLabel(): string;
         productName(): string;
-        productItem(next?: any): $mol_labeler;
+        productItem(): $mol_labeler;
         costlabel(): string;
-        cost(next?: any): $mol_unit_money;
-        coster(next?: any): $mol_coster;
-        costItem(next?: any): $mol_labeler;
-        mainGroup(next?: any): $mol_rower;
+        cost(): $mol_unit_money;
+        coster(): $mol_coster;
+        costItem(): $mol_labeler;
+        mainGroup(): $mol_rower;
         divisionLabel(): string;
         divisionName(): string;
-        divisionItem(next?: any): $mol_labeler;
+        divisionItem(): $mol_labeler;
         priceLabel(): string;
-        price(next?: any): $mol_unit_money;
-        pricer(next?: any): $mol_coster;
-        priceItem(next?: any): $mol_labeler;
-        addonGroup(next?: any): $mol_rower;
+        price(): $mol_unit_money;
+        pricer(): $mol_coster;
+        priceItem(): $mol_labeler;
+        addonGroup(): $mol_rower;
         quantityLabel(): string;
         quantity(): string;
-        quantityItem(next?: any): $mol_labeler;
+        quantityItem(): $mol_labeler;
         supplyDateLabel(): string;
         supplyDate(): string;
-        supplyDateItem(next?: any): $mol_labeler;
+        supplyDateItem(): $mol_labeler;
         storeLabel(): string;
         storeName(): string;
-        storeItem(next?: any): $mol_labeler;
-        supplyGroup(next?: any): $mol_rower;
-        grouper(next?: any): $mol_viewer;
+        storeItem(): $mol_labeler;
+        supplyGroup(): $mol_rower;
+        grouper(): $mol_viewer;
         content(): $mol_viewer;
     }
 }
@@ -1289,69 +1310,69 @@ declare namespace $ {
     class $mol_app_supplies_detailer extends $mol_pager {
         supply(): any;
         title(): string;
-        backer_icon(next?: any): $mol_icon_chevron;
+        backer_icon(): $mol_icon_chevron;
         backArg(): {
             "side": () => any;
             "supply": () => any;
         };
-        backer(next?: any): $mol_linker;
+        backer(): $mol_linker;
         head(): any[];
         orgLabel(): string;
         providerLabel(): string;
         providerName(): string;
-        providerItem(next?: any): $mol_labeler;
+        providerItem(): $mol_labeler;
         customerLabel(): string;
         consumerName(): string;
-        consumerItem(next?: any): $mol_labeler;
+        consumerItem(): $mol_labeler;
         supplyGroupLabel(): string;
         supplyGroupName(): string;
-        supplyGroupItem(next?: any): $mol_labeler;
+        supplyGroupItem(): $mol_labeler;
         ballanceUnitLabel(): string;
         ballanceUnitName(): string;
-        ballanceUnitItem(next?: any): $mol_labeler;
+        ballanceUnitItem(): $mol_labeler;
         orgItems(): any[];
-        orgContent(next?: any): $mol_rower;
-        orgItem(next?: any): $mol_decker_item;
+        orgContent(): $mol_rower;
+        orgItem(): $mol_decker_item;
         consLabel(): string;
         contractLabel(): string;
         contractId(): string;
-        contractItem(next?: any): $mol_labeler;
+        contractItem(): $mol_labeler;
         payMethodLabel(): string;
         payMethodName(): string;
-        payMethodItem(next?: any): $mol_labeler;
+        payMethodItem(): $mol_labeler;
         managerLabel(): string;
         managerName(): string;
-        managerItem(next?: any): $mol_labeler;
+        managerItem(): $mol_labeler;
         debitodLabel(): string;
         debitorName(): string;
-        debitorItem(next?: any): $mol_labeler;
+        debitorItem(): $mol_labeler;
         consItems(): any[];
-        consContent(next?: any): $mol_rower;
-        consItem(next?: any): $mol_decker_item;
-        descrDecker(next?: any): $mol_decker;
-        descrCarder(next?: any): $mol_carder;
+        consContent(): $mol_rower;
+        consItem(): $mol_decker_item;
+        descrDecker(): $mol_decker;
+        descrCarder(): $mol_carder;
         attachTitle(): string;
         attachments(): any[];
-        attachNew(next?: any): any;
-        attacher(next?: any): $mol_attacher;
-        attachCarder(next?: any): $mol_sectioner;
+        attachNew(val?: any): any;
+        attacher(): $mol_attacher;
+        attachCarder(): $mol_sectioner;
         positionsTitle(): string;
         costLabel(): string;
-        cost(next?: any): $mol_unit_money;
-        coster(next?: any): $mol_coster;
-        costItem(next?: any): $mol_labeler;
+        cost(): $mol_unit_money;
+        coster(): $mol_coster;
+        costItem(): $mol_labeler;
         posListerHead(): any[];
         positions(): any[];
-        posLister(next?: any): $mol_sectioner;
+        posLister(): $mol_sectioner;
         content(): any[];
-        contenter(next?: any): $mol_lister;
-        lister(next?: any): $mol_lister;
+        contenter(): $mol_lister;
+        lister(): $mol_lister;
         body(): any[];
-        approved(next?: any): any;
+        approved(val?: any): any;
         approvedLabel(): string;
-        approver(next?: any): $mol_checker_ticker;
+        approver(): $mol_checker_ticker;
         tools(): any[];
-        controller(next?: any): $mol_rower;
+        controller(): $mol_rower;
         foot(): any[];
     }
 }
@@ -1381,13 +1402,13 @@ declare namespace $.$mol {
 }
 declare namespace $ {
     class $mol_app_supplies_root extends $mol_stacker {
-        entered(next?: any): any;
-        enter(next?: any): $mol_app_supplies_enter;
+        entered(val?: any): any;
+        enter(): $mol_app_supplies_enter;
         supplies(): any[];
-        searchQuery(next?: any): any;
-        lister(next?: any): $mol_app_supplies_lister;
+        searchQuery(val?: any): any;
+        lister(): $mol_app_supplies_lister;
         supply(): any;
-        detailer(next?: any): $mol_app_supplies_detailer;
+        detailer(): $mol_app_supplies_detailer;
     }
 }
 declare namespace $.$mol {
@@ -1411,9 +1432,9 @@ declare namespace $ {
 declare namespace $ {
     class $mol_app_supplies_positioner_demo extends $mol_app_supplies_positioner {
         productName(): string;
-        price(next?: any): $mol_unit_money_usd;
+        price(): $mol_unit_money_usd;
         quantity(): string;
-        cost(next?: any): $mol_unit_money_usd;
+        cost(): $mol_unit_money_usd;
         supplyDate(): string;
         divisionName(): string;
         storeName(): string;
@@ -1422,9 +1443,9 @@ declare namespace $ {
 declare namespace $ {
     class $mol_app_supplies_detailer_demo extends $mol_app_supplies_detailer {
         title(): string;
-        approved(next?: any): any;
+        approved(val?: any): any;
         providerName(): string;
-        cost(next?: any): $mol_unit_money_rur;
+        cost(): $mol_unit_money_rur;
         consumerName(): string;
         supplyGroupName(): string;
         ballanceUnitName(): string;
@@ -1432,11 +1453,11 @@ declare namespace $ {
         payMethodName(): string;
         managerName(): string;
         debitorName(): string;
-        pos1(next?: any): $mol_app_supplies_positioner_demo;
-        pos2(next?: any): $mol_app_supplies_positioner_demo;
-        pos3(next?: any): $mol_app_supplies_positioner_demo;
-        pos4(next?: any): $mol_app_supplies_positioner_demo;
-        pos5(next?: any): $mol_app_supplies_positioner_demo;
+        pos1(): $mol_app_supplies_positioner_demo;
+        pos2(): $mol_app_supplies_positioner_demo;
+        pos3(): $mol_app_supplies_positioner_demo;
+        pos4(): $mol_app_supplies_positioner_demo;
+        pos5(): $mol_app_supplies_positioner_demo;
         positions(): any[];
         attachments(): any[];
     }
