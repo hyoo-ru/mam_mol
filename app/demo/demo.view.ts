@@ -110,7 +110,7 @@ namespace $.$mol {
 		
 		@$mol_mem() 
 		mainerContent() {
-			switch (this.names().length) {
+			switch( this.names().length ) {
 				case 0 :
 					return [ this.emptyDemoMessager() ]
 				case 1 :
