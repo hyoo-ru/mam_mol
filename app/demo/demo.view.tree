@@ -1,9 +1,7 @@
 $mol_app_demo $mol_stacker
 	main / <= detailer $mol_app_demo_pager
 		title <= detailerTitle \
-		body /
-			<= detailerRower $mol_rower
-				childs <= samples /
+		body <= mainerContent /
 	addon / <= menu $mol_pager
 		title <= titleAddon @ \Demos
 		bodier <= navigator $mol_app_demo_navigator
@@ -12,7 +10,15 @@ $mol_app_demo $mol_stacker
 	welcomer $mol_scroller
 		childs / <= welcomeTexter $mol_texter
 			text <= welcomeText \
-
+	detailerRower $mol_rower
+		childs /
+			<= samples /
+	emptyDemoMessager $mol_statuser
+		childs /
+			<= emptyDemoPrefix @ \No one demo with prefix "
+			<= selected \
+			<= emptyDemoPostfix @ \"
+	
 $mol_app_demo_pager $mol_pager
 	head /
 		<= backer $mol_linker

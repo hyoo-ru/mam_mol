@@ -2,6 +2,7 @@
 	position: relative;
 	z-index: 1;
 	opacity: 1;
+	transition: none;
 }
 
 [mol_floater_scrolling] {

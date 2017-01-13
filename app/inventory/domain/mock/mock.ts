@@ -59,7 +59,7 @@ namespace $ {
 			const creds = this.credentials()
 			if( !creds ) return false
 			
-			if( creds.login === 'demo' ) return true
+			if( creds.login && creds.password ) return true
 			return false
 		}
 		
