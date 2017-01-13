@@ -5,6 +5,7 @@
 	align-items: stretch;
 	flex-direction: column;
 	transform: translateZ(0);
+	max-width: 100%;
 }
 
 [mol_demo_header] {
