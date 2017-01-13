@@ -46,6 +46,7 @@
 	align-items: stretch;
 	justify-content: flex-start;
 	flex-wrap: wrap;
+	padding: 1rem;
 }
 
 [mol_app_demo_detailerRower] {
@@ -54,6 +55,10 @@
 	justify-content: center;
 	box-shadow: none;
 	margin: 0;
+}
+
+[mol_app_demo_detailerRower] > * {
+	padding: .5rem;
 }
 
 [mol_app_demo_pager_backer] {
