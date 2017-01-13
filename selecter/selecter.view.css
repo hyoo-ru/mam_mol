@@ -1,6 +1,8 @@
-[mol_selecter] {
-	margin: auto;
-}
 [mol_selecter_trigger] {
 	margin: 0;
+}
+[mol_selecter_lister] {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
 }

@@ -3,7 +3,6 @@ $mol_selecter_demo $mol_viewer
 	childs /
 		<= selecterSimple $mol_selecter
 			options <= names /
-			value \
 		- <= customselecter $mol_selecter
 		-	options <= 
 		-	optioner!id <= optioner!id $mol_viewer
