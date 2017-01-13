@@ -41,3 +41,8 @@
 [mol_grider_number] {
 	text-align: right;
 }
+
+[mol_grider_cellerDimmer] {
+	display: inline-block;
+	vertical-align: inherit;
+}

@@ -88,8 +88,8 @@ namespace $.$mol {
 			return this.cellerText( id )
 		}
 		
-		cellerContent( id : { row : string[] , col : string } ) {
-			return [ this.record( id.row[ id.row.length - 1 ] )[ id.col ] ]
+		cellerValue( id : { row : string[] , col : string } ) {
+			return this.record( id.row[ id.row.length - 1 ] )[ id.col ]
 		}
 		
 		records() : any {

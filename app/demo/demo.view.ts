@@ -3,12 +3,10 @@ namespace $.$mol {
 	export class $mol_app_demo extends $.$mol_app_demo {
 		
 		title() {
-			let next = this.titleAddon()
-			
 			const selected = this.selected()
-			if( selected ) next = `$${ selected } - ${ next }`
+			if( selected ) return `$${ selected }`
 			
-			return next
+			return super.title()
 		}
 		
 		@ $mol_mem()
@@ -17,7 +15,7 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		namesDemo() {
+		namesDemoAll() {
 			var next : string[] = []
 			for( var name in $ ) {
 				if( !/^\$.*_demo($|_)/i.test( name ) ) continue
@@ -30,8 +28,15 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
+		namesDemoFiltered() {
+			const filter = this.filterString()
+			const names = this.namesDemoAll().filter( name => name.match( filter ) )
+			return names
+		}
+		
+		@ $mol_mem()
 		navigatorHierarchy() {
-			const names = this.namesDemo()
+			const names = this.namesDemoFiltered()
 			
 			const hierarchy = {} as { [ prefix : string ] : $mol_grider_node }
 			const root = hierarchy[ '' ] = {
@@ -101,20 +106,20 @@ namespace $.$mol {
 			return '$' + this.selected()
 		}
 		
-		names() {
+		namesDemo() {
 			const prefix = this.selected()
-			const namesAll = this.namesDemo()
+			const namesAll = this.namesDemoAll()
 			const names = namesAll.filter( name => name.substring( 0 , prefix.length ) === prefix )
 			return names
 		}
 		
 		@$mol_mem() 
 		mainerContent() {
-			switch (this.names().length) {
+			switch( this.namesDemo().length ) {
 				case 0 :
 					return [ this.emptyDemoMessager() ]
 				case 1 :
-					return [ this.sampleLarge( this.names()[0] ) ]
+					return [ this.sampleLarge() ]
 				default :
 					return [ this.detailerRower() ]
 			}
@@ -122,8 +127,7 @@ namespace $.$mol {
 		
 		@ $mol_mem() 
 		samples () {
-			const samples = this.names().map( name => this.sampleSmall( name ) )
-			return samples
+			return this.namesDemo().map( name => this.sampleSmall( name ) )
 		}
 		
 		@ $mol_mem_key()
@@ -134,10 +138,10 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		sampleLarge( name : string ) {
+		sampleLarge() {
 			const sample = new $mol_demo_large()
 			sample.titler = ()=> null
-			sample.name = ()=> name
+			sample.name = ()=> this.namesDemo()[ 0 ]
 			return sample
 		}
 		

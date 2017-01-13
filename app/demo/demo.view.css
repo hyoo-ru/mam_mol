@@ -1,6 +1,5 @@
 :root {
 	--mol_skin_base: hsl( 140 , 35% , 50% );
-	--mol_skin_round: .25rem;
 }
 
 [mol_app_demo_navigator] {
@@ -8,6 +7,10 @@
 	flex-direction: column;
 	flex: 1 1 auto;
 	margin: 0;
+}
+
+[mol_app_demo_navigatorHeader] {
+	padding: 0;
 }
 
 [mol_app_demo_navigator_tabler] {
@@ -46,6 +49,7 @@
 	align-items: stretch;
 	justify-content: flex-start;
 	flex-wrap: wrap;
+	padding: 1rem;
 }
 
 [mol_app_demo_detailerRower] {
@@ -54,6 +58,10 @@
 	justify-content: center;
 	box-shadow: none;
 	margin: 0;
+}
+
+[mol_app_demo_detailerRower] > * {
+	padding: .5rem;
 }
 
 [mol_app_demo_pager_backer] {

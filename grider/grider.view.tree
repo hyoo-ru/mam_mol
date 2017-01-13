@@ -37,6 +37,10 @@ $mol_grider $mol_scroller
 		level <= cellerLevel!id 0
 		label <= cellerContent!id /
 		expanded?val <=> cellerExpanded!id?val false
+	cellerContent!id /
+		<= cellerDimmer!id $mol_dimmer
+			needle <= needle \
+			haystack <= cellerValue!id \
 
 $mol_grider_gaper $mol_viewer
 	height 0
