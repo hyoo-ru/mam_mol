@@ -1,4 +1,16 @@
 $mol_selecter $mol_viewer
-    childs /
-        < header $mol_barer
-        \fsdfsdfsdfsd
+	selected \
+	childs /
+		<= header $mol_barer
+			childs /
+				<= selectedOption  $mol_stringer
+				<= trigger $mol_checker_expander
+		<= lister $mol_lister
+			heightMinimal 0
+			childs /
+
+$mol_selecter_optioner $mol_clicker
+	value \
+	event *
+		mousedown?event <=> selectEvent?event null
+	childs /
