@@ -3,10 +3,13 @@ $mol_app_demo $mol_stacker
 		title <= detailerTitle \
 		body <= mainerContent /
 	addon / <= menu $mol_pager
-		title <= titleAddon @ \Demos
+		head / <= navigatorHeader $mol_rower childs / <= filterStringer $mol_stringer
+			hint <= filterHint @ \Search demo..
+			value?val <=> filterString?val \
 		bodier <= navigator $mol_app_demo_navigator
 			hierarchy <= navigatorHierarchy null
 			record!id <= navigatorOption!id null
+			needle <= filterString?val \
 	welcomer $mol_scroller
 		childs / <= welcomeTexter $mol_texter
 			text <= welcomeText \
