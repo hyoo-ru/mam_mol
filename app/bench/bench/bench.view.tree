@@ -1,0 +1,24 @@
+$mol_app_bench $mol_stacker
+	main / <= mainPage $mol_pager
+		title <= title
+		body /
+			<= informator $mol_viewer childs /
+				<= descriptioner $mol_texter
+					text <= description \
+				<= resulter $mol_bencher
+					results <= results null
+					columnHeaderLabel!id <= columnHeaderLabel!id / 
+					colSort?val <=> resultsColSort?val \
+			<= tester $mol_app_bench_tester
+	addon / <= addonPage $mol_pager
+		title <= addonerTitle @ \Samples
+		body / <= menu $mol_lister
+			rowers <= menuOptions /
+	menuOptioner!id $mol_checker_ticker
+		heightMinimal 36
+		checked?val <=> menuOptionerChecked!id?val false
+		label / <= menuOptionerTitle!id \
+	columnHeaderLabelSample @ \Sample
+
+$mol_app_bench_tester $mol_viewer
+	tagName \iframe

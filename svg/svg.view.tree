@@ -4,15 +4,15 @@ $mol_svg $mol_viewer
 
 $mol_svg_root $mol_viewer
 	tagName \svg
-	attr * viewBox < viewBox \0 0 100 100 
+	attr * viewBox <= viewBox \0 0 100 100 
 
 $mol_svg_path $mol_svg
 	tagName \path
-	attr * d < geometry \
+	attr * d <= geometry \
 
 $mol_svg_circle $mol_svg
 	tagName \circle
 	attr *
-		r < radius \
-		cx < posX \
-		cy < posY \
+		r <= radius \
+		cx <= posX \
+		cy <= posY \

@@ -8,11 +8,15 @@
 	flex: 1 1 auto;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
+	box-sizing: border-box;
+	margin: auto;
+	max-width: 100%;
 }
 
-[mol_rower] > * ,
-[mol_rower_sub] > * {
+[mol_rower] > [mol_viewer] ,
+[mol_rower_sub] > [mol_viewer] {
 	margin: .5rem;
+	max-width: 100%;
 }
 
 [mol_rower_sub] {

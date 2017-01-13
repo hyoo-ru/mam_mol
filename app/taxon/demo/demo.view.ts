@@ -3,19 +3,19 @@ namespace $.$mol {
 	export class $mol_app_taxon_demo extends $.$mol_app_taxon_demo {
 		
 		@ $mol_mem()
-		hierarhy() {
-			const dict : { [ key : number ] : $mol_app_taxon_hierarhy_node } = {}
-			dict[ 0 ] = {
-				id : 0 ,
+		hierarchy() {
+			const dict : { [ key : string ] : $mol_grider_node } = {}
+			dict[ '' ] = {
+				id : '' ,
 				parent : null ,
-				childs : []
+				childs : [] ,
 			}
 			for( let i = 1 ; i < 30000 ; ++i ) {
-				const parent = dict[ Math.floor( Math.random() * i ) ] 
+				const parent = dict[ Math.floor( Math.random() * i ) || '' ] 
 				const node = dict[ i ] = {
-					id : i ,
+					id : `${ i || '' }` ,
 					parent ,
-					childs : [] as $mol_app_taxon_hierarhy_node[] ,
+					childs : [] as $mol_grider_node[] ,
 				}
 				parent.childs.push( node )
 			}

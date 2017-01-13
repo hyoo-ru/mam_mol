@@ -70,7 +70,11 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		samplesAll( next? : string[] ) {
-			return Object.keys( this.meta().samples ).sort()
+			return Object.keys( this.meta().samples ).sort( ( a , b )=> {
+				const titleA = this.menuOptionerTitle( a ).toLowerCase()
+				const titleB = this.menuOptionerTitle( a ).toLowerCase()
+				return titleA > titleB ? 1 : titleA < titleB ? -1 : 0
+			} )
 		}
 		
 		@ $mol_mem()
@@ -99,7 +103,7 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		resultsSample( sampleId : string )  {
 			const results : { [ key : string ] : any } = {
-				sample : sampleId ,
+				sample : this.menuOptionerTitle( sampleId ) ,
 			}
 			
 			this.steps().forEach( step => {
@@ -136,7 +140,8 @@ namespace $.$mol {
 		}
 		
 		menuOptionerTitle( sample : string ) {
-			return sample
+			const title = this.meta().samples[ sample ].title
+			return title[ $mol_locale.lang() ] || title[ 'en' ]
 		}
 		
 		@ $mol_mem_key()

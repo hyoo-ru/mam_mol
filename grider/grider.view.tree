@@ -1,59 +1,54 @@
 $mol_grider $mol_scroller
 	rows /
-	row# null
+	row!id null
 	cols /
 	records /
-	record# null
-	hierarhyColumn \
+	record!id null
+	hierarchy null
+	hierarchyColumn \
+	fieldId \
+	fieldParent \
 	-
 	childs /
-		< tabler $mol_viewer
+		<= tabler $mol_viewer
 			tagName \table
 			childs /
-				< rowersVisible /
+				<= rowersVisible /
 	rowers /
 	header $mol_grider_rower
-		height < rowHeight 40
-		cellers < headerCellers /
+		height <= rowHeight 40
+		cellers <= headerCellers /
 	gaperTop $mol_grider_gaper
-		height < gapTop 0 
+		height <= gapTop 0 
 	gaperBottom $mol_grider_gaper
-		height < gapBottom 0 
-	rower# $mol_grider_rower
-		height < rowHeight 40
-		cellers < cellers# /
+		height <= gapBottom 0 
+	rower!id $mol_grider_rower
+		height <= rowHeight 40
+		cellers <= cellers!id /
 	-
-	celler# null
-	cellerText# $mol_grider_celler
-		childs / < cellerContentText# < cellerContent# /
-	cellerNumber# $mol_grider_number
-		childs / < cellerContentNumber# < cellerContent# /
-	columnHeader# $mol_floater
-		childs / < columnHeaderContent# /
-	cellerBranch# $mol_grider_branch
-		level < rowLevel# 0
-		content < cellerContent# /
-		expanded > rowExpanded# false
+	celler!id null
+	cellerText!id $mol_grider_celler
+		childs / <= cellerContentText!id <= cellerContent!id /
+	cellerNumber!id $mol_grider_number
+		childs / <= cellerContentNumber!id <= cellerContent!id /
+	columnHeader!id $mol_floater
+		childs / <= columnHeaderContent!id /
+	cellerBranch!id $mol_checker_expander
+		level <= cellerLevel!id 0
+		label <= cellerContent!id /
+		expanded?val <=> cellerExpanded!id?val false
 
 $mol_grider_gaper $mol_viewer
 	height 0
-	field * style.height < heightStyle \0px
+	field * style.height <= heightStyle \0px
 
 $mol_grider_rower $mol_viewer
 	tagName \tr
 	height 40
-	field * style.height < heightStyle \
-	childs < cellers /
+	field * style.height <= heightStyle \
+	childs <= cellers /
 
 $mol_grider_celler $mol_viewer
 	tagName \td
 
 $mol_grider_number $mol_grider_celler
-
-$mol_grider_branch $mol_checker_expander
-	tagName \div
-	level 0
-	field * style.paddingLeft < levelStyle \0px
-	checked > expanded false
-	enabled < expandable false
-	label < content /

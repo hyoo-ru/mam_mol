@@ -1,3 +1,7 @@
+[mol_app_bench] {
+	margin: 0;
+}
+
 [mol_app_bench_mainPage] > [mol_pager_bodier] {
 	display: flex;
 	overflow: auto;
@@ -6,6 +10,10 @@
 
 [mol_app_bench_menu] {
 	padding: .5rem;
+}
+
+[mol_app_bench_menu] > * {
+	margin: 0;
 }
 
 [mol_app_bench_informator] {

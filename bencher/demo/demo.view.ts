@@ -12,8 +12,8 @@ namespace $.$mol {
 				'bubble' : {
 					'algorithm' : 'bubble' ,
 					'min' : '1 ms' ,
-					'mid' : '50 ms' ,
-					'max' : '1000 ms' ,
+					'mid' : '11 ms' ,
+					'max' : '99 ms' ,
 				} ,
 				'qsort' : {
 					'algorithm' : 'qsort' ,

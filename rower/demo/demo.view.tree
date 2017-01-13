@@ -1,20 +1,20 @@
 $mol_rower_demo $mol_rower
 	heightMinimal 68
 	childs /
-		< titler $mol_suggester
-			hint < helloHint @ \Title
-			value > title \
+		<= titler $mol_suggester
+			hint <= helloHint @ \Title
+			value?val <=> title?val \
 			suggests /
-				< suggest1 @ \Hello
-				< suggest2 @ \World
-		< counter $mol_number
-			hint < countHint @ \Count
-			value > count null
-		< progresser $mol_portioner
-			portion < progress 0.33
-		< publisher $mol_checker_ticker
-			label / < publishLabel @ \Shared
-			checked > publish false
-		< buttonDrop $mol_clicker_minor
-			childs / < dropLabel @ \Drop
-			eventClick > eventLog null
+				<= suggest1 @ \Hello
+				<= suggest2 @ \World
+		<= counter $mol_number
+			hint <= countHint @ \Count
+			value?val <=> count?val null
+		<= progresser $mol_portioner
+			portion <= progress 0.33
+		<= publisher $mol_checker_ticker
+			label / <= publishLabel @ \Shared
+			checked?val <=> publish?val false
+		<= buttonDrop $mol_clicker_minor
+			childs / <= dropLabel @ \Drop
+			eventClick?val <=> eventLog?val null

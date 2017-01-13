@@ -9,7 +9,10 @@ namespace $.$mol {
 			clicker.eventClick = event => { clicked = true }
 			
 			const element = <HTMLButtonElement> clicker.DOMTree()
-			element.dispatchEvent( new Event( 'click' , {} ) )
+			
+			const event = document.createEvent( 'mouseevent' )
+			event.initEvent( 'click' , true , true )
+			element.dispatchEvent( event )
 			
 			$mol_assert_ok( clicked )
 		} ,
@@ -22,7 +25,10 @@ namespace $.$mol {
 			clicker.enabled = ()=> false
 			
 			const element = <HTMLButtonElement> clicker.DOMTree()
-			element.dispatchEvent( new Event( 'click' , {} ) )
+			
+			const event = document.createEvent( 'mouseevent' )
+			event.initEvent( 'click' , true , true )
+			element.dispatchEvent( event )
 			
 			$mol_assert_not( clicked )
 		} ,
@@ -30,4 +36,3 @@ namespace $.$mol {
 	})
 	
 }
-
