@@ -1,0 +1,26 @@
+{
+	"short_name": "$mol",
+	"name": "$mol demo app",
+	"icons": [
+		{
+			"src": "logo/logo_48.png",
+			"type": "image/png",
+			"sizes": "48x48"
+		},
+		{
+			"src": "logo/logo_96.png",
+			"type": "image/png",
+			"sizes": "96x96"
+		},
+		{
+			"src": "logo/logo_192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		}
+	],
+	"start_url": ".",
+	"background_color": "#53ac71",
+	"theme_color": "#53ac71",
+	"display": "standalone",
+	"orientation": "landscape"
+}
