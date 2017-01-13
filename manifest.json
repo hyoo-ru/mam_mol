@@ -1,0 +1,26 @@
+{
+  "short_name": "$Mol Demo",
+  "name": "Molecule Demo",
+  "icons": [
+    {
+      "src": "standalone_statics/icon-1x.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "standalone_statics/icon-2x.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "standalone_statics/icon-4x.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/mol/#demo=mol#",
+  "background_color": "#53ac71",
+  "theme_color": "#53ac71",
+  "display": "standalone",
+  "orientation": "landscape"
+}
