@@ -16,7 +16,7 @@ namespace $.$mol {
 		optioners () {
 			return this.optionsFiltered().map( ( option: string ) => this.optioner( option ) )
 		}
-		 
+		
 		selectedOption () {
 			return (this.value())
 				? this.optionerContent(this.value())
@@ -27,6 +27,35 @@ namespace $.$mol {
 		
 		eventSelect ( id: string, event?: MouseEvent ) {
 			this.value( id )
+			this.expanded(false);
+		}
+		
+		childs() {
+			return [
+				this.trigger(),
+				(this.expanded())
+					? this.lister()
+					: null
+			]
+		}
+		
+		@$mol_mem()
+		focused() {
+			return $mol_viewer_selection.focused().indexOf( this.DOMNode() ) !== -1 
+		}
+		
+		@$mol_mem()
+		expanded( val?: boolean ) {
+			if ( !this.focused() )
+				return false;	
+					
+			if (val !== void 0) 
+				return val;
+			
+			if (this.prefix())
+				return true;
+			
+			return false;
 		}
 	}
 }

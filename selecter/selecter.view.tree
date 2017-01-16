@@ -1,7 +1,8 @@
 $mol_selecter $mol_viewer
 	options /
-	minOptionsToSearch 3
+	minOptionsToSearch 1
 	value?val \
+	expanded?val false
 	optioner!id $mol_clicker
 		eventClick?event <=> eventSelect!id?event null
 		childs <= optionerContent!id /
@@ -14,10 +15,9 @@ $mol_selecter $mol_viewer
 		childs / 
 			<= selecterEmptyMessege @ \ - Select -
 	childs /
-		<= header $mol_barer
-			childs /
-				<= trigger $mol_checker_expander
-					label <= selectedOption / 
+		<= trigger $mol_checker_expander
+			label <= selectedOption / 
+			checked?val <=> expanded?val
 		<= lister $mol_lister
 			heightMinimal 0
 			childs <= optioners /
