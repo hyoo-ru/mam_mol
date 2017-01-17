@@ -177,9 +177,10 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    var $mol_viewer_context: $mol_viewer_context;
+    let $mol_viewer_context: $mol_viewer_context;
     interface $mol_viewer_context {
-        $mol_viewer_heightLimit(): number;
+        $mol_viewer_visibleWidth(): number;
+        $mol_viewer_visibleHeight(): number;
     }
     class $mol_viewer extends $mol_object {
         static root(id: number): $mol_viewer;
@@ -194,6 +195,7 @@ declare namespace $ {
         childs(): (string | number | boolean | Node | $mol_viewer)[];
         childsVisible(): (string | number | boolean | Node | $mol_viewer)[];
         heightMinimal(): number;
+        widthMinimal(): number;
         private 'DOMNode()';
         DOMNode(next?: Element): Element;
         static renderChilds(node: Element, childs: ($mol_viewer | Node | string | number | boolean)[]): void;
@@ -229,7 +231,7 @@ declare namespace $ {
         tagName(): string;
         enabled(): boolean;
         hint(): string;
-        type(): string;
+        type(val?: any): any;
         attr(): {
             [key: string]: () => string | number | boolean;
         } & {
@@ -237,19 +239,19 @@ declare namespace $ {
             "type": () => any;
         };
         disabled(): boolean;
-        value(next?: any): any;
-        valueChanged(next?: any): any;
+        value(val?: any): any;
+        valueChanged(val?: any): any;
         field(): {
             [key: string]: (next?: any) => any;
         } & {
             "disabled": () => any;
             "value": () => any;
         };
-        eventChange(next?: any): any;
+        eventChange(event?: any): any;
         event(): {
             [key: string]: (event: Event) => void;
         } & {
-            "input": (next?: any) => any;
+            "input": (event?: any) => any;
         };
     }
 }
@@ -262,10 +264,10 @@ declare namespace $.$mol {
 declare namespace $ {
     class $mol_app_hello extends $mol_viewer {
         namerHint(): string;
-        name(next?: any): any;
-        namer(next?: any): $mol_stringer;
+        name(val?: any): any;
+        namer(): $mol_stringer;
         greeting(): string;
-        greeter(next?: any): $mol_viewer;
+        greeter(): $mol_viewer;
         childs(): any[];
     }
 }

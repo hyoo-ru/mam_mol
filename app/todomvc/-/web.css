@@ -1,3 +1,8 @@
+[mol_viewer] {
+    -webkit-transition: all .1s;
+    transition: all .1s;
+    -webkit-appearance: none
+}
 [mol_viewer_root] {
     margin: 0;
     padding: 0;
@@ -5,9 +10,6 @@
     height: 100%;
     font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
 }
-/*body[mol_viewer_root] {*/
-/*position: fixed;*/
-/*}*/
 [mol_viewer_error] {
     background-image: -webkit-repeating-linear-gradient(
 		315deg,
@@ -93,7 +95,8 @@
             flex: 1000 1 auto;
     width: 8em;
     background: #eee;
-    color: gray
+    color: gray;
+    margin: auto
 }
 [mol_stringer]:enabled {
     background: white;
@@ -118,9 +121,9 @@
     background: none;
     box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
     border-radius: 2px;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
@@ -133,14 +136,16 @@
     text-align: center;
     padding: 8px;
     padding: .5rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
     text-decoration: inherit;
     color: inherit;
-    cursor: default;
+    cursor: inherit;
     opacity: .9;
-    position: relative
+    position: relative;
+    box-sizing: border-box;
+    margin: auto
 }
 [mol_clicker_button][disabled] {
     background: #eee;
@@ -152,13 +157,13 @@
     box-shadow: 0 0 0 1px rgba(220, 220, 220, 1)
 }
 [mol_clicker_danger]:not([disabled]) {
-    background: rgba(255, 0, 0, .51);
+    background: rgba(255, 0, 0, .5);
     color: white
 }
 [mol_clicker]:not([disabled]):hover ,
 [mol_clicker]:focus {
     outline: none;
-    z-index: 2;
+    z-index: 1;
     cursor: pointer;
     opacity: 1;
     box-shadow: 0 0 0 1px rgb(211, 80, 91)
@@ -168,17 +173,25 @@
     color: hsl(215, 50%, 57%);
     cursor: pointer;
     border-radius: 2px;
-    display: inline-block;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
     padding: 8px;
     padding: .5rem;
-    box-sizing: border-box
+    box-sizing: border-box;
+    -webkit-box-align: baseline;
+        -ms-flex-align: baseline;
+            align-items: baseline
 }
 [mol_linker_current] {
     color: inherit;
     cursor: default
 }
-[mol_linker]:focus ,
 [mol_linker]:not([mol_linker_current]):hover {
+    background-color: rgba(0, 0, 0, .03);
+    box-shadow: 0 0 0 1px rgb(211, 80, 91)
+}
+[mol_linker]:focus {
     outline: none;
     box-shadow: 0 0 0 1px rgb(211, 80, 91)
 }
@@ -196,7 +209,8 @@
         align-content: center;
     border: none;
     font-weight: normal;
-    box-shadow: none
+    box-shadow: none;
+    text-align: left
 }
 [mol_checker_icon] {
     display: -webkit-inline-box;
@@ -212,16 +226,20 @@
 [mol_scroller] {
     overflow: auto;
     overflow-y: scroll;
-    -webkit-box-flex: 0;
-        -ms-flex: 0 1 auto;
-            flex: 0 1 auto;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
     box-sizing: border-box;
     will-change: scroll-position;
     -webkit-transform: translateZ(0);
             transform: translateZ(0);
     box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
     max-height: 100%;
-    -webkit-overflow-scrolling: touch
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+    -ms-flex-item-align: stretch;
+        -ms-grid-row-align: stretch;
+        align-self: stretch
 }
 @media print {
     [mol_scroller] {
@@ -236,26 +254,30 @@
     display: -ms-flexbox;
     display: flex;
     box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
-    border-radius: 2px
+    border-radius: 2px;
+    margin: auto
+}
+[mol_barer] > * {
+    border-radius: 0
 }
 [mol_barer] > *:first-child {
-    border-radius: 2px 0 0 2px
-}
-[mol_barer] > *:not(:first-child):not(:last-child) {
-    border-radius: 0
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px
 }
 [mol_barer] > *:not(:first-child) {
     margin-left: 1px
 }
 [mol_barer] > *:last-child {
-    border-radius: 0 2px 2px 0
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px
 }
 [mol_app_todomvc] {
     -ms-flex-item-align: stretch;
         -ms-grid-row-align: stretch;
         align-self: stretch;
     width: 100%;
-    height: 100%
+    background: #f5f5f5;
+    margin: 0
 }
 [mol_app_todomvc] [mol_stringer] ,
 [mol_app_todomvc] [mol_stringer]:focus ,
@@ -316,7 +338,9 @@
         -ms-flex-direction: column;
             flex-direction: column;
     margin: 0 auto 32px;
-    margin: 0 auto 2rem
+    margin: 0 auto 2rem;
+    -webkit-transition: none;
+    transition: none
 }
 [mol_app_todomvc_header] {
     font-size: 24px;
@@ -359,9 +383,7 @@
     background: no-repeat center center url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>')
 }
 [mol_app_todomvc_tasker_titler] {
-    padding: 0;
-    -webkit-transition: all 0.4s;
-    transition: all 0.4s
+    padding: 0
 }
 [mol_app_todomvc_tasker_completed] [mol_app_todomvc_tasker_titler] {
     color: #d9d9d9;
@@ -378,9 +400,7 @@
 }
 [mol_app_todomvc_tasker]:not(:hover) [mol_app_todomvc_tasker_dropper]:not(:focus) {
     opacity: 0;
-    color: #cc9a9a;
-    -webkit-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out
+    color: #cc9a9a
 }
 [mol_app_todomvc_footer] {
     display: -webkit-box;

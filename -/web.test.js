@@ -485,7 +485,9 @@ var $;
                 var clicker = new $mol.$mol_clicker;
                 clicker.eventClick = function (event) { clicked = true; };
                 var element = clicker.DOMTree();
-                element.dispatchEvent(new Event('click', {}));
+                var event = document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
                 $.$mol_assert_ok(clicked);
             },
             'no handle clicks if disabled': function () {
@@ -494,7 +496,9 @@ var $;
                 clicker.eventClick = function (event) { clicked = true; };
                 clicker.enabled = function () { return false; };
                 var element = clicker.DOMTree();
-                element.dispatchEvent(new Event('click', {}));
+                var event = document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
                 $.$mol_assert_not(clicked);
             },
         });
@@ -583,14 +587,123 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
-        'const returns stored value': function () {
-            var foo = { bar: $.$mol_const(Math.random()) };
-            $.$mol_assert_equal(foo.bar(), foo.bar());
-            $.$mol_assert_equal(foo.bar(), foo.bar['()']);
+        'Make empty div': function () {
+            var dom = $.$mol_dom_make({
+                id: '$mol_dom_make_test',
+            });
+            $.$mol_assert_equal(dom.outerHTML, '<div id="$mol_dom_make_test"></div>');
+        },
+        'Make SVG': function () {
+            var dom = $.$mol_dom_make({
+                id: '$mol_dom_make_test',
+                tagName: 'svg',
+                namespaceURI: 'http://www.w3.org/2000/svg',
+            });
+            $.$mol_assert_equal(dom.outerHTML, '<svg id="$mol_dom_make_test"></svg>');
+            $.$mol_assert_equal(dom.viewBox.baseVal.width, 0);
+        },
+        'Make input with id and value': function () {
+            var dom = $.$mol_dom_make({
+                id: '$mol_dom_make_test',
+                tagName: 'input',
+                value: 123,
+            });
+            $.$mol_assert_equal(dom.outerHTML, '<input id="$mol_dom_make_test">');
+            $.$mol_assert_equal(dom.value, '123');
+        },
+        'Make content': function () {
+            var id = '$mol_dom_make_test';
+            var dom = $.$mol_dom_make({
+                id: "" + id,
+                childNodes: [
+                    'hello',
+                    $.$mol_dom_make({
+                        id: id + "_inner1",
+                    }),
+                    {
+                        id: id + "_inner2",
+                    },
+                    '!',
+                ]
+            });
+            $.$mol_assert_equal(dom.outerHTML, '<div id="$mol_dom_make_test">' +
+                'hello' +
+                '<div id="$mol_dom_make_test_inner1"></div>' +
+                '<div id="$mol_dom_make_test_inner2"></div>' +
+                '!' +
+                '</div>');
+        },
+        'Make to exists element': function () {
+            var dom1 = $.$mol_dom_make({
+                id: '$mol_dom_make_test',
+            });
+            document.body.appendChild(dom1);
+            var dom2 = $.$mol_dom_make({
+                id: '$mol_dom_make_test',
+                className: 'mol_dom_make_test'
+            });
+            document.body.removeChild(dom1);
+            $.$mol_assert_equal(dom1, dom2);
+            $.$mol_assert_equal(dom1.outerHTML, '<div id="$mol_dom_make_test" class="mol_dom_make_test"></div>');
+        },
+        'Make by another dom element': function () {
+            var dom1 = $.$mol_dom_make({
+                id: '$mol_dom_make_test',
+                className: 'hello',
+                childNodes: [
+                    'world'
+                ],
+            });
+            var dom2 = $.$mol_dom_make({
+                id: dom1.id,
+                className: dom1.className,
+                childNodes: dom1.childNodes,
+            });
+            $.$mol_assert_equal(dom2.outerHTML, '<div id="$mol_dom_make_test" class="hello">world</div>');
         },
     });
 })($ || ($ = {}));
-//const.test.js.map
+//make.test.js.map
+;
+var $;
+(function ($) {
+    $.$mol_test({
+        'Make empty div': function () {
+            $.$mol_assert_equal(($.$mol_dom_jsx("div", null)).outerHTML, '<div></div>');
+        },
+        'Make input with id and value': function () {
+            var dom = $.$mol_dom_jsx("input", { id: "$mol_dom_make_test", value: 123 });
+            $.$mol_assert_equal(dom.outerHTML, '<input id="$mol_dom_make_test">');
+            $.$mol_assert_equal(dom.value, '123');
+        },
+        'Make content': function () {
+            var id = '$mol_dom_make_test';
+            var dom = $.$mol_dom_jsx("div", null,
+                "hello",
+                $.$mol_dom_jsx("strong", null, "world"),
+                "!");
+            $.$mol_assert_equal(dom.outerHTML, '<div>' +
+                'hello' +
+                '<strong>world</strong>' +
+                '!' +
+                '</div>');
+        },
+        'Make to exists element': function () {
+            var dom1 = $.$mol_dom_jsx("div", { id: "$mol_dom_make_test" });
+            document.body.appendChild(dom1);
+            var dom2 = $.$mol_dom_jsx("div", { id: "$mol_dom_make_test" }, "hello");
+            document.body.removeChild(dom1);
+            $.$mol_assert_equal(dom1, dom2);
+            $.$mol_assert_equal(dom1.outerHTML, '<div id="$mol_dom_make_test">hello</div>');
+        },
+        'Make by another dom element': function () {
+            var dom1 = $.$mol_dom_jsx("div", { className: "hello" }, "world");
+            var dom2 = $.$mol_dom_jsx("div", { className: dom1.className, childNodes: dom1.childNodes });
+            $.$mol_assert_equal(dom2.outerHTML, '<div class="hello">world</div>');
+        },
+    });
+})($ || ($ = {}));
+//jsx.test.js.map
 ;
 var $;
 (function ($) {
@@ -612,6 +725,18 @@ var $;
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));
 //habhub.test.js.map
+;
+var $;
+(function ($) {
+    $.$mol_test({
+        'const returns stored value': function () {
+            var foo = { bar: $.$mol_const(Math.random()) };
+            $.$mol_assert_equal(foo.bar(), foo.bar());
+            $.$mol_assert_equal(foo.bar(), foo.bar['()']);
+        },
+    });
+})($ || ($ = {}));
+//const.test.js.map
 ;
 var $;
 (function ($) {

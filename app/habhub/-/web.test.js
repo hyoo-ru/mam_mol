@@ -563,7 +563,9 @@ var $;
                 var clicker = new $mol.$mol_clicker;
                 clicker.eventClick = function (event) { clicked = true; };
                 var element = clicker.DOMTree();
-                element.dispatchEvent(new Event('click', {}));
+                var event = document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
                 $.$mol_assert_ok(clicked);
             },
             'no handle clicks if disabled': function () {
@@ -572,7 +574,9 @@ var $;
                 clicker.eventClick = function (event) { clicked = true; };
                 clicker.enabled = function () { return false; };
                 var element = clicker.DOMTree();
-                element.dispatchEvent(new Event('click', {}));
+                var event = document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
                 $.$mol_assert_not(clicked);
             },
         });
