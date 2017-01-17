@@ -1,0 +1,10 @@
+$mol_selecter_demo_search $mol_labeler
+	title \Find your meaning of life
+	content $mol_selecter
+		minOptionsToSearch 4
+		options /
+			\Jesus
+			\Allah
+			\Buddha
+			\Krishna
+			\Cthulhu

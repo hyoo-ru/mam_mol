@@ -1,3 +1,19 @@
-[mol_selecter_demo] {
+
+[mol_selecter] {
 	margin: auto;
+}
+
+[mol_selecter_demo_custom_optioner] {
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin: .5em 2em;
+	text-align: center;
+}
+
+[mol_colorer] {
+	width: 3em;
+	height: 3em;
+	border-radius: 50%;
+	margin: 0;
 }

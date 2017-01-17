@@ -1,0 +1,9 @@
+$mol_selecter_demo_simple $mol_labeler
+	title \Do you like our framework?
+	content $mol_selecter
+		options /
+			\Yes!
+			\Sure
+			\Of course
+			\Yeaaah!!!
+			\Best framework ever!

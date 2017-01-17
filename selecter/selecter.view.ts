@@ -18,11 +18,16 @@ namespace $.$mol {
 		}
 		
 		selectedOption () {
-			return (this.value())
-				? this.optionerContent(this.value())
-				: (this.options().length > this.minOptionsToSearch())
-					? [ this.stringer() ]
-					: [ this.emptyOptioner() ]
+			if(this.value())
+				return this.optionerContent(this.value())
+			else 
+				return (!this.searcheble())
+					? [ this.emptyOptioner() ]
+					: null
+		}
+		
+		searcheble() {
+			return this.options().length >= this.minOptionsToSearch();
 		}
 		
 		eventSelect ( id: string, event?: MouseEvent ) {
@@ -32,10 +37,19 @@ namespace $.$mol {
 		
 		childs() {
 			return [
-				this.trigger(),
+				this.barer(),
 				(this.expanded())
 					? this.lister()
 					: null
+			]
+		}
+		
+		controls() {
+			return [
+				(this.searcheble() && !this.value())
+					? this.stringer()
+					: null ,
+				this.trigger()
 			]
 		}
 		
@@ -46,16 +60,16 @@ namespace $.$mol {
 		
 		@$mol_mem()
 		expanded( val?: boolean ) {
-			// if ( !this.focused() )
-			// 	return false;	
-			// 		
-			// if (val !== void 0) 
-			// 	return val;
-			// 
-			// if (this.prefix())
-			// 	return true;
+			if ( !this.focused() )
+				return false;	
+					
+			if (val !== void 0) 
+				return val;
 			
-			return true;
+			if (this.prefix())
+				return true;
+			
+			return false;
 		}
 	}
 }

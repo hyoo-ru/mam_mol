@@ -2,6 +2,8 @@
 	display: flex;
 	flex-direction: column;
 	position: absolute;
+	z-index: 3;
+	background-color: white;
 }
 
 [mol_selecter_trigger] {
@@ -18,8 +20,13 @@
 [mol_selecter_optioner] {
 	width: 100%;
 	padding: 0;
+	justify-content: flex-start;
 }
 
-[mol_selecter_dimmer] {
+[mol_selecter_dimmer], [mol_selecter_emptyoptioner] {
 	padding: .5em;
+}
+
+[mol_selecter_trigger] > svg {
+	transform: rotateZ(90deg);
 }

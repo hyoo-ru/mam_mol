@@ -1,0 +1,23 @@
+$mol_selecter_demo_custom $mol_labeler
+	<= colors *
+		red \Red 
+		blue \Blue
+		pink \Pink
+		green \Green
+		black \Black
+	title \Choose some color
+	content $mol_selecter
+		options <= colorOptions /
+		value?val <=> value?val \pink
+		optionerContent!id <= optionerContent!id /
+			<= optioner!id $mol_viewer
+				childs /
+					<= colorer!id $mol_colorer
+						color <= prop!id \
+					<= colorName!id \
+
+$mol_colorer $mol_viewer
+	tagName \figure
+	color \
+	attr *
+		style <= setColor \
