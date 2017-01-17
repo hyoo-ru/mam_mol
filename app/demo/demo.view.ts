@@ -119,7 +119,7 @@ namespace $.$mol {
 				case 0 :
 					return [ this.emptyDemoMessager() ]
 				case 1 :
-					return [ this.sampleLarge() ]
+					return [ this.sampleLarge(this.namesDemo()[0]) ]
 				default :
 					return [ this.detailerRower() ]
 			}
@@ -138,10 +138,10 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		sampleLarge() {
+		sampleLarge(id: string) {
 			const sample = new $mol_demo_large()
 			sample.titler = ()=> null
-			sample.name = ()=> this.namesDemo()[ 0 ]
+			sample.name = ()=> id;
 			return sample
 		}
 		

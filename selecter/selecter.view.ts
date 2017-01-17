@@ -53,6 +53,10 @@ namespace $.$mol {
 			]
 		}
 		
+		eventSwitch(event?: MouseEvent) {
+			this.expanded(!this.expanded());
+		}
+		
 		@$mol_mem()
 		focused() {
 			return $mol_viewer_selection.focused().indexOf( this.DOMNode() ) !== -1 
