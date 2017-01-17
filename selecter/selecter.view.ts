@@ -46,16 +46,16 @@ namespace $.$mol {
 		
 		@$mol_mem()
 		expanded( val?: boolean ) {
-			if ( !this.focused() )
-				return false;	
-					
-			if (val !== void 0) 
-				return val;
+			// if ( !this.focused() )
+			// 	return false;	
+			// 		
+			// if (val !== void 0) 
+			// 	return val;
+			// 
+			// if (this.prefix())
+			// 	return true;
 			
-			if (this.prefix())
-				return true;
-			
-			return false;
+			return true;
 		}
 	}
 }

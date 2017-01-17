@@ -17,4 +17,9 @@
 
 [mol_selecter_optioner] {
 	width: 100%;
+	padding: 0;
+}
+
+[mol_selecter_dimmer] {
+	padding: .5em;
 }
