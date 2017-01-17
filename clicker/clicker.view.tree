@@ -1,7 +1,7 @@
 $mol_clicker $mol_viewer
-	tagName \button
 	enabled true
-	event * click > eventActivate > eventClick null
+	event * click?event <=> eventActivate?event <=> eventClick?event null
 	attr *
-		disabled < disabled false
-		tabindex \0
+		disabled <= disabled false
+		role \button
+		tabindex <= tabIndex \0

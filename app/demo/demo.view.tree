@@ -1,18 +1,42 @@
 $mol_app_demo $mol_stacker
-	main / < lister $mol_scroller childs < items /
-	addon / < menu $mol_pager
-		title < titleAddon @ \Demos
-		body / < optioner $mol_lister rows < options /
+	main / <= detailer $mol_app_demo_pager
+		title <= detailerTitle \
+		body <= mainerContent /
+	addon / <= menu $mol_pager
+		head / <= navigatorHeader $mol_rower childs / <= filterStringer $mol_stringer
+			hint <= filterHint @ \Search demo..
+			value?val <=> filterString?val \
+		bodier <= navigator $mol_app_demo_navigator
+			hierarchy <= navigatorHierarchy null
+			record!id <= navigatorOption!id null
+			needle <= filterString?val \
 	welcomer $mol_scroller
-		childs / < welcomeTexter $mol_texter
-			text < welcomeText \
-	sample# $mol_viewer
+		childs / <= welcomeTexter $mol_texter
+			text <= welcomeText \
+	detailerRower $mol_rower
 		childs /
-			< widget# null
-
+			<= samples /
+	emptyDemoMessager $mol_statuser
+		childs /
+			<= emptyDemoPrefix @ \No one demo with prefix "
+			<= selected \
+			<= emptyDemoPostfix @ \"
+	
 $mol_app_demo_pager $mol_pager
 	head /
-		< backer $mol_linker
-			childs / < backer_icon $mol_icon_chevron
-			arg < backArg * demo null
-		< titler
+		<= backer $mol_linker
+			childs / <= backer_icon $mol_icon_chevron
+			arg <= backArg * demo null
+		<= titler
+
+$mol_app_demo_navigator $mol_grider
+	rowHeight 32
+	hierarchyColumn \title
+	header null
+	linker!id $mol_linker
+		arg <= arg!id *
+		childs /
+			<= expander!id $mol_checker_expander
+				expanded?val <=> cellerExpanded!id?val
+				level <= cellerLevel!id
+			<= cellerContent!id

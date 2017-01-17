@@ -2,11 +2,11 @@ namespace $.$mol {
 	export class $mol_lister extends $.$mol_lister {
 		
 		@ $mol_mem()
-		rowOffsets() : number[] {
+		rowerOffsets() : number[] {
 			var childs = this.childs()
 			if( !childs ) return null
 			
-			let heightLimit = this.contextSub().$mol_viewer_heightLimit()
+			let heightLimit = this.context().$mol_viewer_visibleHeight()
 			var offset = 0
 			
 			var next : number[] = []
@@ -24,10 +24,13 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		rowContext( index : number ) {
-			let context = this.contextSub()
+		rowerContext( index : number ) {
+			let context = this.context()
 			let next = Object.create( context )
-			next.$mol_viewer_heightLimit = ()=> context.$mol_viewer_heightLimit() - this.rowOffsets()[ index ]
+			next.$mol_viewer_visibleHeight = ()=> {
+				const limit = context.$mol_viewer_visibleHeight()
+				return limit - this.rowerOffsets()[ index ]
+			}
 			return next
 		}
 		
@@ -36,14 +39,14 @@ namespace $.$mol {
 			var childs = this.childs()
 			if( !childs ) return childs
 			
-			var limit = this.rowOffsets().length
+			var limit = this.rowerOffsets().length
 			
 			var next : $mol_viewer[] = []
 			for( let i = 0 ; i < limit ; ++ i ) {
 				const child = childs[ i ]
 				if( child == null ) continue 
 				if( child instanceof $mol_viewer ) {
-					child.context( this.rowContext( i ) )
+					child.context( this.rowerContext( i ) )
 				}
 				next.push( child )
 			}

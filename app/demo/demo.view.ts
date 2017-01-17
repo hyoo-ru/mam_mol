@@ -1,22 +1,12 @@
 namespace $.$mol {
+	
 	export class $mol_app_demo extends $.$mol_app_demo {
 		
 		title() {
-			let next = this.titleAddon()
-			
 			const selected = this.selected()
-			if( selected ) next = `$${ selected } - ${ next }`
+			if( selected ) return `$${ selected }`
 			
-			return next
-		}
-		
-		main() : $mol_viewer[] {
-			var selected = this.selected()
-			if( selected ) {
-				return [ this.detailer( selected ) ]
-			} else {
-				return [ this.welcomer() ]
-			}
+			return super.title()
 		}
 		
 		@ $mol_mem()
@@ -24,12 +14,8 @@ namespace $.$mol {
 			return $mol_http_resource.item( 'readme.md' ).text()
 		}
 		
-		side() {
-			return this.selected() ? false : true
-		}
-		
 		@ $mol_mem()
-		namesDemo() {
+		namesDemoAll() {
 			var next : string[] = []
 			for( var name in $ ) {
 				if( !/^\$.*_demo($|_)/i.test( name ) ) continue
@@ -38,21 +24,66 @@ namespace $.$mol {
 				if( typeof (<{[index : string]:any}>$)[ name ] !== 'function' ) continue
 				next.push( name.substring( 1 ) )
 			}
-		return next.sort()
+			return next.sort()
 		}
 		
 		@ $mol_mem()
-		options() {
-			return this.namesDemo().map( name => this.option( name ) )
+		namesDemoFiltered() {
+			const filter = this.filterString()
+			const names = this.namesDemoAll().filter( name => name.match( filter ) )
+			return names
 		}
-
-		// @ $mol_prop()
-		// items() : $mol_viewer[] {
-		// 	return this.namesDemo().map( name => this.screen( name ) )
-		// }
+		
+		@ $mol_mem()
+		navigatorHierarchy() {
+			const names = this.namesDemoFiltered()
+			
+			const hierarchy = {} as { [ prefix : string ] : $mol_grider_node }
+			const root = hierarchy[ '' ] = {
+				id : '' ,
+				parent : null as $mol_grider_node ,
+				childs : [] as $mol_grider_node[] ,
+			}
+			
+			names.forEach( name => {
+				const chunks = name.split( /(?=[_.-])/ )
+				let branch = root
+				for( let i = 1 ; i <= chunks.length ; ++ i ) {
+					const prefix = chunks.slice( 0 , i ).join( '' )
+					if( !hierarchy[ prefix ] ) {
+						branch.childs.push( hierarchy[ prefix ] = {
+							id : prefix ,
+							parent : branch ,
+							childs : [] as $mol_grider_node[] ,
+						} )
+					}
+					branch = hierarchy[ prefix ]
+				}
+			} )
+			
+			hierarchy[ '' ].childs.map( child => reduce( child ) )
+			
+			function reduce( node : $mol_grider_node ) {
+				if( names.indexOf( node.id ) >= 0 ) return node
+				
+				node.childs = node.childs.map( child => reduce( child ) )
+				if( node.childs.length !== 1 ) return node
+				
+				node.childs[0].parent = node.parent
+				return node.childs[0]
+			}
+			
+			return hierarchy
+		}
+		
+		navigatorOption( id : string ) {
+			const parent = this.navigatorHierarchy()[ id ].parent
+			const title = `$${ id }`.substring( parent.id.length + 1 ).replace( /^[-._]|[-._]demo$/g , '' )
+			return { title }
+		}
 		
 		selected() {
-			return $mol_state_arg.value( this.stateKey( 'demo' ) )
+			return $mol_state_arg.value( this.stateKey( 'demo' ) ) || ''
 		}
 
 		@ $mol_mem_key()
@@ -63,22 +94,6 @@ namespace $.$mol {
 			} )
 		}
 		
-		// @ $mol_prop()
-		// screen( name : string ) {
-		// 	return new $mol_demo_medium().setup( obj => {
-		// 		obj.name = () => '$' + name
-		// 		obj.argument = () => this.argument().sub( name )
-		// 	} )
-		// }
-		
-		// @ $mol_prop()
-		// screens( name : string ) {
-		// 	return new $mol_demo_all().setup( obj => {
-		// 		obj.name = () => '$' + name
-		// 		obj.argument = () => this.argument().sub( name )
-		// 	} )
-		// }
-
 		@ $mol_mem_key()
 		widget( name : string ) {
 			var Class : typeof $mol_viewer = (<{[index : string]:any}>$)[ '$' + name ]
@@ -87,13 +102,62 @@ namespace $.$mol {
 			} )
 		}
 		
-		@ $mol_mem_key()
-		detailer( name : string ) {
-			return new $mol_app_demo_pager().setup( obj => {
-				obj.title = $mol_const( '$' + name )
-				obj.body = ()=> [ this.sample( name ) ]
-			} )
+		detailerTitle() {
+			return '$' + this.selected()
 		}
-
+		
+		namesDemo() {
+			const prefix = this.selected()
+			const namesAll = this.namesDemoAll()
+			const names = namesAll.filter( name => name.substring( 0 , prefix.length ) === prefix )
+			return names
+		}
+		
+		@$mol_mem() 
+		mainerContent() {
+			switch( this.namesDemo().length ) {
+				case 0 :
+					return [ this.emptyDemoMessager() ]
+				case 1 :
+					return [ this.sampleLarge() ]
+				default :
+					return [ this.detailerRower() ]
+			}
+		}
+		
+		@ $mol_mem() 
+		samples () {
+			return this.namesDemo().map( name => this.sampleSmall( name ) )
+		}
+		
+		@ $mol_mem_key()
+		sampleSmall( name : string ) {
+			const sample = new $mol_demo_small
+			sample.name = ()=> name
+			return sample
+		}
+		
+		@ $mol_mem_key()
+		sampleLarge() {
+			const sample = new $mol_demo_large()
+			sample.titler = ()=> null
+			sample.name = ()=> this.namesDemo()[ 0 ]
+			return sample
+		}
+		
 	}
+	
+	export class $mol_app_demo_navigator extends $.$mol_app_demo_navigator {
+		
+		celler( id : { row : string[] , col : string } ) : $mol_viewer {
+			if( id.col === 'title' ) return this.linker( id )
+			return super.celler( id )
+		}
+		
+		arg( id : { row : string[] , col : string } ) {
+			return { 'demo' : ()=> id.row[ id.row.length - 1 ] }
+		}
+		
+	}
+	
 }

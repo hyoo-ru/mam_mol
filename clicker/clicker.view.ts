@@ -10,5 +10,9 @@ namespace $.$mol {
 			this.eventClick( next )
 		}
 		
+		tabIndex() {
+			return this.enabled() ? super.tabIndex() : null
+		}
+		
 	}
 }

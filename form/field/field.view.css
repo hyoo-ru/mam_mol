@@ -13,14 +13,18 @@
 	padding: .25rem .5rem;
 }
 
-[mol_form_field_errorer] {
-	color: var(--mol_skin_warn_text);
+[mol_form_field_bider] {
+	color: var(--mol_skin_accent);
 }
 
-[mol_form_field_errorer]:not(:empty):before {
+[mol_form_field_bider]:not(:empty):before {
 	content: '(';
 }
 
-[mol_form_field_errorer]:not(:empty):after {
+[mol_form_field_bider]:not(:empty):after {
 	content: ')';
+}
+
+[mol_form_field] > * {
+	margin: 0;
 }

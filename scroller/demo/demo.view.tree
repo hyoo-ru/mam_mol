@@ -1,13 +1,5 @@
 $mol_scroller_demo $mol_scroller
-	childs /
-		< one $mol_filler
-
-$mol_scroller_demo_top $mol_scroller_demo
-	scrollTop 0
-
-$mol_scroller_demo_middle $mol_scroller_demo
-	scrollTop 1500
-
-$mol_scroller_demo_bottom $mol_scroller_demo
-	scrollTop 10000
-
+	childs / <= rower $mol_rower childs /
+		<= one $mol_filler
+		<= two $mol_filler
+		<= tree $mol_filler

@@ -1,8 +1,8 @@
 $mol_portioner_indicator $mol_viewer
-	field * style.width < widthStyle \0
+	field * style.width <= widthStyle \0
 
 $mol_portioner $mol_viewer
 	portion 0
 	childs /
-		< indicator $mol_portioner_indicator
-			widthStyle < indWidthStyle \0
+		<= indicator $mol_portioner_indicator
+			widthStyle <= indWidthStyle \0

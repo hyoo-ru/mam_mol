@@ -1,10 +1,19 @@
 $mol_decker_demo $mol_decker items /
-	< stringerItem $mol_decker_item
-		title < stringerLabel @ \String fields
-		content < stringerContent $mol_stringer_demo
-	< clickerItem $mol_decker_item
-		title < buttonsLabel @ \Buttons
-		content < clickerContent $mol_clicker_demo
-	< checkerItem $mol_decker_item
-		title < checkerLabel @ \Check boxes
-		content < checkerContent $mol_checker_ticker_demo
+	<= greeterItem $mol_decker_item
+		title <= greeterLabel @ \Greeting page
+		content <= greeterContent $mol_rower
+			childs /
+				<= greeterMessager $mol_viewer childs /
+					<= greeterMessage @ \Hello, world!
+	<= questerItem $mol_decker_item
+		title <= questerLabel @ \Question page
+		content <= questerContent $mol_rower
+			childs /
+				<= questerMessager $mol_viewer childs /
+					<= questerMessage @ \How are you?
+	<= commanderItem $mol_decker_item
+		title <= commanderLabel @ \Command page
+		content <= commanderContent $mol_rower
+			childs /
+				<= commanderMessager $mol_viewer childs /
+					<= commanderMessage @ \Let us do it right!

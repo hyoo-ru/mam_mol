@@ -1,10 +1,10 @@
 $mol_app_inventory_controller $mol_pager
 	domain $mol_app_inventory_domain
-	body < positioners /
-	positioner# $mol_app_inventory_positioner
-		position < position# null
+	body <= positioners /
+	positioner!id $mol_app_inventory_positioner
+		position <= position!id null
 	foot /
-		< controlsRower $mol_rower childs /
-			< submitter $mol_clicker_major
-				eventClick > eventSubmit null
-				childs / < submitLabel @ \Remove confirmed
+		<= controlsRower $mol_rower childs /
+			<= submitter $mol_clicker_major
+				eventClick?event <=> eventSubmit?event null
+				childs / <= submitLabel @ \Remove confirmed

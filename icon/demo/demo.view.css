@@ -1,5 +1,6 @@
 [mol_icon_demo] {
 	justify-content: flex-start;
+	flex: 0 1 auto;
 }
 
 [mol_icon_demo_icon]:hover {

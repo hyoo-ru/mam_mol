@@ -1,3 +1,9 @@
+[mol_labeler] {
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+}
+
 [mol_labeler_titler] {
 	color: var(--mol_skin_passive_text);
 	font-size: .75rem;

@@ -1,10 +1,10 @@
 $mol_carder $mol_lister
-	attr * mol_carder_status < status \
-	rows /
-		< contenter $mol_viewer
+	attr * mol_carder_status <= status \
+	rowers /
+		<= contenter $mol_viewer
 			childs /
-				< content null
-		< statuser $mol_viewer
+				<= content null
+		<= statuser $mol_viewer
 			heightMinimal 30
 			childs /
-				< statusText < status
+				<= statusText <= status

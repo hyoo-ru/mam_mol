@@ -1,7 +1,14 @@
 [mol_app_inventory_enter] {
+	margin: 0;
 	flex: 1 1 auto;
 	justify-content: center;
 	display: flex;
 	align-items: center;
+	align-self: stretch;
 	flex-direction: column;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+}
+
+[mol_app_inventory_enter_form] {
+	margin: 0;
 }

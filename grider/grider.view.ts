@@ -1,5 +1,11 @@
 namespace $.$mol {
 	
+	export interface $mol_grider_node {
+		id : string
+		parent : $mol_grider_node
+		childs : $mol_grider_node[]
+	}
+	
 	export class $mol_grider extends $.$mol_grider {
 		
 		@ $mol_mem()
@@ -25,7 +31,7 @@ namespace $.$mol {
 			const count = rowers.length
 			const context = this.contextSub()
 			const scrollTop = context.$mol_scroller_scrollTop()
-			const heightLimit = context.$mol_viewer_heightLimit()
+			const heightLimit = context.$mol_viewer_visibleHeight()
 			const rowHeight = this.rowHeight()
 			
 			const top = Math.max( 0 , Math.floor( scrollTop / rowHeight ) - 2 )
@@ -58,21 +64,22 @@ namespace $.$mol {
 			return this.rows().map( row => this.rower( row ) )
 		}
 		
-		cellers( row : string ) {
+		cellers( row : string[] ) {
 			return this.cols().map( col => this.celler({ row , col }) )
 		}
 		
 		@ $mol_mem_key()
 		colType( col : string ) {
-			if( col === this.hierarhyColumn() ) return 'branch'
+			if( col === this.hierarchyColumn() ) return 'branch'
 			
-			const val = this.record( this.row(0) )[ col ]
+			const rowFirst = this.row(0)
+			const val = this.record( rowFirst[ rowFirst.length -1 ] )[ col ]
 			if( typeof val === 'number' ) return 'number'
 			
 			return 'text'
 		}
 		
-		celler( id : { row : string , col : string } ) : $mol_viewer {
+		celler( id : { row : string[] , col : string } ) : $mol_viewer {
 			switch( this.colType( id.col ).valueOf() ) {
 				case 'branch' : return this.cellerBranch( id )
 				case 'number' : return this.cellerNumber( id )
@@ -81,34 +88,95 @@ namespace $.$mol {
 			return this.cellerText( id )
 		}
 		
-		cellerContent( id : { row : string , col : string } ) {
-			return [ this.record( id.row )[ id.col ] ]
+		cellerValue( id : { row : string[] , col : string } ) {
+			return this.record( id.row[ id.row.length - 1 ] )[ id.col ]
 		}
 		
 		records() : any {
 			return []
 		}
 		
-		record( row : string ) {
-			return this.records()[ row ]
+		record( id : string ) {
+			return this.records()[ id ]
 		}
 		
 		@ $mol_mem()
-		rows() {
+		ids() {
 			return Object.keys( this.records() )
 		}
 		
-		row( row : number ) {
-			return ( this.rows().slice( 0 , 1 ).valueOf() as string[] )[0]
+		row( index : number ) {
+			return ( this.rows().slice( index , index + 1 ).valueOf() as string[] )[0]
 		}
-		
+
 		cols() {
 			const rowFirst = this.row(0)
 			if( rowFirst === void 0 ) return null
 			
-			return Object.keys( this.record( rowFirst ) )
+			const record = this.record( rowFirst[ rowFirst.length - 1 ] )
+			if( !record ) return []
+			
+			return Object.keys( record )
 		}
 		
+		@ $mol_mem()
+		hierarchy() {
+			const hierarchy : { [ id : string ] : $mol_grider_node } = {}
+			const root = hierarchy[ '' ] = {
+				id : '' ,
+				parent : null as $mol_grider_node ,
+				childs : [] as $mol_grider_node[] ,
+			}
+			this.ids().map( id => {
+				root.childs.push( hierarchy[ id ] = {
+					id ,
+					parent : root ,
+					childs : [] ,
+				} )
+			} )
+			return hierarchy
+		}
+		
+		rowsSub( row : string[] ) : string[][] {
+			return this.hierarchy()[ row[ row.length - 1 ] ].childs.map( child => row.concat( child.id ) )
+		}
+		
+		rowRoot() : string[] {
+			return [ '' ]
+		}
+		
+		cellerLevel( id : { row : string[] } ) {
+			return id.row.length
+		}
+		
+		@ $mol_mem()
+		rows() {
+			const next : string[][] = []
+			
+			const add = ( row : string[] )=> {
+				next.push( row )
+				if( this.rowExpanded( row ) ) {
+					this.rowsSub( row ).forEach( child => add( child ) )
+				}
+			}
+			
+			this.rowsSub( this.rowRoot() ).forEach( child => add( child ) )
+			
+			return next
+		}
+		
+		rowExpanded( row : string[] , next? : boolean ) {
+			if( !this.rowsSub( row ).length ) return null
+			
+			const key = `rowExpanded(${ JSON.stringify( row ) })`
+			const next2 = $mol_state_session.value( key , next )
+			
+			return ( next2 == null ) ? false : next2
+		}
+		
+		cellerExpanded( id : { row : string[] } , next? : boolean ) {
+			return this.rowExpanded( id.row , next )
+		}
 	}
 	
 	export class $mol_grider_gaper extends $.$mol_grider_gaper {
@@ -123,18 +191,6 @@ namespace $.$mol {
 		
 		heightStyle() {
 			return `${ this.height() }px`
-		}
-		
-	}
-	
-	export class $mol_grider_branch extends $.$mol_grider_branch {
-		
-		levelStyle() {
-			return `${ this.level() *.75 - 1.5 }rem`
-		}
-		
-		expandable() {
-			return this.expanded() !== null
 		}
 		
 	}

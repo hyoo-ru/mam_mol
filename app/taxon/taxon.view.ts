@@ -1,23 +1,17 @@
 namespace $.$mol {
 	
-	export interface $mol_app_taxon_hierarhy_node {
-		id : number
-		parent : $mol_app_taxon_hierarhy_node
-		childs : $mol_app_taxon_hierarhy_node[]
-	}
-	
 	export interface $mol_app_taxon_data_row {
 		KeyId : number
 	}
 	
 	export class $mol_app_taxon extends $.$mol_app_taxon {
 		
-		hierarhyUri() {
+		hierarchyUri() {
 			return 'http://justine.saprun.com:8000/sap/opu/odata/sap/ZTRNF_TEST_DATA_SRV/TRNF_TREESet?$'+'format=json'
 		}
 		
 		@ $mol_mem()
-		hierarhy() {
+		hierarchy() {
 			type response = { d : {
 				results : {
 					KeyId : number
@@ -25,34 +19,34 @@ namespace $.$mol {
 				}[]
 			} }
 
-			const resource = $mol_http_resource_json.item< response >( this.hierarhyUri() ) 
+			const resource = $mol_http_resource_json.item< response >( this.hierarchyUri() ) 
 			resource.credentials = $mol_const({})
 
-			const hierarhy : { [ key : number ] : $mol_app_taxon_hierarhy_node } = {}
-				hierarhy[ 0 ] = {
-					id : 0 ,
-					parent : null ,
-					childs : []
-				}
+			const hierarchy : { [ key : string ] : $mol_grider_node } = {}
+			hierarchy[ '' ] = {
+				id : '' ,
+				parent : null ,
+				childs : []
+			}
 			
 			resource.json().d.results.forEach( row => {
-				const parent = hierarhy[ row.ParentId ]
-				const node = hierarhy[ row.KeyId ] = {
-					id : row.KeyId ,
+				const parent = hierarchy[ row.ParentId ]
+				const node = hierarchy[ row.KeyId ] = {
+					id : `${ row.KeyId }` ,
 					parent ,
-					childs : [] as $mol_app_taxon_hierarhy_node[] ,
+					childs : [] as $mol_grider_node[] ,
 				}
 				parent.childs.push( node )
 			} )
 
-			return hierarhy
+			return hierarchy
 		}
 		
 		dataUri() {
 			return 'http://justine.saprun.com:8000/sap/opu/odata/sap/ZTRNF_TEST_DATA_SRV/TRNF_DATASet?$'+'format=json'
 		}
 		
-		dataResource( id : number ) {
+		dataResource( id : string ) {
 			const uri = this.dataUri() + '&$' + 'filter=' + encodeURIComponent( `KeyId eq ${ id }` )
 			const resource = $mol_http_resource_json.item<any>( uri )
 			resource.credentials = $mol_const({})
@@ -61,12 +55,11 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		dataTable() {
-			return [] as $mol_app_taxon_data_row[]
+			return {} as { [ id : string ] : $mol_app_taxon_data_row }
 		}
 		
 		@ $mol_mem_key()
-		record( path : number[] ) {
-			const id = path[ path.length - 1 ]
+		record( id : string ) {
 			if( !id ) return {} as $mol_app_taxon_data_row
 			
 			const cache = this.dataTable()
@@ -76,56 +69,6 @@ namespace $.$mol {
 			delete ( next as any ).__metadata
 			
 			return cache[ id ] = next 
-		}
-		
-		rowsSub( path : number[] ) : number[][] {
-			return this.hierarhy()[ path[ path.length - 1 ] ].childs.map( child => path.concat( child.id ) )
-		}
-
-		rowRoot() : number[] {
-			return [0]
-		}
-		
-		@ $mol_mem()
-		rows() {
-			const next : number[][] = []
-			
-			const add = ( path : number[] )=> {
-				next.push( path )
-				if( this.branchExpanded( path ) ) {
-					this.rowsSub( path ).forEach( path => add( path ) )
-				}
-			}
-			
-			this.rowsSub( this.rowRoot() ).forEach( path => add( path ) )
-			
-			return next
-		}
-		
-		@ $mol_mem()
-		records() {
-			const paths = this.rows()
-			return $mol_range_in( {
-				length : paths.length ,
-				item : index => this.record( paths[ index ] ) ,
-			} )
-		}
-		
-		branchExpanded( path : number[] , next? : boolean ) {
-			if( !this.rowsSub( path ).length ) return null
-			
-			const key = `branchExpanded(${ JSON.stringify( path ) })`
-			const next2 = $mol_state_session.value( key , next )
-			
-			return ( next2 == null ) ? false : next2
-		}
-		
-		rowLevel( id : { row : number[] } ) {
-			return id.row.length
-		}
-		
-		rowExpanded( id : { row : number[] } , next? : boolean ) {
-			return this.branchExpanded( id.row , next )
 		}
 		
 	}

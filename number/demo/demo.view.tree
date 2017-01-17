@@ -1,29 +1,29 @@
 $mol_number_demo $mol_rower childs /
-	< zero $mol_number
-	< one $mol_number
-		value > year null
-	< two $mol_number
-		value > year null
+	<= zero $mol_number
+	<= one $mol_number
+		value?val <=> year?val null
+	<= two $mol_number
+		value?val <=> year?val null
 		hint \2016
-	< three $mol_number
-		value > age 32
+	<= three $mol_number
+		value?val <=> age?val 32
 		hint \18-99
 		enabled false
-	< four $mol_number
-		value > year null
+	<= four $mol_number
+		value?val <=> year?val null
 		enabledStringer false
-	< five $mol_number
-		value > age 32
+	<= five $mol_number
+		value?val <=> age?val 32
 		enabledDec false
-	< six $mol_number
-		value > year null
+	<= six $mol_number
+		value?val <=> year?val null
 		enabledInc false
-	< seven $mol_number
-		value > year null
+	<= seven $mol_number
+		value?val <=> year?val null
 		precisionChange 10
-	< eight $mol_number
-		value > year null
+	<= eight $mol_number
+		value?val <=> year?val null
 		precisionView 0.01
-	< nine $mol_number
-		value > year null
+	<= nine $mol_number
+		value?val <=> year?val null
 		precision 1000

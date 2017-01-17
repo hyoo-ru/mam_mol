@@ -2,11 +2,10 @@
 	position: relative;
 	z-index: 1;
 	opacity: 1;
-	transition: opacity ease-out .1s .1s;
+	transition: none;
 }
 
 [mol_floater_scrolling] {
 	opacity: 0;
 	transition: none;
 }
-

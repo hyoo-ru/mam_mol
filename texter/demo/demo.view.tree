@@ -1,4 +1,4 @@
-$mol_texter_demo $mol_texter text \
+$mol_texter_demo $mol_scroller childs / <= texter $mol_texter text \
 	\# [Benchmarks](perf)
 	\## Benchmark 1
 	\### Benchmark 1.1
