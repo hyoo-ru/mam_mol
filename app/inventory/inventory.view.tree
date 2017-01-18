@@ -1,26 +1,33 @@
-$mol_app_inventory $mol_viewer
+$mol_app_inventory $mol_view
 	domain $mol_app_inventory_domain
-	childs / <= page null
-	header $mol_app_inventory_header
-	enter $mol_app_inventory_enter
+	sub /
+		<= Page null
+	Head $mol_app_inventory_head
+	Enter $mol_app_inventory_enter
 		domain <= domain
-	controller $mol_app_inventory_controller
-		header <= header
+	Controller $mol_app_inventory_controller
+		Head <= Head
 		domain <= domain
-	keeper $mol_app_inventory_keeper
-		header <= header
+	Keeper $mol_app_inventory_keeper
+		Head <= Head
 		domain <= domain
-	stats $mol_app_inventory_stats
-		header <= header
+	Stats $mol_app_inventory_stats
+		Head <= Head
 		domain <= domain
 
-$mol_app_inventory_header $mol_rower childs /
-	<= keeperLink $mol_linker
-		arg * page \keeper
-		childs / <= keeperLabel @ \Keeper
-	<= controlLink $mol_linker
-		arg * page \controller
-		childs / <= controlLabel @ \Controller
-	- <= statsLink $mol_linker
-		arg * page \stats
-		childs / <= statsLabel @ \Stats
+$mol_app_inventory_head $mol_row sub /
+	<= Keeper_link $mol_link
+		arg *
+			page \keeper
+		sub /
+			<= keeper_label @ \Keeper
+	<= Control_link $mol_link
+		arg *
+			page \controller
+		sub /
+			<= control_label @ \Controller
+	- <= Stats_link $mol_link
+		arg *
+			page \stats
+		sub /
+			<= stats_label @ \Stats

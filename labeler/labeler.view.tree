@@ -1,9 +1,9 @@
-$mol_labeler $mol_viewer
-	tagName \label
-	childs /
-		<= titler $mol_viewer
-			childs /
+$mol_labeler $mol_view
+	dom_name \label
+	sub /
+		<= Title $mol_view
+			sub /
 				<= title
-		<= contenter $mol_viewer
-			childs /
+		<= Content $mol_view
+			sub /
 				<= content null

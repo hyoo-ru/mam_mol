@@ -1,0 +1,5 @@
+$mol_section_demo $mol_scroll
+	sub /
+		<= Section $mol_section
+			head \Section header
+			Content $mol_filler

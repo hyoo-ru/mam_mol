@@ -1,0 +1,22 @@
+[mol_app_inventory_position] {
+	display: flex;
+	margin-bottom: 1px;
+}
+[mol_app_inventory_position_product] {
+	flex: 1000 1 10rem;
+}
+[mol_app_inventory_position_status] {
+	flex: 1 1 auto;
+}
+[mol_app_inventory_position_count] {
+	width: 8rem;
+	flex: 1 1 4rem;
+}
+[mol_app_inventory_position_comment] {
+	flex: 0 1 auto;
+}
+[mol_app_inventory_position_title] {
+}
+[mol_app_inventory_position_description] {
+	color: var(--mol_skin_passive_text);
+}

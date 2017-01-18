@@ -1,0 +1,8 @@
+$mol_float_demo $mol_scroll
+	sub /
+		<= floater $mol_float
+			sub /
+				<= floaterContent $mol_card_demo_hello
+		<= content / <= contenter $mol_row sub /
+			<= filler1 $mol_filler
+			<= filler2 $mol_filler

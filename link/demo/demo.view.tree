@@ -1,0 +1,17 @@
+$mol_link_demo $mol_row sub /
+	<= linkRed $mol_link
+		arg * color \red
+		sub /
+			<= labelRed @ \Red
+	<= linkGreen $mol_link
+		arg * color \green
+		sub /
+			<= labelGreen @ \Green
+	<= linkBlue $mol_link
+		arg * color \blue
+		sub /
+			<= labelBlue @ \Blue
+	<= linkExternal $mol_link
+		uri \http://example.org
+		sub /
+			\example.org

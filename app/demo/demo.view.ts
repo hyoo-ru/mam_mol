@@ -10,12 +10,12 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		welcomeText() {
+		welcome_text() {
 			return $mol_http_resource.item( 'readme.md' ).text()
 		}
 		
 		@ $mol_mem()
-		namesDemoAll() {
+		names_demo_all() {
 			var next : string[] = []
 			for( var name in $ ) {
 				if( !/^\$.*_demo($|_)/i.test( name ) ) continue
@@ -28,21 +28,21 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		namesDemoFiltered() {
-			const filter = this.filterString()
-			const names = this.namesDemoAll().filter( name => name.match( filter ) )
+		names_demo_filtered() {
+			const filter = this.filter_string()
+			const names = this.names_demo_all().filter( name => name.match( filter ) )
 			return names
 		}
 		
 		@ $mol_mem()
-		navigatorHierarchy() {
-			const names = this.namesDemoFiltered()
+		nav_hierarchy() {
+			const names = this.names_demo_filtered()
 			
-			const hierarchy = {} as { [ prefix : string ] : $mol_grider_node }
+			const hierarchy = {} as { [ prefix : string ] : $mol_grid_node }
 			const root = hierarchy[ '' ] = {
 				id : '' ,
-				parent : null as $mol_grider_node ,
-				childs : [] as $mol_grider_node[] ,
+				parent : null as $mol_grid_node ,
+				sub : [] as $mol_grid_node[] ,
 			}
 			
 			names.forEach( name => {
@@ -51,107 +51,108 @@ namespace $.$mol {
 				for( let i = 1 ; i <= chunks.length ; ++ i ) {
 					const prefix = chunks.slice( 0 , i ).join( '' )
 					if( !hierarchy[ prefix ] ) {
-						branch.childs.push( hierarchy[ prefix ] = {
+						branch.sub.push( hierarchy[ prefix ] = {
 							id : prefix ,
 							parent : branch ,
-							childs : [] as $mol_grider_node[] ,
+							sub : [] as $mol_grid_node[] ,
 						} )
 					}
 					branch = hierarchy[ prefix ]
 				}
 			} )
 			
-			hierarchy[ '' ].childs.map( child => reduce( child ) )
+			hierarchy[ '' ].sub.map( child => reduce( child ) )
 			
-			function reduce( node : $mol_grider_node ) {
+			function reduce( node : $mol_grid_node ) {
 				if( names.indexOf( node.id ) >= 0 ) return node
 				
-				node.childs = node.childs.map( child => reduce( child ) )
-				if( node.childs.length !== 1 ) return node
+				node.sub = node.sub.map( child => reduce( child ) )
+				if( node.sub.length !== 1 ) return node
 				
-				node.childs[0].parent = node.parent
-				return node.childs[0]
+				node.sub[0].parent = node.parent
+				return node.sub[0]
 			}
 			
 			return hierarchy
 		}
 		
-		navigatorOption( id : string ) {
-			const parent = this.navigatorHierarchy()[ id ].parent
+		nav_option( id : string ) {
+			const parent = this.nav_hierarchy()[ id ].parent
 			const title = `$${ id }`.substring( parent.id.length + 1 ).replace( /^[-._]|[-._]demo$/g , '' )
 			return { title }
 		}
 		
 		selected() {
-			return $mol_state_arg.value( this.stateKey( 'demo' ) ) || ''
+			return $mol_state_arg.value( this.state_key( 'demo' ) ) || ''
 		}
 
 		@ $mol_mem_key()
 		option( name : string ) {
-			return new $mol_linker().setup( obj => {
-				obj.childs = () => [ name ? ( '$' + name ) : 'All' ]
+			return new $mol_link().setup( obj => {
+				obj.sub = () => [ name ? ( '$' + name ) : 'All' ]
 				obj.arg = () => ({ demo : ()=> name })
 			} )
 		}
 		
 		@ $mol_mem_key()
 		widget( name : string ) {
-			var Class : typeof $mol_viewer = (<{[index : string]:any}>$)[ '$' + name ]
+			var Class : typeof $mol_view = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class().setup( obj => {
-				obj.statePrefix = () => this.statePrefix() + name + '.'
+				obj.state_prefix = () => this.state_prefix() + name + '.'
 			} )
 		}
 		
-		detailerTitle() {
+		detail_title() {
 			return '$' + this.selected()
 		}
 		
-		namesDemo() {
+		names_demo() {
 			const prefix = this.selected()
-			const namesAll = this.namesDemoAll()
+			const namesAll = this.names_demo_all()
 			const names = namesAll.filter( name => name.substring( 0 , prefix.length ) === prefix )
 			return names
 		}
 		
 		@$mol_mem() 
-		mainerContent() {
-			switch( this.namesDemo().length ) {
+		Main_content() {
+			const names = this.names_demo()
+			switch( names.length ) {
 				case 0 :
-					return [ this.emptyDemoMessager() ]
+					return [ this.Detail_empty_message() ]
 				case 1 :
-					return [ this.sampleLarge() ]
+					return [ this.Sample_large( names[0] ) ]
 				default :
-					return [ this.detailerRower() ]
+					return [ this.Detail_row() ]
 			}
 		}
 		
 		@ $mol_mem() 
-		samples () {
-			return this.namesDemo().map( name => this.sampleSmall( name ) )
+		Samples () {
+			return this.names_demo().map( name => this.Sample_small( name ) )
 		}
 		
 		@ $mol_mem_key()
-		sampleSmall( name : string ) {
+		Sample_small( name : string ) {
 			const sample = new $mol_demo_small
 			sample.name = ()=> name
 			return sample
 		}
 		
 		@ $mol_mem_key()
-		sampleLarge() {
+		Sample_large( name : string ) {
 			const sample = new $mol_demo_large()
 			sample.titler = ()=> null
-			sample.name = ()=> this.namesDemo()[ 0 ]
+			sample.name = ()=> name
 			return sample
 		}
 		
 	}
 	
-	export class $mol_app_demo_navigator extends $.$mol_app_demo_navigator {
+	export class $mol_app_demo_nav extends $.$mol_app_demo_nav {
 		
-		celler( id : { row : string[] , col : string } ) : $mol_viewer {
-			if( id.col === 'title' ) return this.linker( id )
-			return super.celler( id )
+		Cell( id : { row : string[] , col : string } ) : $mol_view {
+			if( id.col === 'title' ) return this.Option( id )
+			return super.cell( id )
 		}
 		
 		arg( id : { row : string[] , col : string } ) {

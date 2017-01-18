@@ -1,4 +1,4 @@
-$mol_app_quine $mol_pager
+$mol_app_quine $mol_page
 	body /
-		<= texter $mol_texter
+		<= texter $mol_text
 			text <= content \

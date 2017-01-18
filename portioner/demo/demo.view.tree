@@ -1,8 +1,0 @@
-$mol_portioner_demo_empty $mol_portioner
-	portion 0
-
-$mol_portioner_demo_partial $mol_portioner
-	portion 0.5
-
-$mol_portioner_demo_full $mol_portioner
-	portion 1

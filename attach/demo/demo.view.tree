@@ -1,0 +1,13 @@
+$mol_attach_demo_empty $mol_attach
+
+$mol_attach_demo_filled $mol_attach
+	items /
+		<= Item1 $mol_attach_item
+			url_thumb \/mol/logo/logo.svg
+			url_load \/mol/logo/logo.svg
+		<= Item2 $mol_attach_item
+			url_thumb \/mol/logo/logo.svg
+			url_load \/mol/logo/logo.svg
+		<= Item3 $mol_attach_item
+			url_thumb \/mol/logo/logo.svg
+			url_load \/mol/logo/logo.svg

@@ -1,0 +1,9 @@
+$mol_code $mol_view
+	sub /
+		<= Manual $mol_string
+			value?val <=> value?val \
+			hint <= hint <= format \
+		<= Scan $mol_button
+			event_click?val <=> event_scan?val null
+			sub /
+				<= scan_label @ \Scan

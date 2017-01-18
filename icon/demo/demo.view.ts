@@ -20,7 +20,7 @@ namespace $.$mol {
 
 		@ $mol_mem_key()
 		icon( name : string ) {
-			var Class : typeof $mol_viewer = (<any>$)[ '$' + name ]
+			var Class : typeof $mol_view = (<any>$)[ '$' + name ]
 			return new Class()
 		}
 		

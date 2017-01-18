@@ -1,0 +1,15 @@
+$mol_check_expand_demo_labeled_base $mol_check_expand
+	label / <= c1Label @ \Base
+
+$mol_check_expand_demo_labeled_expanded $mol_check_expand
+	label / <= c2Label @ \Expanded
+	checked true
+
+$mol_check_expand_demo_empty_base $mol_check_expand
+
+$mol_check_expand_demo_empty_expanded $mol_check_expand
+	checked true
+	
+$mol_check_expand_demo_disabled $mol_check_expand
+	label / <= c5Label @ \Non expandable
+	disabled true

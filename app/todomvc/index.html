@@ -16,7 +16,7 @@
 	}
 </style>
 
-<div mol_viewer_root="$mol_app_todomvc">
+<div mol_view_root="$mol_app_todomvc">
 
 <script src="-/web.js" charset="utf-8"></script>
 
@@ -44,7 +44,7 @@
 
 	function creates( done ){
 		var i = 0
-		var newTodo = document.querySelector('#new-todo,.new-todo,.todo__new,[mol_app_todomvc_adder]')
+		var newTodo = document.querySelector('#new-todo,.new-todo,.todo__new,[mol_app_todomvc_add]')
 		step()
 		function step( ) {
 			newTodo.value = 'Something to do ' + i;
@@ -88,7 +88,7 @@
 	function completes(done) {
 		step()
 		function step( ) {
-			var toggleButton = document.querySelector('.toggle:not(:checked),[mol_app_todomvc_allCompleter]:not([mol_checker_checked]),.sapUiRrRow input[type="CheckBox"]:not(:checked)');
+			var toggleButton = document.querySelector('.toggle:not(:checked),[mol_app_todomvc_head_complete]:not([mol_check_checked]),.sapUiRrRow input[type="CheckBox"]:not(:checked)');
 
 			if( toggleButton ) {
 				toggleButton.dispatchEvent( new Event( 'click' , {} ) )
@@ -101,7 +101,7 @@
 	function removes(done) {
 		step()
 		function step( ) {
-			var deleteButton = document.querySelector('.destroy,[mol_app_todomvc_tasker_dropper]');
+			var deleteButton = document.querySelector('.destroy,[mol_app_todomvc_task_row_drop]');
 
 			if( deleteButton ) {
 				deleteButton.dispatchEvent( new Event( 'click' , {} ) )

@@ -1,0 +1,14 @@
+$mol_switch_demo_enabled $mol_switch
+	value?val <=> color?val \red
+	options *
+		red <= option_red @ \Red
+		green <= option_green @ \Green
+		blue <= option_blue @ \Blue
+
+$mol_switch_demo_disabled $mol_switch
+	value?val <=> color?val \red
+	enabled false
+	options *
+		red <= option_red @ \Red
+		green <= option_green @ \Green
+		blue <= option_blue @ \Blue

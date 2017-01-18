@@ -1,0 +1,4 @@
+$mol_status $mol_view
+	status null
+	sub /
+		<= message \

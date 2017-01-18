@@ -6,15 +6,15 @@ The component that provide labels before the content.
 
 ## Properties
 
-`title`  
+`title() : string`
 Property for setting title.
 
-`content`  
+`content() : Array`
 Property for placing the content.
 
 ## Usage examples
 ```
 $mol_labeler
 	title \Provider
-	content \ACME Provider Inc.
+	content / \ACME Provider Inc.
 ```

@@ -1,6 +1,6 @@
-$mol_expander $mol_lister
-	rowers /
-		<= labeler $mol_checker_expander
+$mol_expander $mol_list
+	rows /
+		<= labeler $mol_check_expand
 			checked?val <=> expanded?val false
 			label <= label /
 		<= content null

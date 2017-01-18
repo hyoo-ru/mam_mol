@@ -1,0 +1,18 @@
+[mol_app_supplies_list_search_panel] {
+	flex: 0 0 auto;
+	background: var(--mol_skin_base);
+	position: relative;
+	margin: 0;
+}
+
+[mol_app_supplies_list_search] {
+	flex: 1 1 auto;
+}
+
+[mol_app_supplies_list_supply_rows] {
+	align-items: flex-start;
+}
+
+[mol_app_supplies_list_supply_rows] > * {
+	margin: .5rem;
+}

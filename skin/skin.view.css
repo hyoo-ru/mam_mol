@@ -1,26 +1,30 @@
 :root {
-	--mol_skin_font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--mol_skin_font: 12pt/1.5 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 	
 	--mol_skin_base: hsl( 215 , 50% , 57% );
 	--mol_skin_base_text: color( var(--mol_skin_base) lightness(99%) );
-
-	--mol_skin_hover: rgba( 0 , 0 , 0 , .03 );
-	--mol_skin_focus: var(--mol_skin_accent);
+	
+	--mol_skin_button: rgba( 245 , 245 , 245 , .9 );
+	--mol_skin_hover: rgba( 0 , 0 , 0 , .05 );
+	--mol_skin_focus_line: rgba( 0 , 0 , 0 , .2 );
 	
 	--mol_skin_passive: #eee;
 	--mol_skin_passive_text: gray;
 	
 	--mol_skin_light: #fcfcfc;
-	--mol_skin_light_line: rgba( 220 , 220 , 220 , 1 );
+	--mol_skin_light_line: rgba( 230 , 230 , 230 , 1 );
 	--mol_skin_light_text: rgba( 0 , 0 , 0 , .9 );
+	--mol_skin_light_hover: color( var(--mol_skin_light) lightness(-5%) );
 
 	--mol_skin_card: white;
 	
 	--mol_skin_accent: color( var(--mol_skin_base) hue(+140deg) saturation(+10%) );
 	--mol_skin_accent_text: color( var(--mol_skin_accent) hue(+180deg) lightness(99%) );
+	--mol_skin_accent_hover: color( var(--mol_skin_accent) lightness(-5%) );
 
-	--mol_skin_warn: rgba( 255 , 0 , 0 , 0.5 );
+	--mol_skin_warn: rgba( 255 , 50 , 50 , 0.75 );
 	--mol_skin_warn_text: white;
+	--mol_skin_warn_hover: color( var(--mol_skin_warn) lightness(-5%) );
 
 	--mol_skin_good: #96DAA9;
 	--mol_skin_good_text: white;

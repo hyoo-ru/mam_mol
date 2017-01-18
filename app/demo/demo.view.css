@@ -2,36 +2,36 @@
 	--mol_skin_base: hsl( 140 , 35% , 50% );
 }
 
-[mol_app_demo_navigator] {
+[mol_app_demo_nav] {
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
 	margin: 0;
 }
 
-[mol_app_demo_navigatorHeader] {
+[mol_app_demo_nav_head] {
 	padding: 0;
 }
 
-[mol_app_demo_navigator_tabler] {
+[mol_app_demo_nav_table] {
 	width: 100%;
 }
 
-[mol_app_demo_navigator_linker] {
+[mol_app_demo_nav_option] {
 	padding: 0 1rem 0 0;
 }
 
-[mol_app_demo_navigator_expander] {
+[mol_app_demo_nav_expand] {
 	padding: 0;
 	height: 100%;
 }
 
-[mol_app_demo_mainer] {
+[mol_app_demo_main] {
 	background: var(--mol_skin_light);
 	overflow: auto;
 }
 
-[mol_app_demo_lister] {
+[mol_app_demo_list] {
 	display: flex;
 	flex-wrap: wrap;
 	height: 100%;
@@ -44,7 +44,7 @@
 	max-height: 45%;
 }
 
-[mol_app_demo_pager_bodier] {
+[mol_app_demo_page_body] {
 	display: flex;
 	align-items: stretch;
 	justify-content: flex-start;
@@ -52,7 +52,7 @@
 	padding: 1rem;
 }
 
-[mol_app_demo_detailerRower] {
+[mol_app_demo_detail_row] {
 	align-items: flex-start;
 	align-content: flex-start;
 	justify-content: center;
@@ -60,25 +60,25 @@
 	margin: 0;
 }
 
-[mol_app_demo_detailerRower] > * {
+[mol_app_demo_detail_row] > * {
 	padding: .5rem;
 }
 
-[mol_app_demo_pager_backer] {
+[mol_app_demo_page_back] {
 	color: var(--mol_skin_base_text);
 	display: flex;
 	align-items: center;
 	margin-right: -1rem;
 }
 
-[mol_app_demo_pager_backer_icon] {
+[mol_app_demo_page_back_icon] {
 	transform: rotateZ(180deg);
 }
 
-[mol_app_demo_welcomer] {
+[mol_app_demo_welcome] {
 	flex: 1 1 auto;
 }
 
-[mol_app_demo_optionerLinker] {
+[mol_app_demo_option_link] {
 	padding: 0;
 }

@@ -1,9 +1,9 @@
-$mol_demo $mol_viewer
-	childs /
-		<= header $mol_viewer
-			childs /
-				<= titler $mol_linker
+$mol_demo $mol_view
+	sub /
+		<= header $mol_view
+			sub /
+				<= titler $mol_link
 					arg * demo <= name
-					childs /
-						<= title <= name \$mol_viewer
-		<= screener $mol_viewer childs / <= widget null
+					sub /
+						<= title <= name \$mol_view
+		<= screener $mol_view sub / <= widget null

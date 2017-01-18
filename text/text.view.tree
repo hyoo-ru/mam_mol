@@ -1,0 +1,48 @@
+$mol_text $mol_list
+	text \
+	Row!id $mol_text_row
+		sub <= block_content!id /
+		type <= block_type!id \
+	Span!id $mol_text_spanner
+	Link!id $mol_text_linker
+	Image!id $mol_text_imager
+	Header!id $mol_text_header
+		level <= header_level!id 0
+		content <= header_content!id /
+	Table!id $mol_grid
+		head_cells <= table_head_cells!id /
+		rows <= table_rows!id /
+	Table_row!id $mol_grid_row
+		cells <= table_cells!id /
+	Table_cell!id $mol_grid_cell
+		sub <= table_cell_content!id /
+	Table_cell_head!id $mol_float
+		sub <= table_cell_content!id /
+
+$mol_text_row $mol_view
+	minimal_height 40
+	attr * mol_text_type <= type \
+
+$mol_text_header $mol_view
+	dom_name \h
+	attr * mol_text_header_level <= level?val 0
+	sub <= content /
+
+$mol_text_spanner $mol_view
+	dom_name \span
+	attr * mol_text_type <= type?val \
+	sub <= content?val /
+
+$mol_text_linker $mol_view
+	dom_name \a
+	attr *
+		mol_text_type <= type?val \
+		href <= link?val \
+	sub <= content?val /
+
+$mol_text_imager $mol_view
+	dom_name \img
+	attr *
+		mol_text_type <= type?val \
+		src <= link?val \
+		alt <= title?val \

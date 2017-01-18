@@ -1,43 +1,43 @@
 namespace $.$mol {
 	export class $mol_app_signup extends $.$mol_app_signup {
 		
-		nameFirst( next? : string ) {
-			return $mol_state_local.value( this.stateKey( 'nameFirst' ) , next ) || ''
+		name_first( next? : string ) {
+			return $mol_state_local.value( this.state_key( 'name_first' ) , next ) || ''
 		}
 		
-		nameFirstErrors() {
-			return this.nameFirst() ? [] : [ 'Input required' ]
+		name_first_errors() {
+			return this.name_first() ? [] : [ this.message_required() ]
 		}
 		
-		nameNick( next? : string ) {
-			return $mol_state_local.value( this.stateKey( 'nameNick' ) , next ) || ''
+		name_nick( next? : string ) {
+			return $mol_state_local.value( this.state_key( 'name_nick' ) , next ) || ''
 		}
 		
-		nameSecond( next? : string ) {
-			return $mol_state_local.value( this.stateKey( 'nameSecond' ) , next ) || ''
+		name_second( next? : string ) {
+			return $mol_state_local.value( this.state_key( 'name_second' ) , next ) || ''
 		}
 		
-		nameSecondErrors() {
-			var value = this.nameSecond()
+		name_second_errors() {
+			const value = this.name_second()
 			
-			if( value.length === 0 ) return [ 'Input required' ]
+			if( value.length === 0 ) return [ this.message_required() ]
 			
-			var errors : string[] = []
-			if( value.length < 3 ) errors.push( 'More then 2 letter required' )
-			if( value.indexOf( ' ' ) !== -1 ) errors.push( 'Spaces are forbidden' )
+			const errors : string[] = []
+			if( value.length < 3 ) errors.push( this.message_need_more_letters() )
+			if( value.indexOf( ' ' ) !== -1 ) errors.push( this.message_no_spaces() )
 			return errors
 		}
 
 		sex( next? : string ) {
-			return $mol_state_local.value( this.stateKey( 'sex' ) , next ) || ''
+			return $mol_state_local.value( this.state_key( 'sex' ) , next ) || ''
 		}
 
-		sexErrors() {
-			return this.sex() ? [] : [ 'Input required' ]
+		sex_errors() {
+			return this.sex() ? [] : [ this.message_required() ]
 		}
 
-		eventSubmit( next? : Event ) {
-			alert( `Hello, ${this.sex()} ${this.nameFirst()} (${this.nameNick()}) ${this.nameSecond()}!` )
+		event_submit( next? : Event ) {
+			alert( `Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()}!` )
 		}
 		
 	}

@@ -1,24 +1,31 @@
-$mol_app_bench $mol_stacker
-	main / <= mainPage $mol_pager
-		title <= title
-		body /
-			<= informator $mol_viewer childs /
-				<= descriptioner $mol_texter
-					text <= description \
-				<= resulter $mol_bencher
-					results <= results null
-					columnHeaderLabel!id <= columnHeaderLabel!id / 
-					colSort?val <=> resultsColSort?val \
-			<= tester $mol_app_bench_tester
-	addon / <= addonPage $mol_pager
-		title <= addonerTitle @ \Samples
-		body / <= menu $mol_lister
-			rowers <= menuOptions /
-	menuOptioner!id $mol_checker_ticker
-		heightMinimal 36
-		checked?val <=> menuOptionerChecked!id?val false
-		label / <= menuOptionerTitle!id \
-	columnHeaderLabelSample @ \Sample
-
-$mol_app_bench_tester $mol_viewer
-	tagName \iframe
+$mol_app_bench $mol_stack
+	-
+	main /
+		<= Main_page $mol_page
+			title <= title
+			body /
+				<= Inform $mol_view sub /
+					<= Descr $mol_text
+						text <= description \
+					<= Result $mol_bench
+						result <= result null
+						col_head_label!id /
+							<= result_col_title!id / 
+						col_sort?val <=> result_col_sort?val \
+				<= Sandbox $mol_view
+					dom_name \iframe
+	-
+	addon /
+		<= Addon_page $mol_page
+			title <= addon_title @ \Samples
+			body /
+				<= Menu $mol_list
+					rows <= menu_options /
+	-
+	Menu_option!id $mol_check_box
+		minimal_height 36
+		checked?val <=> menu_option_checked!id?val false
+		label /
+			<= menu_option_title!id \
+	-
+	result_col_title_sample @ \Sample

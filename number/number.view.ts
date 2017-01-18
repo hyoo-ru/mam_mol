@@ -1,46 +1,38 @@
 namespace $.$mol {
 	export class $mol_number extends $.$mol_number {
 
-		eventDec( next? : Event ) {
-			this.value( this.value() - this.precisionChange() )
+		event_dec( next? : Event ) {
+			this.value( this.value() - this.precision_change() )
 		}
 
-		eventInc( next? : Event ) {
-			this.value( Number( this.value() ) + this.precisionChange() )
+		event_inc( next? : Event ) {
+			this.value( Number( this.value() ) + this.precision_change() )
 		}
 
-		valueString( next? : string ) {
+		value_string( next? : string ) {
 			if( next !== void 0 ) {
 				this.value( next === '' ? null : Number( next ) )
 			}
 
-			var precisionView = this.precisionView()
-			var value = next ? Number( next ) : this.value()
+			const precisionView = this.precision_view()
+			const value = next ? Number( next ) : this.value()
 
 			if( value === null ) return ''
 
 			if( precisionView >= 1 ) {
 				return ( value / precisionView ).toFixed()
 			} else {
-				var fixedNumber = Math.log( 1 / precisionView ) / Math.log( 10 )
+				const fixedNumber = Math.log( 1 / precisionView ) / Math.log( 10 )
 				return value.toFixed( fixedNumber )
 			}
 		}
 
-		eventWheel( next? : MouseWheelEvent ) {
+		event_wheel( next? : MouseWheelEvent ) {
 			next.preventDefault();
-			if( next.wheelDelta < 0 && this.enabledInc() )
-				this.eventInc( next )
-			if( next.wheelDelta > 0 && this.enabledDec())
-				this.eventDec( next )
-		}
-
-		incrementer() {
-			return this.enabledInc() ? super.incrementer() : null
-		}
-
-		decrementer() {
-			return this.enabledDec() ? super.decrementer() : null
+			if( next.wheelDelta < 0 && this.inc_enabled() )
+				this.event_inc( next )
+			if( next.wheelDelta > 0 && this.dec_enabled())
+				this.event_dec( next )
 		}
 
 	}

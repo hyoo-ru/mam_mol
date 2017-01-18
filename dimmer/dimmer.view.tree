@@ -1,8 +1,8 @@
-$mol_dimmer $mol_viewer
+$mol_dimmer $mol_view
 	haystack \
 	needle \
-	childs <= parts /
-	low!id $mol_dimmer_low childs / <= string!id \
+	sub <= parts /
+	low!id $mol_dimmer_low sub / <= string!id \
 
-$mol_dimmer_low $mol_viewer
-	tagName \span
+$mol_dimmer_low $mol_view
+	dom_name \span

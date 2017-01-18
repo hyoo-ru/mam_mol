@@ -1,0 +1,4 @@
+$mol_page_demo $mol_page
+	title @ \Sign Up
+	body / <= signup $mol_app_signup
+	foot / <= rower $mol_row_demo
