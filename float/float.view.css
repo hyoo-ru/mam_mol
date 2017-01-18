@@ -1,0 +1,11 @@
+[mol_float] {
+	position: relative;
+	z-index: 1;
+	opacity: 1;
+	transition: opacity .25s ease-in;
+}
+
+[mol_float_scrolling] {
+	opacity: 0;
+	transition: opacity .25s ease-out;
+}

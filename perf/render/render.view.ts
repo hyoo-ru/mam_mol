@@ -26,7 +26,7 @@ namespace $.$mol {
  		}
 		
 		@ $mol_mem()
-		rowers() { return this.data().map( ( _ , id ) => this.row( id ) ) }
+		rows() { return this.data().map( ( _ , id ) => this.row( id ) ) }
 		
 		@ $mol_mem_key()
 		row( id : number ) { return new $mol_perf_render_row().setup( obj => {

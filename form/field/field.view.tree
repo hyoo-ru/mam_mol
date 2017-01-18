@@ -1,5 +1,5 @@
-$mol_form_field $mol_viewer childs /
-	<= label $mol_viewer childs /
-		<= namer $mol_viewer childs / <= name \
-		<= bider $mol_viewer childs <= errors /
+$mol_form_field $mol_view sub /
+	<= label $mol_view sub /
+		<= namer $mol_view sub / <= name \
+		<= bider $mol_view sub <= errors /
 	<= control null

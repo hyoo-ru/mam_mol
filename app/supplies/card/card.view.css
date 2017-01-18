@@ -1,0 +1,27 @@
+[mol_app_supplies_card] {
+	flex: 0 1 28rem;
+	position: relative;
+	display: block;
+	margin: auto;
+}
+
+[mol_app_supplies_card_content] {
+}
+
+[mol_app_supplies_card_group] {
+	align-items: flex-start;
+	margin: 0;
+}
+
+[mol_app_supplies_card_code_item] {
+	flex: 1 1 5rem;
+}
+
+[mol_app_supplies_card_cost_item] {
+	flex: 1 1 5rem;
+	text-align: right;
+}
+
+[mol_app_supplies_card_provider_item] {
+	flex: 10 1 10rem;
+}

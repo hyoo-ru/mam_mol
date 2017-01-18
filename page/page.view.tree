@@ -1,0 +1,11 @@
+$mol_page $mol_view
+	sub /
+		<= Head $mol_view
+			sub <= head /
+				<= Title $mol_view
+					sub /
+						<= title
+		<= Body $mol_scroll
+			sub <= body /
+		<= Foot $mol_view
+			sub <= foot /

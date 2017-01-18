@@ -5,12 +5,12 @@ namespace $.$mol {
 			return $mol_state_session.value( `${ this }.entered()` , next ) || false
 		}
 
-		childs() {
+		sub() {
 			return [
 				this.entered()
-					? this.mainer()
+					? this.Main()
 					: null ,
-				this.addoner()
+				this.Addon()
 			]
 		}
 		
@@ -39,21 +39,21 @@ namespace $.$mol {
 			return this.domain().supplies()
 		}
 
-		supplyId( next? : string ) {
-			return $mol_state_arg.value( this.stateKey( 'supply' ) , next )
+		supply_id( next? : string ) {
+			return $mol_state_arg.value( this.state_key( 'supply' ) , next )
 		}
 		
 		@ $mol_mem()
-		searchQuery( next? : string ) {
+		search_query( next? : string ) {
 			if( !next ) return ''
 			if( next.length < 7 ) return next
-			this.supplyId( next )
+			this.supply_id( next )
 			return ''
 		}
 
 		supply() {
 			if( !this.entered() ) return null
-			var id = this.supplyId()
+			var id = this.supply_id()
 			return id ? this.domain().supply( id ) : null
 		}
 

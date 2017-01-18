@@ -1,0 +1,24 @@
+[mol_check_expand] {
+}
+
+[mol_check_expand][disabled] {
+	background: transparent;
+}
+
+[mol_check_expand][disabled] [mol_check_expand_icon] {
+	visibility: hidden;
+}
+
+[mol_check_expand_icon] {
+	box-shadow: none;
+}
+[mol_check_expand]:not([mol_check_checked]) > [mol_check_expand_icon] {
+	transform: rotateZ(0deg);
+}
+
+[mol_check_expand][mol_check_checked] > [mol_check_expand_icon] {
+	transform: rotateZ(90deg);
+}
+
+[mol_check_box_icon] + div:not(:empty) {
+}

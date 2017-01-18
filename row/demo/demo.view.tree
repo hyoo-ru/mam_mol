@@ -1,0 +1,19 @@
+$mol_row_demo $mol_row
+	minimal_height 68
+	sub /
+		<= titler $mol_suggest
+			hint <= helloHint @ \Title
+			value?val <=> title?val \
+			suggests /
+				<= suggest1 @ \Hello
+				<= suggest2 @ \World
+		<= counter $mol_number
+			hint <= countHint @ \Count
+			value?val <=> count?val null
+		<= progresser $mol_portion
+			portion <= progress 0.33
+		<= publisher $mol_check_box
+			label / <= publishLabel @ \Shared
+			checked?val <=> publish?val false
+		<= buttonDrop $mol_button_minor
+			sub / <= dropLabel @ \Drop

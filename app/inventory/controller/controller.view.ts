@@ -8,8 +8,8 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		positioners() {
-			return this.positions().map( position => this.positioner( position.product().code() ) )
+		position_rows() {
+			return this.positions().map( position => this.Position_row( position.product().code() ) )
 		}
 		
 		positions() {
@@ -23,7 +23,7 @@ namespace $.$mol {
 			} )
 		}
 		
-		eventSubmit( next? : Event ) {
+		event_submit( next? : Event ) {
 			this.positions().forEach( position => {
 				if( position.status() === $mol_app_inventory_domain_position_status.approved ) {
 					position.status( $mol_app_inventory_domain_position_status.completed )

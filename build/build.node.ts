@@ -32,7 +32,7 @@ namespace $ {
 		mods( { path , exclude } : { path : string , exclude? : string[] } ) {
 			const mods : $mol_file[] = []
 			
-			$mol_file.absolute( path ).childs()
+			$mol_file.absolute( path ).sub()
 			.forEach(
 				child => {
 					const name = child.name()
@@ -44,7 +44,7 @@ namespace $ {
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale.json` )
 						
 						const tree = $mol_tree.fromString( String( child.content() ) , child.path() )
-						const res = $mol_viewer_tree2ts( tree )
+						const res = $mol_view_tree2ts( tree )
 						script.content( res.script )
 						locale.content( JSON.stringify( res.locales , null , '\t' ) )
 						
@@ -314,7 +314,7 @@ namespace $ {
 				return false
 			}
 			
-			for( let repo of mapping.select( 'pack' , name , 'git' ).childs ) {
+			for( let repo of mapping.select( 'pack' , name , 'git' ).sub ) {
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
 				pack.stat( null )
 				return true

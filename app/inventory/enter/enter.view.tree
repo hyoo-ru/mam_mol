@@ -1,24 +1,24 @@
-$mol_app_inventory_enter $mol_viewer
+$mol_app_inventory_enter $mol_view
 	domain $mol_app_inventory_domain
 	entered?val false
-	childs / 
+	sub / 
 		<= form $mol_form
-			formFields /
+			form_fields /
 				<= loginField $mol_form_field
 					name <= loginLabel @ \User name
 					errors <= loginErrors /
-					control <= loginControl $mol_stringer
+					control <= loginControl $mol_string
 						value?val <=> login?val \
 				<= passwordField $mol_form_field
 					name <= passwordLabel @ \Pass word
 					errors <= passwordErrors /
-					control <= passControl $mol_stringer
+					control <= passControl $mol_string
 						value?val <=> password?val \
 						type \password
 			buttons /
-				<= submit $mol_clicker_major
-					childs / <= submitLabel @ \Log in
-					eventClick?event <=> eventSubmit?event null
-					disabled <= submitBlocked false
+				<= submit $mol_button_major
+					sub / <= submitLabel @ \Log in
+					event_click?event <=> event_submit?event null
+					disabled <= submit_blocked false
 		<= message \
 	messageNoAccess @ \Access denied

@@ -1,0 +1,26 @@
+$mol_code_demo_qr $mol_code
+	format \QR_CODE
+
+$mol_code_demo_dataMatrix $mol_code
+	format \DATA_MATRIX
+
+$mol_code_demo_upc_e $mol_code
+	format \UPC_E
+
+$mol_code_demo_upc_a $mol_code
+	format \UPC_A
+
+$mol_code_demo_ean_8 $mol_code
+	format \EAN_8
+
+$mol_code_demo_ean_13 $mol_code
+	format \EAN_13
+
+$mol_code_demo_code_128 $mol_code
+	format \CODE_128
+
+$mol_code_demo_code_39 $mol_code
+	format \CODE_39
+
+$mol_code_demo_itf $mol_code
+	format \ITF

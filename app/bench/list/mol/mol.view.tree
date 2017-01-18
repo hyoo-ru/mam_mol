@@ -1,22 +1,20 @@
-$mol_app_bench_list_mol $mol_scroller
-	childs /
-		<= lister $mol_lister
-			rowers /
-				<= header $mol_viewer
-					childs / <= sample \
-				<= rowers /
-	rower!id $mol_app_bench_list_mol_rower
-		selected?val <=> rowerSelected!id?val false
-		title <= rowerTitle!id \
-		content <= rowerContent!id \
+$mol_app_bench_list_mol $mol_scroll
+	sub /
+		<= List $mol_list
+			rows /
+				<= Head $mol_view
+					sub / <= sample \
+				<= rows /
+	Row!id $mol_app_bench_list_mol_row
+		checked?val <=> row_selected!id?val false
+		title <= row_title!id \
+		content <= row_content!id \
 
-$mol_app_bench_list_mol_rower $mol_viewer
+$mol_app_bench_list_mol_row $mol_check
 	selected?val false
-	heightMinimal 56
-	attr * mol_app_bench_list_mol_rower_selected <= selected
-	event * click?event <=> eventToggle?event null
-	childs /
-		<= titler $mol_viewer
-			childs / <= title \
-		<= contenter $mol_viewer
-			childs / <= content \
+	minimal_height 56
+	sub /
+		<= Title $mol_view
+			sub / <= title \
+		<= Content $mol_view
+			sub / <= content \

@@ -8,15 +8,13 @@ namespace $.$mol {
 		}
 		
 		@$mol_mem()
-		newCode( next? : string ) {
+		code_new( next? : string ) {
 			if( next === void 0 ) return ''
 			
 			const domain = this.domain()
 
-			const product = domain.productByCode( next )
+			const product = domain.product_by_code( next )
 			if( !product ) return next
-			
-			
 			
 			let positions = domain.positions()
 			const position = domain.position( product.code() )
@@ -33,8 +31,8 @@ namespace $.$mol {
 		}			
 		
 		@ $mol_mem()
-		positioners() {
-			return this.positions().map( position => this.positioner( position.product().code() ) )
+		position_rows() {
+			return this.positions().map( position => this.Position_row( position.product().code() ) )
 		}
 		
 		positions() {
@@ -47,7 +45,7 @@ namespace $.$mol {
 			} )
 		}
 		
-		eventSubmit( next? : Event ) {
+		event_submit( next? : Event ) {
 			this.positions().forEach( position => {
 				position.status( $mol_app_inventory_domain_position_status.pending )
 			} )

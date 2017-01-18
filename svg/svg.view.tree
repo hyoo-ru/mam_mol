@@ -1,18 +1,18 @@
-$mol_svg $mol_viewer
-	tagName \svg
-	nameSpace \http://www.w3.org/2000/svg
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
 
-$mol_svg_root $mol_viewer
-	tagName \svg
+$mol_svg_root $mol_view
+	dom_name \svg
 	attr * viewBox <= viewBox \0 0 100 100 
 
 $mol_svg_path $mol_svg
-	tagName \path
+	dom_name \path
 	attr * d <= geometry \
 
 $mol_svg_circle $mol_svg
-	tagName \circle
+	dom_name \circle
 	attr *
 		r <= radius \
-		cx <= posX \
-		cy <= posY \
+		cx <= pos_x \
+		cy <= pos_y \

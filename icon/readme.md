@@ -11,8 +11,8 @@ Used icons will be compiled to JS and bundled with other scripts.
 ***.view.tree**
 
 ```tree
-$my_attacher $mol_clicker
-	childs /
+$my_attacher $mol_button
+	sub /
 		< icon $mol_icon_attach
 ```
 

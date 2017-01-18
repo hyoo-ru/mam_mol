@@ -1,0 +1,56 @@
+[mol_app_supplies_detail_content] {
+	/*display: flex;*/
+	/*flex-wrap: wrap;*/
+	padding: 0 1rem;
+}
+
+[mol_app_supplies_detail_content] > * {
+	margin: 1rem 0;
+	/*flex: 1 1 100%;*/
+}
+
+[mol_app_supplies_detail_positions] > * {
+	margin: 1rem 0;
+}
+
+[mol_app_supplies_detail_back] {
+	color: var(--mol_skin_base_text);
+	display: flex;
+	align-items: center;
+	margin-right: -1rem;
+}
+
+[mol_app_supplies_detail_back_icon] {
+	transform: rotateZ(180deg);
+}
+
+[mol_app_supplies_detail_descr_deck] {
+	margin: 0;
+}
+
+[mol_app_supplies_detail_cons_content] {
+	align-items: baseline;
+	background: var(--mol_skin_card);
+}
+
+[mol_app_supplies_detail_cons_content] > * {
+	flex: 1 1 10rem;
+}
+
+[mol_app_supplies_detail_org_content] {
+	align-items: baseline;
+	background: var(--mol_skin_card);
+}
+
+[mol_app_supplies_detail_org_content] > * {
+	flex: 1 1 10rem;
+}
+
+[mol_app_supplies_detail_cost] {
+	text-align: right;
+	margin: 0;
+}
+
+[mol_app_supplies_detail_tools] {
+	padding: 0;
+}

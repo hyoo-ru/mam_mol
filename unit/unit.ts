@@ -25,12 +25,12 @@ namespace $ {
 			return ' '
 		}
 		
-		valueView() {
+		value_view() {
 			return String( this.valueOf() ).split( /(?=(?:...)+$)/ ).join( this.delimiter() )
 		}
 		
 		toString() {
-			return this.prefix() + this.valueView() + this.postfix()
+			return this.prefix() + this.value_view() + this.postfix()
 		}
 		
 		static summ( a : $mol_unit , b : $mol_unit ) {

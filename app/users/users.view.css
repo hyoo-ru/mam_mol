@@ -2,6 +2,7 @@
 	max-width: 28rem;
 	max-height: 100%;
 	width: 100%;
+	height: auto;
 	margin: auto;
 	background: var(--mol_skin_light);
 	display: flex;
@@ -10,40 +11,45 @@
 }
 
 [mol_app_users_filter] {
-	flex: 0 0 auto;
-	width: 100%;
+	flex: 1 0 auto;
 	box-sizing: border-box;
 }
 
-[mol_app_users_bodier] {
+[mol_app_users_body] {
 	flex: 1 1 40rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-[mol_app_users_lister] {
+[mol_app_users_list] {
 	align-self: stretch;
 	flex: 1 0 auto;
 	background: var(--mol_skin_light);
 }
 
-[mol_app_users_item] {
+[mol_app_users_row] {
 	margin-bottom: 1px;
 	background: var(--mol_skin_light);
 }
 
-[mol_app_users_controller] {
-	background: var(--mol_skin_light);
-	flex: 0 0 auto;
-	margin: 0;
+[mol_app_users_row_title] {
+	flex: 1 1 auto;
 }
 
-[mol_app_users_messager] {
+[mol_app_users_message] {
 	flex: 1 1 auto;
 	align-self: stretch;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	color: var(--mol_skin_warn_text);
+}
+
+[mol_app_users_controller] {
+	justify-content: flex-start;
+}
+
+[mol_app_users_controller] > * {
+	flex: 1 1 auto;
 }

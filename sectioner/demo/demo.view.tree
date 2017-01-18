@@ -1,6 +1,0 @@
-$mol_sectioner_demo $mol_scroller childs / <= sectioner $mol_sectioner
-	head \Section header
-	content /
-		<= one $mol_filler
-		<= two $mol_filler
-		<= three $mol_filler

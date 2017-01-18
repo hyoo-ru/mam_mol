@@ -6,22 +6,22 @@ Component that helps to compose any form.
 
 ```
 $mol_form
-   	formFields /
+   	form_fields /
    		< loginField $mol_form_field
    			name < loginLabel @ \Login
    			errors < loginErrors /
-   			control < loginControl $mol_stringer value > login \
+   			control < loginControl $mol_string value > login \
    		< passwordField $mol_form_field
    			name < passwordLabel @ \Password
    			errors < passwordErrors /
-   			control < passControl $mol_stringer
+   			control < passControl $mol_string
    				value > password \
    				type \password
 ```
 
 ## Properties
 
-**`formFields(): Array`**  
+**`form_fields(): Array`**  
 
 Field for `$mol_form_field` components which would be included in the the form
 

@@ -1,8 +1,0 @@
-$mol_floater_demo $mol_scroller
-	childs /
-		<= floater $mol_floater
-			childs /
-				<= floaterContent $mol_carder_demo_hello
-		<= content / <= contenter $mol_rower childs /
-			<= filler1 $mol_filler
-			<= filler2 $mol_filler

@@ -1,0 +1,24 @@
+[mol_bar] {
+	display: flex;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	border-radius: var(--mol_skin_round);
+	margin: auto;
+}
+
+[mol_bar] > * {
+	border-radius: 0;
+}
+
+[mol_bar] > *:first-child {
+	border-top-left-radius: var(--mol_skin_round);
+	border-bottom-left-radius: var(--mol_skin_round);
+}
+
+[mol_bar] > *:not(:first-child) {
+	margin-left: 1px;
+}
+
+[mol_bar] > *:last-child {
+	border-top-right-radius: var(--mol_skin_round);
+	border-bottom-right-radius: var(--mol_skin_round);
+}

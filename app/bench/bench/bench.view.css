@@ -2,7 +2,7 @@
 	margin: 0;
 }
 
-[mol_app_bench_mainPage] > [mol_pager_bodier] {
+[mol_app_bench_main_page] > [mol_page_body] {
 	display: flex;
 	overflow: auto;
 	z-index: 1;
@@ -16,11 +16,11 @@
 	margin: 0;
 }
 
-[mol_app_bench_informator] {
+[mol_app_bench_inform] {
 	flex: 0 1 auto;
 	overflow: auto;
 }
-[mol_app_bench_tester] {
+[mol_app_bench_sandbox] {
 	border: none;
 	flex: 1 0 33%;
 	position: relative;
@@ -29,13 +29,13 @@
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 }
 
-[mol_app_bench_descriptioner] {
+[mol_app_bench_descr] {
 	padding: .5rem 1rem;
 	flex: 0 2 50%;
 	max-width: none;
 }
 
-[mol_app_bench_resulter] {
+[mol_app_bench_result] {
 	background: var(--mol_skin_card);
 }
 
@@ -44,16 +44,16 @@
 	flex-direction: column;
 }
 
-[mol_app_bench_resulterHeader] {
+[mol_app_bench_result_head] {
 	cursor: pointer;
 }
 
-[mol_app_bench_resulterCellerNumber] {
+[mol_app_bench_result_cell_number] {
 	white-space: nowrap;
 	text-align: right;
 }
 
-[mol_app_bench_resultPortioner] {
+[mol_app_bench_result_portion] {
 	display: inline-flex;
 	vertical-align: bottom;
 	margin-left: .5rem;
