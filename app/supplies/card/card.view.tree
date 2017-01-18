@@ -2,6 +2,7 @@ $mol_app_supplies_card $mol_link
 	supply null
 	sub /
 		<= Card $mol_card
+			status <= status \
 			Content <= Group $mol_row
 				sub /
 					<= items /

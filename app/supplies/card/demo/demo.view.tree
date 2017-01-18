@@ -11,10 +11,3 @@ $mol_app_supplies_card_demo_approved $mol_app_supplies_card
 	cost $mol_unit_money_rur valueOf 3000000
 	status \approved
 	arg * supply \2
-
-$mol_app_supplies_card_demo_selected $mol_app_supplies_card
-	code \327836275
-	provider_name @ \NorNikel
-	cost $mol_unit_money_usd valueOf 900000
-	status \selected
-	arg * supply \3
