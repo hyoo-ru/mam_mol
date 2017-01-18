@@ -1,0 +1,36 @@
+[mol_select_list] {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	z-index: 3;
+	background-color: white;
+}
+
+[mol_select_trigger] {
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	padding: 0;
+	margin: 0;
+}
+
+[mol_select_option] {
+	width: 100%;
+	padding: 0;
+	justify-content: flex-start;
+}
+
+[mol_select_dimmer], [mol_select_option_empty] {
+	padding: .5em;
+}
+
+[mol_select_chevron] {
+	margin: .5em;
+	transform: rotateZ(90deg);
+}
+
+[mol_select_option_no_value] {
+	padding: .5em;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	border-radius: var(--mol_skin_round);
+    color: hsla(0, 0%, 0%, 0.3);
+    cursor: not-allowed;
+}

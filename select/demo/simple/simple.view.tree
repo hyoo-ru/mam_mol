@@ -1,0 +1,8 @@
+$mol_select_demo_simple $mol_labeler
+	title \Do you like our framework?
+	Content $mol_select
+		options /
+			\Yes!
+			\Sure
+			\Best framework ever!
+			\Shut up and take my MONEY!!!

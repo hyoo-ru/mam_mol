@@ -1,9 +1,9 @@
 
-[mol_selecter] {
+[mol_select] {
 	margin: auto;
 }
 
-[mol_selecter_demo_custom_optioner] {
+[mol_select_demo_custom_option] {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
@@ -11,7 +11,7 @@
 	text-align: center;
 }
 
-[mol_colorer] {
+[mol_color] {
 	width: 3em;
 	height: 3em;
 	border-radius: 50%;

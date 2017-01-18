@@ -1,0 +1,23 @@
+$mol_select_demo_custom $mol_labeler
+	title \Choose some color
+	Content $mol_select
+		message_empty \😇 👍 👍 👍 😇
+		dictionary <= colors *
+			red \crimson 
+			blue \darkcyan
+			pink \hotpink
+			green \seagreen
+			gray \dimgray
+		value?val <=> value?val \gray
+		option_content!id <= option_content!id /
+			<= Option!id $mol_view
+				sub /
+					<= Color!id $mol_color
+						color <= color_code!id \
+					<= prop!id \
+
+$mol_color $mol_view
+	tag_name \figure
+	color \
+	attr *
+		style <= set_color \

@@ -1,0 +1,10 @@
+$mol_select_demo_search $mol_labeler
+	title \Choose your robin
+	Content $mol_select
+		search_breakpoint 4
+		message_no_value \😨 Not found 😱
+		dictionary <= robins *
+			dg \Dick Graison
+			jt \Jason Todd
+			td \Tim Drake
+			dw \Damien Wayne
