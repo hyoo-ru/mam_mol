@@ -3,7 +3,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		widget() {
-			var Class : typeof $mol_viewer = (<any>$)[ `$${ this.name() }` ]
+			var Class : typeof $mol_view = (<any>$)[ `$${ this.name() }` ]
 			return new Class()
 		}
 		

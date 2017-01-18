@@ -1,4 +1,4 @@
-$mol_number_demo $mol_rower childs /
+$mol_number_demo $mol_row sub /
 	<= zero $mol_number
 	<= one $mol_number
 		value?val <=> year?val null
@@ -11,19 +11,19 @@ $mol_number_demo $mol_rower childs /
 		enabled false
 	<= four $mol_number
 		value?val <=> year?val null
-		enabledStringer false
+		string_enabled false
 	<= five $mol_number
 		value?val <=> age?val 32
-		enabledDec false
+		dec_enabled false
 	<= six $mol_number
 		value?val <=> year?val null
-		enabledInc false
+		inc_enabled false
 	<= seven $mol_number
 		value?val <=> year?val null
-		precisionChange 10
+		precision_change 10
 	<= eight $mol_number
 		value?val <=> year?val null
-		precisionView 0.01
+		precision_view 0.01
 	<= nine $mol_number
 		value?val <=> year?val null
 		precision 1000

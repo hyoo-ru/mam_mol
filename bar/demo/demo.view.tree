@@ -1,0 +1,17 @@
+$mol_bar_demo_search $mol_bar
+	sub /
+		<= stringer $mol_string
+			value?val <=> value?val \
+		<= submitter $mol_button
+			sub /
+				\submit
+
+$mol_bar_demo_login $mol_bar
+	sub /
+		<= stringer $mol_string
+			value?val <=> value?val \
+		<= rememberer $mol_check_box
+			label / \Remember me
+		<= submitter $mol_button
+			sub /
+				\submit

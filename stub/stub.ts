@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export function $mol_stub_selectRandom< Value >( list : Value[] ) {
+	export function $mol_stub_select_random< Value >( list : Value[] ) {
 		return list[ Math.floor( Math.random() * list.length ) ]
 	}
 	
@@ -13,7 +13,7 @@ namespace $ {
 		for( let i = 0 ; i < count ; i++ ) {
 			let text = prefix
 			for( let j = prefix.length ; j < length ; j++ ) {
-				text += $mol_stub_selectRandom( possible )
+				text += $mol_stub_select_random( possible )
 			}
 			strings.push( text )
 		}
@@ -34,8 +34,8 @@ namespace $ {
 		return new $mol_unit_money_usd( value )
 	}
 	
-	export function $mol_stub_productName() {
-		var name = $mol_stub_selectRandom(
+	export function $mol_stub_product_name() {
+		var name = $mol_stub_select_random(
 			[
 				'Monitor 15"' ,
 				'Monitor 17"' ,
@@ -44,35 +44,35 @@ namespace $ {
 				'Frame grabber card'
 			]
 		)
-		var port = $mol_stub_selectRandom( [ 'D-SUB' , 'DVI' , 'HDMI' ] )
-		var resolution = $mol_stub_selectRandom( [ 'VGA' , 'Full HD' , '4K' ] )
+		var port = $mol_stub_select_random( [ 'D-SUB' , 'DVI' , 'HDMI' ] )
+		var resolution = $mol_stub_select_random( [ 'VGA' , 'Full HD' , '4K' ] )
 		
 		return [ name , port , resolution ].join( ', ' )
 	}
 	
-	export function $mol_stub_companyNameBig() {
-		var product = $mol_stub_selectRandom( [ 'Everything' , 'Something' , 'Anything' , 'Nothing' ] )
-		var type = $mol_stub_selectRandom( [ 'Company' , 'Corporation' , 'Holding' ] )
+	export function $mol_stub_company_name_big() {
+		var product = $mol_stub_select_random( [ 'Everything' , 'Something' , 'Anything' , 'Nothing' ] )
+		var type = $mol_stub_select_random( [ 'Company' , 'Corporation' , 'Holding' ] )
 		
 		return `A ${type} that makes ${product}`
 	}
 	
-	export function $mol_stub_companyNameSmall() {
-		return $mol_stub_selectRandom( [ 'ACME inc.' , 'Dream Company' , 'Just Company' ] )
+	export function $mol_stub_company_name_small() {
+		return $mol_stub_select_random( [ 'ACME inc.' , 'Dream Company' , 'Just Company' ] )
 	}
 	
-	export function $mol_stub_companyName() {
-		return $mol_stub_selectRandom( [ $mol_stub_companyNameSmall , $mol_stub_companyNameBig ] )()
+	export function $mol_stub_company_name() {
+		return $mol_stub_select_random( [ $mol_stub_company_name_small , $mol_stub_company_name_big ] )()
 	}
 	
-	export function $mol_stub_personName() {
-		var first = $mol_stub_selectRandom( [ 'Ivan' , 'Petr' , 'Sidor' ] )
-		var last = $mol_stub_selectRandom( [ 'Ivanov' , 'Petrov' , 'Sidorov' ] )
+	export function $mol_stub_person_name() {
+		var first = $mol_stub_select_random( [ 'Ivan' , 'Petr' , 'Sidor' ] )
+		var last = $mol_stub_select_random( [ 'Ivanov' , 'Petrov' , 'Sidorov' ] )
 		return `${first} ${last}`
 	}
 	
 	export function $mol_stub_city() {
-		return $mol_stub_selectRandom( [ 'Moscow' , 'London' , 'Washington' , 'Buenos Aires' ] )
+		return $mol_stub_select_random( [ 'Moscow' , 'London' , 'Washington' , 'Buenos Aires' ] )
 	}
 	
 	export function $mol_stub_time( maxShift = 60 * 24 * 365 ) {

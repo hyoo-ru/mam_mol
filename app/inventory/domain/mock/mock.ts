@@ -14,13 +14,13 @@ namespace $ {
 			const next = new $mol_app_inventory_domain_product()
 			
 			next.code = $mol_const( code )
-			next.title = $mol_const( $mol_stub_productName() )
+			next.title = $mol_const( $mol_stub_product_name() )
 			next.description = $mol_const( 'some description' )
 			
 			return next
 		}
 		
-		productByCode( code : string ) {
+		product_by_code( code : string ) {
 			return this.product( code )
 		}
 		
@@ -40,17 +40,17 @@ namespace $ {
 		position( productCode : string ) {
 			const next = new $mol_app_inventory_domain_position()
 			next.product = ()=> this.product( productCode )
-			next.count = ( next? )=> this.positionCount( productCode , next )
-			next.status = ( next? )=> this.positionStatus( productCode , next )
+			next.count = ( next? )=> this.position_count( productCode , next )
+			next.status = ( next? )=> this.position_status( productCode , next )
 			return next
 		}
 		
-		positionCount( productCode : string , next? : number ) {
+		position_count( productCode : string , next? : number ) {
 			const key = `positionCount(${ JSON.stringify( productCode ) })`
 			return $mol_state_session.value( key , next ) || 0
 		}
 		
-		positionStatus( productCode : string , next? : $mol_app_inventory_domain_position_status ) {
+		position_status( productCode : string , next? : $mol_app_inventory_domain_position_status ) {
 			const key = `positionStatus(${ JSON.stringify( productCode ) })`
 			return $mol_state_session.value( key , next ) || $mol_app_inventory_domain_position_status.draft
 		}

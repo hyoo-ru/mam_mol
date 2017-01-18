@@ -1,26 +1,39 @@
-$mol_app_users $mol_viewer childs /
-	<= filter $mol_stringer
-		hint <= filterHint @ \Search users on GitHub
-		value?val <=> query?val \
-	<= bodier $mol_scroller childs <= body / <= lister $mol_lister rowers <= userRows /
-	<= controller $mol_rower childs /
-		<= reloader $mol_clicker_minor
-			childs / <= reloadLabel @ \Reload
-			eventClick?val <=> eventReload?val null
-		<= adder $mol_clicker_minor
-			enabled <= loaded false 
-			childs / <= addLabel @ \Add
-			eventClick?val <=> eventAdd?val null
-		<= saver $mol_clicker_major
-			enabled <= changed false 
-			childs / <= saveLabel @ \Save
-			eventClick?val <=> eventSave?val null
-		<= messager $mol_statuser status <= saverResult null
+$mol_app_users $mol_page
+	head /
+		<= Head_row $mol_row
+			sub /
+				<= Filter $mol_string
+					hint <= filter_hint @ \Search users on GitHub
+					value?val <=> query?val \
+	body /
+		<= List $mol_list
+			rows <= user_rows /
+	foot /
+		<= Controller $mol_row
+			sub /
+				<= Reload $mol_button_minor
+					sub /
+						<= reload_label @ \Reload
+					event_click?val <=> event_reload?val null
+				<= Add $mol_button_minor
+					enabled <= loaded false 
+					sub /
+						<= add_label @ \Add
+					event_click?val <=> event_add?val null
+				<= Save $mol_button_major
+					enabled <= changed false 
+					sub /
+						<= save_label @ \Save
+					event_click?val <=> event_save?val null
+				<= Message $mol_status
+					status <= save_result null
 
-$mol_app_users_item $mol_rower
-	heightMinimal 68
-	childs /
-		<= titler $mol_stringer value?val <=> title?val \
-		<= dropper $mol_clicker_minor
-			childs / <= dropLabel \Drop
-			eventClick?val <=> eventDrop?val null
+$mol_app_users_row $mol_row
+	minimal_height 68
+	sub /
+		<= Title $mol_string
+			value?val <=> title?val \
+		<= Drop $mol_button_minor
+			sub /
+				<= drop_label \Drop
+			event_click?val <=> event_drop?val null

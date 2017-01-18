@@ -13,7 +13,7 @@ namespace $.$mol {
 				}
 			]
 			
-			$mol_assert_equal( app.gistContent( 0 ) , '# hello\nworld' )
+			$mol_assert_equal( app.gist_content( 0 ) , '# hello\nworld' )
 			
 		}
 	})

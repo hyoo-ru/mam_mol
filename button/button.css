@@ -1,0 +1,67 @@
+[mol_button] {
+	user-select: none;
+	border: none;
+	font: inherit;
+	background: none;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	border-radius: var(--mol_skin_round);
+	flex: 0 1 auto;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	vertical-align: middle;
+	text-align: center;
+	padding: .5rem;
+	display: inline-flex;
+	text-decoration: inherit;
+	color: inherit;
+	cursor: inherit;
+	position: relative;
+	box-sizing: border-box;
+	margin: auto;
+}
+
+[mol_button][disabled] {
+	color: var(--mol_skin_passive_text);
+}
+
+[mol_button_minor]:not([disabled]) {
+	background: var(--mol_skin_button);
+	color: var(--mol_skin_light_text);
+}
+
+[mol_button_major]:not([disabled]) {
+	background: var(--mol_skin_accent);
+	color: var(--mol_skin_accent_text);
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+}
+
+[mol_button_danger]:not([disabled]) {
+	background: var(--mol_skin_warn);
+	color: var(--mol_skin_warn_text);
+}
+
+[mol_button]:not([disabled]):hover {
+	z-index: 1;
+	cursor: pointer;
+	background: var(--mol_skin_hover);
+}
+
+[mol_button_minor]:not([disabled]):hover {
+	background: var(--mol_skin_light_hover);
+	color: var(--mol_skin_light_text);
+}
+
+[mol_button]:focus {
+	z-index: 1;
+	outline: none;
+	box-shadow: 0 0 0 1px var(--mol_skin_focus_line);
+}
+
+[mol_button_major]:not([disabled]):hover {
+	background: var(--mol_skin_accent_hover);
+}
+
+[mol_button_danger]:not([disabled]):hover {
+	background: var(--mol_skin_warn_hover);
+}

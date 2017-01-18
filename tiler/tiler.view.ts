@@ -2,12 +2,12 @@ namespace $.$mol {
 	export class $mol_tiler extends $.$mol_tiler {
 		
 		@ $mol_mem()
-		childs() {
+		sub() {
 			return this.groupChilds([ ])
 		}
 		
 		@ $mol_mem_key()
-		groupItems( path : number[] ) : $mol_viewer[] {
+		groupItems( path : number[] ) : $mol_view[] {
 			var items = ( path.length === 0 )
 				? this.items()
 				: this.groupItems( path.slice( 0 , path.length - 1 ) ) 
@@ -42,15 +42,15 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		group( path : number[] ) {
-			return new $mol_viewer().setup( obj => {
-				obj.childs = () => this.groupChilds( path )
+			return new $mol_view().setup( obj => {
+				obj.sub = () => this.groupChilds( path )
 			} )
 		}
 		
 		@ $mol_mem_key()
 		item( path : number[] ) {
-			return new $mol_viewer().setup( obj => {
-				obj.childs = () => this.groupItems( path )
+			return new $mol_view().setup( obj => {
+				obj.sub = () => this.groupItems( path )
 			} )
 		}
 		

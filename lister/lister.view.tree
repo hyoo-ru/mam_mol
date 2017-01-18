@@ -1,3 +1,0 @@
-$mol_lister $mol_viewer
-	field * style.minHeight <= minHeightStyle \
-	childs <= rowers /

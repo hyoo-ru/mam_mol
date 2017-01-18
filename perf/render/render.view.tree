@@ -1,17 +1,17 @@
-$mol_perf_render $mol_viewer childs /
-	<= header $mol_viewer childs / <= head /
-		<= titler $mol_viewer
-			tagName \h2
-			childs / <= title \$mol
-		<= runner $mol_clicker_major
-			tagName \button
-			childs / <= runnerLabel @ \Run
-			eventClick?val <=> eventRun?val null
-	<= contenter $mol_scroller childs / <= lister $mol_lister rowers <= rowers /
+$mol_perf_render $mol_view sub /
+	<= header $mol_view sub / <= head /
+		<= titler $mol_view
+			dom_name \h2
+			sub / <= title \$mol
+		<= runner $mol_button_major
+			dom_name \button
+			sub / <= runnerLabel @ \Run
+			event_click?val <=> eventRun?val null
+	<= contenter $mol_scroll sub / <= lister $mol_list rows <= rows /
 
-$mol_perf_render_row $mol_viewer
+$mol_perf_render_row $mol_view
 	selected?val false
-	heightMinimal 24
+	minimal_height 24
 	attr * mol_perf_render_row_selected <= selected
 	event * click?val <=> eventToggle?val null
-	childs / <= bar $mol_viewer childs / <= label \
+	sub / <= bar $mol_view sub / <= label \

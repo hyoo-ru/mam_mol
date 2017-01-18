@@ -143,7 +143,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		childs() : $mol_file[] {
+		sub() : $mol_file[] {
 			this.stat()
 			
 			switch( this.type() ) {
@@ -174,7 +174,7 @@ namespace $ {
 		) {
 			
 			var found : $mol_file[] = []
-			this.childs().forEach(
+			this.sub().forEach(
 				child => {
 					if( exclude && child.path().match( exclude ) ) return
 					if( !include || child.path().match( include ) ) found.push( child )

@@ -4,12 +4,12 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		bench( next? : string ) {
-			return $mol_state_arg.value( this.stateKey( 'bench' ) , next ) || 'list'
+			return $mol_state_arg.value( this.state_key( 'bench' ) , next ) || 'list'
 		}
 		
 		@ $mol_mem()
 		sandbox( next? : HTMLIFrameElement , force? : $mol_atom_force ) : HTMLIFrameElement {
-			const next2 = this.tester().DOMNode() as HTMLIFrameElement
+			const next2 = this.Sandbox().dom_node() as HTMLIFrameElement
 			
 			next2.src = this.bench()
 			
@@ -21,22 +21,22 @@ namespace $.$mol {
 			throw new $mol_atom_wait( `Loading sandbox...` )
 		}
 		
-		'commandCurrent()' : any[]
+		'command_current()' : any[]
 		
 		@ $mol_mem()
-		commandCurrent( next? : any[] , force? : $mol_atom_force ) {
-			if( this['commandCurrent()'] ) return
+		command_current( next? : any[] , force? : $mol_atom_force ) {
+			if( this['command_current()'] ) return
 			return next
 		}
 		
 		@ $mol_mem_key()
-		commandResult< Result >( command : any[] , next? : Result ) : Result {
+		command_result< Result >( command : any[] , next? : Result ) : Result {
 			const sandbox = this.sandbox()
 			sandbox.valueOf()
 			
 			if( next !== void 0 ) return next
 			
-			const current = this.commandCurrent( command )
+			const current = this.command_current( command )
 			if( current !== command ) throw new $mol_atom_wait( `Waiting for ${ JSON.stringify( current ) }...` )
 			
 			requestAnimationFrame( ()=> {
@@ -46,8 +46,8 @@ namespace $.$mol {
 					if( event.data[ 0 ] !== 'done' ) return
 					window.onmessage = null
 					
-					this.commandCurrent( null , $mol_atom_force )
-					this.commandResult( command , event.data[ 1 ] )
+					this.command_current( null , $mol_atom_force )
+					this.command_result( command , event.data[ 1 ] )
 				}
 			} )
 			
@@ -65,21 +65,21 @@ namespace $.$mol {
 					title : { [ lang : string ] : string }
 				} }
 			}
-			return this.commandResult< meta >( [ 'meta' ] )
+			return this.command_result< meta >( [ 'meta' ] )
 		}
 		
 		@ $mol_mem()
-		samplesAll( next? : string[] ) {
+		samples_all( next? : string[] ) {
 			return Object.keys( this.meta().samples ).sort( ( a , b )=> {
-				const titleA = this.menuOptionerTitle( a ).toLowerCase()
-				const titleB = this.menuOptionerTitle( a ).toLowerCase()
+				const titleA = this.menu_option_title( a ).toLowerCase()
+				const titleB = this.menu_option_title( a ).toLowerCase()
 				return titleA > titleB ? 1 : titleA < titleB ? -1 : 0
 			} )
 		}
 		
 		@ $mol_mem()
 		samples( next? : string[] ) : string[] {
-			const arg = $mol_state_arg.value( this.stateKey( 'sample' ) , next && next.join( '~' ) )
+			const arg = $mol_state_arg.value( this.state_key( 'sample' ) , next && next.join( '~' ) )
 			return arg ? arg.split( '~' ).sort() : []
 		}
 		
@@ -101,51 +101,51 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		resultsSample( sampleId : string )  {
-			const results : { [ key : string ] : any } = {
-				sample : this.menuOptionerTitle( sampleId ) ,
+		result_sample( sampleId : string )  {
+			const result : { [ key : string ] : any } = {
+				sample : this.menu_option_title( sampleId ) ,
 			}
 			
 			this.steps().forEach( step => {
-				results[ step ] = this.commandResult<string>([ step , sampleId ])
+				result[ step ] = this.command_result<string>([ step , sampleId ])
 			} )
 			
-			return results
+			return result
 		}
 		
 		@ $mol_mem()
-		results() {
-			const results : { [ sample : string ] : { [ step : string ] : any } } = {}
+		result() {
+			const result : { [ sample : string ] : { [ step : string ] : any } } = {}
 			
 			this.samples().forEach( sample => {
-				results[ sample ] = this.resultsSample( sample )
+				result[ sample ] = this.result_sample( sample )
 			} )
 			
-			return results
+			return result
 		}
 		
-		columnHeaderLabel( col : string ) {
-			if( col === 'sample' ) return [ this.columnHeaderLabelSample() ]
-			const title = this.meta().steps[ col ].title
+		result_col_title( col_id : string ) {
+			if( col_id === 'sample' ) return [ this.result_col_title_sample() ]
+			const title = this.meta().steps[ col_id ].title
 			return [ title[ $mol_locale.lang() ] || title[ 'en' ] ]
 		}
 		
 		@ $mol_mem()
-		resultsColSort( next? : string ) {
-			return $mol_state_arg.value( this.stateKey( 'sort' ) , next )
+		result_col_sort( next? : string ) {
+			return $mol_state_arg.value( this.state_key( 'sort' ) , next )
 		}
 		
-		menuOptions() {
-			return this.samplesAll().map( sample => this.menuOptioner( sample ) )
+		menu_options() {
+			return this.samples_all().map( sample => this.Menu_option( sample ) )
 		}
 		
-		menuOptionerTitle( sample : string ) {
+		menu_option_title( sample : string ) {
 			const title = this.meta().samples[ sample ].title
 			return title[ $mol_locale.lang() ] || title[ 'en' ]
 		}
 		
 		@ $mol_mem_key()
-		menuOptionerChecked( sample : string , next? : boolean ) {
+		menu_option_checked( sample : string , next? : boolean ) {
 			if( next === void 0 ) return this.samples().indexOf( sample ) !== -1
 			
 			if( next ) this.samples( this.samples().concat( sample ) )

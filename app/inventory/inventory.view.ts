@@ -1,23 +1,23 @@
 namespace $.$mol {
 	export class $mol_app_inventory extends $.$mol_app_inventory {
 		
-		page() : $mol_viewer {
+		Page() : $mol_view {
 			if( !this.domain().authentificated() ) {
-				return this.enter()
+				return this.Enter()
 			}
 			
-			switch( this.pageName() ) {
-				case 'keeper': return this.keeper()
-				case 'controller': return this.controller()
-				case 'stats': return this.stats()
+			switch( this.page_name() ) {
+				case 'keeper': return this.Keeper()
+				case 'controller': return this.Controller()
+				case 'stats': return this.Stats()
 			}
 			
-			return this.stats()
+			return this.Keeper()
 		}
 		
 		@ $mol_mem()
-		pageName( next? : string ) {
-			return $mol_state_arg.value( this.stateKey( 'page' ) , next ) || 'keeper'
+		page_name( next? : string ) {
+			return $mol_state_arg.value( this.state_key( 'page' ) , next ) || 'keeper'
 		}
 		
 	}

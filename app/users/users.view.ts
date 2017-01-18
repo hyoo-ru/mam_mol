@@ -3,24 +3,24 @@ namespace $.$mol {
 	/// GitHub users View Model
 	export class $mol_app_users extends $.$mol_app_users {
 		
-		queryArg( next? : string ) {
-			return $mol_state_arg.value( this.stateKey( 'query' ) , next )
+		query_arg( next? : string ) {
+			return $mol_state_arg.value( this.state_key( 'query' ) , next )
 		}
 		
 		/// Search query string synchronized with argument from URL.
 		@ $mol_mem()
 		query( next? : string ) : string {
 			if( next == null ) {
-				return this.queryArg()
+				return this.query_arg()
 			} else {
-				this.queryArg( next )
+				this.query_arg( next )
 				
-				if( this._queryTimer ) clearTimeout( this._queryTimer )
-				this._queryTimer = setTimeout( ()=> { this.query( null ) } , 500 )
+				if( this._query_timer ) clearTimeout( this._query_timer )
+				this._query_timer = setTimeout( ()=> { this.query( null ) } , 500 )
 			}
 		}
 		
-		_queryTimer = 0
+		_query_timer = 0
 		
 		/// Data source resource based on this.query()
 		@ $mol_mem()
@@ -38,22 +38,22 @@ namespace $.$mol {
 		}
 		
 		/// List of child views. Show users and controls only when this.query() is not empty.
-		childs() {
-			var next = [ this.filter() ]
-			if( this.master() ) next = [].concat( next , this.bodier() , this.controller() )
+		sub() {
+			var next = [ this.Head() ]
+			if( this.master() ) next = [].concat( next , this.Body() , this.Foot() )
 			return next
 		}
 		
 		/// Current list of users. May be changed by user.
 		@ $mol_mem()
 		users( next? : string[] ) {
-			let usersMaster = this.usersMaster()
+			let usersMaster = this.users_master()
 			return next || usersMaster
 		}
 		
 		/// List of users loaded from server.
 		@ $mol_mem()
-		usersMaster( next? : string[] , force? : $mol_atom_force ) {
+		users_master( next? : string[] , force? : $mol_atom_force ) {
 			if( !this.query() ) return []
 			
 			const master = this.master()
@@ -69,28 +69,28 @@ namespace $.$mol {
 		
 		/// Status of net communication. Shows errors of downloading|uploading. 
 		@ $mol_mem()
-		saverResult() {
-			return this.usersMaster()
+		save_result() {
+			return this.users_master()
 		}
 		
 		/// Reload data from server and discard changes.
-		eventReload( next? : Event ) {
-			this.usersMaster( void 0 , $mol_atom_force )
+		event_reload( next? : Event ) {
+			this.users_master( void 0 , $mol_atom_force )
 		}
 		
 		/// Add user with empty name at the end of list.
-		eventAdd( next? : Event ) {
+		event_add( next? : Event ) {
 			this.users( this.users().concat( '' ) )
 		}
 		
 		/// Remove user from list by id.
-		eventUserDrop( id : number , next? : Event ) {
+		event_user_drop( id : number , next? : Event ) {
 			this.users( this.users().filter( ( name , i )=> ( i !== id ) ) )
 		}
 		
 		/// Indicates difference between current list and list loaded from server.
 		changed() {
-			return JSON.stringify( this.usersMaster() ) !== JSON.stringify( this.users() )
+			return JSON.stringify( this.users_master() ) !== JSON.stringify( this.users() )
 		}
 		
 		/// Flag to enable some controls when user list loaded.
@@ -99,10 +99,10 @@ namespace $.$mol {
 		}
 		
 		/// Initiates current user list to upload. 
-		eventSave( next? : Event ) {
+		event_save( next? : Event ) {
 			if( !this.changed() ) return
 			try {
-				this.usersMaster( this.users() ).valueOf()
+				this.users_master( this.users() ).valueOf()
 			} catch( error ) {
 				if( error instanceof $mol_atom_wait ) throw error
 				console.log( '---' , error )
@@ -111,7 +111,7 @@ namespace $.$mol {
 		
 		body() : any[] {
 			if( this.users().length ) {
-				return [ this.lister() ]
+				return [ this.List() ]
 			} else {
 				return [ 'Users not found' ]
 			}
@@ -119,21 +119,21 @@ namespace $.$mol {
 		
 		/// Lazy list of user view models. Items are created only when they fits to viewport.
 		@ $mol_mem()
-		userRows() {
-			return this.users().map( ( user , id )=> this.userRow( id ) )
+		user_rows() {
+			return this.users().map( ( user , id )=> this.User_row( id ) )
 		}
 		
 		/// One user view model with injected behaviour.
 		@ $mol_mem_key()
-		userRow( id : number ) {
-			return new $mol_app_users_item().setup( obj => {
-				obj.title = ( next? )=> this.userName( id , next )
-				obj.eventDrop = ( next? )=> this.eventUserDrop( id , next )
+		User_row( id : number ) {
+			return new $mol_app_users_row().setup( obj => {
+				obj.title = ( next? )=> this.user_name( id , next )
+				obj.event_drop = ( next? )=> this.event_user_drop( id , next )
 			} )
 		}
 		
 		/// Read/write accessor to user name by id.
-		userName( id : number , next? : string ) {
+		user_name( id : number , next? : string ) {
 			if( next === void 0 ) return this.users()[ id ] || ''
 			
 			this.users( this.users().map( ( name , i )=> ( i === id ) ? next : name ) )

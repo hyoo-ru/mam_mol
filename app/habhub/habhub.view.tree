@@ -1,10 +1,10 @@
-$mol_app_habhub $mol_pager
+$mol_app_habhub $mol_page
 	title \HabHub
 	body /
-		<= statuser $mol_statuser
-			status <= gisters /
-		<= lister $mol_lister
-			rowers <= gisters /
-	gister!id $mol_texter
-		text <= gistContent!id \
+		<= status $mol_status
+			status <= gists /
+		<= list $mol_list
+			rows <= gist_rows /
+	Gist_row!id $mol_text
+		text <= gist_content!id \
 	footer null

@@ -23,7 +23,7 @@ namespace $.$mol {
 		}
 
 		@ $mol_mem()
-		page() : $mol_viewer {
+		page() : $mol_view {
 			switch( this.state().location ) {
 				case 'table' : return this.table()
 				case 'anim' : return this.anim()
@@ -40,7 +40,7 @@ namespace $.$mol {
 			return { items : <any[]>[] }
 		}
 		
-		rowers() {
+		rows() {
 			return this.state().items.map( ( v : any , i : number )=> this.rower( i ) )
 		}
 
@@ -86,7 +86,7 @@ namespace $.$mol {
 
 	export class $mol_perf_uibench_table_cell extends $.$mol_perf_uibench_table_cell {
 
-		eventClick( next? : Event ) {
+		event_click( next? : Event ) {
 			console.log( 'Click' , this.text() )
 			next.preventDefault()
 			next.stopPropagation()
@@ -155,7 +155,7 @@ namespace $.$mol {
 			return { children : <any[]>[] }
 		}
 
-		childs() {
+		sub() {
 			return ( this.state().children || [] ).map( ( child : any , i : number )=> {
 				return child.container ? this.branch( i ) : this.leaf( i )
 			} )

@@ -1,2 +1,2 @@
 $mol_app_taxon_demo $mol_app_taxon
-	hierarchyField \name
+	hierarchy_field \name

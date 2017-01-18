@@ -40,7 +40,7 @@ namespace $ {
 				const host = this.host
 				const value = host[ this.field ]
 				if( value instanceof $mol_object ) {
-					if( ( value.objectOwner() === host ) && ( value.objectField() === this.field ) ) {
+					if( ( value.object_owner() === host ) && ( value.object_field() === this.field ) ) {
 						value.destroyed( true );
 					}
 				}
@@ -59,8 +59,8 @@ namespace $ {
 		}
 		
 		unlink() {
-			this.disobeyAll()
-			this.checkSlaves()
+			this.disobey_all()
+			this.check_slaves()
 		}
 		
 		toString() {
@@ -170,8 +170,8 @@ namespace $ {
 			}
 			if( prev !== next ) {
 				if( next instanceof $mol_object ) {
-					next[ 'objectField' ]( this.field ) // FIXME: type checking
-					next[ 'objectOwner' ]( host ) // FIXME: type checking
+					next[ 'object_field' ]( this.field ) // FIXME: type checking
+					next[ 'object_owner' ]( host ) // FIXME: type checking
 				}
 				if(( typeof Proxy === 'function' )&&( next instanceof Error )) {
 					next = new Proxy( next , {
@@ -186,20 +186,20 @@ namespace $ {
 				host[ this.field ] = next
 				this.log( [ 'push' , next , prev ] )
 				
-				this.obsoleteSlaves()
+				this.obsolete_slaves()
 			}
 			this.status = $mol_atom_status.actual
 			this._next = void null
 			return next as Value
 		}
 		
-		obsoleteSlaves() {
+		obsolete_slaves() {
 			if( !this.slaves ) return
 			
 			this.slaves.forEach( slave => slave.obsolete() )
 		}
 		
-		checkSlaves() {
+		check_slaves() {
 			if( this.slaves ) {
 				this.slaves.forEach( slave => slave.check() )
 			} else {
@@ -216,7 +216,7 @@ namespace $ {
 				//this.log([ 'checking' ])
 				this.status = $mol_atom_status.checking
 				
-				this.checkSlaves()
+				this.check_slaves()
 			}
 		}
 		
@@ -231,7 +231,7 @@ namespace $ {
 			
 			this.status = $mol_atom_status.obsolete
 			
-			this.checkSlaves()
+			this.check_slaves()
 			
 			return void null
 		}
@@ -265,7 +265,7 @@ namespace $ {
 			this.masters.delete( master )
 		}
 		
-		disobeyAll() {
+		disobey_all() {
 			if( !this.masters ) return
 			
 			this.masters.forEach( master => master.dislead( this ) )

@@ -1,0 +1,21 @@
+[mol_check][disabled] > [mol_check_box_icon] {
+	background-color: var(--mol_skin_passive);
+}
+
+[mol_check_box_icon] {
+	left: 0;
+	border-radius: var(--mol_skin_round);
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+}
+
+[mol_check_box_icon] + div:not(:empty) {
+	margin-left: .5rem;
+}
+
+[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {
+	fill: transparent;
+}
+
+[mol_check]:not([disabled]) > [mol_check_box_icon] {
+	background: white;
+}

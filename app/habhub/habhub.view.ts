@@ -16,11 +16,11 @@ namespace $.$mol {
 			return $mol_http_resource_json.item<{ items : $mol_app_habhub_gist[] }>( this.uriSource() ).json().items
 		}
 		
-		gisters() : $mol_viewer[] {
-			return this.gists().map( ( gist , index ) => this.gister( index ) )
+		gist_rows() : $mol_view[] {
+			return this.gists().map( ( gist , index ) => this.Gist_row( index ) )
 		}
 		
-		gistContent( index : number ) {
+		gist_content( index : number ) {
 			const gist = this.gists()[ index ]
 			return `# ${ gist.title }\n${ gist.body }`
 		}

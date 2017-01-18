@@ -1,14 +1,16 @@
-$mol_app_inventory_keeper $mol_pager
+$mol_app_inventory_keeper $mol_page
 	domain $mol_app_inventory_domain
-	body <= positioners /
-	positioner!id $mol_app_inventory_positioner
-		statuser null
+	body <= position_rows /
+	Position_row!id $mol_app_inventory_position
+		Status null
 		position <= position!id null
 	foot /
-		<= coderRower $mol_rower childs /
-			<= coder $mol_coder
-				value?val <=> newCode?val \
-				hint <= newCodeHint @ \Product bar code
-			<= submitter $mol_clicker_major
-				eventClick?event <=> eventSubmit?event null
-				childs / <= submitLabel @ \Write off
+		<= Action_row $mol_row
+			sub /
+				<= Code $mol_code
+					value?val <=> code_new?val \
+					hint <= code_new_hint @ \Product bar code
+				<= Submit $mol_button_major
+					event_click?event <=> event_submit?event null
+					sub /
+						<= submit_label @ \Write off

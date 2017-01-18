@@ -18,19 +18,23 @@
 }
 
 [mol_app_report_headRower] {
-	text-align: center;
 }
 
-[mol_app_report_celler] {
+[mol_app_report_cell] {
 	border: 1px solid var(--mol_skin_light_line);
 	padding: 0;
-	vertical-align: baseline;
+	vertical-align: top;
 }
 
-[mol_app_report_celler]:not( [colspan="1"] ) {
+[mol_app_report_cell]:not( [colspan="1"] ) {
 	font-weight: 500;
 }
 
 [mol_app_report_texter] {
 	padding: .5rem;
+}
+
+[mol_app_report_stringer] {
+	width: 100%;
+	min-height: 100%;
 }

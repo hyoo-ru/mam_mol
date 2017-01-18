@@ -29,38 +29,30 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		rowers() { return this.items().map( ( row , id ) => this.rower( id ) ) }
+		rows() { return this.items().map( ( row , id ) => this.Row( id ) ) }
 		
 		@ $mol_mem_key()
-		rowerTitle( id : number ) {
+		row_title( id : number ) {
 			return this.items()[ id ].title
 		}
 		
 		@ $mol_mem_key()
-		rowerContent( id : number ) {
+		row_content( id : number ) {
 			return this.items()[ id ].content
 		}
 		
-		rowerSelected( id : number , next? : boolean ) {
-			if( next !== void 0 ) this.selectedId( next ? id : null )
-			return this.selectedId() === id
+		row_selected( id : number , next? : boolean ) {
+			if( next !== void 0 ) this.selected_id( next ? id : null )
+			return this.selected_id() === id
 		}
 		
 		@ $mol_mem()
-		selectedId( next? : number ) {
+		selected_id( next? : number ) {
 			this.items()
 			if( next === void 0 ) return null
 			return next
 		}
 		
-	}
-
-	export class $mol_app_bench_list_mol_rower extends $.$mol_app_bench_list_mol_rower {
-
-		eventToggle( next? : Event ) {
-			this.selected( !this.selected() )
-		}
-
 	}
 
 }

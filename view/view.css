@@ -1,0 +1,55 @@
+[mol_view] {
+	transition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;
+	transition-duration: .1s;
+	-webkit-appearance: none;
+}
+
+[mol_view_root] {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	font: var(--mol_skin_font);
+}
+
+[mol_view_error] {
+	background-image: repeating-linear-gradient(
+		135deg,
+		rgba(255,220,220,1),
+		rgba(255,220,220,1) 11px,
+		rgba(255,255,220,1) 10px,
+		rgba(255,255,220,1) 20px
+	) !important;
+	background-size: 28px 28px !important;
+}
+[mol_view_error] * {
+	background: none !important;
+}
+
+@keyframes mol_view_wait_show {
+	from {
+		background: none;
+	}
+}
+
+@keyframes mol_view_wait_move {
+	from {
+		background-position: 0 0;
+	}
+	to {
+		background-position: 28px 0;
+	}
+}
+
+[mol_view_error="$mol_atom_wait"] ,
+[mol_view_error="$mol_atom_wait"] * {
+	background-image: repeating-linear-gradient(
+		45deg,
+		color( var(--mol_skin_base) alpha(.025) ),
+		color( var(--mol_skin_base) alpha(.025) ) 9px,
+		rgba(255,255,255,.015) 10px,
+		rgba(255,255,255,.015) 20px
+	) !important;
+	background-size: 28px 28px !important;
+	animation: mol_view_wait_show .5s ease-in , mol_view_wait_move .25s steps(6) infinite !important;
+}

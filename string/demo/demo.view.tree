@@ -1,0 +1,8 @@
+$mol_string_demo_simple $mol_string
+
+$mol_string_demo_hint $mol_string
+	hint @ \Batman
+
+$mol_string_demo_disabled $mol_string
+	hint @ \Jocker
+	disabled true
