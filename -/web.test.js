@@ -44,9 +44,9 @@ var $;
         'object path generation': function () {
             var x = new $.$mol_object;
             $.$mol_assert_equal("" + x, '');
-            x.objectField('foo()');
+            x.object_field('foo()');
             $.$mol_assert_equal("" + x, '.foo()');
-            x.objectField('bar()');
+            x.object_field('bar()');
             $.$mol_assert_equal("" + x, '.foo()');
         },
     });
@@ -332,148 +332,147 @@ var $;
 (function ($) {
     $.$mol_test({
         'id auto generation': function () {
-            var $mol_viewer_test_item = (function (_super) {
-                __extends($mol_viewer_test_item, _super);
-                function $mol_viewer_test_item() {
+            var $mol_view_test_item = (function (_super) {
+                __extends($mol_view_test_item, _super);
+                function $mol_view_test_item() {
                     return _super.apply(this, arguments) || this;
                 }
-                return $mol_viewer_test_item;
-            }($.$mol_viewer));
-            var $mol_viewer_test_block = (function (_super) {
-                __extends($mol_viewer_test_block, _super);
-                function $mol_viewer_test_block() {
+                return $mol_view_test_item;
+            }($.$mol_view));
+            var $mol_view_test_block = (function (_super) {
+                __extends($mol_view_test_block, _super);
+                function $mol_view_test_block() {
                     return _super.apply(this, arguments) || this;
                 }
-                $mol_viewer_test_block.prototype.element = function (id) {
-                    return new $mol_viewer_test_item();
+                $mol_view_test_block.prototype.element = function (id) {
+                    return new $mol_view_test_item();
                 };
-                return $mol_viewer_test_block;
-            }($.$mol_viewer));
+                return $mol_view_test_block;
+            }($.$mol_view));
             __decorate([
                 $.$mol_mem_key()
-            ], $mol_viewer_test_block.prototype, "element", null);
-            var x = new $mol_viewer_test_block();
-            $.$mol_assert_equal(x.DOMNode().id, '');
-            $.$mol_assert_equal(x.element(0).DOMNode().id, '.element(0)');
+            ], $mol_view_test_block.prototype, "element", null);
+            var x = new $mol_view_test_block();
+            $.$mol_assert_equal(x.dom_node().id, '');
+            $.$mol_assert_equal(x.element(0).dom_node().id, '.element(0)');
         },
         'caching ref to dom node': function () {
-            var $mol_viewer_test = (function (_super) {
-                __extends($mol_viewer_test, _super);
-                function $mol_viewer_test() {
+            var $mol_view_test = (function (_super) {
+                __extends($mol_view_test, _super);
+                function $mol_view_test() {
                     return _super.apply(this, arguments) || this;
                 }
-                return $mol_viewer_test;
-            }($.$mol_viewer));
-            var x = new $mol_viewer_test();
-            $.$mol_assert_equal(x.DOMNode(), x.DOMNode());
+                return $mol_view_test;
+            }($.$mol_view));
+            var x = new $mol_view_test();
+            $.$mol_assert_equal(x.dom_node(), x.dom_node());
         },
         'content render': function () {
-            var $mol_viewer_test = (function (_super) {
-                __extends($mol_viewer_test, _super);
-                function $mol_viewer_test() {
+            var $mol_view_test = (function (_super) {
+                __extends($mol_view_test, _super);
+                function $mol_view_test() {
                     return _super.apply(this, arguments) || this;
                 }
-                $mol_viewer_test.prototype.childs = function () {
+                $mol_view_test.prototype.sub = function () {
                     return ['lol', 5];
                 };
-                return $mol_viewer_test;
-            }($.$mol_viewer));
-            var x = new $mol_viewer_test();
-            var node = x.DOMTree();
+                return $mol_view_test;
+            }($.$mol_view));
+            var x = new $mol_view_test();
+            var node = x.dom_tree();
             $.$mol_assert_equal(node.innerHTML, 'lol5');
         },
         'bem attributes generation': function () {
-            var $mol_viewer_test_item = (function (_super) {
-                __extends($mol_viewer_test_item, _super);
-                function $mol_viewer_test_item() {
+            var $mol_view_test_item = (function (_super) {
+                __extends($mol_view_test_item, _super);
+                function $mol_view_test_item() {
                     return _super.apply(this, arguments) || this;
                 }
-                return $mol_viewer_test_item;
-            }($.$mol_viewer));
-            var $mol_viewer_test_block = (function (_super) {
-                __extends($mol_viewer_test_block, _super);
-                function $mol_viewer_test_block() {
+                return $mol_view_test_item;
+            }($.$mol_view));
+            var $mol_view_test_block = (function (_super) {
+                __extends($mol_view_test_block, _super);
+                function $mol_view_test_block() {
                     return _super.apply(this, arguments) || this;
                 }
-                $mol_viewer_test_block.prototype.element = function (id) {
-                    return new $mol_viewer_test_item();
+                $mol_view_test_block.prototype.Element = function (id) {
+                    return new $mol_view_test_item();
                 };
-                return $mol_viewer_test_block;
-            }($.$mol_viewer));
+                return $mol_view_test_block;
+            }($.$mol_view));
             __decorate([
                 $.$mol_mem_key()
-            ], $mol_viewer_test_block.prototype, "element", null);
-            var x = new $mol_viewer_test_block();
-            $.$mol_assert_equal(x.DOMNode().getAttribute('mol_viewer_test_block'), '');
-            $.$mol_assert_equal(x.DOMNode().getAttribute('mol_viewer'), '');
-            $.$mol_assert_equal(x.element(0).DOMNode().getAttribute('mol_viewer_test_block_element'), '');
-            $.$mol_assert_equal(x.element(0).DOMNode().getAttribute('mol_viewer_element'), '');
-            $.$mol_assert_equal(x.element(0).DOMNode().getAttribute('mol_viewer_test_item'), '');
-            $.$mol_assert_equal(x.element(0).DOMNode().getAttribute('mol_viewer'), '');
+            ], $mol_view_test_block.prototype, "Element", null);
+            var x = new $mol_view_test_block();
+            $.$mol_assert_equal(x.dom_node().getAttribute('mol_view_test_block'), '');
+            $.$mol_assert_equal(x.dom_node().getAttribute('mol_view'), '');
+            $.$mol_assert_equal(x.Element(0).dom_node().getAttribute('mol_view_test_block_element'), '');
+            $.$mol_assert_equal(x.Element(0).dom_node().getAttribute('mol_view_test_item'), '');
+            $.$mol_assert_equal(x.Element(0).dom_node().getAttribute('mol_view'), '');
         },
         'render custom attributes': function () {
-            var $mol_viewer_test = (function (_super) {
-                __extends($mol_viewer_test, _super);
-                function $mol_viewer_test() {
+            var $mol_view_test = (function (_super) {
+                __extends($mol_view_test, _super);
+                function $mol_view_test() {
                     return _super.apply(this, arguments) || this;
                 }
-                $mol_viewer_test.prototype.attr = function () {
+                $mol_view_test.prototype.attr = function () {
                     return {
                         'href': function () { return '#haha'; },
                         'required': function () { return true; },
                         'hidden': function () { return null; },
                     };
                 };
-                return $mol_viewer_test;
-            }($.$mol_viewer));
-            var x = new $mol_viewer_test();
-            var node = x.DOMTree();
+                return $mol_view_test;
+            }($.$mol_view));
+            var x = new $mol_view_test();
+            var node = x.dom_tree();
             $.$mol_assert_equal(node.getAttribute('href'), '#haha');
             $.$mol_assert_equal(node.getAttribute('hidden'), null);
         },
         'render custom fields': function () {
-            var $mol_viewer_test = (function (_super) {
-                __extends($mol_viewer_test, _super);
-                function $mol_viewer_test() {
+            var $mol_view_test = (function (_super) {
+                __extends($mol_view_test, _super);
+                function $mol_view_test() {
                     return _super.apply(this, arguments) || this;
                 }
-                $mol_viewer_test.prototype.field = function () {
+                $mol_view_test.prototype.field = function () {
                     return {
-                        'style.top': function () { return '10px'; }
+                        'hidden': function () { return true; }
                     };
                 };
-                return $mol_viewer_test;
-            }($.$mol_viewer));
-            var x = new $mol_viewer_test();
-            var node = x.DOMTree();
-            $.$mol_assert_equal(node.style.top, '10px');
+                return $mol_view_test;
+            }($.$mol_view));
+            var x = new $mol_view_test();
+            var node = x.dom_tree();
+            $.$mol_assert_equal(node.hidden, true);
         },
         'attach event handlers': function () {
             var clicked = false;
-            var $mol_viewer_test = (function (_super) {
-                __extends($mol_viewer_test, _super);
-                function $mol_viewer_test() {
+            var $mol_view_test = (function (_super) {
+                __extends($mol_view_test, _super);
+                function $mol_view_test() {
                     return _super.apply(this, arguments) || this;
                 }
-                $mol_viewer_test.prototype.event = function () {
+                $mol_view_test.prototype.event = function () {
                     var _this = this;
                     return {
-                        'click': function (next) { return _this.eventClick(next); }
+                        'click': function (next) { return _this.event_click(next); }
                     };
                 };
-                $mol_viewer_test.prototype.eventClick = function (next) {
+                $mol_view_test.prototype.event_click = function (next) {
                     clicked = true;
                 };
-                return $mol_viewer_test;
-            }($.$mol_viewer));
-            var x = new $mol_viewer_test();
-            var node = x.DOMNode();
+                return $mol_view_test;
+            }($.$mol_view));
+            var x = new $mol_view_test();
+            var node = x.dom_node();
             node.click();
             $.$mol_assert_ok(clicked);
         },
     });
 })($ || ($ = {}));
-//viewer.test.js.map
+//view.test.js.map
 ;
 var $;
 (function ($) {
@@ -482,9 +481,9 @@ var $;
         $.$mol_test({
             'handle clicks by default': function () {
                 var clicked = false;
-                var clicker = new $mol.$mol_clicker;
-                clicker.eventClick = function (event) { clicked = true; };
-                var element = clicker.DOMTree();
+                var clicker = new $mol.$mol_button;
+                clicker.event_click = function (event) { clicked = true; };
+                var element = clicker.dom_tree();
                 var event = document.createEvent('mouseevent');
                 event.initEvent('click', true, true);
                 element.dispatchEvent(event);
@@ -492,10 +491,10 @@ var $;
             },
             'no handle clicks if disabled': function () {
                 var clicked = false;
-                var clicker = new $mol.$mol_clicker;
-                clicker.eventClick = function (event) { clicked = true; };
+                var clicker = new $mol.$mol_button;
+                clicker.event_click = function (event) { clicked = true; };
                 clicker.enabled = function () { return false; };
-                var element = clicker.DOMTree();
+                var element = clicker.dom_tree();
                 var event = document.createEvent('mouseevent');
                 event.initEvent('click', true, true);
                 element.dispatchEvent(event);
@@ -504,7 +503,7 @@ var $;
         });
     })($mol = $.$mol || ($.$mol = {}));
 })($ || ($ = {}));
-//clicker.test.js.map
+//button.test.js.map
 ;
 var $;
 (function ($) {
@@ -719,7 +718,7 @@ var $;
                         body: 'world',
                     }
                 ]; };
-                $.$mol_assert_equal(app.gistContent(0), '# hello\nworld');
+                $.$mol_assert_equal(app.gist_content(0), '# hello\nworld');
             }
         });
     })($mol = $.$mol || ($.$mol = {}));
@@ -940,13 +939,13 @@ var $;
 (function ($) {
     $.$mol_test({
         'tree parsing': function () {
-            $.$mol_assert_equal($.$mol_tree.fromString("foo\nbar\n").childs.length, 2);
-            $.$mol_assert_equal($.$mol_tree.fromString("foo\nbar\n").childs[1].type, "bar");
-            $.$mol_assert_equal($.$mol_tree.fromString("foo\n\n\n").childs.length, 1);
-            $.$mol_assert_equal($.$mol_tree.fromString("=foo\n\\bar\n").childs.length, 2);
-            $.$mol_assert_equal($.$mol_tree.fromString("=foo\n\\bar\n").childs[1].data, "bar");
-            $.$mol_assert_equal($.$mol_tree.fromString("foo bar \\pol").childs[0].childs[0].childs[0].data, "pol");
-            $.$mol_assert_equal($.$mol_tree.fromString("foo bar\n\t\\pol\n\t\\men").childs[0].childs[0].childs[1].data, "men");
+            $.$mol_assert_equal($.$mol_tree.fromString("foo\nbar\n").sub.length, 2);
+            $.$mol_assert_equal($.$mol_tree.fromString("foo\nbar\n").sub[1].type, "bar");
+            $.$mol_assert_equal($.$mol_tree.fromString("foo\n\n\n").sub.length, 1);
+            $.$mol_assert_equal($.$mol_tree.fromString("=foo\n\\bar\n").sub.length, 2);
+            $.$mol_assert_equal($.$mol_tree.fromString("=foo\n\\bar\n").sub[1].data, "bar");
+            $.$mol_assert_equal($.$mol_tree.fromString("foo bar \\pol").sub[0].sub[0].sub[0].data, "pol");
+            $.$mol_assert_equal($.$mol_tree.fromString("foo bar\n\t\\pol\n\t\\men").sub[0].sub[0].sub[1].data, "men");
             $.$mol_assert_equal($.$mol_tree.fromString('foo bar \\text\n').toString(), 'foo bar \\text\n');
         },
     });

@@ -1,5 +1,7 @@
 {
-	"$mol_bencher_header_hint": "Щёлкните для сортировки по этой колонке",
-	"$mol_app_bench_addonerTitle": "Варианты реализаций",
-	"$mol_app_bench_columnHeaderLabelSample": "Вариант"
+	"$mol_bench_header_hint": "Щёлкните для сортировки по этой колонке",
+	"$mol_app_bench_addon_title": "Варианты реализаций",
+	"$mol_app_bench_result_column_title_sample": "Вариант",
+	"$mol_bench_head_hint": "Click to sort by this column",
+	"$mol_app_bench_result_col_title_sample": "Sample"
 }

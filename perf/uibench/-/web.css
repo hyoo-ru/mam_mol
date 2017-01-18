@@ -1,16 +1,20 @@
-[mol_viewer] {
-    -webkit-transition: all .1s;
-    transition: all .1s;
+[mol_view] {
+    -webkit-transition-property: background-color, height, width, min-height, min-width, max-width, max-height, -webkit-transform;
+    transition-property: background-color, height, width, min-height, min-width, max-width, max-height, -webkit-transform;
+    transition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;
+    transition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform, -webkit-transform;
+    -webkit-transition-duration: .1s;
+            transition-duration: .1s;
     -webkit-appearance: none
 }
-[mol_viewer_root] {
+[mol_view_root] {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+    font: 12pt/1.5 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
 }
-[mol_viewer_error] {
+[mol_view_error] {
     background-image: -webkit-repeating-linear-gradient(
 		315deg,
 		rgba(255, 220, 220, 1),
@@ -27,20 +31,20 @@
 	) !important;
     background-size: 28px 28px !important
 }
-[mol_viewer_error] * {
+[mol_view_error] * {
     background: none !important
 }
-@-webkit-keyframes mol_viewer_wait_show {
+@-webkit-keyframes mol_view_wait_show {
     from {
         background: none
     }
 }
-@keyframes mol_viewer_wait_show {
+@keyframes mol_view_wait_show {
     from {
         background: none
     }
 }
-@-webkit-keyframes mol_viewer_wait_move {
+@-webkit-keyframes mol_view_wait_move {
     from {
         background-position: 0 0
     }
@@ -48,7 +52,7 @@
         background-position: 28px 0
     }
 }
-@keyframes mol_viewer_wait_move {
+@keyframes mol_view_wait_move {
     from {
         background-position: 0 0
     }
@@ -56,27 +60,27 @@
         background-position: 28px 0
     }
 }
-[mol_viewer_error="$mol_atom_wait"] ,
-[mol_viewer_error="$mol_atom_wait"] * {
+[mol_view_error="$mol_atom_wait"] ,
+[mol_view_error="$mol_atom_wait"] * {
     background-image: -webkit-repeating-linear-gradient(
 		45deg,
-		rgba(0, 0, 0, .01),
-		rgba(0, 0, 0, .01) 9px,
-		rgba(255, 255, 255, .01) 10px,
-		rgba(255, 255, 255, .01) 20px
+		rgba(91, 136, 200, 0.025),
+		rgba(91, 136, 200, 0.025) 9px,
+		rgba(255, 255, 255, .015) 10px,
+		rgba(255, 255, 255, .015) 20px
 	) !important;
     background-image: repeating-linear-gradient(
 		45deg,
-		rgba(0, 0, 0, .01),
-		rgba(0, 0, 0, .01) 9px,
-		rgba(255, 255, 255, .01) 10px,
-		rgba(255, 255, 255, .01) 20px
+		rgba(91, 136, 200, 0.025),
+		rgba(91, 136, 200, 0.025) 9px,
+		rgba(255, 255, 255, .015) 10px,
+		rgba(255, 255, 255, .015) 20px
 	) !important;
     background-size: 28px 28px !important;
-    -webkit-animation: mol_viewer_wait_show .5s ease-in , mol_viewer_wait_move .25s steps(6) infinite !important;
-            animation: mol_viewer_wait_show .5s ease-in , mol_viewer_wait_move .25s steps(6) infinite !important
+    -webkit-animation: mol_view_wait_show .5s ease-in , mol_view_wait_move .25s steps(6) infinite !important;
+            animation: mol_view_wait_show .5s ease-in , mol_view_wait_move .25s steps(6) infinite !important
 }
-[mol_scroller] {
+[mol_scroll] {
     overflow: auto;
     overflow-y: scroll;
     -webkit-box-flex: 1;
@@ -86,7 +90,7 @@
     will-change: scroll-position;
     -webkit-transform: translateZ(0);
             transform: translateZ(0);
-    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
+    box-shadow: 0 0 0 1px rgba(230, 230, 230, 1);
     max-height: 100%;
     max-width: 100%;
     -webkit-overflow-scrolling: touch;
@@ -95,11 +99,11 @@
         align-self: stretch
 }
 @media print {
-    [mol_scroller] {
+    [mol_scroll] {
         overflow: visible
     }
 }
-[mol_lister] {
+[mol_list] {
     will-change: contents
 }
 

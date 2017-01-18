@@ -58,36 +58,22 @@ var $;
                 || (self['displayName'] = Function.prototype.toString.call(self)
                     .match(/^function ([a-z0-9_$]*)/)[1]);
         };
-        $mol_object.prototype.objectClassNames = function () {
-            if (this.hasOwnProperty('objectClassNames()'))
-                return this['objectClassNames()'];
-            var names = [];
-            var current = this;
-            while (current) {
-                var name = current.constructor.toString();
-                if (!name)
-                    continue;
-                names.push(name);
-                current = Object.getPrototypeOf(current);
-            }
-            return this['objectClassNames()'] = names;
+        $mol_object.prototype.object_owner = function (next) {
+            if (this['object_owner()'])
+                return this['object_owner()'];
+            return this['object_owner()'] = next;
         };
-        $mol_object.prototype.objectOwner = function (next) {
-            if (this['objectOwner()'])
-                return this['objectOwner()'];
-            return this['objectOwner()'] = next;
-        };
-        $mol_object.prototype.objectField = function (next) {
-            if (this['objectField()'])
-                return this['objectField()'] || '';
-            return this['objectField()'] = next;
+        $mol_object.prototype.object_field = function (next) {
+            if (this['object_field()'])
+                return this['object_field()'] || '';
+            return this['object_field()'] = next;
         };
         $mol_object.prototype.toString = function () {
             var path = '';
-            var owner = this.objectOwner();
+            var owner = this.object_owner();
             if (owner)
                 path = owner.toString();
-            var field = this.objectField();
+            var field = this.object_field();
             if (field)
                 path += '.' + field;
             return path;
@@ -397,7 +383,7 @@ var $;
                 var host = this.host;
                 var value = host[this.field];
                 if (value instanceof $.$mol_object) {
-                    if ((value.objectOwner() === host) && (value.objectField() === this.field)) {
+                    if ((value.object_owner() === host) && (value.object_field() === this.field)) {
                         value.destroyed(true);
                     }
                 }
@@ -413,8 +399,8 @@ var $;
             }
         };
         $mol_atom.prototype.unlink = function () {
-            this.disobeyAll();
-            this.checkSlaves();
+            this.disobey_all();
+            this.check_slaves();
         };
         $mol_atom.prototype.toString = function () {
             return this.host + "." + this.field;
@@ -501,8 +487,8 @@ var $;
             }
             if (prev !== next) {
                 if (next instanceof $.$mol_object) {
-                    next['objectField'](this.field);
-                    next['objectOwner'](host);
+                    next['object_field'](this.field);
+                    next['object_owner'](host);
                 }
                 if ((typeof Proxy === 'function') && (next instanceof Error)) {
                     next = new Proxy(next, {
@@ -516,18 +502,18 @@ var $;
                 }
                 host[this.field] = next;
                 this.log(['push', next, prev]);
-                this.obsoleteSlaves();
+                this.obsolete_slaves();
             }
             this.status = $mol_atom_status.actual;
             this._next = void null;
             return next;
         };
-        $mol_atom.prototype.obsoleteSlaves = function () {
+        $mol_atom.prototype.obsolete_slaves = function () {
             if (!this.slaves)
                 return;
             this.slaves.forEach(function (slave) { return slave.obsolete(); });
         };
-        $mol_atom.prototype.checkSlaves = function () {
+        $mol_atom.prototype.check_slaves = function () {
             if (this.slaves) {
                 this.slaves.forEach(function (slave) { return slave.check(); });
             }
@@ -539,7 +525,7 @@ var $;
         $mol_atom.prototype.check = function () {
             if (this.status === $mol_atom_status.actual) {
                 this.status = $mol_atom_status.checking;
-                this.checkSlaves();
+                this.check_slaves();
             }
         };
         $mol_atom.prototype.obsolete = function () {
@@ -547,7 +533,7 @@ var $;
                 return;
             this.log(['obsolete']);
             this.status = $mol_atom_status.obsolete;
-            this.checkSlaves();
+            this.check_slaves();
             return void null;
         };
         $mol_atom.prototype.lead = function (slave) {
@@ -578,7 +564,7 @@ var $;
                 return;
             this.masters.delete(master);
         };
-        $mol_atom.prototype.disobeyAll = function () {
+        $mol_atom.prototype.disobey_all = function () {
             var _this = this;
             if (!this.masters)
                 return;

@@ -122,9 +122,9 @@ var $;
         'object path generation': function () {
             var x = new $.$mol_object;
             $.$mol_assert_equal("" + x, '');
-            x.objectField('foo()');
+            x.object_field('foo()');
             $.$mol_assert_equal("" + x, '.foo()');
-            x.objectField('bar()');
+            x.object_field('bar()');
             $.$mol_assert_equal("" + x, '.foo()');
         },
     });

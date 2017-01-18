@@ -8,12 +8,10 @@ declare namespace $ {
     class $mol_object {
         Class(): any;
         static toString(): string;
-        'objectClassNames()': string[];
-        objectClassNames(): string[];
-        private 'objectOwner()';
-        objectOwner(next?: Object): Object;
-        private 'objectField()';
-        objectField(next?: string): string;
+        private 'object_owner()';
+        object_owner(next?: Object): Object;
+        private 'object_field()';
+        object_field(next?: string): string;
         toString(): string;
         setup(script: (obj: this) => void): this;
         'destroyed()': boolean;
@@ -126,15 +124,15 @@ declare namespace $ {
         _next: Value;
         set(next: Value): Value;
         push(next: Value | Error): Value;
-        obsoleteSlaves(): void;
-        checkSlaves(): void;
+        obsolete_slaves(): void;
+        check_slaves(): void;
         check(): void;
         obsolete(): Value;
         lead(slave: $mol_atom<any>): void;
         dislead(slave: $mol_atom<any>): void;
         obey(master: $mol_atom<any>): void;
         disobey(master: $mol_atom<any>): void;
-        disobeyAll(): void;
+        disobey_all(): void;
         value(next?: Value, force?: $mol_atom_force): Value;
         static stack: $mol_atom<any>[];
         static updating: $mol_atom<any>[];

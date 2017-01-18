@@ -8,12 +8,10 @@ declare namespace $ {
     class $mol_object {
         Class(): any;
         static toString(): string;
-        'objectClassNames()': string[];
-        objectClassNames(): string[];
-        private 'objectOwner()';
-        objectOwner(next?: Object): Object;
-        private 'objectField()';
-        objectField(next?: string): string;
+        private 'object_owner()';
+        object_owner(next?: Object): Object;
+        private 'object_field()';
+        object_field(next?: string): string;
         toString(): string;
         setup(script: (obj: this) => void): this;
         'destroyed()': boolean;
@@ -126,15 +124,15 @@ declare namespace $ {
         _next: Value;
         set(next: Value): Value;
         push(next: Value | Error): Value;
-        obsoleteSlaves(): void;
-        checkSlaves(): void;
+        obsolete_slaves(): void;
+        check_slaves(): void;
         check(): void;
         obsolete(): Value;
         lead(slave: $mol_atom<any>): void;
         dislead(slave: $mol_atom<any>): void;
         obey(master: $mol_atom<any>): void;
         disobey(master: $mol_atom<any>): void;
-        disobeyAll(): void;
+        disobey_all(): void;
         value(next?: Value, force?: $mol_atom_force): Value;
         static stack: $mol_atom<any>[];
         static updating: $mol_atom<any>[];
@@ -177,37 +175,43 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    let $mol_viewer_context: $mol_viewer_context;
-    interface $mol_viewer_context {
-        $mol_viewer_visibleWidth(): number;
-        $mol_viewer_visibleHeight(): number;
+    let $mol_view_context: $mol_view_context;
+    interface $mol_view_context {
+        $mol_view_visible_width(): number;
+        $mol_view_visible_height(): number;
     }
-    class $mol_viewer extends $mol_object {
-        static root(id: number): $mol_viewer;
+    class $mol_view extends $mol_object {
+        static Root(id: number): $mol_view;
         title(): string;
-        static statePrefix(): string;
-        statePrefix(): any;
-        stateKey(postfix: string): string;
-        context(next?: $mol_viewer_context): $mol_viewer_context;
-        contextSub(): $mol_viewer_context;
-        tagName(): string;
-        nameSpace(): string;
-        childs(): (string | number | boolean | Node | $mol_viewer)[];
-        childsVisible(): (string | number | boolean | Node | $mol_viewer)[];
-        heightMinimal(): number;
-        widthMinimal(): number;
-        private 'DOMNode()';
-        DOMNode(next?: Element): Element;
-        static renderChilds(node: Element, childs: ($mol_viewer | Node | string | number | boolean)[]): void;
-        static renderAttrs(node: Element, attrs: {
+        static state_prefix(): string;
+        state_prefix(): any;
+        state_key(postfix: string): string;
+        context(next?: $mol_view_context): $mol_view_context;
+        context_sub(): $mol_view_context;
+        dom_name(): string;
+        dom_name_space(): string;
+        sub(): (string | number | boolean | Node | $mol_view)[];
+        sub_visible(): (string | number | boolean | Node | $mol_view)[];
+        minimal_height(): number;
+        minimal_width(): number;
+        private 'dom_node()';
+        dom_node(next?: Element): Element;
+        static render_sub(node: Element, sub: ($mol_view | Node | string | number | boolean)[]): void;
+        static render_attr(node: Element, attrs: {
             [key: string]: () => string | number | boolean;
         }): void;
-        static renderFields(node: Element, fields: {
+        static render_style(node: HTMLElement, styles: {
+            [key: string]: () => string | number;
+        }): void;
+        static render_field(node: any, field: {
             [key: string]: (next?: any) => any;
         }): void;
-        DOMTree(): Element;
+        dom_tree(): HTMLElement;
         attr(): {
             [key: string]: () => string | number | boolean;
+        };
+        style(): {
+            [key: string]: () => string | number;
         };
         field(): {
             [key: string]: (next?: any) => any;
@@ -215,7 +219,7 @@ declare namespace $ {
         event(): {
             [key: string]: (event: Event) => void;
         };
-        localizationContexts(): any;
+        locale_contexts(): string[];
     }
 }
 interface Window {
@@ -227,8 +231,8 @@ declare namespace $ {
     function $mol_merge_dict<Target, Source>(target: Target, source: Source): Target & Source;
 }
 declare namespace $ {
-    class $mol_stringer extends $mol_viewer {
-        tagName(): string;
+    class $mol_string extends $mol_view {
+        dom_name(): string;
         enabled(): boolean;
         hint(): string;
         type(val?: any): any;
@@ -240,14 +244,14 @@ declare namespace $ {
         };
         disabled(): boolean;
         value(val?: any): any;
-        valueChanged(val?: any): any;
+        value_changed(val?: any): any;
         field(): {
             [key: string]: (next?: any) => any;
         } & {
             "disabled": () => any;
             "value": () => any;
         };
-        eventChange(event?: any): any;
+        event_change(event?: any): any;
         event(): {
             [key: string]: (event: Event) => void;
         } & {
@@ -256,19 +260,19 @@ declare namespace $ {
     }
 }
 declare namespace $.$mol {
-    class $mol_stringer extends $.$mol_stringer {
-        eventChange(next?: Event): void;
+    class $mol_string extends $.$mol_string {
+        event_change(next?: Event): void;
         disabled(): boolean;
     }
 }
 declare namespace $ {
-    class $mol_app_hello extends $mol_viewer {
-        namerHint(): string;
+    class $mol_app_hello extends $mol_view {
+        name_hint(): string;
         name(val?: any): any;
-        namer(): $mol_stringer;
+        Name(): $mol_string;
         greeting(): string;
-        greeter(): $mol_viewer;
-        childs(): any[];
+        Greeting(): $mol_view;
+        sub(): any[];
     }
 }
 declare namespace $.$mol {

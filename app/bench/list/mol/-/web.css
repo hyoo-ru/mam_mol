@@ -1,16 +1,20 @@
-[mol_viewer] {
-    -webkit-transition: all .1s;
-    transition: all .1s;
+[mol_view] {
+    -webkit-transition-property: background-color, height, width, min-height, min-width, max-width, max-height, -webkit-transform;
+    transition-property: background-color, height, width, min-height, min-width, max-width, max-height, -webkit-transform;
+    transition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;
+    transition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform, -webkit-transform;
+    -webkit-transition-duration: .1s;
+            transition-duration: .1s;
     -webkit-appearance: none
 }
-[mol_viewer_root] {
+[mol_view_root] {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+    font: 12pt/1.5 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
 }
-[mol_viewer_error] {
+[mol_view_error] {
     background-image: -webkit-repeating-linear-gradient(
 		315deg,
 		rgba(255, 220, 220, 1),
@@ -27,20 +31,20 @@
 	) !important;
     background-size: 28px 28px !important
 }
-[mol_viewer_error] * {
+[mol_view_error] * {
     background: none !important
 }
-@-webkit-keyframes mol_viewer_wait_show {
+@-webkit-keyframes mol_view_wait_show {
     from {
         background: none
     }
 }
-@keyframes mol_viewer_wait_show {
+@keyframes mol_view_wait_show {
     from {
         background: none
     }
 }
-@-webkit-keyframes mol_viewer_wait_move {
+@-webkit-keyframes mol_view_wait_move {
     from {
         background-position: 0 0
     }
@@ -48,7 +52,7 @@
         background-position: 28px 0
     }
 }
-@keyframes mol_viewer_wait_move {
+@keyframes mol_view_wait_move {
     from {
         background-position: 0 0
     }
@@ -56,27 +60,131 @@
         background-position: 28px 0
     }
 }
-[mol_viewer_error="$mol_atom_wait"] ,
-[mol_viewer_error="$mol_atom_wait"] * {
+[mol_view_error="$mol_atom_wait"] ,
+[mol_view_error="$mol_atom_wait"] * {
     background-image: -webkit-repeating-linear-gradient(
 		45deg,
-		rgba(0, 0, 0, .01),
-		rgba(0, 0, 0, .01) 9px,
-		rgba(255, 255, 255, .01) 10px,
-		rgba(255, 255, 255, .01) 20px
+		rgba(91, 136, 200, 0.025),
+		rgba(91, 136, 200, 0.025) 9px,
+		rgba(255, 255, 255, .015) 10px,
+		rgba(255, 255, 255, .015) 20px
 	) !important;
     background-image: repeating-linear-gradient(
 		45deg,
-		rgba(0, 0, 0, .01),
-		rgba(0, 0, 0, .01) 9px,
-		rgba(255, 255, 255, .01) 10px,
-		rgba(255, 255, 255, .01) 20px
+		rgba(91, 136, 200, 0.025),
+		rgba(91, 136, 200, 0.025) 9px,
+		rgba(255, 255, 255, .015) 10px,
+		rgba(255, 255, 255, .015) 20px
 	) !important;
     background-size: 28px 28px !important;
-    -webkit-animation: mol_viewer_wait_show .5s ease-in , mol_viewer_wait_move .25s steps(6) infinite !important;
-            animation: mol_viewer_wait_show .5s ease-in , mol_viewer_wait_move .25s steps(6) infinite !important
+    -webkit-animation: mol_view_wait_show .5s ease-in , mol_view_wait_move .25s steps(6) infinite !important;
+            animation: mol_view_wait_show .5s ease-in , mol_view_wait_move .25s steps(6) infinite !important
 }
-[mol_scroller] {
+[mol_button] {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    border: none;
+    font: inherit;
+    background: none;
+    box-shadow: 0 0 0 1px rgba(230, 230, 230, 1);
+    border-radius: 2px;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    vertical-align: middle;
+    text-align: center;
+    padding: 8px;
+    padding: .5rem;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    text-decoration: inherit;
+    color: inherit;
+    cursor: inherit;
+    position: relative;
+    box-sizing: border-box;
+    margin: auto
+}
+[mol_button][disabled] {
+    color: gray
+}
+[mol_button_minor]:not([disabled]) {
+    background: rgba(245, 245, 245, .9);
+    color: rgba(0, 0, 0, .9)
+}
+[mol_button_major]:not([disabled]) {
+    background: rgb(211, 80, 91);
+    color: rgb(251, 254, 254);
+    box-shadow: 0 0 0 1px rgba(230, 230, 230, 1)
+}
+[mol_button_danger]:not([disabled]) {
+    background: rgba(255, 50, 50, .75);
+    color: white
+}
+[mol_button]:not([disabled]):hover {
+    z-index: 1;
+    cursor: pointer;
+    background: rgba(0, 0, 0, .05)
+}
+[mol_button_minor]:not([disabled]):hover {
+    background: rgb(240, 240, 240);
+    color: rgba(0, 0, 0, .9)
+}
+[mol_button]:focus {
+    z-index: 1;
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .2)
+}
+[mol_button_major]:not([disabled]):hover {
+    background: rgb(206, 59, 71)
+}
+[mol_button_danger]:not([disabled]):hover {
+    background: rgba(255, 26, 26, 0.75)
+}
+[mol_check] {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    border: none;
+    font-weight: normal;
+    box-shadow: none;
+    text-align: left
+}
+[mol_check]:not([mol_check_checked]) {
+    /*background: transparent;*/
+    color: inherit
+}
+[mol_check_icon] {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    /*vertical-align: -10%;*/
+    vertical-align: middle
+}
+[mol_check_label] {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex
+}
+[mol_scroll] {
     overflow: auto;
     overflow-y: scroll;
     -webkit-box-flex: 1;
@@ -86,7 +194,7 @@
     will-change: scroll-position;
     -webkit-transform: translateZ(0);
             transform: translateZ(0);
-    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
+    box-shadow: 0 0 0 1px rgba(230, 230, 230, 1);
     max-height: 100%;
     max-width: 100%;
     -webkit-overflow-scrolling: touch;
@@ -95,33 +203,37 @@
         align-self: stretch
 }
 @media print {
-    [mol_scroller] {
+    [mol_scroll] {
         overflow: visible
     }
 }
-[mol_lister] {
+[mol_list] {
     will-change: contents
 }
 [mol_app_bench_list_mol] {
     padding: 8px;
     padding: .5rem
 }
-[mol_app_bench_list_mol_header] {
+[mol_app_bench_list_mol_head] {
     padding: 8px;
     padding: .5rem;
     margin: 0;
     font-size: 1.5em;
     font-weight: normal
 }
-[mol_app_bench_list_mol_rower] {
+[mol_app_bench_list_mol_row] {
     padding: 8px;
     padding: .5rem;
-    cursor: pointer
+    cursor: pointer;
+    display: block
 }
-[mol_app_bench_list_mol_rower_selected] {
+[mol_app_bench_list_mol_row]:hover {
+    box-shadow: none
+}
+[mol_app_bench_list_mol_row][mol_check_checked] {
     background: #eee
 }
-[mol_app_bench_list_mol_rower_titler] {
+[mol_app_bench_list_mol_row_title] {
     font-weight: bold
 }
 
