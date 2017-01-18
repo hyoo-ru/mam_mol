@@ -4,7 +4,7 @@ namespace $ {
 		
 		type : string
 		data : string
-		childs : $mol_tree[]
+		sub : $mol_tree[]
 		baseUri : string
 		row : number
 		col : number
@@ -14,7 +14,7 @@ namespace $ {
 				type? : string
 				value? : string
 				data? : string
-				childs? : $mol_tree[]
+				sub? : $mol_tree[]
 				baseUri? : string
 				row? : number
 				col? : number
@@ -22,17 +22,17 @@ namespace $ {
 		) {
 			this.type = config.type || ''
 			if( config.value ) {
-				var childs = $mol_tree.values( config.value )
-				if( config.type || childs.length > 1 ) {
-					this.childs = childs.concat( config.childs || [] )
+				var sub = $mol_tree.values( config.value )
+				if( config.type || sub.length > 1 ) {
+					this.sub = sub.concat( config.sub || [] )
 					this.data = config.data || ''
 				} else {
-					this.data = childs[ 0 ].data
-					this.childs = config.childs || []
+					this.data = sub[ 0 ].data
+					this.sub = config.sub || []
 				}
 			} else {
 				this.data = config.data || ''
-				this.childs = config.childs || []
+				this.sub = config.sub || []
 			}
 			this.baseUri = config.baseUri || ''
 			this.row = config.row || 0
@@ -56,7 +56,7 @@ namespace $ {
 				type? : string
 				value? : string
 				data? : string
-				childs? : $mol_tree[]
+				sub? : $mol_tree[]
 				baseUri? : string
 				row? : number
 				col? : number
@@ -66,7 +66,7 @@ namespace $ {
 				{
 					type : ( 'type' in config ) ? config.type : this.type ,
 					data : ( 'data' in config ) ? config.data : this.data ,
-					childs : ( 'childs' in config ) ? config.childs : this.childs ,
+					sub : ( 'sub' in config ) ? config.sub : this.sub ,
 					baseUri : ( 'baseUri' in config ) ? config.baseUri : this.baseUri ,
 					row : ( 'row' in config ) ? config.row : this.row ,
 					col : ( 'col' in config ) ? config.col : this.col ,
@@ -111,7 +111,7 @@ namespace $ {
 									row : row
 								}
 							)
-							parent.childs.push( next )
+							parent.sub.push( next )
 							parent = next
 						}
 					)
@@ -124,7 +124,7 @@ namespace $ {
 								row : row
 							}
 						)
-						parent.childs.push( next )
+						parent.sub.push( next )
 						parent = next
 					}
 					
@@ -159,7 +159,7 @@ namespace $ {
 					return new $mol_tree(
 						{
 							type : "list" ,
-							childs : ( <any[]> json ).map( json => $mol_tree.fromJSON( json , baseUri ) )
+							sub : ( <any[]> json ).map( json => $mol_tree.fromJSON( json , baseUri ) )
 						}
 					)
 				case 'Date' :
@@ -171,7 +171,7 @@ namespace $ {
 						}
 					)
 				case 'Object' :
-					var childs : $mol_tree[] = []
+					var sub : $mol_tree[] = []
 					for( var key in json ) {
 						if( json[ key ] === undefined ) continue
 						if( /^[^\n\t\\ ]+$/.test( key ) ) {
@@ -189,21 +189,21 @@ namespace $ {
 								}
 							)
 						}
-						child.childs.push(
+						child.sub.push(
 							new $mol_tree(
 								{
 									type : ":" ,
-									childs : [ $mol_tree.fromJSON( json[ key ] , baseUri ) ] ,
+									sub : [ $mol_tree.fromJSON( json[ key ] , baseUri ) ] ,
 									baseUri : baseUri
 								}
 							)
 						)
-						childs.push( child )
+						sub.push( child )
 					}
 					return new $mol_tree(
 						{
 							type : "dict" ,
-							childs : childs ,
+							sub : sub ,
 							baseUri : baseUri
 						}
 					)
@@ -223,14 +223,14 @@ namespace $ {
 					prefix = "\t";
 				}
 				output += this.type + " "
-				if( this.childs.length == 1 ) {
-					return output + this.childs[ 0 ].toString( prefix )
+				if( this.sub.length == 1 ) {
+					return output + this.sub[ 0 ].toString( prefix )
 				}
 				output += "\n"
 			} else if( this.data.length || prefix.length ) {
 				output += "\\" + this.data + "\n"
 			}
-			for( var child of this.childs ) {
+			for( var child of this.sub ) {
 				output += prefix
 				output += child.toString( prefix + "\t" )
 			}
@@ -248,12 +248,12 @@ namespace $ {
 			
 			if( this.type === 'dict' ) {
 				var obj = {}
-				for( var child of this.childs ) {
+				for( var child of this.sub ) {
 					var key = child.type || child.value
 					if( key === '//' ) continue
-					var colon = child.select( ':' ).childs[ 0 ]
+					var colon = child.select( ':' ).sub[ 0 ]
 					if( !colon ) throw new Error( `Required colon after key at ${child.uri}` )
-					var val = colon.childs[ 0 ].toJSON()
+					var val = colon.sub[ 0 ].toJSON()
 					if( val !== undefined ) (<any>obj)[ key ] = val
 				}
 				return obj
@@ -261,7 +261,7 @@ namespace $ {
 			
 			if( this.type === 'list' ) {
 				var res : any[] = []
-				this.childs.forEach(
+				this.sub.forEach(
 					child => {
 						var val = child.toJSON()
 						if( val !== undefined ) res.push( val )
@@ -281,7 +281,7 @@ namespace $ {
 		
 		get value() {
 			var values : string[] = []
-			for( var child of this.childs ) {
+			for( var child of this.sub ) {
 				if( child.type ) continue
 				values.push( child.value )
 			}
@@ -297,33 +297,33 @@ namespace $ {
 				var prev = next
 				next = []
 				for( var item of prev ) {
-					for( var child of item.childs ) {
+					for( var child of item.sub ) {
 						if( child.type == type ) {
 							next.push( child )
 						}
 					}
 				}
 			}
-			return new $mol_tree( { childs : next } )
+			return new $mol_tree( { sub : next } )
 		}
 		
 		filter( path : string[] , value? : string ) {
 			if( typeof path === 'string' ) path = (<string>path).split( / +/ )
 			
-			var childs = this.childs.filter(
+			var sub = this.sub.filter(
 				function( item ) {
 					
 					var found = item.select( ...path )
 					
 					if( value == null ) {
-						return Boolean( found.childs.length )
+						return Boolean( found.sub.length )
 					} else {
-						return found.childs.some( child => child.value == value )
+						return found.sub.some( child => child.value == value )
 					}
 				}
 			)
 			
-			return new $mol_tree( { childs : childs } )
+			return new $mol_tree( { sub : sub } )
 		}
 		
 	}

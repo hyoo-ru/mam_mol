@@ -1,3 +1,0 @@
-$mol_stacker_demo $mol_stacker
-	main / <= mainContenter $mol_pager_demo
-	addon / <= addonContenter $mol_scroller childs / <= signup $mol_app_signup

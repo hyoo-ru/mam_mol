@@ -1,0 +1,5 @@
+$mol_float $mol_view
+	style *
+		transform <= shiftStyle \
+	attr *
+		mol_float_scrolling <= scrolling false

@@ -2,10 +2,10 @@
 	margin: 0;
 }
 
-[mol_app_habhub_titler] {
+[mol_app_habhub_title] {
 	justify-content: center;
 }
 
-[mol_app_habhub_gister] {
+[mol_app_habhub_gist_row] {
 	margin: 1rem auto;
 }

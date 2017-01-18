@@ -1,0 +1,11 @@
+$mol_deck $mol_list
+	items /
+	rows /
+		<= Switch $mol_switch
+			value?val <=> current?val \0
+			options <= switch_options *
+		<= Content null
+
+$mol_deck_item $mol_object
+	title \
+	Content null

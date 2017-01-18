@@ -15,50 +15,30 @@ namespace $ {
 				.match( /^function ([a-z0-9_$]*)/ )[ 1 ] )
 		}
 		
-		'objectClassNames()' : string[]
-		
-		objectClassNames() {
-			if( this.hasOwnProperty( 'objectClassNames()' ) ) return this[ 'objectClassNames()' ]
-			
-			var names : string[] = []
-			var current = this
-			
-			while( current ) {
-				var name = current.constructor.toString()
-				if( !name ) continue
-				
-				names.push( name )
-				
-				current = Object.getPrototypeOf( current )
-			}
-			
-			return this[ 'objectClassNames()' ] = names
-		}
-		
 		/// Owner object.
-		private 'objectOwner()' : Object
+		private 'object_owner()' : Object
 		
-		objectOwner( next? : Object ) {
-			if( this[ 'objectOwner()' ] ) return this[ 'objectOwner()' ]
-			return this[ 'objectOwner()' ] = next
+		object_owner( next? : Object ) {
+			if( this[ 'object_owner()' ] ) return this[ 'object_owner()' ]
+			return this[ 'object_owner()' ] = next
 		}
 		
 		/// Field in owner where this object is stored.
-		private 'objectField()' : string
+		private 'object_field()' : string
 		
-		objectField( next? : string ) {
-			if( this[ 'objectField()' ] ) return this[ 'objectField()' ] || ''
-			return this[ 'objectField()' ] = next
+		object_field( next? : string ) {
+			if( this[ 'object_field()' ] ) return this[ 'object_field()' ] || ''
+			return this[ 'object_field()' ] = next
 		}
 		
 		/// JS-path to this object from global scope. Can not be redefined.
 		toString() {
 			var path = ''
 			
-			var owner = this.objectOwner()
+			var owner = this.object_owner()
 			if( owner ) path = owner.toString()
 			
-			var field = this.objectField()
+			var field = this.object_field()
 			if( field ) path += '.' + field
 			
 			return path

@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_app_inventory_domain extends $mol_object {
 		
-		rawTable< Row >( name : string ) {
+		table< Row >( name : string ) {
 			const creds = this.credentials()
 			const uri = `http://${ creds.login }:${ creds.password }@hh.saprun.com/sync/v0.4/dev-env/dev-prj/app/`
 			return $mol_hyperhive.data< Row[] >( {
@@ -12,18 +12,18 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		productsTable() {
-			return this.rawTable< $mol_app_inventory_domain_product_raw >( 'GET_MATERIALS' )
+		products_table() {
+			return this.table< $mol_app_inventory_domain_product_raw >( 'GET_MATERIALS' )
 		}
 		
 		@ $mol_mem()
-		positionsTable() {
-			return this.rawTable< $mol_app_inventory_domain_product_raw >( 'GET_MOVEMENTS' )
+		positions_table() {
+			return this.table< $mol_app_inventory_domain_product_raw >( 'GET_MOVEMENTS' )
 		}
 		
 		@ $mol_mem()
-		productRowsById() {
-			const table = this.productsTable()
+		product_rows_by_id() {
+			const table = this.products_table()
 			const dict : { [ code : string ] : $mol_app_inventory_domain_product_raw } = {}
 			table.forEach( row => {
 				dict[ row.R_MATERIAL_ID ] = row
@@ -31,13 +31,13 @@ namespace $ {
 			return dict
 		}
 		
-		productByCode( code : string ) {
-			return this.product( this.productRowsByCode()[ code ].R_MATERIAL_ID )
+		product_by_code( code : string ) {
+			return this.product( this.product_rows_by_code()[ code ].R_MATERIAL_ID )
 		}
 		
 		@ $mol_mem()
-		productRowsByCode() {
-			const table = this.productsTable()
+		product_rows_by_code() {
+			const table = this.products_table()
 			const dict : { [ code : string ] : $mol_app_inventory_domain_product_raw } = {}
 			table.forEach( row => {
 				dict[ row.R_BARCODE ] = row
@@ -46,8 +46,8 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		positionsDict() {
-			const table = this.positionsTable()
+		positions_dict() {
+			const table = this.positions_table()
 			const dict : { [ code : string ] : $mol_app_inventory_domain_position_raw } = {}
 			table.forEach( row => {
 				dict[ row.R_MATERIAL_ID ] = row
@@ -57,14 +57,14 @@ namespace $ {
 		
 		@ $mol_mem()
 		products() {
-			return this.productsTable().map( row => this.product( row.R_MATERIAL_ID ) )
+			return this.products_table().map( row => this.product( row.R_MATERIAL_ID ) )
 		}
 		
 		@ $mol_mem()
 		product( code : string ) {
 			const next = new $mol_app_inventory_domain_product
 			next.code = $mol_const( code )
-			next.title = ()=> this.productRowsById()[ code ].R_NAME
+			next.title = ()=> this.product_rows_by_id()[ code ].R_NAME
 			return next
 		}
 		
@@ -90,17 +90,17 @@ namespace $ {
 		position( productCode : string ) {
 			const next = new $mol_app_inventory_domain_position()
 			next.product = ()=> this.product( productCode )
-			next.count = ( next? )=> this.positionCount( productCode , next )
-			next.status = ( next? )=> this.positionStatus( productCode , next )
+			next.count = ( next? )=> this.position_count( productCode , next )
+			next.status = ( next? )=> this.position_status( productCode , next )
 			return next
 		}
 		
-		positionCount( productCode : string , next? : number ) {
+		position_count( productCode : string , next? : number ) {
 			const key = `positionCount(${ JSON.stringify( productCode ) })`
 			return $mol_state_local.value( key , next ) || 0
 		}
 		
-		positionStatus( productCode : string , next? : $mol_app_inventory_domain_position_status ) {
+		position_status( productCode : string , next? : $mol_app_inventory_domain_position_status ) {
 			const key = `positionStatus(${ JSON.stringify( productCode ) })`
 			return $mol_state_local.value( key , next ) || $mol_app_inventory_domain_position_status.draft
 		}

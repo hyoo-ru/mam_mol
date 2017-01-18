@@ -3,13 +3,13 @@ namespace $.$mol {
 	export interface $mol_app_report_formatCol {
 		title : string
 		field? : string
-		childs? : $mol_app_report_formatCol[]
+		sub? : $mol_app_report_formatCol[]
 	}
 	
 	export interface $mol_app_report_formatRow {
 		title : string
 		field? : string
-		childs? : $mol_app_report_formatRow[]
+		sub? : $mol_app_report_formatRow[]
 	}
 	
 	export interface $mol_app_report_scheme {
@@ -38,14 +38,14 @@ namespace $.$mol {
 			]
 		}
 		
-		formatRows() : $mol_app_report_formatRow[] {
+		formatrows() : $mol_app_report_formatRow[] {
 			return [
 				{
 					title : 'Фундамент' ,
-					childs : [
+					sub : [
 						{
 							title : 'Габаритный размер' ,
-							childs : [
+							sub : [
 								{
 									field : 'base_length' ,
 									title : 'Длинна' ,
@@ -80,10 +80,10 @@ namespace $.$mol {
 				} ,
 				{
 					title : 'Кровля' ,
-					childs : [
+					sub : [
 						{
 							title : 'Габаритный размер' ,
-							childs : [
+							sub : [
 								{
 									field : 'roof_length' ,
 									title : 'Длинна' ,
@@ -184,10 +184,10 @@ namespace $.$mol {
 		
 		headCells() {
 			return [
-				this.celler( [ 0 , 0 ] ) ,
-				this.celler( [ 0 , 1 ] ) ,
-				this.celler( [ 0 , 2 ] ) ,
-				this.celler( [ 0 , 3 ] ) ,
+				this.cell( [ 0 , 0 ] ) ,
+				this.cell( [ 0 , 1 ] ) ,
+				this.cell( [ 0 , 2 ] ) ,
+				this.cell( [ 0 , 3 ] ) ,
 			]
 		}
 		
@@ -196,12 +196,12 @@ namespace $.$mol {
 			
 			const visit = ( pos : number[] , format : $mol_app_report_formatRow )=> {
 				rows.push( this.rower( pos ) )
-				if( format.childs ) format.childs.forEach( ( format , index )=> {
+				if( format.sub ) format.sub.forEach( ( format , index )=> {
 					visit( pos.concat( index + 1 ) , format )
 				} )
 			}
 			
-			this.formatRows().forEach( ( format , index ) => {
+			this.formatrows().forEach( ( format , index ) => {
 				visit( [ index + 1 ] , format )
 			} )
 			
@@ -209,11 +209,11 @@ namespace $.$mol {
 		}
 		
 		formatRow( pos : number[] ) {
-			let formatRows = this.formatRows()
+			let formatrows = this.formatrows()
 			let next : $mol_app_report_formatRow = null
 			for( let index of pos ) {
-				next = formatRows[ index - 1 ]
-				formatRows = next.childs
+				next = formatrows[ index - 1 ]
+				formatrows = next.sub
 			}
 			return next
 		}
@@ -221,10 +221,10 @@ namespace $.$mol {
 		rowerCells( pos : number[] ) {
 			const formatRow = this.formatRow( pos )
 			return [
-				this.celler( pos.concat( 0 ) ) ,
-				this.celler( pos.concat( 1 ) ) ,
-				formatRow.field ? this.celler( pos.concat( 2 ) ) : null ,
-				formatRow.field ? this.celler( pos.concat( 3 ) ) : null ,
+				this.cell( pos.concat( 0 ) ) ,
+				this.cell( pos.concat( 1 ) ) ,
+				formatRow.field ? this.cell( pos.concat( 2 ) ) : null ,
+				formatRow.field ? this.cell( pos.concat( 3 ) ) : null ,
 			]
 		}
 		
@@ -246,7 +246,7 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		cellContent( pos : number[] ) : $mol_viewer {
+		cell_content( pos : number[] ) : $mol_view {
 			if( pos[0] === 0 ) {
 				return this.texter( pos )
 			}
@@ -267,7 +267,7 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		cellValue( pos : number[] , next : any ) {
+		cell_value( pos : number[] , next : any ) {
 			if( next !== void 0 ) return next
 			
 			if( pos[0] === 0 ) {
@@ -277,20 +277,20 @@ namespace $.$mol {
 			const col = pos[ pos.length - 1 ]
 			switch( col ) {
 				case 0 : return pos.slice( 0 , pos.length - 1 ).join( '.' )
-				case 1 : return this.cellContentName( pos.slice( 0 , pos.length - 1 ) )
-				case 2 : return this.cellContentType( pos.slice( 0 , pos.length - 1 )  )
-				case 3 : return this.cellContentValue( pos.slice( 0 , pos.length - 1 )  )
+				case 1 : return this.cell_contentName( pos.slice( 0 , pos.length - 1 ) )
+				case 2 : return this.cell_contentType( pos.slice( 0 , pos.length - 1 )  )
+				case 3 : return this.cell_contentValue( pos.slice( 0 , pos.length - 1 )  )
 			}
 			
 			return ''
 		}
 		
-		cellContentName( pos : number[] ) {
+		cell_contentName( pos : number[] ) {
 			const formatRow = this.formatRow( pos )
 			return formatRow.title
 		}
 		
-		cellContentType( pos : number[] ) {
+		cell_contentType( pos : number[] ) {
 			const field = this.formatRow( pos ).field
 			if( !field ) return ''
 			
@@ -304,7 +304,7 @@ namespace $.$mol {
 			return ''
 		}
 		
-		cellContentValue( pos : number[] ) {
+		cell_contentValue( pos : number[] ) {
 			const field = this.formatRow( pos ).field
 			if( !field ) return ''
 			

@@ -1,3 +1,0 @@
-$mol_sectioner $mol_lister rowers /
-	<= header $mol_viewer childs / <= head null
-	<= content null

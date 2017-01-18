@@ -6,19 +6,19 @@
 	margin: auto;
 }
 
-[mol_app_inventory_header] {
+[mol_app_inventory_head] {
 	flex: 0 0 auto;
 	margin: 0;
 	background: var(--mol_skin_base);
 	color: var(--mol_skin_base_text);
 }
 
-[mol_app_inventory_header] [mol_linker] {
+[mol_app_inventory_head] [mol_link] {
 	margin: 0;
 	color: inherit;
 }
 
-[mol_app_inventory_header] [mol_linker_current] {
+[mol_app_inventory_head] [mol_link_current] {
 	background: var(--mol_skin_light);
 	color: var(--mol_skin_light_text);
 }

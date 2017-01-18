@@ -1,19 +1,19 @@
-$mol_html_head $mol_viewer tagName \head
-$mol_html_body $mol_viewer tagName \body
+$mol_html_head $mol_view dom_name \head
+$mol_html_body $mol_view dom_name \body
 
-$mol_html_title $mol_viewer
-	tagName \title
-	childs / <= title \
+$mol_html_title $mol_view
+	dom_name \title
+	sub / <= title \
 
-$mol_html_meta $mol_viewer
-	tagName \meta
+$mol_html_meta $mol_view
+	dom_name \meta
 	attr *
 		name <= name \
 		content <= content \
 		charset <= charset \utf-8
 
-$mol_html_link $mol_viewer
-	tagName \link
+$mol_html_link $mol_view
+	dom_name \link
 	attr *
 		rel <= rel \
 		href <= href \

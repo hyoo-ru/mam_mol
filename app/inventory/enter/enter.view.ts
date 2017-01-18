@@ -3,7 +3,7 @@ declare var cpprun : any
 namespace $.$mol {
 	export class $mol_app_inventory_enter extends $.$mol_app_inventory_enter {
 		
-		eventSubmit() {
+		event_submit() {
 			this.domain().credentials({
 				login : this.login() ,
 				password : this.password() ,

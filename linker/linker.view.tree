@@ -1,7 +1,0 @@
-$mol_linker $mol_viewer
-	heightMinimal 36
-	tagName \a
-	attr *
-		href <= uri \
-		mol_linker_current <= current false
-	<= arg *

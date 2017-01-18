@@ -1,0 +1,27 @@
+$mol_suggest $mol_view
+	suggests /
+	event * keydown?val <=> eventPress?val null
+	selectedRow?val 0
+	focused false
+	rower!id $mol_suggest_rower
+		text <= suggest!id \
+		prefix <= value
+		eventSelected?val <=> eventRowerSelected!id?val null
+		selected <= selected!id false
+	sub /
+		<= stringer $mol_string
+			value?val <=> value?val \
+			hint <= hint \
+		<= lister $mol_list
+			minimal_height 0
+			sub <= suggestrows /
+
+$mol_suggest_rower $mol_button
+	dom_name \div
+	event * mousedown?val <=> eventSelected?val null
+	attr * mol_suggest_selected <= selected false
+	minimal_height 36
+	sub /
+		<= dimmer $mol_dimmer
+			haystack <= text \
+			needle <= prefix \

@@ -1,0 +1,10 @@
+$mol_card_demo_status $mol_card
+	Content $mol_row
+		sub /
+			\Hello pending!
+	status \pending
+
+$mol_card_demo_hello $mol_card
+	Content $mol_row
+		sub /
+			\Hello world!

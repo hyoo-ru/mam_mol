@@ -27,4 +27,5 @@
 
 [mol_form_field] > * {
 	margin: 0;
+	flex: 1 1 100%;
 }

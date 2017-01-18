@@ -1,0 +1,5 @@
+$mol_section $mol_list rows /
+	<= Head $mol_view
+		sub /
+			<= head null
+	<= Content null

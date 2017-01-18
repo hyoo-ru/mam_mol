@@ -1,59 +1,66 @@
-$mol_perf_uibench $mol_scroller
-	childs / <= page null
+$mol_perf_uibench $mol_scroll
+	sub / <= page null
 	table $mol_perf_uibench_table state <= stateTable null
 	anim $mol_perf_uibench_anim state <= stateAnim null
 	tree $mol_perf_uibench_tree state <= stateTree null
 
-$mol_perf_uibench_table $mol_lister
+$mol_perf_uibench_table $mol_list
 	state null
-	tagName \table
-	attr * class \Table
+	dom_name \table
+	attr *
+		class \Table
 
-$mol_perf_uibench_table_row $mol_viewer
+$mol_perf_uibench_table_row $mol_view
 	state null
-	heightMinimal 20
-	tagName \tr
+	minimal_height 20
+	dom_name \tr
 	attr *
 		class <= className \TableRow
 		data-id <= id 0
-	childs /
+	sub /
 		<= header $mol_perf_uibench_table_cell text <= headerText \
 		<= cells /
 
-$mol_perf_uibench_table_cell $mol_viewer
-	tagName \td
+$mol_perf_uibench_table_cell $mol_view
+	dom_name \td
 	attr *
 		class \TableCell
 		data-text <= text \
-	event * click?val <=> eventClick?val null
-	childs / <= text
+	event * click?val <=> event_click?val null
+	sub / <= text
 
-$mol_perf_uibench_anim $mol_viewer
+$mol_perf_uibench_anim $mol_view
 	state null
-	attr * class \Anim
-	childs <= items /
+	attr *
+		class \Anim
+	sub <= items /
 
-$mol_perf_uibench_anim_box $mol_viewer
+$mol_perf_uibench_anim_box $mol_view
 	attr *
 		class \AnimBox
 		data-id <= id \
-	field *
-		style.borderRadius <= styleRadius \
-		style.background <= styleColor \
-	childs <= items /
+	style *
+		borderRadius <= styleRadius \
+		background <= styleColor \
+	sub <= items /
 
-$mol_perf_uibench_tree $mol_viewer
+$mol_perf_uibench_tree $mol_view
 	state null
-	attr * class \Tree
-	childs / <= root $mol_perf_uibench_tree_branch state <= stateRoot null
+	attr *
+		class \Tree
+	sub /
+		<= root $mol_perf_uibench_tree_branch state <= stateRoot null
 
-$mol_perf_uibench_tree_branch $mol_lister
+$mol_perf_uibench_tree_branch $mol_list
 	state null
-	tagName \ul
-	attr * class \TreeNode
+	dom_name \ul
+	attr *
+		class \TreeNode
 
-$mol_perf_uibench_tree_leaf $mol_viewer
-	heightMinimal 25
-	tagName \li
-	attr * class \TreeLeaf
-	childs / <= text \
+$mol_perf_uibench_tree_leaf $mol_view
+	minimal_height 25
+	dom_name \li
+	attr *
+		class \TreeLeaf
+	sub /
+		<= text \
