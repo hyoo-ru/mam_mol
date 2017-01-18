@@ -1,5 +1,5 @@
 [mol_view] {
-	transition-property: color, background-color, height, width, min-height, min-width, max-width, max-height;
+	transition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;
 	transition-duration: .1s;
 	-webkit-appearance: none;
 }
