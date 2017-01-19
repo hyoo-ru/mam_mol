@@ -15,7 +15,7 @@ $mol_app_report $mol_page
 		rows <= cellrows!id 1
 		cols <= cellCols!id 1
 	texter!id $mol_view
-		sub / <= cell_value!id null
+		sub / <= cell_value!id?val null
 	stringer!id $mol_string
 		value?val <=> cell_value!id?val null
 	number!id $mol_number

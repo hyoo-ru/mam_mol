@@ -25,6 +25,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 		if( !/^\$\w+$/.test( def.type ) ) throw error( 'Wrong component name' , def )
 		var parent = def.sub[0]
 		
+		var propDefs : { [ key : string ] : $mol_tree } = {}
 		var members : { [ key : string ] : string } = {}
 		parent.sub.forEach( param => addProp( param ) )
 		
@@ -145,6 +146,14 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 				var val = getValue( child )
 				if( !val ) return
 				
+				if( propDefs[ propName[1] ] ) {
+					if( propDefs[ propName[1] ].toString() != param.toString() ) {
+						throw new Error( 'Property already defined with another default value' )
+					}
+				} else {
+					propDefs[ propName[1] ] = param
+				}
+				
 				var args : string[] = []
 				if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
 				if( propName[3] ) args.push( ` ${ propName[3] }? : any ` )
@@ -156,6 +165,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 					else decl = '\t@ $' + 'mol_mem()\n' + decl
 				}
 				decl = source( param ).toString().trim().replace( /^/gm , '\t/// ' ) + '\n' + decl
+				
 				members[ propName[1] ] = decl
 			} )
 			
