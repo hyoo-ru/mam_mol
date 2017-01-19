@@ -1,17 +1,28 @@
-$mol_perf_render $mol_view sub /
-	<= header $mol_view sub / <= head /
-		<= titler $mol_view
-			dom_name \h2
-			sub / <= title \$mol
-		<= runner $mol_button_major
-			dom_name \button
-			sub / <= runnerLabel @ \Run
-			event_click?val <=> eventRun?val null
-	<= contenter $mol_scroll sub / <= lister $mol_list rows <= rows /
+$mol_perf_render $mol_view
+	sub /
+		<= Head $mol_view
+			sub <= head /
+				<= Title $mol_view
+					dom_name \h2
+					sub /
+						<= title \$mol
+				<= Run $mol_button_major
+					dom_name \button
+					sub /
+						<= run_label @ \Run
+					event_click?val <=> event_run?val null
+		<= Content $mol_scroll
+			sub /
+				<= List $mol_list
+					rows <= rows /
 
 $mol_perf_render_row $mol_view
-	selected?val false
 	minimal_height 24
-	attr * mol_perf_render_row_selected <= selected
-	event * click?val <=> eventToggle?val null
-	sub / <= bar $mol_view sub / <= label \
+	attr *
+		mol_perf_render_row_selected <= selected?val false
+	event *
+		click?val <=> event_toggle?val null
+	sub /
+		<= Bar $mol_view
+			sub /
+				<= label \

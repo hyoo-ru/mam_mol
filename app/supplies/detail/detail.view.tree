@@ -7,7 +7,7 @@ $mol_app_supplies_detail $mol_page
 			arg <= backArg *
 				side \
 				supply null
-		<= Title
+		<= Title -
 	body /
 		<= List $mol_list
 			rows /
