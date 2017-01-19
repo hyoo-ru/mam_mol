@@ -150,46 +150,64 @@ namespace $ {
 			}
 		}
 		
-		_next : Value
+		_next : Value|Error
 		
 		set( next : Value ) : Value {
-			this._next = next
+			const next_normal = this.normalize( next , this._next )
+			if( next_normal === this._next ) return this._next
+			
+			this._next = next_normal
 			this.obsolete()
 			return this.get()
 		}
 		
-		push( next : Value|Error ) {
+		normalize( next : Value , prev : Value|Error ) : Value {
+			if( next === prev ) return next
+			
+			if( ( next instanceof Array ) && ( prev instanceof Array ) && ( next.length === prev.length ) ) {
+				for( let i = 0 ; i < next.length ; ++i ) {
+					if( next[ i ] !== prev[ i ] ) return next as any
+				}
+				return prev as any
+			}
+			
+			return next
+		}
+		
+		push( next_raw : Value|Error ) {
+			this._next = void null
+			this.status = $mol_atom_status.actual
+			
 			const host = this.host
 			const prev = host[ this.field ]
-			if( next === void null ) next = prev
-			comparing: if( ( next !== prev ) && ( next instanceof Array ) && ( prev instanceof Array ) && ( next.length === prev.length ) ) {
-				for( let i = 0 ; i < next[ 'length' ] ; ++i ) {
-					if( next[ i ] !== prev[ i ] ) break comparing
-				}
-				next = <any> prev
+			
+			if( next_raw === void null ) return prev
+			
+			let next = ( next_raw instanceof Error ) ? next_raw : this.normalize( next_raw , prev )
+			
+			if( next === prev ) return prev
+			
+			if( next instanceof $mol_object ) {
+				next.object_field( this.field )
+				next.object_owner( host )
 			}
-			if( prev !== next ) {
-				if( next instanceof $mol_object ) {
-					next[ 'object_field' ]( this.field ) // FIXME: type checking
-					next[ 'object_owner' ]( host ) // FIXME: type checking
-				}
-				if(( typeof Proxy === 'function' )&&( next instanceof Error )) {
-					next = new Proxy( next , {
-						get( target : Error ) {
-							throw target.valueOf()
-						} ,
-						ownKeys( target : Error ) {
-							throw target.valueOf()
-						} ,
-					} )
-				}
-				host[ this.field ] = next
-				this.log( [ 'push' , next , prev ] )
-				
-				this.obsolete_slaves()
+			
+			if(( typeof Proxy === 'function' )&&( next instanceof Error )) {
+				next = new Proxy( next , {
+					get( target : Error ) {
+						throw target.valueOf()
+					} ,
+					ownKeys( target : Error ) {
+						throw target.valueOf()
+					} ,
+				} )
 			}
-			this.status = $mol_atom_status.actual
-			this._next = void null
+			
+			host[ this.field ] = next
+			this.log( [ 'push' , next , prev ] )
+			
+			this.obsolete_slaves()
+			
 			return next as Value
 		}
 		
