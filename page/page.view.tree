@@ -4,7 +4,7 @@ $mol_page $mol_view
 			sub <= head /
 				<= Title $mol_view
 					sub /
-						<= title
+						<= title -
 		<= Body $mol_scroll
 			sub <= body /
 		<= Foot $mol_view

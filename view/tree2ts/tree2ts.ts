@@ -25,6 +25,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 		if( !/^\$\w+$/.test( def.type ) ) throw error( 'Wrong component name' , def )
 		var parent = def.sub[0]
 		
+		var propDefs : { [ key : string ] : $mol_tree } = {}
 		var members : { [ key : string ] : string } = {}
 		parent.sub.forEach( param => addProp( param ) )
 		
@@ -81,7 +82,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 							var v = getValue( over.sub[0] )
 							let args : string[] = []
 							if( overName[2] ) args.push( ` ${ overName[2] } : any ` )
-							if( overName[3] ) args.push( ` ${ overName[3] } : any ` )
+							if( overName[3] ) args.push( ` ${ overName[3] }? : any ` )
 							overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
 							needSet = ns
 						} )
@@ -139,9 +140,20 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 			} }
 			
 			if( param.sub.length > 1 ) throw new Error( 'Too more sub' )
+			if( param.sub.length < 1 ) throw new Error( 'Need default value (use "-" for inherit)' )
 			
 			param.sub.forEach( child => {
 				var val = getValue( child )
+				if( !val ) return
+				
+				if( propDefs[ propName[1] ] ) {
+					if( propDefs[ propName[1] ].toString() != param.toString() ) {
+						throw new Error( 'Property already defined with another default value' )
+					}
+				} else {
+					propDefs[ propName[1] ] = param
+				}
+				
 				var args : string[] = []
 				if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
 				if( propName[3] ) args.push( ` ${ propName[3] }? : any ` )
@@ -153,6 +165,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 					else decl = '\t@ $' + 'mol_mem()\n' + decl
 				}
 				decl = source( param ).toString().trim().replace( /^/gm , '\t/// ' ) + '\n' + decl
+				
 				members[ propName[1] ] = decl
 			} )
 			

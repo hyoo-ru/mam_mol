@@ -27,7 +27,7 @@ $mol_perf_uibench_table_cell $mol_view
 		class \TableCell
 		data-text <= text \
 	event * click?val <=> event_click?val null
-	sub / <= text
+	sub / <= text \
 
 $mol_perf_uibench_anim $mol_view
 	state null
