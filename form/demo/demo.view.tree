@@ -14,4 +14,4 @@ $mol_form_demo $mol_form
 		<= submit $mol_button_major
 			sub / <= submit_text @ \Sign In
 			event_click?val <=> event_submit?val null
-			disabled <= submit_blocked
+			disabled <= submit_blocked -

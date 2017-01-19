@@ -7,4 +7,4 @@ $mol_card $mol_list
 		<= Status $mol_view
 			minimal_height 30
 			sub /
-				<= status_text <= status
+				<= status_text <= status \

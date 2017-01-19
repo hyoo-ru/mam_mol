@@ -5,7 +5,7 @@ $mol_suggest $mol_view
 	focused false
 	rower!id $mol_suggest_rower
 		text <= suggest!id \
-		prefix <= value
+		prefix <= value -
 		eventSelected?val <=> eventRowerSelected!id?val null
 		selected <= selected!id false
 	sub /

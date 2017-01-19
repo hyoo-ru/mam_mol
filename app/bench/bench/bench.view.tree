@@ -2,7 +2,7 @@ $mol_app_bench $mol_stack
 	-
 	main /
 		<= Main_page $mol_page
-			title <= title
+			title <= title -
 			body /
 				<= Inform $mol_view sub /
 					<= Descr $mol_text

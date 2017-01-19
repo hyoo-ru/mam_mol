@@ -3,7 +3,7 @@ $mol_demo $mol_view
 		<= header $mol_view
 			sub /
 				<= titler $mol_link
-					arg * demo <= name
+					arg * demo <= name \$mol_view
 					sub /
 						<= title <= name \$mol_view
 		<= screener $mol_view sub / <= widget null

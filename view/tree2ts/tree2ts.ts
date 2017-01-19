@@ -81,7 +81,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 							var v = getValue( over.sub[0] )
 							let args : string[] = []
 							if( overName[2] ) args.push( ` ${ overName[2] } : any ` )
-							if( overName[3] ) args.push( ` ${ overName[3] } : any ` )
+							if( overName[3] ) args.push( ` ${ overName[3] }? : any ` )
 							overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
 							needSet = ns
 						} )
@@ -139,9 +139,12 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 			} }
 			
 			if( param.sub.length > 1 ) throw new Error( 'Too more sub' )
+			if( param.sub.length < 1 ) throw new Error( 'Need default value (use "-" for inherit)' )
 			
 			param.sub.forEach( child => {
 				var val = getValue( child )
+				if( !val ) return
+				
 				var args : string[] = []
 				if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
 				if( propName[3] ) args.push( ` ${ propName[3] }? : any ` )
