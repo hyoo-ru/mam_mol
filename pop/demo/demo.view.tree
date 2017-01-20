@@ -1,0 +1,7 @@
+$mol_pop_demo $mol_pop_over
+	Anchor <= Button $mol_button
+		sub /
+			\Hover me!
+	align \bottom_center
+	tip_content / 
+		\This is tooltip

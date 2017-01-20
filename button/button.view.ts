@@ -10,6 +10,11 @@ namespace $.$mol {
 			this.event_click( next )
 		}
 		
+		evenet_key_press ( event: KeyboardEvent ) { 
+      		if(event.keyCode === $mol_keyboard_code.enter) 
+        	return this.event_activate(event); 
+    	} 
+		
 		tab_index() {
 			return this.enabled() ? super.tab_index() : null
 		}

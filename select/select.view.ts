@@ -22,7 +22,7 @@ namespace $.$mol {
 			let filter = this.prefix();
 			return this.options().filter( id => {
 				if( id !== this.value() )
-					return id.toLowerCase().match( filter ) 
+					return this.option_label(id).toLowerCase().match( filter ) 
 			})
 		}
 		option_label ( id: string ) {
@@ -31,6 +31,7 @@ namespace $.$mol {
 			: id
 		}
 		event_press(event?: KeyboardEvent) {
+			if(!this.expanded()) return;
 			let options_length = this.options().length;
 			let nav_index = this.navigation_index();
 			
@@ -47,7 +48,7 @@ namespace $.$mol {
 						: ++nav_index
 					this.navigation_index(nav_index);
 					break;
-				case $mol_keyboard_code.enter :
+				case $mol_keyboard_code.space :
 					if(nav_index) return;
 					this.value(this.options()[nav_index]);
 					break;

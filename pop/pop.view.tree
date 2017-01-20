@@ -1,0 +1,12 @@
+$mol_pop $mol_view
+	showed?val false
+	sub /
+		<= Anchor null
+		<= Bubble $mol_pop_tip
+			align <= align \bottom_center
+			content <= tip_content /
+
+$mol_pop_tip $mol_view
+	sub <= content /
+	attr *
+		mol_pop_align <= align \

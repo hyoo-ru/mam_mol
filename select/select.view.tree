@@ -5,8 +5,8 @@ $mol_select $mol_view
 	expanded?val false
 	search_breakpoint 7
 	navigation_index?index 0
-	event *
-		keydown?event <=> event_press?event null
+	- event *
+		- keydown?event <=> event_press?event null
 	Option!id $mol_button
 		event_click?event <=> event_select!id?event null
 		sub <= option_content!id /
