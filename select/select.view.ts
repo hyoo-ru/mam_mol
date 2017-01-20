@@ -67,14 +67,6 @@ namespace $.$mol {
 		hint_message() {
 			return this.option_label(this.value()) ||  this.message_empty();
 		}
-		sub() {
-			return [
-				this.Bar(),
-				(this.expanded())
-					? this.List()
-					: null
-			]
-		}
 		controls() {
 			return [
 				(this.searchable() && !this.value() || this.searchable() && this.expanded())

@@ -1,9 +1,11 @@
 [mol_select_list] {
 	display: flex;
 	flex-direction: column;
-	position: absolute;
-	z-index: 3;
+}
+
+[mol_select_bubble] {
 	background-color: white;
+	padding: 0;
 }
 
 [mol_select_trigger] {
