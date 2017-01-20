@@ -55,7 +55,7 @@
 [mol_app_demo_detail_row] {
 	align-items: flex-start;
 	align-content: flex-start;
-	justify-content: center;
+	justify-content: flex-start;
 	box-shadow: none;
 	margin: 0;
 }
