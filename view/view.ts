@@ -223,7 +223,6 @@ namespace $ {
 		static render_field( node : any , field : { [ key : string ] : ( next? : any )=> any } ) {
 			for( let key in field ) {
 				const val = field[ key ]()
-				node[ key ] = val
 				if( node[ key ] !== val ) {
 					node[ key ] = val
 					if( node[ key ] !== val ) {
