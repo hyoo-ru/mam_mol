@@ -45,7 +45,9 @@ namespace $ {
 		}
 		
 		/// Name of element that created when element not found in DOM
-		dom_name() { return 'div' }
+		dom_name() {
+			return this.constructor.toString().replace( '$' , '' )
+		}
 		
 		/// NameSpace of element that created when element not found in DOM
 		dom_name_space() { return 'http://www.w3.org/1999/xhtml' }
