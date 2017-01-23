@@ -96,12 +96,12 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 							keys.push( key[1] )
 							var ns = needSet
 							var v = getValue( opt.sub[0] )
-							var arg = key[2] ? ` ${ key[2] }? : any ` : ''
-							opts.push( '\t\t\t"' + key[1] + '" : (' + arg + ')=> <any> ' + v + ' ,\n' )
+							var arg = key[2] ? ` ( ${ key[2] }? : any )=> ` : ''
+							opts.push( '\t\t\t"' + key[1] + '" : ' + arg + ' <any> ' + v + ' ,\n' )
 							needSet = ns
 						} )
 						if( !isOverride ) return '({\n' + opts.join( '' ) + '\t\t})'
-						else return  `$`+`mol_merge_dict( super.${ param.type }() , {\n${ opts.join( '' )}\t\t} )`
+						else return  `( { ...super.${ param.type }() , \n${ opts.join( '' )}\t\t} )`
 					case( value.type === '>' ) :
 						throw new Error( 'Deprecated syntax. Use <=> instead.' )
 					case( value.type === '<=>' ) :

@@ -77,9 +77,9 @@ namespace $ {
 			class $mol_view_test extends $mol_view {
 				attr() {
 					return {
-						'href' : ()=> <any> '#haha' ,
-						'required' : ()=> <any> true ,
-						'hidden' : ()=> <any> null ,
+						'href' : '#haha' ,
+						'required' : true ,
+						'hidden' : false ,
 					}
 				}
 			}
@@ -89,6 +89,7 @@ namespace $ {
 			var node = x.dom_tree()
 			
 			$mol_assert_equal( node.getAttribute( 'href' ) , '#haha' )
+			$mol_assert_equal( node.getAttribute( 'required' ) , 'true' )
 			$mol_assert_equal( node.getAttribute( 'hidden' ) , null )
 			
 		} ,
@@ -98,7 +99,7 @@ namespace $ {
 			class $mol_view_test extends $mol_view {
 				field() {
 					return {
-						'hidden' : ()=> true
+						'hidden' : true
 					}
 				}
 			}

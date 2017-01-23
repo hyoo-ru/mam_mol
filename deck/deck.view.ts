@@ -8,7 +8,7 @@ namespace $.$mol {
 		switch_options() {
 			let options : { [ key : string ] : ()=> string } = {}
 			this.items().forEach( ( item , index ) => {
-				options[ String( index ) ] = ()=> item.title()
+				options[ String( index ) ] = item.title()
 			} )
 			return options
 		}
