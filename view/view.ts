@@ -45,7 +45,9 @@ namespace $ {
 		}
 		
 		/// Name of element that created when element not found in DOM
-		dom_name() { return 'div' }
+		dom_name() {
+			return this.constructor.toString().replace( '$' , '' )
+		}
 		
 		/// NameSpace of element that created when element not found in DOM
 		dom_name_space() { return 'http://www.w3.org/1999/xhtml' }
@@ -201,9 +203,9 @@ namespace $ {
 			}
 		}
 		
-		static render_attr( node : Element , attrs : { [ key : string ] : ()=> string|number|boolean } ) {
+		static render_attr( node : Element , attrs : { [ key : string ] : string|number|boolean } ) {
 			for( let name in attrs ) {
-				let val = attrs[ name ]()
+				let val = attrs[ name ]
 				if( ( val == null ) || ( val === false ) ) {
 					node.removeAttribute( name )
 				} else if( val === true ) {
@@ -214,24 +216,19 @@ namespace $ {
 			}
 		}
 		
-		static render_style( node : HTMLElement , styles : { [ key : string ] : ()=> string|number } ) {
+		static render_style( node : HTMLElement , styles : { [ key : string ] : string|number } ) {
 			for( let name in styles ) {
-				let val = styles[ name ]() as any
+				let val = styles[ name ] as any
 				if( typeof val === 'number' ) val = `${ val }px`
 				const style = node.style as any
 				style[ name ] = val
 			}
 		}
 		
-		static render_field( node : any , field : { [ key : string ] : ( next? : any )=> any } ) {
+		static render_field( node : any , field : { [ key : string ] : any } ) {
 			for( let key in field ) {
-				const val = field[ key ]()
-				if( node[ key ] !== val ) {
-					node[ key ] = val
-					if( node[ key ] !== val ) {
-						new $mol_defer( ()=> field[ key ]( node[ key ] ) )
-					}
-				}
+				const val = field[ key ]
+				if( node[ key ] !== val ) node[ key ] = val
 			}
 		}
 		
@@ -255,14 +252,14 @@ namespace $ {
 			}
 		}
 		
-		attr() : { [ key : string ] : ()=> string|number|boolean } { return {
-			'mol_view_error' : ()=> false
+		attr() : { [ key : string ] : string|number|boolean } { return {
+			'mol_view_error' : false
 		} }
 		
-		style() : { [ key : string ] : ()=> string|number } { return {
+		style() : { [ key : string ] : string|number } { return {
 		} }
 		
-		field() : { [ key : string ] : ( next? : any )=> any } { return {
+		field() : { [ key : string ] : any } { return {
 		} }
 		
 		event() : { [ key : string ] : ( event : Event )=> void } { return {} }

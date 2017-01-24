@@ -16,7 +16,9 @@
 	flex: 0 1 auto;
 }
 [mol_app_inventory_position_title] {
+	display: block;
 }
 [mol_app_inventory_position_description] {
+	display: block;
 	color: var(--mol_skin_passive_text);
 }

@@ -5,7 +5,7 @@ namespace $.$mol {
 			return $mol_state_session.value( `${ this }.value()` , next )
 		}
 		
-		options() : { [ key : string ] : () => string } {
+		options() : { [ key : string ] : string } {
 			return {}
 		}
 
@@ -15,7 +15,7 @@ namespace $.$mol {
 		}
 		
 		option_title( key : string ) {
-			return this.options()[key]();
+			return this.options()[key];
 		}
 		
 		option_checked( key : string , next? : boolean ) {

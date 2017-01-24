@@ -4,11 +4,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		uri() {
-			const patch : { [ key : string ] : string } = {}
-			const arg : any = this.arg()
-			for( let key in arg ) patch[ key ] = arg[ key ]()			
-			
-			return new $mol_state_arg( this.state_prefix() ).link( patch )
+			return new $mol_state_arg( this.state_prefix() ).link( this.arg() )
 		}
 		
 		current() {

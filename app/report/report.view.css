@@ -8,6 +8,7 @@
 }
 
 [mol_app_report_descriptor] {
+	display: block;
 	margin: 1rem auto;
 	white-space: pre-line;
 	text-align: center;

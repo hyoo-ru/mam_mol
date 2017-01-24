@@ -90,7 +90,7 @@ namespace $.$mol {
 		option( name : string ) {
 			return new $mol_link().setup( obj => {
 				obj.sub = () => [ name ? ( '$' + name ) : 'All' ]
-				obj.arg = () => ({ demo : ()=> name })
+				obj.arg = () => ({ demo : name })
 			} )
 		}
 		
@@ -156,7 +156,7 @@ namespace $.$mol {
 		}
 		
 		arg( id : { row : string[] , col : string } ) {
-			return { 'demo' : ()=> id.row[ id.row.length - 1 ] }
+			return { 'demo' : id.row[ id.row.length - 1 ] }
 		}
 		
 	}

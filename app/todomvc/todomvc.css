@@ -68,6 +68,7 @@
 }
 
 [mol_app_todomvc_title] {
+	display: block;
 	padding: .25rem;
 	font-size: 7rem;
 	font-weight: 100;

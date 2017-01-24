@@ -3,6 +3,7 @@
 	z-index: 1;
 	opacity: 1;
 	transition: opacity .25s ease-in;
+	display: block;
 }
 
 [mol_float_scrolling] {
