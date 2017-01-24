@@ -17,6 +17,7 @@
 	--mol_skin_light_hover: color( var(--mol_skin_light) lightness(-5%) );
 
 	--mol_skin_card: white;
+	--mol_skin_card_line: rgba( 230 , 230 , 230 , 1 );
 	
 	--mol_skin_accent: color( var(--mol_skin_base) hue(+140deg) saturation(+10%) );
 	--mol_skin_accent_text: color( var(--mol_skin_accent) hue(+180deg) lightness(99%) );

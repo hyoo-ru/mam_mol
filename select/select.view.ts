@@ -30,29 +30,14 @@ namespace $.$mol {
 			? this.dictionary()[ id ]()
 			: id
 		}
-		event_press(event?: KeyboardEvent) {
-			if(!this.expanded()) return;
-			let options_length = this.options().length;
-			let nav_index = this.navigation_index();
-			
-			switch(event.keyCode) {
-				case $mol_keyboard_code.down :
-					nav_index = nav_index === options_length
-						? 0
-						: --nav_index
-					this.navigation_index(nav_index);
-					break;
-				case $mol_keyboard_code.up :
-					nav_index = nav_index === options_length
-						? 0
-						: ++nav_index
-					this.navigation_index(nav_index);
-					break;
-				case $mol_keyboard_code.space :
-					if(nav_index) return;
-					this.value(this.options()[nav_index]);
-					break;
-			}
+		@$mol_mem()
+		option_focused( key: string ) {
+			if(key === void 0) return ""
+			if(this.expanded())
+				$mol_view_selection.focused([this.Option(key).dom_node()])
+			else
+				this.value(key)
+			return key
 		}
 		event_switch(event?: MouseEvent) {
 			this.expanded(!this.expanded());

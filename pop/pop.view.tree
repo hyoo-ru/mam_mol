@@ -4,7 +4,7 @@ $mol_pop $mol_view
 		<= Anchor null
 		<= Bubble $mol_pop_tip
 			align <= align \bottom_center
-			content <= tip_content /
+			content <= bubble_content /
 
 $mol_pop_tip $mol_view
 	sub <= content /

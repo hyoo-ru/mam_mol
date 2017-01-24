@@ -1,19 +1,15 @@
-
 [mol_select] {
 	margin: auto;
-}
-
-[mol_select_demo_custom_option] {
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	margin: .5em 2em;
-	text-align: center;
 }
 
 [mol_color] {
 	width: 3em;
 	height: 3em;
-	border-radius: 50%;
 	margin: 0;
+}
+
+[mol_select_demo_custom_option] {
+	padding: 1em;
+	display: flex;
+	flex: 1 1 auto;
 }

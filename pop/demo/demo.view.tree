@@ -3,5 +3,5 @@ $mol_pop_demo $mol_pop_over
 		sub /
 			\Hover me!
 	align \bottom_center
-	tip_content / 
+	bubble_content / 
 		\This is tooltip

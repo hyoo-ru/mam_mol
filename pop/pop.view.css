@@ -1,14 +1,18 @@
 [mol_pop] {
 	position: relative;
-	margin: auto;
 }
-[mol_pop_tip] {
-	padding: .5em;
-	background: hsla(0, 0%, 0%, 0.3);
-	border-radius: 2px;
+[mol_pop_bubble] {
+	box-shadow: 0 0 0 1px var(--mol_skin_card_line);
+	border-radius: var(--mol_skin_round);
 	position: absolute;
-	white-space: nowrap;
 	z-index: 5;
+	background-color: var(--mol_skin_card);
+}
+[mol_pop_over_bubble] {
+	padding: .5em;
+	background-color: hsla(0, 0%, 0%, 0.3);
+	box-shadow: none;
+	white-space: nowrap;
 }
 
 

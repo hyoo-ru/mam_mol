@@ -128,17 +128,20 @@ namespace $ {
 			}
 			
 			/// Bind properties to events
-			const events = this.event()
+			$mol_view.bind_event(next2, this.event());
+			
+			return next2
+		}
+		
+		static bind_event(node: Element, events: { [ key : string ] : ( event : Event )=> void } ) {
 			for( let name in events ) {
 				let handle = events[ name ]
-				next2.addEventListener( name , event => {
+				node.addEventListener( name , event => {
 					$mol_atom_task( `${ this }.event()['${ name }']` , ()=> {
 						handle( event )
 					} ).get()
 				} )
 			}
-			
-			return next2
 		}
 		
 		static render_sub( node : Element , sub : ($mol_view|Node|string|number|boolean)[] ) {

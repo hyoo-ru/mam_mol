@@ -1,12 +1,7 @@
-$mol_select $mol_pop
-	<= options /
+$mol_select $mol_view
 	<= dictionary *
 	value?val \
-	showed?val <=> expanded?val false
 	search_breakpoint 7
-	navigation_index?index 0
-	- event *
-		- keydown?event <=> event_press?event null
 	Option!id $mol_button
 		event_click?event <=> event_select!id?event null
 		sub <= option_content!id /
@@ -19,17 +14,24 @@ $mol_select $mol_pop
 	Option_no_value $mol_view
 		sub /
 			<= message_no_value @ \ No values
-	Anchor <= Bar $mol_bar
-		sub <= controls /
-			<= String $mol_string
-				value?val <=> prefix?val \
-				hint <= hint_message \
-			<= Trigger $mol_button
-				event_click?event <=> event_switch?event null
-				sub /
-					<= value_content /
-					<= Chevron $mol_icon_chevron
-	tip_content <= list /
-		<= List $mol_list
-			minimal_height 0
-			sub <= Options /
+	sub / 
+		<= Nav $mol_nav
+			keys_y <= options /
+			current_y?key <=> option_focused?key \
+			Sub <= Pop $mol_pop
+				showed?val <=> expanded?val false
+				align?val <=> align_options?val \bottom_right
+				Anchor <= Bar $mol_bar
+					sub <= controls /
+						<= String $mol_string
+							value?val <=> prefix?val \
+							hint <= hint_message \
+						<= Trigger $mol_button
+							event_click?event <=> event_switch?event null
+							sub /
+								<= value_content /
+								<= Chevron $mol_icon_chevron
+				bubble_content /
+					<= List $mol_list
+						minimal_height 0
+						sub <= Options /
