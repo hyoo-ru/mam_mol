@@ -4,7 +4,7 @@ namespace $ {
 		
 		table< Row >( name : string ) {
 			const creds = this.credentials()
-			const uri = `http://${ creds.login }:${ creds.password }@hh.saprun.com/sync/v0.4/dev-env/dev-prj/app/`
+			const uri = `http://${ creds.login }:${ creds.password }@mobrun.sp.saprun.com/api/v0.5/data/evraz/project/v1/`
 			return $mol_hyperhive.data< Row[] >( {
 				uri : uri ,
 				table : name ,
@@ -32,7 +32,8 @@ namespace $ {
 		}
 		
 		product_by_code( code : string ) {
-			return this.product( this.product_rows_by_code()[ code ].R_MATERIAL_ID )
+			let row = this.product_rows_by_code()[ code ]
+			return row ? this.product( row.R_BARCODE ) : null
 		}
 		
 		@ $mol_mem()
@@ -57,14 +58,14 @@ namespace $ {
 		
 		@ $mol_mem()
 		products() {
-			return this.products_table().map( row => this.product( row.R_MATERIAL_ID ) )
+			return this.products_table().map( row => this.product( row.R_BARCODE ) )
 		}
 		
 		@ $mol_mem()
 		product( code : string ) {
 			const next = new $mol_app_inventory_domain_product
 			next.code = $mol_const( code )
-			next.title = ()=> this.product_rows_by_id()[ code ].R_NAME
+			next.title = ()=> this.product_rows_by_code()[ code ].R_NAME
 			return next
 		}
 		
@@ -110,11 +111,28 @@ namespace $ {
 			return $mol_state_session.value( 'credentials' , next )
 		}
 		
+		@ $mol_mem()
 		authentificated() {
+			$mol_hyperhive.initialize( {
+				 host : "mobrun.sp.saprun.com" ,
+				 version : "v0.5" ,
+				 environment : "evraz" ,
+				 project : "project" ,
+				 application : "v1" ,
+			} )
+			
 			const creds = this.credentials()
 			if( !creds ) return false
 			
-			return true
+			return $mol_hyperhive.authentificated( creds )
+		}
+		
+		canWriteOff() {
+			return Boolean( this.credentials().login.match( 'keeper' ) )
+		}
+		
+		canApprove() {
+			return Boolean( this.credentials().login.match( 'controller' ) )
 		}
 		
 		message() : string {
