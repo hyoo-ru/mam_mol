@@ -1,3 +1,10 @@
-[mol_pop_demo] {
+[mol_pop_demo], [mol_pop_over_demo] {
 	margin: auto;
+}
+
+[mol_pop_demo_content] {
+	white-space: nowrap;
+	padding: .5em;
+	display: flex;
+	flex-direction: column;
 }

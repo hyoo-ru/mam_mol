@@ -1,8 +1,10 @@
 $mol_nav $mol_view_ghost
 	keys_x?val /
 	keys_y?val /
+	-
 	current_x?val \
 	current_y?val \
+	-
 	event_up?event null
 	event_down?event null
 	event_left?event null

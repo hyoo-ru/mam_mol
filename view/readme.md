@@ -64,7 +64,7 @@ namespace $ { export class $my_button extends $mol_view {} }
 While inheritance there is a possibility to declare additional properties or overload existing (but types of properties should match). For example lets overload a `uri` property with `"https://example.org"` string, and `sub` - with array of one string `"Click me!"`, besides, lets declare a new property `target` with `"_top"` value by default. (it's important to mark that a value by default is necessary when declaring a property):  
 
 ```tree
-$my_exampler $mol_link
+$my_exampl $mol_link
 	uri \https://example.org
 	sub /
 		\Click me!
@@ -72,7 +72,7 @@ $my_exampler $mol_link
 ```
 
 ```typescript
-namespace $ { export class $my_exampler extends $mol_link {
+namespace $ { export class $my_exampl extends $mol_link {
 
 	uri() {
 		return "https://example.org"
@@ -175,9 +175,9 @@ $my_hint $mol_view
 	hint \Default hint
 	text \Default text
 	field *
-		title < hint 
+		title <= hint 
 	sub /
-		< text
+		<= text
 ```
 
 ```typescript
@@ -208,16 +208,16 @@ Often it is convenient to combine declaration of property and usage of this one.
 ```tree
 $my_hint $mol_view
 	field *
-		title < hint \Default hint 
+		title <= hint \Default hint 
 	sub /
-		< text \Default text
+		<= text \Default text
 ```
 Reactions on DOM-events are required for two-way binding. For example, lets point out, that objects of `click` event is necessary to put in eventRemove property, which we declare right here and set it a default value `null`:
 
 ```tree
 $my_remover $mol_view
 	event *
-		click > eventRemove null 
+		click <=> event_remove null 
 	sub /
 		\Remove
 ```
@@ -226,13 +226,13 @@ $my_remover $mol_view
 namespace $ { export class $my_remover extends $mol_view {
 
 	@ $mol_prop()
-	eventRemove( ...diff : any[] ) {
+	event_remove( ...diff : any[] ) {
 		return ( diff[0] !== void 0 ) ? diff[0] : <any> null
 	}
 
 	event() {
 		return $mol_merge_dict( super.event() , {
-			"click" : ( ...diff : any[] )=> <any> this.eventRemove(  ...diff ) ,
+			"click" : ( ...diff : any[] )=> <any> this.event_remove(  ...diff ) ,
 		} )
 	}
 
@@ -242,26 +242,26 @@ namespace $ { export class $my_remover extends $mol_view {
 
 } }
 ```
-We could declare as value an instance of another class directly. In the next example it is being declared a property `lister`, and which value would be a component type of `$mol_list_demo`, and then it put into a list of child components `sub`:
+We could declare as value an instance of another class directly. In the next example it is being declared a property `Lister`, and which value would be a component type of `$mol_list_demo`, and then it put into a list of child components `sub`:
 
 ```tree
 $my_app $mol_view
-	lister $mol_list_demo
+	List $mol_list_demo
 	sub /
-		< lister
+		<= List
 ```
 
 ```typescript
 namespace $ { export class $my_app extends $mol_view {
 
 	@ $mol_prop()
-	lister( ...diff : any[] ) {
+	List( ...diff : any[] ) {
 		return ( diff[0] !== void 0 ) ? diff[0] : new $mol_list_demo().setup( __ => { 
 		} )
 	}
 
 	sub() {
-		return [].concat( this.lister() )
+		return [].concat( this.List() )
 	}
 
 } }
@@ -271,7 +271,7 @@ A property of a nested component could be overloaded also:
 ```tree
 $my_name $mol_view
 	sub /
-		< info $mol_labeler
+		<= Info $mol_label
 			title \Name
 			content \Jin
 ```
@@ -280,7 +280,7 @@ $my_name $mol_view
 namespace $ { export class $my_name extends $mol_view {
 
 	@ $mol_prop()
-	info( ...diff : any[] ) {
+	Info( ...diff : any[] ) {
 		return ( diff[0] !== void 0 ) ? diff[0] : new $mol_labeler().setup( __ => { 
 			__.title = () => "Name"
 			__.content = () => "Jin"
@@ -288,28 +288,28 @@ namespace $ { export class $my_name extends $mol_view {
 	}
 
 	sub() {
-		return [].concat( this.info() )
+		return [].concat( this.Info() )
 	}
 
 } }
 ```
-Properties of parent and child component could be linked. At the following example we declare reactive property `name`, and we say to child component `input` use property `name` as its own property `value`, we also say to a child component `output` we want to property `name` to be outputted at inside of this one. In this way components `input` and `output` are become linked through parent's property `name` and changing value in `input` would lead to updating output:
+Properties of parent and child component could be linked. At the following example we declare reactive property `name`, and we say to child component `Input` use property `name` as its own property `value`, we also say to a child component `Output` we want to property `name` to be outputted at inside of this one. In this way components `Input` and `Output` are become linked through parent's property `name` and changing value in `Input` would lead to updating output:
 
 ```tree
-$my_greeter $mol_view
+$my_greet $mol_view
 	- ">" allows pushing to property
-	> name \
+	<=> name \
 	sub /
-		< input $mol_string
+		<= Input $mol_string
 			hint \Name
-			value > name
-		< output $mol_view
+			value <=> name
+		<= Output $mol_view
 			sub /
-				< name
+				<=> name
 ```
 
 ```typescript
-namespace $ { export class $my_greeter extends $mol_view {
+namespace $ { export class $my_greet extends $mol_view {
 
 	@ $mol_prop()
 	name( ...diff : any[] ) {
@@ -317,7 +317,7 @@ namespace $ { export class $my_greeter extends $mol_view {
 	}
 
 	@ $mol_prop()
-	input( ...diff : any[] ) {
+	Input( ...diff : any[] ) {
 		return ( diff[0] !== void 0 ) ? diff[0] : new $mol_string().setup( __ => { 
 			__.hint = () => "Name"
 			__.value = ( ...diff : any[] ) => this.name(  ...diff )
@@ -325,29 +325,29 @@ namespace $ { export class $my_greeter extends $mol_view {
 	}
 
 	@ $mol_prop()
-	output( ...diff : any[] ) {
+	Output( ...diff : any[] ) {
 		return ( diff[0] !== void 0 ) ? diff[0] : new $mol_view().setup( __ => { 
 			__.sub = () => [].concat( this.name() )
 		} )
 	}
 
 	sub() {
-		return [].concat( this.input() , this.output() )
+		return [].concat( this.Input() , this.Output() )
 	}
 
 } }
 ```
 
-Бывают такие свойства, которые в зависимости от ключа возвращают разные значения. Типичный пример - строки списка. Каждая строка - отдельный компонент, доступный по уникальному ключу. Для объявления таких свойств используется суффикс `#`:
+There are certain properties that depending on the key return different values. A typical example - a list of strings. Each line - a separate component that is available for the unique key. The listing of such properties is `!` after the name of the key:
 
 ```tree
 $my_tasks $mol_list
-	sub < taskrows
+	sub <= taskrows
 	taskrows /
-	taskRow# $mol_view
-		sub / < taskTitle#
-	taskTitle# < defaultTitle
-	defaultTitle \
+	task_row!key $mol_view
+		sub / <= task_title!key
+	task_title!key <= defaultTitle
+	default_title \
 ```
 
 ```typescript
@@ -362,23 +362,23 @@ namespace $ { export class $my_tasks extends $mol_list {
 	}
 
 	@ $mol_prop()
-	taskRow( key : any , ...diff : any[] ) {
+	task_row( key : any , ...diff : any[] ) {
 		return ( diff[0] !== void 0 ) ? diff[0] : new $mol_view().setup( __ => { 
-			__.sub = () => [].concat( this.taskTitle( key ) )
+			__.sub = () => [].concat( this.task_title( key ) )
 		} )
 	}
 
-	taskTitle( key : any ) {
-		return this.defaultTitle()
+	task_title( key : any ) {
+		return this.default_title()
 	}
 
-	defaultTitle() {
+	default_title() {
 		return ""
 	}
 
 } }
 ```
-Here we declared the property `taskRow`, which takes on input some key and returns an unique instance of `$mol_view` for every key, with overloaded property `sub`, which outputs appropriate `taskTitle` for every `taskRow`, and in its turn `taskTitle` returns the content of property `defaultTitle` independently of the key, which is equal to empty string initially. Further overloading any of these properties, we could change any aspect of component behavior.
+Here we declared the property `task_row`, which takes on input some key and returns an unique instance of `$mol_view` for every key, with overloaded property `sub`, which outputs appropriate `task_title` for every `task_row`, and in its turn `task_title` returns the content of property `default_title` independently of the key, which is equal to empty string initially. Further overloading any of these properties, we could change any aspect of component behavior.
 
 ## view.ts
 In addition to declarative description of component, next to it could be created a file of the same name with `view.ts` extension, where a behavior could be described. Using a special construction, it could be inherited from realization obtained of `view.tree` and it would be overloaded automatically by heir:  
@@ -387,12 +387,12 @@ For example we have following description into `./my/hello/hello.view.tree`:
 
 ```tree
 $my_hello $mol_view sub /
-	< input $mol_string
+	<= Input $mol_string
 		hint \Name
-		value > name \
-	< message \
+		value <=> name \
+	<= message \
 ```
-Here we declared 2 properties: `name` for getting value from `input` and `message` for output the value. It would be translated into following file `./my/hello/-/view.tree.ts/hello.view.tree.ts`: 
+Here we declared 2 properties: `name` for getting value from `Input` and `message` for output the value. It would be translated into following file `./my/hello/-/view.tree.ts/hello.view.tree.ts`: 
 
 ```typescript
 namespace $ { export class $my_hello extends $mol_view {
@@ -403,7 +403,7 @@ namespace $ { export class $my_hello extends $mol_view {
 	}
 
 	@ $mol_prop()
-	input( ...diff : any[] ) {
+	Input( ...diff : any[] ) {
 		return ( diff[0] !== void 0 ) ? diff[0] : new $mol_string().setup( __ => { 
 			__.hint = () => "Name"
 			__.value = ( ...diff : any[] ) => this.name(  ...diff )
@@ -415,7 +415,7 @@ namespace $ { export class $my_hello extends $mol_view {
 	}
 
 	sub() {
-		return [].concat( this.input() , this.message() )
+		return [].concat( this.Input() , this.message() )
 	}
 
 } }

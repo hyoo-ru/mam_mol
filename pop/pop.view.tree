@@ -6,7 +6,7 @@ $mol_pop $mol_view
 			align <= align \bottom_center
 			content <= bubble_content /
 
-$mol_pop_tip $mol_view
+$mol_pop_tip $mol_scroll
 	sub <= content /
 	attr *
 		mol_pop_align <= align \

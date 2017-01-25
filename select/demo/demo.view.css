@@ -3,9 +3,9 @@
 }
 
 [mol_color] {
-	width: 3em;
-	height: 3em;
-	margin: 0;
+    text-align: start;
+    padding: .5em;
+	flex-grow: 1;
 }
 
 [mol_select_demo_custom_option] {

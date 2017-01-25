@@ -4,8 +4,8 @@
 	margin: 0;
 }
 
-[mol_select_option] {
-	width: 100%;
+[mol_select_option_row] {
+	min-width: 100%;
 	padding: 0;
 	justify-content: flex-start;
 }
@@ -14,12 +14,12 @@
 	min-width: 100%;
 }
 
-[mol_select_dimmer], [mol_select_option_empty] {
+[mol_select_option_label] {
 	padding: .5em;
 	text-align: start;
 }
 
-[mol_select_chevron] {
+[mol_select_trigger_icon] {
 	margin: .5em;
 	transform: rotateZ(90deg);
 }
@@ -28,11 +28,10 @@
 	padding: .5em;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
-    color: hsla(0, 0%, 0%, 0.3);
-    cursor: not-allowed;
+    color: var(--mol_skin_disabled);
 }
 
-[mol_select_list] {
+[mol_select_options] {
 	max-height: 150px;
 	overflow: auto;
 }

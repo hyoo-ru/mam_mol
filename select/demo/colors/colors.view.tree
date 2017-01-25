@@ -1,0 +1,15 @@
+$mol_select_demo_colors $mol_labeler
+	title \Choose some color
+	Content $mol_select
+		dictionary <= colors *
+		option_label!id <= color_name!id \
+		option_content!id <= option_content!id /
+			<= Color_option!id $mol_color
+				color <= color!id \
+				color_name <= color_name!id \
+
+$mol_color $mol_view
+	style *
+		background <= color \
+	sub /
+		<= color_name \

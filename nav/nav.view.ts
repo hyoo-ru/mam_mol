@@ -17,36 +17,44 @@ namespace $.$mol {
 			}
 		}
 		event_up(event?: KeyboardEvent) {
-			if(this.index_y() < 0)
-				this.current_y(this.keys_y()[0])
-			if(this.index_y() === 0)
+			if(this.index_y() === 0) {
 				this.current_y(this.keys_y()[this.max_index_y()])
-			else
+			} else {
 				this.current_y(this.keys_y()[this.index_y() - 1])
+			}
 		}
 		event_down(event?: KeyboardEvent) {
-			if(this.index_y() >= this.max_index_y() || this.index_y() < 0)
+			if(this.index_y() >= this.max_index_y()) {
 				this.current_y(this.keys_y()[0])
-			else
+			} else {
 				this.current_y(this.keys_y()[this.index_y() + 1])
+			}
 		}
 		event_left(event?: KeyboardEvent) {
-			if(this.index_x() <= 0)
+			if(this.index_x() <= 0) {
 				this.current_x(this.keys_x()[this.max_index_x()])
-			else
+			} else {
 				this.current_x(this.keys_x()[this.index_x() - 1]) 
+			}
 		}
 		event_right(event?: KeyboardEvent) {
-			if(this.index_x() >= this.max_index_x() || this.index_x() < 0)
+			if(this.index_x() >= this.max_index_x()) {
 				this.current_x(this.keys_x()[0])
-			else
+			} else {
 				this.current_x(this.keys_x()[this.index_x() + 1])
+			}
 		}
 		index_y() {
-			return this.keys_y().indexOf(this.current_y());
+			let index = this.keys_y().indexOf(this.current_y)
+			if(index < 0)
+				this.current_y(this.keys_y()[0])
+			return index
 		}
 		index_x() {
-			return this.keys_x().indexOf(this.current_x());
+			let index = this.keys_x().indexOf(this.current_x)
+			if(index < 0)
+				this.current_x(this.keys_x()[0])
+			return index
 		}
 		max_index_y() {
 			return this.keys_y().length - 1;

@@ -1,20 +1,17 @@
 [mol_pop] {
 	position: relative;
 }
+
 [mol_pop_bubble] {
 	box-shadow: 0 0 0 1px var(--mol_skin_card_line);
 	border-radius: var(--mol_skin_round);
 	position: absolute;
-	z-index: 5;
+	z-index: 3;
 	background-color: var(--mol_skin_card);
+	max-width: none;
+	max-height: none;
+	overflow-y: auto;
 }
-[mol_pop_over_bubble] {
-	padding: .5em;
-	background-color: hsla(0, 0%, 0%, 0.3);
-	box-shadow: none;
-	white-space: nowrap;
-}
-
 
 [mol_pop_align="left_top"] {
 	transform: translate(-100%);
