@@ -36,7 +36,6 @@ namespace $ {
 		darksalmon: "#e9967a",
 		darkseagreen: "#8fbc8f",
 		darkslateblue: "#483d8b",
-		darkslategray: "#2f4f4f",
 		darkslategrey: "#2f4f4f",
 		darkturquoise: "#00ced1",
 		darkviolet: "#9400d3",

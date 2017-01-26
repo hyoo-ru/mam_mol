@@ -1,5 +1,5 @@
 $mol_pop_over_demo $mol_pop_over
 	align \bottom_right
-	Anchor \File ▾
+	Anchor \File
 	bubble_content / 
 		\ Open 

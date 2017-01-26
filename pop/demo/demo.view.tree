@@ -6,7 +6,8 @@ $mol_pop_demo $mol_pop
 			sub /
 				\ I'm pop, i showed when you want
 				<= Button $mol_button
-					event_click?event <=> switch_pop_state?event null
+					event_click?event <=> event_hide?event null
 					sub /
 						\Close
 	showed?val <=> value?val false
+	align \center

@@ -7,7 +7,7 @@ $mol_select $mol_view
 		sub <= option_content!id /
 			<= Option_label!id $mol_dimmer
 				haystack <= option_label!id \ No values
-				needle <= pattern?val \
+				needle <= filter_pattern?val \
 	No_options $mol_view
 		sub /
 			<= no_options_message @ \ No values
@@ -15,13 +15,13 @@ $mol_select $mol_view
 		<= Nav $mol_nav
 			keys_y <= options /
 			current_y?key <=> option_focused?key \
-			Sub <= Pop $mol_pop
+			Sub <= Pop $mol_pop 
 				showed?val <=> options_showed?val false
 				align?val <=> options_align?val \bottom_right
 				Anchor <= Bar $mol_bar
 					sub <= controls /
 						<= String $mol_string
-							value?val <=> pattern?val \
+							value?val <=> filter_pattern?val \
 						<= Trigger $mol_button
 							event_click?event <=> event_showed_toggle?event null
 							sub /
@@ -29,4 +29,4 @@ $mol_select $mol_view
 								<= Trigger_icon $mol_icon_chevron
 				bubble_content /
 					<= Options $mol_list
-						sub <= option_rows /
+						rows <= option_rows /

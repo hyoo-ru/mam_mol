@@ -32,21 +32,3 @@
 	height: 100%;
 	margin: 0;
 }
-
-[mol_demo_large] {
-	flex: 1 1 100%;
-	align-self: stretch;
-}
-
-[mol_demo_medium] {
-	flex: 0 1 auto;
-}
-
-[mol_demo_small] {
-	flex: 0 0 auto;
-}
-
-[mol_demo_small_screener] {
-	width: 500px;
-	height: 280px;
-}

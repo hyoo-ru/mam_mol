@@ -64,7 +64,7 @@ namespace $ { export class $my_button extends $mol_view {} }
 While inheritance there is a possibility to declare additional properties or overload existing (but types of properties should match). For example lets overload a `uri` property with `"https://example.org"` string, and `sub` - with array of one string `"Click me!"`, besides, lets declare a new property `target` with `"_top"` value by default. (it's important to mark that a value by default is necessary when declaring a property):  
 
 ```tree
-$my_exampl $mol_link
+$my_example $mol_link
 	uri \https://example.org
 	sub /
 		\Click me!
@@ -72,7 +72,7 @@ $my_exampl $mol_link
 ```
 
 ```typescript
-namespace $ { export class $my_exampl extends $mol_link {
+namespace $ { export class $my_example extends $mol_link {
 
 	uri() {
 		return "https://example.org"
@@ -242,7 +242,7 @@ namespace $ { export class $my_remover extends $mol_view {
 
 } }
 ```
-We could declare as value an instance of another class directly. In the next example it is being declared a property `Lister`, and which value would be a component type of `$mol_list_demo`, and then it put into a list of child components `sub`:
+We could declare as value an instance of another class directly. In the next example it is being declared a property `List`, and which value would be a component type of `$mol_list_demo`, and then it put into a list of child components `sub`:
 
 ```tree
 $my_app $mol_view
@@ -296,20 +296,19 @@ namespace $ { export class $my_name extends $mol_view {
 Properties of parent and child component could be linked. At the following example we declare reactive property `name`, and we say to child component `Input` use property `name` as its own property `value`, we also say to a child component `Output` we want to property `name` to be outputted at inside of this one. In this way components `Input` and `Output` are become linked through parent's property `name` and changing value in `Input` would lead to updating output:
 
 ```tree
-$my_greet $mol_view
-	- ">" allows pushing to property
-	<=> name \
+$my_greeter $mol_view
+	name?val \
 	sub /
 		<= Input $mol_string
 			hint \Name
-			value <=> name
+			value <=> name?val -
 		<= Output $mol_view
 			sub /
-				<=> name
+				name?val
 ```
 
 ```typescript
-namespace $ { export class $my_greet extends $mol_view {
+namespace $ { export class $my_greeter extends $mol_view {
 
 	@ $mol_prop()
 	name( ...diff : any[] ) {
@@ -389,7 +388,7 @@ For example we have following description into `./my/hello/hello.view.tree`:
 $my_hello $mol_view sub /
 	<= Input $mol_string
 		hint \Name
-		value <=> name \
+		value <=> name?val \
 	<= message \
 ```
 Here we declared 2 properties: `name` for getting value from `Input` and `message` for output the value. It would be translated into following file `./my/hello/-/view.tree.ts/hello.view.tree.ts`: 

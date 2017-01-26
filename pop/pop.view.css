@@ -1,5 +1,6 @@
 [mol_pop] {
 	position: relative;
+	display: inline-flex;
 }
 
 [mol_pop_bubble] {

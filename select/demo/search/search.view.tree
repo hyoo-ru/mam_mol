@@ -1,16 +1,16 @@
 $mol_select_demo_search $mol_labeler
-	title \Choose month
+	title \Month
 	Content $mol_select
 		no_options_message \Not found
-		dictionary <= months *
-			jfasdfkbadkmsfan \January
-			dsfkbhskdfnlsd \February
-			smflsdf \March
-			dsfsd \April
-			dsffsd \May
-			adfad \June
-			dsfasdd \July
-			dffsdf \August
-			ft3 \September
-			adad \November
-			asdasd \December
+		options /
+			\January
+			\February
+			\March
+			\April
+			\May
+			\June
+			\July
+			\August
+			\September
+			\November
+			\December

@@ -8,6 +8,9 @@
 	min-width: 100%;
 	padding: 0;
 	justify-content: flex-start;
+	&:focus {
+		background: var(--mol_skin_light_hover);
+	}
 }
 
 [mol_select_sub] > [mol_pop_bubble] {
@@ -17,6 +20,7 @@
 [mol_select_option_label] {
 	padding: .5em;
 	text-align: start;
+	min-height: 1.5em;
 }
 
 [mol_select_trigger_icon] {
@@ -25,15 +29,9 @@
 }
 
 [mol_select_option_no_value] {
-	padding: .5em;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
     color: var(--mol_skin_disabled);
-}
-
-[mol_select_options] {
-	max-height: 150px;
-	overflow: auto;
 }
 
 [mol_select_pop] > [mol_pop_bubble] {

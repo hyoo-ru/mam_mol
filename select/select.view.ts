@@ -8,24 +8,25 @@ namespace $.$mol {
 		@$mol_mem()
 		options_showed( val?: boolean ) {
 			if ( !this.focused() )
-				return false;	
+				return false	
 			if (val !== void 0) 
-				return val;	
-			if (this.pattern())
-				return true;	
-			return false;
+				return val
+			if (this.filter_pattern())
+				return true	
+			return false
 		}
 		
 		@$mol_mem()
 		options() {
-			return Object.keys(this.dictionary());
+			return Object.keys(this.dictionary())
 		}
 		
 		options_filtered () {
-			let filter = this.pattern();
-			return this.options().filter( 
-				id => this.option_label(id).toLowerCase().match( filter ) 
-			);
+			let filter = this.filter_pattern()
+			return this.options().filter( id => {
+				if( id !== this.value() )
+					return this.option_label(id).toLowerCase().match( filter ) 
+				})
 		}
 		
 		option_label ( id: string ) {
@@ -43,12 +44,12 @@ namespace $.$mol {
 		}
 		
 		event_showed_toggle(event?: MouseEvent) {
-			this.options_showed(!this.options_showed());
+			this.options_showed(!this.options_showed())
 		}
 		
 		event_select ( id: string, event?: MouseEvent ) {
 			this.value( id )
-			this.options_showed(false);
+			this.options_showed(false)
 		}
 		
 		searchable() {

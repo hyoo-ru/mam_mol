@@ -2,14 +2,10 @@
 	margin: auto;
 }
 
-[mol_color] {
+[mol_select_demo_colors_color_option] {
+	border-radius: var(--mol_skin_round);
     text-align: start;
     padding: .5em;
-	flex-grow: 1;
-}
-
-[mol_select_demo_custom_option] {
-	padding: 1em;
-	display: flex;
-	flex: 1 1 auto;
+	margin: 1em;
+	box-shadow: var(--mol_skin_light_line) 0 0 0 1px;
 }

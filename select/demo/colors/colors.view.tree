@@ -4,12 +4,10 @@ $mol_select_demo_colors $mol_labeler
 		dictionary <= colors *
 		option_label!id <= color_name!id \
 		option_content!id <= option_content!id /
-			<= Color_option!id $mol_color
+			<= Color_option!id $mol_select_colors_option
 				color <= color!id \
-				color_name <= color_name!id \
+			<= color_name!id \
 
-$mol_color $mol_view
+$mol_select_colors_option $mol_view
 	style *
 		background <= color \
-	sub /
-		<= color_name \

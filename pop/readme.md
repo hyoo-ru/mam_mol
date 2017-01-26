@@ -4,12 +4,12 @@
 
 ## Usage example
 ```
-$mol_my_pop $mol_pop
-    showed?val <=> value?val
+$my_pop $mol_pop
+    showed?val <=> pop_showed?val
     align \bottom_center
 	Anchor <= Checkbox $mol_check
 	    sub / \Check to show
-	    checked?val <=> value?val
+	    checked?val <=> pop_showed?val
 	bubble_content / \Can you see me?
 ```
 
@@ -26,3 +26,16 @@ Show or Hide Bubble of options depending on the takes value (boolean type).
 
 **`align()`**
 Takes a string and apply Bubble align
+* `left_top`
+* `left_center`
+* `left_bottom`
+* `right_top`
+* `right_center`
+* `right_bottom`
+* `center`
+* `top_left`
+* `top_center`
+* `top_right`
+* `bottom_left`
+* `bottom_center`
+* `bottom_right`

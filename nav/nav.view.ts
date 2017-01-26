@@ -1,66 +1,64 @@
 namespace $.$mol {
 	export class $mol_nav extends $.$mol_nav {
-		event_key(event?: KeyboardEvent) {
-			switch(event.keyCode) {
+		event_key( event?: KeyboardEvent ) {
+			switch( event.keyCode ) {
 				case $mol_keyboard_code.up :
-					this.event_up(event)
-					break
+					return this.event_up( event )
 				case $mol_keyboard_code.down :
-					this.event_down(event)
-					break
+					return this.event_down( event )
 				case $mol_keyboard_code.left :
-					this.event_left(event)
-					break
+					return this.event_left( event )
 				case $mol_keyboard_code.right :
-					this.event_right(event)
-					break
+					return this.event_right( event )
 			}
 		}
-		event_up(event?: KeyboardEvent) {
-			if(this.index_y() === 0) {
-				this.current_y(this.keys_y()[this.max_index_y()])
-			} else {
-				this.current_y(this.keys_y()[this.index_y() - 1])
-			}
+		
+		event_up( event?: KeyboardEvent ) {
+			event.preventDefault();
+			const keys = this.keys_y()
+			const index_y = this.index_y();
+			const index_old = index_y === null ? 0 : index_y
+			const index = ( index_old + keys.length - 1 ) % keys.length
+			this.current_y( this.keys_y()[ index ] )
 		}
-		event_down(event?: KeyboardEvent) {
-			if(this.index_y() >= this.max_index_y()) {
-				this.current_y(this.keys_y()[0])
-			} else {
-				this.current_y(this.keys_y()[this.index_y() + 1])
-			}
+		
+		event_down( event?: KeyboardEvent ) {
+			event.preventDefault();
+			const keys = this.keys_y()
+			const index_y = this.index_y();
+			const index_old = index_y === null ? keys.length - 1: index_y;
+			const index = ( index_old + 1 ) % keys.length
+			this.current_y( this.keys_y()[ index ] )
 		}
-		event_left(event?: KeyboardEvent) {
-			if(this.index_x() <= 0) {
-				this.current_x(this.keys_x()[this.max_index_x()])
-			} else {
-				this.current_x(this.keys_x()[this.index_x() - 1]) 
-			}
+		
+		event_left( event?: KeyboardEvent ) {
+			event.preventDefault();
+			const keys = this.keys_x()
+			const index_x = this.index_x();
+			const index_old = index_x === null ? 0 : index_x
+			const index = ( index_old + keys.length - 1 ) % keys.length
+			this.current_x( this.keys_x()[ index ] )
 		}
-		event_right(event?: KeyboardEvent) {
-			if(this.index_x() >= this.max_index_x()) {
-				this.current_x(this.keys_x()[0])
-			} else {
-				this.current_x(this.keys_x()[this.index_x() + 1])
-			}
+		
+		event_right( event?: KeyboardEvent ) {
+			event.preventDefault();
+			const keys = this.keys_x()
+			const index_x = this.index_x();
+			const index_old = index_x === null ? keys.length - 1: index_x;
+			const index = ( index_old + 1 ) % keys.length
+			this.current_x( this.keys_x()[ index ] )
 		}
+		
 		index_y() {
-			let index = this.keys_y().indexOf(this.current_y)
-			if(index < 0)
-				this.current_y(this.keys_y()[0])
+			let index = this.keys_y().indexOf(this.current_y())
+			if(index < 0) return null
 			return index
 		}
+		
 		index_x() {
-			let index = this.keys_x().indexOf(this.current_x)
-			if(index < 0)
-				this.current_x(this.keys_x()[0])
+			let index = this.keys_x().indexOf(this.current_x())
+			if(index < 0) return null
 			return index
-		}
-		max_index_y() {
-			return this.keys_y().length - 1;
-		}
-		max_index_x() {
-			return this.keys_x().length - 1;
 		}
 	}
 }
