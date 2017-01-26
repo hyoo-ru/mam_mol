@@ -347,21 +347,34 @@ namespace $ {
 				
 				graph.nodes[ mod.relate( this.root() ) ] = null
 				
-				let deps = this.dependencies( { path : mod.path() , exclude } )
-				for( let p in deps ) {
+				const checkDep = ( p : string )=> {
 					
 					var dep = ( p[ 0 ] === '/' ) ? this.root().resolve( p ) : mod.resolve( p )
 					this.modEnsure( dep.path() )
 					
 					while( !dep.exists() ) dep = dep.parent()
+					
+					if( dep.type() === 'dir' ) {
+						let index = dep.resolve( 'index.js' )
+						if( index.exists() ) dep = index
+					}
+					
 					//if( dep.type() === 'file' ) dep = dep.parent()
-					if( mod === dep ) continue
-					if( dep === this.root() ) continue
+					if( mod === dep ) return
+					if( dep === this.root() ) return
 					
 					graph.link( mod.relate( this.root() ) , dep.relate( this.root() ) , { priority : deps[ p ] } )
 					
 					addMod( dep )
 				}
+				
+				let deps = this.dependencies( { path : mod.path() , exclude } )
+				for( let p in deps ) {
+					checkDep( p )
+					const p2 = p.replace( /^\/node\// , '/node_modules/' )
+					if( p2 !== p ) checkDep( p2 )
+				}
+				
 			}
 			
 			this.modEnsure( path )
@@ -454,7 +467,7 @@ namespace $ {
 			}
 			
 			sources.forEach(
-				function( src ) {
+				( src )=> {
 					var content = src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
 					
 					var srcMap = src.parent().resolve( src.name() + '.map' ).content()
@@ -463,7 +476,18 @@ namespace $ {
 						map.sourceRoot = src.parent().relate( target.parent() )
 					}
 					
+					const isCommonJs = /module\.exports/.test( content )
+					
+					if( isCommonJs ) {
+						concater.add( '-' , '\nvoid function( module ) {\n' )
+					}
+					
 					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
+					
+					if( isCommonJs ) {
+						const id = src.relate( this.root().resolve( 'node_modules' ) ).replace( /\/index\.js$/ , '' )
+						concater.add( '-' , `\n$node[ "${ id }" ] = module.${''}exports }( { exports : {} } )\n` )
+					}
 				}
 			)
 			
@@ -714,8 +738,8 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$([a-z][a-z0-9]+(?:[._][a-z0-9]+)*)/ig , ( str , name )=> {
-						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[._-]/g , '/' ) ] : priority } )
+					/\$([a-z][a-z0-9]+(?:[._][a-z0-9]+|\[\s*['"](?:.*?)['"]\s*\])*)/ig , ( str , name )=> {
+						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[_.\[\]'"]+/g , '/' ) ] : priority } )
 						return str
 					}
 				)
