@@ -234,9 +234,9 @@ namespace $ {
 			let node = this.dom_node() as HTMLElement
 			
 			try {
-				$mol_view.render_sub( node , this.sub_visible() )
 				$mol_view.render_attr( node , this.attr() )
 				$mol_view.render_style( node , this.style() )
+				$mol_view.render_sub( node , this.sub_visible() )
 				$mol_view.render_field( node , this.field() )
 				
 				return node
