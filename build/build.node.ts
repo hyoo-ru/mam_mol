@@ -479,14 +479,15 @@ namespace $ {
 					const isCommonJs = /module\.exports/.test( content )
 					
 					if( isCommonJs ) {
-						concater.add( '-' , '\nvoid function( module ) {\n' )
+						concater.add( '-' , '\nvoid function( module ) { var exports = module'+'.exports; function require( id ) { return $node[ id ] }; \n' )
 					}
 					
 					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
 					
 					if( isCommonJs ) {
-						const id = src.relate( this.root().resolve( 'node_modules' ) ).replace( /\/index\.js$/ , '' )
-						concater.add( '-' , `\n$node[ "${ id }" ] = module.${''}exports }( { exports : {} } )\n` )
+						const idFull = src.relate( this.root().resolve( 'node_modules' ) )
+						const idShort = idFull.replace( /\/index\.js$/ , '' )
+						concater.add( '-' , `\n$node[ "${ idShort }" ] = $node[ "${ idFull }" ] = module.${''}exports }( { exports : {} } )\n` )
 					}
 				}
 			)
