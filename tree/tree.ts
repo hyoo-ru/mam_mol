@@ -111,8 +111,7 @@ namespace $ {
 									row : row
 								}
 							)
-							parent.sub.push( next )
-								
+							parent.sub.push( next )	
 							parent = next
 						}
 					)
