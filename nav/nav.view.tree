@@ -1,4 +1,6 @@
 $mol_nav $mol_view_ghost
+	cycle?val false 
+	-
 	keys_x?val /
 	keys_y?val /
 	-

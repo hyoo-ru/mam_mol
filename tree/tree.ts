@@ -112,6 +112,7 @@ namespace $ {
 								}
 							)
 							parent.sub.push( next )
+								
 							parent = next
 						}
 					)

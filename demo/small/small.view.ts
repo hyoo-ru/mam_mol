@@ -5,8 +5,8 @@ namespace $.$mol {
 		context_sub( ) {
 			const context = this.context()
 			const subContext : $mol_view_context = Object.create( context )
-			subContext.$mol_view_visible_height = () => this.minimal_height()
-			subContext.$mol_view_visible_width = () => this.minimal_width()
+			subContext.$mol_view_visible_height = () => this.height()
+			subContext.$mol_view_visible_width = () => this.width()
 			return subContext
 		}
 		

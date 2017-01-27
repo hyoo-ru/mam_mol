@@ -1,3 +1,3 @@
 $mol_demo_small $mol_demo
-	minimal_height 240
-	minimal_width 440
+	minimal_height <= height 240
+	minimal_width <= width  440

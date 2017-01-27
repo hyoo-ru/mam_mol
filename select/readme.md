@@ -7,11 +7,11 @@ Select element
 ## Usage example
 
 ```
-$mol_color_select $mol_select
+$my_color_select $mol_select
 	dictionary <= colors *
-		red \rgb(255,0,0)
-		green \rgb(0,255,0)
-		blue \rgb(0,0,255)
+		red \Red
+		green \Green
+		blue \Blue
 ```
 
 ## Properties

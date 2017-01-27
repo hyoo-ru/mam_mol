@@ -25,7 +25,7 @@ A list of components in Bubble
 Show or Hide Bubble of options depending on the takes value (boolean type).
 
 **`align()`**
-Takes a string and apply Bubble align
+Returns a string and apply Bubble align
 * `left_top`
 * `left_center`
 * `left_bottom`

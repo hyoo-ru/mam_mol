@@ -297,14 +297,13 @@ Properties of parent and child component could be linked. At the following examp
 
 ```tree
 $my_greeter $mol_view
-	name?val \
 	sub /
 		<= Input $mol_string
 			hint \Name
-			value <=> name?val -
+			value?val <=> name?val -
 		<= Output $mol_view
 			sub /
-				name?val
+				name?val \
 ```
 
 ```typescript

@@ -1,5 +1,6 @@
 $mol_select $mol_view
 	<= dictionary *
+	options /
 	value?val \
 	search_breakpoint 7
 	Option_row!id $mol_button
@@ -13,8 +14,9 @@ $mol_select $mol_view
 			<= no_options_message @ \ No values
 	sub / 
 		<= Nav $mol_nav
-			keys_y <= options /
+			keys_y <= options_filtered /
 			current_y?key <=> option_focused?key \
+			cycle?val <=> nav_cycle?val true
 			Sub <= Pop $mol_pop 
 				showed?val <=> options_showed?val false
 				align?val <=> options_align?val \bottom_right
