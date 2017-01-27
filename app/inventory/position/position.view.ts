@@ -20,7 +20,7 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		status( next? : $mol_app_inventory_domain_position_status ) {
+		status( next? : keyof typeof $mol_app_inventory_domain_position_status ) {
 			return this.position().status( next )
 		}
 		
