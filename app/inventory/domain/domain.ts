@@ -103,7 +103,7 @@ namespace $ {
 		
 		position_status( productCode : string , next? : $mol_app_inventory_domain_position_status ) {
 			const key = `positionStatus(${ JSON.stringify( productCode ) })`
-			return $mol_state_local.value( key , next ) || $mol_app_inventory_domain_position_status.draft
+			return $mol_state_local.value( key , next || void null ) || $mol_app_inventory_domain_position_status.draft
 		}
 		
 		@ $mol_mem()
