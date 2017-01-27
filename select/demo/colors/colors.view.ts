@@ -1,16 +1,19 @@
 namespace $.$mol {
-
+	
 	export class $mol_select_demo_colors extends $.$mol_select_demo_colors {
-		color_name(id: string) {
+		
+		color_name( id : string ) {
 			return id
 		}
 		
-		color(id: string) {
-			return this.colors()[id]
+		color( id : string ) {
+			return this.colors()[ id ]
 		}
 		
 		colors() {
 			return $mol_colors
 		}
+		
 	}
+	
 }

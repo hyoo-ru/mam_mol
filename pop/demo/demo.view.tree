@@ -4,7 +4,7 @@ $mol_pop_demo $mol_pop
 	bubble_content /
 		<= Content $mol_view
 			sub /
-				\ I'm pop, i showed when you want
+				\ I'm bubble, i showed when you want
 				<= Button $mol_button
 					event_click?event <=> event_hide?event null
 					sub /

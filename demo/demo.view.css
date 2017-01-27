@@ -20,9 +20,9 @@
 
 [mol_demo_screener] {
 	overflow: hidden;
-	box-shadow: 0 0 0 1px var( --mol_skin_light_line );
-	background: var( --mol_skin_card );
-	color: var( --mol_skin_light_text );
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	background: var(--mol_skin_card);
+	color: var(--mol_skin_light_text);
 	position: relative;
 	flex: 1 1 auto;
 	display: flex;

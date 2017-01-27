@@ -130,12 +130,12 @@ namespace $ {
 			}
 			
 			/// Bind properties to events
-			$mol_view.bind_event(next2, this.event());
+			$mol_view.bind_event( next2 , this.event() )
 			
 			return next2
 		}
 		
-		static bind_event(node: Element, events: { [ key : string ] : ( event : Event )=> void } ) {
+		static bind_event( node: Element , events: { [ key : string ] : ( event : Event )=> void } ) {
 			for( let name in events ) {
 				let handle = events[ name ]
 				node.addEventListener( name , event => {
@@ -237,9 +237,9 @@ namespace $ {
 			let node = this.dom_node() as HTMLElement
 			
 			try {
-				$mol_view.render_sub( node , this.sub_visible() )
 				$mol_view.render_attr( node , this.attr() )
 				$mol_view.render_style( node , this.style() )
+				$mol_view.render_sub( node , this.sub_visible() )
 				$mol_view.render_field( node , this.field() )
 				
 				return node

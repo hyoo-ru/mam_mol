@@ -1,13 +1,13 @@
 # $mol_select
 
-Select element
+Allow user to select value from various options and displays current value.
 
-## [Online demo](http://eigenmethod.github.io/mol//#demo=mol_select_demo)
+## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_select)
 
 ## Usage example
 
 ```
-$my_color_select $mol_select
+$mol_select
 	dictionary <= colors *
 		red \Red
 		green \Green
@@ -16,39 +16,39 @@ $my_color_select $mol_select
 
 ## Properties
 
-**`dictionary()`**
+**`dictionary() : { [ key : string ] : any }`**
 Property which takes a dictionary with options (key) & values (value).
 
-**`value()`**
+**`value() : string`**
 Property which should be changed `value()` by select option, based on their own property `options()`.
 
-**`options()`**
+**`options() : string[]`**
 Keys are possible values of `value()` property. If the property is not defined, value is a keys of `dictionary()`
 
-**`search_breakpoint()`**
+**`options_filtered() : string[]`**
+Logic of filter `options()`
+
+**`search_breakpoint() : number`**
 The property takes a number. If options count more than the property, select activate a search string.
 
-**`searchable()`**
+**`searchable() : boolean`**
 Takes boolean and set search in select
 
-**`option_content()`**
+**`option_content() : $mol_view[]`**
 List of components in `Option()` component
 
-**`option_label()`**
+**`option_label() : string`**
 By default if  `Option()` not redefined, it has a textNode which takes a value from `option_label()`.
 If `option_label()` property not redefined by user, value is `dictionary()[key]` or `key` 
 
-**`no_options_message()`**
+**`no_options_message() : string`**
 The property takes a string and show this string when `option_rows()` is empty.
 
-**`options_showed()`**
-Show or Hide List of options depending on the takes value (boolean type).
+**`options_showed() : boolean`**
+Show or Hide List of options.
 
-**`options_align()`**
+**`options_align() : string`**
 Property extends from `$mol_pop`. Equals `align()` property
 
-**`option_rows()`**
+**`option_rows() : $mol_view[]`**
 The list with `Option()` components
-
-**`options_filtered()`**
-Logic of filter `options()`
