@@ -1,9 +1,10 @@
 $mol_select_demo_simple $mol_labeler
 	title \Priority
 	Content $mol_select
+		value?val <=> priority?val \Lowest
 		options /
-			\Lowest
-			\Low
-			\Medium
-			\High
 			\Highest 
+			\High
+			\Medium
+			\Low
+			\Lowest

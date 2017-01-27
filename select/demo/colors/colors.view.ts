@@ -6,7 +6,7 @@ namespace $.$mol {
 			return id
 		}
 		
-		color( id : string ) {
+		option_color( id : string ) {
 			return this.colors()[ id ]
 		}
 		

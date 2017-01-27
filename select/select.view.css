@@ -1,3 +1,7 @@
+[mol_select] {
+	margin: auto;
+}
+
 [mol_select_trigger] {
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	padding: 0;
@@ -8,6 +12,8 @@
 	min-width: 100%;
 	padding: 0;
 	justify-content: flex-start;
+	background: var(--mol_skin_card);
+	
 	&:focus {
 		background: var(--mol_skin_light_hover);
 	}
