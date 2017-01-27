@@ -61,7 +61,7 @@ namespace $ {
 			return this.products_table().map( row => this.product( row.R_BARCODE ) )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem_key()
 		product( code : string ) {
 			const next = new $mol_app_inventory_domain_product
 			next.code = $mol_const( code )
