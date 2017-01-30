@@ -4,6 +4,7 @@ $mol_select_demo_colors $mol_labeler
 		value?val <=> color?val \
 		dictionary <= colors *
 		option_label!id <= color_name!id \
+		options_showed true
 		option_content!id <= option_content!id /
 			<= Color_row!id $mol_row
 				sub /

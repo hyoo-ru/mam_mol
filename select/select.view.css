@@ -29,6 +29,10 @@
 	width: 100%;
 }
 
+[mol_select_filter_string] {
+	width: 100%;
+}
+
 [mol_select_option_label], [mol_select_сlear_option_content], [mol_select_no_options] {
 	padding: .5em;
 	text-align: start;

@@ -39,8 +39,6 @@ namespace $.$mol {
 			return value === void 0 ? id : value
 		}
 		
-		option_id( id : string ) { return id }
-		
 		option_rows() {
 			if( this.options_filtered().length === 0 ) return [ this.No_options() ]
 			
@@ -51,9 +49,9 @@ namespace $.$mol {
 			return options
 		}
 		
-		option_content( id: string ) {
+		option_content_super( id: string ) {
 			if( id === '' ) return [ this.Сlear_option_content() ]
-			return super.option_content(id);
+			else return this.option_content(id)
 		}
 		
 		@$mol_mem()
@@ -61,8 +59,6 @@ namespace $.$mol {
 			if( component === void 0 ) return ""
 			if( this.options_showed() ) {
 				$mol_view_selection.focused( [ component.dom_node() ] )
-			} else {
-				
 			}
 			
 			return component
