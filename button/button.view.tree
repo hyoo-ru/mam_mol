@@ -2,6 +2,7 @@ $mol_button $mol_view
 	enabled true
 	event *
 		click?event <=> event_activate?event <=> event_click?event null
+		keypress?event <=> evenet_key_press?event null 
 	attr *
 		disabled <= disabled false
 		role \button

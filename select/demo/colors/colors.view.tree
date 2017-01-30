@@ -1,0 +1,17 @@
+$mol_select_demo_colors $mol_labeler
+	title \Prefer color
+	Content $mol_select
+		value?val <=> color?val \
+		dictionary <= colors *
+		option_label!id <= color_name!id \
+		option_content!id <= option_content!id /
+			<= Color_row!id $mol_row
+				sub /
+					<= Color_preview!id $mol_select_colors_color_preview
+						color <= option_color!id \
+					<= color_name!id \
+				minimal_height 40
+
+$mol_select_colors_color_preview $mol_view
+	style *
+		background <= color \

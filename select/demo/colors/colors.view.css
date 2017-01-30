@@ -1,0 +1,15 @@
+[mol_select_demo_colors_color_row] {
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	padding: .25rem;
+	padding-right: .5rem;
+	box-shadow: none;
+}
+
+[mol_select_demo_colors_color_preview] {
+	border-radius: var(--mol_skin_round);
+	text-align: start;
+	padding: .5em;
+	margin: 1em;
+	box-shadow: var(--mol_skin_light_line) 0 0 0 1px;
+}

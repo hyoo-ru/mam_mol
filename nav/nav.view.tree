@@ -1,0 +1,18 @@
+$mol_nav $mol_view_ghost
+	cycle?val false 
+	-
+	keys_x?val /
+	keys_y?val /
+	-
+	current_x?val \
+	current_y?val \
+	-
+	event_up?event null
+	event_down?event null
+	event_left?event null
+	event_right?event null
+	event * 
+		keydown?event <=> event_key?event null
+	attr *
+		mol_nav_x <= current_x -
+		mol_nav_y <= current_y -

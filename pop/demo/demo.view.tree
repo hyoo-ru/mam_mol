@@ -1,0 +1,13 @@
+$mol_pop_demo $mol_pop
+	Anchor <= Checkbox $mol_check_box
+		checked?val <=> value?val false
+	bubble_content /
+		<= Content $mol_view
+			sub /
+				\ I'm bubble, i showed when you want
+				<= Button $mol_button
+					event_click?event <=> event_hide?event null
+					sub /
+						\Close
+	showed?val <=> value?val false
+	align \center

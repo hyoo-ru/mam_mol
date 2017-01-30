@@ -26,6 +26,12 @@ namespace $ {
 			return ''
 		}
 		
+		@$mol_mem()
+		focused ( next?: boolean ) {
+			const value = $mol_view_selection.focused( next === void 0 ? void 0 : [ this.dom_node() ] )
+			return value.indexOf( this.dom_node() ) !== -1
+		} 
+		
 		state_prefix() {
 			const owner = this.object_owner()
 			return owner ? (<any>owner).state_prefix() : ''
@@ -74,13 +80,35 @@ namespace $ {
 		}
 		
 		/// Minimal height that used for lazy rendering
-		minimal_height() {
-			return 0
+		@ $mol_mem()
+		minimal_width() {
+			const sub = this.sub()
+			if( !sub ) return 0
+			
+			let min = 0
+			sub.forEach( view => {
+				if( view instanceof $mol_view ) {
+					min = Math.max( min , view.minimal_width() )
+				}
+			} )
+			
+			return min
 		}
 		
 		/// Minimal width that used for lazy rendering
-		minimal_width() {
-			return 0
+		@ $mol_mem()
+		minimal_height() {
+			const sub = this.sub()
+			if( !sub ) return 0
+			
+			let min = 0
+			sub.forEach( view => {
+				if( view instanceof $mol_view ) {
+					min = Math.max( min , view.minimal_height() )
+				}
+			} )
+			
+			return min
 		}
 		
 		private 'dom_node()' : Element
@@ -130,17 +158,20 @@ namespace $ {
 			}
 			
 			/// Bind properties to events
-			const events = this.event()
+			$mol_view.bind_event( next2 , this.event() )
+			
+			return next2
+		}
+		
+		static bind_event( node: Element , events: { [ key : string ] : ( event : Event )=> void } ) {
 			for( let name in events ) {
 				let handle = events[ name ]
-				next2.addEventListener( name , event => {
+				node.addEventListener( name , event => {
 					$mol_atom_task( `${ this }.event()['${ name }']` , ()=> {
 						handle( event )
 					} ).get()
 				} )
 			}
-			
-			return next2
 		}
 		
 		static render_sub( node : Element , sub : ($mol_view|Node|string|number|boolean)[] ) {

@@ -1,0 +1,15 @@
+$mol_pop $mol_view
+	showed?val false
+	sub /
+		<= Anchor null
+		<= Bubble $mol_pop_tip
+			align <= align \bottom_center
+			content <= bubble_content /
+			height_max <= height_max 9999
+
+$mol_pop_tip $mol_scroll
+	sub <= content /
+	style *
+		maxHeight <= height_max 9999
+	attr *
+		mol_pop_align <= align \
