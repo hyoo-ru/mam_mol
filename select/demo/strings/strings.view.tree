@@ -1,4 +1,4 @@
-$mol_select_demo_simple $mol_labeler
+$mol_select_demo_strings $mol_labeler
 	title \Priority
 	Content $mol_select
 		value?val <=> priority?val \Lowest
@@ -8,3 +8,4 @@ $mol_select_demo_simple $mol_labeler
 			\Medium
 			\Low
 			\Lowest
+		clearable false

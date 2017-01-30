@@ -1,6 +1,13 @@
 namespace $.$mol {
 	export class $mol_select extends $.$mol_select {
 		
+		@ $mol_mem()
+		filter_pattern( next? : string ) {
+			if( !this.focused() ) return ''
+			
+			return next || ''
+		}
+		
 		@$mol_mem()
 		options_showed( val? : boolean ) {
 			if( !this.focused() ) return false
@@ -18,11 +25,12 @@ namespace $.$mol {
 		}
 		
 		options_filtered() {
-			let filter = this.filter_pattern()
+			const filter = this.filter_pattern()
+			const value = this.value()
 			
 			return this.options().filter(
 				id => {
-					if( id === this.value() ) return false
+					if( id === value ) return false
 					
 					return this.option_label( id ).toLowerCase().match( filter )
 				}
@@ -40,13 +48,13 @@ namespace $.$mol {
 			let options = this.options_filtered().map( ( option : string ) => this.Option_row( option ) )
 			
 			if( this.clearable() && this.value() ) options = [ this.Option_row( '' ) ].concat( options )
-						
+			
 			return options
 		}
 		
 		option_content_super( id: string ) {
 			if( id === '' ) return [ this.Сlear_option_content() ]
-			else return this.option_content(id)
+			else return this.option_content( id )
 		}
 		
 		@$mol_mem()
@@ -74,7 +82,7 @@ namespace $.$mol {
 		}
 		
 		select_bubble_content() {
-			return [ ... this.searchable() ? this.filter_content() : [], this.Options() ]
+			return [ ... this.searchable() ? this.filter_content() : [] ].concat( this.option_rows() )
 		}
 		
 		value_content() {

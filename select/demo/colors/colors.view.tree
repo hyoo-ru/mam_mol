@@ -1,5 +1,5 @@
 $mol_select_demo_colors $mol_labeler
-	title \Choose some color
+	title \Prefer color
 	Content $mol_select
 		value?val <=> color?val \
 		dictionary <= colors *

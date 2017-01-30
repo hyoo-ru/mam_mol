@@ -2,8 +2,8 @@ $mol_select $mol_view
 	<= dictionary *
 	options /
 	value?val \
-	search_breakpoint 5
-	clearable?val true
+	search_breakpoint 7
+	clearable true
 	Option_row!id $mol_button
 		event_click?event <=> event_select!id?event null
 		sub <= option_content_super!id <= option_content!id /
@@ -12,11 +12,11 @@ $mol_select $mol_view
 				needle <= filter_pattern?val \
 	No_options $mol_view
 		sub /
-			<= no_options_message @ \No values
+			<= no_options_message @ \No options
 	Сlear_option_content $mol_view 
 		sub <= clear_option_content /
-			<= Clear_icon $mol_icon_cross
 			<= clear_option_message @ \Clear
+			<= Clear_icon $mol_icon_cross
 	sub / 
 		<= Nav $mol_nav
 			keys_y <= nav_components /
@@ -37,5 +37,4 @@ $mol_select $mol_view
 						<= Filter_string $mol_string
 							value?val <=> filter_pattern?val \
 							hint <= filter_hint @ \Filter
-					<= Options $mol_list
-						rows <= option_rows /
+					<= option_rows /

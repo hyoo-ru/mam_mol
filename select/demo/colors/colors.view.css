@@ -3,6 +3,7 @@
 	justify-content: flex-start;
 	padding: .25rem;
 	padding-right: .5rem;
+	box-shadow: none;
 }
 
 [mol_select_demo_colors_color_preview] {

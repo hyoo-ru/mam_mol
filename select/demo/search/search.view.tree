@@ -1,7 +1,7 @@
 $mol_select_demo_search $mol_labeler
 	title \Month
 	Content $mol_select
-		no_options_message \Not found
+		no_options_message \Not found
 		value?val <=> month?val \
 		dictionary <= months *
 			jan \January
