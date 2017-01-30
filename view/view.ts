@@ -26,6 +26,11 @@ namespace $ {
 			return ''
 		}
 		
+		focused ( next?: boolean ) {
+			const value = $mol_view_selection.focused( next === void 0 ? void 0 : [ this.dom_node() ] )
+			return value.indexOf( this.dom_node() ) !== -1
+		} 
+		
 		state_prefix() {
 			const owner = this.object_owner()
 			return owner ? (<any>owner).state_prefix() : ''

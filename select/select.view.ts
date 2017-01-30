@@ -2,11 +2,6 @@ namespace $.$mol {
 	export class $mol_select extends $.$mol_select {
 		
 		@$mol_mem()
-		focused() {
-			return $mol_view_selection.focused().indexOf( this.dom_node() ) !== -1
-		}
-		
-		@$mol_mem()
 		options_showed( val? : boolean ) {
 			if( !this.focused() ) return false
 			
@@ -36,7 +31,7 @@ namespace $.$mol {
 		
 		option_label( id : string ) {
 			const value = this.dictionary()[ id ]
-			return value === void 0 ? id : value
+			return value == null ? id : value
 		}
 		
 		option_rows() {
@@ -44,21 +39,22 @@ namespace $.$mol {
 			
 			let options = this.options_filtered().map( ( option : string ) => this.Option_row( option ) )
 			
-			if(this.clearable() && this.value()) options = [ this.Option_row( '' ) ].concat(options)
+			if( this.clearable() && this.value() ) options = [ this.Option_row( '' ) ].concat( options )
 						
 			return options
 		}
 		
 		option_content_super( id: string ) {
-			if( id === '' ) return [ this.Сlear_option_content() ]
+			if( id === '' ) return this.Сlear_option_content()
 			else return this.option_content(id)
 		}
 		
 		@$mol_mem()
 		option_focused( component : $mol_view ) {
 			if( component === void 0 ) return ""
+			
 			if( this.options_showed() ) {
-				$mol_view_selection.focused( [ component.dom_node() ] )
+				component.focused( true )
 			}
 			
 			return component
