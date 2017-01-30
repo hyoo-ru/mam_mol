@@ -3,13 +3,13 @@ namespace $.$mol {
 	
 	export class $mol_app_inventory_controller extends $.$mol_app_inventory_controller {
 		
-		position( code : string ) {
-			return this.domain().position( code )
+		position( id : string ) {
+			return this.domain().position( id )
 		}
 		
 		@ $mol_mem()
 		position_rows() {
-			return this.positions().map( position => this.Position_row( position.product().code() ) )
+			return this.positions().map( position => this.Position_row( position.id() ) )
 		}
 		
 		positions() {
@@ -23,7 +23,7 @@ namespace $.$mol {
 			} )
 		}
 		
-		event_submit( next? : Event ) {
+		event_sanitize( next? : Event ) {
 			this.positions().forEach( position => {
 				if( position.status() === 'approved' ) {
 					position.status( 'completed' )

@@ -2,11 +2,12 @@ $mol_app_inventory_controller $mol_page
 	domain $mol_app_inventory_domain
 	body <= position_rows /
 	Position_row!id $mol_app_inventory_position
+		count_editable false
 		position <= position!id null
 	foot /
 		<= Controls_row $mol_row
 			sub /
 				<= Submit $mol_button_major
-					event_click?event <=> event_submit?event null
+					event_click?event <=> event_sanitize?event null
 					sub /
-						<= submit_label @ \Remove confirmed
+						<= submit_label @ \Remove approved

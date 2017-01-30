@@ -13,8 +13,24 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		positions_table( next? : $mol_app_inventory_domain_position_raw[] ) {
-			return next || [] as $mol_app_inventory_domain_position_raw[]
+		positions_table( next? : $mol_app_inventory_domain_position_raw[] ) : $mol_app_inventory_domain_position_raw[] {
+			
+			let table = $mol_state_local.value< $mol_app_inventory_domain_position_raw[] >( 'positions' ) || []
+			if( next === void 0 ) return table
+			
+			let index = table.length
+			
+			next.forEach( row => {
+				if( !row.R_MOVEMENT_ID ) row.R_MOVEMENT_ID = String( index++ )
+			} )
+			
+			table = table.filter( row => {
+				return next.some( row2 => row.R_MOVEMENT_ID === row2.R_MOVEMENT_ID )
+			} )
+			
+			table = table.concat( next )
+			
+			return $mol_state_local.value< $mol_app_inventory_domain_position_raw[] >( 'positions' , next )
 		}
 		
 		authentificated() {

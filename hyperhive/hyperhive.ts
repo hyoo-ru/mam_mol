@@ -48,7 +48,7 @@ namespace $ {
 									resource.table ,
 									`select * from ${ resource.table }_$_${ resource.table }` ,
 									( resp : string )=> {
-										$mol_hyperhive.data( resource , JSON.parse( resp ).data , $mol_atom_force )
+										$mol_hyperhive.data( resource , JSON.parse( resp ).data || null , $mol_atom_force )
 									} ,
 									handleError ,
 								)
@@ -57,7 +57,6 @@ namespace $ {
 						)
 					} else {
 						hhfw.Post(
-							resource.uri ,
 							resource.table ,
 							JSON.stringify( next ) ,
 							( resp : any )=> {

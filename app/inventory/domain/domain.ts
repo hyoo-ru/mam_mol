@@ -8,6 +8,20 @@ namespace $ {
 		rejected : 'Rejected' ,
 	}
 	
+	export interface $mol_app_inventory_domain_product_raw {
+		R_MATERIAL_ID : string
+		R_BARCODE : string
+		R_NAME : string
+	}
+	
+	export interface $mol_app_inventory_domain_position_raw {
+		R_MOVEMENT_ID : string
+		R_MATERIAL_ID : string
+		R_QUANTITY : number
+		R_COMMENT : string
+		R_STATUS : typeof $mol_app_inventory_domain_position_status[ keyof typeof $mol_app_inventory_domain_position_status ]
+	}
+	
 	export class $mol_app_inventory_domain extends $mol_object {
 		
 		table< Row >( name : string , next? : Row[] ) {
@@ -16,7 +30,7 @@ namespace $ {
 			return $mol_hyperhive.data< Row[] >( {
 				uri : uri ,
 				table : name ,
-			} )
+			} , next )
 		}
 		
 		@ $mol_mem()
@@ -65,16 +79,6 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		position_rows_by_product() {
-			const table = this.positions_table()
-			const dict : { [ code : string ] : $mol_app_inventory_domain_position_raw } = {}
-			table.forEach( row => {
-				dict[ row.R_MATERIAL_ID ] = row
-			} )
-			return dict
-		}
-		
-		@ $mol_mem()
 		products() {
 			return this.products_table().map( row => this.product( row.R_MATERIAL_ID ) )
 		}
@@ -109,24 +113,42 @@ namespace $ {
 				}
 			} )
 			
-			return this.positions_table( table ).map( row => this.position( row.R_MOVEMENT_ID ) )
+			return this.positions_table( table )
+			.map( row => this.position( row.R_MOVEMENT_ID ) )
+			.filter( position => position.status() )
 		}
 		
-		position_by_product( product : $mol_app_inventory_domain_product ) {
-			const row = this.position_rows_by_product()[ product.id() ]
+		@ $mol_mem()
+		positions_by_product_id() {
+			const positions = this.positions()
+			const dict : { [ code : string ] : $mol_app_inventory_domain_position } = {}
+			positions.forEach( position => {
+				if( position.status() === 'completed' ) return
+				dict[ position.product().id() ] = position
+			} )
+			return dict
+		}
+		
+		@ $mol_mem_key()
+		position_by_product_id( product_id : string ) {
+			let position = this.positions_by_product_id()[ product_id ]
+			if( position ) return position
 			
-			if( row ) return this.position( row.R_MOVEMENT_ID )
+			this.positions_table([{
+				R_MOVEMENT_ID : null ,
+				R_MATERIAL_ID : product_id ,
+				R_STATUS : $mol_app_inventory_domain_position_status.draft ,
+				R_QUANTITY : 0 ,
+				R_COMMENT : '' ,
+			}])
 			
-			const position = new $mol_app_inventory_domain_position
-			position.product = $mol_const( product )
-			position.count = $mol_const(1)
-			
-			return position
+			return this.positions_by_product_id()[ product_id ]
 		}
 		
 		@ $mol_mem_key()
 		position( id : string ) {
 			const next = new $mol_app_inventory_domain_position()
+			next.id = $mol_const( id )
 			next.product = ()=> this.position_product( id )
 			next.count = ( next? )=> this.position_count( id , next )
 			next.status = ( next? )=> this.position_status( id , next )
@@ -138,6 +160,17 @@ namespace $ {
 		}
 		
 		position_count( id : string , next? : number ) {
+			if( next >= 0 ) {
+				const pos = this.position( id )
+				this.positions_table([{
+					R_MOVEMENT_ID : id ,
+					R_MATERIAL_ID : pos.product().id() ,
+					R_QUANTITY : next ,
+					R_COMMENT : pos.remark() ,
+					R_STATUS : $mol_app_inventory_domain_position_status.draft ,
+				}])
+			}
+			
 			return this.position_rows_by_id()[ id ].R_QUANTITY
 		}
 		
@@ -145,6 +178,17 @@ namespace $ {
 			const remap = {}
 			for( let key in $mol_app_inventory_domain_position_status ) {
 				remap[ $mol_app_inventory_domain_position_status[ key ] ] = key
+			}
+			
+			if( next ) {
+				const pos = this.position( id )
+				this.positions_table([{
+					R_MOVEMENT_ID : id ,
+					R_MATERIAL_ID : pos.product().id() ,
+					R_QUANTITY : pos.count() ,
+					R_COMMENT : pos.remark() ,
+					R_STATUS : $mol_app_inventory_domain_position_status[ next ] ,
+				}])
 			}
 			
 			return remap[ this.position_rows_by_id()[ id ].R_STATUS ]
@@ -183,20 +227,6 @@ namespace $ {
 			return void 0
 		}
 		
-	}
-	
-	export interface $mol_app_inventory_domain_product_raw {
-		R_MATERIAL_ID : string
-		R_BARCODE : string
-		R_NAME : string
-	}
-	
-	export interface $mol_app_inventory_domain_position_raw {
-		R_MOVEMENT_ID : string
-		R_MATERIAL_ID : string
-		R_QUANTITY : number
-		R_COMMENT : string
-		R_STATUS : typeof $mol_app_inventory_domain_position_status[ keyof typeof $mol_app_inventory_domain_position_status ]
 	}
 	
 	export class $mol_app_inventory_domain_product extends $mol_object {
