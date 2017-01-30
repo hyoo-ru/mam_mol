@@ -3,16 +3,16 @@ $mol_select_demo_search $mol_labeler
 	Content $mol_select
 		no_options_message \Not found
 		value?val <=> month?val \
-		dictionary <= months *
-			01 \January
-			02 \February
-			03 \March
-			04 \April
-			05 \May
-			06 \June
-			07 \July
-			08 \August
-			09 \September
-			10 \October
-			11 \November
-			12 \December
+		options <= months /
+			\January
+			\February
+			\March
+			\April
+			\May
+			\June
+			\July
+			\August
+			\September
+			\October
+			\November
+			\December

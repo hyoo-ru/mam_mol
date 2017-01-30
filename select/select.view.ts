@@ -35,20 +35,37 @@ namespace $.$mol {
 		}
 		
 		option_label( id : string ) {
-			return this.dictionary()[ id ] || id
+			const value = this.dictionary()[ id ]
+			return value === void 0 ? id : value
+		}
+		
+		option_id( id : string ) { return id }
+		
+		option_rows() {
+			if( this.options_filtered().length === 0 ) return [ this.No_options() ]
+			
+			let options = this.options_filtered().map( ( option : string ) => this.Option_row( option ) )
+			
+			if(this.clearable() && this.value()) options = [ this.Option_row( '' ) ].concat(options)
+						
+			return options
+		}
+		
+		option_content( id: string ) {
+			if( id === '' ) return [ this.Сlear_option_content() ]
+			return super.option_content(id);
 		}
 		
 		@$mol_mem()
-		option_focused( key : string ) {
-			if( key === void 0 ) return ""
-			
+		option_focused( component : $mol_view ) {
+			if( component === void 0 ) return ""
 			if( this.options_showed() ) {
-				$mol_view_selection.focused( [ this.Option_row( key ).dom_node() ] )
+				$mol_view_selection.focused( [ component.dom_node() ] )
 			} else {
-				this.value( key )
+				
 			}
 			
-			return key
+			return component
 		}
 		
 		event_showed_toggle( event? : MouseEvent ) {
@@ -64,23 +81,12 @@ namespace $.$mol {
 			return this.options().length >= this.search_breakpoint()
 		}
 		
-		controls() {
-			const showString = this.searchable() && ( !this.value() || this.options_showed() ) 
-			return [
-				showString ? this.String() : null ,
-				this.Trigger() ,
-			]
-		}
-		
-		option_rows() {
-			if( this.options_filtered().length === 0 ) return [ this.No_options() ]
-			
-			return this.options_filtered().map( ( option : string ) => this.Option_row( option ) )
+		select_bubble_content() {
+			return [ ... this.searchable() ? this.filter_content() : [], this.Options() ]
 		}
 		
 		value_content() {
-			const showContent = this.value() && ( !this.options_showed() || !this.searchable() )
-			return showContent ? this.option_content( this.value() ) : null
+			return this.value() ? this.option_content( this.value() ) : null
 		}
 		
 	}

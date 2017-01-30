@@ -23,7 +23,13 @@
 	min-width: 100%;
 }
 
-[mol_select_option_label] {
+[mol_select_filter] {
+	z-index: 2;
+	opacity: 1 !important;
+	width: 100%;
+}
+
+[mol_select_option_label], [mol_select_сlear_option_content], [mol_select_no_options] {
 	padding: .5em;
 	text-align: start;
 	min-height: 1.5em;
