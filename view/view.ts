@@ -80,13 +80,35 @@ namespace $ {
 		}
 		
 		/// Minimal height that used for lazy rendering
-		minimal_height() {
-			return 0
+		@ $mol_mem()
+		minimal_width() {
+			const sub = this.sub()
+			if( !sub ) return 0
+			
+			let min = 0
+			sub.forEach( view => {
+				if( view instanceof $mol_view ) {
+					min = Math.max( min , view.minimal_width() )
+				}
+			} )
+			
+			return min
 		}
 		
 		/// Minimal width that used for lazy rendering
-		minimal_width() {
-			return 0
+		@ $mol_mem()
+		minimal_height() {
+			const sub = this.sub()
+			if( !sub ) return 0
+			
+			let min = 0
+			sub.forEach( view => {
+				if( view instanceof $mol_view ) {
+					min = Math.max( min , view.minimal_height() )
+				}
+			} )
+			
+			return min
 		}
 		
 		private 'dom_node()' : Element
