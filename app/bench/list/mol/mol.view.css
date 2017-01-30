@@ -25,4 +25,9 @@
 
 [mol_app_bench_list_mol_row_title] {
 	font-weight: bold;
+	display: block;
+}
+
+[mol_app_bench_list_mol_row_content] {
+	display: block;
 }
