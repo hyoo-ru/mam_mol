@@ -32,9 +32,9 @@ $mol_select $mol_view
 					sub /
 						<= Trigger_icon $mol_icon_chevron
 						<= value_content /
-				bubble_content <= bubble_content /
+				bubble_content /
 					<= Bubble_content $mol_list
-						rows /
+						rows <= bubble_content /
 							<= filter_content /
 								<= Filter_string $mol_string
 									autofocus true
