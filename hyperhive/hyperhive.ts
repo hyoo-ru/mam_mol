@@ -6,7 +6,11 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		static initialize( params : { host : string , version : string , environment : string , project : string , application : string } ) {
-			if( typeof hhfw !== 'undefined' ) hhfw.Init( params.host , params.version , params.environment , params.project , params.application )
+			if( typeof hhfw === 'undefined' ) return this
+			
+			hhfw.Init( params.host , params.version , params.environment , params.project , params.application )
+			hhfw.setSslChecks( true )
+			
 			return this
 		}
 		

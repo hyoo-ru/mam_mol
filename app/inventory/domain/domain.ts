@@ -26,7 +26,7 @@ namespace $ {
 		
 		table< Row >( name : string , next? : Row[] ) {
 			const creds = this.credentials()
-			const uri = `http://${ creds.login }:${ creds.password }@mobrun.sp.saprun.com/api/v0.5/data/evraz/project/v1/`
+			const uri = `https://${ creds.login }:${ creds.password }@mobrun.sp.saprun.com/api/v0.5/data/demo/demo/inventory/`
 			return $mol_hyperhive.data< Row[] >( {
 				uri : uri ,
 				table : name ,
