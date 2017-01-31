@@ -1,11 +1,15 @@
 [mol_select] {
 	margin: auto;
+	display: flex;
 }
 
 [mol_select_trigger] {
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	padding: 0;
 	margin: 0;
+	flex: 1 1 auto;
+	justify-content: space-between;
+	flex-direction: row-reverse;
 }
 
 [mol_select_option_row] {
@@ -57,11 +61,16 @@
 }
 
 [mol_select_trigger_icon] {
-	margin: .5em;
+	margin: .75rem .5rem;
 	transform: rotateZ(90deg);
 	&:not(:first-child) {
 		margin-left: 0;
 	}
+}
+
+[mol_select_pop] {
+	flex: 1 1 auto;
+	display: flex;
 }
 
 [mol_select_pop] > [mol_pop_bubble] {
