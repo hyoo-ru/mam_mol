@@ -468,6 +468,12 @@ namespace $ {
 			
 			sources.forEach(
 				( src )=> {
+					if( bundle === 'node' ) {
+						if( /node_modules\//.test( src.relate( this.root() ) ) ) {
+							return
+						}
+					}
+					
 					var content = src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
 					
 					var srcMap = src.parent().resolve( src.name() + '.map' ).content()

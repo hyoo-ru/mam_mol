@@ -30,15 +30,12 @@ namespace $.$mol {
 					title : 'Наименование' ,
 				} ,
 				{
-					title : 'Форма записи' ,
-				} ,
-				{
 					title : 'Значение' ,
 				} ,
 			]
 		}
 		
-		formatrows() : $mol_app_report_formatRow[] {
+		format_rows() : $mol_app_report_formatRow[] {
 			return [
 				{
 					title : 'Фундамент' ,
@@ -187,7 +184,6 @@ namespace $.$mol {
 				this.cell( [ 0 , 0 ] ) ,
 				this.cell( [ 0 , 1 ] ) ,
 				this.cell( [ 0 , 2 ] ) ,
-				this.cell( [ 0 , 3 ] ) ,
 			]
 		}
 		
@@ -201,7 +197,7 @@ namespace $.$mol {
 				} )
 			}
 			
-			this.formatrows().forEach( ( format , index ) => {
+			this.format_rows().forEach( ( format , index ) => {
 				visit( [ index + 1 ] , format )
 			} )
 			
@@ -209,11 +205,11 @@ namespace $.$mol {
 		}
 		
 		formatRow( pos : number[] ) {
-			let formatrows = this.formatrows()
+			let format_rows = this.format_rows()
 			let next : $mol_app_report_formatRow = null
 			for( let index of pos ) {
-				next = formatrows[ index - 1 ]
-				formatrows = next.sub
+				next = format_rows[ index - 1 ]
+				format_rows = next.sub
 			}
 			return next
 		}
@@ -224,7 +220,6 @@ namespace $.$mol {
 				this.cell( pos.concat( 0 ) ) ,
 				this.cell( pos.concat( 1 ) ) ,
 				formatRow.field ? this.cell( pos.concat( 2 ) ) : null ,
-				formatRow.field ? this.cell( pos.concat( 3 ) ) : null ,
 			]
 		}
 		
@@ -238,7 +233,7 @@ namespace $.$mol {
 			
 			const formatRow = this.formatRow( pos.slice( 0 , pos.length - 1 ) )
 			if( !formatRow.field ) {
-				if( col === 1 ) return 3
+				if( col === 1 ) return 2
 				else return 0
 			}
 			
@@ -253,17 +248,23 @@ namespace $.$mol {
 			
 			const col = pos[ pos.length - 1 ]
 			
-			if( col === 3 ) {
+			if( col === 2 ) {
 				const field = this.formatRow( pos.slice( 0 , pos.length - 1 ) ).field
 				const scheme = this.scheme()[ field ]
 				
 				switch( scheme.type ) {
 					case 'number' : return this.number( pos )
-					case 'enum' : return this.stringer( pos )
+					case 'enum' : return this.select( pos )
 				}
 			} else {
 				return this.texter( pos )
 			}
+		}
+		
+		@ $mol_mem_key()
+		cell_options( pos : number[] ) {
+			const field = this.formatRow( pos.slice( 0 , pos.length - 1 ) ).field
+			return this.scheme()[ field ].options
 		}
 		
 		@ $mol_mem_key()
@@ -278,8 +279,7 @@ namespace $.$mol {
 			switch( col ) {
 				case 0 : return pos.slice( 0 , pos.length - 1 ).join( '.' )
 				case 1 : return this.cell_contentName( pos.slice( 0 , pos.length - 1 ) )
-				case 2 : return this.cell_contentType( pos.slice( 0 , pos.length - 1 )  )
-				case 3 : return this.cell_contentValue( pos.slice( 0 , pos.length - 1 )  )
+				case 2 : return this.cell_contentValue( pos.slice( 0 , pos.length - 1 )  )
 			}
 			
 			return ''
@@ -288,20 +288,6 @@ namespace $.$mol {
 		cell_contentName( pos : number[] ) {
 			const formatRow = this.formatRow( pos )
 			return formatRow.title
-		}
-		
-		cell_contentType( pos : number[] ) {
-			const field = this.formatRow( pos ).field
-			if( !field ) return ''
-			
-			const scheme = this.scheme()[ field ]
-			
-			switch( scheme.type ) {
-				case 'number' : return scheme.mask
-				case 'enum' : return Object.keys( scheme.options ).map( key => scheme.options[ key ] ).join( ' / ' )
-			}
-			
-			return ''
 		}
 		
 		cell_contentValue( pos : number[] ) {

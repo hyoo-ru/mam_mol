@@ -30,9 +30,9 @@ $mol_select $mol_view
 				Anchor <= Trigger $mol_button
 					event_click?event <=> event_showed_toggle?event null
 					sub /
-						<= value_content /
 						<= Trigger_icon $mol_icon_chevron
-				bubble_content /
+						<= value_content /
+				bubble_content <= bubble_content /
 					<= Bubble_content $mol_list
 						rows <= bubble_content /
 							<= filter_content /

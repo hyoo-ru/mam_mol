@@ -14,6 +14,7 @@
 	appearance: textfield;
 	text-align: right;
 	position: relative;
+	flex: 1 1 auto;
 }
 
 [mol_number_string]::-webkit-inner-spin-button {
