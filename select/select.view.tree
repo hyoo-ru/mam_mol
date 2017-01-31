@@ -32,7 +32,7 @@ $mol_select $mol_view
 					sub /
 						<= value_content /
 						<= Trigger_icon $mol_icon_chevron
-				bubble_content <= bubble_content /
+				bubble_content /
 					<= Bubble_content $mol_list
 						rows <= bubble_content /
 							<= filter_content /

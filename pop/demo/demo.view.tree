@@ -5,7 +5,7 @@ $mol_pop_demo $mol_row sub /
 		Anchor <= Show $mol_button
 			event_click?event <=> event_show?event null
 			sub /
-				\Show pop
+				\Show Bubble
 		bubble_content /
 			<= Content $mol_view 
 				sub / 
@@ -13,11 +13,10 @@ $mol_pop_demo $mol_row sub /
 					<= Hide $mol_button 
 						event_click?event <=> event_hide?event null 
 						sub / 
-							\Close pop
+							\Close Bubble
 	<= Select_label $mol_labeler
 		title \align
 		Content $mol_select
-			search_breakpoint 15
 			clearable false
 			value?val <=> align_value?val \bottom_center
 			options /
