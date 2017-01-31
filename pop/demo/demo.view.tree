@@ -13,7 +13,7 @@ $mol_pop_demo $mol_row sub /
 					<= Hide $mol_button 
 						event_click?event <=> event_hide?event null 
 						sub / 
-							\Close Bubble
+							\Hide Bubble
 	<= Select_label $mol_labeler
 		title \align
 		Content $mol_select
