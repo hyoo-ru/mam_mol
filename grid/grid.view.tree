@@ -2,7 +2,7 @@ $mol_grid $mol_scroll
 	row_ids /
 	row_id!index null
 	col_ids /
-	records /
+	<= records *
 	record!id null
 	hierarchy null
 	hierarchy_col \

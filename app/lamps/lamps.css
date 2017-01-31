@@ -1,0 +1,21 @@
+[mol_app_lamps_title] {
+	flex: 0 1 auto;
+}
+
+[mol_app_lamps_filter] {
+	flex: 1 1 auto;
+	margin: .5rem;
+}
+
+[mol_app_lamps_lamp_row] {
+	display: flex;
+	flex: 0 0 auto;
+}
+
+[mol_app_lamps_light] {
+	background: var(--mol_skin_card);
+}
+
+[mol_app_lamps_body] {
+	background: var(--mol_skin_card);
+}
