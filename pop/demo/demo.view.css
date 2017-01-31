@@ -6,4 +6,6 @@
 }
 [mol_pop_demo] {
 	margin: auto;
+	flex: 0 0 auto;
+	align-items: flex-end;
 }
