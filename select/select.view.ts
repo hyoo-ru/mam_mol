@@ -81,7 +81,7 @@ namespace $.$mol {
 			return this.options().length >= this.search_breakpoint()
 		}
 		
-		select_bubble_content() {
+		bubble_content() {
 			return [ ... this.searchable() ? this.filter_content() : [] ].concat( this.option_rows() )
 		}
 		

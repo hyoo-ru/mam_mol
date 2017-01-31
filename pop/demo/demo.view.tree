@@ -2,37 +2,35 @@ $mol_pop_demo $mol_row sub /
 	<= Pop $mol_pop
 		showed?val <= showed_value?val false
 		align <= align_value?val -
-		Anchor <= Checkbox $mol_button
-			event_click?event <=> event_showed_switch?event null
+		Anchor <= Show $mol_button
+			event_click?event <=> event_show?event null
 			sub /
 				\Show pop
 		bubble_content /
 			<= Content $mol_view 
 				sub / 
 					\ I'm bubble, i showed when you want 
-					<= Button $mol_button 
-						event_click?event <=> event_showed_switch?event null 
+					<= Hide $mol_button 
+						event_click?event <=> event_hide?event null 
 						sub / 
 							\Close pop
-	
 	<= Select_label $mol_labeler
-		title \Pop align direction
+		title \align
 		Content $mol_select
 			search_breakpoint 15
 			clearable false
 			value?val <=> align_value?val \bottom_center
-			dictionary <= align_options *
-				left_top \Left, Up
-				left_center \Left, Forward
-				left_bottom \Left, Down
-				right_top \Right, Up
-				right_center \Right, Forward
-				right_bottom \Right, Down
-				center \Center
-				top_left \Top, Left
-				top_center \Top, Forward
-				top_right \Top, Right
-				bottom_left \Bottom, Left
-				bottom_center \Bottom, Forward
-				bottom_right \Bottom, Right
-		
+			options /
+				\left_top
+				\left_center
+				\left_bottom
+				\right_top
+				\right_center
+				\right_bottom
+				\center
+				\top_left
+				\top_center
+				\top_right
+				\bottom_left
+				\bottom_center
+				\bottom_right

@@ -3,7 +3,7 @@ $mol_select $mol_view
 	options /
 	value?val \
 	search_breakpoint 7
-	clearable?val true
+	clearable true
 	Option_row!id $mol_button
 		event_click?event <=> event_select!id?event null
 		sub <= option_content_super!id <= option_content!id /
@@ -34,7 +34,7 @@ $mol_select $mol_view
 						<= Trigger_icon $mol_icon_chevron
 				bubble_content <= bubble_content /
 					<= Bubble_content $mol_list
-						rows <= select_bubble_content /
+						rows <= bubble_content /
 							<= filter_content /
 								<= Filter_string $mol_string
 									autofocus true
