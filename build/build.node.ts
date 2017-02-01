@@ -510,6 +510,7 @@ namespace $ {
 		bundleTestJS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
+			var root = this.root()
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
@@ -527,7 +528,7 @@ namespace $ {
 			sources.forEach(
 				function( src ) {
 					if( bundle === 'node' ) {
-						if( /node_modules\//.test( src.relate( this.root() ) ) ) {
+						if( /node_modules\//.test( src.relate( root ) ) ) {
 							return
 						}
 					}
