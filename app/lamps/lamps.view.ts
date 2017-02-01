@@ -4,7 +4,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		lamps_all() {
-			return $mol_csv_parse( $mol_http_resource.item( '/mol/app/lamps/lamps.csv' ).text() )
+			return $mol_csv_parse( $mol_http_resource.item( '//eigenmethod.github.io/mol/app/lamps/lamps.csv' ).text() )
 		}
 		
 		@ $mol_mem()
