@@ -25,6 +25,7 @@ $mol_text_row $mol_view
 
 $mol_text_header $mol_view
 	dom_name \h
+	minimal_height 50
 	attr * mol_text_header_level <= level?val 0
 	sub <= content /
 
