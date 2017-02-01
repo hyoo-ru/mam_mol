@@ -87,7 +87,7 @@
 	function start( sample ) {
 		var sandbox = document.getElementById( 'sandbox' )
 		var start = Date.now()
-		sandbox.src = sample
+		sandbox.src = sample + '/'
 		sandbox.onload = function() {
 			sandbox.onload = null
 			done( Date.now() - start + ' ms' )
