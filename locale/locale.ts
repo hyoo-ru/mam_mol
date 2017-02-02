@@ -12,10 +12,13 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		static texts() {
-			const uri = `-/web.locale=${ this.lang() }.json`
-			const resource = $mol_http_resource_json.item< $mol_locale_dict >( uri ) 
-			return resource.json()
+		static texts( next? : $mol_locale_dict ) {
+			if( next ) return next
+			
+			const path = `-/web.locale=${ this.lang() }.json`
+			const content = $mol_file.relative( path ).content() 
+			
+			return JSON.parse( content ) as $mol_locale_dict
 		}
 		
 		static text( contexts : string[] , key : string ) {
