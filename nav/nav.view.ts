@@ -14,6 +14,8 @@ namespace $.$mol {
 		
 		event_up( event? : KeyboardEvent ) {
 			const keys = this.keys_y()
+			if( keys.length < 2 ) return
+			
 			const index_y = this.index_y();
 			
 			const index_old = index_y === null ? 0 : index_y
@@ -28,6 +30,8 @@ namespace $.$mol {
 		
 		event_down( event? : KeyboardEvent ) {
 			const keys = this.keys_y()
+			if( keys.length < 2 ) return
+			
 			const index_y = this.index_y();
 			
 			const index_old = index_y === null ? keys.length - 1 : index_y;
@@ -42,6 +46,8 @@ namespace $.$mol {
 		
 		event_left( event? : KeyboardEvent ) {
 			const keys = this.keys_x()
+			if( keys.length < 2 ) return
+			
 			const index_x = this.index_x();
 			
 			const index_old = index_x === null ? 0 : index_x
@@ -56,6 +62,8 @@ namespace $.$mol {
 		
 		event_right( event? : KeyboardEvent ) {
 			const keys = this.keys_x()
+			if( keys.length < 2 ) return
+			
 			const index_x = this.index_x();
 			
 			const index_old = index_x === null ? keys.length - 1 : index_x

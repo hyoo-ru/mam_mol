@@ -1,0 +1,18 @@
+$mol_search $mol_bar
+	query?val \
+	sub /
+		<= Suggest $mol_search_suggest
+			value?val <=> suggest_selected?val \
+			filter_hint <= hint \Search...
+			filter_pattern?val <=> query?val -
+			options_showed <= suggests_showed false
+			options <= suggests /
+		<= Clear $mol_button_minor
+			sub /
+				<= Clear_icon $mol_icon_cross
+			event_click?val <=> event_clear?val null
+
+$mol_search_suggest $mol_select
+	trigger_content <= filter_content -
+	bubble_content <= option_rows -
+	clearable false
