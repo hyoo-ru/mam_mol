@@ -41,7 +41,7 @@ namespace $ {
 				$mol_hyperhive.data( resource , error , $mol_atom_force )
 			}
 			
-			document.addEventListener(
+			$mol_dom_context.document.addEventListener(
 				'deviceready' , () => {
 					
 					if( next === void 0 ) {

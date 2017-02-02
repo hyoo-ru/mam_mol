@@ -20,9 +20,9 @@
 
 [mol_demo_screener] {
 	overflow: hidden;
-	box-shadow: 0 0 0 1px var( --mol_skin_light_line );
-	background: var( --mol_skin_card );
-	color: var( --mol_skin_light_text );
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	background: var(--mol_skin_card);
+	color: var(--mol_skin_light_text);
 	position: relative;
 	flex: 1 1 auto;
 	display: flex;
@@ -31,22 +31,4 @@
 	box-sizing: border-box;
 	height: 100%;
 	margin: 0;
-}
-
-[mol_demo_large] {
-	flex: 1 1 100%;
-	align-self: stretch;
-}
-
-[mol_demo_medium] {
-	flex: 0 1 auto;
-}
-
-[mol_demo_small] {
-	flex: 0 0 auto;
-}
-
-[mol_demo_small_screener] {
-	width: 500px;
-	height: 280px;
 }

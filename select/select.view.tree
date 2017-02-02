@@ -1,0 +1,45 @@
+$mol_select $mol_view
+	<= dictionary *
+	options /
+	value?val \
+	searchable true
+	search_breakpoint 7
+	clearable true
+	Option_row!id $mol_button
+		event_click?event <=> event_select!id?event null
+		sub <= option_content_super!id <= option_content!id /
+			<= Option_label!id $mol_dimmer
+				minimal_height 40
+				haystack <= option_label!id \
+				needle <= filter_pattern?val \
+	No_options $mol_view
+		sub /
+			<= no_options_message @ \No options
+	Сlear_option_content $mol_view 
+		sub <= clear_option_content /
+			<= clear_option_message @ \Clear
+			<= Clear_icon $mol_icon_cross
+	sub / 
+		<= Nav $mol_nav
+			keys_y <= nav_components /
+				<= Filter_string -
+				<= option_rows -
+			current_y?key <=> option_focused?key \
+			cycle?val <=> nav_cycle?val true
+			Sub <= Pop $mol_pop 
+				showed?val <=> options_showed?val false
+				align?val <=> options_align?val \bottom_right
+				Anchor <= Trigger $mol_button
+					event_click?event <=> event_showed_toggle?event null
+					sub <= trigger_content /
+						<= Trigger_icon $mol_icon_chevron
+						<= value_content /
+				bubble_content /
+					<= Bubble_content $mol_list
+						rows <= bubble_content /
+							<= filter_content /
+								<= Filter_string $mol_string
+									autofocus true
+									value?val <=> filter_pattern?val \
+									hint <= filter_hint @ \Filter
+							<= option_rows /

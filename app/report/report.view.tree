@@ -16,8 +16,9 @@ $mol_app_report $mol_page
 		cols <= cellCols!id 1
 	texter!id $mol_view
 		sub / <= cell_value!id?val null
-	stringer!id $mol_string
+	select!id $mol_select
 		value?val <=> cell_value!id?val null
+		dictionary <= cell_options!id *
 	number!id $mol_number
 		value?val <=> cell_value!id?val null
 

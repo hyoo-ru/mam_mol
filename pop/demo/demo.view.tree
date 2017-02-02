@@ -1,0 +1,35 @@
+$mol_pop_demo $mol_row sub /
+	<= Pop $mol_pop
+		showed?val <= showed_value?val false
+		align <= align_value?val -
+		Anchor <= Show $mol_button
+			event_click?event <=> event_show?event null
+			sub /
+				\Show Bubble
+		bubble_content /
+			<= Content $mol_view 
+				sub / 
+					\ I'm bubble, i showed when you want 
+					<= Hide $mol_button 
+						event_click?event <=> event_hide?event null 
+						sub / 
+							\Hide Bubble
+	<= Select_label $mol_labeler
+		title \align
+		Content $mol_select
+			clearable false
+			value?val <=> align_value?val \bottom_center
+			options /
+				\left_top
+				\left_center
+				\left_bottom
+				\right_top
+				\right_center
+				\right_bottom
+				\center
+				\top_left
+				\top_center
+				\top_right
+				\bottom_left
+				\bottom_center
+				\bottom_right

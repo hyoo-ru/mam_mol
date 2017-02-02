@@ -468,6 +468,12 @@ namespace $ {
 			
 			sources.forEach(
 				( src )=> {
+					if( bundle === 'node' ) {
+						if( /node_modules\//.test( src.relate( this.root() ) ) ) {
+							return
+						}
+					}
+					
 					var content = src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
 					
 					var srcMap = src.parent().resolve( src.name() + '.map' ).content()
@@ -504,6 +510,7 @@ namespace $ {
 		bundleTestJS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
+			var root = this.root()
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
@@ -520,6 +527,12 @@ namespace $ {
 			
 			sources.forEach(
 				function( src ) {
+					if( bundle === 'node' ) {
+						if( /node_modules\//.test( src.relate( root ) ) ) {
+							return
+						}
+					}
+					
 					var content = src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
 					
 					var srcMap = src.parent().resolve( src.name() + '.map' ).content()
@@ -599,6 +612,8 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		bundleCSS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+			if( bundle === 'node' ) return []
+			
 			var pack = $mol_file.absolute( path )
 			var sources = this.sourcesCSS( { path , exclude } )
 			if( !sources.length ) return []

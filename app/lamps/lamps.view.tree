@@ -1,0 +1,55 @@
+$mol_app_lamps $mol_stack
+	lamp_current_id?val \
+	addon /
+		<= addon_page $mol_page
+			title \LampTest.ru
+			head /
+				- <= Title -
+				<= Filter $mol_code
+					hint <= filter_hint @ \Filter...
+					value?val <=> filter?val \
+			body /
+				<= Menu $mol_list
+					rows <= lamp_rows /
+	main /
+		<= main_page $mol_page
+			title <= title \
+			body /
+				<= Info $mol_row
+					sub /
+						<= Light $mol_row
+							sub /
+								<= Temp $mol_labeler
+									title <= Temp_title @ \Temperature
+									content /
+										<= temp \
+								<= Cri $mol_labeler
+									title <= cri_title @ \CRI
+									content /
+										<= cri \
+								<= Angle $mol_labeler
+									title <= angle_title @ \Angle
+									content /
+										<= angle \
+						<= Body $mol_row
+							sub /
+								<= Type $mol_labeler
+									title <= type_title @ \Type
+									content /
+										<= type \
+								<= Shape $mol_labeler
+									title <= shape_title @ \Shape
+									content /
+										<= shape \
+								<= Base $mol_labeler
+									title <= base_title @ \Shape
+									content /
+										<= base \
+	Lamp_row!id $mol_lamps_lamp_row
+		title <= lamp_title!id \
+		arg <= lamp_arg!id *
+
+$mol_lamps_lamp_row $mol_link
+	minimal_height 40
+	sub /
+		<= title -

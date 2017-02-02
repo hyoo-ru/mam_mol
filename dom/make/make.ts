@@ -11,6 +11,7 @@ namespace $ {
 	export function $mol_dom_make< tagName extends string >( config : $mol_dom_make_config ) {
 		const tag = config.tagName || 'div'
 		const ns = config.namespaceURI || 'http://www.w3.org/1999/xhtml'
+		const document = $mol_dom_context.document
 		const el : HTMLElement = document.getElementById( config.id ) || document.createElementNS( ns , tag ) as HTMLElement
 		
 		if( config.childNodes ) {
@@ -30,7 +31,7 @@ namespace $ {
 						if( typeof child === 'string' ) {
 							el.appendChild( document.createTextNode( child ) )
 						} else {
-							el.appendChild( child instanceof Node ? child : $mol_dom_make( child ) )
+							el.appendChild( child instanceof $mol_dom_context.Node ? child : $mol_dom_make( child ) )
 						}
 					}
 					break
@@ -46,7 +47,7 @@ namespace $ {
 					} else {
 						childNext = document.createTextNode( childNext )
 					}
-				} else if(!( childNext instanceof Node )) {
+				} else if(!( childNext instanceof $mol_dom_context.Node )) {
 					childNext = $mol_dom_make( childNext )
 				}
 				

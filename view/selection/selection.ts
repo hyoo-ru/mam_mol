@@ -3,8 +3,14 @@ namespace $ {
 	export class $mol_view_selection extends $mol_object {
 		
 		@ $mol_mem()
-		static focused( next? : Element[] ) {
-			return next || []
+		static focused( next? : Element[] , force? : $mol_atom_force ) {
+			if( next === void 0 ) return [] as Element[]
+			
+			if( next.length !== 1 ) throw new Error( 'Length must be equals 1' )
+			
+			const node = next[ 0 ] as HTMLElement
+			
+			node.focus();
 		}
 		
 		@ $mol_mem()
@@ -16,7 +22,7 @@ namespace $ {
 				var end = diff[ 0 ].end
 				if( !( start <= end ) ) throw new Error( `Wrong offsets (${start},${end})` )
 				
-				var root = document.getElementById( diff[ 0 ].id )
+				var root = $mol_dom_context.document.getElementById( diff[ 0 ].id )
 				root.focus()
 				
 				var range = new Range
@@ -57,13 +63,13 @@ namespace $ {
 				}
 				range.setEnd( cur , end )
 				
-				var sel = document.getSelection()
+				var sel = $mol_dom_context.document.getSelection()
 				sel.removeAllRanges()
 				sel.addRange( range )
 				
 				return diff[ 0 ]
 			} else {
-				var sel = document.getSelection()
+				var sel = $mol_dom_context.document.getSelection()
 				if( sel.rangeCount === 0 ) return null
 				var range = sel.getRangeAt( 0 )
 				
@@ -94,11 +100,11 @@ namespace $ {
 				element = element.parentElement
 			}
 			
-			$mol_view_selection.focused( parents )
+			$mol_view_selection.focused( parents , $mol_atom_force )
 		}
 		
 		static onBlur( event : FocusEvent ) {
-			$mol_view_selection.focused( [] )
+			$mol_view_selection.focused( [] , $mol_atom_force )
 		}
 	}
 	

@@ -1,4 +1,4 @@
-# $mol_switch
+# $mol_switch 
 
 Buttons which switching the sate;
 
@@ -28,4 +28,3 @@ Keys are possible values of `value` property. That options are labels which woul
 **`enabled()`**
 
 Property that turning on or off our switcher.
-
