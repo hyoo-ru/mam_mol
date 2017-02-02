@@ -22,7 +22,7 @@ namespace $ {
 				var end = diff[ 0 ].end
 				if( !( start <= end ) ) throw new Error( `Wrong offsets (${start},${end})` )
 				
-				var root = document.getElementById( diff[ 0 ].id )
+				var root = $mol_dom_context.document.getElementById( diff[ 0 ].id )
 				root.focus()
 				
 				var range = new Range
@@ -63,13 +63,13 @@ namespace $ {
 				}
 				range.setEnd( cur , end )
 				
-				var sel = document.getSelection()
+				var sel = $mol_dom_context.document.getSelection()
 				sel.removeAllRanges()
 				sel.addRange( range )
 				
 				return diff[ 0 ]
 			} else {
-				var sel = document.getSelection()
+				var sel = $mol_dom_context.document.getSelection()
 				if( sel.rangeCount === 0 ) return null
 				var range = sel.getRangeAt( 0 )
 				

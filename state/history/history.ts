@@ -16,8 +16,8 @@ namespace $ {
 		@ $mol_mem()
 		static id( next? : string ) {
 			if( history.state ) return <string> history.state
-			var id = Date.now().toString( 16 )
-			history.replaceState( id , document.title , document.location.href )
+			const id = Date.now().toString( 16 )
+			history.replaceState( id , $mol_dom_context.document.title , $mol_dom_context.document.location.href )
 			return id
 		}
 		

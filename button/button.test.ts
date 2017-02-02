@@ -10,7 +10,7 @@ namespace $.$mol {
 			
 			const element = <HTMLButtonElement> clicker.dom_tree()
 			
-			const event = document.createEvent( 'mouseevent' )
+			const event = $mol_dom_context.document.createEvent( 'mouseevent' )
 			event.initEvent( 'click' , true , true )
 			element.dispatchEvent( event )
 			
@@ -26,7 +26,7 @@ namespace $.$mol {
 			
 			const element = <HTMLButtonElement> clicker.dom_tree()
 			
-			const event = document.createEvent( 'mouseevent' )
+			const event = $mol_dom_context.document.createEvent( 'mouseevent' )
 			event.initEvent( 'click' , true , true )
 			element.dispatchEvent( event )
 			

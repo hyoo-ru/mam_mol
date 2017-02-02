@@ -121,13 +121,13 @@ namespace $ {
 				next2 = this[ 'dom_node()' ]
 				if( next2 ) return next2
 				
-				next2 = document.getElementById( path )
+				next2 = $mol_dom_context.document.getElementById( path )
 				if( next2 ) {
 					if( (<any>next2)[ '$mol_view' ] ) {
 						return this[ 'dom_node()' ] = next2
 					}
 				} else {
-					next2 = document.createElementNS( this.dom_name_space() , this.dom_name() )
+					next2 = $mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 				}
 			}
 			
@@ -207,7 +207,7 @@ namespace $ {
 						nextNode.nodeValue = String( view )
 						nextNode = nextNode.nextSibling
 					} else {
-						const textNode = document.createTextNode( String( view ) )
+						const textNode = $mol_dom_context.document.createTextNode( String( view ) )
 						node.insertBefore( textNode , nextNode )
 					}
 				}
