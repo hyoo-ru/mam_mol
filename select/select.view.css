@@ -63,7 +63,7 @@
 [mol_select_trigger_icon] {
 	margin: .75rem .5rem;
 	transform: rotateZ(90deg);
-	&:not(:first-child) {
+	&:not(:last-child) {
 		margin-left: 0;
 	}
 }
