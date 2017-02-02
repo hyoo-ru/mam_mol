@@ -25,7 +25,7 @@ namespace $.$mol {
 		}
 		
 		options_filtered() {
-			const filter = this.filter_pattern()
+			const filter = this.filter_pattern().toLowerCase()
 			const value = this.value()
 			
 			return this.options().filter(
@@ -59,7 +59,7 @@ namespace $.$mol {
 		
 		@$mol_mem()
 		option_focused( component : $mol_view ) {
-			if( component === void 0 ) return ""
+			if( component === void 0 ) return this.Filter_string()
 			
 			if( this.options_showed() ) {
 				component.focused( true )
@@ -79,6 +79,10 @@ namespace $.$mol {
 		
 		searchable() {
 			return this.options().length >= this.search_breakpoint()
+		}
+		
+		nav_components() {
+			return [ ... this.searchable() ? this.filter_content() : [] ].concat( this.option_rows() )
 		}
 		
 		bubble_content() {
