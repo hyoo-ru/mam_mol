@@ -4,7 +4,7 @@ namespace $ {
 		
 		@ $mol_mem()
 		static href( next? : string ) {
-			if( next ) history.replaceState( history.state , document.title , `${ next }` )
+			if( next ) history.replaceState( history.state , $mol_dom_context.document.title , `${ next }` )
 			return window.location.search + window.location.hash
 		}
 		

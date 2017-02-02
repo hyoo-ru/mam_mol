@@ -34,10 +34,10 @@ namespace $ {
 		} ,
 		'Make to exists element'() {
 			const dom1 = <div id="$mol_dom_make_test" />
-			document.body.appendChild( dom1 )
+			$mol_dom_context.document.body.appendChild( dom1 )
 			
 			const dom2 = <div id="$mol_dom_make_test">hello</div>
-			document.body.removeChild( dom1 )
+			$mol_dom_context.document.body.removeChild( dom1 )
 			
 			$mol_assert_equal( dom1 , dom2 )
 			$mol_assert_equal( dom1.outerHTML , '<div id="$mol_dom_make_test">hello</div>' )
