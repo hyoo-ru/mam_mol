@@ -24,6 +24,7 @@
 [mol_number_inc] ,
 [mol_number_dec] {
 	margin: 0;
+	flex: 0 0 auto;
 }
 
 [mol_number_inc_icon] ,
