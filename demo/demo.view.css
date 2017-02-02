@@ -25,6 +25,7 @@
 	color: var(--mol_skin_light_text);
 	position: relative;
 	flex: 1 1 auto;
+	flex-direction: column;
 	display: flex;
 	align-content: flex-start;
 	align-items: flex-start;
