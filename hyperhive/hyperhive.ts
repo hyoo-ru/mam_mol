@@ -9,7 +9,7 @@ namespace $ {
 			if( typeof hhfw === 'undefined' ) return this
 			
 			hhfw.Init( params.host , params.version , params.environment , params.project , params.application )
-			hhfw.setSslChecks( true )
+			hhfw.SetSslChecks( false )
 			
 			return this
 		}
@@ -46,12 +46,14 @@ namespace $ {
 					
 					if( next === void 0 ) {
 						hhfw.GetDeltaStream(
-							resource.table ,
+							`GET_${ resource.table }` ,
 							( result : any ) => {
+								console.debug( result )
 								hhfw.QueryToResTable(
-									resource.table ,
-									`select * from ${ resource.table }_$_${ resource.table }` ,
+									`GET_${ resource.table }` ,
+									`select * from GET_${ resource.table }_$_GET_${ resource.table }` ,
 									( resp : string )=> {
+										console.debug( resp.substring( 0 , 512 ) )
 										$mol_hyperhive.data( resource , JSON.parse( resp ).data || null , $mol_atom_force )
 									} ,
 									handleError ,
@@ -61,10 +63,11 @@ namespace $ {
 						)
 					} else {
 						hhfw.Post(
+							`UPSERT_${ resource.table }` ,
 							resource.table ,
 							JSON.stringify( next ) ,
 							( resp : any )=> {
-								console.log( resp )
+								console.debug( resp )
 								$mol_hyperhive.data( resource , void 0 , $mol_atom_force )
 							} ,
 							handleError

@@ -35,12 +35,12 @@ namespace $ {
 		
 		@ $mol_mem()
 		products_table() {
-			return this.table< $mol_app_inventory_domain_product_raw >( 'GET_MATERIALS' )
+			return this.table< $mol_app_inventory_domain_product_raw >( 'MATERIALS' )
 		}
 		
 		@ $mol_mem()
 		positions_table( next? : $mol_app_inventory_domain_position_raw[] ) {
-			return this.table< $mol_app_inventory_domain_position_raw >( 'GET_MOVEMENTS' , next )
+			return this.table< $mol_app_inventory_domain_position_raw >( 'MOVEMENTS' , next )
 		}
 		
 		@ $mol_mem()
@@ -162,13 +162,20 @@ namespace $ {
 		position_count( id : string , next? : number ) {
 			if( next >= 0 ) {
 				const pos = this.position( id )
-				this.positions_table([{
-					R_MOVEMENT_ID : id ,
-					R_MATERIAL_ID : pos.product().id() ,
-					R_QUANTITY : next ,
-					R_COMMENT : pos.remark() ,
-					R_STATUS : $mol_app_inventory_domain_position_status.draft ,
-				}])
+				const row = this.position_rows_by_id()[ id ]
+				if( row.R_QUANTITY === next ) return next
+				
+				this.positions_table(
+					[
+						{
+							R_MOVEMENT_ID : id ,
+							R_MATERIAL_ID : pos.product().id() ,
+							R_QUANTITY : next ,
+							R_COMMENT : pos.remark() ,
+							R_STATUS : $mol_app_inventory_domain_position_status.draft ,
+						}
+					]
+				)
 			}
 			
 			return this.position_rows_by_id()[ id ].R_QUANTITY
@@ -204,9 +211,9 @@ namespace $ {
 			$mol_hyperhive.initialize( {
 				 host : "mobrun.sp.saprun.com" ,
 				 version : "v0.5" ,
-				 environment : "evraz" ,
-				 project : "project" ,
-				 application : "v1" ,
+				 environment : "demo" ,
+				 project : "demo" ,
+				 application : "inventory" ,
 			} )
 			
 			const creds = this.credentials()

@@ -17,6 +17,7 @@
 }
 [mol_app_inventory_position_title] {
 	display: block;
+	min-height: 1rem;
 }
 [mol_app_inventory_position_description] {
 	display: block;
