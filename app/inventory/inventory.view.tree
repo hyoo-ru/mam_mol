@@ -3,8 +3,8 @@ $mol_app_inventory $mol_view
 	sub /
 		<= Page null
 	Head $mol_app_inventory_head
-		keeper_show <= canWriteOff false
-		control_show <= canApprove false
+		keeper_show <= can_write_off false
+		control_show <= can_approve false
 	Enter $mol_app_inventory_enter
 		domain <= domain -
 	Controller $mol_app_inventory_controller

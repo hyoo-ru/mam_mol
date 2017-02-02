@@ -222,11 +222,11 @@ namespace $ {
 			return $mol_hyperhive.authentificated( creds )
 		}
 		
-		canWriteOff() {
+		can_write_off() {
 			return Boolean( this.credentials().login.match( 'keeper' ) )
 		}
 		
-		canApprove() {
+		can_approve() {
 			return Boolean( this.credentials().login.match( 'controller' ) )
 		}
 		

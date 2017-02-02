@@ -12,8 +12,8 @@ namespace $.$mol {
 				case 'stats': return this.Stats()
 			}
 			
-			if( this.canWriteOff() ) return this.Keeper()
-			if( this.canApprove() ) return this.Controller()
+			if( this.can_write_off() ) return this.Keeper()
+			if( this.can_approve() ) return this.Controller()
 			
 			return null
 		}
@@ -23,12 +23,12 @@ namespace $.$mol {
 			return $mol_state_arg.value( this.state_key( 'page' ) , next ) || ''
 		}
 		
-		canWriteOff() {
-			return this.domain().canWriteOff()
+		can_write_off() {
+			return this.domain().can_write_off()
 		}
 		
-		canApprove() {
-			return this.domain().canApprove()
+		can_approve() {
+			return this.domain().can_approve()
 		}
 		
 	}
