@@ -5,10 +5,12 @@ namespace $ {
 	export interface $mol_view_context {
 		$mol_view_visible_width() : number
 		$mol_view_visible_height() : number
+		$mol_view_state_key( suffix : string ) : string
 	}
 	
 	$mol_view_context.$mol_view_visible_width = () => $mol_window.size().width
 	$mol_view_context.$mol_view_visible_height = () => $mol_window.size().height
+	$mol_view_context.$mol_view_state_key = ( suffix : string )=> suffix
 
 	/// Reactive statefull lazy ViewModel 
 	export class $mol_view extends $mol_object {
@@ -22,24 +24,11 @@ namespace $ {
 			return this.Class().toString()
 		}
 		
-		static state_prefix() {
-			return ''
-		}
-		
 		@$mol_mem()
 		focused ( next?: boolean ) {
 			const value = $mol_view_selection.focused( next === void 0 ? void 0 : [ this.dom_node() ] )
 			return value.indexOf( this.dom_node() ) !== -1
 		} 
-		
-		state_prefix() {
-			const owner = this.object_owner()
-			return owner ? (<any>owner).state_prefix() : ''
-		}
-		
-		state_key( postfix : string ) {
-			return this.state_prefix() + postfix
-		}
 		
 		@ $mol_mem()
 		context( next? : $mol_view_context ) {
@@ -48,6 +37,10 @@ namespace $ {
 		
 		context_sub() {
 			return this.context()
+		}
+		
+		state_key( suffix = '' ) {
+			return this.context().$mol_view_state_key( suffix )
 		}
 		
 		/// Name of element that created when element not found in DOM

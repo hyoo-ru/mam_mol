@@ -4,7 +4,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		uri() {
-			return new $mol_state_arg( this.state_prefix() ).link( this.arg() )
+			return new $mol_state_arg( this.state_key() ).link( this.arg() )
 		}
 		
 		current() {
