@@ -1,5 +1,5 @@
 namespace $ {
-
+	
 	/// Common superclass that provides base functionality.
 	export class $mol_object {
 		
@@ -8,11 +8,7 @@ namespace $ {
 		}
 		
 		static toString() : string {
-			let self : any = this
-			return self[ 'name' ]
-				|| self[ 'displayName' ]
-				|| ( self[ 'displayName' ] = Function.prototype.toString.call( self )
-				.match( /^function ([a-z0-9_$]*)/ )[ 1 ] )
+			return $mol_func_name( this )
 		}
 		
 		/// Owner object.
