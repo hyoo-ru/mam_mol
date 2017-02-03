@@ -1,7 +1,6 @@
 [mol_app_inventory] {
 	width: 100%;
 	max-width: 60rem;
-	/*height: 100%;*/
 	display: flex;
 	margin: 0 auto;
 	flex: 1 1 auto;
