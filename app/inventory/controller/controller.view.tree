@@ -7,7 +7,7 @@ $mol_app_inventory_controller $mol_page
 	foot /
 		<= Controls_row $mol_row
 			sub /
-				<= Submit $mol_button_major
-					event_click?event <=> event_sanitize?event null
+				<= Sweep $mol_button_major
+					event_click?event <=> event_sweep?event null
 					sub /
-						<= submit_label @ \Remove approved
+						<= submit_label @ \Sweep approved

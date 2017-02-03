@@ -23,7 +23,7 @@ namespace $.$mol {
 			} )
 		}
 		
-		event_sanitize( next? : Event ) {
+		event_sweep( next? : Event ) {
 			this.positions().forEach( position => {
 				if( position.status() === 'approved' ) {
 					position.status( 'completed' )

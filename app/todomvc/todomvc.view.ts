@@ -125,7 +125,7 @@ namespace $.$mol {
 			this.task_ids( tasks )
 		}
 
-		event_sanitize() {
+		event_sweep() {
 			this.task_ids( this.task_ids().filter( id => {
 				if( !this.task( id ).completed ) return true
 				this.task( id , null )
@@ -145,7 +145,7 @@ namespace $.$mol {
 			return this.task_ids().length > 0
 		}
 
-		sanitize_enabled() {
+		sweep_enabled() {
 			return this.groups_completed()[ 'true' ].length > 0
 		}
 		
