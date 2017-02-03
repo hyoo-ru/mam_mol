@@ -104,6 +104,23 @@ namespace $ {
 			return min
 		}
 		
+		'view_classes()' : Function[]
+		view_classes() {
+			const proto = Object.getPrototypeOf( this ) as $mol_view
+			if( this[ 'view_classes()' ] ) return this[ 'view_classes()' ]
+			
+			let current = proto
+			const classes = [] as Function[]
+			
+			while( current ) {
+				classes.push( current.constructor )
+				if(!( current instanceof $mol_view )) break
+				current = Object.getPrototypeOf( current )
+			}
+			
+			return this['view_classes()'] = classes
+		}
+		
 		private 'dom_node()' : Element
 		
 		dom_node( next? : Element ) {
@@ -129,26 +146,22 @@ namespace $ {
 			this[ 'dom_node()' ] = next2
 			
 			/// Set BEM-like element-attributes with inheritance support
-			let ownerProto = this.object_owner() && Object.getPrototypeOf( this.object_owner() ) as $mol_object
-			if( ownerProto ) {
+			const owner = this.object_owner()
+			if( owner instanceof $mol_view ) {
 				const suffix = this.object_field().replace( /\(.*/ , '' )
 				const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1)
-				
-				while( ownerProto && ( ownerProto instanceof $mol_view ) && ( suffix in ownerProto ) ) {
-					const attrName = ownerProto.constructor.toString().replace( /\$/g , '' ) + suffix2
-					next2.setAttribute( attrName , '' )
-					ownerProto = Object.getPrototypeOf( ownerProto )
-				}
+				owner.view_classes().forEach( Class => {
+					if( suffix in Class.prototype ) {
+						const attrName = Class.toString().replace( /\$/g , '' ) + suffix2
+						next2.setAttribute( attrName , '' )
+					}
+				} )
 			}
 			
 			/// Set BEM-like block-attributes with inheritance support
-			let proto = Object.getPrototypeOf( this ) as $mol_view
-			while( proto ) {
-				const attrName = proto.constructor.toString().replace( /\$/g , '' ).toLowerCase()
-				next2.setAttribute( attrName , '' )
-				if(!( proto instanceof $mol_view )) break
-				proto = Object.getPrototypeOf( proto )
-			}
+			this.view_classes().forEach( Class => {
+				next2.setAttribute( Class.toString().replace( /\$/g , '' ).toLowerCase() , '' ) 
+			} )
 			
 			/// Bind properties to events
 			$mol_view.bind_event( next2 , this.event() )
@@ -285,14 +298,9 @@ namespace $ {
 		
 		event() : { [ key : string ] : ( event : Event )=> void } { return {} }
 		
+		'locale_contexts()' : string[]
 		locale_contexts() {
-			const contexts = [] as string[]
-			let proto = Object.getPrototypeOf( this ) as $mol_view
-			while( proto && ( proto instanceof $mol_view ) ) {
-				contexts.push( proto.constructor.toString() )
-				proto = Object.getPrototypeOf( proto )
-			}
-			return contexts
+			return this['locale_contexts()'] || ( this[ 'locale_contexts()' ] = this.view_classes().map( String ) )
 		}
 		
 	}
