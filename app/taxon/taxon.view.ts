@@ -30,7 +30,7 @@ namespace $.$mol {
 			}
 			
 			resource.json().d.results.forEach( row => {
-				const parent = hierarchy[ row.ParentId ]
+				const parent = hierarchy[ row.ParentId || '' ]
 				const node = hierarchy[ row.KeyId ] = {
 					id : `${ row.KeyId }` ,
 					parent ,
