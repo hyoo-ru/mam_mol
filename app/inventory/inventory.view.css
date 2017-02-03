@@ -3,8 +3,9 @@
 	max-width: 60rem;
 	/*height: 100%;*/
 	display: flex;
-	margin: auto;
+	margin: 0 auto;
 	flex: 1 1 auto;
+	align-self: stretch;
 }
 
 [mol_app_inventory_head] {
