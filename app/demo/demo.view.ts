@@ -114,7 +114,7 @@ namespace $.$mol {
 		}
 		
 		@$mol_mem() 
-		Main_content() {
+		main_content() {
 			const names = this.names_demo()
 			switch( names.length ) {
 				case 0 :

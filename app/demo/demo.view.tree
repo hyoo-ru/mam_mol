@@ -2,7 +2,7 @@ $mol_app_demo $mol_stack
 	main /
 		<= Detail $mol_app_demo_page
 			title <= detail_title \
-			body <= Main_content /
+			body <= main_content /
 	addon /
 		<= Menu $mol_page
 			head /
