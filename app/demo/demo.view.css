@@ -38,7 +38,6 @@
 [mol_app_demo_list] {
 	display: flex;
 	flex-wrap: wrap;
-	/*height: 100%;*/
 	padding: .5rem;
 	align-content: flex-start;
 	align-items: flex-start;
