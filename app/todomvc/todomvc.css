@@ -136,15 +136,15 @@
 	box-shadow: none;
 }
 
-[mol_app_todomvc_sanitize] {
+[mol_app_todomvc_sweep] {
 	flex: 0 1 auto;
 	padding: .25rem;
 }
-[mol_app_todomvc_sanitize][disabled] {
+[mol_app_todomvc_sweep][disabled] {
 	visibility: hidden;
 }
 
-[mol_app_todomvc_sanitize]:hover ,
-[mol_app_todomvc_sanitize]:focus {
+[mol_app_todomvc_sweep]:hover ,
+[mol_app_todomvc_sweep]:focus {
 	text-decoration: underline;
 }

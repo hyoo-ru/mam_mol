@@ -88,7 +88,9 @@ namespace $.$mol {
 		
 		task( id : number , next? : $mol_app_todomvc_task ) {
 			const key = this.state_key( `mol-todos-${id}` )
-			if( next === void 0 ) return $mol_state_local.value( key ) || { title : '' , completed : false }
+			if( next === void 0 ) {
+				return $mol_state_local.value<$mol_app_todomvc_task>( key ) || { title : '' , completed : false }
+			}
 			
 			$mol_state_local.value( key , next )
 			
@@ -123,7 +125,7 @@ namespace $.$mol {
 			this.task_ids( tasks )
 		}
 
-		event_sanitize() {
+		event_sweep() {
 			this.task_ids( this.task_ids().filter( id => {
 				if( !this.task( id ).completed ) return true
 				this.task( id , null )
@@ -143,7 +145,7 @@ namespace $.$mol {
 			return this.task_ids().length > 0
 		}
 
-		sanitize_enabled() {
+		sweep_enabled() {
 			return this.groups_completed()[ 'true' ].length > 0
 		}
 		

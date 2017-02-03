@@ -17,7 +17,7 @@ namespace $ {
 		native() {
 			if( this[ 'native()' ] ) return this[ 'native()' ]
 			
-			var next = this[ 'native()' ] = $mol_http_request_native()
+			var next = this[ 'native()' ] = new $mol_dom_context.XMLHttpRequest
 			
 			next.withCredentials = Boolean( this.credentials() )
 			

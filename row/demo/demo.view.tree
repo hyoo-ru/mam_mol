@@ -1,9 +1,9 @@
 $mol_row_demo $mol_row
 	minimal_height 68
 	sub /
-		<= titler $mol_suggest
+		<= titler $mol_search
 			hint <= helloHint @ \Title
-			value?val <=> title?val \
+			query?val <=> title?val \
 			suggests /
 				<= suggest1 @ \Hello
 				<= suggest2 @ \World

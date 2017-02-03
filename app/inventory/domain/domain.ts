@@ -1,24 +1,46 @@
 namespace $ {
 	
+	export const $mol_app_inventory_domain_position_status = {
+		draft : 'Inserted' ,
+		approved : 'Approved' ,
+		completed : 'Completed' ,
+		pending : 'Pending' ,
+		rejected : 'Rejected' ,
+	}
+	
+	export interface $mol_app_inventory_domain_product_raw {
+		R_MATERIAL_ID : string
+		R_BARCODE : string
+		R_NAME : string
+	}
+	
+	export interface $mol_app_inventory_domain_position_raw {
+		R_MOVEMENT_ID : string
+		R_MATERIAL_ID : string
+		R_QUANTITY : number
+		R_COMMENT : string
+		R_STATUS : typeof $mol_app_inventory_domain_position_status[ keyof typeof $mol_app_inventory_domain_position_status ]
+	}
+	
 	export class $mol_app_inventory_domain extends $mol_object {
 		
-		table< Row >( name : string ) {
+		table< Row >( name : string , next? : Row[] ) {
 			const creds = this.credentials()
-			const uri = `http://${ creds.login }:${ creds.password }@hh.saprun.com/sync/v0.4/dev-env/dev-prj/app/`
+			const uri = `https://${ creds.login }:${ creds.password }@mobrun.sp.saprun.com/api/v0.5/data/demo/demo/inventory/`
 			return $mol_hyperhive.data< Row[] >( {
 				uri : uri ,
 				table : name ,
-			} )
+			} , next )
 		}
 		
 		@ $mol_mem()
 		products_table() {
-			return this.table< $mol_app_inventory_domain_product_raw >( 'GET_MATERIALS' )
+			return this.table< $mol_app_inventory_domain_product_raw >( 'MATERIALS' )
 		}
 		
 		@ $mol_mem()
-		positions_table() {
-			return this.table< $mol_app_inventory_domain_product_raw >( 'GET_MOVEMENTS' )
+		positions_table( next? : $mol_app_inventory_domain_position_raw[] ) {
+			return this.table< $mol_app_inventory_domain_position_raw >( 'MOVEMENTS' , next )
 		}
 		
 		@ $mol_mem()
@@ -32,7 +54,8 @@ namespace $ {
 		}
 		
 		product_by_code( code : string ) {
-			return this.product( this.product_rows_by_code()[ code ].R_MATERIAL_ID )
+			let row = this.product_rows_by_code()[ code ]
+			return row ? this.product( row.R_MATERIAL_ID ) : null
 		}
 		
 		@ $mol_mem()
@@ -46,11 +69,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		positions_dict() {
+		position_rows_by_id() {
 			const table = this.positions_table()
 			const dict : { [ code : string ] : $mol_app_inventory_domain_position_raw } = {}
 			table.forEach( row => {
-				dict[ row.R_MATERIAL_ID ] = row
+				dict[ row.R_MOVEMENT_ID ] = row
 			} )
 			return dict
 		}
@@ -60,49 +83,122 @@ namespace $ {
 			return this.products_table().map( row => this.product( row.R_MATERIAL_ID ) )
 		}
 		
-		@ $mol_mem()
-		product( code : string ) {
+		@ $mol_mem_key()
+		product( id : string ) {
 			const next = new $mol_app_inventory_domain_product
-			next.code = $mol_const( code )
-			next.title = ()=> this.product_rows_by_id()[ code ].R_NAME
+			next.id = $mol_const( id )
+			next.code = ()=> this.product_code( id )
+			next.title = ()=> this.product_title( id )
 			return next
+		}
+		
+		product_code( id : string ) {
+			return this.product_rows_by_id()[ id ].R_BARCODE
+		}
+		
+		product_title( id : string ) {
+			return this.product_rows_by_id()[ id ].R_NAME
 		}
 		
 		@ $mol_mem()
 		positions( next? : $mol_app_inventory_domain_position[] ) : $mol_app_inventory_domain_position[] {
-			const codes = next && next.map( position => {
-				return position.product().code()
+			
+			const table = next && next.map( position => {
+				return {
+					R_MOVEMENT_ID : position.id() ,
+					R_MATERIAL_ID : position.product().id() ,
+					R_QUANTITY : position.count() ,
+					R_COMMENT : position.remark() ,
+					R_STATUS : $mol_app_inventory_domain_position_status[ position.status() ]
+				}
 			} )
 			
-			const codes2 : string[] = $mol_state_local.value<string[]>( 'positions' , codes ) || <string[]>[]
-			
-			return codes2.map( code => this.position( code ) )
-			//return next || this.positionsTable().map( row => this.position( row.R_MATERIAL_ID ) )
+			return this.positions_table( table )
+			.map( row => this.position( row.R_MOVEMENT_ID ) )
+			.filter( position => position.status() )
 		}
 		
-		//position( productId : string ) : $mol_app_inventory_domain_position {
-		//	const next = new $mol_app_inventory_domain_position()
-		//	next.product = ()=> this.product( productId )
-		//	return next
-		//}
+		@ $mol_mem()
+		positions_by_product_id() {
+			const positions = this.positions()
+			const dict : { [ code : string ] : $mol_app_inventory_domain_position } = {}
+			positions.forEach( position => {
+				if( position.status() === 'completed' ) return
+				dict[ position.product().id() ] = position
+			} )
+			return dict
+		}
 		
 		@ $mol_mem_key()
-		position( productCode : string ) {
+		position_by_product_id( product_id : string ) {
+			let position = this.positions_by_product_id()[ product_id ]
+			if( position ) return position
+			
+			this.positions_table([{
+				R_MOVEMENT_ID : null ,
+				R_MATERIAL_ID : product_id ,
+				R_STATUS : $mol_app_inventory_domain_position_status.draft ,
+				R_QUANTITY : 0 ,
+				R_COMMENT : '' ,
+			}])
+			
+			return this.positions_by_product_id()[ product_id ]
+		}
+		
+		@ $mol_mem_key()
+		position( id : string ) {
 			const next = new $mol_app_inventory_domain_position()
-			next.product = ()=> this.product( productCode )
-			next.count = ( next? )=> this.position_count( productCode , next )
-			next.status = ( next? )=> this.position_status( productCode , next )
+			next.id = $mol_const( id )
+			next.product = ()=> this.position_product( id )
+			next.count = ( next? )=> this.position_count( id , next )
+			next.status = ( next? )=> this.position_status( id , next )
 			return next
 		}
 		
-		position_count( productCode : string , next? : number ) {
-			const key = `positionCount(${ JSON.stringify( productCode ) })`
-			return $mol_state_local.value( key , next ) || 0
+		position_product( id : string , next? : $mol_app_inventory_domain_product ) {
+			return this.product( this.position_rows_by_id()[ id ].R_MATERIAL_ID )
 		}
 		
-		position_status( productCode : string , next? : $mol_app_inventory_domain_position_status ) {
-			const key = `positionStatus(${ JSON.stringify( productCode ) })`
-			return $mol_state_local.value( key , next ) || $mol_app_inventory_domain_position_status.draft
+		position_count( id : string , next? : number ) {
+			if( next >= 0 ) {
+				const pos = this.position( id )
+				const row = this.position_rows_by_id()[ id ]
+				if( row.R_QUANTITY === next ) return next
+				
+				this.positions_table(
+					[
+						{
+							R_MOVEMENT_ID : id ,
+							R_MATERIAL_ID : pos.product().id() ,
+							R_QUANTITY : next ,
+							R_COMMENT : pos.remark() ,
+							R_STATUS : $mol_app_inventory_domain_position_status.draft ,
+						}
+					]
+				)
+			}
+			
+			return this.position_rows_by_id()[ id ].R_QUANTITY
+		}
+		
+		position_status( id : string , next? : keyof typeof $mol_app_inventory_domain_position_status ) {
+			const remap = {}
+			for( let key in $mol_app_inventory_domain_position_status ) {
+				remap[ $mol_app_inventory_domain_position_status[ key ] ] = key
+			}
+			
+			if( next ) {
+				const pos = this.position( id )
+				this.positions_table([{
+					R_MOVEMENT_ID : id ,
+					R_MATERIAL_ID : pos.product().id() ,
+					R_QUANTITY : pos.count() ,
+					R_COMMENT : pos.remark() ,
+					R_STATUS : $mol_app_inventory_domain_position_status[ next ] ,
+				}])
+			}
+			
+			return remap[ this.position_rows_by_id()[ id ].R_STATUS ]
 		}
 		
 		@ $mol_mem()
@@ -110,11 +206,28 @@ namespace $ {
 			return $mol_state_session.value( 'credentials' , next )
 		}
 		
+		@ $mol_mem()
 		authentificated() {
+			$mol_hyperhive.initialize( {
+				 host : "mobrun.sp.saprun.com" ,
+				 version : "v0.5" ,
+				 environment : "demo" ,
+				 project : "demo" ,
+				 application : "inventory" ,
+			} )
+			
 			const creds = this.credentials()
 			if( !creds ) return false
 			
-			return true
+			return $mol_hyperhive.authentificated( creds )
+		}
+		
+		can_write_off() {
+			return Boolean( this.credentials().login.match( 'keeper' ) )
+		}
+		
+		can_approve() {
+			return Boolean( this.credentials().login.match( 'controller' ) )
 		}
 		
 		message() : string {
@@ -123,23 +236,17 @@ namespace $ {
 		
 	}
 	
-	export interface $mol_app_inventory_domain_product_raw {
-		R_MATERIAL_ID : string ,
-		R_BARCODE : string ,
-		R_NAME : string ,
-	}
-	
-	export interface $mol_app_inventory_domain_position_raw {
-		R_BARCODE : string ,
-	}
-	
 	export class $mol_app_inventory_domain_product extends $mol_object {
+		id() : string { return void 0 }
 		code() : string { return void 0 }
 		title() : string { return void 0 }
 		description() : string { return void 0 }
 	}
 	
 	export class $mol_app_inventory_domain_position extends $mol_object {
+		
+		id() : string { return void 0 }
+		
 		product() : $mol_app_inventory_domain_product { return void 0 }
 		
 		@ $mol_mem()
@@ -148,18 +255,15 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		status( next? : $mol_app_inventory_domain_position_status ) {
-			return next || $mol_app_inventory_domain_position_status.draft
+		status( next? : keyof typeof $mol_app_inventory_domain_position_status ) {
+			return next || 'draft' as keyof typeof $mol_app_inventory_domain_position_status
 		}
 		
-	}
-	
-	export enum $mol_app_inventory_domain_position_status {
-		draft = 'draft' as any ,
-		pending = 'pending' as any ,
-		rejected = 'rejected' as any ,
-		approved = 'approved' as any ,
-		completed = 'completed' as any ,
+		@ $mol_mem()
+		remark( next? : string ) {
+			return next
+		}
+		
 	}
 	
 }

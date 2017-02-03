@@ -96,10 +96,8 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		widget( name : string ) {
-			var Class : typeof $mol_view = (<{[index : string]:any}>$)[ '$' + name ]
-			return new Class().setup( obj => {
-				obj.state_prefix = () => this.state_prefix() + name + '.'
-			} )
+			const Class : typeof $mol_view = (<{[index : string]:any}>$)[ '$' + name ]
+			return new Class()
 		}
 		
 		detail_title() {
@@ -113,8 +111,8 @@ namespace $.$mol {
 			return names
 		}
 		
-		@$mol_mem() 
-		Main_content() {
+		@ $mol_mem() 
+		main_content() {
 			const names = this.names_demo()
 			switch( names.length ) {
 				case 0 :

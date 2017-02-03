@@ -4,6 +4,7 @@ namespace $ {
 		Node : typeof Node
 		Element : typeof Element
 		HTMLElement : typeof HTMLElement
+		XMLHttpRequest : typeof XMLHttpRequest
 	}
 	
 }

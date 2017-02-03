@@ -15,17 +15,9 @@ namespace $ {
 			return $mol_file.absolute( $node.path.resolve( path ).replace( /\\/g , '/' ) )
 		}
 		
-		mime() {
-			return 'application/octet-stream'
-		}
-		
 		path() {
 			return '.'
 		}
-		
-		//toString() {
-		//	return this.path()
-		//}
 		
 		@ $mol_mem()
 		watcher() {

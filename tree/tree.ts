@@ -96,7 +96,7 @@ namespace $ {
 					var deep = indent.length
 					var types = path ? path.split( / +/ ) : []
 					
-					if( stack.length < deep ) throw new Error( `Too many tabs at ${baseUri}#${row}\n${line}` )
+					if( stack.length <= deep ) throw new Error( `Too many tabs at ${baseUri}#${row}\n${line}` )
 					
 					stack.length = deep + 1
 					var parent = stack[ deep ];

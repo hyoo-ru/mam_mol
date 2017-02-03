@@ -3,6 +3,8 @@ $mol_app_inventory $mol_view
 	sub /
 		<= Page null
 	Head $mol_app_inventory_head
+		keeper_show <= can_write_off false
+		control_show <= can_approve false
 	Enter $mol_app_inventory_enter
 		domain <= domain -
 	Controller $mol_app_inventory_controller
@@ -15,19 +17,22 @@ $mol_app_inventory $mol_view
 		Head <= Head -
 		domain <= domain -
 
-$mol_app_inventory_head $mol_row sub /
-	<= Keeper_link $mol_link
-		arg *
-			page \keeper
-		sub /
-			<= keeper_label @ \Keeper
-	<= Control_link $mol_link
-		arg *
-			page \controller
-		sub /
-			<= control_label @ \Controller
-	- <= Stats_link $mol_link
-		arg *
-			page \stats
-		sub /
-			<= stats_label @ \Stats
+$mol_app_inventory_head $mol_row
+	keeper_show false
+	control_show false
+	sub /
+		<= Keeper_link $mol_link
+			arg *
+				page \keeper
+			sub /
+				<= keeper_label @ \Keeper
+		<= Control_link $mol_link
+			arg *
+				page \controller
+			sub /
+				<= control_label @ \Controller
+		<= Stats_link $mol_link
+			arg *
+				page \stats
+			sub /
+				<= stats_label @ \Stats

@@ -9,6 +9,10 @@
 	margin: 0;
 }
 
+[mol_app_demo_filter_string] {
+	width: 100%;
+}
+
 [mol_app_demo_nav_head] {
 	padding: 0;
 }
