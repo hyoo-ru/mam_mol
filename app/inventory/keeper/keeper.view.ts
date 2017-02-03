@@ -3,11 +3,11 @@ namespace $.$mol {
 	
 	export class $mol_app_inventory_keeper extends $.$mol_app_inventory_keeper {
 		
-		position( code : string ) {
-			return this.domain().position( code )
+		position( id : string ) {
+			return this.domain().position( id )
 		}
 		
-		@$mol_mem()
+		@ $mol_mem()
 		code_new( next? : string ) {
 			if( next === void 0 ) return ''
 			
@@ -16,30 +16,23 @@ namespace $.$mol {
 			const product = domain.product_by_code( next )
 			if( !product ) return next
 			
-			let positions = domain.positions()
-			const position = domain.position( product.code() )
-			
-			if( positions.indexOf( position ) === -1 ) {
-				positions = positions.concat( position )
-				domain.positions( positions )
-			}
+			const position = domain.position_by_product_id( product.id() )
 			
 			position.count( position.count() + 1 )
-			position.status( $mol_app_inventory_domain_position_status.draft )
 			
 			return '';
 		}			
 		
 		@ $mol_mem()
 		position_rows() {
-			return this.positions().map( position => this.Position_row( position.product().code() ) )
+			return this.positions().map( position => this.Position_row( position.id() ) )
 		}
 		
 		positions() {
 			return this.domain().positions().filter( position => {
 				switch( position.status() ) {
-					case $mol_app_inventory_domain_position_status.draft : return true
-					case $mol_app_inventory_domain_position_status.rejected : return true
+					case 'draft' : return true
+					case 'rejected' : return true
 				}
 				return false
 			} )
@@ -47,7 +40,7 @@ namespace $.$mol {
 		
 		event_submit( next? : Event ) {
 			this.positions().forEach( position => {
-				position.status( $mol_app_inventory_domain_position_status.pending )
+				position.status( 'pending' )
 			} )
 		}
 		

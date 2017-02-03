@@ -43,10 +43,10 @@ $mol_app_todomvc $mol_scroll
 												<= filter_completed_label @ \Completed
 											arg *
 												completed true
-								<= Sanitize $mol_button_minor
-									enabled <= sanitize_enabled true
-									event_click?event <=> event_sanitize?event null
-									sub / <= sanitize_label @ \Clear completed
+								<= Sweep $mol_button_minor
+									enabled <= sweep_enabled true
+									event_click?event <=> event_sweep?event null
+									sub / <= sweep_label @ \Clear completed
 	Task_row!id $mol_app_todomvc_task_row
 		completed?val <=> task_completed!id?val false
 		title?val <=> task_title!id?val \

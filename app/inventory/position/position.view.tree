@@ -10,6 +10,7 @@ $mol_app_inventory_position $mol_row
 					sub /
 						<= description \
 		<= Count $mol_number
+			enabled <= count_editable true
 			value?val <=> count?val 0
 		<= Status $mol_switch
 			value?val <=> status?val null

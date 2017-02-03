@@ -8,7 +8,7 @@ namespace $.$mol {
 			return next || ''
 		}
 		
-		@$mol_mem()
+		@ $mol_mem()
 		options_showed( val? : boolean ) {
 			if( !this.focused() ) return false
 			
@@ -19,7 +19,7 @@ namespace $.$mol {
 			return false
 		}
 		
-		@$mol_mem()
+		@ $mol_mem()
 		options() {
 			return Object.keys( this.dictionary() )
 		}
@@ -57,7 +57,7 @@ namespace $.$mol {
 			else return this.option_content( id )
 		}
 		
-		@$mol_mem()
+		@ $mol_mem()
 		option_focused( component : $mol_view ) {
 			if( component === void 0 ) return this.Filter_string()
 			

@@ -24,7 +24,7 @@ namespace $ {
 			return this.Class().toString()
 		}
 		
-		@$mol_mem()
+		@ $mol_mem()
 		focused ( next?: boolean ) {
 			const value = $mol_view_selection.focused( next === void 0 ? void 0 : [ this.dom_node() ] )
 			return value.indexOf( this.dom_node() ) !== -1
