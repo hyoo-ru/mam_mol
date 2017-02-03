@@ -1,6 +1,6 @@
 [mol_number] {
 	display: flex;
-	flex: 0 1 auto;
+	flex: 0 1 8rem;
 	position: relative;
 	align-items: stretch;
 	max-width: 100%;
@@ -15,6 +15,7 @@
 	text-align: right;
 	position: relative;
 	flex: 1 1 auto;
+	width: 3rem;
 }
 
 [mol_number_string]::-webkit-inner-spin-button {
