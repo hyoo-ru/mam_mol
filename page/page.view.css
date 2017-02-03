@@ -30,7 +30,7 @@
 
 [mol_page_body] {
 	flex: 1 1 auto;
-	/*height: 100%;*/
+	height: inherit;
 	margin: 0;
 	background: var(--mol_skin_light);
 	color: var(--mol_skin_light_text);
