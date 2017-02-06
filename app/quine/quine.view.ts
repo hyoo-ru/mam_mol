@@ -12,7 +12,7 @@ namespace $.$mol {
 			]
 			
 			const sources = paths.map( path => {
-				return $mol_http_resource.item( path ).text()
+				return $mol_file.relative( path ).content()
 			} )
 			
 			const content = sources.map( ( source , index )=> {

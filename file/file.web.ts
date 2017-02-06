@@ -12,18 +12,19 @@ namespace $ {
 		}
 		
 		static relative( path : string ) : $mol_file {
-			
-			if( /^[\w-]+:/.test( path ) ) {
-				return $mol_file.absolute( path )
+			if( /^\//.test( path ) ) {
+				return $mol_file.root().resolve( path.substring(1) )
 			}
-			
-			if( /^\/[^\/]/.test( path ) ) {
-				const prefix = $mol_dom_context.document.location.href.replace( /([^\/])\/[^\/]+.*/ , '$1' )
-				return $mol_file.absolute( prefix + path )
-			}
-			
-			const prefix = $mol_dom_context.document.location.href.replace( /[\?#].*$/ , '' ).replace( /\/[^\/]*$/ , '/' )
-			return $mol_file.absolute( prefix + path )
+			return $mol_file.base().resolve( path )
+		}
+		
+		static root() {
+			return $mol_file.absolute( '' )
+		}
+		
+		static base() {
+			const path = $mol_dom_context.document.location.pathname.replace( /\/[^\/]*$/ , '' )
+			return $mol_file.absolute( path )
 		}
 		
 		path() {
@@ -49,7 +50,21 @@ namespace $ {
 		}
 		
 		resolve( path : string ) : $mol_file {
-			return this.Class().relative( path )
+			let res = this.path() + '/' + path
+			
+			while( true ) {
+				let prev = res
+				res = res.replace( /\/[^\/]+\/\.\.\// , '/' )
+				if( prev === res ) break
+			}
+			
+			while( true ) {
+				let prev = res
+				res = res.replace( /\/\.\.\/[^\/]+\// , '/' )
+				if( prev === res ) break
+			}
+			
+			return this.Class().absolute( res )
 		}
 		
 		relate( base = this.Class().relative( '.' ) ) {
