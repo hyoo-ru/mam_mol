@@ -1,6 +1,7 @@
 [mol_app_inventory_position] {
 	display: flex;
 	margin-bottom: 1px;
+	align-items: flex-start;
 }
 [mol_app_inventory_position_product] {
 	flex: 1000 1000 10rem;
