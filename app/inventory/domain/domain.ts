@@ -178,7 +178,7 @@ namespace $ {
 				)
 			}
 			
-			return this.position_rows_by_id()[ id ].R_QUANTITY
+			return Number( this.position_rows_by_id()[ id ].R_QUANTITY )
 		}
 		
 		position_status( id : string , next? : keyof typeof $mol_app_inventory_domain_position_status ) {
