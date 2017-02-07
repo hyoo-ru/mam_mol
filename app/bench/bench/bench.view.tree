@@ -1,6 +1,10 @@
-$mol_app_bench $mol_stack
-	-
-	main /
+$mol_app_bench $mol_view
+	sub /
+		<= Addon_page $mol_page
+			title <= addon_title @ \Samples
+			body /
+				<= Menu $mol_list
+					rows <= menu_options /
 		<= Main_page $mol_page
 			title <= title -
 			body /
@@ -14,13 +18,6 @@ $mol_app_bench $mol_stack
 						col_sort?val <=> result_col_sort?val \
 				<= Sandbox $mol_view
 					dom_name \iframe
-	-
-	addon /
-		<= Addon_page $mol_page
-			title <= addon_title @ \Samples
-			body /
-				<= Menu $mol_list
-					rows <= menu_options /
 	-
 	Menu_option!id $mol_check_box
 		minimal_height 36

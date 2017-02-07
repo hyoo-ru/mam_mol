@@ -1,5 +1,7 @@
 [mol_app_bench] {
 	margin: 0;
+	display: flex;
+	align-self: stretch;
 }
 
 [mol_app_bench_main_page] > [mol_page_body] {
