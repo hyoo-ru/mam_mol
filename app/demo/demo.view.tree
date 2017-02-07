@@ -29,11 +29,12 @@ $mol_app_demo $mol_stack
 			<= detail_empty_postfix @ \"
 	
 $mol_app_demo_page $mol_page
-	head /
-		<= Back $mol_link
-			sub / <= Back_icon $mol_icon_chevron
-			arg <= back_arg * demo null
-		<= Title -
+	tools /
+		<= Close $mol_link
+			sub /
+				<= Close_icon $mol_icon_cross
+			arg <= close_arg *
+				demo null
 
 $mol_app_demo_nav $mol_grid
 	row_height 32

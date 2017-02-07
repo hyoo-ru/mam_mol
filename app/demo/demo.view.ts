@@ -111,6 +111,11 @@ namespace $.$mol {
 			return names
 		}
 		
+		main() {
+			if( !this.selected() ) return []
+			return super.main()
+		}
+		
 		@ $mol_mem() 
 		main_content() {
 			const names = this.names_demo()

@@ -67,15 +67,10 @@
 	padding: .5rem;
 }
 
-[mol_app_demo_page_back] {
-	color: var(--mol_skin_base_text);
-	display: flex;
+[mol_app_demo_page_close] {
+	color: inherit;
 	align-items: center;
-	margin-right: -1rem;
-}
-
-[mol_app_demo_page_back_icon] {
-	transform: rotateZ(180deg);
+	padding: 1rem;
 }
 
 [mol_app_demo_welcome] {

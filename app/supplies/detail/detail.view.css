@@ -13,11 +13,10 @@
 	margin: 1rem 0;
 }
 
-[mol_app_supplies_detail_back] {
-	color: var(--mol_skin_base_text);
-	display: flex;
+[mol_app_supplies_detail_close] {
+	color: inherit;
 	align-items: center;
-	margin-right: -1rem;
+	padding: 1rem;
 }
 
 [mol_app_supplies_detail_back_icon] {
@@ -51,6 +50,6 @@
 	margin: 0;
 }
 
-[mol_app_supplies_detail_tools] {
+[mol_app_supplies_detail_actions] {
 	padding: 0;
 }
