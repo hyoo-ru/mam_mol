@@ -141,6 +141,10 @@ namespace $ {
 				}
 			}
 			
+			this.plugins().forEach( ( plugin ) => {
+				plugin.dom_node( next2 )
+			} )
+			
 			next2.id = path
 			void( (<any>next2)[ '$mol_view' ] = this )
 			this[ 'dom_node()' ] = next2
@@ -277,7 +281,6 @@ namespace $ {
 				$mol_view.render_field( node , this.field() )
 				
 				this.plugins().forEach( ( plugin ) => {
-					plugin.dom_node( this.dom_node() )
 					plugin.dom_tree()
 				} )
 				

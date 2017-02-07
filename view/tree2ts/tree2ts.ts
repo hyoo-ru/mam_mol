@@ -87,9 +87,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 							if( over.sub[0].type === '=>' ) {
 								if( over.sub[0].sub.length === 1 ) {
 									const method_name = over.sub[0].sub[0].type
-									members[ method_name ] = `${ method_name } () {
-										return this.${ param.type }().${ over.type }()
-									}`
+									members[ method_name ] = `\t${ method_name }(){\n\t\treturn this.${ param.type }().${ over.type }()\n\t}\n\n`
 								 	return
 								}
 							}

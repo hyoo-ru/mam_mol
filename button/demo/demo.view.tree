@@ -1,5 +1,8 @@
 $mol_button_demo_major_enabled $mol_button_major
-	sub / <= label @ \Click me!
+	plugins /
+		<= Meter $mol_meter
+			width => width
+	sub / <= width - label @ \Click me!
 
 $mol_button_demo_minor_enabled $mol_button_minor
 	sub / <= label @ \Or click me..
