@@ -4,55 +4,70 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Features
 
-* [Zero configuration](#zero-configuration). Just checkout and use it. 
+* [Zero configuration](#zero-configuration). Just checkout and use it.
 * [Lazy rendering/evaluating/loading etc](#lazyness).
 * [Full reactivity](#reactivity) in all application layers. Not only between View and ViewModel.
-* [Automatic dependency tracking](#reactivity) between reactive containers. No need to manual (un)subscribe and streams routing.
+* [Automatic dependency tracking](#reactivity) between reactive containers. No need to manual publish/subscribe/unsubscribe and streams routing.
 * [Effective state synchronization](atom) in right way. 
-* Automatic include modules in package at compile time. No need to manual import them. [Just use it](#zero-configuration).
+* Automatic include modules to package at compile time. No need to manual import them. [Just use it](#zero-configuration).
 * Very small modules. [All of them are optional](#zero-configuration).
-* Cross platform. [Support any environment](#zero-configuration) (NodeJS, Web, Cordova).
+* Cross platform. [Support any environment](#zero-configuration) (NodeJS, Web browsers, Cordova).
 * Static typing ([TypeScript](https://www.typescriptlang.org/)). Full IDE support.
 * Full customization. No implementation hiding. [All aspects are overridable](#lego-components).
 * [Lifecycle management](#reactivity). Automatic destroy of unnecessary objects.
-* [Easy debugging](#debugging). User readable id's of all objects. Quick access to all objects from console.
+* [Easy debugging](#debugging). User friendly id's of all objects. Quick access to all objects from console.
 * Easy [user friendly logging](#debugging) of all state changes.
-* Pseudosynchronous code. [Asynchrony is abstracted by reactivity](#reactivity). No callbacks/promises/streams hell. No async/awiat/yield virus.
+* Pseudosynchronous code. [Asynchrony is abstracted by reactivity](#reactivity). No callbacks/promises/streams hell. No async/await/yield virus.
 * Automatic [BEM](https://en.bem.info/methodology/naming-convention/)-attributes generation for elements.
 
 # [Demo applications](demo)
 
-* [$mol_app_hello](app/hello) - very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
-* [$mol_app_demo](app/demo) - demonstrates all components ([online](http://eigenmethod.github.io/mol/))
+* [$mol_app_hello](app/hello) - Very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
+* [$mol_app_demo](app/demo) - Demonstration of all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/))
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
-* [$mol_app_signup](app/signup) - simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
+* [$mol_app_signup](app/signup) - Simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
 * [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
-* [$mol_app_taxon](app/taxon) - Displays big hierarchical table from database ([online](http://eigenmethod.github.io/mol/app/taxon/demo/))
-* [$mol_app_bench](app/bench) - abstract benchmarking interface ([online](http://eigenmethod.github.io/mol/app/bench/))
+* [$mol_app_taxon](app/taxon) - Big hierarchical table wild database ([online](http://eigenmethod.github.io/mol/app/taxon/demo/))
+* [$mol_app_bench](app/bench) - Abstract benchmarking interface ([online](http://eigenmethod.github.io/mol/app/bench/))
 
 # Benchmarks
 
-* [$mol_app_bench_list](app/bench/list) - frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/#becnh=list#sort=fill#))
+* [$mol_app_bench_list](app/bench/list) - Frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/#becnh=list#sort=fill#))
 * [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark)
 ([online](https://eigenmethod.github.io/mol/app/bench/#bench=%2Ftodomvc%2Fbenchmark%2F#sample=angular2~angularjs~knockoutjs~mol~polymer~react-alt~vanillajs~vue#sort=fill#))
-* [WebPageTest - loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
+* [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
 
 # Articles
 
-* [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/)
-* [$mol_atom: теория и практика реактивности](https://habrahabr.ru/post/317360/)
-* [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/)
-* [React'ивные Panel'и](https://habrahabr.ru/post/314752/)
-* [Tree — убийца JSON, XML, YAML и иже с ними](https://habrahabr.ru/post/248147/)
-* [Атом — минимальный кирпичик FRP приложения](https://habrahabr.ru/post/235121/)
-* [Принципы написания кода](https://habrahabr.ru/post/236785/)
+* [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Сomprehensive $mol review
+* [$mol_atom: теория и практика реактивности](https://habrahabr.ru/post/317360/) - Object oriented reactive programming
+* [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/) - Problems of popular frameworks
+* [React'ивные Panel'и](https://habrahabr.ru/post/314752/) - JSX vs view.tree
+* [Tree — убийца JSON, XML, YAML и иже с ними](https://habrahabr.ru/post/248147/) - Tree format description
+* [Атом — минимальный кирпичик FRP приложения](https://habrahabr.ru/post/235121/) - Theory of reactive containers
+* [Принципы написания кода](https://habrahabr.ru/post/236785/) - Code style principles
+
+# Any questions?
+
+* [Ask us](https://github.com/eigenmethod/mol/issues/new?labels=question)
+* [All answers](https://github.com/eigenmethod/mol/labels/question)
+
+# Found a bug?
+
+* [Report it](https://github.com/eigenmethod/mol/issues/new?labels=bug)
+* [All bugs](https://github.com/eigenmethod/mol/labels/bug)
+
+# Need feature?
+
+* [Suggest it](https://github.com/eigenmethod/mol/issues/new?labels=improvement)
+* [Vote for other](https://github.com/eigenmethod/mol/labels/improvement)
 
 # Quick start
 
 **Create MAM project**
 
-Easy way is checkout [this preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
+Easy way is checkout this [preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
 
 ```sh
 git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
@@ -75,13 +90,13 @@ Add **web entry point** at `./my/hello/index.html`:
 <!-- Force utf-8 encoding -->
 <meta charset="utf-8" />
 	
-<!-- Disable modile browser auto zoom, $mol is adaptive -->
+<!-- Disable mobile browser auto zoom, $mol is adaptive -->
 <meta name="viewport" content="width=device-width" />
 	
 <!-- link to autogenerated css bundle -->
 <link rel="stylesheet" href="-/web.css" />
 
-<!-- link to autogenerated test js bundle -->
+<!-- link to autogenerated js bundle -->
 <script src="-/web.js"></script>
 
 <!-- link to optional autogenerated test js bundle -->
@@ -91,17 +106,28 @@ Add **web entry point** at `./my/hello/index.html`:
 <body mol_view_root="$my_hello">
 ```
 
-Your application will be served at **`http://localhost:8080/my/hello/`**.
+Your application will be served at **`http://localhost:8080/my/hello/`**. Open it. You should refresh page to view your changes.
 
-Add **declarative component description** at `./my/hello/hello.view.tree` with string input field and greeting message:
+Add [**declarative component description**](view) at `./my/hello/hello.view.tree` with string input field and greeting message:
 
 ```tree
 $my_hello $mol_view
 	sub /
 		<= Name $mol_string
 			hint \Name
-			value <=> name \
+			value?val <=> name?val \
 		<= message \
+```
+
+Same code with comments:
+
+```tree
+$my_hello $mol_view - Create `$my_hello` component by extending `$mol_view` base component
+	sub / - Overload base property `sub` by custom that returns two sub components: `Name` view and `message` string
+		<= Name $mol_string - Define property `Name` that returns `$mol_string` with overloaded two properties: `hint` and `name`
+			hint \Name - Define constant value for `hint` property
+			value?val <=> name?val \ - Overload `value` property of `$mol_string` by property `name` with empty string as default value.
+		<= message \ - Outputs value of `message` property with empty string as default value.
 ```
 
 That will be compiled to typescript code like this:
@@ -109,7 +135,7 @@ That will be compiled to typescript code like this:
 ```typescript
 namespace $ { export class $my_hello extends $mol_view {
 
-	/// name \
+	/// name?val \
 	@ $mol_mem()
 	name( next? : any ) {
 		return ( next !== void 0 ) ? next : ""
@@ -117,12 +143,12 @@ namespace $ { export class $my_hello extends $mol_view {
 
 	/// Name $mol_string 
 	/// 	hint \Name
-	/// 	value <=> name
+	/// 	value?val <=> name?val
 	@ $mol_mem()
 	Name() {
-		return new $mol_string().setup( __ => { 
-			__.hint = () => "Name"
-			__.value = ( next? ) => this.name( next )
+		return new $mol_string().setup( obj => { 
+			obj.hint = () => "Name"
+			obj.value = ( next? ) => this.name( next )
 		} )
 	}
 
@@ -132,8 +158,8 @@ namespace $ { export class $my_hello extends $mol_view {
 	}
 
 	/// sub / 
-	/// 	< input 
-	/// 	< message
+	/// 	<= Name
+	/// 	<= message
 	sub() {
 		return [].concat( this.Name() , this.message() )
 	}
