@@ -10,7 +10,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 	}
 	
 	function source( root : $mol_tree ) : $mol_tree {
-		if( [ '<=>' , '<=' ].indexOf( root.type ) !== -1 ) {
+		if( [ '<=>', '<=', '=>' ].indexOf( root.type ) !== -1 ) {
 			return root.clone({
 				sub : root.sub.map( name => name.clone({
 					sub : []
@@ -44,6 +44,10 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 			if( param.type === '<=' ) {
 				isOverride = false
 				param = param.sub[0]
+			}
+			
+			if( param.type === '=>' ) {
+				isOverride = false
 			}
 
 			var propName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( param.type )
@@ -79,6 +83,17 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 							if( /^-?$/.test( over.type ) ) return ''
 							var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )
 							var ns = needSet
+							
+							if( over.sub[0].type === '=>' ) {
+								if( over.sub[0].sub.length === 1 ) {
+									const method_name = over.sub[0].sub[0].type
+									members[ method_name ] = `${ method_name } () {
+										return this.${ param.type }().${ over.type }()
+									}`
+								 	return
+								}
+							}
+							
 							var v = getValue( over.sub[0] )
 							let args : string[] = []
 							if( overName[2] ) args.push( ` ${ overName[2] } : any ` )
