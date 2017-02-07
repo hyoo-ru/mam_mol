@@ -19,3 +19,9 @@
 [mol_app_lamps_body] {
 	background: var(--mol_skin_card);
 }
+
+[mol_app_lamps_close] {
+	color: inherit;
+	padding: 1rem;
+	align-items: center;
+}

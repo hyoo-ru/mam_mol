@@ -14,6 +14,12 @@ $mol_app_lamps $mol_stack
 	main /
 		<= main_page $mol_page
 			title <= title \
+			tools /
+				<= Close $mol_link
+					sub /
+						<= Close_icon $mol_icon_cross
+					arg *
+						lamp null
 			body /
 				<= Info $mol_row
 					sub /
