@@ -26,7 +26,7 @@ $mol_select $mol_view
 				<= option_rows -
 			current_y?key <=> option_focused?key \
 			cycle?val <=> nav_cycle?val true
-			Sub <= Pop $mol_pop 
+			sub / <= Pop $mol_pop 
 				showed?val <=> options_showed?val false
 				align?val <=> options_align?val \bottom_right
 				Anchor <= Trigger $mol_button
