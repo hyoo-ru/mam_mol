@@ -37,6 +37,10 @@ namespace $.$mol {
 		
 		lamp_title( id : string ) {
 			const row = this.lamps_dict()[ id ]
+			
+			const brand = row[ 'Бренд' ]
+			if( brand === 'noname' ) return row[ 'Модель' ]
+			
 			return `${ row[ 'Бренд' ] } ${ row[ 'Модель' ] }`
 		}
 		
@@ -85,6 +89,14 @@ namespace $.$mol {
 		
 		temp() {
 			return `${ this.lamp()[ 'Цвет' ] }`
+		}
+		
+		slug() {
+			return this.lamp_title( this.id() ).replace( / /g , '-' ).replace( /\./g , '' ).toLowerCase()
+		}
+		
+		photo() {
+			return `//lamptest.ru/images/photo/${ this.slug() }.jpg`
 		}
 		
 	}
