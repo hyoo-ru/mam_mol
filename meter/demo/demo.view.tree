@@ -1,0 +1,16 @@
+$mol_meter_demo $mol_card
+	plugins /
+		<= Meter $mol_meter
+			top => top
+			height => height
+	sub /
+		<= Top $mol_view
+			sub /
+				\Offset from top is 
+				<= top -
+				\px
+		<= Height $mol_view
+			sub /
+				\Component height is 
+				<= height -
+				\px

@@ -50,6 +50,20 @@ Returns dictionary of event handlers. The event handlers are bind to the DOM-ele
 
 Determines, whether the component is focused or not at this time. If any inserted component would be focused, then its parent component would be focused also.
 
+**`plugins() : Array< $mol_view > = null`**
+
+It is an array of plugins. Plugin is a component which can be supplemented with the logic of the current components.
+For example
+
+In the example we create a list with navigation (using $mol_nav)
+```
+$my_list $mol_list
+    plugins / 
+        <= Nav $mol_nav
+            keys_y <= list_options /
+    rows <= list_options /
+```
+
 ## view.tree
 *view.tree* - is a declarative language of describing components, based on [format tree](https://github.com/nin-jin/tree.d). In a file could be plenty of components defined in series, but better way is put every component in a separate file, except very trivial cases.
 To create a new component it's enough to inherit this from any existing one.
@@ -342,7 +356,7 @@ namespace $ { export class $my_greeter extends $mol_view {
 	Input() {
 		return new $mol_string().setup(obj => { 
 			obj.hint = () => "Name"
-			obj.value = ( mext? : any ) => this.name( next )
+			obj.value = ( next? : any ) => this.name( next )
 		} )
 	}
 
@@ -355,6 +369,52 @@ namespace $ { export class $my_greeter extends $mol_view {
 
 	sub() {
 		return [].concat( this.Input() , this.Output() )
+	}
+
+} }
+```
+
+`=>` - Right-side binding. It is binding type which returns actual value of an entity with which it works.
+```
+	$my_app $mol_scroll
+		sub /
+	 		<= Page $mol_page
+				Title => Page_title -
+				head /
+					<= Back $mol_button_minor
+						title \Back
+					<= Page_title -
+```
+```typescript
+namespace $ { export class $my_app extends $mol_scroll {
+
+	Page_title(){
+		return this.Page().Title()
+	}
+
+	/// Back $mol_button_minor title \Back
+	@ $mol_mem()
+	Back() {
+		return new $mol_button_minor().setup( obj => { 
+			obj.title = () => "Back"
+		} )
+	}
+
+	/// Page $mol_page 
+	/// 	Title => Page_title 
+	/// 	head / 
+	/// 		<= Back 
+	/// 		<= Page_title
+	@ $mol_mem()
+	Page() {
+		return new $mol_page().setup( obj => { 
+			obj.head = () => [].concat( this.Back() , this.Page_title() )
+		} )
+	}
+
+	/// sub / <= Page
+	sub() {
+		return [].concat( this.Page() )
 	}
 
 } }

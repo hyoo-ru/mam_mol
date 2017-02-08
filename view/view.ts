@@ -141,6 +141,10 @@ namespace $ {
 				}
 			}
 			
+			this.plugins().forEach( ( plugin ) => {
+				plugin.dom_node( next2 )
+			} )
+			
 			next2.id = path
 			void( (<any>next2)[ '$mol_view' ] = this )
 			this[ 'dom_node()' ] = next2
@@ -276,6 +280,10 @@ namespace $ {
 				$mol_view.render_sub( node , this.sub_visible() )
 				$mol_view.render_field( node , this.field() )
 				
+				this.plugins().forEach( ( plugin ) => {
+					plugin.dom_tree()
+				} )
+				
 				return node
 			} catch( error ) {
 				if( !error['$mol_view_catched'] ) {
@@ -301,6 +309,10 @@ namespace $ {
 		'locale_contexts()' : string[]
 		locale_contexts() {
 			return this['locale_contexts()'] || ( this[ 'locale_contexts()' ] = this.view_classes().map( String ) )
+		}
+		
+		plugins() {
+			return [] as $mol_view[]
 		}
 		
 	}
