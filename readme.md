@@ -51,7 +51,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 # Any questions?
 
 * [Ask us](https://github.com/eigenmethod/mol/issues/new?labels=question)
-* [All answers](https://github.com/eigenmethod/mol/labels/question)
+* [All answers](https://github.com/eigenmethod/mol/issues?q=label%3Aquestion+is%3Aclosed)
 
 # Found a bug?
 
