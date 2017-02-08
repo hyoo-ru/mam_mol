@@ -50,6 +50,19 @@ Returns dictionary of event handlers. The event handlers are bind to the DOM-ele
 
 Determines, whether the component is focused or not at this time. If any inserted component would be focused, then its parent component would be focused also.
 
+**`plugins() : Array< $mol_view > = null`**
+
+It is an array of plugins. Plugin is a component which can be supplemented with the logic of the current components.
+For example
+
+In the example we create a list with navigation (using $mol_nav)
+```
+$my_list $mol_nav
+    keys_y <= list_options /
+    Sub <= List $mol_list
+        rows <= list_options /
+```
+
 ## view.tree
 *view.tree* - is a declarative language of describing components, based on [format tree](https://github.com/nin-jin/tree.d). In a file could be plenty of components defined in series, but better way is put every component in a separate file, except very trivial cases.
 To create a new component it's enough to inherit this from any existing one.
