@@ -339,7 +339,6 @@ $my_greeter $mol_view
 		<= Input $mol_string
 			hint \Name
 			value?val <=> name?val \
-			enabled?val <= input_enabled - 
 		<= Output $mol_view
 			sub /
 				name?val \
