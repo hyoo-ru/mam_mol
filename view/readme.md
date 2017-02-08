@@ -383,8 +383,8 @@ namespace $ { export class $my_greeter extends $mol_view {
 				Title => Page_title -
 				head /
 					<= Back $mol_button_minor
-				title \Back
-			<= Page_title -
+						title \Back
+					<= Page_title -
 ```
 ```typescript
 namespace $ { export class $my_app extends $mol_scroll {
@@ -393,21 +393,23 @@ namespace $ { export class $my_app extends $mol_scroll {
 		return this.Page().Title()
 	}
 
-	/// Back $mol_button_minor
+	/// Back $mol_button_minor title \Back
 	@ $mol_mem()
 	Back() {
-		return new $mol_button_minor()
+		return new $mol_button_minor().setup( obj => { 
+			obj.title = () => "Back"
+		} )
 	}
 
 	/// Page $mol_page 
 	/// 	Title => Page_title 
-	/// 	head / <= Back 
-	/// 	title \Back
+	/// 	head / 
+	/// 		<= Back 
+	/// 		<= Page_title
 	@ $mol_mem()
 	Page() {
 		return new $mol_page().setup( obj => { 
-			obj.head = () => [].concat( this.Back() )
-			obj.title = () => "Back"
+			obj.head = () => [].concat( this.Back() , this.Page_title() )
 		} )
 	}
 
