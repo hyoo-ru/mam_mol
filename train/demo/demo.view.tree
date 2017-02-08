@@ -1,0 +1,14 @@
+$mol_train_demo $mol_train
+	trailers /
+		<= Page1 $mol_page
+			minimal_width 300
+			title \Page 1
+			body / \Body of Page 1
+		<= Page2 $mol_page
+			minimal_width 500
+			title \Page 2
+			body / \Body of Page 2
+		<= Page3 $mol_page
+			minimal_width 300
+			title \Page 3
+			body / \Body of Page 3

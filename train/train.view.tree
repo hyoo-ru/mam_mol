@@ -1,0 +1,10 @@
+$mol_train $mol_view
+	Trailer!component $mol_train_trailer
+		content <= trailer_content!component null
+	plugins /
+		<= Meter $mol_meter
+			width => width
+	trailers /
+
+$mol_train_trailer $mol_view
+	sub / <= content null
