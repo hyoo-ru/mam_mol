@@ -1,8 +1,8 @@
 # $mol_nav
 
-Component to view and edit some number value.
+Plugin which can navigate in list of items
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_nav)
+## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_nav_demo)
 
 ## Usage example
 ```
