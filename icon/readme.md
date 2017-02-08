@@ -4,24 +4,14 @@ This is collection of SVG icons. Ported from [google/material-design-icons](http
 
 Used icons will be compiled to JS and bundled with other scripts.
 
-**[Online demo](https://eigenmethod.github.io/mol/#demo=mol_icon_demo)**
+**[Online demo](https://eigenmethod.github.io/mol/#demo=mol_icon)**
 
 ## Usage
 
 ***.view.tree**
 
 ```tree
-$my_attacher $mol_button
-	sub /
-		< icon $mol_icon_attach
-```
-
-***.view.css**
-
-```
-[my_attacher_icon]:hover {
-	fill : blue;
-}
+<= Attach_icon $mol_icon_attach
 ```
 
 ## Define custom icon

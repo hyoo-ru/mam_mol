@@ -1,28 +1,27 @@
 # $mol_expander
 
-Component which expands any content
+Component which expands any content on title click.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_expander_demo)
+## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_expander)
 
 ## Usage example
 
 ```
-$mol_expander
-	label \Lorem Ipsum
-	content $mol_filler
+<= Spoiler $mol_expander
+	label / \Murder is..
+	content / \majordomo
 ```
 
 ## Properties
 
-**`label(): any`**  
+**`label(): []`**  
 
-Property which would be shown as label. It can accept any type of content. 
+Returns button content. 
 
 **`content(): any`**  
 
-Property that can be hidden/shown by click on the button.
+Returns expandable content.
 
-**`expanded(): boolean`**
-Property state for expander content.  
-* `false` - content is not expanded  
-* `true` - content is expanded
+**`expanded( next? : boolean ): boolean`**
+
+Returns showing state of content.

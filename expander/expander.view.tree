@@ -1,6 +1,7 @@
 $mol_expander $mol_list
 	rows /
-		<= labeler $mol_check_expand
+		<= Labeler $mol_check_expand
 			checked?val <=> expanded?val false
 			label <= label /
-		<= content null
+		<= Content $mol_view
+			sub <= content /

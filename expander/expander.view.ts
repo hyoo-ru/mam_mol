@@ -3,8 +3,8 @@ namespace $.$mol {
 		
 		rows() {
 			return [
-				this.labeler(),
-				this.expanded() ? this.content() : null	
+				this.Labeler(),
+				this.expanded() ? this.Content() : null	
 			]
 		}
 		

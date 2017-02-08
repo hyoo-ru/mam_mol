@@ -1,4 +1,7 @@
-$mol_expander_demo $mol_scroll sub / <= expander $mol_expander
-	label / \Lorem Ipsum
-	content $mol_filler
+$mol_expander_demo $mol_scroll
+	sub /
+		<= Expander $mol_expander
+			label /
+				\Lorem Ipsum
+			Content $mol_filler
 	
