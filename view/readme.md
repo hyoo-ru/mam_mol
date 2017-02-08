@@ -325,9 +325,12 @@ $my_greeter $mol_view
 		<= Input $mol_string
 			hint \Name
 			value?val <=> name?val \
+			enabled?val <= input_enabled - 
 		<= Output $mol_view
 			sub /
 				name?val \
+		<= Check $mol_check
+			checked => input_enabled
 ```
 
 ```typescript
@@ -342,7 +345,7 @@ namespace $ { export class $my_greeter extends $mol_view {
 	Input() {
 		return new $mol_string().setup(obj => { 
 			obj.hint = () => "Name"
-			obj.value = ( mext? : any ) => this.name( next )
+			obj.value = ( next? : any ) => this.name( next )
 		} )
 	}
 
@@ -351,6 +354,15 @@ namespace $ { export class $my_greeter extends $mol_view {
 		return new $mol_view().setup( obj => { 
 			obj.sub = () => [].concat( this.name() )
 		} )
+	}
+	
+	@ $mol_mem()
+	Check() {
+		return new $mol_check()
+	}
+	
+	input_enabled() {
+		return this.Check().checked()
 	}
 
 	sub() {
