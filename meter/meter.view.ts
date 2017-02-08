@@ -1,7 +1,7 @@
 namespace $.$mol {
 	export class $mol_meter extends $.$mol_meter {
 		
-		request_id = 0;
+		_request_id = 0;
 		
 		constructor() {
 			super()
@@ -9,7 +9,7 @@ namespace $.$mol {
 		}
 		
 		defer_task( next?: $mol_defer, force?: $mol_atom_force ) {
-			this.request_id = requestAnimationFrame( () => {
+			this._request_id = requestAnimationFrame( () => {
 				const elem = this.dom_node() as HTMLElement
 				const rect = elem.getBoundingClientRect()
 				
@@ -25,7 +25,7 @@ namespace $.$mol {
 		}
 		
 		destroyed( next?: boolean ) {
-			if( next ) cancelAnimationFrame( this.request_id )
+			if( next ) cancelAnimationFrame( this._request_id )
 			return super.destroyed( next )
 		}
 		
