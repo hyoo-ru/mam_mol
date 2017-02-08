@@ -1,14 +1,15 @@
 namespace $.$mol {
 	export class $mol_meter extends $.$mol_meter {
 		
+		request_id = 0;
+		
 		constructor() {
 			super()
 			this.defer_task()
 		}
 		
-		@$mol_mem()
 		defer_task( next?: $mol_defer, force?: $mol_atom_force ) {
-			return requestAnimationFrame( () => {
+			this.request_id = requestAnimationFrame( () => {
 				const elem = this.dom_node() as HTMLElement
 				const rect = elem.getBoundingClientRect()
 				
@@ -21,6 +22,11 @@ namespace $.$mol {
 				
 				this.defer_task( void 0, $mol_atom_force )
 			} )
+		}
+		
+		destroyed( next?: boolean ) {
+			if( next ) cancelAnimationFrame( this.request_id )
+			return super.destroyed( next )
 		}
 		
 	}
