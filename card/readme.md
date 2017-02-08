@@ -1,23 +1,23 @@
 # $mol_card
 
-The component which represent the common card. It has several statuses like pending and selected.
+Represents a common card. It can has several statuses at bottom line.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_card)
 
 ## Usage example
 
 ```
-$mol_card
-	Content $mol_row_demo
-	status \pending
+<= User $mol_card
+	content / <= user_name \
+	status <= user_online_status \
 ```
 
 ## Properties
 
-**`content(): Array`**
+**`content(): []`**
   
-There can be placed any content which user want to be shown.
+Returns content of card.
 
 **`status(): string`**  
 
-The string which would be used like a label of card's status.
+Returns optional status string that will be placed at bottom line.

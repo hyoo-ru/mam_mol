@@ -5,21 +5,23 @@ A various type of checkboxes.
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_check)
 
 ## Usage example
+
 ```
-$mol_check_box
-	sub / \Checked
-	checked true
-	enabled false
+<= Spam $mol_check_box
+	label / <= spam_label @ \Send me some spam
+	checked?val <=> spam_needed?val true
+	enabled <= spam_enabled false
 ```
+
 ## Properties
 
-**`checked()`**
+**`checked( next? : boolean ) : boolean`**
 
-Property which state can be switched if a user clicked on element  
+Returns checked state of checkbox. User can switch them when checkbox is enabled.
 
-**`enabled()`**
+**`enabled() : false`**
 
-Property is determine an ability of interacting to the component.
+Returns tru if checkbox can be switched by user.
 
 ## Variants of visualization
 
