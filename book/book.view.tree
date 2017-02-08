@@ -1,0 +1,13 @@
+$mol_book $mol_view
+	Paper!index $mol_book_paper
+		content <= page_content!index null
+		visible <= page_visible!index \
+	pages /
+	plugins /
+		<= Meter $mol_meter
+			width => width
+
+$mol_book_paper $mol_view
+	attr *
+		mol_book_paper_visible <= visible \
+	sub / <= content null

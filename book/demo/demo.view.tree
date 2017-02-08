@@ -1,5 +1,5 @@
-$mol_train_demo $mol_train
-	trailers /
+$mol_book_demo $mol_book
+	pages /
 		<= Page1 $mol_page
 			minimal_width 300
 			title \Page 1
