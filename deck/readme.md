@@ -7,25 +7,30 @@ The component which arrange content in multiple tabs.
 ## Usage example
 
 ```
-$mol_deck 
+<= Info $mol_deck
 	items /
-		<= One $mol_deck_item
-			title \Text1
-			content <= OneFiller $mol_filler
-		<= Two $mol_deck_item
-			title \Text2
-			content <= TwoFiller $mol_filler
+		<= Main $mol_deck_item
+			title <= Main_title @ \Main info
+			content /
+				\Main
+		<= Addon $mol_deck_item
+			title <= Addon_title @ \Addition data
+			content /
+				\Addon
 ```
 
-## Properties
+## Properties $mol_deck
 
-**`items() : Array`**
-Property where elements (components) should be placed.
+**`items() : $mol_deck_item[]`**
+
+Returns list of $mol_deck_item.
  
 # $mol_deck_item
 
 **`title() : String`**
-Title of the tab element
 
-**`content() : Array`**
-Content of the tab element
+Title of the tab element.
+
+**`content() : []`**
+
+Content of the tab element.

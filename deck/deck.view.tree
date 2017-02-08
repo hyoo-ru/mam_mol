@@ -8,4 +8,5 @@ $mol_deck $mol_list
 
 $mol_deck_item $mol_object
 	title \
-	Content null
+	Content $mol_view
+		sub <= content /

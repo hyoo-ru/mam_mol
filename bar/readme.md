@@ -6,11 +6,10 @@ The component for grouping several components in one composite control.
 
 ## Usage examples
 ```
-$mol_bar
+<= Search $mol_bar
 	sub /
 		< String $mol_string
-			value <=> value \
-		< Submit $mol_button
-			sub /
-				\Submit
+			value?val <=> query?val \
+		< Submit $mol_button_minor
+			title <= submit_label @ \Submit
 ```

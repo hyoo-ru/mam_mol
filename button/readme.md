@@ -1,33 +1,28 @@
 # $mol_button
 
-Button with many variations.
+Simple button.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_button)
 
 ## Usage example
 ```
-$mol_button_major
-	event_click > event null
-	sub /
-		\Click me!
+<= Submit $mol_button_major
+	event_click?val <=> event_submit?val null
+	title <= submit_label @ \Submit form
 ```
 
 ## Variations
 
-**`$mol_button_major`**
-
-The button for common cases colored in base color.
-
-**`$mol_button_minor`**
-
-The default button.
-
-**`$mol_button_danger`**
-
-The button for danger cases.
+**`$mol_button_major`** - Call-To-Action button
+**`$mol_button_minor`** - Generic button
+**`$mol_button_danger`** - Destructive button
 
 ## Properties
 
 **`enabled() : boolean`**
 
-This property changes the state of the button.
+Button can be clicked when enable only.
+
+**`event_click( next? : Event ) : Event`**
+
+Stores last event when button activated. Overload this property to do your action instead.
