@@ -57,10 +57,11 @@ For example
 
 In the example we create a list with navigation (using $mol_nav)
 ```
-$my_list $mol_nav
-    keys_y <= list_options /
-    Sub <= List $mol_list
-        rows <= list_options /
+$my_list $mol_list
+    plugins / 
+        <= Nav $mol_nav
+            keys_y <= list_options /
+    rows <= list_options /
 ```
 
 ## view.tree
@@ -342,8 +343,6 @@ $my_greeter $mol_view
 		<= Output $mol_view
 			sub /
 				name?val \
-		<= Check $mol_check
-			checked => input_enabled
 ```
 
 ```typescript
@@ -368,18 +367,53 @@ namespace $ { export class $my_greeter extends $mol_view {
 			obj.sub = () => [].concat( this.name() )
 		} )
 	}
-	
-	@ $mol_mem()
-	Check() {
-		return new $mol_check()
-	}
-	
-	input_enabled() {
-		return this.Check().checked()
-	}
 
 	sub() {
 		return [].concat( this.Input() , this.Output() )
+	}
+
+} }
+```
+
+`=>` - Right-side binding. It is binding type which returns actual value of an entity with which it works.
+```
+	$my_app $mol_scroll
+		sub /
+	 		<= Page $mol_page
+				Title => Page_title -
+				head /
+					<= Back $mol_button_minor
+				title \Back
+			<= Page_title -
+```
+```typescript
+namespace $ { export class $my_app extends $mol_scroll {
+
+	Page_title(){
+		return this.Page().Title()
+	}
+
+	/// Back $mol_button_minor
+	@ $mol_mem()
+	Back() {
+		return new $mol_button_minor()
+	}
+
+	/// Page $mol_page 
+	/// 	Title => Page_title 
+	/// 	head / <= Back 
+	/// 	title \Back
+	@ $mol_mem()
+	Page() {
+		return new $mol_page().setup( obj => { 
+			obj.head = () => [].concat( this.Back() )
+			obj.title = () => "Back"
+		} )
+	}
+
+	/// sub / <= Page
+	sub() {
+		return [].concat( this.Page() )
 	}
 
 } }
