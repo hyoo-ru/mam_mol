@@ -1,3 +1,10 @@
 # $mol_tiler
 
-Tiler component
+Presents items as tiles.
+
+## Usage example
+
+```tree
+<= Gallery $mol_tiler
+	items <= images /
+```

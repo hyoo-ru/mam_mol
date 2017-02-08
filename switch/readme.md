@@ -7,9 +7,9 @@ Buttons which switching the sate;
 ## Usage example
 
 ```
-$mol_switch
-	value > color \
-	options *
+<= Color $mol_switch
+	value?val <=> color?val \red
+	options <= colors *
 		red \Red
 		green \Green
 		blue \Blue
@@ -17,14 +17,14 @@ $mol_switch
 
 ## Properties
 
-**`value()`**
+**`value( next? ) : string`**
 
 Property which should be changed `value()` by buttons based on their own property `options`.
 
-**`options()`**
+**`options() : { [ key : string ] : any }`**
+
 Keys are possible values of `value` property. That options are labels which would be visible to user.
 
-
-**`enabled()`**
+**`enabled() : boolean`**
 
 Property that turning on or off our switcher.

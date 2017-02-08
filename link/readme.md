@@ -1,33 +1,31 @@
 # $mol_link
 
-The component have an ability to patch the link leading to the current page. It can to add, change or remove parameters.
+Dynamic hyperlink. It can to add, change or remove parameters. The link leads to current page would be stylized in other way.
 
-## [Online demo](http://eigenmethod.github.io/mol//#demo=mol_link)
+## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_link)
 
 ## Properties
 
-**`arg() : { [ name : string ] : () => string }`**
+**`arg() : { [ name : string ] : string }`**
 
-The patch could be set as the dictionary like `{ color : ()=> 'red' , sidebar : null }`. 
+Returns patch that will be applied to page url. 
 
 ```
-$mol_link
+<= Close $mol_link
 	arg *
-		color \red
-		sidebar null
+		demo null
 	sub /
-		\Red
+		<= close_title @ \Close demo
 ```
 
 **`uri()`**
 
-One more way to set the link in direct way.
+Returns new url.
 
 ```
-$mol_link
+<= Example $mol_link
 	uri \http://example.org
 	sub /
 		\example.org
 ```
 
-The link leads to current page would be stylized in other way.

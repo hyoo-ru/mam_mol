@@ -7,7 +7,7 @@ The component which contains head and content.
 ## Usage example
 
 ```
-$mol_section
-	head \Section header
+<= Info $mol_section
+	head \Information
 	Content $mol_filler
 ```

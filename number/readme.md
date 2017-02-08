@@ -5,11 +5,12 @@ Component to view and edit some number value.
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_number)
 
 ## Usage example
+
 ```
-$mol_number
-	value > fees null
+<= Fees $mol_number
+	value?val <=> fees?val null
 	hint \0.01 .. 10.00
-	enabled < fees_changeable true
+	enabled <= fees_changeable true
 	precision .01
 ```
 

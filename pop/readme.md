@@ -7,29 +7,36 @@ Bubble that can be shown anchored to ancor element.
 ## Usage example
 
 ```
-$mol_pop
-    showed?val <=> pop_showed?val
+<= Hint $mol_pop
+    showed <= hint_showed?val 0
     align \bottom_center
-	Anchor <= Checkbox $mol_check
-	    sub / \Check to show
-	    checked?val <=> pop_showed?val
+	Anchor <= Hint_trigger $mol_check
+		sub / \?
+		checked?val <=> hint_showed?val 0
 	bubble_content /
-		\Can you see me?
+		<= hint_message @ \You can see me wen you want.
 ```
 
 ## Properties
 
 **`Anchor() : $mol_view`**
+
 A component respect of which will be shown a Bubble
 
 **`bubble_content() : $mol_view[]`**
+
 A list of components in Bubble
 
 **`showed() : boolean`**
+
 Show or Hide Bubble of options depending on the takes value.
 
 **`align() : string`**
+
 Returns a string and apply Bubble align
+
+## Supported aligns
+
 * `left_top`
 * `left_center`
 * `left_bottom`
