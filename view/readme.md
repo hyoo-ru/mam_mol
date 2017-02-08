@@ -4,53 +4,56 @@ The base class for all visual components. It provides the infrastructure for rea
 
 ## Properties
 
-**`tagName()' = 'div'`**
-It sets the name of the DOM-element creating for component, if the element with appropriate id is not presented at DOM yet.
+**`dom_name()' : string`**
+Returns name of the DOM-element creating for component, if the element with appropriate id is not presented at DOM yet.
 
-**`nameSpace() = 'http://www.w3.org/1999/xhtml'`**
+**`dom_name_space() = 'http://www.w3.org/1999/xhtml'`**
 
-It sets the namespace for the DOM element. 
+Returns namespaceURI for the DOM element. 
 
-**`sub() = null `**
-It sets the list of their child elements. In this list could be instances of `$mol_view`,
-any DOM-elements or primitives like strings, numbers etc. If the list have not been set (by default), then the content of the DOM-element would not be changed in way, it's helpful for manual operating with DOM.
+**`sub() : Array< $mol_view | Node | string | number | boolean > = null `**
+Returns list of child components/elements/primitives. If the list have not been set (by default), then the content of the DOM-element would not be changed in way, it's helpful for manual operating with DOM.
 
 **`context( next? : $mol_view_context ) : $mol_view_context`**
 Some rendering context. Parent node injects context to all rendered child components.
 
 **`minimal_height()` = 0**
 
-It is the minimum possible height of the component. It's set by hand with constant or some expression.This property is used for lazy rendering.
+Returns minimum possible height of the component. It's set by hand with constant or some expression.This property is used for lazy rendering.
 
 **`dom_node() : Element`**
 
-It returns the DOM-element, to which the component is bounded to. At first the method tries to find the element by its id at DOM and only if it would have not been found - the method would create and remember a new one. 
+Returns DOM-element, to which the component is bounded to. At first the method tries to find the element by its id at DOM and only if it would have not been found - the method would create and remember a new one. 
 
 **`dom_tree() : Element`**
 
-It is the same as `dom_node`, but its guarantee, that the content, attributes and properties of the DOM-element should be in actual state.
+Same as `dom_node`, but its guarantee, that the content, attributes and properties of the DOM-element should be in actual state.
 
-**`attr() : { [ key : string ] : ()=> string|number|boolean }`**
+**`attr() : { [ key : string ] : string | number | boolean }`**
 
-It returns the dictionary of the DOM-attributes, which values would be set while rendering. Passing `null` or `false` as the value to the attribute would lead to removing the attribute.
+Returns the dictionary of the DOM-attributes, which values would be set while rendering. Passing `null` or `false` as the value to the attribute would lead to removing the attribute.
 Passing `true` is an equivalent to passing its name as value. `undefined` is just ignored.
 
-**`field() : { [ key : string ] : ()=> any }`**
+**`field() : { [ key : string ] : any }`**
 
-It returns the dictionary of fields, which is necessary to set to the DOM-element after rendering. By way of name of the field a path could be set to. For example `scrollTop` would be set scroll's position, or `style.backgroundPosition` would be set background's position.
+Returns dictionary of fields, which is necessary to set to the DOM-element after rendering.
+
+**`style() : { [ key : string ] : string | number }`**
+
+Returns dictionary of styles. Numbers will be convertes to string with "px" suffix.
 
 **`event() : { [ key : string ] : ( event : Event )=> void }`**
 
-It returns the dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property.
+Returns dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property.
 
-**`focused() : boolean`**
+**`focused( next? : boolean ) : boolean`**
 
-It determines, whether the component is focused or not at this time. If any inserted component would be focused, then its parent component would be focused also.
+Determines, whether the component is focused or not at this time. If any inserted component would be focused, then its parent component would be focused also.
 
 ## view.tree
 *view.tree* - is a declarative language of describing components, based on [format tree](https://github.com/nin-jin/tree.d). In a file could be plenty of components defined in series, but better way is put every component in a separate file, except very trivial cases.
 To create a new component it's enough to inherit this from any existing one.
-Names of the components should begin with `$` and be unique globally accordance with principles presented on [PMS](https://github.com/nin-jin/pms). For example, lets declare a component `$my_button` as a child from `$mol_view`:
+Names of the components should begin with `$` and be unique globally accordance with principles presented on [MAM](https://github.com/eigenmethod/mam). For example, let's declare the component `$my_button` extended from `$mol_view`:
 
 ```tree
 $my_button $mol_view
@@ -120,7 +123,7 @@ Dictionary (correspondence keys to their values) could be declared through a nod
 
 ```tree
 $my_number $mol_view
-	tagName \input
+	dom_name \input
 	attr *
 		type \number
 		- attribute values must be a strings
@@ -131,16 +134,16 @@ $my_number $mol_view
 ```typescript
 namespace $ { export class $my_number extends $mol_view {
 
-	tagName() {
+	dom_name() {
 		return "input"
 	}
 
 	attr() {
-		return $mol_merge_dict( super.attr() , {
-			"type" : ()=> <any> "number" ,
-			"min" : ()=> <any> "0" ,
-			"max" : ()=> <any> "20" ,
-		} )
+		return { ...super.attr() ,
+			"type" : "number" ,
+			"min" : "0" ,
+			"max" : "20" ,
+		}
 	}
 
 } }
@@ -149,25 +152,38 @@ namespace $ { export class $my_number extends $mol_view {
 We could set value in the same way for fields of a DOM-element:
 
 ```tree
-$my_wonder $mol_view
-	tagName \input
+$my_scroll $mol_view
 	field *
-		value \Hello!
-		style.transform \rotate( 180deg )
+		scrollTop 0
 ```
 
 ```typescript
-namespace $ { export class $my_wonder extends $mol_view {
-
-	tagName() {
-		return "input"
-	}
+namespace $ { export class $my_scroll extends $mol_view {
 
 	field() {
-		return $mol_merge_dict( super.field() , {
-			"value" : ()=> <any> "Hello!" ,
-			"style.transform" : ()=> <any> "rotate( 180deg )" ,
-		} )
+		return { ...super.field() ,
+			"scrollTop" : 0 ,
+		}
+	}
+
+} }
+```
+
+And styles too:
+
+```tree
+$my_rotate $mol_view
+	style *
+		transform \rotate( 180deg )
+```
+
+```typescript
+namespace $ { export class $my_rotate extends $mol_view {
+
+	style() {
+		return { ...super.field() ,
+			"transform" : "rotate( 180deg )" ,
+		}
 	}
 
 } }
@@ -180,9 +196,9 @@ $my_hint $mol_view
 	hint \Default hint
 	text \Default text
 	field *
-		title <= hint 
+		title <= hint -
 	sub /
-		<= text
+		<= text -
 ```
 
 ```typescript
@@ -197,9 +213,9 @@ namespace $ { export class $my_hint extends $mol_view {
 	}
 
 	field() {
-		return $mol_merge_dict( super.field() , {
-			"title" : ()=> <any> this.hint() ,
-		} )
+		return { ...super.field() ,
+			"title" : this.hint() ,
+		}
 	}
 
 	sub() {
@@ -223,7 +239,7 @@ Reactions on DOM-events are required for two-way binding. For example, lets poin
 ```tree
 $my_remover $mol_view
 	event *
-		click <=> event_remove null 
+		click?val <=> event_remove?val null 
 	sub /
 		\Remove
 ```
@@ -232,14 +248,14 @@ $my_remover $mol_view
 namespace $ { export class $my_remover extends $mol_view {
 
 	@ $mol_mem()
-	event_remove( ...diff : any[] ) {
-		return ( diff[0] !== void 0 ) ? diff[0] : <any> null
+	event_remove( next? : any ) {
+		return ( next !== void 0 ) ? next : <any> null
 	}
 
 	event() {
-		return $mol_merge_dict( super.event() , {
-			"click" : ( ...diff : any[] )=> <any> this.event_remove(  ...diff ) ,
-		} )
+		return { ...super.event() ,
+			"click" : ( next? : any )=> this.event_remove( next ) ,
+		}
 	}
 
 	sub() {
@@ -288,9 +304,9 @@ namespace $ { export class $my_name extends $mol_view {
 
 	@ $mol_mem()
 	Info() {
-		return new $mol_labeler().setup( __ => { 
-			__.title = () => "Name"
-			__.content = () => "Jin"
+		return new $mol_labeler().setup( obj => { 
+			obj.title = () => "Name"
+			obj.content = () => "Jin"
 		} )
 	}
 
@@ -324,16 +340,16 @@ namespace $ { export class $my_greeter extends $mol_view {
 
 	@ $mol_mem()
 	Input() {
-		return new $mol_string().setup( __ => { 
-			__.hint = () => "Name"
-			__.value = ( mext? : any ) => this.name( next )
+		return new $mol_string().setup(obj => { 
+			obj.hint = () => "Name"
+			obj.value = ( mext? : any ) => this.name( next )
 		} )
 	}
 
 	@ $mol_mem()
 	Output() {
-		return new $mol_view().setup( __ => { 
-			__.sub = () => [].concat( this.name() )
+		return new $mol_view().setup( obj => { 
+			obj.sub = () => [].concat( this.name() )
 		} )
 	}
 
@@ -350,7 +366,7 @@ There are certain properties that depending on the key return different values. 
 $my_tasks $mol_list
 	sub <= task_rows /
 	Task_row!key $mol_view
-		sub / <= task_title!key
+		sub / <= task_title!key -
 	task_title!key <= task_title_default \
 ```
 
@@ -367,8 +383,8 @@ namespace $ { export class $my_tasks extends $mol_list {
 
 	@ $mol_mem()
 	Task_row( key : any ) {
-		return new $mol_view().setup( __ => { 
-			__.sub = () => [].concat( this.task_title( key ) )
+		return new $mol_view().setup( obj => { 
+			obj.sub = () => [].concat( this.task_title( key ) )
 		} )
 	}
 
@@ -391,11 +407,12 @@ In addition to declarative description of component, next to it could be created
 For example we have following description into `./my/hello/hello.view.tree`:
 
 ```tree
-$my_hello $mol_view sub /
-	<= Input $mol_string
-		hint \Name
-		value <=> name?val \
-	<= message \
+$my_hello $mol_view
+	sub /
+		<= Input $mol_string
+			hint \Name
+			value <=> name?val \
+		<= message \
 ```
 
 Here we declared 2 properties: `name` for getting value from `Input` and `message` for output the value. It would be translated into following file `./my/hello/-/view.tree.ts/hello.view.tree.ts`: 
@@ -410,9 +427,9 @@ namespace $ { export class $my_hello extends $mol_view {
 
 	@ $mol_mem()
 	Input( next? : any ) {
-		return new $mol_string().setup( __ => { 
-			__.hint = () => "Name"
-			__.value = ( next? : any ) => this.name( next )
+		return new $mol_string().setup( obj => { 
+			obj.hint = () => "Name"
+			obj.value = ( next? : any ) => this.name( next )
 		} )
 	}
 
@@ -434,7 +451,7 @@ namespace $.$mol {
 	export class $my_hello extends $.$my_hello {
 		
 		message() {
-			let name = this.name()
+			const name = this.name()
 			return name && `Hello, ${name}!`
 		}
 		

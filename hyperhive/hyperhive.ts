@@ -30,7 +30,7 @@ namespace $ {
 		static data< Value >( resource : { uri : string , table : string } , next? : any , force? : $mol_atom_force ) : Value {
 			
 			if( typeof hhfw === 'undefined' ) {
-				const uri = `${ resource.uri }${ resource.table }/table/${ resource.table }/`
+				const uri = `${ resource.uri }${ resource.table }/table/GET_${ resource.table }/`
 				const res = $mol_http_resource_json.item< Value >( uri )
 				res.credentials = $mol_const({})
 				return res.json()
@@ -48,13 +48,13 @@ namespace $ {
 						hhfw.GetDeltaStream(
 							`GET_${ resource.table }` ,
 							( result : any ) => {
-								console.debug( result )
+								console.debug( 'GetDeltaStream' , resource , result.substring( 0 , 512 ) )
 								hhfw.QueryToResTable(
 									`GET_${ resource.table }` ,
 									`select * from GET_${ resource.table }_$_GET_${ resource.table }` ,
 									( resp : string )=> {
-										console.debug( resp.substring( 0 , 512 ) )
-										$mol_hyperhive.data( resource , JSON.parse( resp ).data || null , $mol_atom_force )
+										console.debug( 'QueryToResTable' , resource , resp.substring( 0 , 512 ) )
+										$mol_hyperhive.data( resource , JSON.parse( resp ).data || [] , $mol_atom_force )
 									} ,
 									handleError ,
 								)
@@ -67,7 +67,7 @@ namespace $ {
 							resource.table ,
 							JSON.stringify( next ) ,
 							( resp : any )=> {
-								console.debug( resp )
+								console.debug( 'Post' , resource , next , resp.substring( 0 , 512 ) )
 								$mol_hyperhive.data( resource , void 0 , $mol_atom_force )
 							} ,
 							handleError
