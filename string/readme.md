@@ -1,14 +1,16 @@
 # $mol_string
+
 Input field to enter single line of text.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_string_demo)
 
 ## Usage example
-```
-$mol_string
-	value > name \
-	hint \Alice Smith
-	enabled < nameChangeable true
+
+```tree
+<= Name $mol_string
+	value?val <=> name?val \
+	hint <= name_hint @ \Alice Smith
+	enabled <= name_changeable true
 ```
 
 ## Properties

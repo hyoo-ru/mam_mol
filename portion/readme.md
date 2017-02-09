@@ -2,15 +2,16 @@
 
 Component to see progress state of any operation.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_portion_demo)
+## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_portion)
 
 ## Usage example
 ```
-$mol_portion
-	portioner 0.44
+<= Progress $mol_portion
+	portion <= progress 0
 ```
 
 ## Properties
 
-Property `portion` is a value would be displayed on to an indicator of `$mol_portion` component.   
-`portion` value can be from 0 till 1.
+**`portion() : number`**
+ 
+Returns portion value from 0 to 1.

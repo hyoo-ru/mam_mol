@@ -56,15 +56,17 @@ It is an array of plugins. Plugin is a component which can be supplemented with 
 For example
 
 In the example we create a list with navigation (using $mol_nav)
+
 ```
-$my_list $mol_list
+<= Options $mol_list
     plugins / 
         <= Nav $mol_nav
-            keys_y <= list_options /
-    rows <= list_options /
+            keys_y <= options /
+    rows <= options /
 ```
 
 ## view.tree
+
 *view.tree* - is a declarative language of describing components, based on [format tree](https://github.com/nin-jin/tree.d). In a file could be plenty of components defined in series, but better way is put every component in a separate file, except very trivial cases.
 To create a new component it's enough to inherit this from any existing one.
 Names of the components should begin with `$` and be unique globally accordance with principles presented on [MAM](https://github.com/eigenmethod/mam). For example, let's declare the component `$my_button` extended from `$mol_view`:

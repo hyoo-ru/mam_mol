@@ -1,17 +1,16 @@
 # $mol_row
 
-Horizontal list of blocks with indents between the elements.
+Horizontal list of blocks with margins between and around.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_row)
 
 ## Usage example
 
-```
-$mol_row	
+```tree
+<= Stat $mol_row
 	sub /
 		<= Progress $mol_portion
-			portion <= progress 0.33
+			portion <= progress 0
 		<= Update $mol_button_minor
-			sub /
-				\ Update
+			title <= update_title @ \Update
 ```

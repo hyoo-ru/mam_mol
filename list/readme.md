@@ -2,19 +2,20 @@
 
 ##[Online demo](http://eigenmethod.github.io/mol/#demo=mol_list)
 
-The list of rows with lazy rendering. 
+The list of rows with lazy rendering support based on `minimal_height` of rows. 
 
 ## Usage example
 
 ```
-$mol_list
+<= Users $mol_list
 	rows /
-		< Head $mol_view
-		< Body $mol_scroll
-		< Foot $mol_view
+		<= User_1 $mol_view
+		<= User_2 $mol_view
+		<= User_3 $mol_view
 ```
+
 ## Properties
 
-`rows() : Array`
+`rows() : []`
 
-Property by which we set the list of rows.
+Returns list of rows.

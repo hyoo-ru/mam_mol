@@ -2,27 +2,35 @@
 
 The component for creating page layout.
 
-##[Online demo](http://eigenmethod.github.io/mol/#demo=mol_page_demo)
+##[Online demo](http://eigenmethod.github.io/mol/#demo=mol_page)
+
+## Usage examples
+
+```
+<= Sign_up $mol_page
+	title <= Sign_up_title @ \Sign Up
+	body / <= Sign_up_form $mol_view
+	foot null
+```
 
 ## Properties
 
-`title() : string`  
-Property for setting page title.
+**`title() : string`**
 
-`head() : Array`
+Returns page title.
 
-Property which wraps subhead elements like title and so on.
+**`head() : []`**
 
-`body() : Array`  
-In body can be placed the content.
+Returns content of Head.
 
-`foot() : Array`
-Here can be placed the footer content
+**`tools() : []`**
 
-## Usage examples
-```
-$mol_page
-	title \Sign Up
-	body $mol_app_signup
-	foot $mol_row_demo
-```
+Returns content of toolbar in Head.
+
+**`body() : []`**
+
+Returns content of Body.
+
+`foot() : []`
+
+Returns content of Foot.

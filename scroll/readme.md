@@ -7,9 +7,9 @@ Scrolling pane.
 ## Usage example
 
 ```
-$mol_scroll
-	Sub /
-		<= Filler $mol_filler 
+<= Body $mol_scroll
+	sub /
+		<= Text $mol_filler 
 ```
 
 ## Properties
