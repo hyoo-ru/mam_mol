@@ -1,14 +1,11 @@
 $mol_book_demo $mol_book
 	pages /
-		<= Page1 $mol_page
-			minimal_width 300
-			title \Page 1
-			body / \Body of Page 1
-		<= Page2 $mol_page
-			minimal_width 500
-			title \Page 2
-			body / \Body of Page 2
-		<= Page3 $mol_page
-			minimal_width 300
-			title \Page 3
-			body / \Body of Page 3
+		<= Page1 $mol_view
+			minimal_width 200
+			sub / \ Placeholder
+		<= Page2 $mol_view
+			minimal_width 400
+			sub / \ Main
+		<= Page3 $mol_view
+			minimal_width 250
+			sub / \ Addon

@@ -4,18 +4,12 @@
     align-items: stretch;
     justify-content: flex-start;
 	overflow: hidden;
-}
-
-[mol_book_paper] {
-	display: flex;
-  	overflow: hidden;
-  	align-items: center;
-  	justify-content: center;
-	flex: 0 1 auto;
-  	width: 0;
-}
-
-[mol_book_paper_visible] {
 	flex: 1 1 auto;
-	width: auto;	
+	align-self: stretch;
+}
+
+[mol_book] > * {
+	display: flex;
+	flex: 1 1 auto;
+	width: auto;
 }
