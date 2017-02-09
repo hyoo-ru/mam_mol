@@ -5,35 +5,39 @@ Reactive http request implementation.
 ## Usage example
 
 ```typescript
-class $my_saver extends $mol_object {
+namespace $ {
+	export class $my_saver extends $mol_object {
+		
+		@ $mol_mem()
+		request_put() {
+			return new $mol_http_request().setup( obj => {
+				obj.method = () => 'Put'
+				obj.uri = () => '//example.org'
+				obj.body = () => 'Some data'
+			} )
+		}
 	
-	@ $mol_prop()
-	requestPut() {
-		return new $mol_http_request().setup( obj => {
-			obj.method = () => 'Put'
-			obj.uri = () => '//example.org'
-			obj.body = () => 'Some data'
-		} )
 	}
-
 }
 ```
 
 ```typescript
-class $my_data extends $mol_object {
-
-	@ $mol_prop()
-	requestGet() {
-		return new $mol_http_request().setup( obj => {
-			obj.uri = () => '//example.org'
-		} )
-	}
+namespace $ {
+	export class $my_data extends $mol_object {
 	
-	@ $mol_prop()
-	data() {
-		return JSON.parse( this.requestGet().text() )
+		@ $mol_mem()
+		request_get() {
+			return new $mol_http_request().setup( obj => {
+				obj.uri = () => '//example.org'
+			} )
+		}
+		
+		@ $mol_mem()
+		data() {
+			return JSON.parse( this.request_get().text() )
+		}
+	
 	}
-
 }
 ```
 

@@ -2,21 +2,22 @@
 
 Output text with dimmed not matched substrings.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_dimmer_demo)
+## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_dimmer)
 
 ## Usage example
+
 ```
-$my_eggs $mol_dimmer
-	haystack \Don't put all your eggs in one basket
-	needle \eggs
+<= Aphorism $mol_dimmer
+	haystack <= aphorism \Don't put all your eggs in one basket
+	needle <= query \eggs
 ```
 
 ## Properties
 
 **`haystack() : string`**
 
-Property `haystack` is a string a needle will be looked in.
+Returns full text to output.
 
 **`needle() : string`**
 
-Property `needle' is a key to find substring in haystack.
+Returns substring to highlight.

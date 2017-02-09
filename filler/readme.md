@@ -1,9 +1,9 @@
 # $mol_filler
 
-Component to print large bulk of text.
+Prints large bulk of text.
 
 ## Usage example
 
 ```tree
-$mol_filler
+<= Description $mol_filler
 ```
