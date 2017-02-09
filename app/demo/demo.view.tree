@@ -1,10 +1,7 @@
-$mol_app_demo $mol_stack
-	main /
-		<= Detail $mol_app_demo_page
-			title <= detail_title \
-			body <= main_content /
-	addon /
+$mol_app_demo $mol_book
+	pages <= blocks /
 		<= Menu $mol_page
+			minimal_width 200
 			head /
 				<= Nav_head $mol_row
 					sub /
@@ -15,6 +12,10 @@ $mol_app_demo $mol_stack
 				hierarchy <= nav_hierarchy null
 				record!id <= nav_option!id null
 				needle <= filter_string?val \
+		<= Detail $mol_app_demo_page
+			minimal_width 500
+			title <= detail_title \
+			body <= main_content /
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text

@@ -60,8 +60,11 @@ namespace $.$mol {
 			return this.lamps_dict()[ this.id() ] || null
 		}
 		
-		main() {
-			return this.lamp() ? super.main() : []
+		pages() {
+			return [ 
+				this.Addon_page(),
+				this.lamp() ? this.Main_page() : null
+			]
 		}
 		
 		title() {

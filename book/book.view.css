@@ -7,9 +7,3 @@
 	flex: 1 1 auto;
 	align-self: stretch;
 }
-
-[mol_book] > * {
-	display: flex;
-	flex: 1 1 auto;
-	width: auto;
-}

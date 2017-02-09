@@ -5,6 +5,8 @@
     justify-content: center;
     font-size: 2rem;
 	color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	flex: 1 1 auto;
 }
 
 [mol_book_demo_page1] {

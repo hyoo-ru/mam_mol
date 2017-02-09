@@ -2,6 +2,10 @@
 	--mol_skin_base: hsl( 140 , 35% , 50% );
 }
 
+[mol_app_demo_detail] {
+	flex-grow: 1000;
+}
+
 [mol_app_demo_nav] {
 	display: flex;
 	flex-direction: column;

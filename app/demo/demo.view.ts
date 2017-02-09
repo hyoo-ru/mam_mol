@@ -111,9 +111,13 @@ namespace $.$mol {
 			return names
 		}
 		
-		main() {
-			if( !this.selected() ) return []
-			return super.main()
+		blocks() {
+			return [
+				this.Menu(),
+				this.selected() 
+					? this.Detail()
+					: null
+			]
 		}
 		
 		@ $mol_mem() 
