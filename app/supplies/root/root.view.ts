@@ -6,14 +6,14 @@ namespace $.$mol {
 		}
 		
 		pages() {
-			return [ 
-				this.entered()
-					? this.lister()
-					: this.enter(), 
-				this.supply()
-					? this.detailer()
-				 	: null 
-			]
+			let sub : $mol_view[] = []
+			
+			sub.push( this.entered() ? this.lister() : this.enter() )
+			
+			if( this.supply() ) sub.push( this.detailer() )
+			else sub.unshift( this.placeholder() )
+			
+			return sub
 		}
 		
 		@ $mol_mem()

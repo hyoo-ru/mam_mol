@@ -112,12 +112,14 @@ namespace $.$mol {
 		}
 		
 		blocks() {
-			return [
-				this.Menu(),
-				this.selected() 
-					? this.Detail()
-					: null
-			]
+			let sub : $mol_view[] = []
+			
+			sub.push( this.Menu() )
+			
+			if( this.selected() ) sub.push( this.Detail() )
+			else sub.unshift( this.Placeholder() )
+			
+			return sub
 		}
 		
 		@ $mol_mem() 

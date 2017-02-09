@@ -61,10 +61,14 @@ namespace $.$mol {
 		}
 		
 		pages() {
-			return [ 
-				this.Addon_page(),
-				this.lamp() ? this.Main_page() : null
-			]
+			let sub : $mol_view[] = []
+			
+			sub.push( this.Addon_page() )
+			
+			if( this.lamp() ) sub.push( this.Main_page() )
+			else sub.unshift( this.Placeholder() )
+			
+			return sub
 		}
 		
 		title() {

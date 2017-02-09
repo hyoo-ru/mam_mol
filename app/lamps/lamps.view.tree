@@ -1,5 +1,6 @@
 $mol_app_lamps $mol_book
 	lamp_current_id?val \
+	Placeholder $mol_book_placeholder
 	pages /
 		<= Addon_page $mol_page
 			minimal_width 200

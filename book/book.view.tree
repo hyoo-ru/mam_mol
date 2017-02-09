@@ -4,3 +4,6 @@ $mol_book $mol_view
 		<= Meter $mol_meter
 			width => width
 	pages /
+
+$mol_book_placeholder $mol_view
+	minimal_width 400

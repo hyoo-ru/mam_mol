@@ -1,4 +1,5 @@
 $mol_app_demo $mol_book
+	Placeholder $mol_book_placeholder
 	pages <= blocks /
 		<= Menu $mol_page
 			minimal_width 200
@@ -13,7 +14,7 @@ $mol_app_demo $mol_book
 				record!id <= nav_option!id null
 				needle <= filter_string?val \
 		<= Detail $mol_app_demo_page
-			minimal_width 500
+			minimal_width 400
 			title <= detail_title \
 			body <= main_content /
 	Welcome $mol_scroll
