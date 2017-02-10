@@ -8,16 +8,14 @@ namespace $.$mol {
 		pages() {	
 			if( !this.entered() ) {
 				return [ this.enter() ]
-			} else {
-				const sub : $mol_view[] = []
-				
-				sub.push( this.lister() )
-				
-				if( this.supply() ) sub.push( this.detailer() )
-				else sub.unshift( this.placeholder() )
-				
-				return sub
 			}
+				
+			const sub : $mol_view[] = [ this.lister() ]
+				
+			if( this.supply() ) sub.push( this.detailer() )
+			else sub.unshift( this.placeholder() )
+				
+			return sub
 		}
 		
 		@ $mol_mem()
