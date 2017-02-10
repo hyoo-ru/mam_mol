@@ -1,5 +1,9 @@
 $mol_app_demo $mol_book
 	Placeholder $mol_book_placeholder
+		sub /
+			<= Logo $mol_image
+				uri <= logo_uri \
+				title \$mol logo
 	pages <= blocks /
 		<= Menu $mol_page
 			minimal_width 200

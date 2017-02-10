@@ -9,6 +9,7 @@
 }
 
 [mol_book_placeholder] {
+	display: flex;
 	flex: 1000 1 400px;
 	order: 1;
 }
