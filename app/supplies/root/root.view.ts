@@ -5,16 +5,19 @@ namespace $.$mol {
 			return $mol_state_session.value( `${ this }.entered()` , next ) || false
 		}
 		
-		pages() {
-			let sub : $mol_view[] = []
-			
-			if( this.entered() ) sub.push( this.lister() )
-			else return [ this.enter() ]
-			
-			if( this.supply() ) sub.push( this.detailer() )
-			else sub.unshift( this.placeholder() )
-			
-			return sub
+		pages() {	
+			if( !this.entered() ) {
+				return [ this.enter() ]
+			} else {
+				const sub : $mol_view[] = []
+				
+				sub.push( this.lister() )
+				
+				if( this.supply() ) sub.push( this.detailer() )
+				else sub.unshift( this.placeholder() )
+				
+				return sub
+			}
 		}
 		
 		@ $mol_mem()
