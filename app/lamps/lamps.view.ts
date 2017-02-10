@@ -4,7 +4,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		lamps_all() {
-			return $mol_csv_parse( $mol_file.relative( '/mol/app/lamps/lamps.csv' ).content() )
+			return $mol_csv_parse( $mol_http_resource.item( '//lamptest.ru/led.php' ).text() )
 		}
 		
 		@ $mol_mem()
@@ -25,23 +25,23 @@ namespace $.$mol {
 			const dict = {} as { [ key : string ] : any }
 			
 			this.lamps_all().forEach( lamp => {
-				dict[ lamp[ '№' ] ] = lamp
+				dict[ lamp[ 'no' ] ] = lamp
 			} )
 			
 			return dict
 		}
 		
 		lamp_rows() {
-			return this.lamps().map( lamp => this.Lamp_row( lamp[ '№' ] ) )
+			return this.lamps().map( lamp => this.Lamp_row( lamp[ 'no' ] ) )
 		}
 		
 		lamp_title( id : string ) {
 			const row = this.lamps_dict()[ id ]
 			
-			const brand = row[ 'Бренд' ]
-			if( brand === 'noname' ) return row[ 'Модель' ]
+			const brand = row[ 'brand' ]
+			if( brand === 'noname' ) return row[ 'model' ]
 			
-			return `${ row[ 'Бренд' ] } ${ row[ 'Модель' ] }`
+			return `${ row[ 'brand' ] } ${ row[ 'model' ] }`
 		}
 		
 		filter( next? : string ) {
@@ -79,30 +79,34 @@ namespace $.$mol {
 		}
 		
 		cri() {
-			return `${ this.lamp()[ 'CRI' ] }%`
+			return `${ this.lamp()[ 'cri' ] }%`
 		}
 		
 		angle() {
-			return `${ this.lamp()[ 'Угол' ] }°`
+			return `${ this.lamp()[ 'angle' ] }°`
 		}
 		
 		shape() {
-			return `${ this.lamp()[ 'Вид' ] }`
+			return `${ this.lamp()[ 'shape' ] }`
 		}
 		
 		base() {
-			return `${ this.lamp()[ 'Цок.' ] }`
+			return `${ this.lamp()[ 'base' ] }`
 		}
 		
 		type() {
-			return `${ this.lamp()[ 'Тип' ] }`
+			return `${ this.lamp()[ 'type' ] }`
 		}
 		
 		temp() {
-			return `${ this.lamp()[ 'Цвет' ] }`
+			return `${ this.lamp()[ 'color_l' ] }`
 		}
 		
-		slug() {
+		matt() {
+			return this.lamp()[ 'matt' ] == 1
+		}
+		
+		slug( id : string ) {
 			const trans = {
 				'а' : 'a' ,
 				'б' : 'b' ,
@@ -139,7 +143,7 @@ namespace $.$mol {
 				'я' : 'ya' ,
 			}
 			
-			return this.lamp_title( this.id() )
+			return this.lamp_title( id )
 				.replace( /[ \/]/g , '-' )
 				.replace( /[.,]/g , '' )
 				.toLowerCase()
@@ -147,7 +151,11 @@ namespace $.$mol {
 		}
 		
 		photo() {
-			return `//lamptest.ru/images/photo/${ this.slug() }.jpg`
+			return `//lamptest.ru/images/photo/${ this.slug( this.id() ) }.jpg`
+		}
+		
+		thumb( id : string ) {
+			return `//lamptest.ru/images/photo/${ this.slug( id ) }-med.jpg`
 		}
 		
 	}
