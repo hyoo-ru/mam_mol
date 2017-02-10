@@ -2,23 +2,23 @@ namespace $.$mol {
 	export class $mol_book extends $.$mol_book {
 		
 		visible_pages() {
-			const pages = this.pages().slice().reverse()
+			const pages = this.pages()
 			const book_width = this.width()
 			let pages_width = 0
 			let visible_pages : $mol_view[] = []
-			let i = 0
 			
-			for( let page of pages ) {
+			for( let i = pages.length; i > 0; i-- ) {
+				const page = pages[ i - 1 ]
+				
 				if( page == null ) continue
 				
 				const page_width = page.minimal_width()
 				
-				if( ( pages_width + page_width ) >= book_width && i > 0) break
+				if( ( pages_width + page_width ) >= book_width && visible_pages.length > 0 ) break
 				
-				pages_width += page.minimal_width()
+				pages_width += page_width
 				visible_pages.push( page )
 				
-				i++
 			}
 			
 			return visible_pages.reverse()

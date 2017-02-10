@@ -1,11 +1,11 @@
 $mol_book_demo $mol_book
 	pages /
-		<= Page1 $mol_view
+		<= Placeholder $mol_view
 			minimal_width 200
 			sub / \ Placeholder
-		<= Page2 $mol_view
+		<= Main $mol_view
 			minimal_width 400
 			sub / \ Main
-		<= Page3 $mol_view
+		<= Addon $mol_view
 			minimal_width 250
 			sub / \ Addon

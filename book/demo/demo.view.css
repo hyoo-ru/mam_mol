@@ -1,6 +1,6 @@
-[mol_book_demo_page1], 
-[mol_book_demo_page2], 
-[mol_book_demo_page3] {
+[mol_book_demo_placeholder], 
+[mol_book_demo_main], 
+[mol_book_demo_addon] {
 	align-items: center;
     justify-content: center;
     font-size: 2rem;
@@ -9,7 +9,7 @@
 	flex: 1 1 auto;
 }
 
-[mol_book_demo_page1] {
+[mol_book_demo_placeholder] {
 	background-color: hsl(132, 56%, 96%);
 	order: 1;
 }
