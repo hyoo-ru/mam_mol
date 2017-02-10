@@ -48,7 +48,7 @@ $mol_app_lamps $mol_stack
 									content /
 										<= shape \
 								<= Base $mol_labeler
-									title <= base_title @ \Shape
+									title <= base_title @ \Base
 									content /
 										<= base \
 				<= Gallery $mol_row
