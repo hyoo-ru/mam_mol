@@ -25,3 +25,11 @@
 	padding: 1rem;
 	align-items: center;
 }
+
+[mol_app_lamps_addon_page] {
+	flex: 1 1 400px;
+}
+
+[mol_app_lamps_main_page] {
+	flex: 1000 1 400px;
+}

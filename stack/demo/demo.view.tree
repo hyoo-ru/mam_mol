@@ -1,9 +1,0 @@
-$mol_stack_demo $mol_stack
-	main /
-		<= Main_page $mol_scroll
-			sub /
-				<= Hello $mol_card_demo_hello
-	addon /
-		<= Addon_page $mol_scroll
-			sub /
-				<= Enter $mol_form_demo

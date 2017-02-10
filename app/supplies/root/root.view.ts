@@ -4,30 +4,16 @@ namespace $.$mol {
 		entered( next? : boolean ) {
 			return $mol_state_session.value( `${ this }.entered()` , next ) || false
 		}
-
-		sub() {
-			return [
-				this.entered()
-					? this.Main()
-					: null ,
-				this.Addon()
-			]
-		}
 		
-		main() {
-			return this.supply()
-				? [ this.detailer() ]
-				: []
-		}
-
-		addon() {
-			return this.entered()
-				? [ this.lister() ]
-				: [ this.enter() ]
-		}
-		
-		title() {
-			return ( this.main()[0] || this.addon()[0] ).title()
+		pages() {
+			let sub : $mol_view[] = []
+			
+			sub.push( this.entered() ? this.lister() : this.enter() )
+			
+			if( this.supply() ) sub.push( this.detailer() )
+			else sub.unshift( this.placeholder() )
+			
+			return sub
 		}
 		
 		@ $mol_mem()

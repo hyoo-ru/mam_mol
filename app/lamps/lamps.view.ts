@@ -60,8 +60,15 @@ namespace $.$mol {
 			return this.lamps_dict()[ this.id() ] || null
 		}
 		
-		main() {
-			return this.lamp() ? super.main() : []
+		pages() {
+			let sub : $mol_view[] = []
+			
+			sub.push( this.Addon_page() )
+			
+			if( this.lamp() ) sub.push( this.Main_page() )
+			else sub.unshift( this.Placeholder() )
+			
+			return sub
 		}
 		
 		title() {

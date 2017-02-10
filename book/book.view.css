@@ -1,0 +1,14 @@
+[mol_book] {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: stretch;
+	justify-content: flex-start;
+	overflow: hidden;
+	flex: 1 1 auto;
+	align-self: stretch;
+}
+
+[mol_book_placeholder] {
+	flex: 1000 1 400px;
+	order: 1;
+}

@@ -1,0 +1,9 @@
+$mol_book $mol_view
+	sub <= visible_pages /
+	plugins /
+		<= Meter $mol_meter
+			width => width
+	pages /
+
+$mol_book_placeholder $mol_view
+	minimal_width 400

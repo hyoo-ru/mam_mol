@@ -111,9 +111,15 @@ namespace $.$mol {
 			return names
 		}
 		
-		main() {
-			if( !this.selected() ) return []
-			return super.main()
+		blocks() {
+			let sub : $mol_view[] = []
+			
+			sub.push( this.Menu() )
+			
+			if( this.selected() ) sub.push( this.Detail() )
+			else sub.unshift( this.Placeholder() )
+			
+			return sub
 		}
 		
 		@ $mol_mem() 

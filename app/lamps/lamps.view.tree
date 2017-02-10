@@ -1,7 +1,9 @@
-$mol_app_lamps $mol_stack
+$mol_app_lamps $mol_book
 	lamp_current_id?val \
-	addon /
-		<= addon_page $mol_page
+	Placeholder $mol_book_placeholder
+	pages /
+		<= Addon_page $mol_page
+			minimal_width 200
 			title \LampTest.ru
 			head /
 				- <= Title -
@@ -11,8 +13,8 @@ $mol_app_lamps $mol_stack
 			body /
 				<= Menu $mol_list
 					rows <= lamp_rows /
-	main /
-		<= main_page $mol_page
+		<= Main_page $mol_page
+			minimal_width 400
 			title <= title \
 			tools /
 				<= Close $mol_link

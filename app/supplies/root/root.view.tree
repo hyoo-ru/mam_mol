@@ -1,11 +1,15 @@
-$mol_app_supplies_root $mol_stack
+$mol_app_supplies_root $mol_book
 	-
 	enter $mol_app_supplies_enter
 		entered?val <=> entered?val false
 	-
 	lister $mol_app_supplies_list
+		minimal_width 400
 		supplies <= supplies /
 		search_query?val <=> search_query?val \
 	-
 	detailer $mol_app_supplies_detail
+		minimal_width 400
 		supply <= supply null
+	-
+	placeholder $mol_book_placeholder
