@@ -14,7 +14,7 @@ namespace $.$mol {
 				
 			if( this.supply() ) sub.push( this.detailer() )
 			else sub.unshift( this.placeholder() )
-				
+			
 			return sub
 		}
 		
