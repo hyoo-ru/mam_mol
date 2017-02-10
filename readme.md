@@ -365,6 +365,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 * **[$mol_http_resource](http/resource)** - Reactive REST HTTP resource
 * **[$mol_http_request](http/request)** - Reactive HTTP Request
+* **[$mol_webdav](webdav)** - Reactive [WebDAV](https://ru.wikipedia.org/wiki/WebDAV) client
 
 ## Simple components
 
@@ -379,7 +380,9 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_button](button)** - button
 * **[$mol_check](check)** - check box
 * **[$mol_switch](switch)** - radio buttons
+* **[$mol_select](select)** - select with search and lazy rendering support
 * **[$mol_string](string)** - one string input control
+* **[$mol_search](search)** - search string with suggests support
 * **[$mol_number](number)** - one number input control
 * **[$mol_code](code)** - bar code scanner
 * **[$mol_portion](portion)** - portion visualizer
@@ -393,10 +396,15 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_list](list)** - vertical list of rows
 * **[$mol_labeler](labeler)** - labeled content
 * **[$mol_section](section)** - section with header
-* **[$mol_stack](stack)** - horizontal stack of panels
+* **[$mol_book](book)** - horizontal stack of pages
 * **[$mol_page](page)** - page with header, body and footer
 * **[$mol_deck](deck)** - deck of panels with tab bar
 * **[$mol_card](card)** - card with content
+
+## Plugin components
+
+* **[$mol_nav](meter)** - keyboard navigation
+* **[$mol_meter](meter)** - real time element size monitoring
 
 ## Complex components
 
