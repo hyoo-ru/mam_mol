@@ -12,6 +12,21 @@
 	flex: 0 0 auto;
 }
 
+[mol_app_lamps_lamp_row_link] {
+	display: flex;
+	flex: 1 1 auto;
+	align-items: flex-start;
+}
+
+[mol_app_lamps_lamp_row_title] {
+	flex: 1000 1 auto;
+}
+
+[mol_app_lamps_lamp_row_thumb] {
+	height : 3rem;
+	display: block;
+}
+
 [mol_app_lamps_light] {
 	background: var(--mol_skin_card);
 }
