@@ -25,10 +25,10 @@ namespace $ {
 				this.path() ,
 				{ persistent : false } ,
 				( type : string , name : string )=> {
-					if( !name ) this.stat( void 0 )
+					if( !name ) this.stat( void null , $mol_atom_force )
 					else if( !/(^\.|___$)/.test( name ) ) {
 						var file = this.resolve( name )
-						file.stat( null )
+						file.stat( void null , $mol_atom_force )
 					}
 				}
 			)
@@ -77,7 +77,7 @@ namespace $ {
 					$node.fs.unlinkSync( this.path() )
 				}
 				
-				this.stat( null )
+				this.stat( void null , $mol_atom_force )
 				
 				return next
 			}
