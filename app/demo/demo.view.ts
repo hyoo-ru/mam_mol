@@ -155,6 +155,10 @@ namespace $.$mol {
 			return sample
 		}
 		
+		logo_uri() {
+			return $mol_file.relative( '/mol/logo/logo.svg' ).path()
+		}
+		
 	}
 	
 	export class $mol_app_demo_nav extends $.$mol_app_demo_nav {

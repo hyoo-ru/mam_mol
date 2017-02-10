@@ -2,11 +2,19 @@
 	--mol_skin_base: hsl( 140 , 35% , 50% );
 }
 
+[mol_app_demo_logo] {
+	width: 30%;
+	margin: auto;
+	box-shadow: none;
+}
+
 [mol_app_demo_menu] {
 	flex: 1 1 200px;
 }
 
-[mol_app_demo_detail] {
+[mol_app_demo_detail], 
+[mol_app_demo_detail_row],
+[mol_app_empty_message] {
 	flex: 1000 1 400px;
 }
 
