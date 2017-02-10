@@ -5,11 +5,13 @@ namespace $.$mol {
 			return $mol_state_session.value( `${ this }.entered()` , next ) || false
 		}
 		
-		pages() {
-			let sub : $mol_view[] = []
-			
-			sub.push( this.entered() ? this.lister() : this.enter() )
-			
+		pages() {	
+			if( !this.entered() ) {
+				return [ this.enter() ]
+			}
+				
+			const sub : $mol_view[] = [ this.lister() ]
+				
 			if( this.supply() ) sub.push( this.detailer() )
 			else sub.unshift( this.placeholder() )
 			
