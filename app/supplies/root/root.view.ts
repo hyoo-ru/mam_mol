@@ -8,7 +8,8 @@ namespace $.$mol {
 		pages() {
 			let sub : $mol_view[] = []
 			
-			sub.push( this.entered() ? this.lister() : this.enter() )
+			if( this.entered() ) sub.push( this.lister() )
+			else return [ this.enter() ]
 			
 			if( this.supply() ) sub.push( this.detailer() )
 			else sub.unshift( this.placeholder() )
