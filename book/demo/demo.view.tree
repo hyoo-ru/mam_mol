@@ -4,8 +4,8 @@ $mol_book_demo $mol_book
 			minimal_width 200
 			sub / \ Placeholder
 		<= Addon $mol_view
-			minimal_width 400
+			minimal_width 250
 			sub / \ Addon
 		<= Main $mol_view
-			minimal_width 250
+			minimal_width 400
 			sub / \ Main
