@@ -1,3 +1,5 @@
-$mol_icon $mol_svg
-	attr * viewBox <= viewBox \0 0 24 24
-	sub / <= pather $mol_svg_path geometry <= path \
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \

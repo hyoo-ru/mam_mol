@@ -1,0 +1,8 @@
+$mol_plot_graph $mol_svg_group
+	series /
+	points /
+	hue 0
+	-
+	style *
+		stroke <= color_stroke \
+		fill <= color_fill \

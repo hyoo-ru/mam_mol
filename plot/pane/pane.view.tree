@@ -1,0 +1,6 @@
+$mol_plot_pane $mol_svg_root
+	aspect \none
+	view_box null
+	sub <= graphs /
+		<= back /
+		<= front_colored <= front /

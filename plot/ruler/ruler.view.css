@@ -1,0 +1,4 @@
+[mol_plot_ruler] {
+	color: var(--mol_skin_light_line);
+	stroke-width: .1%;
+}

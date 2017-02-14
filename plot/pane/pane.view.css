@@ -1,0 +1,6 @@
+[mol_plot_pane] {
+	flex: 1 1 auto;
+	align-self: stretch;
+	stroke-width: .33%;
+	transform: scaleY(-1);
+}

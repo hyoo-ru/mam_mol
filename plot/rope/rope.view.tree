@@ -1,0 +1,8 @@
+$mol_plot_rope $mol_plot_graph
+	sub /
+		<= Line $mol_plot_line
+			points <= points -
+			hue <= hue -
+		<= Dots $mol_plot_dot
+			points <= points -
+			hue <= hue -

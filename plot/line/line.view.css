@@ -1,0 +1,5 @@
+[mol_plot_line] {
+	color: var(--mol_skin_base);
+	fill: none;
+	stroke-linejoin: round;
+}

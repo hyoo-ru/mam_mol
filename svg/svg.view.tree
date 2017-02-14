@@ -2,9 +2,14 @@ $mol_svg $mol_view
 	dom_name \svg
 	dom_name_space \http://www.w3.org/2000/svg
 
-$mol_svg_root $mol_view
+$mol_svg_root $mol_svg
 	dom_name \svg
-	attr * viewBox <= viewBox \0 0 100 100 
+	attr *
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \
+
+$mol_svg_group $mol_svg
+	dom_name \g
 
 $mol_svg_path $mol_svg
 	dom_name \path
@@ -12,7 +17,8 @@ $mol_svg_path $mol_svg
 
 $mol_svg_circle $mol_svg
 	dom_name \circle
+	pos /
 	attr *
-		r <= radius \
+		r <= radius \.5%
 		cx <= pos_x \
 		cy <= pos_y \

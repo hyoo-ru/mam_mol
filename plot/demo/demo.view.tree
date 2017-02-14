@@ -1,0 +1,10 @@
+$mol_plot_demo $mol_plot_pane
+	count?val 25
+	back /
+	front /
+		<= Output $mol_plot_bar
+			series <= output_series /
+		<= Saturation $mol_plot_line
+			series <= saturation_series /
+		<= Input $mol_plot_rope
+			series <= input_series /
