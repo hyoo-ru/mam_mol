@@ -14,7 +14,6 @@ $mol_attach_item $mol_link
 		download <= loadable true
 
 $mol_attach_add $mol_button
-	dom_name \div
 	file_new?val \
 	sub /
 		<= Icon $mol_icon_attach

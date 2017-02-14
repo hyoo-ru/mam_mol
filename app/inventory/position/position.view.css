@@ -4,7 +4,7 @@
 	align-items: flex-start;
 }
 [mol_app_inventory_position_product] {
-	flex: 1000 1000 10rem;
+	flex: 1000 1000 8rem;
 }
 [mol_app_inventory_position_status] {
 	flex: 1 1 auto;
