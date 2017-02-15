@@ -2,6 +2,20 @@
 
 Reactive micro-modular ui framework. Very simple, but very powerful!
 
+# Contents
+
+- [Features](#features)
+- [Demo applications](#demo-applications)
+- [Benchmarks](#benchmarks)
+- [Articles](#articles)
+- [Any questions?](#any-questions)
+- [Found a bug?](#found-a-bug)
+- [Need feature?](#need-feature)
+- [Quick start](#quick-start)
+- [Rationale](#rationale)
+- [Modules](#modules)
+- [Cool stuff](#cool-stuff)
+
 # Features
 
 * [Zero configuration](#zero-configuration). Just checkout and use it.
