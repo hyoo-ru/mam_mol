@@ -244,18 +244,20 @@ Unlike another frameworks the $mol does not seek to isolate the insides of the c
 For example, to set the list of sub components you need to redefine `sub` property in view.tree
 
 ```tree
-$mol_view
-	sub /
-		< Button1 $mol_filler
-		< Button2 $mol_filler
+Confirm_delte $mol_row sub /
+	<= Yes $mol_button_minor title \Yes
+	<= No $mol_button_danger title \No
 ```
 
 Or the same code through TypeScript would be:
 
 ```typescript
-new $mol_view().setup( obj => {
-	obj.sub = ()=> [ this.Button1() , this.Button2() ]
-} )
+@ $mol_mem()
+Confirm_delete() {
+	return new $mol_row().setup( obj => {
+		obj.sub = ()=> [ this.Yes() , this.No() ]
+	} )
+}
 ```
 
 In both variants the compiler would verify existence of the property and accordance of the signature. In normal mode you don't need to work with fields of the object directly, so all definable properties 
