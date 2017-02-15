@@ -30,7 +30,7 @@ namespace $.$mol {
 		@ $mol_mem()
 		names_demo_filtered() {
 			const filter = this.filter_string()
-			const names = this.names_demo_all().filter( name => name.match( filter ) )
+			const names = this.names_demo_all().filter( name => ( name.indexOf( filter ) != -1 ) )
 			return names
 		}
 		
