@@ -2,6 +2,8 @@
 	overflow: auto;
 	overflow-y: scroll;
 	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
 	box-sizing: border-box;
 	will-change: scroll-position;
 	transform: translateZ(0);

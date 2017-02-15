@@ -1,0 +1,30 @@
+$mol_app_docs $mol_book
+	webdav_url \https://docs.live.net/28857C99F9421720
+	title @ \Documents
+	File!file $mol_app_docs_file
+		title <= file_name!file \
+		src <= file_src!file \
+		mime <= file_mime!file \
+	Icon_folder $mol_icon_folder
+	Folder!folder $mol_page
+		minimal_width 300
+		title <= folder_title!folder \
+		body / <= Folder_row_list!folder $mol_list
+			rows <= folder_rows!folder /
+	Folder_row!item $mol_app_docs_folder_row
+		folder_row_click?event <=> folder_row_click!item?event null
+		sub /
+			<= folder_row_icon!item null
+			<= folder_row_title!item \
+	Placeholder $mol_book_placeholder
+		sub / \Documents App
+		
+$mol_app_docs_file $mol_page
+	body /
+		<= Data $mol_embed
+			uri <= src \
+			mime <= mime \
+	minimal_width 600
+
+$mol_app_docs_folder_row $mol_button
+	event_click?event <=> folder_row_click?event null

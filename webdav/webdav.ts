@@ -23,73 +23,51 @@ namespace $ {
 			return 'PropFind'
 		}
 		
+		resolve( path : string ) : $mol_webdav {
+			if( !path ) return this
+			
+			let res = this.uri() + '/' + path
+			
+			while( true ) {
+				let prev = res
+				res = res.replace( /\/[^\/]+\/\.\.\// , '/' )
+				if( prev === res ) break
+			}
+			
+			while( true ) {
+				let prev = res
+				res = res.replace( /\/\.\.\/[^\/]+\// , '/' )
+				if( prev === res ) break
+			}
+			
+			return this.Class().item( res )
+		}
+		
 		@ $mol_mem()
-		info_tree() {
+		data_tree() {
 			const dom = this.request().response().responseXML as XMLDocument
 			const responses = dom.querySelectorAll( 'response' ) as any as Element[]
 			const base = this.uri().replace( /\/[^\/]*$/ , '' )
 			
-			type common = {
-				title : string
-				created : $jin.time.moment_class
-				//modified : $jin.time.moment_class
-			} 
-			
-			type dir = common & {
-				type : 'dir'
-			}
-			
-			type file = common & {
-				type : 'file'
-				version : string
-				size : number
-				mime : string
-			}
-			
-			const info = {} as { [ path : string ] : dir | file }
+			const data = {} as { [ path : string ] : Element }
 			
 			for( let response of responses ) {
 				const uri = base + response.querySelector( 'href' ).textContent
 				
-				const type = response.querySelector( 'resourcetype > collection' ) ? 'dir' : 'file'
-				
-				const common = {
-					title : response.querySelector( 'displayname' ).textContent ,
-					created : $jin.time.moment( response.querySelector( 'creationdate' ).textContent ) ,
-					//modified : $jin.time.moment( response.querySelector( 'getlastmodified' ).textContent ) ,
-				}
-				
-				switch( type ) {
-					case 'dir' :
-						info[ uri ] = {
-							...common ,
-							type : 'dir' ,
-						}
-						break
-					case 'file' :
-						info[ uri ] = {
-							...common ,
-							type : 'file' ,
-							size : Number( response.querySelector( 'getcontentlength' ).textContent ) ,
-							version : response.querySelector( 'getetag' ).textContent ,
-							mime : response.querySelector( 'getcontenttype' ).textContent ,
-						}
-						break
-				}
-				
+				data[ uri ] = response
 			}
 			
-			return info
+			return data
 		}
 		
-		info_self() {
-			this.parent().info_tree()
+		data_self() {
+			return this.parent().data_tree()
 		}
 		
 		@ $mol_mem()
 		sub() {
 			const next = [] as $mol_webdav[]
-			for( let uri in this.info_tree() ) {
+			for( let uri in this.data_self() ) {
 				if( uri == this.uri() ) continue
 				next.push( $mol_webdav.item( uri ) )
 			}
@@ -100,34 +78,13 @@ namespace $ {
 			return $mol_webdav.item( this.uri().replace( /\/[^\/]*$/ , '' ) )
 		}
 		
+		prop( prop: string ) {
+			return this.data_tree()[ this.uri() ].querySelector( prop ).textContent
+		}
+		
 		type() {
-			return this.info_self()[ this.uri() ].type
+			return this.prop( 'collection' ) ? 'dir' : 'file'
 		}
-		
-		title() {
-			return this.info_self()[ this.uri() ].title
-		}
-		
-		created() {
-			return this.info_self()[ this.uri() ].created
-		}
-		
-		size() {
-			return this.info_self()[ this.uri() ].size
-		}
-		
-		mime() {
-			return this.info_self()[ this.uri() ].mime
-		}
-		
-		version() {
-			return this.info_self()[ this.uri() ].version
-		}
-		
-		//modified() {
-		//	return this.info_self()[ this.uri() ].modified
-		//}
-		
 	}
 	
 }
