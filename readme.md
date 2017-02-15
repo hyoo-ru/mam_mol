@@ -35,7 +35,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 * [$mol_app_bench_list](app/bench/list) - Frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/#becnh=list#sort=fill#))
 * [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark)
-([online](https://eigenmethod.github.io/mol/app/bench/#bench=%2Ftodomvc%2Fbenchmark%2F#sample=angular2~angularjs~knockoutjs~mol~polymer~react-alt~vanillajs~vue#sort=fill#))
+([online](http://eigenmethod.github.io/mol/app/bench/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
 * [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
 
 # Articles
@@ -244,18 +244,20 @@ Unlike another frameworks the $mol does not seek to isolate the insides of the c
 For example, to set the list of sub components you need to redefine `sub` property in view.tree
 
 ```tree
-$mol_view
-	sub /
-		< Button1 $mol_filler
-		< Button2 $mol_filler
+Confirm_delte $mol_row sub /
+	<= Yes $mol_button_minor title \Yes
+	<= No $mol_button_danger title \No
 ```
 
 Or the same code through TypeScript would be:
 
 ```typescript
-new $mol_view().setup( obj => {
-	obj.sub = ()=> [ this.Button1() , this.Button2() ]
-} )
+@ $mol_mem()
+Confirm_delete() {
+	return new $mol_row().setup( obj => {
+		obj.sub = ()=> [ this.Yes() , this.No() ]
+	} )
+}
 ```
 
 In both variants the compiler would verify existence of the property and accordance of the signature. In normal mode you don't need to work with fields of the object directly, so all definable properties 
