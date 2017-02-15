@@ -28,20 +28,6 @@ namespace $.$mol {
 			]
 		}
 		
-		view_box() {
-			const dims = this.dimensions()
-
-			const size = this.size()
-			const gap = [0,0]//[ size[0] * .1 , size[1] * .1 ]
-
-			const box = [
-				[ dims[0][0] - gap[0] , dims[0][1] - gap[1] ] ,
-				[ size[0] + 2 * gap[0] , size[1] + 2 * gap[1] ] ,
-			]
-
-			return box.map( point => point.join( ' ' ) ).join( ' ' )
-		}
-		
 		hue_base() { return 140 }
 		
 		hue_shift() { return 50 }
@@ -56,6 +42,31 @@ namespace $.$mol {
 			
 			graphs.forEach( ( graph , index ) => {
 				graph.hue = () => this.hue_graph( index )
+			} )
+			
+			return graphs
+		}
+		
+		@ $mol_mem()
+		shift() {
+			const dims = this.dimensions()
+			return [ - dims[0][0] , - dims[0][1] ]
+		}
+		
+		@ $mol_mem()
+		scale() {
+			const size = this.size()
+			const real = [ this.width() , this.height() ]
+			return [ real[0] / size[0] , real[1] / size[1] ]
+		}
+		
+		@ $mol_mem()
+		graphs_positioned() {
+			const graphs = this.graphs()
+			
+			graphs.forEach( ( graph , index ) => {
+				graph.shift = ()=> this.shift()
+				graph.scale = ()=> this.scale()
 			} )
 			
 			return graphs

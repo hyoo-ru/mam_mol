@@ -1,6 +1,12 @@
 $mol_plot_graph $mol_svg_group
 	series /
-	points /
+	points_scaled <= points /
+	shift /
+		0
+		0
+	scale /
+		1
+		1
 	hue 0
 	-
 	style *

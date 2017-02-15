@@ -5,6 +5,15 @@ namespace $.$mol {
 			return this.series().map( ( val , i )=> [ i , val ] )
 		}
 		
+		points_scaled() {
+			const shift = this.shift()
+			const scale = this.scale()
+			return this.points().map( point => [
+				( point[0] + shift[0] ) * scale[0] ,
+				( point[1] + shift[1] ) * scale[1] ,
+			] )
+		}
+		
 		@ $mol_mem()
 		dimensions() {
 			const points = this.points()
