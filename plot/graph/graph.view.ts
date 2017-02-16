@@ -1,22 +1,35 @@
 namespace $.$mol {
 	export class $mol_plot_graph extends $.$mol_plot_graph {
 		
-		points() {
+		points_raw() {
 			return this.series().map( ( val , i )=> [ i , val ] )
 		}
 		
+		@ $mol_mem()
 		points_scaled() {
 			const shift = this.shift()
 			const scale = this.scale()
-			return this.points().map( point => [
+			return this.points_raw().map( point => [
 				shift[0] + point[0] * scale[0] ,
 				shift[1] + point[1] * scale[1] ,
 			] )
 		}
 		
 		@ $mol_mem()
+		points() {
+			const res = [] as number[][]
+			let last = [ - Number.NEGATIVE_INFINITY , - Number.NEGATIVE_INFINITY ]
+			this.points_scaled().forEach( point => {
+				if( Math.abs( point[0] - last[0] ) < 2 ) return 
+				if( Math.abs( point[1] - last[1] ) < 2 ) return
+				res.push( last = point )
+			} )
+			return res
+		}
+		
+		@ $mol_mem()
 		dimensions() {
-			const points = this.points()
+			const points = this.points_raw()
 			const next = [ [ 0 , 0 ] , [ 0 , 0 ] ]
 			
 			for( let point of points ) {
