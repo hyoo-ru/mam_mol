@@ -7,18 +7,33 @@ namespace $ {
 	export class $mol_locale extends $mol_object {
 		
 		@ $mol_mem()
-		static lang( next? : string ) {
-			return $mol_state_local.value( 'locale' , next ) || $mol_state_arg.value( 'locale' ) || 'en'
+		static lang_default() {
+			return 'en'
 		}
 		
 		@ $mol_mem()
-		static texts( next? : $mol_locale_dict ) {
+		static lang( next? : string ) {
+			return $mol_state_local.value( 'locale' , next ) || $mol_dom_context.navigator.language || this.lang_default()
+		}
+		
+		@ $mol_mem_key()
+		static source( lang : string ) {
+			return JSON.parse( $mol_file.relative( `-/web.locale=${ lang }.json` ).content() )
+		}
+		
+		@ $mol_mem()
+		static texts( next? : $mol_locale_dict ) : $mol_locale_dict {
 			if( next ) return next
 			
-			const path = `-/web.locale=${ this.lang() }.json`
-			const content = $mol_file.relative( path ).content() 
+			const lang = this.lang()
 			
-			return JSON.parse( content ) as $mol_locale_dict
+			try {
+				return this.source( lang ).valueOf()
+			} catch( error ) {
+				const def = this.lang_default()
+				if( lang === def ) throw error
+				return this.source( def )
+			}
 		}
 		
 		static text( contexts : string[] , key : string ) {
