@@ -40,17 +40,17 @@
 
 [mol_app_supplies_position_price_item] {
 	flex: 1 0 3rem;
-	text-align: right;
+	align-items: flex-end;
 }
 
 [mol_app_supplies_position_quantity_item] {
 	flex: 1 0 2rem;
-	text-align: right;
+	align-items: flex-end;
 }
 
 [mol_app_supplies_position_cost_item] {
 	flex: 1 0 3rem;
-	text-align: right;
+	align-items: flex-end;
 }
 
 [mol_app_supplies_position_supply_date_item] {

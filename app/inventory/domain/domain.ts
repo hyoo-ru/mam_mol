@@ -223,11 +223,11 @@ namespace $ {
 		}
 		
 		can_write_off() {
-			return Boolean( this.credentials().login.match( 'keeper' ) )
+			return !this.credentials().login.match( 'controller' )
 		}
 		
 		can_approve() {
-			return Boolean( this.credentials().login.match( 'controller' ) )
+			return !this.credentials().login.match( 'keeper' )
 		}
 		
 		message() : string {

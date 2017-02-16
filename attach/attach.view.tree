@@ -4,6 +4,7 @@ $mol_attach $mol_card
 			<= items?val /
 			<= Add $mol_attach_add file_new?val <=> attach_new?val \
 	Item!id $mol_attach_item
+		title <= attach_title \
 
 $mol_attach_item $mol_link
 	url_thumb?val \
@@ -11,10 +12,10 @@ $mol_attach_item $mol_link
 	style *
 		backgroundImage <= style_bg \
 	attr *
-		download <= loadable true
+		download <= title \
 
 $mol_attach_add $mol_button
-	dom_name \div
+	minimal_height 80
 	file_new?val \
 	sub /
 		<= Icon $mol_icon_attach

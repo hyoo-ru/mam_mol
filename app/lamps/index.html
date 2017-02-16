@@ -2,9 +2,11 @@
 <html style=" height: 100% ">
 
 <meta name="viewport" content="width=device-width" />
+<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'">
 <link rel="stylesheet" href="-/web.css" />
 
 <body mol_view_root="$mol_app_lamps"></body>
 
+<script type="text/javascript" src="cordova.js"></script>
 <script src="-/web.js"></script>
 <script>$mol_file.root = function(){ return $mol_file.relative( '../../..' ) }</script>
