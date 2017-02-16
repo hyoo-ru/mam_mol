@@ -4,7 +4,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		lamps_all() {
-			return $mol_csv_parse( $mol_http_resource.item( '//lamptest.ru/led.php' ).text() )
+			return $mol_csv_parse( $mol_http_resource.item( 'http://lamptest.ru/led.php' ).text() )
 		}
 		
 		@ $mol_mem()
@@ -151,11 +151,11 @@ namespace $.$mol {
 		}
 		
 		photo() {
-			return `//lamptest.ru/images/photo/${ this.slug( this.id() ) }.jpg`
+			return `http://lamptest.ru/images/photo/${ this.slug( this.id() ) }.jpg`
 		}
 		
 		thumb( id : string ) {
-			return `//lamptest.ru/images/photo/${ this.slug( id ) }-med.jpg`
+			return `http://lamptest.ru/images/photo/${ this.slug( id ) }-med.jpg`
 		}
 		
 	}

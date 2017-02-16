@@ -3,6 +3,8 @@
 }
 
 [mol_demo_small_screener] {
-	width: 500px;
-	height: 280px;
+	width: 340px;
+	height: 340px;
+	max-width: 85vw;
+	max-height: 85vh;
 }

@@ -68,7 +68,6 @@
 	align-items: stretch;
 	justify-content: flex-start;
 	flex-wrap: wrap;
-	padding: 1rem;
 }
 
 [mol_app_demo_detail_row] {
@@ -95,4 +94,9 @@
 
 [mol_app_demo_option_link] {
 	padding: 0;
+}
+
+[mol_app_demo_sample_large] {
+	padding: 1rem;
+	box-sizing: border-box;
 }

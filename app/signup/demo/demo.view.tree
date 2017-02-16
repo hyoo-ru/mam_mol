@@ -1,1 +1,3 @@
-$mol_app_signup_demo $mol_app_signup
+$mol_app_signup_demo $mol_scroll
+	sub /
+		<= Signup $mol_app_signup
