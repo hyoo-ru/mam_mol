@@ -1,0 +1,4 @@
+$mol_plot_fill $mol_plot_graph
+	sub /
+		<= Curve $mol_svg_path
+			geometry <= curve \

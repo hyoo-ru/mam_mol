@@ -9,8 +9,8 @@ namespace $.$mol {
 			const shift = this.shift()
 			const scale = this.scale()
 			return this.points().map( point => [
-				( point[0] + shift[0] ) * scale[0] ,
-				( point[1] + shift[1] ) * scale[1] ,
+				shift[0] + point[0] * scale[0] ,
+				shift[1] + point[1] * scale[1] ,
 			] )
 		}
 		

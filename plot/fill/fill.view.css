@@ -1,0 +1,5 @@
+[mol_plot_fill] {
+	stroke: none;
+	opacity: .2;
+	fill: linear-gradient( to bottom , currentColor , transparent )
+}

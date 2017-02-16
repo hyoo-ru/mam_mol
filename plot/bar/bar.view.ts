@@ -6,7 +6,7 @@ namespace $.$mol {
 			const points = this.points_scaled()
 			if( points.length < 1 ) return ''
 			
-			return points.map( point => `M ${ point[0] } ${ shift[1] * this.scale()[1] } V ${ point[1] }` ).join( ' ' )
+			return points.map( point => `M ${ point[0] } ${ shift[1] } V ${ point[1] }` ).join( ' ' )
 		}
 		
 		stroke_width() {

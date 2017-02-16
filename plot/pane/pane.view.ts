@@ -50,7 +50,8 @@ namespace $.$mol {
 		@ $mol_mem()
 		shift() {
 			const dims = this.dimensions()
-			return [ - dims[0][0] , - dims[0][1] ]
+			const scale = this.scale()
+			return [ - dims[0][0] * scale[0] , - dims[0][1] * scale[1] ]
 		}
 		
 		@ $mol_mem()
