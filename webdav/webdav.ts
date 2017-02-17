@@ -9,6 +9,40 @@ namespace $ {
 			} )
 		}
 		
+		@ $mol_mem()
+		data_tree() {
+			const dom = this.request().response().responseXML as XMLDocument
+			const responses = dom.querySelectorAll( 'response' ) as any as Element[]
+			
+			const data = {} as { [ path : string ] : Element }
+			
+			for( let response of responses ) {
+				const uri = this.resolve( response.querySelector( 'href' ).textContent ).uri()
+				
+				data[ uri ] = response
+			}
+			
+			return data
+		}
+		
+		data_self() {
+			return this.parent().data_tree()
+		}
+		
+		parent() {
+			return $mol_webdav.item( this.uri().replace( /\/[^\/]*\/?$/ , '/' ) )
+		}
+		
+		@ $mol_mem()
+		sub() {
+			const next = [] as $mol_webdav[]
+			for( let uri in this.data_tree() ) {
+				if( uri == this.uri() ) continue
+				next.push( $mol_webdav.item( uri ) )
+			}
+			return next
+		}
+		
 		depth() {
 			return 1
 		}
@@ -20,12 +54,16 @@ namespace $ {
 		}
 		
 		method_get() {
-			return 'PropFind'
+			return 'PROPFIND'
 		}
 		
 		resolve( path : string ) : $mol_webdav {
 			if( !path ) return this
 			
+			if( path[0] === '/' ) {
+				return $mol_webdav.item( this.uri().replace( /^([^\/]+\/\/[^\/]+).*/, '$1' ) + path )
+			}
+				
 			let res = this.uri() + '/' + path
 			
 			while( true ) {
@@ -43,47 +81,12 @@ namespace $ {
 			return this.Class().item( res )
 		}
 		
-		@ $mol_mem()
-		data_tree() {
-			const dom = this.request().response().responseXML as XMLDocument
-			const responses = dom.querySelectorAll( 'response' ) as any as Element[]
-			const base = this.uri().replace( /\/[^\/]*$/ , '' )
-			
-			const data = {} as { [ path : string ] : Element }
-			
-			for( let response of responses ) {
-				const uri = base + response.querySelector( 'href' ).textContent
-				
-				data[ uri ] = response
-			}
-			
-			return data
-		}
-		
-		data_self() {
-			return this.parent().data_tree()
-		}
-		
-		@ $mol_mem()
-		sub() {
-			const next = [] as $mol_webdav[]
-			for( let uri in this.data_self() ) {
-				if( uri == this.uri() ) continue
-				next.push( $mol_webdav.item( uri ) )
-			}
-			return next
-		}
-		
-		parent() {
-			return $mol_webdav.item( this.uri().replace( /\/[^\/]*$/ , '' ) )
-		}
-		
 		prop( prop: string ) {
-			return this.data_tree()[ this.uri() ].querySelector( prop ).textContent
+			return this.data_self()[ this.uri() ].querySelector( prop ).textContent
 		}
-		
+	
 		type() {
-			return this.prop( 'collection' ) ? 'dir' : 'file'
+			return this.data_self()[ this.uri() ].querySelector( 'collection' ) ? 'dir' : 'file'
 		}
 	}
 	

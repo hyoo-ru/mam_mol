@@ -2,24 +2,25 @@ namespace $.$mol {
 	export class $mol_app_docs extends $.$mol_app_docs {
 		
 		pages() {
-			return [ 
-				this.last_item().type() === 'dir'
-					? this.Placeholder()
-					: null, 
-				...this.items() 
-			]
+			if( this.item_type( this.last_item() ) === 'dir' ) {
+				return [ this.Placeholder(), ...this.items() ]
+			}
+			return this.items()
 		}
 		
-		title() {
-			return this.root().prop( 'displayname' )
+		root() {
+			return $mol_webdav.item( this.webdav_url() )
 		}
 		
 		dir( val?: string ) {
-			return $mol_state_arg.value(this.state_key( 'dir' ), val ) || ''
+			return $mol_state_arg.value(this.state_key( 'dir' ), val ) || this.webdav_url()
 		}
 		
-		last_item() {
-			return this.dir() ? $mol_webdav.item( this.dir() ) : this.root()
+		items() {
+			return this.item_models().map( ( item_model ) => {
+				if( this.item_type( item_model ) === 'dir' ) return this.Folder( item_model )
+				return this.File( item_model ) 
+			} )
 		}
 		
 		item_models() {
@@ -37,20 +38,24 @@ namespace $.$mol {
 			return items
 		}
 		
-		items() {
-			const items = []
-			const item_models = this.item_models()
-			
-			for( let item_model of item_models ) {
-				if( item_model.type() === 'dir' ) items.push( this.Folder( item_model ) )
-				else items.push( this.File( item_model ) )
-			}
-			
-			return items
+		last_item() {
+			return this.dir() ? $mol_webdav.item( this.dir() ) : this.root()
 		}
 		
-		folder_title( folder: $mol_webdav ) {
-			return folder.prop( 'displayname' ) || super.title()
+		item_type( item: $mol_webdav ) {
+			if( item === this.root() || item.type() === 'dir' ) return 'dir'
+			return 'file'
+		}
+		
+		item_content( item: $mol_webdav ) {
+			return this.item_type( item ) === 'dir'
+				? [ this.Folder( item ) ]
+				: [ this.File( item ) ]
+		}
+		
+		item_title( item: $mol_webdav ) {
+			if( item === this.root() ) return super.title()
+			return item.prop( 'displayname' ) || super.title()
 		}
 		
 		folder_rows( folder: $mol_webdav ) {
@@ -64,33 +69,41 @@ namespace $.$mol {
 			return sub
 		}
 		
-		folder_row_title( item: $mol_webdav ) {
-			return item.prop( 'displayname' )
-		}
-		
-		folder_row_click( item: $mol_webdav, event?: MouseEvent ) {
-			this.dir( item.uri() )
+		folder_row_link( item: $mol_webdav ) {
+			return { 'dir' : item.uri() }
 		}
 		
 		folder_row_icon( item: $mol_webdav ) {
-			return item.type() === 'dir' ? this.Icon_folder() : null
-			
+			return this.item_type( item ) === 'dir' 
+				? this.Icon_folder( item ) 
+				: this.Icon_file( item )
+		}
+		
+		folder_row_title( item: $mol_webdav ) {
+			return item.prop( 'displayname' )
 		}
 		
 		file_src( file: $mol_webdav ) {
 			return file.uri()
 		}
 		
-		file_name ( file: $mol_webdav ) {
-			return file.prop( 'displayname' )
-		}
-		
 		file_mime( file: $mol_webdav ) {
 			return file.prop( 'getcontenttype' )
 		}
 		
-		root() {
-			return $mol_webdav.item( this.webdav_url() )
+		title() {
+			return this.item_title( this.last_item() )
 		}
+		
+		Close( item: $mol_webdav ) {
+			return item === this.last_item() && item !== this.root()
+				? super.Close( item )
+				: null
+		}
+		
+		close_link( item: $mol_webdav ) {
+			return { 'dir' : item.parent().uri() }
+		}
+		
 	}
 }

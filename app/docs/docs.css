@@ -5,26 +5,40 @@
 	color: rgba(0,0,0,0.5);
 }
 
-[mol_app_docs_folder] {
-	flex: 1 1 300px;
-}
-
 [mol_app_docs_folder_row] {
 	width: 100%;
 	justify-content: flex-start;
-	word-break: break-all;
 	text-align: left;
 }
 
 [mol_app_docs_file] {
-	flex: 1000 1 400px;
+	flex: 1000 1 800px;
+	align-self: stretch;
 }
 
-[mol_app_docs_file_data] {
-	flex: 1 1 auto;
+[mol_app_docs_file_embed] {
 	align-self: stretch;
+	flex: 1 1 auto;
 }
 
 [mol_app_docs_file_body] {
 	overflow: hidden;
+}
+
+[mol_app_docs_icon_file],[mol_app_docs_icon_folder] {
+	margin: .5em;
+}
+
+[mol_app_docs_folder_folder_rows] {
+	height: 3rem;
+}
+
+[mol_app_docs_close] {
+	color: inherit;
+    align-items: center;
+    padding: 1rem;
+}
+
+[mol_app_docs_folder] {
+	flex: 1 1 400px;
 }

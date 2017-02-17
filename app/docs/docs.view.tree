@@ -1,30 +1,43 @@
 $mol_app_docs $mol_book
-	webdav_url \https://docs.live.net/28857C99F9421720
+	webdav_url \https://mol:$mol_mam@dav.dropdav.com/
 	title @ \Documents
-	File!file $mol_app_docs_file
-		title <= file_name!file \
-		src <= file_src!file \
-		mime <= file_mime!file \
-	Icon_folder $mol_icon_folder
-	Folder!folder $mol_page
-		minimal_width 300
-		title <= folder_title!folder \
-		body / <= Folder_row_list!folder $mol_list
-			rows <= folder_rows!folder /
-	Folder_row!item $mol_app_docs_folder_row
-		folder_row_click?event <=> folder_row_click!item?event null
+	-
+	Folder!folder $mol_app_docs_folder
+		minimal_width 400
+		title <= item_title!folder \
+		tools <= item_tools!folder -
+		rows <= folder_rows!folder /
+	-
+	Folder_row!item $mol_link
+		arg <= folder_row_link!item *
 		sub /
 			<= folder_row_icon!item null
 			<= folder_row_title!item \
+	-
+	File!file $mol_app_docs_file
+		minimal_width 800
+		title <= item_title!file -
+		tools <= item_tools!file -
+		src <= file_src!file \
+		mime <= file_mime!file \
+	-
+	Icon_folder!item $mol_icon_folder
+	-
+	Icon_file!item $mol_icon_file
+	-
 	Placeholder $mol_book_placeholder
 		sub / \Documents App
-		
-$mol_app_docs_file $mol_page
-	body /
-		<= Data $mol_embed
-			uri <= src \
-			mime <= mime \
-	minimal_width 600
+	-
+	item_tools!item /
+		<= Close!item $mol_link
+			sub /
+				<= Close_icon!item $mol_icon_cross
+			arg <= close_link!item *
 
-$mol_app_docs_folder_row $mol_button
-	event_click?event <=> folder_row_click?event null
+$mol_app_docs_folder $mol_page
+	body / <= Folder_rows $mol_list
+		rows <= rows /
+$mol_app_docs_file $mol_page
+	body / <= Embed $mol_embed
+		uri <= src \
+		mime <= mime \
