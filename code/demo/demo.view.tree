@@ -1,7 +1,7 @@
 $mol_code_demo_qr $mol_code
 	format \QR_CODE
 
-$mol_code_demo_dataMatrix $mol_code
+$mol_code_demo_data_matrix $mol_code
 	format \DATA_MATRIX
 
 $mol_code_demo_upc_e $mol_code

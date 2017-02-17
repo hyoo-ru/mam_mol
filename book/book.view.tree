@@ -1,9 +1,11 @@
 $mol_book $mol_view
-	sub <= visible_pages /
+	sub <= pages /
 	plugins /
 		<= Meter $mol_meter
 			width => width
-	pages /
+	Break $mol_book_break
 
 $mol_book_placeholder $mol_view
 	minimal_width 400
+
+$mol_book_break $mol_view

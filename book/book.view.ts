@@ -1,31 +1,25 @@
 namespace $.$mol {
 	export class $mol_book extends $.$mol_book {
 		
-		visible_pages() {
-			const pages = this.pages()
-			const book_width = this.width()
-			let pages_width = 0
-			let visible_pages : $mol_view[] = []
-			
-			for( let i = pages.length; i > 0; i-- ) {
-				const page = pages[ i - 1 ]
-				
-				if( page == null ) continue
-				
-				const page_width = page.minimal_width()
-				
-				if( ( pages_width + page_width ) >= book_width && visible_pages.length > 0 ) break
-				
-				pages_width += page_width
-				visible_pages.push( page )
-				
+		sub() {
+			const pages = this.pages().filter( page => page ).reverse()
+			const limit = this.width()
+
+			let width = 0
+			for( var visible = 0 ; visible < pages.length ; ++ visible ) {
+				width += pages[ visible ].minimal_width()
+				if( width > limit ) break
 			}
 			
-			return visible_pages.reverse()
+			if( visible == 0 ) visible = 1
+			
+			if( visible === pages.length ) return pages
+			
+			return [ ... pages.slice( 0 , visible ) , this.Break() , ... pages.slice( visible ) ]
 		}
 		
 		title() {
-			return this.visible_pages()[ this.visible_pages().length - 1 ].title()
+			return this.pages()[ this.pages().length - 1 ].title()
 		}
 		
 	}

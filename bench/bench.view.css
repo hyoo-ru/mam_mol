@@ -1,3 +1,8 @@
+[mol_bench] {
+	margin: auto;
+	overflow: auto;
+}
+
 [mol_bench_col_head] {
 	cursor: pointer;
 }

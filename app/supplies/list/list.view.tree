@@ -1,14 +1,10 @@
 $mol_app_supplies_list $mol_page
 	supplies /
 	title @ \Supplies
-	sub /
-		<= Head -
-		<= Search_panel $mol_row
-			sub /
-				<= Search $mol_code
-					hint <= search_hint @ \Search by bar code
-					value?val <=> search_query?val \
-		<= Body -
+	tools /
+		<= Search $mol_code
+			hint <= search_hint @ \Search by bar code
+			value?val <=> search_query?val \
 	body /
 		<= Supply_rows $mol_list
 			rows <= supply_rows /
