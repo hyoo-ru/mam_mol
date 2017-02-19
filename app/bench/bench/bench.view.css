@@ -10,6 +10,10 @@
 	z-index: 1;
 }
 
+[mol_app_bench_addon_page] {
+	flex: 0 1 auto;
+}
+
 [mol_app_bench_menu] {
 	padding: .5rem;
 }
