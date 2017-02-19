@@ -41,52 +41,32 @@
 
 <body>
 
-<div
-	class="list"
-	al-app="test"
-	al-cloak
-	>
-	<h1 class="list-header">{{data.sample}}</h1>
-	<div
-		al-repeat="item in data.items track by $index"
-		class="{
-			list-item
-			{{ (selected === item) ? 'list-item-selected' : '' }}
-		}"
-		@click="selected=item"
-		>
+<div id="app" class="list" al-cloak>
+	<h1 class="list-header">{{sample}}</h1>
+	<div class="list-item"
+		al-repeat="item in items track by $index" 
+		:class.list-item-selected="selected === item"
+		@click="selected=item">
 		<div class="list-item-title">
 			{{item.title}}
-		</div>
-		<div class="list-item-content">
+		</div><div class="list-item-content">
 			{{item.content}}
 		</div>
 	</div>
 </div>
 
-<script type="text/javascript" src="//angularlight.org/bin/alight_0.12.last.min.js"></script>
+<script type="text/javascript" src="//angularlight.org/bin/0.14/alight_0.14.0.min.js"></script>
 
 <script>
+	var app = {};
+	var cd = alight('#app', app);
 
-	function test( scope ) {
-		
-		scope.data = {
-			sample : '' ,
-			items : []
-		}
-
-		scope.onMessage = function( event ) {
-			switch( event.data[ 0 ] ) {
-				case 'set data' :
-					scope.data = event.data[ 1 ]
-					scope.selected = null
-					break
-			}
-			scope.$scan()
-		}
-
-		window.addEventListener( 'message' , scope.onMessage )
-
-	}
+	window.addEventListener( 'message' , function(event) {
+		if(event.data[0] !== 'set data') return;
+		app.sample = event.data[1].sample;
+		app.items = event.data[1].items;
+		app.selected = null;
+		cd.scan();
+	});
 
 </script>
