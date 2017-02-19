@@ -3,3 +3,8 @@
 	fill: var(--mol_skin_base);
 	stroke-dasharray: none;
 }
+
+[mol_plot_dot_mark]:hover {
+	fill: red;
+	stroke: red;
+}

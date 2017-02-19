@@ -2,7 +2,7 @@ $mol_plot_dot $mol_plot_graph
 	sub <= marks /
 	-
 	Mark!id $mol_svg_circle
-		radius \.25%
+		radius \.5%
 		pos <= mark_pos!id /
 			0
 			0

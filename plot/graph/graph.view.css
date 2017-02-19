@@ -1,3 +1,8 @@
 [mol_plot_graph] {
 	stroke: currentColor;
+	opacity: .8;
+}
+
+[mol_plot_graph]:hover {
+	opacity: 1;
 }

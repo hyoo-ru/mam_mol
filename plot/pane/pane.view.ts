@@ -4,7 +4,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		dimensions() {
-			const graphs = this.front()
+			const graphs = this.graphs()
 			
 			const next = [ [ 0 , 0 ] , [ 0 , 0 ] ]
 			for( let graph of graphs ) {
@@ -30,7 +30,7 @@ namespace $.$mol {
 		
 		hue_base() { return 140 }
 		
-		hue_shift() { return 50 }
+		hue_shift() { return 49 }
 		
 		hue_graph( index : number ) {
 			return ( 360 + this.hue_base() + this.hue_shift() * index ) % 360
