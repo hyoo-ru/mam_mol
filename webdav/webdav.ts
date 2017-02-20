@@ -14,7 +14,7 @@ namespace $ {
 			const dom = this.request().response().responseXML as XMLDocument
 			const responses = dom.querySelectorAll( 'response' ) as any as Element[]
 			
-			const data = {} as { [ path : string ] : Element }
+			const data = {} as { [ uri : string ] : Element }
 			
 			for( let response of responses ) {
 				const uri = this.resolve( response.querySelector( 'href' ).textContent ).uri()
@@ -57,14 +57,18 @@ namespace $ {
 			return 'PROPFIND'
 		}
 		
-		resolve( path : string ) : $mol_webdav {
-			if( !path ) return this
+		resolve( uri : string ) : $mol_webdav {
+			if( !uri ) return this
 			
-			if( path[0] === '/' ) {
-				return $mol_webdav.item( this.uri().replace( /^([^\/]+\/\/[^\/]+).*/, '$1' ) + path )
+			if( /^[-\w]+:/.test( uri ) ) {
+				return $mol_webdav.item( uri )
+			}
+			
+			if( uri[0] === '/' ) {
+				return $mol_webdav.item( this.uri().replace( /^([^\/]+\/\/[^\/]+).*/, '$1' ) + uri )
 			}
 				
-			let res = this.uri() + '/' + path
+			let res = this.uri() + '/' + uri
 			
 			while( true ) {
 				let prev = res
