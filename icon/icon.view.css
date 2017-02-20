@@ -4,4 +4,5 @@
 	height: 1em;
 	/*vertical-align: -10%;*/
 	vertical-align: middle;
+	flex: 0 0 auto;
 }
