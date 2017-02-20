@@ -6,7 +6,6 @@ $mol_app_lamps $mol_book
 			minimal_width 200
 			title \LampTest.ru
 			head /
-				- <= Title -
 				<= Filter $mol_code
 					hint <= filter_hint @ \Filter...
 					value?val <=> filter?val \

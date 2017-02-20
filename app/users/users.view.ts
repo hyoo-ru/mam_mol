@@ -9,15 +9,13 @@ namespace $.$mol {
 		
 		/// Search query string synchronized with argument from URL.
 		@ $mol_mem()
-		query( next? : string ) : string {
-			if( next == null ) {
-				return this.query_arg()
-			} else {
-				this.query_arg( next )
-				
-				if( this._query_timer ) clearTimeout( this._query_timer )
-				this._query_timer = setTimeout( ()=> { this.query( null ) } , 500 )
-			}
+		query( next? : string , force? : $mol_atom_force ) : string {
+			if( next === void null ) return this.query_arg()
+			
+			this.query_arg( next )
+			
+			if( this._query_timer ) clearTimeout( this._query_timer )
+			this._query_timer = setTimeout( ()=> { this.query( void null , $mol_atom_force ) } , 500 )
 		}
 		
 		_query_timer = 0

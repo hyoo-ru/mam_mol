@@ -5,7 +5,6 @@ $mol_app_supplies_detail $mol_page
 		<= Close $mol_link
 			sub / <= Close_icon $mol_icon_cross
 			arg <= close_arg *
-				side \
 				supply null
 	body /
 		<= List $mol_list

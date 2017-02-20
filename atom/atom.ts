@@ -154,8 +154,8 @@ namespace $ {
 		
 		set( next : Value ) : Value {
 			const next_normal = this.normalize( next , this._next )
-			if( next_normal === this._next ) return next_normal
-			if( next_normal === this.host[ this.field ] ) return next_normal
+			if( next_normal === this._next ) return this.get()
+			if( next_normal === this.host[ this.field ] ) return this.get()
 			
 			this._next = next_normal
 			this.obsolete()
@@ -176,7 +176,8 @@ namespace $ {
 		}
 		
 		push( next_raw : Value|Error ) {
-			this._next = void null
+			if(!( next_raw instanceof Error )) this._next = void null
+			
 			this.status = $mol_atom_status.actual
 			
 			const host = this.host

@@ -13,3 +13,7 @@
 	flex: 1000 1 400px;
 	order: 1;
 }
+
+[mol_book] > *:not([mol_book_page_visible]) {
+	display: none !important;
+}
