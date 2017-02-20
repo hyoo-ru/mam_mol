@@ -271,7 +271,16 @@ namespace $ {
 		static render_field( node : any , field : { [ key : string ] : any } ) {
 			for( let key in field ) {
 				const val = field[ key ]
-				if( node[ key ] !== val ) node[ key ] = val
+				if( node[ key ] !== val ) {
+					node[ key ] = val
+					if( node[ key ] !== val && !node.parentNode ) {
+						const setter = ()=> {
+							node[ key ] = val
+							node.removeEventListener( 'DOMNodeInsertedIntoDocument' , setter )
+						}
+						node.addEventListener( 'DOMNodeInsertedIntoDocument' , setter )
+					}
+				}
 			}
 		}
 		
