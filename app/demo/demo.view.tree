@@ -1,9 +1,7 @@
 $mol_app_demo $mol_book
+	title @ \$mol demonstrations
 	Placeholder $mol_book_placeholder
-		sub /
-			<= Logo $mol_image
-				uri <= logo_uri \
-				title \$mol logo
+		title <= title -
 	pages <= blocks /
 		<= Menu $mol_page
 			minimal_width 200
@@ -19,7 +17,7 @@ $mol_app_demo $mol_book
 				needle <= filter_string?val \
 		<= Detail $mol_app_demo_page
 			minimal_width 600
-			title <= detail_title \
+			title <= title -
 			body <= main_content /
 	Welcome $mol_scroll
 		sub /

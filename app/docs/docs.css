@@ -1,8 +1,6 @@
-[mol_app_docs_placeholder] {
-	align-items: center;
-	justify-content: center;
-	font-size: 2rem;
-	color: rgba(0,0,0,0.5);
+[mol_app_docs_folder] {
+	flex: 1 1 auto;
+	width: 400px;
 }
 
 [mol_app_docs_folder_row] {
@@ -12,7 +10,8 @@
 }
 
 [mol_app_docs_file] {
-	flex: 1000 1 800px;
+	flex: 1000 1 auto;
+	width: 800px;
 	align-self: stretch;
 }
 
@@ -38,8 +37,4 @@
 	color: inherit;
     align-items: center;
     padding: 1rem;
-}
-
-[mol_app_docs_folder] {
-	flex: 1 1 400px;
 }

@@ -22,7 +22,7 @@
 }
 
 [mol_page_title] {
-	flex: 1 1 100%;
+	flex: 1 1 auto;
 	display: flex;
 	padding: 1rem;
 }

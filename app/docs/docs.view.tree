@@ -9,7 +9,9 @@ $mol_app_docs $mol_book
 		rows <= folder_rows!folder /
 	-
 	Folder_row!item $mol_link
+		minimal_height 40
 		arg <= folder_row_arg!item *
+		current <= folder_row_current!item false
 		sub /
 			<= folder_row_icon!item null
 			<= folder_row_title!item \
@@ -26,8 +28,7 @@ $mol_app_docs $mol_book
 	Icon_file!item $mol_icon_file
 	-
 	Placeholder $mol_book_placeholder
-		sub /
-			<= title -
+		title <= title -
 	-
 	item_tools!item /
 		<= Close!item $mol_link

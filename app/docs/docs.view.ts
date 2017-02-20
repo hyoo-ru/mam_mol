@@ -31,6 +31,10 @@ namespace $.$mol {
 			} )
 		}
 		
+		folder_row_current( item : $mol_webdav ) {
+			return this.item_models().indexOf( item ) !== -1
+		}
+		
 		item_models() {
 			const root = this.root()
 			const current = this.current()
