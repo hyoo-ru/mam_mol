@@ -1,6 +1,6 @@
 [mol_book] {
 	display: flex;
-	flex-flow: row-reverse nowrap;
+	flex-flow: row nowrap;
 	align-items: stretch;
 	justify-content: flex-start;
 	overflow: hidden;
@@ -11,13 +11,9 @@
 [mol_book_placeholder] {
 	display: flex;
 	flex: 1000 1 400px;
-	order: -1;
+	order: 1;
 }
 
-[mol_book_break]  {
-	display: none;
-}
-
-[mol_book_break] ~ * {
+[mol_book] > *:not([mol_book_page_visible]) {
 	display: none !important;
 }
