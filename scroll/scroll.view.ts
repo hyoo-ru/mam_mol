@@ -16,12 +16,10 @@ namespace $.$mol {
 	
 	export class $mol_scroll extends $.$mol_scroll {
 
-		@ $mol_mem()
 		scroll_top( next? : number ) {
 			return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
 		}
 		
-		@ $mol_mem()
 		scroll_left( next? : number ) {
 			return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
 		}
