@@ -1,37 +1,40 @@
-$mol_app_signup $mol_form
+$mol_app_signup $mol_scroll
 	message_required @ \Input required
 	message_no_spaces @ \Spaces are forbidden
 	message_need_more_letters @ \More then 2 letter required
-	form_fields /
-		<= Name_first_field $mol_form_field
-			name <= name_first_label @ \First Name
-			errors <= name_first_errors /
-			control <= Name_first_control $mol_string
-				hint <= name_first_hint @ \Jack
-				value?val <=> name_first?val \
-		<= Name_nick_field $mol_form_field
-			name <= name_nick_label @ \Nick Name
-			errors <= name_nick_errors /
-			control <= Name_nick_control $mol_string
-				hint <= name_nick_hint @ \Capitan
-				value?val <=> name_nick?val \
-		<= Name_second_field $mol_form_field
-			name <= name_second_label @ \Second Name
-			errors <= name_second_errors /
-			control <= Name_second_control $mol_string
-				hint <= name_second_hint @ \Sparrow
-				value?val <=> name_second?val \
-		<= Sex_field $mol_form_field
-			name <= sex_label @ \Sex
-			errors <= sex_errors /
-			control / <= Sex_control $mol_switch
-				value?val <=> sex?val \
-				options <= sex_options *
-					male <= sex_option_male @ \Male
-					intersex <= sex_option_intersex @ \Intersex
-					female <= sex_option_female @ \Female
-	buttons /
-		<= Submit $mol_button_major
-			sub / <= submit_text @ \Sign Up
-			event_click?val <=> event_submit?val null
-			disabled <= submit_blocked -
+	sub /
+		<= Form $mol_form
+			form_fields /
+				<= Name_first_field $mol_form_field
+					name <= name_first_label @ \First Name
+					errors <= name_first_errors /
+					control <= Name_first_control $mol_string
+						hint <= name_first_hint @ \Jack
+						value?val <=> name_first?val \
+				<= Name_nick_field $mol_form_field
+					name <= name_nick_label @ \Nick Name
+					errors <= name_nick_errors /
+					control <= Name_nick_control $mol_string
+						hint <= name_nick_hint @ \Capitan
+						value?val <=> name_nick?val \
+				<= Name_second_field $mol_form_field
+					name <= name_second_label @ \Second Name
+					errors <= name_second_errors /
+					control <= Name_second_control $mol_string
+						hint <= name_second_hint @ \Sparrow
+						value?val <=> name_second?val \
+				<= Sex_field $mol_form_field
+					name <= sex_label @ \Sex
+					errors <= sex_errors /
+					control / <= Sex_control $mol_switch
+						value?val <=> sex?val \
+						options <= sex_options *
+							male <= sex_option_male @ \Male
+							intersex <= sex_option_intersex @ \Intersex
+							female <= sex_option_female @ \Female
+			submit_blocked => submit_blocked
+			buttons /
+				<= Submit $mol_button_major
+					sub / <= submit_text @ \Sign Up
+					event_click?val <=> event_submit?val null
+					disabled <= submit_blocked -

@@ -10,6 +10,7 @@
 [mol_app_lamps_lamp_row] {
 	display: flex;
 	flex: 0 0 auto;
+	padding: .5rem 1rem;
 }
 
 [mol_app_lamps_lamp_row_link] {

@@ -17,19 +17,18 @@
 	display: flex;
 	justify-content: space-between;
 	flex: 0 0 auto;
-	/*overflow: hidden;*/
 	position: relative;
 	margin: 0;
 }
 
 [mol_page_title] {
-	flex: 1 1 auto;
+	flex: 1 1 100%;
 	display: flex;
 	padding: 1rem;
 }
 
 [mol_page_body] {
-	flex: 1 1 auto;
+	flex: 1 1 100%;
 	margin: 0;
 	background: var(--mol_skin_light);
 	color: var(--mol_skin_light_text);
