@@ -1,5 +1,5 @@
 namespace $.$mol {
-	export class $mol_app_docs extends $.$mol_app_docs {
+	export class $mol_app_files extends $.$mol_app_files {
 		
 		pages() {
 			if( this.item_type( this.current() ) === 'dir' ) {

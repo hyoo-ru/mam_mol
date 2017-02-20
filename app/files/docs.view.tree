@@ -1,8 +1,8 @@
-$mol_app_docs $mol_book
+$mol_app_files $mol_book
 	uri_current <= uri_root \
 	title @ \Documents
 	-
-	Folder!folder $mol_app_docs_folder
+	Folder!folder $mol_app_files_folder
 		minimal_width 400
 		title <= item_title!folder \
 		tools <= item_tools!folder -
@@ -16,7 +16,7 @@ $mol_app_docs $mol_book
 			<= folder_row_icon!item null
 			<= folder_row_title!item \
 	-
-	File!file $mol_app_docs_file
+	File!file $mol_app_files_file
 		minimal_width 800
 		title <= item_title!file -
 		tools <= item_tools!file -
@@ -36,14 +36,14 @@ $mol_app_docs $mol_book
 				<= Close_icon!item $mol_icon_cross
 			arg <= close_arg!item *
 
-$mol_app_docs_folder $mol_page
+$mol_app_files_folder $mol_page
 	body /
 		<= Status $mol_status
 			status <= rows /
 		<= Folder_rows $mol_list
 			rows <= rows /
 
-$mol_app_docs_file $mol_page
+$mol_app_files_file $mol_page
 	body /
 		<= Embed $mol_embed
 			uri <= src \
