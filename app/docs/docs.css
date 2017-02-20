@@ -7,6 +7,7 @@
 	width: 100%;
 	justify-content: flex-start;
 	text-align: left;
+	word-break: break-word;
 }
 
 [mol_app_docs_file] {
