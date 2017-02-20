@@ -15,5 +15,20 @@
 }
 
 [mol_book] > *:not([mol_book_page_visible]) {
-	display: none !important;
+	position: absolute;
+}
+
+@keyframes mol_book_page_show {
+	from {
+		transform: translateX( 100% );
+	}
+}
+
+[mol_book] > * {
+	position: relative;
+	animation: mol_book_page_show ease-out .1s;
+}
+
+[mol_book_age_visible] {
+	z-index: 1;
 }

@@ -1,5 +1,5 @@
 $mol_app_docs $mol_book
-	webdav_url \https://mol:$mol_mam@dav.dropdav.com/
+	uri_current <= uri_root \
 	title @ \Documents
 	-
 	Folder!folder $mol_app_docs_folder
@@ -9,7 +9,7 @@ $mol_app_docs $mol_book
 		rows <= folder_rows!folder /
 	-
 	Folder_row!item $mol_link
-		arg <= folder_row_link!item *
+		arg <= folder_row_arg!item *
 		sub /
 			<= folder_row_icon!item null
 			<= folder_row_title!item \
@@ -26,18 +26,22 @@ $mol_app_docs $mol_book
 	Icon_file!item $mol_icon_file
 	-
 	Placeholder $mol_book_placeholder
-		sub / \Documents App
+		sub /
+			<= title -
 	-
 	item_tools!item /
 		<= Close!item $mol_link
 			sub /
 				<= Close_icon!item $mol_icon_cross
-			arg <= close_link!item *
+			arg <= close_arg!item *
 
 $mol_app_docs_folder $mol_page
-	body / <= Folder_rows $mol_list
-		rows <= rows /
+	body /
+		<= Folder_rows $mol_list
+			rows <= rows /
+
 $mol_app_docs_file $mol_page
-	body / <= Embed $mol_embed
-		uri <= src \
-		mime <= mime \
+	body /
+		<= Embed $mol_embed
+			uri <= src \
+			mime <= mime \

@@ -2,18 +2,26 @@ namespace $.$mol {
 	export class $mol_app_docs extends $.$mol_app_docs {
 		
 		pages() {
-			if( this.item_type( this.last_item() ) === 'dir' ) {
+			if( this.item_type( this.current() ) === 'dir' ) {
 				return [ this.Placeholder(), ...this.items() ]
 			}
 			return this.items()
 		}
 		
-		root() {
-			return $mol_webdav.item( this.webdav_url() )
+		uri_root( next?: string ) {
+			return $mol_state_arg.value( this.state_key( 'root' ) , next ) || super.uri_root()
 		}
 		
-		dir( val?: string ) {
-			return $mol_state_arg.value(this.state_key( 'dir' ), val ) || this.webdav_url()
+		uri_current( next?: string ) {
+			return $mol_state_arg.value( this.state_key( 'current' ) , next ) || super.uri_current()
+		}
+		
+		root() {
+			return $mol_webdav.item( this.uri_root() )
+		}
+		
+		current() {
+			return $mol_webdav.item( this.uri_current() )
 		}
 		
 		items() {
@@ -25,10 +33,10 @@ namespace $.$mol {
 		
 		item_models() {
 			const root = this.root()
-			const last_item = this.last_item()
-			const items = [ last_item ]
+			const current = this.current()
+			const items = [ current ]
 			
-			let current_item = last_item
+			let current_item = current
 			
 			while( current_item !== root) {
 				current_item = current_item.parent()
@@ -36,10 +44,6 @@ namespace $.$mol {
 			}
 			
 			return items
-		}
-		
-		last_item() {
-			return this.dir() ? $mol_webdav.item( this.dir() ) : this.root()
 		}
 		
 		item_type( item: $mol_webdav ) {
@@ -69,8 +73,8 @@ namespace $.$mol {
 			return sub
 		}
 		
-		folder_row_link( item: $mol_webdav ) {
-			return { 'dir' : item.uri() }
+		folder_row_arg( item: $mol_webdav ) {
+			return { 'current' : item.uri() }
 		}
 		
 		folder_row_icon( item: $mol_webdav ) {
@@ -92,17 +96,17 @@ namespace $.$mol {
 		}
 		
 		title() {
-			return this.item_title( this.last_item() )
+			return this.item_title( this.current() )
 		}
 		
 		Close( item: $mol_webdav ) {
-			return item === this.last_item() && item !== this.root()
+			return item !== this.root()
 				? super.Close( item )
 				: null
 		}
 		
-		close_link( item: $mol_webdav ) {
-			return { 'dir' : item.parent().uri() }
+		close_arg( item: $mol_webdav ) {
+			return { 'current' : item.parent().uri() }
 		}
 		
 	}

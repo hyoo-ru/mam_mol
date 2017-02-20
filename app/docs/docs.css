@@ -25,8 +25,9 @@
 	overflow: hidden;
 }
 
-[mol_app_docs_icon_file],[mol_app_docs_icon_folder] {
-	margin: .5em;
+[mol_app_docs_icon_file] ,
+[mol_app_docs_icon_folder] {
+	margin: 0 .5em;
 }
 
 [mol_app_docs_folder_folder_rows] {
