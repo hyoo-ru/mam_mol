@@ -193,15 +193,16 @@ namespace $ {
 				if( view instanceof $mol_view ) {
 					nodes.push( view.dom_tree() )
 				} else if( view ) {
-					if( typeof view === 'object' ) nodes.push( view.valueOf() as Node )
+					if( typeof view === 'object' ) nodes.push( view as Node )
 					else nodes.push( String( view ) ) 
 				}
 			} )
 			
 			let nextNode = node.firstChild
-			for( let view of nodes ) {
+			for( let view_ of nodes ) {
+				const view = view_.valueOf() as Node
 				
-				if( typeof view === 'object' ) {
+				if( view instanceof $mol_dom_context.Node ) {
 
 					while( true ) {
 						if( !nextNode ) {
@@ -228,6 +229,7 @@ namespace $ {
 						nextNode.nodeValue = String( view )
 						nextNode = nextNode.nextSibling
 					} else {
+						if( view=='[object HTMLObjectElement]')debugger
 						const textNode = $mol_dom_context.document.createTextNode( String( view ) )
 						node.insertBefore( textNode , nextNode )
 					}

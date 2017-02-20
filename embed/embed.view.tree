@@ -1,5 +1,5 @@
 $mol_embed $mol_view
-	field *
+	dom_name \object
+	attr *
 		data <= uri \
 		type <= mime \
-	dom_name \object
