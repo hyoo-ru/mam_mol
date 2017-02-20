@@ -177,7 +177,7 @@ namespace $ {
 			for( let name in events ) {
 				let handle = events[ name ]
 				node.addEventListener( name , event => {
-					$mol_atom_task( `${ this }.event()['${ name }']` , ()=> {
+					$mol_atom_task( `${ node.id }.event()['${ name }']` , ()=> {
 						handle( event )
 					} ).get()
 				} )
@@ -186,32 +186,43 @@ namespace $ {
 		
 		static render_sub( node : Element , sub : ($mol_view|Node|string|number|boolean)[] ) {
 			if( sub == null ) return
-				
+			
+			const nodes = [] as Array< Node|string >
+			
+			sub.forEach( view => {
+				if( view instanceof $mol_view ) {
+					nodes.push( view.dom_tree() )
+				} else if( view ) {
+					if( typeof view === 'object' ) nodes.push( view.valueOf() as Node )
+					else nodes.push( String( view ) ) 
+				}
+			} )
+			
 			let nextNode = node.firstChild
-			for( let view of sub ) {
+			for( let view of nodes ) {
 				
-				if( view == null ) {
-				} else if( typeof view === 'object' ) {
-					const existsNode = ( ( view instanceof $mol_view ) ? view.dom_node() : view.valueOf() as Node )
+				if( typeof view === 'object' ) {
+
 					while( true ) {
 						if( !nextNode ) {
-							node.appendChild( existsNode )
+							node.appendChild( view )
 							break
 						}
-						if( nextNode == existsNode ) {
+						if( nextNode == view ) {
 							nextNode = nextNode.nextSibling
 							break
 						} else {
-							//if( childViews.indexOf( nextNode ) === -1 ) {
-							//	var nn = nextNode.nextSibling
-							//	prev.removeChild( nextNode )
-							//	nextNode = nn
-							//} else {
-							node.insertBefore( existsNode , nextNode )
-							break
-							//}
+							if( nodes.indexOf( nextNode ) === -1 ) {
+								const nn = nextNode.nextSibling
+								node.removeChild( nextNode )
+								nextNode = nn
+							} else {
+								node.insertBefore( view , nextNode )
+								break
+							}
 						}
 					}
+					
 				} else {
 					if( nextNode && nextNode.nodeName === '#text' ) {
 						nextNode.nodeValue = String( view )
@@ -230,15 +241,9 @@ namespace $ {
 				node.removeChild( currNode )
 			}
 			
-			for( let view of sub ) {
-				if( view instanceof $mol_view ) {
-					try {
-						view.dom_tree()
-					} catch( e ) {
-						console.error(e)
-					}
-				}
-			}
+			sub.forEach( view => {
+				if( view instanceof $mol_view ) view.dom_tree()
+			} )
 		}
 		
 		static render_attr( node : Element , attrs : { [ key : string ] : string|number|boolean } ) {
@@ -266,7 +271,16 @@ namespace $ {
 		static render_field( node : any , field : { [ key : string ] : any } ) {
 			for( let key in field ) {
 				const val = field[ key ]
-				if( node[ key ] !== val ) node[ key ] = val
+				if( node[ key ] !== val ) {
+					node[ key ] = val
+					if( node[ key ] !== val && !node.parentNode ) {
+						const setter = ()=> {
+							node[ key ] = val
+							node.removeEventListener( 'DOMNodeInsertedIntoDocument' , setter )
+						}
+						node.addEventListener( 'DOMNodeInsertedIntoDocument' , setter )
+					}
+				}
 			}
 		}
 		
@@ -284,14 +298,19 @@ namespace $ {
 					plugin.dom_tree()
 				} )
 				
-				return node
 			} catch( error ) {
-				if( !error['$mol_view_catched'] ) {
-					node.setAttribute( 'mol_view_error' , error.name )
-					error['$mol_view_catched'] = true
-				}
-				throw error
+				node.setAttribute( 'mol_view_error' , error.name )
+				
+				if( error instanceof $mol_atom_wait ) return node
+				
+				if( error['$mol_atom_catched'] ) return node
+				
+				console.error( error )
+				
+				error['$mol_atom_catched'] = true
 			}
+			
+			return node
 		}
 		
 		attr() : { [ key : string ] : string|number|boolean } { return {

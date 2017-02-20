@@ -12,7 +12,7 @@ $mol_perf_uibench_table $mol_list
 
 $mol_perf_uibench_table_row $mol_view
 	state null
-	minimal_height 20
+	minimal_height 18
 	dom_name \tr
 	attr *
 		class <= className \TableRow
@@ -58,7 +58,7 @@ $mol_perf_uibench_tree_branch $mol_list
 		class \TreeNode
 
 $mol_perf_uibench_tree_leaf $mol_view
-	minimal_height 25
+	minimal_height 23
 	dom_name \li
 	attr *
 		class \TreeLeaf

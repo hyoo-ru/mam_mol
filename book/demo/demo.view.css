@@ -10,14 +10,13 @@
 }
 
 [mol_book_demo_placeholder] {
-	background-color: hsl(132, 56%, 96%);
-	order: 1;
+	background-color: hsl(0, 60%, 90%);
 }
 
 [mol_book_demo_addon] {
-	background-color: hsl(216, 56%, 96%);
+	background-color: hsl(240, 60%, 90%);
 }
 
 [mol_book_demo_main] {
-	background-color: hsl(0, 56%, 96%);
+	background-color: hsl(120, 60%, 90%);
 }

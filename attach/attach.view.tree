@@ -15,7 +15,7 @@ $mol_attach_item $mol_link
 		download <= title \
 
 $mol_attach_add $mol_button
-	minimal_height 80
+	minimal_height 60
 	file_new?val \
 	sub /
 		<= Icon $mol_icon_attach
