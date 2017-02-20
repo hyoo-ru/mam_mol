@@ -30,10 +30,6 @@
 	margin: 0 .5em;
 }
 
-[mol_app_docs_folder_folder_rows] {
-	height: 1rem;
-}
-
 [mol_app_docs_close] {
 	color: inherit;
     align-items: center;

@@ -38,6 +38,8 @@ $mol_app_docs $mol_book
 
 $mol_app_docs_folder $mol_page
 	body /
+		<= Status $mol_status
+			status <= rows /
 		<= Folder_rows $mol_list
 			rows <= rows /
 
