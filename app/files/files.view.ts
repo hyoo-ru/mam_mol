@@ -2,10 +2,16 @@ namespace $.$mol {
 	export class $mol_app_files extends $.$mol_app_files {
 		
 		pages() {
-			if( this.item_type( this.current() ) === 'dir' ) {
-				return [ this.Placeholder(), ...this.items() ]
-			}
-			return this.items()
+			return [
+				this.webdav_type( this.current() ) === 'dir'
+					? this.Placeholder()
+					: null
+				, 
+				... this.webdavs().map( ( webdav ) => ( this.webdav_type( webdav ) === 'dir' )
+					? this.Folder( webdav )
+					: this.File( webdav )
+				) ,
+			]
 		}
 		
 		uri_root( next?: string ) {
@@ -24,71 +30,58 @@ namespace $.$mol {
 			return $mol_webdav.item( this.uri_current() )
 		}
 		
-		items() {
-			return this.item_models().map( ( item_model ) => {
-				if( this.item_type( item_model ) === 'dir' ) return this.Folder( item_model )
-				return this.File( item_model ) 
-			} )
+		folder_row_current( webdav : $mol_webdav ) {
+			return this.webdavs().indexOf( webdav ) !== -1
 		}
 		
-		folder_row_current( item : $mol_webdav ) {
-			return this.item_models().indexOf( item ) !== -1
-		}
-		
-		item_models() {
+		webdavs() {
 			const root = this.root()
 			const current = this.current()
-			const items = [ current ]
+			const webdavs = [ current ]
 			
-			let current_item = current
+			let webdav = current
 			
-			while( current_item !== root) {
-				current_item = current_item.parent()
-				items.unshift( current_item )
+			while( webdav !== root) {
+				webdav = webdav.parent()
+				webdavs.unshift( webdav )
 			}
 			
-			return items
+			return webdavs
 		}
 		
-		item_type( item: $mol_webdav ) {
-			if( item === this.root() || item.type() === 'dir' ) return 'dir'
+		webdav_type( webdav : $mol_webdav ) {
+			if( webdav === this.root() || webdav.type() === 'dir' ) return 'dir'
 			return 'file'
 		}
 		
-		item_content( item: $mol_webdav ) {
-			return this.item_type( item ) === 'dir'
-				? [ this.Folder( item ) ]
-				: [ this.File( item ) ]
-		}
-		
-		item_title( item: $mol_webdav ) {
-			if( item === this.root() ) return super.title()
-			return item.prop( 'displayname' ) || super.title()
+		webdav_title( webdav: $mol_webdav ) {
+			if( webdav === this.root() ) return super.title()
+			return webdav.prop( 'displayname' ) || ''
 		}
 		
 		folder_rows( folder: $mol_webdav ) {
-			const items = folder.sub()
+			const webdavs = folder.sub()
 			const sub = []
 			
-			for( let item of items ) {
-				sub.push( this.Folder_row( item ))
+			for( let webdav of webdavs ) {
+				sub.push( this.Folder_row( webdav ))
 			}
 			
 			return sub
 		}
 		
-		folder_row_arg( item: $mol_webdav ) {
-			return { 'current' : item.uri() }
+		folder_row_arg( webdav : $mol_webdav ) {
+			return { 'current' : webdav.uri() }
 		}
 		
-		folder_row_icon( item: $mol_webdav ) {
-			return this.item_type( item ) === 'dir' 
-				? this.Icon_folder( item ) 
-				: this.Icon_file( item )
+		folder_row_icon( webdav : $mol_webdav ) {
+			return this.webdav_type( webdav ) === 'dir' 
+				? this.Icon_folder( webdav ) 
+				: this.Icon_file( webdav )
 		}
 		
-		folder_row_title( item: $mol_webdav ) {
-			return item.prop( 'displayname' )
+		folder_row_title( webdav : $mol_webdav ) {
+			return webdav.prop( 'displayname' )
 		}
 		
 		file_src( file: $mol_webdav ) {
@@ -100,17 +93,17 @@ namespace $.$mol {
 		}
 		
 		title() {
-			return this.item_title( this.current() )
+			return this.webdav_title( this.current() )
 		}
 		
-		Close( item: $mol_webdav ) {
-			return item !== this.root()
-				? super.Close( item )
+		Close( webdav : $mol_webdav ) {
+			return webdav !== this.root()
+				? super.Close( webdav )
 				: null
 		}
 		
-		close_arg( item: $mol_webdav ) {
-			return { 'current' : item.parent().uri() }
+		close_arg( webdav : $mol_webdav ) {
+			return { 'current' : webdav.parent().uri() }
 		}
 		
 	}
