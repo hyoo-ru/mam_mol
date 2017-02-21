@@ -152,3 +152,7 @@ jins() {
 	return this.usersSearch({ name : 'jin' })
 }
 ```
+
+## Articles
+
+* [$mol_atom: теория и практика реактивности](https://habrahabr.ru/post/317360/) - Object oriented reactive programming

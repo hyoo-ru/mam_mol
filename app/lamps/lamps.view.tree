@@ -1,12 +1,12 @@
 $mol_app_lamps $mol_book
 	lamp_current_id?val \
 	Placeholder $mol_book_placeholder
+		title <= title -
 	pages /
 		<= Addon_page $mol_page
 			minimal_width 200
 			title \LampTest.ru
 			head /
-				- <= Title -
 				<= Filter $mol_code
 					hint <= filter_hint @ \Filter...
 					value?val <=> filter?val \

@@ -1,0 +1,37 @@
+[mol_app_files_folder] {
+	flex: 1 1 auto;
+	width: 400px;
+}
+
+[mol_app_files_folder_row] {
+	width: 100%;
+	justify-content: flex-start;
+	text-align: left;
+	word-break: break-word;
+}
+
+[mol_app_files_file] {
+	flex: 1000 1 auto;
+	width: 800px;
+	align-self: stretch;
+}
+
+[mol_app_files_file_embed] {
+	align-self: stretch;
+	flex: 1 1 auto;
+}
+
+[mol_app_files_file_body] {
+	overflow: hidden;
+}
+
+[mol_app_files_icon_file] ,
+[mol_app_files_icon_folder] {
+	margin: 0 .5em;
+}
+
+[mol_app_files_close] {
+	color: inherit;
+    align-items: center;
+    padding: 1rem;
+}

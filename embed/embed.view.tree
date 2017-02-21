@@ -1,0 +1,5 @@
+$mol_embed $mol_view
+	dom_name \object
+	attr *
+		data <= uri \
+		type <= mime \

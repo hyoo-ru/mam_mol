@@ -100,10 +100,6 @@ namespace $.$mol {
 			return new Class()
 		}
 		
-		detail_title() {
-			return '$' + this.selected()
-		}
-		
 		names_demo() {
 			const prefix = this.selected()
 			const namesAll = this.names_demo_all()

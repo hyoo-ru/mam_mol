@@ -9,6 +9,13 @@
 		html {
 			overflow: auto;
 		}
+		.Main {
+			font: 16px/normal 'Times New Roman', sans-serif;
+			box-shadow: none;
+		}
+		.Table {
+			display: inline-block;
+		}
 	</style>
 </head>
 <body mol_view_root="$mol_perf_uibench" class="Main">
@@ -19,7 +26,7 @@
 	document.addEventListener("DOMContentLoaded", function(event) {
 		uibench.run(
 			function (state) {
-				$mol_perf_uibench.root(0).state(state)
+				$mol_perf_uibench.Root(0).state(state)
 				$mol_defer.run()
 			},
 			function (samples) {

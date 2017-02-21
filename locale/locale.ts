@@ -13,7 +13,7 @@ namespace $ {
 		
 		@ $mol_mem()
 		static lang( next? : string ) {
-			return $mol_state_local.value( 'locale' , next ) || $mol_dom_context.navigator.language || this.lang_default()
+			return $mol_state_local.value( 'locale' , next ) || $mol_dom_context.navigator.language.replace( /-.*/ , '' ) || this.lang_default()
 		}
 		
 		@ $mol_mem_key()
