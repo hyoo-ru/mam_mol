@@ -2,8 +2,13 @@ namespace $.$mol {
 	export class $mol_book extends $.$mol_book {
 		
 		@ $mol_mem()
+		pages_filtered() {
+			return this.pages().filter( page => page )
+		}
+		
+		@ $mol_mem()
 		break_point() {
-			const pages = this.pages().filter( page => page )
+			const pages = this.pages_filtered()
 			const limit = this.width()
 
 			let width = 0
@@ -17,7 +22,7 @@ namespace $.$mol {
 		}
 		
 		page( index : number ) {
-			return this.pages()[ index ]
+			return this.pages_filtered()[ index ]
 		}
 		
 		page_visible( index : number ) {
@@ -25,11 +30,11 @@ namespace $.$mol {
 		}
 		
 		pages_extended() {
-			return this.pages().map( ( page , index )=> this.Page( index ) )
+			return this.pages_filtered().map( ( page , index )=> this.Page( index ) )
 		}
 		
 		title() {
-			return this.pages()[ this.pages().length - 1 ].title()
+			return this.pages_filtered()[ this.pages_filtered().length - 1 ].title()
 		}
 		
 	}

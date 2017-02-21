@@ -193,15 +193,16 @@ namespace $ {
 				if( view instanceof $mol_view ) {
 					nodes.push( view.dom_tree() )
 				} else if( view ) {
-					if( typeof view === 'object' ) nodes.push( view.valueOf() as Node )
+					if( typeof view === 'object' ) nodes.push( view as Node )
 					else nodes.push( String( view ) ) 
 				}
 			} )
 			
 			let nextNode = node.firstChild
-			for( let view of nodes ) {
+			for( let view_ of nodes ) {
+				const view = view_.valueOf() as Node
 				
-				if( typeof view === 'object' ) {
+				if( view instanceof $mol_dom_context.Node ) {
 
 					while( true ) {
 						if( !nextNode ) {
@@ -289,15 +290,14 @@ namespace $ {
 			let node = this.dom_node() as HTMLElement
 			
 			try {
-				$mol_view.render_attr( node , this.attr() )
-				$mol_view.render_style( node , this.style() )
-				$mol_view.render_sub( node , this.sub_visible() )
-				$mol_view.render_field( node , this.field() )
-				
 				this.plugins().forEach( ( plugin ) => {
 					plugin.dom_tree()
 				} )
 				
+				$mol_view.render_attr( node , this.attr() )
+				$mol_view.render_style( node , this.style() )
+				$mol_view.render_sub( node , this.sub_visible() )
+				$mol_view.render_field( node , this.field() )
 			} catch( error ) {
 				node.setAttribute( 'mol_view_error' , error.name )
 				

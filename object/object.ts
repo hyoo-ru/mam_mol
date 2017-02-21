@@ -40,6 +40,10 @@ namespace $ {
 			return path
 		}
 		
+		toJSON() {
+			return this.toString()
+		}
+		
 		/// Helper to override fields in fluent style.
 		setup( script : ( obj : this )=> void ) : this {
 			script( this )

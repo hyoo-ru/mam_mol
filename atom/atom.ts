@@ -176,7 +176,7 @@ namespace $ {
 		}
 		
 		push( next_raw : Value|Error ) {
-			if(!( next_raw instanceof Error )) this._next = void null
+			this._next = void null
 			
 			this.status = $mol_atom_status.actual
 			
