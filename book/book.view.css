@@ -34,4 +34,5 @@
 	position: relative;
 	animation: mol_book_page_show ease-out .1s;
 	background: var(--mol_skin_card);
+	transform: translateX( 100% );
 }
