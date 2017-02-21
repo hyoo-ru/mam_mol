@@ -35,7 +35,3 @@
 	animation: mol_book_page_show ease-out .1s;
 	background: var(--mol_skin_card);
 }
-
-[mol_book_age_visible] {
-	z-index: 1;
-}
