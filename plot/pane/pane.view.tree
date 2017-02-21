@@ -1,6 +1,7 @@
 $mol_plot_pane $mol_svg_root
 	aspect \none
 	view_box null
+	gap 0.01
 	shift /
 		0
 		0

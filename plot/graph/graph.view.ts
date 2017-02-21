@@ -20,8 +20,11 @@ namespace $.$mol {
 			const res = [] as number[][]
 			let last = [ - Number.NEGATIVE_INFINITY , - Number.NEGATIVE_INFINITY ]
 			this.points_scaled().forEach( point => {
-				if( Math.abs( point[0] - last[0] ) < 2 ) return 
-				if( Math.abs( point[1] - last[1] ) < 2 ) return
+				check : {
+					if( Math.abs( point[ 0 ] - last[ 0 ] ) > 5 ) break check
+					if( Math.abs( point[ 1 ] - last[ 1 ] ) > 5 ) break check
+					return
+				}
 				res.push( last = point )
 			} )
 			return res

@@ -20,8 +20,42 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
+		gap_real() {
+			const size = this.size()
+			const gap = this.gap()
+			
+			return size.map( val => val * gap )
+		}
+		
+		@ $mol_mem()
+		dimensions_expanded() {
+			const gap = this.gap_real()
+			const dims = this.dimensions()
+			
+			return [
+				[
+					( dims[0][0] - gap[0] ) ,
+					( dims[0][1] - gap[1] ) ,
+				] ,
+				[
+					( dims[1][0] + gap[0] ) ,
+					( dims[1][1] + gap[1] ) ,
+				] ,
+			]
+		}
+		
+		@ $mol_mem()
 		size() {
 			const dims = this.dimensions()
+			return [
+				dims[1][0] - dims[0][0] ,
+				dims[1][1] - dims[0][1] ,
+			]
+		}
+		
+		@ $mol_mem()
+		size_expanded() {
+			const dims = this.dimensions_expanded()
 			return [
 				dims[1][0] - dims[0][0] ,
 				dims[1][1] - dims[0][1] ,
@@ -49,7 +83,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		shift() {
-			const dims = this.dimensions()
+			const dims = this.dimensions_expanded()
 			const scale = this.scale()
 			return [ - dims[0][0] * scale[0] , - dims[0][1] * scale[1] ]
 		}
@@ -57,8 +91,9 @@ namespace $.$mol {
 		@ $mol_mem()
 		scale() {
 			const size = this.size()
+			const size_exp = this.size_expanded()
 			const real = [ this.width() , this.height() ]
-			return [ real[0] / size[0] , real[1] / size[1] ]
+			return [ real[0] / size_exp[0] , real[1] / size_exp[1] ]
 		}
 		
 		@ $mol_mem()
