@@ -20,7 +20,7 @@ $mol_app_files $mol_book
 		minimal_width 800
 		title <= webdav_title!file -
 		tools <= page_tools!file -
-		src <= file_src!file \
+		src <= file_uri!file \
 		mime <= file_mime!file \
 	-
 	Icon_folder!uri $mol_icon_folder

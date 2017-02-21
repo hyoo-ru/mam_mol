@@ -3,13 +3,13 @@ namespace $.$mol {
 		
 		pages() {
 			return [
-				this.webdav_type( this.current() ) === 'dir'
+				this.webdav_type( this.uri_current() ) === 'dir'
 					? this.Placeholder()
 					: null
 				, 
-				... this.webdavs().map( ( webdav ) => ( this.webdav_type( webdav ) === 'dir' )
-					? this.Folder( webdav )
-					: this.File( webdav )
+				... this.webdavs().map( ( webdav ) => ( this.webdav_type( webdav.uri() ) === 'dir' )
+					? this.Folder( webdav.uri() )
+					: this.File( webdav.uri() )
 				) ,
 			]
 		}
@@ -30,8 +30,12 @@ namespace $.$mol {
 			return $mol_webdav.item( this.uri_current() )
 		}
 		
-		folder_row_current( webdav : $mol_webdav ) {
-			return this.webdavs().indexOf( webdav ) !== -1
+		webdav( uri : string ) {
+			return $mol_webdav.item( uri )
+		}
+		
+		folder_row_current( uri : string ) {
+			return this.webdavs().indexOf( this.webdav( uri ) ) !== -1
 		}
 		
 		webdavs() {
@@ -49,61 +53,56 @@ namespace $.$mol {
 			return webdavs
 		}
 		
-		webdav_type( webdav : $mol_webdav ) {
+		webdav_type( uri : string ) {
+			const webdav = this.webdav( uri )
 			if( webdav === this.root() || webdav.type() === 'dir' ) return 'dir'
 			return 'file'
 		}
 		
-		webdav_title( webdav: $mol_webdav ) {
+		webdav_title( uri : string ) {
+			const webdav = this.webdav( uri )
 			if( webdav === this.root() ) return super.title()
 			return webdav.prop( 'displayname' ) || ''
 		}
 		
-		folder_rows( folder: $mol_webdav ) {
-			const webdavs = folder.sub()
-			const sub = []
-			
-			for( let webdav of webdavs ) {
-				sub.push( this.Folder_row( webdav ))
-			}
-			
-			return sub
+		folder_rows( uri : string ) {
+			return this.webdav( uri ).sub().map( webdav => this.Folder_row( webdav.uri() ) )
 		}
 		
-		folder_row_arg( webdav : $mol_webdav ) {
-			return { 'current' : webdav.uri() }
+		folder_row_arg( uri : string ) {
+			return { 'current' : uri }
 		}
 		
-		folder_row_icon( webdav : $mol_webdav ) {
-			return this.webdav_type( webdav ) === 'dir' 
-				? this.Icon_folder( webdav ) 
-				: this.Icon_file( webdav )
+		folder_row_icon( uri : string ) {
+			return this.webdav_type( uri ) === 'dir' 
+				? this.Icon_folder( uri ) 
+				: this.Icon_file( uri )
 		}
 		
-		folder_row_title( webdav : $mol_webdav ) {
-			return webdav.prop( 'displayname' )
+		folder_row_title( uri : string ) {
+			return this.webdav( uri ).prop( 'displayname' )
 		}
 		
-		file_src( file: $mol_webdav ) {
-			return file.uri()
+		file_uri( uri : string ) {
+			return uri
 		}
 		
-		file_mime( file: $mol_webdav ) {
-			return file.prop( 'getcontenttype' )
+		file_mime( uri : string ) {
+			return this.webdav( uri ).prop( 'getcontenttype' )
 		}
 		
 		title() {
-			return this.webdav_title( this.current() )
+			return this.webdav_title( this.uri_current() )
 		}
 		
-		Close( webdav : $mol_webdav ) {
-			return webdav !== this.root()
-				? super.Close( webdav )
+		Close( uri : string ) {
+			return uri !== this.uri_root()
+				? super.Close( uri )
 				: null
 		}
 		
-		close_arg( webdav : $mol_webdav ) {
-			return { 'current' : webdav.parent().uri() }
+		close_arg( uri : string ) {
+			return { 'current' : this.webdav( uri ).parent().uri() }
 		}
 		
 	}
