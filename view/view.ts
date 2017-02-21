@@ -229,7 +229,6 @@ namespace $ {
 						nextNode.nodeValue = String( view )
 						nextNode = nextNode.nextSibling
 					} else {
-						if( view=='[object HTMLObjectElement]')debugger
 						const textNode = $mol_dom_context.document.createTextNode( String( view ) )
 						node.insertBefore( textNode , nextNode )
 					}
