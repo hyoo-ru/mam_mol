@@ -522,3 +522,7 @@ namespace $.$mol {
 ```
 
 Here we linked our properties `message` and `name` through the expression. So now wherever we use `$my_hello`, the value `message` would be depend on `name` property entered by a user.
+
+## Articles
+
+* [React'ивные Panel'и](https://habrahabr.ru/post/314752/) - JSX vs view.tree
