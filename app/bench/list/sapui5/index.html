@@ -1,63 +1,38 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 
-<style>
-	html {
-		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
-	}
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv='Content-Type' content='text/html;charset=UTF-8' />
 
-	body {
-		margin: 0;
-	}
+    <title>SAPUI5 - sap.m</title>
 
-	.list {
-		padding: .5rem;
-	}
+    <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" data-sap-ui-libs="sap.m" data-sap-ui-xx-bindingSyntax="complex"></script>
+    <!-- load the mobile lib "sap.m", the layout lib and the "sap_bluecrystal" theme -->
+    <style>
+        .sapMTitle {
+            margin: 10px;
+            float: left;
+            font-size: 20px;
+            background-color: white;
+        }
+        .sapMListUl {
+            padding: 0;
+        }
+        .sapMListUl li {
+            height: auto;
+            margin-top: 10px;
+        }
+        .sapMList {
+            margin-top: 40px;
+        }
+        .sapMSLIDescription {
+            white-space: normal;
+        }
+    </style>
 
-	.list-header {
-		padding: .5rem;
-		margin: 0;
-		font-size: 1.5em;
-		font-weight: normal;
-	}
-
-	.list-item {
-		padding: .5rem;
-		cursor: pointer;
-	}
-
-	.list-item[aria-selected=true] {
-		background: #eee;
-		outline: none;
-	}
-
-	.sapMSLITitleDiv {
-		font-weight: bold;
-	}
-	
-	.list-items > ul {
-		padding: 0;
-	}
-
-	.sapMSLI {
-		height: auto !important;
-	}
-
-</style>
-
-<body id="body">
-
-<script id='sap-ui-bootstrap'
-		src='//openui5.hana.ondemand.com/resources/sap-ui-core.js'
-		data-sap-ui-libs='sap.m, sap.ui.commons'
-		data-sap-ui-preload="async">
-</script>
-
-<script>
-
-	sap.ui.getCore().attachInit( function() {
-		
-		window.addEventListener( 'message' , function onMessage( event ) {
+    <script type="text/javascript">
+        window.addEventListener( 'message' , function onMessage( event ) {
 			switch( event.data[ 0 ] ) {
 				case 'set data' :
 					oModel.setData( event.data[1] );
@@ -72,38 +47,38 @@
 			items : []
 		} )
 
-		var labelContent = new sap.m.FormattedText({
-			htmlText: '<h2>SAPUI5</h2>'
-		})
-
-		var listItem = new sap.m.StandardListItem({
-			key: "{id}",
-			title : "{title}" ,
-			description: "{content}",
-			selected: true
-		})
-		listItem.addStyleClass( 'list-item' )
-
-		var listContent = new sap.m.List({
+        var list = new sap.m.List({
 			growing: true,
 			growingThreshold: 1000,
 			showNoData: false,
 			mode: sap.m.ListMode.SingleSelectMaster
-		});
-		listContent.addStyleClass( 'list-items' )
+        });
 
-		listContent.setModel(oModel);
-		listContent.bindItems('/items', listItem);
+       // list.setData(oModel);
 
-		var oScrollContainerContent = new sap.m.ScrollContainer({
-			content: [
-				labelContent,
-				listContent
-			]
-		});
-		oScrollContainerContent.addStyleClass( 'list' )
+        list.bindItems({
+            path: "/items",
+            template: new sap.m.StandardListItem({
+                title: "{id}",
+                description: "{content}"
+            })
+        });
 
-		oScrollContainerContent.placeAt('body');
-	} )
+        var page1 = new sap.m.Page({
+            title: "SAPUI5 on sap.m",
+            content: list
+        });
 
-</script>
+        var app = new sap.m.App({
+            pages: [page1]
+        }).placeAt("content");
+
+        app.setModel(oModel);
+
+    </script>
+</head>
+
+<body id="content" class="sapUiBody">
+</body>
+
+</html>
