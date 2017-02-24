@@ -1,6 +1,6 @@
 $mol_book_demo $mol_book
 	pages /
-		<= Placeholder $mol_view
+		<= Placeholder $mol_book_placeholder
 			minimal_width 200
 			sub / \ Placeholder
 		<= Addon $mol_view

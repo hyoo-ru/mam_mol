@@ -9,6 +9,40 @@ namespace $ {
 			} )
 		}
 		
+		@ $mol_mem()
+		data_tree() {
+			const dom = this.request().response().responseXML as XMLDocument
+			const responses = dom.querySelectorAll( 'response' ) as any as Element[]
+			
+			const data = {} as { [ uri : string ] : Element }
+			
+			for( let response of responses ) {
+				const uri = this.resolve( response.querySelector( 'href' ).textContent ).uri()
+				
+				data[ uri ] = response
+			}
+			
+			return data
+		}
+		
+		data_self() {
+			return this.parent().data_tree()
+		}
+		
+		parent() {
+			return $mol_webdav.item( this.uri().replace( /\/[^\/]*\/?$/ , '/' ) )
+		}
+		
+		@ $mol_mem()
+		sub() {
+			const next = [] as $mol_webdav[]
+			for( let uri in this.data_tree() ) {
+				if( uri == this.uri() ) continue
+				next.push( $mol_webdav.item( uri ) )
+			}
+			return next
+		}
+		
 		depth() {
 			return 1
 		}
@@ -20,114 +54,44 @@ namespace $ {
 		}
 		
 		method_get() {
-			return 'PropFind'
+			return 'PROPFIND'
 		}
 		
-		@ $mol_mem()
-		info_tree() {
-			const dom = this.request().response().responseXML as XMLDocument
-			const responses = dom.querySelectorAll( 'response' ) as any as Element[]
-			const base = this.uri().replace( /\/[^\/]*$/ , '' )
+		resolve( uri : string ) : $mol_webdav {
+			if( !uri ) return this
 			
-			type common = {
-				title : string
-				created : $jin.time.moment_class
-				//modified : $jin.time.moment_class
-			} 
-			
-			type dir = common & {
-				type : 'dir'
+			if( /^[-\w]+:/.test( uri ) ) {
+				return $mol_webdav.item( uri )
 			}
 			
-			type file = common & {
-				type : 'file'
-				version : string
-				size : number
-				mime : string
+			if( uri[0] === '/' ) {
+				return $mol_webdav.item( this.uri().replace( /^([^\/]+\/\/[^\/]+).*/, '$1' ) + uri )
+			}
+				
+			let res = this.uri() + '/' + uri
+			
+			while( true ) {
+				let prev = res
+				res = res.replace( /\/[^\/]+\/\.\.\// , '/' )
+				if( prev === res ) break
 			}
 			
-			const info = {} as { [ path : string ] : dir | file }
-			
-			for( let response of responses ) {
-				const uri = base + response.querySelector( 'href' ).textContent
-				
-				const type = response.querySelector( 'resourcetype > collection' ) ? 'dir' : 'file'
-				
-				const common = {
-					title : response.querySelector( 'displayname' ).textContent ,
-					created : $jin.time.moment( response.querySelector( 'creationdate' ).textContent ) ,
-					//modified : $jin.time.moment( response.querySelector( 'getlastmodified' ).textContent ) ,
-				}
-				
-				switch( type ) {
-					case 'dir' :
-						info[ uri ] = {
-							...common ,
-							type : 'dir' ,
-						}
-						break
-					case 'file' :
-						info[ uri ] = {
-							...common ,
-							type : 'file' ,
-							size : Number( response.querySelector( 'getcontentlength' ).textContent ) ,
-							version : response.querySelector( 'getetag' ).textContent ,
-							mime : response.querySelector( 'getcontenttype' ).textContent ,
-						}
-						break
-				}
-				
+			while( true ) {
+				let prev = res
+				res = res.replace( /\/\.\.\/[^\/]+\// , '/' )
+				if( prev === res ) break
 			}
 			
-			return info
+			return this.Class().item( res )
 		}
 		
-		info_self() {
-			this.parent().info_tree()
+		prop( prop: string ) {
+			return this.data_self()[ this.uri() ].querySelector( prop ).textContent
 		}
-		
-		@ $mol_mem()
-		sub() {
-			const next = [] as $mol_webdav[]
-			for( let uri in this.info_tree() ) {
-				if( uri == this.uri() ) continue
-				next.push( $mol_webdav.item( uri ) )
-			}
-			return next
-		}
-		
-		parent() {
-			return $mol_webdav.item( this.uri().replace( /\/[^\/]*$/ , '' ) )
-		}
-		
+	
 		type() {
-			return this.info_self()[ this.uri() ].type
+			return this.data_self()[ this.uri() ].querySelector( 'collection' ) ? 'dir' : 'file'
 		}
-		
-		title() {
-			return this.info_self()[ this.uri() ].title
-		}
-		
-		created() {
-			return this.info_self()[ this.uri() ].created
-		}
-		
-		size() {
-			return this.info_self()[ this.uri() ].size
-		}
-		
-		mime() {
-			return this.info_self()[ this.uri() ].mime
-		}
-		
-		version() {
-			return this.info_self()[ this.uri() ].version
-		}
-		
-		//modified() {
-		//	return this.info_self()[ this.uri() ].modified
-		//}
-		
 	}
 	
 }

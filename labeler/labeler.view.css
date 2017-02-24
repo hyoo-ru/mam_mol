@@ -3,6 +3,7 @@
 	flex-direction: column;
 	align-items: flex-start;
 	margin: auto;
+	cursor: inherit;
 }
 
 [mol_labeler_title] {

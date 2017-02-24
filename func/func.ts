@@ -1,17 +1,10 @@
-declare class WeakMap< Key extends Object , Value > {
-	get( key : Key ) : Value
-	has( key : Key ) : boolean
-	set( key : Key , val : Value ) : this
-	delete( key : Key ) : this
-}
-
 interface Function {
 	name : string
 }
 
 namespace $ {
 	
-	export var $mol_func_name_dict = new WeakMap< Function , string >()
+	export var $mol_func_name_dict = new $mol_dict< Function , string >()
 
 	export function $mol_func_name( func : Function ) : string {
 		if( func.name ) return func.name

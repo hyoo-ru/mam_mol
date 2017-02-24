@@ -1,12 +1,11 @@
 [mol_grid] {
 	display: block;
 	flex: 0 1 auto;
-	margin: auto;
 }
 
 [mol_grid_table] {
 	border-spacing: 0;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	box-shadow: none;
 	transform: translateZ(0);
 }
 

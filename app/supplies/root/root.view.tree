@@ -13,3 +13,4 @@ $mol_app_supplies_root $mol_book
 		supply <= supply null
 	-
 	placeholder $mol_book_placeholder
+		title <= title -
