@@ -3,6 +3,13 @@ $mol_plot_rope $mol_plot_graph
 		<= Line $mol_plot_line
 			points_scaled <= points_scaled -
 			hue <= hue -
+			type <= type \solid
+			Sample => Line_sample
 		<= Dots $mol_plot_dot
 			points_scaled <= points_scaled -
 			hue <= hue -
+			Sample => Dots_sample
+	Sample $mol_plot_graph_sample
+		sub /
+			<= Line_sample -
+			<= Dots_sample -

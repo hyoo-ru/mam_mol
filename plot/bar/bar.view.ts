@@ -13,5 +13,9 @@ namespace $.$mol {
 			return 50 / this.points().length + '%'
 		}
 		
+		color_stroke() {
+			return `hsl( ${ this.hue() } , 80% , 80% )`
+		}
+		
 	}
 }

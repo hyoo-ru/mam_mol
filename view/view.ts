@@ -313,17 +313,23 @@ namespace $ {
 			return node
 		}
 		
-		attr() : { [ key : string ] : string|number|boolean } { return {
-			'mol_view_error' : false
-		} }
+		attr() : { [ key : string ] : string|number|boolean } {
+			return {
+				'mol_view_error' : false ,
+			}
+		}
 		
-		style() : { [ key : string ] : string|number } { return {
-		} }
+		style() : { [ key : string ] : string|number } {
+			return {}
+		}
 		
-		field() : { [ key : string ] : any } { return {
-		} }
+		field() : { [ key : string ] : any } {
+			return {}
+		}
 		
-		event() : { [ key : string ] : ( event : Event )=> void } { return {} }
+		event() : { [ key : string ] : ( event : Event )=> void } {
+			return {}
+		}
 		
 		'locale_contexts()' : string[]
 		locale_contexts() {

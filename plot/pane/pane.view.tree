@@ -1,16 +1,14 @@
 $mol_plot_pane $mol_svg_root
 	aspect \none
 	view_box null
-	gap 0.01
+	gap 0
 	shift /
 		0
 		0
 	scale /
 		1
 		1
-	sub <= graphs_positioned <= graphs /
-		<= back /
-		<= front_sized <= front_colored <= front /
+	sub <= graphs_colored <= graphs_positioned <= graphs /
 	plugins /
 		<= Meter $mol_meter
 			width => width

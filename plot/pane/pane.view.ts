@@ -66,16 +66,16 @@ namespace $.$mol {
 		
 		hue_shift() { return 49 }
 		
-		hue_graph( index : number ) {
-			return ( 360 + this.hue_base() + this.hue_shift() * index ) % 360
+		graph_hue( index : number ) {
+			return ( 360 + ( this.hue_base() + this.hue_shift() * index ) % 360 ) % 360
 		}
 		
 		@ $mol_mem()
-		front_colored() {
-			const graphs = this.front()
+		graphs_colored() {
+			const graphs = this.graphs_positioned()
 			
 			graphs.forEach( ( graph , index ) => {
-				graph.hue = () => this.hue_graph( index )
+				graph.hue = () => this.graph_hue( index )
 			} )
 			
 			return graphs

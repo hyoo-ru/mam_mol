@@ -1,0 +1,8 @@
+[mol_plot_rope_sample] {
+	display: flex;
+	position: relative;
+}
+
+[mol_plot_rope_sample] > [mol_plot_dot_sample] {
+	position: absolute;
+}

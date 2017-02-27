@@ -1,8 +1,9 @@
 $mol_plot_demo $mol_plot_pane
 	count?val 25
-	back /
-	front /
+	graphs /
 		<= Input_fill $mol_plot_fill
+			series <= saturation_series /
+		<= Input_ruler $mol_plot_ruler
 			series <= input_series /
 		<= Output $mol_plot_bar
 			series <= output_series /

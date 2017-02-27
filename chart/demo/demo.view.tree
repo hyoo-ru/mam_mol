@@ -1,0 +1,25 @@
+$mol_chart_demo $mol_chart
+	count?val 25
+	graphs /
+		<= Ruler $mol_plot_ruler
+			series <= series_1 /
+		<= Receipts $mol_plot_bar
+			title <= receipts_title @ \Receipts
+			series <= series_2 /
+		<= Receipts_confirmed $mol_plot_bar
+			title <= receipts_confirmed_title @ \Confirmed receipts
+			series <= series_3 /
+		<= Maximum $mol_plot_dot
+			title <= maximum_title @ \Maximum value
+			series <= series_1 /
+		<= Waste $mol_plot_line
+			type \dashed
+			title <= waste_title @ \Waste
+			series <= series_4 /
+		<= Purchases $mol_plot_rope
+			title <= purchases_title @ \Purchases
+			series <= series_5 /
+		<= Taxes $mol_plot_rope
+			type \dashed
+			title <= taxes_title @ \Taxes
+			series <= series_6 /

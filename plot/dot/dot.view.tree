@@ -6,4 +6,5 @@ $mol_plot_dot $mol_plot_graph
 		pos <= mark_pos!id /
 			0
 			0
-
+	Sample $mol_plot_graph_sample
+		color <= color_stroke -
