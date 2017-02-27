@@ -40,7 +40,6 @@ $mol_select $mol_view
 					rows <= bubble_content /
 						<= filter_content /
 							<= Filter_string $mol_string
-								autofocus true
 								value?val <=> filter_pattern?val \
 								hint <= filter_hint @ \Filter
 						<= option_rows /
