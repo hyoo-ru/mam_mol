@@ -7,7 +7,7 @@ namespace $.$mol {
 			return $mol_range_in({
 				length : this.count() ,
 				item( index ) {
-					return 6 + Math.sin( index + $mol_state_time.now( 125 ) / 10000 )
+					return 6 + Math.sin( index )
 				}
 			}).valueOf() as number[]
 		}
