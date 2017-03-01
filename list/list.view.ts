@@ -1,6 +1,11 @@
 namespace $.$mol {
 	export class $mol_list extends $.$mol_list {
 		
+		sub() {
+			const rows = this.rows()
+			return ( rows.length === 0 ) ? [ this.Empty() ] : rows
+		}
+		
 		@ $mol_mem()
 		row_offsets() : number[] {
 			var sub = this.sub()
