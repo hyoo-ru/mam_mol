@@ -23,7 +23,9 @@
 <iframe id="sandbox"></iframe>
 
 <script>
-	
+
+	if( window.parent === window ) document.location = '//eigenmethod.github.io/mol/app/bench/#bench=' + encodeURIComponent( location.href )
+
 	var size = 1000
 
 	var items = {
@@ -57,9 +59,9 @@
 				title : { 'en' : 'AngularJS 1.5.5' } ,
 				weight : '55.4 KB' ,
 			} ,
-			'alight-0-12' : {
-				title : { 'en' : 'ALight 0.12' } ,
-				weight : '22.2 KB' ,
+			'alight-0-14' : {
+				title : { 'en' : 'ALight 0.14' } ,
+				weight : '22.1 KB' ,
 			} ,
 			'native-html' : {
 				title : { 'en' : 'Native HTML' } ,
