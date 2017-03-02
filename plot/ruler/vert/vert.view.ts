@@ -54,8 +54,8 @@ namespace $.$mol {
 			return this.points().map( ( point , index )=> this.Label( index ) )
 		}
 		
-		label_pos( index : number ) {
-			return [ '48px' , this.points()[ index ][1] ]
+		label_pos_y( index : number ) {
+			return this.points()[ index ][1] + 'px'
 		}
 		
 		label_text( index : number ) {

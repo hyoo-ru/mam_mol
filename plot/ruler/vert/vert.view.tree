@@ -6,5 +6,7 @@ $mol_plot_ruler_vert $mol_plot_graph
 		<= labels /
 	Label!index $mol_svg_text
 		pos <= label_pos!index /
+			<= label_pos_x!index \36px
+			<= label_pos_y!index \
 		align \end
 		text <= label_text!index \

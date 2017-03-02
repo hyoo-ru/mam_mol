@@ -6,4 +6,6 @@ $mol_plot_ruler_hor $mol_plot_graph
 		<= labels /
 	Label!index $mol_svg_text
 		pos <= label_pos!index /
+			<= label_pos_x!index \
+			<= label_pos_y!index \100%
 		text <= label_text!index \
