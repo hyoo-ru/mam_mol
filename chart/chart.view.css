@@ -7,6 +7,6 @@
 }
 
 [mol_chart_plot] {
+	flex: 1 1 50%;
 	margin: .5rem;
-	flex: 0 1 50%;
 }

@@ -6,7 +6,11 @@ namespace $.$mol {
 		dimensions() {
 			const graphs = this.graphs()
 			
-			const next = [ [ 0 , 0 ] , [ 0 , 0 ] ]
+			const next = [
+				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
+				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
+			]
+			
 			for( let graph of graphs ) {
 				const dims = graph.dimensions()
 				
@@ -20,51 +24,13 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		gap_real() {
-			const size = this.size()
-			const gap = this.gap()
-			
-			return size.map( val => val * gap )
-		}
-		
-		@ $mol_mem()
-		dimensions_expanded() {
-			const gap = this.gap_real()
-			const dims = this.dimensions()
-			
-			return [
-				[
-					( dims[0][0] - gap[0] ) ,
-					( dims[0][1] - gap[1] ) ,
-				] ,
-				[
-					( dims[1][0] + gap[0] ) ,
-					( dims[1][1] + gap[1] ) ,
-				] ,
-			]
-		}
-		
-		@ $mol_mem()
 		size() {
 			const dims = this.dimensions()
 			return [
-				dims[1][0] - dims[0][0] ,
-				dims[1][1] - dims[0][1] ,
+				( dims[1][0] - dims[0][0] ) || 1 ,
+				( dims[1][1] - dims[0][1] ) || 1 ,
 			]
 		}
-		
-		@ $mol_mem()
-		size_expanded() {
-			const dims = this.dimensions_expanded()
-			return [
-				dims[1][0] - dims[0][0] ,
-				dims[1][1] - dims[0][1] ,
-			]
-		}
-		
-		hue_base() { return 140 }
-		
-		hue_shift() { return 49 }
 		
 		graph_hue( index : number ) {
 			return ( 360 + ( this.hue_base() + this.hue_shift() * index ) % 360 ) % 360
@@ -81,19 +47,30 @@ namespace $.$mol {
 			return graphs
 		}
 		
-		@ $mol_mem()
-		shift() {
-			const dims = this.dimensions_expanded()
-			const scale = this.scale()
-			return [ - dims[0][0] * scale[0] , - dims[0][1] * scale[1] ]
+		size_real() {
+			return [ this.width() , this.height() ]
+		}
+		
+		view_box() {
+			const size = this.size_real()
+			return `0 0 ${ size[0] } ${ size[1] }`
 		}
 		
 		@ $mol_mem()
 		scale() {
 			const size = this.size()
-			const size_exp = this.size_expanded()
-			const real = [ this.width() , this.height() ]
-			return [ real[0] / size_exp[0] , real[1] / size_exp[1] ]
+			const real = this.size_real()
+			return [
+				+ ( real[0] - this.gap_left() - this.gap_right() ) / size[0] ,
+				- ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1] ,
+			]
+		}
+		
+		@ $mol_mem()
+		shift() {
+			const dims = this.dimensions()
+			const scale = this.scale()
+			return [ this.gap_left() - dims[0][0] * scale[0] , this.gap_top() - dims[1][1] * scale[1] ]
 		}
 		
 		@ $mol_mem()

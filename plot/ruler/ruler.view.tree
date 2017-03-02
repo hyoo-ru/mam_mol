@@ -1,6 +1,0 @@
-$mol_plot_ruler $mol_plot_graph
-	color_stroke \
-	color_fill \
-	sub /
-		<= Curve $mol_svg_path
-			geometry <= curve \

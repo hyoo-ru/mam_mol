@@ -1,7 +1,7 @@
 $mol_plot_bar $mol_plot_graph
 	color_fill \
 	style *
-		stroke-width <= stroke_width \1%
+		stroke-width <= stroke_width \1rem
 	sub /
 		<= Curve $mol_svg_path
 			geometry <= curve \

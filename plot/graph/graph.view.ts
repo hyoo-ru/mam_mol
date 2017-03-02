@@ -2,7 +2,12 @@ namespace $.$mol {
 	export class $mol_plot_graph extends $.$mol_plot_graph {
 		
 		points_raw() {
-			return this.series().map( ( val , i )=> [ i , val ] )
+			const series = this.series()
+			
+			return Object.keys( series ).map( ( key , index )=> [
+				isNaN( Number( key ) ) ? index : Number( key ) ,
+				series[ key ] ,
+			] )
 		}
 		
 		@ $mol_mem()
@@ -17,12 +22,13 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		points() {
+			const threshold = this.threshold()
 			const res = [] as number[][]
-			let last = [ - Number.NEGATIVE_INFINITY , - Number.NEGATIVE_INFINITY ]
+			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ]
 			this.points_scaled().forEach( point => {
 				check : {
-					if( Math.abs( point[ 0 ] - last[ 0 ] ) > 5 ) break check
-					if( Math.abs( point[ 1 ] - last[ 1 ] ) > 5 ) break check
+					if( Math.abs( point[ 0 ] - last[ 0 ] ) >= threshold ) break check
+					if( Math.abs( point[ 1 ] - last[ 1 ] ) >= threshold ) break check
 					return
 				}
 				res.push( last = point )
@@ -33,7 +39,10 @@ namespace $.$mol {
 		@ $mol_mem()
 		dimensions() {
 			const points = this.points_raw()
-			const next = [ [ 0 , 0 ] , [ 0 , 0 ] ]
+			const next = [
+				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
+				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
+			]
 			
 			for( let point of points ) {
 				if( point[0] < next[0][0] ) next[0][0] = point[0]
@@ -46,11 +55,11 @@ namespace $.$mol {
 		}
 		
 		color_stroke() {
-			return `hsl( ${ this.hue() } , 80% , 60% )`
+			return `hsl( ${ this.hue() } , 80% , 50% )`
 		}
 		
 		color_fill() {
-			return `hsl( ${ this.hue() } , 70% , 70% )`
+			return `hsl( ${ this.hue() } , 80% , 70% )`
 		}
 		
 	}

@@ -1,4 +1,4 @@
-$mol_chart_legend $mol_view
+$mol_chart_legend $mol_scroll
 	graphs /
 	sub <= graph_legends /
 	-

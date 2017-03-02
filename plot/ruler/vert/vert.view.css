@@ -1,0 +1,9 @@
+[mol_plot_ruler_vert] {
+	color: var(--mol_skin_light_line);
+	stroke-width: .1%;
+}
+
+[mol_plot_ruler_vert_label] {
+	color: var(--mol_skin_light_text);
+	stroke-width: 0;
+}
