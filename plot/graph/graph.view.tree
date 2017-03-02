@@ -8,14 +8,16 @@ $mol_plot_graph $mol_svg_group
 	scale /
 		1
 		1
+	dimensions_full <= dimensions /
+		/
+		/
 	hue 0
 	-
 	attr *
 		mol_plot_graph_type <= type \solid
 	-
 	style *
-		stroke <= color_stroke \
-		fill <= color_fill \
+		color <= color \black
 	-
 	Sample null
 

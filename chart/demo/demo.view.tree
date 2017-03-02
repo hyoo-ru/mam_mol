@@ -52,4 +52,4 @@ $mol_chart_demo_styles $mol_list rows /
 				title <= taxes_title @ \Dashed line with dots
 				series <= series_6 /
 	<= Count $mol_number
-		value?val <=> count?val 25
+		value?val <=> count?val 15

@@ -70,7 +70,10 @@ namespace $.$mol {
 		shift() {
 			const dims = this.dimensions()
 			const scale = this.scale()
-			return [ this.gap_left() - dims[0][0] * scale[0] , this.gap_top() - dims[1][1] * scale[1] ]
+			return [
+				Math.round( this.gap_left() - dims[0][0] * scale[0] ) ,
+				Math.round( this.gap_top() - dims[1][1] * scale[1] ) ,
+			]
 		}
 		
 		@ $mol_mem()
@@ -80,6 +83,7 @@ namespace $.$mol {
 			graphs.forEach( ( graph , index ) => {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
+				graph.dimensions_full = ()=> this.dimensions()
 			} )
 			
 			return graphs

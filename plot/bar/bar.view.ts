@@ -10,10 +10,10 @@ namespace $.$mol {
 		}
 		
 		stroke_width() {
-			return 8 / Math.sqrt( this.points().length ) + '%'
+			return ( 8 / Math.sqrt( this.points().length ) ).toPrecision(2) + '%'
 		}
 		
-		color_stroke() {
+		color() {
 			return `hsl( ${ this.hue() } , 80% , 70% )`
 		}
 		

@@ -43,10 +43,7 @@ namespace $.$mol {
 			
 			const last = points[ points.length - 1 ]
 			
-			const vert = points.map( point => `M ${ point[0] } 1000 V 0` ).join( ' ' )
-			const hor = `M ${ points[0][0] } ${ shift[1] } H ${ last[0] }`
-			
-			return vert + hor
+			return points.map( point => `M ${ point[0] } 1000 V 0` ).join( ' ' )
 		}
 		
 		labels() {

@@ -26,8 +26,8 @@ namespace $.$mol {
 			const elem = this.dom_node() as HTMLElement
 			const rect = elem.getBoundingClientRect()
 			
-			this.width( rect.width )
-			this.height( rect.height )
+			this.width( Math.round( rect.width ) )
+			this.height( Math.round( rect.height ) )
 			this.top( rect.top )
 			this.bottom( rect.bottom )
 			this.left( rect.left )

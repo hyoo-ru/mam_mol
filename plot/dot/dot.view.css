@@ -1,7 +1,7 @@
 [mol_plot_dot] {
 	stroke: none;
-	fill: var(--mol_skin_base);
-	stroke-dasharray: none;
+	fill: currentColor;
+	stroke-width: 0;
 }
 
 [mol_plot_dot_sample] {

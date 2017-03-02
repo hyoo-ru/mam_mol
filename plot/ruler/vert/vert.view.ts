@@ -18,22 +18,23 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		step() {
-			const dims = this.dimensions()
-			const count = Math.max( 1 , Math.pow( 2 , Math.floor( Math.log( ( dims[0][1] - dims[1][1] ) * this.scale()[1] / 48 ) / Math.log( 2 ) - 1 ) ) )
-			const step = $mol_math_round_expand( ( dims[1][1] - dims[0][1] ) ) / count
+			const dims = this.dimensions_full()
+			const size = $mol_math_round_expand( ( dims[1][1] - dims[0][1] ) , -1 )
+			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( - size * this.scale()[1] / 24 ) / Math.log( 10 ) ) ) )
+			const step = size / count
 			return step
 		}
 		
 		points_raw() {
-			const dims = this.dimensions()
+			const dims = this.dimensions_full()
 			const step = this.step()
 			
 			const next = [] as number[][]
-			const start = Math.ceil( dims[0][1] / step ) * step
-			const end = Math.floor( dims[1][1] / step + 1 ) * step
+			const start = Math.round( dims[0][1] / step ) * step
+			const end = Math.round( dims[1][1] / step ) * step
 
 			for( let val = start ; val <= end ; val += step ) {
-				next.push( [ 0 , val ] )
+				next.push( [ 0 , Number( val.toFixed( 10 ) ) ] )
 			}
 
 			return next
@@ -59,7 +60,7 @@ namespace $.$mol {
 		
 		label_text( index : number ) {
 			const step = this.step()
-			const precision = Math.max( 0 , ( step - Math.floor( step ) ).toString().length - 2 )
+			const precision = Math.max( 0 , Math.min( 15 , ( step - Math.floor( step ) ).toString().length - 2 ) )
 			return this.points_raw()[ index ][1].toFixed( precision )
 		}
 		

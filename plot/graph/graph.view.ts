@@ -15,8 +15,8 @@ namespace $.$mol {
 			const shift = this.shift()
 			const scale = this.scale()
 			return this.points_raw().map( point => [
-				shift[0] + point[0] * scale[0] ,
-				shift[1] + point[1] * scale[1] ,
+				Math.round( shift[0] + point[0] * scale[0] ) ,
+				Math.round( shift[1] + point[1] * scale[1] ) ,
 			] )
 		}
 		
@@ -54,12 +54,8 @@ namespace $.$mol {
 			return next
 		}
 		
-		color_stroke() {
+		color() {
 			return `hsl( ${ this.hue() } , 80% , 50% )`
-		}
-		
-		color_fill() {
-			return `hsl( ${ this.hue() } , 80% , 70% )`
 		}
 		
 	}

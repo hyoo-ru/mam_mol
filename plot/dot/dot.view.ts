@@ -9,9 +9,5 @@ namespace $.$mol {
 			return this.points()[ index ]
 		}
 		
-		mark_radius() {
-			return 2 / Math.sqrt( this.points().length ) + '%'
-		}
-		
 	}
 }
