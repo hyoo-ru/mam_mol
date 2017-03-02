@@ -10,6 +10,7 @@ $mol_chart_demo_simple $mol_chart
 		<= Ruler_vert $mol_plot_ruler_vert
 		<= Ruler_hor $mol_plot_ruler_hor
 			series <= plan -
+			label_text!key <= hor_label_text!key \
 		<= Fact $mol_plot_rope
 			title <= fact_title @ \Fact
 			series <= fact *

@@ -14,26 +14,27 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		indexes_visible() {
-			const res = [] as number[]
+		keys_visible() {
+			const res = [] as string[]
 			
-			let points = this.points_raw()
-			if( points.length === 0 ) return []
+			const keys = Object.keys( this.series() ) 
+			if( keys.length === 0 ) return []
 			
 			let step = this.step()
-			let limit = Math.floor( points.length - step / 2 )
+			let limit = Math.floor( keys.length - step / 2 )
 			
 			for( let i = 0 ; i < limit ; i += step ) {
-				res.push( i )
+				res.push( keys[ i ] )
 			}
-			res.push( points.length - 1 )
+			res.push( keys[ keys.length - 1 ] )
 			
 			return res
 		}
 		
 		points() {
 			const points = this.points_scaled()
-			return this.indexes_visible().map( index => points[ index ] )
+			const keys = Object.keys( this.series() )
+			return this.keys_visible().map( key => points[ keys.indexOf( key ) ] )
 		}
 		
 		curve() {
@@ -47,15 +48,15 @@ namespace $.$mol {
 		}
 		
 		labels() {
-			return this.points().map( ( point , index )=> this.Label( index ) )
+			return this.keys_visible().map( key => this.Label( key ) )
 		}
 		
-		label_pos_x( index : number ) {
-			return String( this.points()[ index ][0] )
+		label_pos_x( key : string ) {
+			return String( this.points()[ this.keys_visible().indexOf( key ) ][0] )
 		}
 		
-		label_text( index : number ) {
-			return String( Object.keys( this.series() )[ this.indexes_visible()[ index ] ] )
+		label_text( key : string ) {
+			return key
 		}
 		
 	}
