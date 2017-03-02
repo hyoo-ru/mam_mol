@@ -1,4 +1,10 @@
-$mol_list_demo $mol_scroll
+$mol_list_demo_large $mol_scroll
 	sub /
 		<= lister $mol_list
 			rows <= rows /
+
+$mol_list_demo_empty $mol_list
+	rows /
+	Empty $mol_view
+		sub /
+			<= empty_message @ \Empty list
