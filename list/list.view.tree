@@ -2,3 +2,4 @@ $mol_list $mol_view
 	style *
 		minHeight <= minimal_height -
 	sub <= rows /
+	Empty null
