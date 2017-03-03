@@ -9,15 +9,17 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		lamps() {
-			const filter = this.filter().toLowerCase()
+			const filter = this.filter().toLowerCase().trim()
 			if( !filter ) return this.lamps_all()
 			
-			return this.lamps_all().filter( lamp => {
+			const words = filter.split( /\s+/ )
+			
+			return this.lamps_all().filter( lamp => words.every( word => {
 				for( let field in lamp ) {
-					if( lamp[ field ].toLowerCase().match( filter ) ) return true
+					if( lamp[ field ].toLowerCase().match( word ) ) return true
 				}
 				return false
-			} )
+			} ) )
 		}
 		
 		@ $mol_mem()
