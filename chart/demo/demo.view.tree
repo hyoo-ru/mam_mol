@@ -48,8 +48,8 @@ $mol_chart_demo_styles $mol_chart
 			series <= series_5 /
 			graphs /
 				<= Purchases_fill $mol_plot_fill
-				<= Purchases_dots_line $mol_plot_line 
-				<= Purchases_dots_dots $mol_plot_dot 
+				<= Purchases_line $mol_plot_line 
+				<= Purchases_dots $mol_plot_dot 
 		<= Taxes $mol_plot_group
 			title <= taxes_title @ \Taxes
 			series <= series_6 /
