@@ -13,40 +13,51 @@ $mol_chart_demo_simple $mol_chart
 				february 20
 				march 30
 				april 40
-		<= Fact $mol_plot_rope
+		<= Fact $mol_plot_group
 			title <= fact_title @ \Fact
 			series <= fact *
 				january 5
 				february 10
 				march 30
+			graphs /
+				<= Fact_line $mol_plot_line
+				<= Fact_dots $mol_plot_dot
 
 $mol_chart_demo_styles $mol_chart
 	graphs /
-		<= Vert_ruler $mol_plot_ruler_vert
-			title <= vert_title @ \kJ
-		<= Hor_ruler $mol_plot_ruler_hor
-			title <= hor_title @ \Day
+		<= Energy $mol_plot_ruler_vert
+			title <= energy_title @ \kJ
+		<= Day $mol_plot_ruler_hor
+			title <= day_title @ \Day
 			series <= series_1 /
 		<= Receipts $mol_plot_bar
-			title <= receipts_title @ \Bars 1
+			title <= receipts_title @ \Receipts
 			series <= series_2 /
 		<= Receipts_confirmed $mol_plot_bar
-			title <= receipts_confirmed_title @ \Bars 2
+			title <= receipts_confirmed_title @ \Confirmed receipts
 			series <= series_3 /
 		<= Maximum $mol_plot_dot
-			title <= maximum_title @ \Dots
+			title <= maximum_title @ \Maximum
 			series <= series_1 /
 		<= Waste $mol_plot_line
 			type \dashed
-			title <= waste_title @ \Dashed line
+			title <= waste_title @ \Waste
 			series <= series_4 /
-		<= Purchases $mol_plot_rope
-			title <= purchases_title @ \Line with dots
+		<= Purchases_dots $mol_plot_group
+			title <= purchases_title @ \Purchases
 			series <= series_5 /
-		<= Taxes $mol_plot_rope
-			type \dashed
-			title <= taxes_title @ \Dashed line with dots
+			graphs /
+				<= Purchases_fill $mol_plot_fill
+				<= Purchases_dots_line $mol_plot_line 
+				<= Purchases_dots_dots $mol_plot_dot 
+		<= Taxes $mol_plot_group
+			title <= taxes_title @ \Taxes
 			series <= series_6 /
+			graphs /
+				<= Taxes_fill $mol_plot_fill
+				<= Taxes_line $mol_plot_line
+					type \dashed
+				<= Taxes_dots $mol_plot_dot
 	sub /
 		<= Plot -
 		<= Legend -

@@ -1,13 +1,15 @@
 $mol_plot_demo $mol_plot_pane
 	count?val 20
 	graphs /
-		<= Input_fill $mol_plot_fill
-			series <= input_series /
-		<= Saturation_fill $mol_plot_fill
-			series <= saturation_series /
 		<= Output $mol_plot_bar
 			series <= output_series /
-		<= Saturation $mol_plot_line
+		<= Saturation $mol_plot_group
 			series <= saturation_series /
-		<= Input $mol_plot_rope
+			graphs /
+				<= Saturation_fill $mol_plot_fill
+				<= Saturation_line $mol_plot_line
+		<= Input $mol_plot_group
 			series <= input_series /
+			graphs /
+				<= Input_line $mol_plot_line
+				<= Input_dots $mol_plot_dot

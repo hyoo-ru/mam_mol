@@ -4,3 +4,11 @@
 	opacity: .1;
 	fill: currentColor;
 }
+
+[mol_plot_fill_sample] {
+	min-height: .75rem;
+	min-width: 1.5rem;
+	align-self: flex-end;
+	opacity: .1;
+	background: currentColor;
+}
