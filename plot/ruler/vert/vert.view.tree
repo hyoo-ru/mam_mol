@@ -1,4 +1,5 @@
 $mol_plot_ruler_vert $mol_plot_graph
+	front /
 	color null
 	sub /
 		<= Curve $mol_svg_path
@@ -7,7 +8,7 @@ $mol_plot_ruler_vert $mol_plot_graph
 		<= Title $mol_svg_text
 			pos <= title_pos /
 				<= title_pos_x \36px
-				<= title_pos_y \12px
+				<= title_pos_y \14px
 			align \end
 			sub /
 				<= title -

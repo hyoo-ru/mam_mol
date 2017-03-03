@@ -64,5 +64,9 @@ namespace $.$mol {
 			return this.points_raw()[ index ][1].toFixed( precision )
 		}
 		
+		back() {
+			return [ this ]
+		}
+		
 	}
 }

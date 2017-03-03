@@ -59,5 +59,9 @@ namespace $.$mol {
 			return key
 		}
 		
+		back() {
+			return [ this ]
+		}
+		
 	}
 }

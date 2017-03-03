@@ -4,7 +4,7 @@ $mol_plot_pane $mol_svg_root
 	hue_base?val 140
 	hue_shift?val 111
 	-
-	gap 0
+	gap 24
 	gap_hor <= gap -
 	gap_vert <= gap -
 	gap_left <= gap_hor -

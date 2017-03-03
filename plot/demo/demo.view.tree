@@ -1,15 +1,22 @@
 $mol_plot_demo $mol_plot_pane
 	count?val 20
+	gap 48
 	graphs /
-		<= Output $mol_plot_bar
-			series <= output_series /
 		<= Saturation $mol_plot_group
 			series <= saturation_series /
 			graphs /
 				<= Saturation_fill $mol_plot_fill
 				<= Saturation_line $mol_plot_line
+					type \dashed
 		<= Input $mol_plot_group
 			series <= input_series /
 			graphs /
 				<= Input_line $mol_plot_line
 				<= Input_dots $mol_plot_dot
+		<= Output $mol_plot_bar
+			series <= output_series /
+		<= Voltage $mol_plot_ruler_vert
+			title <= Voltage_title @ \V
+		<= Time $mol_plot_ruler_hor
+			title <= Time_title @ \ms
+			series <= output_series /
