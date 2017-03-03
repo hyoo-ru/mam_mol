@@ -9,6 +9,7 @@
 	position: absolute;
 	z-index: 3;
 	background-color: var(--mol_skin_card);
+	color: var(--mol_skin_card_text);
 	max-width: none;
 	max-height: none;
 	overflow-y: auto;
