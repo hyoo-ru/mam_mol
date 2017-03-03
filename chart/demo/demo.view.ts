@@ -17,7 +17,7 @@ namespace $.$mol {
 			const limit = shift + this.count() 
 			
 			for( let i = shift ; i < limit ; ++ i ) {
-				next[ i ] = Number( ( 6 + Math.sin( 8 * i / limit ) ).toFixed( 3 ) )
+				next[ i ] = Number( ( 6.5 + Math.sin( 8 * i / limit ) ).toFixed( 3 ) )
 			}
 			
 			return next

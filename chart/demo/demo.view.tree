@@ -1,5 +1,11 @@
 $mol_chart_demo_simple $mol_chart
 	graphs /
+		<= Vert_ruler $mol_plot_ruler_vert
+			title <= vert_title @ \pcs
+		<= Hor_ruler $mol_plot_ruler_hor
+			title <= hor_title @ \Month
+			series <= plan -
+			label_text!key <= hor_label_text!key \
 		<= Plan $mol_plot_bar
 			title <= plan_title @ \Plan
 			series <= plan *
@@ -7,10 +13,6 @@ $mol_chart_demo_simple $mol_chart
 				february 20
 				march 30
 				april 40
-		<= Ruler_vert $mol_plot_ruler_vert
-		<= Ruler_hor $mol_plot_ruler_hor
-			series <= plan -
-			label_text!key <= hor_label_text!key \
 		<= Fact $mol_plot_rope
 			title <= fact_title @ \Fact
 			series <= fact *
@@ -18,31 +20,35 @@ $mol_chart_demo_simple $mol_chart
 				february 10
 				march 30
 
-$mol_chart_demo_styles $mol_list rows /
-	<= Chart $mol_chart
-		graphs /
-			<= Receipts $mol_plot_bar
-				title <= receipts_title @ \Bars 1
-				series <= series_2 /
-			<= Receipts_confirmed $mol_plot_bar
-				title <= receipts_confirmed_title @ \Bars 2
-				series <= series_3 /
-			<= Ruler_vert $mol_plot_ruler_vert
-			<= Ruler_hor $mol_plot_ruler_hor
-				series <= series_1 /
-			<= Maximum $mol_plot_dot
-				title <= maximum_title @ \Dots
-				series <= series_1 /
-			<= Waste $mol_plot_line
-				type \dashed
-				title <= waste_title @ \Dashed line
-				series <= series_4 /
-			<= Purchases $mol_plot_rope
-				title <= purchases_title @ \Line with dots
-				series <= series_5 /
-			<= Taxes $mol_plot_rope
-				type \dashed
-				title <= taxes_title @ \Dashed line with dots
-				series <= series_6 /
-	<= Count $mol_number
-		value?val <=> count?val 15
+$mol_chart_demo_styles $mol_chart
+	graphs /
+		<= Vert_ruler $mol_plot_ruler_vert
+			title <= vert_title @ \kJ
+		<= Hor_ruler $mol_plot_ruler_hor
+			title <= hor_title @ \Day
+			series <= series_1 /
+		<= Receipts $mol_plot_bar
+			title <= receipts_title @ \Bars 1
+			series <= series_2 /
+		<= Receipts_confirmed $mol_plot_bar
+			title <= receipts_confirmed_title @ \Bars 2
+			series <= series_3 /
+		<= Maximum $mol_plot_dot
+			title <= maximum_title @ \Dots
+			series <= series_1 /
+		<= Waste $mol_plot_line
+			type \dashed
+			title <= waste_title @ \Dashed line
+			series <= series_4 /
+		<= Purchases $mol_plot_rope
+			title <= purchases_title @ \Line with dots
+			series <= series_5 /
+		<= Taxes $mol_plot_rope
+			type \dashed
+			title <= taxes_title @ \Dashed line with dots
+			series <= series_6 /
+	sub /
+		<= Plot -
+		<= Legend -
+		<= Count $mol_number
+			value?val <=> count?val 15

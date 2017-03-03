@@ -55,7 +55,7 @@ namespace $.$mol {
 		}
 		
 		color() {
-			return `hsl( ${ this.hue() } , 80% , 50% )`
+			return `hsl( ${ this.hue() } , 100% , 35% )`
 		}
 		
 	}

@@ -32,6 +32,26 @@ namespace $.$mol {
 			]
 		}
 		
+		@ $mol_mem()
+		dimensions_expanded() {
+			const dims = this.dimensions()
+			const size = this.size()
+			const gap = [ 0 , 0 ]
+			return [
+				[ dims[0][0] - size[0] * gap[0] , dims[0][1] - size[1] * gap[1] ] ,
+				[ dims[1][0] + size[0] * gap[0] , dims[1][1] + size[1] * gap[1] ] ,
+			]
+		}
+		
+		@ $mol_mem()
+		size_expaned() {
+			const dims = this.dimensions_expanded()
+			return [
+				( dims[1][0] - dims[0][0] ) || 1 ,
+				( dims[1][1] - dims[0][1] ) || 1 ,
+			]
+		}
+		
 		graph_hue( index : number ) {
 			return ( 360 + ( this.hue_base() + this.hue_shift() * index ) % 360 ) % 360
 		}
@@ -58,7 +78,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		scale() {
-			const size = this.size()
+			const size = this.size_expaned()
 			const real = this.size_real()
 			return [
 				+ ( real[0] - this.gap_left() - this.gap_right() ) / size[0] ,
@@ -68,7 +88,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		shift() {
-			const dims = this.dimensions()
+			const dims = this.dimensions_expanded()
 			const scale = this.scale()
 			return [
 				Math.round( this.gap_left() - dims[0][0] * scale[0] ) ,
@@ -83,7 +103,7 @@ namespace $.$mol {
 			graphs.forEach( ( graph , index ) => {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
-				graph.dimensions_full = ()=> this.dimensions()
+				graph.dimensions_expanded = ()=> this.dimensions_expanded()
 			} )
 			
 			return graphs

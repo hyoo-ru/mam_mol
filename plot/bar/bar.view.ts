@@ -14,7 +14,7 @@ namespace $.$mol {
 		}
 		
 		color() {
-			return `hsl( ${ this.hue() } , 80% , 70% )`
+			return `hsl( ${ this.hue() } , 70% , 85% )`
 		}
 		
 		@ $mol_mem()
@@ -31,6 +31,11 @@ namespace $.$mol {
 				if( point[0] > next[1][0] ) next[1][0] = point[0]
 				if( point[1] > next[1][1] ) next[1][1] = point[1]
 			}
+			
+			const gap = ( next[1][0] - next[0][0] ) / points.length || 0.00000001
+			
+			next[0][0] -= gap
+			next[1][0] += gap
 			
 			return next
 		}

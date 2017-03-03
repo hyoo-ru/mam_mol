@@ -7,7 +7,7 @@ namespace $.$mol {
 			return $mol_range_in({
 				length : this.count() ,
 				item( index ) {
-					return 4 + Math.sin( index )
+					return Math.sin( index / 2 ) * 2
 				}
 			}).valueOf() as number[]
 		}
@@ -19,7 +19,7 @@ namespace $.$mol {
 			return $mol_range_in({
 				length : this.count() ,
 				item( index ) {
-					return input[ index ] - Math.random() * 2
+					return input[ index ] * Math.random()
 				}
 			}).valueOf() as number[]
 		}
@@ -29,7 +29,8 @@ namespace $.$mol {
 			const input = this.output_series()
 			const prev = ( this['saturation_series()'] || [] ) as number[]
 			return input.map( ( val , i )=> {
-				return Math.max( val , ( val + 9 * ( prev[ i ] || 0 ) ) / 10 )
+				const next = ( val + 9 * ( prev[ i ] || 0 ) ) / 10
+				return ( Math.abs( next ) > Math.abs( val ) ) ? next : val
 			} )
 		}
 		

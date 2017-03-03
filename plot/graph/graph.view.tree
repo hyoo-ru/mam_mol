@@ -8,7 +8,7 @@ $mol_plot_graph $mol_svg_group
 	scale /
 		1
 		1
-	dimensions_full <= dimensions /
+	dimensions_expanded <= dimensions /
 		/
 		/
 	hue 0

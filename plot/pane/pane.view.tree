@@ -2,7 +2,7 @@ $mol_plot_pane $mol_svg_root
 	aspect \none
 	-
 	hue_base?val 140
-	hue_shift?val 39
+	hue_shift?val 111
 	-
 	gap 0
 	gap_hor <= gap -
