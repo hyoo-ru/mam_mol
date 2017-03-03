@@ -58,5 +58,9 @@ namespace $.$mol {
 			return `hsl( ${ this.hue() } , 100% , 35% )`
 		}
 		
+		front() {
+			return [ this ]
+		}
+		
 	}
 }

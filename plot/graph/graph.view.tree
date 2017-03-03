@@ -20,6 +20,9 @@ $mol_plot_graph $mol_svg_group
 		color <= color \black
 	-
 	Sample null
+	-
+	front /
+	back /
 
 $mol_plot_graph_sample $mol_view
 	attr *

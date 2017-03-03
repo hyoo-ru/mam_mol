@@ -19,7 +19,7 @@ $mol_plot_pane $mol_svg_root
 		1
 		1
 	-
-	sub <= graphs_colored <= graphs_positioned <= graphs /
+	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /
 	-
 	plugins /
 		<= Meter $mol_meter

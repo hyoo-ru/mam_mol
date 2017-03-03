@@ -109,6 +109,17 @@ namespace $.$mol {
 			return graphs
 		}
 		
+		@ $mol_mem()
+		graphs_sorted() {
+			const graphs = this.graphs_colored()
+			const sorted = [] as $mol_view[]
+			
+			for( let graph of graphs ) sorted.push( ...graph.back() )
+			for( let graph of graphs ) sorted.push( ...graph.front() )
+			
+			return sorted
+		}
+		
 	}
 
 }

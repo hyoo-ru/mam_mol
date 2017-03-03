@@ -10,5 +10,9 @@ namespace $.$mol {
 			return `M ${ points[0].join( ' ' ) } ${ main } V ${ shift[1] } H ${ points[0][0] }`
 		}
 		
+		back() {
+			return [ this ]
+		}
+		
 	}
 }

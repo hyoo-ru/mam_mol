@@ -19,5 +19,23 @@ namespace $.$mol {
 			return this.graphs().map( graph => graph.Sample() )
 		}
 		
+		back() {
+			const graphs = this.graphs_enriched()
+			const next = [] as $mol_view[]
+			
+			for( let graph of graphs ) next.push( ...graph.back() )
+			
+			return next
+		}
+		
+		front() {
+			const graphs = this.graphs_enriched()
+			const next = [] as $mol_view[]
+			
+			for( let graph of graphs ) next.push( ...graph.front() )
+			
+			return next
+		}
+		
 	}
 }
