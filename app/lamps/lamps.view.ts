@@ -9,14 +9,12 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		lamps() {
-			const filter = this.filter().toLowerCase().trim()
-			if( !filter ) return this.lamps_all()
+			const tags = this.filter_tags()
+			if( tags.length === 0 ) return this.lamps_all()
 			
-			const words = filter.split( /\s+/ )
-			
-			return this.lamps_all().filter( lamp => words.every( word => {
+			return this.lamps_all().filter( lamp => tags.every( tag => {
 				for( let field in lamp ) {
-					if( lamp[ field ].toLowerCase().match( word ) ) return true
+					if( lamp[ field ].toLowerCase().match( tag ) ) return true
 				}
 				return false
 			} ) )
@@ -48,6 +46,12 @@ namespace $.$mol {
 		
 		filter( next? : string ) {
 			return $mol_state_arg.value( 'filter' , next ) || ''
+		}
+		
+		filter_tags( next? : string[] ) {
+			const filter = this.filter( next && next.join( ' ' ) ).toLowerCase().trim()
+			const tags = filter.split( /\s+/ ).filter( tag => Boolean( tag ) )
+			return tags
 		}
 		
 		lamp_arg( id : string ) {
