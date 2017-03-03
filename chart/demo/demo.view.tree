@@ -43,7 +43,7 @@ $mol_chart_demo_styles $mol_chart
 			type \dashed
 			title <= waste_title @ \Waste
 			series <= series_4 /
-		<= Purchases_dots $mol_plot_group
+		<= Purchases $mol_plot_group
 			title <= purchases_title @ \Purchases
 			series <= series_5 /
 			graphs /
