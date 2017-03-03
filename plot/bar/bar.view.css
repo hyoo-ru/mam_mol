@@ -1,0 +1,12 @@
+[mol_plot_bar] {
+	stroke-linecap: butt;
+	stroke-width: 1rem;
+}
+
+[mol_plot_bar_sample] {
+	padding: .25rem;
+	margin: 0 .5rem;
+	min-height: 1rem;
+	align-self: stretch;
+	background: currentColor;
+}

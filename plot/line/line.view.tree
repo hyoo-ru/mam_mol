@@ -1,0 +1,9 @@
+$mol_plot_line $mol_plot_graph
+	color_fill \none
+	sub /
+		<= Curve $mol_svg_path
+			geometry <= curve \
+	-
+	Sample $mol_plot_graph_sample
+		color <= color -
+		type <= type -

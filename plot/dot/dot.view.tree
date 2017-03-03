@@ -1,0 +1,10 @@
+$mol_plot_dot $mol_plot_graph
+	sub <= marks /
+	-
+	Mark!id $mol_svg_circle
+		radius <= mark_radius \4px
+		pos <= mark_pos!id /
+			0
+			0
+	Sample $mol_plot_graph_sample
+		color <= color -

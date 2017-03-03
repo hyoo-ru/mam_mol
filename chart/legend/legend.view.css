@@ -1,0 +1,19 @@
+[mol_chart_legend] {
+	display: flex;
+	flex-wrap: wrap;
+	padding: .5rem;
+	margin: .5rem;
+	flex: 0 0 auto;
+}
+
+[mol_chart_legend_graph_legend] {
+	display: flex;
+	justify-content: flex-start;
+	flex: 1 1 8rem;
+	padding: .5rem;
+}
+
+[mol_chart_legend_graph_title] {
+	margin: 0 .25rem;
+	align-self: center;
+}

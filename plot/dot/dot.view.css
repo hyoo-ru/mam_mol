@@ -1,0 +1,13 @@
+[mol_plot_dot] {
+	stroke: none;
+	fill: currentColor;
+	stroke-width: 0;
+}
+
+[mol_plot_dot_sample] {
+	margin: 0 .5rem;
+	padding: .25rem;
+	border-radius: 1rem;
+	background: currentColor;
+	align-self: center;
+}

@@ -13,25 +13,27 @@ namespace $.$mol {
 			
 			if( _node.tagName === 'BODY' ) return _node
 			
-			this.defer_task()
+			new $mol_defer( ()=> this.update() )
 			
 			return _node
 		}
 		
 		defer_task() {
-			this._request_id = requestAnimationFrame( () => {
-				const elem = this.dom_node() as HTMLElement
-				const rect = elem.getBoundingClientRect()
-				
-				this.width( rect.width )
-				this.height( rect.height )
-				this.top( rect.top )
-				this.bottom( rect.bottom )
-				this.left( rect.left )
-				this.right( rect.right )
-				
-				this.defer_task()
-			} )
+			this._request_id = requestAnimationFrame( ()=> this.update() )
+		}
+	
+		update() {
+			const elem = this.dom_node() as HTMLElement
+			const rect = elem.getBoundingClientRect()
+			
+			this.width( Math.round( rect.width ) )
+			this.height( Math.round( rect.height ) )
+			this.top( rect.top )
+			this.bottom( rect.bottom )
+			this.left( rect.left )
+			this.right( rect.right )
+			
+			this.defer_task()
 		}
 		
 		destroyed( next?: boolean ) {
