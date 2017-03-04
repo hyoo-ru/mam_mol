@@ -15,6 +15,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Rationale](#rationale)
 - [Modules](#modules)
 - [Cool stuff](#cool-stuff)
+- [Donate](#donate)
 
 # Features
 
@@ -470,3 +471,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 * **[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)**
 * **[Sources visualization](http://veniversum.me/git-visualizer/?owner=eigenmethod&repo=mol)**
+
+# Donate
+
+* **[Shut up and take my money](http://yasobe.ru/na/mol)**
