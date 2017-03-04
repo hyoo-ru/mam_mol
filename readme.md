@@ -85,6 +85,12 @@ git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
 npm install && npm start
 ```
 
+**Setup your editor**
+
+- Use MAM directory as root of your project in editor
+- [Install plugins for *.tree files](https://github.com/nin-jin/tree.d#ide-support)
+- If your editor ignores .editorconfig use this preferences: TABs for indents, LF for line endings.
+
 **Create your application component**
 
 In examples we will use namespace `my` and application name `hello`, but you could use your own namespace and application name.
