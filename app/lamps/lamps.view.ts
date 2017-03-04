@@ -112,6 +112,25 @@ namespace $.$mol {
 			return this.lamp()[ 'matt' ] == 1
 		}
 		
+		ripple() {
+			return `${ this.lamp()[ 'flicker' ] }%`
+		}
+		
+		rating_cri() {
+			const cri = this.lamp()[ 'cri' ]
+			if( cri >= 90 ) return 5
+			if( cri >= 85 ) return 4.5
+			if( cri >= 80 ) return 4
+			if( cri >= 75 ) return 3.5
+			if( cri >= 70 ) return 3
+			if( cri >= 60 ) return 2
+			return 1
+		}
+		
+		rating() {
+			return Math.min( this.rating_cri() )
+		}
+		
 		slug( id : string ) {
 			const trans = {
 				'а' : 'a' ,

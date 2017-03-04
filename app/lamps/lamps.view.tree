@@ -25,20 +25,12 @@ $mol_app_lamps $mol_book
 			body /
 				<= Info $mol_row
 					sub /
-						<= Light $mol_row
+						<= Stat $mol_row
 							sub /
-								<= Temp $mol_labeler
-									title <= Temp_title @ \Temperature
+								<= Rating $mol_labeler
+									title <= rating_title @ \Rating
 									content /
-										<= temp \
-								<= Cri $mol_labeler
-									title <= cri_title @ \CRI
-									content /
-										<= cri \
-								<= Angle $mol_labeler
-									title <= angle_title @ \Angle
-									content /
-										<= angle \
+										<= rating 0
 						<= Body $mol_row
 							sub /
 								<= Type $mol_labeler
@@ -53,6 +45,24 @@ $mol_app_lamps $mol_book
 									title <= base_title @ \Base
 									content /
 										<= base \
+						<= Light $mol_row
+							sub /
+								<= Temp $mol_labeler
+									title <= Temp_title @ \Temperature
+									content /
+										<= temp \
+								<= Cri $mol_labeler
+									title <= cri_title @ \CRI
+									content /
+										<= cri \
+								<= Ripple $mol_labeler
+									title <= ripple_title @ \Ripple
+									content /
+										<= ripple \
+								<= Angle $mol_labeler
+									title <= angle_title @ \Angle
+									content /
+										<= angle \
 				<= Gallery $mol_row
 					sub /
 						<= Photo $mol_image
