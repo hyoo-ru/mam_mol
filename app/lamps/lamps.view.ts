@@ -44,10 +44,18 @@ namespace $.$mol {
 			return `${ row[ 'brand' ] } ${ row[ 'model' ] }`
 		}
 		
-		filter( next? : string ) {
-			return $mol_state_arg.value( 'filter' , next ) || ''
+		_filter_timer = 0
+		@ $mol_mem()
+		filter( next? : string , force? : $mol_atom_force ) : string {
+			if( next === void null ) return $mol_state_arg.value( 'filter' ) || ''
+			
+			$mol_state_arg.value( 'filter' , next )
+			
+			if( this._filter_timer ) clearTimeout( this._filter_timer )
+			this._filter_timer = setTimeout( ()=> { this.filter( void null , $mol_atom_force ) } , 500 )
 		}
 		
+		@ $mol_mem()
 		filter_tags( next? : string[] ) {
 			const filter = this.filter( next && next.join( ' ' ) ).toLowerCase().trim()
 			const tags = filter.split( /\s+/ ).filter( tag => Boolean( tag ) )
