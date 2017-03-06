@@ -26,12 +26,11 @@
 @keyframes mol_book_page_show {
 	from {
 		transform: translateX( 100% );
-		opacity: 0;
 	}
 }
 
 [mol_book] > * {
 	position: relative;
-	animation: mol_book_page_show ease-out .1s;
+	animation: mol_book_page_show ease-out .15s;
 	background: var(--mol_skin_card);
 }
