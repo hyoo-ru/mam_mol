@@ -215,7 +215,7 @@ namespace $ {
 			
 			for( let name in event ) {
 				let handle = event[ name ]
-				wrapped[ 'on' + name ] = event => {
+				wrapped[ name ] = event => {
 					$mol_atom_task( `${ this }.event()['${ name }']` , () => handle( event ) ).get()
 				}
 			}
