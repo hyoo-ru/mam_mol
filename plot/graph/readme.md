@@ -24,6 +24,6 @@ Sample for legend.
 
 ## Graph types
 
-- Simple: [line](line), [dots](dot), [fill](fill), [bar](bar)
-- Complex: [group](group)
-- Rulers: [vertical](ruler/vert), [horizontal](ruler/hor)
+- Simple: [line](../line), [dots](../dot), [fill](../fill), [bar](../bar)
+- Complex: [group](../group)
+- Rulers: [vertical](../ruler/vert), [horizontal](../ruler/hor)
