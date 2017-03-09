@@ -1,7 +1,7 @@
 $mol_app_todomvc $mol_scroll
 	sub /
 		<= Page $mol_list
-			sub /
+			rows /
 				<= Title $mol_view
 					minimal_height 142
 					sub /

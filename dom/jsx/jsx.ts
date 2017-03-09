@@ -122,12 +122,12 @@ namespace JSX {
 namespace $ {
 	
 	export function $mol_dom_jsx(
-		tagName : string ,
+		localName : string ,
 		props : $mol_dom_make_config ,
-		...childNodes : Array< Node | string | $mol_dom_make_config >
+		...childNodes : Array< Node | string >
 	) {
 		let config = {
-			tagName ,
+			localName ,
 			childNodes : [].concat.apply( [] , childNodes ) ,
 			...props
 		}

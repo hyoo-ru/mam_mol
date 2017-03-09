@@ -36,8 +36,9 @@ namespace $.$mol {
 		
 		event_scroll( next? : Event ) {
 			this.moving( true )
+			this.moving_task_stop()
 			new $mol_defer( ()=> {
-				const el = this.dom_node() as HTMLElement
+				const el = next.target as HTMLElement
 				this.scroll_top( Math.max( 0 , el.scrollTop ) )
 				this.scroll_left( Math.max( 0 , el.scrollLeft ) )
 				this.scroll_bottom( Math.max( 0 , el.scrollHeight - el.scrollTop - el.offsetHeight ) )
@@ -45,13 +46,16 @@ namespace $.$mol {
 			} )
 		}
 		
+		_moving_task_frame = 0
+		moving_task_stop() {
+			cancelAnimationFrame( this._moving_task_frame )
+			this._moving_task_frame = requestAnimationFrame( ()=> {
+				this.moving( false )
+			} )
+		}
+		
 		@ $mol_mem()
 		moving( next? : boolean ) {
-			if( next ) {
-				setTimeout( ()=> {
-					this.moving( false )
-				} )
-			}				
 			return next || false
 		}
 

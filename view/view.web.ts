@@ -11,9 +11,9 @@ namespace $ {
 		
 		for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
 			let view = (<any>$)[ nodes.item( i ).getAttribute( 'mol_view_root' ) ].Root( i )
-			view.dom_node( nodes.item( i ) )
+			$mol_view_dom.mount( view , nodes.item( i ) )
 			let win = new $mol_atom( `$mol_view.Root(${ i })` , ()=> {
-				view.dom_tree()
+				view.render()
 				$mol_dom_context.document.title = view.title()
 				return null
 			} )

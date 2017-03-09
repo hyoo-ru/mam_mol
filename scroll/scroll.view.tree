@@ -5,5 +5,3 @@ $mol_scroll $mol_view
 		scrollLeft <= scroll_left?val 0
 	event *
 		scroll?event <=> event_scroll?event null
-		overflow?event <=> event_scroll?event null
-		underflow?event <=> event_scroll?event null
