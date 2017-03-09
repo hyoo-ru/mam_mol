@@ -434,6 +434,20 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_attach](attach)** - preview list and attach button
 * **[$mol_cost](cost)** - prints currency values
 
+## Charts
+
+* **[$mol_chart](chart)** - Plot pane with legend
+* **[$mol_chart_legend](chart/legend)** - Simple legend for charts
+* **[$mol_plot_pane](plot/pane)** - Pane for multiple graphs
+* **[$mol_plot_graph](plot/graph)** - Plot graph base class
+* **[$mol_plot_bar](plot/bar)** - Bar graph
+* **[$mol_plot_line](plot/line)** - Linear graph
+* **[$mol_plot_dot](plot/dot)** - Dots graph
+* **[$mol_plot_fill](plot/fil)** - Filling graph
+* **[$mol_plot_group](plot/group)** - Group of graph as single graph
+* **[$mol_plot_ruler_vert](plot/ruler/vert)** - Verical ruler
+* **[$mol_plot_ruler_hor](plot/ruler/hor)** - Horizontal ruler
+
 ## Data formats
 
 * **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d) (`view.tree` language descripted at [$mol_view](view))
