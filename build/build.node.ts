@@ -316,7 +316,7 @@ namespace $ {
 			
 			for( let repo of mapping.select( 'pack' , name , 'git' ).sub ) {
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
-				pack.stat( null )
+				pack.stat( void null , $mol_atom_force )
 				return true
 			}
 			
