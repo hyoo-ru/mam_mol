@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_state_arg< Value > extends $mol_object {
 		
 		@ $mol_mem()
-		static href( next? : string ) {
+		static href( next? : string , force? : $mol_atom_force ) {
 			if( next ) history.replaceState( history.state , $mol_dom_context.document.title , `${ next }` )
 			return window.location.search + window.location.hash
 		}
@@ -70,6 +70,6 @@ namespace $ {
 		
 	}
 	
-	window.addEventListener( 'hashchange' , event => $mol_state_arg.href( null ) )
+	window.addEventListener( 'hashchange' , event => $mol_state_arg.href( void null , $mol_atom_force ) )
 	
 }
