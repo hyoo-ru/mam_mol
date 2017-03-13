@@ -30,7 +30,7 @@ namespace $ {
 				node , {
 					id : view.toString() ,
 					attributes : view.attr_static() ,
-					events : view.event_wrapped() ,
+					events : view.event() ,
 				}
 			)
 			
@@ -39,7 +39,7 @@ namespace $ {
 				$mol_dom_render(
 					node , {
 						attributes : plugin.attr_static() ,
-						events : plugin.event_wrapped() ,
+						events : plugin.event() ,
 					}
 				)
 			}
