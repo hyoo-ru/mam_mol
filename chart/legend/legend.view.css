@@ -3,7 +3,7 @@
 	flex-wrap: wrap;
 	padding: .5rem;
 	margin: .5rem;
-	flex: 0 0 auto;
+	flex: 0 1 auto;
 }
 
 [mol_chart_legend_graph_legend] {
