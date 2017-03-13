@@ -30,7 +30,7 @@ class $mol_http_resource extends $mol_object {
 	
 	@ $mol_prop()
 	uploader( ) {
-		var body = this.jsonNext()
+		var body = this.dataNext()
 		if( body === void 0 ) return null
 		
 		return this.request( 'put' ).setup( obj => {
@@ -46,22 +46,31 @@ class $mol_http_resource extends $mol_object {
 	}
 	
 	@ $mol_prop()
-	json( ...diff : any[] ) {
+	text( ...diff : any[] ) {
 		if( diff[0] === void 0 ) {
-			return this.downloader( ...diff ).json()
+			return this.downloader( ...diff ).text()
 		} else {
-			this.jsonNext( diff[0] )
+			this.dataNext( diff[0] )
 		}
 	}
 	
 	@ $mol_prop()
-	jsonNext( ...diff : any[] ) {
+	json( ...diff : any[] ) {
+		if( diff[0] === void 0 ) {
+			return this.downloader( ...diff ).json()
+		} else {
+			this.dataNext( diff[0] )
+		}
+	}
+	
+	@ $mol_prop()
+	dataNext( ...diff : any[] ) {
 		return diff[0]
 	}
 	
 	refresh() {
 		this.downloader( void 0 )
-		this.jsonNext( void 0 , void 0 )
+		this.dataNext( void 0 , void 0 )
 	}
 	
 }
