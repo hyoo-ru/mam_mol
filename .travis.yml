@@ -18,3 +18,5 @@ deploy:
   local_dir: mol
   on:
     branch: master
+notifications:
+  slack: mam-mol:Z7vokFhXaSrMlPXzq6L93bUj
