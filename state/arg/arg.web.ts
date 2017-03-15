@@ -42,9 +42,7 @@ namespace $ {
 				chunks.push( [ key ].concat( next[ key ] ).map( encodeURIComponent ).join( '=' ) )
 			}
 			
-			const hash = chunks.join( '#' )
-			
-			return hash ? '#' + hash + '#' : '#'
+			return '#' + chunks.join( '/' )
 		}
 		
 		constructor( public prefix = '' ) {
