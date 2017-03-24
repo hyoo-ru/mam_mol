@@ -18,7 +18,7 @@ Returns patch that will be applied to page url.
 		<= close_title @ \Close demo
 ```
 
-**`uri()`**
+**`uri() : string`**
 
 Returns new url.
 
@@ -27,5 +27,16 @@ Returns new url.
 	uri \http://example.org
 	sub /
 		\example.org
+```
+
+**`hint() : string`**
+
+Returns hint that displays on hover.
+
+```
+<= Example $mol_link
+	uri \http://example.org
+	title \example.org
+	hint \Open external link
 ```
 
