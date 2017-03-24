@@ -9,6 +9,7 @@
 	max-height: 100%;
 	box-sizing: border-box;
 	box-shadow: 0 0 0 1px var( --mol_skin_light_line );
+	overflow: hidden;
 }
 
 [mol_page_head] {
