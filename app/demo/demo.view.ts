@@ -104,7 +104,9 @@ namespace $.$mol {
 		names_demo() {
 			const selected = this.selected()
 			const all = this.names_demo_all()
+			
 			const root = this.nav_hierarchy()[ selected ]
+			if( !root ) return []
 
 			const names : string[] = []
 			const collect = ( node : typeof root )=> {
