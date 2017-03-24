@@ -54,17 +54,51 @@ module $ {
 			
 		} ,
 		
-		//'error handling'() {
-		//	
-		//	let source = new $mol_atom< number >( ( next? : number )=> {
-		//		throw new Error( 'Test error' )
-		//	} )
-		//	let middle = new $mol_atom( ()=> source.get() + 1 )
-		//	let target = new $mol_atom( ()=> middle.get() + 1 )
-		//	
-		//	$mol_assert_fail( ()=> target.get().valueOf() )
-		//	
-		//} ,
+		'Right reactive change of source'() {
+
+			let targetValue : number
+			
+			let counter = new $mol_atom<number>( 'counter' , next => {
+				new $mol_defer( ()=> {
+					counter.push( next || 1 )
+				} )
+				throw new $mol_atom_wait
+			} )
+			
+			let slave = new $mol_atom<number>( 'slave' , next => counter.get() )
+			slave.actualize()
+			
+			let changed = false
+			
+			$mol_atom_task( 'task' , () => {
+				let next = counter.get() + 1
+				$mol_atom_task( 'task' , ()=> {
+					counter.set( next ).valueOf()
+					changed = true
+				})
+			} )
+			
+			$mol_defer.run()
+			
+			$mol_assert_equal( counter.get() , 2 )
+			$mol_assert_ok( changed )
+			
+			slave.destroyed( true )
+		} ,
+		
+		'error handling'() {
+
+			let source = new $mol_atom< number >( 'source' , ( next? : number )=> {
+				const error = new Error( 'Test error' )
+				error['$mol_atom_catched'] = true
+				throw error
+			} )
+			let middle = new $mol_atom( 'middle' , ()=> source.get() + 1 )
+			let target = new $mol_atom( 'target' , ()=> middle.get() + 1 )
+
+			$mol_assert_fail( ()=> target.get().valueOf() )
+
+		} ,
 		
 	})
 	
