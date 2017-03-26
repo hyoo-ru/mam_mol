@@ -2,12 +2,15 @@
 
 JSX adapter for [$mol_dom_make](../make), that makes DOM tree. If global unique id is provided, uses already exits element with this id in DOM.
 
+## Interface
+
+```
 $mol_dom_jsx(
 	localName : string ,
 	props : $mol_dom_make_config ,
 	...childNodes : Array< Node | string >
 ) : Element
-
+```
 
 ## Usage example
 
