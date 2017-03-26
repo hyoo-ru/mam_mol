@@ -5,11 +5,7 @@ JSX adapter for [$mol_dom_make](../make), that makes DOM tree. If global unique 
 ## Interface
 
 ```
-$mol_dom_jsx(
-	localName : string ,
-	props : $mol_dom_make_config ,
-	...childNodes : Array< Node | string >
-) : Element
+( localName : string , props : $mol_dom_make_config , ...childNodes : Array< Node | string > ) => Element
 ```
 
 ## Usage example
