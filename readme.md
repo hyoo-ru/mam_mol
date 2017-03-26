@@ -77,6 +77,8 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Quick start
 
+[Video of this precess](https://www.youtube.com/embed/PyK3if5sgN0)
+
 **Create MAM project**
 
 Easy way is checkout this [preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
