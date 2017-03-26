@@ -1,6 +1,6 @@
 # $mol_dom_jsx
 
-JSX adapter for [$mol_dom_make](../make), that makes DOM tree. If global unique id is provided, uses already exits element with this id in DOM.
+JSX adapter for [$mol_dom_make](../make), that makes DOM tree. If global unique id is provided, uses already exists element with this id in DOM.
 
 ## Interface
 
