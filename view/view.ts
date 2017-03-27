@@ -206,6 +206,10 @@ namespace $ {
 			return {}
 		}
 		
+		event_sync() : { [ key : string ] : ( event : Event )=> void } {
+			return {}
+		}
+		
 		'event_wrapped()' = null as { [ name : string ] : ( event? : Event )=> any }
 		event_wrapped() {
 			if( this[ 'event_wrapped()' ] ) return this[ 'event_wrapped()' ]

@@ -31,6 +31,7 @@ namespace $ {
 					id : view.toString() ,
 					attributes : view.attr_static() ,
 					events : view.event() ,
+					events_sync : view.event_sync() ,
 				}
 			)
 			
@@ -40,6 +41,7 @@ namespace $ {
 					node , {
 						attributes : plugin.attr_static() ,
 						events : plugin.event() ,
+						events_sync : plugin.event_sync() ,
 					}
 				)
 			}

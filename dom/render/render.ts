@@ -5,6 +5,7 @@ namespace $ {
 		attributes? : { [ key : string ] : string|number|boolean }
 		style? : { [ key : string ] : string|number }
 		events? : { [ key : string ] : ( event : Event )=> any }
+		events_sync? : { [ key : string ] : ( event : Event )=> any }
 		[ key : string ] : any
 	}
 	
@@ -39,17 +40,22 @@ namespace $ {
 					break
 				}
 				
+				case 'events_sync' : {
+					$mol_dom_render_event_sync( el , config.events_sync )
+					break
+				}
+				
 				default : {
 					if( el[ key ] !== config[ key ] ) {
 						el[ key ] = config[ key ]
 						if( el[ key ] !== config[ key ] ) {
 							const setter = ()=> {
-								el.removeEventListener( 'DOMNodeInsertedIntoDocument' , setter , true )
+								el.removeEventListener( 'DOMNodeInsertedIntoDocument' , setter , { passive : true } as any )
 								new $mol_defer( ()=> {
 									el[ key ] = config[ key ]
 								} )
 							}
-							el.addEventListener( 'DOMNodeInsertedIntoDocument' , setter , true )
+							el.addEventListener( 'DOMNodeInsertedIntoDocument' , setter , { passive : true } as any )
 						}
 					}
 				}
@@ -147,6 +153,15 @@ namespace $ {
 	}
 	
 	export function $mol_dom_render_event(
+		el : Element ,
+		events? : { [ key : string ] : ( event : Event )=> any }
+	) {
+		for( let name in events ) {
+			el.addEventListener( name , events[ name ] , { passive : true } as any )
+		}
+	}
+	
+	export function $mol_dom_render_event_sync(
 		el : Element ,
 		events? : { [ key : string ] : ( event : Event )=> any }
 	) {
