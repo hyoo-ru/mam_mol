@@ -1,12 +1,11 @@
 namespace $.$mol {
 	export class $mol_plot_dot extends $.$mol_plot_dot {
 		
-		marks() {
-			return this.points().map( ( _ , index ) => this.Mark( index ) )
-		}
-		
-		mark_pos( index : number ) {
-			return this.points()[ index ]
+		curve() {
+			const points = this.points()
+			if( points.length < 1 ) return ''
+			
+			return points.map( point => 'M ' + point.join( ' ' ) + ' l 0 0' ).join( ' ' )
 		}
 		
 	}
