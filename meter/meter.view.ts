@@ -7,7 +7,7 @@ namespace $.$mol {
 			const node = super.render()
 
 			if( node.tagName !== 'BODY' ) {
-				this._request_id = requestAnimationFrame( ()=> this.update() )
+				this.defer_task()
 			}
 
 			return node
