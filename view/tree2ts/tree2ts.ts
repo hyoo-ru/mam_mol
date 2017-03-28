@@ -110,7 +110,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 							var ns = needSet
 							var v = getValue( opt.sub[0] )
 							var arg = key[2] ? ` ( ${ key[2] }? : any )=> ` : ''
-							opts.push( '\t\t\t"' + key[1] + '" : ' + arg + ' <any> ' + v + ' ,\n' )
+							opts.push( '\t\t\t"' + key[1] + '" : ' + arg + ' ' + v + ' ,\n' )
 							needSet = ns
 						} )
 						if( !isOverride ) return '({\n' + opts.join( '' ) + '\t\t})'
@@ -189,7 +189,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 		} }
 		
 		var body = Object.keys( members ).map( function( name ) {
-			return members[ name ] || '\t' + name +'() { return <any>null }\n\t}\n'
+			return members[ name ] || '\t' + name +'() { return <any> null }\n\t}\n'
 		}).join( '' )
 		
 		var classes = 'namespace $ { export class ' + def.type + ' extends ' + parent.type + ' {\n\n' + body + '} }\n'
