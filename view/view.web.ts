@@ -10,13 +10,24 @@ namespace $ {
 		const nodes = $mol_dom_context.document.querySelectorAll( '[mol_view_root]' )
 		
 		for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
-			let view = (<any>$)[ nodes.item( i ).getAttribute( 'mol_view_root' ) ].Root( i )
+			const name = nodes.item( i ).getAttribute( 'mol_view_root' )
+			
+			const View = $[ name ]
+			if( !View ) {
+				console.error( `Can not attach view. Class not found: ${ name }` )
+				continue
+			}
+			
+			const view = View.Root( i )
+			
 			$mol_view_dom.mount( view , nodes.item( i ) )
+			
 			let win = new $mol_atom( `$mol_view.Root(${ i })` , ()=> {
 				view.render()
 				$mol_dom_context.document.title = view.title()
 				return null
 			} )
+			
 			new $mol_defer( ()=> win.get() )
 		}
 		
