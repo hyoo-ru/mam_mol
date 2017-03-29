@@ -53,6 +53,8 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark)
 ([online](http://eigenmethod.github.io/mol/app/bench/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
 * [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
+* [chart/rope](app/bench/chart/rope) - Line charts comparison ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F#sort=fill#))
+* [chart/bar](app/bench/chart/bar) - Bar charts comparison ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Fbar%2F#sort=fill#))
 
 # Articles
 
