@@ -1,0 +1,13 @@
+$mol_date_demo $mol_view
+	sub /
+		<= Data $mol_date
+			value?val <=> date?val \
+		<= Str $mol_list
+			sub /
+				<= date -
+
+
+$mol_date_demo_simple $mol_view
+	sub /
+		<= Data $mol_date
+			value?val <=> date?val \
