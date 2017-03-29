@@ -174,7 +174,11 @@ namespace $.$mol {
 			const key = `row_expanded(${ JSON.stringify( row_id ) })`
 			const next2 = $mol_state_session.value( key , next )
 			
-			return ( next2 == null ) ? false : next2
+			return ( next2 == null ) ? this.row_expanded_default( row_id ) : next2
+		}
+		
+		row_expanded_default( row_id : string[] ) {
+			return row_id.length < 3
 		}
 		
 		cell_expanded( id : { row : string[] } , next? : boolean ) {

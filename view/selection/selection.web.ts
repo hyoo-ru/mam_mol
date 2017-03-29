@@ -1,13 +1,10 @@
 namespace $ {
 	
 	$mol_dom_context.document.addEventListener( 'selectionchange' , event => {
-		$mol_view_selection.position( void 0 )
+		$mol_view_selection.position( void null , $mol_atom_force )
 	} )
 	
-	$mol_dom_context.document.addEventListener( 'focusin' , $mol_view_selection.onFocus )
-	$mol_dom_context.document.addEventListener( 'focus' , $mol_view_selection.onFocus , true ) // FF
-	
-	$mol_dom_context.document.addEventListener( 'focusout' , $mol_view_selection.onBlur )
-	$mol_dom_context.document.addEventListener( 'blur' , $mol_view_selection.onBlur , true ) // FF
+	$mol_dom_context.document.addEventListener( 'focus' , event => setTimeout( ()=> $mol_view_selection.onFocus( event ) ) , true )
+	$mol_dom_context.document.addEventListener( 'blur' , event => setTimeout( ()=> $mol_view_selection.onBlur( event ) ) , true )
 	
 }

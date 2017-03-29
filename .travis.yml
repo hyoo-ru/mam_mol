@@ -8,5 +8,15 @@ install:
   - git pull origin master
   - npm install
 script:
-  - npm start mol
+  - npm start mol mol/app/hello mol/app/supplies mol/app/habhub mol/app/todomvc mol/perf/render mol/perf/uibench mol/app/bench mol/app/bench/list/mol mol/app/bench/list/tsx mol/app/bench/chart/rope/mol mol/app/bench/chart/bar/mol mol/app/taxon mol/app/taxon/demo mol/app/users mol/mem mol/app/quine mol/app/lamps mol/app/files
   - node mol/-/node.test.js mol
+  - rm mol/.gitignore
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: mol
+  on:
+    branch: master
+notifications:
+  slack: mam-mol:Z7vokFhXaSrMlPXzq6L93bUj

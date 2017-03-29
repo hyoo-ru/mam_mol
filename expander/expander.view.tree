@@ -1,7 +1,9 @@
 $mol_expander $mol_list
 	rows /
-		<= Labeler $mol_check_expand
+		<= Label $mol_check_expand
+			minimal_height 40
 			checked?val <=> expanded?val false
 			label <= label /
+				<= title -
 		<= Content $mol_view
 			sub <= content /

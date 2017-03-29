@@ -13,5 +13,5 @@ $mol_link_demo $mol_row sub /
 			<= labelBlue @ \Blue
 	<= linkExternal $mol_link
 		uri \http://example.org
-		sub /
-			\example.org
+		title \example.org
+		hint \external link

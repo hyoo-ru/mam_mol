@@ -1,4 +1,4 @@
-# $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
+# $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol) [![eigenmethod.github.io](https://img.shields.io/website-up-down-green-red/http/mol.js.org.svg?label=mol.js.org)](http://eigenmethod.github.io/mol/) [![Maintanance status](https://img.shields.io/maintenance/yes/2017.svg)](https://github.com/eigenmethod/mol/graphs/contributors)
 
 Reactive micro-modular ui framework. Very simple, but very powerful!
 
@@ -15,6 +15,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Rationale](#rationale)
 - [Modules](#modules)
 - [Cool stuff](#cool-stuff)
+- [Donate](#donate)
 
 # Features
 
@@ -52,6 +53,8 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark)
 ([online](http://eigenmethod.github.io/mol/app/bench/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
 * [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
+* [Line charts comparison](app/bench/chart/rope) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
+* [Bar charts comparison](app/bench/chart/bar) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
 
 # Articles
 
@@ -76,6 +79,8 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Quick start
 
+[Video of this precess](https://www.youtube.com/embed/PyK3if5sgN0)
+
 **Create MAM project**
 
 Easy way is checkout this [preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
@@ -84,6 +89,12 @@ Easy way is checkout this [preconfigured MAM repository](http://github.com/eigen
 git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
 npm install && npm start
 ```
+
+**Setup your editor**
+
+- Use MAM directory as root of your project in editor
+- [Install plugins for *.tree files](https://github.com/nin-jin/tree.d#ide-support)
+- If your editor ignores .editorconfig use this preferences: TABs for indents, LF for line endings.
 
 **Create your application component**
 
@@ -427,6 +438,20 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_attach](attach)** - preview list and attach button
 * **[$mol_cost](cost)** - prints currency values
 
+## Charts
+
+* **[$mol_chart](chart)** - Plot pane with legend
+* **[$mol_chart_legend](chart/legend)** - Simple legend for charts
+* **[$mol_plot_pane](plot/pane)** - Pane for multiple graphs
+* **[$mol_plot_graph](plot/graph)** - Plot graph base class
+* **[$mol_plot_bar](plot/bar)** - Bar graph
+* **[$mol_plot_line](plot/line)** - Linear graph
+* **[$mol_plot_dot](plot/dot)** - Dots graph
+* **[$mol_plot_fill](plot/fil)** - Filling graph
+* **[$mol_plot_group](plot/group)** - Group of graph as single graph
+* **[$mol_plot_ruler_vert](plot/ruler/vert)** - Verical ruler
+* **[$mol_plot_ruler_hor](plot/ruler/hor)** - Horizontal ruler
+
 ## Data formats
 
 * **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d) (`view.tree` language descripted at [$mol_view](view))
@@ -464,3 +489,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 * **[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)**
 * **[Sources visualization](http://veniversum.me/git-visualizer/?owner=eigenmethod&repo=mol)**
+
+# Donate
+
+* **[Shut up and take my money](http://yasobe.ru/na/mol)**

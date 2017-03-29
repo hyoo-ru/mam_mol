@@ -3,37 +3,32 @@ namespace $.$mol {
 		
 		_request_id = 0
 		
-		dom_node( node?: Element ) {
-			if( node === void 0 ) {
-				const cache_node = this[ 'dom_node()' ]
-				if( cache_node ) return cache_node
-			} 
-			
-			const _node = super.dom_node( node )
-			
-			if( _node.tagName === 'BODY' ) return _node
-			
-			this.defer_task()
-			
-			return _node
+		render() {
+			const node = super.render()
+
+			if( node.tagName !== 'BODY' ) {
+				this.defer_task()
+			}
+
+			return node
 		}
 		
 		defer_task() {
-			this._request_id = requestAnimationFrame( () => {
-				const elem = this.dom_node() as HTMLElement
-				const rect = elem.getBoundingClientRect()
-				
-				this.width( rect.width )
-				this.height( rect.height )
-				this.top( rect.top )
-				this.bottom( rect.bottom )
-				this.left( rect.left )
-				this.right( rect.right )
-				
-				this.defer_task()
-			} )
+			this._request_id = requestAnimationFrame( ()=> this.update() )
 		}
-		
+	
+		update() {
+			const elem = this.render()
+			const rect = elem.getBoundingClientRect()
+
+			this.width( Math.round( rect.width ) )
+			this.height( Math.round( rect.height ) )
+			this.top( rect.top )
+			this.bottom( rect.bottom )
+			this.left( rect.left )
+			this.right( rect.right )
+		}
+
 		destroyed( next?: boolean ) {
 			if( next ) cancelAnimationFrame( this._request_id )
 			return super.destroyed( next )

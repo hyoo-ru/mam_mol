@@ -1,0 +1,10 @@
+[mol_plot_group_sample] {
+	display: flex;
+	position: relative;
+	min-height: 1rem;
+	min-width: 1.5rem;
+}
+
+[mol_plot_group_sample] > * {
+	position: absolute;
+}

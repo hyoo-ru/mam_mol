@@ -36,7 +36,7 @@ namespace $ {
 			.forEach(
 				child => {
 					const name = child.name()
-					if( !/^[a-z]/.test( name ) ) return false
+					if( !/^[a-z]/i.test( name ) ) return false
 					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
 					
 					if( /(view\.tree)$/.test( name ) ) {
@@ -262,13 +262,15 @@ namespace $ {
 		@ $mol_mem_key()
 		srcDeps( path : string ) {
 			var src = $mol_file.absolute( path )
+			
 			var ext = src.ext()
+			if( !ext ) return {}
 			
 			var dependencies : ( src : $mol_file ) => { [ path : string ] : number } = null
 			while( !dependencies ) {
 				dependencies = this.Class().dependors[ ext ]
 				if( dependencies ) break
-				var extShort = ext.replace( /^\w+\./ , '' )
+				var extShort = ext.replace( /^[^.]*\./ , '' )
 				if( ext === extShort ) break
 				ext = extShort
 			}
@@ -316,7 +318,7 @@ namespace $ {
 			
 			for( let repo of mapping.select( 'pack' , name , 'git' ).sub ) {
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
-				pack.stat( null )
+				pack.stat( void null , $mol_atom_force )
 				return true
 			}
 			
@@ -800,6 +802,24 @@ namespace $ {
 				)
 			}
 		)
+		
+		return depends
+	}
+	
+	$mol_build.dependors[ 'meta.tree' ] = source => {
+		const depends : { [ index : string ] : number } = {}
+		
+		const tree = $mol_tree.fromString( source.content() )
+		
+		tree.select( 'require' ).sub.forEach( leaf => {
+			depends[ leaf.value ] = 0
+		} )
+		
+		tree.select( 'include' ).sub.forEach( leaf => {
+			depends[ leaf.toString() ] = Number.NEGATIVE_INFINITY
+		} )
+		
+		console.log( source.path() , depends )
 		
 		return depends
 	}

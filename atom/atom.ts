@@ -48,14 +48,10 @@ namespace $ {
 				host[ this.field ] = void null
 				host[ this.field + '@' ] = void null
 				
-				this[ 'destroyed()' ] = true
-				this.log( [ '.destroyed()' , true , 'atom' ] )
 				this.status = $mol_atom_status.obsolete
-				
-				return true
-			} else {
-				return this[ 'destroyed()' ]
 			}
+			
+			return super.destroyed( next )
 		}
 		
 		unlink() {
@@ -64,7 +60,7 @@ namespace $ {
 		}
 		
 		toString() {
-			return `${ this.host }.${ this.field }`
+			return `${ this.host }.${ this.field }@`
 		}
 		
 		get( force? : $mol_atom_force ) {

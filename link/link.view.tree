@@ -3,5 +3,7 @@ $mol_link $mol_view
 	dom_name \a
 	attr *
 		href <= uri \
+		title <= hint \
 		mol_link_current <= current false
+	sub / <= title -
 	<= arg *

@@ -10,12 +10,12 @@
 }
 
 [mol_grid_table] > * {
-	display: table-row !important;
+	display: table-row;
 	transition: none;
 }
 
 [mol_grid_table] > * > * {
-	display: table-cell !important;
+	display: table-cell;
 }
 
 [mol_grid_table] > * > * {
