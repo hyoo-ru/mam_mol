@@ -9,13 +9,22 @@
 		padding: 0;
 		width: 100%;
 		height: 100%;
-		display: flex;
 		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
 	}
-	
+
+	@keyframes measure {
+		from {
+			outline : 1px solid black;
+		}
+		to {
+			outline : 1px solid white;
+		}
+	}
+
 	#sandbox {
 		border: none;
-		flex: 1 0 50%;
+		width: 100%;
+		height: 100%;
 	}
 </style>
 
@@ -83,15 +92,18 @@
 			} ,
 		} )
 	}
-	
+
 	function start( sample ) {
 		var sandbox = document.getElementById( 'sandbox' )
-		var start = Date.now()
-		sandbox.src = sample + '/'
-		sandbox.onload = function() {
-			sandbox.onload = null
-			done( Date.now() - start + ' ms' )
-		}
+		sandbox.src = 'about:blank'
+		setTimeout( function() {
+			var start = Date.now()
+			sandbox.src = sample + '/'
+			sandbox.onload = function() {
+				done( Date.now() - start + ' ms' )
+				sandbox.onload = null
+			}
+		} )
 	}
 	
 	function render( sample ) {
@@ -101,20 +113,23 @@
 	function restyle( sample ) {
 		measure( [ 'restyle' , { sample : sample , color : 'steelblue' , dashed : true } ] , '*' )
 	}
-	
+
 	function measure( message ) {
 		var sandbox = document.getElementById( 'sandbox' )
 		requestAnimationFrame( function() { // begin at next frame start for measure stability reason
-			var command = JSON.stringify( message )
-			console.timeStamp( 'begin ' + command )
+			console.timeStamp( 'begin ' + message[0] )
 			sandbox.contentWindow.postMessage( message , '*' )
+			sandbox.addEventListener( 'animationend' , end )
+			requestAnimationFrame( function(){ setTimeout( function() { // wait for message processed
+				sandbox.style.animation = 'measure .001s'
+			} ) } )
 			var start = Date.now()
-			requestAnimationFrame( function() { // wait for message processed
-				setTimeout( function() { // wait for painting completed
-					done( Date.now() - start + ' ms' )
-					console.timeStamp( 'end ' + command )
-				} )
-			} )
+			function end() { // wait for painting ends
+				done( Date.now() - start + ' ms' )
+				console.timeStamp( 'end ' + message[0] )
+				sandbox.style.animation = ''
+				sandbox.removeEventListener( 'animationend' , end )
+			}
 		} )
 	}
 
