@@ -5,7 +5,7 @@ namespace $.$mol {
 			const points = this.points()
 			if( points.length < 1 ) return ''
 			
-			return points.map( point => 'M ' + point.join( ' ' ) + ' l 0 0' ).join( ' ' )
+			return points.map( point => 'M ' + point.join( ' ' ) + ' v 0' ).join( ' ' )
 		}
 		
 	}
