@@ -206,7 +206,7 @@ namespace $ {
 			return {}
 		}
 		
-		event_sync() : { [ key : string ] : ( event : Event )=> void } {
+		event_async() : { [ key : string ] : ( event : Event )=> void } {
 			return {}
 		}
 		

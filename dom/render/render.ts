@@ -5,7 +5,7 @@ namespace $ {
 		attributes? : { [ key : string ] : string|number|boolean }
 		style? : { [ key : string ] : string|number }
 		events? : { [ key : string ] : ( event : Event )=> any }
-		events_sync? : { [ key : string ] : ( event : Event )=> any }
+		events_async? : { [ key : string ] : ( event : Event )=> any }
 		[ key : string ] : any
 	}
 	
@@ -40,8 +40,8 @@ namespace $ {
 					break
 				}
 				
-				case 'events_sync' : {
-					$mol_dom_render_event_sync( el , config.events_sync )
+				case 'events_async' : {
+					$mol_dom_render_event_async( el , config.events_async )
 					break
 				}
 				
@@ -157,16 +157,16 @@ namespace $ {
 		events? : { [ key : string ] : ( event : Event )=> any }
 	) {
 		for( let name in events ) {
-			el.addEventListener( name , events[ name ] , { passive : true } as any )
+			el.addEventListener( name , events[ name ] )
 		}
 	}
 	
-	export function $mol_dom_render_event_sync(
+	export function $mol_dom_render_event_async(
 		el : Element ,
 		events? : { [ key : string ] : ( event : Event )=> any }
 	) {
 		for( let name in events ) {
-			el.addEventListener( name , events[ name ] )
+			el.addEventListener( name , events[ name ] , { passive : true } as any )
 		}
 	}
 	
