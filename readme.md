@@ -238,10 +238,11 @@ For example if you download **[base MAM-project](http://github.com/eigenmethod/m
 There are the full set of supports bundles:
 
 * `-/web.js` - JS for browser
+* `-/web.d.ts` - TypeScript definitions
 * `-/web.test.js` - JS with tests for a browser
 * `-/web.css` - CSS styles for a browser
-* `-/web.deps.json` - a map of dependencies modules for browser
-* `-/web.locale=en.json` - strings pulled from view.tree sources
+* `-/web.deps.json` - map of dependencies modules for browser
+* `-/web.locale=en.json` - strings pulled from ```*.view.tree``` and ```*.locale=en.json``` sources
 * `-/node.js` - JS for NodeJS
 * `-/node.test.js` - JS with tests for NodeJS
 * `-/node.deps.json` - a map of dependencies modules for NodeJS

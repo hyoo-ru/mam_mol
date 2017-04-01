@@ -3,6 +3,7 @@ $mol_number $mol_bar
 	precision_change <= precision 1
 	value?val null
 	event_async *
+		^
 		wheel?val <=> event_wheel?val null
 	sub /
 		<= Dec $mol_button

@@ -1,5 +1,6 @@
 $mol_portion_indicator $mol_view
 	style *
+		^
 		width <= widthStyle \0
 
 $mol_portion $mol_view

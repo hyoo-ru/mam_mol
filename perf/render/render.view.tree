@@ -19,8 +19,10 @@ $mol_perf_render $mol_view
 $mol_perf_render_row $mol_view
 	minimal_height 24
 	attr *
+		^
 		mol_perf_render_row_selected <= selected?val false
 	event *
+		^
 		click?val <=> event_toggle?val null
 	sub /
 		<= Bar $mol_view

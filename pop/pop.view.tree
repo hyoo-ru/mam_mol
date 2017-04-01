@@ -10,6 +10,8 @@ $mol_pop $mol_view
 $mol_pop_tip $mol_scroll
 	sub <= content /
 	style *
+		^
 		maxHeight <= height_max 9999
 	attr *
+		^
 		mol_pop_align <= align \

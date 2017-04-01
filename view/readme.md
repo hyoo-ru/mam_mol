@@ -139,12 +139,13 @@ namespace $ { export class $my_values extends $mol_view {
 } }
 ````
 
-Dictionary (correspondence keys to their values) could be declared through a node `*`, through which are set values of attributes to DOM-element:
+Dictionary (correspondence keys to their values) could be declared through a node `*` (you can use `^` to inherit pairs from superclass), through which are set values of attributes to DOM-element:
 
 ```tree
 $my_number $mol_view
 	dom_name \input
 	attr *
+		^
 		type \number
 		- attribute values must be a strings
 		min \0
@@ -174,6 +175,7 @@ We could set value in the same way for fields of a DOM-element:
 ```tree
 $my_scroll $mol_view
 	field *
+		^
 		scrollTop 0
 ```
 
@@ -194,6 +196,7 @@ And styles too:
 ```tree
 $my_rotate $mol_view
 	style *
+		^
 		transform \rotate( 180deg )
 ```
 
@@ -216,6 +219,7 @@ $my_hint $mol_view
 	hint \Default hint
 	text \Default text
 	field *
+		^
 		title <= hint -
 	sub /
 		<= text -
@@ -250,6 +254,7 @@ Often it is convenient to combine declaration of property and usage of this one.
 ```tree
 $my_hint $mol_view
 	field *
+		^
 		title <= hint \Default hint 
 	sub /
 		<= text \Default text
@@ -259,6 +264,7 @@ Reactions on DOM-events are required for two-way binding. For example, lets poin
 ```tree
 $my_remover $mol_view
 	event *
+		^
 		click?val <=> event_remove?val null 
 	sub /
 		\Remove
@@ -466,6 +472,20 @@ namespace $ { export class $my_tasks extends $mol_list {
 ```
 
 Here we declared the property `task_row`, which takes on input some key and returns an unique instance of `$mol_view` for every key, with overloaded property `sub`, which outputs appropriate `task_title` for every `task_row`, and in its turn `task_title` returns the content of property `default_title` independently of the key, which is equal to empty string initially. Further overloading any of these properties, we could change any aspect of component behavior.
+
+**All special chars:***
+
+- `-` - remarks, ignored by code generation
+- `$` - component name prefix
+- `/` - array
+- `*` - dictionary (string keys, any values)
+- `^` - return value of the same property from super class
+- `\` - raw string
+- `<=` - read only provide property from owner to sub component
+- `=>` - read only provide property from sub component to owner
+- `<=>` - fully replace sub component property by owner's one
+- `!` - property takes key as first argument
+- `?` - property can be changed by provide additional optional argument
 
 ## view.ts
 In addition to declarative description of component, next to it could be created a file of the same name with `view.ts` extension, where a behavior could be described. Using a special construction, it could be inherited from realization obtained of `view.tree` and it would be overloaded automatically by heir:  

@@ -33,6 +33,7 @@ $mol_app_report_rower $mol_view
 $mol_app_report_cell $mol_view
 	dom_name \td
 	attr *
+		^
 		colspan <= cols 1
 		rowspan <= rows 1
 	sub / <= content null
