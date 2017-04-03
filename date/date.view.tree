@@ -3,6 +3,6 @@ $mol_date $mol_view
 	attr *
 		type \date
 	field *
-		value?val <=> value?val \
+		value <= value?val \
 	event *
 		input?event <=> event_change?event null
