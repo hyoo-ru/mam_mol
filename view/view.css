@@ -2,6 +2,11 @@
 	transition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;
 	transition-duration: .1s;
 	-webkit-appearance: none;
+	word-break: break-word;
+}
+
+[mol_view] > [mol_view] {
+	word-break: inherit;
 }
 
 [mol_view_root] {
