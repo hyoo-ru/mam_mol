@@ -4,6 +4,7 @@
 
 [mol_app_habhub_menu_page] {
 	flex: 1 1000 400px;
+	width: 100%;
 }
 
 [mol_app_habhub_menu] {

@@ -59,6 +59,11 @@ namespace $.$mol {
 			return this.gist( this.gist_current_id() ).body
 		}
 		
+		details_scroll_top( next? : number ) {
+			const current = this.gist_current_id()
+			return $mol_state_session.value( `${ this }.details_scroll_top(${ current })` , next )
+		}
+		
 	}
 	
 }

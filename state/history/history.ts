@@ -4,7 +4,7 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		static value< Value >( key : string , next? : Value ) {
-			return $mol_state_session.value( `$mol_state_history.id(${this.id()}).${key}` , next )
+			return $mol_state_session.value( `$mol_state_history:id(${this.id()}):${key}` , next )
 		}
 		
 		prefix() { return '' }

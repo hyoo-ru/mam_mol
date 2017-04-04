@@ -5,7 +5,7 @@ $mol_app_habhub $mol_book
 			title <= title_default -
 		<= Menu_page $mol_page
 			minimal_width 400
-			title <= title_default @ \HabHub
+			title <= title_default \HabHub
 			body /
 				<= Status $mol_status
 					status <= gists /
@@ -19,6 +19,7 @@ $mol_app_habhub $mol_book
 					arg <= close_arg * gist null
 					sub /
 						<= Close_icon $mol_icon_cross
+			body_scroll_top?val <=> details_scroll_top?val 0
 			body /
 				<= Datails_text $mol_text
 					text <= gist_current_content \
