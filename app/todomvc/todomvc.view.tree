@@ -55,6 +55,7 @@ $mol_app_todomvc $mol_scroll
 $mol_app_todomvc_add $mol_string
 	hint @ \What needs to be done?
 	event *
+		^
 		keyup?event <=> event_press?event null
 	event_done?event null
 
@@ -71,4 +72,5 @@ $mol_app_todomvc_task_row $mol_view
 			sub / \✖
 			event_click?event <=> event_drop?event null
 	attr *
+		^
 		mol_app_todomvc_task_row_completed <= completed?val false

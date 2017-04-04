@@ -1,5 +1,6 @@
 $mol_check $mol_button
 	attr *
+		^
 		mol_check_checked <= checked?val false
 		aria-checked <= checked?val false
 		role \checkbox

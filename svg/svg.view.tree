@@ -5,6 +5,7 @@ $mol_svg $mol_view
 $mol_svg_root $mol_svg
 	dom_name \svg
 	attr *
+		^
 		viewBox <= view_box \0 0 100 100
 		preserveAspectRatio <= aspect \
 
@@ -17,6 +18,7 @@ $mol_svg_line $mol_svg
 		<= from /
 		<= to /
 	attr *
+		^
 		x1 <= from_x \
 		y1 <= from_y \
 		x2 <= to_x \
@@ -24,12 +26,15 @@ $mol_svg_line $mol_svg
 
 $mol_svg_path $mol_svg
 	dom_name \path
-	attr * d <= geometry \
+	attr *
+		^
+		d <= geometry \
 
 $mol_svg_circle $mol_svg
 	dom_name \circle
 	pos /
 	attr *
+		^
 		r <= radius \.5%
 		cx <= pos_x \
 		cy <= pos_y \
@@ -38,6 +43,7 @@ $mol_svg_text $mol_svg
 	dom_name \text
 	pos /
 	attr *
+		^
 		x <= pos_x \
 		y <= pos_y \
 		text-anchor <= align \middle

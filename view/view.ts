@@ -126,8 +126,8 @@ namespace $ {
 			return $mol_view_dom.node( this )
 		}
 		
+		@ $mol_deprecated( 'Use $mol_view::render instead.' )
 		dom_tree() {
-			console.warn( '$mol_view.dom_tree is deprecated by $mol_view.render' )
 			return this.render()
 		}
 		
@@ -206,7 +206,7 @@ namespace $ {
 			return {}
 		}
 		
-		event_sync() : { [ key : string ] : ( event : Event )=> void } {
+		event_async() : { [ key : string ] : ( event : Event )=> void } {
 			return {}
 		}
 		
