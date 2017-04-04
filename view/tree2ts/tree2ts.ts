@@ -113,7 +113,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 						} )
 						return '({\n' + opts.join( '' ) + '\t\t})'
 					case( value.type === '>' ) :
-						throw new Error( 'Deprecated syntax. Use <=> instead.' )
+						throw new Error( 'Deprecated syntax `>`. Use `<=>` instead.' )
 					case( value.type === '<=>' ) :
 						needSet = true
 						if( value.sub.length === 1 ) {
@@ -123,7 +123,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 						}
 						break
 					case( value.type === '<' ) :
-						throw new Error( 'Deprecated syntax. Use <= instead.' )
+						throw new Error( 'Deprecated syntax `<`. Use `<=` instead.' )
 					case( value.type === '<=' ) :
 						if( value.sub.length === 1 ) {
 							addProp( value )
