@@ -6,6 +6,7 @@
 	overflow: hidden;
 	flex: 1 1 auto;
 	align-self: stretch;
+	margin: 0;
 }
 
 [mol_book_placeholder] {

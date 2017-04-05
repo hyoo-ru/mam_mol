@@ -1,7 +1,7 @@
 namespace $.$mol {
 	export class $mol_portion extends $.$mol_portion {
 		
-		indWidthStyle() {
+		indicator_width_style() {
 			return this.portion() * 100 + '%'
 		}
 		

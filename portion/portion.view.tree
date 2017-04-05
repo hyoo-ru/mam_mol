@@ -1,10 +1,10 @@
 $mol_portion_indicator $mol_view
 	style *
 		^
-		width <= widthStyle \0
+		width <= width_style \0
 
 $mol_portion $mol_view
 	portion 0
 	sub /
 		<= indicator $mol_portion_indicator
-			widthStyle <= indWidthStyle \0
+			width_style <= indicator_width_style \0

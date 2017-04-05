@@ -18,7 +18,6 @@
 	cursor: inherit;
 	position: relative;
 	box-sizing: border-box;
-	margin: auto;
 }
 
 [mol_button][disabled] {

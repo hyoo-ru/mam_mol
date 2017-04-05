@@ -13,6 +13,7 @@
 }
 
 [mol_attach_add] {
+	flex: 1 0 5rem;
 	width: 5rem;
 	height: 5rem;
 	overflow: hidden;
@@ -22,7 +23,6 @@
 	padding: 0;
 	position: relative;
 	margin: 0;
-	/*max-width: 15rem;*/
 }
 
 [mol_attach_add_icon] {

@@ -1,6 +1,6 @@
 [mol_select] {
-	margin: auto;
 	display: flex;
+	word-break: normal;
 }
 
 [mol_select_trigger] {

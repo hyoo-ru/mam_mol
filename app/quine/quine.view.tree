@@ -1,4 +1,5 @@
 $mol_app_quine $mol_page
+	title @ \Quine - application that proints salf sources
 	body /
 		<= texter $mol_text
 			text <= content \

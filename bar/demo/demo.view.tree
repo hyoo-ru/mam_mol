@@ -1,17 +1,22 @@
-$mol_bar_demo_search $mol_bar
+$mol_bar_demo_search $mol_row
 	sub /
-		<= stringer $mol_string
-			value?val <=> value?val \
-		<= submitter $mol_button
+		<= Subscription $mol_bar
 			sub /
-				\submit
+				<= String $mol_string
+					value?val <=> value?val \
+				<= Submit $mol_button
+					sub /
+						\submit
 
-$mol_bar_demo_login $mol_bar
+$mol_bar_demo_login $mol_row
 	sub /
-		<= stringer $mol_string
-			value?val <=> value?val \
-		<= rememberer $mol_check_box
-			label / \Remember me
-		<= submitter $mol_button
+		<= Subscription $mol_bar
 			sub /
-				\submit
+				<= String $mol_string
+					hint \E-mail
+					value?val <=> value?val \
+				<= Confirm $mol_check_box
+					label / \Confirm
+				<= Submit $mol_button
+					sub /
+						\submit

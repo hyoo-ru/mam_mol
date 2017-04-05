@@ -1,12 +1,14 @@
-$mol_pop_over_demo $mol_pop_over
-	align \bottom_right
-	Anchor \File
-	bubble_content /
-		<= Menu $mol_list
-			rows /
-				<= Open $mol_row
-					sub / \Open
-				<= Export $mol_row
-					sub / \Export
-				<= Save $mol_row
-					sub / \Save
+$mol_pop_over_demo $mol_row
+	sub /
+		<= File $mol_pop_over
+			align \bottom_right
+			Anchor \File
+			bubble_content /
+				<= Menu $mol_list
+					rows /
+						<= Open $mol_row
+							sub / \Open
+						<= Export $mol_row
+							sub / \Export
+						<= Save $mol_row
+							sub / \Save

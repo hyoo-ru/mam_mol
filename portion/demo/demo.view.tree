@@ -1,8 +1,8 @@
-$mol_portion_demo_empty $mol_portion
-	portion 0
-
-$mol_portion_demo_partial $mol_portion
-	portion 0.5
-
-$mol_portion_demo_full $mol_portion
-	portion 1
+$mol_portion_demo $mol_row
+	sub /
+		<= Empty $mol_portion
+			portion <= fist 0
+		<= Partial $mol_portion
+			portion <= second 0.5
+		<= Full $mol_portion
+			portion <= third 1

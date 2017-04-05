@@ -1,11 +1,5 @@
 :root {
-	--mol_skin_base: hsl( 140 , 35% , 50% );
-}
-
-[mol_app_demo_logo] {
-	width: 30%;
-	margin: auto;
-	box-shadow: none;
+	/*--mol_skin_base: hsl( 140 , 35% , 50% );*/
 }
 
 [mol_app_demo_menu] {
@@ -83,7 +77,6 @@
 	align-content: flex-start;
 	justify-content: flex-start;
 	box-shadow: none;
-	margin: 0;
 }
 
 [mol_app_demo_detail_row] > * {

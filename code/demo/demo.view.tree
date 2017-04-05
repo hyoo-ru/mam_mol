@@ -1,26 +1,20 @@
-$mol_code_demo_qr $mol_code
-	format \QR_CODE
-
-$mol_code_demo_data_matrix $mol_code
-	format \DATA_MATRIX
-
-$mol_code_demo_upc_e $mol_code
-	format \UPC_E
-
-$mol_code_demo_upc_a $mol_code
-	format \UPC_A
-
-$mol_code_demo_ean_8 $mol_code
-	format \EAN_8
-
-$mol_code_demo_ean_13 $mol_code
-	format \EAN_13
-
-$mol_code_demo_code_128 $mol_code
-	format \CODE_128
-
-$mol_code_demo_code_39 $mol_code
-	format \CODE_39
-
-$mol_code_demo_itf $mol_code
-	format \ITF
+$mol_code_demo $mol_row
+	sub /
+		<= qr $mol_code
+			format \QR_CODE
+		<= matrix $mol_code
+			format \DATA_MATRIX
+		<= upc_e $mol_code
+			format \UPC_E
+		<= upc_a $mol_code
+			format \UPC_A
+		<= ean_8 $mol_code
+			format \EAN_8
+		<= ean_13 $mol_code
+			format \EAN_13
+		<= code_128 $mol_code
+			format \CODE_128
+		<= code_39 $mol_code
+			format \CODE_39
+		<= itf $mol_code
+			format \ITF

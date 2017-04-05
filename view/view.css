@@ -5,7 +5,7 @@
 	word-break: break-word;
 }
 
-[mol_view] > [mol_view] {
+[mol_view] > * {
 	word-break: inherit;
 }
 

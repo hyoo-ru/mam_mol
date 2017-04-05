@@ -1,7 +1,7 @@
 [mol_row] {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
+	align-items: baseline;
 	align-content: center;
 	justify-content: space-between;
 	padding: .5rem;
@@ -9,12 +9,11 @@
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
 	box-sizing: border-box;
-	margin: auto;
 	max-width: 100%;
 }
 
-[mol_row] > [mol_view] ,
-[mol_row_sub] > [mol_view] {
+[mol_row] > * ,
+[mol_row_sub] > * {
 	margin: .5rem;
 	max-width: 100%;
 }

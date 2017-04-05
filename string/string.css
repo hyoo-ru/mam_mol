@@ -15,7 +15,6 @@
 	width: 8em;
 	background: var(--mol_skin_passive);
 	color: var(--mol_skin_passive_text);
-	margin: auto;
 }
 
 [mol_string]:enabled {

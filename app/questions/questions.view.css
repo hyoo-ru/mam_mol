@@ -28,7 +28,6 @@
 	display: flex;
 	justify-content: flex-end;
 	flex-wrap: wrap;
-	margin: 0;
 }
 
 [mol_app_questions_tag] {
