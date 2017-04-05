@@ -1,0 +1,43 @@
+$mol_app_questions $mol_book
+	Placeholder $mol_book_placeholder
+		title <= placeholder \Stack Overflow
+	-
+	Menu $mol_page
+		title <= title_default @ \Questions
+		minimal_width 400
+		body /
+			<= Status $mol_status
+				status <= menu_rows /
+			<= Menu_links $mol_list
+				rows <= menu_rows /
+	-
+	Details!id $mol_page
+		minimal_width 400
+		title <= question_title!id \
+		tools /
+			<= Details_close!id $mol_link
+				sub /
+					<= Details_close_icon!id $mol_icon_cross
+				arg *
+					question null
+		body /
+			<= Details_descr!id $mol_text
+				text <= question_descr!id \
+			<= Details_permalink!id $mol_link
+				uri <= question_permalink!id \
+				title <= details_permalink_title @ \Answers
+	-
+	Question_link!index $mol_link
+		minimal_height 70
+		arg <= question_arg_by_index!index *
+		sub /
+			<= Question_row!index $mol_row sub /
+				<= Question_title!index $mol_view
+					sub /
+						<= question_title_by_index!index \
+				<= Question_tags!index $mol_view
+					sub <= question_tags_by_index!index /
+	-
+	Tag!id $mol_view
+		sub /
+			<= tag_name!id \ 

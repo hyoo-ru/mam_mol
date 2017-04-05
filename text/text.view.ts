@@ -113,6 +113,7 @@ namespace $.$mol {
 				case 'header' : return this.text2spans( `${ indexBlock }` , token.chunks[2] )
 				case 'list-item' : return this.text2spans( `${ indexBlock }` , token.chunks[1] )
 				case 'code' : return [ token.chunks[2] ]
+				case 'code-indent' : return [ token.chunks[0].replace( /[\n\r]*$/ , '' ) ]
 			}
 			
 			return this.text2spans( `${ indexBlock }` , token.chunks[0] )

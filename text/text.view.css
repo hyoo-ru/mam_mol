@@ -63,6 +63,7 @@
 	flex-grow: 0;
 }
 
+[mol_text_type="code-indent"] ,
 [mol_text_type="code"] {
 	font-family: monospace;
 	white-space: pre;
