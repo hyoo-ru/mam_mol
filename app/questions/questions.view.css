@@ -38,8 +38,9 @@
 	flex: 1000 1 auto;
 }
 
+[mol_app_questions_placeholder] ,
 [mol_app_questions_details] {
-	flex: 1000 1 400px;
+	flex: 1000 1 600px;
 }
 
 [mol_app_questions_details_close] {

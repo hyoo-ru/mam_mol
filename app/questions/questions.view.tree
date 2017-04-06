@@ -1,5 +1,6 @@
 $mol_app_questions $mol_book
 	Placeholder $mol_book_placeholder
+		minimal_width 600
 		title <= placeholder \Stack Overflow
 	-
 	Menu $mol_page
@@ -12,7 +13,7 @@ $mol_app_questions $mol_book
 				rows <= menu_rows /
 	-
 	Details!id $mol_page
-		minimal_width 400
+		minimal_width 600
 		title <= question_title!id \
 		tools /
 			<= Details_close!id $mol_link
