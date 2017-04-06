@@ -40,11 +40,11 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol_app_hello](app/hello) - Very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - Demonstration of all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/))
-* [$mol_app_files](app/files) - WebDAV file manager ([online](https://eigenmethod.github.io/mol/app/files/))
+* [$mol_app_files](app/files) - [WebDAV](https://wikipedia.org/wiki/WebDAV) file manager ([online](https://eigenmethod.github.io/mol/app/files/))
+* [$mol_app_questions](app/questions) - Questions from [StackOverflow.com](http://stackoverflow.com) ([online](http://eigenmethod.github.io/mol/app/questions/)) 
+* [$mol_app_lamps](app/lamps) - Lamps database from [LampTest.ru](http://lamptest.ru) ([online](http://eigenmethod.github.io/mol/app/lamps/)) 
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
-* [$mol_app_signup](app/signup) - Simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
-* [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
-* [$mol_app_taxon](app/taxon) - Big hierarchical table wild database ([online](http://eigenmethod.github.io/mol/app/taxon/demo/))
+* [$mol_app_taxon](app/taxon) - Interface for big hierarchical table ([online](http://eigenmethod.github.io/mol/app/taxon/demo/))
 * [$mol_app_bench](app/bench) - Abstract benchmarking interface ([online](http://eigenmethod.github.io/mol/app/bench/))
 
 # Benchmarks
