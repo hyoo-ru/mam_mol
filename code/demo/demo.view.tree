@@ -1,4 +1,5 @@
 $mol_code_demo $mol_row
+	title @ \Barcode scanner with various formats support
 	sub /
 		<= qr $mol_code
 			format \QR_CODE

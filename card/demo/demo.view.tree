@@ -1,4 +1,5 @@
 $mol_card_demo $mol_row
+	title @ \Cards with optional status
 	sub /
 		<= Simple $mol_card
 			Content $mol_row

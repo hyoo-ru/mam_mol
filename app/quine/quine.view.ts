@@ -3,13 +3,7 @@ namespace $.$mol {
 	export class $mol_app_quine extends $.$mol_app_quine {
 		
 		content() {
-			
-			const paths = [
-				'/mol/app/quine/quine.view.tree' ,
-				'/mol/app/quine/quine.view.ts' ,
-				'/mol/app/quine/quine.view.css' ,
-				'/mol/app/quine/index.html' ,
-			]
+			const paths = this.paths()
 			
 			const sources = paths.map( path => {
 				return $mol_file.relative( path ).content()

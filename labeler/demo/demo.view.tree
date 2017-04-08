@@ -1,4 +1,5 @@
 $mol_labeler_demo $mol_row
+	title @ \Labeled content of some types
 	sub /
 		<= Provider $mol_labeler
 			title \Provider

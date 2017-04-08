@@ -1,11 +1,12 @@
 $mol_app_todomvc $mol_scroll
+	title @ \Todos
 	sub /
 		<= Page $mol_list
 			rows /
 				<= Title $mol_view
 					minimal_height 142
 					sub /
-						<= title @ \todos
+						<= title -
 				<= Panel $mol_list
 					rows <= panels /
 						<= Head $mol_view

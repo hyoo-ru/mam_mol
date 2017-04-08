@@ -1,7 +1,7 @@
 :root {
-	--mol_skin_font: 12pt/1.5 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--mol_skin_font: 1rem/1.5 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 	
-	--mol_skin_base: hsl( 215 , 50% , 57% );
+	--mol_skin_base: hsl( 215 , 50% , 60% );
 	--mol_skin_base_text: color( var(--mol_skin_base) lightness(99%) );
 	
 	--mol_skin_button: rgba( 245 , 245 , 245 , .9 );
@@ -12,7 +12,7 @@
 	--mol_skin_passive_text: darkgray;
 	
 	--mol_skin_light: #fcfcfc;
-	--mol_skin_light_line: rgba( 230 , 230 , 230 , 1 );
+	--mol_skin_light_line: rgba( 230 , 230 , 230 , .75 );
 	--mol_skin_light_text: rgba( 0 , 0 , 0 , .9 );
 	--mol_skin_light_hover: color( var(--mol_skin_light) lightness(-5%) );
 

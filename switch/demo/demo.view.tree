@@ -1,4 +1,5 @@
 $mol_switch_demo $mol_row
+	title @ \Color switchers in various state
 	sub /
 		<= Enabled $mol_switch
 			value?val <=> color?val \red

@@ -1,4 +1,5 @@
 $mol_chart_demo_simple $mol_chart
+	title @ \Simple chart with hadcoded series
 	graphs /
 		<= Vert_ruler $mol_plot_ruler_vert
 			title <= vert_title @ \pcs
@@ -24,6 +25,7 @@ $mol_chart_demo_simple $mol_chart
 				<= Fact_dots $mol_plot_dot
 
 $mol_chart_demo_styles $mol_chart
+	title @ \Chart with various styles of graphs.
 	graphs /
 		<= Energy $mol_plot_ruler_vert
 			title <= energy_title @ \kJ

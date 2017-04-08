@@ -12,9 +12,7 @@
 }
 
 [mol_bench_result_portion] {
-	display: inline-flex;
-	vertical-align: bottom;
-	margin-left: .5rem;
+	margin-left: 1rem;
 }
 
 [mol_bench_col_head] > * {

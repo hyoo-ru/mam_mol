@@ -1,12 +1,21 @@
 [mol_grid] {
 	display: block;
 	flex: 0 1 auto;
+	position: relative;
+}
+
+[mol_grid_gap] {
+	position: absolute;
+	padding: .1px;
+	top: 0;
+	transform: translateZ(0);
 }
 
 [mol_grid_table] {
 	border-spacing: 0;
-	box-shadow: none;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	transform: translateZ(0);
+	position: relative;
 }
 
 [mol_grid_table] > * {

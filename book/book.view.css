@@ -17,6 +17,7 @@
 	justify-content: center;
 	font-size: 2rem;
 	color: var(--mol_skin_passive_text);
+	padding: 1rem;
 }
 
 [mol_book] > *:not([mol_book_page_visible]) {

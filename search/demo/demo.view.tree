@@ -1,4 +1,5 @@
 $mol_search_demo $mol_row
+	title @ \Simple search field with suggest 
 	sub /
 		<= Search $mol_search
 			query => query

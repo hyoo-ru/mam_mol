@@ -1,4 +1,5 @@
 $mol_deck_demo $mol_row
+	title @ \Simple deck with tabbar
 	sub /
 		<= Deck $mol_deck items /
 			<= greeterItem $mol_deck_item

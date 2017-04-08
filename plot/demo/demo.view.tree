@@ -1,4 +1,5 @@
 $mol_plot_demo $mol_plot_pane
+	title @ \Dynamic lightweight graphs
 	count?val 20
 	gap 48
 	graphs /

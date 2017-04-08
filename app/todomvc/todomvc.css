@@ -75,6 +75,7 @@
 	text-align: center;
 	color: rgba(175, 47, 47, 0.15);
 	text-rendering: optimizeLegibility;
+	text-transform: lowercase;
 }
 
 [mol_app_todomvc_task_row] {

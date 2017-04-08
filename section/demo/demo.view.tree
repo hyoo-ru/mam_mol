@@ -1,5 +1,8 @@
 $mol_section_demo $mol_scroll
+	title @ \Section with header
 	sub /
-		<= Section $mol_section
-			head \Section header
-			Content $mol_filler
+		<= Article $mol_row
+			sub /
+				<= Section $mol_section
+					head \Section header
+					Content $mol_filler

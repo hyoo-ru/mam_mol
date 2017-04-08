@@ -1,4 +1,5 @@
 $mol_app_signup $mol_scroll
+	title @ \Sign Up form demo
 	message_required @ \Input required
 	message_no_spaces @ \Spaces are forbidden
 	message_need_more_letters @ \More then 2 letter required

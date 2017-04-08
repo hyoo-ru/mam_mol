@@ -5,7 +5,6 @@
 	background-color: none;
 	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
 	border-radius: var(--mol_skin_round);
-	flex: 0 1 auto;
 	justify-content: center;
 	align-content: center;
 	align-items: center;

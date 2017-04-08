@@ -3,6 +3,10 @@
 	width: 400px;
 }
 
+[mol_app_files_folder_body] {
+	padding: .5rem;
+}
+
 [mol_app_files_folder_row] {
 	width: 100%;
 	justify-content: flex-start;
@@ -19,6 +23,8 @@
 [mol_app_files_file_embed] {
 	align-self: stretch;
 	flex: 1 1 auto;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	border-radius: var(--mol_skin_round);
 }
 
 [mol_app_files_file_body] {
@@ -27,7 +33,7 @@
 
 [mol_app_files_icon_file] ,
 [mol_app_files_icon_folder] {
-	margin: 0 .5em;
+	margin: 0 .5em 0 0;
 }
 
 [mol_app_files_close] {

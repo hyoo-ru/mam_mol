@@ -1,4 +1,5 @@
 $mol_select_demo_colors $mol_row
+	title @ \Color picker with filter and custom rows
 	sub /
 		<= Color $mol_labeler
 			title \Prefer color

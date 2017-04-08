@@ -1,4 +1,5 @@
 $mol_float_demo $mol_scroll
+	title @ \Floating header example
 	sub /
 		<= Head $mol_float
 			sub /

@@ -1,5 +1,5 @@
 $mol_app_report $mol_page
-	title \Pump #1337
+	title @ \Pump #1337 - Technical passport
 	body /
 		<= descriptor $mol_view
 			sub / <= description \

@@ -1,22 +1,21 @@
-$mol_bar_demo_search $mol_row
+$mol_bar_demo $mol_row
+	title @ \Group of controls as one control
 	sub /
-		<= Subscription $mol_bar
+		<= Two $mol_bar
 			sub /
-				<= String $mol_string
-					value?val <=> value?val \
-				<= Submit $mol_button
-					sub /
-						\submit
-
-$mol_bar_demo_login $mol_row
-	sub /
-		<= Subscription $mol_bar
-			sub /
-				<= String $mol_string
+				<= Two_mail $mol_string
 					hint \E-mail
 					value?val <=> value?val \
-				<= Confirm $mol_check_box
+				<= Two_submit $mol_button
+					sub /
+						\submit
+		<= Tree $mol_bar
+			sub /
+				<= Three_mail $mol_string
+					hint \E-mail
+					value?val <=> value?val \
+				<= Three_confirm $mol_check_box
 					label / \Confirm
-				<= Submit $mol_button
+				<= Three_submit $mol_button
 					sub /
 						\submit

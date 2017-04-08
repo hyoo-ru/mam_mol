@@ -1,18 +1,18 @@
-[mol_form_barFields] {
-	padding: 0 .5rem;
+[mol_form_bar_fields] {
+	padding: .5rem .5rem 0;
 	display: flex;
 	flex-direction: column;
 }
 
-[mol_form_barFields] > * {
+[mol_form_bar_fields] > * {
 	margin: .5rem;
 }
 
-[mol_form_barButtons] {
+[mol_form_bar_buttons] {
 	justify-content: center;
 	box-shadow: none;
 }
 
-[mol_form_barButtons] > * {
+[mol_form_bar_buttons] > * {
 	flex: 1 1 auto;
 }

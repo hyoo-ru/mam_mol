@@ -1,4 +1,5 @@
 $mol_check_expand_demo $mol_row
+	title @ \Checkbox-expand in various states
 	sub /
 		<= Labeled_base $mol_check_expand
 			checked?val <=> base_expanded?val false

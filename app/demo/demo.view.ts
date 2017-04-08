@@ -4,7 +4,13 @@ namespace $.$mol {
 		
 		title() {
 			const selected = this.selected()
-			if( selected ) return `$${ selected }`
+			if( selected ) {
+				const names = this.names_demo() 
+				if( names.length === 1 ) {
+					return `$${ selected.replace( /_demo.*/ , '' ) }: ${ this.Sample_large( names[0] ).widget().title() }`
+				}
+				return `$${ selected }`
+			}
 			
 			return super.title()
 		}
@@ -165,7 +171,7 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		Sample_large( name : string ) {
 			const sample = new $mol_demo_large()
-			sample.titler = ()=> null
+			sample.title = ()=> null
 			sample.name = ()=> name
 			return sample
 		}

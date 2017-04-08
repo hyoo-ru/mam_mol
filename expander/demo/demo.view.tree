@@ -1,4 +1,5 @@
 $mol_expander_demo $mol_scroll
+	title @ \Simple spoiler
 	sub /
 		<= Expander $mol_expander
 			label /

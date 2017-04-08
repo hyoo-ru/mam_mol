@@ -1,0 +1,6 @@
+{
+	"$mol_app_demo_title": "$mol демо примеры",
+	"$mol_app_demo_filter_hint": "Поиск демо...",
+	"$mol_app_demo_detail_empty_prefix": "По префиксу \"",
+	"$mol_app_demo_detail_empty_postfix": "\" ни одного демо не найдено"
+}
