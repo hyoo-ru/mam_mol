@@ -49,10 +49,15 @@
 }
 
 [mol_app_questions_details_descr] {
-	padding: 1rem;
-	margin: .5rem;
+	margin: 1rem;
 }
 
-[mol_app_questions_details] > [mol_page_body] {
-	padding: .5rem;
+[mol_app_questions_details_permalink] {
+	color: inherit;
+	padding: 1rem;
+	word-break: normal;
+}
+
+[mol_app_questions_answer] {
+	margin: 1rem;
 }

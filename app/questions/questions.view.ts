@@ -93,6 +93,24 @@ namespace $.$mol {
 			return $mol_http_resource_json.item<{ items : Item[] }>( uri ).json().items[0]
 		}
 		
+		question_answers( id : number ) {
+			const uri = `//api.stackexchange.com/2.2/questions/${ id }/answers?order=desc&sort=votes&site=stackoverflow&filter=!-*f(6sFKn6ub`
+			type Item = {
+				score : number
+				body_markdown : string
+				share_link : string
+			}
+			return $mol_http_resource_json.item<{ items : Item[] }>( uri ).json().items
+		}
+		
+		answers( id : number ) {
+			return this.question_answers( id ).map( ( answer , index )=> this.Answer({ question : id , answer : index }) )
+		}
+		
+		question_answer( id : { question : number , answer : number } ) {
+			return this.question_answers( id.question )[ id.answer ].body_markdown
+		}
+		
 	}
 	
 }

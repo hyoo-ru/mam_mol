@@ -16,6 +16,10 @@ $mol_app_questions $mol_book
 		minimal_width 600
 		title <= question_title!id \
 		tools /
+			<= Details_permalink!id $mol_link
+				uri <= question_permalink!id \
+				sub /
+					<= Details_permalink_icon!id $mol_icon_external
 			<= Details_close!id $mol_link
 				sub /
 					<= Details_close_icon!id $mol_icon_cross
@@ -24,9 +28,11 @@ $mol_app_questions $mol_book
 		body /
 			<= Details_descr!id $mol_text
 				text <= question_descr!id \
-			<= Details_permalink!id $mol_link
-				uri <= question_permalink!id \
-				title <= details_permalink_title @ \Answers
+			<= Answers!id $mol_list
+				rows <= answers!id /
+	-
+	Answer!id $mol_text
+		text <= question_answer!id \
 	-
 	Question_link!index $mol_link
 		minimal_height 70

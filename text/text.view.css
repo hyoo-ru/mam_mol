@@ -68,8 +68,6 @@
 	font-family: monospace;
 	white-space: pre;
 	font-size: .9rem;
-	background: var(--mol_skin_light);
-	color: var(--mol_skin_light_text);
 	border-radius: var(--mol_skin_round);
 	padding: 1px;
 }
