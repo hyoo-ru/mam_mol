@@ -23,16 +23,19 @@
 [mol_book] > *:not([mol_book_page_visible]) {
 	position: absolute;
 	height: 100%;
+	transform: translate( -100% );
+	transition-duration: .2s;
+	transition-timing-function: ease-out;
 }
 
 @keyframes mol_book_page_show {
 	from {
-		opacity: .5;
+		transform: translate( 100% );
 	}
 }
 
 [mol_book] > * {
 	position: relative;
-	animation: mol_book_page_show ease-in .1s;
+	animation: mol_book_page_show ease-out .2s;
 	background: var(--mol_skin_card);
 }
