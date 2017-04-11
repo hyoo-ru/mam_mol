@@ -16,8 +16,8 @@
 
 [mol_check_icon] {
 	display: inline-flex;
-	/*vertical-align: -10%;*/
 	vertical-align: middle;
+	margin: .25rem 0;
 }
 
 [mol_check_label] {

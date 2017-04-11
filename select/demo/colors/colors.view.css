@@ -4,6 +4,7 @@
 	padding: 0;
 	padding-right: .5rem;
 	box-shadow: none;
+	align-items: center;
 }
 
 [mol_select_demo_colors_color_preview] {

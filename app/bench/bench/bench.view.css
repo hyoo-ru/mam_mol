@@ -36,7 +36,7 @@
 	position: relative;
 	width: 50%;
 	min-height: 100%;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	@apply --mol_skin_outline;
 }
 
 [mol_app_bench_descr] {

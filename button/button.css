@@ -3,7 +3,7 @@
 	border: none;
 	font: inherit;
 	background-color: none;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	@apply --mol_skin_outline;
 	border-radius: var(--mol_skin_round);
 	justify-content: center;
 	align-content: center;
@@ -31,7 +31,7 @@
 [mol_button_major]:not([disabled]) {
 	background-color: var(--mol_skin_accent);
 	color: var(--mol_skin_accent_text);
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	@apply --mol_skin_outline;
 }
 
 [mol_button_danger]:not([disabled]) {
@@ -53,7 +53,7 @@
 [mol_button]:focus {
 	z-index: 1;
 	outline: none;
-	box-shadow: 0 0 0 1px var(--mol_skin_focus_line);
+	@apply --mol_skin_focus;
 }
 
 [mol_button_major]:not([disabled]):hover {

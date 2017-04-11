@@ -20,7 +20,7 @@
 
 [mol_demo_screen] {
 	overflow: hidden;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	@apply --mol_skin_outline;
 	background: var(--mol_skin_card);
 	color: var(--mol_skin_light_text);
 	position: relative;

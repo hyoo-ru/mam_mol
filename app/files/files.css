@@ -23,7 +23,7 @@
 [mol_app_files_file_embed] {
 	align-self: stretch;
 	flex: 1 1 auto;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	@apply --mol_skin_outline;
 	border-radius: var(--mol_skin_round);
 }
 
