@@ -4,3 +4,7 @@ $mol_embed $mol_view
 		^
 		data <= uri \
 		type <= mime \
+	sub /
+		<= Open $mol_link
+			uri <= uri \
+			title <= open_label @ \Open
