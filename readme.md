@@ -15,6 +15,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Rationale](#rationale)
 - [Modules](#modules)
 - [Cool stuff](#cool-stuff)
+- [Oganizations using $mol](#oganizations-using-mol)
 - [Donate](#donate)
 
 # Features
@@ -490,6 +491,12 @@ The name of the field corresponds to calling the property, the content of the fi
 
 * **[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)**
 * **[Sources visualization](http://veniversum.me/git-visualizer/?owner=eigenmethod&repo=mol)**
+
+# Oganizations using $mol
+
+[![EigenMethod](http://eigenmethod.com/img/logos/logo-eigenmethod-desktop.png)](http://eigenmethod.com) 
+
+[![SAPRUN](http://www.saprun.com/static/core/img/base/logo_sm.png)](http://www.saprun.com)
 
 # Donate
 
