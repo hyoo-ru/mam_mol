@@ -7,6 +7,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Features](#features)
 - [Demo applications](#demo-applications)
 - [Benchmarks](#benchmarks)
+- [Oganizations using $mol](#oganizations-using-mol)
 - [Articles](#articles)
 - [Any questions?](#any-questions)
 - [Found a bug?](#found-a-bug)
@@ -15,7 +16,6 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Rationale](#rationale)
 - [Modules](#modules)
 - [Cool stuff](#cool-stuff)
-- [Oganizations using $mol](#oganizations-using-mol)
 - [Donate](#donate)
 
 # Features
@@ -56,6 +56,12 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
 * [Line charts comparison](app/bench/chart/rope) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
 * [Bar charts comparison](app/bench/chart/bar) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
+
+# Oganizations using $mol
+
+[![EigenMethod](http://eigenmethod.com/img/logos/logo-eigenmethod-desktop.png)](http://eigenmethod.com) 
+
+[![SAPRUN](http://www.saprun.com/static/core/img/base/logo_sm.png)](http://www.saprun.com)
 
 # Articles
 
@@ -491,12 +497,6 @@ The name of the field corresponds to calling the property, the content of the fi
 
 * **[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)**
 * **[Sources visualization](http://veniversum.me/git-visualizer/?owner=eigenmethod&repo=mol)**
-
-# Oganizations using $mol
-
-[![EigenMethod](http://eigenmethod.com/img/logos/logo-eigenmethod-desktop.png)](http://eigenmethod.com) 
-
-[![SAPRUN](http://www.saprun.com/static/core/img/base/logo_sm.png)](http://www.saprun.com)
 
 # Donate
 
