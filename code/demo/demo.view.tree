@@ -1,6 +1,6 @@
-$mol_code_demo $mol_row
+$mol_code_demo $mol_tiler
 	title @ \Barcode scanner with various formats support
-	sub /
+	items /
 		<= qr $mol_code
 			format \QR_CODE
 		<= matrix $mol_code
