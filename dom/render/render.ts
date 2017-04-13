@@ -46,6 +46,8 @@ namespace $ {
 				}
 				
 				default : {
+					if( config[ key ] === void null ) continue
+					
 					if( el[ key ] !== config[ key ] ) {
 						el[ key ] = config[ key ]
 						if( el[ key ] !== config[ key ] ) {
