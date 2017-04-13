@@ -1,0 +1,32 @@
+$mol_app_studio $mol_book
+	pages /
+		<= Catalog_page $mol_page
+			title <= catalog_title @ \Components
+			minimal_width 300
+		<= Preview_page $mol_page
+			title <= preview_title @ \Preview
+			body /
+				<= Preview $mol_view
+			minimal_width 600
+		<= Editor_page $mol_page
+			title <= editor_title @ \Editor
+			body <= fields /
+			minimal_width 300
+	-
+	String_field!name $mol_labeler
+		title <= property_title!name \
+		Content <= String!name $mol_string
+			value?val <=> string_value!name?val \
+	View_field!name $mol_labeler
+		title <= property_title!name \
+		Content <= View_select!name $mol_select
+			value?val <=> string_value!name?val \
+			options <= view_options /
+	List_field!name $mol_labeler
+		title <= property_title!name \
+		Content <= List_select!name $mol_select
+			value?val <=> string_value!name?val \
+			options <= view_options /
+	-
+	component?val \$mol_view
+	registry *
