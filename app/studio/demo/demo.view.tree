@@ -1,78 +1,82 @@
 $mol_app_studio_demo $mol_app_studio
-	component?val \$mol_page
+	parent?val \$mol_page
 	-
 	registry *
 		$mol_view *
 			title *
 				type \string
-				key false
+				keyed false
 				mutable false
 			dom_name *
 				type \string
-				key false
+				keyed false
 				mutable false
 			dom_name_space *
 				type \string
-				key false
+				keyed false
 				mutable false
 			minimal_width *
 				type \number
-				key false
+				keyed false
 				mutable false
 			minimal_height *
 				type \number
-				key false
+				keyed false
 				mutable false
 			plugins *
 				type \List
-				key false
+				keyed false
 				mutable false
 			sub *
 				type \List
-				key false
+				keyed false
 				mutable false
 			attr *
 				type \Dict
-				key false
+				keyed false
 				mutable false
 			field *
 				type \Dict
-				key false
+				keyed false
 				mutable false
 			style *
 				type \Dict
-				key false
+				keyed false
 				mutable false
 		$mol_page *
 			Head *
 				type \$mol_view
-				key false
+				keyed false
 				mutable false
 			head *
 				type \List
-				key false
+				keyed false
 				mutable false
 			Title *
 				type \$mol_view
-				key false
+				keyed false
 				mutable false
 			tools *
 				type \List
-				key false
+				keyed false
 				mutable false
 			Body *
 				type \$mol_view
-				key false
+				keyed false
 				mutable false
 			body *
 				type \List
-				key false
+				keyed false
 				mutable false
 			Foot *
 				type \$mol_view
-				key false
+				keyed false
 				mutable false
 			foot *
 				type \List
-				key false
+				keyed false
 				mutable false
+			body_scroll_top *
+				type \number
+				keyed false
+				mutable true
