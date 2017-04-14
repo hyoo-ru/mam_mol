@@ -90,7 +90,9 @@ namespace $.$mol {
 		}
 		
 		value_content() {
-			return this.value() ? this.option_content( this.value() ) : [ this.Hint() ]
+			if( this.value() ) return this.option_content( this.value() )
+			if( this.hint() ) return [ this.Hint() ]
+			return []
 		}
 		
 	}
