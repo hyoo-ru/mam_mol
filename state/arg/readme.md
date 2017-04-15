@@ -34,6 +34,10 @@ Returns and sets value by key without history position changing.
 
 Returns and sets dictionary of all arguments.
 
-***```link( next : { [ key : string ] : string } ) : string```***
+**```link( next : { [ key : string ] : string } ) : string```**
 
 Returns link with overrided arguments.
+
+# Real world usage
+
+($mol_link](../../link)
