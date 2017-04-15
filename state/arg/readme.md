@@ -4,7 +4,7 @@ State of arguments.
 
 ## NodeJS
 
-When line arguments like ```foo=bar xxx```:
+When command line arguments like ```foo=bar xxx```:
 
 ```
 $mol_state_arg.value( 'foo' ) // 'bar'
