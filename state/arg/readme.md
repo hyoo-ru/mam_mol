@@ -40,4 +40,4 @@ Returns link with overrided arguments.
 
 # Real world usage
 
-($mol_link](../../link)
+- [$mol_link](../../link)
