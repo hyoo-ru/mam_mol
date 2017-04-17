@@ -6,29 +6,41 @@ $mol_app_studio $mol_book
 		<= Preview_page $mol_page
 			title <= preview_title <= parent -
 			body /
-				<= Block_wrapped <= Block $mol_view
-			minimal_width 500
+				<= Block $mol_view
+			minimal_width 400
 		<= Editor_page $mol_page
 			title <= editor_title \
 			body <= fields /
 			minimal_width 300
 	-
-	String_field!name $mol_labeler
-		title <= property_title!name \
-		Content <= String!name $mol_string
-			value?val <=> string_value!name?val \
-			hint <= string_hint!name \
-	View_field!name $mol_labeler
-		title <= property_title!name \
-		Content <= View_select!name $mol_select
-			value?val <=> string_value!name?val \
-			options <= view_options /
-			hint <= view_hint!name \
-	List_field!name $mol_labeler
-		title <= property_title!name \
-		Content <= List_select!name $mol_select
-			value?val <=> string_value!name?val \
-			options <= view_options /
+	Prop!id $mol_labeler
+		title <= prop_title!id \
+		content <= prop_controls!id /
+			<= Prop_type!id $mol_select
+				value?val <=> prop_type!id?val \null
+				options <= type_options /
+					\null
+					\boolean
+					\number
+					\string
+					\List
+					\Dict
+					\$mol_view
+			<= Boolean_field!id $mol_check_box
+				checked?val <=> boolean_value!id?val \
+			<= Number_field!id $mol_number
+				value?val <=> number_value!id?val 0
+				hint <= number_hint!id \
+			<= String_field!id $mol_string
+				value?val <=> string_value!id?val \
+				hint <= string_hint!id \
+			<= Element_field!id $mol_select
+				value?val <=> string_value!id?val \
+				options <= view_options /
+				hint <= view_hint!id \
+			<= List_field!id $mol_select
+				value?val <=> string_value!id?val \
+				options <= view_options /
 	-
-	parent?val \$mol_view
+	parent?val <= parent_default \$mol_view
 	registry *

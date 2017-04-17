@@ -1,5 +1,5 @@
 $mol_app_studio_demo $mol_app_studio
-	parent?val \$mol_page
+	parent_default \$mol_page_demo
 	-
 	registry *
 		$mol_view *
@@ -80,3 +80,4 @@ $mol_app_studio_demo $mol_app_studio
 				type \number
 				keyed false
 				mutable true
+		$mol_page_demo *
