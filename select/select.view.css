@@ -27,13 +27,9 @@
 	min-width: 100%;
 }
 
-[mol_select_filter] {
+[mol_select_filter_string] {
 	z-index: 2;
 	opacity: 1 !important;
-	width: 100%;
-}
-
-[mol_select_filter_string] {
 	width: 100%;
 }
 
@@ -75,4 +71,9 @@
 
 [mol_select_pop] > [mol_pop_bubble] {
 	min-width: 100%;
+}
+
+[mol_select_bubble_content] {
+	display: flex;
+	flex-direction: column;
 }

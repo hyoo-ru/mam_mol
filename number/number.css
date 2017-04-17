@@ -1,6 +1,7 @@
 [mol_number] {
 	display: flex;
-	flex: 0 1 8rem;
+	flex: 0 1 auto;
+	width: 10rem;
 	position: relative;
 	align-items: stretch;
 	max-width: 100%;
