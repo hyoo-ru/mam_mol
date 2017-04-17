@@ -11,8 +11,8 @@
 	position: relative;
 	z-index: 0;
 	font: inherit;
-	flex: 0 1 auto;
-	width: 8em;
+	flex: 0 1 8rem;
+	width: 0;
 	background: var(--mol_skin_passive);
 	color: var(--mol_skin_passive_text);
 }
