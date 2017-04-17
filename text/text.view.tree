@@ -1,4 +1,5 @@
 $mol_text $mol_list
+	uri_base \
 	text \
 	Row!id $mol_text_row
 		sub <= block_content!id /

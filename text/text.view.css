@@ -9,6 +9,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
+	flex: 0 0 auto;
 }
 
 [mol_text_row] {
@@ -85,6 +86,7 @@
 
 [mol_text_image] {
 	max-width: 100%;
+	max-height: 75vh;
 }
 
 [mol_text_type="strong"] {

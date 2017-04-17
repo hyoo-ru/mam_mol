@@ -60,6 +60,10 @@ namespace $.$mol {
 			return this.text2spans( `${ id.block }/${ id.row }/${ id.cell }` , this.cell_contents( id.block )[ id.row ][ id.cell ] )
 		}
 		
+		uri_resolve( uri : string ) {
+			return this.uri_base() + uri
+		}
+		
 		text2spans( prefix : string , text : string ) {
 			return $mol_syntax_md_line.tokenize( text ).map( ( token , index )=> {
 				const id = `${prefix}/${index}`
@@ -73,7 +77,7 @@ namespace $.$mol {
 						} else {
 							const span = this.Link( id )
 							span.type( token.name )
-							span.link( token.chunks[ 1 ] )
+							span.link( this.uri_resolve( token.chunks[ 1 ] ) )
 							span.content( this.text2spans( id , token.chunks[ 0 ] ) )
 							return span
 						}
@@ -81,7 +85,7 @@ namespace $.$mol {
 					case 'image-link' : {
 						const span = this.Image( id )
 						span.type( token.name )
-						span.link( token.chunks[ 1 ] )
+						span.link( this.uri_resolve( token.chunks[ 1 ] ) )
 						span.title( token.chunks[ 0 ] )
 						return span
 					}
