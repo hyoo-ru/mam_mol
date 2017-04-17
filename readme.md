@@ -86,7 +86,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Quick start
 
-[Video of this precess](https://www.youtube.com/embed/PyK3if5sgN0)
+[Video of this precess](https://www.youtube.com/watch?v=PyK3if5sgN0)
 
 **Create MAM project**
 
