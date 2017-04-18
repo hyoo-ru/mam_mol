@@ -1,11 +1,5 @@
 :root {
-	--mol_skin_base: hsl( 140 , 35% , 50% );
-}
-
-[mol_app_demo_logo] {
-	width: 30%;
-	margin: auto;
-	box-shadow: none;
+	/*--mol_skin_base: hsl( 140 , 35% , 50% );*/
 }
 
 [mol_app_demo_menu] {
@@ -37,13 +31,21 @@
 	width: 100%;
 }
 
+[mol_app_demo_nav_row] {
+	display: flex;
+}
+
 [mol_app_demo_nav_option] {
 	padding: 0 1rem 0 0;
+	display: flex;
+	flex: 1;
+	align-items: center;
 }
 
 [mol_app_demo_nav_expand] {
 	padding: 0;
-	height: 100%;
+	margin: 0;
+	align-self: stretch;
 }
 
 [mol_app_demo_main] {
@@ -75,7 +77,6 @@
 	align-content: flex-start;
 	justify-content: flex-start;
 	box-shadow: none;
-	margin: 0;
 }
 
 [mol_app_demo_detail_row] > * {
@@ -97,6 +98,14 @@
 }
 
 [mol_app_demo_sample_large] {
-	padding: 1rem;
 	box-sizing: border-box;
+}
+
+[mol_app_demo_detail_source_link],[mol_app_demo_detail_close]{
+	color: #fff;
+	padding: 1rem;
+}
+[mol_app_demo_nav_option]{
+	padding: .5rem;
+	text-transform: capitalize;
 }
