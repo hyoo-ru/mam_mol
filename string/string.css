@@ -1,6 +1,6 @@
 [mol_string] {
 	box-sizing: border-box;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	@apply --mol_skin_outline;
 	outline-offset: 0;
 	border: none;
 	border-radius: var(--mol_skin_round);
@@ -12,10 +12,9 @@
 	z-index: 0;
 	font: inherit;
 	flex: 0 1 auto;
-	width: 8em;
+	width: 8rem;
 	background: var(--mol_skin_passive);
 	color: var(--mol_skin_passive_text);
-	margin: auto;
 }
 
 [mol_string]:enabled {
@@ -30,7 +29,7 @@
 }
 
 [mol_string]:focus {
-	box-shadow: 0 0 0 1px var(--mol_skin_focus_line);
+	@apply --mol_skin_focus;
 }
 
 [mol_string]::-ms-clear {

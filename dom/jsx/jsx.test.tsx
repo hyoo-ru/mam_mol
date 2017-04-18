@@ -3,7 +3,7 @@ namespace $ {
 	$mol_test({
 		
 		'Make empty div'() {
-			$mol_assert_equal( (<div></div>).outerHTML , '<div></div>' )
+			$mol_assert_equal( (<div/>).outerHTML , '<div></div>' )
 		} ,
 		
 		'Make input with id and value'() {

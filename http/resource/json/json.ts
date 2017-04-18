@@ -11,6 +11,7 @@ namespace $ {
 			)
 		}
 		
+		@ $mol_mem()
 		json( next? : Content , force? : $mol_atom_force ) : Content {
 			return JSON.parse( this.text( next && JSON.stringify( next , null , '\t' ) , force ) )
 		}

@@ -1,15 +1,20 @@
-$mol_check_expand_demo_labeled_base $mol_check_expand
-	label / <= c1Label @ \Base
-
-$mol_check_expand_demo_labeled_expanded $mol_check_expand
-	label / <= c2Label @ \Expanded
-	checked true
-
-$mol_check_expand_demo_empty_base $mol_check_expand
-
-$mol_check_expand_demo_empty_expanded $mol_check_expand
-	checked true
-	
-$mol_check_expand_demo_disabled $mol_check_expand
-	label / <= c5Label @ \Non expandable
-	disabled true
+$mol_check_expand_demo $mol_row
+	title @ \Checkbox-expand in various states
+	sub /
+		<= Labeled_base $mol_check_expand
+			checked?val <=> base_expanded?val false
+			label / <= c1Label @ \Base
+		-
+		<= Labeled_expanded $mol_check_expand
+			label / <= c2Label @ \Expanded
+			checked?val <=> expanded_expanded?val true
+		-
+		<= Empty_base $mol_check_expand
+			checked?val <=> base_expanded?val false
+		-
+		<= Empty_expanded $mol_check_expand
+			checked?val <=> expanded_expanded?val true
+		-
+		<= Disabled $mol_check_expand
+			label / <= c5Label @ \Non expandable
+			disabled true

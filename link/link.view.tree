@@ -2,6 +2,9 @@ $mol_link $mol_view
 	minimal_height 36
 	dom_name \a
 	attr *
+		^
 		href <= uri \
+		title <= hint \
 		mol_link_current <= current false
-	<= arg *
+	sub / <= title -
+	arg *

@@ -1,0 +1,10 @@
+$mol_chart_legend $mol_scroll
+	graphs /
+	sub <= graph_legends /
+	-
+	Graph_legend!id $mol_view
+		sub /
+			<= Graph_sample!id null
+			<= Graph_title!id $mol_view
+				sub /
+					<= graph_title!id \

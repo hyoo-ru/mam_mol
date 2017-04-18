@@ -12,7 +12,16 @@
 		overflow: hidden;
 		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
 	}
-	
+
+	@keyframes measure {
+		from {
+			outline : 1px solid black;
+		}
+		to {
+			outline : 1px solid white;
+		}
+	}
+
 	#sandbox {
 		border: none;
 		width: 100%;
@@ -23,7 +32,9 @@
 <iframe id="sandbox"></iframe>
 
 <script>
-	
+
+	if( window.parent === window ) document.location = '//eigenmethod.github.io/mol/app/bench/#bench=' + encodeURIComponent( location.href )
+
 	var size = 1000
 
 	var items = {
@@ -57,9 +68,9 @@
 				title : { 'en' : 'AngularJS 1.5.5' } ,
 				weight : '55.4 KB' ,
 			} ,
-			'alight-0-12' : {
-				title : { 'en' : 'ALight 0.12' } ,
-				weight : '22.2 KB' ,
+			'alight-0-14' : {
+				title : { 'en' : 'ALight 0.14' } ,
+				weight : '22.1 KB' ,
 			} ,
 			'native-html' : {
 				title : { 'en' : 'Native HTML' } ,
@@ -109,12 +120,16 @@
 	}
 
 	function start( sample ) {
-		var start = Date.now()
-		sandbox.src = sample + '/'
-		sandbox.onload = function() {
-			sandbox.onload = null
-			done( Date.now() - start + ' ms' )
-		}
+		var sandbox = document.getElementById( 'sandbox' )
+		sandbox.src = 'about:blank'
+		setTimeout( function() {
+			var start = Date.now()
+			sandbox.src = sample + '/'
+			sandbox.onload = function() {
+				done( Date.now() - start + ' ms' )
+				sandbox.onload = null
+			}
+		} )
 	}
 
 	function weight( sample ) {
@@ -136,19 +151,21 @@
 	}
 
 	function measure( message ) {
+		var sandbox = document.getElementById( 'sandbox' )
 		requestAnimationFrame( function() { // begin at next frame start for measure stability reason
-			var command = JSON.stringify( message )
-//			console.timeStamp( 'begin ' + command )
+			console.timeStamp( 'begin ' + message[0] )
 			sandbox.contentWindow.postMessage( message , '*' )
+			sandbox.addEventListener( 'animationend' , end )
+			requestAnimationFrame( function(){ setTimeout( function() { // wait for message processed
+				sandbox.style.animation = 'measure .001s'
+			} ) } )
 			var start = Date.now()
-			requestAnimationFrame( function() { // wait for message processed
-				setTimeout( function() { // wait for painting completed
-					requestAnimationFrame( function() { // For IE :(
-						done( Date.now() - start + ' ms' )
-//						console.timeStamp( 'end ' + command )
-					} )
-				} )
-			} )
+			function end() { // wait for painting ends
+				done( Date.now() - start + ' ms' )
+				console.timeStamp( 'end ' + message[0] )
+				sandbox.style.animation = ''
+				sandbox.removeEventListener( 'animationend' , end )
+			}
 		} )
 	}
 

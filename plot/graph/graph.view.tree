@@ -1,0 +1,35 @@
+$mol_plot_graph $mol_svg_group
+	series *
+	points <= points_scaled <= points_raw /
+	threshold 4
+	shift /
+		0
+		0
+	scale /
+		1
+		1
+	dimensions_expanded <= dimensions /
+		/
+		/
+	hue 0
+	-
+	attr *
+		^
+		mol_plot_graph_type <= type \solid
+	-
+	style *
+		^
+		color <= color \black
+	-
+	Sample null
+	-
+	front /
+	back /
+
+$mol_plot_graph_sample $mol_view
+	attr *
+		^
+		mol_plot_graph_type <= type \solid
+	style *
+		^
+		color <= color \black

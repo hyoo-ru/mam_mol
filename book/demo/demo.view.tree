@@ -1,4 +1,5 @@
 $mol_book_demo $mol_book
+	title @ \Adaprive layout for various sizes of screen
 	pages /
 		<= Placeholder $mol_book_placeholder
 			minimal_width 200

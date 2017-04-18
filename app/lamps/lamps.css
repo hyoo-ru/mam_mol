@@ -49,3 +49,8 @@
 [mol_app_lamps_main_page] {
 	flex: 1000 1 400px;
 }
+
+[mol_app_lamps_light] ,
+[mol_app_lamps_body] {
+	justify-content: space-between;
+}

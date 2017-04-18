@@ -2,17 +2,18 @@ $mol_grid $mol_scroll
 	row_ids /
 	row_id!index null
 	col_ids /
-	<= records *
+	records *
 	record!id null
 	hierarchy null
 	hierarchy_col \
 	-
 	sub /
 		<= Table $mol_grid_table
-			gap_top <= gap_top 0
-			gap_bottom <= gap_bottom 0
+			offset <= gap_top 0
 			sub /
 				<= rows_visible /
+		<= Gap $mol_grid_gap
+			offset <= height 0
 	rows /
 	Head $mol_grid_row
 		height <= row_height 40
@@ -43,12 +44,18 @@ $mol_grid $mol_scroll
 $mol_grid_table $mol_view
 	dom_name \table
 	style *
-		marginTop <= gap_top 0
-		marginBottom <= gap_bottom 0
+		^
+		top <= offset 0
+
+$mol_grid_gap $mol_view
+	style *
+		^
+		top <= offset 0
 
 $mol_grid_row $mol_view
 	dom_name \tr
 	style *
+		^
 		height <= height 40
 	sub <= cells /
 

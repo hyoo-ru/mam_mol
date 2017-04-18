@@ -1,21 +1,25 @@
-$mol_check_box_demo_labeled_base $mol_check_box
-	label / <= c1Label @ \Base
-
-$mol_check_box_demo_labeled_checked $mol_check_box
-	label / <= c2Label @ \Checked
-	checked true
-
-$mol_check_box_demo_labeled_disabled $mol_check_box
-	label / <= c6Label @ \Disabled
-	checked true
-	enabled false
-
-
-$mol_check_box_demo_alone_base $mol_check_box
-
-$mol_check_box_demo_alone_checked $mol_check_box
-	checked true
-
-$mol_check_box_demo_alone_disabled $mol_check_box
-	checked true
-	enabled false
+$mol_check_box_demo $mol_row
+	title @ \Checkboxes in various states
+	sub /
+		<= Labeled_base $mol_check_box
+			checked?val <=> base_checked?val false
+			label / <= c1Label @ \Base
+		-
+		<= Labeled_checked $mol_check_box
+			label / <= c2Label @ \Checked
+			checked?val <=> checked_checked?val true
+		-
+		<= Labeled_disabled $mol_check_box
+			label / <= c6Label @ \Disabled
+			checked true
+			enabled false
+		-
+		<= Alone_base $mol_check_box
+			checked?val <=> base_checked?val false
+		-
+		<= Alone_checked $mol_check_box
+			checked?val <=> checked_checked?val true
+		-
+		<= Alone_disabled $mol_check_box
+			checked true
+			enabled false

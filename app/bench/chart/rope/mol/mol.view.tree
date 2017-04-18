@@ -1,0 +1,16 @@
+$mol_app_bench_chart_rope_mol $mol_view
+	sub /
+		<= Chart $mol_chart
+			graphs /
+				<= Vert $mol_plot_ruler_vert
+					title \Val
+				<= Hor $mol_plot_ruler_hor
+					title \Iter
+					series <= hor_series /
+				<= graphs /
+	Graph!id $mol_plot_group
+		title <= graph_title!id \
+		series <= series!id /
+		graphs /
+			<= Line!id $mol_plot_line
+			<= Dots!id $mol_plot_dot

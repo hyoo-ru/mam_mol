@@ -1,0 +1,27 @@
+$mol_plot_pane $mol_svg_root
+	aspect \none
+	-
+	hue_base?val 140
+	hue_shift?val 111
+	-
+	gap 24
+	gap_hor <= gap -
+	gap_vert <= gap -
+	gap_left <= gap_hor -
+	gap_right <= gap_hor -
+	gap_top <= gap_vert -
+	gap_bottom <= gap_vert -
+	-
+	shift /
+		0
+		0
+	scale /
+		1
+		1
+	-
+	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /
+	-
+	plugins /
+		<= Meter $mol_meter
+			width => width
+			height => height

@@ -7,12 +7,13 @@
 	height: 5rem;
 	background: center no-repeat;
 	border-radius: var(--mol_skin_round);
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	@apply --mol_skin_outline;
 	background-size: cover;
 	flex: 1 0 5rem;
 }
 
 [mol_attach_add] {
+	flex: 1 0 5rem;
 	width: 5rem;
 	height: 5rem;
 	overflow: hidden;
@@ -22,7 +23,6 @@
 	padding: 0;
 	position: relative;
 	margin: 0;
-	/*max-width: 15rem;*/
 }
 
 [mol_attach_add_icon] {

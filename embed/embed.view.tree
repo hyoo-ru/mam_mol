@@ -1,5 +1,10 @@
 $mol_embed $mol_view
 	dom_name \object
 	attr *
+		^
 		data <= uri \
 		type <= mime \
+	sub /
+		<= Open $mol_link
+			uri <= uri \
+			title <= open_label @ \Open

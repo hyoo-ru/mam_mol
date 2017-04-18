@@ -1,10 +1,12 @@
-$mol_card_demo_status $mol_card
-	Content $mol_row
-		sub /
-			\Hello pending!
-	status \pending
-
-$mol_card_demo_hello $mol_card
-	Content $mol_row
-		sub /
-			\Hello world!
+$mol_card_demo $mol_row
+	title @ \Cards with optional status
+	sub /
+		<= Simple $mol_card
+			Content $mol_row
+				sub /
+					\Hello world!
+		<= Pending $mol_card
+			Content $mol_row
+				sub /
+					\Hello pending!
+			status \pending

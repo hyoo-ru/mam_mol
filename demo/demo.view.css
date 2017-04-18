@@ -9,18 +9,18 @@
 	max-height: 100%;
 }
 
-[mol_demo_header] {
+[mol_demo_head] {
 	display: flex;
 	line-height: 1.5rem;
 }
 
-[mol_demo_titler] {
+[mol_demo_title] {
 	padding: 0 1rem;
 }
 
-[mol_demo_screener] {
+[mol_demo_screen] {
 	overflow: hidden;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	@apply --mol_skin_outline;
 	background: var(--mol_skin_card);
 	color: var(--mol_skin_light_text);
 	position: relative;
@@ -29,5 +29,4 @@
 	align-content: flex-start;
 	align-items: flex-start;
 	box-sizing: border-box;
-	margin: 0;
 }

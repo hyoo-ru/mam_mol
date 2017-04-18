@@ -2,10 +2,30 @@
 	margin: 0;
 }
 
-[mol_app_habhub_title] {
-	justify-content: center;
+[mol_app_habhub_menu_page] {
+	flex: 1 1000 400px;
+	width: 100%;
 }
 
-[mol_app_habhub_gist_row] {
-	margin: 1rem auto;
+[mol_app_habhub_menu] {
+	display: flex;
+	flex-direction: column;
+	padding: .5rem;
+}
+
+[mol_app_habhub_close] {
+	color: inherit;
+	padding: 1rem;
+}
+
+[mol_app_habhub_placeholder] {
+	flex: 1000 1 600px;
+}
+
+[mol_app_habhub_details] {
+	flex: 1000 1 600px;
+}
+
+[mol_app_habhub_datails_text] {
+	margin: 1rem;
 }

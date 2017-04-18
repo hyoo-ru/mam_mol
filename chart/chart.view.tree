@@ -1,0 +1,8 @@
+$mol_chart $mol_view
+	sub /
+		<= Plot $mol_plot_pane
+			graphs <= graphs /
+			gap_hor 48
+			gap_vert 24
+		<= Legend $mol_chart_legend
+			graphs <= graphs /

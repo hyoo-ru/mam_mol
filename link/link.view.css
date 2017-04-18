@@ -14,7 +14,6 @@
 }
 
 [mol_link]:not([mol_link_current]):focus {
-	/*box-shadow: 0 0 0 1px var(--mol_skin_focus);*/
 	background-color: var(--mol_skin_hover);
 	box-shadow: 0 0 0 1px var(--mol_skin_hover_line);
 }

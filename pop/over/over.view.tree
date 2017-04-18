@@ -1,4 +1,5 @@
 $mol_pop_over $mol_pop
 	event *
+		^
 		mouseover?event <=> event_show?event null
 		mouseout?event <=> event_hide?event null

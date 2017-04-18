@@ -4,7 +4,7 @@
 }
 
 [mol_pop_bubble] {
-	box-shadow: 0 0 0 1px var(--mol_skin_card_line);
+	@apply --mol_skin_outline;
 	border-radius: var(--mol_skin_round);
 	position: absolute;
 	z-index: 3;
@@ -12,6 +12,7 @@
 	max-width: none;
 	max-height: none;
 	overflow-y: auto;
+	word-break: normal;
 }
 
 [mol_pop_align="left_top"] {

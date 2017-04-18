@@ -95,14 +95,7 @@ namespace $.$mol {
 			supply.attachments( list )
 		}
 		
-		Body() {
-			return new $mol_scroll().setup( obj => {
-				obj.sub = ()=> this.body()
-				obj.scroll_top = ( next? )=> this.scroll_top( next )
-			} )
-		}
-		
-		scroll_top( next? : number ) {
+		body_scroll_top( next? : number ) {
 			var supplyId = this.supply() && this.supply().id()
 			return $mol_state_session.value( `${ this }.scroll_top(${supplyId})` , next )
 		}
