@@ -4,7 +4,7 @@ $mol_app_demo $mol_book
 		title <= title -
 	pages <= blocks /
 		<= Menu $mol_page
-			minimal_width 200
+			minimal_width 100
 			head /
 				<= Nav_head $mol_row
 					sub /
@@ -18,6 +18,7 @@ $mol_app_demo $mol_book
 		<= Detail $mol_app_demo_page
 			minimal_width 600
 			title <= title -
+			link_to_git <= link_to_git \
 			body <= main_content /
 	Welcome $mol_scroll
 		sub /
@@ -34,14 +35,18 @@ $mol_app_demo $mol_book
 	
 $mol_app_demo_page $mol_page
 	tools /
-		<= Close $mol_link
+		<= Go_to_git $mol_link
+			sub /
+				<= Source_icon $mol_icon_source
+			uri <= link_to_git \
+		<= Close $mol_link 
 			sub /
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
 				demo null
 
 $mol_app_demo_nav $mol_grid
-	row_height 32
+	row_height 40
 	hierarchy_col \title
 	Head null
 	-
