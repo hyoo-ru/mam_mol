@@ -1,3 +1,3 @@
 $mol_app_files_demo $mol_app_files
-	title @ \WebDAV client
+	title_root @ \WebDAV client
 	uri_root \http://ajaxexplorer.com/User5df12c6/
