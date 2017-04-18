@@ -40,3 +40,14 @@ Returns hint that displays on hover.
 	hint \Open external link
 ```
 
+**`target() : string`**
+
+[Name of window](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target) to open link.
+
+```
+<= External $mol_link
+	uri \http://example.org
+	title \example.org
+	target \_blank
+```
+
