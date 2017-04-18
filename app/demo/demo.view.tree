@@ -4,7 +4,7 @@ $mol_app_demo $mol_book
 		title <= title -
 	pages <= blocks /
 		<= Menu $mol_page
-			minimal_width 100
+			minimal_width 200
 			head /
 				<= Nav_head $mol_row
 					sub /
@@ -15,10 +15,10 @@ $mol_app_demo $mol_book
 				hierarchy <= nav_hierarchy null
 				record!id <= nav_option!id null
 				needle <= filter_string?val \
-		<= Detail $mol_app_demo_page
+		<= Detail $mol_app_demo_detail
 			minimal_width 600
 			title <= title -
-			link_to_git <= link_to_git \
+			source_link <= source_link \
 			body <= main_content /
 	Welcome $mol_scroll
 		sub /
@@ -33,12 +33,12 @@ $mol_app_demo $mol_book
 			<= selected \
 			<= detail_empty_postfix @ \"
 	
-$mol_app_demo_page $mol_page
+$mol_app_demo_detail $mol_page
 	tools /
-		<= Go_to_git $mol_link
+		<= Source_link $mol_link
 			sub /
 				<= Source_icon $mol_icon_source
-			uri <= link_to_git \
+			uri <= source_link \
 		<= Close $mol_link 
 			sub /
 				<= Close_icon $mol_icon_cross
