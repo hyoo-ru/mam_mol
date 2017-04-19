@@ -3,7 +3,7 @@ namespace $.$mol {
 		
 		rows() {
 			return [
-				this.Labeler(),
+				this.Label(),
 				this.expanded() ? this.Content() : null	
 			]
 		}

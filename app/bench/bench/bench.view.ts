@@ -9,7 +9,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		sandbox( next? : HTMLIFrameElement , force? : $mol_atom_force ) : HTMLIFrameElement {
-			const next2 = this.Sandbox().dom_node() as HTMLIFrameElement
+			const next2 = this.Sandbox().render() as HTMLIFrameElement
 			
 			next2.src = this.bench()
 			

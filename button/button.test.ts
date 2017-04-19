@@ -8,7 +8,7 @@ namespace $.$mol {
 			const clicker = new $mol_button
 			clicker.event_click = event => { clicked = true }
 			
-			const element = <HTMLButtonElement> clicker.dom_tree()
+			const element = clicker.render() as HTMLButtonElement
 			
 			const event = $mol_dom_context.document.createEvent( 'mouseevent' )
 			event.initEvent( 'click' , true , true )
@@ -24,7 +24,7 @@ namespace $.$mol {
 			clicker.event_click = event => { clicked = true }
 			clicker.enabled = ()=> false
 			
-			const element = <HTMLButtonElement> clicker.dom_tree()
+			const element = clicker.render() as HTMLButtonElement
 			
 			const event = $mol_dom_context.document.createEvent( 'mouseevent' )
 			event.initEvent( 'click' , true , true )

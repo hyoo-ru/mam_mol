@@ -1,4 +1,15 @@
 $mol_page_demo $mol_page
-	title @ \Sign Up
-	body / <= signup $mol_app_signup
-	foot / <= rower $mol_row_demo
+	title @ \Page with header, body and footer
+	tools /
+		<= Button $mol_button
+			title \Toolbar Button
+	body /
+		<= Content $mol_row
+			sub /
+				<= Text $mol_filler
+	foot /
+		<= Foot_content $mol_row
+			sub /
+				<= Foot_text $mol_view
+					sub /
+						\Footer

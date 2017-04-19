@@ -2,11 +2,10 @@
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	margin: auto;
 	cursor: inherit;
 }
 
 [mol_labeler_title] {
 	color: var(--mol_skin_passive_text);
-	font-size: .75rem;
+	font-size: .875rem;
 }

@@ -1,5 +1,6 @@
 $mol_card $mol_list
 	attr *
+		^
 		mol_card_status_type <= status \
 	rows /
 		<= Content $mol_view

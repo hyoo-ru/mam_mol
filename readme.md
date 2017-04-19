@@ -1,4 +1,4 @@
-# $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
+# $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol) [![eigenmethod.github.io](https://img.shields.io/website-up-down-green-red/http/mol.js.org.svg?label=mol.js.org)](http://eigenmethod.github.io/mol/) [![Maintanance status](https://img.shields.io/maintenance/yes/2017.svg)](https://github.com/eigenmethod/mol/graphs/contributors)
 
 Reactive micro-modular ui framework. Very simple, but very powerful!
 
@@ -7,6 +7,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Features](#features)
 - [Demo applications](#demo-applications)
 - [Benchmarks](#benchmarks)
+- [Oganizations using $mol](#oganizations-using-mol)
 - [Articles](#articles)
 - [Any questions?](#any-questions)
 - [Found a bug?](#found-a-bug)
@@ -15,6 +16,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Rationale](#rationale)
 - [Modules](#modules)
 - [Cool stuff](#cool-stuff)
+- [Donate](#donate)
 
 # Features
 
@@ -39,11 +41,11 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol_app_hello](app/hello) - Very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - Demonstration of all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/))
-* [$mol_app_files](app/files) - WebDAV file manager ([online](https://eigenmethod.github.io/mol/app/files/))
+* [$mol_app_files](app/files) - [WebDAV](https://wikipedia.org/wiki/WebDAV) file manager ([online](https://eigenmethod.github.io/mol/app/files/))
+* [$mol_app_questions](app/questions) - Questions from [StackOverflow.com](http://stackoverflow.com) ([online](http://eigenmethod.github.io/mol/app/questions/)) 
+* [$mol_app_lamps](app/lamps) - Lamps database from [LampTest.ru](http://lamptest.ru) ([online](http://eigenmethod.github.io/mol/app/lamps/)) 
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
-* [$mol_app_signup](app/signup) - Simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
-* [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
-* [$mol_app_taxon](app/taxon) - Big hierarchical table wild database ([online](http://eigenmethod.github.io/mol/app/taxon/demo/))
+* [$mol_app_taxon](app/taxon) - Interface for big hierarchical table ([online](http://eigenmethod.github.io/mol/app/taxon/demo/))
 * [$mol_app_bench](app/bench) - Abstract benchmarking interface ([online](http://eigenmethod.github.io/mol/app/bench/))
 
 # Benchmarks
@@ -52,6 +54,14 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark)
 ([online](http://eigenmethod.github.io/mol/app/bench/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
 * [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
+* [Line charts comparison](app/bench/chart/rope) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
+* [Bar charts comparison](app/bench/chart/bar) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
+
+# Oganizations using $mol
+
+[![EigenMethod](http://eigenmethod.com/img/logos/logo-eigenmethod-desktop.png)](http://eigenmethod.com) 
+
+[![SAPRUN](http://www.saprun.com/static/core/img/base/logo_sm.png)](http://www.saprun.com)
 
 # Articles
 
@@ -76,6 +86,8 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Quick start
 
+[Video of this precess](https://www.youtube.com/watch?v=PyK3if5sgN0)
+
 **Create MAM project**
 
 Easy way is checkout this [preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
@@ -84,6 +96,12 @@ Easy way is checkout this [preconfigured MAM repository](http://github.com/eigen
 git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
 npm install && npm start
 ```
+
+**Setup your editor**
+
+- Use MAM directory as root of your project in editor
+- [Install plugins for *.tree files](https://github.com/nin-jin/tree.d#ide-support)
+- If your editor ignores .editorconfig use this preferences: TABs for indents, LF for line endings.
 
 **Create your application component**
 
@@ -227,10 +245,11 @@ For example if you download **[base MAM-project](http://github.com/eigenmethod/m
 There are the full set of supports bundles:
 
 * `-/web.js` - JS for browser
+* `-/web.d.ts` - TypeScript definitions
 * `-/web.test.js` - JS with tests for a browser
 * `-/web.css` - CSS styles for a browser
-* `-/web.deps.json` - a map of dependencies modules for browser
-* `-/web.locale=en.json` - strings pulled from view.tree sources
+* `-/web.deps.json` - map of dependencies modules for browser
+* `-/web.locale=en.json` - strings pulled from ```*.view.tree``` and ```*.locale=en.json``` sources
 * `-/node.js` - JS for NodeJS
 * `-/node.test.js` - JS with tests for NodeJS
 * `-/node.deps.json` - a map of dependencies modules for NodeJS
@@ -427,6 +446,20 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_attach](attach)** - preview list and attach button
 * **[$mol_cost](cost)** - prints currency values
 
+## Charts
+
+* **[$mol_chart](chart)** - Plot pane with legend
+* **[$mol_chart_legend](chart/legend)** - Simple legend for charts
+* **[$mol_plot_pane](plot/pane)** - Pane for multiple graphs
+* **[$mol_plot_graph](plot/graph)** - Plot graph base class
+* **[$mol_plot_bar](plot/bar)** - Bar graph
+* **[$mol_plot_line](plot/line)** - Linear graph
+* **[$mol_plot_dot](plot/dot)** - Dots graph
+* **[$mol_plot_fill](plot/fil)** - Filling graph
+* **[$mol_plot_group](plot/group)** - Group of graph as single graph
+* **[$mol_plot_ruler_vert](plot/ruler/vert)** - Verical ruler
+* **[$mol_plot_ruler_hor](plot/ruler/hor)** - Horizontal ruler
+
 ## Data formats
 
 * **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d) (`view.tree` language descripted at [$mol_view](view))
@@ -464,3 +497,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 * **[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)**
 * **[Sources visualization](http://veniversum.me/git-visualizer/?owner=eigenmethod&repo=mol)**
+
+# Donate
+
+* **[Shut up and take my money](http://yasobe.ru/na/mol)**

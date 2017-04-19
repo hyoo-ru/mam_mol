@@ -5,5 +5,5 @@ $mol_switch $mol_view
 		label / <= option_title!id \
 		enabled <= option_enabled!id <= enabled true
 	value?val null
-	<= options *
+	options *
 	sub <= items /

@@ -1,4 +1,5 @@
-$mol_meter_demo $mol_card
+$mol_meter_demo $mol_row
+	title @ \Real time offset and size metering
 	plugins /
 		<= Meter $mol_meter
 			top => top
@@ -6,11 +7,9 @@ $mol_meter_demo $mol_card
 	sub /
 		<= Top $mol_view
 			sub /
-				\Offset from top is 
+				\Offset from top: 
 				<= top -
-				\px
 		<= Height $mol_view
 			sub /
-				\Component height is 
+				\Component height: 
 				<= height -
-				\px

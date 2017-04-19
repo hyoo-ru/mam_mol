@@ -1,0 +1,3 @@
+$mol_app_inventory_test $mol_app_inventory
+	title @ \Inventorization business process
+	domain $mol_app_inventory_domain_mock

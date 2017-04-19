@@ -1,19 +1,22 @@
-$mol_deck_demo $mol_deck items /
-	<= greeterItem $mol_deck_item
-		title <= greeterLabel @ \Greeting
-		Content <= greeterContent $mol_row
-			sub /
-				<= greeterMessager $mol_view sub /
-					<= greeterMessage @ \Hello, world!
-	<= questerItem $mol_deck_item
-		title <= questerLabel @ \Question
-		Content <= questerContent $mol_row
-			sub /
-				<= questerMessager $mol_view sub /
-					<= questerMessage @ \How are you?
-	<= commanderItem $mol_deck_item
-		title <= commanderLabel @ \Command
-		Content <= commanderContent $mol_row
-			sub /
-				<= commanderMessager $mol_view sub /
-					<= commanderMessage @ \Let us do it right!
+$mol_deck_demo $mol_row
+	title @ \Simple deck with tabbar
+	sub /
+		<= Deck $mol_deck items /
+			<= greeterItem $mol_deck_item
+				title <= greeterLabel @ \Greeting
+				Content <= greeterContent $mol_row
+					sub /
+						<= greeterMessager $mol_view sub /
+							<= greeterMessage @ \Hello, world!
+			<= questerItem $mol_deck_item
+				title <= questerLabel @ \Question
+				Content <= questerContent $mol_row
+					sub /
+						<= questerMessager $mol_view sub /
+							<= questerMessage @ \How are you?
+			<= commanderItem $mol_deck_item
+				title <= commanderLabel @ \Command
+				Content <= commanderContent $mol_row
+					sub /
+						<= commanderMessager $mol_view sub /
+							<= commanderMessage @ \Let us do it right!

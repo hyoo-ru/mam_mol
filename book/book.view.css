@@ -6,6 +6,8 @@
 	overflow: hidden;
 	flex: 1 1 auto;
 	align-self: stretch;
+	margin: 0;
+	@apply --mol_skin_outline;
 }
 
 [mol_book_placeholder] {
@@ -16,22 +18,27 @@
 	justify-content: center;
 	font-size: 2rem;
 	color: var(--mol_skin_passive_text);
+	padding: 1rem;
 }
 
 [mol_book] > *:not([mol_book_page_visible]) {
 	position: absolute;
 	height: 100%;
+	opacity: 0;
+	transform: translateX( -100% );
 }
 
 @keyframes mol_book_page_show {
 	from {
-		transform: translateX( 100% );
+		transform: translateX( 50% );
 		opacity: 0;
 	}
 }
 
 [mol_book] > * {
 	position: relative;
-	animation: mol_book_page_show ease-out .1s;
+	animation: mol_book_page_show ease-out .2s;
 	background: var(--mol_skin_card);
+	transition-duration: .2s;
+	transition-timing-function: ease-out;
 }

@@ -1,6 +1,6 @@
 $mol_app_files $mol_book
 	uri_current <= uri_root \
-	title @ \Documents
+	title <= title_root @ \Documents
 	-
 	Folder!folder $mol_app_files_folder
 		minimal_width 400
@@ -30,6 +30,7 @@ $mol_app_files $mol_book
 	Placeholder $mol_book_placeholder
 		title <= title -
 	-
+	tools_root /
 	page_tools!uri /
 		<= Close!uri $mol_link
 			sub /

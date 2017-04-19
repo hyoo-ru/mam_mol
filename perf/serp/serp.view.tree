@@ -1,0 +1,27 @@
+$mol_perf_serp $mol_view
+	size_target 25
+	elapsed?val 0
+	style *
+		transform <= transform \
+	Dot!id $mol_perf_serp_dot
+		left <= left!id 0
+		top <= top!id 0
+		size <= size!id 25
+		text <= text \
+
+$mol_perf_serp_dot $mol_view
+	size 25
+	hover?val false
+	sub /
+		<= text \
+	style *
+		width <= width <= size -
+		height <= height <= size -
+		left <= left 0
+		top <= top 0
+		borderRadius <= radius <= size -
+		lineHeight <= height <= size -
+		background <= color \
+	event *
+		mouseenter?val <=> enter?val null
+		mouseleave?val <=> leave?val null

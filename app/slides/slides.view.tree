@@ -1,0 +1,38 @@
+$mol_app_slides $mol_book
+	contents?val \
+	pages /
+		<= Listener $mol_page
+			minimal_width 600
+			title <= slide_title \
+			tools /
+				<= Slide_number $mol_view
+					sub /
+						<= slide?val 0
+			body /
+				<= Listener_content $mol_text
+					uri_base <= uri_base \
+					text <= listener_content \
+		<= Speaker $mol_page
+			minimal_width 600
+			title <= slide_title \
+			tools /
+				<= Open_listener $mol_link
+					target \_blank
+					hint <= open_listener_hint @ \Open slides window
+					arg *
+						role \listener
+						slide null
+					sub /
+						<= Open_listener_icon $mol_icon_external
+				<= Slide_switcher $mol_number
+					value?val <=> slide?val 0
+			body /
+				<= Speaker_content $mol_text
+					uri_base <= uri_base \
+					text <= speaker_content \
+		<= Loader $mol_view
+			dom_name \iframe
+			attr *
+				src <= uri_slides <= uri_slides_default \//nin-jin.github.io/slides/oorp/
+			event *
+				load?val <=> event_load?val null

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<style>
+		body {
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+<div id="test">
+</div>
+</body>
+<script type="text/javascript">
+
+	window.addEventListener( 'message' , function( event ) {
+		window[ event.data[0] ].apply( null , event.data.slice( 1 ) )
+	} )
+	
+	var chart = Highcharts.chart( 'test' , {
+		series : [] ,
+	})
+
+	function fill( data ) {
+		while( chart.series.length ) chart.series[0].remove( false , false )
+		for( var i = 0 ; i < data.graphs.length ; ++i ) {
+			chart.addSeries( {
+				data : data.graphs[ i ] ,
+				type : "column" ,
+				animation: false ,
+			} , false , false )
+		}
+		chart.redraw()
+	}
+
+	function update( data ) {
+		var series = chart.series 
+		for( var i = 0 ; i < data.graphs.length ; ++i ) {
+			series[i].setData( data.graphs[i] , false , false )
+		}
+		chart.redraw()
+	}
+	
+	window.onresize = function() {
+		chart.setSize( innerWidth , innerHeight , false )
+	}
+	window.onresize()
+
+</script>
+</html>

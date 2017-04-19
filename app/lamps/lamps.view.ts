@@ -71,6 +71,12 @@ namespace $.$mol {
 			return sub
 		}
 		
+		@ $mol_mem()
+		menu_scroll_top( next? : number ) {
+			this.filter()
+			return next || 0
+		}
+		
 		title() {
 			const id = this.id()
 			if( !id ) return 'LampTest.ru'

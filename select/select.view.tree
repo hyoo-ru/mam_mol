@@ -1,5 +1,5 @@
 $mol_select $mol_view
-	<= dictionary *
+	dictionary *
 	options /
 	value?val \
 	searchable true

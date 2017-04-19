@@ -1,8 +1,0 @@
-$mol_app_supplies_position_demo $mol_app_supplies_position
-	product_name @ \Bread
-	price $mol_unit_money_usd valueOf 1
-	quantity \100
-	cost $mol_unit_money_usd valueOf 100
-	supply_date \2016-01-13
-	division_name @ \Food
-	store_name @ \Main office

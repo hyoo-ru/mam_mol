@@ -1,0 +1,12 @@
+[mol_chart] {
+	display: flex;
+	flex-direction: column;
+	align-self: stretch;
+	flex: 1 1 auto;
+	padding: .5rem;
+}
+
+[mol_chart_plot] {
+	flex: 1 0 50%;
+	margin: .5rem;
+}

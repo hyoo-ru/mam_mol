@@ -10,6 +10,7 @@ $mol_app_lamps $mol_book
 				<= Filter $mol_code
 					hint <= filter_hint @ \Filter...
 					value?val <=> filter?val \
+			body_scroll_top?val <=> menu_scroll_top?val 0
 			body /
 				<= Menu $mol_list
 					rows <= lamp_rows /

@@ -1,0 +1,4 @@
+$mol_plot_group $mol_plot_graph
+	sub <= graphs_enriched <= graphs /
+	Sample $mol_plot_graph_sample
+		sub <= graph_samples /

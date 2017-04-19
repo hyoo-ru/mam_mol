@@ -4,7 +4,13 @@ namespace $.$mol {
 		
 		title() {
 			const selected = this.selected()
-			if( selected ) return `$${ selected }`
+			if( selected ) {
+				const names = this.names_demo() 
+				if( names.length === 1 ) {
+					return `$${ selected.replace( /_demo.*/ , '' ) }: ${ this.Sample_large( names[0] ).widget().title() }`
+				}
+				return `$${ selected }`
+			}
 			
 			return super.title()
 		}
@@ -100,10 +106,29 @@ namespace $.$mol {
 			return new Class()
 		}
 		
+		@ $mol_mem()
 		names_demo() {
-			const prefix = this.selected()
-			const namesAll = this.names_demo_all()
-			const names = namesAll.filter( name => name.substring( 0 , prefix.length ) === prefix )
+			const selected = this.selected()
+			const all = this.names_demo_all()
+			
+			const root = this.nav_hierarchy()[ selected ]
+			if( !root ) return []
+
+			const names : string[] = []
+			const collect = ( node : typeof root )=> {
+				const demo = `${ node.id }_demo`
+				if( all.indexOf( demo ) !== -1 ) {
+					if( names.indexOf( demo ) === -1 ) names.push( demo )
+				} else if( all.indexOf( node.id ) !== -1 ) {
+					if( names.indexOf( node.id ) === -1 ) names.push( node.id )
+				} else {
+					node.sub.forEach( child => collect( child ) )
+				}
+			}
+
+			if( root.sub.length ) root.sub.forEach( child => collect( child ) )
+			collect( root )
+			
 			return names
 		}
 		
@@ -146,7 +171,7 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		Sample_large( name : string ) {
 			const sample = new $mol_demo_large()
-			sample.titler = ()=> null
+			sample.title = ()=> null
 			sample.name = ()=> name
 			return sample
 		}

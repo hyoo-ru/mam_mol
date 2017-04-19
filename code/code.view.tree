@@ -1,7 +1,7 @@
 $mol_code $mol_view
 	sub /
-		<= Manual $mol_string
-			value?val <=> value?val \
+		<= Manual $mol_search
+			query?val <=> value?val \
 			hint <= hint <= format \
 		<= Scan $mol_button
 			event_click?val <=> event_scan?val null

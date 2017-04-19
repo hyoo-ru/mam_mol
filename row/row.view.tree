@@ -1,5 +1,6 @@
 $mol_row $mol_view
 	style *
+		^
 		minHeight <= minimal_height -
 
 $mol_row_sub $mol_view

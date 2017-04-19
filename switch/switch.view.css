@@ -1,17 +1,16 @@
 [mol_switch] {
-	margin: auto;
 	display: flex;
 	flex-wrap: wrap;
-	flex: 0 1 auto;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	flex: 1 1 auto;
+	@apply --mol_skin_outline;
 	border-radius: var(--mol_skin_round);
 	background: var(--mol_skin_light_line);
 }
 
 [mol_switch_option] {
-	padding: .5rem 1rem;
+	padding: .5rem;
 	flex: 1 1 auto;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	@apply --mol_skin_outline;
 	background: var(--mol_skin_passive);
 }
 

@@ -1,1 +1,3 @@
-$mol_icon_demo $mol_row sub <= icons /
+$mol_icon_demo $mol_row
+	title @ \All $mol icons
+	sub <= icons /

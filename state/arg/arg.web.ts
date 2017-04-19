@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_state_arg< Value > extends $mol_object {
 		
 		@ $mol_mem()
-		static href( next? : string ) {
+		static href( next? : string , force? : $mol_atom_force ) {
 			if( next ) history.replaceState( history.state , $mol_dom_context.document.title , `${ next }` )
 			return window.location.search + window.location.hash
 		}
@@ -39,12 +39,10 @@ namespace $ {
 			const chunks : string[] = []
 			for( let key in next ) {
 				if( null == next[ key ] ) continue
-				chunks.push( [ key ].concat( next[ key ] ).map( encodeURIComponent ).join( '=' ) )
+				chunks.push( [ key ].concat( next[ key ] ? next[ key ] : [] ).map( encodeURIComponent ).join( '=' ) )
 			}
 			
-			const hash = chunks.join( '#' )
-			
-			return hash ? '#' + hash + '#' : '#'
+			return '#' + chunks.join( '/' )
 		}
 		
 		constructor( public prefix = '' ) {
@@ -70,6 +68,6 @@ namespace $ {
 		
 	}
 	
-	window.addEventListener( 'hashchange' , event => $mol_state_arg.href( null ) )
+	window.addEventListener( 'hashchange' , event => $mol_state_arg.href( void null , $mol_atom_force ) )
 	
 }

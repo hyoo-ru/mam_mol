@@ -1,4 +1,5 @@
 $mol_dimmer_demo $mol_row
+	title @ \Text with highlighted found substring
 	sub /
 		<= one $mol_dimmer
 			haystack \Don't put all your eggs in one basket

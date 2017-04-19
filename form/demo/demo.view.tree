@@ -1,4 +1,5 @@
 $mol_form_demo $mol_form
+	title @ \Simple sign in form
 	form_fields /
 		<= loginField $mol_form_field
 			name <= loginLabel @ \Login

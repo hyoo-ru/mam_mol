@@ -36,22 +36,41 @@ namespace $.$mol {
 		
 		event_scroll( next? : Event ) {
 			this.moving( true )
+			this.moving_task_stop()
+			
 			new $mol_defer( ()=> {
 				const el = this.dom_node() as HTMLElement
-				this.scroll_top( Math.max( 0 , el.scrollTop ) )
-				this.scroll_left( Math.max( 0 , el.scrollLeft ) )
-				this.scroll_bottom( Math.max( 0 , el.scrollHeight - el.scrollTop - el.offsetHeight ) )
-				this.scroll_right( Math.max( 0 , el.scrollWidth - el.scrollLeft - el.offsetWidth ) )
+				
+				const top = Math.max( 0 , el.scrollTop )
+				const left = Math.max( 0 , el.scrollLeft )
+				
+				this.scroll_top( top )
+				this.scroll_left( left )
+				
+				this.scroll_bottom( Math.max( 0 , el.scrollHeight - top - el.offsetHeight ) )
+				this.scroll_right( Math.max( 0 , el.scrollWidth - left - el.offsetWidth ) )
+			} )
+		}
+		
+		event_repos( next? : Event ) {
+			new $mol_defer( ()=> {
+				const el = this.dom_node() as HTMLElement
+				
+				this.scroll_bottom( Math.max( 0 , el.scrollHeight - this.scroll_top() - el.offsetHeight ) )
+				this.scroll_right( Math.max( 0 , el.scrollWidth - this.scroll_left() - el.offsetWidth ) )
+			} )
+		}
+		
+		_moving_task_frame = 0
+		moving_task_stop() {
+			cancelAnimationFrame( this._moving_task_frame )
+			this._moving_task_frame = requestAnimationFrame( ()=> {
+				this.moving( false )
 			} )
 		}
 		
 		@ $mol_mem()
 		moving( next? : boolean ) {
-			if( next ) {
-				setTimeout( ()=> {
-					this.moving( false )
-				} )
-			}				
 			return next || false
 		}
 

@@ -1,9 +1,15 @@
 $mol_list_demo_large $mol_scroll
+	title @ \Large list of rows with dynamic content
 	sub /
 		<= lister $mol_list
 			rows <= rows /
+	Row!id $mol_expander
+		title <= row_text!id \
+		content /
+			<= Content!id $mol_filler
 
 $mol_list_demo_empty $mol_list
+	title @ \Empty list with placeholder
 	rows /
 	Empty $mol_view
 		sub /

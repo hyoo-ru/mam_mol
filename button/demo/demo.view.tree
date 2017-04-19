@@ -1,22 +1,23 @@
-$mol_button_demo_major_enabled $mol_button_major
-	sub / <= label @ \Click me!
-
-$mol_button_demo_minor_enabled $mol_button_minor
-	sub / <= label @ \Or click me..
-
-
-$mol_button_demo_major_disabled $mol_button_major
-	sub / <= label @ \Click me!
-	enabled false
-
-$mol_button_demo_minor_disabled $mol_button_minor
-	sub / <= label @ \Or click me..
-	enabled false
-
-
-$mol_button_demo_danger_enabled $mol_button_danger
-	sub / <= label @ \Be attentive!
-
-$mol_button_demo_danger_disabled $mol_button_danger
-	sub / <= label @ \Be attentive!
-	enabled false
+$mol_button_demo $mol_row
+	title @ \All types of buttons in every states
+	sub /
+		<= Major_enabled $mol_button_major
+			sub / <= major_label @ \Click me!
+		-
+		<= Major_disabled $mol_button_major
+			sub / <= major_label @ \Click me!
+			enabled false
+		-
+		<= Minor_enabled $mol_button_minor
+			sub / <= minor_label @ \Or click me..
+		-
+		<= Minor_disabled $mol_button_minor
+			sub / <= minor_label @ \Or click me..
+			enabled false
+		-
+		<= Danger_enabled $mol_button_danger
+			sub / <= danger_label @ \Be attentive!
+		-
+		<= Danger_disabled $mol_button_danger
+			sub / <= danger_label @ \Be attentive!
+			enabled false
