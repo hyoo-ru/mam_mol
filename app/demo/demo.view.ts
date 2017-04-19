@@ -179,6 +179,12 @@ namespace $.$mol {
 		logo_uri() {
 			return $mol_file.relative( '/mol/logo/logo.svg' ).path()
 		}
+
+		source_link(){
+			var pieces = $mol_state_arg.value('demo').split('_').slice(1) 
+			var source_link = this.source_prefix() + pieces.join('/')
+			return source_link
+		}
 		
 	}
 	
