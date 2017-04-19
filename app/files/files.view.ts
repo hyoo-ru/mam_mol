@@ -61,7 +61,7 @@ namespace $.$mol {
 		
 		webdav_title( uri : string ) {
 			const webdav = this.webdav( uri )
-			if( webdav === this.root() ) return super.title()
+			if( webdav === this.root() ) return this.title_root()
 			return webdav.prop( 'displayname' ) || ''
 		}
 		
@@ -95,10 +95,10 @@ namespace $.$mol {
 			return this.webdav_title( this.uri_current() )
 		}
 		
-		Close( uri : string ) {
-			return uri !== this.uri_root()
-				? super.Close( uri )
-				: null
+		page_tools( uri : string ) {
+			return uri === this.uri_root()
+				? this.tools_root()
+				: [ this.Close( uri ) ]
 		}
 		
 		close_arg( uri : string ) {

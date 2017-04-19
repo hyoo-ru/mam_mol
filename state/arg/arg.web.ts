@@ -39,7 +39,7 @@ namespace $ {
 			const chunks : string[] = []
 			for( let key in next ) {
 				if( null == next[ key ] ) continue
-				chunks.push( [ key ].concat( next[ key ] ).map( encodeURIComponent ).join( '=' ) )
+				chunks.push( [ key ].concat( next[ key ] ? next[ key ] : [] ).map( encodeURIComponent ).join( '=' ) )
 			}
 			
 			return '#' + chunks.join( '/' )
