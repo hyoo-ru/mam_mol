@@ -21,6 +21,7 @@ $mol_app_slides $mol_book
 					hint <= open_listener_hint @ \Open slides window
 					arg *
 						role \listener
+						slide null
 					sub /
 						<= Open_listener_icon $mol_icon_external
 				<= Slide_switcher $mol_number
@@ -32,6 +33,6 @@ $mol_app_slides $mol_book
 		<= Loader $mol_view
 			dom_name \iframe
 			attr *
-				src <= uri_slides <= uri_slides_default \/my/slides/oorp/
+				src <= uri_slides <= uri_slides_default \//nin-jin.github.io/slides/oorp/
 			event *
 				load?val <=> event_load?val null

@@ -27,10 +27,6 @@ namespace $.$mol {
 			}
 		}
 		
-		//contents() {
-		//	return $mol_file.relative( this.uri_slides() ).content().split( /^(?=#)/mg )
-		//}
-		
 		content() {
 			return this.contents()[ this.slide() ]
 		}
@@ -47,6 +43,10 @@ namespace $.$mol {
 			return this.content().replace( /[^]*?^#*([^]*?)$(\r?\n?)*[^]*/mg , '$1' )
 		}
 		
+		slide_local( uri : string , next : number ) {
+			return $mol_state_local.value( this.state_key( `slide_local(${ JSON.stringify( uri ) })` ) , next ) || 0
+		}
+		
 		slide( next? : number ) {
 			const count = this.contents().length
 			
@@ -57,7 +57,7 @@ namespace $.$mol {
 			
 			str = $mol_state_arg.value( this.state_key( 'slide' ) , str ) || void null
 			
-			return $mol_state_local.value( this.state_key( 'slide' ) , str && Number( str ) ) || 0
+			return this.slide_local( this.uri_slides() , str && Number( str ) ) || 0
 		}
 		
 		role( next? : 'speaker' | 'listener' ) {
