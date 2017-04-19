@@ -6,6 +6,10 @@
 	border: none;
 }
 
+[mol_app_slides_listener] {
+	font-size: 2em;
+}
+
 [mol_app_slides_speaker] > [mol_page_body] ,
 [mol_app_slides_listener] > [mol_page_body] {
 	display: flex;
@@ -36,4 +40,5 @@
 
 [mol_app_slides_slide_number] {
 	margin: 1rem;
+	word-break: normal;
 }
