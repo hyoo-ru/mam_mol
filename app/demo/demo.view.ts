@@ -179,6 +179,17 @@ namespace $.$mol {
 		logo_uri() {
 			return $mol_file.relative( '/mol/logo/logo.svg' ).path()
 		}
+
+		source_link(){
+			var component_name = $mol_state_arg.value('demo').split('_')
+			component_name = component_name.slice(1)
+
+			const link_mol = 'https://github.com/eigenmethod/mol/tree/master/'
+
+			var link_git = link_mol + component_name.join('/')
+
+			return link_git
+		}
 		
 	}
 	

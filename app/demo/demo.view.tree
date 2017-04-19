@@ -15,9 +15,10 @@ $mol_app_demo $mol_book
 				hierarchy <= nav_hierarchy null
 				record!id <= nav_option!id null
 				needle <= filter_string?val \
-		<= Detail $mol_app_demo_page
+		<= Detail $mol_app_demo_detail
 			minimal_width 600
 			title <= title -
+			source_link <= source_link \
 			body <= main_content /
 	Welcome $mol_scroll
 		sub /
@@ -32,16 +33,20 @@ $mol_app_demo $mol_book
 			<= selected \
 			<= detail_empty_postfix @ \"
 	
-$mol_app_demo_page $mol_page
+$mol_app_demo_detail $mol_page
 	tools /
-		<= Close $mol_link
+		<= Source_link $mol_link
+			sub /
+				<= Source_icon $mol_icon_source
+			uri <= source_link \
+		<= Close $mol_link 
 			sub /
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
 				demo null
 
 $mol_app_demo_nav $mol_grid
-	row_height 32
+	row_height 40
 	hierarchy_col \title
 	Head null
 	-
