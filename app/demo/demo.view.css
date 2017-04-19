@@ -100,3 +100,11 @@
 [mol_app_demo_sample_large] {
 	box-sizing: border-box;
 }
+[mol_app_demo_detail_source_link],[mol_app_demo_detail_close]{
+	color: #fff;
+	padding: 1rem;
+}
+[mol_app_demo_nav_option]{
+	padding: .5rem;
+	text-transform: capitalize;
+}
