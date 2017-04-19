@@ -40,6 +40,7 @@
 	display: flex;
 	flex: 1;
 	align-items: center;
+	text-transform: capitalize;
 }
 
 [mol_app_demo_nav_expand] {
@@ -105,9 +106,4 @@
 [mol_app_demo_detail_close]{
 	color: inherit;
 	padding: 1rem;
-}
-
-[mol_app_demo_nav_option]{
-	padding: 0 .5rem;
-	text-transform: capitalize;
 }
