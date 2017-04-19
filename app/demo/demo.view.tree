@@ -1,5 +1,6 @@
 $mol_app_demo $mol_book
 	title @ \$mol demonstrations
+	source_prefix @ \https://github.com/eigenmethod/mol/tree/master/
 	Placeholder $mol_book_placeholder
 		title <= title -
 	pages <= blocks /
