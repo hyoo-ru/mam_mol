@@ -1,0 +1,6 @@
+$mol_list_demo_empty $mol_list
+	title @ \Empty list with placeholder
+	rows /
+	Empty $mol_view
+		sub /
+			<= empty_message @ \Empty list

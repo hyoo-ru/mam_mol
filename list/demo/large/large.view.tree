@@ -7,10 +7,3 @@ $mol_list_demo_large $mol_scroll
 		title <= row_text!id \
 		content /
 			<= Content!id $mol_filler
-
-$mol_list_demo_empty $mol_list
-	title @ \Empty list with placeholder
-	rows /
-	Empty $mol_view
-		sub /
-			<= empty_message @ \Empty list
