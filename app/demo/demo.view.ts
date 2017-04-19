@@ -181,14 +181,9 @@ namespace $.$mol {
 		}
 
 		source_link(){
-			var pieces = $mol_state_arg.value('demo').split('_').slice(1)
-
-			const link = this.source_prefix()
-
-			var source_link = link + pieces.join('/')
-
+			var pieces = $mol_state_arg.value('demo').split('_').slice(1) 
+			var source_link = this.source_prefix() + pieces.join('/')
 			return source_link
-
 		}
 		
 	}

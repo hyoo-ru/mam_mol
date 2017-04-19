@@ -103,7 +103,7 @@
 
 [mol_app_demo_detail_source_link],
 [mol_app_demo_detail_close]{
-	color: #fff;
+	color: inherit;
 	padding: 1rem;
 }
 [mol_app_demo_nav_option]{
