@@ -21,7 +21,6 @@ $mol_app_demo $mol_book
 			title <= title -
 			source_link <= source_link \
 			body <= main_content /
-
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text
