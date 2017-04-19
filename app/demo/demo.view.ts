@@ -182,9 +182,9 @@ namespace $.$mol {
 		source_link(){
 			var pieces = $mol_state_arg.value('demo').split('_').slice(1)
 
-			const link_mol = 'https://github.com/eigenmethod/mol/tree/master/'
+			const link = this.source_prefix()
 
-			var source_link = link_mol + pieces.join('/')
+			var source_link = link + pieces.join('/')
 
 			return source_link
 
