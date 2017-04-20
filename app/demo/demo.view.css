@@ -4,6 +4,7 @@
 
 [mol_app_demo_menu] {
 	flex: 1 1 200px;
+	z-index: 2;
 }
 
 [mol_app_demo_detail], 
@@ -23,8 +24,12 @@
 	width: 100%;
 }
 
-[mol_app_demo_nav_head] {
+[mol_app_demo_nav_search] {
 	padding: 0;
+}
+
+[mol_search_suggest_filter_string]{
+	padding-left: 1rem;
 }
 
 [mol_app_demo_nav_table] {
@@ -106,4 +111,9 @@
 [mol_app_demo_detail_close]{
 	color: inherit;
 	padding: 1rem;
+}
+
+[mol_app_demo_nav_option]{
+	padding: 0 .5rem;
+	text-transform: capitalize;
 }

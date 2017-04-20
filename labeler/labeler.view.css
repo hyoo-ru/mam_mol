@@ -1,7 +1,7 @@
 [mol_labeler] {
 	display: flex;
 	flex-direction: column;
-	align-items: stretch;
+	align-items: flex-start;
 	cursor: inherit;
 }
 
