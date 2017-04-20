@@ -1,7 +1,3 @@
-[mol_check_box] {
-	margin-left: -.5rem;
-}
-
 [mol_check][disabled] > [mol_check_box_icon] {
 	background-color: var(--mol_skin_passive);
 }
