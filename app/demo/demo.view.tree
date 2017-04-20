@@ -8,11 +8,10 @@ $mol_app_demo $mol_book
 			minimal_width 200
 			title <= component_title @ \Компоненты
 			search_line /
-				<= Nav_search $mol_row
-					sub /
-						<= Filter_string $mol_search
-							hint <= filter_hint @ \Search demo...
-							query?val <=> filter_string?val \
+				<= Nav_search $mol_view
+					<= Filter_string $mol_search
+						hint <= filter_hint @ \Search demo...
+						query?val <=> filter_string?val \
 			Body <= Nav $mol_app_demo_nav
 				hierarchy <= nav_hierarchy null
 				record!id <= nav_option!id null
