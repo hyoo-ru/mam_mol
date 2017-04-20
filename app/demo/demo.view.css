@@ -4,7 +4,11 @@
 
 [mol_app_demo_menu] {
 	flex: 1 1 200px;
-	z-index: 2;
+}
+
+[mol_app_demo_menu] [mol_page_head]{
+	flex-direction: column;
+	padding: 1rem 0 0 .5rem;
 }
 
 [mol_app_demo_detail], 
@@ -19,17 +23,17 @@
 	flex: 1 1 auto;
 	margin: 0;
 }
+[mol_app_demo_filter]{
+	margin-top: 1rem;
+	margin-left: -1rem;
+}
 
 [mol_app_demo_filter_string] {
 	width: 100%;
 }
 
-[mol_app_demo_nav_search] {
-	padding: 0;
-}
-
 [mol_search_suggest_filter_string]{
-	padding-left: 1rem;
+	padding: .5rem 1rem;
 }
 
 [mol_app_demo_nav_table] {
@@ -111,9 +115,4 @@
 [mol_app_demo_detail_close]{
 	color: inherit;
 	padding: 1rem;
-}
-
-[mol_app_demo_nav_option]{
-	padding: 0 .5rem;
-	text-transform: capitalize;
 }

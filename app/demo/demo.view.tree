@@ -6,9 +6,9 @@ $mol_app_demo $mol_book
 	pages <= blocks /
 		<= Menu $mol_page
 			minimal_width 200
-			title <= component_title @ \Компоненты
-			search_line /
-				<= Filter_string $mol_search
+			head /
+				<= titles @ \Компоненты
+				<= Filter $mol_search
 					hint <= filter_hint @ \Search demo...
 					query?val <=> filter_string?val \
 			Body <= Nav $mol_app_demo_nav
