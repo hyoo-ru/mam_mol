@@ -8,7 +8,6 @@
 
 [mol_app_demo_menu] [mol_page_head]{
 	flex-direction: column;
-	padding: 1rem 0 0 .5rem;
 }
 
 [mol_app_demo_detail], 
@@ -17,22 +16,11 @@
 	flex: 1000 1 600px;
 }
 
-[mol_app_demo_nav] {
-	display: flex;
-	flex-direction: column;
-	flex: 1 1 auto;
-	margin: 0;
-}
-[mol_app_demo_filter]{
-	margin-top: 1rem;
-	margin-left: -1rem;
-}
-
 [mol_app_demo_filter_string] {
 	width: 100%;
 }
 
-[mol_search_suggest_filter_string]{
+[mol_select_filter_string]{
 	padding: .5rem 1rem;
 }
 
