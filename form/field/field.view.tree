@@ -3,4 +3,4 @@ $mol_form_field $mol_labeler
 		<= name \
 		<= Bid $mol_view
 			sub <= errors /
-	content <= control null
+	Content <= control null
