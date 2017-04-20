@@ -28,6 +28,10 @@
 	padding: 0;
 }
 
+[mol_search_suggest_filter_string]{
+	padding-left: 1rem;
+}
+
 [mol_app_demo_nav_table] {
 	width: 100%;
 }
