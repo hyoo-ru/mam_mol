@@ -23,8 +23,16 @@
 	width: 100%;
 }
 
-[mol_app_demo_nav_head] {
+[mol_app_demo_nav_search] {
 	padding: 0;
+}
+
+[mol_scroll]{
+	box-shadow: 0 0 0 0px rgba(230, 230, 230, .75);
+}
+
+[mol_row]{
+	box-shadow: 0 0 0 0px rgba(230, 230, 230, .75);
 }
 
 [mol_app_demo_nav_table] {
