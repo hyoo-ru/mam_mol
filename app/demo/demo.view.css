@@ -112,6 +112,7 @@
 
 [mol_app_demo_sample_large] {
 	box-sizing: border-box;
+	height: 100%;
 }
 
 [mol_app_demo_detail_source_link],
