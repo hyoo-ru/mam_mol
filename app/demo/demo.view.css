@@ -7,7 +7,7 @@
 }
 
 [mol_app_demo_menu] [mol_page_head]{
-	flex-direction: column;
+	flex-wrap: wrap;
 }
 
 [mol_app_demo_detail], 
