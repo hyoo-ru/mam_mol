@@ -15,7 +15,7 @@ namespace $.$mol {
 		}
 		
 		uri_root( next?: string ) {
-			return $mol_state_arg.value( this.state_key( 'root' ) , next ) || super.uri_root()
+			return $mol_state_arg.value( this.state_key( 'root' ) , next ) || super.uri_root_default()
 		}
 		
 		uri_current( next?: string ) {
@@ -27,7 +27,12 @@ namespace $.$mol {
 		}
 		
 		current() {
-			return $mol_webdav.item( this.uri_current() )
+			const root = this.uri_root()
+			const current = this.uri_current()
+
+			if( current.substring( 0 , root.length ) !== root ) return this.root()
+
+			return $mol_webdav.item( current )
 		}
 		
 		webdav( uri : string ) {
