@@ -3,7 +3,6 @@
 	color: var(--mol_skin_base);
 	cursor: pointer;
 	border-radius: var(--mol_skin_round);
-	display: inline-flex;
 	padding: .5rem;
 	box-sizing: border-box;
 	align-items: baseline;
