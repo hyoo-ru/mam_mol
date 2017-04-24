@@ -6,25 +6,22 @@
 	flex: 1 1 200px;
 }
 
+[mol_app_demo_menu_head] {
+	flex-direction:column;
+}
+
 [mol_app_demo_detail], 
 [mol_app_demo_detail_row],
 [mol_app_empty_message] {
 	flex: 1000 1 600px;
 }
 
-[mol_app_demo_nav] {
-	display: flex;
-	flex-direction: column;
-	flex: 1 1 auto;
-	margin: 0;
-}
-
-[mol_app_demo_filter_string] {
+[mol_app_demo_menu_filter] {
 	width: 100%;
 }
 
-[mol_app_demo_nav_head] {
-	padding: 0;
+[mol_search_suggest_filter_string]{
+	padding: .5rem 1rem;
 }
 
 [mol_app_demo_nav_table] {
@@ -40,6 +37,7 @@
 	display: flex;
 	flex: 1;
 	align-items: center;
+	text-transform: capitalize;
 }
 
 [mol_app_demo_nav_expand] {
@@ -105,8 +103,4 @@
 [mol_app_demo_detail_close]{
 	color: inherit;
 	padding: 1rem;
-}
-[mol_app_demo_nav_option]{
-	padding: 0 .5rem;
-	text-transform: capitalize;
 }
