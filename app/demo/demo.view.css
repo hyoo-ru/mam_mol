@@ -17,7 +17,7 @@
 }
 
 [mol_app_demo_menu_filter] {
-	width: 100%;
+	align-items:stretch;
 }
 
 [mol_search_suggest_filter_string]{
