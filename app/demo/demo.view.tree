@@ -4,18 +4,11 @@ $mol_app_demo $mol_book
 	Placeholder $mol_book_placeholder
 		title <= title -
 	pages <= blocks /
-		<= Menu $mol_page
-			minimal_width 200
-			head /
-				<= Nav_head $mol_row
-					sub /
-						<= Filter_string $mol_search
-							hint <= filter_hint @ \Search demo...
-							query?val <=> filter_string?val \
-			Body <= Nav $mol_app_demo_nav
-				hierarchy <= nav_hierarchy null
-				record!id <= nav_option!id null
-				needle <= filter_string?val \
+		<= Menu $mol_app_demo_menu
+			filter_string?val <=> filter_string?val \
+			nav_hierarchy <= nav_hierarchy null
+			nav_option!id <= nav_option!id null
+			filter_string?val <=> filter_string?val \
 		<= Detail $mol_app_demo_detail
 			minimal_width 600
 			title <= title -
@@ -33,7 +26,17 @@ $mol_app_demo $mol_book
 			<= detail_empty_prefix @ \No one demo with prefix "
 			<= selected \
 			<= detail_empty_postfix @ \"
-	
+$mol_app_demo_menu $mol_page
+	minimal_width 200
+	title <= titles @ \Компоненты
+	tools /
+		<= Filter $mol_search
+			hint <= filter_hint @ \Search demo...
+			query?val <=> filter_string?val \
+	Body <= Nav $mol_app_demo_nav
+		hierarchy <= nav_hierarchy null				
+		record!id <= nav_option!id null
+		needle <= filter_string?val \
 $mol_app_demo_detail $mol_page
 	tools /
 		<= Source_link $mol_link
