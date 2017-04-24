@@ -5,8 +5,6 @@ $mol_app_demo $mol_book
 		title <= title -
 	pages <= blocks /
 		<= Menu $mol_app_demo_menu
-			minimal_width 200
-			title <= Title @ \Компоненты
 			filter_string?val <=> filter_string?val \
 			Body <= Nav $mol_app_demo_nav
 				hierarchy <= nav_hierarchy null
@@ -30,6 +28,8 @@ $mol_app_demo $mol_book
 			<= selected \
 			<= detail_empty_postfix @ \"
 $mol_app_demo_menu $mol_page
+	minimal_width 200
+	title <= titles @ \Компоненты
 	tools /
 		<= Filter $mol_search
 			hint <= filter_hint @ \Search demo...

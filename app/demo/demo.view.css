@@ -6,8 +6,8 @@
 	flex: 1 1 200px;
 }
 
-[mol_app_demo_menu_head]{
-	flex-wrap: wrap;
+[mol_app_demo_menu_head] {
+	flex-direction:column;
 }
 
 [mol_app_demo_detail], 
@@ -16,12 +16,8 @@
 	flex: 1000 1 600px;
 }
 
-[mol_app_demo_filter_string] {
+[mol_app_demo_menu_filter] {
 	width: 100%;
-}
-
-[mol_select_filter_string]{
-	padding: .5rem 1rem;
 }
 
 [mol_app_demo_nav_table] {
