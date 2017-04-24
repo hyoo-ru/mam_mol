@@ -6,10 +6,9 @@ $mol_app_demo $mol_book
 	pages <= blocks /
 		<= Menu $mol_app_demo_menu
 			filter_string?val <=> filter_string?val \
-			Body <= Nav $mol_app_demo_nav
-				hierarchy <= nav_hierarchy null
-				record!id <= nav_option!id null
-				needle <= filter_string?val \
+			nav_hierarchy <= nav_hierarchy null
+			nav_option!id <= nav_option!id null
+			filter_string?val <=> filter_string?val \
 		<= Detail $mol_app_demo_detail
 			minimal_width 600
 			title <= title -
@@ -34,6 +33,10 @@ $mol_app_demo_menu $mol_page
 		<= Filter $mol_search
 			hint <= filter_hint @ \Search demo...
 			query?val <=> filter_string?val \
+	Body <= Nav $mol_app_demo_nav
+		hierarchy <= nav_hierarchy null				
+		record!id <= nav_option!id null
+		needle <= filter_string?val \
 $mol_app_demo_detail $mol_page
 	tools /
 		<= Source_link $mol_link
