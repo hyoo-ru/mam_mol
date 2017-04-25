@@ -46,6 +46,18 @@
 	align-self: stretch;
 }
 
+[mol_app_demo_nav_icons]{
+	flex-grow: 0;
+}
+
+[mol_check_expand_label]{
+	flex-grow: 1;
+}
+
+[mol_app_demo_nav_content]{
+	flex-grow: 2;
+}
+
 [mol_app_demo_main] {
 	background: var(--mol_skin_light);
 	overflow: auto;
