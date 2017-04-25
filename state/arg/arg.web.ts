@@ -28,7 +28,8 @@ namespace $ {
 		@ $mol_mem_key()
 		static value( key : string , next? : string ) {
 			const nextDict = ( next === void 0 ) ? void 0 : $mol_merge_dict( this.dict() , { [ key ] : next } ) 
-			return this.dict( nextDict )[ key ] || null
+			const next2 = this.dict( nextDict )[ key ]
+			return ( next2 == null ) ? null : next2
 		}
 		
 		static link( next : { [ key : string ] : string } ) {
