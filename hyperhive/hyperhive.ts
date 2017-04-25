@@ -2,82 +2,163 @@ declare var hhfw : any
 declare var sqlitePlugin : any
 
 namespace $ {
+
 	export class $mol_hyperhive extends $mol_object {
+
+		host() { return '' }
+		version() { return '' }
+		environment() { return '' }
+		project() { return '' }
+		application() { return '' }
 		
+		@ $mol_mem()
+		login( next? : string ) {
+			return next || ''
+		}
+
+		@ $mol_mem()
+		password( next? : string ) {
+			return next || ''
+		}
+
+		@ $mol_mem()
+		device() {
+			return Date.now().toString( 16 )
+		}
+
 		@ $mol_mem_key()
-		static initialize( params : { host : string , version : string , environment : string , project : string , application : string } ) {
-			if( typeof hhfw === 'undefined' ) return this
-			
-			hhfw.Init( params.host , params.version , params.environment , params.project , params.application )
-			hhfw.SetSslChecks( false )
-			
-			return this
+		static item( config : {
+			host : string
+			version : string
+			environment : string
+			project : string
+			application : string
+		} ) {
+			const next = new $mol_hyperhive()
+			next.host = ()=> config.host
+			next.version = ()=> config.version
+			next.environment = ()=> config.environment
+			next.project = ()=> config.project
+			next.application = ()=> config.application
+			return next
 		}
 		
-		@ $mol_mem_key()
-		static authentificated( credentials : { login : string , password : string } , next? : boolean , force? : $mol_atom_force ) : boolean {
+		@ $mol_mem()
+		initialized() {
 			if( typeof hhfw === 'undefined' ) return true
+			
+			hhfw.Init( `http://${ this.host() }` , this.version() , this.environment() , this.project() , this.application() )
+			
+			hhfw.SetSslChecks( false )
+			
+			return true
+		}
+		
+		@ $mol_mem()
+		authentificated( next? : boolean , force? : $mol_atom_force ) : boolean {
+
+			if( !this.login() || !this.password() ) return false
+
+			if( typeof hhfw === 'undefined' ) {
+				
+				const uri = `http://${ this.host() }/api/${ this.version() }/auth/?env=${ this.environment() }&proj=${ this.project() }&app=${ this.application() }`
+				const res = $mol_http_resource_json.item<any>( uri )
+				
+				res.credentials = $mol_const({
+					login : this.login() ,
+					password : this.password() ,
+				})
+				
+				res.headers = $mol_const({
+					'x-device-id' : this.device()
+				})
+				
+				return res.json().valueOf() && true
+			}
+
+			this.initialized().valueOf()
+
 			hhfw.Auth(
-				credentials.login ,
-				credentials.password ,
-				( message : any )=> this.authentificated( credentials , true , $mol_atom_force ) ,
-				( message : any )=> this.authentificated( credentials , new Error( `${ JSON.stringify( credentials ) } ${ message }` ) as any , $mol_atom_force ) ,
+				this.login() ,
+				this.password() ,
+				( message : any )=> this.authentificated( true , $mol_atom_force ) ,
+				( message : any )=> this.authentificated( new Error( message ) as any , $mol_atom_force ) ,
 			)
+			
 			throw new $mol_atom_wait( 'Authentification...' )
 		}
 		
-		@ $mol_mem_key()
-		static data< Value >( resource : { uri : string , table : string } , next? : any , force? : $mol_atom_force ) : Value {
-			
-			if( typeof hhfw === 'undefined' ) {
-				const uri = `${ resource.uri }${ resource.table }/table/GET_${ resource.table }/`
-				const res = $mol_http_resource_json.item< Value >( uri )
-				res.credentials = $mol_const({})
-				return res.json()
-			}
-			
-			const handleError = ( message : string ) => {
-				const error = new Error( `${ JSON.stringify( resource ) } ${ message }` )
-				$mol_hyperhive.data( resource , error , $mol_atom_force )
-			}
-			
-			$mol_dom_context.document.addEventListener(
-				'deviceready' , () => {
-					
-					if( next === void 0 ) {
-						hhfw.GetDeltaStream(
-							`GET_${ resource.table }` ,
-							( result : any ) => {
-								console.debug( 'GetDeltaStream' , resource , result.substring( 0 , 512 ) )
-								hhfw.QueryToResTable(
-									`GET_${ resource.table }` ,
-									`select * from GET_${ resource.table }_$_GET_${ resource.table }` ,
-									( resp : string )=> {
-										console.debug( 'QueryToResTable' , resource , resp.substring( 0 , 512 ) )
-										$mol_hyperhive.data( resource , JSON.parse( resp ).data || [] , $mol_atom_force )
-									} ,
-									handleError ,
-								)
-							} ,
-							handleError ,
-						)
-					} else {
-						hhfw.Post(
-							`UPSERT_${ resource.table }` ,
-							resource.table ,
-							JSON.stringify( next ) ,
-							( resp : any )=> {
-								console.debug( 'Post' , resource , next , resp.substring( 0 , 512 ) )
-								$mol_hyperhive.data( resource , void 0 , $mol_atom_force )
-							} ,
-							handleError
-						)
-					}
-					
-				}
+		@ $mol_mem()
+		resources( next? : any , force? : $mol_atom_force ) : boolean {
+			this.authentificated().valueOf()
+
+			hhfw.GetResource(
+				( message : any )=> this.resources( JSON.parse( message ).data , $mol_atom_force ) ,
+				( message : any )=> this.resources( new Error( `${ message }` ) as any , $mol_atom_force ) ,
 			)
 			
-			throw new $mol_atom_wait( `Loading ${ resource.table } from ${ resource.uri }` )
+			throw new $mol_atom_wait( 'Loading resource list...' )
+		}
+		
+		@ $mol_mem_key()
+		data< Value >( table : string , next? : any , force? : $mol_atom_force ) : Value {
+			
+			if( typeof hhfw === 'undefined' ) {
+				this.authentificated().valueOf()
+
+				const uri_descr = `http://${ this.host() }/api/${ this.version() }/resources_description/`
+				const descr = $mol_http_resource_json.item< any >( uri_descr ).json()
+				
+				const uri_data = `http://${ this.host() }/api/${ this.version() }/table/GET_${ table }/`
+				const res = $mol_http_resource_json.item< any >( uri_data )
+				res.method_get = $mol_const( 'Post' )
+				res.credentials = $mol_const({})
+				const table_data = res.json()
+
+				const data = table_data.map( ( values : any[] )=> {
+					const record = {} as any
+					values.forEach( ( val , index )=> {
+						const field = Object.keys( descr[ `GET_${ table }`].output[ index ] )[0]
+						record[ field ] = val
+					} )
+					return record
+				} )
+
+				return data as Value
+			}
+
+			this.resources().valueOf()
+			
+			const handleError = ( message : string ) => {
+				const error = new Error( message )
+				this.data( table , error , $mol_atom_force )
+			}
+			
+			if( next === void 0 ) {
+				hhfw.GetDeltaStream(
+					`GET_${ table }` ,
+					( result : any ) => {
+						setTimeout( ()=> {
+							hhfw.Query(
+								`select * from GET_${ table }` ,
+								( resp : string )=> this.data( table , JSON.parse( resp ).data || [] , $mol_atom_force ) ,
+								handleError ,
+							)
+						})
+					} ,
+					handleError ,
+				)
+			} else {
+				hhfw.Post(
+					`UPSERT_${ table }` ,
+					table ,
+					JSON.stringify( next ) ,
+					( resp : any )=> this.data( table , void 0 , $mol_atom_force ) ,
+					handleError
+				)
+			}
+			
+			throw new $mol_atom_wait( `Loading ${ table }...` )
 		
 		}
 		
