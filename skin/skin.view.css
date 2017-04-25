@@ -4,6 +4,9 @@
 	--mol_skin_base: hsl( 215 , 50% , 60% );
 	--mol_skin_base_text: color( var(--mol_skin_base) lightness(99%) );
 	
+	--mol_skin_current: var(--mol_skin_base);
+	--mol_skin_current_text: white;
+	
 	--mol_skin_button: rgba( 245 , 245 , 245 , .9 );
 	--mol_skin_hover: rgba( 0 , 0 , 0 , .05 );
 
@@ -13,7 +16,7 @@
 	}
 	
 	--mol_skin_passive: #eee;
-	--mol_skin_passive_text: darkgray;
+	--mol_skin_passive_text: rgba( 0 , 0 , 0 , .5 );
 	
 	--mol_skin_light: #fcfcfc;
 	--mol_skin_light_line: rgba( 230 , 230 , 230 , .75 );
@@ -31,7 +34,7 @@
 	--mol_skin_warn_hover: color( var(--mol_skin_warn) lightness(-5%) );
 
 	--mol_skin_good: #96DAA9;
-	--mol_skin_good_text: white;
+	--mol_skin_good_text: black;
 
 	--mol_skin_bad: #CC5252;
 	--mol_skin_bad_text: white;
