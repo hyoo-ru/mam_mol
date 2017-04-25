@@ -14,7 +14,7 @@ namespace $ {
 			if( next !== void 0 ) this.href( this.make( next ) )
 			
 			var href = this.href()
-			var chunks = href.split( /[\/\?#!&; ]/g )
+			var chunks = href.split( /[\/\?#&; ]/g )
 			
 			var params : { [ key : string ] : any } = {}
 			chunks.forEach(

@@ -38,7 +38,8 @@
 [mol_book] > * {
 	position: relative;
 	animation: mol_book_page_show ease-out .2s;
-	background: var(--mol_skin_card);
+	background: var(--mol_skin_light);
 	transition-duration: .2s;
 	transition-timing-function: ease-out;
+	z-index: 0;
 }

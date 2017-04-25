@@ -9,6 +9,8 @@
 
 [mol_app_files_folder_row] {
 	width: 100%;
+	display: flex;
+	align-items: flex-start;
 	justify-content: flex-start;
 	text-align: left;
 	word-break: break-word;
@@ -33,7 +35,7 @@
 
 [mol_app_files_icon_file] ,
 [mol_app_files_icon_folder] {
-	margin: 0 .5em 0 0;
+	margin: .25rem .5rem .25rem 0;
 }
 
 [mol_app_files_close] {

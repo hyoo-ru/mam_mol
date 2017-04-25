@@ -24,23 +24,24 @@ namespace $ {
 	
 	export class $mol_app_inventory_domain extends $mol_object {
 		
-		table< Row >( name : string , next? : Row[] ) {
-			const creds = this.credentials()
-			const uri = `https://${ creds.login }:${ creds.password }@mobrun.sp.saprun.com/api/v0.5/data/demo/demo/inventory/`
-			return $mol_hyperhive.data< Row[] >( {
-				uri : uri ,
-				table : name ,
-			} , next )
+		hyperhive() {
+			return $mol_hyperhive.item({
+				host : "mobrun.sp.saprun.com" ,
+				version : "v0.6" ,
+				environment : "demo" ,
+				project : "demo" ,
+				application : "inventory" ,
+			})
 		}
 		
 		@ $mol_mem()
 		products_table() {
-			return this.table< $mol_app_inventory_domain_product_raw >( 'MATERIALS' )
+			return this.hyperhive().data< $mol_app_inventory_domain_product_raw[] >( 'MATERIALS' )
 		}
 		
 		@ $mol_mem()
 		positions_table( next? : $mol_app_inventory_domain_position_raw[] ) {
-			return this.table< $mol_app_inventory_domain_position_raw >( 'MOVEMENTS' , next )
+			return this.hyperhive().data< $mol_app_inventory_domain_position_raw[] >( 'MOVEMENTS' , next )
 		}
 		
 		@ $mol_mem()
@@ -201,25 +202,16 @@ namespace $ {
 			return remap[ this.position_rows_by_id()[ id ].R_STATUS ]
 		}
 		
-		@ $mol_mem()
 		credentials( next? : { login : string , password : string } ) {
-			return $mol_state_session.value( 'credentials' , next )
+			const creds = $mol_state_session.value( 'credentials' , next ) || { login : '' , password : '' }
+			this.hyperhive().login( creds.login )
+			this.hyperhive().password( creds.password )
+			return creds
 		}
 		
 		@ $mol_mem()
 		authentificated() {
-			$mol_hyperhive.initialize( {
-				 host : "mobrun.sp.saprun.com" ,
-				 version : "v0.5" ,
-				 environment : "demo" ,
-				 project : "demo" ,
-				 application : "inventory" ,
-			} )
-			
-			const creds = this.credentials()
-			if( !creds ) return false
-			
-			return $mol_hyperhive.authentificated( creds )
+			return this.hyperhive().authentificated()
 		}
 		
 		can_write_off() {
