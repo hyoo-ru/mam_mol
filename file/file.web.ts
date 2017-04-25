@@ -54,13 +54,13 @@ namespace $ {
 			
 			while( true ) {
 				let prev = res
-				res = res.replace( /\/[^\/]+\/\.\.\// , '/' )
+				res = res.replace( /\/[^\/.]+\/\.\.\// , '/' )
 				if( prev === res ) break
 			}
 			
 			while( true ) {
 				let prev = res
-				res = res.replace( /\/\.\.\/[^\/]+\// , '/' )
+				res = res.replace( /\/\.\.\/[^\/.]+\// , '/' )
 				if( prev === res ) break
 			}
 			
