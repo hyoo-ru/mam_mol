@@ -15,7 +15,7 @@ namespace $.$mol {
 		}
 		
 		uri_root( next?: string ) {
-			return $mol_state_arg.value( this.state_key( 'root' ) , next ) || super.uri_root_default()
+			return $mol_state_arg.value( this.state_key( 'root' ) , next ) || this.uri_root_default()
 		}
 		
 		uri_current( next?: string ) {
