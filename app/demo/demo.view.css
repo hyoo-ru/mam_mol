@@ -46,10 +46,6 @@
 	align-self: stretch;
 }
 
-[mol_app_demo_nav_icons] {
-	flex-grow: 0;
-}
-
 [mol_app_demo_nav_content] {
 	flex-grow: 1;
 }
