@@ -20,7 +20,7 @@
 	align-items:stretch;
 }
 
-[mol_search_suggest_filter_string] {
+[mol_app_demo_menu_filter] [mol_search_suggest_filter_string] {
 	padding: .5rem 1rem;
 }
 
