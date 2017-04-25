@@ -62,4 +62,3 @@ $mol_app_demo_nav $mol_grid
 				expanded?val <=> cell_expanded!id?val -
 				level <= cell_level!id -
 			<= cell_content!id -
-			<= Icons!id $mol_icon_chevron
