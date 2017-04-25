@@ -61,4 +61,8 @@ $mol_app_demo_nav $mol_grid
 			<= Expand!id $mol_check_expand
 				expanded?val <=> cell_expanded!id?val -
 				level <= cell_level!id -
-			<= cell_content!id -
+			<= Content!id $mol_view
+				sub /
+					<= cell_content!id -
+			<= Chevron!id $mol_icon_chevron
+			
