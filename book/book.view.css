@@ -41,4 +41,5 @@
 	background: var(--mol_skin_light);
 	transition-duration: .2s;
 	transition-timing-function: ease-out;
+	z-index: 0;
 }
