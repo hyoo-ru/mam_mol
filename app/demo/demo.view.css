@@ -112,14 +112,45 @@
 [mol_app_demo_placeholder] {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
 	align-content:center;
 	padding: 5rem;
 }
 
-[mol_app_demo_placeholder_welcom_image1],
-[mol_app_demo_placeholder_welcom_image2],
-[mol_app_demo_placeholder_welcom_image3] {
+[mol_app_demo_placeholder_image1],
+[mol_app_demo_placeholder_image2],
+[mol_app_demo_placeholder_image3],
+[mol_app_demo_placeholder_image4] {
 	box-shadow: 0 0 0 0px rgba(230, 230, 230, .75);
 	margin: 1rem .5rem .5rem 0;
+	width: 8rem;
+	height: 8rem;
+}
+
+[mol_app_demo_placeholder_image4] {
+	width: 2rem;
+	margin: 0;
+}
+
+[mol_app_demo_placeholder_text] {
+	display: flex;
+	text-align: center;
+	margin-top: 2rem;
+	font-size: 1.5rem;
+}
+
+[mol_app_demo_placeholder_text1],
+[mol_app_demo_placeholder_text2],
+[mol_app_demo_placeholder_text3] {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: flex-start;
+	width: 20rem;
+	font-size: 1.5rem;
+}
+
+[mol_app_demo_placeholder_github] {
+	display: flex;
+	align-items: center;
+	font-size: 1.5rem;
 }
