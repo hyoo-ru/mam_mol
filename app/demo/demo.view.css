@@ -113,6 +113,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	align-content:center;
+	justify-content: flex-start;
 	padding: 5rem;
 }
 
@@ -132,8 +133,6 @@
 }
 
 [mol_app_demo_placeholder_text] {
-	display: flex;
-	text-align: center;
 	margin-top: 2rem;
 	font-size: 1.5rem;
 }
@@ -143,8 +142,7 @@
 [mol_app_demo_placeholder_text3] {
 	display: flex;
 	align-items: center;
-	flex-direction: column;
-	justify-content: flex-start;
+
 	width: 20rem;
 	font-size: 1.5rem;
 }
