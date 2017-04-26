@@ -11,6 +11,7 @@
 	-webkit-overflow-scrolling: touch;
 	align-self: stretch;
 	display: flex;
+	flex-direction: column;
 }
 
 @media print {
