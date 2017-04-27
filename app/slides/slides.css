@@ -30,7 +30,6 @@
 [mol_app_slides_listener_content] {
 	flex: 1 0 auto;
 	justify-content: space-around;
-	align-items: center;
 	max-width: none;
 }
 
