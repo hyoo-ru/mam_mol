@@ -10,6 +10,8 @@
 	box-sizing: border-box;
 	@apply --mol_skin_outline;
 	overflow: hidden;
+	background: var(--mol_skin_light);
+	color: var(--mol_skin_light_text);
 }
 
 [mol_page_head] {
@@ -31,8 +33,6 @@
 [mol_page_body] {
 	flex: 1 1 100%;
 	margin: 0;
-	background: var(--mol_skin_light);
-	color: var(--mol_skin_light_text);
 }
 
 [mol_page_foot] {

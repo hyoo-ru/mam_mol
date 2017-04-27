@@ -3,7 +3,7 @@
 	max-width: 60rem;
 	background: var(--mol_skin_card);
 	@apply --mol_skin_outline;
-	padding: 1rem 2rem;
+	padding: .5rem;
 	border-radius: var(--mol_skin_round);
 	white-space: pre-line;
 	display: flex;
@@ -13,7 +13,7 @@
 }
 
 [mol_text_row] {
-	margin: .5rem 0;
+	margin: .5rem;
 	overflow: auto;
 	max-width: 100%;
 }
@@ -29,31 +29,35 @@
 }
 
 [mol_text_header_level="1"] {
-	font-size: 1.5rem;
+	font-size: 1.5em;
 }
 
 [mol_text_header_level="2"] {
-	font-size: 1.3rem;
+	font-size: 1.3em;
 }
 
 [mol_text_header_level="3"] {
-	font-size: 1.1rem;
+	font-size: 1.1em;
 }
 
 [mol_text_header_level="4"] {
-	font-size: 1.1rem;
+	font-size: 1.1em;
 	font-style: italic;
 }
 
 [mol_text_header_level="5"] {
-	font-size: 1.1rem;
+	font-size: 1.1em;
 	font-weight: normal;
 	font-style: italic;
 }
 
 [mol_text_type="list-item"] {
-	list-style: inside;
 	display: list-item;
+}
+
+[mol_text_type="list-item"]:before {
+	content: '•';
+	margin-right: 1ch;
 }
 
 [mol_text_table] {
@@ -68,7 +72,6 @@
 [mol_text_type="code"] {
 	font-family: monospace;
 	white-space: pre;
-	font-size: .9rem;
 	border-radius: var(--mol_skin_round);
 	padding: 1px;
 }
