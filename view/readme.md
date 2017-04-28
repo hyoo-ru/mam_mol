@@ -549,4 +549,5 @@ Here we linked our properties `message` and `name` through the expression. So no
 
 ## Articles
 
+* [View formats](https://github.com/eigenmethod/mol/wiki/View-formats) - Comparison of component description formats (tree, xml, json)
 * [React'ивные Panel'и](https://habrahabr.ru/post/314752/) - JSX vs view.tree
