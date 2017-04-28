@@ -78,22 +78,22 @@ $mol_app_demo_placeholder $mol_book_placeholder
 				<= Text1 $mol_view
 					sub /
 						<= Image1 $mol_image
-							uri \app/demo/technology.svg
+							uri \app/demo/demo_technology.svg
 						<= technology @ \Flexible adaptive interface
 				<= Text2 $mol_view
 					sub /
 						<= Image2 $mol_image
-							uri \app/demo/code-rate.svg
+							uri \app/demo/demo_code-rate.svg
 						<= Code_rate @ \Quick and easy development
 				<= Text3 $mol_view
 					sub /
 						<= Image3 $mol_image
-							uri \app/demo/programming.svg
+							uri \app/demo/demo_programming.svg
 						<= Programming @ \High-speed applications
 				<= Github $mol_view
 					sub /
 						<= Image4 $mol_image
-							uri \app/demo/github.svg
+							uri \app/demo/demo_github.svg
 						<= Github_link $mol_link
 							uri \https://github.com/eigenmethod/mol
 							title \https://github.com/eigenmethod/mol
