@@ -118,7 +118,7 @@
 
 [mol_app_demo_placeholder_content] {
 	max-width: 65rem;
-	padding: 0 2rem;
+	padding: 2rem;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -129,21 +129,26 @@
 	font-size: 2rem;
 }
 
-[mol_placehlder_image] {
+[mol_app_demo_placeholder_advantages] {
+	display: flex;
+}
+
+[mol_app_placehlder_image] {
 	box-shadow: none;
+	min-width: 5rem;
 	margin: 1rem 1rem .5rem 0;
-	width: 10rem;
+	width: 8rem;
 }
 
 [mol_app_demo_placeholder_image_github] {
 	height: 2rem;
 	width: 2rem;
+	min-width: 2rem;
 	margin: 0;
 }
 
 [mol_app_demo_placeholder_text_about] {
 	margin-top: 2rem;
-
 }
 
 [mol_app_demo_placeholder_technology],
@@ -151,13 +156,7 @@
 [mol_app_demo_placeholder_programming] {
 	display: flex;
 	align-items: center;
-	min-height: 8rem;
-	width: 19rem;
 	margin: 1rem 2rem 0 0;
-}
-
-[mol_app_demo_placeholder_programming] {
-	margin-right: 0;
 }
 
 [mol_app_demo_placeholder_github] {
