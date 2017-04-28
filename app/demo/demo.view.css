@@ -110,11 +110,19 @@
 }
 
 [mol_app_demo_placeholder] {
-	display: flex;
-	flex-wrap: wrap;
-	align-content:center;
+	padding: 0;
+	margin: 0;
 	justify-content: flex-start;
-	padding: 5rem;
+}
+
+[mol_app_demo_placeholder_content] {
+	max-width: 65rem;
+	min-width: 30rem;
+	padding: 0 .5rem 0 3rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: center;
 }
 
 [mol_app_demo_placeholder_image1],
@@ -123,11 +131,11 @@
 [mol_app_demo_placeholder_image4] {
 	box-shadow: 0 0 0 0px rgba(230, 230, 230, .75);
 	margin: 1rem .5rem .5rem 0;
-	width: 8rem;
-	height: 8rem;
+	width: 10rem;
 }
 
 [mol_app_demo_placeholder_image4] {
+	height: 2rem;
 	width: 2rem;
 	margin: 0;
 }
@@ -142,13 +150,19 @@
 [mol_app_demo_placeholder_text3] {
 	display: flex;
 	align-items: center;
-
-	width: 20rem;
+	min-height: 8rem;
+	width: 18rem;
 	font-size: 1.5rem;
+	margin: 1rem 3rem 0 0;
+}
+
+[mol_app_demo_placeholder_text3] {
+	margin-right: 0;
 }
 
 [mol_app_demo_placeholder_github] {
 	display: flex;
 	align-items: center;
 	font-size: 1.5rem;
+	margin-top: 1.5rem;
 }

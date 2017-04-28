@@ -69,29 +69,31 @@ $mol_app_demo_nav $mol_grid
 $mol_app_demo_placeholder $mol_book_placeholder
 	title -
 	sub /
-		<= welcom_text @ \Welcome to $mol
-		<= Text $mol_view
+		<= Content $mol_scroll
 			sub /
-				<= text @ \$mol - framework with small size of code, reactive architecture, components with adaptive design, that can be easily chaned for different tasks.
-		<= Text1 $mol_view
-			sub /
-				<= Image1 $mol_image
-					uri \app/demo/technology.svg
-				<= technology @ \Flexible adaptive interface
-		<= Text2 $mol_view
-			sub /
-				<= Image2 $mol_image
-					uri \app/demo/code-rate.svg
-				<= Code_rate @ \Quick and easy development
-		<= Text3 $mol_view
-			sub /
-				<= Image3 $mol_image
-					uri \app/demo/programming.svg
-				<= Programming @ \High-speed applications
-		<= Github $mol_view
-			sub /
-				<= Image4 $mol_image
-					uri \app/demo/github.svg
-				<= Github_link $mol_link
-					uri \https://github.com/eigenmethod/mol
-					title \https://github.com/eigenmethod/mol
+				<= welcom_text @ \Framework $mol
+				<= Text $mol_view
+					sub /
+						<= text @ \Reactive micro-modular ui framework. Very simple, but very powerful! $mol has small size of code, reactive architecture, components with adaptive design, that can be easily configured.
+				<= Text1 $mol_view
+					sub /
+						<= Image1 $mol_image
+							uri \app/demo/technology.svg
+						<= technology @ \Flexible adaptive interface
+				<= Text2 $mol_view
+					sub /
+						<= Image2 $mol_image
+							uri \app/demo/code-rate.svg
+						<= Code_rate @ \Quick and easy development
+				<= Text3 $mol_view
+					sub /
+						<= Image3 $mol_image
+							uri \app/demo/programming.svg
+						<= Programming @ \High-speed applications
+				<= Github $mol_view
+					sub /
+						<= Image4 $mol_image
+							uri \app/demo/github.svg
+						<= Github_link $mol_link
+							uri \https://github.com/eigenmethod/mol
+							title \https://github.com/eigenmethod/mol
