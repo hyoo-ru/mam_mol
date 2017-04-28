@@ -133,7 +133,7 @@
 [mol_app_demo_placeholder_image_code_rate],
 [mol_app_demo_placeholder_image_programming],
 [mol_app_demo_placeholder_image_github] {
-	box-shadow: var(--mol_skin_outline);
+	box-shadow: none;
 	margin: 1rem 1rem .5rem 0;
 	width: 10rem;
 }
