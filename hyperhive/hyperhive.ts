@@ -64,12 +64,12 @@ namespace $ {
 				const uri = `http://${ this.host() }/api/${ this.version() }/auth/?env=${ this.environment() }&proj=${ this.project() }&app=${ this.application() }`
 				const res = $mol_http_resource_json.item<any>( uri )
 				
-				res.credentials = $mol_const({
+				res.credentials = ()=> ({
 					login : this.login() ,
 					password : this.password() ,
 				})
 				
-				res.headers = $mol_const({
+				res.headers = ()=> ({
 					'x-device-id' : this.device()
 				})
 				

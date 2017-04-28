@@ -1,4 +1,7 @@
 $mol_app_slides $mol_book
+	attr *
+		^
+		mol_app_slides_role <= role \ 
 	contents?val \
 	pages /
 		<= Listener $mol_page
@@ -33,6 +36,6 @@ $mol_app_slides $mol_book
 		<= Loader $mol_view
 			dom_name \iframe
 			attr *
-				src <= uri_slides <= uri_slides_default \//nin-jin.github.io/slides/oorp/
+				src <= uri_slides <= uri_slides_default \https://nin-jin.github.io/slides/oorp/
 			event *
 				load?val <=> event_load?val null
