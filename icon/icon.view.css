@@ -2,6 +2,6 @@
 	fill: currentColor;
 	width: 1em;
 	height: 1em;
-	vertical-align: middle;
 	flex: 0 0 auto;
+	vertical-align: -10%;
 }

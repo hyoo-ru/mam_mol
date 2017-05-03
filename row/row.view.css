@@ -1,7 +1,7 @@
 [mol_row] {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: flex-start;
+	align-items: baseline;
 	align-content: flex-start;
 	justify-content: flex-start;
 	padding: .5rem;

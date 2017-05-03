@@ -3,7 +3,6 @@
 	height: 1rem;
 	flex: 0 1 8rem;
 	width: 8rem;
-	align-self: center;
 	vertical-align: middle;
 	border-radius: var(--mol_skin_round);
 	@apply --mol_skin_outline;
