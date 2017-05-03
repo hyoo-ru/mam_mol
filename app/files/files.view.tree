@@ -4,6 +4,7 @@ $mol_app_files $mol_book
 	-
 	Folder!folder $mol_app_files_folder
 		title <= webdav_title!folder \
+		description <= webdav_description!folder \
 		tools <= page_tools!folder -
 		rows <= folder_rows!folder /
 	-
@@ -13,7 +14,14 @@ $mol_app_files $mol_book
 		current <= folder_row_current!uri false
 		sub /
 			<= folder_row_icon!uri null
-			<= folder_row_title!uri \
+			<= Folder_row_info!uri $mol_view
+				sub /
+					<= Folder_row_title!uri $mol_view
+						sub /
+							<= folder_row_title!uri \
+					<= Folder_row_descr!uri $mol_view
+						sub /
+							<= folder_row_descr!uri \
 	-
 	File!file $mol_app_files_file
 		title <= webdav_title!file -
@@ -23,7 +31,7 @@ $mol_app_files $mol_book
 	-
 	Icon_folder!uri $mol_icon_folder
 	-
-	Icon_file!uri $mol_icon_file
+	Icon_file!uri $mol_icon_file2
 	-
 	Placeholder $mol_book_placeholder
 		title <= title -
@@ -38,6 +46,8 @@ $mol_app_files $mol_book
 $mol_app_files_folder $mol_page
 	minimal_width 400
 	body /
+		<= Description $mol_text
+			text <= description \
 		<= Status $mol_status
 			status <= rows /
 		<= Folder_rows $mol_list

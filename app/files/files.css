@@ -14,6 +14,31 @@
 	justify-content: flex-start;
 	text-align: left;
 	word-break: break-word;
+	@apply --mol_skin_outline;
+	padding: .25rem;
+}
+
+[mol_app_files_folder_row]:not([mol_link_current]) {
+	background: var(--mol_skin_card);
+	color: var(--mol_skin_card_text);
+}
+
+[mol_app_files_folder_row_info] {
+	display: flex;
+	flex: 1 1 auto;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+[mol_app_files_folder_row_title] {
+	margin: .25rem;
+}
+
+[mol_app_files_folder_row_descr] {
+	color: var(--mol_skin_passive_text);
+	white-space: nowrap;
+	margin: .25rem;
+	font-size: .8rem;
 }
 
 [mol_app_files_file] {
@@ -35,7 +60,9 @@
 
 [mol_app_files_icon_file] ,
 [mol_app_files_icon_folder] {
-	margin: .25rem .5rem .25rem 0;
+	margin: .25rem;
+	zoom: 1.5;
+	color: var(--mol_skin_passive_text);
 }
 
 [mol_app_files_close] {
