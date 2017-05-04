@@ -441,6 +441,9 @@ namespace $ {
 					if( env === 'node' && ( !bundle || bundle === 'package.json' ) ) {
 						res = res.concat( this.bundlePackageJSON( { path , exclude } ) )
 					}
+					if( env === 'web' ) {
+						res = res.concat( this.bundleCordova( { path , exclude } ) )
+					}
 				}
 			)
 			
@@ -610,6 +613,39 @@ namespace $ {
 			this.logBundle( target )
 			
 			return [ target ]
+		}
+		
+		@ $mol_mem_key()
+		bundleCordova( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+			const pack = $mol_file.absolute( path )
+			const cordova = pack.resolve( '-/cordova' )
+			
+			const config = pack.resolve( 'config.xml' )
+			if( !config.exists() ) return []
+			
+			const config_target = cordova.resolve( 'config.xml' )
+			config_target.content( config.content() )
+			
+			const html = pack.resolve( 'index.html' )
+			const html_target = cordova.resolve( 'www/index.html' )
+			html_target.content( html.content() )
+			
+			const sources : $mol_file[] = [].concat.apply( [] , [
+				this.bundleJS({ path , exclude , bundle : 'web' }) ,
+				this.bundleCSS({ path , exclude , bundle : 'web' }) ,
+				this.bundleLocale({ path , exclude , bundle : 'web' }) ,
+			] )
+			
+			const targets = [ config_target , html_target ]
+			.concat( sources.map( source => {
+				const target = cordova.resolve( `www/${ source.relate( pack ) }` )
+				target.content( source.content() )
+				return target
+			} ) )
+			
+			this.logBundle( cordova )
+			
+			return targets
 		}
 		
 		@ $mol_mem_key()
