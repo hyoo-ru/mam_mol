@@ -25,6 +25,7 @@
 
 [mol_app_files_folder_row_info] {
 	display: flex;
+	flex-wrap: wrap;
 	flex: 1 1 auto;
 	justify-content: space-between;
 	align-items: baseline;
@@ -39,6 +40,8 @@
 	white-space: nowrap;
 	margin: .25rem;
 	font-size: .8rem;
+	flex: 1 1 auto;
+	text-align: right;
 }
 
 [mol_app_files_file] {
