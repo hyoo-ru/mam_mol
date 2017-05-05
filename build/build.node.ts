@@ -168,6 +168,12 @@ namespace $ {
 			return res.options
 		}
 		
+		@ $mol_mem_key()
+		tsSource( { path , target } : { path : string , target : number } ) {
+			const content = $mol_file.absolute( path ).content().toString()
+			return $node.typescript.createSourceFile( path , content , target )
+		}
+		
 		@ $mol_mem()
 		tsHost() {
 
@@ -183,8 +189,7 @@ namespace $ {
 				getCommonSourceDirectory : ()=> this.root().path() ,
 				getNewLine : ()=> '\n' ,
 				getSourceFile : ( path : string , target : any , fail : any )=> {
-					const content = $mol_file.absolute( path ).content().toString()
-					return $node.typescript.createSourceFile( path , content , target )
+					return this.tsSource({ path , target })
 				} ,
 				fileExists : ( path : string )=> {
 					return $mol_file.absolute( path ).exists()
