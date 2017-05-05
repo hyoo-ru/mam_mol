@@ -391,7 +391,7 @@ namespace $ {
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
 			
 			var envsDef = [ 'web' , 'node' ]
-			var envs = [] as string[]
+			var envs = bundle ? [] as string[] : envsDef.slice()
 			var stages = [ 'test' , 'dev' ]
 			
 			if( bundle ) {
