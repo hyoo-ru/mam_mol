@@ -391,7 +391,7 @@ namespace $ {
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
 			
 			var envsDef = [ 'web' , 'node' ]
-			var envs = envsDef.slice()
+			var envs = [] as string[]
 			var stages = [ 'test' , 'dev' ]
 			
 			if( bundle ) {
@@ -401,7 +401,7 @@ namespace $ {
 				
 				tags.split( '.' ).forEach(
 					tag => {
-						if( envs.indexOf( tag ) !== -1 ) envs = [ tag ]
+						if( envsDef.indexOf( tag ) !== -1 ) envs = [ tag ]
 					}
 				)
 			}
@@ -438,15 +438,19 @@ namespace $ {
 							)
 						)
 					}
-					if( env === 'node' && ( !bundle || bundle === 'package.json' ) ) {
-						res = res.concat( this.bundlePackageJSON( { path , exclude } ) )
-					}
-					if( env === 'web' ) {
-						res = res.concat( this.bundleCordova( { path , exclude } ) )
-					}
 				}
 			)
 			
+			if( !bundle || bundle === 'package.json' ) {
+				res = res.concat( this.bundlePackageJSON( { path , exclude : [ 'web' ] } ) )
+			}
+			
+			if( !type || /(svg|png|jpg)$/.test( type ) ) {
+				res = res.concat( this.bundleImages( { path , exclude : [ 'node' ] } ) )
+			}
+			
+			res = res.concat( this.bundleCordova( { path , exclude : [ 'node' ] } ) )
+
 			return res.map( r => r.valueOf() )
 		}
 		
@@ -616,9 +620,29 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key()
+		bundleImages( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+			const root = this.root()
+			const pack = $mol_file.absolute( path )
+			
+			var sources = this.sourcesAll( { path , exclude } )
+			.filter( src => /(svg|png|jpg)$/.test( src.ext() ) )
+			
+			if( sources.length === 0 ) return [] 
+			
+			const targets : $mol_file[] = [].concat( sources.map( source => {
+				const target = pack.resolve( `-/${ source.relate( root ) }` )
+				target.content( source.content() )
+				this.logBundle( target )
+				return target
+			} ) )
+			
+			return targets
+		}
+		
+		@ $mol_mem_key()
 		bundleCordova( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const pack = $mol_file.absolute( path )
-			const cordova = pack.resolve( '-/cordova' )
+			const cordova = pack.resolve( '-cordova' )
 			
 			const config = pack.resolve( 'config.xml' )
 			if( !config.exists() ) return []
@@ -630,11 +654,7 @@ namespace $ {
 			const html_target = cordova.resolve( 'www/index.html' )
 			html_target.content( html.content() )
 			
-			const sources : $mol_file[] = [].concat.apply( [] , [
-				this.bundleJS({ path , exclude , bundle : 'web' }) ,
-				this.bundleCSS({ path , exclude , bundle : 'web' }) ,
-				this.bundleLocale({ path , exclude , bundle : 'web' }) ,
-			] )
+			const sources = pack.resolve( '-' ).find().filter( src => src.type() === 'file' )
 			
 			const targets = [ config_target , html_target ]
 			.concat( sources.map( source => {
