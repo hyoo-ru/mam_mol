@@ -68,6 +68,22 @@ namespace $.$mol {
 			return $mol_state_arg.value( this.state_key( 'slides' ) ) || this.uri_slides_default()
 		}
 		
+		event_next( next? : Event ) {
+			this.slide( this.slide() + 1 )
+		}
+		
+		event_prev( next? : Event ) {
+			this.slide( this.slide() - 1 )
+		}
+		
+		event_start( next? : Event ) {
+			this.slide( 0 )
+		}
+		
+		speech_enabled( next? : boolean ) {
+			return $mol_speech.listening( next )
+		}
+		
 	}
 	
 }

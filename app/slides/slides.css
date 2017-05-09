@@ -47,3 +47,7 @@
 	margin: 1rem;
 	word-break: normal;
 }
+
+[mol_app_slides_speech_toggle] {
+	padding: 1rem;
+}
