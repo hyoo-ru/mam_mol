@@ -4,8 +4,9 @@
 	--mol_skin_base: hsl( 215 , 50% , 60% );
 	--mol_skin_base_text: color( var(--mol_skin_base) lightness(99%) );
 	
-	--mol_skin_current: var(--mol_skin_base);
+	--mol_skin_current: color( var(--mol_skin_base) lightness(-5%) saturation(+10%) );
 	--mol_skin_current_text: white;
+	--mol_skin_current_line: color( var(--mol_skin_current) lightness(-10%) saturation(+20%) );
 	
 	--mol_skin_button: rgba( 245 , 245 , 245 , .9 );
 	--mol_skin_hover: rgba( 0 , 0 , 0 , .05 );
