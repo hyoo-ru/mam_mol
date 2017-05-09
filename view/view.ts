@@ -137,7 +137,9 @@ namespace $ {
 			
 			try {
 				
-				for( let plugin of this.plugins() ) plugin.render()
+				for( let plugin of this.plugins() ) {
+					if( typeof plugin['render'] === 'function' ) plugin.render()
+				}
 				
 				$mol_dom_render( node , {
 					attributes : this.attr() ,
