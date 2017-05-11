@@ -21,31 +21,33 @@
 
 [mol_button][disabled] {
 	color: var(--mol_skin_passive_text);
+	background: none;
+	pointer-events: none;
 }
 
-[mol_button_minor]:not([disabled]) {
+[mol_button_minor] {
 	background-color: var(--mol_skin_button);
 	color: var(--mol_skin_light_text);
 }
 
-[mol_button_major]:not([disabled]) {
+[mol_button_major] {
 	background-color: var(--mol_skin_accent);
 	color: var(--mol_skin_accent_text);
 	@apply --mol_skin_outline;
 }
 
-[mol_button_danger]:not([disabled]) {
+[mol_button_danger] {
 	background-color: var(--mol_skin_warn);
 	color: var(--mol_skin_warn_text);
 }
 
-[mol_button]:not([disabled]):hover {
+[mol_button]:hover {
 	z-index: 1;
 	cursor: pointer;
 	background-color: var(--mol_skin_hover);
 }
 
-[mol_button_minor]:not([disabled]):hover {
+[mol_button_minor]:hover {
 	background-color: var(--mol_skin_light_hover);
 	color: var(--mol_skin_light_text);
 }
@@ -56,10 +58,10 @@
 	@apply --mol_skin_focus;
 }
 
-[mol_button_major]:not([disabled]):hover {
+[mol_button_major]:hover {
 	background-color: var(--mol_skin_accent_hover);
 }
 
-[mol_button_danger]:not([disabled]):hover {
+[mol_button_danger]:hover {
 	background-color: var(--mol_skin_warn_hover);
 }
