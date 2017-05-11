@@ -16,12 +16,12 @@ $mol_app_files $mol_book
 			<= folder_row_icon!uri null
 			<= Folder_row_info!uri $mol_view
 				sub /
-					<= Folder_row_title!uri $mol_view
-						sub /
-							<= folder_row_title!uri \
 					<= Folder_row_descr!uri $mol_view
 						sub /
 							<= folder_row_descr!uri \
+					<= Folder_row_title!uri $mol_view
+						sub /
+							<= folder_row_title!uri \
 	-
 	File!file $mol_app_files_file
 		title <= webdav_title!file -

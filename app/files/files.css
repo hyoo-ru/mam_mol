@@ -24,24 +24,21 @@
 }
 
 [mol_app_files_folder_row_info] {
-	display: flex;
-	flex-wrap: wrap;
+	display: block;
 	flex: 1 1 auto;
-	justify-content: space-between;
-	align-items: baseline;
 }
 
 [mol_app_files_folder_row_title] {
 	margin: .25rem;
+	display: block;
 }
 
 [mol_app_files_folder_row_descr] {
 	color: var(--mol_skin_passive_text);
 	white-space: nowrap;
-	margin: .25rem;
+	margin: .5rem;
 	font-size: .8rem;
-	flex: 1 1 auto;
-	text-align: right;
+	float: right;
 }
 
 [mol_app_files_file] {
