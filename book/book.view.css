@@ -8,6 +8,7 @@
 	align-self: stretch;
 	margin: 0;
 	@apply --mol_skin_outline;
+	transform: translateZ( 0 );
 }
 
 [mol_book_placeholder] {
@@ -25,12 +26,12 @@
 	position: absolute;
 	height: 100%;
 	opacity: 0;
-	transform: translateX( -100% );
+	transform: translateX( -100% ) scale( 0 , 1 );
 }
 
 @keyframes mol_book_page_show {
 	from {
-		transform: translateX( 50% );
+		transform: translateX( 100% ) scale( 0 , 1 );
 		opacity: 0;
 	}
 }
@@ -42,4 +43,8 @@
 	transition-duration: .2s;
 	transition-timing-function: ease-out;
 	z-index: 0;
+}
+
+[mol_book] > *:first-child:last-child {
+	animation: none;
 }
