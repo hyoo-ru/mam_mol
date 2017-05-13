@@ -29,6 +29,7 @@ $mol_app_slides $mol_book
 				<= Speech_toggle $mol_check_icon
 					Icon <= Speech_toggle_icon $mol_icon_microphone
 					checked?val <=> speech_enabled?val false
+					hint <= speech_toggle_hint @ \Speech contol
 				<= Slide_number $mol_view
 					sub /
 						<= slide?val 0
