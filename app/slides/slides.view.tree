@@ -10,7 +10,10 @@ $mol_app_slides $mol_book
 				\next
 				\forward
 				\дальше
+				\далее
+				\удали
 				\вперед
+				\перевод
 		<= Speech_prev $mol_speech
 			event_catch?val <=> event_prev?val null
 			patterns <= speech_prev /
@@ -26,10 +29,6 @@ $mol_app_slides $mol_book
 			minimal_width 600
 			title <= slide_title \
 			tools /
-				<= Speech_toggle $mol_check_icon
-					Icon <= Speech_toggle_icon $mol_icon_microphone
-					checked?val <=> speech_enabled?val false
-					hint <= speech_toggle_hint @ \Speech contol
 				<= Slide_number $mol_view
 					sub /
 						<= slide?val 0
@@ -49,6 +48,10 @@ $mol_app_slides $mol_book
 						slide null
 					sub /
 						<= Open_listener_icon $mol_icon_external
+				<= Speech_toggle $mol_check_icon
+					Icon <= Speech_toggle_icon $mol_icon_microphone
+					checked?val <=> speech_enabled?val false
+					hint <= speech_toggle_hint @ \Speech contol
 				<= Slide_switcher $mol_number
 					value?val <=> slide?val 0
 			body /

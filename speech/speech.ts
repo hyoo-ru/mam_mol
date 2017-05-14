@@ -62,7 +62,7 @@ namespace $ {
 			const text = $mol_speech.text()
 			
 			if( text.match( this.matcher() ) ) {
-				new $mol_defer( ()=> this.event_catch( event ) )
+				new $mol_defer( ()=> this.event_catch( null ) )
 			}
 			
 			return null
