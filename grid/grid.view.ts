@@ -23,7 +23,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		rows_visible_max() {
-			return Math.ceil( this.context().$mol_view_visible_height() / this.row_height() )
+			return Math.ceil( this.$.$mol_view_visible_height() / this.row_height() )
 		}
 		
 		@ $mol_mem()
@@ -33,7 +33,7 @@ namespace $.$mol {
 			
 			const count = rows.length
 			const context = this.context_sub()
-			const scrollTop = context.$mol_scroll_scroll_top()
+			const scrollTop = context.$mol_scroll_top()
 			
 			const top = Math.max( 0 , Math.floor( scrollTop / this.row_height() ) )
 			const bottom = Math.min( count , top + this.rows_visible_max() )
@@ -191,7 +191,7 @@ namespace $.$mol {
 		context_sub( ) {
 			const context = this.context()
 			const subContext : $mol_view_context = Object.create( context )
-			subContext.$mol_scroll_scroll_top = ()=> context.$mol_scroll_scroll_top() - this.offset()
+			subContext.$mol_scroll_top = ()=> context.$mol_scroll_top() - this.offset()
 			return subContext
 			
 		}

@@ -11,7 +11,7 @@ namespace $.$mol {
 			var sub = this.sub()
 			if( !sub ) return null
 			
-			let heightLimit = this.context().$mol_view_visible_height()
+			let heightLimit = this.$.$mol_view_visible_height()
 			var offset = 0
 			
 			var next : number[] = []
