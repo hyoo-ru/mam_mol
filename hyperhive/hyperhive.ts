@@ -47,7 +47,7 @@ namespace $ {
 		initialized() {
 			if( typeof hhfw === 'undefined' ) return true
 			
-			hhfw.Init( `http://${ this.host() }` , this.version() , this.environment() , this.project() , this.application() , '0' )
+			hhfw.Init( `http://${ this.host() }` , this.version() , this.environment() , this.project() , this.application() , '123' )
 			
 			hhfw.SetSslChecks( false )
 			
