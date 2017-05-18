@@ -131,36 +131,39 @@
 
 [mol_app_demo_placeholder_advantages] {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 [mol_app_placehlder_image] {
 	box-shadow: none;
-	min-width: 5rem;
+	flex-shrink: 0;
+	width: 5rem;
 	margin: 1rem 1rem .5rem 0;
-	width: 8rem;
-}
-
-[mol_app_demo_placeholder_image_github] {
-	height: 2rem;
-	width: 2rem;
-	min-width: 2rem;
-	margin: 0;
 }
 
 [mol_app_demo_placeholder_text_about] {
 	margin-top: 2rem;
 }
 
-[mol_app_demo_placeholder_technology],
-[mol_app_demo_placeholder_code],
-[mol_app_demo_placeholder_programming] {
+[mol_app_demo_placeholder_about]{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[mol_app_placeholder_block] {
 	display: flex;
 	align-items: center;
 	margin: 1rem 2rem 0 0;
+	flex: 18rem;
 }
 
 [mol_app_demo_placeholder_github] {
 	display: flex;
 	align-items: center;
 	margin-top: 1.5rem;
+}
+
+[mol_app_demo_placeholder_github_image] {
+	width: 2rem;
+	margin: 0;
 }
