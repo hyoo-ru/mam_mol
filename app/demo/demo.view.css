@@ -66,9 +66,6 @@
 	max-height: 45%;
 }
 
-[mol_app_demo_page_body] {
-}
-
 [mol_app_demo_detail_body] {
 	display: flex;
 	align-items: stretch;
@@ -109,4 +106,61 @@
 [mol_app_demo_detail_close]{
 	color: inherit;
 	padding: 1rem;
+}
+
+[mol_app_demo_placeholder] {
+	padding: 0;
+	margin: 0;
+	font-size: 1.5rem;
+	justify-content: flex-start;
+}
+
+[mol_app_demo_placeholder_content] {
+	max-width: 65rem;
+	padding: 2rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: center;
+	align-self: stretch;
+}
+
+[mol_app_demo_placeholder_welcome_text] {
+	font-size: 2rem;
+}
+
+[mol_app_demo_placeholder_advantages] {
+	display: flex;
+}
+
+[mol_app_placehlder_image] {
+	box-shadow: none;
+	min-width: 5rem;
+	margin: 1rem 1rem .5rem 0;
+	width: 8rem;
+}
+
+[mol_app_demo_placeholder_image_github] {
+	height: 2rem;
+	width: 2rem;
+	min-width: 2rem;
+	margin: 0;
+}
+
+[mol_app_demo_placeholder_text_about] {
+	margin-top: 2rem;
+}
+
+[mol_app_demo_placeholder_technology],
+[mol_app_demo_placeholder_code],
+[mol_app_demo_placeholder_programming] {
+	display: flex;
+	align-items: center;
+	margin: 1rem 2rem 0 0;
+}
+
+[mol_app_demo_placeholder_github] {
+	display: flex;
+	align-items: center;
+	margin-top: 1.5rem;
 }
