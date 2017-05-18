@@ -87,6 +87,7 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 		
+		@ $mol_mem()
 		type() {
 			var stat = this.stat()
 			
@@ -117,13 +118,13 @@ namespace $ {
 		@ $mol_mem()
 		content( next? : string , force? : $mol_atom_force ) {
 			if( next === void 0 ) {
-				return this.stat() && $node.fs.readFileSync( this.path() )
+				return this.stat() && $node.fs.readFileSync( this.path() )//.toString()
 			}
 			
 			this.parent().exists( true )
 			$node.fs.writeFileSync( this.path() , next )
 			
-			return next
+			return next//.toString()
 		}
 		
 		reader() {

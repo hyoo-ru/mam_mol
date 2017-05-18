@@ -9,11 +9,11 @@ The component which arrange content in multiple tabs.
 ```
 <= Info $mol_deck
 	items /
-		<= Main $mol_deck_item
+		<= Main *
 			title <= Main_title @ \Main info
 			content /
 				\Main
-		<= Addon $mol_deck_item
+		<= Addon *
 			title <= Addon_title @ \Addition data
 			content /
 				\Addon
@@ -21,16 +21,14 @@ The component which arrange content in multiple tabs.
 
 ## Properties $mol_deck
 
-**`items() : $mol_deck_item[]`**
+**`items() : { title : string , Content : $mol_view }[]`**
 
-Returns list of $mol_deck_item.
+Returns list of item config:
  
-# $mol_deck_item
-
-**`title() : String`**
+*`title : string`*
 
 Title of the tab element.
 
-**`content() : []`**
+*`Content : []`*
 
 Content of the tab element.

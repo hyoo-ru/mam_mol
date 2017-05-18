@@ -84,7 +84,13 @@ namespace $.$mol {
 		
 		nav_option( id : string ) {
 			const parent = this.nav_hierarchy()[ id ].parent
-			const title = `$${ id }`.substring( parent.id.length + 1 ).replace( /^[-._]|[-._]demo$/g , '' )
+			
+			const title = `$${ id }`
+			.substring( parent.id.length + 1 )
+			.replace( /^[-._]|[-._]demo$/g , '' )
+			.replace( /_/g , ' ' )
+			.replace( /^(\w)/ , letter => letter.toUpperCase() )
+			
 			return { title }
 		}
 		

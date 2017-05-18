@@ -9,4 +9,4 @@ $mol_scroll $mol_view
 	event_async *
 		^
 		scroll?event <=> event_scroll?event null
-		DOMSubtreeModified?event <=> event_repos?event null
+		- DOMSubtreeModified?event <=> event_repos?event null

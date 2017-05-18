@@ -94,6 +94,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 Easy way is checkout this [preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
 
 ```sh
+git config --global core.autocrlf input
 git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
 npm install && npm start
 ```

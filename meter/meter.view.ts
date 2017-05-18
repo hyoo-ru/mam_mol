@@ -6,7 +6,11 @@ namespace $.$mol {
 		defer_task() {
 			this._request_id = requestAnimationFrame( ()=> this.update() )
 		}
-	
+		
+		dom_node() {
+			return ( this.object_owner() as $mol_view ).dom_node()
+		}
+		
 		update() {
 			const elem = this.render()
 			const rect = elem.getBoundingClientRect()

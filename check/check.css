@@ -14,12 +14,6 @@
 	color: inherit;
 }
 
-[mol_check_icon] {
-	display: inline-flex;
-	vertical-align: middle;
-	margin: .25rem 0;
-}
-
 [mol_check_label] {
 	display: inline-flex;
 }

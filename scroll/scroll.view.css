@@ -1,6 +1,5 @@
 [mol_scroll] {
 	overflow: auto;
-	/*overflow-y: scroll;*/
 	flex: 1 1 auto;
 	box-sizing: border-box;
 	will-change: scroll-position;
@@ -9,7 +8,6 @@
 	max-height: 100%;
 	max-width: 100%;
 	-webkit-overflow-scrolling: touch;
-	align-self: stretch;
 }
 
 @media print {

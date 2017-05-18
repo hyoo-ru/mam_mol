@@ -24,6 +24,7 @@ namespace $ {
 		}
 		
 		static mount( view : $mol_view , node : Element ) {
+			if( $mol_view_dom.nodes.get( view ) === node ) return node 
 			$mol_view_dom.nodes.set( view , node )
 			
 			$mol_dom_render(
@@ -34,17 +35,6 @@ namespace $ {
 					events_async : view.event_async() ,
 				}
 			)
-			
-			for( let plugin of view.plugins() ) {
-				$mol_view_dom.nodes.set( plugin , node )
-				$mol_dom_render(
-					node , {
-						attributes : plugin.attr_static() ,
-						events : plugin.event() ,
-						events_async : plugin.event_async() ,
-					}
-				)
-			}
 			
 			return node
 		}

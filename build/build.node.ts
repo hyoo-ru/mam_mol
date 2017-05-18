@@ -168,6 +168,12 @@ namespace $ {
 			return res.options
 		}
 		
+		@ $mol_mem_key()
+		tsSource( { path , target } : { path : string , target : number } ) {
+			const content = $mol_file.absolute( path ).content().toString()
+			return $node.typescript.createSourceFile( path , content , target )
+		}
+		
 		@ $mol_mem()
 		tsHost() {
 
@@ -183,8 +189,7 @@ namespace $ {
 				getCommonSourceDirectory : ()=> this.root().path() ,
 				getNewLine : ()=> '\n' ,
 				getSourceFile : ( path : string , target : any , fail : any )=> {
-					const content = $mol_file.absolute( path ).content().toString()
-					return $node.typescript.createSourceFile( path , content , target )
+					return this.tsSource({ path , target })
 				} ,
 				fileExists : ( path : string )=> {
 					return $mol_file.absolute( path ).exists()
@@ -391,7 +396,7 @@ namespace $ {
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
 			
 			var envsDef = [ 'web' , 'node' ]
-			var envs = envsDef.slice()
+			var envs = bundle ? [] as string[] : envsDef.slice()
 			var stages = [ 'test' , 'dev' ]
 			
 			if( bundle ) {
@@ -401,7 +406,7 @@ namespace $ {
 				
 				tags.split( '.' ).forEach(
 					tag => {
-						if( envs.indexOf( tag ) !== -1 ) envs = [ tag ]
+						if( envsDef.indexOf( tag ) !== -1 ) envs = [ tag ]
 					}
 				)
 			}
@@ -438,12 +443,19 @@ namespace $ {
 							)
 						)
 					}
-					if( env === 'node' && ( !bundle || bundle === 'package.json' ) ) {
-						res = res.concat( this.bundlePackageJSON( { path , exclude } ) )
-					}
 				}
 			)
 			
+			if( !bundle || bundle === 'package.json' ) {
+				res = res.concat( this.bundlePackageJSON( { path , exclude : [ 'web' ] } ) )
+			}
+			
+			if( !type || /(svg|png|jpg)$/.test( type ) ) {
+				res = res.concat( this.bundleImages( { path , exclude : [ 'node' ] } ) )
+			}
+			
+			res = res.concat( this.bundleCordova( { path , exclude : [ 'node' ] } ) )
+
 			return res.map( r => r.valueOf() )
 		}
 		
@@ -610,6 +622,55 @@ namespace $ {
 			this.logBundle( target )
 			
 			return [ target ]
+		}
+		
+		@ $mol_mem_key()
+		bundleImages( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+			const root = this.root()
+			const pack = $mol_file.absolute( path )
+			
+			var sources = this.sourcesAll( { path , exclude } )
+			.filter( src => /(svg|png|jpg)$/.test( src.ext() ) )
+			
+			if( sources.length === 0 ) return [] 
+			
+			const targets : $mol_file[] = [].concat( sources.map( source => {
+				const target = pack.resolve( `-/${ source.relate( root ) }` )
+				target.content( source.content() )
+				this.logBundle( target )
+				return target
+			} ) )
+			
+			return targets
+		}
+		
+		@ $mol_mem_key()
+		bundleCordova( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+			const pack = $mol_file.absolute( path )
+			const cordova = pack.resolve( '-cordova' )
+			
+			const config = pack.resolve( 'config.xml' )
+			if( !config.exists() ) return []
+			
+			const config_target = cordova.resolve( 'config.xml' )
+			config_target.content( config.content() )
+			
+			const html = pack.resolve( 'index.html' )
+			const html_target = cordova.resolve( 'www/index.html' )
+			html_target.content( html.content() )
+			
+			const sources = pack.resolve( '-' ).find().filter( src => src.type() === 'file' )
+			
+			const targets = [ config_target , html_target ]
+			.concat( sources.map( source => {
+				const target = cordova.resolve( `www/${ source.relate( pack ) }` )
+				target.content( source.content() )
+				return target
+			} ) )
+			
+			this.logBundle( cordova )
+			
+			return targets
 		}
 		
 		@ $mol_mem_key()

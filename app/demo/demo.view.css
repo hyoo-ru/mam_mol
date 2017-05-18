@@ -37,7 +37,6 @@
 	display: flex;
 	flex: 1;
 	align-items: center;
-	text-transform: capitalize;
 }
 
 [mol_app_demo_nav_expand] {
@@ -68,6 +67,9 @@
 }
 
 [mol_app_demo_page_body] {
+}
+
+[mol_app_demo_detail_body] {
 	display: flex;
 	align-items: stretch;
 	justify-content: flex-start;

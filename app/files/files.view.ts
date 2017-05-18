@@ -1,4 +1,5 @@
 namespace $.$mol {
+
 	export class $mol_app_files extends $.$mol_app_files {
 		
 		pages() {
@@ -88,12 +89,23 @@ namespace $.$mol {
 			return this.webdav( uri ).prop( 'displayname' )
 		}
 		
+		folder_row_descr( uri : string ) {
+			if( this.webdav_type( uri ) !== 'file' ) return ''
+			
+			const size = this.file_size( uri )
+			return `${ size.toLocaleString() } B`
+		}
+		
 		file_uri( uri : string ) {
 			return uri
 		}
 		
 		file_mime( uri : string ) {
 			return this.webdav( uri ).prop( 'getcontenttype' )
+		}
+		
+		file_size( uri : string ) {
+			return Number( this.webdav( uri ).prop( 'getcontentlength' ) )
 		}
 		
 		title() {
@@ -111,4 +123,17 @@ namespace $.$mol {
 		}
 		
 	}
+
+	export class $mol_app_files_folder extends $.$mol_app_files_folder {
+		
+		body() {
+			return [
+				this.description() ? this.Description() : null ,
+				this.Status() ,
+				this.Folder_rows() ,
+			]
+		}
+		
+	}
+	
 }

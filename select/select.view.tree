@@ -41,5 +41,5 @@ $mol_select $mol_view
 						<= filter_content /
 							<= Filter_string $mol_string
 								value?val <=> filter_pattern?val \
-								hint <= filter_hint @ \Filter
+								hint <= filter_hint @ \Filter..
 						<= option_rows /

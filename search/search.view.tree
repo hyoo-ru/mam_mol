@@ -3,7 +3,7 @@ $mol_search $mol_bar
 	sub /
 		<= Suggest $mol_search_suggest
 			value?val <=> suggest_selected?val \
-			filter_hint <= hint \Search...
+			filter_hint <= hint @ \Search...
 			filter_pattern?val <=> query?val -
 			options_showed <= suggests_showed false
 			options <= suggests /

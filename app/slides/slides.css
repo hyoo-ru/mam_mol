@@ -6,8 +6,8 @@
 	border: none;
 }
 
-[mol_app_slides_listener] {
-	font-size: 2em;
+[mol_app_slides_role="listener"] {
+	font-size: 3vmin;
 }
 
 [mol_app_slides_speaker] > [mol_page_body] ,
@@ -30,8 +30,13 @@
 [mol_app_slides_listener_content] {
 	flex: 1 0 auto;
 	justify-content: space-around;
-	align-items: center;
 	max-width: none;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: space-around;
+	align-items: center;
+	box-shadow: none;
+	background: none;
 }
 
 [mol_app_slides_slide_switcher] {
@@ -41,4 +46,8 @@
 [mol_app_slides_slide_number] {
 	margin: 1rem;
 	word-break: normal;
+}
+
+[mol_app_slides_speech_toggle] {
+	padding: 1rem;
 }

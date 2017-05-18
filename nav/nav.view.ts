@@ -1,6 +1,10 @@
 namespace $.$mol {
 	export class $mol_nav extends $.$mol_nav {
 		
+		dom_node() : Element {
+			return $mol_view_dom.mount( this , ( this.object_owner() as $mol_view ).dom_node() )
+		}
+		
 		event_key( event? : KeyboardEvent ) {
 			if( event.defaultPrevented ) return
 			
@@ -37,7 +41,7 @@ namespace $.$mol {
 			const index_old = index_y === null ? keys.length - 1 : index_y;
 			const index_new = ( index_old + 1 ) % keys.length
 			
-			if( index_new === keys.length && !this.cycle() ) return
+			if( index_new === ( keys.length - 1 ) && !this.cycle() ) return
 			
 			event.preventDefault()
 			

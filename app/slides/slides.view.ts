@@ -23,24 +23,37 @@ namespace $.$mol {
 				if( event.data[ 0 ] !== 'done' ) return
 				window.onmessage = null
 				
-				this.contents( event.data[ 1 ].split( /^(?=#)/mg ) )
+				this.contents( event.data[ 1 ] )
 			}
 		}
 		
-		content() {
-			return this.contents()[ this.slide() ]
-		}
-		
-		speaker_content() {
-			return this.content().replace( /^(?!>)[^]*?$(\r?\n?)*/mg , '' )
-		}
-		
-		listener_content() {
-			return this.content().replace( /^[>#][^]*?$(\r?\n?)*/mg , '' )
+		@ $mol_mem()
+		content_pages() {
+			const contents = this.contents().split( /^(?=#)/mg ) as string[]
+			
+			const pages = contents
+			.map( content => {
+				return {
+					title : content.replace( /[^]*?^#*([^]*?)$(\r?\n?)*[^]*/mg , '$1' ) ,
+					speaker : content.replace( /^(?!>)[^]*?$(\r?\n?)*/mg , '' ) ,
+					listener : content.replace( /^[>#][^]*?$(\r?\n?)*/mg , '' ) ,
+				}
+			} )
+			.filter( page => page.speaker || page.listener )
+			
+			return pages
 		}
 		
 		slide_title() {
-			return this.content().replace( /[^]*?^#*([^]*?)$(\r?\n?)*[^]*/mg , '$1' )
+			return this.content_pages()[ this.slide() ].title
+		}
+		
+		speaker_content() {
+			return this.content_pages()[ this.slide() ].speaker
+		}
+		
+		listener_content() {
+			return this.content_pages()[ this.slide() ].listener
 		}
 		
 		slide_local( uri : string , next : number ) {
@@ -48,7 +61,7 @@ namespace $.$mol {
 		}
 		
 		slide( next? : number ) {
-			const count = this.contents().length
+			const count = this.content_pages().length
 			
 			if( next >= count ) next = 0
 			if( next < 0 ) next = count - 1
@@ -66,6 +79,22 @@ namespace $.$mol {
 		
 		uri_slides() {
 			return $mol_state_arg.value( this.state_key( 'slides' ) ) || this.uri_slides_default()
+		}
+		
+		event_next( next? : Event ) {
+			this.slide( this.slide() + 1 )
+		}
+		
+		event_prev( next? : Event ) {
+			this.slide( this.slide() - 1 )
+		}
+		
+		event_start( next? : Event ) {
+			this.slide( 0 )
+		}
+		
+		speech_enabled( next? : boolean ) {
+			return $mol_speech.listening( next )
 		}
 		
 	}

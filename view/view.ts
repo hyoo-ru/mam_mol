@@ -1,16 +1,20 @@
 namespace $ {
 	
-	export let $mol_view_context = <$mol_view_context> {}
+	export namespace $mol { let $mol }
+
+	export type $mol_view_context = ( typeof $ )&( typeof $.$mol )
 	
-	export interface $mol_view_context {
-		$mol_view_visible_width() : number
-		$mol_view_visible_height() : number
-		$mol_view_state_key( suffix : string ) : string
+	export function $mol_view_visible_width() {
+		return $mol_window.size().width
 	}
 	
-	$mol_view_context.$mol_view_visible_width = () => $mol_window.size().width
-	$mol_view_context.$mol_view_visible_height = () => $mol_window.size().height
-	$mol_view_context.$mol_view_state_key = ( suffix : string )=> suffix
+	export function $mol_view_visible_height() {
+		return $mol_window.size().height
+	}
+	
+	export function $mol_view_state_key( suffix : string ) {
+		return suffix
+	}
 
 	/// Reactive statefull lazy ViewModel
 	export class $mol_view extends $mol_object {
@@ -33,7 +37,14 @@ namespace $ {
 		
 		@ $mol_mem()
 		context( next? : $mol_view_context ) {
-			return next || $mol_view_context
+			return next || $ as any
+		}
+		
+		get $() {
+			return this.context()
+		}
+		set $( next : $mol_view_context ) {
+			this.context( next )
 		}
 		
 		context_sub() {
@@ -41,7 +52,7 @@ namespace $ {
 		}
 		
 		state_key( suffix = '' ) {
-			return this.context().$mol_view_state_key( suffix )
+			return this.$.$mol_view_state_key( suffix )
 		}
 		
 		/// Name of element that created when element not found in DOM
@@ -137,7 +148,9 @@ namespace $ {
 			
 			try {
 				
-				for( let plugin of this.plugins() ) plugin.render()
+				for( let plugin of this.plugins() ) {
+					if( typeof plugin['render'] === 'function' ) plugin.render()
+				}
 				
 				$mol_dom_render( node , {
 					attributes : this.attr() ,
