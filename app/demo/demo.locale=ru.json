@@ -3,5 +3,9 @@
 	"$mol_app_demo_menu_filter_hint": "Поиск...",
 	"$mol_app_demo_menu_title": "Компоненты",
 	"$mol_app_demo_detail_empty_prefix": "По префиксу \"",
-	"$mol_app_demo_detail_empty_postfix": "\" ни одного демо не найдено"
+	"$mol_app_demo_detail_empty_postfix": "\" ни одного демо не найдено",
+	"$mol_app_demo_placeholder_description": "Реактивный микромодульный UI Framework. Очень простой, но очень мощный! $mol имеет небольшой размер кода, реактивную архитектуру, компоненты с адаптивным дизайном, которые можно легко настроить.",
+	"$mol_app_demo_placeholder_text_technology": "Гибкий адаптивный интерфейс",
+	"$mol_app_demo_placeholder_text_code_rate": "Быстрая и легкая разработка",
+	"$mol_app_demo_placeholder_text_programming": "Производительные приложения"
 }

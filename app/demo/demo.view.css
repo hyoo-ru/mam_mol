@@ -117,7 +117,7 @@
 
 [mol_app_demo_placeholder_content] {
 	max-width: 65rem;
-	padding: 2rem;
+	padding: 1rem;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -134,15 +134,11 @@
 	flex-wrap: wrap;
 }
 
-[mol_app_placehlder_image] {
+[mol_app_placeholder_advantage_image] {
 	box-shadow: none;
 	flex-shrink: 0;
 	width: 5rem;
 	margin: 1rem 1rem .5rem 0;
-}
-
-[mol_app_demo_placeholder_text_about] {
-	margin-top: 2rem;
 }
 
 [mol_app_demo_placeholder_about]{
@@ -150,10 +146,10 @@
 	flex-wrap: wrap;
 }
 
-[mol_app_placeholder_block] {
+[mol_app_placeholder_advantage] {
 	display: flex;
 	align-items: center;
-	margin: 1rem 2rem 0 0;
+	margin: 1rem 1rem 0 0;
 	flex: 18rem;
 }
 
@@ -166,4 +162,5 @@
 [mol_app_demo_placeholder_github_image] {
 	width: 2rem;
 	margin: 0;
+	box-shadow: none;
 }

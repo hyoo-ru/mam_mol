@@ -77,31 +77,27 @@ $mol_app_demo_placeholder $mol_book_placeholder
 				<= About $mol_view
 					sub /
 						<= description @ \Reactive micro-modular ui framework. Very simple, but very powerful! $mol has small size of code, reactive architecture, components with adaptive design, that can be easily configured.
-						<= advantages $mol_view
+						<= Advantages $mol_view
 							sub /
-								<= Technology $mol_app_placeholder_block
-									sub /
-										<= Image_technology $mol_app_placehlder_image
-											uri \-/mol/app/demo/demo_technology.svg
-										<= text_technology @ \Flexible adaptive interface
-								<= Code $mol_app_placeholder_block
-									sub /
-										<= Image_code_rate $mol_app_placehlder_image
-											uri \-/mol/app/demo/demo_code_rate.svg
-										<= text_code_rate @ \Quick and easy development
-								<= Programming $mol_app_placeholder_block
-									sub /
-										<= Image_programming $mol_app_placehlder_image
-											uri \-/mol/app/demo/demo_programming.svg
-										<= text_programming @ \High-speed applications
+								<= Technology $mol_app_placeholder_advantage
+									image \-/mol/app/demo/demo_technology.svg
+									text <= text_technology @ \Flexible adaptive interface
+								<= Code $mol_app_placeholder_advantage
+									image \-/mol/app/demo/demo_code_rate.svg
+									text <= text_code_rate @ \Quick and easy development
+								<= Programming $mol_app_placeholder_advantage
+									image \-/mol/app/demo/demo_programming.svg
+									text <= text_programming @ \High-speed applications
 				<= Github $mol_view
 					sub /
-						<= Github_image $mol_app_placehlder_image
+						<= Github_image $mol_image
 							uri \-/mol/app/demo/demo_github.svg
 						<= Github_link $mol_link
 							uri \https://github.com/eigenmethod/mol
 							title \https://github.com/eigenmethod/mol
 
-$mol_app_placehlder_image $mol_image
-
-$mol_app_placeholder_block $mol_view
+$mol_app_placeholder_advantage $mol_view
+	sub /
+		<= Image $mol_image
+			uri <= image \
+		<= text \
