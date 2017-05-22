@@ -1,0 +1,7 @@
+$mol_touch $mol_view
+	zoom?val 1
+	event *
+		^
+		touchstart?event <=> event_start?event null
+		touchmove?event <=> event_move?event null
+		touchend?event <=> event_end?event null
