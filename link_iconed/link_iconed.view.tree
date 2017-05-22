@@ -1,0 +1,5 @@
+$mol_link_iconed $mol_link
+	dom_name \img
+	field *
+		src <= uri \
+		alt <= title -
