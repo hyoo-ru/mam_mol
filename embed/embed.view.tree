@@ -1,10 +1,6 @@
 $mol_embed $mol_view
-	dom_name \object
-	attr *
-		^
-		data <= uri \
-		type <= mime \
-	sub /
-		<= Open $mol_link
-			uri <= uri \
-			title <= open_label @ \Open
+	Pdf $mol_embed_pdf
+		uri <= uri \
+	Native $mol_embed_native
+		uri <= uri \
+		mime <= mime \
