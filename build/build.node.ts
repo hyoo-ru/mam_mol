@@ -450,9 +450,7 @@ namespace $ {
 				res = res.concat( this.bundlePackageJSON( { path , exclude : [ 'web' ] } ) )
 			}
 			
-			if( !type || /(svg|png|jpg)$/.test( type ) ) {
-				res = res.concat( this.bundleImages( { path , exclude : [ 'node' ] } ) )
-			}
+			res = res.concat( this.bundleFiles( { path , exclude : [ 'node' ] } ) )
 			
 			res = res.concat( this.bundleCordova( { path , exclude : [ 'node' ] } ) )
 
@@ -625,21 +623,29 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key()
-		bundleImages( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		bundleFiles( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const root = this.root()
 			const pack = $mol_file.absolute( path )
 			
 			var sources = this.sourcesAll( { path , exclude } )
-			.filter( src => /(svg|png|jpg)$/.test( src.ext() ) )
+			.filter( src => /meta.tree$/.test( src.ext() ) )
 			
 			if( sources.length === 0 ) return [] 
 			
-			const targets : $mol_file[] = [].concat( sources.map( source => {
-				const target = pack.resolve( `-/${ source.relate( root ) }` )
-				target.content( source.content() )
-				this.logBundle( target )
-				return target
-			} ) )
+			const targets : $mol_file[] = []
+			
+			sources.forEach( source => {
+				const tree = $mol_tree.fromString( source.content() )
+				
+				tree.select( 'deploy' ).sub.forEach( deploy => {
+					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
+					const target = pack.resolve( `-/${ file.relate( root ) }` )
+					target.content( file.content() )
+					targets.push( target )
+					this.logBundle( target )
+				} )
+				
+			} )
 			
 			return targets
 		}
@@ -888,8 +894,6 @@ namespace $ {
 		tree.select( 'include' ).sub.forEach( leaf => {
 			depends[ leaf.toString() ] = Number.NEGATIVE_INFINITY
 		} )
-		
-		console.log( source.path() , depends )
 		
 		return depends
 	}
