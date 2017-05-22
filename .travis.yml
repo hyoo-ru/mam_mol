@@ -12,7 +12,7 @@ script:
   - cd mol/-
   - npm install
   - cd ../..
-  - node node.test.js mol
+  - node mol/-/node.test.js mol
   - rm mol/.gitignore
 deploy:
   provider: pages
