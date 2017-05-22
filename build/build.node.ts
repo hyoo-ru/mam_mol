@@ -163,7 +163,7 @@ namespace $ {
 		@ $mol_mem()
 		tsOptions() {
 			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() ).compilerOptions
-			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
+			const res = $node['typescript'].convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
 			if( res.errors.length ) throw res.errors
 			return res.options
 		}
@@ -171,7 +171,7 @@ namespace $ {
 		@ $mol_mem_key()
 		tsSource( { path , target } : { path : string , target : number } ) {
 			const content = $mol_file.absolute( path ).content().toString()
-			return $node.typescript.createSourceFile( path , content , target )
+			return $node['typescript'].createSourceFile( path , content , target )
 		}
 		
 		@ $mol_mem()
@@ -185,7 +185,7 @@ namespace $ {
 				getCompilationSettings : ()=> this.tsOptions() ,
 				useCaseSensitiveFileNames : ()=> false ,
 				getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
-				getDefaultLibFileName : ( options : any )=> $node.typescript.getDefaultLibFilePath( options ) ,
+				getDefaultLibFileName : ( options : any )=> $node['typescript'].getDefaultLibFilePath( options ) ,
 				getCommonSourceDirectory : ()=> this.root().path() ,
 				getNewLine : ()=> '\n' ,
 				getSourceFile : ( path : string , target : any , fail : any )=> {
@@ -223,13 +223,13 @@ namespace $ {
 				var host = this.tsHost()
 				var options = host.getCompilationSettings()
 				
-				var program = $node.typescript.createProgram( sourcesTS.map( src => src.path() ) , options , host )
+				var program = $node['typescript'].createProgram( sourcesTS.map( src => src.path() ) , options , host )
 				var result = program.emit()
 				
-				var errors : any[] = $node.typescript.getPreEmitDiagnostics( program ).concat( result.diagnostics )
+				var errors : any[] = $node['typescript'].getPreEmitDiagnostics( program ).concat( result.diagnostics )
 				var logs = errors.map(
 					error => {
-						var message = $node.typescript.flattenDiagnosticMessageText( error.messageText , '\n' )
+						var message = $node['typescript'].flattenDiagnosticMessageText( error.messageText , '\n' )
 						if( !error.file ) return message
 						
 						var pos = error.file.getLineAndCharacterOfPosition( error.start )
@@ -684,16 +684,16 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.css` )
 			var targetMap = pack.resolve( `-/${bundle}.css.map` )
 			
-			var root : any = null //$node.postcss.root({})
+			var root : any = null //$node['postcss'].root({})
 			sources.forEach(
 				src => {
-					var root2 = $node.postcss.parse( src.content() , { from : src.path() } )
+					var root2 = $node['postcss'].parse( src.content() , { from : src.path() } )
 					root = root ? root.append( root2 ) : root2
 				}
 			)
 			
 			var cssnext = $node[ 'postcss-cssnext' ]
-			var processor = $node.postcss(
+			var processor = $node['postcss'](
 				cssnext(
 					null , {
 						features : {
@@ -826,8 +826,8 @@ namespace $ {
 				)
 				
 				line.replace(
-					/\$node(?:\[\s*['"](.*?)['"]\s*\]|\.(\w+))/ig , ( str , path , name )=> {
-						$mol_build_depsMerge( depends , { [ '/node/' + ( path || name ) ] : priority } )
+					/\$node\[\s*['"](.*?)['"]\s*\]/ig , ( str , path )=> {
+						$mol_build_depsMerge( depends , { [ '/node/' + path ] : priority } )
 						return str
 					}
 				)

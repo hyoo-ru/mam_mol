@@ -1,5 +1,5 @@
 namespace $ {
 	
-	$mol_dom_context = $node.jsdom.jsdom().defaultView as any
+	$mol_dom_context = $node['jsdom'].jsdom().defaultView as any
 	
 }
