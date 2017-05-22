@@ -499,7 +499,7 @@ namespace $ {
 					const isCommonJs = /module\.exports/.test( content )
 					
 					if( isCommonJs ) {
-						concater.add( '-' , '\nvoid function( module ) { var exports = module'+'.exports; function require( id ) { return $node[ id ] }; \n' )
+						concater.add( '-' , '\nvar $node = $node || {}\nvoid function( module ) { var exports = module'+'.exports; function require( id ) { return $node[ id ] }; \n' )
 					}
 					
 					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
@@ -817,8 +817,15 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$([a-z][a-z0-9]+(?:[._][a-z0-9]+|\[\s*['"](?:.*?)['"]\s*\])*)/ig , ( str , name )=> {
+					/\$([a-z][a-z0-9]+(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name )=> {
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[_.\[\]'"]+/g , '/' ) ] : priority } )
+						return str
+					}
+				)
+				
+				line.replace(
+					/\$node\[\s*['"](.*?)['"]\s*\]/ig , ( str , path )=> {
+						$mol_build_depsMerge( depends , { [ '/node_modules/' + path ] : priority } )
 						return str
 					}
 				)
