@@ -507,7 +507,7 @@ namespace $ {
 					if( isCommonJs ) {
 						const idFull = src.relate( this.root().resolve( 'node_modules' ) )
 						const idShort = idFull.replace( /\/index\.js$/ , '' )
-						concater.add( '-' , `\n$node[ "${ idShort }" ] = $node[ "${ idFull }" ] = module.${''}exports }( { exports : {} } )\n` )
+						concater.add( '-' , `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }( { exports : {} } )\n` )
 					}
 				}
 			)
@@ -611,9 +611,9 @@ namespace $ {
 			for( let src of sources ) {
 				let deps = this.srcDeps( src.path() )
 				for( let dep in deps ) {
-					if( !/^\/node\//.test( dep ) ) continue
-					let mod = dep.replace( /^\/node\// , '' ).replace( /\/.*/g , '' )
-					json.dependencies[ mod ] = '*'
+					if( !/^\/node(?:_modules)?\//.test( dep ) ) continue
+					let mod = dep.replace( /^\/node(?:_modules)?\// , '' ).replace( /\/.*/g , '' )
+					json.dependencies[ mod ] = `*`
 				}
 			}
 			
@@ -817,15 +817,17 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$([a-z][a-z0-9]+(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name )=> {
+					/\$(([a-z][a-z0-9]+)(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name , pack )=> {
+						if( pack === 'node' ) return str
+						
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[_.\[\]'"]+/g , '/' ) ] : priority } )
 						return str
 					}
 				)
 				
 				line.replace(
-					/\$node\[\s*['"](.*?)['"]\s*\]/ig , ( str , path )=> {
-						$mol_build_depsMerge( depends , { [ '/node_modules/' + path ] : priority } )
+					/\$node(?:\[\s*['"](.*?)['"]\s*\]|\.(\w+))/ig , ( str , path , name )=> {
+						$mol_build_depsMerge( depends , { [ '/node/' + ( path || name ) ] : priority } )
 						return str
 					}
 				)
