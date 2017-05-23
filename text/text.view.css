@@ -89,7 +89,8 @@
 
 [mol_text_image] {
 	max-width: 100%;
-	max-height: 75vh;
+	max-height: 66vh;
+	object-fit: scale-down;
 }
 
 [mol_text_type="strong"] {
