@@ -1,0 +1,21 @@
+$mol_embed_pdf $mol_scroll
+	uri \
+	sub  /
+		<= Pages $mol_list 
+			rows <= pages /
+	Page!index $mol_embed_pdf_page
+		page <= page!index null
+
+$mol_embed_pdf_page $mol_view
+	dom_name \canvas
+	page null
+	max_width 640
+	scale_over 1.25
+	plugins /
+		<= Touch $mol_touch
+			zoom?val <=> scale?val 1
+	style *
+		zoom <= zoom 0.8
+	field *
+		width <= width 0
+		height <= height 0

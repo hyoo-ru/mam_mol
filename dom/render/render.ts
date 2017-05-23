@@ -147,10 +147,16 @@ namespace $ {
 	) {
 		for( let name in styles ) {
 			let val = styles[ name ]
-			if( typeof val === 'number' ) val = `${ val }px`
 			
 			const style = ( <HTMLElement>el ).style as any
-			if( val !== style[ name ] ) style[ name ] = val
+			const cur = style[ name ]
+			
+			if( typeof val === 'number' ) {
+				if( parseFloat( cur ) == val ) continue
+				style[ name ] = `${ val }px`
+			}
+			
+			if( cur !== val ) style[ name ] = val
 		}
 	}
 	

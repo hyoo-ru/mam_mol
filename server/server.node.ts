@@ -4,11 +4,11 @@ namespace $ {
 		
 		@ $mol_mem()
 		express() {
-			var express = $node.express()
+			var express = $node['express']()
 			
 			this.expressHandlers().forEach( plugin => express.use( plugin ) )
 			
-			$node.portastic.find(
+			$node['portastic'].find(
 				{
 					min : this.port() ,
 					max : this.port() + 1000 ,
@@ -41,7 +41,7 @@ namespace $ {
 		}
 		
 		expressCompressor() {
-			return $node.compression()
+			return $node['compression']()
 		}
 		
 		expressBodier() {
@@ -53,7 +53,7 @@ namespace $ {
 		}
 		
 		expressFiler() {
-			return $node.express.static(
+			return $node['express'].static(
 				$node.path.resolve( this.rootPublic() ) , {
 					maxAge : this.cacheTime()
 				}

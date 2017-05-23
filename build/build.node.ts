@@ -163,7 +163,7 @@ namespace $ {
 		@ $mol_mem()
 		tsOptions() {
 			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() ).compilerOptions
-			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
+			const res = $node['typescript'].convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
 			if( res.errors.length ) throw res.errors
 			return res.options
 		}
@@ -171,7 +171,7 @@ namespace $ {
 		@ $mol_mem_key()
 		tsSource( { path , target } : { path : string , target : number } ) {
 			const content = $mol_file.absolute( path ).content().toString()
-			return $node.typescript.createSourceFile( path , content , target )
+			return $node['typescript'].createSourceFile( path , content , target )
 		}
 		
 		@ $mol_mem()
@@ -185,7 +185,7 @@ namespace $ {
 				getCompilationSettings : ()=> this.tsOptions() ,
 				useCaseSensitiveFileNames : ()=> false ,
 				getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
-				getDefaultLibFileName : ( options : any )=> $node.typescript.getDefaultLibFilePath( options ) ,
+				getDefaultLibFileName : ( options : any )=> $node['typescript'].getDefaultLibFilePath( options ) ,
 				getCommonSourceDirectory : ()=> this.root().path() ,
 				getNewLine : ()=> '\n' ,
 				getSourceFile : ( path : string , target : any , fail : any )=> {
@@ -223,13 +223,13 @@ namespace $ {
 				var host = this.tsHost()
 				var options = host.getCompilationSettings()
 				
-				var program = $node.typescript.createProgram( sourcesTS.map( src => src.path() ) , options , host )
+				var program = $node['typescript'].createProgram( sourcesTS.map( src => src.path() ) , options , host )
 				var result = program.emit()
 				
-				var errors : any[] = $node.typescript.getPreEmitDiagnostics( program ).concat( result.diagnostics )
+				var errors : any[] = $node['typescript'].getPreEmitDiagnostics( program ).concat( result.diagnostics )
 				var logs = errors.map(
 					error => {
-						var message = $node.typescript.flattenDiagnosticMessageText( error.messageText , '\n' )
+						var message = $node['typescript'].flattenDiagnosticMessageText( error.messageText , '\n' )
 						if( !error.file ) return message
 						
 						var pos = error.file.getLineAndCharacterOfPosition( error.start )
@@ -450,9 +450,7 @@ namespace $ {
 				res = res.concat( this.bundlePackageJSON( { path , exclude : [ 'web' ] } ) )
 			}
 			
-			if( !type || /(svg|png|jpg)$/.test( type ) ) {
-				res = res.concat( this.bundleImages( { path , exclude : [ 'node' ] } ) )
-			}
+			res = res.concat( this.bundleFiles( { path , exclude : [ 'node' ] } ) )
 			
 			res = res.concat( this.bundleCordova( { path , exclude : [ 'node' ] } ) )
 
@@ -499,7 +497,7 @@ namespace $ {
 					const isCommonJs = /module\.exports/.test( content )
 					
 					if( isCommonJs ) {
-						concater.add( '-' , '\nvoid function( module ) { var exports = module'+'.exports; function require( id ) { return $node[ id ] }; \n' )
+						concater.add( '-' , '\nvar $node = $node || {}\nvoid function( module ) { var exports = module'+'.exports; function require( id ) { return $node[ id ] }; \n' )
 					}
 					
 					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
@@ -507,7 +505,7 @@ namespace $ {
 					if( isCommonJs ) {
 						const idFull = src.relate( this.root().resolve( 'node_modules' ) )
 						const idShort = idFull.replace( /\/index\.js$/ , '' )
-						concater.add( '-' , `\n$node[ "${ idShort }" ] = $node[ "${ idFull }" ] = module.${''}exports }( { exports : {} } )\n` )
+						concater.add( '-' , `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }( { exports : {} } )\n` )
 					}
 				}
 			)
@@ -611,9 +609,9 @@ namespace $ {
 			for( let src of sources ) {
 				let deps = this.srcDeps( src.path() )
 				for( let dep in deps ) {
-					if( !/^\/node\//.test( dep ) ) continue
-					let mod = dep.replace( /^\/node\// , '' ).replace( /\/.*/g , '' )
-					json.dependencies[ mod ] = '*'
+					if( !/^\/node(?:_modules)?\//.test( dep ) ) continue
+					let mod = dep.replace( /^\/node(?:_modules)?\// , '' ).replace( /\/.*/g , '' )
+					json.dependencies[ mod ] = `*`
 				}
 			}
 			
@@ -625,21 +623,29 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key()
-		bundleImages( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		bundleFiles( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const root = this.root()
 			const pack = $mol_file.absolute( path )
 			
 			var sources = this.sourcesAll( { path , exclude } )
-			.filter( src => /(svg|png|jpg)$/.test( src.ext() ) )
+			.filter( src => /meta.tree$/.test( src.ext() ) )
 			
 			if( sources.length === 0 ) return [] 
 			
-			const targets : $mol_file[] = [].concat( sources.map( source => {
-				const target = pack.resolve( `-/${ source.relate( root ) }` )
-				target.content( source.content() )
-				this.logBundle( target )
-				return target
-			} ) )
+			const targets : $mol_file[] = []
+			
+			sources.forEach( source => {
+				const tree = $mol_tree.fromString( source.content() )
+				
+				tree.select( 'deploy' ).sub.forEach( deploy => {
+					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
+					const target = pack.resolve( `-/${ file.relate( root ) }` )
+					target.content( file.content() )
+					targets.push( target )
+					this.logBundle( target )
+				} )
+				
+			} )
 			
 			return targets
 		}
@@ -684,16 +690,16 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.css` )
 			var targetMap = pack.resolve( `-/${bundle}.css.map` )
 			
-			var root : any = null //$node.postcss.root({})
+			var root : any = null //$node['postcss'].root({})
 			sources.forEach(
 				src => {
-					var root2 = $node.postcss.parse( src.content() , { from : src.path() } )
+					var root2 = $node['postcss'].parse( src.content() , { from : src.path() } )
 					root = root ? root.append( root2 ) : root2
 				}
 			)
 			
 			var cssnext = $node[ 'postcss-cssnext' ]
-			var processor = $node.postcss(
+			var processor = $node['postcss'](
 				cssnext(
 					null , {
 						features : {
@@ -817,8 +823,17 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$([a-z][a-z0-9]+(?:[._][a-z0-9]+|\[\s*['"](?:.*?)['"]\s*\])*)/ig , ( str , name )=> {
+					/\$(([a-z][a-z0-9]+)(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name , pack )=> {
+						if( pack === 'node' ) return str
+						
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[_.\[\]'"]+/g , '/' ) ] : priority } )
+						return str
+					}
+				)
+				
+				line.replace(
+					/\$node\[\s*['"](.*?)['"]\s*\]/ig , ( str , path )=> {
+						$mol_build_depsMerge( depends , { [ '/node/' + path ] : priority } )
 						return str
 					}
 				)
@@ -879,8 +894,6 @@ namespace $ {
 		tree.select( 'include' ).sub.forEach( leaf => {
 			depends[ leaf.toString() ] = Number.NEGATIVE_INFINITY
 		} )
-		
-		console.log( source.path() , depends )
 		
 		return depends
 	}
