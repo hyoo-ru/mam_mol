@@ -61,7 +61,8 @@ namespace $.$mol {
 		}
 		
 		uri_resolve( uri : string ) {
-			return this.uri_base() + uri
+			const url = new URL( uri , this.uri_base() )
+			return url.toString()
 		}
 		
 		text2spans( prefix : string , text : string ) {

@@ -53,13 +53,13 @@ namespace $.$mol {
 		transform() {
 			const t = ( this.elapsed() / 1000 ) % 10
 			const scale = 1 + (t > 5 ? 10 - t : t) / 10;
-			return 'scaleX(' + (scale / 2.1) + ') scaleY(0.7) translateZ(0.1px)'
+			return 'scaleX(' + (scale / 2.1).toFixed(4) + ') scaleY(0.7) translateZ(0.1px)'
 		}
 		
 		_request_id = 0
 		
 		update() {
-			this.elapsed( Date.now() )
+			this.elapsed( Date.now() , $mol_atom_force )
 			this._request_id = requestAnimationFrame( ()=> this.update() )
 		}
 		
@@ -79,6 +79,10 @@ namespace $.$mol {
 		
 		sub() {
 			return [ this.hover() ? `*${ this.text() }*` : this.text() ]
+		}
+		
+		size_px() {
+			return `${ this.size() }px`
 		}
 		
 		radius() {
