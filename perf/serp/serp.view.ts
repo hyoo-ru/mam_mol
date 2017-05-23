@@ -59,7 +59,7 @@ namespace $.$mol {
 		_request_id = 0
 		
 		update() {
-			this.elapsed( Date.now() )
+			this.elapsed( Date.now() , $mol_atom_force )
 			this._request_id = requestAnimationFrame( ()=> this.update() )
 		}
 		
