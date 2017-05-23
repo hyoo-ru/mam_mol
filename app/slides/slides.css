@@ -51,3 +51,8 @@
 [mol_app_slides_speech_toggle] {
 	padding: 1rem;
 }
+
+[mol_app_slides_listener_content] [mol_text_image] {
+	width: 100vh;
+	height: 100vw;
+}
