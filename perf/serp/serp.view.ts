@@ -53,7 +53,7 @@ namespace $.$mol {
 		transform() {
 			const t = ( this.elapsed() / 1000 ) % 10
 			const scale = 1 + (t > 5 ? 10 - t : t) / 10;
-			return 'scaleX(' + (scale / 2.1).tofixed(4) + ') scaleY(0.7) translateZ(0.1px)'
+			return 'scaleX(' + (scale / 2.1).toFixed(4) + ') scaleY(0.7) translateZ(0.1px)'
 		}
 		
 		_request_id = 0
