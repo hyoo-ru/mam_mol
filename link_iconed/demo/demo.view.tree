@@ -1,0 +1,8 @@
+$mol_link_iconed_demo $mol_list
+	title \Link with icon
+	sub /
+		<= Input $mol_string
+			value?val <=> name?val \http://google.com
+		<= Output $mol_link_iconed
+			uri <= name?val -
+			
