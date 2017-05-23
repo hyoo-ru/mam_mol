@@ -65,4 +65,39 @@ $mol_app_demo_nav $mol_grid
 				sub /
 					<= cell_content!id -
 			<= Chevron!id $mol_icon_chevron
-			
+
+$mol_app_demo_placeholder $mol_book_placeholder
+	title -
+	sub /
+		<= Content $mol_scroll
+			sub /
+				<= Welcome_text $mol_view
+					sub /
+						<= welcome_text @ \$mol
+				<= About $mol_view
+					sub /
+						<= description @ \Reactive micro-modular ui framework. Very simple, but very powerful! $mol has small size of code, reactive architecture, components with adaptive design, that can be easily configured.
+						<= Advantages $mol_view
+							sub /
+								<= Technology $mol_app_placeholder_advantage
+									image \-/mol/app/demo/demo_technology.svg
+									text <= text_technology @ \Flexible adaptive interface
+								<= Code $mol_app_placeholder_advantage
+									image \-/mol/app/demo/demo_code_rate.svg
+									text <= text_code_rate @ \Quick and easy development
+								<= Programming $mol_app_placeholder_advantage
+									image \-/mol/app/demo/demo_programming.svg
+									text <= text_programming @ \High-speed applications
+				<= Github $mol_view
+					sub /
+						<= Github_image $mol_image
+							uri \-/mol/app/demo/demo_github.svg
+						<= Github_link $mol_link
+							uri \https://github.com/eigenmethod/mol
+							title \https://github.com/eigenmethod/mol
+
+$mol_app_placeholder_advantage $mol_view
+	sub /
+		<= Image $mol_image
+			uri <= image \
+		<= text \
