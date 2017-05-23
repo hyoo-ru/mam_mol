@@ -81,6 +81,10 @@ namespace $.$mol {
 			return [ this.hover() ? `*${ this.text() }*` : this.text() ]
 		}
 		
+		size_px() {
+			return `${ this.size() }px`
+		}
+		
 		radius() {
 			return this.size() / 2
 		}
