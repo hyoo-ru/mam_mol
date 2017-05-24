@@ -60,6 +60,10 @@ namespace $.$mol {
 			return this.text2spans( `${ id.block }/${ id.row }/${ id.cell }` , this.cell_contents( id.block )[ id.row ][ id.cell ] )
 		}
 		
+		uri_base() {
+			return $mol_dom_context.document.location.href
+		}
+		
 		uri_resolve( uri : string ) {
 			const url = new URL( uri , this.uri_base() )
 			return url.toString()
