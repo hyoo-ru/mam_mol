@@ -31,7 +31,6 @@ $mol_app_demo_menu $mol_page
 	title @ \Components
 	tools /
 		<= Filter $mol_search
-			hint <= filter_hint @ \Search...
 			query?val <=> filter?val \
 	Body <= Nav $mol_app_demo_nav
 		hierarchy <= hierarchy null				

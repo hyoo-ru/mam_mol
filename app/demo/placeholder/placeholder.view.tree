@@ -4,7 +4,7 @@ $mol_app_demo_placeholder $mol_book_placeholder
 			sub /
 				<= Title $mol_view
 					sub /
-						<= title @ \$mol
+						<= title \$mol
 				<= Description $mol_view
 					sub /
 						<= description @ \Reactive micro-modular ui framework. Very simple, but very powerful! $mol has small size of code, reactive architecture, components with adaptive design, that can be easily configured.

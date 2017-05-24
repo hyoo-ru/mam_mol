@@ -1,6 +1,4 @@
 {
-	"$mol_app_demo_title": "$mol",
-	"$mol_app_demo_menu_filter_hint": "Поиск...",
 	"$mol_app_demo_menu_title": "Компоненты",
 	"$mol_app_demo_detail_empty_prefix": "По префиксу \"",
 	"$mol_app_demo_detail_empty_postfix": "\" ни одного демо не найдено",
