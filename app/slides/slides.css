@@ -53,6 +53,6 @@
 }
 
 [mol_app_slides_listener_content] [mol_text_image] {
-	width: 100vh;
-	height: 100vw;
+	width: 100vw;
+	height: 100vh;
 }
