@@ -1,15 +1,18 @@
 [mol_perf_serp] {
 	position: absolute;
+	display: block;
 	transform-origin: 0 0;
 	left: 50%;
 	top: 50%;
 	width: 10px;
 	height: 10px;
 	background: #eee;
+	zoom: .75;
 }
 
 [mol_perf_serp_dot] {
 	position: absolute;
+	display: block;
 	background: #61dafb;
 	font: normal 15px sans-serif;
 	text-align: center;
