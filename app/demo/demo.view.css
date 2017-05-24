@@ -10,7 +10,7 @@
 	flex-direction:column;
 }
 
-[mol_app_demo_detail], 
+[mol_app_demo_detail],
 [mol_app_demo_detail_row],
 [mol_app_empty_message] {
 	flex: 1000 1 600px;
@@ -64,9 +64,6 @@
 
 [mol_app_demo_screen] {
 	max-height: 45%;
-}
-
-[mol_app_demo_page_body] {
 }
 
 [mol_app_demo_detail_body] {
