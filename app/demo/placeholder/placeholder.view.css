@@ -9,11 +9,11 @@
 [mol_app_demo_placeholder_content] {
 	max-width: 65rem;
 	padding: 1rem;
-	background: #fff;
+	background: var(--mol_skin_card);
 	margin: auto;
 }
 
-[mol_app_demo_placeholder_welcome_text] {
+[mol_app_demo_placeholder_title] {
 	font-size: 2rem;
 	margin: 1rem;
 	display: block;
@@ -31,7 +31,7 @@
 	margin: 1rem;
 }
 
-[mol_app_demo_placeholder_about]{
+[mol_app_demo_placeholder_description]{
 	display: flex;
 	flex-wrap: wrap;
 	margin: 1rem;
@@ -43,14 +43,8 @@
 	flex: 18rem;
 }
 
-[mol_app_demo_placeholder_github] {
+[mol_app_demo_placeholder_github_link] {
 	display: flex;
 	align-items: center;
 	margin: .5rem;
-}
-
-[mol_app_demo_placeholder_github_image] {
-	width: 2rem;
-	margin: 0;
-	box-shadow: none;
 }
