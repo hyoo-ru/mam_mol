@@ -50,9 +50,10 @@ $mol_text_linker $mol_view
 	sub <= content?val /
 
 $mol_text_imager $mol_view
-	dom_name \img
+	dom_name \object
 	attr *
 		^
 		mol_text_type <= type?val \
-		src <= link?val \
-		alt <= title?val \
+		data <= link?val \
+	sub /
+		<= title?val \
