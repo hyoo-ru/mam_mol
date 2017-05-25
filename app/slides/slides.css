@@ -28,15 +28,16 @@
 }
 
 [mol_app_slides_listener_content] {
-	flex: 1 0 auto;
+	flex: 0 1 auto;
+	margin: auto 0;
 	justify-content: space-around;
 	max-width: none;
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-content: space-around;
-	align-items: center;
+	align-items: flex-start;
 	box-shadow: none;
-	background: white;
+	background: none;
 }
 
 [mol_app_slides_slide_switcher] {
