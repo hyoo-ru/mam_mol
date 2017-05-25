@@ -1,0 +1,10 @@
+[mol_date]
+{
+	display: inline-flex;
+	border: none;
+	font: inherit;
+	background-color: none;
+	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	border-radius: var(--mol_skin_round);
+	padding: .5rem;
+}
