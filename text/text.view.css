@@ -105,3 +105,44 @@
 	text-decoration: line-through;
 	color: var(--mol_skin_passive_text);
 }
+
+[mol_text_type="code-keyword"] {
+	color: #E06252;
+}
+
+[mol_text_type="code-field"] {
+	color: #D9963F;
+}
+
+[mol_text_type="code-global"] {
+	color: #61AFEF;
+}
+
+[mol_text_type="code-decorator"] {
+	color: #4BB6A7;
+}
+
+[mol_text_type="code-punctuation"] {
+	opacity: .5;
+}
+
+[mol_text_type="code-string"] {
+	color: #98C363;
+}
+
+[mol_text_type="code-number"] {
+	color: #E06252;
+}
+
+[mol_text_type="code-call"] {
+	color: #C678DD;
+}
+
+[mol_text_type="code-comment-inline"] ,
+[mol_text_type="code-comment-block"] {
+	opacity: .5;
+}
+
+[mol_text_type="code-docs"] {
+	opacity: .75;
+}

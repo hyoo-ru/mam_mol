@@ -20,4 +20,18 @@ namespace $ {
 		'image-link' : /!\[([^\[\]]*?)\]\((.*?)\)/ ,
 	})
 	
+	export const $mol_syntax_md_code = new $mol_syntax({
+		'code-docs' : /\/\/\/.*?$/ ,
+		'code-comment-inline' : /\/\/.*?$/ ,
+		'code-comment-block' : /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/)/ ,
+		'code-string' : /(?:".*?"|'.*?'|`.*?`|\/.*?\/[gmi]*)/ ,
+		'code-number' : /[+-]?(?:\d*\.)?\d+\w*/ ,
+		'code-keyword' : /\b(class|function|extends|implements|module|import|include|var|let|const|for|do|while|until|in|new|if|then|else|switch|case|this|return|async|await|try|catch)\b/ ,
+		'code-call' : /\.?\w+(?=\()/ ,
+		'code-field' : /(?:\.\w+|[\w-]+:)/ ,
+		'code-global' : /[$]\w*/ ,
+		'code-decorator' : /@.*?$/ ,
+		'code-punctuation' : /-[\[\]{}()<=>`~!@#$%&*_+\\\/|'";:.,^]/ ,
+	})
+	
 }

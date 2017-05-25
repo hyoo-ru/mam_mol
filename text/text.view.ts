@@ -114,6 +114,31 @@ namespace $.$mol {
 			} )
 		}
 		
+		code2spans( prefix : string , text : string ) {
+			return $mol_syntax_md_code.tokenize( text ).map( ( token , index )=> {
+				const id = `${prefix}/${index}`
+				
+				const span = this.Span( id )
+				span.type( token.name )
+				
+				switch( token.name ) {
+					case 'code-docs' : {
+						span.content( this.text2spans( `${id}/${index}` , token.found ) )
+						return span
+					}
+					case 'code-string' : {
+						span.content([ token.found[0] , ... this.code2spans( `${id}/${index}` , token.found.slice( 1 , token.found.length - 1 ) ) , token.found[ token.found.length - 1 ] ])
+						return span
+					}
+					default : {
+						span.content([ token.found ])
+						return span
+					}
+				}
+				
+			} )
+		}
+		
 		block_content( indexBlock : number ) : ($mol_view|string)[] {
 			
 			const token = this.tokens_flow()[ indexBlock ]
@@ -121,8 +146,8 @@ namespace $.$mol {
 			switch( token.name ) {
 				case 'header' : return this.text2spans( `${ indexBlock }` , token.chunks[2] )
 				case 'list-item' : return this.text2spans( `${ indexBlock }` , token.chunks[1] )
-				case 'code' : return [ token.chunks[2].replace( /\t/g, '    ' ) ]
-				case 'code-indent' : return [ token.chunks[0].replace( /[\n\r]*$/ , '' ).replace( /\t/g, '    ' ) ]
+				case 'code' : return this.code2spans( `${ indexBlock }` , token.chunks[2].replace( /\t/g, '    ' ) )
+				case 'code-indent' : return this.code2spans( `${ indexBlock }` , token.chunks[0].replace( /[\n\r]*$/ , '' ).replace( /\t/g, '    ' ) )
 			}
 			
 			return this.text2spans( `${ indexBlock }` , token.chunks[0] )
