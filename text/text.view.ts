@@ -98,7 +98,7 @@ namespace $.$mol {
 					case 'code' : {
 						const span = this.Span( id )
 						span.type( 'code' )
-						span.content([ token.chunks[ 0 ] ])
+						span.content( this.code2spans( id , token.chunks[ 0 ] ) )
 						return span
 					}
 				}
