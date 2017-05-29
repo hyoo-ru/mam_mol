@@ -3,7 +3,7 @@ namespace $ {
 	export var $mol_syntax_md_flow = new $mol_syntax({
 		'quote' : /^(?:>\s+)(.*?)$([\n\r]*)/ ,
 		'header' : /^(#+)(\s*)(.*?)$([\n\r]*)/ ,
-		'list-item' : /^(\s?[*-]\s+)(.*?)$([\n\r]*)/ ,
+		'list' :  /^((?:[*+-]\s+(?:[^]*?)$(?:[\n\r]*))+)/ ,
 		'code' : /^(```\s*)(\w*)[\r\n]+([^]*?)^(```)$([\n\r]*)/ ,
 		'code-indent' : /^((?:(?:  |\t)(?:[^]*?)$([\n\r]*))+)/ ,
 		'table' : /((?:^\|.+?$\r?\n)+)([\n\r]*)/ ,
@@ -12,7 +12,7 @@ namespace $ {
 	
 	export var $mol_syntax_md_line = new $mol_syntax({
 		'strong' : /\*\*(.+?)\*\*/ ,
-		'emphasis' : /\*(.+?)\*/ ,
+		'emphasis' : /\*(?!\s)(.+?)\*/ ,
 		'code3' : /```(.+?)```/ ,
 		'code' : /`(.+?)`/ ,
 		'strike' : /~~(.+?)~~/ ,
