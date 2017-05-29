@@ -7,6 +7,7 @@
 	width: 10px;
 	height: 10px;
 	zoom: .75;
+	transition: none;
 }
 
 [mol_perf_serp_dot] {
