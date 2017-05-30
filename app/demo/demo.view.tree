@@ -1,5 +1,5 @@
 $mol_app_demo $mol_book
-	title @ \$mol demonstrations
+	title \$mol
 	source_prefix \https://github.com/eigenmethod/mol/tree/master/
 	Placeholder $mol_app_demo_placeholder
 		title <= title -
@@ -28,8 +28,7 @@ $mol_app_demo $mol_book
 			
 $mol_app_demo_menu $mol_page
 	minimal_width 200
-	title @ \Components
-	tools /
+	head /
 		<= Filter $mol_search
 			query?val <=> filter?val \
 	Body <= Nav $mol_app_demo_nav

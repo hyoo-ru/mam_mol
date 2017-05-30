@@ -18,16 +18,26 @@
 	background: var(--mol_skin_base);
 	color: var(--mol_skin_base_text);
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	flex: 0 0 auto;
 	position: relative;
 	margin: 0;
+	padding: .5rem;
+	min-height: calc( 1.5em + 1rem );
 }
 
 [mol_page_title] {
+	flex: 1000 1 0;
+	display: flex;
+	margin: .5rem;
+	word-break: normal;
+}
+
+[mol_page_tools] {
 	flex: 1 1 auto;
 	display: flex;
-	padding: 1rem;
+	justify-content: flex-end;
 }
 
 [mol_page_body] {

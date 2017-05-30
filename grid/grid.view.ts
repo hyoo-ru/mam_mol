@@ -16,7 +16,7 @@ namespace $.$mol {
 			const view_window = this.view_window()
 			
 			return [].concat(
-				this.col_ids() && this.Head() ,
+				this.Head() ,
 				rows.slice( view_window.top , view_window.bottom ).valueOf() ,
 			)
 		}

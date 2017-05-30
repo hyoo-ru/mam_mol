@@ -1,6 +1,7 @@
 [mol_link_iconed] {
 	align-items: center;
 	font-size: 1em;
+	color: var(--mol_skin_base);
 }
 
 [mol_link_iconed_icon] {

@@ -13,11 +13,6 @@
 	padding: .5rem;
 }
 
-[mol_app_habhub_close] {
-	color: inherit;
-	padding: 1rem;
-}
-
 [mol_app_habhub_placeholder] {
 	flex: 1000 1 600px;
 }

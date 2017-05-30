@@ -17,10 +17,10 @@ namespace $.$mol {
 
 			this.width( Math.round( rect.width ) )
 			this.height( Math.round( rect.height ) )
-			this.top( rect.top )
-			this.bottom( rect.bottom )
-			this.left( rect.left )
-			this.right( rect.right )
+			this.top( Math.round( rect.top ) )
+			this.bottom( Math.round( rect.bottom ) )
+			this.left( Math.round( rect.left ) )
+			this.right( Math.round( rect.right ) )
 			
 			this.defer_task()
 		}

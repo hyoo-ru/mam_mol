@@ -88,7 +88,7 @@ namespace $.$mol {
 						}
 					}
 					case 'image-link' : {
-						const span = this.Image( id )
+						const span = this.Image( token.chunks[ 1 ] )
 						span.type( token.name )
 						span.link( this.uri_resolve( token.chunks[ 1 ] ) )
 						span.title( token.chunks[ 0 ] )

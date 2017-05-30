@@ -17,6 +17,7 @@
 	cursor: inherit;
 	position: relative;
 	box-sizing: border-box;
+	word-break: normal;
 }
 
 [mol_button][disabled] {

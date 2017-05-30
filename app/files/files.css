@@ -68,9 +68,3 @@
 	zoom: 1.5;
 	opacity: .5;
 }
-
-[mol_app_files_close] {
-	color: inherit;
-    align-items: center;
-    padding: 1rem;
-}

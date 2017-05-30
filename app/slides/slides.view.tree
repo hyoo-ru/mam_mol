@@ -26,7 +26,6 @@ $mol_app_slides $mol_book
 				\на начало
 	pages /
 		<= Listener $mol_page
-			minimal_width 600
 			title <= slide_title \
 			tools /
 				<= Slide_number $mol_view
@@ -37,8 +36,7 @@ $mol_app_slides $mol_book
 					uri_base <= uri_base \
 					text <= listener_content \
 		<= Speaker $mol_page
-			minimal_width 600
-			title <= slide_title \
+			title \
 			tools /
 				<= Open_listener $mol_link
 					target \_blank

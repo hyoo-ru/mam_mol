@@ -17,11 +17,7 @@
 }
 
 [mol_app_demo_menu_filter] {
-	align-items:stretch;
-}
-
-[mol_app_demo_menu_filter] [mol_search_suggest_filter_string] {
-	padding: .5rem 1rem;
+	flex: 1 1 auto;
 }
 
 [mol_app_demo_nav_table] {
@@ -80,10 +76,6 @@
 	box-shadow: none;
 }
 
-[mol_app_demo_detail_row] > * {
-	padding: .5rem;
-}
-
 [mol_app_demo_page_close] {
 	color: inherit;
 	align-items: center;
@@ -100,10 +92,4 @@
 
 [mol_app_demo_sample_large] {
 	box-sizing: border-box;
-}
-
-[mol_app_demo_detail_source_link],
-[mol_app_demo_detail_close]{
-	color: inherit;
-	padding: 1rem;
 }

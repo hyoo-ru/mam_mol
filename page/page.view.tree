@@ -5,7 +5,8 @@ $mol_page $mol_view
 				<= Title $mol_view
 					sub /
 						<= title -
-				<= tools /
+				<= Tools $mol_view
+					sub <= tools /
 		<= Body $mol_scroll
 			scroll_top?val <=> body_scroll_top?val 0
 			sub <= body /
