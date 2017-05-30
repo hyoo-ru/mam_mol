@@ -2,7 +2,7 @@ namespace $.$mol {
 	
 	export class $mol_app_slides extends $.$mol_app_slides {
 		
-		pages() {
+		sub() {
 			if( !this.contents() ) return [ this.Loader() ]
 			
 			const role = this.role()
@@ -44,8 +44,11 @@ namespace $.$mol {
 			return pages
 		}
 		
-		slide_title() {
-			return this.content_pages()[ this.slide() ].title
+		title() {
+			const page = this.content_pages()[ this.slide() ]
+			if( !page ) return super.title()
+			
+			return page.title
 		}
 		
 		speaker_content() {

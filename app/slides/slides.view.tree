@@ -1,4 +1,4 @@
-$mol_app_slides $mol_book
+$mol_app_slides $mol_view
 	attr *
 		^
 		mol_app_slides_role <= role \ 
@@ -24,9 +24,9 @@ $mol_app_slides $mol_book
 			patterns <= speech_start /
 				\to beginning
 				\на начало
-	pages /
+	sub /
 		<= Listener $mol_page
-			title <= slide_title \
+			title <= title -
 			tools /
 				<= Slide_number $mol_view
 					sub /
