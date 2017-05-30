@@ -1,4 +1,4 @@
-[mol_perf_serp] {
+[mol_perf_sierp] {
 	position: absolute;
 	display: block;
 	transform-origin: 0 0;
@@ -10,7 +10,7 @@
 	transition: none;
 }
 
-[mol_perf_serp_dot] {
+[mol_perf_sierp_dot] {
 	position: absolute;
 	display: block;
 	background: #61dafb;

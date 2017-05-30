@@ -1,6 +1,6 @@
 namespace $.$mol {
 	
-	export class $mol_perf_serp extends $.$mol_perf_serp {
+	export class $mol_perf_sierp extends $.$mol_perf_sierp {
 		
 		sub() {
 			return this.data().map( ( props , index )=> this.Dot( index ) )
@@ -75,7 +75,7 @@ namespace $.$mol {
 		
 	}
 	
-	export class $mol_perf_serp_dot extends $.$mol_perf_serp_dot {
+	export class $mol_perf_sierp_dot extends $.$mol_perf_sierp_dot {
 		
 		sub() {
 			return [ this.hover() ? `*${ this.text() }*` : this.text() ]

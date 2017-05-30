@@ -1,15 +1,15 @@
-$mol_perf_serp $mol_view
+$mol_perf_sierp $mol_view
 	size_target 25
 	elapsed?val 0
 	style *
 		transform <= transform \
-	Dot!id $mol_perf_serp_dot
+	Dot!id $mol_perf_sierp_dot
 		left <= left!id 0
 		top <= top!id 0
 		size <= size!id 25
 		text <= text \
 
-$mol_perf_serp_dot $mol_view
+$mol_perf_sierp_dot $mol_view
 	size 25
 	size_px \25px
 	hover?val false
