@@ -38,12 +38,12 @@ $mol_app_todomvc $mol_scroll
 											sub /
 												<= filter_active_label @ \Active
 											arg *
-												completed false
+												completed \false
 										<= Filter_completed $mol_link
 											sub /
 												<= filter_completed_label @ \Completed
 											arg *
-												completed true
+												completed \true
 								<= Sweep $mol_button_minor
 									enabled <= sweep_enabled true
 									event_click?event <=> event_sweep?event null
