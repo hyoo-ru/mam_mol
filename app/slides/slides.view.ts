@@ -97,6 +97,22 @@ namespace $.$mol {
 			return $mol_speech.listening( next )
 		}
 		
+		@ $mol_mem()
+		timings() {
+			return this.content_pages().map( page => page.speaker.length )
+		}
+		
+		@ $mol_mem()
+		timing_total() {
+			return this.timings().reduce( ( a , b )=> a + b , 0 )
+		}
+		
+		@ $mol_mem()
+		progress() {
+			const timing = this.timings().slice( 0 , this.slide() ).reduce( ( a , b )=> a + b , 0 )
+			return timing / this.timing_total()
+		}
+		
 	}
 	
 }

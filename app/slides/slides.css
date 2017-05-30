@@ -51,3 +51,8 @@
 	width: 100vw;
 	height: 100vh;
 }
+
+[mol_app_slides_progress] {
+	flex: 0 0 auto;
+	width: auto;
+}

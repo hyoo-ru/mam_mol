@@ -35,6 +35,8 @@ $mol_app_slides $mol_book
 				<= Listener_content $mol_text
 					uri_base <= uri_base \
 					text <= listener_content \
+				<= Progress $mol_portion
+					portion <= progress 0
 		<= Speaker $mol_page
 			title \
 			tools /
