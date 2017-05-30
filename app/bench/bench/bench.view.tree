@@ -22,7 +22,6 @@ $mol_app_bench $mol_view
 	Menu_option!id $mol_check_box
 		minimal_height 36
 		checked?val <=> menu_option_checked!id?val false
-		label /
-			<= menu_option_title!id \
+		title <= menu_option_title!id \
 	-
 	result_col_title_sample @ \Sample

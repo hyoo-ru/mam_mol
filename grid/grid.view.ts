@@ -90,7 +90,7 @@ namespace $.$mol {
 		}
 		
 		cell_content( id : { row : string[] , col : string } ) {
-			return this.record( id.row[ id.row.length - 1 ] )[ id.col ]
+			return [ this.record( id.row[ id.row.length - 1 ] )[ id.col ] ]
 		}
 		
 		records() : any {

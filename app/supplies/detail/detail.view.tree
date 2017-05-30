@@ -66,5 +66,4 @@ $mol_app_supplies_detail $mol_page
 			sub <= actions /
 				<= Approve $mol_check_box
 					checked?val <=> approved?val false
-					label /
-						<= approved_title @ \Approved
+					title <= approved_title @ \Approved

@@ -15,8 +15,7 @@ $mol_app_todomvc $mol_scroll
 								<= Head_complete $mol_check
 									enabled <= head_complete_enabled false
 									checked?val <=> completed_all?val false
-									sub /
-										\❯
+									title \❯
 								<= Add $mol_app_todomvc_add
 									value?val <=> task_title_new?val \
 									event_done?event <=> event_add?event null
@@ -65,7 +64,6 @@ $mol_app_todomvc_task_row $mol_view
 	sub /
 		<= Complete $mol_check
 			checked?val <=> completed?val false
-			sub /
 		<= Title $mol_string
 			hint <= title_hint @ \Task title
 			value?val <=> title?val \

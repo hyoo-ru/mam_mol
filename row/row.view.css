@@ -1,7 +1,7 @@
 [mol_row] {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: baseline;
+	align-items: flex-start;
 	align-content: flex-start;
 	justify-content: flex-start;
 	padding: .5rem;
@@ -10,6 +10,7 @@
 	border-radius: var(--mol_skin_round);
 	box-sizing: border-box;
 	max-width: 100%;
+	align-self: flex-start;
 }
 
 [mol_row] > * ,

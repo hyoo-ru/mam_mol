@@ -3,7 +3,7 @@
 }
 
 [mol_app_demo_menu] {
-	flex: 1 1 200px;
+	flex: 1 1 240px;
 }
 
 [mol_app_demo_menu_head] {
@@ -46,6 +46,7 @@
 
 [mol_app_demo_nav_content] {
 	flex-grow: 1;
+	margin: 0 .5rem;
 }
 
 [mol_app_demo_main] {

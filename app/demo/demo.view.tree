@@ -27,7 +27,7 @@ $mol_app_demo $mol_book
 			<= detail_empty_postfix @ \"
 			
 $mol_app_demo_menu $mol_page
-	minimal_width 200
+	minimal_width 240
 	title @ \$mol demonstrations
 	tools /
 		<= Filter $mol_search

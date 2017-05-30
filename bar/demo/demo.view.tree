@@ -15,7 +15,7 @@ $mol_bar_demo $mol_row
 					hint \E-mail
 					value?val <=> value?val \
 				<= Three_confirm $mol_check_box
-					label / \Confirm
+					title \Confirm
 				<= Three_submit $mol_button
 					sub /
 						\submit
