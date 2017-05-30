@@ -23,14 +23,14 @@
 	flex: 0 0 auto;
 	position: relative;
 	margin: 0;
-	padding: .5rem;
-	min-height: calc( 1.5em + 1rem );
+	/*padding: .5rem;*/
+	min-height: calc( 1.5em + 2rem );
 }
 
 [mol_page_title] {
-	flex: 1000 1 0;
+	flex: 1000 1 50%;
 	display: flex;
-	margin: .5rem;
+	margin: 1rem;
 	word-break: normal;
 }
 
@@ -38,6 +38,7 @@
 	flex: 1 1 auto;
 	display: flex;
 	justify-content: flex-end;
+	padding: .5rem;
 }
 
 [mol_page_body] {

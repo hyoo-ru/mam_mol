@@ -8,7 +8,6 @@
 }
 
 [mol_switch_option] {
-	padding: .5rem;
 	flex: 1 1 auto;
 	@apply --mol_skin_outline;
 	background: var(--mol_skin_passive);

@@ -31,16 +31,17 @@
 	z-index: 2;
 	opacity: 1 !important;
 	width: 100%;
+	align-self: stretch;
 }
 
 [mol_select_option_label] {
-	padding: .5em;
+	padding: .5em 1rem;
 	text-align: start;
 	min-height: 1.5em;
 }
 
 [mol_select_сlear_option_content] {
-	padding: .5em;
+	padding: .5em 1rem;
 	text-align: start;
 	min-height: 1.5em;
 	@apply --mol_skin_outline;
@@ -49,7 +50,7 @@
 }
 
 [mol_select_no_options] {
-	padding: .5em;
+	padding: .5em 1rem;
 	text-align: start;
 	min-height: 1.5em;
 	display: block;

@@ -7,7 +7,10 @@
 }
 
 [mol_app_demo_menu_head] {
-	flex-direction:column;
+}
+
+[mol_app_demo_menu_tools] {
+	padding: 0;
 }
 
 [mol_app_demo_detail],
