@@ -23,14 +23,14 @@ namespace $ {
 		
 		constructor(
 			host : any ,
-			handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value ,
-			field = 'value()'
+			handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value = ()=> null ,
+			field = ''
 		) {
 			super()
 			
 			this.handler = handler
 			this.host = Object( host )
-			this.field = field || 'value()'
+			this.field = field
 		}
 		
 		destroyed( next? : boolean ) {
@@ -356,6 +356,53 @@ namespace $ {
 			this.scheduled = false
 		}
 		
+		then< Next >( done : ( prev? : Value )=> Next , fail? : ( error : Error )=> Next ) {
+			
+			let prev : Value
+			let next : Next
+			
+			const atom = new $mol_atom<any>(
+				this ,
+				() => {
+					try {
+						
+						if( prev == undefined ) {
+							const val = this.get()
+							if( val instanceof $mol_atom_wait ) return val
+							if( val ) val.valueOf()
+							prev = val
+						}
+						
+						if( next == undefined ) {
+							const val = done( prev )
+							if( val instanceof $mol_atom_wait ) return val
+							if( val ) val.valueOf()
+							next = val
+						}
+						
+						return next
+
+					} catch( error ) {
+						
+						if( error instanceof $mol_atom_wait ) return error
+						
+						if( fail ) return fail( error )
+						
+						return error
+					}
+
+				} ,
+			)
+			
+			$mol_atom.actualize( atom )
+			
+			return atom
+		}
+		
+		catch( fail : ( error : Error )=> Value ) {
+			return this.then( next => next , fail )
+		}
+		
 	}
 	
 	$mol_state_stack.set( '$mol_atom.stack' , $mol_atom.stack )
@@ -375,28 +422,6 @@ namespace $ {
 	export class $mol_atom_force extends Object {
 		$mol_atom_force : boolean
 		static $mol_atom_force : boolean
-	}
-	
-	export function $mol_atom_task< Value >(
-		host : any ,
-		handler : ()=> Value ,
-	) {
-		const atom = new $mol_atom<any>(
-			host ,
-			() => {
-				try {
-					handler()
-				} catch( error ) {
-					if(!( error instanceof $mol_atom_wait )) atom.destroyed( true )
-					throw error
-				}
-				atom.destroyed( true )
-			} ,
-		)
-		
-		$mol_atom.actualize( atom )
-		
-		return atom
 	}
 	
 }

@@ -223,23 +223,6 @@ namespace $ {
 			return {}
 		}
 		
-		'event_wrapped()' = null as { [ name : string ] : ( event? : Event )=> any }
-		event_wrapped() {
-			if( this[ 'event_wrapped()' ] ) return this[ 'event_wrapped()' ]
-			
-			const event = this.event()
-			const wrapped = {} as typeof event
-			
-			for( let name in event ) {
-				let handle = event[ name ]
-				wrapped[ name ] = event => {
-					$mol_atom_task( `${ this }.event()['${ name }']` , () => handle( event ) ).get()
-				}
-			}
-			
-			return this[ 'event_wrapped()' ] = wrapped
-		}
-		
 		'locale_contexts()' : string[]
 		locale_contexts() {
 			return this['locale_contexts()'] || ( this[ 'locale_contexts()' ] = this.view_classes().map( String ) )

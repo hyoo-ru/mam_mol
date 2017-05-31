@@ -58,30 +58,33 @@ module $ {
 
 			let targetValue : number
 			
-			let counter = new $mol_atom<number>( 'counter' , next => {
+			let test_counter = new $mol_atom<number>( 'test_counter' , next => {
 				new $mol_defer( ()=> {
-					counter.push( next || 1 )
+					test_counter.push( next || 1 )
 				} )
 				throw new $mol_atom_wait
 			} )
 			
-			let slave = new $mol_atom<number>( 'slave' , next => counter.get() )
+			let slave = new $mol_atom<number>( 'slave' , next => test_counter.get() )
 			slave.actualize()
 			
-			let changed = false
+			let res : Error[] = []
+			const error = new Error( 'test error' )
 			
-			$mol_atom_task( 'task' , () => {
-				let next = counter.get() + 1
-				$mol_atom_task( 'task' , ()=> {
-					counter.set( next ).valueOf()
-					changed = true
-				})
+			const test_task = new $mol_atom( 'test_task' )
+			.then( () => test_counter.get() + 1 )
+			.then( next => test_counter.set( next ) )
+			.then( next => {
+				test_counter.set( next + 1 )
+				throw error
 			} )
+			.catch( error => [ error ] )
+			.then( next => res = next )
 			
 			$mol_defer.run()
 			
-			$mol_assert_equal( counter.get() , 2 )
-			$mol_assert_ok( changed )
+			$mol_assert_equal( test_counter.get() , 3 )
+			$mol_assert_equal( res[0] , error )
 			
 			slave.destroyed( true )
 		} ,
