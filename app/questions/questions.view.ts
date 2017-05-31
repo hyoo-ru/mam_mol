@@ -61,12 +61,12 @@ namespace $.$mol {
 		}
 		
 		questions_count() {
-			let uri = `//api.stackexchange.com/2.2/questions?site=stackoverflow&filter=total`
+			let uri = `http://api.stackexchange.com/2.2/questions?site=stackoverflow&filter=total`
 			return $mol_http.resource( uri ).json<{ total : number }>().total
 		}
 		
 		questions_data( page : number ) {
-			const uri = `//api.stackexchange.com/2.2/questions?order=desc&sort=creation&site=stackoverflow&pagesize=${ this.data_page_size() }&page=${ page + 1 }`
+			const uri = `http://api.stackexchange.com/2.2/questions?order=desc&sort=creation&site=stackoverflow&pagesize=${ this.data_page_size() }&page=${ page + 1 }`
 			type Item = {
 				title : string
 				creation_date : number
@@ -84,7 +84,7 @@ namespace $.$mol {
 		}
 		
 		question_full( id : number ) {
-			const uri = `//api.stackexchange.com/2.2/questions/${ id }?site=stackoverflow&filter=!9YdnSJ*_T`
+			const uri = `http://api.stackexchange.com/2.2/questions/${ id }?site=stackoverflow&filter=!9YdnSJ*_T`
 			type Item = {
 				title : string
 				body_markdown : string
@@ -94,7 +94,7 @@ namespace $.$mol {
 		}
 		
 		question_answers( id : number ) {
-			const uri = `//api.stackexchange.com/2.2/questions/${ id }/answers?order=desc&sort=votes&site=stackoverflow&filter=!-*f(6sFKn6ub`
+			const uri = `http://api.stackexchange.com/2.2/questions/${ id }/answers?order=desc&sort=votes&site=stackoverflow&filter=!-*f(6sFKn6ub`
 			type Item = {
 				score : number
 				body_markdown : string

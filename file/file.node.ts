@@ -4,11 +4,9 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		static absolute( path : string ) {
-			return new $mol_file().setup(
-				obj => {
-					obj.path = ()=> path
-				}
-			)
+			const next = new $mol_file()
+			next.path = ()=> path
+			return next
 		}
 		
 		static relative( path : string ) : $mol_file {

@@ -1,0 +1,4 @@
+deploy \/mol/app/quine/quine.view.tree
+deploy \/mol/app/quine/quine.view.ts
+deploy \/mol/app/quine/index.html
+deploy \/mol/app/quine/quine.locale=ru.json

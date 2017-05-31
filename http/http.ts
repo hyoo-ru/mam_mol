@@ -2,8 +2,13 @@ namespace $ {
 	
 	export class $mol_http extends $mol_object {
 		
-		@ $mol_mem_key()
 		static resource( uri : string ) {
+			const normal = new URL( uri , $mol_dom_context.document.location.href ).toString()
+			return this.resource_absolute( normal )
+		}
+		
+		@ $mol_mem_key()
+		static resource_absolute( uri : string ) {
 			const next = new $mol_http
 			next.uri = ()=> uri
 			return next
