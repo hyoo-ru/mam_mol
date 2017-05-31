@@ -397,9 +397,8 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## Communication modules
 
-* **[$mol_http_resource](http/resource)** - Reactive REST HTTP resource
-* **[$mol_http_request](http/request)** - Reactive HTTP Request
-* **[$mol_webdav](webdav)** - Reactive [WebDAV](https://ru.wikipedia.org/wiki/WebDAV) client
+* **[$mol_http](http)** - Reactive [HTTP](https://wikipedia.org/wiki/HTTP) client
+* **[$mol_webdav](webdav)** - Reactive [WebDAV](https://wikipedia.org/wiki/WebDAV) client
 
 ## Simple components
 

@@ -27,7 +27,7 @@ namespace $.$mol {
 			
 			if( query ) {
 				var uri = `https://api.github.com/search/users?per_page=100&q=${ encodeURIComponent( query ) }`
-				var resource = $mol_http_resource_json.item<{ items : { login : string }[] }>( uri )
+				var resource = $mol_http.resource( uri )
 			} else {
 				resource = null
 			}
@@ -57,10 +57,10 @@ namespace $.$mol {
 			const master = this.master()
 			
 			if( next === void 0 ) {
-				return master.json( void 0 , force ).items.map( item => item.login ) as string[]
+				return master.json<{ items : { login : string }[] }>( void 0 , force ).items.map( item => item.login ) as string[]
 			}
 			
-			master.json( next && { items : next.map( login => ({ login }) ) } )
+			master.json<{ items : { login : string }[] }>( next && { items : next.map( login => ({ login }) ) } )
 			
 			return next
 		}

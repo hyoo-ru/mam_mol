@@ -16,11 +16,6 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		welcome_text() {
-			return $mol_http_resource.item( 'readme.md' ).text()
-		}
-		
-		@ $mol_mem()
 		names_demo_all() {
 			var next : string[] = []
 			for( var name in $ ) {

@@ -62,7 +62,7 @@ namespace $.$mol {
 		
 		questions_count() {
 			let uri = `//api.stackexchange.com/2.2/questions?site=stackoverflow&filter=total`
-			return $mol_http_resource_json.item<{ total : number }>( uri ).json().total
+			return $mol_http.resource( uri ).json<{ total : number }>().total
 		}
 		
 		questions_data( page : number ) {
@@ -76,7 +76,7 @@ namespace $.$mol {
 					display_name : string
 				}
 			}
-			return $mol_http_resource_json.item<{ items : Item[] }>( uri ).json()
+			return $mol_http.resource( uri ).json<{ items : Item[] }>()
 		}
 		
 		data_page_size() {
@@ -90,7 +90,7 @@ namespace $.$mol {
 				body_markdown : string
 				link : string
 			}
-			return $mol_http_resource_json.item<{ items : Item[] }>( uri ).json().items[0]
+			return $mol_http.resource( uri ).json<{ items : Item[] }>().items[0]
 		}
 		
 		question_answers( id : number ) {
@@ -100,7 +100,7 @@ namespace $.$mol {
 				body_markdown : string
 				share_link : string
 			}
-			return $mol_http_resource_json.item<{ items : Item[] }>( uri ).json().items
+			return $mol_http.resource( uri ).json<{ items : Item[] }>().items
 		}
 		
 		answers( id : number ) {

@@ -62,7 +62,7 @@ namespace $ {
 			if( typeof hhfw === 'undefined' ) {
 				
 				const uri = `http://${ this.host() }/api/${ this.version() }/auth/?env=${ this.environment() }&proj=${ this.project() }&app=${ this.application() }`
-				const res = $mol_http_resource_json.item<any>( uri )
+				const res = $mol_http.resource( uri )
 				
 				res.credentials = ()=> ({
 					login : this.login() ,
@@ -73,7 +73,7 @@ namespace $ {
 					'x-device-id' : this.device()
 				})
 				
-				return res.json().valueOf() && true
+				return res.json<any>().valueOf() && true
 			}
 
 			this.initialized().valueOf()
@@ -107,13 +107,13 @@ namespace $ {
 				this.authentificated().valueOf()
 
 				const uri_descr = `http://${ this.host() }/api/${ this.version() }/resources_description/`
-				const descr = $mol_http_resource_json.item< any >( uri_descr ).json()
+				const descr = $mol_http.resource( uri_descr ).json< any >()
 				
 				const uri_data = `http://${ this.host() }/api/${ this.version() }/table/GET_${ table }/`
-				const res = $mol_http_resource_json.item< any >( uri_data )
+				const res = $mol_http.resource( uri_data )
 				res.method_get = $mol_const( 'Post' )
 				res.credentials = $mol_const({})
-				const table_data = res.json()
+				const table_data = res.json< any >()
 
 				const data = table_data.map( ( values : any[] )=> {
 					const record = {} as any

@@ -46,7 +46,7 @@ namespace $ {
 		
 		@ $mol_mem()
 		content( next? : string , force? : $mol_atom_force ) {
-			return $mol_http_resource.item( this.path() ).text( next )
+			return $mol_http.resource( this.path() ).text( next )
 		}
 		
 		resolve( path : string ) : $mol_file {
