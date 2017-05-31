@@ -10,7 +10,6 @@
 	border-radius: var(--mol_skin_round);
 	box-sizing: border-box;
 	max-width: 100%;
-	align-self: flex-start;
 }
 
 [mol_row] > * ,
