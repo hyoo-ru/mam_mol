@@ -39,8 +39,8 @@ namespace $.$mol {
 			new $mol_defer( ()=> {
 				const el = this.dom_node() as HTMLElement
 				
-				const top = Math.max( 0 , Math.round( el.scrollTop ) )
-				const left = Math.max( 0 , Math.round( el.scrollLeft ) )
+				const top = Math.max( 0 , el.scrollTop )
+				const left = Math.max( 0 , el.scrollLeft )
 				
 				this.scroll_top( top )
 				this.scroll_left( left )
