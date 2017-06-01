@@ -5,7 +5,7 @@
 	box-sizing: border-box;
 	will-change: scroll-position;
 	transform: translateZ(0);
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	max-height: 100%;
 	max-width: 100%;
 	-webkit-overflow-scrolling: touch;

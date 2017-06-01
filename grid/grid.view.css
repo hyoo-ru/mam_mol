@@ -13,7 +13,7 @@
 
 [mol_grid_table] {
 	border-spacing: 0;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	transform: translateZ(0);
 	position: relative;
 }

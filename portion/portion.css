@@ -7,7 +7,7 @@
 	align-self: stretch;
 	vertical-align: inherit;
 	border-radius: var(--mol_skin_round);
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_light);
 }
 

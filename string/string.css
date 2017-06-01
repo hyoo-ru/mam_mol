@@ -1,6 +1,6 @@
 [mol_string] {
 	box-sizing: border-box;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	outline-offset: 0;
 	border: none;
 	border-radius: var(--mol_skin_round);
@@ -28,7 +28,7 @@
 }
 
 [mol_string]:focus {
-	@apply --mol_skin_focus;
+	box-shadow: var(--mol_skin_focus_outline);
 }
 
 [mol_string]::-ms-clear {

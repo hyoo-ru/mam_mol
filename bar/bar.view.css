@@ -1,6 +1,6 @@
 [mol_bar] {
 	display: flex;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	border-radius: var(--mol_skin_round);
 }
 

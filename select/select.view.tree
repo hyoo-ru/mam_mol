@@ -17,8 +17,8 @@ $mol_select $mol_view
 			<= no_options_message @ \No options
 	Сlear_option_content $mol_view 
 		sub <= clear_option_content /
-			<= clear_option_message @ \Clear
 			<= Clear_icon $mol_icon_cross
+			<= clear_option_message @ \Clear
 	plugins /
 		<= Nav $mol_nav
 			keys_y <= nav_components /

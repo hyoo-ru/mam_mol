@@ -11,7 +11,7 @@
 	border-radius: var(--mol_skin_round);
 	text-align: start;
 	padding: .25em;
-	margin: .25rem;
+	margin: 0 .5rem 0 0;
 	align-self: stretch;
 	box-shadow: var(--mol_skin_light_line) 0 0 0 1px;
 }

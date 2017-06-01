@@ -12,7 +12,7 @@
 	align-items: stretch;
 	align-content: flex-start;
 	overflow: hidden;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	margin: 0;
 }
 
@@ -24,7 +24,7 @@
 	display: flex;
 	background: var(--mol_skin_light);
 	flex: 1000 1 640px;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	max-width: 100%;
 }
 
@@ -36,7 +36,7 @@
 	background: var(--mol_skin_light);
 	flex: 1 1 auto;
 	display: flex;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	z-index: 0;
 	max-width: 100%;
 }

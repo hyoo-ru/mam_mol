@@ -2,7 +2,7 @@
 	line-height: 1.5;
 	max-width: 60rem;
 	background: var(--mol_skin_card);
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	padding: .5rem;
 	border-radius: var(--mol_skin_round);
 	white-space: pre-line;

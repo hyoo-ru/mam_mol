@@ -4,7 +4,7 @@
 }
 
 [mol_select_trigger] {
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	padding: 0;
 	margin: 0;
 	flex: 1 1 auto;
@@ -41,10 +41,10 @@
 }
 
 [mol_select_сlear_option_content] {
-	padding: .5em 1rem;
+	padding: .5em 1rem .5rem 0;
 	text-align: start;
 	min-height: 1.5em;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	border-radius: var(--mol_skin_round);
 	flex: 1 0 auto;
 }

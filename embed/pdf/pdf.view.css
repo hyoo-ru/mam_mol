@@ -13,5 +13,5 @@
 	display: block;
 	margin: .5rem auto;
 	image-rendering: auto;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 }

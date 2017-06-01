@@ -18,7 +18,7 @@
 	justify-content: flex-start;
 	text-align: left;
 	word-break: break-word;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	padding: .25rem;
 }
 
@@ -54,7 +54,7 @@
 [mol_app_files_file_embed] {
 	align-self: stretch;
 	flex: 1 1 auto;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	border-radius: var(--mol_skin_round);
 }
 
