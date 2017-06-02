@@ -96,6 +96,31 @@ namespace $.$mol {
 			this.slide( 0 )
 		}
 		
+		event_end( next? : Event ) {
+			this.slide( -1 )
+		}
+		
+		event_slide( [ numb ] : [ string ] ) {
+			this.slide( Number( numb ) )
+		}
+		
+		event_about( [ topic ] : [ string ] ) {
+			let matcher = topic
+			const pages = this.content_pages()
+			
+			while( matcher.length > 2 ) {
+				
+				for( let i = 0 ; i < pages.length ; ++i ) {
+					if( !pages[i].title.toLowerCase().match( matcher ) ) continue
+					
+					this.slide( i )
+					return
+				}
+				
+				matcher = matcher.substring( 0 , matcher.length - 1 )
+			}
+		}
+		
 		speech_enabled( next? : boolean ) {
 			return $mol_speech.listening( next )
 		}

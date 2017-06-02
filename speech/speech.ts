@@ -59,17 +59,22 @@ namespace $ {
 		
 		@ $mol_mem()
 		render() : null {
-			const text = $mol_speech.text()
+			const text = $mol_speech.text().replace( /[,\.]/g , '' )
 			
-			if( text.match( this.matcher() ) ) {
-				new $mol_defer( ()=> this.event_catch( null ) )
+			for( let matcher of this.matchers() ) {
+				
+				const found = text.match( matcher )
+				if( !found ) continue
+				
+				new $mol_defer( ()=> this.event_catch( found.slice( 1 ).map( text => text.toLowerCase() ) ) )
+				break
 			}
 			
 			return null
 		}
 		
-		event_catch( event? : Event ) {
-			console.log( event )
+		event_catch( found? : string[] ) {
+			console.log( found )
 		}
 		
 		patterns() {
@@ -77,12 +82,18 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		matcher() {
-			return new RegExp( `(${ this.patterns().join( '|' ) })${ this.suffix() }$` , 'i' )
+		matchers() {
+			return this.patterns().map( pattern => {
+				return new RegExp( this.prefix() + pattern + this.suffix() , 'i' )
+			} )
+		}
+		
+		prefix() {
+			return ''
 		}
 		
 		suffix() {
-			return '\\s(?:please|would you kindly|пожалуйста|будь любезен)'
+			return '\\s(?:please|would you kindly|пожалуйста|пожалуй 100|будь любезен)\.?$'
 		}
 		
 	}

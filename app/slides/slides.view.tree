@@ -14,6 +14,13 @@ $mol_app_slides $mol_view
 				\удали
 				\вперед
 				\перевод
+		<= Speech_slide $mol_speech
+			event_catch?val <=> event_slide?val null
+			patterns <= speech_slide /
+				\slide number (\d+)
+				\(\d+) slide
+				\слайд номер (\d+)
+				\(\d+) слайд
 		<= Speech_prev $mol_speech
 			event_catch?val <=> event_prev?val null
 			patterns <= speech_prev /
@@ -23,7 +30,24 @@ $mol_app_slides $mol_view
 			event_catch?val <=> event_start?val null
 			patterns <= speech_start /
 				\to beginning
-				\на начало
+				\first slide
+				\начало
+				\первый слайд
+		<= Speech_end $mol_speech
+			event_catch?val <=> event_end?val null
+			patterns <= speech_end /
+				\to ending
+				\last slide
+				\конец
+				\последний слайд
+		<= Speech_about $mol_speech
+			event_catch?val <=> event_about?val null
+			patterns <= speech_about /
+				\slide about (\S+?)
+				\search (\S+?)
+				\слайд про (\S+?)
+				\найти (\S+?)
+				\найди (\S+?)
 	sub /
 		<= Listener $mol_page
 			title <= title -
