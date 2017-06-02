@@ -16,4 +16,5 @@
 [mol_cost_postfix] {
 	font-weight: lighter;
 	display: inline;
+	white-space: pre-wrap;
 }
