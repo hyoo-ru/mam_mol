@@ -46,6 +46,6 @@
 	max-height: 100%;
 }
 
-[mol_book] > *:first-child:last-child {
+[mol_book] > *:first-child {
 	animation: none;
 }
