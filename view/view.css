@@ -27,6 +27,7 @@
 		rgba(255,255,220,1) 20px
 	);
 	background-size: 28px 28px;
+	color: black;
 }
 [mol_view][mol_view_error] * {
 	background: none;
