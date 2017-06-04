@@ -10,3 +10,4 @@ $mol_string $mol_view
 	event *
 		^
 		input?event <=> event_change?event null
+		keypress?event <=> event_key_press?event null
