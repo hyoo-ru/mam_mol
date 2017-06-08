@@ -28,16 +28,16 @@
 	transform: translateX( -100% ) scale( 0 , 1 );
 }
 
-@keyframes mol_book_page_show {
+/*@keyframes mol_book_page_show {
 	from {
 		transform: translateX( 100% ) scale( 0 , 1 );
 		opacity: 0;
 	}
-}
+}*/
 
 [mol_book] > * {
 	position: relative;
-	animation: mol_book_page_show ease-out .2s;
+	/*animation: mol_book_page_show ease-out .2s;*/
 	background: var(--mol_skin_light);
 	transition-duration: .2s;
 	transition-timing-function: ease-out;
@@ -46,6 +46,6 @@
 	max-height: 100%;
 }
 
-[mol_book] > *:first-child {
+/*[mol_book] > *:first-child {
 	animation: none;
-}
+}*/
