@@ -60,13 +60,12 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Oganizations using $mol
 
-[![EigenMethod](http://eigenmethod.com/img/logos/logo-eigenmethod-desktop.png)](http://eigenmethod.com) 
-
 [![SAPRUN](http://www.saprun.com/static/core/img/base/logo_sm.png)](http://www.saprun.com)
 
 # Articles
 
 * [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Сomprehensive $mol review
+* [Объектное Реактивное Программирование](https://habrahabr.ru/post/330466/) - Features of Object Reactive Programming
 * [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/) - Problems of popular frameworks
 * [Принципы написания кода](https://habrahabr.ru/post/236785/) - Code style principles
 
