@@ -60,8 +60,6 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Oganizations using $mol
 
-[![EigenMethod](http://eigenmethod.com/img/logos/logo-eigenmethod-desktop.png)](http://eigenmethod.com) 
-
 [![SAPRUN](http://www.saprun.com/static/core/img/base/logo_sm.png)](http://www.saprun.com)
 
 # Articles
