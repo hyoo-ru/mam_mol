@@ -9,8 +9,9 @@ namespace $.$mol {
 			let strings = this.strings()
 			
 			for( let index = 0 ; index < strings.length ; index++ ) {
-				if( index > 0 ) chunks.push( this.needle() )
-				if( strings[ index ] !== '' ) chunks.push( this.low( index ) )
+				if( strings[ index ] === '' ) continue
+				
+				chunks.push( ( index % 2 ) ? strings[ index ] : this.Low( index ) )
 			}
 			
 			return chunks
@@ -18,7 +19,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		strings() {
-			return this.haystack().split( this.needle() )
+			return this.haystack().split( new RegExp( `(${ this.needle() })` , 'gi' ) )
 		}
 		
 		string( index: number ) {
