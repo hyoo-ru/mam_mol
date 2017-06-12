@@ -123,17 +123,15 @@ namespace $ {
 	
 	export function $mol_dom_jsx(
 		localName : string ,
-		props : $mol_dom_make_config ,
-		...childNodes : Array< Node | string >
+		props : { [ key : string ] : any } ,
+		...children : Array< Node | string >
 	) {
-		let config = {
-			localName ,
-			childNodes : [].concat.apply( [] , childNodes ) ,
-			...props
-		}
+		const node = $mol_dom_make( props && props.id , localName )
 		
-		return $mol_dom_make( config )
+		$mol_dom_render_children( node , [].concat.apply( [] , children ) )
+		$mol_dom_render_fields( node , props )
+		
+		return node
 	}
 	
 }
-

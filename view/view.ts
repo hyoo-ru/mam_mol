@@ -137,7 +137,7 @@ namespace $ {
 			return $mol_view_dom.node( this )
 		}
 		
-		@ $mol_deprecated( 'Use $mol_view::render instead.' )
+		@ $mol_deprecated( 'Use $mol_view.render instead.' )
 		dom_tree() {
 			return this.render()
 		}
@@ -152,18 +152,17 @@ namespace $ {
 					if( typeof plugin['render'] === 'function' ) plugin.render()
 				}
 				
-				$mol_dom_render( node , {
-					attributes : this.attr() ,
-					childNodes : this.sub_visible() ,
-					style : this.style() ,
-					...( this.field() || {} ) ,
-				} )
+				$mol_dom_render_attributes( node , this.attr() )
+				
+				const sub = this.sub_visible()
+				if( sub ) $mol_dom_render_children( node , sub )
+				
+				$mol_dom_render_styles( node , this.style() )
+				$mol_dom_render_fields( node , this.field() )
 				
 			} catch( error ) {
 				
-				$mol_dom_render( node , {
-					attributes : { mol_view_error : error.name } ,
-				} )
+				$mol_dom_render_attributes( node , { mol_view_error : error.name } )
 				
 				if( error instanceof $mol_atom_wait ) return node
 				
