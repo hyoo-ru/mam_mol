@@ -44,7 +44,7 @@ namespace $ {
 				if( text ) return text
 			}
 			
-			console.warn( 'Locale tet not found: ' , contexts , key )
+			console.warn( 'Locale text not found: ' , `(${ contexts.join( '|' ) })_${ key }` )
 			
 			return `<${ key }>`
 		}
