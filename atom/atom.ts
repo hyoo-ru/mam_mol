@@ -71,14 +71,15 @@ namespace $ {
 			this.actualize( force )
 			
 			const slave = $mol_atom.stack[0]
-			if( slave ) this.lead( slave )
-			if( slave ) slave.obey( this )
+			if( slave ) {
+				this.lead( slave )
+				slave.obey( this )
+			}
 			
 			const value : Value = this.host[ this.field ]
 			
-			if( value instanceof Error ) {
-				if( typeof Proxy !== 'function' ) throw value
-				//if(!( value instanceof $mol_atom_wait )) throw value
+			if( typeof Proxy !== 'function' && value instanceof Error ) {
+				throw value
 			}
 			
 			return value
