@@ -411,12 +411,9 @@ namespace $ {
 	export class $mol_atom_wait extends Error {
 		name = '$mol_atom_wait'
 		
-		constructor( public message = 'Wait...' ) {
+		constructor( message = 'Wait...' ) {
 			super( message )
-			const error : any = new Error( message )
-			error.name = this.name
-			error['__proto__'] = $mol_atom_wait.prototype
-			return error
+			this['__proto__'] = new.target.prototype
 		}
 	}
 	
