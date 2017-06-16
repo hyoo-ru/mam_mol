@@ -3,27 +3,27 @@ declare var Proxy : any
 namespace $ {
 	
 	export enum $mol_atom_status {
-		obsolete = 'obsolete' as any ,
-		checking = 'checking' as any ,
-		pulling = 'pulling' as any ,
-		actual = 'actual' as any ,
+		obsolete = 'obsolete' ,
+		checking = 'checking' ,
+		pulling = 'pulling' ,
+		actual = 'actual' ,
 	}
 	
-	export class $mol_atom< Value > extends $mol_object {
+	export class $mol_atom< Value = null > extends $mol_object {
 		
-		masters : $mol_set< $mol_atom<any> > = null
-		slaves : $mol_set< $mol_atom<any> > = null
+		masters : $mol_set< $mol_atom<any> > | null = null
+		slaves : $mol_set< $mol_atom<any> > | null = null
 		
 		status = $mol_atom_status.obsolete
 		autoFresh = true
 		
-		handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value
+		handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value|void
 		host : { [ key : string ] : any }
 		field : string
 		
 		constructor(
 			host : any ,
-			handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value = ()=> null ,
+			handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value|void = ()=> undefined,
 			field = ''
 		) {
 			super()
@@ -45,8 +45,8 @@ namespace $ {
 					}
 				}
 				
-				host[ this.field ] = void null
-				host[ this.field + '@' ] = void null
+				host[ this.field ] = undefined
+				host[ this.field + '@' ] = undefined
 				
 				this.status = $mol_atom_status.obsolete
 			}
@@ -96,7 +96,7 @@ namespace $ {
 			
 			if( !force && this.status === $mol_atom_status.checking ) {
 				
-				this.masters.forEach(
+				this.masters!.forEach(
 					master => {
 						if( this.status !== $mol_atom_status.checking ) return
 						master.actualize()
@@ -147,7 +147,7 @@ namespace $ {
 			}
 		}
 		
-		_next : Value|Error
+		_next? : Value|Error
 		
 		set( next : Value ) : Value {
 			const next_normal = this.normalize( next , this._next )
@@ -159,7 +159,7 @@ namespace $ {
 			return this.get()
 		}
 		
-		normalize( next : Value , prev : Value|Error ) : Value {
+		normalize( next : Value , prev? : Value|Error ) : Value {
 			if( next === prev ) return next
 			
 			if( ( next instanceof Array ) && ( prev instanceof Array ) && ( next.length === prev.length ) ) {
@@ -172,15 +172,15 @@ namespace $ {
 			return next
 		}
 		
-		push( next_raw : Value|Error ) {
-			this._next = void null
+		push( next_raw? : Value|Error ) {
+			this._next = undefined
 			
 			this.status = $mol_atom_status.actual
 			
 			const host = this.host
 			const prev = host[ this.field ]
 			
-			if( next_raw === void null ) return prev
+			if( next_raw === undefined ) return prev
 			
 			let next = ( next_raw instanceof Error ) ? next_raw : this.normalize( next_raw , prev )
 			
@@ -237,7 +237,7 @@ namespace $ {
 			}
 		}
 		
-		obsolete() : Value {
+		obsolete() {
 			if( this.status === $mol_atom_status.obsolete ) return
 			
 			//if( this.status === $mol_atom_status.pulling ) {
@@ -250,7 +250,7 @@ namespace $ {
 			
 			this.check_slaves()
 			
-			return void null
+			return
 		}
 		
 		lead( slave : $mol_atom<any> ) {
@@ -291,7 +291,7 @@ namespace $ {
 		}
 		
 		value( next? : Value , force? : $mol_atom_force ) {
-			if( next === void null ) {
+			if( next === undefined ) {
 				return this.get( force )
 			} else {
 				if( force ) {
@@ -302,7 +302,7 @@ namespace $ {
 			}
 		}
 		
-		static stack = [ null ] as $mol_atom<any>[]
+		static stack = [] as $mol_atom<any>[]
 		static updating : $mol_atom<any>[] = []
 		static reaping = new $mol_set< $mol_atom<any> >()
 		static scheduled = false
@@ -339,8 +339,9 @@ namespace $ {
 			$mol_log( '$mol_atom.sync' , [] )
 			this.schedule()
 			
-			while( this.updating.length ) {
+			while( true ) {
 				const atom = this.updating.shift()
+				if( !atom ) break
 				if( this.reaping.has( atom ) ) continue
 				if( !atom.destroyed() ) atom.get()
 			}

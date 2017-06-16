@@ -266,14 +266,14 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		srcDeps( path : string ) {
-			var src = $mol_file.absolute( path )
+			const src = $mol_file.absolute( path )
 			
-			var ext = src.ext()
+			let ext = src.ext()
 			if( !ext ) return {}
 			
-			var dependencies : ( src : $mol_file ) => { [ path : string ] : number } = null
+			let dependencies 
 			while( !dependencies ) {
-				dependencies = this.Class().dependors[ ext ]
+				dependencies = $mol_build.dependors[ ext ]
 				if( dependencies ) break
 				var extShort = ext.replace( /^[^.]*\./ , '' )
 				if( ext === extShort ) break
@@ -301,6 +301,8 @@ namespace $ {
 					return this.srcDeps( path )
 				case 'dir' :
 					return this.modDeps( { path , exclude } )
+				default :
+					return {}
 			}
 		}
 		
@@ -323,7 +325,7 @@ namespace $ {
 			
 			for( let repo of mapping.select( 'pack' , name , 'git' ).sub ) {
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
-				pack.stat( void null , $mol_atom_force )
+				pack.stat( undefined , $mol_atom_force )
 				return true
 			}
 			
@@ -345,7 +347,7 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		graph( { path , exclude } : { path : string , exclude? : string[] } ) {
-			let graph = new $mol_graph< {} , { priority : number } >()
+			let graph = new $mol_graph< null , { priority : number } >()
 			let added : { [ path : string ] : boolean } = {}
 			
 			var addMod = ( mod : $mol_file )=> {

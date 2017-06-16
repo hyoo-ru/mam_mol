@@ -22,7 +22,7 @@ namespace $ {
 				
 				let atom : $mol_atom<Value> = host[ fieldA ]
 				if( !atom ) {
-					if( force && ( next === void null ) ) return next
+					if( force && ( next === undefined ) ) return next
 					
 					host[ fieldA ] = atom = new $mol_atom<Value>(
 						host ,
@@ -60,7 +60,7 @@ namespace $ {
 				
 				let atom : $mol_atom<Value> = host[ fieldA ]
 				if( !atom ) {
-					if( force && ( next === void null ) ) return next
+					if( force && ( next === undefined ) ) return next
 					
 					host[ fieldA ] = atom = new $mol_atom<Value>(
 						host ,

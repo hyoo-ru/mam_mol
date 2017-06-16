@@ -23,10 +23,10 @@ namespace $ {
 				this.path() ,
 				{ persistent : false } ,
 				( type : string , name : string )=> {
-					if( !name ) this.stat( void null , $mol_atom_force )
+					if( !name ) this.stat( undefined , $mol_atom_force )
 					else if( !/(^\.|___$)/.test( name ) ) {
 						var file = this.resolve( name )
-						file.stat( void null , $mol_atom_force )
+						file.stat( undefined , $mol_atom_force )
 					}
 				}
 			)
@@ -75,7 +75,7 @@ namespace $ {
 					$node.fs.unlinkSync( this.path() )
 				}
 				
-				this.stat( void null , $mol_atom_force )
+				this.stat( undefined , $mol_atom_force )
 				
 				return next
 			}
@@ -110,7 +110,7 @@ namespace $ {
 		
 		ext() {
 			var match = /((?:\.\w+)+)$/.exec( this.path() )
-			return match && match[ 1 ].substring( 1 )
+			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 		
 		@ $mol_mem()

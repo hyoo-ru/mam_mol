@@ -69,9 +69,9 @@ namespace $.$mol {
 			if( next >= count ) next = 0
 			if( next < 0 ) next = count - 1
 			
-			let str = ( next === void null ) ? void null : String( next )
+			let str = ( next === undefined ) ? undefined : String( next )
 			
-			str = $mol_state_arg.value( this.state_key( 'slide' ) , str ) || void null
+			str = $mol_state_arg.value( this.state_key( 'slide' ) , str ) || undefined
 			
 			return this.slide_local( this.uri_slides() , str && Number( str ) ) || 0
 		}
