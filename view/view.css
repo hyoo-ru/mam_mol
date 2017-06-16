@@ -1,6 +1,6 @@
 [mol_view] {
 	transition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;
-	transition-duration: .1s;
+	transition-duration: .2s;
 	-webkit-appearance: none;
 	word-break: break-word;
 }
@@ -15,6 +15,7 @@
 	width: 100%;
 	height: 100%;
 	font: var(--mol_skin_font);
+	background: var(--mol_skin_light);
 }
 
 [mol_view][mol_view_error] {
@@ -26,6 +27,7 @@
 		rgba(255,255,220,1) 20px
 	);
 	background-size: 28px 28px;
+	color: black;
 }
 [mol_view][mol_view_error] * {
 	background: none;

@@ -1,18 +1,18 @@
 # $mol_dom_jsx
 
-JSX adapter for [$mol_dom_make](../make), that makes DOM tree. If global unique id is provided, uses already exists element with this id in DOM.
+JSX adapter for [$mol_dom_make](../make), that makes DOM tree. If global unique id is provided, uses already exists element with this id from document.
 
 ## Interface
 
 ```
-( localName : string , props : $mol_dom_make_config , ...childNodes : Array< Node | string > ) => Element
+( localName : string , props : { [ key : string ] : any } , ...children : Array< Node | string > ) => Element
 ```
 
 ## Usage example
 
 ```tsx
 namespace $ {
-	export function $my_example( guid : string ) { return (
+	export function $my_pure_component( guid : string ) { return (
 		<div id={ guid } className="my_example" >
 			Content is
 			<strong id={ guid + '.text_nodes' } >
@@ -31,7 +31,7 @@ namespace $ {
 ```html
 <body id="$my_app">
 	<script>
-		$my_example( '$my_app' )
+		$my_pure_component( '$my_app' )
 	</script>
 </body>
 ```

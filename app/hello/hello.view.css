@@ -5,7 +5,7 @@
 	justify-content: center;
 	align-items: center;
 	font: 1.5rem/1 sans-serif;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	flex: 1 1 auto;
 	align-self: stretch;
 	margin: 0;

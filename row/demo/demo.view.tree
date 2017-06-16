@@ -14,7 +14,7 @@ $mol_row_demo $mol_row
 		<= Progress $mol_portion
 			portion <= progress 0.33
 		<= Publish $mol_check_box
-			label / <= publish_label @ \Shared
+			title <= publish_label @ \Shared
 			checked?val <=> publish?val false
 		<= Drop $mol_button_minor
 			title <= drop_title @ \Drop

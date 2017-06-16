@@ -10,12 +10,12 @@ namespace $.$mol {
 		/// Search query string synchronized with argument from URL.
 		@ $mol_mem()
 		query( next? : string , force? : $mol_atom_force ) : string {
-			if( next === void null ) return this.query_arg()
+			if( next === undefined ) return this.query_arg()
 			
 			this.query_arg( next )
 			
 			if( this._query_timer ) clearTimeout( this._query_timer )
-			this._query_timer = setTimeout( ()=> { this.query( void null , $mol_atom_force ) } , 500 )
+			this._query_timer = setTimeout( ()=> { this.query( undefined , $mol_atom_force ) } , 500 )
 		}
 		
 		_query_timer = 0
@@ -27,7 +27,7 @@ namespace $.$mol {
 			
 			if( query ) {
 				var uri = `https://api.github.com/search/users?per_page=100&q=${ encodeURIComponent( query ) }`
-				var resource = $mol_http_resource_json.item<{ items : { login : string }[] }>( uri )
+				var resource = $mol_http.resource( uri )
 			} else {
 				resource = null
 			}
@@ -57,10 +57,10 @@ namespace $.$mol {
 			const master = this.master()
 			
 			if( next === void 0 ) {
-				return master.json( void 0 , force ).items.map( item => item.login ) as string[]
+				return master.json<{ items : { login : string }[] }>( void 0 , force ).items.map( item => item.login ) as string[]
 			}
 			
-			master.json( next && { items : next.map( login => ({ login }) ) } )
+			master.json<{ items : { login : string }[] }>( next && { items : next.map( login => ({ login }) ) } )
 			
 			return next
 		}

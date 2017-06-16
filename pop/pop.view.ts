@@ -9,7 +9,7 @@ namespace $.$mol {
 		}
 		
 		height_max() {
-			return this.context().$mol_view_visible_height() * 0.3;
+			return this.$.$mol_view_visible_height() * 0.3;
 		}
 		
 	}

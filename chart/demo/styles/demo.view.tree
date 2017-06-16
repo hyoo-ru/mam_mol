@@ -1,29 +1,3 @@
-$mol_chart_demo_simple $mol_chart
-	title @ \Simple chart with hadcoded series
-	graphs /
-		<= Vert_ruler $mol_plot_ruler_vert
-			title <= vert_title @ \pcs
-		<= Hor_ruler $mol_plot_ruler_hor
-			title <= hor_title @ \Month
-			series <= plan -
-			label_text!key <= hor_label_text!key \
-		<= Plan $mol_plot_bar
-			title <= plan_title @ \Plan
-			series <= plan *
-				january 10
-				february 20
-				march 30
-				april 40
-		<= Fact $mol_plot_group
-			title <= fact_title @ \Fact
-			series <= fact *
-				january 5
-				february 10
-				march 30
-			graphs /
-				<= Fact_line $mol_plot_line
-				<= Fact_dots $mol_plot_dot
-
 $mol_chart_demo_styles $mol_chart
 	title @ \Chart with various styles of graphs.
 	graphs /

@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export class $mol_webdav extends $mol_http_resource {
+	export class $mol_webdav extends $mol_http {
 		
 		@ $mol_mem_key()
 		static item( uri : string ) {
@@ -11,7 +11,7 @@ namespace $ {
 		
 		@ $mol_mem()
 		data_tree() {
-			const dom = this.request().response().responseXML as XMLDocument
+			const dom = this.response().responseXML as XMLDocument
 			const responses = dom.querySelectorAll( 'response' ) as any as Element[]
 			
 			const data = {} as { [ uri : string ] : Element }

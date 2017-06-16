@@ -1,0 +1,5 @@
+{
+	"$mol_select_no_options_message" : "Нет вариантов" ,
+	"$mol_select_clear_option_message" : "Стереть" ,
+	"$mol_select_filter_hint": "Фильтр.."
+}

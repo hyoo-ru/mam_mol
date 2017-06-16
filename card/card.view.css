@@ -1,5 +1,5 @@
 [mol_card] {
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_card);
 	color: var(--mol_skin_light_text);
 	border-radius: var(--mol_skin_round);

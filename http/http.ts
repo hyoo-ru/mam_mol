@@ -1,6 +1,18 @@
 namespace $ {
 	
-	export class $mol_http_request extends $mol_object {
+	export class $mol_http extends $mol_object {
+		
+		static resource( uri : string ) {
+			const normal = new URL( uri , $mol_dom_context.document.location.href ).toString()
+			return this.resource_absolute( normal )
+		}
+		
+		@ $mol_mem_key()
+		static resource_absolute( uri : string ) {
+			const next = new $mol_http
+			next.uri = ()=> uri
+			return next
+		}
 		
 		uri() { return '' }
 		
@@ -16,13 +28,11 @@ namespace $ {
 			return {}
 		}
 		
-		body() { return <any> null }
-		
-		'native()' : XMLHttpRequest
-		native() {
-			if( this[ 'native()' ] ) return this[ 'native()' ]
+		'Request()' : XMLHttpRequest
+		request() {
+			if( this[ 'request()' ] ) return this[ 'request()' ]
 			
-			var next = this[ 'native()' ] = new $mol_dom_context.XMLHttpRequest
+			var next = this[ 'request()' ] = new $mol_dom_context.XMLHttpRequest
 			
 			next.withCredentials = Boolean( this.credentials() )
 			
@@ -43,7 +53,7 @@ namespace $ {
 		
 		destroyed( next? : boolean ) {
 			if( next ) {
-				const native = this[ 'native()' ]
+				const native = this[ 'reques()' ]
 				if( native ) native.abort()
 			}
 			return super.destroyed( next )
@@ -52,7 +62,7 @@ namespace $ {
 		@ $mol_mem()
 		response( next? : any , force? : $mol_atom_force ) : XMLHttpRequest {
 			const creds = this.credentials()
-			const native = this.native()
+			const native = this.request()
 			const method = ( next === void 0 ) ? this.method_get() : this.method_put()
 			const uri = this.uri()
 			
@@ -68,6 +78,12 @@ namespace $ {
 		
 		text( next? : string , force? : $mol_atom_force ) : string {
 			return this.response( next , force ).responseText
+		}
+		
+		@ $mol_mem()
+		json< Content >( next? : Content , force? : $mol_atom_force ) : Content {
+			const next2 = next && JSON.stringify( next , null , '\t' )
+			return JSON.parse( this.text( next2 , force ) )
 		}
 		
 	}

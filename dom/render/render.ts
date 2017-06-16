@@ -1,75 +1,33 @@
 namespace $ {
 	
-	export interface $mol_dom_render_config {
-		childNodes? : NodeList | Array< Node | string | number | boolean | { render : ()=> Node } >
-		attributes? : { [ key : string ] : string|number|boolean }
-		style? : { [ key : string ] : string|number }
-		events? : { [ key : string ] : ( event : Event )=> any }
-		events_async? : { [ key : string ] : ( event : Event )=> any }
-		[ key : string ] : any
-	}
-	
-	export function $mol_dom_render( el : Element , config : $mol_dom_make_config ) {
-		const document = el.ownerDocument
-		
-		for( let key in config ) {
-			switch( key ) {
-				case 'localName' : break
-				case 'namespaceURI' : break
-				
-				case 'childNodes' : {
-					if( !config.childNodes ) break
-					$mol_dom_render_childNodes( el , config.childNodes )
-					break
-				}
-				
-				case 'attributes' : {
-					if( !config.attributes ) break
-					$mol_dom_render_attributes( el , config.attributes )
-					break
-				}
-				
-				case 'style' : {
-					if( !config.style ) break
-					$mol_dom_render_style( el , config.style )
-					break
-				}
-				
-				case 'events' : {
-					$mol_dom_render_event( el , config.events )
-					break
-				}
-				
-				case 'events_async' : {
-					$mol_dom_render_event_async( el , config.events_async )
-					break
-				}
-				
-				default : {
-					if( config[ key ] === void null ) continue
-					
-					if( el[ key ] !== config[ key ] ) {
-						el[ key ] = config[ key ]
-						if( el[ key ] !== config[ key ] ) {
-							const setter = ()=> {
-								el.removeEventListener( 'DOMNodeInsertedIntoDocument' , setter , { passive : true } as any )
-								new $mol_defer( ()=> {
-									el[ key ] = config[ key ]
-								} )
-							}
-							el.addEventListener( 'DOMNodeInsertedIntoDocument' , setter , { passive : true } as any )
-						}
-					}
-				}
-			}
-		}
-		
-		return el
-	}
-	
-	export function $mol_dom_render_childNodes(
+	export function $mol_dom_render_fields (
 		el : Element ,
-		childNodes? : NodeList | Array< Node | string | number | boolean | { render : ()=> Node } >
+		fields : { [ key : string ] : any }
+	) {
+		for( let key in fields ) {
+			
+			const val : any = fields[ key ]
+			
+			if( val === undefined ) continue
+			if( el[ key ] === val ) continue
+			
+			el[ key ] = val
+			if( el[ key ] === val ) continue
+			
+			const setter = ()=> {
+				el.removeEventListener( 'DOMNodeInsertedIntoDocument' , setter , { passive : true } as any )
+				new $mol_defer( ()=> {
+					el[ key ] = val
+				} )
+			}
+			el.addEventListener( 'DOMNodeInsertedIntoDocument' , setter , { passive : true } as any )
+			
+		}
+	}
+	
+	export function $mol_dom_render_children (
+		el : Element ,
+		childNodes : NodeList | Array< Node | string | number | boolean | { render : ()=> Node } >
 	) {
 		const nodes = [] as ( Node | string )[]
 		
@@ -129,9 +87,9 @@ namespace $ {
 		}
 	}
 	
-	export function $mol_dom_render_attributes(
+	export function $mol_dom_render_attributes (
 		el : Element ,
-		attrs? : { [ key : string ] : string|number|boolean }
+		attrs : { [ key : string ] : string|number|boolean }
 	) {
 		for( let name in attrs ) {
 			let val = attrs[ name ] as any
@@ -141,31 +99,37 @@ namespace $ {
 		}
 	}
 	
-	export function $mol_dom_render_style(
+	export function $mol_dom_render_styles (
 		el : Element ,
-		styles? : { [ key : string ] : string|number }
+		styles : { [ key : string ] : string|number }
 	) {
 		for( let name in styles ) {
 			let val = styles[ name ]
-			if( typeof val === 'number' ) val = `${ val }px`
 			
 			const style = ( <HTMLElement>el ).style as any
-			if( val !== style[ name ] ) style[ name ] = val
+			const cur = style[ name ]
+			
+			if( typeof val === 'number' ) {
+				if( parseFloat( cur ) == val ) continue
+				style[ name ] = `${ val }px`
+			}
+			
+			if( cur !== val ) style[ name ] = val
 		}
 	}
 	
-	export function $mol_dom_render_event(
+	export function $mol_dom_render_events (
 		el : Element ,
-		events? : { [ key : string ] : ( event : Event )=> any }
+		events : { [ key : string ] : ( event : Event )=> any }
 	) {
 		for( let name in events ) {
 			el.addEventListener( name , events[ name ] )
 		}
 	}
 	
-	export function $mol_dom_render_event_async(
+	export function $mol_dom_render_events_async (
 		el : Element ,
-		events? : { [ key : string ] : ( event : Event )=> any }
+		events : { [ key : string ] : ( event : Event )=> any }
 	) {
 		for( let name in events ) {
 			el.addEventListener( name , events[ name ] , { passive : true } as any )

@@ -1,0 +1,11 @@
+[mol_link_iconed] {
+	align-items: center;
+	color: var(--mol_skin_base);
+}
+
+[mol_link_iconed_icon] {
+	box-shadow: none;
+	margin-right: 1px;
+	height: 1em;
+	vertical-align: -10%;
+}

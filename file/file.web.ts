@@ -4,26 +4,13 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		static absolute( path : string ) {
-			return new $mol_file().setup(
-				obj => {
-					obj.path = ()=> path
-				}
-			)
+			const next = new $mol_file()
+			next.path = ()=> path
+			return next
 		}
 		
 		static relative( path : string ) : $mol_file {
-			if( /^\//.test( path ) ) {
-				return $mol_file.root().resolve( path.substring(1) )
-			}
-			return $mol_file.base().resolve( path )
-		}
-		
-		static root() {
-			return $mol_file.absolute( '' )
-		}
-		
-		static base() {
-			const path = $mol_dom_context.document.location.pathname.replace( /\/[^\/]*$/ , '' )
+			const uri = new URL( path , $mol_dom_context.document.location.href )
 			return $mol_file.absolute( path )
 		}
 		
@@ -46,7 +33,7 @@ namespace $ {
 		
 		@ $mol_mem()
 		content( next? : string , force? : $mol_atom_force ) {
-			return $mol_http_resource.item( this.path() ).text( next )
+			return $mol_http.resource( this.path() ).text( next )
 		}
 		
 		resolve( path : string ) : $mol_file {
@@ -54,13 +41,7 @@ namespace $ {
 			
 			while( true ) {
 				let prev = res
-				res = res.replace( /\/[^\/]+\/\.\.\// , '/' )
-				if( prev === res ) break
-			}
-			
-			while( true ) {
-				let prev = res
-				res = res.replace( /\/\.\.\/[^\/]+\// , '/' )
+				res = res.replace( /\/[^\/.]+\/\.\.\// , '/' )
 				if( prev === res ) break
 			}
 			

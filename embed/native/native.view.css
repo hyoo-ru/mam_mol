@@ -1,0 +1,11 @@
+[mol_embed_native] {
+	min-width: 100%;
+	min-height: 100%;
+	max-width: 100vw;
+	max-height: 100vh;
+	object-fit: scale-down;
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+}

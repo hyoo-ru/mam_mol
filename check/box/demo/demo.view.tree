@@ -3,14 +3,14 @@ $mol_check_box_demo $mol_row
 	sub /
 		<= Labeled_base $mol_check_box
 			checked?val <=> base_checked?val false
-			label / <= c1Label @ \Base
+			title <= c1Label @ \Base
 		-
 		<= Labeled_checked $mol_check_box
-			label / <= c2Label @ \Checked
+			title <= c2Label @ \Checked
 			checked?val <=> checked_checked?val true
 		-
 		<= Labeled_disabled $mol_check_box
-			label / <= c6Label @ \Disabled
+			title <= c6Label @ \Disabled
 			checked true
 			enabled false
 		-

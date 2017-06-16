@@ -1,0 +1,90 @@
+$mol_app_slides $mol_view
+	attr *
+		^
+		mol_app_slides_role <= role \ 
+	contents?val \
+	plugins /
+		<= Speech_next $mol_speech
+			event_catch?val <=> event_next?val null
+			patterns <= speech_next /
+				\next
+				\forward
+				\дальше
+				\далее
+				\удали
+				\вперед
+				\перевод
+		<= Speech_slide $mol_speech
+			event_catch?val <=> event_slide?val null
+			patterns <= speech_slide /
+				\slide number (\d+)
+				\(\d+) slide
+				\слайд номер (\d+)
+				\(\d+) слайд
+		<= Speech_prev $mol_speech
+			event_catch?val <=> event_prev?val null
+			patterns <= speech_prev /
+				\back
+				\назад
+		<= Speech_start $mol_speech
+			event_catch?val <=> event_start?val null
+			patterns <= speech_start /
+				\to beginning
+				\first slide
+				\начало
+				\первый слайд
+		<= Speech_end $mol_speech
+			event_catch?val <=> event_end?val null
+			patterns <= speech_end /
+				\to ending
+				\last slide
+				\конец
+				\последний слайд
+		<= Speech_about $mol_speech
+			event_catch?val <=> event_about?val null
+			patterns <= speech_about /
+				\slide about (\S+?)
+				\search (\S+?)
+				\слайд про (\S+?)
+				\найти (\S+?)
+				\найди (\S+?)
+	sub /
+		<= Listener $mol_page
+			title <= title -
+			tools /
+				<= Slide_number $mol_view
+					sub /
+						<= slide?val 0
+			body /
+				<= Listener_content $mol_text
+					uri_base <= uri_base \
+					text <= listener_content \
+				<= Progress $mol_portion
+					portion <= progress 0
+		<= Speaker $mol_page
+			title \
+			tools /
+				<= Open_listener $mol_link
+					target \_blank
+					hint <= open_listener_hint @ \Open slides window
+					arg *
+						role \listener
+						slide null
+					sub /
+						<= Open_listener_icon $mol_icon_external
+				<= Speech_toggle $mol_check_icon
+					Icon <= Speech_toggle_icon $mol_icon_microphone
+					checked?val <=> speech_enabled?val false
+					hint <= speech_toggle_hint @ \Speech contol
+				<= Slide_switcher $mol_number
+					value?val <=> slide?val 0
+			body /
+				<= Speaker_content $mol_text
+					uri_base <= uri_base \
+					text <= speaker_content \
+		<= Loader $mol_view
+			dom_name \iframe
+			attr *
+				src <= uri_slides <= uri_slides_default \https://nin-jin.github.io/slides/orp/
+			event *
+				load?val <=> event_load?val null

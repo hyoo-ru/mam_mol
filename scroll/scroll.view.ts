@@ -1,28 +1,26 @@
-namespace $ {
-	
-	export interface $mol_view_context {
-		$mol_scroll_scroll_top() : number
-		$mol_scroll_scroll_left() : number
-		$mol_scroll_moving() : boolean
-	}
-
-	$mol_view_context.$mol_scroll_scroll_top = () => 0
-	$mol_view_context.$mol_scroll_scroll_left = () => 0
-	$mol_view_context.$mol_scroll_moving = () => false
-	
-}
-
 namespace $.$mol {
+	
+	export function $mol_scroll_top() {
+		return 0
+	}
+	
+	export function $mol_scroll_left() {
+		return 0
+	}
+	
+	export function $mol_scroll_moving() {
+		return false
+	}
 	
 	export class $mol_scroll extends $.$mol_scroll {
 
-		scroll_top( next? : number ) {
-			return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
-		}
-		
-		scroll_left( next? : number ) {
-			return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
-		}
+		// scroll_top( next? : number ) {
+		// 	return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
+		// }
+		// 
+		// scroll_left( next? : number ) {
+		// 	return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
+		// }
 		
 		@ $mol_mem()
 		scroll_bottom( next? : number ) {
@@ -88,8 +86,8 @@ namespace $.$mol {
 				const limit = context.$mol_view_visible_width()
 				return this.scroll_left() + Math.min( sizeWin.width , limit )
 			}
-			subContext.$mol_scroll_scroll_top = ()=> this.scroll_top()
-			subContext.$mol_scroll_scroll_left = ()=> this.scroll_left()
+			subContext.$mol_scroll_top = ()=> this.scroll_top()
+			subContext.$mol_scroll_left = ()=> this.scroll_left()
 			subContext.$mol_scroll_moving = ()=> this.moving()
 			return subContext
 		}

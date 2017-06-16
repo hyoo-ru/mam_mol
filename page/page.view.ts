@@ -6,6 +6,13 @@ namespace $.$mol {
 			return $mol_state_session.value( `${ this }.body_scroll_top()` , next ) || 0
 		}
 		
+		head() {
+			return [
+				this.title() ? this.Title() : null ,
+				this.tools().length > 0 ? this.Tools() : null ,
+			]
+		}
+		
 	}
 
 }

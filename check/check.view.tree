@@ -7,5 +7,5 @@ $mol_check $mol_button
 	sub /
 		<= Icon null
 		<= Label $mol_view
-			sub /
-				<= label /
+			sub <= label /
+				<= title \

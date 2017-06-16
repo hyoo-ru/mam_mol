@@ -14,7 +14,7 @@ $mol_app_supplies_detail $mol_page
 						<= Descr_card $mol_card
 							Content <= Descr_deck $mol_deck
 								items /
-									<= Org $mol_deck_item
+									<= Org *
 										title <= org_title @ \Organization
 										Content <= Org_content $mol_row
 											sub <= org_items /
@@ -30,7 +30,7 @@ $mol_app_supplies_detail $mol_page
 												<= Ballance_unit_item $mol_labeler
 													title <= ballance_unit_title @ \Ballance Unit
 													content <= ballance_unit_name \
-									<= Cons $mol_deck_item
+									<= Cons *
 										title <= cons_title @ \Consumer
 										Content <= Cons_content $mol_row
 											sub <= cons_items /
@@ -66,5 +66,4 @@ $mol_app_supplies_detail $mol_page
 			sub <= actions /
 				<= Approve $mol_check_box
 					checked?val <=> approved?val false
-					label /
-						<= approved_title @ \Approved
+					title <= approved_title @ \Approved

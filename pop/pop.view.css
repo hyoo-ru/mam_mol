@@ -4,13 +4,15 @@
 }
 
 [mol_pop_bubble] {
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_float);
 	border-radius: var(--mol_skin_round);
 	position: absolute;
 	z-index: 3;
-	background-color: var(--mol_skin_card);
+	background: var(--mol_skin_card);
+	color: var(--mol_skin_card_text);
 	max-width: none;
 	max-height: none;
+	overflow: hidden;
 	overflow-y: auto;
 	word-break: normal;
 }

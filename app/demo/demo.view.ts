@@ -16,11 +16,6 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		welcome_text() {
-			return $mol_http_resource.item( 'readme.md' ).text()
-		}
-		
-		@ $mol_mem()
 		names_demo_all() {
 			var next : string[] = []
 			for( var name in $ ) {
@@ -84,7 +79,13 @@ namespace $.$mol {
 		
 		nav_option( id : string ) {
 			const parent = this.nav_hierarchy()[ id ].parent
-			const title = `$${ id }`.substring( parent.id.length + 1 ).replace( /^[-._]|[-._]demo$/g , '' )
+			
+			const title = `$${ id }`
+			.substring( parent.id.length + 1 )
+			.replace( /^[-._]|[-._]demo$/g , '' )
+			.replace( /_/g , ' ' )
+			.replace( /^(\w)/ , letter => letter.toUpperCase() )
+			
 			return { title }
 		}
 		
@@ -178,6 +179,12 @@ namespace $.$mol {
 		
 		logo_uri() {
 			return $mol_file.relative( '/mol/logo/logo.svg' ).path()
+		}
+
+		source_link(){
+			var pieces = $mol_state_arg.value('demo').split('_').slice(1) 
+			var source_link = this.source_prefix() + pieces.join('/')
+			return source_link
 		}
 		
 	}

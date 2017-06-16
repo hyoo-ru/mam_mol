@@ -1,16 +1,20 @@
 namespace $ {
 	
-	export let $mol_view_context = <$mol_view_context> {}
+	export namespace $mol { let $mol }
+
+	export type $mol_view_context = ( typeof $ )&( typeof $.$mol )
 	
-	export interface $mol_view_context {
-		$mol_view_visible_width() : number
-		$mol_view_visible_height() : number
-		$mol_view_state_key( suffix : string ) : string
+	export function $mol_view_visible_width() {
+		return $mol_window.size().width
 	}
 	
-	$mol_view_context.$mol_view_visible_width = () => $mol_window.size().width
-	$mol_view_context.$mol_view_visible_height = () => $mol_window.size().height
-	$mol_view_context.$mol_view_state_key = ( suffix : string )=> suffix
+	export function $mol_view_visible_height() {
+		return $mol_window.size().height
+	}
+	
+	export function $mol_view_state_key( suffix : string ) {
+		return suffix
+	}
 
 	/// Reactive statefull lazy ViewModel
 	export class $mol_view extends $mol_object {
@@ -33,7 +37,14 @@ namespace $ {
 		
 		@ $mol_mem()
 		context( next? : $mol_view_context ) {
-			return next || $mol_view_context
+			return next || $ as any
+		}
+		
+		get $() {
+			return this.context()
+		}
+		set $( next : $mol_view_context ) {
+			this.context( next )
 		}
 		
 		context_sub() {
@@ -41,7 +52,7 @@ namespace $ {
 		}
 		
 		state_key( suffix = '' ) {
-			return this.context().$mol_view_state_key( suffix )
+			return this.$.$mol_view_state_key( suffix )
 		}
 		
 		/// Name of element that created when element not found in DOM
@@ -126,7 +137,7 @@ namespace $ {
 			return $mol_view_dom.node( this )
 		}
 		
-		@ $mol_deprecated( 'Use $mol_view::render instead.' )
+		@ $mol_deprecated( 'Use $mol_view.render instead.' )
 		dom_tree() {
 			return this.render()
 		}
@@ -137,20 +148,21 @@ namespace $ {
 			
 			try {
 				
-				for( let plugin of this.plugins() ) plugin.render()
+				for( let plugin of this.plugins() ) {
+					if( typeof plugin['render'] === 'function' ) plugin.render()
+				}
 				
-				$mol_dom_render( node , {
-					attributes : this.attr() ,
-					childNodes : this.sub_visible() ,
-					style : this.style() ,
-					...( this.field() || {} ) ,
-				} )
+				$mol_dom_render_attributes( node , this.attr() )
+				
+				const sub = this.sub_visible()
+				if( sub ) $mol_dom_render_children( node , sub )
+				
+				$mol_dom_render_styles( node , this.style() )
+				$mol_dom_render_fields( node , this.field() )
 				
 			} catch( error ) {
 				
-				$mol_dom_render( node , {
-					attributes : { mol_view_error : error.name } ,
-				} )
+				$mol_dom_render_attributes( node , { mol_view_error : error.name } )
 				
 				if( error instanceof $mol_atom_wait ) return node
 				
@@ -208,23 +220,6 @@ namespace $ {
 		
 		event_async() : { [ key : string ] : ( event : Event )=> void } {
 			return {}
-		}
-		
-		'event_wrapped()' = null as { [ name : string ] : ( event? : Event )=> any }
-		event_wrapped() {
-			if( this[ 'event_wrapped()' ] ) return this[ 'event_wrapped()' ]
-			
-			const event = this.event()
-			const wrapped = {} as typeof event
-			
-			for( let name in event ) {
-				let handle = event[ name ]
-				wrapped[ name ] = event => {
-					$mol_atom_task( `${ this }.event()['${ name }']` , () => handle( event ) ).get()
-				}
-			}
-			
-			return this[ 'event_wrapped()' ] = wrapped
 		}
 		
 		'locale_contexts()' : string[]

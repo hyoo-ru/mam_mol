@@ -13,7 +13,7 @@ namespace $.$mol {
 		}
 		
 		gists() {
-			return $mol_http_resource_json.item<{ items : $mol_app_habhub_gist[] }>( this.uriSource() ).json().items
+			return $mol_http.resource( this.uriSource() ).json<{ items : $mol_app_habhub_gist[] }>().items
 		}
 		
 		gists_dict() {

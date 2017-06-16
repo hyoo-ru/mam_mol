@@ -166,7 +166,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 				
 				var args : string[] = []
 				if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
-				if( propName[3] ) args.push( ` ${ propName[3] }? : any ` )
+				if( propName[3] ) args.push( ` ${ propName[3] }? : any , force? : $${''}mol_atom_force ` )
 				if( needSet && param.sub[0].type !== '<=>' ) val = ( needReturn ? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : ` : `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t` ) + val
 				if( needReturn ) val = 'return ' + val
 				var decl = '\t' + propName[1] +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'

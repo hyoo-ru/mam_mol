@@ -7,10 +7,11 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Features](#features)
 - [Demo applications](#demo-applications)
 - [Benchmarks](#benchmarks)
+- [Oganizations using $mol](#oganizations-using-mol)
 - [Articles](#articles)
-- [Any questions?](#any-questions)
-- [Found a bug?](#found-a-bug)
-- [Need feature?](#need-feature)
+- [Any questions?](https://github.com/eigenmethod/mol/issues/new?labels=question) / [All answers](https://github.com/eigenmethod/mol/issues?q=label%3Aquestion+is%3Aclosed)
+- [Found a bug?](https://github.com/eigenmethod/mol/issues/new?labels=bug) / [All bugs](https://github.com/eigenmethod/mol/labels/bug)
+- [Need a feature?](https://github.com/eigenmethod/mol/issues/new?labels=improvement) / [Vote for other](https://github.com/eigenmethod/mol/labels/improvement)
 - [Quick start](#quick-start)
 - [Rationale](#rationale)
 - [Modules](#modules)
@@ -55,37 +56,29 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
 * [Line charts comparison](app/bench/chart/rope) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
 * [Bar charts comparison](app/bench/chart/bar) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
+* [React vs React Fiber vs $mol](https://github.com/nin-jin/sierpinski) ([online](https://nin-jin.github.io/sierpinski))
+
+# Organizations using $mol
+
+[![SAPRUN](http://www.saprun.com/static/core/img/base/logo_sm.png)](http://www.saprun.com)
 
 # Articles
 
 * [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Сomprehensive $mol review
+* [Объектное Реактивное Программирование](https://habrahabr.ru/post/330466/) - Features of Object Reactive Programming
 * [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/) - Problems of popular frameworks
 * [Принципы написания кода](https://habrahabr.ru/post/236785/) - Code style principles
 
-# Any questions?
-
-* [Ask us](https://github.com/eigenmethod/mol/issues/new?labels=question)
-* [All answers](https://github.com/eigenmethod/mol/issues?q=label%3Aquestion+is%3Aclosed)
-
-# Found a bug?
-
-* [Report it](https://github.com/eigenmethod/mol/issues/new?labels=bug)
-* [All bugs](https://github.com/eigenmethod/mol/labels/bug)
-
-# Need feature?
-
-* [Suggest it](https://github.com/eigenmethod/mol/issues/new?labels=improvement)
-* [Vote for other](https://github.com/eigenmethod/mol/labels/improvement)
-
 # Quick start
 
-[Video of this precess](https://www.youtube.com/embed/PyK3if5sgN0)
+[Video of this precess](https://www.youtube.com/watch?v=PyK3if5sgN0)
 
 **Create MAM project**
 
 Easy way is checkout this [preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
 
 ```sh
+git config --global core.autocrlf input
 git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
 npm install && npm start
 ```
@@ -388,9 +381,8 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## Communication modules
 
-* **[$mol_http_resource](http/resource)** - Reactive REST HTTP resource
-* **[$mol_http_request](http/request)** - Reactive HTTP Request
-* **[$mol_webdav](webdav)** - Reactive [WebDAV](https://ru.wikipedia.org/wiki/WebDAV) client
+* **[$mol_http](http)** - Reactive [HTTP](https://wikipedia.org/wiki/HTTP) client
+* **[$mol_webdav](webdav)** - Reactive [WebDAV](https://wikipedia.org/wiki/WebDAV) client
 
 ## Simple components
 

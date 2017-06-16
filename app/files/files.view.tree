@@ -1,10 +1,10 @@
 $mol_app_files $mol_book
-	uri_current <= uri_root \
-	title @ \Documents
+	uri_current <= uri_root <= uri_root_default \
+	title <= title_root @ \Documents
 	-
 	Folder!folder $mol_app_files_folder
-		minimal_width 400
 		title <= webdav_title!folder \
+		description <= webdav_description!folder \
 		tools <= page_tools!folder -
 		rows <= folder_rows!folder /
 	-
@@ -14,10 +14,16 @@ $mol_app_files $mol_book
 		current <= folder_row_current!uri false
 		sub /
 			<= folder_row_icon!uri null
-			<= folder_row_title!uri \
+			<= Folder_row_info!uri $mol_view
+				sub /
+					<= Folder_row_descr!uri $mol_view
+						sub /
+							<= folder_row_descr!uri \
+					<= Folder_row_title!uri $mol_view
+						sub /
+							<= folder_row_title!uri \
 	-
 	File!file $mol_app_files_file
-		minimal_width 800
 		title <= webdav_title!file -
 		tools <= page_tools!file -
 		src <= file_uri!file \
@@ -25,11 +31,12 @@ $mol_app_files $mol_book
 	-
 	Icon_folder!uri $mol_icon_folder
 	-
-	Icon_file!uri $mol_icon_file
+	Icon_file!uri $mol_icon_file2
 	-
 	Placeholder $mol_book_placeholder
 		title <= title -
 	-
+	tools_root /
 	page_tools!uri /
 		<= Close!uri $mol_link
 			sub /
@@ -37,13 +44,17 @@ $mol_app_files $mol_book
 			arg <= close_arg!uri *
 
 $mol_app_files_folder $mol_page
+	minimal_width 400
 	body /
+		<= Description $mol_text
+			text <= description \
 		<= Status $mol_status
 			status <= rows /
 		<= Folder_rows $mol_list
 			rows <= rows /
 
 $mol_app_files_file $mol_page
+	minimal_width 800
 	body /
 		<= Embed $mol_embed
 			uri <= src \

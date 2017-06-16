@@ -11,7 +11,7 @@ namespace $ {
 		@ $mol_mem()
 		static dict( next? : { [ key : string ] : string } ) {
 			var href = this.href( next && this.make( next ) )
-			var chunks = href.split( /[\/\?#!&;]/g )
+			var chunks = href.split( /[\/\?#&;]/g )
 			
 			var params : { [ key : string ] : string } = {}
 			chunks.forEach(
@@ -28,7 +28,8 @@ namespace $ {
 		@ $mol_mem_key()
 		static value( key : string , next? : string ) {
 			const nextDict = ( next === void 0 ) ? void 0 : $mol_merge_dict( this.dict() , { [ key ] : next } ) 
-			return this.dict( nextDict )[ key ] || null
+			const next2 = this.dict( nextDict )[ key ]
+			return ( next2 == null ) ? null : next2
 		}
 		
 		static link( next : { [ key : string ] : string } ) {
@@ -39,7 +40,7 @@ namespace $ {
 			const chunks : string[] = []
 			for( let key in next ) {
 				if( null == next[ key ] ) continue
-				chunks.push( [ key ].concat( next[ key ] ).map( encodeURIComponent ).join( '=' ) )
+				chunks.push( [ key ].concat( next[ key ] ? next[ key ] : [] ).map( encodeURIComponent ).join( '=' ) )
 			}
 			
 			return '#' + chunks.join( '/' )
@@ -68,6 +69,6 @@ namespace $ {
 		
 	}
 	
-	window.addEventListener( 'hashchange' , event => $mol_state_arg.href( void null , $mol_atom_force ) )
+	window.addEventListener( 'hashchange' , event => $mol_state_arg.href( undefined , $mol_atom_force ) )
 	
 }

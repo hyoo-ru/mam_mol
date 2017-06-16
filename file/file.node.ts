@@ -4,11 +4,9 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		static absolute( path : string ) {
-			return new $mol_file().setup(
-				obj => {
-					obj.path = ()=> path
-				}
-			)
+			const next = new $mol_file()
+			next.path = ()=> path
+			return next
 		}
 		
 		static relative( path : string ) : $mol_file {
@@ -25,10 +23,10 @@ namespace $ {
 				this.path() ,
 				{ persistent : false } ,
 				( type : string , name : string )=> {
-					if( !name ) this.stat( void null , $mol_atom_force )
+					if( !name ) this.stat( undefined , $mol_atom_force )
 					else if( !/(^\.|___$)/.test( name ) ) {
 						var file = this.resolve( name )
-						file.stat( void null , $mol_atom_force )
+						file.stat( undefined , $mol_atom_force )
 					}
 				}
 			)
@@ -77,7 +75,7 @@ namespace $ {
 					$node.fs.unlinkSync( this.path() )
 				}
 				
-				this.stat( void null , $mol_atom_force )
+				this.stat( undefined , $mol_atom_force )
 				
 				return next
 			}
@@ -87,6 +85,7 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 		
+		@ $mol_mem()
 		type() {
 			var stat = this.stat()
 			
@@ -111,19 +110,19 @@ namespace $ {
 		
 		ext() {
 			var match = /((?:\.\w+)+)$/.exec( this.path() )
-			return match && match[ 1 ].substring( 1 )
+			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 		
 		@ $mol_mem()
 		content( next? : string , force? : $mol_atom_force ) {
 			if( next === void 0 ) {
-				return this.stat() && $node.fs.readFileSync( this.path() )
+				return this.stat() && $node.fs.readFileSync( this.path() )//.toString()
 			}
 			
 			this.parent().exists( true )
 			$node.fs.writeFileSync( this.path() , next )
 			
-			return next
+			return next//.toString()
 		}
 		
 		reader() {

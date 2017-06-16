@@ -5,6 +5,7 @@ $mol_link $mol_view
 		^
 		href <= uri \
 		title <= hint \
+		target <= target \_self
 		mol_link_current <= current false
 	sub / <= title -
 	arg *

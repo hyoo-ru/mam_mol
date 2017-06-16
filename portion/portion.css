@@ -1,12 +1,13 @@
 [mol_portion] {
 	display: inline-flex;
-	height: 1rem;
 	flex: 0 1 8rem;
 	width: 8rem;
-	align-self: center;
-	vertical-align: middle;
+	max-height: 2.5rem;
+	min-height: .5rem;
+	align-self: stretch;
+	vertical-align: inherit;
 	border-radius: var(--mol_skin_round);
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_light);
 }
 

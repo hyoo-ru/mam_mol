@@ -13,12 +13,6 @@
 	margin: 1rem 0;
 }
 
-[mol_app_supplies_detail_close] {
-	color: inherit;
-	align-items: center;
-	padding: 1rem;
-}
-
 [mol_app_supplies_detail_back_icon] {
 	transform: rotateZ(180deg);
 }

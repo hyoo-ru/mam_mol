@@ -5,7 +5,13 @@ namespace $.$mol {
 			this.checked( !this.checked() )
 			next.preventDefault()
 		}
+		
+		sub() {
+			return [
+				this.Icon() ,
+				this.label().some( item => item ) ? this.Label() : null ,
+			]
+		}
 
 	}
 }
-

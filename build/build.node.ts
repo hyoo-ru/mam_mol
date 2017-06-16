@@ -163,9 +163,15 @@ namespace $ {
 		@ $mol_mem()
 		tsOptions() {
 			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() ).compilerOptions
-			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
+			const res = $node['typescript'].convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
 			if( res.errors.length ) throw res.errors
 			return res.options
+		}
+		
+		@ $mol_mem_key()
+		tsSource( { path , target } : { path : string , target : number } ) {
+			const content = $mol_file.absolute( path ).content().toString()
+			return $node['typescript'].createSourceFile( path , content , target )
 		}
 		
 		@ $mol_mem()
@@ -179,12 +185,11 @@ namespace $ {
 				getCompilationSettings : ()=> this.tsOptions() ,
 				useCaseSensitiveFileNames : ()=> false ,
 				getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
-				getDefaultLibFileName : ( options : any )=> $node.typescript.getDefaultLibFilePath( options ) ,
+				getDefaultLibFileName : ( options : any )=> $node['typescript'].getDefaultLibFilePath( options ) ,
 				getCommonSourceDirectory : ()=> this.root().path() ,
 				getNewLine : ()=> '\n' ,
 				getSourceFile : ( path : string , target : any , fail : any )=> {
-					const content = $mol_file.absolute( path ).content().toString()
-					return $node.typescript.createSourceFile( path , content , target )
+					return this.tsSource({ path , target })
 				} ,
 				fileExists : ( path : string )=> {
 					return $mol_file.absolute( path ).exists()
@@ -218,13 +223,13 @@ namespace $ {
 				var host = this.tsHost()
 				var options = host.getCompilationSettings()
 				
-				var program = $node.typescript.createProgram( sourcesTS.map( src => src.path() ) , options , host )
+				var program = $node['typescript'].createProgram( sourcesTS.map( src => src.path() ) , options , host )
 				var result = program.emit()
 				
-				var errors : any[] = $node.typescript.getPreEmitDiagnostics( program ).concat( result.diagnostics )
+				var errors : any[] = $node['typescript'].getPreEmitDiagnostics( program ).concat( result.diagnostics )
 				var logs = errors.map(
 					error => {
-						var message = $node.typescript.flattenDiagnosticMessageText( error.messageText , '\n' )
+						var message = $node['typescript'].flattenDiagnosticMessageText( error.messageText , '\n' )
 						if( !error.file ) return message
 						
 						var pos = error.file.getLineAndCharacterOfPosition( error.start )
@@ -261,14 +266,14 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		srcDeps( path : string ) {
-			var src = $mol_file.absolute( path )
+			const src = $mol_file.absolute( path )
 			
-			var ext = src.ext()
+			let ext = src.ext()
 			if( !ext ) return {}
 			
-			var dependencies : ( src : $mol_file ) => { [ path : string ] : number } = null
+			let dependencies 
 			while( !dependencies ) {
-				dependencies = this.Class().dependors[ ext ]
+				dependencies = $mol_build.dependors[ ext ]
 				if( dependencies ) break
 				var extShort = ext.replace( /^[^.]*\./ , '' )
 				if( ext === extShort ) break
@@ -296,6 +301,8 @@ namespace $ {
 					return this.srcDeps( path )
 				case 'dir' :
 					return this.modDeps( { path , exclude } )
+				default :
+					return {}
 			}
 		}
 		
@@ -318,7 +325,7 @@ namespace $ {
 			
 			for( let repo of mapping.select( 'pack' , name , 'git' ).sub ) {
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
-				pack.stat( void null , $mol_atom_force )
+				pack.stat( undefined , $mol_atom_force )
 				return true
 			}
 			
@@ -340,7 +347,7 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		graph( { path , exclude } : { path : string , exclude? : string[] } ) {
-			let graph = new $mol_graph< {} , { priority : number } >()
+			let graph = new $mol_graph< null , { priority : number } >()
 			let added : { [ path : string ] : boolean } = {}
 			
 			var addMod = ( mod : $mol_file )=> {
@@ -391,7 +398,7 @@ namespace $ {
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
 			
 			var envsDef = [ 'web' , 'node' ]
-			var envs = envsDef.slice()
+			var envs = bundle ? [] as string[] : envsDef.slice()
 			var stages = [ 'test' , 'dev' ]
 			
 			if( bundle ) {
@@ -401,7 +408,7 @@ namespace $ {
 				
 				tags.split( '.' ).forEach(
 					tag => {
-						if( envs.indexOf( tag ) !== -1 ) envs = [ tag ]
+						if( envsDef.indexOf( tag ) !== -1 ) envs = [ tag ]
 					}
 				)
 			}
@@ -438,12 +445,17 @@ namespace $ {
 							)
 						)
 					}
-					if( env === 'node' && ( !bundle || bundle === 'package.json' ) ) {
-						res = res.concat( this.bundlePackageJSON( { path , exclude } ) )
-					}
 				}
 			)
 			
+			if( !bundle || bundle === 'package.json' ) {
+				res = res.concat( this.bundlePackageJSON( { path , exclude : [ 'web' ] } ) )
+			}
+			
+			res = res.concat( this.bundleFiles( { path , exclude : [ 'node' ] } ) )
+			
+			res = res.concat( this.bundleCordova( { path , exclude : [ 'node' ] } ) )
+
 			return res.map( r => r.valueOf() )
 		}
 		
@@ -487,7 +499,7 @@ namespace $ {
 					const isCommonJs = /module\.exports/.test( content )
 					
 					if( isCommonJs ) {
-						concater.add( '-' , '\nvoid function( module ) { var exports = module'+'.exports; function require( id ) { return $node[ id ] }; \n' )
+						concater.add( '-' , '\nvar $node = $node || {}\nvoid function( module ) { var exports = module'+'.exports; function require( id ) { return $node[ id ] }; \n' )
 					}
 					
 					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
@@ -495,7 +507,7 @@ namespace $ {
 					if( isCommonJs ) {
 						const idFull = src.relate( this.root().resolve( 'node_modules' ) )
 						const idShort = idFull.replace( /\/index\.js$/ , '' )
-						concater.add( '-' , `\n$node[ "${ idShort }" ] = $node[ "${ idFull }" ] = module.${''}exports }( { exports : {} } )\n` )
+						concater.add( '-' , `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }( { exports : {} } )\n` )
 					}
 				}
 			)
@@ -599,9 +611,9 @@ namespace $ {
 			for( let src of sources ) {
 				let deps = this.srcDeps( src.path() )
 				for( let dep in deps ) {
-					if( !/^\/node\//.test( dep ) ) continue
-					let mod = dep.replace( /^\/node\// , '' ).replace( /\/.*/g , '' )
-					json.dependencies[ mod ] = '*'
+					if( !/^\/node(?:_modules)?\//.test( dep ) ) continue
+					let mod = dep.replace( /^\/node(?:_modules)?\// , '' ).replace( /\/.*/g , '' )
+					json.dependencies[ mod ] = `*`
 				}
 			}
 			
@@ -610,6 +622,63 @@ namespace $ {
 			this.logBundle( target )
 			
 			return [ target ]
+		}
+		
+		@ $mol_mem_key()
+		bundleFiles( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+			const root = this.root()
+			const pack = $mol_file.absolute( path )
+			
+			var sources = this.sourcesAll( { path , exclude } )
+			.filter( src => /meta.tree$/.test( src.ext() ) )
+			
+			if( sources.length === 0 ) return [] 
+			
+			const targets : $mol_file[] = []
+			
+			sources.forEach( source => {
+				const tree = $mol_tree.fromString( source.content() )
+				
+				tree.select( 'deploy' ).sub.forEach( deploy => {
+					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
+					const target = pack.resolve( `-/${ file.relate( root ) }` )
+					target.content( file.content() )
+					targets.push( target )
+					this.logBundle( target )
+				} )
+				
+			} )
+			
+			return targets
+		}
+		
+		@ $mol_mem_key()
+		bundleCordova( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+			const pack = $mol_file.absolute( path )
+			const cordova = pack.resolve( '-cordova' )
+			
+			const config = pack.resolve( 'config.xml' )
+			if( !config.exists() ) return []
+			
+			const config_target = cordova.resolve( 'config.xml' )
+			config_target.content( config.content() )
+			
+			const html = pack.resolve( 'index.html' )
+			const html_target = cordova.resolve( 'www/index.html' )
+			html_target.content( html.content() )
+			
+			const sources = pack.resolve( '-' ).find().filter( src => src.type() === 'file' )
+			
+			const targets = [ config_target , html_target ]
+			.concat( sources.map( source => {
+				const target = cordova.resolve( `www/${ source.relate( pack ) }` )
+				target.content( source.content() )
+				return target
+			} ) )
+			
+			this.logBundle( cordova )
+			
+			return targets
 		}
 		
 		@ $mol_mem_key()
@@ -623,16 +692,16 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.css` )
 			var targetMap = pack.resolve( `-/${bundle}.css.map` )
 			
-			var root : any = null //$node.postcss.root({})
+			var root : any = null //$node['postcss'].root({})
 			sources.forEach(
 				src => {
-					var root2 = $node.postcss.parse( src.content() , { from : src.path() } )
+					var root2 = $node['postcss'].parse( src.content() , { from : src.path() } )
 					root = root ? root.append( root2 ) : root2
 				}
 			)
 			
 			var cssnext = $node[ 'postcss-cssnext' ]
-			var processor = $node.postcss(
+			var processor = $node['postcss'](
 				cssnext(
 					null , {
 						features : {
@@ -756,8 +825,17 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$([a-z][a-z0-9]+(?:[._][a-z0-9]+|\[\s*['"](?:.*?)['"]\s*\])*)/ig , ( str , name )=> {
+					/\$(([a-z][a-z0-9]+)(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name , pack )=> {
+						if( pack === 'node' ) return str
+						
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[_.\[\]'"]+/g , '/' ) ] : priority } )
+						return str
+					}
+				)
+				
+				line.replace(
+					/\$node\[\s*['"](.*?)['"]\s*\]/ig , ( str , path )=> {
+						$mol_build_depsMerge( depends , { [ '/node/' + path ] : priority } )
 						return str
 					}
 				)
@@ -818,8 +896,6 @@ namespace $ {
 		tree.select( 'include' ).sub.forEach( leaf => {
 			depends[ leaf.toString() ] = Number.NEGATIVE_INFINITY
 		} )
-		
-		console.log( source.path() , depends )
 		
 		return depends
 	}

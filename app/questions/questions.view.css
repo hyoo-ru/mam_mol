@@ -43,19 +43,8 @@
 	flex: 1000 1 600px;
 }
 
-[mol_app_questions_details_close] {
-	color: inherit;
-	padding: 1.25rem 1rem;
-}
-
 [mol_app_questions_details_descr] {
 	margin: 1rem;
-}
-
-[mol_app_questions_details_permalink] {
-	color: inherit;
-	padding: 1rem;
-	word-break: normal;
 }
 
 [mol_app_questions_answer] {

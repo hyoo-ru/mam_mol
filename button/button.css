@@ -3,49 +3,52 @@
 	border: none;
 	font: inherit;
 	background-color: none;
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 	border-radius: var(--mol_skin_round);
 	justify-content: center;
 	align-content: center;
 	align-items: center;
 	vertical-align: middle;
 	text-align: center;
-	padding: .5rem;
+	padding: .5rem 1rem;
 	display: inline-flex;
 	text-decoration: inherit;
 	color: inherit;
 	cursor: inherit;
 	position: relative;
 	box-sizing: border-box;
+	word-break: normal;
 }
 
 [mol_button][disabled] {
 	color: var(--mol_skin_passive_text);
+	background: none;
+	pointer-events: none;
 }
 
-[mol_button_minor]:not([disabled]) {
+[mol_button_minor] {
 	background-color: var(--mol_skin_button);
 	color: var(--mol_skin_light_text);
 }
 
-[mol_button_major]:not([disabled]) {
+[mol_button_major] {
 	background-color: var(--mol_skin_accent);
 	color: var(--mol_skin_accent_text);
-	@apply --mol_skin_outline;
+	box-shadow: var(--mol_skin_light_outline);
 }
 
-[mol_button_danger]:not([disabled]) {
+[mol_button_danger] {
 	background-color: var(--mol_skin_warn);
 	color: var(--mol_skin_warn_text);
 }
 
-[mol_button]:not([disabled]):hover {
+[mol_button]:hover {
 	z-index: 1;
 	cursor: pointer;
 	background-color: var(--mol_skin_hover);
 }
 
-[mol_button_minor]:not([disabled]):hover {
+[mol_button_minor]:hover {
 	background-color: var(--mol_skin_light_hover);
 	color: var(--mol_skin_light_text);
 }
@@ -53,13 +56,13 @@
 [mol_button]:focus {
 	z-index: 1;
 	outline: none;
-	@apply --mol_skin_focus;
+	box-shadow: var(--mol_skin_focus_outline);
 }
 
-[mol_button_major]:not([disabled]):hover {
+[mol_button_major]:hover {
 	background-color: var(--mol_skin_accent_hover);
 }
 
-[mol_button_danger]:not([disabled]):hover {
+[mol_button_danger]:hover {
 	background-color: var(--mol_skin_warn_hover);
 }

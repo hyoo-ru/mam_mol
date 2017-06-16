@@ -10,7 +10,7 @@ namespace $.$mol {
 			} )
 			
 			const content = sources.map( ( source , index )=> {
-				const header = `# ${ paths[ index ] }\n`
+				const header = `# ${ paths[ index ].replace( /.*\// , '' ) }\n`
 				const code = '```\n' + source.replace( /\n+$/ , '' ) + '\n```\n'
 				return `${ header }\n${ code }`
 			} ).join( '\n' )

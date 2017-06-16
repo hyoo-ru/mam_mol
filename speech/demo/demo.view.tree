@@ -1,0 +1,9 @@
+$mol_speech_demo $mol_view
+	sub /
+		<= Toggle $mol_check_icon
+			Icon <= Toggle_icon $mol_icon_microphone
+			checked?val <=> listening?val false
+		<= Message $mol_view
+			sub /
+				<= message \
+		
