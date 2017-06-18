@@ -41,7 +41,7 @@ namespace $ {
 	export class $mol_app_supplies_domain_supply_position extends $mol_object {
 		name() : string { return void 0 }
 		
-		supply_moment() : $jin.time.moment_class { return void 0 }
+		supply_moment() : $mol_time_moment { return void 0 }
 		
 		division() : $mol_app_supplies_domain_supply_division { return void 0 }
 		

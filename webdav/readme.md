@@ -39,30 +39,10 @@ URI of resource.
 
 List of subresources.
 
-**`title() : string`**
+**`prop( name : string ) : string`**
 
-User friendly title.
-
-**`created() : $jin.time.moment_class`**
-
-Moment of creation.
-
-**`modified() : $jin.time.moment_class`**
-
-Moment of last modification.
+String value of named resource property. 
 
 **`type() : 'dir'|'file'`**
 
 Type of resource ( file or collection of files).
-
-**`mime() : string`**
-
-Mime-type of file.
-
-**`size() : number`**
-
-Size of file on bytes.
-
-**`version() : string`**
-
-E-tag.

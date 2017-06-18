@@ -76,7 +76,7 @@ namespace $ {
 	}
 	
 	export function $mol_stub_time( maxShift = 60 * 24 * 365 ) {
-		return $jin.time.moment().shift( { minute : Math.round( Math.random() * maxShift ) } )
+		return new $mol_time_moment().shift( { minute : Math.round( Math.random() * maxShift ) } )
 	}
 	
 }
