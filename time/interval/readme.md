@@ -1,4 +1,6 @@
-# $mol_time_range
+# $mol_time_interval
+
+Immutable iso8601 time interval representation.
 
 ## Creating
 

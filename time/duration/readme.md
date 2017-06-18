@@ -1,5 +1,7 @@
 ## $mol_time_duration
 
+Immutable iso8601 time duration representation.
+
 ## Creating
 
 ```js
