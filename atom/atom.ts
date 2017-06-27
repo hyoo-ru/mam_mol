@@ -11,8 +11,8 @@ namespace $ {
 	
 	export class $mol_atom< Value = null > extends $mol_object {
 		
-		masters : $mol_set< $mol_atom<any> > | null = null
-		slaves : $mol_set< $mol_atom<any> > | null = null
+		masters : Set< $mol_atom<any> > | null = null
+		slaves : Set< $mol_atom<any> > | null = null
 		
 		status = $mol_atom_status.obsolete
 		autoFresh = true
@@ -244,7 +244,7 @@ namespace $ {
 			//	throw new Error( `Obsolated while pulling ${ this }` )
 			//} 
 			
-			this.log( [ 'obsolete' ] )
+			// this.log( [ 'obsolete' ] )
 			
 			this.status = $mol_atom_status.obsolete
 			
@@ -255,7 +255,7 @@ namespace $ {
 		
 		lead( slave : $mol_atom<any> ) {
 			if( !this.slaves ) {
-				this.slaves = new $mol_set<$mol_atom<any>>()
+				this.slaves = new Set<$mol_atom<any>>()
 				$mol_atom.unreap( this )
 			}
 			this.slaves.add( slave )
@@ -273,7 +273,7 @@ namespace $ {
 		}
 		
 		obey( master : $mol_atom<any> ) {
-			if( !this.masters ) this.masters = new $mol_set< $mol_atom<any> >()
+			if( !this.masters ) this.masters = new Set< $mol_atom<any> >()
 			this.masters.add( master )
 		}
 		
@@ -304,7 +304,7 @@ namespace $ {
 		
 		static stack = [] as $mol_atom<any>[]
 		static updating : $mol_atom<any>[] = []
-		static reaping = new $mol_set< $mol_atom<any> >()
+		static reaping = new Set< $mol_atom<any> >()
 		static scheduled = false
 		
 		static actualize( atom : $mol_atom<any> ) {
