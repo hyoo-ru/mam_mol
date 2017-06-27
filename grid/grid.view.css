@@ -46,8 +46,13 @@
 	border-bottom: 1px solid var(--mol_skin_light_line);
 }
 
-[mol_grid_number] {
+[mol_grid_cell_number] {
 	text-align: right;
+}
+
+[mol_grid_col_head] {
+	font-weight: inherit;
+	text-align: inherit;
 }
 
 [mol_grid_cell_dimmer] {
