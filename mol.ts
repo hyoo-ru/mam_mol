@@ -1,3 +1,10 @@
+declare class WeaakMap< Key , Value > {
+    delete( key : Key ) : boolean
+    get( key : Key ) : Value
+    has( key : Key ) : boolean
+    set( key : Key , value : Value ) : Map< Key , Value >
+}
+
 declare class Map< Key , Value > {
     clear(): void
     delete( key : Key ) : boolean
