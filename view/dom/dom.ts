@@ -1,8 +1,3 @@
-declare class WeakMap< Key , Value > {
-	get( key : Key ) : Value
-	set( key : Key , value : Value ) : this
-}
-
 namespace $ {
 	
 	export class $mol_view_dom extends $mol_object {
