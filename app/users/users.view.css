@@ -28,6 +28,11 @@
 	background: var(--mol_skin_light);
 }
 
+[mol_app_users_empty] {
+	padding: 1rem;
+	display: block;
+}
+
 [mol_app_users_row] {
 	margin-bottom: 1px;
 	background: var(--mol_skin_light);
@@ -37,8 +42,17 @@
 	flex: 1 1 auto;
 }
 
+[mol_app_users_foot] {
+	justify-content: flex-start;
+	flex: 0 0 auto;
+}
+
+[mol_app_users_foot] > * {
+	flex: 1000 1 auto;
+}
+
 [mol_app_users_message] {
-	flex: 1 1 auto;
+	flex: 1 1 100%;
 	align-self: stretch;
 	display: flex;
 	align-items: center;
@@ -46,10 +60,6 @@
 	color: var(--mol_skin_warn_text);
 }
 
-[mol_app_users_controller] {
-	justify-content: flex-start;
-}
-
-[mol_app_users_controller] > * {
-	flex: 1 1 auto;
+[mol_app_users_message][mol_view_error="$mol_atom_wait"] {
+	display: none;
 }

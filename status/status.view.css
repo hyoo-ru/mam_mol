@@ -3,7 +3,6 @@
 	padding: .5rem;
 	border-radius: var(--mol_skin_round);
 	display: block;
-	margin: auto;
 }
 
 [mol_status]:not([mol_view_error="$mol_atom_wait"]) {
