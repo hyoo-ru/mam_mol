@@ -28,7 +28,7 @@ namespace $ {
 			return {}
 		}
 		
-		'Request()' : XMLHttpRequest
+		'request()' : XMLHttpRequest
 		request() {
 			if( this[ 'request()' ] ) return this[ 'request()' ]
 			
