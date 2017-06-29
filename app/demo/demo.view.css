@@ -97,3 +97,7 @@
 [mol_app_demo_sample_large] {
 	box-sizing: border-box;
 }
+
+[mol_app_demo_detail_empty_message] {
+	margin: auto;
+}
