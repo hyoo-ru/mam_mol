@@ -148,31 +148,6 @@ namespace $ {
 			})
 		}
 
-		sub( config : $mol_time_moment_config ) {
-			var moment = new $mol_time_moment( config )
-			var dur = {
-				year : ( moment.year === undefined )
-					? this.year
-					: ( this.year || 0 ) - moment.year,
-				month : ( moment.month === undefined )
-					? this.month
-					: ( this.month || 0 ) - moment.month,
-				day : ( moment.day === undefined )
-					? this.day
-					: ( this.day || 0 ) - moment.day,
-				hour : ( moment.hour === undefined )
-					? this.hour
-					: ( this.hour || 0 ) - moment.hour,
-				minute : ( moment.minute === undefined )
-					? this.minute
-					: ( this.minute || 0 ) - moment.minute,
-				second : ( moment.second === undefined )
-					? this.second
-					: ( this.second || 0 ) - moment.second,
-			}
-			return new $mol_time_duration( dur )
-		}
-
 		toOffset( config : $mol_time_duration_config ) {
 			const duration = new $mol_time_duration( config )
 		 	const moment = this.offset ? this.shift( duration.summ( this.offset.mult( -1 ) ) ) : this
