@@ -15,7 +15,7 @@ namespace $ {
 		
 		@ $mol_mem()
 		server() {
-			return $mol_build_server().make({
+			return $mol_build_server.make({
 				build : $mol_const( this ) ,
 			})
 		}
