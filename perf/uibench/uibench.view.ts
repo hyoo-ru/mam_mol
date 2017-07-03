@@ -46,9 +46,9 @@ namespace $.$mol {
 
 		@ $mol_mem_key()
 		rower( id : number ) {
-			return new $mol_perf_uibench_table_row().setup( obj => {
-				obj.state = ()=> this.state().items[ id ] || []
-			} )
+			return $mol_perf_uibench_table_row.make({
+				state : ()=> this.state().items[ id ] || [] ,
+			})
 		}
 
 	}
@@ -77,9 +77,9 @@ namespace $.$mol {
 
 		@ $mol_mem_key()
 		cell( id : number ) {
-			return new $mol_perf_uibench_table_cell().setup( obj => {
-				obj.text = ()=> this.state().props[ id ]
-			} )
+			return $mol_perf_uibench_table_cell.make({
+				text : ()=> this.state().props[ id ] ,
+			})
 		}
 		
 	}
@@ -106,9 +106,9 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		item( i : number ) {
-			return new $mol_perf_uibench_anim_box().setup( obj => {
-				obj.state = ()=> this.state().items[ i ] || { id : '' , time : 0 }
-			} )
+			return $mol_perf_uibench_anim_box.make({
+				state : ()=> this.state().items[ i ] || { id : '' , time : 0 } ,
+			})
 		}
 		
 	}
@@ -163,16 +163,16 @@ namespace $.$mol {
 
 		@ $mol_mem_key()
 		branch( i : number ) {
-			return new $mol_perf_uibench_tree_branch().setup( obj => {
-				obj.state = ()=> this.state().children[ i ] || { children : [] }
-			} )
+			return $mol_perf_uibench_tree_branch.make({
+				state : ()=> this.state().children[ i ] || { children : [] }
+			})
 		}
 
 		@ $mol_mem_key()
 		leaf( i : number ) {
-			return new $mol_perf_uibench_tree_leaf().setup( obj => {
-				obj.text = ()=> ( ( this.state().children || [] )[ i ] || {} ).id
-			} )
+			return $mol_perf_uibench_tree_leaf.make({
+				text : ()=> ( ( this.state().children || [] )[ i ] || {} ).id
+			})
 		}
 
 	}

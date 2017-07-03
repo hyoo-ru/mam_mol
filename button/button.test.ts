@@ -5,8 +5,9 @@ namespace $.$mol {
 		'handle clicks by default'() {
 			let clicked = false
 			
-			const clicker = new $mol_button
-			clicker.event_click = event => { clicked = true }
+			const clicker = $mol_button.make({
+				event_click : ( event : MouseEvent )=> { clicked = true } ,
+			})
 			
 			const element = clicker.render() as HTMLButtonElement
 			
@@ -20,9 +21,10 @@ namespace $.$mol {
 		'no handle clicks if disabled'() {
 			let clicked = false
 			
-			const clicker = new $mol_button
-			clicker.event_click = event => { clicked = true }
-			clicker.enabled = ()=> false
+			const clicker = $mol_button.make({
+				event_click : ( event : MouseEvent )=> { clicked = true } ,
+				enabled : ()=> false ,
+			})
 			
 			const element = clicker.render() as HTMLButtonElement
 			

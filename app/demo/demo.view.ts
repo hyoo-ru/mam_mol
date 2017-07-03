@@ -94,14 +94,6 @@ namespace $.$mol {
 		}
 
 		@ $mol_mem_key()
-		option( name : string ) {
-			return new $mol_link().setup( obj => {
-				obj.sub = () => [ name ? ( '$' + name ) : 'All' ]
-				obj.arg = () => ({ demo : name })
-			} )
-		}
-		
-		@ $mol_mem_key()
 		widget( name : string ) {
 			const Class : typeof $mol_view = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class()
@@ -164,17 +156,17 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		Sample_small( name : string ) {
-			const sample = new $mol_demo_small
-			sample.name = ()=> name
-			return sample
+			return $mol_demo_small.make({
+				name : $mol_const( name ) ,
+			})
 		}
 		
 		@ $mol_mem_key()
 		Sample_large( name : string ) {
-			const sample = new $mol_demo_large()
-			sample.title = ()=> null
-			sample.name = ()=> name
-			return sample
+			return $mol_demo_large.make({
+				title : $mol_const( null ) ,
+				name : $mol_const( name ) ,
+			})
 		}
 		
 		logo_uri() {

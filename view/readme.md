@@ -330,10 +330,10 @@ namespace $ { export class $my_name extends $mol_view {
 
 	@ $mol_mem()
 	Info() {
-		return new $mol_labeler().setup( obj => { 
-			obj.title = () => "Name"
-			obj.content = () => "Jin"
-		} )
+		return $mol_labeler.make({ 
+			title : () => "Name" ,
+			content : () => "Jin" ,
+		})
 	}
 
 	sub() {
@@ -366,17 +366,17 @@ namespace $ { export class $my_greeter extends $mol_view {
 
 	@ $mol_mem()
 	Input() {
-		return new $mol_string().setup(obj => { 
-			obj.hint = () => "Name"
-			obj.value = ( next? : any ) => this.name( next )
-		} )
+		return $mol_string.make({ 
+			hint : () => "Name" ,
+			value : ( next? : any ) => this.name( next ) ,
+		})
 	}
 
 	@ $mol_mem()
 	Output() {
-		return new $mol_view().setup( obj => { 
-			obj.sub = () => [].concat( this.name() )
-		} )
+		return $mol_view.make({ 
+			sub : () => [].concat( this.name() ) ,
+		})
 	}
 
 	sub() {
@@ -407,9 +407,9 @@ namespace $ { export class $my_app extends $mol_scroll {
 	/// Back $mol_button_minor title \Back
 	@ $mol_mem()
 	Back() {
-		return new $mol_button_minor().setup( obj => { 
-			obj.title = () => "Back"
-		} )
+		return $mol_button_minor.make({ 
+			title : () => "Back" ,
+		})
 	}
 
 	/// Page $mol_page 
@@ -419,9 +419,9 @@ namespace $ { export class $my_app extends $mol_scroll {
 	/// 		<= Page_title
 	@ $mol_mem()
 	Page() {
-		return new $mol_page().setup( obj => { 
-			obj.head = () => [].concat( this.Back() , this.Page_title() )
-		} )
+		return $mol_page.make({ 
+			head : () => [].concat( this.Back() , this.Page_title() ) ,
+		})
 	}
 
 	/// sub / <= Page
@@ -455,9 +455,9 @@ namespace $ { export class $my_tasks extends $mol_list {
 
 	@ $mol_mem()
 	Task_row( key : any ) {
-		return new $mol_view().setup( obj => { 
-			obj.sub = () => [].concat( this.task_title( key ) )
-		} )
+		return $mol_view.make({ 
+			sub : () => [].concat( this.task_title( key ) ) ,
+		})
 	}
 
 	task_title( key : any ) {
@@ -513,10 +513,10 @@ namespace $ { export class $my_hello extends $mol_view {
 
 	@ $mol_mem()
 	Input( next? : any ) {
-		return new $mol_string().setup( obj => { 
-			obj.hint = () => "Name"
-			obj.value = ( next? : any ) => this.name( next )
-		} )
+		return $mol_string.make({ 
+			hint : () => "Name" ,
+			value : ( next? : any ) => this.name( next ) ,
+		})
 	}
 
 	message() {

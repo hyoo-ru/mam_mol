@@ -86,11 +86,11 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		product( id : string ) {
-			const next = new $mol_app_inventory_domain_product
-			next.id = $mol_const( id )
-			next.code = ()=> this.product_code( id )
-			next.title = ()=> this.product_title( id )
-			return next
+			return $mol_app_inventory_domain_product.make({
+				id : $mol_const( id ) ,
+				code : ()=> this.product_code( id ) ,
+				title : ()=> this.product_title( id ) ,
+			})
 		}
 		
 		product_code( id : string ) {
@@ -148,12 +148,12 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		position( id : string ) {
-			const next = new $mol_app_inventory_domain_position()
-			next.id = $mol_const( id )
-			next.product = ()=> this.position_product( id )
-			next.count = ( next? )=> this.position_count( id , next )
-			next.status = ( next? )=> this.position_status( id , next )
-			return next
+			return $mol_app_inventory_domain_position.make({
+				id : $mol_const( id ) ,
+				product : ()=> this.position_product( id ) ,
+				count : ( next? : number )=> this.position_count( id , next ) ,
+				status : ( next? : keyof typeof $mol_app_inventory_domain_position_status )=> this.position_status( id , next ) ,
+			})
 		}
 		
 		position_product( id : string , next? : $mol_app_inventory_domain_product ) {

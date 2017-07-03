@@ -41,17 +41,17 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		group( path : number[] ) {
-			return new $mol_view().setup( obj => {
-				obj.sub = () => this.groupChilds( path )
-			} )
+		group( path : number[] ) : $mol_view {
+			return $mol_view.make({
+				sub : () => this.groupChilds( path )
+			})
 		}
 		
 		@ $mol_mem_key()
-		item( path : number[] ) {
-			return new $mol_view().setup( obj => {
-				obj.sub = () => this.groupItems( path )
-			} )
+		item( path : number[] ) : $mol_view {
+			return $mol_view.make({
+				sub : () => this.groupItems( path )
+			})
 		}
 		
 	}

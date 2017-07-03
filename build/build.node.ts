@@ -4,11 +4,9 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		static root( path : string ) {
-			return new this().setup(
-				obj => {
-					obj.root = ()=> $mol_file.absolute( path )
-				}
-			)
+			return this.make({
+				root : $mol_const( $mol_file.absolute( path ) ) ,
+			})
 		}
 		
 		static relative( path : string ) {
@@ -17,11 +15,9 @@ namespace $ {
 		
 		@ $mol_mem()
 		server() {
-			return new $mol_build_server().setup(
-				obj => {
-					obj.build = $mol_const( this )
-				}
-			)
+			return $mol_build_server().make({
+				build : $mol_const( this ) ,
+			})
 		}
 		
 		root() {

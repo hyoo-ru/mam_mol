@@ -1,5 +1,6 @@
 $mol_app_supplies_position $mol_card
 	minimal_height 70
+	position $mol_app_supplies_domain_supply_position
 	
 	Content <= Row $mol_view sub /
 		

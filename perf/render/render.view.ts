@@ -29,13 +29,13 @@ namespace $.$mol {
 		rows() { return this.data().map( ( _ , id ) => this.Row( id ) ) }
 		
 		@ $mol_mem_key()
-		Row( id : number ) { return new $mol_perf_render_row().setup( obj => {
-			obj.data = () => this.data()[ id ]
-			obj.selected = ( next? : boolean ) => {
+		Row( id : number ) { return $mol_perf_render_row.make({
+			data : () => this.data()[ id ] ,
+			selected : ( next? : boolean ) => {
 				if( next !== void 0 ) this.selected_item( next ? id : null )
 				return this.selected_item() === id
-			}
-		} ) }
+			} ,
+		}) }
 		
 		@ $mol_mem()
 		data( next? : $mol_perf_render_item[] ) { return next || [] }

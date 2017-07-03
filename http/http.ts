@@ -9,9 +9,9 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		static resource_absolute( uri : string ) {
-			const next = new $mol_http
-			next.uri = ()=> uri
-			return next
+			return $mol_http.make({
+				uri : $mol_const( uri )
+			})
 		}
 		
 		uri() { return '' }

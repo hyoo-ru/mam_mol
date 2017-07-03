@@ -6,15 +6,12 @@ namespace $.$mol {
 			return this.supplies().map( ( supply , index ) => this.Supply_row( index ) )
 		}
 		
-		@ $mol_mem_key()
-		Supply_row( index : number ) {
-			return new $mol_app_supplies_card().setup( obj => {
-				obj.supply = ()=> this.supplies()[ index ]
-				obj.arg = ()=> ({
-					supply : this.supplies()[ index ].id() ,
-					side : <string> null ,
-				})
-			} )
+		supply( index : number ) {
+			return this.supplies()[ index ]
+		}
+		
+		supply_id( index : number ) {
+			return this.supplies()[ index ].id()
 		}
 		
 	}

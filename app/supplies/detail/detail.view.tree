@@ -67,3 +67,10 @@ $mol_app_supplies_detail $mol_page
 				<= Approve $mol_check_box
 					checked?val <=> approved?val false
 					title <= approved_title @ \Approved
+	-
+	Position!index $mol_app_supplies_position
+		position <= position!index null
+	-
+	Attachment!index $mol_attach_item
+		url_thumb <= attachment_thumb!index \
+		url_load <= attachment_load!index \

@@ -162,10 +162,10 @@ namespace $ { export class $my_hello extends $mol_view {
 	/// 	value?val <=> name?val
 	@ $mol_mem()
 	Name() {
-		return new $mol_string().setup( obj => { 
-			obj.hint = () => "Name"
-			obj.value = ( next? ) => this.name( next )
-		} )
+		return $mol_string.make({ 
+			hint : () => "Name" ,
+			value : ( next? ) => this.name( next ) ,
+		})
 	}
 
 	/// message \
@@ -271,9 +271,9 @@ Or the same code through TypeScript would be:
 ```typescript
 @ $mol_mem()
 Confirm_delete() {
-	return new $mol_row().setup( obj => {
-		obj.sub = ()=> [ this.Yes() , this.No() ]
-	} )
+	return $mol_row.make({
+		sub : ()=> [ this.Yes() , this.No() ] ,
+	})
 }
 ```
 

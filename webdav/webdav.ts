@@ -4,9 +4,9 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		static item( uri : string ) {
-			return new $mol_webdav().setup( obj => {
-				obj.uri = ()=> uri
-			} )
+			return this.make({
+				uri : $mol_const( uri ) ,
+			})
 		}
 		
 		@ $mol_mem()

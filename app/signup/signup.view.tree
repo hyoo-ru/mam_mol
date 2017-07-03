@@ -33,9 +33,8 @@ $mol_app_signup $mol_scroll
 							male <= sex_option_male @ \Male
 							intersex <= sex_option_intersex @ \Intersex
 							female <= sex_option_female @ \Female
-			submit_blocked => submit_blocked
 			buttons /
 				<= Submit $mol_button_major
 					sub / <= submit_text @ \Sign Up
 					event_click?val <=> event_submit?val null
-					disabled <= submit_blocked -
+					disabled <= submit_blocked true
