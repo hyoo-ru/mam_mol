@@ -40,10 +40,10 @@ new $mol_time_moment({
 ```js
 // Component value (undefined by default)
 moment.year // number
-moment.month // [ 0 .. 12 )
-moment.day // [ 0 .. 31 )
-moment.hour // [ 0 .. 24 )
-moment.minute // [ 0 .. 60 )
+moment.month // [ 0 .. 12 ]
+moment.day // [ 0 .. 31 ]
+moment.hour // [ 0 .. 23 ]
+moment.minute // [ 0 .. 59 ]
 moment.second // [ 0 .. 60 ) (fractional)
 moment.offset // $mol_time_duration
 
