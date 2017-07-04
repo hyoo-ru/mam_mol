@@ -37,7 +37,9 @@ namespace $.$mol {
 		}
 		
 		webdav( uri : string ) {
-			return $mol_webdav.item( uri )
+			const webdav = $mol_webdav.item( uri )
+			webdav.credentials = ()=> this.credentials()
+			return webdav
 		}
 		
 		folder_row_current( uri : string ) {

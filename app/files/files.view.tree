@@ -1,5 +1,8 @@
 $mol_app_files $mol_book
 	uri_current <= uri_root <= uri_root_default \
+	credentials *
+		login \
+		password \
 	title <= title_root @ \Documents
 	-
 	Folder!folder $mol_app_files_folder
