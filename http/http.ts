@@ -40,7 +40,7 @@ namespace $ {
 				if(( next.status === 0 )||( Math.floor( next.status / 100 ) === 2 )) {
 					this.response( next , $mol_atom_force )
 				} else {
-					this.response( new Error( next.responseText ) as any , $mol_atom_force )
+					this.response( new Error( next.statusText || next.responseText ) as any , $mol_atom_force )
 				}
 			}
 			
