@@ -19,7 +19,7 @@
 	background: var(--mol_skin_card);
 	
 	&:focus {
-		background: var(--mol_skin_light_hover);
+		background: var(--mol_skin_hover);
 	}
 }
 

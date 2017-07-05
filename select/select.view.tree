@@ -24,7 +24,7 @@ $mol_select $mol_view
 			keys_y <= nav_components /
 				<= Filter_string -
 				<= option_rows -
-			current_y?key <=> option_focused?key \
+			current_y?component <=> option_focused?component null
 			cycle?val <=> nav_cycle?val true
 	sub / 
 		<= Pop $mol_pop 

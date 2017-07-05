@@ -10,7 +10,7 @@ namespace $ {
 			
 			const node = next[ 0 ] as HTMLElement
 			
-			node.focus();
+			new $mol_defer( ()=> node.focus() );
 		}
 		
 		@ $mol_mem()
