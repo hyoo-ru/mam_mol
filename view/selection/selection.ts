@@ -10,7 +10,7 @@ namespace $ {
 			
 			const node = next[ 0 ] as HTMLElement
 			
-			new $mol_defer( ()=> node.focus() );
+			node.focus()
 		}
 		
 		@ $mol_mem()
@@ -104,7 +104,11 @@ namespace $ {
 		}
 		
 		static onBlur( event : FocusEvent ) {
-			$mol_view_selection.focused( [] , $mol_atom_force )
+			const focused = this.focused()
+			setTimeout( ()=> {
+				if( focused !== this.focused() ) return
+				this.focused( [] , $mol_atom_force )
+			} )
 		}
 	}
 	

@@ -12,7 +12,7 @@ namespace $.$mol {
 		options_showed( val? : boolean ) {
 			if( !this.focused() ) return false
 			
-			if( val !== void 0 ) return val
+			if( val !== undefined ) return val
 			
 			if( this.filter_pattern() ) return true
 			
