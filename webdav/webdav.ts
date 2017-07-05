@@ -36,7 +36,7 @@ namespace $ {
 		@ $mol_mem()
 		sub() {
 			const next = [] as $mol_webdav[]
-			for( let uri in this.data_tree() ) {
+			for( let uri of Object.keys( this.data_tree() ) ) {
 				if( uri == this.uri() ) continue
 				next.push( $mol_webdav.item( uri ) )
 			}
