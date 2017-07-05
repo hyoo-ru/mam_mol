@@ -7,8 +7,6 @@ $mol_app_questions $mol_book
 		title <= title_default @ \Questions
 		minimal_width 400
 		body /
-			<= Status $mol_status
-				status <= menu_rows /
 			<= Menu_links $mol_list
 				rows <= menu_rows /
 	-

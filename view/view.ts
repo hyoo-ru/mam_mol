@@ -165,6 +165,8 @@ namespace $ {
 				
 				if( error instanceof $mol_atom_wait ) return node
 				
+				void( ( node as HTMLElement ).innerText = error.message )
+				
 				if( error[ '$mol_atom_catched' ] ) return node
 				
 				console.error( error )

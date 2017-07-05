@@ -131,7 +131,6 @@ namespace $.$mol {
 		body() {
 			return [
 				this.description() ? this.Description() : null ,
-				this.Status() ,
 				this.Folder_rows() ,
 			]
 		}

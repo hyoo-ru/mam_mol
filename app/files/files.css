@@ -11,6 +11,10 @@
 	padding: 0;
 }
 
+[mol_app_files_folder_folder_rows] {
+	padding: .5rem;
+}
+
 [mol_app_files_folder_row] {
 	width: 100%;
 	display: flex;
@@ -38,7 +42,7 @@
 }
 
 [mol_app_files_folder_row_descr] {
-	opacity: .5;
+	opacity: .66;
 	white-space: nowrap;
 	margin: .5rem;
 	font-size: .8rem;
@@ -66,5 +70,5 @@
 [mol_app_files_icon_folder] {
 	margin: .25rem;
 	zoom: 1.5;
-	opacity: .5;
+	opacity: .66;
 }

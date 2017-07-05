@@ -51,8 +51,6 @@ $mol_app_files_folder $mol_page
 	body /
 		<= Description $mol_text
 			text <= description \
-		<= Status $mol_status
-			status <= rows /
 		<= Folder_rows $mol_list
 			rows <= rows /
 
