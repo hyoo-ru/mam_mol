@@ -14,7 +14,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		title() {
-			return this.uri().split( this.host() , 2 )[1]
+			return decodeURIComponent( this.uri().split( this.host() , 2 )[1] )
 		}
 
 	}
