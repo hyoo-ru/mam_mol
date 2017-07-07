@@ -3,8 +3,9 @@ namespace $ {
 	export class $mol_http extends $mol_object {
 		
 		static resource( uri : string ) {
-			const normal = new URL( uri , $mol_dom_context.document.location.href ).toString()
-			return this.resource_absolute( normal )
+			const resolver = $mol_dom_context.document.createElement( 'a' )
+			resolver.href = uri
+			return this.resource_absolute( resolver.href )
 		}
 		
 		@ $mol_mem_key()

@@ -20,7 +20,7 @@ Returns patch that will be applied to page url.
 
 **`uri() : string`**
 
-Returns new url.
+Returns target uri.
 
 ```
 <= Example $mol_link
