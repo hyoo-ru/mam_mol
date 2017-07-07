@@ -131,9 +131,12 @@ namespace $.$mol {
 			sub.push( this.Menu() )
 			
 			if( this.selected() ) sub.push( this.Detail() )
-			else sub.unshift( this.Placeholder() )
 			
 			return sub
+		}
+
+		Placeholder() {
+			return this.selected() ? null : super.Placeholder()
 		}
 		
 		@ $mol_mem() 

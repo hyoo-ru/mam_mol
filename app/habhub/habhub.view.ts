@@ -33,12 +33,15 @@ namespace $.$mol {
 		pages() {
 			const gist = this.gist_current_id()
 			return [
-				gist ? null : this.Placeholder() ,
 				this.Menu_page() ,
 				gist ? this.Details() : null
 			]
 		}
 		
+		Placeholder() {
+			return this.gist_current_id() ? null : super.Placeholder()
+		}
+
 		menu_rows() : $mol_view[] {
 			return this.gists().map( ( gist , index ) => this.Menu_row( gist.id ) )
 		}

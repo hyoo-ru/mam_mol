@@ -4,10 +4,6 @@ namespace $.$mol {
 		
 		pages() {
 			return [
-				this.webdav_type( this.uri_current() ) === 'dir'
-					? this.Placeholder()
-					: null
-				, 
 				... this.webdavs().map( ( webdav ) => ( this.webdav_type( webdav.uri() ) === 'dir' )
 					? this.Folder( webdav.uri() )
 					: this.File( webdav.uri() )

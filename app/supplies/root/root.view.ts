@@ -13,9 +13,12 @@ namespace $.$mol {
 			const sub : $mol_view[] = [ this.lister() ]
 				
 			if( this.supply() ) sub.push( this.detailer() )
-			else sub.unshift( this.placeholder() )
 			
 			return sub
+		}
+
+		Placeholder() {
+			return this.supply() ? null : super.Placeholder()
 		}
 		
 		@ $mol_mem()
