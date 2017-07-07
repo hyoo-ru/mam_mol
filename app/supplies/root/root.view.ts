@@ -28,21 +28,16 @@ namespace $.$mol {
 		}
 
 		supply_id( next? : string ) {
-			return $mol_state_arg.value( this.state_key( 'supply' ) , next )
+			return $mol_state_arg.value( this.state_key( 'supply' ) , next ) || ''
 		}
 		
-		@ $mol_mem()
-		search_query( next? : string ) {
-			if( !next ) return ''
-			if( next.length < 7 ) return next
-			this.supply_id( next )
-			return ''
-		}
-
 		supply() {
 			if( !this.entered() ) return null
+			
 			var id = this.supply_id()
-			return id ? this.domain().supply( id ) : null
+			if( id.length < 7 ) return null
+
+			return this.domain().supply( id )
 		}
 
 	}

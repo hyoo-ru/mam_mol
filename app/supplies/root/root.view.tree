@@ -6,7 +6,7 @@ $mol_app_supplies_root $mol_book
 	lister $mol_app_supplies_list
 		minimal_width 400
 		supplies <= supplies /
-		search_query?val <=> search_query?val \
+		search_query?val <=> supply_id?val \
 	-
 	detailer $mol_app_supplies_detail
 		minimal_width 400
