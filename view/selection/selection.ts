@@ -97,7 +97,7 @@ namespace $ {
 			
 			while( element ) {
 				parents.push( element )
-				element = element.parentElement
+				element = element.parentNode as HTMLElement
 			}
 			
 			$mol_view_selection.focused( parents , $mol_atom_force )
