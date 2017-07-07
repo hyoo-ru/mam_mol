@@ -34,10 +34,6 @@
 	max-height: 100%;
 }
 
-/*[mol_book] > *:first-child {
-	animation: none;
-}*/
-
 [mol_book_placeholder] {
 	display: flex;
 	flex: 1000 1 400px;
