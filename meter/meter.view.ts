@@ -7,19 +7,25 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		rect() {
-			if( this.dom_node() === $mol_dom_context.document.body ) {
-				const size = $mol_window.size()
-				return {
-					left : 0 ,
-					top : 0 ,
-					right : size.width ,
-					bottom : size.height ,
-					width : size.width ,
-					height : size.height ,
-				}
-			} else {
+			if( this.dom_node() !== $mol_dom_context.document.body ) {
 				$mol_state_time.now()
-				return this.render().getBoundingClientRect()
+				
+				const node = this.dom_node()
+				try {
+					return node.getBoundingClientRect()
+				} catch( error ) {
+					// IE11
+				}
+			}
+
+			const size = $mol_window.size()
+			return {
+				left : 0 ,
+				top : 0 ,
+				right : size.width ,
+				bottom : size.height ,
+				width : size.width ,
+				height : size.height ,
 			}
 		}
 		
