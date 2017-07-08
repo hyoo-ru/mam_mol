@@ -23,7 +23,7 @@ namespace $ {
 		
 		constructor(
 			host : any ,
-			handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value|void = ()=> undefined,
+			handler : ( next? : Value , force? : $mol_atom_force )=> Value|void = ()=> undefined,
 			field = ''
 		) {
 			super()
