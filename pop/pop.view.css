@@ -3,6 +3,14 @@
 	display: inline-flex;
 }
 
+[mol_pop]:focus {
+	outline: none;
+}
+
+[mol_pop]:hover {
+	z-index: 4;
+}
+
 [mol_pop_bubble] {
 	box-shadow: var(--mol_skin_float);
 	border-radius: var(--mol_skin_round);

@@ -2,11 +2,15 @@ namespace $.$mol {
 	export class $mol_pop_over extends $.$mol_pop_over {
 		
 		event_show( event? : MouseEvent ) {
-			this.showed( true )
+			this.hovered( true )
 		}
 		
 		event_hide( event? : MouseEvent ) {
-			this.showed( false )
+			this.hovered( false )
+		}
+
+		showed() {
+			return this.focused() || this.hovered()
 		}
 		
 	}
