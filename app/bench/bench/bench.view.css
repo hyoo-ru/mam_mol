@@ -40,7 +40,6 @@
 }
 
 [mol_app_bench_descr] {
-	padding: .5rem 1rem;
 	flex: 0 2 50%;
 	max-width: none;
 }
