@@ -6,9 +6,7 @@ namespace $.$mol {
 		}
 		
 		pages() {	
-			if( !this.entered() ) {
-				return [ this.enter() ]
-			}
+			if( !this.entered() ) return [ this.enter() ]
 				
 			const sub : $mol_view[] = [ this.lister() ]
 				
@@ -18,6 +16,7 @@ namespace $.$mol {
 		}
 
 		Placeholder() {
+			if( !this.entered() ) return null
 			return this.supply() ? null : super.Placeholder()
 		}
 		
