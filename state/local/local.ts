@@ -7,9 +7,10 @@ namespace $ {
 			if( this['native()'] ) return this['native()']
 
 			try {
-				localStorage.setItem( '' , '' )
-				localStorage.removeItem( '' )
-				return this['native()'] = localStorage
+				const native = $mol_dom_context.localStorage
+				native.setItem( '' , '' )
+				native.removeItem( '' )
+				return this['native()'] = native
 			} catch( error ) {
 				console.warn( error )
 			}
