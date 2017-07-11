@@ -1,19 +1,33 @@
-var localStorage = localStorage || <Storage> {
-	getItem( key : string ) {
-		return this[ ':' + key ]
-	} ,
-	setItem( key : string , value : string ) {
-		this[ ':' + key ] = value
-	} ,
-	removeItem( key : string ) {
-		this[ ':' + key ] = void 0
-	}
-}
-
 namespace $ {
 	
 	export class $mol_state_local< Value > extends $mol_object {
 		
+		static 'native()' : Pick< Storage , 'getItem'|'setItem'|'removeItem' >
+		static native() {
+			if( this['native()'] ) return this['native()']
+
+			try {
+				localStorage.setItem( '' , '' )
+				localStorage.removeItem( '' )
+				return this['native()'] = localStorage
+			} catch( error ) {
+				console.warn( error )
+			}
+
+			return this['native()'] = {
+				getItem( key : string ) {
+					return this[ ':' + key ]
+				} ,
+				setItem( key : string , value : string ) {
+					this[ ':' + key ] = value
+				} ,
+				removeItem( key : string ) {
+					this[ ':' + key ] = void 0
+				}
+			}
+
+		}
+
 		@ $mol_mem_key()
 		static value< Value >( key : string , next? : Value , force? : $mol_atom_force ) : Value {
 			if( next === void 0 ) return JSON.parse( localStorage.getItem( key ) || 'null' )
