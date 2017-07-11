@@ -31,10 +31,10 @@ namespace $ {
 
 		@ $mol_mem_key()
 		static value< Value >( key : string , next? : Value , force? : $mol_atom_force ) : Value {
-			if( next === void 0 ) return JSON.parse( localStorage.getItem( key ) || 'null' )
+			if( next === void 0 ) return JSON.parse( this.native().getItem( key ) || 'null' )
 			
-			if( next === null ) localStorage.removeItem( key )
-			else localStorage.setItem( key , JSON.stringify( next ) )
+			if( next === null ) this.native().removeItem( key )
+			else this.native().setItem( key , JSON.stringify( next ) )
 			
 			return next
 		}
