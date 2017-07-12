@@ -16,6 +16,7 @@
 	height: 100%;
 	font: var(--mol_skin_font);
 	background: var(--mol_skin_light);
+	touch-action: manipulation;
 }
 
 [mol_view][mol_view_error]:not([mol_view_error="$mol_atom_wait"]) {
