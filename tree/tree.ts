@@ -137,7 +137,7 @@ namespace $ {
 		}
 		
 		static fromJSON( json : any , baseUri = '' ) : $mol_tree {
-			var type = $jin_type( json )
+			var type = $mol_typeof( json )
 			switch( type ) {
 				case 'Boolean' :
 				case 'Null' :

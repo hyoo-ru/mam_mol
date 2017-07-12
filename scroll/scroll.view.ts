@@ -59,12 +59,10 @@ namespace $.$mol {
 			} )
 		}
 		
-		_moving_task_frame = 0
+		_moving_task_timer = 0
 		moving_task_stop() {
-			cancelAnimationFrame( this._moving_task_frame )
-			this._moving_task_frame = requestAnimationFrame( ()=> {
-				this.moving( false )
-			} )
+			clearTimeout( this._moving_task_timer )
+			this._moving_task_timer = setTimeout( ()=> this.moving( false ) , 50 )
 		}
 		
 		@ $mol_mem()

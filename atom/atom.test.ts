@@ -35,6 +35,52 @@ module $ {
 			
 		} ,
 		
+		'do not actualize when masters not changed'() {
+			
+			let target_updates = 0 
+
+			let source = new $mol_atom( 'source' , ( next? : number )=> next || 1 )
+			let middle = new $mol_atom( 'middle' , ()=> Math.abs( source.get() ) )
+			let target = new $mol_atom( 'target' , ()=> {
+				++ target_updates
+				return middle.get()
+			} )
+			
+			target.get()
+			$mol_assert_equal( target_updates , 1 )
+			
+			source.set( -1 )
+			target.get()
+			
+			$mol_assert_equal( target_updates , 1 )
+						
+		} ,
+		
+		'obsolete atoms actualized in initial order'() {
+			
+			let actualizations = '' 
+
+			let source = new $mol_atom( 'source' , ( next? : number )=> next || 1 )
+			let middle = new $mol_atom( 'middle' , ()=> {
+				actualizations += 'M'
+				return source.get()
+			} )
+			let target = new $mol_atom( 'target' , ()=> {
+				actualizations += 'T'
+				source.get()
+				return middle.get()
+			} )
+			
+			target.get()
+			$mol_assert_equal( actualizations , 'TM' )
+			
+			source.set( 2 )
+			$mol_defer.run()
+			
+			$mol_assert_equal( actualizations , 'TMTM' )
+						
+		} ,
+
 		'automatic deferred restart'() {
 			
 			let targetValue : number

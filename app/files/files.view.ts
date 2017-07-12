@@ -4,10 +4,6 @@ namespace $.$mol {
 		
 		pages() {
 			return [
-				this.webdav_type( this.uri_current() ) === 'dir'
-					? this.Placeholder()
-					: null
-				, 
 				... this.webdavs().map( ( webdav ) => ( this.webdav_type( webdav.uri() ) === 'dir' )
 					? this.Folder( webdav.uri() )
 					: this.File( webdav.uri() )
@@ -37,7 +33,9 @@ namespace $.$mol {
 		}
 		
 		webdav( uri : string ) {
-			return $mol_webdav.item( uri )
+			const webdav = $mol_webdav.item( uri )
+			webdav.credentials = ()=> this.credentials()
+			return webdav
 		}
 		
 		folder_row_current( uri : string ) {
@@ -129,7 +127,6 @@ namespace $.$mol {
 		body() {
 			return [
 				this.description() ? this.Description() : null ,
-				this.Status() ,
 				this.Folder_rows() ,
 			]
 		}

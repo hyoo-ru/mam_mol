@@ -112,7 +112,7 @@ namespace $.$mol {
 
 		col_ids() {
 			const rowFirst = this.row_id(0)
-			if( rowFirst === void 0 ) return null
+			if( rowFirst === void 0 ) return []
 			
 			const record = this.record( rowFirst[ rowFirst.length - 1 ] )
 			if( !record ) return []

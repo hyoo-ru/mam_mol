@@ -40,5 +40,9 @@ namespace $.$mol {
 			alert( `Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()}!` )
 		}
 		
+		submit_blocked() {
+			return this.Form().submit_blocked()
+		}
+
 	}
 }

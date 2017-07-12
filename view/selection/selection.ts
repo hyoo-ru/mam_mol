@@ -10,7 +10,7 @@ namespace $ {
 			
 			const node = next[ 0 ] as HTMLElement
 			
-			node.focus();
+			node.focus()
 		}
 		
 		@ $mol_mem()
@@ -97,14 +97,18 @@ namespace $ {
 			
 			while( element ) {
 				parents.push( element )
-				element = element.parentElement
+				element = element.parentNode as HTMLElement
 			}
 			
 			$mol_view_selection.focused( parents , $mol_atom_force )
 		}
 		
 		static onBlur( event : FocusEvent ) {
-			$mol_view_selection.focused( [] , $mol_atom_force )
+			const focused = this.focused()
+			setTimeout( ()=> {
+				if( focused !== this.focused() ) return
+				this.focused( [] , $mol_atom_force )
+			} )
 		}
 	}
 	

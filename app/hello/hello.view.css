@@ -2,7 +2,6 @@
 [mol_app_hello] {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
 	font: 1.5rem/1 sans-serif;
 	box-shadow: var(--mol_skin_light_outline);
@@ -15,4 +14,5 @@
 [mol_app_hello_name] {
 	flex-grow: 0;
 	margin: 1rem;
+	width: 14rem;
 }

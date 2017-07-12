@@ -4,14 +4,16 @@ namespace $ {
 		
 		@ $mol_mem_key()
 		static absolute( path : string ) {
-			const next = new $mol_file()
-			next.path = ()=> path
-			return next
+			return $mol_file.make({
+				path : $mol_const( path )
+			})
 		}
 		
 		static relative( path : string ) : $mol_file {
-			const uri = new URL( path , $mol_dom_context.document.location.href )
-			return $mol_file.absolute( path )
+			const resolver = $mol_dom_context.document.createElement( 'a' )
+			resolver.href = path
+			
+			return this.absolute( resolver.href )
 		}
 		
 		path() {

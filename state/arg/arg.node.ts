@@ -11,16 +11,16 @@ namespace $ {
 		
 		@ $mol_mem()
 		static dict( next? : { [ key : string ] : string } ) {
-			if( next !== void 0 ) this.href( this.make( next ) )
+			if( next !== void 0 ) this.href( this.make_link( next ) )
 			
 			var href = this.href()
-			var chunks = href.split( /[\/\?#&; ]/g )
+			var chunks = href.split( ' ' )
 			
 			var params : { [ key : string ] : any } = {}
 			chunks.forEach(
 				chunk => {
 					if( !chunk ) return
-					var vals = chunk.split( /[:=]/ ).map( decodeURIComponent )
+					var vals = chunk.split( '=' ).map( decodeURIComponent )
 					params[ vals.shift() ] = vals
 				}
 			)
@@ -47,17 +47,17 @@ namespace $ {
 				params[ key ] = next[ key ]
 			}
 			
-			return this.make( params )
+			return this.make_link( params )
 		}
 		
-		static make( next : { [ key : string ] : any } ) {
+		static make_link( next : { [ key : string ] : any } ) {
 			var chunks : string[] = []
 			for( var key in next ) {
 				if( null == next[ key ] ) continue
 				chunks.push( [ key ].concat( next[ key ] ).map( encodeURIComponent ).join( '=' ) )
 			}
 			
-			return '#' + chunks.join( '#' )
+			return chunks.join( ' ' )
 		}
 		
 		constructor( public prefix = '' ) {

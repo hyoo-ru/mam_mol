@@ -152,11 +152,10 @@ namespace $ {
 					if( typeof plugin['render'] === 'function' ) plugin.render()
 				}
 				
-				$mol_dom_render_attributes( node , this.attr() )
-				
 				const sub = this.sub_visible()
 				if( sub ) $mol_dom_render_children( node , sub )
 				
+				$mol_dom_render_attributes( node , this.attr() )
 				$mol_dom_render_styles( node , this.style() )
 				$mol_dom_render_fields( node , this.field() )
 				
@@ -165,6 +164,8 @@ namespace $ {
 				$mol_dom_render_attributes( node , { mol_view_error : error.name } )
 				
 				if( error instanceof $mol_atom_wait ) return node
+				
+				try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
 				
 				if( error[ '$mol_atom_catched' ] ) return node
 				

@@ -10,7 +10,7 @@ namespace $ {
 		
 		@ $mol_mem()
 		static dict( next? : { [ key : string ] : string } ) {
-			var href = this.href( next && this.make( next ) )
+			var href = this.href( next && this.make_link( next ) )
 			var chunks = href.split( /[\/\?#&;]/g )
 			
 			var params : { [ key : string ] : string } = {}
@@ -33,10 +33,10 @@ namespace $ {
 		}
 		
 		static link( next : { [ key : string ] : string } ) {
-			return this.make( $mol_merge_dict( this.dict() , next ) )
+			return this.make_link( $mol_merge_dict( this.dict() , next ) )
 		}
 		
-		static make( next : { [ key : string ] : string } ) {
+		static make_link( next : { [ key : string ] : string } ) {
 			const chunks : string[] = []
 			for( let key in next ) {
 				if( null == next[ key ] ) continue

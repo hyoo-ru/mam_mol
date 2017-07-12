@@ -4,6 +4,7 @@
 
 [mol_search_clear] {
 	margin: 0;
+	flex: none;
 }
 
 [mol_search_clear_icon] {

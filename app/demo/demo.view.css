@@ -13,6 +13,10 @@
 	padding: 0;
 }
 
+[mol_app_demo_menu_nav] {
+	flex: auto;
+}
+
 [mol_app_demo_detail],
 [mol_app_demo_detail_row],
 [mol_app_empty_message] {
@@ -96,4 +100,8 @@
 
 [mol_app_demo_sample_large] {
 	box-sizing: border-box;
+}
+
+[mol_app_demo_detail_empty_message] {
+	margin: auto;
 }

@@ -1,3 +1,7 @@
+[mol_svg_root] {
+	overflow: hidden;
+}
+
 [mol_svg_text] {
 	fill: currentColor;
 	stroke: none;

@@ -19,7 +19,7 @@
 	background: var(--mol_skin_card);
 	
 	&:focus {
-		background: var(--mol_skin_light_hover);
+		background: var(--mol_skin_hover);
 	}
 }
 
@@ -36,13 +36,13 @@
 
 [mol_select_option_label] {
 	padding: .5em 1rem;
-	text-align: start;
+	text-align: left;
 	min-height: 1.5em;
 }
 
 [mol_select_сlear_option_content] {
 	padding: .5em 1rem .5rem 0;
-	text-align: start;
+	text-align: left;
 	min-height: 1.5em;
 	box-shadow: var(--mol_skin_light_outline);
 	border-radius: var(--mol_skin_round);
@@ -51,7 +51,7 @@
 
 [mol_select_no_options] {
 	padding: .5em 1rem;
-	text-align: start;
+	text-align: left;
 	min-height: 1.5em;
 	display: block;
 	color: var(--mol_skin_passive_text);

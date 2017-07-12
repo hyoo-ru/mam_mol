@@ -12,13 +12,13 @@
 	z-index: 0;
 	font: inherit;
 	flex: 0 1 auto;
+	width: 100%;
 	background: var(--mol_skin_passive);
-	color: var(--mol_skin_passive_text);
+	color: var(--mol_skin_light_text);
 }
 
 [mol_string]:enabled {
 	background: var(--mol_skin_card);
-	color: var(--mol_skin_light_text);
 }
 
 [mol_string]:enabled:hover ,

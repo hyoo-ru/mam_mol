@@ -89,10 +89,10 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 							let args : string[] = []
 							if( overName[2] ) args.push( ` ${ overName[2] } : any ` )
 							if( overName[3] ) args.push( ` ${ overName[3] }? : any ` )
-							overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
+							overs.push( '\t\t\t' + overName[1] + ' : (' + args.join( ',' ) + ') => ' + v + ' ,\n' )
 							needSet = ns
 						} )
-						return 'new ' + value.type + '()' + ( overs.length ? '.setup( obj => { \n' + overs.join( '' ) + '\t\t} )' : '' )
+						return value.type + '.make({\n' + overs.join( '' ) + '\t\t})'
 					case( value.type === '*' ) :
 						//needReturn = false
 						var opts : string[] = []

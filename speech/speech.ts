@@ -21,6 +21,7 @@ namespace $ {
 			api.onerror = ( event : Event & { error : string } )=> {
 				console.error( new Error( event.error ) )
 				this.text( '' )
+				this.listening( false )
 			}
 			
 			return api;

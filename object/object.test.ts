@@ -8,11 +8,9 @@ namespace $ {
 				}
 			}
 			
-			var x = new X().setup(
-				obj => {
-					obj.foo = () => 2
-				}
-			)
+			var x = X.make({
+				foo : ()=> 2 ,
+			})
 			
 			$mol_assert_equal( x.foo() , 2 )
 		} ,

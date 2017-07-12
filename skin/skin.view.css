@@ -24,7 +24,7 @@
 	--mol_skin_light: #fcfcfc;
 	--mol_skin_light_line: rgba( 230 , 230 , 230 , .75 );
 	--mol_skin_light_text: rgba( 0 , 0 , 0 , .9 );
-	--mol_skin_light_hover: color( var(--mol_skin_light) lightness(-5%) );
+	--mol_skin_light_hover: color( var(--mol_skin_light) lightness(+5%) );
 	--mol_skin_light_outline: 0 0 0 1px var(--mol_skin_light_line);
 
 	--mol_skin_card: white;

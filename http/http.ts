@@ -3,15 +3,16 @@ namespace $ {
 	export class $mol_http extends $mol_object {
 		
 		static resource( uri : string ) {
-			const normal = new URL( uri , $mol_dom_context.document.location.href ).toString()
-			return this.resource_absolute( normal )
+			const resolver = $mol_dom_context.document.createElement( 'a' )
+			resolver.href = uri
+			return this.resource_absolute( resolver.href )
 		}
 		
 		@ $mol_mem_key()
 		static resource_absolute( uri : string ) {
-			const next = new $mol_http
-			next.uri = ()=> uri
-			return next
+			return $mol_http.make({
+				uri : $mol_const( uri )
+			})
 		}
 		
 		uri() { return '' }
@@ -28,7 +29,7 @@ namespace $ {
 			return {}
 		}
 		
-		'Request()' : XMLHttpRequest
+		'request()' : XMLHttpRequest
 		request() {
 			if( this[ 'request()' ] ) return this[ 'request()' ]
 			
@@ -40,7 +41,7 @@ namespace $ {
 				if(( next.status === 0 )||( Math.floor( next.status / 100 ) === 2 )) {
 					this.response( next , $mol_atom_force )
 				} else {
-					this.response( new Error( next.responseText ) as any , $mol_atom_force )
+					this.response( new Error( next.statusText || next.responseText ) as any , $mol_atom_force )
 				}
 			}
 			

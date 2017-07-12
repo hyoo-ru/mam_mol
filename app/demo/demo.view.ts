@@ -30,8 +30,8 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		names_demo_filtered() {
-			const filter = this.filter_string()
-			const names = this.names_demo_all().filter( name => ( name.indexOf( filter ) != -1 ) )
+			const filter = this.filter_string().toLowerCase()
+			const names = this.names_demo_all().filter( name => ( name.toLowerCase().indexOf( filter ) != -1 ) )
 			return names
 		}
 		
@@ -94,14 +94,6 @@ namespace $.$mol {
 		}
 
 		@ $mol_mem_key()
-		option( name : string ) {
-			return new $mol_link().setup( obj => {
-				obj.sub = () => [ name ? ( '$' + name ) : 'All' ]
-				obj.arg = () => ({ demo : name })
-			} )
-		}
-		
-		@ $mol_mem_key()
 		widget( name : string ) {
 			const Class : typeof $mol_view = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class()
@@ -139,9 +131,12 @@ namespace $.$mol {
 			sub.push( this.Menu() )
 			
 			if( this.selected() ) sub.push( this.Detail() )
-			else sub.unshift( this.Placeholder() )
 			
 			return sub
+		}
+
+		Placeholder() {
+			return this.selected() ? null : super.Placeholder()
 		}
 		
 		@ $mol_mem() 
@@ -164,17 +159,17 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		Sample_small( name : string ) {
-			const sample = new $mol_demo_small
-			sample.name = ()=> name
-			return sample
+			return $mol_demo_small.make({
+				name : $mol_const( name ) ,
+			})
 		}
 		
 		@ $mol_mem_key()
 		Sample_large( name : string ) {
-			const sample = new $mol_demo_large()
-			sample.title = ()=> null
-			sample.name = ()=> name
-			return sample
+			return $mol_demo_large.make({
+				title : $mol_const( null ) ,
+				name : $mol_const( name ) ,
+			})
 		}
 		
 		logo_uri() {

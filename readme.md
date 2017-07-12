@@ -7,11 +7,12 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Features](#features)
 - [Demo applications](#demo-applications)
 - [Benchmarks](#benchmarks)
-- [Oganizations using $mol](#oganizations-using-mol)
+- [Oganizations using $mol](#organizations-using-mol)
 - [Articles](#articles)
 - [Any questions?](https://github.com/eigenmethod/mol/issues/new?labels=question) / [All answers](https://github.com/eigenmethod/mol/issues?q=label%3Aquestion+is%3Aclosed)
 - [Found a bug?](https://github.com/eigenmethod/mol/issues/new?labels=bug) / [All bugs](https://github.com/eigenmethod/mol/labels/bug)
 - [Need a feature?](https://github.com/eigenmethod/mol/issues/new?labels=improvement) / [Vote for other](https://github.com/eigenmethod/mol/labels/improvement)
+- Discussions: [Telegram](https://t.me/joinchat/AAAAAEPh3ssTZZjjYRzOwA), [Slack](http://mam-mol.slack.com), [E-mail](mailto:jin+mol@hyoo.ru)
 - [Quick start](#quick-start)
 - [Rationale](#rationale)
 - [Modules](#modules)
@@ -71,7 +72,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Quick start
 
-[Video of this precess](https://www.youtube.com/watch?v=PyK3if5sgN0)
+[Video of this process](https://www.youtube.com/watch?v=PyK3if5sgN0)
 
 **Create MAM project**
 
@@ -161,10 +162,10 @@ namespace $ { export class $my_hello extends $mol_view {
 	/// 	value?val <=> name?val
 	@ $mol_mem()
 	Name() {
-		return new $mol_string().setup( obj => { 
-			obj.hint = () => "Name"
-			obj.value = ( next? ) => this.name( next )
-		} )
+		return $mol_string.make({ 
+			hint : () => "Name" ,
+			value : ( next? ) => this.name( next ) ,
+		})
 	}
 
 	/// message \
@@ -270,9 +271,9 @@ Or the same code through TypeScript would be:
 ```typescript
 @ $mol_mem()
 Confirm_delete() {
-	return new $mol_row().setup( obj => {
-		obj.sub = ()=> [ this.Yes() , this.No() ]
-	} )
+	return $mol_row.make({
+		sub : ()=> [ this.Yes() , this.No() ] ,
+	})
 }
 ```
 
@@ -366,8 +367,6 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Collections
 
 * **[$mol_range](range)** - lazy array
-* **[$mol_set](set)** - [Set API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
-* **[$mol_dict](dict)** - [Map API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
 * **[$mol_maybe](maybe)** - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
 * **[$mol_hyperhive](hypehive)** - [HypeHive API](http://hhive.eap.eigenmethod.com/)
 

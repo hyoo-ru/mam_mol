@@ -1,5 +1,5 @@
 $mol_book $mol_view
-	sub <= pages_extended /
+	sub <= pages_wrapped /
 	pages /
 	plugins /
 		<= Meter $mol_meter
@@ -7,6 +7,8 @@ $mol_book $mol_view
 	Page!index $mol_book_page
 		Sub <= page!index null
 		visible <= page_visible!index true
+	Placeholder $mol_book_placeholder
+		title <= title -
 
 $mol_book_placeholder $mol_view
 	minimal_width 400

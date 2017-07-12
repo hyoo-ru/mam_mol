@@ -7,8 +7,6 @@ $mol_app_habhub $mol_book
 			minimal_width 400
 			title <= title_default \HabHub
 			body /
-				<= Status $mol_status
-					status <= gists /
 				<= Menu $mol_list
 					rows <= menu_rows /
 		<= Details $mol_page

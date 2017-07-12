@@ -12,6 +12,7 @@
 	text-align: center;
 	padding: .5rem 1rem;
 	display: inline-flex;
+	flex-shrink: 0;
 	text-decoration: inherit;
 	color: inherit;
 	cursor: inherit;

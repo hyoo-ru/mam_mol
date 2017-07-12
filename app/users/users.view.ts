@@ -3,22 +3,11 @@ namespace $.$mol {
 	/// GitHub users View Model
 	export class $mol_app_users extends $.$mol_app_users {
 		
-		query_arg( next? : string ) {
-			return $mol_state_arg.value( this.state_key( 'query' ) , next )
-		}
-		
 		/// Search query string synchronized with argument from URL.
 		@ $mol_mem()
 		query( next? : string , force? : $mol_atom_force ) : string {
-			if( next === undefined ) return this.query_arg()
-			
-			this.query_arg( next )
-			
-			if( this._query_timer ) clearTimeout( this._query_timer )
-			this._query_timer = setTimeout( ()=> { this.query( undefined , $mol_atom_force ) } , 500 )
+			return $mol_state_arg.value( this.state_key( 'query' ) , next )
 		}
-		
-		_query_timer = 0
 		
 		/// Data source resource based on this.query()
 		@ $mol_mem()
@@ -37,48 +26,37 @@ namespace $.$mol {
 		
 		/// List of child views. Show users and controls only when this.query() is not empty.
 		sub() {
-			var next = [ this.Head() ]
-			if( this.master() ) next = [].concat( next , this.Body() , this.Foot() )
-			return next
+			return [
+				this.Head() ,
+				this.master() ? this.Body() : null ,
+				this.master() ? this.Foot() : null ,
+			]
 		}
 		
 		/// Current list of users. May be changed by user.
 		@ $mol_mem()
-		users( next? : string[] ) {
-			let usersMaster = this.users_master()
-			return next || usersMaster
+		users( next? : string[] , force? : $mol_atom_force ) {
+			return next || this.users_master( next , force )
 		}
 		
 		/// List of users loaded from server.
 		@ $mol_mem()
 		users_master( next? : string[] , force? : $mol_atom_force ) {
-			if( !this.query() ) return []
-			
 			const master = this.master()
+			if( !master ) return []
 			
-			if( next === void 0 ) {
-				return master.json<{ items : { login : string }[] }>( void 0 , force ).items.map( item => item.login ) as string[]
-			}
-			
-			master.json<{ items : { login : string }[] }>( next && { items : next.map( login => ({ login }) ) } )
-			
-			return next
-		}
-		
-		/// Status of net communication. Shows errors of downloading|uploading. 
-		@ $mol_mem()
-		save_result() {
-			return this.users_master()
+			const data = next && { items : next.map( login => ({ login }) ) }
+			return master.json<{ items : { login : string }[] }>( data , force ).items.map( item => item.login )
 		}
 		
 		/// Reload data from server and discard changes.
 		event_reload( next? : Event ) {
-			this.users_master( void 0 , $mol_atom_force )
+			this.users( undefined , $mol_atom_force )
 		}
 		
 		/// Add user with empty name at the end of list.
 		event_add( next? : Event ) {
-			this.users( this.users().concat( '' ) )
+			this.users([ ... this.users() , '' ])
 		}
 		
 		/// Remove user from list by id.
@@ -93,26 +71,12 @@ namespace $.$mol {
 		
 		/// Flag to enable some controls when user list loaded.
 		loaded() {
-			return Boolean( this.users().valueOf() )
+			return Boolean( this.users_master().valueOf() )
 		}
 		
 		/// Initiates current user list to upload. 
 		event_save( next? : Event ) {
-			if( !this.changed() ) return
-			try {
-				this.users_master( this.users() ).valueOf()
-			} catch( error ) {
-				if( error instanceof $mol_atom_wait ) throw error
-				console.log( '---' , error )
-			}
-		}
-		
-		body() : any[] {
-			if( this.users().length ) {
-				return [ this.List() ]
-			} else {
-				return [ 'Users not found' ]
-			}
+			this.users_master( this.users() )
 		}
 		
 		/// Lazy list of user view models. Items are created only when they fits to viewport.
@@ -121,22 +85,15 @@ namespace $.$mol {
 			return this.users().map( ( user , id )=> this.User_row( id ) )
 		}
 		
-		/// One user view model with injected behaviour.
-		@ $mol_mem_key()
-		User_row( id : number ) {
-			return new $mol_app_users_row().setup( obj => {
-				obj.title = ( next? )=> this.user_name( id , next )
-				obj.event_drop = ( next? )=> this.event_user_drop( id , next )
-			} )
-		}
-		
 		/// Read/write accessor to user name by id.
-		user_name( id : number , next? : string ) {
-			if( next === void 0 ) return this.users()[ id ] || ''
+		user_name( index : number , next? : string ) {
+			const users = this.users()
 			
-			this.users( this.users().map( ( name , i )=> ( i === id ) ? next : name ) )
+			if( next !== undefined ) {
+				this.users([ ... users.slice( 0 , index ) , next , ... users.slice( index + 1 ) ])
+			}
 			
-			return next
+			return users[ index ] || ''
 		}
 		
 	}

@@ -5,10 +5,13 @@ namespace $.$mol {
 		pages() {
 			const question = this.question_cur_id()
 			return [
-				question ? null : this.Placeholder() ,
 				this.Menu() ,
 				question ? this.Details( question ) : null ,
 			]
+		}
+		
+		Placeholder() {
+			return this.question_cur_id() ? null : super.Placeholder()
 		}
 		
 		menu_rows() {

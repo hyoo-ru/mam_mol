@@ -12,7 +12,7 @@ namespace $.$mol {
 		options_showed( val? : boolean ) {
 			if( !this.focused() ) return false
 			
-			if( val !== void 0 ) return val
+			if( val !== undefined ) return val
 			
 			if( this.filter_pattern() ) return true
 			
@@ -59,7 +59,13 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		option_focused( component : $mol_view ) {
-			if( component === void 0 ) return this.Filter_string()
+			if( component === undefined ) {
+				for( let comp of this.nav_components() ) {
+					if( comp.focused() ) return comp
+				}
+				
+				return this.Filter_string()
+			}
 			
 			if( this.options_showed() ) {
 				component.focused( true )

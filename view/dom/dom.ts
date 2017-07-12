@@ -1,13 +1,8 @@
-declare class WeakMap< Key , Value > {
-	get( key : Key ) : Value
-	set( key : Key , value : Value ) : this
-}
-
 namespace $ {
 	
 	export class $mol_view_dom extends $mol_object {
 		
-		static nodes = new ( WeakMap || $mol_dict )< $mol_view , Element >()
+		static nodes = new WeakMap< $mol_view , Element >()
 		
 		static node( view : $mol_view ) {
 			let node = $mol_view_dom.nodes.get( view )

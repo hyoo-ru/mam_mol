@@ -1,7 +1,5 @@
 namespace $ {
 	
-	/// Creates the decorator for caching result value by json-key passed as first argument.
-	/// Method must be a polymorphic property (getter/setter/getter+setter).
 	export function $mol_mem< Host , Value >(
 		config? : {
 			lazy? : boolean

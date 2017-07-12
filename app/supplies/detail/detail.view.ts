@@ -66,32 +66,30 @@ namespace $.$mol {
 			return this.supply().positions().map( ( pos , index )=> this.Position( index ) )
 		}
 		
-		@ $mol_mem_key()
-		Position( index : number ) {
-			return new $mol_app_supplies_position().setup( obj => {
-				obj.position = ()=> this.supply().positions()[ index ]
-			} )
+		position( index : number ) {
+			return this.supply().positions()[ index ]
 		}
 
 		attachments() {
 			return this.supply().attachments().map( ( pos , index )=> this.Attachment( index ) )
 		}
 
-		@ $mol_mem_key()
-		Attachment( index : number ) {
-			return new $mol_attach_item().setup( obj => {
-				obj.url_thumb = ()=> this.supply().attachments()[ index ].url_thumb()
-				obj.url_load = ()=> this.supply().attachments()[ index ].url_load()
-			} )
+		attachment_thumb( index : number ) {
+			return this.supply().attachments()[ index ].url_thumb()
+		}
+		
+		attachment_load( index : number ) {
+			return this.supply().attachments()[ index ].url_load()
 		}
 
 		attach_new( next? : string ) {
 			var supply = this.supply()
 			var list = supply.attachments()
 			var url = $mol_const( next )
-			list = list.concat( new $mol_app_supplies_domain_attachment().setup( obj => {
-				obj.url_thumb = obj.url_load = url
-			} ) )
+			list = list.concat( $mol_app_supplies_domain_attachment.make({
+				url_thumb : url ,
+				url_load : url ,
+			}) )
 			supply.attachments( list )
 		}
 		

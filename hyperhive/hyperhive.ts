@@ -34,13 +34,13 @@ namespace $ {
 			project : string
 			application : string
 		} ) {
-			const next = new $mol_hyperhive()
-			next.host = ()=> config.host
-			next.version = ()=> config.version
-			next.environment = ()=> config.environment
-			next.project = ()=> config.project
-			next.application = ()=> config.application
-			return next
+			return $mol_hyperhive.make({
+				host : ()=> config.host ,
+				version : ()=> config.version ,
+				environment : ()=> config.environment ,
+				project : ()=> config.project ,
+				application : ()=> config.application ,
+			})
 		}
 		
 		@ $mol_mem()

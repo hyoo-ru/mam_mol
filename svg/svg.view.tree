@@ -7,7 +7,7 @@ $mol_svg_root $mol_svg
 	attr *
 		^
 		viewBox <= view_box \0 0 100 100
-		preserveAspectRatio <= aspect \
+		preserveAspectRatio <= aspect \xMidYMid
 
 $mol_svg_group $mol_svg
 	dom_name \g

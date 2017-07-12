@@ -8,5 +8,5 @@
 
 [mol_float_scrolling] {
 	opacity: 0;
-	transition: opacity .25s ease-out;
+	transition-duration: 0;
 }
