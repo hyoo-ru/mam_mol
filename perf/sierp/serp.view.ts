@@ -51,26 +51,9 @@ namespace $.$mol {
 		}
 		
 		transform() {
-			const t = ( this.elapsed() / 1000 ) % 10
+			const t = ( $mol_state_time.now() / 1000 ) % 10
 			const scale = 1 + (t > 5 ? 10 - t : t) / 10;
 			return 'scale(' + (scale / 2.1) + ',0.7) translateZ(0.1px)'
-		}
-		
-		_request_id = 0
-		
-		update() {
-			this.elapsed( Date.now() )
-			this._request_id = requestAnimationFrame( ()=> this.update() )
-		}
-		
-		destroyed( next?: boolean ) {
-			if( next ) cancelAnimationFrame( this._request_id )
-			return super.destroyed( next )
-		}
-		
-		constructor() {
-			super()
-			new $mol_defer( ()=> this.update() )
 		}
 		
 	}
