@@ -6,8 +6,10 @@ namespace $ {
 		static native() {
 			if( this['native()'] ) return this['native()']
 
-			try {
+			check : try {
 				const native = $mol_dom_context.sessionStorage
+				if( !native ) break check
+
 				native.setItem( '' , '' )
 				native.removeItem( '' )
 				return this['native()'] = native
