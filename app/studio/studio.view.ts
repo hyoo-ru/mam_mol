@@ -125,11 +125,11 @@ namespace $.$mol {
 			
 			for( let prop of props.sub ) {
 				const value = Object.getPrototypeOf( obj )[ prop.type ]
-				obj[ prop.type ] = ()=> {
+				obj[ prop.type ] = ( ... args : any[] )=> {
 					const val = this.value([ ... path , prop.type ])
 					if( val != null ) return val
 					
-					return value && value.call( obj )
+					return value && value.apply( obj , args )
 				}
 			}
 			
