@@ -14,7 +14,7 @@
 	margin: 1rem;
 }
 
-[mol_app_studio_demo_preview_page] > [mol_page_body] {
+[mol_app_studio_preview_page] > [mol_page_body] {
 	padding: 1rem;
 	display: flex;
 }

@@ -42,6 +42,7 @@ namespace $ {
 					if( prop.sub.length === 0 ) return
 
 					props[ prop.type ] = prop.clone({
+						type : prop.type.replace( /\W.*/ , '' ) ,
 						sub : [
 							prop.clone({
 								type : 'type' ,

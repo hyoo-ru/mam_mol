@@ -2,6 +2,13 @@ namespace $.$mol {
 	
 	export class $mol_app_studio extends $.$mol_app_studio {
 
+		pages() {
+			return [
+				this.Preview_page() ,
+				( this.path() == null ) ? null : this.Editor_page() ,
+			]
+		}
+
 		@ $mol_mem()
 		registry() {
 			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\n'
@@ -82,7 +89,7 @@ namespace $.$mol {
 		
 		path( next? : string[] ) {
 			const str = $mol_state_arg.value( this.state_key( 'path' ) , next && next.join( ',' ) )
-			return str && str.split( ',' ) || []
+			return ( str == null ) ? null : ( str ? str.split( ',' ) : [] )
 		}
 		
 		@ $mol_mem()
@@ -99,8 +106,11 @@ namespace $.$mol {
 			} )
 		}
 		
-		element_class( path : string[] , next? : string ) : string {
-			if( path.length === 0 ) return this.block()
+		@ $mol_mem_key()
+		element_class( path : string[] ) : string {
+			if( this.string_value( path ) ) return this.string_value( path )
+
+			if( path.length === 0 ) return '$' + this.block()
 			const parent_class = this.element_class( path.slice( 0 , path.length - 1 ) )
 			return this.props_all( parent_class ).select( path[ path.length - 1 ] , 'value' , '' ).sub[0].type
 		}
@@ -131,7 +141,7 @@ namespace $.$mol {
 		}
 		
 		editor_title() {
-			return [ this.block() , ... this.path() ].join(' / ')
+			return [ '$' + this.block() , ... this.path() ].join(' / ')
 		}
 		
 	}

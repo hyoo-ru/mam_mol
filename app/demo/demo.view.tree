@@ -4,15 +4,25 @@ $mol_app_demo $mol_book
 	Placeholder $mol_app_demo_placeholder
 		title <= title -
 	pages <= blocks /
-		<= Menu $mol_app_demo_menu
-			hierarchy <= nav_hierarchy null
-			option!id <= nav_option!id null
-			filter?val <=> filter_string?val \
-		<= Detail $mol_app_demo_detail
-			minimal_width 600
-			title <= title -
-			source_link <= source_link \
-			body <= main_content /
+	Menu $mol_app_demo_menu
+		hierarchy <= nav_hierarchy null
+		option!id <= nav_option!id null
+		filter?val <=> filter_string?val \
+	Detail $mol_app_demo_detail
+		minimal_width 600
+		title <= title -
+		source_link <= source_link \
+		body <= main_content /
+	Editor!id $mol_app_studio
+		minimal_width 1000
+		title <= title -
+		block <= selected \
+		tools_main /
+			<= Close $mol_link
+				sub /
+					<= Close_icon $mol_icon_cross
+				arg <= close_arg *
+					edit null
 	Welcome $mol_scroll
 		sub /
 			<= Welcome_text $mol_text
@@ -43,6 +53,13 @@ $mol_app_demo_detail $mol_page
 			sub /
 				<= Source_icon $mol_icon_source
 			uri <= source_link \
+			target \_blank
+		<= Edit $mol_link
+			sub /
+				<= Edit_icon $mol_icon_settings
+			arg *
+				edit \
+				path \
 		<= Close $mol_link 
 			sub /
 				<= Close_icon $mol_icon_cross

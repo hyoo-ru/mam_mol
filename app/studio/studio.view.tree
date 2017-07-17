@@ -1,15 +1,19 @@
 $mol_app_studio $mol_book
 	pages /
-		<= Catalog_page $mol_page
-			title <= catalog_title @ \Components
-			minimal_width 300
 		<= Preview_page $mol_page
 			title <= preview_title <= block -
+			tools <= tools_main /
 			body /
 				<= Block $mol_view
 			minimal_width 400
 		<= Editor_page $mol_page
 			title <= editor_title \
+			tools /
+				<= Close $mol_link
+					sub /
+						<= Close_icon $mol_icon_cross
+					arg <= close_arg *
+						path null
 			body <= fields /
 			minimal_width 300
 	Placeholder null
@@ -47,5 +51,5 @@ $mol_app_studio $mol_book
 				value?val <=> string_value!id?val \
 				options <= view_options /
 	-
-	block?val <= block_default \$mol_view
+	block?val <= block_default \mol_view
 	registry $mol_tree

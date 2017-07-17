@@ -1,5 +1,6 @@
 $mol_chart_demo_styles $mol_chart
 	title @ \Chart with various styles of graphs.
+	count 15
 	graphs /
 		<= Energy $mol_plot_ruler_vert
 			title <= energy_title @ \kJ
@@ -34,8 +35,3 @@ $mol_chart_demo_styles $mol_chart
 				<= Taxes_line $mol_plot_line
 					type \dashed
 				<= Taxes_dots $mol_plot_dot
-	sub /
-		<= Plot -
-		<= Legend -
-		<= Count $mol_number
-			value?val <=> count?val 15

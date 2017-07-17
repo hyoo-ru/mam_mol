@@ -93,6 +93,10 @@ namespace $.$mol {
 			return $mol_state_arg.value( this.state_key( 'demo' ) ) || ''
 		}
 
+		editing() {
+			return $mol_state_arg.value( this.state_key( 'edit' ) ) != null
+		}
+
 		@ $mol_mem_key()
 		widget( name : string ) {
 			const Class : typeof $mol_view = (<{[index : string]:any}>$)[ '$' + name ]
@@ -130,7 +134,10 @@ namespace $.$mol {
 			
 			sub.push( this.Menu() )
 			
-			if( this.selected() ) sub.push( this.Detail() )
+			if( this.selected() ) {
+				if( this.editing() ) sub.push( ... this.Editor( this.selected() ).pages() )
+				else sub.push( this.Detail() )
+			}
 			
 			return sub
 		}
