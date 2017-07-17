@@ -3,6 +3,8 @@ $mol_app_bench $mol_view
 		<= Addon_page $mol_page
 			title <= addon_title @ \Samples
 			body /
+				<= Filter $mol_search
+					query?val <=> filter?val \
 				<= Menu $mol_list
 					rows <= menu_options /
 		<= Main_page $mol_page
