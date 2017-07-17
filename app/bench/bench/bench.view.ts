@@ -140,7 +140,7 @@ namespace $.$mol {
 			const filter = this.filter().toLowerCase()
 
 			return this.samples_all()
-			.filter( sample => sample.toLowerCase().match( filter ) )
+			.filter( sample => this.menu_option_title( sample ).toLowerCase().match( filter ) )
 			.map( sample => this.Menu_option( sample ) )
 		}
 		
