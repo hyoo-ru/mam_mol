@@ -4,7 +4,7 @@ $mol_app_studio $mol_book
 			title <= catalog_title @ \Components
 			minimal_width 300
 		<= Preview_page $mol_page
-			title <= preview_title <= parent -
+			title <= preview_title <= block -
 			body /
 				<= Block $mol_view
 			minimal_width 400
@@ -12,9 +12,14 @@ $mol_app_studio $mol_book
 			title <= editor_title \
 			body <= fields /
 			minimal_width 300
+	Placeholder null
 	-
 	Prop!id $mol_labeler
-		title <= prop_title!id \
+		label /
+			<= Prop_dive!id $mol_link
+				title <= prop_title!id \
+				arg <= prop_arg!id *
+					path <= prop_path!id \
 		content <= prop_controls!id /
 			<= Prop_type!id $mol_select
 				value?val <=> prop_type!id?val \null
@@ -27,7 +32,7 @@ $mol_app_studio $mol_book
 					\Dict
 					\$mol_view
 			<= Boolean_field!id $mol_check_box
-				checked?val <=> boolean_value!id?val \
+				checked?val <=> boolean_value!id?val false
 			<= Number_field!id $mol_number
 				value?val <=> number_value!id?val 0
 				hint <= number_hint!id \
@@ -42,5 +47,5 @@ $mol_app_studio $mol_book
 				value?val <=> string_value!id?val \
 				options <= view_options /
 	-
-	parent?val <= parent_default \$mol_view
-	registry *
+	block?val <= block_default \$mol_view
+	registry $mol_tree

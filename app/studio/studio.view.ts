@@ -1,70 +1,29 @@
 namespace $.$mol {
 	
-	export type $mol_app_studio_prop_types = 'boolean' | 'number' | 'string' | '$mol_view' | 'List' | 'Dict' | 'any'
-	
-	export interface $mol_app_studio_prop {
-		type : $mol_app_studio_prop_types
-		keyed : boolean
-		mutable : boolean
-	}
-	
-	export interface $mol_app_studio_props {
-		[ name : string ] : $mol_app_studio_prop
-	}
-
 	export class $mol_app_studio extends $.$mol_app_studio {
-		
+
 		@ $mol_mem()
 		registry() {
-			const registry : { [ name : string ] : $mol_app_studio_props } = {}
-
-			for( let name in $ ) {
-				if( typeof $[ name ] !== 'function' ) continue
-				if(!( $[ name ].prototype instanceof $mol_view )) continue
-
-				const props : $mol_app_studio_props = {}
-
-				Object.keys( $[ name ].prototype ).forEach( prop => {
-					if( prop === 'constructor' ) return
-					if( typeof $[ name ].prototype[ name ] === 'function' ) return
-
-					props[ prop ] = {
-						type : 'any' ,
-						keyed : false ,
-						mutable : false ,
-					}
-				} )
-				
-				registry[ name ] = props
-			}
-
-			return registry
+			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\n'
+			return $mol_view_tree.fromString( view_tree + $mol_http.resource( '-/web.view.tree' ).text() )
 		}
 		
 		@ $mol_mem_key()
-		props_self( name : string , next? : $mol_app_studio_props ) {
-			return this.registry()[ name ]
+		props_self( name : string ) {
+			return this.registry().select( name , 'props' , '' )
 		}
 		
 		@ $mol_mem_key()
-		props_all( name : string ) : $mol_app_studio_props {
-			let View = this.view_class( name )
+		props_all( name : string ) {
+			const props_all : $mol_tree[] = []
 			
-			let props_all : $mol_app_studio_props = {}
-			
-			while( true ) {
-				const props = this.props_self( View.toString() )
-				if( !props ) break
-				
-				props_all = { ... props , ... props_all }
-				View = Object.getPrototypeOf( View.prototype ).constructor
+			while( name ) {
+				const props = this.props_self( name )
+				props_all.push( ... props.sub )
+				name = this.registry().select( name , 'super' , '' ).value
 			}
 			
-			return props_all
-		}
-		
-		props_current() {
-			return this.props_all( this.Element_current().constructor.toString() )
+			return this.registry().clone({ sub : props_all })
 		}
 		
 		view_class( name : string ) {
@@ -73,61 +32,57 @@ namespace $.$mol {
 		}
 		
 		fields() {
-			const element = this.element_current()
-			return Object.keys( this.props_current() ).map( prop => this.Prop({ element , prop }) )
+			const path = this.path()
+			return this.props_all( this.element_class( path ) ).sub.map( prop => this.Prop([ ... path , prop.type ]) )
 		}
 		
-		prop_controls( id : { element : string , prop : string } ) {
-			const type = this.prop_type( id )
+		prop_controls( path : string[] ) {
+			const type = this.prop_type( path )
 			return [
-				( type === 'any' ) ? this.Prop_type( id ) : null ,
-				( type === 'boolean' ) ? this.Boolean_field( id ) : null ,
-				( type === 'number' ) ? this.Number_field( id ) : null ,
-				( type === 'string' ) ? this.String_field( id ) : null ,
-				( type === '$mol_view' ) ? this.Element_field( id ) : null ,
-				( type === 'List' ) ? this.List_field( id ) : null ,
+				( type === 'any' ) ? this.Prop_type( path ) : null ,
+				( type === 'boolean' ) ? this.Boolean_field( path ) : null ,
+				( type === 'number' ) ? this.Number_field( path ) : null ,
+				( type === 'string' ) ? this.String_field( path ) : null ,
+				( type === 'localization' ) ? this.String_field( path ) : null ,
+				( type === '$mol_object' ) ? this.Element_field( path ) : null ,
+				//( type === 'Array' ) ? this.List_field( path ) : null ,
 			]
 		}
 		
-		prop_title( id : { element : string , prop : string } ) {
-			return id.prop
+		prop_title( path : string[] ) {
+			return path[ path.length - 1 ]
+		}
+
+		prop_path( path : string[] ) {
+			return path.join( ',' )
 		}
 		
 		@ $mol_mem_key()
-		prop_type( id : { element : string , prop : string } , next? : $mol_app_studio_prop_types ) {
-			return next || this.props_all( this.parent() )[ id.prop ].type
+		prop_type( path : string[] , next? : string ) {
+			const class_name = this.element_class( path.slice( 0 , path.length - 1 ) )
+			return next || this.props_all( class_name ).select( path[ path.length - 1 ] , 'type' , '' ).sub[0].value
 		}
 		
-		value( id : { element : string , prop : string } ) {
-			switch( this.props_all( this.Element( id.element ).constructor.toString() )[ id.prop ].type ) {
-				case 'any' : return this.string_value( id ) || void null
-				case 'number' : return this.number_value( id ) || void null
-				case 'string' : return this.string_value( id ) || void null
-				case '$mol_view' : return this.View( id )
-				case 'List' : return this.View( id ) && [ this.View( id ) ]
+		value( path : string[] ) {
+			switch( this.prop_type( path ) ) {
+				case 'any' : return this.string_value( path ) || void null
+				case 'boolean' : return $mol_maybe( this.boolean_value( path ) )[0]
+				case 'number' : return this.number_value( path ) || void null
+				case 'localization' : return this.string_value( path ) || void null
+				case 'string' : return this.string_value( path ) || void null
+				case '$mol_object' : return this.string_value( path ) ? this.Element( path ) : undefined
+				case 'Array' : return null //this.Element( path ) && [ this.Element( path ) ]
 				default : void null
 			}
 		}
 		
-		@ $mol_mem_key()
-		View( id : { element : string , prop : string } ) {
-			const view_name = this.string_value( id )
-			if( !view_name ) return void null
-			
-			const View = this.view_class( view_name )
-			return new View
+		block( next? : string ) : string {
+			return $mol_state_arg.value( this.state_key( 'block' ) , next ) || this.block_default()
 		}
 		
-		parent() {
-			return $mol_state_arg.value( this.state_key( 'block' ) ) || this.parent_default()
-		}
-		
-		element_current() {
-			return $mol_state_arg.value( this.state_key( 'element' ) ) || ''
-		}
-		
-		Element_current() {
-			return this.Element( this.element_current() )
+		path( next? : string[] ) {
+			const str = $mol_state_arg.value( this.state_key( 'path' ) , next && next.join( ',' ) )
+			return str && str.split( ',' ) || []
 		}
 		
 		@ $mol_mem()
@@ -144,19 +99,25 @@ namespace $.$mol {
 			} )
 		}
 		
-		Element( element : string ) {
-			if( !element ) return this.Block()
+		element_class( path : string[] , next? : string ) : string {
+			if( path.length === 0 ) return this.block()
+			const parent_class = this.element_class( path.slice( 0 , path.length - 1 ) )
+			return this.props_all( parent_class ).select( path[ path.length - 1 ] , 'value' , '' ).sub[0].type
+		}
+		
+		@ $mol_mem_key()
+		Element( path : string[] ) {
+
+			const class_name = this.string_value( path ) || this.element_class( path )
+			const obj = new( this.view_class( class_name ) )
 			
-			const obj = this.Block()[ element ]()
+			const props = this.props_all( class_name )
 			
-			const props = this.props_all( obj.constructor.toString() )
-			
-			for( let prop in props ) {
-				const value = obj[ prop ]
-				
-				obj[ prop ] = ()=> {
-					const val = this.value({ element , prop })
-					if( val !== void 0 ) return val
+			for( let prop of props.sub ) {
+				const value = Object.getPrototypeOf( obj )[ prop.type ]
+				obj[ prop.type ] = ()=> {
+					const val = this.value([ ... path , prop.type ])
+					if( val != null ) return val
 					
 					return value && value.call( obj )
 				}
@@ -165,29 +126,12 @@ namespace $.$mol {
 			return obj
 		}
 		
-		@ $mol_mem()
 		Block() {
-			const props = this.props_all( this.parent() )
-			
-			const Class = this.view_class( this.parent() )
-			const obj = new Class
-			
-			for( let prop in props ) {
-				const value = obj[ prop ] 
-				
-				obj[ prop ] = ()=> {
-					const val = this.value({ element : '' , prop })
-					if( val !== void 0 ) return val
-					
-					return value && value.call( obj )
-				}
-			}
-			
-			return obj
+			return this.Element([])
 		}
 		
 		editor_title() {
-			return this.element_current() || this.parent()
+			return [ this.block() , ... this.path() ].join(' / ')
 		}
 		
 	}

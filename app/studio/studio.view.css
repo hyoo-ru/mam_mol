@@ -23,3 +23,7 @@
 [mol_app_studio_string_field] {
 	flex: 1 1 auto;
 }
+
+[mol_app_studio_prop_dive] {
+	padding: 0;
+}

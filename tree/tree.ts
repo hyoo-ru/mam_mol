@@ -18,7 +18,7 @@ namespace $ {
 				baseUri? : string
 				row? : number
 				col? : number
-			}
+			} = {}
 		) {
 			this.type = config.type || ''
 			if( config.value ) {
@@ -158,14 +158,14 @@ namespace $ {
 				case 'Array' :
 					return new $mol_tree(
 						{
-							type : "list" ,
+							type : "/" ,
 							sub : ( <any[]> json ).map( json => $mol_tree.fromJSON( json , baseUri ) )
 						}
 					)
 				case 'Date' :
 					return new $mol_tree(
 						{
-							type : "time" ,
+							type : "" ,
 							value : json.toISOString() ,
 							baseUri : baseUri
 						}
@@ -190,19 +190,13 @@ namespace $ {
 							)
 						}
 						child.sub.push(
-							new $mol_tree(
-								{
-									type : ":" ,
-									sub : [ $mol_tree.fromJSON( json[ key ] , baseUri ) ] ,
-									baseUri : baseUri
-								}
-							)
+							$mol_tree.fromJSON( json[ key ] , baseUri )
 						)
 						sub.push( child )
 					}
 					return new $mol_tree(
 						{
-							type : "dict" ,
+							type : "*" ,
 							sub : sub ,
 							baseUri : baseUri
 						}
@@ -289,8 +283,6 @@ namespace $ {
 		}
 		
 		select( ...path : string[] ) {
-			if( typeof path === 'string' ) path = (<string>path).split( / +/ )
-			
 			var next = [ <$mol_tree>this ]
 			for( var type of path ) {
 				if( !next.length ) break
@@ -298,7 +290,7 @@ namespace $ {
 				next = []
 				for( var item of prev ) {
 					for( var child of item.sub ) {
-						if( child.type == type ) {
+						if( !type || ( child.type == type ) ) {
 							next.push( child )
 						}
 					}
@@ -308,8 +300,6 @@ namespace $ {
 		}
 		
 		filter( path : string[] , value? : string ) {
-			if( typeof path === 'string' ) path = (<string>path).split( / +/ )
-			
 			var sub = this.sub.filter(
 				function( item ) {
 					
@@ -325,7 +315,16 @@ namespace $ {
 			
 			return new $mol_tree( { sub : sub } )
 		}
-		
+
+		transform( visit : ( stack : $mol_tree[] , sub : ()=> $mol_tree[] )=> $mol_tree , stack : $mol_tree[] = [] ) : $mol_tree {
+			const sub_stack = [ this , ...stack ]
+			return visit( sub_stack , ()=> this.sub.map( node => node.transform( visit , sub_stack ) ).filter( n => n ) )
+		}
+
+		error( message : string ) {
+			return new Error( `${message}:\n${ this } ${this.baseUri}:${this.row}:${this.col}` )
+		}
+
 	}
 	
 }
