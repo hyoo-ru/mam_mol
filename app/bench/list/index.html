@@ -153,7 +153,7 @@
 	function measure( message ) {
 		var sandbox = document.getElementById( 'sandbox' )
 		requestAnimationFrame( function() { // begin at next frame start for measure stability reason
-			console.timeStamp( 'begin ' + message[0] )
+			// console.timeStamp( 'begin ' + message[0] )
 			sandbox.contentWindow.postMessage( message , '*' )
 			sandbox.addEventListener( 'animationend' , end )
 			requestAnimationFrame( function(){ setTimeout( function() { // wait for message processed
@@ -162,7 +162,7 @@
 			var start = Date.now()
 			function end() { // wait for painting ends
 				done( Date.now() - start + ' ms' )
-				console.timeStamp( 'end ' + message[0] )
+				// console.timeStamp( 'end ' + message[0] )
 				sandbox.style.animation = ''
 				sandbox.removeEventListener( 'animationend' , end )
 			}
