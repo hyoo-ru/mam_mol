@@ -3,5 +3,5 @@
 }
 
 [mol_icon_demo_icon]:hover {
-	color: var(--mol_skin_base);
+	color: var(--mol_skin_accent);
 }
