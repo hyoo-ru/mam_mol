@@ -108,9 +108,14 @@ namespace $.$mol {
 			return base.apply( element )
 		}
 
+		@ $mol_mem_key()
+		value_overrided( path : string[] , next? : any ) {
+			return next
+		}
+
 		value_effective( path : string[] , next? : string ) {
 			let value = this.value_overrided( path , next )
-			if( value != null ) return value
+			if( value !== undefined ) return value
 			
 			value = this.value_base( path )
 			if( this.value_base( path ) instanceof $mol_object ) value = this.value_base( path ).constructor.toString()
@@ -120,10 +125,10 @@ namespace $.$mol {
 
 		value_view( path : string[] , next? : string ) {
 			let value = this.value_overrided( path , next )
-			if( value == null ) return this.value_base( path )
+			if( value === undefined ) return this.value_base( path )
 
 			if( this.prop_type( path ) === '$mol_object' ) return this.Element( path )
-			
+
 			return value
 		}
 

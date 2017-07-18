@@ -12,7 +12,7 @@ $mol_select $mol_view
 		event_click?event <=> event_select!id?event null
 		sub <= option_content_super!id <= option_content!id /
 			<= Option_label!id $mol_dimmer
-				minimal_height 40
+				minimal_height 36
 				haystack <= option_label!id \
 				needle <= filter_pattern?val \
 	No_options $mol_view
