@@ -4,18 +4,19 @@ $mol_bar_demo $mol_row
 		<= One $mol_bar
 			sub /
 				<= One_mail $mol_string
-					hint \E-mail
+					hint <= mail_hint \E-mail
 					value?val <=> value?val \
 				<= One_submit $mol_button
 					sub /
-						\submit
+						<= submit_title \submit
 		<= Two $mol_bar
 			sub /
 				<= Two_mail $mol_string
-					hint \E-mail
+					hint <= mail_hint \E-mail
 					value?val <=> value?val \
 				<= Two_confirm $mol_check_box
-					title \Confirm
+					title <= confirm_title \Confirm
+					checked?val <=> confirmed?val false
 				<= Two_submit $mol_button
 					sub /
-						\submit
+						<= submit_title \submit

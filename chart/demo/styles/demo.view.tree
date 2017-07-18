@@ -1,6 +1,6 @@
 $mol_chart_demo_styles $mol_chart
 	title @ \Chart with various styles of graphs.
-	count 15
+	samples_count 15
 	graphs /
 		<= Energy $mol_plot_ruler_vert
 			title <= energy_title @ \kJ

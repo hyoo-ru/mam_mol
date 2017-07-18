@@ -1,4 +1,6 @@
 $mol_app_studio $mol_book
+	value_overrided!id?val null
+	-
 	pages /
 		<= Preview_page $mol_page
 			title <= preview_title <= block -
@@ -15,7 +17,7 @@ $mol_app_studio $mol_book
 					arg <= close_arg *
 						path null
 			body <= fields /
-			minimal_width 300
+			minimal_width 400
 	Placeholder null
 	-
 	Prop!id $mol_labeler
@@ -24,32 +26,37 @@ $mol_app_studio $mol_book
 				title <= prop_title!id \
 				arg <= prop_arg!id *
 					path <= prop_path!id \
-		content <= prop_controls!id /
-			<= Prop_type!id $mol_select
-				value?val <=> prop_type!id?val \null
-				options <= type_options /
-					\null
-					\boolean
-					\number
-					\string
-					\List
-					\Dict
-					\$mol_view
-			<= Boolean_field!id $mol_check_box
-				checked?val <=> boolean_value!id?val false
-			<= Number_field!id $mol_number
-				value?val <=> number_value!id?val 0
-				hint <= number_hint!id \
-			<= String_field!id $mol_string
-				value?val <=> string_value!id?val \
-				hint <= string_hint!id \
-			<= Element_field!id $mol_select
-				value?val <=> string_value!id?val \
-				options <= view_options /
-				hint <= view_hint!id \
-			<= List_field!id $mol_select
-				value?val <=> string_value!id?val \
-				options <= view_options /
+		content /
+			<= Prop_bar!id $mol_bar
+				sub /
+					<= Prop_type!id $mol_select
+						value?val <=> prop_type!id?val \null
+						clearable false
+						searchable false
+						options <= type_options /
+							\null
+							\boolean
+							\number
+							\string
+							\List
+							\Dict
+							\$mol_object
+					<= prop_controls!id /
+						<= Boolean_field!id $mol_check_box
+							checked?val <=> value_effective!id?val null
+						<= Number_field!id $mol_number
+							value?val <=> value_effective!id?val null
+							hint <= number_hint!id \
+						<= String_field!id $mol_string
+							value?val <=> value_effective!id?val null
+							hint <= string_hint!id \
+						<= Element_field!id $mol_select
+							value?val <=> value_effective!id?val null
+							options <= view_options /
+							hint <= view_hint!id \
+						<= List_field!id $mol_select
+							value?val <=> value_effective!id?val null
+							options <= view_options /
 	-
 	block?val <= block_default \mol_view
 	registry $mol_tree
