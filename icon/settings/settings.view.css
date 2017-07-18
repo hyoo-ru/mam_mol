@@ -7,6 +7,6 @@
 	}
 }
 
-[mol_icon_settings]:hover {
+:hover > [mol_icon_settings] {
 	animation: mol_icon_settings_hover 1s infinite linear;
 }
