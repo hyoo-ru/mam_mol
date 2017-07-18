@@ -5,3 +5,7 @@
 	flex: 0 0 auto;
 	vertical-align: -10%;
 }
+
+:hover > [mol_icon] {
+	transform: scale(1.25);
+}
