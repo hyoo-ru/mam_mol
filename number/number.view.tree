@@ -2,9 +2,6 @@ $mol_number $mol_bar
 	precision_view <= precision 1
 	precision_change <= precision 1
 	value?val null
-	event_async *
-		^
-		wheel?val <=> event_wheel?val null
 	sub /
 		<= Dec $mol_button
 			event_click?val <=> event_dec?val null

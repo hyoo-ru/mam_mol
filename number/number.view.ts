@@ -27,13 +27,5 @@ namespace $.$mol {
 			}
 		}
 
-		event_wheel( next? : MouseWheelEvent ) {
-			next.preventDefault();
-			if( next.wheelDelta < 0 && this.inc_enabled() )
-				this.event_inc( next )
-			if( next.wheelDelta > 0 && this.dec_enabled())
-				this.event_dec( next )
-		}
-
 	}
 }
