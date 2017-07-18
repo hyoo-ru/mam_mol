@@ -23,8 +23,7 @@
 	flex: 0 0 auto;
 	position: relative;
 	margin: 0;
-	/*padding: .5rem;*/
-	min-height: calc( 1.5em + 2rem );
+	min-height: calc( 1.25em + 2rem );
 }
 
 [mol_page_title] {

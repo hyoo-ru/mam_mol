@@ -36,14 +36,15 @@
 
 [mol_select_option_label] {
 	padding: .5em 1rem;
+	padding-right: .25rem;
 	text-align: left;
-	min-height: 1.5em;
+	/*min-height: 1.25em;*/
 }
 
 [mol_select_сlear_option_content] {
 	padding: .5em 1rem .5rem 0;
 	text-align: left;
-	min-height: 1.5em;
+	/*min-height: 1.25em;*/
 	box-shadow: var(--mol_skin_light_outline);
 	border-radius: var(--mol_skin_round);
 	flex: 1 0 auto;
@@ -52,13 +53,13 @@
 [mol_select_no_options] {
 	padding: .5em 1rem;
 	text-align: left;
-	min-height: 1.5em;
+	/*min-height: 1.25em;*/
 	display: block;
 	color: var(--mol_skin_passive_text);
 }
 
 [mol_select_trigger_icon] {
-	margin: .75rem .5rem;
+	margin: .75rem;
 	transform: rotateZ(90deg);
 }
 [mol_select_trigger_icon]:not(:last-child) {
