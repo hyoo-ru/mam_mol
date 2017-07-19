@@ -5,7 +5,7 @@ Common benchmarking interface, that can be added to any of benchmarks.
 ## Known benchmarks
 
 * [list](list) - Rendering of lists by frameworks ([online](http://eigenmethod.github.io/mol/app/bench/#bench=list%2F#sort=fill#))
-* [elements](elemnts) - Rendering of HTML elements ([online](http://eigenmethod.github.io/mol/app/bench/#bench=elements%2F#sample=audio~button~details~div~fieldset~hr~img~input~keygen~marquee~meter~object~optgroup~q~select~style~textarea~video#sort=fill#))
+* [elements](elements) - Rendering of HTML elements ([online](http://eigenmethod.github.io/mol/app/bench/#bench=elements%2F#sample=audio~button~details~div~fieldset~hr~img~input~keygen~marquee~meter~object~optgroup~q~select~style~textarea~video#sort=fill#))
 * [geometry](geometry) - Rendering of simple geometry by graphics libraries ([online](http://eigenmethod.github.io/mol/app/bench/#bench=geometry%2F#sort=render#))
 * [chart/rope](chart/rope) - Line graphs rendering by charts libraries ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
 * [chart/bar](chart/bar) - Bar graphs rendering by charts libraries ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
