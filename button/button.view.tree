@@ -8,7 +8,7 @@ $mol_button $mol_view
 		^
 		disabled <= disabled false
 		role \button
-		tabindex <= tab_index \0
+		tabindex <= tab_index 0
 		title <= hint \
 	sub /
 		<= title -

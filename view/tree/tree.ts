@@ -41,16 +41,29 @@ namespace $ {
 				function catch_prop( prop : $mol_tree ) {
 					if( prop.sub.length === 0 ) return
 
+					const parts = prop.type.match( /^(\w+)(?:!(\w+))?(?:\?(\w+))?$/ )
+					const type = prop_type( prop.sub[0] )
+
 					props[ prop.type ] = prop.clone({
-						type : prop.type.replace( /\W.*/ , '' ) ,
+						type : parts[1] ,
 						sub : [
 							prop.clone({
 								type : 'type' ,
-								value : prop_type( prop.sub[0] ) ,
+								value : type ,
 								sub : [] ,
 							}) ,
 							prop.clone({
-								type : 'value' ,
+								type : 'key' ,
+								value : parts[2] ,
+								sub : [] ,
+							}) ,
+							prop.clone({
+								type : 'next' ,
+								value : parts[3] ,
+								sub : [] ,
+							}) ,
+							prop.clone({
+								type : 'default' ,
 								sub : [ prop.sub[0].transform( ( [ node , ... stack ] , sub )=> {
 
 									if( [ '<=' , '<=>' , '=>' ].indexOf( node.type ) === -1 ) return node.clone({ sub : sub() })

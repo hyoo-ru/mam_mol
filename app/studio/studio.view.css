@@ -17,6 +17,7 @@
 [mol_app_studio_preview_page] > [mol_page_body] {
 	padding: 1rem;
 	display: flex;
+	align-items: flex-start;
 }
 
 [mol_app_studio_number_field] ,

@@ -48,9 +48,11 @@ namespace $.$mol {
 			return [
 				( type === 'boolean' ) ? this.Boolean_field( path ) : null ,
 				( type === 'number' ) ? this.Number_field( path ) : null ,
-				( type === 'string' ) ? this.String_field( path ) : null ,
+				( type === 'string' || type === '=>' ) ? this.String_field( path ) : null ,
 				( type === 'localization' ) ? this.String_field( path ) : null ,
 				( type === '$mol_object' ) ? this.Element_field( path ) : null ,
+				( type === '<=' ) ? this.Bind_field( path ) : null ,
+				( type === '<=>' ) ? this.Bind_field( path ) : null ,
 				//( type === 'Array' ) ? this.List_field( path ) : null ,
 			]
 		}
@@ -64,11 +66,31 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem_key()
-		prop_type( path : string[] , next? : string ) {
+		prop( path : string[] ) {
 			const class_name = this.element_class( path.slice( 0 , path.length - 1 ) )
-			return next || this.props_all( class_name ).select( path[ path.length - 1 ] , 'type' , '' ).sub[0].value
+			return this.props_all( class_name ).select( path[ path.length - 1 ] , '' )
 		}
 		
+		@ $mol_mem_key()
+		prop_type( path : string[] , next? : string ) {
+			return next || this.prop( path ).select( 'type' , '' ).sub[0].value
+		}
+
+		@ $mol_mem_key()
+		prop_key( path : string[] , next? : string ) {
+			return next || this.prop( path ).select( 'key' , '' ).sub[0].value
+		}
+
+		@ $mol_mem_key()
+		prop_next( path : string[] , next? : string ) {
+			return next || this.prop( path ).select( 'next' , '' ).sub[0].value
+		}
+
+		@ $mol_mem_key()
+		prop_default( path : string[] , next? : $mol_tree ) {
+			return next || this.prop( path ).select( 'default' , '' ).sub[0]
+		}
+
 		block( next? : string ) : string {
 			return $mol_state_arg.value( this.state_key( 'block' ) , next ) || this.block_default()
 		}
@@ -92,20 +114,25 @@ namespace $.$mol {
 			} )
 		}
 		
+		@ $mol_mem()
+		bind_options() {
+			return this.props_all( '$' + this.block() ).sub.map( prop => prop.type )
+		}
+
 		@ $mol_mem_key()
 		element_class( path : string[] ) : string {
 			if( this.value_overrided( path ) ) return this.value_overrided( path )
 
 			if( path.length === 0 ) return '$' + this.block()
 			const parent_class = this.element_class( path.slice( 0 , path.length - 1 ) )
-			return this.props_all( parent_class ).select( path[ path.length - 1 ] , 'value' , '' ).sub[0].type
+			return this.props_all( parent_class ).select( path[ path.length - 1 ] , 'default' , '' ).sub[0].type
 		}
 		
 		@ $mol_mem_key()
-		value_base( path : string[] ) : any {
+		value_base( path : string[] , next? : any ) : any {
 			const element = this.Element( path.slice( 0 , path.length - 1 ) )
 			const base = Object.getPrototypeOf( element )[ path[ path.length - 1 ] ]
-			return base.apply( element )
+			return base.call( element , next )
 		}
 
 		@ $mol_mem_key()
@@ -115,19 +142,27 @@ namespace $.$mol {
 
 		value_effective( path : string[] , next? : string ) {
 			let value = this.value_overrided( path , next )
-			if( value !== undefined ) return value
+			if( value != null ) return value
 			
 			value = this.value_base( path )
-			if( this.value_base( path ) instanceof $mol_object ) value = this.value_base( path ).constructor.toString()
+			
+			switch( this.prop_type( path ) ) {
+				case 'boolean' : return this.value_base( path ).toString()
+				case '$mol_object' : return this.value_base( path ).constructor.toString()
+				case '<=' : return this.prop_default( path ).sub[0].type
+				case '<=>' : return this.prop_default( path ).sub[0].type
+			}
 
 			return value
 		}
 
 		value_view( path : string[] , next? : string ) {
 			let value = this.value_overrided( path , next )
-			if( value === undefined ) return this.value_base( path )
+			if( value == null ) return this.value_base( path , next )
 
-			if( this.prop_type( path ) === '$mol_object' ) return this.Element( path )
+			switch( this.prop_type( path ) ) {
+				case '$mol_object' : return this.Element( path )
+			}
 
 			return value
 		}
@@ -135,10 +170,8 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		Element( path : string[] ) : $mol_view {
 
-			if( path.length && !this.value_overrided( path ) ) return this.value_base( path )
-
 			const class_name = this.value_overrided( path ) || this.element_class( path )
-			const obj = new( this.view_class( class_name ) )
+			const obj = ( path.length && !this.value_overrided( path ) ) ? this.value_base( path ) : new( this.view_class( class_name ) )
 			
 			const props = this.props_all( class_name )
 			

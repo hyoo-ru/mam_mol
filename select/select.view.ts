@@ -53,7 +53,7 @@ namespace $.$mol {
 		}
 		
 		option_content_super( id: string ) {
-			if( id === '' ) return [ this.Сlear_option_content() ]
+			if( id === '' ) return [ this.Clear_option_content() ]
 			else return this.option_content( id )
 		}
 		

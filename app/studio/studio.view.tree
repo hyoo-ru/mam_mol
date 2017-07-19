@@ -41,9 +41,15 @@ $mol_app_studio $mol_book
 							\List
 							\Dict
 							\$mol_object
+							\<=
+							\<=>
+							\=>
 					<= prop_controls!id /
-						<= Boolean_field!id $mol_check_box
-							checked?val <=> value_effective!id?val null
+						<= Boolean_field!id $mol_switch
+							value?val <=> value_effective!id?val null
+							options *
+								true \On
+								false \Off
 						<= Number_field!id $mol_number
 							value?val <=> value_effective!id?val null
 							hint <= number_hint!id \
@@ -53,7 +59,9 @@ $mol_app_studio $mol_book
 						<= Element_field!id $mol_select
 							value?val <=> value_effective!id?val null
 							options <= view_options /
-							hint <= view_hint!id \
+						<= Bind_field!id $mol_select
+							value?val <=> value_effective!id?val null
+							options <= bind_options /
 						<= List_field!id $mol_select
 							value?val <=> value_effective!id?val null
 							options <= view_options /
