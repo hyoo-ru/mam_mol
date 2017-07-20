@@ -9,13 +9,20 @@ $mol_book $mol_view
 		visible <= page_visible!index true
 	Placeholder $mol_book_placeholder
 		title <= title -
+	event_front_up?val null
+	event_front_down?val null
 
-$mol_book_placeholder $mol_view
+$mol_book_placeholder $mol_scroll
 	minimal_width 400
+	attr *
+		^
+		tabindex null
 	sub /
 		<= title -
 
 $mol_book_page $mol_ghost
 	attr *
 		^
+		tabindex 0
+		mol_book_page_focused <= focused -
 		mol_book_page_visible <= visible true

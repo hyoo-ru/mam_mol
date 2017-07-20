@@ -1,3 +1,5 @@
-$mol_button_major $mol_button
-$mol_button_minor $mol_button
-$mol_button_danger $mol_button
+$mol_button_typed $mol_button
+
+$mol_button_major $mol_button_typed
+$mol_button_minor $mol_button_typed
+$mol_button_danger $mol_button_typed

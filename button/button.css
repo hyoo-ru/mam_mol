@@ -3,14 +3,6 @@
 	border: none;
 	font: inherit;
 	background-color: none;
-	box-shadow: var(--mol_skin_light_outline);
-	border-radius: var(--mol_skin_round);
-	justify-content: center;
-	align-content: center;
-	align-items: center;
-	vertical-align: middle;
-	text-align: center;
-	padding: .5rem 1rem;
 	display: inline-flex;
 	flex-shrink: 0;
 	text-decoration: inherit;
@@ -19,9 +11,24 @@
 	position: relative;
 	box-sizing: border-box;
 	word-break: normal;
+	cursor: default;
+}
+[mol_button]:focus {
+	outline: none;
 }
 
-[mol_button][disabled] {
+[mol_button_typed] {
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	vertical-align: middle;
+	text-align: center;
+	padding: .5rem 1rem;
+	box-shadow: var(--mol_skin_light_outline);
+	border-radius: var(--mol_skin_round);
+}
+
+[mol_button_typed][disabled] {
 	color: var(--mol_skin_passive_text);
 	background: none;
 	pointer-events: none;
@@ -43,7 +50,7 @@
 	color: var(--mol_skin_warn_text);
 }
 
-[mol_button]:hover {
+[mol_button_typed]:hover {
 	z-index: 1;
 	cursor: pointer;
 	background-color: var(--mol_skin_hover);
@@ -54,7 +61,7 @@
 	color: var(--mol_skin_light_text);
 }
 
-[mol_button]:focus {
+[mol_button_typed]:focus {
 	z-index: 1;
 	outline: none;
 	box-shadow: var(--mol_skin_focus_outline);

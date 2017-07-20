@@ -6,7 +6,7 @@ $mol_bar_demo $mol_row
 				<= Two_mail $mol_string
 					hint \E-mail
 					value?val <=> value?val \
-				<= Two_submit $mol_button
+				<= Two_submit $mol_button_minor
 					sub /
 						\submit
 		<= Tree $mol_bar
@@ -16,6 +16,6 @@ $mol_bar_demo $mol_row
 					value?val <=> value?val \
 				<= Three_confirm $mol_check_box
 					title \Confirm
-				<= Three_submit $mol_button
+				<= Three_submit $mol_button_minor
 					sub /
 						\submit

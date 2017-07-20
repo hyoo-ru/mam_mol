@@ -4,7 +4,7 @@ $mol_pop_demo $mol_row
 		<= Pop $mol_pop
 			showed?val <= showed_value?val false
 			align <= align_value?val -
-			Anchor <= Show $mol_button
+			Anchor <= Show $mol_button_minor
 				event_click?event <=> event_show?event null
 				sub /
 					<= show_text @ \Show Bubble
@@ -12,7 +12,7 @@ $mol_pop_demo $mol_row
 				<= Content $mol_view 
 					sub / 
 						<= bubble_hint @ \ I'm bubble, i showed when you want 
-						<= Hide $mol_button 
+						<= Hide $mol_button_minor 
 							event_click?event <=> event_hide?event null 
 							sub / 
 								<= hide_hint @ \Hide Bubble

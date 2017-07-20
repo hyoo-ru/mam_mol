@@ -1,6 +1,6 @@
 # $mol_book
 
-Component is used for lazy add and/or remove screens depending on the size screen ( `page` ) size
+Component for lazy add and/or remove pages depending on the container size. Supports pop left of front page that hides when it blurs.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_book_demo)
 
@@ -20,3 +20,11 @@ $my_app $mol_book
 `pages() : $mol_view[]`
 
 The array of "pages"
+
+`event_front_up( next? : Event ) : Event`
+
+Pop left front page.
+
+`event_front_down( next? : Event ) : Event`
+
+Hide front page is its poped.
