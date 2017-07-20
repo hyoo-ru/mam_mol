@@ -1,0 +1,12 @@
+$mol_date_demo_bithday $mol_view
+	sub /
+		<= Date $mol_date
+			value?val <=> date?val \
+		<= Bithday $mol_list
+			sub /
+				<= date -
+
+$mol_date_demo_default $mol_view
+	sub /
+		<= Date $mol_date
+			value?val <=> date?val \2017-04-01
