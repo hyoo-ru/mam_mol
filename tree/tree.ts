@@ -86,24 +86,24 @@ namespace $ {
 				line => {
 					++row
 					
-					var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?/.exec( line )
-					if( !chunks ) new Error( `Syntax error at ${baseUri}#${row}\n${line}` )
+					var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?$\n?/m.exec( line )
+					if( !chunks ) throw new Error( `Syntax error at ${baseUri}:${row}\n${line}` )
 					
 					var indent = chunks[ 1 ]
 					var path = chunks[ 2 ]
 					var data = chunks[ 3 ]
 					
 					var deep = indent.length
-					var types = path ? path.split( / +/ ) : []
+					var types = path ? path.replace( / $/ , '' ).split( / +/ ) : []
 					
-					if( stack.length <= deep ) throw new Error( `Too many tabs at ${baseUri}#${row}\n${line}` )
+					if( stack.length <= deep ) throw new Error( `Too many tabs at ${baseUri}:${row}\n${line}` )
 					
 					stack.length = deep + 1
 					var parent = stack[ deep ];
 					
 					types.forEach(
 						type => {
-							if( !type ) return
+							if( !type ) throw new Error( `Unexpected space symbol ${baseUri}:${row}\n${line}` )
 							var next = new $mol_tree(
 								{
 									type : type ,

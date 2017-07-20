@@ -18,4 +18,4 @@ $mol_book_placeholder $mol_view
 $mol_book_page $mol_ghost
 	attr *
 		^
-		mol_book_page_visible <= visible true	
+		mol_book_page_visible <= visible true
