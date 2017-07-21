@@ -52,10 +52,12 @@ namespace $.$mol {
 		}
 
 		event_front_up( event? : Event ) {
+			if( event.defaultPrevented ) return
 			this.page(1).focused( true )
 		}
 		
 		event_front_down( event? : Event ) {
+			if( event.defaultPrevented ) return
 			setTimeout( ()=> this.pages().filter( page => page ).pop().focused( true ) )
 		}
 		

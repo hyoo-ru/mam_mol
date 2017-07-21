@@ -4,13 +4,14 @@ $mol_book $mol_view
 	plugins /
 		<= Meter $mol_meter
 			width => width
+		<= Touch $mol_touch
+			swipe_right?val <=> event_front_up?val null
+			swipe_left?val <=> event_front_down?val null
 	Page!index $mol_book_page
 		Sub <= page!index null
 		visible <= page_visible!index true
 	Placeholder $mol_book_placeholder
 		title <= title -
-	event_front_up?val null
-	event_front_down?val null
 
 $mol_book_placeholder $mol_scroll
 	minimal_width 400
