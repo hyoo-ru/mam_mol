@@ -7,11 +7,11 @@ $mol_pop_over_demo $mol_row
 			bubble_content /
 				<= File_menu $mol_list
 					rows /
-						<= Open $mol_button
+						<= Open $mol_button_minor
 							title <= open_title @ \Open
-						<= Export $mol_button
+						<= Export $mol_button_minor
 							title <= export_title @ \Export
-						<= Save $mol_button
+						<= Save $mol_button_minor
 							title <= save_title @ \Save
 		<= Help $mol_pop_over
 			align \bottom_right
@@ -19,7 +19,7 @@ $mol_pop_over_demo $mol_row
 			bubble_content /
 				<= Help_menu $mol_list
 					rows /
-						<= Updates $mol_button
+						<= Updates $mol_button_minor
 							title <= updates_title @ \Updates
-						<= About $mol_button
+						<= About $mol_button_minor
 							title <= about_title @ \About

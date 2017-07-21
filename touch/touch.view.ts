@@ -5,31 +5,43 @@ namespace $.$mol {
 			return $mol_view_dom.mount( this , ( this.object_owner() as $mol_view ).dom_node() )
 		}
 		
-		@ $mol_mem()
-		start_distance( next = 0 ) {
-			return next
-		}
-		
-		@ $mol_mem()
-		start_zoom( next = 0 ) {
-			return next
-		}
-		
 		event_start( event? : TouchEvent ) {
-			if( event.touches.length !== 2 ) return
-			
-			event.preventDefault()
-			
-			const distance = ( ( event.touches[1].screenX - event.touches[0].screenX ) ** 2 + ( event.touches[1].screenY - event.touches[0].screenY ) ** 2 ) ** .5
-			this.start_distance( distance )
-			this.start_zoom( this.zoom() )
+
+			if( event.touches.length === 1 ) {
+				const pos = [ event.touches[0].screenX , event.touches[0].screenY ]
+				this.start_pos( pos )
+			}
+
+			if( event.touches.length === 2 ) {
+				event.preventDefault()
+				
+				const distance = ( ( event.touches[1].screenX - event.touches[0].screenX ) ** 2 + ( event.touches[1].screenY - event.touches[0].screenY ) ** 2 ) ** .5
+				this.start_distance( distance )
+				this.start_zoom( this.zoom() )
+			}
 		}
 		
 		event_move( event? : TouchEvent ) {
-			if( event.touches.length !== 2 ) return
+
+			if( event.touches.length === 1 ) {
+				const start = this.start_pos()
+				if( !start ) return
+				
+				const pos = [ event.touches[0].screenX , event.touches[0].screenY ]
+				const precision = this.swipe_precision()
+				
+				if( pos[0] - start[0] > precision && Math.abs( pos[1] - start[1] ) < precision ) this.swipe_right( event )
+				if( start[0] - pos[0] > precision && Math.abs( pos[1] - start[1] ) < precision ) this.swipe_left( event )
+				if( pos[1] - start[1] > precision && Math.abs( pos[0] - start[0] ) < precision ) this.swipe_bottom( event )
+				if( start[1] - pos[1] > precision && Math.abs( pos[0] - start[0] ) < precision ) this.swipe_top( event )
+				
+				this.start_pos( null )
+			}
 			
-			const distance = ( ( event.touches[1].screenX - event.touches[0].screenX ) ** 2 + ( event.touches[1].screenY - event.touches[0].screenY ) ** 2 ) ** .5
-			this.zoom( this.start_zoom() * distance / this.start_distance() )
+			if( event.touches.length === 2 ) {
+				const distance = ( ( event.touches[1].screenX - event.touches[0].screenX ) ** 2 + ( event.touches[1].screenY - event.touches[0].screenY ) ** 2 ) ** .5
+				this.zoom( this.start_zoom() * distance / this.start_distance() )
+			}
 		}
 		
 		event_end( event? : TouchEvent ) {

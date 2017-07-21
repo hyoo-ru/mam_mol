@@ -11,6 +11,6 @@ $mol_app_supplies_list $mol_page
 	-
 	Supply_row!index $mol_app_supplies_card
 		supply <= supply!index null
+		event_click?val <=> event_navigate?val null
 		arg <= supply_arg!index *
 			supply <= supply_id!index \
-			side null

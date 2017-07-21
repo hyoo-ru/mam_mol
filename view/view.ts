@@ -29,9 +29,9 @@ namespace $ {
 		}
 		
 		@ $mol_mem()
-		focused ( next?: boolean ) {
-			let node = $mol_view_dom.node( this )
-			const value = $mol_view_selection.focused( next === void 0 ? void 0 : [ node ] )
+		focused( next?: boolean ) {
+			let node = this.dom_node()
+			const value = $mol_view_selection.focused( next === undefined ? undefined : [ node ] )
 			return value.indexOf( node ) !== -1
 		} 
 		

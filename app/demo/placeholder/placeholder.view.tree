@@ -1,5 +1,4 @@
-$mol_app_demo_placeholder $mol_scroll
-	minimal_width 400
+$mol_app_demo_placeholder $mol_book_placeholder
 	sub /
 		<= Content $mol_card
 			content /
