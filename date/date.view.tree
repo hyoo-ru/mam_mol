@@ -1,8 +1,5 @@
-$mol_date $mol_view
-	dom_name \input
-	attr *
-		type \date
-	field *
-		value <= value?val \
-	event *
-		input?event <=> event_change?event null
+$mol_date $mol_string
+	type \date
+	-
+	value_number?val 0
+	value_moment?val $mol_time_moment

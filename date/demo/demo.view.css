@@ -4,11 +4,11 @@
 	display: block;
 	margin: 0px auto;
 	vertical-align: middle;
-    align-self: center;
-    flex: 0 0 auto;
+	align-self: center;
+	flex: 0 0 auto;
 }
 
-[mol_date_demo_bithday_bithday]
+[mol_date_demo_bithday]
 {
 	text-align: center;
 }
