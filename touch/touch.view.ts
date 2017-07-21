@@ -30,10 +30,11 @@ namespace $.$mol {
 				const pos = [ event.touches[0].screenX , event.touches[0].screenY ]
 				const precision = this.swipe_precision()
 				
-				if( pos[0] - start[0] > precision && Math.abs( pos[1] - start[1] ) < precision ) this.swipe_right( event )
-				if( start[0] - pos[0] > precision && Math.abs( pos[1] - start[1] ) < precision ) this.swipe_left( event )
-				if( pos[1] - start[1] > precision && Math.abs( pos[0] - start[0] ) < precision ) this.swipe_bottom( event )
-				if( start[1] - pos[1] > precision && Math.abs( pos[0] - start[0] ) < precision ) this.swipe_top( event )
+				if( pos[0] - start[0] > precision * 2 && Math.abs( pos[1] - start[1] ) < precision ) this.swipe_right( event )
+				else if( start[0] - pos[0] > precision * 2 && Math.abs( pos[1] - start[1] ) < precision ) this.swipe_left( event )
+				else if( pos[1] - start[1] > precision * 2 && Math.abs( pos[0] - start[0] ) < precision ) this.swipe_bottom( event )
+				else if( start[1] - pos[1] > precision * 2 && Math.abs( pos[0] - start[0] ) < precision ) this.swipe_top( event )
+				else return
 				
 				this.start_pos( null )
 			}
