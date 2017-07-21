@@ -4,7 +4,7 @@ $mol_nav_demo $mol_row
 		<= Labeler $mol_labeler
 			title \Focus me and navigate (arrows up & down)!
 			content /
-				<= Button $mol_button
+				<= Button $mol_button_minor
 					title?val <= selected_item?val \Click!
 			plugins /
 				<= Nav $mol_nav

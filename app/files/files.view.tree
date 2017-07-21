@@ -10,11 +10,13 @@ $mol_app_files $mol_book
 		description <= webdav_description!folder \
 		tools <= page_tools!folder -
 		rows <= folder_rows!folder /
+		event_top?val <=> event_front_up?val -
 	-
 	Folder_row!uri $mol_link
 		minimal_height 40
 		arg <= folder_row_arg!uri *
 		current <= folder_row_current!uri false
+		event_click?val <=> event_front_down?val -
 		sub /
 			<= folder_row_icon!uri null
 			<= Folder_row_info!uri $mol_view
@@ -31,6 +33,7 @@ $mol_app_files $mol_book
 		tools <= page_tools!file -
 		src <= file_uri!file \
 		mime <= file_mime!file \
+		event_top?val <=> event_front_up?val -
 	-
 	Icon_folder!uri $mol_icon_folder
 	-

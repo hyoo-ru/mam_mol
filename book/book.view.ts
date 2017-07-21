@@ -2,7 +2,7 @@ namespace $.$mol {
 	export class $mol_book extends $.$mol_book {
 		
 		@ $mol_mem()
-		pages_extended() {
+		pages_extended() : $mol_view[] {
 			return [ this.Placeholder() ].concat( this.pages() )
 		}
 		
@@ -49,6 +49,16 @@ namespace $.$mol {
 		title() {
 			const pages = this.pages_wrapped()
 			return pages[ pages.length - 1 ].title()
+		}
+
+		event_front_up( event? : Event ) {
+			if( event.defaultPrevented ) return
+			this.page(1).focused( true )
+		}
+		
+		event_front_down( event? : Event ) {
+			if( event.defaultPrevented ) return
+			setTimeout( ()=> this.pages().filter( page => page ).pop().focused( true ) )
 		}
 		
 	}
