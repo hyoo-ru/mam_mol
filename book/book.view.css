@@ -24,7 +24,7 @@
 	content : '•••';
 	position: absolute;
 	top: 1rem;
-	left: -.5rem;
+	left: -.5em;
 	z-index: 1;
 	pointer-events: none;
 	color: var(--mol_skin_base_text);
