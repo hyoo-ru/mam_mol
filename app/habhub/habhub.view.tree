@@ -12,6 +12,7 @@ $mol_app_habhub $mol_book
 		<= Details $mol_page
 			minimal_width 600
 			title <= gist_current_title \
+			event_top?val <=> event_front_up?val -
 			tools /
 				<= Close $mol_link
 					arg <= close_arg * gist null
@@ -24,3 +25,4 @@ $mol_app_habhub $mol_book
 	Menu_row!id $mol_link
 		title <= gist_title!id \
 		arg <= gist_arg!id *
+		event_click?val <=> event_front_down?val -

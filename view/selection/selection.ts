@@ -4,13 +4,15 @@ namespace $ {
 		
 		@ $mol_mem()
 		static focused( next? : Element[] , force? : $mol_atom_force ) {
-			if( next === void 0 ) return [] as Element[]
+			if( next === undefined ) return [] as Element[]
 			
 			if( next.length !== 1 ) throw new Error( 'Length must be equals 1' )
 			
 			const node = next[ 0 ] as HTMLElement
 			
-			node.focus()
+			setTimeout( ()=> node.focus() )
+			
+			return []
 		}
 		
 		@ $mol_mem()

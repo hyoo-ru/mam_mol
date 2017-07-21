@@ -1,5 +1,15 @@
 $mol_touch $mol_view
+	start_zoom?val 0
+	start_distance?val 0
 	zoom?val 1
+	-
+	start_pos?val null
+	swipe_precision 16
+	swipe_right?val null
+	swipe_bottom?val null
+	swipe_left?val null
+	swipe_top?val null
+	-
 	event *
 		^
 		touchstart?event <=> event_start?event null

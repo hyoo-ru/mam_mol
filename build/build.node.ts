@@ -338,7 +338,8 @@ namespace $ {
 		
 		@ $mol_mem()
 		packMapping() {
-			return $mol_tree.fromString( $mol_file.relative( '.pms.tree' ).content() )
+			const file = $mol_file.relative( '.pms.tree' )
+			return $mol_tree.fromString( file.content() , file.path() )
 		}
 		
 		@ $mol_mem_key()
@@ -654,7 +655,7 @@ namespace $ {
 			const targets : $mol_file[] = []
 			
 			sources.forEach( source => {
-				const tree = $mol_tree.fromString( source.content() )
+				const tree = $mol_tree.fromString( source.content() , source.path() )
 				
 				tree.select( 'deploy' ).sub.forEach( deploy => {
 					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
@@ -904,7 +905,7 @@ namespace $ {
 	$mol_build.dependors[ 'meta.tree' ] = source => {
 		const depends : { [ index : string ] : number } = {}
 		
-		const tree = $mol_tree.fromString( source.content() )
+		const tree = $mol_tree.fromString( source.content() , source.path() )
 		
 		tree.select( 'require' ).sub.forEach( leaf => {
 			depends[ leaf.value ] = 0

@@ -1,7 +1,7 @@
 $mol_page_demo $mol_page
 	title @ \Page with header, body and footer
 	tools /
-		<= Button $mol_button
+		<= Button $mol_button_minor
 			title \Toolbar Button
 	body /
 		<= Content $mol_row

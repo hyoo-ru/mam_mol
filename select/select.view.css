@@ -16,11 +16,6 @@
 	min-width: 100%;
 	padding: 0;
 	justify-content: flex-start;
-	background: var(--mol_skin_card);
-	
-	&:focus {
-		background: var(--mol_skin_hover);
-	}
 }
 
 [mol_select_sub] > [mol_pop_bubble] {

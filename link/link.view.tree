@@ -9,3 +9,6 @@ $mol_link $mol_view
 		mol_link_current <= current false
 	sub / <= title -
 	arg *
+	event *
+		^
+		click?val <=> event_click?val null

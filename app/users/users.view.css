@@ -11,7 +11,6 @@
 }
 
 [mol_app_users_filter] {
-	flex: 1 0 auto;
 	box-sizing: border-box;
 }
 
@@ -40,6 +39,7 @@
 
 [mol_app_users_row_title] {
 	flex: 1 1 auto;
+	width: auto;
 }
 
 [mol_app_users_foot] {

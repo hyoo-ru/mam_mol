@@ -3,7 +3,7 @@ $mol_number $mol_bar
 	precision_change <= precision 1
 	value?val null
 	sub /
-		<= Dec $mol_button
+		<= Dec $mol_button_minor
 			event_click?val <=> event_dec?val null
 			enabled <= dec_enabled <= enabled true
 			sub / <= dec_icon $mol_icon_minus
@@ -12,7 +12,7 @@ $mol_number $mol_bar
 			value?val <=> value_string?val \
 			hint <= hint \
 			enabled <= string_enabled <= enabled true
-		<= Inc $mol_button
+		<= Inc $mol_button_minor
 			event_click?val <=> event_inc?val null
 			enabled <= inc_enabled <= enabled true
 			sub / <= inc_icon $mol_icon_plus

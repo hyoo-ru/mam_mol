@@ -14,6 +14,10 @@
 	color: var(--mol_skin_light_text);
 }
 
+[mol_page]:focus {
+	outline: none;
+}
+
 [mol_page_head] {
 	background: var(--mol_skin_base);
 	color: var(--mol_skin_base_text);
@@ -28,9 +32,9 @@
 
 [mol_page_title] {
 	flex: 1000 1 50%;
-	display: flex;
-	margin: 1rem;
+	padding: 1rem;
 	word-break: normal;
+	cursor: default;
 }
 
 [mol_page_tools] {

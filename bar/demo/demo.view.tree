@@ -1,15 +1,14 @@
 $mol_bar_demo $mol_row
 	title @ \Group of controls as one control
 	sub /
-		<= One $mol_bar
+		<= Two $mol_bar
 			sub /
 				<= One_mail $mol_string
 					hint <= mail_hint \E-mail
 					value?val <=> value?val \
-				<= One_submit $mol_button
-					sub /
-						<= submit_title \submit
-		<= Two $mol_bar
+				<= One_submit $mol_button_minor
+					title <= submit_title \submit
+		<= Three $mol_bar
 			sub /
 				<= Two_mail $mol_string
 					hint <= mail_hint \E-mail
@@ -17,6 +16,5 @@ $mol_bar_demo $mol_row
 				<= Two_confirm $mol_check_box
 					title <= confirm_title \Confirm
 					checked?val <=> confirmed?val false
-				<= Two_submit $mol_button
-					sub /
-						<= submit_title \submit
+				<= Three_submit $mol_button_minor
+					title <= submit_title \submit
