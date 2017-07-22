@@ -1,0 +1,6 @@
+$mol_map_yandex_demo $mol_map_yandex
+	title @ \Simple Yandex Maps wrapper
+	center?val /
+		60
+		30
+	zoom?val 10
