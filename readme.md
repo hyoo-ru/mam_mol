@@ -378,6 +378,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_state_session](state/session)** - session temporary state (sessionStorage)
 * **[$mol_state_history](state/history)** - browser history bound state
 * **[$mol_state_stack](state/stack)** - state of current stack of execution
+* **[$mol_state_time](state/time)** - reactive current time stamp 
 
 ## Communication modules
 
