@@ -1,11 +1,8 @@
 namespace $.$mol {
 	export class $mol_touch extends $.$mol_touch {
 		
-		dom_node() : Element {
-			return $mol_view_dom.mount( this , ( this.object_owner() as $mol_view ).dom_node() )
-		}
-		
 		event_start( event? : TouchEvent ) {
+			if( event.defaultPrevented ) return
 
 			if( event.touches.length === 1 ) {
 				const pos = [ event.touches[0].screenX , event.touches[0].screenY ]

@@ -1,4 +1,4 @@
-$mol_nav $mol_view
+$mol_nav $mol_plugin
 	cycle?val false 
 	-
 	keys_x?val /

@@ -2,12 +2,12 @@ namespace $.$mol {
 	
 	export class $mol_embed extends $.$mol_embed {
 		
-		render() {
+		Sub() {
 			if( this.mime() === 'application/pdf' ) {
-				return this.Pdf().render()
+				return this.Pdf()
 			}
 			
-			return this.Native().render()
+			return this.Native()
 		}
 		
 	}

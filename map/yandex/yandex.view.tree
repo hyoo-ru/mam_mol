@@ -1,0 +1,5 @@
+$mol_map_yandex $mol_view
+	zoom?val 2
+	center?val /
+		0
+		0

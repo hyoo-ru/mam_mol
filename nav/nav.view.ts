@@ -1,10 +1,6 @@
 namespace $.$mol {
 	export class $mol_nav extends $.$mol_nav {
 		
-		dom_node() : Element {
-			return $mol_view_dom.mount( this , ( this.object_owner() as $mol_view ).dom_node() )
-		}
-		
 		event_key( event? : KeyboardEvent ) {
 			if( event.defaultPrevented ) return
 			
