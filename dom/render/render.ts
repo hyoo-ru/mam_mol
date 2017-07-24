@@ -27,7 +27,7 @@ namespace $ {
 	
 	export function $mol_dom_render_children (
 		el : Element ,
-		childNodes : NodeList | Array< Node | string | number | boolean | { render : ()=> Node } >
+		childNodes : NodeList | Array< Node | string | number | boolean | { dom_tree : ()=> Node } >
 	) {
 		const nodes = [] as ( Node | string )[]
 		
@@ -35,7 +35,7 @@ namespace $ {
 			let node = childNodes[ i ] as any
 			if( node == null ) continue
 			if( Object( node ) === node ) {
-				if( node[ 'render' ] ) node = node[ 'render' ]()
+				if( node[ 'dom_tree' ] ) node = node[ 'dom_tree' ]()
 				nodes.push( node )
 			} else {
 				nodes.push( String( node ) )
@@ -123,7 +123,7 @@ namespace $ {
 		events : { [ key : string ] : ( event : Event )=> any }
 	) {
 		for( let name in events ) {
-			el.addEventListener( name , events[ name ] )
+			el.addEventListener( name , events[ name ] , { passive : false } as any )
 		}
 	}
 	

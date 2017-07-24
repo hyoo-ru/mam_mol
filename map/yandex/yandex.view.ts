@@ -37,8 +37,7 @@ namespace $.$mol {
 
 		render() {
 			this.api().setCenter( this.center() , this.zoom() )
-			
-			return super.render()
+			super.render()
 		}
 
 	}

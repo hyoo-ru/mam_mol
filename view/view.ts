@@ -133,31 +133,27 @@ namespace $ {
 			return this['view_classes()'] = classes
 		}
 		
+		'dom_node()' : Element
 		dom_node() {
-			return $mol_view_dom.node( this )
-		}
-		
-		@ $mol_deprecated( 'Use $mol_view.render instead.' )
-		dom_tree() {
-			return this.render()
+			if( this['dom_node()'] ) return this['dom_node()']
+			
+			const node = $mol_dom_make( this.toString() , this.dom_name() , this.dom_name_space() )
+
+			$mol_dom_render_attributes( node , this.attr_static() )
+			$mol_dom_render_events( node , this.event() )
+			$mol_dom_render_events_async( node , this.event_async() )
+
+			return this['dom_node()'] = node
 		}
 		
 		@ $mol_mem()
-		render() : Element {
+		dom_tree() : Element {
 			const node = this.dom_node()
 			
 			try {
 				
-				for( let plugin of this.plugins() ) {
-					if( typeof plugin['render'] === 'function' ) plugin.render()
-				}
-				
-				const sub = this.sub_visible()
-				if( sub ) $mol_dom_render_children( node , sub )
-				
-				$mol_dom_render_attributes( node , this.attr() )
-				$mol_dom_render_styles( node , this.style() )
-				$mol_dom_render_fields( node , this.field() )
+				for( let plugin of this.plugins() ) plugin.render()
+				this.render()
 				
 			} catch( error ) {
 				
@@ -175,6 +171,17 @@ namespace $ {
 			}
 			
 			return node
+		}
+		
+		render() {
+			const node = this.dom_node()
+			
+			const sub = this.sub_visible()
+			if( sub ) $mol_dom_render_children( node , sub )
+			
+			$mol_dom_render_attributes( node , this.attr() )
+			$mol_dom_render_styles( node , this.style() )
+			$mol_dom_render_fields( node , this.field() )
 		}
 		
 		attr_static() : { [ key : string ] : string|number|boolean } {

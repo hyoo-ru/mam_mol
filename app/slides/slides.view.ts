@@ -17,7 +17,7 @@ namespace $.$mol {
 		}
 		
 		event_load() {
-			const frame = this.Loader().render() as HTMLIFrameElement
+			const frame = this.Loader().dom_node() as HTMLIFrameElement
 			frame.contentWindow.postMessage( [ 'content' ] , '*' )
 			window.onmessage = event => {
 				if( event.data[ 0 ] !== 'done' ) return
