@@ -378,6 +378,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_state_session](state/session)** - session temporary state (sessionStorage)
 * **[$mol_state_history](state/history)** - browser history bound state
 * **[$mol_state_stack](state/stack)** - state of current stack of execution
+* **[$mol_state_time](state/time)** - reactive current time stamp 
 
 ## Communication modules
 
@@ -472,6 +473,13 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_exec](exec)** - synchronous execute of system command
 * **[$mol_file](file)** - reactive file system wrapper
 * **[$mol_window](window)** - reactive view port configuration
+
+## Time
+
+* **[$mol_time_moment](time/moment)** - [time moment](https://en.wikipedia.org/wiki/ISO_8601#Dates) representation with iso8601 support
+* **[$mol_time_duration](time/duration)** - [time duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) representation with iso8601 support
+* **[$mol_time_interval](time/interval)** - [time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals) representation with iso8601 support
+* **[$mol_state_time](state/time)** - reactive current time stamp 
 
 ## Maps
 
