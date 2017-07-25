@@ -6,10 +6,13 @@ $mol_app_studio $mol_book
 			title <= preview_title @ \Preview
 			tools <= tools_main /
 			body /
-				<= Block $mol_view
+				<= Selector $mol_app_studio_selector
+					Sub <= Block $mol_view
+					path?val <=> path?val /
 			minimal_width 500
 		<= Editor_page $mol_page
 			title <= editor_title @ \Properties
+			event_top?val <=> event_front_up?val -
 			tools /
 				<= Close $mol_link
 					sub /
@@ -65,3 +68,9 @@ $mol_app_studio $mol_book
 	-
 	block?val <= block_default \mol_view
 	registry $mol_tree
+
+$mol_app_studio_selector $mol_ghost
+	event *
+		contextmenu?event <=> select?event null
+		dblclick?event <=> select?event null
+	path?val /

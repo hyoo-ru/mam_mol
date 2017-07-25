@@ -207,4 +207,22 @@ namespace $.$mol {
 		
 	}
 	
+	export class $mol_app_studio_selector extends $.$mol_app_studio_selector {
+
+		select( event? : Event ) {
+			const target = ( event.target as HTMLElement ).id
+			const self = this.dom_node().id
+
+			if( target.substring( 0 , self.length ) === self ) {
+				const suffix = ( event.target as HTMLElement ).id.substring( this.dom_node().id.length + 1 );
+				this.path( suffix.replace( /\(.*?\)/g , '' ).split( '.' ).filter( v => v ) )
+			} else {
+				this.path( JSON.parse( target.replace( /^.*\(|\)$/g , '' ) ) )
+			}
+
+			event.preventDefault()
+		}
+
+	}
+
 }
