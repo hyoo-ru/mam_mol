@@ -32,7 +32,7 @@
 [mol_select_option_label] {
 	padding: .5em 1rem;
 	text-align: left;
-	/*min-height: 1.25em;*/
+	min-height: 1.5em;
 }
 
 [mol_select_clear_option_content] {

@@ -10,16 +10,16 @@ namespace $ {
 					case 'true' : return 'boolean'
 					case 'false' : return 'boolean'
 					case 'null' : return 'any'
-					case '*' : return 'Object'
-					case '/' : return 'Array'
-					case '@' : return 'localization'
+					case '*' : return 'dict'
+					case '/' : return 'list'
+					case '@' : return 'locale'
 					case '' : return 'string'
-					case '<=' : return '<='
-					case '<=>' : return '<=>'
-					case '=>' : return '=>'
+					case '<=' : return 'get'
+					case '<=>' : return 'bind'
+					case '=>' : return 'put'
 				}
 
-				if( val.type[0] === '$' ) return '$mol_object'
+				if( val.type[0] === '$' ) return 'object'
 
 				if( Number( val.type ).toString() == val.type ) return 'number'
 

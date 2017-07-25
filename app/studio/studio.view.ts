@@ -49,10 +49,10 @@ namespace $.$mol {
 				( type === 'boolean' ) ? this.Boolean_field( path ) : null ,
 				( type === 'number' ) ? this.Number_field( path ) : null ,
 				( type === 'string' || type === '=>' ) ? this.String_field( path ) : null ,
-				( type === 'localization' ) ? this.String_field( path ) : null ,
-				( type === '$mol_object' ) ? this.Element_field( path ) : null ,
-				( type === '<=' ) ? this.Bind_field( path ) : null ,
-				( type === '<=>' ) ? this.Bind_field( path ) : null ,
+				( type === 'locale' ) ? this.String_field( path ) : null ,
+				( type === 'object' ) ? this.Element_field( path ) : null ,
+				( type === 'get' ) ? this.Bind_field( path ) : null ,
+				( type === 'bind' ) ? this.Bind_field( path ) : null ,
 				//( type === 'Array' ) ? this.List_field( path ) : null ,
 			]
 		}
@@ -108,7 +108,7 @@ namespace $.$mol {
 				
 				const val = $[ name ]
 				if( typeof val !== 'function' ) return false
-				if(!( val.prototype instanceof $mol_view )) return false
+				if(!( val.prototype instanceof $mol_object )) return false
 				
 				return true
 			} )
@@ -121,9 +121,9 @@ namespace $.$mol {
 
 		@ $mol_mem_key()
 		element_class( path : string[] ) : string {
+			if( path.length === 0 ) return '$' + this.block()
 			if( this.value_overrided( path ) ) return this.value_overrided( path )
 
-			if( path.length === 0 ) return '$' + this.block()
 			const parent_class = this.element_class( path.slice( 0 , path.length - 1 ) )
 			return this.props_all( parent_class ).select( path[ path.length - 1 ] , 'default' , '' ).sub[0].type
 		}
@@ -137,7 +137,8 @@ namespace $.$mol {
 
 		@ $mol_mem_key()
 		value_overrided( path : string[] , next? : any ) {
-			return next
+			this.prop_type( path )
+			return next === undefined ? null : next
 		}
 
 		value_effective( path : string[] , next? : string ) {
@@ -148,23 +149,31 @@ namespace $.$mol {
 			
 			switch( this.prop_type( path ) ) {
 				case 'boolean' : return this.value_base( path ).toString()
-				case '$mol_object' : return this.value_base( path ).constructor.toString()
-				case '<=' : return this.prop_default( path ).sub[0].type
-				case '<=>' : return this.prop_default( path ).sub[0].type
+				case 'object' : return this.value_base( path ).constructor.toString()
+				case 'get' : return this.prop_default( path ).sub[0].type
+				case 'bind' : return this.prop_default( path ).sub[0].type
 			}
 
 			return value
 		}
 
 		value_view( path : string[] , next? : string ) {
-			let value = this.value_overrided( path , next )
-			if( value == null ) return this.value_base( path , next )
-
 			switch( this.prop_type( path ) ) {
-				case '$mol_object' : return this.Element( path )
+				case 'boolean' : {
+					let value = this.value_overrided( path , next )
+					return value ? ( value == 'true' ) : this.value_base( path , next )
+				}
+				case 'string' : {
+					return this.value_overrided( path , next ) || this.value_base( path , next )
+				}
+				case 'object' : {
+					let value = this.value_overrided( path , next )
+					return ( value == null ) ? this.value_base( path , next ) : this.Element( path )
+				}
 			}
 
-			return value
+			let value = this.value_overrided( path , next )
+			return ( value == null ) ? this.value_base( path , next ) : value
 		}
 
 		@ $mol_mem_key()
@@ -188,13 +197,13 @@ namespace $.$mol {
 			return this.Element([])
 		}
 		
-		preview_title() {
-			return '$' + this.block() + ": " + this.Element([]).title()
-		}
+		// preview_title() {
+		// 	return '$' + this.block() + ": " + this.Element([]).title()
+		// }
 
-		editor_title() {
-			return this.path().join(' / ')
-		}
+		// editor_title() {
+		// 	return this.path().join(' / ')
+		// }
 		
 	}
 	
