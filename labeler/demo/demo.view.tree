@@ -1,9 +1,11 @@
-$mol_labeler_demo_text $mol_labeler
-	title @ \Provider
-	content @ \ACME Provider Inc.
-
-$mol_labeler_demo_stringer $mol_labeler
-	title @ \User name
-	Content $mol_string
-		hint <= hint @ \Jack Sparrow
-		value?val <=> user_name?val \
+$mol_labeler_demo $mol_row
+	title @ \Labeled content of some types
+	sub /
+		<= Provider $mol_labeler
+			title \Provider
+			content \ACME Provider Inc.
+		<= Name $mol_labeler
+			title \User name
+			Content <= Name_control $mol_string
+				hint \Jack Sparrow
+				value?val <=> user_name?val \

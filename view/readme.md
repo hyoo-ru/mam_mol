@@ -44,7 +44,11 @@ Returns dictionary of styles. Numbers will be convertes to string with "px" suff
 
 **`event() : { [ key : string ] : ( event : Event )=> void }`**
 
-Returns dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property.
+Returns dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property. This handlers are synchronous and can be cancelled by ``preventDefault()```.
+
+**`event_async() : { [ key : string ] : ( event : Event )=> void }`**
+
+Returns dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property. This handlers are passive and can not be cancelled by ``preventDefault()```.
 
 **`focused( next? : boolean ) : boolean`**
 
@@ -135,12 +139,13 @@ namespace $ { export class $my_values extends $mol_view {
 } }
 ````
 
-Dictionary (correspondence keys to their values) could be declared through a node `*`, through which are set values of attributes to DOM-element:
+Dictionary (correspondence keys to their values) could be declared through a node `*` (you can use `^` to inherit pairs from superclass), through which are set values of attributes to DOM-element:
 
 ```tree
 $my_number $mol_view
 	dom_name \input
 	attr *
+		^
 		type \number
 		- attribute values must be a strings
 		min \0
@@ -170,6 +175,7 @@ We could set value in the same way for fields of a DOM-element:
 ```tree
 $my_scroll $mol_view
 	field *
+		^
 		scrollTop 0
 ```
 
@@ -190,6 +196,7 @@ And styles too:
 ```tree
 $my_rotate $mol_view
 	style *
+		^
 		transform \rotate( 180deg )
 ```
 
@@ -212,6 +219,7 @@ $my_hint $mol_view
 	hint \Default hint
 	text \Default text
 	field *
+		^
 		title <= hint -
 	sub /
 		<= text -
@@ -246,6 +254,7 @@ Often it is convenient to combine declaration of property and usage of this one.
 ```tree
 $my_hint $mol_view
 	field *
+		^
 		title <= hint \Default hint 
 	sub /
 		<= text \Default text
@@ -255,6 +264,7 @@ Reactions on DOM-events are required for two-way binding. For example, lets poin
 ```tree
 $my_remover $mol_view
 	event *
+		^
 		click?val <=> event_remove?val null 
 	sub /
 		\Remove
@@ -320,10 +330,10 @@ namespace $ { export class $my_name extends $mol_view {
 
 	@ $mol_mem()
 	Info() {
-		return new $mol_labeler().setup( obj => { 
-			obj.title = () => "Name"
-			obj.content = () => "Jin"
-		} )
+		return $mol_labeler.make({ 
+			title : () => "Name" ,
+			content : () => "Jin" ,
+		})
 	}
 
 	sub() {
@@ -356,17 +366,17 @@ namespace $ { export class $my_greeter extends $mol_view {
 
 	@ $mol_mem()
 	Input() {
-		return new $mol_string().setup(obj => { 
-			obj.hint = () => "Name"
-			obj.value = ( next? : any ) => this.name( next )
-		} )
+		return $mol_string.make({ 
+			hint : () => "Name" ,
+			value : ( next? : any ) => this.name( next ) ,
+		})
 	}
 
 	@ $mol_mem()
 	Output() {
-		return new $mol_view().setup( obj => { 
-			obj.sub = () => [].concat( this.name() )
-		} )
+		return $mol_view.make({ 
+			sub : () => [].concat( this.name() ) ,
+		})
 	}
 
 	sub() {
@@ -397,9 +407,9 @@ namespace $ { export class $my_app extends $mol_scroll {
 	/// Back $mol_button_minor title \Back
 	@ $mol_mem()
 	Back() {
-		return new $mol_button_minor().setup( obj => { 
-			obj.title = () => "Back"
-		} )
+		return $mol_button_minor.make({ 
+			title : () => "Back" ,
+		})
 	}
 
 	/// Page $mol_page 
@@ -409,9 +419,9 @@ namespace $ { export class $my_app extends $mol_scroll {
 	/// 		<= Page_title
 	@ $mol_mem()
 	Page() {
-		return new $mol_page().setup( obj => { 
-			obj.head = () => [].concat( this.Back() , this.Page_title() )
-		} )
+		return $mol_page.make({ 
+			head : () => [].concat( this.Back() , this.Page_title() ) ,
+		})
 	}
 
 	/// sub / <= Page
@@ -445,9 +455,9 @@ namespace $ { export class $my_tasks extends $mol_list {
 
 	@ $mol_mem()
 	Task_row( key : any ) {
-		return new $mol_view().setup( obj => { 
-			obj.sub = () => [].concat( this.task_title( key ) )
-		} )
+		return $mol_view.make({ 
+			sub : () => [].concat( this.task_title( key ) ) ,
+		})
 	}
 
 	task_title( key : any ) {
@@ -462,6 +472,20 @@ namespace $ { export class $my_tasks extends $mol_list {
 ```
 
 Here we declared the property `task_row`, which takes on input some key and returns an unique instance of `$mol_view` for every key, with overloaded property `sub`, which outputs appropriate `task_title` for every `task_row`, and in its turn `task_title` returns the content of property `default_title` independently of the key, which is equal to empty string initially. Further overloading any of these properties, we could change any aspect of component behavior.
+
+**All special chars:***
+
+- `-` - remarks, ignored by code generation
+- `$` - component name prefix
+- `/` - array
+- `*` - dictionary (string keys, any values)
+- `^` - return value of the same property from super class
+- `\` - raw string
+- `<=` - read only provide property from owner to sub component
+- `=>` - read only provide property from sub component to owner
+- `<=>` - fully replace sub component property by owner's one
+- `!` - property takes key as first argument
+- `?` - property can be changed by provide additional optional argument
 
 ## view.ts
 In addition to declarative description of component, next to it could be created a file of the same name with `view.ts` extension, where a behavior could be described. Using a special construction, it could be inherited from realization obtained of `view.tree` and it would be overloaded automatically by heir:  
@@ -489,10 +513,10 @@ namespace $ { export class $my_hello extends $mol_view {
 
 	@ $mol_mem()
 	Input( next? : any ) {
-		return new $mol_string().setup( obj => { 
-			obj.hint = () => "Name"
-			obj.value = ( next? : any ) => this.name( next )
-		} )
+		return $mol_string.make({ 
+			hint : () => "Name" ,
+			value : ( next? : any ) => this.name( next ) ,
+		})
 	}
 
 	message() {
@@ -525,4 +549,5 @@ Here we linked our properties `message` and `name` through the expression. So no
 
 ## Articles
 
+* [View formats](https://github.com/eigenmethod/mol/wiki/View-formats) - Comparison of component description formats (tree, xml, json)
 * [React'ивные Panel'и](https://habrahabr.ru/post/314752/) - JSX vs view.tree

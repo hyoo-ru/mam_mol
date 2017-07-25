@@ -1,8 +1,7 @@
 [mol_bar] {
 	display: flex;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	box-shadow: var(--mol_skin_light_outline);
 	border-radius: var(--mol_skin_round);
-	margin: auto;
 }
 
 [mol_bar] > * {

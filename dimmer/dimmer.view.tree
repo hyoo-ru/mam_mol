@@ -2,7 +2,6 @@ $mol_dimmer $mol_view
 	haystack \
 	needle \
 	sub <= parts /
-	low!id $mol_dimmer_low sub / <= string!id \
-
-$mol_dimmer_low $mol_view
-	dom_name \span
+	Low!id $mol_view
+		sub /
+			<= string!id \

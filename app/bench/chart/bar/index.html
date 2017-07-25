@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+
+<meta charset="utf-8" />
+
+<style>
+	html , body {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+	}
+
+	@keyframes measure {
+		from {
+			outline : 1px solid black;
+		}
+		to {
+			outline : 1px solid white;
+		}
+	}
+
+	#sandbox {
+		border: none;
+		width: 100%;
+		height: 100%;
+	}
+</style>
+
+<iframe id="sandbox"></iframe>
+
+<script>
+
+	if( window.parent === window ) document.location = '//eigenmethod.github.io/mol/app/bench/#bench=' + encodeURIComponent( location.href )
+
+	var size = {
+		graphs : 20 ,
+		series : 200 ,
+	}
+
+	var graphs = {
+		fill : getSeries( size ) ,
+		update : getSeries( size ) ,
+	}
+
+	function getSeries( size ) {
+		var graphs = []
+		for( var g = 0 ; g < size.graphs ; ++g ) {
+			var series = []
+			for( var i = 0 ; i < size.series ; ++i ) {
+				series.push( Math.cos( g + 5 * i / size.series ) + Math.random() / 10 )
+			}
+			graphs.push( series )
+		}
+		return graphs
+	}
+	
+	var metaData = {
+		title : {
+			'en' : 'Graphs' ,
+			'ru' : 'Графики' ,
+		} ,
+		descr : {
+			'en' : 'Draws **' + size.graphs + ' bar graphs** with **' + size.series + ' samples** in each.' ,
+			'ru' : 'Рисует **' + size.graphs + ' столбчатых графиков** по **' + size.series + ' замеров** в каждом.' ,
+		} ,
+		samples : {
+			'mol' : {
+				title : {
+					'en' : '$mol_chart' ,
+				} ,
+				weight : '18 KB' ,
+			} ,
+			'hcharts' : {
+				title : {
+					'en' : 'HighCharts' ,
+				} ,
+				weight : '71 KB' ,
+			} ,
+			'anychart' : {
+				title : {
+					'en' : 'AnyChart' ,
+				} ,
+				weight : '499 KB' ,
+			} ,
+		} ,
+		steps : {
+			'start' : {
+				title : {
+					'en' : 'Start' ,
+					'ru' : 'Запуск' ,
+				} ,
+			} ,
+			'weight' : {
+				title : {
+					'en' : 'Weight' ,
+					'ru' : 'Размер' ,
+				}
+			} ,
+			'fill' : {
+				title : {
+					'en' : 'First render' ,
+					'ru' : 'Первичная отрисовка' ,
+				} ,
+			} ,
+			'update' : {
+				title : {
+					'en' : 'Data update' ,
+					'ru' : 'Обновление данных' ,
+				} ,
+			} ,
+		} ,
+	}
+	
+	function meta() {
+		done( metaData )
+	}
+
+	function start( sample ) {
+		var sandbox = document.getElementById( 'sandbox' )
+		sandbox.src = 'about:blank'
+		setTimeout( function() {
+			var start = Date.now()
+			sandbox.src = sample + '/'
+			sandbox.onload = function() {
+				done( Date.now() - start + ' ms' )
+				sandbox.onload = null
+			}
+		} )
+	}
+
+	function weight( sample ) {
+		done( metaData.samples[ sample ].weight )
+	}
+
+	function fill( sample ) {
+		measure( [ 'fill' , { sample : sample , graphs : graphs.fill } ] , '*' )
+	}
+
+	function update( sample ) {
+		measure( [ 'update' , { sample : sample , graphs : graphs.update } ] , '*' )
+	}
+
+	function measure( message ) {
+		var sandbox = document.getElementById( 'sandbox' )
+		requestAnimationFrame( function() { // begin at next frame start for measure stability reason
+			// console.timeStamp( 'begin ' + message[0] )
+			sandbox.contentWindow.postMessage( message , '*' )
+			sandbox.addEventListener( 'animationend' , end )
+			requestAnimationFrame( function(){ setTimeout( function() { // wait for message processed
+				sandbox.style.animation = 'measure .001s'
+			} ) } )
+			var start = Date.now()
+			function end() { // wait for painting ends
+				done( Date.now() - start + ' ms' )
+				// console.timeStamp( 'end ' + message[0] )
+				sandbox.style.animation = ''
+				sandbox.removeEventListener( 'animationend' , end )
+			}
+		} )
+	}
+
+	function done( result ) {
+		if( parent === window ) console.log( result )
+		else parent.postMessage( [ 'done' , result ] , '*' )
+	}
+
+	window.addEventListener( 'message' , function( event ) {
+		window[ event.data[0] ].apply( null , event.data.slice( 1 ) )
+	} )
+	
+</script>

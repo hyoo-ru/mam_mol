@@ -33,23 +33,16 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 			var needSet = false
 			var needReturn = true
 			var needCache = false
-			var isOverride = true
 			var keys : string[] = []
 
 			if( param.type === '<=>' ) {
-				isOverride = false
 				param = param.sub[0]
 			}
 
 			if( param.type === '<=' ) {
-				isOverride = false
 				param = param.sub[0]
 			}
 			
-			if( param.type === '=>' ) {
-				isOverride = false
-			}
-
 			var propName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( param.type )
 			
 			if( propName[3] ) {
@@ -72,6 +65,10 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 						var items : string[] = []
 						value.sub.forEach( item => {
 							if( item.type === '-' ) return
+							if( item.type === '^' ) {
+								items.push( `...super.${ param.type }()` )
+								return
+							}
 							var val = getValue( item )
 							if( val ) items.push( val )
 						} )
@@ -96,27 +93,31 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 							let args : string[] = []
 							if( overName[2] ) args.push( ` ${ overName[2] } : any ` )
 							if( overName[3] ) args.push( ` ${ overName[3] }? : any ` )
-							overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
+							overs.push( '\t\t\tobj[' + JSON.stringify( overName[1] ) + '] = (' + args.join( ',' ) + ') => ' + v + '\n' )
 							needSet = ns
 						} )
-						return 'new ' + value.type + '()' + ( overs.length ? '.setup( obj => { \n' + overs.join( '' ) + '\t\t} )' : '' )
+						return '(( obj )=>{\n' + overs.join( '' ) + '\t\t\treturn obj\n\t\t})( new ' + value.type + ' )'
 					case( value.type === '*' ) :
 						//needReturn = false
 						var opts : string[] = []
 						value.sub.forEach( opt => {
 							if( /^-?$/.test( opt.type ) ) return ''
+							if( opt.type === '^' ) {
+								opts.push( `\t\t\t...super.${ param.type }() ,\n` )
+								return
+							}
+							
 							var key = /(.*?)(?:\?(\w+))?$/.exec( opt.type )
 							keys.push( key[1] )
 							var ns = needSet
 							var v = getValue( opt.sub[0] )
 							var arg = key[2] ? ` ( ${ key[2] }? : any )=> ` : ''
-							opts.push( '\t\t\t"' + key[1] + '" : ' + arg + ' <any> ' + v + ' ,\n' )
+							opts.push( '\t\t\t"' + key[1] + '" : ' + arg + ' ' + v + ' ,\n' )
 							needSet = ns
 						} )
-						if( !isOverride ) return '({\n' + opts.join( '' ) + '\t\t})'
-						else return  `( { ...super.${ param.type }() , \n${ opts.join( '' )}\t\t} )`
+						return '({\n' + opts.join( '' ) + '\t\t})'
 					case( value.type === '>' ) :
-						throw new Error( 'Deprecated syntax. Use <=> instead.' )
+						throw new Error( 'Deprecated syntax `>`. Use `<=>` instead.' )
 					case( value.type === '<=>' ) :
 						needSet = true
 						if( value.sub.length === 1 ) {
@@ -126,7 +127,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 						}
 						break
 					case( value.type === '<' ) :
-						throw new Error( 'Deprecated syntax. Use <= instead.' )
+						throw new Error( 'Deprecated syntax `<`. Use `<=` instead.' )
 					case( value.type === '<=' ) :
 						if( value.sub.length === 1 ) {
 							addProp( value )
@@ -169,7 +170,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 				
 				var args : string[] = []
 				if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
-				if( propName[3] ) args.push( ` ${ propName[3] }? : any ` )
+				if( propName[3] ) args.push( ` ${ propName[3] }? : any , force? : $${''}mol_atom_force ` )
 				if( needSet && param.sub[0].type !== '<=>' ) val = ( needReturn ? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : ` : `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t` ) + val
 				if( needReturn ) val = 'return ' + val
 				var decl = '\t' + propName[1] +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
@@ -189,7 +190,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 		} }
 		
 		var body = Object.keys( members ).map( function( name ) {
-			return members[ name ] || '\t' + name +'() { return <any>null }\n\t}\n'
+			return members[ name ] || '\t' + name +'() { return <any> null }\n\t}\n'
 		}).join( '' )
 		
 		var classes = 'namespace $ { export class ' + def.type + ' extends ' + parent.type + ' {\n\n' + body + '} }\n'

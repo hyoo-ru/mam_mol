@@ -1,0 +1,54 @@
+
+[mol_app_demo_placeholder] {
+	padding: 0;
+	margin: 0;
+	font-size: 1.5rem;
+	justify-content: flex-start;
+	display: flex;
+	flex: 1000 1 400px;
+	order: 1;
+	align-items: center;
+}
+
+[mol_app_demo_placeholder_content] {
+	max-width: 65rem;
+	padding: 1rem;
+	background: var(--mol_skin_card);
+	margin: auto;
+}
+
+[mol_app_demo_placeholder_title] {
+	font-size: 2rem;
+	margin: 1rem;
+	display: block;
+}
+
+[mol_app_demo_placeholder_advantages] {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[mol_app_placeholder_advantage_image] {
+	box-shadow: none;
+	flex-shrink: 0;
+	width: 5rem;
+	margin: 1rem;
+}
+
+[mol_app_demo_placeholder_description]{
+	display: flex;
+	flex-wrap: wrap;
+	margin: 1rem;
+}
+
+[mol_app_placeholder_advantage] {
+	display: flex;
+	align-items: center;
+	flex: 18rem;
+}
+
+[mol_app_demo_placeholder_github_link] {
+	display: flex;
+	align-items: center;
+	margin: .5rem;
+}

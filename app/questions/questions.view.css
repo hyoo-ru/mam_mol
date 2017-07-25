@@ -1,0 +1,53 @@
+[mol_app_questions_menu] {
+	flex: 1 1 400px;
+}
+
+[mol_app_questions_menu_links] {
+	padding: .5rem;
+}
+
+[mol_app_questions_question_link] {
+	display: block;
+}
+
+[mol_app_questions_question_card] {
+	min-height: 70px;
+}
+
+[mol_app_questions_question_row] {
+	justify-content: flex-start;
+	align-items: flex-start;
+	background: var(--mol_skin_card);
+	color: var(--mol_skin_light_text);
+}
+
+[mol_app_questions_question_tags] {
+	flex: 1 0 auto;
+	color: var(--mol_skin_passive_text);
+	align-self: flex-end;
+	display: flex;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	margin: .5rem 0;
+}
+
+[mol_app_questions_tag] {
+	margin: 0 .5rem;
+}
+
+[mol_app_questions_question_title] {
+	flex: 1000 1 auto;
+}
+
+[mol_app_questions_placeholder] ,
+[mol_app_questions_details] {
+	flex: 1000 1 600px;
+}
+
+[mol_app_questions_details_descr] {
+	margin: 1rem;
+}
+
+[mol_app_questions_answer] {
+	margin: 1rem;
+}

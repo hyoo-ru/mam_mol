@@ -2,9 +2,12 @@ $mol_string $mol_view
 	dom_name \input
 	enabled true
 	field *
+		^
 		disabled <= disabled false
 		value <= value_changed?val <=> value?val \
 		placeholder <= hint \
 		type <= type?val \text
 	event *
+		^
 		input?event <=> event_change?event null
+		keypress?event <=> event_key_press?event null

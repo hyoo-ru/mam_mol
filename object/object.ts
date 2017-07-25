@@ -44,7 +44,15 @@ namespace $ {
 			return this.toString()
 		}
 		
+		/// Generic factory than allows to override all fields
+		public static make< Instance >( this : { new () : Instance } , config : Partial< Instance > ) : Instance {
+			const instance = new this
+			for( let key in config ) instance[ key ] = config[ key ]
+			return instance
+		}
+		
 		/// Helper to override fields in fluent style.
+		@ $mol_deprecated( `Use $mol_object.make() instead.` )
 		setup( script : ( obj : this )=> void ) : this {
 			script( this )
 			return this

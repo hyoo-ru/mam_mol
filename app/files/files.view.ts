@@ -1,12 +1,9 @@
 namespace $.$mol {
+
 	export class $mol_app_files extends $.$mol_app_files {
 		
 		pages() {
 			return [
-				this.webdav_type( this.uri_current() ) === 'dir'
-					? this.Placeholder()
-					: null
-				, 
 				... this.webdavs().map( ( webdav ) => ( this.webdav_type( webdav.uri() ) === 'dir' )
 					? this.Folder( webdav.uri() )
 					: this.File( webdav.uri() )
@@ -15,7 +12,7 @@ namespace $.$mol {
 		}
 		
 		uri_root( next?: string ) {
-			return $mol_state_arg.value( this.state_key( 'root' ) , next ) || super.uri_root()
+			return $mol_state_arg.value( this.state_key( 'root' ) , next ) || this.uri_root_default()
 		}
 		
 		uri_current( next?: string ) {
@@ -27,11 +24,18 @@ namespace $.$mol {
 		}
 		
 		current() {
-			return $mol_webdav.item( this.uri_current() )
+			const root = this.uri_root()
+			const current = this.uri_current()
+
+			if( current.substring( 0 , root.length ) !== root ) return this.root()
+
+			return $mol_webdav.item( current )
 		}
 		
 		webdav( uri : string ) {
-			return $mol_webdav.item( uri )
+			const webdav = $mol_webdav.item( uri )
+			webdav.credentials = ()=> this.credentials()
+			return webdav
 		}
 		
 		folder_row_current( uri : string ) {
@@ -61,7 +65,7 @@ namespace $.$mol {
 		
 		webdav_title( uri : string ) {
 			const webdav = this.webdav( uri )
-			if( webdav === this.root() ) return super.title()
+			if( webdav === this.root() ) return this.title_root()
 			return webdav.prop( 'displayname' ) || ''
 		}
 		
@@ -83,6 +87,13 @@ namespace $.$mol {
 			return this.webdav( uri ).prop( 'displayname' )
 		}
 		
+		folder_row_descr( uri : string ) {
+			if( this.webdav_type( uri ) !== 'file' ) return ''
+			
+			const size = this.file_size( uri )
+			return `${ size.toLocaleString() } B`
+		}
+		
 		file_uri( uri : string ) {
 			return uri
 		}
@@ -91,14 +102,18 @@ namespace $.$mol {
 			return this.webdav( uri ).prop( 'getcontenttype' )
 		}
 		
+		file_size( uri : string ) {
+			return Number( this.webdav( uri ).prop( 'getcontentlength' ) )
+		}
+		
 		title() {
 			return this.webdav_title( this.uri_current() )
 		}
 		
-		Close( uri : string ) {
-			return uri !== this.uri_root()
-				? super.Close( uri )
-				: null
+		page_tools( uri : string ) {
+			return uri === this.uri_root()
+				? this.tools_root()
+				: [ this.Close( uri ) ]
 		}
 		
 		close_arg( uri : string ) {
@@ -106,4 +121,16 @@ namespace $.$mol {
 		}
 		
 	}
+
+	export class $mol_app_files_folder extends $.$mol_app_files_folder {
+		
+		body() {
+			return [
+				this.description() ? this.Description() : null ,
+				this.Folder_rows() ,
+			]
+		}
+		
+	}
+	
 }

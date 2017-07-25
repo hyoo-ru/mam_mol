@@ -1,12 +1,10 @@
 [mol_link] {
 	text-decoration: none;
-	color: var(--mol_skin_base);
+	color: inherit;
 	cursor: pointer;
 	border-radius: var(--mol_skin_round);
-	display: inline-flex;
 	padding: .5rem;
 	box-sizing: border-box;
-	align-items: baseline;
 }
 
 [mol_link]:not([mol_link_current]):hover {
@@ -14,14 +12,13 @@
 }
 
 [mol_link]:not([mol_link_current]):focus {
-	/*box-shadow: 0 0 0 1px var(--mol_skin_focus);*/
 	background-color: var(--mol_skin_hover);
 	box-shadow: 0 0 0 1px var(--mol_skin_hover_line);
 }
 
 [mol_link_current] {
-	background-color: var(--mol_skin_base);
-	color: var(--mol_skin_base_text);
+	background-color: var(--mol_skin_current);
+	color: var(--mol_skin_current_text);
 }
 
 [mol_link]:focus {

@@ -1,19 +1,20 @@
 $mol_row_demo $mol_row
+	title @ \Some controls in one row with equal paddings and wrapping support
 	minimal_height 68
 	sub /
-		<= titler $mol_search
-			hint <= helloHint @ \Title
-			query?val <=> title?val \
+		<= Name $mol_search
+			hint <= name_hint @ \Jack Sparrow
+			query?val <=> name?val \
 			suggests /
-				<= suggest1 @ \Hello
-				<= suggest2 @ \World
-		<= counter $mol_number
-			hint <= countHint @ \Count
+				<= suggest1 @ \Jack Sparrow
+				<= suggest2 @ \Bruce Wayne
+		<= Count $mol_number
+			hint <= count_hint @ \Count
 			value?val <=> count?val null
-		<= progresser $mol_portion
+		<= Progress $mol_portion
 			portion <= progress 0.33
-		<= publisher $mol_check_box
-			label / <= publishLabel @ \Shared
+		<= Publish $mol_check_box
+			title <= publish_label @ \Shared
 			checked?val <=> publish?val false
-		<= buttonDrop $mol_button_minor
-			sub / <= dropLabel @ \Drop
+		<= Drop $mol_button_minor
+			title <= drop_title @ \Drop

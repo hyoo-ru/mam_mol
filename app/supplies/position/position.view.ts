@@ -1,10 +1,6 @@
 namespace $.$mol {
 	export class $mol_app_supplies_position extends $.$mol_app_supplies_position {
 
-		position() {
-			return null as $mol_app_supplies_domain_supply_position
-		}
-
 		product_name() {
 			return this.position().name()
 		}

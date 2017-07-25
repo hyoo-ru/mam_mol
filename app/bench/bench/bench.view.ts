@@ -135,8 +135,13 @@ namespace $.$mol {
 			return $mol_state_arg.value( this.state_key( 'sort' ) , next )
 		}
 		
+		@ $mol_mem()
 		menu_options() {
-			return this.samples_all().map( sample => this.Menu_option( sample ) )
+			const filter = this.filter().toLowerCase()
+
+			return this.samples_all()
+			.filter( sample => this.menu_option_title( sample ).toLowerCase().match( filter ) )
+			.map( sample => this.Menu_option( sample ) )
 		}
 		
 		menu_option_title( sample : string ) {

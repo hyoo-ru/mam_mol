@@ -11,7 +11,7 @@ Bubble that can be shown anchored to ancor element.
     showed <= hint_showed?val 0
     align \bottom_center
 	Anchor <= Hint_trigger $mol_check
-		sub / \?
+		title \?
 		checked?val <=> hint_showed?val 0
 	bubble_content /
 		<= hint_message @ \You can see me wen you want.

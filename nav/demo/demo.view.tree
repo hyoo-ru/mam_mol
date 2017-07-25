@@ -1,16 +1,19 @@
-$mol_nav_demo $mol_labeler
-	title \Focus me and navigate (arrows up & down)!
-	content /
-		<= Button $mol_button
-			title?val <= selected_item?val \Click!
-	plugins /
-		<= Nav $mol_nav
-			keys_y <= items /
-				\Item 1
-				\Item 2
-				\Item 3
-				\Item 4
-				\Item 5
-				\Item 6
-				\Item 7
-			current_y?val <=> selected_item?val -
+$mol_nav_demo $mol_row
+	title @ \Keyboard navigation demo
+	sub /
+		<= Labeler $mol_labeler
+			title \Focus me and navigate (arrows up & down)!
+			content /
+				<= Button $mol_button_minor
+					title?val <= selected_item?val \Click!
+			plugins /
+				<= Nav $mol_nav
+					keys_y <= items /
+						\Item 1
+						\Item 2
+						\Item 3
+						\Item 4
+						\Item 5
+						\Item 6
+						\Item 7
+					current_y?val <=> selected_item?val -

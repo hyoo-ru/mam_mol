@@ -1,4 +1,4 @@
-# $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
+# $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol) [![eigenmethod.github.io](https://img.shields.io/website-up-down-green-red/http/mol.js.org.svg?label=mol.js.org)](http://eigenmethod.github.io/mol/) [![Maintanance status](https://img.shields.io/maintenance/yes/2017.svg)](https://github.com/eigenmethod/mol/graphs/contributors)
 
 Reactive micro-modular ui framework. Very simple, but very powerful!
 
@@ -7,14 +7,17 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Features](#features)
 - [Demo applications](#demo-applications)
 - [Benchmarks](#benchmarks)
+- [Oganizations using $mol](#organizations-using-mol)
 - [Articles](#articles)
-- [Any questions?](#any-questions)
-- [Found a bug?](#found-a-bug)
-- [Need feature?](#need-feature)
+- [Any questions?](https://github.com/eigenmethod/mol/issues/new?labels=question) / [All answers](https://github.com/eigenmethod/mol/issues?q=label%3Aquestion+is%3Aclosed)
+- [Found a bug?](https://github.com/eigenmethod/mol/issues/new?labels=bug) / [All bugs](https://github.com/eigenmethod/mol/labels/bug)
+- [Need a feature?](https://github.com/eigenmethod/mol/issues/new?labels=improvement) / [Vote for other](https://github.com/eigenmethod/mol/labels/improvement)
+- **Discussions: [Telegram](https://t.me/joinchat/AAAAAEPh3ssTZZjjYRzOwA), [Slack](http://mam-mol.slack.com), [E-mail](mailto:jin+mol@hyoo.ru)**
 - [Quick start](#quick-start)
 - [Rationale](#rationale)
 - [Modules](#modules)
 - [Cool stuff](#cool-stuff)
+- [Donate](#donate)
 
 # Features
 
@@ -39,11 +42,11 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol_app_hello](app/hello) - Very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - Demonstration of all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/))
-* [$mol_app_files](app/files) - WebDAV file manager ([online](https://eigenmethod.github.io/mol/app/files/))
+* [$mol_app_files](app/files) - [WebDAV](https://wikipedia.org/wiki/WebDAV) file manager ([online](https://eigenmethod.github.io/mol/app/files/))
+* [$mol_app_questions](app/questions) - Questions from [StackOverflow.com](http://stackoverflow.com) ([online](http://eigenmethod.github.io/mol/app/questions/)) 
+* [$mol_app_lamps](app/lamps) - Lamps database from [LampTest.ru](http://lamptest.ru) ([online](http://eigenmethod.github.io/mol/app/lamps/)) 
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
-* [$mol_app_signup](app/signup) - Simple form with persistence ([online](http://eigenmethod.github.io/mol/#demo=mol_app_signup))
-* [$mol_app_users](app/users) - GitHub user "management" tool ([online](http://eigenmethod.github.io/mol/#demo=mol_app_users))
-* [$mol_app_taxon](app/taxon) - Big hierarchical table wild database ([online](http://eigenmethod.github.io/mol/app/taxon/demo/))
+* [$mol_app_taxon](app/taxon) - Interface for big hierarchical table ([online](http://eigenmethod.github.io/mol/app/taxon/demo/))
 * [$mol_app_bench](app/bench) - Abstract benchmarking interface ([online](http://eigenmethod.github.io/mol/app/bench/))
 
 # Benchmarks
@@ -52,38 +55,40 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark)
 ([online](http://eigenmethod.github.io/mol/app/bench/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
 * [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
+* [Line charts comparison](app/bench/chart/rope) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
+* [Bar charts comparison](app/bench/chart/bar) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
+* [React vs React Fiber vs $mol](https://github.com/nin-jin/sierpinski) ([online](https://nin-jin.github.io/sierpinski))
+
+# Organizations using $mol
+
+[![SAPRUN](http://www.saprun.com/static/core/img/base/logo_sm.png)](http://www.saprun.com)
 
 # Articles
 
 * [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Сomprehensive $mol review
+* [Объектное Реактивное Программирование](https://habrahabr.ru/post/330466/) - Features of Object Reactive Programming
 * [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/) - Problems of popular frameworks
 * [Принципы написания кода](https://habrahabr.ru/post/236785/) - Code style principles
 
-# Any questions?
-
-* [Ask us](https://github.com/eigenmethod/mol/issues/new?labels=question)
-* [All answers](https://github.com/eigenmethod/mol/issues?q=label%3Aquestion+is%3Aclosed)
-
-# Found a bug?
-
-* [Report it](https://github.com/eigenmethod/mol/issues/new?labels=bug)
-* [All bugs](https://github.com/eigenmethod/mol/labels/bug)
-
-# Need feature?
-
-* [Suggest it](https://github.com/eigenmethod/mol/issues/new?labels=improvement)
-* [Vote for other](https://github.com/eigenmethod/mol/labels/improvement)
-
 # Quick start
+
+[Video of this process](https://www.youtube.com/watch?v=PyK3if5sgN0)
 
 **Create MAM project**
 
 Easy way is checkout this [preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
 
 ```sh
+git config --global core.autocrlf input
 git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
 npm install && npm start
 ```
+
+**Setup your editor**
+
+- Use MAM directory as root of your project in editor
+- [Install plugins for *.tree files](https://github.com/nin-jin/tree.d#ide-support)
+- If your editor ignores .editorconfig use this preferences: TABs for indents, LF for line endings.
 
 **Create your application component**
 
@@ -157,10 +162,10 @@ namespace $ { export class $my_hello extends $mol_view {
 	/// 	value?val <=> name?val
 	@ $mol_mem()
 	Name() {
-		return new $mol_string().setup( obj => { 
-			obj.hint = () => "Name"
-			obj.value = ( next? ) => this.name( next )
-		} )
+		return $mol_string.make({ 
+			hint : () => "Name" ,
+			value : ( next? ) => this.name( next ) ,
+		})
 	}
 
 	/// message \
@@ -227,10 +232,11 @@ For example if you download **[base MAM-project](http://github.com/eigenmethod/m
 There are the full set of supports bundles:
 
 * `-/web.js` - JS for browser
+* `-/web.d.ts` - TypeScript definitions
 * `-/web.test.js` - JS with tests for a browser
 * `-/web.css` - CSS styles for a browser
-* `-/web.deps.json` - a map of dependencies modules for browser
-* `-/web.locale=en.json` - strings pulled from view.tree sources
+* `-/web.deps.json` - map of dependencies modules for browser
+* `-/web.locale=en.json` - strings pulled from ```*.view.tree``` and ```*.locale=en.json``` sources
 * `-/node.js` - JS for NodeJS
 * `-/node.test.js` - JS with tests for NodeJS
 * `-/node.deps.json` - a map of dependencies modules for NodeJS
@@ -265,9 +271,9 @@ Or the same code through TypeScript would be:
 ```typescript
 @ $mol_mem()
 Confirm_delete() {
-	return new $mol_row().setup( obj => {
-		obj.sub = ()=> [ this.Yes() , this.No() ]
-	} )
+	return $mol_row.make({
+		sub : ()=> [ this.Yes() , this.No() ] ,
+	})
 }
 ```
 
@@ -348,6 +354,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_defer](defer)** - deferred but immediate execution
 * **[$mol_atom](atom)** - reactive container
 * **[$mol_log](log)** - logging
+* **[$mol_import](import)** - dynamic sources import
 
 ## Object model
 
@@ -361,8 +368,6 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Collections
 
 * **[$mol_range](range)** - lazy array
-* **[$mol_set](set)** - [Set API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
-* **[$mol_dict](dict)** - [Map API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
 * **[$mol_maybe](maybe)** - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
 * **[$mol_hyperhive](hypehive)** - [HypeHive API](http://hhive.eap.eigenmethod.com/)
 
@@ -373,12 +378,12 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_state_session](state/session)** - session temporary state (sessionStorage)
 * **[$mol_state_history](state/history)** - browser history bound state
 * **[$mol_state_stack](state/stack)** - state of current stack of execution
+* **[$mol_state_time](state/time)** - reactive current time stamp 
 
 ## Communication modules
 
-* **[$mol_http_resource](http/resource)** - Reactive REST HTTP resource
-* **[$mol_http_request](http/request)** - Reactive HTTP Request
-* **[$mol_webdav](webdav)** - Reactive [WebDAV](https://ru.wikipedia.org/wiki/WebDAV) client
+* **[$mol_http](http)** - Reactive [HTTP](https://wikipedia.org/wiki/HTTP) client
+* **[$mol_webdav](webdav)** - Reactive [WebDAV](https://wikipedia.org/wiki/WebDAV) client
 
 ## Simple components
 
@@ -427,6 +432,20 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_attach](attach)** - preview list and attach button
 * **[$mol_cost](cost)** - prints currency values
 
+## Charts
+
+* **[$mol_chart](chart)** - Plot pane with legend
+* **[$mol_chart_legend](chart/legend)** - Simple legend for charts
+* **[$mol_plot_pane](plot/pane)** - Pane for multiple graphs
+* **[$mol_plot_graph](plot/graph)** - Plot graph base class
+* **[$mol_plot_bar](plot/bar)** - Bar graph
+* **[$mol_plot_line](plot/line)** - Linear graph
+* **[$mol_plot_dot](plot/dot)** - Dots graph
+* **[$mol_plot_fill](plot/fil)** - Filling graph
+* **[$mol_plot_group](plot/group)** - Group of graph as single graph
+* **[$mol_plot_ruler_vert](plot/ruler/vert)** - Verical ruler
+* **[$mol_plot_ruler_hor](plot/ruler/hor)** - Horizontal ruler
+
 ## Data formats
 
 * **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d) (`view.tree` language descripted at [$mol_view](view))
@@ -455,6 +474,17 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_file](file)** - reactive file system wrapper
 * **[$mol_window](window)** - reactive view port configuration
 
+## Time
+
+* **[$mol_time_moment](time/moment)** - [time moment](https://en.wikipedia.org/wiki/ISO_8601#Dates) representation with iso8601 support
+* **[$mol_time_duration](time/duration)** - [time duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) representation with iso8601 support
+* **[$mol_time_interval](time/interval)** - [time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals) representation with iso8601 support
+* **[$mol_state_time](state/time)** - reactive current time stamp 
+
+## Maps
+
+* **[$mol_map_yandex](map/yandex)** - [Yandex Maps](https://tech.yandex.ru/maps/doc/jsapi/2.1/)
+
 ## Building
 
 * **[$mol_build](build)** - MAM builder
@@ -464,3 +494,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 * **[Commits visualization](http://ghv.artzub.com/#repo=mol&user=eigenmethod&climit=100000)**
 * **[Sources visualization](http://veniversum.me/git-visualizer/?owner=eigenmethod&repo=mol)**
+
+# Donate
+
+* **[Shut up and take my money](http://yasobe.ru/na/mol)**

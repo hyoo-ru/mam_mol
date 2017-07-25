@@ -1,0 +1,14 @@
+$mol_select_demo_priority $mol_row
+	title @ \Priority picker
+	sub /
+		<= Labeler $mol_labeler
+			title \Priority
+			Content $mol_select
+				value?val <=> priority?val \Lowest
+				options /
+					\Highest 
+					\High
+					\Medium
+					\Low
+					\Lowest
+				clearable false

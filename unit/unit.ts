@@ -39,7 +39,7 @@ namespace $ {
 			return new Class( a.valueOf() + b.valueOf() )
 		}
 		
-		mult( m : number ) {
+		mult( m : number ) : this {
 			var Class = this.Class()
 			return new Class( this.valueOf() * m )
 		}

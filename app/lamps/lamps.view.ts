@@ -4,7 +4,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		lamps_all() {
-			return $mol_csv_parse( $mol_http_resource.item( 'http://lamptest.ru/led.php' ).text() )
+			return $mol_csv_parse( $mol_http.resource( 'http://lamptest.ru/led.php' ).text() )
 		}
 		
 		@ $mol_mem()
@@ -80,9 +80,18 @@ namespace $.$mol {
 			sub.push( this.Addon_page() )
 			
 			if( this.lamp() ) sub.push( this.Main_page() )
-			else sub.unshift( this.Placeholder() )
 			
 			return sub
+		}
+		
+		Placeholder() {
+			return this.lamp() ? null : super.Placeholder()
+		}
+
+		@ $mol_mem()
+		menu_scroll_top( next? : number ) {
+			this.filter()
+			return next || 0
 		}
 		
 		title() {

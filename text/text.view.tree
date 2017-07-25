@@ -1,11 +1,12 @@
 $mol_text $mol_list
+	uri_base \
 	text \
 	Row!id $mol_text_row
 		sub <= block_content!id /
 		type <= block_type!id \
-	Span!id $mol_text_spanner
-	Link!id $mol_text_linker
-	Image!id $mol_text_imager
+	Span!id $mol_text_span
+	Link!id $mol_text_link
+	Image!id $mol_text_image
 	Header!id $mol_text_header
 		level <= header_level!id 0
 		content <= header_content!id /
@@ -21,29 +22,38 @@ $mol_text $mol_list
 
 $mol_text_row $mol_view
 	minimal_height 40
-	attr * mol_text_type <= type \
+	attr *
+		^
+		mol_text_type <= type \
 
 $mol_text_header $mol_view
 	dom_name \h
 	minimal_height 50
-	attr * mol_text_header_level <= level?val 0
+	attr *
+		^
+		mol_text_header_level <= level?val 0
 	sub <= content /
 
-$mol_text_spanner $mol_view
+$mol_text_span $mol_view
 	dom_name \span
-	attr * mol_text_type <= type?val \
+	attr *
+		^
+		mol_text_type <= type?val \
 	sub <= content?val /
 
-$mol_text_linker $mol_view
+$mol_text_link $mol_view
 	dom_name \a
 	attr *
+		^
 		mol_text_type <= type?val \
 		href <= link?val \
 	sub <= content?val /
 
-$mol_text_imager $mol_view
-	dom_name \img
+$mol_text_image $mol_view
+	dom_name \object
 	attr *
+		^
 		mol_text_type <= type?val \
-		src <= link?val \
-		alt <= title?val \
+		data <= link?val \
+	sub /
+		<= title?val \

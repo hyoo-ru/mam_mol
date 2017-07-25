@@ -3,7 +3,7 @@ namespace $ {
 	$mol_test({
 		
 		'Make empty div'() {
-			$mol_assert_equal( (<div></div>).outerHTML , '<div></div>' )
+			$mol_assert_equal( (<div/>).outerHTML , '<div></div>' )
 		} ,
 		
 		'Make input with id and value'() {
@@ -41,21 +41,6 @@ namespace $ {
 			
 			$mol_assert_equal( dom1 , dom2 )
 			$mol_assert_equal( dom1.outerHTML , '<div id="$mol_dom_make_test">hello</div>' )
-		} ,
-		
-		'Make by another dom element'() {
-			const dom1 = <div
-				className="hello"
-				>
-				world
-			</div>
-			
-			const dom2 = <div
-				className={ dom1.className }
-				childNodes={ dom1.childNodes }
-			/>
-			
-			$mol_assert_equal( dom2.outerHTML , '<div class="hello">world</div>' )
 		} ,
 		
 	})

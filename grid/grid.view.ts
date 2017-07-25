@@ -16,16 +16,14 @@ namespace $.$mol {
 			const view_window = this.view_window()
 			
 			return [].concat(
-				this.col_ids() && this.Head() ,
-				//( view_window.top > 0 ) ? this.Gap_top() : null ,
+				this.Head() ,
 				rows.slice( view_window.top , view_window.bottom ).valueOf() ,
-				//( view_window.bottom < view_window.count ) ? this.Gap_bottom() : null ,
 			)
 		}
 		
 		@ $mol_mem()
 		rows_visible_max() {
-			return Math.ceil( this.context().$mol_view_visible_height() / this.row_height() )
+			return Math.ceil( this.$.$mol_view_visible_height() / this.row_height() )
 		}
 		
 		@ $mol_mem()
@@ -35,7 +33,7 @@ namespace $.$mol {
 			
 			const count = rows.length
 			const context = this.context_sub()
-			const scrollTop = context.$mol_scroll_scroll_top()
+			const scrollTop = context.$mol_scroll_top()
 			
 			const top = Math.max( 0 , Math.floor( scrollTop / this.row_height() ) )
 			const bottom = Math.min( count , top + this.rows_visible_max() )
@@ -48,9 +46,9 @@ namespace $.$mol {
 			return view_window.top * this.row_height()
 		}
 		
-		gap_bottom() {
+		height() {
 			const view_window = this.view_window()
-			return ( view_window.count - view_window.bottom ) * this.row_height()
+			return view_window.count * this.row_height()
 		}
 		
 		@ $mol_mem()
@@ -92,7 +90,7 @@ namespace $.$mol {
 		}
 		
 		cell_content( id : { row : string[] , col : string } ) {
-			return this.record( id.row[ id.row.length - 1 ] )[ id.col ]
+			return [ this.record( id.row[ id.row.length - 1 ] )[ id.col ] ]
 		}
 		
 		records() : any {
@@ -114,7 +112,7 @@ namespace $.$mol {
 
 		col_ids() {
 			const rowFirst = this.row_id(0)
-			if( rowFirst === void 0 ) return null
+			if( rowFirst === void 0 ) return []
 			
 			const record = this.record( rowFirst[ rowFirst.length - 1 ] )
 			if( !record ) return []
@@ -174,7 +172,11 @@ namespace $.$mol {
 			const key = `row_expanded(${ JSON.stringify( row_id ) })`
 			const next2 = $mol_state_session.value( key , next )
 			
-			return ( next2 == null ) ? false : next2
+			return ( next2 == null ) ? this.row_expanded_default( row_id ) : next2
+		}
+		
+		row_expanded_default( row_id : string[] ) {
+			return row_id.length < 3
 		}
 		
 		cell_expanded( id : { row : string[] } , next? : boolean ) {
@@ -189,7 +191,7 @@ namespace $.$mol {
 		context_sub( ) {
 			const context = this.context()
 			const subContext : $mol_view_context = Object.create( context )
-			subContext.$mol_scroll_scroll_top = ()=> context.$mol_scroll_scroll_top() - this.gap_top()
+			subContext.$mol_scroll_top = ()=> context.$mol_scroll_top() - this.offset()
 			return subContext
 			
 		}

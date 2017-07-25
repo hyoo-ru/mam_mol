@@ -1,0 +1,10 @@
+$mol_chart $mol_view
+	sub /
+		<= Plot $mol_plot_pane
+			graphs <= graphs /
+			gap_hor 48
+			gap_vert 24
+			hue_base?val <= hue_base 140
+			hue_shift?val <= hue_shift 111
+		<= Legend $mol_chart_legend
+			graphs <= graphs /

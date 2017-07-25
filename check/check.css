@@ -1,5 +1,5 @@
 [mol_check] {
-	flex: 0 1 auto;
+	flex: 0 0 auto;
 	justify-content: flex-start;
 	align-items: center;
 	align-content: center;
@@ -7,19 +7,14 @@
 	font-weight: normal;
 	box-shadow: none;
 	text-align: left;
+	padding: .5rem;
 }
 
 [mol_check]:not([mol_check_checked]) {
-	/*background: transparent;*/
 	color: inherit;
-}
-
-[mol_check_icon] {
-	display: inline-flex;
-	/*vertical-align: -10%;*/
-	vertical-align: middle;
 }
 
 [mol_check_label] {
 	display: inline-flex;
+	margin: 0 .5rem;
 }

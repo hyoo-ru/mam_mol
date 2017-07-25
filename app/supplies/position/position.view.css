@@ -25,7 +25,7 @@
 }
 
 [mol_app_supplies_position_supply_group] {
-	flex: 1 1 22rem;
+	flex: 1 1 24rem;
 	background: hsla(0,50%,98%,1);
 	flex-direction: row-reverse;
 }
@@ -44,7 +44,7 @@
 }
 
 [mol_app_supplies_position_quantity_item] {
-	flex: 1 0 2rem;
+	flex: 1 0 4rem;
 	align-items: flex-end;
 }
 
@@ -58,5 +58,5 @@
 }
 
 [mol_app_supplies_position_store_item] {
-	flex: 1 1 8rem;
+	flex: 1 1 10rem;
 }

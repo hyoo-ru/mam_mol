@@ -13,16 +13,58 @@ namespace $.$mol {
 		}
 		
 		gists() {
-			return $mol_http_resource_json.item<{ items : $mol_app_habhub_gist[] }>( this.uriSource() ).json().items
+			return $mol_http.resource( this.uriSource() ).json<{ items : $mol_app_habhub_gist[] }>().items
 		}
 		
-		gist_rows() : $mol_view[] {
-			return this.gists().map( ( gist , index ) => this.Gist_row( index ) )
+		gists_dict() {
+			const dict = {} as { [ key : string ] : $mol_app_habhub_gist }
+			this.gists().forEach( gist => dict[ gist.id ] = gist )
+			return dict
 		}
 		
-		gist_content( index : number ) {
-			const gist = this.gists()[ index ]
-			return `# ${ gist.title }\n${ gist.body }`
+		gist( id : number ) {
+			return this.gists_dict()[ id ]
+		}
+		
+		gist_current_id() {
+			return Number( $mol_state_arg.value( 'gist' ) )
+		}
+		
+		pages() {
+			const gist = this.gist_current_id()
+			return [
+				this.Menu_page() ,
+				gist ? this.Details() : null
+			]
+		}
+		
+		Placeholder() {
+			return this.gist_current_id() ? null : super.Placeholder()
+		}
+
+		menu_rows() : $mol_view[] {
+			return this.gists().map( ( gist , index ) => this.Menu_row( gist.id ) )
+		}
+		
+		gist_title( id : number ) {
+			return this.gist( id ).title
+		}
+		
+		gist_arg( id : number ) {
+			return { gist : id }
+		}
+		
+		gist_current_title() {
+			return this.gist( this.gist_current_id() ).title
+		}
+		
+		gist_current_content() {
+			return this.gist( this.gist_current_id() ).body
+		}
+		
+		details_scroll_top( next? : number ) {
+			const current = this.gist_current_id()
+			return $mol_state_session.value( `${ this }.details_scroll_top(${ current })` , next )
 		}
 		
 	}

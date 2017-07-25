@@ -1,12 +1,11 @@
 [mol_card] {
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_card);
 	color: var(--mol_skin_light_text);
 	border-radius: var(--mol_skin_round);
 	display: flex;
 	flex: 0 1 auto;
 	flex-direction: column;
-	margin: auto;
 }
 
 [mol_card_content] {

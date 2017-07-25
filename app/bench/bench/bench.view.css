@@ -4,6 +4,10 @@
 	align-self: stretch;
 }
 
+[mol_app_bench_main_page] {
+	flex: 1 10000 auto;
+}
+
 [mol_app_bench_main_page] > [mol_page_body] {
 	display: flex;
 	overflow: auto;
@@ -32,11 +36,10 @@
 	position: relative;
 	width: 50%;
 	min-height: 100%;
-	box-shadow: 0 0 0 1px var(--mol_skin_light_line);
+	box-shadow: var(--mol_skin_light_outline);
 }
 
 [mol_app_bench_descr] {
-	padding: .5rem 1rem;
 	flex: 0 2 50%;
 	max-width: none;
 }

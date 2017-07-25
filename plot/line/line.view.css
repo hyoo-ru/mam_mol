@@ -1,0 +1,12 @@
+[mol_plot_line] {
+	color: var(--mol_skin_base);
+	fill: none;
+	stroke-linejoin: round;
+}
+
+[mol_plot_line_sample] {
+	min-width: 1.5rem;
+	height: 0;
+	align-self: center;
+	border-width: 2px 0 0;
+}

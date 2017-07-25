@@ -22,16 +22,16 @@ Scrolling offset from top corner.
 
 Scrolling offset from left corner.
 
-## Sub context extensions
+## Context extensions
 
-`this.context().$mol_scroll_scroll_top() : number`
+`this.$.$mol_scroll_top() : number`
 
 Scrolling offset from top corner.
 
-`this.context().$mol_scroll_scroll_left() : number`
+`this.$.$mol_scroll_left() : number`
 
 Scrolling offset from left corner.
 
-`this.context().$mol_scroll_moving() : boolean`
+`this.$.$mol_scroll_moving() : boolean`
 
 True while scrolling changing. False when scrolling stops.

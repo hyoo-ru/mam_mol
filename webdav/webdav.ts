@@ -1,17 +1,17 @@
 namespace $ {
 	
-	export class $mol_webdav extends $mol_http_resource {
+	export class $mol_webdav extends $mol_http {
 		
 		@ $mol_mem_key()
 		static item( uri : string ) {
-			return new $mol_webdav().setup( obj => {
-				obj.uri = ()=> uri
-			} )
+			return this.make({
+				uri : $mol_const( uri ) ,
+			})
 		}
 		
 		@ $mol_mem()
 		data_tree() {
-			const dom = this.request().response().responseXML as XMLDocument
+			const dom = this.response().responseXML as XMLDocument
 			const responses = dom.querySelectorAll( 'response' ) as any as Element[]
 			
 			const data = {} as { [ uri : string ] : Element }
@@ -36,7 +36,7 @@ namespace $ {
 		@ $mol_mem()
 		sub() {
 			const next = [] as $mol_webdav[]
-			for( let uri in this.data_tree() ) {
+			for( let uri of Object.keys( this.data_tree() ) ) {
 				if( uri == this.uri() ) continue
 				next.push( $mol_webdav.item( uri ) )
 			}

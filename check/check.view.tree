@@ -1,10 +1,11 @@
-$mol_check $mol_button
+$mol_check $mol_button_typed
 	attr *
+		^
 		mol_check_checked <= checked?val false
 		aria-checked <= checked?val false
 		role \checkbox
 	sub /
 		<= Icon null
 		<= Label $mol_view
-			sub /
-				<= label /
+			sub <= label /
+				<= title \

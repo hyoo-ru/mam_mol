@@ -4,14 +4,15 @@ namespace $.$mol {
 		
 		title() {
 			const selected = this.selected()
-			if( selected ) return `$${ selected }`
+			if( selected ) {
+				const names = this.names_demo() 
+				if( names.length === 1 ) {
+					return `$${ selected.replace( /_demo.*/ , '' ) }: ${ this.Sample_large( names[0] ).widget().title() }`
+				}
+				return `$${ selected }`
+			}
 			
 			return super.title()
-		}
-		
-		@ $mol_mem()
-		welcome_text() {
-			return $mol_http_resource.item( 'readme.md' ).text()
 		}
 		
 		@ $mol_mem()
@@ -29,8 +30,8 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		names_demo_filtered() {
-			const filter = this.filter_string()
-			const names = this.names_demo_all().filter( name => ( name.indexOf( filter ) != -1 ) )
+			const filter = this.filter_string().toLowerCase()
+			const names = this.names_demo_all().filter( name => ( name.toLowerCase().indexOf( filter ) != -1 ) )
 			return names
 		}
 		
@@ -78,7 +79,13 @@ namespace $.$mol {
 		
 		nav_option( id : string ) {
 			const parent = this.nav_hierarchy()[ id ].parent
-			const title = `$${ id }`.substring( parent.id.length + 1 ).replace( /^[-._]|[-._]demo$/g , '' )
+			
+			const title = `$${ id }`
+			.substring( parent.id.length + 1 )
+			.replace( /^[-._]|[-._]demo$/g , '' )
+			.replace( /_/g , ' ' )
+			.replace( /^(\w)/ , letter => letter.toUpperCase() )
+			
 			return { title }
 		}
 		
@@ -87,23 +94,34 @@ namespace $.$mol {
 		}
 
 		@ $mol_mem_key()
-		option( name : string ) {
-			return new $mol_link().setup( obj => {
-				obj.sub = () => [ name ? ( '$' + name ) : 'All' ]
-				obj.arg = () => ({ demo : name })
-			} )
-		}
-		
-		@ $mol_mem_key()
 		widget( name : string ) {
 			const Class : typeof $mol_view = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class()
 		}
 		
+		@ $mol_mem()
 		names_demo() {
-			const prefix = this.selected()
-			const namesAll = this.names_demo_all()
-			const names = namesAll.filter( name => name.substring( 0 , prefix.length ) === prefix )
+			const selected = this.selected()
+			const all = this.names_demo_all()
+			
+			const root = this.nav_hierarchy()[ selected ]
+			if( !root ) return []
+
+			const names : string[] = []
+			const collect = ( node : typeof root )=> {
+				const demo = `${ node.id }_demo`
+				if( all.indexOf( demo ) !== -1 ) {
+					if( names.indexOf( demo ) === -1 ) names.push( demo )
+				} else if( all.indexOf( node.id ) !== -1 ) {
+					if( names.indexOf( node.id ) === -1 ) names.push( node.id )
+				} else {
+					node.sub.forEach( child => collect( child ) )
+				}
+			}
+
+			if( root.sub.length ) root.sub.forEach( child => collect( child ) )
+			collect( root )
+			
 			return names
 		}
 		
@@ -113,9 +131,12 @@ namespace $.$mol {
 			sub.push( this.Menu() )
 			
 			if( this.selected() ) sub.push( this.Detail() )
-			else sub.unshift( this.Placeholder() )
 			
 			return sub
+		}
+
+		Placeholder() {
+			return this.selected() ? null : super.Placeholder()
 		}
 		
 		@ $mol_mem() 
@@ -138,21 +159,27 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		Sample_small( name : string ) {
-			const sample = new $mol_demo_small
-			sample.name = ()=> name
-			return sample
+			return $mol_demo_small.make({
+				name : $mol_const( name ) ,
+			})
 		}
 		
 		@ $mol_mem_key()
 		Sample_large( name : string ) {
-			const sample = new $mol_demo_large()
-			sample.titler = ()=> null
-			sample.name = ()=> name
-			return sample
+			return $mol_demo_large.make({
+				title : $mol_const( null ) ,
+				name : $mol_const( name ) ,
+			})
 		}
 		
 		logo_uri() {
 			return $mol_file.relative( '/mol/logo/logo.svg' ).path()
+		}
+
+		source_link(){
+			var pieces = $mol_state_arg.value('demo').split('_').slice(1) 
+			var source_link = this.source_prefix() + pieces.join('/')
+			return source_link
 		}
 		
 	}

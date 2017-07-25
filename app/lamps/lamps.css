@@ -4,7 +4,6 @@
 
 [mol_app_lamps_filter] {
 	flex: 1 1 auto;
-	margin: .5rem;
 }
 
 [mol_app_lamps_lamp_row] {
@@ -36,16 +35,15 @@
 	background: var(--mol_skin_card);
 }
 
-[mol_app_lamps_close] {
-	color: inherit;
-	padding: 1rem;
-	align-items: center;
-}
-
 [mol_app_lamps_addon_page] {
 	flex: 1 1 400px;
 }
 
 [mol_app_lamps_main_page] {
 	flex: 1000 1 400px;
+}
+
+[mol_app_lamps_light] ,
+[mol_app_lamps_body] {
+	justify-content: space-between;
 }

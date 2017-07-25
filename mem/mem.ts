@@ -1,7 +1,5 @@
 namespace $ {
 	
-	/// Creates the decorator for caching result value by json-key passed as first argument.
-	/// Method must be a polymorphic property (getter/setter/getter+setter).
 	export function $mol_mem< Host , Value >(
 		config? : {
 			lazy? : boolean
@@ -22,7 +20,7 @@ namespace $ {
 				
 				let atom : $mol_atom<Value> = host[ fieldA ]
 				if( !atom ) {
-					if( force && ( next === void null ) ) return next
+					if( force && ( next === undefined ) ) return next
 					
 					host[ fieldA ] = atom = new $mol_atom<Value>(
 						host ,
@@ -60,7 +58,7 @@ namespace $ {
 				
 				let atom : $mol_atom<Value> = host[ fieldA ]
 				if( !atom ) {
-					if( force && ( next === void null ) ) return next
+					if( force && ( next === undefined ) ) return next
 					
 					host[ fieldA ] = atom = new $mol_atom<Value>(
 						host ,

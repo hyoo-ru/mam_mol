@@ -1,5 +1,5 @@
 $mol_app_report $mol_page
-	title \Pump #1337
+	title @ \Pump #1337 - Technical passport
 	body /
 		<= descriptor $mol_view
 			sub / <= description \
@@ -33,6 +33,7 @@ $mol_app_report_rower $mol_view
 $mol_app_report_cell $mol_view
 	dom_name \td
 	attr *
+		^
 		colspan <= cols 1
 		rowspan <= rows 1
 	sub / <= content null

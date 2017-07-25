@@ -1,17 +1,21 @@
-$mol_bar_demo_search $mol_bar
+$mol_bar_demo $mol_row
+	title @ \Group of controls as one control
 	sub /
-		<= stringer $mol_string
-			value?val <=> value?val \
-		<= submitter $mol_button
+		<= Two $mol_bar
 			sub /
-				\submit
-
-$mol_bar_demo_login $mol_bar
-	sub /
-		<= stringer $mol_string
-			value?val <=> value?val \
-		<= rememberer $mol_check_box
-			label / \Remember me
-		<= submitter $mol_button
+				<= Two_mail $mol_string
+					hint \E-mail
+					value?val <=> value?val \
+				<= Two_submit $mol_button_minor
+					sub /
+						\submit
+		<= Tree $mol_bar
 			sub /
-				\submit
+				<= Three_mail $mol_string
+					hint \E-mail
+					value?val <=> value?val \
+				<= Three_confirm $mol_check_box
+					title \Confirm
+				<= Three_submit $mol_button_minor
+					sub /
+						\submit

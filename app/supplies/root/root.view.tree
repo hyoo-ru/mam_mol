@@ -6,11 +6,13 @@ $mol_app_supplies_root $mol_book
 	lister $mol_app_supplies_list
 		minimal_width 400
 		supplies <= supplies /
-		search_query?val <=> search_query?val \
+		search_query?val <=> supply_id?val \
+		event_navigate?val <=> event_front_down?val -
 	-
 	detailer $mol_app_supplies_detail
 		minimal_width 400
 		supply <= supply null
+		event_top?val <=> event_front_up?val -
 	-
 	placeholder $mol_book_placeholder
 		title <= title -

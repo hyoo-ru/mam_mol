@@ -1,0 +1,14 @@
+[mol_plot_ruler_vert_curve] {
+	color: var(--mol_skin_light_line);
+	stroke-width: .1%;
+	stroke: currentColor;
+}
+
+[mol_plot_ruler_vert_label] {
+	color: var(--mol_skin_light_text);
+	transform: translateY( 4px );
+}
+
+[mol_plot_ruler_vert_title] {
+	color: var(--mol_skin_passive_text);
+}

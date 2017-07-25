@@ -1,0 +1,19 @@
+$mol_plot_ruler_hor $mol_plot_graph
+	front /
+	color null
+	sub /
+		<= Curve $mol_svg_path
+			geometry <= curve \
+		<= labels /
+		<= Title $mol_svg_text
+			pos <= title_pos /
+				<= title_pos_x \0
+				<= title_pos_y \100%
+			align \start
+			sub /
+				<= title -
+	Label!index $mol_svg_text
+		pos <= label_pos!index /
+			<= label_pos_x!index \
+			<= label_pos_y!index <= title_pos_y -
+		text <= label_text!index \

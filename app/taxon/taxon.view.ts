@@ -19,7 +19,7 @@ namespace $.$mol {
 				}[]
 			} }
 
-			const resource = $mol_http_resource_json.item< response >( this.hierarchy_uri() ) 
+			const resource = $mol_http.resource( this.hierarchy_uri() ) 
 			resource.credentials = $mol_const({})
 
 			const hierarchy : { [ key : string ] : $mol_grid_node } = {}
@@ -29,7 +29,7 @@ namespace $.$mol {
 				sub : []
 			}
 			
-			resource.json().d.results.forEach( row => {
+			resource.json< response >().d.results.forEach( row => {
 				const parent = hierarchy[ row.ParentId || '' ]
 				const node = hierarchy[ row.KeyId ] = {
 					id : `${ row.KeyId }` ,
@@ -48,7 +48,7 @@ namespace $.$mol {
 		
 		data_resource( id : string ) {
 			const uri = this.data_uri() + '&$' + 'filter=' + encodeURIComponent( `KeyId eq ${ id }` )
-			const resource = $mol_http_resource_json.item<any>( uri )
+			const resource = $mol_http.resource( uri )
 			resource.credentials = $mol_const({})
 			return resource
 		}
@@ -65,7 +65,7 @@ namespace $.$mol {
 			const cache = this.data_table()
 			if( cache[ id ] ) return cache[ id ]
 			
-			const next = this.data_resource( id ).json().d.results[0] as $mol_app_taxon_data_row
+			const next = this.data_resource( id ).json<any>().d.results[0] as $mol_app_taxon_data_row
 			delete ( next as any ).__metadata
 			
 			return cache[ id ] = next 
