@@ -18,7 +18,6 @@
 	z-index: 3;
 	background: var(--mol_skin_card);
 	color: var(--mol_skin_card_text);
-	color: var(--mol_skin_card_text);
 	max-width: none;
 	max-height: none;
 	overflow: hidden;
@@ -28,8 +27,8 @@
 
 [mol_pop_align="left_top"] {
 	transform: translate(-100%);
-    left: 0;
-    bottom: 0;
+	left: 0;
+	bottom: 0;
 }
 
 [mol_pop_align="left_center"] {
@@ -40,26 +39,26 @@
 
 [mol_pop_align="left_bottom"] {
 	transform: translate(-100%);
-    left: 0;
-    top: 0;
+	left: 0;
+	top: 0;
 }
 
 [mol_pop_align="right_top"] {
 	transform: translate(100%);
-    right: 0;
-    bottom: 0;
+	right: 0;
+	bottom: 0;
 }
 
 [mol_pop_align="right_center"] {
 	transform: translate(100%, -50%);
-    right: 0;
-    top: 50%;
+	right: 0;
+	top: 50%;
 }
 
 [mol_pop_align="right_bottom"] {
 	transform: translate(100%);
-    right: 0;
-    top: 0;
+	right: 0;
+	top: 0;
 }
 
 [mol_pop_align="center"] {
@@ -70,32 +69,32 @@
 
 [mol_pop_align="top_left"] {
 	right: 0;
-    bottom: 100%;
+	bottom: 100%;
 }
 
 [mol_pop_align="top_center"] {
 	transform: translate(-50%);
-    left: 50%;
-    bottom: 100%;
+	left: 50%;
+	bottom: 100%;
 }
 
 [mol_pop_align="top_right"] {
 	left: 0;
-    bottom: 100%;
+	bottom: 100%;
 }
 
 [mol_pop_align="bottom_left"] {
 	right: 0;
-    top: 100%;
+	top: 100%;
 }
 
 [mol_pop_align="bottom_center"] {
 	transform: translate(-50%);
-    left: 50%;
-    top: 100%;
+	left: 50%;
+	top: 100%;
 }
 
 [mol_pop_align="bottom_right"] {
 	left: 0;
-    top: 100%;
+	top: 100%;
 }
