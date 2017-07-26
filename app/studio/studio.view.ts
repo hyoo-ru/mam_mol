@@ -40,7 +40,9 @@ namespace $.$mol {
 		
 		fields() {
 			const path = this.path()
-			return this.props_all( this.element_class( path ) ).sub.map( prop => this.Prop([ ... path , prop.type ]) )
+			return this.props_all( this.element_class( path ) ).sub
+			.filter( prop => !prop.select( 'key' ).sub[0].value )
+			.map( prop => this.Prop([ ... path , prop.type ]) )
 		}
 		
 		prop_controls( path : string[] ) {
@@ -184,6 +186,8 @@ namespace $.$mol {
 			const props = this.props_all( class_name )
 			
 			for( let prop of props.sub ) {
+				if( this.prop_key( [ ... path , prop.type ] ) ) continue
+				
 				let value = obj[ prop.type ]
 				obj[ prop.type ] = ( next? : any )=> {
 					const val = this.value_view( [ ... path , prop.type ] , next )
