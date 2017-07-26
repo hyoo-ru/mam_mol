@@ -209,7 +209,7 @@ namespace $.$mol {
 				const suffix = ( event.target as HTMLElement ).id.substring( this.dom_node().id.length + 1 );
 				this.path( suffix.replace( /\(.*?\)/g , '' ).split( '.' ).filter( v => v ) )
 			} else {
-				this.path( JSON.parse( target.replace( /^.*\(|\)$/g , '' ) ) )
+				this.path( JSON.parse( target.replace( /^.*?Element\(/g , '' ).replace( /\).*$/g , '' ) ) )
 			}
 
 			event.preventDefault()
