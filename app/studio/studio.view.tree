@@ -19,52 +19,24 @@ $mol_app_studio $mol_book
 						<= Close_icon $mol_icon_cross
 					arg <= close_arg *
 						path null
-			Body <= Editor_body $mol_scroll
-				sub <= fields /
+			body /
+				<= Fields $mol_list
+					rows <= fields /
 			minimal_width 500
 	Placeholder null
 	-
-	Prop!id $mol_row
+	Prop!id $mol_view
 		sub /
-			<= Prop_dive!id $mol_link
+			<= Prop_name!id $mol_link
 				title <= prop_title!id \
 				arg <= prop_arg!id *
 					path <= prop_path!id \
-			<= Prop_type!id $mol_select
-				value?val <=> prop_type!id?val \null
-				clearable false
-				searchable false
-				dictionary <= type_options *
-					any \Any
-					boolean \Bool
-					number \Numb
-					string \Str
-					list \List
-					dict \Dict
-					object \Obj
-					get \<=
-					bind \<=>
-			<= prop_controls!id /
-				<= Boolean_field!id $mol_switch
-					value?val <=> value_effective!id?val null
-					options *
-						true \True
-						false \False
-				<= Number_field!id $mol_number
-					value?val <=> value_effective!id?val null
-					hint <= number_hint!id \
-				<= String_field!id $mol_string
-					value?val <=> value_effective!id?val null
-					hint <= string_hint!id \
-				<= Element_field!id $mol_select
-					value?val <=> value_effective!id?val null
-					options <= view_options /
-				<= Bind_field!id $mol_select
-					value?val <=> value_effective!id?val null
-					options <= bind_options /
-				<= List_field!id $mol_select
-					value?val <=> value_effective!id?val null
-					options <= view_options /
+			<= Prop_value!id $mol_app_studio_field
+				type?val <=> prop_type!id?val \
+				value?val <=> value_effective!id?val null
+				hint <= value_effective!id -
+				object_options <= view_options /
+				prop_options <= bind_options /
 	-
 	block?val <= block_default \mol_view
 	registry $mol_tree

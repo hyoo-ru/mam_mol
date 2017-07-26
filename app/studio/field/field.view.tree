@@ -1,0 +1,42 @@
+$mol_app_studio_field $mol_view
+	sub /
+		<= controls /
+			<= Bool $mol_switch
+				value?val <=> value?val null
+				options *
+					true \True
+					false \False
+			<= Number $mol_number
+				value?val <=> value?val null
+				hint <= hint \
+			<= String $mol_string
+				value?val <=> value?val null
+				hint <= hint \
+			<= Object $mol_select
+				value?val <=> value?val null
+				options <= object_options /
+			<= Prop $mol_select
+				value?val <=> value?val null
+				options <= prop_options /
+			<= List $mol_list
+				rows <= rows /
+		<= Type $mol_select
+			value?val <=> type?val \null
+			clearable false
+			searchable false
+			options <= type_options /
+				\null
+				\bool
+				\number
+				\string
+				\locale
+				\list
+				\dict
+				\object
+				\get
+				\bind
+	Item!index $mol_app_studio_field
+		type_options /
+			\string
+			\object
+			\get

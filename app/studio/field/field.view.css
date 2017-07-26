@@ -1,0 +1,23 @@
+[mol_app_studio_field] {
+	display: flex;
+	justify-content: flex-end;
+}
+
+[mol_app_studio_field_type] {
+	flex: 0 0 7rem;
+}
+
+[mol_app_studio_field_boolean] ,
+[mol_app_studio_field_number] ,
+[mol_app_studio_field_string] ,
+[mol_app_studio_field_object] ,
+[mol_app_studio_field_prop] {
+	flex: 1 1 10rem;
+	width: auto;
+}
+
+[mol_app_studio_field_list] {
+	flex: 1 1 20rem;
+}
+[mol_app_studio_field_item] {
+}

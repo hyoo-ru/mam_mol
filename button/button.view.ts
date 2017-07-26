@@ -6,7 +6,9 @@ namespace $.$mol {
 		}
 		
 		event_activate( next : Event ) {
+			if( !next ) return
 			if( !this.enabled() ) return
+			
 			this.event_click( next )
 		}
 		

@@ -3,7 +3,7 @@ namespace $.$mol {
 
 		event_click( next? : Event ) {
 			this.checked( !this.checked() )
-			next.preventDefault()
+			if( next ) next.preventDefault()
 		}
 		
 		sub() {

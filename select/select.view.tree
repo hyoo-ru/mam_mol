@@ -5,6 +5,7 @@ $mol_select $mol_view
 	searchable true
 	search_breakpoint 7
 	clearable true
+	minimal_height 40
 	Hint $mol_view
 		sub /
 			<= hint \

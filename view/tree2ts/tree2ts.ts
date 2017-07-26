@@ -96,7 +96,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 							overs.push( '\t\t\tobj[' + JSON.stringify( overName[1] ) + '] = (' + args.join( ',' ) + ') => ' + v + '\n' )
 							needSet = ns
 						} )
-						return '(( obj )=>{\n' + overs.join( '' ) + '\t\t\treturn obj\n\t\t})( new ' + value.type + ' )'
+						return '(( obj )=>{\n' + overs.join( '' ) + '\t\t\treturn obj\n\t\t})( new this.$.' + value.type + ' )'
 					case( value.type === '*' ) :
 						//needReturn = false
 						var opts : string[] = []

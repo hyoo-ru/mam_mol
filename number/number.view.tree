@@ -1,7 +1,7 @@
 $mol_number $mol_bar
 	precision_view <= precision 1
 	precision_change <= precision 1
-	value?val null
+	value?val NaN
 	sub /
 		<= Dec $mol_button_minor
 			event_click?val <=> event_dec?val null

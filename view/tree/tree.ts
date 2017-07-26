@@ -7,9 +7,9 @@ namespace $ {
 			function prop_type( val : $mol_tree ) {
 				
 				switch( val.type ) {
-					case 'true' : return 'boolean'
-					case 'false' : return 'boolean'
-					case 'null' : return 'any'
+					case 'true' : return 'bool'
+					case 'false' : return 'bool'
+					case 'null' : return 'null'
 					case '*' : return 'dict'
 					case '/' : return 'list'
 					case '@' : return 'locale'

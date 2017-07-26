@@ -45,20 +45,6 @@ namespace $.$mol {
 			.map( prop => this.Prop([ ... path , prop.type ]) )
 		}
 		
-		prop_controls( path : string[] ) {
-			const type = this.prop_type( path )
-			return [
-				( type === 'boolean' ) ? this.Boolean_field( path ) : null ,
-				( type === 'number' ) ? this.Number_field( path ) : null ,
-				( type === 'string' || type === '=>' ) ? this.String_field( path ) : null ,
-				( type === 'locale' ) ? this.String_field( path ) : null ,
-				( type === 'object' ) ? this.Element_field( path ) : null ,
-				( type === 'get' ) ? this.Bind_field( path ) : null ,
-				( type === 'bind' ) ? this.Bind_field( path ) : null ,
-				//( type === 'Array' ) ? this.List_field( path ) : null ,
-			]
-		}
-		
 		prop_title( path : string[] ) {
 			return path[ path.length - 1 ]
 		}
@@ -150,7 +136,7 @@ namespace $.$mol {
 			value = this.value_base( path )
 			
 			switch( this.prop_type( path ) ) {
-				case 'boolean' : return this.value_base( path ).toString()
+				case 'bool' : return this.value_base( path ).toString()
 				case 'object' : return this.value_base( path ).constructor.toString()
 				case 'get' : return this.prop_default( path ).sub[0].type
 				case 'bind' : return this.prop_default( path ).sub[0].type
@@ -161,19 +147,19 @@ namespace $.$mol {
 
 		value_view( path : string[] , next? : string ) {
 			switch( this.prop_type( path ) ) {
-				case 'boolean' : {
-					let value = this.value_overrided( path , next )
+				case 'bool' : {
+					let value = this.value_overrided( path )
 					return value ? ( value == 'true' ) : undefined
 				}
 				case 'string' : {
-					return this.value_overrided( path , next ) || undefined
+					return this.value_overrided( path ) || undefined
 				}
 				case 'object' : {
 					return this.Element( path )
 				}
 			}
 
-			let value = this.value_overrided( path , next )
+			let value = this.value_overrided( path )
 			return ( value == null ) ? undefined : value
 		}
 
@@ -190,9 +176,9 @@ namespace $.$mol {
 				
 				let value = obj[ prop.type ]
 				obj[ prop.type ] = ( next? : any )=> {
-					const val = this.value_view( [ ... path , prop.type ] , next )
+					const val = this.value_view( [ ... path , prop.type ] )
 					if( val !== undefined ) return val
-					return value.apply( obj , next )
+					return value.call( obj , next )
 				}
 			}
 			

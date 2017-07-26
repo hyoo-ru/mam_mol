@@ -2,7 +2,7 @@ namespace $ {
 	
 	export namespace $mol { let $mol }
 
-	export type $mol_view_context = ( typeof $ )&( typeof $.$mol )
+	export type $mol_view_context = ( Window )&( typeof $.$mol )&( typeof $ )
 	
 	export function $mol_view_visible_width() {
 		return $mol_window.size().width

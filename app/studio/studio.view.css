@@ -6,18 +6,17 @@
 	flex: 1 1 500px;
 }
 
-[mol_app_studio_editor_body] {
-	padding: .5rem;
-}
 
 [mol_app_studio_prop] {
-	box-shadow: none;
-	padding: 0;
-	align-items: stretch;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 [mol_app_studio_prop] > * {
 	margin: 0;
+	box-shadow: var(--mol_skin_light_outline);
+	background: var(--mol_skin_light);
+	color: var(--mol_skin_light_text);
 }
 
 [mol_app_studio_preview_page] > [mol_page_body] {
@@ -26,29 +25,13 @@
 	align-items: flex-start;
 }
 
-[mol_app_studio_prop_type] {
-	flex: 0 0 5rem;
+[mol_app_studio_prop_name] {
+	flex: 1 0 10rem;
+	padding: .5rem 1rem;
+	font-weight: bolder;
+	font-size: .875rem;
 }
 
-[mol_app_studio_prop_type] [mol_select_trigger] {
-}
-
-[mol_app_studio_prop_type] [mol_select_trigger_icon] {
-	display: none;
-}
-
-[mol_app_studio_boolean_field] ,
-[mol_app_studio_number_field] ,
-[mol_app_studio_string_field] ,
-[mol_app_studio_bind_field] {
-	flex: 1 1 10rem;
-	width: auto;
-}
-
-[mol_app_studio_prop_dive] {
-	flex: 0 0 12rem;
-}
-
-[mol_app_studio_element_field] {
-	flex: auto;
+[mol_app_studio_prop_value] {
+	flex: 1000 1 auto;
 }

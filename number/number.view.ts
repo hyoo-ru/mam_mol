@@ -2,11 +2,11 @@ namespace $.$mol {
 	export class $mol_number extends $.$mol_number {
 
 		event_dec( next? : Event ) {
-			this.value( this.value() - this.precision_change() )
+			this.value( ( this.value() || 0 ) - this.precision_change() )
 		}
 
 		event_inc( next? : Event ) {
-			this.value( Number( this.value() ) + this.precision_change() )
+			this.value( ( Number( this.value() ) || 0 ) + this.precision_change() )
 		}
 
 		value_string( next? : string ) {
