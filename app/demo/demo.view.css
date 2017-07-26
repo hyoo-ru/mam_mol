@@ -15,6 +15,7 @@
 
 [mol_app_demo_menu_nav] {
 	flex: auto;
+	align-self: stretch;
 }
 
 [mol_app_demo_detail],
