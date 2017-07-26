@@ -44,6 +44,7 @@ namespace $ {
 					const parts = prop.type.match( /^(\w+)(?:!(\w+))?(?:\?(\w+))?$/ )
 					const type = prop_type( prop.sub[0] )
 
+					props[ prop.type ] = undefined
 					props[ prop.type ] = prop.clone({
 						type : parts[1] ,
 						sub : [

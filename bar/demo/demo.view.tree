@@ -3,18 +3,18 @@ $mol_bar_demo $mol_row
 	sub /
 		<= Two $mol_bar
 			sub /
-				<= One_mail $mol_string
-					hint <= mail_hint \E-mail
-					value?val <=> value?val \
-				<= One_submit $mol_button_minor
-					title <= submit_title \submit
-		<= Three $mol_bar
-			sub /
 				<= Two_mail $mol_string
 					hint <= mail_hint \E-mail
-					value?val <=> value?val \
-				<= Two_confirm $mol_check_box
+					value?val <=> mail?val \
+				<= Two_submit $mol_button_minor
+					title <= submit_title \Submit
+		<= Three $mol_bar
+			sub /
+				<= Three_mail $mol_string
+					hint <= mail_hint \E-mail
+					value?val <=> mail?val \
+				<= Three_confirm $mol_check_box
 					title <= confirm_title \Confirm
 					checked?val <=> confirmed?val false
 				<= Three_submit $mol_button_minor
-					title <= submit_title \submit
+					title <= submit_title \Submit

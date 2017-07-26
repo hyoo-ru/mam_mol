@@ -30,7 +30,7 @@ $mol_app_studio $mol_book
 				title <= prop_title!id \
 				arg <= prop_arg!id *
 					path <= prop_path!id \
-			- <= Prop_type!id $mol_select
+			<= Prop_type!id $mol_select
 				value?val <=> prop_type!id?val \null
 				clearable false
 				searchable false
@@ -48,8 +48,8 @@ $mol_app_studio $mol_book
 				<= Boolean_field!id $mol_switch
 					value?val <=> value_effective!id?val null
 					options *
-						true \On
-						false \Off
+						true \True
+						false \False
 				<= Number_field!id $mol_number
 					value?val <=> value_effective!id?val null
 					hint <= number_hint!id \

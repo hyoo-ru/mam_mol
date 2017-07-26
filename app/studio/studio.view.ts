@@ -68,22 +68,22 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		prop( path : string[] ) {
 			const class_name = this.element_class( path.slice( 0 , path.length - 1 ) )
-			return this.props_all( class_name ).select( path[ path.length - 1 ] , '' )
+			return this.props_all( class_name ).select( path[ path.length - 1 ] ).sub[0]
 		}
 		
 		@ $mol_mem_key()
 		prop_type( path : string[] , next? : string ) {
-			return next || this.prop( path ).select( 'type' , '' ).sub[0].value
+			return next || this.prop( path ).select( 'type' ).sub[0].value
 		}
 
 		@ $mol_mem_key()
 		prop_key( path : string[] , next? : string ) {
-			return next || this.prop( path ).select( 'key' , '' ).sub[0].value
+			return next || this.prop( path ).select( 'key' ).sub[0].value
 		}
 
 		@ $mol_mem_key()
 		prop_next( path : string[] , next? : string ) {
-			return next || this.prop( path ).select( 'next' , '' ).sub[0].value
+			return next || this.prop( path ).select( 'next' ).sub[0].value
 		}
 
 		@ $mol_mem_key()
@@ -161,32 +161,34 @@ namespace $.$mol {
 			switch( this.prop_type( path ) ) {
 				case 'boolean' : {
 					let value = this.value_overrided( path , next )
-					return value ? ( value == 'true' ) : this.value_base( path , next )
+					return value ? ( value == 'true' ) : undefined
 				}
 				case 'string' : {
-					return this.value_overrided( path , next ) || this.value_base( path , next )
+					return this.value_overrided( path , next ) || undefined
 				}
 				case 'object' : {
-					let value = this.value_overrided( path , next )
-					return ( value == null ) ? this.value_base( path , next ) : this.Element( path )
+					return this.Element( path )
 				}
 			}
 
 			let value = this.value_overrided( path , next )
-			return ( value == null ) ? this.value_base( path , next ) : value
+			return ( value == null ) ? undefined : value
 		}
 
 		@ $mol_mem_key()
 		Element( path : string[] ) : $mol_view {
 
-			const class_name = this.value_overrided( path ) || this.element_class( path )
+			const class_name = path.length && this.value_overrided( path ) || this.element_class( path )
 			const obj = ( path.length && !this.value_overrided( path ) ) ? this.value_base( path ) : new( this.view_class( class_name ) )
 			
 			const props = this.props_all( class_name )
 			
 			for( let prop of props.sub ) {
+				let value = obj[ prop.type ]
 				obj[ prop.type ] = ( next? : any )=> {
-					return this.value_view( [ ... path , prop.type ] , next )
+					const val = this.value_view( [ ... path , prop.type ] , next )
+					if( val !== undefined ) return val
+					return value.apply( obj , next )
 				}
 			}
 			

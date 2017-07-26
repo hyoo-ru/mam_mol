@@ -27,7 +27,7 @@
 }
 
 [mol_app_studio_prop_type] {
-	flex: 0 0 auto;
+	flex: 0 0 5rem;
 }
 
 [mol_app_studio_prop_type] [mol_select_trigger] {
