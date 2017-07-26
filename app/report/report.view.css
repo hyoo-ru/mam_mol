@@ -37,7 +37,7 @@
 
 [mol_app_report_texter] {
 	display: flex;
-	padding: .5rem;
+	padding: .5rem 1rem;
 }
 
 [mol_app_report_stringer] {

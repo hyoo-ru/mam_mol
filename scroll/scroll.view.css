@@ -2,6 +2,7 @@
 	display: block;
 	overflow: auto;
 	flex: 1 1 auto;
+	align-self: stretch;
 	box-sizing: border-box;
 	will-change: scroll-position;
 	transform: translateZ(0);
