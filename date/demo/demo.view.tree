@@ -1,5 +1,5 @@
-$mol_date_demo_bithday $mol_view
-	sub /
+$mol_date_demo_bithday $mol_list
+	rows /
 		<= Date $mol_date
 			value?val <=> date?val \
 		<= Bithday $mol_list
@@ -9,12 +9,25 @@ $mol_date_demo_bithday $mol_view
 $mol_date_demo_default $mol_view
 	sub /
 		<= Date $mol_date
-			value?val <=> date?val \2017-04-01
+			value?val <=> date?val \2017-04-01T00:00
 
 $mol_date_demo_number $mol_list
 	rows /
+		<= Text $mol_text
+			text <= text_date_mumber \
+				\Number
 		<= Date $mol_date
-			value_number?val <=> today?val 1500899852946
+			value_number?val <=> today?val 699274800
 		<= Number $mol_number
 			value?val <=> today?val -
-			precision 60000
+			precision_change 3600000
+
+$mol_date_demo_moment $mol_list
+	rows /
+		<= Text $mol_text
+			text <= text_date_moment \
+				\Time moment
+		<= Date_moment $mol_view
+			sub /
+				<= date $mol_date
+					value_moment <= today \2017-04-01T00:00
