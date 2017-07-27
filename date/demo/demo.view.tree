@@ -10,3 +10,10 @@ $mol_date_demo_default $mol_view
 	sub /
 		<= Date $mol_date
 			value?val <=> date?val \2017-04-01
+
+$mol_date_demo_number $mol_view
+	sub /
+		<= Date $mol_date
+			value_number?val <=> today?val 1500899852946
+		<= Number $mol_number
+			value?val <=> today?val -
