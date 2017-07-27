@@ -150,7 +150,8 @@ namespace $ {
 
 		toOffset( config : $mol_time_duration_config ) {
 			const duration = new $mol_time_duration( config )
-		 	const moment = this.offset ? this.shift( duration.summ( this.offset.mult( -1 ) ) ) : this
+			const offset = this.offset || new $mol_time_moment().offset
+		 	const moment = this.shift( duration.summ( offset.mult( -1 ) ) )
 			return moment.merge({ offset : duration })
 		}
 
