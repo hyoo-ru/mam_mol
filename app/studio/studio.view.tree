@@ -32,21 +32,15 @@ $mol_app_studio $mol_book
 		arg *
 			path <= crumb_path!index \
 	-
-	Prop!id $mol_view
-		attr *
-			mol_app_studio_prop_type <= prop_type!id?val \null
-		sub /
-			<= Prop_name!id $mol_link
-				title <= prop_title!id \
-				arg <= prop_arg!id *
-					path <= prop_path!id \
-			<= Prop_value!id $mol_app_studio_field
-				type?val <=> prop_type!id?val \null
-				value?val <=> value_effective!id?val null
-				tree?val <=> prop_default!id?val null
-				hint <= value_effective!id -
-				object_options <= view_options /
-				prop_options <= bind_options /
+	Prop!id $mol_app_studio_field
+		title <= prop_title!id \
+		title_arg <= prop_arg!id *
+		type?val <=> prop_type!id?val \null
+		value?val <=> value_effective!id?val null
+		tree?val <=> prop_default!id?val null
+		hint <= value_effective!id -
+		object_options <= view_options /
+		prop_options <= bind_options /
 	-
 	block?val <= block_default \mol_view
 	registry $mol_tree

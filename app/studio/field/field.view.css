@@ -1,23 +1,70 @@
 [mol_app_studio_field] {
 	display: flex;
-	justify-content: flex-end;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	box-shadow: var(--mol_skin_light_outline);
+	background: var(--mol_skin_light);
+	color: var(--mol_skin_light_text);
+}
+
+[mol_app_studio_field] > * {
+	order: 1;
+}
+
+[mol_app_studio_field_title] {
+	flex: 1 1 14rem;
+	padding: .5rem 1rem;
+	box-shadow: var(--mol_skin_light_outline);
+	order: 0;
+}
+
+[mol_app_studio_field_type="null"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_type="bool"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_type="number"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_type="locale"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_type="string"] [mol_app_studio_field_title] {
+	background: #fffff9;
+}
+
+[mol_app_studio_field_type="object"] [mol_app_studio_field_title] {
+	background: #fff9ff;
+}
+
+[mol_app_studio_field_type="object"]  {
+	margin-top: .5rem;
+}
+
+[mol_app_studio_field_type="list"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_type="dict"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_type="object"] [mol_app_studio_field_title] {
+	font-weight: bolder;
+}
+
+[mol_app_studio_field_type="list"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_type="dict"] [mol_app_studio_field_title] {
+	background: #f9ffff;
+}
+
+[mol_app_studio_field_type="list"] ,
+[mol_app_studio_field_type="dict"] {
+	margin: .5rem 0;
 }
 
 [mol_app_studio_field_type] {
 	flex: 0 0 7rem;
 }
 
-[mol_app_studio_field_boolean] ,
+[mol_app_studio_field_bool] ,
 [mol_app_studio_field_number] ,
 [mol_app_studio_field_string] ,
 [mol_app_studio_field_object] ,
 [mol_app_studio_field_prop] {
-	flex: 1 1 10rem;
+	flex: 1000 1 10rem;
 	width: auto;
 }
 
 [mol_app_studio_field_list] {
-	flex: 1 1 20rem;
+	flex: 1000 1 20rem;
 }
 
 [mol_app_studio_field_item] {

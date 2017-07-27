@@ -2,6 +2,10 @@ namespace $.$mol {
 	
 	export class $mol_app_studio_field extends $.$mol_app_studio_field {
 
+		Title() {
+			return this.title() ? super.Title() : null
+		}
+
 		controls() {
 			const type = this.type()
 			return [

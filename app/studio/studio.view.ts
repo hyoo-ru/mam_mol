@@ -49,8 +49,8 @@ namespace $.$mol {
 			return path[ path.length - 1 ]
 		}
 
-		prop_path( path : string[] ) {
-			return path.join( ',' )
+		prop_arg( path : string[] ) {
+			return { path : path.join( ',' ) }
 		}
 		
 		@ $mol_mem_key()

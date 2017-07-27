@@ -1,5 +1,25 @@
 $mol_app_studio_field $mol_view
+	attr *
+		mol_app_studio_field_type <= type?val \null
 	sub /
+		<= Title $mol_link
+			title <= title \
+			arg <= title_arg *
+		<= Type $mol_select
+			value?val <=> type?val \null
+			clearable false
+			searchable false
+			options <= type_options /
+				\null
+				\bool
+				\number
+				\string
+				\locale
+				\list
+				\dict
+				\object
+				\get
+				\bind
 		<= controls /
 			<= Bool $mol_switch
 				value?val <=> value?val null
@@ -20,21 +40,6 @@ $mol_app_studio_field $mol_view
 				options <= prop_options /
 			<= List $mol_list
 				rows <= rows /
-		<= Type $mol_select
-			value?val <=> type?val \null
-			clearable false
-			searchable false
-			options <= type_options /
-				\null
-				\bool
-				\number
-				\string
-				\locale
-				\list
-				\dict
-				\object
-				\get
-				\bind
 	tree $mol_tree
 	Item!index $mol_app_studio_field
 		type?val <=> item_type!index?val \null
