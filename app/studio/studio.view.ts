@@ -22,15 +22,15 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		props_all( name : string ) {
-			const props_all : $mol_tree[] = []
+			const props_all : { [ name : string ] : $mol_tree } = {}
 			
 			while( name ) {
 				const props = this.props_self( name )
-				props_all.push( ... props.sub )
+				for( let prop of props.sub ) props_all[ prop.type ] = prop
 				name = this.registry().select( name , 'super' , '' ).value
 			}
 			
-			return this.registry().clone({ sub : props_all })
+			return this.registry().clone({ sub : Object.keys( props_all ).map( name => props_all[ name ] ) })
 		}
 		
 		view_class( name : string ) {
