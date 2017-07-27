@@ -23,7 +23,7 @@
 	align-items: center;
 	vertical-align: middle;
 	text-align: center;
-	padding: .5rem 1rem;
+	padding: .5rem;
 	box-shadow: var(--mol_skin_light_outline);
 	border-radius: var(--mol_skin_round);
 }
