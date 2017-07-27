@@ -1,9 +1,9 @@
 [mol_app_studio_preview_page] {
-	flex: 1000 1000 500px; 
+	flex: 1000 1000 600px; 
 }
 
 [mol_app_studio_editor_page] {
-	flex: 1 1 500px;
+	flex: 1 1 600px;
 }
 
 [mol_app_studio_crumbs] {
@@ -26,8 +26,9 @@
 }
 
 [mol_app_studio_prop_name] {
-	flex: 1 0 10rem;
+	flex: 1 0 12rem;
 	padding: .5rem 1rem;
+	pointer-events: none;
 }
 
 [mol_app_studio_prop_value] {
@@ -49,6 +50,7 @@
 
 [mol_app_studio_prop_type="object"] [mol_app_studio_prop_name] {
 	font-weight: bolder;
+	pointer-events: all;
 }
 
 [mol_app_studio_prop_type="list"] ,

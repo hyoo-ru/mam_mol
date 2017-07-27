@@ -83,7 +83,7 @@ namespace $.$mol {
 			return $mol_state_arg.value( this.state_key( 'block' ) , next ) || this.block_default()
 		}
 		
-		path( next? : string[] ) {
+		path( next? : string[] ) : string[] {
 			const str = $mol_state_arg.value( this.state_key( 'path' ) , next && next.join( ',' ) )
 			return ( str == null ) ? null : ( str ? str.split( ',' ) : [] )
 		}
