@@ -9,15 +9,15 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		lamps() {
-			const filter = this.filter().toLowerCase()
-			if( !filter ) return this.lamps_all()
+			const tags = this.filter_tags()
+			if( tags.length === 0 ) return this.lamps_all()
 			
-			return this.lamps_all().filter( lamp => {
+			return this.lamps_all().filter( lamp => tags.every( tag => {
 				for( let field in lamp ) {
-					if( lamp[ field ].toLowerCase().match( filter ) ) return true
+					if( lamp[ field ].toLowerCase().match( tag ) ) return true
 				}
 				return false
-			} )
+			} ) )
 		}
 		
 		@ $mol_mem()
@@ -44,8 +44,22 @@ namespace $.$mol {
 			return `${ row[ 'brand' ] } ${ row[ 'model' ] }`
 		}
 		
-		filter( next? : string ) {
-			return $mol_state_arg.value( 'filter' , next ) || ''
+		_filter_timer = 0
+		@ $mol_mem()
+		filter( next? : string , force? : $mol_atom_force ) : string {
+			if( next === void null ) return $mol_state_arg.value( 'filter' ) || ''
+			
+			$mol_state_arg.value( 'filter' , next )
+			
+			if( this._filter_timer ) clearTimeout( this._filter_timer )
+			this._filter_timer = setTimeout( ()=> { this.filter( void null , $mol_atom_force ) } , 500 )
+		}
+		
+		@ $mol_mem()
+		filter_tags( next? : string[] ) {
+			const filter = this.filter( next && next.join( ' ' ) ).toLowerCase().trim()
+			const tags = filter.split( /\s+/ ).filter( tag => Boolean( tag ) )
+			return tags
 		}
 		
 		lamp_arg( id : string ) {
@@ -113,6 +127,25 @@ namespace $.$mol {
 		
 		matt() {
 			return this.lamp()[ 'matt' ] == 1
+		}
+		
+		ripple() {
+			return `${ this.lamp()[ 'flicker' ] }%`
+		}
+		
+		rating_cri() {
+			const cri = this.lamp()[ 'cri' ]
+			if( cri >= 90 ) return 5
+			if( cri >= 85 ) return 4.5
+			if( cri >= 80 ) return 4
+			if( cri >= 75 ) return 3.5
+			if( cri >= 70 ) return 3
+			if( cri >= 60 ) return 2
+			return 1
+		}
+		
+		rating() {
+			return Math.min( this.rating_cri() )
 		}
 		
 		slug( id : string ) {

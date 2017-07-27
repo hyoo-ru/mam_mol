@@ -68,9 +68,8 @@ namespace $.$mol {
 		}
 		
 		render() {
-			const node = super.render()
+			super.render()
 			this.paint()
-			return node
 		}
 
 	}

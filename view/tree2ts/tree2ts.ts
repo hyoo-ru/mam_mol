@@ -65,6 +65,10 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 						var items : string[] = []
 						value.sub.forEach( item => {
 							if( item.type === '-' ) return
+							if( item.type === '^' ) {
+								items.push( `...super.${ param.type }()` )
+								return
+							}
 							var val = getValue( item )
 							if( val ) items.push( val )
 						} )

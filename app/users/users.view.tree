@@ -29,6 +29,9 @@ $mol_app_users $mol_page
 				event_click?val <=> event_save?val null
 			<= Message $mol_status
 				status <= users_master null
+	plugins /
+		<= Touch $mol_touch
+			swipe_bottom?val <=> event_reload?val null
 	User_row!id $mol_app_users_row
 		title?val <=> user_name!id?val \
 		event_drop?val <=> event_user_drop!id?val null

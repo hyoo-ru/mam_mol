@@ -20,10 +20,10 @@ namespace $ {
 			
 			const view = View.Root( i )
 			
-			$mol_view_dom.mount( view , nodes.item( i ) )
+			nodes.item( i ).id = view.toString()
 			
 			let win = new $mol_atom( `$mol_view.Root(${ i })` , ()=> {
-				view.render()
+				view.dom_tree()
 				$mol_dom_context.document.title = view.title()
 				return null
 			} )

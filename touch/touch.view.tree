@@ -1,4 +1,4 @@
-$mol_touch $mol_view
+$mol_touch $mol_plugin
 	start_zoom?val 0
 	start_distance?val 0
 	zoom?val 1

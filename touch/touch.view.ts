@@ -1,11 +1,8 @@
 namespace $.$mol {
 	export class $mol_touch extends $.$mol_touch {
 		
-		dom_node() : Element {
-			return $mol_view_dom.mount( this , ( this.object_owner() as $mol_view ).dom_node() )
-		}
-		
 		event_start( event? : TouchEvent ) {
+			if( event.defaultPrevented ) return
 
 			if( event.touches.length === 1 ) {
 				const pos = [ event.touches[0].screenX , event.touches[0].screenY ]
@@ -30,10 +27,11 @@ namespace $.$mol {
 				const pos = [ event.touches[0].screenX , event.touches[0].screenY ]
 				const precision = this.swipe_precision()
 				
-				if( pos[0] - start[0] > precision && Math.abs( pos[1] - start[1] ) < precision ) this.swipe_right( event )
-				if( start[0] - pos[0] > precision && Math.abs( pos[1] - start[1] ) < precision ) this.swipe_left( event )
-				if( pos[1] - start[1] > precision && Math.abs( pos[0] - start[0] ) < precision ) this.swipe_bottom( event )
-				if( start[1] - pos[1] > precision && Math.abs( pos[0] - start[0] ) < precision ) this.swipe_top( event )
+				if( pos[0] - start[0] > precision * 2 && Math.abs( pos[1] - start[1] ) < precision ) this.swipe_right( event )
+				else if( start[0] - pos[0] > precision * 2 && Math.abs( pos[1] - start[1] ) < precision ) this.swipe_left( event )
+				else if( pos[1] - start[1] > precision * 2 && Math.abs( pos[0] - start[0] ) < precision ) this.swipe_bottom( event )
+				else if( start[1] - pos[1] > precision * 2 && Math.abs( pos[0] - start[0] ) < precision ) this.swipe_top( event )
+				else return
 				
 				this.start_pos( null )
 			}
