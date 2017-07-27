@@ -1,16 +1,6 @@
-[mol_date_demo_bithday],
-[mol_date_demo_default],
-[mol_date_demo_number],
-[mol_date_demo_moment]
-{
-	display: block;
-	margin: 0px auto;
-	vertical-align: middle;
-	align-self: center;
-	flex: 0 0 auto;
-}
-
 [mol_date_demo_number]
 {
-	width: 10rem;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
 }

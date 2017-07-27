@@ -3,12 +3,12 @@ namespace $.$mol {
 
 		@ $mol_mem()
 		value( val? : string ) {
-			return this.value_moment( new $mol_time_moment( val ) ).toString('YYYY-MM-DD')
+			return this.value_moment( new $mol_time_moment( val ) ).toString('YYYY-MM-DDThh:mm')
 		}
 
 		@ $mol_mem()
 		value_moment( val? : $mol_time_moment) {
-			return new $mol_time_moment( this.value_number( new $mol_time_moment( val ).valueOf() ) )
+			return new $mol_time_moment( this.value_number( val == undefined ? val : val.valueOf() ) )
  		}
  	}
 

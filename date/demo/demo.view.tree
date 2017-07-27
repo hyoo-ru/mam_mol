@@ -11,9 +11,10 @@ $mol_date_demo_default $mol_view
 		<= Date $mol_date
 			value?val <=> date?val \2017-04-01
 
-$mol_date_demo_number $mol_view
-	sub /
+$mol_date_demo_number $mol_list
+	rows /
 		<= Date $mol_date
 			value_number?val <=> today?val 1500899852946
 		<= Number $mol_number
 			value?val <=> today?val -
+			precision 60000
