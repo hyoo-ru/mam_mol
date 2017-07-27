@@ -17,8 +17,18 @@ namespace $.$mol {
 			]
 		}
 
+		item_type( index : number , next? : string ) {
+			//if( next != undefined ) //this.tree().sub[ index ].select( 'type' ).value = next
+			return $mol_view_tree.prop_type( this.tree().sub[ index ] )
+		}
+
+		item_value( index : number , next? : string ) {
+			//if( next != undefined ) this.tree().sub[ index ].select( 'default' ).value = next
+			return this.tree().sub[ index ].sub[0].type || this.tree().sub[ index ].value
+		}
+
 		rows() {
-			return [ this.Item( 0 ) ]
+			return this.tree().sub.map( ( item , index )=> this.Item( index ) )
 		}
 
 	}

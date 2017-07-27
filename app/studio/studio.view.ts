@@ -26,7 +26,7 @@ namespace $.$mol {
 			
 			while( name ) {
 				const props = this.props_self( name )
-				for( let prop of props.sub ) props_all[ prop.type ] = prop
+				for( let prop of props.sub ) props_all[ prop.type ] = props_all[ prop.type ] || prop
 				name = this.registry().select( name , 'super' , '' ).value
 			}
 			

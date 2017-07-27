@@ -2,29 +2,29 @@ namespace $ {
 
 	export class $mol_view_tree extends $mol_tree {
 
-		static fromString( str : string , baseUri? : string ) {
-
-			function prop_type( val : $mol_tree ) {
-				
-				switch( val.type ) {
-					case 'true' : return 'bool'
-					case 'false' : return 'bool'
-					case 'null' : return 'null'
-					case '*' : return 'dict'
-					case '/' : return 'list'
-					case '@' : return 'locale'
-					case '' : return 'string'
-					case '<=' : return 'get'
-					case '<=>' : return 'bind'
-					case '=>' : return 'put'
-				}
-
-				if( val.type[0] === '$' ) return 'object'
-
-				if( Number( val.type ).toString() == val.type ) return 'number'
-
-				throw val.error( 'Wrong value' )
+		static prop_type( val : $mol_tree ) {
+			
+			switch( val.type ) {
+				case 'true' : return 'bool'
+				case 'false' : return 'bool'
+				case 'null' : return 'null'
+				case '*' : return 'dict'
+				case '/' : return 'list'
+				case '@' : return 'locale'
+				case '' : return 'string'
+				case '<=' : return 'get'
+				case '<=>' : return 'bind'
+				case '=>' : return 'put'
 			}
+
+			if( val.type[0] === '$' ) return 'object'
+
+			if( Number( val.type ).toString() == val.type ) return 'number'
+
+			throw val.error( 'Wrong value' )
+		}
+
+		static fromString( str : string , baseUri? : string ) {
 
 			return super.fromString( str , baseUri )
 			
@@ -38,11 +38,11 @@ namespace $ {
 				
 				const props : { [ key : string ] : $mol_tree } = {}
 				
-				function catch_prop( prop : $mol_tree ) {
+				const catch_prop = ( prop : $mol_tree )=> {
 					if( prop.sub.length === 0 ) return
 
 					const parts = prop.type.match( /^(\w+)(?:!(\w+))?(?:\?(\w+))?$/ )
-					const type = prop_type( prop.sub[0] )
+					const type = this.prop_type( prop.sub[0] )
 
 					props[ prop.type ] = undefined
 					props[ prop.type ] = prop.clone({

@@ -35,8 +35,15 @@ $mol_app_studio_field $mol_view
 				\object
 				\get
 				\bind
+	tree $mol_tree
 	Item!index $mol_app_studio_field
+		type?val <=> item_type!index?val \null
+		value?val <=> item_value!index?val \
+		prop_options <= prop_options /
 		type_options /
+			\bool
+			\number
 			\string
-			\object
+			\locale
+			\dict
 			\get

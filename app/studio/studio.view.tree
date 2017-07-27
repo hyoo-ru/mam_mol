@@ -34,6 +34,7 @@ $mol_app_studio $mol_book
 			<= Prop_value!id $mol_app_studio_field
 				type?val <=> prop_type!id?val \
 				value?val <=> value_effective!id?val null
+				tree?val <=> prop_default!id?val null
 				hint <= value_effective!id -
 				object_options <= view_options /
 				prop_options <= bind_options /
