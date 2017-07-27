@@ -6,17 +6,17 @@
 	flex: 1 1 500px;
 }
 
+[mol_app_studio_crumbs] {
+	padding: 0;
+}
 
 [mol_app_studio_prop] {
 	display: flex;
 	flex-wrap: wrap;
-}
-
-[mol_app_studio_prop] > * {
-	margin: 0;
 	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_light);
 	color: var(--mol_skin_light_text);
+	margin: 0rem;
 }
 
 [mol_app_studio_preview_page] > [mol_page_body] {
@@ -28,10 +28,32 @@
 [mol_app_studio_prop_name] {
 	flex: 1 0 10rem;
 	padding: .5rem 1rem;
-	font-weight: bolder;
-	font-size: .875rem;
 }
 
 [mol_app_studio_prop_value] {
 	flex: 1000 1 auto;
 }
+
+[mol_app_studio_prop_type="null"] ,
+[mol_app_studio_prop_type="bool"] ,
+[mol_app_studio_prop_type="number"] ,
+[mol_app_studio_prop_type="locale"] ,
+[mol_app_studio_prop_type="string"] {
+	background: #fffff9;
+}
+
+[mol_app_studio_prop_type="object"]  {
+	background: #fff9ff;
+	margin-top: .5rem;
+}
+
+[mol_app_studio_prop_type="object"] [mol_app_studio_prop_name] {
+	font-weight: bolder;
+}
+
+[mol_app_studio_prop_type="list"] ,
+[mol_app_studio_prop_type="dict"] {
+	background: #f9ffff;
+	margin: .5rem 0;
+}
+

@@ -189,13 +189,23 @@ namespace $.$mol {
 			return this.Element([])
 		}
 		
-		// preview_title() {
-		// 	return '$' + this.block() + ": " + this.Element([]).title()
-		// }
+		preview_title() {
+			return super.preview_title() + this.Element([]).title()
+		}
 
-		// editor_title() {
-		// 	return this.path().join(' / ')
-		// }
+		crumbs() {
+			return [ this.Crumb(0) , ... this.path().map( ( name , index )=> this.Crumb( index + 1 ) ) ]
+		}
+
+		crumb_title( index : number ) {
+			if( index === 0 ) return '$' + this.block()
+			return this.path()[ index - 1 ]
+		}
+		
+		crumb_path( index : number ) {
+			if( index === 0 ) return ''
+			return this.path().slice( 0 , index ).join( ',' )
+		}
 		
 	}
 	

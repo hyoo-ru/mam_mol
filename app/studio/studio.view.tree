@@ -3,7 +3,7 @@ $mol_app_studio $mol_book
 	-
 	pages /
 		<= Preview_page $mol_page
-			title <= preview_title @ \Preview
+			title <= preview_title @ \Preview: 
 			tools <= tools_main /
 			body /
 				<= Selector $mol_app_studio_selector
@@ -20,19 +20,28 @@ $mol_app_studio $mol_book
 					arg <= close_arg *
 						path null
 			body /
+				<= Crumbs $mol_row
+					sub <= crumbs /
 				<= Fields $mol_list
 					rows <= fields /
 			minimal_width 500
 	Placeholder null
 	-
+	Crumb!index $mol_link
+		title <= crumb_title!index \
+		arg *
+			path <= crumb_path!index \
+	-
 	Prop!id $mol_view
+		attr *
+			mol_app_studio_prop_type <= prop_type!id?val \null
 		sub /
 			<= Prop_name!id $mol_link
 				title <= prop_title!id \
 				arg <= prop_arg!id *
 					path <= prop_path!id \
 			<= Prop_value!id $mol_app_studio_field
-				type?val <=> prop_type!id?val \
+				type?val <=> prop_type!id?val \null
 				value?val <=> value_effective!id?val null
 				tree?val <=> prop_default!id?val null
 				hint <= value_effective!id -
