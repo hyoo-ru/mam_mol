@@ -4,6 +4,7 @@
 	height: 1em;
 	flex: 0 0 auto;
 	vertical-align: -.1em;
+	will-change: transform;
 }
 
 :hover > [mol_icon] {

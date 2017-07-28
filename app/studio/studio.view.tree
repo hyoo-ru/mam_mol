@@ -9,7 +9,7 @@ $mol_app_studio $mol_book
 				<= Selector $mol_app_studio_selector
 					Sub <= Block $mol_view
 					path?val <=> path?val /
-			minimal_width 600
+			minimal_width 400
 		<= Editor_page $mol_page
 			title <= editor_title @ \Properties
 			event_top?val <=> event_front_up?val -
@@ -24,7 +24,7 @@ $mol_app_studio $mol_book
 					sub <= crumbs /
 				<= Fields $mol_list
 					rows <= fields /
-			minimal_width 600
+			minimal_width 400
 	Placeholder null
 	-
 	Crumb!index $mol_link

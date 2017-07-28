@@ -138,14 +138,14 @@ namespace $.$mol {
 			switch( this.prop_type( path ) ) {
 				case 'bool' : return this.value_base( path ).toString()
 				case 'object' : return this.value_base( path ).constructor.toString()
-				case 'get' : return this.prop_default( path ).sub[0].type
+				case 'get' : return this.prop_default( path ).sub[0] && this.prop_default( path ).sub[0].type
 				case 'bind' : return this.prop_default( path ).sub[0].type
 			}
 
 			return value
 		}
 
-		value_view( path : string[] , next? : string ) {
+		value_view( path : string[] , next? : string ) : any {
 			switch( this.prop_type( path ) ) {
 				case 'bool' : {
 					let value = this.value_overrided( path )
@@ -153,6 +153,10 @@ namespace $.$mol {
 				}
 				case 'string' : {
 					return this.value_overrided( path ) || undefined
+				}
+				case 'get' : {
+					const prop = this.value_overrided( path )
+					return prop ? this.Element([])[ prop ]() : undefined
 				}
 				case 'object' : {
 					return this.Element( path )
