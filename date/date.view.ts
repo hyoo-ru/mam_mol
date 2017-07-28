@@ -3,7 +3,7 @@ namespace $.$mol {
 
 		@ $mol_mem()
 		value( val? : string ) {
-			return this.value_moment( val == undefined ? undefined : new $mol_time_moment( val ) ).toString('YYYY-MM-DDThh:mm')
+			return this.value_moment( val == undefined ? undefined : new $mol_time_moment( val ) ).toString('YYYY-MM-DD')
 		}
 
 		@ $mol_mem()

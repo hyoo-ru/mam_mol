@@ -1,7 +1,7 @@
 $mol_date_demo_string $mol_list
 	rows /
 		<= String $mol_string
-			value?val <=> date?val \2017-04-01T00:00
+			value?val <=> date?val \2017-04-01
 		<= Date $mol_date
 			value <= date -
 
@@ -9,11 +9,11 @@ $mol_date_demo_number $mol_list
 	rows /
 		<= Number $mol_number
 			value?val <=> today?val -
-			precision_change 3600000
+			precision_change 100000000
 		<= Date $mol_date
 			value_number?val <=> today?val 699274800
 
 $mol_date_demo_moment $mol_view
 	sub /
 		<= date $mol_date
-			value_moment <= today \2017-04-01T00:00
+			value_moment <= today \2017-04-01
