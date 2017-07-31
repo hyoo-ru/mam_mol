@@ -1,0 +1,11 @@
+$mol_date_demo_moment $mol_row
+	sub /
+		<= Date_label $mol_labeler
+			title <= date_label \Date
+			content <= Date $mol_date
+				value_moment?val <=> date?val $mol_time_moment
+		<= Formatted_label $mol_labeler
+			title <= formatted_label \Time Moment
+			content <= Formatted $mol_view
+				sub /
+					<= formatted \

@@ -51,7 +51,7 @@ moment.offset // $mol_time_duration
 moment.weekday // 0 - sunday , 6 - saturday
 
 // Timestamp
-moment.valueOf() // timestamp
+moment.valueOf() // count of milliseconds from unix epoch
 
 // Native Date
 moment.native // Date instance
