@@ -480,6 +480,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_time_duration](time/duration)** - [time duration](https://en.wikipedia.org/wiki/ISO_8601#Durations) representation with iso8601 support
 * **[$mol_time_interval](time/interval)** - [time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals) representation with iso8601 support
 * **[$mol_state_time](state/time)** - reactive current time stamp 
+* **[$mol_date](state/date)** - work with the date.
 
 ## Maps
 
