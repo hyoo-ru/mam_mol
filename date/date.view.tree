@@ -1,0 +1,5 @@
+$mol_date $mol_string
+	type \date
+	-
+	value_number?val NaN
+	value_moment?val $mol_time_moment

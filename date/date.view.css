@@ -1,0 +1,17 @@
+[mol_date]
+ {
+	padding-right: .5rem;
+ }
+
+ [mol_date]::-webkit-datetime-edit
+ {
+	margin-right: -1.5rem;
+ }
+
+[mol_date]::-webkit-inner-spin-button
+{
+	display: none;
+}
+
+
+
