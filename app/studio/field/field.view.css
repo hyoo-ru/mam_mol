@@ -1,10 +1,11 @@
 [mol_app_studio_field] {
 	display: flex;
-	align-items: flex-start;
+	align-items: stretch;
 	flex-wrap: wrap;
 	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_light);
 	color: var(--mol_skin_light_text);
+	margin: .5rem;
 }
 
 [mol_app_studio_field] > * {
@@ -18,36 +19,27 @@
 	order: 0;
 }
 
-[mol_app_studio_field_type="null"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_type="bool"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_type="number"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_type="locale"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_type="string"] [mol_app_studio_field_title] {
-	background: #fffff9;
+[mol_app_studio_field_variant="null"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="bool"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="number"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="locale"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="string"] [mol_app_studio_field_title] {
+	background: #fffff3;
 }
 
-[mol_app_studio_field_type="object"] [mol_app_studio_field_title] {
-	background: #fff9ff;
+[mol_app_studio_field_variant="object"] [mol_app_studio_field_title] {
+	background: #fff6f3;
 }
 
-[mol_app_studio_field_type="object"]  {
-	margin-top: .5rem;
-}
-
-[mol_app_studio_field_type="list"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_type="dict"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_type="object"] [mol_app_studio_field_title] {
+[mol_app_studio_field_variant="list"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="dict"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="object"] [mol_app_studio_field_title] {
 	font-weight: bolder;
 }
 
-[mol_app_studio_field_type="list"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_type="dict"] [mol_app_studio_field_title] {
-	background: #f9ffff;
-}
-
-[mol_app_studio_field_type="list"] ,
-[mol_app_studio_field_type="dict"] {
-	margin: .5rem 0;
+[mol_app_studio_field_variant="list"] [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="dict"] [mol_app_studio_field_title] {
+	background: #f3ffff;
 }
 
 [mol_app_studio_field_type] {
@@ -68,4 +60,9 @@
 }
 
 [mol_app_studio_field_item] {
+}
+
+[mol_app_studio_field_add] {
+	width: 100%;
+	height: 2.5rem;
 }

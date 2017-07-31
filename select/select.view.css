@@ -78,6 +78,6 @@
 }
 
 [mol_select_hint] {
-	padding: .5rem;
+	padding: .5rem 1rem;
 	color: var(--mol_skin_passive_text);
 }

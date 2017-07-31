@@ -1,17 +1,35 @@
 [mol_app_studio_preview_page] {
-	flex: 1000 1 600px; 
+	flex: 1000 1 400px; 
 }
 
 [mol_app_studio_editor_page] {
-	flex: 1 1 600px;
+	flex: 1 1 400px;
 }
 
 [mol_app_studio_crumbs] {
-	padding: 0;
+	flex: 1000 1 auto;
+	box-shadow: none;
+}
+[mol_app_studio_crumbs] > * {
+	margin: 0;
 }
 
 [mol_app_studio_preview_page] > [mol_page_body] {
 	padding: 1rem;
 	display: flex;
 	align-items: flex-start;
+}
+
+[mol_app_studio_editor_page] > [mol_page_head] {
+	flex-wrap: nowrap;
+}
+
+[mol_app_studio_fields] {
+	display: flex;
+	flex-direction: column;
+	padding: .5rem;
+}
+
+[mol_app_studio_prop_add] {
+	margin: .5rem;
 }

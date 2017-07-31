@@ -13,6 +13,11 @@ $mol_app_studio $mol_book
 		<= Editor_page $mol_page
 			title <= editor_title @ \Properties
 			event_top?val <=> event_front_up?val -
+			Tools => Editor_tools
+			head /
+				<= Crumbs $mol_row
+					sub <= crumbs /
+				<= Editor_tools -
 			tools /
 				<= Close $mol_link
 					sub /
@@ -20,10 +25,16 @@ $mol_app_studio $mol_book
 					arg <= close_arg *
 						path null
 			body /
-				<= Crumbs $mol_row
-					sub <= crumbs /
+				<= Add $mol_bar
+					sub /
+						<= Filter $mol_string
+							hint <= filter_hint @ \Filter properties
+							value?val <=> prop_filter?val \
 				<= Fields $mol_list
 					rows <= fields /
+					Empty <= Prop_add $mol_button_minor
+						event_click?val <=> prop_add?val null
+						title <= prop_add_label @ \Add property
 			minimal_width 400
 	Placeholder null
 	-
@@ -36,9 +47,10 @@ $mol_app_studio $mol_book
 		title <= prop_title!id \
 		title_arg <= prop_arg!id *
 		type?val <=> prop_type!id?val \null
-		value?val <=> value_effective!id?val null
-		tree?val <=> prop_default!id?val null
-		hint <= value_effective!id -
+		- value?val <=> prop_value!id?val null
+		- class?val <=> prop_class!id?val null
+		- tree?val <=> prop_default!id?val null
+		- hint <= prop_value!id -
 		object_options <= view_options /
 		prop_options <= bind_options /
 	-

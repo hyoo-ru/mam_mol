@@ -1,7 +1,7 @@
 $mol_app_studio_field $mol_view
 	attr *
-		mol_app_studio_field_type <= type?val \null
-	sub /
+		mol_app_studio_field_variant <= type?val \null
+	sub <= controls /
 		<= Title $mol_link
 			title <= title \
 			arg <= title_arg *
@@ -20,30 +20,37 @@ $mol_app_studio_field $mol_view
 				\object
 				\get
 				\bind
-		<= controls /
-			<= Bool $mol_switch
-				value?val <=> value?val null
-				options *
-					true \True
-					false \False
-			<= Number $mol_number
-				value?val <=> value?val null
-				hint <= hint \
-			<= String $mol_string
-				value?val <=> value?val null
-				hint <= hint \
-			<= Object $mol_select
-				value?val <=> value?val null
-				options <= object_options /
-			<= Prop $mol_select
-				value?val <=> value?val null
-				options <= prop_options /
-			<= List $mol_list
-				rows <= rows /
+		<= Bool $mol_switch
+			value?val <=> value?val null
+			options *
+				true \True
+				false \False
+		<= Number $mol_number
+			value?val <=> value?val null
+			hint <= hint \
+		<= String $mol_string
+			value?val <=> value?val null
+			hint <= hint \
+		<= Object $mol_select
+			value?val <=> class?val null
+			options <= object_options /
+			hint \Class name
+		<= Prop $mol_select
+			value?val <=> value?val null
+			options <= prop_options /
+		<= List $mol_list
+			rows /
+				<= rows /
+				<= Add $mol_button_minor
+					event_click?val <=> item_add?val null
+					sub /
+						<= Add_icon $mol_icon_plus
 	tree $mol_tree
 	Item!index $mol_app_studio_field
 		type?val <=> item_type!index?val \null
 		value?val <=> item_value!index?val \
+		class?val <=> item_class!index?val \
+		object_options <= object_options /
 		prop_options <= prop_options /
 		type_options /
 			\bool
