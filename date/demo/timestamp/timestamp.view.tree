@@ -1,0 +1,11 @@
+$mol_date_demo_timestamp $mol_row
+	sub /
+		<= Date_label $mol_labeler
+			title <= date_label \Date
+			content <= Date $mol_date
+				value_number?val <=> timestamp?val 699274800
+		<= Timestamp_label $mol_labeler
+			title <= timestamp_label \Timestamp
+			content <= Timestamp $mol_number
+				value?val <=> timestamp?val -
+				precision_change 86400000
