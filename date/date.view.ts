@@ -8,7 +8,8 @@ namespace $.$mol {
 
 		@ $mol_mem()
 		value_moment( val? : $mol_time_moment) {
-			return new $mol_time_moment( this.value_number( val == undefined ? val : val.valueOf() ) )
+			let date = this.value_number( val == undefined ? val : val.valueOf() )
+			return date == null ?  new $mol_time_moment( NaN ) : new $mol_time_moment( date )
  		}
  	}
 

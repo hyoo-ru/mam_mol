@@ -187,9 +187,11 @@ namespace $ {
 				return moment.native.toLocaleString( undefined , { month : 'long' } )
 			} ,
 			'DD Month' : ( moment : $mol_time_moment )=> {
+				if( moment.month == null && moment.day == null ) return ''
 				return moment.native.toLocaleString( undefined , { day : '2-digit' , month : 'long' } )
 			} ,
 			'D Month' : ( moment : $mol_time_moment )=> {
+				if( moment.month == null && moment.day == null ) return ''
 				return moment.native.toLocaleString( undefined , { day : 'numeric' , month : 'long' } )
 			} ,
 			'Mon' : ( moment : $mol_time_moment )=> {
@@ -197,9 +199,11 @@ namespace $ {
 				return moment.native.toLocaleString( undefined , { month : 'short' } )
 			} ,
 			'DD Mon' : ( moment : $mol_time_moment )=> {
+				if( moment.month == null && moment.day == null ) return ''
 				return moment.native.toLocaleString( undefined , { day : '2-digit' , month : 'short' } )
 			} ,
 			'D Mon' : ( moment : $mol_time_moment )=> {
+				if( moment.month == null && moment.day == null ) return ''
 				return moment.native.toLocaleString( undefined , { day : 'numeric' , month : 'short' } )
 			} ,
 			'-MM' : ( moment : $mol_time_moment )=> {

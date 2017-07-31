@@ -8,10 +8,12 @@
 	margin-right: -1.5rem;
  }
 
+[mol_date]::-webkit-datetime-edit-fields-wrapper
+{
+	padding: 0;
+}
+
 [mol_date]::-webkit-inner-spin-button
 {
 	display: none;
 }
-
-
-
