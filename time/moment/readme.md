@@ -1,6 +1,6 @@
 # $mol_time_moment
 
-Immutable iso8601 time moment representation.
+Immutable iso8601 time moment representation. But timestamp is expressed in milliseconds.
 
 ## Creating
 
