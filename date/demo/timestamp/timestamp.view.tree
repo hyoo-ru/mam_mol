@@ -3,7 +3,7 @@ $mol_date_demo_timestamp $mol_row
 		<= Date_label $mol_labeler
 			title <= date_label \Date
 			content <= Date $mol_date
-				value_number?val <=> msec?val 699274800
+				value_number?val <=> msec?val NaN
 		<= Timestamp_label $mol_labeler
 			title <= timestamp_label \Timestamp
 			content <= Msec $mol_number
