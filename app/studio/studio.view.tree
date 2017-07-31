@@ -25,11 +25,9 @@ $mol_app_studio $mol_book
 					arg <= close_arg *
 						path null
 			body /
-				<= Add $mol_bar
-					sub /
-						<= Filter $mol_string
-							hint <= filter_hint @ \Filter properties
-							value?val <=> prop_filter?val \
+				<= Filter $mol_search
+					hint <= filter_hint @ \Filter properties
+					query?val <=> prop_filter?val \
 				<= Fields $mol_list
 					rows <= fields /
 					Empty <= Prop_add $mol_button_minor
@@ -50,7 +48,7 @@ $mol_app_studio $mol_book
 		- value?val <=> prop_value!id?val null
 		- class?val <=> prop_class!id?val null
 		- tree?val <=> prop_default!id?val null
-		- hint <= prop_value!id -
+		hint <= prop_value_base!id null
 		object_options <= view_options /
 		prop_options <= bind_options /
 	-
