@@ -200,7 +200,6 @@ namespace $ {
 				return moment.native.toLocaleString( undefined , { day : '2-digit' , month : 'short' } )
 			} ,
 			'D Mon' : ( moment : $mol_time_moment )=> {
-				if( moment.month == null ) return ''
 				return moment.native.toLocaleString( undefined , { day : 'numeric' , month : 'short' } )
 			} ,
 			'-MM' : ( moment : $mol_time_moment )=> {
