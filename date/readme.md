@@ -1,6 +1,6 @@
 # $mol_date
 
-The component is used to work with the date.
+Date presenter and picker.
  
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_date)
 
@@ -11,7 +11,7 @@ The component is used to work with the date.
 Date in YYYY-MM-DD format.
 ```
 <= Birth_day $mol_date
-	value <= birth_day \2017-04-01
+	value?val <=> birth_day?val \2017-04-01
 ```
 
 **`value_number( next? : number ) : number`**
