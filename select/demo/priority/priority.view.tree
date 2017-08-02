@@ -3,7 +3,7 @@ $mol_select_demo_priority $mol_row
 	sub /
 		<= Labeler $mol_labeler
 			title \Priority
-			Content $mol_select
+			Content <= Priority $mol_select
 				value?val <=> priority?val \Lowest
 				options /
 					\Highest 
@@ -11,4 +11,3 @@ $mol_select_demo_priority $mol_row
 					\Medium
 					\Low
 					\Lowest
-				clearable false

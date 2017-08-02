@@ -7,6 +7,8 @@ $mol_select_demo_month $mol_row
 				no_options_message \Not found
 				value?val <=> month?val \
 				dictionary <= months *
+					\
+						\
 					jan \January
 					feb \February
 					mar \March

@@ -101,7 +101,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 						//needReturn = false
 						var opts : string[] = []
 						value.sub.forEach( opt => {
-							if( /^-?$/.test( opt.type ) ) return ''
+							if( opt.type === '-' ) return ''
 							if( opt.type === '^' ) {
 								opts.push( `\t\t\t...super.${ param.type }() ,\n` )
 								return

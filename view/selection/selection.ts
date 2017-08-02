@@ -6,12 +6,13 @@ namespace $ {
 		static focused( next? : Element[] , force? : $mol_atom_force ) {
 			if( next === undefined ) return [] as Element[]
 			
-			if( next.length !== 1 ) throw new Error( 'Length must be equals 1' )
-			
 			const node = next[ 0 ] as HTMLElement
 			
-			setTimeout( ()=> node.focus() )
-			
+			new $mol_defer( ()=> {
+				if( node ) node.focus()
+				else if( this[ 'focused()' ][0] ) console.log( this[ 'focused()' ][ 0 ].blur() )
+			} )
+
 			return []
 		}
 		
@@ -101,8 +102,8 @@ namespace $ {
 				parents.push( element )
 				element = element.parentNode as HTMLElement
 			}
-			
-			$mol_view_selection.focused( parents , $mol_atom_force )
+
+			this.focused( parents , $mol_atom_force )
 		}
 		
 		static onBlur( event : FocusEvent ) {

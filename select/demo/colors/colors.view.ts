@@ -11,7 +11,7 @@ namespace $.$mol {
 		}
 		
 		colors() {
-			return $mol_colors
+			return { '' : 'transparent' , ... $mol_colors }
 		}
 		
 	}

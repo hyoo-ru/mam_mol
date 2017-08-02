@@ -9,8 +9,10 @@ namespace $.$mol {
 		}
 
 		suggest_selected( next? : string ) {
-			if( next ) this.Suggest().Filter_string().focused( true )
-			return this.query( next )
+			if( next === undefined ) return
+			
+			this.Suggest().Filter().focused( true )
+			this.query( next )
 		}
 		
 		sub() {

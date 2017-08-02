@@ -3,10 +3,6 @@
 	display: inline-flex;
 }
 
-[mol_pop]:focus {
-	outline: none;
-}
-
 [mol_pop]:hover {
 	z-index: 4;
 }
@@ -23,6 +19,10 @@
 	overflow: hidden;
 	overflow-y: auto;
 	word-break: normal;
+}
+
+[mol_pop_bubble]:focus {
+	outline: none;
 }
 
 [mol_pop_align="left_top"] {
