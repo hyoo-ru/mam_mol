@@ -3,13 +3,10 @@
 	word-break: normal;
 }
 
-[mol_select_trigger] {
-	box-shadow: var(--mol_skin_light_outline);
-	padding: 0;
-	margin: 0;
+[mol_select_anchor] {
+	display: flex;
 	flex: 1 1 auto;
 	justify-content: space-between;
-	flex-direction: row;
 }
 
 [mol_select_option_row] {
@@ -18,7 +15,7 @@
 	justify-content: flex-start;
 }
 
-[mol_select_sub] > [mol_pop_bubble] {
+[mol_select_bubble] {
 	min-width: 100%;
 }
 
@@ -51,20 +48,10 @@
 }
 
 [mol_select_trigger_icon] {
-	margin: .75rem;
 	transform: rotateZ(90deg);
 }
 :hover > [mol_select_trigger_icon] {
 	transform: rotateZ(90deg) scale(1.25);
-}
-
-[mol_select_pop] {
-	flex: 1 1 auto;
-	display: flex;
-}
-
-[mol_select_pop] > [mol_pop_bubble] {
-	min-width: 100%;
 }
 
 [mol_select_bubble_content] {

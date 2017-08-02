@@ -1,4 +1,4 @@
-$mol_select $mol_view
+$mol_select $mol_pop
 	dictionary *
 	options /
 	value?val \
@@ -20,16 +20,16 @@ $mol_select $mol_view
 				<= option_rows -
 			current_y?component <=> option_focused?component null
 			cycle?val <=> nav_cycle?val true
-	sub / 
-		<= Pop $mol_pop 
-			showed <= options_showed false
-			align?val <=> options_align?val \bottom_right
-			Anchor <= Trigger $mol_button_minor
-				sub <= trigger_content /
-					<= Filter $mol_string
-						value?val <=> filter_pattern?val \
-						hint <= filter_hint <= hint @ \Search..
+	showed <= options_showed false
+	align?val <=> options_align?val \bottom_right
+	Anchor $mol_bar
+		sub <= anchor_content /
+			<= Filter $mol_string
+				value?val <=> filter_pattern?val \
+				hint <= filter_hint <= hint @ \Search..
+			<= Trigger $mol_button_minor
+				sub /
 					<= Trigger_icon $mol_icon_chevron
-			bubble_content /
-				<= Bubble_content $mol_list
-					rows <= option_rows /
+	bubble_content /
+		<= Bubble_content $mol_list
+			rows <= option_rows /

@@ -8,7 +8,7 @@ $mol_search $mol_bar
 			filter_pattern?val <=> query?val -
 			options_showed <= suggests_showed false
 			options <= suggests /
-			Trigger_icon null
+			Trigger null
 		<= Clear $mol_button_minor
 			sub /
 				<= Clear_icon $mol_icon_cross
