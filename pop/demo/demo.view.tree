@@ -19,7 +19,6 @@ $mol_pop_demo $mol_row
 		<= Align_block $mol_labeler
 			title <= Align_title @ \Align
 			Content <= Align $mol_select
-				clearable false
 				value?val <=> align_value?val \bottom_center
 				options /
 					<= align_left_top @ \left_top

@@ -50,27 +50,25 @@
 	color: var(--mol_skin_warn_text);
 }
 
-[mol_button_typed]:hover {
+[mol_button_typed]:hover ,
+[mol_button_typed]:focus {
 	z-index: 1;
 	cursor: pointer;
 	background-color: var(--mol_skin_hover);
 }
 
-[mol_button_minor]:hover {
+[mol_button_minor]:hover ,
+[mol_button_minor]:focus {
 	background-color: var(--mol_skin_light_hover);
 	color: var(--mol_skin_light_text);
 }
 
-[mol_button_typed]:focus {
-	z-index: 1;
-	outline: none;
-	box-shadow: var(--mol_skin_focus_outline);
-}
-
-[mol_button_major]:hover {
+[mol_button_major]:hover ,
+[mol_button_major]:focus {
 	background-color: var(--mol_skin_accent_hover);
 }
 
-[mol_button_danger]:hover {
+[mol_button_danger]:hover ,
+[mol_button_danger]:focus {
 	background-color: var(--mol_skin_warn_hover);
 }
