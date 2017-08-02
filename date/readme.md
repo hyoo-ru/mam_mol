@@ -1,6 +1,6 @@
 # $mol_date
 
-The component is used to work with the date.
+Date presenter and picker.
  
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_date)
 
