@@ -11,7 +11,7 @@ Date presenter and picker.
 Date in YYYY-MM-DD format.
 ```
 <= Birth_day $mol_date
-	value <= birth_day \2017-04-01
+	value?val <=> birth_day?val \2017-04-01
 ```
 
 **`value_number( next? : number ) : number`**
