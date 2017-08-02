@@ -1,6 +1,8 @@
 [mol_select] {
 	display: flex;
 	word-break: normal;
+	background: var(--mol_skin_light);
+	color: var(--mol_skin_light_text);
 }
 
 [mol_select_anchor] {
