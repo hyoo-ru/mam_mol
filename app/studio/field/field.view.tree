@@ -9,16 +9,16 @@ $mol_app_studio_field $mol_view
 			value?val <=> type?val \null
 			hint <= type_hint @ \Type...
 			options <= type_options /
-				\null
-				\bool
-				\number
-				\string
-				\locale
-				\list
-				\dict
-				\object
 				\get
 				\bind
+				\object
+				\string
+				\locale
+				\number
+				\bool
+				\list
+				\dict
+				\null
 		<= Bool $mol_switch
 			value?val <=> value?val null
 			options *
@@ -53,9 +53,9 @@ $mol_app_studio_field $mol_view
 		object_options <= object_options /
 		prop_options <= prop_options /
 		type_options <= item_type_options /
-			\bool
-			\number
+			\get
 			\string
 			\locale
+			\number
+			\bool
 			\dict
-			\get

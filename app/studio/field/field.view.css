@@ -13,7 +13,7 @@
 }
 
 [mol_app_studio_field_title] {
-	flex: 1 1 14rem;
+	flex: 1000 1 12rem;
 	padding: .5rem 1rem;
 	box-shadow: var(--mol_skin_light_outline);
 	order: 0;
@@ -43,7 +43,7 @@
 }
 
 [mol_app_studio_field_type] {
-	flex: 0 0 9rem;
+	flex: 1 0 9rem;
 }
 
 [mol_app_studio_field_bool] ,
@@ -51,12 +51,12 @@
 [mol_app_studio_field_string] ,
 [mol_app_studio_field_object] ,
 [mol_app_studio_field_prop] {
-	flex: 1000 1 10rem;
+	flex: 1000000 1 10rem;
 	width: auto;
 }
 
 [mol_app_studio_field_list] {
-	flex: 1000 1 20rem;
+	flex: 1000000 1 20rem;
 }
 
 [mol_app_studio_field_item] {
