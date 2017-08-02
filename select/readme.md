@@ -33,14 +33,6 @@ Keys are possible values of `value()` property. If the property is not defined, 
 
 Logic of filter `options()`
 
-**`search_breakpoint() : number`**
-
-The property takes a number. If options count more than the property, select activate a search string.
-
-**`searchable() : boolean`**
-
-Takes boolean and set search in select
-
 **`option_content() : $mol_view[]`**
 
 List of components in `Option()` component
