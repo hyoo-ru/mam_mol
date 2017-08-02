@@ -181,6 +181,8 @@ namespace $.$mol {
 			const class_name = this.element_class( path )
 			const obj = ( path.length && !this.Prop( path ).class() ) ? this.prop_value_base( path ) : new( this.view_class( class_name ) )
 			
+			if( !obj || typeof obj !== 'object' ) return obj
+
 			const props = this.props_all( class_name )
 			
 			for( let prop of props.sub ) {
