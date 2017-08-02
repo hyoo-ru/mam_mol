@@ -34,8 +34,14 @@ namespace $.$mol {
 			return next || [] as $mol_view[]
 		}
 
-		item_add() {
-			this.rows( this.rows().concat( this.Item( this.rows().length ) ) )
+		add_item( type? : string ) : string {
+			if( !type ) return null
+			
+			const item = this.Item( this.rows().length )
+			item.type( type )
+			this.rows([ ... this.rows() , item ])
+
+			return null
 		}
 
 	}

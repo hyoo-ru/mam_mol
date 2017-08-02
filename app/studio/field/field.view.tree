@@ -41,10 +41,10 @@ $mol_app_studio_field $mol_view
 		<= List $mol_list
 			rows /
 				<= rows /
-				<= Add $mol_button_minor
-					event_click?val <=> item_add?val null
-					sub /
-						<= Add_icon $mol_icon_plus
+				<= Add $mol_select
+					hint <= add_hint @ \Add item..
+					value?val <=> add_item?val \
+					options <= item_type_options -
 	tree $mol_tree
 	Item!index $mol_app_studio_field
 		type?val <=> item_type!index?val \null
@@ -52,7 +52,7 @@ $mol_app_studio_field $mol_view
 		class?val <=> item_class!index?val \
 		object_options <= object_options /
 		prop_options <= prop_options /
-		type_options /
+		type_options <= item_type_options /
 			\bool
 			\number
 			\string
