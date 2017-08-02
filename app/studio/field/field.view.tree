@@ -7,8 +7,7 @@ $mol_app_studio_field $mol_view
 			arg <= title_arg *
 		<= Type $mol_select
 			value?val <=> type?val \null
-			clearable false
-			searchable false
+			hint <= type_hint @ \Type...
 			options <= type_options /
 				\null
 				\bool
@@ -34,10 +33,11 @@ $mol_app_studio_field $mol_view
 		<= Object $mol_select
 			value?val <=> class?val null
 			options <= object_options /
-			hint \Class name
+			hint <= object_hint @ \Class name..
 		<= Prop $mol_select
 			value?val <=> value?val null
 			options <= prop_options /
+			hint <= prop_hint @ \Property..
 		<= List $mol_list
 			rows /
 				<= rows /
