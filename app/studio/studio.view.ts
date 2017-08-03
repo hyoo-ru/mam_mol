@@ -118,7 +118,8 @@ namespace $.$mol {
 			if( this.Prop( path ).class() ) return this.Prop( path ).class()
 
 			const parent_class = this.element_class( path.slice( 0 , path.length - 1 ) )
-			return this.props_all( parent_class ).select( path[ path.length - 1 ] , 'default' , '' ).sub[0].type
+			const def = this.props_all( parent_class ).select( path[ path.length - 1 ] , 'default' , '' ).sub[0]
+			return def && def.type || '$mol_view'
 		}
 		
 		@ $mol_mem_key()
