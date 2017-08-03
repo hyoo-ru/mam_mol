@@ -124,7 +124,7 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		prop_value_base( path : string[] , next? : any ) : any {
 			const element = this.Element( path.slice( 0 , path.length - 1 ) )
-			const base = Object.getPrototypeOf( element )[ path[ path.length - 1 ] ]
+			const base = element[ path[ path.length - 1 ] ][ '$mol_app_studio_original' ]
 			return base.call( element , next )
 		}
 
@@ -179,7 +179,9 @@ namespace $.$mol {
 		Element( path : string[] ) : $mol_view {
 
 			const class_name = this.element_class( path )
-			const obj = ( path.length && !this.Prop( path ).class() ) ? this.prop_value_base( path ) : new( this.view_class( class_name ) )
+			const obj = ( path.length && !this.Prop( path ).class() )
+				? this.prop_value_base( path )
+				: new( this.view_class( class_name ) )
 			
 			if( !obj || typeof obj !== 'object' ) return obj
 
@@ -194,6 +196,7 @@ namespace $.$mol {
 					if( val !== undefined ) return val
 					return value.call( obj , next )
 				}
+				obj[ prop.type ][ '$mol_app_studio_original' ] = value
 			}
 			
 			return obj
