@@ -20,6 +20,8 @@ namespace $.$mol {
 			
 			throw new $mol_atom_wait( `Loading sandbox...` )
 		}
+
+
 		
 		'command_current()' : any[]
 		
@@ -64,6 +66,12 @@ namespace $.$mol {
 				steps : { [ step : string ] : {
 					title : { [ lang : string ] : string }
 				} }
+				params : { [ param : string ] : {
+					title : { [ lang : string ] : string },
+					descr : { [ lang : string ] : string },
+					defualt : number,
+					type : string
+				} }
 			}
 			return this.command_result< meta >( [ 'meta' ] )
 		}
@@ -107,12 +115,12 @@ namespace $.$mol {
 			}
 			
 			this.steps().forEach( step => {
-				result[ step ] = this.command_result<string>([ step , sampleId ])
+				result[ step ] = this.command_result<string>([ step , sampleId, this.param_dict() ])
 			} )
 			
 			return result
 		}
-		
+
 		@ $mol_mem()
 		result() {
 			const result : { [ sample : string ] : { [ step : string ] : any } } = {}
@@ -143,7 +151,7 @@ namespace $.$mol {
 			.filter( sample => this.menu_option_title( sample ).toLowerCase().match( filter ) )
 			.map( sample => this.Menu_option( sample ) )
 		}
-		
+
 		menu_option_title( sample : string ) {
 			const title = this.meta().samples[ sample ].title
 			return title[ $mol_locale.lang() ] || title[ 'en' ]
@@ -158,7 +166,40 @@ namespace $.$mol {
 			
 			return next
 		}
+
+		params() {
+			return Object.keys( this.meta().params )
+		}
+
+		fields() {
+			return this.params().map( param => this.Param( param ) )
+		}
+
+		param_title( id : string ) {
+			const title = this.meta().params[ id ].title
+			return title[ $mol_locale.lang() ] || title[ 'en' ]
+		}
+
+		param_value( id : string, next? : any) {
+			return next || this.meta().params[ id ].defualt
+		}
+
+		descr( id : string  ) {
+			const descr = this.meta().params[ id ].descr
+			return descr[ $mol_locale.lang() ] || descr[ 'en' ]
+		}
 		
+		@ $mol_mem()
+		param_dict() {
+			const param_dict = {}
+			const params = this.params()
+
+			for (let param of params  ) {
+				param_dict[param] = this.param_value(param)
+			}
+			return param_dict
+		}
+
 	}
-	
+
 }

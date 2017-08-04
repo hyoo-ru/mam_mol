@@ -68,3 +68,21 @@
 	margin-left: .5rem;
 	width: 5vw;
 }
+
+[mol_app_bench_count_lable] {
+	margin: .5rem;
+}
+
+[mol_app_bench_lenght_lable] {
+	margin: .5rem;
+}
+
+[mol_app_bench_param_descr] {
+	background: none;
+	box-shadow: none;
+	padding: 0 .5rem;
+}
+
+[mol_app_bench_param] {
+	flex: 1 1 auto;
+}
