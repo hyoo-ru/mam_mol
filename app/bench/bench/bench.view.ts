@@ -68,7 +68,6 @@ namespace $.$mol {
 				} }
 				params : { [ param : string ] : {
 					title : { [ lang : string ] : string },
-					descr : { [ lang : string ] : string },
 					defualt : number,
 					type : string
 				} }
@@ -180,15 +179,13 @@ namespace $.$mol {
 			return title[ $mol_locale.lang() ] || title[ 'en' ]
 		}
 
+		@ $mol_mem_key()
 		param_value( id : string, next? : any) {
 			return next || this.meta().params[ id ].defualt
+
+			//return $mol_state_arg.value( this.state_key( 'param_value' ) , next )
 		}
 
-		descr( id : string  ) {
-			const descr = this.meta().params[ id ].descr
-			return descr[ $mol_locale.lang() ] || descr[ 'en' ]
-		}
-		
 		@ $mol_mem()
 		param_dict() {
 			const param_dict = {}

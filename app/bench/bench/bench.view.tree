@@ -32,9 +32,7 @@ $mol_app_bench $mol_view
 	Param!id $mol_labeler
 		title <= param_title!id \
 		content /
-			<= Param_value!id $mol_string
-				value?val <=> param_value!id?val \
-			<= Param_descr!id $mol_text
-				text <= param_descr!id \		
+			<= Param_value!id $mol_number
+				value?val <=> param_value!id?val \		
 	-
 	result_col_title_sample @ \Sample
