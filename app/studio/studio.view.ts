@@ -44,7 +44,7 @@ namespace $.$mol {
 			const filter = this.prop_filter().toLowerCase()
 			
 			const path = this.path()
-			return this.props_all( this.element_class( path ) ).sub
+			return this.props_all( this.prop_class( path ) ).sub
 			.filter( prop => !prop.select( 'key' ).sub[0].value )
 			.filter( prop => prop.type.toLowerCase().indexOf( filter ) >= 0 )
 			.map( prop => this.Prop([ ... path , prop.type ]) )
@@ -60,28 +60,28 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		prop( path : string[] ) {
-			const class_name = this.element_class( path.slice( 0 , path.length - 1 ) )
+			const class_name = this.prop_class( path.slice( 0 , path.length - 1 ) )
 			return this.props_all( class_name ).select( path[ path.length - 1 ] ).sub[0]
 		}
 		
 		@ $mol_mem_key()
 		prop_type( path : string[] , next? : string ) {
-			return next || this.prop( path ).select( 'type' ).sub[0].value
+			return this.$.$mol_state_session.value( `prop_type(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'type' ).sub[0].value
 		}
 
 		@ $mol_mem_key()
 		prop_key( path : string[] , next? : string ) {
-			return next || this.prop( path ).select( 'key' ).sub[0].value
+			return this.$.$mol_state_session.value( `prop_key(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'key' ).sub[0].value
 		}
 
 		@ $mol_mem_key()
 		prop_next( path : string[] , next? : string ) {
-			return next || this.prop( path ).select( 'next' ).sub[0].value
+			return this.$.$mol_state_session.value( `prop_next(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'next' ).sub[0].value
 		}
 
 		@ $mol_mem_key()
 		prop_default( path : string[] , next? : $mol_tree ) {
-			return next || this.prop( path ).select( 'default' , '' ).sub[0]
+			return this.$.$mol_state_session.value( `prop_default(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'default' , '' ).sub[0]
 		}
 
 		block( next? : string ) : string {
@@ -112,14 +112,9 @@ namespace $.$mol {
 			return this.props_all( '$' + this.block() ).sub.map( prop => prop.type )
 		}
 
-		@ $mol_mem_key()
-		element_class( path : string[] ) : string {
-			if( path.length === 0 ) return '$' + this.block()
-			if( this.Prop( path ).class() ) return this.Prop( path ).class()
-
-			const parent_class = this.element_class( path.slice( 0 , path.length - 1 ) )
-			const def = this.props_all( parent_class ).select( path[ path.length - 1 ] , 'default' , '' ).sub[0]
-			return def && def.type || '$mol_view'
+		@ $mol_mem()
+		overrided( next? : { [ key : string ] : string } ) {
+			return next || {}
 		}
 		
 		@ $mol_mem_key()
@@ -140,12 +135,18 @@ namespace $.$mol {
 			return this.prop_value_base( path )
 		}
 
-		prop_class( path : string[] , next? : string ) {
+		prop_class( path : string[] , next? : string ) : string {
+			if( path.length === 0 ) return '$' + this.block()
+			if( this.Prop( path ).class() ) return this.Prop( path ).class()
+			
 			switch( this.prop_type( path ) ) {
-				case 'get' : return this.prop_default( path ).sub[0] && this.prop_default( path ).sub[0].type
-				case 'bind' : return this.prop_default( path ).sub[0].type
-				case 'object' : return this.prop_default( path ).sub[0].type
+				case 'get' : 
+				case 'bind' : 
+				case 'object' :
+					const def = this.prop_default( path )
+					return def && def.type
 			}
+			
 			throw new Error( `Wrong type ${ this.prop_type( path ) }` )
 		}
 
@@ -179,7 +180,7 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		Element( path : string[] ) : $mol_view {
 
-			const class_name = this.element_class( path )
+			const class_name = this.prop_class( path )
 			const obj = ( path.length && !this.Prop( path ).class() )
 				? this.prop_value_base( path )
 				: new( this.view_class( class_name ) )
@@ -226,7 +227,7 @@ namespace $.$mol {
 		}
 
 		prop_add( event? : Event ) {
-			const class_name = this.element_class([])
+			const class_name = this.prop_class([])
 			const props = this.props_all( class_name )
 			const prop = new $mol_tree({ type : this.prop_filter() , sub : $mol_tree.fromString( 'type \null\nkey\nnext\ndefault\n' ).sub })
 			this.props_all( class_name , props.clone({

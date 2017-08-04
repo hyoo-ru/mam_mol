@@ -49,7 +49,7 @@ $mol_app_studio $mol_book
 		- class?val <=> prop_class!id?val null
 		- tree?val <=> prop_default!id?val null
 		hint <= prop_value_base!id null
-		object_hint <= element_class!id null
+		object_hint <= prop_class!id null
 		object_options <= view_options /
 		prop_options <= bind_options /
 	-
