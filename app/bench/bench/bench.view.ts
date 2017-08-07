@@ -21,8 +21,6 @@ namespace $.$mol {
 			throw new $mol_atom_wait( `Loading sandbox...` )
 		}
 
-
-		
 		'command_current()' : any[]
 		
 		@ $mol_mem()
@@ -168,7 +166,7 @@ namespace $.$mol {
 		}
 
 		params() {
-			return Object.keys( this.meta().params != null || undefined ? this.meta().params : 0)
+			return Object.keys( this.meta().params || {} )
 		}
 
 		fields() {
