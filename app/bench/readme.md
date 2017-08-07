@@ -46,7 +46,7 @@ type meta = {
 	} }
 	params : { [ param : string ] : {
 		title : { [ lang : string ] : string }
-		defualt : number
+		default : number
 		type : string
 		precision : number 
 	} }

@@ -66,7 +66,7 @@ namespace $.$mol {
 				} }
 				params : { [ param : string ] : {
 					title : { [ lang : string ] : string }
-					defualt : number
+					default : number
 					type : string
 					precision : number
 				} }
@@ -181,7 +181,7 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		param_value( id : string, next? : any) {
 			let next_2 = $mol_state_arg.value( this.state_key( id ) , next )
-			return next_2 || this.meta().params[ id ].defualt
+			return next_2 || this.meta().params[ id ].default
 		}
 
 		param_precision( id : string ){
