@@ -33,6 +33,7 @@ $mol_app_bench $mol_view
 		title <= param_title!id \
 		content /
 			<= Param_value!id $mol_number
-				value?val <=> param_value!id?val \		
+				value?val <=> param_value!id?val \
+				precision_change <= param_precision!id 0
 	-
 	result_col_title_sample @ \Sample

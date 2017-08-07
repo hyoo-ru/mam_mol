@@ -67,9 +67,10 @@ namespace $.$mol {
 					title : { [ lang : string ] : string }
 				} }
 				params : { [ param : string ] : {
-					title : { [ lang : string ] : string },
-					defualt : number,
+					title : { [ lang : string ] : string }
+					defualt : number
 					type : string
+					precision : number
 				} }
 			}
 			return this.command_result< meta >( [ 'meta' ] )
@@ -167,7 +168,7 @@ namespace $.$mol {
 		}
 
 		params() {
-			return Object.keys( this.meta().params )
+			return Object.keys( this.meta().params != null || undefined ? this.meta().params : 0)
 		}
 
 		fields() {
@@ -181,9 +182,12 @@ namespace $.$mol {
 
 		@ $mol_mem_key()
 		param_value( id : string, next? : any) {
-			return next || this.meta().params[ id ].defualt
+			let next_2 = $mol_state_arg.value( this.state_key( id ) , next )
+			return next_2 || this.meta().params[ id ].defualt
+		}
 
-			//return $mol_state_arg.value( this.state_key( 'param_value' ) , next )
+		param_precision( id : string ){
+			return this.meta().params[ id ].precision
 		}
 
 		@ $mol_mem()

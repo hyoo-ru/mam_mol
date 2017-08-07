@@ -31,8 +31,6 @@
 <iframe id="sandbox"></iframe>
 
 <script>
-	
-	var size = 10000
 
 	function meta() {
 		done( {
@@ -41,9 +39,20 @@
 				'ru' : 'Производительность вариантов рендеринга линий' ,
 			} ,
 			descr : {
-				'en' : 'Sample applications renders styled spiral. Spiral has **' + size + ' parts**.' ,
-				'ru' : 'Варианты приложений отображают спираль из **' + size + ' линий**, а потом меняют её стиль штриха. ' ,
+				'en' : 'Sample applications renders styled spiral.' ,
+				'ru' : 'Варианты приложений отображают спираль из заданного колличества линий, а потом меняют её стиль штриха. ' ,
 			} ,
+			params : {
+			'count' : {
+				title : {
+					'en' : 'Count of lines',
+					'ru' : 'Колличество линий',
+				},
+				defualt : 10000,
+				type : 'number',
+				precision : 1000,
+			},
+			},
 			samples : {
 				'svg-lines' : {
 					title : {
@@ -106,8 +115,8 @@
 		} )
 	}
 	
-	function render( sample ) {
-		measure( [ 'render' , { sample : sample , count : size } ] , '*' )
+	function render( sample, params ) {
+		measure( [ 'render' , { sample : sample , count : params.count } ] , '*' )
 	}
 	
 	function restyle( sample ) {
