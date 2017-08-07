@@ -35,22 +35,26 @@
 
 	if( window.parent === window ) document.location = '//eigenmethod.github.io/mol/app/bench/#bench=' + encodeURIComponent( location.href )
 
-	var size = 1000
-
-	var items = {
-		fill : getItems( size ) ,
-		update : getItems( size )
-	}
-
 	var metaData = {
 		title : {
 			'en' : 'List rendering benchmark' ,
 			'ru' : 'Время вывода значительных объёмов данных в WEB приложениях' ,
 		} ,
 		descr : {
-			'en' : 'Sample applications outputs list of blocks with title and content. Blocks has **variable height**. Block **can selected** by clicking on them. Dataset has **' + size + ' items**.' ,
-			'ru' : 'Минимальное время визуализации данных на экране пользователя - важнейший параметр для современных WEB приложений. Реализованные примеры визуализируют для пользователя одинаковый объём данных, состоящий из списка в **' + size + ' элементов**. Представляется элемент данных в виде блока **переменной высоты**, содержащего заголовок с порядковым номером и текст. Каждый блок имеет обработчик действий пользователя, который **выделяет блок при нажатии** на него. Замеры идут в два шага: заполнение приложения большим объёмом данных и обновление этих данных. Чем меньше затраченное время тем отзывчивее получается приложени.' ,
+			'en' : 'Sample applications outputs list of blocks with title and content. Blocks has **variable height**. Block **can selected** by clicking on them.' ,
+			'ru' : 'Минимальное время визуализации данных на экране пользователя - важнейший параметр для современных WEB приложений. Реализованные примеры визуализируют для пользователя одинаковый объём данных. Представляется элемент данных в виде блока **переменной высоты**, содержащего заголовок с порядковым номером и текст. Каждый блок имеет обработчик действий пользователя, который **выделяет блок при нажатии** на него. Замеры идут в два шага: заполнение приложения большим объёмом данных и обновление этих данных. Чем меньше затраченное время тем отзывчивее получается приложени.' ,
 		} ,
+		params : {
+			'count' : {
+				title : {
+					'en' : 'Count of paragraphs',
+					'ru' : 'Колличество параграфов',
+				},
+				defualt : 1000,
+				type : 'number',
+				precision : 100,
+			},
+		},
 		samples : {
 			'mol' : {
 				title : { 'en' : '$mol' } ,
@@ -119,7 +123,7 @@
 		done( metaData )
 	}
 
-	function start( sample ) {
+	function start( sample, params ) {
 		var sandbox = document.getElementById( 'sandbox' )
 		sandbox.src = 'about:blank'
 		setTimeout( function() {
@@ -132,21 +136,21 @@
 		} )
 	}
 
-	function weight( sample ) {
+	function weight( sample, params  ) {
 		done( metaData.samples[ sample ].weight || Number.POSITIVE_INFINITY )
 	}
 		
-	function fill( sample ) {
+	function fill( sample, params  ) {
 		measure( [ 'set data' , {
 			sample : sample ,
-			items : items.fill
+			items : getItems( params.count )
 		} ] )
 	}
 
-	function update( sample ) {
+	function update( sample, params  ) {
 		measure( [ 'set data' , {
 			sample : sample ,
-			items : items.update
+			items : getItems( params.count )
 		} ] )
 	}
 

@@ -13,6 +13,9 @@ $mol_app_bench $mol_view
 				<= Inform $mol_view sub /
 					<= Descr $mol_text
 						text <= description \
+					<= Fields $mol_row
+						sub /
+							<= fields /
 					<= Result $mol_bench
 						result <= result null
 						col_head_label!id /
@@ -25,5 +28,12 @@ $mol_app_bench $mol_view
 		minimal_height 36
 		checked?val <=> menu_option_checked!id?val false
 		title <= menu_option_title!id \
+	-
+	Param!id $mol_labeler
+		title <= param_title!id \
+		content /
+			<= Param_value!id $mol_number
+				value?val <=> param_value!id?val \
+				precision_change <= param_precision!id 0
 	-
 	result_col_title_sample @ \Sample
