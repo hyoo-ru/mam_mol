@@ -61,27 +61,27 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		prop( path : string[] ) {
 			const class_name = this.prop_class( path.slice( 0 , path.length - 1 ) )
-			return this.props_all( class_name ).select( path[ path.length - 1 ] ).sub[0]
+			return this.props_all( class_name ).select( path[ path.length - 1 ] ).sub[0] || $mol_tree.fromString( 'type \null' )
 		}
 		
 		@ $mol_mem_key()
 		prop_type( path : string[] , next? : string ) {
-			return this.$.$mol_state_session.value( `prop_type(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'type' ).sub[0].value
+			return this.overrided( `prop_type(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'type' ).sub[0].value
 		}
 
 		@ $mol_mem_key()
 		prop_key( path : string[] , next? : string ) {
-			return this.$.$mol_state_session.value( `prop_key(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'key' ).sub[0].value
+			return this.overrided( `prop_key(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'key' ).sub[0].value
 		}
 
 		@ $mol_mem_key()
 		prop_next( path : string[] , next? : string ) {
-			return this.$.$mol_state_session.value( `prop_next(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'next' ).sub[0].value
+			return this.overrided( `prop_next(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'next' ).sub[0].value
 		}
 
 		@ $mol_mem_key()
 		prop_default( path : string[] , next? : $mol_tree ) {
-			return this.$.$mol_state_session.value( `prop_default(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'default' , '' ).sub[0]
+			return this.overrided( `prop_default(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'default' , '' ).sub[0]
 		}
 
 		block( next? : string ) : string {
@@ -113,15 +113,19 @@ namespace $.$mol {
 		}
 
 		@ $mol_mem()
-		overrided( next? : { [ key : string ] : string } ) {
+		overrided_all( next? : { [ key : string ] : any } ) {
 			return next || {}
+		}
+
+		overrided( key : string , next? : any ) : any {
+			return this.overrided_all( ( next === undefined ) ? undefined : { ... this.overrided_all() , [ key ] : next } )[ key ]
 		}
 		
 		@ $mol_mem_key()
 		prop_value_base( path : string[] , next? : any ) : any {
 			const element = this.Element( path.slice( 0 , path.length - 1 ) )
-			const base = element[ path[ path.length - 1 ] ][ '$mol_app_studio_original' ]
-			return base.call( element , next )
+			const base = element[ path[ path.length - 1 ] ] && element[ path[ path.length - 1 ] ][ '$mol_app_studio_original' ]
+			return base && base.call( element , next )
 		}
 
 		prop_value( path : string[] ) {
@@ -167,7 +171,7 @@ namespace $.$mol {
 					if( !this.Prop( path ).rows().length ) return undefined
 					return this.Prop( path ).rows().map( item => {
 						switch( item.type() ) {
-							case 'get' : return item.value() ? this.Element([])[ item.value() ]() : undefined
+							case 'get' : return item.value() ? this.prop_value_view([ item.value() ]) : undefined
 						}
 						return item.value()
 					} )
@@ -226,14 +230,18 @@ namespace $.$mol {
 			return this.path().slice( 0 , index ).join( ',' )
 		}
 
-		prop_add( event? : Event ) {
+		event_add( event? : Event ) {
+			this.prop_add( this.prop_filter() )
+			this.prop_filter('')
+		}
+		
+		prop_add( name : string ) {
 			const class_name = this.prop_class([])
 			const props = this.props_all( class_name )
-			const prop = new $mol_tree({ type : this.prop_filter() , sub : $mol_tree.fromString( 'type \null\nkey\nnext\ndefault\n' ).sub })
+			const prop = new $mol_tree({ type : name , sub : $mol_tree.fromString( 'type \null\nkey\nnext\ndefault\n' ).sub })
 			this.props_all( class_name , props.clone({
 				sub : [ prop , ... props.sub ]
 			}) )
-			this.prop_filter('')
 		}
 		
 	}

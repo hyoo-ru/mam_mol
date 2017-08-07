@@ -5,7 +5,7 @@
 	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_light);
 	color: var(--mol_skin_light_text);
-	margin: .5rem;
+	flex: 1 1 auto;
 }
 
 [mol_app_studio_field] > * {
@@ -62,10 +62,13 @@
 	padding: .5rem;
 }
 
+[mol_app_studio_field_list] > * {
+	margin: .5rem;
+}
+
 [mol_app_studio_field_item] {
 }
 
 [mol_app_studio_field_add] {
 	height: 2.5rem;
-	margin: .5rem;
 }

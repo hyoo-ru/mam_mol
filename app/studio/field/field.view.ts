@@ -10,12 +10,12 @@ namespace $.$mol {
 				( type === 'bool' ) ? this.Bool() : null ,
 				( type === 'number' ) ? this.Number() : null ,
 				( type === 'string' ) ? this.String() : null ,
-				( type === 'string' ) ? this.String() : null ,
 				( type === 'locale' ) ? this.String() : null ,
 				( type === 'get' ) ? this.Prop() : null ,
 				( type === 'bind' ) ? this.Prop() : null ,
 				( [ 'object' ].indexOf( type ) >= 0 ) ? this.Object() : null ,
 				( type === 'list' ) ? this.List() : null ,
+				( type === 'get' && this.Prop().value() ) ? this.Prop_inner([ this.Prop().value() ]) : null ,
 			]
 		}
 
@@ -42,6 +42,13 @@ namespace $.$mol {
 			this.rows([ ... this.rows() , item ])
 
 			return null
+		}
+
+		event_prop_add( event? : Event ) {
+			const name = this.Prop().filter_pattern()
+			this.prop_add( name )
+			this.Prop().value( name )
+			this.Prop().filter_pattern( '' )
 		}
 
 	}

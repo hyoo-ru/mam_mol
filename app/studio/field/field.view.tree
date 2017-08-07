@@ -1,6 +1,7 @@
 $mol_app_studio_field $mol_view
 	attr *
 		mol_app_studio_field_variant <= type?val \null
+	prop_add?val null
 	sub <= controls /
 		<= Title $mol_link
 			title <= title \
@@ -38,6 +39,9 @@ $mol_app_studio_field $mol_view
 			value?val <=> value?val null
 			options <= prop_options /
 			hint <= prop_hint @ \Property..
+			No_options <= Prop_add $mol_button_minor
+				title <= prop_add_label @ \Add property
+				event_click?val <=> event_prop_add?val null
 		<= List $mol_list
 			rows /
 				<= rows /
@@ -59,3 +63,4 @@ $mol_app_studio_field $mol_view
 			\number
 			\bool
 			\dict
+		Prop_inner!id <= Prop_inner!id $mol_view

@@ -31,7 +31,7 @@ $mol_app_studio $mol_book
 				<= Fields $mol_list
 					rows <= fields /
 					Empty <= Prop_add $mol_button_minor
-						event_click?val <=> prop_add?val null
+						event_click?val <=> event_add?val null
 						title <= prop_add_label @ \Add property
 			minimal_width 400
 	Placeholder null
@@ -52,6 +52,8 @@ $mol_app_studio $mol_book
 		object_hint <= prop_class!id null
 		object_options <= view_options /
 		prop_options <= bind_options /
+		Prop_inner!id <= Prop!id -
+		prop_add?val <=> prop_add?val \
 	-
 	block?val <= block_default \mol_view
 	registry $mol_tree
