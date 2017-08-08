@@ -42,7 +42,6 @@
 <body>
 
 <div id="app" class="list" al-cloak>
-	<h1 class="list-header">{{sample}}</h1>
 	<div class="list-item"
 		al-repeat="item in items track by $index" 
 		:class.list-item-selected="selected === item"
@@ -62,8 +61,7 @@
 <script>
 	
 	var app = {
-		
-		sample : '' ,
+
 		items : [] ,
 		selected : null ,
 		
@@ -74,8 +72,7 @@
 		
 		onMessage : function( event ) {
 			if( event.data[0] !== 'set data' ) return
-			
-			this.sample = event.data[1].sample
+
 			this.items = event.data[1].items
 			this.selected = null
 			

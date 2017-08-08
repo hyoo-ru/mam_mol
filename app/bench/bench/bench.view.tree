@@ -19,15 +19,18 @@ $mol_app_bench $mol_view
 					<= Result $mol_bench
 						result <= result null
 						col_head_label!id /
-							<= result_col_title!id / 
+							<= result_col_title!id /
 						col_sort?val <=> result_col_sort?val \
+		<= Result_page $mol_page
+			title <= result_title \
+			body /
 				<= Sandbox $mol_view
 					dom_name \iframe
 	-
 	Menu_option!id $mol_check_box
 		minimal_height 36
 		checked?val <=> menu_option_checked!id?val false
-		title <= menu_option_title!id \
+		title <= sample_title!id \
 	-
 	Param!id $mol_labeler
 		title <= param_title!id \
