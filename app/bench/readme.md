@@ -44,10 +44,16 @@ type meta = {
 	steps : { [ step : string ] : { 
 		title : { [ lang : string ] : string }
 	} }
+	params : { [ param : string ] : {
+		title : { [ lang : string ] : string }
+		default : number
+		type : string
+		precision : number 
+	} }
 }
 ```
 
-Description supports markdown. For every sample and step benchmark will receive message ```[ step , sample ]```.
+Description supports markdown. For every sample and step benchmark will receive message ```[ step , sample, params ]```.
 
 Deploy benchmark to web server. In example: ```//localhost:8080/mol/app/bench/geometry/```
 

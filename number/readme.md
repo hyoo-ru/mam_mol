@@ -44,7 +44,7 @@ For example if we want to show a number in fixed-point notation
 we should set to `precisionView` property to a value that would be less then `0`. For example if we want to display 
 number in `0.xx` format we should set `precisionView` to `0.01`.  
 
-**`precision_change() : boolean`**
+**`precision_change() : number`**
 
 Also we can set `$mol_number` how it should increase of decrease the value in it's input. If we set `precisionChange` any number,
 the value in its input field will be increased or decreased on this number.

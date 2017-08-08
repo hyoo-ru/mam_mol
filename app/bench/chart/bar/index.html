@@ -34,22 +34,12 @@
 
 	if( window.parent === window ) document.location = '//eigenmethod.github.io/mol/app/bench/#bench=' + encodeURIComponent( location.href )
 
-	var size = {
-		graphs : 20 ,
-		series : 200 ,
-	}
-
-	var graphs = {
-		fill : getSeries( size ) ,
-		update : getSeries( size ) ,
-	}
-
-	function getSeries( size ) {
+	function getSeries( params ) {
 		var graphs = []
-		for( var g = 0 ; g < size.graphs ; ++g ) {
+		for( var g = 0 ; g < params.graphs ; ++g ) {
 			var series = []
-			for( var i = 0 ; i < size.series ; ++i ) {
-				series.push( Math.cos( g + 5 * i / size.series ) + Math.random() / 10 )
+			for( var i = 0 ; i < params.series ; ++i ) {
+				series.push( Math.cos( g + 5 * i / params.series ) + Math.random() / 10 )
 			}
 			graphs.push( series )
 		}
@@ -62,9 +52,29 @@
 			'ru' : 'Графики' ,
 		} ,
 		descr : {
-			'en' : 'Draws **' + size.graphs + ' bar graphs** with **' + size.series + ' samples** in each.' ,
-			'ru' : 'Рисует **' + size.graphs + ' столбчатых графиков** по **' + size.series + ' замеров** в каждом.' ,
+			'en' : 'Draws some bar graphs.' ,
+			'ru' : 'Рисует несколько столбчатых графиков.' ,
 		} ,
+		params : {
+			'graphs' : {
+				title : {
+					'en' : 'Count of rows',
+					'ru' : 'Колличество графиков',
+				},
+				default : 20,
+				type : 'number',
+				precision : 1,
+			},
+			'series' : {
+				title : {
+					'en' : 'Count of measurement',
+					'ru' : 'Колличество замеров',
+				},
+				default : 200,
+				type : 'number',
+				precision : 10,
+			},
+		},
 		samples : {
 			'mol' : {
 				title : {
@@ -134,12 +144,12 @@
 		done( metaData.samples[ sample ].weight )
 	}
 
-	function fill( sample ) {
-		measure( [ 'fill' , { sample : sample , graphs : graphs.fill } ] , '*' )
+	function fill( sample, params ) {
+		measure( [ 'fill' , { sample : sample , graphs : getSeries( params ) } ] , '*' )
 	}
 
-	function update( sample ) {
-		measure( [ 'update' , { sample : sample , graphs : graphs.update } ] , '*' )
+	function update( sample, params ) {
+		measure( [ 'update' , { sample : sample , graphs : getSeries( params ) } ] , '*' )
 	}
 
 	function measure( message ) {
