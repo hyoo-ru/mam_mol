@@ -19,11 +19,7 @@ namespace $.$mol {
 			} )
 			return { sample : '' , items : [] }
 		}
-		
-		sample() {
-			return $mol_app_bench_list_mol.data().sample
-		}
-		
+
 		items() {
 			return $mol_app_bench_list_mol.data().items
 		}

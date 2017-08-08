@@ -77,15 +77,7 @@
 		} ,
 	
 		render : function() {
-			var items = [
-				React.createElement(
-					"h1" ,
-					{
-						className : 'list-header'
-					} ,
-					this.state.data.sample
-				)
-			]
+			var items = []
 			for( var i = 0 ; i < this.state.data.items.length ; i++ ) {
 				var selectedClass = this.state.selected === this.state.data.items[ i ].id ? " list-item-selected " : ""
 				items.push(
