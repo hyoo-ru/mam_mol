@@ -21,7 +21,7 @@ $mol_app_bench $mol_view
 						col_head_label!id /
 							<= result_col_title!id /
 						col_sort?val <=> result_col_sort?val \
-		<= Result_page $mol_page
+		<= Sandbox_page $mol_page
 			title <= result_title \
 			body /
 				<= Sandbox $mol_view
