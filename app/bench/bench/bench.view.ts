@@ -131,13 +131,20 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		result_title() {
-			return this.command_current() ? this.sample_title( this.command_current()[1] ) : undefined
+		sandbox_title() {
+			const command = this.command_current()
+			if( !command ) return
+			
+			return `${ this.sample_title( command[1] ) }: ${ this.step_title( command[0] ) }`
 		}
 
 		result_col_title( col_id : string ) {
 			if( col_id === 'sample' ) return [ this.result_col_title_sample() ]
-			const title = this.meta().steps[ col_id ].title
+			return this.step_title( col_id )
+		}
+		
+		step_title( step : string ) {
+			const title = this.meta().steps[ step ].title
 			return [ title[ $mol_locale.lang() ] || title[ 'en' ] ]
 		}
 		

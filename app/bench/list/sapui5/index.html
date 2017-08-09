@@ -11,6 +11,12 @@
             font-size: 20px;
             background-color: white;
         }
+        .sapMNav {
+            overflow: auto;
+        }
+        .sapMSLITitle {
+            font-weight: bolder;
+        }
         .sapMListUl {
             padding: 0;
         }
@@ -22,8 +28,7 @@
             white-space: normal;
         }
         .sapUiBody {
-            margin-top: -40px;
-            height: 100%;
+            margin: 0;
         }
         .sapMLIB {
             border: 0px;
@@ -36,10 +41,6 @@
         }
         .sapMLIB:hover {
             background: white;
-        }
-
-        #sapMPageHeader {
-            box-shadow: 0 white;
         }
 
     </style>
@@ -69,11 +70,8 @@
                 description: "{content}"
             })
         });
-        var page1 = new sap.m.Page({
-            content: list
-        });
         var app = new sap.m.App({
-            pages: [page1]
+            pages: [list]
         }).placeAt("content");
         app.setModel(oModel);
 
