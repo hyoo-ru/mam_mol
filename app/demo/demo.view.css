@@ -43,14 +43,12 @@
 }
 
 [mol_app_demo_nav_expand] {
-	padding: 0;
-	margin: 0;
 	align-self: stretch;
+	align-items: center;
 }
 
 [mol_app_demo_nav_content] {
 	flex-grow: 1;
-	margin: 0 .5rem;
 }
 
 [mol_app_demo_main] {

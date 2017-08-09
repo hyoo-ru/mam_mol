@@ -5,7 +5,7 @@
 }
 
 [mol_app_bench_main_page] {
-	flex: 1 10 50rem;
+	flex: 10 10 50rem;
 }
 
 [mol_app_bench_main_page] > [mol_page_body] {
