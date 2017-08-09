@@ -181,7 +181,7 @@ namespace $.$mol {
 			return Object.keys( this.meta().params || {} )
 		}
 
-		fields() {
+		param_fields() {
 			return this.params().map( param => this.Param( param ) )
 		}
 

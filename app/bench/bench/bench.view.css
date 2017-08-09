@@ -5,7 +5,7 @@
 }
 
 [mol_app_bench_main_page] {
-	flex: 10 10 50rem;
+	flex: 10 2 50rem;
 }
 
 [mol_app_bench_main_page] > [mol_page_body] {
@@ -33,6 +33,8 @@
 [mol_app_bench_inform] {
 	flex: 0 1 auto;
 	overflow: auto;
+	display: flex;
+	flex-direction: column;
 }
 [mol_app_bench_result_page] {
 	flex: 1 1 auto;
@@ -43,12 +45,20 @@
 }
 
 [mol_app_bench_descr] {
-	flex: 0 2 50%;
+	flex: 0 1 auto;
 	max-width: none;
 }
 
+[mol_app_bench_param_fields] {
+	flex: none;
+	background: var(--mol_skin_light);
+	color: var(--mol_skin_light_text);
+}
+
 [mol_app_bench_result] {
+	flex: 1000 1 50%;
 	background: var(--mol_skin_card);
+	color: var(--mol_skin_card_text);
 	font-size: .9rem;
 }
 

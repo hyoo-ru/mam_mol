@@ -11,11 +11,13 @@ $mol_app_bench $mol_view
 			title <= title -
 			body /
 				<= Inform $mol_view sub /
-					<= Descr $mol_text
-						text <= description \
-					<= Fields $mol_row
+					<= Descr_scroll $mol_scroll
 						sub /
-							<= fields /
+							<= Descr $mol_text
+								text <= description \
+					<= Param_fields $mol_row
+						sub /
+							<= param_fields /
 					<= Result $mol_bench
 						result <= result null
 						col_head_label!id /
