@@ -23,9 +23,8 @@ $mol_app_bench $mol_view
 						col_sort?val <=> result_col_sort?val \
 		<= Sandbox_page $mol_page
 			title <= result_title \
-			body /
-				<= Sandbox $mol_view
-					dom_name \iframe
+			Body <= Sandbox $mol_scroll
+				dom_name \iframe
 	-
 	Menu_option!id $mol_check_box
 		minimal_height 36
