@@ -2,8 +2,6 @@ $mol_app_bench_list_mol $mol_scroll
 	sub /
 		<= List $mol_list
 			rows /
-				<= Head $mol_view
-					sub / <= sample \
 				<= rows /
 	Row!id $mol_app_bench_list_mol_row
 		checked?val <=> row_selected!id?val false

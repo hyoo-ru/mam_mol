@@ -66,11 +66,6 @@
 			id : 'list' ,
 			className : 'list' ,
 			childNodes : [].concat(
-				{
-					id : 'list-header' ,
-					className : 'list-header' ,
-					innerText : data.sample
-				} ,
 				data.items.map( function( item ) {
 					return {
 						id : 'list-item#' + item.id ,
