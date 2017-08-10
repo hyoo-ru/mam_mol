@@ -49,6 +49,9 @@ $mol_app_studio_field $mol_view
 					hint <= add_hint @ \Add item..
 					value?val <=> add_item?val \
 					options <= item_type_options -
+		<= Overs $mol_list
+			rows /
+				<= overs /
 	tree $mol_tree
 	Item!index $mol_app_studio_field
 		type?val <=> item_type!index?val \null
@@ -58,6 +61,20 @@ $mol_app_studio_field $mol_view
 		prop_options <= prop_options /
 		type_options <= item_type_options /
 			\get
+			\string
+			\locale
+			\number
+			\bool
+			\dict
+		Prop_inner!id <= Prop_inner!id $mol_view
+	Over!name $mol_app_studio_field
+		title <= over_name!name \
+		type?val <=> over_type!name?val \get
+		value?val <=> over_value!name?val \
+		prop_options <= prop_options /
+		type_options <= over_type_options /
+			\get
+			\bind
 			\string
 			\locale
 			\number

@@ -49,6 +49,10 @@ namespace $.$mol {
 			.filter( prop => prop.type.toLowerCase().indexOf( filter ) >= 0 )
 			.map( prop => this.Prop([ ... path , prop.type ]) )
 		}
+
+		prop_overs( path : string[] ) {
+			return this.prop_default( path ).sub.map( over => this.Prop([ ... path , over.type.replace( /[?!].*/ , '' ) ]) )
+		}
 		
 		prop_title( path : string[] ) {
 			return path[ path.length - 1 ]
@@ -81,7 +85,7 @@ namespace $.$mol {
 
 		@ $mol_mem_key()
 		prop_default( path : string[] , next? : $mol_tree ) {
-			return this.overrided( `prop_default(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'default' , '' ).sub[0]
+			return /*this.overrided( `prop_default(${ JSON.stringify( path ) })` , next ) ||*/ this.prop( path ).select( 'default' , '' ).sub[0]
 		}
 
 		block( next? : string ) : string {

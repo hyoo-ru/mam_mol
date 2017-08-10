@@ -66,6 +66,17 @@
 	margin: .5rem;
 }
 
+[mol_app_studio_field_overs] {
+	flex: 1000000 1 20rem;
+	display: flex;
+	flex-direction: column;
+	padding: .5rem;
+}
+
+[mol_app_studio_field_overs] > * {
+	margin: .5rem;
+}
+
 [mol_app_studio_field_item] {
 }
 

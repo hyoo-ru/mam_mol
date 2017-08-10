@@ -15,6 +15,7 @@ namespace $.$mol {
 				( type === 'bind' ) ? this.Prop() : null ,
 				( [ 'object' ].indexOf( type ) >= 0 ) ? this.Object() : null ,
 				( type === 'list' ) ? this.List() : null ,
+				( type === 'object' ) ? this.Overs() : null ,
 				( type === 'get' && this.Prop().value() ) ? this.Prop_inner([ this.Prop().value() ]) : null ,
 			]
 		}

@@ -54,6 +54,7 @@ $mol_app_studio $mol_book
 		prop_options <= bind_options /
 		Prop_inner!id <= Prop!id -
 		prop_add?val <=> prop_add?val \
+		overs <= prop_overs!id /
 	-
 	block?val <= block_default \mol_view
 	registry $mol_tree
