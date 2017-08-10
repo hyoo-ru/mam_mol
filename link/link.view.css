@@ -5,6 +5,7 @@
 	border-radius: var(--mol_skin_round);
 	padding: .5rem;
 	box-sizing: border-box;
+	position: relative;
 }
 
 [mol_link]:not([mol_link_current]):hover {
