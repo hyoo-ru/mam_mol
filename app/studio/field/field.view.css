@@ -1,10 +1,7 @@
 [mol_app_studio_field] {
 	display: flex;
-	align-items: stretch;
+	align-items: flex-start;
 	flex-wrap: wrap;
-	box-shadow: var(--mol_skin_light_outline);
-	background: var(--mol_skin_light);
-	color: var(--mol_skin_light_text);
 	flex: 1 1 auto;
 }
 
@@ -13,68 +10,70 @@
 }
 
 [mol_app_studio_field_title] {
-	flex: 1000 1 12rem;
-	padding: .5rem 1rem;
-	box-shadow: var(--mol_skin_light_outline);
-	order: 0;
+	flex: 1000 0 auto;
+	padding: .5rem;
 }
 
-[mol_app_studio_field_variant="null"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="bool"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="number"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="locale"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="string"] [mol_app_studio_field_title] {
-	background: #fffff3;
+[mol_app_studio_field_variant="null"] > [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="bool"] > [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="number"] > [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="locale"] > [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="string"] > [mol_app_studio_field_title] {
+	/* color: color( var(--mol_skin_base) hue(-120deg) ); */
 }
 
-[mol_app_studio_field_variant="object"] [mol_app_studio_field_title] {
-	background: #fff6f3;
+[mol_app_studio_field_variant="object"] > [mol_app_studio_field_title] {
+	color: var(--mol_skin_base);
 }
 
-[mol_app_studio_field_variant="list"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="dict"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="object"] [mol_app_studio_field_title] {
+[mol_app_studio_field_variant="object"] > [mol_app_studio_field_title] {
 	font-weight: bolder;
 }
 
-[mol_app_studio_field_variant="list"] [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="dict"] [mol_app_studio_field_title] {
-	background: #f3ffff;
+[mol_app_studio_field_variant="list"] > [mol_app_studio_field_title] ,
+[mol_app_studio_field_variant="dict"] > [mol_app_studio_field_title] {
+	color: color( var(--mol_skin_base) hue(+120deg) );
 }
 
-[mol_app_studio_field_type] {
-	flex: 1 0 9rem;
-}
-
-[mol_app_studio_field_bool] ,
 [mol_app_studio_field_number] ,
 [mol_app_studio_field_string] ,
-[mol_app_studio_field_object] ,
+[mol_app_studio_field_object] {
+	flex: 1 1 100%;
+	margin: 0 .5rem;
+	width: auto;
+}
+
+[mol_app_studio_field_bool] {
+	flex: 1 1 100%;
+	width: auto;
+	margin: 0 .5rem;
+}
+
 [mol_app_studio_field_prop] {
-	flex: 1000000 1 10rem;
+	flex: 0 1 auto;
 	width: auto;
 }
 
 [mol_app_studio_field_list] {
-	flex: 1000000 1 20rem;
-	display: flex;
-	flex-direction: column;
-	padding: .5rem;
+	flex: 1 1 100%;
+	padding: 0 .5rem;
+	margin: 0 .5rem;
+	background: rgba( 0 , 0 , 0 , .025 );
 }
 
 [mol_app_studio_field_list] > * {
-	margin: .5rem;
+	margin: .5rem 0;
 }
 
 [mol_app_studio_field_overs] {
-	flex: 1000000 1 20rem;
-	display: flex;
-	flex-direction: column;
-	padding: .5rem;
+	flex: 1 1 100%;
+	padding: 0 .5rem;
+	margin: 0 .5rem;
+	background: rgba( 0 , 0 , 0 , .025 );
 }
 
 [mol_app_studio_field_overs] > * {
-	margin: .5rem;
+	margin: .5rem 0;
 }
 
 [mol_app_studio_field_item] {

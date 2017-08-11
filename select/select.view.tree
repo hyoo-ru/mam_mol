@@ -22,8 +22,9 @@ $mol_select $mol_pop
 			cycle?val <=> nav_cycle?val true
 	showed <= options_showed false
 	align?val <=> options_align?val \bottom_right
-	Anchor $mol_bar
+	Anchor $mol_view
 		sub <= anchor_content /
+			<= option_content_current /
 			<= Filter $mol_string
 				value?val <=> filter_pattern?val \
 				hint <= filter_hint <= hint @ \Search..

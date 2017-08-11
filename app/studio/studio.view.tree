@@ -30,7 +30,7 @@ $mol_app_studio $mol_book
 					query?val <=> prop_filter?val \
 				<= Fields $mol_list
 					rows <= fields /
-					Empty <= Prop_add $mol_button_minor
+					Empty <= Prop_add $mol_button_major
 						event_click?val <=> event_add?val null
 						title <= prop_add_label @ \Add property
 			minimal_width 400

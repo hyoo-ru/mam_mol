@@ -9,6 +9,7 @@ $mol_app_studio_field $mol_view
 		<= Type $mol_select
 			value?val <=> type?val \null
 			hint <= type_hint @ \Type...
+			option_content_current /
 			options <= type_options /
 				\get
 				\bind

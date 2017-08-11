@@ -25,11 +25,9 @@
 }
 
 [mol_app_studio_fields] {
-	display: flex;
-	flex-direction: column;
 	padding: .5rem;
 }
 
 [mol_app_studio_fields] > * {
-	margin: .5rem;
+	margin: .5rem 0;
 }

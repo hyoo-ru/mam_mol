@@ -1,4 +1,4 @@
-$mol_number $mol_bar
+$mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
 	value?val NaN

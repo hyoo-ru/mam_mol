@@ -63,10 +63,14 @@ namespace $.$mol {
 		nav_components() {
 			return [ this.Filter() , ... this.option_rows() ]
 		}
+
+		option_content_current() {
+			return this.option_content( this.value() )
+		}
 		
 		anchor_content() {
 			return [
-				... ( this.options_showed() || !this.value() ) ? [ this.Filter() ] : this.option_content( this.value() ) ,
+				... ( this.options_showed() || !this.value() ) ? [ this.Filter() ] : this.option_content_current() ,
 				this.Trigger() ,
 			]
 		}

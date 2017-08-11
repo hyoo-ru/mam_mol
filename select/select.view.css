@@ -1,8 +1,6 @@
 [mol_select] {
 	display: flex;
 	word-break: normal;
-	background: var(--mol_skin_light);
-	color: var(--mol_skin_light_text);
 }
 
 [mol_select_anchor] {
@@ -29,7 +27,7 @@
 }
 
 [mol_select_option_label] {
-	padding: .5em 1rem;
+	padding: .5em 0 .5rem 1rem;
 	text-align: left;
 	min-height: 1.5em;
 }
@@ -47,6 +45,10 @@
 	text-align: left;
 	display: block;
 	color: var(--mol_skin_passive_text);
+}
+
+[mol_select_trigger] {
+	padding: .75rem .5rem;
 }
 
 [mol_select_trigger_icon] {
