@@ -51,6 +51,7 @@ $mol_app_studio $mol_book
 		hint <= prop_value_base!id null
 		object_hint <= prop_class!id null
 		object_options <= view_options /
+		prop_hint <= prop_value!id?val null
 		prop_options <= bind_options /
 		Prop_inner!id <= Prop!id -
 		prop_add?val <=> prop_add?val \
