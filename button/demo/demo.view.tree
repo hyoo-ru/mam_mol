@@ -2,22 +2,22 @@ $mol_button_demo $mol_row
 	title @ \All types of buttons in every states
 	sub /
 		<= Major_enabled $mol_button_major
-			sub / <= major_label @ \Click me!
+			title <= major_label @ \Click me!
 		-
 		<= Major_disabled $mol_button_major
-			sub / <= major_label @ \Click me!
+			title <= major_label @ \Click me!
 			enabled false
 		-
 		<= Minor_enabled $mol_button_minor
-			sub / <= minor_label @ \Or click me..
+			title <= minor_label @ \Or click me..
 		-
 		<= Minor_disabled $mol_button_minor
-			sub / <= minor_label @ \Or click me..
+			title <= minor_label @ \Or click me..
 			enabled false
 		-
 		<= Danger_enabled $mol_button_danger
-			sub / <= danger_label @ \Be attentive!
+			title <= danger_label @ \Be attentive!
 		-
 		<= Danger_disabled $mol_button_danger
-			sub / <= danger_label @ \Be attentive!
+			title <= danger_label @ \Be attentive!
 			enabled false

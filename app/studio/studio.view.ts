@@ -10,14 +10,22 @@ namespace $.$mol {
 		}
 
 		@ $mol_mem()
-		registry() {
+		classes() {
 			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\n'
-			return $mol_view_tree.fromString( view_tree + $mol_http.resource( '-/web.view.tree' ).text() )
+			return $mol_view_tree_classes( $mol_tree.fromString( view_tree + $mol_http.resource( '-/web.view.tree' ).text() ) )
 		}
 		
 		@ $mol_mem_key()
+		class( name : string ) {
+			return this.classes().select( name ).sub[0]
+		}
+
+		@ $mol_mem_key()
 		props_self( name : string ) {
-			return this.registry().select( name , 'props' , '' )
+			const def = this.class( name )
+			if( !def ) return new $mol_tree
+			
+			return $mol_view_tree_class_props( def )
 		}
 		
 		@ $mol_mem_key()
@@ -29,10 +37,14 @@ namespace $.$mol {
 			while( name ) {
 				const props = this.props_self( name )
 				for( let prop of props.sub ) props_all[ prop.type ] = props_all[ prop.type ] || prop
-				name = this.registry().select( name , 'super' , '' ).value
+				
+				const sup = this.class( name )
+				if( !sup ) break
+				
+				name = $mol_view_tree_super_name( sup )
 			}
 			
-			return this.registry().clone({ sub : Object.keys( props_all ).map( name => props_all[ name ] ) })
+			return this.classes().clone({ type : '' , sub : Object.keys( props_all ).map( name => props_all[ name ] ) })
 		}
 		
 		view_class( name : string ) {
@@ -45,8 +57,8 @@ namespace $.$mol {
 			
 			const path = this.path()
 			return this.props_all( this.prop_class( path ) ).sub
-			.filter( prop => !prop.select( 'key' ).sub[0].value )
-			.filter( prop => prop.type.toLowerCase().indexOf( filter ) >= 0 )
+			.filter( prop => !$mol_view_tree_prop_key( prop ) )
+			.filter( prop => $mol_view_tree_prop_name( prop ).toLowerCase().indexOf( filter ) >= 0 )
 			.map( prop => this.Prop([ ... path , prop.type ]) )
 		}
 
@@ -64,28 +76,35 @@ namespace $.$mol {
 		
 		@ $mol_mem_key()
 		prop( path : string[] ) {
+			if( path.length > 0 ) {
+				const val = $mol_view_tree_prop_value( this.prop( path.slice( 0 , path.length - 1 ) ) )
+				const over = val.select( path[ path.length - 1 ] ).sub[0]
+				if( over ) return over
+			}
+
 			const class_name = this.prop_class( path.slice( 0 , path.length - 1 ) )
-			return this.props_all( class_name ).select( path[ path.length - 1 ] ).sub[0] || $mol_tree.fromString( 'type \null' )
+			return this.props_all( class_name ).select( path[ path.length - 1 ] ).sub[0] || $mol_tree.fromString( path[ path.length - 1 ] )
 		}
 		
 		@ $mol_mem_key()
 		prop_type( path : string[] , next? : string ) {
-			return this.overrided( `prop_type(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'type' ).sub[0].value
+			return this.overrided( `prop_type(${ JSON.stringify( path ) })` , next )
+			|| $mol_view_tree_value_type( $mol_view_tree_prop_value( this.prop( path ) ) )
 		}
 
 		@ $mol_mem_key()
 		prop_key( path : string[] , next? : string ) {
-			return this.overrided( `prop_key(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'key' ).sub[0].value
+			return this.overrided( `prop_key(${ JSON.stringify( path ) })` , next ) || $mol_view_tree_prop_key( this.prop( path ) )
 		}
 
 		@ $mol_mem_key()
 		prop_next( path : string[] , next? : string ) {
-			return this.overrided( `prop_next(${ JSON.stringify( path ) })` , next ) || this.prop( path ).select( 'next' ).sub[0].value
+			return this.overrided( `prop_next(${ JSON.stringify( path ) })` , next ) || $mol_view_tree_prop_next( this.prop( path ) )
 		}
 
 		@ $mol_mem_key()
 		prop_default( path : string[] , next? : $mol_tree ) {
-			return /*this.overrided( `prop_default(${ JSON.stringify( path ) })` , next ) ||*/ this.prop( path ).select( 'default' , '' ).sub[0]
+			return /*this.overrided( `prop_default(${ JSON.stringify( path ) })` , next ) ||*/ $mol_view_tree_prop_value( this.prop( path ) )
 		}
 
 		block( next? : string ) : string {
@@ -242,7 +261,7 @@ namespace $.$mol {
 		prop_add( name : string ) {
 			const class_name = this.prop_class([])
 			const props = this.props_all( class_name )
-			const prop = new $mol_tree({ type : name , sub : $mol_tree.fromString( 'type \null\nkey\nnext\ndefault\n' ).sub })
+			const prop = new $mol_tree({ type : name , sub : $mol_tree.fromString( 'null' ).sub })
 			this.props_all( class_name , props.clone({
 				sub : [ prop , ... props.sub ]
 			}) )

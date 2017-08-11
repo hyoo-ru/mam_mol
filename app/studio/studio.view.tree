@@ -57,7 +57,7 @@ $mol_app_studio $mol_book
 		overs <= prop_overs!id /
 	-
 	block?val <= block_default \mol_view
-	registry $mol_tree
+	classes $mol_tree
 
 $mol_app_studio_selector $mol_ghost
 	event *
