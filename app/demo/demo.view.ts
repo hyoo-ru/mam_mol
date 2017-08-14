@@ -135,7 +135,7 @@ namespace $.$mol {
 			sub.push( this.Menu() )
 			
 			if( this.selected() ) {
-				if( this.editing() ) sub.push( ... this.Editor( this.selected() ).pages() )
+				if( this.editing() && this.names_demo().length === 1 ) sub.push( ... this.Editor( this.selected() ).pages() )
 				else sub.push( this.Detail() )
 			}
 			
