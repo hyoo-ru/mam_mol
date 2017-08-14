@@ -2,7 +2,7 @@
 	display: flex;
 	align-items: flex-start;
 	flex-wrap: wrap;
-	flex: 1 1 auto;
+	flex: 1 1 100%;
 	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_card);
 	color: var(--mol_skin_card_text);
@@ -39,7 +39,7 @@
 }
 
 [mol_app_studio_field_number] {
-	flex: 1000 1 10rem;
+	flex: 1 1 100%;
 	width: auto;
 }
 

@@ -83,7 +83,7 @@ namespace $.$mol {
 			}
 
 			const class_name = this.prop_class( path.slice( 0 , path.length - 1 ) )
-			return this.props_all( class_name ).select( path[ path.length - 1 ] ).sub[0] || $mol_tree.fromString( path[ path.length - 1 ] )
+			return this.props_all( class_name ).select( path[ path.length - 1 ] ).sub[0] || $mol_tree.fromString( path[ path.length - 1 ] + ' null' ).sub[0]
 		}
 		
 		@ $mol_mem_key()
@@ -153,13 +153,25 @@ namespace $.$mol {
 
 		prop_value( path : string[] ) {
 			switch( this.prop_type( path ) ) {
-				case 'bool' : return this.prop_value_base( path ).toString()
+				case 'bool' : return this.prop_value_base( path ) && this.prop_value_base( path ).toString()
 				case 'object' : return this.prop_value_base( path ).constructor.toString()
 				case 'get' : return this.prop_default( path ).sub[0] && this.prop_default( path ).sub[0].type
 				case 'bind' : return this.prop_default( path ).sub[0].type
 			}
 
 			return this.prop_value_base( path )
+		}
+
+		prop_bind( path : string[] , next? : any ) {
+			const over = this.overrided( `prop_value(${ JSON.stringify( path ) })` , next )
+			if( over ) return over
+			
+			switch( this.prop_type( path ) ) {
+				case 'get' : return this.prop_default( path ).sub[0] && this.prop_default( path ).sub[0].type
+				case 'bind' : return this.prop_default( path ).sub[0].type && this.prop_default( path ).sub[0].type
+			}
+
+			throw new Error( 'Wrong path for bind: ' + path.join( '.' ) )
 		}
 
 		prop_class( path : string[] , next? : string ) : string {

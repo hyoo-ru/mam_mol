@@ -6,7 +6,6 @@ namespace $.$mol {
 			const type = this.type()
 			return [
 				this.title() ? super.Title() : null ,
-				( type === 'list' ) ? this.Add() : null ,
 				this.Type() ,
 				( type === 'bool' ) ? this.Bool() : null ,
 				( type === 'number' ) ? this.Number() : null ,
