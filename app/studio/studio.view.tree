@@ -46,10 +46,10 @@ $mol_app_studio $mol_book
 		title_arg <= prop_arg!id *
 		type?val <=> prop_type!id?val \null
 		- value?val <=> prop_value!id?val null
-		- class?val <=> prop_class!id?val null
+		class?val <=> prop_class!id?val null
 		- tree?val <=> prop_default!id?val null
 		hint <= prop_value_base!id null
-		object_hint <= prop_class!id null
+		object_hint <= prop_class!id?val null
 		object_options <= view_options /
 		prop_hint <= prop_value!id?val null
 		prop_options <= bind_options /

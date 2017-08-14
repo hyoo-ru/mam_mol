@@ -17,10 +17,6 @@
 	padding: .5rem 1rem;
 }
 
-[mol_app_studio_field_type] {
-	flex: 1 1 auto;
-}
-
 [mol_app_studio_field_variant="null"] > [mol_app_studio_field_title] ,
 [mol_app_studio_field_variant="bool"] > [mol_app_studio_field_title] ,
 [mol_app_studio_field_variant="number"] > [mol_app_studio_field_title] ,
@@ -42,10 +38,17 @@
 	color: color( var(--mol_skin_base) hue(+60deg) );
 }
 
-[mol_app_studio_field_number] ,
-[mol_app_studio_field_string] ,
-[mol_app_studio_field_object] {
+[mol_app_studio_field_number] {
+	flex: 1000 1 10rem;
+	width: auto;
+}
+
+[mol_app_studio_field_string] {
 	flex: 1 1 100%;
+	width: auto;
+}
+
+[mol_app_studio_field_object] {
 	width: auto;
 }
 

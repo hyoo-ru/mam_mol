@@ -164,7 +164,9 @@ namespace $.$mol {
 
 		prop_class( path : string[] , next? : string ) : string {
 			if( path.length === 0 ) return '$' + this.block()
-			if( this.Prop( path ).class() ) return this.Prop( path ).class()
+			
+			const over = this.overrided( `prop_class(${ JSON.stringify( path ) })` , next )
+			if( over ) return over
 			
 			switch( this.prop_type( path ) ) {
 				case 'get' : 
@@ -208,7 +210,7 @@ namespace $.$mol {
 		Element( path : string[] ) : $mol_view {
 
 			const class_name = this.prop_class( path )
-			const obj = ( path.length && !this.Prop( path ).class() )
+			const obj = ( path.length && !this.overrided( `prop_class(${ JSON.stringify( path ) })` ) )
 				? this.prop_value_base( path )
 				: new( this.view_class( class_name ) )
 			
