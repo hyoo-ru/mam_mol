@@ -68,10 +68,10 @@ namespace $.$mol {
 			return this.option_content( this.value() )
 		}
 		
-		anchor_content() {
+		trigger_content() {
 			return [
 				... ( this.options_showed() || !this.value() ) ? [ this.Filter() ] : this.option_content_current() ,
-				this.Trigger() ,
+				this.Trigger_icon() ,
 			]
 		}
 		

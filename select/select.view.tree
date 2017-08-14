@@ -22,15 +22,13 @@ $mol_select $mol_pop
 			cycle?val <=> nav_cycle?val true
 	showed <= options_showed false
 	align?val <=> options_align?val \bottom_right
-	Anchor $mol_view
-		sub <= anchor_content /
+	Anchor <= Trigger $mol_button_minor
+		sub <= trigger_content /
 			<= option_content_current /
 			<= Filter $mol_string
 				value?val <=> filter_pattern?val \
 				hint <= filter_hint <= hint @ \Search..
-			<= Trigger $mol_button_minor
-				sub /
-					<= Trigger_icon $mol_icon_chevron
+			<= Trigger_icon $mol_icon_chevron
 	bubble_content /
 		<= Bubble_content $mol_list
 			rows <= option_rows /

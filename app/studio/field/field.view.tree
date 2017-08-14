@@ -6,10 +6,15 @@ $mol_app_studio_field $mol_view
 		<= Title $mol_link
 			title <= title \
 			arg <= title_arg *
+		<= Add $mol_select
+			hint <= add_hint @ \Add item..
+			value?val <=> add_item?val \
+			options <= item_type_options -
+			Trigger_icon <= List_trigger_icon $mol_icon_plus
+			Filter null
 		<= Type $mol_select
 			value?val <=> type?val \null
 			hint <= type_hint @ \Type...
-			option_content_current /
 			options <= type_options /
 				\get
 				\bind
@@ -44,12 +49,7 @@ $mol_app_studio_field $mol_view
 				title <= prop_add_label @ \Add property
 				event_click?val <=> event_prop_add?val null
 		<= List $mol_list
-			rows /
-				<= rows /
-				<= Add $mol_select
-					hint <= add_hint @ \Add item..
-					value?val <=> add_item?val \
-					options <= item_type_options -
+			rows <= rows /
 		<= Overs $mol_list
 			rows /
 				<= overs /

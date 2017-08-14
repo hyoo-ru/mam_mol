@@ -63,7 +63,7 @@ namespace $.$mol {
 		}
 
 		prop_overs( path : string[] ) {
-			return this.prop_default( path ).sub.map( over => this.Prop([ ... path , over.type.replace( /[?!].*/ , '' ) ]) )
+			return this.prop_default( path ).sub.map( over => this.Prop([ ... path , over.type ]) )
 		}
 		
 		prop_title( path : string[] ) {

@@ -48,11 +48,15 @@
 }
 
 [mol_select_trigger] {
-	padding: .75rem .5rem;
+	padding: 0;
+	flex: 1 1 auto;
+	display: flex;
+	justify-content: flex-end;
 }
 
 [mol_select_trigger_icon] {
 	transform: rotateZ(90deg);
+	margin: .5rem;
 }
 :hover > [mol_select_trigger_icon] {
 	transform: rotateZ(90deg) scale(1.25);

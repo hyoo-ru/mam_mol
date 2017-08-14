@@ -25,9 +25,9 @@
 }
 
 [mol_app_studio_fields] {
-	padding: .5rem;
+	padding: 0 1rem;
 }
 
 [mol_app_studio_fields] > * {
-	margin: .5rem 0;
+	margin: 1rem 0;
 }
