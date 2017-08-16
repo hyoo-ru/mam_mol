@@ -32,7 +32,7 @@ $mol_app_studio $mol_book
 					rows <= fields /
 					Empty <= Prop_add $mol_button_major
 						event_click?val <=> event_add?val null
-						title <= prop_add_label @ \Add property
+						title <= prop_add_label @ \Add this property
 			minimal_width 400
 	Placeholder null
 	-
@@ -42,20 +42,21 @@ $mol_app_studio $mol_book
 			path <= crumb_path!index \
 	-
 	Prop!id $mol_app_studio_field
-		title <= prop_title!id \
-		title_arg <= prop_arg!id *
-		type?val <=> prop_type!id?val \null
+		path <= prop_path!id /
+		prop_title!id <= prop_title!id \
+		prop_arg!id <= prop_arg!id *
+		prop_type!id?val <=> prop_type!id?val \null
+		prop_bool!id?val <=> prop_bool!id?val null
+		prop_number!id?val <=> prop_number!id?val NaN
+		prop_string!id?val <=> prop_string!id?val \
 		- value?val <=> prop_value!id?val null
-		class?val <=> prop_class!id?val null
-		bind?val <=> prop_bind!id?val null
-		hint <= prop_value_base!id null
-		object_hint <= prop_class!id?val null
+		prop_class!id?val <=> prop_class!id?val null
+		prop_bind!id?val <=> prop_bind!id?val null
+		prop_value!id <= prop_value_base!id null
 		object_options <= view_options /
-		prop_hint <= prop_value!id?val null
-		prop_options <= bind_options /
-		Prop_inner!id <= Prop!id -
+		prop_options <= prop_options /
 		prop_add?val <=> prop_add?val \
-		overs <= prop_overs!id /
+		prop_overs!id <= prop_overs!id /
 	-
 	block?val <= block_default \mol_view
 	classes $mol_tree

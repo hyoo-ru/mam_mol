@@ -1,7 +1,7 @@
 $mol_app_studio_field $mol_view
 	attr *
 		mol_app_studio_field_variant <= type?val \null
-	prop_add?val null
+	path /
 	sub <= controls /
 		<= Title $mol_link
 			title <= title \
@@ -21,30 +21,30 @@ $mol_app_studio_field $mol_view
 				\dict
 				\null
 		<= Bool $mol_switch
-			value?val <=> value?val null
+			value?val <=> value_bool?val null
 			options *
 				true \True
 				false \False
 		<= Number $mol_number
-			value?val <=> value?val null
+			value?val <=> value_number?val NaN
 			hint <= hint \
 		<= String $mol_string
-			value?val <=> value?val null
+			value?val <=> value_string?val null
 			hint <= hint \
 		<= Object $mol_select
 			value?val <=> class?val null
 			options <= object_options /
 			hint <= object_hint @ \Class name..
-		<= Prop $mol_select
+		<= Bind $mol_select
 			value?val <=> bind?val null
 			options <= prop_options /
-			hint <= prop_hint @ \Property..
+			hint <= bind_hint @ \Property..
 			No_options <= Prop_add $mol_button_minor
 				title <= prop_add_label @ \Add property
 				event_click?val <=> event_prop_add?val null
 		<= List $mol_list
 			rows /
-				<= rows /
+				<= list_rows /
 				<= Add $mol_select
 					hint <= add_hint @ \Add item..
 					value?val <=> add_item?val \
@@ -53,10 +53,8 @@ $mol_app_studio_field $mol_view
 		<= Overs $mol_list
 			rows /
 				<= overs /
-	tree $mol_tree
 	Item!index $mol_app_studio_field
 		type?val <=> item_type!index?val \null
-		value?val <=> item_value!index?val \
 		class?val <=> item_class!index?val \
 		object_options <= object_options /
 		prop_options <= prop_options /
@@ -67,18 +65,19 @@ $mol_app_studio_field $mol_view
 			\number
 			\bool
 			\dict
-		Prop_inner!id <= Prop_inner!id $mol_view
-	Over!name $mol_app_studio_field
-		title <= over_name!name \
-		type?val <=> over_type!name?val \get
-		value?val <=> over_value!name?val \
+		Prop!id <= Prop!id -
+	Prop!id $mol_app_studio_field
+		path <= prop_path!id /
+		prop_arg!id <= prop_arg!id *
+		prop_title!id <= prop_title!id \
+		prop_type!id?val <=> prop_type!id?val \null
 		prop_options <= prop_options /
-		type_options <= over_type_options /
-			\get
-			\bind
-			\string
-			\locale
-			\number
-			\bool
-			\dict
-		Prop_inner!id <= Prop_inner!id $mol_view
+		prop_bind!id?val <=> prop_bind!id?val \
+		prop_value!id <= prop_value!id null
+		object_options <= object_options /
+		prop_string!id?val <=> prop_string!id?val \
+		prop_number!id?val <=> prop_number!id?val NaN
+		prop_bool!id?val <=> prop_bool!id?val null
+		prop_class!id?val <=> prop_class!id?val \
+		prop_add?val <=> prop_add?val null
+		prop_overs!id?val <=> prop_overs!id?val /

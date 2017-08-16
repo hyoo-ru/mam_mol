@@ -63,7 +63,11 @@ namespace $.$mol {
 		}
 
 		prop_overs( path : string[] ) {
-			return this.prop_default( path ).sub.map( over => this.Prop([ ... path , over.type ]) )
+			return this.prop_default( path ).sub.map( over => over.type )
+		}
+
+		prop_path( path : string[] ) {
+			return path
 		}
 		
 		prop_title( path : string[] ) {
@@ -131,7 +135,7 @@ namespace $.$mol {
 		}
 		
 		@ $mol_mem()
-		bind_options() {
+		prop_options() {
 			return this.props_all( '$' + this.block() ).sub.map( prop => prop.type )
 		}
 
@@ -147,7 +151,8 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		prop_value_base( path : string[] , next? : any ) : any {
 			const element = this.Element( path.slice( 0 , path.length - 1 ) )
-			const base = element[ path[ path.length - 1 ] ] && element[ path[ path.length - 1 ] ][ '$mol_app_studio_original' ]
+			const field = path[ path.length - 1 ].replace( /[?!].*/ , '' )
+			const base = element[ field ] && element[ field ][ '$mol_app_studio_original' ]
 			return base && base.call( element , next )
 		}
 
@@ -155,10 +160,31 @@ namespace $.$mol {
 			switch( this.prop_type( path ) ) {
 				case 'bool' : return this.prop_value_base( path ) && this.prop_value_base( path ).toString()
 				case 'object' : return this.prop_value_base( path ).constructor.toString()
-				case 'get' : return this.prop_default( path ).sub[0] && this.prop_default( path ).sub[0].type
-				case 'bind' : return this.prop_default( path ).sub[0].type
+				case 'get' : 
+				case 'bind' : return this.prop_default( path ).sub[0] && this.prop_default( path ).sub[0].type
 			}
 
+			return this.prop_value_base( path )
+		}
+
+		prop_bool( path : string[] , next? : boolean ) {
+			const over = this.overrided( `prop_string(${ JSON.stringify( path ) })` , next )
+			if( over != null ) return over
+			
+			return this.prop_value_base( path )
+		}
+
+		prop_number( path : string[] , next? : number ) {
+			const over = this.overrided( `prop_string(${ JSON.stringify( path ) })` , next )
+			if( over != null ) return over
+			
+			return this.prop_value_base( path )
+		}
+
+		prop_string( path : string[] , next? : string ) {
+			const over = this.overrided( `prop_string(${ JSON.stringify( path ) })` , next )
+			if( over != null ) return over
+			
 			return this.prop_value_base( path )
 		}
 
@@ -194,28 +220,33 @@ namespace $.$mol {
 		prop_value_view( path : string[] , next? : string ) : any {
 			switch( this.prop_type( path ) ) {
 				case 'bool' : {
-					let value = this.Prop( path ).value()
+					let value = this.prop_bool( path )
 					return value ? ( value == 'true' ) : undefined
 				}
-				case 'get' : {
-					const prop = this.Prop( path ).value()
-					return prop ? this.Element([])[ prop ]() : undefined
+				case 'string' : return this.prop_string( path ) || undefined
+				case 'locale' : return this.prop_string( path ) || undefined
+				case 'number' : return this.prop_number( path ) || undefined
+				case 'get' :
+				case 'bind' : {
+					const prop =  this.overrided( `prop_bind(${ JSON.stringify( path ) })` )
+					return prop ? this.Element([])[ prop.replace( /[?!].*/ , '' ) ]() : undefined
 				}
 				case 'object' : {
 					return this.Element( path )
 				}
 				case 'list' : {
-					if( !this.Prop( path ).rows().length ) return undefined
-					return this.Prop( path ).rows().map( item => {
+					if( !this.Prop( path ).list_rows().length ) return undefined
+					return this.Prop( path ).list_rows().map( item => {
 						switch( item.type() ) {
-							case 'get' : return item.value() ? this.prop_value_view([ item.value() ]) : undefined
+							case 'get' : return item.bind() ? this.prop_value_view([ item.bind() ]) : undefined
+							case 'string' : return item.value_string()
 						}
-						return item.value()
+						throw new Error( 'Unsupported item type' )
 					} )
 				}
 			}
 
-			return this.Prop( path ).value() || undefined
+			return undefined
 		}
 
 		@ $mol_mem_key()
@@ -233,13 +264,18 @@ namespace $.$mol {
 			for( let prop of props.sub ) {
 				if( this.prop_key( [ ... path , prop.type ] ) ) continue
 				
-				let value = obj[ prop.type ]
-				obj[ prop.type ] = ( next? : any )=> {
-					const val = this.prop_value_view( [ ... path , prop.type ] )
-					if( val !== undefined ) return val
+				const field = prop.type.replace( /[?!].*/ , '' )
+				let value = obj[ field ]
+				if( !value || value[ '$mol_app_studio_original' ] ) continue
+					
+				obj[ field ] = ( next? : any )=> {
+					const val = this.prop_value_view([ ... path , prop.type ])
+					if( next === undefined ) {
+						if( val !== undefined ) return val
+					}
 					return value.call( obj , next )
 				}
-				obj[ prop.type ][ '$mol_app_studio_original' ] = value
+				obj[ field ][ '$mol_app_studio_original' ] = value
 			}
 			
 			return obj
