@@ -11,6 +11,12 @@ $mol_app_studio $mol_book
 					path?val <=> path?val /
 			minimal_width 400
 		<= Editor_page $mol_page
+			plugins /
+				<= Speech_filter $mol_speech
+					event_catch?val <=> speech_filter?val null
+					patterns <= speech_filter_patterns /
+						\find property (.+?)
+						\(?:до|на)й[дт]и свойств[оа] (.+?)
 			title <= editor_title @ \Properties
 			event_top?val <=> event_front_up?val -
 			Tools => Editor_tools
@@ -19,6 +25,10 @@ $mol_app_studio $mol_book
 					sub <= crumbs /
 				<= Editor_tools -
 			tools /
+				<= Speech_toggle $mol_check_icon
+					Icon <= Speech_toggle_icon $mol_icon_microphone
+					checked?val <=> speech_enabled?val false
+					hint <= speech_toggle_hint @ \Speech contol
 				<= Close $mol_link
 					sub /
 						<= Close_icon $mol_icon_cross

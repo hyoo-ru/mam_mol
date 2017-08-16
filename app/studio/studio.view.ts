@@ -316,6 +316,14 @@ namespace $.$mol {
 				sub : [ prop , ... props.sub ]
 			}) )
 		}
+
+		speech_enabled( next? : boolean ) {
+			return this.$.$mol_speech.listening( next )
+		}
+
+		speech_filter( [ filter ] : string[] ) {
+			this.prop_filter( filter )
+		}
 		
 	}
 	

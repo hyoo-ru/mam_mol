@@ -13,9 +13,10 @@ namespace $.$mol {
 			return node
 		}
 		
-		render() {
-			this.Sub().render()
+		dom_tree() {
+			const node = this.Sub().dom_tree()
 			super.render()
+			return node
 		}
 		
 	}
