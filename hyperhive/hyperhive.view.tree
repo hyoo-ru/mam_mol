@@ -1,0 +1,14 @@
+$mol_hyperhive $mol_object
+	host \
+	version \
+	environment \
+	project \
+	application \
+	device \
+	-
+	login?val \
+	password?val \
+	-
+	initialized false
+	authentificated false
+	data!table /

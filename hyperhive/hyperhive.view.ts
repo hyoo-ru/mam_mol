@@ -1,25 +1,9 @@
 declare var hhfw : any
 declare var sqlitePlugin : any
 
-namespace $ {
+namespace $.$mol {
 
-	export class $mol_hyperhive extends $mol_object {
-
-		host() { return '' }
-		version() { return '' }
-		environment() { return '' }
-		project() { return '' }
-		application() { return '' }
-		
-		@ $mol_mem()
-		login( next? : string ) {
-			return next || ''
-		}
-
-		@ $mol_mem()
-		password( next? : string ) {
-			return next || ''
-		}
+	export class $mol_hyperhive extends $.$mol_hyperhive {
 
 		@ $mol_mem()
 		device() {

@@ -1,4 +1,4 @@
-namespace $ {
+namespace $.$mol {
 	
 	export const $mol_app_inventory_domain_position_status = {
 		draft : 'Inserted' ,
