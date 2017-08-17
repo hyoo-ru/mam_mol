@@ -53,12 +53,10 @@ namespace $.$mol {
 		}
 		
 		fields() {
-			const filter = this.prop_filter().toLowerCase()
-			
 			const path = this.path()
 			return this.props_all( this.prop_class( path ) ).sub
 			.filter( prop => !$mol_view_tree_prop_key( prop ) )
-			.filter( prop => $mol_view_tree_prop_name( prop ).toLowerCase().indexOf( filter ) >= 0 )
+			.filter( $mol_match_text( this.prop_filter() , ( prop : $mol_tree )=> [ $mol_view_tree_prop_name( prop ) ] ) )
 			.map( prop => this.Prop([ ... path , prop.type ]) )
 		}
 

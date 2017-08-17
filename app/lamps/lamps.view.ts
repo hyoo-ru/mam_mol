@@ -9,15 +9,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		lamps() {
-			const tags = this.filter_tags()
-			if( tags.length === 0 ) return this.lamps_all()
-			
-			return this.lamps_all().filter( lamp => tags.every( tag => {
-				for( let field in lamp ) {
-					if( lamp[ field ].toLowerCase().match( tag ) ) return true
-				}
-				return false
-			} ) )
+			return this.lamps_all().filter( $mol_match_text( this.filter() , ( lamp : any )=> Object.keys( lamp ).map( field => lamp[ field ] ) ) )
 		}
 		
 		@ $mol_mem()
@@ -53,13 +45,6 @@ namespace $.$mol {
 			
 			if( this._filter_timer ) clearTimeout( this._filter_timer )
 			this._filter_timer = setTimeout( ()=> { this.filter( void null , $mol_atom_force ) } , 500 )
-		}
-		
-		@ $mol_mem()
-		filter_tags( next? : string[] ) {
-			const filter = this.filter( next && next.join( ' ' ) ).toLowerCase().trim()
-			const tags = filter.split( /\s+/ ).filter( tag => Boolean( tag ) )
-			return tags
 		}
 		
 		lamp_arg( id : string ) {
