@@ -19,10 +19,7 @@ namespace $.$mol {
 		}
 		
 		options_filtered() {
-			const filter = this.filter_pattern().toLowerCase()
-			const value = this.value()
-			
-			return this.options().filter( id => this.option_label( id ).toLowerCase().match( filter ) )
+			return this.options().filter( $mol_match_text( this.filter_pattern() , ( id : string )=> [ this.option_label( id ) ] ) )
 		}
 		
 		option_label( id : string ) {
