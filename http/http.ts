@@ -54,7 +54,7 @@ namespace $ {
 		
 		destroyed( next? : boolean ) {
 			if( next ) {
-				const native = this[ 'reques()' ]
+				const native = this[ 'request()' ]
 				if( native ) native.abort()
 			}
 			return super.destroyed( next )
