@@ -26,7 +26,7 @@ namespace $ {
 		}
 		
 		value_view() {
-			return String( this.valueOf() ).split( /(?=(?:...)+$)/ ).join( this.delimiter() )
+			return this.valueOf().toLocaleString()
 		}
 		
 		toString() {
