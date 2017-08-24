@@ -134,7 +134,7 @@ namespace $.$mol {
 		sandbox_title() {
 			const command = this.command_current()
 			if( !command ) return
-			
+
 			return `${ this.sample_title( command[1] ) }: ${ this.step_title( command[0] ) }`
 		}
 
@@ -142,7 +142,7 @@ namespace $.$mol {
 			if( col_id === 'sample' ) return [ this.result_col_title_sample() ]
 			return this.step_title( col_id )
 		}
-		
+
 		step_title( step : string ) {
 			const title = this.meta().steps[ step ].title
 			return [ title[ $mol_locale.lang() ] || title[ 'en' ] ]

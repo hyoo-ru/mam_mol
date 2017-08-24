@@ -15,6 +15,7 @@
 
 [mol_bar] > *:not(:first-child) {
 	margin-left: 1px;
+	padding: .5rem;
 }
 
 [mol_bar] > *:last-child {
