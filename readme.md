@@ -138,12 +138,23 @@ $my_hello $mol_view
 Same code with comments:
 
 ```tree
-$my_hello $mol_view - Create `$my_hello` component by extending `$mol_view` base component
-	sub / - Overload base property `sub` by custom that returns two sub components: `Name` view and `message` string
-		<= Name $mol_string - Define property `Name` that returns `$mol_string` with overloaded two properties: `hint` and `name`
-			hint \Name - Define constant value for `hint` property
-			value?val <=> name?val \ - Overload `value` property of `$mol_string` by property `name` with empty string as default value.
-		<= message \ - Outputs value of `message` property with empty string as default value.
+- Create `$my_hello` component by extending `$mol_view` base component
+$my_hello $mol_view
+	-
+	- Overload base property `sub` by custom that returns two sub components: `Name` view and `message` string
+	sub /
+		-
+		- Define property `Name` that returns `$mol_string` with overloaded two properties: `hint` and `name`
+		<= Name $mol_string
+			-
+			- Define constant value for `hint` property
+			hint \Name
+			-
+			- Overload `value` property of `$mol_string` by property `name` with empty string as default value.
+			value?val <=> name?val \
+		-
+		- Outputs value of `message` property with empty string as default value.
+		<= message \
 ```
 
 That will be compiled to typescript code like this:
