@@ -11,23 +11,27 @@ $mol_app_bench $mol_view
 			title <= title -
 			body /
 				<= Inform $mol_view sub /
-					<= Descr $mol_text
-						text <= description \
-					<= Fields $mol_row
+					<= Descr_scroll $mol_scroll
 						sub /
-							<= fields /
+							<= Descr $mol_text
+								text <= description \
+					<= Param_fields $mol_row
+						sub /
+							<= param_fields /
 					<= Result $mol_bench
 						result <= result null
 						col_head_label!id /
-							<= result_col_title!id / 
+							<= result_col_title!id /
 						col_sort?val <=> result_col_sort?val \
-				<= Sandbox $mol_view
-					dom_name \iframe
+		<= Sandbox_page $mol_page
+			title <= sandbox_title \
+			Body <= Sandbox $mol_scroll
+				dom_name \iframe
 	-
 	Menu_option!id $mol_check_box
 		minimal_height 36
 		checked?val <=> menu_option_checked!id?val false
-		title <= menu_option_title!id \
+		title <= sample_title!id \
 	-
 	Param!id $mol_labeler
 		title <= param_title!id \

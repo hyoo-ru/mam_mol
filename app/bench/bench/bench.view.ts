@@ -77,8 +77,8 @@ namespace $.$mol {
 		@ $mol_mem()
 		samples_all( next? : string[] ) {
 			return Object.keys( this.meta().samples ).sort( ( a , b )=> {
-				const titleA = this.menu_option_title( a ).toLowerCase()
-				const titleB = this.menu_option_title( a ).toLowerCase()
+				const titleA = this.sample_title( a ).toLowerCase()
+				const titleB = this.sample_title( a ).toLowerCase()
 				return titleA > titleB ? 1 : titleA < titleB ? -1 : 0
 			} )
 		}
@@ -99,7 +99,7 @@ namespace $.$mol {
 			const title = this.meta().title 
 			return title[ $mol_locale.lang() ] || title[ 'en' ] || super.title()
 		}
-		
+
 		@ $mol_mem()
 		description() {
 			const descr = this.meta().descr
@@ -109,7 +109,7 @@ namespace $.$mol {
 		@ $mol_mem_key()
 		result_sample( sampleId : string )  {
 			const result : { [ key : string ] : any } = {
-				sample : this.menu_option_title( sampleId ) ,
+				sample : this.sample_title( sampleId ) ,
 			}
 			
 			this.steps().forEach( step => {
@@ -130,9 +130,21 @@ namespace $.$mol {
 			return result
 		}
 		
+		@ $mol_mem()
+		sandbox_title() {
+			const command = this.command_current()
+			if( !command ) return
+
+			return `${ this.sample_title( command[1] ) }: ${ this.step_title( command[0] ) }`
+		}
+
 		result_col_title( col_id : string ) {
 			if( col_id === 'sample' ) return [ this.result_col_title_sample() ]
-			const title = this.meta().steps[ col_id ].title
+			return this.step_title( col_id )
+		}
+
+		step_title( step : string ) {
+			const title = this.meta().steps[ step ].title
 			return [ title[ $mol_locale.lang() ] || title[ 'en' ] ]
 		}
 		
@@ -146,11 +158,11 @@ namespace $.$mol {
 			const filter = this.filter().toLowerCase()
 
 			return this.samples_all()
-			.filter( sample => this.menu_option_title( sample ).toLowerCase().match( filter ) )
+			.filter( sample => this.sample_title( sample ).toLowerCase().match( filter ) )
 			.map( sample => this.Menu_option( sample ) )
 		}
 
-		menu_option_title( sample : string ) {
+		sample_title( sample : string ) {
 			const title = this.meta().samples[ sample ].title
 			return title[ $mol_locale.lang() ] || title[ 'en' ]
 		}
@@ -169,7 +181,7 @@ namespace $.$mol {
 			return Object.keys( this.meta().params || {} )
 		}
 
-		fields() {
+		param_fields() {
 			return this.params().map( param => this.Param( param ) )
 		}
 

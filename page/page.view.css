@@ -12,6 +12,7 @@
 	overflow: hidden;
 	background: var(--mol_skin_light);
 	color: var(--mol_skin_light_text);
+	z-index: 0;
 }
 
 [mol_page]:focus {

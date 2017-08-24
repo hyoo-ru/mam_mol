@@ -11,6 +11,7 @@
 	flex: 1 1 auto;
 	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_passive);
+	padding: .25rem .75rem;
 }
 
 [mol_switch_option][mol_check_checked] {

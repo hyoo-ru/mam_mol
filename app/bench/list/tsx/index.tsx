@@ -21,12 +21,6 @@ namespace $ {
 		static render() {
 			return (
 				<div id="list" className="list">
-					<div
-						id="list-header"
-						className="list-header"
-						>
-						{ this.data.sample }
-					</div> ,
 					{ this.data.items.map( item => (
 						<div
 							id={ 'list-item#' + item.id }

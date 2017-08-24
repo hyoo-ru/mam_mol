@@ -3,14 +3,10 @@
 }
 
 [mol_check_box_icon] {
-	left: 0;
+	margin: .25rem;
 	border-radius: var(--mol_skin_round);
 	box-shadow: var(--mol_skin_light_outline);
 	color: var(--mol_skin_light_text);
-}
-
-[mol_check_box_icon] + [mol_check_box_label]:not(:empty) {
-	margin-left: .5rem;
 }
 
 [mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {
