@@ -72,7 +72,6 @@
 	display: flex;
 	align-items: stretch;
 	justify-content: flex-start;
-	flex-wrap: wrap;
 }
 
 [mol_app_demo_detail_row] {
