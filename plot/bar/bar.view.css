@@ -4,7 +4,6 @@
 }
 
 [mol_plot_bar_sample] {
-	min-height: 1rem;
 	background: currentColor;
 	position: absolute;
 	top:0;
