@@ -11,6 +11,7 @@ namespace $ {
 			api.interimResults = true
 			api.maxAlternatives = 1
 			api.continuous = true
+			api.lang = $mol_locale.lang()
 			
 			api.onnomatch = ( event : any )=> {
 				this.text( '' )
