@@ -1,10 +1,15 @@
 [mol_plot_group_sample] {
-	display: flex;
 	position: relative;
-	min-height: 1rem;
+	height: 2rem;
 	min-width: 1.5rem;
+	margin-top: 2rem;
+	box-sizing: border-box;
 }
 
 [mol_plot_group_sample] > * {
 	position: absolute;
+}
+
+[mol_plot_dot_sample] {
+	margin-top: -.2rem;
 }
