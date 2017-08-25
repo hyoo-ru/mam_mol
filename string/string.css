@@ -15,7 +15,6 @@
 	width: 100%;
 	background: var(--mol_skin_passive);
 	color: var(--mol_skin_light_text);
-	margin: 0;
 }
 
 [mol_string]:enabled {

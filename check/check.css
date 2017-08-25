@@ -7,7 +7,7 @@
 	font-weight: normal;
 	box-shadow: none;
 	text-align: left;
-	padding: .5rem;
+	padding: .25rem;
 }
 
 [mol_check]:not([mol_check_checked]) {
