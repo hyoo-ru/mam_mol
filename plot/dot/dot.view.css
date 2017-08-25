@@ -4,12 +4,12 @@
 }
 
 [mol_plot_dot_sample] {
-	margin: 0 .5rem;
-	padding: .25rem;
+	width: .5rem;
+	height: .5rem;
 	border-radius: 1rem;
 	background: currentColor;
-	align-self: center;
 	position: absolute;
-	top:50%;
-	transform: translateY(-50%);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }

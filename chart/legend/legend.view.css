@@ -22,4 +22,5 @@
 [mol_chart_legend_graph_sample_box] {
 	position: relative;
 	width: 1.5rem;
+	flex: none;
 }

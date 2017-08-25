@@ -8,7 +8,6 @@
 [mol_plot_fill_sample] {
 	min-height: 50%;
 	min-width: 1.5rem;
-	align-self: flex-end;
 	opacity: .1;
 	background: currentColor;
 	position: absolute;

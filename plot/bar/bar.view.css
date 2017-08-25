@@ -4,10 +4,8 @@
 }
 
 [mol_plot_bar_sample] {
-	padding: .25rem;
-	margin: 0 .5rem;
+	width: 1.5rem;
 	min-height: 1rem;
-	align-self: stretch;
 	background: currentColor;
 	position: absolute;
 	top:0;
