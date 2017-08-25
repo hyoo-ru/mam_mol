@@ -55,7 +55,6 @@
 
 [mol_app_studio_field_object] {
 	width: auto;
-	margin-left: -.5rem;
 }
 
 [mol_app_studio_field_bool] {
@@ -66,7 +65,6 @@
 [mol_app_studio_field_bind] {
 	flex: 1000 1 auto;
 	width: auto;
-	margin-left: -.5rem;
 }
 
 [mol_app_studio_field_list] {
