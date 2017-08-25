@@ -4,10 +4,11 @@
 }
 
 [mol_plot_bar_sample] {
-	width: 1.5rem;
 	min-height: 1rem;
 	background: currentColor;
 	position: absolute;
 	top:0;
 	bottom: 0;
+	left: 0;
+	right: 0;
 }
