@@ -9,4 +9,7 @@
 	height: 0;
 	align-self: center;
 	border-width: 2px 0 0;
+	position: absolute;
+	top:50%;
+	transform: translateY(-50%);
 }

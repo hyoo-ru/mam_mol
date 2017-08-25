@@ -9,4 +9,7 @@
 	min-height: 1rem;
 	align-self: stretch;
 	background: currentColor;
+	position: absolute;
+	top:0;
+	bottom: 0;
 }

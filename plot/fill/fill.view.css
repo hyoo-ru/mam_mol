@@ -11,4 +11,7 @@
 	align-self: flex-end;
 	opacity: .1;
 	background: currentColor;
+	position: absolute;
+	bottom: 0;
+	top:50%;
 }
