@@ -7,13 +7,10 @@
 	box-shadow: none;
 	text-align: left;
 	padding: .5rem;
+	display: inline-flex;
+	flex-wrap: wrap;
 }
 
 [mol_check]:not([mol_check_checked]) {
 	color: inherit;
-}
-
-[mol_check_label] {
-	display: inline-flex;
-	margin: 0 .25rem;
 }

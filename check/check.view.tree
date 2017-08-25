@@ -6,6 +6,7 @@ $mol_check $mol_button_typed
 		role \checkbox
 	sub /
 		<= Icon null
-		<= Label $mol_view
-			sub <= label /
-				<= title \
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \

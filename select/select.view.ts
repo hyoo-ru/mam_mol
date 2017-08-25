@@ -66,10 +66,9 @@ namespace $.$mol {
 		}
 		
 		trigger_content() {
-			return [
-				... ( this.options_showed() || !this.value() ) ? [ this.Filter() ] : this.option_content_current() ,
-				this.Trigger_icon() ,
-			]
+			return ( this.options_showed() || !this.value() )
+				? [ this.Filter() ]
+				: [ ... this.option_content_current() , this.Trigger_icon() ]
 		}
 		
 	}

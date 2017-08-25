@@ -22,7 +22,7 @@ namespace $ {
 		
 		const catch_prop = ( prop : $mol_tree )=> {
 			if( prop.sub.length === 0 ) return
-
+			
 			props[ prop.type ] = undefined
 			props[ prop.type ] = prop.clone({
 				sub : [ prop.sub[0].transform( ( [ node , ... stack ] , sub )=> {
@@ -30,10 +30,15 @@ namespace $ {
 					if( [ '<=' , '<=>' , '=>' ].indexOf( node.type ) === -1 ) return node.clone({ sub : sub() })
 					
 					catch_prop( node.sub[0] )
-					
+
 					return node.clone({
 						sub : [ node.sub[0].clone({
-							sub : []
+							sub : [
+								node.sub[0].clone({
+									type : '-' ,
+									sub : [] ,
+								})
+							]
 						}) ]
 					})
 					
@@ -64,7 +69,7 @@ namespace $ {
 	}
 
 	export function $mol_view_tree_prop_value( prop : $mol_tree ) {
-		if( prop.sub.length != 1 ) throw prop.error( 'Wrong sub count' )
+		if( prop.sub.length != 1 ) throw prop.error( `Wrong sub count (${ prop.sub.length })` )
 		return prop.sub[0]
 	}
 

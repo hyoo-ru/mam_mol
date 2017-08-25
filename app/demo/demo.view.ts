@@ -93,6 +93,10 @@ namespace $.$mol {
 			return $mol_state_arg.value( this.state_key( 'demo' ) ) || ''
 		}
 
+		selected_class_name() {
+			return '$' + this.selected()
+		}
+
 		editing() {
 			return $mol_state_arg.value( this.state_key( 'edit' ) ) != null
 		}

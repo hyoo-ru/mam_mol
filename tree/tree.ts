@@ -1,4 +1,6 @@
 namespace $ {
+
+	export type $mol_tree_path = Array< string | number | null >
 	
 	export class $mol_tree {
 		
@@ -282,17 +284,61 @@ namespace $ {
 			return this.data + values.join( "\n" )
 		}
 		
-		select( ...path : string[] ) {
+		insert( value : $mol_tree , ...path : $mol_tree_path ) : $mol_tree {
+			if( path.length === 0 ) return value
+			
+			const type = path[0]
+			if( typeof type === 'string' ) {
+
+				let replaced = false
+				const sub = this.sub.map( ( item , index )=> {
+					if( item.type !== type ) return item
+					replaced = true
+					return item.insert( value , ... path.slice( 1 ) )
+				} )
+				
+				if( !replaced ) sub.push( new $mol_tree({ type }).insert( value , ... path.slice( 1 ) ) )
+				
+				return this.clone({ sub })
+
+			} else if( typeof type === 'number' ) {
+				
+				const sub = this.sub.slice()
+				sub[ type ] = ( sub[ type ] || new $mol_tree ).insert( value , ... path.slice( 1 ) )
+				
+				return this.clone({ sub })
+
+			} else {
+				
+				return this.clone({ sub : ( ( this.sub.length === 0 ) ? [ new $mol_tree() ] : this.sub ).map( item => item.insert( value , ... path.slice( 1 ) ) ) })
+
+			}
+		}
+
+		select( ...path : $mol_tree_path ) {
 			var next = [ <$mol_tree>this ]
 			for( var type of path ) {
 				if( !next.length ) break
 				var prev = next
 				next = []
+
 				for( var item of prev ) {
-					for( var child of item.sub ) {
-						if( !type || ( child.type == type ) ) {
-							next.push( child )
-						}
+
+					switch( typeof( type ) ) {
+
+						case 'string' :
+							for( var child of item.sub ) {
+								if( !type || ( child.type == type ) ) {
+									next.push( child )
+								}
+							}
+							break;
+						
+						case 'number' :
+							if( type < item.sub.length ) next.push( item.sub[ type ] )
+							break;
+						
+						default : next.push( ... item.sub )
 					}
 				}
 			}

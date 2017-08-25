@@ -18,7 +18,7 @@ $mol_app_demo $mol_book
 	Editor!id $mol_app_studio
 		minimal_width 1000
 		title <= title -
-		block <= selected \
+		class_name_base <= selected_class_name \
 		tools_main /
 			<= Close $mol_link
 				sub /

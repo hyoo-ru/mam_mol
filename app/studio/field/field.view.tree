@@ -1,25 +1,31 @@
-$mol_app_studio_field $mol_view
-	attr *
-		mol_app_studio_field_variant <= type?val \null
+$mol_app_studio_field $mol_expander
 	path /
-	sub <= controls /
-		<= Title $mol_link
-			title <= title \
-			arg <= title_arg *
+	label /
+		<= Title $mol_app_studio_field_title
+			title <= title -
+			type <= type?val \null
 		<= Type $mol_select
 			value?val <=> type?val \null
 			hint <= type_hint @ \Type...
-			options <= type_options /
-				\get
-				\bind
-				\object
-				\string
-				\locale
-				\number
-				\bool
-				\list
-				\dict
-				\null
+			Trigger_icon null
+			dictionary <= types *
+				get \<=
+				bind \<=>
+				object \Object
+				string \Text
+				locale \Localization
+				number \Number
+				bool \Flag
+				list \List
+				dict \Dictionary
+				null \None
+		<= Object $mol_select
+			value?val <=> class?val null
+			options <= object_options /
+			options_align \bottom_left
+			hint <= object_hint @ \Class...
+			Trigger_icon null
+	content /
 		<= Bool $mol_switch
 			value?val <=> value_bool?val null
 			options *
@@ -31,53 +37,47 @@ $mol_app_studio_field $mol_view
 		<= String $mol_string
 			value?val <=> value_string?val null
 			hint <= hint \
-		<= Object $mol_select
-			value?val <=> class?val null
-			options <= object_options /
-			hint <= object_hint @ \Class name..
 		<= Bind $mol_select
 			value?val <=> bind?val null
-			options <= prop_options /
+			options <= bind_options /
 			hint <= bind_hint @ \Property..
+			options_align \bottom_left
 			No_options <= Prop_add $mol_button_minor
 				title <= prop_add_label @ \Add property
 				event_click?val <=> event_prop_add?val null
+			Trigger_icon null
 		<= List $mol_list
 			rows /
 				<= list_rows /
 				<= Add $mol_select
 					hint <= add_hint @ \Add item..
 					value?val <=> add_item?val \
-					options <= item_type_options -
+					dictionary <= item_types *
+						get \<=
+						string \Text
+						number \Number
+						bool \Flag
+						list \List
+						dict \Dictionary
+						null \None
 					Trigger_icon <= List_trigger_icon $mol_icon_plus
 		<= Overs $mol_list
 			rows /
 				<= overs /
-	Item!index $mol_app_studio_field
-		type?val <=> item_type!index?val \null
-		class?val <=> item_class!index?val \
-		object_options <= object_options /
-		prop_options <= prop_options /
-		type_options <= item_type_options /
-			\get
-			\string
-			\locale
-			\number
-			\bool
-			\dict
-		Prop!id <= Prop!id -
+				<= Add_over $mol_select
+					hint <= add_over_hint @ \Add override..
+					Trigger_icon <= Overs_trigger_icon $mol_icon_plus
 	Prop!id $mol_app_studio_field
 		path <= prop_path!id /
 		prop_arg!id <= prop_arg!id *
-		prop_title!id <= prop_title!id \
-		prop_type!id?val <=> prop_type!id?val \null
-		prop_options <= prop_options /
-		prop_bind!id?val <=> prop_bind!id?val \
+		prop!path?val <=> prop!path?val $mol_tree
 		prop_value!id <= prop_value!id null
-		object_options <= object_options /
-		prop_string!id?val <=> prop_string!id?val \
-		prop_number!id?val <=> prop_number!id?val NaN
-		prop_bool!id?val <=> prop_bool!id?val null
-		prop_class!id?val <=> prop_class!id?val \
+		bind_options <= bind_options /
 		prop_add?val <=> prop_add?val null
-		prop_overs!id?val <=> prop_overs!id?val /
+		object_options <= object_options /
+
+$mol_app_studio_field_title $mol_view
+	attr *
+		mol_app_studio_field_title_type <= type \null
+	sub /
+		<= title -

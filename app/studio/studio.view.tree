@@ -4,7 +4,19 @@ $mol_app_studio $mol_book
 	pages /
 		<= Preview_page $mol_page
 			title <= preview_title @ \Preview: 
-			tools <= tools_main /
+			tools /
+				<= Source_link $mol_link
+					sub /
+						<= Source_icon $mol_icon_source
+					arg <= source_arg *
+						source \
+				<= Edit $mol_link
+					sub /
+						<= Edit_icon $mol_icon_settings
+					arg *
+						path \
+						source null
+				<= tools_main /
 			body /
 				<= Selector $mol_app_studio_selector
 					Sub <= Block $mol_view
@@ -15,8 +27,7 @@ $mol_app_studio $mol_book
 				<= Speech_filter $mol_speech
 					event_catch?val <=> speech_filter?val null
 					patterns <= speech_filter_patterns /
-						\find property (.+?)
-						\(?:до|на)й[дт]и свойств[оа] (.+?)
+						\find (.+?)
 			title <= editor_title @ \Properties
 			event_top?val <=> event_front_up?val -
 			Tools => Editor_tools
@@ -29,10 +40,10 @@ $mol_app_studio $mol_book
 					Icon <= Speech_toggle_icon $mol_icon_microphone
 					checked?val <=> speech_enabled?val false
 					hint <= speech_toggle_hint @ \Speech contol
-				<= Close $mol_link
+				<= Editor_close $mol_link
 					sub /
-						<= Close_icon $mol_icon_cross
-					arg <= close_arg *
+						<= Editor_close_icon $mol_icon_cross
+					arg <= editor_close_arg *
 						path null
 			body /
 				<= Filter $mol_search
@@ -44,6 +55,18 @@ $mol_app_studio $mol_book
 						event_click?val <=> event_add?val null
 						title <= prop_add_label @ \Add this property
 			minimal_width 400
+		<= Source_page $mol_page
+			title <= source_title @ \Source code
+			minimal_width 400
+			tools /
+				<= Source_close $mol_link
+					sub /
+						<= Source_close_icon $mol_icon_cross
+					arg <= source_close_arg *
+						source null
+			body /
+				<= Source $mol_text
+					text <= source \
 	Placeholder null
 	-
 	Crumb!index $mol_link
@@ -53,22 +76,16 @@ $mol_app_studio $mol_book
 	-
 	Prop!id $mol_app_studio_field
 		path <= prop_path!id /
-		prop_title!id <= prop_title!id \
+		prop!path?val <=> prop_default!path?val $mol_tree
 		prop_arg!id <= prop_arg!id *
-		prop_type!id?val <=> prop_type!id?val \null
-		prop_bool!id?val <=> prop_bool!id?val null
-		prop_number!id?val <=> prop_number!id?val NaN
-		prop_string!id?val <=> prop_string!id?val \
-		- value?val <=> prop_value!id?val null
-		prop_class!id?val <=> prop_class!id?val null
-		prop_bind!id?val <=> prop_bind!id?val null
 		prop_value!id <= prop_value_base!id null
+		bind_options <= prop_options /
 		object_options <= view_options /
-		prop_options <= prop_options /
 		prop_add?val <=> prop_add?val \
-		prop_overs!id <= prop_overs!id /
 	-
-	block?val <= block_default \mol_view
+	class_name_self?val \$my_app
+	class_name_base?val \$mol_page
+	class_self?val $mol_tree
 	classes $mol_tree
 
 $mol_app_studio_selector $mol_ghost

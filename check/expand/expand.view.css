@@ -11,7 +11,6 @@
 
 [mol_check_expand_icon] {
 	box-shadow: none;
-	margin: .25rem;
 }
 [mol_check_expand]:not([mol_check_checked]) > [mol_check_expand_icon] {
 	transform: rotateZ(0deg);

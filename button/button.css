@@ -49,7 +49,6 @@
 
 [mol_button_typed]:hover ,
 [mol_button_typed]:focus {
-	z-index: 1;
 	cursor: pointer;
 	background-color: var(--mol_skin_hover);
 }

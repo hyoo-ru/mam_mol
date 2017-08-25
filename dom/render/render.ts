@@ -136,4 +136,13 @@ namespace $ {
 		}
 	}
 	
+	export function $mol_dom_render_events_detach (
+		el : Element ,
+		events : { [ key : string ] : ( event : Event )=> any }
+	) {
+		for( let name in events ) {
+			el.removeEventListener( name , events[ name ] , { passive : false } as any )
+		}
+	}
+	
 }

@@ -1,41 +1,45 @@
 [mol_app_studio_field] {
-	display: flex;
-	flex-wrap: wrap;
 	flex: 1 1 100%;
 	box-shadow: var(--mol_skin_light_outline);
 	color: var(--mol_skin_light_text);
-	background: color( var(--mol_skin_base) alpha(.05) );
+	background: color( var(--mol_skin_base) alpha(.025) );
 }
 
-[mol_app_studio_field] > * {
-	order: 1;
+[mol_app_studio_field_label] {
+	padding: 0 0 0 .5rem;
+	display: flex;
+}
+
+[mol_app_studio_field_content] {
+	display: flex;
+	flex-wrap: wrap;
 }
 
 [mol_app_studio_field_title] {
 	flex: 1000000 0 auto;
-	padding: .5rem 1rem;
+	padding: .5rem 1rem .5rem 0;
 }
 
-[mol_app_studio_field_variant="null"] > [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="bool"] > [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="number"] > [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="locale"] > [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="string"] > [mol_app_studio_field_title] {
+[mol_app_studio_field_title_type="null"] ,
+[mol_app_studio_field_title_type="bool"]  ,
+[mol_app_studio_field_title_type="number"] ,
+[mol_app_studio_field_title_type="locale"] ,
+[mol_app_studio_field_title_type="string"] {
 	color: color( var(--mol_skin_base) hue(-60deg) );
 }
 
-[mol_app_studio_field_variant="object"] > [mol_app_studio_field_title] {
+[mol_app_studio_field_title_type="object"] {
 	color: var(--mol_skin_base);
 	font-weight: bolder;
 }
 
-[mol_app_studio_field_variant="list"] > [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="dict"] > [mol_app_studio_field_title] {
+[mol_app_studio_field_title_type="list"] ,
+[mol_app_studio_field_title_type="dict"] {
 	color: color( var(--mol_skin_base) hue(+60deg) );
 }
 
-[mol_app_studio_field_variant="get"] > [mol_app_studio_field_title] ,
-[mol_app_studio_field_variant="bind"] > [mol_app_studio_field_title] {
+[mol_app_studio_field_title_type="get"] ,
+[mol_app_studio_field_title_type="bind"] {
 	color: color( var(--mol_skin_base) hue(+120deg) );
 }
 
@@ -51,6 +55,7 @@
 
 [mol_app_studio_field_object] {
 	width: auto;
+	margin-left: -.5rem;
 }
 
 [mol_app_studio_field_bool] {
@@ -61,6 +66,7 @@
 [mol_app_studio_field_bind] {
 	flex: 1000 1 auto;
 	width: auto;
+	margin-left: -.5rem;
 }
 
 [mol_app_studio_field_list] {
@@ -71,11 +77,12 @@
 
 [mol_app_studio_field_list] > * {
 	box-shadow: var(--mol_skin_light_outline);
-	margin: 1rem;
+	margin: 1rem 0 1rem 1rem;
 }
 
-[mol_app_studio_field_list_trigger_icon] {
-	margin: .5rem;
+[mol_app_studio_field_list_trigger_icon] ,
+[mol_app_studio_field_overs_trigger_icon] {
+		margin: .5rem;
 }
 
 [mol_app_studio_field_overs] {
@@ -85,7 +92,7 @@
 }
 
 [mol_app_studio_field_overs] > * {
-	margin: 1rem;
+	margin: 1rem 0 1rem 1rem;
 }
 
 [mol_app_studio_field_item] {

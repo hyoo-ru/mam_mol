@@ -1,4 +1,5 @@
 $mol_check_expand $mol_check
+	minimal_height 32
 	Icon $mol_icon_chevron
 	level 0
 	style *
