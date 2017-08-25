@@ -36,7 +36,7 @@ $mol_app_studio $mol_book
 					sub <= crumbs /
 				<= Editor_tools -
 			tools /
-				<= Speech_toggle $mol_check_icon
+				- <= Speech_toggle $mol_check_icon
 					Icon <= Speech_toggle_icon $mol_icon_microphone
 					checked?val <=> speech_enabled?val false
 					hint <= speech_toggle_hint @ \Speech contol
