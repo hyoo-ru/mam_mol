@@ -471,9 +471,17 @@ namespace $ { export class $my_tasks extends $mol_list {
 } }
 ```
 
-Here we declared the property `task_row`, which takes on input some key and returns an unique instance of `$mol_view` for every key, with overloaded property `sub`, which outputs appropriate `task_title` for every `task_row`, and in its turn `task_title` returns the content of property `default_title` independently of the key, which is equal to empty string initially. Further overloading any of these properties, we could change any aspect of component behavior.
+Here we declared the property `task_row`, which takes on input some key and returns an unique instance of `$mol_view` for every key, with overloaded property `sub`, which outputs appropriate `task_title` for every `task_row`, and in its turn `task_title` returns the content of property `default_title` independently of the key, which is equal to empty string initially. Further overloading any of these properties, we could change any aspect of component behavior. You can override `task_rows` in subclass to generate rows as you want. In example:
 
-**All special chars:***
+```
+task_rows() {
+	const rows = [] as $mol_view[]
+	for( let i = 0 ; i < 10 ; ++ i ) rows.push( this.Task_row( i ) )
+	return rows
+}
+```
+
+**All special chars:**
 
 - `-` - remarks, ignored by code generation
 - `$` - component name prefix
