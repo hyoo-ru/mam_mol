@@ -481,7 +481,7 @@ task_rows() {
 }
 ```
 
-**All special chars:***
+**All special chars:**
 
 - `-` - remarks, ignored by code generation
 - `$` - component name prefix
