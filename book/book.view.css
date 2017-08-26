@@ -17,7 +17,7 @@
 }
 
 [mol_book] > *:not([mol_book_page_visible]):not([mol_book_page_focused]) {
-	transform: translate3d( -50% , 0 , 0 ) scaleX( 0 );
+	transform: translate3d( -100% , 0 , 0 );
 }
 
 [mol_book] > *:not([mol_book_page_visible]):not([mol_book_page_focused]) + *:before {
@@ -33,7 +33,6 @@
 
 @keyframes mol_book_page_show {
 	from {
-		transform: translate3d( 50% , 0 , 0 ) scaleX( 0 );
 		opacity: 0;
 	}
 }
