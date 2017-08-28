@@ -8,6 +8,12 @@ namespace $ {
 		
 		var time = new Date().toLocaleTimeString()
 		console.log( time , path , values )
+
+		var debug = $mol_log.debug()
+		if( debug == null ) return
+		if( path.indexOf( debug ) === -1 ) return
+		
+		debugger
 	}
 	
 	export namespace $mol_log {
@@ -27,6 +33,12 @@ namespace $ {
 			if( _filter !== void 0 ) return _filter
 			
 			return _filter = sessionStorage.getItem( '$mol_log.filter()' )
+		}
+
+		var _debug : string
+
+		export function debug( next = _debug ) {
+			return _debug = next
 		}
 		
 	}

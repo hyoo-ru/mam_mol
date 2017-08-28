@@ -1,3 +1,1 @@
-$mol_demo_small $mol_demo
-	minimal_height <= height 340
-	minimal_width <= width 340
+$mol_demo_small $mol_view

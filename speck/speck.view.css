@@ -1,0 +1,17 @@
+[mol_speck] {
+	font-size: .75rem;
+	border-radius: 1rem;
+	background: var(--mol_skin_accent);
+	color: var(--mol_skin_accent_text);
+	margin: -.5em;
+	min-height: 1em;
+	min-width: .5em;
+	vertical-align: sub;
+	padding: 0 .25em;
+	position: absolute;
+	z-index: 2;
+    text-align: center;
+    line-height: 1;
+    display: inline-block;
+	text-shadow: 1px 1px 0 black;
+}

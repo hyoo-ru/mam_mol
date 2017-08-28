@@ -1,20 +1,16 @@
 [mol_check] {
 	flex: 0 0 auto;
 	justify-content: flex-start;
-	align-items: flex-start;
 	align-content: center;
 	border: none;
 	font-weight: normal;
 	box-shadow: none;
 	text-align: left;
 	padding: .5rem;
+	display: inline-flex;
+	flex-wrap: wrap;
 }
 
 [mol_check]:not([mol_check_checked]) {
 	color: inherit;
-}
-
-[mol_check_label] {
-	display: inline-flex;
-	margin: 0 .25rem;
 }

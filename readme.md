@@ -406,6 +406,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_filler](filler)** - lorem ipsum
 * **[$mol_svg](svg)** - svg base components
 * **[$mol_status](status)** - prints error status of some property
+* **[$mol_speck](speck)** - attention speck
 
 ## Simple controls
 

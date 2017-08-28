@@ -1,4 +1,6 @@
 namespace $ {
+
+	export type $mol_tree_path = Array< string | number | null >
 	
 	export class $mol_tree {
 		
@@ -18,7 +20,7 @@ namespace $ {
 				baseUri? : string
 				row? : number
 				col? : number
-			}
+			} = {}
 		) {
 			this.type = config.type || ''
 			if( config.value ) {
@@ -158,14 +160,14 @@ namespace $ {
 				case 'Array' :
 					return new $mol_tree(
 						{
-							type : "list" ,
+							type : "/" ,
 							sub : ( <any[]> json ).map( json => $mol_tree.fromJSON( json , baseUri ) )
 						}
 					)
 				case 'Date' :
 					return new $mol_tree(
 						{
-							type : "time" ,
+							type : "" ,
 							value : json.toISOString() ,
 							baseUri : baseUri
 						}
@@ -190,19 +192,13 @@ namespace $ {
 							)
 						}
 						child.sub.push(
-							new $mol_tree(
-								{
-									type : ":" ,
-									sub : [ $mol_tree.fromJSON( json[ key ] , baseUri ) ] ,
-									baseUri : baseUri
-								}
-							)
+							$mol_tree.fromJSON( json[ key ] , baseUri )
 						)
 						sub.push( child )
 					}
 					return new $mol_tree(
 						{
-							type : "dict" ,
+							type : "*" ,
 							sub : sub ,
 							baseUri : baseUri
 						}
@@ -288,19 +284,61 @@ namespace $ {
 			return this.data + values.join( "\n" )
 		}
 		
-		select( ...path : string[] ) {
-			if( typeof path === 'string' ) path = (<string>path).split( / +/ )
+		insert( value : $mol_tree , ...path : $mol_tree_path ) : $mol_tree {
+			if( path.length === 0 ) return value
 			
+			const type = path[0]
+			if( typeof type === 'string' ) {
+
+				let replaced = false
+				const sub = this.sub.map( ( item , index )=> {
+					if( item.type !== type ) return item
+					replaced = true
+					return item.insert( value , ... path.slice( 1 ) )
+				} )
+				
+				if( !replaced ) sub.push( new $mol_tree({ type }).insert( value , ... path.slice( 1 ) ) )
+				
+				return this.clone({ sub })
+
+			} else if( typeof type === 'number' ) {
+				
+				const sub = this.sub.slice()
+				sub[ type ] = ( sub[ type ] || new $mol_tree ).insert( value , ... path.slice( 1 ) )
+				
+				return this.clone({ sub })
+
+			} else {
+				
+				return this.clone({ sub : ( ( this.sub.length === 0 ) ? [ new $mol_tree() ] : this.sub ).map( item => item.insert( value , ... path.slice( 1 ) ) ) })
+
+			}
+		}
+
+		select( ...path : $mol_tree_path ) {
 			var next = [ <$mol_tree>this ]
 			for( var type of path ) {
 				if( !next.length ) break
 				var prev = next
 				next = []
+
 				for( var item of prev ) {
-					for( var child of item.sub ) {
-						if( child.type == type ) {
-							next.push( child )
-						}
+
+					switch( typeof( type ) ) {
+
+						case 'string' :
+							for( var child of item.sub ) {
+								if( !type || ( child.type == type ) ) {
+									next.push( child )
+								}
+							}
+							break;
+						
+						case 'number' :
+							if( type < item.sub.length ) next.push( item.sub[ type ] )
+							break;
+						
+						default : next.push( ... item.sub )
 					}
 				}
 			}
@@ -308,8 +346,6 @@ namespace $ {
 		}
 		
 		filter( path : string[] , value? : string ) {
-			if( typeof path === 'string' ) path = (<string>path).split( / +/ )
-			
 			var sub = this.sub.filter(
 				function( item ) {
 					
@@ -325,7 +361,16 @@ namespace $ {
 			
 			return new $mol_tree( { sub : sub } )
 		}
-		
+
+		transform( visit : ( stack : $mol_tree[] , sub : ()=> $mol_tree[] )=> $mol_tree , stack : $mol_tree[] = [] ) : $mol_tree {
+			const sub_stack = [ this , ...stack ]
+			return visit( sub_stack , ()=> this.sub.map( node => node.transform( visit , sub_stack ) ).filter( n => n ) )
+		}
+
+		error( message : string ) {
+			return new Error( `${message}:\n${ this } ${this.baseUri}:${this.row}:${this.col}` )
+		}
+
 	}
 	
 }

@@ -1,4 +1,4 @@
-$mol_string_demo $mol_row
+$mol_string_demo $mol_demo_small
 	title @ \String input field in various states
 	sub /
 		<= Simple $mol_string

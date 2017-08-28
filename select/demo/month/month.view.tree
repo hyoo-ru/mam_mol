@@ -1,23 +1,21 @@
-$mol_select_demo_month $mol_row
+$mol_select_demo_month $mol_demo_small
 	title @ \Month picker with filter
 	sub /
-		<= Month $mol_labeler
-			title \Month
-			Content <= Month_select $mol_select
-				no_options_message \Not found
-				value?val <=> month?val \
-				dictionary <= months *
+		<= Month $mol_select
+			no_options_message \Not found
+			value?val <=> month?val \
+			dictionary <= months *
+				\
 					\
-						\
-					jan \January
-					feb \February
-					mar \March
-					apr \April
-					may \May
-					jun \June
-					jul \July
-					aug \August
-					sep \September
-					oct \October
-					nov \November
-					dec \December
+				jan \January
+				feb \February
+				mar \March
+				apr \April
+				may \May
+				jun \June
+				jul \July
+				aug \August
+				sep \September
+				oct \October
+				nov \November
+				dec \December

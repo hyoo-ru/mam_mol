@@ -1,5 +1,4 @@
 $mol_page $mol_view
-	focus_trigger null
 	sub /
 		<= Head $mol_view
 			sub <= head /

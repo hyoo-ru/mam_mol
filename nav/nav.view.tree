@@ -14,7 +14,3 @@ $mol_nav $mol_plugin
 	event *
 		^
 		keydown?event <=> event_key?event null
-	attr *
-		^
-		mol_nav_x <= current_x -
-		mol_nav_y <= current_y -

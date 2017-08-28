@@ -1,4 +1,4 @@
-$mol_speech_demo $mol_view
+$mol_speech_demo $mol_demo_small
 	sub /
 		<= Toggle $mol_check_icon
 			Icon <= Toggle_icon $mol_icon_microphone

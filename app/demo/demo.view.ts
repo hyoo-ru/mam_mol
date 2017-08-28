@@ -6,9 +6,9 @@ namespace $.$mol {
 			const selected = this.selected()
 			if( selected ) {
 				const names = this.names_demo() 
-				if( names.length === 1 ) {
-					return `$${ selected.replace( /_demo.*/ , '' ) }: ${ this.Sample_large( names[0] ).widget().title() }`
-				}
+				/*if( names.length === 1 ) {
+					return `$${ selected.replace( /_demo.* / , '' ) }: ${ this.Sample_large( names[0] ).Widget().title() }`
+				}*/
 				return `$${ selected }`
 			}
 			
@@ -93,8 +93,16 @@ namespace $.$mol {
 			return $mol_state_arg.value( this.state_key( 'demo' ) ) || ''
 		}
 
+		selected_class_name() {
+			return '$' + this.selected()
+		}
+
+		editing() {
+			return $mol_state_arg.value( this.state_key( 'edit' ) ) != null
+		}
+
 		@ $mol_mem_key()
-		widget( name : string ) {
+		Widget( name : string ) {
 			const Class : typeof $mol_view = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class()
 		}
@@ -130,7 +138,10 @@ namespace $.$mol {
 			
 			sub.push( this.Menu() )
 			
-			if( this.selected() ) sub.push( this.Detail() )
+			if( this.selected() ) {
+				if( this.editing() && this.names_demo().length === 1 ) sub.push( ... this.Editor( this.selected() ).pages() )
+				else sub.push( this.Detail() )
+			}
 			
 			return sub
 		}
@@ -145,31 +156,9 @@ namespace $.$mol {
 			switch( names.length ) {
 				case 0 :
 					return [ this.Detail_empty_message() ]
-				case 1 :
-					return [ this.Sample_large( names[0] ) ]
 				default :
-					return [ this.Detail_row() ]
+					return this.names_demo().map( name => this.Widget( name ) )
 			}
-		}
-		
-		@ $mol_mem() 
-		Samples () {
-			return this.names_demo().map( name => this.Sample_small( name ) )
-		}
-		
-		@ $mol_mem_key()
-		Sample_small( name : string ) {
-			return $mol_demo_small.make({
-				name : $mol_const( name ) ,
-			})
-		}
-		
-		@ $mol_mem_key()
-		Sample_large( name : string ) {
-			return $mol_demo_large.make({
-				title : $mol_const( null ) ,
-				name : $mol_const( name ) ,
-			})
 		}
 		
 		logo_uri() {

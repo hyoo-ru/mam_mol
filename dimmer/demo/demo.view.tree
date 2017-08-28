@@ -1,4 +1,4 @@
-$mol_dimmer_demo $mol_row
+$mol_dimmer_demo $mol_demo_small
 	title @ \Text with highlighted found substring
 	sub /
 		<= one $mol_dimmer

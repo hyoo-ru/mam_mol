@@ -1,5 +1,6 @@
 $mol_button $mol_view
 	enabled true
+	minimal_height 40
 	event *
 		^
 		click?event <=> event_activate?event <=> event_click?event null
@@ -8,7 +9,7 @@ $mol_button $mol_view
 		^
 		disabled <= disabled false
 		role \button
-		tabindex <= tab_index \0
+		tabindex <= tab_index 0
 		title <= hint \
 	sub /
 		<= title -

@@ -1,7 +1,7 @@
-$mol_scroll_demo $mol_scroll
+$mol_scroll_demo $mol_demo_large
 	title @ \Simple scroll pane
 	sub /
-		<= Row $mol_row
+		<= Scroll $mol_scroll
 			sub /
 				<= One $mol_filler
 				<= Two $mol_filler

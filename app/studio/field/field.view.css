@@ -1,0 +1,101 @@
+[mol_app_studio_field] {
+	flex: 1 1 100%;
+	box-shadow: var(--mol_skin_light_outline);
+	color: var(--mol_skin_light_text);
+	background: color( var(--mol_skin_base) alpha(.025) );
+}
+
+[mol_app_studio_field_label] {
+	padding: 0 0 0 .5rem;
+	display: flex;
+}
+
+[mol_app_studio_field_content] {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[mol_app_studio_field_title] {
+	flex: 1000000 0 auto;
+	padding: .5rem 1rem .5rem 0;
+}
+
+[mol_app_studio_field_title_type="null"] ,
+[mol_app_studio_field_title_type="bool"]  ,
+[mol_app_studio_field_title_type="number"] ,
+[mol_app_studio_field_title_type="locale"] ,
+[mol_app_studio_field_title_type="string"] {
+	color: color( var(--mol_skin_base) hue(-60deg) );
+}
+
+[mol_app_studio_field_title_type="object"] {
+	color: var(--mol_skin_base);
+	font-weight: bolder;
+}
+
+[mol_app_studio_field_title_type="list"] ,
+[mol_app_studio_field_title_type="dict"] {
+	color: color( var(--mol_skin_base) hue(+60deg) );
+}
+
+[mol_app_studio_field_title_type="get"] ,
+[mol_app_studio_field_title_type="bind"] {
+	color: color( var(--mol_skin_base) hue(+120deg) );
+}
+
+[mol_app_studio_field_number] {
+	flex: 1 1 100%;
+	width: auto;
+}
+
+[mol_app_studio_field_string] {
+	flex: 1 1 100%;
+	width: auto;
+}
+
+[mol_app_studio_field_object] {
+	width: auto;
+}
+
+[mol_app_studio_field_bool] {
+	flex: 1 1 100%;
+	width: auto;
+}
+
+[mol_app_studio_field_bind] {
+	flex: 1000 1 auto;
+	width: auto;
+}
+
+[mol_app_studio_field_list] {
+	flex: 1 1 100%;
+	background: var(--mol_skin_card);
+	box-shadow: var(--mol_skin_light_outline);
+}
+
+[mol_app_studio_field_list] > * {
+	box-shadow: var(--mol_skin_light_outline);
+	margin: 1rem 0 1rem 1rem;
+}
+
+[mol_app_studio_field_list_trigger_icon] ,
+[mol_app_studio_field_overs_trigger_icon] {
+		margin: .5rem;
+}
+
+[mol_app_studio_field_overs] {
+	flex: 1 1 100%;
+	box-shadow: var(--mol_skin_light_outline);
+	background: var(--mol_skin_light);
+}
+
+[mol_app_studio_field_overs] > * {
+	margin: 1rem 0 1rem 1rem;
+}
+
+[mol_app_studio_field_item] {
+}
+
+[mol_app_studio_field_add] {
+	margin: 0;
+}

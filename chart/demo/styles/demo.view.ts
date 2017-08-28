@@ -6,7 +6,7 @@ namespace $.$mol {
 		series() {
 			const next = [] as number[]
 			const shift = 10
-			const limit = shift + this.count() 
+			const limit = shift + this.samples_count() 
 			
 			for( let i = shift ; i < limit ; ++ i ) {
 				next[ i ] = Number( ( 6.5 + Math.sin( 8 * i / limit ) ).toFixed( 3 ) )

@@ -15,10 +15,10 @@
 
 [mol_app_demo_menu_nav] {
 	flex: auto;
+	align-self: stretch;
 }
 
 [mol_app_demo_detail],
-[mol_app_demo_detail_row],
 [mol_app_empty_message] {
 	flex: 1000 1 600px;
 }
@@ -45,6 +45,7 @@
 [mol_app_demo_nav_expand] {
 	align-self: stretch;
 	align-items: center;
+	padding-right: .25rem;
 }
 
 [mol_app_demo_nav_content] {
@@ -72,13 +73,18 @@
 	display: flex;
 	align-items: stretch;
 	justify-content: flex-start;
+	flex-direction: column;
 }
 
-[mol_app_demo_detail_row] {
-	align-items: flex-start;
-	align-content: flex-start;
-	justify-content: flex-start;
-	box-shadow: none;
+[mol_app_demo_detail_list] {
+	flex: auto;
+	display: flex;
+	flex-direction: column;
+	margin: .5rem;
+}
+
+[mol_app_demo_detail_list] > * {
+	margin: .5rem;
 }
 
 [mol_app_demo_page_close] {

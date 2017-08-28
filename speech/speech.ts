@@ -1,6 +1,6 @@
 namespace $ {
 	
-	export class $mol_speech extends $mol_object {
+	export class $mol_speech extends $mol_plugin {
 		
 		@ $mol_mem()
 		static api() {
@@ -11,6 +11,7 @@ namespace $ {
 			api.interimResults = true
 			api.maxAlternatives = 1
 			api.continuous = true
+			api.lang = $mol_locale.lang()
 			
 			api.onnomatch = ( event : any )=> {
 				this.text( '' )
@@ -94,7 +95,7 @@ namespace $ {
 		}
 		
 		suffix() {
-			return '\\s(?:please|would you kindly|пожалуйста|пожалуй 100|будь любезен)\.?$'
+			return '[,\\s]+(?:please|would you kindly|пожалуйста|пожалуй 100|будь любезен)\.?$'
 		}
 		
 	}

@@ -9,3 +9,7 @@
 	color: var(--mol_skin_passive_text);
 	font-size: .875rem;
 }
+
+[mol_labeler_content] {
+	display: flex;
+}

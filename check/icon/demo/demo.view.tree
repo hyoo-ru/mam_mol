@@ -1,4 +1,4 @@
-$mol_check_icon_demo $mol_row
+$mol_check_icon_demo $mol_demo_small
 	title @ \Iconic checkboxes in various states
 	sub /
 		<= Base $mol_check_icon

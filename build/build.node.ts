@@ -40,11 +40,11 @@ namespace $ {
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale.json` )
 						
 						const tree = $mol_tree.fromString( String( child.content() ) , child.path() )
-						const res = $mol_view_tree2ts( tree )
+						const res = $mol_view_tree_compile( tree )
 						script.content( res.script )
 						locale.content( JSON.stringify( res.locales , null , '\t' ) )
 						
-						mods.push( script , locale )
+						mods.push( script , locale , child )
 					} else {
 						mods.push( child )
 					}
@@ -431,6 +431,9 @@ namespace $ {
 					if( !type || type === 'd.ts' ) {
 						res = res.concat( this.bundleDTS( { path , exclude , bundle : env } ) )
 					}
+					if( !type || type === 'view.tree' ) {
+						res = res.concat( this.bundleViewTree( { path , exclude , bundle : env } ) )
+					}
 					if( !type || /^locale(?:=\w+)?.json$/.test( type ) ) {
 						res = res.concat(
 							this.bundleLocale(
@@ -589,6 +592,24 @@ namespace $ {
 			return [ target ]
 		}
 		
+		@ $mol_mem_key()
+		bundleViewTree( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+			var pack = $mol_file.absolute( path )
+			
+			var target = pack.resolve( `-/${bundle}.view.tree` )
+			
+			var sources = this.sourcesAll({ path , exclude })
+			.filter( src => /view.tree$/.test( src.ext() ) )
+			
+			if( sources.length === 0 ) return []
+			
+			target.content( sources.map( src => src.content().toString() ).join( '\n' ) )
+			
+			this.logBundle( target )
+			
+			return [ target ]
+		}
+
 		@ $mol_mem_key()
 		bundlePackageJSON( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
@@ -822,7 +843,7 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$(([a-z][a-z0-9]+)(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name , pack )=> {
+					/\$\.?(([a-z][a-z0-9]+)(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name , pack )=> {
 						if( pack === 'node' ) return str
 						
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[_.\[\]'"]+/g , '/' ) ] : priority } )

@@ -1,4 +1,4 @@
-$mol_check_box_demo $mol_row
+$mol_check_box_demo $mol_demo_small
 	title @ \Checkboxes in various states
 	sub /
 		<= Labeled_base $mol_check_box

@@ -1,4 +1,4 @@
-$mol_portion_demo $mol_row
+$mol_portion_demo $mol_demo_small
 	title @ \Progress bar in various states
 	sub /
 		<= Empty $mol_portion

@@ -19,10 +19,7 @@ namespace $.$mol {
 		}
 		
 		options_filtered() {
-			const filter = this.filter_pattern().toLowerCase()
-			const value = this.value()
-			
-			return this.options().filter( id => this.option_label( id ).toLowerCase().match( filter ) )
+			return this.options().filter( $mol_match_text( this.filter_pattern() , ( id : string )=> [ this.option_label( id ) ] ) )
 		}
 		
 		option_label( id : string ) {
@@ -63,12 +60,15 @@ namespace $.$mol {
 		nav_components() {
 			return [ this.Filter() , ... this.option_rows() ]
 		}
+
+		option_content_current() {
+			return this.option_content( this.value() )
+		}
 		
 		trigger_content() {
-			return [
-				... ( this.options_showed() || !this.value() ) ? [ this.Filter() ] : this.option_content( this.value() ) ,
-				this.Trigger_icon() ,
-			]
+			return ( this.options_showed() || !this.value() )
+				? [ this.Filter() ]
+				: [ ... this.option_content_current() , this.Trigger_icon() ]
 		}
 		
 	}

@@ -1,0 +1,12 @@
+@keyframes mol_icon_settings_hover {
+	from {
+		transform: rotateZ( 0 );
+	}
+	to {
+		transform: rotateZ( 360deg );
+	}
+}
+
+:hover > [mol_icon_settings] {
+	animation: mol_icon_settings_hover 1s infinite linear;
+}

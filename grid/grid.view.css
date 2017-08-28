@@ -1,6 +1,7 @@
 [mol_grid] {
 	display: block;
 	flex: 0 1 auto;
+	align-self: flex-start;
 	position: relative;
 }
 

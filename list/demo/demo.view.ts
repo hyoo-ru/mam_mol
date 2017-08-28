@@ -1,5 +1,5 @@
 namespace $.$mol {
-	export class $mol_list_demo_large extends $.$mol_list_demo_large {
+	export class $mol_list_demo extends $.$mol_list_demo {
 		
 		rows() {
 			var next : $mol_view[] = []

@@ -1,6 +1,8 @@
-$mol_map_yandex_demo $mol_map_yandex
+$mol_map_yandex_demo $mol_demo_large
 	title @ \Simple Yandex Maps wrapper
-	center?val /
-		60
-		30
-	zoom?val 10
+	sub /
+		<= Map $mol_map_yandex
+			center?val /
+				60
+				30
+			zoom?val 10
