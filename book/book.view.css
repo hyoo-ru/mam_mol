@@ -56,7 +56,7 @@
 	color: var(--mol_skin_passive_text);
 	padding: 1rem;
 	box-shadow: var(--mol_skin_light_outline);
-	z-index: -1;
+	z-index: -1 !important;
 }
 
 [mol_book_placeholder]:hover {
