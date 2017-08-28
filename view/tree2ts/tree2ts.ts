@@ -5,10 +5,6 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 	var content = ''
 	var locales : { [ key : string ] : string } = {}
 	
-	function error( message : string , tree : $mol_tree ) {
-		return new Error( `${message}:\n${source( tree )} ${tree.baseUri}:${tree.row}:${tree.col}` )
-	}
-	
 	function source( root : $mol_tree ) : $mol_tree {
 		if( [ '<=>', '<=', '=>' ].indexOf( root.type ) !== -1 ) {
 			return root.clone({
@@ -22,7 +18,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 	
 	tree.sub.forEach( function( def : $mol_tree ) {
 		if( !def.type || /^-$/.test( def.type ) ) return
-		if( !/^\$\w+$/.test( def.type ) ) throw error( 'Wrong component name' , def )
+		if( !/^\$\w+$/.test( def.type ) ) throw def.error( 'Wrong component name' )
 		var parent = def.sub[0]
 		
 		var propDefs : { [ key : string ] : $mol_tree } = {}
@@ -147,7 +143,7 @@ export function $mol_view_tree2ts( tree : $mol_tree ) {
 				
 				if( Number( value.type ).toString() == value.type ) return value.type
 				
-				throw error( 'Wrong value' , value )
+				throw value.error( 'Wrong value' )
 			} catch ( err ) {
 				err.message += `\n${value.baseUri}:${value.row}:${value.col}\n${source( value )}`
 				throw err
