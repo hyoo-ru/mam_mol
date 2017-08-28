@@ -1,4 +1,4 @@
-$mol_number_demo $mol_row
+$mol_number_demo $mol_demo_small
 	title @ \Number input control with various configuration
 	sub /
 		<= zero $mol_number

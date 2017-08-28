@@ -1,9 +1,0 @@
-$mol_demo $mol_view
-	sub /
-		<= Head $mol_view
-			sub /
-				<= Title $mol_link
-					arg * demo <= name \$mol_view
-					sub /
-						<= title <= name \$mol_view
-		<= Screen $mol_view sub / <= widget null

@@ -1,4 +1,4 @@
-$mol_nav_demo $mol_row
+$mol_nav_demo $mol_demo_small
 	title @ \Keyboard navigation demo
 	sub /
 		<= Labeler $mol_labeler

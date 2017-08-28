@@ -1,4 +1,4 @@
-$mol_date_demo_timestamp $mol_row
+$mol_date_demo_timestamp $mol_demo_small
 	sub /
 		<= Date_label $mol_labeler
 			title <= date_label \Date

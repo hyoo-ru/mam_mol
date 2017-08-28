@@ -1,37 +1,39 @@
-$mol_chart_demo_styles $mol_chart
+$mol_chart_demo_styles $mol_demo_large
 	title @ \Chart with various styles of graphs.
 	samples_count 15
-	graphs /
-		<= Energy $mol_plot_ruler_vert
-			title <= energy_title @ \kJ
-		<= Day $mol_plot_ruler_hor
-			title <= day_title @ \Day
-			series <= series_1 /
-		<= Receipts $mol_plot_bar
-			title <= receipts_title @ \Receipts
-			series <= series_2 /
-		<= Receipts_confirmed $mol_plot_bar
-			title <= receipts_confirmed_title @ \Confirmed receipts
-			series <= series_3 /
-		<= Maximum $mol_plot_dot
-			title <= maximum_title @ \Maximum
-			series <= series_1 /
-		<= Waste $mol_plot_line
-			type \dashed
-			title <= waste_title @ \Waste
-			series <= series_4 /
-		<= Purchases $mol_plot_group
-			title <= purchases_title @ \Purchases
-			series <= series_5 /
+	sub /
+		<= Chart $mol_chart
 			graphs /
-				<= Purchases_fill $mol_plot_fill
-				<= Purchases_line $mol_plot_line 
-				<= Purchases_dots $mol_plot_dot 
-		<= Taxes $mol_plot_group
-			title <= taxes_title @ \Taxes
-			series <= series_6 /
-			graphs /
-				<= Taxes_fill $mol_plot_fill
-				<= Taxes_line $mol_plot_line
+				<= Energy $mol_plot_ruler_vert
+					title <= energy_title @ \kJ
+				<= Day $mol_plot_ruler_hor
+					title <= day_title @ \Day
+					series <= series_1 /
+				<= Receipts $mol_plot_bar
+					title <= receipts_title @ \Receipts
+					series <= series_2 /
+				<= Receipts_confirmed $mol_plot_bar
+					title <= receipts_confirmed_title @ \Confirmed receipts
+					series <= series_3 /
+				<= Maximum $mol_plot_dot
+					title <= maximum_title @ \Maximum
+					series <= series_1 /
+				<= Waste $mol_plot_line
 					type \dashed
-				<= Taxes_dots $mol_plot_dot
+					title <= waste_title @ \Waste
+					series <= series_4 /
+				<= Purchases $mol_plot_group
+					title <= purchases_title @ \Purchases
+					series <= series_5 /
+					graphs /
+						<= Purchases_fill $mol_plot_fill
+						<= Purchases_line $mol_plot_line 
+						<= Purchases_dots $mol_plot_dot 
+				<= Taxes $mol_plot_group
+					title <= taxes_title @ \Taxes
+					series <= series_6 /
+					graphs /
+						<= Taxes_fill $mol_plot_fill
+						<= Taxes_line $mol_plot_line
+							type \dashed
+						<= Taxes_dots $mol_plot_dot

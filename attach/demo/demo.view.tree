@@ -1,4 +1,4 @@
-$mol_attach_demo $mol_view
+$mol_attach_demo $mol_demo_small
 	title @ \Attach files an show them
 	sub /
 		<= Empty $mol_attach

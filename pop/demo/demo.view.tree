@@ -1,36 +1,38 @@
-$mol_pop_demo $mol_row
+$mol_pop_demo $mol_demo_large
 	title @ \Pop up block with various alignment
 	sub /
-		<= Pop $mol_pop
-			showed?val <= showed_value?val false
-			align <= align_value?val -
-			Anchor <= Show $mol_button_minor
-				event_click?event <=> event_show?event null
-				sub /
-					<= show_text @ \Show Bubble
-			bubble_content /
-				<= Content $mol_view 
-					sub / 
-						<= bubble_hint @ \ I'm bubble, i showed when you want 
-						<= Hide $mol_button_minor 
-							event_click?event <=> event_hide?event null 
+		<= Row $mol_row
+			sub /
+				<= Pop $mol_pop
+					showed?val <= showed_value?val false
+					align <= align_value?val -
+					Anchor <= Show $mol_button_minor
+						event_click?event <=> event_show?event null
+						sub /
+							<= show_text @ \Show Bubble
+					bubble_content /
+						<= Content $mol_view 
 							sub / 
-								<= hide_hint @ \Hide Bubble
-		<= Align_block $mol_labeler
-			title <= Align_title @ \Align
-			Content <= Align $mol_select
-				value?val <=> align_value?val \bottom_center
-				options /
-					<= align_left_top @ \left_top
-					<= align_left_center @ \left_center
-					<= align_left_bottom @ \left_bottom
-					<= align_right_top @ \right_top
-					<= align_right_center @ \right_center
-					<= align_right_bottom @ \right_bottom
-					<= align_center @ \center
-					<= align_top_left @ \top_left
-					<= align_top_center @ \top_center
-					<= align_top_right @ \top_right
-					<= align_bottom_left @ \bottom_left
-					<= align_bottom_center @ \bottom_center
-					<= align_bottom_right @ \bottom_right
+								<= bubble_hint @ \ I'm bubble, i showed when you want 
+								<= Hide $mol_button_minor 
+									event_click?event <=> event_hide?event null 
+									sub / 
+										<= hide_hint @ \Hide Bubble
+				<= Align_block $mol_labeler
+					title <= Align_title @ \Align
+					Content <= Align $mol_select
+						value?val <=> align_value?val \bottom_center
+						options /
+							<= align_left_top @ \left_top
+							<= align_left_center @ \left_center
+							<= align_left_bottom @ \left_bottom
+							<= align_right_top @ \right_top
+							<= align_right_center @ \right_center
+							<= align_right_bottom @ \right_bottom
+							<= align_center @ \center
+							<= align_top_left @ \top_left
+							<= align_top_center @ \top_center
+							<= align_top_right @ \top_right
+							<= align_bottom_left @ \bottom_left
+							<= align_bottom_center @ \bottom_center
+							<= align_bottom_right @ \bottom_right

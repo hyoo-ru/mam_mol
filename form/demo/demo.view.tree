@@ -1,18 +1,21 @@
-$mol_form_demo $mol_form
-	title @ \Simple sign in form
-	form_fields /
-		<= loginField $mol_form_field
-			name <= loginLabel @ \Login
-			errors <= loginErrors /
-			control <= loginControl $mol_string value?val <=> login?val \
-		<= passwordField $mol_form_field
-			name <= passwordLabel @ \Password
-			errors <= passwordErrors /
-			control <= passControl $mol_string
-				value?val <=> password?val \
-				type \password
-	buttons /
-		<= submit $mol_button_major
-			sub / <= submit_text @ \Sign In
-			event_click?val <=> event_submit?val null
-			disabled <= submit_blocked -
+$mol_form_demo $mol_demo_large
+	sub /
+		<= Form $mol_form
+			title @ \Simple sign in form
+			form_fields /
+				<= loginField $mol_form_field
+					name <= loginLabel @ \Login
+					errors <= loginErrors /
+					control <= loginControl $mol_string value?val <=> login?val \
+				<= passwordField $mol_form_field
+					name <= passwordLabel @ \Password
+					errors <= passwordErrors /
+					control <= passControl $mol_string
+						value?val <=> password?val \
+						type \password
+			submit_blocked => submit_blocked
+			buttons /
+				<= submit $mol_button_major
+					sub / <= submit_text @ \Sign In
+					event_click?val <=> event_submit?val null
+					disabled <= submit_blocked -

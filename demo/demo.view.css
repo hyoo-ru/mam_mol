@@ -1,31 +1,14 @@
 [mol_demo] {
-	flex: 1 1 auto;
-	display: flex;
-	align-content: flex-start;
-	align-items: stretch;
-	flex-direction: column;
-	transform: translateZ(0);
+	/* transform: translateZ(0); */
+	max-height: 75vh;
 	max-width: 100%;
-	max-height: 100%;
-}
-
-[mol_demo_head] {
-	display: flex;
-	line-height: 1.5rem;
-}
-
-[mol_demo_title] {
-	padding: 0 1rem;
-}
-
-[mol_demo_screen] {
 	overflow: hidden;
 	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_card);
 	color: var(--mol_skin_light_text);
 	position: relative;
-	flex: 1 1 auto;
+	flex: 1 0 auto;
 	display: flex;
+	align-items: stretch;
 	box-sizing: border-box;
-	flex-direction: column;
 }

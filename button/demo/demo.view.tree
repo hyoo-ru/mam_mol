@@ -1,4 +1,4 @@
-$mol_button_demo $mol_row
+$mol_button_demo $mol_demo_small
 	title @ \All types of buttons in every states
 	sub /
 		<= Major_enabled $mol_button_major

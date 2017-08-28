@@ -1,3 +1,7 @@
-$mol_grid_demo $mol_grid
+$mol_grid_demo $mol_demo_large
 	title @ \Grid with large count of cells
-	row_height 37
+	sub /
+		<= Grid $mol_grid
+			row_height 37
+			records <= records *
+			col_head_content!col <= col_head_content!col /

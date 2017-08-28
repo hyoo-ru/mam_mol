@@ -1,4 +1,4 @@
-$mol_meter_demo $mol_row
+$mol_meter_demo $mol_demo_small
 	title @ \Real time offset and size metering
 	plugins /
 		<= Meter $mol_meter

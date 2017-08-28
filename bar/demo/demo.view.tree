@@ -1,4 +1,4 @@
-$mol_bar_demo $mol_row
+$mol_bar_demo $mol_demo_small
 	title @ \Group of controls as one control
 	sub /
 		<= Two $mol_bar

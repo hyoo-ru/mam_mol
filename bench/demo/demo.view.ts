@@ -2,11 +2,6 @@ namespace $.$mol {
 	
 	export class $mol_bench_demo extends $.$mol_bench_demo {
 		
-		@ $mol_mem()
-		col_sort( next? : string ) {
-			return next || 'mid'
-		}
-		
 		result() {
 			return {
 				'bubble' : {

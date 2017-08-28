@@ -1,4 +1,4 @@
-$mol_switch_demo $mol_row
+$mol_switch_demo $mol_demo_small
 	title @ \Color switchers in various state
 	sub /
 		<= Enabled $mol_switch

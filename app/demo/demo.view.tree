@@ -13,7 +13,9 @@ $mol_app_demo $mol_book
 		minimal_width 600
 		title <= title -
 		source_link <= source_link \
-		body <= main_content /
+		body /
+			<= Detail_list $mol_list
+				rows <= main_content /
 		event_top?val <=> event_front_up?val -
 	Editor!id $mol_app_studio
 		minimal_width 1000
@@ -29,9 +31,6 @@ $mol_app_demo $mol_book
 		sub /
 			<= Welcome_text $mol_text
 				text <= welcome_text \
-	Detail_row $mol_row
-		sub /
-			<= Samples /
 	Detail_empty_message $mol_status
 		sub /
 			<= detail_empty_prefix @ \No one demo with prefix "

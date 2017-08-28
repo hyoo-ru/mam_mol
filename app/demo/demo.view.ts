@@ -6,9 +6,9 @@ namespace $.$mol {
 			const selected = this.selected()
 			if( selected ) {
 				const names = this.names_demo() 
-				if( names.length === 1 ) {
-					return `$${ selected.replace( /_demo.*/ , '' ) }: ${ this.Sample_large( names[0] ).widget().title() }`
-				}
+				/*if( names.length === 1 ) {
+					return `$${ selected.replace( /_demo.* / , '' ) }: ${ this.Sample_large( names[0] ).Widget().title() }`
+				}*/
 				return `$${ selected }`
 			}
 			
@@ -102,7 +102,7 @@ namespace $.$mol {
 		}
 
 		@ $mol_mem_key()
-		widget( name : string ) {
+		Widget( name : string ) {
 			const Class : typeof $mol_view = (<{[index : string]:any}>$)[ '$' + name ]
 			return new Class()
 		}
@@ -156,31 +156,9 @@ namespace $.$mol {
 			switch( names.length ) {
 				case 0 :
 					return [ this.Detail_empty_message() ]
-				case 1 :
-					return [ this.Sample_large( names[0] ) ]
 				default :
-					return [ this.Detail_row() ]
+					return this.names_demo().map( name => this.Widget( name ) )
 			}
-		}
-		
-		@ $mol_mem() 
-		Samples () {
-			return this.names_demo().map( name => this.Sample_small( name ) )
-		}
-		
-		@ $mol_mem_key()
-		Sample_small( name : string ) {
-			return $mol_demo_small.make({
-				name : $mol_const( name ) ,
-			})
-		}
-		
-		@ $mol_mem_key()
-		Sample_large( name : string ) {
-			return $mol_demo_large.make({
-				title : $mol_const( null ) ,
-				name : $mol_const( name ) ,
-			})
 		}
 		
 		logo_uri() {
