@@ -80,11 +80,11 @@
 	flex: auto;
 	display: flex;
 	flex-direction: column;
-	margin: .5rem;
+	margin: 1rem;
 }
 
 [mol_app_demo_detail_list] > * {
-	margin: .5rem;
+	margin: 1rem;
 }
 
 [mol_app_demo_page_close] {
