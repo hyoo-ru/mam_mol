@@ -19,7 +19,8 @@ $mol_app_studio $mol_book
 				<= tools_main /
 			body /
 				<= Selector $mol_app_studio_selector
-					Sub <= Block $mol_view
+					sub /
+						<= Block $mol_view
 					path?val <=> path?val /
 			minimal_width 400
 		<= Editor_page $mol_page
@@ -88,7 +89,7 @@ $mol_app_studio $mol_book
 	class_self?val $mol_tree
 	classes $mol_tree
 
-$mol_app_studio_selector $mol_ghost
+$mol_app_studio_selector $mol_demo_large
 	event *
 		contextmenu?event <=> select?event null
 		dblclick?event <=> select?event null
