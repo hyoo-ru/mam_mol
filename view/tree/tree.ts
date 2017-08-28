@@ -23,8 +23,9 @@ namespace $ {
 		const catch_prop = ( prop : $mol_tree )=> {
 			if( prop.sub.length === 0 ) return
 			
-			props[ prop.type ] = undefined
-			props[ prop.type ] = prop.clone({
+			props[ prop.type ] = props[ prop.type ]
+
+			const def = prop.clone({
 				sub : [ prop.sub[0].transform( ( [ node , ... stack ] , sub )=> {
 
 					if( [ '<=' , '<=>' , '=>' ].indexOf( node.type ) === -1 ) return node.clone({ sub : sub() })
@@ -44,10 +45,17 @@ namespace $ {
 					
 				} )]
 			})
+
+			if( props[ prop.type ] ) {
+				if( props[ prop.type ].toString() !== def.toString() ) {
+					throw def.error( 'Property already defined with another default value' )
+				}
+			} else {
+				props[ prop.type ] = def
+			}
 		}
 
 		def.sub[0].sub.map( catch_prop )
-
 		
 		return def.clone({
 			type : '' ,
@@ -100,7 +108,7 @@ namespace $ {
 		var content = ''
 		var locales : { [ key : string ] : string } = {}
 		
-		$mol_view_tree_classes( tree ).sub.forEach( function( def : $mol_tree ) {
+		for( let def of $mol_view_tree_classes( tree ).sub ) {
 			if( !/^\$\w+$/.test( def.type ) ) throw def.error( 'Wrong component name' )
 			
 			var parent = def.sub[0]
@@ -108,9 +116,7 @@ namespace $ {
 			var propDefs : { [ key : string ] : $mol_tree } = {}
 			var members : { [ key : string ] : string } = {}
 			
-			$mol_view_tree_class_props( def ).sub.forEach( param => addProp( param ) )
-			
-			function addProp( param : $mol_tree ) { try {
+			for( let param of $mol_view_tree_class_props( def ).sub ) { try {
 				var needSet = false
 				var needReturn = true
 				var needCache = false
@@ -200,7 +206,6 @@ namespace $ {
 						case( value.type === '<=>' ) :
 							needSet = true
 							if( value.sub.length === 1 ) {
-								addProp( value )
 								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))$/.exec( value.sub[0].type )
 								return 'this.' + type[1] + '(' + ( type[2] ? type[2] + ' ,' : '' ) + ' ' + type[3] + ' )'
 							}
@@ -209,7 +214,6 @@ namespace $ {
 							throw new Error( 'Deprecated syntax `<`. Use `<=` instead.' )
 						case( value.type === '<=' ) :
 							if( value.sub.length === 1 ) {
-								addProp( value )
 								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( value.sub[0].type )
 								return 'this.' + type[1] + '(' + (  type[2] ? type[2] : '' ) + ')'
 							}
@@ -239,13 +243,7 @@ namespace $ {
 					var val = getValue( child )
 					if( !val ) return
 					
-					if( propDefs[ propName[1] ] ) {
-						if( propDefs[ propName[1] ].toString() != param.toString() ) {
-							throw new Error( 'Property already defined with another default value' )
-						}
-					} else {
-						propDefs[ propName[1] ] = param
-					}
+					propDefs[ propName[1] ] = param
 					
 					var args : string[] = []
 					if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
@@ -262,7 +260,6 @@ namespace $ {
 					members[ propName[1] ] = decl
 				} )
 				
-				return needSet
 			} catch ( err ) {
 				err.message += `\n${param.baseUri}:${param.row}:${param.col}\n${ param }`
 				throw err
@@ -275,7 +272,7 @@ namespace $ {
 			var classes = 'namespace $ { export class ' + def.type + ' extends ' + parent.type + ' {\n\n' + body + '} }\n'
 			
 			content += classes + '\n'
-		})
+		}
 		
 		return { script : content , locales : locales }
 	}
