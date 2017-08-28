@@ -40,7 +40,7 @@ namespace $ {
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale.json` )
 						
 						const tree = $mol_tree.fromString( String( child.content() ) , child.path() )
-						const res = $mol_view_tree2ts( tree )
+						const res = $mol_view_tree_compile( tree )
 						script.content( res.script )
 						locale.content( JSON.stringify( res.locales , null , '\t' ) )
 						

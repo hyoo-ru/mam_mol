@@ -155,7 +155,7 @@ namespace $.$mol {
 			return { children : <any[]>[] }
 		}
 
-		sub() {
+		sub() : $mol_view[] {
 			return ( this.state().children || [] ).map( ( child : any , i : number )=> {
 				return child.container ? this.branch( i ) : this.leaf( i )
 			} )
