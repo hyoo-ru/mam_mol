@@ -9,9 +9,6 @@ namespace $.$mol {
 			if( !next ) return
 			if( !this.enabled() ) return
 			
-			if( next.defaultPrevented ) return
-			next.preventDefault()
-			
 			this.event_click( next )
 		}
 		
