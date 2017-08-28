@@ -5,8 +5,12 @@
 }
 
 [mol_plot_line_sample] {
-	min-width: 1.5rem;
 	height: 0;
-	align-self: center;
+	left: 0;
+	right: 0;
+	bottom: 0;
 	border-width: 2px 0 0;
+	position: absolute;
+	top:50%;
+	transform: translateY(-50%);
 }
