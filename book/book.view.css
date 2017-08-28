@@ -12,7 +12,7 @@
 }
 
 [mol_book] > *:not([mol_book_page_visible]) {
-	position: absolute;
+	position: absolute; 
 }
 
 [mol_book] > [mol_book_page_focused]:not([mol_book_page_visible]) {
