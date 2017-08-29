@@ -5,10 +5,21 @@ $mol_touch $mol_plugin
 	-
 	start_pos?val null
 	swipe_precision 16
+	-
 	swipe_right?val null
 	swipe_bottom?val null
 	swipe_left?val null
 	swipe_top?val null
+	-
+	swipe_from_right?val null
+	swipe_from_bottom?val null
+	swipe_from_left?val null
+	swipe_from_top?val null
+	-
+	swipe_to_right?val null
+	swipe_to_bottom?val null
+	swipe_to_left?val null
+	swipe_to_top?val null
 	-
 	event *
 		^
