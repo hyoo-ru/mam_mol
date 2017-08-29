@@ -17,6 +17,7 @@
 
 [mol_book] > [mol_book_page_focused]:not([mol_book_page_visible]) {
 	z-index: 1;
+	box-shadow: 0 0 0 100vw rgba( 0 , 0 , 0 , .25 );
 }
 
 [mol_book] > *:not([mol_book_page_visible]):not([mol_book_page_focused]) {
