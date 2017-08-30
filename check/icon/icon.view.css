@@ -1,3 +1,7 @@
+[mol_check_icon] {
+	padding: .75rem .5rem;
+}
+
 [mol_check_icon][mol_check_checked] {
 	color: var(--mol_skin_accent);
 }
