@@ -1,6 +1,7 @@
 [mol_select] {
 	display: flex;
 	word-break: normal;
+	align-self: flex-start;
 }
 
 [mol_select_anchor] {

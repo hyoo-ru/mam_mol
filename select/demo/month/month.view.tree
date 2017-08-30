@@ -1,4 +1,4 @@
-$mol_select_demo_month $mol_demo_small
+$mol_select_demo_month $mol_demo_large
 	title @ \Month picker with filter
 	sub /
 		<= Month $mol_select

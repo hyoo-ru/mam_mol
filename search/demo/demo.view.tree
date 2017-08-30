@@ -1,4 +1,4 @@
-$mol_search_demo $mol_demo_small
+$mol_search_demo $mol_demo_large
 	title @ \Simple search field with suggest 
 	sub /
 		<= Search $mol_search
