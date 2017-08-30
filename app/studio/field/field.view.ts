@@ -39,7 +39,7 @@ namespace $.$mol {
 				this.value( val )
 			}
 			const val = this.value()
-			if( val.type === '-' ) return
+			if( !val || val.type === '-' ) return
 			
 			return $mol_view_tree_value_type( this.value() )
 		}
