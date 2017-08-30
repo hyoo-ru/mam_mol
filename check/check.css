@@ -2,13 +2,14 @@
 	flex: 0 0 auto;
 	justify-content: flex-start;
 	align-content: center;
+	align-items: flex-start;
 	border: none;
 	font-weight: normal;
 	box-shadow: none;
 	text-align: left;
 	padding: .5rem;
 	display: inline-flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 }
 
 [mol_check]:not([mol_check_checked]) {
