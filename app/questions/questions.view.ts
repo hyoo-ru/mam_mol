@@ -6,7 +6,7 @@ namespace $.$mol {
 			const question = this.question_cur_id()
 			return [
 				this.Menu() ,
-				question ? this.Details( question ) : null ,
+				... question ? [ this.Details( question ) ] : [] ,
 			]
 		}
 		
