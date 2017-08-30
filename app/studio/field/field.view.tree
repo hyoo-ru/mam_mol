@@ -66,11 +66,14 @@ $mol_app_studio_field $mol_expander
 				<= overs /
 				<= Add_over $mol_select
 					hint <= add_over_hint @ \Add override..
+					value?val <=> add_over?val \
 					Trigger_icon <= Overs_trigger_icon $mol_icon_plus
+					options <= over_options /
 	Prop!id $mol_app_studio_field
 		path <= prop_path!id /
 		prop_arg!id <= prop_arg!id *
 		prop!path?val <=> prop!path?val $mol_tree
+		props!name?val <=> props!name?val $mol_tree
 		prop_value!id <= prop_value!id null
 		bind_options <= bind_options /
 		prop_add?val <=> prop_add?val null

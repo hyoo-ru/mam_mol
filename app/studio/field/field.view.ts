@@ -129,9 +129,21 @@ namespace $.$mol {
 			if( !type ) return null
 			
 			const items = this.value()
-			this.value( items.clone({ sub : [ ... items.sub , new $mol_tree({ type : 'null' }) ] }) )
+			this.value( items.insert( new $mol_tree({ type }) , items.sub.length ) )
 
 			this.list_rows()[ items.sub.length ].type( type )
+
+			return null
+		}
+
+		over_options() {
+			return ( this.props( this.class() ) as $mol_tree ).sub.map( item => item.type )
+		}
+
+		add_over( name? : string ) : string {
+			if( !name ) return null
+			
+			this.value( this.value().insert( new $mol_tree({ type : name }) , name ) )
 
 			return null
 		}
