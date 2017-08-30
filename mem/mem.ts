@@ -12,7 +12,7 @@ namespace $ {
 			descr : TypedPropertyDescriptor< ( next? : Value , force? : $mol_atom_force )=> Value >
 		) {
 			const value = descr.value
-			const store = new WeakMap< $mol_view , $mol_atom<Value> >()
+			const store = new WeakMap< Object , $mol_atom<Value> >()
 			
 			descr.value = function( next? : Value , force? : $mol_atom_force ) {
 				const host : any = this
@@ -52,7 +52,7 @@ namespace $ {
 			descr : TypedPropertyDescriptor< ( key : Key , next? : Value , force? : $mol_atom_force )=> Value >
 		) {
 			const value = descr.value
-			const store = new WeakMap< $mol_view , { [ key : string ] : $mol_atom<Value> } >()
+			const store = new WeakMap< Object , { [ key : string ] : $mol_atom<Value> } >()
 			
 			descr.value = function( key : Key , next? : Value , force? : $mol_atom_force ) {
 				const host : any = this
