@@ -25,7 +25,7 @@ namespace $.$mol {
 		
 		@ $mol_mem()
 		command_current( next? : any[] , force? : $mol_atom_force ) {
-			if( this['command_current()'] ) return
+			if( this['command_current()']['value()'] ) return
 			return next
 		}
 		

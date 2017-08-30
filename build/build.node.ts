@@ -580,7 +580,7 @@ namespace $ {
 			
 			sources.forEach(
 				function( src ) {
-					var content = src.content().toString()
+					var content = src.content()	.toString()
 					concater.add( src.relate( target.parent() ) , content )
 				}
 			)

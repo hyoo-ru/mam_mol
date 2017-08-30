@@ -20,6 +20,8 @@ namespace $ {
 		handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value|void
 		host : { [ key : string ] : any }
 		field : string
+
+		'value()' : Value|Error
 		
 		constructor(
 			host : any ,
@@ -38,15 +40,12 @@ namespace $ {
 				this.unlink()
 				
 				const host = this.host
-				const value = host[ this.field ]
+				const value = this['value()']
 				if( value instanceof $mol_object ) {
 					if( ( value.object_owner() === host ) && ( value.object_field() === this.field ) ) {
 						value.destroyed( true );
 					}
 				}
-				
-				host[ this.field ] = undefined
-				host[ this.field + '@' ] = undefined
 				
 				this.status = $mol_atom_status.obsolete
 			}
@@ -76,7 +75,7 @@ namespace $ {
 				slave.obey( this )
 			}
 			
-			const value : Value = this.host[ this.field ]
+			const value = this['value()'] as Value
 			
 			if( typeof Proxy !== 'function' && value instanceof Error ) {
 				throw value
@@ -152,7 +151,7 @@ namespace $ {
 		set( next : Value ) : Value {
 			const next_normal = this.normalize( next , this._next )
 			if( next_normal === this._next ) return this.get()
-			if( next_normal === this.host[ this.field ] ) return this.get()
+			if( next_normal === this['value()'] ) return this.get()
 			
 			this._next = next_normal
 			this.obsolete()
@@ -172,19 +171,19 @@ namespace $ {
 			return next
 		}
 		
-		push( next_raw? : Value|Error ) {
+		push( next_raw? : Value|Error ) : Value {
 			this._next = undefined
 			
 			this.status = $mol_atom_status.actual
 			
 			const host = this.host
-			const prev = host[ this.field ]
+			const prev = this['value()']
 			
-			if( next_raw === undefined ) return prev
+			if( next_raw === undefined ) return prev as Value
 			
 			let next = ( next_raw instanceof Error ) ? next_raw : this.normalize( next_raw , prev )
 			
-			if( next === prev ) return prev
+			if( next === prev ) return prev as Value
 			
 			if( next instanceof $mol_object ) {
 				next.object_field( this.field )
@@ -202,7 +201,7 @@ namespace $ {
 				} )
 			}
 			
-			host[ this.field ] = next
+			this['value()'] = next
 			this.log( [ 'push' , next , prev ] )
 			
 			this.obsolete_slaves()
@@ -290,7 +289,7 @@ namespace $ {
 			this.masters = null
 		}
 		
-		value( next? : Value , force? : $mol_atom_force ) {
+		value( next? : Value , force? : $mol_atom_force ) : Value {
 			if( next === undefined ) {
 				return this.get( force )
 			} else {

@@ -87,9 +87,6 @@ userName( 'jin' , $mol_atom_force ) // returns 'jin'
 
 /// Force cache ignoring and pulling fresh value
 userName( void 0 , $mol_atom_force ) // returns 'mary'
-
-/// Cache are placed in object field (use this for debugging only!)
-this['userName()'] // returns 'mary'
 ```
 
 ## Multi-value properties

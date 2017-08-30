@@ -18,8 +18,8 @@
 	flex: 1 1 66%;
 }
 
-[mol_app_slides_speaker] > [mol_page_body] ,
-[mol_app_slides_listener] > [mol_page_body] {
+[mol_app_slides_speaker_body] ,
+[mol_app_slides_listener_body] {
 	display: flex;
 	flex-direction: column;
 }

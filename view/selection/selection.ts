@@ -10,7 +10,7 @@ namespace $ {
 			
 			new $mol_defer( ()=> {
 				if( node ) node.focus()
-				else if( this[ 'focused()' ][0] ) console.log( this[ 'focused()' ][ 0 ].blur() )
+				else if( this[ 'focused()' ][ 'value()' ][0] ) this[ 'focused()' ][ 'value()' ][ 0 ].blur()
 			} )
 
 			return []

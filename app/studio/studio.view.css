@@ -18,13 +18,17 @@
 	margin: 0;
 }
 
-[mol_app_studio_preview_page] > [mol_page_body] {
+[mol_app_studio_preview_page_head] {
+	background: color( var(--mol_skin_base) blackness(+20%) );
+}
+
+[mol_app_studio_preview_page_body] {
 	padding: 1rem;
 	display: flex;
 	align-items: flex-start;
 }
 
-[mol_app_studio_editor_page] > [mol_page_head] {
+[mol_app_studio_editor_page_head] {
 	flex-wrap: nowrap;
 }
 

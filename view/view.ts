@@ -116,23 +116,6 @@ namespace $ {
 			return min
 		}
 		
-		'view_classes()' : Function[]
-		view_classes() {
-			const proto = Object.getPrototypeOf( this ) as $mol_view
-			if( this[ 'view_classes()' ] ) return this[ 'view_classes()' ]
-			
-			let current = proto
-			const classes = [] as Function[]
-			
-			while( current ) {
-				classes.push( current.constructor )
-				if(!( current instanceof $mol_view )) break
-				current = Object.getPrototypeOf( current )
-			}
-			
-			return this['view_classes()'] = classes
-		}
-		
 		'dom_node()' : Element
 		dom_node() {
 			if( this['dom_node()'] ) return this['dom_node()']
@@ -183,27 +166,64 @@ namespace $ {
 			$mol_dom_render_styles( node , this.style() )
 			$mol_dom_render_fields( node , this.field() )
 		}
+
+		@ $mol_mem()
+		static view_classes() {
+			const proto = this.prototype
+			
+			let current = proto
+			const classes = [] as ( typeof $mol_view )[]
+			
+			while( current ) {
+				classes.push( current.constructor as typeof $mol_view )
+				if(!( current instanceof $mol_view )) break
+				current = Object.getPrototypeOf( current )
+			}
+			
+			return classes
+		}
+		
+		view_names_owned() {
+			const names = [] as string[]
+			const owner = this.object_owner()
+
+			if( owner instanceof $mol_view ) {
+
+				const suffix = this.object_field().replace( /\(.*/ , '' )
+				const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1)
+				
+				for( let Class of ( owner.constructor as typeof $mol_view ).view_classes() ) {
+					if( suffix in Class.prototype ) names.push( $mol_func_name( Class ) + suffix2 )
+					else break
+				}
+				
+				for( let prefix of owner.view_names_owned() ) {
+					names.push( prefix + suffix2 )
+				}
+			}
+
+			return names
+		}
+
+		@ $mol_mem()
+		view_names() {
+			const names = [] as string[]
+			
+			for( let name of this.view_names_owned() ) {
+				names.push( name )
+			}
+
+			for( let Class of ( this.constructor as typeof $mol_view ).view_classes() ) {
+				names.push( $mol_func_name( Class ) )
+			}
+
+			return names
+		}
 		
 		attr_static() : { [ key : string ] : string|number|boolean } {
 			let attrs = { 'mol_view_error' : false } as any
 			
-			/// Set BEM-like element-attributes with inheritance support
-			const owner = this.object_owner()
-			if( owner instanceof $mol_view ) {
-				const suffix = this.object_field().replace( /\(.*/ , '' )
-				const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1)
-				owner.view_classes().forEach( Class => {
-					if( suffix in Class.prototype ) {
-						const attrName = Class.toString().replace( /\$/g , '' ) + suffix2
-						attrs[ attrName ] = ''
-					}
-				} )
-			}
-			
-			/// Set BEM-like block-attributes with inheritance support
-			this.view_classes().forEach( Class => {
-				attrs[ Class.toString().replace( /\$/g , '' ).toLowerCase() ] = ''
-			} )
+			for( let name of this.view_names() ) attrs[ name.replace( /\$/g , '' ).toLowerCase() ] = ''
 			
 			return attrs
 		}
@@ -232,7 +252,7 @@ namespace $ {
 		
 		'locale_contexts()' : string[]
 		locale_contexts() {
-			return this['locale_contexts()'] || ( this[ 'locale_contexts()' ] = this.view_classes().map( String ) )
+			return this['locale_contexts()'] || ( this[ 'locale_contexts()' ] = this.view_names() )
 		}
 		
 		plugins() {
