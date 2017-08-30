@@ -4,7 +4,7 @@ namespace $.$mol {
 		sub() {
 			return [
 				this.Anchor() ,
-				this.showed() ? this.Bubble() : null ,
+				... this.showed() ? [ this.Bubble() ] : [] ,
 			]
 		}
 		

@@ -219,7 +219,7 @@ namespace $.$mol {
 			return [
 				this.cell( pos.concat( 0 ) ) ,
 				this.cell( pos.concat( 1 ) ) ,
-				formatRow.field ? this.cell( pos.concat( 2 ) ) : null ,
+				... formatRow.field ? [ this.cell( pos.concat( 2 ) ) ] : [] ,
 			]
 		}
 		
