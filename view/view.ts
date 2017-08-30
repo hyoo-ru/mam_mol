@@ -116,17 +116,15 @@ namespace $ {
 			return min
 		}
 		
-		'dom_node()' : Element
-		dom_node() {
-			if( this['dom_node()'] ) return this['dom_node()']
-			
-			const node = $mol_dom_make( this.toString() , this.dom_name() , this.dom_name_space() )
+		@ $mol_mem()
+		dom_node( next? : Element ) {
+			const node = next || this.$.$mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
 			$mol_dom_render_attributes( node , this.attr_static() )
 			$mol_dom_render_events( node , this.event() )
 			$mol_dom_render_events_async( node , this.event_async() )
 
-			return this['dom_node()'] = node
+			return node
 		}
 		
 		@ $mol_mem()
@@ -221,7 +219,10 @@ namespace $ {
 		}
 		
 		attr_static() : { [ key : string ] : string|number|boolean } {
-			let attrs = { 'mol_view_error' : false } as any
+			let attrs : any = {
+				'mol_view_error' : false ,
+				'id' : this.toString() ,
+			}
 			
 			for( let name of this.view_names() ) attrs[ name.replace( /\$/g , '' ).toLowerCase() ] = ''
 			
