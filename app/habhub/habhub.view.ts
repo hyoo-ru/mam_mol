@@ -34,7 +34,7 @@ namespace $.$mol {
 			const gist = this.gist_current_id()
 			return [
 				this.Menu_page() ,
-				gist ? this.Details() : null
+				... gist ? [ this.Details() ] : []
 			]
 		}
 		

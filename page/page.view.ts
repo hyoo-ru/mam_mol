@@ -8,8 +8,8 @@ namespace $.$mol {
 		
 		head() {
 			return [
-				this.title() ? this.Title() : null ,
-				this.tools().length > 0 ? this.Tools() : null ,
+				... this.title() ? [ this.Title() ] : [] ,
+				... this.tools().length > 0 ? [ this.Tools() ] : [] ,
 			]
 		}
 		

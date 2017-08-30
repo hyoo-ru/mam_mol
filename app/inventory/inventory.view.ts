@@ -37,8 +37,8 @@ namespace $.$mol {
 		
 		sub() {
 			return [
-				this.keeper_show() ? this.Keeper_link() : null ,
-				this.control_show() ? this.Control_link() : null ,
+				... this.keeper_show() ? [ this.Keeper_link() ] : [] ,
+				... this.control_show() ? [ this.Control_link() ] : [] ,
 			]
 		}
 		

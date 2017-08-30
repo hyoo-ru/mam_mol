@@ -28,8 +28,8 @@ namespace $.$mol {
 		sub() {
 			return [
 				this.Head() ,
-				this.master() ? this.Body() : null ,
-				this.master() ? this.Foot() : null ,
+				... this.master() ? [ this.Body() ] : [] ,
+				... this.master() ? [ this.Foot() ] : [] ,
 			]
 		}
 		

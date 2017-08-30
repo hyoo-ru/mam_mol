@@ -4,7 +4,7 @@ namespace $.$mol {
 		rows() {
 			return [
 				this.Label(),
-				this.expanded() ? this.Content() : null	
+				... this.expanded() ? [ this.Content() ] : []
 			]
 		}
 		

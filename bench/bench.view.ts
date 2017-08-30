@@ -69,19 +69,15 @@ namespace $.$mol {
 		cell_content_number( id : { row : string[] , col : string } ) {
 			return [
 				this.result_value( id ) ,
-				( this.col_sort() === id.col )
-					? this.Result_portion( id )
-					: null
+				... ( this.col_sort() === id.col ) ? [ this.Result_portion( id ) ] : []
 			]
 		}
 		
 		col_head_content( col : string ) {
-			return [].concat(
+			return [
 				this.col_head_label( col ) ,
-				( this.col_sort() === col )
-					? this.Col_head_sort( col )
-					: null
-			)
+				... ( this.col_sort() === col ) ? [ this.Col_head_sort( col ) ] : []
+			]
 		}
 		
 	}

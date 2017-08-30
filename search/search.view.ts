@@ -18,7 +18,7 @@ namespace $.$mol {
 		sub() {
 			return [
 				this.Suggest() ,
-				( this.query().length > 0 ) ? this.Clear() : null ,
+				... ( this.query().length > 0 ) ? [ this.Clear() ] : [] ,
 			]
 		}
 		
