@@ -1,5 +1,5 @@
 $mol_bench $mol_grid
-	result null
+	result *
 	records <= result_sorted null
 	col_sort?val \
 	-

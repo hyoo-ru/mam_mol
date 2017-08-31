@@ -74,7 +74,11 @@ namespace $.$mol {
 			return this.value( next2 ).value
 		}
 
-		overs( next? : any ) {
+		pairs() {
+			return this.value().sub.map( pair => this.Prop([ ... this.path() , pair.type , null ]) )
+		}
+
+		overs() {
 			return this.value().sub.map( over => this.Prop([ ... this.path() , over.type , null ]) )
 		}
 
@@ -101,6 +105,7 @@ namespace $.$mol {
 				( type === 'string' ) ? this.String() : null ,
 				( type === 'locale' ) ? this.String() : null ,
 				( type === 'list' ) ? this.List() : null ,
+				( type === 'dict' ) ? this.Dict() : null ,
 				( type === 'object' ) ? this.Overs() : null ,
 				... ( [ 'get' , 'bind' ].indexOf( type ) >= 0 && this.bind() ) ? [ this.Prop([ this.Bind().value() , null ]) ] : [] ,
 			]
@@ -146,6 +151,14 @@ namespace $.$mol {
 			this.value( this.value().insert( new $mol_tree({ type : name }) , name ) )
 
 			return null
+		}
+
+		add_pair( event? : Event ) : string {
+			if( !event ) return
+			
+			const name = this.add_pair_key()
+			this.add_pair_key( '' )
+			this.value( this.value().insert( new $mol_tree , name , null ) )
 		}
 
 		event_prop_add( event? : Event ) {

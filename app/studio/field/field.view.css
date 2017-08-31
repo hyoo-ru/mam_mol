@@ -82,7 +82,7 @@
 
 [mol_app_studio_field_list] > * {
 	box-shadow: var(--mol_skin_light_outline);
-	margin: 1rem 0 1rem 1rem;
+	margin: 1rem;
 }
 
 [mol_app_studio_field_list_trigger_icon] ,
@@ -90,14 +90,16 @@
 		margin: .5rem;
 }
 
+[mol_app_studio_field_dict] ,
 [mol_app_studio_field_overs] {
 	flex: 1 1 100%;
 	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_light);
 }
 
+[mol_app_studio_field_dict] > * ,
 [mol_app_studio_field_overs] > * {
-	margin: 1rem 0 1rem 1rem;
+	margin: 1rem;
 }
 
 [mol_app_studio_field_item] {

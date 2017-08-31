@@ -173,13 +173,21 @@ namespace $.$mol {
 			const path2 = path.slice()
 			
 			while( path2[ path2.length - 1 ] === null ) path2.pop()
-			const field = String( path2.pop() ).replace( /[?!].*/ , '' )
 
-			while( path2[ path2.length - 1 ] === null ) path2.pop()
-			const element = this.Element( path2.slice( 0 , path2.length - 1 ) )
+			const element = this.Element([])
+			const field = String( path2.shift() ).replace( /[?!].*/ , '' )
 			
-			const base = element[ field ] && element[ field ][ '$mol_app_studio_original' ]
-			return base && base.call( element , next )
+			let val = element[ field ] && element[ field ][ '$mol_app_studio_original' ]
+			if( typeof val === 'function' ) {
+				val = val.call( element , next )
+				while( val && path2.length ) {
+					const field = path2.shift()
+					if( field === null ) continue
+					val = val[ field ]
+				}
+			}
+
+			return val
 		}
 
 		prop_class( path : $mol_tree_path , next? : string ) : string {
@@ -211,6 +219,7 @@ namespace $.$mol {
 				case 'bind' : return over && this.prop_value_view([ over.sub[0].type , null ])
 				case 'object' : return this.Element( path )
 				case 'list' : return over && over.sub.map( ( item , index )=> this.prop_value_view([ ... path , index ]) )
+				case 'dict' : return over && over.sub.reduce( ( dict , item )=> ({ ... dict , [ item.type ] : this.prop_value_view([ ... path , item.type , null ]) }) , {} )
 			}
 
 			return undefined

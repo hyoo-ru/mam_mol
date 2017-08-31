@@ -61,6 +61,19 @@ $mol_app_studio_field $mol_expander
 						dict \Dictionary
 						null \None
 					Trigger_icon <= List_trigger_icon $mol_icon_plus
+		<= Dict $mol_list
+			rows /
+				<= pairs /
+				<= Add_pair $mol_bar
+					sub /
+						<= Add_pair_key $mol_search
+							hint <= add_pair_hint @ \Add key..
+							query?val <=> add_pair_key?val \
+							suggests <= key_suggests /
+						<= Add_pair_submit $mol_button_minor
+							event_click?val <=> add_pair?val \
+							sub /
+								<= Add_pair_submit_icon $mol_icon_plus
 		<= Overs $mol_list
 			rows /
 				<= overs /

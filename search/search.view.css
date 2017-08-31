@@ -1,5 +1,6 @@
 [mol_search] {
 	align-self: flex-start;
+	flex: auto;
 }
 
 [mol_search_suggest] {

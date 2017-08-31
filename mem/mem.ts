@@ -19,7 +19,7 @@ namespace $ {
 			
 				let atom : $mol_atom<Value> = store.get( host )
 				if( !atom ) {
-					//if( force && ( next === undefined ) ) return next
+					if( force && ( next === undefined ) ) return next
 					
 					store.set( host , atom = new $mol_atom<Value>(
 						host ,
@@ -63,7 +63,7 @@ namespace $ {
 				
 				let atom : $mol_atom<Value> = dict[ key_str ]
 				if( !atom ) {
-					// if( force && ( next === undefined ) ) return next
+					if( force && ( next === undefined ) ) return next
 					
 					dict[ key_str ] = atom = new $mol_atom<Value>(
 						host ,
