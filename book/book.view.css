@@ -22,6 +22,10 @@
 	box-shadow: 0 0 0 100vw rgba( 0 , 0 , 0 , .25 );
 }
 
+[mol_book] > [mol_book_page_focused]:not([mol_book_page_visible]) ~ * {
+	pointer-events: none;
+}
+
 [mol_book] > *:not([mol_book_page_visible]):not([mol_book_page_focused]) {
 	transform: translate3d( -100% , 0 , 0 );
 }
