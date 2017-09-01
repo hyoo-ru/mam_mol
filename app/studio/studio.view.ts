@@ -14,31 +14,29 @@ namespace $.$mol {
 		}
 
 		@ $mol_mem()
+		classes_static() {
+			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\n'
+			const source = view_tree + $mol_http.resource( '-/web.view.tree' ).text()
+			return $mol_view_tree_classes( $mol_tree.fromString( source ) )
+		}
+		
+		@ $mol_mem()
 		classes( next? : $mol_tree ) {
 			if( next ) return next
 			
-			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\n'
-			const source = view_tree + $mol_http.resource( '-/web.view.tree' ).text()
-			let all = $mol_tree.fromString( source )
-			all = all.clone({ sub : [ ... all.sub , this.class_self() ] })
-			return $mol_view_tree_classes( all )
+			return this.classes_static().insert( new $mol_tree({ type : this.class_name_base() }) , this.class_name_self() , null )
 		}
 		
 		@ $mol_mem_key()
 		class( name : string , next? : $mol_tree ) {
 			if( next !== undefined ) {
-				this.classes( this.classes().transform( ( [ node ] , sub )=> {
-					if( node.type == '' ) return node.clone({ sub : sub() })
-					return ( node.type === name ) ? next : node
-				} ) )
+				this.classes( this.classes().insert( next , name ) )
 			}
 			return this.classes().select( name ).sub[0]
 		}
 
-		@ $mol_mem()
 		class_self( next? : $mol_tree ) {
-			if( next ) return next
-			return $mol_tree.fromString( `${ this.class_name_self() } ${ this.class_name_base() }` ).sub[0]
+			return this.class( this.class_name_self() , next )
 		}
 
 		@ $mol_mem_key()
@@ -54,16 +52,16 @@ namespace $.$mol {
 			if( next ) return next
 			
 			const props_all : { [ name : string ] : $mol_tree } = {}
-			
-			while( name ) {
-				const props = this.props_self( name )
-				for( let prop of props.sub ) props_all[ prop.type ] = props_all[ prop.type ] || prop
-				
+
+			const collect = ( name : string )=> {
 				const sup = this.class( name )
-				if( !sup ) break
-				
-				name = $mol_view_tree_super_name( sup )
+				if( sup ) collect( $mol_view_tree_super_name( sup ) )
+
+				const props = this.props_self( name )
+				for( let prop of props.sub ) props_all[ prop.type ] = prop
 			}
+
+			collect( name )
 			
 			return this.classes().clone({ type : '' , sub : Object.keys( props_all ).map( name => props_all[ name ] ) })
 		}
@@ -281,11 +279,10 @@ namespace $.$mol {
 
 		event_add( event? : Event ) {
 			this.prop_add( this.prop_filter() )
-			this.prop_filter('')
 		}
 		
 		prop_add( name : string ) {
-			this.prop( [ name ] , new $mol_tree({ type : name , sub : [ new $mol_tree({ type : 'null' }) ] }) )
+			this.prop( [ name ] , new $mol_tree({ type : name , sub : [ new $mol_tree ] }) )
 		}
 
 		speech_enabled( next? : boolean ) {

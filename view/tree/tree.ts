@@ -22,7 +22,8 @@ namespace $ {
 		
 		const catch_prop = ( prop : $mol_tree )=> {
 			if( prop.sub.length === 0 ) return
-			
+			if( prop.sub[0].type === '-' ) return
+					
 			props[ prop.type ] = props[ prop.type ]
 
 			const def = prop.clone({
