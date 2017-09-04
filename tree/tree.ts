@@ -88,8 +88,8 @@ namespace $ {
 				line => {
 					++row
 					
-					var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?$\n?/m.exec( line )
-					if( !chunks ) throw new Error( `Syntax error at ${baseUri}:${row}\n${line}` )
+					var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec( line )
+					if( !chunks || chunks[4] ) throw new Error( `Syntax error at ${baseUri}:${row}\n${line}` )
 					
 					var indent = chunks[ 1 ]
 					var path = chunks[ 2 ]
