@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_plot_ruler_vert extends $.$mol_plot_ruler_vert {
 		
 		dimensions() {

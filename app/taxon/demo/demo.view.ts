@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export class $mol_app_taxon_demo extends $.$mol_app_taxon_demo {
 		

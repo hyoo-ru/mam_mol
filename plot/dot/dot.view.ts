@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_plot_dot extends $.$mol_plot_dot {
 		
 		curve() {

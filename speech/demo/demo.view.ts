@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export class $mol_speech_demo extends $.$mol_speech_demo {
 		

@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_app_signup extends $.$mol_app_signup {
 		
 		name_first( next? : string ) {

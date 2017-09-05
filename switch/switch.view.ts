@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_switch extends $.$mol_switch {
 
 		value( next? : any ) {

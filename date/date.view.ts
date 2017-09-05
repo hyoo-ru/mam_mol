@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
  	export class $mol_date extends $.$mol_date {
 
 		@ $mol_mem()

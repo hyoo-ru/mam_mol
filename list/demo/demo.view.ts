@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_list_demo extends $.$mol_list_demo {
 		
 		rows() {

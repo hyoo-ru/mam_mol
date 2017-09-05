@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_meter extends $.$mol_meter {
 		
 		dom_node() {

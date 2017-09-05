@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_app_supplies_list extends $.$mol_app_supplies_list {
 		
 		@ $mol_mem()

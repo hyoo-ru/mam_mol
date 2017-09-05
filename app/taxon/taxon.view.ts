@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export interface $mol_app_taxon_data_row {
 		KeyId : number

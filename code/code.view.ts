@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_code extends $.$mol_code {
 		
 		scan_support() {

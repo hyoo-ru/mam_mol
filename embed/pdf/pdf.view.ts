@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export class $mol_embed_pdf extends $.$mol_embed_pdf {
 		

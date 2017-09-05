@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_float extends $.$mol_float {
 
 		shiftStyle() {

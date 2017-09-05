@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export class $mol_app_inventory_position extends $.$mol_app_inventory_position {
 		

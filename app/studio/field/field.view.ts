@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export class $mol_app_studio_field extends $.$mol_app_studio_field {
 

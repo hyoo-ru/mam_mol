@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_dimmer extends $.$mol_dimmer {
 		
 		parts() {

@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export class $mol_app_lamps extends $.$mol_app_lamps {
 		

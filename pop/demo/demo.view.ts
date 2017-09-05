@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_pop_demo extends $.$mol_pop_demo {
 		
 		event_show( event? : MouseEvent ) {

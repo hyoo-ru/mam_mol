@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export class $mol_app_inventory_domain_mock extends $mol_app_inventory_domain {
 		

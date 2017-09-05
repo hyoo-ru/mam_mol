@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_touch extends $.$mol_touch {
 		
 		event_start( event? : TouchEvent ) {

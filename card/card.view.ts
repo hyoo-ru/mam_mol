@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 
 	export class $mol_card extends $.$mol_card {
 

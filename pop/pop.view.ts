@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_pop extends $.$mol_pop {
 		
 		sub() {

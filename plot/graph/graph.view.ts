@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_plot_graph extends $.$mol_plot_graph {
 		
 		points_raw() {

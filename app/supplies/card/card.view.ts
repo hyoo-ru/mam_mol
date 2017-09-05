@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_app_supplies_card extends $.$mol_app_supplies_card {
 		
 		supply() {

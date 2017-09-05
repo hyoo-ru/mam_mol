@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export interface $mol_app_habhub_gist {
 		id : number

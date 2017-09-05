@@ -1,6 +1,6 @@
 declare var cpprun : any
 
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_app_inventory_enter extends $.$mol_app_inventory_enter {
 		
 		event_submit() {

@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_string extends $.$mol_string {
 		
 		_timer = 0

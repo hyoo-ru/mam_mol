@@ -1,6 +1,6 @@
 declare var ymaps : any
 
-namespace $.$mol {
+namespace $.$$ {
 
 	export class $mol_map_yandex extends $.$mol_map_yandex {
 

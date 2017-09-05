@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 
 	export interface $mol_perf_render_item {
 		id : number

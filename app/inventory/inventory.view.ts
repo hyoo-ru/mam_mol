@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_app_inventory extends $.$mol_app_inventory {
 		
 		Page() : $mol_view {

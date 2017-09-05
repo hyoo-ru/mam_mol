@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_plot_ruler_hor extends $.$mol_plot_ruler_hor {
 		
 		count() {

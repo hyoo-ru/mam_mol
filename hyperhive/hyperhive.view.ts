@@ -1,7 +1,7 @@
 declare var hhfw : any
 declare var sqlitePlugin : any
 
-namespace $.$mol {
+namespace $.$$ {
 
 	export class $mol_hyperhive extends $.$mol_hyperhive {
 

@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_nav extends $.$mol_nav {
 		
 		event_key( event? : KeyboardEvent ) {

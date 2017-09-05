@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 
 	export interface $mol_app_bench_list_mol_data {
 		sample : string

@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 
 	export interface $mol_app_bench_chart_rope_mol_data {
 		sample : string

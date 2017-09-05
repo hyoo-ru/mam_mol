@@ -1,5 +1,5 @@
 
-namespace $.$mol {
+namespace $.$$ {
 	
 	export class $mol_app_inventory_controller extends $.$mol_app_inventory_controller {
 		

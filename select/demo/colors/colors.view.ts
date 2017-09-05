@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export class $mol_select_demo_colors extends $.$mol_select_demo_colors {
 		

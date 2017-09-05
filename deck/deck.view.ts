@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_deck extends $.$mol_deck {
 		
 		current( next? : string ) {

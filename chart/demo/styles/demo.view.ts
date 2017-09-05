@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	export class $mol_chart_demo_styles extends $.$mol_chart_demo_styles {
 		

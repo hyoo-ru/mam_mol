@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	export class $mol_button extends $.$mol_button {
 		
 		disabled() {

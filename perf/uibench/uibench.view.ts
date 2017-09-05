@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 
 	export class $mol_perf_uibench extends $.$mol_perf_uibench {
 

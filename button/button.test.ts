@@ -1,4 +1,4 @@
-namespace $.$mol {
+namespace $.$$ {
 	
 	$mol_test({
 		
