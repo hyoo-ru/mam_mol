@@ -61,6 +61,7 @@ namespace $.$$ {
 			return [ colId ]
 		}
 		
+		@ $mol_mem()
 		rows() {
 			return this.row_ids().map( id => this.Row( id ) )
 		}
