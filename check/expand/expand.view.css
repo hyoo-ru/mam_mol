@@ -32,6 +32,10 @@
 [mol_check_box_icon] + div:not(:empty) {
 }
 
+[mol_check_expand_icon] {
+	vertical-align: text-top;
+}
+
 [mol_check_expand_label] {
 	margin-left: 0;
 }
