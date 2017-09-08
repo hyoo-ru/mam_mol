@@ -16,7 +16,7 @@ namespace $ {
 		@ $mol_mem()
 		static id( next? : string ) {
 			try {
-				if( history.state ) return <string> history.state
+				if( history.state ) return history.state as string
 			} catch( error ) {
 				// IE11
 			}

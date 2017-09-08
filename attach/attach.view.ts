@@ -35,7 +35,7 @@ namespace $.$$ {
 			$mol_cordova_camera().getPicture( ( url : string )=> {
 				this.file_new( url )
 			}, ( error : Error )=> {
-				this.file_new( <any> error )
+				this.file_new( error as any )
 			}, {
 				quality: 50
 			} )

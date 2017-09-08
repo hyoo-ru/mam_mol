@@ -6,7 +6,7 @@ namespace $ {
 			length : number
 		}
 	) {
-		return <Item[]> <any> new $mol_range_lazy< Item >( source )
+		return new $mol_range_lazy< Item >( source ) as any as Item[]
 	}
 	
 	export class $mol_range_common< Value > /*implements ReadonlyArray< Value >*/ {
@@ -98,7 +98,7 @@ namespace $ {
 		
 		constructor(
 			private source = {
-				item( id : number ) { return < Value > void 0 } ,
+				item( id : number ) { return undefined as Value } ,
 				length : 0
 			}
 		) {

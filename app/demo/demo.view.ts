@@ -22,7 +22,7 @@ namespace $.$$ {
 				if( !/^\$.*_demo($|_)/i.test( name ) ) continue
 				if( /^\$mol_demo/.test( name ) ) continue
 				if( /^\$mol_app_demo/.test( name ) ) continue
-				if( typeof (<{[index : string]:any}>$)[ name ] !== 'function' ) continue
+				if( typeof ( $ as {[index : string]:any} )[ name ] !== 'function' ) continue
 				next.push( name.substring( 1 ) )
 			}
 			return next.sort()
@@ -103,7 +103,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key()
 		Widget( name : string ) {
-			const Class : typeof $mol_view = (<{[index : string]:any}>$)[ '$' + name ]
+			const Class : typeof $mol_view = ( $ as {[index : string]:any} )[ '$' + name ]
 			return new Class()
 		}
 		

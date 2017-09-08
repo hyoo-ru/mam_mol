@@ -12,7 +12,7 @@ namespace $.$$ {
 		
 		event_run( next? : Event ) {
 			requestAnimationFrame( ()=> {
-				var data = (<any>window)[ '_buildData' ]()
+				var data = ( window as any )[ '_buildData' ]()
 				
 				var date = Date.now()
 				

@@ -18,7 +18,7 @@ namespace $ {
 		
 		constructor( code : string | ( ()=> void ) ) {
 			if( typeof code === 'string' ) {
-				this.code = <any> new Function( code )
+				this.code = new Function( code ) as any
 			} else {
 				this.code = code
 			}

@@ -226,7 +226,7 @@ namespace $ {
 						case 'false' :
 							return value.type
 						case 'null' :
-							return '<any> null'
+							return 'null as any'
 					}
 					
 					if( Number( value.type ).toString() == value.type ) return value.type
@@ -267,7 +267,7 @@ namespace $ {
 			} }
 			
 			var body = Object.keys( members ).map( function( name ) {
-				return members[ name ] || '\t' + name +'() { return <any> null }\n\t}\n'
+				return members[ name ] || '\t' + name +'() { return null as any }\n\t}\n'
 			}).join( '' )
 			
 			var classes = 'namespace $ { export class ' + def.type + ' extends ' + parent.type + ' {\n\n' + body + '} }\n'

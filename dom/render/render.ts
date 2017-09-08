@@ -106,7 +106,7 @@ namespace $ {
 		for( let name in styles ) {
 			let val = styles[ name ]
 			
-			const style = ( <HTMLElement>el ).style as any
+			const style = ( el as HTMLElement ).style as any
 			const cur = style[ name ]
 			
 			if( typeof val === 'number' ) {

@@ -9,7 +9,7 @@ namespace $ {
 	}
 	
 	export function $mol_cordova_camera() {
-		return (<any>navigator)[ 'camera' ]
+		return ( navigator as any )[ 'camera' ]
 	}
 	
 }

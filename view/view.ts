@@ -67,7 +67,7 @@ namespace $ {
 		
 		/// Raw child views
 		sub() {
-			return <Array<$mol_view|Node|string|number|boolean>> null
+			return null as Array<$mol_view|Node|string|number|boolean>
 		}
 		
 		/// Visible sub views with defined context()

@@ -7,10 +7,10 @@ namespace $ {
 			descr : TypedPropertyDescriptor< Method >
 		) {
 			const value = descr.value
-			descr.value = <any> function $mol_deprecated_wrapper() {
+			descr.value = function $mol_deprecated_wrapper() {
 				console.warn( `${ host.constructor }::${ field } is deprecated. ${ message }` )
 				return value.apply( this , arguments )
-			}
+			} as any
 		}
 	}
 	

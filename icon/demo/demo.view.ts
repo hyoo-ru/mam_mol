@@ -7,7 +7,7 @@ namespace $.$$ {
 			for( var name in $ ) {
 				if( !/^\$mol_icon_/i.test( name ) ) continue
 				if( /^\$mol_icon_demo/.test( name ) ) continue
-				if( typeof (<any>$)[ name ] !== 'function' ) continue
+				if( typeof ( $ as any )[ name ] !== 'function' ) continue
 				next.push( name.substring( 1 ) )
 			}
 			return next
@@ -20,7 +20,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key()
 		icon( name : string ) {
-			var Class : typeof $mol_view = (<any>$)[ '$' + name ]
+			var Class : typeof $mol_view = ( $ as any )[ '$' + name ]
 			return new Class()
 		}
 		

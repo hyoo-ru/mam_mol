@@ -76,7 +76,7 @@ namespace $ {
 				if( sel.rangeCount === 0 ) return null
 				var range = sel.getRangeAt( 0 )
 				
-				var el = <Element> range.commonAncestorContainer
+				var el = range.commonAncestorContainer as Element
 				while( el && !el.id ) el = el.parentElement
 				
 				if( !el ) return { id : null , start : 0 , end : 0 }

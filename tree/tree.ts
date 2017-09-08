@@ -161,7 +161,7 @@ namespace $ {
 					return new $mol_tree(
 						{
 							type : "/" ,
-							sub : ( <any[]> json ).map( json => $mol_tree.fromJSON( json , baseUri ) )
+							sub : ( json as any[] ).map( json => $mol_tree.fromJSON( json , baseUri ) )
 						}
 					)
 				case 'Date' :
@@ -250,7 +250,7 @@ namespace $ {
 					var colon = child.select( ':' ).sub[ 0 ]
 					if( !colon ) throw new Error( `Required colon after key at ${child.uri}` )
 					var val = colon.sub[ 0 ].toJSON()
-					if( val !== undefined ) (<any>obj)[ key ] = val
+					if( val !== undefined ) ( obj as any )[ key ] = val
 				}
 				return obj
 			}
@@ -316,7 +316,7 @@ namespace $ {
 		}
 
 		select( ...path : $mol_tree_path ) {
-			var next = [ <$mol_tree>this ]
+			var next = [ this as $mol_tree ]
 			for( var type of path ) {
 				if( !next.length ) break
 				var prev = next

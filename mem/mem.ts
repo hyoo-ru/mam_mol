@@ -78,7 +78,7 @@ namespace $ {
 			}
 			
 			Object.defineProperty( obj , name + "()" , { get : function() { return store.get( this ) } } )
-			void( (<any>descr.value)[ 'value' ] = value )
+			void( ( descr.value as any )[ 'value' ] = value )
 		}
 		
 	}

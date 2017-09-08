@@ -37,7 +37,7 @@ namespace $.$$ {
 	export class $mol_perf_uibench_table extends $.$mol_perf_uibench_table {
 
 		state() {
-			return { items : <any[]>[] }
+			return { items : [] as any[] }
 		}
 		
 		rows() {
@@ -56,7 +56,7 @@ namespace $.$$ {
 	export class $mol_perf_uibench_table_row extends $.$mol_perf_uibench_table_row {
 
 		state() {
-			return { props : <any[]>[] , active : false , id : 0 }
+			return { props : [] as any[] , active : false , id : 0 }
 		}
 		
 		headerText() {
@@ -97,7 +97,7 @@ namespace $.$$ {
 	export class $mol_perf_uibench_anim extends $.$mol_perf_uibench_anim {
 		
 		state() {
-			return { items : <any[]>[] }
+			return { items : [] as any[] }
 		}
 		
 		items() {
@@ -140,7 +140,7 @@ namespace $.$$ {
 	export class $mol_perf_uibench_tree extends $.$mol_perf_uibench_tree {
 
 		state() {
-			return { root : <any>null }
+			return { root : null as any }
 		}
 
 		stateRoot() {
@@ -152,7 +152,7 @@ namespace $.$$ {
 	export class $mol_perf_uibench_tree_branch extends $.$mol_perf_uibench_tree_branch {
 
 		state() {
-			return { children : <any[]>[] }
+			return { children : [] as any[] }
 		}
 
 		sub() : $mol_view[] {
