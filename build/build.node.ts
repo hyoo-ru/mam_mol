@@ -343,7 +343,7 @@ namespace $ {
 			var sub = file.relate( this.root() )
 			var name = sub.replace( /\/.*$/ , '' )
 			
-			return this.packEnsure( name )
+			return this.packEnsure( name ).valueOf()
 		}
 		
 		@ $mol_mem()
@@ -366,7 +366,12 @@ namespace $ {
 				const checkDep = ( p : string )=> {
 					
 					var dep = ( p[ 0 ] === '/' ) ? this.root().resolve( p ) : mod.resolve( p )
-					this.modEnsure( dep.path() )
+
+					try {
+						this.modEnsure( dep.path() )
+					} catch( error ) {
+						throw new Error( `${ error.message }\nDependency "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" ` )
+					}
 					
 					while( !dep.exists() ) dep = dep.parent()
 					
@@ -394,6 +399,7 @@ namespace $ {
 			}
 			
 			this.modEnsure( path )
+
 			this.modsRecursive( { path , exclude } ).forEach( mod => addMod( mod ) )
 			
 			return graph
