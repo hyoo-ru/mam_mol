@@ -86,10 +86,9 @@ namespace $.$$ {
 			return this.prop_value( this.path() )
 		}
 
-		label() {
+		tools() {
 			const type = this.type()
 			return [
-				... this.title() ? [ super.Title() ] : [] ,
 				this.Type() ,
 				... ( type === 'get' ) ? [ this.Bind() ] : [] ,
 				... ( type === 'bind' ) ? [ this.Bind() ] : [] ,

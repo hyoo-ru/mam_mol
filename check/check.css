@@ -4,14 +4,11 @@
 	align-content: center;
 	align-items: flex-start;
 	border: none;
-	font-weight: normal;
+	font-weight: inherit;
 	box-shadow: none;
 	text-align: left;
 	padding: .5rem;
 	display: inline-flex;
 	flex-wrap: nowrap;
-}
-
-[mol_check]:not([mol_check_checked]) {
 	color: inherit;
 }

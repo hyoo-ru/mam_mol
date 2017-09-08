@@ -22,7 +22,7 @@ $mol_select $mol_pop
 			cycle?val <=> nav_cycle?val true
 	showed <= options_showed false
 	align?val <=> options_align?val \bottom_right
-	Anchor <= Trigger $mol_button_minor
+	Anchor <= Trigger $mol_button_typed
 		sub <= trigger_content /
 			<= option_content_current /
 			<= Filter $mol_string

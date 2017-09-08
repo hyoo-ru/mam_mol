@@ -4,5 +4,10 @@
 }
 
 [mol_expander_label] {
-	display: block;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[mol_expander_trigger] {
+	flex: auto;
 }

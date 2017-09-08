@@ -1,7 +1,11 @@
 $mol_app_studio_field $mol_expander
 	path /
-	label /
-		<= Title $mol_app_studio_field_title
+	Trigger $mol_app_studio_field_title
+		checked?val <=> expanded?val false
+		title <= title -
+		type <= type -
+	tools /
+		- <= Title $mol_app_studio_field_title
 			title <= title -
 			type <= type?val \null
 		<= Type $mol_select
@@ -92,8 +96,7 @@ $mol_app_studio_field $mol_expander
 		prop_add?val <=> prop_add?val null
 		object_options <= object_options /
 
-$mol_app_studio_field_title $mol_view
+$mol_app_studio_field_title $mol_check_expand
 	attr *
+		^
 		mol_app_studio_field_title_type <= type \null
-	sub /
-		<= title -
