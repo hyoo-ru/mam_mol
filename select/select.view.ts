@@ -10,7 +10,11 @@ namespace $.$$ {
 		
 		@ $mol_mem()
 		options_showed() {
-			return this.focused() || this.filter_pattern().length > 0
+			const showed = this.focused() || this.filter_pattern().length > 0
+			
+			if( showed ) new $mol_defer( ()=> this.Filter().focused( true ) )
+			
+			return showed
 		}
 		
 		@ $mol_mem()
