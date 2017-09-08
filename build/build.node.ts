@@ -199,6 +199,16 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key()
+		tsProgram( { path , exclude } : { path : string , exclude? : string[] } ) {
+			var host = this.tsHost()
+			var options = host.getCompilationSettings()
+			
+			var paths = this.sourcesAll( { path , exclude } ).filter( src => /tsx?$/.test( src.ext() ) ).map( src => src.path() )
+			var program = $node['typescript'].createProgram( paths , options , host )
+			return program
+		}
+		
+		@ $mol_mem_key()
 		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var sources = this.sourcesAll( { path , exclude } )
 			.filter( src => /(js|tsx?)$/.test( src.ext() ) )
@@ -219,7 +229,7 @@ namespace $ {
 				var host = this.tsHost()
 				var options = host.getCompilationSettings()
 				
-				var program = $node['typescript'].createProgram( sourcesTS.map( src => src.path() ) , options , host )
+				var program = this.tsProgram({ path , exclude })
 				var result = program.emit()
 				
 				var errors : any[] = $node['typescript'].getPreEmitDiagnostics( program ).concat( result.diagnostics )
@@ -488,7 +498,7 @@ namespace $ {
 						}
 					}
 					
-					var content = src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
+					var content = src.content()?src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' ):''
 					
 					var srcMap = src.parent().resolve( src.name() + '.map' ).content()
 					if( srcMap ) {
