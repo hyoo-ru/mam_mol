@@ -39,5 +39,6 @@ $mol_app_bench $mol_view
 			<= Param_value!id $mol_number
 				value?val <=> param_value!id?val \
 				precision_change <= param_precision!id 0
+				debounce 1000
 	-
 	result_col_title_sample @ \Sample

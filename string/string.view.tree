@@ -1,6 +1,7 @@
 $mol_string $mol_view
 	dom_name \input
 	enabled true
+	debounce 200
 	minimal_height 40
 	field *
 		^

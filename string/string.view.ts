@@ -9,7 +9,7 @@ namespace $.$$ {
 			const val = ( next.target as HTMLInputElement ).value.trim()
 			
 			clearTimeout( this._timer )
-			this._timer = setTimeout( () => this.value( val ) , 200 )
+			this._timer = setTimeout( () => this.value( val ) , this.debounce() )
 		}
 		
 		event_key_press( next? : KeyboardEvent ) { 
