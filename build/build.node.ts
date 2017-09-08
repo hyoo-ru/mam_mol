@@ -198,7 +198,7 @@ namespace $ {
 			return host
 		}
 		
-		@ $mol_mem_key()
+		//@ $mol_mem_key()
 		tsProgram( { path , exclude } : { path : string , exclude? : string[] } ) {
 			var host = this.tsHost()
 			var options = host.getCompilationSettings()
