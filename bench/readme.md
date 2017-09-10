@@ -1,21 +1,25 @@
 # $mol_bench
 
-Date presenter and picker.
+Benchmark results visualisator.
  
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_bench)
+
+## Usage example
+
+```
+<= Result $mol_bench
+	col_sort?val <=> result_sort?val \
+	result?val <=> result_data?val *
+```
 
 ## Properties
 
 **`col_sort( next? : string ) : string`**
 
-The sorting of the data is executed.
-```
-<= Rows_bench $mol_bench
-	col_sort?val <=> rows_bench?val \
-```
+Field name for sorting.
 
-**`result() : { 'name' : { 'text' : 'text' } } `**
+**`result() : { [ row : string ] : { [ col : string ] : string } } `**
 
-Object of the specified type. 
+Dictionary of dictionaries of results.
 
 ## Extends: [$mol_grid](../grid)
