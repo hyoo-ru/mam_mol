@@ -13,7 +13,7 @@ namespace $ {
 				else if( this[ 'focused()' ][ 'value()' ][0] ) this[ 'focused()' ][ 'value()' ][ 0 ].blur()
 			} )
 
-			return []
+			return undefined
 		}
 		
 		@ $mol_mem()
