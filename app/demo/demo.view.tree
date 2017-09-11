@@ -8,7 +8,6 @@ $mol_app_demo $mol_book
 		hierarchy <= nav_hierarchy null
 		option!id <= nav_option!id null
 		filter?val <=> filter_string?val \
-		event_navigate?val <=> event_front_down?val -
 	Detail $mol_app_demo_detail
 		minimal_width 600
 		title <= title -
@@ -47,7 +46,6 @@ $mol_app_demo_menu $mol_page
 		hierarchy <= hierarchy null
 		record!id <= option!id null
 		needle <= filter?val \
-		event_navigate?val <=> event_navigate?val null
 		
 $mol_app_demo_detail $mol_page
 	tools /
@@ -77,7 +75,6 @@ $mol_app_demo_nav $mol_grid
 	-
 	Option!id $mol_link
 		arg <= arg!id *
-		event_click?val <=> event_navigate?val null
 		sub /
 			<= Expand!id $mol_check_expand
 				expanded?val <=> cell_expanded!id?val -

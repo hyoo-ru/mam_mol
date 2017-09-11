@@ -12,7 +12,7 @@ namespace $.$$ {
 		}
 
 		event_click( event? : Event ) {
-			setTimeout( ()=> this.focused( false ) , 16 )
+			setTimeout( ()=> this.focused( false ) , 200 )
 		}
 		
 	}

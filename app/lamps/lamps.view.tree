@@ -71,7 +71,6 @@ $mol_app_lamps $mol_book
 	Lamp_row!id $mol_lamps_lamp_row
 		title <= lamp_title!id \
 		arg <= lamp_arg!id *
-		event_click?val <=> event_front_down?val -
 
 $mol_lamps_lamp_row $mol_link
 	minimal_height 33
