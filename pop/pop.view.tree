@@ -1,5 +1,11 @@
 $mol_pop $mol_view
 	showed?val false
+	plugins /
+		<= Meter $mol_meter
+			top => top
+			bottom => bottom
+			left => left
+			right => right
 	sub /
 		<= Anchor null
 		<= Bubble $mol_pop_bubble

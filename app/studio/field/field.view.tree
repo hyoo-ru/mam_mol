@@ -26,7 +26,6 @@ $mol_app_studio_field $mol_expander
 		<= Object $mol_select
 			value?val <=> class?val null
 			options <= object_options /
-			options_align \bottom_left
 			hint <= object_hint @ \Class...
 			Trigger_icon null
 	content /
@@ -45,7 +44,6 @@ $mol_app_studio_field $mol_expander
 			value?val <=> bind?val null
 			options <= bind_options /
 			hint <= bind_hint @ \Property..
-			options_align \bottom_left
 			No_options <= Prop_add $mol_button_minor
 				title <= prop_add_label @ \Add property
 				event_click?val <=> event_prop_add?val null

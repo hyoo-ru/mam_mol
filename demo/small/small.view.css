@@ -1,10 +1,6 @@
 [mol_demo_small] {
 	max-height: 75vh;
 	max-width: 100%;
-	overflow: hidden;
-	box-shadow: var(--mol_skin_light_outline);
-	background: var(--mol_skin_card);
-	color: var(--mol_skin_light_text);
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
@@ -12,7 +8,6 @@
 	box-sizing: border-box;
 	flex: 0 0 auto;
 	align-self: flex-start;
-	padding: .5rem;
 }
 
 [mol_demo_small] > * {

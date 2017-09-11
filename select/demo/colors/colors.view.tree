@@ -1,4 +1,4 @@
-$mol_select_demo_colors $mol_demo_large
+$mol_select_demo_colors $mol_demo_small
 	title @ \Color picker with filter and custom rows
 	sub /
 		<= Color $mol_select
