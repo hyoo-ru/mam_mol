@@ -928,7 +928,7 @@ namespace $ {
 		} )
 		
 		tree.select( 'include' ).sub.forEach( leaf => {
-			depends[ leaf.toString() ] = Number.NEGATIVE_INFINITY
+			depends[ leaf.value ] = Number.NEGATIVE_INFINITY
 		} )
 		
 		return depends
