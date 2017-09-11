@@ -60,7 +60,7 @@ namespace $.$$ {
 		event_front_down( event? : Event ) {
 			if( !event ) return
 			if( event.defaultPrevented ) return
-			setTimeout( ()=> this.pages().filter( page => page ).pop().focused( true ) )
+			this.page(1).focused( false )
 		}
 		
 	}

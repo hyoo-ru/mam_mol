@@ -16,7 +16,6 @@ $mol_app_files $mol_book
 		minimal_height 40
 		arg <= folder_row_arg!uri *
 		current <= folder_row_current!uri false
-		event_click?val <=> event_front_down?val -
 		sub /
 			<= folder_row_icon!uri null
 			<= Folder_row_info!uri $mol_view

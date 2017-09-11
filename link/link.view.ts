@@ -10,6 +10,10 @@ namespace $.$$ {
 		current() {
 			return this.uri() === $mol_state_arg.link( {} )
 		}
+
+		event_click( event? : Event ) {
+			setTimeout( ()=> this.focused( false ) , 16 )
+		}
 		
 	}
 	
