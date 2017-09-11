@@ -12,8 +12,20 @@
 	-webkit-overflow-scrolling: touch;
 }
 
+[mol_scroll] > * {
+	transform: translateZ(0);
+}
+
 @media print {
 	[mol_scroll] {
 		overflow: visible;
 	}
+}
+
+[mol_scroll_strut] {
+	position: absolute;
+	display: block;
+	padding: 1px;
+	margin: -1px;
+	z-index: 0; 
 }

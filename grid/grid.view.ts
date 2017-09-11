@@ -50,6 +50,10 @@ namespace $.$$ {
 			const view_window = this.view_window()
 			return view_window.count * this.row_height()
 		}
+
+		minimal_height() {
+			return this.rows().length * this.row_height()
+		}
 		
 		@ $mol_mem()
 		head_cells() {

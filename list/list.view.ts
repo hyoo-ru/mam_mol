@@ -59,6 +59,7 @@ namespace $.$$ {
 			return next
 		}
 		
+		@ $mol_mem()
 		minimal_height() {
 			var height = 0
 			var sub = this.sub()
@@ -69,6 +70,6 @@ namespace $.$$ {
 			} )
 			return height
 		}
-		
+
 	}
 }

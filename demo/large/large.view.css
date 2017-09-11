@@ -13,9 +13,3 @@
 	box-sizing: border-box;
 	align-self: stretch;
 }
-
-[mol_demo_large]:first-child:last-child {
-	height: auto;
-	max-height: none;
-	flex: 1 1 100%;
-}

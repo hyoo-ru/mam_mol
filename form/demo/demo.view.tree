@@ -1,4 +1,4 @@
-$mol_form_demo $mol_demo_large
+$mol_form_demo $mol_demo_small
 	sub /
 		<= Form $mol_form
 			title @ \Simple sign in form

@@ -90,6 +90,26 @@ namespace $.$$ {
 			return subContext
 		}
 		
+		strut_transform() {
+			return `translate3d( 0 , ${this.minimal_height()}px , 0 )`
+		}
+
+		sub_visible() {
+			const sub = [
+				this.Strut() ,
+				... this.sub() ,
+			]
+
+			const context = this.context_sub()
+			sub.forEach( child => {
+				if( child instanceof $mol_view ) {
+					child.context( context )
+				}
+			} )
+			
+			return sub
+		}
+		
 	}
 
 }

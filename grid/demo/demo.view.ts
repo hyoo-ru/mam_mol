@@ -7,10 +7,10 @@ namespace $.$$ {
 				length : 1000 ,
 				item : index => {
 					return $mol_range_in( {
-						length : 15 ,
+						length : 10 ,
 						item : colId => colId === 0
 							? `Row ${ index + 1 }`
-							: `Cell ${ colId }×${ index + 1 }`
+							: `Row ${ index + 1 } Cell ${ colId }`
 					} ).valueOf() as string[]
 				}
 			} ).valueOf() as string[][]
