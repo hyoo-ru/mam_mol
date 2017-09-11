@@ -36,7 +36,15 @@ namespace $.$$ {
 		}
 
 		render() {
-			this.api().setCenter( this.center() , this.zoom() )
+			const api = this.api()
+			
+			api.setCenter( this.center() , this.zoom() )
+			
+			api.geoObjects.removeAll()
+			for( let obj of this.objects() ) {
+				api.geoObjects.add( obj.object() )
+			}
+			
 			super.render()
 		}
 
