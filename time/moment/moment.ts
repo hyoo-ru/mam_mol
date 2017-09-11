@@ -85,8 +85,8 @@ namespace $ {
 				( utc.day || 0 ) + 1,
 				( utc.hour || 0 ) ,
 				( utc.minute || 0 ) ,
-				( utc.second && Math.ceil( utc.second ) || 0 ) ,
-				( utc.second && ( utc.second - Math.ceil( utc.second ) ) || 0 ) ,
+				( utc.second && Math.floor( utc.second ) || 0 ) ,
+				( utc.second && Math.floor( ( utc.second - Math.floor( utc.second ) ) * 1000 ) || 0 ) ,
 			) )
 		}
 
