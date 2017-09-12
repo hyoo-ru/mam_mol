@@ -11,6 +11,6 @@
 	bottom: 0;
 	border-width: 2px 0 0;
 	position: absolute;
-	top:50%;
+	top: .75em;
 	transform: translateY(-50%);
 }

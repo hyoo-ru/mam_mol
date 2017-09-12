@@ -10,7 +10,7 @@
 	background: currentColor;
 	position: absolute;
 	bottom: 0;
-	top:50%;
+	top: .75em;
 	left: 0;
 	right: 0;
 }

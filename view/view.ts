@@ -86,7 +86,7 @@ namespace $ {
 			return sub
 		}
 		
-		/// Minimal height that used for lazy rendering
+		/// Minimal width that used for lazy rendering
 		@ $mol_mem()
 		minimal_width() {
 			const sub = this.sub()
@@ -102,9 +102,13 @@ namespace $ {
 			return min
 		}
 		
-		/// Minimal width that used for lazy rendering
-		@ $mol_mem()
+		/// Minimal height that used for lazy rendering
 		minimal_height() {
+			return this.content_height()
+		}
+
+		@ $mol_mem()
+		content_height() {
 			const sub = this.sub()
 			if( !sub ) return 0
 			

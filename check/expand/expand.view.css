@@ -2,7 +2,7 @@
 }
 
 [mol_check_expand][disabled] {
-	background: transparent;
+	color: inherit;
 }
 
 [mol_check_expand][disabled] [mol_check_expand_icon] {

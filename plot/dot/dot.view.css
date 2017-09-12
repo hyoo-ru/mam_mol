@@ -9,7 +9,7 @@
 	border-radius: 1rem;
 	background: currentColor;
 	position: absolute;
-	top: 50%;
+	top: .75em;
 	left: 50%;
 	transform: translate(-50%, -50%);
 }

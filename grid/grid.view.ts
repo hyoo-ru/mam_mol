@@ -51,7 +51,7 @@ namespace $.$$ {
 			return view_window.count * this.row_height()
 		}
 
-		minimal_height() {
+		content_height() {
 			return this.rows().length * this.row_height()
 		}
 		

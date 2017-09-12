@@ -1,7 +1,7 @@
 [mol_tiler] {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: stretch;
+	align-items: flex-start;
 	padding: .5rem;
 }
 

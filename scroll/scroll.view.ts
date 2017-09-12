@@ -91,7 +91,7 @@ namespace $.$$ {
 		}
 		
 		strut_transform() {
-			return `translate3d( 0 , ${this.minimal_height()}px , 0 )`
+			return `translate3d( 0 , ${this.content_height()}px , 0 )`
 		}
 
 		sub_visible() {
