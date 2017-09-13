@@ -28,4 +28,5 @@
 	padding: 1px;
 	margin: -1px;
 	z-index: 0; 
+	transition: none;
 }
