@@ -107,7 +107,7 @@ namespace $ {
 		
 		group() : $mol_app_supplies_domain_supply_group { return void 0 }
 		
-		@ $mol_mem()
+		@ $mol_mem
 		status( next? : $mol_app_supplies_domain_supply_status ) { return next }
 		
 		ballance_unit() : $mol_app_supplies_domain_ballance_unit { return void 0 }
@@ -122,7 +122,7 @@ namespace $ {
 		
 		positions() : $mol_app_supplies_domain_supply_position[] { return void 0 }
 		
-		@ $mol_mem()
+		@ $mol_mem
 		attachments( next? : $mol_app_supplies_domain_attachment[] ) { return next || [] }
 		
 		cost() : $mol_unit_money { return void 0 }
@@ -138,7 +138,7 @@ namespace $ {
 	/// Демонстрационный бизнес домен
 	export class $mol_app_supplies_domain_mock extends $mol_object {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		supplies() {
 			var next : $mol_app_supplies_domain_supply[] = []
 			for( var i = 1 ; i <= 100 ; ++i ) {
@@ -147,7 +147,7 @@ namespace $ {
 			return next
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		positions( supply : string ) {
 			var next : $mol_app_supplies_domain_supply_position[] = []
 			var count = 10 + Math.floor( Math.random() * 30 )
@@ -160,7 +160,7 @@ namespace $ {
 			return next
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		supply_status( id : string , next? : $mol_app_supplies_domain_supply_status ) {
 			return next || $mol_stub_select_random( [
 				$mol_app_supplies_domain_supply_status.pending ,
@@ -168,7 +168,7 @@ namespace $ {
 			] )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		supply( id : string ) {
 			return $mol_app_supplies_domain_supply.make({
 				id : $mol_const( id ) ,
@@ -187,7 +187,7 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		provider( id : string ) {
 			return $mol_app_supplies_domain_provider.make({
 				id : $mol_const( id ) ,
@@ -195,7 +195,7 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		consumer( id : string ) {
 			return $mol_app_supplies_domain_consumer.make({
 				id : $mol_const( id ) ,
@@ -203,7 +203,7 @@ namespace $ {
 			} )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		ballance_unit( id : string ) {
 			return $mol_app_supplies_domain_ballance_unit.make({
 				id : $mol_const( id ) ,
@@ -215,7 +215,7 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		division( id : string ) {
 			return $mol_app_supplies_domain_supply_division.make({
 				id : $mol_const( id ) ,
@@ -223,7 +223,7 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		supply_group( id : string ) {
 			return $mol_app_supplies_domain_supply_group.make({
 				id : $mol_const( id ) ,
@@ -231,7 +231,7 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		store( id : string ) {
 			return $mol_app_supplies_domain_store.make({
 				id : $mol_const( id ) ,
@@ -239,7 +239,7 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		person( id : string ) {
 			return $mol_app_supplies_domain_person.make({
 				id : $mol_const( id ) ,
@@ -247,14 +247,14 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		contract( id : string ) {
 			return $mol_app_supplies_domain_person.make({
 				id : $mol_const( id ) ,
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		pay_method( id : string ) {
 			return $mol_app_supplies_domain_pay_method.make({
 				id : $mol_const( id ) ,
@@ -262,7 +262,7 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		debitor( id : string ) {
 			return $mol_app_supplies_domain_pay_method.make({
 				id : $mol_const( id ) ,
@@ -270,7 +270,7 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		position( id : { supply : string , position : string } ) {
 			return $mol_app_supplies_domain_supply_position.make({
 				name : $mol_const( $mol_stub_product_name() ) ,
@@ -282,12 +282,12 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		attachments( id : string , next? : $mol_app_supplies_domain_attachment[] ) {
 			return next || []
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		attachment( id : { supply : string , attachment : string } ) {
 			const image = $mol_const( 'data:image/svg+xml;base64,PHN2ZyBpZD0i0KHQu9C+0LlfMSIgZGF0YS1uYW1lPSLQodC70L7QuSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjUuNyA2NDUuNDQiPgoJPGRlZnM+CgkJPHN0eWxlPi5jbHMtMXtmaWxsOiM0YzdjNGQ7fS5jbHMtMntmaWxsOiM2ZmMwNTg7fTwvc3R5bGU+Cgk8L2RlZnM+Cgk8dGl0bGU+JG1vbF9zeW1ib2w8L3RpdGxlPgoJPHBvbHlnb24gY2xhc3M9ImNscy0xIgoJCQkgcG9pbnRzPSI4MC43OCAyMTcuNTYgMjE0LjAzIDExNC42MSAzNTEuMTIgMjIwLjUzIDQyNS43IDE2Mi45MSAyMTQuODQgMCAzLjk4IDE2Mi45MSA0LjM1IDE2My4xOSAzLjM1IDE2My45NiAzNDQuOTMgNDI3Ljg3IDIxMS42NyA1MzAuODMgNzQuNTggNDI0LjkxIDAgNDgyLjUzIDIxMC44NiA2NDUuNDQgNDIxLjcyIDQ4Mi41MyA0MjEuMDIgNDgxLjk5IDQyMi4wMyA0ODEuMjEgODAuNzggMjE3LjU2Ii8+Cgk8cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMjA5LjU0IDQ0MC44MyA1OC4zNiAzMjIuNzIgMjA5LjU0IDIwNC42MSAzNjcuMzQgMzIyLjcyIDIwOS41NCA0NDAuODMiLz4KPC9zdmc+Cg==' )
 			

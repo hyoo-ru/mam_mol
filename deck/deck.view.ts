@@ -13,7 +13,7 @@ namespace $.$$ {
 			return options
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		Content() {
 			return this.items()[ this.current() ].Content
 		}

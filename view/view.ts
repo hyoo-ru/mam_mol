@@ -21,7 +21,7 @@ namespace $ {
 	/// Reactive statefull lazy ViewModel
 	export class $mol_view extends $mol_object {
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static Root( id : number ) {
 			return new this
 		}
@@ -30,14 +30,14 @@ namespace $ {
 			return this.Class().toString()
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		focused( next?: boolean ) {
 			let node = this.dom_node()
 			const value = $mol_view_selection.focused( next === undefined ? undefined : next ? [ node ] : [] )
 			return value.indexOf( node ) !== -1
 		} 
 		
-		@ $mol_mem()
+		@ $mol_mem
 		context( next? : $mol_view_context ) {
 			return next || $ as any
 		}
@@ -87,7 +87,7 @@ namespace $ {
 		}
 		
 		/// Minimal width that used for lazy rendering
-		@ $mol_mem()
+		@ $mol_mem
 		minimal_width() {
 			const sub = this.sub()
 			if( !sub ) return 0
@@ -107,7 +107,7 @@ namespace $ {
 			return this.content_height()
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		content_height() {
 			const sub = this.sub()
 			if( !sub ) return 0
@@ -122,7 +122,7 @@ namespace $ {
 			return min
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		dom_node( next? : Element ) {
 			const node = next || this.$.$mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
@@ -133,7 +133,7 @@ namespace $ {
 			return node
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		dom_tree() : Element {
 			const node = this.dom_node()
 			
@@ -171,7 +171,7 @@ namespace $ {
 			$mol_dom_render_fields( node , this.field() )
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		static view_classes() {
 			const proto = this.prototype
 			
@@ -209,7 +209,7 @@ namespace $ {
 			return names
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		view_names() {
 			const names = [] as string[]
 			

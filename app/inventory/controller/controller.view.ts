@@ -7,7 +7,7 @@ namespace $.$$ {
 			return this.domain().position( id )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		position_rows() {
 			return this.positions().map( position => this.Position_row( position.id() ) )
 		}

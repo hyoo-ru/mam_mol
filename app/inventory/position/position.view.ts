@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	export class $mol_app_inventory_position extends $.$mol_app_inventory_position {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		position() {
 			return new $mol_app_inventory_domain_position();
 		}
@@ -19,7 +19,7 @@ namespace $.$$ {
 			return this.position().count( next )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		status( next? : keyof typeof $mol_app_inventory_domain_position_status ) {
 			return this.position().status( next )
 		}

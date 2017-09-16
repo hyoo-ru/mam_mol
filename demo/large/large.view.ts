@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_demo_large extends $.$mol_demo_large {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		context_sub() {
 			const context = this.context()
 			const subContext : $mol_view_context = Object.create( context )

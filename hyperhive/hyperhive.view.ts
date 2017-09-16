@@ -5,12 +5,12 @@ namespace $.$$ {
 
 	export class $mol_hyperhive extends $.$mol_hyperhive {
 
-		@ $mol_mem()
+		@ $mol_mem
 		device() {
 			return Date.now().toString( 16 )
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static item( config : {
 			host : string
 			version : string
@@ -27,7 +27,7 @@ namespace $.$$ {
 			})
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		initialized() {
 			if( typeof hhfw === 'undefined' ) return true
 			
@@ -38,7 +38,7 @@ namespace $.$$ {
 			return true
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		authentificated( next? : boolean , force? : $mol_atom_force ) : boolean {
 
 			if( !this.login() || !this.password() ) return false
@@ -72,7 +72,7 @@ namespace $.$$ {
 			throw new $mol_atom_wait( 'Authentification...' )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		resources( next? : any , force? : $mol_atom_force ) : boolean {
 			this.authentificated().valueOf()
 
@@ -84,7 +84,7 @@ namespace $.$$ {
 			throw new $mol_atom_wait( 'Loading resource list...' )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		data< Value >( table : string , next? : any , force? : $mol_atom_force ) : Value {
 			
 			if( typeof hhfw === 'undefined' ) {

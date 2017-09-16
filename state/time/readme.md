@@ -11,7 +11,7 @@ Returns timestamp that updates every ```precision``` ms. If ```precision``` is n
 ## Usage example
 
 ```
-@ $mol_mem()
+@ $mol_mem
 remaining_time( deadline : number ) {
 	return deadline - $mol_state_time.now()
 }

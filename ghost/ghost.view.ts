@@ -2,7 +2,7 @@ namespace $.$$ {
 
 	export class $mol_ghost extends $.$mol_ghost {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		dom_node() {
 			const node = this.Sub().dom_node()
 

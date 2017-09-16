@@ -240,7 +240,7 @@ namespace $.$$ {
 			return 1
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		cell_content( pos : number[] ) : $mol_view {
 			if( pos[0] === 0 ) {
 				return this.texter( pos )
@@ -261,13 +261,13 @@ namespace $.$$ {
 			}
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		cell_options( pos : number[] ) {
 			const field = this.formatRow( pos.slice( 0 , pos.length - 1 ) ).field
 			return this.scheme()[ field ].options
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		cell_value( pos : number[] , next : any ) {
 			if( next !== void 0 ) return next
 			

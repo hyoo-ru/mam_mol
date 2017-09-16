@@ -2,12 +2,12 @@ namespace $.$$ {
 	
 	export class $mol_bench extends $.$mol_bench {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		col_sort( next? : string ) {
 			return $mol_state_arg.value( this.state_key( 'sort' ) , next )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		result_sorted() {
 			const prev = this.result()
 			const col = this.col_sort()
@@ -30,7 +30,7 @@ namespace $.$$ {
 			return parseInt( this.result_value( id ) , 10 )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		result_value_max( col : string ) {
 			let max = 0
 			
@@ -55,7 +55,7 @@ namespace $.$$ {
 			this.col_sort( col )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		col_type( col : string ) {
 			if( col === this.hierarchy_col() ) return 'branch'
 			

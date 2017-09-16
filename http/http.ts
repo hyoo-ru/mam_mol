@@ -8,7 +8,7 @@ namespace $ {
 			return this.resource_absolute( resolver.href )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static resource_absolute( uri : string ) {
 			return $mol_http.make({
 				uri : $mol_const( uri )
@@ -60,7 +60,7 @@ namespace $ {
 			return super.destroyed( next )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		response( next? : any , force? : $mol_atom_force ) : XMLHttpRequest {
 			const creds = this.credentials()
 			const native = this.request()
@@ -81,7 +81,7 @@ namespace $ {
 			return this.response( next , force ).responseText
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		json< Content >( next? : Content , force? : $mol_atom_force ) : Content {
 			const next2 = next && JSON.stringify( next , null , '\t' )
 			return JSON.parse( this.text( next2 , force ) )

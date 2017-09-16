@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_row extends $.$mol_row {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		item_offsets_top() : number[] {
 			let next : number[] = []
 			

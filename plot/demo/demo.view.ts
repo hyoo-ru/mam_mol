@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	export class $mol_plot_demo extends $.$mol_plot_demo {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		input_series() {
 			return $mol_range_in({
 				length : this.count() ,
@@ -12,7 +12,7 @@ namespace $.$$ {
 			}).valueOf() as number[]
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		output_series() {
 			$mol_state_time.now( 125 )
 			const input = this.input_series()
@@ -24,7 +24,7 @@ namespace $.$$ {
 			}).valueOf() as number[]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		saturation_series() {
 			const input = this.output_series()
 			const prev = ( this['saturation_series()']['value()'] || [] ) as number[]

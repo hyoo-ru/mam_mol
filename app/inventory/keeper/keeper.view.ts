@@ -7,7 +7,7 @@ namespace $.$$ {
 			return this.domain().position( id )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		code_new( next? : string ) {
 			if( next === void 0 ) return ''
 			
@@ -23,7 +23,7 @@ namespace $.$$ {
 			return '';
 		}			
 		
-		@ $mol_mem()
+		@ $mol_mem
 		position_rows() {
 			return this.positions().map( position => this.Position_row( position.id() ) )
 		}

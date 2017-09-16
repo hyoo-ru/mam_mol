@@ -8,7 +8,7 @@ namespace $.$$ {
 	
 	export class $mol_grid extends $.$mol_grid {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		rows_visible() {
 			const rows = this.rows()
 			if( !rows ) return null
@@ -21,12 +21,12 @@ namespace $.$$ {
 			)
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		rows_visible_max() {
 			return Math.ceil( this.$.$mol_view_visible_height() / this.row_height() )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		view_window() {
 			const rows = this.rows()
 			if( !rows ) return null
@@ -55,17 +55,16 @@ namespace $.$$ {
 			return this.rows().length * this.row_height()
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		head_cells() {
 			return this.col_ids().map( colId => this.Col_head( colId ) )
 		}
 		
-		@ $mol_mem()
 		col_head_content( colId : string ) {
 			return [ colId ]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		rows() {
 			return this.row_ids().map( id => this.Row( id ) )
 		}
@@ -74,7 +73,7 @@ namespace $.$$ {
 			return this.col_ids().map( col_id => this.Cell({ row : row_id , col : col_id }) )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		col_type( col_id : string ) {
 			if( col_id === this.hierarchy_col() ) return 'branch'
 			
@@ -106,7 +105,7 @@ namespace $.$$ {
 			return this.records()[ id ]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		record_ids() {
 			return Object.keys( this.records() )
 		}
@@ -125,7 +124,7 @@ namespace $.$$ {
 			return Object.keys( record )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		hierarchy() {
 			const hierarchy : { [ id : string ] : $mol_grid_node } = {}
 			const root = hierarchy[ '' ] = {
@@ -155,7 +154,7 @@ namespace $.$$ {
 			return id.row.length - 1
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		row_ids() {
 			const next : string[][] = []
 			
@@ -192,7 +191,7 @@ namespace $.$$ {
 	
 	export class $mol_grid_table extends $.$mol_grid_table {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		context_sub( ) {
 			const context = this.context()
 			const subContext : $mol_view_context = Object.create( context )

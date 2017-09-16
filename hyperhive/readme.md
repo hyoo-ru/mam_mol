@@ -25,7 +25,7 @@ namespace $ {
 			})
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		data( next? : $my_data ) {
 			return this.hyperhive().data< $my_domain_user[] >( 'USERS_TABLE' )
 		}

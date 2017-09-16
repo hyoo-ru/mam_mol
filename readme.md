@@ -163,7 +163,7 @@ That will be compiled to typescript code like this:
 namespace $ { export class $my_hello extends $mol_view {
 
 	/// name?val \
-	@ $mol_mem()
+	@ $mol_mem
 	name( next? : any ) {
 		return ( next !== void 0 ) ? next : ""
 	}
@@ -171,7 +171,7 @@ namespace $ { export class $my_hello extends $mol_view {
 	/// Name $mol_string 
 	/// 	hint \Name
 	/// 	value?val <=> name?val
-	@ $mol_mem()
+	@ $mol_mem
 	Name() {
 		return $mol_string.make({ 
 			hint : () => "Name" ,
@@ -283,7 +283,7 @@ Confirm_delte $mol_row sub /
 Or the same code through TypeScript would be:
 
 ```typescript
-@ $mol_mem()
+@ $mol_mem
 Confirm_delete() {
 	return $mol_row.make({
 		sub : ()=> [ this.Yes() , this.No() ] ,
@@ -318,7 +318,7 @@ namespace $ {
 	export class $my_greeter {
 		
 		// Define memoized property with push support
-		@ $mol_mem()
+		@ $mol_mem
 		greeting( next? : string , force? : $mol_atom_force ) : string {
 			
 			// Defered push value to property
@@ -331,7 +331,7 @@ namespace $ {
 		}
 		
 		// Define memoized property without push support
-		@ $mol_mem()
+		@ $mol_mem
 		greeting_length() {
 			// Using other properties in synchronous style
 			return this.greeting().length

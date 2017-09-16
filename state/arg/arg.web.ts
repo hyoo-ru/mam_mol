@@ -2,13 +2,13 @@ namespace $ {
 	
 	export class $mol_state_arg< Value > extends $mol_object {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static href( next? : string , force? : $mol_atom_force ) {
 			if( next ) history.replaceState( history.state , $mol_dom_context.document.title , `${ next }` )
 			return window.location.search + window.location.hash
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static dict( next? : { [ key : string ] : string } ) {
 			var href = this.href( next && this.make_link( next ) )
 			var chunks = href.split( /[\/\?#&;]/g )
@@ -25,7 +25,7 @@ namespace $ {
 			return params
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static value( key : string , next? : string ) {
 			const nextDict = ( next === void 0 ) ? void 0 : $mol_merge_dict( this.dict() , { [ key ] : next } ) 
 			const next2 = this.dict( nextDict )[ key ]

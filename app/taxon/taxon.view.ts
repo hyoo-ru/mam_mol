@@ -10,7 +10,7 @@ namespace $.$$ {
 			return 'http://justine.saprun.com:8000/sap/opu/odata/sap/ZTRNF_TEST_DATA_SRV/TRNF_TREESet?$'+'format=json'
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		hierarchy() {
 			type response = { d : {
 				results : {
@@ -53,12 +53,12 @@ namespace $.$$ {
 			return resource
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		data_table() {
 			return {} as { [ id : string ] : $mol_app_taxon_data_row }
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		record( id : string ) {
 			if( !id ) return {} as $mol_app_taxon_data_row
 			

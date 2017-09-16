@@ -273,7 +273,7 @@ $my_remover $mol_view
 ```typescript
 namespace $ { export class $my_remover extends $mol_view {
 
-	@ $mol_mem()
+	@ $mol_mem
 	event_remove( next? : any ) {
 		return ( next !== void 0 ) ? next : <any> null
 	}
@@ -303,7 +303,7 @@ $my_app $mol_view
 ```typescript
 namespace $ { export class $my_app extends $mol_view {
 
-	@ $mol_mem()
+	@ $mol_mem
 	List() {
 		return new $mol_list_demo()
 	}
@@ -328,7 +328,7 @@ $my_name $mol_view
 ```typescript
 namespace $ { export class $my_name extends $mol_view {
 
-	@ $mol_mem()
+	@ $mol_mem
 	Info() {
 		return $mol_labeler.make({ 
 			title : () => "Name" ,
@@ -359,12 +359,12 @@ $my_greeter $mol_view
 ```typescript
 namespace $ { export class $my_greeter extends $mol_view {
 
-	@ $mol_mem()
+	@ $mol_mem
 	name( next? : any ) {
 		return ( next !== void 0 ) ? next : ""
 	}
 
-	@ $mol_mem()
+	@ $mol_mem
 	Input() {
 		return $mol_string.make({ 
 			hint : () => "Name" ,
@@ -372,7 +372,7 @@ namespace $ { export class $my_greeter extends $mol_view {
 		})
 	}
 
-	@ $mol_mem()
+	@ $mol_mem
 	Output() {
 		return $mol_view.make({ 
 			sub : () => [].concat( this.name() ) ,
@@ -405,7 +405,7 @@ namespace $ { export class $my_app extends $mol_scroll {
 	}
 
 	/// Back $mol_button_minor title \Back
-	@ $mol_mem()
+	@ $mol_mem
 	Back() {
 		return $mol_button_minor.make({ 
 			title : () => "Back" ,
@@ -417,7 +417,7 @@ namespace $ { export class $my_app extends $mol_scroll {
 	/// 	head / 
 	/// 		<= Back 
 	/// 		<= Page_title
-	@ $mol_mem()
+	@ $mol_mem
 	Page() {
 		return $mol_page.make({ 
 			head : () => [].concat( this.Back() , this.Page_title() ) ,
@@ -453,7 +453,7 @@ namespace $ { export class $my_tasks extends $mol_list {
 		return []
 	}
 
-	@ $mol_mem()
+	@ $mol_mem
 	Task_row( key : any ) {
 		return $mol_view.make({ 
 			sub : () => [].concat( this.task_title( key ) ) ,
@@ -514,12 +514,12 @@ Here we declared 2 properties: `name` for getting value from `Input` and `messag
 ```typescript
 namespace $ { export class $my_hello extends $mol_view {
 
-	@ $mol_mem()
+	@ $mol_mem
 	name( next? : any ) {
 		return ( next !== void 0 ) ? next : ""
 	}
 
-	@ $mol_mem()
+	@ $mol_mem
 	Input( next? : any ) {
 		return $mol_string.make({ 
 			hint : () => "Name" ,

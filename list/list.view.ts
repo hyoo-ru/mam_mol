@@ -6,7 +6,7 @@ namespace $.$$ {
 			return ( rows.length === 0 ) ? [ this.Empty() ] : rows
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		row_offsets() : number[] {
 			var sub = this.sub()
 			if( !sub ) return null
@@ -28,7 +28,7 @@ namespace $.$$ {
 			return next
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		row_context( index : number ) {
 			let context = this.context()
 			let next = Object.create( context )
@@ -39,7 +39,7 @@ namespace $.$$ {
 			return next
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		sub_visible() {
 			var sub = this.sub()
 			if( !sub ) return sub
@@ -59,7 +59,7 @@ namespace $.$$ {
 			return next
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		minimal_height() {
 			var height = 0
 			var sub = this.sub()

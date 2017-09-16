@@ -34,17 +34,17 @@ namespace $.$$ {
 			})
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		products_table() {
 			return this.hyperhive().data< $mol_app_inventory_domain_product_raw[] >( 'MATERIALS' )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		positions_table( next? : $mol_app_inventory_domain_position_raw[] ) {
 			return this.hyperhive().data< $mol_app_inventory_domain_position_raw[] >( 'MOVEMENTS' , next )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		product_rows_by_id() {
 			const table = this.products_table()
 			const dict : { [ code : string ] : $mol_app_inventory_domain_product_raw } = {}
@@ -59,7 +59,7 @@ namespace $.$$ {
 			return row ? this.product( row.R_MATERIAL_ID ) : null
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		product_rows_by_code() {
 			const table = this.products_table()
 			const dict : { [ code : string ] : $mol_app_inventory_domain_product_raw } = {}
@@ -69,7 +69,7 @@ namespace $.$$ {
 			return dict
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		position_rows_by_id() {
 			const table = this.positions_table()
 			const dict : { [ code : string ] : $mol_app_inventory_domain_position_raw } = {}
@@ -79,12 +79,12 @@ namespace $.$$ {
 			return dict
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		products() {
 			return this.products_table().map( row => this.product( row.R_MATERIAL_ID ) )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		product( id : string ) {
 			return $mol_app_inventory_domain_product.make({
 				id : $mol_const( id ) ,
@@ -101,7 +101,7 @@ namespace $.$$ {
 			return this.product_rows_by_id()[ id ].R_NAME
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		positions( next? : $mol_app_inventory_domain_position[] ) : $mol_app_inventory_domain_position[] {
 			
 			const table = next && next.map( position => {
@@ -119,7 +119,7 @@ namespace $.$$ {
 			.filter( position => position.status() )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		positions_by_product_id() {
 			const positions = this.positions()
 			const dict : { [ code : string ] : $mol_app_inventory_domain_position } = {}
@@ -130,7 +130,7 @@ namespace $.$$ {
 			return dict
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		position_by_product_id( product_id : string ) {
 			let position = this.positions_by_product_id()[ product_id ]
 			if( position ) return position
@@ -146,7 +146,7 @@ namespace $.$$ {
 			return this.positions_by_product_id()[ product_id ]
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		position( id : string ) {
 			return $mol_app_inventory_domain_position.make({
 				id : $mol_const( id ) ,
@@ -209,7 +209,7 @@ namespace $.$$ {
 			return creds
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		authentificated() {
 			return this.hyperhive().authentificated()
 		}
@@ -241,17 +241,17 @@ namespace $.$$ {
 		
 		product() : $mol_app_inventory_domain_product { return void 0 }
 		
-		@ $mol_mem()
+		@ $mol_mem
 		count( next? : number ) {
 			return next || 0
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		status( next? : keyof typeof $mol_app_inventory_domain_position_status ) {
 			return next || 'draft' as keyof typeof $mol_app_inventory_domain_position_status
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		remark( next? : string ) {
 			return next
 		}

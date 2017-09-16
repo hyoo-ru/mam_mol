@@ -6,22 +6,22 @@ namespace $ {
 	
 	export class $mol_locale extends $mol_object {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static lang_default() {
 			return 'en'
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static lang( next? : string ) {
 			return $mol_state_local.value( 'locale' , next ) || $mol_dom_context.navigator.language.replace( /-.*/ , '' ) || this.lang_default()
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static source( lang : string ) {
 			return JSON.parse( $mol_file.relative( `-/web.locale=${ lang }.json` ).content() )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static texts( next? : $mol_locale_dict ) : $mol_locale_dict {
 			if( next ) return next
 			

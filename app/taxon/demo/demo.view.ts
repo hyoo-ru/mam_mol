@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	export class $mol_app_taxon_demo extends $.$mol_app_taxon_demo {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		hierarchy() {
 			const dict : { [ key : string ] : $mol_grid_node } = {}
 			dict[ '' ] = {
@@ -22,7 +22,7 @@ namespace $.$$ {
 			return dict
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		record( path : number[] ) {
 			return {
 				name : $mol_stub_person_name() ,

@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_view_selection extends $mol_object {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static focused( next? : Element[] , force? : $mol_atom_force ) {
 			if( next === undefined ) return [] as Element[]
 			
@@ -16,7 +16,7 @@ namespace $ {
 			return undefined
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static position( ...diff : any[] ) {
 			if( diff.length ) {
 				if( !diff[ 0 ] ) return diff[ 0 ]

@@ -16,7 +16,7 @@ namespace $.$$ {
 			return next
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		step() {
 			const dims = this.dimensions_expanded()
 			const size = $mol_math_round_expand( ( dims[1][1] - dims[0][1] ) , -1 )

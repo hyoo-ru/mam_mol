@@ -46,13 +46,13 @@ To do a property is cached it is enough to use decorator [$mol_mem](../prop), wh
 
 ```ts
 /// getter
-@ $mol_mem()
+@ $mol_mem
 userName() { return $mol_state_local.value( 'name' ) }
 ```
 
 ```ts
 /// getter/setter
-@ $mol_mem()
+@ $mol_mem
 userName( next? : string ) {
 	if( next === void ) { // check for undefined for switch between getter and setter
 		return $mol_state_local.value( 'name' ) // pull value
@@ -65,7 +65,7 @@ userName( next? : string ) {
 
 ```ts
 /// Delegated getter/setter
-@ $mol_mem()
+@ $mol_mem
 userName( next? : string ) {
 	return $mol_state_local.value( 'name' , next )
 }
@@ -74,7 +74,7 @@ userName( next? : string ) {
 Additional examples of usage reactive properties:
 
 ```ts
-@ $mol_mem()
+@ $mol_mem
 userName( next? : string , force? : $mol_atom_force ) { // Added force support
 	return 'mary'
 }
@@ -108,7 +108,7 @@ userName( pos : number ) {
 ```
 
 ```ts
-@ $mol_mem_key()
+@ $mol_mem_key
 userNames( pos : number , next? : string ) {
 	return $mol_state_local.value( 'name' , next ) || `User #${pos}`
 }
@@ -129,7 +129,7 @@ userName( 0 )
 As a key it is allowed to use any value, which can be serialized into JSON, for example:
 
 ```ts
-@ $mol_mem_key()
+@ $mol_mem_key
 usersSearch( query : {
 	name? : string
 	minAge? : number

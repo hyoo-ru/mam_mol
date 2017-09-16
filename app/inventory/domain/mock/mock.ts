@@ -12,7 +12,7 @@ namespace $.$$ {
 			]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		positions_table( next? : $mol_app_inventory_domain_position_raw[] ) : $mol_app_inventory_domain_position_raw[] {
 			
 			let table = $mol_state_local.value< $mol_app_inventory_domain_position_raw[] >( 'positions' ) || []

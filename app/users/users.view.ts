@@ -4,13 +4,13 @@ namespace $.$$ {
 	export class $mol_app_users extends $.$mol_app_users {
 		
 		/// Search query string synchronized with argument from URL.
-		@ $mol_mem()
+		@ $mol_mem
 		query( next? : string , force? : $mol_atom_force ) : string {
 			return $mol_state_arg.value( this.state_key( 'query' ) , next )
 		}
 		
 		/// Data source resource based on this.query()
-		@ $mol_mem()
+		@ $mol_mem
 		master() {
 			var query = this.query()
 			
@@ -34,13 +34,13 @@ namespace $.$$ {
 		}
 		
 		/// Current list of users. May be changed by user.
-		@ $mol_mem()
+		@ $mol_mem
 		users( next? : string[] , force? : $mol_atom_force ) {
 			return next || this.users_master( next , force )
 		}
 		
 		/// List of users loaded from server.
-		@ $mol_mem()
+		@ $mol_mem
 		users_master( next? : string[] , force? : $mol_atom_force ) {
 			const master = this.master()
 			if( !master ) return []
@@ -80,7 +80,7 @@ namespace $.$$ {
 		}
 		
 		/// Lazy list of user view models. Items are created only when they fits to viewport.
-		@ $mol_mem()
+		@ $mol_mem
 		user_rows() {
 			return this.users().map( ( user , id )=> this.User_row( id ) )
 		}

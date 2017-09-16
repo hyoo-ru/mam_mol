@@ -5,7 +5,7 @@ namespace $.$$ {
 			return ( this.object_owner() as $mol_view ).dom_node()
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		rect() {
 			if( this.dom_node() !== $mol_dom_context.document.body ) {
 				$mol_state_time.now()
@@ -29,32 +29,32 @@ namespace $.$$ {
 			}
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		top() {
 			return this.rect().top
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		bottom() {
 			return this.rect().bottom
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		left() {
 			return this.rect().left
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		right() {
 			return this.rect().right
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		width() {
 			return this.rect().width
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		height() {
 			return this.rect().height
 		}

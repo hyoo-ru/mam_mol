@@ -18,7 +18,7 @@ namespace $.$$ {
 			return null
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		page_name( next? : string ) {
 			return $mol_state_arg.value( this.state_key( 'page' ) , next ) || ''
 		}

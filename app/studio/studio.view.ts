@@ -13,21 +13,21 @@ namespace $.$$ {
 			]
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		classes_static() {
 			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n'
 			const source = view_tree + $mol_http.resource( '-/web.view.tree' ).text()
 			return $mol_view_tree_classes( $mol_tree.fromString( source ) )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		classes( next? : $mol_tree ) {
 			if( next ) return next
 			
 			return this.classes_static().insert( new $mol_tree({ type : this.class_name_base() }) , this.class_name_self() , null )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		class( name : string , next? : $mol_tree ) {
 			if( next !== undefined ) {
 				this.classes( this.classes().insert( next , name ) )
@@ -39,7 +39,7 @@ namespace $.$$ {
 			return this.class( this.class_name_self() , next )
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		props_self( name : string ) {
 			const def = this.class( name )
 			if( !def ) return new $mol_tree
@@ -47,7 +47,7 @@ namespace $.$$ {
 			return $mol_view_tree_class_props( def )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		props_all( name : string , next? : $mol_tree , force? : $mol_atom_force ) {
 			if( next ) return next
 			
@@ -95,7 +95,7 @@ namespace $.$$ {
 			return { path : path.join( ',' ) }
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		prop( path : $mol_tree_path , next? : $mol_tree ) {
 			const props = this.props_all( this.class_name_self() )
 			let prop = props.select( path[0] ).sub[0] || new $mol_tree({ type : String( path[0] ) })
@@ -107,28 +107,28 @@ namespace $.$$ {
 			return prop.select( ... path.slice(1) ).sub[0]
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		prop_self( path : $mol_tree_path ) {
 			return this.class_self().select( null , ... path ).sub[0]
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		prop_type( path : $mol_tree_path ) {
 			const prop = this.prop( path )
 			return ( prop && prop.type !== '-' ) ? $mol_view_tree_value_type( prop ) : undefined
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		prop_key( path : $mol_tree_path , next? : string ) {
 			return $mol_view_tree_prop_key( this.prop( path.slice( 0 , path.length - 1 ) ) )
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		prop_next( path : $mol_tree_path , next? : string ) {
 			return $mol_view_tree_prop_next( this.prop( path.slice( 0 , path.length - 1 ) ) )
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		prop_default( path : $mol_tree_path , next? : $mol_tree ) {
 			return this.prop( path , next )
 		}
@@ -138,7 +138,7 @@ namespace $.$$ {
 			return ( str == null ) ? null : ( str ? str.split( ',' ) : [] )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		view_options() {
 			return Object.keys( $ ).filter( name => {
 				if( name.length < 2 ) return false
@@ -152,12 +152,12 @@ namespace $.$$ {
 			} )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		prop_options() {
 			return this.props_all( this.class_name_self() ).sub.map( prop => prop.type )
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		overrided_all( next? : { [ key : string ] : any } ) {
 			return next || {}
 		}
@@ -166,7 +166,7 @@ namespace $.$$ {
 			return this.overrided_all( ( next === undefined ) ? undefined : { ... this.overrided_all() , [ key ] : next } )[ key ]
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		prop_value_base( path : $mol_tree_path , next? : any ) : any {
 			const path2 = path.slice()
 			
@@ -223,7 +223,7 @@ namespace $.$$ {
 			return undefined
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		Element( path : $mol_tree_path ) : $mol_view {
 
 			const prop_self = this.prop_self( path )

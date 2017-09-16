@@ -20,7 +20,7 @@ namespace $.$$ {
 			return this.supply() ? null : super.Placeholder()
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		domain() {
 			return new $mol_app_supplies_domain_mock()
 		}

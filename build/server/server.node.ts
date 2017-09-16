@@ -26,9 +26,7 @@ namespace $ {
 			return null
 		}
 		
-		@ $mol_mem_key({
-			lazy : true
-		})
+		@ $mol_mem_key
 		generator( path : string ) {
 			var matched = path.match( /^((?:\/\w+)+)\/-\/(\w+(?:.\w+)+)$/ )
 			if( !matched ) return <$mol_file[]>[]

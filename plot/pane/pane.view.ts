@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	export class $mol_plot_pane extends $.$mol_plot_pane {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		dimensions() {
 			const graphs = this.graphs()
 			
@@ -23,7 +23,7 @@ namespace $.$$ {
 			return next
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		size() {
 			const dims = this.dimensions()
 			return [
@@ -32,7 +32,7 @@ namespace $.$$ {
 			]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		dimensions_expanded() {
 			const dims = this.dimensions()
 			const size = this.size()
@@ -43,7 +43,7 @@ namespace $.$$ {
 			]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		size_expaned() {
 			const dims = this.dimensions_expanded()
 			return [
@@ -56,7 +56,7 @@ namespace $.$$ {
 			return ( 360 + ( this.hue_base() + this.hue_shift() * index ) % 360 ) % 360
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		graphs_colored() {
 			const graphs = this.graphs_positioned()
 			
@@ -76,7 +76,7 @@ namespace $.$$ {
 			return `0 0 ${ size[0] } ${ size[1] }`
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		scale() {
 			const size = this.size_expaned()
 			const real = this.size_real()
@@ -86,7 +86,7 @@ namespace $.$$ {
 			]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		shift() {
 			const dims = this.dimensions_expanded()
 			const scale = this.scale()
@@ -96,7 +96,7 @@ namespace $.$$ {
 			]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		graphs_positioned() {
 			const graphs = this.graphs()
 			
@@ -109,7 +109,7 @@ namespace $.$$ {
 			return graphs
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		graphs_sorted() {
 			const graphs = this.graphs_colored()
 			const sorted = [] as $mol_view[]

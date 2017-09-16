@@ -11,7 +11,7 @@ namespace $.$$ {
 
 	export class $mol_app_bench_list_mol extends $.$mol_app_bench_list_mol {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static data( next? : $mol_app_bench_list_mol_data , force? : $mol_atom_force ) : $mol_app_bench_list_mol_data {
 			window.addEventListener( 'message' , event => {
 				if( event.data[0] !== 'set data' ) return
@@ -24,15 +24,15 @@ namespace $.$$ {
 			return $mol_app_bench_list_mol.data().items
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		rows() { return this.items().map( ( row , id ) => this.Row( id ) ) }
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		row_title( id : number ) {
 			return this.items()[ id ].title
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		row_content( id : number ) {
 			return this.items()[ id ].content
 		}
@@ -42,7 +42,7 @@ namespace $.$$ {
 			return this.selected_id() === id
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		selected_id( next? : number ) {
 			this.items()
 			if( next === void 0 ) return null

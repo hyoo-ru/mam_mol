@@ -7,7 +7,7 @@ namespace $ {
 			
 			class $mol_view_test_block extends $mol_view {
 				
-				@ $mol_mem_key()
+				@ $mol_mem_key
 				element( id : number ) {
 					return new $mol_view_test_item()
 				}
@@ -53,7 +53,7 @@ namespace $ {
 			
 			class $mol_view_test_block extends $mol_view {
 				
-				@ $mol_mem_key()
+				@ $mol_mem_key
 				Element( id : number ) {
 					return new $mol_view_test_item()
 				}

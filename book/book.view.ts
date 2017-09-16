@@ -1,12 +1,12 @@
 namespace $.$$ {
 	export class $mol_book extends $.$mol_book {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		pages_extended() : $mol_view[] {
 			return [ this.Placeholder() ].concat( this.pages() )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		break_point() {
 			const pages = this.pages_extended()
 			const limit = this.width()
@@ -33,7 +33,7 @@ namespace $.$$ {
 			return index >= this.break_point()
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		pages_wrapped() {
 			const pages = this.pages_extended()
 			const extended = [] as typeof pages

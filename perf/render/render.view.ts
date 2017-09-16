@@ -7,7 +7,7 @@ namespace $.$$ {
 
 	export class $mol_perf_render extends $.$mol_perf_render {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		run_label( next? : string ) { return next || 'Run' }
 		
 		event_run( next? : Event ) {
@@ -25,10 +25,10 @@ namespace $.$$ {
 			} )
  		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		rows() { return this.data().map( ( _ , id ) => this.Row( id ) ) }
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		Row( id : number ) { return $mol_perf_render_row.make({
 			data : () => this.data()[ id ] ,
 			selected : ( next? : boolean ) => {
@@ -37,10 +37,10 @@ namespace $.$$ {
 			} ,
 		}) }
 		
-		@ $mol_mem()
+		@ $mol_mem
 		data( next? : $mol_perf_render_item[] ) { return next || [] }
 		
-		@ $mol_mem()
+		@ $mol_mem
 		selected_item( next? : number ) { 
 			if( next === void 0 ) return null
 			return next

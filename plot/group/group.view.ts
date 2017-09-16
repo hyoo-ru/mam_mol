@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_plot_group extends $.$mol_plot_group {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		graphs_enriched() {
 			const graphs = this.graphs()
 			for( let graph of graphs ) {
@@ -14,7 +14,7 @@ namespace $.$$ {
 			return graphs
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		graph_samples() {
 			return this.graphs().map( graph => graph.Sample() )
 		}

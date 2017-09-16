@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_state_history< Value > extends $mol_object {
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static value< Value >( key : string , next? : Value ) {
 			return $mol_state_session.value( `$mol_state_history:id(${this.id()}):${key}` , next )
 		}
@@ -13,7 +13,7 @@ namespace $ {
 			return $mol_state_local.value( this.prefix() + '.' + key , next )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static id( next? : string ) {
 			try {
 				if( history.state ) return history.state as string

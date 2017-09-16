@@ -2,12 +2,12 @@ namespace $.$$ {
 	
 	export class $mol_app_bench extends $.$mol_app_bench {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		bench( next? : string ) {
 			return $mol_state_arg.value( this.state_key( 'bench' ) , next ) || 'list/'
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		sandbox( next? : HTMLIFrameElement , force? : $mol_atom_force ) : HTMLIFrameElement {
 			const next2 = this.Sandbox().dom_node() as HTMLIFrameElement
 			
@@ -23,13 +23,13 @@ namespace $.$$ {
 
 		'command_current()' : any[]
 		
-		@ $mol_mem()
+		@ $mol_mem
 		command_current( next? : any[] , force? : $mol_atom_force ) {
 			if( this['command_current()']['value()'] ) return
 			return next
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		command_result< Result >( command : any[] , next? : Result ) : Result {
 			const sandbox = this.sandbox()
 			sandbox.valueOf()
@@ -74,7 +74,7 @@ namespace $.$$ {
 			return this.command_result< meta >( [ 'meta' ] )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		samples_all( next? : string[] ) {
 			return Object.keys( this.meta().samples ).sort( ( a , b )=> {
 				const titleA = this.sample_title( a ).toLowerCase()
@@ -83,30 +83,30 @@ namespace $.$$ {
 			} )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		samples( next? : string[] ) : string[] {
 			const arg = $mol_state_arg.value( this.state_key( 'sample' ) , next && next.join( '~' ) )
 			return arg ? arg.split( '~' ).sort() : []
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		steps( next? : string[] ) {
 			return Object.keys( this.meta().steps )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		title() {
 			const title = this.meta().title 
 			return title[ $mol_locale.lang() ] || title[ 'en' ] || super.title()
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		description() {
 			const descr = this.meta().descr
 			return descr[ $mol_locale.lang() ] || descr[ 'en' ] || ''
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		result_sample( sampleId : string )  {
 			const result : { [ key : string ] : any } = {
 				sample : this.sample_title( sampleId ) ,
@@ -119,7 +119,7 @@ namespace $.$$ {
 			return result
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		result() {
 			const result : { [ sample : string ] : { [ step : string ] : any } } = {}
 			
@@ -130,7 +130,7 @@ namespace $.$$ {
 			return result
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		sandbox_title() {
 			const command = this.command_current()
 			if( !command ) return
@@ -148,12 +148,12 @@ namespace $.$$ {
 			return [ title[ $mol_locale.lang() ] || title[ 'en' ] ]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		result_col_sort( next? : string ) {
 			return $mol_state_arg.value( this.state_key( 'sort' ) , next )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		menu_options() {
 			const filter = this.filter().toLowerCase()
 
@@ -167,7 +167,7 @@ namespace $.$$ {
 			return title[ $mol_locale.lang() ] || title[ 'en' ]
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		menu_option_checked( sample : string , next? : boolean ) {
 			if( next === void 0 ) return this.samples().indexOf( sample ) !== -1
 			
@@ -190,7 +190,7 @@ namespace $.$$ {
 			return title[ $mol_locale.lang() ] || title[ 'en' ]
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		param_value( id : string, next? : any) {
 			let next_2 = $mol_state_arg.value( this.state_key( id ) , next )
 			return next_2 || this.meta().params[ id ].default
@@ -200,7 +200,7 @@ namespace $.$$ {
 			return this.meta().params[ id ].precision
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		param_dict() {
 			const param_dict = {}
 			const params = this.params()

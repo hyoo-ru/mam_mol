@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_build extends $mol_object {
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static root( path : string ) {
 			return this.make({
 				root : $mol_const( $mol_file.absolute( path ) ) ,
@@ -13,7 +13,7 @@ namespace $ {
 			return $mol_build.root( $mol_file.relative( path ).path() )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		server() {
 			return $mol_build_server.make({
 				build : $mol_const( this ) ,
@@ -24,7 +24,7 @@ namespace $ {
 			return $mol_file.relative( '.' )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		mods( { path , exclude } : { path : string , exclude? : string[] } ) {
 			const mods : $mol_file[] = []
 			
@@ -57,7 +57,7 @@ namespace $ {
 			return mods
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		modsRecursive( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var mod = $mol_file.absolute( path )
 			switch( mod.type() ) {
@@ -79,7 +79,7 @@ namespace $ {
 			throw new Error( `Unsopported type "${mod.type()}" of "${mod.relate()}"` )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		sources( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const mod = $mol_file.absolute( path )
 			switch( mod.type() ) {
@@ -92,7 +92,7 @@ namespace $ {
 			}
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		sourcesSorted( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const mod = $mol_file.absolute( path )
 			const graph = new $mol_graph< void , { priority : number } >()
@@ -142,7 +142,7 @@ namespace $ {
 		}
 		
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const sortedPaths = this.graph( { path , exclude } ).sorted( edge => edge.priority )
 			
@@ -156,7 +156,7 @@ namespace $ {
 			return sources
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		tsOptions() {
 			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() ).compilerOptions
 			const res = $node['typescript'].convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
@@ -164,13 +164,13 @@ namespace $ {
 			return res.options
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		tsSource( { path , target } : { path : string , target : number } ) {
 			const content = $mol_file.absolute( path ).content().toString()
 			return $node['typescript'].createSourceFile( path , content , target )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		tsHost() {
 
 			const host = {
@@ -198,7 +198,7 @@ namespace $ {
 			return host
 		}
 		
-		//@ $mol_mem_key()
+		//@ $mol_mem_key
 		tsProgram( { path , exclude } : { path : string , exclude? : string[] } ) {
 			var host = this.tsHost()
 			var options = host.getCompilationSettings()
@@ -208,7 +208,7 @@ namespace $ {
 			return program
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var sources = this.sourcesAll( { path , exclude } )
 			.filter( src => /(js|tsx?)$/.test( src.ext() ) )
@@ -249,7 +249,7 @@ namespace $ {
 			return sources
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		sourcesDTS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			
 			let sources = this.sourcesAll( { path , exclude } )
@@ -263,14 +263,14 @@ namespace $ {
 			return sources
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		sourcesCSS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			return this.sourcesAll( { path , exclude } ).filter( src => /(css)$/.test( src.ext() ) )
 		}
 		
 		static dependors : { [ index : string ] : ( source : $mol_file )=> { [ index : string ] : number } } = {}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		srcDeps( path : string ) {
 			const src = $mol_file.absolute( path )
 			
@@ -289,7 +289,7 @@ namespace $ {
 			return dependencies ? dependencies( src ) : {}
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		modDeps( { path , exclude } : { path : string , exclude? : string[] } ) {
 			const mod = $mol_file.absolute( path )
 			const depends : { [ index : string ] : number } = { '..' : 0 }
@@ -299,7 +299,7 @@ namespace $ {
 			return depends
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		dependencies( { path , exclude } : { path : string , exclude? : string[] } ) {
 			var mod = $mol_file.absolute( path )
 			switch( mod.type() ) {
@@ -312,7 +312,7 @@ namespace $ {
 			}
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		packEnsure( name : string ) {
 			var mapping = this.packMapping()
 			
@@ -346,13 +346,13 @@ namespace $ {
 			return this.packEnsure( name ).valueOf()
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		packMapping() {
 			const file = $mol_file.relative( '.pms.tree' )
 			return $mol_tree.fromString( file.content() , file.path() )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		graph( { path , exclude } : { path : string , exclude? : string[] } ) {
 			let graph = new $mol_graph< null , { priority : number } >()
 			let added : { [ path : string ] : boolean } = {}
@@ -405,7 +405,7 @@ namespace $ {
 			return graph
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundle( { path , bundle } : { path : string , bundle? : string } ) {
 			
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
@@ -481,7 +481,7 @@ namespace $ {
 			console.log( `${time} Built ${path}` )
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundleJS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
@@ -536,7 +536,7 @@ namespace $ {
 			return [ target , targetMap ]
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundleTestJS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
@@ -583,7 +583,7 @@ namespace $ {
 			return [ target , targetMap ]
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundleDTS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
@@ -608,7 +608,7 @@ namespace $ {
 			return [ target ]
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundleViewTree( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
@@ -626,7 +626,7 @@ namespace $ {
 			return [ target ]
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundlePackageJSON( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
@@ -658,7 +658,7 @@ namespace $ {
 			return [ target ]
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundleFiles( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const root = this.root()
 			const pack = $mol_file.absolute( path )
@@ -686,7 +686,7 @@ namespace $ {
 			return targets
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundleCordova( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const pack = $mol_file.absolute( path )
 			const cordova = pack.resolve( '-cordova' )
@@ -715,7 +715,7 @@ namespace $ {
 			return targets
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundleCSS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			if( bundle === 'node' ) return []
 			
@@ -756,7 +756,7 @@ namespace $ {
 			return [ target , targetMap ]
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundleLocale( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			const pack = $mol_file.absolute( path )
 			
@@ -800,7 +800,7 @@ namespace $ {
 			return targets
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		bundleDepsJSON( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			

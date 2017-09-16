@@ -22,12 +22,12 @@ namespace $.$$ {
 		// 	return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
 		// }
 		
-		@ $mol_mem()
+		@ $mol_mem
 		scroll_bottom( next? : number ) {
 			return next || 0
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		scroll_right( next? : number ) {
 			return next || 0
 		}
@@ -65,12 +65,12 @@ namespace $.$$ {
 			this._moving_task_timer = setTimeout( ()=> this.moving( false ) , 50 )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		moving( next? : boolean ) {
 			return next || false
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		context_sub( ) {
 			const context = this.context()
 			const subContext : $mol_view_context = Object.create( context )

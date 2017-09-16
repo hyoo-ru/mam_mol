@@ -5,7 +5,7 @@ namespace $.$$ {
 			return this.points_raw().length * this.scale()[0] / 100
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		step() {
 			const count = this.count()
 			let points = this.points_scaled()
@@ -13,7 +13,7 @@ namespace $.$$ {
 			return step
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		keys_visible() {
 			const res = [] as string[]
 			

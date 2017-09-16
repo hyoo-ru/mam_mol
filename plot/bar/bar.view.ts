@@ -17,7 +17,7 @@ namespace $.$$ {
 			return `hsl( ${ this.hue() } , 70% , 85% )`
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		dimensions() {
 			const points = this.points_raw()
 			const next = [

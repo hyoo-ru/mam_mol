@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_text extends $.$mol_text {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		tokens_flow() {
 			return $mol_syntax_md_flow.tokenize( this.text() )
 		}
@@ -28,7 +28,7 @@ namespace $.$$ {
 			return this.tokens_flow()[ index ].name
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		cell_contents( indexBlock : number ) {
 			return this.tokens_flow()[ indexBlock ].chunks[ 0 ]
 			.split( /\r?\n/g )

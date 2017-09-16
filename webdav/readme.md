@@ -9,17 +9,17 @@ namespace $ {
 	
 	export class $my_domain extends $mol_object {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		root() {
 			return $mol_webdav.item( 'https://example.org' )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		files() {
 			return this.root().sub()
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		titles() {
 			return this.files().map( file => file.title() )
 		}

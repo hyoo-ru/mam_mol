@@ -7,7 +7,7 @@ it's very convenience while debugging. To have a correct identifiers, it's recom
 namespace $ {
 	export class $my_app extends $mol_view {
 	
-		@ $mol_mem()
+		@ $mol_mem
 		List() {
 			return new $mol_list()
 		}

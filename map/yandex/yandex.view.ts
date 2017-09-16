@@ -8,7 +8,7 @@ namespace $.$$ {
 			return $mol_import.script( `https://api-maps.yandex.ru/2.1/?lang=${ $mol_locale.lang() }` ).ymaps
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		api( next? : any , force? : $mol_atom_force ) : any {
 			
 			const ymaps = $mol_map_yandex.api()

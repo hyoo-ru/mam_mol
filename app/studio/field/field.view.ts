@@ -44,7 +44,7 @@ namespace $.$$ {
 			return $mol_view_tree_value_type( this.value() )
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		expanded( next = [ 'bool' , 'number' , 'string' , 'locale' ].indexOf( this.type() ) >= 0 ) {
 			return next
 		}
@@ -110,18 +110,18 @@ namespace $.$$ {
 			]
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		item_value( index : number , next? : string ) {
 			return next
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		item_class( index : number , next? : string ) {
 			return next
 		}
 
-		@ $mol_mem()
-		list_rows( next? : $mol_view[] ) {
+		@ $mol_mem
+		list_rows() {
 			return this.value().sub.map( ( item , index )=> this.Prop([ ... this.path() , index ]) )
 		}
 

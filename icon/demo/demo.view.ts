@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_icon_demo extends $.$mol_icon_demo {
 
-		@ $mol_mem()
+		@ $mol_mem
 		names() {
 			var next : string[] = []
 			for( var name in this.$ ) {
@@ -13,12 +13,12 @@ namespace $.$$ {
 			return next
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		icons() {
 			return this.names().map( name => this.Icon( name ) )
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		Icon( name : string ) {
 			var Class : typeof $mol_view = this.$[ name ]
 			return new Class()

@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_server extends $mol_object {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		express() {
 			var express = $node['express']()
 			

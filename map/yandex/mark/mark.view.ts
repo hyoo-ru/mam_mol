@@ -2,7 +2,7 @@ namespace $.$$ {
 
 	export class $mol_map_yandex_mark extends $.$mol_map_yandex_mark {
 
-		@ $mol_mem()
+		@ $mol_mem
 		object() {
 			const ymaps = $mol_map_yandex.api()
 

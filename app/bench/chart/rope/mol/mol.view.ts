@@ -7,7 +7,7 @@ namespace $.$$ {
 
 	export class $mol_app_bench_chart_rope_mol extends $.$mol_app_bench_chart_rope_mol {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static data( next? : $mol_app_bench_chart_rope_mol_data , force? : $mol_atom_force ) : $mol_app_bench_chart_rope_mol_data {
 			window.addEventListener( 'message' , event => {
 				switch( event.data[0] ) {

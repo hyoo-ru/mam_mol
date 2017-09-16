@@ -31,7 +31,7 @@ namespace $ {
 
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static value< Value >( key : string , next? : Value ) : Value {
 			if( next === void 0 ) return JSON.parse( this.native().getItem( key ) || 'null' )
 			

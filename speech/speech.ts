@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_speech extends $mol_plugin {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static api() {
 			const API = window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition']
 			
@@ -28,7 +28,7 @@ namespace $ {
 			return api;
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static listening( next? : boolean ) {
 			if( next === undefined ) return false
 			
@@ -54,12 +54,12 @@ namespace $ {
 			this.text( text )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static text( next = '' ) {
 			return next
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		render() : null {
 			const text = $mol_speech.text().replace( /[,\.]/g , '' )
 			
@@ -83,7 +83,7 @@ namespace $ {
 			return [] as string[]
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		matchers() {
 			return this.patterns().map( pattern => {
 				return new RegExp( this.prefix() + pattern + this.suffix() , 'i' )

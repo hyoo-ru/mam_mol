@@ -2,17 +2,17 @@ namespace $.$$ {
 	
 	export class $mol_app_lamps extends $.$mol_app_lamps {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		lamps_all() {
 			return $mol_csv_parse( $mol_http.resource( 'http://lamptest.ru/led.php' ).text() )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		lamps() {
 			return this.lamps_all().filter( $mol_match_text( this.filter() , ( lamp : any )=> Object.keys( lamp ).map( field => lamp[ field ] ) ) )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		lamps_dict() {
 			const dict = {} as { [ key : string ] : any }
 			
@@ -37,7 +37,7 @@ namespace $.$$ {
 		}
 		
 		_filter_timer = 0
-		@ $mol_mem()
+		@ $mol_mem
 		filter( next? : string , force? : $mol_atom_force ) : string {
 			if( next === void null ) return $mol_state_arg.value( 'filter' ) || ''
 			
@@ -73,7 +73,7 @@ namespace $.$$ {
 			return this.lamp() ? null : super.Placeholder()
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		menu_scroll_top( next? : number ) {
 			this.filter()
 			return next || 0

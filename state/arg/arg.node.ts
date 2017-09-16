@@ -4,12 +4,12 @@ namespace $ {
 
 	export class $mol_state_arg< Value > extends $mol_object {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static href( next? : string ) : string {
 			return next || process.argv.slice( 2 ).join( ' ' )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static dict( next? : { [ key : string ] : string } ) {
 			if( next !== void 0 ) this.href( this.make_link( next ) )
 			
@@ -28,7 +28,7 @@ namespace $ {
 			return params
 		}
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static value( key : string , next? : string ) {
 			if( next === void 0 ) return this.dict()[ key ] || null
 			this.href( this.link( { [ key ] : next } ) )

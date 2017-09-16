@@ -4,8 +4,8 @@ namespace $ {
 		'cached property with simple key'() {				
 
 			class X extends $mol_object {
-				@ $mol_mem_key()
-				foo( id : number , next? : Number|String ) {
+				@ $mol_mem_key
+				foo( id : number , next? : Number ) {
 					if( next == null ) return new Number( 123 )
 					return new Number( next )
 				}
@@ -31,7 +31,7 @@ namespace $ {
 		'cached property with complex key'() {
 
 			class X extends $mol_object {
-				@ $mol_mem_key()
+				@ $mol_mem_key
 				foo( ids : number[] ) {
 					return Math.random()
 				}
@@ -46,17 +46,17 @@ namespace $ {
 
 			class X extends $mol_object {
 
-				@ $mol_mem()
+				@ $mol_mem
 				foo( next? : number ) {
 					return next || 1
 				}
 
-				@ $mol_mem()
+				@ $mol_mem
 				bar() {
 					return this.foo() + 1
 				}
 
-				@ $mol_mem()
+				@ $mol_mem
 				xxx() {
 					return this.bar() + 1
 				}
@@ -98,18 +98,18 @@ namespace $ {
 
 			class B extends $mol_object {
 
-				@ $mol_mem()
+				@ $mol_mem
 				showing( next? : boolean ) {
 					if( next === void 0 ) return true
 					return next
 				}
 
-				@ $mol_mem()
+				@ $mol_mem
 				foo() {
 					return foo = new $mol_object
 				}
 
-				@ $mol_mem()
+				@ $mol_mem
 				bar() {
 					return this.showing() ? this.foo() : null
 				}
@@ -137,7 +137,7 @@ namespace $ {
 
 			class Test extends $mol_object {
 
-				@ $mol_mem()
+				@ $mol_mem
 				source( next? : string , force? : $mol_atom_force ) : string {
 					new $mol_defer( () => {
 						this.source( 'Jin' , $mol_atom_force )
@@ -145,12 +145,12 @@ namespace $ {
 					throw new $mol_atom_wait( 'Wait for data!' )
 				}
 
-				@ $mol_mem()
+				@ $mol_mem
 				middle() {
 					return this.source()
 				}
 
-				@ $mol_mem()
+				@ $mol_mem
 				target() {
 					return this.middle()
 				}

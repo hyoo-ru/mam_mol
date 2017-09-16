@@ -9,7 +9,7 @@ namespace $.$$ {
 			return {}
 		}
 
-		@ $mol_mem()
+		@ $mol_mem
 		items() {
 			return Object.keys( this.options() ).map( key => this.Option( key ) )
 		}

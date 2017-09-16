@@ -15,7 +15,7 @@ namespace $.$$ {
 			return super.title()
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		names_demo_all() {
 			var next : string[] = []
 			for( var name in this.$ ) {
@@ -28,14 +28,14 @@ namespace $.$$ {
 			return next.sort()
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		names_demo_filtered() {
 			const filter = this.filter_string().toLowerCase()
 			const names = this.names_demo_all().filter( name => ( name.toLowerCase().indexOf( filter ) != -1 ) )
 			return names
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		nav_hierarchy() {
 			const names = this.names_demo_filtered()
 			
@@ -101,13 +101,13 @@ namespace $.$$ {
 			return $mol_state_arg.value( this.state_key( 'edit' ) ) != null
 		}
 
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		Widget( name : string ) {
 			const Class : typeof $mol_view = this.$[ '$' + name ]
 			return new Class()
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		names_demo() {
 			const selected = this.selected()
 			const all = this.names_demo_all()
@@ -150,7 +150,7 @@ namespace $.$$ {
 			return this.selected() ? null : super.Placeholder()
 		}
 		
-		@ $mol_mem() 
+		@ $mol_mem 
 		main_content() {
 			const names = this.names_demo()
 			switch( names.length ) {

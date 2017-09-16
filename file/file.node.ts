@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_file extends $mol_object {
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static absolute( path : string ) {
 			return $mol_file.make({
 				path : $mol_const( path )
@@ -17,7 +17,7 @@ namespace $ {
 			return '.'
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		watcher() {
 			const watcher = $node.fs.watch(
 				this.path() ,
@@ -39,7 +39,7 @@ namespace $ {
 			return watcher
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		stat( next? : any , force? : $mol_atom_force ) {
 			var path = this.path()
 			
@@ -55,7 +55,7 @@ namespace $ {
 			return stat
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		version() {
 			return this.stat().mtime.getTime().toString( 36 ).toUpperCase()
 		}
@@ -85,7 +85,7 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		type() {
 			var stat = this.stat()
 			
@@ -113,7 +113,7 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		content( next? : string , force? : $mol_atom_force ) {
 			if( next === void 0 ) {
 				return this.stat() && $node.fs.readFileSync( this.path() )//.toString()
@@ -133,7 +133,7 @@ namespace $ {
 			return $node.fs.createWriteStream( this.path() )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		sub() : $mol_file[] {
 			this.stat()
 			

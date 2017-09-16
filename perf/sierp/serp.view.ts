@@ -6,7 +6,7 @@ namespace $.$$ {
 			return this.data().map( ( props , index )=> this.Dot( index ) )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		data() {
 			return this.SierpinskiTriangle({ left : 0 , top : 0 , size : 1000 })
 		}
@@ -45,7 +45,7 @@ namespace $.$$ {
 			return this.data()[ index ].size * 1.3
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		text() {
 			return ( ( $mol_state_time.now( 1000 ) / 1000 ) % 10 ).toFixed( 0 )
 		}

@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_grid_demo extends $.$mol_grid_demo {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		records() {
 			return $mol_range_in( {
 				length : 1000 ,

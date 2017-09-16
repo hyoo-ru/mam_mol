@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_window extends $mol_object {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		static size( next? : {
 			width : number
 			height : number

@@ -253,8 +253,8 @@ namespace $ {
 					if( needReturn ) val = 'return ' + val
 					var decl = '\t' + propName[1] +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
 					if( needCache ) {
-						if( propName[2] ) decl = '\t@ $' + 'mol_mem_key()\n' + decl
-						else decl = '\t@ $' + 'mol_mem()\n' + decl
+						if( propName[2] ) decl = '\t@ $' + 'mol_mem_key\n' + decl
+						else decl = '\t@ $' + 'mol_mem\n' + decl
 					}
 					decl = param.toString().trim().replace( /^/gm , '\t/// ' ) + '\n' + decl
 					

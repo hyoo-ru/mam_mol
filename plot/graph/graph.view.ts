@@ -10,7 +10,7 @@ namespace $.$$ {
 			] )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		points_scaled() {
 			const shift = this.shift()
 			const scale = this.scale()
@@ -20,7 +20,7 @@ namespace $.$$ {
 			] )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		points() {
 			const threshold = this.threshold()
 			const res = [] as number[][]
@@ -36,7 +36,7 @@ namespace $.$$ {
 			return res
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		dimensions() {
 			const points = this.points_raw()
 			const next = [

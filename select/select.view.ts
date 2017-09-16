@@ -1,14 +1,14 @@
 namespace $.$$ {
 	export class $mol_select extends $.$mol_select {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		filter_pattern( next? : string ) {
 			if( !this.focused() ) return ''
 			
 			return next || ''
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		options_showed() {
 			const showed = this.focused() || this.filter_pattern().length > 0
 			
@@ -17,7 +17,7 @@ namespace $.$$ {
 			return showed
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		options() {
 			return Object.keys( this.dictionary() )
 		}
@@ -39,7 +39,7 @@ namespace $.$$ {
 			return options
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		option_focused( component? : $mol_view ) {
 			if( component === undefined ) {
 				for( let comp of this.nav_components() ) {

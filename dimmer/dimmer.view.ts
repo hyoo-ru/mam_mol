@@ -17,7 +17,7 @@ namespace $.$$ {
 			return chunks
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		strings() {
 			return this.haystack().split( new RegExp( `(${ this.needle() })` , 'gi' ) )
 		}

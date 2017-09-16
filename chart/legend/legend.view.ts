@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	export class $mol_chart_legend extends $.$mol_chart_legend {
 		
-		@ $mol_mem()
+		@ $mol_mem
 		graphs_front() {
 			return this.graphs().filter( graph => graph.Sample() )
 		}

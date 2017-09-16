@@ -2,7 +2,7 @@ namespace $ {
 
 	export class $mol_import {
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static script( uri : string , next? : any , force? : $mol_atom_force  ) : any {
 			const doc = $mol_dom_context.document
 

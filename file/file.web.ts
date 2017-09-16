@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_file extends $mol_object {
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static absolute( path : string ) {
 			return $mol_file.make({
 				path : $mol_const( path )
@@ -33,7 +33,7 @@ namespace $ {
 			return match && match[ 1 ].substring( 1 )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		content( next? : string , force? : $mol_atom_force ) {
 			return $mol_http.resource( this.path() ).text( next )
 		}

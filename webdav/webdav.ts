@@ -2,14 +2,14 @@ namespace $ {
 	
 	export class $mol_webdav extends $mol_http {
 		
-		@ $mol_mem_key()
+		@ $mol_mem_key
 		static item( uri : string ) {
 			return this.make({
 				uri : $mol_const( uri ) ,
 			})
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		data_tree() {
 			const dom = this.response().responseXML as XMLDocument
 			const responses = dom.querySelectorAll( 'response' ) as any as Element[]
@@ -33,7 +33,7 @@ namespace $ {
 			return $mol_webdav.item( this.uri().replace( /\/[^\/]*\/?$/ , '/' ) )
 		}
 		
-		@ $mol_mem()
+		@ $mol_mem
 		sub() {
 			const next = [] as $mol_webdav[]
 			for( let uri of Object.keys( this.data_tree() ) ) {
