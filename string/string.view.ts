@@ -4,7 +4,7 @@ namespace $.$$ {
 		_timer = 0
 		
 		event_change( next? : Event ) {
-			if( !event ) return
+			if( !next ) return
 			
 			const val = ( next.target as HTMLInputElement ).value.trim()
 			
@@ -13,7 +13,7 @@ namespace $.$$ {
 		}
 		
 		event_key_press( next? : KeyboardEvent ) { 
-			if( !event ) return
+			if( !next ) return
 			
 			if( next.keyCode === $mol_keyboard_code.enter ) {
 				this.value( ( next.target as HTMLInputElement ).value.trim() )
