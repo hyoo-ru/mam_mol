@@ -18,11 +18,11 @@ namespace $.$$ {
 		@ $mol_mem()
 		names_demo_all() {
 			var next : string[] = []
-			for( var name in $ ) {
+			for( var name in this.$ ) {
 				if( !/^\$.*_demo($|_)/i.test( name ) ) continue
 				if( /^\$mol_demo/.test( name ) ) continue
 				if( /^\$mol_app_demo/.test( name ) ) continue
-				if( typeof ( $ as {[index : string]:any} )[ name ] !== 'function' ) continue
+				if( typeof this.$[ name ] !== 'function' ) continue
 				next.push( name.substring( 1 ) )
 			}
 			return next.sort()
@@ -103,7 +103,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key()
 		Widget( name : string ) {
-			const Class : typeof $mol_view = ( $ as {[index : string]:any} )[ '$' + name ]
+			const Class : typeof $mol_view = this.$[ '$' + name ]
 			return new Class()
 		}
 		
