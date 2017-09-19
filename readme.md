@@ -197,7 +197,7 @@ namespace $ { export class $my_hello extends $mol_view {
 Add **your behaviour** at `./my/hello/hello.view.ts` by extending generated class:
 
 ```typescript
-namespace $.$mol {
+namespace $.$$ {
 	export class $my_hello extends $.$my_hello {
 		
 		message() {
