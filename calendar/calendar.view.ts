@@ -25,9 +25,7 @@ namespace $.$mol {
 		}
 /* end */
 /* Нарисовал строки */
-		rows( id : number){
-			this.start_draw_day().shift({ day : id })
-
+		rows(){
 			const week : $mol_view[] = []
 			for( let row = 0; row < 6; ++row ){
 				week.push( this.Row( row ))
