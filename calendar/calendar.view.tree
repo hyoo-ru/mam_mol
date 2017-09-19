@@ -15,10 +15,11 @@ $mol_calendar $mol_view
 		sub / 
 			<= cells!row /
 	-
-	Cell!id $mol_view
+	Cell!day $mol_view
 		attr *
-			weekend <= weekend!id false
-			other <= other!id false
+			other <= other!day false
+			weekend <= weekend!day false
+			is_holiday false
 		sub / 
-			<= cell!id \
+			<= cell!day \
 	

@@ -21,10 +21,12 @@
 	text-align: right;
 	font-size: .85rem;
 }
-
 [mol_calendar_cell][other] {
 	opacity: .5;
 }
 [mol_calendar_cell][weekend] {
 	color: var(--mol_skin_base);
+}
+[mol_calendar_cell][holiday] {
+	color: var(--mol_skin_accent_text);
 }

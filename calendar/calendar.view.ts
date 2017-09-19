@@ -34,26 +34,26 @@ namespace $.$mol {
 
 		cells(row : number){
 			const day : $mol_view[] = []
+			let start_day = this.start_draw_day()
 			for( let col = 0; col < 7; ++col ){
-				day.push( this.Cell( {row, col} ) )
+				day.push( this.Cell( start_day.shift({ day : (col + 7 * row)}).toString("YYYY-MM-DD") ) )
 			}
 			return day
 		}
 
-		cell(id: {row : number, col : number }){
-			return this.start_draw_day().shift({day : (id.col + 7 * id.row)}).toString("D")
+		cell(cells : string){
+			return cells.slice(8,10)
 		}
 
-		other(id: {row : number, col : number }){
-			let month = this.start_draw_day().shift({day : (id.col + 7 * id.row)}).month
-			let this_month = this.first_day().month
+		other(cells : string){
+			let month = cells.slice(5,7)
+			let this_month = this.first_day().toString("MM")
 			
 			return this_month != month ? true : false
 		}
 
-		weekend(id: {row : number, col : number }){
-			let day = this.start_draw_day().shift({day : (id.col + 7 * id.row)}).weekday
-
+		weekend(cells : string){
+			let day = new $mol_time_moment(cells).weekday
 			return  day == 0 ? true : day == 6 ? true : false
 		}
 
