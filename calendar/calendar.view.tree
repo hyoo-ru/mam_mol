@@ -1,0 +1,24 @@
+$mol_calendar $mol_view
+	sub /
+		<= Head $mol_view
+			sub /
+				<= head /
+		<= Rows $mol_view
+			sub /
+				<= rows /
+	-
+	Head_day!id $mol_view
+		sub /
+			<= head_day!id \
+	-
+	Row!row $mol_view
+		sub / 
+			<= cells!row /
+	-
+	Cell!id $mol_view
+		- attr *
+			weekend <= weekend!id false
+			other_month <= other_month!id false
+		- sub / 
+			<= cell!id \
+	

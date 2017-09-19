@@ -1,0 +1,4 @@
+$mol_calendar_demo $mol_demo_small
+	title @ \Calendar
+	sub /
+		<= Calendar $mol_calendar
