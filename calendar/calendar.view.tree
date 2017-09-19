@@ -16,9 +16,9 @@ $mol_calendar $mol_view
 			<= cells!row /
 	-
 	Cell!id $mol_view
-		- attr *
+		attr *
 			weekend <= weekend!id false
-			other_month <= other_month!id false
-		- sub / 
+			other <= other!id false
+		sub / 
 			<= cell!id \
 	

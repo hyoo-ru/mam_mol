@@ -22,7 +22,7 @@
 	font-size: .85rem;
 }
 
-[mol_calendar_cell][other_month] {
+[mol_calendar_cell][other] {
 	opacity: .5;
 }
 [mol_calendar_cell][weekend] {
