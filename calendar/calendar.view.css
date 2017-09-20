@@ -2,31 +2,27 @@
 	display: table;
 }
 [mol_calendar_head]{
-	display: table-row;
+	display: table-caption;
 }
 [mol_calendar_head_day]{
 	display: table-cell;
-	padding: .5rem;
+	padding: .85rem;
 	text-align: right;
 }
-[mol_calendar_row] {
+[mol_calendar_week] {
 	display: table-row;
 }
-[mol_calendar_rows]{
-	display: table-row-group;
-}
-[mol_calendar_cell] {
+[mol_calendar_day] {
 	display: table-cell;
 	padding: .25rem .75rem;
 	text-align: right;
-	font-size: .85rem;
 }
-[mol_calendar_cell][other] {
+[mol_calender_other_month] {
 	opacity: .5;
 }
-[mol_calendar_cell][weekend] {
+[mol_calender_weekend] {
 	color: var(--mol_skin_base);
 }
-[mol_calendar_cell][holiday] {
-	color: var(--mol_skin_accent_text);
+[mol_calendar_is_holiday] {
+	color: var(--mol_skin_base);
 }

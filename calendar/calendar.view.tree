@@ -3,23 +3,23 @@ $mol_calendar $mol_view
 		<= Head $mol_view
 			sub /
 				<= head /
-		<= Rows $mol_view
+		<= Days $mol_view
 			sub /
-				<= rows /
+				<= days /
 	-
 	Head_day!id $mol_view
 		sub /
 			<= head_day!id \
 	-
-	Row!row $mol_view
+	Week!row $mol_view
 		sub / 
-			<= cells!row /
+			<= week_days!row /
 	-
-	Cell!day $mol_view
+	Day!day $mol_view
 		attr *
-			other <= other!day false
-			weekend <= weekend!day false
-			is_holiday false
+			mol_calender_other_month <= other_month!day false
+			mol_calender_weekend <= weekend!day false
+			mol_calender_is_holiday <= is_holiday!day false
 		sub / 
-			<= cell!day \
+			<= day!day \
 	

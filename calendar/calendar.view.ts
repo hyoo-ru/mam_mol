@@ -1,15 +1,19 @@
 namespace $.$mol {
  	export class $mol_calendar extends $.$mol_calendar {
-		first_day(){
+
+		month_first_day(){
 			return new $mol_time_moment().merge({ day : 0 })
 		}
 
-		start_draw_day(){
+		current_month(){
+			return new $mol_time_moment().merge({ month : 0 })
+		}
+
+		day_draw_from(){
 			const usa_day = 1
-			let first_wd = this.first_day().weekday
-			let start_draw_day = this.first_day().shift( { day : - first_wd + usa_day } )
-			
-			return start_draw_day
+			let first_wd = this.month_first_day().weekday
+			let day_draw_from = this.month_first_day().shift( { day : - first_wd + usa_day } )
+			return day_draw_from
 		}
 
 		head(){
@@ -21,40 +25,45 @@ namespace $.$mol {
 		}
 
 		head_day( id : number ){
-			return this.start_draw_day().shift( { day : id } ).toString('WD')
+			return this.day_draw_from().shift( { day : id } ).toString('WD')
 		}
 
-		rows(){
+		// sum_week_of_month(){
+		// 	let date = this.month_first_day().week
+			
+		// }
+
+		days(){
 			const week : $mol_view[] = []
 			for( let row = 0; row < 6; ++row ){
-				week.push( this.Row( row ))
+				week.push( this.Week( row ))
 			}
 			return week
 		}
 
-		cells(row : number){
+		week_days(row : number){
 			const day : $mol_view[] = []
-			let start_day = this.start_draw_day()
+			let start_day = this.day_draw_from()
+			let is_week = 7 * row
 			for( let col = 0; col < 7; ++col ){
-				day.push( this.Cell( start_day.shift({ day : (col + 7 * row)}).toString("YYYY-MM-DD") ) )
+				day.push( this.Day( start_day.shift({ day : (col + is_week)}).toString("YYYY-MM-DD") ) )
 			}
 			return day
 		}
 
-		cell(cells : string){
-			return cells.slice(8,10)
+		day(week_days : string){
+			return new $mol_time_moment(week_days).toString("DD")
 		}
 
-		other(cells : string){
-			let month = cells.slice(5,7)
-			let this_month = this.first_day().toString("MM")
-			
-			return this_month != month ? true : false
+		other_month(week_days : string){
+			let other_month = new $mol_time_moment(week_days).toString("MM")
+			let this_month = this.month_first_day().toString("MM")
+			return this_month == other_month ? false : true
 		}
 
-		weekend(cells : string){
-			let day = new $mol_time_moment(cells).weekday
-			return  day == 0 ? true : day == 6 ? true : false
+		weekend(week_days : string){
+			let day = new $mol_time_moment(week_days).weekday
+			return  day == 0 && 6 ? true : false
 		}
 
 	 }
