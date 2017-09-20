@@ -214,11 +214,12 @@ namespace $ {
 			const names = [] as string[]
 			
 			for( let name of this.view_names_owned() ) {
-				names.push( name )
+				if( names.indexOf( name ) < 0 ) names.push( name )
 			}
 
 			for( let Class of ( this.constructor as typeof $mol_view ).view_classes() ) {
-				names.push( $mol_func_name( Class ) )
+				const name = $mol_func_name( Class )
+				if( names.indexOf( name ) < 0 ) names.push( name )
 			}
 
 			return names
@@ -255,11 +256,6 @@ namespace $ {
 		
 		event_async() : { [ key : string ] : ( event : Event )=> void } {
 			return {}
-		}
-		
-		'locale_contexts()' : string[]
-		locale_contexts() {
-			return this['locale_contexts()'] || ( this[ 'locale_contexts()' ] = this.view_names() )
 		}
 		
 		plugins() {

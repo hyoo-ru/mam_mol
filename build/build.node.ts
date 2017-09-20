@@ -37,7 +37,7 @@ namespace $ {
 					
 					if( /(view\.tree)$/.test( name ) ) {
 						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
-						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale.json` )
+						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
 						
 						const tree = $mol_tree.fromString( String( child.content() ) , child.path() )
 						const res = $mol_view_tree_compile( tree )
@@ -415,7 +415,7 @@ namespace $ {
 			var stages = [ 'test' , 'dev' ]
 			
 			if( bundle ) {
-				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(test\.js|js|css|deps\.json|locale(?:=(.*))?\.json))?$/.exec(
+				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(test\.js|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(
 					bundle
 				)
 				
@@ -450,7 +450,7 @@ namespace $ {
 					if( !type || type === 'view.tree' ) {
 						res = res.concat( this.bundleViewTree( { path , exclude , bundle : env } ) )
 					}
-					if( !type || /^locale(?:=\w+)?.json$/.test( type ) ) {
+					if( !type || /^locale=(\w+).json$/.test( type ) ) {
 						res = res.concat(
 							this.bundleLocale(
 								{
@@ -760,14 +760,14 @@ namespace $ {
 		bundleLocale( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			const pack = $mol_file.absolute( path )
 			
-			const sources = this.sourcesAll( { path , exclude } ).filter( src => /(locale(?:=\w+)?\.json)$/.test( src.name() ) )
+			const sources = this.sourcesAll( { path , exclude } ).filter( src => /(locale=(\w+)\.json)$/.test( src.name() ) )
 			if( !sources.length ) return []
 			
-			const locales : { [ key : string ] : { [ key : string ] : string } } = { 'en' : {} }
+			const locales = {} as { [ key : string ] : { [ key : string ] : string } }
 			
 			sources.forEach(
 				src => {
-					const [ ext , lang = '' ] = /locale(?:=(\w+))?\.json$/.exec( src.name() )
+					const [ ext , lang ] = /locale=(\w+)\.json$/.exec( src.name() )
 					
 					if( !locales[ lang ] ) locales[ lang ] = {}
 					
@@ -779,18 +779,26 @@ namespace $ {
 			)
 			
 			const targets = Object.keys( locales ).map( lang => {
-				const ext = lang ? `locale=${ lang }.json` : `locale.json`
-				const target = pack.resolve( `-/${bundle}.${ ext }` )
+				const target = pack.resolve( `-/${bundle}.locale=${ lang }.json` )
 				
 				const locale = locales[ lang ]
-				if( locales[''] ) {
-					for( let key in locales[''] ) {
-						if( locale[ key ] ) continue
-						locale[ key ] = locales[''][ key ] 
+
+				if( lang !== 'en' && locales['en'] ) {
+					
+					for( let key in locale ) {
+						if( key in locales[ 'en' ] ) continue
+						console.warn( `Not translated to "en": ${ key }` )
 					}
+
 				}
 				
-				target.content( JSON.stringify( locales[ lang ] , null , '\t' ) )
+				const locale_sorted = {}
+
+				for( let key of Object.keys( locale ).sort() ) {
+					locale_sorted[ key ] = locale[ key ]
+				}
+
+				target.content( JSON.stringify( locale_sorted , null , '\t' ) )
 				
 				this.logBundle( target )
 				

@@ -21,11 +21,9 @@ namespace $ {
 			return JSON.parse( $mol_file.relative( `-/web.locale=${ lang }.json` ).content() )
 		}
 		
-		@ $mol_mem
-		static texts( next? : $mol_locale_dict ) : $mol_locale_dict {
+		@ $mol_mem_key
+		static texts( lang : string , next? : $mol_locale_dict ) : $mol_locale_dict {
 			if( next ) return next
-			
-			const lang = this.lang()
 			
 			try {
 				return this.source( lang ).valueOf()
@@ -36,16 +34,16 @@ namespace $ {
 			}
 		}
 		
-		static text( contexts : string[] , key : string ) {
-			const texts = this.texts()
-			
-			for( let i = 0 ; i < contexts.length ; ++i ) {
-				const text = texts[ `${ contexts[i] }_${ key }` ]
+		static text( key : string ) {
+
+			for( let lang of [ this.lang() , 'en' ] ) {
+				
+				const text = this.texts( lang )[ key ]
 				if( text ) return text
+
+				console.warn( `Not translated to "${ lang }": ${ key }` )
 			}
-			
-			console.warn( 'Locale text not found: ' , `(${ contexts.join( '|' ) })_${ key }` )
-			
+						
 			return `<${ key }>`
 		}
 		

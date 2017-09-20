@@ -4,7 +4,7 @@ $mol_string_demo $mol_demo_small
 		<= Simple $mol_string
 			value?val <=> name?val \
 		<= Hint $mol_string
-			hint @ \Batman
+			hint \Batman
 			value?val <=> name?val \
 		<= Filled $mol_string
 			value?val <=> name2?val \Jocker
