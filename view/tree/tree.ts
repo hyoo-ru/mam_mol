@@ -143,8 +143,9 @@ namespace $ {
 						case( value.type === '' ) :
 							return JSON.stringify( value.value )
 						case( value.type === '@' ) :
-							locales[ `${ def.type }_${ param.type }` ] = value.value
-							return`$mol_locale.text( this.locale_contexts() , ${ JSON.stringify( param.type ) } )`
+							const key = `${ def.type }_${ param.type }`
+							locales[ key ] = value.value
+							return`$mol_locale.text( ${ JSON.stringify( key ) } )`
 						case( value.type === '-' ) :
 							return null
 						case( value.type === '/' ) :

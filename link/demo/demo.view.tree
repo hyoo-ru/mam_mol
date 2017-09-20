@@ -3,20 +3,20 @@ $mol_link_demo $mol_demo_small
 	sub /
 		<= This $mol_link
 			sub /
-				<= This_label @ \This page
+				<= this_label @ \This page
 		<= Red $mol_link
 			arg * color \red
 			sub /
-				<= Red_label @ \Red
+				<= red_label @ \Red
 		<= Green $mol_link
 			arg * color \green
 			sub /
-				<= Green_label @ \Green
+				<= green_label @ \Green
 		<= Blue $mol_link
 			arg * color \blue
 			sub /
-				<= Blue_label @ \Blue
+				<= blue_label @ \Blue
 		<= External $mol_link
 			uri \http://example.org
 			title \example.org
-			hint <= External_hint @ \external link
+			hint <= external_hint @ \external link
