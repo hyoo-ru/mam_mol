@@ -14,15 +14,9 @@ namespace $.$mol {
 			return new $mol_time_moment().merge({ month : 0 })
 		}
 
-		week_start_from(){
-			let day = 1
-			return day
-		}
-
 		day_draw_from(){
 			let first_wd = this.month_first_day().weekday
-			let start_from = this.week_start_from()
-			let day_draw_from = this.month_first_day().shift( { day : - first_wd + start_from } )
+			let day_draw_from = this.month_first_day().shift( { day : - first_wd } )
 			return day_draw_from
 		}
 
@@ -35,7 +29,6 @@ namespace $.$mol {
 		}
 
 		head_day( id : number ){
-			let start_from = this.week_start_from()
 			return this.day_draw_from().shift( { day : id } ).toString('WD')
 		}
 
