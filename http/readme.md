@@ -6,7 +6,7 @@ Reactive http request implementation.
 
 ```typescript
 	users() {
-		return $mol_http.resource( 'users.json' ).json< { name : string }[] >()
+		return $mol_http.resource( 'users.json' ).json() as { name : string }[]
 	}
 ```
 
@@ -18,7 +18,7 @@ Reactive http request implementation.
 
 ## Registry
 
-**`resource( uri : string ) : $mol_http`**
+**`$mol_http.resource( uri : string ) : $mol_http`**
 
 Instances for uri's.
 
