@@ -63,5 +63,10 @@ namespace $ {
 			)
 		} , 
 	
+		'iso week day'() {
+			$mol_assert_equal( new $mol_time_moment( '2017-09-17' ).weekday , 6 )
+			$mol_assert_equal( new $mol_time_moment( '2017-09-18' ).weekday , 0 )
+		} ,
+
 	} )
 }

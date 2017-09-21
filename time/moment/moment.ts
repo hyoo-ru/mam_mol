@@ -71,7 +71,7 @@ namespace $ {
 		readonly offset : $mol_time_duration
 
 		get weekday() {
-			return this.native.getDay()
+			return ( this.native.getDay() + 6 ) % 7
 		}
 
 		private _native : Date
