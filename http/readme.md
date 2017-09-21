@@ -18,7 +18,7 @@ Reactive http request implementation.
 
 ## Registry
 
-**`resource( uri : string ) : $mol_http`**
+**`$mol_http.resource( uri : string ) : $mol_http`**
 
 Instances for uri's.
 
