@@ -16,8 +16,7 @@ namespace $.$mol {
 
 		day_draw_from(){
 			let first_wd = this.month_first_day().weekday
-			let day_draw_from = this.month_first_day().shift( { day : - first_wd } )
-			return day_draw_from
+			return this.month_first_day().shift( { day : - first_wd } )
 		}
 
 		head(){
@@ -33,8 +32,8 @@ namespace $.$mol {
 		}
 
 		sum_week_of_month(){
-			let week = 604800 * 1000
-			let sum = (this.month_last_day().valueOf() - this.day_draw_from().valueOf()) / ( week )
+			let week_milisec = 604800 * 1000
+			let sum = (this.month_last_day().valueOf() - this.day_draw_from().valueOf()) / ( week_milisec )
 			return Math.ceil(sum)
 		}
 
@@ -70,7 +69,7 @@ namespace $.$mol {
 
 		weekend(week_days : string){
 			let day = new $mol_time_moment(week_days).weekday
-			return  day == 0 || day == 6 ? true : false
+			return  day == 5 || day == 6 ? true : false
 		}
 
 	 }
