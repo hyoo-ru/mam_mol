@@ -6,7 +6,7 @@ Reactive http request implementation.
 
 ```typescript
 	users() {
-		return $mol_http.resource( 'users.json' ).json< { name : string }[] >()
+		return $mol_http.resource( 'users.json' ).json() as { name : string }[]
 	}
 ```
 
