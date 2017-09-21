@@ -2,6 +2,7 @@ namespace $ {
 	
 	export function $mol_test( set : { [ name : string ] : string | ( ()=> void ) } ) {
 		for( let name in set ) $mol_test_all.push( new $mol_test_case( set[ name ] ) )
+		$mol_test_schedule()
 	}
 	
 	export var $mol_test_all : $mol_test_case[] = []
@@ -28,6 +29,17 @@ namespace $ {
 			this.code()
 		}
 		
+	}
+
+	let scheduled = false
+	export function $mol_test_schedule() {
+		if( scheduled ) return
+		scheduled = true
+
+		setTimeout( ()=> {
+			scheduled = false
+ 			$mol_test_run()
+		} )
 	}
 	
 }
