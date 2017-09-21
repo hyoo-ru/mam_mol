@@ -48,7 +48,7 @@ moment.second // [ 0 .. 60 ) (fractional)
 moment.offset // $mol_time_duration
 
 // Day of week
-moment.weekday // 0 - sunday , 6 - saturday
+moment.weekday // 0 - monday , 6 - sunday
 
 // Timestamp
 moment.valueOf() // count of milliseconds from unix epoch
