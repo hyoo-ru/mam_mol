@@ -1,4 +1,5 @@
 namespace $.$mol {
+	
  	export class $mol_calendar extends $.$mol_calendar {
 
 		month_first_day(){
