@@ -5,6 +5,10 @@ namespace $.$mol {
 			return new $mol_time_moment().merge({ day : 0 })
 		}
 
+		month_last_day(){
+			return this.month_first_day().shift({ month: + 1, day: - 1})
+		}
+
 		current_month(){
 			return new $mol_time_moment().merge({ month : 0 })
 		}
@@ -28,14 +32,17 @@ namespace $.$mol {
 			return this.day_draw_from().shift( { day : id } ).toString('WD')
 		}
 
-		// sum_week_of_month(){
-		// 	let date = this.month_first_day().week
-			
-		// }
+		sum_week_of_month(){
+			let week = 604800 * 1000
+			let sum = (Number(this.month_last_day()) - Number(this.day_draw_from())) / ( week )
+			return Math.ceil(sum)
+		}
 
 		days(){
 			const week : $mol_view[] = []
-			for( let row = 0; row < 6; ++row ){
+			let count_week = this.sum_week_of_month()
+
+			for( let row = 0; row < count_week; ++row ){
 				week.push( this.Week( row ))
 			}
 			return week
@@ -63,7 +70,7 @@ namespace $.$mol {
 
 		weekend(week_days : string){
 			let day = new $mol_time_moment(week_days).weekday
-			return  day == 0 && 6 ? true : false
+			return  day == 0 || day == 6 ? true : false
 		}
 
 	 }
