@@ -1,0 +1,3 @@
+deploy \/mol/perf/dbmon/_ENV.js
+deploy \/mol/perf/dbmon/_memory-stats.js
+deploy \/mol/perf/dbmon/_monitor.js
