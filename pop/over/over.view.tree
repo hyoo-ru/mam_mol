@@ -5,5 +5,5 @@ $mol_pop_over $mol_pop
 		tabindex 0
 	event *
 		^
-		mouseover?event <=> event_show?event null
-		mouseout?event <=> event_hide?event null
+		mouseenter?event <=> event_show?event null
+		mouseleave?event <=> event_hide?event null
