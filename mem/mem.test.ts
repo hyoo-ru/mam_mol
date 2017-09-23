@@ -95,6 +95,7 @@ namespace $ {
 		'must be deferred destroyed when no longer referenced'() {
 
 			let foo : any
+			let foo_destroyed = false
 
 			class B extends $mol_object {
 
@@ -106,7 +107,11 @@ namespace $ {
 
 				@ $mol_mem
 				foo() {
-					return foo = new $mol_object
+					return foo = new class extends $mol_object {
+						destructor() {
+							foo_destroyed = true
+						}
+					}
 				}
 
 				@ $mol_mem
@@ -124,8 +129,7 @@ namespace $ {
 			b.showing( false )
 			b.bar()
 			$mol_defer.run()
-			$mol_assert_ok( foo.destroyed() )
-			$mol_assert_ok( bar.destroyed() )
+			$mol_assert_ok( foo_destroyed )
 			$mol_assert_not( b.bar() )
 
 			b.showing( true )

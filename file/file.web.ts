@@ -47,10 +47,10 @@ namespace $ {
 				if( prev === res ) break
 			}
 			
-			return this.Class().absolute( res )
+			return ( this.constructor as typeof $mol_file ).absolute( res )
 		}
 		
-		relate( base = this.Class().relative( '.' ) ) {
+		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' ) ) {
 			throw new Error( 'Not implemented yet' )
 		}
 		

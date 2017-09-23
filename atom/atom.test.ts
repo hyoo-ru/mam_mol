@@ -131,8 +131,6 @@ module $ {
 			
 			$mol_assert_equal( test_counter.get() , 3 )
 			$mol_assert_equal( res[0] , error )
-			
-			slave.destroyed( true )
 		} ,
 		
 		'error handling'() {

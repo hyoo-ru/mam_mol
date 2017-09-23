@@ -1,4 +1,4 @@
-$mol_meter $mol_view
+$mol_meter $mol_plugin
 	width?val 0
 	height?val 0
 	-

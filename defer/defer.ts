@@ -7,9 +7,8 @@ namespace $ {
 			$mol_defer.add( this )
 		}
 		
-		destroyed( next? : boolean ) {
-			if( next ) $mol_defer.drop( this )
-			return super.destroyed( next )
+		destructor() {
+			$mol_defer.drop( this )
 		}
 		
 		static all : $mol_defer[] = []

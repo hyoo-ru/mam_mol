@@ -16,11 +16,28 @@ namespace $ {
 			if( !atom ) {
 				if( force && ( next === undefined ) ) return next
 				
-				store.set( host , atom = new $mol_atom<Value>(
-					host ,
-					value.bind( host ) ,
-					name + '()' ,
-				) )
+				const id = `${ host }.${ name }()`
+				atom = new $mol_atom<Value>( id , function() {
+					const v = value.apply( host , arguments )
+					if( v instanceof $mol_object ) {
+						if( !v.object_host() ) {
+							v.object_host( host )
+							v.object_field( name )
+							v.object_id( id )
+						}
+					}
+					return v
+				} )
+
+				atom.object_owner( host )
+				
+				const destructor = atom.destructor
+				atom.destructor = ()=> {
+					store.delete( host )
+					destructor.call( atom )
+				}
+
+				store.set( host , atom )
 			}
 			
 			return atom.value( next , force )
@@ -52,11 +69,26 @@ namespace $ {
 			if( !atom ) {
 				if( force && ( next === undefined ) ) return next
 				
-				dict[ key_str ] = atom = new $mol_atom<Value>(
-					host ,
-					value.bind( host , key ) ,
-					name + "(" + key_str + ")" ,
-				)
+				const id = `${ host }.${ name }(${ key_str })`
+				atom = new $mol_atom<Value>( id , function( ... args: any[] ) {
+					const v = value.apply( host , [ key , ... args ] )
+					if( v instanceof $mol_object ) {
+						if( !v.object_host() ) {
+							v.object_host( host )
+							v.object_field( name )
+							v.object_id( id )
+						}
+					}
+					return v
+				} )
+
+				const destructor = atom.destructor
+				atom.destructor = ()=> {
+					delete dict[ key_str ]
+					destructor.call( atom )
+				}
+
+				dict[ key_str ] = atom
 
 			}
 			

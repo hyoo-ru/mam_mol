@@ -82,7 +82,7 @@ namespace $ {
 				if( prev === res ) break
 			}
 			
-			return this.Class().item( res )
+			return ( this.constructor as typeof $mol_webdav ).item( res )
 		}
 		
 		prop( prop: string ) {

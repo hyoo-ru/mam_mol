@@ -6,7 +6,7 @@ namespace $.$$ {
 		dom_node() {
 			if( this['dom_node()'] ) return this['dom_node()']
 			
-			const node = ( this.object_owner() as $mol_view ).dom_node()
+			const node = ( this.object_host() as $mol_view ).dom_node()
 
 			$mol_dom_render_attributes( node , this.attr_static() )
 			$mol_dom_render_events( node , this.event() )

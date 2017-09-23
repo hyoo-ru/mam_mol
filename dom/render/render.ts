@@ -12,16 +12,6 @@ namespace $ {
 			if( el[ key ] === val ) continue
 			
 			el[ key ] = val
-			if( el[ key ] === val ) continue
-			
-			const setter = ()=> {
-				el.removeEventListener( 'DOMNodeInsertedIntoDocument' , setter , { passive : true } as any )
-				new $mol_defer( ()=> {
-					el[ key ] = val
-				} )
-			}
-			el.addEventListener( 'DOMNodeInsertedIntoDocument' , setter , { passive : true } as any )
-			
 		}
 	}
 	
@@ -93,7 +83,6 @@ namespace $ {
 	) {
 		for( let name in attrs ) {
 			let val = attrs[ name ] as any
-			if( el.getAttribute( name ) === val ) continue
 			if( val === null || val === false ) el.removeAttribute( name )
 			else el.setAttribute( name , String( val ) )
 		}

@@ -1,10 +1,6 @@
 namespace $.$$ {
 	export class $mol_meter extends $.$mol_meter {
 		
-		dom_node() {
-			return ( this.object_owner() as $mol_view ).dom_node()
-		}
-		
 		@ $mol_mem
 		rect() {
 			if( this.dom_node() !== $mol_dom_context.document.body ) {

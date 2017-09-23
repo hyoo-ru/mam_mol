@@ -1,13 +1,14 @@
 namespace $ {
 	
-	export function $mol_log( path : string , values : any[] ) {
+	export function $mol_log( path : any , ... values : any[] ) {
 		
 		var filter = $mol_log.filter()
 		if( filter == null ) return
+		
+		path = String( path )
 		if( path.indexOf( filter ) === -1 ) return
 		
-		var time = new Date().toLocaleTimeString()
-		console.log( time , path , values )
+		console.debug( path , ... values )
 
 		var debug = $mol_log.debug()
 		if( debug == null ) return

@@ -34,13 +34,13 @@ namespace $ {
 		}
 		
 		static summ( a : $mol_unit , b : $mol_unit ) {
-			var Class = a.Class()
-			if( Class !== b.Class() ) throw new Error( `Not same measure: ${Class} , ${b.Class()}` )
+			var Class = a.constructor as any
+			if( Class !== b.constructor ) throw new Error( `Not same measure: ${Class} , ${b.constructor}` )
 			return new Class( a.valueOf() + b.valueOf() )
 		}
 		
 		mult( m : number ) : this {
-			var Class = this.Class()
+			var Class = this.constructor as any
 			return new Class( this.valueOf() * m )
 		}
 		
