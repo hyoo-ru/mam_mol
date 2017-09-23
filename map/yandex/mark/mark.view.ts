@@ -9,8 +9,8 @@ namespace $.$$ {
 			return new ymaps.Placemark( this.pos() , {
 				hintContent : this.hint() ,
 				iconContent : this.title() ,
-                balloonContent : this.content() ,
-            } , {
+				balloonContent : this.content() ,
+			} , {
 				preset : "islands#redStretchyIcon" ,
 			} )
 		}
