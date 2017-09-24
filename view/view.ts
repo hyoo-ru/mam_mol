@@ -173,7 +173,7 @@ namespace $ {
 			$mol_dom_render_fields( node , fields )
 			new $mol_defer( ()=> $mol_dom_render_fields( node , fields ) )
 
-			if( !this.object_host() ) this.$.$mol_dom_context.document.title = this.title()			
+			if( this.object_host() === this.constructor ) this.$.$mol_dom_context.document.title = this.title()			
 		}
 
 		@ $mol_mem
