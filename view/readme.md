@@ -209,7 +209,7 @@ $my_rotate $mol_view
 namespace $ { export class $my_rotate extends $mol_view {
 
 	style() {
-		return { ...super.field() ,
+		return { ...super.style() ,
 			"transform" : "rotate( 180deg )" ,
 		}
 	}
