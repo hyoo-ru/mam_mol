@@ -42,7 +42,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol_app_hello](app/hello) - Very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - Demonstration of all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/))
-* [$mol_app_calc](app/calc) - Simple spreedsheet ([online](http://eigenmethod.github.io/mol/calc/))
+* [$mol_app_calc](app/calc) - Simple spreedsheet ([online](http://mol.js.org/app/calc/#title=a*x**2%20%2B%20b*x%20%2B%20c%20%3D%200/A1=a/B2=6/A2=3/B1=b/C1=c/E1=D/E2=%3D%20B2**2%20-%204*A2*C2/G1=x1/G2=%3D%20(%20-B2%20%2B%20sqrt(E2)%20)%20%2F%202%20%2F%20A2/H1=x2/H2=%3D%20(%20-B2%20-%20sqrt(E2)%20)%20%2F%202%20%2F%20A2/C2=0))
 * [$mol_app_files](app/files) - [WebDAV](https://wikipedia.org/wiki/WebDAV) file manager ([online](https://eigenmethod.github.io/mol/app/files/))
 * [$mol_app_questions](app/questions) - Questions from [StackOverflow.com](http://stackoverflow.com) ([online](http://eigenmethod.github.io/mol/app/questions/)) 
 * [$mol_app_lamps](app/lamps) - Lamps database from [LampTest.ru](http://lamptest.ru) ([online](http://eigenmethod.github.io/mol/app/lamps/)) 
