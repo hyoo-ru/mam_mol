@@ -42,6 +42,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol_app_hello](app/hello) - Very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - Demonstration of all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/))
+* [$mol_app_calc](app/calc) - Simple spreedsheet ([online](http://eigenmethod.github.io/mol/calc/))
 * [$mol_app_files](app/files) - [WebDAV](https://wikipedia.org/wiki/WebDAV) file manager ([online](https://eigenmethod.github.io/mol/app/files/))
 * [$mol_app_questions](app/questions) - Questions from [StackOverflow.com](http://stackoverflow.com) ([online](http://eigenmethod.github.io/mol/app/questions/)) 
 * [$mol_app_lamps](app/lamps) - Lamps database from [LampTest.ru](http://lamptest.ru) ([online](http://eigenmethod.github.io/mol/app/lamps/)) 
