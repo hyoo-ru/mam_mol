@@ -138,12 +138,12 @@ namespace $ {
 					needCache = true
 				}
 				
-				function getValue( value : $mol_tree ) { try {
+				const getValue = ( value : $mol_tree )=> { try {
 					switch( true ) {
 						case( value.type === '' ) :
 							return JSON.stringify( value.value )
 						case( value.type === '@' ) :
-							const key = `${ def.type }_${ param.type }`
+							const key = `${ def.type }_${ param.type.replace( /[?!].*/ , '' ) }`
 							locales[ key ] = value.value
 							return`$mol_locale.text( ${ JSON.stringify( key ) } )`
 						case( value.type === '-' ) :
