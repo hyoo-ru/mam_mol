@@ -4,6 +4,10 @@ namespace $.$$ {
 		event_key( event? : KeyboardEvent ) {
 			if( event.defaultPrevented ) return
 			
+			if( this.mod_ctrl() && !event.ctrlKey ) return
+			if( this.mod_shift() && !event.shiftKey ) return
+			if( this.mod_alt() && !event.altKey ) return
+			
 			switch( event.keyCode ) {
 				case $mol_keyboard_code.up : return this.event_up( event )
 				case $mol_keyboard_code.down : return this.event_down( event )
