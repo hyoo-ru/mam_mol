@@ -20,6 +20,7 @@ $mol_grid $mol_scroll
 		height <= row_height 40
 		cells <= cells!id /
 	-
+	Cell!id $mol_view
 	cell!id null
 	Cell_text!id $mol_grid_cell
 		sub /
@@ -29,6 +30,7 @@ $mol_grid $mol_scroll
 			<= cell_content_number!id <= cell_content!id /
 	Col_head!id $mol_float
 		dom_name \th
+		horizontal false
 		sub /
 			<= col_head_content!id /
 	Cell_branch!id $mol_check_expand

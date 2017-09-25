@@ -33,7 +33,7 @@ namespace $ {
 		@ $mol_mem
 		focused( next?: boolean ) {
 			let node = this.dom_node()
-			const value = $mol_view_selection.focused( next === undefined ? undefined : next ? [ node ] : [] )
+			const value = $mol_view_selection.focused( next === undefined ? undefined : next ? [ node ] : [] ) || []
 			return value.indexOf( node ) !== -1
 		} 
 		

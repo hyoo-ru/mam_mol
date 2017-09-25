@@ -6,7 +6,7 @@ namespace $.$$ {
 		event_change( next? : Event ) {
 			if( !next ) return
 			
-			const val = ( next.target as HTMLInputElement ).value.trim()
+			const val = ( next.target as HTMLInputElement ).value
 			
 			clearTimeout( this._timer )
 			this._timer = setTimeout( () => this.value( val ) , this.debounce() )
@@ -16,7 +16,7 @@ namespace $.$$ {
 			if( !next ) return
 			
 			if( next.keyCode === $mol_keyboard_code.enter ) {
-				this.value( ( next.target as HTMLInputElement ).value.trim() )
+				this.value( ( next.target as HTMLInputElement ).value )
 			}
 		} 
 		

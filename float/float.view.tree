@@ -1,4 +1,6 @@
 $mol_float $mol_view
+	vertical true
+	horizontal true
 	style *
 		^
 		transform <= shiftStyle \

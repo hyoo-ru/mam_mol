@@ -1,0 +1,43 @@
+[mol_app_calc_title_edit]:enabled {
+	color: inherit;
+	background: transparent;
+}
+
+[mol_app_calc_pos] {
+	flex: none;
+	width: 2ch;
+	box-sizing: content-box;
+	font-family: var(--mol_skin_font_monospace);
+}	
+	
+[mol_app_calc_data] {
+	align-self: stretch;
+	flex: auto;
+}
+
+[mol_app_calc_col_head] ,
+[mol_app_calc_row_head] {
+	font-family: var(--mol_skin_font_monospace);
+	background: var(--mol_skin_light);
+	color: var(--mol_skin_passive_text);
+	user-select: none;
+	font-weight: inherit;
+}
+
+[mol_app_calc_row_head] {
+	min-width: 2ch;
+}
+
+[mol_app_calc_cell] {
+	user-select: text;
+	background: var(--mol_skin_card);
+}
+
+[mol_app_calc_cell_selected] {
+	box-shadow: var(--mol_skin_focus_outline);
+	z-index: 1;
+}
+
+[mol_app_calc_cell_type="number"] {
+	text-align: right;
+}
