@@ -39,18 +39,12 @@ namespace $.$$ {
 
 		@ $mol_mem
 		col_ids() {
-			return $mol_range_in({
-				item : this.number2string ,
-				length : this.dimensions().cols
-			}).valueOf() as string[]
+			return Array( this.dimensions().cols ).join(' ').split(' ').map( ( _ , i )=> this.number2string( i ) )
 		}
 
 		@ $mol_mem
 		row_ids() {
-			return $mol_range_in({
-				item : i => i + 1 ,
-				length : this.dimensions().rows
-			}).valueOf() as string[]
+			return Array( this.dimensions().rows ).join(' ').split(' ').map( ( _ , i )=> i + 1 )
 		}
 
 		number2string( numb : number ) {
