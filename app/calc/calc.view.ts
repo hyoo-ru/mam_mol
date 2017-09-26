@@ -179,6 +179,28 @@ namespace $.$$ {
 			event.preventDefault()
 		}
 
+		download_file() {
+			return `${ this.title() }.csv`
+		}
+
+		download_uri( event? : Event ) {
+			const table : string[][] = []
+			const dims = this.dimensions()
+
+			for( let row = 1 ; row < dims.rows ; ++ row ) {
+				const row_data = [] as any[]
+				table.push( row_data )
+				
+				for( let col = 0 ; col < dims.cols ; ++ col ) {
+					row_data[ col ] = String( this.result({ row , col : this.number2string( col ) }) )
+				}
+			}
+
+			const content = table.map( row => row.map( val => `"${ val.replace( /"/g , '""' ) }"` ).join( ';' ) ).join( '\n' )
+
+			return `data:text/csv;charset=utf-8,${ encodeURIComponent( content ) }`
+		}
+
 	}
 
 	export class $mol_app_calc_cell extends $.$mol_app_calc_cell {
