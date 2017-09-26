@@ -69,7 +69,7 @@ namespace $ {
 			const headers = this.headers()
 			for( let name in headers ) native.setRequestHeader( name , headers[ name ] )
 			
-			native.send( ... next || [] )
+			native.send( ... $mol_maybe( next ) )
 			
 			throw new $mol_atom_wait( `${ method } ${ uri }` )
 		}

@@ -66,7 +66,6 @@ namespace $.$$ {
 			return numb
 		}
 
-		@ $mol_mem
 		title( next? : string ) {
 			const title = this.$.$mol_state_arg.value( `title` , next )
 			return title == undefined ? super.title() : title
