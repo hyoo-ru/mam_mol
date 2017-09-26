@@ -14,6 +14,10 @@ namespace $.$$ {
 		event_click( event? : Event ) {
 			setTimeout( ()=> this.focused( false ) , 200 )
 		}
+
+		file_name() {
+			return null as string
+		}
 		
 	}
 	

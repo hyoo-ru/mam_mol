@@ -6,6 +6,7 @@ $mol_link $mol_view
 		href <= uri \
 		title <= hint \
 		target <= target \_self
+		download <= file_name \
 		mol_link_current <= current false
 	sub / <= title -
 	arg *
