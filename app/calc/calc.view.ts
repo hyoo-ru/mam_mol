@@ -153,7 +153,9 @@ namespace $.$$ {
 		result( id : { row : number , col : string } ) {
 			const res = this.func( id ).call()
 			if( res === undefined ) return ''
-			return res
+			if( res === '' ) return ''
+			if( isNaN( res ) ) return res
+			return Number( res )
 		}
 
 		paste( event? : ClipboardEvent ) {
