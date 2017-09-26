@@ -10,7 +10,7 @@
 	font-family: var(--mol_skin_font_monospace);
 }	
 	
-[mol_app_calc_data] {
+[mol_app_calc_body] {
 	align-self: stretch;
 	flex: auto;
 }

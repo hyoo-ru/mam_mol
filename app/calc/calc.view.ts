@@ -3,6 +3,20 @@ namespace $.$$ {
 	export class $mol_app_calc extends $.$mol_app_calc {
 
 		@ $mol_mem
+		formulas( next? : { [ key : string ] : string } ) {
+			const formulas : typeof next = {}
+			
+			let args = this.$.$mol_state_arg.dict()
+			if( next ) args = this.$.$mol_state_arg.dict({ ... args , ... next })
+
+			const ids = Object.keys( args ).filter( param => /^[A-Z]+\d+$/.test( param ) )
+			
+			for( let id of ids ) formulas[ id ] = args[ id ]
+
+			return formulas
+		}
+
+		@ $mol_mem
 		dimensions() {
 
 			const dims = {
@@ -10,9 +24,8 @@ namespace $.$$ {
 				cols : 3 ,
 			}
 
-			for( let key of Object.keys( this.$.$mol_state_arg.dict() ) ) {
+			for( let key of Object.keys( this.formulas() ) ) {
 				const parsed = /^([A-Z]+)(\d+)$/.exec( key )
-				if( !parsed ) continue
 
 				const rows = Number( parsed[2] ) + 2
 				const cols = this.string2number( parsed[1] ) + 3
@@ -106,14 +119,10 @@ namespace $.$$ {
 			return `${ id.col }${ id.row }`
 		}
 
-		@ $mol_mem
-		formulas( next? : { [ key : string ] : string } ) {
-			return JSON.parse( this.$.$mol_state_local.value( 'formulas' , next && JSON.stringify( next ) ) ) || {}
-		}
-
 		@ $mol_mem_key
 		formula( id : { row : number , col : string } , next? : string ) {
-			return this.$.$mol_state_arg.value( `${ id.col }${ id.row }` , next === undefined ? next : next || null ) || ''
+			const pos = `${ id.col }${ id.row }`
+			return this.formulas( next === undefined ? undefined : { [ pos ] : next || null } )[ pos ] || ''
 		}
 
 		formula_current( next? : string ) {
@@ -148,22 +157,22 @@ namespace $.$$ {
 		}
 
 		paste( event? : ClipboardEvent ) {
-			const table = event.clipboardData.getData( 'text/plain' ).split( '\n' ).map( row => row.split( '\t' ) ) as string[][]
+			const table = event.clipboardData.getData( 'text/plain' ).trim().split( '\n' ).map( row => row.split( '\t' ) ) as string[][]
 			if( table[0].length === 1 ) return
 
 			const anchor = this.current()
 			const row_start = anchor.row
 			const col_start = this.string2number( anchor.col )
+			const patch = {}
 
 			for( let row in table ) {
 				for( let col in table[ row ] ) {
-					const id = {
-						row : row_start + Number( row ) ,
-						col : this.number2string( col_start + Number( col ) ) ,
-					}
-					this.formula( id , table[ row ][ col ] )
+					const id = `${ this.number2string( col_start + Number( col ) ) }${ row_start + Number( row ) }`
+					patch[ id ] = table[ row ][ col ]
 				}
 			}
+
+			this.formulas( patch )
 
 			event.preventDefault()
 		}
