@@ -189,7 +189,7 @@ namespace $.$$ {
 				}
 			}
 
-			const content = table.map( row => row.map( val => `"${ val.replace( /"/g , '""' ) }"` ).join( ';' ) ).join( '\n' )
+			const content = table.map( row => row.map( val => `"${ val.replace( /"/g , '""' ) }"` ).join( '\t' ) ).join( '\n' )
 
 			this.download_uri( `data:text/csv;charset=utf-8,${ encodeURIComponent( content ) }` )
 			
