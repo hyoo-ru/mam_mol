@@ -9,7 +9,9 @@ namespace $.$$ {
 		}
 
 		scrolling() {
-			return this.$.$mol_scroll_moving()
+			if( this.horizontal() && this.$.$mol_scroll_moving_hor() ) return true
+			if( this.vertical() && this.$.$mol_scroll_moving_vert() ) return true
+			return false
 		}
 
 	}
