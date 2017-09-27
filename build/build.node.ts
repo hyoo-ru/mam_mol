@@ -1,3 +1,5 @@
+declare var process : any
+
 namespace $ {
 	
 	export class $mol_build extends $mol_object {
@@ -400,7 +402,7 @@ namespace $ {
 			
 			this.modEnsure( path )
 
-			this.modsRecursive( { path , exclude } ).forEach( mod => addMod( mod ) )
+			addMod( $mol_file.absolute( path ) )
 			
 			return graph
 		}

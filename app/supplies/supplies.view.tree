@@ -1,14 +1,14 @@
-$mol_app_supplies_root $mol_book
+$mol_app_supplies $mol_book
 	-
 	enter $mol_app_supplies_enter
 		entered?val <=> entered?val false
 	-
-	lister $mol_app_supplies_list
+	List $mol_app_supplies_list
 		minimal_width 400
 		supplies <= supplies /
 		search_query?val <=> supply_id?val \
 	-
-	detailer $mol_app_supplies_detail
+	Detail $mol_app_supplies_detail
 		minimal_width 400
 		supply <= supply null
 		event_top?val <=> event_front_up?val -

@@ -1,5 +1,5 @@
 namespace $.$$ {
-	export class $mol_app_supplies_root extends $.$mol_app_supplies_root {
+	export class $mol_app_supplies extends $.$mol_app_supplies {
 		
 		entered( next? : boolean ) {
 			return $mol_state_session.value( `${ this }.entered()` , next ) || false
@@ -8,9 +8,9 @@ namespace $.$$ {
 		pages() {	
 			if( !this.entered() ) return [ this.enter() ]
 				
-			const sub : $mol_view[] = [ this.lister() ]
+			const sub : $mol_view[] = [ this.List() ]
 				
-			if( this.supply() ) sub.push( this.detailer() )
+			if( this.supply() ) sub.push( this.Detail() )
 			
 			return sub
 		}
