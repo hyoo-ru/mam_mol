@@ -176,7 +176,7 @@ namespace $.$$ {
 			return `${ this.title() }.csv`
 		}
 
-		download_uri( event? : Event ) {
+		download_generate( event? : Event ) {
 			const table : string[][] = []
 			const dims = this.dimensions()
 
@@ -191,7 +191,9 @@ namespace $.$$ {
 
 			const content = table.map( row => row.map( val => `"${ val.replace( /"/g , '""' ) }"` ).join( ';' ) ).join( '\n' )
 
-			return `data:text/csv;charset=utf-8,${ encodeURIComponent( content ) }`
+			this.download_uri( `data:text/csv;charset=utf-8,${ encodeURIComponent( content ) }` )
+			
+			$mol_defer.run()
 		}
 
 	}

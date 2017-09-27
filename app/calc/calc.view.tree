@@ -11,7 +11,8 @@ $mol_app_calc $mol_page
 		<= Download $mol_link
 			hint <= download_hint @ \Download
 			file_name <= download_file \
-			uri <= download_uri \
+			uri <= download_uri?val \
+			click?event <=> download_generate?event null
 			sub /
 				<= Download_icon $mol_icon_load
 	sub /
