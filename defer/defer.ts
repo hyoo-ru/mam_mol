@@ -49,7 +49,7 @@ namespace $ {
 		static run() {
 			if( this.all.length === 0 ) return
 			this.schedule()
-			for( var defer : $mol_defer ; defer = this.all.pop() ; ) defer.run()
+			for( var defer : $mol_defer ; defer = this.all.shift() ; ) defer.run()
 			//this.unschedule()
 		}
 		

@@ -95,8 +95,12 @@ namespace $.$$ {
 
 		@ $mol_mem
 		current( next? : { row : number , col : string } ) {
-			new $mol_defer( ()=> this.Edit().focused( true ) )
+			new $mol_defer( ()=> this.Edit_current().focused( true ) )
 			return next || super.current()
+		}
+
+		Edit_current() {
+			return this.Edit( this.current() )
 		}
 
 		current_row( next? : number ) {

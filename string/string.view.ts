@@ -6,10 +6,10 @@ namespace $.$$ {
 		event_change( next? : Event ) {
 			if( !next ) return
 			
-			const val = ( next.target as HTMLInputElement ).value
-			
 			clearTimeout( this._timer )
-			this._timer = setTimeout( () => this.value( val ) , this.debounce() )
+			this._timer = setTimeout( () => {
+				this.value( ( next.target as HTMLInputElement ).value ) 
+			} , this.debounce() )
 		}
 		
 		event_key_press( next? : KeyboardEvent ) { 

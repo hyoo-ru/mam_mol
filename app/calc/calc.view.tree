@@ -22,14 +22,15 @@ $mol_app_calc $mol_page
 				<= Pos $mol_string
 					enabled false
 					value <= pos \
-				<= Edit $mol_string
-					hint \=
-					value?val <=> formula_current?val \
+				<= Edit_current $mol_string
 		<= Body $mol_grid
 			col_ids <= col_ids /
 			row_ids <= row_ids /
 			head_cells <= head_cells /
 			cells!row <= cells!row /
+	Edit!id $mol_string
+		hint \=
+		value?val <=> formula!id?val \
 	Col_head!id $mol_float
 		dom_name \th
 		horizontal false
