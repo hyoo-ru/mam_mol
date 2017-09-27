@@ -49,17 +49,14 @@ namespace $ {
 		}
 		
 		get( force? : $mol_atom_force ) {
-			if( this.status === $mol_atom_status.pulling ) {
-				throw new Error( `Cyclic atom dependency of ${ this }` )
-			}
-			
-			this.actualize( force )
 			
 			const slave = $mol_atom.stack[0]
 			if( slave ) {
 				this.lead( slave )
 				slave.obey( this )
 			}
+			
+			this.actualize( force )
 			
 			const value = this['value()'] as Value
 			
@@ -72,7 +69,9 @@ namespace $ {
 		
 		actualize( force? : $mol_atom_force ) {
 			
-			//this.log([ 'actualize' ])
+			if( this.status === $mol_atom_status.pulling ) {
+				throw new Error( `Cyclic atom dependency of ${ this }` )
+			}
 			
 			if( !force && this.status === $mol_atom_status.actual ) return
 			
@@ -217,7 +216,6 @@ namespace $ {
 			//}
 			
 			if( this.status === $mol_atom_status.actual ) {
-				//this.log([ 'checking' ])
 				this.status = $mol_atom_status.checking
 				
 				this.check_slaves()
@@ -230,8 +228,6 @@ namespace $ {
 			//if( this.status === $mol_atom_status.pulling ) {
 			//	throw new Error( `Obsolated while pulling ${ this }` )
 			//} 
-			
-			// this.log( [ 'obsolete' ] )
 			
 			this.status = $mol_atom_status.obsolete
 			
