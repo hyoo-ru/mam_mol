@@ -1,4 +1,4 @@
-# [$mol_app_calc - simple spreedsheet app](mol.js.org/app/calc/)
+# [$mol_app_calc](mol.js.org/app/calc/) - simple spreedsheet app
 
 # Examples
 
