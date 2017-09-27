@@ -153,7 +153,7 @@ namespace $.$$ {
 
 		paste( event? : ClipboardEvent ) {
 			const table = event.clipboardData.getData( 'text/plain' ).trim().split( '\n' ).map( row => row.split( '\t' ) ) as string[][]
-			if( table[0].length === 1 ) return
+			if( table.length === 1 && table[0].length === 1 ) return
 
 			const anchor = this.current()
 			const row_start = anchor.row
