@@ -27,8 +27,13 @@
 	font-weight: inherit;
 }
 
+[mol_app_calc_col_head] {
+	text-align: left;
+}
+
 [mol_app_calc_row_head] {
 	min-width: 2ch;
+	text-align: right;
 }
 
 [mol_app_calc_cell] {
