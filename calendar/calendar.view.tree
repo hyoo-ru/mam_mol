@@ -20,6 +20,10 @@ $mol_calendar $mol_view
 			mol_calender_other_month <= other_month!day false
 			mol_calender_weekend <= weekend!day false
 			mol_calender_is_holiday <= is_holiday!day false
+			mol_calendar_today <= today!day false
 		sub / 
 			<= day!day \
+	-
+	value_moment?val $mol_time_moment
+	current_date \
 	

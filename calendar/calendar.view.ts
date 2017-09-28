@@ -2,16 +2,28 @@ namespace $.$mol {
 	
  	export class $mol_calendar extends $.$mol_calendar {
 
+		value_moment( val? : $mol_time_moment) {
+			return new $mol_time_moment( val == undefined ? undefined : new $mol_time_moment( val ) )
+		}
+
+		date_moment(){
+			return new $mol_time_moment()
+		}
+		 
 		month_first_day(){
-			return new $mol_time_moment().merge({ day : 0 })
+			return this.date_moment().merge({ day : 0 })
 		}
 
 		month_last_day(){
 			return this.month_first_day().shift({ month: + 1, day: - 1})
 		}
 
-		current_month(){
-			return new $mol_time_moment().merge({ month : 0 })
+		// current_month(){
+		// 	return this.value_moment().merge({ month : 0 })
+		// }
+
+		current_day(){
+			return this.date_moment().day
 		}
 
 		day_draw_from(){
@@ -58,7 +70,7 @@ namespace $.$mol {
 		}
 
 		day(week_days : string){
-			return new $mol_time_moment(week_days).toString("DD")
+			return new $mol_time_moment(week_days).toString("D")
 		}
 
 		other_month(week_days : string){
