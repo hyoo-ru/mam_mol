@@ -6,12 +6,12 @@ namespace $.$mol {
 			return new $mol_time_moment( val == undefined ? undefined : new $mol_time_moment( val ) )
 		}
 
-		date_moment(){
-			return new $mol_time_moment()
-		}
+//		date_moment(){
+//			return new $mol_time_moment()
+//		}
 		 
 		month_first_day(){
-			return this.date_moment().merge({ day : 0 })
+			return this.value_moment().merge({ day : 0 })
 		}
 
 		month_last_day(){
@@ -23,7 +23,7 @@ namespace $.$mol {
 		// }
 
 		current_day(){
-			return this.date_moment().day
+			return this.value_moment().day
 		}
 
 		day_draw_from(){
@@ -83,6 +83,13 @@ namespace $.$mol {
 			let day = new $mol_time_moment(week_days).weekday
 			return  day == 5 || day == 6 ? true : false
 		}
+
+		today(week_days : string){
+			let date = new $mol_time_moment()
+			let is_date = new $mol_time_moment(week_days)
+			return ( date.month == is_date.month ) && (date.day == is_date.day) ? true : false
+		}
+
 
 	 }
 
