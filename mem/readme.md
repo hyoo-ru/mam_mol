@@ -6,8 +6,8 @@ Properties of a the same values, in terminology of mol is polymorphic methods wi
 
 ```ts
 myProperty< Value >() : Value // getter
-myProperty< Vlaue >( next? : Value ) : Value // getter/setter
-myProperty< Vlaue >( next? : Value , force? : $mol_atom_force ) : Value // getter/setter with force support
+myProperty< Value >( next? : Value ) : Value // getter/setter
+myProperty< Value >( next? : Value , force? : $mol_atom_force ) : Value // getter/setter with force support
 ```
 
 The example of declaring a not cached property:
