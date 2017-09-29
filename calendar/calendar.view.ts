@@ -2,28 +2,16 @@ namespace $.$mol {
 	
  	export class $mol_calendar extends $.$mol_calendar {
 
-		value_moment( val? : $mol_time_moment) {
-			return new $mol_time_moment( val == undefined ? undefined : new $mol_time_moment( val ) )
+		date_moment(){
+			return new $mol_time_moment()
 		}
-
-//		date_moment(){
-//			return new $mol_time_moment()
-//		}
 		 
 		month_first_day(){
-			return this.value_moment().merge({ day : 0 })
+			return this.date_moment().merge({ day : 0 })
 		}
 
 		month_last_day(){
 			return this.month_first_day().shift({ month: + 1, day: - 1})
-		}
-
-		// current_month(){
-		// 	return this.value_moment().merge({ month : 0 })
-		// }
-
-		current_day(){
-			return this.value_moment().day
 		}
 
 		day_draw_from(){
@@ -73,23 +61,16 @@ namespace $.$mol {
 			return new $mol_time_moment(week_days).toString("D")
 		}
 
-		other_month(week_days : string){
-			let other_month = new $mol_time_moment(week_days).toString("MM")
-			let this_month = this.month_first_day().toString("MM")
-			return this_month == other_month ? false : true
-		}
-
 		weekend(week_days : string){
 			let day = new $mol_time_moment(week_days).weekday
 			return  day == 5 || day == 6 ? true : false
 		}
 
-		today(week_days : string){
-			let date = new $mol_time_moment()
-			let is_date = new $mol_time_moment(week_days)
-			return ( date.month == is_date.month ) && (date.day == is_date.day) ? true : false
+		other_month(week_days : string){
+			let other_month = new $mol_time_moment(week_days).toString("MM")
+			let this_month = this.month_first_day().toString("MM")
+			return this_month == other_month ? false : true
 		}
-
 
 	 }
 

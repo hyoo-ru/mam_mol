@@ -40,15 +40,6 @@
 [mol_calender_weekend] {
 	color: var(--mol_skin_base);
 }
-[mol_calendar_is_holiday] {
-	color: var(--mol_skin_base);
-}
 
-[mol_calendar_today] {
-	background: var(--mol_skin_base);
-	color: var(--mol_skin_base_text);
-	border-radius: var(--mol_skin_round);
-	/* box-shadow: var(--mol_skin_focus_outline); */
-	/* border: 1px solid var(--mol_skin_base); */
-}
+
 
