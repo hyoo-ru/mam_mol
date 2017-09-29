@@ -12,19 +12,6 @@
 	padding-bottom: .5rem;
 	margin-bottom: .5rem;
 }
-[mol_calendar_head_day]{
-	/* display: table-cell; */
-	/* align-content: stretch; */
-	/* padding: .25rem .425rem; */
-	/* text-align: center; */
-}
-[mol_calendar_head_day]:nth-last-child(1){
-	color:  var(--mol_skin_base);
-}
-[mol_calendar_head_day]:nth-last-child(2){
-	color:  var(--mol_skin_base);
-}
-
 [mol_calendar_week] {
 	display: table-row;
 }
@@ -32,7 +19,6 @@
 	display: table-cell;
 	padding: .25rem .5rem;
 	text-align: center;
-	
 }
 [mol_calender_other_month] {
 	opacity: .5;
@@ -40,6 +26,6 @@
 [mol_calender_weekend] {
 	color: var(--mol_skin_base);
 }
-
-
-
+[mol_calendar_weekend_wd]{
+	color: var(--mol_skin_base);
+}

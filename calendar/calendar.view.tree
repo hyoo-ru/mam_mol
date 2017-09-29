@@ -8,6 +8,8 @@ $mol_calendar $mol_view
 				<= days /
 	-
 	Head_day!id $mol_view
+		attr *
+			mol_calendar_weekend_wd <= weekend_wd!id false
 		sub /
 			<= head_day!id \
 	-

@@ -31,6 +31,11 @@ namespace $.$mol {
 			return this.day_draw_from().shift( { day : id } ).toString('WD')
 		}
 
+		weekend_wd( id : number ){
+			let wd = this.day_draw_from().shift( { day : id } ).toString('WD')
+			return  wd == 'сб' || wd == 'вс' ? true : false
+		}
+
 		sum_week_of_month(){
 			let week_milisec = 604800 * 1000
 			let sum = (this.month_last_day().valueOf() - this.day_draw_from().valueOf()) / ( week_milisec )
