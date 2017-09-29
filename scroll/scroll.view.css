@@ -5,11 +5,12 @@
 	align-self: stretch;
 	box-sizing: border-box;
 	will-change: scroll-position;
-	transform: translateZ(0);
+	transform: translateZ(0); /* enforce gpu scroll in all agents */
 	box-shadow: var(--mol_skin_light_outline);
 	max-height: 100%;
 	max-width: 100%;
 	-webkit-overflow-scrolling: touch;
+	background: none !important; /* prevent large gpu layer */
 }
 
 [mol_scroll] > * {
