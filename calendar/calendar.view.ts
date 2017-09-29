@@ -32,8 +32,7 @@ namespace $.$mol {
 		}
 
 		weekend_wd( id : number ){
-			let wd = this.day_draw_from().shift( { day : id } ).toString('WD')
-			return  wd == 'сб' || wd == 'вс' ? true : false
+			return  id == 5 || id == 6 ? true : false
 		}
 
 		sum_week_of_month(){
