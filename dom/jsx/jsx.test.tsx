@@ -52,7 +52,7 @@ namespace $ {
 
 			const dom = <Button id="$mol_dom_jsx_test" text="click me" />
 
-			$mol_assert_equal( (<Button id="$mol_dom_jsx_test" text="click me" />).outerHTML , '<button id="$mol_dom_jsx_test">click me</button>' )
+			$mol_assert_equal( dom.outerHTML , '<button id="$mol_dom_jsx_test">click me</button>' )
 		} ,
 		
 		'Custom class as component'() {
@@ -64,7 +64,7 @@ namespace $ {
 
 			const dom = <Button id="$mol_dom_jsx_test" text="click me" />
 
-			$mol_assert_equal( (<Button id="$mol_dom_jsx_test" text="click me" />).outerHTML , '<button id="$mol_dom_jsx_test">click me</button>' )
+			$mol_assert_equal( dom.outerHTML , '<button id="$mol_dom_jsx_test">click me</button>' )
 		} ,
 		
 	})
