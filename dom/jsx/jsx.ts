@@ -16,7 +16,7 @@ namespace $ {
 		if( typeof Elem === 'string' ) {
 
 			node = $mol_dom_make( props && props['id'] , Elem )
-			if( props['childNodes'] ) {
+			if( props && props['childNodes'] ) {
 				children = props['childNodes']
 				props['childNodes'] = undefined
 			}
