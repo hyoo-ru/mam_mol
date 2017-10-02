@@ -1,0 +1,9 @@
+$mol_calendar_demo_moment $mol_demo_small
+	title @ \Calendar_moment
+	sub /
+		<= Month_label $mol_labeler
+			title <= is_date \Date $mol_time_moment
+			content <= Date $mol_date
+				value_moment?val <=> today?val $mol_time_moment
+		<= Calendar $mol_calendar
+			value_moment <= today -
