@@ -16,6 +16,11 @@ namespace $ {
 		if( typeof Elem === 'string' ) {
 
 			node = $mol_dom_make( props && props['id'] , Elem )
+			if( props['childNodes'] ) {
+				children = props['childNodes']
+				props['childNodes'] = undefined
+			}
+			
 			$mol_dom_render_children( node , [].concat.apply( [] , children ) )
 			$mol_dom_render_fields( node , props )
 			
