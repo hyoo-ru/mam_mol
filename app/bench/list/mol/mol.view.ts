@@ -37,6 +37,7 @@ namespace $.$$ {
 			return this.items()[ id ].content
 		}
 		
+		@ $mol_mem_key
 		row_selected( id : number , next? : boolean ) {
 			if( next !== void 0 ) this.selected_id( next ? id : null )
 			return this.selected_id() === id
