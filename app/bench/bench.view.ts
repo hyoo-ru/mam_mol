@@ -85,7 +85,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		samples( next? : string[] ) : string[] {
-			const arg = $mol_state_arg.value( this.state_key( 'sample' ) , next && next.join( '~' ) )
+			const arg = $mol_state_arg.value( this.state_key( 'sample' ) , next && next.join( '~' ) ) as string
 			const all = this.samples_all()
 			return arg ? arg.split( '~' ).sort().filter( name => all.indexOf( name ) >= 0 ) : []
 		}
