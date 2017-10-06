@@ -35,7 +35,7 @@
 }
 
 [mol_grid_table] > * > * {
-	box-shadow: 0 0 0 1px color( var(--mol_skin_light_line) lightness(+5%) );
+	box-shadow: 0 0 0 1px color( var(--mol_skin_light_line) tint(50%) );
 }
 
 [mol_grid_head] > * {
