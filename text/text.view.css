@@ -1,5 +1,6 @@
 [mol_text] {
 	line-height: 1.5;
+	box-sizing: border-box;
 	max-width: 60rem;
 	background: var(--mol_skin_card);
 	box-shadow: var(--mol_skin_light_outline);
