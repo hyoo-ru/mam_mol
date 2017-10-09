@@ -1,4 +1,4 @@
-# $mol_meter
+# $mol_message
 
 Draws generic user message
 
