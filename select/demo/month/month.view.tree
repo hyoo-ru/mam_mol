@@ -3,10 +3,8 @@ $mol_select_demo_month $mol_demo_small
 	sub /
 		<= Month $mol_select
 			no_options_message \Not found
-			value?val <=> month?val \
+			value?val <=> month?val \jan
 			dictionary <= months *
-				\
-					\
 				jan \January
 				feb \February
 				mar \March
