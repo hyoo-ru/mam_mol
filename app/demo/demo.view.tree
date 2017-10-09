@@ -57,7 +57,7 @@ $mol_app_demo_detail $mol_page
 		<= Edit $mol_link
 			sub /
 				<= Edit_speck $mol_speck
-					value \𝞫
+					value \β
 				<= Edit_icon $mol_icon_settings
 			arg *
 				edit \
