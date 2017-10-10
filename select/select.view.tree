@@ -3,6 +3,9 @@ $mol_select $mol_pop
 	options /
 	value?val \
 	minimal_height 40
+	attr *
+		^
+		mol_select_showed <= showed -
 	Option_row!id $mol_button_minor
 		event_click?event <=> event_select!id?event null
 		sub <= option_content!id /
