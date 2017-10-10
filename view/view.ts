@@ -126,6 +126,7 @@ namespace $ {
 		dom_node( next? : Element ) {
 			const node = next || this.$.$mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
+			node.setAttribute( 'id' , this.toString() )
 			$mol_dom_render_attributes( node , this.attr_static() )
 			$mol_dom_render_events( node , this.event() )
 			$mol_dom_render_events_async( node , this.event_async() )
@@ -231,10 +232,7 @@ namespace $ {
 		}
 		
 		attr_static() : { [ key : string ] : string|number|boolean } {
-			let attrs : any = {
-				'mol_view_error' : false ,
-				'id' : this.toString() ,
-			}
+			let attrs : any = {}
 			
 			for( let name of this.view_names() ) attrs[ name.replace( /\$/g , '' ).toLowerCase() ] = ''
 			
