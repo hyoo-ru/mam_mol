@@ -157,7 +157,7 @@ namespace $ {
 		}
 		
 		push( next_raw? : Value|Error ) : Value {
-			this._next = undefined
+			//this._next = undefined
 			
 			this.status = $mol_atom_status.actual
 			
