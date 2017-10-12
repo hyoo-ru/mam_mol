@@ -131,14 +131,17 @@ namespace $ {
 			}
 		}
 		
-		_next? : Value|Error
+		_next : Value|Error
+		_ignore : Value|Error
 		
 		set( next : Value ) : Value {
-			const next_normal = this.normalize( next , this._next )
-			if( next_normal === this._next ) return this.get()
+			const next_normal = this.normalize( next , this._ignore )
+			if( next_normal === this._ignore ) return this.get()
 			if( next_normal === this['value()'] ) return this.get()
 			
 			this._next = next_normal
+			this._ignore = next_normal
+			
 			this.obsolete()
 			return this.get()
 		}
@@ -157,7 +160,7 @@ namespace $ {
 		}
 		
 		push( next_raw? : Value|Error ) : Value {
-			//this._next = undefined
+			if(!( next_raw instanceof $mol_atom_wait )) this._next = undefined
 			
 			this.status = $mol_atom_status.actual
 			
