@@ -384,7 +384,6 @@ The name of the field corresponds to calling the property, the content of the fi
 
 * **[$mol_range](range)** - lazy array
 * **[$mol_maybe](maybe)** - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
-* **[$mol_hyperhive](hypehive)** - [HypeHive API](http://hhive.eap.eigenmethod.com/)
 
 ## [State modules](state)
 
@@ -490,6 +489,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_exec](exec)** - synchronous execute of system command
 * **[$mol_file](file)** - reactive file system wrapper
 * **[$mol_window](window)** - reactive view port configuration
+* **[$mol_hyperhive](hypehive)** - [HypeHive API](http://hhive.eap.eigenmethod.com/)
 
 ## Time
 
@@ -502,6 +502,10 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Maps
 
 * **[$mol_map_yandex](map/yandex)** - [Yandex Maps](https://tech.yandex.ru/maps/doc/jsapi/2.1/)
+
+## Web Services
+
+* **[$mol_github](github)** - [GitHub API](https://developer.github.com/v3/)
 
 ## Building
 
