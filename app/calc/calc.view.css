@@ -6,6 +6,10 @@
 	box-shadow: none;
 }
 
+[mol_app_calc_current] {
+	flex: none;
+}
+
 [mol_app_calc_pos] {
 	flex: none;
 	width: 2ch;
