@@ -14,7 +14,6 @@ namespace $ {
 		
 			let atom : $mol_atom<Value> = store.get( host )
 			if( !atom ) {
-				if( force && ( next === undefined ) ) return next
 				
 				const id = `${ host }.${ name }()`
 				atom = new $mol_atom<Value>( id , function() {
@@ -67,7 +66,6 @@ namespace $ {
 			
 			let atom : $mol_atom<Value> = dict[ key_str ]
 			if( !atom ) {
-				if( force && ( next === undefined ) ) return next
 				
 				const id = `${ host }.${ name }(${ key_str })`
 				atom = new $mol_atom<Value>( id , function( ... args: any[] ) {
