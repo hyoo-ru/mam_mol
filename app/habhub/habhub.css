@@ -21,6 +21,9 @@
 	flex: 1000 1 600px;
 }
 
-[mol_app_habhub_datails_text] {
-	margin: 1rem;
+[mol_app_habhub_details_text] {
+}
+
+[mol_app_habhub_details_chat] {
+	box-shadow: none;
 }

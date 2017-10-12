@@ -17,8 +17,12 @@ $mol_app_habhub $mol_book
 						<= Close_icon $mol_icon_cross
 			body_scroll_top?val <=> details_scroll_top?val 0
 			body /
-				<= Datails_text $mol_text
-					text <= gist_current_content \
+				<= Details_content $mol_list
+					rows /
+						<= Datails_text $mol_text
+							text <= gist_current_content \
+						<= Details_chat $mol_chat
+							issue <= gist_current_issue $mol_github_issue
 	Menu_row!id $mol_link
 		title <= gist_title!id \
 		arg <= gist_arg!id *

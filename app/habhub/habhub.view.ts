@@ -1,11 +1,5 @@
 namespace $.$$ {
 	
-	export interface $mol_app_habhub_gist {
-		id : number
-		title : string
-		body : string
-	}
-	
 	export class $mol_app_habhub extends $.$mol_app_habhub {
 		
 		uriSource(){
@@ -13,12 +7,14 @@ namespace $.$$ {
 		}
 		
 		gists() {
-			return $mol_http.resource( this.uriSource() ).json<{ items : $mol_app_habhub_gist[] }>().items
+			return $mol_github_search_issues.item( this.uriSource() ).items()
 		}
 		
 		gists_dict() {
-			const dict = {} as { [ key : string ] : $mol_app_habhub_gist }
-			this.gists().forEach( gist => dict[ gist.id ] = gist )
+			const dict = {} as { [ key : string ] : $mol_github_issue }
+			for( let gist of this.gists() ) {
+				dict[ gist.uri() ] = gist
+			}
 			return dict
 		}
 		
@@ -26,28 +22,27 @@ namespace $.$$ {
 			return this.gists_dict()[ id ]
 		}
 		
-		gist_current_id() {
-			return Number( $mol_state_arg.value( 'gist' ) )
+		gist_current() {
+			return $mol_maybe( $mol_state_arg.value( 'gist' ) ).map( uri => this.gists_dict()[ uri ] )[0] || null
 		}
 		
 		pages() {
-			const gist = this.gist_current_id()
 			return [
 				this.Menu_page() ,
-				... gist ? [ this.Details() ] : []
+				... this.gist_current() ? [ this.Details() ] : []
 			]
 		}
 		
 		Placeholder() {
-			return this.gist_current_id() ? null : super.Placeholder()
+			return this.gist_current() ? null : super.Placeholder()
 		}
 
 		menu_rows() : $mol_view[] {
-			return this.gists().map( ( gist , index ) => this.Menu_row( gist.id ) )
+			return this.gists().map( ( gist , index ) => this.Menu_row( gist.uri() ) )
 		}
 		
 		gist_title( id : number ) {
-			return this.gist( id ).title
+			return this.gist( id ).title()
 		}
 		
 		gist_arg( id : number ) {
@@ -55,16 +50,20 @@ namespace $.$$ {
 		}
 		
 		gist_current_title() {
-			return this.gist( this.gist_current_id() ).title
+			return this.gist_current().title()
 		}
 		
 		gist_current_content() {
-			return this.gist( this.gist_current_id() ).body
+			return this.gist_current().text()
+		}
+		
+		gist_current_issue() {
+			return this.gist_current()
 		}
 		
 		details_scroll_top( next? : number ) {
-			const current = this.gist_current_id()
-			return $mol_state_session.value( `${ this }.details_scroll_top(${ current })` , next )
+			const current = this.gist_current()
+			return $mol_state_session.value( `${ this }.details_scroll_top(${ current.uri() })` , next )
 		}
 		
 	}
