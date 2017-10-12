@@ -1,5 +1,4 @@
 $mol_message $mol_view
-	minimal_height 72
 	moment $mol_time_moment
 	sub /
 		<= Info $mol_row
