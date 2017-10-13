@@ -19,7 +19,7 @@ Form, that contains form fields and action buttons.
    				value?val <=> pass?val \
    				type \password
    	buttons /
-   		<= Login_submit
+   		<= Login_submit $mol_button_major
    			title <= login_submit_label @ \Submit
    			event_click?val <=> event_submit?val null
 ```
