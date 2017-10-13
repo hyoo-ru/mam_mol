@@ -160,7 +160,10 @@ namespace $ {
 		}
 		
 		push( next_raw? : Value|Error ) : Value {
-			if(!( next_raw instanceof $mol_atom_wait )) this._next = undefined
+			if(!( next_raw instanceof $mol_atom_wait )) {
+				this._ignore = this._next
+				this._next = undefined
+			}
 			
 			this.status = $mol_atom_status.actual
 			
