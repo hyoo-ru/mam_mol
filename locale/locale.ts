@@ -35,6 +35,7 @@ namespace $ {
 			}
 		}
 		
+		@ $mol_mem_key
 		static text( key : string ) {
 
 			for( let lang of [ this.lang() , 'en' ] ) {
