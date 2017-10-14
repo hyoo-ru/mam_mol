@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_json_conform< Target , Source >( target : Target , source : Source ) : Target & Source {
+	export function $mol_json_conform< Target , Source >( target : Target , source : Source ) : Target {
 
 		const t = target as any
 		const s = source as any
