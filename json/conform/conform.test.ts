@@ -60,7 +60,7 @@ namespace $ {
 			$mol_assert_equal( result[1] , target[1] )
 		} ,
 
-		'return target when some are is not a json value'() {
+		'return target when some is not a json value'() {
 			const target = new Date(0)
 			$mol_assert_equal( $mol_json_conform( target , new Date(0) ) , target )
 		} ,
