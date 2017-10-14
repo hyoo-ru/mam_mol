@@ -379,6 +379,8 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Functions
 
 * **[$mol_const](const)** - const value returning function
+* **[$mol_func_name](func/name)** - name of function
+* **[$mol_func_sandbox](func/sandbox)** - sandbox for safe code evaluation
 
 ## Collections
 
@@ -465,6 +467,7 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Data formats
 
 * **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d) (`view.tree` language descripted at [$mol_view](view))
+* **[$mol_json_conform](json/conform)** - json reconciler
 
 ## Math
 
