@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_conform< Target , Source >( target : Target , source : Source , stack? : Set<any> ) : Target {
+	export function $mol_conform< Target , Source >( target : Target , source : Source , stack : any[] = [] ) : Target {
 
 		if( target as any === source as any ) return source as any
 
@@ -12,26 +12,22 @@ namespace $ {
 		const conform = $mol_conform_handlers.get( target.constructor )
 		if( !conform ) return target
 
-		if( stack ) {
-			if( stack.has( target ) ) return target
-		} else {
-			stack = new Set
-		}
+		if( stack.indexOf( target ) !== -1 ) return target
 
-		stack.add( target )
+		stack.push( target )
 
 		const res = conform( target , source , stack )
 
-		stack.delete( target )
+		stack.pop()
 
 		return res
 	}
 
-	export const $mol_conform_handlers = new WeakMap< Object , ( target : any , source : any , stack? : Set<any> )=> any >()
+	export const $mol_conform_handlers = new WeakMap< Object , ( target : any , source : any , stack : any[] )=> any >()
 
 	export function $mol_conform_handler< Class >(
 		cl : { new( ... args : any[] ) : Class } ,
-		handler : ( target : Class , source : Class , stack : Set<any> )=> Class ,
+		handler : ( target : Class , source : Class , stack : any[] )=> Class ,
 	) {
 		$mol_conform_handlers.set( cl , handler )
 	}
