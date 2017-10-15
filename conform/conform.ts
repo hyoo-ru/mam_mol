@@ -2,37 +2,41 @@ namespace $ {
 
 	export function $mol_conform< Target , Source >( target : Target , source : Source , stack? : Set<any> ) : Target {
 
-		const t = target as any
-		const s = source as any
+		if( target as any === source as any ) return source as any
 
-		if( t === s ) return s
-
-		if( !t || typeof t !== 'object' ) return t
-		if( !s || typeof s !== 'object' ) return t
+		if( !target || typeof target !== 'object' ) return target
+		if( !source || typeof source !== 'object' ) return target
 		
-		if( t.constructor !== s.constructor ) return t
+		if( target.constructor !== source.constructor ) return target
 
-		const conform = $mol_conform_types.get( t.constructor )
-		if( !conform ) return t
+		const conform = $mol_conform_handlers.get( target.constructor )
+		if( !conform ) return target
 
 		if( stack ) {
-			if( stack.has( t ) ) return t
+			if( stack.has( target ) ) return target
 		} else {
 			stack = new Set
 		}
 
-		stack.add( t )
+		stack.add( target )
 
-		const res = conform( t , s , stack )
+		const res = conform( target , source , stack )
 
-		stack.delete( t )
+		stack.delete( target )
 
 		return res
 	}
 
-	export const $mol_conform_types = new WeakMap< Object , ( target : any , source : any , stack? : Set<any> )=> any >()
+	export const $mol_conform_handlers = new WeakMap< Object , ( target : any , source : any , stack? : Set<any> )=> any >()
 
-	$mol_conform_types.set( Array , ( target : any[] , source : any[] , stack )=> {
+	export function $mol_conform_handler< Class >(
+		cl : { new( ... args : any[] ) : Class } ,
+		handler : ( target : Class , source : Class , stack : Set<any> )=> Class ,
+	) {
+		$mol_conform_handlers.set( cl , handler )
+	}
+
+	$mol_conform_handler( Array , ( target , source , stack )=> {
 		
 		let equal = target.length === source.length
 
@@ -44,7 +48,7 @@ namespace $ {
 		return equal ? source : target
 	} )
 
-	$mol_conform_types.set( Object , ( target : Object , source : Object , stack )=> {
+	$mol_conform_handler( Object , ( target , source , stack )=> {
 
 		let count = 0
 		let equal = true
@@ -60,12 +64,8 @@ namespace $ {
 		return ( equal && count === 0 ) ? source : target
 	} )
 
-	$mol_conform_types.set( Date , ( target : Date , source : Date , stack )=> {
-		return ( target.getTime() === source.getTime() ) ? source : target
-	} )
+	$mol_conform_handler( Date , ( target , source )=> ( target.getTime() === source.getTime() ) ? source : target )
 
-	$mol_conform_types.set( RegExp , ( target : RegExp , source : RegExp , stack )=> {
-		return ( target.toString() === source.toString() ) ? source : target
-	} )
+	$mol_conform_handler( RegExp , ( target , source )=> ( target.toString() === source.toString() ) ? source : target )
 
 }
