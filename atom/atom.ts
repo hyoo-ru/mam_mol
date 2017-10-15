@@ -135,8 +135,10 @@ namespace $ {
 		_ignore : Value|Error
 		
 		set( next : Value ) : Value {
-			const next_normal = this.normalize( next , this._ignore )
+			let next_normal = $mol_json_conform( next , this._ignore )
 			if( next_normal === this._ignore ) return this.get()
+
+			next_normal = $mol_json_conform( next , this['value()'] )
 			if( next_normal === this['value()'] ) return this.get()
 			
 			this._next = next_normal
@@ -144,19 +146,6 @@ namespace $ {
 			
 			this.obsolete()
 			return this.get()
-		}
-		
-		normalize( next : Value , prev? : Value|Error ) : Value {
-			if( next === prev ) return next
-			
-			if( ( next instanceof Array ) && ( prev instanceof Array ) && ( next.length === prev.length ) ) {
-				for( let i = 0 ; i < next.length ; ++i ) {
-					if( next[ i ] !== prev[ i ] ) return next as any
-				}
-				return prev as any
-			}
-			
-			return next
 		}
 		
 		push( next_raw? : Value|Error ) : Value {
@@ -171,7 +160,7 @@ namespace $ {
 			
 			if( next_raw === undefined ) return prev as Value
 			
-			let next = ( next_raw instanceof Error ) ? next_raw : this.normalize( next_raw , prev )
+			let next = ( next_raw instanceof Error || prev instanceof Error ) ? next_raw : $mol_json_conform( next_raw , prev )
 			
 			if( next === prev ) return prev as Value
 			
