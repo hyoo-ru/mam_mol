@@ -27,7 +27,11 @@ namespace $ {
 
 		'return target when different keys count'() {
 			const target = [ 1 , 2 , 3 ]
-			$mol_assert_equal( $mol_json_conform( target , [ 1 , 2 , 3 , undefined ] ) , target )
+			const source = [ 1 , 2 , 3 , undefined ]
+			const result = $mol_json_conform( target , source )
+			
+			$mol_assert_equal( result , target )
+			$mol_assert_equal( result.join(',') , '1,2,3' )
 		} ,
 
 		'return source when array values are strong equal'() {
@@ -42,7 +46,11 @@ namespace $ {
 
 		'return target when some values are not equal'() {
 			const target = [ 1 , 2 , 3 ]
-			$mol_assert_equal( $mol_json_conform( target , [ 1 , 2 , 5 ] ) , target )
+			const source = [ 1 , 2 , 5 ]
+			const result = $mol_json_conform( target , source )
+			
+			$mol_assert_equal( result , target )
+			$mol_assert_equal( result.join(',') , '1,2,3' )
 		} ,
 
 		'return source when values are deep equal'() {
@@ -50,7 +58,7 @@ namespace $ {
 			$mol_assert_equal( $mol_json_conform( [ 1 , [ 2 , [ 3 ] ] ] , source ) , source )
 		} ,
 
-		'return target with equal source overrides'() {
+		'return target with equal values from source and not equal from target'() {
 			const source = [ [ 1 ] , [ 2 ] ]
 			const target = [ [ 1 ] , [ 3 ] ]
 			const result = $mol_json_conform( target , source )
@@ -68,6 +76,20 @@ namespace $ {
 		'return target when equal but with different class'() {
 			const target = { '0' : 1 }
 			$mol_assert_equal( $mol_json_conform( target , [ 1 ] ) , target )
+		} ,
+
+		'return target when has cyclic reference'() {
+			const source = { foo : {} }
+			source['self'] = source
+
+			const target = { foo : {} }
+			target['self'] = target
+
+			const result = $mol_json_conform( target , source )
+
+			$mol_assert_equal( result , target )
+			$mol_assert_equal( result['self'] , target )
+			$mol_assert_equal( result.foo , source.foo )
 		} ,
 
 	})
