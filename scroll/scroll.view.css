@@ -10,7 +10,11 @@
 	max-height: 100%;
 	max-width: 100%;
 	-webkit-overflow-scrolling: touch;
-	background: none !important; /* prevent large gpu layer */
+}
+
+/* prevent large gpu layer */
+[mol_scroll][mol_scroll] {
+	background: none;
 }
 
 [mol_scroll] > * {

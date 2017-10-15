@@ -21,6 +21,10 @@
 	word-break: normal;
 }
 
+[mol_pop_bubble][mol_scroll] {
+	background: var(--mol_skin_card);
+}
+
 [mol_pop_bubble]:focus {
 	outline: none;
 }
