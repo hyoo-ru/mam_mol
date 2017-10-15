@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_conform< Target , Source >( target : Target , source : Source , stack : any[] = [] ) : Target {
+	export function $mol_conform< Target , Source >( target : Target , source : Source , stack? : Set<any> ) : Target {
 
 		const t = target as any
 		const s = source as any
@@ -15,14 +15,24 @@ namespace $ {
 		const conform = $mol_conform_types.get( t.constructor )
 		if( !conform ) return t
 
-		if( stack.indexOf( t ) >= 0 ) return t
+		if( stack ) {
+			if( stack.has( t ) ) return t
+		} else {
+			stack = new Set
+		}
 
-		return conform( t , s , [ ... stack , t ] )
+		stack.add( t )
+
+		const res = conform( t , s , stack )
+
+		stack.delete( t )
+
+		return res
 	}
 
-	export const $mol_conform_types = new WeakMap< Object , ( target : any , source : any , stack? : any[] )=> any >()
+	export const $mol_conform_types = new WeakMap< Object , ( target : any , source : any , stack? : Set<any> )=> any >()
 
-	$mol_conform_types.set( Array , ( target : any[] , source : any[] , stack : any[] )=> {
+	$mol_conform_types.set( Array , ( target : any[] , source : any[] , stack )=> {
 		
 		let equal = target.length === source.length
 
@@ -34,10 +44,7 @@ namespace $ {
 		return equal ? source : target
 	} )
 
-	$mol_conform_types.set( Object , ( target : Object , source : Object , stack : any[] )=> {
-
-		const tkeys = Object.keys( target )
-		const skeys = Object.keys( source )
+	$mol_conform_types.set( Object , ( target : Object , source : Object , stack )=> {
 
 		let count = 0
 		let equal = true
@@ -53,11 +60,11 @@ namespace $ {
 		return ( equal && count === 0 ) ? source : target
 	} )
 
-	$mol_conform_types.set( Date , ( target : Date , source : Date , stack : any[] )=> {
+	$mol_conform_types.set( Date , ( target : Date , source : Date , stack )=> {
 		return ( target.getTime() === source.getTime() ) ? source : target
 	} )
 
-	$mol_conform_types.set( RegExp , ( target : RegExp , source : RegExp , stack : any[] )=> {
+	$mol_conform_types.set( RegExp , ( target : RegExp , source : RegExp , stack )=> {
 		return ( target.toString() === source.toString() ) ? source : target
 	} )
 
