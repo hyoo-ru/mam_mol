@@ -9,7 +9,7 @@ namespace $ {
 		const value = descr.value
 		const store = new WeakMap< Object , $mol_atom<Value> >()
 		
-		descr.value = function( next? : Value , force? : $mol_atom_force ) {
+		descr.value = function $mol_mem_value( next? : Value , force? : $mol_atom_force ) {
 			const host : any = this
 		
 			let atom : $mol_atom<Value> = store.get( host )
@@ -57,7 +57,7 @@ namespace $ {
 		const value = descr.value
 		const store = new WeakMap< Object , { [ key : string ] : $mol_atom<Value> } >()
 		
-		descr.value = function( key : Key , next : Value , force? : $mol_atom_force ) {
+		descr.value = function $mol_mem_key_value( key : Key , next : Value , force? : $mol_atom_force ) {
 			const host : any = this
 			const key_str = JSON.stringify( key )
 			
