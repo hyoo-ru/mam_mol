@@ -20,6 +20,7 @@ namespace $.$$ {
 			return this.data()[ id ].dbname
 		}
 
+		@ $mol_mem_key
 		last_sample( id : string ) {
 			return this.data()[ id ].lastSample
 		}
@@ -32,12 +33,18 @@ namespace $.$$ {
 			return this.last_sample( id ).countClassName
 		}
 
-		top_queries( db : string ) {
-			return Object.keys( this.last_sample( db ).topFiveQueries ).map( query => this.Query({ db , query }) )
+		@ $mol_mem_key
+		top_queries_data( db : string ) {
+			return this.last_sample( db ).topFiveQueries
 		}
 
+		top_queries( db : string ) {
+			return Object.keys( this.top_queries_data( db ) ).map( query => this.Query({ db , query }) )
+		}
+
+		@ $mol_mem_key
 		top_query( id : { db : string , query : string } ) {
-			return this.last_sample( id.db ).topFiveQueries[ id.query ]
+			return this.top_queries_data( id.db )[ id.query ]
 		}
 
 		query_elapsed( id : { db : string , query : string } ) {
