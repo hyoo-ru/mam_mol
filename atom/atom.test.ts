@@ -146,7 +146,68 @@ module $ {
 			$mol_assert_fail( ()=> target.get().valueOf() )
 
 		} ,
+
+		'setting equal state are ignored'() {
+
+			let atom = new $mol_atom( 'atom' , next => next || { foo : [777] } )
+
+			let v1 = atom.get()
+			let v2 = { foo : [777] }
+			let v3 = atom.set( v2 )
+			
+			$mol_assert_equal( v1 , v3 )
+			$mol_assert_unique( v2 , v3 )
+		} ,
 		
+		'setting equal to last setted are ignored until changed'() {
+			let val = { foo : [777] }
+			let called = 0
+
+			let atom = new $mol_atom( 'atom' , ()=> {
+				++ called
+				return val
+			} )
+
+			atom.get()
+			$mol_assert_equal( called , 1 )
+
+			atom.set({ foo : [666] })
+			$mol_assert_equal( called , 2 )
+			
+			atom.set({ foo : [666] })
+			$mol_assert_equal( called , 2 )
+
+			atom.push({ foo : [777] })
+
+			atom.set({ foo : [666] })
+			$mol_assert_equal( called , 3 )
+
+			atom.set({ foo : [555] })
+			$mol_assert_equal( called , 4 )
+		} ,
+		
+		'Next remains after restart'() {
+
+			let defer = new $mol_atom( 'defer' , next => {
+				new $mol_defer( ()=> {
+					defer.push({})
+				} )
+				throw new $mol_atom_wait
+			} )
+
+			let value = {}
+			
+			let task = new $mol_atom( 'task' , next => {
+				defer.get().valueOf()
+				return next
+			} )
+			
+			$mol_assert_fail( ()=> task.set( value ).valueOf() , $mol_atom_wait )
+
+			$mol_defer.run()
+
+			$mol_assert_equal( task.get() , value )
+		} ,
 	})
 	
 }

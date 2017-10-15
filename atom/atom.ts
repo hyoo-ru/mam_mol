@@ -9,7 +9,7 @@ namespace $ {
 		actual = 'actual' ,
 	}
 	
-	export class $mol_atom< Value = null > extends $mol_object {
+	export class $mol_atom< Value = any > extends $mol_object {
 		
 		masters : Set< $mol_atom<any> > | null = null
 		slaves : Set< $mol_atom<any> > | null = null
@@ -22,7 +22,7 @@ namespace $ {
 		
 		constructor(
 			id : string ,
-			handler : ( next? : Value , force? : $mol_atom_force )=> Value|void = ()=> undefined,
+			handler : ( next? : Value , force? : $mol_atom_force )=> Value|void = next => next ,
 		) {
 			super()
 			
