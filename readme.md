@@ -386,6 +386,7 @@ The name of the field corresponds to calling the property, the content of the fi
 
 * **[$mol_range](range)** - lazy array
 * **[$mol_maybe](maybe)** - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
+* **[$mol_conform](conform)** - object tree reconciler
 
 ## [State modules](state)
 
@@ -467,7 +468,6 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Data formats
 
 * **[$mol_tree](tree)** - [tree format](https://github.com/nin-jin/tree.d) (`view.tree` language descripted at [$mol_view](view))
-* **[$mol_json_conform](json/conform)** - json reconciler
 
 ## Math
 

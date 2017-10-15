@@ -135,10 +135,10 @@ namespace $ {
 		_ignore : Value|Error
 		
 		set( next : Value ) : Value {
-			let next_normal = $mol_json_conform( next , this._ignore )
+			let next_normal = $mol_conform( next , this._ignore )
 			if( next_normal === this._ignore ) return this.get()
 
-			next_normal = $mol_json_conform( next , this['value()'] )
+			next_normal = $mol_conform( next , this['value()'] )
 			if( next_normal === this['value()'] ) return this.get()
 			
 			this._next = next_normal
@@ -160,7 +160,7 @@ namespace $ {
 			
 			if( next_raw === undefined ) return prev as Value
 			
-			let next = ( next_raw instanceof Error || prev instanceof Error ) ? next_raw : $mol_json_conform( next_raw , prev )
+			let next = ( next_raw instanceof Error || prev instanceof Error ) ? next_raw : $mol_conform( next_raw , prev )
 			
 			if( next === prev ) return prev as Value
 			
