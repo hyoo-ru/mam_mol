@@ -22,10 +22,8 @@ namespace $ {
 		} ,
 		
 		'caching ref to dom node'() {
-				
-			class $mol_view_test extends $mol_view { }
 			
-			var x = new $mol_view_test()
+			var x = new class extends $mol_view { }
 			
 			$mol_assert_equal( x.dom_node() , x.dom_node() )
 			

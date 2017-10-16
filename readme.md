@@ -42,7 +42,8 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 * [$mol_app_hello](app/hello) - Very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$mol_app_demo](app/demo) - Demonstration of all components ([online](http://eigenmethod.github.io/mol/))
 * [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/))
-* [$mol_app_files](app/files) - [WebDAV](https://wikipedia.org/wiki/WebDAV) file manager ([online](https://eigenmethod.github.io/mol/app/files/))
+* [$mol_app_calc](app/calc) - Simple spreedsheet ([online](http://mol.js.org/app/calc/#title=a*x**2%20%2B%20b*x%20%2B%20c%20%3D%200/A1=a/B2=6/A2=3/B1=b/C1=c/E1=D/E2=%3D%20B2**2%20-%204*A2*C2/G1=x1/G2=%3D%20(%20-B2%20%2B%20sqrt(E2)%20)%20%2F%202%20%2F%20A2/H1=x2/H2=%3D%20(%20-B2%20-%20sqrt(E2)%20)%20%2F%202%20%2F%20A2/C2=0))
+* [$mol_app_files](app/files) - [WebDAV](https://wikipedia.org/wiki/WebDAV) file manager ([online](https://eigenmethod.github.io/mol/app/files/demo/))
 * [$mol_app_questions](app/questions) - Questions from [StackOverflow.com](http://stackoverflow.com) ([online](http://eigenmethod.github.io/mol/app/questions/)) 
 * [$mol_app_lamps](app/lamps) - Lamps database from [LampTest.ru](http://lamptest.ru) ([online](http://eigenmethod.github.io/mol/app/lamps/)) 
 * [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
@@ -378,12 +379,14 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Functions
 
 * **[$mol_const](const)** - const value returning function
+* **[$mol_func_name](func/name)** - name of function
+* **[$mol_func_sandbox](func/sandbox)** - sandbox for safe code evaluation
 
 ## Collections
 
 * **[$mol_range](range)** - lazy array
 * **[$mol_maybe](maybe)** - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
-* **[$mol_hyperhive](hypehive)** - [HypeHive API](http://hhive.eap.eigenmethod.com/)
+* **[$mol_conform](conform)** - object tree reconciler
 
 ## [State modules](state)
 
@@ -446,6 +449,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_demo](demo)** - demonstrates widget in various screens
 * **[$mol_attach](attach)** - preview list and attach button
 * **[$mol_cost](cost)** - prints currency values
+* **[$mol_message](message)** - user message
 
 ## Charts
 
@@ -488,6 +492,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_exec](exec)** - synchronous execute of system command
 * **[$mol_file](file)** - reactive file system wrapper
 * **[$mol_window](window)** - reactive view port configuration
+* **[$mol_hyperhive](hypehive)** - [HypeHive API](http://hhive.eap.eigenmethod.com/)
 
 ## Time
 
@@ -500,6 +505,10 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Maps
 
 * **[$mol_map_yandex](map/yandex)** - [Yandex Maps](https://tech.yandex.ru/maps/doc/jsapi/2.1/)
+
+## Web Services
+
+* **[$mol_github](github)** - [GitHub API](https://developer.github.com/v3/)
 
 ## Building
 

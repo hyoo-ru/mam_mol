@@ -12,7 +12,7 @@ namespace $.$$ {
 		options_showed() {
 			const showed = this.focused() || this.filter_pattern().length > 0
 			
-			if( showed ) new $mol_defer( ()=> this.Filter().focused( true ) )
+			if( showed && this.Filter() ) new $mol_defer( ()=> this.Filter().focused( true ) )
 			
 			return showed
 		}
@@ -22,8 +22,15 @@ namespace $.$$ {
 			return Object.keys( this.dictionary() )
 		}
 		
+		@ $mol_mem
 		options_filtered() {
-			return this.options().filter( $mol_match_text( this.filter_pattern() , ( id : string )=> [ this.option_label( id ) ] ) )
+			let options = this.options()
+			options = options.filter( $mol_match_text( this.filter_pattern() , ( id : string )=> [ this.option_label( id ) ] ) )
+
+			const index = options.indexOf( this.value() )
+			if( index >= 0 ) options.splice( index , 1 )
+			
+			return options
 		}
 		
 		option_label( id : string ) {
@@ -70,7 +77,7 @@ namespace $.$$ {
 		}
 		
 		trigger_content() {
-			return ( this.options_showed() || !this.value() )
+			return ( ( this.options_showed() || !this.value() ) && this.Filter() )
 				? [ this.Filter() ]
 				: [ ... this.option_content_current() , this.Trigger_icon() ]
 		}

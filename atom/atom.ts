@@ -9,48 +9,38 @@ namespace $ {
 		actual = 'actual' ,
 	}
 	
-	export class $mol_atom< Value = null > extends $mol_object {
+	export class $mol_atom< Value = any > extends $mol_object {
 		
 		masters : Set< $mol_atom<any> > | null = null
 		slaves : Set< $mol_atom<any> > | null = null
 		
 		status = $mol_atom_status.obsolete
-		autoFresh = true
 		
-		handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value|void
-		host : { [ key : string ] : any }
-		field : string
+		readonly handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value|void
 
 		'value()' : Value|Error
 		
 		constructor(
-			host : any ,
-			handler : ( next? : Value , force? : $mol_atom_force )=> Value|void = ()=> undefined,
-			field = ''
+			id : string ,
+			handler : ( next? : Value , force? : $mol_atom_force )=> Value|void = next => next ,
 		) {
 			super()
 			
+			this.object_id( id )
 			this.handler = handler
-			this.host = Object( host )
-			this.field = field
 		}
 		
-		destroyed( next? : boolean ) {
-			if( next ) {
-				this.unlink()
-				
-				const host = this.host
-				const value = this['value()']
-				if( value instanceof $mol_object ) {
-					if( ( value.object_owner() === host ) && ( value.object_field() === this.field ) ) {
-						value.destroyed( true );
-					}
-				}
-				
-				this.status = $mol_atom_status.obsolete
-			}
+		destructor() {
+			this.unlink()
+			this.status = $mol_atom_status.actual
 			
-			return super.destroyed( next )
+			const value = this['value()']
+			
+			if( value instanceof $mol_object ) {
+				if( value.object_owner() === this ) value.destructor();
+			}
+
+			this['value()'] = undefined
 		}
 		
 		unlink() {
@@ -58,16 +48,7 @@ namespace $ {
 			this.check_slaves()
 		}
 		
-		toString() {
-			return `${ this.host }.${ this.field }@`
-		}
-		
 		get( force? : $mol_atom_force ) {
-			if( this.status === $mol_atom_status.pulling ) {
-				throw new Error( `Cyclic atom dependency of ${ this }` )
-			}
-			
-			this.actualize( force )
 			
 			const slave = $mol_atom.stack[0]
 			if( slave ) {
@@ -75,18 +56,22 @@ namespace $ {
 				slave.obey( this )
 			}
 			
+			this.actualize( force )
+			
 			const value = this['value()'] as Value
 			
 			if( typeof Proxy !== 'function' && value instanceof Error ) {
 				throw value
 			}
 			
-			return value
+			return value as Value
 		}
 		
 		actualize( force? : $mol_atom_force ) {
 			
-			//this.log([ 'actualize' ])
+			if( this.status === $mol_atom_status.pulling ) {
+				throw new Error( `Cyclic atom dependency of ${ this }` )
+			}
 			
 			if( !force && this.status === $mol_atom_status.actual ) return
 			
@@ -146,48 +131,45 @@ namespace $ {
 			}
 		}
 		
-		_next? : Value|Error
+		_next : Value|Error
+		_ignore : Value|Error
 		
 		set( next : Value ) : Value {
-			const next_normal = this.normalize( next , this._next )
-			if( next_normal === this._next ) return this.get()
+			let next_normal = $mol_conform( next , this._ignore )
+			if( next_normal === this._ignore ) return this.get()
+
+			next_normal = $mol_conform( next , this['value()'] )
 			if( next_normal === this['value()'] ) return this.get()
 			
 			this._next = next_normal
+			this._ignore = next_normal
+			
 			this.obsolete()
 			return this.get()
 		}
 		
-		normalize( next : Value , prev? : Value|Error ) : Value {
-			if( next === prev ) return next
-			
-			if( ( next instanceof Array ) && ( prev instanceof Array ) && ( next.length === prev.length ) ) {
-				for( let i = 0 ; i < next.length ; ++i ) {
-					if( next[ i ] !== prev[ i ] ) return next as any
-				}
-				return prev as any
-			}
-			
-			return next
-		}
-		
 		push( next_raw? : Value|Error ) : Value {
-			this._next = undefined
+			if(!( next_raw instanceof $mol_atom_wait )) {
+				this._ignore = this._next
+				this._next = undefined
+			}
 			
 			this.status = $mol_atom_status.actual
 			
-			const host = this.host
 			const prev = this['value()']
 			
 			if( next_raw === undefined ) return prev as Value
 			
-			let next = ( next_raw instanceof Error ) ? next_raw : this.normalize( next_raw , prev )
+			let next = ( next_raw instanceof Error || prev instanceof Error ) ? next_raw : $mol_conform( next_raw , prev )
 			
 			if( next === prev ) return prev as Value
 			
+			if( prev instanceof $mol_object ) {
+				if( prev.object_owner() === this ) prev.destructor()
+			}
+			
 			if( next instanceof $mol_object ) {
-				next.object_field( this.field )
-				next.object_owner( host )
+				next.object_owner( this )
 			}
 			
 			if(( typeof Proxy === 'function' )&&( next instanceof Error )) {
@@ -202,7 +184,7 @@ namespace $ {
 			}
 			
 			this['value()'] = next
-			this.log( [ 'push' , next , prev ] )
+			$mol_log( this , prev , '➔' , next )
 			
 			this.obsolete_slaves()
 			
@@ -219,7 +201,7 @@ namespace $ {
 			if( this.slaves ) {
 				this.slaves.forEach( slave => slave.check() )
 			} else {
-				if( this.autoFresh ) $mol_atom.actualize( this )
+				$mol_atom.actualize( this )
 			}
 		}
 		
@@ -229,7 +211,6 @@ namespace $ {
 			//}
 			
 			if( this.status === $mol_atom_status.actual ) {
-				//this.log([ 'checking' ])
 				this.status = $mol_atom_status.checking
 				
 				this.check_slaves()
@@ -242,8 +223,6 @@ namespace $ {
 			//if( this.status === $mol_atom_status.pulling ) {
 			//	throw new Error( `Obsolated while pulling ${ this }` )
 			//} 
-			
-			// this.log( [ 'obsolete' ] )
 			
 			this.status = $mol_atom_status.obsolete
 			
@@ -335,21 +314,21 @@ namespace $ {
 		}
 		
 		static sync() {
-			$mol_log( '$mol_atom.sync' , [] )
+			$mol_log( this , 'sync' )
 			this.schedule()
 			
 			while( true ) {
 				const atom = this.updating.shift()
 				if( !atom ) break
 				if( this.reaping.has( atom ) ) continue
-				if( !atom.destroyed() ) atom.get()
+				if( atom.status !== $mol_atom_status.actual ) atom.get()
 			}
 			
 			while( this.reaping.size ) {
 				this.reaping.forEach(
 					atom => {
 						this.reaping.delete( atom )
-						if( !atom.slaves ) atom.destroyed( true )
+						if( !atom.slaves ) atom.destructor()
 					}
 				)
 			}
@@ -363,7 +342,7 @@ namespace $ {
 			let next : Next
 			
 			const atom = new $mol_atom<any>(
-				this ,
+				`${ this }.then(${ done })` ,
 				() => {
 					try {
 						

@@ -37,22 +37,23 @@
 
 <body>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/react/16.0.0/umd/react.production.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/react-dom/16.0.0/umd/react-dom.production.min.js"></script>
 <script>
 	
-	var Test = React.createClass( {
-	
-		getInitialState : function() {
-			this.onMessage = this.onMessage.bind( this )
-			return {
-				data : {
-					sample : '' ,
-					items : []
-				} ,
-				selected : null
-			}
-		} ,
+	var Test = function(){
+		React.Component.apply( this , arguments )
+		this.state = {
+			data : {
+				sample : '' ,
+				items : []
+			} ,
+			selected : null
+		}
+		this.onMessage = this.onMessage.bind( this )
+	}
+	Test.prototype = Object.assign( Object.create( React.Component.prototype ) ,
+	{
 	
 		select : function( data ) {
 			this.setState( {

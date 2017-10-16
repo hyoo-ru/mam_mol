@@ -35,7 +35,7 @@ namespace $.$$ {
 			const context = this.context_sub()
 			const scrollTop = context.$mol_scroll_top()
 			
-			const top = Math.max( 0 , Math.floor( scrollTop / this.row_height() ) )
+			const top = Math.max( 0 , Math.floor( scrollTop / this.row_height() ) - 1 )
 			const bottom = Math.min( count , top + this.rows_visible_max() )
 			
 			return { top , bottom , count }

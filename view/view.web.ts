@@ -22,13 +22,7 @@ namespace $ {
 			
 			view.dom_node( nodes.item( i ) )
 			
-			let win = new $mol_atom( `$mol_view.Root(${ i })` , ()=> {
-				view.dom_tree()
-				$mol_dom_context.document.title = view.title()
-				return null
-			} )
-			
-			new $mol_defer( ()=> win.get() )
+			view.dom_tree()
 		}
 		
 		$mol_defer.run()

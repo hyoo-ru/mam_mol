@@ -1,13 +1,13 @@
-[mol_app_supplies_root] {
+[mol_app_supplies] {
 	flex: 1 1 auto;
 	align-self: stretch;
 	display: flex;
 }
 
-[mol_app_supplies_root_lister] {
+[mol_app_supplies_list] {
 	flex: 1 1 400px;
 }
 
-[mol_app_supplies_root_detailer] {
+[mol_app_supplies_detail] {
 	flex: 1000 1 400px;
 }

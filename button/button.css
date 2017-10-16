@@ -1,5 +1,4 @@
 [mol_button] {
-	user-select: none;
 	border: none;
 	font: inherit;
 	background-color: none;
@@ -23,7 +22,7 @@
 	align-items: center;
 	vertical-align: middle;
 	text-align: center;
-	padding: .5rem;
+	padding: .5rem 1rem;
 	border-radius: var(--mol_skin_round);
 }
 

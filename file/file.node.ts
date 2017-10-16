@@ -148,10 +148,10 @@ namespace $ {
 		}
 		
 		resolve( path : string ) : $mol_file {
-			return this.Class().relative( $node.path.join( this.path() , path ) )
+			return ( this.constructor as typeof $mol_file ).relative( $node.path.join( this.path() , path ) )
 		}
 		
-		relate( base = this.Class().relative( '.' ) ) {
+		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' ) ) {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
 		

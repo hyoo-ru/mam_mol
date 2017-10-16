@@ -7,9 +7,8 @@ namespace $ {
 			$mol_defer.add( this )
 		}
 		
-		destroyed( next? : boolean ) {
-			if( next ) $mol_defer.drop( this )
-			return super.destroyed( next )
+		destructor() {
+			$mol_defer.drop( this )
 		}
 		
 		static all : $mol_defer[] = []
@@ -50,7 +49,7 @@ namespace $ {
 		static run() {
 			if( this.all.length === 0 ) return
 			this.schedule()
-			for( var defer : $mol_defer ; defer = this.all.pop() ; ) defer.run()
+			for( var defer : $mol_defer ; defer = this.all.shift() ; ) defer.run()
 			//this.unschedule()
 		}
 		

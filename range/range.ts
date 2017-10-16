@@ -15,7 +15,9 @@ namespace $ {
 			return
 		}
 		
-		length = 0
+		get length() {
+			return 0
+		}
 		
 		get '0'() : Value {
 			throw new Error( 'Direct access to items not supported. Use item( id : number ) method instead.' )
@@ -112,7 +114,7 @@ namespace $ {
 		get length() {
 			return this.source.length
 		}
-		
+				
 	}
 	
 	// export class $mol_range_list< Value > extends $mol_range_common< Value > {

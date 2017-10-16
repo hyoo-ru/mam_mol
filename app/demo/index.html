@@ -1,0 +1,40 @@
+<!doctype html>
+<html style=" width : 100% ; height : 100% ; position : fixed ">
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+<link rel="manifest" href="manifest.json">
+
+<!-- description -->
+<meta name="description" content="$mol framework demo application">
+<meta name="application-name" content="$mol">
+<meta name="apple-mobile-web-app-title" content="$mol Demo">
+
+<!-- colors -->
+<meta name="theme-color" content="#000000">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- logo -->
+<link href="logo/logo.png" rel="icon" />
+<link rel="apple-touch-icon" sizes="128x128" href="logo/logo_128.png">
+<link rel="apple-touch-icon-precomposed" sizes="128x128" href="logo/logo_128.png">
+<meta name="msapplication-TileImage" content="logo/logo_192.png">
+
+<!-- full screen -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<link href="-/web.css" rel="stylesheet"/>
+
+<body mol_view_root="$mol_app_demo" tabindex="0">
+
+<script src="-/web.js" charset="utf-8"></script>
+<script>
+	addEventListener( 'load' , function() {
+		var script = document.createElement( 'script' )
+		script.src = '-/web.test.js'
+		document.body.appendChild( script )
+	} )
+</script>

@@ -28,12 +28,14 @@ namespace $ {
 			try {
 				return this.source( lang ).valueOf()
 			} catch( error ) {
+				if( error instanceof $mol_atom_wait ) throw error
 				const def = this.lang_default()
 				if( lang === def ) throw error
 				return this.source( def )
 			}
 		}
 		
+		@ $mol_mem_key
 		static text( key : string ) {
 
 			for( let lang of [ this.lang() , 'en' ] ) {

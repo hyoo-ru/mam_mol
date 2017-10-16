@@ -40,10 +40,14 @@ namespace $ {
 			const chunks : string[] = []
 			for( let key in next ) {
 				if( null == next[ key ] ) continue
-				chunks.push( [ key ].concat( next[ key ] ? next[ key ] : [] ).map( encodeURIComponent ).join( '=' ) )
+				chunks.push( [ key ].concat( next[ key ] ? next[ key ] : [] ).map( this.encode ).join( '=' ) )
 			}
 			
 			return '#' + chunks.join( '/' )
+		}
+
+		static encode( str : string ) {
+			return encodeURIComponent( str ).replace( /\(/g , '%28' ).replace( /\)/g , '%29' )
 		}
 		
 		constructor( public prefix = '' ) {

@@ -1,5 +1,3 @@
-declare var ymaps : any
-
 namespace $.$$ {
 
 	export class $mol_map_yandex extends $.$mol_map_yandex {
@@ -31,8 +29,8 @@ namespace $.$$ {
 		}
 
 		update( event? : any ) {
-			this.zoom( this.api().getZoom() , $mol_atom_force )
-			this.center( this.api().getCenter(), $mol_atom_force )
+			this.zoom( this.api().getZoom() )
+			this.center( this.api().getCenter() )
 		}
 
 		render() {

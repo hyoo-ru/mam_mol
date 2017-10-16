@@ -9,12 +9,20 @@ namespace $ {
 			$mol_assert_ok( 1 )
 		} ,
 		
-		'must be equal'() {
+		'two must be equal'() {
 			$mol_assert_equal( 2 , 2 )
 		} ,
 		
-		'must be unique'() {
+		'three must be equal'() {
+			$mol_assert_equal( 2 , 2 , 2 )
+		} ,
+		
+		'two must be unique'() {
 			$mol_assert_unique( [ 3 ] , [ 3 ] )
+		} ,
+		
+		'three must be unique'() {
+			$mol_assert_unique( [ 3 ] , [ 3 ] , [ 3 ] )
 		} ,
 		
 	} )

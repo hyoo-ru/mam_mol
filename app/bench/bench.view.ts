@@ -37,7 +37,7 @@ namespace $.$$ {
 			if( next !== void 0 ) return next
 			
 			const current = this.command_current( command )
-			if( current !== command ) throw new $mol_atom_wait( `Waiting for ${ JSON.stringify( current ) }...` )
+			if( current && current !== command ) throw new $mol_atom_wait( `Waiting for ${ JSON.stringify( current ) }...` )
 			
 			requestAnimationFrame( ()=> {
 				sandbox.contentWindow.postMessage( command , '*' )
@@ -85,8 +85,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		samples( next? : string[] ) : string[] {
-			const arg = $mol_state_arg.value( this.state_key( 'sample' ) , next && next.join( '~' ) )
-			return arg ? arg.split( '~' ).sort() : []
+			const arg = $mol_state_arg.value( this.state_key( 'sample' ) , next && next.join( '~' ) ) as string
+			const all = this.samples_all()
+			return arg ? arg.split( '~' ).sort().filter( name => all.indexOf( name ) >= 0 ) : []
 		}
 		
 		@ $mol_mem

@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	export class $mol_perf_sierp extends $.$mol_perf_sierp {
 		
-		sub() {
+		dots() {
 			return this.data().map( ( props , index )=> this.Dot( index ) )
 		}
 		

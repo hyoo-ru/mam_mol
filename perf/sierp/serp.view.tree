@@ -3,6 +3,7 @@ $mol_perf_sierp $mol_view
 	elapsed?val 0
 	style *
 		transform <= transform \
+	sub / <= Dots $mol_view sub <= dots /
 	Dot!id $mol_perf_sierp_dot
 		left <= left!id 0
 		top <= top!id 0

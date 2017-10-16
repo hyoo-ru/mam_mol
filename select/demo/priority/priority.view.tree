@@ -2,6 +2,7 @@ $mol_select_demo_priority $mol_demo_small
 	title @ \Priority picker
 	sub /
 		<= Priority $mol_select
+			Filter null
 			value?val <=> priority?val \Lowest
 			options /
 				\Highest 

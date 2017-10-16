@@ -52,12 +52,9 @@ namespace $ {
 			return next
 		}
 		
-		destroyed( next? : boolean ) {
-			if( next ) {
-				const native = this[ 'request()' ]
-				if( native ) native.abort()
-			}
-			return super.destroyed( next )
+		destructor() {
+			const native = this[ 'request()' ]
+			if( native ) native.abort()
 		}
 		
 		@ $mol_mem
@@ -72,7 +69,7 @@ namespace $ {
 			const headers = this.headers()
 			for( let name in headers ) native.setRequestHeader( name , headers[ name ] )
 			
-			native.send( ... next || [] )
+			native.send( ... $mol_maybe( next ) )
 			
 			throw new $mol_atom_wait( `${ method } ${ uri }` )
 		}

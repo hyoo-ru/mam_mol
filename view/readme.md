@@ -44,11 +44,11 @@ Returns dictionary of styles. Numbers will be convertes to string with "px" suff
 
 **`event() : { [ key : string ] : ( event : Event )=> void }`**
 
-Returns dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property. This handlers are synchronous and can be cancelled by ``preventDefault()```.
+Returns dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property. This handlers are synchronous and can be cancelled by ```preventDefault()```.
 
 **`event_async() : { [ key : string ] : ( event : Event )=> void }`**
 
-Returns dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property. This handlers are passive and can not be cancelled by ``preventDefault()```.
+Returns dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property. This handlers are passive and can not be cancelled by ```preventDefault()```.
 
 **`focused( next? : boolean ) : boolean`**
 
@@ -69,7 +69,7 @@ In the example we create a list with navigation (using $mol_nav)
     rows <= options /
 ```
 
-## view.tree
+## *.view.tree
 
 *view.tree* - is a declarative language of describing components, based on [format tree](https://github.com/nin-jin/tree.d). In a file could be plenty of components defined in series, but better way is put every component in a separate file, except very trivial cases.
 To create a new component it's enough to inherit this from any existing one.
@@ -88,7 +88,7 @@ namespace $ { export class $my_button extends $mol_view {} }
 While inheritance there is a possibility to declare additional properties or overload existing (but types of properties should match). For example lets overload a `uri` property with `"https://example.org"` string, and `sub` - with array of one string `"Click me!"`, besides, lets declare a new property `target` with `"_top"` value by default. (it's important to mark that a value by default is necessary when declaring a property):  
 
 ```tree
-$mol_link
+$my_example $mol_link
 	uri \https://example.org
 	sub /
 		\Click me!
@@ -103,7 +103,7 @@ namespace $ { export class $my_example extends $mol_link {
 	}
 
 	sub() {
-		return [].concat(  "Click me!" )
+		return [].concat( "Click me!" )
 	}
 
 	target() {
@@ -113,10 +113,11 @@ namespace $ { export class $my_example extends $mol_link {
 } }
 ```
 
-Nodes beginning with `-` - would be ignored, it allows to use them for commenting and temporary disable subtree. Nodes beginning with `$` - is name of component. `/` - any list should begin with this symbol. `\` - should be preceded any  raw data, which can contain entirely any data until the end of the line. Numbers, booleans values and `null` is being wrote as it is, without any prefixes:
+Nodes beginning with `-` - would be ignored, it allows to use them for commenting and temporary disable subtree. Nodes beginning with `$` - is name of component. `/` - any list should begin with this symbol. `\` - should be preceded any raw data, which can contain entirely any data until the end of the line, `@` marks string for extraction to separate `*.locale=en.json` file. Numbers, booleans values and `null` is being wrote as it is, without any prefixes:
 
 ```tree
 $my_values $mol_view
+	title @ \Values example
 	sub /
 		0
 		1.1
@@ -131,6 +132,10 @@ $my_values $mol_view
 
 ```typescript
 namespace $ { export class $my_values extends $mol_view {
+
+	title() {
+		return this.$.$mol_locale.text( '$my_values_title' )
+	}
 
 	sub() {
 		return [].concat( 0 , 1.1 , true , false , <any> null , "I can contain any character! \\(\"o\")/" )
@@ -204,7 +209,7 @@ $my_rotate $mol_view
 namespace $ { export class $my_rotate extends $mol_view {
 
 	style() {
-		return { ...super.field() ,
+		return { ...super.style() ,
 			"transform" : "rotate( 180deg )" ,
 		}
 	}
@@ -489,6 +494,7 @@ task_rows() {
 - `*` - dictionary (string keys, any values)
 - `^` - return value of the same property from super class
 - `\` - raw string
+- `@` - localized string
 - `<=` - read only provide property from owner to sub component
 - `=>` - read only provide property from sub component to owner
 - `<=>` - fully replace sub component property by owner's one
@@ -496,6 +502,7 @@ task_rows() {
 - `?` - property can be changed by provide additional optional argument
 
 ## view.ts
+
 In addition to declarative description of component, next to it could be created a file of the same name with `view.ts` extension, where a behavior could be described. Using a special construction, it could be inherited from realization obtained of `view.tree` and it would be overloaded automatically by heir:  
 
 For example we have following description into `./my/hello/hello.view.tree`:
@@ -541,7 +548,7 @@ namespace $ { export class $my_hello extends $mol_view {
 For now we could "mix" into this class our behavior through `./my/hello/hello.view.ts`:
 
 ```typescript
-namespace $.$mol {
+namespace $.$$ {
 	export class $my_hello extends $.$my_hello {
 		
 		message() {

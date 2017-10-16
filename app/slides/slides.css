@@ -60,3 +60,7 @@
 	flex: 0 0 auto;
 	width: auto;
 }
+
+[mol_app_slides_speech_toggle] {
+	align-items: center;
+}

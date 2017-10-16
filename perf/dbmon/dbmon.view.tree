@@ -1,0 +1,35 @@
+$mol_perf_dbmon $mol_scroll
+	title \dbmon ($mol)
+	sub /
+		<= Databases $mol_list
+			rows <= databases /
+	Database!id $mol_view
+		sub /
+			<= Name!id $mol_view
+				sub /
+					<= name!id \
+			<= Query_count!id $mol_perf_dbmon_query_count
+				label_mod <= query_count_label_mod!id \
+				count <= query_count!id 0
+			<= top_queries!id /
+	Query!id $mol_perf_dbmon_query
+		elapsed <= query_elapsed!id \
+		elapsed_mod <= query_elapsed_mod!id \
+		value <= query_value!id \
+
+$mol_perf_dbmon_query_count $mol_view
+	sub /
+		<= Label $mol_view
+			attr * mol_perf_dbmon_query_count_label <= label_mod \
+			sub /
+				<= count 0
+
+$mol_perf_dbmon_query $mol_pop_over
+	minimal_height 40
+	Anchor <= Elapsed $mol_view
+		attr * mol_perf_dbmon_query_elapsed <= elapsed_mod \
+		sub /
+			<= elapsed \
+	bubble_content /
+		<= value \
+	align \left_center

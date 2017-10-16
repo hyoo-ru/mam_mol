@@ -20,14 +20,22 @@ namespace $ {
 		throw new Error( 'Not failed' )
 	}
 	
-	export function $mol_assert_equal< Value >( a : Value , b : Value ) {
-		if( a === b ) return
-		throw new Error( `Not equal (${a},${b})` )
+	export function $mol_assert_equal< Value >( ... args : Value[] ) {
+		for( let i = 0 ; i < args.length ; ++i ) {
+			for( let j = 0 ; j < args.length ; ++j ) {
+				if( i === j ) continue
+				if( args[i] !== args[j] ) throw new Error( `Not equal (${ args[i] }!==${ args[j] })` )
+			}
+		}
 	}
 	
-	export function $mol_assert_unique< Value >( a : Value , b : Value ) {
-		if( a !== b ) return
-		throw new Error( `Not unique (${a},${b})` )
+	export function $mol_assert_unique( ... args : any[] ) {
+		for( let i = 0 ; i < args.length ; ++i ) {
+			for( let j = 0 ; j < args.length ; ++j ) {
+				if( i === j ) continue
+				if( args[i] === args[j] ) throw new Error( `Not unique (args[${ i }]===args[${ j }])===${ args[i] }` )
+			}
+		}
 	}
 	
 }

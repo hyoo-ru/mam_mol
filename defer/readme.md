@@ -26,9 +26,9 @@ namespace $ {
 Output:
 ```
 Uncaught Error: :-(
-2
-Uncaught Error: ;-)
 1
+Uncaught Error: ;-)
+2
 ```
 
 # API

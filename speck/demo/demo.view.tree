@@ -3,7 +3,7 @@ $mol_speck_demo $mol_demo_small
 		<= Link $mol_link
 			sub /
 				<= Link_speck $mol_speck
-					value \𝞫
+					value \β
 				<= Link_icon $mol_icon_settings
 		<= String $mol_view
 			sub /

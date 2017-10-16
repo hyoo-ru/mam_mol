@@ -12,6 +12,14 @@ namespace $.$$ {
 		return false
 	}
 	
+	export function $mol_scroll_moving_vert() {
+		return false
+	}
+	
+	export function $mol_scroll_moving_hor() {
+		return false
+	}
+	
 	export class $mol_scroll extends $.$mol_scroll {
 
 		// scroll_top( next? : number ) {
@@ -33,7 +41,8 @@ namespace $.$$ {
 		}
 		
 		event_scroll( next? : Event ) {
-			this.moving( true )
+			this.moving_vert( this.scroll_top() !== this.dom_node().scrollTop )
+			this.moving_hor( this.scroll_left() !== this.dom_node().scrollLeft )
 			this.moving_task_stop()
 			
 			new $mol_defer( ()=> {
@@ -62,12 +71,14 @@ namespace $.$$ {
 		_moving_task_timer = 0
 		moving_task_stop() {
 			clearTimeout( this._moving_task_timer )
-			this._moving_task_timer = setTimeout( ()=> this.moving( false ) , 50 )
+			this._moving_task_timer = setTimeout( ()=> {
+				this.moving_vert( false )
+				this.moving_hor( false )
+			} , 50 )
 		}
 		
-		@ $mol_mem
-		moving( next? : boolean ) {
-			return next || false
+		moving() {
+			return this.moving_hor() || this.moving_vert()
 		}
 
 		@ $mol_mem
@@ -87,6 +98,8 @@ namespace $.$$ {
 			subContext.$mol_scroll_top = ()=> this.scroll_top()
 			subContext.$mol_scroll_left = ()=> this.scroll_left()
 			subContext.$mol_scroll_moving = ()=> this.moving()
+			subContext.$mol_scroll_moving_vert = ()=> this.moving_vert()
+			subContext.$mol_scroll_moving_hor = ()=> this.moving_hor()
 			return subContext
 		}
 		

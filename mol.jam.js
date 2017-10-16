@@ -1,3 +1,4 @@
+"use strict"
 /// Fake namespace for optional overrides
 ///
 /// 	namespace $ { export var x = 1 , y = 1 } // defaults
