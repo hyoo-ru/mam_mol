@@ -1,32 +1,36 @@
 $mol_calendar $mol_view
 	sub /
+		<= Title $mol_view
+			sub /
+				<= title \
 		<= Head $mol_view
 			sub /
-				<= head /
-		<= Days $mol_view
+				<= weekdays /
+		<= Weeks $mol_view
 			sub /
-				<= days /
+				<= weeks /
 	-
-	Head_day!id $mol_view
-		attr *
-			mol_calendar_weekend_wd <= weekend_wd!id false
-		sub /
-			<= head_day!id \
+	Weekday!index $mol_calendar_day
+		holiday <= weekend!index false
+		text <= weekday!index \
 	-
 	Week!row $mol_view
 		sub / 
 			<= week_days!row /
 	-
-	Day!day $mol_view
-		attr *
-			mol_calender_other_month <= other_month!day false
-			mol_calender_weekend <= weekend!day false
-			mol_calender_is_holiday <= is_holiday!day false
-			mol_calendar_today <= today!day false
-		sub / 
-			<= day!day \
+	Day!day $mol_calendar_day
+		ghost <= day_ghost!day false
+		holiday <= day_holiday!day false
+		selected <= day_selected!day false
+		text <= day_text!day \
 	-
-	get_date?val \
-	- value_iso?val \
-	- value_moment?val $mol_time_moment
-	
+	month_string \
+	month_moment $mol_time_moment
+
+$mol_calendar_day $mol_view
+	attr *
+		mol_calendar_holiday <= holiday false
+		mol_calendar_ghost <= ghost false
+		mol_calendar_selected <= selected false
+	sub <= content /
+		<= text \

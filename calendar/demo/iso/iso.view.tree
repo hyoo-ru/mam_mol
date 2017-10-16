@@ -1,9 +1,0 @@
-- $mol_calendar_demo_iso $mol_demo_small
-	title @ \Calendar_iso
-	sub /
-		<= Month_label $mol_labeler
-			title <= is_date \Date iso8601
-			content <= Date $mol_string
-				value?val <=> today?val \2017-10-29
-		<= Calendar $mol_calendar
-			value_moment?val <= today?val -

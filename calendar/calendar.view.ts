@@ -2,82 +2,104 @@ namespace $.$mol {
 	
  	export class $mol_calendar extends $.$mol_calendar {
 
-		get_date( val? : string ){
-			return val == undefined ? new $mol_time_moment() :  new $mol_time_moment( val )
+		@ $mol_mem
+		month_moment() {
+			const moment = new $mol_time_moment( this.month_string() || undefined )
+			return new $mol_time_moment({ year : moment.year , month : moment.month })
 		}
 
-		// value_moment(val? : $mol_time_moment){
-		// 	return new $mol_time_moment( this.value_iso( val == undefined ? val : val.valueOf() ) )
-		// }
-		
-		month_first_day(){
-			return this.get_date().merge({ day : 0 })
+		title() {
+			return this.month_moment().toString( 'Month YYYY' )
 		}
 
-		month_last_day(){
-			return this.month_first_day().shift({ month: + 1, day: - 1})
+		@ $mol_mem
+		day_first() {
+			return this.month_moment().merge({ day : 0 })
 		}
 
-		day_draw_from(){
-			let first_wd = this.month_first_day().weekday
-			return this.month_first_day().shift( { day : - first_wd } )
+		@ $mol_mem
+		day_last() {
+			return this.day_first().shift( 'P1M' )
 		}
 
-		head(){
+		@ $mol_mem
+		day_draw_from() {
+			let weekday = this.day_first().weekday
+			return this.day_first().shift({ day : - weekday })
+		}
+
+		@ $mol_mem
+		weekdays() {
 			const next : $mol_view[] = []
-			for( let id = 0 ; id < 7 ; ++id ) {
-				next.push( this.Head_day( id ) )
+			for( let index = 0 ; index < 7 ; ++index ) {
+				next.push( this.Weekday( index ) )
 			}
 			return next
 		}
 
-		head_day( id : number ){
-			return this.day_draw_from().shift( { day : id } ).toString('WD')
+		@ $mol_mem_key
+		weekday( index : number ){
+			return this.day_draw_from().shift({ day : index }).toString( 'WD' )
 		}
 
-		weekend_wd( id : number ){
-			return  id == 5 || id == 6 ? true : false
+		weekend( index : number ){
+			return [ 5 , 6 ].indexOf( index ) >= 0
 		}
 
-		sum_week_of_month(){
-			let week_milisec = 604800 * 1000
-			let sum = (this.month_last_day().valueOf() - this.day_draw_from().valueOf()) / ( week_milisec )
-			return Math.ceil(sum)
+		@ $mol_mem
+		weeks_count() {
+
+			const interval = new $mol_time_interval({
+				start : this.day_draw_from() , 
+				end : this.day_last() ,
+			})
+			
+			return Math.ceil( interval.duration.count({ day : 7 }) )
 		}
 
-		days(){
-			const week : $mol_view[] = []
-			let count_week = this.sum_week_of_month()
+		@ $mol_mem
+		weeks() {
+			const weeks : $mol_view[] = []
+			let count = this.weeks_count()
 
-			for( let row = 0; row < count_week; ++row ){
-				week.push( this.Week( row ))
+			for( let i = 0; i < count; ++i ) {
+				weeks.push( this.Week( i ) )
 			}
-			return week
+
+			return weeks
 		}
 
-		week_days(row : number){
-			const day : $mol_view[] = []
-			let start_day = this.day_draw_from()
-			let is_week = 7 * row
-			for( let col = 0; col < 7; ++col ){
-				day.push( this.Day( start_day.shift({ day : (col + is_week)}).toString("YYYY-MM-DD") ) )
+		@ $mol_mem_key
+		week_days( index : number ) {
+			const days : $mol_view[] = []
+			
+			let start = this.day_draw_from().shift({ day : index * 7 })
+			
+			for( let i = 0 ; i < 7 ; ++i ) {
+				days.push( this.Day( start.shift({ day : i }).toString( 'YYYY-MM-DD' ) ) )
 			}
-			return day
+			
+			return days
 		}
 
-		day(week_days : string){
-			return new $mol_time_moment(week_days).toString("D")
+		@ $mol_mem_key
+		day_text( day : string ) {
+			return new $mol_time_moment( day ).toString( "D" )
 		}
 
-		weekend(week_days : string){
-			let day = new $mol_time_moment(week_days).weekday
-			return  day == 5 || day == 6 ? true : false
+		@ $mol_mem_key
+		day_holiday( day : string ) {
+			return this.weekend( new $mol_time_moment( day ).weekday )
 		}
 
-		other_month(week_days : string){
-			let other_month = new $mol_time_moment(week_days).toString("MM")
-			let this_month = this.month_first_day().toString("MM")
-			return this_month == other_month ? false : true
+		@ $mol_mem_key
+		day_ghost( day : string ) {
+			return new $mol_time_moment( day ).toString( 'YYYY-MM' ) !== this.day_first().toString( 'YYYY-MM' )
+		}
+
+		@ $mol_mem_key
+		day_selected( day : string ) {
+			return new $mol_time_moment().toString( 'YYYY-MM-DD' ) === day
 		}
 
 	 }

@@ -1,4 +1,5 @@
 $mol_calendar_demo_simple $mol_demo_small
-	title @ \Calendar
+	title @ \Days of curret month
 	sub /
 		<= Calendar $mol_calendar
+			month_moment <= today $mol_time_moment
