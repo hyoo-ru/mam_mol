@@ -135,8 +135,8 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		dom_tree() : Element {
-			const node = this.dom_node()
+		dom_tree( next? : Element ) : Element {
+			const node = this.dom_node( next )
 			
 			try {
 				
