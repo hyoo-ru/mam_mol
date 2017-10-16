@@ -25,6 +25,29 @@ namespace $ {
 		static Root( id : number ) {
 			return new this
 		}
+
+		@ $mol_mem
+		static autobind() {
+			const nodes = $mol_dom_context.document.querySelectorAll( '[mol_view_root]' )
+			
+			for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
+				const name = nodes.item( i ).getAttribute( 'mol_view_root' )
+				
+				const View = $[ name ]
+				if( !View ) {
+					console.error( `Can not attach view. Class not found: ${ name }` )
+					continue
+				}
+				
+				const view = View.Root( i )
+				
+				view.dom_tree( nodes.item( i ) )
+				
+				document.title = view.title()
+			}
+			
+			$mol_defer.run()
+		}
 		
 		title() : string {
 			return this.constructor.toString()
@@ -173,8 +196,6 @@ namespace $ {
 			const fields = this.field()
 			$mol_dom_render_fields( node , fields )
 			new $mol_defer( ()=> $mol_dom_render_fields( node , fields ) )
-
-			if( this.object_host() === this.constructor ) this.$.$mol_dom_context.document.title = this.title()			
 		}
 
 		@ $mol_mem
