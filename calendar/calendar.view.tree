@@ -1,13 +1,14 @@
-$mol_calendar $mol_view
+$mol_calendar $mol_list
 	sub /
 		<= Title $mol_view
+			minimal_height 24
 			sub /
 				<= title \
 		<= Head $mol_view
 			sub /
 				<= weekdays /
-		<= Weeks $mol_view
-			sub /
+		<= Weeks $mol_list
+			rows /
 				<= weeks /
 	-
 	Weekday!index $mol_calendar_day
@@ -28,6 +29,8 @@ $mol_calendar $mol_view
 	month_moment $mol_time_moment
 
 $mol_calendar_day $mol_view
+	minimal_height 32
+	minimal_width 36
 	attr *
 		mol_calendar_holiday <= holiday false
 		mol_calendar_ghost <= ghost false
