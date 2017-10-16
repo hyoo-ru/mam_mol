@@ -1,0 +1,6 @@
+- $mol_calendar_demo_holiday $mol_demo_small
+	title @ \Calendar_iso
+	sub /
+		<= Calendar $mol_calendar
+			value_moment <= today *
+			

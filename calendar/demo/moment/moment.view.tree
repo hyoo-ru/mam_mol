@@ -1,0 +1,7 @@
+$mol_calendar_demo_moment $mol_demo_small
+	title @ \Calendar_moment
+	sub /
+		<= Month_label $mol_labeler
+			title <= is_date \Date $mol_time_moment
+			content <= Calendar $mol_calendar
+				get_date <= date \2017-02-28
