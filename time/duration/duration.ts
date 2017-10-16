@@ -61,20 +61,20 @@ namespace $ {
 				throw new Error( `Can not parse time duration (${ config })` )
 			}
 			
-			this.year = config.year
-			this.month = config.month
-			this.day = config.day
-			this.hour = config.hour
-			this.minute = config.minute
-			this.second = config.second
+			this.year = config.year || 0
+			this.month = config.month || 0
+			this.day = config.day || 0
+			this.hour = config.hour || 0
+			this.minute = config.minute || 0
+			this.second = config.second || 0
 		}
 
-		readonly year : number
-		readonly month : number
-		readonly day : number
-		readonly hour : number
-		readonly minute : number
-		readonly second : number
+		readonly year : number= 0
+		readonly month : number = 0
+		readonly day : number = 0
+		readonly hour : number = 0
+		readonly minute : number = 0
+		readonly second : number = 0
 
 		summ( config : $mol_time_duration_config ) {
 			const duration = new $mol_time_duration( config )
@@ -98,6 +98,11 @@ namespace $ {
 				minute : this.minute && this.minute * numb ,
 				second : this.second && this.second * numb ,
 			})
+		}
+
+		count( config : $mol_time_duration_config ) {
+			const duration = new $mol_time_duration( config )
+			return this.valueOf() / duration.valueOf()
 		}
 
 		valueOf() {
