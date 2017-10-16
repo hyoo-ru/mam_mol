@@ -1,0 +1,10 @@
+$mol_calendar_demo_selection $mol_demo_small
+	title @ \Days of month 2018-01 with custom selection
+	interval_config *
+		start \2018-01-10
+		end \2018-01-20
+	sub /
+		<= Calendar $mol_calendar
+			month_string <= month \2018-01
+			day_selected!day <= selected!day false
+			

@@ -15,6 +15,9 @@ include \/mol/bar/demo
 include \/mol/bench/demo
 include \/mol/book/demo
 include \/mol/button/demo
+include \/mol/calendar/demo/holiday
+include \/mol/calendar/demo/selection
+include \/mol/calendar/demo/simple
 include \/mol/card/demo
 include \/mol/chart/demo/simple
 include \/mol/chart/demo/styles
