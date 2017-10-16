@@ -2,12 +2,16 @@ namespace $.$mol {
 	
  	export class $mol_calendar extends $.$mol_calendar {
 
-		date_moment(){
-			return new $mol_time_moment()
+		get_date( val? : string ){
+			return val == undefined ? new $mol_time_moment() :  new $mol_time_moment( val )
 		}
-		 
+
+		// value_moment(val? : $mol_time_moment){
+		// 	return new $mol_time_moment( this.value_iso( val == undefined ? val : val.valueOf() ) )
+		// }
+		
 		month_first_day(){
-			return this.date_moment().merge({ day : 0 })
+			return this.get_date().merge({ day : 0 })
 		}
 
 		month_last_day(){

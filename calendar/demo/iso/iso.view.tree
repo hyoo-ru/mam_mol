@@ -1,4 +1,4 @@
-$mol_calendar_demo_iso $mol_demo_small
+- $mol_calendar_demo_iso $mol_demo_small
 	title @ \Calendar_iso
 	sub /
 		<= Month_label $mol_labeler

@@ -2,9 +2,13 @@ namespace $.$mol {
 
 	 export class $mol_calendar_demo_moment extends $.$mol_calendar_demo_moment {
 
-		today( val? : $mol_time_moment) {
-			return new $mol_time_moment( val == undefined ? undefined : new $mol_time_moment( val ) )
-		}
+		// today(val? : $mol_time_moment){
+		// 	return this.value_moment( val == undefined ? undefined : new $mol_time_moment( val ) )
+		// }
+
+		// today() {
+		// 	return new $mol_time_moment().toString()
+		// }
 
 		// date(){
 		// 	return new $mol_time_moment().toString("MM")

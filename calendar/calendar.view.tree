@@ -26,6 +26,7 @@ $mol_calendar $mol_view
 		sub / 
 			<= day!day \
 	-
-	value_moment?val $mol_time_moment
-	current_date \
+	get_date?val \
+	- value_iso?val \
+	- value_moment?val $mol_time_moment
 	
