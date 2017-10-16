@@ -13,9 +13,12 @@ Draws all days of month as table.
 ## Properties
 
 **`month_moment() : $mol_time_moment`**
+
+Displayed month as moment.
+
 **`month_string() : string`**
 
-Displayed month.
+Displayed month as string in iso format like `2017-01`.
 
 ## Days modifications
 
