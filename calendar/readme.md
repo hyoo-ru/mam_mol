@@ -22,14 +22,14 @@ Displayed month as string in iso format like `2017-01`.
 
 ## Days modificators
 
-**`selected( day : string ) : boolean`**
+**`day_selected( day : string ) : boolean`**
 
 Returns true when day should be marked as selected. Current day is selected by default.
 
-**`ghost( day : string ) : boolean`**
+**`day_ghost( day : string ) : boolean`**
 
 Returns true when day should be half visible. Days of other months are half-visible by default.
 
-**`holiday( day : string ) : boolean`**
+**`day_holiday( day : string ) : boolean`**
 
 Returns true when day should be marked as holiday. Weekends are holidays by default.
