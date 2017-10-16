@@ -20,7 +20,7 @@ Displayed month as moment.
 
 Displayed month as string in iso format like `2017-01`.
 
-## Days modifications
+## Days modificators
 
 **`selected( day : string ) : boolean`**
 
