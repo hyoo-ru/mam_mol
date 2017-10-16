@@ -54,4 +54,7 @@ new $mol_time_duration( 'PT1h' ).summ( 'PT1h1m' ) // new $mol_time_duration( 'PT
 // Create duration as multiply of one to multiplier
 // Attention! Can produce negative values that is not compatible with iso8601
 new $mol_time_duration( 'PT1h' ).mult( -1 ) // new $mol_time_duration( 'PT-1H' )
+
+// Count of another durations in
+new $mol_time_duration( 'PT1h' ).count( 'PT1s' ) // 3600
 ```
