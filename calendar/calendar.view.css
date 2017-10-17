@@ -13,7 +13,7 @@
 	display: table-row-group;
 }
 
-[mol_calendar_head] ,
+[mol_calendar_weekdays] ,
 [mol_calendar_week] {
 	display: table-row;
 }

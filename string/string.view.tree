@@ -9,6 +9,8 @@ $mol_string $mol_view
 		value <= value_changed?val <=> value?val \
 		placeholder <= hint \
 		type <= type?val \text
+	attr *
+		maxlength <= length_max Infinity
 	event *
 		^
 		input?event <=> event_change?event null
