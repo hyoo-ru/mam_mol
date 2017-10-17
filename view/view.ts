@@ -46,7 +46,6 @@ namespace $ {
 				document.title = view.title()
 			}
 			
-			$mol_defer.run()
 		}
 		
 		title() : string {
