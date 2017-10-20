@@ -267,6 +267,11 @@ namespace $ {
 			
 			this.masters = null
 		}
+
+		cache( next? : Value|Error ) {
+			if( next === undefined ) return this['value()']
+			return this['value()'] = next
+		}
 		
 		value( next? : Value , force? : $mol_atom_force ) : Value {
 			if( next === undefined ) {
@@ -386,6 +391,10 @@ namespace $ {
 	}
 	
 	$mol_state_stack.set( '$mol_atom.stack' , $mol_atom.stack )
+
+	export function $mol_atom_current< Value = any >() {
+		return $mol_atom.stack[0] as $mol_atom< Value >
+	}
 	
 	export class $mol_atom_wait extends Error {
 		name = '$mol_atom_wait'

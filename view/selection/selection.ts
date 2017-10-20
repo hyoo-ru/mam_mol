@@ -8,9 +8,12 @@ namespace $ {
 			
 			const node = next[ 0 ] as HTMLElement
 			
+			const atom = $mol_atom_current< HTMLElement >()
 			new $mol_defer( ()=> {
-				if( node ) node.focus()
-				else if( this[ 'focused()' ][ 'value()' ][0] ) this[ 'focused()' ][ 'value()' ][ 0 ].blur()
+				if( node ) return node.focus()
+
+				const el = atom.cache()[0]
+				if( el ) el.blur()
 			} )
 
 			return undefined
