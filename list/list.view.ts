@@ -51,7 +51,7 @@ namespace $.$$ {
 				const child = sub[ i ]
 				if( child == null ) continue 
 				if( child instanceof $mol_view ) {
-					child.context( this.row_context( i ) )
+					child.$ = this.row_context( i )
 				}
 				next.push( child )
 			}

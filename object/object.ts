@@ -1,6 +1,13 @@
 namespace $ {
 	
+	export type $mol_object_context = ( Window )&( typeof $.$$ )&( typeof $ )
+	
 	export class $mol_object {
+		
+		get $() {
+			const owner = this.object_owner()
+			return ( owner && owner.$ || $ ) as $mol_object_context
+		}
 		
 		public static make< Instance >( this : { new() : Instance } , config : Partial< Instance > ) : Instance {
 			const instance = new this

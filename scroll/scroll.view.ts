@@ -84,7 +84,7 @@ namespace $.$$ {
 		@ $mol_mem
 		context_sub( ) {
 			const context = this.context()
-			const subContext : $mol_view_context = Object.create( context )
+			const subContext : typeof context = Object.create( context )
 			subContext.$mol_view_visible_height = ()=> {
 				const sizeWin = $mol_window.size()
 				const limit = context.$mol_view_visible_height()
@@ -116,7 +116,7 @@ namespace $.$$ {
 			const context = this.context_sub()
 			sub.forEach( child => {
 				if( child instanceof $mol_view ) {
-					child.context( context )
+					child.$ = context
 				}
 			} )
 			

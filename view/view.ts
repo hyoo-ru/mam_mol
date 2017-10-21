@@ -4,7 +4,8 @@ namespace $ {
 	export namespace $$ { let $$ }
 	export namespace $mol { let $mol }
 	
-	export type $mol_view_context = ( Window )&( typeof $.$$ )&( typeof $ )
+	/// Use $mol_object_context instead
+	export type $mol_view_context = $mol_object_context
 	
 	export function $mol_view_visible_width() {
 		return $mol_window.size().width
@@ -60,10 +61,9 @@ namespace $ {
 		} 
 		
 		@ $mol_mem
-		context( next? : $mol_view_context ) {
-			return next || $ as any
+		context( next? : $mol_object_context ) {
+			return next || $ as $mol_object_context
 		}
-		
 		get $() {
 			return this.context()
 		}
@@ -101,7 +101,7 @@ namespace $ {
 			const context = this.context_sub()
 			sub.forEach( child => {
 				if( child instanceof $mol_view ) {
-					child.context( context )
+					child.$ = context
 				}
 			} )
 			

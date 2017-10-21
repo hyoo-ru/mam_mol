@@ -194,7 +194,7 @@ namespace $.$$ {
 		@ $mol_mem
 		context_sub( ) {
 			const context = this.context()
-			const subContext : $mol_view_context = Object.create( context )
+			const subContext : typeof context = Object.create( context )
 			subContext.$mol_scroll_top = ()=> context.$mol_scroll_top() - this.offset()
 			return subContext
 			
