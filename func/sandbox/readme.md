@@ -12,7 +12,7 @@ const result = func() // 4
 
 ## API
 
-**constructor( contexts : Object[] )**
+**constructor( ... contexts : Object[] )**
 
 `contexts` contains global variables for code inside.
 
