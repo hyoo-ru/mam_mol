@@ -1,4 +1,6 @@
 namespace $ {
+
+	export namespace $$ { let $ }
 	
 	export type $mol_object_context = ( Window )&( typeof $.$$ )&( typeof $ )
 	
