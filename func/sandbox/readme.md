@@ -14,8 +14,8 @@ const result = func() // 4
 
 **constructor( contexts : Object[] )**
 
-Global variables for code inside.
+`contexts` contains global variables for code inside.
 
-**eval() : ()=> any**
+**eval( code : string ) : ()=> any**
 
 Creates new function by source code.
