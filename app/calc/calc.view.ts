@@ -148,7 +148,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		result( id : { row : number , col : string } ) {
-			const res = this.func( id ).call()
+			const res = this.func( id )()
 			if( res === undefined ) return ''
 			if( res === '' ) return ''
 			if( isNaN( res ) ) return res

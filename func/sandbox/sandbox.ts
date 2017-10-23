@@ -38,7 +38,15 @@ namespace $ {
 		}
 		
 		eval( code : string ) {
-			return new Function( this.vars().join( ',' ) , `"use strict"\n${ code }` ).bind( null , ... this.values() )
+			const func = new Function( this.vars().join( ',' ) , `"use strict"\n${ code }` ).bind( null , ... this.values() )
+			return ()=> {
+				try {
+					Function.prototype.constructor = undefined
+					return func()
+				} finally {
+					Function.prototype.constructor = Function
+				}
+			}
 		}
 
 	}
