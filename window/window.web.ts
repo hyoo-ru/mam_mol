@@ -16,7 +16,7 @@ namespace $ {
 	}
 	
 	window.addEventListener( 'resize' , ()=> {
-		$mol_window.size( undefined , $mol_atom_force )
+		$mol_window.size( undefined , $mol_atom_force_cache )
 	} )
 	
 }

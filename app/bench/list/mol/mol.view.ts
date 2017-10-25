@@ -15,7 +15,7 @@ namespace $.$$ {
 		static data( next? : $mol_app_bench_list_mol_data , force? : $mol_atom_force ) : $mol_app_bench_list_mol_data {
 			window.addEventListener( 'message' , event => {
 				if( event.data[0] !== 'set data' ) return
-				this.data( event.data[1] , $mol_atom_force )
+				this.data( event.data[1] , $mol_atom_force_cache )
 			} )
 			return { sample : '' , items : [] }
 		}

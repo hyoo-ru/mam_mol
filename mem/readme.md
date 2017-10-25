@@ -83,10 +83,10 @@ userName( next? : string , force? : $mol_atom_force ) { // Added force support
 userName( 'jin' ) // returns 'mary'
 
 /// Force push value to cache 
-userName( 'jin' , $mol_atom_force ) // returns 'jin'
+userName( 'jin' , $mol_atom_force_cache ) // returns 'jin'
 
 /// Force cache ignoring and pulling fresh value
-userName( void 0 , $mol_atom_force ) // returns 'mary'
+userName( void 0 , $mol_atom_force_update ) // returns 'mary'
 ```
 
 ## Multi-value properties

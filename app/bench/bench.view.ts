@@ -15,7 +15,7 @@ namespace $.$$ {
 			
 			next2.onload = event => {
 				next2.onload = null
-				this.sandbox( next2 , $mol_atom_force )
+				this.sandbox( next2 , $mol_atom_force_cache )
 			}
 			
 			throw new $mol_atom_wait( `Loading sandbox...` )
@@ -46,7 +46,7 @@ namespace $.$$ {
 					if( event.data[ 0 ] !== 'done' ) return
 					window.onmessage = null
 					
-					this.command_current( null , $mol_atom_force )
+					this.command_current( null , $mol_atom_force_cache )
 					this.command_result( command , event.data[ 1 ] )
 				}
 			} )

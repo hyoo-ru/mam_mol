@@ -108,14 +108,14 @@ namespace $ {
 				const comment = $mol_github_comment.item( json.url ).json_update( json )
 				$mol_github_user.item( json.user.url ).json_update( json.user )
 
-				this.json( undefined , $mol_atom_force )
+				this.json( undefined , $mol_atom_force_cache )
 				
 				return comment
 
 			} catch( error ) {
 				
 				if( error.message === 'Unauthorized' ) {
-					$mol_github_auth.token_last( undefined , $mol_atom_force ).valueOf()
+					$mol_github_auth.token_last( undefined , $mol_atom_force_cache ).valueOf()
 				}
 				
 				throw error

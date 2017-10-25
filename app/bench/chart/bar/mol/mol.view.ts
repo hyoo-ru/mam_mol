@@ -13,7 +13,7 @@ namespace $.$$ {
 				switch( event.data[0] ) {
 					case 'fill' :
 					case 'update' :
-						this.data( event.data[ 1 ] , $mol_atom_force )
+						this.data( event.data[ 1 ] , $mol_atom_force_cache )
 						break
 				}
 			} )

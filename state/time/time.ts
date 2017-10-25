@@ -6,9 +6,9 @@ namespace $ {
 		static now( precision? : number , next? : number , force? : $mol_atom_force ) {
 			
 			if( precision > 0 ) {
-				setTimeout( () => this.now( precision , undefined , $mol_atom_force ) , precision )
+				setTimeout( () => this.now( precision , undefined , $mol_atom_force_cache ) , precision )
 			} else {
-				requestAnimationFrame( () => this.now( precision , undefined , $mol_atom_force ) )
+				requestAnimationFrame( () => this.now( precision , undefined , $mol_atom_force_cache ) )
 			}
 			
 			return Date.now()

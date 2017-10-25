@@ -23,16 +23,16 @@ namespace $ {
 				this.path() ,
 				{ persistent : false } ,
 				( type : string , name : string )=> {
-					if( !name ) this.stat( undefined , $mol_atom_force )
+					if( !name ) this.stat( undefined , $mol_atom_force_cache )
 					else if( !/(^\.|___$)/.test( name ) ) {
 						var file = this.resolve( name )
-						file.stat( undefined , $mol_atom_force )
+						file.stat( undefined , $mol_atom_force_cache )
 					}
 				}
 			)
 			watcher.on(
 				'error' , ( error : Error )=> {
-					this.stat( error , $mol_atom_force )
+					this.stat( error , $mol_atom_force_cache )
 				}
 			)
 			
@@ -75,7 +75,7 @@ namespace $ {
 					$node.fs.unlinkSync( this.path() )
 				}
 				
-				this.stat( undefined , $mol_atom_force )
+				this.stat( undefined , $mol_atom_force_cache )
 				
 				return next
 			}

@@ -12,7 +12,7 @@ namespace $.$$ {
 			const ymaps = $mol_map_yandex.api()
 
 			if( !ymaps.Map ) {
-				ymaps.ready( ()=> this.api( undefined , $mol_atom_force ) )
+				ymaps.ready( ()=> this.api( undefined , $mol_atom_force_cache ) )
 				throw new $mol_atom_wait( 'Loading maps api modules...' )
 			}
 

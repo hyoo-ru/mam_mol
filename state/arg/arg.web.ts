@@ -73,6 +73,6 @@ namespace $ {
 		
 	}
 	
-	window.addEventListener( 'hashchange' , event => $mol_state_arg.href( undefined , $mol_atom_force ) )
+	window.addEventListener( 'hashchange' , event => $mol_state_arg.href( undefined , $mol_atom_force_cache ) )
 	
 }

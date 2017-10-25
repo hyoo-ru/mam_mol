@@ -213,7 +213,7 @@ namespace $ {
 					return $mol_file.absolute( path ).exists()
 				} ,
 				writeFile : ( path : string , content : string )=> {
-					$mol_file.absolute( path ).content( content , $mol_atom_force )
+					$mol_file.absolute( path ).content( content , $mol_atom_force_cache )
 				} ,
 			}
 			
@@ -353,7 +353,7 @@ namespace $ {
 			
 			for( let repo of mapping.select( 'pack' , name , 'git' ).sub ) {
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
-				pack.stat( undefined , $mol_atom_force )
+				pack.stat( undefined , $mol_atom_force_cache )
 				return true
 			}
 			

@@ -106,14 +106,14 @@ namespace $ {
 				element = element.parentNode as HTMLElement
 			}
 
-			this.focused( parents , $mol_atom_force )
+			this.focused( parents , $mol_atom_force_cache )
 		}
 		
 		static onBlur( event : FocusEvent ) {
 			const focused = this.focused()
 			setTimeout( ()=> {
 				if( focused !== this.focused() ) return
-				this.focused( [] , $mol_atom_force )
+				this.focused( [] , $mol_atom_force_cache )
 			} )
 		}
 	}

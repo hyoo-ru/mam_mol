@@ -102,7 +102,7 @@ namespace $.$$ {
 			if( next ) {
 				prop = prop.insert( next , ... path.slice(1) )
 				this.class_self( this.class_self().insert( prop , 0 , path[0] ) )
-				this.props_all( this.class_name_self() , undefined , $mol_atom_force )
+				this.props_all( this.class_name_self() , undefined , $mol_atom_force_cache )
 			}
 			return prop.select( ... path.slice(1) ).sub[0]
 		}

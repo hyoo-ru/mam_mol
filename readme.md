@@ -353,7 +353,7 @@ namespace $ {
 			
 			// Defered push value to property
 			setTimeout( () => {
-				this.greeting( 'Hello!' , $mol_atom_force )
+				this.greeting( 'Hello!' , $mol_atom_force_cache )
 			} , 1000 )
 			
 			// throw special error to notify about waiting

@@ -44,7 +44,7 @@ namespace $.$$ {
 			$mol_state_arg.value( 'filter' , next )
 			
 			if( this._filter_timer ) clearTimeout( this._filter_timer )
-			this._filter_timer = setTimeout( ()=> { this.filter( void null , $mol_atom_force ) } , 500 )
+			this._filter_timer = setTimeout( ()=> { this.filter( void null , $mol_atom_force_cache ) } , 500 )
 		}
 		
 		lamp_arg( id : string ) {

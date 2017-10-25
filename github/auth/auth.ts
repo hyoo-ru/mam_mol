@@ -43,9 +43,9 @@ namespace $ {
 				if( search !== undefined ) {
 					const found = search.match( /\bcode=([^&]+)/ )
 					if( !found ) return
-					this.code( found[1] , $mol_atom_force )
+					this.code( found[1] , $mol_atom_force_cache )
 				} else {
-					this.code( new Error( 'Can not get auth code' ) as any , $mol_atom_force )
+					this.code( new Error( 'Can not get auth code' ) as any , $mol_atom_force_cache )
 				}
 				
 				clearInterval( timer )

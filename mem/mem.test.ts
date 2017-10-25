@@ -144,7 +144,7 @@ namespace $ {
 				@ $mol_mem
 				source( next? : string , force? : $mol_atom_force ) : string {
 					new $mol_defer( () => {
-						this.source( 'Jin' , $mol_atom_force )
+						this.source( 'Jin' , $mol_atom_force_cache )
 					} )
 					throw new $mol_atom_wait( 'Wait for data!' )
 				}

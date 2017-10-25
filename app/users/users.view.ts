@@ -51,7 +51,7 @@ namespace $.$$ {
 		
 		/// Reload data from server and discard changes.
 		event_reload( next? : Event ) {
-			this.users( undefined , $mol_atom_force )
+			this.users( undefined , $mol_atom_force_cache )
 		}
 		
 		/// Add user with empty name at the end of list.
