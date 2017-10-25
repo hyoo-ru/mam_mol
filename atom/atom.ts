@@ -273,9 +273,11 @@ namespace $ {
 				let next_normal = $mol_conform( next , this._ignore )
 				if( next_normal === this._ignore ) return this.get( force )
 
-				next_normal = $mol_conform( next , this['value()'] )
-				if( next_normal === this['value()'] ) return this.get( force )
-				
+				if(!( this['value()'] instanceof Error )) {
+					next_normal = $mol_conform( next , this['value()'] )
+					if( next_normal === this['value()'] ) return this.get( force )
+				}
+
 				this._next = next_normal
 				this._ignore = next_normal
 
