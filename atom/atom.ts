@@ -134,18 +134,8 @@ namespace $ {
 		_next : Value|Error
 		_ignore : Value|Error
 		
-		set( next : Value ) : Value {
-			let next_normal = $mol_conform( next , this._ignore )
-			if( next_normal === this._ignore ) return this.get()
-
-			next_normal = $mol_conform( next , this['value()'] )
-			if( next_normal === this['value()'] ) return this.get()
-			
-			this._next = next_normal
-			this._ignore = next_normal
-			
-			this.obsolete()
-			return this.get()
+		set( next : Value ) {
+			return this.value( next )
 		}
 		
 		push( next_raw? : Value|Error ) : Value {
@@ -274,15 +264,25 @@ namespace $ {
 		}
 		
 		value( next? : Value , force? : $mol_atom_force ) : Value {
-			if( next === undefined ) {
-				return this.get( force )
-			} else {
-				if( force ) {
+			if( next !== undefined ) {
+				
+				if( force === $mol_atom_force_cache ) {
 					return this.push( next )
-				} else {
-					return this.set( next )
 				}
+
+				let next_normal = $mol_conform( next , this._ignore )
+				if( next_normal === this._ignore ) return this.get( force )
+
+				next_normal = $mol_conform( next , this['value()'] )
+				if( next_normal === this['value()'] ) return this.get( force )
+				
+				this._next = next_normal
+				this._ignore = next_normal
+
+				force = $mol_atom_force_update
 			}
+			
+			return this.get( force )
 		}
 		
 		static stack = [] as $mol_atom<any>[]
@@ -409,5 +409,8 @@ namespace $ {
 		$mol_atom_force : boolean
 		static $mol_atom_force : boolean
 	}
+
+	export let $mol_atom_force_cache = $mol_atom_force
+	export class $mol_atom_force_update extends $mol_atom_force {}
 	
 }
