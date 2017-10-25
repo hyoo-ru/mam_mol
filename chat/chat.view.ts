@@ -36,10 +36,10 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		adding( post : $mol_github_comment ) {
+		adding( post : $mol_github_comment , force? : $mol_atom_force ) {
 			if( !post ) return
 
-			post = this.issue().comments().add( post ).valueOf() as $mol_github_comment
+			post = this.issue().comments().add( post , force ).valueOf() as $mol_github_comment
 			
 			this.add_body( '' )
 			
@@ -47,7 +47,7 @@ namespace $.$$ {
 		}
 
 		add() {
-			this.adding( $mol_github_comment.make({ text : ()=> this.add_body() }) )
+			this.adding( $mol_github_comment.make({ text : ()=> this.add_body() }) , $mol_atom_force_update )
 		}
 
 	}

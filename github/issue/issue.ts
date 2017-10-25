@@ -93,7 +93,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		add( next : $mol_github_comment ) {
+		add( next : $mol_github_comment , force? : $mol_atom_force ) {
 			if( !next ) return
 
 			const resource = $mol_http.resource( this.uri() )
@@ -104,7 +104,7 @@ namespace $ {
 
 			try {
 				
-				const json = resource.json({ body : next.text() }) as $mol_github_comment_json
+				const json = resource.json( { body : next.text() } , force ) as $mol_github_comment_json
 				const comment = $mol_github_comment.item( json.url ).json_update( json )
 				$mol_github_user.item( json.user.url ).json_update( json.user )
 
