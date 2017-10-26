@@ -36,18 +36,23 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		adding( post : $mol_github_comment , force? : $mol_atom_force ) {
-			if( !post ) return
+		adding( text : string , force? : $mol_atom_force ) {
+			if( !text ) return
 
-			post = this.issue().comments().add( post , force ).valueOf() as $mol_github_comment
+			this.$.$mol_rpc_client_frame.item( '//mol.js.org/chat/service/' ).proxy().comment_add(
+				this.issue().uri() ,
+				text ,
+			).valueOf() as string
+
+			this.issue().comments().items( undefined , $mol_atom_force_update ).valueOf()
 			
 			this.add_body( '' )
 			
-			return post
+			return text
 		}
 
 		add() {
-			this.adding( $mol_github_comment.make({ text : ()=> this.add_body() }) , $mol_atom_force_update )
+			this.adding( this.add_body() , $mol_atom_force_update )
 		}
 
 	}

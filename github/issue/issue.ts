@@ -8,7 +8,7 @@ namespace $ {
 		number : number
 		title : string
 		user : $mol_github_user_json
-		labels : { url : string }[]
+		labels : $mol_github_label_json[]
 		state : string
 		locked : string
 		assignees : $mol_github_user_json[]
@@ -36,7 +36,17 @@ namespace $ {
 				}
 			}
 			
+			if( json.labels ) {
+				for( let label of json.labels ) {
+					$mol_github_label.item( label.url ).json_update( label )
+				}
+			}
+			
 			return json
+		}
+
+		repository() {
+			return $mol_github_repository.item( this.json().repository_url )
 		}
 
 		author() {
@@ -57,7 +67,12 @@ namespace $ {
 
 		@ $mol_mem
 		assignees() {
-			return this.json().assignees.map( json =>  $mol_github_user.item( json.url ) )
+			return this.json().assignees.map( json => $mol_github_user.item( json.url ) )
+		}
+
+		@ $mol_mem
+		labels() {
+			return this.json().labels.map( json => $mol_github_label.item( json.url ) )
 		}
 
 		@ $mol_mem
@@ -67,7 +82,7 @@ namespace $ {
 
 		@ $mol_mem
 		comments() {
-			return $mol_github_issue_comments.item( this.json().comments_url )
+			return $mol_github_issue_comments.item( `${ this.uri() }/comments` )
 		}
 
 	}
@@ -88,13 +103,13 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		items() {
-			return this.json().map( json => $mol_github_comment.item( json.url ) )
+		items( next? : $mol_github_comment[] , force? : $mol_atom_force ) {
+			return this.json( undefined , force ).map( json => $mol_github_comment.item( json.url ) )
 		}
 
-		@ $mol_mem
-		add( next : $mol_github_comment , force? : $mol_atom_force ) {
-			if( !next ) return
+		@ $mol_mem_key
+		add( config : { text : string } , next? : $mol_github_comment , force? : $mol_atom_force ) {
+			if( !config ) return
 
 			const resource = $mol_http.resource( this.uri() )
 			resource.method_put = $mol_const( 'POST' )
@@ -104,7 +119,7 @@ namespace $ {
 
 			try {
 				
-				const json = resource.json( { body : next.text() } , force ) as $mol_github_comment_json
+				const json = resource.json( { body : config.text } , force ) as $mol_github_comment_json
 				const comment = $mol_github_comment.item( json.url ).json_update( json )
 				$mol_github_user.item( json.user.url ).json_update( json.user )
 
