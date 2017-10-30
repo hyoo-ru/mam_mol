@@ -24,8 +24,7 @@ namespace $.$$ {
 		'command_current()' : any[]
 		
 		@ $mol_mem
-		command_current( next? : any[] , force? : $mol_atom_force ) {
-			if( $mol_atom_current< any[] >().cache() ) return
+		command_current( next? : any[] ) {
 			return next
 		}
 		
@@ -36,19 +35,22 @@ namespace $.$$ {
 			
 			if( next !== void 0 ) return next
 			
-			const current = this.command_current( command )
+			const current = this.command_current()
 			if( current && current !== command ) throw new $mol_atom_wait( `Waiting for ${ JSON.stringify( current ) }...` )
-			
+			this.command_current( command )
+
 			requestAnimationFrame( ()=> {
 				sandbox.contentWindow.postMessage( command , '*' )
 				
-				window.onmessage = event => {
+				const handle = ( event : MessageEvent )=> {
 					if( event.data[ 0 ] !== 'done' ) return
-					window.onmessage = null
+					window.removeEventListener( 'message' , handle )
 					
-					this.command_current( null , $mol_atom_force_cache )
+					this.command_current( null )
 					this.command_result( command , event.data[ 1 ] )
 				}
+
+				window.addEventListener( 'message' , handle )
 			} )
 			
 			throw new $mol_atom_wait( `Running ${ command }...` )
@@ -108,13 +110,13 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		result_sample( sampleId : string )  {
+		result_sample( sample_id : string )  {
 			const result : { [ key : string ] : any } = {
-				sample : this.sample_title( sampleId ) ,
+				sample : this.sample_title( sample_id ) ,
 			}
 			
 			this.steps().forEach( step => {
-				result[ step ] = this.command_result<string>([ step , sampleId, this.param_dict() ])
+				result[ step ] = this.command_result<string>([ step , sample_id, this.param_dict() ]).valueOf()
 			} )
 			
 			return result
@@ -135,6 +137,7 @@ namespace $.$$ {
 		sandbox_title() {
 			const command = this.command_current()
 			if( !command ) return
+			if( command[0] === 'meta' ) return super.sandbox_title()
 			
 			return `${ this.sample_title( command[1] ) }: ${ this.step_title( command[0] ) }`
 		}

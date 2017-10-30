@@ -6,6 +6,9 @@ namespace $ {
 
 		if( !target || typeof target !== 'object' ) return target
 		if( !source || typeof source !== 'object' ) return target
+
+		if( target instanceof Error ) return target
+		if( source instanceof Error ) return target
 		
 		if( target.constructor !== source.constructor ) return target
 

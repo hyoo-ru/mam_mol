@@ -24,7 +24,7 @@ $mol_app_bench $mol_view
 							<= result_col_title!id /
 						col_sort?val <=> result_col_sort?val \
 		<= Sandbox_page $mol_page
-			title <= sandbox_title \
+			title <= sandbox_title @ \Sandbox
 			Body <= Sandbox $mol_scroll
 				dom_name \iframe
 	-
