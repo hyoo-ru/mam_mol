@@ -45,15 +45,15 @@
 		background-position: 0 0;
 	}
 	to {
-		background-position: 28px 0;
+		background-position: -28px 0;
 	}
 }
 
 [mol_view][mol_view_error="$mol_atom_wait"] {
 		background-image: repeating-linear-gradient(
 		45deg,
-		color( var(--mol_skin_base) alpha(.025) ),
-		color( var(--mol_skin_base) alpha(.025) ) 9px,
+		color( var(--mol_skin_base) alpha(.05) ),
+		color( var(--mol_skin_base) alpha(.05) ) 9px,
 		rgba(255,255,255,.015) 10px,
 		rgba(255,255,255,.015) 20px
 	);
