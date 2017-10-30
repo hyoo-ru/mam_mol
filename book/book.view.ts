@@ -1,4 +1,5 @@
 namespace $.$$ {
+
 	export class $mol_book extends $.$mol_book {
 		
 		@ $mol_mem
@@ -47,7 +48,7 @@ namespace $.$$ {
 		}
 		
 		title() {
-			const pages = this.pages_wrapped()
+			const pages = this.pages()
 			return pages[ pages.length - 1 ].title()
 		}
 
@@ -64,4 +65,5 @@ namespace $.$$ {
 		}
 		
 	}
+
 }
