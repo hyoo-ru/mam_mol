@@ -14,6 +14,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Need a feature?](https://github.com/eigenmethod/mol/issues/new?labels=improvement) / [Vote for other](https://github.com/eigenmethod/mol/labels/improvement)
 - **Discussions: [Telegram](https://t.me/mam_mol), [Slack](http://mam-mol.slack.com), [E-mail](mailto:jin+mol@hyoo.ru)**
 - [Quick start](#quick-start)
+- [Tutorials](#tutorials)
 - [Rationale](#rationale)
 - [Modules](#modules)
 - [Cool stuff](#cool-stuff)
@@ -263,6 +264,12 @@ Add **styles** at `./my/hello/hello.view.css`:
 ```
 
 [That is all!](https://eigenmethod.github.io/mol/app/hello/)
+
+# Tutorials
+
+- [$mol_app_calc: вечеринка электронных таблиц](https://github.com/nin-jin/HabHub/issues/10)
+- [$mol_app_bench: готовим JS бенчмарки быстро и просто](https://github.com/nin-jin/HabHub/issues/8)
+- [$mol_app_habhub: чтение статей с GitHub](https://github.com/nin-jin/HabHub/issues/5)
 
 # Rationale
 
