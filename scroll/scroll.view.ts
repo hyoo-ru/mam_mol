@@ -104,7 +104,11 @@ namespace $.$$ {
 		}
 		
 		strut_transform() {
-			return `translate3d( 0 , ${this.content_height()}px , 0 )`
+			try {
+				return `translate3d( 0 , ${ this.content_height() }px , 0 )`
+			} catch( error ) {
+				return ''
+			}
 		}
 
 		sub_visible() {
