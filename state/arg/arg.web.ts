@@ -43,7 +43,7 @@ namespace $ {
 				chunks.push( [ key ].concat( next[ key ] ? next[ key ] : [] ).map( this.encode ).join( '=' ) )
 			}
 			
-			return '#' + chunks.join( '/' )
+			return new URL( '#' + chunks.join( '/' ) , window.location.href ).toString()
 		}
 
 		static encode( str : string ) {
