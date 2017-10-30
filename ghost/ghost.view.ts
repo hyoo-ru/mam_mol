@@ -18,6 +18,10 @@ namespace $.$$ {
 			super.render()
 			return node
 		}
+
+		title() {
+			return this.Sub().title()
+		}
 		
 	}
 
