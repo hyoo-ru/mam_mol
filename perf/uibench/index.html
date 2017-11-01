@@ -6,8 +6,9 @@
 	<title>UI Benchmark: $mol</title>
 	<link href="-/web.css" rel="stylesheet"/>
 	<style>
-		html {
-			overflow: auto;
+		html , body {
+			overflow: hidden;
+			height: 100%;
 		}
 		.Main {
 			font: 16px/normal 'Times New Roman', sans-serif;
@@ -16,9 +17,13 @@
 		.Table {
 			display: inline-block;
 		}
+		[mol_view] {
+			transition: none;
+		}
 	</style>
 </head>
-<body mol_view_root="$mol_perf_uibench" class="Main">
+<body>
+<div mol_view_root="$mol_perf_uibench"></div>
 <script src="https://localvoid.github.io/uibench-base/0.1.0/uibench.js"></script>
 <script src="-/web.js"></script>
 <script>

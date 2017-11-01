@@ -1,0 +1,28 @@
+$mol_perf_uibench_tree $mol_view
+	state null
+	attr_static *
+		^
+		class \Tree
+	sub /
+		<= Root $mol_perf_uibench_tree_branch
+			state <= root_state null
+
+$mol_perf_uibench_tree_branch $mol_list
+	state null
+	dom_name \ul
+	attr_static *
+		^
+		class \TreeNode
+	Branch!index $mol_perf_uibench_tree_branch
+		state <= branch_state!index null
+	Leaf!index $mol_perf_uibench_tree_leaf
+		text <= leaf_state!index null
+
+$mol_perf_uibench_tree_leaf $mol_view
+	minimal_height 26
+	dom_name \li
+	attr_static *
+		^
+		class \TreeLeaf
+	sub /
+		<= text \

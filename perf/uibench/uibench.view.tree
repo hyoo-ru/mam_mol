@@ -1,77 +1,11 @@
 $mol_perf_uibench $mol_scroll
-	sub / <= page null
-	table $mol_perf_uibench_table state <= stateTable null
-	anim $mol_perf_uibench_anim state <= stateAnim null
-	tree $mol_perf_uibench_tree state <= stateTree null
-
-$mol_perf_uibench_table $mol_list
-	state null
-	dom_name \table
-	attr *
+	attr_static *
 		^
-		class \Table
-
-$mol_perf_uibench_table_row $mol_view
-	state null
-	minimal_height 18
-	dom_name \tr
-	attr *
-		^
-		class <= className \TableRow
-		data-id <= id 0
+		class \Main
 	sub /
-		<= header $mol_perf_uibench_table_cell text <= headerText \
-		<= cells /
-
-$mol_perf_uibench_table_cell $mol_view
-	dom_name \td
-	attr *
-		^
-		class \TableCell
-		data-text <= text \
-	event *
-		^
-		click?val <=> event_click?val null
-	sub / <= text \
-
-$mol_perf_uibench_anim $mol_view
-	state null
-	attr *
-		^
-		class \Anim
-	sub <= items /
-
-$mol_perf_uibench_anim_box $mol_view
-	attr *
-		^
-		class \AnimBox
-		data-id <= id \
-	style *
-		^
-		borderRadius <= styleRadius \
-		background <= styleColor \
-	sub <= items /
-
-$mol_perf_uibench_tree $mol_view
-	state null
-	attr *
-		^
-		class \Tree
-	sub /
-		<= root $mol_perf_uibench_tree_branch state <= stateRoot null
-
-$mol_perf_uibench_tree_branch $mol_list
-	state null
-	dom_name \ul
-	attr *
-		^
-		class \TreeNode
-
-$mol_perf_uibench_tree_leaf $mol_view
-	minimal_height 23
-	dom_name \li
-	attr *
-		^
-		class \TreeLeaf
-	sub /
-		<= text \
+		<= Table $mol_perf_uibench_table
+			state <= table_state null
+		<= Anim $mol_perf_uibench_anim
+			state <= anim_state null
+		<= Tree $mol_perf_uibench_tree
+			state <= tree_state null
