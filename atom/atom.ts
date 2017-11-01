@@ -106,7 +106,11 @@ namespace $ {
 				this.status = $mol_atom_status.pulling
 				const next = this.pull( force )
 				
-				this.push( next )
+				if( next === undefined ) {
+					this.status = $mol_atom_status.actual
+				} else {
+					this.push( next )
+				}
 				
 			}
 			
@@ -144,11 +148,9 @@ namespace $ {
 				this._next = undefined
 			}
 			
-			this.status = $mol_atom_status.actual
+			this.status = next_raw === undefined ? $mol_atom_status.obsolete : $mol_atom_status.actual
 			
 			const prev = this['value()']
-			
-			if( next_raw === undefined ) return prev as Value
 			
 			let next = ( next_raw instanceof Error || prev instanceof Error ) ? next_raw : $mol_conform( next_raw , prev )
 			
@@ -264,11 +266,12 @@ namespace $ {
 		}
 		
 		value( next? : Value , force? : $mol_atom_force ) : Value {
+
+			if( force === $mol_atom_force_cache ) return this.push( next )
+
 			if( next !== undefined ) {
 				
-				if( force === $mol_atom_force_cache ) {
-					return this.push( next )
-				}
+				if( force === $mol_atom_force ) return this.push( next )
 
 				let next_normal = $mol_conform( next , this._ignore )
 				if( next_normal === this._ignore ) return this.get( force )
@@ -412,7 +415,7 @@ namespace $ {
 		static $mol_atom_force : boolean
 	}
 
-	export let $mol_atom_force_cache = $mol_atom_force
+	export class $mol_atom_force_cache extends $mol_atom_force {}
 	export class $mol_atom_force_update extends $mol_atom_force {}
 	
 }
