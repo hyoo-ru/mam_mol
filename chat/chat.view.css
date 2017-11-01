@@ -1,5 +1,6 @@
 [mol_chat] {
 	box-shadow: var(--mol_skin_light_outline);
+	min-height: 1rem;
 }
 
 [mol_chat_post] {
