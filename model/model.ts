@@ -18,6 +18,10 @@ namespace $ {
 			return ''
 		}
 
+		resource_url() {
+			return this.uri()
+		}
+
 		method_put() {
 			return 'Put'
 		}
@@ -35,7 +39,7 @@ namespace $ {
 
 			cache[ uri ] = undefined
 
-			const resource = $mol_http.resource( uri )
+			const resource = $mol_http.resource( this.resource_url() )
 			resource.method_put = $mol_const( this.method_put() )
 			resource.headers = $mol_const({
 				... next ? { 'Authorization' : `token ${ $mol_github_auth.token([ 'public_repo' ]) }` } : {}
