@@ -8,22 +8,20 @@ namespace $ {
 
 	export class $mol_github_search_issues extends $mol_model< $mol_github_search_issues_json > {
 		
-		@ $mol_mem
-		json( next? : $mol_github_search_issues_json , force? : $mol_atom_force ) {
-			const json = super.json( next , force )
+		json_update( patch : $mol_github_search_issues_json ) {
 			
-			if( json ) {
-				for( let item of json.items ) {
-					$mol_github_issue.item( item.url ).json_update( item )
+			if( patch ) {
+				for( let issue of patch.items ) {
+					$mol_github_issue.item( issue.url ).json_update( issue )
 				}
 			}
-			
-			return json
+
+			return super.json_update( patch )
 		}
 
 		@ $mol_mem
-		items() {
-			return this.json().items.map( item => $mol_github_issue.item( item.url ) )
+		items( next? : $mol_github_issue[] , force? : $mol_atom_force ) {
+			return this.json( undefined , force ).items.map( json => $mol_github_issue.item( json.url ) )
 		}
 
 	}

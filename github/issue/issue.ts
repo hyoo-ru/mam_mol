@@ -22,31 +22,29 @@ namespace $ {
 
 	export class $mol_github_issue extends $mol_model< $mol_github_issue_json > {
 
-		@ $mol_mem
-		json( next? : $mol_github_issue_json , force? : $mol_atom_force ) {
-			const json = super.json( next , force )
+		json_update( patch : Partial< $mol_github_issue_json > ) {
 			
-			if( json.user ) $mol_github_user.item( json.user.url ).json_update( json.user )
+			if( patch.user ) $mol_github_user.item( patch.user.url ).json_update( patch.user )
 			
-			if( json.closed_by ) $mol_github_user.item( json.closed_by.url ).json_update( json.closed_by )
+			if( patch.closed_by ) $mol_github_user.item( patch.closed_by.url ).json_update( patch.closed_by )
 			
-			if( json.assignees ) {
-				for( let assignee of json.assignees ) {
+			if( patch.assignees ) {
+				for( let assignee of patch.assignees ) {
 					$mol_github_user.item( assignee.url ).json_update( assignee )
 				}
 			}
 			
-			if( json.labels ) {
-				for( let label of json.labels ) {
+			if( patch.labels ) {
+				for( let label of patch.labels ) {
 					$mol_github_label.item( label.url ).json_update( label )
 				}
 			}
-			
-			return json
+
+			return super.json_update( patch )
 		}
 
 		repository() {
-			return $mol_github_repository.item( this.json().repository_url )
+			return $mol_github_repository.item( this.uri().replace( /\/[^\/]*\/[^\/]*$/ , '' ) )
 		}
 
 		author() {
@@ -89,17 +87,17 @@ namespace $ {
 
 	export class $mol_github_issue_comments extends $mol_model< $mol_github_comment_json[] > {
 		
-		@ $mol_mem
-		json( next? : $mol_github_comment_json[] , force? : $mol_atom_force ) {
-			const json = super.json( next , force )
+		json_update( patch : $mol_github_repository_json[] ) {
 			
-			if( json ) {
-				for( let comment of json ) {
+			if( patch ) {
+				for( let comment of patch ) {
 					$mol_github_comment.item( comment.url ).json_update( comment )
 				}
 			}
+
+			const cache = $mol_model.cache< $mol_github_comment_json[] >()
 			
-			return json
+			return cache[ this.uri() ] = patch
 		}
 
 		@ $mol_mem
@@ -111,7 +109,7 @@ namespace $ {
 		add( config : { text : string } , next? : $mol_github_comment , force? : $mol_atom_force ) {
 			if( !config ) return
 
-			const resource = $mol_http.resource( this.uri() )
+			const resource = $mol_http.resource( this.uri() + '?' )
 			resource.method_put = $mol_const( 'POST' )
 			resource.headers = $mol_const({
 				'Authorization' : `token ${ $mol_github_auth.token([ 'public_repo' ]) }`
@@ -120,8 +118,8 @@ namespace $ {
 			try {
 				
 				const json = resource.json( { body : config.text } , force ) as $mol_github_comment_json
-				const comment = $mol_github_comment.item( json.url ).json_update( json )
-				$mol_github_user.item( json.user.url ).json_update( json.user )
+				const comment = $mol_github_comment.item( json.url )
+				comment.json_update( json )
 
 				this.json( undefined , $mol_atom_force_cache )
 				
@@ -130,7 +128,7 @@ namespace $ {
 			} catch( error ) {
 				
 				if( error.message === 'Unauthorized' ) {
-					$mol_github_auth.token_last( undefined , $mol_atom_force_cache ).valueOf()
+					$mol_github_auth.token_last( undefined , $mol_atom_force_update ).valueOf()
 				}
 				
 				throw error

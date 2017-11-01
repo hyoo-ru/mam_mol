@@ -1,6 +1,7 @@
 namespace $ {
 	
 	export interface $mol_github_repository_json extends $mol_github_entity_json {
+		name? : string
 		full_name? : string
 		owner? : $mol_github_user_json
 		author_association? : string
@@ -70,17 +71,80 @@ namespace $ {
 
 	export class $mol_github_repository extends $mol_github_entity< $mol_github_repository_json > {
 		
-		@ $mol_mem
-		json( next? : $mol_github_repository_json , force? : $mol_atom_force ) {
-			const json = super.json( next , force )
+		json_update( patch : Partial< $mol_github_repository_json > ) {
 			
-			if( json.owner ) $mol_github_user.item( json.owner.url ).json_update( json.owner )
+			if( patch.owner ) $mol_github_user.item( patch.owner.url ).json_update( patch.owner )
 			
-			return json
+			return super.json_update( patch )
 		}
 
 		owner() {
 			return $mol_github_user.item( this.json().owner.url )
+		}
+
+		name() {
+			return this.uri().match(/[^\/]+$/)[0]
+		}
+
+		name_full() {
+			return this.uri().match(/[^\/]+\/[^\/]+$/)[0]
+		}
+
+		@ $mol_mem
+		issues() {
+			return $mol_github_repository_issues.item( `${ this.uri() }/issues` )
+		}
+
+	}
+
+	export class $mol_github_repository_issues extends $mol_model< $mol_github_issue_json[] > {
+		
+		json_update( patch : $mol_github_issue_json[] ) {
+			
+			if( patch ) {
+				for( let issue of patch ) {
+					$mol_github_issue.item( issue.url ).json_update( issue )
+				}
+			}
+
+			const cache = $mol_model.cache< $mol_github_issue_json[] >()
+			
+			return cache[ this.uri() ] = patch
+		}
+
+		@ $mol_mem
+		items( next? : $mol_github_issue[] , force? : $mol_atom_force ) {
+			return this.json( undefined , force ).map( json => $mol_github_issue.item( json.url ) )
+		}
+
+		@ $mol_mem_key
+		add( config : { title : string , text? : string } , next? : $mol_github_issue , force? : $mol_atom_force ) {
+			if( !config ) return
+
+			const resource = $mol_http.resource( this.uri() + '?' )
+			resource.method_put = $mol_const( 'POST' )
+			resource.headers = $mol_const({
+				'Authorization' : `token ${ $mol_github_auth.token([ 'public_repo' ]) }`
+			})
+
+			try {
+				
+				const json = resource.json( { title : config.title , body : config.text } , force ) as $mol_github_issue_json
+				const comment = $mol_github_issue.item( json.url )
+				comment.json_update( json )
+
+				this.json( undefined , $mol_atom_force_cache )
+				
+				return comment
+
+			} catch( error ) {
+				
+				if( error.message === 'Unauthorized' ) {
+					$mol_github_auth.token_last( undefined , $mol_atom_force_update ).valueOf()
+				}
+				
+				throw error
+			}
 		}
 
 	}

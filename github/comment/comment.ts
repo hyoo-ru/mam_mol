@@ -9,13 +9,11 @@ namespace $ {
 
 	export class $mol_github_comment extends $mol_github_entity< $mol_github_comment_json > {
 		
-		@ $mol_mem
-		json( next? : $mol_github_comment_json , force? : $mol_atom_force ) {
-			const json = super.json( next , force )
+		json_update( patch : Partial< $mol_github_comment_json > ) {
 			
-			if( json.user ) $mol_github_user.item( json.user.url ).json_update( json.user )
-			
-			return json
+			if( patch.user ) $mol_github_user.item( patch.user.url ).json_update( patch.user )
+
+			return super.json_update( patch )
 		}
 
 		issue() {
