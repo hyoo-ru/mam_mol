@@ -32,6 +32,11 @@ namespace $ {
 			return 'PATCH'
 		}
 
+		resource_url() {
+			const auth = this.$.$mol_github_auth
+			return `${ this.uri() }?client_id=${ auth.id() }&client_secret=${ auth.secret() }`
+		}
+
 	}
 
 }

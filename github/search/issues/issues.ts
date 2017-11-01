@@ -24,6 +24,11 @@ namespace $ {
 			return this.json( undefined , force ).items.map( json => $mol_github_issue.item( json.url ) )
 		}
 
+		resource_url() {
+			const auth = this.$.$mol_github_auth
+			return `${ this.uri() }&client_id=${ auth.id() }&client_secret=${ auth.secret() }`
+		}
+
 	}
 
 }
