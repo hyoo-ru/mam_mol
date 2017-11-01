@@ -41,16 +41,14 @@ namespace $ {
 				... next ? { 'Authorization' : `token ${ $mol_github_auth.token([ 'public_repo' ]) }` } : {}
 			})
 
-			return cache[ uri ] = resource.json( next , force ).valueOf() as Raw
+			return this.json_update( resource.json( next , force ) )
 		}
 
 		json_update( patch : Partial< Raw > ) {
 			const uri = this.uri()
 			const cache =  $mol_model.cache< Raw >()
 
-			cache[ uri ] = $mol_merge_dict( cache[ uri ] || {} as Raw , patch )
-
-			return this
+			return cache[ uri ] = $mol_merge_dict( cache[ uri ] || {} as Raw , patch )
 		}
 
 	}
