@@ -21,6 +21,7 @@ include \/mol/calendar/demo/simple
 include \/mol/card/demo
 include \/mol/chart/demo/simple
 include \/mol/chart/demo/styles
+include \/mol/chat/demo
 include \/mol/check/box/demo
 include \/mol/check/expand/demo
 include \/mol/check/icon/demo

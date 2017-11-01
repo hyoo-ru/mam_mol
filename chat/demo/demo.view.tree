@@ -1,0 +1,7 @@
+$mol_chat_demo $mol_demo_small
+	title @ \Feed of comments for this page
+	sub /
+		<= Chat $mol_chat
+			repository_name \nin-jin/mol_chat
+			title \$mol_chat_demo
+			link <= chat_link \http://mol.js.org/#demo=mol_chat_demo
