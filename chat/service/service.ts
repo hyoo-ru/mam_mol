@@ -4,10 +4,26 @@ namespace $ {
 
 		handlers() {
 			return {
+
+				issue_add : ( repo_uri : string , title : string , text : string )=> {
+					this.guard_repo( repo_uri ).valueOf()
+
+					const repo = $mol_github_repository.item( repo_uri )
+					const issue = repo.issues().add({ title , text })
+
+					return issue.json()
+				} ,
+				
 				comment_add : ( issue_uri : string , text : string )=> {
 					this.guard_issue( issue_uri ).valueOf()
-					return $mol_github_issue.item( issue_uri ).comments().add({ text }).uri()
-				}
+
+					return $mol_github_issue.item( issue_uri ).comments().add({ text }).json()
+				} ,
+
+				comment_list : ( issue_uri : string )=> {
+					return $mol_github_issue.item( issue_uri ).comments().items().map( comment => comment.json() )
+				} ,
+
 			}
 		}
 

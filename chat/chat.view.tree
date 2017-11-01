@@ -17,5 +17,9 @@ $mol_chat $mol_list
 		avatar_link <= post_user_link!index \
 		avatar <= post_user_ava!index \
 		text <= post_body!index \
-	repo \
+	repository $mol_github_repository
+	repository_name \
+	link \
+	seed \
+	teaser \
 	issue $mol_github_issue
