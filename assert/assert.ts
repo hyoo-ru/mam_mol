@@ -14,7 +14,7 @@ namespace $ {
 		try {
 			handler()
 		} catch( error ) {
-			if( ErrorRight ) $mol_assert_ok( error instanceof ErrorRight )
+			if( ErrorRight ) if(!( error instanceof ErrorRight )) throw error
 			return error
 		}
 		throw new Error( 'Not failed' )
