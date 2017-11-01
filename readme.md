@@ -487,6 +487,10 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_cost](cost)** - prints currency values
 * **[$mol_message](message)** - user message
 
+## Widgets
+
+* **[$mol_chat](chat)** - GitHub based comments everywere
+
 ## Charts
 
 * **[$mol_chart](chart)** - Plot pane with legend
@@ -546,6 +550,7 @@ The name of the field corresponds to calling the property, the content of the fi
 ## Web Services
 
 * **[$mol_github](github)** - [GitHub API](https://developer.github.com/v3/)
+* **[$mol_chat](chat)** - GitHub based comments everywere
 
 ## Building
 
