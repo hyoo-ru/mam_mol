@@ -90,7 +90,7 @@ namespace $.$$ {
 		}
 		
 		selected() {
-			return $mol_state_arg.value( this.state_key( 'demo' ) ) || ''
+			return $mol_state_arg.value( 'demo' ) || ''
 		}
 
 		selected_class_name() {
@@ -98,7 +98,7 @@ namespace $.$$ {
 		}
 
 		editing() {
-			return $mol_state_arg.value( this.state_key( 'edit' ) ) != null
+			return $mol_state_arg.value( 'edit' ) != null
 		}
 
 		@ $mol_mem_key
@@ -169,6 +169,10 @@ namespace $.$$ {
 			var pieces = $mol_state_arg.value('demo').split('_').slice(1) 
 			var source_link = this.source_prefix() + pieces.join('/')
 			return source_link
+		}
+
+		chat_link() {
+			return $mol_state_arg.make_link({ demo : this.selected() })
 		}
 		
 	}

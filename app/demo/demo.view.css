@@ -78,14 +78,14 @@
 }
 
 [mol_app_demo_detail_list] {
-	flex: auto;
+	flex: 1 0 auto;
 	display: flex;
 	flex-direction: column;
-	margin: 1rem;
+	margin: .5rem;
 }
 
-[mol_app_demo_detail_list] > * {
-	margin: 1rem;
+[mol_app_demo_detail_list] > [mol_demo_large] {
+	margin: .5rem;
 }
 
 [mol_app_demo_page_close] {
@@ -108,4 +108,8 @@
 
 [mol_app_demo_detail_empty_message] {
 	margin: auto;
+}
+
+[mol_app_demo_chat] {
+	flex: none;
 }
