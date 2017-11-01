@@ -112,6 +112,15 @@ namespace $ {
 
 			$mol_assert_equal( result , source )
 		} ,
+		
+		'return cached value if already conformed'() {
+			const source = [ [ 1 ] , [ 3 ] ]
+			const target = [ [ 2 ] , [ 3 ] ]
+			const result = $mol_conform( target , source )
+
+			target[ 0 ][ 0 ] = 1
+			$mol_assert_equal( $mol_conform( target[0] , source[0] ) , target[0] )
+		} ,
 
 	})
 
