@@ -1,5 +1,3 @@
-declare var Proxy : any
-
 namespace $ {
 	
 	export enum $mol_atom_status {
@@ -169,7 +167,7 @@ namespace $ {
 					get( target : Error ) {
 						throw target.valueOf()
 					} ,
-					ownKeys( target : Error ) {
+					ownKeys( target : Error ) : string[] {
 						throw target.valueOf()
 					} ,
 				} )

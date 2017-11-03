@@ -114,7 +114,7 @@ namespace $.$$ {
 		sub_visible() {
 			const sub = [
 				this.Strut() ,
-				... this.sub() ,
+				... ( this.sub() || [] ) ,
 			]
 
 			const context = this.context_sub()

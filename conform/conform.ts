@@ -1,6 +1,6 @@
 namespace $ {
 
-	const cache = new WeakMap< any , any >()
+	export const $mol_conform_done = Symbol( '$mol_conform_done' )
 
 	export function $mol_conform< Target , Source >( target : Target , source : Source , stack : any[] = [] ) : Target {
 
@@ -9,20 +9,14 @@ namespace $ {
 		if( !target || typeof target !== 'object' ) return target
 		if( !source || typeof source !== 'object' ) return target
 
-		let cache2
-		if( cache.has( source ) ) {
-			cache2 = cache.get( source )
-			if( cache2.get( target ) ) return target
-		} else {
-			cache.set( source , cache2 = new WeakMap )
-		}
-		cache2.set( target , true )
-		
 		if( target instanceof Error ) return target
 		if( source instanceof Error ) return target
 		
 		if( target.constructor !== source.constructor ) return target
 
+		if( target[ $mol_conform_done ] ) return target
+		target[ $mol_conform_done ] = true
+		
 		const conform = $mol_conform_handlers.get( target.constructor )
 		if( !conform ) return target
 

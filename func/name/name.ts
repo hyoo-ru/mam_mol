@@ -1,7 +1,3 @@
-interface Function {
-	name : string
-}
-
 namespace $ {
 	
 	export var $mol_func_name_dict = new WeakMap< Function , string >()
