@@ -10,4 +10,3 @@ var $ = this.$
 $.$$ = $
 
 $.$mol = $  // deprecated
-console.warn( 'namespace $.$mol is deprecated. Use namespace $.$$ instead.' )
