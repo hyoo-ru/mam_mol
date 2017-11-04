@@ -4,7 +4,7 @@ Common benchmarking interface, that can be added to any of benchmarks.
 
 ## Known benchmarks
 
-* [list](list) - Rendering of lists by frameworks ([online](http://eigenmethod.github.io/mol/app/bench/#becnh=list/sort=update/sample=angularjs~mol~native-dom~react~native-html))
+* [list](list) - Rendering of lists by frameworks ([online](http://eigenmethod.github.io/mol/app/bench/#bench=list/sort=fill/sample=angularjs~mol~native-dom~react~native-html))
 * [elements](elements) - Rendering of HTML elements ([online](http://eigenmethod.github.io/mol/app/bench/#bench=elements%2F#sample=audio~button~details~div~fieldset~hr~img~input~keygen~marquee~meter~object~optgroup~q~select~style~textarea~video#sort=fill#))
 * [geometry](geometry) - Rendering of simple geometry by graphics libraries ([online](http://eigenmethod.github.io/mol/app/bench/#bench=geometry%2F#sort=render#))
 * [chart/rope](chart/rope) - Line graphs rendering by charts libraries ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
