@@ -3,6 +3,13 @@ $mol_touch $mol_plugin
 	start_distance?val 0
 	zoom?val 1
 	-
+	start_pan?val /
+		0
+		0
+	pan?val /
+		0
+		0
+	-
 	start_pos?val null
 	swipe_precision 16
 	-
@@ -21,8 +28,9 @@ $mol_touch $mol_plugin
 	swipe_to_left?val null
 	swipe_to_top?val null
 	-
-	event_async *
+	event *
 		^
 		touchstart?event <=> event_start?event null
 		touchmove?event <=> event_move?event null
 		touchend?event <=> event_end?event null
+		wheel?event <=> event_wheel?event null
