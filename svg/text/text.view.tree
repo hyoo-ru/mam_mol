@@ -1,0 +1,10 @@
+$mol_svg_text $mol_svg
+	dom_name \text
+	pos /
+	attr *
+		^
+		x <= pos_x \
+		y <= pos_y \
+		text-anchor <= align \middle
+	sub /
+		<= text \
