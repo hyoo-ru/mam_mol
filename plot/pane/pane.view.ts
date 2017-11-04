@@ -104,6 +104,7 @@ namespace $.$$ {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
 				graph.dimensions_expanded = ()=> this.dimensions_expanded()
+				graph.size_real = ()=> this.size_real()
 			} )
 			
 			return graphs

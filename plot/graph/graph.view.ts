@@ -23,6 +23,8 @@ namespace $.$$ {
 		@ $mol_mem
 		points() {
 			const threshold = this.threshold()
+			if( !threshold ) return this.points_scaled()
+			
 			const res = [] as number[][]
 			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ]
 			this.points_scaled().forEach( point => {

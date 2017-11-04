@@ -11,6 +11,9 @@ $mol_plot_graph $mol_svg_group
 	dimensions_expanded <= dimensions /
 		/
 		/
+	size_real /
+		0
+		0
 	hue 0
 	-
 	attr *
