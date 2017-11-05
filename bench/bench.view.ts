@@ -8,18 +8,18 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		result_sorted() {
-			const prev = this.result()
+		row_ids() {
+			const result = this.result()
+			const keys = Object.keys( result ).map( key => [ '' , key ] )
+
 			const col = this.col_sort()
-			if( !col ) return prev
+			if( col ) {
+				keys.sort( ( a , b )=> {
+					return this.result_number({ row : a , col }) - this.result_number({ row : b , col })
+				} )
+			}
 			
-			const next : { [ sample : string ] : { [ step : string ] : any } } = {}
-			
-			const keys = Object.keys( prev )
-			keys.sort( ( a , b )=> this.result_number({ row : [ '' , a ] , col }) - this.result_number({ row : [ '' , b ] , col }) )
-			keys.forEach( row => next[ row ] = prev[ row ] )
-			
-			return next
+			return keys
 		}
 		
 		result_value( id : { row : string[] , col : string } ) {

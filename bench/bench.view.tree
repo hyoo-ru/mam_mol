@@ -1,6 +1,5 @@
 $mol_bench $mol_grid
-	result *
-	records <= result_sorted null
+	records <= result *
 	col_sort?val \
 	-
 	Col_head!id $mol_bench_head
