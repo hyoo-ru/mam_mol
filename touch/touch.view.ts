@@ -20,28 +20,80 @@ namespace $.$$ {
 		
 		event_move( event? : TouchEvent ) {
 			if( event.defaultPrevented ) return
-			event.preventDefault()
 
 			const start_pan = this.start_pan()
 
 			if( event.touches.length === 1 ) {
+
 				const start_pos = this.start_pos()
 				if( !start_pos ) return
 				
 				const pos = [ event.touches[0].pageX , event.touches[0].pageY ]
 				const precision = this.swipe_precision()
 
-				this.pan([ start_pan[0] + pos[0] - start_pos[0] , start_pan[1] + pos[1] - start_pos[1] ])
+				if( this.pan !== $mol_touch.prototype.pan ) {
+					this.pan([ start_pan[0] + pos[0] - start_pos[0] , start_pan[1] + pos[1] - start_pos[1] ])
+					event.preventDefault()
+				}
 				
-				if( pos[0] - start_pos[0] > precision * 2 && Math.abs( pos[1] - start_pos[1] ) < precision ) this.swipe_right( event )
-				else if( start_pos[0] - pos[0] > precision * 2 && Math.abs( pos[1] - start_pos[1] ) < precision ) this.swipe_left( event )
-				else if( pos[1] - start_pos[1] > precision * 2 && Math.abs( pos[0] - start_pos[0] ) < precision ) this.swipe_bottom( event )
-				else if( start_pos[1] - pos[1] > precision * 2 && Math.abs( pos[0] - start_pos[0] ) < precision ) this.swipe_top( event )
-				
-				else return
+				if(
+					(
+						this.swipe_right !== $mol_touch.prototype.swipe_right
+						|| this.swipe_from_left !== $mol_touch.prototype.swipe_from_left
+						|| this.swipe_to_right !== $mol_touch.prototype.swipe_to_right
+					)
+					&& pos[0] - start_pos[0] > precision * 2
+					&& Math.abs( pos[1] - start_pos[1] ) < precision
+				) {
+					this.swipe_right( event )
+					event.preventDefault()
+				}
+
+				if(
+					(
+						this.swipe_left !== $mol_touch.prototype.swipe_left
+						|| this.swipe_from_right !== $mol_touch.prototype.swipe_from_right
+						|| this.swipe_to_left !== $mol_touch.prototype.swipe_to_left
+					)
+					&& start_pos[0] - pos[0] > precision * 2
+					&& Math.abs( pos[1] - start_pos[1] ) < precision
+				) {
+					this.swipe_left( event )
+					event.preventDefault()
+				}
+
+				if(
+					(
+						this.swipe_bottom !== $mol_touch.prototype.swipe_bottom
+						|| this.swipe_from_top !== $mol_touch.prototype.swipe_from_top
+						|| this.swipe_to_bottom !== $mol_touch.prototype.swipe_to_bottom
+					)
+					&& pos[1] - start_pos[1] > precision * 2
+					&& Math.abs( pos[0] - start_pos[0] ) < precision
+				) {
+					this.swipe_bottom( event )
+					event.preventDefault()
+				}
+
+				if(
+					(
+						this.swipe_top !== $mol_touch.prototype.swipe_top
+						|| this.swipe_from_bottom !== $mol_touch.prototype.swipe_from_bottom
+						|| this.swipe_to_top !== $mol_touch.prototype.swipe_to_top
+					)
+					&& start_pos[1] - pos[1] > precision * 2
+					&& Math.abs( pos[0] - start_pos[0] ) < precision
+				) {
+					this.swipe_top( event )
+					event.preventDefault()
+				}
+
 			}
 			
 			if( event.touches.length === 2 ) {
+
+				if( this.zoom === $mol_touch.prototype.zoom ) return
+
 				const pos0 = [ event.touches[0].pageX , event.touches[0].pageY ]
 				const pos1 = [ event.touches[1].pageX , event.touches[1].pageY ]
 
@@ -55,6 +107,8 @@ namespace $.$$ {
 				const pan = [ ( start_pan[0] - center[0] ) * mult + center[0] , ( start_pan[1] - center[1] ) * mult + center[1] ]
 
 				this.pan( pan )
+
+				event.preventDefault()
 			}
 		}
 
