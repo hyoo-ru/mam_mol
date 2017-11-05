@@ -3,6 +3,7 @@ include \/mol/app/files/demo
 include \/mol/app/habhub/demo
 include \/mol/app/hello/demo
 include \/mol/app/lamps/demo
+include \/mol/app/life/demo
 include \/mol/app/questions/demo
 include \/mol/app/quine/demo
 include \/mol/app/report/demo

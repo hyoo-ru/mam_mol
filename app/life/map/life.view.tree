@@ -1,0 +1,29 @@
+$mol_app_life_map $mol_plot_pane
+	snapshot \
+	snapshot_current \
+	stored?val true
+	speed 0
+	population 0
+	event *
+		mousedown?event <=> draw_start?event null
+		mousemove?event <=> draw?event null
+		mouseup?event <=> draw?event null
+	hue_base 206
+	gap 0
+	scale /
+		<= zoom -
+		<= zoom -
+	shift <= pan -
+	graphs /
+		<= Points $mol_plot_dot
+			threshold 0
+			diameter <= zoom -
+			points_raw <= points /
+	plugins /
+		<= Touch $mol_touch
+			zoom?val <=> zoom?val 16
+			pan?val <=> pan?val /
+				0
+				0
+	style *
+		font-size <= font_size \
