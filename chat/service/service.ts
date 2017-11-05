@@ -36,7 +36,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		guard_repo( repo_uri : string ) {
-			const origin = this.$.$mol_dom_context.parent.location.hostname
+			const origin = new URL( this.$.$mol_dom_context.document.referrer ).hostname
 
 			const label = $mol_github_label.item( `${ repo_uri }/labels/$mol_chat:${ origin }` )
 
