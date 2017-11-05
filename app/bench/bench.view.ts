@@ -78,11 +78,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		samples_all( next? : string[] ) {
-			return Object.keys( this.meta().samples ).sort( ( a , b )=> {
-				const titleA = this.sample_title( a ).toLowerCase()
-				const titleB = this.sample_title( a ).toLowerCase()
-				return titleA > titleB ? 1 : titleA < titleB ? -1 : 0
-			} )
+			return Object.keys( this.meta().samples ).sort( $mol_compare_text( sample => this.sample_title( sample ) ) )
 		}
 		
 		@ $mol_mem
