@@ -18,6 +18,9 @@ $mol_plot_pane $mol_svg_root
 	scale /
 		1
 		1
+	size_real /
+		1
+		1
 	-
 	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /
 	-

@@ -1,0 +1,22 @@
+[mol_app_life_tools] {
+	justify-content: space-between;
+}
+
+[mol_app_life_time] {
+	flex: 0 1 auto;
+}
+
+[mol_app_life_time_option] {
+	padding: .5rem;
+	background: none;
+	box-shadow: none;
+	color: inherit;
+}
+
+[mol_app_life_store_link] {
+	align-items: center;
+}
+
+[mol_app_life_store_link][mol_link_current] {
+	opacity: .5;
+}

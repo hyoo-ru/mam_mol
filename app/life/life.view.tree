@@ -1,0 +1,54 @@
+$mol_app_life $mol_page
+	title @ \Life of {count} cells
+	tools /
+		<= Store_link $mol_link
+			uri <= store_link?val \
+			hint <= store_link_hint @ \Store snapshot
+			sub /
+				<= Stored $mol_icon_stored
+		<= Time $mol_switch
+			value?val <=> speed?val 0
+			options *
+				1 \Slowest
+				15 \Slow
+				45 \Fast
+				90 \Fastest
+	-
+	sub /
+		<= Head -
+		<= Map $mol_app_life_map
+			speed <= speed -
+			population => population
+			stored => stored
+			snapshot <= snapshot \10000~-ffff~1~10001~ffff
+			snapshot_current => snapshot_current
+
+$mol_app_life_map $mol_plot_pane
+	snapshot \
+	snapshot_current \
+	stored?val true
+	speed 0
+	population 0
+	event *
+		mousedown?event <=> draw_start?event null
+		mousemove?event <=> draw?event null
+		mouseup?event <=> draw?event null
+	hue_base 206
+	gap 0
+	scale /
+		<= zoom -
+		<= zoom -
+	shift <= pan -
+	graphs /
+		<= Points $mol_plot_dot
+			threshold 0
+			diameter <= zoom -
+			points_raw <= points /
+	plugins /
+		<= Touch $mol_touch
+			zoom?val <=> zoom?val 16
+			pan?val <=> pan?val /
+				0
+				0
+	style *
+		font-size <= font_size \
