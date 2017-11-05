@@ -24,7 +24,8 @@
 }
 
 [mol_app_demo_menu_filter] {
-	flex: 1 1 auto;
+	align-self: stretch;
+	flex: none;
 }
 
 [mol_app_demo_nav_table] {

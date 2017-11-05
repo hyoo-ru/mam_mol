@@ -43,13 +43,14 @@ $mol_app_demo $mol_book
 $mol_app_demo_menu $mol_page
 	minimal_width 240
 	title @ \$mol demonstrations
-	tools /
+	sub /
+		<= Head -
 		<= Filter $mol_search
 			query?val <=> filter?val \
-	Body <= Nav $mol_app_demo_nav
-		hierarchy <= hierarchy null
-		record!id <= option!id null
-		needle <= filter?val \
+		<= Nav $mol_app_demo_nav
+			hierarchy <= hierarchy null
+			record!id <= option!id null
+			needle <= filter?val \
 		
 $mol_app_demo_detail $mol_page
 	tools /

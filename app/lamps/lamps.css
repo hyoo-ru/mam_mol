@@ -3,8 +3,7 @@
 }
 
 [mol_app_lamps_filter] {
-	flex: 1 1 auto;
-	margin: .5rem;
+	display: block;
 }
 
 [mol_app_lamps_lamp_row] {

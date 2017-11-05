@@ -2,21 +2,20 @@
 	display: flex;
 	flex-wrap: wrap;
 	flex: 1 1 auto;
-	box-shadow: var(--mol_skin_light_outline);
 	border-radius: var(--mol_skin_round);
-	background: var(--mol_skin_light_line);
 }
 
 [mol_switch_option] {
-	flex: 1 1 auto;
+	flex: 0 1 auto;
 	box-shadow: var(--mol_skin_light_outline);
 	background: var(--mol_skin_passive);
+	color: var(--mol_skin_light_text);
 	padding: .5rem 1rem;
 }
 
 [mol_switch_option][mol_check_checked] {
 	background: var(--mol_skin_card);
-	color: black;
+	color: var(--mol_skin_card_text);
 	z-index: 1;
 }
 
