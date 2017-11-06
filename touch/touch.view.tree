@@ -33,5 +33,8 @@ $mol_touch $mol_plugin
 		touchstart?event <=> event_start?event null
 		touchmove?event <=> event_move?event null
 		touchend?event <=> event_end?event null
+		mousedown?event <=> event_start?event null
+		mousemove?event <=> event_move?event null
+		mouseup?event <=> event_end?event null
 	event_async *
 		wheel?event <=> event_wheel?event null
