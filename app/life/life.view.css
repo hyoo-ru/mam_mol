@@ -20,3 +20,8 @@
 [mol_app_life_store_link][mol_link_current] {
 	opacity: .5;
 }
+
+[mol_app_life_map] {
+	flex: auto;
+	display: flex;
+}

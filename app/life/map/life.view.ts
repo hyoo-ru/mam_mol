@@ -77,11 +77,6 @@ namespace $.$$ {
 			return this.state()[ JSON.stringify( id ) ]
 		}
 
-		@ $mol_mem
-		draw_alive( next : boolean = null ) {
-			return next
-		}
-
 		key_from_event( event : MouseEvent ) {
 			const zoom = this.zoom()
 			const pan = this.pan()
@@ -92,19 +87,27 @@ namespace $.$$ {
 			return key( px , py )
 		}
 
-		draw_start( event? : MouseEvent ) {
-			this.draw_alive( !this.state().has( this.key_from_event( event ) ) )
-			this.draw( event )
+		@ $mol_mem
+		draw_start_pos( next? : number[] ) {
+			return next
 		}
 
-		draw( event? : MouseEvent ) {
-			if( !event.buttons ) return
+		draw_start( event? : MouseEvent ) {
+			this.draw_start_pos([ event.pageX , event.pageY ])
+		}
 
+		draw_end( event? : MouseEvent ) {
+			const start_pos = this.draw_start_pos()
+			const pos = [ event.pageX , event.pageY ]
+			
+			if( Math.abs( start_pos[0] - pos[0] ) > 4 ) return
+			if( Math.abs( start_pos[1] - pos[1] ) > 4 ) return
+			
 			const state = new Set( this.state0() )
 			const key = this.key_from_event( event )
 			
-			if( this.draw_alive() ) state.add( key )
-			else state.delete( key )
+			if( state.has( key ) ) state.delete( key )
+			else state.add( key )
 			
 			this.state0( state )
 		}
@@ -116,7 +119,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		pan( next? : number[] ) {
-			return next || this.size_real().map( v => v / 2 )
+			return next || this.Pane().size_real().map( v => v / 2 )
 		}
 		
 	}
