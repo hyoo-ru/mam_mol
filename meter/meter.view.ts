@@ -3,10 +3,11 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		rect() {
-			if( this.dom_node() !== $mol_dom_context.document.body ) {
+			const node = this.dom_node()
+			
+			if( node !== $mol_dom_context.document.body ) {
 				$mol_state_time.now()
 				
-				const node = this.dom_node()
 				try {
 					return node.getBoundingClientRect()
 				} catch( error ) {
