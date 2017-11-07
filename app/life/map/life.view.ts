@@ -37,22 +37,28 @@ namespace $.$$ {
 			
 			function is_alive( px : number , py : number ) {
 				let sum = 0
-				for( let y = py - 1 ; y <= py + 1 ; ++y ) {
-					for( let x = px - 1 ; x <= px + 1 ; ++x ) {
-						if( prev.has( key( x , y ) ) ) ++sum
+				for( let y = -1 ; y <= 1 ; ++y ) {
+					for( let x = -1 ; x <= 1 ; ++x ) {
+						if( !x && !y ) continue
+						if( prev.has( key( px + x , py + y ) ) ) ++sum
 					}
 				}
-				if( prev.has( key( px , py ) ) ) return ( sum === 3 || sum === 4 )
+				if( prev.has( key( px , py ) ) ) return ( sum === 2 || sum === 3 )
 				else return sum == 3
 			}
 
 			const state = new Set<number>()
+			const done = new Set<number>()
+
 			for( let pos of prev ) {
 				const px = x_of( pos )
 				const py = y_of( pos )
 				for( let y = py - 1 ; y <= py + 1 ; ++y ) {
 					for( let x = px - 1 ; x <= px + 1 ; ++x ) {
-						if( is_alive( x , y ) ) state.add( key( x , y ) )
+						const k = key( x , y )
+						if( done.has( k ) ) continue
+						if( is_alive( x , y ) ) state.add( k )
+						done.add( k )
 					}
 				}
 			}
