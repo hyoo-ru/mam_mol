@@ -204,7 +204,7 @@ namespace $.$$ {
 
 	export class $mol_app_calc_cell extends $.$mol_app_calc_cell {
 
-		select( event? : Event ) {
+		click( event? : Event ) {
 			if( event ) this.selected( true )
 		}
 

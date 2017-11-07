@@ -60,4 +60,3 @@ $mol_app_calc_cell $mol_button
 		^
 		mol_app_calc_cell_selected <= selected?val false
 		mol_app_calc_cell_type <= type?val \
-	event_click?event <=> select?event null
