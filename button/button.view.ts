@@ -10,6 +10,7 @@ namespace $.$$ {
 			if( !this.enabled() ) return
 			
 			this.event_click( next )
+			this.click( next )
 		}
 		
 		event_key_press ( event: KeyboardEvent ) { 
