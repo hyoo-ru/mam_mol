@@ -19,5 +19,5 @@ $mol_app_life $mol_page
 		<= Map $mol_app_life_map
 			speed <= speed -
 			population => population
-			snapshot <= snapshot \1fffe~1ffff~2ffff~10001~20001~10002~-1ffff~-ffff~-fffe~-2~-10001~-1~3~fffd~0
+			snapshot <= snapshot \0~-2ffff~10002~-20000~-1fffe~3~10003~20003
 			snapshot_current => snapshot_current
