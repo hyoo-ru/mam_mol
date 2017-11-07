@@ -9,6 +9,7 @@ namespace $.$$ {
 				graph.points = ()=> this.points()
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
+				graph.size_real = ()=> this.size_real()
 				graph.dimensions_expanded = ()=> this.dimensions_expanded()
 			}
 			return graphs
