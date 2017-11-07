@@ -5,11 +5,18 @@ namespace $ {
 		@ $mol_mem_key
 		static now( precision? : number , next? : number , force? : $mol_atom_force ) {
 			
-			if( precision > 0 ) {
-				setTimeout( () => this.now( precision , undefined , $mol_atom_force_cache ) , precision )
-			} else {
-				requestAnimationFrame( () => this.now( precision , undefined , $mol_atom_force_cache ) )
+			const atom = $mol_atom_current()
+			const handler = () => {
+				atom['value()'] = Date.now()
+				atom.obsolete_slaves()
+				if( precision > 0 ) {
+					setTimeout( handler , precision )
+				} else {
+					requestAnimationFrame( handler )
+				}
 			}
+
+			handler()
 			
 			return Date.now()
 		}

@@ -9,7 +9,8 @@ namespace $.$$ {
 				$mol_state_time.now()
 				
 				try {
-					return node.getBoundingClientRect()
+					const { left , top , right , bottom , width , height } = node.getBoundingClientRect()
+					return { left , top , right , bottom , width , height }
 				} catch( error ) {
 					// IE11
 				}

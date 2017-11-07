@@ -311,18 +311,17 @@ namespace $ {
 			if( this.scheduled ) return
 			
 			new $mol_defer(
-				() => {
+				$mol_log_group( '$mol_atom.sync()' , () => {
 					if( !this.scheduled ) return
 					this.scheduled = false
 					this.sync()
-				}
+				} )
 			)
 			
 			this.scheduled = true
 		}
 		
 		static sync() {
-			$mol_log( this , 'sync' )
 			this.schedule()
 			
 			while( true ) {

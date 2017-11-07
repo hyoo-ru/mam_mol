@@ -21,12 +21,10 @@ namespace $ {
 		static schedule() {
 			if( this.timer ) return
 			
-			this.timer = this.scheduleNative(
-				()=> {
-					this.timer = 0
-					this.run()
-				}
-			)
+			this.timer = this.scheduleNative( ()=> {
+				this.timer = 0
+				this.run()
+			} )
 		}
 		
 		static unschedule() {

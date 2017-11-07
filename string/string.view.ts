@@ -7,9 +7,9 @@ namespace $.$$ {
 			if( !next ) return
 			
 			clearTimeout( this._timer )
-			this._timer = setTimeout( () => {
+			this._timer = setTimeout( $mol_log_group( `${ this }.event_change()` , () => {
 				this.value( ( next.target as HTMLInputElement ).value ) 
-			} , this.debounce() )
+			} ) , this.debounce() )
 		}
 		
 		event_key_press( next? : KeyboardEvent ) { 

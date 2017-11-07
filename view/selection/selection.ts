@@ -111,10 +111,10 @@ namespace $ {
 		
 		static onBlur( event : FocusEvent ) {
 			const focused = this.focused()
-			setTimeout( ()=> {
+			setTimeout( $mol_log_group( '$mol_view_selection blur' , ()=> {
 				if( focused !== this.focused() ) return
 				this.focused( [] , $mol_atom_force_cache )
-			} )
+			} ) )
 		}
 	}
 	

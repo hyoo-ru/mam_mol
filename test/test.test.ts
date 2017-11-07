@@ -36,10 +36,10 @@ namespace $ {
 		if( scheduled ) return
 		scheduled = true
 
-		setTimeout( ()=> {
+		setTimeout( $mol_log_group( '$mol_test.run()' , ()=> {
 			scheduled = false
  			$mol_test_run()
-		} )
+		} ) )
 	}
 	
 }

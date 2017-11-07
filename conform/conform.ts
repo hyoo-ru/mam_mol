@@ -1,6 +1,6 @@
 namespace $ {
 
-	export const $mol_conform_done = Symbol( '$mol_conform_done' )
+	const cache = new WeakMap< any , boolean >()
 
 	export function $mol_conform< Target , Source >( target : Target , source : Source , stack : any[] = [] ) : Target {
 
@@ -14,8 +14,8 @@ namespace $ {
 		
 		if( target.constructor !== source.constructor ) return target
 
-		if( target[ $mol_conform_done ] ) return target
-		target[ $mol_conform_done ] = true
+		if( cache.get( target ) ) return target
+		cache.set( target , true )
 		
 		const conform = $mol_conform_handlers.get( target.constructor )
 		if( !conform ) return target

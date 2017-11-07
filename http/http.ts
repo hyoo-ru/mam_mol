@@ -37,17 +37,19 @@ namespace $ {
 			
 			next.withCredentials = Boolean( this.credentials() )
 			
-			next.onload = ( event : Event )=> {
+			next.onload = $mol_log_group( this.object_id() + ' load' , ( event : Event )=> {
 				if(( next.status === 0 )||( Math.floor( next.status / 100 ) === 2 )) {
 					this.response( next , $mol_atom_force_cache )
 				} else {
 					this.response( new Error( next.statusText || next.responseText ) as any , $mol_atom_force_cache )
 				}
-			}
+			} )
 			
-			next.onerror = ( event : ErrorEvent ) => {
-				this.response( event.error || new Error( 'Unknown HTTP error' ) , $mol_atom_force_cache )
-			}
+			next.onerror = $mol_log_group( this.object_id() + ' error' , ( event : ErrorEvent ) => {
+				new $mol_defer( ()=> {
+					this.response( event.error || new Error( 'Unknown HTTP error' ) , $mol_atom_force_cache )
+				} )
+			} )
 			
 			return next
 		}

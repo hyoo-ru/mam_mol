@@ -45,7 +45,7 @@ namespace $.$$ {
 			this.moving_hor( this.scroll_left() !== this.dom_node().scrollLeft )
 			this.moving_task_stop()
 			
-			new $mol_defer( ()=> {
+			new $mol_defer( $mol_log_group( `${ this }.event_scroll()` , ()=> {
 				const el = this.dom_node() as HTMLElement
 				
 				const top = Math.max( 0 , el.scrollTop )
@@ -56,7 +56,7 @@ namespace $.$$ {
 				
 				this.scroll_bottom( Math.max( 0 , el.scrollHeight - top - el.offsetHeight ) )
 				this.scroll_right( Math.max( 0 , el.scrollWidth - left - el.offsetWidth ) )
-			} )
+			} ) )
 		}
 		
 		event_repos( next? : Event ) {
@@ -71,10 +71,10 @@ namespace $.$$ {
 		_moving_task_timer = 0
 		moving_task_stop() {
 			clearTimeout( this._moving_task_timer )
-			this._moving_task_timer = setTimeout( ()=> {
+			this._moving_task_timer = setTimeout( $mol_log_group( `${ this }.moving_task_stop()` , ()=> {
 				this.moving_vert( false )
 				this.moving_hor( false )
-			} , 50 )
+			} ) , 50 )
 		}
 		
 		moving() {
