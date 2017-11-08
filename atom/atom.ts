@@ -410,6 +410,7 @@ namespace $ {
 	export class $mol_atom_force extends Object {
 		$mol_atom_force : boolean
 		static $mol_atom_force : boolean
+		static toString() { return this.name }
 	}
 
 	export class $mol_atom_force_cache extends $mol_atom_force {}
