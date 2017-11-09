@@ -534,10 +534,10 @@ namespace $ {
 						map.sourceRoot = src.parent().relate( target.parent() )
 					}
 					
-					const isCommonJs = /module\.exports/.test( content )
+					const isCommonJs = /module\.exports|__esModule/.test( content )
 					
 					if( isCommonJs ) {
-						concater.add( '-' , '\nvar $node = $node || {}\nvoid function( module ) { var exports = module'+'.exports; function require( id ) { return $node[ id ] }; \n' )
+						concater.add( '-' , '\nvar $node = $node || {}\nvoid function( module ) { var exports = module'+'.exports; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n' )
 					}
 					
 					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
@@ -869,6 +869,33 @@ namespace $ {
 			target[ path ] = source[ path ]
 		}
 		return target
+	}
+	
+	$mol_build.dependors[ 'js' ] = source => {
+		var depends : { [ index : string ] : number } = {}
+		
+		var lines = String( source.content() )
+		.replace( /\/\*[^]*?\*\//g , '' ) // drop block comments
+		.replace( /\/\/.*$/gm , '' ) // drop inline comments
+		.split( '\n' )
+		
+		lines.forEach(
+			function( line ) {
+				var indent = /^([\s\t]*)/.exec( line )
+				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
+				
+				line.replace(
+					/require\(\s*['"](.*?)['"]\s*\)/ig , ( str , path )=> {
+						if( !/\.[^\/]$/.test( path ) ) path += '.js'
+						if( path[0] === '.' ) path = '../' + path
+						$mol_build_depsMerge( depends , { [ path ] : priority } )
+						return str
+					}
+				)
+			}
+		)
+		
+		return depends
 	}
 	
 	$mol_build.dependors[ 'ts' ] = $mol_build.dependors[ 'tsx' ] = $mol_build.dependors[ 'jam.js' ] = source => {
