@@ -1,4 +1,5 @@
 [mol_plot_dot] {
+	color: var(--mol_skin_base);
 	stroke-linecap: round;
 }
 

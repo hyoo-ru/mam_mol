@@ -14,7 +14,7 @@ $mol_plot_graph $mol_svg_group
 	size_real /
 		0
 		0
-	hue 0
+	hue NaN
 	-
 	attr *
 		^
@@ -22,7 +22,7 @@ $mol_plot_graph $mol_svg_group
 	-
 	style *
 		^
-		color <= color \black
+		color <= color \
 	-
 	Sample null
 	-
