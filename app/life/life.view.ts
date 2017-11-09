@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_app_life extends $.$mol_app_life {
 
 		title() {
-			return super.title().replace( '{count}' , `${ this.population() }` )
+			return super.title().replace( '{population}' , `${ this.population() }` )
 		}
 
 		store_link() {

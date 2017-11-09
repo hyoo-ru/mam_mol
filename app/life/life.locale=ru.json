@@ -1,5 +1,5 @@
 {
-	"$mol_app_life_title": "Жизнь из {count} клеток",
+	"$mol_app_life_title": "Жизнь из {population} клеток",
 	"$mol_app_life_store_link_hint": "Запомнить состояние",
 	"$mol_app_life_time_slowest_label": "Тягуче",
 	"$mol_app_life_time_slow_label": "Лениво",

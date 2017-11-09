@@ -1,5 +1,5 @@
 $mol_app_life $mol_page
-	title @ \Life of {count} cells
+	title @ \Life of {population} cells
 	tools /
 		<= Store_link $mol_link
 			uri <= store_link?val \
@@ -18,6 +18,6 @@ $mol_app_life $mol_page
 		<= Head -
 		<= Map $mol_app_life_map
 			speed <= speed -
-			population => population
 			snapshot <= snapshot \0~-2ffff~10002~-20000~-1fffe~3~10003~20003
 			snapshot_current => snapshot_current
+			population => population

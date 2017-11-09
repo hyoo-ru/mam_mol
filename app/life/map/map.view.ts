@@ -23,7 +23,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		snapshot_current() {
-			return [ ... this.future() ].map( key => key.toString( 16 ) ).join( '~' )
+			return [ ... this.state() ].map( key => key.toString( 16 ) ).join( '~' )
 		}
 
 		@ $mol_mem
@@ -35,32 +35,32 @@ namespace $.$$ {
 			
 			this.$.$mol_state_time.now( 1000 / this.speed() )
 			
-			function is_alive( px : number , py : number ) {
-				let sum = 0
-				for( let y = -1 ; y <= 1 ; ++y ) {
-					for( let x = -1 ; x <= 1 ; ++x ) {
-						if( !x && !y ) continue
-						if( prev.has( key( px + x , py + y ) ) ) ++sum
-					}
-				}
-				if( prev.has( key( px , py ) ) ) return ( sum === 2 || sum === 3 )
-				else return sum == 3
-			}
-
 			const state = new Set<number>()
-			const done = new Set<number>()
+			const skip = new Set<number>()
 
-			for( let pos of prev ) {
-				const px = x_of( pos )
-				const py = y_of( pos )
-				for( let y = py - 1 ; y <= py + 1 ; ++y ) {
-					for( let x = px - 1 ; x <= px + 1 ; ++x ) {
-						const k = key( x , y )
-						if( done.has( k ) ) continue
-						if( is_alive( x , y ) ) state.add( k )
-						done.add( k )
+			for( let alive of prev ) {
+				
+				const ax = x_of( alive )
+				const ay = y_of( alive )
+				
+				for( let ny = ay - 1 ; ny <= ay + 1 ; ++ny ) for( let nx = ax - 1 ; nx <= ax + 1 ; ++nx ) {
+
+					const nkey = key( nx , ny )
+					if( skip.has( nkey ) ) continue
+					skip.add( nkey )
+					
+					let sum = 0
+
+					for( let y = -1 ; y <= 1 ; ++y ) for( let x = -1 ; x <= 1 ; ++x ) {
+						if( !x && !y ) continue
+						if( prev.has( key( nx + x , ny + y ) ) ) ++sum
 					}
+					
+					if( sum != 3 && ( !prev.has( nkey ) || sum !== 2 ) ) continue
+					state.add( nkey )
+					
 				}
+
 			}
 			
 			return this.state( state )
@@ -68,7 +68,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		population() {
-			return this.future().size
+			return this.state().size
 		}
 
 		points() {
@@ -77,10 +77,6 @@ namespace $.$$ {
 				points.push([ x_of( key ) , y_of( key ) ])
 			}
 			return points
-		}
-
-		cell_alive( id : number[] ) {
-			return this.future()[ JSON.stringify( id ) ]
 		}
 
 		key_from_event( event : MouseEvent ) {
@@ -109,11 +105,17 @@ namespace $.$$ {
 			if( Math.abs( start_pos[0] - pos[0] ) > 4 ) return
 			if( Math.abs( start_pos[1] - pos[1] ) > 4 ) return
 			
-			const state = new Set( this.state() )
-			const key = this.key_from_event( event )
+			const zoom = this.zoom()
+			const pan = this.pan()
 			
-			if( state.has( key ) ) state.delete( key )
-			else state.add( key )
+			const cell = key(
+				Math.round( ( event.offsetX - pan[0] ) / zoom ) ,
+				Math.round( ( event.offsetY - pan[1] ) / zoom ) ,
+			)
+			
+			const state = new Set( this.state() )
+			if( state.has( cell ) ) state.delete( cell )
+			else state.add( cell )
 			
 			this.state( state )
 		}
