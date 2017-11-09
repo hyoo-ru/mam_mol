@@ -15,7 +15,7 @@ namespace $.$$ {
 	export class $mol_app_life_map extends $.$mol_app_life_map {
 
 		@ $mol_mem
-		state0( next? : Set<number> ) {
+		state( next? : Set<number> ) {
 			const snapshot = this.snapshot()
 			if( next ) return next
 			return new Set( snapshot.split( '~' ).map( v => parseInt( v , 16 ) ) )
@@ -23,13 +23,13 @@ namespace $.$$ {
 
 		@ $mol_mem
 		snapshot_current() {
-			return [ ... this.state() ].map( key => key.toString( 16 ) ).join( '~' )
+			return [ ... this.future() ].map( key => key.toString( 16 ) ).join( '~' )
 		}
 
 		@ $mol_mem
-		state( next? : Set<number> ) {
+		future( next? : Set<number> ) {
 
-			let prev = this.state0()
+			let prev = this.state()
 
 			if( !this.speed() ) return prev
 			
@@ -63,24 +63,24 @@ namespace $.$$ {
 				}
 			}
 			
-			return this.state0( state )
+			return this.state( state )
 		}
 
 		@ $mol_mem
 		population() {
-			return this.state().size
+			return this.future().size
 		}
 
 		points() {
 			const points = [] as number[][]
-			for( let key of this.state().keys() ) {
+			for( let key of this.future().keys() ) {
 				points.push([ x_of( key ) , y_of( key ) ])
 			}
 			return points
 		}
 
 		cell_alive( id : number[] ) {
-			return this.state()[ JSON.stringify( id ) ]
+			return this.future()[ JSON.stringify( id ) ]
 		}
 
 		key_from_event( event : MouseEvent ) {
@@ -109,13 +109,13 @@ namespace $.$$ {
 			if( Math.abs( start_pos[0] - pos[0] ) > 4 ) return
 			if( Math.abs( start_pos[1] - pos[1] ) > 4 ) return
 			
-			const state = new Set( this.state0() )
+			const state = new Set( this.state() )
 			const key = this.key_from_event( event )
 			
 			if( state.has( key ) ) state.delete( key )
 			else state.add( key )
 			
-			this.state0( state )
+			this.state( state )
 		}
 
 		@ $mol_mem
