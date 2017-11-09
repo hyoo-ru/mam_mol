@@ -125,7 +125,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		pan( next? : number[] ) {
-			return next || this.Pane().size_real().map( v => v / 2 )
+			return next || this.size_real().map( v => v / 2 )
 		}
 		
 	}
