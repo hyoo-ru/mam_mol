@@ -10,9 +10,9 @@ $mol_app_life $mol_page
 			value?val <=> speed?val 0
 			options *
 				1 <= time_slowest_label @ \Slowest
-				15 <= time_slow_label @ \Slow
-				45 <= time_fast_label @ \Fast
-				90 <= time_fastest_label @ \Fastest
+				5 <= time_slow_label @ \Slow
+				25 <= time_fast_label @ \Fast
+				60 <= time_fastest_label @ \Fastest
 	-
 	sub /
 		<= Head -

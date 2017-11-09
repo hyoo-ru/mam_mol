@@ -1,0 +1,17 @@
+$mol_app_life_pane $mol_plot_pane
+	gap 0
+	scale /
+		<= zoom -
+		<= zoom -
+	shift <= pan -
+	graphs /
+		<= Points $mol_plot_dot
+			threshold 0
+			diameter <= zoom -
+			points_raw <= points /
+	plugins /
+		<= Touch $mol_touch
+			zoom?val <=> zoom?val 16
+			pan?val <=> pan?val /
+				0
+				0
