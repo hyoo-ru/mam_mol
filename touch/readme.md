@@ -10,15 +10,18 @@ Plugin for touch gestures
 plugins /
 	<= Touch $mol_touch
 		zoom?val <=> zoom?val 1
+		pan?val <=> pan?val /
+			0
+			0
 		swipe_right?event <=> open_menu?event null
 		swipe_left?event <=> close_menu?event null
 ```
 
 ## Properties
 
-**`zoom( next? = 1 ) : number`**
+**`zoom( next? = 1 ) : number`** - zoom level
 
-Current zoom value.
+**`pan( next? = [ 0 , 0 ] ) : [ number , number ]`** - offset vector
 
 ## Swipe events
 
