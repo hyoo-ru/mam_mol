@@ -23,7 +23,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		snapshot_current() {
-			return [ ... this.state() ].map( key => key.toString( 16 ) ).join( '~' )
+			return [ ... this.future() ].map( key => key.toString( 16 ) ).join( '~' )
 		}
 
 		@ $mol_mem
@@ -68,7 +68,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		population() {
-			return this.state().size
+			return this.future().size
 		}
 
 		points() {
