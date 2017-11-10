@@ -97,10 +97,11 @@ namespace $.$$ {
 			
 			const zoom = this.zoom()
 			const pan = this.pan()
+			const rect = this.dom_node().getBoundingClientRect()
 			
 			const cell = key(
-				Math.round( ( event.layerX - pan[0] ) / zoom ) ,
-				Math.round( ( event.layerY - pan[1] ) / zoom ) ,
+				Math.round( ( event.pageX - rect.left - pan[0] ) / zoom ) ,
+				Math.round( ( event.pageY - rect.top - pan[1] ) / zoom ) ,
 			)
 			
 			const state = new Set( this.state() )
