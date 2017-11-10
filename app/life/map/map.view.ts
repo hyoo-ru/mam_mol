@@ -79,16 +79,6 @@ namespace $.$$ {
 			return points
 		}
 
-		key_from_event( event : MouseEvent ) {
-			const zoom = this.zoom()
-			const pan = this.pan()
-			
-			const px = Math.round( ( event.offsetX - pan[0] ) / zoom )
-			const py = Math.round( ( event.offsetY - pan[1] ) / zoom )
-			
-			return key( px , py )
-		}
-
 		@ $mol_mem
 		draw_start_pos( next? : number[] ) {
 			return next
@@ -109,8 +99,8 @@ namespace $.$$ {
 			const pan = this.pan()
 			
 			const cell = key(
-				Math.round( ( event.offsetX - pan[0] ) / zoom ) ,
-				Math.round( ( event.offsetY - pan[1] ) / zoom ) ,
+				Math.round( ( event.layerX - pan[0] ) / zoom ) ,
+				Math.round( ( event.layerY - pan[1] ) / zoom ) ,
 			)
 			
 			const state = new Set( this.state() )
