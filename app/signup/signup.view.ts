@@ -5,8 +5,8 @@ namespace $.$$ {
 			return $mol_state_local.value( this.state_key( 'name_first' ) , next ) || ''
 		}
 		
-		name_first_errors() {
-			return this.name_first() ? [] : [ this.message_required() ]
+		name_first_bid() {
+			if( !this.name_first() ) return this.message_required()
 		}
 		
 		name_nick( next? : string ) {
@@ -17,23 +17,20 @@ namespace $.$$ {
 			return $mol_state_local.value( this.state_key( 'name_second' ) , next ) || ''
 		}
 		
-		name_second_errors() {
+		name_second_bid() {
 			const value = this.name_second()
 			
-			if( value.length === 0 ) return [ this.message_required() ]
-			
-			const errors : string[] = []
-			if( value.length < 3 ) errors.push( this.message_need_more_letters() )
-			if( value.indexOf( ' ' ) !== -1 ) errors.push( this.message_no_spaces() )
-			return errors
+			if( value.length === 0 ) return this.message_required()
+			if( value.indexOf( ' ' ) !== -1 ) return this.message_no_spaces()
+			if( value.length < 3 ) return this.message_need_more_letters()
 		}
 
 		sex( next? : string ) {
 			return $mol_state_local.value( this.state_key( 'sex' ) , next ) || ''
 		}
 
-		sex_errors() {
-			return this.sex() ? [] : [ this.message_required() ]
+		sex_bid() {
+			if( !this.sex() ) return this.message_required()
 		}
 
 		event_submit( next? : Event ) {

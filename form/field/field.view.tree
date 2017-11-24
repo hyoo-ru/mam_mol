@@ -2,5 +2,5 @@ $mol_form_field $mol_labeler
 	label /
 		<= name \
 		<= Bid $mol_view
-			sub <= errors /
+			sub <= errors / <= bid \
 	Content <= control null
