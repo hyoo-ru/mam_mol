@@ -12,4 +12,4 @@ $mol_link $mol_view
 	arg *
 	event *
 		^
-		click?val <=> click?event <=> event_click?event null
+		click?event <=> click?event <=> event_click?event null
