@@ -1,0 +1,33 @@
+# $jin.time
+
+Small, simple, powerfull, and fast TypeScript/JavaScript library for proper date/time/duration/interval arithmetic.
+
+# Installation
+
+## Direct
+
+```html
+<script src="http://mol.js.org/time/all/-/web.js"></script>
+<script>
+	alert( new $mol_time_moment() ) // alerts current time
+</script>
+```
+
+Or get typescript sources from repository: https://github.com/eigenmethod/mol/tree/master/time
+
+## NPM
+
+```sh
+npm install mol_time
+```
+
+```js
+var moment = require( 'mol_time_all' ).$mol_time_moment
+console.log( new moment().toString() ) // logs current time
+```
+
+# API
+
+- [$mol_time_moment](moment)
+- [$mol_time_duration](duration)
+- [$mol_time_interval](interval)
