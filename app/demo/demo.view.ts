@@ -184,8 +184,8 @@ namespace $.$$ {
 			return super.cell( id )
 		}
 		
-		arg( id : { row : string[] , col : string } ) {
-			return { 'demo' : id.row[ id.row.length - 1 ] }
+		link( id : { row : string[] , col : string } ) {
+			return this.$.$mol_state_arg.make_link({ 'demo' : id.row[ id.row.length - 1 ] })
 		}
 		
 	}

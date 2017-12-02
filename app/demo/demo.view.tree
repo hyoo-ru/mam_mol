@@ -79,7 +79,7 @@ $mol_app_demo_nav $mol_grid
 	Head null
 	-
 	Option!id $mol_link
-		arg <= arg!id *
+		uri <= link!id \
 		sub /
 			<= Expand!id $mol_check_expand
 				expanded?val <=> cell_expanded!id?val -
