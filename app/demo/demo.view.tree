@@ -15,7 +15,7 @@ $mol_app_demo $mol_book
 		body /
 			<= Detail_list $mol_list
 				rows <= main_content /
-			<= Chat $mol_chat
+			- <= Chat $mol_chat
 				repository_name \nin-jin/mol_chat
 				title <= title -
 				link <= chat_link \
