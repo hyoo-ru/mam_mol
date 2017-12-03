@@ -61,7 +61,7 @@ namespace $ {
 
 	}
 
-	export function $mol_task_wrap< Result >( handler : ( ... args : any[] )=> Result ) {
+	export function $mol_task_wrap< Handler extends ( ... args : any[] )=> Result , Result = void >( handler : Handler ) {
 		
 		return function $mol_task_wrapper( ... args : any[] ) : Result {
 
@@ -72,12 +72,13 @@ namespace $ {
 				if( master ) return master.run()
 			}
 
-			const master = new $mol_task_state( ()=> handler( ... args ) , slave )
+			const master = new $mol_task_state< Result >( ()=> handler( ... args ) , slave )
 
 			if( slave ) slave.masters[ slave.cursor - 1 ] = master
 
 			return master.run()
-		} as typeof handler
+
+		} as Handler
 
 	}
 
