@@ -1,15 +1,17 @@
 namespace $ {
 
-	export let $mol_task_current : $mol_task_state< any >
+	export let $mol_task_current : $mol_task_state
 	
-	export class $mol_task_state< Result > {
+	export class $mol_task_state< Result = any > {
 		
 		constructor(
-			public handler : ( ... args : any[] )=> any ,
-			public slave : $mol_task_state< Result > ,
-		) { }
+			public handler : ()=> Result ,
+		) {
+			if( this.slave ) this.slave.master = this
+		}
 
-		masters = [] as $mol_task_state< any >[]
+		slave = $mol_task_current
+		masters = [] as $mol_task_state[]
 		cursor = -1
 		result : Result
 
@@ -44,9 +46,10 @@ namespace $ {
 		}
 
 		run() {
-			if( this.cursor !== -1 ) return this.result
-			
 			const slave = $mol_task_current
+			if( slave ) slave.step()
+			
+			if( this.cursor !== -1 ) return this.result
 
 			$mol_task_current = this
 			this.cursor = 0
@@ -59,25 +62,24 @@ namespace $ {
 			return this.result
 		}
 
+		step() {
+			++ this.cursor
+		}
+
+		get master() {
+			return this.masters[ this.cursor ]
+		}
+		set master( next : $mol_task_state ) {
+			this.masters[ this.cursor ] = next
+		}
+
 	}
 
 	export function $mol_task_wrap< Handler extends ( ... args : any[] )=> Result , Result = void >( handler : Handler ) {
 		
-		return function $mol_task_wrapper( ... args : any[] ) : Result {
-
-			const slave = $mol_task_current
-
-			if( slave ) {
-				const master = slave.masters[ slave.cursor ++ ]
-				if( master ) return master.run()
-			}
-
-			const master = new $mol_task_state< Result >( ()=> handler( ... args ) , slave )
-
-			if( slave ) slave.masters[ slave.cursor - 1 ] = master
-
+		return function $mol_task_wrapper( ... args : any[] ) {
+			const master = $mol_task_current && $mol_task_current.master || new $mol_task_state< Result >( handler.bind( this , ... args ) )
 			return master.run()
-
 		} as Handler
 
 	}
