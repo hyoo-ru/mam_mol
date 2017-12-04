@@ -1,16 +1,36 @@
 <!doctype html>
-<html style=" width : 100% ; height : 100% ; position : fixed ">
+<html>
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+<style>
+	q { display: block; position: absolute }
+</style>
 
 <body>
 
 <script src="-/web.js" charset="utf-8"></script>
 <script>
+	
 	addEventListener( 'load' , function() {
 		var script = document.createElement( 'script' )
 		script.src = '-/web.test.js'
 		document.body.appendChild( script )
 	} )
+
+	const one = $mol_task_wrap( ()=> {
+		document.body.innerText = ''
+		document.body.appendChild( document.createElement( 'video' ) )
+	} )
+
+	const all = $mol_task_wrap( ()=> {
+		for( let i = 0 ; i < 500 ; ++i ) {
+			one()
+		}
+		console.timeEnd()
+	} )
+
+	console.time()
+	all()
 </script>

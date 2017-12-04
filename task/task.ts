@@ -1,6 +1,9 @@
 namespace $ {
 
+	declare function requestIdleCallback( handler : ()=> any ) : number
+
 	export let $mol_task_current : $mol_task_state
+	export let $mol_task_deadline = 0
 	
 	export class $mol_task_state< Result = any > {
 		
@@ -42,7 +45,7 @@ namespace $ {
 			this.cursor = -1
 			
 			if( this.slave ) this.slave.notify()
-			else new $mol_defer( ()=> this.run() )
+			else this.run()
 		}
 
 		run() {
@@ -51,13 +54,31 @@ namespace $ {
 			
 			if( this.cursor !== -1 ) return this.result
 
-			$mol_task_current = this
 			this.cursor = 0
 			
-			try { this.result = this.handler() }
-			catch( error ) { this.result = this.error( error ) }
+			if( $mol_task_deadline ) {
+				if( Date.now() > $mol_task_deadline ) {
+					const error = new Promise( done => {
+						requestIdleCallback( ()=> {
+							$mol_task_deadline = 0
+							this.notify()
+						} )
+					} )
+					this.result = this.error( error )
+					throw error
+				}
+			} else {
+				$mol_task_deadline = Date.now() + 8
+			}
 
-			$mol_task_current = slave
+			try {
+				$mol_task_current = this
+				this.result = this.handler()
+			} catch( error ) {
+				this.result = this.error( error )
+			} finally {
+				$mol_task_current = slave
+			}			
 
 			return this.result
 		}

@@ -1,7 +1,5 @@
 namespace $ {
 
-	declare var Promise : any
-	
 	$mol_test({
 
 		'synchronous task'() {
