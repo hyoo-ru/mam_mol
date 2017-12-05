@@ -58,12 +58,11 @@ namespace $ {
 			
 			if( $mol_task_deadline ) {
 				if( Date.now() > $mol_task_deadline ) {
-					const error = new Promise( done => {
-						requestIdleCallback( ()=> {
-							$mol_task_deadline = 0
-							this.notify()
-						} )
+					requestIdleCallback( ()=> {
+						$mol_task_deadline = 0
+						this.notify()
 					} )
+					const error = new Error( 'Defer...' )
 					this.result = this.error( error )
 					throw error
 				}
