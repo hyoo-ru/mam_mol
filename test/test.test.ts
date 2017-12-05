@@ -1,42 +1,26 @@
 namespace $ {
 	
 	export function $mol_test( set : { [ name : string ] : string | ( ()=> void ) } ) {
-		for( let name in set ) $mol_test_all.push( new $mol_test_case( set[ name ] ) )
+		for( let name in set ) {
+			const code = set[ name ]
+			const test = ( typeof code === 'string' ) ? new Function( '' , code ) as ()=> void : code
+			$mol_test_all.push( test )
+		}
 		$mol_test_schedule()
 	}
 	
-	export var $mol_test_all : $mol_test_case[] = []
+	export const $mol_test_all = [] as Array< ()=> void >
 	
-	export var $mol_test_run = () => {
-		for( var test of $mol_test_all ) {
-			test.run()
-		}
+	export function $mol_test_run() {
+		for( var test of $mol_test_all ) test()
 	}
 	
-	export class $mol_test_case {
-		
-		code : ()=> void
-		
-		constructor( code : string | ( ()=> void ) ) {
-			if( typeof code === 'string' ) {
-				this.code = new Function( code ) as any
-			} else {
-				this.code = code
-			}
-		}
-		
-		run() {
-			this.code()
-		}
-		
-	}
-
 	let scheduled = false
 	export function $mol_test_schedule() {
 		if( scheduled ) return
 		scheduled = true
 
-		setTimeout( $mol_log_group( '$mol_test.run()' , ()=> {
+		setTimeout( $mol_log_group( '$mol_test_run()' , ()=> {
 			scheduled = false
  			$mol_test_run()
 		} ) )
