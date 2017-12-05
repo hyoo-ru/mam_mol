@@ -9,11 +9,11 @@ namespace $ {
 		
 		constructor(
 			public handler : ()=> Result ,
+			public slave : $mol_task_state = undefined ,
 		) {
-			if( this.slave ) this.slave.master = this
+			if( slave ) slave.master = this
 		}
 
-		slave = $mol_task_current
 		masters = [] as $mol_task_state[]
 		cursor = -1
 		result : Result
@@ -58,16 +58,18 @@ namespace $ {
 			
 			if( $mol_task_deadline ) {
 				if( Date.now() > $mol_task_deadline ) {
+					$mol_task_deadline = 0
 					requestIdleCallback( ()=> {
-						$mol_task_deadline = 0
 						this.notify()
 					} )
 					const error = new Error( 'Defer...' )
 					this.result = this.error( error )
-					throw error
+					
+					if( slave ) throw error
+					else return this.result
 				}
 			} else {
-				$mol_task_deadline = Date.now() + 8
+				$mol_task_deadline = Date.now() + 10
 			}
 
 			try {
@@ -98,7 +100,8 @@ namespace $ {
 	export function $mol_task_wrap< Handler extends ( ... args : any[] )=> Result , Result = void >( handler : Handler ) {
 		
 		return function $mol_task_wrapper( ... args : any[] ) {
-			const master = $mol_task_current && $mol_task_current.master || new $mol_task_state< Result >( handler.bind( this , ... args ) )
+			let master = $mol_task_current && $mol_task_current.master
+			if( !master ) master = new $mol_task_state< Result >( handler.bind( this , ... args ) , $mol_task_current )
 			return master.run()
 		} as Handler
 
