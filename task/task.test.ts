@@ -3,23 +3,23 @@ namespace $ {
 	$mol_test({
 
 		'synchronous task'() {
+			$mol_task_frame()
 			const task = $mol_task_wrap( ()=> 1 )
 			$mol_assert_equal( task() , 1 )
 		} ,
 
 		'task in func in task'() {
-
+			$mol_task_frame()
+			
 			const history = [] as number[]
 
 			const log = $mol_task_wrap( ( val : number ) : number => {
-				throw {
-					then( done : ( res : number )=> null ) {
-						new $mol_defer( ()=> {
-							history.push( val )
-							done( val )
-						} )
-					}
-				}
+				const task = $mol_task_current
+				new $mol_defer( ()=> {
+					history.push( val )
+					task.done( val )
+				} )
+				throw $mol_task_wait
 			} )
 
 			const subtask = ( val : number )=> log( val )
@@ -36,18 +36,17 @@ namespace $ {
 		} ,
 
 		'task in task in task'() {
-
+			$mol_task_frame()
+			
 			const history = [] as number[]
 
 			const log = $mol_task_wrap( ( val : number ) : number => {
-				throw {
-					then( done : ( res : number )=> null ) {
-						new $mol_defer( ()=> {
-							history.push( val )
-							done( val )
-						} )
-					}
-				}
+				const task = $mol_task_current
+				new $mol_defer( ()=> {
+					history.push( val )
+					task.done( val )
+				} )
+				throw $mol_task_wait
 			} )
 
 			const subtask = $mol_task_wrap( ( val : number )=> log( val ) )
@@ -64,21 +63,20 @@ namespace $ {
 		} ,
 
 		'decorated methods'() {
-
+			$mol_task_frame()
+			
 			const history = [] as number[]
 
 			class Test {
 				
 				@ $mol_task
 				static log( val : number ) : number {
-					throw {
-						then( done : ( res : number )=> null ) {
-							new $mol_defer( ()=> {
-								history.push( val )
-								done( val )
-							} )
-						}
-					}
+					const task = $mol_task_current
+					new $mol_defer( ()=> {
+						history.push( val )
+						task.done( val )
+					} )
+					throw $mol_task_wait
 				}
 
 				static subtask( val : number ) {

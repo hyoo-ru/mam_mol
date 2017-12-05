@@ -1,87 +1,115 @@
 namespace $ {
 
-	declare function requestIdleCallback( handler : ()=> any ) : number
+	export function $mol_task< Host , Result >(
+		obj : Host ,
+		name : string ,
+		descr : TypedPropertyDescriptor< ( ... args : any[] )=> Result >
+	) {
+		descr.value = $mol_task_wrap( descr.value )
+	}
+
+	export function $mol_task_wrap< Handler extends ( ... args : any[] )=> Result , Result = void >( handler : Handler ) {
+		
+		return function $mol_task_wrapper( ... args : any[] ) {
+			let master = $mol_task_current && $mol_task_current.master
+			if( !master ) master = new $mol_task_state< Result >( handler.bind( this , ... args ) , $mol_task_current )
+			return master.start()
+		} as Handler
+
+	}
+
+	export const $mol_task_wait = Symbol( '$mol_task_wait' )
 
 	export let $mol_task_current : $mol_task_state
-	export let $mol_task_deadline = 0
+	
+	export let $mol_task_deadline : number
+	export function $mol_task_frame( timeout = 16 ) {
+		$mol_task_deadline = Date.now() + timeout
+	}
+	$mol_task_frame()
 	
 	export class $mol_task_state< Result = any > {
 		
 		constructor(
-			public handler : ()=> Result ,
-			public slave : $mol_task_state = undefined ,
+			readonly handler : ()=> Result ,
+			readonly slave : $mol_task_state = undefined ,
 		) {
 			if( slave ) slave.master = this
 		}
 
-		masters = [] as $mol_task_state[]
+		readonly masters = [] as $mol_task_state[]
 		cursor = -1
+
+		error : Error
 		result : Result
 
-		done( res : Result ) {
-			this.result = res
-			if( this.slave ) this.slave.notify()
+		done( result : Result ) {
+			this.result = result
+			this.masters.length = 0
+			if( this.slave ) this.slave.restart()
 		}
 
-		error( error : any ) : Result {
+		fail( error : Error ) {
+			this.error = error
+			this.masters.length = 0
+			if( this.slave ) this.slave.restart()
+		}
 
-			if( typeof error.then === 'function' ) {
-				error.then(
-					( val: any )=> this.done( val ) ,
-					( error : any )=> this.done( this.error( error ) ) ,
-				)
-				error = new Error( 'Wait...' )
+		restart() {
+			let current = this as $mol_task_state
+
+			while( current ) {
+				if( current.cursor === -1 ) break
+				current.cursor = -1
+				if( current.slave ) current = current.slave
+				else break
 			}
-	
-			return new Proxy<Error>( error , {
-				get() { throw error } ,
-				apply() { throw error } ,
-			} ) as any as Result
-	
+
+			$mol_task_deadline = Date.now() + 15
+
+			current.start()
 		}
 
-		notify() {
-			if( this.cursor === -1 ) return
-			this.cursor = -1
-			
-			if( this.slave ) this.slave.notify()
-			else this.run()
+		limit() {
+			if( Date.now() < $mol_task_deadline ) return
+
+			requestAnimationFrame( ()=> this.restart() )
+			throw $mol_task_wait
 		}
 
-		run() {
+		start() {
 			const slave = $mol_task_current
 			if( slave ) slave.step()
 			
-			if( this.cursor !== -1 ) return this.result
-
+			if( this.cursor !== -1 ) {
+				if( this.error ) throw this.error
+				return this.result
+			}
+	
 			this.cursor = 0
 			
-			if( $mol_task_deadline ) {
-				if( Date.now() > $mol_task_deadline ) {
-					$mol_task_deadline = 0
-					requestIdleCallback( ()=> {
-						this.notify()
-					} )
-					const error = new Error( 'Defer...' )
-					this.result = this.error( error )
-					
-					if( slave ) throw error
-					else return this.result
-				}
-			} else {
-				$mol_task_deadline = Date.now() + 10
-			}
-
 			try {
+				
+				this.limit()
+
 				$mol_task_current = this
+				
 				this.result = this.handler()
+				this.masters.length = 0
+				
+				return this.result
+
 			} catch( error ) {
-				this.result = this.error( error )
+
+				if( error !== $mol_task_wait ) this.error = error
+				
+				if( this.slave ) throw error
+				else return this.result
+
 			} finally {
 				$mol_task_current = slave
 			}			
 
-			return this.result
 		}
 
 		step() {
@@ -95,24 +123,6 @@ namespace $ {
 			this.masters[ this.cursor ] = next
 		}
 
-	}
-
-	export function $mol_task_wrap< Handler extends ( ... args : any[] )=> Result , Result = void >( handler : Handler ) {
-		
-		return function $mol_task_wrapper( ... args : any[] ) {
-			let master = $mol_task_current && $mol_task_current.master
-			if( !master ) master = new $mol_task_state< Result >( handler.bind( this , ... args ) , $mol_task_current )
-			return master.run()
-		} as Handler
-
-	}
-
-	export function $mol_task< Host , Result >(
-		obj : Host ,
-		name : string ,
-		descr : TypedPropertyDescriptor< ( ... args : any[] )=> Result >
-	) {
-		descr.value = $mol_task_wrap( descr.value )
 	}
 
 }

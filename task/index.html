@@ -24,10 +24,12 @@
 		document.body.appendChild( document.createElement( 'video' ) )
 	} )
 
+	const group = $mol_task_wrap( ()=> {
+		for( let i = 0 ; i < 10 ; ++i ) one()
+	} )
+
 	const all = $mol_task_wrap( ()=> {
-		for( let i = 0 ; i < 500 ; ++i ) {
-			one()
-		}
+		for( let i = 0 ; i < 50 ; ++i ) group()
 		console.timeEnd()
 	} )
 
