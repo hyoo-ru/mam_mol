@@ -21,7 +21,7 @@ namespace $ {
 	export const $mol_task_wait = Symbol( '$mol_task_wait' )
 
 	export let $mol_task_current : $mol_task_state
-	
+
 	export let $mol_task_deadline : number
 	export function $mol_task_frame( timeout = 16 ) {
 		$mol_task_deadline = Date.now() + timeout
@@ -37,22 +37,34 @@ namespace $ {
 			if( slave ) slave.master = this
 		}
 
-		readonly masters = [] as $mol_task_state[]
+		destructor() {
+			this.complete()
+			this.masters = null
+		}
+
+		masters = [] as $mol_task_state[]
 		cursor = -1
 
 		error : Error
 		result : Result
 
 		done( result : Result ) {
+			if( !this.masters ) return
 			this.result = result
-			this.masters.length = 0
+			this.complete()
 			if( this.slave ) this.slave.restart()
 		}
 
 		fail( error : Error ) {
+			if( !this.masters ) return
 			this.error = error
-			this.masters.length = 0
+			this.complete()
 			if( this.slave ) this.slave.restart()
+		}
+
+		complete() {
+			for( let master of this.masters ) master.destructor()
+			this.masters.length = 0
 		}
 
 		restart() {
@@ -95,13 +107,16 @@ namespace $ {
 				$mol_task_current = this
 				
 				this.result = this.handler()
-				this.masters.length = 0
+				this.complete()
 				
 				return this.result
 
 			} catch( error ) {
 
-				if( error !== $mol_task_wait ) this.error = error
+				if( error !== $mol_task_wait ) {
+					this.error = error
+					this.complete()
+				}					
 				
 				if( this.slave ) throw error
 				else return this.result
