@@ -10,11 +10,10 @@ namespace $ {
 		}
 		
 		static relative( path : string ) : $mol_file {
-			const resolver = $mol_dom_context.document.createElement( 'a' )
-			resolver.href = path
-			
-			return this.absolute( resolver.href )
+			return this.absolute( new URL( path , this.base ).toString() )
 		}
+
+		static base = new URL( '.' , document.currentScript['src'] ).toString()
 		
 		path() {
 			return '.'

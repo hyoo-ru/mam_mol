@@ -7,7 +7,7 @@ $mol_app_quine $mol_page
 					text <= content \
 	-
 	paths /
-		\-/mol/app/quine/quine.view.tree
-		\-/mol/app/quine/quine.view.ts
-		\-/mol/app/quine/index.html
-		\-/mol/app/quine/quine.locale=ru.json
+		\mol/app/quine/quine.view.tree
+		\mol/app/quine/quine.view.ts
+		\mol/app/quine/index.html
+		\mol/app/quine/quine.locale=ru.json

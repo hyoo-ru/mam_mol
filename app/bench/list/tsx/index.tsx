@@ -18,6 +18,7 @@ namespace $ {
 			this.render()
 		}
 
+		@ $mol_task
 		static render() {
 			return (
 				<div id="list" className="list">
@@ -36,7 +37,6 @@ namespace $ {
 							<div
 								id={ 'list-item#' + item.id + '-content' }
 								className="list-item-content"
-								childNodes={[ item.content ]}
 								>
 								{ item.content }
 							</div>

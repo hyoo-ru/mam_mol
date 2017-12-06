@@ -7,11 +7,12 @@ namespace JSX {
 
 namespace $ {
 	
-	export function $mol_dom_jsx< Props >(
+	export const $mol_dom_jsx = $mol_task_wrap( function $mol_dom_jsx< Props >(
 		Elem : string | { ( props : Props ) : Element } | { new( props : Props ) : { render() : Element } } ,
 		props : Props ,
 		...children : Array< Node | string >
 	) {
+
 		let node : Element
 		if( typeof Elem === 'string' ) {
 
@@ -33,6 +34,6 @@ namespace $ {
 		}
 		
 		return node
-	}
+	} )
 	
 }
