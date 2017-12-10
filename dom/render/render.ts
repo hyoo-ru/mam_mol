@@ -19,21 +19,23 @@ namespace $ {
 		el : Element ,
 		childNodes : NodeList | Array< Node | string | number | boolean | { dom_tree : ()=> Node } >
 	) {
-		const nodes = [] as ( Node | string )[]
+		const node_list = [] as ( Node | string )[]
+		const node_set = new Set<Node>()
 		
 		for( let i = 0 ; i < childNodes.length ; ++i ) {
 			let node = childNodes[ i ] as any
 			if( node == null ) continue
 			if( Object( node ) === node ) {
 				if( node[ 'dom_tree' ] ) node = node[ 'dom_tree' ]()
-				nodes.push( node )
+				node_list.push( node )
+				node_set.add( node )
 			} else {
-				nodes.push( String( node ) )
+				node_list.push( String( node ) )
 			}
 		}
 		
 		let nextNode = el.firstChild
-		for( let view_ of nodes ) {
+		for( let view_ of node_list ) {
 			const view = view_.valueOf() as Node
 			
 			if( view instanceof $mol_dom_context.Node ) {
@@ -47,13 +49,13 @@ namespace $ {
 						nextNode = nextNode.nextSibling
 						break
 					} else {
-						if( nodes.indexOf( nextNode ) === -1 ) {
+						if( node_set.has( nextNode ) ) {
+							el.insertBefore( view , nextNode )
+							break
+						} else {
 							const nn = nextNode.nextSibling
 							el.removeChild( nextNode )
 							nextNode = nn
-						} else {
-							el.insertBefore( view , nextNode )
-							break
 						}
 					}
 				}

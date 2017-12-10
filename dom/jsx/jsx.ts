@@ -6,9 +6,9 @@ namespace JSX {
 }
 
 namespace $ {
-	
+
 	export const $mol_dom_jsx = $mol_task_wrap( function $mol_dom_jsx< Props >(
-		Elem : string | { ( props : Props ) : Element } | { new( props : Props ) : { render() : Element } } ,
+		Elem : string | ( ( props : Props ) => Element ) ,
 		props : Props ,
 		...children : Array< Node | string >
 	) {
@@ -28,11 +28,13 @@ namespace $ {
 		} else if( typeof Elem === 'function' ) {
 			
 			const props2 = props as any
-			node = new ( Elem as any )({ childNodes : children , ... props2 })
+
+			node = Elem({ childNodes : children , ... props2 })
+			
 			if( node['render'] ) node = node['render']()
 
 		}
-		
+
 		return node
 	} )
 	

@@ -20,28 +20,37 @@ namespace $ {
 
 		@ $mol_task
 		static render() {
+
+			$mol_task_deadline = Number.POSITIVE_INFINITY
+
+			let Item = ( { id , item } : { id : string , item : {
+				id : number
+				title : string
+				content : string
+			} } )=> (
+				<div
+					id={ id }
+					className={ `list-item list-item-selected-${ this.selected === item.id }`  }
+					onclick={ this.onClick.bind( this , item ) }
+					>
+					<div
+						id={ `${id}.title` }
+						className="list-item-title"
+						>
+						{ item.title }
+					</div>
+					<div
+						id={ `${id}.content` }
+						className="list-item-content"
+						>
+						{ item.content }
+					</div>
+				</div>
+			)
+
 			return (
 				<div id="list" className="list">
-					{ this.data.items.map( item => (
-						<div
-							id={ 'list-item#' + item.id }
-							className={ `list-item list-item-selected-${ this.selected === item.id }`  }
-							onclick={ this.onClick.bind( this , item ) }
-							>
-							<div
-								id={ 'list-item#' + item.id + '-title' }
-								className="list-item-title"
-								>
-								{ item.title }
-							</div>
-							<div
-								id={ 'list-item#' + item.id + '-content' }
-								className="list-item-content"
-								>
-								{ item.content }
-							</div>
-						</div>
-					) ) }
+					{ this.data.items.map( item => <Item id={ `list.item[${item.id}]` } item={ item } /> ) }
 				</div>
 			)
 		}

@@ -55,18 +55,6 @@ namespace $ {
 			$mol_assert_equal( dom.outerHTML , '<button id="$mol_dom_jsx_test">click me</button>' )
 		} ,
 		
-		'Custom class as component'() {
-
-			class Button {
-				constructor( public props : { id : string , text : string } ) { }
-				render() { return <button id={ this.props.id }>{ this.props.text }</button> }
-			}
-
-			const dom = <Button id="$mol_dom_jsx_test" text="click me" />
-
-			$mol_assert_equal( dom.outerHTML , '<button id="$mol_dom_jsx_test">click me</button>' )
-		} ,
-		
 	})
 	
 }

@@ -18,7 +18,7 @@ namespace $ {
 
 	}
 
-	export const $mol_task_wait = Symbol( '$mol_task_wait' )
+	export const $mol_task_wait = new Error( '$mol_task_wait' )
 
 	export let $mol_task_current : $mol_task_state
 
@@ -38,7 +38,8 @@ namespace $ {
 		}
 
 		destructor() {
-			this.complete()
+			if( !this.masters ) return
+			for( let master of this.masters ) master.destructor()
 			this.masters = null
 		}
 
@@ -51,26 +52,22 @@ namespace $ {
 		done( result : Result ) {
 			if( !this.masters ) return
 			this.result = result
-			this.complete()
+			this.destructor()
 			if( this.slave ) this.slave.restart()
 		}
 
 		fail( error : Error ) {
 			if( !this.masters ) return
 			this.error = error
-			this.complete()
+			this.destructor()
 			if( this.slave ) this.slave.restart()
-		}
-
-		complete() {
-			for( let master of this.masters ) master.destructor()
-			this.masters.length = 0
 		}
 
 		restart() {
 			let current = this as $mol_task_state
 
 			while( current ) {
+				if( !current.masters ) return
 				if( current.cursor === -1 ) break
 				current.cursor = -1
 				if( current.slave ) current = current.slave
@@ -107,7 +104,7 @@ namespace $ {
 				$mol_task_current = this
 				
 				this.result = this.handler()
-				this.complete()
+				this.destructor()
 				
 				return this.result
 
@@ -115,11 +112,13 @@ namespace $ {
 
 				if( error !== $mol_task_wait ) {
 					this.error = error
-					this.complete()
+					this.destructor()
 				}					
 				
 				if( this.slave ) throw error
-				else return this.result
+				
+				if( error !== $mol_task_wait ) console.error( error )
+				return new Proxy( error , { get() { throw error } } )
 
 			} finally {
 				$mol_task_current = slave
