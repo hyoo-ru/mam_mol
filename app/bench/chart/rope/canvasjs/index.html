@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<script type="text/javascript" src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>	
+	<style>
+		body {
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+<div id="test" style="height:100vh;width:100vw">
+</div>
+</body>
+<script type="text/javascript">
+
+	window.addEventListener( 'message' , function( event ) {
+		window[ event.data[0] ].apply( null , event.data.slice( 1 ) )
+	} )
+	
+	var chart = new CanvasJS.Chart( 'test' , {
+		interactivityEnabled: false,
+		data : [] , //[{dataPoints:[{y:1},{y:2}],type:'line'}] ,
+	})
+	chart.render()
+
+	function fill( data ) {
+		chart.options.data = data.graphs.map( graph => ({
+			dataPoints : graph.map( val => ({ y : val * 10 }) ) ,
+			showInLegend: true,
+			markerType: "circle",
+			legendText: "circle",
+			markerSize: 8,
+			type : "line" ,
+		}) )
+		chart.render()
+	}
+
+	function update( data ) {
+		fill( data )
+	}
+	
+	window.onresize = function() {
+		// chart.setSize( innerWidth , innerHeight , false )
+	}
+	window.onresize()
+
+</script>
+</html>
