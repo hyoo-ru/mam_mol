@@ -41,9 +41,6 @@ namespace $ {
 
 			const resource = $mol_http.resource( this.resource_url() )
 			resource.method_put = $mol_const( this.method_put() )
-			resource.headers = $mol_const({
-				... next ? { 'Authorization' : `token ${ $mol_github_auth.token([ 'public_repo' ]) }` } : {}
-			})
 
 			return this.json_update( resource.json( next , force ) )
 		}
