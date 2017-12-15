@@ -33,7 +33,7 @@ $mol_app_studio $mol_book
 			event_top?val <=> event_front_up?val -
 			Tools => Editor_tools
 			head /
-				<= Crumbs $mol_row
+				<= Crumbs $mol_view
 					sub <= crumbs /
 				<= Editor_tools -
 			tools /

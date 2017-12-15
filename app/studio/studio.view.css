@@ -12,7 +12,8 @@
 
 [mol_app_studio_crumbs] {
 	flex: 1000 1 auto;
-	box-shadow: none;
+	display: flex;
+	flex-wrap: wrap;
 }
 [mol_app_studio_crumbs] > * {
 	margin: 0;
