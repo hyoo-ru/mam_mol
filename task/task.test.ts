@@ -4,8 +4,9 @@ namespace $ {
 
 		'synchronous task'() {
 			$mol_task_frame()
-			const task = $mol_task_wrap( ()=> 1 )
-			$mol_assert_equal( task() , 1 )
+			const task1 = $mol_task_wrap( ()=> 1 )
+			const task2 = $mol_task_wrap( ()=> task1() + 1 )
+			$mol_assert_equal( task2() , 2 )
 		} ,
 
 		'wrapped in wrapped in wrapped'() {

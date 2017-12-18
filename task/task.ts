@@ -18,7 +18,7 @@ namespace $ {
 
 	}
 
-	export const $mol_task_wait = new Error( '$mol_task_wait' )
+	export const $mol_task_wait = new class $mol_task_wait {}
 
 	export let $mol_task_current : $mol_task_state
 
@@ -46,43 +46,33 @@ namespace $ {
 		masters = [] as $mol_task_state[]
 		cursor = -1
 
-		error : Error
-		result : Result
+		error : Error = undefined
+		result : Result = undefined
 
 		done( result : Result ) {
 			if( !this.masters ) return
 			this.result = result
 			this.destructor()
-			if( this.slave ) this.slave.restart()
+			if( this.slave && !$mol_task_current ) this.slave.start()
+			return result
 		}
 
 		fail( error : Error ) {
 			if( !this.masters ) return
 			this.error = error
 			this.destructor()
-			if( this.slave ) this.slave.restart()
-		}
-
-		restart() {
-			let current = this as $mol_task_state
-
-			while( current ) {
-				if( !current.masters ) return
-				if( current.cursor === -1 ) break
-				current.cursor = -1
-				if( current.slave ) current = current.slave
-				else break
-			}
-
-			$mol_task_deadline = Date.now() + 15
-
-			current.start()
+			if( this.slave && !$mol_task_current ) this.slave.start()
+			return error
 		}
 
 		limit() {
 			if( Date.now() < $mol_task_deadline ) return
 
-			requestAnimationFrame( ()=> this.restart() )
+			requestAnimationFrame( ()=> {
+				$mol_task_deadline = Date.now() + 15
+				this.start() 
+			} )
+
 			throw $mol_task_wait
 		}
 
@@ -90,7 +80,7 @@ namespace $ {
 			const slave = $mol_task_current
 			if( slave ) slave.step()
 			
-			if( this.cursor !== -1 ) {
+			if( !this.masters ) {
 				if( this.error ) throw this.error
 				return this.result
 			}
@@ -102,26 +92,22 @@ namespace $ {
 				this.limit()
 
 				$mol_task_current = this
-				
-				this.result = this.handler()
-				this.destructor()
-				
-				return this.result
+				const result = this.handler()
+				$mol_task_current = slave
+
+				return this.done( result )
 
 			} catch( error ) {
 
-				if( error !== $mol_task_wait ) {
-					this.error = error
-					this.destructor()
-				}					
+				$mol_task_current = slave
 				
-				if( this.slave ) throw error
+				if( error != $mol_task_wait ) this.fail( error )
+				
+				if( $mol_task_current ) throw error
 				
 				if( error !== $mol_task_wait ) console.error( error )
 				return new Proxy( error , { get() { throw error } } )
 
-			} finally {
-				$mol_task_current = slave
 			}			
 
 		}
