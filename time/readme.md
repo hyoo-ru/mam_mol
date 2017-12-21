@@ -18,12 +18,12 @@ Or get typescript sources from repository: https://github.com/eigenmethod/mol/tr
 ## NPM
 
 ```sh
-npm install mol_time
+npm install mol_time_all
 ```
 
 ```js
-const moment = require( 'mol_time_all' ).$mol_time_moment
-console.log( new moment().toString() ) // logs current time
+const Moment = require( 'mol_time_all' ).$mol_time_moment
+console.log( new Moment().toString() ) // logs current time
 ```
 
 # API
