@@ -36,7 +36,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		tasks_filtered() {
+		task_ids_filtered() {
 			var completed = this.arg_completed()
 			if( completed ) {
 				return this.groups_completed()[ completed ] || []
@@ -86,7 +86,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		task_rows() {
-			return this.tasks_filtered().map( ( id , index )=> this.Task_row( index ) )
+			return this.task_ids_filtered().map( id => this.Task_row( id ) )
 		}
 		
 		task( id : number , next? : $mol_app_todomvc_task ) {
@@ -101,27 +101,16 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		task_completed( index : number , next? : boolean ) {
-			var id = this.tasks_filtered()[ index ]
-			if( next === void 0 ) return this.task( id ).completed
-			
-			this.task( id , $mol_merge_dict( this.task( id ) , { completed : next } ) )
-			
-			return next
+		task_completed( id : number , next? : boolean ) {
+			return this.task( id , next === undefined ? undefined : { ... this.task( id ) , completed : next } ).completed
 		}
 		
 		@ $mol_mem_key
-		task_title( index : number , next? : string ) {
-			var id = this.tasks_filtered()[ index ]
-			if( next === void 0 ) return this.task( id ).title
-			
-			this.task( id , $mol_merge_dict( this.task( id ) , { title : next } ) )
-			
-			return next
+		task_title( id : number , next? : string ) {
+			return this.task( id , next === undefined ? undefined : { ... this.task( id ) , title : next } ).title
 		}
 		
-		event_task_drop( index : number , next? : Event ) {
-			const id = this.tasks_filtered()[index]
+		event_task_drop( id : number , next? : Event ) {
 			this.task( id , null )
 			this.task_ids( this.task_ids().filter( id2 => id !== id2 ) )
 		}

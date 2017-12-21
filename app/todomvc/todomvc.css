@@ -76,6 +76,7 @@
 }
 
 [mol_app_todomvc_title] {
+	word-break: normal;
 	display: block;
 	padding: .25rem;
 	font-size: 7rem;
