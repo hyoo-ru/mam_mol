@@ -57,7 +57,7 @@ moment.valueOf() // count of milliseconds from unix epoch
 moment.native // Date instance
 
 // Iso8601 string
-momet.toString()
+moment.toString()
 moment.toJSON()
 ```
 
