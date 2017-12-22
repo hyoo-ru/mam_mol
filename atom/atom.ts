@@ -43,7 +43,7 @@ namespace $ {
 		
 		unlink() {
 			this.disobey_all()
-			this.check_slaves()
+			if( this.slaves ) this.check_slaves()
 		}
 		
 		get( force? : $mol_atom_force ) {
@@ -400,11 +400,6 @@ namespace $ {
 	
 	export class $mol_atom_wait extends Error {
 		name = '$mol_atom_wait'
-		
-		constructor( message = 'Wait...' ) {
-			super( message )
-			this['__proto__'] = new.target.prototype
-		}
 	}
 	
 	export class $mol_atom_force extends Object {
