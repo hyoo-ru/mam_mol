@@ -143,12 +143,16 @@ namespace $ {
 			
 			return min
 		}
+
+		dom_id() {
+			return this.toString()
+		}
 		
 		@ $mol_mem
 		dom_node( next? : Element ) {
 			const node = next || this.$.$mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
-			node.setAttribute( 'id' , this.toString() )
+			node.setAttribute( 'id' , this.dom_id() )
 			$mol_dom_render_attributes( node , this.attr_static() )
 			$mol_dom_render_events( node , this.event() )
 			$mol_dom_render_events_async( node , this.event_async() )
