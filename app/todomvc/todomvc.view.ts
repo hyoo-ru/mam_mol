@@ -18,11 +18,11 @@ namespace $.$$ {
 	export class $mol_app_todomvc extends $.$mol_app_todomvc {
 		
 		task_ids( next? : number[] ) : number[] {
-			return $mol_state_local.value( this.state_key( 'mol-todos' ) , next ) || []
+			return this.$.$mol_state_local.value( this.state_key( 'mol-todos' ) , next ) || []
 		}
 		
 		arg_completed() {
-			return $mol_state_arg.value( this.state_key( 'completed' ) )
+			return this.$.$mol_state_arg.value( this.state_key( 'completed' ) )
 		}
 
 		@ $mol_mem
@@ -72,7 +72,7 @@ namespace $.$$ {
 			return Math.max( 1 , 1 + Math.max( ... this.task_ids() ) )
 		}
 		
-		event_add( next : Event ) {
+		event_add( next? : Event ) {
 			var title = this.task_title_new() 
 			if( !title ) return
 			
