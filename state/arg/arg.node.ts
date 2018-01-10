@@ -2,7 +2,7 @@ declare var process : any
 
 namespace $ {
 
-	export class $mol_state_arg< Value > extends $mol_object {
+	export class $mol_state_arg extends $mol_object {
 		
 		@ $mol_mem
 		static href( next? : string ) : string {
@@ -65,11 +65,11 @@ namespace $ {
 		}
 		
 		value( key : string , next? : string ) {
-			return $mol_state_arg.value( this.prefix + key , next )
+			return ( this.constructor as typeof $mol_state_arg ).value( this.prefix + key , next )
 		}
 		
 		sub( postfix : string ) {
-			return new $mol_state_arg( this.prefix + postfix + '.' )
+			return new ( this.constructor as typeof $mol_state_arg )( this.prefix + postfix + '.' )
 		}
 		
 		link( next : { [ key : string ] : string } ) {
@@ -78,7 +78,7 @@ namespace $ {
 			for( var key in next ) {
 				dict[ prefix + key ] = next[ key ]
 			}
-			return $mol_state_arg.link( dict )
+			return ( this.constructor as typeof $mol_state_arg ).link( dict )
 		}
 		
 	}
