@@ -16,6 +16,7 @@ namespace $ {
 
 			for( let name of Object.getOwnPropertyNames( window ) ) {
 				if( name === 'eval' ) continue
+				if( name === 'Object' ) continue
 				context_merged[ name ] = undefined
 			}
 
@@ -38,7 +39,16 @@ namespace $ {
 		}
 		
 		eval( code : string ) {
-			const func = new Function( this.vars().join( ',' ) , `"use strict"\n${ code }` ).bind( null , ... this.values() )
+
+			const codes = [
+				'"use strict";',
+				"Object.defineProperty( Object.getPrototypeOf( async function(){} ) , 'constructor' , { value : undefined } );" ,
+				"Object.defineProperty( Object.getPrototypeOf( function *(){} ) , 'constructor' , { value : undefined } );" ,
+				code
+			]
+			
+			const func = new Function( this.vars().join( ',' ) , codes.join('\n') ).bind( null , ... this.values() )
+			
 			return ()=> {
 				try {
 					Function.prototype.constructor = undefined
