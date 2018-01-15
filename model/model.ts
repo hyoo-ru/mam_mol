@@ -54,4 +54,26 @@ namespace $ {
 
 	}
 
+	export function $mol_model_prop< Value , Json >(
+		field : string ,
+		make : ( json : Json )=> Value ,
+	) {
+		return < Raw , Host extends $mol_model< Raw > >(
+			host : Host ,
+			prop : string ,
+			descr : TypedPropertyDescriptor< ( next?: Value )=> Value >
+		)=> {
+			if( field ) field = prop
+
+			const value = descr.value
+
+			descr.value = function( next? : Value ) {
+				const val = this.json( next === undefined ? undefined : { ... this.json() , [ field ] : next } )[ field ]
+				if( val === undefined ) return value
+				if( make ) return make( val )
+				return val
+			}
+		}
+	}
+
 }
