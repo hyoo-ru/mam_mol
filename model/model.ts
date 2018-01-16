@@ -69,7 +69,7 @@ namespace $ {
 
 			descr.value = function( next? : Value ) {
 				const val = this.json( next === undefined ? undefined : { ... this.json() , [ field ] : next } )[ field ]
-				if( val === undefined ) return value
+				if( val === undefined ) return value()
 				if( make ) return make( val )
 				return val
 			}
