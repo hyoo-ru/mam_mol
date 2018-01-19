@@ -1,7 +1,6 @@
 [mol_date_input] {
 	box-sizing: content-box;
 	width: 10ch;
-	font-family: var(--mol_skin_font_monospace);
 }
 
 [mol_date_bubble] {
