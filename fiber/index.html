@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+<style>
+	div {
+		font: 16px/1 monospace;
+		transform: translateZ(0);
+	}
+	div > * {
+		display: inline-block;
+		width: 4px;
+		height: 8px;
+		border: none;
+	}
+	#red > * {
+		background: pink;
+	}
+	#green > * {
+		background: lime;
+	}
+	#blue > * {
+		background: lightsteelblue;
+	}
+	script {
+		display: inline-block;
+		white-space: pre;
+		font: 12px/1.25 monospace;
+	}
+</style>
+
+<body>
+
+<button onclick="run()">Run</button>
+
+<div id="red">0</div>
+<div id="green">0</div>
+<div id="blue">0</div>
+
+<script src="-/web.js" charset="utf-8"></script>
+<script style="display: none">
+	
+	addEventListener( 'load' , function() {
+		var script = document.createElement( 'script' )
+		script.src = '-/web.test.js'
+		document.body.appendChild( script )
+	} )
+
+	const red = document.getElementById( 'red' )
+	const green = document.getElementById( 'green' )
+	const blue = document.getElementById( 'blue' )
+
+</script>
+
+<script>
+
+	const run = () => {
+
+		const one = $mol_fiber_func( sandbox => {
+			sandbox.appendChild( document.createElement( 'video' ) )
+		} )
+
+		const group = $mol_fiber_func( sandbox => {
+			
+			let start = $mol_fiber_sync( ()=> Date.now() )
+
+			for( let i = 0 ; i < 100 ; ++i ) one( sandbox )
+			
+			$mol_fiber_sync( ()=> sandbox.innerText = Date.now() - start )
+		
+		} )
+
+		group( red )
+		group( green )
+		group( blue )
+	}
+
+</script>
