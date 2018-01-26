@@ -1,5 +1,5 @@
 namespace $ {
-	
+
 	export class $mol_app_bench_list_tsx {
 	
 		static data = {
@@ -18,10 +18,10 @@ namespace $ {
 			this.render()
 		}
 
-		@ $mol_task
+		@ $mol_fiber_method
 		static render() {
 
-			$mol_task_deadline = Number.POSITIVE_INFINITY
+			$mol_fiber.deadline = Number.POSITIVE_INFINITY
 
 			let Item = ( { id , item } : { id : string , item : {
 				id : number
