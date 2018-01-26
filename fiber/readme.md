@@ -22,7 +22,7 @@ $mol_fiber_sync( ()=> {
 Converts function to fiber.
 
 ```typescript
-const log = mol_fiber_func( console.log )
+const log = $mol_fiber_func( console.log )
 
 $mol_fiber_sync( ()=> {
 	log( 1 ) // 1
@@ -32,7 +32,7 @@ $mol_fiber_sync( ()=> {
 
 ### $mol_fiber_make
 
-Creates child fiber to current executed.
+Creates fiber as child of current executing.
 
 ```typescript
 $mol_fiber_sync( ()=> {
@@ -46,13 +46,23 @@ $mol_fiber_sync( ()=> {
 Starts fiber and provide callback to asynchronous provide result or error.
 
 ```typescript
-$mol_fiber_sync( ()=>{
-
-	const res = $mol_fiber_async( back => {
+function get_data() {
+	return $mol_fiber_async( back => {
 		setTimeout( back( ()=> 123 ) )
 	} )
+}
 
-	console.log( res ) // 123
+function get_error() {
+	return $mol_fiber_async( back => {
+		setTimeout( back( ()=> {
+			throw new Error( 'Test error' )
+		} ) )
+	} )
+}
+
+$mol_fiber_sync( ()=>{
+	get_data() // returns 123
+	get_error() // throws test error
 }
 ```
 
