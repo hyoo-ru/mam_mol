@@ -1,6 +1,6 @@
 # $mol_fiber
 
-Pausable synchronous executions. Quantizes main thread holding by 8ms. Fibers must be idempotent because can me restarted for continuation.
+Pausable synchronous executions. Frees main thread every 8ms, and continues fiber in next frame. Fibers must be idempotent because can be restarted for continuation.
 
 ## [Online demo](http://eigenmethod.github.io/mol/fiber/)
 
@@ -76,12 +76,12 @@ Decorate method as fiber.
 ```typescript
 const action = $mol_fiber_method
 
-class Foo {
+export class $my_foo {
 
 	// ...
 
 	@action
-	foo() {
+	transfer() {
 		return this.send_data( thid.load_data() )
 	}
 
@@ -92,7 +92,7 @@ class Foo {
 
 Executes scheduled fibers to the end. Usefull for tests.
 
-```
+```typescript
 $mol_fiber_warp()
 // No scheduled fibers here
 ```
