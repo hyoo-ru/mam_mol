@@ -1,21 +1,33 @@
 namespace $ {
 
 	export function $mol_fiber_async< Result = void >(
-		handler : ( back : ( callback :  ( ... args : any[] )=> Result )=> ( ... args : any[] )=> Result )=> void
+		request : (
+			back : (
+				response :  ( ... args : any[] )=> Result
+			)=> ( ... args : any[] )=> Result
+		)=> PromiseLike< Result > | void
 	) {
-		return $mol_fiber_make( ()=> {
-			const fiber = $mol_fiber.current
+		const fiber = $mol_fiber_make< Result >( ()=> {
 
-			handler( callback => ( ... args : any[] )=> {
+			const promise = request( response => ( ... args : any[] )=> {
 				try {
-					return fiber.done( callback( ... args ) )
+					return fiber.done( response( ... args ) )
 				} catch( error ) {
 					fiber.fail( error )
 				}
 			} )
+
+			if( promise && typeof promise.then === 'function' ) {
+				promise.then(
+					result => fiber.done( result ) ,
+					error => fiber.fail( error ) ,
+				)
+			}
 			
 			throw $mol_fiber_wait
-		} ).start()
+		} )
+		
+		return fiber.start()
 	}
 
 }

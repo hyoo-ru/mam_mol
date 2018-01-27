@@ -63,20 +63,25 @@ function get_error() {
 $mol_fiber_sync( ()=>{
 	get_data() // returns 123
 	get_error() // throws test error
-}
+} )
 ```
 
-### $mol_fiber_promise
-
-Start asynchronous task and waits until its promise resolved.
+You can return promise instead of using `back`.
 
 ```typescript
 $mol_fiber_sync( ()=>{
-
-	const res = $mol_fiber_promise( ()=> fetch( 'http://example.org/' ) )
-
+	const res = $mol_fiber_async( ()=> fetch( 'http://example.org/' ) )
 	console.log( res ) // content of example.org
-}
+} )
+```
+
+And you can use async functions too.
+
+```typescript
+$mol_fiber_sync( ()=>{
+	const res = $mol_fiber_async( async()=> await fetch( 'http://example.org/' ) )
+	console.log( res ) // content of example.org
+} )
 ```
 
 ### $mol_fiber_method
