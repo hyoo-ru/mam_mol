@@ -18,10 +18,17 @@ namespace $ {
 			this.render()
 		}
 
+		static rendering : $mol_fiber
+
 		@ $mol_fiber_method
 		static render() {
 
-			$mol_fiber.deadline = Number.POSITIVE_INFINITY
+			$mol_fiber_sync( ()=> {
+				if( this.rendering ) this.rendering.destructor()
+			} )
+			
+			this.rendering = $mol_fiber.current
+			// $mol_fiber.deadline = Number.POSITIVE_INFINITY
 
 			let Item = ( { id , item } : { id : string , item : {
 				id : number
