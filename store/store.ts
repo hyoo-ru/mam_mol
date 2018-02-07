@@ -12,6 +12,10 @@ namespace $ {
 			return next
 		}
 
+		snapshot( next? : string ) {
+			return JSON.stringify( this.data( next === undefined ? next : JSON.parse( next ) ) )
+		}
+
 		value< Key extends keyof Data >( key : Key , next? : Data[ Key ] ) {
 			return this.sub( key ).data( next )
 		}

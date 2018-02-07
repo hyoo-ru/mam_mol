@@ -31,6 +31,22 @@ namespace $ {
 
 		} ,
 
+		'get and set by shapshot' () {
+
+			const store = new $mol_store({
+				foo : 1 ,
+				bar : 2 ,
+			})
+
+			$mol_assert_equal( store.snapshot() , '{"foo":1,"bar":2}' )
+
+			store.snapshot( '{"foo":2,"bar":1}' )
+
+			$mol_assert_equal( store.data().foo , 2 )
+			$mol_assert_equal( store.data().bar , 1 )
+
+		} ,
+
 		'get and set by key' () {
 
 			const store = new $mol_store({
