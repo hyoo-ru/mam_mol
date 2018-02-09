@@ -59,7 +59,38 @@ namespace $ {
 			task.destructor()
 			$mol_defer.run()
 
-			$mol_assert_equal( history.join( ',' ) , '1' )
+			$mol_assert_equal( history.join( ',' ) , '' )
+		} ,
+
+		'disposed while executed'() {
+			$mol_fiber_warp()
+			
+			const history = [] as number[]
+
+			const log = ( val : number ) : number => {
+				return $mol_fiber_async( back => {
+
+					let disposed = false
+					
+					new $mol_defer( ()=> {
+						if( disposed ) return
+						history.push( val )
+						return val
+					} )
+					
+					return ()=> disposed = true
+				} )
+			}
+
+			const task = new $mol_fiber( ()=> {
+				history.push( log( 1 ) + log( 2 ) )
+			} )
+
+			task.start()
+			task.destructor()
+			$mol_defer.run()
+
+			$mol_assert_equal( history.join( ',' ) , '' )
 		} ,
 
 		'wrapped in func in decorated'() {

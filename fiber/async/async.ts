@@ -5,23 +5,37 @@ namespace $ {
 			back : (
 				response :  ( ... args : any[] )=> Result
 			)=> ( ... args : any[] )=> Result
-		)=> PromiseLike< Result > | void
+		)=> PromiseLike< Result > | { (): any } | void
 	) {
+
 		const fiber = $mol_fiber_make< Result >( ()=> {
 
-			const promise = request( response => ( ... args : any[] )=> {
+			const res = request( response => ( ... args : any[] )=> {
+				
+				if( !fiber.masters ) return
+
 				try {
 					return fiber.done( response( ... args ) )
 				} catch( error ) {
 					fiber.fail( error )
 				}
+				
 			} )
 
-			if( promise && typeof promise.then === 'function' ) {
-				promise.then(
-					result => fiber.done( result ) ,
-					error => fiber.fail( error ) ,
-				)
+			if( res ) {
+
+				if( typeof res === 'function' ) {
+
+					fiber.dispose = res
+				
+				} else if( typeof res.then === 'function' ) {
+
+					res.then(
+						result => fiber.done( result ) ,
+						error => fiber.fail( error ) ,
+					)
+
+				}
 			}
 			
 			throw $mol_fiber_wait

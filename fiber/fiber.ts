@@ -52,7 +52,11 @@ namespace $ {
 			}
 			
 			this.masters = null
+
+			if( this.dispose ) this.dispose()
 		}
+
+		dispose : ()=> void
 
 		masters = [] as $mol_fiber[]
 		cursor = -1
@@ -95,6 +99,7 @@ namespace $ {
 		}
 
 		limit() {
+			if( !this.slave ) return
 			if( Date.now() <= $mol_fiber.deadline ) return
 
 			this.schedule()
