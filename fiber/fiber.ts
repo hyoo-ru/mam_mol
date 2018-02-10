@@ -1,7 +1,7 @@
+var requestIdleCallback : ( handler : ()=> void )=> number = requestIdleCallback || setTimeout
+
 namespace $ {
 
-	declare function requestIdleCallback( handler : ()=> any ) : number
-	
 	export const $mol_fiber_wait = new class $mol_fiber_wait {}
 	
 	export class $mol_fiber< Result = any > {
@@ -53,10 +53,10 @@ namespace $ {
 			
 			this.masters = null
 
-			if( this.dispose ) this.dispose()
+			if( this.abort ) this.abort()
 		}
 
-		dispose : ()=> void
+		abort : ()=> void
 
 		masters = [] as $mol_fiber[]
 		cursor = -1
@@ -72,6 +72,7 @@ namespace $ {
 		}
 
 		complete() {
+			this.abort = null
 			this.destructor()
 
 			if( !this.slave ) return

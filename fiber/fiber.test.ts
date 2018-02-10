@@ -62,7 +62,7 @@ namespace $ {
 			$mol_assert_equal( history.join( ',' ) , '' )
 		} ,
 
-		'disposed while executed'() {
+		'aborted while executed'() {
 			$mol_fiber_warp()
 			
 			const history = [] as number[]

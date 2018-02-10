@@ -8,7 +8,7 @@ Pausable synchronous executions. Frees main thread every 8ms, and continues fibe
 
 ### $mol_fiber_sync
 
-Starts synchronous fiber. Executed only one time in parent execution. Use it to wrap non idempotent code.
+Starts synchronous fiber. Handler executed only one time in parent execution. Use it to wrap non idempotent code.
 
 ```typescript
 $mol_fiber_sync( ()=> {
@@ -64,6 +64,38 @@ $mol_fiber_sync( ()=>{
 	get_data() // returns 123
 	get_error() // throws test error
 } )
+```
+
+Return function to handle fiber cancelling.
+
+```typescript
+function get_text( uri : string ) {
+
+	return $mol_fiber_async( back => {
+
+		const xhr = new XMLHttpRequest()
+		xhr.open( 'GET', uri )
+
+		xhr.onload = back( () => {
+
+			if( Math.floor( xhr.status / 100 ) !== 2 ) {
+				throw new Error( xhr.statusText )
+			}
+
+			return xhr
+		} )
+
+		xhr.onerror = back( () => {
+			throw new Error( xhr.statusText )
+		} )
+
+		xhr.send()
+
+		return ()=> xhr.abort()
+
+	} )
+
+}
 ```
 
 You can return promise instead of using `back`.

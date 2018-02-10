@@ -19,14 +19,14 @@ namespace $ {
 				} catch( error ) {
 					fiber.fail( error )
 				}
-				
+
 			} )
 
 			if( res ) {
 
 				if( typeof res === 'function' ) {
 
-					fiber.dispose = res
+					fiber.abort = res
 				
 				} else if( typeof res.then === 'function' ) {
 
