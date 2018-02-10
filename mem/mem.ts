@@ -45,8 +45,6 @@ namespace $ {
 		Object.defineProperty( obj , name + "()" , { get : function() { return store.get( this ) } } )
 
 		descr.value[ 'value' ] = value
-
-		return descr
 	}
 	
 	export function $mol_mem_key< Host , Key , Value >(
@@ -95,8 +93,6 @@ namespace $ {
 		
 		Object.defineProperty( obj , name + "()" , { get : function() { return store.get( this ) } } )
 		void( ( descr.value as any )[ 'value' ] = value )
-
-		return descr
 	}
 	
 }
