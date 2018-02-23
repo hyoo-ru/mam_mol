@@ -2,7 +2,9 @@ namespace $ {
 
 	const cache = new WeakMap< any , boolean >()
 
-	export function $mol_conform< Target , Source >( target : Target , source : Source , stack : any[] = [] ) : Target {
+	export const $mol_conform_stack = [] as any[]
+
+	export function $mol_conform< Target , Source >( target : Target , source : Source ) : Target {
 
 		if( target as any === source as any ) return source as any
 
@@ -20,32 +22,30 @@ namespace $ {
 		const conform = $mol_conform_handlers.get( target.constructor )
 		if( !conform ) return target
 
-		if( stack.indexOf( target ) !== -1 ) return target
+		if( $mol_conform_stack.indexOf( target ) !== -1 ) return target
 
-		stack.push( target )
+		$mol_conform_stack.push( target )
 
-		const res = conform( target , source , stack )
+		try { return conform( target , source ) }
+		finally { $mol_conform_stack.pop() }
 
-		stack.pop()
-
-		return res
 	}
 
-	export const $mol_conform_handlers = new WeakMap< Object , ( target : any , source : any , stack : any[] )=> any >()
+	export const $mol_conform_handlers = new WeakMap< Object , ( target : any , source : any )=> any >()
 
 	export function $mol_conform_handler< Class >(
 		cl : { new( ... args : any[] ) : Class } ,
-		handler : ( target : Class , source : Class , stack : any[] )=> Class ,
+		handler : ( target : Class , source : Class )=> Class ,
 	) {
 		$mol_conform_handlers.set( cl , handler )
 	}
 
-	$mol_conform_handler( Array , ( target , source , stack )=> {
+	$mol_conform_handler( Array , ( target , source )=> {
 		
 		let equal = target.length === source.length
 
 		for( let i = 0 ; i < target.length ; ++i ) {
-			const conformed = $mol_conform( target[i] , source[i] , stack )
+			const conformed = $mol_conform( target[i] , source[i] )
 			if( conformed !== target[i] ) {
 				try { target[i] = conformed }
 				catch( error ) { equal = false }
@@ -56,13 +56,13 @@ namespace $ {
 		return equal ? source : target
 	} )
 
-	$mol_conform_handler( Object , ( target , source , stack )=> {
+	$mol_conform_handler( Object , ( target , source )=> {
 
 		let count = 0
 		let equal = true
 
 		for( let key in target ) {
-			const conformed = $mol_conform( target[key] , source[key] , stack )
+			const conformed = $mol_conform( target[key] , source[key] )
 			if( conformed !== target[key] ) {
 				try { target[key] = conformed }
 				catch( error ) { equal = false }
@@ -76,8 +76,14 @@ namespace $ {
 		return ( equal && count === 0 ) ? source : target
 	} )
 
-	$mol_conform_handler( Date , ( target , source )=> ( target.getTime() === source.getTime() ) ? source : target )
+	$mol_conform_handler( Date , ( target , source )=> {
+		if( target.getTime() === source.getTime() ) return source
+		return target 
+	} )
 
-	$mol_conform_handler( RegExp , ( target , source )=> ( target.toString() === source.toString() ) ? source : target )
+	$mol_conform_handler( RegExp , ( target , source )=> {
+		if( target.toString() === source.toString() ) return source
+		return target
+	} )
 
 }
