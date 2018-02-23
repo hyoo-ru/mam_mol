@@ -45,7 +45,11 @@ namespace $ {
 		let equal = target.length === source.length
 
 		for( let i = 0 ; i < target.length ; ++i ) {
-			const conformed = target[i] = $mol_conform( target[i] , source[i] , stack )
+			const conformed = $mol_conform( target[i] , source[i] , stack )
+			if( conformed !== target[i] ) {
+				try { target[i] = conformed }
+				catch( error ) { equal = false }
+			}
 			if( equal && conformed !== source[i] ) equal = false
 		}
 
@@ -58,7 +62,11 @@ namespace $ {
 		let equal = true
 
 		for( let key in target ) {
-			const conformed = target[key] = $mol_conform( target[key] , source[key] , stack )
+			const conformed = $mol_conform( target[key] , source[key] , stack )
+			if( conformed !== target[key] ) {
+				try { target[key] = conformed }
+				catch( error ) { equal = false }
+			}
 			if( equal && conformed !== source[key] ) equal = false
 			++ count
 		}
