@@ -122,6 +122,19 @@ namespace $ {
 			$mol_assert_equal( $mol_conform( target[0] , source[0] ) , target[0] )
 		} ,
 
+		'skip readlony fields'() {
+			const source = { foo : {} , bar : {} }
+
+			const target = { foo : {} , bar : {} }
+			Object.defineProperty( target , 'bar' , { value : {} , writable : false } )
+
+			const result = $mol_conform( target , source )
+
+			$mol_assert_equal( result , target )
+			$mol_assert_equal( result.foo , source.foo )
+			$mol_assert_equal( result.bar , target.bar )
+		} ,
+
 	})
 
 }
