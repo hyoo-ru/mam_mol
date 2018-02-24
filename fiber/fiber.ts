@@ -6,6 +6,8 @@ namespace $ {
 	
 	export class $mol_fiber< Result = any > {
 
+		static quant = 8
+
 		static current : $mol_fiber
 		
 		static scheduled = 0
@@ -14,7 +16,7 @@ namespace $ {
 		static tick() {
 
 			$mol_fiber.scheduled = 0
-			$mol_fiber.deadline = Date.now() + 8
+			$mol_fiber.deadline = Date.now() + $mol_fiber.quant
 	
 			if( $mol_fiber.queue.length == 0 ) return
 	
@@ -100,8 +102,12 @@ namespace $ {
 		}
 
 		limit() {
-			if( !this.slave ) return
 			if( Date.now() <= $mol_fiber.deadline ) return
+
+			if( !$mol_fiber.current && $mol_fiber.queue.length === 0 ) {
+				$mol_fiber.deadline = Date.now() + $mol_fiber.quant
+				return
+			}
 
 			this.schedule()
 			throw $mol_fiber_wait
