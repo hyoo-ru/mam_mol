@@ -437,7 +437,8 @@ namespace $ {
 			var stages = [ 'test' , 'dev' ]
 			
 			if( bundle ) {
-				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(test\.js|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(
+				
+				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(
 					bundle
 				)
 				
@@ -465,6 +466,9 @@ namespace $ {
 					}
 					if( !type || type === 'test.js' ) {
 						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
+					}
+					if( !type || type === 'test.html' ) {
+						res = res.concat( this.bundleTestHtml({ path }) )
 					}
 					if( !type || type === 'd.ts' ) {
 						res = res.concat( this.bundleDTS( { path , exclude , bundle : env } ) )
@@ -605,6 +609,34 @@ namespace $ {
 			return [ target , targetMap ]
 		}
 		
+		@ $mol_mem_key
+		bundleTestHtml( { path } : { path : string } ) : $mol_file[] {
+			var pack = $mol_file.absolute( path )
+			
+			var source = pack.resolve( `index.html` )
+			var target = pack.resolve( `-/web.test.html` )
+
+			const content = `
+<!doctype html>
+<meta charset="utf-8" />
+<body>
+<script src="web.js" charset="utf-8"></script>
+<script>
+	addEventListener( 'load' , function() {
+		var script = document.createElement( 'script' )
+		script.src = 'web.test.js'
+		document.body.appendChild( script )
+	} )
+</script>
+`
+			
+			target.content( content )
+			
+			this.logBundle( target )
+			
+			return [ target ]
+		}
+
 		@ $mol_mem_key
 		bundleDTS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
