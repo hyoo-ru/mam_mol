@@ -64,10 +64,10 @@ namespace $ {
 		for( let key in target ) {
 			const conformed = $mol_conform( target[key] , source[key] )
 			if( conformed !== target[key] ) {
-				try { target[key] = conformed }
-				catch( error ) { equal = false }
+				try { target[key] = conformed } catch( error ) {}
+				if( conformed !== target[key] ) equal = false
 			}
-			if( equal && conformed !== source[key] ) equal = false
+			if( conformed !== source[key] ) equal = false
 			++ count
 		}
 
