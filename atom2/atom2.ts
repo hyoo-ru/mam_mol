@@ -85,9 +85,7 @@ namespace $ {
 
 			$mol_log( this , prev , '➔' , value )
 
-			if( $mol_owning_check( this , prev ) ) prev.destructor()
-			$mol_owning_catch( this , value )
-
+			
 			this['value()'] = value
 			for( let slave of this.slaves ) {
 				if( slave.status === 'compute' && status !== 'actual' ) continue
@@ -99,6 +97,8 @@ namespace $ {
 				this.pulling = null
 			}
 
+			if( $mol_owning_check( this , prev ) ) prev.destructor()
+			
 			return this['value()']
 		}
 
@@ -180,7 +180,11 @@ namespace $ {
 			}
 
 			try {
-				return this.push( this.calculate() )
+				
+				const res = this.calculate()
+				$mol_owning_catch( this , res )
+				return this.push( res )
+
 			} catch( error ) {
 				if( error !== $mol_fiber_wait ) this.fail( error )
 				throw error
