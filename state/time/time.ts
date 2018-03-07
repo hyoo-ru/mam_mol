@@ -3,21 +3,16 @@ namespace $ {
 	export class $mol_state_time extends $mol_object {
 		
 		@ $mol_mem_key
-		static now( precision? : number , next? : number , force? : $mol_atom_force ) {
+		static now( precision? : number , next? : number ) {
 			
-			const atom = $mol_atom_current()
-			const handler = () => {
-				atom['value()'] = Date.now()
-				atom.obsolete_slaves()
-				if( precision > 0 ) {
-					setTimeout( handler , precision )
-				} else {
-					requestAnimationFrame( handler )
-				}
+			const atom = $mol_atom2.current
+			
+			if( precision > 0 ) {
+				setTimeout( ()=> atom.obsolete() , precision )
+			} else {
+				requestAnimationFrame( ()=> atom.obsolete() )
 			}
-
-			handler()
-			
+		
 			return Date.now()
 		}
 		

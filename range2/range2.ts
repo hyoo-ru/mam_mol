@@ -138,13 +138,18 @@ namespace $ {
 			return true
 		}
 
-		// [ Symbol.iterator ]() {
-		// 	let index = -1
-		// 	return { next : ()=> ({
-		// 		value : this[ ++ index ] ,
-		// 		done : false
-		// 	}) }
-		// }
+		[ Symbol.iterator ]() {
+			let index = -1
+			let length = this.length
+			const it = {
+				[ Symbol.iterator ] : ()=> it,
+				next : ()=> ({
+					value : this[ ++ index ] ,
+					done : index >= length
+				})
+			}
+			return it
+		}
 
 	}
 

@@ -10,7 +10,7 @@ namespace $ {
 	}
 	
 	export const $mol_test_all = [] as Array< ()=> void >
-	
+
 	export function $mol_test_run() {
 		for( var test of $mol_test_all ) test()
 	}
