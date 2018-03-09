@@ -150,8 +150,7 @@ namespace $ {
 		
 		@ $mol_mem
 		dom_node( next? : Element ) {
-			if(next&&!next.removeAttribute)debugger
-			const node = next || $mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
+			const node = next || this.$.$mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
 			node.setAttribute( 'id' , this.dom_id() )
 			$mol_dom_render_attributes( node , this.attr_static() )
@@ -165,25 +164,25 @@ namespace $ {
 		dom_tree( next? : Element ) : Element {
 			const node = this.dom_node( next )
 			
-			// try {
+			try {
 				
 				for( let plugin of this.plugins() ) plugin.render()
 				this.render()
 				
-			// } catch( error ) {
+			} catch( error ) {
 				
-			// 	$mol_dom_render_attributes( node , { mol_view_error : error.name } )
+				$mol_dom_render_attributes( node , { mol_view_error : error.name } )
 				
-			// 	if( error instanceof $mol_atom_wait ) return node
+				if( error instanceof $mol_atom_wait ) return node
 				
-			// 	try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
+				try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
 				
-			// 	if( error[ '$mol_atom_catched' ] ) return node
+				if( error[ '$mol_atom_catched' ] ) return node
 				
-			// 	console.error( error )
+				console.error( error )
 
-			// 	error[ '$mol_atom_catched' ] = true
-			// }
+				error[ '$mol_atom_catched' ] = true
+			}
 			
 			return node
 		}
@@ -202,7 +201,7 @@ namespace $ {
 			new $mol_defer( ()=> $mol_dom_render_fields( node , fields ) )
 		}
 
-		// @ $mol_mem
+		@ $mol_mem
 		static view_classes() {
 			const proto = this.prototype
 			
@@ -240,7 +239,7 @@ namespace $ {
 			return names
 		}
 
-		// @ $mol_mem
+		@ $mol_mem
 		view_names() {
 			const names = [] as string[]
 			
