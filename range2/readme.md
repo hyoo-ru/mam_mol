@@ -5,15 +5,15 @@ Lazy computable lists with native Array interface. $mol_range2_array is mutable 
 # Creating
 
 ```
-$mol_range() // infinite number range from 0
+$mol_range2() // infinite number range from 0
 
-$mol_range( index => `#${ index + 1 }` ) // infinite range of custom values
+$mol_range2( index => `#${ index + 1 }` ) // infinite range of custom values
 
-$mol_range( index => `#${ index + 1 }` , ()=> 10 ) // range of custom values that contains 10 elements
-$mol_range( index => `#${ index + 1 }` ).slice( 0 , 10 ) // same as above
+$mol_range2( index => `#${ index + 1 }` , ()=> 10 ) // range of custom values that contains 10 elements
+$mol_range2( index => `#${ index + 1 }` ).slice( 0 , 10 ) // same as above
 
-$mol_range().slice( 1 , 11 ) // numbers from 1 to 10
-$mol_range( index => index + 1 , ()=> 10 ) // same as above
+$mol_range2().slice( 1 , 11 ) // numbers from 1 to 10
+$mol_range2( index => index + 1 , ()=> 10 ) // same as above
 ```
 
 # Convertation
@@ -26,7 +26,7 @@ const range = new $mol_range2_array( ... array )
 
 ```
 // to Array
-const range = $mol_range().slice( 1 , 11 ) 
+const range = $mol_range2().slice( 1 , 11 ) 
 const array = [ ... range ]
 ```
 
@@ -75,5 +75,5 @@ const tasks = $mol_range2( i => `task #${ i + 1 }` )
 const task_rows = tasks.map( task => new Task_row( task ) )
 
 // Only visible Task_row's will be created later
-const task_rows_visible = rows.slice( offset , offset + limit )
+const task_rows_visible = task_rows.slice( offset , offset + limit )
 ```

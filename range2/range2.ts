@@ -138,14 +138,6 @@ namespace $ {
 			return true
 		}
 
-		// [ Symbol.iterator ]() {
-		// 	let index = -1
-		// 	return { next : ()=> ({
-		// 		value : this[ ++ index ] ,
-		// 		done : false
-		// 	}) }
-		// }
-
 	}
 
 }

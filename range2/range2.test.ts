@@ -51,11 +51,11 @@ namespace $ {
 
 			let log = ''
 
-			for( let i of $mol_range2( i => i , ()=> 5 ) ) {
+			for( let i of $mol_range2( i => i + 1 , ()=> 5 ) ) {
 				log += i
 			}
 
-			$mol_assert_equal( log , '01234' )
+			$mol_assert_equal( log , '12345' )
 
 		} ,
 
@@ -120,7 +120,8 @@ namespace $ {
 			$mol_assert_equal( list[2] , 5 )
 			$mol_assert_equal( list[3] , 7 )
 			
-			//$mol_assert_equal( calls , 6 )
+			$mol_assert_equal( calls , 10 )
+			// $mol_assert_equal( calls , 6 ) // TODO: lazy filter
 
 		} ,
 
