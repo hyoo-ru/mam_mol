@@ -13,16 +13,23 @@ Small, simple, powerfull, and fast TypeScript/JavaScript library for proper date
 </script>
 ```
 
-Or get typescript sources from repository: https://github.com/eigenmethod/mol/tree/master/time
-
 ## NPM
 
 ```sh
 npm install mol_time_all
 ```
 
+### JavaScript
+
 ```js
 const Moment = require( 'mol_time_all' ).$mol_time_moment
+console.log( new Moment().toString() ) // logs current time
+```
+
+### TypeScript
+
+```js
+import { $mol_time_moment as Moment } from 'mol_time_all'
 console.log( new Moment().toString() ) // logs current time
 ```
 
