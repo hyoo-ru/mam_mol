@@ -80,7 +80,7 @@ namespace $ {
 
 			const prev = this['value()']
 
-			const value = $mol_conform( next , prev )
+			const value = this.$.$mol_conform( next , prev )
 			if( value === prev ) return value
 
 			$mol_log( this , prev , '➔' , value )
@@ -194,7 +194,7 @@ namespace $ {
 
 		put( next : Next ) {
 
-			const conformed = $mol_conform( next , this['value()'] ) as any as Value
+			const conformed = this.$.$mol_conform( next , this['value()'] ) as any as Value
 			if( conformed === this['value()'] ) return conformed
 
 			return this.push( this.calculate( conformed as any as Next ) )
