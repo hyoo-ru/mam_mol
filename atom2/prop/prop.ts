@@ -9,7 +9,7 @@ namespace $ {
 		const value = descr.value
 		const store = new WeakMap< Object , $mol_atom2<Value> >()
 		
-		descr.value = function $mol_mem_prop_value( next? : Value ) {
+		descr.value = function $mol_atom2_prop_value( next? : Value ) {
 			const host : Host = this
 		
 			let atom : $mol_atom2<Value> = store.get( host )
