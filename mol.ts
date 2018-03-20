@@ -1,3 +1,3 @@
-namespace $ { let $ }
+declare namespace $ {}
 export = $
 
