@@ -435,7 +435,7 @@ namespace $ {
 			var envsDef = [ 'web' , 'node' ]
 			var envs = bundle ? [] as string[] : envsDef.slice()
 			var stages = [ 'test' , 'dev' ]
-			
+			var moduleTargets = ['', 'esm']
 			if( bundle ) {
 				
 				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(
@@ -462,7 +462,11 @@ namespace $ {
 						res = res.concat( this.bundleCSS( { path , exclude , bundle : env } ) )
 					}
 					if( !type || type === 'js' ) {
-						res = res.concat( this.bundleJS( { path , exclude , bundle : env } ) )
+						moduleTargets.forEach(
+							moduleTarget => {
+								res = res.concat( this.bundleJS( { path , exclude , bundle : env, moduleTarget } ) )
+							}
+						)
 					}
 					if( !type || type === 'test.js' ) {
 						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
@@ -508,11 +512,11 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleJS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+		bundleJS( { path , exclude , bundle , moduleTarget } : { path : string , exclude? : string[] , bundle : string, moduleTarget? : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
-			
-			var target = pack.resolve( `-/${bundle}.js` )
-			var targetMap = pack.resolve( `-/${bundle}.js.map` )
+			var mt = moduleTarget ? `.${moduleTarget}` : ''
+			var target = pack.resolve( `-/${bundle}${mt}.js` )
+			var targetMap = pack.resolve( `-/${bundle}${mt}.js.map` )
 			
 			var sources = this.sourcesJS( { path , exclude } )
 			if( sources.length === 0 ) return []
@@ -553,7 +557,9 @@ namespace $ {
 					}
 				}
 			)
-			
+			if( moduleTarget === 'esm' ) {
+				concater.add( '-', 'export default $')
+			}
 			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() ) )
 			targetMap.content( concater.sourceMap )
 			
@@ -688,11 +694,12 @@ namespace $ {
 			var targetMap = pack.resolve( `-/package.json` )
 			
 			var sources = this.sourcesAll( { path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) } )
-			
 			var json = {
 				name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
 				version : '0.0.0' ,
 				main : 'node.js' ,
+				module : 'web.esm.js',
+				browser : 'web.esm.js',
 				dependencies : <{ [ key : string ] : string }>{}
 			}
 			
