@@ -170,7 +170,9 @@ namespace $.$$ {
 				'я' : 'ya' ,
 			}
 			
-			return this.lamp_title( id )
+			const prefix = '0'.repeat(5 - id.length) + id + '-'
+			
+			return prefix + this.lamp_title( id )
 				.replace( /[ \/]/g , '-' )
 				.replace( /[.,]/g , '' )
 				.toLowerCase()
