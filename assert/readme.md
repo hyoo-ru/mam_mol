@@ -1,6 +1,6 @@
 # $mol_assert
 
-Collections of assert functions.
+Collection of assert functions.
 
 **`$mol_assert_equal< Value >( ... args : Value[] )`** - all arguments must be equal.
 
