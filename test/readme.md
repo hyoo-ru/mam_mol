@@ -5,7 +5,7 @@ See stack trace in console or enable "Pause on exceptions" to stop debugger on f
 
 ## Example
 
-```
+```typescript
 $mol_test({
     '2**3 = 8'() {
         $mol_assert_equal( 2**3 , 8 )
