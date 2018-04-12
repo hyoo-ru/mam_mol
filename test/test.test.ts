@@ -1,6 +1,11 @@
 namespace $ {
+
+	export namespace $$ { let $ }
 	
-	export type $mol_test_context = ( Window )&( typeof $.$$ )&( typeof $ )
+	export type $mol_test_context = ( Window )&( typeof $.$$ )&( typeof $ )&{
+		Math : Math
+		XMLHttpRequest : typeof XMLHttpRequest
+	}
 
 	export function $mol_test( set : { [ name : string ] : string | ( ( context : $mol_test_context )=> void ) } ) {
 		for( let name in set ) {
@@ -33,5 +38,52 @@ namespace $ {
  			$mol_test_run()
 		} ) )
 	}
+
+
+	$mol_test_mocks.push( context => {
+		let seed = 0
+
+		context.Math = Object.create( Math )
+		context.Math.random = ()=> Math.sin( seed++ )
+
+		const forbidden = [ 'XMLHttpRequest' , 'fetch' ]
+
+		for( let api of forbidden ) {
+			context[ api ] = new Proxy( context[ api ] , {
+				get() {
+					throw new Error( `${ api } is forbidden in tests` )
+				} ,
+				apply() {
+					throw new Error( `${ api } is forbidden in tests` )
+				} ,
+			} )
+		}
+		
+	} )
+
+	$mol_test({
+
+		'mocked Math.random'( $ ) {
+			console.assert( $.Math.random() === 0 )
+			console.assert( $.Math.random() === Math.sin(1) )
+		} ,
+
+		'forbidden XMLHttpRequest'( $ ) {
+			try {
+				console.assert( void new $.XMLHttpRequest )
+			} catch( error ) {
+				console.assert( error.message === 'XMLHttpRequest is forbidden in tests' )
+			}
+		} ,
+
+		'forbidden fetch'( $ ) {
+			try {
+				console.assert( void $.fetch('') )
+			} catch( error ) {
+				console.assert( error.message === 'fetch is forbidden in tests' )
+			}
+		} ,
+
+	})
 	
 }
