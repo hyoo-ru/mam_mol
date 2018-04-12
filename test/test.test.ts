@@ -49,7 +49,7 @@ namespace $ {
 		const forbidden = [ 'XMLHttpRequest' , 'fetch' ]
 
 		for( let api of forbidden ) {
-			context[ api ] = new Proxy( context[ api ] , {
+			context[ api ] = new Proxy( function(){} , {
 				get() {
 					throw new Error( `${ api } is forbidden in tests` )
 				} ,
