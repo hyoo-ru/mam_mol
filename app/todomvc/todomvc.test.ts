@@ -2,12 +2,9 @@ namespace $.$$ {
 
 	$mol_test({
 
-		'task add'() {
+		'task add'( $ ) {
 
-			const app = $mol_app_todomvc.make({})
-
-			app.$ = Object.create( app.$ )
-			app.$.$mol_state_local = class< Value > extends $mol_state_local_mock< Value > {}
+			const app = $mol_app_todomvc.make({ $ })
 
 			$mol_assert_equal( app.task_ids().toString() , '' )
 
@@ -19,12 +16,9 @@ namespace $.$$ {
 
 		} ,
 
-		'task rename'() {
+		'task rename'( $ ) {
 
-			const app = $mol_app_todomvc.make({})
-
-			app.$ = Object.create( app.$ )
-			app.$.$mol_state_local = class< Value > extends $mol_state_local_mock< Value > {}
+			const app = $mol_app_todomvc.make({ $ })
 
 			app.Add().value( 'test title' )
 			app.Add().event_done()
@@ -36,12 +30,9 @@ namespace $.$$ {
 
 		} ,
 
-		'task toggle'() {
+		'task toggle'( $ ) {
 
-			const app = $mol_app_todomvc.make({})
-
-			app.$ = Object.create( app.$ )
-			app.$.$mol_state_local = class< Value > extends $mol_state_local_mock< Value > {}
+			const app = $mol_app_todomvc.make({ $ })
 
 			app.task_title_new( 'test title' )
 			app.event_add()
@@ -56,13 +47,9 @@ namespace $.$$ {
 			
 		} ,
 
-		'navigation'() {
+		'navigation'( $ ) {
 
-			const app = $mol_app_todomvc.make({})
-
-			app.$ = Object.create( app.$ )
-			app.$.$mol_state_arg = class extends $mol_state_arg_mock {}
-			app.$.$mol_state_local = class< Value > extends $mol_state_local_mock< Value > {}
+			const app = $mol_app_todomvc.make({ $ })
 
 			app.Add().value( 'test title' )
 			app.Add().event_done()

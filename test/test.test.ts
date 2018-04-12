@@ -1,6 +1,8 @@
 namespace $ {
 	
-	export function $mol_test( set : { [ name : string ] : string | ( ()=> void ) } ) {
+	export type $mol_test_context = ( Window )&( typeof $.$$ )&( typeof $ )
+
+	export function $mol_test( set : { [ name : string ] : string | ( ( context : $mol_test_context )=> void ) } ) {
 		for( let name in set ) {
 			const code = set[ name ]
 			const test = ( typeof code === 'string' ) ? new Function( '' , code ) as ()=> void : code
@@ -8,11 +10,17 @@ namespace $ {
 		}
 		$mol_test_schedule()
 	}
-	
-	export const $mol_test_all = [] as Array< ()=> void >
+
+	export let $mol_test_mocks = [] as Array< ( context : $mol_test_context )=> void >
+
+	export const $mol_test_all = [] as Array< ( context : $mol_test_context )=> void >
 
 	export function $mol_test_run() {
-		for( var test of $mol_test_all ) test()
+		for( var test of $mol_test_all ) {
+			let context = Object.create( $$ )
+			for( let mock of $mol_test_mocks ) mock( context )
+			test( context )
+		}
 	}
 	
 	let scheduled = false
