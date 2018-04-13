@@ -12,7 +12,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Any questions?](https://github.com/eigenmethod/mol/issues/new?labels=question) / [All answers](https://github.com/eigenmethod/mol/issues?q=label%3Aquestion+is%3Aclosed)
 - [Found a bug?](https://github.com/eigenmethod/mol/issues/new?labels=bug) / [All bugs](https://github.com/eigenmethod/mol/labels/bug)
 - [Need a feature?](https://github.com/eigenmethod/mol/issues/new?labels=improvement) / [Vote for other](https://github.com/eigenmethod/mol/labels/improvement)
-- **Discussions: [Telegram](https://t.me/mam_mol), [Slack](http://mam-mol.slack.com), [E-mail](mailto:jin+mol@hyoo.ru)**
+- **Discussions: [Telegram](https://t.me/mam_mol), [Slack](https://join.slack.com/t/mam-mol/shared_invite/enQtMzQ2NjY2NzQ1MTA2LWRjMzE3ODNlZTc1ZGQ3YTY2YjZiM2Q3NzY1ZGY4MmI4MmYyM2Q2NGY5NDgxZDhiMGRkZmJkNTU3MjNhMTA1MWI), [E-mail](mailto:jin+mol@hyoo.ru)**
 - [Quick start](#quick-start)
 - [Tutorials](#tutorials)
 - [Rationale](#rationale)
