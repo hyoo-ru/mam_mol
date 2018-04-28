@@ -6,8 +6,8 @@ Fibers must be idempotent because can be restarted for continuation.
 
 ## Online demos
 
-[Concurrency and errors handling](http://eigenmethod.github.io/mol/fiber/)
-[Cancelling at any step (request, processing)](http://plnkr.co/edit/pL1nQmIHrIojyV0GHtVH?p=preview)
+- [Concurrency and errors handling](http://eigenmethod.github.io/mol/fiber/)
+- [Cancelling at any step (request, processing)](http://plnkr.co/edit/pL1nQmIHrIojyV0GHtVH?p=preview)
 
 ## API
 
@@ -22,6 +22,17 @@ $mol_fiber_start( ()=> {
 	$mol_fiber_start( ()=> console.log( 1 ) ) // 1
 	$mol_fiber_start( ()=> console.log( 2 ) ) // 2
 } )
+```
+
+### $mol_fiber_defer
+
+Defer starts fiber.
+So fiber will be executed asynchronously.
+Use it to start fibers concurrently.
+
+```typescript
+$mol_fiber_defer( ()=> console.log( 1 ) ) // 1
+$mol_fiber_defer( ()=> console.log( 2 ) ) // 2
 ```
 
 ### $mol_fiber_func
