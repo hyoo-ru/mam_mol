@@ -23,7 +23,7 @@ namespace $ {
 		@ $mol_fiber_method
 		static render() {
 
-			$mol_fiber_sync( ()=> {
+			$mol_fiber_start( ()=> {
 				if( this.rendering ) this.rendering.destructor()
 			} )
 			
