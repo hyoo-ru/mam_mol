@@ -1,19 +1,26 @@
 # $mol_fiber
 
-Pausable synchronous executions. Frees main thread every 8ms, and continues fiber in next frame. Fibers must be idempotent because can be restarted for continuation.
+Pausable synchronous executions.
+Frees main thread every 8ms and continues fiber in next animation frame.
+Fibers must be idempotent because can be restarted for continuation.
 
-## [Online demo](http://eigenmethod.github.io/mol/fiber/)
+## Online demos
+
+[Concurrency and errors handling](http://eigenmethod.github.io/mol/fiber/)
+[Cancelling at any step (request, processing)](http://plnkr.co/edit/pL1nQmIHrIojyV0GHtVH?p=preview)
 
 ## API
 
-### $mol_fiber_sync
+### $mol_fiber_start
 
-Starts synchronous fiber. Handler executed only one time in parent execution. Use it to wrap non idempotent code.
+Creates fiber for handler and immediately starts it.
+Handler executed only once in parent execution.
+Use it to wrap non idempotent code.
 
 ```typescript
-$mol_fiber_sync( ()=> {
-	$mol_fiber_sync( ()=> console.log( 1 ) ) // 1
-	$mol_fiber_sync( ()=> console.log( 2 ) ) // 2
+$mol_fiber_start( ()=> {
+	$mol_fiber_start( ()=> console.log( 1 ) ) // 1
+	$mol_fiber_start( ()=> console.log( 2 ) ) // 2
 } )
 ```
 
@@ -24,7 +31,7 @@ Converts function to fiber.
 ```typescript
 const log = $mol_fiber_func( console.log )
 
-$mol_fiber_sync( ()=> {
+$mol_fiber_start( ()=> {
 	log( 1 ) // 1
 	log( 2 ) // 2
 } )
@@ -32,10 +39,10 @@ $mol_fiber_sync( ()=> {
 
 ### $mol_fiber_make
 
-Creates fiber as child of current executing.
+Creates fiber as child of current fiber.
 
 ```typescript
-$mol_fiber_sync( ()=> {
+$mol_fiber_start( ()=> {
 	$mol_fiber_make( ()=> console.log( 1 ) ).start() // 1
 	$mol_fiber_make( ()=> console.log( 2 ) ).start() // 2
 } )
@@ -43,7 +50,7 @@ $mol_fiber_sync( ()=> {
 
 ### $mol_fiber_async
 
-Starts fiber and provide callback to asynchronous provide result or error.
+Starts fiber and provide callback to provide result or error.
 
 ```typescript
 function get_data() {
@@ -60,13 +67,13 @@ function get_error() {
 	} )
 }
 
-$mol_fiber_sync( ()=>{
+$mol_fiber_start( ()=>{
 	get_data() // returns 123
 	get_error() // throws test error
 } )
 ```
 
-Return function to handle fiber cancelling.
+Return function to handle fiber cancelling. In example cancellable fetch:
 
 ```typescript
 function get_text( uri : string ) {
@@ -98,41 +105,61 @@ function get_text( uri : string ) {
 }
 ```
 
-You can return promise instead of using `back`.
+Use `destructor` method to stop execution of fiber tree and provide second callback to handle aborting:
 
-```typescript
-$mol_fiber_sync( ()=>{
-	const res = $mol_fiber_async( ()=> fetch( 'http://example.org/' ) )
-	console.log( res ) // content of example.org
-} )
+
 ```
+const fiber = $mol_fiber_make( ()=> doSomeJob() , ()=> handleAbort() )
+//...
+fiber.destructor() // `doSomeJob` won't be completed and `handleAbort` will be called
+``` 
 
-And you can use async functions too.
+### $mol_fiber_sync
+
+Converts any `async` function (function that returns promise) to "synchronous" fiber.
 
 ```typescript
-$mol_fiber_sync( ()=>{
-	const res = $mol_fiber_async( async()=> await fetch( 'http://example.org/' ) )
-	console.log( res ) // content of example.org
+const request = $mol_fiber_sync( fetch )
+
+$mol_fiber_start( ()=> {
+	console.log( request( 'http://example.org/users' ).users )
 } )
 ```
 
 ### $mol_fiber_method
 
-Decorate method as fiber.
+Decorates method to fiber.
 
 ```typescript
-const action = $mol_fiber_method
-
 export class $my_foo {
 
-	// ...
+	@ $mol_fiber_method
+	transfer( from  , to ) {
+		request( to , {
+			method: 'post' ,
+			body : request( from ) ,
+		} )
 
-	@action
-	transfer() {
-		return this.send_data( thid.load_data() )
+		return 'Transfer is completed'
 	}
 
 }
+```
+
+### $mol_fiber_catch
+
+Declares error handler for current fiber. 
+
+```
+const get_zero = $mol_fiber_func( ()=> {
+	
+	$mol_fiber_catch( error => {
+		document.body.innerHTML = error.message
+		return 0 // will be returned by fiber
+	} )	
+	
+	throw new Error( 'Alerted message' )
+} )
 ```
 
 ### $mol_fiber_warp

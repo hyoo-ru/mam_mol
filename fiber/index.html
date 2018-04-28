@@ -8,12 +8,14 @@
 	div {
 		font: 16px/1 monospace;
 		transform: translateZ(0);
+		margin: 8px 0;
 	}
 	div > * {
 		display: inline-block;
-		width: 1px;
+		width: 2px;
 		height: 8px;
 		border: none;
+		margin-left: 2px;
 	}
 	#red > * {
 		background: pink;
@@ -35,9 +37,9 @@
 
 <button onclick="run()">Run</button>
 
-<div id="red">0</div>
-<div id="green">0</div>
-<div id="blue">0</div>
+<div id="red">Red</div>
+<div id="green">Green</div>
+<div id="blue">Blue</div>
 
 <script src="-/web.js" charset="utf-8"></script>
 <script style="display: none">
@@ -56,25 +58,29 @@
 
 <script>
 
-	const run = () => {
+	const one = $mol_fiber_func( sandbox => {
+		if( Math.random() > .999 ) throw new Error( 'Test error' )
+		sandbox.appendChild( document.createElement( 'video' ) )
+	} )
 
-		const one = $mol_fiber_func( sandbox => {
-			sandbox.appendChild( document.createElement( 'video' ) )
+	const group = $mol_fiber_func( sandbox => {
+
+		$mol_fiber_catch( error => {
+			sandbox.innerText = error.message
 		} )
-
-		const group = $mol_fiber_func( sandbox => {
-			
-			let start = $mol_fiber_sync( ()=> Date.now() )
-
-			for( let i = 0 ; i < 100 ; ++i ) one( sandbox )
-			
-			$mol_fiber_sync( ()=> sandbox.innerText = Date.now() - start )
 		
-		} )
+		let start = $mol_fiber_start( ()=> Date.now() )
 
-		group( red )
-		group( green )
-		group( blue )
+		for( let i = 0 ; i < 100 ; ++i ) one( sandbox , i )
+		
+		$mol_fiber_start( ()=> sandbox.innerText = Date.now() - start )
+
+	} )
+
+	const run = () => {
+		$mol_fiber_defer( ()=> group( red ) )
+		$mol_fiber_defer( ()=> group( green ) )
+		$mol_fiber_defer( ()=> group( blue ) )
 	}
 
 </script>
