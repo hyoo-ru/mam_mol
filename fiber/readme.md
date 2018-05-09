@@ -182,3 +182,25 @@ $mol_fiber_warp()
 // No scheduled fibers here
 ```
 
+## Installation
+
+
+### Via bundle from CDN
+
+```
+<script src="http://mol.js.org/fiber/-/web.js"></script>
+```
+
+### Via NPM
+
+```
+npm install mol_fiber
+```
+
+```
+const { $mol_fiber_start : fiber } = require( 'mol_fiber' )
+```
+
+```
+import { $mol_fiber_start as fiber } from 'mol_fiber'
+```

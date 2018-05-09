@@ -15,7 +15,6 @@
 		width: 2px;
 		height: 8px;
 		border: none;
-		margin-left: 2px;
 	}
 	#red > * {
 		background: pink;
@@ -58,12 +57,12 @@
 
 <script>
 
-	const one = $mol_fiber_func( sandbox => {
-		if( Math.random() > .999 ) throw new Error( 'Test error' )
+	const step = $mol_fiber_func( function step( sandbox ) {
+		if( Math.random() > .99 ) throw new Error( 'Test error' )
 		sandbox.appendChild( document.createElement( 'video' ) )
 	} )
 
-	const group = $mol_fiber_func( sandbox => {
+	const walk = $mol_fiber_func( function walk( sandbox ) {
 
 		$mol_fiber_catch( error => {
 			sandbox.innerText = error.message
@@ -71,16 +70,16 @@
 		
 		let start = $mol_fiber_start( ()=> Date.now() )
 
-		for( let i = 0 ; i < 100 ; ++i ) one( sandbox , i )
+		for( let i = 0 ; i < 100 ; ++i ) step( sandbox , i )
 		
 		$mol_fiber_start( ()=> sandbox.innerText = Date.now() - start )
 
 	} )
 
-	const run = () => {
-		$mol_fiber_defer( ()=> group( red ) )
-		$mol_fiber_defer( ()=> group( green ) )
-		$mol_fiber_defer( ()=> group( blue ) )
+	function run() {
+		$mol_fiber_defer( ()=> walk( red ) )
+		$mol_fiber_defer( ()=> walk( green ) )
+		$mol_fiber_defer( ()=> walk( blue ) )
 	}
 
 </script>

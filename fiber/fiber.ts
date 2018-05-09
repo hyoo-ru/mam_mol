@@ -116,9 +116,11 @@ namespace $ {
 
 			$mol_fiber.schedule()
 
-			const resolve = $mol_fiber.queue.shift()
-			if( resolve ) resolve()
-
+			while( true ) {
+				const resolve = $mol_fiber.queue.shift()
+				if( resolve ) resolve()
+				else break
+			}
 		}
 
 		static schedule() {
@@ -208,6 +210,13 @@ namespace $ {
 			return error
 		}
 
+		schedule() {
+			return new Promise( done => {
+				$mol_fiber.queue.push( done )
+				$mol_fiber.schedule()
+			} )
+		}
+
 		limit() {
 			if( Date.now() <= $mol_fiber.deadline ) return
 
@@ -216,10 +225,7 @@ namespace $ {
 				return
 			}
 
-			throw new Promise( done => {
-				$mol_fiber.queue.push( done )
-				$mol_fiber.schedule()
-			} )
+			throw this.schedule()
 		}
 
 		start() {
@@ -276,7 +282,7 @@ namespace $ {
 				$mol_fiber.current = this
 				var res = this.handler()
 				this.done( res )
-				if( this.slave ) this.slave.start()
+				if( !slave && this.slave ) this.schedule().then( this.slave.start() )
 			} finally {
 				$mol_fiber.current = slave
 			}
