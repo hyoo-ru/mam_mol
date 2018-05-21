@@ -218,10 +218,11 @@ namespace $ {
 		}
 
 		limit() {
-			if( Date.now() <= $mol_fiber.deadline ) return
+			const now = Date.now()
+			if( now <= $mol_fiber.deadline ) return
 
 			if( !$mol_fiber.current && $mol_fiber.queue.length === 0 ) {
-				$mol_fiber.deadline = Date.now() + $mol_fiber.quant
+				$mol_fiber.deadline = now + $mol_fiber.quant
 				return
 			}
 
