@@ -58,7 +58,7 @@ $mol_app_slides $mol_view
 			body /
 				<= Listener_content $mol_text
 					uri_base <= uri_base \
-					text <= listener_content \
+					tokens <= listener_content /
 				<= Progress $mol_portion
 					portion <= progress 0
 		<= Speaker $mol_page
@@ -81,7 +81,7 @@ $mol_app_slides $mol_view
 			body /
 				<= Speaker_content $mol_text
 					uri_base <= uri_base \
-					text <= speaker_content \
+					tokens <= speaker_content /
 		<= Loader $mol_view
 			dom_name \iframe
 			attr *

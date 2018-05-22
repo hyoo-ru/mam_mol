@@ -29,34 +29,47 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		content_pages() {
-			const contents = this.contents().split( /^(?=#)/mg ) as string[]
-			
-			const pages = contents
-			.map( content => {
-				return {
-					title : content.replace( /[^]*?^#*([^]*?)$(\r?\n?)*[^]*/mg , '$1' ) ,
-					speaker : content.replace( /^(?!>)[^]*?$(\r?\n?)*/mg , '' ) ,
-					listener : content.replace( /^[>#][^]*?$(\r?\n?)*/mg , '' ) ,
-				}
-			} )
-			.filter( page => page.speaker || page.listener )
-			
-			return pages
+			return this.contents().split( /^(?=#)/mg ) as string[]
 		}
 		
+		@ $mol_mem_key
+		page_tokens( index : number ) {
+			return $mol_syntax_md_flow.tokenize( this.content_pages()[ index ] || '' )
+		}
+		
+		@ $mol_mem_key
+		page_title( index : number ) {
+
+			for( let token of this.page_tokens( index ) ) {
+				if( token.name === 'header' ) return token.chunks[2]
+			}
+
+			return ''
+		}
+
+		@ $mol_mem
 		title() {
-			const page = this.content_pages()[ this.slide() ]
-			if( !page ) return super.title()
-			
-			return page.title
+			return this.page_title( this.slide() ) || super.title()
 		}
-		
+
+		@ $mol_mem
 		speaker_content() {
-			return this.content_pages()[ this.slide() ].speaker
+			return this.page_tokens( this.slide() ).filter( token => {
+				if( token.name === 'header' ) return false
+				if( token.name !== 'block' ) return false
+				if( '!['.indexOf( token.found[0] ) >= 0 ) return false
+				return true
+			} )
 		}
 		
+		@ $mol_mem
 		listener_content() {
-			return this.content_pages()[ this.slide() ].listener
+			return this.page_tokens( this.slide() ).filter( token => {
+				if( token.name === 'header' ) return false
+				if( token.name !== 'block' ) return true
+				if( '!['.indexOf( token.found[0] ) >= 0 ) return true
+				return false
+			} )
 		}
 		
 		slide_local( uri : string , next : number ) {
@@ -111,7 +124,7 @@ namespace $.$$ {
 			while( matcher.length > 2 ) {
 				
 				for( let i = 0 ; i < pages.length ; ++i ) {
-					if( !pages[i].title.toLowerCase().match( matcher ) ) continue
+					if( !this.page_title(i).toLowerCase().match( matcher ) ) continue
 					
 					this.slide( i )
 					return
@@ -127,7 +140,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		timings() {
-			return this.content_pages().map( page => page.speaker.length )
+			return this.content_pages().map( page => page.length )
 		}
 		
 		@ $mol_mem

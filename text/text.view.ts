@@ -2,35 +2,40 @@ namespace $.$$ {
 	export class $mol_text extends $.$mol_text {
 		
 		@ $mol_mem
-		tokens_flow() {
+		tokens() {
 			return $mol_syntax_md_flow.tokenize( this.text() )
 		}
 		
 		rows() {
-			return this.tokens_flow().map( ( token , index )=> {
+			return this.tokens().map( ( token , index )=> {
 				switch( token.name ) {
 					case 'table' : return this.Table( index )
 					case 'header' : return this.Header( index )
+					case 'quote' : return this.Quote( index )
 				}
 				return this.Row( index )
 			} )
 		}
 		
 		header_level( index : number ) {
-			return this.tokens_flow()[ index ].chunks[0].length
+			return this.tokens()[ index ].chunks[0].length
 		}
 		
 		header_content( index : number ) {
-			return this.text2spans( `${ index }` , this.tokens_flow()[ index ].chunks[2] )
+			return this.text2spans( `${ index }` , this.tokens()[ index ].chunks[2] )
+		}
+		
+		quote_text( index : number ) {
+			return this.tokens()[ index ].chunks[0].replace( /^> /mg , '' )
 		}
 		
 		block_type( index : number ) {
-			return this.tokens_flow()[ index ].name
+			return this.tokens()[ index ].name
 		}
 		
 		@ $mol_mem_key
 		cell_contents( indexBlock : number ) {
-			return this.tokens_flow()[ indexBlock ].chunks[ 0 ]
+			return this.tokens()[ indexBlock ].chunks[ 0 ]
 			.split( /\r?\n/g )
 			.filter( row => row && !/\|--/.test( row ) )
 			.map( ( row , rowId ) => {
@@ -141,7 +146,7 @@ namespace $.$$ {
 		
 		block_content( indexBlock : number ) : ($mol_view|string)[] {
 			
-			const token = this.tokens_flow()[ indexBlock ]
+			const token = this.tokens()[ indexBlock ]
 			
 			switch( token.name ) {
 				case 'header' : return this.text2spans( `${ indexBlock }` , token.chunks[2] )

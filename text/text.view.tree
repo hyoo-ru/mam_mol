@@ -1,6 +1,9 @@
 $mol_text $mol_list
 	uri_base \
 	text \
+	tokens /
+	Quote!id $mol_text
+		text <= quote_text!id \
 	Row!id $mol_text_row
 		sub <= block_content!id /
 		type <= block_type!id \

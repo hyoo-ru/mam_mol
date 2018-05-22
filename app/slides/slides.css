@@ -33,13 +33,13 @@
 [mol_app_slides_listener_content] {
 	flex: 0 1 auto;
 	margin: auto;
-	justify-content: space-around;
 	max-width: none;
 	flex-wrap: wrap;
-	align-content: space-around;
+	align-content: space-evenly;
 	align-items: flex-start;
 	box-shadow: none;
 	background: none;
+	flex-direction: row;
 }
 
 [mol_app_slides_slide_switcher] {
@@ -49,6 +49,17 @@
 [mol_app_slides_slide_number] {
 	margin: .5rem;
 	word-break: normal;
+}
+
+[mol_app_slides_listener_content_row] {
+	margin: 1rem;
+}
+
+[mol_app_slides_listener_content_quote] {
+	margin: 1rem;
+	box-shadow: none;
+	background: transparent;
+	color: inherit;
 }
 
 [mol_app_slides_listener_content] [mol_text_image] {
