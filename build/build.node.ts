@@ -698,8 +698,11 @@ namespace $ {
 				name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
 				version : '0.0.0' ,
 				main : 'node.js' ,
-				module : 'web.esm.js',
-				browser : 'web.esm.js',
+				module : 'node.esm.js',
+				browser : {
+					'./node.js': './web.js',
+					'./node.esm.js': './web.esm.js',
+				},
 				dependencies : <{ [ key : string ] : string }>{}
 			}
 			
