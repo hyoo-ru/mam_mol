@@ -19,22 +19,21 @@ namespace $ {
 		
 		@ $mol_mem
 		watcher() {
-			const watcher = $node.fs.watch(
-				this.path() ,
-				{ persistent : false } ,
-				( type : string , name : string )=> {
-					if( !name ) this.stat( undefined , $mol_atom_force_cache )
-					else if( !/(^\.|___$)/.test( name ) ) {
-						var file = this.resolve( name )
-						file.stat( undefined , $mol_atom_force_cache )
-					}
-				}
-			)
-			watcher.on(
-				'error' , ( error : Error )=> {
-					this.stat( error , $mol_atom_force_cache )
-				}
-			)
+
+			const watcher = $node.chokidar.watch( this.path() , {
+				persistent : false ,
+				ignored : /(^\.|___$)/ ,
+				depth :  0 ,
+				ignoreInitial : true ,
+			} )
+			
+			watcher.on( 'all' , ( type : string , path : string )=> {
+				$mol_file.absolute( path.replace( /\\/g , '/' ) ).stat( undefined , $mol_atom_force_cache )
+			} )
+
+			watcher.on( 'error' , ( error : Error )=> {
+				this.stat( error , $mol_atom_force_cache )
+			} )
 			
 			return watcher
 		}
