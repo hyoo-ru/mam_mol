@@ -2,7 +2,7 @@
 
 Tree format support (parsing, serialization, processing).
 
-(Reference implementation on D](https://github.com/nin-jin/tree.d)
+[Reference implementation on D](https://github.com/nin-jin/tree.d)
 
 ## Articles
 
