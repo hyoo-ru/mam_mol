@@ -103,7 +103,7 @@ namespace $ { export class $my_example extends $mol_link {
 	}
 
 	sub() {
-		return [].concat( "Click me!" )
+		return [ "Click me!" ]
 	}
 
 	target() {
@@ -138,7 +138,7 @@ namespace $ { export class $my_values extends $mol_view {
 	}
 
 	sub() {
-		return [].concat( 0 , 1.1 , true , false , <any> null , "I can contain any character! \\(\"o\")/" )
+		return [ 0 , 1.1 , true , false , <any> null , "I can contain any character! \\(\"o\")/" ]
 	}
 
 } }
@@ -248,7 +248,7 @@ namespace $ { export class $my_hint extends $mol_view {
 	}
 
 	sub() {
-		return [].concat( this.text() )
+		return [ this.text() ]
 	}
 
 } }
@@ -270,7 +270,7 @@ Reactions on DOM-events are required for two-way binding. For example, lets poin
 $my_remover $mol_view
 	event *
 		^
-		click?val <=> event_remove?val null 
+		click?val <=> remove?val null 
 	sub /
 		\Remove
 ```
@@ -279,18 +279,18 @@ $my_remover $mol_view
 namespace $ { export class $my_remover extends $mol_view {
 
 	@ $mol_mem
-	event_remove( next? : any ) {
-		return ( next !== void 0 ) ? next : <any> null
+	remove( next? : any ) {
+		return ( next !== undefinded ) ? next : null as any
 	}
 
 	event() {
 		return { ...super.event() ,
-			"click" : ( next? : any )=> this.event_remove( next ) ,
+			"click" : ( next? : any )=> this.remove( next ) ,
 		}
 	}
 
 	sub() {
-		return [].concat( "Remove" )
+		return [ "Remove" ]
 	}
 
 } }
@@ -310,11 +310,12 @@ namespace $ { export class $my_app extends $mol_view {
 
 	@ $mol_mem
 	List() {
-		return new $mol_list_demo()
+		const obj = new $mol_list_demo
+		return obj
 	}
 
 	sub() {
-		return [].concat( this.List() )
+		return [ this.List() ]
 	}
 
 } }
@@ -335,14 +336,14 @@ namespace $ { export class $my_name extends $mol_view {
 
 	@ $mol_mem
 	Info() {
-		return $mol_labeler.make({ 
-			title : () => "Name" ,
-			content : () => "Jin" ,
-		})
+		const obj = new $mol_label
+		obj.title = () => "Name"
+		obj.content = () => "Jin"
+		return obj
 	}
 
 	sub() {
-		return [].concat( this.Info() )
+		return [ this.Info() ]
 	}
 
 } }
@@ -358,7 +359,7 @@ $my_greeter $mol_view
 			value?val <=> name?val \
 		<= Output $mol_view
 			sub /
-				name?val \
+				<= name?val \
 ```
 
 ```typescript
@@ -366,55 +367,58 @@ namespace $ { export class $my_greeter extends $mol_view {
 
 	@ $mol_mem
 	name( next? : any ) {
-		return ( next !== void 0 ) ? next : ""
+		return ( next !== undefined ) ? next : ""
 	}
 
 	@ $mol_mem
 	Input() {
-		return $mol_string.make({ 
-			hint : () => "Name" ,
-			value : ( next? : any ) => this.name( next ) ,
-		})
+		const obj = new $mol_string
+		obj.hint = () => "Name"
+		obj.value = ( next? : any ) => this.name( next )
+		return obj
 	}
 
 	@ $mol_mem
 	Output() {
-		return $mol_view.make({ 
-			sub : () => [].concat( this.name() ) ,
-		})
+		const obj = new $mol_view
+		obj.sub = () => [ this.name() ]
+		return obj
 	}
 
 	sub() {
-		return [].concat( this.Input() , this.Output() )
+		return [ this.Input() , this.Output() ]
 	}
 
 } }
 ```
 
-`=>` - Right-side binding. It is binding type which returns actual value of an entity with which it works.
+`=>` - Right-side binding. It declares alias for property of subcomponent in declared component.
+
 ```
-	$my_app $mol_scroll
-		sub /
-	 		<= Page $mol_page
-				Title => Page_title -
-				head /
-					<= Back $mol_button_minor
-						title \Back
-					<= Page_title -
+$my_app $mol_scroll
+	sub /
+ 		<= Page $mol_page
+			Title => Page_title -
+			head /
+				<= Back $mol_button_minor
+					title \Back
+				<= Page_title -
 ```
+
 ```typescript
 namespace $ { export class $my_app extends $mol_scroll {
 
-	Page_title(){
+	/// Title => Page_title -
+	Page_title() {
 		return this.Page().Title()
 	}
 
 	/// Back $mol_button_minor title \Back
 	@ $mol_mem
 	Back() {
-		return $mol_button_minor.make({ 
-			title : () => "Back" ,
-		})
+		const obj = new $mol_button_minor
+		obj.title = () => "Back"
+		return obj
 	}
 
 	/// Page $mol_page 
@@ -424,14 +428,14 @@ namespace $ { export class $my_app extends $mol_scroll {
 	/// 		<= Page_title
 	@ $mol_mem
 	Page() {
-		return $mol_page.make({ 
-			head : () => [].concat( this.Back() , this.Page_title() ) ,
-		})
+		const obj = new $mol_page
+		obj.head = () => [ this.Back() , this.Page_title() ]
+		return obj
 	}
 
 	/// sub / <= Page
 	sub() {
-		return [].concat( this.Page() )
+		return [ this.Page() ]
 	}
 
 } }
@@ -443,8 +447,8 @@ There are certain properties that depending on the key return different values. 
 $my_tasks $mol_list
 	sub <= task_rows /
 	Task_row!key $mol_view
-		sub / <= task_title!key -
-	task_title!key <= task_title_default \
+		sub /
+			<= task_title!key <= task_title_default \
 ```
 
 ```typescript
@@ -460,9 +464,9 @@ namespace $ { export class $my_tasks extends $mol_list {
 
 	@ $mol_mem
 	Task_row( key : any ) {
-		return $mol_view.make({ 
-			sub : () => [].concat( this.task_title( key ) ) ,
-		})
+		const obj = new $mol_view
+		obj.sub = () => [ this.task_title( key ) ]
+		return obj
 	}
 
 	task_title( key : any ) {
@@ -516,22 +520,22 @@ $my_hello $mol_view
 		<= message \
 ```
 
-Here we declared 2 properties: `name` for getting value from `Input` and `message` for output the value. It would be translated into following file `./my/hello/-/view.tree.ts/hello.view.tree.ts`: 
+Here we declared 2 properties: `name` for getting value from `Input` and `message` for output the value. It would be translated into following file `./my/hello/-view.tree/hello.view.tree.ts`: 
 
 ```typescript
 namespace $ { export class $my_hello extends $mol_view {
 
 	@ $mol_mem
 	name( next? : any ) {
-		return ( next !== void 0 ) ? next : ""
+		return ( next !== undefined ) ? next : ""
 	}
 
 	@ $mol_mem
 	Input( next? : any ) {
-		return $mol_string.make({ 
-			hint : () => "Name" ,
-			value : ( next? : any ) => this.name( next ) ,
-		})
+		const obj = $mol_string
+		obj.hint = () => "Name"
+		obj.value = ( next? : any ) => this.name( next )
+		return obj
 	}
 
 	message() {
@@ -539,7 +543,7 @@ namespace $ { export class $my_hello extends $mol_view {
 	}
 
 	sub() {
-		return [].concat( this.Input() , this.message() )
+		return [ this.Input() , this.message() ]
 	}
 
 } }
