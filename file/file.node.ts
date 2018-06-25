@@ -28,7 +28,13 @@ namespace $ {
 			} )
 			
 			watcher.on( 'all' , ( type : string , path : string )=> {
-				$mol_file.absolute( path.replace( /\\/g , '/' ) ).stat( undefined , $mol_atom_force_cache )
+				
+				const file = $mol_file.absolute( path.replace( /\\/g , '/' ) )
+				file.stat( undefined , $mol_atom_force_cache )
+
+				if( type === 'change' ) return
+				file.parent().stat( undefined , $mol_atom_force_cache )
+
 			} )
 
 			watcher.on( 'error' , ( error : Error )=> {
