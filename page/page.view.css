@@ -39,10 +39,18 @@
 	cursor: default;
 }
 
+[mol_page_title]:empty {
+	display: none;
+}
+
 [mol_page_tools] {
 	flex: 1 1 auto;
 	display: flex;
 	justify-content: flex-end;
+}
+
+[mol_page_tools]:empty {
+	display: none;
 }
 
 [mol_page_body] {
