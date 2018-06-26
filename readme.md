@@ -456,6 +456,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_switch](switch)** - radio buttons
 * **[$mol_select](select)** - select with search and lazy rendering support
 * **[$mol_string](string)** - one string input control
+* **[$mol_textarea](textarea)** - multiple line input control
 * **[$mol_search](search)** - search string with suggests support
 * **[$mol_number](number)** - one number input control
 * **[$mol_code](code)** - bar code scanner
