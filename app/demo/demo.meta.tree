@@ -66,3 +66,4 @@ include \/mol/speech/demo
 include \/mol/string/demo
 include \/mol/switch/demo
 include \/mol/text/demo
+include \/mol/textarea/demo
