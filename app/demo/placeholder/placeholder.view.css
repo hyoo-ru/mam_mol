@@ -52,3 +52,7 @@
 	align-items: center;
 	margin: .5rem;
 }
+
+[mol_app_demo_placeholder_logo] {
+	margin: -4px;
+}
