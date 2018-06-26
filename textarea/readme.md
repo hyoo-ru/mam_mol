@@ -1,4 +1,4 @@
-# $mol_string
+# $mol_textarea
 
 Input field to enter multiple line text.
 
