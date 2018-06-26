@@ -1,0 +1,17 @@
+$mol_textarea $mol_view
+	disabled false
+	enabled true
+	debounce 200
+	minimal_height 40
+	field *
+		^
+		contentEditable <= enabled -
+	attr *
+		^
+		mol_textarea_hint <= hint \
+	event *
+		^
+		input?event <=> event_change?event null
+		keypress?event <=> event_key_press?event null
+	sub /
+		<= value_changed?val <= value?val \
