@@ -20,15 +20,14 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		static position( ...diff : any[] ) {
-			if( diff.length ) {
-				if( !diff[ 0 ] ) return diff[ 0 ]
+		static position( next? : { start : number , end : number , id : string } , force? : $mol_atom_force ) {
+			if( next !== undefined ) {
 				
-				var start = diff[ 0 ].start
-				var end = diff[ 0 ].end
+				var start = next.start
+				var end = next.end
 				if( !( start <= end ) ) throw new Error( `Wrong offsets (${start},${end})` )
 				
-				var root = $mol_dom_context.document.getElementById( diff[ 0 ].id )
+				var root = $mol_dom_context.document.getElementById( next.id )
 				root.focus()
 				
 				var range = new Range
@@ -73,7 +72,7 @@ namespace $ {
 				sel.removeAllRanges()
 				sel.addRange( range )
 				
-				return diff[ 0 ]
+				return next
 			} else {
 				var sel = $mol_dom_context.document.getSelection()
 				if( sel.rangeCount === 0 ) return null
