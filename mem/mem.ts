@@ -46,26 +46,25 @@ namespace $ {
 
 		descr.value[ 'value' ] = value
 	}
-	
+
 	export function $mol_mem_key< Host , Key , Value >(
 		obj : Host ,
 		name : string ,
 		descr : TypedPropertyDescriptor< ( key : Key , next? : Value , force? : $mol_atom_force )=> Value >
 	) {
 		const value = descr.value
-		const store = new WeakMap< Object , { [ key : string ] : $mol_atom<Value> } >()
+		const store = new WeakMap< Object , Map< any , $mol_atom<Value> > >()
 		
 		descr.value = function $mol_mem_key_value( key : Key , next : Value , force? : $mol_atom_force ) {
 			const host : any = this
-			const key_str = JSON.stringify( key )
 			
 			let dict = store.get( host )
-			if( !dict ) store.set( host , dict = {} )
+			if( !dict ) store.set( host , dict = new $mol_dict )
 			
-			let atom : $mol_atom<Value> = dict[ key_str ]
+			let atom : $mol_atom<Value> = dict.get( key )
 			if( !atom ) {
 				
-				const id = `${ host }.${ name }(${ key_str })`
+				const id = `${ host }.${ name }(${ key })`
 				atom = new $mol_atom<Value>( id , function( ... args: any[] ) {
 					const v = value.apply( host , [ key , ... args ] )
 					if( v instanceof $mol_object ) {
@@ -80,11 +79,11 @@ namespace $ {
 
 				const destructor = atom.destructor
 				atom.destructor = ()=> {
-					delete dict[ key_str ]
+					dict.delete( key )
 					destructor.call( atom )
 				}
 
-				dict[ key_str ] = atom
+				dict.set( key , atom )
 
 			}
 			
