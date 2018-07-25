@@ -424,6 +424,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_range2](range2)** - lazy array
 * **[$mol_maybe](maybe)** - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
 * **[$mol_conform](conform)** - object tree reconciler
+* **[$mol_dict](dict)** - usefull native `Map` extension
 
 ## [State modules](state)
 
