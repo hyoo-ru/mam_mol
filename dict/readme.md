@@ -3,7 +3,7 @@
 Dictionary with extenden keys support:
 
 - Primitives is used by value
-- POJO and Arrays is used by value
+- POJO and Arrays is used by value (Be carefull, POJO with different fields order is different keys due to JSON.stringify)
 - Other objects is used by reference 
 
 ## Usage example
