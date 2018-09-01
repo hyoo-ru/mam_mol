@@ -45,9 +45,10 @@ namespace $ {
 				}
 			} )
 			
-			next.onerror = $mol_log_group( this.object_id() + ' error' , ( event : ErrorEvent ) => {
+			next.onerror = $mol_log_group( this.object_id() + ' error' , ( event : any ) => {
+				const right_event = event as ErrorEvent
 				new $mol_defer( ()=> {
-					this.response( event.error || new Error( 'Unknown HTTP error' ) , $mol_atom_force_cache )
+					this.response( right_event.error || new Error( 'Unknown HTTP error' ) , $mol_atom_force_cache )
 				} )
 			} )
 			
