@@ -26,8 +26,8 @@
 [mol_app_calc_col_head] ,
 [mol_app_calc_row_head] {
 	font-family: var(--mol_skin_font_monospace);
-	background: var(--mol_skin_light);
-	color: var(--mol_skin_passive_text);
+	background: var(--mol_theme_back);
+	color: var(--mol_theme_shade);
 	user-select: none;
 	font-weight: inherit;
 }
@@ -43,11 +43,11 @@
 
 [mol_app_calc_cell] {
 	user-select: text;
-	background: var(--mol_skin_card);
+	background: var(--mol_theme_back);
 }
 
 [mol_app_calc_cell_selected] {
-	box-shadow: var(--mol_skin_focus_outline);
+	box-shadow: 0 0 0 1px var(--mol_theme_focus);
 	z-index: 1;
 }
 

@@ -1,8 +1,8 @@
 [mol_grid] {
 	display: block;
-	flex: 0 1 auto;
-	align-self: flex-start;
+	flex: 1 1 auto;
 	position: relative;
+	background: var(--mol_theme_back);
 }
 
 [mol_grid_gap] {
@@ -13,8 +13,8 @@
 }
 
 [mol_grid_table] {
+	margin: -1px 0 0 -1px;
 	border-spacing: 1px;
-	box-shadow: var(--mol_skin_light_outline);
 	transform: translateZ(0);
 	position: relative;
 }
@@ -26,20 +26,14 @@
 
 [mol_grid_table] > * > * {
 	display: table-cell;
-}
-
-[mol_grid_table] > * > * {
 	padding: 0 1rem;
 	white-space: nowrap;
 	vertical-align: middle;
-}
-
-[mol_grid_table] > * > * {
-	box-shadow: 0 0 0 1px color( var(--mol_skin_light_line) tint(50%) );
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_grid_head] > * {
-	background: var(--mol_skin_light);
+	background: var(--mol_theme_back);
 }
 
 [mol_grid_cell_number] {

@@ -7,6 +7,11 @@
 	box-sizing: border-box;
 	flex: 0 0 auto;
 	align-self: flex-start;
+	background: var(--mol_theme_back);
+	color: var(--mol_theme_text);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	margin: .5rem;
+	padding: .5rem;
 }
 
 [mol_demo_small] > * {

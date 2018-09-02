@@ -8,7 +8,7 @@ $mol_speck_demo $mol_demo_small
 		<= String $mol_view
 			sub /
 				<= String_speck $mol_speck
-					value <= string_speck @ \new
+					value <= string_speck @ \New
 				<= String_field $mol_string
 		<= Button $mol_button_minor
 			sub /

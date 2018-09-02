@@ -8,12 +8,11 @@
 }
 
 [mol_pop_bubble] {
-	box-shadow: var(--mol_skin_float);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	border-radius: var(--mol_skin_round);
 	position: absolute;
 	z-index: 3;
-	background: var(--mol_skin_card);
-	color: var(--mol_skin_card_text);
+	background: var(--mol_theme_back);
 	max-width: none;
 	max-height: none;
 	overflow: hidden;
@@ -22,7 +21,7 @@
 }
 
 [mol_pop_bubble][mol_scroll] {
-	background: var(--mol_skin_card);
+	background: var(--mol_theme_back);
 }
 
 [mol_pop_bubble]:focus {

@@ -36,7 +36,7 @@ $mol_app_files $mol_book
 	-
 	Icon_folder!uri $mol_icon_folder
 	-
-	Icon_file!uri $mol_icon_file2
+	Icon_file!uri $mol_icon_file
 	-
 	Placeholder $mol_book_placeholder
 		title <= title -

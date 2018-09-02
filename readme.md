@@ -315,7 +315,7 @@ For example, to set the list of sub components you need to redefine `sub` proper
 ```tree
 Confirm_delte $mol_row sub /
 	<= Yes $mol_button_minor title \Yes
-	<= No $mol_button_danger title \No
+	<= No $mol_button_major title \No
 ```
 
 Or the same code through TypeScript would be:

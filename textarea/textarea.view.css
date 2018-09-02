@@ -1,7 +1,7 @@
 [mol_textarea] {
 	display: inline-block;
 	box-sizing: border-box;
-	box-shadow: var(--mol_skin_light_outline);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	border-radius: var(--mol_skin_round);
 	overflow: auto;
 	padding: .5rem 1rem;
@@ -9,25 +9,24 @@
 	position: relative;
 	z-index: 0;
 	flex: 1 1 auto;
-	/* width: 100%; */
-	background: var(--mol_skin_passive);
-	color: var(--mol_skin_light_text);
+	background: var(--mol_theme_field);
+	color: inherit;
 	white-space: pre-wrap;
 	min-height: calc( 1rem + 1.5em );
 }
 
-[mol_textarea][contentEditable="true"] {
-	background: var(--mol_skin_card);
+[mol_textarea][contentEditable="false"] {
+	background-color: transparent;
 }
 
 [mol_textarea]:focus {
 	z-index: 1;
 	outline: none;
-	box-shadow: var(--mol_skin_focus_outline);
+	box-shadow: 0 0 0 1px var(--mol_theme_focus);
 }
 
 [mol_textarea]:empty:before {
 	content: attr(mol_textarea_hint);
-	color: var(--mol_skin_passive_text);
+	color: var(--mol_theme_shade);
 	pointer-events: none;
 }

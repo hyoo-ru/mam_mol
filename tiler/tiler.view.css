@@ -2,7 +2,6 @@
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-start;
-	padding: .5rem;
 }
 
 [mol_tiler_group] {
@@ -14,7 +13,6 @@
 
 [mol_tiler_item] {
 	flex: 1 1 auto;
-	margin: .5rem;
 	align-items: stretch;
 	display: flex;
 }

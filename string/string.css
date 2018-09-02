@@ -1,6 +1,5 @@
 [mol_string] {
 	box-sizing: border-box;
-	box-shadow: var(--mol_skin_light_outline);
 	outline-offset: 0;
 	border: none;
 	border-radius: var(--mol_skin_round);
@@ -13,23 +12,20 @@
 	font: inherit;
 	flex: 0 1 auto;
 	width: 100%;
-	background: var(--mol_skin_passive);
-	color: var(--mol_skin_light_text);
+	background: var(--mol_theme_field);
+	color: var(--mol_theme_text);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	margin: 0;
 }
 
-[mol_string]:enabled {
-	background: var(--mol_skin_card);
+[mol_string]:disabled {
+	background-color: transparent;
 }
 
-[mol_string]:enabled:hover ,
 [mol_string]:focus {
 	outline: none;
 	z-index: 1;
-}
-
-[mol_string]:focus {
-	box-shadow: var(--mol_skin_focus_outline);
+	box-shadow: 0 0 0 1px var(--mol_theme_focus);
 }
 
 [mol_string]::-ms-clear {

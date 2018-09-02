@@ -13,7 +13,7 @@
 [mol_app_demo_placeholder_content] {
 	max-width: 65rem;
 	padding: 1rem;
-	background: var(--mol_skin_card);
+	background: var(--mol_theme_back);
 	margin: auto;
 }
 

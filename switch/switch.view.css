@@ -3,26 +3,17 @@
 	flex-wrap: wrap;
 	flex: 1 1 auto;
 	border-radius: var(--mol_skin_round);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_switch_option] {
 	flex: 0 1 auto;
-	box-shadow: var(--mol_skin_light_outline);
-	background: var(--mol_skin_passive);
-	color: var(--mol_skin_light_text);
 	padding: .5rem 1rem;
 }
 
 [mol_switch_option][mol_check_checked] {
-	background: var(--mol_skin_card);
-	color: var(--mol_skin_card_text);
+	background: var(--mol_theme_current);
+	color: var(--mol_theme_text);
+	color: inherit;
 	z-index: 1;
-}
-
-[mol_switch_option][mol_check_checked]:not([disabled]):hover {
-	background: var(--mol_skin_light_hover);
-}
-
-[mol_switch_option][disabled] {
-	color: var(--mol_skin_passive_text);
 }

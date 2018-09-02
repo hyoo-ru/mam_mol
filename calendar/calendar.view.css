@@ -23,10 +23,11 @@
 	padding: .25rem .5rem;
 	text-align: center;
 	word-break: normal;
+	box-shadow: none;
 }
 
 [mol_calendar_weekday] {
-	border-bottom: 1px solid var(--mol_skin_light_line);
+	border-bottom: 1px solid var(--mol_theme_line);
 }
 
 [mol_calendar_holiday] {

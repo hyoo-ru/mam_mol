@@ -27,14 +27,6 @@
 	display: block;
 }
 
-[mol_app_lamps_light] {
-	background: var(--mol_skin_card);
-}
-
-[mol_app_lamps_body] {
-	background: var(--mol_skin_card);
-}
-
 [mol_app_lamps_addon_page] {
 	flex: 1 1 400px;
 }

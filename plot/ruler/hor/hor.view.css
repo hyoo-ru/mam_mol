@@ -1,15 +1,15 @@
 [mol_plot_ruler_hor_curve] {
-	color: var(--mol_skin_light_line);
+	color: var(--mol_theme_line);
 	stroke-width: .1%;
 	stroke: currentColor;
 }
 
 [mol_plot_ruler_hor_label] {
-	color: var(--mol_skin_light_text);
+	color: var(--mol_theme_text);
 	transform: translateY( -4px );
 }
 
 [mol_plot_ruler_hor_title] {
-	color: var(--mol_skin_passive_text);
+	color: var(--mol_theme_shade);
 	transform: translateY( -4px );
 }

@@ -15,7 +15,6 @@
 [mol_message_avatar] {
 	width: 3.5rem;
 	height: 3.5rem;
-	background: var(--mol_skin_light_line);
 }
 
 [mol_message_text] {

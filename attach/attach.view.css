@@ -7,7 +7,7 @@
 	height: 5rem;
 	background: center no-repeat;
 	border-radius: var(--mol_skin_round);
-	box-shadow: var(--mol_skin_light_outline);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	background-size: cover;
 	flex: 1 0 5rem;
 }

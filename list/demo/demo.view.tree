@@ -8,5 +8,7 @@ $mol_list_demo $mol_demo_large
 	Row!id $mol_expander
 		title <= row_text!id \
 		content /
-			<= Content!id $mol_filler
+			<= Content!id $mol_row
+				sub /
+					<= Text $mol_filler
 			

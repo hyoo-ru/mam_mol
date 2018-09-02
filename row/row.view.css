@@ -6,8 +6,8 @@
 	justify-content: flex-start;
 	padding: .5rem;
 	flex: 1 0 auto;
-	box-shadow: var(--mol_skin_light_outline);
-	border-radius: var(--mol_skin_round);
+	/* box-shadow: 0 0 0 1px var(--mol_theme_line); */
+	/* border-radius: var(--mol_skin_round); */
 	box-sizing: border-box;
 	max-width: 100%;
 }

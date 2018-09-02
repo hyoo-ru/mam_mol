@@ -22,6 +22,7 @@ namespace $.$$ {
 			} )
 
 			api.controls.remove( 'fullscreenControl' )
+			api.controls.remove( 'typeSelector' )
 			
 			api.events.add( [ 'actionend' ] , ( event : any )=> this.update( event ) )
 

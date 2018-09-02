@@ -37,12 +37,11 @@ $mol_app_questions $mol_book
 		minimal_height 70
 		arg <= question_arg_by_index!index *
 		sub /
-			<= Question_row!index $mol_row sub /
-				<= Question_title!index $mol_view
-					sub /
-						<= question_title_by_index!index \
-				<= Question_tags!index $mol_view
-					sub <= question_tags_by_index!index /
+			<= Question_title!index $mol_view
+				sub /
+					<= question_title_by_index!index \
+			<= Question_tags!index $mol_view
+				sub <= question_tags_by_index!index /
 	-
 	Tag!id $mol_view
 		sub /

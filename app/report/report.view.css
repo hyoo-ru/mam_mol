@@ -7,26 +7,22 @@
 }
 
 [mol_app_report_tabler] {
-	margin: 1rem auto;
+	margin: 1rem;
 	border-collapse: collapse;
 }
 
 [mol_app_report_descriptor] {
 	display: block;
-	margin: 1rem auto;
+	margin: 1rem;
 	white-space: pre-line;
-	text-align: center;
 	line-height: 2rem;
-}
-
-[mol_app_report_tabler] {
 }
 
 [mol_app_report_headRower] {
 }
 
 [mol_app_report_cell] {
-	border: 1px solid var(--mol_skin_light_line);
+	border: 1px solid var(--mol_theme_line);
 	padding: 0;
 	vertical-align: top;
 }

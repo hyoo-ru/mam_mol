@@ -1,8 +1,6 @@
 $mol_attach_demo $mol_demo_small
 	title @ \Attach files an show them
 	sub /
-		<= Empty $mol_attach
-			items?val <=> empty_items?val /
 		<= Filled $mol_attach
 			items?val <=> filled_items?val /
 				<= Item1 $mol_attach_item

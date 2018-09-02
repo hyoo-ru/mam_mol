@@ -15,6 +15,6 @@ $mol_date $mol_pop
 
 $mol_date_calendar $mol_calendar
 	day_content!day /
-		<= Day_button!day $mol_button_typed
+		<= Day_button!day $mol_button
 			title <= day_text!day -
 			event_click?event <=> day_click!day?event null

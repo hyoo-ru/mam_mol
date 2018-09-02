@@ -15,7 +15,6 @@ Simple button.
 
 **`$mol_button_major`** - Call-To-Action button
 **`$mol_button_minor`** - Generic button
-**`$mol_button_danger`** - Destructive button
 
 ## Properties
 

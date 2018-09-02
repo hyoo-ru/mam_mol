@@ -47,7 +47,6 @@ include \/mol/list/demo
 include \/mol/map/yandex/demo
 include \/mol/message/demo
 include \/mol/meter/demo
-include \/mol/nav/demo
 include \/mol/number/demo
 include \/mol/page/demo
 include \/mol/plot/demo

@@ -1,11 +1,10 @@
 [mol_demo_large] {
-	height: 75vh;
-	max-height: 75vh;
-	max-width: 100%;
+	height: 100%;
+	width: 100%;
 	overflow: hidden;
-	box-shadow: var(--mol_skin_light_outline);
-	background: var(--mol_skin_card);
-	color: var(--mol_skin_light_text);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	background: var(--mol_theme_back);
+	color: var(--mol_theme_text);
 	position: relative;
 	flex: 1 0 auto;
 	display: flex;

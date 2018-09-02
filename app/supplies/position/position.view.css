@@ -16,18 +16,18 @@
 
 [mol_app_supplies_position_main_group] {
 	flex: 1 1 12rem;
-	background: hsla(137,50%,98%,1);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_app_supplies_position_addon_group] {
 	flex: 1 1 12rem;
-	background: hsla(216,50%,98%,1);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_app_supplies_position_supply_group] {
 	flex: 1 1 24rem;
-	background: hsla(0,50%,98%,1);
 	flex-direction: row-reverse;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_app_supplies_position_division_item] {

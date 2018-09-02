@@ -14,4 +14,6 @@
 [mol_date_calendar_day_button] {
 	width: 100%;
 	padding: .25rem .5rem;
+	justify-content: center;
+	cursor: pointer;
 }

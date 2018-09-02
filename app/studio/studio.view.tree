@@ -6,11 +6,13 @@ $mol_app_studio $mol_book
 			title <= preview_title @ \Preview: 
 			tools /
 				<= Source_link $mol_link
+					hint <= source_title -
 					sub /
 						<= Source_icon $mol_icon_source
 					arg <= source_arg *
 						source \
 				<= Edit $mol_link
+					hint <= editor_title -
 					sub /
 						<= Edit_icon $mol_icon_settings
 					arg *
@@ -31,11 +33,6 @@ $mol_app_studio $mol_book
 						\find (.+?)
 			title <= editor_title @ \Properties
 			event_top?val <=> event_front_up?val -
-			Tools => Editor_tools
-			head /
-				<= Crumbs $mol_view
-					sub <= crumbs /
-				<= Editor_tools -
 			tools /
 				- <= Speech_toggle $mol_check_icon
 					Icon <= Speech_toggle_icon $mol_icon_microphone
@@ -69,11 +66,6 @@ $mol_app_studio $mol_book
 				<= Source $mol_text
 					text <= source \
 	Placeholder null
-	-
-	Crumb!index $mol_link
-		title <= crumb_title!index \
-		arg *
-			path <= crumb_path!index \
 	-
 	Prop!id $mol_app_studio_field
 		path <= prop_path!id /
