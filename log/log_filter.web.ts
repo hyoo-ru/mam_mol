@@ -18,4 +18,6 @@ namespace $ {
 		return filter = sessionStorage.getItem( '$mol_log_filter()' )
 	}
 
+	if( $mol_log_filter() == null ) console.info( 'Use $mol_log_filter( needle : string|null ) to toggle logs' )
+	
 }
