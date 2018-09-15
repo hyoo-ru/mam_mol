@@ -64,7 +64,7 @@ namespace $ {
 			let atom : $mol_atom<Value> = dict.get( key )
 			if( !atom ) {
 				
-				const id = `${ host }.${ name }(${ key })`
+				const id = `${ host }.${ name }(${ JSON.stringify( key ) })`
 				atom = new $mol_atom<Value>( id , function( ... args: any[] ) {
 					const v = value.apply( host , [ key , ... args ] )
 					if( v instanceof $mol_object ) {
