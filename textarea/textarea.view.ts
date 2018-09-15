@@ -35,6 +35,16 @@ namespace $.$$ {
 			}
 		}
 
+		event_paste( event? : ClipboardEvent ) {
+			const text = event.clipboardData.getData( 'text/plain')
+			const node = this.$.$mol_dom_context.document.createTextNode( text )
+			const selection = this.$.$mol_dom_context.document.getSelection()
+			selection.deleteFromDocument()
+			selection.getRangeAt(0).insertNode( node )
+			selection.collapseToEnd()
+			event.preventDefault()
+		}
+
 		_timer = 0
 		
 		commit() {

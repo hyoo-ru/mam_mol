@@ -13,5 +13,6 @@ $mol_textarea $mol_view
 		^
 		input?event <=> event_change?event null
 		keypress?event <=> event_key_press?event null
+		paste?event <=> event_paste?event null
 	sub /
 		<= value_changed?val <= value?val \
