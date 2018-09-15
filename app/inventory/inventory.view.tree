@@ -6,16 +6,16 @@ $mol_app_inventory $mol_view
 		keeper_show <= can_write_off false
 		control_show <= can_approve false
 	Enter $mol_app_inventory_enter
-		domain <= domain -
+		domain <= domain
 	Controller $mol_app_inventory_controller
-		Head <= Head -
-		domain <= domain -
+		Head <= Head
+		domain <= domain
 	Keeper $mol_app_inventory_keeper
-		Head <= Head -
-		domain <= domain -
+		Head <= Head
+		domain <= domain
 	Stats $mol_app_inventory_stats
-		Head <= Head -
-		domain <= domain -
+		Head <= Head
+		domain <= domain
 
 $mol_app_inventory_head $mol_row
 	keeper_show false

@@ -10,4 +10,4 @@ $mol_string_demo $mol_demo_small
 			value?val <=> name2?val \Jocker
 		<= Disabled $mol_string
 			disabled true
-			value?val <=> name2?val -
+			value?val <=> name2?val

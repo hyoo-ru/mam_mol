@@ -15,9 +15,9 @@ $mol_app_life $mol_page
 				60 <= time_fastest_label @ \Fastest
 	-
 	sub /
-		<= Head -
+		<= Head
 		<= Map $mol_app_life_map
-			speed <= speed -
+			speed <= speed
 			snapshot <= snapshot \0~-2ffff~10002~-20000~-1fffe~3~10003~20003
 			snapshot_current => snapshot_current
 			population => population

@@ -17,12 +17,12 @@ $mol_perf_sierp_dot $mol_view
 	sub /
 		<= text \
 	style *
-		width <= width <= size -
-		height <= height <= size -
+		width <= width <= size
+		height <= height <= size
 		left <= left 0
 		top <= top 0
-		borderRadius <= radius <= size -
-		lineHeight <= size_px -
+		borderRadius <= radius <= size
+		lineHeight <= size_px
 		background <= color \
 	event_async *
 		mouseenter?val <=> enter?val null

@@ -8,9 +8,9 @@ $mol_app_files $mol_book
 	Folder!folder $mol_app_files_folder
 		title <= webdav_title!folder \
 		description <= webdav_description!folder \
-		tools <= page_tools!folder -
+		tools <= page_tools!folder
 		rows <= folder_rows!folder /
-		event_top?val <=> event_front_up?val -
+		event_top?val <=> event_front_up?val
 	-
 	Folder_row!uri $mol_link
 		minimal_height 40
@@ -28,18 +28,18 @@ $mol_app_files $mol_book
 							<= folder_row_title!uri \
 	-
 	File!file $mol_app_files_file
-		title <= webdav_title!file -
-		tools <= page_tools!file -
+		title <= webdav_title!file
+		tools <= page_tools!file
 		src <= file_uri!file \
 		mime <= file_mime!file \
-		event_top?val <=> event_front_up?val -
+		event_top?val <=> event_front_up?val
 	-
 	Icon_folder!uri $mol_icon_folder
 	-
 	Icon_file!uri $mol_icon_file
 	-
 	Placeholder $mol_book_placeholder
-		title <= title -
+		title <= title
 	-
 	tools_root /
 	page_tools!uri /

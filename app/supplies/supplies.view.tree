@@ -11,7 +11,7 @@ $mol_app_supplies $mol_book
 	Detail $mol_app_supplies_detail
 		minimal_width 400
 		supply <= supply null
-		event_top?val <=> event_front_up?val -
+		event_top?val <=> event_front_up?val
 	-
 	placeholder $mol_book_placeholder
-		title <= title -
+		title <= title

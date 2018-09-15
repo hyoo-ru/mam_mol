@@ -6,20 +6,20 @@ $mol_app_life_map $mol_plot_pane
 		0
 	zoom?val 16
 	scale /
-		<= zoom -
-		<= zoom -
-	shift <= pan -
+		<= zoom
+		<= zoom
+	shift <= pan
 	-
 	graphs /
 		<= Points $mol_plot_dot
 			threshold 0
-			diameter <= zoom -
+			diameter <= zoom
 			points_raw <= points /
 	-
 	plugins /
 		<= Touch $mol_touch
-			zoom?val <=> zoom?val -
-			pan?val <=> pan?val -
+			zoom?val <=> zoom?val
+			pan?val <=> pan?val
 	-
 	snapshot \
 	snapshot_current \

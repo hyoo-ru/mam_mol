@@ -17,7 +17,7 @@ $mol_app_lamps $mol_book
 		<= Main_page $mol_page
 			minimal_width 400
 			title <= title \
-			event_top?val <=> event_front_up?val -
+			event_top?val <=> event_front_up?val
 			tools /
 				<= Close $mol_link
 					sub /
@@ -69,7 +69,7 @@ $mol_app_lamps $mol_book
 					sub /
 						<= Photo $mol_image
 							uri <= photo \
-							title <= title -
+							title <= title
 	Lamp_row!id $mol_lamps_lamp_row
 		title <= lamp_title!id \
 		arg <= lamp_arg!id *
@@ -77,4 +77,4 @@ $mol_app_lamps $mol_book
 $mol_lamps_lamp_row $mol_link
 	minimal_height 33
 	sub /
-		<= title -
+		<= title

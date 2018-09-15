@@ -5,12 +5,12 @@ $mol_plot_pane $mol_svg_root
 	hue_shift?val 111
 	-
 	gap 24
-	gap_hor <= gap -
-	gap_vert <= gap -
-	gap_left <= gap_hor -
-	gap_right <= gap_hor -
-	gap_top <= gap_vert -
-	gap_bottom <= gap_vert -
+	gap_hor <= gap
+	gap_vert <= gap
+	gap_left <= gap_hor
+	gap_right <= gap_hor
+	gap_top <= gap_vert
+	gap_bottom <= gap_vert
 	-
 	shift /
 		0

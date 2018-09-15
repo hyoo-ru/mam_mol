@@ -2,7 +2,7 @@ $mol_labeler $mol_view
 	sub /
 		<= Title $mol_view
 			sub <= label /
-				<= title -
+				<= title
 		<= Content $mol_view
 			sub /
 				<= content null

@@ -14,4 +14,4 @@ $mol_button $mol_view
 		tabindex <= tab_index 0
 		title <= hint \
 	sub /
-		<= title -
+		<= title

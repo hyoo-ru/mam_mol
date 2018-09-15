@@ -5,7 +5,7 @@ $mol_textarea $mol_scroll
 	minimal_height 40
 	field *
 		^
-		contentEditable <= enabled -
+		contentEditable <= enabled
 	attr *
 		^
 		mol_textarea_hint <= hint \

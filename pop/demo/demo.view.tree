@@ -4,7 +4,7 @@ $mol_pop_demo $mol_demo_small
 		<= Pop $mol_pop
 			Anchor <= Show $mol_button_minor
 				title <= show_text @ \?
-			showed <= showed <= focused -
+			showed <= showed <= focused
 			bubble_content /
 				<= Content $mol_row 
 					sub / 

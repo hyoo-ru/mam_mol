@@ -16,8 +16,8 @@ $mol_select $mol_pop
 	plugins /
 		<= Nav $mol_nav
 			keys_y <= nav_components /
-				<= Filter -
-				<= option_rows -
+				<= Filter
+				<= option_rows
 			current_y?component <=> option_focused?component null
 			cycle?val <=> nav_cycle?val true
 	showed <= options_showed false
