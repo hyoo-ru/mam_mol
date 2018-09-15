@@ -140,7 +140,7 @@ namespace $ {
 						case( value.type === '@' ) :
 							const key = `${ def.type }_${ param.type.replace( /[?!].*/ , '' ) }`
 							locales[ key ] = value.value
-							return`$mol_locale.text( ${ JSON.stringify( key ) } )`
+							return `this.$.$mol_locale.text( ${ JSON.stringify( key ) } )`
 						case( value.type === '-' ) :
 							return null
 						case( value.type === '/' ) :
