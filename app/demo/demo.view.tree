@@ -9,7 +9,7 @@ $mol_app_demo $mol_book
 		hierarchy <= nav_hierarchy null
 		option!id <= nav_option!id null
 		filter?val <=> filter_string?val \
-		theme?val <=> theme?val \$mol_theme_light
+		theme?val <=> theme?val \$mol_theme_dark
 	Detail $mol_app_demo_detail
 		minimal_width 600
 		title <= title
@@ -54,7 +54,7 @@ $mol_app_demo_menu $mol_page
 			record!id <= option!id null
 			needle <= filter?val \
 		<= Themes $mol_switch
-			value?val <=> theme?val \$mol_theme_light
+			value?val <=> theme?val \$mol_theme_dark
 			options *
 				$mol_theme_light <= theme_light_title @ \Light theme
 				$mol_theme_dark <= theme_dark_title @ \Dark theme
