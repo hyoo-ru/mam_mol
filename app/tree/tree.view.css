@@ -3,7 +3,7 @@
 }
 
 [mol_app_tree_source] {
-	flex: 33% 1 1;
+	flex: 50% 1 1;
 	white-space: pre;
 	font-family: var(--mol_skin_font_monospace);
 	padding: 1rem;
@@ -14,18 +14,13 @@
 }
 
 [mol_app_tree_result] {
-	flex: 33% 1 1;
+	flex: 50% 1 1;
 	outline: 0 0 0 1px var(--mol_theme_line);
 	display: flex;
 	flex-direction: column;
 }
 
-[mol_app_tree_result_script] {
-	flex: auto 2 0;
-	background: var(--mol_theme_back);
+[mol_app_tree_result_text] {
+	flex: auto 1 0;
 }
 
-[mol_app_tree_result_locales] {
-	flex: auto 1 0;
-	background: var(--mol_theme_back);
-}
