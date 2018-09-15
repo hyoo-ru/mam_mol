@@ -1,4 +1,4 @@
-$mol_textarea $mol_view
+$mol_textarea $mol_scroll
 	disabled false
 	enabled true
 	debounce 200
@@ -12,7 +12,7 @@ $mol_textarea $mol_view
 	event *
 		^
 		input?event <=> event_change?event null
-		keypress?event <=> event_key_press?event null
+		keydown?event <=> event_key_press?event null
 		paste?event <=> event_paste?event null
-	sub /
+	sub_visible <= sub /
 		<= value_changed?val <= value?val \

@@ -70,7 +70,7 @@
 
 [mol_text_type="code-indent"] ,
 [mol_text_type="code"] {
-	font-family: monospace;
+	font-family: var(--mol_skin_font_monospace);
 	white-space: pre;
 	border-radius: var(--mol_skin_round);
 	padding: 1px;
