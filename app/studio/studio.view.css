@@ -20,7 +20,7 @@
 }
 
 [mol_app_studio_preview_page_head] {
-	background: color( var(--mol_skin_base) blackness(+20%) );
+	filter: brightness(90%);
 }
 
 [mol_app_studio_preview_page_body] {

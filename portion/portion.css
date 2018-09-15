@@ -7,12 +7,12 @@
 	align-self: stretch;
 	vertical-align: inherit;
 	border-radius: var(--mol_skin_round);
-	box-shadow: var(--mol_skin_light_outline);
-	background: var(--mol_skin_light);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	background: var(--mol_theme_back);
 }
 
 [mol_portion_indicator] {
 	background-color: var(--mol_skin_base);
-	color: var(--mol_skin_base_text);
+	color: var(--mol_theme_control);
 	border-radius: var(--mol_skin_round);
 }

@@ -9,13 +9,13 @@ Form, that contains form fields and action buttons.
    	form_fields /
    		<= Name_field $mol_form_field
    			name <= name_label @ \User name
-   			errors <= name_errors /
-   			control <= name_control $mol_string
+   			bid <= name_bid \
+   			control <= Name_control $mol_string
    				value?val <=> name?val \
    		<= pass_field $mol_form_field
-   			name < pass_label @ \Pass word
-   			errors < pass_errors /
-   			control < pass_control $mol_string
+   			name <= pass_label @ \Pass word
+   			bid <= pass_bid \
+   			control <= Pass_control $mol_string
    				value?val <=> pass?val \
    				type \password
    	buttons /

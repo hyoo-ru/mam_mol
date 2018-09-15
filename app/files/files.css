@@ -11,10 +11,6 @@
 	padding: 0;
 }
 
-[mol_app_files_folder_folder_rows] {
-	padding: .5rem;
-}
-
 [mol_app_files_folder_row] {
 	width: 100%;
 	display: flex;
@@ -22,13 +18,7 @@
 	justify-content: flex-start;
 	text-align: left;
 	word-break: break-word;
-	box-shadow: var(--mol_skin_light_outline);
 	padding: .25rem;
-}
-
-[mol_app_files_folder_row]:not([mol_link_current]) {
-	background: var(--mol_skin_card);
-	color: var(--mol_skin_card_text);
 }
 
 [mol_app_files_folder_row_info] {
@@ -58,7 +48,7 @@
 [mol_app_files_file_embed] {
 	align-self: stretch;
 	flex: 1 1 auto;
-	box-shadow: var(--mol_skin_light_outline);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	border-radius: var(--mol_skin_round);
 }
 

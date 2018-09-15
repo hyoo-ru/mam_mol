@@ -166,7 +166,10 @@ namespace $ {
 			
 			try {
 				
-				for( let plugin of this.plugins() ) plugin.render()
+				for( let plugin of this.plugins() ) {
+					plugin.dom_node( node )
+					plugin.render()
+				}
 				this.render()
 				
 			} catch( error ) {

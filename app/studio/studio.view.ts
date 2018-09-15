@@ -263,20 +263,6 @@ namespace $.$$ {
 			return super.preview_title() + this.Element([]).title()
 		}
 
-		crumbs() {
-			return [ this.Crumb(0) , ... this.path().map( ( name , index )=> this.Crumb( index + 1 ) ) ]
-		}
-
-		crumb_title( index : number ) {
-			if( index === 0 ) return this.class_name_self()
-			return this.path()[ index - 1 ]
-		}
-		
-		crumb_path( index : number ) {
-			if( index === 0 ) return ''
-			return this.path().slice( 0 , index ).join( ',' )
-		}
-
 		event_add( event? : Event ) {
 			this.prop_add( this.prop_filter() )
 		}

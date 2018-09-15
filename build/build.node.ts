@@ -656,7 +656,8 @@ namespace $ {
 			
 			sources.forEach(
 				function( src ) {
-					var content = src.content()	.toString()
+					if( !src.content() ) return
+					var content = src.content().toString()
 					concater.add( src.relate( target.parent() ) , content )
 				}
 			)
@@ -796,18 +797,12 @@ namespace $ {
 				}
 			)
 			
-			var cssnext = $node[ 'postcss-cssnext' ]
-			var processor = $node['postcss'](
-				cssnext(
-					null , {
-						features : {
-							customProperties : {
-								preserve : true
-							}
-						}
-					}
-				).plugins
-			)
+			var processor = $node['postcss']([
+				$node[ 'postcss-custom-properties' ]({
+					preserve : true ,
+				}) ,
+				$node[ 'postcss-color-function' ]() ,
+			])
 			var result = processor.process( root , { to : target.relate() , map : { inline : false } } )
 			
 			target.content( result.css )

@@ -1,6 +1,6 @@
 [mol_link] {
 	text-decoration: none;
-	color: inherit;
+	color: var(--mol_theme_control);
 	cursor: pointer;
 	border-radius: var(--mol_skin_round);
 	padding: .5rem;
@@ -9,17 +9,16 @@
 }
 
 [mol_link]:not([mol_link_current]):hover {
-	background-color: var(--mol_skin_hover);
+	background-color: var(--mol_theme_hover);
 }
 
 [mol_link]:not([mol_link_current]):focus {
-	background-color: var(--mol_skin_hover);
-	box-shadow: 0 0 0 1px var(--mol_skin_hover_line);
+	background-color: var(--mol_theme_hover);
 }
 
 [mol_link_current] {
-	background-color: var(--mol_skin_current);
-	color: var(--mol_skin_current_text);
+	background-color: var(--mol_theme_current);
+	color: var(--mol_theme_text);
 }
 
 [mol_link]:focus {

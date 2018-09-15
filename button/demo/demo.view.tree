@@ -14,10 +14,3 @@ $mol_button_demo $mol_demo_small
 		<= Minor_disabled $mol_button_minor
 			title <= minor_label @ \Or click me..
 			enabled false
-		-
-		<= Danger_enabled $mol_button_danger
-			title <= danger_label @ \Be attentive!
-		-
-		<= Danger_disabled $mol_button_danger
-			title <= danger_label @ \Be attentive!
-			enabled false

@@ -218,44 +218,41 @@ namespace $ {
 				if( !prefix.length ) {
 					prefix = "\t";
 				}
-				output += this.type + " "
+				output += this.type
 				if( this.sub.length == 1 ) {
-					return output + this.sub[ 0 ].toString( prefix )
+					return output + ' ' + this.sub[ 0 ].toString( prefix )
 				}
 				output += "\n"
 			} else if( this.data.length || prefix.length ) {
 				output += "\\" + this.data + "\n"
 			}
+
 			for( var child of this.sub ) {
 				output += prefix
 				output += child.toString( prefix + "\t" )
 			}
+			
 			return output
 		}
 		
 		toJSON() : any {
 			if( !this.type ) return this.value
 			
-			if( this.type === '//' ) return undefined
-			
 			if( this.type === 'true' ) return true
 			if( this.type === 'false' ) return false
 			if( this.type === 'null' ) return null
 			
-			if( this.type === 'dict' ) {
+			if( this.type === '*' ) {
 				var obj = {}
 				for( var child of this.sub ) {
-					var key = child.type || child.value
-					if( key === '//' ) continue
-					var colon = child.select( ':' ).sub[ 0 ]
-					if( !colon ) throw new Error( `Required colon after key at ${child.uri}` )
-					var val = colon.sub[ 0 ].toJSON()
+					var key = child.type || child.clone({ sub : child.sub.slice( 0 , child.sub.length - 1 ) }).value
+					var val = child.sub[ child.sub.length - 1 ].toJSON()
 					if( val !== undefined ) ( obj as any )[ key ] = val
 				}
 				return obj
 			}
 			
-			if( this.type === 'list' ) {
+			if( this.type === '/' ) {
 				var res : any[] = []
 				this.sub.forEach(
 					child => {

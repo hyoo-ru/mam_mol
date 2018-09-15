@@ -1,0 +1,46 @@
+[mol_theme] , :root {
+	background-color: var(--mol_theme_back);
+	color: var(--mol_theme_text);
+	fill: var(--mol_theme_text);
+}
+
+[mol_theme="$mol_theme_light"] , :root {
+	--mol_theme_back: #fcfcfc;
+	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
+	--mol_theme_current: hsl(210, 100%, 80%);
+	--mol_theme_text: rgba( 0 , 0 , 0 , .9 );
+	--mol_theme_control: hsla( 210 , 60% , 40% , 1 );
+	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );
+	--mol_theme_line: rgba( 230 , 230 , 230 , 1 );
+	--mol_theme_focus: hsla( 0 , 60% , 50% , 0.75 );
+	--mol_theme_field: white;
+}
+
+[mol_theme="$mol_theme_dark"] {
+	--mol_theme_back: #0b1b28;
+	--mol_theme_hover: #333;
+	--mol_theme_current: hsl(210, 100%, 20%);
+	--mol_theme_text: rgba( 255 , 255 , 255 , .9 );
+	--mol_theme_control: hsla( 210 , 60% , 60% , 1 );
+	--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );
+	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
+	--mol_theme_focus: rgba( 204 , 68 , 50 , .75 );
+	--mol_theme_field: black;
+}
+
+[mol_theme="$mol_theme_base"] {
+	--mol_theme_back: hsla( 210 , 60% , 50% , 1 );
+	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
+	--mol_theme_current: hsl(210, 100%, 20%);
+	--mol_theme_text: white;
+	--mol_theme_line: white;
+	--mol_theme_control: white;
+}
+
+[mol_theme="$mol_theme_accent"] {
+	--mol_theme_back: rgb(204, 68, 50);
+	--mol_theme_hover: rgb(165, 56, 42);
+	--mol_theme_text: white;
+	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
+	--mol_theme_control: white;
+}

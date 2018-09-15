@@ -6,6 +6,8 @@ namespace $ {
 	
 	export class $mol_object {
 		
+		static $ : $mol_object_context = $ as any
+
 		get $() {
 			const owner = this.object_owner()
 			return ( owner && owner.$ || $ ) as $mol_object_context

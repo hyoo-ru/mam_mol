@@ -33,11 +33,9 @@ $mol_app_calc $mol_page
 		value?val <=> formula!id?val \
 	Col_head!id $mol_float
 		dom_name \th
-		horizontal false
 		sub / <= col_title!id \
 	Row_head!id $mol_float
 		dom_name \th
-		vertical false
 		sub / <= row_title!id \
 	Cell!id $mol_app_calc_cell
 		value <= result!id \

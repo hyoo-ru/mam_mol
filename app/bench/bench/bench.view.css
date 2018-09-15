@@ -51,14 +51,10 @@
 
 [mol_app_bench_param_fields] {
 	flex: none;
-	background: var(--mol_skin_light);
-	color: var(--mol_skin_light_text);
 }
 
 [mol_app_bench_result] {
 	flex: 1000 1 50%;
-	background: var(--mol_skin_card);
-	color: var(--mol_skin_card_text);
 	font-size: .9rem;
 }
 

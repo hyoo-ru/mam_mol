@@ -41,13 +41,14 @@ namespace $ {
 				if(( next.status === 0 )||( Math.floor( next.status / 100 ) === 2 )) {
 					this.response( next , $mol_atom_force_cache )
 				} else {
-					this.response( new Error( next.statusText || next.responseText ) as any , $mol_atom_force_cache )
+					this.response( new Error( next.statusText || next.responseText || `HTTP error ${ next.status }` ) as any , $mol_atom_force_cache )
 				}
 			} )
 			
-			next.onerror = $mol_log_group( this.object_id() + ' error' , ( event : ErrorEvent ) => {
+			next.onerror = $mol_log_group( this.object_id() + ' error' , ( event : any ) => {
+				const right_event = event as ErrorEvent
 				new $mol_defer( ()=> {
-					this.response( event.error || new Error( 'Unknown HTTP error' ) , $mol_atom_force_cache )
+					this.response( right_event.error || new Error( 'Unknown HTTP error' ) , $mol_atom_force_cache )
 				} )
 			} )
 			

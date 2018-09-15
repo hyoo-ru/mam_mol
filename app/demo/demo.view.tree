@@ -2,12 +2,14 @@ $mol_app_demo $mol_book
 	title \$mol
 	source_prefix \https://github.com/eigenmethod/mol/tree/master/
 	Placeholder $mol_app_demo_placeholder
-		title <= title -
 	pages <= blocks /
+	attr *
+		mol_theme <= theme -
 	Menu $mol_app_demo_menu
 		hierarchy <= nav_hierarchy null
 		option!id <= nav_option!id null
 		filter?val <=> filter_string?val \
+		theme?val <=> theme?val \$mol_theme_light
 	Detail $mol_app_demo_detail
 		minimal_width 600
 		title <= title -
@@ -51,6 +53,11 @@ $mol_app_demo_menu $mol_page
 			hierarchy <= hierarchy null
 			record!id <= option!id null
 			needle <= filter?val \
+		<= Themes $mol_switch
+			value?val <=> theme?val \$mol_theme_light
+			options *
+				$mol_theme_light <= theme_light_title @ \Light theme
+				$mol_theme_dark <= theme_dark_title @ \Dark theme
 		
 $mol_app_demo_detail $mol_page
 	tools /
@@ -79,7 +86,7 @@ $mol_app_demo_nav $mol_grid
 	Head null
 	-
 	Option!id $mol_link
-		uri <= link!id \
+		arg <= arg!id *
 		sub /
 			<= Expand!id $mol_check_expand
 				expanded?val <=> cell_expanded!id?val -
@@ -87,4 +94,3 @@ $mol_app_demo_nav $mol_grid
 			<= Content!id $mol_view
 				sub /
 					<= cell_content!id -
-			<= Chevron!id $mol_icon_chevron

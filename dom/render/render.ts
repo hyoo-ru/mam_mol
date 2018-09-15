@@ -62,7 +62,8 @@ namespace $ {
 				
 			} else {
 				if( nextNode && nextNode.nodeName === '#text' ) {
-					nextNode.nodeValue = String( view )
+					const str = String( view )
+					if( nextNode.nodeValue !== str ) nextNode.nodeValue = str
 					nextNode = nextNode.nextSibling
 				} else {
 					const textNode = $mol_dom_context.document.createTextNode( String( view ) )

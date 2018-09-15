@@ -3,7 +3,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		submit_blocked( ) {
-			return this.form_fields().some( field => field.errors().length !== 0 )
+			return this.form_fields().some( field => field.bid() )
 		}
 		
 	}

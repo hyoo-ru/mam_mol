@@ -5,7 +5,6 @@
 	display: inline-flex;
 	flex-shrink: 0;
 	text-decoration: inherit;
-	color: inherit;
 	cursor: inherit;
 	position: relative;
 	box-sizing: border-box;
@@ -27,46 +26,20 @@
 }
 
 [mol_button_typed][disabled] {
-	color: var(--mol_skin_passive_text);
-	background: none;
+	color: var(--mol_theme_text);
 	pointer-events: none;
 }
 
 [mol_button_minor] {
-	box-shadow: var(--mol_skin_light_outline);
-	background-color: var(--mol_skin_light);
-	color: var(--mol_skin_light_text);
+	color: var(--mol_theme_control);
 }
 
-[mol_button_major] {
-	background-color: var(--mol_skin_accent);
-	color: var(--mol_skin_accent_text);
-	box-shadow: var(--mol_skin_light_outline);
-}
-
-[mol_button_danger] {
-	background-color: var(--mol_skin_warn);
-	color: var(--mol_skin_warn_text);
+[mol_button_major][disabled] {
+	opacity: .5;
 }
 
 [mol_button_typed]:hover ,
 [mol_button_typed]:focus {
 	cursor: pointer;
-	background-color: var(--mol_skin_hover);
-}
-
-[mol_button_minor]:hover ,
-[mol_button_minor]:focus {
-	background-color: var(--mol_skin_light_hover);
-	color: var(--mol_skin_light_text);
-}
-
-[mol_button_major]:hover ,
-[mol_button_major]:focus {
-	background-color: var(--mol_skin_accent_hover);
-}
-
-[mol_button_danger]:hover ,
-[mol_button_danger]:focus {
-	background-color: var(--mol_skin_warn_hover);
+	background-color: var(--mol_theme_hover);
 }

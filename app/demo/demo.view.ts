@@ -14,6 +14,10 @@ namespace $.$$ {
 			
 			return super.title()
 		}
+
+		theme( next?: '$mol_theme_light' | '$mol_theme_dark' ) {
+			return this.$.$mol_state_local.value( '$mol_app_demo_theme' , next ) || '$mol_theme_light'
+		}
 		
 		@ $mol_mem
 		names_demo_all() {
@@ -184,8 +188,8 @@ namespace $.$$ {
 			return super.cell( id )
 		}
 		
-		link( id : { row : string[] , col : string } ) {
-			return this.$.$mol_state_arg.make_link({ 'demo' : id.row[ id.row.length - 1 ] })
+		arg( id : { row : string[] , col : string } ) {
+			return { 'demo' : id.row[ id.row.length - 1 ] }
 		}
 		
 	}

@@ -2,8 +2,7 @@
 	line-height: 1.5;
 	box-sizing: border-box;
 	max-width: 60rem;
-	background: var(--mol_skin_card);
-	box-shadow: var(--mol_skin_light_outline);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	padding: .5rem;
 	border-radius: var(--mol_skin_round);
 	white-space: pre-line;
@@ -78,7 +77,7 @@
 }
 
 [mol_text_type="text-link"] {
-	color: var(--mol_skin_base);
+	color: var(--mol_theme_control);
 	text-decoration: none;
 }
 
@@ -104,7 +103,7 @@
 
 [mol_text_type="strike"] {
 	text-decoration: line-through;
-	color: var(--mol_skin_passive_text);
+	color: var(--mol_theme_shade);
 }
 
 [mol_text_type="code-keyword"] {

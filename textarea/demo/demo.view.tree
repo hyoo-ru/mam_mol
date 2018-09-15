@@ -1,0 +1,13 @@
+$mol_textarea_demo $mol_demo_small
+	title @ \Text input field in various states
+	sub /
+		<= Empty_descr $mol_textarea
+			hint \markdown
+			value?val <=> empty_descr?val \
+		<= Filled_descr $mol_textarea
+			value?val <=> filled_descr?val \
+				\Hello
+				\World
+		<= Disabled $mol_textarea
+			enabled false
+			value?val <=> filled_descr?val -

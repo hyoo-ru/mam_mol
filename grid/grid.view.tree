@@ -30,7 +30,6 @@ $mol_grid $mol_scroll
 			<= cell_content_number!id <= cell_content!id /
 	Col_head!id $mol_float
 		dom_name \th
-		horizontal false
 		sub /
 			<= col_head_content!id /
 	Cell_branch!id $mol_check_expand

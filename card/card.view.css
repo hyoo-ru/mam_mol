@@ -1,7 +1,7 @@
 [mol_card] {
-	box-shadow: var(--mol_skin_light_outline);
-	background: var(--mol_skin_card);
-	color: var(--mol_skin_light_text);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	background: var(--mol_theme_back);
+	color: var(--mol_theme_text);
 	border-radius: var(--mol_skin_round);
 	display: flex;
 	flex: 0 1 auto;
@@ -15,17 +15,16 @@
 }
 
 [mol_card_status] {
-	background: var(--mol_skin_light_line);
+	background: var(--mol_theme_line);
 	text-transform: capitalize;
 	padding: 0 1rem;
 	line-height: 2;
-	opacity: .75;
 	margin: 0;
 }
 
 [mol_card_status_type="approved"] {
-	box-shadow: 0 0 0 1px var(--mol_skin_good);
+	--mol_theme_line: hsl(140, 50%, 50%);
 }
-[mol_card_status_type="approved"] [mol_card_status] {
-	background: var(--mol_skin_good);
+[mol_card_status] {
+	background: var(--mol_theme_line);
 }

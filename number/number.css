@@ -26,6 +26,23 @@
 [mol_number_dec] {
 	margin: 0;
 	flex: 0 0 auto;
+	position: absolute;
+	padding: .75rem;
+	display: none;
+	z-index: 1;
+}
+
+[mol_number_inc] {
+	left: calc( 100% - .75rem );
+}
+
+[mol_number_dec] {
+	right: calc( 100% - .75rem );
+}
+
+[mol_number]:focus-within [mol_number_inc]:not([disabled]) ,
+[mol_number]:focus-within [mol_number_dec]:not([disabled]) {
+	display: flex;
 }
 
 [mol_number_inc_icon] ,

@@ -21,7 +21,7 @@ $mol_select $mol_pop
 			current_y?component <=> option_focused?component null
 			cycle?val <=> nav_cycle?val true
 	showed <= options_showed false
-	Anchor <= Trigger $mol_button_typed
+	Anchor <= Trigger $mol_button_minor
 		sub <= trigger_content /
 			<= option_content_current /
 			<= Filter $mol_string

@@ -5,11 +5,9 @@ $mol_form_demo $mol_demo_small
 			form_fields /
 				<= loginField $mol_form_field
 					name <= loginLabel @ \Login
-					errors <= loginErrors /
 					control <= loginControl $mol_string value?val <=> login?val \
 				<= passwordField $mol_form_field
 					name <= passwordLabel @ \Password
-					errors <= passwordErrors /
 					control <= passControl $mol_string
 						value?val <=> password?val \
 						type \password

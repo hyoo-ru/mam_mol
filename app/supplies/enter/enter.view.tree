@@ -4,11 +4,9 @@ $mol_app_supplies_enter $mol_view
 		form_fields /
 			<= loginField $mol_form_field
 				name <= loginLabel @ \User name
-				errors <= loginErrors /
 				control <= loginControl $mol_string value?val <=> login?val \
 			<= passwordField $mol_form_field
 				name <= passwordLabel @ \Pass word
-				errors <= passwordErrors /
 				control <= passControl $mol_string
 					value?val <=> password?val \
 					type \password

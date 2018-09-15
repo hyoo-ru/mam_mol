@@ -315,7 +315,7 @@ For example, to set the list of sub components you need to redefine `sub` proper
 ```tree
 Confirm_delte $mol_row sub /
 	<= Yes $mol_button_minor title \Yes
-	<= No $mol_button_danger title \No
+	<= No $mol_button_major title \No
 ```
 
 Or the same code through TypeScript would be:
@@ -424,6 +424,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_range2](range2)** - lazy array
 * **[$mol_maybe](maybe)** - [maybe monad](https://en.wikipedia.org/wiki/Monad_(functional_programming)#The_Maybe_monad)
 * **[$mol_conform](conform)** - object tree reconciler
+* **[$mol_dict](dict)** - usefull native `Map` extension
 
 ## [State modules](state)
 
@@ -456,6 +457,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_switch](switch)** - radio buttons
 * **[$mol_select](select)** - select with search and lazy rendering support
 * **[$mol_string](string)** - one string input control
+* **[$mol_textarea](textarea)** - multiple line input control
 * **[$mol_search](search)** - search string with suggests support
 * **[$mol_number](number)** - one number input control
 * **[$mol_code](code)** - bar code scanner

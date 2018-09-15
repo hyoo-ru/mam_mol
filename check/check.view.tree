@@ -1,4 +1,4 @@
-$mol_check $mol_button_typed
+$mol_check $mol_button_minor
 	attr *
 		^
 		mol_check_checked <= checked?val false

@@ -99,6 +99,8 @@ myProperty< Key , Value >( key : Key , next? : Value ) : Value // getter/setter
 myProperty< Key , Value >( key : Key , next? : Value , force? : $mol_atom_force ) : Value // getter/setter with force support
 ```
 
+$mol_mem_key uses [$mol_dict](../dict) inside.
+
 Examples of declarations:
 
 ```ts

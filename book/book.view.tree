@@ -18,8 +18,6 @@ $mol_book_placeholder $mol_scroll
 	attr *
 		^
 		tabindex null
-	sub /
-		<= title -
 
 $mol_book_page $mol_ghost
 	attr *

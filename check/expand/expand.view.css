@@ -1,10 +1,6 @@
 [mol_check_expand] {
 }
 
-[mol_check_expand][disabled] {
-	color: inherit;
-}
-
 [mol_check_expand][disabled] [mol_check_expand_icon] {
 	visibility: hidden;
 }

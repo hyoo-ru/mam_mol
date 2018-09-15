@@ -1,3 +1,8 @@
+deploy \/mol/logo/logo.svg
+deploy \/mol/logo/logo_16.png
+deploy \/mol/logo/logo_128.png
+deploy \/mol/logo/logo_192.png
+
 include \/mol/app/calc/demo
 include \/mol/app/files/demo
 include \/mol/app/habhub/demo
@@ -42,7 +47,6 @@ include \/mol/list/demo
 include \/mol/map/yandex/demo
 include \/mol/message/demo
 include \/mol/meter/demo
-include \/mol/nav/demo
 include \/mol/number/demo
 include \/mol/page/demo
 include \/mol/plot/demo
@@ -61,3 +65,4 @@ include \/mol/speech/demo
 include \/mol/string/demo
 include \/mol/switch/demo
 include \/mol/text/demo
+include \/mol/textarea/demo
