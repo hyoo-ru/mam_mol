@@ -16,6 +16,7 @@ include \/mol/app/signup/demo
 include \/mol/app/supplies/demo
 include \/mol/app/taxon/demo
 include \/mol/app/todomvc/demo
+include \/mol/app/tree/demo
 include \/mol/attach/demo
 include \/mol/bar/demo
 include \/mol/bench/demo
