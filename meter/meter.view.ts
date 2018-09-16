@@ -10,7 +10,7 @@ namespace $.$$ {
 				
 				try {
 					const { left , top , right , bottom , width , height } = node.getBoundingClientRect()
-					return { left , top , right , bottom , width , height }
+					return { left , top , right , bottom , width , height , zoom : window.devicePixelRatio || 1 }
 				} catch( error ) {
 					// IE11
 				}
@@ -18,6 +18,7 @@ namespace $.$$ {
 
 			const size = $mol_window.size()
 			return {
+				zoom : window.devicePixelRatio || 1 ,
 				left : 0 ,
 				top : 0 ,
 				right : size.width ,
@@ -55,6 +56,11 @@ namespace $.$$ {
 		@ $mol_mem
 		height() {
 			return this.rect().height
+		}
+		
+		@ $mol_mem
+		zoom() {
+			return this.rect().zoom
 		}
 		
 	}

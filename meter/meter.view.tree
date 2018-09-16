@@ -1,4 +1,6 @@
 $mol_meter $mol_plugin
+	zoom 1
+	-
 	width?val 0
 	height?val 0
 	-
