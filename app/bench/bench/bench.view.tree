@@ -8,7 +8,7 @@ $mol_app_bench $mol_view
 				<= Menu $mol_list
 					rows <= menu_options /
 		<= Main_page $mol_page
-			title <= title -
+			title <= title
 			body /
 				<= Inform $mol_view sub /
 					<= Descr_scroll $mol_scroll

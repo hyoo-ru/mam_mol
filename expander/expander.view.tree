@@ -5,7 +5,7 @@ $mol_expander $mol_list
 				<= Trigger $mol_check_expand
 					checked?val <=> expanded?val false
 					label <= label /
-						<= title -
+						<= title
 				<= tools /
 		<= Content $mol_view
 			sub <= content /

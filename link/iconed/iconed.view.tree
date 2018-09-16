@@ -3,5 +3,5 @@ $mol_link_iconed $mol_link
 		<= Icon $mol_image
 			uri <= icon \
 		<= content /
-			<= title <= uri -
+			<= title <= uri
 	host \

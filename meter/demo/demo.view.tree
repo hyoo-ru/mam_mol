@@ -8,8 +8,8 @@ $mol_meter_demo $mol_demo_small
 		<= Top $mol_view
 			sub /
 				\Offset from top: 
-				<= top -
+				<= top
 		<= Height $mol_view
 			sub /
 				\Component height: 
-				<= height -
+				<= height

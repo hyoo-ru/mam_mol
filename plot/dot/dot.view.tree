@@ -7,4 +7,4 @@ $mol_plot_dot $mol_plot_graph
 			geometry <= curve \
 	-
 	Sample $mol_plot_graph_sample
-		color <= color -
+		color <= color

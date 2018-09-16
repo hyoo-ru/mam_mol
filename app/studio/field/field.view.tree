@@ -2,11 +2,11 @@ $mol_app_studio_field $mol_expander
 	path /
 	Trigger $mol_app_studio_field_title
 		checked?val <=> expanded?val false
-		title <= title -
-		type <= type -
+		title <= title
+		type <= type
 	tools /
 		- <= Title $mol_app_studio_field_title
-			title <= title -
+			title <= title
 			type <= type?val \null
 		<= Type $mol_select
 			value?val <=> type?val \null

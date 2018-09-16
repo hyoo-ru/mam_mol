@@ -9,7 +9,7 @@ $mol_app_habhub $mol_book
 		<= Details $mol_page
 			minimal_width 600
 			title <= gist_current_title \
-			event_top?val <=> event_front_up?val -
+			event_top?val <=> event_front_up?val
 			tools /
 				<= Close $mol_link
 					arg <= close_arg * gist null

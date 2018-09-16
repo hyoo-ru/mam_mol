@@ -10,4 +10,4 @@ $mol_textarea_demo $mol_demo_small
 				\World
 		<= Disabled $mol_textarea
 			enabled false
-			value?val <=> filled_descr?val -
+			value?val <=> filled_descr?val

@@ -6,7 +6,7 @@ $mol_date $mol_pop
 	-
 	bubble_content /
 		<= Calendar $mol_date_calendar
-			month_string <= value -
+			month_string <= value
 			day_selected!day <= day_selected!day false
 			day_click!day?event <=> day_click!day?event null
 	-
@@ -16,5 +16,5 @@ $mol_date $mol_pop
 $mol_date_calendar $mol_calendar
 	day_content!day /
 		<= Day_button!day $mol_button
-			title <= day_text!day -
+			title <= day_text!day
 			event_click?event <=> day_click!day?event null

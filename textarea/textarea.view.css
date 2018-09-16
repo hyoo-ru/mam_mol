@@ -9,14 +9,13 @@
 	position: relative;
 	z-index: 0;
 	flex: 1 1 auto;
-	background: var(--mol_theme_field);
 	color: inherit;
 	white-space: pre-wrap;
 	min-height: calc( 1rem + 1.5em );
 }
 
-[mol_textarea][contentEditable="false"] {
-	background-color: transparent;
+[mol_textarea][contentEditable="true"] {
+	background: var(--mol_theme_field);
 }
 
 [mol_textarea]:focus {

@@ -5,7 +5,7 @@ $mol_search $mol_bar
 			value?val <=> suggest_selected?val \
 			filter_pattern?val <=> suggest_selected?val \
 			hint <= hint @ \Search...
-			filter_pattern?val <=> query?val -
+			filter_pattern?val <=> query?val
 			options_showed <= suggests_showed false
 			options <= suggests /
 			Trigger_icon null

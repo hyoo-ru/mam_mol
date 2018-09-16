@@ -6,13 +6,13 @@ $mol_app_studio $mol_book
 			title <= preview_title @ \Preview: 
 			tools /
 				<= Source_link $mol_link
-					hint <= source_title -
+					hint <= source_title
 					sub /
 						<= Source_icon $mol_icon_source
 					arg <= source_arg *
 						source \
 				<= Edit $mol_link
-					hint <= editor_title -
+					hint <= editor_title
 					sub /
 						<= Edit_icon $mol_icon_settings
 					arg *
@@ -32,7 +32,7 @@ $mol_app_studio $mol_book
 					patterns <= speech_filter_patterns /
 						\find (.+?)
 			title <= editor_title @ \Properties
-			event_top?val <=> event_front_up?val -
+			event_top?val <=> event_front_up?val
 			tools /
 				- <= Speech_toggle $mol_check_icon
 					Icon <= Speech_toggle_icon $mol_icon_microphone

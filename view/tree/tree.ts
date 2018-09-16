@@ -35,12 +35,7 @@ namespace $ {
 
 					return node.clone({
 						sub : [ node.sub[0].clone({
-							sub : [
-								node.sub[0].clone({
-									type : '-' ,
-									sub : [] ,
-								})
-							]
+							sub : []
 						}) ]
 					})
 					
@@ -145,7 +140,7 @@ namespace $ {
 						case( value.type === '@' ) :
 							const key = `${ def.type }_${ param.type.replace( /[?!].*/ , '' ) }`
 							locales[ key ] = value.value
-							return`$mol_locale.text( ${ JSON.stringify( key ) } )`
+							return `this.$.$mol_locale.text( ${ JSON.stringify( key ) } )`
 						case( value.type === '-' ) :
 							return null
 						case( value.type === '/' ) :
@@ -239,7 +234,6 @@ namespace $ {
 				} }
 				
 				if( param.sub.length > 1 ) throw new Error( 'Too more sub' )
-				if( param.sub.length < 1 ) throw new Error( 'Need default value (use "-" for inherit)' )
 				
 				param.sub.forEach( child => {
 					var val = getValue( child )

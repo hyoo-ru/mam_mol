@@ -3,4 +3,4 @@ $mol_image $mol_view
 	field *
 		^
 		src <= uri \
-		alt <= title -
+		alt <= title

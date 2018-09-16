@@ -5,7 +5,7 @@ $mol_page $mol_view
 			sub <= head /
 				<= Title $mol_button
 					sub /
-						<= title -
+						<= title
 					event_click?val <=> event_top?val null
 				<= Tools $mol_view
 					sub <= tools /

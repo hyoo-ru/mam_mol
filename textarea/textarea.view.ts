@@ -10,29 +10,47 @@ namespace $.$$ {
 		event_key_press( next? : KeyboardEvent ) { 
 			if( !next ) return
 			
-			if( next.keyCode === $mol_keyboard_code.enter ) {
-				
-				const selection = this.$.$mol_dom_context.document.getSelection()
-				let offset = selection.focusOffset
-				
-				const element = this.dom_node()
-				const node = element.childNodes[0]
+			switch( next.keyCode ) {
 
-				let text = node.textContent
-				if( text.length === offset ) {
-					text = text.replace( /\n?$/, '\n\n' )
-				} else {
-					text = text.slice( 0 , offset ) + '\n' + text.slice( offset )
-				}
-				node.textContent = text
-				
-				const range = selection.getRangeAt(0)
-				range.setStart( node , offset + 1 )
-				
-				this.commit()
-				
-				next.preventDefault()
+				case $mol_keyboard_code.enter :
+					this.insert( '\n' )
+					next.preventDefault()
+					break
+
+				case $mol_keyboard_code.tab :
+					this.insert( '\t' )
+					next.preventDefault()
+					break
+
 			}
+
+		}
+
+		event_paste( event? : ClipboardEvent ) {
+			this.insert( event.clipboardData.getData( 'text/plain').replace( /\r/g , '' ) )
+			event.preventDefault()
+		}
+
+		insert( injection : string ) {
+
+			const selection = this.$.$mol_dom_context.document.getSelection()
+			let offset = selection.focusOffset
+			
+			const element = this.dom_node()
+			const node = element.childNodes[0]
+
+			let text = node.textContent
+			if( text.length === offset ) {
+				text = text.replace( /\n?$/, '\n\n' )
+			} else {
+				text = text.slice( 0 , offset ) + injection + text.slice( offset )
+			}
+			node.textContent = text
+			
+			const range = selection.getRangeAt(0)
+			range.setStart( node , offset + injection.length )
+			
+			this.commit()
 		}
 
 		_timer = 0
