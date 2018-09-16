@@ -4,7 +4,9 @@ namespace $ {
 
 	export function $mol_owning_allow< Having >(
 		having : Having ,
-	) : having is Having & { destructor() : void } {
+	) : having is Having & {
+		destructor() : void
+	} {
 		if( !having ) return false
 		if( typeof having !== 'object' ) return false
 		if(!( 'destructor' in having )) return false
@@ -29,9 +31,11 @@ namespace $ {
 		owner : Owner ,
 		having : Having ,
 	) {
-		if( !$mol_owning_allow( having ) ) return
-		if( $mol_owning_map.get( having ) === owner ) return
+		if( !$mol_owning_allow( having ) ) return false
+		if( $mol_owning_map.get( having ) === owner ) return false
+
 		$mol_owning_map.set( having , owner )
+		return true
 	}
 
 }
