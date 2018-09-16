@@ -4,7 +4,7 @@ namespace $ {
 	
 	export class $mol_object2 {
 		
-		static $ = $ as ( typeof $ ) & Window
+		static $ = $ as ( typeof $ ) & Window & { Promise : PromiseConstructor }
 		$ = this.constructor['$'] as typeof $mol_object2.$
 
 		public static make< Instance >( this : { new() : Instance } , config : Partial< Instance > ) : Instance {
@@ -16,8 +16,12 @@ namespace $ {
 		static toString() : string {
 			return $mol_func_name( this )
 		}
-		
+
 		destructor() { }
+
+		toString() {
+			return `<${ this.constructor.toString() }>`
+		}
 		
 	}
 	
