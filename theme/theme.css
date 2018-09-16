@@ -7,7 +7,7 @@
 [mol_theme="$mol_theme_light"] , :root {
 	--mol_theme_back: #fcfcfc;
 	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
-	--mol_theme_current: hsl(210, 100%, 80%);
+	--mol_theme_current: hsl( 210 , 100% , 80% );
 	--mol_theme_text: rgba( 0 , 0 , 0 , .9 );
 	--mol_theme_control: hsla( 210 , 60% , 40% , 1 );
 	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );
@@ -19,7 +19,7 @@
 [mol_theme="$mol_theme_dark"] {
 	--mol_theme_back: #0b1b28;
 	--mol_theme_hover: #333;
-	--mol_theme_current: hsl(210, 100%, 20%);
+	--mol_theme_current: hsl( 210 , 100% , 20% );
 	--mol_theme_text: rgba( 255 , 255 , 255 , .9 );
 	--mol_theme_control: hsla( 210 , 60% , 60% , 1 );
 	--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );
@@ -31,7 +31,7 @@
 [mol_theme="$mol_theme_base"] {
 	--mol_theme_back: hsla( 210 , 60% , 50% , 1 );
 	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
-	--mol_theme_current: hsl(210, 100%, 20%);
+	--mol_theme_current: hsl( 210 , 100% , 20% );
 	--mol_theme_text: white;
 	--mol_theme_line: white;
 	--mol_theme_control: white;

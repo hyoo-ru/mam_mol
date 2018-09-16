@@ -15,20 +15,16 @@
 	position: absolute; 
 	left: 0;
 	top: 0;
-	z-index: 1;
 }
 
 [mol_book] > [mol_book_page_focused]:not([mol_book_page_visible]) ~ * {
 	opacity: .25;
-}
-
-[mol_book] > [mol_book_page_focused]:not([mol_book_page_visible]) ~ * {
 	pointer-events: none;
+	z-index: -1;
 }
 
 [mol_book] > *:not([mol_book_page_visible]):not([mol_book_page_focused]) {
 	transform: translate3d( -100% , 0 , 0 );
-	z-index: 0;
 }
 
 [mol_book] > *:not([mol_book_page_visible]):not([mol_book_page_focused]) + *:before {
@@ -71,9 +67,10 @@
 	from {
 		transform: translateX( 100% );
 		opacity: 0;
+		z-index: -1;
 	}
 }
 
-[mol_book_page_visible]:not(:first-child) {
-	animation: mol_book_page_show .2s ease; 
+[mol_book_page]:not(:first-child) {
+	animation: mol_book_page_show .2s ease-out;
 }
