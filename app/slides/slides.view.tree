@@ -4,6 +4,11 @@ $mol_app_slides $mol_view
 		mol_app_slides_role <= role \ 
 	contents?val \
 	plugins /
+		<= Nav $mol_nav
+			keys_y <= slide_keys /
+			keys_x <= slide_keys /
+			current_y?val <=> slide?val 0
+			current_x?val <=> slide?val 0
 		<= Speech_next $mol_speech
 			event_catch?val <=> event_next?val null
 			patterns <= speech_next /

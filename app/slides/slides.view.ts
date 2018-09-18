@@ -88,6 +88,11 @@ namespace $.$$ {
 			
 			return this.slide_local( this.uri_slides() , str && Number( str ) ) || 0
 		}
+
+		@ $mol_mem
+		slide_keys() {
+			return this.content_pages().map( ( _ , index )=> index )
+		}
 		
 		role( next? : 'speaker' | 'listener' ) {
 			return $mol_state_arg.value( this.state_key( 'role' ) , next )
