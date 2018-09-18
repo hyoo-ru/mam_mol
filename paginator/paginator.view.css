@@ -1,0 +1,17 @@
+[mol_paginator_backward] ,
+[mol_paginator_forward] {
+	padding: .75rem;
+	margin: 0 -.75rem;
+}
+
+[mol_paginator_value] {
+	padding: .75rem 0;
+}
+
+[mol_paginator_backward_icon] {
+	transform: scale( -1 , 1 );
+}
+
+:hover > [mol_paginator_backward_icon] {
+	transform: scale( -1.2 , 1.2 );
+}
