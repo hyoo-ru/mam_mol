@@ -52,9 +52,8 @@ $mol_app_slides $mol_view
 		<= Listener $mol_page
 			title <= title
 			tools /
-				<= Slide_number $mol_view
-					sub /
-						<= slide?val 0
+				<= Slide_switcher $mol_paginator
+					value?val <=> slide?val 0
 			body /
 				<= Listener_content $mol_text
 					uri_base <= uri_base \
@@ -76,8 +75,6 @@ $mol_app_slides $mol_view
 					Icon <= Speech_toggle_icon $mol_icon_microphone
 					checked?val <=> speech_enabled?val false
 					hint <= speech_toggle_hint @ \Speech contol
-				<= Slide_switcher $mol_number
-					value?val <=> slide?val 0
 			body /
 				<= Speaker_content $mol_text
 					uri_base <= uri_base \
