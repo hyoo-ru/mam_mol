@@ -1,0 +1,11 @@
+$mol_paginator $mol_view
+	sub /
+		<= Backward $mol_button_minor
+			hint <= backward_hint @ \Назад
+			click?event <=> backward?event null
+			sub / <= Backward_icon $mol_icon_chevron
+		<= Value $mol_view sub / <= value?val 0
+		<= Forward $mol_button_minor
+			hint <= forward_hint @ \Вперёд
+			click?event <=> forward?event null
+			sub / <= Forward_icon $mol_icon_chevron

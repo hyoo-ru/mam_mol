@@ -92,10 +92,10 @@ namespace $.$$ {
 		task( id : number , next? : $mol_app_todomvc_task ) {
 			const key = this.state_key( `mol-todos-${id}` )
 			if( next === void 0 ) {
-				return $mol_state_local.value<$mol_app_todomvc_task>( key ) || { title : '' , completed : false }
+				return this.$.$mol_state_local.value<$mol_app_todomvc_task>( key ) || { title : '' , completed : false }
 			}
 			
-			$mol_state_local.value( key , next )
+			this.$.$mol_state_local.value( key , next )
 			
 			return next || void 0
 		}

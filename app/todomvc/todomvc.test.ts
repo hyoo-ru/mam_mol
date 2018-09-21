@@ -13,8 +13,8 @@ namespace $.$$ {
 
 			$mol_assert_equal( app.task_ids().toString() , '1' )
 
-			$mol_assert_equal( app.Task_row(0).title() , 'test title' )
-			$mol_assert_equal( app.Task_row(0).completed() , false )
+			$mol_assert_equal( app.Task_row(1).title() , 'test title' )
+			$mol_assert_equal( app.Task_row(1).completed() , false )
 			
 			$mol_assert_equal( app.Add().value() , '' )
 

@@ -4,6 +4,11 @@ $mol_app_slides $mol_view
 		mol_app_slides_role <= role \ 
 	contents?val \
 	plugins /
+		<= Nav $mol_nav
+			keys_y <= slide_keys /
+			keys_x <= slide_keys /
+			current_y?val <=> slide?val 0
+			current_x?val <=> slide?val 0
 		<= Speech_next $mol_speech
 			event_catch?val <=> event_next?val null
 			patterns <= speech_next /
@@ -52,9 +57,8 @@ $mol_app_slides $mol_view
 		<= Listener $mol_page
 			title <= title
 			tools /
-				<= Slide_number $mol_view
-					sub /
-						<= slide?val 0
+				<= Slide_switcher $mol_paginator
+					value?val <=> slide?val 0
 			body /
 				<= Listener_content $mol_text
 					uri_base <= uri_base \
@@ -76,8 +80,6 @@ $mol_app_slides $mol_view
 					Icon <= Speech_toggle_icon $mol_icon_microphone
 					checked?val <=> speech_enabled?val false
 					hint <= speech_toggle_hint @ \Speech contol
-				<= Slide_switcher $mol_number
-					value?val <=> slide?val 0
 			body /
 				<= Speaker_content $mol_text
 					uri_base <= uri_base \

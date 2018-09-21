@@ -88,6 +88,11 @@ namespace $.$$ {
 			
 			return this.slide_local( this.uri_slides() , str && Number( str ) ) || 0
 		}
+
+		@ $mol_mem
+		slide_keys() {
+			return this.content_pages().map( ( _ , index )=> index )
+		}
 		
 		role( next? : 'speaker' | 'listener' ) {
 			return $mol_state_arg.value( this.state_key( 'role' ) , next )
@@ -145,12 +150,12 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		timing_total() {
-			return this.timings().reduce( ( a , b )=> a + b , 0 )
+			return this.timings().slice( 1 ).reduce( ( a , b )=> a + b , 0 )
 		}
 		
 		@ $mol_mem
 		progress() {
-			const timing = this.timings().slice( 0 , this.slide() ).reduce( ( a , b )=> a + b , 0 )
+			const timing = this.timings().slice( 1 , this.slide() + 1 ).reduce( ( a , b )=> a + b , 0 )
 			return timing / this.timing_total()
 		}
 		
