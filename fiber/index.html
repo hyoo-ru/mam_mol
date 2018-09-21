@@ -34,7 +34,7 @@
 
 <body>
 
-<button onclick="run()">Run</button>
+<button onclick="Demo.run()">Run</button>
 
 <div id="red">Red</div>
 <div id="green">Green</div>
@@ -58,28 +58,38 @@
 <script>
 
 	const step = $mol_fiber_func( function step( sandbox ) {
-		if( Math.random() > .99 ) throw new Error( 'Test error' )
+		if( Math.random() > .999 ) throw new Error( 'Test error' )
 		sandbox.appendChild( document.createElement( 'video' ) )
 	} )
+
+	const now = $mol_fiber_func( Date.now )
 
 	const walk = $mol_fiber_func( function walk( sandbox ) {
 
 		$mol_fiber_catch( error => {
 			sandbox.innerText = error.message
+			return error
 		} )
 		
-		let start = $mol_fiber_start( ()=> Date.now() )
+		let start = now()
 
-		for( let i = 0 ; i < 100 ; ++i ) step( sandbox , i )
+		for( let i = 0 ; i < 200 ; ++i ) step( sandbox , i )
 		
-		$mol_fiber_start( ()=> sandbox.innerText = Date.now() - start )
+		sandbox.innerText = Date.now() - start
 
 	} )
 
-	function run() {
-		$mol_fiber_defer( ()=> walk( red ) )
-		$mol_fiber_defer( ()=> walk( green ) )
-		$mol_fiber_defer( ()=> walk( blue ) )
+	class Demo {
+
+		static red_task() { walk( red ) }
+		static green_task() { walk( green ) }
+		static blue_task() { walk( blue ) }
+
+		static run() {
+			$mol_fiber_defer( this.red_task )
+			$mol_fiber_defer( this.green_task )
+			$mol_fiber_defer( this.blue_task )
+		}
 	}
 
 </script>

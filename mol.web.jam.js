@@ -5,7 +5,7 @@
 /// 	namespace $.$$ { export var x = 2 } // overrides
 /// 	namespace $.$$ { console.log( x , y ) } // usage
 ///
-var $ = $ || ( typeof module === 'object' ) && module['export'+'s'] || ( typeof window === 'object' ) && window
+var $ = ( typeof module === 'object' ) ? Object.setPrototypeOf( module['export'+'s'] , window ) : window
 $.$$ = $
 
 $.$mol = $  // deprecated

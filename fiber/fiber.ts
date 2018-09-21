@@ -4,13 +4,16 @@ namespace $ {
 
 	export function $mol_fiber_make< Result = void >( handler : ()=> Result , abort? : void | ( ()=> void ) ) {
 		if( $mol_fiber.current ) $mol_fiber.current.step()
+
 		let master = $mol_fiber.current && $mol_fiber.current.master as $mol_fiber< Result >
 		if( master ) return master 
 		
-		return new $mol_fiber< Result >( $mol_fiber.current , handler , abort )
+		const id = `${ $mol_fiber.current || '$mol_fiber' }/${ $mol_fiber.current ? $mol_fiber.current.cursor : '' }:${ $mol_func_name( handler ) }`
+		return new $mol_fiber< Result >( id , $mol_fiber.current , handler , abort )
 	}
 	
 	export function $mol_fiber_start< Result = void >( handler : ()=> Result ) {
+		// if( !$mol_fiber.current ) return handler()
 		return $mol_fiber_make( handler ).start()
 	}
 
@@ -21,7 +24,7 @@ namespace $ {
 
 	export function $mol_fiber_func< Handler extends ( ... args : any[] )=> Result , Result = void >( handler : Handler ) {
 		return function $mol_fiber_func_wrapper( ... args : any[] ) {
-			return $mol_fiber_make( handler.bind( this , ... args ) as ()=> Result ).start()
+			return $mol_fiber_make( $mol_func_name_from( handler.bind( this , ... args ) as ()=> Result , handler ) ).start()
 		} as Handler
 	}
 
@@ -30,19 +33,24 @@ namespace $ {
 		name : string ,
 		descr : TypedPropertyDescriptor< ( ... args : any[] )=> Result >
 	) {
-		descr.value = $mol_fiber_func( descr.value )
+		const value = descr.value
+		descr.value = function $mol_fiber_method_wrapper( ... args : any[] ) {
+			const handler = value.bind( this , ... args ) as ()=> Result
+			handler[ Symbol.toStringTag ] = `${ this }.${ name }()`
+			return $mol_fiber_start( handler )
+		}
 	}
 
 	export function $mol_fiber_sync< Result = void >(
 		request : ()=> PromiseLike< Result >
 	) : Result {
 
-		const fiber = $mol_fiber_make< Result >( ()=> {
+		const fiber = $mol_fiber_make< Result >( $mol_func_name_from( ()=> {
 			throw request().then(
 				res => { fiber.done( res ) } ,
 				error => { fiber.fail( error ) } ,
 			)
-		} )
+		} , request ) )
 
 		return fiber.start()
 
@@ -56,7 +64,7 @@ namespace $ {
 		)=> { (): any } | void
 	) : Result {
 
-		const fiber = $mol_fiber_make< Result >( ()=> {
+		const fiber = $mol_fiber_make< Result >( $mol_func_name_from( ()=> {
 			
 			const promise = new Promise( ( done , fail )=> {
 
@@ -78,7 +86,7 @@ namespace $ {
 
 			throw promise
 
-		} )
+		} , request ) )
 
 		return fiber.start()
 
@@ -92,10 +100,17 @@ namespace $ {
 		$mol_fiber.current.catcher = catcher
 	}
 
-	export class $mol_fiber< Result = any > extends $mol_object2 {
+	export function $mol_fiber_fence( func : ()=> any ) {
+		const prev = $mol_fiber.current
+		try {
+			$mol_fiber.current = null
+			func()
+		} finally {
+			$mol_fiber.current = prev
+		}
+	}
 
-		static $ : typeof $mol_object2.$ & { Promise : PromiseConstructor }
-		$ : typeof $mol_object2.$ & { Promise : PromiseConstructor }
+	export class $mol_fiber< Result = any > extends $mol_object2 {
 
 		static quant = 8
 
@@ -137,11 +152,14 @@ namespace $ {
 		static queue = [] as ( ()=> void )[]
 
 		constructor(
+			id : string ,
 			public slave : $mol_fiber ,
 			public handler : ()=> Result ,
 			public abort? : void | ( ()=> void ) ,
 		) {
 			super()
+			
+			this.toString = $mol_const( id )
 
 			if( slave ) {
 				slave.master = this
@@ -173,6 +191,8 @@ namespace $ {
 			this.abort = null
 			this.destructor()
 			
+			this.$.$mol_log( this , result )
+
 			return result
 		}
 
@@ -181,7 +201,7 @@ namespace $ {
 		fail( error : Error | Promise<Result> ) : Error | Promise<Result> {
 			if( !this.masters ) return
 			
-			if( error instanceof Promise ) {
+			if( error instanceof this.$.Promise ) {
 				const self = this
 				const listener = function $mol_fiber_listener() {
 					return self.start()
@@ -190,7 +210,6 @@ namespace $ {
 			} else {
 				if( !$mol_fiber.catched.has( error ) ) {
 					if( error.stack ) error.stack = error.stack.replace( /.*\$mol_fiber.*[\n\r]*/g , '' )
-					console.error( error )
 					$mol_fiber.catched.add( error )
 				}
 			}
@@ -199,7 +218,7 @@ namespace $ {
 				const value = this.catcher( error )
 				if(!( value instanceof Error )) {
 					this.done( value )
-					return error
+					return value
 				}
 			}
 
@@ -207,6 +226,8 @@ namespace $ {
 			this.abort = null
 			this.destructor()
 			
+			this.$.$mol_log( this , error )
+
 			return error
 		}
 
@@ -226,6 +247,7 @@ namespace $ {
 				return
 			}
 
+			this.$.$mol_log( this , '⏱' )
 			throw this.schedule()
 		}
 
@@ -234,34 +256,39 @@ namespace $ {
 			if( this.masters ) {
 	
 				if( $mol_fiber.current ) {
+					this.$.$mol_log( this , 'execute' )
 					this.execute()
 				} else {
+					this.$.$mol_log( this , 'execute in catcher' )
 
 					const self = this
-					new Promise( function $mol_fiber_catcher() {
+					$mol_catcher.run( function $mol_fiber_catcher() {
 						self.execute()
-					} ).catch( error => {
+					} , error => {
 
 						let fiber = this as $mol_fiber
 						while( fiber.masters && fiber.master && fiber.master.masters ) fiber = fiber.master
 
 						while( fiber ) {
-							error = fiber.fail( error )
+							const res = fiber.fail( error )
 
-							if( error instanceof Promise ) return
+							if( res instanceof Promise ) return
 
-							if( error instanceof Error ) {
+							if( res instanceof Error ) {
+								error = res
 								fiber = fiber.slave
 								continue
 							} else {
-								if( fiber.slave ) fiber.slave.start()
-								break
+								if( fiber.slave ) fiber.slave.schedule().then( ()=> fiber.slave.start() )
+								return
 							}
 
 						}
+
+						throw error
 						
 					} )
-					
+
 				}
 
 			}
@@ -283,7 +310,7 @@ namespace $ {
 				$mol_fiber.current = this
 				var res = this.handler()
 				this.done( res )
-				if( !slave && this.slave ) this.schedule().then( this.slave.start() )
+				if( !slave && this.slave ) this.slave.schedule().then( ()=> this.slave.start() )
 			} finally {
 				$mol_fiber.current = slave
 			}
@@ -292,7 +319,7 @@ namespace $ {
 		}
 
 		step() {
-			++ this.cursor
+			return ++ this.cursor
 		}
 
 		get master() {
@@ -300,11 +327,6 @@ namespace $ {
 		}
 		set master( next : $mol_fiber ) {
 			this.masters[ this.cursor ] = next
-		}
-
-		toString() {
-			if( !this.slave ) return ''
-			return this.slave + '/' + this.slave.masters.indexOf( this )
 		}
 
 	}
