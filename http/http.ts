@@ -28,7 +28,11 @@ namespace $ {
 		headers() {
 			return {}
 		}
-		
+
+		type() : '' | 'text' | 'document' | 'json' | 'blob' | 'arraybuffer' {
+			return ''
+		}
+
 		'request()' : XMLHttpRequest
 		request() {
 			if( this[ 'request()' ] ) return this[ 'request()' ]
@@ -59,7 +63,7 @@ namespace $ {
 			const native = this[ 'request()' ]
 			if( native ) native.abort()
 		}
-		
+
 		@ $mol_mem
 		response( next? : any , force? : $mol_atom_force ) : XMLHttpRequest {
 			const creds = this.credentials()
@@ -68,6 +72,7 @@ namespace $ {
 			const uri = this.uri()
 			
 			native.open( method , uri , true , creds && creds.login , creds && creds.password )
+			native.responseType = this.type()
 			
 			const headers = this.headers()
 			for( let name in headers ) native.setRequestHeader( name , headers[ name ] )
@@ -77,8 +82,12 @@ namespace $ {
 			throw new $mol_atom_wait( `${ method } ${ uri }` )
 		}
 		
-		text( next? : string , force? : $mol_atom_force ) : string {
+		text( next? : string , force? : $mol_atom_force ) {
 			return this.response( next , force ).responseText
+		}
+		
+		xml( next? : string , force? : $mol_atom_force ) {
+			return this.response( next , force ).responseXML
 		}
 		
 		@ $mol_mem
