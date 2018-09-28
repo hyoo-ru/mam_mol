@@ -2,10 +2,12 @@ namespace $ {
 
 	export function $mol_bind<
 		Slave extends object ,
+		Slave_keys extends keyof Slave ,
+		Master_keys extends keyof Master ,
 		Master extends object
 	>(
 		slave : Slave , 
-		mapping : { [ key in keyof Slave ] : keyof Master } ,
+		mapping : { [ key in Slave_keys ] : Master_keys } ,
 		master : Master ,
 	) {
 		for( let slave_field in mapping ) {
@@ -14,7 +16,7 @@ namespace $ {
 			const descr = Object.getOwnPropertyDescriptor( slave , slave_field )
 
 			Object.defineProperty( slave , slave_field , {
-				enumerable : descr.enumerable ,
+				enumerable : descr ? descr.enumerable : true ,
 				get : ()=> master[ master_field ] ,
 				set : next => { master[ master_field ] = next } ,
 			} )
