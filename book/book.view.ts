@@ -48,8 +48,7 @@ namespace $.$$ {
 		}
 		
 		title() {
-			const pages = this.pages()
-			return pages[ pages.length - 1 ].title()
+			return this.pages().map( page => page.title() ).reverse().join( ' | ' )
 		}
 
 		event_front_up( event? : Event ) {

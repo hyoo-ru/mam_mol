@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	export class $mol_app_demo extends $.$mol_app_demo {
 		
-		title() {
+		detail_title() {
 			const selected = this.selected()
 			if( selected ) {
 				const names = this.names_demo() 
