@@ -50,7 +50,7 @@ namespace $ {
 				}
 				range.setStart( cur , start )
 				
-				var cur = root.firstChild
+				var cur : Node = root.firstChild
 				while( cur !== root ) {
 					while( cur.firstChild ) cur = cur.firstChild
 					if( cur.nodeValue ) {
