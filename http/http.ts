@@ -29,7 +29,7 @@ namespace $ {
 			return {}
 		}
 
-		type() : '' | 'text' | 'document' | 'json' | 'blob' | 'arraybuffer' {
+		response_type() : '' | 'text' | 'document' | 'json' | 'blob' | 'arraybuffer' {
 			return ''
 		}
 
@@ -72,7 +72,7 @@ namespace $ {
 			const uri = this.uri()
 			
 			native.open( method , uri , true , creds && creds.login , creds && creds.password )
-			native.responseType = this.type()
+			native.responseType = this.response_type()
 			
 			const headers = this.headers()
 			for( let name in headers ) native.setRequestHeader( name , headers[ name ] )
