@@ -16,11 +16,7 @@ namespace $ {
 		}
 	}
 	
-	setImmediate(
-		()=> {
-			$mol_build_start( process.argv.slice( 2 ) )
-		}
-	)
+	setTimeout( ()=> $mol_build_start( process.argv.slice( 2 ) ) )
 	
 	export class $mol_build extends $mol_object {
 		

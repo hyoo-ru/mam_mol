@@ -32,7 +32,7 @@ namespace $ {
 				
 				var range = new Range
 				
-				var cur = root.firstChild
+				var cur : Node = root.firstChild
 				while( cur !== root ) {
 					while( cur.firstChild ) cur = cur.firstChild
 					if( cur.nodeValue ) {

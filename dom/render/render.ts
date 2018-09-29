@@ -34,7 +34,7 @@ namespace $ {
 			}
 		}
 		
-		let nextNode = el.firstChild
+		let nextNode : Node = el.firstChild
 		for( let view_ of node_list ) {
 			const view = view_.valueOf() as Node
 			
