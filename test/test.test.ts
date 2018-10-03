@@ -2,12 +2,7 @@ namespace $ {
 
 	export namespace $$ { let $ }
 	
-	export type $mol_test_context = ( Window )&( typeof $.$$ )&( typeof $ )&{
-		Math : Math
-		XMLHttpRequest : typeof XMLHttpRequest
-	}
-
-	export function $mol_test( set : { [ name : string ] : string | ( ( context : $mol_test_context )=> void ) } ) {
+	export function $mol_test( set : { [ name : string ] : string | ( ( context : $mol_ambient_context )=> void ) } ) {
 		for( let name in set ) {
 			const code = set[ name ]
 			const test = ( typeof code === 'string' ) ? new Function( '' , code ) as ()=> void : code
@@ -16,9 +11,9 @@ namespace $ {
 		$mol_test_schedule()
 	}
 
-	export let $mol_test_mocks = [] as Array< ( context : $mol_test_context )=> void >
+	export let $mol_test_mocks = [] as Array< ( context : $mol_ambient_context )=> void >
 
-	export const $mol_test_all = [] as Array< ( context : $mol_test_context )=> void >
+	export const $mol_test_all = [] as Array< ( context : $mol_ambient_context )=> void >
 
 	export function $mol_test_run() {
 		for( var test of $mol_test_all ) {

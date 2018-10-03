@@ -4,9 +4,6 @@ namespace $ {
 	export namespace $$ { let $$ }
 	export namespace $mol { let $mol }
 	
-	/// Use $mol_object_context instead
-	export type $mol_view_context = $mol_object_context
-	
 	export function $mol_view_visible_width() {
 		return $mol_window.size().width
 	}
@@ -61,13 +58,13 @@ namespace $ {
 		} 
 		
 		@ $mol_mem
-		context( next? : $mol_object_context ) {
-			return next || $ as $mol_object_context
+		context( next? : $mol_ambient_context ) {
+			return next || $ as $mol_ambient_context
 		}
 		get $() {
 			return this.context()
 		}
-		set $( next : $mol_view_context ) {
+		set $( next : $mol_ambient_context ) {
 			this.context( next )
 		}
 		

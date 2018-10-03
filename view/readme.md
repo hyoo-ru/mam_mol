@@ -14,7 +14,7 @@ Returns namespaceURI for the DOM element.
 **`sub() : Array< $mol_view | Node | string | number | boolean > = null `**
 Returns list of child components/elements/primitives. If the list have not been set (by default), then the content of the DOM-element would not be changed in way, it's helpful for manual operating with DOM.
 
-**`context( next? : $mol_view_context ) : $mol_view_context`**
+**`context( next? : $mol_ambient_context ) : $mol_ambient_context`**
 Some rendering context. Parent node injects context to all rendered child components.
 
 **`minimal_height()` = 0**

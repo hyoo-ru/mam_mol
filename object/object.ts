@@ -2,15 +2,13 @@ namespace $ {
 
 	export namespace $$ { let $ }
 	
-	export type $mol_object_context = ( Window )&( typeof $.$$ )&( typeof $ )
-	
 	export class $mol_object {
 		
-		static $ : $mol_object_context = $ as any
+		static $ : $mol_ambient_context = $ as any
 
 		get $() {
 			const owner = this.object_owner()
-			return ( owner && owner.$ || $ ) as $mol_object_context
+			return ( owner && owner.$ || $ ) as $mol_ambient_context
 		}
 		
 		public static make< Instance >( this : { new() : Instance } , config : Partial< Instance > ) : Instance {
