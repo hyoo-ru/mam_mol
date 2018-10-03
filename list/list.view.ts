@@ -30,13 +30,9 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		row_context( index : number ) {
-			let context = this.context()
-			let next = Object.create( context )
-			next.$mol_view_visible_height = ()=> {
-				const limit = context.$mol_view_visible_height()
-				return limit - this.row_offsets()[ index ]
-			}
-			return next
+			return this.$.$mol_ambient({
+				$mol_view_visible_height : ()=> this.$.$mol_view_visible_height() - this.row_offsets()[ index ] ,
+			})
 		}
 		
 		@ $mol_mem

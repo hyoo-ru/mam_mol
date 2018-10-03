@@ -83,24 +83,23 @@ namespace $.$$ {
 
 		@ $mol_mem
 		context_sub( ) {
-			const context = this.context()
-			const subContext : typeof context = Object.create( context )
-			subContext.$mol_view_visible_height = ()=> {
-				const sizeWin = $mol_window.size()
-				const limit = context.$mol_view_visible_height()
-				return this.scroll_top() + Math.min( sizeWin.height , limit )
-			}
-			subContext.$mol_view_visible_width = ()=> {
-				const sizeWin = $mol_window.size()
-				const limit = context.$mol_view_visible_width()
-				return this.scroll_left() + Math.min( sizeWin.width , limit )
-			}
-			subContext.$mol_scroll_top = ()=> this.scroll_top()
-			subContext.$mol_scroll_left = ()=> this.scroll_left()
-			subContext.$mol_scroll_moving = ()=> this.moving()
-			subContext.$mol_scroll_moving_vert = ()=> this.moving_vert()
-			subContext.$mol_scroll_moving_hor = ()=> this.moving_hor()
-			return subContext
+			return this.$.$mol_ambient({
+				$mol_view_visible_height : ()=> {
+					const sizeWin = $mol_window.size()
+					const limit = this.$.$mol_view_visible_height()
+					return this.scroll_top() + Math.min( sizeWin.height , limit )
+				} ,
+				$mol_view_visible_width : ()=> {
+					const sizeWin = $mol_window.size()
+					const limit = this.$.$mol_view_visible_width()
+					return this.scroll_left() + Math.min( sizeWin.width , limit )
+				} ,
+				$mol_scroll_top : ()=> this.scroll_top() ,
+				$mol_scroll_left : ()=> this.scroll_left() ,
+				$mol_scroll_moving : ()=> this.moving() ,
+				$mol_scroll_moving_vert : ()=> this.moving_vert() ,
+				$mol_scroll_moving_hor : ()=> this.moving_hor() ,
+			})
 		}
 		
 		strut_transform() {
