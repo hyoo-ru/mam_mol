@@ -75,6 +75,6 @@ $mol_app_lamps $mol_book
 		arg <= lamp_arg!id *
 
 $mol_lamps_lamp_row $mol_link
-	minimal_height 33
+	minimal_height 40
 	sub /
 		<= title
