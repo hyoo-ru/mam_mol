@@ -4,7 +4,7 @@ namespace $ {
 	
 	export class $mol_object2 {
 		
-		static $ = $ as ( typeof $ ) & Window & { Promise : PromiseConstructor }
+		static $ = $ as $mol_ambient_context
 		$ = this.constructor['$'] as typeof $mol_object2.$
 
 		public static make< Instance >( this : { new() : Instance } , config : Partial< Instance > ) : Instance {
