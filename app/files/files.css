@@ -11,6 +11,10 @@
 	padding: 0;
 }
 
+[mol_app_files_folder_folder_rows] {
+	min-height: 100%;
+}
+
 [mol_app_files_folder_row] {
 	width: 100%;
 	display: flex;
