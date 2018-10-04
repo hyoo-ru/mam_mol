@@ -34,7 +34,7 @@ $mol_app_questions $mol_book
 		text <= question_answer!id \
 	-
 	Question_link!index $mol_link
-		minimal_height 70
+		minimal_height 64
 		arg <= question_arg_by_index!index *
 		sub /
 			<= Question_title!index $mol_view
