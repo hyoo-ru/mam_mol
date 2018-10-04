@@ -4,13 +4,13 @@ namespace $ {
 		
 		@ $mol_mem
 		static href( next? : string , force? : $mol_atom_force ) {
-			if( next ) history.replaceState( history.state , $mol_dom_context.document.title , `${ next }` )
-			return window.location.search + window.location.hash
+			if( next ) history.replaceState( history.state , $mol_dom_context.document.title , next )
+			return window.location.href
 		}
 		
 		@ $mol_mem
 		static dict( next? : { [ key : string ] : string } ) {
-			var href = this.href( next && this.make_link( next ) )
+			var href = this.href( next && this.make_link( next ) ).split( /#/ )[1] || ''
 			var chunks = href.split( /[\/\?#&;]/g )
 			
 			var params : { [ key : string ] : string } = {}
@@ -24,6 +24,20 @@ namespace $ {
 			
 			return params
 		}
+
+		@ $mol_mem_key
+		static dict_cut( except : string[] ) {
+			
+			const dict = this.dict()
+			const cut : { [ key : string ] : string } = {}
+			
+			for( const key in dict ) {
+				if( except.indexOf( key ) >= 0 ) continue
+				cut[ key ] = dict[ key ]
+			}
+			
+			return cut
+		}
 		
 		@ $mol_mem_key
 		static value( key : string , next? : string ) {
@@ -33,7 +47,7 @@ namespace $ {
 		}
 		
 		static link( next : { [ key : string ] : string } ) {
-			return this.make_link( $mol_merge_dict( this.dict() , next ) )
+			return this.make_link( $mol_merge_dict( this.dict_cut( Object.keys( next ) ) , next ) )
 		}
 		
 		static make_link( next : { [ key : string ] : string } ) {

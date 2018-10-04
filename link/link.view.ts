@@ -6,9 +6,10 @@ namespace $.$$ {
 		uri() {
 			return new $mol_state_arg( this.state_key() ).link( this.arg() )
 		}
-		
+
+		@ $mol_mem
 		current() {
-			return this.uri() === $mol_state_arg.link( {} )
+			return this.uri() === $mol_state_arg.href()
 		}
 
 		event_click( event? : Event ) {
