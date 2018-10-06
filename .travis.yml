@@ -8,7 +8,7 @@ install:
   - git pull origin master
   - npm install
 script:
-  - npm start mol/app/demo mol/app/hello mol/app/supplies mol/app/habhub mol/app/todomvc mol/perf/sierp mol/perf/uibench mol/perf/dbmon mol/app/bench/bench mol/app/bench/list/mol mol/app/bench/list/tsx mol/app/bench/chart/rope/mol mol/app/bench/chart/bar/mol mol/app/taxon mol/app/taxon/demo mol/app/users mol/mem mol/app/quine mol/app/lamps mol/app/files/demo mol/app/questions mol/app/slides mol/app/calc mol/chat/service mol/app/life mol/time/all mol/plot/all mol/fiber mol/app/report mol/app/tree
+  - npm start mol/app/demo mol/app/hello mol/app/supplies mol/app/habhub mol/app/todomvc mol/perf/sierp mol/perf/uibench mol/perf/dbmon mol/app/bench/bench mol/app/bench/list/mol mol/app/bench/list/tsx mol/app/bench/chart/rope/mol mol/app/bench/chart/bar/mol mol/app/taxon mol/app/taxon/demo mol/app/users mol/mem mol/app/quine mol/app/lamps mol/app/files/demo mol/app/questions mol/app/slides mol/app/calc mol/chat/service mol/app/life mol/time/all mol/plot/all mol/fiber mol/app/report mol/app/tree mol/app/request
   - node mol/app/demo/-/node.test.js
   - rm mol/.gitignore
 deploy:

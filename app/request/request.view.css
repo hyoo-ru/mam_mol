@@ -1,0 +1,31 @@
+[mol_app_request_body] {
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_app_request_data] {
+	display: flex;
+	flex: auto;
+	padding: .5rem;
+}
+
+[mol_app_request_request] {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 33%;
+}
+
+[mol_app_request_request] > * ,
+[mol_app_request_response] > * {
+	margin: .5rem;
+}
+
+[mol_app_request_request_body] {
+	flex: 1000 1 auto;
+}
+
+[mol_app_request_response] {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 66%;
+}
