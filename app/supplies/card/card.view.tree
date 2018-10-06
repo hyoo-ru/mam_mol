@@ -1,5 +1,6 @@
 $mol_app_supplies_card $mol_link
 	supply null
+	minimal_height 125
 	sub /
 		<= Card $mol_card
 			status <= status \
