@@ -36,7 +36,7 @@ namespace $.$$ {
 					let resource = item.getAttributeNS( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#' , 'resource' )
 					if( resource != null ) resource = new URL( resource , this.uri() ).toString()
 					
-					const value = descr.textContent
+					const value = item.textContent
 					
 					data[ abs ][ pred ] = data[ abs ][ pred ] || []
 					data[ abs ][ pred ].push({
