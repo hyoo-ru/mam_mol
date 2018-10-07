@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_app_rdf extends $.$mol_app_rdf {
 
 		uri( next? : string ) {
-			return this.$.$mol_state_arg.value( 'uri' , next ) || ''
+			return this.$.$mol_state_arg.value( 'uri' , next ) || super.uri()
 		}
 
 		@ $mol_mem

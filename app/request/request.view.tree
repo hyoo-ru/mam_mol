@@ -2,7 +2,7 @@ $mol_app_request $mol_page
 	title @ \HTTP request browser
 	body /
 		<= Uri_input $mol_string
-			value?val <=> uri?val \https://jin.solid.community/profile/card
+			value?val <=> uri?val \
 			hint <= uri_hint @ \URI
 		<= Data $mol_view sub /
 			<= Request $mol_view sub /

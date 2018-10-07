@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_app_request extends $.$mol_app_request {
 
 		uri( next? : string ) {
-			return this.$.$mol_state_arg.value( 'uri' , next ) || ''
+			return this.$.$mol_state_arg.value( 'uri' , next ) || super.uri()
 		}
 
 		request_headers( next? : string ) : string{
