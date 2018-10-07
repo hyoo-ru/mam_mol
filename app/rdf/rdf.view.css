@@ -1,0 +1,53 @@
+[mol_app_rdf_subjects] {
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_app_rdf_subject] {
+	padding: .5rem 1rem;
+	flex: 1 1 12rem;
+}
+
+[mol_app_rdf_subject_row] {
+	display: flex;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	background: var(--mol_theme_back);
+}
+
+[mol_app_rdf_predicates] {
+	display: flex;
+	flex-direction: column;
+	flex: 100 1 66%;
+}
+
+[mol_app_rdf_predicate_row] {
+	display: flex;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	background: var(--mol_theme_back);
+}
+
+[mol_app_rdf_predicate] {
+	padding: .5rem 1rem;
+	flex: 1 1 12rem;
+}
+
+[mol_app_rdf_objects] {
+	display: flex;
+	flex-direction: column;
+	flex: 100 1 50%;
+}
+
+[mol_app_rdf_resource] {
+	display: flex;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	background: var(--mol_theme_back);
+	padding: .5rem 1rem;
+	min-height: calc( 1.5em + 1rem );
+}
+
+[mol_app_rdf_value] {
+	display: flex;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	background: var(--mol_theme_back);
+	padding: .5rem 1rem;
+}
