@@ -14,7 +14,7 @@ namespace $ {
 		}
 		
 		static toString() : string {
-			return $mol_func_name( this )
+			return this.name
 		}
 
 		destructor() { }
