@@ -1,17 +1,27 @@
 namespace $ {
 
-	export const $mol_font_wait_started = new Map< string , number >()
+	export class $mol_font_wait extends $mol_object2 {
 
-	export function $mol_font_wait( face : string , timeout = 5000 ) {
-		if( $mol_font_loaded( face ) ) return true
+		@ $mol_mem_key
+		static face( face : string ) {
 
-		const time = $mol_state_time.now()
-		const started = $mol_font_wait_started.get( face ) || time
-		$mol_font_wait_started.set( face , started )
+			if( this.$.$mol_font_loaded( face ) ) return true
 
-		if( time - started > timeout ) return $mol_font_loaded( face , true )
-		
-		throw new $mol_atom_wait( `Wait font face: ${ face }` )
+			const atom = this.$.$mol_atom_current()
+			
+			const check = ()=> {
+				if( this.$.$mol_font_loaded( face ) ) atom.push( true )
+				else this.$.requestAnimationFrame( check )				
+			}
+
+			this.$.requestAnimationFrame( check )
+
+			this.$.setTimeout( ()=> $mol_font_loaded( face , true ) , 5000 )
+			
+			throw new this.$.$mol_atom_wait( `Wait font face: ${ face }` )
+			
+		}
+
 	}
 
 }
