@@ -123,9 +123,7 @@ namespace $ {
 
 		static tick() {
 
-			const now = Date.now()
-			let elapsed = Math.max( 0 , now - $mol_fiber.deadline )
-			$mol_fiber.deadline = now + $mol_fiber.quant + Math.min( elapsed , 1000 ) / 10
+			$mol_fiber.deadline = Date.now() + $mol_fiber.quant
 	
 			if( $mol_fiber.queue.length == 0 ) return
 
@@ -248,7 +246,7 @@ namespace $ {
 			}
 
 			this.$.$mol_log( this , '⏱' )
-			throw this.schedule()
+			throw this.schedule() /// Use 'Never Pause Here' breakpoint in DevTools
 		}
 
 		start() {
