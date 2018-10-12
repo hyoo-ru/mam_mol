@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_string extends $.$mol_string {
 		
-		_timer = 0
+		_timer = null as any
 		
 		event_change( next? : Event ) {
 			if( !next ) return

@@ -36,7 +36,7 @@ namespace $.$$ {
 			return `${ row[ 'brand' ] } ${ row[ 'model' ] }`
 		}
 		
-		_filter_timer = 0
+		_filter_timer = null as any
 		@ $mol_mem
 		filter( next? : string , force? : $mol_atom_force ) : string {
 			if( next === void null ) return $mol_state_arg.value( 'filter' ) || ''

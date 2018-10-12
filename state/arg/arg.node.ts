@@ -1,5 +1,3 @@
-declare var process : any
-
 namespace $ {
 
 	export class $mol_state_arg extends $mol_object {

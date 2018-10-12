@@ -1,5 +1,3 @@
-declare var process : any
-
 namespace $ {
 	
 	export function $mol_build_start( paths : string[] ) {

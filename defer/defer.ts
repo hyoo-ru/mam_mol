@@ -12,9 +12,9 @@ namespace $ {
 		}
 		
 		static all : $mol_defer[] = []
-		static timer = 0
+		static timer = null as any
 		
-		static scheduleNative : ( handler : ()=> void ) => number = ( typeof requestAnimationFrame == 'function' )
+		static scheduleNative : ( handler : ()=> void ) => any = ( typeof requestAnimationFrame == 'function' )
 			? handler => requestAnimationFrame( handler )
 			: handler => setTimeout( handler , 16 )
 		
@@ -22,7 +22,7 @@ namespace $ {
 			if( this.timer ) return
 			
 			this.timer = this.scheduleNative( ()=> {
-				this.timer = 0
+				this.timer = null
 				this.run()
 			} )
 		}
@@ -31,7 +31,7 @@ namespace $ {
 			if( !this.timer ) return
 			
 			cancelAnimationFrame( this.timer )
-			this.timer = 0
+			this.timer = null
 		}
 		
 		static add( defer : $mol_defer ) {

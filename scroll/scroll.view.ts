@@ -68,7 +68,7 @@ namespace $.$$ {
 			} )
 		}
 		
-		_moving_task_timer = 0
+		_moving_task_timer = null as any
 		moving_task_stop() {
 			clearTimeout( this._moving_task_timer )
 			this._moving_task_timer = setTimeout( $mol_log_group( `${ this }.moving_task_stop()` , ()=> {

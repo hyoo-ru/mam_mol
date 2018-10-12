@@ -53,7 +53,7 @@ namespace $.$$ {
 			this.commit()
 		}
 
-		_timer = 0
+		_timer = null as any
 		
 		commit() {
 			this.value_changed( this.dom_node().textContent )
