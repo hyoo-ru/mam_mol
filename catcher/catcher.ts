@@ -8,6 +8,7 @@ namespace $ {
 			return this.handlers !== undefined
 		}
 
+		@ $mol_deprecated( 'Use $mol_fail_hidden approach.' )
 		static run( task : ()=> any , fail : ( error : Error )=> any ) {
 			
 			if( this.handlers ) {
