@@ -6,7 +6,7 @@ $mol_app_rdf $mol_page
 	sub /
 		<= Head
 		<= Uri $mol_string
-			value?val <=> uri?val \https://jin.solid.community/profile/card
+			value?val <=> uri?val \http://dbpedia.org/ontology/
 			hint <= uri_hint \URI
 		<= Body
 	body / <= Subjects $mol_list rows <= subject_rows /
