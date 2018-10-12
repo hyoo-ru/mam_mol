@@ -46,10 +46,10 @@ namespace $ {
 		for( let api of forbidden ) {
 			context[ api ] = new Proxy( function(){} , {
 				get() {
-					throw new Error( `${ api } is forbidden in tests` )
+					$mol_fail_hidden( new Error( `${ api } is forbidden in tests` ) )
 				} ,
 				apply() {
-					throw new Error( `${ api } is forbidden in tests` )
+					$mol_fail_hidden( new Error( `${ api } is forbidden in tests` ) )
 				} ,
 			} )
 		}
