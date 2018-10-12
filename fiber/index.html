@@ -39,6 +39,7 @@
 <div id="red">Red</div>
 <div id="green">Green</div>
 <div id="blue">Blue</div>
+<div id="source">Loaded HTML Size</div>
 
 <script src="-/web.js" charset="utf-8"></script>
 <script style="display: none">
@@ -52,31 +53,33 @@
 	const red = document.getElementById( 'red' )
 	const green = document.getElementById( 'green' )
 	const blue = document.getElementById( 'blue' )
+	const source = document.getElementById( 'source' )
 
 </script>
 
 <script>
 
-	const step = $mol_fiber_func( function step( sandbox ) {
+	const step = $mol_fiber_func( function step( sandbox , i ) {
 		if( Math.random() > .999 ) throw new Error( 'Test error' )
 		sandbox.appendChild( document.createElement( 'video' ) )
 	} )
 
 	const now = $mol_fiber_func( Date.now )
+	const load = $mol_fiber_sync( async uri =>( await fetch( uri ) ).text() )
 
 	const walk = $mol_fiber_func( function walk( sandbox ) {
+		try {
+			
+			let start = now()
+			for( let i = 0 ; i < 200 ; ++i ) step( sandbox , i )
+			sandbox.innerText = Date.now() - start
 
-		$mol_fiber_catch( error => {
+		} catch( error ) {
+			if( 'then' in error ) $mol_fail_hidden( error )
+
 			sandbox.innerText = error.message
-			return error
-		} )
-		
-		let start = now()
-
-		for( let i = 0 ; i < 200 ; ++i ) step( sandbox , i )
-		
-		sandbox.innerText = Date.now() - start
-
+			$mol_fail_hidden( error )
+		}
 	} )
 
 	class Demo {
@@ -85,11 +88,18 @@
 		static green_task() { walk( green ) }
 		static blue_task() { walk( blue ) }
 
+		static load_source() {
+			source.innerText += ' ' + load( 'index.html' ).length
+		}
+
 		static run() {
+			$mol_fiber_defer( this.load_source )
 			$mol_fiber_defer( this.red_task )
 			$mol_fiber_defer( this.green_task )
 			$mol_fiber_defer( this.blue_task )
 		}
+		
 	}
+	
 
 </script>

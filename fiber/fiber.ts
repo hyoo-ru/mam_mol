@@ -13,13 +13,12 @@ namespace $ {
 	}
 	
 	export function $mol_fiber_start< Result = void >( handler : ()=> Result ) {
-		// if( !$mol_fiber.current ) return handler()
 		return $mol_fiber_make( handler ).start()
 	}
 
 	export function $mol_fiber_defer< Result = void >( handler : ()=> Result ) {
-		const defer = $mol_fiber.$.requestAnimationFrame || $mol_fiber.$.setTimeout
-		defer( $mol_fiber_func( handler ) )
+		const fiber = $mol_fiber_make( handler )
+		fiber.schedule().then( fiber.start.bind( fiber ) )
 	}
 
 	export function $mol_fiber_func< Handler extends ( ... args : any[] )=> Result , Result = void >( handler : Handler ) {
@@ -41,18 +40,21 @@ namespace $ {
 		}
 	}
 
-	export function $mol_fiber_sync< Result = void >(
-		request : ()=> PromiseLike< Result >
-	) : Result {
+	export function $mol_fiber_sync< Args extends any[] , Result = void >(
+		request : ( ... args : Args )=> PromiseLike< Result >
+	) : ( ... args : Args )=> Result {
 
-		const fiber = $mol_fiber_make< Result >( $mol_func_name_from( ()=> {
-			throw request().then(
-				res => { fiber.done( res ) } ,
-				error => { fiber.fail( error ) } ,
-			)
-		} , request ) )
+		return function $mol_fiber_sync_wrapper( ... args : Args ) {
 
-		return fiber.start()
+			const fiber = $mol_fiber_make< Result >( $mol_func_name_from( ()=> {
+				return $mol_fail_hidden( request( ... args ).then(
+					res => { fiber.done( res ) } ,
+					error => { fiber.fail( error ) } ,
+				) )
+			} , request ) )
+
+			return fiber.start()
+		}
 
 	}
 
@@ -84,7 +86,7 @@ namespace $ {
 
 			} )
 
-			throw promise
+			return $mol_fail_hidden( promise )
 
 		} , request ) )
 
@@ -177,7 +179,7 @@ namespace $ {
 		masters = [] as $mol_fiber[]
 		cursor = -1
 
-		error : Error = undefined
+		error : Error | Promise< Result > = undefined
 		result : Result = undefined
 
 		protected _done : ( result : Result )=> void
@@ -186,6 +188,7 @@ namespace $ {
 			if( !this.masters ) return
 
 			this.result = result
+			this.error = null
 			this.abort = null
 			this.destructor()
 			
@@ -199,31 +202,32 @@ namespace $ {
 		fail( error : Error | Promise<Result> ) : Error | Promise<Result> {
 			if( !this.masters ) return
 			
-			if( error instanceof this.$.Promise ) {
-				const self = this
-				const listener = function $mol_fiber_listener() {
-					return self.start()
-				}
-				return error.then( listener , listener )
+			if( 'then' in error ) {
+
+				const listener = this.start.bind( this )
+				error = error.then( listener , listener )
+			
 			} else {
+
 				if( !$mol_fiber.catched.has( error ) ) {
 					if( error.stack ) error.stack = error.stack.replace( /.*\$mol_fiber.*[\n\r]*/g , '' )
 					$mol_fiber.catched.add( error )
 				}
-			}
-
-			if( this.catcher ) {
-				const value = this.catcher( error )
-				if(!( value instanceof Error )) {
-					this.done( value )
-					return value
+				
+				if( this.catcher ) {
+					const value = this.catcher( error )
+					if(!( value instanceof Error )) {
+						this.done( value )
+						return value
+					}
 				}
+
+				this.abort = null
+				this.destructor()
+	
 			}
 
-			this.error = error
-			this.abort = null
-			this.destructor()
-			
+			this.error = error			
 			this.$.$mol_log( this , error )
 
 			return error
@@ -237,6 +241,7 @@ namespace $ {
 		}
 
 		limit() {
+			
 			const now = Date.now()
 			if( now <= $mol_fiber.deadline ) return
 
@@ -245,75 +250,39 @@ namespace $ {
 				return
 			}
 
-			this.$.$mol_log( this , '⏱' )
-			throw this.schedule() /// Use 'Never Pause Here' breakpoint in DevTools
+			$mol_fail_hidden( this.schedule() )
 		}
 
 		start() {
 
 			if( this.masters ) {
-	
-				if( $mol_fiber.current ) {
-					this.$.$mol_log( this , 'execute' )
-					this.execute()
-				} else {
-					this.$.$mol_log( this , 'execute in catcher' )
 
-					const self = this
-					$mol_catcher.run( function $mol_fiber_catcher() {
-						self.execute()
-					} , error => {
+				this.$.$mol_log( this , 'start' )
 
-						let fiber = this as $mol_fiber
-						while( fiber.masters && fiber.master && fiber.master.masters ) fiber = fiber.master
+				const slave = $mol_fiber.current
 
-						while( fiber ) {
-							const res = fiber.fail( error )
+				try {
+					
+					this.cursor = -1
+					this.error = undefined
+					
+					this.limit()
+					
+					$mol_fiber.current = this
 
-							if( res instanceof Promise ) return
+					this.done( this.handler() )
 
-							if( res instanceof Error ) {
-								error = res
-								fiber = fiber.slave
-								continue
-							} else {
-								if( fiber.slave ) fiber.slave.schedule().then( ()=> fiber.slave.start() )
-								return
-							}
-
-						}
-
-						throw error
-						
-					} )
-
+				} catch( error ) {
+					this.fail( error )
+				} finally {
+					$mol_fiber.current = slave
 				}
 
 			}
 
-			if( this.error ) throw this.error
+			if( this.error ) $mol_fail_hidden( this.error )
 			return this.result
 
-		}
-
-		execute() {
-
-			const slave = $mol_fiber.current
-			
-			this.limit()
-
-			this.cursor = -1
-			
-			try {
-				$mol_fiber.current = this
-				var res = this.handler()
-				this.done( res )
-				if( !slave && this.slave ) this.slave.schedule().then( ()=> this.slave.start() )
-			} finally {
-				$mol_fiber.current = slave
-			}
-
-			return res
 		}
 
 		step() {

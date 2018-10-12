@@ -139,7 +139,7 @@ $mol_fiber_start( ()=> {
 
 ### $mol_fiber_method
 
-Decorates method to fiber.
+Decorates method by fiber.
 
 ```typescript
 export class $my_foo {
@@ -157,22 +157,6 @@ export class $my_foo {
 }
 ```
 
-### $mol_fiber_catch
-
-Declares error handler for current fiber. 
-
-```
-const get_zero = $mol_fiber_func( ()=> {
-	
-	$mol_fiber_catch( error => {
-		document.body.innerHTML = error.message
-		return 0 // will be returned by fiber
-	} )	
-	
-	throw new Error( 'Alerted message' )
-} )
-```
-
 ### $mol_fiber_warp
 
 Executes scheduled fibers to the end. Usefull for tests.
@@ -182,8 +166,20 @@ $mol_fiber_warp()
 // No scheduled fibers here
 ```
 
-## Installation
+## Error handling
 
+```
+$mol_fiber_start( ()=> {
+	try {
+		console.log( get_text( 'example.org' )	 )
+	} catch( error ) {
+		if( 'then' in error ) $mol_fail_hidden( error ) // rethrow if promise
+		console.log( error ) // handle error
+	}
+} )
+```
+
+## Installation
 
 ### Via bundle from CDN
 
