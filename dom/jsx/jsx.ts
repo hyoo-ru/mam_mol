@@ -7,35 +7,48 @@ namespace JSX {
 
 namespace $ {
 
-	export const $mol_dom_jsx = $mol_fiber_func( function $mol_dom_jsx< Props >(
-		Elem : string | ( ( props : Props ) => Element ) ,
+	export function $mol_dom_jsx< Props , Children extends Array< Node | string > >(
+		Elem : string | ( ( props : Props , ... children : Children ) => Element ) ,
 		props : Props ,
-		...children : Array< Node | string >
+		... children : Children
 	) {
 
-		let node : Element
-		if( typeof Elem === 'string' ) {
+		if( typeof Elem !== 'string' ) return Elem( props , ... children )
 
-			node = $mol_dom_make( props && props['id'] , Elem )
-			if( props && props['childNodes'] ) {
-				children = props['childNodes']
-				props['childNodes'] = undefined
+		const document = $mol_dom_context.document
+		const node = document.createElement( Elem )
+
+		for( let child of [].concat.call( [] , ... children ) ) {
+			if( typeof child === 'string' ) child = document.createTextNode( child )
+			node.appendChild( child )
+		}
+
+		for( const key in props ) {
+
+			let descr : PropertyDescriptor | undefined
+			let proto = node
+
+			while( true ) {
+
+				proto = Object.getPrototypeOf( proto )
+				if( !proto ) {
+					node.setAttribute( key , String( props[ key ] ) )
+					break
+				}
+				
+				descr = Object.getOwnPropertyDescriptor( proto , key )
+				if( !descr ) continue
+
+				if( descr.set ) Object.defineProperty( node , key , descr )
+				break
 			}
-			
-			$mol_dom_render_children( node , [].concat.apply( [] , children ) )
-			$mol_dom_render_fields( node , props )
-			
-		} else if( typeof Elem === 'function' ) {
-			
-			const props2 = props as any
 
-			node = Elem({ childNodes : children , ... props2 })
 			
-			if( node['render'] ) node = node['render']()
-
+			node[ key as any ] = props[ key ]
 		}
 
 		return node
-	} )
+
+	}
 	
 }
