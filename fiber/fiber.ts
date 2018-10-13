@@ -129,8 +129,6 @@ namespace $ {
 	
 			if( $mol_fiber.queue.length == 0 ) return
 
-			$mol_fiber.schedule()
-
 			while( true ) {
 				const resolve = $mol_fiber.queue.shift()
 				if( resolve ) resolve()
@@ -241,7 +239,7 @@ namespace $ {
 		}
 
 		limit() {
-			
+
 			const now = Date.now()
 			if( now <= $mol_fiber.deadline ) return
 
