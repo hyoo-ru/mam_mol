@@ -99,7 +99,7 @@ namespace $ {
 	}
 
 	export function $mol_fiber_catch( catcher : ( error : Error )=> any ) {
-		$mol_fiber.current.catcher = catcher
+		throw new Error( '$mol_fiber_catch is deprecated. Use try-catch with $mol_fail_hidden for rethrow.' )
 	}
 
 	export function $mol_fiber_fence( func : ()=> any ) {
@@ -120,8 +120,6 @@ namespace $ {
 		
 		static scheduled = 0
 		static deadline = Date.now() + $mol_fiber.quant
-
-		catcher : ( error : Error )=> any
 
 		static tick() {
 
@@ -212,14 +210,6 @@ namespace $ {
 					$mol_fiber.catched.add( error )
 				}
 				
-				if( this.catcher ) {
-					const value = this.catcher( error )
-					if(!( value instanceof Error )) {
-						this.done( value )
-						return value
-					}
-				}
-
 				this.abort = null
 				this.destructor()
 	
