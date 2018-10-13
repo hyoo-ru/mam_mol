@@ -98,10 +98,6 @@ namespace $ {
 		while( $mol_fiber.queue.length ) $mol_fiber.tick()
 	}
 
-	export function $mol_fiber_catch( catcher : ( error : Error )=> any ) {
-		throw new Error( '$mol_fiber_catch is deprecated. Use try-catch with $mol_fail_hidden for rethrow.' )
-	}
-
 	export function $mol_fiber_fence( func : ()=> any ) {
 		const prev = $mol_fiber.current
 		try {
