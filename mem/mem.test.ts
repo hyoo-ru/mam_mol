@@ -146,7 +146,7 @@ namespace $ {
 					new $mol_defer( () => {
 						this.source( 'Jin' , $mol_atom_force_cache )
 					} )
-					throw new $mol_atom_wait( 'Wait for data!' )
+					return $mol_fail_hidden( new $mol_atom_wait( 'Wait for data!' ) )
 				}
 
 				@ $mol_mem

@@ -79,7 +79,7 @@ namespace $ {
 			
 			native.send( ... $mol_maybe( next ) )
 			
-			throw new $mol_atom_wait( `${ method } ${ uri }` )
+			return $mol_fail_hidden( new $mol_atom_wait( `${ method } ${ uri }` ) )
 		}
 		
 		text( next? : string , force? : $mol_atom_force ) {

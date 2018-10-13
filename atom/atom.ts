@@ -165,10 +165,10 @@ namespace $ {
 			if(( typeof Proxy === 'function' )&&( next instanceof Error )) {
 				next = new Proxy( next , {
 					get( target : Error ) {
-						throw target.valueOf()
+						return $mol_fail_hidden( target.valueOf() )
 					} ,
 					ownKeys( target : Error ) : string[] {
-						throw target.valueOf()
+						return $mol_fail_hidden( target.valueOf() )
 					} ,
 				} )
 			}

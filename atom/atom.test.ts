@@ -108,7 +108,7 @@ module $ {
 				new $mol_defer( ()=> {
 					test_counter.push( next || 1 )
 				} )
-				throw new $mol_atom_wait
+				$mol_fail_hidden( new $mol_atom_wait )
 			} )
 			
 			let slave = new $mol_atom<number>( 'slave' , next => test_counter.get() )
@@ -122,7 +122,7 @@ module $ {
 			.then( next => test_counter.set( next ) )
 			.then( next => {
 				test_counter.set( next + 1 )
-				throw error
+				$mol_fail_hidden( error )
 			} )
 			.catch( error => [ error ] )
 			.then( next => res = next )
@@ -138,7 +138,7 @@ module $ {
 			let source = new $mol_atom< number >( 'source' , ( next? : number )=> {
 				const error = new Error( 'Test error' )
 				error['$mol_atom_catched'] = true
-				throw error
+				$mol_fail_hidden( error )
 			} )
 			let middle = new $mol_atom( 'middle' , ()=> source.get() + 1 )
 			let target = new $mol_atom( 'target' , ()=> middle.get() + 1 )
@@ -194,7 +194,7 @@ module $ {
 				new $mol_defer( ()=> {
 					defer.push({})
 				} )
-				throw new $mol_atom_wait
+				$mol_fail_hidden( new $mol_atom_wait )
 			} )
 
 			let value = {}
