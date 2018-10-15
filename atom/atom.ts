@@ -200,11 +200,11 @@ namespace $ {
 			//	throw new Error( `May be obsolated while pulling ${ this }` )
 			//}
 			
-			if( this.status === $mol_atom_status.actual ) {
+			if( this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling ) {
 				this.status = $mol_atom_status.checking
-				
-				this.check_slaves()
 			}
+				
+			this.check_slaves()
 		}
 		
 		obsolete() {
