@@ -64,12 +64,12 @@ namespace $.$$ {
 		}
 		
 		questions_count() {
-			let uri = `http://api.stackexchange.com/2.2/questions?site=stackoverflow&filter=total`
+			let uri = `https://api.stackexchange.com/2.2/questions?site=stackoverflow&filter=total`
 			return $mol_http.resource( uri ).json<{ total : number }>().total
 		}
 		
 		questions_data( page : number ) {
-			const uri = `http://api.stackexchange.com/2.2/questions?order=desc&sort=creation&site=stackoverflow&pagesize=${ this.data_page_size() }&page=${ page + 1 }`
+			const uri = `https://api.stackexchange.com/2.2/questions?order=desc&sort=creation&site=stackoverflow&pagesize=${ this.data_page_size() }&page=${ page + 1 }`
 			type Item = {
 				title : string
 				creation_date : number

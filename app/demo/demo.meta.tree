@@ -2,6 +2,9 @@ deploy \/mol/logo/logo.svg
 deploy \/mol/logo/logo_16.png
 deploy \/mol/logo/logo_128.png
 deploy \/mol/logo/logo_192.png
+deploy \/mol/app/demo/manifest.json
+
+include \/mol/offline/install
 
 include \/mol/app/calc/demo
 include \/mol/app/files/demo

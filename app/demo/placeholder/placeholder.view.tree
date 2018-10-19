@@ -12,13 +12,13 @@ $mol_app_demo_placeholder $mol_book_placeholder
 				<= Advantages $mol_view
 					sub /
 						<= Technology $mol_app_placeholder_advantage
-							image \-/mol/app/demo/placeholder/technology.svg
+							image \mol/app/demo/placeholder/technology.svg
 							title <= technology @ \Flexible adaptive interface
 						<= Code $mol_app_placeholder_advantage
-							image \-/mol/app/demo/placeholder/code_rate.svg
+							image \mol/app/demo/placeholder/code_rate.svg
 							title <= code_rate @ \Quick and easy development
 						<= Programming $mol_app_placeholder_advantage
-							image \-/mol/app/demo/placeholder/programming.svg
+							image \mol/app/demo/placeholder/programming.svg
 							title <= programming @ \High-speed applications
 				<= Github_link $mol_link_iconed
 					uri \https://github.com/eigenmethod/mol

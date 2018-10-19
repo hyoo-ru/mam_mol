@@ -3,6 +3,8 @@ namespace $ {
 	let filter : string
 	export function $mol_log_filter( next? : string ) {
 
+		if( typeof sessionStorage === 'undefined' ) return filter = next
+
 		if( next !== undefined ) {
 			if( next == null ) {
 				sessionStorage.removeItem( '$mol_log_filter()' )

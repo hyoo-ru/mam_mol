@@ -13,7 +13,9 @@ namespace $ {
 			return this.absolute( new URL( path , this.base ).toString() )
 		}
 
-		static base = new URL( '.' , document.currentScript['src'] ).toString()
+		static base = $mol_dom_context.document
+		? new URL( '.' , $mol_dom_context.document.currentScript['src'] ).toString()
+		: ''
 		
 		path() {
 			return '.'

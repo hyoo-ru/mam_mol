@@ -4,11 +4,11 @@ $mol_attach_demo $mol_demo_small
 		<= Filled $mol_attach
 			items?val <=> filled_items?val /
 				<= Item1 $mol_attach_item
-					url_thumb \-/mol/logo/logo.svg
+					url_thumb \mol/logo/logo.svg
 					url_load \logo/logo.svg
 				<= Item2 $mol_attach_item
-					url_thumb \-/mol/logo/logo.svg
+					url_thumb \mol/logo/logo.svg
 					url_load \logo/logo.svg
 				<= Item3 $mol_attach_item
-					url_thumb \-/mol/logo/logo.svg
+					url_thumb \mol/logo/logo.svg
 					url_load \logo/logo.svg

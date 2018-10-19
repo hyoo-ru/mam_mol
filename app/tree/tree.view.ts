@@ -14,7 +14,7 @@ namespace $.$$ {
 		}
 
 		source( next? : string ) {
-			return this.$.$mol_state_arg.value( 'source' , next ) || this.$.$mol_http.resource( '-/mol/app/tree/tree.view.tree' ).text()
+			return this.$.$mol_state_arg.value( 'source' , next ) || this.$.$mol_http.resource( 'mol/app/tree/tree.view.tree' ).text()
 		}
 
 	}

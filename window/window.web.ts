@@ -8,14 +8,14 @@ namespace $ {
 			height : number
 		} , force? : $mol_atom_force ) {
 			return next || {
-				width : window.innerWidth ,
-				height : window.innerHeight ,
+				width : self.innerWidth ,
+				height : self.innerHeight ,
 			}
 		}
 		
 	}
 	
-	window.addEventListener( 'resize' , $mol_log_group( `$mol_window resize` , ()=> {
+	self.addEventListener( 'resize' , $mol_log_group( `$mol_window resize` , ()=> {
 		$mol_window.size( undefined , $mol_atom_force_cache )
 	} ) )
 	

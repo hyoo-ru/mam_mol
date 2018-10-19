@@ -87,7 +87,7 @@ namespace $ {
 		
 	}
 	
-	window.addEventListener( 'hashchange' , $mol_log_group( '$mol_state_arg hashchange' , ( event : HashChangeEvent )=> {
+	self.addEventListener( 'hashchange' , $mol_log_group( '$mol_state_arg hashchange' , ( event : HashChangeEvent )=> {
 		$mol_state_arg.href( undefined , $mol_atom_force_cache ) 
 	} ) )
 	

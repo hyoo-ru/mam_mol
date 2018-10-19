@@ -740,6 +740,11 @@ namespace $ {
 				
 			} )
 			
+			const html = pack.resolve( 'index.html' )
+			const html_target = pack.resolve( '-/index.html' )
+			html_target.content( html.content() )
+			targets.push( html_target )
+
 			return targets
 		}
 		

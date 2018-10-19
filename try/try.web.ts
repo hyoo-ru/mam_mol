@@ -22,11 +22,11 @@ namespace $ {
 		return error2 || result2
 	}
 	
-	window.addEventListener( '$mol_try' , ( event : any )=> {
+	self.addEventListener( '$mol_try' , ( event : any )=> {
 		result = handler()
 	} , true )
 	
-	window.addEventListener( 'error' , ( event : ErrorEvent )=> {
+	self.addEventListener( 'error' , ( event : ErrorEvent )=> {
 		error = event.error
 	} , true )
 	
