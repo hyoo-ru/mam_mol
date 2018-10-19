@@ -42,7 +42,9 @@ namespace $ {
 			} )
 
 		} else {
-			navigator.serviceWorker.register( uri )
+			if( navigator.serviceWorker ) navigator.serviceWorker.register( uri )
+			else if( location.protocol === 'http:' ) console.warn( 'HTTPS is required for service workers.' )
+			else console.warn( 'Service Worker is not supported.' )
 		}
 
 	}
