@@ -87,7 +87,7 @@ namespace $.$$ {
 		}
 		
 		question_full( id : number ) {
-			const uri = `http://api.stackexchange.com/2.2/questions/${ id }?site=stackoverflow&filter=!9YdnSJ*_T`
+			const uri = `https://api.stackexchange.com/2.2/questions/${ id }?site=stackoverflow&filter=!9YdnSJ*_T`
 			type Item = {
 				title : string
 				body_markdown : string
@@ -97,7 +97,7 @@ namespace $.$$ {
 		}
 		
 		question_answers( id : number ) {
-			const uri = `http://api.stackexchange.com/2.2/questions/${ id }/answers?order=desc&sort=votes&site=stackoverflow&filter=!-*f(6sFKn6ub`
+			const uri = `https://api.stackexchange.com/2.2/questions/${ id }/answers?order=desc&sort=votes&site=stackoverflow&filter=!-*f(6sFKn6ub`
 			type Item = {
 				score : number
 				body_markdown : string
