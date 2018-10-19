@@ -16,6 +16,11 @@
 			"src": "mol/logo/logo_192.png",
 			"type": "image/png",
 			"sizes": "192x192"
+		},
+		{
+			"src": "mol/logo/logo_512.png",
+			"type": "image/png",
+			"sizes": "512x512"
 		}
 	],
 	"start_url": ".",
