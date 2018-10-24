@@ -48,9 +48,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		option_focused( component? : $mol_view ) {
-			if( component === undefined ) {
+			if( component == null ) {
 				for( let comp of this.nav_components() ) {
-					if( comp.focused() ) return comp
+					if( comp && comp.focused() ) return comp
 				}
 				
 				return this.Filter()
@@ -77,7 +77,7 @@ namespace $.$$ {
 		}
 		
 		trigger_content() {
-			return ( ( this.options_showed() || !this.value() ) && this.Filter() )
+			return ( !this.value() && this.Filter() )
 				? [ this.Filter() ]
 				: [ ... this.option_content_current() , this.Trigger_icon() ]
 		}
