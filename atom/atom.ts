@@ -17,7 +17,7 @@ namespace $ {
 		readonly handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value|void
 
 		'value()' : Value|Error
-		
+
 		constructor(
 			id : string ,
 			handler : ( next? : Value , force? : $mol_atom_force )=> Value|void = next => next ,
@@ -202,9 +202,9 @@ namespace $ {
 			
 			if( this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling ) {
 				this.status = $mol_atom_status.checking
+				this.check_slaves()
 			}
 				
-			this.check_slaves()
 		}
 		
 		obsolete() {
