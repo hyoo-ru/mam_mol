@@ -36,9 +36,8 @@ namespace $ {
 			return this[ 'object_field()' ] || ( this[ 'object_field()' ] = next ) || ''
 		}
 		
-		'object_id()' : string
 		object_id( next? : string ) {
-			return this[ 'object_id()' ] || ( this[ 'object_id()' ] = next ) || ''
+			return this[ Symbol.toStringTag ] || ( this[ Symbol.toStringTag ] = next ) || ''
 		}
 
 		toString() {
