@@ -177,7 +177,7 @@ namespace $.$$ {
 		}
 
 		time() {
-			return `${ ( this.result().time * 1000 ).toFixed( 1 ) } µs`
+			return `${ ( this.result().time * 1000 ).toFixed( 2 ) } µs`
 		}
 
 		portion() {
