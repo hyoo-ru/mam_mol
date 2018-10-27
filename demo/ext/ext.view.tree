@@ -1,4 +1,5 @@
 $mol_demo_ext $mol_demo_large
-	sub /
-		<= Frame $mol_embed
-			uri <= uri \
+	dom_name \object
+	attr *
+		^
+		data <= uri \
