@@ -723,10 +723,14 @@ namespace $ {
 			var sources = this.sourcesAll( { path , exclude } )
 			.filter( src => /meta.tree$/.test( src.ext() ) )
 			
-			if( sources.length === 0 ) return [] 
-			
 			const targets : $mol_file[] = []
-			
+
+			const html = pack.resolve( 'index.html' )
+			const html_target = pack.resolve( '-/index.html' )
+			html_target.content( html.content() )
+			targets.push( html_target )
+			this.logBundle( html_target )
+
 			sources.forEach( source => {
 				const tree = $mol_tree.fromString( source.content() , source.path() )
 				
@@ -740,11 +744,6 @@ namespace $ {
 				
 			} )
 			
-			const html = pack.resolve( 'index.html' )
-			const html_target = pack.resolve( '-/index.html' )
-			html_target.content( html.content() )
-			targets.push( html_target )
-
 			return targets
 		}
 		
