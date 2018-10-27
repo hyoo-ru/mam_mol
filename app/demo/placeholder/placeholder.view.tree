@@ -20,8 +20,12 @@ $mol_app_demo_placeholder $mol_book_placeholder
 						<= Programming $mol_app_placeholder_advantage
 							image \mol/app/demo/placeholder/programming.svg
 							title <= programming @ \High-speed applications
-				<= Github_link $mol_link_iconed
-					uri \https://github.com/eigenmethod/mol
+				<= Links $mol_row sub /
+					<= Github_link $mol_link_iconed
+						uri \https://github.com/eigenmethod/mol
+					<= Showcase_link $mol_link_iconed
+						title <= showcase_title @ \Applications showcase
+						uri \https://showcase.hyoo.ru
 
 $mol_app_placeholder_advantage $mol_view
 	sub /

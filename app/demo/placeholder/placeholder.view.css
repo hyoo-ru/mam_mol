@@ -56,3 +56,8 @@
 [mol_app_demo_placeholder_logo] {
 	margin: -4px;
 }
+
+[mol_app_demo_placeholder_links] {
+	padding: 0;
+	justify-content: space-between;
+}
