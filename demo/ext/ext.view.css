@@ -1,5 +1,5 @@
 [mol_demo_ext] {
-	object-fit: scale-down;
+	object-fit: fill;
 	display: flex;
 	align-items: center;
 	align-content: center;
