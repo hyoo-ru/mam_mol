@@ -87,12 +87,14 @@ namespace $.$$ {
 						}
 						
 						const source = outer.join( current )
-						const func = new Function( '' , source )
+						let func = new Function( '' , source )
 						const time_make = performance.now() - start_make
 
 						const start_run = performance.now()
 						func()
 						time_run = performance.now() - start_run
+
+						func = null
 		
 						if( time_make > 100 ) break
 						if( time_run > 100 ) break
@@ -177,7 +179,7 @@ namespace $.$$ {
 		}
 
 		time() {
-			return `${ ( this.result().time * 1000 ).toFixed( 2 ) } µs`
+			return `${ ( this.result().time * 1000 ).toFixed( 3 ) } µs`
 		}
 
 		portion() {
