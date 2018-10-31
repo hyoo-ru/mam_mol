@@ -5,7 +5,10 @@ namespace $ {
 	export class $mol_object2 {
 		
 		static $ = $ as $mol_ambient_context
+		static get $$() { return this.$ }
+
 		$ = this.constructor['$'] as typeof $mol_object2.$
+		get $$() { return this.$ }
 
 		public static make< Instance >( this : { new() : Instance } , init? : ( instance : Instance )=> void  ) : Instance {
 			const instance = new this
@@ -13,9 +16,7 @@ namespace $ {
 			return instance
 		}
 		
-		static toString() : string {
-			return this.name
-		}
+		static toString() { return this.name }
 
 		destructor() { }
 
