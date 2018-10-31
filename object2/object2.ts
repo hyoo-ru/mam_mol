@@ -19,8 +19,10 @@ namespace $ {
 
 		destructor() { }
 
+		[ Symbol.toStringTag ] = `${ this.constructor }.make()`
+		
 		toString() {
-			return `<${ this.constructor.toString() }>`
+			return this[ Symbol.toStringTag ]
 		}
 		
 	}
