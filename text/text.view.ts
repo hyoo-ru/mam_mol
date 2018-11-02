@@ -151,8 +151,8 @@ namespace $.$$ {
 			switch( token.name ) {
 				case 'header' : return this.text2spans( `${ indexBlock }` , token.chunks[2] )
 				case 'list' : return this.text2spans( `${ indexBlock }` , token.chunks[0] )
-				case 'code' : return this.code2spans( `${ indexBlock }` , token.chunks[2].replace( /\t/g, '    ' ) )
-				case 'code-indent' : return this.code2spans( `${ indexBlock }` , token.chunks[0].replace( /[\n\r]*$/ , '' ).replace( /\t/g, '    ' ) )
+				case 'code' : return this.code2spans( `${ indexBlock }` , token.chunks[2] )
+				case 'code-indent' : return this.code2spans( `${ indexBlock }` , token.chunks[0].replace( /[\n\r]*$/ , '\n' ).replace( /^\t/gm , '' ) )
 			}
 			
 			return this.text2spans( `${ indexBlock }` , token.chunks[0] )

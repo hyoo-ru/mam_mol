@@ -1,5 +1,8 @@
 $mol_app_jsperf $mol_page
 	title @ \JS Performance
+	attr *
+		^
+		mol_theme \$mol_theme_dark
 	body /
 		<= Source_common $mol_textarea
 			value?val <=> source_common?val \{{case}}

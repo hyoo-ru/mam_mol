@@ -8,9 +8,9 @@ namespace $.$$ {
 		}
 
 		result() {
-			return '# view.tree\n\n```tree\n' + this.source() + '\n```\n'
-			+ '# view.tree.ts\n\n```tree\n' + this.compiled().script + '\n```\n'
-			+ '# view.tree.locale=en.json\n\n```tree\n' + JSON.stringify( this.compiled().locales , null , '\t' ) + '\n```\n'
+			return ''
+			+ '# view.tree.ts\n\n' + this.compiled().script.replace( /^/gm , '\t' ) + '\n'
+			+ '# view.tree.locale=en.json\n\n' + JSON.stringify( this.compiled().locales , null , '\t' ).replace( /^/gm , '\t' )
 		}
 
 		source( next? : string ) {

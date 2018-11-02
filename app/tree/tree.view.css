@@ -6,7 +6,6 @@
 	flex: 50% 1 1;
 	white-space: pre;
 	font-family: var(--mol_skin_font_monospace);
-	padding: 1rem;
 }
 
 [mol_app_tree_source_view] {

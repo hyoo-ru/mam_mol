@@ -1,18 +1,10 @@
-$mol_textarea $mol_scroll
-	disabled false
-	enabled true
-	debounce 200
-	minimal_height 40
-	field *
-		^
-		contentEditable <= enabled
-	attr *
-		^
-		mol_textarea_hint <= hint \
-	event *
-		^
-		input?event <=> event_change?event null
-		keydown?event <=> event_key_press?event null
-		paste?event <=> event_paste?event null
-	sub_visible <= sub /
-		<= value_changed?val <= value?val \
+$mol_textarea $mol_view
+	sub /
+		<= Edit $mol_string
+			dom_name \textarea
+			value?val <=> value?val \
+			hint <= hint \
+			debounce 0
+			enabled <= enabled true
+		<= View $mol_text
+			text <= text \
