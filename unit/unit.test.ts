@@ -21,7 +21,7 @@ namespace $ {
 			var rur = new $mol_unit_money_rur( 2 )
 			
 			$mol_assert_equal( $mol_unit.summ( usd1 , usd2 ).toString() , '$5' )
-			$mol_assert_equal( usd1.mult( 2 ).toString() , '$6' )
+			$mol_assert_equal( usd1.mult( 2 ).toString() , '$4' )
 		} ,
 	
 	} )
