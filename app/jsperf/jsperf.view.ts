@@ -19,6 +19,11 @@ namespace $.$$ {
 			return JSON.parse( this.$.$mol_state_arg.value( 'sources' , next === undefined ? undefined : JSON.stringify( next ) ) || '[]' )
 		}
 
+		@ $mol_mem
+		source_common( next? : string ) : string {
+			return this.$.$mol_state_arg.value( 'common' , next ) || '{{case}}'
+		}
+
 		cases() {
 			return $mol_range2( index => this.Case( index ) , ()=> this.sources().length + 1 )
 		}
@@ -46,7 +51,7 @@ namespace $.$$ {
 			return this.measures().reduce( ( max , measure )=> Math.max( max , measure.length )  , 0 )
 		}
 
-		@ $mol_mem
+		@ $mol_mem_key
 		max_frequency( level : number ) {
 			return this.measures().reduce( ( max , measure )=> Math.max( max , measure[ level ].frequency ) , 0 )
 		}
@@ -70,33 +75,33 @@ namespace $.$$ {
 
 				try {
 				
-					outer = outer.map( src => src.replace( /\{#\}/g , '' ) )
-
 					let current = ''				
 					let time_run = 0
 					let iteration = 0
 
 					while( true ) {
 						
-						const start_make = performance.now()
+						let measure_time = - performance.now()
 
 						const next_count = Math.ceil( iteration * 1.5 || 1 )
 						while( iteration < next_count ) {
-							current += inner.replace( /\{#\}/g , `${ iteration }` )
+							current += inner.replace( /\{#\}/g , `${ iteration }` ) + ';'
 							iteration ++
 						}
 						
-						const source = outer.join( current )
+						const prefix = outer[0].replace( /\{#\}/g , `${ iteration }` )
+						const wrapped = `; let $mol_app_jsperf = -performance.now();\n${ current }\n $mol_app_jsperf += performance.now() ;\n`
+						const postfix = outer[1].replace( /\{#\}/g , `${ iteration }` ) + ';return $mol_app_jsperf'
+						const source = prefix + wrapped + postfix
+						
 						let func = new Function( '' , source )
-						const time_make = performance.now() - start_make
-
-						const start_run = performance.now()
-						func()
-						time_run = performance.now() - start_run
-
+						
+						time_run = func()
 						func = null
+
+						measure_time += performance.now()
 		
-						if( time_make > 100 ) break
+						if( measure_time > 1000 ) break
 						if( time_run > 100 ) break
 
 					}
@@ -120,19 +125,9 @@ namespace $.$$ {
 
 			}
 
-			const measures = this.sources().map( source => {
+			const outer = this.source_common().split( /\{\{case\}\}/g )
 
-				const outer = source.split( /\{\{[\s\S]*\}\}/g )
-				const inner = source.replace( /^[\s\S]*\{\{|\}\}[\s\S]*$/g , '' )
-				
-				const stat_outer = measure( outer.join( '' ) )
-				const stat_inner = measure( inner , outer )
-
-				stat_inner.elapsed -= stat_outer.time
-
-				return [ stat_outer , stat_inner ]
-
-			} )
+			const measures = this.sources().map( inner => [ measure( inner , outer ) ] )
 
 			this.measures( measures )
 		}

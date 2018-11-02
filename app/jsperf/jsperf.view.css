@@ -1,6 +1,10 @@
 [mol_app_jsperf_run] {
 }
 
+[mol_app_jsperf_source_common] {
+	display: block;
+}
+
 [mol_app_jsperf_columns] {
 	display: grid;
 	grid-template-columns: 3fr;
