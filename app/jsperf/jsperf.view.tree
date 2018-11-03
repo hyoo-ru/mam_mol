@@ -7,6 +7,7 @@ $mol_app_jsperf $mol_page
 		<= Prefix $mol_textarea
 			value?val <=> prefix?val \
 			hint <= prefix_hint @ \Setup code for all cases. Use {{#}} to insert iterations count.
+		<= Cases $mol_view sub <= cases /
 		<= Chart $mol_plot_pane
 			gap_bottom 0
 			graphs /
@@ -19,7 +20,6 @@ $mol_app_jsperf $mol_page
 					title \
 					series <= frequencies /
 					labels /
-		<= Cases $mol_view sub <= cases /
 		<= Postfix $mol_textarea
 			value?val <=> postfix?val \
 			hint <= postfix_hint @ \Teardown code for all cases. Use {{#}} to insert iterations count.
