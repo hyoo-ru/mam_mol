@@ -1,33 +1,30 @@
-[mol_app_jsperf_source_common] {
-	display: block;
+[mol_app_jsperf_body] {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
-[mol_app_jsperf_columns] {
-	display: grid;
-	grid-template-columns: 3fr;
-	grid-auto-columns: 1fr;
-	grid-auto-flow: column;
-	padding: .5rem;
-	margin-bottom: -1.5rem;
+[mol_app_jsperf_prefix] {
+	flex: none;
 }
 
-[mol_app_jsperf_columns] > * {
-	margin: .5rem;
+[mol_app_jsperf_postfix] {
+	flex: none;
 }
 
 [mol_app_jsperf_cases] {
-	display: grid;
-	flex: 1 1 auto;
+	display: flex;
+	flex: none;
 	padding: .5rem;
-	grid-auto-rows: max-content;
 	align-items: flex-start;
+	align-items: stretch;
+	flex-wrap: wrap;
 }
 
 [mol_app_jsperf_case] {
-	display: grid;
-	grid-template-columns: 3fr;
-	grid-auto-columns: 1fr;
-	grid-auto-flow: column;
+	display: flex;
+	flex-direction: column;
+	flex: 1000 1 20rem;
 }
 
 [mol_app_jsperf_case_source] {
@@ -36,7 +33,6 @@
 }
 
 [mol_app_jsperf_case_result] {
-	flex: 0 1 25%;
 	display: flex;
 	flex-direction: column;
 	margin: .5rem;
@@ -49,6 +45,7 @@
 [mol_app_jsperf_case_result_stats] {
 	display: flex;
 	flex-wrap: wrap;
+	padding: .25rem .5rem;
 }
 
 [mol_app_jsperf_case_result_stats] > * {

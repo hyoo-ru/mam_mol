@@ -34,11 +34,11 @@ $mol_app_jsperf_case $mol_view
 $mol_app_jsperf_case_result $mol_view
 	result $mol_app_jsperf_stats
 	sub /
-		<= Error $mol_view sub / <= error \
-		<= Portion $mol_portion portion <= portion 0
 		<= Stats $mol_view sub /
 			<= Frequency $mol_view sub / <= frequency \
-			\ ≡ 
+			\ ≈ 
 			<= Time $mol_view sub / <= time \
 			\ ⋅ 
 			<= Iterations $mol_view sub / <= iterations \
+		<= Portion $mol_portion portion <= portion 0
+		<= Error $mol_view sub / <= error \

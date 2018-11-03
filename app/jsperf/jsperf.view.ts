@@ -158,8 +158,8 @@ namespace $.$$ {
 		@ $mol_mem
 		columns() {
 			return [
-				... super.columns() ,
 				... this.result_columns() ,
+				... super.columns() ,
 			]
 		}
 
@@ -177,7 +177,7 @@ namespace $.$$ {
 	export class $mol_app_jsperf_case_result extends $.$mol_app_jsperf_case_result {
 
 		sub() {
-			return this.result().error ? [ this.Error() ] : [ this.Portion() , this.Stats() ]
+			return this.result().error ? [ this.Error() ] : [ this.Stats() , this.Portion() ]
 		}
 
 		error() {
