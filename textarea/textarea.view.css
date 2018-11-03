@@ -13,6 +13,7 @@
 	pointer-events: none;
 	white-space: pre-wrap;
 	z-index: 1;
+	box-shadow: none;
 }
 
 [mol_textarea_edit] {
