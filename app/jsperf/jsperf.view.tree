@@ -12,6 +12,9 @@ $mol_app_jsperf $mol_page
 		source?val <=> source!index?val \
 		results?val <=> results!index?val \
 	tools /
+		<= Optimized $mol_check_box
+			title <= optimized_title @ \Optimized
+			checked?val <=> optimized?val true
 		<= Run $mol_button_major
 			title <= run_title @ \Run
 			click?event <=> run?event null

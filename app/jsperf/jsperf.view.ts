@@ -42,6 +42,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		measures( next? : $mol_app_jsperf_stats[][] ) {
+			this.optimized()
 			this.sources()
 			return next || []
 		}
@@ -124,10 +125,18 @@ namespace $.$$ {
 				}
 
 			}
+			
+			const measures = this.sources().map( inner => {
 
-			const outer = this.source_common().split( /\{\{case\}\}/g )
+				const outer = this.source_common().split( /\{\{case\}\}/g )
 
-			const measures = this.sources().map( inner => [ measure( inner , outer ) ] )
+				if( this.optimized() ) {
+					outer[0] += ';const $mol_app_jsperf_case = $mol_app_jsperf_iteration => {\n' + inner.replace( /\{#\}/g , '$mol_app_jsperf_iteration' ) + '\n};'
+					inner = '$mol_app_jsperf_case({#});'
+				}
+	
+				return [ measure( inner , outer ) ]
+			} )
 
 			this.measures( measures )
 		}
