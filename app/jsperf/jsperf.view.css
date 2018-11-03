@@ -12,19 +12,24 @@
 	flex: none;
 }
 
+[mol_app_jsperf_chart] {
+	flex: 1 1 auto;
+	min-height: 16rem;
+	margin-top: 1rem;
+}
+
 [mol_app_jsperf_cases] {
 	display: flex;
 	flex: none;
 	padding: .5rem;
 	align-items: flex-start;
 	align-items: stretch;
-	flex-wrap: wrap;
 }
 
 [mol_app_jsperf_case] {
 	display: flex;
 	flex-direction: column;
-	flex: 1000 1 20rem;
+	flex: 1 0 20rem;
 }
 
 [mol_app_jsperf_case_source] {
@@ -45,7 +50,7 @@
 [mol_app_jsperf_case_result_stats] {
 	display: flex;
 	flex-wrap: wrap;
-	padding: .25rem .5rem;
+	padding: .5rem;
 }
 
 [mol_app_jsperf_case_result_stats] > * {

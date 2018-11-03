@@ -62,6 +62,12 @@ namespace $.$$ {
 			return this.measures().reduce( ( max , measure )=> Math.max( max , measure.length )  , 0 )
 		}
 
+		@ $mol_mem
+		frequencies() {
+			const frequencies = this.measures().map( measure => measure[0].frequency )
+			return [ ... frequencies , 0 ]
+		}
+		
 		@ $mol_mem_key
 		max_frequency( level : number ) {
 			return this.measures().reduce( ( max , measure )=> Math.max( max , measure[ level ].frequency ) , 0 )
@@ -177,7 +183,7 @@ namespace $.$$ {
 	export class $mol_app_jsperf_case_result extends $.$mol_app_jsperf_case_result {
 
 		sub() {
-			return this.result().error ? [ this.Error() ] : [ this.Stats() , this.Portion() ]
+			return this.result().error ? [ this.Error() ] : [ this.Stats() ]
 		}
 
 		error() {
