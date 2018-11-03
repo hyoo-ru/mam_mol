@@ -15,6 +15,11 @@ $mol_app_jsperf $mol_page
 		source?val <=> source!index?val \
 		results?val <=> results!index?val \
 	tools /
+		<= New $mol_link
+			uri \#
+			hint <= new_hint @ \New benchmark
+			sub /
+				<= New_icon $mol_icon_plus
 		<= Optimized $mol_check_box
 			title <= optimized_title @ \Optimized
 			checked?val <=> optimized?val true
