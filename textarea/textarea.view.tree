@@ -1,4 +1,4 @@
-$mol_textarea $mol_scroll
+$mol_textarea $mol_view
 	sub /
 		<= Edit $mol_string
 			dom_name \textarea
