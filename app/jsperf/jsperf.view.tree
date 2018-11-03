@@ -4,10 +4,13 @@ $mol_app_jsperf $mol_page
 		^
 		mol_theme \$mol_theme_dark
 	body /
-		<= Source_common $mol_textarea
-			value?val <=> source_common?val \{{case}}
-			hint <= source_common_hint @ \Common source for all cases. Use {{case}} to place case source.
+		<= Prefix $mol_textarea
+			value?val <=> prefix?val \
+			hint <= prefix_hint @ \Setup code for all cases. Use {{#}} to insert iterations count.
 		<= Cases $mol_view sub <= cases /
+		<= Postfix $mol_textarea
+			value?val <=> postfix?val \
+			hint <= postfix_hint @ \Teardown code for all cases. Use {{#}} to insert iterations count.
 	Case!index $mol_app_jsperf_case
 		source?val <=> source!index?val \
 		results?val <=> results!index?val \
@@ -24,7 +27,7 @@ $mol_app_jsperf_case $mol_view
 	sub <= columns /
 		<= Source $mol_textarea
 			value?val <=> source?val \
-			hint <= source_hint @ \Source code. Use {#} to insert iteration number.
+			hint <= source_hint @ \Case source code. Use {#} to insert iteration number.
 	Result!level $mol_app_jsperf_case_result
 		result <= result!level $mol_app_jsperf_stats
 

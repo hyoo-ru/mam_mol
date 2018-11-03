@@ -20,8 +20,13 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		source_common( next? : string ) : string {
-			return this.$.$mol_state_arg.value( 'common' , next ) || ''
+		prefix( next? : string ) : string {
+			return this.$.$mol_state_arg.value( 'prefix' , next ) || this.$.$mol_state_arg.value( 'common' ) || ''
+		}
+
+		@ $mol_mem
+		postfix( next? : string ) : string {
+			return this.$.$mol_state_arg.value( 'postfix' , next ) || ''
 		}
 
 		@ $mol_mem
@@ -133,7 +138,7 @@ namespace $.$$ {
 			
 			const measures = this.sources().map( inner => {
 
-				const outer = this.source_common().split( /\{\{case\}\}/g )
+				const outer = [ this.prefix() , this.postfix() ]
 
 				if( this.optimized() ) {
 					outer[0] += ';const $mol_app_jsperf_case = $mol_app_jsperf_iteration => {\n' + inner.replace( /\{#\}/g , '$mol_app_jsperf_iteration' ) + '\n};'
