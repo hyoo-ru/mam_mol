@@ -50,7 +50,7 @@
 [mol_app_jsperf_case_result_stats] {
 	display: flex;
 	flex-wrap: wrap;
-	padding: .5rem;
+	padding: 0 .5rem;
 }
 
 [mol_app_jsperf_case_result_stats] > * {

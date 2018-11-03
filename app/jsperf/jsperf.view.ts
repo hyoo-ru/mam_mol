@@ -164,8 +164,8 @@ namespace $.$$ {
 		@ $mol_mem
 		columns() {
 			return [
-				... this.result_columns() ,
 				... super.columns() ,
+				... this.result_columns() ,
 			]
 		}
 
