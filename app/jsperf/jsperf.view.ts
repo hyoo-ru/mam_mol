@@ -21,7 +21,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		source_common( next? : string ) : string {
-			return this.$.$mol_state_arg.value( 'common' , next ) || '{{case}}'
+			return this.$.$mol_state_arg.value( 'common' , next ) || ''
 		}
 
 		@ $mol_mem

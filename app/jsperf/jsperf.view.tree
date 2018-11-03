@@ -6,7 +6,7 @@ $mol_app_jsperf $mol_page
 	body /
 		<= Source_common $mol_textarea
 			value?val <=> source_common?val \{{case}}
-			hint <= source_common_hint @ \Commonn source for all cases
+			hint <= source_common_hint @ \Common source for all cases. Use {{case}} to place case source.
 		<= Cases $mol_view sub <= cases /
 	Case!index $mol_app_jsperf_case
 		source?val <=> source!index?val \
@@ -24,7 +24,7 @@ $mol_app_jsperf_case $mol_view
 	sub <= columns /
 		<= Source $mol_textarea
 			value?val <=> source?val \
-			hint <= source_hint @ \Wrap by {{ and }} to automatic repeat inner code. Use {#} to insert iteration number.
+			hint <= source_hint @ \Source code. Use {#} to insert iteration number.
 	Result!level $mol_app_jsperf_case_result
 		result <= result!level $mol_app_jsperf_stats
 
