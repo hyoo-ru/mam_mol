@@ -24,6 +24,11 @@ namespace $.$$ {
 			return this.$.$mol_state_arg.value( 'common' , next ) || '{{case}}'
 		}
 
+		@ $mol_mem
+		optimized( next? : boolean ) : boolean {
+			return this.$.$mol_state_arg.value( 'optimized' , ( next === undefined ) ? undefined : `${ next }` ) !== 'false'
+		}
+
 		cases() {
 			return $mol_range2( index => this.Case( index ) , ()=> this.sources().length + 1 )
 		}
