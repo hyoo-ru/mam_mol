@@ -1,4 +1,4 @@
-# $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol) [![eigenmethod.github.io](https://img.shields.io/website-up-down-green-red/http/mol.js.org.svg?label=mol.js.org)](http://eigenmethod.github.io/mol/) [![Maintanance status](https://img.shields.io/maintenance/yes/2018.svg)](https://github.com/eigenmethod/mol/graphs/contributors)
+# $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol) [![eigenmethod.github.io](https://img.shields.io/website-up-down-green-red/http/mol.js.org.svg?label=mol.js.org)](http://eigenmethod.github.io/mol/) [![Maintanance status](https://img.shields.io/maintenance/yes/2018.svg)](https://github.com/eigenmethod/mol/graphs/contributors) [![Backers on Open Collective](https://opencollective.com/mol/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/mol/sponsors/badge.svg)](#sponsors) 
 
 Reactive micro-modular ui framework. Very simple, but very powerful!
 
@@ -568,3 +568,24 @@ The name of the field corresponds to calling the property, the content of the fi
 # Donate
 
 * **[Shut up and take my money](http://yasobe.ru/na/mol)**
+
+## Credits
+
+### Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<img src="https://opencollective.com/mol/contributors.svg?width=890&button=false" />
+
+### Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/XX#backer)]
+
+<a href="https://opencollective.com/mol#backers" target="_blank"><img src="https://opencollective.com/mol/backers.svg?width=890"></a>
+
+### Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/mol#sponsor)]
+
+<a href="https://opencollective.com/mol/sponsor/0/website" target="_blank"><img src="https://opencollective.com/mol/sponsor/0/avatar.svg"></a>
+
+
