@@ -1,9 +1,10 @@
 namespace $ {
 
-	export function $mol_atom2_dict< Key extends string | number | symbol , Value >(
-		get : ( key : Key , dict : Record< Key , Value > )=> Value = ()=> undefined ,
-		set : ( value : Value , key : Key )=> Value = value => value ,
-	) {
+	export function $mol_atom2_dict< Key extends string | number | symbol , Value >( config : {
+		get? : ( key : Key , dict : Record< Key , Value > )=> Value
+		set? : ( value : Value , key : Key , dict : Record< Key , Value > )=> Value
+		abort? : ( key : Key , dict : Record< Key , Value > )=> void
+	} ) {
 
 		const store = new $mol_object2 as unknown as Record< Key , $mol_atom2< Value > >
 
@@ -24,7 +25,8 @@ namespace $ {
 			let cache = store[ key ]
 			if( !cache ) {
 				cache = new $mol_atom2
-				cache.calculate = get.bind( null , key , proxy )
+				if( config.get ) cache.calculate = config.get.bind( null , key , proxy )
+				if( config.abort ) cache.abort = config.abort.bind( null , key , proxy )
 				cache[ Symbol.toStringTag ] = `${ store }[${ key }]`
 				store[ key ] = cache
 				if( keys ) keys.obsolete_slaves()
@@ -44,7 +46,8 @@ namespace $ {
 				if( key in $mol_object2.prototype ) {
 					store[ key ] = value as any
 				} else {
-					get_cache( key ).done( set.call( null , value , key ) )
+					if( config.set ) value = config.set.call( null , value , key , proxy )
+					get_cache( key ).done( value )
 				}
 
 				return true

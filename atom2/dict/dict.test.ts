@@ -9,9 +9,11 @@ module $ {
 				@ $mol_atom2_field
 				static get value() {
 
-					return $mol_atom2_dict< number , number >( ( index , dict )=> {
-						if( index < 2 ) return 1
-						return dict[ index - 1 ] + dict[ index - 2 ]
+					return $mol_atom2_dict< number , number >({
+						get : ( index , dict )=> {
+							if( index < 2 ) return 1
+							return dict[ index - 1 ] + dict[ index - 2 ]
+						}
 					} )
 
 				}
@@ -31,7 +33,7 @@ module $ {
 
 				@ $mol_atom2_field
 				static get value() {
-					return $mol_atom2_dict< number , number >()
+					return $mol_atom2_dict< number , number >({})
 				}
 
 				@ $mol_atom2_field
@@ -56,7 +58,7 @@ module $ {
 
 				@ $mol_atom2_field
 				static get value() {
-					return $mol_atom2_dict< number , number >()
+					return $mol_atom2_dict< number , number >({})
 				}
 				
 			}
@@ -77,7 +79,7 @@ module $ {
 
 				@ $mol_atom2_field
 				static get value() {
-					return $mol_atom2_dict< number , number >()
+					return $mol_atom2_dict< number , number >({})
 				}
 				
 			}
@@ -89,6 +91,37 @@ module $ {
 			for( const pair of Object.entries( Registry.value ) ) keys.push( pair )
 
 			$mol_assert_equal( $mol_conform( [ [ '1' , 2 ] , [ '3' , 4 ] ] , keys ) , keys )
+
+		} ,
+
+		'Call back on abort' () {
+
+			const log = [] as string[]
+
+			class Registry extends $mol_object2 {
+
+				@ $mol_atom2_field
+				static get item() {
+					return $mol_atom2_dict< string , string >({
+						get : key => key ,
+						abort : key => log.push( key ) ,
+					})
+				}
+
+				@ $mol_atom2_field
+				static condition = true
+
+				@ $mol_atom2_field
+				static get result() { return this.condition ? this.item['foo'] : '' }
+
+			}
+
+			$mol_assert_equal( Registry.result , 'foo' )
+			
+			Registry.condition = false
+			$mol_assert_equal( Registry.result , '' )
+
+			$mol_assert_equal( $mol_conform( [ 'foo' ] , log ) , log )
 
 		} ,
 
