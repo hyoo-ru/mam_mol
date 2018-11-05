@@ -7,7 +7,7 @@ namespace $ {
 		static $ = $ as $mol_ambient_context
 		static get $$() { return this.$ }
 
-		$ = this.constructor['$'] as typeof $mol_object2.$
+		$ : typeof $mol_object2.$
 		get $$() { return this.$ }
 
 		public static make< Instance >( this : { new() : Instance } , init? : ( instance : Instance )=> void  ) : Instance {
@@ -27,5 +27,7 @@ namespace $ {
 		}
 		
 	}
+
+	$mol_object2.prototype.$ = $mol_object2.$
 	
 }
