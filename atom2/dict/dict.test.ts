@@ -69,7 +69,7 @@ module $ {
 			const keys = [] as string[]
 			for( let key in Registry.value ) keys.push( key )
 
-			$mol_assert_equal( $mol_conform( [ '1' , '3' ] , keys ) , keys )
+			$mol_assert_like( keys , [ '1' , '3' ] )
 
 		} ,
 
@@ -90,7 +90,7 @@ module $ {
 			const keys = [] as [ string , number ][]
 			for( const pair of Object.entries( Registry.value ) ) keys.push( pair )
 
-			$mol_assert_equal( $mol_conform( [ [ '1' , 2 ] , [ '3' , 4 ] ] , keys ) , keys )
+			$mol_assert_like( keys , [ [ '1' , 2 ] , [ '3' , 4 ] ] )
 
 		} ,
 
@@ -121,7 +121,7 @@ module $ {
 			Registry.condition = false
 			$mol_assert_equal( Registry.result , '' )
 
-			$mol_assert_equal( $mol_conform( [ 'foo' ] , log ) , log )
+			$mol_assert_like( log , [ 'foo' ] )
 
 		} ,
 

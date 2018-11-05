@@ -25,5 +25,13 @@ namespace $ {
 			$mol_assert_unique( [ 3 ] , [ 3 ] , [ 3 ] )
 		} ,
 		
+		'two must be alike'() {
+			$mol_assert_like( [ 3 ] , [ 3 ] )
+		} ,
+		
+		'three must be alike'() {
+			$mol_assert_like( [ 3 ] , [ 3 ] , [ 3 ] )
+		} ,
+		
 	} )
 }
