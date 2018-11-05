@@ -24,7 +24,9 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 # Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
-<img src="https://opencollective.com/mol/contributors.svg?width=890&button=false" />
+
+| [![nin-jin](https://avatars3.githubusercontent.com/u/882172?s=60&v=4)<br>nin-jin](https://github.com/nin-jin) | [![ar2r13](https://avatars1.githubusercontent.com/u/17687448?s=60&v=44)<br>ar2r13](https://github.com/ar2r13) | [![muleronko](https://avatars0.githubusercontent.com/u/5873373?s=60&v=4)<br>muleronko](https://github.com/muleronko) | [![zerkalica](https://avatars2.githubusercontent.com/u/274786?s=60&v=4)<br>zerkalica](https://github.com/zerkalica) |
+|-|-|-|-|
 
 # Features
 
