@@ -28,6 +28,7 @@ namespace $ {
 		
 	}
 
-	$mol_object2.prototype.$ = $mol_object2.$
+	Object.defineProperty( $mol_object2.prototype, '$' , { value : $mol_object2.$ , enumerable : false , writable : true } )
+	$mol_object2.prototype[ Symbol.toStringTag ] = '$mol_object2.make()'
 	
 }
