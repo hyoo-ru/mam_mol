@@ -24,7 +24,7 @@ namespace $ {
 		for( var test of $mol_test_all ) {
 
 			let context = Object.create( $$ )
-			for( let mock of $mol_test_mocks ) mock( context )
+			for( let mock of $mol_test_mocks ) await mock( context )
 			
 			await test( context )
 		}
@@ -38,7 +38,7 @@ namespace $ {
 		if( scheduled ) return
 		scheduled = true
 
-		setTimeout( $mol_log_group( '$mol_test_run()' , ()=> {
+		setTimeout( $mol_log_group( '$mol_test' , ()=> {
 			scheduled = false
  			$mol_test_run()
 		} ) )
