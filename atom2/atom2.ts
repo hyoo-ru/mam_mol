@@ -1,6 +1,6 @@
 namespace $ {
 
-	export class $mol_atom2 extends $mol_fiber {
+	export class $mol_atom2< Value = any > extends $mol_fiber< Value > {
 
 		slaves = [] as ( $mol_fiber | number | undefined )[]
 		

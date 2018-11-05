@@ -24,7 +24,6 @@ namespace $ {
 				master.calculate = calculate.bind( this , ... args )
 				master[ Symbol.toStringTag ] = `${ slave }|${ calculate.name }#${ slave.cursor / 2 }`
 			}
-			if( slave ) slave.master = master
 
 			return master.get()
 
@@ -54,8 +53,7 @@ namespace $ {
 				master.calculate = calculate.bind( this , ... args )
 				master[ Symbol.toStringTag ] = `${ this }.${ name }()`
 			}
-			if( slave ) slave.master = master
-
+			
 			return master.get()
 
 		}
@@ -81,7 +79,6 @@ namespace $ {
 					fiber[ Symbol.toStringTag ] = `${ slave }|${ request.name }#${ slave.cursor / 2 }`
 				} )
 			}
-			if( slave ) slave.master = master
 
 			return master.get()
 
@@ -266,17 +263,18 @@ namespace $ {
 
 		get() {
 
-			if( Number.isNaN( this.cursor ) ) {
-				if( this.error ) $mol_fail_hidden( this.error )
-				return this.result
-			}
-
 			if( this.cursor > 0 ) {
 				throw new Error( 'Cyclic dependency' )
 			}
 			
 			const slave = $mol_fiber.current
+			if( slave ) slave.master = this
 			
+			if( Number.isNaN( this.cursor ) ) {
+				if( this.error ) $mol_fail_hidden( this.error )
+				return this.result
+			}
+
 			try {
 				
 				this.error = undefined

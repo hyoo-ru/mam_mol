@@ -38,14 +38,7 @@ namespace $ {
 		return {
 			
 			get() {
-				
-				const master = get_cache( this )
-
-				const slave = $mol_fiber.current
-				if( slave ) slave.master = master
-				
-				return master.get()
-
+				return get_cache( this ).get()
 			},
 
 			set( next : Value ) {
@@ -61,8 +54,6 @@ namespace $ {
 					}
 					master[ Symbol.toStringTag ] = `${ this }.${ name }=`
 				}
-
-				if( slave ) slave.master = master
 
 				master.get()
 
