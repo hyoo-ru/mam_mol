@@ -2,34 +2,19 @@ module $ {
 	
 	$mol_test({
 		
-		'simple reactive properties' () {
-			$mol_fiber_warp()
+		'Property method' () {
 
-			class Source {
+			class App extends $mol_object2 {
 
 				@ $mol_atom2_prop
-				value( next = 1 ) {
-					return next 
-				}
+				static value( next = 1 ) { return next + 1 }
 
 			}
 
-			const source = new Source
+			$mol_assert_equal( App.value() , 2 )
 
-			class Target {
-
-				@ $mol_atom2_prop
-				value() {
-					return source.value() + 1
-				}
-				
-			}
-
-			const target = new Target
-			$mol_assert_equal( target.value() , 2 )
-
-			source.value( 2 )
-			$mol_assert_equal( target.value() , 3 )
+			App.value( 2 )
+			$mol_assert_equal( App.value() , 3 )
 
 		} ,
 
