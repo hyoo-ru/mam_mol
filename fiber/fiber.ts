@@ -1,30 +1,39 @@
 namespace $ {
 
-	export let $mol_fiber_stack = [] as $mol_fiber[]
-
-	export function $mol_fiber_make< Result = void >( handler : ()=> Result , abort? : void | ( ()=> void ) ) {
-		if( $mol_fiber.current ) $mol_fiber.current.step()
-
-		let master = $mol_fiber.current && $mol_fiber.current.master as $mol_fiber< Result >
-		if( master ) return master 
+	export function $mol_fiber_defer< Result = void >( calculate : ()=> Result ) {
 		
-		const id = `${ $mol_fiber.current || '$mol_fiber' }/${ $mol_fiber.current ? $mol_fiber.current.cursor : '' }:${ $mol_func_name( handler ) }`
-		return new $mol_fiber< Result >( id , $mol_fiber.current , handler , abort )
-	}
-	
-	export function $mol_fiber_start< Result = void >( handler : ()=> Result ) {
-		return $mol_fiber_make( handler ).start()
-	}
-
-	export function $mol_fiber_defer< Result = void >( handler : ()=> Result ) {
-		const fiber = $mol_fiber_make( handler )
-		fiber.schedule().then( fiber.start.bind( fiber ) )
+		const fiber = new $mol_fiber
+		
+		fiber.calculate = calculate
+		fiber[ Symbol.toStringTag ] = calculate.name
+		
+		fiber.schedule()
+		
+		return fiber
 	}
 
-	export function $mol_fiber_func< Handler extends ( ... args : any[] )=> Result , Result = void >( handler : Handler ) {
-		return function $mol_fiber_func_wrapper( ... args : any[] ) {
-			return $mol_fiber_make( $mol_func_name_from( handler.bind( this , ... args ) as ()=> Result , handler ) ).start()
-		} as Handler
+	export function $mol_fiber_func< Calculate extends ( ... args : any[] )=> Result , Result = void >( calculate : Calculate ) {
+		
+		const wrapper = function $mol_fiber_func_wrapper( ... args : any[] ) {
+			
+			const slave = $mol_fiber.current
+
+			let master = slave && slave.master
+			if( !master ) {
+				master = new $mol_fiber
+				master.calculate = calculate.bind( this , ... args )
+				master[ Symbol.toStringTag ] = `${ slave }|${ calculate.name }#${ slave.cursor / 2 }`
+			}
+			if( slave ) slave.master = master
+
+			return master.get()
+
+		} as Calculate
+
+		wrapper[ Symbol.toStringTag ] = calculate.name
+
+		return wrapper
+
 	}
 
 	export function $mol_fiber_method< Host , Result >(
@@ -32,12 +41,25 @@ namespace $ {
 		name : string ,
 		descr : TypedPropertyDescriptor< ( ... args : any[] )=> Result >
 	) {
-		const value = descr.value
-		descr.value = function $mol_fiber_method_wrapper( ... args : any[] ) {
-			const handler = value.bind( this , ... args ) as ()=> Result
-			handler[ Symbol.toStringTag ] = `${ this }.${ name }()`
-			return $mol_fiber_start( handler )
+
+		const calculate = descr.value
+		
+		descr.value = function $mol_fiber_action_wrapper( ... args : any[] ) {
+
+			const slave = $mol_fiber.current
+
+			let master = slave && slave.master
+			if( !master ) {
+				master = new $mol_fiber
+				master.calculate = calculate.bind( this , ... args )
+				master[ Symbol.toStringTag ] = `${ this }.${ name }()`
+			}
+			if( slave ) slave.master = master
+
+			return master.get()
+
 		}
+
 	}
 
 	export function $mol_fiber_sync< Args extends any[] , Result = void >(
@@ -46,56 +68,66 @@ namespace $ {
 
 		return function $mol_fiber_sync_wrapper( ... args : Args ) {
 
-			const fiber = $mol_fiber_make< Result >( $mol_func_name_from( ()=> {
-				return $mol_fail_hidden( request( ... args ).then(
-					res => { fiber.done( res ) } ,
-					error => { fiber.fail( error ) } ,
-				) )
-			} , request ) )
+			const slave = $mol_fiber.current
 
-			return fiber.start()
+			let master = slave && slave.master
+			if( !master ) {
+				master = $mol_fiber.make( fiber => {
+					fiber.cursor = Number.NaN
+					fiber.error = ( request.call( this , ... args ) as PromiseLike< Result > ).then(
+						res => fiber.done( res ) ,
+						err => fiber.fail( err ) ,
+					)
+					fiber[ Symbol.toStringTag ] = `${ slave }|${ request.name }#${ slave.cursor / 2 }`
+				} )
+			}
+			if( slave ) slave.master = master
+
+			return master.get()
+
 		}
 
 	}
 
-	export function $mol_fiber_async< Result = void >(
-		request : (
-			back : (
-				response :  ( ... args : any[] )=> Result
-			)=> ( ... args : any[] )=> void
-		)=> { (): any } | void
-	) : Result {
+	// export function $mol_fiber_async< Result = void >(
+	// 	request : (
+	// 		back : (
+	// 			response :  ( ... args : any[] )=> Result
+	// 		)=> ( ... args : any[] )=> void
+	// 	)=> { (): any } | void
+	// ) : Result {
 
-		const fiber = $mol_fiber_make< Result >( $mol_func_name_from( ()=> {
+	// 	const fiber = $mol_fiber_make< Result >( $mol_func_name_from( ()=> {
 			
-			const promise = new Promise( ( done , fail )=> {
+	// 		const promise = new Promise( ( done , fail )=> {
 
-				fiber.abort = request( response => ( ... args : any[] )=> {
+	// 			fiber.abort = request( response => ( ... args : any[] )=> {
 			
-					if( !fiber.masters ) return
+	// 				if( !fiber.masters ) return
 		
-					new Promise( ()=> {
-						fiber.done( response( ... args ) )
-					} ).catch( error => {
-						fiber.fail( error )
-					} )
+	// 				new Promise( ()=> {
+	// 					fiber.done( response( ... args ) )
+	// 				} ).catch( error => {
+	// 					fiber.fail( error )
+	// 				} )
 
-					if( fiber.slave ) fiber.slave.start()
+	// 				// if( fiber.slave ) fiber.slave.start()
 		
-				} )
+	// 			} )
 
-			} )
+	// 		} )
 
-			return $mol_fail_hidden( promise )
+	// 		return $mol_fail_hidden( promise )
 
-		} , request ) )
+	// 	} , request ) )
 
-		return fiber.start()
+	// 	return fiber.start()
 
-	}
+	// }
 
-	export function $mol_fiber_warp() {
-		while( $mol_fiber.queue.length ) $mol_fiber.tick()
+	export async function $mol_fiber_warp() {
+		while( $mol_fiber.queue.length ) await $mol_fiber.tick()
+		return Promise.resolve()
 	}
 
 	export function $mol_fiber_fence( func : ()=> any ) {
@@ -111,117 +143,178 @@ namespace $ {
 	export class $mol_fiber< Result = any > extends $mol_object2 {
 
 		static quant = 8
+		static deadline = Date.now() + $mol_fiber.quant
 
 		static current : $mol_fiber
 		
 		static scheduled = 0
-		static deadline = Date.now() + $mol_fiber.quant
+		static queue = [] as ( ()=> PromiseLike< any > )[]
+		
+		
+		static async tick() {
 
-		static tick() {
-
-			$mol_fiber.deadline = Date.now() + $mol_fiber.quant
+			$mol_fiber.deadline = Math.max( $mol_fiber.deadline , Date.now() + $mol_fiber.quant )
 	
-			if( $mol_fiber.queue.length == 0 ) return
+			while( $mol_fiber.queue.length > 0 ) {
 
-			while( true ) {
-				const resolve = $mol_fiber.queue.shift()
-				if( resolve ) resolve()
-				else break
+				if( Date.now() > $mol_fiber.deadline ) return $mol_fiber.schedule()
+
+				const task = $mol_fiber.queue.shift()
+				await task()
+
 			}
+			
 		}
 
 		static schedule() {
-			if( $mol_fiber.scheduled ) return
 
-			const schedule = this.$.requestAnimationFrame || this.$.setTimeout
+			if( !$mol_fiber.scheduled ) {
 
-			$mol_fiber.scheduled = schedule( ()=> {
-				$mol_fiber.scheduled = 0
-				$mol_fiber.tick()
-			} )
-		}
+				const schedule = this.$.requestAnimationFrame || this.$.setTimeout
 
-		static queue = [] as ( ()=> void )[]
+				$mol_fiber.scheduled = schedule( ()=> {
+					$mol_fiber.scheduled = 0
+					$mol_fiber.tick()
+				} )
 
-		constructor(
-			id : string ,
-			public slave : $mol_fiber ,
-			public handler : ()=> Result ,
-			public abort? : void | ( ()=> void ) ,
-		) {
-			super()
-			
-			this.toString = $mol_const( id )
-
-			if( slave ) {
-				slave.master = this
-				this.$ = slave.$
 			}
+
+			const promise : Promise< any > = new this.$.Promise( done => this.queue.push( ()=> ( done() , promise ) ) )
+			return promise
+
 		}
 
-		destructor() {
-			if( !this.masters ) return
+		calculate : ()=> Result
+		abort : void | ( ()=> void )
+		
+		masters = [] as ( $mol_fiber | number | undefined )[]
+		cursor = 0
 
-			for( let master of this.masters ) master.destructor()			
-			this.masters = null
+		error = null as Error | PromiseLike< Result >
+		result = undefined as Result
 
-			if( this.abort ) this.abort()
+		schedule() {
+			$mol_fiber.schedule().then( this.get.bind( this ) )
 		}
-
-		masters = [] as $mol_fiber[]
-		cursor = -1
-
-		error : Error | Promise< Result > = undefined
-		result : Result = undefined
-
-		protected _done : ( result : Result )=> void
 
 		done( result : Result ) {
-			if( !this.masters ) return
-
-			this.result = result
-			this.error = null
-			this.abort = null
-			this.destructor()
 			
-			this.$.$mol_log( this , result )
+			result = $mol_conform( result , this.result )
+			
+			if( this.result !== result ) {
+
+				this.forget()
+
+				if( $mol_owning_catch( this , result ) ) {
+					result[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+				}
+				
+				this.$.$mol_log( this , result , '🠈' , this.result  )
+				
+				this.obsolete_slaves()
+				
+			} else {
+				this.$.$mol_log( this , '✔' , result )
+				if( this.error ) this.obsolete_slaves()
+			}
+			
+			
+			this.error = null
+			this.result = result
+			
+			this.complete()
 
 			return result
 		}
 
-		static catched = new WeakSet
-
-		fail( error : Error | Promise<Result> ) : Error | Promise<Result> {
-			if( !this.masters ) return
+		fail( error : Error ) : Error {
 			
-			if( 'then' in error ) {
-
-				const listener = this.start.bind( this )
-				error = error.then( listener , listener )
+			this.complete()	
 			
-			} else {
+			this.error = error
+			
+			this.$.$mol_log( this , '🔥' , error.message )
 
-				if( !$mol_fiber.catched.has( error ) ) {
-					if( error.stack ) error.stack = error.stack.replace( /.*\$mol_fiber.*[\n\r]*/g , '' )
-					$mol_fiber.catched.add( error )
-				}
-				
-				this.abort = null
-				this.destructor()
-	
-			}
-
-			this.error = error			
-			this.$.$mol_log( this , error )
+			this.obsolete_slaves()
 
 			return error
 		}
 
-		schedule() {
-			return new Promise( done => {
-				$mol_fiber.queue.push( done )
-				$mol_fiber.schedule()
-			} )
+		wait( promise : PromiseLike< Result > ) : PromiseLike< Result > {
+			this.error = promise
+			this.$.$mol_log( this , '💤' )
+			this.cursor = 0
+			return promise
+		}
+
+		complete() {
+
+			if( Number.isNaN( this.cursor ) ) return
+
+			for( let index = 0 ; index < this.masters.length ; index += 2  ) {
+				this.complete_master( index )
+			}
+			
+			this.cursor = Number.NaN
+
+			return false
+		}
+		
+		complete_master( index : number ) {
+			this.disobey( index )
+		}
+
+		get() {
+
+			if( Number.isNaN( this.cursor ) ) {
+				if( this.error ) $mol_fail_hidden( this.error )
+				return this.result
+			}
+
+			if( this.cursor > 0 ) {
+				throw new Error( 'Cyclic dependency' )
+			}
+			
+			const slave = $mol_fiber.current
+			
+			try {
+				
+				this.error = undefined
+				
+				this.limit()
+				
+				$mol_fiber.current = this
+
+				this.$.$mol_log( this , '▷' )
+
+				const result = this.done( this.calculate() )
+				
+				return result
+
+			} catch( error ) {
+
+				if( 'then' in error ) {
+
+					error = this.wait( error )
+
+					if( !slave ) {
+						const listener = ()=> {
+							this.$.$mol_log( this , '⏰' )
+							this.get()
+						}
+						error = error.then( listener , listener )		
+					}
+
+				} else {
+					error = this.fail( error )
+				}
+
+				$mol_fail_hidden( error )
+			
+			} finally {
+				$mol_fiber.current = slave
+			}
+
 		}
 
 		limit() {
@@ -234,50 +327,64 @@ namespace $ {
 				return
 			}
 
-			$mol_fail_hidden( this.schedule() )
-		}
-
-		start() {
-
-			if( this.masters ) {
-
-				this.$.$mol_log( this , 'start' )
-
-				const slave = $mol_fiber.current
-
-				try {
-					
-					this.cursor = -1
-					this.error = undefined
-					
-					this.limit()
-					
-					$mol_fiber.current = this
-
-					this.done( this.handler() )
-
-				} catch( error ) {
-					this.fail( error )
-				} finally {
-					$mol_fiber.current = slave
-				}
-
-			}
-
-			if( this.error ) $mol_fail_hidden( this.error )
-			return this.result
-
-		}
-
-		step() {
-			return ++ this.cursor
+			$mol_fail_hidden( $mol_fiber.schedule() )
 		}
 
 		get master() {
-			return this.masters[ this.cursor ]
+			return this.masters[ this.cursor ] as $mol_fiber
 		}
 		set master( next : $mol_fiber ) {
-			this.masters[ this.cursor ] = next
+			
+			const cursor = this.cursor
+			const prev = this.masters[ this.cursor ]
+			
+			if( prev !== next ) {
+				if( prev ) this.rescue( prev as $mol_fiber , cursor )
+				this.masters[ cursor ] = next
+				this.masters[ cursor + 1 ] = this.obey( next , cursor )
+			}
+			
+			this.cursor = cursor + 2
+		}
+
+		rescue( master : $mol_fiber , index : number ) {}
+
+		obey( master : $mol_fiber , index : number ) { return Number.NaN }
+		lead( slave : $mol_fiber , index : number ) { return Number.NaN }
+
+		dislead( index : number ) {
+			this.destructor()
+		}
+
+		disobey( index : number ) {
+			
+			const master = this.masters[ index ] as $mol_fiber
+			if( !master ) return
+
+			master.dislead( this.masters[ index + 1 ] as number )
+			
+			this.masters[ index ] = undefined
+			this.masters[ index + 1 ] = undefined
+
+		}
+
+		obsolete_slaves() { }
+
+		obsolete( index : number ) { }
+
+		forget() {
+			if( $mol_owning_check( this , this.result ) ) {
+				this.result.destructor()
+			}
+			this.result = undefined
+		}
+
+		destructor() {
+			this.$.$mol_log( this , '🕱' )
+			this.cursor = 0
+			this.complete()
+			this.forget()
+			if( this.abort ) this.abort()
 		}
 
 	}

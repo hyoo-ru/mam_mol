@@ -82,7 +82,7 @@
 		}
 	} )
 
-	class Demo {
+	class Demo extends $mol_object2 {
 
 		static red_task() { walk( red ) }
 		static green_task() { walk( green ) }
@@ -93,10 +93,14 @@
 		}
 
 		static run() {
-			$mol_fiber_defer( this.load_source )
+
+			if( this.loading ) this.loading.destructor()
+			this.loading = $mol_fiber_defer( this.load_source )
+			
 			$mol_fiber_defer( this.red_task )
 			$mol_fiber_defer( this.green_task )
 			$mol_fiber_defer( this.blue_task )
+			
 		}
 		
 	}

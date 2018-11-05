@@ -200,3 +200,33 @@ const { $mol_fiber_start : fiber } = require( 'mol_fiber' )
 ```
 import { $mol_fiber_start as fiber } from 'mol_fiber'
 ```
+
+## Logs
+
+Logs can be enabled through [$mol_log_filter](../log).
+
+Legend:
+
+`▷` - calculation started
+
+`🠈` - cache changed
+
+`✔` - cache actualized but not not changed
+
+`✘` - cache cleared
+
+`🔥` - exception cached
+
+`💤` - calculation paused until promise finalized
+
+`⏰` - calculation restarted after promise finalize
+
+`☍` - master leads slave
+
+`☌` - master disleads slave
+
+`🕱` - fiber destroyed
+
+`=` - setter
+
+`#` - number of fiber in slave masters
