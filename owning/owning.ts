@@ -32,7 +32,7 @@ namespace $ {
 		having : Having ,
 	) {
 		if( !$mol_owning_allow( having ) ) return false
-		if( $mol_owning_map.get( having ) === owner ) return false
+		if( $mol_owning_map.get( having ) ) return false
 
 		$mol_owning_map.set( having , owner )
 		return true
