@@ -125,6 +125,23 @@ module $ {
 
 		} ,
 
+		'Value has js-path name' () {
+
+			class Registry extends $mol_object2 {
+
+				@ $mol_atom2_field
+				static get item() {
+					return $mol_atom2_dict({
+						get : ( key : string )=> new $mol_object2 ,
+					})
+				}
+
+			}
+
+			$mol_assert_equal( `${ Registry.item['foo'] }` , 'Registry.item["foo"]' )
+
+		} ,
+
 	})
 	
 }

@@ -27,7 +27,7 @@ namespace $ {
 				cache = new $mol_atom2
 				if( config.get ) cache.calculate = config.get.bind( null , key , proxy )
 				if( config.abort ) cache.abort = config.abort.bind( null , key , proxy )
-				cache[ Symbol.toStringTag ] = `${ store }[${ key }]`
+				cache[ Symbol.toStringTag ] = `${ store }[${ JSON.stringify( key ) }]`
 				store[ key ] = cache
 				if( keys ) keys.obsolete_slaves()
 			}

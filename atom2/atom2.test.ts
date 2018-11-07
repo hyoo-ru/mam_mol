@@ -2,6 +2,19 @@ module $ {
 
 	$mol_test({
 
+		'Value has js-path name' () {
+
+			class App extends $mol_object2 {
+
+				@ $mol_atom2_field
+				static get title() { return new $mol_object2 }
+
+			}
+
+			$mol_assert_equal( `${ App.title }` , 'App.title' )
+
+		} ,
+
 		'Simple property' () {
 
 			class App extends $mol_object2 {
