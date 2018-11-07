@@ -9,9 +9,11 @@ namespace $ {
 		name : Field ,
 		descr? : TypedPropertyDescriptor< Value >
 	) : any {
+		
+		if( !descr ) descr =  Object.getOwnPropertyDescriptor( proto , name )
 
-		const get = descr ? descr.get : $mol_const( proto[ name ] )
-		const set = descr ? descr.set : ()=> {}
+		const get = descr ? ( descr.get || $mol_const( descr.value ) ) : ( ()=> {} )
+		const set = descr && descr.set || ( ()=> {} )
 		
 		const store = new WeakMap< Host , $mol_fiber< Value > >()
 
