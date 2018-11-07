@@ -45,19 +45,19 @@ namespace $ {
 
 			set( next : Value ) {
 				
-				const slave = $mol_fiber.current 
+				// const slave = $mol_fiber.current 
 
-				let master = slave && slave.master as $mol_fiber< void >
-				if( !master ) {
-					master = new $mol_fiber
-					master.calculate = ()=> {
+				// let master = slave && slave.master as $mol_fiber< void >
+				// if( !master ) {
+				// 	master = new $mol_fiber
+				// 	master.calculate = ()=> {
 						set.call( this , next )
 						get_cache( this ).done( next )
-					}
-					master[ Symbol.toStringTag ] = `${ this }.${ name }=`
-				}
+				// 	}
+				// 	master[ Symbol.toStringTag ] = `${ this }.${ name }=`
+				// }
 
-				master.get()
+				// master.get()
 
 			}
 
