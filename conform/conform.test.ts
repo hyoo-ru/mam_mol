@@ -135,6 +135,26 @@ namespace $ {
 			$mol_assert_equal( result.bar , target.bar )
 		} ,
 
+		'object with NaN'() {
+
+			const source = { foo : Number.NaN }
+			const target = { foo : Number.NaN }
+
+			const result = $mol_conform( target , source )
+
+			$mol_assert_equal( result , source )
+		} ,
+
+		'array with NaN'() {
+
+			const source = [ Number.NaN ]
+			const target = [ Number.NaN ]
+
+			const result = $mol_conform( target , source )
+
+			$mol_assert_equal( result , source )
+		} ,
+
 	})
 
 }

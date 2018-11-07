@@ -6,7 +6,7 @@ namespace $ {
 
 	export function $mol_conform< Target , Source >( target : Target , source : Source ) : Target {
 
-		if( target as any === source as any ) return source as any
+		if( $mol_compare_any( target , source ) ) return source as any
 
 		if( !target || typeof target !== 'object' ) return target
 		if( !source || typeof source !== 'object' ) return target
@@ -46,11 +46,11 @@ namespace $ {
 
 		for( let i = 0 ; i < target.length ; ++i ) {
 			const conformed = $mol_conform( target[i] , source[i] )
-			if( conformed !== target[i] ) {
+			if( !$mol_compare_any( conformed , target[i] ) ) {
 				try { target[i] = conformed }
 				catch( error ) { equal = false }
 			}
-			if( equal && conformed !== source[i] ) equal = false
+			if( equal && !$mol_compare_any( conformed , source[i] ) ) equal = false
 		}
 
 		return equal ? source : target
@@ -62,12 +62,16 @@ namespace $ {
 		let equal = true
 
 		for( let key in target ) {
+
 			const conformed = $mol_conform( target[key] , source[key] )
+			
 			if( conformed !== target[key] ) {
 				try { target[key] = conformed } catch( error ) {}
-				if( conformed !== target[key] ) equal = false
+				if( !$mol_compare_any( conformed , target[key] ) ) equal = false
 			}
-			if( conformed !== source[key] ) equal = false
+			
+			if( !$mol_compare_any( conformed , source[key] ) ) equal = false
+			
 			++ count
 		}
 
