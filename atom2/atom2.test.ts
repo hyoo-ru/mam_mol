@@ -79,6 +79,30 @@ module $ {
 
 		} ,
 
+		'Do not recalc grand slave on equal direct slave result ' () {
+
+			class App extends $mol_object2 {
+
+				@ $mol_atom2_field
+				static first = 1
+
+				@ $mol_atom2_field
+				static get second() { return Math.abs( this.first ) }
+
+				static counter = 0
+
+				@ $mol_atom2_field
+				static get result() { return this.second + ++this.counter }
+				
+			}
+
+			$mol_assert_equal( App.result , 2 )
+
+			App.first = -1
+			$mol_assert_equal( App.result , 2 )
+
+		} ,
+
 		'Branch switching' () {
 
 			class App extends $mol_object2 {

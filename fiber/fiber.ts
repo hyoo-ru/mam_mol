@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_fiber_defer< Result = void >( calculate : ()=> Result ) {
+	export function $mol_fiber_defer< Value = void >( calculate : ()=> Value ) {
 		
 		const fiber = new $mol_fiber
 		
@@ -12,7 +12,7 @@ namespace $ {
 		return fiber
 	}
 
-	export function $mol_fiber_func< Calculate extends ( ... args : any[] )=> Result , Result = void >( calculate : Calculate ) {
+	export function $mol_fiber_func< Calculate extends ( ... args : any[] )=> Value , Value = void >( calculate : Calculate ) {
 		
 		const wrapper = function $mol_fiber_func_wrapper( ... args : any[] ) {
 			
@@ -36,10 +36,10 @@ namespace $ {
 
 	}
 
-	export function $mol_fiber_method< Host , Result >(
+	export function $mol_fiber_method< Host , Value >(
 		obj : Host ,
 		name : string ,
-		descr : TypedPropertyDescriptor< ( ... args : any[] )=> Result >
+		descr : TypedPropertyDescriptor< ( ... args : any[] )=> Value >
 	) {
 
 		const calculate = descr.value
@@ -61,9 +61,9 @@ namespace $ {
 
 	}
 
-	export function $mol_fiber_sync< Args extends any[] , Result = void >(
-		request : ( ... args : Args )=> PromiseLike< Result >
-	) : ( ... args : Args )=> Result {
+	export function $mol_fiber_sync< Args extends any[] , Value = void >(
+		request : ( ... args : Args )=> PromiseLike< Value >
+	) : ( ... args : Args )=> Value {
 
 		return function $mol_fiber_sync_wrapper( ... args : Args ) {
 
@@ -73,7 +73,7 @@ namespace $ {
 			if( !master ) {
 				master = $mol_fiber.make( fiber => {
 					fiber.cursor = Number.NaN
-					fiber.error = ( request.call( this , ... args ) as PromiseLike< Result > ).then(
+					fiber.error = ( request.call( this , ... args ) as PromiseLike< Value > ).then(
 						res => fiber.push( res ) ,
 						err => fiber.fail( err ) ,
 					)
@@ -139,7 +139,7 @@ namespace $ {
 		}
 	}
 
-	export class $mol_fiber< Result = any > extends $mol_object2 {
+	export class $mol_fiber< Value = any > extends $mol_object2 {
 
 		static quant = 15
 		static deadline = Date.now() + $mol_fiber.quant
@@ -183,46 +183,46 @@ namespace $ {
 
 		}
 
-		calculate : ()=> Result
+		calculate : ()=> Value
 		
 		masters = [] as ( $mol_fiber | number | undefined )[]
 		cursor = 0
 
-		error = null as Error | PromiseLike< Result >
-		result = undefined as Result
+		error = null as Error | PromiseLike< Value >
+		value = undefined as Value
 
 		schedule() {
 			$mol_fiber.schedule().then( this.get.bind( this ) )
 		}
 
-		push( result : Result ) {
+		push( value : Value ) {
 			
-			result = $mol_conform( result , this.result )
+			value = $mol_conform( value , this.value )
 			
-			if( this.result !== result ) {
+			if( this.value !== value ) {
 
 				this.forget()
 
-				if( $mol_owning_catch( this , result ) ) {
-					result[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+				if( $mol_owning_catch( this , value ) ) {
+					value[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
 				}
 				
-				this.$.$mol_log( this , result , '🠈' , this.result  )
+				this.$.$mol_log( this , value , '🠈' , this.value  )
 				
 				this.obsolete_slaves()
 				
 			} else {
-				this.$.$mol_log( this , '✔' , result )
+				this.$.$mol_log( this , '✔' , value )
 				if( this.error ) this.obsolete_slaves()
 			}
 			
 			
 			this.error = null
-			this.result = result
+			this.value = value
 			
 			this.complete()
 
-			return result
+			return value
 		}
 
 		fail( error : Error ) : Error {
@@ -238,7 +238,7 @@ namespace $ {
 			return error
 		}
 
-		wait( promise : PromiseLike< Result > ) : PromiseLike< Result > {
+		wait( promise : PromiseLike< Value > ) : PromiseLike< Value > {
 			this.error = promise
 			this.$.$mol_log( this , '💤' )
 			this.cursor = 0
@@ -311,7 +311,7 @@ namespace $ {
 			}
 
 			if( this.error ) $mol_fail_hidden( this.error )
-			return this.result
+			return this.value
 
 		}
 
@@ -373,10 +373,10 @@ namespace $ {
 		obsolete( index : number ) { }
 
 		forget() {
-			if( $mol_owning_check( this , this.result ) ) {
-				this.result.destructor()
+			if( $mol_owning_check( this , this.value ) ) {
+				this.value.destructor()
 			}
-			this.result = undefined
+			this.value = undefined
 		}
 
 		abort() {
