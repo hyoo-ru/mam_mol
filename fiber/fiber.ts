@@ -22,7 +22,8 @@ namespace $ {
 			if( !master ) {
 				master = new $mol_fiber
 				master.calculate = calculate.bind( this , ... args )
-				master[ Symbol.toStringTag ] = `${ slave }|${ calculate.name }#${ slave.cursor / 2 }`
+				const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
+				master[ Symbol.toStringTag ] = prefix + calculate.name
 			}
 
 			return master.get()
@@ -76,7 +77,8 @@ namespace $ {
 						res => fiber.done( res ) ,
 						err => fiber.fail( err ) ,
 					)
-					fiber[ Symbol.toStringTag ] = `${ slave }|${ request.name }#${ slave.cursor / 2 }`
+					const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
+					fiber[ Symbol.toStringTag ] = prefix + ( request.name || $mol_fiber_sync.name )
 				} )
 			}
 
