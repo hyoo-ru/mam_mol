@@ -182,7 +182,6 @@ namespace $ {
 		}
 
 		calculate : ()=> Result
-		abort : void | ( ()=> void )
 		
 		masters = [] as ( $mol_fiber | number | undefined )[]
 		cursor = 0
@@ -364,6 +363,8 @@ namespace $ {
 			this.masters[ index ] = undefined
 			this.masters[ index + 1 ] = undefined
 
+			$mol_array_trim( this.masters )
+
 		}
 
 		obsolete_slaves() { }
@@ -377,12 +378,15 @@ namespace $ {
 			this.result = undefined
 		}
 
+		abort() {
+			this.forget()
+		}
+
 		destructor() {
 			this.$.$mol_log( this , '🕱' )
-			this.cursor = 0
 			this.complete()
-			this.forget()
-			if( this.abort ) this.abort()
+			this.cursor = 0
+			this.abort()
 		}
 
 	}
