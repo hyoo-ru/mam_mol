@@ -16,7 +16,7 @@ namespace $ {
 
 			this.cursor = 0
 			const masters = this.masters
-			
+
 			while( this.cursor < masters.length ) {
 
 				const master = masters[ this.cursor ] as $mol_atom2
@@ -119,6 +119,15 @@ namespace $ {
 			
 			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
 				if( this.slaves[ index ] ) return false
+			}
+
+			return true
+		}
+		
+		get derived() {
+			
+			for( let index = 0 ; index < this.masters.length ; index += 2 ) {
+				if( this.masters[ index ] ) return false
 			}
 
 			return true
