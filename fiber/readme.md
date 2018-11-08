@@ -215,6 +215,8 @@ Legend:
 
 `✘` - cache cleared
 
+`�` - required revalidation of master's caches 
+
 `🔥` - exception cached
 
 `💤` - calculation paused until promise finalized
