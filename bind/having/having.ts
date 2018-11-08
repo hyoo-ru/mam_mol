@@ -8,9 +8,9 @@ namespace $ {
 
 		return <
 			Field extends string ,
-			Host extends Record< Mapping[ Keys ] , any > & Record< Field , Record< Keys , any > >
+			Host extends Record< Values , any > & Record< Field , Record< Keys , any > >
 		>(
-			proto: Host,
+			proto: Host ,
 			field: Field,
 			descr?: any
 		) => {
@@ -22,16 +22,16 @@ namespace $ {
 			
 			const set = descr.set || function( next : any ) {
 				this[ '_' + field ] = next
-			} 
+			}
 
-			Object.defineProperty( proto , field , {
+			return {
 				get() {
-					return $mol_bind( get.call( this ) , mapping , this )
+					return $mol_bind( get.call( this ) , mapping as any , this )
 				} ,
-				set( next ) {
-					set.call( this , $mol_bind( next , mapping , this ) )
+				set( next : Host[ Field ] ) {
+					set.call( this , $mol_bind( next , mapping as any , this ) )
 				} ,
-			} )
+			} as any
 			
 		}
 

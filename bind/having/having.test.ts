@@ -50,7 +50,6 @@ namespace $ {
 			const app = new App
 			$mol_assert_equal( app.View.text , 'Jin' )
 
-			$mol_assert_fail( ()=> app.View.text = 'John' , TypeError )
 			$mol_assert_equal( app.View.text , 'Jin' )
 			
 			app.name = 'Jack'

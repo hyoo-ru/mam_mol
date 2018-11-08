@@ -2,9 +2,9 @@ namespace $ {
 
 	export function $mol_bind<
 		Slave extends object ,
+		Master extends object ,
 		Slave_keys extends keyof Slave ,
 		Master_keys extends keyof Master ,
-		Master extends object
 	>(
 		slave : Slave , 
 		mapping : { [ key in Slave_keys ] : Master_keys } ,
