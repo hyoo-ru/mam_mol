@@ -68,6 +68,8 @@ namespace $ {
 			this.slaves[ index ] = undefined
 			this.slaves[ index + 1 ] = undefined
 
+			$mol_array_trim( this.slaves )
+
 			if( this.alone ) this.destructor()
 		}
 
