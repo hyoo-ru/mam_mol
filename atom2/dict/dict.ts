@@ -15,7 +15,7 @@ namespace $ {
 			if( !keys ) {
 				keys = new $mol_atom2< number >()
 				keys[ Symbol.toStringTag ] = `Object.keys(${ store })`
-				keys.done( undefined )
+				keys.push( undefined )
 			}
 
 			return keys
@@ -47,7 +47,7 @@ namespace $ {
 					store[ key ] = value as any
 				} else {
 					if( config.set ) value = config.set.call( null , value , key , proxy )
-					get_cache( key ).done( value )
+					get_cache( key ).push( value )
 				}
 
 				return true

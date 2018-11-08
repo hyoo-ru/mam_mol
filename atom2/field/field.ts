@@ -52,7 +52,7 @@ namespace $ {
 				// 	master = new $mol_fiber
 				// 	master.calculate = ()=> {
 						set.call( this , next )
-						get_cache( this ).done( next )
+						get_cache( this ).push( next )
 				// 	}
 				// 	master[ Symbol.toStringTag ] = `${ this }.${ name }=`
 				// }

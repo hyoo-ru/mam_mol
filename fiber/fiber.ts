@@ -74,7 +74,7 @@ namespace $ {
 				master = $mol_fiber.make( fiber => {
 					fiber.cursor = Number.NaN
 					fiber.error = ( request.call( this , ... args ) as PromiseLike< Result > ).then(
-						res => fiber.done( res ) ,
+						res => fiber.push( res ) ,
 						err => fiber.fail( err ) ,
 					)
 					const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
@@ -141,7 +141,7 @@ namespace $ {
 
 	export class $mol_fiber< Result = any > extends $mol_object2 {
 
-		static quant = 8
+		static quant = 15
 		static deadline = Date.now() + $mol_fiber.quant
 
 		static current : $mol_fiber
@@ -195,7 +195,7 @@ namespace $ {
 			$mol_fiber.schedule().then( this.get.bind( this ) )
 		}
 
-		done( result : Result ) {
+		push( result : Result ) {
 			
 			result = $mol_conform( result , this.result )
 			
@@ -262,57 +262,56 @@ namespace $ {
 			this.disobey( index )
 		}
 
+		pull() {
+			this.push( this.calculate() )
+		}
+
 		get() {
 
-			if( this.cursor > 0 ) {
-				throw new Error( 'Cyclic dependency' )
-			}
+			if( this.cursor > 0 ) throw new Error( 'Cyclic dependency' )
 			
 			const slave = $mol_fiber.current
 			if( slave ) slave.master = this
 			
-			if( Number.isNaN( this.cursor ) ) {
-				if( this.error ) $mol_fail_hidden( this.error )
-				return this.result
-			}
+			if( this.cursor <= 0 ) {
 
-			try {
-				
-				this.error = undefined
-				
-				this.limit()
-				
-				$mol_fiber.current = this
+				try {
+					
+					this.error = undefined
+					
+					this.limit()
+					
+					$mol_fiber.current = this
 
-				this.$.$mol_log( this , '▷' )
+					this.$.$mol_log( this , '▷' )
 
-				const result = this.done( this.calculate() )
-				
-				return result
+					this.pull()
 
-			} catch( error ) {
+				} catch( error ) {
 
-				if( 'then' in error ) {
-
-					error = this.wait( error )
-
-					if( !slave ) {
-						const listener = ()=> {
-							this.$.$mol_log( this , '⏰' )
-							this.get()
+					if( 'then' in error ) {
+						
+						if( !slave ) {
+							const listener = ()=> {
+								this.$.$mol_log( this , '⏰' )
+								this.get()
+							}
+							error = error.then( listener , listener )		
 						}
-						error = error.then( listener , listener )		
+
+						this.wait( error )
+
+					} else {
+						this.fail( error )
 					}
 
-				} else {
-					error = this.fail( error )
+				} finally {
+					$mol_fiber.current = slave
 				}
-
-				$mol_fail_hidden( error )
-			
-			} finally {
-				$mol_fiber.current = slave
 			}
+
+			if( this.error ) $mol_fail_hidden( this.error )
+			return this.result
 
 		}
 
