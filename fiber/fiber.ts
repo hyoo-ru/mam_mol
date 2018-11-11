@@ -187,10 +187,12 @@ namespace $ {
 		
 		masters = [] as ( $mol_fiber | number | undefined )[]
 		
-		// NaN - ✔ actual
-		// -Infinity - � doubt, need check for master's changes
-		// 0 - ✘ obsoleted, need recalc
-		// >0 - now calculating
+		/**
+		 * * `NaN` - ✔ actual
+		 * * `-Infinity` - � doubt, need check for master's changes
+		 * * `0` - ✘ obsoleted, need recalc
+		 * * `>0` - now calculating
+		 */
 		cursor = 0
 
 		error = null as Error | PromiseLike< Value >
