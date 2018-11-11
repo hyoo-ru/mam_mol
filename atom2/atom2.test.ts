@@ -58,6 +58,22 @@ module $ {
 
 		} ,
 
+		'Access to cached value' () {
+
+			class App extends $mol_object2 {
+
+				@ $mol_atom2_field
+				static get value() { return 1 }
+
+			}
+
+			$mol_assert_equal( $mol_atom2_value( ()=> App.value ) , undefined )
+
+			$mol_assert_equal( App.value , 1 )
+			$mol_assert_equal( $mol_atom2_value( ()=> App.value ) , 1 )
+
+		} ,
+
 		'Do not recalc slaves on equal changes' () {
 
 			class App extends $mol_object2 {

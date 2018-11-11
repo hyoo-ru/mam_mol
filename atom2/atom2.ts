@@ -1,20 +1,41 @@
 namespace $ {
 
+	export function $mol_atom2_value< Value >( task : ()=> Value ) {
+		const cached = $mol_atom2.cached
+		try {
+			$mol_atom2.cached = true
+			return task()
+		} finally {
+			$mol_atom2.cached = cached
+		}
+	}
+
 	export class $mol_atom2< Value = any > extends $mol_fiber< Value > {
+
+		static cached = false
 
 		slaves = [] as ( $mol_fiber | number | undefined )[]
 		
 		rescue( master : $mol_atom2 , cursor : number ) {
-			const index = this.masters.length
-			master.slaves[ this.masters[ cursor + 1 ] as number + 1 ] = index
+			
+			const master_index = this.masters.length
+			const slave_index = this.masters[ cursor + 1 ] as number + 1
+			
+			master.slaves[ slave_index ] = master_index
 			this.masters.push( master , this.masters[ cursor + 1 ] )
+			
+		}
+
+		get() {
+			if( $mol_atom2.cached ) return this.value
+			return super.get()
 		}
 
 		pull() {
 			
-			if( this.cursor === 0 ) super.pull()
+			if( this.cursor === $mol_fiber_status.obsolete ) super.pull()
 
-			this.cursor = 0
+			this.cursor = $mol_fiber_status.obsolete
 			const masters = this.masters
 
 			while( this.cursor < masters.length ) {
@@ -23,7 +44,7 @@ namespace $ {
 
 				if( master ) {
 					if( !$mol_compare_any( master.value , master.get() ) ) {
-						this.cursor = 0
+						this.cursor = $mol_fiber_status.obsolete
 						return super.pull()
 					}
 				} else {
@@ -33,72 +54,72 @@ namespace $ {
 			}
 
 			this.$.$mol_log( this , '✔' , this.value )
-			this.cursor = Number.NaN
+			this.cursor = $mol_fiber_status.actual
 
 			return this.value
 		}
 
-		complete_master( index : number ) {
-			if( this.masters[ index ] instanceof $mol_atom2 ) {
-				if( index >= this.cursor ) this.disobey( index )
+		complete_master( master_index : number ) {
+			if( this.masters[ master_index ] instanceof $mol_atom2 ) {
+				if( master_index >= this.cursor ) this.disobey( master_index )
 			} else {
-				this.disobey( index )
+				this.disobey( master_index )
 			}
 		}
 
-		obey( master : $mol_fiber , index : number ) : number {
-			return master.lead( this , index )
+		obey( master : $mol_fiber , master_index : number ) : number {
+			return master.lead( this , master_index )
 		}
 
-		lead( slave : $mol_fiber , slave_index : number ) {
+		lead( slave : $mol_fiber , master_index : number ) {
 			
 			this.$.$mol_log( this , '☍' )
 			
-			const index = this.slaves.length
-			this.slaves[ index ] = slave
-			this.slaves[ index + 1 ] = slave_index
+			const slave_index = this.slaves.length
+			this.slaves[ slave_index ] = slave
+			this.slaves[ slave_index + 1 ] = master_index
 			
-			return index
+			return slave_index
 		}
 
-		dislead( index : number ) {
+		dislead( slave_index : number ) {
 			
 			this.$.$mol_log( this , '☌' )
 
-			this.slaves[ index ] = undefined
-			this.slaves[ index + 1 ] = undefined
+			this.slaves[ slave_index ] = undefined
+			this.slaves[ slave_index + 1 ] = undefined
 
 			$mol_array_trim( this.slaves )
 
 			if( this.alone ) this.destructor()
 		}
 
-		obsolete( index : number ) {
+		obsolete( master_index : number ) {
 
-			if( this.cursor > 0 ) {
-				if( index >= this.cursor - 2 ) return
+			if( this.cursor > $mol_fiber_status.obsolete ) {
+				if( master_index >= this.cursor - 2 ) return
 				throw new Error( 'Obsoleted while calculation' )
 			}
 			
-			if( this.cursor === 0 ) return
+			if( this.cursor === $mol_fiber_status.obsolete ) return
 
 			this.$.$mol_log( this , '✘' )
-			this.cursor = 0
+			this.cursor = $mol_fiber_status.obsolete
 			
 			this.doubt_slaves()
 		}
 
-		doubt( index : number ) {
+		doubt( master_index : number ) {
 
-			if( this.cursor > 0 ) {
-				if( index >= this.cursor - 2 ) return
+			if( this.cursor > $mol_fiber_status.obsolete ) {
+				if( master_index >= this.cursor - 2 ) return
 				throw new Error( 'Doubted while calculation' )
 			}
 
-			if( !Number.isNaN( this.cursor ) ) return
+			if( this.cursor !== $mol_fiber_status.actual ) return
 				
 			this.$.$mol_log( this , '�' )
-			this.cursor = Number.NEGATIVE_INFINITY
+			this.cursor = $mol_fiber_status.doubt
 			
 			this.doubt_slaves()
 		}

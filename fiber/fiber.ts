@@ -1,5 +1,11 @@
 namespace $ {
 
+	export const enum $mol_fiber_status {
+		actual = -2 , // ✔
+		doubt = -1 , // �
+		obsolete = 0 , // ✘
+	}
+
 	export function $mol_fiber_defer< Value = void >( calculate : ()=> Value ) {
 		
 		const fiber = new $mol_fiber
@@ -72,7 +78,7 @@ namespace $ {
 			let master = slave && slave.master
 			if( !master ) {
 				master = $mol_fiber.make( fiber => {
-					fiber.cursor = Number.NaN
+					fiber.cursor = $mol_fiber_status.actual
 					fiber.error = ( request.call( this , ... args ) as PromiseLike< Value > ).then(
 						res => fiber.push( res ) ,
 						err => fiber.fail( err ) ,
@@ -187,13 +193,7 @@ namespace $ {
 		
 		masters = [] as ( $mol_fiber | number | undefined )[]
 		
-		/**
-		 * * `NaN` - ✔ actual
-		 * * `-Infinity` - � doubt, need check for master's changes
-		 * * `0` - ✘ obsoleted, need recalc
-		 * * `>0` - now calculating
-		 */
-		cursor = 0
+		cursor = $mol_fiber_status.obsolete
 
 		error = null as Error | PromiseLike< Value >
 		value = undefined as Value
@@ -248,25 +248,25 @@ namespace $ {
 		wait( promise : PromiseLike< Value > ) : PromiseLike< Value > {
 			this.error = promise
 			this.$.$mol_log( this , '💤' )
-			this.cursor = 0
+			this.cursor = $mol_fiber_status.obsolete
 			return promise
 		}
 
 		complete() {
 
-			if( Number.isNaN( this.cursor ) ) return
+			if( this.cursor === $mol_fiber_status.actual ) return
 
 			for( let index = 0 ; index < this.masters.length ; index += 2  ) {
 				this.complete_master( index )
 			}
 			
-			this.cursor = Number.NaN
+			this.cursor = $mol_fiber_status.actual
 
 			return false
 		}
 		
-		complete_master( index : number ) {
-			this.disobey( index )
+		complete_master( master_index : number ) {
+			this.disobey( master_index )
 		}
 
 		pull() {
@@ -275,12 +275,12 @@ namespace $ {
 
 		get() {
 
-			if( this.cursor > 0 ) throw new Error( 'Cyclic dependency' )
+			if( this.cursor > $mol_fiber_status.obsolete ) throw new Error( 'Cyclic dependency' )
 			
 			const slave = $mol_fiber.current
 			if( slave ) slave.master = this
 			
-			if( this.cursor <= 0 ) {
+			if( this.cursor > $mol_fiber_status.actual ) {
 
 				try {
 					
@@ -352,24 +352,24 @@ namespace $ {
 			this.cursor = cursor + 2
 		}
 
-		rescue( master : $mol_fiber , index : number ) {}
+		rescue( master : $mol_fiber , master_index : number ) {}
 
-		obey( master : $mol_fiber , index : number ) { return Number.NaN }
-		lead( slave : $mol_fiber , index : number ) { return Number.NaN }
+		obey( master : $mol_fiber , master_index : number ) { return -1 }
+		lead( slave : $mol_fiber , master_index : number ) { return -1 }
 
-		dislead( index : number ) {
+		dislead( slave_index : number ) {
 			this.destructor()
 		}
 
-		disobey( index : number ) {
+		disobey( master_index : number ) {
 			
-			const master = this.masters[ index ] as $mol_fiber
+			const master = this.masters[ master_index ] as $mol_fiber
 			if( !master ) return
 
-			master.dislead( this.masters[ index + 1 ] as number )
+			master.dislead( this.masters[ master_index + 1 ] as number )
 			
-			this.masters[ index ] = undefined
-			this.masters[ index + 1 ] = undefined
+			this.masters[ master_index ] = undefined
+			this.masters[ master_index + 1 ] = undefined
 
 			$mol_array_trim( this.masters )
 
@@ -377,7 +377,7 @@ namespace $ {
 
 		obsolete_slaves() { }
 
-		obsolete( index : number ) { }
+		obsolete( master_index : number ) { }
 
 		forget() {
 			if( $mol_owning_check( this , this.value ) ) {
@@ -393,7 +393,7 @@ namespace $ {
 		destructor() {
 			this.$.$mol_log( this , '🕱' )
 			this.complete()
-			this.cursor = 0
+			this.cursor = $mol_fiber_status.obsolete
 			this.abort()
 		}
 
