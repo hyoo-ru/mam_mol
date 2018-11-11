@@ -91,7 +91,7 @@ namespace $ {
 
 			$mol_array_trim( this.slaves )
 
-			if( this.alone ) this.destructor()
+			if( this.alone && this.derived ) this.destructor()
 		}
 
 		obsolete( master_index : number ) {
@@ -150,10 +150,10 @@ namespace $ {
 		get derived() {
 			
 			for( let index = 0 ; index < this.masters.length ; index += 2 ) {
-				if( this.masters[ index ] ) return false
+				if( this.masters[ index ] ) return true
 			}
 
-			return true
+			return false
 		}
 		
 	}
