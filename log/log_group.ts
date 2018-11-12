@@ -5,7 +5,7 @@ namespace $ {
 		const filter = $mol_log_filter()
 		if( filter == null ) return task
 
-		return async function $mol_log_group_wrapper( ... args : any [] ) {
+		return function $mol_log_group_wrapper( ... args : any [] ) {
 
 			let started = false
 			let prev = $mol_log_context()
@@ -21,7 +21,7 @@ namespace $ {
 			} )
 			
 			try {
-				return await task.apply( this , args )
+				return task.apply( this , args )
 			} finally {
 				if( started ) console.groupEnd()
 				$mol_log_context( prev )
