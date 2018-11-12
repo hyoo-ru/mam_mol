@@ -83,6 +83,8 @@ namespace $ {
 		}
 
 		dislead( slave_index : number ) {
+
+			if( slave_index < 0 ) return // slave is fiber
 			
 			this.$.$mol_log( this , '☌' )
 
