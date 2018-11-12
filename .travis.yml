@@ -13,8 +13,7 @@ script:
   - rm mol/.gitignore
 deploy:
   - provider: heroku
-    api_key:
-      secure: $HEROKU_API_KEY
+    api_key: $HEROKU_API_KEY
     app: mam-mol
     on:
       all_branches: true
