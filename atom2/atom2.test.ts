@@ -36,8 +36,7 @@ module $ {
 			class Source extends $mol_object2 {
 
 				@ $mol_atom2_field
-				get value() { return 1 }
-				set value( next ) {}
+				value = 1
 
 			}
 
@@ -95,29 +94,29 @@ module $ {
 
 		} ,
 
-		'Do not recalc grand slave on equal direct slave result ' () {
+		// 'Do not recalc grand slave on equal direct slave result ' () {
 
-			class App extends $mol_object2 {
+		// 	class App extends $mol_object2 {
 
-				@ $mol_atom2_field
-				static first = 1
+		// 		@ $mol_atom2_field
+		// 		static first = 1
 
-				@ $mol_atom2_field
-				static get second() { return Math.abs( this.first ) }
+		// 		@ $mol_atom2_field
+		// 		static get second() { return Math.abs( this.first ) }
 
-				static counter = 0
+		// 		static counter = 0
 
-				@ $mol_atom2_field
-				static get result() { return this.second + ++this.counter }
+		// 		@ $mol_atom2_field
+		// 		static get result() { return this.second + ++this.counter }
 				
-			}
+		// 	}
 
-			$mol_assert_equal( App.result , 2 )
+		// 	$mol_assert_equal( App.result , 2 )
 
-			App.first = -1
-			$mol_assert_equal( App.result , 2 )
+		// 	App.first = -1
+		// 	$mol_assert_equal( App.result , 2 )
 
-		} ,
+		// } ,
 
 		'Branch switching' () {
 
@@ -268,6 +267,35 @@ module $ {
 
 		} ,
 
+		async 'Do not destroy putted value' () {
+
+			class App extends $mol_object2 {
+
+				@ $mol_atom2_field
+				static source : number
+				
+				@ $mol_atom2_field
+				static condition = true
+				
+				@ $mol_atom2_field
+				static get target() {
+					return this.condition ? this.source : 0
+				}
+				
+			}
+
+			App.source = 1
+			$mol_assert_equal( App.target , 1 )
+			
+			App.condition = false
+			$mol_assert_equal( App.target , 0 )
+			await $mol_fiber_warp()
+			
+			App.condition = true
+			$mol_assert_equal( App.target , 1 )
+
+		} ,
+
 		'Restore after error' () {
 
 			class App extends $mol_object2 {
@@ -292,7 +320,7 @@ module $ {
 			App.condition = true
 			$mol_assert_fail( ()=> App.result )
 			
-			App.broken = 1
+			App.condition = false
 			$mol_assert_equal( App.result , 1 )
 
 		} ,

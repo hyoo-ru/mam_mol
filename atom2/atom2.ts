@@ -59,6 +59,11 @@ namespace $ {
 			return this.value
 		}
 
+		put( next : Value ) {
+			this.push( next )
+			this.cursor = $mol_fiber_status.persist
+		}
+
 		complete_master( master_index : number ) {
 			if( this.masters[ master_index ] instanceof $mol_atom2 ) {
 				if( master_index >= this.cursor ) this.disobey( master_index )
@@ -93,7 +98,7 @@ namespace $ {
 
 			$mol_array_trim( this.slaves )
 
-			if( this.alone && this.derived ) this.destructor()
+			if( this.cursor > $mol_fiber_status.persist && this.alone ) this.destructor()
 		}
 
 		obsolete( master_index : number ) {
@@ -108,35 +113,13 @@ namespace $ {
 			this.$.$mol_log( this , '✘' )
 			this.cursor = $mol_fiber_status.obsolete
 			
-			this.doubt_slaves()
-		}
-
-		doubt( master_index : number ) {
-
-			if( this.cursor > $mol_fiber_status.obsolete ) {
-				if( master_index >= this.cursor - 2 ) return
-				throw new Error( 'Doubted while calculation' )
-			}
-
-			if( this.cursor !== $mol_fiber_status.actual ) return
-				
-			this.$.$mol_log( this , '�' )
-			this.cursor = $mol_fiber_status.doubt
-			
-			this.doubt_slaves()
+			this.obsolete_slaves()
 		}
 
 		obsolete_slaves() {
 			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
 				const slave = this.slaves[ index ] as $mol_atom2
 				if( slave ) slave.obsolete( this.slaves[ index + 1 ] as number )
-			}
-		}
-
-		doubt_slaves() {
-			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
-				const slave = this.slaves[ index ] as $mol_atom2
-				if( slave ) slave.doubt( this.slaves[ index + 1 ] as number )
 			}
 		}
 

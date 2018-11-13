@@ -13,9 +13,9 @@ namespace $ {
 		if( !descr ) descr =  Object.getOwnPropertyDescriptor( proto , name )
 
 		const get = descr ? ( descr.get || $mol_const( descr.value ) ) : ( ()=> {} )
-		const set = descr && descr.set || ( ()=> {} )
+		const set = descr && descr.set || function( next ) { get_cache( this ).put( next ) }
 		
-		const store = new WeakMap< Host , $mol_fiber< Value > >()
+		const store = new WeakMap< Host , $mol_atom2< Value > >()
 
 		Object.defineProperty( proto , name + "@" , {
 			get : function() {
@@ -43,7 +43,9 @@ namespace $ {
 				return get_cache( this ).get()
 			},
 
-			set( next : Value ) {
+			set ,
+
+			// set( next : Value ) {
 				
 				// const slave = $mol_fiber.current 
 
@@ -51,15 +53,14 @@ namespace $ {
 				// if( !master ) {
 				// 	master = new $mol_fiber
 				// 	master.calculate = ()=> {
-						set.call( this , next )
-						get_cache( this ).push( next )
+						// set.call( this , next )
 				// 	}
 				// 	master[ Symbol.toStringTag ] = `${ this }.${ name }=`
 				// }
 
 				// master.get()
 
-			}
+			// }
 
 		}
 

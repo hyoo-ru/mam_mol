@@ -1,8 +1,8 @@
 namespace $ {
 
 	export const enum $mol_fiber_status {
-		actual = -2 , // ✔
-		doubt = -1 , // �
+		persist = -2 , // 🗹
+		actual = -1 , // ✔
 		obsolete = 0 , // ✘
 	}
 
@@ -25,7 +25,7 @@ namespace $ {
 			const slave = $mol_fiber.current
 
 			let master = slave && slave.master
-			if( !master ) {
+			if( !master || master.constructor !== $mol_fiber ) {
 				master = new $mol_fiber
 				master.calculate = calculate.bind( this , ... args )
 				const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
@@ -55,7 +55,7 @@ namespace $ {
 			const slave = $mol_fiber.current
 
 			let master = slave && slave.master
-			if( !master ) {
+			if( !master || master.constructor !== $mol_fiber ) {
 				master = new $mol_fiber
 				master.calculate = calculate.bind( this , ... args )
 				master[ Symbol.toStringTag ] = `${ this }.${ name }()`
@@ -76,9 +76,9 @@ namespace $ {
 			const slave = $mol_fiber.current
 
 			let master = slave && slave.master
-			if( !master ) {
+			if( !master || master.constructor !== $mol_fiber ) {
 				master = $mol_fiber.make( fiber => {
-					fiber.cursor = $mol_fiber_status.actual
+					fiber.cursor = $mol_fiber_status.persist
 					fiber.error = ( request.call( this , ... args ) as PromiseLike< Value > ).then(
 						res => fiber.push( res ) ,
 						err => fiber.fail( err ) ,
@@ -189,15 +189,12 @@ namespace $ {
 
 		}
 
+		value = undefined as Value
+		error = null as Error | PromiseLike< Value >
+		cursor = $mol_fiber_status.obsolete
+		masters = [] as ( $mol_fiber | number | undefined )[]
 		calculate : ()=> Value
 		
-		masters = [] as ( $mol_fiber | number | undefined )[]
-		
-		cursor = $mol_fiber_status.obsolete
-
-		error = null as Error | PromiseLike< Value >
-		value = undefined as Value
-
 		schedule() {
 			$mol_fiber.schedule().then( this.get.bind( this ) )
 		}
@@ -207,22 +204,21 @@ namespace $ {
 			value = $mol_conform( value , this.value )
 			
 			if( this.value !== value ) {
-
-				this.forget()
-
+		
 				if( $mol_owning_catch( this , value ) ) {
 					value[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
 				}
 				
 				this.$.$mol_log( this , value , '🠈' , this.value  )
 				
+				this.forget()
+		
 				this.obsolete_slaves()
 				
 			} else {
 				this.$.$mol_log( this , '✔' , value )
 				if( this.error ) this.obsolete_slaves()
 			}
-			
 			
 			this.error = null
 			this.value = value
@@ -254,7 +250,7 @@ namespace $ {
 
 		complete() {
 
-			if( this.cursor === $mol_fiber_status.actual ) return
+			if( this.cursor <= $mol_fiber_status.actual ) return
 
 			for( let index = 0 ; index < this.masters.length ; index += 2  ) {
 				this.complete_master( index )
@@ -284,7 +280,7 @@ namespace $ {
 
 				try {
 					
-					this.error = undefined
+					this.error = null
 					
 					this.limit()
 					
