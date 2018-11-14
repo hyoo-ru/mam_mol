@@ -94,29 +94,59 @@ module $ {
 
 		} ,
 
-		// 'Do not recalc grand slave on equal direct slave result ' () {
+		'Do not recalc grand slave on equal direct slave result ' () {
 
-		// 	class App extends $mol_object2 {
+			class App extends $mol_object2 {
 
-		// 		@ $mol_atom2_field
-		// 		static first = 1
+				@ $mol_atom2_field
+				static first = 1
 
-		// 		@ $mol_atom2_field
-		// 		static get second() { return Math.abs( this.first ) }
+				@ $mol_atom2_field
+				static get second() { return Math.abs( this.first ) }
 
-		// 		static counter = 0
+				static counter = 0
 
-		// 		@ $mol_atom2_field
-		// 		static get result() { return this.second + ++this.counter }
+				@ $mol_atom2_field
+				static get result() { return this.second + ++this.counter }
 				
-		// 	}
+			}
 
-		// 	$mol_assert_equal( App.result , 2 )
+			$mol_assert_equal( App.result , 2 )
 
-		// 	App.first = -1
-		// 	$mol_assert_equal( App.result , 2 )
+			App.first = -1
+			$mol_assert_equal( App.result , 2 )
 
-		// } ,
+		} ,
+
+		'Recalc when [not changed master] changes [following master]' () {
+
+			class App extends $mol_object2 {
+
+				@ $mol_atom2_field
+				static first = 1
+
+				@ $mol_atom2_field
+				static get second() {
+					this.third = this.first
+					return 0
+				}
+
+				@ $mol_atom2_field
+				static third = 0
+
+				static counter = 0
+
+				@ $mol_atom2_field
+				static get result() { return this.second + this.third + ++this.counter }
+				
+			}
+
+			$mol_assert_equal( App.result , 2 )
+
+			App.first = 5
+			$mol_assert_equal( App.result , 7 )
+
+		} ,
 
 		'Branch switching' () {
 
@@ -308,7 +338,6 @@ module $ {
 					if( this.condition ) throw new Error( 'test error' )
 					return 1
 				}
-				static set broken( next : number ) {}
 				
 				@ $mol_atom2_field
 				static get result() { return this.broken }

@@ -1,8 +1,9 @@
 namespace $ {
 
 	export const enum $mol_fiber_status {
-		persist = -2 , // 🗹
-		actual = -1 , // ✔
+		persist = -3 , // 🗹
+		actual = -2 , // ✔
+		doubt = -1 , // �
 		obsolete = 0 , // ✘
 	}
 
@@ -286,7 +287,7 @@ namespace $ {
 					
 					$mol_fiber.current = this
 
-					this.$.$mol_log( this , '▷' )
+					this.$.$mol_log( this , '►' )
 
 					this.pull()
 
@@ -335,6 +336,8 @@ namespace $ {
 			return this.masters[ this.cursor ] as $mol_fiber
 		}
 		set master( next : $mol_fiber ) {
+
+			if( this.cursor === $mol_fiber_status.doubt ) return
 			
 			const cursor = this.cursor
 			const prev = this.masters[ this.cursor ]

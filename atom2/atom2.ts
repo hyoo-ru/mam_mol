@@ -33,27 +33,32 @@ namespace $ {
 
 		pull() {
 			
-			if( this.cursor === $mol_fiber_status.obsolete ) super.pull()
+			if( this.cursor === $mol_fiber_status.obsolete ) return super.pull()
 
-			this.cursor = $mol_fiber_status.obsolete
+			this.$.$mol_log( this , '⏭' )
+			
+			// this.cursor = $mol_fiber_status.obsolete
 			const masters = this.masters
 
-			while( this.cursor < masters.length ) {
+			for( let index = 0 ; index < masters.length ; index += 2 ) {
 
-				const master = masters[ this.cursor ] as $mol_atom2
+				const master = masters[ index ] as $mol_atom2
+				if( !master ) continue
 
-				if( master ) {
-					if( !$mol_compare_any( master.value , master.get() ) ) {
-						this.cursor = $mol_fiber_status.obsolete
-						return super.pull()
-					}
-				} else {
-					this.cursor += 2
+				try {
+					master.get()
+				} catch( error ) {
+					this.cursor = index + 1
+					$mol_fail_hidden( error )
 				}
 
+				if( this.cursor as $mol_fiber_status !== $mol_fiber_status.obsolete ) continue
+
+				this.$.$mol_log( this , '⏯' )
+				return super.pull()
 			}
 
-			this.$.$mol_log( this , '✔' , this.value )
+			this.$.$mol_log( this , '✔✔' , this.value )
 			this.cursor = $mol_fiber_status.actual
 
 			return this.value
@@ -109,17 +114,40 @@ namespace $ {
 			}
 			
 			if( this.cursor === $mol_fiber_status.obsolete ) return
-
+			
 			this.$.$mol_log( this , '✘' )
+			if( this.cursor !== $mol_fiber_status.doubt ) this.doubt_slaves()
+			
 			this.cursor = $mol_fiber_status.obsolete
 			
-			this.obsolete_slaves()
+		}
+
+		doubt( master_index : number ) {
+			
+			if( this.cursor > $mol_fiber_status.obsolete ) {
+				if( master_index >= this.cursor - 2 ) return
+				throw new Error( 'Doubted while calculation' )
+			}
+			
+			if( this.cursor >= $mol_fiber_status.doubt ) return
+				
+			this.$.$mol_log( this , '�' )
+			this.cursor = $mol_fiber_status.doubt
+			
+			this.doubt_slaves()
 		}
 
 		obsolete_slaves() {
 			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
 				const slave = this.slaves[ index ] as $mol_atom2
 				if( slave ) slave.obsolete( this.slaves[ index + 1 ] as number )
+			}
+		}
+
+		doubt_slaves() {
+			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
+				const slave = this.slaves[ index ] as $mol_atom2
+				if( slave ) slave.doubt( this.slaves[ index + 1 ] as number )
 			}
 		}
 
