@@ -20,13 +20,5 @@ deploy:
     local_dir: .
     on:
       branch: master
-  - provider: heroku
-    api_key:
-      secure: "CDtx9scL6Mm/0WXEkzC1evvYl+fVVeQbarhFE3TyhtBbQU/shGmaRA5Lfkkpt1vVgkLEun1jXg66AKIv4v/mzMMJfYPN1RMJ4yGXfnWOeqE5Xq+MGsMcx3OlGafM7jQmxvN4LbDAFj2iASn/owBuWF7eSZ/OGAysAE2ncuSPTJqdUtqixcOKp6WPOhSQ17Sv3F4VnIO2slvFSDUAG8flBPQGJRGct/l7coBse8l1iyimx26YcD4agmNbMqLTQ5rQOb7sXkZdjhB7QFNFFeeqRzxrWJ4uqgnAQKF4epV7RaRsKCYgwSqT+HlKWOyHhtyPxruCgvDUFCu0DGy4JIL/oWYDgT/Z2P1duLlQYrLydd13u8OEvCZR19n0KqrCQlvXuDS9oK3t0qXhd+AXngL/V662cNUO8sWRObLqOmrjT6/XARt1YR9Lx/Ex/1qjioX5wFbpLE6eSdRdZD+Jg7g6kbCHLz3gNIy8iIUjkQ8NRyd65ka2Obzu+WYAzZbpLer9OgIMmLW2zJub33g+KAk6FN7Z9BenVjQYmmXhv6USNxdbYB+xwzOgikuea4mXnehPtjpGP+uZmZxA69s/8eXBj4RpzMYxWU8EhRIjUPNXcLAuJ5x8+A20x75A3aIAXUWzjxcz1QlM7S4yK8vR7LmpREOzt+0wwM9MjPs4z4jXFgQ="
-    app: mam-mol
-    on:
-      all_branches: true
-    run:
-      - npm run lh -- https://mam-mol.herokuapp.com/
 notifications:
   slack: mam-mol:Z7vokFhXaSrMlPXzq6L93bUj
