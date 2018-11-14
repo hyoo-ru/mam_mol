@@ -1,7 +1,7 @@
 namespace $ {
 
-	export namespace $$ { let $ : any }
-	
+	export namespace $$ { export let $ : any }
+
 	export type $mol_ambient_context = Window & {
 		Promise : PromiseConstructor
 		Math : Math
