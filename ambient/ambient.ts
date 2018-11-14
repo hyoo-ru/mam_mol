@@ -1,6 +1,6 @@
 namespace $ {
 
-	export namespace $$ { export let $ : any }
+	export namespace $$ { export let $$ : typeof $ }
 
 	export type $mol_ambient_context = Window & {
 		Promise : PromiseConstructor
