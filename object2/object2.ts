@@ -1,7 +1,5 @@
 namespace $ {
 
-	export namespace $$ { let $ }
-
 	export class $mol_object2 {
 		
 		static $ = $ as $mol_ambient_context
