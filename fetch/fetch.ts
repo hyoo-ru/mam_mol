@@ -32,30 +32,17 @@ namespace $ {
 
 		@ $mol_fiber_method
 		static xml( input: RequestInfo, init?: RequestInit ) {
+			return $mol_dom_parse( this.text( input , init ) , 'application/xml' )
+		}
 
-			const text = this.text( input , init )
-			const parser = new DOMParser()
-
-			const doc = parser.parseFromString( text , 'text/xml' )
-			
-			const error = doc.getElementsByTagName( 'parsererror' )[0]
-			if( !error ) return doc
-
-			throw new Error( error.textContent )
+		@ $mol_fiber_method
+		static xhtml( input: RequestInfo, init?: RequestInit ) {
+			return $mol_dom_parse( this.text( input , init ) , 'application/xhtml+xml' )
 		}
 
 		@ $mol_fiber_method
 		static html( input: RequestInfo, init?: RequestInit ) {
-
-			const text = this.text( input , init )
-			const parser = new DOMParser()
-
-			const doc = parser.parseFromString( text , 'text/html' )
-			
-			const error = doc.getElementsByTagName( 'parsererror' )[0]
-			if( !error ) return doc
-
-			throw new Error( error.textContent )
+			return $mol_dom_parse( this.text( input , init ) , 'text/html' )
 		}
 
 	}

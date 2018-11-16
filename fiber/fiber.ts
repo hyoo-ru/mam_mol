@@ -146,10 +146,20 @@ namespace $ {
 		}
 	}
 
+	export function $mol_fiber_unlimit( func : ()=> any ) {
+		const deadline = $mol_fiber.deadline
+		try {
+			$mol_fiber.deadline = Number.POSITIVE_INFINITY
+			func()
+		} finally {
+			$mol_fiber.deadline = deadline
+		}
+	}
+
 	export class $mol_fiber< Value = any > extends $mol_object2 {
 
 		static quant = 15
-		static deadline = Date.now() + $mol_fiber.quant
+		static deadline = 0
 
 		static current : $mol_fiber
 		
@@ -322,10 +332,13 @@ namespace $ {
 		limit() {
 
 			const now = Date.now()
-			if( now <= $mol_fiber.deadline ) return
 
-			if( !$mol_fiber.current && $mol_fiber.queue.length === 0 ) {
-				$mol_fiber.deadline = now + $mol_fiber.quant
+			const overtime = now - $mol_fiber.deadline
+			if( overtime < 0 ) return
+
+			/// after debugger
+			if( overtime > 500 || !$mol_fiber.current ) {
+				$mol_fiber.deadline = Math.max( $mol_fiber.deadline , now + $mol_fiber.quant )
 				return
 			}
 
