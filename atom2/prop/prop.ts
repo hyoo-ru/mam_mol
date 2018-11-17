@@ -7,7 +7,7 @@ namespace $ {
 	>(
 		proto : Host ,
 		name : Field ,
-		descr? : TypedPropertyDescriptor< ( next? : Value )=> Value >
+		descr? : TypedPropertyDescriptor< ( next? : Value , force? : $mol_atom_force )=> Value >
 	) : any {
 
 		const value = descr.value
@@ -28,6 +28,7 @@ namespace $ {
 				cache = new $mol_atom2
 				cache.calculate = value.bind( host )
 				cache[ Symbol.toStringTag ] = `${ host }.${ name }()`
+				$mol_owning_catch( host , cache )
 				store.set( host , cache )
 			}
 
@@ -36,35 +37,27 @@ namespace $ {
 		
 		return {
 			
-			value( next? : Value ) {
-				
-				const slave = $mol_fiber.current 
+			value( next? : Value , force? : $mol_atom_force ) {
 				
 				if( next === undefined ) {
-				
-					const master = get_cache( this )
-
-					if( slave ) slave.master = master
-					
-					return master.get()
-
-				} else {
-					
-					let master = slave && slave.master as $mol_fiber< void >
-					if( !master ) {
-						
-						master = new $mol_fiber
-						master.calculate = ()=> {
-							next = value.call( this , next )
-							get_cache( this ).push( next )
-						}
-						master[ Symbol.toStringTag ] = `${ this }.${ name }(*)`
-					}
-
-					if( slave ) slave.master = master
-
-					master.get()
+					const cache = get_cache( this )
+					if( force === $mol_atom_force_cache ) cache.obsolete( Number.NaN )
+					return cache.get()
 				}
+				
+				// const slave = $mol_fiber.current
+				// let master = slave && slave.master as $mol_fiber< void >
+				// if( !master ) {
+					
+				// 	master = new $mol_fiber
+				// 	master.calculate = ()=> {
+						if( force !== $mol_atom_force_cache ) next = value.call( this , next )
+						return get_cache( this ).push( next )
+				// 	}
+				// 	master[ Symbol.toStringTag ] = `${ this }.${ name }(*)`
+				// }
+
+				// master.get()
 
 			}
 
