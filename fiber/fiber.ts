@@ -222,9 +222,9 @@ namespace $ {
 				
 				this.$.$mol_log( this , value , '🠈' , this.value  )
 				
-				this.forget()
-		
 				this.obsolete_slaves()
+				
+				this.forget()
 				
 			} else {
 				this.$.$mol_log( this , '✔' , value )
