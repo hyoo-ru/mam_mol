@@ -32,7 +32,9 @@ namespace $ {
 			}
 
 			if( next === undefined ) return atom.get()
-			return atom.put( value.call( host , key , next ) )
+			next = value.call( host , key , next )
+			atom.put( next )
+			return next
 		}
 		
 		Object.defineProperty( obj , name + "()" , { get : function() { return store.get( this ) } } )

@@ -5,27 +5,36 @@ namespace $ {
 		static request = $mol_fiber_sync( fetch.bind( null ) as typeof fetch )
 
 		@ $mol_fiber_method
+		static response( input: RequestInfo, init?: RequestInit ) {
+
+			const response = this.request( input , init )
+			if( Math.floor( response.status / 100 ) === 2 ) return response
+			
+			throw new Error( response.statusText || `HTTP Error ${ response.status }` )
+		}
+
+		@ $mol_fiber_method
 		static stream( input: RequestInfo, init?: RequestInit ) {
-			return this.request( input , init ).body
+			return this.response( input , init ).body
 		}
 
 		@ $mol_fiber_method
 		static text( input: RequestInfo, init?: RequestInit ) {
-			const response = this.request( input , init )
+			const response = this.response( input , init )
 			const parse = $mol_fiber_sync( response.text )
 			return parse.call( response ) as string
 		}	
 
 		@ $mol_fiber_method
 		static json( input: RequestInfo, init?: RequestInit ) {
-			const response = this.request( input , init )
+			const response = this.response( input , init )
 			const parse = $mol_fiber_sync( response.json )
 			return parse.call( response )
 		}	
 
 		@ $mol_fiber_method
 		static buffer( input: RequestInfo, init?: RequestInit ) {
-			const response = this.request( input , init )
+			const response = this.response( input , init )
 			const parse = $mol_fiber_sync( response.arrayBuffer )
 			return parse.call( response )
 		}	
