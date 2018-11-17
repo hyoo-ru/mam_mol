@@ -1,6 +1,6 @@
 namespace $ {
 
-	export class $mol_object2 {
+	export class $mol_object2 extends Object {
 		
 		static $ = $ as $mol_ambient_context
 		static get $$() { return this.$ }
@@ -18,10 +18,12 @@ namespace $ {
 
 		destructor() { }
 
-		[ Symbol.toStringTag ] = `${ this.constructor }.make()`
-		
 		toString() {
 			return this[ Symbol.toStringTag ]
+		}
+		
+		toJSON() {
+			return this.toString()
 		}
 		
 	}
