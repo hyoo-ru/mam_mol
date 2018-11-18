@@ -106,7 +106,7 @@ namespace $ {
 			if( this.cursor > $mol_fiber_status.persist && this.alone ) this.destructor()
 		}
 
-		obsolete( master_index : number ) {
+		obsolete( master_index = -1 ) {
 
 			if( this.cursor > $mol_fiber_status.obsolete ) {
 				if( master_index >= this.cursor - 2 ) return
@@ -122,7 +122,7 @@ namespace $ {
 			
 		}
 
-		doubt( master_index : number ) {
+		doubt( master_index = -1 ) {
 			
 			if( this.cursor > $mol_fiber_status.obsolete ) {
 				if( master_index >= this.cursor - 2 ) return
