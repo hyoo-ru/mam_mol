@@ -48,8 +48,8 @@ namespace $ {
 				try {
 					master.get()
 				} catch( error ) {
-					this.cursor = index + 1
-					$mol_fail_hidden( error )
+					if( 'then' in error ) $mol_fail_hidden( error )
+					this.cursor = $mol_fiber_status.obsolete
 				}
 
 				if( this.cursor as $mol_fiber_status !== $mol_fiber_status.obsolete ) continue
