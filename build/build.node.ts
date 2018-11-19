@@ -686,18 +686,25 @@ namespace $ {
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/package.json` )
-			var targetMap = pack.resolve( `-/package.json` )
 			
 			var sources = this.sourcesAll( { path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) } )
-			var json = {
-				name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
-				version : '0.0.0' ,
-				main : 'node.js' ,
-				module : 'node.esm.js',
-				browser : 'web.js',
-				types : 'web.d.ts',
-				dependencies : <{ [ key : string ] : string }>{}
+			
+			try {
+				var json = JSON.parse( target.content() )
+			} catch( error ) {
+				var json : any = {
+					name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
+					version : '0.0.0' ,
+					main : 'node.js' ,
+					module : 'node.esm.js',
+					browser : 'web.esm.js',
+					types : 'web.d.ts',
+					dependencies : <{ [ key : string ] : string }>{}
+				}
 			}
+
+			json.version = json.version.replace( /\d+$/, ( build : string )=> parseInt( build ) + 1 )
+			json.dependencies = {}
 			
 			for( let src of sources ) {
 				let deps = this.srcDeps( src.path() )
