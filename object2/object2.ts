@@ -25,6 +25,8 @@ namespace $ {
 		toJSON() {
 			return this.toString()
 		}
+
+		[ Symbol.toStringTag ] = `${ this.constructor.name }.make()`
 		
 	}
 
