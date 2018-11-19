@@ -1,0 +1,3 @@
+include \/mol/atom2/autorun
+include \/mol/atom2/field
+include \/mol/atom2/dict
