@@ -31,6 +31,10 @@ namespace $ {
 				cache = new $mol_atom2
 				cache.calculate = get.bind( host )
 				cache[ Symbol.toStringTag ] = `${ host }.${ name }`
+				cache.abort = ()=> {
+					store.delete( host )
+					cache.forget()
+				}
 				store.set( host , cache )
 			}
 

@@ -168,6 +168,15 @@ namespace $ {
 
 			return false
 		}
+
+		destructor() {
+			super.destructor()
+
+			for( let index = 0 ; index < this.masters.length ; index += 2 ) {
+				this.disobey( index )
+			}
+			
+		}
 		
 	}
 

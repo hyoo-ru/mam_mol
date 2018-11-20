@@ -3,7 +3,7 @@ namespace $ {
 	export function $mol_atom2_dict< Key extends string | number | symbol , Value >( config : {
 		get? : ( key : Key , dict : Record< Key , Value > )=> Value
 		set? : ( value : Value , key : Key , dict : Record< Key , Value > )=> Value
-		abort? : ( key : Key , dict : Record< Key , Value > )=> void
+		abort? : ( value : Value , key : Key , dict : Record< Key , Value > )=> void
 	} ) {
 
 		const store = new $mol_object2 as unknown as Record< Key , $mol_atom2< Value > >
@@ -25,8 +25,12 @@ namespace $ {
 			let cache = store[ key ]
 			if( !cache ) {
 				cache = new $mol_atom2
+				cache.abort = ()=> {
+					store[ key ] = undefined
+					if( config.abort ) config.abort( cache.value , key , proxy )
+					else cache.forget()
+				}
 				if( config.get ) cache.calculate = config.get.bind( null , key , proxy )
-				if( config.abort ) cache.abort = config.abort.bind( null , key , proxy )
 				cache[ Symbol.toStringTag ] = `${ store }[${ JSON.stringify( key ) }]`
 				store[ key ] = cache
 				if( keys ) keys.obsolete_slaves()

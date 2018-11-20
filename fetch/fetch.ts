@@ -2,7 +2,15 @@ namespace $ {
 
 	export class $mol_fetch extends $mol_object2 {
 		
-		static request = $mol_fiber_sync( fetch.bind( null ) as typeof fetch )
+		static request = $mol_fiber_sync( ( input : RequestInfo , init : RequestInit = {} )=> {
+			
+			var controller = new AbortController()
+			init.signal = controller.signal
+			$mol_fiber.current.abort = controller.abort.bind( controller )
+		
+			return fetch( input , init )
+
+		} )
 
 		@ $mol_fiber_method
 		static response( input: RequestInfo, init?: RequestInit ) {

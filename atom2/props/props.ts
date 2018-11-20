@@ -25,7 +25,10 @@ namespace $ {
 				atom = new $mol_atom2<Value>()
 				atom[ Symbol.toStringTag ] = `${ host }.${ name }(${key_str})`
 				atom.calculate = value.bind( host , key )
-				atom.abort = ()=> dict[ key_str ] = null
+				atom.abort = ()=> {
+					dict[ key_str ] = null
+					atom.forget()
+				}
 				$mol_owning_catch( this , atom )
 
 				dict[ key_str ] = atom

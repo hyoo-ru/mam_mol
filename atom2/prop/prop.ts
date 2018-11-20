@@ -28,6 +28,10 @@ namespace $ {
 				cache = new $mol_atom2
 				cache.calculate = value.bind( host )
 				cache[ Symbol.toStringTag ] = `${ host }.${ name }()`
+				cache.abort = ()=> {
+					store.delete( host )
+					cache.forget()
+				}
 				$mol_owning_catch( host , cache )
 				store.set( host , cache )
 			}
