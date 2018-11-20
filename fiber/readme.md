@@ -42,88 +42,11 @@ Converts function to fiber.
 ```typescript
 const log = $mol_fiber_func( console.log )
 
-$mol_fiber_start( ()=> {
+$mol_fiber_defer( ()=> {
 	log( 1 ) // 1
 	log( 2 ) // 2
 } )
 ```
-
-### $mol_fiber_make
-
-Creates fiber as child of current fiber.
-
-```typescript
-$mol_fiber_start( ()=> {
-	$mol_fiber_make( ()=> console.log( 1 ) ).start() // 1
-	$mol_fiber_make( ()=> console.log( 2 ) ).start() // 2
-} )
-```
-
-### $mol_fiber_async
-
-Starts fiber and provide callback to provide result or error.
-
-```typescript
-function get_data() {
-	return $mol_fiber_async( back => {
-		setTimeout( back( ()=> 123 ) )
-	} )
-}
-
-function get_error() {
-	return $mol_fiber_async( back => {
-		setTimeout( back( ()=> {
-			throw new Error( 'Test error' )
-		} ) )
-	} )
-}
-
-$mol_fiber_start( ()=>{
-	get_data() // returns 123
-	get_error() // throws test error
-} )
-```
-
-Return function to handle fiber cancelling. In example cancellable fetch:
-
-```typescript
-function get_text( uri : string ) {
-
-	return $mol_fiber_async( back => {
-
-		const xhr = new XMLHttpRequest()
-		xhr.open( 'GET', uri )
-
-		xhr.onload = back( () => {
-
-			if( Math.floor( xhr.status / 100 ) !== 2 ) {
-				throw new Error( xhr.statusText )
-			}
-
-			return xhr
-		} )
-
-		xhr.onerror = back( () => {
-			throw new Error( xhr.statusText )
-		} )
-
-		xhr.send()
-
-		return ()=> xhr.abort()
-
-	} )
-
-}
-```
-
-Use `destructor` method to stop execution of fiber tree and provide second callback to handle aborting:
-
-
-```
-const fiber = $mol_fiber_make( ()=> doSomeJob() , ()=> handleAbort() )
-//...
-fiber.destructor() // `doSomeJob` won't be completed and `handleAbort` will be called
-``` 
 
 ### $mol_fiber_sync
 
@@ -132,9 +55,33 @@ Converts any `async` function (function that returns promise) to "synchronous" f
 ```typescript
 const request = $mol_fiber_sync( fetch )
 
-$mol_fiber_start( ()=> {
+$mol_fiber_defer( ()=> {
 	console.log( request( 'http://example.org/users' ).users )
 } )
+```
+
+You can prodive `abort` callback to cancel async task on fiber destruction:
+
+```typescript
+const request = $mol_fiber_sync( ( input : RequestInfo , init : RequestInit = {} )=> {
+
+	var controller = new AbortController()
+	$mol_fiber.current.abort = controller.abort.bind( controller )
+	init.signal = controller.signal
+		
+	return fetch( input , init )
+
+}
+```
+
+And you can destroy fiber tree by calling `destructor` method:
+
+```typescript
+const task = $mol_fiber_defer( ()=> {
+	console.log( request( 'http://example.org/users' ).users )
+} )
+
+task.destructor()
 ```
 
 ### $mol_fiber_method
