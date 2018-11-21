@@ -212,11 +212,11 @@ namespace $ {
 
 		push( value : Value ) {
 			
-			value = $mol_conform( value , this.value )
+			value = this.$.$mol_conform( value , this.value )
 			
 			if( this.value !== value ) {
 		
-				if( $mol_owning_catch( this , value ) ) {
+				if( this.$.$mol_owning_catch( this , value ) ) {
 					value[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
 				}
 				
@@ -324,7 +324,7 @@ namespace $ {
 				}
 			}
 
-			if( this.error ) $mol_fail_hidden( this.error )
+			if( this.error ) this.$.$mol_fail_hidden( this.error )
 			return this.value
 
 		}
@@ -342,7 +342,7 @@ namespace $ {
 				return
 			}
 
-			$mol_fail_hidden( $mol_fiber.schedule() )
+			this.$.$mol_fail_hidden( $mol_fiber.schedule() )
 		}
 
 		get master() {
@@ -383,7 +383,7 @@ namespace $ {
 			this.masters[ master_index ] = undefined
 			this.masters[ master_index + 1 ] = undefined
 
-			$mol_array_trim( this.masters )
+			this.$.$mol_array_trim( this.masters )
 
 		}
 
@@ -392,7 +392,7 @@ namespace $ {
 		obsolete( master_index : number ) { }
 
 		forget() {
-			if( $mol_owning_check( this , this.value ) ) {
+			if( this.$.$mol_owning_check( this , this.value ) ) {
 				this.value.destructor()
 			}
 			this.value = undefined
