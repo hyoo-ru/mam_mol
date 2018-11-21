@@ -6,21 +6,21 @@ namespace $ {
 
 			if( this.$.$mol_font_loaded( config ) ) return true
 			
-			throw new Promise( ( done , fail )=> {
+			$mol_fail_hidden( new Promise( ( done , fail )=> {
 
 				const check = ()=> {
 					if( this.$.$mol_font_loaded( config ) ) done()
-					else this.$.requestAnimationFrame( check )				
+					else new this.$.$mol_after_frame( check )				
 				}
 	
-				this.$.requestAnimationFrame( check )
+				new this.$.$mol_after_frame( check )
 	
-				this.$.setTimeout( ()=> {
+				new this.$.$mol_after_timeout( 5000 , ()=> {
 					this.$.$mol_font_loaded( config , true )
 					fail( new Error( `Font loading timeout ${ config.face }` ) )
-				} , 5000 )
+				} )
 				
-			} )
+			} ) )
 			
 		}
 
