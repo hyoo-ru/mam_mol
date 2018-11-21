@@ -95,42 +95,6 @@ namespace $ {
 
 	}
 
-	// export function $mol_fiber_async< Result = void >(
-	// 	request : (
-	// 		back : (
-	// 			response :  ( ... args : any[] )=> Result
-	// 		)=> ( ... args : any[] )=> void
-	// 	)=> { (): any } | void
-	// ) : Result {
-
-	// 	const fiber = $mol_fiber_make< Result >( $mol_func_name_from( ()=> {
-			
-	// 		const promise = new Promise( ( done , fail )=> {
-
-	// 			fiber.abort = request( response => ( ... args : any[] )=> {
-			
-	// 				if( !fiber.masters ) return
-		
-	// 				new Promise( ()=> {
-	// 					fiber.done( response( ... args ) )
-	// 				} ).catch( error => {
-	// 					fiber.fail( error )
-	// 				} )
-
-	// 				// if( fiber.slave ) fiber.slave.start()
-		
-	// 			} )
-
-	// 		} )
-
-	// 		return $mol_fail_hidden( promise )
-
-	// 	} , request ) )
-
-	// 	return fiber.start()
-
-	// }
-
 	export async function $mol_fiber_warp() {
 		while( $mol_fiber.queue.length ) await $mol_fiber.tick()
 		return Promise.resolve()
@@ -405,7 +369,6 @@ namespace $ {
 		destructor() {
 			this.$.$mol_log( this , '🕱' )
 			this.complete()
-			this.cursor = $mol_fiber_status.obsolete
 			this.abort()
 		}
 

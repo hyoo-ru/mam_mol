@@ -692,15 +692,17 @@ namespace $ {
 			try {
 				var json = JSON.parse( target.content() )
 			} catch( error ) {
-				var json : any = {
-					name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
-					version : '0.0.0' ,
-					main : 'node.js' ,
-					module : 'node.esm.js',
-					browser : 'web.esm.js',
-					types : 'web.d.ts',
-					dependencies : <{ [ key : string ] : string }>{}
-				}
+				console.error( error )
+			}
+
+			if( !json ) json = {
+				name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
+				version : '0.0.0' ,
+				main : 'node.js' ,
+				module : 'node.esm.js',
+				browser : 'web.esm.js',
+				types : 'web.d.ts',
+				dependencies : <{ [ key : string ] : string }>{}
 			}
 
 			json.version = json.version.replace( /\d+$/, ( build : string )=> parseInt( build ) + 1 )
