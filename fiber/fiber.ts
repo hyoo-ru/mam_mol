@@ -96,8 +96,14 @@ namespace $ {
 	}
 
 	export async function $mol_fiber_warp() {
-		while( $mol_fiber.queue.length ) await $mol_fiber.tick()
-		return Promise.resolve()
+		const deadline = $mol_fiber.deadline
+		try {
+			$mol_fiber.deadline = Number.POSITIVE_INFINITY
+			while( $mol_fiber.queue.length ) await $mol_fiber.tick()
+			return Promise.resolve()
+		} finally {
+			$mol_fiber.deadline = deadline
+		}
 	}
 
 	export function $mol_fiber_fence( func : ()=> any ) {
@@ -127,17 +133,18 @@ namespace $ {
 
 		static current : $mol_fiber
 		
-		static scheduled = 0
+		static scheduled : $mol_after_frame
 		static queue = [] as ( ()=> PromiseLike< any > )[]
 		
 		
 		static async tick() {
-
-			$mol_fiber.deadline = Math.max( $mol_fiber.deadline , Date.now() + $mol_fiber.quant )
 	
 			while( $mol_fiber.queue.length > 0 ) {
 
-				if( Date.now() > $mol_fiber.deadline ) return $mol_fiber.schedule()
+				if( Date.now() > $mol_fiber.deadline ) {
+					$mol_fiber.schedule()
+					return 
+				}
 
 				const task = $mol_fiber.queue.shift()
 				await task()
@@ -150,10 +157,9 @@ namespace $ {
 
 			if( !$mol_fiber.scheduled ) {
 
-				const schedule = this.$.requestAnimationFrame || this.$.setTimeout
-
-				$mol_fiber.scheduled = schedule( ()=> {
-					$mol_fiber.scheduled = 0
+				$mol_fiber.scheduled = new $mol_after_frame( ()=> {
+					$mol_fiber.deadline = Math.max( $mol_fiber.deadline , Date.now() + $mol_fiber.quant )
+					$mol_fiber.scheduled = null
 					$mol_fiber.tick()
 				} )
 
@@ -274,7 +280,7 @@ namespace $ {
 								this.$.$mol_log( this , '⏰' )
 								this.get()
 							}
-							error = error.then( listener , listener )		
+							error = error.then( listener , listener )
 						}
 
 						this.wait( error )
@@ -301,8 +307,8 @@ namespace $ {
 			if( overtime < 0 ) return
 
 			/// after debugger
-			if( overtime > 500 || !$mol_fiber.current ) {
-				$mol_fiber.deadline = Math.max( $mol_fiber.deadline , now + $mol_fiber.quant )
+			if( overtime > 500 ) {
+				$mol_fiber.deadline = now + $mol_fiber.quant
 				return
 			}
 
