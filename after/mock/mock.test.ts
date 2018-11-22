@@ -4,7 +4,8 @@ namespace $ {
 	export let $mol_after_mock_queue = [] as ( ()=> void )[]
 
 	export function $mol_after_mock_warp() {
-		while( this.queue.length ) $mol_after_mock_queue.shift()()
+		const queue = $mol_after_mock_queue.splice( 0 )
+		for( const task of queue ) task()
 	}
 
 	export class $mol_after_mock_commmon extends $mol_object2 {
