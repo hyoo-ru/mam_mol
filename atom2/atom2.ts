@@ -37,7 +37,6 @@ namespace $ {
 
 			this.$.$mol_log( this , '⏭' )
 			
-			// this.cursor = $mol_fiber_status.obsolete
 			const masters = this.masters
 
 			for( let index = 0 ; index < masters.length ; index += 2 ) {
@@ -175,6 +174,8 @@ namespace $ {
 			for( let index = 0 ; index < this.masters.length ; index += 2 ) {
 				this.disobey( index )
 			}
+
+			this.cursor = $mol_fiber_status.obsolete
 			
 		}
 		

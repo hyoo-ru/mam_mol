@@ -260,6 +260,43 @@ namespace $ {
 			this.push( this.calculate() )
 		}
 
+		update() {
+
+			const slave = $mol_fiber.current
+			
+			try {
+					
+				this.error = null
+				
+				this.limit()
+				
+				$mol_fiber.current = this
+
+				this.$.$mol_log( this , '►' )
+
+				this.pull()
+
+			} catch( error ) {
+
+				if( 'then' in error ) {
+					
+					if( !slave ) {
+						const listener = this.wake.bind( this )
+						error = error.then( listener , listener )
+					}
+
+					this.wait( error )
+
+				} else {
+					this.fail( error )
+				}
+
+			} finally {
+				$mol_fiber.current = slave
+			}
+
+		}
+
 		get() {
 
 			if( this.cursor > $mol_fiber_status.obsolete ) throw new Error( 'Cyclic dependency' )
@@ -267,39 +304,7 @@ namespace $ {
 			const slave = $mol_fiber.current
 			if( slave ) slave.master = this
 			
-			if( this.cursor > $mol_fiber_status.actual ) {
-
-				try {
-					
-					this.error = null
-					
-					this.limit()
-					
-					$mol_fiber.current = this
-
-					this.$.$mol_log( this , '►' )
-
-					this.pull()
-
-				} catch( error ) {
-
-					if( 'then' in error ) {
-						
-						if( !slave ) {
-							const listener = this.wake.bind( this )
-							error = error.then( listener , listener )
-						}
-
-						this.wait( error )
-
-					} else {
-						this.fail( error )
-					}
-
-				} finally {
-					$mol_fiber.current = slave
-				}
-			}
+			if( this.cursor > $mol_fiber_status.actual ) this.update()
 
 			if( this.error ) this.$.$mol_fail_hidden( this.error )
 			return this.value
