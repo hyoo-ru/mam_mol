@@ -177,7 +177,17 @@ namespace $ {
 		calculate : ()=> Value
 		
 		schedule() {
-			$mol_fiber.schedule().then( this.get.bind( this ) )
+			$mol_fiber.schedule().then( this.wake.bind( this ) )
+		}
+
+		wake() {
+			this.$.$mol_log( this , '⏰' )
+			try {
+				return this.get()
+			} catch( error ) {
+				if( 'then' in error ) return
+				$mol_fail_hidden( error )
+			}
 		}
 
 		push( value : Value ) {
@@ -276,10 +286,7 @@ namespace $ {
 					if( 'then' in error ) {
 						
 						if( !slave ) {
-							const listener = ()=> {
-								this.$.$mol_log( this , '⏰' )
-								this.get()
-							}
+							const listener = this.wake.bind( this )
 							error = error.then( listener , listener )
 						}
 
