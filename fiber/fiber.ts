@@ -184,7 +184,7 @@ namespace $ {
 			
 			value = this.$.$mol_conform( value , this.value )
 			
-			if( this.value !== value ) {
+			if( !$mol_compare_any( this.value , value ) ) {
 		
 				if( this.$.$mol_owning_catch( this , value ) ) {
 					value[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
