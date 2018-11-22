@@ -14,6 +14,7 @@ namespace $ {
 
 			case Node.ELEMENT_NODE :
 
+				let overflow = - ( source as Element ).childNodes.length
 				let next = ( target as Element ).firstChild as Node
 				for( let child of ( source as Element ).childNodes ) {
 					child = $mol_dom_patch( next , child ) as ChildNode
@@ -21,7 +22,7 @@ namespace $ {
 					else target.insertBefore( child , next )
 				}
 
-				const overflow = ( target as Element ).childNodes.length - ( source as Element ).childNodes.length
+				overflow += ( target as Element ).childNodes.length
 				for( let i = 0 ; i < overflow ; ++ i ) {
 					target.removeChild( target.lastChild )
 				}
