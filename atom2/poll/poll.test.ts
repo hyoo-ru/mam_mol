@@ -24,9 +24,6 @@ namespace $ {
 			$.$mol_after_mock_warp()
 			$mol_assert_equal( $mol_atom2_value( ()=> monitor.get() ) , undefined )
 			
-			state = 4
-			$mol_assert_equal( monitor.get() , 4 )
-
 		} ,
 
 	})
