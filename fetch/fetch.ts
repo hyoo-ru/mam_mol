@@ -4,9 +4,11 @@ namespace $ {
 		
 		static request = $mol_fiber_sync( ( input : RequestInfo , init : RequestInit = {} )=> {
 			
-			var controller = new AbortController()
-			init.signal = controller.signal
-			$mol_fiber.current.abort = controller.abort.bind( controller )
+			if( typeof AbortController === 'function' ) {
+				var controller = new AbortController()
+				init.signal = controller.signal
+				$mol_fiber.current.abort = controller.abort.bind( controller )
+			}
 		
 			return fetch( input , init )
 
