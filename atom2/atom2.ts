@@ -82,7 +82,7 @@ namespace $ {
 
 		lead( slave : $mol_fiber , master_index : number ) {
 			
-			this.$.$mol_log( this , '☍' )
+			this.$.$mol_log( this , '☍' , slave )
 			
 			const slave_index = this.slaves.length
 			this.slaves[ slave_index ] = slave
@@ -95,7 +95,7 @@ namespace $ {
 
 			if( slave_index < 0 ) return // slave is fiber
 			
-			this.$.$mol_log( this , '☌' )
+			this.$.$mol_log( this , '☌' , this.slaves[ slave_index ] )
 
 			this.slaves[ slave_index ] = undefined
 			this.slaves[ slave_index + 1 ] = undefined
