@@ -59,7 +59,8 @@ namespace $ {
 			if( !master || master.constructor !== $mol_fiber ) {
 				master = new $mol_fiber
 				master.calculate = calculate.bind( this , ... args )
-				master[ Symbol.toStringTag ] = `${ this }.${ name }()`
+				const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
+				master[ Symbol.toStringTag ] = `${ prefix }${ this }.${ name }()`
 			}
 			
 			return master.get()
@@ -385,7 +386,7 @@ namespace $ {
 		}
 
 		destructor() {
-			this.$.$mol_log( this , '🕱' )
+			this.$.$mol_log( this , '🕱' , this.value )
 			this.complete()
 			this.abort()
 		}
