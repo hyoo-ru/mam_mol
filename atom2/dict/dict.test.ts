@@ -73,27 +73,6 @@ module $ {
 
 		} ,
 
-		'Can be iterated over pairs' () {
-
-			class Registry extends $mol_object2 {
-
-				@ $mol_atom2_field
-				static get value() {
-					return $mol_atom2_dict< number , number >({})
-				}
-				
-			}
-
-			Registry.value[1] = 2
-			Registry.value[3] = 4
-
-			const keys = [] as [ string , number ][]
-			for( const pair of Object.entries( Registry.value ) ) keys.push( pair )
-
-			$mol_assert_like( keys , [ [ '1' , 2 ] , [ '3' , 4 ] ] )
-
-		} ,
-
 		'Call back on abort' () {
 
 			const log = [] as string[]
