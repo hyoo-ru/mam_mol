@@ -73,7 +73,6 @@
 	font-family: var(--mol_skin_font_monospace);
 	white-space: pre-wrap;
 	border-radius: var(--mol_skin_round);
-	padding: 1px;
 }
 
 [mol_text_type="text-link"] {
