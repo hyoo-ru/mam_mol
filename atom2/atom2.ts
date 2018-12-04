@@ -12,6 +12,11 @@ namespace $ {
 
 	export class $mol_atom2< Value = any > extends $mol_fiber< Value > {
 
+		static get current() {
+			const atom = $mol_fiber.current
+			if( atom instanceof $mol_atom2 ) return atom
+		}
+
 		static cached = false
 
 		slaves = [] as ( $mol_fiber | number | undefined )[]
@@ -147,6 +152,15 @@ namespace $ {
 			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
 				const slave = this.slaves[ index ] as $mol_atom2
 				if( slave ) slave.doubt( this.slaves[ index + 1 ] as number )
+			}
+		}
+
+		get fresh() {
+			return ()=> {
+				if( this.cursor === $mol_fiber_status.obsolete ) return
+
+				this.cursor = $mol_fiber_status.obsolete
+				this.schedule()
 			}
 		}
 
