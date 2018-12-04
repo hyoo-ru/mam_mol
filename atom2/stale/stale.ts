@@ -9,7 +9,7 @@ namespace $ {
 			if( atom.cursor === $mol_fiber_status.obsolete ) return
 
 			atom.cursor = $mol_fiber_status.obsolete
-			atom.update()
+			atom.schedule()
 		}
 
 	}
