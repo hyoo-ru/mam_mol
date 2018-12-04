@@ -1,3 +1,2 @@
 declare namespace $ {}
 export = $
-

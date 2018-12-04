@@ -2,11 +2,15 @@ namespace $ {
 
 	$mol_test({
 
-		'$mol_atom2_poll'( $ ) {
+		'$mol_atom2_stale'( $ ) {
 
 			let state = 1
 
-			const monitor = $.$mol_atom2_poll( ()=> state )
+			const monitor = new $.$mol_atom2
+			monitor.calculate = ()=> {
+				new $.$mol_after_frame( $mol_atom2_stale() )
+				return state
+			}
 			$mol_assert_equal( monitor.get() , 1 )
 			
 			state = 2
@@ -19,10 +23,10 @@ namespace $ {
 			$mol_assert_equal( monitor.get() , 2 )
 			
 			monitor.destructor()
-			$mol_assert_equal( $mol_atom2_value( ()=> monitor.get() ) , undefined )
+			$mol_assert_equal( monitor.value , undefined )
 			
 			$.$mol_after_mock_warp()
-			$mol_assert_equal( $mol_atom2_value( ()=> monitor.get() ) , undefined )
+			$mol_assert_equal( monitor.value , undefined )
 			
 		} ,
 
