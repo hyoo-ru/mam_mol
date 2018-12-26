@@ -82,5 +82,11 @@ namespace $.$$ {
 				: [ ... this.option_content_current() , this.Trigger_icon() ]
 		}
 		
+		menu_content() {
+			return ( this.value() && this.Filter() )
+				? [ this.Filter() , ... this.option_rows() ]
+				: this.option_rows()
+		}
+		
 	}
 }

@@ -30,7 +30,7 @@ $mol_select $mol_pop
 				debounce <= debounce 200
 			<= Trigger_icon $mol_icon_chevron
 	bubble_content /
-		<= Bubble_content $mol_list
-			rows /
+		<= Menu $mol_list
+			rows <= menu_content /
 				<= Filter
 				<= option_rows /
