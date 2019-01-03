@@ -12,13 +12,11 @@ script:
   - node mol/app/demo/-/node.test.js
   - rm mol/.gitignore
 deploy:
-  - edge:
-      branch: v1.8.47
-    provider: pages
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN
-    local_dir: .
-    on:
-      branch: master
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: .
+  on:
+	branch: master
 notifications:
   slack: mam-mol:Z7vokFhXaSrMlPXzq6L93bUj

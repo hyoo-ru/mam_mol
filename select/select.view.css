@@ -63,7 +63,7 @@
 	transform: rotateZ(90deg) scale(1.25);
 }
 
-[mol_select_bubble_content] {
+[mol_select_menu] {
 	display: flex;
 	flex-direction: column;
 }
