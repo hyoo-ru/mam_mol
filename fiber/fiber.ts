@@ -129,7 +129,7 @@ namespace $ {
 
 	export class $mol_fiber< Value = any > extends $mol_object2 {
 
-		static quant = 15
+		static quant = 16
 		static deadline = 0
 
 		static current : $mol_fiber
@@ -249,8 +249,6 @@ namespace $ {
 			}
 			
 			this.cursor = $mol_fiber_status.actual
-
-			return false
 		}
 		
 		complete_master( master_index : number ) {
@@ -300,7 +298,7 @@ namespace $ {
 
 		get() {
 
-			if( this.cursor > $mol_fiber_status.obsolete ) throw new Error( 'Cyclic dependency' )
+			if( this.cursor > $mol_fiber_status.obsolete ) this.$.$mol_fail( new Error( 'Cyclic dependency' ) )
 			
 			const slave = $mol_fiber.current
 			if( slave ) slave.master = this

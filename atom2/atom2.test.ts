@@ -335,7 +335,7 @@ module $ {
 
 				@ $mol_atom2_field
 				static get broken() {
-					if( this.condition ) throw new Error( 'test error' )
+					if( this.condition ) $mol_fail( new Error( 'test error' ) )
 					return 1
 				}
 				

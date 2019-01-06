@@ -11,7 +11,7 @@ namespace $.$$ {
 			app.Add().value( 'test title' )
 			app.Add().event_done()
 
-			$mol_assert_equal( app.task_ids().toString() , '1' )
+			$mol_assert_like( app.task_ids() , [ 1 ] )
 
 			$mol_assert_equal( app.Task_row(1).title() , 'test title' )
 			$mol_assert_equal( app.Task_row(1).completed() , false )
@@ -63,16 +63,16 @@ namespace $.$$ {
 
 			app.Task_row(1).Complete().event_click()
 
-			$mol_assert_equal( app.task_ids_filtered().toString() , '1,2' )
+			$mol_assert_like( app.task_ids_filtered() , [ 1 , 2 ] )
 
 			app.$.$mol_state_arg.href( app.Filter_completed().uri() )
-			$mol_assert_equal( app.task_ids_filtered().toString() , '1' )
+			$mol_assert_like( app.task_ids_filtered() , [ 1 ] )
 			
 			app.$.$mol_state_arg.href( app.Filter_active().uri() )
-			$mol_assert_equal( app.task_ids_filtered().toString() , '2' )
+			$mol_assert_like( app.task_ids_filtered() , [ 2 ] )
 			
 			app.$.$mol_state_arg.href( app.Filter_all().uri() )
-			$mol_assert_equal( app.task_ids_filtered().toString() , '1,2' )
+			$mol_assert_like( app.task_ids_filtered() , [ 1 , 2 ] )
 			
 		} ,
 

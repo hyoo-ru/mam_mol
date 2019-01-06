@@ -114,7 +114,7 @@ namespace $ {
 
 			if( this.cursor > $mol_fiber_status.obsolete ) {
 				if( master_index >= this.cursor - 2 ) return
-				throw new Error( 'Obsoleted while calculation' )
+				this.$.$mol_fail( new Error( 'Obsoleted while calculation' ) )
 			}
 			
 			if( this.cursor === $mol_fiber_status.obsolete ) return
@@ -130,7 +130,16 @@ namespace $ {
 			
 			if( this.cursor > $mol_fiber_status.obsolete ) {
 				if( master_index >= this.cursor - 2 ) return
-				throw new Error( 'Doubted while calculation' )
+
+				const path = [] as $mol_atom2[]
+				let current = this as $mol_atom2
+				
+				collect : while( current ) {
+					path.push( current )
+					current = current.masters[ current.cursor - 2 ] as $mol_atom2
+				}
+
+				throw new Error( `Doubted while calculation \n\n${ path.join( '\n' ) }\n` )
 			}
 			
 			if( this.cursor >= $mol_fiber_status.doubt ) return
@@ -139,6 +148,7 @@ namespace $ {
 			this.cursor = $mol_fiber_status.doubt
 			
 			this.doubt_slaves()
+
 		}
 
 		obsolete_slaves() {
