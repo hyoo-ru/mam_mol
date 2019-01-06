@@ -1,0 +1,40 @@
+$mol_app_issues $mol_page
+	title @ \Time of unresolving issues of GitHub projects
+	tools /
+		<= Sources $mol_link_iconed
+			uri \https://github.com/eigenmethod/mol/tree/master/app/issues
+			content /
+	body /
+		<= Projects $mol_row
+			sub <= projects /
+		<= Chart $mol_plot_pane
+			gap_bottom 0
+			graphs /
+				<= Capacities $mol_plot_bar
+					series <= capacities /
+				<= Capacities_ruler $mol_plot_ruler_vert
+					title \
+					labels /
+				<= Capacities_ruler_hor $mol_plot_ruler_hor
+					title \
+					series <= capacities /
+					labels /
+		<= Description $mol_view
+			sub / <= description @ \Sum of ages of all open issues. Lower is better.
+	Project!index $mol_app_issues_project
+		id?val <=> project_id!index?val \
+
+$mol_app_issues_project $mol_view
+	capacity 0
+	sub /
+		<= Input $mol_view sub /
+			<= Id $mol_string
+				hint \username/repo
+				value?val <=> id?val \
+			<= Homepage $mol_link_iconed
+				uri <= homepage \
+				content /
+		<= Capacity $mol_view
+			minimal_height 80
+			minimal_width 80
+			sub / <= capacity_text \
