@@ -31,6 +31,7 @@ $mol_app_issues_project $mol_view
 			<= Id $mol_string
 				hint \username/repo
 				value?val <=> id?val \
+				debounce 1000
 			<= Homepage $mol_link_iconed
 				uri <= homepage \
 				content /
