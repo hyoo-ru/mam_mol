@@ -59,7 +59,7 @@ namespace $ {
 			this.minute = config.minute
 			this.second = config.second
 			
-			if( config.offset !== undefined ) this.offset = new $mol_time_duration( config.offset )
+			if( config.offset !== undefined ) this.offset = config.offset && new $mol_time_duration( config.offset )
 		}
 
 		readonly year : number
