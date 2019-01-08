@@ -67,13 +67,39 @@ namespace $.$$ {
 				()=> this.project().open_issues_count
 			)
 		}
-		
+
 		capacity() {
 			if( !this.id() ) return 0
-			return this.issues().reduce( ( sum , issue )=> {
+
+			const key = 'mol/app/issues/project/' + this.id()
+			
+			try {
+
+				const cache = this.$.$mol_shared.cache<{ date : string , capacity : number }>( key )
+
+				if( cache.date ) {
+					const age = new this.$.$mol_time_interval( cache.date + '/' ).duration.count( 'P1D' )
+					if( age < 1 ) return cache.capacity
+				}
+
+			} catch( error ) {
+				if( error instanceof $mol_atom_wait ) $mol_fail_hidden( error )
+				console.error( error )
+			}
+
+			const capacity = this.issues().reduce( ( sum , issue )=> {
 				const age = new this.$.$mol_time_interval( issue.created_at + '/' )
 				return sum + Math.ceil( age.duration.count( 'P1D' ) )
 			} , 0 )
+
+			const today  = new this.$.$mol_time_moment().merge({ hour : null , minute : null , second : null , offset : null })
+
+			this.$.$mol_shared.cache( key , {
+				date : today.toString() ,
+				capacity ,
+			} )
+
+			return capacity
 		}
 
 		capacity_text() {
