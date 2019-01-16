@@ -175,12 +175,7 @@ namespace $ {
 		}
 
 		get alone() {
-			
-			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
-				if( this.slaves[ index ] ) return false
-			}
-
-			return true
+			return this.slaves.length === 0
 		}
 		
 		get derived() {
