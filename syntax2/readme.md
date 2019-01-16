@@ -39,3 +39,29 @@ Calls different `handle` for different tokens. Arguments of `handle`:
 * `found : string` - matched substring
 * `chunks : string[]` - captured chunks
 * `offset : number` - offset of token start
+
+# Installation
+
+## Direct
+
+```html
+<script src="http://mol.js.org/syntax2/-/web.js"></script>
+```
+
+## NPM
+
+```sh
+npm install mol_syntax --save
+```
+
+### JavaScript
+
+```js
+const { $mol_syntax2 } = require( 'mol_syntax' )
+```
+
+### TypeScript
+
+```ts
+import { $mol_syntax2 } from 'mol_syntax'
+```
