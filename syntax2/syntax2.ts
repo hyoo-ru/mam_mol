@@ -15,7 +15,7 @@ namespace $ {
 			}
 
 			const parts = '(' + this.rules.map( rule => rule.regExp.source ).join( ')|(' ) + ')'
-			this.regexp = RegExp( `([^]*?)(?:(${ parts })|$(?![^]))` , 'gm' ) 
+			this.regexp = RegExp( `([\\s\\S]*?)(?:(${ parts })|$(?![^]))` , 'gm' ) 
 			
 		}
 		
