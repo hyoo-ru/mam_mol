@@ -1,9 +1,9 @@
 namespace $ {
 
-	export class $mol_import {
+	export class $mol_import extends $mol_object2 {
 		
 		@ $mol_mem_key
-		static script( uri : string , next? : any , force? : $mol_atom_force  ) : any {
+		static script( uri : string , next? : any , force? : $mol_atom_force ) : any {
 			const doc = $mol_dom_context.document
 
 			const found = doc.querySelector( `script[src="${ uri }"]` )
