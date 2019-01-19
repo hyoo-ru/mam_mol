@@ -92,6 +92,7 @@ namespace $.$$ {
 			return measure
 		}
 
+		@ $mol_mem
 		run() {
 
 			function measure( inner : string , outer = [ '' , '' ] ) {
@@ -136,6 +137,8 @@ namespace $.$$ {
 				
 				} catch( error ) {
 
+					if( error instanceof $mol_atom_wait ) $mol_fail_hidden( error )
+
 					console.error( error )
 
 					return $mol_app_jsperf_stats.make( stats => {
@@ -161,6 +164,8 @@ namespace $.$$ {
 			} )
 
 			this.measures( measures )
+
+			$mol_atom_current().destructor()
 		}
 
 	}
