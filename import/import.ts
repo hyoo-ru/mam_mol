@@ -12,6 +12,7 @@ namespace $ {
 			const script = doc.createElement( 'script' )
 			script.src = uri
 			script.onload = ()=> this.script( uri , $mol_dom_context , $mol_atom_force_cache )
+			script.onerror = ()=> this.script( uri , new Error( `Can not import ${ uri }` ) , $mol_atom_force_cache )
 			doc.head.appendChild( script )
 			
 			throw new $mol_atom_wait( `Import ${ uri }` )
