@@ -35,6 +35,11 @@ namespace $.$$ {
 			return this.$.$mol_state_arg.value( 'postfix' , next ) || ''
 		}
 
+		permalink() {
+			const win = this.$.$mol_dom_context
+			return 'https://tinyurl.com/create.php?url=' + encodeURIComponent( win.location.href )
+		}
+
 		@ $mol_mem
 		optimized( next? : boolean ) : boolean {
 			return this.$.$mol_state_arg.value( 'optimized' , ( next === undefined ) ? undefined : `${ next }` ) !== 'false'
