@@ -40,7 +40,13 @@ namespace $ {
 		$mol_conform_handlers.set( cl , handler )
 	}
 
-	$mol_conform_handler( Array , ( target , source )=> {
+	function $mol_conform_array<
+		Value ,
+		List extends {
+			[ index : number ] : Value
+			length : number
+		} ,
+	>( target : List , source : List ) {
 		
 		let equal = target.length === source.length
 
@@ -54,7 +60,12 @@ namespace $ {
 		}
 
 		return equal ? source : target
-	} )
+	}
+
+	$mol_conform_handler( Array , $mol_conform_array )
+	$mol_conform_handler( Uint8Array , $mol_conform_array )
+	$mol_conform_handler( Uint16Array , $mol_conform_array )
+	$mol_conform_handler( Uint32Array , $mol_conform_array )
 
 	$mol_conform_handler( Object , ( target , source )=> {
 
