@@ -83,7 +83,8 @@ namespace $ {
 			var stack = [ root ]
 			
 			var row = 0
-			var lines = str.split( '\n' )
+			var prefix = str.replace( /^\n?(\t*)[\s\S]*/ , '$1' )
+			var lines = str.replace( new RegExp( '^\\t{0,' + prefix.length + '}' , 'mg' ) , '' ).split( '\n' )
 			lines.forEach(
 				line => {
 					++row
