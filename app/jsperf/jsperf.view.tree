@@ -6,7 +6,7 @@ $mol_app_jsperf $mol_page
 	body /
 		<= Prefix $mol_textarea
 			value?val <=> prefix?val \
-			hint <= prefix_hint @ \Setup code for all cases. Use {{#}} to insert iterations count.
+			hint <= prefix_hint @ \Setup code for all cases. Use {#} to insert iterations count. Use  $mol_import.script( uri ) to load external.
 		<= Cases $mol_view sub <= cases /
 		<= Chart $mol_plot_pane
 			gap_bottom 0
@@ -22,11 +22,17 @@ $mol_app_jsperf $mol_page
 					labels /
 		<= Postfix $mol_textarea
 			value?val <=> postfix?val \
-			hint <= postfix_hint @ \Teardown code for all cases. Use {{#}} to insert iterations count.
+			hint <= postfix_hint @ \Teardown code for all cases. Use {#} to insert iterations count.
 	Case!index $mol_app_jsperf_case
 		source?val <=> source!index?val \
 		results?val <=> results!index?val \
 	tools /
+		<= Permalink $mol_link
+			uri <= permalink \
+			hint <= parmalink_hint @ \Permamemnt short link
+			target \_blank
+			sub /
+				<= Permalink_icon $mol_icon_external
 		<= New $mol_link
 			uri \#
 			hint <= new_hint @ \New benchmark

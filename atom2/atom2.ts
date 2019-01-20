@@ -139,7 +139,7 @@ namespace $ {
 					current = current.masters[ current.cursor - 2 ] as $mol_atom2
 				}
 
-				throw new Error( `Doubted while calculation \n\n${ path.join( '\n' ) }\n` )
+				this.$.$mol_fail( new Error( `Doubted while calculation \n\n${ path.join( '\n' ) }\n` ) )
 			}
 			
 			if( this.cursor >= $mol_fiber_status.doubt ) return
@@ -175,12 +175,7 @@ namespace $ {
 		}
 
 		get alone() {
-			
-			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
-				if( this.slaves[ index ] ) return false
-			}
-
-			return true
+			return this.slaves.length === 0
 		}
 		
 		get derived() {

@@ -35,6 +35,11 @@ namespace $.$$ {
 			return this.$.$mol_state_arg.value( 'postfix' , next ) || ''
 		}
 
+		permalink() {
+			const win = this.$.$mol_dom_context
+			return 'https://tinyurl.com/create.php?url=' + encodeURIComponent( win.location.href )
+		}
+
 		@ $mol_mem
 		optimized( next? : boolean ) : boolean {
 			return this.$.$mol_state_arg.value( 'optimized' , ( next === undefined ) ? undefined : `${ next }` ) !== 'false'
@@ -92,6 +97,7 @@ namespace $.$$ {
 			return measure
 		}
 
+		@ $mol_mem
 		run() {
 
 			function measure( inner : string , outer = [ '' , '' ] ) {
@@ -136,6 +142,8 @@ namespace $.$$ {
 				
 				} catch( error ) {
 
+					if( error instanceof $mol_atom_wait ) $mol_fail_hidden( error )
+
 					console.error( error )
 
 					return $mol_app_jsperf_stats.make( stats => {
@@ -161,6 +169,8 @@ namespace $.$$ {
 			} )
 
 			this.measures( measures )
+
+			$mol_atom_current().destructor()
 		}
 
 	}
