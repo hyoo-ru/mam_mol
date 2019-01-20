@@ -83,7 +83,7 @@ namespace $ {
 			var stack = [ root ]
 			
 			var row = 0
-			var lines = String( str ).split( /\n/ )
+			var lines = str.split( '\n' )
 			lines.forEach(
 				line => {
 					++row
