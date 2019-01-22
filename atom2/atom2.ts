@@ -19,6 +19,27 @@ namespace $ {
 
 		static cached = false
 
+		static reap_task : $mol_fiber
+		static reap_queue = [] as $mol_atom2[]
+
+		static reap( atom : $mol_atom2 ) {
+
+			this.reap_queue.push( atom )
+
+			if( this.reap_task ) return
+
+			this.reap_task = $mol_fiber_defer( ()=> {
+				this.reap_task = null
+				
+				while( atom = this.reap_queue.pop() ) {
+					if( !atom.alone ) continue
+					atom.destructor()
+				}
+				
+			} )
+
+		}
+
 		slaves = [] as ( $mol_fiber | number | undefined )[]
 		
 		rescue( master : $mol_atom2 , cursor : number ) {
@@ -107,7 +128,7 @@ namespace $ {
 
 			$mol_array_trim( this.slaves )
 
-			if( this.cursor > $mol_fiber_status.persist && this.alone ) this.destructor()
+			if( this.cursor > $mol_fiber_status.persist && this.alone ) $mol_atom2.reap( this )
 		}
 
 		obsolete( master_index = -1 ) {

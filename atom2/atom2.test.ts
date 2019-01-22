@@ -291,8 +291,9 @@ module $ {
 			App.condition = false
 			App.result
 
-			await $mol_fiber_warp()
+			$mol_assert_equal( counter , 0 )
 
+			await $mol_fiber_warp()
 			$mol_assert_equal( counter , 1 )
 
 		} ,

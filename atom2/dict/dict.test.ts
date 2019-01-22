@@ -73,7 +73,7 @@ module $ {
 
 		} ,
 
-		'Call back on abort' () {
+		async 'Call back on abort' () {
 
 			const log = [] as string[]
 
@@ -100,6 +100,9 @@ module $ {
 			Registry.condition = false
 			$mol_assert_equal( Registry.result , '' )
 
+			$mol_assert_like( log , [] )
+
+			await $mol_fiber_warp()
 			$mol_assert_like( log , [ 'foo' ] )
 
 		} ,
