@@ -20,9 +20,9 @@ namespace $ {
 			
 			const type_name = node.select( 'id' , '' ).sub[0].type
 			const type = $mol_wasm_section_types[ type_name ]
-			if( !type ) throw new Error( `Unknown section type: ${ type_name }` )
+			if( type === undefined ) throw new Error( `Unknown section type: ${ type_name }` )
 			
-			const name = node.select( 'name' ).value
+			const name = node.select( 'name' , '' ).value
 			const payload = sub( node.select( 'payload' ).sub[0] )
 
 			return [
