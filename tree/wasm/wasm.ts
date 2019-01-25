@@ -1,6 +1,14 @@
 namespace $ {
 
-	const $mol_tree_wasm_nodes : {
+	export function $mol_tree_wasm_bytes( bytes : number[] ) {
+		return [ ... $mol_leb128_encode( bytes.length ) , ... bytes ]
+	}
+
+	export function $mol_tree_wasm_string( str : string ) {
+		return $mol_tree_wasm_bytes([ ... new TextEncoder().encode( str ) ])
+	}
+
+	export const $mol_tree_wasm_nodes : {
 		[ type : string ] : ( sub : ( node : $mol_tree )=> number[] , node : $mol_tree )=> number[]
 	} = {
 
@@ -14,8 +22,16 @@ namespace $ {
 			const type = $mol_wasm_section_types[ type_name ]
 			if( !type ) throw new Error( `Unknown section type: ${ type_name }` )
 			
+			const name = node.select( 'name' ).value
 			const payload = sub( node.select( 'payload' ).sub[0] )
-			return [ type , payload.length + 1 , 0 , ... payload ]
+
+			return [
+				type ,
+				... $mol_tree_wasm_bytes([
+					... $mol_tree_wasm_string( name ) ,
+					... payload ,
+				]) ,
+			]
 
 		} ,
 
