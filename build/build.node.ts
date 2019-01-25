@@ -55,7 +55,7 @@ namespace $ {
 						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
 						
-						const tree = $mol_tree.fromString( String( child.content() ) , child.path() )
+						const tree = $mol_tree.fromString( child.content().toString() , child.path() )
 						const res = $mol_view_tree_compile( tree )
 						script.content( res.script )
 						locale.content( JSON.stringify( res.locales , null , '\t' ) )
@@ -365,7 +365,7 @@ namespace $ {
 		@ $mol_mem
 		packMapping() {
 			const file = $mol_file.relative( '.pms.tree' )
-			return $mol_tree.fromString( file.content() , file.path() )
+			return $mol_tree.fromString( file.content().toString() , file.path() )
 		}
 		
 		@ $mol_mem_key
@@ -741,7 +741,7 @@ namespace $ {
 			this.logBundle( html_target )
 
 			sources.forEach( source => {
-				const tree = $mol_tree.fromString( source.content() , source.path() )
+				const tree = $mol_tree.fromString( source.content().toString() , source.path() )
 				
 				tree.select( 'deploy' ).sub.forEach( deploy => {
 					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
@@ -1020,7 +1020,7 @@ namespace $ {
 	$mol_build.dependors[ 'meta.tree' ] = source => {
 		const depends : { [ index : string ] : number } = {}
 		
-		const tree = $mol_tree.fromString( source.content() , source.path() )
+		const tree = $mol_tree.fromString( source.content().toString() , source.path() )
 		
 		tree.select( 'require' ).sub.forEach( leaf => {
 			depends[ leaf.value ] = 0
