@@ -2,7 +2,8 @@ namespace $ {
 
 	export function $mol_leb128_encode( val : number ) {
 		
-		const bytes = new Uint8Array( Math.ceil( Math.log2( val ) / 7 ) )
+		const length = Math.max( 1 , Math.ceil( Math.log2( val ) / 7 ) )
+		const bytes = new Uint8Array( length )
 		
 		for( let i = 0 ; i < bytes.length ; ++ i ) {
 			bytes[ i ] = ( ( val >> ( 7 * i ) ) & 0xFF ) | ( 1 << 7 )
