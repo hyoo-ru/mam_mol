@@ -104,29 +104,19 @@ namespace $ {
 					stack.length = deep + 1
 					var parent = stack[ deep ];
 					
+					let col = deep
 					types.forEach(
 						type => {
 							if( !type ) throw new Error( `Unexpected space symbol ${baseUri}:${row}\n${line}` )
-							var next = new $mol_tree(
-								{
-									type : type ,
-									baseUri : baseUri ,
-									row : row
-								}
-							)
+							var next = new $mol_tree({ type , baseUri , row , col })
 							parent.sub.push( next )	
 							parent = next
+							col += type.length + 1
 						}
 					)
 					
 					if( data ) {
-						var next = new $mol_tree(
-							{
-								data : data.substring( 1 ) ,
-								baseUri : baseUri ,
-								row : row
-							}
-						)
+						var next = new $mol_tree({ data : data.substring( 1 ) , baseUri , row , col })
 						parent.sub.push( next )
 						parent = next
 					}
