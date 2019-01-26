@@ -1,6 +1,6 @@
 namespace $ {
 
-	export const $mol_jack : Record< string , Record< string , ( input : $mol_tree , jack : $mol_tree_context )=> $mol_tree[] > > = {
+	export const $mol_jack : $mol_tree_library = {
 
 		meta : {
 		

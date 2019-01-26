@@ -2,7 +2,9 @@ namespace $ {
 
 	export type $mol_tree_path = Array< string | number | null >
 
-	export type $mol_tree_context = Record< string , ( input : $mol_tree , context : $mol_tree_context )=> $mol_tree[] >
+	export type $mol_tree_hack = ( input : $mol_tree , context : $mol_tree_context )=> $mol_tree[]
+	export type $mol_tree_context = Record< string , $mol_tree_hack >
+	export type $mol_tree_library = Record< string , $mol_tree_context >
 	
 	export class $mol_tree {
 		
