@@ -43,5 +43,16 @@ namespace $ {
 			$mol_assert_equal( JSON.stringify( $mol_tree.fromString( '*\n\tfoo false\n\t\\\n\t\t\\bar\n\t\t\\baz\n\t\t\\lol\n' ).sub[0] ) , '{"foo":false,"bar\\nbaz":"lol"}' )
 		} ,
 		
+		'hack'() {
+
+			const res = $mol_tree.fromString( `foo bar xxx` ).hack({
+				'' : ( tree , context )=> [ tree.hack( context ) ] ,
+				'bar' : ( tree , context )=> [ tree.hack( context ).clone({ type : '777' }) ] ,
+			})
+
+			$mol_assert_equal( res.toString() , new $mol_tree({ type : 'foo 777 xxx' }).toString() )
+
+		} ,
+
 	} )	
 }

@@ -1,6 +1,8 @@
 namespace $ {
 
 	export type $mol_tree_path = Array< string | number | null >
+
+	export type $mol_tree_context = Record< string , ( input : $mol_tree , context : $mol_tree_context )=> $mol_tree[] >
 	
 	export class $mol_tree {
 		
@@ -353,6 +355,20 @@ namespace $ {
 		transform( visit : ( stack : $mol_tree[] , sub : ()=> $mol_tree[] )=> $mol_tree , stack : $mol_tree[] = [] ) : $mol_tree {
 			const sub_stack = [ this , ...stack ]
 			return visit( sub_stack , ()=> this.sub.map( node => node.transform( visit , sub_stack ) ).filter( n => n ) )
+		}
+
+		hack( context : $mol_tree_context ) : $mol_tree {
+			
+			const sub = [].concat( ... this.sub.map( child => {
+
+				const handle = context[ child.type ] || context[ '' ]
+				if( !handle ) $mol_fail( child.error( 'Handler not defined' ) )
+				
+				return handle( child , context )
+
+			} ) )
+
+			return this.clone({ sub })
 		}
 
 		error( message : string ) {
