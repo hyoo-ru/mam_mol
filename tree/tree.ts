@@ -23,7 +23,7 @@ namespace $ {
 			} = {}
 		) {
 			this.type = config.type || ''
-			if( config.value ) {
+			if( config.value !== undefined ) {
 				var sub = $mol_tree.values( config.value )
 				if( config.type || sub.length > 1 ) {
 					this.sub = sub.concat( config.sub || [] )
