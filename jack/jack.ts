@@ -64,7 +64,6 @@ namespace $ {
 					
 					defs[ def.type ] = input => {
 						
-						console.log(input+'')
 						const exec : $mol_tree_context = {
 							... defs ,
 							from : ()=> input.sub ,
