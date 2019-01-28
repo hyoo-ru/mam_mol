@@ -19,6 +19,7 @@ namespace $ {
 				module
 					section
 						id type
+						name
 						payload
 			` )
 
