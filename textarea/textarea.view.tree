@@ -1,4 +1,6 @@
 $mol_textarea $mol_view
+	event *
+		keydown?event <=> press?event null
 	sub /
 		<= Edit $mol_string
 			dom_name \textarea
