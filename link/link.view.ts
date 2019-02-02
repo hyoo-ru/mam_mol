@@ -9,7 +9,19 @@ namespace $.$$ {
 
 		@ $mol_mem
 		current() {
-			return this.uri() === $mol_state_arg.href()
+
+			if( this.uri() === this.$.$mol_state_arg.href() ) return true
+			
+			const args = this.arg()
+			
+			const keys = Object.keys( args ).filter( key => args[ key ] != null )
+			if( keys.length === 0 ) return false
+
+			for( const key of keys ) {
+				if( this.$.$mol_state_arg.value( key ) !== args[ key ] ) return false
+			}
+
+			return true
 		}
 
 		event_click( event? : Event ) {

@@ -11,6 +11,7 @@ $mol_app_studio $mol_book
 						<= Source_icon $mol_icon_source
 					arg <= source_arg *
 						source \
+						path null
 				<= Edit $mol_link
 					hint <= editor_title
 					sub /
