@@ -72,5 +72,5 @@
 }
 
 [mol_book_page]:not(:first-child) {
-	animation: mol_book_page_show .2s ease-out;
+	animation: mol_book_page_show .15s ease-out;
 }
