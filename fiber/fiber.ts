@@ -129,7 +129,7 @@ namespace $ {
 
 	export class $mol_fiber< Value = any > extends $mol_object2 {
 
-		static quant = 16
+		static quant = 32
 		static deadline = 0
 
 		static current : $mol_fiber
