@@ -2,8 +2,8 @@ namespace $ {
 	
 	export function $mol_dom_patch( target : Node | null , source : Node ) {
 		
-		if( target == null ) return source
-		if( target.nodeName !== source.nodeName ) return source
+		if( target == null ) return source.cloneNode( true )
+		if( target.nodeName !== source.nodeName ) return source.cloneNode( true )
 
 		switch( source.nodeType ) {
 		
