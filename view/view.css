@@ -1,6 +1,6 @@
 [mol_view] {
 	transition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;
-	transition-duration: .2s;
+	transition-duration: .15s;
 	transition-timing-function: ease-out;
 	-webkit-appearance: none;
 	word-break: break-word;
