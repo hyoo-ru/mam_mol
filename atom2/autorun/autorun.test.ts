@@ -31,12 +31,14 @@ namespace $ {
 
 				await $mol_fiber_warp()
 				$mol_assert_equal( App.counter , 2 )
+				
+				App.state = 3
 
 			} finally {
 				autorun.destructor()
 			}
 
-			App.state = 3
+			App.state = 4
 			await $mol_fiber_warp()
 			$mol_assert_equal( App.counter , 2 )
 

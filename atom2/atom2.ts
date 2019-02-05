@@ -215,7 +215,7 @@ namespace $ {
 				this.disobey( index )
 			}
 
-			this.cursor = $mol_fiber_status.obsolete
+			this.cursor = $mol_fiber_status.persist
 			
 		}
 		
