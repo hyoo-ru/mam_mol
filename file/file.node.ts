@@ -29,7 +29,7 @@ namespace $ {
 			
 			watcher.on( 'all' , ( type : string , path : string )=> {
 				
-				const file = $mol_file.absolute( path.replace( /\\/g , '/' ) )
+				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
 				file.stat( undefined , $mol_atom_force_cache )
 
 				if( type === 'change' ) return
