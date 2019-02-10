@@ -536,10 +536,10 @@ namespace $ {
 						map.sourceRoot = src.parent().relate( target.parent() )
 					}
 					
-					const isCommonJs = /module.exports/.test( content )
+					const isCommonJs = /module\.exports/.test( content )
 					
 					if( isCommonJs ) {
-						concater.add( '-' , '\nvar $node = $node || {}\nvoid function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n' )
+						concater.add( '-' , `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n` )
 					}
 					
 					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
