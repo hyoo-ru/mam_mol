@@ -381,7 +381,7 @@ namespace $ {
 				
 				const checkDep = ( p : string )=> {
 					
-					var dep = ( p[ 0 ] === '/' ) ? this.root().resolve( p ) : mod.resolve( p )
+					var dep = ( p[ 0 ] === '/' ) ? this.root().resolve( p ) : mod.resolve( './' + p )
 
 					try {
 						this.modEnsure( dep.path() )
