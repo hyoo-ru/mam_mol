@@ -381,7 +381,7 @@ namespace $ {
 				
 				const checkDep = ( p : string )=> {
 					
-					var dep = ( p[ 0 ] === '/' ) ? this.root().resolve( p ) : mod.resolve( p )
+					var dep = ( p[ 0 ] === '/' ) ? this.root().resolve( p ) : mod.resolve( './' + p )
 
 					try {
 						this.modEnsure( dep.path() )
@@ -517,7 +517,7 @@ namespace $ {
 			
 			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
 			if( bundle === 'node' ) {
-				concater.add( '' , 'require( "source-map-support" ).install(); var exports = void 0;\n' )
+				concater.add( '' , 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
 			}
 			
 			sources.forEach(
@@ -536,10 +536,10 @@ namespace $ {
 						map.sourceRoot = src.parent().relate( target.parent() )
 					}
 					
-					const isCommonJs = /module.exports/.test( content )
+					const isCommonJs = /module\.exports/.test( content )
 					
 					if( isCommonJs ) {
-						concater.add( '-' , '\nvar $node = $node || {}\nvoid function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n' )
+						concater.add( '-' , `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n` )
 					}
 					
 					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
@@ -574,7 +574,7 @@ namespace $ {
 			
 			var sources = this.sourcesJS( { path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) } )
 			if( bundle === 'node' ) {
-				concater.add( '' , 'require( "source-map-support" ).install()\n' )
+				concater.add( '' , 'require'+'( "source-map-support" ).install()\n' )
 			} else {
 				var sourcesNoTest = this.sourcesJS( { path , exclude } )
 				sources = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
