@@ -188,7 +188,7 @@ namespace $ {
 
 		get fresh() {
 			return ()=> {
-				if( this.cursor === $mol_fiber_status.obsolete ) return
+				if( this.cursor !== $mol_fiber_status.actual ) return
 
 				this.cursor = $mol_fiber_status.obsolete
 				this.schedule()

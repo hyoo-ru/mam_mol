@@ -355,7 +355,7 @@ module $ {
 
 		} ,
 	
-		'auto fresh only when alive'( $ ) {
+		async 'auto fresh only when alive'( $ ) {
 
 			let state = 1
 
@@ -379,6 +379,7 @@ module $ {
 			$mol_assert_equal( monitor.value , undefined )
 			
 			$.$mol_after_mock_warp()
+			await $.$mol_fiber_warp()
 			$mol_assert_equal( monitor.value , undefined )
 			
 		} ,
