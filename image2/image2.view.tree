@@ -1,7 +1,8 @@
 $mol_image2 $mol_view
 	links /
 	aspect 1
-	style * backgroundImage <= background \
 	sub /
 		<= Content $mol_view
-			style * paddingTop <= height \100%
+			style *
+				paddingTop <= height \100%
+				backgroundImage <= background \
