@@ -129,7 +129,7 @@ namespace $ {
 
 	export class $mol_fiber< Value = any > extends $mol_object2 {
 
-		static quant = 16
+		static quant = 32
 		static deadline = 0
 
 		static current : $mol_fiber
@@ -197,10 +197,6 @@ namespace $ {
 			
 			if( !$mol_compare_any( this.value , value ) ) {
 		
-				if( this.$.$mol_owning_catch( this , value ) ) {
-					value[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
-				}
-				
 				this.$.$mol_log( this , value , '🠈' , this.value  )
 				
 				this.obsolete_slaves()
@@ -373,9 +369,6 @@ namespace $ {
 		obsolete( master_index : number ) { }
 
 		forget() {
-			if( this.$.$mol_owning_check( this , this.value ) ) {
-				this.value.destructor()
-			}
 			this.value = undefined
 		}
 

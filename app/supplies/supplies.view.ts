@@ -2,6 +2,7 @@ namespace $.$$ {
 	export class $mol_app_supplies extends $.$mol_app_supplies {
 		
 		entered( next? : boolean ) {
+			if( $mol_state_arg.value( `entered` ) != null ) return true
 			return $mol_state_session.value( `${ this }.entered()` , next ) || false
 		}
 		

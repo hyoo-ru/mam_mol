@@ -88,6 +88,30 @@ namespace $ {
 
 			return this.value
 		}
+		
+		_value = undefined as Value
+		get value() { return this._value }
+		set value( next : Value ) {
+
+			const prev = this._value
+
+			if( prev && this.$.$mol_owning_check( this , prev ) ) prev.destructor()
+			if( next && this.$.$mol_owning_catch( this , next ) ) next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+
+			this._value = next
+		}
+
+		_error = null as Error | PromiseLike< Value >
+		get error() { return this._error }
+		set error( next : Error | PromiseLike< Value > ) {
+
+			const prev = this._error
+
+			if( prev && this.$.$mol_owning_check( this , prev ) ) prev.destructor()
+			if( next && this.$.$mol_owning_catch( this , next ) ) next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+
+			this._error = next
+		}
 
 		put( next : Value ) {
 			this.push( next )
@@ -188,7 +212,7 @@ namespace $ {
 
 		get fresh() {
 			return ()=> {
-				if( this.cursor === $mol_fiber_status.obsolete ) return
+				if( this.cursor !== $mol_fiber_status.actual ) return
 
 				this.cursor = $mol_fiber_status.obsolete
 				this.schedule()
@@ -215,7 +239,7 @@ namespace $ {
 				this.disobey( index )
 			}
 
-			this.cursor = $mol_fiber_status.obsolete
+			this.cursor = $mol_fiber_status.persist
 			
 		}
 		

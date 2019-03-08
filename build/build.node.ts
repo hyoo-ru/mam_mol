@@ -55,7 +55,7 @@ namespace $ {
 						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
 						
-						const tree = $mol_tree.fromString( String( child.content() ) , child.path() )
+						const tree = $mol_tree.fromString( child.content().toString() , child.path() )
 						const res = $mol_view_tree_compile( tree )
 						script.content( res.script )
 						locale.content( JSON.stringify( res.locales , null , '\t' ) )
@@ -365,7 +365,7 @@ namespace $ {
 		@ $mol_mem
 		packMapping() {
 			const file = $mol_file.relative( '.pms.tree' )
-			return $mol_tree.fromString( file.content() , file.path() )
+			return $mol_tree.fromString( file.content().toString() , file.path() )
 		}
 		
 		@ $mol_mem_key
@@ -381,7 +381,7 @@ namespace $ {
 				
 				const checkDep = ( p : string )=> {
 					
-					var dep = ( p[ 0 ] === '/' ) ? this.root().resolve( p ) : mod.resolve( p )
+					var dep = ( p[ 0 ] === '/' ) ? this.root().resolve( p ) : mod.resolve( './' + p )
 
 					try {
 						this.modEnsure( dep.path() )
@@ -517,7 +517,7 @@ namespace $ {
 			
 			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
 			if( bundle === 'node' ) {
-				concater.add( '' , 'require( "source-map-support" ).install(); var exports = void 0;\n' )
+				concater.add( '' , 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
 			}
 			
 			sources.forEach(
@@ -536,10 +536,10 @@ namespace $ {
 						map.sourceRoot = src.parent().relate( target.parent() )
 					}
 					
-					const isCommonJs = /module.exports/.test( content )
+					const isCommonJs = /module\.exports/.test( content )
 					
 					if( isCommonJs ) {
-						concater.add( '-' , '\nvar $node = $node || {}\nvoid function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n' )
+						concater.add( '-' , `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n` )
 					}
 					
 					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
@@ -574,7 +574,7 @@ namespace $ {
 			
 			var sources = this.sourcesJS( { path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) } )
 			if( bundle === 'node' ) {
-				concater.add( '' , 'require( "source-map-support" ).install()\n' )
+				concater.add( '' , 'require'+'( "source-map-support" ).install()\n' )
 			} else {
 				var sourcesNoTest = this.sourcesJS( { path , exclude } )
 				sources = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
@@ -741,7 +741,7 @@ namespace $ {
 			this.logBundle( html_target )
 
 			sources.forEach( source => {
-				const tree = $mol_tree.fromString( source.content() , source.path() )
+				const tree = $mol_tree.fromString( source.content().toString() , source.path() )
 				
 				tree.select( 'deploy' ).sub.forEach( deploy => {
 					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
@@ -1020,7 +1020,7 @@ namespace $ {
 	$mol_build.dependors[ 'meta.tree' ] = source => {
 		const depends : { [ index : string ] : number } = {}
 		
-		const tree = $mol_tree.fromString( source.content() , source.path() )
+		const tree = $mol_tree.fromString( source.content().toString() , source.path() )
 		
 		tree.select( 'require' ).sub.forEach( leaf => {
 			depends[ leaf.value ] = 0

@@ -13,7 +13,7 @@ $mol_book $mol_view
 	Placeholder $mol_book_placeholder
 		title <= title
 
-$mol_book_placeholder $mol_scroll
+$mol_book_placeholder $mol_view
 	minimal_width 400
 	attr *
 		^

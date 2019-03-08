@@ -29,7 +29,7 @@ namespace $ {
 			for( let j = 0 ; j < args.length ; ++j ) {
 				if( i === j ) continue
 				if( Number.isNaN( args[i] as any as number ) && Number.isNaN( args[j] as any as number ) ) continue
-				if( args[i] !== args[j] ) $mol_fail( new Error( `${ args[i] } ≠ ${ args[j] }` ) )
+				if( args[i] !== args[j] ) $mol_fail( new Error( `Not equal\n${ args[i] }\n${ args[j] }` ) )
 			}
 		}
 	}
@@ -49,7 +49,7 @@ namespace $ {
 		for( let value of tail ) {
 			value = $mol_conform( value , head )
 			if( Number.isNaN( value as any as number ) && Number.isNaN( head as any as number ) ) continue
-			if( head !== value ) $mol_fail( new Error( `${ head } ≄ ${ value }` ) )
+			if( head !== value ) $mol_fail( new Error( `Not like\n${ head }\n${ value }` ) )
 			head = value
 		}
 	}
