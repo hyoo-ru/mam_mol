@@ -76,8 +76,10 @@ This project exists thanks to all the people who contribute. [[Contribute](CONTR
 
 # Articles
 
+* [$mol — лучшее средство от геморроя](https://habr.com/ru/post/341146/) - Quick intoduction to $mol
 * [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Сomprehensive $mol review
 * [Объектное Реактивное Программирование](https://habrahabr.ru/post/330466/) - Features of Object Reactive Programming
+* [Концепции автоматического тестирования](https://habr.com/ru/post/351430/) - Testing principles
 * [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/) - Problems of popular frameworks
 * [Принципы написания кода](https://habrahabr.ru/post/236785/) - Code style principles
 
