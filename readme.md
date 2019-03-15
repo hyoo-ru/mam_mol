@@ -46,7 +46,7 @@ This project exists thanks to all the people who contribute. [[Contribute](CONTR
 * Pseudosynchronous code. [Asynchrony is abstracted by reactivity](#reactivity). No callbacks/promises/streams hell. No async/await/yield virus.
 * Automatic [BEM](https://en.bem.info/methodology/naming-convention/)-attributes generation for elements.
 
-# [Demo applications](demo)
+# Demo applications
 
 * [$mol_app_hello](app/hello) - Very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
 * [$hyoo_showcase](https://showcase.hyoo.ru/) - App that shows most of other $mol apps on single page
