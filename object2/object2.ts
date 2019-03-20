@@ -14,7 +14,7 @@ namespace $ {
 			return instance
 		}
 		
-		static toString() { return this.name }
+		static toString() { return this[ Symbol.toStringTag ] || this.name }
 
 		destructor() { }
 
