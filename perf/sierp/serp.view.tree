@@ -24,6 +24,7 @@ $mol_perf_sierp_dot $mol_view
 		borderRadius <= radius <= size
 		lineHeight <= size_px
 		background <= color \
-	event_async *
+	event *
+		^
 		mouseenter?val <=> enter?val null
 		mouseleave?val <=> leave?val null

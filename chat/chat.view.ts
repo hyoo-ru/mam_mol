@@ -8,7 +8,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		issue( next? : $mol_github_issue , force? : $mol_atom_force ) {
+		issue( next? : $mol_github_issue , force? : $mol_mem_force ) {
 
 			const repo_name = this.repository().name_full()
 
@@ -89,14 +89,14 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		adding( text : string , force? : $mol_atom_force ) {
+		adding( text : string , force? : $mol_mem_force ) {
 			if( !text ) return
 
 			const comment_json = this.service().comment_add( this.issue_ensured().uri() , text )
 			const comment = $mol_github_comment.item( comment_json.url )
 			comment.json_update( comment_json )
 
-			this.issue_ensured().comments().items( [ ... this.issue_ensured().comments().items() , comment ] , $mol_atom_force_cache )
+			this.issue_ensured().comments().items( [ ... this.issue_ensured().comments().items() , comment ] , $mol_mem_force_cache )
 			
 			this.add_body( '' )
 			
@@ -104,7 +104,7 @@ namespace $.$$ {
 		}
 
 		add() {
-			this.adding( this.add_body() , $mol_atom_force_update )
+			this.adding( this.add_body() , $mol_mem_force_update )
 		}
 
 	}

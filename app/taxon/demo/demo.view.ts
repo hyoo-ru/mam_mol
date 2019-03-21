@@ -37,7 +37,7 @@ namespace $.$$ {
 				company : $mol_stub_company_name() ,
 				phoneOS : $mol_stub_select_random([ 'iOS' , 'Android' , 'Windows' ]) ,
 				fingersCount : 7 + Math.ceil( Math.random() * 3 )
-			}
+			} as $mol_app_taxon_data_row
 		}
 		
 	}

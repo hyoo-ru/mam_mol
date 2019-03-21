@@ -8,14 +8,14 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		sandbox( next? : HTMLIFrameElement , force? : $mol_atom_force ) : HTMLIFrameElement {
+		sandbox( next? : HTMLIFrameElement , force? : $mol_mem_force ) : HTMLIFrameElement {
 			const next2 = this.Sandbox().dom_node() as HTMLIFrameElement
 			
 			next2.src = this.bench()
 			
 			next2.onload = event => {
 				next2.onload = null
-				this.sandbox( next2 , $mol_atom_force_cache )
+				this.sandbox( next2 , $mol_mem_force_cache )
 			}
 			
 			throw new $mol_atom_wait( `Loading sandbox...` )

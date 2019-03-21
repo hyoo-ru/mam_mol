@@ -9,7 +9,16 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		lamps() {
-			return this.lamps_all().filter( $mol_match_text( this.filter() , ( lamp : any )=> Object.keys( lamp ).map( field => lamp[ field ] ) ) )
+			return this.lamps_all().filter(
+				$mol_fiber_func(
+					$mol_match_text(
+						this.filter() ,
+						( lamp : any )=> {
+							return Object.keys( lamp ).map( field => lamp[ field ] )
+						} ,
+					)
+				)
+			)
 		}
 		
 		@ $mol_mem
@@ -36,15 +45,11 @@ namespace $.$$ {
 			return `${ row[ 'brand' ] } ${ row[ 'model' ] }`
 		}
 		
-		_filter_timer = null as any
 		@ $mol_mem
-		filter( next? : string , force? : $mol_atom_force ) : string {
-			if( next === void null ) return $mol_state_arg.value( 'filter' ) || ''
+		filter( next? : string , force? : $mol_mem_force ) : string {
+			if( next === undefined ) return $mol_state_arg.value( 'filter' ) || ''
 			
-			$mol_state_arg.value( 'filter' , next )
-			
-			if( this._filter_timer ) clearTimeout( this._filter_timer )
-			this._filter_timer = setTimeout( ()=> { this.filter( void null , $mol_atom_force_cache ) } , 500 )
+			return $mol_state_arg.value( 'filter' , next )
 		}
 		
 		lamp_arg( id : string ) {

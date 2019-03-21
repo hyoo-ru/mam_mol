@@ -28,7 +28,7 @@ namespace $ {
 			try {
 				return this.source( lang ).valueOf()
 			} catch( error ) {
-				if( error instanceof $mol_atom_wait ) $mol_fail_hidden( error )
+				if( 'then' in error ) $mol_fail_hidden( error )
 				const def = this.lang_default()
 				if( lang === def ) throw error
 				return this.source( def )

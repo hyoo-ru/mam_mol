@@ -13,17 +13,20 @@ namespace $ {
 			api.continuous = true
 			api.lang = $mol_locale.lang()
 			
-			api.onnomatch = ( event : any )=> {
+			api.onnomatch = $mol_fiber_root( ( event : any )=> {
 				this.text( '' )
-			}
-			api.onresult = ( event : any )=> {
+				return null
+			})
+			api.onresult = $mol_fiber_root(( event : any )=> {
 				this.event_result( event )
-			}
-			api.onerror = ( event : Event & { error : string } )=> {
+				return null
+			} )
+			api.onerror = $mol_fiber_root( ( event : Event & { error : string } )=> {
 				console.error( new Error( event.error ) )
 				this.text( '' )
 				this.listening( false )
-			}
+				return null
+			} )
 			
 			return api;
 		}

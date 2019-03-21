@@ -35,7 +35,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		content( next? : string , force? : $mol_atom_force ) {
+		content( next? : string , force? : $mol_mem_force ) {
 			return $mol_http.resource( this.path() ).text( next )
 		}
 		

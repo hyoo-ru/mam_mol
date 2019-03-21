@@ -27,7 +27,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		json( next? : Raw , force? : $mol_atom_force ) {
+		json( next? : Raw , force? : $mol_mem_force ) {
 			let json : Raw
 			let uri = this.uri()			
 			const cache = $mol_model.cache< Raw >()

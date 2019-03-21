@@ -105,10 +105,14 @@ namespace $.$$ {
 			return $mol_state_arg.value( 'edit' ) != null
 		}
 
-		@ $mol_mem_key
-		Widget( name : string ) {
-			const Class : typeof $mol_view = this.$[ '$' + name ]
-			return new Class()
+		@ $mol_mem
+		Widget() {
+			return $mol_atom2_dict({
+				get : ( name : string )=> {
+					const Class : typeof $mol_view = this.$[ '$' + name ]
+					return new Class()
+				}
+			})
 		}
 		
 		@ $mol_mem
@@ -161,7 +165,7 @@ namespace $.$$ {
 				case 0 :
 					return [ this.Detail_empty_message() ]
 				default :
-					return this.names_demo().map( name => this.Widget( name ) )
+					return this.names_demo().map( name => this.Widget()[ name ] )
 			}
 		}
 		

@@ -48,7 +48,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		props_all( name : string , next? : $mol_tree , force? : $mol_atom_force ) {
+		props_all( name : string , next? : $mol_tree , force? : $mol_mem_force ) {
 			if( next ) return next
 			
 			const props_all : { [ name : string ] : $mol_tree } = {}
@@ -102,7 +102,7 @@ namespace $.$$ {
 			if( next ) {
 				prop = prop.insert( next , ... path.slice(1) )
 				this.class_self( this.class_self().insert( prop , 0 , path[0] ) )
-				this.props_all( this.class_name_self() , undefined , $mol_atom_force_cache )
+				this.props_all( this.class_name_self() , undefined , $mol_mem_force_cache )
 			}
 			return prop.select( ... path.slice(1) ).sub[0]
 		}

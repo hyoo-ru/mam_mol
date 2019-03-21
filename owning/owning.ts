@@ -13,9 +13,21 @@ namespace $ {
 		return true
 	}
 
-	export function $mol_owning_get< Owner , Having >( having : Having ) {
+	export function $mol_owning_get< Having , Owner extends object >( having : Having , Owner? : { new() : Owner } ) : Owner {
+	
 		if( !$mol_owning_allow( having ) ) return
-		return $mol_owning_map.get( having )
+
+		while( true ) {
+
+			const owner = $mol_owning_map.get( having )
+			if( !owner ) return owner
+			if( !Owner ) return owner
+			
+			if( owner instanceof Owner ) return owner
+
+			having = owner
+		}
+
 	}
 	
 	export function $mol_owning_check< Owner , Having >(

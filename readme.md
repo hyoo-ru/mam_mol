@@ -358,11 +358,11 @@ namespace $ {
 		
 		// Define memoized property with push support
 		@ $mol_mem
-		greeting( next? : string , force? : $mol_atom_force ) : string {
+		greeting( next? : string , force? : $mol_mem_force ) : string {
 			
 			// Defered push value to property
 			setTimeout( () => {
-				this.greeting( 'Hello!' , $mol_atom_force_cache )
+				this.greeting( 'Hello!' , $mol_mem_force_cache )
 			} , 1000 )
 			
 			// throw special error to notify about waiting

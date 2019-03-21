@@ -41,18 +41,18 @@ namespace $ {
 			
 			next.withCredentials = Boolean( this.credentials() )
 			
-			next.onload = $mol_log_group( this.object_id() + ' load' , ( event : Event )=> {
+			next.onload = $mol_log_group( `${ this } load` , ( event : Event )=> {
 				if(( next.status === 0 )||( Math.floor( next.status / 100 ) === 2 )) {
-					this.response( next , $mol_atom_force_cache )
+					this.response( next , $mol_mem_force_cache )
 				} else {
-					this.response( new Error( next.statusText || next.responseText || `HTTP error ${ next.status }` ) as any , $mol_atom_force_cache )
+					this.response( new Error( next.statusText || next.responseText || `HTTP error ${ next.status }` ) as any , $mol_mem_force_cache )
 				}
 			} )
 			
-			next.onerror = $mol_log_group( this.object_id() + ' error' , ( event : any ) => {
+			next.onerror = $mol_log_group( `${ this } error` , ( event : any ) => {
 				const right_event = event as ErrorEvent
 				new $mol_defer( ()=> {
-					this.response( right_event.error || new Error( 'Unknown HTTP error' ) , $mol_atom_force_cache )
+					this.response( right_event.error || new Error( 'Unknown HTTP error' ) , $mol_mem_force_cache )
 				} )
 			} )
 			
@@ -65,7 +65,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		response( next? : any , force? : $mol_atom_force ) : XMLHttpRequest {
+		response( next? : any , force? : $mol_mem_force ) : XMLHttpRequest {
 			const creds = this.credentials()
 			const native = this.request()
 			const method = ( next === void 0 ) ? this.method_get() : this.method_put()
@@ -79,19 +79,20 @@ namespace $ {
 			
 			native.send( ... $mol_maybe( next ) )
 			
-			return $mol_fail_hidden( new $mol_atom_wait( `${ method } ${ uri }` ) )
+			return $mol_fail_hidden( new Promise(()=>{}) )
 		}
 		
-		text( next? : string , force? : $mol_atom_force ) {
+		text( next? : string , force? : $mol_mem_force ) {
+			return this.$.$mol_fetch.text( this.uri() )
 			return this.response( next , force ).responseText
 		}
 		
-		xml( next? : string , force? : $mol_atom_force ) {
+		xml( next? : string , force? : $mol_mem_force ) {
 			return this.response( next , force ).responseXML
 		}
 		
 		@ $mol_mem
-		json< Content >( next? : Content , force? : $mol_atom_force ) : Content {
+		json< Content >( next? : Content , force? : $mol_mem_force ) : Content {
 			const next2 = next && JSON.stringify( next , null , '\t' )
 			return JSON.parse( this.text( next2 , force ) )
 		}

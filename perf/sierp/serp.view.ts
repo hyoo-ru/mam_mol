@@ -11,6 +11,7 @@ namespace $.$$ {
 			return this.SierpinskiTriangle({ left : 0 , top : 0 , size : 1000 })
 		}
 		
+		@ $mol_mem_key
 		SierpinskiTriangle( id : { left : number , top : number , size : number } ) : { left : number , top : number , size : number }[] {
 			
 			const target = this.size_target()
@@ -50,6 +51,7 @@ namespace $.$$ {
 			return ( ( $mol_state_time.now( 1000 ) / 1000 ) % 10 ).toFixed( 0 )
 		}
 		
+		@ $mol_mem
 		transform() {
 			const t = ( $mol_state_time.now() / 1000 ) % 10
 			const scale = 1 + (t > 5 ? 10 - t : t) / 10;
@@ -78,10 +80,12 @@ namespace $.$$ {
 		
 		enter( next : Event ) {
 			this.hover( true )
+			this.dom_tree()
 		}
 		
 		leave( next : Event ) {
 			this.hover( false )
+			this.dom_tree()
 		}
 		
 	}

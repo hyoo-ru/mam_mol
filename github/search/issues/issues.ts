@@ -20,7 +20,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		items( next? : $mol_github_issue[] , force? : $mol_atom_force ) {
+		items( next? : $mol_github_issue[] , force? : $mol_mem_force ) {
 			return this.json( undefined , force ).items.map( json => $mol_github_issue.item( json.url ) )
 		}
 

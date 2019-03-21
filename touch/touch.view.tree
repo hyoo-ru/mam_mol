@@ -36,5 +36,4 @@ $mol_touch $mol_plugin
 		mousedown?event <=> event_start?event null
 		mousemove?event <=> event_move?event null
 		mouseup?event <=> event_end?event null
-	event_async *
 		wheel?event <=> event_wheel?event null

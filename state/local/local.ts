@@ -32,7 +32,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		static value< Value >( key : string , next? : Value , force? : $mol_atom_force ) : Value {
+		static value< Value >( key : string , next? : Value , force? : $mol_mem_force ) : Value {
 			if( next === void 0 ) return JSON.parse( this.native().getItem( key ) || 'null' )
 			
 			if( next === null ) this.native().removeItem( key )

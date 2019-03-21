@@ -25,7 +25,8 @@ namespace $.$$ {
 		}
 
 		event_click( event? : Event ) {
-			setTimeout( $mol_log_group( `${ this }.event_click()` , ()=> this.focused( false ) ) , 50 )
+			this.focused( false )
+			// setTimeout( $mol_log_group( `${ this }.event_click()` , ()=> this.focused( false ) ) , 50 )
 		}
 
 		file_name() {

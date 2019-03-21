@@ -96,17 +96,17 @@ namespace $ {
 							PI tree float 3.14
 						out tree PI
 					case float 3.14
-				tree test
+				test
 					name \\define and use custom macro with arguments
 					case jack
 						let
 							ambient
-							tree tail head reversed from
+							tree tail head headless from
 						out tree tail
 							one
 							two
 							three
-					case tree three
+					case tree TWO
 			`).hack({
 				... $mol_jack.meta ,
 				'one' : input => [ input.clone({ type : 'ONE' }) ] ,

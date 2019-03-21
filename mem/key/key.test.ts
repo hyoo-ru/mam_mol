@@ -7,7 +7,7 @@ module $ {
 
 			class Fib extends $mol_object2 {
 
-				@ $mol_atom2_props
+				@ $mol_mem_key
 				static value( index : number , next? : number ) : number {
 					if( next ) return next
 					if( index < 2 ) return 1

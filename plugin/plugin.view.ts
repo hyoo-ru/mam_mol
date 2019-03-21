@@ -4,11 +4,18 @@ namespace $.$$ {
 
 		@ $mol_mem
 		dom_node() {
-			const node = this.object_host().dom_node()
+			const node = $mol_owning_get( this , $mol_view ).dom_node()
 
 			$mol_dom_render_attributes( node , this.attr_static() )
-			$mol_dom_render_events( node , this.event() )
-			$mol_dom_render_events_async( node , this.event_async() )
+
+			const events = this.event()
+			for( let event_name in events ) {
+				node.addEventListener(
+					event_name ,
+					$mol_fiber_root( $mol_log_group( `${ this } ${ name }` , events[ event_name ] ) ) ,
+					{ passive : false } as any ,
+				)
+			}
 
 			return node
 		}

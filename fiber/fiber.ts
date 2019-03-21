@@ -43,6 +43,20 @@ namespace $ {
 
 	}
 
+	export function $mol_fiber_root<
+		Result ,
+		Args extends any[] ,
+		Calculate extends ( ... args : Args )=> Result ,
+	>( calculate : Calculate ) {
+		return function( ... args : Args ) {
+			const fiber = new $mol_fiber< Result >()
+			fiber.calculate = ()=> {
+				return calculate.call( this , ... args ) as Result
+			}
+			return fiber.wake()
+		}
+	}
+
 	export function $mol_fiber_method< Host , Value >(
 		obj : Host ,
 		name : string ,
@@ -117,11 +131,11 @@ namespace $ {
 		}
 	}
 
-	export function $mol_fiber_unlimit( func : ()=> any ) {
+	export function $mol_fiber_unlimit< Result >( func : ()=> Result ) {
 		const deadline = $mol_fiber.deadline
 		try {
 			$mol_fiber.deadline = Number.POSITIVE_INFINITY
-			func()
+			return func()
 		} finally {
 			$mol_fiber.deadline = deadline
 		}

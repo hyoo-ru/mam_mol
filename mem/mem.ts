@@ -1,97 +1,73 @@
 namespace $ {
-	
-	export function $mol_mem< Host , Value >(
-		obj? : Host ,
-		name? : string ,
-		descr? : TypedPropertyDescriptor< ( next? : Value , force? : $mol_atom_force )=> Value >
-	) {
+
+	export function $mol_mem<
+		Host extends object ,
+		Field extends keyof Host ,
+		Value ,
+	>(
+		proto : Host ,
+		name : Field ,
+		descr? : TypedPropertyDescriptor< ( next? : Value , force? : $mol_mem_force )=> Value >
+	) : any {
 
 		const value = descr.value
-		const store = new WeakMap< Object , $mol_atom<Value> >()
 		
-		descr.value = function $mol_mem_value( next? : Value , force? : $mol_atom_force ) {
-			const host : any = this
-		
-			let atom : $mol_atom<Value> = store.get( host )
-			if( !atom ) {
-				
-				const id = `${ host }.${ name }()`
-				atom = new $mol_atom<Value>( id , function() {
-					const v = value.apply( host , arguments )
-					if( v instanceof $mol_object ) {
-						if( !v.object_host() ) {
-							v.object_host( host )
-							v.object_field( name )
-							v.object_id( id )
-						}
-					}
-					return v
-				} )
+		const store = new WeakMap< Host , $mol_atom2< Value > >()
 
-				atom.object_owner( host )
-				
-				const destructor = atom.destructor
-				atom.destructor = ()=> {
+		Object.defineProperty( proto , name + "()" , {
+			get : function() {
+				return store.get( this )
+			}
+		} )
+
+		const get_cache = ( host : Host )=> {
+			
+			let cache = store.get( host )
+			
+			if( !cache ) {
+				cache = new $mol_atom2
+				cache.calculate = value.bind( host )
+				cache[ Symbol.toStringTag ] = `${ host }.${ name }()`
+				cache.abort = ()=> {
 					store.delete( host )
-					destructor.call( atom )
+					cache.forget()
 				}
-
-				store.set( host , atom )
+				$mol_owning_catch( host , cache )
+				cache[ $mol_object_field ] = name
+				store.set( host , cache )
 			}
-			
-			return atom.value( next , force )
+
+			return cache
 		}
 		
-		Object.defineProperty( obj , name + "()" , { get : function() { return store.get( this ) } } )
-
-		descr.value[ 'value' ] = value
-	}
-
-	export function $mol_mem_key< Host , Key , Value >(
-		obj : Host ,
-		name : string ,
-		descr : TypedPropertyDescriptor< ( key : Key , next? : Value , force? : $mol_atom_force )=> Value >
-	) {
-		const value = descr.value
-		const store = new WeakMap< Object , Map< any , $mol_atom<Value> > >()
-		
-		descr.value = function $mol_mem_key_value( key : Key , next : Value , force? : $mol_atom_force ) {
-			const host : any = this
+		return {
 			
-			let dict = store.get( host )
-			if( !dict ) store.set( host , dict = new $mol_dict )
-			
-			let atom : $mol_atom<Value> = dict.get( key )
-			if( !atom ) {
+			value( next? : Value , force? : $mol_mem_force ) {
 				
-				const id = `${ host }.${ name }(${ JSON.stringify( key ) })`
-				atom = new $mol_atom<Value>( id , function( ... args: any[] ) {
-					const v = value.apply( host , [ key , ... args ] )
-					if( v instanceof $mol_object ) {
-						if( !v.object_host() ) {
-							v.object_host( host )
-							v.object_field( name )
-							v.object_id( id )
-						}
+				if( next === undefined ) {
+					const cache = get_cache( this )
+					if( force === $mol_mem_force_cache ) cache.obsolete()
+					return cache.get()
+				}
+				
+				const slave = $mol_fiber.current
+				let master = slave && slave.master as $mol_fiber< void >
+				if( !master ) {
+					
+					master = new $mol_fiber
+					master.calculate = ()=> {
+						if( force !== $mol_mem_force_cache ) next = value.call( this , next )
+						return get_cache( this ).put( next )
 					}
-					return v
-				} )
-
-				const destructor = atom.destructor
-				atom.destructor = ()=> {
-					dict.delete( key )
-					destructor.call( atom )
+					master[ Symbol.toStringTag ] = `${ this }.${ name }()/set`
 				}
 
-				dict.set( key , atom )
+				return master.get()
 
 			}
-			
-			return atom.value( next , force )
+
 		}
-		
-		Object.defineProperty( obj , name + "()" , { get : function() { return store.get( this ) } } )
-		void( ( descr.value as any )[ 'value' ] = value )
+
 	}
 	
 }

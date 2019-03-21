@@ -32,7 +32,7 @@ namespace $.$$ {
 			if( !rows ) return null
 			
 			const count = rows.length
-			const context = this.context_sub()
+			const context = this.$$
 			const scrollTop = context.$mol_scroll_top()
 			
 			const top = Math.max( 0 , Math.floor( scrollTop / this.row_height() ) - 1 )
@@ -191,8 +191,8 @@ namespace $.$$ {
 	
 	export class $mol_grid_table extends $.$mol_grid_table {
 		
-		@ $mol_mem
-		context_sub( ) {
+		@ $mol_atom2_field
+		get $$( ) {
 			return this.$.$mol_ambient({
 				$mol_scroll_top : ()=> this.$.$mol_scroll_top() - this.offset() ,
 			})			

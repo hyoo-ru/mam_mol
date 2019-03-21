@@ -5,7 +5,7 @@ namespace $.$$ {
 		
 		/// Search query string synchronized with argument from URL.
 		@ $mol_mem
-		query( next? : string , force? : $mol_atom_force ) : string {
+		query( next? : string , force? : $mol_mem_force ) : string {
 			return $mol_state_arg.value( this.state_key( 'query' ) , next )
 		}
 		
@@ -35,13 +35,13 @@ namespace $.$$ {
 		
 		/// Current list of users. May be changed by user.
 		@ $mol_mem
-		users( next? : string[] , force? : $mol_atom_force ) {
+		users( next? : string[] , force? : $mol_mem_force ) {
 			return next || this.users_master( next , force )
 		}
 		
 		/// List of users loaded from server.
 		@ $mol_mem
-		users_master( next? : string[] , force? : $mol_atom_force ) {
+		users_master( next? : string[] , force? : $mol_mem_force ) {
 			const master = this.master()
 			if( !master ) return []
 			
@@ -51,7 +51,7 @@ namespace $.$$ {
 		
 		/// Reload data from server and discard changes.
 		event_reload( next? : Event ) {
-			this.users( undefined , $mol_atom_force_cache )
+			this.users( undefined , $mol_mem_force_cache )
 		}
 		
 		/// Add user with empty name at the end of list.

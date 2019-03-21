@@ -1,7 +1,7 @@
 namespace $.$$ {
 	
-	export interface $mol_app_taxon_data_row {
-		KeyId : number
+	export class $mol_app_taxon_data_row {
+		KeyId? : number
 	}
 	
 	export class $mol_app_taxon extends $.$mol_app_taxon {

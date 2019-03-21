@@ -3,9 +3,10 @@ namespace $ {
 	export class $mol_state_arg extends $mol_object {
 		
 		@ $mol_mem
-		static href( next? : string , force? : $mol_atom_force ) {
-			if( next ) history.replaceState( history.state , $mol_dom_context.document.title , next )
-			return window.location.href
+		static href( next? : string , force? : $mol_mem_force ) {
+			if( next === undefined ) return window.location.href
+			history.replaceState( history.state , $mol_dom_context.document.title , next )
+			return next
 		}
 		
 		@ $mol_mem
@@ -87,8 +88,8 @@ namespace $ {
 		
 	}
 	
-	self.addEventListener( 'hashchange' , $mol_log_group( '$mol_state_arg hashchange' , ( event : HashChangeEvent )=> {
-		$mol_state_arg.href( undefined , $mol_atom_force_cache ) 
-	} ) )
+	self.addEventListener( 'hashchange' , $mol_fiber_root( $mol_log_group( '$mol_state_arg hashchange' , ( event : HashChangeEvent )=> {
+		$mol_state_arg.href( undefined , $mol_mem_force_cache ) 
+	} ) ) )
 	
 }

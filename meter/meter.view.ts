@@ -6,7 +6,7 @@ namespace $.$$ {
 			const node = this.dom_node()
 			
 			if( node !== $mol_dom_context.document.body ) {
-				$mol_state_time.now()
+				new $mol_after_frame( $mol_atom2.current.fresh )
 				
 				try {
 					const { left , top , right , bottom , width , height } = node.getBoundingClientRect()

@@ -12,7 +12,7 @@ namespace $.$$ {
 		options_showed() {
 			const showed = this.focused() || this.filter_pattern().length > 0
 			
-			if( showed && this.Filter() ) new $mol_defer( ()=> this.Filter().focused( true ) )
+			if( showed && this.Filter() ) new $mol_defer( $mol_fiber_root( ()=> this.Filter().focused( true ) ) )
 			
 			return showed
 		}

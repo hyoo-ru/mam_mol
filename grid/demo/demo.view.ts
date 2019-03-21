@@ -7,7 +7,7 @@ namespace $.$$ {
 				length : 1000 ,
 				item : index => {
 					return $mol_range_in( {
-						length : 10 ,
+						length : 16 ,
 						item : colId => colId === 0
 							? `Row ${ index + 1 }`
 							: `Row ${ index + 1 } Cell ${ colId }`

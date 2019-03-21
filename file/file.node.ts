@@ -27,25 +27,25 @@ namespace $ {
 				ignoreInitial : true ,
 			} )
 			
-			watcher.on( 'all' , ( type : string , path : string )=> {
+			watcher.on( 'all' , ( type : string , path : string )=> $mol_fiber_unlimit( ()=> {
 				
 				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
-				file.stat( undefined , $mol_atom_force_cache )
+				file.stat( undefined , $mol_mem_force_cache )
 
 				if( type === 'change' ) return
-				file.parent().stat( undefined , $mol_atom_force_cache )
+				file.parent().stat( undefined , $mol_mem_force_cache )
 
-			} )
+			} ) )
 
 			watcher.on( 'error' , ( error : Error )=> {
-				this.stat( error , $mol_atom_force_cache )
+				this.stat( error , $mol_mem_force_cache )
 			} )
 			
 			return watcher
 		}
 		
 		@ $mol_mem
-		stat( next? : any , force? : $mol_atom_force ) {
+		stat( next? : any , force? : $mol_mem_force ) {
 			var path = this.path()
 			
 			try {
@@ -80,7 +80,7 @@ namespace $ {
 					$node.fs.unlinkSync( this.path() )
 				}
 				
-				this.stat( undefined , $mol_atom_force_cache )
+				this.stat( undefined , $mol_mem_force_cache )
 				
 				return next
 			}
@@ -119,7 +119,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		content( next? : string , force? : $mol_atom_force ) {
+		content( next? : string , force? : $mol_mem_force ) {
 			if( next === void 0 ) {
 				return this.stat() && $node.fs.readFileSync( this.path() )//.toString()
 			}

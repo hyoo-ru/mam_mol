@@ -30,7 +30,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		static code( next? : string , force? : $mol_atom_force ) : string {
+		static code( next? : string , force? : $mol_mem_force ) : string {
 			const win = $mol_dom_context.open( `${ this.code_uri() }?client_id=${ this.id() }&scope=${ this.scopes() }` , '$mol_github' )
 
 			win.focus()
@@ -43,9 +43,9 @@ namespace $ {
 				if( search !== undefined ) {
 					const found = search.match( /\bcode=([^&]+)/ )
 					if( !found ) return
-					this.code( found[1] , $mol_atom_force_cache )
+					this.code( found[1] , $mol_mem_force_cache )
 				} else {
-					this.code( new Error( 'Can not get auth code' ) as any , $mol_atom_force_cache )
+					this.code( new Error( 'Can not get auth code' ) as any , $mol_mem_force_cache )
 				}
 				
 				clearInterval( timer )
@@ -59,7 +59,7 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		static token_last( next? : string , force? : $mol_atom_force ) {
+		static token_last( next? : string , force? : $mol_mem_force ) {
 			const cache = this.cache()
 			if( force ) this.cache({ ... cache , token : '' })
 			if( !force && cache.token ) return cache.token

@@ -6,7 +6,7 @@ namespace $ {
 		static size( next? : {
 			width : number
 			height : number
-		} , force? : $mol_atom_force ) {
+		} , force? : $mol_mem_force ) {
 			return next || {
 				width : self.innerWidth ,
 				height : self.innerHeight ,
@@ -15,8 +15,8 @@ namespace $ {
 		
 	}
 	
-	self.addEventListener( 'resize' , $mol_log_group( `$mol_window resize` , ()=> {
-		$mol_window.size( undefined , $mol_atom_force_cache )
-	} ) )
+	self.addEventListener( 'resize' , $mol_fiber_root( $mol_log_group( `$mol_window resize` , ()=> {
+		$mol_window.size( undefined , $mol_mem_force_cache )
+	} ) ) )
 	
 }

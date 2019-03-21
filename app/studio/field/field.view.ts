@@ -99,13 +99,13 @@ namespace $.$$ {
 		content() {
 			const type = this.type()
 			return [
-				( type === 'bool' ) ? this.Bool() : null ,
-				( type === 'number' ) ? this.Number() : null ,
-				( type === 'string' ) ? this.String() : null ,
-				( type === 'locale' ) ? this.String() : null ,
-				( type === 'list' ) ? this.List() : null ,
-				( type === 'dict' ) ? this.Dict() : null ,
-				( type === 'object' ) ? this.Overs() : null ,
+				... ( type === 'bool' ) ? [ this.Bool() ] : [] ,
+				... ( type === 'number' ) ? [ this.Number() ] : [] ,
+				... ( type === 'string' ) ? [ this.String() ] : [] ,
+				... ( type === 'locale' ) ? [ this.String() ] : [] ,
+				... ( type === 'list' ) ? [ this.List() ] : [] ,
+				... ( type === 'dict' ) ? [ this.Dict() ] : [] ,
+				... ( type === 'object' ) ? [ this.Overs() ] : [] ,
 				... ( [ 'get' , 'bind' ].indexOf( type ) >= 0 && this.bind() ) ? [ this.Prop([ this.Bind().value() , null ]) ] : [] ,
 			]
 		}

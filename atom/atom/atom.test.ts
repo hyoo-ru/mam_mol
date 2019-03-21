@@ -176,7 +176,7 @@ module $ {
 			
 			atom.set({ foo : [666] })
 			$mol_assert_equal( called , 2 )
-			atom.value( { foo : [666] } , $mol_atom_force_update )
+			atom.value( { foo : [666] } , $mol_mem_force_update )
 			$mol_assert_equal( called , 3 )
 			
 			atom.push({ foo : [777] })

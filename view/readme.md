@@ -46,10 +46,6 @@ Returns dictionary of styles. Numbers will be convertes to string with "px" suff
 
 Returns dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property. This handlers are synchronous and can be cancelled by ```preventDefault()```.
 
-**`event_async() : { [ key : string ] : ( event : Event )=> void }`**
-
-Returns dictionary of event handlers. The event handlers are bind to the DOM-element one time, when the value is set to `dom_node` property. This handlers are passive and can not be cancelled by ```preventDefault()```.
-
 **`focused( next? : boolean ) : boolean`**
 
 Determines, whether the component is focused or not at this time. If any inserted component would be focused, then its parent component would be focused also.

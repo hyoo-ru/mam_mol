@@ -1,12 +1,7 @@
 namespace $ {
 	
-	export enum $mol_atom_status {
-		obsolete = 'obsolete' ,
-		checking = 'checking' ,
-		pulling = 'pulling' ,
-		actual = 'actual' ,
-	}
-	
+	console.warn( '$mol_atom is deprecated. Use $mol_atom2 or $mol_fiber instead.' )
+
 	export class $mol_atom< Value = any > extends $mol_object {
 		
 		masters : Set< $mol_atom<any> > | null = null
@@ -14,17 +9,16 @@ namespace $ {
 		
 		status = $mol_atom_status.obsolete
 		
-		readonly handler : ( next? : Value|Error , force? : $mol_atom_force )=> Value|void
+		readonly handler : ( next? : Value|Error , force? : $mol_mem_force )=> Value|void
 
 		'value()' : Value|Error
 
 		constructor(
 			id : string ,
-			handler : ( next? : Value , force? : $mol_atom_force )=> Value|void = next => next ,
+			handler : ( next? : Value , force? : $mol_mem_force )=> Value|void = next => next ,
 		) {
 			super()
 			
-			this.object_id( id )
 			this.handler = handler
 		}
 		
@@ -35,7 +29,7 @@ namespace $ {
 			const value = this['value()']
 			
 			if( value instanceof $mol_object ) {
-				if( value.object_owner() === this ) value.destructor();
+				if( $mol_owning_get( value ) === this ) value.destructor();
 			}
 
 			this['value()'] = undefined
@@ -46,7 +40,7 @@ namespace $ {
 			if( this.slaves ) this.check_slaves()
 		}
 		
-		get( force? : $mol_atom_force ) {
+		get( force? : $mol_mem_force ) {
 			
 			const slave = $mol_atom.stack[0]
 			if( slave ) {
@@ -65,7 +59,7 @@ namespace $ {
 			return value as Value
 		}
 		
-		actualize( force? : $mol_atom_force ) {
+		actualize( force? : $mol_mem_force ) {
 			
 			if( this.status === $mol_atom_status.pulling ) {
 				throw new Error( `Cyclic atom dependency of ${ this }` )
@@ -115,7 +109,7 @@ namespace $ {
 			$mol_atom.stack[0] = slave
 		}
 		
-		pull( force? : $mol_atom_force ) {
+		pull( force? : $mol_mem_force ) {
 			try {
 				return this.handler( this._next , force )
 			} catch( error ) {
@@ -155,12 +149,10 @@ namespace $ {
 			if( next === prev ) return prev as Value
 			
 			if( prev instanceof $mol_object ) {
-				if( prev.object_owner() === this ) prev.destructor()
+				if( $mol_owning_get( prev ) === this ) prev.destructor()
 			}
 			
-			if( next instanceof $mol_object ) {
-				next.object_owner( this )
-			}
+			$mol_owning_catch( this , next )
 			
 			if(( typeof Proxy === 'function' )&&( next instanceof Error )) {
 				next = new Proxy( next , {
@@ -263,13 +255,13 @@ namespace $ {
 			return this['value()'] = next
 		}
 		
-		value( next? : Value , force? : $mol_atom_force ) : Value {
+		value( next? : Value , force? : $mol_mem_force ) : Value {
 
-			if( force === $mol_atom_force_cache ) return this.push( next )
+			if( force === $mol_mem_force_cache ) return this.push( next )
 
 			if( next !== undefined ) {
 				
-				if( force === $mol_atom_force ) return this.push( next )
+				if( force === $mol_mem_force ) return this.push( next )
 
 				let next_normal = $mol_conform( next , this._ignore )
 				if( next_normal === this._ignore ) return this.get( force )
@@ -282,7 +274,7 @@ namespace $ {
 				this._next = next_normal
 				this._ignore = next_normal
 
-				force = $mol_atom_force_update
+				force = $mol_mem_force_update
 			}
 			
 			return this.get( force )
@@ -394,21 +386,8 @@ namespace $ {
 	
 	$mol_state_stack.set( '$mol_atom.stack' , $mol_atom.stack )
 
-	export function $mol_atom_current< Value = any >() {
-		return $mol_atom.stack[0] as $mol_atom< Value >
-	}
-	
-	export class $mol_atom_wait extends Error {
-		name = '$mol_atom_wait'
-	}
-	
-	export class $mol_atom_force extends Object {
-		$mol_atom_force : boolean
-		static $mol_atom_force : boolean
-		static toString() { return this.name }
-	}
-
-	export class $mol_atom_force_cache extends $mol_atom_force {}
-	export class $mol_atom_force_update extends $mol_atom_force {}
+	export let $mol_atom_force = $mol_mem_force
+	export let $mol_atom_force_cache = $mol_mem_force_cache
+	export let $mol_atom_force_update = $mol_mem_force_update
 	
 }

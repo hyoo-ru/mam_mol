@@ -17,26 +17,14 @@ namespace $ {
 	
 	export function $mol_dom_render_children (
 		el : Element ,
-		childNodes : NodeList | Array< Node | string | number | boolean | { dom_tree : ()=> Node } >
+		childNodes : NodeList | Array< Node | string >
 	) {
-		const node_list = [] as ( Node | string )[]
-		const node_set = new Set<Node>()
-		
-		for( let i = 0 ; i < childNodes.length ; ++i ) {
-			let node = childNodes[ i ] as any
-			if( node == null ) continue
-			if( Object( node ) === node ) {
-				if( node[ 'dom_tree' ] ) node = node[ 'dom_tree' ]()
-				node_list.push( node )
-				node_set.add( node )
-			} else {
-				node_list.push( String( node ) )
-			}
-		}
+		const node_set = new Set<Node>( [].slice.call( childNodes ) )
 		
 		let nextNode : Node = el.firstChild
-		for( let view_ of node_list ) {
-			const view = view_.valueOf() as Node
+		for( let view of childNodes ) {
+
+			if( view == null ) continue
 			
 			if( view instanceof $mol_dom_context.Node ) {
 				

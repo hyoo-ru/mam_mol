@@ -3,10 +3,11 @@ namespace $ {
 	export class $mol_build_server extends $mol_server {
 		
 		expressGenerator() {
-			return ( req : any , res : any , next : () => void )=> {
+			return $mol_fiber_root( ( req : any , res : any , next : () => any )=> {
 				try {
-					return this.generator( req.url ).valueOf() && next()
+					return $mol_fiber_unlimit( ()=> this.generator( req.url ).valueOf() && next() )
 				} catch( error ) {
+					if( typeof error.then === 'function' ) $mol_fail_hidden( error )
 					if( req.url.match( /\.js$/ ) ) {
 						res.send( `console.error( ${ JSON.stringify( error.message ) } )` ).end()
 					} else if( req.url.match( /\.css$/ ) ) {
@@ -19,7 +20,7 @@ namespace $ {
 						throw error
 					}
 				}
-			}
+			} )
 		}
 		
 		build() : $mol_build {

@@ -16,8 +16,8 @@ namespace $ {
 			
 			var x = new $mol_view_test_block()
 			
-			$mol_assert_equal( x.dom_node().id , '' )
-			$mol_assert_equal( x.element( 0 ).dom_node().id , '.element(0)' )
+			$mol_assert_equal( x.dom_node().id , '$mol_view_test_block.make()' )
+			$mol_assert_equal( x.element( 0 ).dom_node().id , '$mol_view_test_block.make().element(0)' )
 			
 		} ,
 		

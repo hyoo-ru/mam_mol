@@ -7,7 +7,7 @@ Properties of a the same values, in terminology of mol is polymorphic methods wi
 ```ts
 myProperty< Value >() : Value // getter
 myProperty< Value >( next? : Value ) : Value // getter/setter
-myProperty< Value >( next? : Value , force? : $mol_atom_force ) : Value // getter/setter with force support
+myProperty< Value >( next? : Value , force? : $mol_mem_force ) : Value // getter/setter with force support
 ```
 
 The example of declaring a not cached property:
@@ -75,7 +75,7 @@ Additional examples of usage reactive properties:
 
 ```ts
 @ $mol_mem
-userName( next? : string , force? : $mol_atom_force ) { // Added force support
+userName( next? : string , force? : $mol_mem_force ) { // Added force support
 	return 'mary'
 }
 
@@ -83,10 +83,10 @@ userName( next? : string , force? : $mol_atom_force ) { // Added force support
 userName( 'jin' ) // returns 'mary'
 
 /// Force push value to cache 
-userName( 'jin' , $mol_atom_force_cache ) // returns 'jin'
+userName( 'jin' , $mol_mem_force_cache ) // returns 'jin'
 
 /// Force cache ignoring and pulling fresh value
-userName( void 0 , $mol_atom_force_update ) // returns 'mary'
+userName( void 0 , $mol_mem_force_update ) // returns 'mary'
 ```
 
 ## Multi-value properties
@@ -96,7 +96,7 @@ Multi-value properties has the following interface:
 ```ts
 myProperty< Key , Value >( key : Key ) : Value // getter
 myProperty< Key , Value >( key : Key , next? : Value ) : Value // getter/setter
-myProperty< Key , Value >( key : Key , next? : Value , force? : $mol_atom_force ) : Value // getter/setter with force support
+myProperty< Key , Value >( key : Key , next? : Value , force? : $mol_mem_force ) : Value // getter/setter with force support
 ```
 
 $mol_mem_key uses [$mol_dict](../dict) inside.
