@@ -87,6 +87,6 @@ $mol_app_slides $mol_view
 		<= Loader $mol_view
 			dom_name \iframe
 			attr *
-				src <= uri_slides <= uri_slides_default \https://nin-jin.github.io/slides/orp/
+				src <= uri_slides <= uri_slides_default \https://nin-jin.github.io/slides/slides/
 			event *
 				load?val <=> event_load?val null
