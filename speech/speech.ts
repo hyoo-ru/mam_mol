@@ -96,7 +96,7 @@ namespace $ {
 		}
 
 		static forget() {
-			if( !this.hearing() ) retun
+			if( !this.hearing() ) return
 			this.hearer().stop()
 		}
 		
