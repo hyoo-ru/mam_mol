@@ -8,13 +8,14 @@ namespace $ {
 			const API = window.speechSynthesis
 
 			const on_voices = ( event : SpeechSynthesisEvent )=> {
+				if( !API.getVoices().length ) return
 				this.speaker( API , $mol_atom_force_cache )
 				API.removeEventListener( 'voiceschanged' , on_voices )
 			}
 
 			API.addEventListener( 'voiceschanged' , on_voices )
 			
-			if( !API.getVoices().length ) throw new $mol_atom_wait( 'Waiting for voice..' )
+			throw new $mol_atom_wait( 'Waiting for voice..' )
 
 			return API
 		}
@@ -73,7 +74,9 @@ namespace $ {
 			api.onerror = ( event : Event & { error : string } )=> {
 				console.error( new Error( event.error ) )
 				this.text( '' )
-				this.hearing( false )
+			}
+			api.onend = ( event : any )=> {
+				if( this.hearing() ) api.start()
 			}
 			
 			return api;
@@ -90,6 +93,11 @@ namespace $ {
 			}
 			
 			return next
+		}
+
+		static forget() {
+			if( !this.hearing() ) retun
+			this.hearer().stop()
 		}
 		
 		static event_result( event? : Event & { results : { transcript : string }[][] } ) {

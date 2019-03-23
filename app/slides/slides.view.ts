@@ -76,7 +76,11 @@ namespace $.$$ {
 			return $mol_state_local.value( this.state_key( `slide_local(${ JSON.stringify( uri ) })` ) , next ) || 0
 		}
 		
+		@ $mol_mem
 		slide( next? : number ) {
+			
+			new $mol_defer( ()=> $mol_speech.forget() )
+			
 			const count = this.content_pages().length
 			
 			if( next >= count ) next = 0
@@ -85,7 +89,7 @@ namespace $.$$ {
 			let str = ( next === undefined ) ? undefined : String( next )
 			
 			str = $mol_state_arg.value( this.state_key( 'slide' ) , str ) || undefined
-			
+
 			return this.slide_local( this.uri_slides() , str && Number( str ) ) || 0
 		}
 
@@ -129,6 +133,7 @@ namespace $.$$ {
 			while( matcher.length > 2 ) {
 				
 				for( let i = 0 ; i < pages.length ; ++i ) {
+					
 					if( !this.page_title(i).toLowerCase().match( matcher ) ) continue
 					
 					this.slide( i )
@@ -137,6 +142,21 @@ namespace $.$$ {
 				
 				matcher = matcher.substring( 0 , matcher.length - 1 )
 			}
+			
+			matcher = topic
+			while( matcher.length > 2 ) {
+				
+				for( let i = 0 ; i < pages.length ; ++i ) {
+
+					if( !pages[i].toLowerCase().match( matcher ) ) continue
+					
+					this.slide( i )
+					return
+				}
+				
+				matcher = matcher.substring( 0 , matcher.length - 1 )
+			}
+
 		}
 		
 		event_repeat( next? : Event ) {
