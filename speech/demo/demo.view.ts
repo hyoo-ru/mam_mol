@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_speech_demo extends $.$mol_speech_demo {
 		
 		listening( next? : boolean ) {
-			return $mol_speech.listening( next )
+			return $mol_speech.hearing( next )
 		}
 		
 		message() {

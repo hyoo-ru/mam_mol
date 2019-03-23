@@ -139,8 +139,24 @@ namespace $.$$ {
 			}
 		}
 		
+		event_repeat( next? : Event ) {
+			$mol_speech.say( $mol_speech.text() )
+		}
+		
+		event_speech_on( next? : Event ) {
+			$mol_speech.speaking( true )
+		}
+		
+		event_speech_off( next? : Event ) {
+			$mol_speech.speaking( false )
+		}
+		
 		speech_enabled( next? : boolean ) {
-			return $mol_speech.listening( next )
+			return $mol_speech.hearing( next )
+		}
+
+		speech_text() {
+			return $mol_speech.text()
 		}
 		
 		@ $mol_mem

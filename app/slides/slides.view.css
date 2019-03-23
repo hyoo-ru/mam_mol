@@ -14,6 +14,17 @@
 	flex: 1 1 40rem;
 }
 
+[mol_app_slides_speaker_head] {
+	flex-wrap: nowrap;
+}
+
+[mol_app_slides_speech_text] {
+	line-height: 1;
+	display: flex;
+	align-items: center;
+	flex: 1 1 auto;
+}
+
 [mol_app_slides_listener] {
 	flex: 1 1 66%;
 }

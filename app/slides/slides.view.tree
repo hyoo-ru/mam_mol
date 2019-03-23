@@ -53,6 +53,24 @@ $mol_app_slides $mol_view
 				\слайд про (\S+?)
 				\найти (\S+?)
 				\найди (\S+?)
+		<= Speech_repeat $mol_speech
+			event_catch?val <=> event_repeat?val null
+			patterns <= speech_repeat /
+				\repeat
+				\повтори
+				\повторите
+		<= Speech_on $mol_speech
+			event_catch?val <=> event_speech_on?val null
+			patterns <= speech_on /
+				\continue
+				\продолжай
+		<= Speech_off $mol_speech
+			event_catch?val <=> event_speech_off?val null
+			patterns <= speech_off /
+				\shut up
+				\hush
+				\замолчи
+				\помолчи
 	sub /
 		<= Listener $mol_page
 			title <= title
@@ -66,8 +84,12 @@ $mol_app_slides $mol_view
 				<= Progress $mol_portion
 					portion <= progress 0
 		<= Speaker $mol_page
-			title \
-			tools /
+			head /
+				<= Speech_toggle $mol_check_icon
+					Icon <= Speech_toggle_icon $mol_icon_microphone
+					checked?val <=> speech_enabled?val false
+					hint <= speech_toggle_hint @ \Speech contol
+				<= Speech_text $mol_view sub / <= speech_text \
 				<= Open_listener $mol_link
 					target \_blank
 					hint <= open_listener_hint @ \Open slides window
@@ -76,10 +98,6 @@ $mol_app_slides $mol_view
 						slide null
 					sub /
 						<= Open_listener_icon $mol_icon_external
-				<= Speech_toggle $mol_check_icon
-					Icon <= Speech_toggle_icon $mol_icon_microphone
-					checked?val <=> speech_enabled?val false
-					hint <= speech_toggle_hint @ \Speech contol
 			body /
 				<= Speaker_content $mol_text
 					uri_base <= uri_base \

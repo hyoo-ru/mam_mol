@@ -3,7 +3,58 @@ namespace $ {
 	export class $mol_speech extends $mol_plugin {
 		
 		@ $mol_mem
-		static api() {
+		static speaker( next? : SpeechSynthesis , force? : $mol_atom_force ) {
+
+			const API = window.speechSynthesis
+
+			const on_voices = ( event : SpeechSynthesisEvent )=> {
+				this.speaker( API , $mol_atom_force_cache )
+				API.removeEventListener( 'voiceschanged' , on_voices )
+			}
+
+			API.addEventListener( 'voiceschanged' , on_voices )
+			
+			if( !API.getVoices().length ) throw new $mol_atom_wait( 'Waiting for voice..' )
+
+			return API
+		}
+
+		@ $mol_mem
+		static voices() {
+			const lang = this.$.$mol_locale.lang()
+			return this.speaker().getVoices().filter( voice => voice.lang.split('-')[0] === lang )
+		}
+		
+		@ $mol_mem_key
+		static say( text : string ) {
+			
+			const speaker = this.speaker()
+			this.speaking( true )
+			
+			const rate = 1
+			const voice = this.voices()[ this.voices().length - 1 ]
+			const pitch = 1
+			
+			var utter = new SpeechSynthesisUtterance( text )
+			
+			utter.voice = voice
+			utter.rate = rate
+			utter.pitch = pitch
+			
+			speaker.speak( utter )
+		}
+
+		@ $mol_mem
+		static speaking( next = true ) {
+			
+			if( next ) this.speaker().resume()
+			else this.speaker().pause()
+			
+			return next
+		}
+		
+		@ $mol_mem
+		static hearer() {
 			const API = window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition']
 			
 			const api = new API
@@ -22,20 +73,20 @@ namespace $ {
 			api.onerror = ( event : Event & { error : string } )=> {
 				console.error( new Error( event.error ) )
 				this.text( '' )
-				this.listening( false )
+				this.hearing( false )
 			}
 			
 			return api;
 		}
 		
 		@ $mol_mem
-		static listening( next? : boolean ) {
+		static hearing( next? : boolean ) {
 			if( next === undefined ) return false
 			
 			if( next ) {
-				this.api().start()
+				this.hearer().start()
 			} else {
-				this.api().stop()
+				this.hearer().stop()
 			}
 			
 			return next
