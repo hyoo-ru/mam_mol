@@ -184,7 +184,7 @@ namespace $ {
 		wake() {
 			this.$.$mol_log( this , '⏰' )
 			try {
-				return this.get()
+				if( this.cursor > $mol_fiber_status.actual ) return this.get()
 			} catch( error ) {
 				if( 'then' in error ) return
 				$mol_fail_hidden( error )
