@@ -54,7 +54,11 @@ namespace $ {
 
 		get() {
 			if( $mol_atom2.cached ) return this.value
-			return super.get()
+			
+			const value = super.get()
+			if( value === undefined ) throw new Error( `Not defined: ${ this }` )
+			
+			return value
 		}
 
 		pull() {
@@ -88,7 +92,7 @@ namespace $ {
 
 			return this.value
 		}
-		
+
 		_value = undefined as Value
 		get value() { return this._value }
 		set value( next : Value ) {

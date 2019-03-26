@@ -15,7 +15,7 @@ namespace $ {
 			if( !keys ) {
 				keys = new $mol_atom2< number >()
 				keys[ Symbol.toStringTag ] = `Object.keys(${ store })`
-				keys.push( undefined )
+				keys.put( 0 )
 			}
 
 			return keys
