@@ -66,14 +66,14 @@ namespace $ {
 			api.lang = $mol_locale.lang()
 			
 			api.onnomatch = ( event : any )=> {
-				this.text( '' )
+				this.event_result( null )
 			}
 			api.onresult = ( event : any )=> {
 				this.event_result( event )
 			}
 			api.onerror = ( event : Event & { error : string } )=> {
 				console.error( new Error( event.error ) )
-				this.text( '' )
+				this.event_result( null )
 			}
 			api.onend = ( event : any )=> {
 				if( this.hearing() ) api.start()
@@ -95,40 +95,61 @@ namespace $ {
 			return next
 		}
 
-		static forget() {
-			if( !this.hearing() ) return
-			this.hearer().stop()
+		@ $mol_mem
+		static event_result( event? : Event & {
+			results : Array< { transcript : string }[] & { isFinal : boolean } >
+		} ) {
+			this.hearer()
+			return event
 		}
-		
-		static event_result( event? : Event & { results : { transcript : string }[][] } ) {
-			
-			const text = [].slice.call( event.results )
-			.map( ( result : any )=> {
-				return result[0].transcript
-			} )
-			.join( '' )
-			.toLowerCase()
-			.trim()
-			
-			this.text( text )
+
+		@ $mol_mem
+		static recognitions() {
+
+			const result = this.event_result()
+			if( !result ) return []
+
+			const results = this.event_result().results
+			return ( [].slice.call( this.event_result().results ) as typeof results )
+		}
+
+		@ $mol_mem
+		static commands() {
+			return this.recognitions().map( result => result[0].transcript.toLowerCase().trim().replace( /[,\.]/g , '' ) )
 		}
 		
 		@ $mol_mem
-		static text( next = '' ) {
+		static text() {
+			return this.recognitions().map( result => result[0].transcript ).join( '' )
+		}
+		
+		@ $mol_mem
+		commands_skip( next = 0 ) {
+			$mol_speech.hearing()
 			return next
 		}
-		
+
 		@ $mol_mem
 		render() : null {
-			const text = $mol_speech.text().replace( /[,\.]/g , '' )
-			
-			for( let matcher of this.matchers() ) {
+
+			const matchers = this.matchers()
+			const commands = $mol_speech.commands()
+
+			for( let i = this.commands_skip() ; i < commands.length ; ++ i ) {
 				
-				const found = text.match( matcher )
-				if( !found ) continue
-				
-				new $mol_defer( ()=> this.event_catch( found.slice( 1 ).map( text => text.toLowerCase() ) ) )
-				break
+				for( let matcher of matchers ) {
+					
+					const found = commands[i].match( matcher )
+					if( !found ) continue
+					
+					new $mol_defer( ()=> {
+						this.commands_skip( i + 1 )
+						this.event_catch( found.slice( 1 ) )
+					} )
+					
+					return null
+				}
+
 			}
 			
 			return null
@@ -154,7 +175,7 @@ namespace $ {
 		}
 		
 		suffix() {
-			return '[,\\s]+(?:please|would you kindly|пожалуйста|пожалуй 100|будь любезен)\.?$'
+			return '[,\\s]+(?:please|would you kindly|пожалуйста|пожалуй 100|будь любезен|будь любезна|будь добра?)\.?$'
 		}
 		
 	}
