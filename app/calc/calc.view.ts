@@ -32,8 +32,13 @@ namespace $.$$ {
 			const vars = {} as Record< string , string >
 			
 			for( const id in formulas ) {
+				
 				const name = this.formula_name( id )
-				if( name ) vars[ name ] = id
+				if( !name ) continue
+
+				if( vars[ name ] ) throw new Error( `Names conflict: ${ id }, ${ vars[ name ] }` )
+				
+				vars[ name ] = id
 			}
 
 			return vars
@@ -177,6 +182,9 @@ namespace $.$$ {
 				} } ) ,
 				'_' : new Proxy( {} , { get : ( _ , name : string ) : any => {
 					return this.result( this.refs()[ name ] )
+				} } ) ,
+				'__' : new Proxy( {} , { get : ( _ , name : string ) : any => {
+					return this.refs()[ name ]
 				} } ) ,
 			} )
 		}
