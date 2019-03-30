@@ -9,11 +9,23 @@ namespace $.$$ {
 			let args = this.$.$mol_state_arg.dict()
 			if( next ) args = this.$.$mol_state_arg.dict({ ... args , ... next })
 
-			const ids = Object.keys( args ).filter( param => /^[A-Z]+\d+$/.test( param ) )
+			const ids = Object.keys( args ).filter( param => this.id2coord( param ) )
 			
 			for( let id of ids ) formulas[ id ] = args[ id ]
 
 			return formulas
+		}
+
+		id2coord( id : string ) : [ number , number ] {
+			
+			const parsed = /^([A-Z]+)(\d+)$/.exec( id )
+			if( !parsed ) return null
+
+			return [ this.string2number( parsed[1] ) , Number( parsed[2] ) ]
+		}
+
+		coord2id( coord : [ number , number ] ) : string {
+			return `${ this.number2string( coord[0] ) }${ coord[1] }`
 		}
 
 		@ $mol_mem
@@ -25,10 +37,10 @@ namespace $.$$ {
 			}
 
 			for( let key of Object.keys( this.formulas() ) ) {
-				const parsed = /^([A-Z]+)(\d+)$/.exec( key )
+				const coord = this.id2coord( key )
 
-				const rows = Number( parsed[2] ) + 2
-				const cols = this.string2number( parsed[1] ) + 3
+				const rows = coord[1] + 2
+				const cols = coord[0] + 3
 				
 				if( rows > dims.rows ) dims.rows = rows
 				if( cols > dims.cols ) dims.cols = cols
@@ -39,7 +51,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		col_ids() {
-			return Array( this.dimensions().cols ).join(' ').split(' ').map( ( _ , i )=> this.number2string( i ) )
+			return Array( this.dimensions().cols ).join(' ').split(' ').map( ( _ , i )=> i + 1 )
 		}
 
 		@ $mol_mem
@@ -48,12 +60,18 @@ namespace $.$$ {
 		}
 
 		number2string( numb : number ) {
+			
+			if( numb <= 0 ) return ''
+			numb --
+			
 			const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 			let str = ''
+			
 			do {
 				str = letters[ numb % 26 ] + str
 				numb = Math.floor( numb / 26 )
 			} while ( numb )
+			
 			return str
 		}
 
@@ -63,7 +81,7 @@ namespace $.$$ {
 				numb = numb * 26
 				numb += symb.charCodeAt( 0 ) - 65
 			}
-			return numb
+			return numb + 1
 		}
 
 		title( next? : string ) {
@@ -71,8 +89,8 @@ namespace $.$$ {
 			return title == undefined ? super.title() : title
 		}
 
-		col_title( id : string ) {
-			return id
+		col_title( id : number ) {
+			return this.number2string( id )
 		}
 
 		row_title( id : number ) {
@@ -81,73 +99,94 @@ namespace $.$$ {
 
 		@ $mol_mem
 		head_cells() {
-			return [ this.Col_head( '' ) , ... this.col_ids().map( colId => this.Col_head( colId ) ) ]
+			return [ this.Col_head( 0 ) , ... this.col_ids().map( colId => this.Col_head( colId ) ) ]
 		}
 		
 		cells( row_id : number ) {
-			return [ this.Row_head( row_id ) , ... this.col_ids().map( col_id => this.Cell({ row : row_id , col : col_id }) ) ]
+			return [ this.Row_head( row_id ) , ... this.col_ids().map( col_id => this.Cell( this.coord2id([ col_id , row_id ]) ) ) ]
 		}
 
 		@ $mol_mem_key
-		selected( id : { row : number , col : string } , next? : boolean ) {
-			return this.Cell( this.current( next ? id : undefined ) ) === this.Cell( id )
+		selected( id : string , next? : boolean ) {
+			return this.Cell( this.pos( next ? id : undefined ) ) === this.Cell( id )
 		}
 
 		@ $mol_mem
-		current( next? : { row : number , col : string } ) {
-			new $mol_defer( ()=> this.Edit_current().focused( true ) )
-			return next || super.current()
+		pos( next? : string ) : string {
+			new $mol_defer( ()=> this.Edit_current().Edit().focused( true ) )
+			return next || super.pos()
+		}
+
+		@ $mol_mem
+		coord( next? : [ number , number ] ) {
+			return this.id2coord( this.pos( next && this.coord2id( next ) ) )
 		}
 
 		Edit_current() {
-			return this.Edit( this.current() )
+			return this.Edit( this.pos() )
 		}
 
 		current_row( next? : number ) {
-			return this.current( next === undefined ? undefined : { ... this.current() , row : next } ).row
+			return this.coord( next === undefined ? undefined : [ this.coord()[0] , next ] )[ 1 ]
 		}
 
 		current_col( next? : number ) {
-			return this.current( next === undefined ? undefined : { ... this.current() , col : next } ).col
-		}
-
-		pos() {
-			const id = this.current()
-			return `${ id.col }${ id.row }`
+			return this.coord( next === undefined ? undefined : [ next , this.coord()[1] ] )[ 0 ]
 		}
 
 		@ $mol_mem_key
-		formula( id : { row : number , col : string } , next? : string ) {
-			const pos = `${ id.col }${ id.row }`
-			return this.formulas( next === undefined ? undefined : { [ pos ] : next || null } )[ pos ] || ''
+		formula( id : string , next? : string ) {
+			return this.formulas( next === undefined ? undefined : { [ id ] : next || null } )[ id ] || ''
 		}
 
 		formula_current( next? : string ) {
-			return this.formula( this.current() , next )
+			return this.formula( this.pos() , next )
 		}
 
 		@ $mol_mem
 		sandbox() {
 			return new $mol_func_sandbox( Math , {
-				'formula' : this.formula.bind( this ) ,
-				'result' : this.result.bind( this ) ,
+				'$' : new Proxy( {} , { get : ( _ , id : string ) : any => {
+					return this.result( id )
+				} } ) ,
+				'$$' : new Proxy( {} , { get : ( _ , id : string ) : any => {
+					return this.formula( id )
+				} } ) ,
 			} )
 		}
 
+		sub() {
+			return [
+				this.Head() ,
+				this.Body() ,
+				... this.hint_showed() ? [ this.Hint() ] : [] ,
+				this.Current() ,
+			]
+		}
+
+		@ $mol_mem
+		hint() {
+			const context = this.sandbox().context()
+			const keys = Object.keys( context ).filter( key => context[ key ] !== undefined )
+			const funcs = keys.filter( key => typeof context[ key ] === 'function' )
+			return `**$.A1** - result of A1, **$$.A1** - formula of A1\n**Functions**: ${ funcs.join( ', ' ) }`
+		}
+
 		@ $mol_mem_key
-		func( id : { row : number , col : string } ) {
+		func( id : string ) {
 			const formula = this.formula( id )
 			if( formula[0] !== '=' ) return ()=> formula
 			
-			const code = 'return ' + formula.slice( 1 )
-			.replace( /@([A-Z]+)([0-9]+)\b/g , 'formula({ row : $2 , col : "$1" })' )
-			.replace( /\b([A-Z]+)([0-9]+)\b/g , 'result({ row : $2 , col : "$1" })' )
+			const code = 'return ' + formula
+			.replace( /@([A-Z]+[0-9]+)\b/g , '$$.$1' )
+			.replace( /([^.])([A-Z]+[0-9]+)\b/g , '$1$.$2' )
+			.slice( 1 )
 			
 			return this.sandbox().eval( code )
 		}
 
 		@ $mol_mem_key
-		result( id : { row : number , col : string } ) {
+		result( id : string ) {
 			const res = this.func( id )()
 			if( res === undefined ) return ''
 			if( res === '' ) return ''
@@ -159,14 +198,12 @@ namespace $.$$ {
 			const table = event.clipboardData.getData( 'text/plain' ).trim().split( '\n' ).map( row => row.split( '\t' ) ) as string[][]
 			if( table.length === 1 && table[0].length === 1 ) return
 
-			const anchor = this.current()
-			const row_start = anchor.row
-			const col_start = this.string2number( anchor.col )
+			const [ col_start , row_start ] = this.id2coord( this.pos() )
 			const patch = {}
 
 			for( let row in table ) {
 				for( let col in table[ row ] ) {
-					const id = `${ this.number2string( col_start + Number( col ) ) }${ row_start + Number( row ) }`
+					const id = this.coord2id([ col_start + Number( col ) , row_start + Number( row ) ])
 					patch[ id ] = table[ row ][ col ]
 				}
 			}
@@ -189,7 +226,7 @@ namespace $.$$ {
 				table.push( row_data )
 				
 				for( let col = 0 ; col < dims.cols ; ++ col ) {
-					row_data[ col ] = String( this.result({ row , col : this.number2string( col ) }) )
+					row_data[ col ] = String( this.result( this.coord2id([ col , row ]) ) )
 				}
 			}
 

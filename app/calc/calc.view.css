@@ -17,7 +17,11 @@
 	box-sizing: content-box;
 	font-family: var(--mol_skin_font_monospace);
 }	
-	
+
+[mol_app_calc_hint_trigger] {
+	align-items: center;
+}
+
 [mol_app_calc_body] {
 	align-self: stretch;
 	flex: auto;

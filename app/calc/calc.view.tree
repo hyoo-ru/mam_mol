@@ -1,7 +1,4 @@
 $mol_app_calc $mol_page
-	current?val *
-		row 1
-		col \A
 	formula!id?val \
 	head /
 		<= Title_edit $mol_string
@@ -17,18 +14,22 @@ $mol_app_calc $mol_page
 				<= Download_icon $mol_icon_load
 	sub /
 		<= Head
-		<= Current $mol_bar
-			sub /
-				<= Pos $mol_string
-					enabled false
-					value <= pos \
-				<= Edit_current $mol_string
 		<= Body $mol_grid
 			col_ids <= col_ids /
 			row_ids <= row_ids /
 			head_cells <= head_cells /
 			cells!row <= cells!row /
-	Edit!id $mol_string
+		<= Hint $mol_text text <= hint \
+		<= Current $mol_bar
+			sub /
+				<= Pos $mol_string
+					enabled false
+					value <= pos?val \A1
+				<= Edit_current $mol_textarea
+				<= Hint_trigger $mol_check_icon
+					checked?val <=> hint_showed?val false
+					Icon <= Hint_trigger_icon $mol_icon_hint
+	Edit!id $mol_textarea
 		hint \=
 		value?val <=> formula!id?val \
 	Col_head!id $mol_float
