@@ -18,6 +18,10 @@
 	font-family: var(--mol_skin_font_monospace);
 }	
 
+[mol_app_calc_hint] {
+	max-width: none;
+}
+
 [mol_app_calc_hint_trigger] {
 	align-items: center;
 }

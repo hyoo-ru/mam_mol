@@ -169,7 +169,7 @@ namespace $.$$ {
 			const context = this.sandbox().context()
 			const keys = Object.keys( context ).filter( key => context[ key ] !== undefined )
 			const funcs = keys.filter( key => typeof context[ key ] === 'function' )
-			return `**$.A1** - result of A1, **$$.A1** - formula of A1\n**Functions**: ${ funcs.join( ', ' ) }`
+			return super.hint().replace( '{funcs}' , funcs.join( ', ' ) )
 		}
 
 		@ $mol_mem_key

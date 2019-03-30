@@ -19,7 +19,10 @@ $mol_app_calc $mol_page
 			row_ids <= row_ids /
 			head_cells <= head_cells /
 			cells!row <= cells!row /
-		<= Hint $mol_text text <= hint \
+		<= Hint $mol_text
+			text <= hint @ \
+				\**$.A1** - result of A1, **$$.A1** - formula of A1, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
+				\**Functions**: {funcs}.
 		<= Current $mol_bar
 			sub /
 				<= Pos $mol_string
