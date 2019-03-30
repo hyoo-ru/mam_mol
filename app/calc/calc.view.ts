@@ -16,6 +16,29 @@ namespace $.$$ {
 			return formulas
 		}
 
+		@ $mol_mem
+		formula_name( id : string ) {
+			
+			const found = /^(\w*)\s*=/u.exec( this.formulas()[ id ] )
+			if( !found ) return null
+
+			return found[1]
+		}
+
+		@ $mol_mem
+		refs() {
+			
+			const formulas = this.formulas()
+			const vars = {} as Record< string , string >
+			
+			for( const id in formulas ) {
+				const name = this.formula_name( id )
+				if( name ) vars[ name ] = id
+			}
+
+			return vars
+		}
+
 		id2coord( id : string ) : [ number , number ] {
 			
 			const parsed = /^([A-Z]+)(\d+)$/.exec( id )
@@ -32,14 +55,14 @@ namespace $.$$ {
 		dimensions() {
 
 			const dims = {
-				rows : 2 ,
+				rows : 3 ,
 				cols : 3 ,
 			}
 
 			for( let key of Object.keys( this.formulas() ) ) {
 				const coord = this.id2coord( key )
 
-				const rows = coord[1] + 2
+				const rows = coord[1] + 3
 				const cols = coord[0] + 3
 				
 				if( rows > dims.rows ) dims.rows = rows
@@ -152,6 +175,9 @@ namespace $.$$ {
 				'$$' : new Proxy( {} , { get : ( _ , id : string ) : any => {
 					return this.formula( id )
 				} } ) ,
+				'_' : new Proxy( {} , { get : ( _ , name : string ) : any => {
+					return this.result( this.refs()[ name ] )
+				} } ) ,
 			} )
 		}
 
@@ -172,15 +198,26 @@ namespace $.$$ {
 			return super.hint().replace( '{funcs}' , funcs.join( ', ' ) )
 		}
 
+		@ $mol_mem
+		cell_content( id : string ) {
+			
+			const name = this.formula_name( id )
+			
+			let val = this.result( id )
+			if( typeof val === 'object' ) val = JSON.stringify( val )
+
+			return name ? `${name} = ${val}` : val
+		}
+
 		@ $mol_mem_key
 		func( id : string ) {
 			const formula = this.formula( id )
-			if( formula[0] !== '=' ) return ()=> formula
+			if( !/^(\w*)?\s*=/u.test( formula ) ) return ()=> formula
 			
 			const code = 'return ' + formula
 			.replace( /@([A-Z]+[0-9]+)\b/g , '$$.$1' )
 			.replace( /([^.])([A-Z]+[0-9]+)\b/g , '$1$.$2' )
-			.slice( 1 )
+			.replace( /^(\w*)?\s*=/u , '' )
 			
 			return this.sandbox().eval( code )
 		}

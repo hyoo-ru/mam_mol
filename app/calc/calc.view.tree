@@ -21,7 +21,7 @@ $mol_app_calc $mol_page
 			cells!row <= cells!row /
 		<= Hint $mol_text
 			text <= hint @ \
-				\**$.A1** - result of A1, **$$.A1** - formula of A1, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
+				\**$.A1** - result of A1, **$$.A1** - formula of A1, **a=** - define variable, **_.a** - value of variable, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
 				\**Functions**: {funcs}.
 		<= Current $mol_bar
 			sub /
@@ -42,7 +42,7 @@ $mol_app_calc $mol_page
 		dom_name \th
 		sub / <= row_title!id \
 	Cell!id $mol_app_calc_cell
-		value <= result!id \
+		value <= cell_content!id \
 		selected?val <=> selected!id?val false
 	plugins /
 		<= Nav $mol_nav

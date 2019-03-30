@@ -1,5 +1,5 @@
 {
 	"$mol_app_calc_title" : "Электронная таблица" ,
 	"$mol_app_calc_download_hint" : "Скачать",
-	"$mol_app_calc_hint": "**$.A1** - результат из A1, **$$.A1** - формула из A1, используйте [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).\n**Функции**: {funcs}."
+	"$mol_app_calc_hint": "**$.A1** - результат из A1, **$$.A1** - формула из A1, **a=** - задать переменную, **_.a** - значение переменной, используйте [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).\n**Функции**: {funcs}."
 }
