@@ -23,11 +23,11 @@ namespace $ {
 				return [ ... Array( size() ) ].map( ( v, i ) => String( i ) ).concat( 'length' )
 			} ,
 
-			getOwnPropertyDescriptor( target , field ) {
+			getOwnPropertyDescriptor( target , field ) : PropertyDescriptor | undefined {
 				
 				const index = Number( field )
 				if( index === Math.trunc( index ) ) return {
-					get : this.get ,
+					get : ()=> this.get!( target , field , this ) ,
 					enumerable : true ,
 					configurable : true ,
 				}
@@ -64,7 +64,7 @@ namespace $ {
 		}
 
 		filter< Context > (
-			check : ( val? : Item , index? : number , list? : Item[] )=> boolean ,
+			check : ( val : Item , index : number , list : Item[] )=> boolean ,
 			context? : Context ,
 		) {
 			const filtered = new $mol_range2_array< Item >() as any as Item[]
@@ -76,24 +76,24 @@ namespace $ {
 		}
 
 		forEach< Context > (
-			proceed : ( this : Context , val? : Item , index? : number , list? : Item[] )=> void ,
+			proceed : ( this : Context , val : Item , index : number , list : Item[] )=> void ,
 			context? : Context,
 		) {
-			for( let [ key , value ] of this.entries() ) proceed.call( context , value , key , this )
+			for( let [ key , value ] of this.entries() ) proceed.call( context as Context , value , key , this )
 		}
 
 		map< Item_out , Context > (
-			proceed : ( this : Context , val? : Item , index? : number , list? : Item[] )=> Item_out ,
+			proceed : ( this : Context , val : Item , index : number , list : Item[] )=> Item_out ,
 			context? : Context ,
-		) {
+		) : Item_out[] {
 			return $mol_range2(
-				index => proceed.call( context , this[ index ] , index , this ) ,
+				index => proceed.call( context as Context , this[ index ] , index , this ) ,
 				()=> this.length ,
 			)
 		}
 
 		reduce< Result > (
-			merge : ( result : Result , val? : Item , index? : number , list? : Item[] )=> Result ,
+			merge : ( result : Result , val : Item , index : number , list : Item[] )=> Result ,
 			result? : Result ,
 		) {
 			let index = 0
@@ -103,13 +103,13 @@ namespace $ {
 			}
 			
 			for( ; index < this.length ; ++ index ) {
-				result = merge( result , this[ index ] , index , this as any )
+				result = merge( result as Result , this[ index ] , index , this as any )
 			}
 			
 			return result
 		}
 
-		slice( from? : number , to = this.length ) : Item[] {
+		slice( from = 0 , to = this.length ) : Item[] {
 			return $mol_range2(
 				index => this[ from + index ] ,
 				()=> Math.min( to , this.length ) - from ,
@@ -117,23 +117,21 @@ namespace $ {
 		}
 
 		some< Context > (
-			check : ( this : Context , val? : Item , index? : number , list? : Item[] )=> boolean ,
+			check : ( this : Context , val : Item , index : number , list : Item[] )=> boolean ,
 			context? : Context ,
 		) {
-			const legth = this.length
 			for( let index = 0 ; index < this.length ; ++ index ) {
-				if( check.call( context , this[ index ] , index , this ) ) return true
+				if( check.call( context as Context , this[ index ] , index , this ) ) return true
 			}
 			return false
 		}
 
-		every< Context > (
-			check : ( this : Context , val? : Item , index? : number , list? : Item[] )=> boolean ,
+		every< Context = null > (
+			check : ( this : Context , val : Item , index : number , list : Item[] )=> boolean ,
 			context? : Context ,
 		) {
-			const legth = this.length
 			for( let index = 0 ; index < this.length ; ++ index ) {
-				if( !check.call( context , this[ index ] , index , this ) ) return false
+				if( !check.call( context as Context , this[ index ] , index , this ) ) return false
 			}
 			return true
 		}

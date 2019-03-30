@@ -56,7 +56,7 @@ namespace $ {
 			if( $mol_atom2.cached ) return this.value
 			
 			const value = super.get()
-			if( value === undefined ) throw new Error( `Not defined: ${ this }` )
+			if( value === undefined ) $mol_fail( new Error( `Not defined: ${ this }` ) )
 			
 			return value
 		}
