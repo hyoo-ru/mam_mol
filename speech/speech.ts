@@ -7,6 +7,8 @@ namespace $ {
 
 			const API = window.speechSynthesis
 
+			if( API.getVoices().length ) return API
+
 			const on_voices = ( event : SpeechSynthesisEvent )=> {
 				if( !API.getVoices().length ) return
 				this.speaker( API , $mol_atom_force_cache )
@@ -16,8 +18,6 @@ namespace $ {
 			API.addEventListener( 'voiceschanged' , on_voices )
 			
 			throw new $mol_atom_wait( 'Waiting for voice..' )
-
-			return API
 		}
 
 		@ $mol_mem
@@ -30,7 +30,9 @@ namespace $ {
 		static say( text : string ) {
 			
 			const speaker = this.speaker()
-			this.speaking( true )
+			
+			speaker.cancel()
+			speaker.resume()
 			
 			const rate = 1
 			const voice = this.voices()[ this.voices().length - 1 ]
@@ -47,7 +49,7 @@ namespace $ {
 
 		@ $mol_mem
 		static speaking( next = true ) {
-			
+
 			if( next ) this.speaker().resume()
 			else this.speaker().pause()
 			
