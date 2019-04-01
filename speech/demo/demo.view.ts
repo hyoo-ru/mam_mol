@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	export class $mol_speech_demo extends $.$mol_speech_demo {
 		
-		listening( next? : boolean ) {
+		hearing( next? : boolean ) {
 			return $mol_speech.hearing( next )
 		}
 		
@@ -30,6 +30,10 @@ namespace $.$$ {
 			return text
 				.replace( /цитата (.*?) конец цитаты/g , ' "$1"' )
 				.replace( /(?:^|[.!?]\s)\S/g , str => str.toUpperCase() )
+		}
+
+		speak() {
+			$mol_speech.say( this.message() )
 		}
 		
 	}
