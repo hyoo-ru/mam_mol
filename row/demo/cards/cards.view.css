@@ -1,0 +1,11 @@
+
+[mol_row_demo_cards_cards] {
+	display: grid;
+	grid-gap: 0.5rem;
+	grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+
+[mol_row_demo_cards_card] {
+	padding: 0.5rem;
+	min-height: 90px;
+}
