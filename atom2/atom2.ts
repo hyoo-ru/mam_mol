@@ -237,13 +237,16 @@ namespace $ {
 		}
 
 		destructor() {
-			super.destructor()
-
-			for( let index = 0 ; index < this.masters.length ; index += 2 ) {
-				this.disobey( index )
-			}
+			
+			if( !this.abort() ) return
+			
+			this.$.$mol_log( this , '🕱' , this.value )
 
 			this.cursor = $mol_fiber_status.persist
+
+			for( let index = 0 ; index < this.masters.length ; index += 2 ) {
+				this.complete_master( index )
+			}
 			
 		}
 		

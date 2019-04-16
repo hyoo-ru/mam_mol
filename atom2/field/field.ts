@@ -34,6 +34,7 @@ namespace $ {
 				cache.abort = ()=> {
 					store.delete( host )
 					cache.forget()
+					return true
 				}
 				store.set( host , cache )
 			}

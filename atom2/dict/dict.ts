@@ -27,11 +27,12 @@ namespace $ {
 				cache = new $mol_atom2
 				cache.abort = ()=> {
 					if( config.abort ) {
-						if( !config.abort( cache.value , key , proxy ) ) return 
+						if( !config.abort( cache.value , key , proxy ) ) return false
 					} else {
 						cache.forget()
 					}
 					store[ key ] = undefined
+					return true
 				}
 				if( config.get ) cache.calculate = config.get.bind( null , key , proxy )
 				cache[ Symbol.toStringTag ] = `${ store }[${ JSON.stringify( key ) }]`

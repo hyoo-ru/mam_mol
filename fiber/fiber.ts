@@ -374,12 +374,14 @@ namespace $ {
 
 		abort() {
 			this.forget()
+			return true
 		}
 
 		destructor() {
+			if( !this.abort() ) return
+			
 			this.$.$mol_log( this , '🕱' , this.value )
 			this.complete()
-			this.abort()
 		}
 
 	}
