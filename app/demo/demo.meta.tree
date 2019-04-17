@@ -44,7 +44,7 @@ include \/mol/pop/demo
 include \/mol/pop/over/demo
 include \/mol/portion/demo
 include \/mol/row/demo/form
-include \/mol/row/demo/cards
+include \/mol/row/demo/products
 include \/mol/scroll/demo
 include \/mol/search/demo
 include \/mol/section/demo
