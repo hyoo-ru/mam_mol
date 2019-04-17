@@ -219,7 +219,7 @@ namespace $ {
 				if( this.cursor !== $mol_fiber_status.actual ) return
 
 				this.cursor = $mol_fiber_status.obsolete
-				this.schedule()
+				$mol_fiber_unlimit( ()=> this.update() )
 			}
 		}
 
