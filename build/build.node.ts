@@ -518,6 +518,7 @@ namespace $ {
 			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
 			if( bundle === 'node' ) {
 				concater.add( '' , 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
+				concater.add( '' , "process.on( 'unhandledRejection' , up => { throw up } )" )
 			}
 			
 			sources.forEach(
@@ -577,6 +578,7 @@ namespace $ {
 			var sourcesTest = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
 			if( bundle === 'node' ) {
 				concater.add( '' , 'require'+'( "source-map-support" ).install()\n' )
+				concater.add( '' , "process.on( 'unhandledRejection' , up => { throw up } )" )
 				sources = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {
 				sources = sourcesTest
