@@ -7,7 +7,7 @@ namespace $ {
 			if( typeof AbortController === 'function' ) {
 				var controller = new AbortController()
 				init.signal = controller.signal
-				$mol_fiber.current.abort = ()=> {
+				$mol_fiber.current!.abort = ()=> {
 					controller.abort()
 					return true
 				}

@@ -361,7 +361,7 @@ module $ {
 
 			const monitor = new $.$mol_atom2
 			monitor.calculate = ()=> {
-				new $.$mol_after_frame( $mol_atom2.current.fresh )
+				new $.$mol_after_frame( $mol_atom2.current!.fresh )
 				return state
 			}
 			$mol_assert_equal( monitor.get() , 1 )

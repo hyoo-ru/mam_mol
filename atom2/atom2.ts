@@ -15,11 +15,12 @@ namespace $ {
 		static get current() {
 			const atom = $mol_fiber.current
 			if( atom instanceof $mol_atom2 ) return atom
+			return null
 		}
 
 		static cached = false
 
-		static reap_task : $mol_fiber
+		static reap_task = null as null | $mol_fiber
 		static reap_queue = [] as $mol_atom2[]
 
 		static reap( atom : $mol_atom2 ) {
@@ -31,8 +32,13 @@ namespace $ {
 			this.reap_task = $mol_fiber_defer( ()=> {
 				this.reap_task = null
 				
-				while( atom = this.reap_queue.pop() ) {
+				while( true ) {
+					
+					const atom = this.reap_queue.pop()
+					if( !atom ) break
+					
 					if( !atom.alone ) continue
+					
 					atom.destructor()
 				}
 				
@@ -93,7 +99,7 @@ namespace $ {
 			return this.value
 		}
 
-		_value = undefined as Value
+		_value = undefined as unknown as Value
 		get value() { return this._value }
 		set value( next : Value ) {
 
@@ -105,9 +111,9 @@ namespace $ {
 			this._value = next
 		}
 
-		_error = null as Error | PromiseLike< Value >
+		_error = null as null | Error | PromiseLike< Value >
 		get error() { return this._error }
-		set error( next : Error | PromiseLike< Value > ) {
+		set error( next : null | Error | PromiseLike< Value > ) {
 
 			const prev = this._error
 

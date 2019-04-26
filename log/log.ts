@@ -7,7 +7,8 @@ namespace $ {
 		path = String( path )
 		if( path.indexOf( $mol_log_filter() ) === -1 ) return
 		
-		if( $mol_log_context() ) $mol_log_context()()
+		const context = $mol_log_context()
+		if( context ) context()
 		
 		console.debug( path , ... values )
 
