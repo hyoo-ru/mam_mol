@@ -19,6 +19,10 @@ namespace $ {
 				return target[ field ]
 			} ,
 
+			set( target , field ) {
+				throw new TypeError( 'Lazy range is read only' )
+			} ,
+
 			ownKeys( target ) {
 				return [ ... Array( size() ) ].map( ( v, i ) => String( i ) ).concat( 'length' )
 			} ,
