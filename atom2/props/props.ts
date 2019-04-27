@@ -28,6 +28,7 @@ namespace $ {
 				atom.abort = ()=> {
 					dict[ key_str ] = null
 					atom.forget()
+					return true
 				}
 				$mol_owning_catch( this , atom )
 

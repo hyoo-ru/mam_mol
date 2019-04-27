@@ -12,8 +12,8 @@ namespace $ {
 		
 		if( !descr ) descr =  Object.getOwnPropertyDescriptor( proto , name )
 
-		const get = descr ? ( descr.get || $mol_const( descr.value ) ) : ( ()=> {} )
-		const set = descr && descr.set || function( next ) { get_cache( this ).put( next ) }
+		const get = descr ? ( descr.get || $mol_const( descr.value! ) ) : ( ()=> undefined as unknown as Value )
+		const set = descr && descr.set || function( this : Host , next ) { get_cache( this ).put( next ) }
 		
 		const store = new WeakMap< Host , $mol_atom2< Value > >()
 
@@ -33,12 +33,13 @@ namespace $ {
 				cache[ Symbol.toStringTag ] = `${ host }.${ name }`
 				cache.abort = ()=> {
 					store.delete( host )
-					cache.forget()
+					cache!.forget()
+					return true
 				}
 				store.set( host , cache )
 			}
 
-			return cache
+			return cache!
 		}
 
 		return {
