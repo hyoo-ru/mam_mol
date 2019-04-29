@@ -29,7 +29,7 @@ namespace $ {
 			const nodes = $mol_dom_context.document.querySelectorAll( '[mol_view_root]' )
 			
 			for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
-				const name = nodes.item( i ).getAttribute( 'mol_view_root' )
+				const name = nodes.item( i ).getAttribute( 'mol_view_root' )!
 				
 				const View = $[ name ]
 				if( !View ) {
@@ -86,7 +86,7 @@ namespace $ {
 		
 		/// Raw child views
 		sub() {
-			return null as Array<$mol_view|Node|string|number|boolean>
+			return null as Array<$mol_view|Node|string|number|boolean> | null
 		}
 		
 		/// Visible sub views with defined context()

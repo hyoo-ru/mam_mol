@@ -2,14 +2,14 @@ namespace $ {
 	
 	export class $mol_graph< Node , Edge > {
 		
-		nodes : { [ id : string ] : Node } = {}
+		nodes : { [ id : string ] : Node | undefined } = {}
 		
 		edgesOut : { [ from : string ] : { [ to : string ] : Edge } } = {}
 		edgesIn : { [ to : string ] : { [ from : string ] : Edge } } = {}
 		
 		nodeEnsure( id : string ) {
 			if( this.nodes.hasOwnProperty( id ) ) return
-			this.nodes[ id ] = null
+			this.nodes[ id ] = undefined
 		}
 		
 		linkOut( from : string , to : string , edge : Edge ) {

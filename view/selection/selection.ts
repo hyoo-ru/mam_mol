@@ -12,7 +12,7 @@ namespace $ {
 			new $mol_defer( ()=> {
 				if( node ) return node.focus()
 
-				const el = atom.cache()[0]
+				const el = atom.cache()![0]
 				if( el ) el.blur()
 			} )
 
@@ -27,12 +27,12 @@ namespace $ {
 				var end = next.end
 				if( !( start <= end ) ) throw new Error( `Wrong offsets (${start},${end})` )
 				
-				var root = $mol_dom_context.document.getElementById( next.id )
+				var root = $mol_dom_context.document.getElementById( next.id )!
 				root.focus()
 				
 				var range = new Range
 				
-				var cur : Node = root.firstChild
+				var cur : Node = root.firstChild!
 				while( cur !== root ) {
 					while( cur.firstChild ) cur = cur.firstChild
 					if( cur.nodeValue ) {
@@ -41,7 +41,7 @@ namespace $ {
 						start -= length
 					}
 					while( !cur.nextSibling ) {
-						cur = cur.parentNode
+						cur = cur.parentNode!
 						if( cur === root ) {
 							start = root.childNodes.length
 							break
@@ -50,7 +50,7 @@ namespace $ {
 				}
 				range.setStart( cur , start )
 				
-				var cur : Node = root.firstChild
+				var cur : Node = root.firstChild!
 				while( cur !== root ) {
 					while( cur.firstChild ) cur = cur.firstChild
 					if( cur.nodeValue ) {
@@ -59,7 +59,7 @@ namespace $ {
 						end -= length
 					}
 					while( !cur.nextSibling ) {
-						cur = cur.parentNode
+						cur = cur.parentNode!
 						if( cur === root ) {
 							end = root.childNodes.length
 							break
@@ -68,7 +68,7 @@ namespace $ {
 				}
 				range.setEnd( cur , end )
 				
-				var sel = $mol_dom_context.document.getSelection()
+				var sel = $mol_dom_context.document.getSelection()!
 				sel.removeAllRanges()
 				sel.addRange( range )
 				
@@ -79,7 +79,7 @@ namespace $ {
 				var range = sel.getRangeAt( 0 )
 				
 				var el = range.commonAncestorContainer as Element
-				while( el && !el.id ) el = el.parentElement
+				while( el && !el.id ) el = el.parentElement!
 				
 				if( !el ) return { id : null , start : 0 , end : 0 }
 				

@@ -422,7 +422,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundle( { path , bundle } : { path : string , bundle? : string } ) {
+		bundle( { path , bundle = '' } : { path : string , bundle? : string } ) {
 			
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
 			
@@ -434,7 +434,7 @@ namespace $ {
 				
 				var [ bundle , tags , type , locale ] = /^(.*?)(?:\.(test\.js|test\.html|js|css|deps\.json|locale=(\w+)\.json))?$/.exec(
 					bundle
-				)
+				)!
 				
 				tags.split( '.' ).forEach(
 					tag => {
@@ -564,7 +564,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleTestJS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+		bundleTestJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
 			var root = this.root()
@@ -686,7 +686,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		bundlePackageJSON( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		bundlePackageJSON( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/package.json` )
@@ -835,7 +835,7 @@ namespace $ {
 			
 			sources.forEach(
 				src => {
-					const [ ext , lang ] = /locale=(\w+)\.json$/.exec( src.name() )
+					const [ ext , lang ] = /locale=(\w+)\.json$/.exec( src.name() )!
 					
 					if( !locales[ lang ] ) locales[ lang ] = {}
 					
@@ -927,7 +927,7 @@ namespace $ {
 		
 		lines.forEach(
 			function( line ) {
-				var indent = /^([\s\t]*)/.exec( line )
+				var indent = /^([\s\t]*)/.exec( line )!
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
@@ -958,7 +958,7 @@ namespace $ {
 		
 		lines.forEach(
 			function( line ) {
-				var indent = /^([\s\t]*)/.exec( line )
+				var indent = /^([\s\t]*)/.exec( line )!
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
@@ -1006,7 +1006,7 @@ namespace $ {
 		
 		lines.forEach(
 			function( line ) {
-				var indent = /^([\s\t]*)/.exec( line )
+				var indent = /^([\s\t]*)/.exec( line )!
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(

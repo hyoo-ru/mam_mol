@@ -1,23 +1,23 @@
 namespace $ {
 	
 	export function $mol_mem< Host , Value >(
-		obj? : Host ,
-		name? : string ,
-		descr? : TypedPropertyDescriptor< ( next? : Value , force? : $mol_atom_force )=> Value >
+		obj : Host ,
+		name : string ,
+		descr : TypedPropertyDescriptor< ( next? : Value , force? : $mol_atom_force )=> Value >
 	) {
 
-		const value = descr.value
+		const value = descr.value!
 		const store = new WeakMap< Object , $mol_atom<Value> >()
 		
 		descr.value = function $mol_mem_value( next? : Value , force? : $mol_atom_force ) {
 			const host : any = this
 		
-			let atom : $mol_atom<Value> = store.get( host )
+			let atom = store.get( host )
 			if( !atom ) {
 				
 				const id = `${ host }.${ name }()`
-				atom = new $mol_atom<Value>( id , function() {
-					const v = value.apply( host , arguments )
+				atom = new $mol_atom<Value>( id , function( ... args : any[] ) {
+					const v = value.call( host , ... args )
 					if( v instanceof $mol_object ) {
 						if( !v.object_host() ) {
 							v.object_host( host )
@@ -52,21 +52,21 @@ namespace $ {
 		name : string ,
 		descr : TypedPropertyDescriptor< ( key : Key , next? : Value , force? : $mol_atom_force )=> Value >
 	) {
-		const value = descr.value
+		const value = descr.value!
 		const store = new WeakMap< Object , Map< any , $mol_atom<Value> > >()
 		
-		descr.value = function $mol_mem_key_value( key : Key , next : Value , force? : $mol_atom_force ) {
+		descr.value = function $mol_mem_key_value( key : Key , next? : Value , force? : $mol_atom_force ) {
 			const host : any = this
 			
 			let dict = store.get( host )
 			if( !dict ) store.set( host , dict = new $mol_dict )
 			
-			let atom : $mol_atom<Value> = dict.get( key )
+			let atom = dict.get( key )
 			if( !atom ) {
 				
 				const id = `${ host }.${ name }(${ JSON.stringify( key ) })`
 				atom = new $mol_atom<Value>( id , function( ... args: any[] ) {
-					const v = value.apply( host , [ key , ... args ] )
+					const v = value.call( host , key , ... args )
 					if( v instanceof $mol_object ) {
 						if( !v.object_host() ) {
 							v.object_host( host )
@@ -79,7 +79,7 @@ namespace $ {
 
 				const destructor = atom.destructor
 				atom.destructor = ()=> {
-					dict.delete( key )
+					dict!.delete( key )
 					destructor.call( atom )
 				}
 
