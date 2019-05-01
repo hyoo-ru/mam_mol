@@ -122,7 +122,8 @@ namespace $ {
 					
 					var names : string[]
 					if( p[ 0 ] === '/' ) names = p.substring( 1 ).split( '/' )
-					else names = mod.resolve( p ).relate( this.root() ).split( '/' )
+					else if( p[ 0 ] === '.' ) names = mod.resolve( p ).relate( this.root() ).split( '/' )
+					else names = [ 'node_modules' , ... p.split( '/' ) ]
 					
 					let files = [ this.root() ]
 					for( let name of names ) {
@@ -137,17 +138,15 @@ namespace $ {
 						if( nextFiles.length === 0 ) break
 						files = nextFiles
 					}
-					
+
 					for( let file of files ) {
 						if( file === this.root() ) continue
 						
-						if( file.relate( this.root() ) in graph.nodes ) {
-							graph.link(
-								src.relate( this.root() ) ,
-								file.relate( this.root() ) ,
-								{ priority : deps[ p ] }
-							)
-						}
+						graph.link(
+							src.relate( this.root() ) ,
+							file.relate( this.root() ) ,
+							{ priority : deps[ p ] }
+						)
 					}
 					
 				}
@@ -381,7 +380,11 @@ namespace $ {
 				
 				const checkDep = ( p : string )=> {
 					
-					var dep = ( p[ 0 ] === '/' ) ? this.root().resolve( p ) : mod.resolve( './' + p )
+					var dep = ( p[ 0 ] === '/' )
+					? this.root().resolve( p )
+					: ( p[ 0 ] === '.' )
+					? mod.resolve( p )
+					: this.root().resolve( 'node_modules' ).resolve( './' + p )
 
 					try {
 						this.modEnsure( dep.path() )
@@ -408,8 +411,6 @@ namespace $ {
 				let deps = this.dependencies( { path : mod.path() , exclude } )
 				for( let p in deps ) {
 					checkDep( p )
-					const p2 = p.replace( /^\/node\// , '/node_modules/' )
-					if( p2 !== p ) checkDep( p2 )
 				}
 				
 			}
@@ -519,6 +520,8 @@ namespace $ {
 			if( bundle === 'node' ) {
 				concater.add( '' , 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
 				concater.add( '' , "process.on( 'unhandledRejection' , up => { throw up } )" )
+			} else {
+				concater.add( '' , 'function require'+'( path ){ return $node[ path ] }' )
 			}
 			
 			sources.forEach(
@@ -581,6 +584,7 @@ namespace $ {
 				concater.add( '' , "process.on( 'unhandledRejection' , up => { throw up } )" )
 				sources = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {
+				concater.add( '' , 'function require'+'( path ){ return $node[ path ] }' )
 				sources = sourcesTest
 			}
 			if( sources.length === 0 ) return []
@@ -963,19 +967,11 @@ namespace $ {
 				
 				line.replace(
 					/\$(([a-z0-9]{2,})(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name , pack )=> {
-						if( pack === 'node' ) return str
-						
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[_.\[\]'"]+/g , '/' ) ] : priority } )
 						return str
 					}
 				)
 				
-				line.replace(
-					/\$node\[\s*['"](.*?)['"]\s*\]/ig , ( str , path )=> {
-						$mol_build_depsMerge( depends , { [ '/node/' + path ] : priority } )
-						return str
-					}
-				)
 				
 				line.replace(
 					/require\(\s*['"](.*?)['"]\s*\)/ig , ( str , path )=> {
@@ -990,7 +986,7 @@ namespace $ {
 	}
 	
 	$mol_build.dependors[ 'view.ts' ] = source => {
-		var treeName = source.name().replace( /ts$/ , 'tree' )
+		var treeName = './' + source.name().replace( /ts$/ , 'tree' )
 		var depends : { [ index : string ] : number } = { [ treeName ] : 0 }
 		$mol_build_depsMerge( depends , $mol_build.dependors[ 'ts' ]( source ) )
 		return depends
