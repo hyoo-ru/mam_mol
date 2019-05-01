@@ -3,7 +3,61 @@ namespace $ {
 	export class $mol_speech extends $mol_plugin {
 		
 		@ $mol_mem
-		static api() {
+		static speaker( next? : SpeechSynthesis , force? : $mol_atom_force ) {
+
+			const API = window.speechSynthesis
+
+			if( API.getVoices().length ) return API
+
+			const on_voices = ( event : SpeechSynthesisEvent )=> {
+				if( !API.getVoices().length ) return
+				this.speaker( API , $mol_atom_force_cache )
+				API.removeEventListener( 'voiceschanged' , on_voices )
+			}
+
+			API.addEventListener( 'voiceschanged' , on_voices )
+			
+			throw new $mol_atom_wait( 'Waiting for voice..' )
+		}
+
+		@ $mol_mem
+		static voices() {
+			const lang = this.$.$mol_locale.lang()
+			return this.speaker().getVoices().filter( voice => voice.lang.split('-')[0] === lang )
+		}
+		
+		@ $mol_mem_key
+		static say( text : string ) {
+			
+			const speaker = this.speaker()
+			
+			speaker.cancel()
+			speaker.resume()
+			
+			const rate = 1
+			const voice = this.voices()[ this.voices().length - 1 ]
+			const pitch = 1
+			
+			var utter = new SpeechSynthesisUtterance( text )
+			
+			utter.voice = voice
+			utter.rate = rate
+			utter.pitch = pitch
+			
+			speaker.speak( utter )
+		}
+
+		@ $mol_mem
+		static speaking( next = true ) {
+
+			if( next ) this.speaker().resume()
+			else this.speaker().pause()
+			
+			return next
+		}
+		
+		@ $mol_mem
+		static hearer() {
 			const API = window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition']
 			
 			const api = new API
@@ -14,7 +68,7 @@ namespace $ {
 			api.lang = $mol_locale.lang()
 			
 			api.onnomatch = $mol_fiber_root( ( event : any )=> {
-				this.text( '' )
+				this.event_result( null )
 				return null
 			})
 			api.onresult = $mol_fiber_root(( event : any )=> {
@@ -23,56 +77,84 @@ namespace $ {
 			} )
 			api.onerror = $mol_fiber_root( ( event : Event & { error : string } )=> {
 				console.error( new Error( event.error ) )
-				this.text( '' )
-				this.listening( false )
+				this.event_result( null )
 				return null
 			} )
+			api.onend = ( event : any )=> {
+				if( this.hearing() ) api.start()
+			}
 			
 			return api;
 		}
 		
 		@ $mol_mem
-		static listening( next? : boolean ) {
+		static hearing( next? : boolean ) {
 			if( next === undefined ) return false
 			
 			if( next ) {
-				this.api().start()
+				this.hearer().start()
 			} else {
-				this.api().stop()
+				this.hearer().stop()
 			}
 			
 			return next
 		}
 		
-		static event_result( event? : Event & { results : { transcript : string }[][] } ) {
+		@ $mol_mem
+		static event_result( event? : Event & {
+			results : Array< { transcript : string }[] & { isFinal : boolean } >
+		} ) {
+			this.hearer()
+			return event
+		}
 			
-			const text = [].slice.call( event.results )
-			.map( ( result : any )=> {
-				return result[0].transcript
-			} )
-			.join( '' )
-			.toLowerCase()
-			.trim()
+		@ $mol_mem
+		static recognitions() {
 			
-			this.text( text )
+			const result = this.event_result()
+			if( !result ) return []
+
+			const results = this.event_result().results
+			return ( [].slice.call( this.event_result().results ) as typeof results )
 		}
 		
 		@ $mol_mem
-		static text( next = '' ) {
+		static commands() {
+			return this.recognitions().map( result => result[0].transcript.toLowerCase().trim().replace( /[,\.]/g , '' ) )
+		}
+		
+		@ $mol_mem
+		static text() {
+			return this.recognitions().map( result => result[0].transcript ).join( '' )
+		}
+		
+		@ $mol_mem
+		commands_skip( next = 0 ) {
+			$mol_speech.hearing()
 			return next
 		}
 		
 		@ $mol_mem
 		render() : null {
-			const text = $mol_speech.text().replace( /[,\.]/g , '' )
 			
-			for( let matcher of this.matchers() ) {
+			const matchers = this.matchers()
+			const commands = $mol_speech.commands()
 				
-				const found = text.match( matcher )
+			for( let i = this.commands_skip() ; i < commands.length ; ++ i ) {
+				
+				for( let matcher of matchers ) {
+					
+					const found = commands[i].match( matcher )
 				if( !found ) continue
 				
-				new $mol_defer( ()=> this.event_catch( found.slice( 1 ).map( text => text.toLowerCase() ) ) )
-				break
+					new $mol_defer( ()=> {
+						this.commands_skip( i + 1 )
+						this.event_catch( found.slice( 1 ) )
+					} )
+					
+					return null
+			}
+			
 			}
 			
 			return null
@@ -98,7 +180,7 @@ namespace $ {
 		}
 		
 		suffix() {
-			return '[,\\s]+(?:please|would you kindly|пожалуйста|пожалуй 100|будь любезен)\.?$'
+			return '[,\\s]+(?:please|would you kindly|пожалуйста|пожалуй 100|будь любезен|будь любезна|будь добра?)\.?$'
 		}
 		
 	}

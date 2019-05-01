@@ -21,7 +21,7 @@ namespace $ {
 
 			class X extends $mol_object2 {
 				@ $mol_mem_key
-				foo( id : number , next? : Number ) {
+				foo( id : number , next? : Number | null ) {
 					if( next == null ) return new Number( 123 )
 					return new Number( next )
 				}

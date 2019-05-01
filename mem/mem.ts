@@ -31,6 +31,7 @@ namespace $ {
 				cache.abort = ()=> {
 					store.delete( host )
 					cache.forget()
+					return true
 				}
 				$mol_owning_catch( host , cache )
 				cache[ $mol_object_field ] = name

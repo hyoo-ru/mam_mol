@@ -21,7 +21,7 @@ namespace $ {
 	) {
 		const node_set = new Set<Node>( [].slice.call( childNodes ) )
 		
-		let nextNode : Node = el.firstChild
+		let nextNode : Node | null = el.firstChild
 		for( let view of childNodes ) {
 
 			if( view == null ) continue

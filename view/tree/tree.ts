@@ -1,7 +1,7 @@
 namespace $ {
 
 	export function $mol_view_tree_trim_remarks( def : $mol_tree ) {
-		return def.transform( ( [ node ] , sub )=> ( node.type === '-' ) ? null : node.clone({ sub : sub() }) )
+		return def.transform( ( [ node ] , sub )=> ( node.type === '-' ) ? null : node.clone({ sub : sub() }) )!
 	}
 
 	export function $mol_view_tree_classes( defs : $mol_tree ) {
@@ -39,7 +39,7 @@ namespace $ {
 						}) ]
 					})
 					
-				} )]
+				} )!]
 			})
 
 			if( props[ prop.type ] ) {
@@ -126,7 +126,7 @@ namespace $ {
 					param = param.sub[0]
 				}
 				
-				var propName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( param.type )
+				var propName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( param.type )!
 				
 				if( propName[3] ) {
 					needSet = true
@@ -160,7 +160,7 @@ namespace $ {
 							var overs : string[] = []
 							value.sub.forEach( over => {
 								if( /^-?$/.test( over.type ) ) return ''
-								var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )
+								var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
 								var ns = needSet
 								
 								if( over.sub[0].type === '=>' ) {
@@ -189,7 +189,7 @@ namespace $ {
 									return
 								}
 								
-								var key = /(.*?)(?:\?(\w+))?$/.exec( opt.type )
+								var key = /(.*?)(?:\?(\w+))?$/.exec( opt.type )!
 								keys.push( key[1] )
 								var ns = needSet
 								var v = getValue( opt.sub[0] )
@@ -203,7 +203,7 @@ namespace $ {
 						case( value.type === '<=>' ) :
 							needSet = true
 							if( value.sub.length === 1 ) {
-								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))$/.exec( value.sub[0].type )
+								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))$/.exec( value.sub[0].type )!
 								return 'this.' + type[1] + '(' + ( type[2] ? type[2] + ' ,' : '' ) + ' ' + type[3] + ' )'
 							}
 							break
@@ -211,7 +211,7 @@ namespace $ {
 							throw new Error( 'Deprecated syntax `<`. Use `<=` instead.' )
 						case( value.type === '<=' ) :
 							if( value.sub.length === 1 ) {
-								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( value.sub[0].type )
+								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( value.sub[0].type )!
 								return 'this.' + type[1] + '(' + (  type[2] ? type[2] : '' ) + ')'
 							}
 							break

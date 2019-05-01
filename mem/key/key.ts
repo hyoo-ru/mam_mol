@@ -36,6 +36,7 @@ namespace $ {
 					dict.delete( key )
 					if( dict.size === 0 ) store.delete( host )
 					cache.forget()
+					return true
 				}
 				$mol_owning_catch( host , cache )
 				cache[ $mol_object_field ] = name

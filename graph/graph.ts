@@ -2,14 +2,14 @@ namespace $ {
 	
 	export class $mol_graph< Node , Edge > {
 		
-		nodes : { [ id : string ] : Node } = {}
+		nodes : { [ id : string ] : Node | undefined } = {}
 		
 		edgesOut : { [ from : string ] : { [ to : string ] : Edge } } = {}
 		edgesIn : { [ to : string ] : { [ from : string ] : Edge } } = {}
 		
 		nodeEnsure( id : string ) {
 			if( this.nodes.hasOwnProperty( id ) ) return
-			this.nodes[ id ] = null
+			this.nodes[ id ] = undefined
 		}
 		
 		linkOut( from : string , to : string , edge : Edge ) {
@@ -44,38 +44,49 @@ namespace $ {
 		}
 		
 		sorted( getWeight : ( edge : Edge )=> number ) {
-			var pending = Object.keys( this.nodes )
-			var visited : string[] = []
-			var weights : number[] = []
-			var sorted : string[] = []
+
+			const pending = Object.keys( this.nodes )
+			const visited : string[] = []
+			const weights : number[] = []
+			const sorted : string[] = []
 			
-			var visit = ( id : string , weight : number )=> {
+			const visit = ( id : string , weight_in : number ) : number => {
 				
-				var index = visited.lastIndexOf( id )
-				if( index >= 0 ) {
-					if( index === visited.length - 1 ) return false
-					if( weight <= weights[ index + 1 ] ) return false
+				if( sorted.indexOf( id ) !== -1 ) return Number.POSITIVE_INFINITY
+
+				const index = visited.lastIndexOf( id )
+				if( index >= 0 ) return weights.slice( index + 1 ).reduce( ( a , b )=> Math.min( a , b ) )
+				
+				visited.push( id )
+				weights.push( weight_in )
+
+				try {
+				
+					const deps = this.edgesOut[ id ];
+					for( const dep in deps ) {					
+						if( dep === id ) continue
+					
+						const weight_out = getWeight( deps[ dep ] )
+						const min = visit( dep , weight_out )
+
+						if( weight_out > min ) return min
+					}
+
+				} finally {
+				
+					visited.pop()
+					weights.pop()
+					
 				}
-				
-				if( weight != null ) {
-					visited.push( id )
-					weights.push( weight )
-				}
-				
-				var deps = this.edgesOut[ id ];
-				for( var dep in deps ) {
-					if( dep === id ) continue
-					visit( dep , getWeight( deps[ dep ] ) )
-				}
-				
-				if( sorted.indexOf( id ) !== -1 ) return false
-				
+
+				if( sorted.indexOf( id ) !== -1 ) return Number.POSITIVE_INFINITY
+
 				sorted.push( id )
-				
-				return true
+
+				return Number.POSITIVE_INFINITY
 			}
 			
-			pending.forEach( id => visit( id , null ) )
+			pending.forEach( id => visit( id , Number.POSITIVE_INFINITY ) )
 			
 			return sorted
 		}

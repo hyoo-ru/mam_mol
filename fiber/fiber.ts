@@ -19,7 +19,11 @@ namespace $ {
 		return fiber
 	}
 
-	export function $mol_fiber_func< Calculate extends ( ... args : any[] )=> Value , Value = void >( calculate : Calculate ) {
+	export function $mol_fiber_func<
+		Calculate extends ( this : This , ... args : any[] )=> Value ,
+		Value = void ,
+		This = void ,
+	>( calculate : Calculate ) {
 		
 		const wrapper = function $mol_fiber_func_wrapper( ... args : any[] ) {
 			
@@ -60,10 +64,10 @@ namespace $ {
 	export function $mol_fiber_method< Host , Value >(
 		obj : Host ,
 		name : string ,
-		descr : TypedPropertyDescriptor< ( ... args : any[] )=> Value >
+		descr : TypedPropertyDescriptor< ( this : Host , ... args : any[] )=> Value >
 	) {
 
-		const calculate = descr.value
+		const calculate = descr.value!
 		
 		descr.value = function $mol_fiber_action_wrapper( ... args : any[] ) {
 
@@ -83,11 +87,11 @@ namespace $ {
 
 	}
 
-	export function $mol_fiber_sync< Args extends any[] , Value = void >(
-		request : ( ... args : Args )=> PromiseLike< Value >
+	export function $mol_fiber_sync< Args extends any[] , Value = void , This = void >(
+		request : ( this : This , ... args : Args )=> PromiseLike< Value >
 	) : ( ... args : Args )=> Value {
 
-		return function $mol_fiber_sync_wrapper( ... args : Args ) {
+		return function $mol_fiber_sync_wrapper( this : This , ... args : Args ) {
 
 			const slave = $mol_fiber.current
 
@@ -146,9 +150,9 @@ namespace $ {
 		static quant = 32
 		static deadline = 0
 
-		static current : $mol_fiber
+		static current = null as null | $mol_fiber
 		
-		static scheduled : $mol_after_frame
+		static scheduled = null as null | $mol_after_frame
 		static queue = [] as ( ()=> PromiseLike< any > )[]
 		
 		
@@ -161,7 +165,7 @@ namespace $ {
 					return 
 				}
 
-				const task = $mol_fiber.queue.shift()
+				const task = $mol_fiber.queue.shift()!
 				await task()
 
 			}
@@ -185,11 +189,11 @@ namespace $ {
 
 		}
 
-		value = undefined as Value
-		error = null as Error | PromiseLike< Value >
+		value = undefined as unknown as Value
+		error = null as null | Error | PromiseLike< Value >
 		cursor = $mol_fiber_status.obsolete
 		masters = [] as ( $mol_fiber | number | undefined )[]
-		calculate : ()=> Value
+		calculate! : ()=> Value
 		
 		schedule() {
 			$mol_fiber.schedule().then( this.wake.bind( this ) )
@@ -198,7 +202,7 @@ namespace $ {
 		wake() {
 			this.$.$mol_log( this , '⏰' )
 			try {
-				return this.get()
+				if( this.cursor > $mol_fiber_status.actual ) return this.get()
 			} catch( error ) {
 				if( 'then' in error ) return
 				$mol_fail_hidden( error )
@@ -383,17 +387,19 @@ namespace $ {
 		obsolete( master_index : number ) { }
 
 		forget() {
-			this.value = undefined
+			this.value = undefined as unknown as Value
 		}
 
 		abort() {
 			this.forget()
+			return true
 		}
 
 		destructor() {
+			if( !this.abort() ) return
+			
 			this.$.$mol_log( this , '🕱' , this.value )
 			this.complete()
-			this.abort()
 		}
 
 	}

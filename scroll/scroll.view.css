@@ -44,8 +44,8 @@
 [mol_scroll_strut] {
 	position: absolute;
 	display: block;
-	padding: 1px;
-	margin: -1px;
+	padding: 1px 1px 0 0;
+	margin: -1px 0 0 0;
 	z-index: 0; 
 	transition: none;
 }

@@ -272,7 +272,7 @@ namespace $.$$ {
 		}
 
 		speech_enabled( next? : boolean ) {
-			return this.$.$mol_speech.listening( next )
+			return this.$.$mol_speech.hearing( next )
 		}
 
 		speech_filter( [ filter ] : string[] ) {
