@@ -2,6 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	font-size: .75em;
 }
 
 [mol_app_jsperf_prefix] {
@@ -21,7 +22,6 @@
 [mol_app_jsperf_cases] {
 	display: flex;
 	flex: none;
-	padding: .5rem;
 	align-items: flex-start;
 	align-items: stretch;
 }
@@ -29,11 +29,10 @@
 [mol_app_jsperf_case] {
 	display: flex;
 	flex-direction: column;
-	flex: 1 0 20rem;
+	flex: 1 0 20em;
 }
 
 [mol_app_jsperf_case_source] {
-	margin: .5rem;
 	font-family: var(--mol_skin_font_monospace);
 }
 

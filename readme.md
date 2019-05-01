@@ -1,4 +1,4 @@
-# $mol [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol) [![eigenmethod.github.io](https://img.shields.io/website-up-down-green-red/http/mol.js.org.svg?label=mol.js.org)](http://eigenmethod.github.io/mol/) [![Maintanance status](https://img.shields.io/maintenance/yes/2018.svg)](https://github.com/eigenmethod/mol/graphs/contributors)
+# $mol [![Build Status](https://travis-ci.com/eigenmethod/mol.svg?branch=master)](https://travis-ci.com/eigenmethod/mol) [![mol.js.org](https://img.shields.io/website-up-down-green-red/http/mol.js.org.svg?label=mol.js.org)](http://mol.js.org/) [![Maintanance status](https://img.shields.io/maintenance/yes/2019.svg)](https://github.com/eigenmethod/mol/graphs/contributors)
 
 Reactive micro-modular ui framework. Very simple, but very powerful!
 
@@ -46,19 +46,10 @@ This project exists thanks to all the people who contribute. [[Contribute](CONTR
 * Pseudosynchronous code. [Asynchrony is abstracted by reactivity](#reactivity). No callbacks/promises/streams hell. No async/await/yield virus.
 * Automatic [BEM](https://en.bem.info/methodology/naming-convention/)-attributes generation for elements.
 
-# [Demo applications](demo)
+# Demo applications
 
 * [$mol_app_hello](app/hello) - Very simple application ([online](https://eigenmethod.github.io/mol/app/hello/))
-* [$mol_app_demo](app/demo) - Demonstration of all components ([online](http://eigenmethod.github.io/mol/))
-* [$mol_app_todomvc](app/todomvc) - [ToDoMVC](http://todomvc.com/) implementation ([online](http://eigenmethod.github.io/mol/app/todomvc/))
-* [$mol_app_calc](app/calc) - Simple spreedsheet ([online](http://mol.js.org/app/calc/#title=a*x**2%20%2B%20b*x%20%2B%20c%20%3D%200/A1=a/B2=6/A2=3/B1=b/C1=c/E1=D/E2=%3D%20B2**2%20-%204*A2*C2/G1=x1/G2=%3D%20(%20-B2%20%2B%20sqrt(E2)%20)%20%2F%202%20%2F%20A2/H1=x2/H2=%3D%20(%20-B2%20-%20sqrt(E2)%20)%20%2F%202%20%2F%20A2/C2=0))
-* [$mol_app_files](app/files) - [WebDAV](https://wikipedia.org/wiki/WebDAV) file manager ([online](https://eigenmethod.github.io/mol/app/files/demo/))
-* [$mol_app_life](app/life) - Conway's Game of Life ([online](http://eigenmethod.github.io/mol/app/life/))
-* [$mol_app_questions](app/questions) - Questions from [StackOverflow.com](http://stackoverflow.com) ([online](http://eigenmethod.github.io/mol/app/questions/)) 
-* [$mol_app_lamps](app/lamps) - Lamps database from [LampTest.ru](http://lamptest.ru) ([online](http://eigenmethod.github.io/mol/app/lamps/)) 
-* [$mol_app_supplies](app/supplies) - Supplies management tool ([online](https://eigenmethod.github.io/mol/app/supplies/))
-* [$mol_app_taxon](app/taxon) - Interface for big hierarchical table ([online](http://eigenmethod.github.io/mol/app/taxon/demo/))
-* [$mol_app_bench](app/bench) - Abstract benchmarking interface ([online](http://eigenmethod.github.io/mol/app/bench/))
+* [$hyoo_showcase](https://showcase.hyoo.ru/) - App that shows most of other $mol apps on single page
 
 # Benchmarks
 
@@ -76,8 +67,10 @@ This project exists thanks to all the people who contribute. [[Contribute](CONTR
 
 # Articles
 
+* [$mol — лучшее средство от геморроя](https://habr.com/ru/post/341146/) - Quick intoduction to $mol
 * [$mol: реактивный микромодульный фреймворк](https://habrahabr.ru/post/311172/) - Сomprehensive $mol review
 * [Объектное Реактивное Программирование](https://habrahabr.ru/post/330466/) - Features of Object Reactive Programming
+* [Концепции автоматического тестирования](https://habr.com/ru/post/351430/) - Testing principles
 * [Идеальный UI фреймворк](https://habrahabr.ru/post/276747/) - Problems of popular frameworks
 * [Принципы написания кода](https://habrahabr.ru/post/236785/) - Code style principles
 

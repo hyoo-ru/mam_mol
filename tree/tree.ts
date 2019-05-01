@@ -1,6 +1,10 @@
 namespace $ {
 
 	export type $mol_tree_path = Array< string | number | null >
+
+	export type $mol_tree_hack = ( input : $mol_tree , context : $mol_tree_context )=> $mol_tree[]
+	export type $mol_tree_context = Record< string , $mol_tree_hack >
+	export type $mol_tree_library = Record< string , $mol_tree_context >
 	
 	export class $mol_tree {
 		
@@ -23,7 +27,7 @@ namespace $ {
 			} = {}
 		) {
 			this.type = config.type || ''
-			if( config.value ) {
+			if( config.value !== undefined ) {
 				var sub = $mol_tree.values( config.value )
 				if( config.type || sub.length > 1 ) {
 					this.sub = sub.concat( config.sub || [] )
@@ -104,29 +108,19 @@ namespace $ {
 					stack.length = deep + 1
 					var parent = stack[ deep ];
 					
+					let col = deep
 					types.forEach(
 						type => {
 							if( !type ) throw new Error( `Unexpected space symbol ${baseUri}:${row}\n${line}` )
-							var next = new $mol_tree(
-								{
-									type : type ,
-									baseUri : baseUri ,
-									row : row
-								}
-							)
+							var next = new $mol_tree({ type , baseUri , row , col })
 							parent.sub.push( next )	
 							parent = next
+							col += type.length + 1
 						}
 					)
 					
 					if( data ) {
-						var next = new $mol_tree(
-							{
-								data : data.substring( 1 ) ,
-								baseUri : baseUri ,
-								row : row
-							}
-						)
+						var next = new $mol_tree({ data : data.substring( 1 ) , baseUri , row , col })
 						parent.sub.push( next )
 						parent = next
 					}
@@ -360,9 +354,23 @@ namespace $ {
 			return new $mol_tree( { sub : sub } )
 		}
 
-		transform( visit : ( stack : $mol_tree[] , sub : ()=> $mol_tree[] )=> $mol_tree , stack : $mol_tree[] = [] ) : $mol_tree {
+		transform( visit : ( stack : $mol_tree[] , sub : ()=> $mol_tree[] )=> $mol_tree | null , stack : $mol_tree[] = [] ) : $mol_tree | null {
 			const sub_stack = [ this , ...stack ]
-			return visit( sub_stack , ()=> this.sub.map( node => node.transform( visit , sub_stack ) ).filter( n => n ) )
+			return visit( sub_stack , ()=> this.sub.map( node => node.transform( visit , sub_stack ) ).filter( n => n ) as $mol_tree[] )
+		}
+
+		hack( context : $mol_tree_context ) : $mol_tree {
+			
+			const sub = ( [] as $mol_tree[] ).concat( ... this.sub.map( child => {
+
+				const handle = context[ child.type ] || context[ '' ]
+				if( !handle ) $mol_fail( child.error( 'Handler not defined' ) )
+				
+				return handle( child , context )
+
+			} ) )
+
+			return this.clone({ sub })
 		}
 
 		error( message : string ) {

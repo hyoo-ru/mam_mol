@@ -16,11 +16,11 @@ namespace $ {
 		) => {
 			if( !descr ) descr = Object.getOwnPropertyDescriptor( proto , field ) || {}
 
-			const get = descr.get || function() {
+			const get = descr.get || function( this : Host ) {
 				return this[ '_' + field ]
 			} 
 			
-			const set = descr.set || function( next : any ) {
+			const set = descr.set || function( this : Host , next : any ) {
 				this[ '_' + field ] = next
 			}
 

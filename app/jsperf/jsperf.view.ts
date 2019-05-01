@@ -131,7 +131,6 @@ namespace $.$$ {
 						measure_time += performance.now()
 		
 						if( measure_time > 1000 ) break
-						if( time_run > 100 ) break
 
 					}
 

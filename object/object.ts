@@ -13,7 +13,7 @@ namespace $ {
 		
 		public static make< Instance >( this : { new() : Instance } , config : Partial< Instance > ) : Instance {
 			const instance = new this
-			for( let key in config ) instance[ key ] = config[ key ]
+			for( let key in config ) instance[ key ] = config[ key ]!
 			return instance
 		}
 		
@@ -33,7 +33,7 @@ namespace $ {
 		
 		'object_field()' : string
 		object_field( next? : string ) {
-			return this[ 'object_field()' ] || ( this[ 'object_field()' ] = next ) || ''
+			return this[ 'object_field()' ] || ( this[ 'object_field()' ] = next! ) || ''
 		}
 		
 		object_id( next? : string ) {

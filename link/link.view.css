@@ -1,6 +1,7 @@
 [mol_link] {
 	text-decoration: none;
 	color: var(--mol_theme_control);
+	stroke: currentColor;
 	cursor: pointer;
 	border-radius: var(--mol_skin_round);
 	padding: .5rem;
