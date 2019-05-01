@@ -96,6 +96,7 @@ namespace $ {
 			const prev = this._value
 
 			if( prev && this.$.$mol_owning_check( this , prev ) ) prev.destructor()
+
 			if( next && this.$.$mol_owning_catch( this , next ) ) {
 				next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
 				next[ $mol_object_field ] = this[ $mol_object_field ]
@@ -111,7 +112,11 @@ namespace $ {
 			const prev = this._error
 
 			if( prev && this.$.$mol_owning_check( this , prev ) ) prev.destructor()
-			if( next && this.$.$mol_owning_catch( this , next ) ) next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+
+			if( next && this.$.$mol_owning_catch( this , next ) ) {
+				next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+				next[ $mol_object_field ] = this[ $mol_object_field ]
+			}
 
 			this._error = next
 		}
