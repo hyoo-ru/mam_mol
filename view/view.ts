@@ -41,6 +41,7 @@ namespace $ {
 					view.dom_node( nodes.item( i ) )
 					view.dom_tree()
 					document.title = view.title()
+					return null
 				})
 			}
 			
@@ -144,7 +145,7 @@ namespace $ {
 			for( let event_name in events ) {
 				node.addEventListener(
 					event_name ,
-					$mol_fiber_root( $mol_log_group( `${ this } ${ name }` , events[ event_name ] ) ) ,
+					$mol_fiber_root( $mol_log_group( `${ this } ${ event_name }` , events[ event_name ] ) ) ,
 					{ passive : false } as any ,
 				)
 			}

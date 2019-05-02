@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_speech extends $mol_plugin {
 		
 		@ $mol_mem
-		static speaker( next? : SpeechSynthesis , force? : $mol_atom_force ) {
+		static speaker( next? : SpeechSynthesis , force? : $mol_mem_force ) {
 
 			const API = window.speechSynthesis
 
@@ -11,7 +11,7 @@ namespace $ {
 
 			const on_voices = ( event : SpeechSynthesisEvent )=> {
 				if( !API.getVoices().length ) return
-				this.speaker( API , $mol_atom_force_cache )
+				this.speaker( API , $mol_mem_force_cache )
 				API.removeEventListener( 'voiceschanged' , on_voices )
 			}
 
@@ -105,7 +105,7 @@ namespace $ {
 			results : Array< { transcript : string }[] & { isFinal : boolean } >
 		} ) {
 			this.hearer()
-			return event
+			return event || null
 		}
 			
 		@ $mol_mem
