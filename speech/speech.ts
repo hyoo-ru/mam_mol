@@ -45,6 +45,7 @@ namespace $ {
 			utter.pitch = pitch
 			
 			speaker.speak( utter )
+			return null as null
 		}
 
 		@ $mol_mem

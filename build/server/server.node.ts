@@ -8,7 +8,7 @@ namespace $ {
 					return $mol_fiber_unlimit( ()=> this.generator( req.url ).valueOf() && next() )
 				} catch( error ) {
 					if( typeof error.then === 'function' ) $mol_fail_hidden( error )
-					console.error( error )
+					console.error( error.stack || error )
 					if( req.url.match( /\.js$/ ) ) {
 						res.send( `console.error( ${ JSON.stringify( error.message ) } )` ).end()
 					} else if( req.url.match( /\.css$/ ) ) {
