@@ -31,25 +31,6 @@ namespace $ {
 			return this.name
 		}
 		
-		// 'object_owner()' : any
-		// object_owner( next? : any ) {
-		// 	return this[ 'object_owner()' ] || ( this[ 'object_owner()' ] = next || $mol_owning_get( this ) )
-		// }
-		
-		// 'object_host()' : any
-		// object_host( next? : any ) {
-		// 	return this[ 'object_host()' ] || ( this[ 'object_host()' ] = next || $mol_owning_get( $mol_owning_get( this ) ) )
-		// }
-		
-		// 'object_field()' : string
-		// object_field( next? : string ) {
-		// 	return this[ 'object_field()' ] || ( this[ 'object_field()' ] = next || `${ this }`.replace( /^(.*)\(.*?$/g , '$1' ).replace( /^.*\./g , ''  ) )
-		// }
-		
-		// object_id( next? : string ) {
-		// 	return this[ Symbol.toStringTag ] || ( this[ Symbol.toStringTag ] = next ) || ''
-		// }
-
 		toString() {
 			return this[ Symbol.toStringTag ]
 		}

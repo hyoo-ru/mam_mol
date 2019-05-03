@@ -1,4 +1,6 @@
 namespace $ {
+
+	console.warn( '$mol_http is deprecated. Use $mol_fetch instead.' )
 	
 	export class $mol_http extends $mol_object {
 		
