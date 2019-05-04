@@ -32,7 +32,7 @@ namespace $.$$ {
 			if( next !== undefined ) {
 				this.classes( this.classes().insert( next , name ) )
 			}
-			return this.classes().select( name ).sub[0]
+			return this.classes().select( name ).sub[0] || null
 		}
 
 		class_self( next? : $mol_tree ) {
@@ -104,18 +104,18 @@ namespace $.$$ {
 				this.class_self( this.class_self().insert( prop , 0 , path[0] ) )
 				this.props_all( this.class_name_self() , undefined , $mol_mem_force_cache )
 			}
-			return prop.select( ... path.slice(1) ).sub[0]
+			return prop.select( ... path.slice(1) ).sub[0] || null
 		}
 		
 		@ $mol_mem_key
 		prop_self( path : $mol_tree_path ) {
-			return this.class_self().select( null , ... path ).sub[0]
+			return this.class_self().select( null , ... path ).sub[0] || null
 		}
 		
 		@ $mol_mem_key
 		prop_type( path : $mol_tree_path ) {
 			const prop = this.prop( path )
-			return ( prop && prop.type !== '-' ) ? $mol_view_tree_value_type( prop ) : undefined
+			return ( prop && prop.type !== '-' ) ? $mol_view_tree_value_type( prop ) : null
 		}
 
 		@ $mol_mem_key
@@ -163,7 +163,7 @@ namespace $.$$ {
 		}
 
 		overrided( key : string , next? : any ) : any {
-			return this.overrided_all( ( next === undefined ) ? undefined : { ... this.overrided_all() , [ key ] : next } )[ key ]
+			return this.overrided_all( ( next === undefined ) ? null : { ... this.overrided_all() , [ key ] : next } )[ key ]
 		}
 		
 		@ $mol_mem_key
@@ -176,6 +176,7 @@ namespace $.$$ {
 			const field = String( path2.shift() ).replace( /[?!].*/ , '' )
 			
 			let val = element[ field ] && element[ field ][ '$mol_app_studio_original' ]
+
 			if( typeof val === 'function' ) {
 				val = val.call( element , next )
 				while( val && path2.length ) {
@@ -184,6 +185,8 @@ namespace $.$$ {
 					val = val[ field ]
 				}
 			}
+
+			if( val === undefined ) val = null
 
 			return val
 		}
@@ -220,7 +223,7 @@ namespace $.$$ {
 				case 'dict' : return over && over.sub.reduce( ( dict , item )=> ({ ... dict , [ item.type ] : this.prop_value_view([ ... path , item.type , null ]) }) , {} )
 			}
 
-			return undefined
+			return null
 		}
 
 		@ $mol_mem_key
@@ -245,7 +248,7 @@ namespace $.$$ {
 				obj[ field ] = ( next? : any )=> {
 					const val = this.prop_value_view([ ... path , prop.type , null ])
 					if( next === undefined ) {
-						if( val !== undefined ) return val
+						if( val !== null ) return val
 					}
 					return value.call( obj , next )
 				}

@@ -3,17 +3,13 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		records() {
-			return $mol_range_in( {
-				length : 1000 ,
-				item : index => {
-					return $mol_range_in( {
-						length : 16 ,
-						item : colId => colId === 0
-							? `Row ${ index + 1 }`
-							: `Row ${ index + 1 } Cell ${ colId }`
-					} ).valueOf() as string[]
-				}
-			} ).valueOf() as string[][]
+			return $mol_range2(
+				index => $mol_range2(
+					colId => colId === 0 ? `Row ${ index + 1 }` : `Row ${ index + 1 } Cell ${ colId }`,
+					()=> this.cols() ,
+				),
+				()=> this.rows() ,
+			)
 		}
 		
 		col_head_content( id : string ) {

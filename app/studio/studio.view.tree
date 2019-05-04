@@ -83,7 +83,7 @@ $mol_app_studio $mol_book
 	class_self?val $mol_tree
 	classes $mol_tree
 
-$mol_app_studio_selector $mol_demo_large
+$mol_app_studio_selector $mol_view
 	event *
 		contextmenu?event <=> select?event null
 		dblclick?event <=> select?event null
