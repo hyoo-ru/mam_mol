@@ -18,7 +18,7 @@ namespace $ {
 		const document = $mol_dom_context.document
 		const node = document.createElement( Elem )
 
-		for( let child of [].concat.call( [] , ... children ) ) {
+		for( let child of ( [] as ( Node | string )[] ).concat.call( [] , ... children ) ) {
 			if( typeof child === 'string' ) child = document.createTextNode( child )
 			node.appendChild( child )
 		}

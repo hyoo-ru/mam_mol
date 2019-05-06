@@ -10,7 +10,7 @@ namespace $ {
 				this.rules.push({
 					name : name ,
 					regExp : lexems[ name ] ,
-					size : RegExp( '^$|' + lexems[ name ].source ).exec( '' ).length - 1 , 
+					size : RegExp( '^$|' + lexems[ name ].source ).exec( '' )!.length - 1 , 
 				})
 			}
 
@@ -39,7 +39,7 @@ namespace $ {
 				const start = end
 
 				this.regexp.lastIndex = start
-				var found = this.regexp.exec( text )
+				var found = this.regexp.exec( text )!
 				
 				end = this.regexp.lastIndex
 				if( start === end ) throw new Error( 'Empty token' )

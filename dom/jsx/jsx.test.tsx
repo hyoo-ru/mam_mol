@@ -1,3 +1,4 @@
+/* @jsx $mol_dom_jsx */
 namespace $ {
 	
 	$mol_test({

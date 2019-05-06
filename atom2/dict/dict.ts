@@ -6,7 +6,7 @@ namespace $ {
 		abort? : ( value : Value , key : Key , dict : Record< Key , Value > )=> boolean
 	} ) {
 
-		const store = new $mol_object2 as unknown as Record< Key , $mol_atom2< Value > >
+		const store = new $mol_object2 as unknown as Record< Key , $mol_atom2< Value > | undefined >
 
 		let keys : $mol_atom2< number >
 		
@@ -27,9 +27,9 @@ namespace $ {
 				cache = new $mol_atom2
 				cache.abort = ()=> {
 					if( config.abort ) {
-						if( !config.abort( cache.value , key , proxy ) ) return false
+						if( !config.abort( cache!.value , key , proxy ) ) return false
 					} else {
-						cache.forget()
+						cache!.forget()
 					}
 					store[ key ] = undefined
 					return true
@@ -39,7 +39,7 @@ namespace $ {
 				store[ key ] = cache
 				if( keys ) keys.obsolete_slaves()
 			}
-			return cache
+			return cache!
 		}
 		
 		const proxy = new Proxy( store , {

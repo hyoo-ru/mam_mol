@@ -23,7 +23,7 @@ namespace $ {
 		}
 		
 		build() : $mol_build {
-			return null
+			return $mol_fail( new Error( 'Not implemented' ) )
 		}
 		
 		@ $mol_mem_key

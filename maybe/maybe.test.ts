@@ -7,7 +7,7 @@ namespace $ {
 			$mol_assert_equal( $mol_maybe( null )[ 0 ] , void 0 )
 			$mol_assert_equal( $mol_maybe( void 0 )[ 0 ] , void 0 )
 			
-			$mol_assert_equal( $mol_maybe( void 0 ).map( v => v.toString() )[ 0 ] , void 0 )
+			$mol_assert_equal( $mol_maybe< number >( void 0 ).map( v => v.toString() )[ 0 ] , void 0 )
 			$mol_assert_equal( $mol_maybe( 0 ).map( v => v.toString() )[ 0 ] , '0' )
 		} ,
 		

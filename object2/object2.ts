@@ -5,7 +5,7 @@ namespace $ {
 		static $ = $ as $mol_ambient_context
 		static get $$() { return this.$ }
 
-		$ : typeof $mol_object2.$
+		$! : typeof $mol_object2.$
 		get $$() { return this.$ }
 
 		public static make< Instance >( this : { new() : Instance } , init? : ( instance : Instance )=> void  ) : Instance {
