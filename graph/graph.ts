@@ -38,55 +38,95 @@ namespace $ {
 			return this.edgesIn[ to ] && this.edgesIn[ to ][ from ]
 		}
 		
-		link( one : string , two : string , edge : Edge ) {
-			this.linkOut( one , two , edge )
-			this.linkIn( two , one , edge )
+		link( from : string , to : string , edge : Edge ) {
+			this.linkOut( from , to , edge )
+			this.linkIn( to , from , edge )
 		}
 		
-		sorted( getWeight : ( edge : Edge )=> number ) {
-
-			const pending = Object.keys( this.nodes )
-			const visited : string[] = []
-			const weights : number[] = []
-			const sorted : string[] = []
+		unlink( from : string , to : string ) {
+			delete this.edgesIn[ to ][ from ]
+			delete this.edgesOut[ from ][ to ]
+		}
+		
+		cut_cycles( get_weight : ( edge : Edge )=> number ) {
 			
-			const visit = ( id : string , weight_in : number ) : number => {
+			const checked = [] as string[]
+			
+			for( const start in this.nodes ) {
 				
-				if( sorted.indexOf( id ) !== -1 ) return Number.POSITIVE_INFINITY
-
-				const index = visited.lastIndexOf( id )
-				if( index >= 0 ) return weights.slice( index + 1 ).reduce( ( a , b )=> Math.min( a , b ) )
+				const path = [] as string[]
 				
-				visited.push( id )
-				weights.push( weight_in )
+				const visit = ( from : string ) : number => {
 
-				try {
-				
-					const deps = this.edgesOut[ id ];
-					for( const dep in deps ) {					
-						if( dep === id ) continue
-					
-						const weight_out = getWeight( deps[ dep ] )
-						const min = visit( dep , weight_out )
+					if( checked.includes( from ) ) return Number.POSITIVE_INFINITY
 
-						if( weight_out > min ) return min
+					const index = path.lastIndexOf( from )
+					if( index > -1 ) {
+
+						const cycle = path.slice( index )
+
+						return cycle.reduce(
+							( weight , id , index )=> Math.min(
+								weight ,
+								get_weight( this.edgesOut[ id ][ cycle[ ( index + 1 ) % cycle.length ] ] ) ,
+							) ,
+							Number.POSITIVE_INFINITY ,
+						)
+
 					}
 
-				} finally {
-				
-					visited.pop()
-					weights.pop()
-					
+					path.push( from )
+
+					try {
+
+						const deps = this.edgesOut[ from ]
+						for( const to in deps ) {
+
+							if( to === from ) {
+								this.unlink( from , to )
+								continue
+							}
+
+							const weight_out = get_weight( deps[ to ] )
+							const min = visit( to )
+							
+							if( weight_out > min ) return min
+							if( weight_out === min ) this.unlink( from , to )
+							
+						}
+
+					} finally {
+						path.pop()
+					}
+
+					checked.push( from )
+
+					return Number.POSITIVE_INFINITY
 				}
 
-				if( sorted.indexOf( id ) !== -1 ) return Number.POSITIVE_INFINITY
+				visit( start )
+
+			}
+
+		}
+		
+		get sorted() {
+
+			const sorted : string[] = []
+			
+			const visit = ( id : string ) => {
+				
+				if( sorted.indexOf( id ) !== -1 ) return
+
+				for( const dep in this.edgesOut[ id ] ) visit( dep )
+
+				if( sorted.indexOf( id ) !== -1 ) return
 
 				sorted.push( id )
 
-				return Number.POSITIVE_INFINITY
 			}
 			
-			pending.forEach( id => visit( id , Number.POSITIVE_INFINITY ) )
+			Object.keys( this.nodes ).forEach( id => visit( id ) )
 			
 			return sorted
 		}
