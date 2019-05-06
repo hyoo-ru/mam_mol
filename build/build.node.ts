@@ -48,10 +48,29 @@ namespace $ {
 			.forEach(
 				child => {
 					const name = child.name()
-					if( !/^[a-z]/i.test( name ) ) return false
+					if( !/^\w/i.test( name ) ) return false
 					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
 					
-					if( /(view\.tree)$/.test( name ) ) {
+					if( /(meta\.tree)$/.test( name ) ) {
+
+						const tree = $mol_tree.fromString( child.content().toString() , child.path() )
+
+						let content = ''
+						for( const step of tree.select( 'build' , '' ).sub ) {
+
+							const res = $mol_exec( child.parent().path() , step.value ).stdout.toString().trim()
+							if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
+
+						}
+
+						if( content ) {
+							const script = child.parent().resolve( `-meta.tree/${ child.name() }.ts` )
+							script.content( content )
+							mods.push( script )
+						}
+
+					} else if( /(view\.tree)$/.test( name ) ) {
+
 						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
 						
@@ -60,10 +79,10 @@ namespace $ {
 						script.content( res.script )
 						locale.content( JSON.stringify( res.locales , null , '\t' ) )
 						
-						mods.push( script , locale , child )
-					} else {
-						mods.push( child )
+						mods.push( script , locale )
 					}
+
+					mods.push( child )
 					
 					return true
 				}
@@ -337,7 +356,7 @@ namespace $ {
 				if( pack.resolve( '.git' ).exists() ) {
 					try {
 						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
-						$mol_exec( pack.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' )
+						process.stdout.write( $mol_exec( pack.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
 					} catch( error ) {
 						console.error( error.message )
 					}
