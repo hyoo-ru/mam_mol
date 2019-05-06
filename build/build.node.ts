@@ -152,15 +152,16 @@ namespace $ {
 					
 				}
 			}
+			graph.cut_cycles( edge => edge.priority )
 			
-			let next = graph.sorted( edge => edge.priority ).map( name => this.root().resolve( name ) )
+			let next = graph.sorted.map( name => this.root().resolve( name ) )
 			return next
 		}
 		
 		
 		@ $mol_mem_key
 		sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
-			const sortedPaths = this.graph( { path , exclude } ).sorted( edge => edge.priority )
+			const sortedPaths = this.graph( { path , exclude } ).sorted
 			
 			let sources : $mol_file[] = []
 			sortedPaths.forEach( path => {
@@ -308,7 +309,7 @@ namespace $ {
 		@ $mol_mem_key
 		modDeps( { path , exclude } : { path : string , exclude? : string[] } ) {
 			const mod = $mol_file.absolute( path )
-			const depends : { [ index : string ] : number } = { '..' : 0 }
+			const depends : { [ index : string ] : number } = { '..' : Number.MIN_SAFE_INTEGER }
 			for( var src of this.sources( { path , exclude } ) ) {
 				$mol_build_depsMerge( depends , this.srcDeps( src.path() ) )
 			}
@@ -400,7 +401,12 @@ namespace $ {
 					if( mod === dep ) return
 					if( dep === this.root() ) return
 					
-					graph.link( mod.relate( this.root() ) , dep.relate( this.root() ) , { priority : deps[ p ] } )
+					const from = mod.relate( this.root() )
+					const to = dep.relate( this.root() )
+					const edge = graph.edgesOut[ from ] && graph.edgesOut[ from ][ to ]
+					if( !edge || ( deps[ p ] > edge.priority ) ) {
+						graph.link( from , to , { priority : deps[ p ] } )
+					}
 					
 					addMod( dep )
 				}
@@ -418,6 +424,8 @@ namespace $ {
 
 			addMod( $mol_file.absolute( path ) )
 			
+			graph.cut_cycles( edge => edge.priority )
+
 			return graph
 		}
 		
@@ -1031,7 +1039,7 @@ namespace $ {
 		} )
 		
 		tree.select( 'include' ).sub.forEach( leaf => {
-			depends[ leaf.value ] = Number.NEGATIVE_INFINITY
+			depends[ leaf.value ] = Number.MIN_SAFE_INTEGER
 		} )
 		
 		return depends
