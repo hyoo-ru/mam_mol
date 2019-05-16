@@ -10,4 +10,5 @@
 
 [mol_expander_trigger] {
 	flex: auto;
+	align-items: baseline;
 }
