@@ -4,6 +4,7 @@
 
 [mol_app_life_time] {
 	flex: 0 1 auto;
+	box-shadow: none;
 }
 
 [mol_app_life_time_option] {
