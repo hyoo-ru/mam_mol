@@ -18,7 +18,7 @@
 	--mol_skin_button: var(--mol_skin_card);
 	--mol_skin_hover: rgba( 0 , 0 , 0 , .05 );
 	
-	--mol_skin_round: 2px;
+	--mol_skin_round: 0px;
 	
 	--mol_skin_focus_line: rgba( 0 , 0 , 0 , .2 );
 	--mol_skin_focus_outline: 0 0 0 1px var(--mol_skin_focus_line);
