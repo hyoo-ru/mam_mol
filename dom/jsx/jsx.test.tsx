@@ -9,18 +9,34 @@ namespace $ {
 		
 		'Define native field'() {
 			
-			const dom = <input value={ 123 } /> as HTMLInputElement
+			const dom = <input value='123' /> as HTMLInputElement
 			
-			$mol_assert_equal( dom.outerHTML , '<input>' )
+			$mol_assert_equal( dom.outerHTML , '<input value="123">' )
 			$mol_assert_equal( dom.value , '123' )
+
+		} ,
+		
+		'Define styles'() {
+			
+			const dom = <div style={{ color : 'red' }} />
+			
+			$mol_assert_equal( dom.outerHTML , '<div style="color: red;"></div>' )
+
+		} ,
+		
+		'Define dataset'() {
+			
+			const dom = <div dataset={{ foo : 'bar' }} />
+			
+			$mol_assert_equal( dom.outerHTML , '<div data-foo="bar"></div>' )
 
 		} ,
 		
 		'Define attributes'() {
 			
-			const dom = <div foo bar="123" />
+			const dom = <div hidden lang="ru" />
 			
-			$mol_assert_equal( dom.outerHTML , '<div foo="true" bar="123"></div>' )
+			$mol_assert_equal( dom.outerHTML , '<div hidden="" lang="ru"></div>' )
 
 		} ,
 		
@@ -39,13 +55,13 @@ namespace $ {
 
 		'Function as component'() {
 
-			function Button( props : { id : string } , action : string , target : string ) {
-				return <button { ... props } >{ action } { target }</button>
+			function Button( { id , ... props } : { id : string } , action : string , target : ()=> string ) {
+				return <button id="root" { ... props } >{ action }{ target() }</button>
 			}
 
-			const dom = <Button id="123">click{ 'me' }</Button>
+			const dom = <Button id="foo">click { ()=> 'me' }</Button>
 
-			$mol_assert_equal( dom.outerHTML , '<button id="123">click me</button>' )
+			$mol_assert_equal( dom.outerHTML , '<button id="foo.root">click me</button>' )
 			
 		} ,
 		
