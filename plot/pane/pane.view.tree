@@ -12,7 +12,7 @@ $mol_plot_pane $mol_svg_root
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
 	-
-	shift /
+	shift?val /
 		0
 		0
 	scale /
@@ -21,6 +21,15 @@ $mol_plot_pane $mol_svg_root
 	size_real /
 		1
 		1
+	size_expaned /
+		0
+		0
+	dimensions_expanded /
+		0
+		0
+	dimensions /
+		0
+		0
 	-
 	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /
 	-

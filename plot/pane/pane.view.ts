@@ -85,14 +85,42 @@ namespace $.$$ {
 				- ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1] ,
 			]
 		}
-		
+
 		@ $mol_mem
-		shift() {
+		shift_defaults() {
 			const dims = this.dimensions_expanded()
 			const scale = this.scale()
 			return [
 				Math.round( this.gap_left() - dims[0][0] * scale[0] ) ,
 				Math.round( this.gap_top() - dims[1][1] * scale[1] ) ,
+			]
+		}
+
+		@ $mol_mem
+		shift(next?: [number, number]) {
+			if (next === undefined) return this.shift_defaults()
+
+			const [dim0, dim1] = this.dimensions_expanded()
+			const [scale_x, scale_y] = this.scale()
+			const [size_x, size_y] = this.size_real()
+
+			const left = -dim1[0] * scale_x + size_x - this.gap_left()
+			const right = -dim0[0] * scale_x + this.gap_right()
+
+			let shift_x = next[0]
+			if (shift_x > right) shift_x = right
+			if (shift_x < left) shift_x = left
+
+			const bottom = -dim0[1] * scale_y + size_y - this.gap_bottom()
+			const top = -dim1[1] * scale_y + this.gap_top()
+
+			let shift_y = next[1]
+			if (shift_y > top) shift_y = top
+			if (shift_y < bottom) shift_y = bottom
+
+			return [
+				shift_x,
+				shift_y,
 			]
 		}
 		
