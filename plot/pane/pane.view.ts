@@ -87,7 +87,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		shift_defaults() {
+		shift_defaults(): [number, number] {
 			const dims = this.dimensions_expanded()
 			const scale = this.scale()
 			return [
@@ -96,9 +96,12 @@ namespace $.$$ {
 			]
 		}
 
+		protected last_shift: number[] = []
+
 		@ $mol_mem
 		shift(next?: [number, number]) {
-			if (next === undefined) return this.shift_defaults()
+			const {last_shift} = this
+			if (next === undefined) return last_shift.length > 0 ? last_shift : this.shift_defaults()
 
 			const [dim0, dim1] = this.dimensions_expanded()
 			const [scale_x, scale_y] = this.scale()
@@ -118,9 +121,12 @@ namespace $.$$ {
 			if (shift_y > top) shift_y = top
 			if (shift_y < bottom) shift_y = bottom
 
+			last_shift[0] = shift_x
+			last_shift[1] = shift_y
+
 			return [
-				shift_x,
-				shift_y,
+				Math.round(shift_x),
+				Math.round(shift_y),
 			]
 		}
 		
