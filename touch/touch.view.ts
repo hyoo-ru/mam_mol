@@ -1,6 +1,4 @@
 namespace $.$$ {
-	let TouchEventPoly: typeof TouchEvent = typeof TouchEvent === 'undefined' ? class {} as any : TouchEvent
-
 	export class $mol_touch extends $.$mol_touch {
 		
 		event_start( event? : TouchEvent | MouseEvent ) {
@@ -8,7 +6,14 @@ namespace $.$$ {
 
 			this.start_pan( this.pan() )
 
-			if( event instanceof TouchEventPoly ) {
+			if( event instanceof MouseEvent ) {
+
+				if( event.buttons === 1 ) {
+					const pos = [ event.pageX , event.pageY ]
+					this.start_pos( pos )
+				}
+
+			} else if( event instanceof TouchEvent ) {
 
 				if( event.touches.length === 1 ) {
 					const pos = [ event.touches[0].pageX , event.touches[0].pageY ]
@@ -19,13 +24,6 @@ namespace $.$$ {
 					const distance = ( ( event.touches[1].pageX - event.touches[0].pageX ) ** 2 + ( event.touches[1].pageY - event.touches[0].pageY ) ** 2 ) ** .5
 					this.start_distance( distance )
 					this.start_zoom( this.zoom() )
-				}
-
-			} else if( event instanceof MouseEvent ) {
-
-				if( event.buttons === 1 ) {
-					const pos = [ event.pageX , event.pageY ]
-					this.start_pos( pos )
 				}
 
 			}
@@ -41,8 +39,7 @@ namespace $.$$ {
 			if( event instanceof MouseEvent ) {
 				if( event.buttons === 1 ) pos = [ event.pageX , event.pageY ]
 				else this.start_pos( null )
-			}
-			if( event instanceof TouchEventPoly ) {
+			} else if( event instanceof TouchEvent ) {
 				if( event.touches.length === 1 ) pos = [ event.touches[0].pageX , event.touches[0].pageY ]
 				else this.start_pos( null )
 			}
@@ -113,7 +110,7 @@ namespace $.$$ {
 
 			}
 			
-			if( event instanceof TouchEventPoly && event.touches.length === 2 ) {
+			if( typeof TouchEvent !== 'undefined' && event instanceof TouchEvent && event.touches.length === 2 ) {
 
 				if( this.zoom === $mol_touch.prototype.zoom ) return
 

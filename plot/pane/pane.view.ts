@@ -100,22 +100,22 @@ namespace $.$$ {
 
 		@ $mol_mem
 		shift(next?: [number, number]) {
-			const {last_shift} = this
+			const last_shift = this.last_shift
 			if (next === undefined) return last_shift.length > 0 ? last_shift : this.shift_defaults()
 
-			const [dim0, dim1] = this.dimensions_expanded()
+			const [min, max] = this.dimensions_expanded()
 			const [scale_x, scale_y] = this.scale()
 			const [size_x, size_y] = this.size_real()
 
-			const left = -dim1[0] * scale_x + size_x - this.gap_left()
-			const right = -dim0[0] * scale_x + this.gap_right()
+			const left = -max[0] * scale_x + size_x - this.gap_left()
+			const right = -min[0] * scale_x + this.gap_right()
 
 			let shift_x = next[0]
 			if (shift_x > right) shift_x = right
 			if (shift_x < left) shift_x = left
 
-			const bottom = -dim0[1] * scale_y + size_y - this.gap_bottom()
-			const top = -dim1[1] * scale_y + this.gap_top()
+			const bottom = -min[1] * scale_y + size_y - this.gap_bottom()
+			const top = -max[1] * scale_y + this.gap_top()
 
 			let shift_y = next[1]
 			if (shift_y > top) shift_y = top
