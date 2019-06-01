@@ -12,6 +12,9 @@ $mol_plot_pane $mol_svg_root
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
 	-
+	shift_defaults /
+		0
+		0
 	shift?val /
 		0
 		0

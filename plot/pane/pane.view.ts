@@ -96,12 +96,9 @@ namespace $.$$ {
 			]
 		}
 
-		protected last_shift: number[] = []
-
 		@ $mol_mem
 		shift(next?: [number, number]) {
-			const last_shift = this.last_shift
-			if (next === undefined) return last_shift.length > 0 ? last_shift : this.shift_defaults()
+			if (next === undefined) next = $mol_atom_current()['value()'] || this.shift_defaults()
 
 			const [min, max] = this.dimensions_expanded()
 			const [scale_x, scale_y] = this.scale()
@@ -120,9 +117,6 @@ namespace $.$$ {
 			let shift_y = next[1]
 			if (shift_y > top) shift_y = top
 			if (shift_y < bottom) shift_y = bottom
-
-			last_shift[0] = shift_x
-			last_shift[1] = shift_y
 
 			return [
 				Math.round(shift_x),
