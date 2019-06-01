@@ -54,18 +54,18 @@ namespace $ {
 		} ,
 
 		'return source when values are deep equal'() {
-			const source = [ 1 , [ 2 , [ 3 ] ] ]
-			$mol_assert_equal( $mol_conform( [ 1 , [ 2 , [ 3 ] ] ] , source ) , source )
+			const source = { foo : { bar : 1 } }
+			$mol_assert_equal( $mol_conform( { foo : { bar : 1 } } , source ) , source )
 		} ,
 
 		'return target with equal values from source and not equal from target'() {
-			const source = [ [ 1 ] , [ 2 ] ]
-			const target = [ [ 1 ] , [ 3 ] ]
+			const source = { foo : { xxx : 1 } , bar : { xxx : 2 } }
+			const target = { foo : { xxx : 1 } , bar : { xxx : 3 } }
 			const result = $mol_conform( target , source )
 
 			$mol_assert_equal( result , target )
-			$mol_assert_equal( result[0] , source[0] )
-			$mol_assert_equal( result[1] , target[1] )
+			$mol_assert_equal( result.foo , source.foo )
+			$mol_assert_equal( result.bar , target.bar )
 		} ,
 
 		'return target when equal but with different class'() {
@@ -114,12 +114,12 @@ namespace $ {
 		} ,
 		
 		'return cached value if already conformed'() {
-			const source = [ [ 1 ] , [ 3 ] ]
-			const target = [ [ 2 ] , [ 3 ] ]
+			const source = { foo : { xxx : 1 } , bar : { xxx : 3 } }
+			const target = { foo : { xxx : 2 } , bar : { xxx : 3 } }
 			const result = $mol_conform( target , source )
 
-			target[ 0 ][ 0 ] = 1
-			$mol_assert_equal( $mol_conform( target[0] , source[0] ) , target[0] )
+			target.foo.xxx = 1
+			$mol_assert_equal( $mol_conform( target.foo , source.foo ) , target.foo )
 		} ,
 
 		'skip readlony fields'() {

@@ -115,7 +115,7 @@ namespace $ {
 		const prev = $mol_fiber.current
 		try {
 			$mol_fiber.current = null
-			func()
+			return func()
 		} finally {
 			$mol_fiber.current = prev
 		}

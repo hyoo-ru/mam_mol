@@ -3,28 +3,28 @@ namespace $ {
 	export function $mol_dom_patch( target : Node | null , source : Node ) {
 		
 		if( target == null ) return source.cloneNode( true )
-		if( target.nodeName !== source.nodeName ) return source.cloneNode( true )
+		if( target.nodeName !== source.nodeName ) target = source.cloneNode( false )
 
 		switch( source.nodeType ) {
 		
-			case Node.TEXT_NODE :
+			case $mol_dom_context.Node.TEXT_NODE :
 			
 				if( target.nodeValue !== source.nodeValue ) target.nodeValue = source.nodeValue
 				return target
 
-			case Node.ELEMENT_NODE :
+			case $mol_dom_context.Node.ELEMENT_NODE :
 
 				let overflow = - ( source as Element ).childNodes.length
 				let next = ( target as Element ).firstChild as Node
 				for( let child of ( source as Element ).childNodes ) {
 					child = $mol_dom_patch( next , child ) as ChildNode
-					if( next === child ) next = next.nextSibling
+					if( next === child ) next = next.nextSibling!
 					else target.insertBefore( child , next )
 				}
 
 				overflow += ( target as Element ).childNodes.length
 				for( let i = 0 ; i < overflow ; ++ i ) {
-					target.removeChild( target.lastChild )
+					target.removeChild( target.lastChild! )
 				}
 
 				for( let key of Object.getOwnPropertyNames( source ) ) {
@@ -37,7 +37,7 @@ namespace $ {
 				}
 				
 				for( const attr of ( source as Element ).attributes ) {
-					;( target as Element ).setAttribute( attr.nodeName , attr.nodeValue )
+					;( target as Element ).setAttribute( attr.nodeName , attr.nodeValue! )
 				}
 				
 				return target
