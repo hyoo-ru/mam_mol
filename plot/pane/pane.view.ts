@@ -77,13 +77,33 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		scale() {
+		scale_defaults(): [number, number] {
 			const size = this.size_expaned()
 			const real = this.size_real()
 			return [
 				+ ( real[0] - this.gap_left() - this.gap_right() ) / size[0] ,
 				- ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1] ,
 			]
+		}
+
+		scale_limits(): [number, number] {
+			return [20, 20]
+		}
+
+		@ $mol_mem
+		scale(next?: [number, number]): [number, number] {
+			const scale = this.scale_defaults()
+			if (next === undefined) return scale
+			let scale_x = next[0]
+			let scale_y = next[1]
+			const scale_limits = this.scale_limits()
+			if (scale_x < scale[0]) scale_x = scale[0]
+			if (scale_x > scale_limits[0]) scale_x = scale_limits[0]
+
+			if (scale_y < scale[1]) scale_y = scale[1]
+			if (scale_y > scale_limits[1]) scale_y = scale_limits[1]
+
+			return [scale_x, scale_y]
 		}
 
 		@ $mol_mem

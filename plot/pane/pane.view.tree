@@ -18,7 +18,13 @@ $mol_plot_pane $mol_svg_root
 	shift?val /
 		0
 		0
-	scale /
+	scale_limits /
+		0
+		0
+	scale_defaults /
+		0
+		0
+	scale?val /
 		1
 		1
 	size_real /
