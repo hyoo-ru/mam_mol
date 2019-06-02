@@ -77,37 +77,50 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		scale_defaults(): [number, number] {
+		scale_limits() {
 			const size = this.size_expaned()
 			const real = this.size_real()
-			return [
+			const min = [
 				+ ( real[0] - this.gap_left() - this.gap_right() ) / size[0] ,
 				- ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1] ,
 			]
-		}
+			const max = [20, 20]
 
-		scale_limits(): [number, number] {
-			return [20, 20]
-		}
-
-		@ $mol_mem
-		scale(next?: [number, number]): [number, number] {
-			const scale = this.scale_defaults()
-			if (next === undefined) return scale
-			let scale_x = next[0]
-			let scale_y = next[1]
-			const scale_limits = this.scale_limits()
-			if (scale_x < scale[0]) scale_x = scale[0]
-			if (scale_x > scale_limits[0]) scale_x = scale_limits[0]
-
-			if (scale_y < scale[1]) scale_y = scale[1]
-			if (scale_y > scale_limits[1]) scale_y = scale_limits[1]
-
-			return [scale_x, scale_y]
+			return [min, max]
 		}
 
 		@ $mol_mem
-		shift_defaults(): [number, number] {
+		scale_defaults() {
+			return this.scale_limits()[0] as [number, number]
+		}
+
+		@ $mol_mem
+		scale(next?: [number, number]) {
+			const [min, max] = this.scale_limits()
+			if (next === undefined) next = this.scale_defaults()
+			return [
+				$mol_minmax(next[0], min[0], max[0]),
+				$mol_minmax(next[1], min[1], max[1]),
+			]
+		}
+
+		@ $mol_mem
+		shift_limits() {
+			const [min, max] = this.dimensions_expanded()
+			const [scale_x, scale_y] = this.scale()
+			const [size_x, size_y] = this.size_real()
+
+			const left = -max[0] * scale_x + size_x - this.gap_left()
+			const right = -min[0] * scale_x + this.gap_right()
+
+			const bottom = -min[1] * scale_y + size_y - this.gap_bottom()
+			const top = -max[1] * scale_y + this.gap_top()
+
+			return [[left, bottom], [right, top]]
+		}
+
+		@ $mol_mem
+		shift_defaults() {
 			const dims = this.dimensions_expanded()
 			const scale = this.scale()
 			return [
@@ -119,28 +132,10 @@ namespace $.$$ {
 		@ $mol_mem
 		shift(next?: [number, number]) {
 			if (next === undefined) next = $mol_atom_current()['value()'] || this.shift_defaults()
-
-			const [min, max] = this.dimensions_expanded()
-			const [scale_x, scale_y] = this.scale()
-			const [size_x, size_y] = this.size_real()
-
-			const left = -max[0] * scale_x + size_x - this.gap_left()
-			const right = -min[0] * scale_x + this.gap_right()
-
-			let shift_x = next[0]
-			if (shift_x > right) shift_x = right
-			if (shift_x < left) shift_x = left
-
-			const bottom = -min[1] * scale_y + size_y - this.gap_bottom()
-			const top = -max[1] * scale_y + this.gap_top()
-
-			let shift_y = next[1]
-			if (shift_y > top) shift_y = top
-			if (shift_y < bottom) shift_y = bottom
-
+			const [min, max] = this.shift_limits()
 			return [
-				Math.round(shift_x),
-				Math.round(shift_y),
+				Math.round($mol_minmax(next[0], min[0], max[0])),
+				Math.round($mol_minmax(next[1], min[1], max[1])),
 			]
 		}
 		

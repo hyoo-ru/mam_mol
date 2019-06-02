@@ -12,6 +12,13 @@ $mol_plot_pane $mol_svg_root
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
 	-
+	shift_limits /
+		<= shift_min /
+			0
+			0
+		<= shift_max /
+			0
+			0
 	shift_defaults /
 		0
 		0
@@ -19,8 +26,12 @@ $mol_plot_pane $mol_svg_root
 		0
 		0
 	scale_limits /
-		0
-		0
+		<= scale_min /
+			0
+			0
+		<= scale_max /
+			20
+			20
 	scale_defaults /
 		0
 		0
