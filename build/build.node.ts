@@ -356,7 +356,7 @@ namespace $ {
 			var parent = mod.parent()
 			this.modEnsure( parent.path() )
 			
-			var mapping = this.packMapping( parent.path() )
+			var mapping = this.modMeta( parent.path() )
 			
 			if( mod.exists() ) {
 				if( mod.resolve( '.git' ).exists() ) {
@@ -385,13 +385,17 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		packMapping( path : string ) {
+		modMeta( path : string ) {
+
+			const decls = [] as $mol_tree[]
 
 			const pack = $mol_file.absolute( path )
-			const file = pack.resolve( './.meta.tree' )
+			for( const file of pack.sub() ) {
+				if( !/\.meta\.tree$/.test( file.name() ) ) continue
+				decls.push( ... $mol_tree.fromString( file.content().toString() , file.path() ).sub )
+			}
 			
-			if( !file.exists() ) return new $mol_tree
-			return $mol_tree.fromString( file.content().toString() , file.path() )
+			return new $mol_tree({ sub : decls })
 
 		}
 		
