@@ -143,7 +143,8 @@ namespace $ {
 							return `this.$.$mol_locale.text( ${ JSON.stringify( key ) } )`
 						case( value.type === '-' ) :
 							return null
-						case( value.type === '/' ) :
+						case( value.type[0] === '/' ) :
+							const item_type = value.type.substring( 1 ) || 'any'
 							var items : string[] = []
 							value.sub.forEach( item => {
 								if( item.type === '-' ) return
@@ -154,7 +155,7 @@ namespace $ {
 								var val = getValue( item )
 								if( val ) items.push( val )
 							} )
-							return '[]' + ( items.length ? '.concat( ' + items.join(' , ') + ' )' : ' as any[]' )
+							return `[].concat( ${ items.join(' , ') } ) as Array< ${ item_type } >`
 						case( value.type[0] === '$' ) :
 							needCache = true
 							var overs : string[] = []

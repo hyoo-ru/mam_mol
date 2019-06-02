@@ -348,43 +348,55 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		packEnsure( name : string ) {
-			var mapping = this.packMapping()
+		modEnsure( path : string ) {
+
+			var mod = $mol_file.absolute( path )
+			if( mod === this.root() ) return false
+
+			var parent = mod.parent()
+			this.modEnsure( parent.path() )
 			
-			var pack = this.root().resolve( name )
-			if( pack.exists() ) {
-				if( pack.resolve( '.git' ).exists() ) {
+			var mapping = this.modMeta( parent.path() )
+			
+			if( mod.exists() ) {
+				if( mod.resolve( '.git' ).exists() ) {
 					try {
 						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
-						process.stdout.write( $mol_exec( pack.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
+						process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
 					} catch( error ) {
 						console.error( error.message )
 					}
 				}
 				return false
 			}
-			
-			for( let repo of mapping.select( 'pack' , name , 'git' ).sub ) {
-				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , name )
-				pack.stat( undefined , $mol_atom_force_cache )
+
+			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
+				console.log( '> git clone' , repo.value , mod.path() )
+				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.name() )
+				mod.stat( undefined , $mol_atom_force_cache )
 				return true
 			}
 			
-			throw new Error( `Package "${name}" not found` )
+			if( parent === this.root() ) {
+				throw new Error( `Root package "${ mod.relate( this.root() ) }" not found` )
+			}
+
+			return false
 		}
 		
-		modEnsure( path : string ) {
-			var file = $mol_file.absolute( path )
-			var sub = file.relate( this.root() )
-			var name = sub.replace( /\/.*$/ , '' )
+		@ $mol_mem_key
+		modMeta( path : string ) {
+
+			const decls = [] as $mol_tree[]
+
+			const pack = $mol_file.absolute( path )
+			for( const file of pack.sub() ) {
+				if( !/\.meta\.tree$/.test( file.name() ) ) continue
+				decls.push( ... $mol_tree.fromString( file.content().toString() , file.path() ).sub )
+			}
 			
-			return this.packEnsure( name ).valueOf()
-		}
-		
-		@ $mol_mem
-		packMapping() {
-			const file = $mol_file.relative( '.pms.tree' )
-			return $mol_tree.fromString( file.content().toString() , file.path() )
+			return new $mol_tree({ sub : decls })
+
 		}
 		
 		@ $mol_mem_key

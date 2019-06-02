@@ -31,6 +31,7 @@ namespace $.$$ {
 			return res
 		}
 		
+		@ $mol_mem
 		points() {
 			const points = this.points_scaled()
 			const keys = Object.keys( this.series() )

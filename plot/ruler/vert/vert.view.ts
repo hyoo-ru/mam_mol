@@ -25,6 +25,7 @@ namespace $.$$ {
 			return step
 		}
 		
+		@ $mol_mem
 		points_raw() {
 			const dims = this.dimensions_expanded()
 			const step = this.step()

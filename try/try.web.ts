@@ -1,6 +1,6 @@
 namespace $ {
 	
-	let error : Error
+	let error : any
 	let result : any
 	let handler : ()=> any
 	
@@ -8,16 +8,16 @@ namespace $ {
 	export function $mol_try< Result >( handler2 : ()=> Result ) : Result|Error {
 		
 		handler = handler2
-		error = void 0
-		result = void 0
+		error = undefined
+		result = undefined
 		
 		window.dispatchEvent( new Event( '$mol_try' ) )
 		
 		const error2 = error
 		const result2 = result
 
-		error = void 0
-		result = void 0
+		error = undefined
+		result = undefined
 		
 		return error2 || result2
 	}
