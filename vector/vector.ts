@@ -16,11 +16,19 @@ namespace $ {
 			return this.merged( limits , ( value , [ min , max ] )=> ( value < min ) ? min : ( value > max ) ? max : value ) as any
 		}
 
-		added( this : $mol_vector< number , Length > , ... diff : readonly number[] & { length : Length } ) : this {
+		added0( this : $mol_vector< number , Length > , diff : number ) : this {
+			return this.map( value => value + diff ) as any
+		}
+
+		added1( this : $mol_vector< number , Length > , ... diff : readonly number[] & { length : Length } ) : this {
 			return this.merged( diff , ( a , b )=> a + b ) as any
 		}
 
-		multed( this : $mol_vector< number , Length > , ... mults : readonly number[] & { length : Length } ) : this {
+		multed0( this : $mol_vector< number , Length > , mult : number ) : this {
+			return this.map( value => value * mult ) as any
+		}
+
+		multed1( this : $mol_vector< number , Length > , ... mults : readonly number[] & { length : Length } ) : this {
 			return this.merged( mults , ( a , b )=> a * b ) as any
 		}
 

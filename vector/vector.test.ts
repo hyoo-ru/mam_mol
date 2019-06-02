@@ -12,10 +12,21 @@ namespace $ {
 
 		} ,
 
-		'Vector adding'() {
+		'Vector adding scalar'() {
 
 			let point = new $mol_vector_3d( 1 , 2 , 3 )
-			let res = point.added( 5 , 10 , 15 )
+			let res = point.added0( 5 )
+
+			$mol_assert_equal( res.x , 6 )
+			$mol_assert_equal( res.y , 7 )
+			$mol_assert_equal( res.z , 8 )
+
+		} ,
+
+		'Vector adding vector'() {
+
+			let point = new $mol_vector_3d( 1 , 2 , 3 )
+			let res = point.added1( 5 , 10 , 15 )
 
 			$mol_assert_equal( res.x , 6 )
 			$mol_assert_equal( res.y , 12 )
@@ -23,10 +34,21 @@ namespace $ {
 
 		} ,
 
-		'Vector multiplying'() {
+		'Vector multiplying scalar'() {
 
 			let point = new $mol_vector_3d( 2 , 3 , 4 )
-			let res = point.multed( 5 , 2 , -2 )
+			let res = point.multed0( -1 )
+
+			$mol_assert_equal( res.x , -2 )
+			$mol_assert_equal( res.y , -3 )
+			$mol_assert_equal( res.z , -4 )
+
+		} ,
+
+		'Vector multiplying vector'() {
+
+			let point = new $mol_vector_3d( 2 , 3 , 4 )
+			let res = point.multed1( 5 , 2 , -2 )
 
 			$mol_assert_equal( res.x , 10 )
 			$mol_assert_equal( res.y , 6 )
@@ -34,7 +56,7 @@ namespace $ {
 
 		} ,
 
-		'Matrix adding'() {
+		'Matrix adding matrix'() {
 
 			let matrix = new $mol_vector_matrix<2,3>( ...[ [ 1 , 2 ] , [ 3 , 4 ] , [ 5 , 6 ] ] as const )
 			let res = matrix.added2( ...[ [ 10 , 20 ] , [ 30 , 40 ] , [ 50 , 60 ] ] as const )
@@ -48,7 +70,7 @@ namespace $ {
 
 		} ,
 
-		'Matrix multiplying'() {
+		'Matrix multiplying matrix'() {
 
 			let matrix = new $mol_vector_matrix<2,3>( ...[ [ 2 , 3 ] , [ 4 , 5 ] , [ 6 , 7 ] ] as const )
 			let res = matrix.multed2( ...[ [ 2 , 3 ] , [ 4 , 5 ] , [ 6 , 7 ] ] as const )
