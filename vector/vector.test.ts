@@ -4,7 +4,7 @@ namespace $ {
 		'Vector limiting'() {
 
 			let point = new $mol_vector_3d( 7 , 10 , 13 )
-			const res = point.limited( [ 1 , 5 ] , [ 15 , 20 ] , [ 5 , 10 ] )
+			const res = point.limited( [ [ 1 , 5 ] , [ 15 , 20 ] , [ 5 , 10 ] ] as const )
 
 			$mol_assert_equal( res.x , 5 )
 			$mol_assert_equal( res.y , 15 )
@@ -26,7 +26,7 @@ namespace $ {
 		'Vector adding vector'() {
 
 			let point = new $mol_vector_3d( 1 , 2 , 3 )
-			let res = point.added1( 5 , 10 , 15 )
+			let res = point.added1( [ 5 , 10 , 15 ] as const )
 
 			$mol_assert_equal( res.x , 6 )
 			$mol_assert_equal( res.y , 12 )
@@ -48,7 +48,7 @@ namespace $ {
 		'Vector multiplying vector'() {
 
 			let point = new $mol_vector_3d( 2 , 3 , 4 )
-			let res = point.multed1( 5 , 2 , -2 )
+			let res = point.multed1( [ 5 , 2 , -2 ] as const )
 
 			$mol_assert_equal( res.x , 10 )
 			$mol_assert_equal( res.y , 6 )
@@ -59,7 +59,7 @@ namespace $ {
 		'Matrix adding matrix'() {
 
 			let matrix = new $mol_vector_matrix<2,3>( ...[ [ 1 , 2 ] , [ 3 , 4 ] , [ 5 , 6 ] ] as const )
-			let res = matrix.added2( ...[ [ 10 , 20 ] , [ 30 , 40 ] , [ 50 , 60 ] ] as const )
+			let res = matrix.added2( [ [ 10 , 20 ] , [ 30 , 40 ] , [ 50 , 60 ] ] as const )
 
 			$mol_assert_equal( res[0][0] , 11 )
 			$mol_assert_equal( res[0][1] , 22 )
@@ -73,7 +73,7 @@ namespace $ {
 		'Matrix multiplying matrix'() {
 
 			let matrix = new $mol_vector_matrix<2,3>( ...[ [ 2 , 3 ] , [ 4 , 5 ] , [ 6 , 7 ] ] as const )
-			let res = matrix.multed2( ...[ [ 2 , 3 ] , [ 4 , 5 ] , [ 6 , 7 ] ] as const )
+			let res = matrix.multed2( [ [ 2 , 3 ] , [ 4 , 5 ] , [ 6 , 7 ] ] as const )
 
 			$mol_assert_equal( res[0][0] , 4 )
 			$mol_assert_equal( res[0][1] , 9 )

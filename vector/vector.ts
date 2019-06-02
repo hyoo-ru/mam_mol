@@ -12,7 +12,7 @@ namespace $ {
 			return this.map( ( value , index )=> combine( value , patches[ index ] ) ) as any
 		}
 
-		limited( this : $mol_vector< number , Length > , ... limits : readonly [ number , number ][] & { length : Length } ) : this {
+		limited( this : $mol_vector< number , Length > , limits : readonly ( readonly [ number , number ] )[] & { length : Length } ) : this {
 			return this.merged( limits , ( value , [ min , max ] )=> ( value < min ) ? min : ( value > max ) ? max : value ) as any
 		}
 
@@ -20,7 +20,7 @@ namespace $ {
 			return this.map( value => value + diff ) as any
 		}
 
-		added1( this : $mol_vector< number , Length > , ... diff : readonly number[] & { length : Length } ) : this {
+		added1( this : $mol_vector< number , Length > , diff : readonly number[] & { length : Length } ) : this {
 			return this.merged( diff , ( a , b )=> a + b ) as any
 		}
 
@@ -28,7 +28,7 @@ namespace $ {
 			return this.map( value => value * mult ) as any
 		}
 
-		multed1( this : $mol_vector< number , Length > , ... mults : readonly number[] & { length : Length } ) : this {
+		multed1( this : $mol_vector< number , Length > , mults : readonly number[] & { length : Length } ) : this {
 			return this.merged( mults , ( a , b )=> a * b ) as any
 		}
 
@@ -69,13 +69,13 @@ namespace $ {
 	> extends $mol_vector< readonly number[] & { length : Width } , Height > {
 
 		added2(
-			... diff : readonly ( readonly number[] & { length : Width } )[] & { length : Height }
+			diff : readonly ( readonly number[] & { length : Width } )[] & { length : Height }
 		) : this {
 			return this.merged( diff , ( a , b )=> a.map( ( a2 , index ) => a2 + b[ index ] ) as any ) as any
 		}
 
 		multed2(
-			... diff : readonly ( readonly number[] & { length : Width } )[] & { length : Height }
+			diff : readonly ( readonly number[] & { length : Width } )[] & { length : Height }
 		) : this {
 			return this.merged( diff , ( a , b )=> a.map( ( a2 , index ) => a2 * b[ index ] ) as any ) as any
 		}
