@@ -116,7 +116,7 @@ namespace $.$$ {
 			const bottom = -min[1] * scale_y + size_y - this.gap_bottom()
 			const top = -max[1] * scale_y + this.gap_top()
 
-			return [[left, bottom], [right, top]]
+			return new $mol_vector_2d(new $mol_vector_range(left, right), new $mol_vector_range(bottom, top))
 		}
 
 		@ $mol_mem
@@ -132,11 +132,7 @@ namespace $.$$ {
 		@ $mol_mem
 		shift(next?: [number, number]) {
 			if (next === undefined) next = $mol_atom_current()['value()'] || this.shift_defaults()
-			const [min, max] = this.shift_limits()
-			return [
-				Math.round($mol_minmax(next[0], min[0], max[0])),
-				Math.round($mol_minmax(next[1], min[1], max[1])),
-			]
+			return new $mol_vector_2d( ...next ).limited(...this.shift_limits())
 		}
 		
 		@ $mol_mem
