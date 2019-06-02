@@ -80,28 +80,23 @@ namespace $.$$ {
 		scale_limits() {
 			const size = this.size_expaned()
 			const real = this.size_real()
-			const min = [
-				+ ( real[0] - this.gap_left() - this.gap_right() ) / size[0] ,
-				- ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1] ,
-			]
-			const max = [20, 20]
+			const left = + ( real[0] - this.gap_left() - this.gap_right() ) / size[0]
+			const bottom = - ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1]
+			const right = 20
+			const top = 20
 
-			return [min, max]
+			return [[left, right], [top, bottom]] as [[number, number], [number, number]]
 		}
 
 		@ $mol_mem
 		scale_defaults() {
-			return this.scale_limits()[0] as [number, number]
+			return this.scale_limits()[0]
 		}
 
 		@ $mol_mem
 		scale(next?: [number, number]) {
-			const [min, max] = this.scale_limits()
 			if (next === undefined) next = this.scale_defaults()
-			return [
-				$mol_minmax(next[0], min[0], max[0]),
-				$mol_minmax(next[1], min[1], max[1]),
-			]
+			return new $mol_vector_2d( ...next ).limited(this.scale_limits())
 		}
 
 		@ $mol_mem
@@ -116,7 +111,7 @@ namespace $.$$ {
 			const bottom = -min[1] * scale_y + size_y - this.gap_bottom()
 			const top = -max[1] * scale_y + this.gap_top()
 
-			return new $mol_vector_2d(new $mol_vector_range(left, right), new $mol_vector_range(bottom, top))
+			return [[left, right], [bottom, top]] as [[number, number], [number, number]]
 		}
 
 		@ $mol_mem
@@ -132,7 +127,7 @@ namespace $.$$ {
 		@ $mol_mem
 		shift(next?: [number, number]) {
 			if (next === undefined) next = $mol_atom_current()['value()'] || this.shift_defaults()
-			return new $mol_vector_2d( ...next ).limited(...this.shift_limits())
+			return new $mol_vector_2d( ...next ).limited(this.shift_limits())
 		}
 		
 		@ $mol_mem
