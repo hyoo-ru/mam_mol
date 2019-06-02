@@ -175,9 +175,18 @@ namespace $ {
 								
 								if( over.sub[0].type === '=>' ) {
 									if( over.sub[0].sub.length === 1 ) {
-										const method_name = over.sub[0].sub[0].type
-										members[ method_name ] = `\t${ method_name }(){\n\t\treturn this.${ param.type }().${ over.type }()\n\t}\n\n`
-										 return
+										
+										const [ , own_name , own_key , own_next ] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.sub[0].sub[0].type )!
+										
+										let own_args : string[] = []
+										if( own_key ) own_args.push( ` ${own_key} : any ` )
+										if( own_next ) own_args.push( ` ${own_next}? : any ` )
+
+										let [ , their_name , ... their_args ] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
+										their_args = their_args.filter( Boolean )
+										
+										members[ own_name ] = `\t${ own_name }(${ own_args.join(',') }) {\n\t\treturn this.${ param.type }().${ their_name }( ${ their_args.join(' , ') } )\n\t}\n\n`
+										return
 									}
 								}
 								
