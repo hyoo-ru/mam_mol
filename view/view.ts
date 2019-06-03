@@ -86,7 +86,7 @@ namespace $ {
 		
 		/// Raw child views
 		sub() {
-			return null as Array<$mol_view|Node|string|number|boolean> | null
+			return null as readonly ($mol_view|Node|string|number|boolean)[] | null
 		}
 		
 		/// Visible sub views with defined context()
@@ -286,7 +286,7 @@ namespace $ {
 		}
 		
 		plugins() {
-			return [] as $mol_view[]
+			return [] as readonly $mol_view[]
 		}
 		
 	}

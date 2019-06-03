@@ -14,12 +14,12 @@ namespace $ {
 		if( target instanceof Error ) return target
 		if( source instanceof Error ) return target
 		
-		if( target.constructor !== source.constructor ) return target
+		if( target['constructor'] !== source['constructor'] ) return target
 
 		if( cache.get( target ) ) return target
 		cache.set( target , true )
 		
-		const conform = $mol_conform_handlers.get( target.constructor )
+		const conform = $mol_conform_handlers.get( target['constructor'] )
 		if( !conform ) return target
 
 		if( $mol_conform_stack.indexOf( target ) !== -1 ) return target

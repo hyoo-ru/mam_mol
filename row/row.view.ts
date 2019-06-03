@@ -40,7 +40,7 @@ namespace $.$$ {
 		
 		sub_visible() {
 			const sub = this.sub()
-			const visible = [] as typeof sub
+			const visible = [] as (string | number | boolean | $mol_view | Node)[]
 
 			const context = this.context_sub()
 			const heightLimit = context.$mol_view_visible_height()

@@ -56,7 +56,7 @@ namespace $ {
 
 				node.setAttribute( key , props[ key as any ] )
 
-			} else if( props[ key ] && props[ key ].constructor === Object ) {
+			} else if( props[ key ] && props[ key ]['constructor'] === Object ) {
 
 				if( typeof node[ key as any ] === 'object' ) {
 					Object.assign( ( node as any )[ key ] , props[ key ] )
