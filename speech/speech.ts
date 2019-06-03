@@ -162,7 +162,7 @@ namespace $ {
 		}
 		
 		patterns() {
-			return [] as string[]
+			return [] as readonly string[]
 		}
 		
 		@ $mol_mem

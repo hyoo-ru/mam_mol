@@ -7,7 +7,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		groupItems( path : number[] ) : $mol_view[] {
+		groupItems( path : number[] ) : readonly $mol_view[] {
 			var items = ( path.length === 0 )
 				? this.items()
 				: this.groupItems( path.slice( 0 , path.length - 1 ) ) 

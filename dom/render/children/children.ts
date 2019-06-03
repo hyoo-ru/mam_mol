@@ -2,7 +2,7 @@ namespace $ {
 
 	export function $mol_dom_render_children (
 		el : Element ,
-		childNodes : NodeList | Array< Node | string | number | boolean | { dom_tree : ()=> Node } >
+		childNodes : NodeList | readonly ( Node | string | number | boolean | { dom_tree : ()=> Node } )[]
 	) {
 		const node_list = [] as ( Node | string )[]
 		const node_set = new Set<Node>()
