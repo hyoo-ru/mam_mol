@@ -28,10 +28,10 @@ $mol_plot_pane $mol_svg_root
 	scale_limit /readonly[number,number]
 		<= scale_limit_x /number
 			0
-			20
+			Infinity
 		<= scale_limit_y /number
 			0
-			20
+			Infinity
 	scale_default /number
 		0
 		0
