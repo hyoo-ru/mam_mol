@@ -77,31 +77,33 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		scale_limits() {
+		scale_limit() {
+			const [ , right, , top, ] = super.scale_limit() as unknown as number[]
+			// @todo replace above line to below, after https://github.com/eigenmethod/mol/pull/320
+			// const [ [, right], [, top], ] = super.scale_limit()
 			const size = this.size_expaned()
 			const real = this.size_real()
+
 			const left = + ( real[0] - this.gap_left() - this.gap_right() ) / size[0]
 			const bottom = - ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1]
-			const right = 20
-			const top = 20
 
 			return [[left, right], [bottom, top]] as const
 		}
 
 		@ $mol_mem
-		scale_defaults() {
-			const limits = this.scale_limits()
+		scale_default() {
+			const limits = this.scale_limit()
 			return [limits[0][0], limits[1][0]] as const
 		}
 
 		@ $mol_mem
 		scale(next?: readonly [number, number]) {
-			if (next === undefined) next = this.scale_defaults()
-			return new $mol_vector_2d( ...next ).limited(this.scale_limits())
+			if (next === undefined) next = this.scale_default()
+			return new $mol_vector_2d( ...next ).limited(this.scale_limit())
 		}
 
 		@ $mol_mem
-		shift_limits() {
+		shift_limit() {
 			const [min, max] = this.dimensions_expanded()
 			const [scale_x, scale_y] = this.scale()
 			const [size_x, size_y] = this.size_real()
@@ -116,19 +118,19 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		shift_defaults() {
+		shift_default() {
 			const dims = this.dimensions_expanded()
 			const scale = this.scale()
 			return [
 				Math.round( this.gap_left() - dims[0][0] * scale[0] ) ,
 				Math.round( this.gap_top() - dims[1][1] * scale[1] ) ,
-			]
+			] as const
 		}
 
 		@ $mol_mem
 		shift(next?: [number, number]) {
-			if (next === undefined) next = $mol_atom_current()['value()'] || this.shift_defaults()
-			return new $mol_vector_2d( ...next ).limited(this.shift_limits())
+			if (next === undefined) next = $mol_atom_current()['value()'] || this.shift_default()
+			return new $mol_vector_2d( ...next ).limited(this.shift_limit())
 		}
 		
 		@ $mol_mem

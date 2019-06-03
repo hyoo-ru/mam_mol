@@ -12,36 +12,36 @@ $mol_plot_pane $mol_svg_root
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
 	-
-	shift_limits /
-		<= shift_x /
+	shift_limit /readonly[number,number]
+		<= shift_limit_x /number
 			0
 			0
-		<= shift_y /
+		<= shift_limit_y /number
 			0
 			0
-	shift_defaults /
+	shift_default /number
 		0
 		0
-	shift?val /
+	shift?val /number
 		0
 		0
-	scale_limits /
-		<= scale_x /
+	scale_limit /readonly[number,number]
+		<= scale_limit_x /number
 			0
-			0
-		<= scale_y /
 			20
+		<= scale_limit_y /number
+			0
 			20
-	scale_defaults /
+	scale_default /number
 		0
 		0
-	scale?val /
+	scale?val /number
 		1
 		1
-	size_real /
+	size_real /number
 		1
 		1
-	size_expaned /
+	size_expaned /number
 		0
 		0
 	dimensions_expanded /
