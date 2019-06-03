@@ -1,5 +1,5 @@
 namespace $.$$ {
-	
+
 	export class $mol_plot_pane extends $.$mol_plot_pane {
 		
 		@ $mol_mem
@@ -85,16 +85,17 @@ namespace $.$$ {
 			const right = 20
 			const top = 20
 
-			return [[left, right], [top, bottom]] as [[number, number], [number, number]]
+			return [[left, right], [bottom, top]] as const
 		}
 
 		@ $mol_mem
 		scale_defaults() {
-			return this.scale_limits()[0]
+			const limits = this.scale_limits()
+			return [limits[0][0], limits[1][0]] as const
 		}
 
 		@ $mol_mem
-		scale(next?: [number, number]) {
+		scale(next?: readonly [number, number]) {
 			if (next === undefined) next = this.scale_defaults()
 			return new $mol_vector_2d( ...next ).limited(this.scale_limits())
 		}
@@ -111,7 +112,7 @@ namespace $.$$ {
 			const bottom = -min[1] * scale_y + size_y - this.gap_bottom()
 			const top = -max[1] * scale_y + this.gap_top()
 
-			return [[left, right], [bottom, top]] as [[number, number], [number, number]]
+			return [[left, right], [bottom, top]] as const
 		}
 
 		@ $mol_mem
