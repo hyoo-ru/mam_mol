@@ -1,41 +1,44 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_hor extends $.$mol_plot_ruler_hor {
 		
-		count() {
-			return this.points_raw().length * this.scale()[0] / 100
+		dimensions() {
+			const series = this.series()
+			const next = [
+				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
+				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
+			]
+			
+			for( let key of Object.keys( series ) ) {
+				if( series[key] < next[0][1] ) next[0][1] = series[key]
+				if( series[key] > next[1][1] ) next[1][1] = series[key]
+			}
+			
+			return next
 		}
 		
 		@ $mol_mem
 		step() {
-			const count = this.count()
-			let points = this.points_scaled()
-			let step = Math.max( 1 , Math.ceil( points.length / count ) )
+			const dims = this.dimensions_expanded()
+			const size = $mol_math_round_expand( ( dims[1][1] - dims[0][1] ) , -1 )
+			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( - size * this.scale()[1] / 24 ) / Math.log( 10 ) ) ) )
+			const step = size / count
 			return step
 		}
 		
 		@ $mol_mem
-		keys_visible() {
-			const res = [] as string[]
+		points_raw() {
+			const dims = this.dimensions_expanded()
+			const step = this.step()
 			
-			const keys = Object.keys( this.series() ) 
-			if( keys.length === 0 ) return []
-			
-			let step = this.step()
-			let limit = Math.floor( keys.length - step / 2 )
-			
-			for( let i = 0 ; i < limit ; i += step ) {
-				res.push( keys[ i ] )
+			const next = [] as number[][]
+			const start = Math.round( dims[0][1] / step ) * step
+			const end = Math.round( dims[1][1] / step ) * step
+
+			for( let val = start ; val <= end ; val += step ) {
+				next.push( [ 0 , Number( val.toFixed( 10 ) ) ] )
 			}
-			res.push( keys[ keys.length - 1 ] )
-			
-			return res
-		}
-		
-		@ $mol_mem
-		points() {
-			const points = this.points_scaled()
-			const keys = Object.keys( this.series() )
-			return this.keys_visible().map( key => points[ keys.indexOf( key ) ] )
+
+			return next
 		}
 		
 		curve() {
@@ -45,19 +48,21 @@ namespace $.$$ {
 			
 			const last = points[ points.length - 1 ]
 			
-			return points.map( point => `M ${ point[0] } 1000 V 0` ).join( ' ' )
+			return points.map( point => `M 0 ${ point[1] } H 2000 ` ).join( ' ' )
 		}
 		
 		labels() {
-			return this.keys_visible().map( key => this.Label( key ) )
+			return this.points().map( ( point , index )=> this.Label( index ) )
 		}
 		
-		label_pos_x( key : string ) {
-			return String( this.points()[ this.keys_visible().indexOf( key ) ][0] )
+		label_pos_y( index : number ) {
+			return this.points()[ index ][1] + 'px'
 		}
 		
-		label_text( key : string ) {
-			return key
+		label_text( index : number ) {
+			const step = this.step()
+			const precision = Math.max( 0 , Math.min( 15 , ( step - Math.floor( step ) ).toString().length - 2 ) )
+			return this.points_raw()[ index ][1].toFixed( precision )
 		}
 		
 		back() {
