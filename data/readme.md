@@ -20,10 +20,10 @@ const evan = User({
 })
 
 const john = User({
-  name: 'John',
-  age: 32,
-  phone: 791234567890.1, // Not a string and Not an integer
-  mails: ['foo@example.org']
+	name: 'John',
+	age: 32,
+	phone: 791234567890.1, // Not a string and Not an integer
+	mails: ['foo@example.org']
 })
 
 const ann = User({
