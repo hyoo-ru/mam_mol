@@ -21,7 +21,7 @@ namespace $.$$ {
 		step() {
 			const dims = this.dimensions_expanded()
 			const size = $mol_math_round_expand( ( dims[1][0] - dims[0][0] ) , -1 )
-			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( - size * this.scale()[0] / 8 ) / Math.log( 10 ) ) ) )
+			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( size * this.scale()[0] / 48 ) / Math.log( 10 ) ) ) )
 			const step = size / count
 			return step
 		}
@@ -43,6 +43,7 @@ namespace $.$$ {
 		}
 		
 		curve() {
+			const shift = this.shift()
 			const points = this.points()
 			if( points.length < 1 ) return ''
 			
