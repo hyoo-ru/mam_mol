@@ -22,10 +22,13 @@ namespace $.$$ {
 			const dims = this.dimensions_expanded()
 			const size = $mol_math_round_expand( ( dims[1][0] - dims[0][0] ) , -1 )
 			const min_width = this.step_width()
-			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( size * this.scale()[0] / min_width ) / Math.log( 10 ) ) ) )
+			const [scale_x] = this.scale()
+			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( size * scale_x / min_width ) / Math.log( 10 ) ) ) )
 			let step = size / count
-			if( step * this.scale()[0] > 2 * min_width ) step /= 2
-			if( step * this.scale()[0] > 2 * min_width ) step /= 2
+			const step_max = min_width * 2
+			const step_scaled = step * scale_x
+			if( step_scaled > step_max ) step /= 2
+			if( step_scaled > step_max ) step /= 2
 
 			return step
 		}
