@@ -16,13 +16,17 @@ namespace $.$$ {
 			
 			return next
 		}
-		
+
 		@ $mol_mem
 		step() {
 			const dims = this.dimensions_expanded()
 			const size = $mol_math_round_expand( ( dims[1][0] - dims[0][0] ) , -1 )
-			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( size * this.scale()[0] / 48 ) / Math.log( 10 ) ) ) )
-			const step = size / count
+			const min_width = this.step_width()
+			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( size * this.scale()[0] / min_width ) / Math.log( 10 ) ) ) )
+			let step = size / count
+			if( step * this.scale()[0] > 2 * min_width ) step /= 2
+			if( step * this.scale()[0] > 2 * min_width ) step /= 2
+
 			return step
 		}
 		
@@ -30,7 +34,7 @@ namespace $.$$ {
 		points_raw() {
 			const dims = this.dimensions_expanded()
 			const step = this.step()
-			
+
 			const next = [] as number[][]
 			const start = Math.round( dims[0][0] / step ) * step
 			const end = Math.round( dims[1][0] / step ) * step
