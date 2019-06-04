@@ -25,10 +25,9 @@ namespace $.$$ {
 			const [scale_x] = this.scale()
 			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( size * scale_x / min_width ) / Math.log( 10 ) ) ) )
 			let step = size / count
-			const step_max = min_width * 2
-			const step_scaled = step * scale_x
-			if( step_scaled > step_max ) step /= 2
-			if( step_scaled > step_max ) step /= 2
+			const step_max = min_width * 2 / scale_x
+			if( step > step_max ) step /= 2
+			if( step > step_max ) step /= 2
 
 			return step
 		}
