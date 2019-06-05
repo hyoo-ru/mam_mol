@@ -1,4 +1,13 @@
-$mol_plot_ruler_hor $mol_plot_graph
+$mol_plot_ruler_hor $mol_svg_group
+	dimensions_expanded <= dimensions /
+	shift /
+		0
+		0
+	scale /
+		1
+		1
+	Sample null
+	-
 	front /
 	color null
 	step_width 50
