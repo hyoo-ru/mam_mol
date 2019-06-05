@@ -1,7 +1,6 @@
-$mol_plot_ruler_hor $mol_plot_graph
+$mol_plot_mark_hor $mol_plot_graph
 	front /
 	color null
-	step_width 50
 	sub /
 		<= Curve $mol_svg_path
 			geometry <= curve \

@@ -16,7 +16,7 @@ $mol_app_jsperf $mol_page
 				<= Frequencies_ruler $mol_plot_ruler_vert
 					title \
 					labels /
-				<= Frequencies_ruler_hor $mol_plot_ruler_hor
+				<= Frequencies_ruler_hor $mol_plot_mark_hor
 					title \
 					series <= frequencies /
 					labels /
