@@ -14,7 +14,7 @@ namespace $ {
 				}
 			}
 			
-			throw new Error( errors.join( ' and ' ) )
+			return $mol_fail( new Error( errors.join( ' and ' ) ) )
 		}
 	}
 	
