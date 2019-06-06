@@ -1,17 +1,26 @@
 $mol_plot_ruler $mol_svg_group
 	dimensions_expanded <= dimensions /
-	shift /
+	shift /number
 		0
 		0
-	scale /
+	scale /number
 		1
 		1
 	Sample null
 	-
 	front /
 	color null
-	step 0
+	step_width 50
+	step 10
 	points /
+	points_generated *
+		raw <= generated_raw /number
+		scaled <= generated_scaled /number
+	shift_axle 0
+	range *
+		from <= range_from 0
+		to <= range_to 0
+		scale <= range_scale 0
 	sub /
 		<= Curve $mol_svg_path
 			geometry <= curve \
