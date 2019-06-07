@@ -1,7 +1,8 @@
 namespace $.$$ {
 	export class $mol_plot_graph extends $.$mol_plot_graph {
 		
-		points_raw() {
+		@ $mol_mem
+		points_raw(): [number, number][] {
 			const series = this.series()
 			
 			return Object.keys( series ).map( ( key , index )=> [
@@ -9,33 +10,46 @@ namespace $.$$ {
 				series[ key ] ,
 			] )
 		}
-		
-		@ $mol_mem
-		points_scaled() {
-			const shift = this.shift()
-			const scale = this.scale()
-			return this.points_raw().map( point => [
-				Math.round( shift[0] + point[0] * scale[0] ) ,
-				Math.round( shift[1] + point[1] * scale[1] ) ,
-			] )
-		}
-		
+
 		@ $mol_mem
 		points() {
 			const threshold = this.threshold()
-			if( !threshold ) return this.points_scaled()
+			const size = this.size_real()
 
-			const res = [] as number[][]
-			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ]
-			this.points_scaled().forEach( point => {
-				check : {
-					if( Math.abs( point[ 0 ] - last[ 0 ] ) >= threshold ) break check
-					if( Math.abs( point[ 1 ] - last[ 1 ] ) >= threshold ) break check
-					return
-				}
-				res.push( last = point )
-			} )
-			return res
+			const threshold_left = - threshold
+			const threshold_right = size[0] + threshold
+			const threshold_top = size[1] + threshold
+			const threshold_bottom = - threshold
+
+			const [shift_x, shift_y] = this.shift()
+			const [scale_x, scale_y] = this.scale()
+			const points_raw = this.points_raw()
+			const next = {
+				raw: [] as (readonly [number, number])[],
+				scaled: [] as (readonly [number, number])[]
+			}
+			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as const
+			for (let point of points_raw) {
+				const scaled = [
+					Math.round( shift_x + point[0] * scale_x ),
+					Math.round( shift_y + point[1] * scale_y ),
+				] as const
+
+				if (
+					Math.abs( scaled[0] - last[ 0 ] ) < threshold
+					&& Math.abs( scaled[1] - last[ 1 ] ) < threshold
+				) continue
+
+				last = scaled
+
+				if (scaled[0] < threshold_left || scaled[0] > threshold_right) continue
+				if (scaled[1] < threshold_bottom || scaled[1] > threshold_top) continue
+
+				next.raw.push(point)
+				next.scaled.push(scaled)
+			}
+
+			return next
 		}
 		
 		@ $mol_mem

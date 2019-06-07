@@ -3,7 +3,7 @@ namespace $.$$ {
 		
 		curve() {
 			const shift = this.shift()
-			const points = this.points()
+			const points = this.points().scaled
 			if( points.length < 1 ) return ''
 			
 			const main = points.map( point => 'L ' + point.join( ' ' ) ).join( ' ' )

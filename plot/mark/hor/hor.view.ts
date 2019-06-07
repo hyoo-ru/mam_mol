@@ -8,7 +8,7 @@ namespace $.$$ {
 		@ $mol_mem
 		step() {
 			const count = this.count()
-			let points = this.points_scaled()
+			let points = this.points().scaled
 			let step = Math.max( 1 , Math.ceil( points.length / count ) )
 			return step
 		}
@@ -32,20 +32,21 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		points() {
-			const points = this.points_scaled()
+		points_visible() {
+			const points = this.points().scaled
 			const keys = Object.keys( this.series() )
 			return this.keys_visible().map( key => points[ keys.indexOf( key ) ] )
 		}
 		
 		curve() {
-			const shift = this.shift()
-			const points = this.points()
-			if( points.length < 1 ) return ''
+			return ''
+			// const shift = this.shift()
+			// const points = this.points_visible().scaled
+			// if( points.length < 1 ) return ''
 			
-			const last = points[ points.length - 1 ]
+			// const last = points[ points.length - 1 ]
 			
-			return points.map( point => `M ${ point[0] } 1000 V 0` ).join( ' ' )
+			// return points.map( point => `M ${ point[0] } 1000 V 0` ).join( ' ' )
 		}
 		
 		labels() {
@@ -53,7 +54,7 @@ namespace $.$$ {
 		}
 		
 		label_pos_x( key : string ) {
-			return String( this.points()[ this.keys_visible().indexOf( key ) ][0] )
+			return String( this.points_visible()[ this.keys_visible().indexOf( key ) ][0] )
 		}
 		
 		label_text( key : string ) {

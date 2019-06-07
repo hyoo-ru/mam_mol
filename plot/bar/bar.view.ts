@@ -3,14 +3,12 @@ namespace $.$$ {
 		
 		curve() {
 			const shift = this.shift()
-			const points = this.points()
-			if( points.length < 1 ) return ''
-			
-			return points.map( point => `M ${ point[0] } ${ shift[1] } V ${ point[1] }` ).join( ' ' )
+
+			return this.points().scaled.map( point => `M ${ point[0] } ${ shift[1] } V ${ point[1] }` ).join( ' ' ) || ''
 		}
 		
 		stroke_width() {
-			return ( 8 / Math.sqrt( this.points().length ) ).toPrecision(2) + '%'
+			return ( 8 / Math.sqrt( this.points().scaled.length ) ).toPrecision(2) + '%'
 		}
 		
 		color() {
