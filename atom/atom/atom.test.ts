@@ -83,7 +83,7 @@ module $ {
 
 		'automatic deferred restart'() {
 			
-			let targetValue : number
+			let targetValue = 0
 			
 			let source = new $mol_atom( 'source' , ( next? : number )=> next || 1 )
 			let middle = new $mol_atom( 'middle' , ()=> source.get() + 1 )

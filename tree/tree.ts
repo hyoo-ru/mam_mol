@@ -354,14 +354,14 @@ namespace $ {
 			return new $mol_tree( { sub : sub } )
 		}
 
-		transform( visit : ( stack : $mol_tree[] , sub : ()=> $mol_tree[] )=> $mol_tree , stack : $mol_tree[] = [] ) : $mol_tree {
+		transform( visit : ( stack : $mol_tree[] , sub : ()=> $mol_tree[] )=> $mol_tree | null , stack : $mol_tree[] = [] ) : $mol_tree | null {
 			const sub_stack = [ this , ...stack ]
-			return visit( sub_stack , ()=> this.sub.map( node => node.transform( visit , sub_stack ) ).filter( n => n ) )
+			return visit( sub_stack , ()=> this.sub.map( node => node.transform( visit , sub_stack ) ).filter( n => n ) as $mol_tree[] )
 		}
 
 		hack( context : $mol_tree_context ) : $mol_tree {
 			
-			const sub = [].concat( ... this.sub.map( child => {
+			const sub = ( [] as $mol_tree[] ).concat( ... this.sub.map( child => {
 
 				const handle = context[ child.type ] || context[ '' ]
 				if( !handle ) $mol_fail( child.error( 'Handler not defined' ) )

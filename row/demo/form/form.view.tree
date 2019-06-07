@@ -1,4 +1,4 @@
-$mol_row_demo $mol_demo_small
+$mol_row_demo_form $mol_demo_small
 	title @ \Some controls in one row with equal paddings and wrapping support
 	sub /
 		<= Row $mol_row

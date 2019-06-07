@@ -1,67 +1,51 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_hor extends $.$mol_plot_ruler_hor {
-		
-		count() {
-			return this.points_raw().length * this.scale()[0] / 100
-		}
-		
 		@ $mol_mem
 		step() {
-			const count = this.count()
-			let points = this.points_scaled()
-			let step = Math.max( 1 , Math.ceil( points.length / count ) )
+			const dims = this.dimensions_expanded()
+			const size = $mol_math_round_expand( ( dims[1][0] - dims[0][0] ) , -1 )
+			const [scale_x] = this.scale()
+
+			const min_width = this.step_width()
+			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( size * scale_x / min_width ) / Math.log( 10 ) ) ) )
+			let step = size / count
+			const step_max = min_width * 2 / scale_x
+			if( step > step_max ) step /= 2
+			if( step > step_max ) step /= 2
+
 			return step
 		}
-		
+
 		@ $mol_mem
-		keys_visible() {
-			const res = [] as string[]
-			
-			const keys = Object.keys( this.series() ) 
-			if( keys.length === 0 ) return []
-			
-			let step = this.step()
-			let limit = Math.floor( keys.length - step / 2 )
-			
-			for( let i = 0 ; i < limit ; i += step ) {
-				res.push( keys[ i ] )
-			}
-			res.push( keys[ keys.length - 1 ] )
-			
-			return res
-		}
-		
 		points() {
-			const points = this.points_scaled()
-			const keys = Object.keys( this.series() )
-			return this.keys_visible().map( key => points[ keys.indexOf( key ) ] )
+			const [shift_x] = this.shift()
+			const [scale_x] = this.scale()
+			const dims = this.dimensions_expanded()
+			const step = this.step()
+
+			const next: [number[], number[]] = [[], []]
+			const start = Math.round( dims[0][0] / step ) * step
+			const end = Math.round( dims[1][0] / step ) * step
+
+			for( let val = start ; val <= end ; val += step ) {
+				const scaled = shift_x + val * scale_x
+				next[0].push(scaled)
+				next[1].push(val)
+			}
+
+			return next
 		}
-		
+
 		curve() {
-			const shift = this.shift()
-			const points = this.points()
-			if( points.length < 1 ) return ''
-			
-			const last = points[ points.length - 1 ]
-			
-			return points.map( point => `M ${ point[0] } 1000 V 0` ).join( ' ' )
+			return this.points()[0].map( point => `M ${ point } 1000 V 0` ).join( ' ' ) || ''
 		}
-		
-		labels() {
-			return this.keys_visible().map( key => this.Label( key ) )
+
+		label_pos_x( index : number ) {
+			return this.points()[0][ index ] + 'px'
 		}
-		
-		label_pos_x( key : string ) {
-			return String( this.points()[ this.keys_visible().indexOf( key ) ][0] )
+
+		label_pos_y( index : number ) {
+			return this.title_pos_y()
 		}
-		
-		label_text( key : string ) {
-			return key
-		}
-		
-		back() {
-			return [ this ]
-		}
-		
 	}
 }

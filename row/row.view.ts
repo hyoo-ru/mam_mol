@@ -49,7 +49,7 @@ namespace $.$$ {
 				}
 			}
 			
-			const visible = [] as typeof sub
+			const visible = [] as (string | number | boolean | $mol_view | Node)[]
 			const heightLimit = context.$mol_view_visible_height()
 			const offsets = this.item_offsets_top()
 

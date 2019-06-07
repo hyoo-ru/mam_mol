@@ -1,50 +1,72 @@
 namespace JSX {
+
+	type DeepPartial< Val > = {
+		[ field in keyof Val ]? : DeepPartial< Val[ field ] >
+	}
+	
 	export interface Element extends HTMLElement {}
+	
 	export interface ElementClass { render() : Element }
-	export interface IntrinsicElements { [ key : string ] : { [ prop : string ] : any } }
+	
+	export type IntrinsicElements = {
+		[ key in keyof HTMLElementTagNameMap ]? : DeepPartial< HTMLElementTagNameMap[ key ] >
+	}
+	
 	export interface ElementAttributesProperty { props : {} }
+
 }
 
 namespace $ {
 
-	export function $mol_dom_jsx< Props , Children extends Array< Node | string > >(
+	export let $mol_dom_jsx_context = {
+		prefix : ''
+	}
+
+	export function $mol_dom_jsx< Props extends { id? : string } , Children extends Array< Node | string > >(
 		Elem : string | ( ( props : Props , ... children : Children ) => Element ) ,
 		props : Props ,
 		... children : Children
 	) {
 
-		if( typeof Elem !== 'string' ) return Elem( props , ... children )
+		const prefix = $mol_dom_jsx_context.prefix
+		const id = prefix
+		? ( props && ( props.id !== undefined ) && ( prefix + '.' + props.id ) || prefix || '' )
+		: ( props && ( props.id !== undefined ) && props.id || '' )
+
+		if( typeof Elem !== 'string' ) {
+			let context = $mol_dom_jsx_context
+			try {
+				if( id ) $mol_dom_jsx_context = { prefix : id }
+				return Elem( props , ... children )
+			} finally {
+				$mol_dom_jsx_context = context
+			}
+		}
 
 		const document = $mol_dom_context.document
-		const node = document.createElement( Elem )
+		const node = id && document.getElementById( id ) || document.createElement( Elem )
 
-		for( let child of [].concat.call( [] , ... children ) ) {
-			if( typeof child === 'string' ) child = document.createTextNode( child )
-			node.appendChild( child )
-		}
+		$mol_dom_render_children( node , ( [] as ( Node | string )[] ).concat( ... children ) )
+
+		if( id ) props.id = id
 
 		for( const key in props ) {
 
-			let descr : PropertyDescriptor | undefined
-			let proto = node
+			if( typeof props[ key ] === 'string' ) {
 
-			while( true ) {
+				node.setAttribute( key , props[ key as any ] )
 
-				proto = Object.getPrototypeOf( proto )
-				if( !proto ) {
-					node.setAttribute( key , String( props[ key ] ) )
-					break
+			} else if( props[ key ] && props[ key ]['constructor'] === Object ) {
+
+				if( typeof node[ key as any ] === 'object' ) {
+					Object.assign( ( node as any )[ key ] , props[ key ] )
+					continue
 				}
-				
-				descr = Object.getOwnPropertyDescriptor( proto , key )
-				if( !descr ) continue
 
-				if( descr.set ) Object.defineProperty( node , key , descr )
-				break
 			}
 
-			
 			node[ key as any ] = props[ key ]
+
 		}
 
 		return node

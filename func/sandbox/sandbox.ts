@@ -51,7 +51,7 @@ namespace $ {
 			
 			return ()=> {
 				try {
-					Function.prototype.constructor = undefined
+					Function.prototype.constructor = undefined as any
 					return func()
 				} finally {
 					Function.prototype.constructor = Function

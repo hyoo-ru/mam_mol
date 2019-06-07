@@ -15,7 +15,7 @@ $mol_app_issues $mol_page
 				<= Capacities_ruler $mol_plot_ruler_vert
 					title \
 					labels /
-				<= Capacities_ruler_hor $mol_plot_ruler_hor
+				<= Capacities_ruler_hor $mol_plot_mark_hor
 					title \
 					series <= capacities /
 					labels /

@@ -4,7 +4,7 @@ $mol_app_bench_chart_bar_mol $mol_view
 			graphs /
 				<= Vert $mol_plot_ruler_vert
 					title \Val
-				<= Hor $mol_plot_ruler_hor
+				<= Hor $mol_plot_mark_hor
 					title \Iter
 					series <= hor_series /
 				<= graphs /

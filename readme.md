@@ -508,6 +508,7 @@ The name of the field corresponds to calling the property, the content of the fi
 * **[$mol_plot_group](plot/group)** - Group of graph as single graph
 * **[$mol_plot_ruler_vert](plot/ruler/vert)** - Verical ruler
 * **[$mol_plot_ruler_hor](plot/ruler/hor)** - Horizontal ruler
+* **[$mol_plot_mark_hor](plot/mark/hor)** - Horizontal markers
 
 ## Data formats
 

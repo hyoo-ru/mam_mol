@@ -1,7 +1,7 @@
 namespace $ {
 
 	export function $mol_view_tree_trim_remarks( def : $mol_tree ) {
-		return def.transform( ( [ node ] , sub )=> ( node.type === '-' ) ? null : node.clone({ sub : sub() }) )
+		return def.transform( ( [ node ] , sub )=> ( node.type === '-' ) ? null : node.clone({ sub : sub() }) )!
 	}
 
 	export function $mol_view_tree_classes( defs : $mol_tree ) {
@@ -20,38 +20,47 @@ namespace $ {
 	export function $mol_view_tree_class_props( def : $mol_tree ) {
 		const props : { [ key : string ] : $mol_tree } = {}
 		
-		const catch_prop = ( prop : $mol_tree )=> {
-			if( prop.sub.length === 0 ) return
-			if( prop.sub[0].type === '-' ) return
-					
-			props[ prop.type ] = props[ prop.type ]
+		const catch_prop = ( prop : $mol_tree , type = '' )=> {
 
-			const def = prop.clone({
-				sub : [ prop.sub[0].transform( ( [ node , ... stack ] , sub )=> {
+			let def = prop
+			
+			if( type === '=>' ) {
+				if( prop.sub[0] ) throw prop.error( 'Right binding can not have default value' )
+			} else {
 
-					if( [ '<=' , '<=>' , '=>' ].indexOf( node.type ) === -1 ) return node.clone({ sub : sub() })
-					
-					catch_prop( node.sub[0] )
+				if( prop.sub.length === 0 ) return
+				if( prop.sub[0].type === '-' ) return
+						
+				props[ prop.type ] = props[ prop.type ]
 
-					return node.clone({
-						sub : [ node.sub[0].clone({
-							sub : []
-						}) ]
-					})
-					
-				} )]
-			})
+				def = prop.clone({
+					sub : [ prop.sub[0].transform( ( [ node , ... stack ] , sub )=> {
+
+						if( [ '<=' , '<=>' , '=>' ].indexOf( node.type ) === -1 ) return node.clone({ sub : sub() })
+						
+						catch_prop( node.sub[0] , node.type )
+
+						return node.clone({
+							sub : [ node.sub[0].clone({
+								sub : []
+							}) ]
+						})
+						
+					} )!]
+				})
+
+			}
 
 			if( props[ prop.type ] ) {
 				if( props[ prop.type ].toString() !== def.toString() ) {
-					throw def.error( 'Property already defined with another default value' )
+					throw def.error( 'Property already defined with another default value' + props[ prop.type ].error('').message + '\n---' )
 				}
 			} else {
 				props[ prop.type ] = def
 			}
 		}
 
-		def.sub[0].sub.map( catch_prop )
+		def.sub[0].sub.map( sub => catch_prop( sub ) )
 		
 		return def.clone({
 			type : '' ,
@@ -126,7 +135,7 @@ namespace $ {
 					param = param.sub[0]
 				}
 				
-				var propName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( param.type )
+				var propName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( param.type )!
 				
 				if( propName[3] ) {
 					needSet = true
@@ -143,7 +152,8 @@ namespace $ {
 							return `this.$.$mol_locale.text( ${ JSON.stringify( key ) } )`
 						case( value.type === '-' ) :
 							return null
-						case( value.type === '/' ) :
+						case( value.type[0] === '/' ) :
+							const item_type = value.type.substring( 1 ) || 'any'
 							var items : string[] = []
 							value.sub.forEach( item => {
 								if( item.type === '-' ) return
@@ -154,20 +164,29 @@ namespace $ {
 								var val = getValue( item )
 								if( val ) items.push( val )
 							} )
-							return '[]' + ( items.length ? '.concat( ' + items.join(' , ') + ' )' : ' as any[]' )
+							return `[].concat( ${ items.join(' , ') } ) as readonly ( ${ item_type } )[]`
 						case( value.type[0] === '$' ) :
 							needCache = true
 							var overs : string[] = []
 							value.sub.forEach( over => {
 								if( /^-?$/.test( over.type ) ) return ''
-								var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )
+								var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
 								var ns = needSet
 								
 								if( over.sub[0].type === '=>' ) {
 									if( over.sub[0].sub.length === 1 ) {
-										const method_name = over.sub[0].sub[0].type
-										members[ method_name ] = `\t${ method_name }(){\n\t\treturn this.${ param.type }().${ over.type }()\n\t}\n\n`
-										 return
+										
+										const [ , own_name , own_key , own_next ] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.sub[0].sub[0].type )!
+										
+										let own_args : string[] = []
+										if( own_key ) own_args.push( ` ${own_key} : any ` )
+										if( own_next ) own_args.push( ` ${own_next}? : any ` )
+
+										let [ , their_name , ... their_args ] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
+										their_args = their_args.filter( Boolean )
+										
+										members[ own_name ] = `\t${ own_name }(${ own_args.join(',') }) {\n\t\treturn this.${ param.type }().${ their_name }( ${ their_args.join(' , ') } )\n\t}\n\n`
+										return
 									}
 								}
 								
@@ -189,7 +208,7 @@ namespace $ {
 									return
 								}
 								
-								var key = /(.*?)(?:\?(\w+))?$/.exec( opt.type )
+								var key = /(.*?)(?:\?(\w+))?$/.exec( opt.type )!
 								keys.push( key[1] )
 								var ns = needSet
 								var v = getValue( opt.sub[0] )
@@ -198,20 +217,16 @@ namespace $ {
 								needSet = ns
 							} )
 							return '({\n' + opts.join( '' ) + '\t\t})'
-						case( value.type === '>' ) :
-							throw new Error( 'Deprecated syntax `>`. Use `<=>` instead.' )
 						case( value.type === '<=>' ) :
 							needSet = true
 							if( value.sub.length === 1 ) {
-								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))$/.exec( value.sub[0].type )
+								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))$/.exec( value.sub[0].type )!
 								return 'this.' + type[1] + '(' + ( type[2] ? type[2] + ' ,' : '' ) + ' ' + type[3] + ' )'
 							}
 							break
-						case( value.type === '<' ) :
-							throw new Error( 'Deprecated syntax `<`. Use `<=` instead.' )
 						case( value.type === '<=' ) :
 							if( value.sub.length === 1 ) {
-								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( value.sub[0].type )
+								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( value.sub[0].type )!
 								return 'this.' + type[1] + '(' + (  type[2] ? type[2] : '' ) + ')'
 							}
 							break

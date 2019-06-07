@@ -83,7 +83,10 @@ module $ {
 				static get item() {
 					return $mol_atom2_dict< string , string >({
 						get : key => key ,
-						abort : key => log.push( key ) ,
+						abort : key => {
+							log.push( key )
+							return true
+						} ,
 					})
 				}
 

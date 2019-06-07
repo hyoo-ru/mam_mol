@@ -23,7 +23,7 @@ namespace $ {
 		
 		public static make< Instance >( this : { new() : Instance } , config : Partial< Instance > ) : Instance {
 			const instance = new this
-			for( let key in config ) instance[ key ] = config[ key ]
+			for( let key in config ) instance[ key ] = config[ key ]!
 			return instance
 		}
 		

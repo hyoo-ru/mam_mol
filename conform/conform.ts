@@ -14,12 +14,12 @@ namespace $ {
 		if( target instanceof Error ) return target
 		if( source instanceof Error ) return target
 		
-		if( target.constructor !== source.constructor ) return target
+		if( target['constructor'] !== source['constructor'] ) return target
 
 		if( cache.get( target ) ) return target
 		cache.set( target , true )
 		
-		const conform = $mol_conform_handlers.get( target.constructor )
+		const conform = $mol_conform_handlers.get( target['constructor'] )
 		if( !conform ) return target
 
 		if( $mol_conform_stack.indexOf( target ) !== -1 ) return target
@@ -48,18 +48,13 @@ namespace $ {
 		} ,
 	>( target : List , source : List ) {
 		
-		let equal = target.length === source.length
-
+		if( source.length !== target.length ) return target
+		
 		for( let i = 0 ; i < target.length ; ++i ) {
-			const conformed = $mol_conform( target[i] , source[i] )
-			if( !$mol_compare_any( conformed , target[i] ) ) {
-				try { target[i] = conformed }
-				catch( error ) { equal = false }
-			}
-			if( equal && !$mol_compare_any( conformed , source[i] ) ) equal = false
+			if( !$mol_compare_any( source[i] , target[i] ) ) return target
 		}
 
-		return equal ? source : target
+		return source
 	}
 
 	$mol_conform_handler( Array , $mol_conform_array )

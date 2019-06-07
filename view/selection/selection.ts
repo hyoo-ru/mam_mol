@@ -28,6 +28,7 @@ namespace $ {
 		
 		static focus( event : FocusEvent ) {
 			this.focused( [ event.target as Element ] )
+
 		}
 		
 		static blur( event : FocusEvent ) {

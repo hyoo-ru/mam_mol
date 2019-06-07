@@ -2,14 +2,14 @@ namespace $ {
 	
 	export class $mol_graph< Node , Edge > {
 		
-		nodes : { [ id : string ] : Node } = {}
+		nodes : { [ id : string ] : Node | undefined } = {}
 		
 		edgesOut : { [ from : string ] : { [ to : string ] : Edge } } = {}
 		edgesIn : { [ to : string ] : { [ from : string ] : Edge } } = {}
 		
 		nodeEnsure( id : string ) {
 			if( this.nodes.hasOwnProperty( id ) ) return
-			this.nodes[ id ] = null
+			this.nodes[ id ] = undefined
 		}
 		
 		linkOut( from : string , to : string , edge : Edge ) {
@@ -38,44 +38,95 @@ namespace $ {
 			return this.edgesIn[ to ] && this.edgesIn[ to ][ from ]
 		}
 		
-		link( one : string , two : string , edge : Edge ) {
-			this.linkOut( one , two , edge )
-			this.linkIn( two , one , edge )
+		link( from : string , to : string , edge : Edge ) {
+			this.linkOut( from , to , edge )
+			this.linkIn( to , from , edge )
 		}
 		
-		sorted( getWeight : ( edge : Edge )=> number ) {
-			var pending = Object.keys( this.nodes )
-			var visited : string[] = []
-			var weights : number[] = []
-			var sorted : string[] = []
+		unlink( from : string , to : string ) {
+			delete this.edgesIn[ to ][ from ]
+			delete this.edgesOut[ from ][ to ]
+		}
+		
+		cut_cycles( get_weight : ( edge : Edge )=> number ) {
 			
-			var visit = ( id : string , weight : number )=> {
+			const checked = [] as string[]
+			
+			for( const start in this.nodes ) {
 				
-				var index = visited.lastIndexOf( id )
-				if( index >= 0 ) {
-					if( index === visited.length - 1 ) return false
-					if( weight <= weights[ index + 1 ] ) return false
+				const path = [] as string[]
+				
+				const visit = ( from : string ) : number => {
+
+					if( checked.includes( from ) ) return Number.POSITIVE_INFINITY
+
+					const index = path.lastIndexOf( from )
+					if( index > -1 ) {
+
+						const cycle = path.slice( index )
+
+						return cycle.reduce(
+							( weight , id , index )=> Math.min(
+								weight ,
+								get_weight( this.edgesOut[ id ][ cycle[ ( index + 1 ) % cycle.length ] ] ) ,
+							) ,
+							Number.POSITIVE_INFINITY ,
+						)
+
+					}
+
+					path.push( from )
+
+					try {
+
+						const deps = this.edgesOut[ from ]
+						for( const to in deps ) {
+
+							if( to === from ) {
+								this.unlink( from , to )
+								continue
+							}
+
+							const weight_out = get_weight( deps[ to ] )
+							const min = visit( to )
+							
+							if( weight_out > min ) return min
+							if( weight_out === min ) this.unlink( from , to )
+							
+						}
+
+					} finally {
+						path.pop()
+					}
+
+					checked.push( from )
+
+					return Number.POSITIVE_INFINITY
 				}
+
+				visit( start )
+
+			}
+
+		}
+		
+		get sorted() {
+
+			const sorted : string[] = []
+			
+			const visit = ( id : string ) => {
 				
-				if( weight != null ) {
-					visited.push( id )
-					weights.push( weight )
-				}
-				
-				var deps = this.edgesOut[ id ];
-				for( var dep in deps ) {
-					if( dep === id ) continue
-					visit( dep , getWeight( deps[ dep ] ) )
-				}
-				
-				if( sorted.indexOf( id ) !== -1 ) return false
-				
+				if( sorted.indexOf( id ) !== -1 ) return
+
+				for( const dep in this.edgesOut[ id ] ) visit( dep )
+
+				if( sorted.indexOf( id ) !== -1 ) return
+
 				sorted.push( id )
-				
-				return true
+
 			}
 			
-			pending.forEach( id => visit( id , null ) )
+			Object.keys( this.nodes ).forEach( id => visit( id ) )
 			
 			return sorted
 		}

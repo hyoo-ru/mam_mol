@@ -9,13 +9,13 @@ namespace $ {
 		
 		status = $mol_atom_status.obsolete
 		
-		readonly handler : ( next? : Value|Error , force? : $mol_mem_force )=> Value|void
+		readonly handler : ( next? : Value , force? : $mol_mem_force )=> Value | void
 
-		'value()' : Value|Error
+		'value()' : Value | Error | undefined
 
 		constructor(
 			id : string ,
-			handler : ( next? : Value , force? : $mol_mem_force )=> Value|void = next => next ,
+			handler : ( next? : Value , force? : $mol_mem_force )=> Value | void = next => next ,
 		) {
 			super()
 			
@@ -32,7 +32,7 @@ namespace $ {
 				if( $mol_owning_get( value ) === this ) value.destructor();
 			}
 
-			this['value()'] = undefined
+			this['value()'] = undefined as unknown as Value
 		}
 		
 		unlink() {
@@ -127,8 +127,8 @@ namespace $ {
 			}
 		}
 		
-		_next : Value|Error
-		_ignore : Value|Error
+		_next : Value | undefined
+		_ignore : Value | undefined
 		
 		set( next : Value ) {
 			return this.value( next )
@@ -144,7 +144,7 @@ namespace $ {
 			
 			const prev = this['value()']
 			
-			let next = ( next_raw instanceof Error || prev instanceof Error ) ? next_raw : $mol_conform( next_raw , prev )
+			let next = ( next_raw instanceof Error || prev instanceof Error ) ? next_raw : $mol_conform( next_raw , prev )!
 			
 			if( next === prev ) return prev as Value
 			

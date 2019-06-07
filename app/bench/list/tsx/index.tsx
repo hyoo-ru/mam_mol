@@ -1,3 +1,4 @@
+/* @jsx $mol_dom_jsx */
 namespace $ {
 
 	export class $mol_app_bench_list_tsx {
@@ -11,7 +12,7 @@ namespace $ {
 			}[]
 		}
 		
-		static selected = null as number
+		static selected = Number.NaN
 		
 		static onClick( id : number , event : MouseEvent ) {
 			this.selected = id
@@ -26,31 +27,31 @@ namespace $ {
 				content : string
 			} )=> (
 				<div
-					id={ id }
-					className={ `list-item list-item-selected-${ this.selected === id }`  }
+					classList={[ `list-item list-item-selected-${ this.selected === id }` ]}
 					onclick={ this.onClick.bind( this , id ) }
 					>
 					<div
-						id={ `${id}.title` }
-						className="list-item-title"
+						id="title"
+						classList={[ "list-item-title" ]}
 						>
 						{ title }
 					</div>
 					<div
-						id={ `${id}.content` }
-						className="list-item-content"
+						id="content"
+						classList={[ "list-item-content" ]}
 						>
 						{ content }
 					</div>
 				</div>
 			)
-			
-			return $mol_dom_patch(
-				document.getElementById( 'list' ) ,
-				<div id="list" className="list">
+
+			let List = ( { id } : { id : string } )=> (
+				<div classList={[ 'list' ]} >
 					{ ... this.data.items.map( item => <Item { ... item } /> ) }
 				</div>
 			)
+
+			return <List id="list" />
 			
 		}
 		

@@ -56,6 +56,7 @@ $mol_text_image $mol_view
 	dom_name \object
 	attr *
 		^
+		allowfullscreen true
 		mol_text_type <= type?val \
 		data <= link?val \
 	sub /
