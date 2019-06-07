@@ -3,8 +3,8 @@ namespace $.$$ {
 	export class $mol_perf_uibench extends $.$mol_perf_uibench {
 
 		@ $mol_mem
-		state( next? : any ) {
-			return next || {}
+		state( next = {} as any ) {
+			return next
 		}
 
 		@ $mol_mem
@@ -24,7 +24,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		location() {
-			return this.state().location
+			return this.state().location || null
 		}
 
 		@ $mol_mem
@@ -33,6 +33,7 @@ namespace $.$$ {
 				case 'table' : return [ this.Table() ]
 				case 'anim' : return [ this.Anim() ]
 				case 'tree' : return [ this.Tree() ]
+				default : return []
 			}
 		}
 

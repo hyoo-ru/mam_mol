@@ -1,4 +1,6 @@
 namespace $ {
+
+	console.warn( '$mol_http is deprecated. Use $mol_fetch instead.' )
 	
 	export class $mol_http extends $mol_object {
 		
@@ -41,20 +43,20 @@ namespace $ {
 			
 			next.withCredentials = Boolean( this.credentials() )
 			
-			next.onload = $mol_log_group( `${ this } load` , ( event : Event )=> {
+			next.onload = $mol_fiber_root( $mol_log_group( `${ this } load` , ( event : Event )=> {
 				if(( next.status === 0 )||( Math.floor( next.status / 100 ) === 2 )) {
 					this.response( next , $mol_mem_force_cache )
 				} else {
 					this.response( new Error( next.statusText || next.responseText || `HTTP error ${ next.status }` ) as any , $mol_mem_force_cache )
 				}
-			} )
+			} ) )
 			
-			next.onerror = $mol_log_group( `${ this } error` , ( event : any ) => {
+			next.onerror = $mol_fiber_root( $mol_log_group( `${ this } error` , ( event : any ) => {
 				const right_event = event as ErrorEvent
 				new $mol_defer( ()=> {
 					this.response( right_event.error || new Error( 'Unknown HTTP error' ) , $mol_mem_force_cache )
 				} )
-			} )
+			} ) )
 			
 			return next
 		}

@@ -58,11 +58,11 @@ namespace $.$$ {
 		}
 
 		value_bool( next? : string ) {
-			return this.value( next === undefined ? undefined : new $mol_tree({ type : String( next ) }) ).type
+			return this.value( next === undefined ? null : new $mol_tree({ type : String( next ) }) ).type
 		}
 
 		value_number( next? : string ) {
-			return this.value( next === undefined ? undefined : new $mol_tree({ type : String( next ) }) ).type
+			return this.value( next === undefined ? null : new $mol_tree({ type : String( next ) }) ).type
 		}
 
 		value_string( next? : string ) {

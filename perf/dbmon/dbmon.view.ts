@@ -7,7 +7,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		data() {
-			$mol_state_time.now( ENV.timeout )
+			$mol_state_time.now( ENV.timeout || 15 )
 			Monitoring.renderRate.ping();
 			return ENV.generateData().toArray()
 		}

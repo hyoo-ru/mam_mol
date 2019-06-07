@@ -29,15 +29,17 @@
 <script>
 	uibench.init("$mol", "1.0.0");
 	document.addEventListener("DOMContentLoaded", function(event) {
-		uibench.run(
-			function (state) {
-				$mol_perf_uibench.Root(0).state(state)
-				$mol_defer.run()
-			},
-			function (samples) {
-				document.body.innerHTML = "<pre>" + JSON.stringify(samples, null, " ") + "</pre>"
-			}
-		)
+		$mol_fiber_defer( ()=> {
+			uibench.run(
+				$mol_fiber_root(function (state) {
+					$mol_perf_uibench.Root[0].state(state)
+					$mol_fiber_wrap()
+				}),
+				function (samples) {
+					document.body.innerHTML = "<pre>" + JSON.stringify(samples, null, " ") + "</pre>"
+				}
+			)
+		})
 	} )
 </script>
 </body>
