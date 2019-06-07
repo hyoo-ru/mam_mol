@@ -5,9 +5,10 @@ namespace $ {
 		expressGenerator() {
 			return $mol_fiber_root( ( req : any , res : any , next : () => any )=> {
 				try {
-					return $mol_fiber_unlimit( ()=> this.generator( req.url ).valueOf() && next() )
+					return $mol_fiber_unlimit( ()=> this.generator( req.url ) && next() )
 				} catch( error ) {
 					if( typeof error.then === 'function' ) $mol_fail_hidden( error )
+					console.error( error.stack )
 					if( req.url.match( /\.js$/ ) ) {
 						res.send( `console.error( ${ JSON.stringify( error.message ) } )` ).end()
 					} else if( req.url.match( /\.css$/ ) ) {

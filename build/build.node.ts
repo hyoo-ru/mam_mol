@@ -14,7 +14,7 @@ namespace $ {
 		}
 	}
 	
-	setTimeout( ()=> $mol_build_start( process.argv.slice( 2 ) ) )
+	setTimeout( $mol_fiber_root( ()=> $mol_fiber_unlimit( ()=> $mol_build_start( process.argv.slice( 2 ) ) as any ) ) )
 	
 	export class $mol_build extends $mol_object {
 		

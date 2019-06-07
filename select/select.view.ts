@@ -19,7 +19,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		options() {
-			return Object.keys( this.dictionary() )
+			return Object.keys( this.dictionary() ) as readonly string[]
 		}
 		
 		@ $mol_mem
@@ -28,7 +28,7 @@ namespace $.$$ {
 			options = options.filter( $mol_match_text( this.filter_pattern() , ( id : string )=> [ this.option_label( id ) ] ) )
 
 			const index = options.indexOf( this.value() )
-			if( index >= 0 ) options.splice( index , 1 )
+			if( index >= 0 ) options = [ ... options.slice( 0 , index ) , ... options.slice( index + 1 ) ]
 			
 			return options
 		}

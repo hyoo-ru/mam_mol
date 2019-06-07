@@ -57,16 +57,16 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		head_cells() {
-			return this.col_ids().map( colId => this.Col_head( colId ) )
+			return this.col_ids().map( colId => this.Col_head( colId ) ) as readonly $mol_view[]
 		}
 		
 		col_head_content( colId : string ) {
-			return [ colId ]
+			return [ colId ] as readonly string[]
 		}
 		
 		@ $mol_mem
 		rows() {
-			return this.row_ids().map( id => this.Row( id ) )
+			return this.row_ids().map( id => this.Row( id ) ) as readonly $mol_view[]
 		}
 		
 		cells( row_id : string[] ) {

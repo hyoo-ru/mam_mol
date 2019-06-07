@@ -130,10 +130,10 @@ namespace $.$$ {
 		shift_changed: boolean = false
 
 		@ $mol_mem
-		shift(next?: [number, number]) {
+		shift(next?: readonly [number, number]) : readonly [number,number] {
 			if (next === undefined) {
 				if (!this.shift_changed) return this.shift_default()
-				next = $mol_atom_current()['value()'] || this.shift_default()
+				next = $mol_atom2_value( ()=> this.shift() ) || this.shift_default()
 			}
 			this.shift_changed = true
 			return new $mol_vector_2d( ...next ).limited(this.shift_limit())

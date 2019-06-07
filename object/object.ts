@@ -10,7 +10,7 @@ namespace $ {
 		static get $$() { return this.$ }
 
 		@ $mol_atom2_field
-		_$ : $mol_ambient_context
+		_$! : $mol_ambient_context
 		get $() {
 			if( this._$ ) return this._$
 			const owner = $mol_owning_get( this ) as any

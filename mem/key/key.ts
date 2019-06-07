@@ -11,7 +11,7 @@ namespace $ {
 		descr? : TypedPropertyDescriptor< ( key : Key , next? : Value , force? : $mol_mem_force )=> Value >
 	) : any {
 
-		const value = descr.value
+		const value = descr!.value!
 		
 		const store = new WeakMap< Host , Map< Key , $mol_atom2<Value> > >()
 
@@ -23,27 +23,26 @@ namespace $ {
 
 		const get_cache = ( host : Host , key : Key )=> {
 			
-			let dict = store.get( host )
+			let dict = store.get( host )!
 			if( !dict ) store.set( host , dict = new $mol_dict )
 			
 			let cache = dict.get( key )
+			if( cache ) return cache
 
-			if( !cache ) {
-				cache = new $mol_atom2
-				cache[ Symbol.toStringTag ] = `${ host }.${ name }(${JSON.stringify(key)})`
-				cache.calculate = value.bind( host , key )
-				cache.abort = ()=> {
-					dict.delete( key )
-					if( dict.size === 0 ) store.delete( host )
-					cache.forget()
-					return true
-				}
-				$mol_owning_catch( host , cache )
-				cache[ $mol_object_field ] = name
-				dict.set( key , cache )
+			let cache2 = new $mol_atom2
+			cache2[ Symbol.toStringTag ] = `${ host }.${ name }(${JSON.stringify(key)})`
+			cache2.calculate = value.bind( host , key )
+			cache2.abort = ()=> {
+				dict.delete( key )
+				if( dict.size === 0 ) store.delete( host )
+				cache2.forget()
+				return true
 			}
+			$mol_owning_catch( host , cache2 )
+			cache2[ $mol_object_field ] = name
+			dict.set( key , cache2 )
 
-			return cache
+			return cache2
 		}
 		
 		return {
