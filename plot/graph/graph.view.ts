@@ -31,10 +31,6 @@ namespace $.$$ {
 					[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
 					[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
 				] as [[number, number], [number, number]],
-				scaled_limit: [
-					[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
-					[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
-				] as [[number, number], [number, number]],
 			}
 
 			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as const
@@ -57,25 +53,17 @@ namespace $.$$ {
 				next.raw.push(point)
 				next.scaled.push(scaled)
 
-				if (point[0] < next.raw_limit[0][0]) {
-					next.raw_limit[0][0] = point[0]
-					next.scaled_limit[0][0] = scaled[0]
-				}
-				if (point[1] < next.raw_limit[0][1]) {
-					next.raw_limit[0][1] = point[1]
-					next.scaled_limit[0][1] = scaled[1]
-				}
-				if (point[0] > next.raw_limit[1][0]) {
-					next.raw_limit[1][0] = point[0]
-					next.scaled_limit[1][0] = scaled[0]
-				}
-				if (point[1] > next.raw_limit[1][1]) {
-					next.raw_limit[1][1] = point[1]
-					next.scaled_limit[1][1] = scaled[1]
-				}
+				if (point[0] < next.raw_limit[0][0]) next.raw_limit[0][0] = point[0]
+				if (point[1] < next.raw_limit[0][1]) next.raw_limit[0][1] = point[1]
+				if (point[0] > next.raw_limit[1][0]) next.raw_limit[1][0] = point[0]
+				if (point[1] > next.raw_limit[1][1]) next.raw_limit[1][1] = point[1]
 			}
 
 			return next
+		}
+
+		dimensions_viewport() {
+			return this.points().raw_limit
 		}
 		
 		@ $mol_mem
@@ -84,7 +72,7 @@ namespace $.$$ {
 			const next = [
 				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
 				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
-			]
+			] as [[number, number], [number,number]]
 			
 			for( let point of points ) {
 				if( point[0] < next[0][0] ) next[0][0] = point[0]

@@ -1,22 +1,6 @@
-$mol_plot_ruler $mol_svg_group
-	dimensions_expanded <= dimensions /
-	shift /number
-		0
-		0
-	scale /number
-		1
-		1
-	Sample null
-	-
-	front /
-	color null
+$mol_plot_ruler $mol_plot_graph
 	step_width 50
 	step 10
-	points *
-		raw /readonly[number,number]
-		scaled /readonly[number,number]
-		raw_limit /readonly[number,number]
-		scaled_limit /readonly[number,number]
 	points_generated *
 		raw <= generated_raw /number
 		scaled <= generated_scaled /number
@@ -42,4 +26,3 @@ $mol_plot_ruler $mol_svg_group
 			<= label_pos_y!index \
 		text <= label_text!index \
 		align <= label_align \
-

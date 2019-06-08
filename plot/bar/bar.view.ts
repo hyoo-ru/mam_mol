@@ -21,7 +21,7 @@ namespace $.$$ {
 			const next = [
 				[ Number.POSITIVE_INFINITY , 0 ] ,
 				[ Number.NEGATIVE_INFINITY , 0 ] ,
-			]
+			] as [[number, number], [number, number]]
 			
 			for( let point of points ) {
 				if( point[0] < next[0][0] ) next[0][0] = point[0]

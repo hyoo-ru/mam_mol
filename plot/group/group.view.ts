@@ -10,7 +10,7 @@ namespace $.$$ {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
 				graph.size_real = ()=> this.size_real()
-				graph.dimensions_expanded = ()=> this.dimensions_expanded()
+				graph.dimensions_viewport_total = ()=> this.dimensions_viewport_total()
 			}
 			return graphs
 		}
@@ -22,7 +22,7 @@ namespace $.$$ {
 		
 		back() {
 			const graphs = this.graphs_enriched()
-			const next = [] as $mol_view[]
+			const next = [] as $mol_plot_graph[]
 			
 			for( let graph of graphs ) next.push( ...graph.back() )
 			
@@ -31,7 +31,7 @@ namespace $.$$ {
 		
 		front() {
 			const graphs = this.graphs_enriched()
-			const next = [] as $mol_view[]
+			const next = [] as $mol_plot_graph[]
 			
 			for( let graph of graphs ) next.push( ...graph.front() )
 			

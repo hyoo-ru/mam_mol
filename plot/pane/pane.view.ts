@@ -9,7 +9,7 @@ namespace $.$$ {
 			const next = [
 				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
 				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
-			]
+			] as [[number, number], [number, number]]
 			
 			for( let graph of graphs ) {
 				const dims = graph.dimensions()
@@ -24,34 +24,35 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		dimensions_viewport() {
+			const graphs = this.graphs()
+			
+			const next = [
+				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
+				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
+			] as [[number, number], [number, number]]
+			
+			for( let graph of graphs ) {
+				const dims = graph.dimensions_viewport()
+				
+				if( dims[ 0 ][ 0 ] < next[ 0 ][ 0 ] ) next[ 0 ][ 0 ] = dims[ 0 ][ 0 ]
+				if( dims[ 0 ][ 1 ] < next[ 0 ][ 1 ] ) next[ 0 ][ 1 ] = dims[ 0 ][ 1 ]
+				if( dims[ 1 ][ 0 ] > next[ 1 ][ 0 ] ) next[ 1 ][ 0 ] = dims[ 1 ][ 0 ]
+				if( dims[ 1 ][ 1 ] > next[ 1 ][ 1 ] ) next[ 1 ][ 1 ] = dims[ 1 ][ 1 ]
+			}
+				
+			return next
+		}
+
+		@ $mol_mem
 		size() {
 			const dims = this.dimensions()
 			return [
 				( dims[1][0] - dims[0][0] ) || 1 ,
 				( dims[1][1] - dims[0][1] ) || 1 ,
-			]
+			] as const
 		}
-		
-		@ $mol_mem
-		dimensions_expanded() {
-			const dims = this.dimensions()
-			const size = this.size()
-			const gap = [ 0 , 0 ]
-			return [
-				[ dims[0][0] - size[0] * gap[0] , dims[0][1] - size[1] * gap[1] ] ,
-				[ dims[1][0] + size[0] * gap[0] , dims[1][1] + size[1] * gap[1] ] ,
-			]
-		}
-		
-		@ $mol_mem
-		size_expaned() {
-			const dims = this.dimensions_expanded()
-			return [
-				( dims[1][0] - dims[0][0] ) || 1 ,
-				( dims[1][1] - dims[0][1] ) || 1 ,
-			]
-		}
-		
+			
 		graph_hue( index : number ) {
 			return ( 360 + ( this.hue_base() + this.hue_shift() * index ) % 360 ) % 360
 		}
@@ -59,16 +60,15 @@ namespace $.$$ {
 		@ $mol_mem
 		graphs_colored() {
 			const graphs = this.graphs_positioned()
-			
-			graphs.forEach( ( graph , index ) => {
-				graph.hue = () => this.graph_hue( index )
-			} )
+			for (let index = 0; index < graphs.length; index++) {
+				graphs[index].hue = () => this.graph_hue( index )
+			}
 			
 			return graphs
 		}
 		
 		size_real() {
-			return [ this.width() , this.height() ]
+			return [ this.width() , this.height() ] as const
 		}
 		
 		view_box() {
@@ -81,7 +81,7 @@ namespace $.$$ {
 			const [ , right, , top, ] = super.scale_limit() as unknown as number[]
 			// @todo replace above line to below, after https://github.com/eigenmethod/mol/pull/320
 			// const [ [, right], [, top], ] = super.scale_limit()
-			const size = this.size_expaned()
+			const size = this.size()
 			const real = this.size_real()
 
 			const left = + ( real[0] - this.gap_left() - this.gap_right() ) / size[0]
@@ -99,17 +99,12 @@ namespace $.$$ {
 		@ $mol_mem
 		scale(next?: readonly [number, number]) {
 			if (next === undefined) next = this.scale_default()
-			const [width, height] = this.scale_limit()
-			return [
-				next[0] < width[0] ? width[0] : (next[0] > width[1] ? width[1] : next[0]),
-				next[1] < height[0] ? height[0] : (next[1] > height[1] ? height[1] : next[1]),
-			] as const
-			// return new $mol_vector_2d( ...next ).limited(this.scale_limit())
+			return new $mol_vector_2d( ...next ).limited(this.scale_limit())
 		}
 
 		@ $mol_mem
 		shift_limit() {
-			const [min, max] = this.dimensions_expanded()
+			const [min, max] = this.dimensions()
 			const [scale_x, scale_y] = this.scale()
 			const [size_x, size_y] = this.size_real()
 
@@ -124,7 +119,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		shift_default() {
-			const dims = this.dimensions_expanded()
+			const dims = this.dimensions()
 			const scale = this.scale()
 			return [
 				Math.round( this.gap_left() - dims[0][0] * scale[0] ) ,
@@ -142,25 +137,18 @@ namespace $.$$ {
 			}
 			this.shift_changed = true
 
-
-			const [width, height] = this.shift_limit()
-			return [
-				next[0] < width[0] ? width[0] : (next[0] > width[1] ? width[1] : next[0]),
-				next[1] < height[0] ? height[0] : (next[1] > height[1] ? height[1] : next[1]),
-			] as const
 			return new $mol_vector_2d( ...next ).limited(this.shift_limit())
 		}
 		
 		@ $mol_mem
 		graphs_positioned() {
 			const graphs = this.graphs()
-			
-			graphs.forEach( ( graph , index ) => {
+			for (let graph of graphs) {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
-				graph.dimensions_expanded = ()=> this.dimensions_expanded()
+				graph.dimensions_viewport_total = () => this.dimensions_viewport()
 				graph.size_real = ()=> this.size_real()
-			} )
+			}
 			
 			return graphs
 		}
@@ -168,7 +156,7 @@ namespace $.$$ {
 		@ $mol_mem
 		graphs_sorted() {
 			const graphs = this.graphs_colored()
-			const sorted = [] as $mol_view[]
+			const sorted = [] as $mol_plot_graph[]
 			
 			for( let graph of graphs ) sorted.push( ...graph.back() )
 			for( let graph of graphs ) sorted.push( ...graph.front() )

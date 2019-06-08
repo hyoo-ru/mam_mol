@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_hor extends $.$mol_plot_ruler_hor {
 		range() {
-			const dims = this.dimensions_expanded()
+			const dims = this.dimensions_viewport_total()
 
 			return {from: dims[0][0], to: dims[1][0], scale: this.scale()[0]} as const
 		}

@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_vert extends $.$mol_plot_ruler_vert {		
 		range() {
-			const dims = this.dimensions_expanded()
+			const dims = this.dimensions_viewport_total()
 
 			return {from: dims[0][1], to: dims[1][1], scale: this.scale()[1]}
 		}

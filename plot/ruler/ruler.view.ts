@@ -1,12 +1,5 @@
 namespace $.$$ {
 	export class $mol_plot_ruler extends $.$mol_plot_ruler {
-		dimensions() {
-			return [
-				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
-				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
-			]
-		}
-
 		direction() {
 			return 1
 		}

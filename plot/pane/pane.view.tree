@@ -38,20 +38,20 @@ $mol_plot_pane $mol_svg_root
 	scale?val /number
 		1
 		1
+	size /number
+		0
+		0
 	size_real /number
 		1
 		1
-	size_expaned /number
-		0
-		0
-	dimensions_expanded /
-		0
-		0
-	dimensions /
-		0
-		0
+	dimensions_viewport /readonly[number,number]
+		/number
+		/number
+	dimensions /readonly[number,number]
+		/number
+		/number
 	-
-	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /
+	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
 	-
 	plugins /
 		<= Meter $mol_meter
