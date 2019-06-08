@@ -10,20 +10,20 @@ const User = $mol_data_record({
 	age : $mol_data_optional( $mol_data_integer ) ,
 	phone : $mol_data_variant( $mol_data_string , $mol_data_integer ) ,
 	mail : $mol_data_email ,
-	get friends() { return $mol_data_array( User ) }
+	get friends() { return $mol_data_array( User ) } ,
 })
 
 // Ensure this is a User
 const ann = User({
 	name : 'Ann' ,
-	age : undefined ,
+	age : 33 ,
 	phone : 791234567890,
 	mail : 'foo@example.org' ,
 	friends : [] ,
 })
 
 // Allow only Users
-function printFriends( user : ReturnType<typeof User> ) {
+function printFriends( user : ReturnType< typeof User > ) {
 	for( const friend of user.friends ) {
 		console.log( friend.name )
 	}
