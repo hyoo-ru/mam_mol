@@ -31,3 +31,15 @@ function printFriends( user : ReturnType< typeof User > ) {
 
 printFriends( ann )
 ```
+
+```typescript
+const Weight = $mol_data_nominal<'Weight'>()( $mol_data_integer )
+const Length = $mol_data_nominal<'Length'>()( $mol_data_integer )
+
+let len = Length(10)
+len = Length(20) // Validate
+len = 20 as ReturnType< typeof Length > // Cast
+
+len = 20 // Compile time error
+len = Weight(20) // Compile time error
+```
