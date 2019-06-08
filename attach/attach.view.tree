@@ -1,8 +1,8 @@
 $mol_attach $mol_card
 	Content $mol_tiler
 		items <= content /
-			<= items?val /
-			<= Add $mol_attach_add file_new?val <=> attach_new?val \
+	items?val /
+	Add $mol_attach_add file_new?val <=> attach_new?val \
 	Item!id $mol_attach_item
 		title <= attach_title \
 

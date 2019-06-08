@@ -4,7 +4,7 @@ $mol_app_studio_field $mol_expander
 		checked?val <=> expanded?val false
 		title <= title
 		type <= type
-	tools /
+	Tools $mol_view sub <= tools /
 		- <= Title $mol_app_studio_field_title
 			title <= title
 			type <= type?val \null
@@ -49,41 +49,38 @@ $mol_app_studio_field $mol_expander
 				event_click?val <=> event_prop_add?val null
 			Trigger_icon null
 		<= List $mol_list
-			rows /
-				<= list_rows /
-				<= Add $mol_select
-					hint <= add_hint @ \Add item..
-					value?val <=> add_item?val \
-					dictionary <= item_types *
-						get \<=
-						string \Text
-						number \Number
-						bool \Flag
-						list \List
-						dict \Dictionary
-						null \None
-					Trigger_icon <= List_trigger_icon $mol_icon_plus
+			rows <= list_rows /
 		<= Dict $mol_list
-			rows /
-				<= pairs /
-				<= Add_pair $mol_bar
-					sub /
-						<= Add_pair_key $mol_search
-							hint <= add_pair_hint @ \Add key..
-							query?val <=> add_pair_key?val \
-							suggests <= key_suggests /
-						<= Add_pair_submit $mol_button_minor
-							event_click?val <=> add_pair?val \
-							sub /
-								<= Add_pair_submit_icon $mol_icon_plus
+			rows <= pairs /
 		<= Overs $mol_list
-			rows /
-				<= overs /
-				<= Add_over $mol_select
-					hint <= add_over_hint @ \Add override..
-					value?val <=> add_over?val \
-					Trigger_icon <= Overs_trigger_icon $mol_icon_plus
-					options <= over_options /
+			rows <= overs /
+	Add $mol_select
+		hint <= add_hint @ \Add item..
+		value?val <=> add_item?val \
+		dictionary <= item_types *
+			get \<=
+			string \Text
+			number \Number
+			bool \Flag
+			list \List
+			dict \Dictionary
+			null \None
+		Trigger_icon <= List_trigger_icon $mol_icon_plus
+	Add_pair $mol_bar
+		sub /
+			<= Add_pair_key $mol_search
+				hint <= add_pair_hint @ \Add key..
+				query?val <=> add_pair_key?val \
+				suggests <= key_suggests /
+			<= Add_pair_submit $mol_button_minor
+				event_click?val <=> add_pair?val \
+				sub /
+					<= Add_pair_submit_icon $mol_icon_plus
+	Add_over $mol_select
+		hint <= add_over_hint @ \Add override..
+		value?val <=> add_over?val \
+		Trigger_icon <= Overs_trigger_icon $mol_icon_plus
+		options <= over_options /
 	Prop!id $mol_app_studio_field
 		path <= prop_path!id /
 		prop_arg!id <= prop_arg!id *

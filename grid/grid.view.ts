@@ -70,7 +70,7 @@ namespace $.$$ {
 		}
 		
 		cells( row_id : string[] ) {
-			return this.col_ids().map( col_id => this.Cell({ row : row_id , col : col_id }) )
+			return this.col_ids().map( col_id => this.Cell({ row : row_id , col : col_id }) ) as readonly $mol_view[]
 		}
 		
 		@ $mol_mem_key
@@ -121,7 +121,7 @@ namespace $.$$ {
 			const record = this.record( rowFirst[ rowFirst.length - 1 ] )
 			if( !record ) return []
 			
-			return Object.keys( record )
+			return Object.keys( record ) as readonly string[]
 		}
 		
 		@ $mol_mem
@@ -167,7 +167,7 @@ namespace $.$$ {
 			
 			this.row_sub_ids( this.row_root_id() ).forEach( child => add( child ) )
 			
-			return next
+			return next as readonly string[][]
 		}
 		
 		row_expanded( row_id : string[] , next? : boolean ) {

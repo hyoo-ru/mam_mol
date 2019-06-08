@@ -141,7 +141,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		pos( next? : string ) : string {
-			new $mol_defer( ()=> this.Edit_current().Edit().focused( true ) )
+			new $mol_defer( $mol_fiber_root( ()=> this.Edit_current().Edit().focused( true ) ) )
 			return next || super.pos()
 		}
 

@@ -47,8 +47,8 @@ namespace $.$$ {
 			return this.result_number( id ) / this.result_value_max( id.col )
 		}
 		
-		col_head_label( col : string ) {
-			return [ col ]
+		col_head_title( col : string ) {
+			return col
 		}
 		
 		event_sort_toggle( col : string , next? : Event ) {
@@ -75,7 +75,7 @@ namespace $.$$ {
 		
 		col_head_content( col : string ) {
 			return [
-				this.col_head_label( col ) ,
+				this.col_head_title( col ) ,
 				... ( this.col_sort() === col ) ? [ this.Col_head_sort( col ) ] : []
 			]
 		}

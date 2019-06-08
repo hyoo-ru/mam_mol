@@ -10,6 +10,10 @@ namespace $.$$ {
 			this.items( items.concat( item ) )
 			return void 0
 		}
+
+		content() {
+			return [ ... this.items() , this.Add() ]
+		}
 		
 	}
 

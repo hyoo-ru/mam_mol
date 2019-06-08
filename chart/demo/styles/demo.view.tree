@@ -6,9 +6,8 @@ $mol_chart_demo_styles $mol_demo_large
 			graphs /
 				<= Energy $mol_plot_ruler_vert
 					title <= energy_title @ \kJ
-				<= Day $mol_plot_mark_hor
+				<= Day $mol_plot_ruler_hor
 					title <= day_title @ \Day
-					series <= series_1 /
 				<= Receipts $mol_plot_bar
 					title <= receipts_title @ \Receipts
 					series <= series_2 /

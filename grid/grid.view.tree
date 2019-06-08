@@ -10,8 +10,7 @@ $mol_grid $mol_scroll
 	sub /
 		<= Table $mol_grid_table
 			offset <= gap_top 0
-			sub /
-				<= rows_visible /
+			sub <= rows_visible /
 	rows /
 	Head $mol_grid_row
 		height <= row_height 40
@@ -23,15 +22,12 @@ $mol_grid $mol_scroll
 	Cell!id $mol_view
 	cell!id null
 	Cell_text!id $mol_grid_cell
-		sub /
-			<= cell_content_text!id <= cell_content!id /
+		sub <= cell_content_text!id <= cell_content!id /
 	Cell_number!id $mol_grid_number
-		sub /
-			<= cell_content_number!id <= cell_content!id /
+		sub <= cell_content_number!id <= cell_content!id /
 	Col_head!id $mol_float
 		dom_name \th
-		sub /
-			<= col_head_content!id /
+		sub <= col_head_content!id /
 	Cell_branch!id $mol_check_expand
 		level <= cell_level!id 0
 		label <= cell_content!id /

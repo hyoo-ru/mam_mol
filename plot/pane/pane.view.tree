@@ -12,7 +12,7 @@ $mol_plot_pane $mol_svg_root
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
 	-
-	shift_limit /readonly[number,number]
+	shift_limit /
 		<= shift_limit_x /number
 			0
 			0
@@ -25,7 +25,7 @@ $mol_plot_pane $mol_svg_root
 	shift?val /number
 		0
 		0
-	scale_limit /readonly[number,number]
+	scale_limit /
 		<= scale_limit_x /number
 			0
 			Infinity

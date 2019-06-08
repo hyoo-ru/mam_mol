@@ -6,6 +6,6 @@ $mol_expander $mol_list
 					checked?val <=> expanded?val false
 					label <= label /
 						<= title
-				<= tools /
+				<= Tools null
 		<= Content $mol_view
 			sub <= content /

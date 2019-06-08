@@ -76,7 +76,7 @@ namespace $.$$ {
 			const sub = [
 				this.Strut() ,
 				... ( this.sub() || [] ) ,
-			]
+			] as readonly (string | number | boolean | $mol_view | Node)[]
 
 			const context = this.$$
 

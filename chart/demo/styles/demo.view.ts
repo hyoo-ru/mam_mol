@@ -5,11 +5,10 @@ namespace $.$$ {
 		@ $mol_mem
 		series() {
 			const next = [] as number[]
-			const shift = 10
-			const limit = shift + this.samples_count() 
+			const limit = this.samples_count() 
 			
-			for( let i = shift ; i < limit ; ++ i ) {
-				next[ i ] = Number( ( 6.5 + Math.sin( 8 * i / limit ) ).toFixed( 3 ) )
+			for( let i = 0 ; i < limit ; ++ i ) {
+				next.push( Number( ( 6.5 + Math.sin( 8 * i / limit ) ).toFixed( 3 ) ) )
 			}
 			
 			return next

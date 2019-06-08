@@ -13,6 +13,10 @@ namespace $.$$ {
 			]
 		}
 
+		preview_tools() {
+			return [ this.Source_link() , this.Edit() , ... this.tools_main() ]
+		}
+
 		@ $mol_mem
 		classes_static() {
 			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n'
@@ -163,7 +167,7 @@ namespace $.$$ {
 		}
 
 		overrided( key : string , next? : any ) : any {
-			return this.overrided_all( ( next === undefined ) ? null : { ... this.overrided_all() , [ key ] : next } )[ key ]
+			return this.overrided_all( ( next === undefined ) ? undefined : { ... this.overrided_all() , [ key ] : next } )[ key ]
 		}
 		
 		@ $mol_mem_key
@@ -181,7 +185,7 @@ namespace $.$$ {
 				val = val.call( element , next )
 				while( val && path2.length ) {
 					const field = path2.shift()
-					if( field === null ) continue
+					if( field == null ) continue
 					val = val[ field ]
 				}
 			}

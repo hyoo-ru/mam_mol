@@ -5,7 +5,7 @@ $mol_bench $mol_grid
 	Col_head!id $mol_bench_head
 		event_click?val <=> event_sort_toggle!id?val null
 		sub <= col_head_content!id /
-			<= col_head_label!id /
+			<= col_head_title!id \
 			<= Col_head_sort!id $mol_icon_sort_asc
 	-
 	cell_content_number!id /

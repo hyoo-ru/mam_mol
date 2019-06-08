@@ -75,11 +75,11 @@ namespace $.$$ {
 		}
 
 		pairs() {
-			return this.value().sub.map( pair => this.Prop([ ... this.path() , pair.type , null ]) )
+			return [ ... this.value().sub.map( pair => this.Prop([ ... this.path() , pair.type , null ]) ) , this.Add_pair() ]
 		}
 
 		overs() {
-			return this.value().sub.map( over => this.Prop([ ... this.path() , over.type , null ]) )
+			return [ ... this.value().sub.map( over => this.Prop([ ... this.path() , over.type , null ]) ) , this.Add_over() ]
 		}
 
 		hint() {
@@ -122,7 +122,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		list_rows() {
-			return this.value().sub.map( ( item , index )=> this.Prop([ ... this.path() , index ]) )
+			return [ ... this.value().sub.map( ( item , index )=> this.Prop([ ... this.path() , index ]) ) , this.Add() ]
 		}
 
 		prop_path( path : $mol_tree_path ) {
@@ -135,7 +135,7 @@ namespace $.$$ {
 			const items = this.value()
 			this.value( items.insert( new $mol_tree({ type }) , items.sub.length ) )
 
-			this.list_rows()[ items.sub.length ].type( type )
+			// this.list_rows()[ items.sub.length ].type( type )
 
 			return null
 		}

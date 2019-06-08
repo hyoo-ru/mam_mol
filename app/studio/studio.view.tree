@@ -1,10 +1,11 @@
 $mol_app_studio $mol_book
 	value_overrided!id?val null
 	-
+	tools_main /
 	pages /
 		<= Preview_page $mol_page
 			title <= preview_title @ \Preview: 
-			tools /
+			tools <= preview_tools /
 				<= Source_link $mol_link
 					hint <= source_title
 					sub /
@@ -19,7 +20,6 @@ $mol_app_studio $mol_book
 					arg *
 						path \
 						source null
-				<= tools_main /
 			body /
 				<= Selector $mol_app_studio_selector
 					sub /

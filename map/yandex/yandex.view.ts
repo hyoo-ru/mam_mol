@@ -23,9 +23,9 @@ namespace $.$$ {
 			api.controls.remove( 'typeSelector' )
 
 			api.events.add( [ 'actionend' ] , ( event : any )=> {
-				new $mol_after_frame( ()=> {
+				new $mol_after_frame( $mol_fiber_root( ()=> {
 					this.update( event ) 
-				} )
+				} ) )
 			} )
 
 			return api

@@ -36,7 +36,7 @@ namespace $ {
 		
 		@ $mol_mem
 		content( next? : string , force? : $mol_mem_force ) {
-			return $mol_http.resource( this.path() ).text( next )
+			return $mol_fetch.text( this.path() )
 		}
 		
 		resolve( path : string ) : $mol_file {
