@@ -42,4 +42,5 @@ len = 20 as ReturnType< typeof Length > // Cast
 
 len = 20 // Compile time error
 len = Weight(20) // Compile time error
+len = Length( 20.1 ) // Run time error
 ```
