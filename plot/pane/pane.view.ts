@@ -87,7 +87,7 @@ namespace $.$$ {
 			const left = + ( real[0] - this.gap_left() - this.gap_right() ) / size[0]
 			const bottom = - ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1]
 
-			return [[left, right], [bottom, top]] as const
+			return [[Math.round(left), Math.round(right)], [Math.round(bottom), Math.round(top)]] as const
 		}
 
 		@ $mol_mem
@@ -99,7 +99,12 @@ namespace $.$$ {
 		@ $mol_mem
 		scale(next?: readonly [number, number]) {
 			if (next === undefined) next = this.scale_default()
-			return new $mol_vector_2d( ...next ).limited(this.scale_limit())
+			const [width, height] = this.scale_limit()
+			return [
+				next[0] < width[0] ? width[0] : (next[0] > width[1] ? width[1] : next[0]),
+				next[1] < height[0] ? height[0] : (next[1] > height[1] ? height[1] : next[1]),
+			] as const
+			// return new $mol_vector_2d( ...next ).limited(this.scale_limit())
 		}
 
 		@ $mol_mem
@@ -136,6 +141,13 @@ namespace $.$$ {
 				next = $mol_atom_current()['value()'] || this.shift_default()
 			}
 			this.shift_changed = true
+
+
+			const [width, height] = this.shift_limit()
+			return [
+				next[0] < width[0] ? width[0] : (next[0] > width[1] ? width[1] : next[0]),
+				next[1] < height[0] ? height[0] : (next[1] > height[1] ? height[1] : next[1]),
+			] as const
 			return new $mol_vector_2d( ...next ).limited(this.shift_limit())
 		}
 		

@@ -16,18 +16,27 @@ namespace $.$$ {
 			const threshold = this.threshold()
 			const size = this.size_real()
 
-			const threshold_left = - threshold
-			const threshold_right = size[0] + threshold
-			const threshold_top = size[1] + threshold
-			const threshold_bottom = - threshold
+			const viewport_left = - threshold
+			const viewport_right = size[0] + threshold
+			const viewport_bottom = - threshold
+			const viewport_top = size[1] + threshold
 
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()
 			const points_raw = this.points_raw()
 			const next = {
 				raw: [] as (readonly [number, number])[],
-				scaled: [] as (readonly [number, number])[]
+				scaled: [] as (readonly [number, number])[],
+				raw_limit: [
+					[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
+					[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
+				] as [[number, number], [number, number]],
+				scaled_limit: [
+					[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
+					[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
+				] as [[number, number], [number, number]],
 			}
+
 			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as const
 			for (let point of points_raw) {
 				const scaled = [
@@ -42,11 +51,28 @@ namespace $.$$ {
 
 				last = scaled
 
-				if (scaled[0] < threshold_left || scaled[0] > threshold_right) continue
-				if (scaled[1] < threshold_bottom || scaled[1] > threshold_top) continue
+				if (scaled[0] < viewport_left || scaled[0] > viewport_right) continue
+				if (scaled[1] < viewport_bottom || scaled[1] > viewport_top) continue
 
 				next.raw.push(point)
 				next.scaled.push(scaled)
+
+				if (point[0] < next.raw_limit[0][0]) {
+					next.raw_limit[0][0] = point[0]
+					next.scaled_limit[0][0] = scaled[0]
+				}
+				if (point[1] < next.raw_limit[0][1]) {
+					next.raw_limit[0][1] = point[1]
+					next.scaled_limit[0][1] = scaled[1]
+				}
+				if (point[0] > next.raw_limit[1][0]) {
+					next.raw_limit[1][0] = point[0]
+					next.scaled_limit[1][0] = scaled[0]
+				}
+				if (point[1] > next.raw_limit[1][1]) {
+					next.raw_limit[1][1] = point[1]
+					next.scaled_limit[1][1] = scaled[1]
+				}
 			}
 
 			return next

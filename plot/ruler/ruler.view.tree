@@ -12,7 +12,11 @@ $mol_plot_ruler $mol_svg_group
 	color null
 	step_width 50
 	step 10
-	points /
+	points *
+		raw /readonly[number,number]
+		scaled /readonly[number,number]
+		raw_limit /readonly[number,number]
+		scaled_limit /readonly[number,number]
 	points_generated *
 		raw <= generated_raw /number
 		scaled <= generated_scaled /number
