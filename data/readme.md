@@ -1,6 +1,6 @@
 # $mol_data
 
-Defines DTO with compiletime/runtime validation.
+Defines static typed DTO with strict runtime validation and user friendly error messages like `["friends"][0]["phone"] is not a string and is not a number`.
 
 # Usage example
 
@@ -9,39 +9,25 @@ const User = $mol_data_record({
 	name : $mol_data_string ,
 	age : $mol_data_optional( $mol_data_integer ) ,
 	phone : $mol_data_variant( $mol_data_string , $mol_data_integer ) ,
-	mails : $mol_data_array( $mol_data_email ),
-	get wife() { return $mol_data_optional( User ) }
+	mail : $mol_data_email ,
+	get friends() { return $mol_data_array( User ) }
 })
 
+// Ensure this is a User
 const ann = User({
 	name : 'Ann' ,
 	age : undefined ,
 	phone : 791234567890,
-	mails : ['foo@example.org'] ,
-	wife : undefined ,
+	mail : 'foo@example.org' ,
+	friends : [] ,
 })
 
-const evan = User({
-	name : 'Evan',
-	age : 22,
-	phone : 791234567890 ,
-	mails : ['lol'] , // Not a mail
-	wife : ann ,
-})
+// Allow only Users
+function printFriends( user : ReturnType<typeof User> ) {
+	for( const friend of user.friends ) {
+		console.log( friend.name )
+	}
+}
 
-const john = User({
-	name : 'John' ,
-	age : 32 ,
-	phone : 791234567890.1 , // Not a string and Not an integer
-	mails : ['foo@example.org'] ,
-	wife : undefined ,
-})
-
-const mary = User({
-	name: 'Mary',
-	age: 32,
-	phone: false, // Type 'false' is not assignable to type 'string | number'
-	mails: [] ,
-	wife : undefined ,
-})
+printFriends( ann )
 ```

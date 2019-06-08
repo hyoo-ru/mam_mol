@@ -7,8 +7,7 @@ namespace $ {
 			
 			for( const type of sub ) {
 				try {
-					type( val )
-					return val
+					return type( val ) as ReturnType< Sub[ number ] >
 				} catch ( error ) {
 					errors.push( error.message )
 				}
