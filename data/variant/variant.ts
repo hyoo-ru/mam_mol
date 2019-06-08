@@ -1,7 +1,7 @@
 namespace $ {
 
 	export function $mol_data_variant< Sub extends $mol_data_value[] >( ... sub : Sub ) {
-		return ( val : ReturnType< Sub[ number ] > ) => {
+		return ( val : Parameters< Sub[ number ] >[0] ) => {
 			
 			const errors = [] as String[]
 			
