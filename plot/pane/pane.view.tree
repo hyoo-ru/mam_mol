@@ -51,7 +51,7 @@ $mol_plot_pane $mol_svg_root
 		/number
 		/number
 	-
-	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
+	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /$mol_plot_base
 	-
 	plugins /
 		<= Meter $mol_meter

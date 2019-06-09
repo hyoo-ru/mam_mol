@@ -1,0 +1,21 @@
+$mol_plot_base $mol_svg_group
+	shift /number
+		0
+		0
+	scale /number
+		1
+		1
+	dimensions_viewport_total /readonly[number,number]
+		/number
+		/number
+	dimensions /readonly[number,number]
+		/number
+		/number
+	size_real /number
+		0
+		0
+	front /
+	back /
+	hue NaN
+	Sample null
+

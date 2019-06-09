@@ -4,11 +4,11 @@ namespace $.$$ {
 		curve() {
 			const shift = this.shift()
 
-			return this.points().scaled.map( point => `M ${ point[0] } ${ shift[1] } V ${ point[1] }` ).join( ' ' ) || ''
+			return this.points().map( point => `M ${ point[0] } ${ shift[1] } V ${ point[1] }` ).join( ' ' ) || ''
 		}
 		
 		stroke_width() {
-			return ( 8 / Math.sqrt( this.points().scaled.length ) ).toPrecision(2) + '%'
+			return ( 8 / Math.sqrt( this.points().length ) ).toPrecision(2) + '%'
 		}
 		
 		color() {

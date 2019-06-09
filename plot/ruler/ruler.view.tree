@@ -1,14 +1,10 @@
-$mol_plot_ruler $mol_plot_graph
+$mol_plot_ruler $mol_plot_base
 	step_width 50
-	step 10
-	points_generated *
-		raw <= generated_raw /number
-		scaled <= generated_scaled /number
-	shift_axle 0
-	range *
-		from <= range_from 0
-		to <= range_to 0
-		scale <= range_scale 0
+	step 0
+	step_scale 1
+	viewport /number
+	points /number
+	normalize?val 0
 	sub /
 		<= Curve $mol_svg_path
 			geometry <= curve \

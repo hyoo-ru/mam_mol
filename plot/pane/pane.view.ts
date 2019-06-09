@@ -24,27 +24,6 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		dimensions_viewport() {
-			const graphs = this.graphs()
-			
-			const next = [
-				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
-				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
-			] as [[number, number], [number, number]]
-			
-			for( let graph of graphs ) {
-				const dims = graph.dimensions_viewport()
-				
-				if( dims[ 0 ][ 0 ] < next[ 0 ][ 0 ] ) next[ 0 ][ 0 ] = dims[ 0 ][ 0 ]
-				if( dims[ 0 ][ 1 ] < next[ 0 ][ 1 ] ) next[ 0 ][ 1 ] = dims[ 0 ][ 1 ]
-				if( dims[ 1 ][ 0 ] > next[ 1 ][ 0 ] ) next[ 1 ][ 0 ] = dims[ 1 ][ 0 ]
-				if( dims[ 1 ][ 1 ] > next[ 1 ][ 1 ] ) next[ 1 ][ 1 ] = dims[ 1 ][ 1 ]
-			}
-				
-			return next
-		}
-
-		@ $mol_mem
 		size() {
 			const dims = this.dimensions()
 			return [
@@ -146,7 +125,7 @@ namespace $.$$ {
 			for (let graph of graphs) {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
-				graph.dimensions_viewport_total = () => this.dimensions_viewport()
+				graph.dimensions_viewport_total = () => this.dimensions()
 				graph.size_real = ()=> this.size_real()
 			}
 			
@@ -156,7 +135,7 @@ namespace $.$$ {
 		@ $mol_mem
 		graphs_sorted() {
 			const graphs = this.graphs_colored()
-			const sorted = [] as $mol_plot_graph[]
+			const sorted = [] as $mol_plot_base[]
 			
 			for( let graph of graphs ) sorted.push( ...graph.back() )
 			for( let graph of graphs ) sorted.push( ...graph.front() )

@@ -1,29 +1,8 @@
-$mol_plot_graph $mol_svg_group
+$mol_plot_graph $mol_plot_base
 	series *
 	points_raw /readonly[number,number]
-	points *
-		raw /readonly[number,number]
-		scaled /readonly[number,number]
+	points /readonly[number,number]
 	threshold 4
-	shift /number
-		0
-		0
-	scale /number
-		1
-		1
-	dimensions_viewport_total /readonly[number,number]
-		/number
-		/number
-	dimensions_viewport /readonly[number,number]
-		/number
-		/number
-	dimensions /readonly[number,number]
-		/number
-		/number
-	size_real /number
-		0
-		0
-	hue NaN
 	-
 	attr *
 		^
@@ -34,9 +13,6 @@ $mol_plot_graph $mol_svg_group
 		color <= color \
 	-
 	Sample null
-	-
-	front /
-	back /
 
 $mol_plot_graph_sample $mol_view
 	attr *

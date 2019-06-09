@@ -7,7 +7,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		curve() {
-			return this.points().scaled.map( point => 'M ' + point.join( ' ' ) + ' v 0' ).join( ' ' ) || ''
+			return this.points().map( point => 'M ' + point.join( ' ' ) + ' v 0' ).join( ' ' ) || ''
 		}
 		
 	}
