@@ -84,5 +84,26 @@ namespace $ {
 
 		} ,
 
+		'Range expanding'() {
+
+			let range = $mol_vector_range_full.inversed
+			
+			const expanded = range.expanded0( 10 ).expanded0( 5 )
+
+			$mol_assert_like( [ ... expanded ] , [ 5 , 10 ] )
+
+		} ,
+
+		'Vector of range expanding by vector'() {
+
+			let dimensions = new $mol_vector_2d( $mol_vector_range_full.inversed , $mol_vector_range_full.inversed )
+			
+			const expanded = dimensions.expanded1( [ 1 , 7 ] as const ).expanded1( [ 3 , 5 ] as const )
+
+			$mol_assert_like( [ ... expanded.x ] , [ 1 , 3 ] )
+			$mol_assert_like( [ ... expanded.y ] , [ 5 , 7 ] )
+
+		} ,
+
 	})
 }
