@@ -18,8 +18,9 @@ namespace $.$$ {
 			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as const
 			const radius = this.diameter() / 2
 
-			const spacing = this.spacing()
-			const filled: Set<number> | null = spacing ? this.filled() : null
+			const spacing_x = this.spacing() / scale_x
+			const spacing_y = this.spacing() / scale_y
+			const filled: Set<number> | null = spacing_x ? this.filled() : null
 
 			for (let point of points_raw) {
 				const scaled = [
@@ -40,8 +41,8 @@ namespace $.$$ {
 				if (scaled[1] > viewport_top) continue
 
 				if (filled) {
-					const key = (Math.round(scaled[0] / spacing) * spacing)
-						+ ((Math.round(scaled[1] / spacing) * spacing) << 14)
+					const key = Math.round(Math.round(point[0] / spacing_x) * spacing_x)
+						+ (Math.round(Math.round(point[1] / spacing_y) * spacing_y) << 14)
 					if (filled.has(key)) continue
 
 					filled.add(key)
