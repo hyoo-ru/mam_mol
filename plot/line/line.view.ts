@@ -17,9 +17,12 @@ namespace $.$$ {
 
 			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as const
 
-			let gain_first = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as const
-			let gain_last = [ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] as const
-			const gain_height = this.gain_height()
+			let first_x = null as readonly [number, number] | null
+			let first_y = null as readonly [number, number] | null
+			let last_x = null as readonly [number, number] | null
+			let last_y = null as readonly [number, number] | null
+
+			let gain_detected = false
 			for (let point of points_raw) {
 				const scaled = [
 					Math.round( shift_x + point[0] * scale_x ),
@@ -34,49 +37,54 @@ namespace $.$$ {
 				last = scaled
 
 				if (scaled[0] < viewport_left) {
-					if (!gain_height && gain_first[0] < scaled[0]) gain_first = scaled
-					continue
-				}
-
-				if (scaled[0] > viewport_right) {
-					if (!gain_height && gain_last[0] > scaled[0]) gain_last = scaled
+					first_x = scaled
+					gain_detected = true
 					continue
 				}
 
 				if (scaled[1] < viewport_bottom) {
-					if (gain_height && gain_first[1] < scaled[1]) gain_first = scaled
+					first_y = scaled
+					gain_detected = true
+					continue
+				}
+
+				if (scaled[0] > viewport_right) {
+					last_x = scaled
+					gain_detected = true
 					continue
 				}
 
 				if (scaled[1] > viewport_top) {
-					if (gain_height && gain_last[1] > scaled[1]) gain_last = scaled
+					last_y = scaled
+					gain_detected = true
 					continue
 				}
 
+				if (first_x) points_scaled.push(first_x)
+				if (first_y) points_scaled.push(first_y)
+				first_x = null
+				first_y = null
+
 				points_scaled.push(scaled)
+				if (last_x) points_scaled.push(last_x)
+				if (last_y) points_scaled.push(last_y)
+
+				last_x = null
+				last_y = null
 			}
 
-			return {scaled: points_scaled, first: gain_first, last: gain_last} as const
+			return {scaled: points_scaled, gain_detected} as const
 		}
 
 		gain_detected() {
-			const points = this.points()
-
-			return points.first[0] !== Number.NEGATIVE_INFINITY
-				&& points.last[0] !== Number.POSITIVE_INFINITY
+			return this.points().gain_detected
 		}
 
 		curve() {
-			const {scaled, first, last} = this.points()
-			if( scaled.length === 0 && !this.gain_detected() ) return ''
-			const first_data = first[0] === Number.NEGATIVE_INFINITY
-				? `${scaled[0][0]} ${scaled[0][1]}`
-				: `${first[0]} ${first[1]} L ${first[0]} ${first[1]}`
-			const last_data = last[0] === Number.POSITIVE_INFINITY
-				? ''
-				: ` L ${last[0]} ${last[1]}`
+			const scaled = this.points().scaled
+			if( scaled.length === 0 ) return ''
 
-			return `M ${first_data} ${scaled.map( point => `L ${point[0]} ${point[1]}` ).join( ' ' )}${last_data}`
+			return `M ${scaled.join(' ')} ${scaled.map( point => `L ${point.join(' ')}` ).join( ' ' )}`
 		}
 		
 	}
