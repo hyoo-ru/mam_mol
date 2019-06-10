@@ -20,6 +20,10 @@ namespace $.$$ {
 			return step
 		}
 
+		box_radius() {
+			return this.title().length / 2 + 'rem'
+		}
+
 		normalize(val: number) {
 			const [first, last] = this.viewport_axle()
 			const scale = this.scale_axle()

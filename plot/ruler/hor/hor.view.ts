@@ -6,11 +6,15 @@ namespace $.$$ {
 		}
 
 		viewport_axle() {
-			return [this.gap_left(), this.size_real()[0]] as const
+			return [0, this.size_real()[0]] as const
 		}
 
 		scale_axle() {
 			return this.scale()[0]
+		}
+
+		box_pos_x() {
+			return Math.max(0, (this.title().length / 4)) + 'rem'
 		}
 
 		scale_step() {

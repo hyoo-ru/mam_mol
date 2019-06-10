@@ -5,8 +5,12 @@ namespace $.$$ {
 			return [dims[0][1], dims[1][1]] as const
 		}
 
+		box_pos_x() {
+			return `calc(${this.title_pos_x()} - ${Math.max(0, (this.title().length / 4))}rem`
+		}
+
 		viewport_axle() {
-			return [this.gap_top(), this.size_real()[1]] as const
+			return [0, this.size_real()[1]] as const
 		}
 
 		scale_axle() {

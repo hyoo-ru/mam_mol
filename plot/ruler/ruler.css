@@ -12,3 +12,8 @@
 	color: var(--mol_theme_shade);
 	background-color: var(--mol_theme_back);
 }
+
+[mol_plot_ruler_title_box] {
+	/* fill: aqua; */
+	fill: var(--mol_theme_field);
+}

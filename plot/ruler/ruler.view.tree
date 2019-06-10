@@ -11,6 +11,11 @@ $mol_plot_ruler $mol_plot_base
 		<= Curve $mol_svg_path
 			geometry <= curve \
 		<= labels /
+		<= Title_box $mol_svg_circle
+			radius <= box_radius \0.5rem
+			pos <= box_pos /
+				<= box_pos_x \0
+				<= box_pos_y \100%
 		<= Title $mol_svg_text
 			pos <= title_pos /
 				<= title_pos_x \0
