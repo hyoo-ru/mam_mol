@@ -62,16 +62,19 @@ namespace $.$$ {
 
 				if (first_x) points_scaled.push(first_x)
 				if (first_y) points_scaled.push(first_y)
-				first_x = null
-				first_y = null
 
 				points_scaled.push(scaled)
+
 				if (last_x) points_scaled.push(last_x)
 				if (last_y) points_scaled.push(last_y)
 
-				last_x = null
-				last_y = null
+				first_x = first_y = last_x = last_y = null
 			}
+
+			if (first_x) points_scaled.push(first_x)
+			if (first_y) points_scaled.push(first_y)
+			if (last_x) points_scaled.push(last_x)
+			if (last_y) points_scaled.push(last_y)
 
 			return {scaled: points_scaled, gain_detected} as const
 		}
