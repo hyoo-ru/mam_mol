@@ -8,6 +8,8 @@ namespace $.$$ {
 
 		@ $mol_mem
 		points() {
+			const threshold = this.diameter() / 2
+
 			const [[viewport_left, viewport_bottom], [viewport_right, viewport_top]] = this.viewport()
 
 			const [shift_x, shift_y] = this.shift()
@@ -16,7 +18,6 @@ namespace $.$$ {
 			const points_scaled = [] as (readonly [number, number])[]
 
 			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as const
-			const radius = this.diameter() / 2
 
 			const spacing_x = this.spacing() / scale_x
 			const spacing_y = this.spacing() / scale_y
@@ -29,8 +30,8 @@ namespace $.$$ {
 				] as const
 
 				if (
-					Math.abs( scaled[0] - last[ 0 ] ) < radius
-					&& Math.abs( scaled[1] - last[ 1 ] ) < radius
+					Math.abs( scaled[0] - last[ 0 ] ) < threshold
+					&& Math.abs( scaled[1] - last[ 1 ] ) < threshold
 				) continue
 
 				last = scaled
