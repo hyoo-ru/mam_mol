@@ -9,7 +9,7 @@ namespace $.$$ {
 			const scale = this.step_scale()
 			const viewport = this.axle_viewport()
 
-			const min_width = this.step_width()
+			const min_width = ( Math.abs( Math.log10( viewport[1] - viewport[0] ) ) + 2 ) * 15
 			const size = $mol_math_round_expand( viewport[1] - viewport[0] , -1 )
 			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( size * scale / min_width ) / Math.log( 10 ) ) ) )
 			let step = size / count
