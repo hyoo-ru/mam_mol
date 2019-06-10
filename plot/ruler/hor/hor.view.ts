@@ -6,19 +6,19 @@ namespace $.$$ {
 		}
 
 		normalize(val: number) {
-			const [size] = this.size_real()
+			const [[first], [last]] = this.viewport()
 			const [shift] = this.shift()
 			const [scale] = this.scale()
 			const step = this.step()
 
 			if (scale == 0) return val
-
+			const step_scaled = step * scale
 			const scaled = val * scale + shift
 			let count = 0
-			if (scaled < 0) count = scaled / (step * scale)
-			if (scaled > size) count = (scaled - size) / (step * scale)
+			if (scaled < first) count = (scaled - first) / step_scaled
+			if (scaled > last) count = (scaled - last) / step_scaled
 
-			return val - Math.round(count) * step
+			return val - Math.floor(count) * step
 		}
 
 		step_scale() {
