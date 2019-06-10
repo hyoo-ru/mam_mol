@@ -8,9 +8,10 @@ namespace $.$$ {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
 				graph.size_real = ()=> this.size_real()
-				graph.dimensions_pane = ()=> this.dimensions_pane()
 				graph.hue = ()=> this.hue()
-				graph.points = ()=> this.points()
+				graph.points_raw = ()=> this.points_raw()
+				graph.dimensions_pane = ()=> this.dimensions_pane()
+				graph.dimensions = ()=> this.dimensions()
 			}
 			return graphs
 		}

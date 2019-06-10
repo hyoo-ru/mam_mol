@@ -1,4 +1,11 @@
 $mol_plot_line $mol_plot_graph
+	points *
+		scaled /readonly[number,number]
+		first /number
+		last /number
+	gain_detected false
+	gain_height false
+	threshold 4
 	color_fill \none
 	sub /
 		<= Curve $mol_svg_path

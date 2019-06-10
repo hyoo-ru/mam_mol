@@ -1,8 +1,6 @@
 $mol_plot_graph $mol_plot_base
 	series *
 	points_raw /readonly[number,number]
-	points /readonly[number,number]
-	threshold 4
 	-
 	attr *
 		^
