@@ -1,7 +1,7 @@
 $mol_plot_line $mol_plot_graph
-	points *
-		scaled /readonly[number,number]
-	threshold 12
+	points /readonly[number,number]
+	threshold 4
+	spacing 2
 	color_fill \none
 	sub /
 		<= Curve $mol_svg_path

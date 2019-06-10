@@ -1,5 +1,5 @@
 $mol_plot_dot $mol_plot_graph
-	point_gap 1
+	spacing <= diameter
 	style *
 		^
 		stroke-width <= diameter 8
