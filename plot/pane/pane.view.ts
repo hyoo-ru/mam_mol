@@ -125,12 +125,21 @@ namespace $.$$ {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
 				graph.dimensions_pane = () => this.dimensions()
+				graph.viewport = () => this.viewport()
 				graph.size_real = ()=> this.size_real()
 			}
 			
 			return graphs
 		}
-		
+
+		viewport() {
+			const size = this.size_real()
+			return [
+				[this.gap_left(), this.gap_bottom()],
+				[size[0] - this.gap_right(), size[1] - this.gap_top()]
+			] as const
+		}
+
 		@ $mol_mem
 		graphs_sorted() {
 			const graphs = this.graphs_colored()

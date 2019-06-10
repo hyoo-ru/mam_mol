@@ -3,12 +3,7 @@ namespace $.$$ {
 		@ $mol_mem
 		points() {
 			const threshold = this.threshold()
-			const size = this.size_real()
-
-			const viewport_left = - threshold
-			const viewport_right = size[0] + threshold
-			const viewport_bottom = - threshold
-			const viewport_top = size[1] + threshold
+			const [[viewport_left, viewport_bottom], [viewport_right, viewport_top]] = this.viewport()
 
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()
@@ -77,10 +72,6 @@ namespace $.$$ {
 			if (last_y) points_scaled.push(last_y)
 
 			return {scaled: points_scaled, gain_detected} as const
-		}
-
-		gain_detected() {
-			return this.points().gain_detected
 		}
 
 		curve() {

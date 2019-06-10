@@ -12,6 +12,7 @@ namespace $.$$ {
 				graph.points_raw = ()=> this.points_raw()
 				graph.dimensions_pane = ()=> this.dimensions_pane()
 				graph.dimensions = ()=> this.dimensions()
+				graph.viewport = ()=> this.viewport()
 			}
 			return graphs
 		}

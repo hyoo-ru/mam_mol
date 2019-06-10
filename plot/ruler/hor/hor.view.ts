@@ -1,6 +1,6 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_hor extends $.$mol_plot_ruler_hor {
-		viewport() {
+		axle_viewport() {
 			const dims = this.dimensions_pane()
 			return [dims[0][0], dims[1][0]] as const
 		}

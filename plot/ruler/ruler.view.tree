@@ -2,7 +2,7 @@ $mol_plot_ruler $mol_plot_base
 	step_width 50
 	step 0
 	step_scale 1
-	viewport /number
+	axle_viewport /number
 	points /number
 	normalize?val 0
 	sub /

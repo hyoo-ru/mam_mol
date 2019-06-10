@@ -9,7 +9,7 @@ namespace $.$$ {
 				series[ key ] ,
 			] )
 		}
-		
+
 		@ $mol_mem
 		dimensions() {
 			const points = this.points_raw()

@@ -7,7 +7,7 @@ namespace $.$$ {
 		@ $mol_mem
 		step() {
 			const scale = this.step_scale()
-			const viewport = this.viewport()
+			const viewport = this.axle_viewport()
 
 			const min_width = this.step_width()
 			const size = $mol_math_round_expand( viewport[1] - viewport[0] , -1 )
@@ -22,7 +22,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		points() {
-			const viewport = this.viewport()
+			const viewport = this.axle_viewport()
 			const step = this.step()
 
 			const next = [] as number[]

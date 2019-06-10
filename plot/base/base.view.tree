@@ -1,4 +1,7 @@
 $mol_plot_base $mol_svg_group
+	viewport /readonly[number,number]
+		/number
+		/number
 	shift /number
 		0
 		0
