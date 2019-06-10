@@ -66,10 +66,9 @@ namespace $.$$ {
 			const left = + ( real[0] - this.gap_left() - this.gap_right() ) / size[0]
 			const bottom = - ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1]
 
-			return [[Math.round(left), Math.round(right)], [Math.round(bottom), Math.round(top)]] as const
+			return [[left, right], [bottom, top]] as const
 		}
 
-		@ $mol_mem
 		scale_default() {
 			const limits = this.scale_limit()
 			return [limits[0][0], limits[1][0]] as const
@@ -125,7 +124,7 @@ namespace $.$$ {
 			for (let graph of graphs) {
 				graph.shift = ()=> this.shift()
 				graph.scale = ()=> this.scale()
-				graph.dimensions_viewport_total = () => this.dimensions()
+				graph.dimensions_pane = () => this.dimensions()
 				graph.size_real = ()=> this.size_real()
 			}
 			

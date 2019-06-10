@@ -5,7 +5,7 @@ $mol_plot_base $mol_svg_group
 	scale /number
 		1
 		1
-	dimensions_viewport_total /readonly[number,number]
+	dimensions_pane /readonly[number,number]
 		/number
 		/number
 	dimensions /readonly[number,number]

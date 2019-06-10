@@ -30,8 +30,13 @@ namespace $.$$ {
 			}
 
 			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as const
-			for (let index = 0; index < points_raw.length; index++) {
-				const point = points_raw[index]
+
+			let first_x: [readonly [number, number], readonly [number, number]] | null = null
+			let first_y: [readonly [number, number], readonly [number, number]] | null = null
+			let last_x: [readonly [number, number], readonly [number, number]] | null = null
+			let last_y: [readonly [number, number], readonly [number, number]] | null = null
+
+			for (let point of points_raw) {
 				const scaled = [
 					Math.round( shift_x + point[0] * scale_x ),
 					Math.round( shift_y + point[1] * scale_y ),
@@ -44,11 +49,60 @@ namespace $.$$ {
 
 				last = scaled
 
-				if (scaled[0] < viewport_left || scaled[0] > viewport_right) continue
-				if (scaled[1] < viewport_bottom || scaled[1] > viewport_top) continue
+				if (scaled[0] < viewport_left) {
+					first_x = [scaled, point]
+					continue
+				}
+
+				if (scaled[0] > viewport_right) {
+					if (!last_x) last_x = [scaled, point]
+					continue
+				}
+
+				if (scaled[1] < viewport_bottom) {
+					first_y = [scaled, point]
+					continue
+				}
+
+				if (scaled[1] > viewport_top) {
+					if (!last_y) last_y = [scaled, point]
+					continue
+				}
+
+				if (first_x) {
+					next.scaled.push(first_x[0])
+					next.raw.push(first_x[1])	
+					first_x = null
+				}
+
+				if (first_y) {
+					next.scaled.push(first_y[0])
+					next.raw.push(first_y[1])	
+					first_y = null
+				}
 
 				next.scaled.push(scaled)
 				next.raw.push(point)
+			}
+
+			if (first_x) {
+				next.scaled.push(first_x[0])
+				next.raw.push(first_x[1])	
+			}
+
+			if (first_y) {
+				next.scaled.push(first_y[0])
+				next.raw.push(first_y[1])	
+			}
+
+			if (last_x) {
+				next.scaled.push(last_x[0])
+				next.raw.push(last_x[1])	
+			}
+
+			if (last_y) {
+				next.scaled.push(last_y[0])
+				next.raw.push(last_y[1])	
 			}
 
 			return next
@@ -66,8 +120,7 @@ namespace $.$$ {
 				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
 			] as [[number, number], [number,number]]
 			
-			for( let i = 0; i < points.length; i++) {
-				const point = points[i]
+			for(let point of points) {
 				if( point[0] < next[0][0] ) next[0][0] = point[0]
 				if( point[1] < next[0][1] ) next[0][1] = point[1]
 				if( point[0] > next[1][0] ) next[1][0] = point[0]

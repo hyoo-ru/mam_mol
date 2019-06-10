@@ -46,7 +46,7 @@ namespace $.$$ {
 			return point.toFixed( this.precision() )
 		}
 		
-		back() {
+		front() {
 			return [ this ]
 		}
 	}
