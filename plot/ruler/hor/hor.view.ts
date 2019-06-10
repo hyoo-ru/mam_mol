@@ -1,30 +1,26 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_hor extends $.$mol_plot_ruler_hor {
-		axle_viewport() {
+		dimensions_axle() {
 			const dims = this.dimensions_pane()
 			return [dims[0][0], dims[1][0]] as const
 		}
 
-		normalize(val: number) {
-			const [[first], [last]] = this.viewport()
-			const [shift] = this.shift()
-			const [scale] = this.scale()
-			const step = this.step()
-
-			if (scale == 0) return val
-			const step_scaled = step * scale
-			const scaled = val * scale + shift
-			let count = 0
-			if (scaled < first) count = (scaled - first) / step_scaled
-			if (scaled > last) count = (scaled - last) / step_scaled
-
-			return val - Math.floor(count) * step
+		viewport_axle() {
+			return [this.gap_left(), this.size_real()[0]] as const
 		}
 
-		step_scale() {
+		scale_axle() {
 			return this.scale()[0]
 		}
 
+		scale_step() {
+			return this.scale()[0]
+		}
+
+		shift_axle() {
+			return this.shift()[0]
+		}
+		
 		curve() {
 			const [shift] = this.shift()
 			const [scale] = this.scale()

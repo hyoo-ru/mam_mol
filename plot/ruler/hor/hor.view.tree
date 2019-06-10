@@ -1,5 +1,5 @@
 $mol_plot_ruler_hor $mol_plot_ruler
-	step_width 50
+	gap_left 28
 	title_align \start
 	label_align \middle
 	title_pos_x \0

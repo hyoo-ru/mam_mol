@@ -1,28 +1,24 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_vert extends $.$mol_plot_ruler_vert {
-		axle_viewport() {
+		dimensions_axle() {
 			const dims = this.dimensions_pane()
 			return [dims[0][1], dims[1][1]] as const
 		}
 
-		step_scale() {
+		viewport_axle() {
+			return [this.gap_top(), this.size_real()[1]] as const
+		}
+
+		scale_axle() {
+			return this.scale()[1]
+		}
+
+		scale_step() {
 			return -this.scale()[1]
 		}
 
-		normalize(val: number) {
-			const [[,first], [,last]] = this.viewport()
-			const [,shift] = this.shift()
-			const [,scale] = this.scale()
-			const step = this.step()
-
-			if (scale == 0) return val
-			const step_scaled = step * scale
-			const scaled = val * scale + shift
-			let count = 0
-			if (scaled < first) count = (scaled - first) / step_scaled
-			if (scaled > last) count = (scaled - last) / step_scaled
-
-			return val - Math.floor(count) * step
+		shift_axle() {
+			return this.shift()[1]
 		}
 
 		curve() {

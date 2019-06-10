@@ -1,5 +1,5 @@
 $mol_plot_ruler_vert $mol_plot_ruler
-	step_width 28
+	gap_top 28
 	title_align \end
 	label_align \end
 	title_pos_x \36px
