@@ -36,31 +36,28 @@
 	background: none;
 }
 
-@keyframes mol_view_wait_show {
-	from {
-		background: none;
-	}
-}
-
 @keyframes mol_view_wait_move {
 	from {
 		background-position: 0 0;
 	}
 	to {
-		background-position: -28px 0;
+		background-position: 200vmax 0;
 	}
 }
 
 [mol_view][mol_view_error="$mol_atom_wait"] {
 		background-image: repeating-linear-gradient(
 		45deg,
-		rgba( 0 , 0 , 0 , .02 ),
-		rgba( 0 , 0 , 0 , .02 ) 9px,
-		rgba(255,255,255,.015) 10px,
-		rgba(255,255,255,.015) 20px
+		hsla( 0 , 0% , 50% , .1 ) 0% ,
+		hsla( 0 , 0% , 50% , 0 ) 5% ,
+		hsla( 0 , 0% , 50% , 0 ) 45% ,
+		hsla( 0 , 0% , 50% , .1 ) 50% ,
+		hsla( 0 , 0% , 50% , 0 ) 55% ,
+		hsla( 0 , 0% , 50% , 0 ) 95% ,
+		hsla( 0 , 0% , 50% , .1 ) 100%
 	);
-	background-size: 28px 28px;
-	animation: mol_view_wait_show .5s ease-in , mol_view_wait_move .25s steps(6) infinite;
+	background-size: 200vmax 200vmax;
+	animation: mol_view_wait_move 1s linear infinite;
 }
 
 [mol_view][mol_view_error="$mol_atom_wait"] * {

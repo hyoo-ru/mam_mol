@@ -32,6 +32,10 @@ namespace $ {
 			return this.merged( mults , ( a , b )=> a * b ) as any
 		}
 
+		expanded1( this : $mol_vector< $mol_vector_range< number > , Length > , point : readonly number[] & { length : Length } ) : this {
+			return this.merged( point , ( range , value )=> range.expanded0( value ) ) as any
+		}
+
 	}
 
 	export class $mol_vector_1d< Value > extends $mol_vector< Value , 1 > {
@@ -61,7 +65,25 @@ namespace $ {
 		[1]: Value
 		get min() { return this[0] }
 		get max() { return this[1] }
+		
+		get inversed() {
+			return new ( this.constructor as typeof $mol_vector_range )( this.max , this.min )
+		}
+
+		expanded0( value : Value ) {
+			
+			const Range = this.constructor as typeof $mol_vector_range
+			let range = this as $mol_vector_range< Value >
+			
+			if( value > range.max ) range = new Range( range.min , value )
+			if( value < range.min ) range = new Range( value , range.max )
+
+			return range
+		}
+
 	}
+
+	export let $mol_vector_range_full = new $mol_vector_range( Number.NEGATIVE_INFINITY , Number.POSITIVE_INFINITY )
 
 	export class $mol_vector_matrix<
 		Width extends number ,

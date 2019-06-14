@@ -11,16 +11,30 @@ namespace $ {
 	}
 	
 	export function $mol_assert_fail( handler : ()=> any , ErrorRight? : any ) {
+		
 		const fail = $.$mol_fail
+		
 		try {
 			$.$mol_fail = $.$mol_fail_hidden
+			
 			handler()
+
 		} catch( error ) {
-			if( ErrorRight ) if(!( error instanceof ErrorRight )) throw error
+			
+			if( !ErrorRight ) return error
+			
+			if( typeof ErrorRight === 'string' ) {
+				if( error.message !== ErrorRight ) throw error
+			} else {
+				if(!( error instanceof ErrorRight )) throw error
+			}
+			
 			return error
+
 		} finally {
 			$.$mol_fail = fail
 		}
+
 		$mol_fail( new Error( 'Not failed' ) )
 	}
 	
