@@ -125,7 +125,7 @@ namespace $ {
 				console.error( error.stack || error )
 				
 				if(!( error instanceof Error )) {
-					error = new Error( error.stack || error )
+					error = new Error( error.message || error )
 				}
 				
 				error['$mol_atom_catched'] = true
