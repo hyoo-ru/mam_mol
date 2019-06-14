@@ -1,0 +1,18 @@
+$mol_func_sandbox_demo $mol_page
+	title \JavaScript Sandbox Demo
+	tools / <= Source $mol_link_iconed
+		uri \https://github.com/eigenmethod/mol/tree/master/func/sandbox
+		title \
+	Sandbox $mol_func_sandbox
+	event *
+		keydown?event <=> keydown?event null
+	body /
+		<= Input $mol_bar sub /
+			<= Code $mol_textarea
+				hint \return document.cookie
+				value?val <=> script?val \
+			<= Run $mol_button_major
+				title \Run
+				click?event <=> run?event null
+		<= Result $mol_view
+			sub / <= result?val \
