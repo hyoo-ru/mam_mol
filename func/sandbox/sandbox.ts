@@ -16,7 +16,6 @@ namespace $ {
 
 			for( let name of Object.getOwnPropertyNames( window ) ) {
 				if( name === 'eval' ) continue
-				if( name === 'Object' ) continue
 				context_merged[ name ] = undefined
 			}
 
@@ -40,23 +39,24 @@ namespace $ {
 		
 		eval( code : string ) {
 
-			const codes = [
-				'"use strict";',
-				"Object.defineProperty( Object.getPrototypeOf( async function(){} ) , 'constructor' , { value : undefined } );" ,
-				"Object.defineProperty( Object.getPrototypeOf( function *(){} ) , 'constructor' , { value : undefined } );" ,
-				code
-			]
-			
-			const func = new Function( this.vars().join( ',' ) , codes.join('\n') ).bind( null , ... this.values() )
+			const AsyncFunction = ( async function() {} ).constructor
+			const GeneratorFunction = ( function*() : any {} ).constructor
+
+			const func = new Function( this.vars().join( ',' ) , '"use strict";' + code ).bind( null , ... this.values() )
 			
 			return ()=> {
 				try {
-					Function.prototype.constructor = undefined as any
+					Object.defineProperty( Function.prototype , 'constructor' , { value : undefined } )
+					Object.defineProperty( AsyncFunction.prototype , 'constructor' , { value : undefined } )
+					Object.defineProperty( GeneratorFunction.prototype , 'constructor' , { value : undefined } )
 					return func()
 				} finally {
-					Function.prototype.constructor = Function
+					Object.defineProperty( Function.prototype , 'constructor' , { value : Function } )
+					Object.defineProperty( AsyncFunction.prototype , 'constructor' , { value : AsyncFunction } )
+					Object.defineProperty( GeneratorFunction.prototype , 'constructor' , { value : GeneratorFunction } )
 				}
 			}
+
 		}
 
 	}
