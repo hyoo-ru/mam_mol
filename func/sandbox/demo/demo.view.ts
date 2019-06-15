@@ -27,6 +27,22 @@ namespace $.$$ {
 
 		}
 
+		snippets() {
+			return this.snippet_codes().map( ( code , index )=> this.Snippet( index ) )
+		}
+
+		snippet_code( index : number ) {
+			return this.snippet_codes()[ index ]
+		}
+
+	}
+
+	export class $mol_func_sandbox_demo_snippet extends $.$mol_func_sandbox_demo_snippet {
+
+		text() {
+			return '```\n' + this.code() + '\n```'
+		}
+
 	}
 
 }

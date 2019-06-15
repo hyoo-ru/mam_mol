@@ -3,11 +3,23 @@
 	margin: auto;
 }
 
-[mol_func_sandbox_demo_body] {
-	padding: 1rem;
+[mol_func_sandbox_demo_input] {
+	margin: 1rem;
 }
 
 [mol_func_sandbox_demo_result] {
-	padding: 1rem;
+	padding: 1rem 2rem;
 	display: block;
+}
+
+[mol_func_sandbox_demo_snippets] {
+	padding: .5rem;
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_func_sandbox_demo_snippet] {
+	display: block;
+	padding: 0;
+	margin: .5rem;
 }
