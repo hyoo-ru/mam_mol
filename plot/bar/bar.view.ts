@@ -1,6 +1,9 @@
 namespace $.$$ {
 	export class $mol_plot_bar extends $.$mol_plot_bar {
-		
+		points() {
+			return this.points_raw()
+		}
+
 		curve() {
 			const shift = this.shift()
 

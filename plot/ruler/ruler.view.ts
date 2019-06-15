@@ -24,11 +24,13 @@ namespace $.$$ {
 			return this.title().length / 2 + 'rem'
 		}
 
-		normalize(val: number) {
+		normalize(coord: number) {
 			const [first, last] = this.viewport_axle()
 			const scale = this.scale_axle()
 			const shift = this.shift_axle()
 			const step = this.step()
+
+			const val = Math.round( coord / step ) * step
 
 			if (scale == 0) return val
 			const step_scaled = step * scale
@@ -40,15 +42,20 @@ namespace $.$$ {
 			return val - Math.floor(count) * step
 		}
 
+		viewport_dimensions() {
+			const dims = this.dimensions_axle()
+			return [
+				this.normalize(dims[0]),
+				this.normalize(dims[1]),
+			]
+		}
+
 		@ $mol_mem
 		points() {
-			const [first, last] = this.dimensions_axle()
+			const [start, end] = this.viewport_dimensions()
 			const step = this.step()
 
 			const next = [] as number[]
-			const start = this.normalize(Math.round( first / step ) * step)
-			const end = this.normalize(Math.round( last / step ) * step)
-
 			for( let val = start ; val <= end ; val += step ) {
 				next.push(val)
 			}
