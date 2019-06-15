@@ -9,8 +9,17 @@
     flex-direction: column;
 }
 
+[mol_func_sandbox_demo_code] {
+	flex: 1000 1 auto;
+}
+
 [mol_func_sandbox_demo_input] {
 	margin: 1rem;
+	flex-wrap: wrap;
+}
+
+[mol_func_sandbox_demo_run] {
+	flex: auto;
 }
 
 [mol_func_sandbox_demo_result] {

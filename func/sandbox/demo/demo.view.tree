@@ -12,7 +12,7 @@ $mol_func_sandbox_demo $mol_page
 				hint \return document.cookie
 				value?val <=> script?val \
 			<= Run $mol_button_major
-				title \Execute
+				title \Hack
 				click?event <=> run?event null
 		<= Result $mol_view
 			sub / <= result?val \

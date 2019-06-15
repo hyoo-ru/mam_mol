@@ -12,8 +12,8 @@ namespace $ {
 			frame.style.display = 'none'
 			$mol_dom_context.document.body.appendChild( frame )
 
-			const SafeFunction = ( frame.contentWindow as any ).Function as typeof Function
 			const win = frame.contentWindow as any as typeof globalThis
+			const SafeFunction = win.Function
 			
 			win.eval( `
 
@@ -33,7 +33,7 @@ namespace $ {
 					Object.freeze( Class.prototype )
 				}
 
-				void ( ( win , def )=>{ for( let key of Object.getOwnPropertyNames(win) ) delete win[ key ] } )( window )
+				for( const key of Object.getOwnPropertyNames( window ) ) delete window[ key ]
 
 			` )
 
