@@ -4,4 +4,5 @@ $mol_plot_ruler_vert $mol_plot_ruler
 	label_align \end
 	title_pos_x \36px
 	title_pos_y \14px
-	box_pos_y \0.5rem
+	box_pos_x \5
+	box_pos_y \3

@@ -1,3 +1,3 @@
 $mol_plot_mark_hor $mol_plot_ruler_hor
-	visible_marks 10
 	labels /string
+	labels_viewport /string

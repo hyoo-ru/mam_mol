@@ -4,4 +4,3 @@ $mol_plot_ruler_hor $mol_plot_ruler
 	label_align \middle
 	title_pos_x \0
 	title_pos_y \100%
-	box_pos_y \calc(100% - 0.5rem)

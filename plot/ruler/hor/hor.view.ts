@@ -13,10 +13,6 @@ namespace $.$$ {
 			return this.scale()[0]
 		}
 
-		box_pos_x() {
-			return Math.max(0, (this.title().length / 4)) + 'rem'
-		}
-
 		scale_step() {
 			return this.scale()[0]
 		}

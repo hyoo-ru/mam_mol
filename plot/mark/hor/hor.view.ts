@@ -4,7 +4,7 @@ namespace $.$$ {
 		series_x() {
 			return this.labels().map((val, index) => index)
 		}
-
+		
 		@ $mol_mem
 		points_record() {
 			const count = 10
@@ -40,8 +40,12 @@ namespace $.$$ {
 			return this.points_record().points
 		}
 
-		label_text( index : number ) {
-			return this.points_record().labels[index]
+		labels_viewport() {
+			return this.points_record().labels
+		}
+
+		label_text( viewport_index : number ) {
+			return this.labels_viewport()[viewport_index]
 		}
 	}
 }

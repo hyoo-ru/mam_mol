@@ -1,6 +1,6 @@
 namespace $.$$ {
 	export class $mol_plot_ruler extends $.$mol_plot_ruler {
-		labels() {
+		labels_formatted() {
 			return this.points().map( ( point , index )=> this.Label( index ) )
 		}
 		
@@ -20,8 +20,8 @@ namespace $.$$ {
 			return step
 		}
 
-		box_radius() {
-			return this.title().length / 2 + 'rem'
+		box_width() {
+			return (this.title().length / 1.5).toFixed(2) + 'rem'
 		}
 
 		normalize(coord: number) {
@@ -72,6 +72,10 @@ namespace $.$$ {
 		label_text( index : number ) {
 			const point = this.points()[index]
 			return point.toFixed( this.precision() )
+		}
+
+		box_pos_y() {
+			return `calc(${this.title_pos_y()} - 1.1rem)`
 		}
 		
 		back() {
