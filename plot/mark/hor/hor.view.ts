@@ -1,27 +1,42 @@
 namespace $.$$ {
 	export class $mol_plot_mark_hor extends $.$mol_plot_mark_hor {
 		@ $mol_mem
-		points() {
-			const [start, end] = this.viewport_dimensions()
-			const step = this.step()
-			const points_raw = this.points_raw()
-			let current = start
+		points_record() {
+			const count = 10
+			const series_x = this.series_x()
+			const labels_x = this.labels_x()
+			const precision = this.precision()
+			const [[viewport_left,], [viewport_right,]] = this.viewport()
+			const step = (viewport_right - viewport_left) / count
+			const [shift_x, ] = this.shift()
+			const [scale_x, ] = this.scale()
 
-			const next = [] as number[]
+			let current = 0
 
-			next.push(points_raw[0][0])
-			for (let point of points_raw) {
-				const [point_x] = point
-				if (point_x >= current) {
-					next.push(point_x)
-					current += step
-					if (current > end) break
-				}
+			const points = [] as number[]
+			const labels = [] as string[]
+			for (let i = 0; i < series_x.length; i++) {
+				const point_x = series_x[i]
+				const scaled_x = shift_x + point_x * scale_x
+				if (scaled_x > viewport_right) continue
+				if (scaled_x < viewport_left) continue
+				if (scaled_x < current) continue
+
+				labels.push(labels_x.length > i ? labels_x[i] : point_x.toFixed(precision))
+				points.push(point_x)
+				if (current === 0) current += point_x
+				current += step
 			}
-			next.push(points_raw[points_raw.length - 1][0])
 
-			return next
+			return {points, labels} as const
 		}
-		
+
+		points() {
+			return this.points_record().points
+		}
+
+		label_text( index : number ) {
+			return this.points_record().labels[index]
+		}
 	}
 }

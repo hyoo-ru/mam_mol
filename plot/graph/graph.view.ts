@@ -1,28 +1,31 @@
 namespace $.$$ {
 	export class $mol_plot_graph extends $.$mol_plot_graph {
-		@ $mol_mem
-		points_raw(): [number, number][] {
-			const series = this.series()
-			
-			return Object.keys( series ).map( (key, index) => [
-				isNaN( Number( key ) ) ? index : Number( key ) ,
-				series[ key ] ,
-			] )
+
+		viewport() {
+			const size = this.size_real()
+			return [[0, size[0]], [0, size[1]]] as const
+		}
+
+		series_x() {
+			return this.series_y().map((val, index) => index)
 		}
 
 		@ $mol_mem
 		dimensions() {
-			const points = this.points_raw()
 			const next = [
 				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
 				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
 			] as [[number, number], [number,number]]
 			
-			for(let point of points) {
-				if( point[0] < next[0][0] ) next[0][0] = point[0]
-				if( point[1] < next[0][1] ) next[0][1] = point[1]
-				if( point[0] > next[1][0] ) next[1][0] = point[0]
-				if( point[1] > next[1][1] ) next[1][1] = point[1]
+			const series_x = this.series_x()
+			const series_y = this.series_y()
+			for(let i = 0; i < series_x.length; i++) {
+				const point_x = series_x[i]
+				const point_y = series_y[i]
+				if( point_x < next[0][0] ) next[0][0] = point_x
+				if( point_y < next[0][1] ) next[0][1] = point_y
+				if( point_x > next[1][0] ) next[1][0] = point_x
+				if( point_y > next[1][1] ) next[1][1] = point_y
 			}
 			
 			return next

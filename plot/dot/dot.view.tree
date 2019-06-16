@@ -1,4 +1,5 @@
 $mol_plot_dot $mol_plot_graph
+	points_max 1000
 	style *
 		^
 		stroke-width <= diameter 8

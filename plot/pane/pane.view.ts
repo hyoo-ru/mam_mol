@@ -143,10 +143,10 @@ namespace $.$$ {
 		@ $mol_mem
 		graphs_sorted() {
 			const graphs = this.graphs_colored()
-			const sorted = [] as $mol_plot_base[]
+			const sorted = [] as $mol_plot_graph[]
 			
-			for( let graph of graphs ) sorted.push( ...graph.back() )
-			for( let graph of graphs ) sorted.push( ...graph.front() )
+			for( let graph of graphs ) sorted.push( ...graph.back() as $mol_plot_graph[])
+			for( let graph of graphs ) sorted.push( ...graph.front() as $mol_plot_graph[])
 			
 			return sorted
 		}

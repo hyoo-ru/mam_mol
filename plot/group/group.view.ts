@@ -9,7 +9,10 @@ namespace $.$$ {
 				graph.scale = ()=> this.scale()
 				graph.size_real = ()=> this.size_real()
 				graph.hue = ()=> this.hue()
-				graph.points_raw = ()=> this.points_raw()
+				graph.series_x = ()=> this.series_x()
+				graph.series_y = ()=> this.series_y()
+				graph.labels_x = ()=> this.labels_x()
+				graph.labels_y = ()=> this.labels_y()
 				graph.dimensions_pane = ()=> this.dimensions_pane()
 				graph.dimensions = ()=> this.dimensions()
 				graph.viewport = ()=> this.viewport()
@@ -26,7 +29,7 @@ namespace $.$$ {
 			const graphs = this.graphs_enriched()
 			const next = [] as $mol_plot_graph[]
 			
-			for( let graph of graphs ) next.push( ...graph.back() )
+			for( let graph of graphs ) next.push( ...graph.back() as $mol_plot_graph[])
 			
 			return next
 		}
@@ -35,7 +38,7 @@ namespace $.$$ {
 			const graphs = this.graphs_enriched()
 			const next = [] as $mol_plot_graph[]
 			
-			for( let graph of graphs ) next.push( ...graph.front() )
+			for( let graph of graphs ) next.push( ...graph.front() as $mol_plot_graph[])
 			
 			return next
 		}

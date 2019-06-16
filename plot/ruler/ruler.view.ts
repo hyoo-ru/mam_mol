@@ -39,7 +39,7 @@ namespace $.$$ {
 			if (scaled < first) count = (scaled - first) / step_scaled
 			if (scaled > last) count = (scaled - last) / step_scaled
 
-			return val - Math.floor(count) * step
+			return val - Math.ceil(count) * step
 		}
 
 		viewport_dimensions() {
@@ -63,6 +63,7 @@ namespace $.$$ {
 			return next
 		}
 
+		@$mol_mem
 		precision() {
 			const step = this.step()
 			return Math.max( 0 , Math.min( 15 , ( step - Math.floor( step ) ).toString().length - 2 ) )
@@ -73,8 +74,12 @@ namespace $.$$ {
 			return point.toFixed( this.precision() )
 		}
 		
-		front() {
+		back() {
 			return [ this ]
+		}
+
+		front() {
+			return [] as $mol_plot_graph[]
 		}
 	}
 }

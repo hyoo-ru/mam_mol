@@ -1,10 +1,5 @@
 namespace $.$$ {
 	export class $mol_plot_fill extends $.$mol_plot_fill {
-		@$mol_mem
-		filled(): Set<number> {
-			return new Set()
-		}
-
 		@ $mol_mem
 		points() {
 			const threshold = this.threshold()
@@ -12,7 +7,6 @@ namespace $.$$ {
 
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()
-			const points_raw = this.points_raw()
 			const points_scaled = [] as (readonly [number, number])[]
 
 			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as const
@@ -22,15 +16,12 @@ namespace $.$$ {
 			let last_x = null as readonly [number, number] | null
 			let last_y = null as readonly [number, number] | null
 
-			const spacing_x = this.spacing() / scale_x
-			const spacing_y = this.spacing() / scale_y
-
-			const filled: Set<number> | null = spacing_x ? this.filled() : null
-
-			for (let point of points_raw) {
+			const series_x = this.series_x()
+			const series_y = this.series_y()
+			for (let i = 0; i < series_x.length; i++) {
 				const scaled = [
-					Math.round( shift_x + point[0] * scale_x ),
-					Math.round( shift_y + point[1] * scale_y ),
+					Math.round( shift_x + series_x[i] * scale_x ),
+					Math.round( shift_y + series_y[i] * scale_y ),
 				] as const
 
 				if (
@@ -60,14 +51,6 @@ namespace $.$$ {
 					continue
 				}
 
-				if (filled) {
-					const key = Math.round(Math.round(point[0] / spacing_x) * spacing_x)
-						+ (Math.round(Math.round(point[1] / spacing_y) * spacing_y) << 14)
-					if (filled.has(key)) continue
-
-					filled.add(key)
-				}
-
 				if (first_x) points_scaled.push(first_x)
 				if (first_y) points_scaled.push(first_y)
 
@@ -78,7 +61,6 @@ namespace $.$$ {
 
 				first_x = first_y = last_x = last_y = null
 			}
-			filled && filled.clear()
 
 			if (first_x) points_scaled.push(first_x)
 			if (first_y) points_scaled.push(first_y)
