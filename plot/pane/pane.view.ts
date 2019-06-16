@@ -86,22 +86,22 @@ namespace $.$$ {
 			const [scale_x, scale_y] = this.scale()
 			const [size_x, size_y] = this.size_real()
 
-			const left = -max[0] * scale_x + size_x - this.gap_left()
-			const right = -min[0] * scale_x + this.gap_right()
+			const left = -min[0] * scale_x + this.gap_left()
+			const right = -max[0] * scale_x + size_x - this.gap_right()
 
 			const bottom = -min[1] * scale_y + size_y - this.gap_bottom()
 			const top = -max[1] * scale_y + this.gap_top()
 
-			return [[left, right], [bottom, top]] as const
+			return [[right, left], [bottom, top]] as const
 		}
 
 		@ $mol_mem
 		shift_default() {
-			const dims = this.dimensions()
+			const [min, max] = this.dimensions()
 			const scale = this.scale()
 			return [
-				Math.round( this.gap_left() - dims[0][0] * scale[0] ) ,
-				Math.round( this.gap_top() - dims[1][1] * scale[1] ) ,
+				Math.round( this.gap_left() - min[0] * scale[0] ) ,
+				Math.round( this.gap_top() - max[1] * scale[1] ) ,
 			] as const
 		}
 

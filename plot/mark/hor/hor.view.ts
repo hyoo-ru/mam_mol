@@ -1,9 +1,5 @@
 namespace $.$$ {
 	export class $mol_plot_mark_hor extends $.$mol_plot_mark_hor {
-		labels_formatted() {
-			return this.indexes().map( index => this.Label( index ) )
-		}
-
 		@ $mol_mem
 		series_x(): number[] {
 			return this.labels().map((val, index) => index)
@@ -16,34 +12,32 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		step() {
-			const count = 10
-			const [[viewport_left,], [viewport_right,]] = this.viewport()
-			return (viewport_right - viewport_left) / count
-		}
-
-		@ $mol_mem
-		indexes() {
+		visible_indexes() {
 			const series_x = this.series_x()
-			const [shift_x, ] = this.shift()
-			const [scale_x, ] = this.scale()
+			const [shift_x,] = this.shift()
+			const [scale_x,] = this.scale()
+			const step = this.step() * scale_x
 			const [[viewport_left,], [viewport_right,]] = this.viewport()
-			const step = this.step()
 
 			let current = 0
 
 			const indexes = [] as number[]
+			let last = 0
 			for (let i = 0; i < series_x.length; i++) {
 				const point_x = series_x[i]
-				const scaled_x = shift_x + point_x * scale_x
-				if (scaled_x > viewport_right) continue
+				const scaled_x = Math.round(shift_x + point_x * scale_x)
 				if (scaled_x < viewport_left) continue
-				if (scaled_x < current) continue
+				if (scaled_x > viewport_right) continue
+				if (current === 0) current = scaled_x
+				if (scaled_x < current) {
+					last = i
+					continue
+				}
 				indexes.push(i)
-
-				if (current === 0) current += point_x
 				current += step
+				last = 0
 			}
+			if (last !== 0) indexes.push(last)
 
 			return indexes
 
@@ -51,15 +45,18 @@ namespace $.$$ {
 
 		@ $mol_mem
 		points() {
-			const [shift_x, ] = this.shift()
-			const [scale_x, ] = this.scale()
 			const series_x = this.series_x()
+			return this.visible_indexes().map(index => series_x[index])
+			}
 
-			return this.indexes().map(index => shift_x + series_x[index] * scale_x)
+		@ $mol_mem
+		labels_visible() {
+			const labels = this.labels()
+			return this.visible_indexes().map(index => labels[index])
 		}
 
 		label_text( index : number ) {
-			return this.labels()[index]
+			return this.labels_visible()[index]
 		}
 	}
 }

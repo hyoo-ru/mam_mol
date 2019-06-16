@@ -31,8 +31,10 @@ namespace $.$$ {
 			do {
 				points_scaled = []
 				for (let i = 0; i < series_x.length; i++) {
-					const scaled_x = shift_x + series_x[i] * scale_x
-					const scaled_y = shift_y + series_y[i] * scale_y
+					const point_x = series_x[i]
+					const point_y = series_y[i]
+					const scaled_x = Math.round(shift_x + point_x * scale_x)
+					const scaled_y = Math.round(shift_y + point_y * scale_y)
 
 					if (
 						Math.abs( scaled_x - last_x ) < threshold
@@ -48,8 +50,8 @@ namespace $.$$ {
 					if (scaled_y > viewport_top) continue
 
 					if (spacing_x !== 0) {
-						const key = Math.round(Math.round(scaled_x / spacing_x) * spacing_x)
-							+ (Math.round(Math.round(scaled_y / spacing_y) * spacing_y) << 14)
+						const key = Math.round(Math.round(point_x / spacing_x) * spacing_x)
+							+ (Math.round(Math.round(point_y / spacing_y) * spacing_y) << 14)
 						if (filled.has(key)) continue
 
 						filled.add(key)
@@ -58,8 +60,8 @@ namespace $.$$ {
 					points_scaled.push([scaled_x, scaled_y] as const)
 					if (points_scaled.length > points_max) break
 				}
-				spacing_x += threshold
-				spacing_y += threshold
+				spacing_x += threshold / scale_x
+				spacing_y += threshold / scale_y
 				filled.clear()
 			} while (points_scaled.length > points_max)
 

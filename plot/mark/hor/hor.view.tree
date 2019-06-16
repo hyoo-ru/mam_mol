@@ -1,2 +1,3 @@
 $mol_plot_mark_hor $mol_plot_ruler_hor
 	labels /string
+	count 10

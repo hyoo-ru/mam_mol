@@ -6,7 +6,7 @@ $mol_app_bench_chart_rope_mol $mol_view
 					title \Val
 				<= Hor $mol_plot_mark_hor
 					title \Iter
-					series <= hor_series /
+					series_x <= hor_series /
 				<= graphs /
 	Graph!id $mol_plot_group
 		title <= graph_title!id \

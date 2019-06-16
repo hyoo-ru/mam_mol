@@ -33,13 +33,14 @@ namespace $.$$ {
 			const val = Math.round( coord / step ) * step
 
 			if (scale == 0) return val
+
 			const step_scaled = step * scale
 			const scaled = val * scale + shift
 			let count = 0
 			if (scaled < first) count = (scaled - first) / step_scaled
 			if (scaled > last) count = (scaled - last) / step_scaled
 
-			return val - Math.ceil(count) * step
+			return val - Math.floor(count) * step
 		}
 
 		viewport_dimensions() {
