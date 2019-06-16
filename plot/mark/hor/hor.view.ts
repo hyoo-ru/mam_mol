@@ -1,5 +1,9 @@
 namespace $.$$ {
 	export class $mol_plot_mark_hor extends $.$mol_plot_mark_hor {
+		labels_formatted() {
+			return this.indexes().map( index => this.Label( index ) )
+		}
+
 		@ $mol_mem
 		series_x(): number[] {
 			return this.labels().map((val, index) => index)
@@ -45,6 +49,7 @@ namespace $.$$ {
 
 		}
 
+		@ $mol_mem
 		points() {
 			const [shift_x, ] = this.shift()
 			const [scale_x, ] = this.scale()
@@ -53,13 +58,8 @@ namespace $.$$ {
 			return this.indexes().map(index => shift_x + series_x[index] * scale_x)
 		}
 
-		labels_viewport() {
-			const labels = this.labels()
-			return this.indexes().map(index => labels[index])
-		}
-
-		label_text( viewport_index : number ) {
-			return this.labels_viewport()[viewport_index]
+		label_text( index : number ) {
+			return this.labels()[index]
 		}
 	}
 }
