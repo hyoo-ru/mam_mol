@@ -6,8 +6,12 @@ namespace $.$$ {
 			return [[0, size[0]], [0, size[1]]] as const
 		}
 
+		@ $mol_mem
 		series_x() {
-			return this.series_y().map((val, index) => index)
+			return this.$.$mol_range2(
+				index => index ,
+				()=> this.series_y().length
+			)
 		}
 
 		@ $mol_mem

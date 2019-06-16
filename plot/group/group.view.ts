@@ -11,8 +11,6 @@ namespace $.$$ {
 				graph.hue = ()=> this.hue()
 				graph.series_x = ()=> this.series_x()
 				graph.series_y = ()=> this.series_y()
-				graph.labels_x = ()=> this.labels_x()
-				graph.labels_y = ()=> this.labels_y()
 				graph.dimensions_pane = ()=> this.dimensions_pane()
 				graph.dimensions = ()=> this.dimensions()
 				graph.viewport = ()=> this.viewport()

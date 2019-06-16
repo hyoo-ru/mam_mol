@@ -1,8 +1,6 @@
 $mol_plot_graph $mol_svg_group
 	series_x /number
 	series_y /number
-	labels_x /string
-	labels_y /string
 	-
 	attr *
 		^

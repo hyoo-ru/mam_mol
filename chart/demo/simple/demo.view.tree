@@ -7,7 +7,7 @@ $mol_chart_demo_simple $mol_demo_large
 					title <= vert_title @ \pcs
 				<= Marker_hor $mol_plot_mark_hor
 					title <= marker_hor_title @ \Months
-					labels_x <= months /
+					labels <= months /
 						\january
 						\february
 						\march
