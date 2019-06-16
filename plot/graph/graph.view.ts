@@ -8,10 +8,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		series_x() {
-			return this.$.$mol_range2(
-				index => index ,
-				()=> this.series_y().length
-			)
+			return this.series_y().map((val, index) => index)
 		}
 
 		@ $mol_mem

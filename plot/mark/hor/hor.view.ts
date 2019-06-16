@@ -4,7 +4,7 @@ namespace $.$$ {
 		series_x() {
 			return this.labels().map((val, index) => index)
 		}
-		
+
 		@ $mol_mem
 		points_record() {
 			const count = 10
