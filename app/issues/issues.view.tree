@@ -8,17 +8,14 @@ $mol_app_issues $mol_page
 		<= Projects $mol_row
 			sub <= projects /
 		<= Chart $mol_plot_pane
-			gap_bottom 0
 			graphs /
 				<= Capacities $mol_plot_bar
-					series <= capacities /
+					series_y <= capacities /number
 				<= Capacities_ruler $mol_plot_ruler_vert
-					title \
-					labels /
+					title \Age, days
 				<= Capacities_ruler_hor $mol_plot_mark_hor
-					title \
-					series <= capacities /
-					labels /
+					title \Project
+					labels <= project_labels /string
 		<= Description $mol_view
 			sub / <= description @ \Sum of ages of all open issues. Lower is better.
 	Project!index $mol_app_issues_project

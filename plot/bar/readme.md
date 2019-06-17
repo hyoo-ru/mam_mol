@@ -8,6 +8,13 @@ Bar graph.
 
 ```tree
 <= Plan $mol_plot_bar
+	series_y <= plan_y /
+```
+
+or
+
+```tree
+<= Plan $mol_plot_bar
 	series_x <= plan_x /
 	series_y <= plan_y /
 ```

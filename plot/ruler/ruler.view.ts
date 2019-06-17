@@ -21,7 +21,9 @@ namespace $.$$ {
 		}
 
 		box_width() {
-			return (this.title().length / 1.5).toFixed(2) + 'rem'
+			const win = this.$.$mol_dom_context
+			const style = win.getComputedStyle(this.dom_node())
+			return $mol_font_measure(Number(style['font-size'].replace(/[^\d]/ig, '')), style['font-family'], this.title() ) + 'px'
 		}
 
 		normalize(coord: number) {

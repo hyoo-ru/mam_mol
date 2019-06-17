@@ -24,8 +24,14 @@ namespace $.$$ {
 			return ids[ index ] || ''
 		}
 
+		@ $mol_mem
 		capacities() {
 			return this.projects().map( project => project.capacity() )
+		}
+
+		@ $mol_mem
+		project_labels() {
+			return this.projects().map( project => project.id() )
 		}
 
 	}

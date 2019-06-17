@@ -8,11 +8,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		series_x() {
-			const series_y = this.series_y()
-			const prev = $mol_atom_current()['value()']
-			if (prev && prev.length === series_y.length) return prev
-
-			return series_y.map((val, index) => index)
+			return this.series_y().map((val, index) => index)
 		}
 
 		@ $mol_mem
