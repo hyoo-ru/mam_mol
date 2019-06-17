@@ -10,7 +10,7 @@ $mol_app_bench_chart_rope_mol $mol_view
 				<= graphs /
 	Graph!id $mol_plot_group
 		title <= graph_title!id \
-		series <= series!id /
+		series_y <= series!id /
 		graphs /
 			<= Line!id $mol_plot_line
 			<= Dots!id $mol_plot_dot
