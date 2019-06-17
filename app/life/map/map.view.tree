@@ -12,9 +12,9 @@ $mol_app_life_map $mol_plot_pane
 	-
 	graphs /
 		<= Points $mol_plot_dot
-			threshold 0
 			diameter <= zoom
-			points_raw <= points /
+			series_x <= points_x /number
+			series_y <= points_y /number
 	-
 	plugins /
 		<= Touch $mol_touch

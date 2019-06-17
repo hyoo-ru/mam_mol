@@ -71,10 +71,20 @@ namespace $.$$ {
 			return this.future().size
 		}
 
-		points() {
-			const points = [] as number[][]
+		@ $mol_mem
+		points_x() {
+			const points = [] as number[]
 			for( let key of this.future().keys() ) {
-				points.push([ x_of( key ) , y_of( key ) ])
+				points.push(x_of( key ))
+			}
+			return points
+		}
+
+		@ $mol_mem
+		points_y() {
+			const points = [] as number[]
+			for( let key of this.future().keys() ) {
+				points.push(y_of( key ))
 			}
 			return points
 		}
