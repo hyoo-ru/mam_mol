@@ -50,8 +50,8 @@ namespace $.$$ {
 					if (scaled_y > viewport_top) continue
 
 					if (spacing_x !== 0) {
-						const key = Math.round(Math.round(point_x / spacing_x) * spacing_x)
-							+ (Math.round(Math.round(point_y / spacing_y) * spacing_y) << 14)
+						const key = Math.round(Math.round(point_x / spacing_x) * spacing_x) & 0xFFFF
+							| (Math.round(Math.round(point_y / spacing_y) * spacing_y) << 16)
 						if (filled.has(key)) continue
 
 						filled.add(key)
