@@ -15,7 +15,7 @@ $mol_app_jsperf $mol_page
 					series_y <= frequencies /number
 				<= Frequencies_ruler $mol_plot_ruler_vert
 					title \
-				<= Frequencies_ruler_hor $mol_plot_mark_hor
+				<= Frequencies_mark_hor $mol_plot_mark_hor
 					title \
 					labels <= labels /string
 		<= Postfix $mol_textarea

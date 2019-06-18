@@ -1,5 +1,5 @@
 $mol_plot_dot $mol_plot_graph
-	points_max 1000
+	points_max Infinity
 	style *
 		^
 		stroke-width <= diameter 8
