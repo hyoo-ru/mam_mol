@@ -20,10 +20,11 @@ namespace $.$$ {
 			return step
 		}
 
+		@ $mol_mem
 		box_width() {
 			const win = this.$.$mol_dom_context
 			const style = win.getComputedStyle(this.dom_node())
-			return $mol_font_measure(Number(style['font-size'].replace(/[^\d]/ig, '')), style['font-family'], this.title() ) + 'px'
+			return $mol_font_measure(parseInt(style.fontSize), style.fontFamily, this.title() ) + 'px'
 		}
 
 		normalize(coord: number) {

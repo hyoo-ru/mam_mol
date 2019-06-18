@@ -12,7 +12,6 @@ namespace $.$$ {
 			const threshold = diameter / 2
 			// calculate by cpu
 			const points_max = this.points_max()
-
 			const [[viewport_left, viewport_bottom], [viewport_right, viewport_top]] = this.viewport()
 
 			const [shift_x, shift_y] = this.shift()
@@ -50,8 +49,8 @@ namespace $.$$ {
 					if (scaled_y > viewport_top) continue
 
 					if (spacing_x !== 0) {
-						const key = Math.round(Math.round(point_x / spacing_x) * spacing_x) & 0xFFFF
-							| (Math.round(Math.round(point_y / spacing_y) * spacing_y) << 16)
+						const key = Math.round(Math.round(point_x * scale_x / spacing_x) * spacing_x) & 0xFFFF
+							| (Math.round(Math.round(point_y * scale_y / spacing_y) * spacing_y) << 16)
 						if (filled.has(key)) continue
 
 						filled.add(key)
