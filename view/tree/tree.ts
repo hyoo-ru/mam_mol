@@ -93,7 +93,6 @@ namespace $ {
 			case 'false' : return 'bool'
 			case 'null' : return 'null'
 			case '*' : return 'dict'
-			case '/' : return 'list'
 			case '@' : return 'locale'
 			case '' : return 'string'
 			case '<=' : return 'get'
@@ -101,7 +100,10 @@ namespace $ {
 			case '=>' : return 'put'
 		}
 
-		if( val.type[0] === '$' ) return 'object'
+		switch( val.type[0] ) {
+			case '/' : return 'list'
+			case '$' : return 'object'
+		}
 
 		if( Number( val.type ).toString() == val.type ) return 'number'
 
