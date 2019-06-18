@@ -31,11 +31,6 @@ namespace $.$$ {
 		series( id : number ) {
 			return $mol_app_bench_chart_rope_mol.data().graphs[ id ]
 		}
-		
-		hor_series() {
-			return (this.series( 0 ) || []).map((v, i) => i)
-		}
-		
 	}
 
 }

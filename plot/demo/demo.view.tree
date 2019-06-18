@@ -20,6 +20,5 @@ $mol_plot_demo $mol_demo_large
 					series_y <= output_series /
 				<= Voltage $mol_plot_ruler_vert
 					title <= Voltage_title @ \V
-				<= Time $mol_plot_mark_hor
+				<= Time $mol_plot_ruler_hor
 					title <= Time_title @ \ms
-					series_x <= series_x /

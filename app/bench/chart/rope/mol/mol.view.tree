@@ -4,9 +4,8 @@ $mol_app_bench_chart_rope_mol $mol_view
 			graphs /
 				<= Vert $mol_plot_ruler_vert
 					title \Val
-				<= Hor $mol_plot_mark_hor
+				<= Hor $mol_plot_ruler_hor
 					title \Iter
-					series_x <= hor_series /number
 				<= graphs /
 	Graph!id $mol_plot_group
 		title <= graph_title!id \
