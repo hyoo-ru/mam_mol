@@ -24,7 +24,7 @@ namespace $.$$ {
 		box_width() {
 			const win = this.$.$mol_dom_context
 			const style = win.getComputedStyle(this.dom_node())
-			return $mol_font_measure(parseInt(style.fontSize), style.fontFamily, this.title() ) + 'px'
+			return $mol_font_measure(parseInt(style['font-size']), style['font-family'], this.title() ) + 'px'
 		}
 
 		normalize(coord: number) {
