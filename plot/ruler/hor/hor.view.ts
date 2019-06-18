@@ -1,15 +1,15 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_hor extends $.$mol_plot_ruler_hor {
-		dimensions_axle() {
+		dimensions_axis() {
 			const dims = this.dimensions_pane()
 			return [dims[0][0], dims[1][0]] as const
 		}
 
-		viewport_axle() {
+		viewport_axis() {
 			return [0, this.size_real()[0]] as const
 		}
 
-		scale_axle() {
+		scale_axis() {
 			return this.scale()[0]
 		}
 
@@ -17,7 +17,7 @@ namespace $.$$ {
 			return this.scale()[0]
 		}
 
-		shift_axle() {
+		shift_axis() {
 			return this.shift()[0]
 		}
 		

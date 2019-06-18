@@ -7,7 +7,7 @@ namespace $.$$ {
 		@ $mol_mem
 		step() {
 			const scale = this.scale_step()
-			const [first, last] = this.dimensions_axle()
+			const [first, last] = this.dimensions_axis()
 			const range = last - first
 			const min_width = ( Math.abs( Math.log10( range ) ) + 2 ) * 15
 			const size = $mol_math_round_expand( range , -1 )
@@ -21,7 +21,7 @@ namespace $.$$ {
 		}
 
 		sub() {
-			const [first, last] = this.dimensions_axle()
+			const [first, last] = this.dimensions_axis()
 			const range = last - first
 			return !Number.isFinite(range) || range === 0 ? [] : super.sub()
 		}
@@ -34,9 +34,9 @@ namespace $.$$ {
 		}
 
 		snap_to_grid(coord: number) {
-			const [first, last] = this.viewport_axle()
-			const scale = this.scale_axle()
-			const shift = this.shift_axle()
+			const [first, last] = this.viewport_axis()
+			const scale = this.scale_axis()
+			const shift = this.shift_axis()
 			const step = this.step()
 
 			const val = Math.round( coord / step ) * step
@@ -53,7 +53,7 @@ namespace $.$$ {
 		}
 
 		viewport_dimensions() {
-			const dims = this.dimensions_axle()
+			const dims = this.dimensions_axis()
 			return [
 				this.snap_to_grid(dims[0]),
 				this.snap_to_grid(dims[1]),

@@ -1,15 +1,15 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_vert extends $.$mol_plot_ruler_vert {
-		dimensions_axle() {
+		dimensions_axis() {
 			const dims = this.dimensions_pane()
 			return [dims[0][1], dims[1][1]] as const
 		}
 
-		viewport_axle() {
+		viewport_axis() {
 			return [0, this.size_real()[1]] as const
 		}
 
-		scale_axle() {
+		scale_axis() {
 			return this.scale()[1]
 		}
 
@@ -17,7 +17,7 @@ namespace $.$$ {
 			return -this.scale()[1]
 		}
 
-		shift_axle() {
+		shift_axis() {
 			return this.shift()[1]
 		}
 

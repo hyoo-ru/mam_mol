@@ -1,10 +1,10 @@
 $mol_plot_ruler $mol_plot_graph
 	step 0
-	scale_axle 1
+	scale_axis 1
 	scale_step 1
-	shift_axle 1
-	dimensions_axle /number
-	viewport_axle /number
+	shift_axis 1
+	dimensions_axis /number
+	viewport_axis /number
 	viewport_dimensions /number
 	points /number
 	normalize?val 0
