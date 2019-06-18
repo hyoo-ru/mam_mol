@@ -59,8 +59,8 @@ namespace $.$$ {
 					points_scaled.push([scaled_x, scaled_y] as const)
 					if (points_scaled.length > points_max) break
 				}
-				spacing_x += threshold / scale_x
-				spacing_y += threshold / scale_y
+				spacing_x += threshold
+				spacing_y += threshold
 				filled.clear()
 			} while (points_scaled.length > points_max)
 
