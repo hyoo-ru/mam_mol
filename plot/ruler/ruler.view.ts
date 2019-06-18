@@ -23,7 +23,7 @@ namespace $.$$ {
 		sub() {
 			const [first, last] = this.dimensions_axle()
 			const range = last - first
-			return Math.abs(range) === Infinity || range === 0 ? [] : super.sub()
+			return !Number.isFinite(range) || range === 0 ? [] : super.sub()
 		}
 
 		@ $mol_mem

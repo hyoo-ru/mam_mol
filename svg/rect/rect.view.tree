@@ -3,7 +3,7 @@ $mol_svg_rect $mol_svg
 	pos /
 	attr *
 		^
-		width <= width \.5%
-		height <= height \.5%
+		width <= width \0
+		height <= height \0
 		x <= pos_x \
 		y <= pos_y \
