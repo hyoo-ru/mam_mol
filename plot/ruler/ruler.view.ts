@@ -20,6 +20,12 @@ namespace $.$$ {
 			return step
 		}
 
+		sub() {
+			const [first, last] = this.dimensions_axle()
+			const range = last - first
+			return Math.abs(range) === Infinity || range === 0 ? [] : super.sub()
+		}
+
 		@ $mol_mem
 		box_width() {
 			const win = this.$.$mol_dom_context

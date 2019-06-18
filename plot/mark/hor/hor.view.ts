@@ -25,7 +25,7 @@ namespace $.$$ {
 			let last = 0
 			for (let i = 0; i < series_x.length; i++) {
 				const point_x = series_x[i]
-				const scaled_x = Math.round(shift_x + point_x * scale_x)
+				const scaled_x = (shift_x + point_x * scale_x)
 				if (scaled_x < viewport_left) continue
 				if (scaled_x > viewport_right) continue
 				if (current === 0) current = scaled_x
@@ -43,20 +43,28 @@ namespace $.$$ {
 
 		}
 
-		@ $mol_mem
-		points() {
+		curve() {
+			const [shift] = this.shift()
+			const [scale] = this.scale()
 			const series_x = this.series_x()
-			return this.visible_indexes().map(index => series_x[index])
-			}
 
-		@ $mol_mem
-		labels_visible() {
-			const labels = this.labels()
-			return this.visible_indexes().map(index => labels[index])
+			return this.visible_indexes().map( index => `M ${ (series_x[index] * scale + shift).toFixed(3) } 1000 V 0` ).join( ' ' ) || ''
 		}
 
 		label_text( index : number ) {
-			return this.labels_visible()[index]
+			return this.labels()[index]
+		}
+
+		labels_formatted() {
+			return this.visible_indexes().map( index => this.Label( index ) )
+		}
+
+		label_pos_x( index : number ) {
+			return (this.series_x()[index] * this.scale()[0] + this.shift()[0]).toFixed(3) + 'px'
+		}
+
+		label_pos_y( index : number ) {
+			return this.title_pos_y()
 		}
 	}
 }

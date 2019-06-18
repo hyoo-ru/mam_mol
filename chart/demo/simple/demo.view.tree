@@ -7,12 +7,11 @@ $mol_chart_demo_simple $mol_demo_large
 					title <= vert_title @ \pcs
 				<= Marker_hor $mol_plot_mark_hor
 					title <= marker_hor_title @ \Months
-					label_text!key <= hor_label_text!key \
 					labels <= months /string
-						\january
-						\february
-						\march
-						\april
+						\January
+						\February
+						\March
+						\April
 				<= Plan $mol_plot_bar
 					title <= plan_title @ \Plan
 					series_y <= plan /

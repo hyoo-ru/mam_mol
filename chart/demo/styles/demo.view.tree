@@ -15,7 +15,7 @@ $mol_chart_demo_styles $mol_demo_large
 					series_y <= series_2_y /
 				<= Receipts_confirmed $mol_plot_bar
 					title <= receipts_confirmed_title @ \Confirmed receipts
-					series_x <= series_3_x /
+					series_x <= series_x /
 					series_y <= series_3_y /
 				<= Maximum $mol_plot_dot
 					title <= maximum_title @ \Maximum
