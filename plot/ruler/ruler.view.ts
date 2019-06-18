@@ -33,7 +33,7 @@ namespace $.$$ {
 			return $mol_font_measure(parseInt(style['font-size']), style['font-family'], this.title() ) + 'px'
 		}
 
-		normalize(coord: number) {
+		snap_to_grid(coord: number) {
 			const [first, last] = this.viewport_axle()
 			const scale = this.scale_axle()
 			const shift = this.shift_axle()
@@ -55,8 +55,8 @@ namespace $.$$ {
 		viewport_dimensions() {
 			const dims = this.dimensions_axle()
 			return [
-				this.normalize(dims[0]),
-				this.normalize(dims[1]),
+				this.snap_to_grid(dims[0]),
+				this.snap_to_grid(dims[1]),
 			]
 		}
 
