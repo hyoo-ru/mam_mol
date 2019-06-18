@@ -13,6 +13,7 @@ namespace $.$$ {
 			// calculate by cpu
 			const points_max = this.points_max()
 			const [[viewport_left, viewport_bottom], [viewport_right, viewport_top]] = this.viewport()
+			const [[min_x, min_y]] = this.dimensions()
 
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()
@@ -49,8 +50,8 @@ namespace $.$$ {
 					if (scaled_y > viewport_top) continue
 
 					if (spacing_x !== 0) {
-						const key = Math.round(Math.round(point_x * scale_x / spacing_x) * spacing_x) & 0xFFFF
-							| (Math.round(Math.round(point_y * scale_y / spacing_y) * spacing_y) << 16)
+						const key = Math.round(Math.abs(Math.round((min_x + point_x) * scale_x / spacing_x)) * spacing_x) & 0xFFFF
+							| (Math.round(Math.abs(Math.round((min_y + point_y) * scale_y / spacing_y)) * spacing_y) << 16)
 						if (filled.has(key)) continue
 
 						filled.add(key)
