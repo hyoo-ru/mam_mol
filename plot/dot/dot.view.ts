@@ -8,12 +8,14 @@ namespace $.$$ {
 
 		@ $mol_mem
 		points() {
-			const diameter = this.diameter()
-			const threshold = diameter / 2
+			const radius = this.diameter() / 2
 			// calculate by cpu
 			const points_max = this.points_max()
-			const [[viewport_left, viewport_bottom], [viewport_right, viewport_top]] = this.viewport()
-			const [[min_x, min_y]] = this.dimensions()
+			const viewport = this.viewport()
+			const viewport_left = viewport[0][0] - radius
+			const viewport_right = viewport[1][0] + radius
+			const viewport_bottom = viewport[0][1] - radius
+			const viewport_top = viewport[1][1] + radius
 
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()
@@ -21,8 +23,7 @@ namespace $.$$ {
 			let last_x = Number.NEGATIVE_INFINITY
 			let last_y = Number.NEGATIVE_INFINITY
 
-			let spacing_x = 0
-			let spacing_y = 0
+			let spacing = 0
 			let filled: Set<number> = this.filled() 
 			let points_scaled: (readonly [number, number])[]
 
@@ -37,8 +38,8 @@ namespace $.$$ {
 					const scaled_y = Math.round(shift_y + point_y * scale_y)
 
 					if (
-						Math.abs( scaled_x - last_x ) < threshold
-						&& Math.abs( scaled_y - last_y ) < threshold
+						Math.abs( scaled_x - last_x ) < radius
+						&& Math.abs( scaled_y - last_y ) < radius
 					) continue
 
 					last_x = scaled_x
@@ -49,9 +50,11 @@ namespace $.$$ {
 					if (scaled_x > viewport_right) continue
 					if (scaled_y > viewport_top) continue
 
-					if (spacing_x !== 0) {
-						const key = Math.round(Math.abs(Math.round((min_x + point_x) * scale_x / spacing_x)) * spacing_x) & 0xFFFF
-							| (Math.round(Math.abs(Math.round((min_y + point_y) * scale_y / spacing_y)) * spacing_y) << 16)
+					if (spacing !== 0) {
+						const key = $mol_math_bit_pack(
+							Math.round(point_x * scale_x / spacing) * spacing,
+							Math.round(point_y * scale_y / spacing) * spacing
+						)
 						if (filled.has(key)) continue
 
 						filled.add(key)
@@ -60,8 +63,7 @@ namespace $.$$ {
 					points_scaled.push([scaled_x, scaled_y] as const)
 					if (points_scaled.length > points_max) break
 				}
-				spacing_x += threshold
-				spacing_y += threshold
+				spacing += Math.ceil(radius)
 				filled.clear()
 			} while (points_scaled.length > points_max)
 
