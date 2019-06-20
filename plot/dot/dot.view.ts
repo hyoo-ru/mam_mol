@@ -51,7 +51,7 @@ namespace $.$$ {
 					if (scaled_y > viewport_top) continue
 
 					if (spacing !== 0) {
-						const key = $mol_math_bit_pack(
+						const key = $mol_coord_pack(
 							Math.round(point_x * scale_x / spacing) * spacing,
 							Math.round(point_y * scale_y / spacing) * spacing
 						)

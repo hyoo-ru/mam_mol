@@ -28,12 +28,12 @@ namespace $.$$ {
 
 			for( let alive of prev ) {
 				
-				const ax = $mol_math_bit_first( alive )
-				const ay = $mol_math_bit_second( alive )
+				const ax = $mol_coord_high( alive )
+				const ay = $mol_coord_low( alive )
 				
 				for( let ny = ay - 1 ; ny <= ay + 1 ; ++ny ) for( let nx = ax - 1 ; nx <= ax + 1 ; ++nx ) {
 
-					const nkey = $mol_math_bit_pack( nx , ny )
+					const nkey = $mol_coord_pack( nx , ny )
 					if( skip.has( nkey ) ) continue
 					skip.add( nkey )
 					
@@ -41,7 +41,7 @@ namespace $.$$ {
 
 					for( let y = -1 ; y <= 1 ; ++y ) for( let x = -1 ; x <= 1 ; ++x ) {
 						if( !x && !y ) continue
-						if( prev.has( $mol_math_bit_pack( nx + x , ny + y ) ) ) ++sum
+						if( prev.has( $mol_coord_pack( nx + x , ny + y ) ) ) ++sum
 					}
 					
 					if( sum != 3 && ( !prev.has( nkey ) || sum !== 2 ) ) continue
@@ -63,7 +63,7 @@ namespace $.$$ {
 		points_x() {
 			const points = [] as number[]
 			for( let key of this.future().keys() ) {
-				points.push($mol_math_bit_first( key ))
+				points.push($mol_coord_high( key ))
 			}
 			return points
 		}
@@ -72,7 +72,7 @@ namespace $.$$ {
 		points_y() {
 			const points = [] as number[]
 			for( let key of this.future().keys() ) {
-				points.push($mol_math_bit_second( key ))
+				points.push($mol_coord_low( key ))
 			}
 			return points
 		}
@@ -97,7 +97,7 @@ namespace $.$$ {
 			const pan = this.pan()
 			const rect = this.dom_node().getBoundingClientRect()
 			
-			const cell = $mol_math_bit_pack(
+			const cell = $mol_coord_pack(
 				Math.round( ( event.pageX - rect.left - pan[0] ) / zoom ) ,
 				Math.round( ( event.pageY - rect.top - pan[1] ) / zoom ) ,
 			)
