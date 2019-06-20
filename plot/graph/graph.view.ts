@@ -1,9 +1,11 @@
 namespace $.$$ {
 	export class $mol_plot_graph extends $.$mol_plot_graph {
-
 		viewport() {
 			const size = this.size_real()
-			return [[0, size[0]], [0, size[1]]] as const
+			return new $mol_vector_2d(
+				new $mol_vector_range(0, size[0]),
+				new $mol_vector_range(0, size[1]),
+			)
 		}
 
 		@ $mol_mem
@@ -13,20 +15,15 @@ namespace $.$$ {
 
 		@ $mol_mem
 		dimensions() {
-			const next = [
-				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
-				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
-			] as [[number, number], [number,number]]
-			
+			let next = new $mol_vector_2d(
+				$mol_vector_range_full.inversed,
+				$mol_vector_range_full.inversed
+			)
+
 			const series_x = this.series_x()
 			const series_y = this.series_y()
 			for(let i = 0; i < series_x.length; i++) {
-				const point_x = series_x[i]
-				const point_y = series_y[i]
-				if( point_x < next[0][0] ) next[0][0] = point_x
-				if( point_y < next[0][1] ) next[0][1] = point_y
-				if( point_x > next[1][0] ) next[1][0] = point_x
-				if( point_y > next[1][1] ) next[1][1] = point_y
+				next = next.expanded1([series_x[i], series_y[i]] as const)
 			}
 			
 			return next

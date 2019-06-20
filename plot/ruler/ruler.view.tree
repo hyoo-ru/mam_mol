@@ -5,7 +5,6 @@ $mol_plot_ruler $mol_plot_graph
 	shift_axis 1
 	dimensions_axis /number
 	viewport_axis /number
-	viewport_dimensions /number
 	points /number
 	normalize?val 0
 	precision 1

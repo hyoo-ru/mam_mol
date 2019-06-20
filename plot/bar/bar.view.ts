@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_plot_bar extends $.$mol_plot_bar {
 		@$mol_mem
 		points() {
-			const [[viewport_left, viewport_bottom], [viewport_right, viewport_top]] = this.viewport()
+			const [[viewport_left, viewport_right], [viewport_bottom, viewport_top]] = this.viewport()
 
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()
@@ -76,26 +76,19 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		dimensions() {
-			const next = [
-				[ Number.POSITIVE_INFINITY , 0 ] ,
-				[ Number.NEGATIVE_INFINITY , 0 ] ,
-			] as [[number, number], [number, number]]
+			let next = new $mol_vector_2d(
+				new $mol_vector_range(Number.POSITIVE_INFINITY , 0),
+				new $mol_vector_range(Number.NEGATIVE_INFINITY , 0),
+			)
 			
 			const series_x = this.series_x()
 			const series_y = this.series_y()
 			for (let i = 0; i < series_x.length; i++) {
-				const point_x = series_x[i]
-				const point_y = series_y[i]
-				if( point_x < next[0][0] ) next[0][0] = point_x
-				if( point_y < next[0][1] ) next[0][1] = point_y
-				if( point_x > next[1][0] ) next[1][0] = point_x
-				if( point_y > next[1][1] ) next[1][1] = point_y
+				next = next.expanded1([series_x[i], series_y[i]] as const)
 			}
 			
-			const gap = ( next[1][0] - next[0][0] ) / series_x.length || 0.00000001
-			
-			next[0][0] -= gap
-			next[1][0] += gap
+			const gap = ( next[0][1] - next[0][0] ) / series_x.length || 0.00000001
+			next[0] = next[0].added1([-gap, gap] as const)
 			
 			return next
 		}

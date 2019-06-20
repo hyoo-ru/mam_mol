@@ -10,21 +10,15 @@ $mol_plot_graph $mol_svg_group
 		^
 		color <= color \
 	-
-	viewport /readonly[number,number]
-		/number
-		/number
+	viewport /$mol_vector_range<number>
 	shift /number
 		0
 		0
 	scale /number
 		1
 		1
-	dimensions_pane /readonly[number,number]
-		/number
-		/number
-	dimensions /readonly[number,number]
-		/number
-		/number
+	dimensions_pane /$mol_vector_range<number>
+	dimensions /$mol_vector_range<number>
 	size_real /number
 		0
 		0

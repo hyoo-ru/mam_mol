@@ -3,7 +3,7 @@ namespace $.$$ {
 		@ $mol_mem
 		points() {
 			const threshold = this.threshold()
-			const [[viewport_left, viewport_bottom], [viewport_right, viewport_top]] = this.viewport()
+			const [[viewport_left, viewport_right], [viewport_bottom, viewport_top]] = this.viewport()
 
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()

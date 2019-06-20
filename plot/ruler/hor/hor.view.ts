@@ -1,8 +1,7 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_hor extends $.$mol_plot_ruler_hor {
 		dimensions_axis() {
-			const dims = this.dimensions_pane()
-			return [dims[0][0], dims[1][0]] as const
+			return this.dimensions_pane()[0]
 		}
 
 		viewport_axis() {

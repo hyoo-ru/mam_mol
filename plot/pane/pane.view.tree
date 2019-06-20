@@ -44,12 +44,8 @@ $mol_plot_pane $mol_svg_root
 	size_real /number
 		1
 		1
-	dimensions_viewport /readonly[number,number]
-		/number
-		/number
-	dimensions /readonly[number,number]
-		/number
-		/number
+	dimensions_viewport /$mol_vector_range<number>
+	dimensions /$mol_vector_range<number>
 	-
 	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
 	-

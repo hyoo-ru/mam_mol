@@ -5,19 +5,19 @@ namespace $.$$ {
 		@ $mol_mem
 		dimensions() {
 			const graphs = this.graphs()
-			
-			const next = [
-				[ Number.POSITIVE_INFINITY , Number.POSITIVE_INFINITY ] ,
-				[ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] ,
-			] as [[number, number], [number, number]]
-			
+			let next = new $mol_vector_2d(
+				$mol_vector_range_full.inversed,
+				$mol_vector_range_full.inversed
+			)
+
 			for( let graph of graphs ) {
 				const dims = graph.dimensions()
-				
 				if( dims[ 0 ][ 0 ] < next[ 0 ][ 0 ] ) next[ 0 ][ 0 ] = dims[ 0 ][ 0 ]
-				if( dims[ 0 ][ 1 ] < next[ 0 ][ 1 ] ) next[ 0 ][ 1 ] = dims[ 0 ][ 1 ]
-				if( dims[ 1 ][ 0 ] > next[ 1 ][ 0 ] ) next[ 1 ][ 0 ] = dims[ 1 ][ 0 ]
+				if( dims[ 1 ][ 0 ] < next[ 1 ][ 0 ] ) next[ 1 ][ 0 ] = dims[ 1 ][ 0 ]
+				if( dims[ 0 ][ 1 ] > next[ 0 ][ 1 ] ) next[ 0 ][ 1 ] = dims[ 0 ][ 1 ]
 				if( dims[ 1 ][ 1 ] > next[ 1 ][ 1 ] ) next[ 1 ][ 1 ] = dims[ 1 ][ 1 ]
+				// next = next.expanded1([dims[0][1], dims[1][1]] as const)
+				// next = next.expanded1([dims[0][0], dims[1][0]] as const)
 			}
 			
 			return next
@@ -27,8 +27,8 @@ namespace $.$$ {
 		size() {
 			const dims = this.dimensions()
 			return [
-				( dims[1][0] - dims[0][0] ) || 1 ,
-				( dims[1][1] - dims[0][1] ) || 1 ,
+				( dims[0][1] - dims[0][0] ) || 1 ,
+				( dims[1][1] - dims[1][0] ) || 1 ,
 			] as const
 		}
 			
@@ -132,12 +132,13 @@ namespace $.$$ {
 			return graphs
 		}
 
+		@ $mol_mem
 		viewport() {
 			const size = this.size_real()
-			return [
-				[this.gap_left(), this.gap_bottom()],
-				[size[0] - this.gap_right(), size[1] - this.gap_top()]
-			] as const
+			return new $mol_vector_2d(
+				new $mol_vector_range(this.gap_left(), size[0] - this.gap_right()),
+				new $mol_vector_range(this.gap_bottom(), size[1] - this.gap_top()),
+			)
 		}
 
 		@ $mol_mem

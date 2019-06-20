@@ -11,10 +11,11 @@ namespace $.$$ {
 			const radius = this.diameter() / 2
 			// calculate by cpu
 			const points_max = this.points_max()
+
 			const viewport = this.viewport()
 			const viewport_left = viewport[0][0] - radius
-			const viewport_right = viewport[1][0] + radius
-			const viewport_bottom = viewport[0][1] - radius
+			const viewport_right = viewport[0][1] + radius
+			const viewport_bottom = viewport[1][0] - radius
 			const viewport_top = viewport[1][1] + radius
 
 			const [shift_x, shift_y] = this.shift()

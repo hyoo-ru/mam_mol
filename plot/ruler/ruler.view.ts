@@ -52,17 +52,11 @@ namespace $.$$ {
 			return val - Math.floor(count) * step
 		}
 
-		viewport_dimensions() {
-			const dims = this.dimensions_axis()
-			return [
-				this.snap_to_grid(dims[0]),
-				this.snap_to_grid(dims[1]),
-			]
-		}
-
 		@ $mol_mem
 		points() {
-			const [start, end] = this.viewport_dimensions()
+			const dims = this.dimensions_axis()
+			const start = this.snap_to_grid(dims[0])
+			const end = this.snap_to_grid(dims[1])
 			const step = this.step()
 
 			const next = [] as number[]

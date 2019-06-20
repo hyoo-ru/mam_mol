@@ -17,7 +17,7 @@ namespace $.$$ {
 			const [shift_x,] = this.shift()
 			const [scale_x,] = this.scale()
 			const step = this.step() * scale_x
-			const [[viewport_left,], [viewport_right,]] = this.viewport()
+			const [[viewport_left, viewport_right]] = this.viewport()
 
 			let current = 0
 
