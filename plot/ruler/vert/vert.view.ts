@@ -25,7 +25,10 @@ namespace $.$$ {
 			const [, shift] = this.shift()
 			const [, scale] = this.scale()
 
-			return this.points().map( point => `M 0 ${ (point * scale + shift).toFixed(3)} H 2000` ).join( ' ' ) || ''
+			return this.points().map( point => {
+				const scaled = point * scale + shift
+				return `M 0 ${scaled.toFixed(3)} H 2000`
+			}).join( ' ' ) || ''
 		}
 
 		label_pos_x( index : number ) {

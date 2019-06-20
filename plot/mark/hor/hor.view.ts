@@ -48,7 +48,10 @@ namespace $.$$ {
 			const [scale] = this.scale()
 			const series_x = this.series_x()
 
-			return this.visible_indexes().map( index => `M ${ (series_x[index] * scale + shift).toFixed(3) } 1000 V 0` ).join( ' ' ) || ''
+			return this.visible_indexes().map( index => {
+				const scaled = series_x[index] * scale + shift
+				return `M ${ scaled.toFixed(3) } 1000 V 0`
+			}).join( ' ' ) || ''
 		}
 
 		label_text( index : number ) {
