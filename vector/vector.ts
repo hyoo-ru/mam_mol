@@ -2,17 +2,23 @@ namespace $ {
 
 	export class $mol_vector< Value , Length extends number > extends Array< Value > {
 
-		length : Length
+		length! : Length
 
 		constructor( ... values : Value[] & { length : Length } ) { super( ... values ) }
 		
-		map : < Res >( convert : ( value : Value , index : number , array : this ) => Res , self? : any )=> $mol_vector< Res , Length >
+		map! : < Res >( convert : ( value : Value , index : number , array : this ) => Res , self? : any )=> $mol_vector< Res , Length >
 
-		merged< Patch >( patches : readonly Patch[] & { length : Length } , combine : ( value : Value , patch : Patch ) => Value ) : this {
+		merged< Patch >(
+			patches : readonly Patch[] & { length : Length } ,
+			combine : ( value : Value , patch : Patch ) => Value ,
+		) : this {
 			return this.map( ( value , index )=> combine( value , patches[ index ] ) ) as any
 		}
 
-		limited( this : $mol_vector< number , Length > , limits : readonly ( readonly [ number , number ] )[] & { length : Length } ) : this {
+		limited(
+			this : $mol_vector< number , Length > ,
+			limits : readonly ( readonly [ number , number ] )[] & { length : Length } ,
+		) : this {
 			return this.merged( limits , ( value , [ min , max ] )=> ( value < min ) ? min : ( value > max ) ? max : value ) as any
 		}
 
@@ -28,12 +34,25 @@ namespace $ {
 			return this.map( value => value * mult ) as any
 		}
 
-		multed1( this : $mol_vector< number , Length > , mults : readonly number[] & { length : Length } ) : this {
+		multed1(
+			this : $mol_vector< number , Length > ,
+			mults : readonly number[] & { length : Length } ,
+		) : this {
 			return this.merged( mults , ( a , b )=> a * b ) as any
 		}
 
-		expanded1( this : $mol_vector< $mol_vector_range< number > , Length > , point : readonly number[] & { length : Length } ) : this {
+		expanded1(
+			this : $mol_vector< $mol_vector_range< number > , Length > ,
+			point : readonly number[] & { length : Length } ,
+		) : this {
 			return this.merged( point , ( range , value )=> range.expanded0( value ) ) as any
+		}
+
+		expanded2(
+			this : $mol_vector< $mol_vector_range< number > , Length > ,
+			point : readonly ( readonly [ number , number ] )[] & { length : Length } ,
+		) : this {
+			return this.merged( point , ( range1 , range2 )=> range1.expanded0( range2[0] ).expanded0( range2[1] ) ) as any
 		}
 
 	}
