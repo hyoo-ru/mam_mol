@@ -25,6 +25,7 @@ namespace $.$$ {
 		}
 
 		event_click( event? : Event ) {
+			if( !event || event.defaultPrevented ) return
 			setTimeout( $mol_log_group( `${ this }.event_click()` , ()=> this.focused( false ) ) , 50 )
 		}
 

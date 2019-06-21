@@ -2,6 +2,8 @@
 
 Sandbox for javascript code from user.
 
+## [Online demo](https://mol.js.org/func/sandbox/demo/)
+
 ## Example
 
 ```
@@ -14,7 +16,7 @@ const result = func() // 4
 
 **constructor( ... contexts : Object[] )**
 
-`contexts` contains global variables for code inside.
+`contexts` contains global variables for sandboxed code.
 
 **eval( code : string ) : ()=> any**
 
