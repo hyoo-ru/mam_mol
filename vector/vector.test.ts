@@ -105,5 +105,18 @@ namespace $ {
 
 		} ,
 
+		'Vector of range expanding by vector of range'() {
+
+			let dimensions = new $mol_vector_2d( $mol_vector_range_full.inversed , $mol_vector_range_full.inversed )
+			
+			const expanded = dimensions
+			.expanded2( [ [ 1 , 3 ] , [ 7 , 9 ] ] as const )
+			.expanded2( [ [ 2 , 4 ] , [ 6 , 8 ] ] as const )
+
+			$mol_assert_like( [ ... expanded.x ] , [ 1 , 4 ] )
+			$mol_assert_like( [ ... expanded.y ] , [ 6 , 9 ] )
+
+		} ,
+
 	})
 }
