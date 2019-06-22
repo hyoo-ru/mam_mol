@@ -1,14 +1,13 @@
 namespace $ {
 
 	export function $mol_data_variant< Sub extends $mol_data_value[] >( ... sub : Sub ) {
-		return ( val : ReturnType< Sub[ number ] > ) => {
+		return ( val : Parameters< Sub[ number ] >[0] ) => {
 			
 			const errors = [] as String[]
 			
 			for( const type of sub ) {
 				try {
-					type( val )
-					return val
+					return type( val ) as ReturnType< Sub[ number ] >
 				} catch ( error ) {
 					errors.push( error.message )
 				}

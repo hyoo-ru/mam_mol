@@ -30,6 +30,10 @@
 	pointer-events: none;
 }
 
+[mol_button_major] {
+	box-shadow: 0 0 0 1px var(--mol_theme_back);
+}
+
 [mol_button_minor] {
 	color: var(--mol_theme_control);
 }
