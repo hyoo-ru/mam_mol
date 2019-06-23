@@ -11,13 +11,7 @@ namespace $.$$ {
 			)
 
 			for( let graph of graphs ) {
-				const dims = graph.dimensions()
-				if( dims[ 0 ][ 0 ] < next[ 0 ][ 0 ] ) next[ 0 ][ 0 ] = dims[ 0 ][ 0 ]
-				if( dims[ 1 ][ 0 ] < next[ 1 ][ 0 ] ) next[ 1 ][ 0 ] = dims[ 1 ][ 0 ]
-				if( dims[ 0 ][ 1 ] > next[ 0 ][ 1 ] ) next[ 0 ][ 1 ] = dims[ 0 ][ 1 ]
-				if( dims[ 1 ][ 1 ] > next[ 1 ][ 1 ] ) next[ 1 ][ 1 ] = dims[ 1 ][ 1 ]
-				// next = next.expanded1([dims[0][1], dims[1][1]] as const)
-				// next = next.expanded1([dims[0][0], dims[1][0]] as const)
+				next = next.expanded2(graph.dimensions() as [$mol_vector_range<number>, $mol_vector_range<number>])
 			}
 			
 			return next
