@@ -24,18 +24,20 @@ It's powerful easy to read and debug graph query language for REST API's.
 **HARP**
 
 ```
-/issue[owner=octocat][repository=Hello-World][number=349][title]
+GET /issue[owner=octocat][repository=Hello-World][number=349][title]
 ```
 
 **OData**
 
 ```
-/owner(octocat)/repository(Hello-World)/issue(349)?$select=title
+GET /owner(octocat)/repository(Hello-World)/issue(349)?$select=title
 ```
 
 **GraphGL**
 
 ```
+POST /graphql
+
 {
 	repository(owner:"octocat", name:"Hello-World") {
 		issue(number:349) {
