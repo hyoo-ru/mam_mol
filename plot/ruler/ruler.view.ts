@@ -3,12 +3,15 @@ namespace $.$$ {
 		labels_formatted() {
 			return this.points().map( ( point , index )=> this.Label( index ) )
 		}
+
+		viewport_axis: () => $mol_vector_range<number>
+		dimensions_axis: () => $mol_vector_range<number>
 		
 		@ $mol_mem
 		step() {
 			const scale = this.scale_step()
-			const [first, last] = this.dimensions_axis()
-			const range = last - first
+			const dims = this.dimensions_axis()
+			const range = dims.max - dims.min
 			const min_width = ( Math.abs( Math.log10( range ) ) + 2 ) * 15
 			const size = $mol_math_round_expand( range , -1 )
 			const count = Math.max( 1 , Math.pow( 10 , Math.floor( Math.log( size * scale / min_width ) / Math.log( 10 ) ) ) )
@@ -21,8 +24,8 @@ namespace $.$$ {
 		}
 
 		sub() {
-			const [first, last] = this.dimensions_axis()
-			const range = last - first
+			const dims = this.dimensions_axis()
+			const range = dims.max - dims.min
 			return !Number.isFinite(range) || range === 0 ? [] : super.sub()
 		}
 
@@ -34,7 +37,7 @@ namespace $.$$ {
 		}
 
 		snap_to_grid(coord: number) {
-			const [first, last] = this.viewport_axis()
+			const viewport = this.viewport_axis()
 			const scale = this.scale_axis()
 			const shift = this.shift_axis()
 			const step = this.step()
@@ -46,8 +49,8 @@ namespace $.$$ {
 			const step_scaled = step * scale
 			const scaled = val * scale + shift
 			let count = 0
-			if (scaled < first) count = (scaled - first) / step_scaled
-			if (scaled > last) count = (scaled - last) / step_scaled
+			if (scaled < viewport.min) count = (scaled - viewport.min) / step_scaled
+			if (scaled > viewport.max) count = (scaled - viewport.max) / step_scaled
 
 			return val - Math.floor(count) * step
 		}
@@ -55,8 +58,8 @@ namespace $.$$ {
 		@ $mol_mem
 		points() {
 			const dims = this.dimensions_axis()
-			const start = this.snap_to_grid(dims[0])
-			const end = this.snap_to_grid(dims[1])
+			const start = this.snap_to_grid(dims.min)
+			const end = this.snap_to_grid(dims.max)
 			const step = this.step()
 
 			const next = [] as number[]
