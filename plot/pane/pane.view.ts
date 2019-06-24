@@ -11,7 +11,7 @@ namespace $.$$ {
 			)
 
 			for( let graph of graphs ) {
-				next = next.expanded2(graph.dimensions() as [$mol_vector_range<number>, $mol_vector_range<number>])
+				next = next.expanded2(graph.dimensions() as $mol_vector_2d<$mol_vector_range<number>>)
 			}
 			
 			return next
@@ -79,7 +79,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		shift_limit() {
-			const [width, height] = this.dimensions()
+		const [width, height] = this.dimensions()
 			const [scale_x, scale_y] = this.scale()
 			const [size_x, size_y] = this.size_real()
 

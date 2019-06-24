@@ -127,6 +127,7 @@ namespace $ {
 				.expanded2( dimensions )
 
 			$mol_assert_like( [ ... expanded.x ] , [ Infinity , -Infinity ] )
+			$mol_assert_like( [ ... expanded.y ] , [ Infinity , -Infinity ] )
 
 		} ,
 	})
