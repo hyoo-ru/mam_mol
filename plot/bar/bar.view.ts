@@ -87,8 +87,8 @@ namespace $.$$ {
 				next = next.expanded1([series_x[i], series_y[i]] as const)
 			}
 			
-			const gap = ( next[0][1] - next[0][0] ) / series_x.length || 0.00000001
-			next[0] = next[0].added1([-gap, gap] as const)
+			const gap = ( next.x.max - next.x.min ) / series_x.length || 0.00000001
+			next[0] = next.x.added1([-gap, gap] as const)
 			
 			return next
 		}

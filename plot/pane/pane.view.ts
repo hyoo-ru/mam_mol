@@ -21,8 +21,8 @@ namespace $.$$ {
 		size() {
 			const dims = this.dimensions()
 			return [
-				( dims[0][1] - dims[0][0] ) || 1 ,
-				( dims[1][1] - dims[1][0] ) || 1 ,
+				( dims.x.max - dims.x.min ) || 1 ,
+				( dims.y.max - dims.y.min ) || 1 ,
 			] as const
 		}
 			
@@ -60,12 +60,15 @@ namespace $.$$ {
 			const left = + ( real[0] - this.gap_left() - this.gap_right() ) / size[0]
 			const bottom = - ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1]
 
-			return [[left, right], [bottom, top]] as const
+			return new $mol_vector_2d(
+				new $mol_vector_range(left, right),
+				new $mol_vector_range(bottom, top),
+			)
 		}
 
 		scale_default() {
 			const limits = this.scale_limit()
-			return [limits[0][0], limits[1][0]] as const
+			return [limits.x.min, limits.y.min] as const
 		}
 
 		@ $mol_mem
@@ -76,26 +79,26 @@ namespace $.$$ {
 
 		@ $mol_mem
 		shift_limit() {
-			const [min, max] = this.dimensions()
+			const [width, height] = this.dimensions()
 			const [scale_x, scale_y] = this.scale()
 			const [size_x, size_y] = this.size_real()
 
-			const left = -min[0] * scale_x + this.gap_left()
-			const right = -max[0] * scale_x + size_x - this.gap_right()
+			const left = -width.min * scale_x + this.gap_left()
+			const right = -width.max * scale_x + size_x - this.gap_right()
 
-			const bottom = -min[1] * scale_y + size_y - this.gap_bottom()
-			const top = -max[1] * scale_y + this.gap_top()
+			const bottom = -height.min * scale_y + size_y - this.gap_bottom()
+			const top = -height.max * scale_y + this.gap_top()
 
 			return [[right, left], [bottom, top]] as const
 		}
 
 		@ $mol_mem
 		shift_default() {
-			const [min, max] = this.dimensions()
+			const dims = this.dimensions()
 			const scale = this.scale()
 			return [
-				Math.round( this.gap_left() - min[0] * scale[0] ) ,
-				Math.round( this.gap_top() - max[1] * scale[1] ) ,
+				Math.round( this.gap_left() - dims.x.min * scale[0] ) ,
+				Math.round( this.gap_top() - dims.y.max * scale[1] ) ,
 			] as const
 		}
 
