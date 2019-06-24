@@ -6,6 +6,8 @@ namespace $.$$ {
 			return new Set()
 		}
 
+		viewport: () => $mol_vector_2d<$mol_vector_range<number>>
+
 		@ $mol_mem
 		points() {
 			const radius = this.diameter() / 2
@@ -13,10 +15,10 @@ namespace $.$$ {
 			const points_max = this.points_max()
 
 			const viewport = this.viewport()
-			const viewport_left = viewport[0][0] - radius
-			const viewport_right = viewport[0][1] + radius
-			const viewport_bottom = viewport[1][0] - radius
-			const viewport_top = viewport[1][1] + radius
+			const viewport_left = viewport.x.min - radius
+			const viewport_right = viewport.x.max + radius
+			const viewport_bottom = viewport.y.min - radius
+			const viewport_top = viewport.y.max + radius
 
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()

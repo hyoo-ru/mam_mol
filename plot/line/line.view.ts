@@ -1,9 +1,15 @@
 namespace $.$$ {
 	export class $mol_plot_line extends $.$mol_plot_line {
+
+		viewport: () => $mol_vector_2d<$mol_vector_range<number>>
+
 		@ $mol_mem
 		points() {
 			const threshold = this.threshold()
-			const [[viewport_left, viewport_right], [viewport_bottom, viewport_top]] = this.viewport()
+			const {
+				x: {min: viewport_left, max: viewport_right},
+				y: {min: viewport_bottom, max: viewport_top},
+			} = this.viewport()
 
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()
