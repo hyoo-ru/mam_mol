@@ -356,14 +356,14 @@ namespace $ {
 						if( prev == undefined ) {
 							const val = this.get()
 							if( val instanceof $mol_atom_wait ) return val
-							if( val ) val.valueOf()
+							if( val ) val['valueOf']()
 							prev = val
 						}
 						
 						if( next == undefined ) {
 							const val = done( prev )
 							if( val instanceof $mol_atom_wait ) return val
-							if( val ) val.valueOf()
+							if( val ) val['valueOf']()
 							next = val
 						}
 						
