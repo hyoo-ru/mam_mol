@@ -6,6 +6,19 @@ namespace $ {
 		pulling = 'pulling' ,
 		actual = 'actual' ,
 	}
+
+	export function $mol_atom_fence< Task extends ()=> any >( task : Task ) {
+
+		const slave = $mol_atom.stack[0]
+		$mol_atom.stack[0] = null as any
+		
+		try {
+			return task()
+		} finally {
+			$mol_atom.stack[0] = slave
+		}
+		
+	}
 	
 	export class $mol_atom< Value = any > extends $mol_object {
 		

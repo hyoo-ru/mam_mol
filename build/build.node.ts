@@ -739,8 +739,9 @@ namespace $ {
 			
 			var sources = this.sourcesAll( { path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) } )
 			
+			var json : any
 			try {
-				var json = JSON.parse( require( 'fs' ).readFileSync( target.path() ) )
+				$mol_atom_fence( ()=> json = target.exists() && JSON.parse( target.content() ) )
 			} catch( error ) {
 				console.error( error )
 			}
