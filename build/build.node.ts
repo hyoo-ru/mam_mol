@@ -740,7 +740,7 @@ namespace $ {
 			var sources = this.sourcesAll( { path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) } )
 			
 			try {
-				var json = JSON.parse( $node.fs.readFileSync( target.path() ) )
+				var json = JSON.parse( require( 'fs' ).readFileSync( target.path() ) )
 			} catch( error ) {
 				console.error( error )
 			}
