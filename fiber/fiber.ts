@@ -20,8 +20,8 @@ namespace $ {
 	}
 
 	export function $mol_fiber_func<
-		Calculate extends ( this : This , ... args : any[] )=> Value ,
-		Value = void ,
+		Calculate extends ( this : This , ... args : any[] )=> Result ,
+		Result = void ,
 		This = void ,
 	>( calculate : Calculate ) {
 		
@@ -45,6 +45,23 @@ namespace $ {
 
 		return wrapper
 
+	}
+
+	export function $mol_fiber_root<
+		Calculate extends ( this : This , ... args : any[] )=> Result ,
+		Result = void ,
+		This = void ,
+	>( calculate : Calculate ) {
+		
+		const wrapper = function( ... args : any[] ) {
+			const fiber = new $mol_fiber< Result >()
+			fiber.calculate = calculate.bind( this , ... args )
+			return fiber.wake()
+		} as Calculate
+		
+		wrapper[ Symbol.toStringTag ] = calculate.name
+		
+		return wrapper
 	}
 
 	export function $mol_fiber_method< Host , Value >(

@@ -225,6 +225,9 @@ namespace $ {
 				fileExists : ( path : string )=> {
 					return $mol_file.absolute( path ).exists()
 				} ,
+				readFile : ( path : string )=> {
+					return $mol_file.absolute( path ).content().toString()
+				} ,
 				writeFile : ( path : string , content : string )=> {
 					$mol_file.absolute( path ).content( content , $mol_atom_force_cache )
 				} ,
@@ -736,8 +739,9 @@ namespace $ {
 			
 			var sources = this.sourcesAll( { path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) } )
 			
+			var json : any
 			try {
-				var json = JSON.parse( target.content() )
+				$mol_atom_fence( ()=> json = target.exists() && JSON.parse( target.content() ) )
 			} catch( error ) {
 				console.error( error )
 			}

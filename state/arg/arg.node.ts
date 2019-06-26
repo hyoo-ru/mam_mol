@@ -14,12 +14,12 @@ namespace $ {
 			var href = this.href()
 			var chunks = href.split( ' ' )
 			
-			var params : { [ key : string ] : any } = {}
+			var params : { [ key : string ] : string } = {}
 			chunks.forEach(
 				chunk => {
 					if( !chunk ) return
 					var vals = chunk.split( '=' ).map( decodeURIComponent )
-					params[ vals.shift() ] = vals
+					params[ vals.shift() ] = vals.join('=')
 				}
 			)
 			

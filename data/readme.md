@@ -1,47 +1,70 @@
 # $mol_data
 
-Defines DTO with compiletime/runtime validation.
+Defines static typed DTO with strict runtime validation and user friendly error messages like `["friends"][0]["phone"] is not a string and is not a number`.
 
-# Usage example
+# Usage examples
+
+## Entities
 
 ```typescript
 const User = $mol_data_record({
 	name : $mol_data_string ,
 	age : $mol_data_optional( $mol_data_integer ) ,
+	birthday : $mol_data_wrapper( $mol_data_string , $mol_time_moment ) ,
 	phone : $mol_data_variant( $mol_data_string , $mol_data_integer ) ,
-	mails : $mol_data_array( $mol_data_email ),
-	get wife() { return $mol_data_optional( User ) }
+	mail : $mol_data_email ,
+	get friends() { return $mol_data_array( User ) } ,
 })
 
+// Ensure this is a User
 const ann = User({
 	name : 'Ann' ,
-	age : undefined ,
+	age : 33 ,
+	birthday : '1984-08-04T12:00:00Z' ,
 	phone : 791234567890,
-	mails : ['foo@example.org'] ,
-	wife : undefined ,
+	mail : 'foo@example.org' ,
+	friends : [] ,
 })
 
-const evan = User({
-	name : 'Evan',
-	age : 22,
-	phone : 791234567890 ,
-	mails : ['lol'] , // Not a mail
-	wife : ann ,
-})
+// typeof ann === {
+// 	readonly name: string;
+// 	readonly age: number | undefined;
+// 	readonly birthday: $mol_time_duration;
+// 	readonly phone: string | number;
+// 	readonly mail: string;
+// 	readonly friends: readonly User[];
+// }
 
-const john = User({
-	name : 'John' ,
-	age : 32 ,
-	phone : 791234567890.1 , // Not a string and Not an integer
-	mails : ['foo@example.org'] ,
-	wife : undefined ,
-})
+// Allow only Users
+function printFriends( user : ReturnType< typeof User > ) {
+	for( const friend of user.friends ) {
+		console.log( friend.name )
+	}
+}
 
-const mary = User({
-	name: 'Mary',
-	age: 32,
-	phone: false, // Type 'false' is not assignable to type 'string | number'
-	mails: [] ,
-	wife : undefined ,
-})
+printFriends( ann )
+```
+
+## Units
+
+```typescript
+const Weight = $mol_data_nominal<'Weight'>()( $mol_data_integer )
+const Length = $mol_data_nominal<'Length'>()( $mol_data_integer )
+
+let len = Length(10)
+len = Length(20) // Validate
+len = 20 as ReturnType< typeof Length > // Cast
+
+len = 20 // Compile time error
+len = Weight(20) // Compile time error
+len = Length( 20.1 ) // Run time error
+```
+
+## (De)Serialization
+
+```typescript
+const Duration = $mol_data_wrapper( $mol_data_variant( $mol_data_string , $mol_data_integer ) , $mol_time_duration )
+
+JSON.stringify( Duration( 'P1D' ) ) // "P1DT"
+JSON.stringify( Duration( 1000 ) ) // "PT1S"
 ```

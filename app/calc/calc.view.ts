@@ -200,10 +200,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		hint() {
-			const context = this.sandbox().context()
-			const keys = Object.keys( context ).filter( key => context[ key ] !== undefined )
-			const funcs = keys.filter( key => typeof context[ key ] === 'function' )
-			return super.hint().replace( '{funcs}' , funcs.join( ', ' ) )
+			return super.hint().replace( '{funcs}' , Object.getOwnPropertyNames( Math ).join( ', ' ) )
 		}
 
 		@ $mol_mem

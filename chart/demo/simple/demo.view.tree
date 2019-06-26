@@ -5,7 +5,7 @@ $mol_chart_demo_simple $mol_demo_large
 			graphs /
 				<= Vert_ruler $mol_plot_ruler_vert
 					title <= vert_title @ \pcs
-				<= Hor_ruler $mol_plot_ruler_hor
+				<= Hor_ruler $mol_plot_mark_hor
 					title <= hor_title @ \Month
 					series <= plan
 					label_text!key <= hor_label_text!key \
