@@ -225,9 +225,9 @@ namespace $ {
 				fileExists : ( path : string )=> {
 					return $mol_file.absolute( path ).exists()
 				} ,
-				readFile : ( path : string )=> {
-					return $mol_file.absolute( path ).content().toString()
-				} ,
+				// readFile : ( path : string )=> {
+				// 	return $mol_file.absolute( path ).content().toString()
+				// } ,
 				writeFile : ( path : string , content : string )=> {
 					$mol_file.absolute( path ).content( content , $mol_atom_force_cache )
 				} ,
