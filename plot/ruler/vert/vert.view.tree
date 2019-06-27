@@ -1,8 +1,6 @@
 $mol_plot_ruler_vert $mol_plot_ruler
 	gap_top 28
-	title_align \start
-	label_align \start
-	title_pos_x \0
+	title_align \end
+	label_align \end
+	title_pos_x \36px
 	title_pos_y \14px
-	box_pos_x \0
-	box_pos_y \0
