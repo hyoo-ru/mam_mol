@@ -1,7 +1,5 @@
 namespace $.$$ {
 	export class $mol_plot_graph extends $.$mol_plot_graph {
-		dimensions_pane: () => $mol_vector_2d<$mol_vector_range<number>>
-
 		viewport() {
 			const size = this.size_real()
 			return new $mol_vector_2d(

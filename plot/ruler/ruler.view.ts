@@ -4,9 +4,6 @@ namespace $.$$ {
 			return this.points().map( ( point , index )=> this.Label( index ) )
 		}
 
-		viewport_axis: () => $mol_vector_range<number>
-		dimensions_axis: () => $mol_vector_range<number>
-		
 		@ $mol_mem
 		step() {
 			const scale = this.scale_step()

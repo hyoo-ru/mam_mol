@@ -3,8 +3,12 @@ $mol_plot_ruler $mol_plot_graph
 	scale_axis 1
 	scale_step 1
 	shift_axis 1
-	dimensions_axis /number
-	viewport_axis /number
+	dimensions_axis $mol_vector_range /
+		Infinity
+		-Infinity
+	viewport_axis $mol_vector_range /
+		Infinity
+		-Infinity
 	points /number
 	normalize?val 0
 	precision 1

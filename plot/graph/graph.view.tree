@@ -10,15 +10,33 @@ $mol_plot_graph $mol_svg_group
 		^
 		color <= color \
 	-
-	viewport /$mol_vector_range<number>
+	viewport $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
 	shift /number
 		0
 		0
 	scale /number
 		1
 		1
-	dimensions_pane /$mol_vector_range<number>
-	dimensions /$mol_vector_range<number>
+	dimensions_pane $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
+	dimensions $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
 	size_real /number
 		0
 		0

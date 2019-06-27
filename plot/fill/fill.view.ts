@@ -1,7 +1,5 @@
 namespace $.$$ {
 	export class $mol_plot_fill extends $.$mol_plot_fill {
-		viewport: () => $mol_vector_2d<$mol_vector_range<number>>
-
 		@ $mol_mem
 		points() {
 			const threshold = this.threshold()

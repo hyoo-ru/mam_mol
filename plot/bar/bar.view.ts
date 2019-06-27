@@ -1,7 +1,5 @@
 namespace $.$$ {
 	export class $mol_plot_bar extends $.$mol_plot_bar {
-		viewport: () => $mol_vector_2d<$mol_vector_range<number>>
-
 		@$mol_mem
 		points() {
 			const {

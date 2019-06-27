@@ -6,8 +6,6 @@ namespace $.$$ {
 			return new Set()
 		}
 
-		viewport: () => $mol_vector_2d<$mol_vector_range<number>>
-
 		@ $mol_mem
 		points() {
 			const radius = this.diameter() / 2

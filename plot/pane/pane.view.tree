@@ -12,11 +12,11 @@ $mol_plot_pane $mol_svg_root
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
 	-
-	shift_limit /readonly[number,number]
-		<= shift_limit_x /number
+	shift_limit $mol_vector_2d /
+		$mol_vector_range /
 			0
 			0
-		<= shift_limit_y /number
+		$mol_vector_range /
 			0
 			0
 	shift_default /number
@@ -25,11 +25,11 @@ $mol_plot_pane $mol_svg_root
 	shift?val /number
 		0
 		0
-	scale_limit /readonly[number,number]
-		<= scale_limit_x /number
+	scale_limit $mol_vector_2d /
+		$mol_vector_range /
 			0
 			Infinity
-		<= scale_limit_y /number
+		$mol_vector_range /
 			0
 			Infinity
 	scale_default /number
@@ -44,8 +44,20 @@ $mol_plot_pane $mol_svg_root
 	size_real /number
 		1
 		1
-	dimensions_viewport /$mol_vector_range<number>
-	dimensions /$mol_vector_range<number>
+	dimensions_viewport $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
+	dimensions $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
 	-
 	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
 	-

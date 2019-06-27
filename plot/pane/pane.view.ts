@@ -79,7 +79,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		shift_limit() {
-		const [width, height] = this.dimensions()
+			const [width, height] = this.dimensions()
 			const [scale_x, scale_y] = this.scale()
 			const [size_x, size_y] = this.size_real()
 
@@ -89,7 +89,10 @@ namespace $.$$ {
 			const bottom = -height.min * scale_y + size_y - this.gap_bottom()
 			const top = -height.max * scale_y + this.gap_top()
 
-			return [[right, left], [bottom, top]] as const
+			return new $mol_vector_2d(
+				new $mol_vector_range(right, left),
+				new $mol_vector_range(bottom, top),
+			)
 		}
 
 		@ $mol_mem

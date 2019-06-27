@@ -1,7 +1,5 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_vert extends $.$mol_plot_ruler_vert {
-		dimensions_pane: () => $mol_vector_2d<$mol_vector_range<number>>
-
 		dimensions_axis() {
 			return this.dimensions_pane().y
 		}
