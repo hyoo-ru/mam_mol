@@ -20,7 +20,7 @@ namespace $ {
 			} ,
 
 			set( target , field ) {
-				throw new TypeError( 'Lazy range is read only' )
+				return $mol_fail( new TypeError( 'Lazy range is read only' ) )
 			} ,
 
 			ownKeys( target ) {
