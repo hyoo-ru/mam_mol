@@ -26,11 +26,15 @@ namespace $.$$ {
 			return !Number.isFinite(range) || range === 0 ? [] : super.sub()
 		}
 
-		@ $mol_mem
-		box_width() {
+		text_width(text: string): number {
 			const win = this.$.$mol_dom_context
 			const style = win.getComputedStyle(this.dom_node())
-			return $mol_font_measure(parseInt(style['font-size']), style['font-family'], this.title() ) + 'px'
+			return $mol_font_measure(parseInt(style['font-size']), style['font-family'], text )
+		}
+
+		@ $mol_mem
+		box_width() {
+			return this.text_width(this.title()) + 'px'
 		}
 
 		box_pos_y() {

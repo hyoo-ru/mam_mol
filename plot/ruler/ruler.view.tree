@@ -12,6 +12,7 @@ $mol_plot_ruler $mol_plot_graph
 	points /number
 	normalize?val 0
 	precision 1
+	text_width!text 0
 	sub /
 		<= Curve $mol_svg_path
 			geometry <= curve \
