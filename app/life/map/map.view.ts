@@ -61,20 +61,12 @@ namespace $.$$ {
 
 		@ $mol_mem
 		points_x() {
-			const points = [] as number[]
-			for( let key of this.future().keys() ) {
-				points.push($mol_coord_high( key ))
-			}
-			return points
+			return [ ... this.future().keys() ].map(key => $mol_coord_high( key ))
 		}
 
 		@ $mol_mem
 		points_y() {
-			const points = [] as number[]
-			for( let key of this.future().keys() ) {
-				points.push($mol_coord_low( key ))
-			}
-			return points
+			return [ ... this.future().keys() ].map(key => $mol_coord_low( key ))
 		}
 
 		@ $mol_mem
