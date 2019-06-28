@@ -14,30 +14,43 @@ namespace $.$$ {
 		@ $mol_mem
 		visible_indexes() {
 			const series_x = this.series_x()
+			const labels = this.labels()
 			const [shift_x,] = this.shift()
 			const [scale_x,] = this.scale()
-			const step = this.step() * scale_x
+			const label_gap = this.label_gap()
+			let step = this.step() * scale_x
 			const [[viewport_left, viewport_right]] = this.viewport()
-
-			let current = 0
-
-			const indexes = [] as number[]
-			let last = 0
-			for (let i = 0; i < series_x.length; i++) {
-				const point_x = series_x[i]
-				const scaled_x = (shift_x + point_x * scale_x)
-				if (scaled_x < viewport_left) continue
-				if (scaled_x > viewport_right) continue
-				if (current === 0) current = scaled_x
-				if (scaled_x < current) {
-					last = i
-					continue
+			const size_x = viewport_right - viewport_left
+			let indexes: number[]
+			let labels_width: number
+			do {
+				indexes = []
+				labels_width = 0
+				let last: number = 0
+				let current = 0
+				for (let i = 0; i < series_x.length; i++) {
+					const point_x = series_x[i]
+					const scaled_x = (shift_x + point_x * scale_x)
+					if (scaled_x < viewport_left) continue
+					if (scaled_x > viewport_right) continue
+					if (current === 0) current = scaled_x
+					if (scaled_x < current) {
+						last = i
+						continue
+					}
+					indexes.push(i)
+					current += step
+					last = 0
+					labels_width += this.text_width(labels[i]) + label_gap
+					if (labels_width > size_x) break
 				}
-				indexes.push(i)
-				current += step
-				last = 0
-			}
-			if (last !== 0) indexes.push(last)
+				if (last !== 0) {
+					indexes.push(last)
+					labels_width += this.text_width(labels[last]) + label_gap
+				}
+
+				step *= 2
+			} while (labels_width > size_x && indexes.length > 2)
 
 			return indexes
 
