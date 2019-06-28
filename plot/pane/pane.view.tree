@@ -38,7 +38,7 @@ $mol_plot_pane $mol_svg_root
 	scale?val /number
 		1
 		1
-	size /number
+	size $mol_vector_2d /
 		0
 		0
 	size_real /number

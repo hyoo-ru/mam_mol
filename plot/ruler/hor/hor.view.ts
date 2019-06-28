@@ -7,7 +7,7 @@ namespace $.$$ {
 		}
 
 		viewport_axis() {
-			return new $mol_vector_range(0, this.size_real()[0])
+			return new this.$.$mol_vector_range(0, this.size_real()[0])
 		}
 
 		scale_axis() {

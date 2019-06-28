@@ -5,13 +5,13 @@ namespace $.$$ {
 		@ $mol_mem
 		dimensions() {
 			const graphs = this.graphs()
-			let next = new $mol_vector_2d(
+			let next = new this.$.$mol_vector_2d(
 				$mol_vector_range_full.inversed,
 				$mol_vector_range_full.inversed
 			)
 
 			for( let graph of graphs ) {
-				next = next.expanded2(graph.dimensions() as $mol_vector_2d<$mol_vector_range<number>>)
+				next = next.expanded2(graph.dimensions())
 			}
 			
 			return next
@@ -20,10 +20,10 @@ namespace $.$$ {
 		@ $mol_mem
 		size() {
 			const dims = this.dimensions()
-			return [
+			return new this.$.$mol_vector_2d(
 				( dims.x.max - dims.x.min ) || 1 ,
 				( dims.y.max - dims.y.min ) || 1 ,
-			] as const
+			)
 		}
 			
 		graph_hue( index : number ) {
@@ -57,12 +57,12 @@ namespace $.$$ {
 			const size = this.size()
 			const real = this.size_real()
 
-			const left = + ( real[0] - this.gap_left() - this.gap_right() ) / size[0]
-			const bottom = - ( real[1] - this.gap_top() - this.gap_bottom() ) / size[1]
+			const left = + ( real[0] - this.gap_left() - this.gap_right() ) / size.x
+			const bottom = - ( real[1] - this.gap_top() - this.gap_bottom() ) / size.y
 
-			return new $mol_vector_2d(
-				new $mol_vector_range(left, right),
-				new $mol_vector_range(bottom, top),
+			return new this.$.$mol_vector_2d(
+				new this.$.$mol_vector_range(left, right),
+				new this.$.$mol_vector_range(bottom, top),
 			)
 		}
 
@@ -74,7 +74,7 @@ namespace $.$$ {
 		@ $mol_mem
 		scale(next?: readonly [number, number]) {
 			if (next === undefined) next = this.scale_default()
-			return new $mol_vector_2d( ...next ).limited(this.scale_limit())
+			return new this.$.$mol_vector_2d( ...next ).limited(this.scale_limit())
 		}
 
 		@ $mol_mem
@@ -89,9 +89,9 @@ namespace $.$$ {
 			const bottom = -height.min * scale_y + size_y - this.gap_bottom()
 			const top = -height.max * scale_y + this.gap_top()
 
-			return new $mol_vector_2d(
-				new $mol_vector_range(right, left),
-				new $mol_vector_range(bottom, top),
+			return new this.$.$mol_vector_2d(
+				new this.$.$mol_vector_range(right, left),
+				new this.$.$mol_vector_range(bottom, top),
 			)
 		}
 
@@ -115,7 +115,7 @@ namespace $.$$ {
 			}
 			this.shift_changed = true
 
-			return new $mol_vector_2d( ...next ).limited(this.shift_limit())
+			return new this.$.$mol_vector_2d( ...next ).limited(this.shift_limit())
 		}
 		
 		@ $mol_mem
@@ -135,9 +135,9 @@ namespace $.$$ {
 		@ $mol_mem
 		viewport() {
 			const size = this.size_real()
-			return new $mol_vector_2d(
-				new $mol_vector_range(this.gap_left(), size[0] - this.gap_right()),
-				new $mol_vector_range(this.gap_bottom(), size[1] - this.gap_top()),
+			return new this.$.$mol_vector_2d(
+				new this.$.$mol_vector_range(this.gap_left(), size[0] - this.gap_right()),
+				new this.$.$mol_vector_range(this.gap_bottom(), size[1] - this.gap_top()),
 			)
 		}
 

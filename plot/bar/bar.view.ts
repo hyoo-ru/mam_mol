@@ -79,9 +79,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		dimensions() {
-			let next = new $mol_vector_2d(
+			let next = new this.$.$mol_vector_2d(
 				$mol_vector_range_full.inversed,
-				new $mol_vector_range(0 , 0),
+				new this.$.$mol_vector_range(0 , 0),
 			)
 			
 			const series_x = this.series_x()
