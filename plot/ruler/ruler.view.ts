@@ -33,6 +33,12 @@ namespace $.$$ {
 			return $mol_font_measure(parseInt(style['font-size']), style['font-family'], this.title() ) + 'px'
 		}
 
+		box_pos_y() {
+			const win = this.$.$mol_dom_context
+			const style = win.getComputedStyle(this.dom_node())
+			return `calc(${super.box_pos_y()} - ${style['font-size']})`
+		}
+
 		snap_to_grid(coord: number) {
 			const viewport = this.viewport_axis()
 			const scale = this.scale_axis()
@@ -78,10 +84,6 @@ namespace $.$$ {
 			return point.toFixed( this.precision() )
 		}
 
-		box_pos_y() {
-			return `calc(${this.title_pos_y()} - 1.1rem)`
-		}
-		
 		back() {
 			return [ this ]
 		}

@@ -30,6 +30,10 @@ namespace $.$$ {
 			}).join( ' ' ) || ''
 		}
 
+		box_pos_x() {
+			return `calc(${super.box_pos_x()} - ${this.box_width()})`
+		}
+
 		label_pos_x( index : number ) {
 			return this.title_pos_x()
 		}

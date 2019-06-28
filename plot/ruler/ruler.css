@@ -14,8 +14,6 @@
 }
 
 [mol_plot_ruler_title_box] {
-	/* fill: aqua; */
 	stroke: none;
-	fill: red;
-	/* var(--mol_theme_back); */
+	fill: var(--mol_theme_back);
 }
