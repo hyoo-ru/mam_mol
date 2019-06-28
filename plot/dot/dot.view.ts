@@ -76,7 +76,7 @@ namespace $.$$ {
 			const points = this.points()
 			if( points.length === 0 ) return ''
 
-			return this.points().map( point => 'M ' + point.join( ' ' ) + ' v 0' ).join( ' ' ) || ''
+			return this.points().map( point => 'M ' + point.join( ' ' ) + ' v 0' ).join( ' ' )
 		}
 		
 	}

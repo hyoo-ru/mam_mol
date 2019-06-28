@@ -1,7 +1,5 @@
 namespace $.$$ {
 	export class $mol_plot_ruler_hor extends $.$mol_plot_ruler_hor {
-		dimensions_pane: () => $mol_vector_2d<$mol_vector_range<number>>
-
 		dimensions_axis() {
 			return this.dimensions_pane().x
 		}
@@ -29,7 +27,7 @@ namespace $.$$ {
 			return this.points().map( point => {
 				const scaled = point * scale + shift
 				return `M ${scaled.toFixed(3)} 1000 V 0`
-			}).join( ' ' ) || ''
+			}).join( ' ' )
 		}
 
 		label_pos_x( index : number ) {

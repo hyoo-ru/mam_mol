@@ -66,7 +66,7 @@ namespace $.$$ {
 		curve() {
 			const shift = this.shift()
 
-			return this.points().map( point => `M ${ point[0] } ${ shift[1] } V ${ point[1] }` ).join( ' ' ) || ''
+			return this.points().map( point => `M ${ point[0] } ${ shift[1] } V ${ point[1] }` ).join( ' ' )
 		}
 		
 		stroke_width() {

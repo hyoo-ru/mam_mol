@@ -51,7 +51,7 @@ namespace $.$$ {
 			return this.visible_indexes().map( index => {
 				const scaled = series_x[index] * scale + shift
 				return `M ${ scaled.toFixed(3) } 1000 V 0`
-			}).join( ' ' ) || ''
+			}).join( ' ' )
 		}
 
 		label_text( index : number ) {
