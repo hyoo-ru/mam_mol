@@ -49,7 +49,7 @@ namespace $.$$ {
 					labels_width += this.text_width(labels[last]) + label_gap
 				}
 
-				step *= 2
+				step *= 1.5
 			} while (labels_width > size_x && indexes.length > 2)
 
 			return indexes
