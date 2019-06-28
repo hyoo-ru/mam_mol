@@ -41,7 +41,7 @@ $mol_plot_pane $mol_svg_root
 	size $mol_vector_2d /
 		0
 		0
-	size_real /number
+	size_real $mol_vector_2d /
 		1
 		1
 	dimensions_viewport $mol_vector_2d /

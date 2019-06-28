@@ -3,8 +3,8 @@ namespace $.$$ {
 		viewport() {
 			const size = this.size_real()
 			return new this.$.$mol_vector_2d(
-				new this.$.$mol_vector_range(0, size[0]),
-				new this.$.$mol_vector_range(0, size[1]),
+				new this.$.$mol_vector_range(0, size.x),
+				new this.$.$mol_vector_range(0, size.y),
 			)
 		}
 

@@ -41,12 +41,12 @@ namespace $.$$ {
 		}
 		
 		size_real() {
-			return [ this.width() , this.height() ] as const
+			return new this.$.$mol_vector_2d(this.width() , this.height())
 		}
 		
 		view_box() {
 			const size = this.size_real()
-			return `0 0 ${ size[0] } ${ size[1] }`
+			return `0 0 ${ size.x } ${ size.y }`
 		}
 		
 		@ $mol_mem
@@ -57,8 +57,8 @@ namespace $.$$ {
 			const size = this.size()
 			const real = this.size_real()
 
-			const left = + ( real[0] - this.gap_left() - this.gap_right() ) / size.x
-			const bottom = - ( real[1] - this.gap_top() - this.gap_bottom() ) / size.y
+			const left = + ( real.x - this.gap_left() - this.gap_right() ) / size.x
+			const bottom = - ( real.y - this.gap_top() - this.gap_bottom() ) / size.y
 
 			return new this.$.$mol_vector_2d(
 				new this.$.$mol_vector_range(left, right),
@@ -79,15 +79,15 @@ namespace $.$$ {
 
 		@ $mol_mem
 		shift_limit() {
-			const [width, height] = this.dimensions()
+			const dims = this.dimensions()
 			const [scale_x, scale_y] = this.scale()
-			const [size_x, size_y] = this.size_real()
+			const size = this.size_real()
 
-			const left = -width.min * scale_x + this.gap_left()
-			const right = -width.max * scale_x + size_x - this.gap_right()
+			const left = -dims.x.min * scale_x + this.gap_left()
+			const right = -dims.x.max * scale_x + size.x - this.gap_right()
 
-			const bottom = -height.min * scale_y + size_y - this.gap_bottom()
-			const top = -height.max * scale_y + this.gap_top()
+			const bottom = -dims.y.min * scale_y + size.y - this.gap_bottom()
+			const top = -dims.y.max * scale_y + this.gap_top()
 
 			return new this.$.$mol_vector_2d(
 				new this.$.$mol_vector_range(right, left),
@@ -136,8 +136,8 @@ namespace $.$$ {
 		viewport() {
 			const size = this.size_real()
 			return new this.$.$mol_vector_2d(
-				new this.$.$mol_vector_range(this.gap_left(), size[0] - this.gap_right()),
-				new this.$.$mol_vector_range(this.gap_bottom(), size[1] - this.gap_top()),
+				new this.$.$mol_vector_range(this.gap_left(), size.x - this.gap_right()),
+				new this.$.$mol_vector_range(this.gap_bottom(), size.y - this.gap_top()),
 			)
 		}
 

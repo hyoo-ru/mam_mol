@@ -37,7 +37,7 @@ $mol_plot_graph $mol_svg_group
 		$mol_vector_range /
 			Infinity
 			-Infinity
-	size_real /number
+	size_real $mol_vector_2d /
 		0
 		0
 	front /$mol_plot_graph
