@@ -38,6 +38,8 @@ $mol_plot_pane $mol_svg_root
 	scale?val /number
 		1
 		1
+	scale_x?val 0
+	scale_y?val 0
 	size $mol_vector_2d /
 		0
 		0
@@ -65,3 +67,6 @@ $mol_plot_pane $mol_svg_root
 		<= Meter $mol_meter
 			width => width
 			height => height
+		<= Touch $mol_touch
+			zoom?val <=> scale_x?val
+			pan?val <=> shift?val

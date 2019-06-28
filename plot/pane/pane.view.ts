@@ -77,6 +77,14 @@ namespace $.$$ {
 			return new this.$.$mol_vector_2d( ...next ).limited(this.scale_limit())
 		}
 
+		scale_x(next?: number): number {
+			return this.scale(next && [next, this.scale()[1]])[0]
+		}
+
+		scale_y(next?: number): number {
+			return this.scale(next && [this.scale()[0], next])[1]
+		}
+
 		@ $mol_mem
 		shift_limit() {
 			const dims = this.dimensions()

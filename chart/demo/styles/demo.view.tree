@@ -3,7 +3,7 @@ $mol_chart_demo_styles $mol_demo_large
 	samples_count 15
 	sub /
 		<= Chart $mol_chart
-			graphs /
+			graphs <= graphs /
 				<= Energy $mol_plot_ruler_vert
 					title <= energy_title @ \kJ
 				<= Day $mol_plot_mark_hor
