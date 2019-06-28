@@ -27,7 +27,7 @@ include \/mol/deck/demo
 include \/mol/dimmer/demo
 include \/mol/expander/demo
 include \/mol/float/demo
-include \/mol/form/demo
+include \/mol/form/demo/bids
 include \/mol/grid/demo
 include \/mol/icon/demo
 include \/mol/labeler/demo
