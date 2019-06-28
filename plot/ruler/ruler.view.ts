@@ -26,10 +26,23 @@ namespace $.$$ {
 			return !Number.isFinite(range) || range === 0 ? [] : super.sub()
 		}
 
-		text_width(text: string): number {
+		@$mol_mem
+		computed_style() {
 			const win = this.$.$mol_dom_context
 			const style = win.getComputedStyle(this.dom_node())
-			return $mol_font_measure(parseInt(style['font-size']), style['font-family'], text )
+			if (style['font-size']) return style
+
+			const atom = $mol_atom_current< CSSStyleDeclaration >()
+			new $mol_defer(() => {
+				atom.push(win.getComputedStyle(this.dom_node()))
+			})
+
+			return style
+		}
+
+		text_width(text: string): number {
+			const style = this.computed_style()
+			return $mol_font_measure(parseInt(style['font-size']) || 16, style['font-family'], text )
 		}
 
 		@ $mol_mem
@@ -38,9 +51,9 @@ namespace $.$$ {
 		}
 
 		box_pos_y() {
-			const win = this.$.$mol_dom_context
-			const style = win.getComputedStyle(this.dom_node())
-			return `calc(${super.box_pos_y()} - ${style['font-size']})`
+			const style = this.computed_style()
+			const res = `calc(${super.box_pos_y()} - ${style['font-size'] || '0'})`
+			return res
 		}
 
 		snap_to_grid(coord: number) {
