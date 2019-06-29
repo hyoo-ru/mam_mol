@@ -171,7 +171,7 @@ namespace $ {
 							needCache = true
 							var overs : string[] = []
 							value.sub.forEach( over => {
-								if( /^-?$/.test( over.type ) ) return ''
+								if( /^[-\/]?$/.test( over.type ) ) return ''
 								var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
 								var ns = needSet
 								
@@ -199,7 +199,8 @@ namespace $ {
 								overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
 								needSet = ns
 							} )
-							return '(( obj )=>{\n' + overs.join( '' ) + '\t\t\treturn obj\n\t\t})( new this.$.' + value.type + ' )'
+							const object_args = value.select( '/' , '' ).sub.map( arg => getValue( arg ) ).join( ' , ' ) as string
+							return '(( obj )=>{\n' + overs.join( '' ) + '\t\t\treturn obj\n\t\t})( new this.$.' + value.type + '( ' + object_args + ' ) )'
 						case( value.type === '*' ) :
 							//needReturn = false
 							var opts : string[] = []

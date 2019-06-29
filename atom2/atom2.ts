@@ -179,7 +179,16 @@ namespace $ {
 
 			if( this.cursor > $mol_fiber_status.obsolete ) {
 				if( master_index >= this.cursor - 2 ) return
-				this.$.$mol_fail( new Error( 'Obsoleted while calculation' ) )
+
+				const path = [] as $mol_atom2[]
+				let current = this as $mol_atom2
+				
+				collect : while( current ) {
+					path.push( current )
+					current = current.masters[ current.cursor - 2 ] as $mol_atom2
+				}
+
+				this.$.$mol_fail( new Error( `Obsoleted while calculation \n\n${ path.join( '\n' ) }\n` ) )
 			}
 			
 			if( this.cursor === $mol_fiber_status.obsolete ) return

@@ -1,33 +1,38 @@
-$mol_app_signup $mol_scroll
+$mol_form_demo_bids $mol_demo_small
 	title @ \Sign Up form demo
-	message_required @ \Input required
-	message_no_spaces @ \Spaces are forbidden
-	message_need_more_letters @ \More then 2 letter required
+	message_required @ \Required
+	message_no_spaces @ \No spaces!
+	message_need_more_letters @ \{count} or more letters
 	sub /
 		<= Form $mol_form
+			submit?val <=> submit?val null
 			form_fields /
+				-
 				<= Name_first_field $mol_form_field
 					name <= name_first_label @ \First Name
 					bid <= name_first_bid \
 					control <= Name_first_control $mol_string
 						hint <= name_first_hint @ \Jack
 						value?val <=> name_first?val \
+				-
 				<= Name_nick_field $mol_form_field
 					name <= name_nick_label @ \Nick Name
 					bid <= name_nick_bid \
 					control <= Name_nick_control $mol_string
 						hint <= name_nick_hint @ \Capitan
 						value?val <=> name_nick?val \
+				-
 				<= Name_second_field $mol_form_field
 					name <= name_second_label @ \Second Name
 					bid <= name_second_bid \
 					control <= Name_second_control $mol_string
 						hint <= name_second_hint @ \Sparrow
 						value?val <=> name_second?val \
+				-
 				<= Sex_field $mol_form_field
 					name <= sex_label @ \Sex
 					bid <= sex_bid \
-					control / <= Sex_control $mol_switch
+					control <= Sex_control $mol_switch
 						value?val <=> sex?val \
 						options <= sex_options *
 							male <= sex_option_male @ \Male
@@ -36,5 +41,6 @@ $mol_app_signup $mol_scroll
 			buttons /
 				<= Submit $mol_button_major
 					sub / <= submit_text @ \Sign Up
-					event_click?val <=> event_submit?val null
+					click?val <=> submit?val null
 					disabled <= submit_blocked true
+		<= Message $mol_view sub / <= message?val \

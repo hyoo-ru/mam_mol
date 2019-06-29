@@ -1,5 +1,8 @@
 $mol_form $mol_view
 	submit_blocked false
+	event *
+		^
+		keydown?event <=> submit?event null
 	sub /
 		<= Bar_fields $mol_view
 			sub <= form_fields /
