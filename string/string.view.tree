@@ -1,7 +1,7 @@
 $mol_string $mol_view
 	dom_name \input
 	enabled true
-	debounce 200
+	debounce 0
 	minimal_height 40
 	field *
 		^
@@ -16,4 +16,4 @@ $mol_string $mol_view
 	event *
 		^
 		input?event <=> event_change?event null
-		keypress?event <=> event_key_press?event null
+		keydown?event <=> event_key_press?event null
