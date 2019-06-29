@@ -58,7 +58,7 @@ namespace $.$$ {
 			const real = this.size_real()
 
 			const left = + ( real.x - this.gap_left() - this.gap_right() ) / size.x
-			const bottom = - ( real.y - this.gap_top() - this.gap_bottom() ) / size.y
+			const bottom = - ( real.y - this.gap_top() - this.gap_bottom()) / size.y
 
 			return new this.$.$mol_vector_2d(
 				new this.$.$mol_vector_range(left, right),
@@ -91,11 +91,11 @@ namespace $.$$ {
 			const [scale_x, scale_y] = this.scale()
 			const size = this.size_real()
 
-			const left = -dims.x.min * scale_x + this.gap_left()
-			const right = -dims.x.max * scale_x + size.x - this.gap_right()
+			const left = this.gap_left() - dims.x.min * scale_x
+			const right = size.x - this.gap_right() - dims.x.max * scale_x
 
-			const bottom = -dims.y.min * scale_y + size.y - this.gap_bottom()
-			const top = -dims.y.max * scale_y + this.gap_top()
+			const top = this.gap_top() - dims.y.max * scale_y
+			const bottom = size.y - this.gap_bottom() - dims.y.min * scale_y
 
 			return new this.$.$mol_vector_2d(
 				new this.$.$mol_vector_range(right, left),
@@ -105,18 +105,14 @@ namespace $.$$ {
 
 		@ $mol_mem
 		shift_default() {
-			const dims = this.dimensions()
-			const scale = this.scale()
-			return [
-				Math.round( this.gap_left() - dims.x.min * scale[0] ) ,
-				Math.round( this.gap_top() - dims.y.max * scale[1] ) ,
-			] as const
+			const limits = this.shift_limit()
+			return [limits.x.min, limits.y.min] as const
 		}
 
 		shift_changed: boolean = false
 
 		@ $mol_mem
-		shift(next?: [number, number]) {
+		shift(next?: readonly [number, number]) {
 			if (next === undefined) {
 				if (!this.shift_changed) return this.shift_default()
 				next = $mol_atom_current()['value()'] || this.shift_default()
@@ -125,7 +121,13 @@ namespace $.$$ {
 
 			return new this.$.$mol_vector_2d( ...next ).limited(this.shift_limit())
 		}
-		
+
+		reset_event(event?: Event) {
+			if (event) event.preventDefault()
+			this.scale(this.scale_default())
+			this.shift(this.shift_default())
+		}
+
 		@ $mol_mem
 		graphs_positioned() {
 			const graphs = this.graphs()
@@ -144,8 +146,8 @@ namespace $.$$ {
 		viewport() {
 			const size = this.size_real()
 			return new this.$.$mol_vector_2d(
-				new this.$.$mol_vector_range(this.gap_left(), size.x - this.gap_right()),
-				new this.$.$mol_vector_range(this.gap_bottom(), size.y - this.gap_top()),
+				new this.$.$mol_vector_range(0, size.x),
+				new this.$.$mol_vector_range(0, size.y),
 			)
 		}
 
@@ -159,7 +161,6 @@ namespace $.$$ {
 			
 			return sorted
 		}
-		
 	}
 
 }

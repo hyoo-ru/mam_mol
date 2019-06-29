@@ -4,9 +4,8 @@ $mol_plot_pane $mol_svg_root
 	hue_base?val NaN
 	hue_shift?val 111
 	-
-	gap 24
-	gap_hor <= gap
-	gap_vert <= gap
+	gap_hor 48
+	gap_vert 24
 	gap_left <= gap_hor
 	gap_right <= gap_hor
 	gap_top <= gap_vert
@@ -70,3 +69,6 @@ $mol_plot_pane $mol_svg_root
 		<= Touch $mol_touch
 			zoom?val <=> scale_x?val
 			pan?val <=> shift?val
+	event *
+		^
+		dblclick?event <=> reset_event?event null

@@ -3,7 +3,6 @@ $mol_plot_demo $mol_demo_large
 	count?val 20
 	sub /
 		<= Plot $mol_plot_pane
-			gap 48
 			graphs /
 				<= Saturation $mol_plot_group
 					series_y <= saturation_series /

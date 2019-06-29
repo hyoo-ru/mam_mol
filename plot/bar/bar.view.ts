@@ -13,26 +13,45 @@ namespace $.$$ {
 
 			const series_x = this.series_x()
 			const series_y = this.series_y()
+
+			let first_x = null as readonly [number, number] | null
+			let last_x = null as readonly [number, number] | null
+
 			for (let i = 0; i < series_x.length; i++) {
 				const scaled = [
 					Math.round( shift_x + series_x[i] * scale_x ),
 					Math.round( shift_y + series_y[i] * scale_y ),
 				] as const
 
-				if (scaled[0] < viewport_left) continue
+				if (scaled[0] < viewport_left) {
+					first_x = scaled
+					continue
+				}
+				if (scaled[0] > viewport_right) {
+					if (!last_x) last_x = scaled
+					continue
+				}
+
 				if (scaled[1] < viewport_bottom) continue
-				if (scaled[0] > viewport_right) continue
 				if (scaled[1] > viewport_top) continue
+ 
+				if (first_x) points_scaled.push(first_x)
 
 				points_scaled.push(scaled)
+
+				if (last_x) points_scaled.push(last_x)
+
+				first_x = last_x = null
 			}
+
+			if (first_x) points_scaled.push(first_x)
+			if (last_x) points_scaled.push(last_x)
 
 			return points_scaled
 		}
 
 		curve() {
 			const shift = this.shift()
-
 			return this.points().map( point => `M ${ point[0] } ${ shift[1] } V ${ point[1] }` ).join( ' ' )
 		}
 		
@@ -62,6 +81,5 @@ namespace $.$$ {
 			
 			return next
 		}
-		
 	}
 }

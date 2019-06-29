@@ -1,6 +1,6 @@
 $mol_plot_ruler_hor $mol_plot_ruler
-	gap_left 28
 	title_align \start
 	label_align \middle
 	title_pos_x \0
 	title_pos_y \100%
+	label_pos_y!v <= title_pos_y

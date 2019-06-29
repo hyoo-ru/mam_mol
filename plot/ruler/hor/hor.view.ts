@@ -33,9 +33,5 @@ namespace $.$$ {
 		label_pos_x( index : number ) {
 			return (this.points()[index] * this.scale()[0] + this.shift()[0]).toFixed(3) + 'px'
 		}
-
-		label_pos_y( index : number ) {
-			return this.title_pos_y()
-		}
 	}
 }

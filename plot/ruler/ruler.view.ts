@@ -40,9 +40,14 @@ namespace $.$$ {
 			return style
 		}
 
+		font_size() {
+			const style = this.computed_style()
+			return parseInt(style['font-size']) || 16
+		}
+
 		text_width(text: string): number {
 			const style = this.computed_style()
-			return $mol_font_measure(parseInt(style['font-size']) || 16, style['font-family'], text )
+			return $mol_font_measure(this.font_size(), style['font-family'], text )
 		}
 
 		@ $mol_mem
@@ -51,9 +56,7 @@ namespace $.$$ {
 		}
 
 		box_pos_y() {
-			const style = this.computed_style()
-			const res = `calc(${super.box_pos_y()} - ${style['font-size'] || '0'})`
-			return res
+			return `calc(${super.box_pos_y()} - ${this.font_size()}px)`
 		}
 
 		snap_to_grid(coord: number) {
@@ -102,11 +105,11 @@ namespace $.$$ {
 		}
 
 		back() {
-			return [ this ]
+			return [] as $mol_plot_graph[]
 		}
 
 		front() {
-			return [] as $mol_plot_graph[]
+			return [this]
 		}
 	}
 }

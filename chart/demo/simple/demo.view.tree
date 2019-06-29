@@ -12,13 +12,16 @@ $mol_chart_demo_simple $mol_demo_large
 						\February
 						\March
 						\April
-				<= Plan $mol_plot_bar
+				<= Plan $mol_plot_group
 					title <= plan_title @ \Plan
 					series_y <= plan /
 						10
 						20
 						30
 						40
+					graphs /
+						<= Plan_bar $mol_plot_bar
+						<= Plan_dots $mol_plot_dot
 				<= Fact $mol_plot_group
 					title <= fact_title @ \Fact
 					series_y <= facts /

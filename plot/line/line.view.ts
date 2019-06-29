@@ -45,12 +45,12 @@ namespace $.$$ {
 				}
 
 				if (scaled[0] > viewport_right) {
-					last_x = scaled
+					if (!last_x) last_x = scaled
 					continue
 				}
 
 				if (scaled[1] > viewport_top) {
-					last_y = scaled
+					if (!last_y) last_y = scaled
 					continue
 				}
 
