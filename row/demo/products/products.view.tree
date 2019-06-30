@@ -2,8 +2,8 @@ $mol_row_demo_products $mol_demo_large
 	title @ \Product catalog
 	count 500
 	Product!id $mol_card
-		minimal_width 150
-		minimal_height 90
+		minimal_width 140
+		minimal_height 100
 		content /
 			<= product_title!id \
 	sub /
