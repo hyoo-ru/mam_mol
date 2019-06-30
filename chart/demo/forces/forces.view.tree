@@ -5,11 +5,6 @@ $mol_chart_demo_forces $mol_demo_large
 	sub /
 		<= Chart $mol_chart
 			graphs /
-				<= Vert_ruler $mol_plot_ruler_vert
-					title <= vert_title @ \kN
-				<= Hor_ruler $mol_plot_ruler_hor
-					title <= hor_title @ \cm
-					series_x <= forces_left_x
 				<= Forces_left $mol_plot_group
 					title <= forces_left_title @ \Left wheel
 					series_x <= forces_left_x /number
@@ -24,3 +19,8 @@ $mol_chart_demo_forces $mol_demo_large
 					graphs /
 						<= Right_fill $mol_plot_dot
 							points_max <= points_max
+				<= Vert_ruler $mol_plot_ruler_vert
+					title <= vert_title @ \kN
+				<= Hor_ruler $mol_plot_ruler_hor
+					title <= hor_title @ \cm
+					series_x <= forces_left_x

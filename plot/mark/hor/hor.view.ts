@@ -17,10 +17,10 @@ namespace $.$$ {
 			const labels = this.labels()
 			const [shift_x,] = this.shift()
 			const [scale_x,] = this.scale()
-			const label_gap = this.label_gap()
 			let step = this.step() * scale_x
 			const [[viewport_left, viewport_right]] = this.viewport()
 			const size_x = viewport_right - viewport_left
+			const font_size = this.font_size()
 			let indexes: number[]
 			let labels_width: number
 			do {
@@ -41,12 +41,12 @@ namespace $.$$ {
 					indexes.push(i)
 					current += step
 					last = 0
-					labels_width += this.text_width(labels[i]) + label_gap
+					labels_width += font_size * (labels[i].length + 1)
 					if (labels_width > size_x) break
 				}
 				if (last !== 0) {
 					indexes.push(last)
-					labels_width += this.text_width(labels[last]) + label_gap
+					labels_width += font_size * (labels[last].length + 1)
 				}
 
 				step *= 1.5

@@ -23,12 +23,12 @@ namespace $.$$ {
 		@$mol_mem
 		computed_style() {
 			const win = this.$.$mol_dom_context
-			const style = win.getComputedStyle(this.dom_node())
+			const style = win.getComputedStyle(this.Title().dom_node())
 			if (style['font-size']) return style
 
 			const atom = $mol_atom_current< CSSStyleDeclaration >()
 			new $mol_defer(() => {
-				atom.push(win.getComputedStyle(this.dom_node()))
+				atom.push(win.getComputedStyle(this.Title().dom_node()))
 			})
 
 			return style
@@ -36,17 +36,14 @@ namespace $.$$ {
 
 		font_size() {
 			const style = this.computed_style()
-			return parseInt(style['font-size']) || 16
-		}
-
-		text_width(text: string): number {
-			const style = this.computed_style()
-			return $mol_font_measure(this.font_size(), style['font-family'], text )
+			return parseInt(style['font-size']) || super.font_size()
 		}
 
 		@ $mol_mem
 		box_width() {
-			return this.text_width(this.title()) + 'px'
+			const style = this.computed_style()
+			const width = $mol_font_measure(this.font_size(), style['font-family'], this.title() )
+			return width + 'px'
 		}
 
 		box_pos_y() {
@@ -99,18 +96,10 @@ namespace $.$$ {
 		}
 
 		back() {
-			const dims = this.dimensions_axis()
-			const range = dims.max - dims.min
-			if (!Number.isFinite(range) || range === 0) return []
-
 			return [this.Curve()]
 		}
 
 		front() {
-			const dims = this.dimensions_axis()
-			const range = dims.max - dims.min
-			if (!Number.isFinite(range) || range === 0) return []
-
 			return [...this.labels_formatted(), this.Title_box(), this.Title()]
 		}
 	}

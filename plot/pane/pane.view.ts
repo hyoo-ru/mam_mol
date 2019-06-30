@@ -156,8 +156,8 @@ namespace $.$$ {
 			const graphs = this.graphs_colored()
 			const sorted = []
 			
-			for( let graph of graphs ) sorted.push( ...graph.back() as $mol_plot_graph[])
-			for( let graph of graphs ) sorted.push( ...graph.front() as $mol_plot_graph[])
+			for( let graph of graphs ) sorted.push(...graph.back())
+			for( let graph of graphs ) sorted.push(...graph.front())
 			
 			return sorted
 		}

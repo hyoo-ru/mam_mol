@@ -31,7 +31,7 @@ namespace $.$$ {
 		}
 
 		box_pos_x() {
-			return `calc(${super.box_pos_x()} - ${this.box_width()})`
+			return `calc(${this.title_pos_x()} - ${this.box_width()})`
 		}
 
 		label_pos_y( index : number ) {

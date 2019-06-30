@@ -3,7 +3,6 @@ $mol_plot_ruler $mol_plot_graph
 	scale_axis 1
 	scale_step 1
 	shift_axis 1
-	font_size 16
 	dimensions_axis $mol_vector_range /
 		Infinity
 		-Infinity
@@ -13,7 +12,7 @@ $mol_plot_ruler $mol_plot_graph
 	points /number
 	normalize?val 0
 	precision 1
-	text_width!text 0
+	font_size 16
 	sub /
 		<= Curve $mol_svg_path
 			geometry <= curve \
