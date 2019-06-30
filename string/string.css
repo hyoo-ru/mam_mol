@@ -18,6 +18,10 @@
 	margin: 0;
 }
 
+[mol_string] {
+	margin-top: .5rem
+}
+
 [mol_string]:disabled {
 	background-color: transparent;
 }
