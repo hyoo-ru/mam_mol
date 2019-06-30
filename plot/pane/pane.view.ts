@@ -73,7 +73,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		scale(next?: readonly [number, number]) {
+		scale(next?: readonly [number, number], force?: $mol_atom_force) {
 			if (next === undefined) {
 				if (!this.graph_touched) return this.scale_default()
 				next = $mol_atom_current()['value()'] || this.scale_default()
@@ -118,7 +118,7 @@ namespace $.$$ {
 		graph_touched: boolean = false
 
 		@ $mol_mem
-		shift(next?: readonly [number, number]) {
+		shift(next?: readonly [number, number], force?: $mol_atom_force) {
 			if (next === undefined) {
 				if (!this.graph_touched) return this.shift_default()
 				next = $mol_atom_current()['value()'] || this.shift_default()
@@ -130,8 +130,8 @@ namespace $.$$ {
 
 		reset(event?: Event) {
 			this.graph_touched = false
-			this.scale(this.scale_default())
-			this.shift(this.shift_default())
+			this.scale(this.scale_default(), $mol_atom_force_cache)
+			this.shift(this.shift_default(), $mol_atom_force_cache)
 		}
 
 		@ $mol_mem
