@@ -122,7 +122,7 @@ namespace $.$$ {
 			return new this.$.$mol_vector_2d( ...next ).limited(this.shift_limit())
 		}
 
-		reset_event(event?: Event) {
+		reset(event?: Event) {
 			if (event) event.preventDefault()
 			this.scale(this.scale_default())
 			this.shift(this.shift_default())

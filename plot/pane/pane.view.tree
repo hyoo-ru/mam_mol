@@ -72,4 +72,4 @@ $mol_plot_pane $mol_svg_root
 			pan?val <=> shift?val
 	event *
 		^
-		dblclick?event <=> reset_event?event null
+		dblclick?event <=> reset?event null
