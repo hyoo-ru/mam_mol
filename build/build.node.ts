@@ -3,12 +3,17 @@ namespace $ {
 	export function $mol_build_start( paths : string[] ) {
 		var build = $mol_build.relative( '.' )
 		if( paths.length > 0 ) {
-			process.argv.slice( 2 ).forEach(
-				( path : string )=> {
-					path = build.root().resolve( path ).path()
-					build.bundle( { path } ).valueOf()
-				}
-			)
+			try {
+				process.argv.slice( 2 ).forEach(
+					( path : string )=> {
+						path = build.root().resolve( path ).path()
+						build.bundle( { path } ).valueOf()
+					}
+				)
+				process.exit(0)
+			} catch {
+				process.exit(1)
+			}
 		} else {
 			build.server().express()
 		}
@@ -205,49 +210,54 @@ namespace $ {
 			return $node['typescript'].createSourceFile( path , content , target )
 		}
 		
-		@ $mol_mem
-		tsHost() {
-
-			const host = {
-				// getScriptFileNames : () => [] ,
-				getScriptVersion : ( path : string )=> $mol_file.absolute( path ).version() ,
-				getScriptSnapshot : ( path : string )=> $mol_file.absolute( path ).content().toString() ,
-				getCurrentDirectory : ()=> this.root().path() ,
-				getCompilationSettings : ()=> this.tsOptions() ,
-				useCaseSensitiveFileNames : ()=> false ,
-				getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
-				getDefaultLibFileName : ( options : any )=> $node['typescript'].getDefaultLibFilePath( options ) ,
-				getCommonSourceDirectory : ()=> this.root().path() ,
-				getNewLine : ()=> '\n' ,
-				getSourceFile : ( path : string , target : any , fail : any )=> {
-					return this.tsSource({ path , target })
-				} ,
-				fileExists : ( path : string )=> {
-					return $mol_file.absolute( path ).exists()
-				} ,
-				// readFile : ( path : string )=> {
-				// 	return $mol_file.absolute( path ).content().toString()
-				// } ,
-				writeFile : ( path : string , content : string )=> {
-					$mol_file.absolute( path ).content( content , $mol_atom_force_cache )
-				} ,
-			}
-			
-			return host
-		}
-		
-		//@ $mol_mem_key
-		tsProgram( { path , exclude } : { path : string , exclude? : string[] } ) {
-			var host = this.tsHost()
-			var options = host.getCompilationSettings()
+		@ $mol_mem_key
+		tsCompile( { path , exclude } : { path : string , exclude? : string[] } ) {
 			
 			var paths = this.sourcesAll( { path , exclude } ).filter( src => /tsx?$/.test( src.ext() ) ).map( src => src.path() )
-			var program = $node['typescript'].createProgram( paths , options , host )
-			return program
+
+			var host = $node.typescript.createWatchCompilerHost(
+
+				paths ,
+				
+				this.tsOptions(),
+				
+				{
+					... $node.typescript.sys ,
+					setTimeout : ( cb : any )=> cb(),
+					writeFile : ( path : string , content : string )=> {
+						$mol_file.relative( path ).content( content , $mol_atom_force_cache )
+					} ,
+				},
+				
+				$node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
+
+				( diagnostic : any )=> {
+
+					const file = $mol_file.absolute( diagnostic.file.fileName.replace( /\.tsx?$/ , '.js' ) )
+					
+					const error = new Error( $node.typescript.formatDiagnostic( diagnostic , {
+						getCurrentDirectory : ()=> this.root().path() ,
+						getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
+						getNewLine : ()=> '\n' ,
+					}) )
+					
+					file.content( error as any , $mol_atom_force_cache )
+					
+				} ,
+
+				() => {} ,
+				
+			)
+
+			const builder = $node.typescript.createWatchProgram( host )
+
+			return $mol_object.make({ destructor : ()=> { builder.updateRootFileNames([]) } })
+
 		}
 		
 		@ $mol_mem_key
 		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+
 			var sources = this.sourcesAll( { path , exclude } )
 			.filter( src => /(js|tsx?)$/.test( src.ext() ) )
 			if( !sources.length ) return []
@@ -262,27 +272,7 @@ namespace $ {
 				}
 			)
 			
-			if( sourcesTS.length ) {
-				
-				var host = this.tsHost()
-				var options = host.getCompilationSettings()
-				
-				var program = this.tsProgram({ path , exclude })
-				var result = program.emit()
-				
-				var errors : any[] = $node['typescript'].getPreEmitDiagnostics( program ).concat( result.diagnostics )
-				var logs = errors.map(
-					error => {
-						var message = $node['typescript'].flattenDiagnosticMessageText( error.messageText , '\n' )
-						if( !error.file ) return message
-						
-						var pos = error.file.getLineAndCharacterOfPosition( error.start )
-						return error.file.fileName + ':' + (pos.line + 1) + ':' + pos.character + '\n ' + message
-					}
-				)
-				if( logs.length ) throw new Error( '\n' + logs.join( '\n' ) )
-				
-			}
+			if( sourcesTS.length ) this.tsCompile({ path , exclude }).valueOf()
 			
 			return sources
 		}

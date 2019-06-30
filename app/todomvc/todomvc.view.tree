@@ -56,7 +56,7 @@ $mol_app_todomvc_add $mol_string
 	hint \What needs to be done?
 	event *
 		^
-		keyup?event <=> event_press?event null
+		keydown?event <=> event_press?event null
 	event_done?event null
 
 $mol_app_todomvc_task_row $mol_view

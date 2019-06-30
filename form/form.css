@@ -1,5 +1,4 @@
 [mol_form_bar_fields] {
-	padding: .5rem .5rem 0;
 	display: flex;
 	flex-direction: column;
 }
@@ -10,6 +9,7 @@
 
 [mol_form_bar_buttons] {
 	box-shadow: none;
+	padding: 0;
 }
 
 [mol_form_bar_buttons] > * {
