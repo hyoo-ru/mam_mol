@@ -157,8 +157,7 @@ namespace $.$$ {
 		}
 
 		event_wheel( event? : WheelEvent ) {
-			const zoom_prev = this.zoom()
-			if (zoom_prev === 0) throw new Error(`${this}.event_wheel() zoom_prev === 0`)
+			const zoom_prev = this.zoom() || 0.001
 			const zoom_next = zoom_prev * ( 1 - .1 * Math.sign( event.deltaY ) )
 			const mult = zoom_next / zoom_prev
 			this.zoom( zoom_next )
