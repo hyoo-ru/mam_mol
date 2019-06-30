@@ -51,9 +51,10 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		scale_limit() {
-			const [ , right, , top, ] = super.scale_limit() as unknown as number[]
-			// @todo replace above line to below, after https://github.com/eigenmethod/mol/pull/320
-			// const [ [, right], [, top], ] = super.scale_limit()
+			const {
+				x: {max: right},
+				y: {max: top}
+			} = super.scale_limit()
 			const size = this.size()
 			const real = this.size_real()
 
@@ -73,7 +74,12 @@ namespace $.$$ {
 
 		@ $mol_mem
 		scale(next?: readonly [number, number]) {
-			if (next === undefined) next = this.scale_default()
+			if (next === undefined) {
+				if (!this.graph_touched) return this.scale_default()
+				next = $mol_atom_current()['value()'] || this.scale_default()
+			}
+			this.graph_touched = true
+
 			return new this.$.$mol_vector_2d( ...next ).limited(this.scale_limit())
 		}
 
@@ -109,21 +115,21 @@ namespace $.$$ {
 			return [limits.x.min, limits.y.min] as const
 		}
 
-		shift_changed: boolean = false
+		graph_touched: boolean = false
 
 		@ $mol_mem
 		shift(next?: readonly [number, number]) {
 			if (next === undefined) {
-				if (!this.shift_changed) return this.shift_default()
+				if (!this.graph_touched) return this.shift_default()
 				next = $mol_atom_current()['value()'] || this.shift_default()
 			}
-			this.shift_changed = true
+			this.graph_touched = true
 
 			return new this.$.$mol_vector_2d( ...next ).limited(this.shift_limit())
 		}
 
 		reset(event?: Event) {
-			if (event) event.preventDefault()
+			this.graph_touched = false
 			this.scale(this.scale_default())
 			this.shift(this.shift_default())
 		}
