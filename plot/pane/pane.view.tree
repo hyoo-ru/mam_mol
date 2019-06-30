@@ -60,7 +60,8 @@ $mol_plot_pane $mol_svg_root
 			Infinity
 			-Infinity
 	-
-	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
+	sub <= graphs_sorted /$mol_svg
+	graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
 	-
 	plugins /
 		<= Meter $mol_meter

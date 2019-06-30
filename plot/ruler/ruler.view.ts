@@ -20,12 +20,6 @@ namespace $.$$ {
 			return step
 		}
 
-		sub() {
-			const dims = this.dimensions_axis()
-			const range = dims.max - dims.min
-			return !Number.isFinite(range) || range === 0 ? [] : super.sub()
-		}
-
 		@$mol_mem
 		computed_style() {
 			const win = this.$.$mol_dom_context
@@ -105,11 +99,19 @@ namespace $.$$ {
 		}
 
 		back() {
-			return [] as $mol_plot_graph[]
+			const dims = this.dimensions_axis()
+			const range = dims.max - dims.min
+			if (!Number.isFinite(range) || range === 0) return []
+
+			return [this.Curve()]
 		}
 
 		front() {
-			return [this]
+			const dims = this.dimensions_axis()
+			const range = dims.max - dims.min
+			if (!Number.isFinite(range) || range === 0) return []
+
+			return [...this.labels_formatted(), this.Title_box(), this.Title()]
 		}
 	}
 }

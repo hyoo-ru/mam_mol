@@ -3,25 +3,13 @@ $mol_chart_demo_simple $mol_demo_large
 	sub /
 		<= Chart $mol_chart
 			graphs /
-				<= Vert_ruler $mol_plot_ruler_vert
-					title <= vert_title @ \pcs
-				<= Marker_hor $mol_plot_mark_hor
-					title <= marker_hor_title @ \Months
-					labels <= months /string
-						\January
-						\February
-						\March
-						\April
-				<= Plan $mol_plot_group
+				<= Plan $mol_plot_bar
 					title <= plan_title @ \Plan
 					series_y <= plan /
 						10
 						20
 						30
 						40
-					graphs /
-						<= Plan_bar $mol_plot_bar
-						<= Plan_dots $mol_plot_dot
 				<= Fact $mol_plot_group
 					title <= fact_title @ \Fact
 					series_y <= facts /
@@ -31,3 +19,12 @@ $mol_chart_demo_simple $mol_demo_large
 					graphs /
 						<= Fact_line $mol_plot_line
 						<= Fact_dots $mol_plot_dot
+				<= Vert_ruler $mol_plot_ruler_vert
+					title <= vert_title @ \pcs
+				<= Marker_hor $mol_plot_mark_hor
+					title <= marker_hor_title @ \Months
+					labels <= months /string
+						\January
+						\February
+						\March
+						\April
