@@ -30,10 +30,6 @@ namespace $.$$ {
 			}).join( ' ' )
 		}
 
-		box_pos_x() {
-			return `calc(${this.title_pos_x()} - ${this.box_width()})`
-		}
-
 		label_pos_y( index : number ) {
 			return (this.points()[index] * this.scale()[1] + this.shift()[1]).toFixed(3) + 'px'
 		}

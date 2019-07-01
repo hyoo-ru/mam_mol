@@ -20,36 +20,6 @@ namespace $.$$ {
 			return step
 		}
 
-		@$mol_mem
-		computed_style() {
-			const win = this.$.$mol_dom_context
-			const style = win.getComputedStyle(this.Title().dom_node())
-			if (style['font-size']) return style
-
-			const atom = $mol_atom_current< CSSStyleDeclaration >()
-			new $mol_defer(() => {
-				atom.push(win.getComputedStyle(this.Title().dom_node()))
-			})
-
-			return style
-		}
-
-		font_size() {
-			const style = this.computed_style()
-			return parseInt(style['font-size']) || super.font_size()
-		}
-
-		@ $mol_mem
-		box_width() {
-			const style = this.computed_style()
-			const width = $mol_font_measure(this.font_size(), style['font-family'], this.title() )
-			return width + 'px'
-		}
-
-		box_pos_y() {
-			return `calc(${super.box_pos_y()} - ${this.font_size()}px)`
-		}
-
 		snap_to_grid(coord: number) {
 			const viewport = this.viewport_axis()
 			const scale = this.scale_axis()
@@ -100,7 +70,7 @@ namespace $.$$ {
 		}
 
 		front() {
-			return [...this.labels_formatted(), this.Title_box(), this.Title()]
+			return [...this.labels_formatted(), this.Title()]
 		}
 	}
 }

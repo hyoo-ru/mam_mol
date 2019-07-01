@@ -12,24 +12,15 @@ $mol_plot_ruler $mol_plot_graph
 	points /number
 	normalize?val 0
 	precision 1
-	font_size 16
 	sub /
 		<= Curve $mol_svg_path
 			geometry <= curve \
 		<= labels_formatted /
-		<= Title_box $mol_svg_rect
-			width <= box_width \0.5rem
-			height <= box_height \1rem
-			pos <= box_pos /
-				<= box_pos_x <= title_pos_x
-				<= box_pos_y <= title_pos_y
-		<= Title $mol_svg_text
-			pos <= title_pos /
-				<= title_pos_x \0
-				<= title_pos_y \100%
+		<= Title $mol_svg_text_box
+			pos_x <= title_pos_x \0
+			pos_y <= title_pos_y \100%
 			align <= title_align \start
-			sub /
-				<= title
+			text <= title
 	Label!index $mol_svg_text
 		pos <= label_pos!index /
 			<= label_pos_x!index \
