@@ -4,12 +4,8 @@ namespace $.$$ {
 		computed_style() {
 			const win = this.$.$mol_dom_context
 			const style = win.getComputedStyle(this.dom_node())
-			if (style['font-size']) return style
 
-			const atom = $mol_atom_current< CSSStyleDeclaration >()
-			new $mol_defer(() => {
-				atom.push(win.getComputedStyle(this.dom_node()))
-			})
+			if(!style['font-size']) $mol_state_time.now()
 
 			return style
 		}
