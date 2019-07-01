@@ -233,15 +233,23 @@ namespace $ {
 
 				( diagnostic : any )=> {
 
-					const file = $mol_file.absolute( diagnostic.file.fileName.replace( /\.tsx?$/ , '.js' ) )
-					
-					const error = new Error( $node.typescript.formatDiagnostic( diagnostic , {
-						getCurrentDirectory : ()=> this.root().path() ,
-						getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
-						getNewLine : ()=> '\n' ,
-					}) )
-					
-					file.content( error as any , $mol_atom_force_cache )
+					if( diagnostic.file ) {
+
+						const file = $mol_file.absolute( diagnostic.file.fileName.replace( /\.tsx?$/ , '.js' ) )
+						
+						const error = new Error( $node.typescript.formatDiagnostic( diagnostic , {
+							getCurrentDirectory : ()=> this.root().path() ,
+							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
+							getNewLine : ()=> '\n' ,
+						}) )
+						
+						file.content( error as any , $mol_atom_force_cache )
+						
+					} else {
+						
+						console.error( diagnostic.messageText )
+
+					}
 					
 				} ,
 
