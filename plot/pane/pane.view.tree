@@ -62,6 +62,9 @@ $mol_plot_pane $mol_svg_root
 	-
 	sub <= graphs_sorted /$mol_svg
 	graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
+	cursor_position?val $mol_vector_2d /
+		0
+		0
 	-
 	plugins /
 		<= Meter $mol_meter
@@ -70,6 +73,7 @@ $mol_plot_pane $mol_svg_root
 		<= Touch $mol_touch
 			zoom?val <=> scale_x?val
 			pan?val <=> shift?val
+			pos?val <=> cursor_position?val
 	event *
 		^
 		dblclick?event <=> reset?event null

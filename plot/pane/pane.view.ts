@@ -43,7 +43,7 @@ namespace $.$$ {
 		size_real() {
 			return new this.$.$mol_vector_2d(this.width() , this.height())
 		}
-		
+
 		view_box() {
 			const size = this.size_real()
 			return `0 0 ${ size.x } ${ size.y }`
@@ -143,6 +143,7 @@ namespace $.$$ {
 				graph.dimensions_pane = () => this.dimensions()
 				graph.viewport = () => this.viewport()
 				graph.size_real = ()=> this.size_real()
+				graph.cursor_position = ()=> this.cursor_position()
 			}
 			
 			return graphs

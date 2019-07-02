@@ -13,6 +13,7 @@ namespace $.$$ {
 				graph.series_y = ()=> this.series_y()
 				graph.dimensions_pane = ()=> this.dimensions_pane()
 				graph.viewport = ()=> this.viewport()
+				graph.cursor_position = ()=> this.cursor_position()
 			}
 			return graphs
 		}

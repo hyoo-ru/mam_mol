@@ -1,0 +1,5 @@
+[mol_plot_mark_cross_curve] {
+	color: var(--mol_theme_control);
+	stroke-width: .1%;
+	stroke: currentColor;
+}

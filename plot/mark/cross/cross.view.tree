@@ -1,0 +1,12 @@
+$mol_plot_mark_cross $mol_plot_graph
+	labels /string
+	gap_x 4
+	gap_y 8
+	title \X: %x, Y: %y
+	sub /
+		<= Curve $mol_svg_path
+			geometry <= curve \
+		<= Labels $mol_svg_text_box
+			pos_x <= title_pos_x \100%
+			pos_y <= title_pos_y \14px
+			text <= nearest_title \

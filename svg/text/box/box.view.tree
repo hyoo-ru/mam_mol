@@ -2,8 +2,8 @@ $mol_svg_text_box $mol_svg_group
 	font_size 16
 	sub /
 		<= Back $mol_svg_rect
-			width <= box_width \0.5rem
-			height <= box_height \1rem
+			width <= box_width_formatted \0.5rem
+			height <= box_height \1.1rem
 			pos /
 				<= box_pos_x <= pos_x
 				<= box_pos_y \0
@@ -11,6 +11,6 @@ $mol_svg_text_box $mol_svg_group
 			pos /
 				<= pos_x \0
 				<= pos_y \100%
-			align <= align \middle
+			align <= align \start
 			sub /
 				<= text \
