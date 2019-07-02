@@ -2,18 +2,17 @@ namespace $.$$ {
 	export class $mol_plot_mark_cross extends $.$mol_plot_mark_cross {
 
 		@$mol_mem
-		nearest_index(): number {
+		nearest(): readonly [number, number] {
+			let delta = Number.POSITIVE_INFINITY
+			let index = -1
 			const [cursor_x, cursor_y] = this.cursor_position()
-			if (cursor_x === -1 || cursor_y === -1) return -1
+			if (cursor_x === -1 || cursor_y === -1) return [index, delta]
 
 			const series_x = this.series_x()
 			const series_y = this.series_y()
 			const [scale_x, scale_y] = this.scale()
 			const [shift_x, shift_y] = this.shift()
 			const [[viewport_left, viewport_right], [viewport_bottom, viewport_top]] = this.viewport()
-			let delta_x = Number.POSITIVE_INFINITY
-			let delta_y = Number.POSITIVE_INFINITY
-			let index = -1
 			for (let i = 0; i < series_x.length; i++) {
 				const scaled_x = Math.round(shift_x + series_x[i] * scale_x)
 				const scaled_y = Math.round(shift_y + series_y[i] * scale_y)
@@ -22,16 +21,22 @@ namespace $.$$ {
 				if (scaled_x > viewport_right) continue
 				if (scaled_y < viewport_bottom) continue
 				if (scaled_y > viewport_top) continue
-				const diff_x = Math.abs(scaled_x - cursor_x)
-				const diff_y = Math.abs(scaled_y - cursor_y)
-				if (diff_x < delta_x && diff_y < delta_y) {
-					delta_x = diff_x
-					delta_y = diff_y
+				const diff = Math.abs(scaled_x - cursor_x) + Math.abs(scaled_y - cursor_y)
+				if (diff < delta) {
+					delta = diff
 					index = i
 				}
 			}
 
-			return index
+			return [index, delta]
+		}
+
+		nearest_delta() {
+			return this.nearest()[1]
+		}
+
+		nearest_index() {
+			return this.nearest()[0]
 		}
 
 		curve() {
@@ -79,7 +84,8 @@ namespace $.$$ {
 		nearest_title() {
 			const index = this.nearest_index()
 			if (index < 0) return ''
-			const point_x = this.labels()[index]
+			const labels = this.labels()
+			const point_x = labels.length > index ? labels[index] : String(this.series_x()[index])
 			const point_y = String(this.series_y()[index])
 
 			return this.title().replace('%x', point_x).replace('%y', point_y)

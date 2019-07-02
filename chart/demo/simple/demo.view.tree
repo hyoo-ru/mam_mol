@@ -28,7 +28,13 @@ $mol_chart_demo_simple $mol_demo_large
 						\February
 						\March
 						\April
-				<= Marker_cross $mol_plot_mark_cross
-					title \Month: %x, pcs: %y
-					series_y <= facts
-					labels <= months
+				<= Marker_cross $mol_plot_mark_cross_group
+					graphs /
+						<= Marker_facts $mol_plot_mark_cross
+							title \Facts: %x, %y pcs
+							series_y <= facts
+							labels <= months
+						<= Marker_plan $mol_plot_mark_cross
+							title \Plan: %x, %y pcs
+							series_y <= plan
+							labels <= months

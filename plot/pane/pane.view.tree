@@ -63,8 +63,8 @@ $mol_plot_pane $mol_svg_root
 	sub <= graphs_sorted /$mol_svg
 	graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
 	cursor_position?val $mol_vector_2d /
-		0
-		0
+		-1
+		-1
 	-
 	plugins /
 		<= Meter $mol_meter
