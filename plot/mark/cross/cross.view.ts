@@ -88,7 +88,7 @@ namespace $.$$ {
 			const point_x = labels.length > index ? labels[index] : String(this.series_x()[index])
 			const point_y = String(this.series_y()[index])
 
-			return this.title().replace('%x', point_x).replace('%y', point_y)
+			return this.title().replace('{x}', point_x).replace('{y}', point_y)
 		}
 
 		@$mol_mem

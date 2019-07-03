@@ -4,7 +4,7 @@ $mol_plot_mark_cross $mol_plot_graph
 	gap_y 8
 	nearest_index -1
 	nearest_delta Infinity
-	title \X: %x, Y: %y
+	title \X: {x}, Y: {y}
 	sub /
 		<= Curve $mol_svg_path
 			geometry <= curve \
