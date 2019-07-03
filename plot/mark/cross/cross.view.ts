@@ -90,13 +90,5 @@ namespace $.$$ {
 
 			return this.title().replace('{x}', point_x).replace('{y}', point_y)
 		}
-
-		@$mol_mem
-		dimensions() {
-			return new this.$.$mol_vector_2d(
-				$mol_vector_range_full.inversed,
-				$mol_vector_range_full.inversed
-			)
-		}
 	}
 }

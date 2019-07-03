@@ -5,6 +5,13 @@ $mol_plot_mark_cross $mol_plot_graph
 	nearest_index -1
 	nearest_delta Infinity
 	title \X: {x}, Y: {y}
+	dimensions $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
 	sub /
 		<= Curve $mol_svg_path
 			geometry <= curve \
