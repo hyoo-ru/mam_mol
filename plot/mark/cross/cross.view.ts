@@ -60,7 +60,7 @@ namespace $.$$ {
 			const [scale_x,] = this.scale()
 			const [shift_x,] = this.shift()
 			const width = this.text_width(title)
-			const gap = this.gap_x()
+			const gap = this.gap()
 			let point_x = shift_x + this.series_x()[index] * scale_x + gap
 			if (point_x + width > real_x) point_x -= width + gap + gap
 
@@ -73,7 +73,7 @@ namespace $.$$ {
 
 			const [, scale_y] = this.scale()
 			const [, shift_y] = this.shift()
-			const gap = this.gap_y()
+			const gap = this.gap()
 			const height = this.font_size()
 			let point_y = shift_y + this.series_y()[index] * scale_y - gap
 			if (point_y - height < 0) point_y += height + gap + gap
