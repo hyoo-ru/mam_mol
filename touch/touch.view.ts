@@ -8,18 +8,18 @@ namespace $.$$ {
 			if( event.defaultPrevented ) return
 
 			this.start_pan( this.pan() )
-
+			let pos: [number, number]
 			if( event instanceof MouseEvent ) {
 
 				if( event.buttons === 1 ) {
-					const pos = [ event.pageX , event.pageY ]
+					pos = [ event.pageX , event.pageY ]
 					this.start_pos( pos )
 				}
 
 			} else if( event instanceof TouchEvent ) {
 
 				if( event.touches.length === 1 ) {
-					const pos = [ event.touches[0].pageX , event.touches[0].pageY ]
+					pos = [ event.touches[0].pageX , event.touches[0].pageY ]
 					this.start_pos( pos )
 				}
 
@@ -54,6 +54,7 @@ namespace $.$$ {
 				if( event.touches.length === 1 ) pos = cursor_pos
 				else this.start_pos( null )
 			}
+
 			if (cursor_pos) {
 				const {left, top} = this.rect()
 				this.pos([
@@ -63,7 +64,6 @@ namespace $.$$ {
 			}
 
 			if( pos ) {
-
 				const start_pos = this.start_pos()
 				if( !start_pos ) return
 				

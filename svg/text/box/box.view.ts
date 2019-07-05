@@ -6,16 +6,12 @@ namespace $.$$ {
 			return this.text_width(this.text())
 		}
 
-		box_width_formatted() {
-			return `${this.box_width()}px`
-		}
-
 		box_pos_x() {
 			const align = this.align()
 			if (align === 'end') return `calc(${this.pos_x()} - ${this.box_width()})`
 			if (align === 'middle') return `calc(${this.pos_x()} - ${Math.round(this.box_width() / 2)})`
 
-			return super.box_pos_x()
+			return this.pos_x()
 		}
 
 		box_pos_y() {

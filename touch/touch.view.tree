@@ -10,8 +10,8 @@ $mol_touch $mol_plugin
 		0
 		0
 	pos?val /
-		-1
-		-1
+		NaN
+		NaN
 	-
 	start_pos?val null
 	swipe_precision 16

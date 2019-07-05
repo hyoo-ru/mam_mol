@@ -4,6 +4,7 @@ $mol_chart_demo_forces $mol_demo_large
 	points_max 600
 	sub /
 		<= Chart $mol_chart
+			gap_vert 0
 			graphs /
 				<= Forces_left $mol_plot_group
 					title <= forces_left_title @ \Left wheel
@@ -27,10 +28,8 @@ $mol_chart_demo_forces $mol_demo_large
 				<= Cross $mol_plot_mark_cross_group
 					graphs /
 						<= Cross_left $mol_plot_mark_cross
-							title \Left wheel: {x} kN, {y} cm
 							series_x <= forces_left_x
 							series_y <= forces_left_y
 						<= Cross_right $mol_plot_mark_cross
-							title \Right wheel: {x} kN, {y} cm
 							series_x <= forces_right_x
 							series_y <= forces_right_y

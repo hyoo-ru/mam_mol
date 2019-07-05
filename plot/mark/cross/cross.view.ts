@@ -6,7 +6,7 @@ namespace $.$$ {
 			let delta = Number.POSITIVE_INFINITY
 			let index = -1
 			const [cursor_x, cursor_y] = this.cursor_position()
-			if (cursor_x === -1 || cursor_y === -1) return [index, delta]
+			if (Number.isNaN(cursor_x) || Number.isNaN(cursor_y)) return [index, delta]
 
 			const series_x = this.series_x()
 			const series_y = this.series_y()
@@ -51,44 +51,69 @@ namespace $.$$ {
 			return `M ${point_x} 1000 V 0 M 0 ${point_y} H 2000`
 		}
 
-		title_pos_x() {
-			const index = this.nearest_index()
-			if (index < 0) return '0'
-
-			const title = this.nearest_title()
-			const [real_x] = this.size_real()
-			const [scale_x,] = this.scale()
-			const [shift_x,] = this.shift()
-			const width = this.text_width(title)
-			const gap = this.gap()
-			let point_x = shift_x + this.series_x()[index] * scale_x + gap
-			if (point_x + width > real_x) point_x -= width + gap + gap
-
-			return `${point_x.toFixed(3)}px`
-		}
-
-		title_pos_y() {
-			const index = this.nearest_index()
-			if (index < 0) return '0'
-
-			const [, scale_y] = this.scale()
-			const [, shift_y] = this.shift()
-			const gap = this.gap()
-			const height = this.font_size()
-			let point_y = shift_y + this.series_y()[index] * scale_y - gap
-			if (point_y - height < 0) point_y += height + gap + gap
-
-			return `${point_y.toFixed(3)}px`
-		}
-
-		nearest_title() {
+		title_x() {
 			const index = this.nearest_index()
 			if (index < 0) return ''
 			const labels = this.labels()
-			const point_x = labels.length > index ? labels[index] : String(this.series_x()[index])
-			const point_y = String(this.series_y()[index])
+			if (labels.length > index) return labels[index]
 
-			return this.title().replace('{x}', point_x).replace('{y}', point_y)
+			return String(this.series_x()[index])
+		}
+
+		title_x_pos_x() {
+			const index = this.nearest_index()
+			if (index < 0) return '0'
+
+			const gap = this.gap()
+			const center = this.shift()[0] + this.series_x()[index] * this.scale()[0]
+			let pos = center + gap
+			const width = this.text_width(this.title_x())
+			if (pos > this.size_real()[0] - width) pos = center - width - gap
+
+			return pos.toFixed(3)
+		}
+
+		title_x_pos_y() {
+			const index = this.nearest_index()
+			if (index < 0) return '0'
+			const size = this.font_size()
+			const center = this.shift()[1] + this.series_y()[index] * this.scale()[1]
+			let pos = size
+			if (pos > center + this.gap()) pos = this.size_real()[1] - size
+
+			return pos.toFixed(3)
+		}
+
+		title_y() {
+			const index = this.nearest_index()
+			if (index < 0) return ''
+
+			return String(this.series_y()[index])
+		}
+
+		title_y_pos_x() {
+			const index = this.nearest_index()
+			if (index < 0) return '0'
+
+			const width = this.text_width(this.title_y())
+			const center = this.shift()[0] + this.series_x()[index] * this.scale()[0]
+			let pos = this.size_real()[0] - width
+			if (pos < center - this.gap()) pos = 0
+
+			return pos.toFixed(3)
+		}
+
+		title_y_pos_y() {
+			const index = this.nearest_index()
+			if (index < 0) return '0'
+
+			const gap = this.gap()
+			const height = this.font_size()
+			const center = this.shift()[1] + this.series_y()[index] * this.scale()[1]
+			let pos = center - gap
+			if (pos < height) pos = center + height + gap
+
+			return pos.toFixed(3)
 		}
 	}
 }

@@ -3,7 +3,6 @@ $mol_plot_mark_cross $mol_plot_graph
 	gap 4
 	nearest_index -1
 	nearest_delta Infinity
-	title \X: {x}, Y: {y}
 	dimensions $mol_vector_2d /
 		$mol_vector_range /
 			Infinity
@@ -14,7 +13,11 @@ $mol_plot_mark_cross $mol_plot_graph
 	sub /
 		<= Curve $mol_svg_path
 			geometry <= curve \
-		<= Labels $mol_svg_text_box
-			pos_x <= title_pos_x \100%
-			pos_y <= title_pos_y \14px
-			text <= nearest_title \
+		<= Label_x $mol_svg_text_box
+			pos_x <= title_x_pos_x \100%
+			pos_y <= title_x_pos_y \50%
+			text <= title_x \
+		<= Label_y $mol_svg_text_box
+			pos_x <= title_y_pos_x \50%
+			pos_y <= title_y_pos_y \14px
+			text <= title_y \

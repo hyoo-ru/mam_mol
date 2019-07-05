@@ -24,8 +24,8 @@ $mol_plot_graph $mol_svg_group
 		1
 		1
 	cursor_position $mol_vector_2d /
-		0
-		0
+		NaN
+		NaN
 	dimensions_pane $mol_vector_2d /
 		$mol_vector_range /
 			Infinity
