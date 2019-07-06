@@ -1,6 +1,6 @@
 [mol_plot_ruler_curve] {
 	color: var(--mol_theme_line);
-	stroke-width: .1%;
+	stroke-width: 1px;
 	stroke: currentColor;
 }
 

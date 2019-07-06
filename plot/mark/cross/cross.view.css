@@ -1,5 +1,10 @@
 [mol_plot_mark_cross_curve] {
 	color: var(--mol_theme_focus);
-	stroke-width: .1%;
+	stroke-width: 1px;
 	stroke: currentColor;
+}
+
+[mol_plot_mark_cross_label_x], [mol_plot_mark_cross_label_y] {
+	color: var(--mol_theme_focus);
+	font-weight: bold;
 }

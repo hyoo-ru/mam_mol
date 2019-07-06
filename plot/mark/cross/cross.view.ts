@@ -3,7 +3,8 @@ namespace $.$$ {
 
 		@$mol_mem
 		nearest(): readonly [number, number] {
-			let delta = Number.POSITIVE_INFINITY
+			let delta = this.threshold()
+			delta *= delta
 			let index = -1
 			const [cursor_x, cursor_y] = this.cursor_position()
 			if (Number.isNaN(cursor_x) || Number.isNaN(cursor_y)) return [index, delta]

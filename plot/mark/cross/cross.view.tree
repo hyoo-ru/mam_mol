@@ -1,6 +1,7 @@
 $mol_plot_mark_cross $mol_plot_graph
 	labels /string
 	gap 4
+	threshold 8
 	nearest_index -1
 	nearest_delta Infinity
 	dimensions $mol_vector_2d /
