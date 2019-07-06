@@ -65,6 +65,10 @@ namespace $.$$ {
 			return point.toFixed( this.precision() )
 		}
 
+		font_size() {
+			return this.Background().font_size()
+		}
+
 		back() {
 			return [this.Curve()]
 		}

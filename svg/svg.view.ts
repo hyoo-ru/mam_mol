@@ -10,10 +10,12 @@ namespace $.$$ {
 			return style
 		}
 
+		@$mol_mem
 		font_size(): number {
 			return parseInt(this.computed_style()['font-size']) || 16
 		}
 
+		@$mol_mem
 		font_family() {
 			return this.computed_style()['font-family']
 		}
