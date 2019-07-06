@@ -209,11 +209,17 @@ namespace $ {
 			const content = $mol_file.absolute( path ).content().toString()
 			return $node['typescript'].createSourceFile( path , content , target )
 		}
+
+		@ $mol_mem_key
+		tsPaths( { path , exclude } : { path : string , exclude? : string[] } ) {
+			return this.sourcesAll( { path , exclude } ).filter( src => /tsx?$/.test( src.ext() ) ).map( src => src.path() )
+		}
 		
 		@ $mol_mem_key
 		tsCompile( { path , exclude } : { path : string , exclude? : string[] } ) {
-			
-			var paths = this.sourcesAll( { path , exclude } ).filter( src => /tsx?$/.test( src.ext() ) ).map( src => src.path() )
+
+			const paths = this.tsPaths({ path , exclude })
+			if( !paths.length ) return null
 
 			var host = $node.typescript.createWatchCompilerHost(
 
@@ -270,17 +276,13 @@ namespace $ {
 			.filter( src => /(js|tsx?)$/.test( src.ext() ) )
 			if( !sources.length ) return []
 			
-			var sourcesTS : $mol_file[] = []
 			sources = sources.map(
 				src => {
 					if( !/tsx?$/.test( src.ext() ) ) return src
 					
-					sourcesTS.push( src )
 					return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
 				}
 			)
-			
-			if( sourcesTS.length ) this.tsCompile({ path , exclude }).valueOf()
 			
 			return sources
 		}
@@ -373,7 +375,7 @@ namespace $ {
 
 			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
 				console.log( '> git clone' , repo.value , mod.path() )
-				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.name() )
+				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.path() )
 				mod.stat( undefined , $mol_atom_force_cache )
 				return true
 			}
@@ -556,6 +558,8 @@ namespace $ {
 			var sources = this.sourcesJS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
+			this.tsCompile({ path , exclude })
+			
 			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
 			if( bundle === 'node' ) {
 				concater.add( '' , 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
@@ -563,6 +567,8 @@ namespace $ {
 			} else {
 				concater.add( '' , 'function require'+'( path ){ return $node[ path ] }' )
 			}
+
+			const errors = [] as Error[]
 			
 			sources.forEach(
 				( src )=> {
@@ -572,7 +578,12 @@ namespace $ {
 						}
 					}
 					
-					var content = src.content()?src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' ):''
+					try {
+						var content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
+					} catch( error ) {
+						content = ''
+						errors.push( error )
+					}
 					
 					var srcMap = src.parent().resolve( src.name() + '.map' ).content()
 					if( srcMap ) {
@@ -602,6 +613,8 @@ namespace $ {
 			targetMap.content( concater.sourceMap )
 			
 			this.logBundle( target )
+
+			if( errors.length ) $mol_fail_hidden( new Error( errors.map( error => error.message ).join( '\n' ) ) )
 			
 			return [ target , targetMap ]
 		}
@@ -616,7 +629,8 @@ namespace $ {
 			
 			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
 			
-			var sources = this.sourcesJS( { path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) } )
+			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
+			var sources = this.sourcesJS( { path , exclude : exclude_ext } )
 			var sourcesNoTest = this.sourcesJS( { path , exclude } )
 			var sourcesTest = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
 			if( bundle === 'node' ) {
@@ -629,6 +643,10 @@ namespace $ {
 			}
 			if( sources.length === 0 ) return []
 			
+			this.tsCompile({ path , exclude : exclude_ext })
+			
+			const errors = [] as Error[]
+			
 			sources.forEach(
 				function( src ) {
 					if( bundle === 'node' ) {
@@ -637,7 +655,12 @@ namespace $ {
 						}
 					}
 					
-					var content = src.content().toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
+					try {
+						var content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
+					} catch( error ) {
+						content = ''
+						errors.push( error )
+					}
 					
 					var srcMap = src.parent().resolve( src.name() + '.map' ).content()
 					if( srcMap ) {
@@ -653,6 +676,8 @@ namespace $ {
 			targetMap.content( concater.sourceMap )
 			
 			this.logBundle( target )
+			
+			if( errors.length ) $mol_fail_hidden( new Error( errors.map( error => error.message ).join( '\n' ) ) )
 			
 			return [ target , targetMap ]
 		}
