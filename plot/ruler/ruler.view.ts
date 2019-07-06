@@ -70,7 +70,7 @@ namespace $.$$ {
 		}
 
 		front() {
-			return [...this.labels_formatted(), this.Title()]
+			return [this.Background(), ...this.labels_formatted(), this.Title()] as any
 		}
 	}
 }

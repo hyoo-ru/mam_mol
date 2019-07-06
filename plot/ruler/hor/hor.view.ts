@@ -33,5 +33,13 @@ namespace $.$$ {
 		label_pos_x( index : number ) {
 			return (this.points()[index] * this.scale()[0] + this.shift()[0]).toFixed(3) + 'px'
 		}
+
+		background_y() {
+			return String(this.size_real()[1] - this.font_size())
+		}
+
+		background_height() {
+			return String(this.font_size())
+		}
 	}
 }

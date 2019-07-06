@@ -13,6 +13,11 @@ $mol_plot_ruler $mol_plot_graph
 	normalize?val 0
 	precision 1
 	sub /
+		<= Background $mol_svg_rect
+			pos_x <= background_x \0
+			pos_y <= background_y \0
+			width <= background_width \100%
+			height <= background_height \14
 		<= Curve $mol_svg_path
 			geometry <= curve \
 		<= labels_formatted /

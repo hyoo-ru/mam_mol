@@ -15,7 +15,7 @@ namespace $.$$ {
 		}
 
 		box_pos_y() {
-			return `calc(${this.pos_y()} - ${this.font_size()}px)`
+			return `calc(${this.pos_y()} - ${this.font_size() - 2})`
 		}
 	}
 	

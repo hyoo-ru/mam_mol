@@ -12,3 +12,9 @@
 	color: var(--mol_theme_shade);
 	background-color: var(--mol_theme_back);
 }
+
+[mol_plot_ruler_background] {
+	stroke: none;
+	fill: var(--mol_theme_back);
+	opacity: 0.8;
+}
