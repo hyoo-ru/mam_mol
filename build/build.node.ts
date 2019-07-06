@@ -373,7 +373,7 @@ namespace $ {
 
 			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
 				console.log( '> git clone' , repo.value , mod.path() )
-				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.name() )
+				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.path() )
 				mod.stat( undefined , $mol_atom_force_cache )
 				return true
 			}
