@@ -4,7 +4,6 @@ $mol_chart_demo_forces $mol_demo_large
 	points_max 600
 	sub /
 		<= Chart $mol_chart
-			gap_vert 0
 			graphs /
 				<= Forces_left $mol_plot_group
 					title <= forces_left_title @ \Left wheel

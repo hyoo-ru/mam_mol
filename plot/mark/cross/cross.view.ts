@@ -76,10 +76,7 @@ namespace $.$$ {
 		title_x_pos_y() {
 			const index = this.nearest_index()
 			if (index < 0) return '0'
-			const size = this.font_size()
-			const center = this.shift()[1] + this.series_y()[index] * this.scale()[1]
-			let pos = size
-			if (pos > center + this.gap()) pos = this.size_real()[1] - size
+			const pos = this.size_real()[1] - this.gap()
 
 			return pos.toFixed(3)
 		}
@@ -95,10 +92,7 @@ namespace $.$$ {
 			const index = this.nearest_index()
 			if (index < 0) return '0'
 
-			const width = this.text_width(this.title_y())
-			const center = this.shift()[0] + this.series_x()[index] * this.scale()[0]
-			let pos = this.size_real()[0] - width
-			if (pos < center - this.gap()) pos = 0
+			const pos = 0
 
 			return pos.toFixed(3)
 		}
