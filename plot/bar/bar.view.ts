@@ -1,5 +1,6 @@
 namespace $.$$ {
 	export class $mol_plot_bar extends $.$mol_plot_bar {
+
 		@$mol_mem
 		points() {
 			const {
