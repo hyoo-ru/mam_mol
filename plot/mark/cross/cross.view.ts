@@ -66,9 +66,9 @@ namespace $.$$ {
 			if (index < 0) return '0'
 
 			const gap = this.gap()
-			const center = this.shift()[0] + this.series_x()[index] * this.scale()[0]
-			let pos = center + gap
+			const center = Math.round(this.shift()[0] + this.series_x()[index] * this.scale()[0])
 			const width = this.text_width(this.title_x())
+			let pos = center - width / 2
 			if (pos > this.size_real()[0] - width) pos = center - width - gap
 
 			return pos.toFixed(3)
@@ -104,8 +104,8 @@ namespace $.$$ {
 
 			const gap = this.gap()
 			const height = this.font_size()
-			const center = this.shift()[1] + this.series_y()[index] * this.scale()[1]
-			let pos = center - gap
+			const center = Math.round(this.shift()[1] + this.series_y()[index] * this.scale()[1])
+			let pos = center + height / 2
 			if (pos < height) pos = center + height + gap
 
 			return pos.toFixed(3)

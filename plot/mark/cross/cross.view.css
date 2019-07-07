@@ -7,4 +7,5 @@
 [mol_plot_mark_cross_label_x], [mol_plot_mark_cross_label_y] {
 	color: var(--mol_theme_focus);
 	font-weight: bold;
+	pointer-events: none;
 }
