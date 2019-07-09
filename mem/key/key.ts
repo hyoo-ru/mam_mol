@@ -62,7 +62,12 @@ namespace $ {
 					master = new $mol_fiber
 					master.calculate = ()=> {
 						if( force !== $mol_mem_force_cache ) next = value.call( this , key , next )
-						return get_cache( this , key ).put( next )
+						const cache = get_cache( this , key )
+						
+						if( next instanceof Error ) cache.fail( next )
+						else cache.put( next )
+						
+						return next
 					}
 					master[ Symbol.toStringTag ] = `${ this }.${ name }(${key},*)`
 				}

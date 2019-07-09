@@ -155,7 +155,7 @@ namespace $ {
 						case( value.type === '-' ) :
 							return null
 						case( value.type[0] === '/' ) :
-							const item_type = value.type.substring( 1 ) || 'any'
+							const item_type = value.type.substring( 1 )
 							var items : string[] = []
 							value.sub.forEach( item => {
 								if( item.type === '-' ) return
@@ -166,7 +166,7 @@ namespace $ {
 								var val = getValue( item )
 								if( val ) items.push( val )
 							} )
-							return `[ ${ items.join(' , ') } ] as readonly ( ${ item_type } )[]`
+							return `[ ${ items.join(' , ') } ]` + ( item_type ? ` as readonly ( ${ item_type } )[]` : '' )
 						case( value.type[0] === '$' ) :
 							needCache = true
 							var overs : string[] = []
