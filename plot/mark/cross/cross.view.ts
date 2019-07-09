@@ -3,8 +3,7 @@ namespace $.$$ {
 
 		@$mol_mem
 		nearest(): readonly [number, number] {
-			let delta = this.threshold()
-			delta *= delta
+			let delta = Math.pow(this.threshold(), 2)
 			let index = -1
 			const [cursor_x, cursor_y] = this.cursor_position()
 			if (Number.isNaN(cursor_x) || Number.isNaN(cursor_y)) return [index, delta]
@@ -22,7 +21,7 @@ namespace $.$$ {
 				if (scaled_x > viewport_right) continue
 				if (scaled_y < viewport_bottom) continue
 				if (scaled_y > viewport_top) continue
-				const diff = Math.abs(scaled_x - cursor_x) + Math.abs(scaled_y - cursor_y)
+				const diff = Math.pow(scaled_x - cursor_x, 2) + Math.pow(scaled_y - cursor_y, 2)
 				if (diff < delta) {
 					delta = diff
 					index = i
