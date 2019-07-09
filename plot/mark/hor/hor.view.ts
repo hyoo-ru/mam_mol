@@ -7,8 +7,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		labels(): string[] {
-			const precision = this.precision()
-			return this.series_x().map(val => val.toFixed(precision))
+			return this.series_x().map(val => String(val))
 		}
 
 		@ $mol_mem
@@ -76,7 +75,7 @@ namespace $.$$ {
 		}
 
 		label_pos_x( index : number ) {
-			return (this.series_x()[index] * this.scale()[0] + this.shift()[0]).toFixed(3) + 'px'
+			return (this.series_x()[index] * this.scale()[0] + this.shift()[0]).toFixed(3)
 		}
 
 		label_pos_y( index : number ) {
