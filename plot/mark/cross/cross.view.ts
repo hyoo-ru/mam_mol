@@ -85,23 +85,13 @@ namespace $.$$ {
 			return String(this.series_y()[index])
 		}
 
-		title_y_pos_x() {
-			const index = this.nearest_index()
-			if (index < 0) return '0'
-
-			const pos = 0
-
-			return pos.toFixed(3)
-		}
-
 		title_y_pos_y() {
 			const index = this.nearest_index()
 			if (index < 0) return '0'
 
-			const height = this.font_size()
-			const center = Math.round(this.shift()[1] + this.series_y()[index] * this.scale()[1])
+			const center = this.shift()[1] + this.series_y()[index] * this.scale()[1]
 
-			return (center + height / 2).toFixed(3)
+			return center.toFixed(3)
 		}
 	}
 }

@@ -9,3 +9,7 @@
 	font-weight: bold;
 	pointer-events: none;
 }
+
+[mol_plot_mark_cross_label_y] {
+	transform: translateY( 4px );
+}
