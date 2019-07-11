@@ -4,7 +4,7 @@ namespace $.$$ {
 		@$mol_mem
 		nearest(): {index: number, delta: number} {
 			let delta = this.threshold() ** 2
-			let index = -1
+			let index = Number.NaN
 			const [cursor_x, cursor_y] = this.cursor_position()
 			if (Number.isNaN(cursor_x) || Number.isNaN(cursor_y)) return {index, delta}
 
@@ -41,7 +41,7 @@ namespace $.$$ {
 
 		curve() {
 			const index = this.nearest_index()
-			if (index < 0) return ''
+			if (Number.isNaN(index)) return ''
 
 			const [scale_x, scale_y] = this.scale()
 			const [shift_x, shift_y] = this.shift()
@@ -53,7 +53,7 @@ namespace $.$$ {
 
 		title_x() {
 			const index = this.nearest_index()
-			if (index < 0) return ''
+			if (Number.isNaN(index)) return ''
 			const labels = this.labels()
 			if (labels.length > index) return labels[index]
 
@@ -62,7 +62,7 @@ namespace $.$$ {
 
 		title_x_pos_x() {
 			const index = this.nearest_index()
-			if (index < 0) return '0'
+			if (Number.isNaN(index)) return '0'
 
 			const center = this.shift()[0] + this.series_x()[index] * this.scale()[0]
 			const width = this.text_width(this.title_x())
@@ -72,7 +72,7 @@ namespace $.$$ {
 
 		title_x_pos_y() {
 			const index = this.nearest_index()
-			if (index < 0) return '0'
+			if (Number.isNaN(index)) return '0'
 			const pos = this.size_real()[1] - this.title_x_gap()
 
 			return pos.toFixed(3)
@@ -80,14 +80,14 @@ namespace $.$$ {
 
 		title_y() {
 			const index = this.nearest_index()
-			if (index < 0) return ''
+			if (Number.isNaN(index)) return ''
 
 			return String(this.series_y()[index])
 		}
 
 		title_y_pos_y() {
 			const index = this.nearest_index()
-			if (index < 0) return '0'
+			if (Number.isNaN(index)) return '0'
 
 			const center = this.shift()[1] + this.series_y()[index] * this.scale()[1]
 
