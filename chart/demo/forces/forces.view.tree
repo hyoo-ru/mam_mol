@@ -5,20 +5,16 @@ $mol_chart_demo_forces $mol_demo_large
 	sub /
 		<= Chart $mol_chart
 			graphs /
-				<= Forces_left $mol_plot_group
+				<= Forces_left $mol_plot_dot
 					title <= forces_left_title @ \Left wheel
 					series_x <= forces_left_x /number
 					series_y <= forces_left_y /number
-					graphs /
-						<= Left_fill $mol_plot_dot
-							points_max <= points_max
-				<= Forces_right $mol_plot_group
+					points_max <= points_max
+				<= Forces_right $mol_plot_dot
 					title <= forces_right_title @ \Right wheel
 					series_x <= forces_right_x /number
 					series_y <= forces_right_y /number
-					graphs /
-						<= Right_fill $mol_plot_dot
-							points_max <= points_max
+					points_max <= points_max
 				<= Vert_ruler $mol_plot_ruler_vert
 					title <= vert_title @ \kN
 				<= Hor_ruler $mol_plot_ruler_hor

@@ -2,11 +2,11 @@ namespace $.$$ {
 	export class $mol_plot_mark_cross extends $.$mol_plot_mark_cross {
 
 		@$mol_mem
-		nearest(): readonly [number, number] {
-			let delta = Math.pow(this.threshold(), 2)
+		nearest(): {index: number, delta: number} {
+			let delta = this.threshold() ** 2
 			let index = -1
 			const [cursor_x, cursor_y] = this.cursor_position()
-			if (Number.isNaN(cursor_x) || Number.isNaN(cursor_y)) return [index, delta]
+			if (Number.isNaN(cursor_x) || Number.isNaN(cursor_y)) return {index, delta}
 
 			const series_x = this.series_x()
 			const series_y = this.series_y()
@@ -21,22 +21,22 @@ namespace $.$$ {
 				if (scaled_x > viewport_right) continue
 				if (scaled_y < viewport_bottom) continue
 				if (scaled_y > viewport_top) continue
-				const diff = Math.pow(scaled_x - cursor_x, 2) + Math.pow(scaled_y - cursor_y, 2)
+				const diff = (scaled_x - cursor_x) ** 2 + (scaled_y - cursor_y) ** 2
 				if (diff < delta) {
 					delta = diff
 					index = i
 				}
 			}
 
-			return [index, delta]
+			return {index, delta}
 		}
 
 		nearest_delta() {
-			return this.nearest()[1]
+			return this.nearest().delta
 		}
 
 		nearest_index() {
-			return this.nearest()[0]
+			return this.nearest().index
 		}
 
 		curve() {
