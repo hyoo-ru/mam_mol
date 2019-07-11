@@ -55,11 +55,12 @@ namespace $.$$ {
 				x: {max: right},
 				y: {max: top}
 			} = super.scale_limit()
+			const gap = this.gap()
 			const size = this.size()
 			const real = this.size_real()
 
-			const left = + ( real.x - this.gap_left() - this.gap_right() ) / size.x
-			const bottom = - ( real.y - this.gap_top() - this.gap_bottom()) / size.y
+			const left = + ( real.x - gap.x.min - gap.x.max ) / size.x
+			const bottom = - ( real.y - gap.y.max - gap.y.min) / size.y
 
 			return new this.$.$mol_vector_2d(
 				new this.$.$mol_vector_range(left, right),
@@ -96,12 +97,13 @@ namespace $.$$ {
 			const dims = this.dimensions()
 			const [scale_x, scale_y] = this.scale()
 			const size = this.size_real()
+			const gap = this.gap()
 
-			const left = this.gap_left() - dims.x.min * scale_x
-			const right = size.x - this.gap_right() - dims.x.max * scale_x
+			const left = gap.x.min - dims.x.min * scale_x
+			const right = size.x - gap.x.max - dims.x.max * scale_x
 
-			const top = this.gap_top() - dims.y.max * scale_y
-			const bottom = size.y - this.gap_bottom() - dims.y.min * scale_y
+			const top = gap.y.max - dims.y.max * scale_y
+			const bottom = size.y - gap.y.min - dims.y.min * scale_y
 
 			return new this.$.$mol_vector_2d(
 				new this.$.$mol_vector_range(right, left),
@@ -144,6 +146,7 @@ namespace $.$$ {
 				graph.viewport = () => this.viewport()
 				graph.size_real = ()=> this.size_real()
 				graph.cursor_position = ()=> this.cursor_position()
+				graph.gap = () => this.gap()
 			}
 			
 			return graphs

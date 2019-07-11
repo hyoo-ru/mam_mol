@@ -8,6 +8,7 @@ $mol_app_issues $mol_page
 		<= Projects $mol_row
 			sub <= projects /
 		<= Chart $mol_plot_pane
+			gap_left 76
 			graphs /
 				<= Capacities $mol_plot_bar
 					series_y <= capacities /number

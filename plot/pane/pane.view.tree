@@ -10,6 +10,13 @@ $mol_plot_pane $mol_svg_root
 	gap_right <= gap_hor
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
+	gap $mol_vector_2d /
+		$mol_vector_range /
+			<= gap_left
+			<= gap_right
+		$mol_vector_range /
+			<= gap_bottom
+			<= gap_top
 	-
 	shift_limit $mol_vector_2d /
 		$mol_vector_range /

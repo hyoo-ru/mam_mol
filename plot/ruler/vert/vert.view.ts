@@ -30,6 +30,10 @@ namespace $.$$ {
 			}).join( ' ' )
 		}
 
+		title_pos_x() {
+			return String(this.gap().x.min)
+		}
+
 		label_pos_y( index : number ) {
 			return (this.points()[index] * this.scale()[1] + this.shift()[1]).toFixed(3)
 		}

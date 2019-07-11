@@ -43,6 +43,13 @@ $mol_plot_graph $mol_svg_group
 	size_real $mol_vector_2d /
 		0
 		0
+	gap $mol_vector_2d /
+		$mol_vector_range /
+			0
+			0
+		$mol_vector_range /
+			0
+			0
 	front /$mol_svg
 	back /$mol_svg
 	hue NaN
