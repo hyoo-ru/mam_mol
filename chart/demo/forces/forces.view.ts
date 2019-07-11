@@ -2,7 +2,7 @@ namespace $.$$ {
 	
 	export class $mol_chart_demo_forces extends $.$mol_chart_demo_forces {
 
-		forces(): readonly [readonly number[], readonly number[]] {
+		generate_forces(): readonly [readonly number[], readonly number[]] {
 			const samples_count = this.samples_count()
 
 			const max_x = 600
@@ -25,12 +25,12 @@ namespace $.$$ {
 
 		@$mol_mem
 		forces_left() {
-			return this.forces()
+			return this.generate_forces()
 		}
 
 		@$mol_mem
 		forces_right() {
-			return this.forces()
+			return this.generate_forces()
 		}
 
 		forces_left_x() {
