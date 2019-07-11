@@ -155,7 +155,7 @@ namespace $ {
 						case( value.type === '-' ) :
 							return null
 						case( value.type[0] === '/' ) :
-							const item_type = value.type.substring( 1 ) || 'any'
+							const item_type = value.type.substring( 1 )
 							var items : string[] = []
 							value.sub.forEach( item => {
 								if( item.type === '-' ) return
@@ -166,7 +166,7 @@ namespace $ {
 								var val = getValue( item )
 								if( val ) items.push( val )
 							} )
-							return `[].concat( ${ items.join(' , ') } ) as readonly ( ${ item_type } )[]`
+							return `[].concat( ${ items.join(' , ') } )` + ( item_type ? ` as readonly ( ${ item_type } )[]` : '' )
 						case( value.type[0] === '$' ) :
 							needCache = true
 							var overs : string[] = []
@@ -269,7 +269,7 @@ namespace $ {
 						if( propName[2] ) decl = '\t@ $' + 'mol_mem_key\n' + decl
 						else decl = '\t@ $' + 'mol_mem\n' + decl
 					}
-					decl = param.toString().trim().replace( /^/gm , '\t/// ' ) + '\n' + decl
+					decl = '\t/**\n\t * ```\n\t * ' + param.toString().trim().split( '\n' ).join( '\n\t * ' ) + '\n\t * ```\n\t **/\n' + decl
 					
 					members[ propName[1] ] = decl
 				} )
