@@ -1,6 +1,6 @@
 $mol_plot_mark_cross $mol_plot_graph
 	labels /string
-	gap 4
+	title_x_gap 4
 	threshold 16
 	nearest_index -1
 	nearest_delta Infinity

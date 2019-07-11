@@ -33,7 +33,7 @@ namespace $.$$ {
 		}
 		
 		hor_series() {
-			return (this.series( 0 ) || []).map((v, i) => i)
+			return $mol_range2().slice( 0 , this.series( 0 ).length )
 		}
 		
 	}

@@ -11,6 +11,7 @@ namespace $.$$ {
 				graph.dimensions_pane = ()=> this.dimensions_pane()
 				graph.viewport = ()=> this.viewport()
 				graph.cursor_position = ()=> this.cursor_position()
+				graph.gap = () => this.gap()
 			}
 			return graphs
 		}

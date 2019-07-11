@@ -73,7 +73,7 @@ namespace $.$$ {
 		title_x_pos_y() {
 			const index = this.nearest_index()
 			if (index < 0) return '0'
-			const pos = this.size_real()[1] - this.gap()
+			const pos = this.size_real()[1] - this.title_x_gap()
 
 			return pos.toFixed(3)
 		}
