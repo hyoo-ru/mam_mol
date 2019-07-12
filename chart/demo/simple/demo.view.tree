@@ -29,6 +29,7 @@ $mol_chart_demo_simple $mol_demo_large
 						\March
 						\April
 				<= Marker_cross $mol_plot_mark_cross
+					labels <= months
 					graphs /
 						<= Plan
 						<= Fact_dots
