@@ -9,7 +9,7 @@ $mol_plot_ruler $mol_plot_graph
 	viewport_axis $mol_vector_range /
 		Infinity
 		-Infinity
-	points /number
+	axis_points /number
 	normalize?val 0
 	precision 1
 	sub /

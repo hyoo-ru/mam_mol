@@ -20,11 +20,7 @@ $mol_chart_demo_forces $mol_demo_large
 				<= Hor_ruler $mol_plot_ruler_hor
 					title <= hor_title @ \cm
 					series_x <= forces_left_x
-				<= Cross $mol_plot_mark_cross_group
+				<= Cross $mol_plot_mark_cross
 					graphs /
-						<= Cross_left $mol_plot_mark_cross
-							series_x <= forces_left_x
-							series_y <= forces_left_y
-						<= Cross_right $mol_plot_mark_cross
-							series_x <= forces_right_x
-							series_y <= forces_right_y
+						<= Forces_left
+						<= Forces_right

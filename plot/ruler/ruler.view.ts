@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_plot_ruler extends $.$mol_plot_ruler {
 		labels_formatted() {
-			return this.points().map( ( point , index )=> this.Label( index ) )
+			return this.axis_points().map( ( point , index )=> this.Label( index ) )
 		}
 
 		@ $mol_mem
@@ -40,7 +40,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		points() {
+		axis_points() {
 			const dims = this.dimensions_axis()
 			const start = this.snap_to_grid(dims.min)
 			const end = this.snap_to_grid(dims.max)
@@ -61,7 +61,7 @@ namespace $.$$ {
 		}
 
 		label_text( index : number ) {
-			const point = this.points()[index]
+			const point = this.axis_points()[index]
 			return point.toFixed( this.precision() )
 		}
 

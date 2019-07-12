@@ -2,8 +2,7 @@ $mol_plot_mark_cross $mol_plot_graph
 	labels /string
 	title_x_gap 4
 	threshold 16
-	nearest_index NaN
-	nearest_delta Infinity
+	graphs /$mol_plot_graph
 	dimensions $mol_vector_2d /
 		$mol_vector_range /
 			Infinity

@@ -24,7 +24,7 @@ namespace $.$$ {
 			const [, shift] = this.shift()
 			const [, scale] = this.scale()
 
-			return this.points().map( point => {
+			return this.axis_points().map( point => {
 				const scaled = point * scale + shift
 				return `M 0 ${scaled.toFixed(3)} H 2000`
 			}).join( ' ' )
@@ -35,7 +35,7 @@ namespace $.$$ {
 		}
 
 		label_pos_y( index : number ) {
-			return (this.points()[index] * this.scale()[1] + this.shift()[1]).toFixed(3)
+			return (this.axis_points()[index] * this.scale()[1] + this.shift()[1]).toFixed(3)
 		}
 	}
 }

@@ -50,6 +50,7 @@ $mol_plot_graph $mol_svg_group
 		$mol_vector_range /
 			0
 			0
+	indexes /number
 	front /$mol_svg
 	back /$mol_svg
 	hue NaN

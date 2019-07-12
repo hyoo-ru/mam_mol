@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_plot_line extends $.$mol_plot_line {
 		@ $mol_mem
-		points() {
+		indexes() {
 			const threshold = this.threshold()
 			const {
 				x: {min: viewport_left, max: viewport_right},
@@ -10,14 +10,14 @@ namespace $.$$ {
 
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()
-			const points_scaled = [] as (readonly [number, number])[]
+			const indexes = [] as number[]
 
 			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as const
 
-			let first_x = null as readonly [number, number] | null
-			let first_y = null as readonly [number, number] | null
-			let last_x = null as readonly [number, number] | null
-			let last_y = null as readonly [number, number] | null
+			let first_x = null as number | null
+			let first_y = null as number | null
+			let last_x = null as number | null
+			let last_y = null as number | null
 
 			const series_x = this.series_x()
 			const series_y = this.series_y()
@@ -35,49 +35,63 @@ namespace $.$$ {
 				last = scaled
 
 				if (scaled[0] < viewport_left) {
-					first_x = scaled
+					first_x = i
 					continue
 				}
 
 				if (scaled[1] < viewport_bottom) {
-					first_y = scaled
+					first_y = i
 					continue
 				}
 
 				if (scaled[0] > viewport_right) {
-					if (!last_x) last_x = scaled
+					if (last_x === null) last_x = i
 					continue
 				}
 
 				if (scaled[1] > viewport_top) {
-					if (!last_y) last_y = scaled
+					if (last_y === null) last_y = i
 					continue
 				}
 
-				if (first_x) points_scaled.push(first_x)
-				if (first_y) points_scaled.push(first_y)
+				if (first_x !== null) indexes.push(first_x)
+				if (first_y !== null) indexes.push(first_y)
 
-				points_scaled.push(scaled)
+				indexes.push(i)
 
-				if (last_x) points_scaled.push(last_x)
-				if (last_y) points_scaled.push(last_y)
+				if (last_x !== null) indexes.push(last_x)
+				if (last_y !== null) indexes.push(last_y)
 
 				first_x = first_y = last_x = last_y = null
 			}
 
-			if (first_x) points_scaled.push(first_x)
-			if (first_y) points_scaled.push(first_y)
-			if (last_x) points_scaled.push(last_x)
-			if (last_y) points_scaled.push(last_y)
+			if (first_x !== null) indexes.push(first_x)
+			if (first_y !== null) indexes.push(first_y)
+			if (last_x !== null) indexes.push(last_x)
+			if (last_y !== null) indexes.push(last_y)
 
-			return points_scaled
+			return indexes
 		}
 
 		curve() {
-			const points = this.points()
-			if( points.length === 0 ) return ''
+			const indexes = this.indexes()
+			if( indexes.length === 0 ) return ''
 
-			return `M ${points[0].join(' ')} ${points.map( point => `L ${point.join(' ')}` ).join( ' ' )}`
+			const [shift_x, shift_y] = this.shift()
+			const [scale_x, scale_y] = this.scale()
+			const series_x = this.series_x()
+			const series_y = this.series_y()
+
+			const point_x = shift_x + series_x[0] * scale_x
+			const point_y = shift_y + series_y[0] * scale_y
+
+			const main = indexes.map( index => {
+				const point_x = shift_x + series_x[index] * scale_x
+				const point_y = shift_y + series_y[index] * scale_y
+				return `L ${point_x.toFixed(3)} ${point_y.toFixed(3)}`
+			}).join(' ')
+
+			return `M ${point_x.toFixed(3)} ${point_y.toFixed(3)} ${main}`
 		}
 		
 	}

@@ -24,14 +24,14 @@ namespace $.$$ {
 			const [shift] = this.shift()
 			const [scale] = this.scale()
 
-			return this.points().map( point => {
+			return this.axis_points().map( point => {
 				const scaled = point * scale + shift
 				return `M ${scaled.toFixed(3)} 1000 V 0`
 			}).join( ' ' )
 		}
 
 		label_pos_x( index : number ) {
-			return (this.points()[index] * this.scale()[0] + this.shift()[0]).toFixed(3)
+			return (this.axis_points()[index] * this.scale()[0] + this.shift()[0]).toFixed(3)
 		}
 
 		background_y() {

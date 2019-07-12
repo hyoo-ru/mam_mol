@@ -7,7 +7,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		points() {
+		indexes() {
 			const radius = this.diameter() / 2
 			// calculate by cpu
 			const points_max = this.points_max()
@@ -26,12 +26,12 @@ namespace $.$$ {
 
 			let spacing = 0
 			let filled: Set<number> = this.filled() 
-			let points_scaled: (readonly [number, number])[]
+			let indexes: number[]
 
 			const series_x = this.series_x()
 			const series_y = this.series_y()
 			do {
-				points_scaled = []
+				indexes = []
 				for (let i = 0; i < series_x.length; i++) {
 					const point_x = series_x[i]
 					const point_y = series_y[i]
@@ -61,22 +61,31 @@ namespace $.$$ {
 						filled.add(key)
 					}
 
-					points_scaled.push([scaled_x, scaled_y] as const)
-					if (points_scaled.length > points_max) break
+					indexes.push(i)
+					if (indexes.length > points_max) break
 				}
 				spacing += Math.ceil(radius)
 				filled.clear()
-			} while (points_scaled.length > points_max)
+			} while (indexes.length > points_max)
 
-			return points_scaled
+			return indexes
 		}
 
-		@ $mol_mem
 		curve() {
-			const points = this.points()
-			if( points.length === 0 ) return ''
+			const indexes = this.indexes()
+			if( indexes.length === 0 ) return ''
 
-			return this.points().map( point => 'M ' + point.join( ' ' ) + ' v 0' ).join( ' ' )
+			const [shift_x, shift_y] = this.shift()
+			const [scale_x, scale_y] = this.scale()
+			const series_x = this.series_x()
+			const series_y = this.series_y()
+
+			return indexes.map( index => {
+				const point_x = shift_x + series_x[index] * scale_x
+				const point_y = shift_y + series_y[index] * scale_y
+
+				return `M ${point_x.toFixed(3)} ${point_y.toFixed(3)} v 0`
+			}).join( ' ' )
 		}
 		
 	}
