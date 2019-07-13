@@ -51,6 +51,7 @@ $mol_plot_graph $mol_svg_group
 			0
 			0
 	indexes /number
+	points /readonly[number,number]
 	front /$mol_svg
 	back /$mol_svg
 	hue NaN

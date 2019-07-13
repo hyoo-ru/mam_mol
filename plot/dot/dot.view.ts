@@ -72,20 +72,10 @@ namespace $.$$ {
 		}
 
 		curve() {
-			const indexes = this.indexes()
-			if( indexes.length === 0 ) return ''
+			const points = this.points()
+			if( points.length === 0 ) return ''
 
-			const [shift_x, shift_y] = this.shift()
-			const [scale_x, scale_y] = this.scale()
-			const series_x = this.series_x()
-			const series_y = this.series_y()
-
-			return indexes.map( index => {
-				const point_x = shift_x + series_x[index] * scale_x
-				const point_y = shift_y + series_y[index] * scale_y
-
-				return `M ${point_x.toFixed(3)} ${point_y.toFixed(3)} v 0`
-			}).join( ' ' )
+			return points.map( point => `M ${point.join(' ')} v 0`).join( ' ' )
 		}
 		
 	}

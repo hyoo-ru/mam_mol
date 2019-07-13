@@ -8,6 +8,20 @@ namespace $.$$ {
 			)
 		}
 
+		points() {
+			const [shift_x, shift_y] = this.shift()
+			const [scale_x, scale_y] = this.scale()
+			const series_x = this.series_x()
+			const series_y = this.series_y()
+
+			return this.indexes().map(index => {
+				const point_x = Math.round(shift_x + series_x[index] * scale_x)
+				const point_y = Math.round(shift_y + series_y[index] * scale_y)
+
+				return [point_x, point_y] as const
+			})
+		}
+		
 		@ $mol_mem
 		series_x() {
 			return this.series_y().map((val, index) => index)
