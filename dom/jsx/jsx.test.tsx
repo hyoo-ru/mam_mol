@@ -16,6 +16,14 @@ namespace $ {
 
 		} ,
 		
+		'Define classes'() {
+			
+			const dom = <div classList={[ 'foo bar' ]} />
+			
+			$mol_assert_equal( dom.outerHTML , '<div class="foo bar"></div>' )
+
+		} ,
+		
 		'Define styles'() {
 			
 			const dom = <div style={{ color : 'red' }} />
@@ -56,12 +64,55 @@ namespace $ {
 		'Function as component'() {
 
 			function Button( { id , ... props } : { id : string } , action : string , target : ()=> string ) {
-				return <button id="root" { ... props } >{ action }{ target() }</button>
+				return <button { ... props } >{ action }{ target() }</button>
 			}
 
 			const dom = <Button id="foo">click { ()=> 'me' }</Button>
 
-			$mol_assert_equal( dom.outerHTML , '<button id="foo.root">click me</button>' )
+			$mol_assert_equal( dom.outerHTML , '<button id="foo">click me</button>' )
+			
+		} ,
+		
+		'Nested guid generation'() {
+
+			function Foo( {} : { id? : string } ) {
+				return <div>
+					<Bar id="bar">
+						<img id="icon" />
+					</Bar>
+				</div>
+			}
+
+			function Bar( props : { id? : string } , icon : Element ) {
+				return <span>{ icon }</span>
+			}
+
+			const dom = <Foo id="foo" />
+
+			$mol_assert_equal( dom.outerHTML , '<div id="foo"><span id="foo.bar"><img id="foo.icon"></span></div>' )
+			
+		} ,
+		
+		'Fail on non unique ids'() {
+
+			function App( props : { id? : string } , icon : Element ) {
+				return <div>
+					<span id="bar" />
+					<span id="bar" />
+				</div>
+			}
+
+			$mol_assert_fail( ()=> <App id="foo" /> , 'JSX already has tag with id "bar"' )
+			
+		} ,
+		
+		'Attach to document'() {
+
+			const doc = $mol_dom_parse( '<html><body id="foo"></body></html>' )
+
+			$mol_dom_jsx_attach( doc , ()=> <body id="foo">bar</body> )
+
+			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="foo">bar</body></html>' )
 			
 		} ,
 		

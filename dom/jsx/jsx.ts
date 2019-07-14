@@ -18,8 +18,23 @@ namespace JSX {
 
 namespace $ {
 
-	export let $mol_dom_jsx_context = {
-		prefix : ''
+	export let $mol_dom_jsx_prefix = ''
+
+	export let $mol_dom_jsx_booked = null as null | Set< string >
+	
+	export let $mol_dom_jsx_document : Pick< Document , 'getElementById' | 'createElement' > = {
+		getElementById : ()=> null ,
+		createElement : ( name : string )=> $mol_dom_context.document.createElement( name )
+	}
+
+	export function $mol_dom_jsx_attach< Result >( next : typeof $mol_dom_jsx_document , action : ()=> Result ) {
+		const prev = $mol_dom_jsx_document
+		try {
+			$mol_dom_jsx_document = next
+			return action()
+		} finally {
+			$mol_dom_jsx_document = prev
+		}
 	}
 
 	export function $mol_dom_jsx< Props extends { id? : string } , Children extends Array< Node | string > >(
@@ -28,27 +43,34 @@ namespace $ {
 		... children : Children
 	) {
 
-		const prefix = $mol_dom_jsx_context.prefix
-		const id = prefix
-		? ( props && ( props.id !== undefined ) && ( prefix + '.' + props.id ) || prefix || '' )
-		: ( props && ( props.id !== undefined ) && props.id || '' )
+		const id = props && props.id || ''
 
-		if( typeof Elem !== 'string' ) {
-			let context = $mol_dom_jsx_context
-			try {
-				if( id ) $mol_dom_jsx_context = { prefix : id }
-				return Elem( props , ... children )
-			} finally {
-				$mol_dom_jsx_context = context
+		if( $mol_dom_jsx_booked ) {
+			if( $mol_dom_jsx_booked.has( id ) ) {
+				$mol_fail( new Error( `JSX already has tag with id ${ JSON.stringify( id ) }` ) )
+			} else {
+				$mol_dom_jsx_booked.add( id )
 			}
 		}
 
-		const document = $mol_dom_context.document
-		const node = id && document.getElementById( id ) || document.createElement( Elem )
+		const guid = id ? $mol_dom_jsx_prefix ? $mol_dom_jsx_prefix + '.' + id : id : $mol_dom_jsx_prefix
+
+		if( typeof Elem !== 'string' ) {
+			const prefix = $mol_dom_jsx_prefix
+			const booked = $mol_dom_jsx_booked
+			try {
+				$mol_dom_jsx_prefix = guid
+				$mol_dom_jsx_booked = new Set
+				return Elem( props , ... children )
+			} finally {
+				$mol_dom_jsx_prefix = prefix
+				$mol_dom_jsx_booked = booked
+			}
+		}
+
+		const node = guid && $mol_dom_jsx_document.getElementById( guid ) || $mol_dom_jsx_document.createElement( Elem )
 
 		$mol_dom_render_children( node , ( [] as ( Node | string )[] ).concat( ... children ) )
-
-		if( id ) props.id = id
 
 		for( const key in props ) {
 
@@ -68,6 +90,8 @@ namespace $ {
 			node[ key as any ] = props[ key ]
 
 		}
+
+		if( guid ) node.id = guid
 
 		return node
 

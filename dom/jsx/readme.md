@@ -12,14 +12,14 @@ JSX adapter for [$mol_dom_make](../make), that makes DOM tree. If global unique 
 
 ```tsx
 namespace $ {
-	export function $my_pure_component( guid : string ) { return (
-		<div id={ guid } className="my_example" >
+	export function $my_pure_component( props : { id : string } ) { return (
+		<div classList={[ 'foo bar' ]} >
 			Content is
-			<strong id={ guid + '.text_nodes' } >
+			<strong id="text_nodes" >
 				text nodes
 			</strong>
 			mixed with
-			<strong id={ guid + '.elements' } >
+			<strong id="elements" >
 				elements
 			</strong>
 			!
@@ -31,7 +31,7 @@ namespace $ {
 ```html
 <body id="$my_app">
 	<script>
-		$my_pure_component( '$my_app' )
+		$mol_dom_jsx_attach( document , ()=> <$my_pure_component id="$my_app" /> )
 	</script>
 </body>
 ```
