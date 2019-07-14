@@ -1,6 +1,6 @@
 $mol_chart_legend $mol_scroll
-	graphs /
-	sub <= graph_legends /
+	graphs /$mol_plot_graph
+	sub <= graph_legends /$mol_view
 	-
 	Graph_legend!id $mol_view
 		sub /

@@ -3,37 +3,43 @@ $mol_chart_demo_styles $mol_demo_large
 	samples_count 15
 	sub /
 		<= Chart $mol_chart
-			graphs /
-				<= Energy $mol_plot_ruler_vert
-					title <= energy_title @ \kJ
-				<= Day $mol_plot_mark_hor
-					title <= day_title @ \Day
-					series <= series_1 /
+			graphs <= graphs /
 				<= Receipts $mol_plot_bar
 					title <= receipts_title @ \Receipts
-					series <= series_2 /
+					series_x <= series_x /
+					series_y <= series_2_y /
 				<= Receipts_confirmed $mol_plot_bar
 					title <= receipts_confirmed_title @ \Confirmed receipts
-					series <= series_3 /
+					series_x <= series_x /
+					series_y <= series_3_y /
 				<= Maximum $mol_plot_dot
 					title <= maximum_title @ \Maximum
-					series <= series_1 /
+					series_x <= series_x /
+					series_y <= series_1_y /
 				<= Waste $mol_plot_line
 					type \dashed
 					title <= waste_title @ \Waste
-					series <= series_4 /
+					series_x <= series_x /
+					series_y <= series_4_y /
 				<= Purchases $mol_plot_group
 					title <= purchases_title @ \Purchases
-					series <= series_5 /
+					series_x <= series_x /
+					series_y <= series_5_y /
 					graphs /
 						<= Purchases_fill $mol_plot_fill
 						<= Purchases_line $mol_plot_line 
 						<= Purchases_dots $mol_plot_dot 
 				<= Taxes $mol_plot_group
 					title <= taxes_title @ \Taxes
-					series <= series_6 /
+					series_x <= series_x /
+					series_y <= series_6_y /
 					graphs /
 						<= Taxes_fill $mol_plot_fill
 						<= Taxes_line $mol_plot_line
 							type \dashed
 						<= Taxes_dots $mol_plot_dot
+				<= Energy $mol_plot_ruler_vert
+					title <= energy_title @ \kJ
+				<= Day $mol_plot_mark_hor
+					title <= day_title @ \Day
+					series_x <= series_x /

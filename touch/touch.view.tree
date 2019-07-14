@@ -9,6 +9,9 @@ $mol_touch $mol_plugin
 	pan?val /
 		0
 		0
+	pos?val /
+		NaN
+		NaN
 	-
 	start_pos?val null
 	swipe_precision 16
@@ -36,5 +39,6 @@ $mol_touch $mol_plugin
 		mousedown?event <=> event_start?event null
 		mousemove?event <=> event_move?event null
 		mouseup?event <=> event_end?event null
+		mouseleave?event <=> event_leave?event null
 	event_async *
 		wheel?event <=> event_wheel?event null

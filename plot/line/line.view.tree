@@ -1,4 +1,6 @@
 $mol_plot_line $mol_plot_graph
+	threshold 4
+	spacing 2
 	color_fill \none
 	sub /
 		<= Curve $mol_svg_path

@@ -79,6 +79,11 @@ namespace $.$$ {
 			return [ ... frequencies , 0 ]
 		}
 		
+		@ $mol_mem
+		labels() {
+			return this.measures().map( (measure, i) => String(i) )
+		}
+
 		@ $mol_mem_key
 		max_frequency( level : number ) {
 			return this.measures().reduce( ( max , measure )=> Math.max( max , measure[ level ].frequency ) , 0 )

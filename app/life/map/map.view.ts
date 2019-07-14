@@ -1,17 +1,5 @@
 namespace $.$$ {
 
-	function key( a : number , b : number ) {
-		return a << 16 | b & 0xFFFF
-	}
-
-	function x_of( key : number ) {
-		return key >> 16
-	}
-
-	function y_of( key : number ) {
-		return ( key & 0xFFFF ) << 16 >> 16
-	}
-
 	export class $mol_app_life_map extends $.$mol_app_life_map {
 
 		@ $mol_mem
@@ -40,12 +28,12 @@ namespace $.$$ {
 
 			for( let alive of prev ) {
 				
-				const ax = x_of( alive )
-				const ay = y_of( alive )
+				const ax = $mol_coord_high( alive )
+				const ay = $mol_coord_low( alive )
 				
 				for( let ny = ay - 1 ; ny <= ay + 1 ; ++ny ) for( let nx = ax - 1 ; nx <= ax + 1 ; ++nx ) {
 
-					const nkey = key( nx , ny )
+					const nkey = $mol_coord_pack( nx , ny )
 					if( skip.has( nkey ) ) continue
 					skip.add( nkey )
 					
@@ -53,7 +41,7 @@ namespace $.$$ {
 
 					for( let y = -1 ; y <= 1 ; ++y ) for( let x = -1 ; x <= 1 ; ++x ) {
 						if( !x && !y ) continue
-						if( prev.has( key( nx + x , ny + y ) ) ) ++sum
+						if( prev.has( $mol_coord_pack( nx + x , ny + y ) ) ) ++sum
 					}
 					
 					if( sum != 3 && ( !prev.has( nkey ) || sum !== 2 ) ) continue
@@ -71,12 +59,14 @@ namespace $.$$ {
 			return this.future().size
 		}
 
-		points() {
-			const points = [] as number[][]
-			for( let key of this.future().keys() ) {
-				points.push([ x_of( key ) , y_of( key ) ])
-			}
-			return points
+		@ $mol_mem
+		points_x() {
+			return [ ... this.future().keys() ].map(key => $mol_coord_high( key ))
+		}
+
+		@ $mol_mem
+		points_y() {
+			return [ ... this.future().keys() ].map(key => $mol_coord_low( key ))
 		}
 
 		@ $mol_mem
@@ -99,7 +89,7 @@ namespace $.$$ {
 			const pan = this.pan()
 			const rect = this.dom_node().getBoundingClientRect()
 			
-			const cell = key(
+			const cell = $mol_coord_pack(
 				Math.round( ( event.pageX - rect.left - pan[0] ) / zoom ) ,
 				Math.round( ( event.pageY - rect.top - pan[1] ) / zoom ) ,
 			)
