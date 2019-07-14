@@ -1,27 +1,22 @@
 namespace $.$$ {
 	
 	export class $mol_plot_demo extends $.$mol_plot_demo {
-		
+		@ $mol_mem
+		series_x() {
+			const next = [] as number[]
+			for (let i = 0, count = this.count(); i < count; i++) next.push(i)
+			return next
+		}
+
 		@ $mol_mem
 		input_series() {
-			return $mol_range_in({
-				length : this.count() ,
-				item( index ) {
-					return Math.sin( index / 2 ) * 2
-				}
-			}).valueOf() as number[]
+			return this.series_x().map(i => Math.sin( i / 2 ) * 2)
 		}
 
 		@ $mol_mem
 		output_series() {
 			$mol_state_time.now( 125 )
-			const input = this.input_series()
-			return $mol_range_in({
-				length : this.count() ,
-				item( index ) {
-					return input[ index ] * Math.random()
-				}
-			}).valueOf() as number[]
+			return this.input_series().map(input => input * Math.random())
 		}
 		
 		@ $mol_mem

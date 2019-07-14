@@ -8,7 +8,8 @@ Fill graph.
 
 ```tree
 <= Plan $mol_plot_fill
-	series <= plan /
+	series_x <= plan_x /
+	series_y <= plan_y /
 ```
 
 ## Properties

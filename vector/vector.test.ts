@@ -118,5 +118,17 @@ namespace $ {
 
 		} ,
 
+		'Vector of infinity range expanding by vector of range'() {
+
+			let dimensions = new $mol_vector_2d( $mol_vector_range_full.inversed , $mol_vector_range_full.inversed )
+			const next = new $mol_vector_2d( $mol_vector_range_full.inversed , $mol_vector_range_full.inversed )
+			
+			const expanded = next
+				.expanded2( dimensions )
+
+			$mol_assert_like( [ ... expanded.x ] , [ Infinity , -Infinity ] )
+			$mol_assert_like( [ ... expanded.y ] , [ Infinity , -Infinity ] )
+
+		} ,
 	})
 }
