@@ -1,6 +1,6 @@
 # $mol_dom_jsx
 
-JSX adapter for [$mol_dom_make](../make), that makes DOM tree. If global unique id is provided, uses already exists element with this id from document.
+JSX adapter that makes DOM tree. Generates global uniue ids for every dom-element by components tree with ids. Can reuse an existing nodes by guids when used inside `$mol_dom_jsx_attach`.
 
 ## Interface
 
@@ -33,6 +33,22 @@ namespace $ {
 	<script>
 		$mol_dom_jsx_attach( document , ()=> <$my_pure_component id="$my_app" /> )
 	</script>
+</body>
+```
+
+Result:
+
+```html
+<body id="$my_app" class="foo bar" >
+	Content is
+	<strong id="$my_app.text_nodes" >
+		text nodes
+	</strong>
+	mixed with
+	<strong id="$my_app.elements" >
+		elements
+	</strong>
+	!
 </body>
 ```
 
