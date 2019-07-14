@@ -2,12 +2,6 @@
 
 JSX adapter that makes DOM tree. Generates global uniue ids for every dom-element by components tree with ids. Can reuse an existing nodes by guids when used inside `$mol_dom_jsx_attach`.
 
-## Interface
-
-```
-( localName : string , props : { [ key : string ] : any } , ...children : Array< Node | string > ) => Element
-```
-
 ## Usage example
 
 ```tsx
