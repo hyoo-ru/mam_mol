@@ -45,7 +45,7 @@ script:
   - node ./mol/build/-/node.test.js mol/app/issues
   - node ./mol/build/-/node.test.js mol/syntax2
   - node ./mol/build/-/node.test.js mol/func/sandbox/demo
-  - node ./mol/build/-/node.test.js mol/portal
+  - node ./mol/build/-/node.test.js mol/app/portal
   - rm mol/.gitignore
 deploy:
   provider: pages
