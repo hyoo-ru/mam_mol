@@ -6,6 +6,8 @@ $mol_app_supplies $mol_book
 	List $mol_app_supplies_list
 		minimal_width 400
 		supplies <= supplies /
+		tools <= tools_root /
+		title <= list_title @ \Supplies
 		search_query?val <=> supply_id?val \
 	-
 	Detail $mol_app_supplies_detail

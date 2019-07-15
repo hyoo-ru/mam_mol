@@ -1,0 +1,36 @@
+$mol_app_portal $mol_book
+	Menu $mol_page
+		event_top?val <=> event_front_up?val
+		tools <= tools_root /
+			<= Sources $mol_link_iconed
+				title \
+				uri \https://github.com/eigenmethod/mol/tree/master/app/portal
+		title <= menu_title @ \My portal
+		minimal_width 200
+		body /
+			<= Habhub_link $mol_link
+				title <= habhub_title
+				arg * app \habhub
+			<= Files_link $mol_link
+				title <= files_title
+				arg * app \files
+			<= Supplies_link $mol_link
+				title <= supplies_title
+				arg * app \supplies
+	Close_app $mol_link
+		arg * app null
+		sub / <= Close_app_icon $mol_icon_cross
+	pages /
+		<= Habhub_app $mol_app_habhub
+			event_front_up?event <=> event_front_up?event
+			menu_title => habhub_title
+			tools_root / <= Close_app
+		<= Files_app $mol_app_files
+			event_front_up?event <=> event_front_up?event
+			title_root => files_title
+			tools_root / <= Close_app
+			uri_root_default \https://ajaxexplorer.com:443/User5df12c6/
+		<= Supplies_app $mol_app_supplies
+			event_front_up?event <=> event_front_up?event
+			list_title => supplies_title
+			tools_root / <= Close_app
