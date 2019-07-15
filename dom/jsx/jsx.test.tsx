@@ -67,9 +67,9 @@ namespace $ {
 				return <button { ... props } >{ action }{ target() }</button>
 			}
 
-			const dom = <Button id="foo">click { ()=> 'me' }</Button>
+			const dom = <Button id="/foo">click { ()=> 'me' }</Button>
 
-			$mol_assert_equal( dom.outerHTML , '<button id="foo">click me</button>' )
+			$mol_assert_equal( dom.outerHTML , '<button id="/foo">click me</button>' )
 			
 		} ,
 		
@@ -77,8 +77,8 @@ namespace $ {
 
 			function Foo( {} : { id? : string } ) {
 				return <div>
-					<Bar id="bar">
-						<img id="icon" />
+					<Bar id="/bar">
+						<img id="/icon" />
 					</Bar>
 				</div>
 			}
@@ -87,9 +87,9 @@ namespace $ {
 				return <span>{ icon }</span>
 			}
 
-			const dom = <Foo id="foo" />
+			const dom = <Foo id="/foo" />
 
-			$mol_assert_equal( dom.outerHTML , '<div id="foo"><span id="foo.bar"><img id="foo.icon"></span></div>' )
+			$mol_assert_equal( dom.outerHTML , '<div id="/foo"><span id="/foo/bar"><img id="/foo/icon"></span></div>' )
 			
 		} ,
 		
@@ -97,22 +97,22 @@ namespace $ {
 
 			function App( props : { id? : string } , icon : Element ) {
 				return <div>
-					<span id="bar" />
-					<span id="bar" />
+					<span id="/bar" />
+					<span id="/bar" />
 				</div>
 			}
 
-			$mol_assert_fail( ()=> <App id="foo" /> , 'JSX already has tag with id "bar"' )
+			$mol_assert_fail( ()=> <App id="/foo" /> , 'JSX already has tag with id "/bar"' )
 			
 		} ,
 		
 		'Attach to document'() {
 
-			const doc = $mol_dom_parse( '<html><body id="foo"></body></html>' )
+			const doc = $mol_dom_parse( '<html><body id="/foo"></body></html>' )
 
-			$mol_dom_jsx_attach( doc , ()=> <body id="foo">bar</body> )
+			$mol_dom_jsx_attach( doc , ()=> <body id="/foo">bar</body> )
 
-			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="foo">bar</body></html>' )
+			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">bar</body></html>' )
 			
 		} ,
 		

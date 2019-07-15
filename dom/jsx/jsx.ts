@@ -53,7 +53,7 @@ namespace $ {
 			}
 		}
 
-		const guid = id ? $mol_dom_jsx_prefix ? $mol_dom_jsx_prefix + '.' + id : id : $mol_dom_jsx_prefix
+		const guid = $mol_dom_jsx_prefix + id
 
 		if( typeof Elem !== 'string' ) {
 			const prefix = $mol_dom_jsx_prefix

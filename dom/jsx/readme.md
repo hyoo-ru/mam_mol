@@ -7,21 +7,21 @@ JSX adapter that makes DOM tree. Generates global uniue ids for every dom-elemen
 ```tsx
 namespace $ {
 	
-	function $my_pure_component( props : { id : string } ) { return (
+	function $my_message( props : { id : string } ) { return (
 		<div classList={[ 'foo bar' ]} >
 			Content is
-			<strong id="text_nodes" >
+			<strong id="/text_nodes" >
 				text nodes
 			</strong>
 			mixed with
-			<strong id="elements" >
+			<strong id="/elements" >
 				elements
 			</strong>
 			!
 		</div>
 	) }
 	
-	$mol_dom_jsx_attach( $mol_dom_context.document , ()=> <$my_pure_component id="$my_app" /> )
+	$mol_dom_jsx_attach( $mol_dom_context.document , ()=> <$my_message id="$my_app" /> )
 	
 }
 ```
@@ -35,11 +35,11 @@ Result:
 ```html
 <body id="$my_app" class="foo bar" >
 	Content is
-	<strong id="$my_app.text_nodes" >
+	<strong id="$my_app/text_nodes" >
 		text nodes
 	</strong>
 	mixed with
-	<strong id="$my_app.elements" >
+	<strong id="$my_app/elements" >
 		elements
 	</strong>
 	!
