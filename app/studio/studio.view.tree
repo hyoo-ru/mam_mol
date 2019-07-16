@@ -45,14 +45,16 @@ $mol_app_studio $mol_book
 					arg <= editor_close_arg *
 						path null
 			body /
-				<= Filter $mol_search
-					hint <= filter_hint @ \Filter properties
-					query?val <=> prop_filter?val \
+				<= Filter_bar $mol_bar sub <= filter_bar_items /
+					<= Filter $mol_search
+						hint <= filter_hint @ \Filter properties
+						query?val <=> prop_filter?val \
+					<= Prop_add $mol_button_minor
+						event_click?val <=> event_add?val null
+						sub / <= Prop_add_icon $mol_icon_plus
+						hint <= prop_add_hint @ \Add this property
 				<= Fields $mol_list
 					rows <= fields /
-					Empty <= Prop_add $mol_button_major
-						event_click?val <=> event_add?val null
-						title <= prop_add_label @ \Add this property
 			minimal_width 400
 		<= Source_page $mol_page
 			title <= source_title @ \Source code

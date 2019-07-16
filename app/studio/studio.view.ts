@@ -70,6 +70,13 @@ namespace $.$$ {
 			if( !$[ name ] ) throw new Error( `View class not found: ${name}` )
 			return $[ name ]
 		}
+
+		filter_bar_items() {
+			return [
+				this.Filter() ,
+				... this.prop_filter() ? [ this.Prop_add() ] : [] ,
+			]
+		}
 		
 		fields() {
 			const path = this.path()
