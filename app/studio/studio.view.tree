@@ -77,6 +77,7 @@ $mol_app_studio $mol_book
 		bind_options <= prop_options /
 		object_options <= view_options /
 		prop_add?val <=> prop_add?val \
+		highlight <= prop_filter
 	-
 	class_name_self?val \App
 	class_name_base?val \$mol_view

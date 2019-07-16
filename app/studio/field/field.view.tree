@@ -2,12 +2,11 @@ $mol_app_studio_field $mol_expander
 	path /
 	Trigger $mol_app_studio_field_title
 		checked?val <=> expanded?val false
-		title <= title
+		Title <= Trigger_label $mol_dimmer
+			needle <= highlight \
+			haystack <= title
 		type <= type
 	tools /
-		- <= Title $mol_app_studio_field_title
-			title <= title
-			type <= type?val \null
 		<= Type $mol_select
 			value?val <=> type?val \null
 			hint <= type_hint @ \Type...
@@ -37,7 +36,7 @@ $mol_app_studio_field $mol_expander
 		<= Number $mol_number
 			value?val <=> value_number?val NaN
 			hint <= hint \
-		<= String $mol_string
+		<= String $mol_textarea
 			value?val <=> value_string?val null
 			hint <= hint \
 		<= Bind $mol_select
