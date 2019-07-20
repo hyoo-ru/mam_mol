@@ -73,4 +73,4 @@ class $my_app extends $mol_jsx_view {
 $mol_jsx_attach( doc , ()=> <$my_app id="$my_app" /> )
 ```
 
-[More examples in tests.](make.test.tsx)
+[More examples in tests.](view.test.tsx)
