@@ -18,7 +18,7 @@ class $my_app extends $mol_jsx_view {
 		this.valueOf() // force subtree rerender
 	}
 
-	dom_render() {
+	render() {
 		return <div onclick={ event => this.change( event ) }>{ this.title }</div>
 	}
 
@@ -56,7 +56,7 @@ class $my_app extends $mol_jsx_view {
 
 	// reactive subtree cache
 	@ $mol_atom2_prop
-	dom_tree() { return super.dom_tree() }
+	valueOf() { return super.valueOf() }
 
 	// fiberized action
 	@ $mol_atom2_method
@@ -64,7 +64,7 @@ class $my_app extends $mol_jsx_view {
 		this.title = 'World'
 	}
 
-	dom_render() {
+	render() {
 		return <div onclick={ event => this.change( event ) }>{ this.title }</div>
 	}
 
