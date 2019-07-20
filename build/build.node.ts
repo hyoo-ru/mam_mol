@@ -1017,12 +1017,8 @@ namespace $ {
 	$mol_build.dependors[ 'ts' ] = $mol_build.dependors[ 'tsx' ] = $mol_build.dependors[ 'jam.js' ] = source => {
 		var depends : { [ index : string ] : number } = {}
 		
-		if( /[jt]sx$/.test( source.ext() ) ) {
-			depends[ '/mol/dom/jsx' ] = 0
-		}
-		
 		var lines = String( source.content() )
-		.replace( /\/\*[^]*?\*\//g , '' ) // drop block comments
+		.replace( /\/\*(?!\*)[\s\S]*?\*\//g , '' ) // drop block comments except doc-comments
 		.replace( /\/\/.*$/gm , '' ) // drop inline comments
 		.split( '\n' )
 		

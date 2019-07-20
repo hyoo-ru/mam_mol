@@ -61,16 +61,16 @@
 				weight : '14.3 KB' ,
 			} ,
 			'tsx' : {
-				title : { 'en' : '$mol_dom_jsx' } ,
-				weight : '3.0 KB' ,
+				title : { 'en' : '$mol_jsx' } ,
+				weight : '4.1 KB' ,
 			} ,
 			'react' : {
 				title : { 'en' : 'ReactJS 16.0.0' } ,
-				weight : '34.5 KB' ,
+				weight : '34.2 KB' ,
 			} ,
 			'angularjs' : {
 				title : { 'en' : 'AngularJS 1.5.5' } ,
-				weight : '56.2 KB' ,
+				weight : '56.1 KB' ,
 			} ,
 			'native-html' : {
 				title : { 'en' : 'Native HTML' } ,
@@ -135,14 +135,14 @@
 	function fill( sample, params  ) {
 		measure( [ 'set data' , {
 			sample : sample ,
-			items : getItems( params.count )
+			items : getItems( params.count , 'fill' )
 		} ] )
 	}
 
 	function update( sample, params  ) {
 		measure( [ 'set data' , {
 			sample : sample ,
-			items : getItems( params.count )
+			items : getItems( params.count , 'update' )
 		} ] )
 	}
 
@@ -165,14 +165,14 @@
 		} )
 	}
 
-	function getItems( count ) {
+	function getItems( count , step ) {
 		var lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 		var result = []
 		for( var i = 0 ; i < count ; ++i ) {
 			result.push({
 				id: i ,
 				title: "#" + ( i + 1 ) ,
-				content: lorem.substring( 0 , Math.ceil( Math.random() * lorem.length ) ) ,
+				content: ( i % 2 ? '' : step + ' ' ) + lorem.substring( 0 , i * i % ( lorem.length + 1 ) ) ,
 			})
 		}
 		return result

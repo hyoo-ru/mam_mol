@@ -63,19 +63,27 @@ namespace $ {
 
 		'Function as component'() {
 
-			function Button( { id , ... props } : { id : string } , action : string , target : ()=> string ) {
-				return <button { ... props } >{ action }{ target() }</button>
+			const Button = ( { hint } : { hint : string } , target : ()=> string ) => {
+				return <button title={ hint } >{ target() }</button>
 			}
 
-			const dom = <Button id="/foo">click { ()=> 'me' }</Button>
+			const dom = <Button id="/foo" hint="click me">{ ()=> 'hey!' }</Button>
 
-			$mol_assert_equal( dom.outerHTML , '<button id="/foo">click me</button>' )
+			$mol_assert_equal( dom.outerHTML , '<button title="click me" id="/foo">hey!</button>' )
 			
 		} ,
 		
+		// 'Standart classes as component'() {
+
+		// 	const dom = <HTMLButtonElement id="/foo" title="click me">hey!</HTMLButtonElement>
+
+		// 	$mol_assert_equal( dom.outerHTML , '<button title="click me" id="/foo">hey!</button>' )
+			
+		// } ,
+		
 		'Nested guid generation'() {
 
-			function Foo( {} : { id? : string } ) {
+			const Foo = ()=> {
 				return <div>
 					<Bar id="/bar">
 						<img id="/icon" />
@@ -83,7 +91,7 @@ namespace $ {
 				</div>
 			}
 
-			function Bar( props : { id? : string } , icon : Element ) {
+			const Bar = ( props : {} , icon : Element )=> {
 				return <span>{ icon }</span>
 			}
 
@@ -95,7 +103,7 @@ namespace $ {
 		
 		'Fail on non unique ids'() {
 
-			function App() {
+			const App = ()=> {
 				return <div>
 					<span id="/bar" />
 					<span id="/bar" />
@@ -103,49 +111,6 @@ namespace $ {
 			}
 
 			$mol_assert_fail( ()=> <App id="/foo" /> , 'JSX already has tag with id "/bar"' )
-			
-		} ,
-		
-		'Attach to document'() {
-
-			const doc = $mol_dom_parse( '<html><body id="/foo"></body></html>' )
-
-			$mol_jsx_attach( doc , ()=> <body id="/foo">bar</body> )
-
-			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">bar</body></html>' )
-			
-		} ,
-		
-		async 'Reactive components'() {
-
-			class Task {
-				@ $mol_atom2_field title = 'foo'
-			}
-
-			class App {
-				constructor( props : Partial< App > ) {
-					this.props = props
-					Object.assign( this , props )
-					return this.render() as any
-				}
-				@ $mol_atom2_field props : Partial< App >
-				id? : string
-				task : Task
-				@ $mol_atom2_prop
-				render() { return <div>{ this.task.title }</div> }
-			}
-
-			const task = new Task
-
-			let dom : Element 
-			$mol_atom2_autorun( ()=> dom = <App id="/foo" task={ task } /> )
-			
-			await $mol_fiber_warp()
-			$mol_assert_equal( dom.outerHTML , '<div id="/foo">foo</div>' )
-
-			task.title = 'bar'
-			await $mol_fiber_warp()
-			$mol_assert_equal( dom.outerHTML , '<div id="/foo">bar</div>' )
 			
 		} ,
 		
