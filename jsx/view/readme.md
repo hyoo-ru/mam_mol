@@ -15,7 +15,7 @@ class $my_app extends $mol_jsx_view {
 
 	change( event : Event ) {
 		this.title = 'World'
-		this.dom_tree() // force subtree rerender
+		this.valueOf() // force subtree rerender
 	}
 
 	dom_render() {
