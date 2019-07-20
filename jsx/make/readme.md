@@ -7,9 +7,9 @@ JSX adapter that makes DOM tree. Generates global uniue ids for every dom-elemen
 ```tsx
 /** @jsx $mol_jsx_make */
 
-const $my_message = ( props : { id : string } )=> (
+const $my_message = ( props : { content : string } )=> (
 	<div classList={[ 'foo bar' ]} >
-		Content is
+		{ props.content } is
 		<strong id="/text_nodes" >
 			text nodes
 		</strong>
@@ -24,7 +24,7 @@ const $my_message = ( props : { id : string } )=> (
 const dom = (
 	<html>
 		<body>
-			<$my_message id="$my_app" />
+			<$my_message id="$my_app" content="Content" />
 		</body>
 	</html>
 )
