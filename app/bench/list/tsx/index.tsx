@@ -11,18 +11,18 @@ namespace $ {
 
 		render() { return (
 			<div
-				classList={ `list-item list-item-selected-${ this.selected }` }
+				classList={[ `list-item list-item-selected-${ this.selected }` ]}
 				onclick={ ()=> this.onSelect() }
 				>
 				<div
 					id="/title"
-					classList="list-item-title"
+					classList={[ 'list-item-title' ]}
 					>
 					{ this.title }
 				</div>
 				<div
 					id="/content"
-					classList="list-item-content"
+					classList={[ 'list-item-content' ]}
 					>
 					{ this.content }
 				</div>
