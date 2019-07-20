@@ -96,17 +96,14 @@ namespace $ {
 
 			const task = new Task
 
-			let dom : Element 
-			$mol_jsx_attach( doc , ()=> $mol_atom2_autorun( ()=> {
-				return dom = <App id="/foo" task={ ()=> task } />
-			} ) )
+			$mol_atom2_autorun( ()=> $mol_jsx_attach( doc , ()=> <App id="/foo" task={ ()=> task } /> ) )
 			
 			await $mol_fiber_warp()
-			$mol_assert_equal( dom.outerHTML , '<div id="/foo">foo</div>' )
+			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">foo</body></html>' )
 
 			task.title( 'bar' )
 			await $mol_fiber_warp()
-			$mol_assert_equal( dom.outerHTML , '<div id="/foo">bar</div>' )
+			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">bar</body></html>' )
 			
 		} ,
 		
