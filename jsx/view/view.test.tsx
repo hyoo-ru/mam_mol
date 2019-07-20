@@ -52,13 +52,11 @@ namespace $ {
 
 			}
 			
-			let dom : Element
-			$mol_jsx_attach( doc , ()=> dom = <Title id="/foo" /> )
-			
-			$mol_assert_equal( Title.of( dom ).ownerDocument , doc )
-			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">foo</body></html>' )
-			
+			const dom = $mol_jsx_attach( doc , ()=> <Title id="/foo" /> )
 			const title = Title.of( dom )
+			
+			$mol_assert_equal( title.ownerDocument , doc )
+			$mol_assert_equal( doc.documentElement.outerHTML , '<html><body id="/foo">foo</body></html>' )
 			
 			title.value = 'bar'
 			title.valueOf()
