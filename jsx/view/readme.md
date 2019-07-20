@@ -58,19 +58,17 @@ class $my_app extends $mol_jsx_view {
 	@ $mol_atom2_prop
 	valueOf() { return super.valueOf() }
 
-	// fiberized action
-	@ $mol_fiber_method
 	change( event : Event ) {
 		this.title = 'World'
 	}
 
 	render() {
-		return <div onclick={ event => this.change( event ) }>{ this.title }</div>
+		return <div onclick={ $mol_fiber_root( event => this.change( event ) ) }>{ this.title }</div>
 	}
 
 }
 
-$mol_jsx_attach( doc , ()=> <$my_app id="$my_app" /> )
+$mol_atom2_autorun( ()=> $mol_jsx_attach( doc , ()=> <$my_app id="$my_app" title="Hola" /> ) )
 ```
 
 [More examples in tests.](view.test.tsx)
