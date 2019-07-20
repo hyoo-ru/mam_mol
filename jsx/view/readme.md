@@ -15,10 +15,10 @@ class $my_app extends $mol_jsx_view {
 
 	change( event : Event ) {
 		this.title = 'World'
-		this.dom_tree() // force subtree rerender
+		this.valueOf() // force subtree rerender
 	}
 
-	dom_render() {
+	render() {
 		return <div onclick={ event => this.change( event ) }>{ this.title }</div>
 	}
 
@@ -56,15 +56,15 @@ class $my_app extends $mol_jsx_view {
 
 	// reactive subtree cache
 	@ $mol_atom2_prop
-	dom_tree() { return super.dom_tree() }
+	valueOf() { return super.valueOf() }
 
 	// fiberized action
-	@ $mol_atom2_method
+	@ $mol_fiber_method
 	change( event : Event ) {
 		this.title = 'World'
 	}
 
-	dom_render() {
+	render() {
 		return <div onclick={ event => this.change( event ) }>{ this.title }</div>
 	}
 
@@ -73,4 +73,4 @@ class $my_app extends $mol_jsx_view {
 $mol_jsx_attach( doc , ()=> <$my_app id="$my_app" /> )
 ```
 
-[More examples in tests.](make.test.tsx)
+[More examples in tests.](view.test.tsx)
