@@ -10,7 +10,7 @@ namespace $ {
 		descr? : TypedPropertyDescriptor< ( next? : Value , force? : $mol_atom_force )=> Value >
 	) : any {
 
-		const value = descr.value
+		const value = descr!.value!
 		
 		const store = new WeakMap< Host , $mol_fiber< Value > >()
 
@@ -22,7 +22,7 @@ namespace $ {
 
 		const get_cache = ( host : Host )=> {
 			
-			let cache = store.get( host )
+			let cache = store.get( host )!
 			
 			if( !cache ) {
 				cache = new $mol_atom2
