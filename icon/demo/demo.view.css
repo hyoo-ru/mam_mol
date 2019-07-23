@@ -1,7 +1,13 @@
 [mol_icon_demo] {
-	justify-content: flex-start;
+	display: flex;
+	flex-direction: column;
 }
 
-[mol_icon_demo_icon]:hover {
+[mol_icon_demo_icons_filter] {
+	align-self: stretch;
+	flex: none;
+}
+
+[mol_icon_demo] [mol_icon]:hover {
 	color: var(--mol_skin_accent);
 }
