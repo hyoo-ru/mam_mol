@@ -8,7 +8,12 @@
 	flex: none;
 }
 
-[mol_icon_demo] [mol_icon]:hover {
+[mol_icon_demo_icon] {
+	width: 24px;
+	height: 24px;
+}
+
+[mol_icon_demo_icon]:hover {
 	color: var(--mol_skin_accent);
-	transform: scale(2);
+	transform: scale(1.5);
 }
