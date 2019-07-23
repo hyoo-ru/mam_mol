@@ -9,7 +9,7 @@ namespace $ {
 		
 		[ Symbol.toStringTag ] : string
 		
-		attributes! : Partial< Omit< this , 'valueOf' > >
+		attributes! : Partial< Pick< this , Exclude< keyof this , 'valueOf' > > >
 		ownerDocument! : typeof $mol_jsx_document
 		childNodes! : Array< Node | string >
 		
