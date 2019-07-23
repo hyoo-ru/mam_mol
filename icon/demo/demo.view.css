@@ -10,4 +10,5 @@
 
 [mol_icon_demo] [mol_icon]:hover {
 	color: var(--mol_skin_accent);
+	transform: scale(2);
 }
