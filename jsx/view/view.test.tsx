@@ -7,7 +7,7 @@ namespace $ {
 
 			class Foo extends $mol_jsx_view {
 
-				title : string
+				title = ''
 				
 				render() {
 					return <div>{ this.title } { this.childNodes.join( '-' ) }</div>
@@ -32,7 +32,7 @@ namespace $ {
 
 			}
 
-			let view : Br
+			let view! : Br
 
 			$mol_assert_equal( Br.of( <Br /> ) , view )
 			

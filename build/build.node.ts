@@ -7,7 +7,7 @@ namespace $ {
 				process.argv.slice( 2 ).forEach(
 					( path : string )=> {
 						path = build.root().resolve( path ).path()
-						build.bundle( { path } ).valueOf()
+						return build.bundleAll( { path } )
 					}
 				)
 				process.exit(0)
@@ -463,8 +463,43 @@ namespace $ {
 
 			return graph
 		}
+
+		bundleAll( { path } : { path : string } ) {
+
+			const once = ( action : ()=> void )=> {
+				const task = new $mol_atom( '$mol_build_start' , action )
+				task.value()
+				task.destructor()
+				$mol_atom.sync()
+			}
+
+			once( ()=> {
+				this.bundle({ path , bundle : 'web.deps.json' })
+				this.bundle({ path , bundle : 'web.css' })
+				this.bundle({ path , bundle : 'web.js' })
+				this.bundle({ path , bundle : 'web.test.js' })
+				this.bundle({ path , bundle : 'web.test.html' })
+				this.bundle({ path , bundle : 'web.d.ts' })
+				this.bundle({ path , bundle : 'web.view.tree' })
+				this.bundle({ path , bundle : 'web.locale=en.json' })
+			} )
+
+			once( ()=> {
+				this.bundle({ path , bundle : 'node.deps.json' })
+				this.bundle({ path , bundle : 'node.js' })
+				this.bundle({ path , bundle : 'node.test.js' })
+				this.bundle({ path , bundle : 'node.d.ts' })
+				this.bundle({ path , bundle : 'node.view.tree' })
+				this.bundle({ path , bundle : 'node.locale=en.json' })
+			} )
+
+			this.bundle({ path , bundle : 'package.json' })
+
+			this.bundleFiles( { path , exclude : [ 'node' ] } )
+			this.bundleCordova( { path , exclude : [ 'node' ] } )
+
+		}
 		
-		@ $mol_mem_key
 		bundle( { path , bundle = '' } : { path : string , bundle? : string } ) {
 			
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
@@ -535,10 +570,6 @@ namespace $ {
 				res = res.concat( this.bundlePackageJSON( { path , exclude : [ 'web' ] } ) )
 			}
 			
-			res = res.concat( this.bundleFiles( { path , exclude : [ 'node' ] } ) )
-			
-			res = res.concat( this.bundleCordova( { path , exclude : [ 'node' ] } ) )
-
 			return res.map( r => r.valueOf() )
 		}
 		
