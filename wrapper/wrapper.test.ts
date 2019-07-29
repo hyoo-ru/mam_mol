@@ -3,8 +3,12 @@ namespace $ {
 	@ $mol_class
 	class Plus1 extends $mol_wrapper {
 
-		static run( task : ()=> number ) {
-			return task.call( this ) + 1
+		static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
+
+			return function( this : This , ... args : Args ) {
+				return task.call( this , ... args ) + 1 as number
+			}
+
 		}
 		
 	}
@@ -21,12 +25,12 @@ namespace $ {
 
 			const obj = {
 				level : 2 ,
-				square1 : Plus1.func( function( this : { level : number } , a ) {
+				pow : Plus1.func( function( this : { level : number } , a ) {
 					return a ** this.level
 				} )
 			}
 
-			$mol_assert_equal( obj.square1( 2 ) , 5 )
+			$mol_assert_equal( obj.pow( 2 ) , 5 )
 
 		} ,
 
@@ -37,7 +41,7 @@ namespace $ {
 				level = 2
 
 				@ Plus1.method
-				square1( a : number ) {
+				pow( a : number ) {
 					return a ** this.level
 				}
 				
@@ -46,7 +50,7 @@ namespace $ {
 			const Foo2 = Foo1
 			const foo = new Foo2
 
-			$mol_assert_equal( foo.square1( 2 ) , 5 )
+			$mol_assert_equal( foo.pow( 2 ) , 5 )
 
 		} ,
 
@@ -58,33 +62,39 @@ namespace $ {
 				static level = 2
 
 				@ Plus1.method
-				static square1( a : number ) {
+				static pow( a : number ) {
 					return a ** this.level
 				}
 
 			}
 
-			$mol_assert_equal( Foo.square1( 2 ) , 5 )
+			$mol_assert_equal( Foo.pow( 2 ) , 5 )
 
 		} ,
 
 		'decorate class' () {
 			
 			@ $mol_class
-			class FooInc extends $mol_wrapper {
+			class BarInc extends $mol_wrapper {
 
-				static run( task : ()=> Foo ) {
-					const foo = task.call( this )
-					foo.bar ++
-					return foo
+				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> Foo ) {
+					
+					return function( this : This , ... args : Args ) {
+
+						const foo = task.call( this , ...args )
+						foo.bar ++
+						return foo
+						
+					}
+
 				}
 
 			}
 			
-			@ FooInc.class
+			@ BarInc.class
 			@ $mol_class
 			class Foo {
-				constructor( public bar : number ) { }
+				constructor( public bar : number ) {}
 			}
 
 			$mol_assert_equal( new Foo( 2 ).bar , 3 )

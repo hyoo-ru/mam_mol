@@ -1,20 +1,22 @@
 namespace $ {
 
 	@ $mol_class
-	export class $mol_wrapper {
+	export class $mol_wrapper extends $mol_object2 {
 
-		static run : ( task : ()=> any )=> any
+		static wrap : ( task : ( ... ags : any[] )=> any )=> ( ... ags : any[] )=> any
+		
+		static run< Result >( task : ()=> Result ) {
+			return this.func( task )()
+		}
 	
 		static func< Host , Args extends any[] , Result >(
 			func : ( this : Host , ... args : Args )=> Result
 		) {
-
-			const wrapper = this
+			const wrapped = this.wrap( func )
 			
-			const wrapped = function $mol_wrapper_wrapped( this : Host , ... args : Args ) {
-				const action = () => func.call( this , ... args )
-				return wrapper.run( action )
-			}
+			Object.defineProperty( wrapped , 'name' , {
+				value : `${ func.name || '<anonymous>' }|${ this.name }`
+			} )
 			
 			return wrapped
 		}
@@ -25,11 +27,10 @@ namespace $ {
 				Class : new ( ... args : Args )=> Result
 			) => {
 
+				const construct = ( target , args : Args )=> new Class( ... args )
+
 				const handler = {
-					construct : ( target , args : Args )=> {
-						const action = ()=> new Class( ... args )
-						return this.run( action )
-					}
+					construct : this.func( construct )
 				}
 
 				handler[ Symbol.toStringTag ] = Class.name + '#'
