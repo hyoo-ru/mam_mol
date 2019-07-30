@@ -38,7 +38,7 @@ namespace $ {
 			return next
 		}
 
-		@ $mol_fiber_method
+		@ $mol_fiber.method
 		db_add( name : string , type = 'document' , storage = 'plocal' ) {
 
 			const api = this.api
@@ -51,7 +51,7 @@ namespace $ {
 
 		}
 
-		@ $mol_fiber_method
+		@ $mol_fiber.method
 		db_ensure( name : string , type = 'document' , storage = 'plocal' ) {
 			
 			const db = this.db[ name ]
@@ -72,7 +72,7 @@ namespace $ {
 			return this.api.name
 		}
 
-		@ $mol_fiber_method
+		@ $mol_fiber.method
 		query( query : string , params : Record< string , any > = {} , limit = 100 , fetchPlan = '' ) {
 
 			const api = this.api

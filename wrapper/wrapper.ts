@@ -53,7 +53,7 @@ namespace $ {
 				name : Field ,
 				descr : TypedPropertyDescriptor< ( this : Host , ... args : Args )=> Result >
 			) => {
-				descr.value = this.func( descr.value )
+				descr.value = this.func( descr.value! )
 				return descr
 			}
 			

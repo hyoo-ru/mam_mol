@@ -4,6 +4,7 @@ module $ {
 
 		'Value has js-path name' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				@ $mol_atom2_field
@@ -209,7 +210,7 @@ module $ {
 				@ $mol_atom2_field
 				static first = 1
 
-				@ $mol_fiber_method
+				@ $mol_fiber.method
 				static increase() { return ++ this.first }
 				
 				@ $mol_atom2_field
@@ -245,7 +246,7 @@ module $ {
 
 				static counter = 0
 
-				@ $mol_fiber_method
+				@ $mol_fiber.method
 				static count() { return this.counter ++ }
 
 				@ $mol_atom2_field
