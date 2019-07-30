@@ -10,6 +10,7 @@ namespace $ {
 		}
 	}
 
+	@ $mol_class
 	export class $mol_atom2< Value = any > extends $mol_fiber< Value > {
 
 		static get current() {
