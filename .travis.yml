@@ -36,7 +36,7 @@ script:
   - node ./mol/build/-/node.test.js mol/app/life
   - node ./mol/build/-/node.test.js mol/time/all
   - node ./mol/build/-/node.test.js mol/plot/all
-  - node ./mol/build/-/node.test.js mol/fiber
+  - node ./mol/build/-/node.test.js mol/fiber/demo
   - node ./mol/build/-/node.test.js mol/app/report
   - node ./mol/build/-/node.test.js mol/app/tree
   - node ./mol/build/-/node.test.js mol/app/request

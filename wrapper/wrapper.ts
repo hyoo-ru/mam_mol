@@ -5,13 +5,13 @@ namespace $ {
 
 		static wrap : ( task : ( ... ags : any[] )=> any )=> ( ... ags : any[] )=> any
 		
-		static run< Result >( task : ()=> Result ) {
+		static run< Result >( task : ()=> Result ) : Result {
 			return this.func( task )()
 		}
 	
 		static func< Host , Args extends any[] , Result >(
 			func : ( this : Host , ... args : Args )=> Result
-		) {
+		) : ( this : Host , ... args : Args )=> Result {
 			const wrapped = this.wrap( func )
 			
 			Object.defineProperty( wrapped , 'name' , {
@@ -23,11 +23,11 @@ namespace $ {
 
 		static get class() {
 
-			return < Args extends any[] , Result >(
+			return < Args extends any[] , Result extends object >(
 				Class : new ( ... args : Args )=> Result
 			) => {
 
-				const construct = ( target , args : Args )=> new Class( ... args )
+				const construct = ( target : new ( ... args : Args )=> Result , args : Args )=> new Class( ... args )
 
 				const handler = {
 					construct : this.func( construct )
@@ -54,6 +54,7 @@ namespace $ {
 				descr : TypedPropertyDescriptor< ( this : Host , ... args : Args )=> Result >
 			) => {
 				descr.value = this.func( descr.value )
+				return descr
 			}
 			
 		}
