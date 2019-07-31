@@ -4,7 +4,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		uri() {
-			return new $mol_state_arg( this.state_key() ).link( this.arg() )
+			return new this.$.$mol_state_arg( this.state_key() ).link( this.arg() )
 		}
 
 		@ $mol_mem

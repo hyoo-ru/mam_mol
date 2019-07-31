@@ -1,13 +1,16 @@
 namespace $ {
 	
 	export class $mol_state_arg extends $mol_object {
-		
 		@ $mol_mem
-		static href( next? : string , force? : $mol_atom_force ) {
+		static href_change( next? : string , force? : $mol_atom_force ) {
 			if( next ) history.replaceState( history.state , $mol_dom_context.document.title , next )
 			return window.location.href
 		}
 		
+		static href( next? : string ) {
+			return $mol_state_arg.href_change(next)
+		}
+
 		@ $mol_mem
 		static dict( next? : { [ key : string ] : string } ) {
 			var href = this.href( next && this.make_link( next ) ).split( /#/ )[1] || ''
@@ -88,7 +91,7 @@ namespace $ {
 	}
 	
 	self.addEventListener( 'hashchange' , $mol_log_group( '$mol_state_arg hashchange' , ( event : HashChangeEvent )=> {
-		$mol_state_arg.href( undefined , $mol_atom_force_cache ) 
+		$mol_state_arg.href_change( undefined , $mol_atom_force_cache )
 	} ) )
 	
 }
