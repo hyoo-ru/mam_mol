@@ -1,28 +1,41 @@
 namespace $ {
 
-	@ $mol_class
-	class Plus1 extends $mol_wrapper {
-
-		static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
-
-			return function( this : This , ... args : Args ) {
-				return task.call( this , ... args ) + 1 as number
-			}
-
-		}
-		
-	}
-
 	$mol_test({
 
 		'run callback' () {
 
+			@ $mol_class
+			class Plus1 extends $mol_wrapper {
+		
+				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
+		
+					return function( this : This , ... args : Args ) {
+						return task.call( this , ... args ) + 1 as number
+					}
+		
+				}
+				
+			}
+		
 			$mol_assert_equal( Plus1.run( ()=> 2 ) , 3 )
 
 		} ,
 
 		'wrap function' () {
-
+		
+			@ $mol_class
+			class Plus1 extends $mol_wrapper {
+		
+				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
+		
+					return function( this : This , ... args : Args ) {
+						return task.call( this , ... args ) + 1 as number
+					}
+		
+				}
+				
+			}
+				
 			const obj = {
 				level : 2 ,
 				pow : Plus1.func( function( this : { level : number } , a ) {
@@ -36,6 +49,19 @@ namespace $ {
 
 		'decorate instance method' () {
 
+			@ $mol_class
+			class Plus1 extends $mol_wrapper {
+		
+				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
+		
+					return function( this : This , ... args : Args ) {
+						return task.call( this , ... args ) + 1 as number
+					}
+		
+				}
+				
+			}
+		
 			class Foo1 {
 
 				level = 2
@@ -56,6 +82,19 @@ namespace $ {
 
 		'decorate static method' () {
 			
+			@ $mol_class
+			class Plus1 extends $mol_wrapper {
+		
+				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
+		
+					return function( this : This , ... args : Args ) {
+						return task.call( this , ... args ) + 1 as number
+					}
+		
+				}
+				
+			}
+		
 			@ $mol_class
 			class Foo {
 
