@@ -13,12 +13,12 @@ namespace $ {
 		static now = $mol_fiber.func( Date.now )
 
 		@ $mol_fiber.method
-		static walk( sandbox ) {
+		static walk( sandbox : HTMLElement ) {
 			try {
 				
 				let start = this.now()
 				for( let i = 0 ; i < 200 ; ++i ) this.step( sandbox )
-				sandbox.innerText = Date.now() - start
+				sandbox.innerText = String( Date.now() - start )
 	
 			} catch( error ) {
 				if( 'then' in error ) $mol_fail_hidden( error )
@@ -28,14 +28,14 @@ namespace $ {
 			}
 		}
 	
-		static red_task() { this.walk( document.getElementById( 'red' ) ) }
-		static green_task() { this.walk( document.getElementById( 'green' ) ) }
-		static blue_task() { this.walk( document.getElementById( 'blue' ) ) }
+		static red_task() { this.walk( document.getElementById( 'red' )! ) }
+		static green_task() { this.walk( document.getElementById( 'green' )! ) }
+		static blue_task() { this.walk( document.getElementById( 'blue' )! ) }
 
 		static load = $mol_fiber_sync( async uri =>( await fetch( uri ) ).text() )
 	
 		static load_source() {
-			document.getElementById( 'source' ).innerText += ' ' + this.load( 'index.html' ).length
+			document.getElementById( 'source' )!.innerText += ' ' + this.load( 'index.html' ).length
 		}
 
 		static loading : $mol_fiber

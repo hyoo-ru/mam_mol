@@ -338,7 +338,8 @@ namespace $ {
 			
 			if( this.cursor > $mol_fiber_status.actual ) this.update()
 
-			if( this.error ) this.$.$mol_fail_hidden( this.error )
+			if( this.error ) return this.$.$mol_fail_hidden( this.error )
+			
 			return this.value
 
 		}
