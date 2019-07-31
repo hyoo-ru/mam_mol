@@ -9,7 +9,7 @@ namespace $ {
 			return this.func( task )()
 		}
 	
-		static func< Host , Args extends any[] , Result >(
+		static func< Args extends any[] , Result , Host = void >(
 			func : ( this : Host , ... args : Args )=> Result
 		) : ( this : Host , ... args : Args )=> Result {
 			const wrapped = this.wrap( func )
