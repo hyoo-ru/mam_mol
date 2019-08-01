@@ -215,7 +215,7 @@ namespace $ {
 		calculate! : ()=> Value
 		
 		schedule() {
-			$mol_fiber.schedule().then( this.wake.bind( this ) )
+			$mol_fiber.schedule().then( $mol_log_group( '$mol_fiber_scheduled' , this.wake.bind( this ) ) )
 		}
 
 		wake() {
