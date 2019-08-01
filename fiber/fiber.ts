@@ -20,10 +20,10 @@ namespace $ {
 	}
 
 	export function $mol_fiber_func<
-		Calculate extends ( this : This , ... args : any[] )=> Result ,
-		Result = void ,
-		This = void ,
-	>( calculate : Calculate ) {
+		This ,
+		Args extends any[] ,
+		Result ,
+	>( calculate : ( this : This , ... args : Args )=> Result ) {
 		console.warn( '$mol_fiber_func is deprecated. Use $mol_fiber.func instead.' )
 		return $mol_fiber.func( calculate )
 	}
@@ -64,11 +64,11 @@ namespace $ {
 
 			let master = slave && slave.master
 			if( !master || master.constructor !== $mol_fiber ) {
-				master = new  $mol_fiber
+				master = new $mol_fiber
 				master.cursor = $mol_fiber_status.persist
 				master.error = ( request.call( this , ... args ) as PromiseLike< Value > ).then(
-					res => master.push( res ) ,
-					err => master.fail( err ) ,
+					res => master!.push( res ) ,
+					err => master!.fail( err ) ,
 				)
 				const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
 				master[ Symbol.toStringTag ] = prefix + ( request.name || $mol_fiber_sync.name )
@@ -124,7 +124,7 @@ namespace $ {
 				} catch( error ) {
 
 					if( 'then' in error ) $mol_fail( new Error( 'Solid fiber can not be suspended.' ) )
-					$mol_fail_hidden( error )
+					return $mol_fail_hidden( error )
 
 				} finally {
 
@@ -215,7 +215,7 @@ namespace $ {
 		calculate! : ()=> Value
 		
 		schedule() {
-			$mol_fiber.schedule().then( this.wake.bind( this ) )
+			$mol_fiber.schedule().then( $mol_log_group( '$mol_fiber_scheduled' , this.wake.bind( this ) ) )
 		}
 
 		wake() {
@@ -338,7 +338,8 @@ namespace $ {
 			
 			if( this.cursor > $mol_fiber_status.actual ) this.update()
 
-			if( this.error ) this.$.$mol_fail_hidden( this.error )
+			if( this.error ) return this.$.$mol_fail_hidden( this.error )
+			
 			return this.value
 
 		}
