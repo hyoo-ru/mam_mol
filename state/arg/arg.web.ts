@@ -1,7 +1,6 @@
 namespace $ {
 	export class $mol_state_arg extends $mol_object {
 		
-		@ $mol_mem
 		static href( next? : string ) {
 			return href.value(next)
 		}
