@@ -101,9 +101,22 @@ namespace $ {
 		}
 	}
 
-	export function $mol_fiber_unlimit( func : ()=> any ) {
-		console.warn( '$mol_fiber_unlimit is deprecated. Use $mol_fiber_solid.run instead.' )
-		return $mol_fiber_solid.run( func )
+	export function $mol_fiber_unlimit< Result >( task : ()=> Result ) {
+		
+		const deadline = $mol_fiber.deadline
+		
+		try {
+
+			$mol_fiber.deadline = Number.POSITIVE_INFINITY
+			
+			return task()
+
+		} finally {
+
+			$mol_fiber.deadline = deadline
+
+		}
+
 	}
 
 	@ $mol_class
