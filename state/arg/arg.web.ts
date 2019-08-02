@@ -24,7 +24,6 @@ namespace $ {
 
 		@ $mol_mem_key
 		static dict_cut( except : string[] ) {
-			
 			const dict = this.dict()
 			const cut : { [ key : string ] : string } = {}
 			
@@ -47,9 +46,15 @@ namespace $ {
 			return this.make_link( $mol_merge_dict( this.dict_cut( Object.keys( next ) ) , next ) )
 		}
 		
+		static allowed_keys(next?: string[]): string[] {
+			return []
+		}
+
 		static make_link( next : { [ key : string ] : string } ) {
 			const chunks : string[] = []
+			const allowed_keys = this.allowed_keys()
 			for( let key in next ) {
+				if (allowed_keys.length && allowed_keys.indexOf(key) === -1) continue
 				if( null == next[ key ] ) continue
 				chunks.push( [ key ].concat( next[ key ] ? next[ key ] : [] ).map( this.encode ).join( '=' ) )
 			}
