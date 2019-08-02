@@ -30,7 +30,7 @@ namespace $.$$ {
 		@ $mol_mem
 		icons_filtered() {
 			const data = this.data()
-			return this.icons_all().filter( $mol_match_text( this.icons_filter() , icon => [ icon.constructor.name , data[ icon.constructor.name ] ] ) )
+			return this.icons_all().filter( $mol_match_text( this.icons_filter() , icon => [ icon.constructor.name.replace( /^\$mol_icon_/ , '' ) , data[ icon.constructor.name ] ] ) )
 		}
 
 		@ $mol_mem
