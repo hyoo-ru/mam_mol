@@ -7,10 +7,6 @@ namespace $ {
 			return next || process.argv.slice( 2 ).join( ' ' )
 		}
 		
-		static allowed_keys(next?: string[]): string[] {
-			return []
-		}
-
 		@ $mol_mem
 		static dict( next? : { [ key : string ] : string } ) {
 			if( next !== void 0 ) this.href( this.make_link( next ) )
