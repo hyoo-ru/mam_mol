@@ -10,7 +10,6 @@ namespace $ {
 		)
 		
 		if( res.status ) throw new Error( `${dir}> ${command} ${args.join( ' ' )}\n ${ res.stderr }` )
-		
 		return res
 	}
 }
