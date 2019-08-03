@@ -112,6 +112,7 @@ module $ {
 
 		'Value has js-path name' () {
 
+			@ $mol_class
 			class Registry extends $mol_object2 {
 
 				@ $mol_atom2_field

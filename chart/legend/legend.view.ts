@@ -1,10 +1,12 @@
 namespace $.$$ {
 	
 	export class $mol_chart_legend extends $.$mol_chart_legend {
-		
+
+		graphs: () => readonly $mol_plot_graph[]
+
 		@ $mol_mem
 		graphs_front() {
-			return this.graphs().filter( graph => graph.Sample() )
+			return this.graphs().filter( graph => graph.Sample())
 		}
 		
 		graph_legends() {

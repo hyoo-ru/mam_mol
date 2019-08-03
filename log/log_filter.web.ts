@@ -1,6 +1,6 @@
 namespace $ {
 	
-	let filter = null as null | string
+	let filter = undefined as undefined | null | string
 
 	export var $mol_log_filter = function $mol_log_filter( next? : null | string ) {
 

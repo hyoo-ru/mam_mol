@@ -1,6 +1,5 @@
 $mol_app_supplies_list $mol_page
 	supplies /$mol_app_supplies_domain_supply
-	title @ \Supplies
 	sub /
 		<= Head
 		<= Search_bar $mol_float

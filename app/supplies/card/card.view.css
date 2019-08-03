@@ -21,6 +21,10 @@
 	text-align: right;
 }
 
+[mol_app_supplies_card_cost_item_content] {
+	justify-content: flex-end;
+}
+
 [mol_app_supplies_card_provider_item] {
 	flex: 10 1 10rem;
 }

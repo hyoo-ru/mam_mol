@@ -43,21 +43,24 @@
 
 <body>
 
-<div id="list"></div>
+<div id="/list"></div>
 
 <script src="-/web.js"></script>
 <script>
 
-	$.$mol_app_bench_list_tsx.render()
+	$.$mol_app_bench_list_tsx.render({})
 
 	window.addEventListener( 'message' , function onMessage( event ) {
+
 		switch( event.data[ 0 ] ) {
 			case 'set data' :
-				$.$mol_app_bench_list_tsx.data = event.data[ 1 ]
-				$.$mol_app_bench_list_tsx.selected = null
+				$.$mol_app_bench_list_tsx.render({
+					data : event.data[ 1 ] ,
+					selected : null ,
+				})
 				break
 		}
-		$.$mol_app_bench_list_tsx.render()
+
 	} )
 
 </script>

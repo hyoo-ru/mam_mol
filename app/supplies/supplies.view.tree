@@ -4,14 +4,13 @@ $mol_app_supplies $mol_book
 		entered?val <=> entered?val false
 	-
 	List $mol_app_supplies_list
-		minimal_width 400
+		minimal_width 600
 		supplies <= supplies /$mol_app_supplies_domain_supply
+		tools <= tools_root /
+		title <= list_title @ \Supplies
 		search_query?val <=> supply_id?val \
 	-
 	Detail $mol_app_supplies_detail
-		minimal_width 400
+		minimal_width 800
 		supply <= supply null
 		event_top?val <=> event_front_up?val
-	-
-	placeholder $mol_book_placeholder
-		title <= title

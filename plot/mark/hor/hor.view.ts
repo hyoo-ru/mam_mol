@@ -1,68 +1,85 @@
 namespace $.$$ {
 	export class $mol_plot_mark_hor extends $.$mol_plot_mark_hor {
-		
-		count() {
-			return this.points_raw().length * this.scale()[0] / 100
-		}
-		
 		@ $mol_mem
-		step() {
-			const count = this.count()
-			let points = this.points_scaled()
-			let step = Math.max( 1 , Math.ceil( points.length / count ) )
-			return step
+		series_x(): readonly number[] {
+			return this.labels().map((val, index) => index)
 		}
-		
+
 		@ $mol_mem
-		keys_visible() {
-			const res = [] as string[]
-			
-			const keys = Object.keys( this.series() ) 
-			if( keys.length === 0 ) return []
-			
-			let step = this.step()
-			let limit = Math.floor( keys.length - step / 2 )
-			
-			for( let i = 0 ; i < limit ; i += step ) {
-				res.push( keys[ i ] )
-			}
-			res.push( keys[ keys.length - 1 ] )
-			
-			return res
-		}
-		
-		@ $mol_mem
-		points() {
-			const points = this.points_scaled()
-			const keys = Object.keys( this.series() )
-			return this.keys_visible().map( key => points[ keys.indexOf( key ) ] )
-		}
-		
-		curve() {
-			const shift = this.shift()
-			const points = this.points()
-			if( points.length < 1 ) return ''
-			
-			const last = points[ points.length - 1 ]
-			
-			return points.map( point => `M ${ point[0] } 1000 V 0` ).join( ' ' )
-		}
-		
 		labels() {
-			return this.keys_visible().map( key => this.Label( key ) )
+			return this.series_x().map(val => String(val)) as readonly string[]
 		}
-		
-		label_pos_x( key : string ) {
-			return String( this.points()[ this.keys_visible().indexOf( key ) ][0] )
+
+		@ $mol_mem
+		visible_indexes() {
+			const series_x = this.series_x()
+			const labels = this.labels()
+			const [shift_x,] = this.shift()
+			const [scale_x,] = this.scale()
+			let step = this.step() * scale_x
+			const [[viewport_left, viewport_right]] = this.viewport()
+			const size_x = viewport_right - viewport_left
+			const font_size = this.font_size()
+			let indexes: number[]
+			let labels_width: number
+			do {
+				indexes = []
+				labels_width = 0
+				let last: number = 0
+				let current = 0
+				for (let i = 0; i < series_x.length; i++) {
+					const point_x = series_x[i]
+					const scaled_x = (shift_x + point_x * scale_x)
+					if (scaled_x < viewport_left) continue
+					if (scaled_x > viewport_right) continue
+					if (current === 0) current = scaled_x
+					if (scaled_x < current) {
+						last = i
+						continue
+					}
+					indexes.push(i)
+					current += step
+					last = 0
+					labels_width += font_size * (labels[i].length + 1)
+					if (labels_width > size_x) break
+				}
+				if (last !== 0) {
+					indexes.push(last)
+					labels_width += font_size * (labels[last].length + 1)
+				}
+
+				step *= 1.5
+			} while (labels_width > size_x && indexes.length > 2)
+
+			return indexes
+
 		}
-		
-		label_text( key : string ) {
-			return key
+
+		curve() {
+			const [shift] = this.shift()
+			const [scale] = this.scale()
+			const series_x = this.series_x()
+
+			return this.visible_indexes().map( index => {
+				const scaled = series_x[index] * scale + shift
+				return `M ${ scaled.toFixed(3) } 1000 V 0`
+			}).join( ' ' )
 		}
-		
-		back() {
-			return [ this ]
+
+		label_text( index : number ) {
+			return this.labels()[index]
 		}
-		
+
+		labels_formatted() {
+			return this.visible_indexes().map( index => this.Label( index ) )
+		}
+
+		label_pos_x( index : number ) {
+			return (this.series_x()[index] * this.scale()[0] + this.shift()[0]).toFixed(3)
+		}
+
+		label_pos_y( index : number ) {
+			return this.title_pos_y()
+		}
 	}
 }

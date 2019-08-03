@@ -11,6 +11,7 @@
 	background: var(--mol_theme_back);
 	color: var(--mol_theme_text);
 	z-index: 0;
+	overflow: hidden;
 }
 
 [mol_page]:focus {

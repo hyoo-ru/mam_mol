@@ -1,5 +1,6 @@
 $mol_app_supplies_enter $mol_view
 	entered?val false
+	minimal_width 400
 	sub / <= form $mol_form
 		form_fields /
 			<= loginField $mol_form_field

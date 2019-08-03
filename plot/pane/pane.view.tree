@@ -4,19 +4,25 @@ $mol_plot_pane $mol_svg_root
 	hue_base?val NaN
 	hue_shift?val 111
 	-
-	gap 24
-	gap_hor <= gap
-	gap_vert <= gap
+	gap_hor 48
+	gap_vert 24
 	gap_left <= gap_hor
 	gap_right <= gap_hor
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
+	gap $mol_vector_2d /
+		$mol_vector_range /
+			<= gap_left
+			<= gap_right
+		$mol_vector_range /
+			<= gap_bottom
+			<= gap_top
 	-
-	shift_limit /readonly(number)[]
-		<= shift_limit_x /number
+	shift_limit $mol_vector_2d /
+		$mol_vector_range /
 			0
 			0
-		<= shift_limit_y /number
+		$mol_vector_range /
 			0
 			0
 	shift_default /number
@@ -25,11 +31,11 @@ $mol_plot_pane $mol_svg_root
 	shift?val /number
 		0
 		0
-	scale_limit /
-		<= scale_limit_x /number
+	scale_limit $mol_vector_2d /
+		$mol_vector_range /
 			0
 			Infinity
-		<= scale_limit_y /number
+		$mol_vector_range /
 			0
 			Infinity
 	scale_default /number
@@ -38,23 +44,44 @@ $mol_plot_pane $mol_svg_root
 	scale?val /number
 		1
 		1
-	size_real /number
+	scale_x?val 0
+	scale_y?val 0
+	size $mol_vector_2d /
+		0
+		0
+	size_real $mol_vector_2d /
 		1
 		1
-	size_expaned /number
-		0
-		0
-	dimensions_expanded /
-		0
-		0
-	dimensions /
-		0
-		0
+	dimensions_viewport $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
+	dimensions $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
 	-
-	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
+	sub <= graphs_sorted /$mol_svg
+	graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
+	cursor_position?val $mol_vector_2d /
+		NaN
+		NaN
 	-
 	plugins /
 		^
 		<= Meter $mol_meter
 			width => width
 			height => height
+		<= Touch $mol_touch
+			zoom?val <=> scale_x?val
+			pan?val <=> shift?val
+			pos?val <=> cursor_position?val
+	event *
+		^
+		dblclick?event <=> reset?event null

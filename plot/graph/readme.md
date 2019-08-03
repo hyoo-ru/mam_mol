@@ -6,13 +6,12 @@ Plot graph base class. Provides common maths.
 
 ## Properties
 
-`series() : number[]`
+`series_x() : number[]`
+
+`series_y() : number[]`
 
 Series of source data.
 
-`points() : number[][]`
-
-List of points to draw on pane in pane coordinates.
 
 `type() : "solid"|"dashed"`
 

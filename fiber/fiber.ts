@@ -20,31 +20,12 @@ namespace $ {
 	}
 
 	export function $mol_fiber_func<
-		Calculate extends ( this : This , ... args : any[] )=> Result ,
-		Result = void ,
-		This = void ,
-	>( calculate : Calculate ) {
-		
-		const wrapper = function $mol_fiber_func_wrapper( ... args : any[] ) {
-			
-			const slave = $mol_fiber.current
-
-			let master = slave && slave.master
-			if( !master || master.constructor !== $mol_fiber ) {
-				master = new $mol_fiber
-				master.calculate = calculate.bind( this , ... args )
-				const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
-				master[ Symbol.toStringTag ] = prefix + calculate.name
-			}
-
-			return master.get()
-
-		} as Calculate
-
-		wrapper[ Symbol.toStringTag ] = calculate.name
-
-		return wrapper
-
+		This ,
+		Args extends any[] ,
+		Result ,
+	>( calculate : ( this : This , ... args : Args )=> Result ) {
+		console.warn( '$mol_fiber_func is deprecated. Use $mol_fiber.func instead.' )
+		return $mol_fiber.func( calculate )
 	}
 
 	export function $mol_fiber_root<
@@ -66,28 +47,11 @@ namespace $ {
 
 	export function $mol_fiber_method< Host , Value >(
 		obj : Host ,
-		name : string ,
+		name : keyof Host ,
 		descr : TypedPropertyDescriptor< ( this : Host , ... args : any[] )=> Value >
 	) {
-
-		const calculate = descr.value!
-		
-		descr.value = function $mol_fiber_action_wrapper( ... args : any[] ) {
-
-			const slave = $mol_fiber.current
-
-			let master = slave && slave.master
-			if( !master || master.constructor !== $mol_fiber ) {
-				master = new $mol_fiber
-				master.calculate = calculate.bind( this , ... args )
-				const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
-				master[ Symbol.toStringTag ] = `${ prefix }${ this }.${ name }()`
-			}
-			
-			return master.get()
-
-		}
-
+		console.warn( '$mol_fiber_method is deprecated. Use $mol_fiber.method instead.' )
+		return $mol_fiber.method( obj , name , descr )
 	}
 
 	export function $mol_fiber_sync< Args extends any[] , Value = void , This = void >(
@@ -100,15 +64,14 @@ namespace $ {
 
 			let master = slave && slave.master
 			if( !master || master.constructor !== $mol_fiber ) {
-				master = $mol_fiber.make( fiber => {
-					fiber.cursor = $mol_fiber_status.persist
-					fiber.error = ( request.call( this , ... args ) as PromiseLike< Value > ).then(
-						res => fiber.push( res ) ,
-						err => fiber.fail( err ) ,
-					)
-					const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
-					fiber[ Symbol.toStringTag ] = prefix + ( request.name || $mol_fiber_sync.name )
-				} )
+				master = new $mol_fiber
+				master.cursor = $mol_fiber_status.persist
+				master.error = ( request.call( this , ... args ) as PromiseLike< Value > ).then(
+					res => master!.push( res ) ,
+					err => master!.fail( err ) ,
+				)
+				const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
+				master[ Symbol.toStringTag ] = prefix + ( request.name || $mol_fiber_sync.name )
 			}
 
 			return master.get()
@@ -138,17 +101,84 @@ namespace $ {
 		}
 	}
 
-	export function $mol_fiber_unlimit< Result >( func : ()=> Result ) {
+	export function $mol_fiber_unlimit< Result >( task : ()=> Result ) {
+		
 		const deadline = $mol_fiber.deadline
+		
 		try {
+
 			$mol_fiber.deadline = Number.POSITIVE_INFINITY
-			return func()
+			
+			return task()
+
 		} finally {
+
 			$mol_fiber.deadline = deadline
+
 		}
+
 	}
 
-	export class $mol_fiber< Value = any > extends $mol_object2 {
+	@ $mol_class
+	export class $mol_fiber_solid extends $mol_wrapper {
+
+		static func< This , Args extends any[] , Result >( task : ( this : This , ... args : Args )=> Result ) {
+
+			function wrapped( this : This , ... args : Args ) {
+
+				const deadline = $mol_fiber.deadline
+
+				try {
+
+					$mol_fiber.deadline = Number.POSITIVE_INFINITY
+					
+					return task.call( this , ... args ) as Result
+
+				} catch( error ) {
+
+					if( 'then' in error ) $mol_fail( new Error( 'Solid fiber can not be suspended.' ) )
+					return $mol_fail_hidden( error )
+
+				} finally {
+
+					$mol_fiber.deadline = deadline
+
+				}
+		
+			}
+
+			Object.defineProperty( wrapped , 'name' , {
+				value : `${ task.name || '<anonymous>' }|${ this.name }`
+			} )
+
+			return $mol_fiber.func( wrapped )
+
+		}
+
+	}
+
+	@ $mol_class
+	export class $mol_fiber< Value = any > extends $mol_wrapper {
+
+		static wrap< This , Args extends any[] , Result >( task : ( this : This , ... args : Args )=> Result ) {
+			
+			return function( this : This , ... args : Args ) {
+
+				const slave = $mol_fiber.current
+
+				let master = slave && slave.master
+				if( !master || master.constructor !== $mol_fiber ) {
+					master = new $mol_fiber
+					master.calculate = task.bind( this , ... args )
+					const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
+					master[ Symbol.toStringTag ] = `${ prefix }${ task.name }`
+				}
+				
+				return master.get()
+
+			}
+
+		}
 
 		static quant = 16
 		static deadline = 0
@@ -157,7 +187,6 @@ namespace $ {
 		
 		static scheduled = null as null | $mol_after_frame
 		static queue = [] as ( ()=> PromiseLike< any > )[]
-		
 		
 		static async tick() {
 	
@@ -199,7 +228,7 @@ namespace $ {
 		calculate! : ()=> Value
 		
 		schedule() {
-			$mol_fiber.schedule().then( this.wake.bind( this ) )
+			$mol_fiber.schedule().then( $mol_log_group( '$mol_fiber_scheduled' , this.wake.bind( this ) ) )
 		}
 
 		wake() {
@@ -322,12 +351,15 @@ namespace $ {
 			
 			if( this.cursor > $mol_fiber_status.actual ) this.update()
 
-			if( this.error ) this.$.$mol_fail_hidden( this.error )
+			if( this.error ) return this.$.$mol_fail_hidden( this.error )
+			
 			return this.value
 
 		}
 
 		limit() {
+
+			if( !$mol_fiber.current ) return
 
 			const now = Date.now()
 

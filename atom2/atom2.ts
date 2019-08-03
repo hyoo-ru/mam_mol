@@ -10,6 +10,7 @@ namespace $ {
 		}
 	}
 
+	@ $mol_class
 	export class $mol_atom2< Value = any > extends $mol_fiber< Value > {
 
 		static get current() {
@@ -244,7 +245,7 @@ namespace $ {
 				if( this.cursor !== $mol_fiber_status.actual ) return
 
 				this.cursor = $mol_fiber_status.obsolete
-				$mol_fiber_unlimit( ()=> this.update() )
+				$mol_fiber_solid.run( ()=> this.update() )
 			}
 		}
 

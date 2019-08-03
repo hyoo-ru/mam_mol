@@ -52,7 +52,14 @@ namespace $ {
 			this : $mol_vector< $mol_vector_range< number > , Length > ,
 			point : readonly ( readonly [ number , number ] )[] & { length : Length } ,
 		) : this {
-			return this.merged( point , ( range1 , range2 )=> range1.expanded0( range2[0] ).expanded0( range2[1] ) ) as any
+			return this.merged( point , ( range1 , range2 )=> {
+				let next = range1
+				const Range = range1.constructor as typeof $mol_vector_range
+				if (range1[0] > range2[0]) next = new Range(range2[0], next.max);
+				if (range1[1] < range2[1]) next = new Range(next.min, range2[1])
+
+				return next
+			}) as any
 		}
 
 	}
@@ -90,7 +97,6 @@ namespace $ {
 		}
 
 		expanded0( value : Value ) {
-			
 			const Range = this.constructor as typeof $mol_vector_range
 			let range = this as $mol_vector_range< Value >
 			

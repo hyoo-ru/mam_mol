@@ -22,7 +22,7 @@ namespace $ {
 
 		const get_cache = ( host : Host )=> {
 			
-			let cache = store.get( host )
+			let cache = store.get( host )!
 			if( cache ) return cache
 
 			let cache2 = new $mol_atom2

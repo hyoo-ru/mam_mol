@@ -1,12 +1,10 @@
 [mol_app_studio_field] {
 	flex: 1 1 100%;
-	box-shadow: 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_app_studio_field_label] {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: flex-end;
 }
 
 [mol_app_studio_field_tools] {
@@ -23,7 +21,7 @@
 }
 
 [mol_app_studio_field_title] {
-	flex: 1000000 0 auto;
+	flex: 0 1 auto;
 }
 
 [mol_app_studio_field_title_type="null"] ,
@@ -53,6 +51,10 @@
 	width: auto;
 }
 
+[mol_app_studio_field_number_string] {
+	text-align: left;
+}
+
 [mol_app_studio_field_string] {
 	flex: 1 1 100%;
 	width: auto;
@@ -68,7 +70,7 @@
 }
 
 [mol_app_studio_field_bind] {
-	flex: 1 1 auto;
+	flex: 0 1 auto;
 	width: auto;
 }
 

@@ -14,7 +14,7 @@ namespace $ {
 				if( prev ) prev()
 				started = true
 
-				if( filter ) console.group( name )
+				if( filter || prev ) console.group( name )
 				else console.groupCollapsed( name )
 
 				$mol_log_context( prev = null )

@@ -41,7 +41,12 @@ namespace $ {
 			var [ path , path , bundle ] = matched
 			path = build.root().resolve( path ).path()
 			
-			return build.bundle( { path , bundle } )
+			try {
+				return build.bundle( { path , bundle } )
+			} finally {
+				build.bundleFiles( { path , exclude : [ 'node' ] } )
+			}
+			
 		}
 		
 		port() {

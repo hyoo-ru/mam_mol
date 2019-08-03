@@ -28,6 +28,7 @@
 
 [mol_app_issues_chart] {
 	flex: 1 0 10rem;
+	margin: 0 0.5rem;
 }
 
 [mol_app_issues_description] {

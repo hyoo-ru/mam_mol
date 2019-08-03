@@ -1,22 +1,25 @@
 namespace $.$$ {
 	export class $mol_touch extends $.$mol_touch {
+		rect() {
+			return this.dom_node().getBoundingClientRect()
+		}
 		
 		event_start( event? : TouchEvent | MouseEvent ) {
 			if( event.defaultPrevented ) return
 
 			this.start_pan( this.pan() )
-
+			let pos: [number, number]
 			if( event instanceof MouseEvent ) {
 
 				if( event.buttons === 1 ) {
-					const pos = [ event.pageX , event.pageY ]
+					pos = [ event.pageX , event.pageY ]
 					this.start_pos( pos )
 				}
 
 			} else if( event instanceof TouchEvent ) {
 
 				if( event.touches.length === 1 ) {
-					const pos = [ event.touches[0].pageX , event.touches[0].pageY ]
+					pos = [ event.touches[0].pageX , event.touches[0].pageY ]
 					this.start_pos( pos )
 				}
 
@@ -29,23 +32,38 @@ namespace $.$$ {
 			}
 
 		}
+
+		event_leave( event? : TouchEvent | MouseEvent ) {
+			if( event.defaultPrevented ) return
+			if( event instanceof MouseEvent ) this.pos(super.pos())
+		}
 		
 		event_move( event? : TouchEvent | MouseEvent ) {
 			if( event.defaultPrevented ) return
 
 			const start_pan = this.start_pan()
 
-			let pos
+			let pos: [number, number]
+			let cursor_pos: [number, number]
 			if( event instanceof MouseEvent ) {
-				if( event.buttons === 1 ) pos = [ event.pageX , event.pageY ]
+				cursor_pos = [ event.pageX , event.pageY ]
+				if( event.buttons === 1 ) pos = cursor_pos
 				else this.start_pos( null )
 			} else if( event instanceof TouchEvent ) {
-				if( event.touches.length === 1 ) pos = [ event.touches[0].pageX , event.touches[0].pageY ]
+				cursor_pos = [ event.touches[0].pageX , event.touches[0].pageY ]
+				if( event.touches.length === 1 ) pos = cursor_pos
 				else this.start_pos( null )
 			}
 
-			if( pos ) {
+			if (cursor_pos) {
+				const {left, top} = this.rect()
+				this.pos([
+					Math.max(0, Math.round(cursor_pos[0] - left)),
+					Math.max(0, Math.round(cursor_pos[1] - top)),
+				])
+			}
 
+			if( pos ) {
 				const start_pos = this.start_pos()
 				if( !start_pos ) return
 				
@@ -133,22 +151,22 @@ namespace $.$$ {
 		}
 
 		swipe_left( event? : TouchEvent | MouseEvent ) {
-			if( this.dom_node().getBoundingClientRect().right - this.start_pos()[0] < this.swipe_precision() * 2 ) this.swipe_from_right( event )
+			if( this.rect().right - this.start_pos()[0] < this.swipe_precision() * 2 ) this.swipe_from_right( event )
 			else this.swipe_to_left( event )
 		}
 		
 		swipe_right( event? : TouchEvent | MouseEvent ) {
-			if( this.start_pos()[0] - this.dom_node().getBoundingClientRect().left < this.swipe_precision() * 2 ) this.swipe_from_left( event )
+			if( this.start_pos()[0] - this.rect().left < this.swipe_precision() * 2 ) this.swipe_from_left( event )
 			else this.swipe_to_right( event )
 		}
 		
 		swipe_top( event? : TouchEvent | MouseEvent ) {
-			if( this.dom_node().getBoundingClientRect().bottom - this.start_pos()[1] < this.swipe_precision() * 2 ) this.swipe_from_bottom( event )
+			if( this.rect().bottom - this.start_pos()[1] < this.swipe_precision() * 2 ) this.swipe_from_bottom( event )
 			else this.swipe_to_top( event )
 		}
 		
 		swipe_bottom( event? : TouchEvent | MouseEvent ) {
-			if( this.start_pos()[1] - this.dom_node().getBoundingClientRect().top < this.swipe_precision() * 2 ) this.swipe_from_top( event )
+			if( this.start_pos()[1] - this.rect().top < this.swipe_precision() * 2 ) this.swipe_from_top( event )
 			else this.swipe_to_bottom( event )
 		}
 		
@@ -157,7 +175,7 @@ namespace $.$$ {
 		}
 
 		event_wheel( event? : WheelEvent ) {
-			const zoom_prev = this.zoom()
+			const zoom_prev = this.zoom() || 0.001
 			const zoom_next = zoom_prev * ( 1 - .1 * Math.sign( event.deltaY ) )
 			const mult = zoom_next / zoom_prev
 			this.zoom( zoom_next )

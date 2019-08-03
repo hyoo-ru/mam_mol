@@ -18,7 +18,7 @@ namespace $.$$ {
 
 		Placeholder() {
 			if( !this.entered() ) return null
-			return this.supply() ? null : super.Placeholder()
+			return super.Placeholder()
 		}
 		
 		@ $mol_mem

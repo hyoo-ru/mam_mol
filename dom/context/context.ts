@@ -1,10 +1,5 @@
 namespace $ {
 	
-	export var $mol_dom_context : Window & {
-		Node : typeof Node
-		Element : typeof Element
-		HTMLElement : typeof HTMLElement
-		XMLHttpRequest : typeof XMLHttpRequest
-	}
+	export var $mol_dom_context : Window & Pick< typeof globalThis , 'Node' | 'Element' | 'HTMLElement' | 'XMLHttpRequest' | 'DOMParser' | 'XMLSerializer' >
 	
 }
