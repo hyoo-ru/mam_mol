@@ -4,9 +4,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		dom_node() {
-			const Sub = this.Sub()
-			Sub.$ = this.$
-			const node = Sub.dom_node()
+			const node = this.Sub().dom_node()
 
 			$mol_dom_render_attributes( node , this.attr_static() )
 			$mol_dom_render_events( node , this.event() )
