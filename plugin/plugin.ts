@@ -1,10 +1,11 @@
-namespace $.$$ {
+namespace $ {
 
-	export class $mol_plugin extends $.$mol_plugin {
+	export class $mol_plugin extends $mol_view {
 
 		@ $mol_mem
-		dom_node() {
-			const node = $mol_owning_get( this , $mol_view ).dom_node()
+		dom_node( next? : Element ) {
+
+			const node = next || $mol_owning_get( this , $mol_view ).dom_node()
 
 			$mol_dom_render_attributes( node , this.attr_static() )
 
@@ -20,6 +21,14 @@ namespace $.$$ {
 			return node
 		}
 
+		attr_static() : { [ key : string ] : string|number|boolean } {
+			return {}
+		}
+
+		event() : { [ key : string ] : ( event : Event )=> void } {
+			return {}
+		}
+		
 		render() {
 			return this.dom_node()
 		}

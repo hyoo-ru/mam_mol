@@ -7,7 +7,7 @@ namespace $ {
 						
 			@ $mol_mem_key
 			static value< Value >( key : string , next = this.state[ key ] as Value ) {
-				return this.state[ key ] = next
+				return this.state[ key ] = ( next || null )
 			}
 
 		}

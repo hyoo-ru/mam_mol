@@ -1,5 +1,5 @@
 $mol_app_supplies_list $mol_page
-	supplies /
+	supplies /$mol_app_supplies_domain_supply
 	title @ \Supplies
 	sub /
 		<= Head
@@ -11,7 +11,7 @@ $mol_app_supplies_list $mol_page
 		<= Body
 	body /
 		<= Supply_rows $mol_list
-			rows <= supply_rows /
+			rows <= supply_rows /$mol_view
 	-
 	Supply_row!index $mol_app_supplies_card
 		supply <= supply!index null

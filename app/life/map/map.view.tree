@@ -14,9 +14,10 @@ $mol_app_life_map $mol_plot_pane
 		<= Points $mol_plot_dot
 			threshold 0
 			diameter <= zoom
-			points_raw <= points /
+			points_raw <= points /readonly(number)[]
 	-
 	plugins /
+		^
 		<= Touch $mol_touch
 			zoom?val <=> zoom?val
 			pan?val <=> pan?val

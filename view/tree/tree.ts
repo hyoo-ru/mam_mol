@@ -166,7 +166,7 @@ namespace $ {
 								var val = getValue( item )
 								if( val ) items.push( val )
 							} )
-							return `[ ${ items.join(' , ') } ]` + ( item_type ? ` as readonly ( ${ item_type } )[]` : '' )
+							return `[ ${ items.join(' , ') } ]` + ( item_type ? ` as readonly ( ${ item_type } )[]` : ` as readonly any[]` )
 						case( value.type[0] === '$' ) :
 							needCache = true
 							var overs : string[] = []

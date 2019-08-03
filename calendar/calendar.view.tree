@@ -5,9 +5,9 @@ $mol_calendar $mol_list
 			sub /
 				<= title \
 		<= Weekdays $mol_view
-			sub <= weekdays /
+			sub <= weekdays /$mol_view
 		<= Weeks $mol_list
-			rows <= weeks /
+			rows <= weeks /$mol_view
 	-
 	Weekday!index $mol_calendar_day
 		holiday <= weekend!index false
@@ -15,7 +15,7 @@ $mol_calendar $mol_list
 			<= weekday!index \
 	-
 	Week!row $mol_view
-		sub <= week_days!row /
+		sub <= week_days!row /$mol_view
 	-
 	Day!day $mol_calendar_day
 		ghost <= day_ghost!day false

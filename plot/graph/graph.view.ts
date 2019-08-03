@@ -1,8 +1,8 @@
 namespace $.$$ {
 	export class $mol_plot_graph extends $.$mol_plot_graph {
 		
-		points_raw() {
-			const series = this.series()
+		points_raw() : readonly( readonly [ number , number ] )[] {
+			const series = this.series() as number[]
 			
 			return Object.keys( series ).map( ( key , index )=> [
 				isNaN( Number( key ) ) ? index : Number( key ) ,
@@ -11,13 +11,13 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		points_scaled() {
+		points_scaled() : readonly( readonly [ number , number ] )[] {
 			const shift = this.shift()
 			const scale = this.scale()
 			return this.points_raw().map( point => [
 				Math.round( shift[0] + point[0] * scale[0] ) ,
 				Math.round( shift[1] + point[1] * scale[1] ) ,
-			] )
+			] as const )
 		}
 		
 		@ $mol_mem
@@ -25,8 +25,8 @@ namespace $.$$ {
 			const threshold = this.threshold()
 			if( !threshold ) return this.points_scaled()
 
-			const res = [] as number[][]
-			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ]
+			const res = [] as (readonly [ number , number ])[]
+			let last = [ Number.NEGATIVE_INFINITY , Number.NEGATIVE_INFINITY ] as typeof res[0]
 			this.points_scaled().forEach( point => {
 				check : {
 					if( Math.abs( point[ 0 ] - last[ 0 ] ) >= threshold ) break check
@@ -35,7 +35,7 @@ namespace $.$$ {
 				}
 				res.push( last = point )
 			} )
-			return res
+			return res as readonly( readonly [ number , number ] )[]
 		}
 		
 		@ $mol_mem
@@ -62,7 +62,7 @@ namespace $.$$ {
 		}
 		
 		front() {
-			return [ this ]
+			return [ this ] as readonly $mol_plot_graph[]
 		}
 		
 	}

@@ -6,7 +6,7 @@ namespace $.$$ {
 		}
 		
 		switch_options() {
-			let options : { [ key : string ] : ()=> string } = {}
+			let options : Record< string , string > = {}
 			this.items().forEach( ( item , index ) => {
 				options[ String( index ) ] = item.title
 			} )

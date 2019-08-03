@@ -1,6 +1,6 @@
 $mol_select $mol_pop
 	dictionary *
-	options /
+	options /string
 	value?val \
 	minimal_height 40
 	Option_row!id $mol_button_minor
@@ -14,23 +14,20 @@ $mol_select $mol_pop
 		sub /
 			<= no_options_message @ \No options
 	plugins /
+		^
 		<= Nav $mol_nav
-			keys_y <= nav_components /
-				<= Filter
-				<= option_rows
+			keys_y <= nav_components /$mol_view
 			current_y?component <=> option_focused?component null
 			cycle?val <=> nav_cycle?val true
 	showed <= options_showed false
 	Anchor <= Trigger $mol_button_minor
-		sub <= trigger_content /
-			<= option_content_current /
-			<= Filter $mol_string
-				value?val <=> filter_pattern?val \
-				hint <= filter_hint <= hint @ \Search..
-				debounce <= debounce 200
-			<= Trigger_icon $mol_icon_chevron
+		sub <= trigger_content /$mol_view_content
 	bubble_content /
 		<= Menu $mol_list
-			rows <= menu_content /
-				<= Filter
-				<= option_rows /
+			rows <= menu_content /$mol_view
+	option_content_current /$mol_view_content
+	Filter $mol_string
+		value?val <=> filter_pattern?val \
+		hint <= filter_hint <= hint @ \Search..
+		debounce <= debounce 200
+	Trigger_icon $mol_icon_chevron

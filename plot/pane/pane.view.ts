@@ -156,7 +156,7 @@ namespace $.$$ {
 		@ $mol_mem
 		graphs_sorted() {
 			const graphs = this.graphs_colored()
-			const sorted = [] as $mol_view[]
+			const sorted = [] as ( typeof graphs[0] )[]
 			
 			for( let graph of graphs ) sorted.push( ...graph.back() )
 			for( let graph of graphs ) sorted.push( ...graph.front() )

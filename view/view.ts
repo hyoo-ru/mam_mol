@@ -1,4 +1,6 @@
 namespace $ {
+
+	export type $mol_view_content = $mol_view|Node|string|number|boolean
 	
 	export function $mol_view_visible_width() {
 		return $mol_window.size().width
@@ -160,8 +162,10 @@ namespace $ {
 			try {
 				
 				for( let plugin of this.plugins() ) {
-					plugin.dom_node( node )
-					plugin.render()
+					if( plugin instanceof $mol_plugin ) {
+						plugin.dom_node( node )
+						plugin.render()
+					}
 				}
 				this.render()
 				

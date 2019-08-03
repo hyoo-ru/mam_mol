@@ -12,7 +12,7 @@ $mol_plot_pane $mol_svg_root
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
 	-
-	shift_limit /
+	shift_limit /readonly(number)[]
 		<= shift_limit_x /number
 			0
 			0
@@ -51,9 +51,10 @@ $mol_plot_pane $mol_svg_root
 		0
 		0
 	-
-	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /
+	sub <= graphs_sorted <= graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
 	-
 	plugins /
+		^
 		<= Meter $mol_meter
 			width => width
 			height => height

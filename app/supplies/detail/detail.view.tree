@@ -47,7 +47,7 @@ $mol_app_supplies_detail $mol_page
 				<= Attach_section $mol_section
 					head <= attach_title @ \Attachments
 					Content <= Attach $mol_attach
-						items <= attachments /
+						items <= attachments /$mol_view
 						attach_new?val <=> attach_new?val null
 				<= Positions_section $mol_section
 					head <= positions_head /
@@ -58,7 +58,7 @@ $mol_app_supplies_detail $mol_page
 								value <= cost $mol_unit_money
 									valueOf 0
 					Content <= Positions $mol_list
-						rows <= positions /
+						rows <= positions /$mol_view
 	foot /
 		<= Actions $mol_row
 			sub <= actions /
