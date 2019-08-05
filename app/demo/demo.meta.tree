@@ -30,7 +30,6 @@ include \/mol/expander/demo
 include \/mol/float/demo
 include \/mol/form/demo/bids
 include \/mol/grid/demo
-include \/mol/icon/demo
 include \/mol/labeler/demo
 include \/mol/link/demo
 include \/mol/link/iconed/demo
