@@ -3,7 +3,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		tokens() {
-			return $mol_syntax_md_flow.tokenize( this.text() )
+			return $mol_syntax_md_flow.tokenize( this.text() ) as readonly $mol_syntax_token[]
 		}
 		
 		rows() {
