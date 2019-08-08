@@ -151,7 +151,7 @@ namespace $.$$ {
 		}
 
 		Edit_current() {
-			return this.Edit( this.pos() )
+			return this.Edit( '' )
 		}
 
 		current_row( next? : number ) {

@@ -34,7 +34,7 @@ $mol_app_calc $mol_page
 					Icon <= Hint_trigger_icon $mol_icon_hint
 	Edit!id $mol_textarea
 		hint \=
-		value?val <=> formula!id?val \
+		value?val <=> formula_current!id?val \
 	Col_head!id $mol_float
 		dom_name \th
 		sub / <= col_title!id \

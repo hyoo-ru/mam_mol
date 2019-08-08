@@ -55,24 +55,15 @@ namespace $ {
 					return cache.get()
 				}
 				
-				const slave = $mol_fiber.current
-				let master = slave && slave.master as $mol_fiber< void >
-				if( !master ) {
+				return $mol_fiber.run( ()=> {
 					
-					master = new $mol_fiber
-					master.calculate = ()=> {
-						if( force !== $mol_mem_force_cache ) next = value.call( this , key , next )
-						const cache = get_cache( this , key )
-						
-						if( next instanceof Error ) cache.fail( next )
-						else cache.put( next )
-						
-						return next
-					}
-					master[ Symbol.toStringTag ] = `${ this }.${ name }(${key},*)`
-				}
+					if( force !== $mol_mem_force_cache ) next = value.call( this , key , next )
+					const cache = get_cache( this , key )
+					
+					if( next instanceof Error ) return cache.fail( next )
+					else return cache.put( next )
 
-				return master.get()
+				} )
 
 			}
 

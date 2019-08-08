@@ -42,33 +42,19 @@ namespace $ {
 		
 		return {
 			
-			value( next? : Value , force? : $mol_mem_force ) {
+			value( this : Host , next? : Value , force? : $mol_mem_force ) {
 				
 				if( next === undefined ) {
 					const cache = get_cache( this )
-					if( force === $mol_mem_force_cache ) cache.obsolete()
+					if( force === $mol_mem_force_cache ) cache.obsolete( Number.NaN )
 					return cache.get()
 				}
 				
-				const slave = $mol_fiber.current
-				let master = slave && slave.master as $mol_fiber< void >
-				if( !master ) {
-					
-					master = new $mol_fiber
-					master.calculate = ()=> {
-						if( force !== $mol_mem_force_cache ) next = value.call( this , next )
-						const cache = get_cache( this )
-						
-						if( next instanceof Error ) cache.fail( next )
-						else cache.put( next )
-						
-						return next
-					}
-					master[ Symbol.toStringTag ] = `${ this }.${ name }()/set`
-				}
-
-				return master.get()
-
+				return $mol_fiber.run( ()=> {
+					if( force !== $mol_mem_force_cache ) next = value.call( this , next )
+					return get_cache( this ).put( next! )
+				} )
+				
 			}
 
 		}
