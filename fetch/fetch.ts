@@ -12,8 +12,10 @@ namespace $ {
 					return true
 				}
 			}
+
+			const native = $mol_dom_context.fetch || $node['node-fetch']
 		
-			return fetch( input , init )
+			return native( input , init )
 
 		} )
 
