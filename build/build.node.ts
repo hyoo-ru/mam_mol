@@ -11,7 +11,8 @@ namespace $ {
 					}
 				)
 				process.exit(0)
-			} catch {
+			} catch(error) {
+				console.log(error)
 				process.exit(1)
 			}
 		} else {
@@ -469,7 +470,7 @@ namespace $ {
 
 			const once = ( action : ()=> void )=> {
 				const task = new $mol_atom2
-				task[ Symbol.toStringTag ] = '$mol_build_start'
+				task[ Symbol.toStringTag ] = `${ this }/once`
 				task.calculate = action
 				task.get()
 				task.destructor()
@@ -485,6 +486,7 @@ namespace $ {
 				this.bundle({ path , bundle : 'web.d.ts' })
 				this.bundle({ path , bundle : 'web.view.tree' })
 				this.bundle({ path , bundle : 'web.locale=en.json' })
+				return null
 			} )
 
 			once( ()=> {
@@ -494,6 +496,7 @@ namespace $ {
 				this.bundle({ path , bundle : 'node.d.ts' })
 				this.bundle({ path , bundle : 'node.view.tree' })
 				this.bundle({ path , bundle : 'node.locale=en.json' })
+				return null
 			} )
 
 			this.bundle({ path , bundle : 'package.json' })
