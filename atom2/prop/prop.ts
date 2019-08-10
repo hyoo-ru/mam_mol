@@ -12,7 +12,7 @@ namespace $ {
 
 		const value = descr!.value!
 		
-		const store = new WeakMap< Host , $mol_fiber< Value > >()
+		const store = new WeakMap< Host , $mol_atom2< Value > >()
 
 		Object.defineProperty( proto , name + "()" , {
 			get : function() {
@@ -42,7 +42,7 @@ namespace $ {
 		
 		return {
 			
-			value( next? : Value , force? : $mol_atom_force ) {
+			value( this : Host , next? : Value , force? : $mol_atom_force ) {
 				
 				if( next === undefined ) {
 					const cache = get_cache( this )
@@ -50,20 +50,11 @@ namespace $ {
 					return cache.get()
 				}
 				
-				// const slave = $mol_fiber.current
-				// let master = slave && slave.master as $mol_fiber< void >
-				// if( !master ) {
-					
-				// 	master = new $mol_fiber
-				// 	master.calculate = ()=> {
-						if( force !== $mol_atom_force_cache ) next = value.call( this , next )
-						return get_cache( this ).push( next )
-				// 	}
-				// 	master[ Symbol.toStringTag ] = `${ this }.${ name }(*)`
-				// }
-
-				// master.get()
-
+				return $mol_fiber.run( ()=> {
+					if( force !== $mol_atom_force_cache ) next = value.call( this , next )
+					return get_cache( this ).put( next! )
+				} )
+				
 			}
 
 		}
