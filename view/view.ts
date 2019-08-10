@@ -163,7 +163,6 @@ namespace $ {
 				
 				for( let plugin of this.plugins() ) {
 					if( plugin instanceof $mol_plugin ) {
-						plugin.dom_node( node )
 						plugin.render()
 					}
 				}
