@@ -45,14 +45,18 @@ namespace $ {
 			value( this : Host , next? : Value , force? : $mol_mem_force ) {
 				
 				if( next === undefined ) {
+					
 					const cache = get_cache( this )
 					if( force === $mol_mem_force_cache ) cache.obsolete( Number.NaN )
-					return cache.get()
+					
+					if( $mol_atom2.current ) return cache.get()
+					else return $mol_fiber.run( ()=> cache.get() )
+				
 				}
 				
 				return $mol_fiber.run( ()=> {
 					if( force !== $mol_mem_force_cache ) next = value.call( this , next )
-					return get_cache( this ).put( next! )
+					return get_cache( this ).put( next )
 				} )
 				
 			}

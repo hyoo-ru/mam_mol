@@ -232,9 +232,7 @@ namespace $ {
 					... $node.typescript.sys ,
 					setTimeout : ( cb : any )=> cb(),
 					writeFile : ( path : string , content : string )=> {
-						$mol_fiber_unlimit( ()=> {
-							$mol_file.relative( path ).content( content , $mol_mem_force_cache )
-						})
+						$mol_file.relative( path ).content( content , $mol_mem_force_cache )
 					} ,
 				},
 				

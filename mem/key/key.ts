@@ -50,19 +50,20 @@ namespace $ {
 			value( key : Key , next? : Value , force? : $mol_mem_force ) {
 				
 				if( next === undefined ) {
+					
 					const cache = get_cache( this , key )
 					if( force === $mol_mem_force_cache ) cache.obsolete()
-					return cache.get()
+
+					if( $mol_atom2.current ) return cache.get()
+					else return $mol_fiber.run( ()=> cache.get() )
+
 				}
 				
 				return $mol_fiber.run( ()=> {
 					
 					if( force !== $mol_mem_force_cache ) next = value.call( this , key , next )
-					const cache = get_cache( this , key )
+					return get_cache( this , key ).put( next )
 					
-					if( next instanceof Error ) return cache.fail( next )
-					else return cache.put( next )
-
 				} )
 
 			}
