@@ -8,11 +8,10 @@ namespace $.$$ {
 			
 			let args = this.$.$mol_state_arg.dict()
 			if( next ) args = this.$.$mol_state_arg.dict({ ... args , ... next })
-
 			const ids = Object.keys( args ).filter( param => this.id2coord( param ) )
 			
 			for( let id of ids ) formulas[ id ] = args[ id ]
-
+			
 			return formulas
 		}
 
@@ -151,7 +150,7 @@ namespace $.$$ {
 		}
 
 		Edit_current() {
-			return this.Edit( '' )
+			return this.Edit( this.pos() )
 		}
 
 		current_row( next? : number ) {
