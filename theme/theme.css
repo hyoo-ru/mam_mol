@@ -11,7 +11,7 @@
 	--mol_theme_text: rgba( 0 , 0 , 0 , .9 );
 	--mol_theme_control: hsla( 210 , 60% , 35% , 1 );
 	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );
-	--mol_theme_line: rgba( 230 , 230 , 230 , 1 );
+	--mol_theme_line: rgba( 220 , 220 , 220 , 1 );
 	--mol_theme_focus: hsla( 0 , 60% , 50% , 0.75 );
 	--mol_theme_field: white;
 }
