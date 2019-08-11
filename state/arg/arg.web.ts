@@ -89,7 +89,7 @@ namespace $ {
 	}
 	
 	self.addEventListener( 'hashchange' , $mol_fiber_root( $mol_log_group( '$mol_state_arg hashchange' , ( event : HashChangeEvent )=> {
-		$mol_state_arg.href( undefined , $mol_mem_force_cache ) 
+		$mol_state_arg.href( window.location.href ) 
 	} ) ) )
 	
 }
