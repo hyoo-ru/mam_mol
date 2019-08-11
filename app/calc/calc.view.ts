@@ -202,7 +202,7 @@ namespace $.$$ {
 			return super.hint().replace( '{funcs}' , Object.getOwnPropertyNames( Math ).join( ', ' ) )
 		}
 
-		@ $mol_mem
+		@ $mol_mem_key
 		cell_content( id : string ) {
 			
 			const name = this.formula_name( id )
