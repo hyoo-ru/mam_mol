@@ -8,10 +8,10 @@ Schedule function to be called after timeout in ms.
 
 ```typescript
 // Schedule
-const timeout = new $mol_after_timeout( 1000 , ()=> alert( 'Hello!' ) )
+const deferred_task = new $mol_after_timeout( 1000 , ()=> alert( 'Hello!' ) )
 
 // Unschedule
-timeout.destructor()
+deferred_task.destructor()
 ```
 
 ## Reactive control
@@ -20,7 +20,7 @@ timeout.destructor()
 // Schedule when first dependent has appeared
 // Unschedule after last dependent has disappeared
 @ $mol_mem
-scheduled task() {
+deferred_task() {
 	return new $mol_after_timeout( 1000 , ()=> alert( 'Hello!' ) )
 }
 ```
