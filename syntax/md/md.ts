@@ -30,7 +30,7 @@ namespace $ {
 		'code-call' : /\.?\w+(?=\()/ ,
 		'code-field' : /(?:\.\w+|[\w-]+\??\s*:)/ ,
 		'code-global' : /[$]\w*/ ,
-		'code-decorator' : /@.*?$/ ,
+		'code-decorator' : /@\s*\S+/ ,
 		'code-tag' : /<\/?[\w-]+\/?>?/ ,
 		'code-punctuation' : /[\-\[\]\{\}\(\)<=>`~!\?@#\$%&\*_\+\\\/\|'";:\.,\^]/ ,
 	})

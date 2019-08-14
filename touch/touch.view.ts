@@ -63,10 +63,13 @@ namespace $.$$ {
 				])
 			}
 
+			if( typeof TouchEvent === 'undefined' ) return
+			if(!( event instanceof TouchEvent )) return
+
 			if( pos ) {
 				const start_pos = this.start_pos()
 				if( !start_pos ) return
-				
+
 				const precision = this.swipe_precision()
 
 				if( this.pan !== $mol_touch.prototype.pan ) {
