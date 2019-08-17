@@ -43,3 +43,13 @@ type $mol_type_intersect< Union > = ( Union extends any ? ( _ : Union )=> void :
  * 	$mol_type_equals< never , never > & number
  */
 type $mol_type_equals< A , B > = ( <X>()=> X extends A ? 1 : 2 ) extends ( <X>()=> X extends B ? 1 : 2 ) ? unknown : never
+
+/**
+ * Converts intersection of records to record of intersections
+ * 
+ * 	// { a : 1 & 2 }
+ * 	$mol_type_merge< { a : 1 } & { b : 2 } >
+ */
+type $mol_type_merge< Intersection extends object > = {
+	[ Key in keyof Intersection ] : Intersection[ Key ]
+}
