@@ -5,7 +5,7 @@
  * 	type MathConstants = $mol_type_filter_keys< Math , number >
  */
 type $mol_type_filter_keys< Input , Constraint > = {
-    [ Field in keyof Input ] : Input[ Field ] extends Constraint ? unknown extends Input[ Field] ? never : Field : never
+    [ Field in keyof Input ] : Input[ Field ] extends Constraint ? unknown extends Input[ Field ] ? never : Field : never
 }[ keyof Input ]
 
 /**
