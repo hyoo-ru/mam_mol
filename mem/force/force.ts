@@ -9,5 +9,6 @@ namespace $ {
 
 	export class $mol_mem_force_cache extends $mol_mem_force {}
 	export class $mol_mem_force_update extends $mol_mem_force {}
+	export class $mol_mem_force_fail extends $mol_mem_force_cache {}
 
 }

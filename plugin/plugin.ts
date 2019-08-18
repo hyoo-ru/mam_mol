@@ -30,7 +30,7 @@ namespace $ {
 		}
 		
 		render() {
-			return this.dom_node_actual()
+			this.dom_node_actual()
 		}
 		
 	}

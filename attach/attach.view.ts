@@ -27,7 +27,7 @@ namespace $.$$ {
 
 	export class $mol_attach_add extends $.$mol_attach_add {
 
-		file_new( next? : string ) {
+		file_new( next? : string , force? : $mol_mem_force_fail ) {
 			return next
 		}
 		
@@ -39,7 +39,7 @@ namespace $.$$ {
 			$mol_cordova_camera().getPicture( ( url : string )=> {
 				this.file_new( url )
 			}, ( error : Error )=> {
-				this.file_new( error as any )
+				this.file_new( error as any , $mol_mem_force_fail )
 			}, {
 				quality: 50
 			} )

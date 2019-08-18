@@ -250,7 +250,7 @@ namespace $ {
 							getNewLine : ()=> '\n' ,
 						}) )
 						
-						file.content( error as any , $mol_mem_force_cache )
+						file.content( error as any , $mol_mem_force_fail )
 						
 					} else {
 						

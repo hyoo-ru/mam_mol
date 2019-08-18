@@ -15,7 +15,7 @@ namespace $.$$ {
 			return formulas
 		}
 
-		@ $mol_mem
+		@ $mol_mem_key
 		formula_name( id : string ) {
 			
 			const found = /^(\w*)\s*=/u.exec( this.formulas()[ id ] )

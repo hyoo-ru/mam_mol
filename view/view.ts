@@ -74,7 +74,7 @@ namespace $ {
 		
 		/// Raw child views
 		sub() {
-			return null as readonly ($mol_view|Node|string|number|boolean)[] | null
+			return [] as readonly ($mol_view|Node|string|number|boolean)[]
 		}
 		
 		/// Visible sub views with defined ambient context
@@ -173,7 +173,6 @@ namespace $ {
 				
 				if( error instanceof Promise ) $mol_fail_hidden( error )
 				$mol_dom_render_attributes( node , { mol_view_error : error.name } )
-				// return node
 				
 				try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
 				
@@ -187,32 +186,31 @@ namespace $ {
 		dom_node_actual() {
 			const node = this.dom_node()
 
-			$mol_dom_render_attributes( node , this.attr() )
-			$mol_dom_render_styles( node , this.style() )
-			
+			const attr = this.attr()
+			const style = this.style()
+			const fields = this.field()
+
+			$mol_dom_render_attributes( node , attr )
+			$mol_dom_render_styles( node , style )
+			$mol_dom_render_fields( node , fields )
+
 			return node
 		}
-		
-		render() {
-			const node = this.dom_node_actual()
-			
-			const sub = this.sub_visible()
-			if( sub ) {
 
-				const nodes = sub.map( child => {
-					if( child == null ) return null
-					return ( child instanceof $mol_view ) ? child.dom_node_actual() : String( child )
-				})
-				
-				$mol_dom_render_children( node , nodes )
-				
-				for( const el of sub ) if( el && typeof el === 'object' && 'dom_tree' in el ) el['dom_tree']()
-				
-			}
+		render() {
+
+			const node = this.dom_node_actual()
+
+			const sub = this.sub_visible()
 			
-			const fields = this.field()
-			$mol_dom_render_fields( node , fields )
+			const nodes = sub.map( child => {
+				if( child == null ) return null
+				return ( child instanceof $mol_view ) ? child.dom_node() : String( child )
+			})
 			
+			$mol_dom_render_children( node , nodes )
+
+			for( const el of sub ) if( el && typeof el === 'object' && 'dom_tree' in el ) el['dom_tree']()
 		}
 
 		@ $mol_mem
@@ -279,7 +277,7 @@ namespace $ {
 		
 		attr() : { [ key : string ] : string|number|boolean } {
 			return {
-				'mol_view_error' : false ,
+				'mol_view_error' : null ,
 			}
 		}
 		

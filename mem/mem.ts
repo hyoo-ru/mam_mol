@@ -55,6 +55,7 @@ namespace $ {
 				}
 				
 				return $mol_fiber.run( ()=> {
+					if( force === $mol_mem_force_fail ) return get_cache( this ).fail( next as any )
 					if( force !== $mol_mem_force_cache ) next = value.call( this , next )
 					return get_cache( this ).put( next )
 				} )
