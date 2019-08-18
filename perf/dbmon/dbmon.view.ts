@@ -16,6 +16,14 @@ namespace $.$$ {
 			return Object.keys( this.data() ).map( index => this.Database( index ) )
 		}
 
+		database( id : string ) {
+			return [
+				this.Name( id ) ,
+				this.Query_count( id ) ,
+				... this.top_queries( id ) ,
+			]
+		}
+
 		name( id : string ) {
 			return this.data()[ id ].dbname
 		}

@@ -33,7 +33,7 @@
 			uibench.run(
 				$mol_fiber_root(function (state) {
 					$mol_perf_uibench.Root[0].state(state)
-					$mol_fiber_wrap()
+					$mol_fiber_warp()
 				}),
 				function (samples) {
 					document.body.innerHTML = "<pre>" + JSON.stringify(samples, null, " ") + "</pre>"
