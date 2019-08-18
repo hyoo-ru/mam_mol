@@ -6,7 +6,7 @@
 	box-sizing: border-box;
 	will-change: scroll-position;
 	transform: translateZ(0); /* enforce gpu scroll in all agents */
-	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	box-shadow: inset 0 0 0 .5px var(--mol_theme_line);
 	max-height: 100%;
 	max-width: 100%;
 	-webkit-overflow-scrolling: touch;

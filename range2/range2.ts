@@ -29,18 +29,18 @@ namespace $ {
 
 			getOwnPropertyDescriptor( target , field ) : PropertyDescriptor | undefined {
 				
+				if( field === "length" ) return {
+					value : size() ,
+					writable : true ,
+					enumerable : false ,
+					configurable : false ,
+				}
+
 				const index = Number( field )
 				if( index === Math.trunc( index ) ) return {
 					get : ()=> this.get!( target , field , this ) ,
 					enumerable : true ,
 					configurable : true ,
-				}
-
-				if( field === "length" ) return {
-					value : size() ,
-					writable : false ,
-					enumerable : false ,
-					configurable : false ,
 				}
 
 				return Object.getOwnPropertyDescriptor( target , field )
