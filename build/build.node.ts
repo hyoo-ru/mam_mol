@@ -1060,6 +1060,7 @@ namespace $ {
 				
 				line.replace(
 					/\$(([a-z0-9]{2,})(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name , pack )=> {
+						name = name.split( /(?=[A-Z])/ ).join( '_' ).toLowerCase()
 						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[_.\[\]'"]+/g , '/' ) ] : priority } )
 						return str
 					}
