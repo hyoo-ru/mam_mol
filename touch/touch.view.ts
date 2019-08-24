@@ -63,10 +63,13 @@ namespace $.$$ {
 				])
 			}
 
+			if( typeof TouchEvent === 'undefined' ) return
+			if(!( event instanceof TouchEvent )) return
+
 			if( pos ) {
 				const start_pos = this.start_pos()
 				if( !start_pos ) return
-				
+
 				const precision = this.swipe_precision()
 
 				if( this.pan !== $mol_touch.prototype.pan ) {
@@ -153,24 +156,28 @@ namespace $.$$ {
 		swipe_left( event? : TouchEvent | MouseEvent ) {
 			if( this.rect().right - this.start_pos()[0] < this.swipe_precision() * 2 ) this.swipe_from_right( event )
 			else this.swipe_to_left( event )
+			this.event_end( event )
 		}
 		
 		swipe_right( event? : TouchEvent | MouseEvent ) {
 			if( this.start_pos()[0] - this.rect().left < this.swipe_precision() * 2 ) this.swipe_from_left( event )
 			else this.swipe_to_right( event )
+			this.event_end( event )
 		}
 		
 		swipe_top( event? : TouchEvent | MouseEvent ) {
 			if( this.rect().bottom - this.start_pos()[1] < this.swipe_precision() * 2 ) this.swipe_from_bottom( event )
 			else this.swipe_to_top( event )
+			this.event_end( event )
 		}
 		
 		swipe_bottom( event? : TouchEvent | MouseEvent ) {
 			if( this.start_pos()[1] - this.rect().top < this.swipe_precision() * 2 ) this.swipe_from_top( event )
 			else this.swipe_to_bottom( event )
+			this.event_end( event )
 		}
 		
-		event_end( event? : TouchEvent ) {
+		event_end( event? : TouchEvent | MouseEvent ) {
 			this.start_pos( null )
 		}
 

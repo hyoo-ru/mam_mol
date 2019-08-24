@@ -12,6 +12,7 @@
 	color: var(--mol_theme_text);
 	z-index: 0;
 	overflow: hidden;
+	box-shadow: inset 0 0 0 .5px var(--mol_theme_line);
 }
 
 [mol_page]:focus {
@@ -53,7 +54,6 @@
 [mol_page_body] {
 	flex: 1000 1 100%;
 	margin: 0;
-	box-shadow: 0 0 0 1px var(--mol_theme_line);
 }
 
 [mol_page_foot] {

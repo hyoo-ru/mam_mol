@@ -1,9 +1,5 @@
 declare namespace JSX {
 
-	type DeepPartial< Val > = {
-		[ field in keyof Val ]? : DeepPartial< Val[ field ] >
-	}
-	
 	export interface Element extends HTMLElement {}
 	
 	export interface ElementClass {
@@ -15,7 +11,7 @@ declare namespace JSX {
 	
 	/** Props for html elements */
 	export type IntrinsicElements = {
-		[ key in keyof HTMLElementTagNameMap ]? : DeepPartial< HTMLElementTagNameMap[ key ] >
+		[ key in keyof HTMLElementTagNameMap ]? : $mol_type_partial_deep< HTMLElementTagNameMap[ key ] >
 	}
 	
 	/** Additional undeclared props */
@@ -28,7 +24,7 @@ declare namespace JSX {
 		}
 	}
 	
-	// export type IntrinsicClassAttributes< Class > = DeepPartial< Omit< Class , 'valueOf' > >
+	// export type IntrinsicClassAttributes< Class > = $mol_type_partial_deep< Omit< Class , 'valueOf' > >
 	
 	interface ElementChildrenAttribute {
 	}

@@ -25,11 +25,8 @@
 	flex: none;
 }
 
-[mol_app_demo_nav] {
-	padding: .5rem;
-}
-
 [mol_app_demo_nav_table] {
+	padding: .5rem;
 	width: 100%;
 }
 
