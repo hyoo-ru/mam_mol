@@ -20,23 +20,37 @@ namespace $ {
 			return this.sub( key ).data( next )
 		}
 
-		sub< Key extends keyof Data >( key : Key ) {
+		sub<
+			Key extends keyof Data ,
+			Lens extends $mol_store< Data[ Key ] > = $mol_store< Data[ Key ] >
+		>( key : Key , lens? : Lens ) {
+
 			return this.lens(
 				data => data[ key ] ,
 				( data , next )=> Object.assign( {} , data , { [ key ] : next } ) ,
+				lens ,
 			)
+
 		}
 
-		lens< Value >(
+		lens<
+			Value ,
+			Lens extends $mol_store< Value > = $mol_store< Value >
+		>(
 			get : ( data : Data )=> Value ,
 			set? : ( data : Data , next? : Value )=> Data ,
+			lens? : Lens
 		) {
-			const sub = new $mol_store< Value >()
-			sub.data = next => {
+
+			if( !lens ) lens = new $mol_store< Value >() as any
+
+			lens.data = next => {
 				if( next == undefined ) return get( this.data() )
 				return get( this.data( set( this.data() , next ) ) )
 			}
-			return sub
+
+			return lens
+
 		}
 
 	}
