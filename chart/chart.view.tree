@@ -7,6 +7,8 @@ $mol_chart $mol_view
 	gap_top <= gap_vert
 	graphs /$mol_plot_graph
 	sub /
+		<= Legend $mol_chart_legend
+			graphs <= graphs
 		<= Plot $mol_plot_pane
 			gap_left <= gap_left
 			gap_right <= gap_right
@@ -15,5 +17,3 @@ $mol_chart $mol_view
 			graphs <= graphs
 			hue_base?val <= hue_base 140
 			hue_shift?val <= hue_shift 111
-		<= Legend $mol_chart_legend
-			graphs <= graphs
