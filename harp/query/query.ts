@@ -66,7 +66,7 @@ namespace $ {
 						if( !query.filter ) fail_at( offset )
 	
 						text = decodeURIComponent( text )
-						range = new this.$.$mol_vector_range( range ? range.min : text , text )
+						range = new $mol_vector_range( range ? range.min : text , text )
 						
 					} else {
 	
@@ -102,7 +102,7 @@ namespace $ {
 				
 				'range' : ( found , chunks , offset )=> {
 	
-					range = new this.$.$mol_vector_range( range && range.min , undefined )
+					range = new $mol_vector_range( range && range.min , undefined )
 	
 				} ,
 				
