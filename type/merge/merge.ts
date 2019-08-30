@@ -1,16 +1,12 @@
-namespace $ {
-
-	/**
-	 * Reqursive converts intersection of records to record of intersections
-	 * 
-	 * 	// { a : 1 & 2 }
-	 * 	$mol_type_merge< { a : 1 } & { b : 2 } >
-	 */
-	export type $mol_type_merge< Intersection >
-		= keyof Intersection extends string
-			? {
-				[ Key in keyof Intersection ] : $mol_type_merge< Intersection[ Key ] >
-			}
-			: Intersection
-
-}
+/**
+ * Reqursive converts intersection of records to record of intersections
+ * 
+ * 	// { a : 1 & 2 }
+ * 	$mol_type_merge< { a : 1 } & { b : 2 } >
+ */
+type $mol_type_merge< Intersection >
+	= keyof Intersection extends string
+		? {
+			[ Key in keyof Intersection ] : $mol_type_merge< Intersection[ Key ] >
+		}
+		: Intersection
