@@ -1,6 +1,7 @@
 namespace $ {
 
-	export class $mol_store< Data > extends $mol_object {
+	@ $mol_class
+	export class $mol_store< Data > extends $mol_object2 {
 
 		constructor( data? : Data ) {
 			super()
@@ -17,26 +18,29 @@ namespace $ {
 		}
 
 		value< Key extends keyof Data >( key : Key , next? : Data[ Key ] ) {
-			return this.sub( key ).data( next )
+			
+			const data = this.data()
+			if( next === undefined ) return data[ key ]
+			
+			this.data( Object.assign( {} , data , { [ key ] : next } ) )
+
+			return next
 		}
 
-		sub< Key extends keyof Data >( key : Key ) {
-			return this.lens(
-				data => data[ key ] ,
-				( data , next )=> Object.assign( {} , data , { [ key ] : next } ) ,
-			)
-		}
+		sub<
+			Key extends keyof Data ,
+			Lens extends $mol_store< Data[ Key ] > = $mol_store< Data[ Key ] >
+		>( key : Key , lens? : Lens ) {
 
-		lens< Value >(
-			get : ( data : Data )=> Value ,
-			set? : ( data : Data , next? : Value )=> Data ,
-		) {
-			const sub = new $mol_store< Value >()
-			sub.data = next => {
-				if( next == undefined ) return get( this.data() )
-				return get( this.data( set( this.data() , next ) ) )
+			if( !lens ) lens = new $mol_store< Data[ Key ] >() as any
+
+			lens.data = next => {
+				if( next == undefined ) return this.value( key )
+				return this.value( key , next )
 			}
-			return sub
+
+			return lens
+
 		}
 
 	}

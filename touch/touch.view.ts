@@ -188,7 +188,7 @@ namespace $.$$ {
 			this.zoom( zoom_next )
 
 			const pan_prev = this.pan()
-			const center = [ event.layerX , event.layerY ]
+			const center = [ event.offsetX , event.offsetY ]
 			const pan_next = [ ( pan_prev[0] - center[0] ) * mult + center[0] , ( pan_prev[1] - center[1] ) * mult + center[1] ]
 
 			this.pan( pan_next )
