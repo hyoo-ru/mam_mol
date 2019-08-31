@@ -63,19 +63,20 @@ namespace $.$$ {
 				])
 			}
 
-			if( typeof TouchEvent === 'undefined' ) return
-			if(!( event instanceof TouchEvent )) return
-
 			if( pos ) {
 				const start_pos = this.start_pos()
 				if( !start_pos ) return
 
-				const precision = this.swipe_precision()
-
+				
 				if( this.pan !== $mol_touch.prototype.pan ) {
 					this.pan([ start_pan[0] + pos[0] - start_pos[0] , start_pan[1] + pos[1] - start_pos[1] ])
 					event.preventDefault()
 				}
+
+				if( typeof TouchEvent === 'undefined' ) return
+				if(!( event instanceof TouchEvent )) return
+	
+				const precision = this.swipe_precision()
 				
 				if(
 					(
@@ -131,7 +132,10 @@ namespace $.$$ {
 
 			}
 			
-			if( typeof TouchEvent !== 'undefined' && event instanceof TouchEvent && event.touches.length === 2 ) {
+			if( typeof TouchEvent === 'undefined' ) return
+			if(!( event instanceof TouchEvent )) return
+
+			if( event.touches.length === 2 ) {
 
 				if( this.zoom === $mol_touch.prototype.zoom ) return
 
@@ -151,6 +155,7 @@ namespace $.$$ {
 
 				event.preventDefault()
 			}
+			
 		}
 
 		swipe_left( event? : TouchEvent | MouseEvent ) {
