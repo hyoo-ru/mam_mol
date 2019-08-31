@@ -39,6 +39,7 @@ include \/mol/message/demo
 include \/mol/meter/demo
 include \/mol/number/demo
 include \/mol/page/demo
+include \/mol/paginator/demo
 include \/mol/plot/demo
 include \/mol/pop/demo
 include \/mol/pop/over/demo
