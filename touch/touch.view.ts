@@ -182,6 +182,11 @@ namespace $.$$ {
 		}
 
 		event_wheel( event? : WheelEvent ) {
+
+			if( this.pan !== $mol_touch.prototype.pan ) {
+				event.preventDefault()
+			}
+
 			const zoom_prev = this.zoom() || 0.001
 			const zoom_next = zoom_prev * ( 1 - .1 * Math.sign( event.deltaY ) )
 			const mult = zoom_next / zoom_prev
