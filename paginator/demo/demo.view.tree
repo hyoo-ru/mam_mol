@@ -1,0 +1,5 @@
+$mol_paginator_demo $mol_demo_small
+	title @ \Page switcher
+	sub /
+		<= Pages $mol_paginator
+			value?val <=> page?val 0
