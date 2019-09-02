@@ -94,7 +94,6 @@ namespace $ {
 		sub_visible() {
 			const sub = this.sub()
 			if( !sub ) return sub
-			
 			const context = this.context_sub()
 			sub.forEach( child => {
 				if( child instanceof $mol_view ) {

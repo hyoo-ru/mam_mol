@@ -14,7 +14,9 @@ namespace $.$$ {
 		}
 		
 		dom_tree() {
-			const node = this.Sub().dom_tree()
+			const Sub = this.Sub()
+			Sub.$ = this.$
+			const node = Sub.dom_tree()
 			super.render()
 			return node
 		}
