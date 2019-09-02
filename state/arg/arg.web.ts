@@ -1,10 +1,13 @@
 namespace $ {
+	
 	export class $mol_state_arg extends $mol_object {
 		
-		static href( next? : string ) {
-			return href.value(next)
+		@ $mol_mem
+		static href( next? : string , force? : $mol_atom_force ) {
+			if( next ) history.replaceState( history.state , $mol_dom_context.document.title , next )
+			return window.location.href
 		}
-
+		
 		@ $mol_mem
 		static dict( next? : { [ key : string ] : string } ) {
 			var href = this.href( next && this.make_link( next ) ).split( /#/ )[1] || ''
@@ -24,6 +27,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		static dict_cut( except : string[] ) {
+			
 			const dict = this.dict()
 			const cut : { [ key : string ] : string } = {}
 			
@@ -83,16 +87,8 @@ namespace $ {
 		
 	}
 	
-	class href {
-		@ $mol_mem
-		static value( next? : string , force? : $mol_atom_force ) {
-			if( next ) history.replaceState( history.state , $mol_dom_context.document.title , next )
-			return window.location.href
-		}
-	}
-
 	self.addEventListener( 'hashchange' , $mol_log_group( '$mol_state_arg hashchange' , ( event : HashChangeEvent )=> {
-		href.value( undefined , $mol_atom_force_cache )
+		$mol_state_arg.href( undefined , $mol_atom_force_cache ) 
 	} ) )
 	
 }
