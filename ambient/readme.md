@@ -36,7 +36,7 @@ foo2.$ = $.$mol_ambient({
 
 Global functions inherits context automatically:
 
-```
+```typescript
 function $my_hello( this : $mol_ambient_context , name : string ) {
 	this.console.log( `Hello, ${ name }!` )
 }
