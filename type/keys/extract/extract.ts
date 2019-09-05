@@ -6,7 +6,7 @@
 type $mol_type_keys_extract< Input , Lower , Upper >
 	= {
 		[ Field in keyof Input ] :
-			Input[ Field ] extends Lower
+		Lower extends Input[ Field ]
 			? never
 			: Input[ Field ] extends Upper
 				? Field
