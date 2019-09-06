@@ -33,7 +33,7 @@ namespace $.$$ {
 		}
 		
 		lamp_rows() {
-			return super.lamp_rows().concat(this.lamps().map( lamp => this.Lamp_row( lamp[ 'no' ] ) ))
+			return [...super.lamp_rows(), ...this.lamps().map( lamp => this.Lamp_row( lamp[ 'no' ] ) )]
 		}
 		
 		lamp_title( id : string ) {
