@@ -139,8 +139,8 @@ namespace $.$$ {
 		}
 
 		result_col_title( col_id : string ) {
-			if( col_id === 'sample' ) return [ this.result_col_title_sample() ]
-			return this.step_title( col_id )
+			if( col_id === 'sample' ) return this.result_col_title_sample()
+			return this.step_title( col_id ).join(' ')
 		}
 		
 		step_title( step : string ) {

@@ -20,8 +20,8 @@ $mol_app_bench $mol_view
 							<= param_fields /
 					<= Result $mol_bench
 						result <= result null
-						col_head_label!id /
-							<= result_col_title!id /
+						col_head_title!id
+							<= result_col_title!id \
 						col_sort?val <=> result_col_sort?val \
 		<= Sandbox_page $mol_page
 			title <= sandbox_title @ \Sandbox
