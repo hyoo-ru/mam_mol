@@ -257,7 +257,7 @@ namespace $ {
 		attr_static() : { [ key : string ] : string|number|boolean } {
 			let attrs : any = {}
 			
-			for( let name of this.view_names() ) attrs[ name.replace( /\$/g , '' ).toLowerCase() ] = ''
+			for( let name of this.view_names() ) attrs[ name.replace( /\$/g , '' ).replace( /^(?=\d)/ , '_' ).toLowerCase() ] = ''
 			
 			return attrs
 		}
