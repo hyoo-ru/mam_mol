@@ -1,6 +1,6 @@
 # $mol_type
 
-Collection of typescript meta types for complext logic.
+Collection of TypeScript meta types for complex logic.
 
 ![Type Asserts](https://i.imgur.com/CNI5KvX.png)
 
