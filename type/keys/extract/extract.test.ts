@@ -22,7 +22,7 @@ namespace $ {
 			unknown ,
 			Function
 		> ,
-		'b' | 'd' | 'c' | 'g'
+		'b' | 'd' | 'c' | 'g' 
 	>
 
 	type only_signature = $mol_type_assert<
@@ -30,8 +30,8 @@ namespace $ {
 			{
 				a : 1
 				b : ()=> void
-				c : ( x : 1 )=> 2
-				d : ( x : 1 , y : 2 )=> 3
+				c : ( x : number )=> 2
+				d : ( x : number , y : number )=> 3
 				e : unknown
 				f : any
 				g : never
