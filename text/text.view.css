@@ -106,23 +106,23 @@
 }
 
 [mol_text_type="code-keyword"] {
-	color: #E06252;
+	color: hsl(0, 70%, 60%);
 }
 
 [mol_text_type="code-field"] {
-	color: #D9963F;
+	color: hsl(300, 70%, 60%);
 }
 
 [mol_text_type="code-tag"] {
-	color: #D9963F;
+	color: hsl(30, 70%, 60%);
 }
 
 [mol_text_type="code-global"] {
-	color: #61AFEF;
+	color: hsl(210, 80%, 60%);
 }
 
 [mol_text_type="code-decorator"] {
-	color: #4BB6A7;
+	color: hsl(180, 40%, 60%);
 }
 
 [mol_text_type="code-punctuation"] {
@@ -130,15 +130,15 @@
 }
 
 [mol_text_type="code-string"] {
-	color: #98C363;
+	color: hsl(90, 40%, 60%);
 }
 
 [mol_text_type="code-number"] {
-	color: #E06252;
+	color: hsl(60, 70%, 40%);
 }
 
 [mol_text_type="code-call"] {
-	color: #C678DD;
+	color: hsl(270, 60%, 60%);
 }
 
 [mol_text_type="code-comment-inline"] ,
