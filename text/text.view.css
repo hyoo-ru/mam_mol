@@ -78,6 +78,7 @@
 [mol_text_type="text-link"] {
 	color: var(--mol_theme_control);
 	text-decoration: none;
+	padding: 0;
 }
 
 [mol_text_link]:hover ,
@@ -114,7 +115,7 @@
 }
 
 [mol_text_type="code-tag"] {
-	color: hsl(30, 70%, 60%);
+	color: hsl(330, 70%, 60%);
 }
 
 [mol_text_type="code-global"] {
@@ -130,15 +131,19 @@
 }
 
 [mol_text_type="code-string"] {
-	color: hsl(90, 40%, 60%);
+	color: hsl(90, 40%, 50%);
 }
 
 [mol_text_type="code-number"] {
-	color: hsl(60, 70%, 40%);
+	color: hsl(60, 70%, 30%);
 }
 
 [mol_text_type="code-call"] {
 	color: hsl(270, 60%, 60%);
+}
+
+[mol_text_type="code-link"] {
+	color: hsl(240, 60%, 60%);
 }
 
 [mol_text_type="code-comment-inline"] ,
