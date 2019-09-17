@@ -28,7 +28,7 @@ npm install mol_tree
 ```
 
 ```typescript
-import { mol_tree as Tree } from 'mol_tree'
+import { $mol_tree as Tree } from 'mol_tree'
 
 const users = Tree.fromString(`
 user
