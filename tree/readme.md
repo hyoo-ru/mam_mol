@@ -21,7 +21,7 @@ user
 `);
 ```
 
-# NPM usage
+## NPM Usage
 
 ```sh
 npm install mol_tree
