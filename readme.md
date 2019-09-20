@@ -135,7 +135,7 @@ Add **web entry point** at `./my/hello/index.html`:
 <body mol_view_root="$my_hello">
 ```
 
-Your application will be served at **`http://localhost:8080/my/hello/`**. Open it. You should refresh page to view your changes.
+Your application will be served at **`http://localhost:9080/my/hello/`**. Open it. You should refresh page to view your changes.
 
 Add [**declarative component description**](view) at `./my/hello/hello.view.tree` with string input field and greeting message:
 
@@ -296,7 +296,7 @@ There are the full set of supports bundles:
 
 **Support of Source Maps**. Sources are compiled and integrate to maps, they are fully self-sufficient.
 
-**Development server**, witch would be compile bundles as needed. For example, when requested `http://localhost:8080/mol/app/todomvc/-/web.js` the `js` bundle is being built of `mol/app/todomvc` for `web` environment. Rebuilding would be occur only if some source file would be changed.
+**Development server**, witch would be compile bundles as needed. For example, when requested `http://localhost:9080/mol/app/todomvc/-/web.js` the `js` bundle is being built of `mol/app/todomvc` for `web` environment. Rebuilding would be occur only if some source file would be changed.
 
 **Transpilling of modern CSS into CSS supported by browsers** ([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): vendor prefixes and variables etc.
 

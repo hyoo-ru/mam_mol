@@ -11,7 +11,7 @@ declare namespace JSX {
 	
 	/** Props for html elements */
 	export type IntrinsicElements = {
-		[ key in keyof HTMLElementTagNameMap ]? : $mol_type_partial_deep< HTMLElementTagNameMap[ key ] >
+		[ key in keyof HTMLElementTagNameMap ]? : $.$mol_type_partial_deep< HTMLElementTagNameMap[ key ] >
 	}
 	
 	/** Additional undeclared props */
@@ -24,7 +24,7 @@ declare namespace JSX {
 		}
 	}
 	
-	// export type IntrinsicClassAttributes< Class > = $mol_type_partial_deep< Omit< Class , 'valueOf' > >
+	// export type IntrinsicClassAttributes< Class > = $.$mol_type_partial_deep< Omit< Class , 'valueOf' > >
 	
 	interface ElementChildrenAttribute {
 	}

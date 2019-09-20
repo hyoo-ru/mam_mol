@@ -144,7 +144,7 @@ namespace $ {
 					needCache = true
 				}
 				
-				const getValue = ( value : $mol_tree )=> { try {
+				const getValue = ( value : $mol_tree , definition? : boolean )=> { try {
 					switch( true ) {
 						case( value.type === '' ) :
 							return JSON.stringify( value.value )
@@ -168,6 +168,7 @@ namespace $ {
 							} )
 							return `[ ${ items.join(' , ') } ]` + ( item_type ? ` as readonly ( ${ item_type } )[]` : ` as readonly any[]` )
 						case( value.type[0] === '$' ) :
+							if( !definition ) throw value.error( 'Objects should be bound' )
 							needCache = true
 							var overs : string[] = []
 							value.sub.forEach( over => {
@@ -254,7 +255,7 @@ namespace $ {
 				if( param.sub.length > 1 ) throw new Error( 'Too more sub' )
 				
 				param.sub.forEach( child => {
-					var val = getValue( child )
+					var val = getValue( child , true )
 					if( !val ) return
 					
 					propDefs[ propName[1] ] = param

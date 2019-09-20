@@ -3,7 +3,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		tokens() {
-			return $mol_syntax_md_flow.tokenize( this.text() ) as readonly $mol_syntax_token[]
+			return this.$.$mol_syntax_md_flow.tokenize( this.text() ) as readonly $mol_syntax_token[]
 		}
 		
 		rows() {
@@ -75,7 +75,7 @@ namespace $.$$ {
 		}
 		
 		text2spans( prefix : string , text : string ) {
-			return $mol_syntax_md_line.tokenize( text ).map( ( token , index )=> {
+			return this.$.$mol_syntax_md_line.tokenize( text ).map( ( token , index )=> {
 				const id = `${prefix}/${index}`
 				
 				switch( token.name ) {
@@ -120,7 +120,7 @@ namespace $.$$ {
 		}
 		
 		code2spans( prefix : string , text : string ) {
-			return $mol_syntax_md_code.tokenize( text ).map( ( token , index )=> {
+			return this.$.$mol_syntax_md_code.tokenize( text ).map( ( token , index )=> {
 				const id = `${prefix}/${index}`
 				
 				const span = this.Span( id )

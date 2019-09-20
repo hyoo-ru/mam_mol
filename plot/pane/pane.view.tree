@@ -11,18 +11,18 @@ $mol_plot_pane $mol_svg_root
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
 	gap $mol_vector_2d /
-		$mol_vector_range /
+		<= gap_x $mol_vector_range /
 			<= gap_left
 			<= gap_right
-		$mol_vector_range /
+		<= gap_y $mol_vector_range /
 			<= gap_bottom
 			<= gap_top
 	-
 	shift_limit $mol_vector_2d /
-		$mol_vector_range /
+		<= shift_limit_x $mol_vector_range /
 			0
 			0
-		$mol_vector_range /
+		<= shift_limit_y $mol_vector_range /
 			0
 			0
 	shift_default /number
@@ -32,10 +32,10 @@ $mol_plot_pane $mol_svg_root
 		0
 		0
 	scale_limit $mol_vector_2d /
-		$mol_vector_range /
+		<= scale_limit_x $mol_vector_range /
 			0
 			Infinity
-		$mol_vector_range /
+		<= scale_limit_y $mol_vector_range /
 			0
 			Infinity
 	scale_default /number
@@ -53,17 +53,17 @@ $mol_plot_pane $mol_svg_root
 		1
 		1
 	dimensions_viewport $mol_vector_2d /
-		$mol_vector_range /
+		<= dimensions_viewport_x $mol_vector_range /
 			Infinity
 			-Infinity
-		$mol_vector_range /
+		<= dimensions_viewport_y $mol_vector_range /
 			Infinity
 			-Infinity
 	dimensions $mol_vector_2d /
-		$mol_vector_range /
+		<= dimensions_x $mol_vector_range /
 			Infinity
 			-Infinity
-		$mol_vector_range /
+		<= dimensions_y $mol_vector_range /
 			Infinity
 			-Infinity
 	-
