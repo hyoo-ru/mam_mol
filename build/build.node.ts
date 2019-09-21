@@ -353,6 +353,9 @@ namespace $ {
 		@ $mol_mem_key
 		modEnsure( path : string ) {
 
+			// Prevent automatic state clear on every bundle build
+			$mol_atom_current().destructor = ()=> {}
+
 			var mod = $mol_file.absolute( path )
 			if( mod === this.root() ) return false
 
