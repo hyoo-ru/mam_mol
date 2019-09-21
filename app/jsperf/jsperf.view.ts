@@ -102,7 +102,7 @@ namespace $.$$ {
 			return measure
 		}
 
-		@ $mol_mem
+		@ $mol_fiber_solid.method
 		run() {
 
 			function measure( inner : string , outer = [ '' , '' ] ) {
@@ -174,7 +174,6 @@ namespace $.$$ {
 
 			this.measures( measures )
 
-			$mol_atom2.current.destructor()
 		}
 
 	}
