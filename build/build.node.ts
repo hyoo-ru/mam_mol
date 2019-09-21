@@ -1,5 +1,4 @@
 namespace $ {
-	const typescript = $node.typescript as typeof import ('typescript')
 
 	export function $mol_build_start( paths : string[] ) {
 		var build = $mol_build.relative( '.' )
@@ -20,7 +19,7 @@ namespace $ {
 		}
 	}
 	
-	setTimeout( $mol_fiber_root( ()=> $mol_fiber_unlimit( ()=> $mol_build_start( process.argv.slice( 2 ) ) as any ) ) )
+	setTimeout( ()=> $mol_build_start( process.argv.slice( 2 ) ) )
 
 	export class $mol_build extends $mol_object {
 		
@@ -200,7 +199,7 @@ namespace $ {
 		@ $mol_mem
 		tsOptions() {
 			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() ).compilerOptions
-			const res = typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
+			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
 			if( res.errors.length ) throw res.errors
 			return res.options
 		}
@@ -208,7 +207,7 @@ namespace $ {
 		@ $mol_mem_key
 		tsSource( { path , target } : { path : string , target : number } ) {
 			const content = $mol_file.absolute( path ).content().toString()
-			return typescript.createSourceFile( path , content , target )
+			return $node.typescript.createSourceFile( path , content , target )
 		}
 
 		@ $mol_mem_key
@@ -237,21 +236,21 @@ namespace $ {
 			const paths = this.tsPaths({ path , exclude , bundle })
 			if( !paths.length ) return null
 
-			var host = typescript.createWatchCompilerHost(
+			var host = $node.typescript.createWatchCompilerHost(
 
 				paths ,
 				
 				this.tsOptions(),
 				
 				{
-					... typescript.sys ,
+					... $node.typescript.sys ,
 					setTimeout : ( cb : any )=> cb(),
 					writeFile : ( path : string , content : string )=> {
 						$mol_file.relative( path ).content( content , $mol_atom_force_cache )
 					} ,
 				},
 				
-				typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
+				$node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
 
 				( diagnostic : any )=> {
 
@@ -259,7 +258,7 @@ namespace $ {
 
 						const file = $mol_file.absolute( diagnostic.file.fileName.replace( /\.tsx?$/ , '.js' ) )
 						
-						const error = new Error( typescript.formatDiagnostic( diagnostic , {
+						const error = new Error( $node.typescript.formatDiagnostic( diagnostic , {
 							getCurrentDirectory : ()=> this.root().path() ,
 							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
 							getNewLine : ()=> '\n' ,
@@ -279,7 +278,7 @@ namespace $ {
 				
 			)
 
-			const builder = typescript.createWatchProgram( host )
+			const builder = $node.typescript.createWatchProgram( host )
 
 			return $mol_object.make({ destructor : ()=> { builder.updateRootFileNames([]) } })
 
@@ -654,7 +653,7 @@ namespace $ {
 				concater.add_content( 'export default $', '-' )
 			}
 			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() ) )
-			targetMap.content( concater.toJSON() )
+			targetMap.content( concater.toString() )
 			
 			this.logBundle( target )
 
@@ -712,7 +711,7 @@ namespace $ {
 			)
 			
 			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() ) )
-			targetMap.content( concater.toJSON() )
+			targetMap.content( concater.toString() )
 			
 			this.logBundle( target )
 			

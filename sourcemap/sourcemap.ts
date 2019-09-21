@@ -61,12 +61,12 @@ namespace $ {
 			}
 		}
 
-		toJS() {
+		toJSON() {
 			return this.sourcemap
 		}
 
-		toJSON() {
-			return JSON.stringify(this.toJS())
+		toString() {
+			return JSON.stringify(this.toJSON())
 		}
 
 		add_content(content: string, file?: string) {
