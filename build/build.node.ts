@@ -198,7 +198,7 @@ namespace $ {
 		
 		@ $mol_mem
 		tsOptions() {
-			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() ).compilerOptions
+			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content().toString() ).compilerOptions
 			const res = $node['typescript'].convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
 			if( res.errors.length ) throw res.errors
 			return res.options
@@ -211,14 +211,29 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		tsPaths( { path , exclude } : { path : string , exclude? : string[] } ) {
-			return this.sourcesAll( { path , exclude } ).filter( src => /tsx?$/.test( src.ext() ) ).map( src => src.path() )
+		tsPaths( { path , exclude , bundle } : { path : string , bundle : string , exclude? : string[] } ) {
+
+			const sources = this.sourcesAll( { path , exclude } ).filter( src => /tsx?$/.test( src.ext() ) )
+
+			if( sources.length && bundle === 'node' ) {
+				const types = [] as string[]
+				
+				for( let dep of this.nodeDeps({ path , exclude }) ) {
+					types.push( '\t' + JSON.stringify( dep ) + ' : typeof import( ' + JSON.stringify( dep ) + ' )' )
+				}
+				
+				const node_types = $mol_file.absolute( path ).resolve( `-node/deps.d.ts` )
+				node_types.content( 'interface $node {\n ' + types.join( '\n' ) + '\n}' )
+				sources.push( node_types )
+			}
+
+			return sources.map( src => src.path() )
 		}
 		
 		@ $mol_mem_key
-		tsCompile( { path , exclude } : { path : string , exclude? : string[] } ) {
+		tsCompile( { path , exclude , bundle } : { path : string , bundle : string , exclude? : string[] } ) {
 
-			const paths = this.tsPaths({ path , exclude })
+			const paths = this.tsPaths({ path , exclude , bundle })
 			if( !paths.length ) return null
 
 			var host = $node.typescript.createWatchCompilerHost(
@@ -592,9 +607,9 @@ namespace $ {
 			var sources = this.sourcesJS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			this.tsCompile({ path , exclude })
+			this.tsCompile({ path , exclude , bundle })
 			
-			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
+			var concater = new $node[ 'concat-with-sourcemaps' ].default( true , target.name() , '\n;\n' )
 			if( bundle === 'node' ) {
 				concater.add( '' , 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
 				concater.add( '' , "process.on( 'unhandledRejection' , up => { throw up } )" )
@@ -621,7 +636,7 @@ namespace $ {
 					
 					var srcMap = src.parent().resolve( src.name() + '.map' ).content()
 					if( srcMap ) {
-						var map = JSON.parse( srcMap )
+						var map = JSON.parse( srcMap.toString() )
 						map.sourceRoot = src.parent().relate( target.parent() )
 					}
 					
@@ -661,7 +676,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
+			var concater = new $node[ 'concat-with-sourcemaps' ].default( true , target.name() , '\n;\n' )
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 			var sources = this.sourcesJS( { path , exclude : exclude_ext } )
@@ -677,7 +692,7 @@ namespace $ {
 			}
 			if( sources.length === 0 ) return []
 			
-			this.tsCompile({ path , exclude : exclude_ext })
+			this.tsCompile({ path , exclude : exclude_ext , bundle })
 			
 			const errors = [] as Error[]
 			
@@ -698,7 +713,7 @@ namespace $ {
 					
 					var srcMap = src.parent().resolve( src.name() + '.map' ).content()
 					if( srcMap ) {
-						var map = JSON.parse( srcMap )
+						var map = JSON.parse( srcMap.toString() )
 						map.sourceRoot = src.parent().relate( target.parent() )
 					}
 					
@@ -753,7 +768,7 @@ namespace $ {
 			var sources = this.sourcesDTS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() )
+			var concater = new $node[ 'concat-with-sourcemaps' ].default( true , target.name() )
 			
 			sources.forEach(
 				function( src ) {
@@ -789,16 +804,36 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
+		nodeDeps( { path , exclude } : { path : string , exclude : string[] } ) : string[] {
+			
+			var res = new Set<string>()
+			var sources = this.sourcesAll( { path , exclude } )
+			
+			for( let src of sources ) {
+				let deps = this.srcDeps( src.path() )
+				for( let dep in deps ) {
+					if( !/^\/node(?:_modules)?\//.test( dep ) ) continue
+					let mod = dep.replace( /^\/node(?:_modules)?\// , '' ).replace( /\/.*/g , '' )
+					res.add( mod )
+				}
+			}
+
+			return [ ... res ]
+
+		}
+
+		@ $mol_mem_key
 		bundlePackageJSON( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/package.json` )
 			
-			var sources = this.sourcesAll( { path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) } )
+			exclude = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
+			var sources = this.sourcesAll( { path , exclude } )
 			
 			var json : any
 			try {
-				$mol_atom_fence( ()=> json = target.exists() && JSON.parse( target.content() ) )
+				$mol_atom_fence( ()=> json = target.exists() && JSON.parse( target.content().toString() ) )
 			} catch( error ) {
 				console.error( error )
 			}
@@ -816,13 +851,9 @@ namespace $ {
 			json.version = json.version.replace( /\d+$/, ( build : string )=> parseInt( build ) + 1 )
 			json.dependencies = {}
 			
-			for( let src of sources ) {
-				let deps = this.srcDeps( src.path() )
-				for( let dep in deps ) {
-					if( !/^\/node(?:_modules)?\//.test( dep ) ) continue
-					let mod = dep.replace( /^\/node(?:_modules)?\// , '' ).replace( /\/.*/g , '' )
-					json.dependencies[ mod ] = `*`
-				}
+			for( let dep of this.nodeDeps({ path , exclude }) ) {
+				if( require('module').builtinModules.includes(dep) ) continue
+				json.dependencies[ dep ] = `*`
 			}
 			
 			target.content( JSON.stringify( json , null , '  ' ) )
@@ -943,7 +974,7 @@ namespace $ {
 					
 					if( !locales[ lang ] ) locales[ lang ] = {}
 					
-					const loc = JSON.parse( src.content() )
+					const loc = JSON.parse( src.content().toString() )
 					for( let key in loc ) {
 						locales[ lang ][ key ] = loc[ key ]
 					}
@@ -1062,9 +1093,11 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$(([a-z0-9]{2,})(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name , pack )=> {
-						name = name.split( /(?=[A-Z])/ ).join( '_' ).toLowerCase()
-						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[_.\[\]'"]+/g , '/' ) ] : priority } )
+					/\$([a-z0-9]{2,})(?:((?:[._][a-z0-9]+)+)|\[\s*['"]([^'"]+?)['"]\s*\])?/ig , ( str , pack , path , name )=> {
+						if( path ) path = '/' + pack + path.split( /(?=[A-Z])/ ).join( '_' ).toLowerCase().replace( /[_.\[\]'"]+/g , '/' )
+						if( name ) name = '/' + pack + '/' + name
+						pack = '/' + pack
+						$mol_build_depsMerge( depends , { [ path || name || pack ] : priority } )
 						return str
 					}
 				)

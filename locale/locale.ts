@@ -18,7 +18,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		static source( lang : string ) {
-			return JSON.parse( $mol_file.relative( `web.locale=${ lang }.json` ).content() )
+			return JSON.parse( $mol_file.relative( `web.locale=${ lang }.json` ).content().toString() )
 		}
 		
 		@ $mol_mem_key

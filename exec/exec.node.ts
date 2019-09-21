@@ -6,7 +6,7 @@ namespace $ {
 
 		console.info( `${ $node.path.relative( '' , dir ) }> ${app} ${ args.join( ' ' ) }` )
 
-		var res = $node.child_process.spawnSync(
+		var res = $node['child_process'].spawnSync(
 			app ,
 			args,
 			{
@@ -15,8 +15,8 @@ namespace $ {
 			}
 		)
 		
-		if( res.status || res.error ) return $mol_fail( res.error || new Error( res.stderr ) )
-		if( !res.stdout ) res.stdout = ''
+		if( res.status || res.error ) return $mol_fail( res.error || new Error( res.stderr.toString() ) )
+		if( !res.stdout ) res.stdout = new Buffer('')
 
 		return res
 	}

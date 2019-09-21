@@ -119,7 +119,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		content( next? : string , force? : $mol_atom_force ) {
+		content( next? : string | Buffer , force? : $mol_atom_force ) {
 			if( next === void 0 ) {
 				return this.stat() && $node.fs.readFileSync( this.path() )//.toString()
 			}
