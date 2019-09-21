@@ -1,6 +1,5 @@
 namespace $ {
 	const sourcemap_codec = $node['sourcemap-codec'] as typeof import ('sourcemap-codec')
-	type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
 	const path = $node.path as typeof import('path')
 
 	type SourceMapLine = ReturnType<typeof sourcemap_codec.decode>[0]
