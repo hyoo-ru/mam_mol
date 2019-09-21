@@ -76,30 +76,29 @@ namespace $ {
 				for (let i = 0, count = this.separator_count; i < count; i++) segment_lines.push([])
 			}
 			chunks.push(content)
-
-			if (!file) return
-
-			file = $mol_sourcemap_file(file)
-
-			let sourceIndex = source_indexes.get(file)
-			if (sourceIndex === undefined) {
-				sourceIndex = sources.length
-				sources.push(file)
-				source_indexes.set(file, sourceIndex)
+			let sourceIndex: number
+			if (file) {
+				file = $mol_sourcemap_file(file)
+				sourceIndex = source_indexes.get(file)
+				if (sourceIndex === undefined) {
+					sourceIndex = sources.length
+					sources.push(file)
+					source_indexes.set(file, sourceIndex)
+				}
 			}
 
 			let pos = 0
 			let originalLine = 0
 			do {
 				++originalLine
-				segment_lines.push([
-					[
+				const line: SourceMapLine = []
+				if (sourceIndex !== undefined) line.push([
 						0,
 						sourceIndex,
 						originalLine,
 						0,
-					] as SourceMapSegment
-				] as SourceMapLine)
+					] as SourceMapSegment)
+				segment_lines.push(line)
 				pos = content.indexOf('\n', ++pos)
 			} while (pos !== -1)
 		}
