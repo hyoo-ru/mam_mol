@@ -81,7 +81,7 @@ $mol_app_studio $mol_book
 		prop_add?val <=> prop_add?val \
 		highlight <= prop_filter
 	-
-	class_name_self?val \App
+	class_name_self?val \$my_app
 	class_name_base?val \$mol_view
 	class_self?val $mol_tree
 	classes $mol_tree
