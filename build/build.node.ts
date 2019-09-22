@@ -198,7 +198,7 @@ namespace $ {
 		
 		@ $mol_mem
 		tsOptions() {
-			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() ).compilerOptions
+			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() + '').compilerOptions
 			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
 			if( res.errors.length ) throw res.errors
 			return res.options
@@ -629,25 +629,24 @@ namespace $ {
 							return
 						}
 					}
-					let content = ''
 					try {
-						content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
+						const content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
+						const isCommonJs = /module\.exports/.test( content )
+					
+						if( isCommonJs ) {
+							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n`, '-' )
+						}
+	
+						const srcMap = src.parent().resolve( src.name() + '.map' ).content()
+						if(content) concater.add( content, src.relate( target.parent() ), srcMap + '')
+						
+						if( isCommonJs ) {
+							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
+							const idShort = idFull.replace( /\/index\.js$/ , '' )
+							concater.add( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
+						}
 					} catch( error ) {
 						errors.push( error )
-					}
-					const isCommonJs = /module\.exports/.test( content )
-					
-					if( isCommonJs ) {
-						concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n`, '-' )
-					}
-
-					const srcMap = src.parent().resolve( src.name() + '.map' ).content()
-					concater.add( content, src.relate( target.parent() ), srcMap )
-					
-					if( isCommonJs ) {
-						const idFull = src.relate( this.root().resolve( 'node_modules' ) )
-						const idShort = idFull.replace( /\/index\.js$/ , '' )
-						concater.add( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
 					}
 				}
 			)
@@ -705,12 +704,11 @@ namespace $ {
 					let content = ''					
 					try {
 						content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
-					} catch( error ) {
+						const srcMap = src.parent().resolve( src.name() + '.map' ).content()
+						if(content) concater.add( content, src.relate( target.parent() ), srcMap + '')
+						} catch( error ) {
 						errors.push( error )
 					}
-
-					const srcMap = src.parent().resolve( src.name() + '.map' ).content()
-					concater.add( content, src.relate( target.parent() ), srcMap )
 				}
 			)
 			

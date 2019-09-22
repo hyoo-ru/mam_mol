@@ -1,6 +1,6 @@
 namespace $ {
-	const sourcemap_codec = $node['sourcemap-codec'] as typeof import ('sourcemap-codec')
-	const path = $node.path as typeof import('path')
+	const sourcemap_codec = $node['sourcemap-codec']
+	const path = $node.path
 
 	type SourceMapLine = ReturnType<typeof sourcemap_codec.decode>[0]
 	type SourceMapSegment = SourceMapLine[0]
@@ -99,8 +99,24 @@ namespace $ {
 					this.sourceContent.push(null)
 				}
 			}
-			const contents = content.split('\n')
-			const linesCount = contents.length
+
+			// let pos = 0
+			// let originalLine = 0
+			// do {
+			// 	if (!file) segment_lines.push([])
+			// 	else segment_lines.push([
+			// 		[
+			// 			0,
+			// 			sourceIndex,
+			// 			originalLine,
+			// 			0,
+			// 		] as SourceMapSegment
+			// 	] as SourceMapLine)
+			// 	originalLine++
+			// 	pos = content.indexOf('\n', ++pos)
+			// } while (pos !== -1)
+
+			const linesCount = content.split('\n').length
 			for (let originalLine = 0; originalLine < linesCount; originalLine++) {
 				if (!file) segment_lines.push([])
 				else segment_lines.push([
@@ -127,7 +143,7 @@ namespace $ {
 
 			let sourceRoot = file ? path.dirname(file) : (raw.sourceRoot || '')
 			if (sourceRoot === '.') sourceRoot = ''
-			if (sourceRoot) sourceRoot += '/'
+			else if (sourceRoot) sourceRoot += '/'
 			const lines = sourcemap_codec.decode(raw.mappings)
 			for (let line of lines) {
 				const mergedLine: SourceMapLine = []
@@ -168,11 +184,17 @@ namespace $ {
 				}
 				segment_lines.push(mergedLine)
 			}
-			
+
 			const lineCount = content.split('\n').length
 			for (let i = lines.length; i < lineCount; i++) {
 				segment_lines.push([])
 			}
+			// let pos = 0
+			// let count = lines.length
+			// do {
+			// 	if (--count < 0) segment_lines.push([])
+			// 	pos = content.indexOf('\n', ++pos)
+			// } while (pos !== -1)
 		}
 	}
 }
