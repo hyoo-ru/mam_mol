@@ -609,10 +609,7 @@ namespace $ {
 			
 			this.tsCompile({ path , exclude , bundle })
 			
-			var concater = $mol_sourcemap_builder.make( init => {
-				init.file = target.name()
-				init.separator = $mol_sourcemap_separator.js
-			} )
+			var concater = new $mol_sourcemap_builder( target.name(), '\n;\n')
 
 			if( bundle === 'node' ) {
 				concater.add( 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
@@ -671,10 +668,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = $mol_sourcemap_builder.make( init => {
-				init.file = target.name()
-				init.separator = $mol_sourcemap_separator.js
-			} )
+			var concater = new $mol_sourcemap_builder( target.name(), '\n;\n')
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 			var sources = this.sourcesJS( { path , exclude : exclude_ext } )
@@ -759,10 +753,7 @@ namespace $ {
 			var sources = this.sourcesDTS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = $mol_sourcemap_builder.make( init => {
-				init.file = target.name()
-				init.separator = $mol_sourcemap_separator.default
-			} )
+			var concater = new $mol_sourcemap_builder( target.name() )
 			
 			sources.forEach(
 				function( src ) {

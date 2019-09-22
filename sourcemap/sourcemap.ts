@@ -19,12 +19,7 @@ namespace $ {
 		return file.replace(/\\/g, '/');
 	}
 
-	export const $mol_sourcemap_separator = {
-		js: '\n;\n',
-		default: '\n',
-	}
-
-	export class $mol_sourcemap_builder extends $mol_object2 {
+	export class $mol_sourcemap_builder {
 		file: string
 		version: number = 3
 
@@ -34,13 +29,13 @@ namespace $ {
 
 		protected separator_count: number
 
-		constructor( init? : ( obj : any )=> void ) {
-			super(init)
-			this.file = $mol_sourcemap_file(this.file)
+		constructor( file: string, separator = '\n' ) {
+			this.file = $mol_sourcemap_file(file)
 			const dir = path.dirname(this.file)
 			this.sourceRoot = dir && dir !== '.' ? (dir + '/') : ''
-			if (!this.separator || this.separator[this.separator.length - 1] !== '\n') this.separator += '\n'
-			this.separator_count = this.separator.split('\n').length - 2
+			if (!separator || separator[separator.length - 1] !== '\n') separator += '\n'
+			this.separator = separator
+			this.separator_count = separator.split('\n').length - 2
 		}
 
 		protected chunks: string[] = []
@@ -52,6 +47,7 @@ namespace $ {
 		protected names: string[] = []
 		protected name_indexes: Map<string, number> = new Map()
 		protected sourceContent: (null|string)[] = []
+
 		get content() {
 			return this.chunks.join('')
 		}
