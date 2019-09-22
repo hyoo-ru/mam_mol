@@ -10,7 +10,7 @@ namespace $ {
 		sources: string[]
 		names: string[]
 		sourceRoot?: string
-		sourcesContent?: string[]
+		sourcesContent?: (string|null)[]
 		mappings: string
 		file: string
 	}
@@ -19,11 +19,16 @@ namespace $ {
 		return file.replace(/\\/g, '/');
 	}
 
+	export const $mol_sourcemap_separator = {
+		js: '\n;\n',
+		default: '\n',
+	}
+
 	export class $mol_sourcemap_builder extends $mol_object2 {
 		file: string
 		version: number = 3
 
-		separator = '\n;\n'
+		separator: string
 
 		protected sourceRoot: string
 
@@ -34,7 +39,7 @@ namespace $ {
 			this.file = $mol_sourcemap_file(this.file)
 			this.sourceRoot = path.dirname(this.file)
 			if (!this.separator || this.separator[this.separator.length - 1] !== '\n') this.separator += '\n'
-			this.separator_count = this.separator.split('\n').length
+			this.separator_count = this.separator.split('\n').length - 2
 		}
 
 		protected chunks: string[] = []
@@ -45,9 +50,9 @@ namespace $ {
 
 		protected names: string[] = []
 		protected name_indexes: Map<string, number> = new Map()
-
+		protected sourceContent: (null|string)[] = []
 		get content() {
-			return this.chunks.join(this.separator)
+			return this.chunks.join('')
 		}
 
 		get sourcemap(): $mol_sourcemap_raw {
@@ -55,9 +60,10 @@ namespace $ {
 				version: this.version,
 				sources: this.sources,
 				names: this.names,
+				sourceRoot: this.sourceRoot === '.' || !this.sourceRoot ? undefined : this.sourceRoot,
+				mappings: sourcemap_codec.encode(this.segment_lines),
 				file: this.file,
-				sourceRoot: this.sourceRoot,
-				mappings: sourcemap_codec.encode(this.segment_lines)
+				sourcesContent: this.sourceContent,
 			}
 		}
 
@@ -69,13 +75,18 @@ namespace $ {
 			return JSON.stringify(this.toJSON())
 		}
 
-		add_content(content: string, file?: string) {
-			const {chunks, source_indexes, sources, segment_lines} = this
+		protected add_chunk(content: string) {
+			const {segment_lines, chunks, separator_count} = this
 			if (chunks.length !== 0) {
 				chunks.push(this.separator)
-				for (let i = 0, count = this.separator_count; i < count; i++) segment_lines.push([])
+				for (let i = 0; i < separator_count; i++) segment_lines.push([])	
 			}
 			chunks.push(content)
+		}
+
+		protected add_content(content: string, file?: string) {
+			const {source_indexes, sources, segment_lines} = this
+			this.add_chunk(content)
 			let sourceIndex: number
 			if (file) {
 				file = $mol_sourcemap_file(file)
@@ -84,32 +95,37 @@ namespace $ {
 					sourceIndex = sources.length
 					sources.push(file)
 					source_indexes.set(file, sourceIndex)
+					this.sourceContent.push(null)
 				}
 			}
-
-			let pos = 0
-			let originalLine = 0
-			do {
-				++originalLine
-				const line: SourceMapLine = []
-				if (sourceIndex !== undefined) line.push([
+			const contents = content.split('\n')
+			const linesCount = contents.length
+			for (let originalLine = 0; originalLine < linesCount; originalLine++) {
+				if (!file) segment_lines.push([])
+				else segment_lines.push([
+					[
 						0,
 						sourceIndex,
 						originalLine,
 						0,
-					] as SourceMapSegment)
-				segment_lines.push(line)
-				pos = content.indexOf('\n', ++pos)
-			} while (pos !== -1)
+					] as SourceMapSegment
+				] as SourceMapLine)
+			}
 		}
 
-		add_sourcemap(raw: $mol_sourcemap_raw | string, sourceRoot?: string) {
-			if (!(raw instanceof Object)) raw = JSON.parse(raw) as $mol_sourcemap_raw
-			if (!raw.mappings || !raw.mappings.length) return
-			if (sourceRoot === undefined) sourceRoot = raw.sourceRoot || ''
+		add(content: string, file?: string, raw?: $mol_sourcemap_raw | string) {
+			const {name_indexes, names, source_indexes, sources, segment_lines} = this
 			const bundleSourceRoot = this.sourceRoot
-			const {name_indexes, names, source_indexes, sources} = this
+			if (!content) throw new Error(`No content: ${file}, ${raw}`)
+			if (typeof raw === 'string') raw = JSON.parse(raw) as $mol_sourcemap_raw
+			if (!raw || !raw.mappings || raw.mappings.length === 0) {
+				this.add_content(content, file)
+				return
+			}
+			this.add_chunk(content)
 
+			const sourceRoot = file ? path.dirname(file) : (raw.sourceRoot || '')
+			
 			const lines = sourcemap_codec.decode(raw.mappings)
 			for (let line of lines) {
 				const mergedLine: SourceMapLine = []
@@ -124,6 +140,8 @@ namespace $ {
 							mergedSourceIndex = sources.length
 							source_indexes.set(source, mergedSourceIndex)
 							sources.push(source)
+							if (raw.sourcesContent)
+								this.sourceContent.push(raw.sourcesContent[sourceIndex])
 						}
 						mergedSegment.push(mergedSourceIndex)
 					}
@@ -146,12 +164,13 @@ namespace $ {
 
 					mergedLine.push(mergedSegment)
 				}
-				this.segment_lines.push(mergedLine)
+				segment_lines.push(mergedLine)
 			}
-		}
-
-		static file(file: string): $mol_sourcemap_builder {
-			return new $mol_sourcemap_builder(init => { init.file = file })
+			
+			const lineCount = content.split('\n').length
+			for (let i = lines.length; i < lineCount; i++) {
+				segment_lines.push([])
+			}
 		}
 	}
 }

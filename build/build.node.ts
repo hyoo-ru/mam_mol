@@ -609,12 +609,16 @@ namespace $ {
 			
 			this.tsCompile({ path , exclude , bundle })
 			
-			var concater = $mol_sourcemap_builder.file( target.name() )
+			var concater = $mol_sourcemap_builder.make( init => {
+				init.file = target.name()
+				init.separator = $mol_sourcemap_separator.js
+			} )
+
 			if( bundle === 'node' ) {
-				concater.add_content( 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
-				concater.add_content( "process.on( 'unhandledRejection' , up => { throw up } )" )
+				concater.add( 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
+				concater.add( "process.on( 'unhandledRejection' , up => { throw up } )" )
 			} else {
-				concater.add_content( 'function require'+'( path ){ return $node[ path ] }' )
+				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 			}
 
 			const errors = [] as Error[]
@@ -634,23 +638,21 @@ namespace $ {
 					const isCommonJs = /module\.exports/.test( content )
 					
 					if( isCommonJs ) {
-						concater.add_content( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n`, '-' )
+						concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n`, '-' )
 					}
-					concater.add_content(content, src.relate( target.parent() ))
 
 					const srcMap = src.parent().resolve( src.name() + '.map' ).content()
-
-					if (srcMap) concater.add_sourcemap( srcMap, src.parent().relate( target.parent() ) )
+					concater.add( content, src.relate( target.parent() ), srcMap )
 					
 					if( isCommonJs ) {
 						const idFull = src.relate( this.root().resolve( 'node_modules' ) )
 						const idShort = idFull.replace( /\/index\.js$/ , '' )
-						concater.add_content( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
+						concater.add( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
 					}
 				}
 			)
 			if( moduleTarget === 'esm' ) {
-				concater.add_content( 'export default $', '-' )
+				concater.add( 'export default $', '-' )
 			}
 			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() ) )
 			targetMap.content( concater.toString() )
@@ -670,18 +672,21 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = $mol_sourcemap_builder.file( target.name() )
+			var concater = $mol_sourcemap_builder.make( init => {
+				init.file = target.name()
+				init.separator = $mol_sourcemap_separator.js
+			} )
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 			var sources = this.sourcesJS( { path , exclude : exclude_ext } )
 			var sourcesNoTest = this.sourcesJS( { path , exclude } )
 			var sourcesTest = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
 			if( bundle === 'node' ) {
-				concater.add_content( 'require'+'( "source-map-support" ).install()\n' )
-				concater.add_content( "process.on( 'unhandledRejection' , up => { throw up } )" )
+				concater.add( 'require'+'( "source-map-support" ).install()\n' )
+				concater.add( "process.on( 'unhandledRejection' , up => { throw up } )" )
 				sources = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {
-				concater.add_content( 'function require'+'( path ){ return $node[ path ] }' )
+				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 				sources = sourcesTest
 			}
 			if( sources.length === 0 ) return []
@@ -704,9 +709,8 @@ namespace $ {
 						errors.push( error )
 					}
 
-					concater.add_content(content, src.relate( target.parent() ))
 					const srcMap = src.parent().resolve( src.name() + '.map' ).content()
-					if(srcMap) concater.add_sourcemap( srcMap, src.parent().relate( target.parent() ) )
+					concater.add( content, src.relate( target.parent() ), srcMap )
 				}
 			)
 			
@@ -757,12 +761,15 @@ namespace $ {
 			var sources = this.sourcesDTS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = $mol_sourcemap_builder.file( target.name() )
+			var concater = $mol_sourcemap_builder.make( init => {
+				init.file = target.name()
+				init.separator = $mol_sourcemap_separator.default
+			} )
 			
 			sources.forEach(
 				function( src ) {
 					if( !src.content() ) return
-					concater.add_content( src.content().toString(), src.relate( target.parent() ) )
+					concater.add( src.content().toString(), src.relate( target.parent() ) )
 				}
 			)
 			
