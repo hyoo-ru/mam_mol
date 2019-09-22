@@ -37,7 +37,8 @@ namespace $ {
 		constructor( init? : ( obj : any )=> void ) {
 			super(init)
 			this.file = $mol_sourcemap_file(this.file)
-			this.sourceRoot = path.dirname(this.file)
+			const dir = path.dirname(this.file)
+			this.sourceRoot = dir && dir !== '.' ? (dir + '/') : ''
 			if (!this.separator || this.separator[this.separator.length - 1] !== '\n') this.separator += '\n'
 			this.separator_count = this.separator.split('\n').length - 2
 		}
@@ -60,7 +61,7 @@ namespace $ {
 				version: this.version,
 				sources: this.sources,
 				names: this.names,
-				sourceRoot: this.sourceRoot === '.' || !this.sourceRoot ? undefined : this.sourceRoot,
+				sourceRoot: this.sourceRoot || undefined,
 				mappings: sourcemap_codec.encode(this.segment_lines),
 				file: this.file,
 				sourcesContent: this.sourceContent,
@@ -124,8 +125,9 @@ namespace $ {
 			}
 			this.add_chunk(content)
 
-			const sourceRoot = file ? path.dirname(file) : (raw.sourceRoot || '')
-			
+			let sourceRoot = file ? path.dirname(file) : (raw.sourceRoot || '')
+			if (sourceRoot === '.') sourceRoot = ''
+			if (sourceRoot) sourceRoot += '/'
 			const lines = sourcemap_codec.decode(raw.mappings)
 			for (let line of lines) {
 				const mergedLine: SourceMapLine = []
@@ -134,7 +136,7 @@ namespace $ {
 
 					if (segment.length > 1) {
 						const [, sourceIndex] = segment
-						const source = path.relative(bundleSourceRoot, path.join(sourceRoot, raw.sources[sourceIndex]))
+						const source = bundleSourceRoot + sourceRoot + raw.sources[sourceIndex]
 						let mergedSourceIndex = source_indexes.get(source)
 						if (mergedSourceIndex === undefined) {
 							mergedSourceIndex = sources.length
