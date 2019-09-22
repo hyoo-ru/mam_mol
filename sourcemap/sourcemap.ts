@@ -100,22 +100,6 @@ namespace $ {
 				}
 			}
 
-			// let pos = 0
-			// let originalLine = 0
-			// do {
-			// 	if (!file) segment_lines.push([])
-			// 	else segment_lines.push([
-			// 		[
-			// 			0,
-			// 			sourceIndex,
-			// 			originalLine,
-			// 			0,
-			// 		] as SourceMapSegment
-			// 	] as SourceMapLine)
-			// 	originalLine++
-			// 	pos = content.indexOf('\n', ++pos)
-			// } while (pos !== -1)
-
 			const linesCount = content.split('\n').length
 			for (let originalLine = 0; originalLine < linesCount; originalLine++) {
 				if (!file) segment_lines.push([])
@@ -186,15 +170,7 @@ namespace $ {
 			}
 
 			const lineCount = content.split('\n').length
-			for (let i = lines.length; i < lineCount; i++) {
-				segment_lines.push([])
-			}
-			// let pos = 0
-			// let count = lines.length
-			// do {
-			// 	if (--count < 0) segment_lines.push([])
-			// 	pos = content.indexOf('\n', ++pos)
-			// } while (pos !== -1)
+			for (let i = lines.length; i < lineCount; i++) segment_lines.push([])
 		}
 	}
 }
