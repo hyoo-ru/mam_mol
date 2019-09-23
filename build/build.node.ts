@@ -609,7 +609,7 @@ namespace $ {
 			
 			this.tsCompile({ path , exclude , bundle })
 			
-			var concater = new $mol_sourcemap_builder( target.name(), '\n;\n')
+			var concater = new $mol_sourcemap_builder( target.name(), '\n;')
 
 			if( bundle === 'node' ) {
 				concater.add( 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
@@ -668,7 +668,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $mol_sourcemap_builder( target.name(), '\n;\n')
+			var concater = new $mol_sourcemap_builder( target.name(), '\n;')
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 			var sources = this.sourcesJS( { path , exclude : exclude_ext } )
