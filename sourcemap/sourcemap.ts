@@ -15,26 +15,17 @@ namespace $ {
 		file: string
 	}
 
-	function $mol_sourcemap_file(file: string) {
-		return file.replace(/\\/g, '/');
-	}
-
 	export class $mol_sourcemap_builder {
-		file: string
 		version: number = 3
-
-		separator: string
 
 		protected sourceRoot: string
 
 		protected separator_count: number
 
-		constructor( file: string, separator = '\n' ) {
-			this.file = $mol_sourcemap_file(file)
-			const dir = path.dirname(this.file)
+		constructor( readonly file: string, readonly separator = '' ) {
+			const dir = path.dirname(file)
 			this.sourceRoot = dir && dir !== '.' ? (dir + '/') : ''
-			if (!separator || separator[separator.length - 1] !== '\n') separator += '\n'
-			this.separator = separator
+			this.separator += '\n'
 			this.separator_count = separator.split('\n').length - 2
 		}
 
@@ -86,7 +77,6 @@ namespace $ {
 			this.add_chunk(content)
 			let sourceIndex: number
 			if (file) {
-				file = $mol_sourcemap_file(file)
 				sourceIndex = source_indexes.get(file)
 				if (sourceIndex === undefined) {
 					sourceIndex = sources.length
