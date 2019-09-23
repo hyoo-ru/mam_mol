@@ -53,7 +53,7 @@ namespace $ {
 			.forEach(
 				child => {
 					const name = child.name()
-					if( !/^\w/i.test( name ) ) return false
+					if( !/^[a-z0-9]/i.test( name ) ) return false
 					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
 					
 					if( /(meta\.tree)$/.test( name ) ) {
