@@ -609,7 +609,7 @@ namespace $ {
 			
 			this.tsCompile({ path , exclude , bundle })
 			
-			var concater = new $mol_sourcemap_builder( target.name(), '\n;')
+			var concater = new $mol_sourcemap_builder( target.name(), ';')
 
 			if( bundle === 'node' ) {
 				concater.add( 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
@@ -627,7 +627,7 @@ namespace $ {
 						}
 					}
 					try {
-						const content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
+						const content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const isCommonJs = /module\.exports/.test( content )
 					
 						if( isCommonJs ) {
@@ -650,7 +650,7 @@ namespace $ {
 			if( moduleTarget === 'esm' ) {
 				concater.add( 'export default $', '-' )
 			}
-			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() ) )
+			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
 			targetMap.content( concater.toString() )
 			
 			this.logBundle( target )
@@ -668,7 +668,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $mol_sourcemap_builder( target.name(), '\n;')
+			var concater = new $mol_sourcemap_builder( target.name(), ';')
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 			var sources = this.sourcesJS( { path , exclude : exclude_ext } )
@@ -697,7 +697,7 @@ namespace $ {
 					}
 					let content = ''					
 					try {
-						content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
+						content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const srcMap = src.parent().resolve( src.name() + '.map' ).content()
 						if(content) concater.add( content, src.relate( target.parent() ), srcMap + '')
 						} catch( error ) {
@@ -706,7 +706,7 @@ namespace $ {
 				}
 			)
 			
-			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() ) )
+			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
 			targetMap.content( concater.toString() )
 			
 			this.logBundle( target )
