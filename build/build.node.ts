@@ -211,7 +211,7 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
-		tsPaths( { path , exclude , bundle } : { path : string , bundle : string , exclude? : string[] } ) {
+		tsPaths( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
 
 			const sources = this.sourcesAll( { path , exclude } ).filter( src => /tsx?$/.test( src.ext() ) )
 
@@ -231,7 +231,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		tsCompile( { path , exclude , bundle } : { path : string , bundle : string , exclude? : string[] } ) {
+		tsCompile( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
 
 			const paths = this.tsPaths({ path , exclude , bundle })
 			if( !paths.length ) return null
@@ -598,7 +598,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		bundleJS( { path , exclude , bundle , moduleTarget } : { path : string , exclude? : string[] , bundle : string, moduleTarget? : string } ) : $mol_file[] {
+		bundleJS( { path , exclude , bundle , moduleTarget } : { path : string , exclude : string[] , bundle : string, moduleTarget? : string } ) : $mol_file[] {
 			var pack = $mol_file.absolute( path )
 			var mt = moduleTarget ? `.${moduleTarget}` : ''
 			var target = pack.resolve( `-/${bundle}${mt}.js` )
@@ -1077,8 +1077,8 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$([a-z0-9]{2,})(?:((?:[._][a-z0-9]+)+)|\[\s*['"]([^'"]+?)['"]\s*\])?/ig , ( str , pack , path , name )=> {
-						if( path ) path = '/' + pack + path.split( /(?=[A-Z])/ ).join( '_' ).toLowerCase().replace( /[_.\[\]'"]+/g , '/' )
+					/\$([a-z0-9]{2,})(?:((?:[._A-Z0-9][a-z0-9]+)+)|\[\s*['"]([^'"]+?)['"]\s*\])?/g , ( str , pack , path , name )=> {
+						if( path ) path = '/' + pack + path.replace( /(?=[A-Z])/g , '_' ).toLowerCase().replace( /[_.\[\]'"]+/g , '/' )
 						if( name ) name = '/' + pack + '/' + name
 						pack = '/' + pack
 						$mol_build_depsMerge( depends , { [ path || name || pack ] : priority } )

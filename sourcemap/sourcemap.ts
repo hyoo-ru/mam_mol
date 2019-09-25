@@ -75,7 +75,7 @@ namespace $ {
 		protected add_content(content: string, file?: string) {
 			const {source_indexes, sources, segment_lines} = this
 			this.add_chunk(content)
-			let sourceIndex: number
+			let sourceIndex: number | undefined
 			if (file) {
 				sourceIndex = source_indexes.get(file)
 				if (sourceIndex === undefined) {
