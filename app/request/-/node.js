@@ -1,8 +1,6 @@
 require( "source-map-support" ).install(); var exports = void 0;
-
 ;
-process.on( 'unhandledRejection' , up => { throw up } )
-;
+process.on( 'unhandledRejection' , up => { throw up } );
 "use strict"
 /// Fake namespace for optional overrides
 ///
@@ -19,7 +17,6 @@ $.$mol = $  // deprecated
 
 var $node = $node || {}
 void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; 
-
 ;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -28,7 +25,6 @@ module.exports;
 ;
 
 $node[ "../mol/mol.js" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {} )
-
 ;
 "use strict";
 var $;
@@ -4724,4 +4720,5 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //request.view.js.map
+
 //# sourceMappingURL=node.js.map

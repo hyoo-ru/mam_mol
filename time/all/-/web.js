@@ -1,9 +1,7 @@
-function require( path ){ return $node[ path ] }
-;
+function require( path ){ return $node[ path ] };
 
 var $node = $node || {}
 void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; 
-
 ;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -12,7 +10,6 @@ module.exports;
 ;
 
 $node[ "../mol/mol.js" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {} )
-
 ;
 "use strict"
 /// Fake namespace for optional overrides
@@ -551,4 +548,5 @@ var $;
     $.$mol_time_interval = $mol_time_interval;
 })($ || ($ = {}));
 //interval.js.map
+
 //# sourceMappingURL=web.js.map

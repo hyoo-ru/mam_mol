@@ -1,5 +1,4 @@
-function require( path ){ return $node[ path ] }
-;
+function require( path ){ return $node[ path ] };
 "use strict";
 var $;
 (function ($_1) {
@@ -2188,4 +2187,5 @@ var $;
     });
 })($ || ($ = {}));
 //view.test.js.map
+
 //# sourceMappingURL=web.test.js.map

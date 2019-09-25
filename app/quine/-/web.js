@@ -1,9 +1,7 @@
-function require( path ){ return $node[ path ] }
-;
+function require( path ){ return $node[ path ] };
 
 var $node = $node || {}
 void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; 
-
 ;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -12,7 +10,6 @@ module.exports;
 ;
 
 $node[ "../mol/mol.js" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {} )
-
 ;
 "use strict"
 /// Fake namespace for optional overrides
@@ -4331,7 +4328,7 @@ var $;
             content() {
                 const paths = this.paths();
                 const sources = paths.map(path => {
-                    return $.$mol_file.relative(path).content();
+                    return $.$mol_file.relative(path).content().toString();
                 });
                 const content = sources.map((source, index) => {
                     const header = `# ${paths[index].replace(/.*\//, '')}\n`;
@@ -4345,4 +4342,5 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //quine.view.js.map
+
 //# sourceMappingURL=web.js.map

@@ -1,22 +1,23 @@
 {
   "name": "mol_build",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "main": "node.js",
   "module": "node.esm.js",
   "browser": "web.esm.js",
   "types": "web.d.ts",
   "dependencies": {
+    "path": "*",
+    "child": "*",
     "jsdom": "*",
     "chokidar": "*",
+    "fs": "*",
     "sourcemap-codec": "*",
     "typescript": "*",
     "postcss": "*",
-    "postcss-custom-properties": "*",
-    "postcss-color-function": "*",
+    " ": "*",
     "express": "*",
     "portastic": "*",
     "compression": "*",
-    "body-parser": "*",
     "serve-index": "*"
   }
 }

@@ -1,8 +1,6 @@
 require( "source-map-support" ).install()
-
 ;
-process.on( 'unhandledRejection' , up => { throw up } )
-;
+process.on( 'unhandledRejection' , up => { throw up } );
 "use strict"
 /// Fake namespace for optional overrides
 ///
@@ -4255,4 +4253,5 @@ var $;
     $.$mol_jsx_view = $mol_jsx_view;
 })($ || ($ = {}));
 //view.js.map
+
 //# sourceMappingURL=node.test.js.map

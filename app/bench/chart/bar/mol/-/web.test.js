@@ -1,5 +1,4 @@
-function require( path ){ return $node[ path ] }
-;
+function require( path ){ return $node[ path ] };
 "use strict";
 var $;
 (function ($_1) {
@@ -2854,4 +2853,5 @@ var $;
     $.$mol_jsx_view = $mol_jsx_view;
 })($ || ($ = {}));
 //view.js.map
+
 //# sourceMappingURL=web.test.js.map

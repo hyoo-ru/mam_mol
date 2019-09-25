@@ -1,5 +1,4 @@
-function require( path ){ return $node[ path ] }
-;
+function require( path ){ return $node[ path ] };
 "use strict";
 //assert.test.js.map
 ;
@@ -2801,4 +2800,5 @@ var $;
 ;
 "use strict";
 //equals.js.map
+
 //# sourceMappingURL=web.test.js.map
