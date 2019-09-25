@@ -1,0 +1,26 @@
+[mol_paginator] {
+	display: flex;
+}
+
+[mol_paginator_backward] ,
+[mol_paginator_forward] {
+	padding: .5rem;
+	margin: 0 -.5rem;
+	transform: scale( 0 , 0 );
+}
+
+[mol_paginator_value] {
+	padding: .5rem;
+	display: flex;
+    align-items: center;
+}
+
+[mol_paginator]:hover [mol_paginator_backward] ,
+[mol_paginator_backward]:focus {
+	transform: scale( -1 , 1 );
+}
+
+[mol_paginator]:hover [mol_paginator_forward] ,
+[mol_paginator_forward]:focus {
+	transform: scale( 1 , 1 );
+}

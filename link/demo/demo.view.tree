@@ -1,0 +1,22 @@
+$mol_link_demo $mol_demo_small
+	title @ \Some hyperlinks
+	sub /
+		<= This $mol_link
+			sub /
+				<= this_label @ \This page
+		<= Red $mol_link
+			arg * color \red
+			sub /
+				<= red_label @ \Red
+		<= Green $mol_link
+			arg * color \green
+			sub /
+				<= green_label @ \Green
+		<= Blue $mol_link
+			arg * color \blue
+			sub /
+				<= blue_label @ \Blue
+		<= External $mol_link
+			uri \http://example.org
+			title \example.org
+			hint <= external_hint @ \external link

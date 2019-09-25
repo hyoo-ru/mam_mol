@@ -1,0 +1,9 @@
+[mol_form_field] {
+	align-items: stretch;
+}
+
+[mol_form_field_bid] {
+	color: var(--mol_skin_accent);
+	margin-left: .5rem;
+	display: inline-block;
+}

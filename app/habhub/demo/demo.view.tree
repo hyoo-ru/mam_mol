@@ -1,0 +1,4 @@
+$mol_app_habhub_demo $mol_demo_large
+	title @ \Articles from GitHub
+	sub /
+		<= App $mol_app_habhub

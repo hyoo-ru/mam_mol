@@ -1,0 +1,5 @@
+{
+	"$mol_app_calc_title": "Spreedsheet",
+	"$mol_app_calc_download_hint": "Download",
+	"$mol_app_calc_hint": "**$.A1** - result of A1, **$$.A1** - formula of A1, **a=** - define variable, **_.a** - value of variable, **__.a** - cell id of variable, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).\n**You can use**: {funcs}."
+}

@@ -1,0 +1,33 @@
+[mol_app_bench_list_mol] {
+	padding: .5rem;
+}
+
+[mol_app_bench_list_mol_head] {
+	padding: .5rem;
+	margin: 0;
+	font-size: 1.5em;
+	font-weight: normal;
+}
+
+[mol_app_bench_list_mol_row] {
+	padding: .5rem;
+	cursor: pointer;
+	display: block;
+}
+
+[mol_app_bench_list_mol_row]:hover {
+	box-shadow: none;
+}
+
+[mol_app_bench_list_mol_row][mol_check_checked] {
+	background: #eee;
+}
+
+[mol_app_bench_list_mol_row_title] {
+	font-weight: bold;
+	display: block;
+}
+
+[mol_app_bench_list_mol_row_content] {
+	display: block;
+}

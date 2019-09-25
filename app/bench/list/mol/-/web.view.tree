@@ -1,0 +1,80 @@
+$mol_button $mol_view
+	enabled true
+	minimal_height 40
+	click?event null
+	event_click?event null
+	event *
+		^
+		click?event <=> event_activate?event null
+		keypress?event <=> event_key_press?event null 
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint \
+	sub /
+		<= title
+
+$mol_button_typed $mol_button
+
+$mol_button_major $mol_button_typed
+	attr *
+		^
+		mol_theme \$mol_theme_accent
+
+$mol_button_minor $mol_button_typed
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked?val false
+		aria-checked <= checked?val false
+		role \checkbox
+	sub /
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_scroll $mol_view
+	minimal_height 0
+	moving_hor?val false
+	moving_vert?val false
+	field *
+		^
+		scrollTop <= scroll_top?val 0
+		scrollLeft <= scroll_left?val 0
+		scrollBottom <= scroll_bottom?val 0
+		scrollRight <= scroll_right?val 0
+	event_async *
+		^
+		scroll?event <=> event_scroll?event null
+		- DOMSubtreeModified?event <=> event_repos?event null
+	Strut $mol_view
+		style *
+			transform <= strut_transform \
+
+$mol_list $mol_view
+	sub <= rows /
+	Empty null
+
+$mol_app_bench_list_mol $mol_scroll
+	sub /
+		<= List $mol_list
+			rows /
+				<= rows /
+	Row!id $mol_app_bench_list_mol_row
+		checked?val <=> row_selected!id?val false
+		title <= row_title!id \
+		content <= row_content!id \
+
+$mol_app_bench_list_mol_row $mol_check
+	selected?val false
+	minimal_height 56
+	sub /
+		<= Title $mol_view
+			sub / <= title \
+		<= Content $mol_view
+			sub / <= content \

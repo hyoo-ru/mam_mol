@@ -1,0 +1,6 @@
+$mol_app_taxon $mol_page
+	title @ \Big hierarchical table demo
+	Body <= Grid $mol_grid
+		hierarchy <= hierarchy null
+		hierarchy_col <= hierarchy_field \Butxt
+		record!id <= record!id null

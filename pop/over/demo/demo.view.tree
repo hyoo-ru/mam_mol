@@ -1,0 +1,27 @@
+$mol_pop_over_demo $mol_demo_small
+	title @ \Menu that opens on mouse over
+	sub /
+		<= Menu $mol_row
+			sub /
+				<= File $mol_pop_over
+					align \bottom_right
+					Anchor <= file_title @ \File
+					bubble_content /
+						<= File_menu $mol_list
+							rows /
+								<= Open $mol_button_minor
+									title <= open_title @ \Open
+								<= Export $mol_button_minor
+									title <= export_title @ \Export
+								<= Save $mol_button_minor
+									title <= save_title @ \Save
+				<= Help $mol_pop_over
+					align \bottom_right
+					Anchor <= help_title @ \About
+					bubble_content /
+						<= Help_menu $mol_list
+							rows /
+								<= Updates $mol_button_minor
+									title <= updates_title @ \Updates
+								<= About $mol_button_minor
+									title <= about_title @ \About

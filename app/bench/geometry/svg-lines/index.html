@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+	html {
+		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+	}
+	
+	html , body {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+	}
+	
+	#picture {
+		width: 100%;
+		height: 100%;
+		display: block;
+		stroke: currentColor;
+		stroke-width: .0015px;
+	}
+
+</style>
+
+<body>
+
+<svg id="picture" viewbox="-.5 -.5 1 1"></svg>
+
+<script>
+
+	var picture = document.getElementById( 'picture' )
+	
+	window.addEventListener( 'message' , function onMessage( event ) {
+		switch( event.data[ 0 ] ) {
+			
+			case 'render' :
+				
+				var count = event.data[ 1 ].count 
+
+				var group = makeEl( 'g' )
+				
+				var prev = [ 0 , 0 ]
+				for( var i = 0 ; i < count ; ++i ) {
+					var radius = i / count / 2
+					var angle = i * Math.PI / 100
+					var next = [ radius * Math.cos( angle ) , radius * Math.sin( angle ) ]
+					var line = makeEl( 'line' , {
+						'x1' : prev[0] ,
+						'x2' : next[0] ,
+						'y1' : prev[1] ,
+						'y2' : next[1]
+					} )
+					prev = next
+					group.appendChild( line )
+				}
+				
+				picture.appendChild( group )
+				
+				break
+			
+			case 'restyle' :
+
+				var style = event.data[ 1 ]
+
+				picture.style.stroke = style.color
+				picture.style.strokeDasharray = style.dashed ? '.005 .005' : ''
+
+				break;
+		}
+	} )
+	
+	function makeEl( type , attrs ) {
+		var el = document.createElementNS( 'http://www.w3.org/2000/svg' , type )
+		if( attrs ) for( var name in attrs ) {
+			el.setAttribute( name , attrs[ name ] )
+		}
+		return el
+	}
+
+</script>

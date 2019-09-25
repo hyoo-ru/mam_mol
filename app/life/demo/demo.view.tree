@@ -1,0 +1,4 @@
+$mol_app_life_demo $mol_demo_large
+	title @ \Conway's Game of Life
+	sub /
+		<= App $mol_app_life

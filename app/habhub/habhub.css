@@ -1,0 +1,29 @@
+[mol_app_habhub] {
+	margin: 0;
+}
+
+[mol_app_habhub_menu_page] {
+	flex: 1 1000 400px;
+	width: 100%;
+}
+
+[mol_app_habhub_menu] {
+	display: flex;
+	flex-direction: column;
+	padding: .5rem;
+}
+
+[mol_app_habhub_placeholder] {
+	flex: 1000 1 600px;
+}
+
+[mol_app_habhub_details] {
+	flex: 1000 1 600px;
+}
+
+[mol_app_habhub_details_text] {
+}
+
+[mol_app_habhub_details_chat] {
+	box-shadow: none;
+}

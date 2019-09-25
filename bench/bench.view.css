@@ -1,0 +1,24 @@
+[mol_bench] {
+	overflow: auto;
+}
+
+[mol_bench_col_head] {
+	cursor: pointer;
+}
+
+[mol_bench_cell_number] {
+	white-space: nowrap;
+	text-align: right;
+}
+
+[mol_bench_result_portion] {
+	margin-left: 1rem;
+}
+
+[mol_bench_col_head] > * {
+	margin: 0 .5rem;
+}
+
+[mol_bench_head] + [mol_bench_row] [mol_portion_indicator] {
+	background: var(--mol_skin_accent);
+}

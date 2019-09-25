@@ -1,0 +1,13 @@
+$mol_string_demo $mol_demo_small
+	title @ \String input field in various states
+	sub /
+		<= Simple $mol_string
+			value?val <=> name?val \
+		<= Hint $mol_string
+			hint \Batman
+			value?val <=> name?val \
+		<= Filled $mol_string
+			value?val <=> name2?val \Jocker
+		<= Disabled $mol_string
+			disabled true
+			value?val <=> name2?val

@@ -1,0 +1,29 @@
+[mol_app_request_uri_input] {
+	flex: 0 0 auto;
+}
+
+[mol_app_request_body] {
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_app_request_data] {
+	display: flex;
+	flex: auto;
+}
+
+[mol_app_request_request] > * ,
+[mol_app_request_response] > * {
+	margin: .5rem;
+}
+
+[mol_app_request_request] {
+	flex: 1 1 33%;
+	padding: .5rem;
+}
+
+[mol_app_request_response] {
+	flex: 1 1 66%;
+	padding: .5rem;
+}
+

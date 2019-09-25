@@ -1,0 +1,80 @@
+$mol_app_lamps $mol_book
+	lamp_current_id?val \
+	pages /
+		<= Addon_page $mol_page
+			minimal_width 400
+			title \LampTest.ru
+			body_scroll_top?val <=> menu_scroll_top?val 0
+			body /
+				<= Menu $mol_list
+					rows /
+						<= Filter_panel $mol_float
+							sub /
+								<= Filter $mol_code
+									hint <= filter_hint @ \Filter...
+									value?val <=> filter?val \
+						<= lamp_rows /
+		<= Main_page $mol_page
+			minimal_width 400
+			title <= title \
+			event_top?val <=> event_front_up?val
+			tools /
+				<= Close $mol_link
+					sub /
+						<= Close_icon $mol_icon_cross
+					arg *
+						lamp null
+			body /
+				<= Info $mol_row
+					sub /
+						<= Stat $mol_row
+							sub /
+								<= Rating $mol_labeler
+									title <= rating_title @ \Rating
+									content /
+										<= rating 0
+						<= Body $mol_row
+							sub /
+								<= Type $mol_labeler
+									title <= type_title @ \Type
+									content /
+										<= type \
+								<= Shape $mol_labeler
+									title <= shape_title @ \Shape
+									content /
+										<= shape \
+								<= Base $mol_labeler
+									title <= base_title @ \Base
+									content /
+										<= base \
+						<= Light $mol_row
+							sub /
+								<= Temp $mol_labeler
+									title <= Temp_title @ \Temperature
+									content /
+										<= temp \
+								<= Cri $mol_labeler
+									title <= cri_title @ \CRI
+									content /
+										<= cri \
+								<= Ripple $mol_labeler
+									title <= ripple_title @ \Ripple
+									content /
+										<= ripple \
+								<= Angle $mol_labeler
+									title <= angle_title @ \Angle
+									content /
+										<= angle \
+				<= Gallery $mol_row
+					sub /
+						<= Photo $mol_image
+							uri <= photo \
+							title <= title
+	Lamp_row!id $mol_lamps_lamp_row
+		title <= lamp_title!id \
+		arg <= lamp_arg!id *
+
+$mol_lamps_lamp_row $mol_link
+	minimal_height 40
+	sub /
+		<= title

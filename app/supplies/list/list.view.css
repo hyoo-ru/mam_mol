@@ -1,0 +1,9 @@
+[mol_app_supplies_list_search] {
+	flex: none;
+	display: block;
+}
+
+[mol_app_supplies_list_supply_rows] {
+	align-items: flex-start;
+	padding: .5rem;
+}

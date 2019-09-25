@@ -1,0 +1,9 @@
+$mol_portion_demo $mol_demo_small
+	title @ \Progress bar in various states
+	sub /
+		<= Empty $mol_portion
+			portion <= fist 0
+		<= Partial $mol_portion
+			portion <= second 0.5
+		<= Full $mol_portion
+			portion <= third 1

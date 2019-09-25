@@ -1,0 +1,11 @@
+{
+  "name": "mol_app_bench_chart_rope_mol",
+  "version": "0.0.1",
+  "main": "node.js",
+  "module": "node.esm.js",
+  "browser": "web.esm.js",
+  "types": "web.d.ts",
+  "dependencies": {
+    "jsdom": "*"
+  }
+}

@@ -1,0 +1,13 @@
+{
+	"$mol_app_lamps_Temp_title": "Температура",
+	"$mol_app_lamps_angle_title": "Угол",
+	"$mol_app_lamps_base_title": "Цоколь",
+	"$mol_app_lamps_cri_title": "Цветопередача",
+	"$mol_app_lamps_filter_hint": "Фильтрация...",
+	"$mol_app_lamps_ripple_title": "Мерцание",
+	"$mol_app_lamps_shape_title": "Форма",
+	"$mol_app_lamps_type_title": "Тип",
+	"$mol_search_hint": "Поиск..",
+	"$mol_select_hint": "Поиск..",
+	"$mol_select_no_options_message": "Нет вариантов"
+}

@@ -1,0 +1,14 @@
+$mol_textarea_demo $mol_demo_small
+	title @ \Text input field in various states
+	sub /
+		<= Empty_descr $mol_textarea
+			hint \source code
+			value?val <=> empty_descr?val \
+		<= Filled_descr $mol_textarea
+			value?val <=> filled_descr?val \
+				\function hello( name = 'World' ) {
+				\	return `Hello, ${ name }!`
+				\}
+		<= Disabled $mol_textarea
+			enabled false
+			value?val <=> filled_descr?val

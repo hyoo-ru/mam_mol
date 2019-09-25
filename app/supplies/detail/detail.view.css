@@ -1,0 +1,46 @@
+[mol_app_supplies_detail_content] {
+	padding: 0 1rem;
+	background: var(--mol_theme_field);
+	overflow: hidden;
+}
+
+[mol_app_supplies_detail_content] > * {
+	margin: 1rem 0;
+}
+
+[mol_app_supplies_detail_positions] > * {
+	margin: 1rem 0;
+}
+
+[mol_app_supplies_detail_back_icon] {
+	transform: rotateZ(180deg);
+}
+
+[mol_app_supplies_detail_descr_deck] {
+	margin: 0;
+}
+
+[mol_app_supplies_detail_cons_content] {
+	align-items: baseline;
+}
+
+[mol_app_supplies_detail_cons_content] > * {
+	flex: 1 1 10rem;
+}
+
+[mol_app_supplies_detail_org_content] {
+	align-items: baseline;
+}
+
+[mol_app_supplies_detail_org_content] > * {
+	flex: 1 1 10rem;
+}
+
+[mol_app_supplies_detail_cost] {
+	text-align: right;
+	margin: 0;
+}
+
+[mol_app_supplies_detail_actions] {
+	padding: 0;
+}

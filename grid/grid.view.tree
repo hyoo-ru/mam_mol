@@ -1,0 +1,65 @@
+$mol_grid $mol_scroll
+	row_ids /
+	row_id!index null
+	col_ids /
+	records *
+	record!id null
+	hierarchy null
+	hierarchy_col \
+	-
+	sub /
+		<= Table $mol_grid_table
+			offset <= gap_top 0
+			sub /
+				<= rows_visible /
+	rows /
+	Head $mol_grid_row
+		height <= row_height 40
+		cells <= head_cells /
+	Row!id $mol_grid_row
+		height <= row_height 40
+		cells <= cells!id /
+	-
+	Cell!id $mol_view
+	cell!id null
+	Cell_text!id $mol_grid_cell
+		sub /
+			<= cell_content_text!id <= cell_content!id /
+	Cell_number!id $mol_grid_number
+		sub /
+			<= cell_content_number!id <= cell_content!id /
+	Col_head!id $mol_float
+		dom_name \th
+		sub /
+			<= col_head_content!id /
+	Cell_branch!id $mol_check_expand
+		level <= cell_level!id 0
+		label <= cell_content!id /
+		expanded?val <=> cell_expanded!id?val false
+	Cell_content!id /
+		<= Cell_dimmer!id $mol_dimmer
+			needle <= needle \
+			haystack <= cell_value!id \
+
+$mol_grid_table $mol_view
+	dom_name \table
+	style *
+		^
+		top <= offset 0
+
+$mol_grid_gap $mol_view
+	style *
+		^
+		top <= offset 0
+
+$mol_grid_row $mol_view
+	dom_name \tr
+	style *
+		^
+		height <= height 40
+	sub <= cells /
+
+$mol_grid_cell $mol_view
+	dom_name \td
+
+$mol_grid_number $mol_grid_cell

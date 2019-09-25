@@ -1,0 +1,12 @@
+$mol_textarea $mol_view
+	event *
+		keydown?event <=> press?event null
+	sub /
+		<= Edit $mol_string
+			dom_name \textarea
+			value?val <=> value?val \
+			hint <= hint \
+			debounce 0
+			enabled <= enabled true
+		<= View $mol_text
+			text <= text \

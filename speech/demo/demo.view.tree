@@ -1,0 +1,12 @@
+$mol_speech_demo $mol_demo_small
+	sub /
+		<= Toggle $mol_check_icon
+			Icon <= Toggle_icon $mol_icon_microphone
+			checked?val <=> hearing?val false
+		<= Message $mol_view
+			sub /
+				<= message \
+		<= Speak $mol_button_major
+			click?val <=> speak?val false
+			sub / \Speak
+		

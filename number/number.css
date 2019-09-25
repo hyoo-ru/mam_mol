@@ -1,0 +1,53 @@
+[mol_number] {
+	display: flex;
+	flex: 0 1 auto;
+	position: relative;
+	align-items: stretch;
+	max-width: 100%;
+}
+
+[mol_number]:hover {
+	z-index: 2;
+}
+
+[mol_number_string] {
+	appearance: textfield;
+	text-align: right;
+	position: relative;
+	flex: 1 1 7rem;
+	width: 7rem;
+}
+
+[mol_number_string]::-webkit-inner-spin-button {
+	display: none;
+}
+
+[mol_number_inc] ,
+[mol_number_dec] {
+	margin: 0;
+	flex: 0 0 auto;
+	position: absolute;
+	padding: .75rem;
+	display: none;
+	z-index: 1;
+}
+
+[mol_number_inc] {
+	left: calc( 100% - .75rem );
+}
+
+[mol_number_dec] {
+	right: calc( 100% - .75rem );
+}
+
+[mol_number]:focus-within [mol_number_inc]:not([disabled]) ,
+[mol_number]:focus-within [mol_number_dec]:not([disabled]) {
+	display: flex;
+}
+
+[mol_number_inc_icon] ,
+[mol_number_dec_icon] {
+	display: block;
+	width: 1rem;
+	height: 1rem;
+}

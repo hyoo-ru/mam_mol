@@ -1,0 +1,17 @@
+$mol_page_demo $mol_demo_large
+	title @ \Page with header, body and footer
+	sub /
+		<= Page $mol_page
+			tools /
+				<= Button $mol_button_minor
+					title \Toolbar Button
+			body /
+				<= Content $mol_row
+					sub /
+						<= Text $mol_filler
+			foot /
+				<= Foot_content $mol_row
+					sub /
+						<= Foot_text $mol_view
+							sub /
+								\Footer

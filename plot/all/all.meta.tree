@@ -1,0 +1,8 @@
+include \/mol/plot/pane
+include \/mol/plot/line
+include \/mol/plot/bar
+include \/mol/plot/dot
+include \/mol/plot/fill
+include \/mol/plot/group
+include \/mol/plot/ruler/vert
+include \/mol/plot/ruler/hor

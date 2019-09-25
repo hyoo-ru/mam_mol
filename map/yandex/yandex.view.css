@@ -1,0 +1,7 @@
+[mol_map_yandex] {
+	flex: auto;
+	align-self: stretch;
+	box-shadow: var(--mol_skin_light_outline);
+	mix-blend-mode: exclusion;
+	filter: invert(1);
+}

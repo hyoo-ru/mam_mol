@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+
+<meta charset="utf-8" />
+
+<style>
+	html , body {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+	}
+
+	@keyframes measure {
+		from {
+			outline : 1px solid black;
+		}
+		to {
+			outline : 1px solid white;
+		}
+	}
+
+	#sandbox {
+		border: none;
+		width: 100%;
+		height: 100%;
+	}
+</style>
+
+<iframe id="sandbox"></iframe>
+
+<script>
+
+	function meta() {
+		done( {
+			title : {
+				'en' : 'Geometry rendering benchmark' ,
+				'ru' : 'Производительность вариантов рендеринга линий' ,
+			} ,
+			descr : {
+				'en' : 'Sample applications renders styled spiral.' ,
+				'ru' : 'Варианты приложений отображают спираль из заданного количества линий, а потом меняют её стиль штриха. ' ,
+			} ,
+			params : {
+			'count' : {
+				title : {
+					'en' : 'Count of lines',
+					'ru' : 'Количество линий',
+				},
+				default : 10000,
+				type : 'number',
+				precision : 1000,
+			},
+			},
+			samples : {
+				'svg-lines' : {
+					title : {
+						'en' : 'SVG separate lines' ,
+						'ru' : 'SVG отдельными линиями' ,
+					} ,
+				} ,
+				'svg-path' : {
+					title : {
+						'en' : 'SVG single path' ,
+						'ru' : 'SVG одной кривой' ,
+					} ,
+				} ,
+				'canvas-lines' : {
+					title : {
+						'en' : 'Canvas separate lines' ,
+						'ru' : 'Canvas отдельными линиями' ,
+					} ,
+				} ,
+				'canvas-path' : {
+					title : {
+						'en' : 'Canvas single path' ,
+						'ru' : 'Canvas одной кривой' ,
+					} ,
+				} ,
+			} ,
+			steps : {
+				'start' : {
+					title : {
+						'en' : 'Load and init' ,
+						'ru' : 'Загрузка и запуск' ,
+					} ,
+				} ,
+				'render' : {
+					title : {
+						'en' : 'Draw solid spiral' ,
+						'ru' : 'Отображение спирали' ,
+					} ,
+				} ,
+				'restyle' : {
+					title : {
+						'en' : 'Update stroke style' ,
+						'ru' : 'Изменение стиля штриха' ,
+					} ,
+				} ,
+			} ,
+		} )
+	}
+
+	function start( sample ) {
+		var sandbox = document.getElementById( 'sandbox' )
+		sandbox.src = 'about:blank'
+		setTimeout( function() {
+			var start = Date.now()
+			sandbox.src = sample + '/'
+			sandbox.onload = function() {
+				done( Date.now() - start + ' ms' )
+				sandbox.onload = null
+			}
+		} )
+	}
+	
+	function render( sample, params ) {
+		measure( [ 'render' , { sample : sample , count : params.count } ] , '*' )
+	}
+	
+	function restyle( sample ) {
+		measure( [ 'restyle' , { sample : sample , color : 'steelblue' , dashed : true } ] , '*' )
+	}
+
+	function measure( message ) {
+		var sandbox = document.getElementById( 'sandbox' )
+		requestAnimationFrame( function() { // begin at next frame start for measure stability reason
+			// console.timeStamp( 'begin ' + message[0] )
+			sandbox.contentWindow.postMessage( message , '*' )
+			sandbox.addEventListener( 'animationend' , end )
+			requestAnimationFrame( function(){ setTimeout( function() { // wait for message processed
+				sandbox.style.animation = 'measure .001s'
+			} ) } )
+			var start = Date.now()
+			function end() { // wait for painting ends
+				done( Date.now() - start + ' ms' )
+				// console.timeStamp( 'end ' + message[0] )
+				sandbox.style.animation = ''
+				sandbox.removeEventListener( 'animationend' , end )
+			}
+		} )
+	}
+
+	function done( result ) {
+		if( parent === window ) console.log( result )
+		else parent.postMessage( [ 'done' , result ] , '*' )
+	}
+
+	window.addEventListener( 'message' , function( event ) {
+		window[ event.data[0] ].apply( null , event.data.slice( 1 ) )
+	} )
+	
+</script>

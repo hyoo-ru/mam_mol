@@ -1,0 +1,43 @@
+$mol_app_supplies_position $mol_card
+	minimal_height 70
+	position $mol_app_supplies_domain_supply_position
+	
+	Content <= Row $mol_view sub /
+		
+		<= Main_group $mol_row sub /
+			
+			<= Product_item $mol_labeler
+				title <= product_title @ \Product
+				content <= product_name \
+			
+			<= Cost_item $mol_labeler
+				title <= cost_title @ \Cost
+				content <= Cost $mol_cost
+					value <= cost $mol_unit_money
+						valueOf 0
+		
+		<= Addon_group $mol_row sub /
+			
+			<= Division_item $mol_labeler
+				title <= division_title @ \Division
+				content <= division_name \
+			
+			<= Price_item $mol_labeler
+				title <= price_label @ \Price
+				content <= Price $mol_cost
+					value <= price $mol_unit_money
+						valueOf 0
+		
+		<= Supply_group $mol_row sub /
+			
+			<= Quantity_item $mol_labeler
+				title <= quantity_title @ \Quantity
+				content <= quantity \
+			
+			<= Supply_date_item $mol_labeler
+				title <= supply_date_title @ \Supply date
+				content <= supply_date \
+			
+			<= Store_item $mol_labeler
+				title <= store_title @ \Store
+				content <= store_name \

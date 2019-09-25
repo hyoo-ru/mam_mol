@@ -1,0 +1,5 @@
+$mol_app_supplies_demo $mol_demo_large
+	title @ \Supplies approving business process
+	sub /
+		<= App $mol_app_supplies
+			entered true

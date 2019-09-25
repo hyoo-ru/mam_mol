@@ -1,0 +1,10 @@
+[mol_app_taxon] {
+	margin: 0;
+}
+
+[mol_app_taxon_grid] {
+	min-height: 1rem;
+	min-width: 5rem;
+	margin: 0;
+	flex: 1 1 auto;
+}

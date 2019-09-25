@@ -1,0 +1,9 @@
+[mol_embed] {
+	min-width: 100%;
+	min-height: 100%;
+	max-width: 100vw;
+	max-height: 100vh;
+	display: flex;
+	align-items: stretch;
+	justify-content: stretch;
+}

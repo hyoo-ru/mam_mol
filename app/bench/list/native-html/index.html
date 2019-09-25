@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+	html {
+		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+	}
+	
+	body {
+		margin: 0;
+	}
+	
+	.list {
+		padding: .5rem;
+	}
+
+	.list-header {
+		padding: .5rem;
+		margin: 0;
+		font-size: 1.5em;
+		font-weight: normal;
+	}
+
+	.list-item {
+		padding: .5rem;
+		cursor: pointer;
+	}
+	
+	.list-item-selected {
+		background: #eee;
+	}
+	
+	.list-item-title {
+		font-weight: bold;
+	}
+	
+</style>
+
+<body>
+
+<script id="tpl-list" type="x-template">
+	<div class="list" >
+		{rows}
+	</div>
+</script>
+
+<script id="tpl-list-item" type="x-template">
+	<div class="list-item {selected}" >
+		<div class="list-item-title">
+			{title}
+		</div>
+		<div class="list-item-content">
+			{content}
+		</div>
+	</div>
+</script>
+
+<script>
+
+	var data = {
+		sample : '' ,
+		items : []
+	}
+	
+	var selected = null
+
+	var tpl = {
+		list : document.getElementById( 'tpl-list' ).innerText ,
+		row : document.getElementById( 'tpl-list-item' ).innerText
+	}
+	
+	render()
+
+	window.addEventListener( 'message' , function onMessage( event ) {
+		switch( event.data[ 0 ] ) {
+			case 'set data' :
+				data = event.data[ 1 ]
+				selected = null
+				break
+		}
+		render()
+	} )
+	
+	function render() {
+		
+		document.body.innerHTML = inject( tpl.list , {
+			title : data.sample ,
+			rows : data.items.map( function( item , index ) {
+				return inject( tpl.row , {
+					title : item.title ,
+					content : item.content
+				} )
+			} ).join( '' )
+		} )
+		
+		var rows = document.querySelectorAll( ".list-item" )
+		for( var i = 0 ; i < rows.length ; ++ i ) {
+			rows[ i ].onclick = function() {
+				var selected = document.querySelector( ".list-item-selected" )
+				if( selected ) selected.classList.remove( 'list-item-selected' )
+				this.classList.add( 'list-item-selected' )
+			}
+		}
+		
+	}
+	
+	function inject( tpl , data ) {
+		return tpl.replace(
+			new RegExp( '\{(' + Object.keys( data ).join( '|' ) + ')\}' , 'g' ) ,
+			function( str , key ) {
+				return data[ key ]
+			}
+		)
+	}
+
+</script>

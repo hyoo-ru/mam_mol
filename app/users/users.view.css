@@ -1,0 +1,65 @@
+[mol_app_users] {
+	max-width: 28rem;
+	max-height: 100%;
+	width: 100%;
+	height: auto;
+	margin: 0 auto;
+	background: var(--mol_skin_light);
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+}
+
+[mol_app_users_filter] {
+	box-sizing: border-box;
+}
+
+[mol_app_users_body] {
+	flex: 1 1 40rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+[mol_app_users_list] {
+	align-self: stretch;
+	flex: 1 0 auto;
+	background: var(--mol_skin_light);
+}
+
+[mol_app_users_empty] {
+	padding: 1rem;
+	display: block;
+}
+
+[mol_app_users_row] {
+	margin-bottom: 1px;
+	background: var(--mol_skin_light);
+}
+
+[mol_app_users_row_title] {
+	flex: 1 1 auto;
+	width: auto;
+}
+
+[mol_app_users_foot] {
+	justify-content: flex-start;
+	flex: 0 0 auto;
+}
+
+[mol_app_users_foot] > * {
+	flex: 1000 1 auto;
+}
+
+[mol_app_users_message] {
+	flex: 1 1 100%;
+	align-self: stretch;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--mol_skin_warn_text);
+}
+
+[mol_app_users_message][mol_view_error="$mol_atom_wait"] {
+	display: none;
+}

@@ -1,0 +1,74 @@
+$mol_app_supplies_detail $mol_page
+	supply null
+	title @ \Supply
+	tools /
+		<= Close $mol_link
+			sub / <= Close_icon $mol_icon_cross
+			arg <= close_arg *
+				supply null
+	body /
+		<= Content $mol_list
+			rows /
+				<= Descr_card $mol_card
+					Content <= Descr_deck $mol_deck
+						items /
+							<= Org *
+								title <= org_title @ \Organization
+								Content <= Org_content $mol_row
+									sub <= org_items /
+										<= Provider $mol_labeler
+											title <= provider_title @ \Provider
+											content <= provider_name \
+										<= Consumer $mol_labeler
+											title <= customer_label @ \Consumer
+											content <= consumer_name \
+										<= Supply_group $mol_labeler
+											title <= supply_group_title @ \Supply Group
+											content <= supply_group_name \
+										<= Ballance_unit_item $mol_labeler
+											title <= ballance_unit_title @ \Ballance Unit
+											content <= ballance_unit_name \
+							<= Cons *
+								title <= cons_title @ \Consumer
+								Content <= Cons_content $mol_row
+									sub <= cons_items /
+										<= Contract $mol_labeler
+											title <= contract_title @ \Contract
+											content <= contract_id \
+										<= Pay_method $mol_labeler
+											title <= pay_method_title @ \Pay Method
+											content <= pay_method_name \
+										<= Manager $mol_labeler
+											title <= manager_title @ \Manager
+											content <= manager_name \
+										<= Debitor $mol_labeler
+											title <= debitod_title @ \Debitor
+											content <= debitor_name \
+				<= Attach_section $mol_section
+					head <= attach_title @ \Attachments
+					Content <= Attach $mol_attach
+						items <= attachments /
+						attach_new?val <=> attach_new?val null
+				<= Positions_section $mol_section
+					head <= positions_head /
+						<= positions_title @ \Positions
+						<= Cost $mol_labeler
+							title <= cost_title @ \Cost
+							content <= Cost_value $mol_cost
+								value <= cost $mol_unit_money
+									valueOf 0
+					Content <= Positions $mol_list
+						rows <= positions /
+	foot /
+		<= Actions $mol_row
+			sub <= actions /
+				<= Approve $mol_check_box
+					checked?val <=> approved?val false
+					title <= approved_title @ \Approved
+	-
+	Position!index $mol_app_supplies_position
+		position <= position!index null
+	-
+	Attachment!index $mol_attach_item
+		url_thumb <= attachment_thumb!index \
+		url_load <= attachment_load!index \

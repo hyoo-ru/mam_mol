@@ -1,0 +1,15 @@
+$mol_link $mol_view
+	minimal_height 40
+	dom_name \a
+	attr *
+		^
+		href <= uri \
+		title <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+	sub / <= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null

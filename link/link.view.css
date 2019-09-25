@@ -1,0 +1,27 @@
+[mol_link] {
+	text-decoration: none;
+	color: var(--mol_theme_control);
+	stroke: currentColor;
+	cursor: pointer;
+	border-radius: var(--mol_skin_round);
+	padding: .5rem;
+	box-sizing: border-box;
+	position: relative;
+}
+
+[mol_link]:not([mol_link_current]):hover {
+	background-color: var(--mol_theme_hover);
+}
+
+[mol_link]:not([mol_link_current]):focus {
+	background-color: var(--mol_theme_hover);
+}
+
+[mol_link_current] {
+	background-color: var(--mol_theme_current);
+	color: var(--mol_theme_text);
+}
+
+[mol_link]:focus {
+	outline: none;
+}

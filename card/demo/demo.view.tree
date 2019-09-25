@@ -1,0 +1,12 @@
+$mol_card_demo $mol_demo_small
+	title @ \Cards with optional status
+	sub /
+		<= Simple $mol_card
+			Content $mol_row
+				sub /
+					\Hello world!
+		<= Pending $mol_card
+			Content $mol_row
+				sub /
+					\Hello pending!
+			status \pending

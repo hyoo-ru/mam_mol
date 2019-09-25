@@ -1,0 +1,17 @@
+[mol_form_bar_fields] {
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_form_bar_fields] > * {
+	margin: .5rem;
+}
+
+[mol_form_bar_buttons] {
+	box-shadow: none;
+	padding: 0;
+}
+
+[mol_form_bar_buttons] > * {
+	flex: 1 1 auto;
+}

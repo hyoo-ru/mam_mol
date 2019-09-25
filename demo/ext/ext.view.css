@@ -1,0 +1,8 @@
+[mol_demo_ext] {
+	object-fit: cover;
+	object-position: left top;
+	display: flex;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+}

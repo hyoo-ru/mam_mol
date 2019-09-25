@@ -1,0 +1,15 @@
+[mol_status] {
+	text-align: center;
+	padding: .5rem;
+	border-radius: var(--mol_skin_round);
+	display: block;
+}
+
+[mol_status]:not([mol_view_error="$mol_atom_wait"]) {
+	background: var(--mol_skin_warn);
+	color: var(--mol_skin_warn_text);
+}
+
+[mol_status]:not([mol_view_error="$mol_atom_wait"]):empty {
+	display: none;
+}

@@ -1,0 +1,3 @@
+$mol_app_quine_demo $mol_demo_large
+	sub /
+		<= App $mol_app_quine

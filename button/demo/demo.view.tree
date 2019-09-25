@@ -1,0 +1,16 @@
+$mol_button_demo $mol_demo_small
+	title @ \All types of buttons in every states
+	sub /
+		<= Major_enabled $mol_button_major
+			title <= major_label @ \Click me!
+		-
+		<= Major_disabled $mol_button_major
+			title <= major_label @ \Click me!
+			enabled false
+		-
+		<= Minor_enabled $mol_button_minor
+			title <= minor_label @ \Or click me..
+		-
+		<= Minor_disabled $mol_button_minor
+			title <= minor_label @ \Or click me..
+			enabled false

@@ -1,0 +1,49 @@
+[mol_button] {
+	border: none;
+	font: inherit;
+	background-color: none;
+	display: inline-flex;
+	flex-shrink: 0;
+	text-decoration: inherit;
+	cursor: inherit;
+	position: relative;
+	box-sizing: border-box;
+	word-break: normal;
+	cursor: default;
+}
+[mol_button]:focus {
+	outline: none;
+}
+
+[mol_button_typed] {
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	vertical-align: middle;
+	text-align: center;
+	padding: .5rem 1rem;
+	border-radius: var(--mol_skin_round);
+}
+
+[mol_button_typed][disabled] {
+	color: var(--mol_theme_text);
+	pointer-events: none;
+}
+
+[mol_button_major] {
+	box-shadow: 0 0 0 1px var(--mol_theme_back);
+}
+
+[mol_button_minor] {
+	color: var(--mol_theme_control);
+}
+
+[mol_button_major][disabled] {
+	opacity: .5;
+}
+
+[mol_button_typed]:hover ,
+[mol_button_typed]:focus {
+	cursor: pointer;
+	background-color: var(--mol_theme_hover);
+}

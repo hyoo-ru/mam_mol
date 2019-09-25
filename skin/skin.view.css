@@ -1,0 +1,53 @@
+:root {
+	--mol_skin_font: 1rem/1.5 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--mol_skin_font_monospace: Monaco, monospace;
+}
+
+/* Deprecated, use mol_theme instead */
+:root {
+
+	--mol_skin_outline: 0 0 0 1px var(--mol_theme_line);
+	
+	--mol_skin_base: #3a8ccb;
+	--mol_skin_base_text: white;
+	
+	--mol_skin_current: var(--mol_skin_base);
+	--mol_skin_current_text: white;
+	--mol_skin_current_line: #1471b8;
+	
+	--mol_skin_button: var(--mol_skin_card);
+	--mol_skin_hover: rgba( 0 , 0 , 0 , .05 );
+	
+	--mol_skin_round: 0px;
+	
+	--mol_skin_focus_line: rgba( 0 , 0 , 0 , .2 );
+	--mol_skin_focus_outline: 0 0 0 1px var(--mol_skin_focus_line);
+	
+	--mol_skin_float: var(--mol_skin_focus_outline);
+
+	--mol_skin_passive: #eee;
+	--mol_skin_passive_text: rgba( 0 , 0 , 0 , .5 );
+	
+	--mol_skin_light: #fcfcfc;
+	--mol_skin_light_line: rgba( 230 , 230 , 230 , .75 );
+	--mol_skin_light_text: rgba( 0 , 0 , 0 , .9 );
+	--mol_skin_light_hover: #f7f7f7;
+	--mol_skin_light_outline: 0 0 0 1px var(--mol_theme_line);
+
+	--mol_skin_card: var(--mol_theme_back);
+	--mol_skin_card_text: var(--mol_theme_text);
+	
+	--mol_skin_accent: #dd0e3e;
+	--mol_skin_accent_text: white;
+	--mol_skin_accent_hover: #c50d37;
+
+	--mol_skin_warn: rgba( 255 , 50 , 50 , 0.75 );
+	--mol_skin_warn_text: white;
+	--mol_skin_warn_hover: color( var(--mol_skin_warn) lightness(-5%) );
+
+	--mol_skin_good: #96DAA9;
+	--mol_skin_good_text: black;
+
+	--mol_skin_bad: #CC5252;
+	--mol_skin_bad_text: white;
+}

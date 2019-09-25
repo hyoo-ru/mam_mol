@@ -1,0 +1,11 @@
+$mol_pop_demo $mol_demo_small
+	title @ \Pop up block with various alignment
+	sub /
+		<= Pop $mol_pop
+			Anchor <= Show $mol_button_minor
+				title <= show_text @ \?
+			showed <= showed <= focused
+			bubble_content /
+				<= Content $mol_row 
+					sub / 
+						<= bubble_hint @ \This is $mol_pop

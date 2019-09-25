@@ -1,0 +1,9 @@
+{
+	"$mol_app_bench_addon_title": "Варианты реализаций",
+	"$mol_app_bench_result_col_title_sample": "Вариант",
+	"$mol_app_bench_sandbox_title": "Песочница",
+	"$mol_bench_head_hint": "Щёлкните для сортировки по этой колонке",
+	"$mol_search_hint": "Поиск..",
+	"$mol_select_hint": "Поиск..",
+	"$mol_select_no_options_message": "Нет вариантов"
+}

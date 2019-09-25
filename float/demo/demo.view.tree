@@ -1,0 +1,18 @@
+$mol_float_demo $mol_demo_large
+	title @ \Floating header example
+	sub /
+		<= Scroll $mol_scroll
+			sub /
+				<= Head $mol_float
+					sub /
+						<= Head_card $mol_card
+							sub /
+								<= Head_row $mol_row
+									sub /
+										<= Head_content $mol_view
+											sub /
+												\Float header
+				<= content /
+					<= Content $mol_row sub /
+						<= Filler1 $mol_filler
+						<= Filler2 $mol_filler

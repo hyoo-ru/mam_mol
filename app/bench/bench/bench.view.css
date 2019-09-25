@@ -1,0 +1,80 @@
+[mol_app_bench] {
+	margin: 0;
+	display: flex;
+	align-self: stretch;
+}
+
+[mol_app_bench_main_page] {
+	flex: 10 2 50rem;
+}
+
+[mol_app_bench_main_page_body] {
+	display: flex;
+	overflow: auto;
+	z-index: 1;
+}
+
+[mol_app_bench_addon_page] {
+	flex: 1 1 16rem;
+}
+
+[mol_app_bench_sandbox_page] {
+	flex: 1000 1 20rem;
+}
+
+[mol_app_bench_menu] {
+	padding: .5rem;
+}
+
+[mol_app_bench_menu] > * {
+	margin: 0;
+}
+
+[mol_app_bench_inform] {
+	flex: 0 1 auto;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+}
+[mol_app_bench_result_page] {
+	flex: 1 1 auto;
+}
+
+[mol_app_bench_sandbox] {
+	border: none;
+}
+
+[mol_app_bench_descr] {
+	flex: 0 1 auto;
+	max-width: none;
+}
+
+[mol_app_bench_param_fields] {
+	flex: none;
+}
+
+[mol_app_bench_result] {
+	flex: 1000 1 50%;
+	font-size: .9rem;
+}
+
+[mol_app_bench_menu] {
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_app_bench_result_head] {
+	cursor: pointer;
+}
+
+[mol_app_bench_result_cell_number] {
+	white-space: nowrap;
+	text-align: right;
+}
+
+[mol_app_bench_result_portion] {
+	display: inline-flex;
+	vertical-align: bottom;
+	margin-left: .5rem;
+	width: 5vw;
+}

@@ -1,0 +1,44 @@
+$mol_app_bench $mol_view
+	sub /
+		<= Addon_page $mol_page
+			title <= addon_title @ \Samples
+			body /
+				<= Filter $mol_search
+					query?val <=> filter?val \
+				<= Menu $mol_list
+					rows <= menu_options /
+		<= Main_page $mol_page
+			title <= title
+			body /
+				<= Inform $mol_view sub /
+					<= Descr_scroll $mol_scroll
+						sub /
+							<= Descr $mol_text
+								text <= description \
+					<= Param_fields $mol_row
+						sub /
+							<= param_fields /
+					<= Result $mol_bench
+						result <= result null
+						col_head_label!id /
+							<= result_col_title!id /
+						col_sort?val <=> result_col_sort?val \
+		<= Sandbox_page $mol_page
+			title <= sandbox_title @ \Sandbox
+			Body <= Sandbox $mol_scroll
+				dom_name \iframe
+	-
+	Menu_option!id $mol_check_box
+		minimal_height 36
+		checked?val <=> menu_option_checked!id?val false
+		title <= sample_title!id \
+	-
+	Param!id $mol_labeler
+		title <= param_title!id \
+		content /
+			<= Param_value!id $mol_number
+				value?val <=> param_value!id?val \
+				precision_change <= param_precision!id 0
+				debounce 1000
+	-
+	result_col_title_sample @ \Sample

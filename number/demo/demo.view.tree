@@ -1,0 +1,31 @@
+$mol_number_demo $mol_demo_small
+	title @ \Number input control with various configuration
+	sub /
+		<= zero $mol_number
+		<= one $mol_number
+			value?val <=> year?val NaN
+		<= two $mol_number
+			value?val <=> year?val NaN
+			hint \2016
+		<= three $mol_number
+			value?val <=> age?val 32
+			hint \18-99
+			enabled false
+		<= four $mol_number
+			value?val <=> year?val NaN
+			string_enabled false
+		<= five $mol_number
+			value?val <=> age?val 32
+			dec_enabled false
+		<= six $mol_number
+			value?val <=> year?val NaN
+			inc_enabled false
+		<= seven $mol_number
+			value?val <=> year?val NaN
+			precision_change 10
+		<= eight $mol_number
+			value?val <=> year?val NaN
+			precision_view 0.01
+		<= nine $mol_number
+			value?val <=> year?val NaN
+			precision 1000

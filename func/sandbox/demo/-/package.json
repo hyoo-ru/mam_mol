@@ -1,0 +1,11 @@
+{
+  "name": "mol_func_sandbox_demo",
+  "version": "0.0.1",
+  "main": "node.js",
+  "module": "node.esm.js",
+  "browser": "web.esm.js",
+  "types": "web.d.ts",
+  "dependencies": {
+    "jsdom": "*"
+  }
+}

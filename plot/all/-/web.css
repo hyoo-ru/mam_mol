@@ -1,0 +1,315 @@
+[mol_theme] , :root {
+	background-color: var(--mol_theme_back);
+	background-color: var(--mol_theme_back);
+	color: var(--mol_theme_text);
+	color: var(--mol_theme_text);
+	fill: var(--mol_theme_text);
+	fill: var(--mol_theme_text);
+}
+
+[mol_theme="$mol_theme_light"] , :root {
+	--mol_theme_back: hsl( 210 , 50% , 99% );
+	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
+	--mol_theme_current: hsl( 210 , 100% , 80% );
+	--mol_theme_text: rgba( 0 , 0 , 0 , .9 );
+	--mol_theme_control: hsla( 210 , 60% , 35% , 1 );
+	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );
+	--mol_theme_line: rgba( 220 , 220 , 220 , 1 );
+	--mol_theme_focus: hsla( 0 , 60% , 50% , 0.75 );
+	--mol_theme_field: white;
+}
+
+[mol_theme="$mol_theme_dark"] {
+	--mol_theme_back: hsl( 210 , 50% , 10% );
+	--mol_theme_hover: #333;
+	--mol_theme_current: hsl( 210 , 100% , 20% );
+	--mol_theme_text: rgba( 255 , 255 , 255 , .8 );
+	--mol_theme_control: hsla( 210 , 60% , 70% , 1 );
+	--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );
+	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
+	--mol_theme_focus: rgba( 204 , 68 , 50 , .75 );
+	--mol_theme_field: black;
+}
+
+[mol_theme="$mol_theme_base"] {
+	--mol_theme_back: hsla( 210 , 60% , 35% , 1 );
+	--mol_theme_hover: rgba( 0 , 0 , 0 , .05 );
+	--mol_theme_current: hsl( 210 , 100% , 20% );
+	--mol_theme_text: white;
+	--mol_theme_line: white;
+	--mol_theme_control: white;
+}
+
+[mol_theme="$mol_theme_accent"] {
+	--mol_theme_back: rgb(204, 68, 50);
+	--mol_theme_hover: rgb(165, 56, 42);
+	--mol_theme_text: white;
+	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
+	--mol_theme_control: white;
+}
+
+:root {
+	--mol_skin_font: 1rem/1.5 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--mol_skin_font_monospace: Monaco, monospace;
+}
+
+/* Deprecated, use mol_theme instead */
+
+:root {
+	--mol_skin_outline: 0 0 0 1px var(--mol_theme_line);
+	--mol_skin_outline: 0 0 0 1px var(--mol_theme_line);
+	--mol_skin_base: #3a8ccb;
+	--mol_skin_base_text: white;
+	--mol_skin_current: #3a8ccb;
+	--mol_skin_current: var(--mol_skin_base);
+	--mol_skin_current_text: white;
+	--mol_skin_current_line: #1471b8;
+	--mol_skin_button: var(--mol_theme_back);
+	--mol_skin_button: var(--mol_skin_card);
+	--mol_skin_hover: rgba( 0 , 0 , 0 , .05 );
+	--mol_skin_round: 0px;
+	--mol_skin_focus_line: rgba( 0 , 0 , 0 , .2 );
+	--mol_skin_focus_outline: 0 0 0 1px rgba( 0 , 0 , 0 , .2 );
+	--mol_skin_focus_outline: 0 0 0 1px var(--mol_skin_focus_line);
+	--mol_skin_float: 0 0 0 1px rgba( 0 , 0 , 0 , .2 );
+	--mol_skin_float: var(--mol_skin_focus_outline);
+	--mol_skin_passive: #eee;
+	--mol_skin_passive_text: rgba( 0 , 0 , 0 , .5 );
+	--mol_skin_light: #fcfcfc;
+	--mol_skin_light_line: rgba( 230 , 230 , 230 , .75 );
+	--mol_skin_light_text: rgba( 0 , 0 , 0 , .9 );
+	--mol_skin_light_hover: #f7f7f7;
+	--mol_skin_light_outline: 0 0 0 1px var(--mol_theme_line);
+	--mol_skin_light_outline: 0 0 0 1px var(--mol_theme_line);
+	--mol_skin_card: var(--mol_theme_back);
+	--mol_skin_card: var(--mol_theme_back);
+	--mol_skin_card_text: var(--mol_theme_text);
+	--mol_skin_card_text: var(--mol_theme_text);
+	--mol_skin_accent: #dd0e3e;
+	--mol_skin_accent_text: white;
+	--mol_skin_accent_hover: #c50d37;
+	--mol_skin_warn: rgba( 255 , 50 , 50 , 0.75 );
+	--mol_skin_warn_text: white;
+	--mol_skin_warn_hover: rgba(255, 26, 26, 0.75);
+	--mol_skin_warn_hover: color( var(--mol_skin_warn) lightness(-5%) );
+	--mol_skin_good: #96DAA9;
+	--mol_skin_good_text: black;
+	--mol_skin_bad: #CC5252;
+	--mol_skin_bad_text: white;
+}
+
+[mol_view] {
+	transition-property: background-color, height, width, min-height, min-width, max-width, max-height, transform;
+	transition-duration: .2s;
+	transition-timing-function: ease-out;
+	-webkit-appearance: none;
+	word-break: break-word;
+}
+
+[mol_view] > * {
+	word-break: inherit;
+}
+
+[mol_view_root] {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	font: 1rem/1.5 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	font: var(--mol_skin_font);
+	background: var(--mol_theme_back);
+	background: var(--mol_theme_back);
+	color: var(--mol_theme_text);
+	color: var(--mol_theme_text);
+}
+
+[mol_view][mol_view_error]:not([mol_view_error="$mol_atom_wait"]) {
+	background-image: repeating-linear-gradient(
+		135deg,
+		rgba(255,220,220,1),
+		rgba(255,220,220,1) 11px,
+		rgba(255,255,220,1) 10px,
+		rgba(255,255,220,1) 20px
+	);
+	background-size: 28px 28px;
+	color: black;
+}
+
+[mol_view][mol_view_error] * {
+	background: none;
+}
+
+@keyframes mol_view_wait_move {
+
+	from {
+		background-position: 0 0;
+	}
+
+	to {
+		background-position: 200vmax 0;
+	}
+}
+
+[mol_view][mol_view_error="$mol_atom_wait"] {
+	background-image: repeating-linear-gradient(
+		45deg,
+		hsla( 0 , 0% , 50% , .1 ) 0% ,
+		hsla( 0 , 0% , 50% , 0 ) 5% ,
+		hsla( 0 , 0% , 50% , 0 ) 45% ,
+		hsla( 0 , 0% , 50% , .1 ) 50% ,
+		hsla( 0 , 0% , 50% , 0 ) 55% ,
+		hsla( 0 , 0% , 50% , 0 ) 95% ,
+		hsla( 0 , 0% , 50% , .1 ) 100%
+	);
+	background-size: 200vmax 200vmax;
+	animation: mol_view_wait_move 1s linear infinite;
+}
+
+[mol_view][mol_view_error="$mol_atom_wait"] * {
+	background: none;
+}
+
+[mol_svg_root] {
+	overflow: hidden;
+}
+
+[mol_plot_graph] {
+	stroke: currentColor;
+}
+
+[mol_plot_graph_sample] {
+	border-width: 0;
+	border-style: solid;
+}
+
+[mol_plot_graph_type="dashed"] {
+	stroke-dasharray: 4 4;
+	border-style: dashed;
+}
+
+[mol_plot_pane] {
+	flex: 1 1 auto;
+	align-self: stretch;
+	stroke-width: 2px;
+}
+
+[mol_plot_line] {
+	color: #3a8ccb;
+	color: var(--mol_skin_base);
+	fill: none;
+	stroke-linejoin: round;
+}
+
+[mol_plot_line_sample] {
+	height: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-width: 2px 0 0;
+	position: absolute;
+	top: .75em;
+	transform: translateY(-50%);
+}
+
+[mol_plot_bar] {
+	color: #3a8ccb;
+	color: var(--mol_skin_base);
+	stroke-linecap: butt;
+	stroke-width: 1rem;
+}
+
+[mol_plot_bar_sample] {
+	background: currentColor;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+[mol_plot_dot] {
+	color: #3a8ccb;
+	color: var(--mol_skin_base);
+	stroke-linecap: round;
+	fill: none;
+}
+
+[mol_plot_dot_sample] {
+	width: .5rem;
+	height: .5rem;
+	border-radius: 1rem;
+	background: currentColor;
+	position: absolute;
+	top: .75em;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+[mol_plot_fill] {
+	stroke: none;
+	stroke-width: 0;
+	opacity: .1;
+	fill: currentColor;
+}
+
+[mol_plot_fill_sample] {
+	opacity: .1;
+	background: currentColor;
+	position: absolute;
+	bottom: 0;
+	top: .75em;
+	left: 0;
+	right: 0;
+}
+
+[mol_svg_text] {
+	fill: currentColor;
+	stroke: none;
+}
+
+[mol_svg_text_box_back] {
+	stroke: none;
+	fill: var(--mol_theme_back);
+	fill: var(--mol_theme_back);
+}
+
+[mol_plot_ruler_curve] {
+	color: var(--mol_theme_line);
+	color: var(--mol_theme_line);
+	stroke-width: 1px;
+	stroke: currentColor;
+}
+
+[mol_plot_ruler_label] {
+	color: var(--mol_theme_text);
+	color: var(--mol_theme_text);
+}
+
+[mol_plot_ruler_title] {
+	color: var(--mol_theme_shade);
+	color: var(--mol_theme_shade);
+	background-color: var(--mol_theme_back);
+	background-color: var(--mol_theme_back);
+}
+
+[mol_plot_ruler_background] {
+	stroke: none;
+	fill: var(--mol_theme_back);
+	fill: var(--mol_theme_back);
+	opacity: 0.8;
+}
+
+[mol_plot_ruler_vert_label] {
+	transform: translateY( 4px );
+}
+
+[mol_plot_ruler_hor_label] {
+	transform: translateY( -4px );
+}
+
+[mol_plot_ruler_hor_title] {
+	transform: translateY( -4px );
+}
+
+/*# sourceMappingURL=web.css.map */

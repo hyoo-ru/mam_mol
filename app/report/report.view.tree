@@ -1,0 +1,39 @@
+$mol_app_report $mol_page
+	title @ \Pump #1337 - Technical passport
+	body /
+		<= descriptor $mol_view
+			sub / <= description \
+		<= tabler $mol_app_report_tabler
+			rows /
+				<= headRower $mol_app_report_rower
+					cells <= headCells /
+				<= rows /
+	rower!id $mol_app_report_rower
+		cells <= rowerCells!id /
+	cell!id $mol_app_report_cell
+		content <= cell_content!id null
+		rows <= cellrows!id 1
+		cols <= cellCols!id 1
+	texter!id $mol_view
+		sub / <= cell_value!id?val null
+	select!id $mol_select
+		value?val <=> cell_value!id?val null
+		dictionary <= cell_options!id *
+	number!id $mol_number
+		value?val <=> cell_value!id?val null
+
+$mol_app_report_tabler $mol_view
+	dom_name \table
+	sub <= rows /
+	
+$mol_app_report_rower $mol_view
+	dom_name \tr
+	sub <= cells /
+
+$mol_app_report_cell $mol_view
+	dom_name \td
+	attr *
+		^
+		colspan <= cols 1
+		rowspan <= rows 1
+	sub / <= content null

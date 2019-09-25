@@ -1,0 +1,38 @@
+$mol_attach $mol_card
+	Content $mol_tiler
+		items <= content /
+			<= items?val /
+			<= Add $mol_attach_add file_new?val <=> attach_new?val \
+	Item!id $mol_attach_item
+		title <= attach_title \
+
+$mol_attach_item $mol_link
+	url_thumb?val \
+	uri?val <=> url_load?val \
+	style *
+		^
+		backgroundImage <= style_bg \
+	attr *
+		^
+		download <= title \
+
+$mol_attach_add $mol_button_minor
+	minimal_height 60
+	file_new?val \
+	sub /
+		<= Icon $mol_icon_attach
+		<= Input $mol_attach_add_input
+			event_capture?val <=> event_capture?val null
+			event_picked?val <=> event_picked?val null
+
+$mol_attach_add_input $mol_view
+	dom_name \input
+	attr *
+		^
+		type <= type \file
+		accept <= accept \image/*;capture=camera
+		multiple <= multiple true
+	event_click?val <=> event_capture?val null
+	event *
+		^
+		change?val <=> event_picked?val null

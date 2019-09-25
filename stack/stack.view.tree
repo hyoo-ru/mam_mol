@@ -1,0 +1,7 @@
+$mol_stack $mol_book
+	pages /
+		<= Main $mol_view
+			sub <= main /
+		<= Addon $mol_view
+			sub <= addon /
+	

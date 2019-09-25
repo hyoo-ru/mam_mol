@@ -1,0 +1,14 @@
+$mol_book_demo $mol_demo_large
+	title @ \Adaprive layout for various sizes of screen
+	sub /
+		<= View $mol_book
+			Placeholder <= Placeholder $mol_book_placeholder
+				minimal_width 200
+				sub / \ Placeholder
+			pages /
+				<= Addon $mol_view
+					minimal_width 250
+					sub / \ Addon
+				<= Main $mol_view
+					minimal_width 400
+					sub / \ Main

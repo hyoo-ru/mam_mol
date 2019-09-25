@@ -1,0 +1,7 @@
+{
+	"$mol_app_users_filter_hint": "Search users on GitHub",
+	"$mol_app_users_empty_message": "Users not found",
+	"$mol_app_users_reload_label": "Reload",
+	"$mol_app_users_add_label": "Add",
+	"$mol_app_users_save_label": "Save"
+}

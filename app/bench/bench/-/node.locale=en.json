@@ -1,0 +1,9 @@
+{
+	"$mol_app_bench_addon_title": "Samples",
+	"$mol_app_bench_result_col_title_sample": "Sample",
+	"$mol_app_bench_sandbox_title": "Sandbox",
+	"$mol_bench_head_hint": "Click to sort by this column",
+	"$mol_search_hint": "Search...",
+	"$mol_select_hint": "Search..",
+	"$mol_select_no_options_message": "No options"
+}

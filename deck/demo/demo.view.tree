@@ -1,0 +1,22 @@
+$mol_deck_demo $mol_demo_small
+	title @ \Simple deck with tabbar
+	sub /
+		<= Deck $mol_deck items /
+			<= greeterItem *
+				title <= greeterLabel @ \Greeting
+				Content <= greeterContent $mol_row
+					sub /
+						<= greeterMessager $mol_view sub /
+							<= greeterMessage @ \Hello, world!
+			<= questerItem *
+				title <= questerLabel @ \Question
+				Content <= questerContent $mol_row
+					sub /
+						<= questerMessager $mol_view sub /
+							<= questerMessage @ \How are you?
+			<= commanderItem *
+				title <= commanderLabel @ \Command
+				Content <= commanderContent $mol_row
+					sub /
+						<= commanderMessager $mol_view sub /
+							<= commanderMessage @ \Let us do it right!

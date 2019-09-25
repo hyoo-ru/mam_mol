@@ -1,0 +1,47 @@
+$mol_app_users $mol_page
+	head /
+		<= Head_row $mol_row
+			sub /
+				<= Filter $mol_string
+					hint <= filter_hint @ \Search users on GitHub
+					value?val <=> query?val \
+	body /
+		<= List $mol_list
+			rows <= user_rows /
+			Empty <= Empty $mol_view
+				sub /
+					<= empty_message @ \Users not found
+	Foot $mol_row
+		sub /
+			<= Reload $mol_button_minor
+				sub /
+					<= reload_label @ \Reload
+				event_click?val <=> event_reload?val null
+			<= Add $mol_button_minor
+				enabled <= loaded false 
+				sub /
+					<= add_label @ \Add
+				event_click?val <=> event_add?val null
+			<= Save $mol_button_major
+				enabled <= changed false 
+				sub /
+					<= save_label @ \Save
+				event_click?val <=> event_save?val null
+			<= Message $mol_status
+				status <= users_master null
+	plugins /
+		<= Touch $mol_touch
+			swipe_bottom?val <=> event_reload?val null
+	User_row!id $mol_app_users_row
+		title?val <=> user_name!id?val \
+		event_drop?val <=> event_user_drop!id?val null
+
+$mol_app_users_row $mol_row
+	minimal_height 68
+	sub /
+		<= Title $mol_string
+			value?val <=> title?val \
+		<= Drop $mol_button_minor
+			sub /
+				<= drop_label \Drop
+			event_click?val <=> event_drop?val null

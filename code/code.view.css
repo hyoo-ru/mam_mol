@@ -1,0 +1,8 @@
+[mol_code] {
+	display: inline-flex;
+	flex: 1 1 8rem;
+}
+
+[mol_code_manual] {
+	flex: 1 1 auto;
+}

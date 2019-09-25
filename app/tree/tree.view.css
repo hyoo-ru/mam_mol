@@ -1,0 +1,25 @@
+[mol_app_tree_body] {
+	display: flex;
+}
+
+[mol_app_tree_source] {
+	flex: 50% 1 1;
+	white-space: pre;
+	font-family: var(--mol_skin_font_monospace);
+}
+
+[mol_app_tree_source_view] {
+	flex: 33% 1 1;
+}
+
+[mol_app_tree_result] {
+	flex: 50% 1 1;
+	outline: 0 0 0 1px var(--mol_theme_line);
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_app_tree_result_text] {
+	flex: auto 1 0;
+}
+

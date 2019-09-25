@@ -1,0 +1,19 @@
+$mol_chart $mol_view
+	gap_hor 48
+	gap_vert 24
+	gap_left <= gap_hor
+	gap_right <= gap_hor
+	gap_bottom <= gap_vert
+	gap_top <= gap_vert
+	graphs /$mol_plot_graph
+	sub /
+		<= Plot $mol_plot_pane
+			gap_left <= gap_left
+			gap_right <= gap_right
+			gap_bottom <= gap_bottom
+			gap_top <= gap_top
+			graphs <= graphs
+			hue_base?val <= hue_base 140
+			hue_shift?val <= hue_shift 111
+		<= Legend $mol_chart_legend
+			graphs <= graphs

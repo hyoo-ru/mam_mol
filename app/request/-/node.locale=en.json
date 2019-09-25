@@ -1,0 +1,8 @@
+{
+	"$mol_app_request_request_body_title": "Request body",
+	"$mol_app_request_request_headers_title": "Request headers",
+	"$mol_app_request_response_body_title": "Response body",
+	"$mol_app_request_response_headers_title": "Response headers",
+	"$mol_app_request_title": "HTTP request browser",
+	"$mol_app_request_uri_hint": "URI"
+}

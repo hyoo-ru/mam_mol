@@ -1,0 +1,6 @@
+$mol_app_taxon_demo $mol_demo_large
+	sub /
+		<= App $mol_app_taxon
+			hierarchy_field \name
+			hierarchy <= hierarchy *
+			record!path <= record!path *

@@ -1,0 +1,41 @@
+[mol_app_lamps_title] {
+	flex: 0 1 auto;
+}
+
+[mol_app_lamps_filter] {
+	display: block;
+}
+
+[mol_app_lamps_lamp_row] {
+	display: flex;
+	flex: 0 0 auto;
+	padding: .5rem 1rem;
+}
+
+[mol_app_lamps_lamp_row_link] {
+	display: flex;
+	flex: 1 1 auto;
+	align-items: flex-start;
+}
+
+[mol_app_lamps_lamp_row_title] {
+	flex: 1000 1 auto;
+}
+
+[mol_app_lamps_lamp_row_thumb] {
+	height : 3rem;
+	display: block;
+}
+
+[mol_app_lamps_addon_page] {
+	flex: 1 1 400px;
+}
+
+[mol_app_lamps_main_page] {
+	flex: 1000 1 400px;
+}
+
+[mol_app_lamps_light] ,
+[mol_app_lamps_body] {
+	justify-content: space-between;
+}

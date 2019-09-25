@@ -1,0 +1,37 @@
+[mol_check_expand] {
+}
+
+[mol_check_expand][disabled] [mol_check_expand_icon] {
+	visibility: hidden;
+}
+
+[mol_check_expand_icon] {
+	box-shadow: none;
+	margin: .25rem 0;
+}
+[mol_check_expand]:not([mol_check_checked]) > [mol_check_expand_icon] {
+	transform: rotateZ(0deg);
+}
+
+[mol_check_expand][mol_check_checked] > [mol_check_expand_icon] {
+	transform: rotateZ(90deg);
+}
+
+[mol_check_expand]:hover > [mol_check_expand_icon] {
+	transform: scale(1.25);
+}
+
+[mol_check_expand][mol_check_checked]:hover > [mol_check_expand_icon] {
+	transform: rotateZ(90deg) scale(1.25);
+}
+
+[mol_check_box_icon] + div:not(:empty) {
+}
+
+[mol_check_expand_icon] {
+	vertical-align: text-top;
+}
+
+[mol_check_expand_label] {
+	margin-left: 0;
+}

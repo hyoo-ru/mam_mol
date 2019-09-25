@@ -1,0 +1,41 @@
+[mol_perf_dbmon_databases] {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
+[mol_perf_dbmon_database] {
+	display: table-row;
+	background: white;
+}
+
+[mol_perf_dbmon_database] > * {
+	display: table-cell;
+	padding: .5rem;
+	border-top: 1px solid #ddd;
+}
+
+[mol_perf_dbmon_database]:nth-child(odd) {
+	background: #f9f9f9;
+}
+
+[mol_perf_dbmon_query_count_label] {
+	border-radius: .25em;
+	color: #fff;
+	font-size: 75%;
+	font-weight: 700;
+	line-height: 1;
+	padding: .25em .5em;
+}
+
+[mol_perf_dbmon_query_count_label~="label-success"] {
+	background-color: #5cb85c;
+}
+
+[mol_perf_dbmon_query_count_label~="label-warning"] {
+	background-color: #f0ad4e;
+}
+
+[mol_perf_dbmon_query_bubble] {
+	padding: .5rem;
+}

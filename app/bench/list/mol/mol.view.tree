@@ -1,0 +1,18 @@
+$mol_app_bench_list_mol $mol_scroll
+	sub /
+		<= List $mol_list
+			rows /
+				<= rows /
+	Row!id $mol_app_bench_list_mol_row
+		checked?val <=> row_selected!id?val false
+		title <= row_title!id \
+		content <= row_content!id \
+
+$mol_app_bench_list_mol_row $mol_check
+	selected?val false
+	minimal_height 56
+	sub /
+		<= Title $mol_view
+			sub / <= title \
+		<= Content $mol_view
+			sub / <= content \

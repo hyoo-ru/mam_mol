@@ -1,0 +1,22 @@
+{
+  "name": "mol_build",
+  "version": "0.0.2",
+  "main": "node.js",
+  "module": "node.esm.js",
+  "browser": "web.esm.js",
+  "types": "web.d.ts",
+  "dependencies": {
+    "jsdom": "*",
+    "chokidar": "*",
+    "sourcemap-codec": "*",
+    "typescript": "*",
+    "postcss": "*",
+    "postcss-custom-properties": "*",
+    "postcss-color-function": "*",
+    "express": "*",
+    "portastic": "*",
+    "compression": "*",
+    "body-parser": "*",
+    "serve-index": "*"
+  }
+}

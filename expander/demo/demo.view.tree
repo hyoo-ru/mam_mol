@@ -1,0 +1,7 @@
+$mol_expander_demo $mol_demo_small
+	title @ \Simple spoiler
+	sub /
+		<= Expander $mol_expander
+			title \Lorem Ipsum
+			Content $mol_filler
+	

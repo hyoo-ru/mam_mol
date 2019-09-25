@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+<meta charset="utf-8" />
+
+<style>
+	* {
+		position: absolute;
+	}
+</style>
+
+<script>
+
+	if( window.parent === window ) document.location = '//eigenmethod.github.io/mol/app/bench/#bench=' + encodeURIComponent( location.href )
+
+	var metaData = {
+		title : {
+			'en' : 'HTML Elements rendering time' ,
+			'ru' : 'Время рендеринга HTML элементов' ,
+		} ,
+		descr : {
+			'en' : 'Simply add elements.' ,
+			'ru' : 'Просто добавляет на страницу элементы заданного типа.' ,
+		} ,
+		params : {
+			'count' : {
+				title : {
+					'en' : 'Count of elements',
+					'ru' : 'Колличество элементов',
+				},
+				default : 500,
+				type : 'number',
+				precision : 100,
+			},
+		},
+		samples : {
+		} ,
+		steps : {
+			'fill' : {
+				title : {
+					'en' : 'Adding elements' ,
+					'ru' : 'Добавление элементов' ,
+				} ,
+			} ,
+		} ,
+	}
+
+	var tagNames = [ 'a' , 'abbr' , 'acronym' , 'address' , 'applet' , 'area' , 'article' , 'aside' , 'audio' , 'b' , 'base' , 'basefont' , 'bdi' , 'bdo' , 'bgsound' , 'big' , 'blink' , 'blockquote' , 'body' , 'br' , 'button' , 'canvas' , 'caption' , 'center' , 'cite' , 'code' , 'col' , 'colgroup' , 'command' , 'content' , 'data' , 'datalist' , 'dd' , 'del' , 'details' , 'dfn' , 'dialog' , 'dir' , 'div' , 'dl' , 'dt' , 'element' , 'em' , 'embed' , 'fieldset' , 'figcaption' , 'figure' , 'font' , 'footer' , 'form' , 'frame' , 'frameset' , 'head' , 'header' , 'hgroup' , 'hr' , 'html' , 'i' , 'iframe' , 'image' , 'img' , 'input' , 'ins' , 'isindex' , 'kbd' , 'keygen' , 'label' , 'legend' , 'li' , 'link' , 'listing' , 'main' , 'map' , 'mark' , 'marquee' , 'menu' , 'menuitem' , 'meta' , 'meter' , 'multicol' , 'nav' , 'nobr' , 'noembed' , 'noframes' , 'noscript' , 'object' , 'ol' , 'optgroup' , 'option' , 'output' , 'p' , 'param' , 'picture' , 'plaintext' , 'pre' , 'progress' , 'q' , 'rp' , 'rt' , 'rtc' , 'ruby' , 's' , 'samp' , 'script' , 'section' , 'select' , 'shadow' , 'small' , 'source' , 'spacer' , 'span' , 'strike' , 'strong' , 'style' , 'sub' , 'summary' , 'sup' , 'table' , 'tbody' , 'td' , 'template' , 'textarea' , 'tfoot' , 'th' , 'thead' , 'time' , 'title' , 'tr' , 'track' , 'tt' , 'u' , 'ul' , 'var' , 'video' , 'wbr' , 'xmp' ]
+
+	tagNames.forEach( function( tagName ) {
+		metaData.samples[ tagName ] = {
+			title : { 'en' : tagName }
+		}
+	} )
+
+	function meta() {
+		done( metaData )
+	}
+
+	function fill( sample, params ) {
+		var body = document.body
+		while( body.firstChild ) {
+			body.removeChild( body.firstChild )
+		}
+		requestAnimationFrame( function() {
+			var start = Date.now()
+			var frag = document.createDocumentFragment()
+			for( var i = 0 ; i < params.count ; ++ i ) {
+				frag.appendChild( document.createElement( sample ) )
+			}
+			body.appendChild( frag )
+	
+			setImmediate( function() {
+				done( Date.now() - start + ' ms' )
+			} )
+		} )
+	}
+
+	function done( result ) {
+		if( parent === window ) console.log( result )
+		else parent.postMessage( [ 'done' , result ] , '*' )
+	}
+
+	window.addEventListener( 'message' , function( event ) {
+		window[ event.data[0] ].apply( null , event.data.slice( 1 ) )
+	} )
+
+	var setImmediate_task
+	function setImmediate( task ) {
+		setImmediate_task = task
+		postMessage( [ 'setImmediate_task' ] , '*' )
+	}
+
+</script>

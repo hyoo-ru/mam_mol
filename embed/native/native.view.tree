@@ -1,0 +1,12 @@
+$mol_embed_native $mol_view
+	dom_name \object
+	attr *
+		^
+		data <= uri \
+		type <= mime \
+	sub /
+		<= Open $mol_link
+			uri <= uri \
+			sub /
+				<= Open_button $mol_button_major
+					title <= open_label @ \Open

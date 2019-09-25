@@ -1,0 +1,16 @@
+[mol_select_demo_colors_color_option] {
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	padding: 0 1rem 0 0;
+	box-shadow: none;
+	align-items: center;
+	min-height: 2.5rem;
+}
+
+[mol_select_demo_colors_color_preview] {
+	border-radius: var(--mol_skin_round);
+	text-align: start;
+	margin: 0 .5rem 0 0;
+	padding: .25rem;
+	align-self: stretch;
+}

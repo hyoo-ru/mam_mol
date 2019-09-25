@@ -1,0 +1,26 @@
+$mol_app_rdf $mol_page
+	title @ \RDF graph browser
+	tools / <= Source $mol_link_iconed
+		uri \https://github.com/eigenmethod/mol/tree/master/app/rdf
+		title \
+	sub /
+		<= Head
+		<= Uri $mol_string
+			value?val <=> uri?val \http://dbpedia.org/ontology/
+			hint <= uri_hint \URI
+		<= Body
+	body / <= Subjects $mol_list rows <= subject_rows /
+	Subject_row!uri $mol_view sub /
+		<= Subject!uri $mol_link
+			title <= subject_title!uri \
+			uri <= subject_uri!uri \
+		<= Predicates!uri $mol_list rows <= predicate_rows!uri /
+	Predicate_row!id $mol_view sub /
+		<= Predicate!id $mol_link
+			title <= predicate_title!id \
+			uri <= predicate_uri!id \
+		<= Objects!id $mol_list rows <= object_rows!id /
+	Resource!id $mol_link
+		title <= resource_title!id \
+		uri <= resource_uri!id \
+	Value!id $mol_view sub / <= value!id \

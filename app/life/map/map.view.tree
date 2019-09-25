@@ -1,0 +1,34 @@
+$mol_app_life_map $mol_plot_pane
+	gap_hor 0
+	gap_vert 0
+	-
+	pan?val /
+		0
+		0
+	zoom?val 16
+	scale /
+		<= zoom
+		<= zoom
+	shift <= pan
+	-
+	graphs /
+		<= Points $mol_plot_dot
+			diameter <= zoom
+			series_x <= points_x /number
+			series_y <= points_y /number
+	-
+	plugins /
+		<= Touch $mol_touch
+			zoom?val <=> zoom?val
+			pan?val <=> pan?val
+	-
+	snapshot \
+	snapshot_current \
+	-
+	speed 0
+	population 0
+	-
+	event *
+		^
+		mousedown?event <=> draw_start?event null
+		mouseup?event <=> draw_end?event null

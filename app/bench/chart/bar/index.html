@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+
+<meta charset="utf-8" />
+
+<style>
+	html , body {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+	}
+
+	@keyframes measure {
+		from {
+			outline : 1px solid black;
+		}
+		to {
+			outline : 1px solid white;
+		}
+	}
+
+	#sandbox {
+		border: none;
+		width: 100%;
+		height: 100%;
+	}
+</style>
+
+<iframe id="sandbox"></iframe>
+
+<script>
+
+	if( window.parent === window ) document.location = '//eigenmethod.github.io/mol/app/bench/#bench=' + encodeURIComponent( location.href )
+
+	function getSeries( params ) {
+		var graphs = []
+		for( var g = 0 ; g < params.graphs ; ++g ) {
+			var series = []
+			for( var i = 0 ; i < params.series ; ++i ) {
+				series.push( Math.cos( g + 5 * i / params.series ) + Math.random() / 10 )
+			}
+			graphs.push( series )
+		}
+		return graphs
+	}
+	
+	var metaData = {
+		title : {
+			'en' : 'Graphs' ,
+			'ru' : 'Графики' ,
+		} ,
+		descr : {
+			'en' : 'Draws some bar graphs.' ,
+			'ru' : 'Рисует несколько столбчатых графиков.' ,
+		} ,
+		params : {
+			'graphs' : {
+				title : {
+					'en' : 'Count of rows',
+					'ru' : 'Колличество графиков',
+				},
+				default : 20,
+				type : 'number',
+				precision : 1,
+			},
+			'series' : {
+				title : {
+					'en' : 'Count of measurement',
+					'ru' : 'Колличество замеров',
+				},
+				default : 200,
+				type : 'number',
+				precision : 10,
+			},
+		},
+		samples : {
+			'mol' : {
+				title : {
+					'en' : '$mol_chart' ,
+				} ,
+				weight : '18 KB' ,
+			} ,
+			'hcharts' : {
+				title : {
+					'en' : 'HighCharts' ,
+				} ,
+				weight : '71 KB' ,
+			} ,
+			'anychart' : {
+				title : {
+					'en' : 'AnyChart' ,
+				} ,
+				weight : '499 KB' ,
+			} ,
+		} ,
+		steps : {
+			'start' : {
+				title : {
+					'en' : 'Start' ,
+					'ru' : 'Запуск' ,
+				} ,
+			} ,
+			'weight' : {
+				title : {
+					'en' : 'Weight' ,
+					'ru' : 'Размер' ,
+				}
+			} ,
+			'fill' : {
+				title : {
+					'en' : 'First render' ,
+					'ru' : 'Первичная отрисовка' ,
+				} ,
+			} ,
+			'update' : {
+				title : {
+					'en' : 'Data update' ,
+					'ru' : 'Обновление данных' ,
+				} ,
+			} ,
+		} ,
+	}
+	
+	function meta() {
+		done( metaData )
+	}
+
+	function start( sample ) {
+		var sandbox = document.getElementById( 'sandbox' )
+		sandbox.src = 'about:blank'
+		setTimeout( function() {
+			var start = Date.now()
+			sandbox.src = sample + '/'
+			sandbox.onload = function() {
+				done( Date.now() - start + ' ms' )
+				sandbox.onload = null
+			}
+		} )
+	}
+
+	function weight( sample ) {
+		done( metaData.samples[ sample ].weight )
+	}
+
+	function fill( sample, params ) {
+		measure( [ 'fill' , { sample : sample , graphs : getSeries( params ) } ] , '*' )
+	}
+
+	function update( sample, params ) {
+		measure( [ 'update' , { sample : sample , graphs : getSeries( params ) } ] , '*' )
+	}
+
+	function measure( message ) {
+		var sandbox = document.getElementById( 'sandbox' )
+		requestAnimationFrame( function() { // begin at next frame start for measure stability reason
+			// console.timeStamp( 'begin ' + message[0] )
+			sandbox.contentWindow.postMessage( message , '*' )
+			sandbox.addEventListener( 'animationend' , end )
+			requestAnimationFrame( function(){ setTimeout( function() { // wait for message processed
+				sandbox.style.animation = 'measure .001s'
+			} ) } )
+			var start = Date.now()
+			function end() { // wait for painting ends
+				done( Date.now() - start + ' ms' )
+				// console.timeStamp( 'end ' + message[0] )
+				sandbox.style.animation = ''
+				sandbox.removeEventListener( 'animationend' , end )
+			}
+		} )
+	}
+
+	function done( result ) {
+		if( parent === window ) console.log( result )
+		else parent.postMessage( [ 'done' , result ] , '*' )
+	}
+
+	window.addEventListener( 'message' , function( event ) {
+		window[ event.data[0] ].apply( null , event.data.slice( 1 ) )
+	} )
+	
+</script>

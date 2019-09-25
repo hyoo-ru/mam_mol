@@ -1,0 +1,7 @@
+$mol_dimmer $mol_view
+	haystack \
+	needle \
+	sub <= parts /
+	Low!id $mol_view
+		sub /
+			<= string!id \

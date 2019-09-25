@@ -1,0 +1,15 @@
+[mol_labeler] {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	cursor: inherit;
+}
+
+[mol_labeler_title] {
+	color: var(--mol_theme_shade);
+	font-size: .875rem;
+}
+
+[mol_labeler_content] {
+	display: flex;
+}

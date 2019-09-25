@@ -1,0 +1,24 @@
+$mol_bench $mol_grid
+	records <= result *
+	col_sort?val \
+	-
+	Col_head!id $mol_bench_head
+		event_click?val <=> event_sort_toggle!id?val null
+		sub <= col_head_content!id /
+			<= col_head_label!id /
+			<= Col_head_sort!id $mol_icon_sort_asc
+	-
+	cell_content_number!id /
+		<= result_value!id \
+		<= Result_portion!id $mol_portion
+			portion <= result_portion!id 0
+
+
+$mol_bench_head $mol_float
+	horizontal false
+	event *
+		^
+		click?val <=> event_click?val null
+	attr *
+		^
+		title <= hint @ \Click to sort by this column

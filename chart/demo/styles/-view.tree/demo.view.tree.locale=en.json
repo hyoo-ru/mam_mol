@@ -1,0 +1,11 @@
+{
+	"$mol_chart_demo_styles_title": "Chart with various styles of graphs.",
+	"$mol_chart_demo_styles_receipts_title": "Receipts",
+	"$mol_chart_demo_styles_receipts_confirmed_title": "Confirmed receipts",
+	"$mol_chart_demo_styles_maximum_title": "Maximum",
+	"$mol_chart_demo_styles_waste_title": "Waste",
+	"$mol_chart_demo_styles_purchases_title": "Purchases",
+	"$mol_chart_demo_styles_taxes_title": "Taxes",
+	"$mol_chart_demo_styles_energy_title": "kJ",
+	"$mol_chart_demo_styles_day_title": "Day"
+}

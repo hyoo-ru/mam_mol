@@ -1,0 +1,17 @@
+[mol_embed_pdf] {
+	width: 100%;
+	height: 100%;
+}
+
+[mol_embed_pdf_pages] {
+	display: flex;
+	flex-direction: column;
+	padding: .5rem;
+}
+
+[mol_embed_pdf_page] {
+	display: block;
+	margin: .5rem auto;
+	image-rendering: auto;
+	box-shadow: var(--mol_skin_light_outline);
+}

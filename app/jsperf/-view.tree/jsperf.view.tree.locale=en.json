@@ -1,0 +1,10 @@
+{
+	"$mol_app_jsperf_title": "JS Performance",
+	"$mol_app_jsperf_prefix_hint": "Setup code for all cases. Use {#} to insert iterations count. Use  $mol_import.script( uri ) to load external.",
+	"$mol_app_jsperf_postfix_hint": "Teardown code for all cases. Use {#} to insert iterations count.",
+	"$mol_app_jsperf_parmalink_hint": "Permamemnt short link",
+	"$mol_app_jsperf_new_hint": "New benchmark",
+	"$mol_app_jsperf_optimized_title": "Optimized",
+	"$mol_app_jsperf_run_title": "Run",
+	"$mol_app_jsperf_case_source_hint": "Case source code. Use {#} to insert iteration number."
+}

@@ -1,0 +1,11 @@
+$mol_app_tree $mol_page
+	title @ \View.Tree compiler
+	body /
+		<= Source $mol_textarea
+			value?val <=> source?val \
+			hint <= source_hint @ \view.tree source
+		<= Result $mol_scroll
+			sub /
+				<= Result_text $mol_text
+					text <= result \
+		

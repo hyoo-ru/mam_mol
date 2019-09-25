@@ -1,0 +1,8 @@
+{
+	"$mol_app_life_title": "Life of {population} cells",
+	"$mol_app_life_store_link_hint": "Store snapshot",
+	"$mol_app_life_time_slowest_label": "Slowest",
+	"$mol_app_life_time_slow_label": "Slow",
+	"$mol_app_life_time_fast_label": "Fast",
+	"$mol_app_life_time_fastest_label": "Fastest"
+}

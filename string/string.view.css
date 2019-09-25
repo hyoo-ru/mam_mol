@@ -1,0 +1,33 @@
+[mol_string] {
+	box-sizing: border-box;
+	outline-offset: 0;
+	border: none;
+	border-radius: var(--mol_skin_round);
+	white-space: nowrap;
+	overflow: hidden;
+	padding: .5rem 1rem;
+	text-align: left;
+	position: relative;
+	z-index: 0;
+	font: inherit;
+	flex: 0 1 auto;
+	width: 100%;
+	background: var(--mol_theme_field);
+	color: var(--mol_theme_text);
+	box-shadow: inset 0 0 0 .5px var(--mol_theme_line);
+	margin: 0;
+}
+
+[mol_string]:disabled {
+	background-color: transparent;
+}
+
+[mol_string]:focus {
+	outline: none;
+	z-index: 1;
+	box-shadow: inset 0 0 0 .5px var(--mol_theme_focus);
+}
+
+[mol_string]::-ms-clear {
+	display: none;
+}

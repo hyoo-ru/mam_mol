@@ -1,0 +1,27 @@
+$mol_app_request $mol_page
+	title @ \HTTP request browser
+	body /
+		<= Uri_input $mol_string
+			value?val <=> uri?val \
+			hint <= uri_hint @ \URI
+		<= Data $mol_view sub /
+			<= Request $mol_scroll sub /
+				<= Request_headers $mol_labeler
+					title <= request_headers_title @ \Request headers
+					Content <= Request_headers_input $mol_textarea
+						value?val <=> request_headers?val \
+				<= Request_body $mol_labeler
+					title <= request_body_title @ \Request body
+					Content <= Request_body_input $mol_textarea
+						value?val <=> request_body?val \
+			<= Response $mol_scroll sub /
+				<= Response_headers $mol_labeler
+					title <= response_headers_title @ \Response headers
+					Content <= Response_headers_output $mol_textarea
+						enabled false
+						value <= response_headers \
+				<= Response_body $mol_labeler
+					title <= response_body_title @ \Response body
+					Content <= Response_body_output $mol_textarea
+						enabled false
+						value <= response_body \

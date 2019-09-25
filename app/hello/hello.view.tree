@@ -1,0 +1,8 @@
+$mol_app_hello $mol_view
+	sub /
+		<= Name $mol_string
+			hint <= name_hint \Name
+			value?val <=> name?val \
+		<= Greeting $mol_view
+			sub /
+				<= greeting \

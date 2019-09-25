@@ -1,0 +1,4 @@
+{
+	"$mol_app_issues_description": "Sum of ages of all open issues. Lower is better.",
+	"$mol_app_issues_title": "Time of unresolving issues of GitHub projects"
+}

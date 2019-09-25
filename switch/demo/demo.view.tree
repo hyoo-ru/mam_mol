@@ -1,0 +1,16 @@
+$mol_switch_demo $mol_demo_small
+	title @ \Color switchers in various state
+	sub /
+		<= Enabled $mol_switch
+			value?val <=> color?val \red
+			options *
+				red <= option_red @ \Red
+				green <= option_green @ \Green
+				blue <= option_blue @ \Blue
+		<= Disabled $mol_switch
+			value?val <=> color?val \red
+			enabled false
+			options *
+				red <= option_red @ \Red
+				green <= option_green @ \Green
+				blue <= option_blue @ \Blue

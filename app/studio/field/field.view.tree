@@ -1,0 +1,99 @@
+$mol_app_studio_field $mol_expander
+	path /
+	Trigger $mol_app_studio_field_title
+		checked?val <=> expanded?val false
+		Title <= Trigger_label $mol_dimmer
+			needle <= highlight \
+			haystack <= title
+		type <= type
+	tools /
+		<= Type $mol_select
+			value?val <=> type?val \null
+			hint <= type_hint @ \Type...
+			Trigger_icon null
+			dictionary <= types *
+				get \<=
+				bind \<=>
+				object \Object
+				string \Text
+				locale \Localization
+				number \Number
+				bool \Flag
+				list \List
+				dict \Dictionary
+				null \None
+		<= Object $mol_select
+			value?val <=> class?val null
+			options <= object_options /
+			hint <= object_hint @ \Class...
+			Trigger_icon null
+	content /
+		<= Bool $mol_switch
+			value?val <=> value_bool?val null
+			options *
+				true \True
+				false \False
+		<= Number $mol_number
+			value?val <=> value_number?val NaN
+			hint <= hint \
+		<= String $mol_textarea
+			value?val <=> value_string?val null
+			hint <= hint \
+		<= Bind $mol_select
+			value?val <=> bind?val null
+			options <= bind_options /
+			hint <= bind_hint @ \Property..
+			No_options <= Prop_add $mol_button_minor
+				title <= prop_add_label @ \Add property
+				event_click?val <=> event_prop_add?val null
+			Trigger_icon null
+		<= List $mol_list
+			rows /
+				<= list_rows /
+				<= Add $mol_select
+					hint <= add_hint @ \Add item..
+					value?val <=> add_item?val \
+					dictionary <= item_types *
+						get \<=
+						string \Text
+						number \Number
+						bool \Flag
+						list \List
+						dict \Dictionary
+						null \None
+					Trigger_icon <= List_trigger_icon $mol_icon_plus
+		<= Dict $mol_list
+			rows /
+				<= pairs /
+				<= Add_pair $mol_bar
+					sub /
+						<= Add_pair_key $mol_search
+							hint <= add_pair_hint @ \Add key..
+							query?val <=> add_pair_key?val \
+							suggests <= key_suggests /
+						<= Add_pair_submit $mol_button_minor
+							event_click?val <=> add_pair?val \
+							sub /
+								<= Add_pair_submit_icon $mol_icon_plus
+		<= Overs $mol_list
+			rows /
+				<= overs /
+				<= Add_over $mol_select
+					hint <= add_over_hint @ \Add override..
+					value?val <=> add_over?val \
+					Trigger_icon <= Overs_trigger_icon $mol_icon_plus
+					options <= over_options /
+	Prop!id $mol_app_studio_field
+		path <= prop_path!id /
+		prop_arg!id <= prop_arg!id *
+		prop!path?val <=> prop!path?val $mol_tree
+		props!name?val <=> props!name?val $mol_tree
+		prop_value!id <= prop_value!id null
+		bind_options <= bind_options /
+		prop_add?val <=> prop_add?val null
+		object_options <= object_options /
+
+$mol_app_studio_field_title $mol_check_expand
+	attr *
+		^
+		mol_app_studio_field_title_type <= type \null

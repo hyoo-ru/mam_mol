@@ -1,0 +1,120 @@
+[mol_app_demo_menu] {
+	flex: 1 1 240px;
+}
+
+[mol_app_demo_menu_head] {
+}
+
+[mol_app_demo_menu_tools] {
+	padding: 0;
+}
+
+[mol_app_demo_menu_nav] {
+	flex: auto;
+	align-self: stretch;
+}
+
+[mol_app_demo_detail],
+[mol_app_empty_message] {
+	flex: 1000 1 600px;
+	background: var(--mol_theme_field);
+}
+
+[mol_app_demo_menu_filter] {
+	align-self: stretch;
+	flex: none;
+}
+
+[mol_app_demo_nav_table] {
+	padding: .5rem;
+	width: 100%;
+}
+
+[mol_app_demo_nav_row] {
+	display: flex;
+}
+
+[mol_app_demo_nav_option] {
+	padding: 0 .5rem 0 0;
+	display: flex;
+	flex: 1;
+	align-items: center;
+	box-shadow: none;
+}
+
+[mol_app_demo_nav_expand] {
+	align-self: stretch;
+	align-items: center;
+	padding-right: .25rem;
+}
+
+[mol_app_demo_nav_content] {
+	flex-grow: 1;
+}
+
+[mol_app_demo_main] {
+	overflow: auto;
+}
+
+[mol_app_demo_menu_themes] {
+	flex: none;
+}
+
+[mol_app_demo_list] {
+	display: flex;
+	flex-wrap: wrap;
+	padding: .5rem;
+	align-content: flex-start;
+	align-items: flex-start;
+}
+
+[mol_app_demo_screen] {
+	max-height: 45%;
+}
+
+[mol_app_demo_detail_body] {
+	display: flex;
+	align-items: stretch;
+	justify-content: flex-start;
+	flex-direction: column;
+}
+
+[mol_app_demo_detail_list] {
+	flex: 1 0 auto;
+	display: flex;
+	flex-direction: column;
+	margin: .5rem;
+	height: calc( 100% - 1rem );
+}
+
+[mol_app_demo_detail_list] > [mol_demo_large] {
+	margin: .5rem;
+	height: calc( 100% - 2rem );
+	width: calc( 100% - 1rem );
+}
+
+[mol_app_demo_page_close] {
+	color: inherit;
+	align-items: center;
+	padding: 1rem;
+}
+
+[mol_app_demo_welcome] {
+	flex: 1 1 auto;
+}
+
+[mol_app_demo_option_link] {
+	padding: 0;
+}
+
+[mol_app_demo_sample_large] {
+	box-sizing: border-box;
+}
+
+[mol_app_demo_detail_empty_message] {
+	margin: auto;
+}
+
+[mol_app_demo_chat] {
+	flex: none;
+}

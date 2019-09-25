@@ -1,0 +1,42 @@
+[mol_app_studio_preview_page] {
+	flex: 1000 1 400px; 
+}
+
+[mol_app_studio_editor_page] {
+	flex: 1000 1 400px;
+}
+
+[mol_app_studio_source_page] {
+	flex: 1000 1 400px;
+}
+
+[mol_app_studio_crumbs] {
+	flex: 1000 1 auto;
+	display: flex;
+	flex-wrap: wrap;
+}
+[mol_app_studio_crumbs] > * {
+	margin: 0;
+}
+
+[mol_app_studio_preview_page_head] {
+	filter: brightness(90%);
+}
+
+[mol_app_studio_preview_page_body] {
+	padding: 1rem;
+	display: flex;
+	align-items: flex-start;
+}
+
+[mol_app_studio_editor_page_head] {
+	flex-wrap: nowrap;
+}
+
+[mol_app_studio_fields] {
+	min-height: 1rem;
+}
+
+[mol_app_studio_fields] > * {
+	margin: 1rem;
+}

@@ -1,0 +1,8 @@
+{
+	"$mol_app_request_request_body_title": "Тело запроса",
+	"$mol_app_request_request_headers_title": "Заголовки запроса",
+	"$mol_app_request_response_body_title": "Тело ответа",
+	"$mol_app_request_response_headers_title": "Заголовки ответа",
+	"$mol_app_request_title": "HTTP запросы онлайн",
+	"$mol_app_request_uri_hint": "URI"
+}

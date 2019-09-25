@@ -1,0 +1,19 @@
+$mol_select_demo_colors $mol_demo_small
+	title @ \Color picker with filter and custom rows
+	sub /
+		<= Color $mol_select
+			value?val <=> color?val \
+			dictionary <= colors *
+			option_label!id <= color_name!id \
+			option_content!id <= option_content!id /
+				<= Color_option!id $mol_row
+					sub /
+						<= Color_preview!id $mol_select_colors_color_preview
+							color <= option_color!id \
+						<= color_name!id \
+					minimal_height 40
+
+$mol_select_colors_color_preview $mol_view
+	style *
+		^
+		background <= color \

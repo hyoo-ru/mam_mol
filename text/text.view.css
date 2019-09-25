@@ -1,0 +1,156 @@
+[mol_text] {
+	line-height: 1.5;
+	box-sizing: border-box;
+	max-width: 60rem;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	padding: .5rem;
+	border-radius: var(--mol_skin_round);
+	white-space: pre-line;
+	display: flex;
+	flex-direction: column;
+	flex: 0 0 auto;
+	tab-size: 4;
+}
+
+[mol_text_row] {
+	margin: .5rem;
+	overflow: auto;
+	max-width: 100%;
+}
+
+[mol_text_type="block"] {
+}
+
+[mol_text_header] {
+	display: block;
+	padding: .5rem;
+	font-weight: 500;
+	margin: 0;
+}
+
+[mol_text_header_level="1"] {
+	font-size: 1.5em;
+}
+
+[mol_text_header_level="2"] {
+	font-size: 1.3em;
+}
+
+[mol_text_header_level="3"] {
+	font-size: 1.1em;
+}
+
+[mol_text_header_level="4"] {
+	font-size: 1.1em;
+	font-style: italic;
+}
+
+[mol_text_header_level="5"] {
+	font-size: 1.1em;
+	font-weight: normal;
+	font-style: italic;
+}
+
+[mol_text_type="list-item"] {
+	display: list-item;
+}
+
+[mol_text_type="list-item"]:before {
+	content: '•';
+	margin-right: 1ch;
+}
+
+[mol_text_table] {
+	max-width: 100%;
+	max-height: 75vh;
+	overflow: auto;
+	margin: .5rem;
+	flex-grow: 0;
+}
+
+[mol_text_type="code-indent"] ,
+[mol_text_type="code"] {
+	font-family: var(--mol_skin_font_monospace);
+	white-space: pre-wrap;
+	border-radius: var(--mol_skin_round);
+}
+
+[mol_text_type="text-link"] {
+	color: var(--mol_theme_control);
+	text-decoration: none;
+	padding: 0;
+}
+
+[mol_text_link]:hover ,
+[mol_text_link]:focus {
+	text-decoration: underline;
+	outline: none;
+}
+
+[mol_text_image] {
+	max-width: 100%;
+	max-height: 75vh;
+	object-fit: scale-down;
+}
+
+[mol_text_type="strong"] {
+	font-weight: bolder;
+}
+
+[mol_text_type="emphasis"] {
+	font-style: italic;
+}
+
+[mol_text_type="strike"] {
+	text-decoration: line-through;
+	color: var(--mol_theme_shade);
+}
+
+[mol_text_type="code-keyword"] {
+	color: hsl(0, 70%, 60%);
+}
+
+[mol_text_type="code-field"] {
+	color: hsl(300, 70%, 60%);
+}
+
+[mol_text_type="code-tag"] {
+	color: hsl(330, 70%, 60%);
+}
+
+[mol_text_type="code-global"] {
+	color: hsl(210, 80%, 60%);
+}
+
+[mol_text_type="code-decorator"] {
+	color: hsl(180, 40%, 60%);
+}
+
+[mol_text_type="code-punctuation"] {
+	opacity: .5;
+}
+
+[mol_text_type="code-string"] {
+	color: hsl(90, 40%, 50%);
+}
+
+[mol_text_type="code-number"] {
+	color: hsl(60, 70%, 30%);
+}
+
+[mol_text_type="code-call"] {
+	color: hsl(270, 60%, 60%);
+}
+
+[mol_text_type="code-link"] {
+	color: hsl(240, 60%, 60%);
+}
+
+[mol_text_type="code-comment-inline"] ,
+[mol_text_type="code-comment-block"] {
+	opacity: .5;
+}
+
+[mol_text_type="code-docs"] {
+	opacity: .75;
+}

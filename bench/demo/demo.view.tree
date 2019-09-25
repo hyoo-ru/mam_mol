@@ -1,0 +1,6 @@
+$mol_bench_demo $mol_demo_small
+	title @ \Benchmarking results visualization
+	sub /
+		<= View $mol_bench
+			col_sort?val <=> col_sort?val \mid
+			result <= result *

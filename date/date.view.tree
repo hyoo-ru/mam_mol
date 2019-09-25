@@ -1,0 +1,20 @@
+$mol_date $mol_pop
+	Anchor <= Input $mol_string
+		value?val <=> value?val \
+		hint <= hint \YYYY-MM-DD
+		length_max 10
+	-
+	bubble_content /
+		<= Calendar $mol_date_calendar
+			month_string <= value
+			day_selected!day <= day_selected!day false
+			day_click!day?event <=> day_click!day?event null
+	-
+	value_number?val NaN
+	value_moment?val $mol_time_moment
+
+$mol_date_calendar $mol_calendar
+	day_content!day /
+		<= Day_button!day $mol_button
+			title <= day_text!day
+			event_click?event <=> day_click!day?event null

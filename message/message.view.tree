@@ -1,0 +1,19 @@
+$mol_message $mol_view
+	moment $mol_time_moment
+	sub /
+		<= Info $mol_row
+			sub /
+				<= Name $mol_view
+					sub /
+						<= name \ 
+				<= Moment $mol_view
+					sub /
+						<= moment_string \
+		<= Avatar_link $mol_link
+			uri <= avatar_link \
+			sub /
+				<= Avatar $mol_image
+					title \
+					uri <= avatar \
+		<= Text $mol_text
+			text <= text \

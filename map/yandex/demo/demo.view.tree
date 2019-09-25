@@ -1,0 +1,15 @@
+$mol_map_yandex_demo $mol_demo_large
+	title @ \Simple Yandex Maps wrapper
+	sub /
+		<= Map $mol_map_yandex
+			center?val <=> center?val /
+				59.9
+				30.3
+			zoom?val <=> zoom?val 10
+			objects /
+				<= Place $mol_map_yandex_mark
+					pos <= place_pos /
+						59.9
+						30.3
+					title <= place_title \Saint-Petersburg
+					content <= place_content \It is Russia's second-largest city after Moscow

@@ -1,0 +1,69 @@
+[mol_select] {
+	display: flex;
+	word-break: normal;
+	align-self: flex-start;
+}
+
+[mol_select_anchor] {
+	display: flex;
+	flex: 1 1 auto;
+	justify-content: space-between;
+}
+
+[mol_select_option_row] {
+	min-width: 100%;
+	padding: 0;
+	justify-content: flex-start;
+}
+
+[mol_select_bubble] {
+	min-width: 100%;
+}
+
+[mol_select_filter] {
+	z-index: 2;
+	opacity: 1 !important;
+	flex: 1 1 auto;
+	align-self: stretch;
+}
+
+[mol_select_option_label] {
+	padding: .5rem 1rem;
+	text-align: left;
+	min-height: 1.5em;
+}
+
+[mol_select_clear_option_content] {
+	padding: .5em 1rem .5rem 0;
+	text-align: left;
+	box-shadow: var(--mol_theme_line);
+	flex: 1 0 auto;
+}
+
+[mol_select_no_options] {
+	padding: .5em 1rem;
+	text-align: left;
+	display: block;
+	color: var(--mol_theme_shade);
+}
+
+[mol_select_trigger] {
+	padding: 0;
+	flex: 1 1 auto;
+	display: flex;
+	justify-content: flex-end;
+}
+
+[mol_select_trigger_icon] {
+	transform: rotateZ(90deg);
+	margin: .5rem .5rem .5rem -1rem;
+}
+:hover > [mol_select_trigger_icon] {
+	transform: rotateZ(90deg) scale(1.25);
+}
+
+[mol_select_menu] {
+	display: flex;
+	flex-direction: column;
+}
+

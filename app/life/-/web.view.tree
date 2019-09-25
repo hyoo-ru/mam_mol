@@ -1,0 +1,421 @@
+$mol_link $mol_view
+	minimal_height 40
+	dom_name \a
+	attr *
+		^
+		href <= uri \
+		title <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+	sub / <= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	text_width?text 0
+	font_size 16
+	font_family \
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_group $mol_svg
+	dom_name \g
+
+$mol_plot_graph $mol_svg_group
+	series_x /number
+	series_y /number
+	-
+	attr *
+		^
+		mol_plot_graph_type <= type \solid
+	-
+	style *
+		^
+		color <= color \
+	-
+	viewport $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
+	shift /number
+		0
+		0
+	scale /number
+		1
+		1
+	cursor_position $mol_vector_2d /
+		NaN
+		NaN
+	dimensions_pane $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
+	dimensions $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
+	size_real $mol_vector_2d /
+		0
+		0
+	gap $mol_vector_2d /
+		$mol_vector_range /
+			0
+			0
+		$mol_vector_range /
+			0
+			0
+	indexes /number
+	points /readonly[number,number]
+	front /$mol_svg
+	back /$mol_svg
+	hue NaN
+	Sample null
+
+$mol_plot_graph_sample $mol_view
+	attr *
+		^
+		mol_plot_graph_type <= type \solid
+	style *
+		^
+		color <= color \black
+
+$mol_plugin $mol_object
+	dom_node null
+	attr_static *
+	event *
+	event_async *
+
+$mol_meter $mol_plugin
+	zoom 1
+	-
+	width?val 0
+	height?val 0
+	-
+	left?val 0
+	right?val 0
+	bottom?val 0
+	top?val 0
+
+$mol_touch $mol_plugin
+	start_zoom?val 0
+	start_distance?val 0
+	zoom?val 1
+	-
+	start_pan?val /
+		0
+		0
+	pan?val /
+		0
+		0
+	pos?val /
+		NaN
+		NaN
+	-
+	start_pos?val null
+	swipe_precision 16
+	-
+	swipe_right?val null
+	swipe_bottom?val null
+	swipe_left?val null
+	swipe_top?val null
+	-
+	swipe_from_right?val null
+	swipe_from_bottom?val null
+	swipe_from_left?val null
+	swipe_from_top?val null
+	-
+	swipe_to_right?val null
+	swipe_to_bottom?val null
+	swipe_to_left?val null
+	swipe_to_top?val null
+	-
+	event *
+		^
+		touchstart?event <=> event_start?event null
+		touchmove?event <=> event_move?event null
+		touchend?event <=> event_end?event null
+		mousedown?event <=> event_start?event null
+		mousemove?event <=> event_move?event null
+		mouseup?event <=> event_end?event null
+		mouseleave?event <=> event_leave?event null
+		wheel?event <=> event_wheel?event null
+
+$mol_plot_pane $mol_svg_root
+	aspect \none
+	-
+	hue_base?val NaN
+	hue_shift?val 111
+	-
+	gap_hor 48
+	gap_vert 24
+	gap_left <= gap_hor
+	gap_right <= gap_hor
+	gap_top <= gap_vert
+	gap_bottom <= gap_vert
+	gap $mol_vector_2d /
+		$mol_vector_range /
+			<= gap_left
+			<= gap_right
+		$mol_vector_range /
+			<= gap_bottom
+			<= gap_top
+	-
+	shift_limit $mol_vector_2d /
+		$mol_vector_range /
+			0
+			0
+		$mol_vector_range /
+			0
+			0
+	shift_default /number
+		0
+		0
+	shift?val /number
+		0
+		0
+	scale_limit $mol_vector_2d /
+		$mol_vector_range /
+			0
+			Infinity
+		$mol_vector_range /
+			0
+			Infinity
+	scale_default /number
+		0
+		0
+	scale?val /number
+		1
+		1
+	scale_x?val 0
+	scale_y?val 0
+	size $mol_vector_2d /
+		0
+		0
+	size_real $mol_vector_2d /
+		1
+		1
+	dimensions_viewport $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
+	dimensions $mol_vector_2d /
+		$mol_vector_range /
+			Infinity
+			-Infinity
+		$mol_vector_range /
+			Infinity
+			-Infinity
+	-
+	sub <= graphs_sorted /$mol_svg
+	graphs_colored <= graphs_positioned <= graphs /$mol_plot_graph
+	cursor_position?val $mol_vector_2d /
+		NaN
+		NaN
+	-
+	plugins /
+		<= Meter $mol_meter
+			width => width
+			height => height
+		<= Touch $mol_touch
+			zoom?val <=> scale_x?val
+			pan?val <=> shift?val
+			pos?val <=> cursor_position?val
+	event *
+		^
+		dblclick?event <=> reset?event null
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_plot_dot $mol_plot_graph
+	points_max Infinity
+	style *
+		^
+		stroke-width <= diameter 8
+	sub /
+		<= Curve $mol_svg_path
+			geometry <= curve \
+	-
+	Sample $mol_plot_graph_sample
+		color <= color
+
+$mol_app_life_map $mol_plot_pane
+	gap_hor 0
+	gap_vert 0
+	-
+	pan?val /
+		0
+		0
+	zoom?val 16
+	scale /
+		<= zoom
+		<= zoom
+	shift <= pan
+	-
+	graphs /
+		<= Points $mol_plot_dot
+			diameter <= zoom
+			series_x <= points_x /number
+			series_y <= points_y /number
+	-
+	plugins /
+		<= Touch $mol_touch
+			zoom?val <=> zoom?val
+			pan?val <=> pan?val
+	-
+	snapshot \
+	snapshot_current \
+	-
+	speed 0
+	population 0
+	-
+	event *
+		^
+		mousedown?event <=> draw_start?event null
+		mouseup?event <=> draw_end?event null
+
+$mol_button $mol_view
+	enabled true
+	minimal_height 40
+	click?event null
+	event_click?event null
+	event *
+		^
+		click?event <=> event_activate?event null
+		keypress?event <=> event_key_press?event null 
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint \
+	sub /
+		<= title
+
+$mol_button_typed $mol_button
+
+$mol_button_major $mol_button_typed
+	attr *
+		^
+		mol_theme \$mol_theme_accent
+
+$mol_button_minor $mol_button_typed
+
+$mol_scroll $mol_view
+	minimal_height 0
+	moving_hor?val false
+	moving_vert?val false
+	field *
+		^
+		scrollTop <= scroll_top?val 0
+		scrollLeft <= scroll_left?val 0
+		scrollBottom <= scroll_bottom?val 0
+		scrollRight <= scroll_right?val 0
+	event_async *
+		^
+		scroll?event <=> event_scroll?event null
+		- DOMSubtreeModified?event <=> event_repos?event null
+	Strut $mol_view
+		style *
+			transform <= strut_transform \
+
+$mol_page $mol_view
+	sub /
+		<= Head $mol_view
+			attr * mol_theme \$mol_theme_base
+			sub <= head /
+				<= Title $mol_button
+					sub /
+						<= title
+					event_click?val <=> event_top?val null
+				<= Tools $mol_view
+					sub <= tools /
+		<= Body $mol_scroll
+			scroll_top?val <=> body_scroll_top?val 0
+			sub <= body /
+		<= Foot $mol_view
+			attr * mol_theme \$mol_theme_base
+			sub <= foot /
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
+$mol_icon_stored $mol_icon path \M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked?val false
+		aria-checked <= checked?val false
+		role \checkbox
+	sub /
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_switch $mol_view
+	minimal_height 40
+	Option!id $mol_check
+		checked?val <=> option_checked!id?val false
+		title <= option_title!id \
+		enabled <= option_enabled!id <= enabled true
+	value?val null
+	options *
+	sub <= items /
+
+$mol_app_life $mol_page
+	title @ \Life of {population} cells
+	tools /
+		<= Store_link $mol_link
+			uri <= store_link?val \
+			hint <= store_link_hint @ \Store snapshot
+			sub /
+				<= Stored $mol_icon_stored
+		<= Time $mol_switch
+			value?val <=> speed?val 0
+			options *
+				1 <= time_slowest_label @ \Slowest
+				5 <= time_slow_label @ \Slow
+				25 <= time_fast_label @ \Fast
+				60 <= time_fastest_label @ \Fastest
+	-
+	sub /
+		<= Head
+		<= Map $mol_app_life_map
+			speed <= speed
+			snapshot <= snapshot \0~-2ffff~10002~-20000~-1fffe~3~10003~20003
+			snapshot_current => snapshot_current
+			population => population

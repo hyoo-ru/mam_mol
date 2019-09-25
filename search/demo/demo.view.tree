@@ -1,0 +1,6 @@
+$mol_search_demo $mol_demo_small
+	title @ \Simple search field with suggest 
+	sub /
+		<= Search $mol_search
+			query => query
+			suggests <= suggests /

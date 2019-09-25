@@ -1,0 +1,25 @@
+$mol_check_box_demo $mol_demo_small
+	title @ \Checkboxes in various states
+	sub /
+		<= Labeled_base $mol_check_box
+			checked?val <=> base_checked?val false
+			title <= c1Label @ \Base
+		-
+		<= Labeled_checked $mol_check_box
+			title <= c2Label @ \Checked
+			checked?val <=> checked_checked?val true
+		-
+		<= Labeled_disabled $mol_check_box
+			title <= c6Label @ \Disabled
+			checked true
+			enabled false
+		-
+		<= Alone_base $mol_check_box
+			checked?val <=> base_checked?val false
+		-
+		<= Alone_checked $mol_check_box
+			checked?val <=> checked_checked?val true
+		-
+		<= Alone_disabled $mol_check_box
+			checked true
+			enabled false

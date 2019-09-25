@@ -1,0 +1,16 @@
+$mol_app_supplies $mol_book
+	-
+	enter $mol_app_supplies_enter
+		entered?val <=> entered?val false
+	-
+	List $mol_app_supplies_list
+		minimal_width 600
+		supplies <= supplies /
+		tools <= tools_root /
+		title <= list_title @ \Supplies
+		search_query?val <=> supply_id?val \
+	-
+	Detail $mol_app_supplies_detail
+		minimal_width 800
+		supply <= supply null
+		event_top?val <=> event_front_up?val

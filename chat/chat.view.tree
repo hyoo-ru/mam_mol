@@ -1,0 +1,25 @@
+$mol_chat $mol_list
+	rows /
+		<= posts /
+		<= Add_status $mol_status status <= adding?next null
+		<= Add $mol_bar
+			sub /
+				<= Add_body $mol_string
+					hint <= add_hint @ \New message...
+					value?val <=> add_body?val \
+				<= Add_submit $mol_button_major
+					enabled <= add_submit_enabled false
+					title <= add_submit_label @ \Post
+					event_click?event <=> add?event null
+	Post!index $mol_message
+		name <= post_user_name!index \
+		moment <= post_updated!index $mol_time_moment
+		avatar_link <= post_user_link!index \
+		avatar <= post_user_ava!index \
+		text <= post_body!index \
+	repository $mol_github_repository
+	repository_name \
+	link \
+	seed \
+	teaser \
+	issue $mol_github_issue

@@ -1,0 +1,19 @@
+[mol_date_input] {
+	box-sizing: content-box;
+	width: 10ch;
+}
+
+[mol_date_bubble] {
+	padding: .5rem;
+}
+
+[mol_date_calendar_day] {
+	padding: 0;
+}
+
+[mol_date_calendar_day_button] {
+	width: 100%;
+	padding: .25rem .5rem;
+	justify-content: center;
+	cursor: pointer;
+}

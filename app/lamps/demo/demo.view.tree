@@ -1,0 +1,4 @@
+$mol_app_lamps_demo $mol_demo_large
+	title @ \Lamps information from LampTest
+	sub /
+		<= App $mol_app_lamps

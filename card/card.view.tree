@@ -1,0 +1,11 @@
+$mol_card $mol_list
+	attr *
+		^
+		mol_card_status_type <= status \
+	rows /
+		<= Content $mol_view
+			sub <= content /
+		<= Status $mol_view
+			minimal_height 30
+			sub /
+				<= status_text <= status \

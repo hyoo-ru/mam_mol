@@ -1,0 +1,13 @@
+[mol_expander] {
+	flex-direction: column;
+	flex: 1 1 auto;
+}
+
+[mol_expander_label] {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[mol_expander_trigger] {
+	flex: auto;
+}

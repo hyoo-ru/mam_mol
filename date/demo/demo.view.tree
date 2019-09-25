@@ -1,0 +1,9 @@
+$mol_date_demo $mol_demo_small
+	sub /
+		<= View $mol_view
+			sub /
+				<= Date $mol_date
+					value_moment?val <=> date?val $mol_time_moment
+				<= Formatted $mol_view
+					sub /
+						<= formatted \

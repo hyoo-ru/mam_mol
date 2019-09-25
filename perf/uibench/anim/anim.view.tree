@@ -1,0 +1,20 @@
+$mol_perf_uibench_anim $mol_view
+	state null
+	attr_static *
+		^
+		class \Anim
+	sub <= boxes /
+	Box!index $mol_perf_uibench_anim_box
+		state <= box_state!index null
+
+$mol_perf_uibench_anim_box $mol_view
+	state null
+	attr *
+		^
+		class \AnimBox
+		data-id <= id \
+	style *
+		^
+		borderRadius <= style_radius \
+		background <= style_color \
+

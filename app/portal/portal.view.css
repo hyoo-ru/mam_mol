@@ -1,0 +1,9 @@
+[mol_app_portal_menu] {
+	flex: 0 1 200px;
+}
+
+[mol_app_portal_menu_body] {
+	display: flex;
+	flex-direction: column;
+	padding: .5rem;
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" data-sap-ui-libs="sap.m" data-sap-ui-xx-bindingSyntax="complex"></script>
+
+    <style>
+        .sapMTitle {
+            margin: 10px;
+            float: left;
+            font-size: 20px;
+            background-color: white;
+        }
+        .sapMNav {
+            overflow: auto;
+        }
+        .sapMSLITitle {
+            font-weight: bolder;
+        }
+        .sapMListUl {
+            padding: 0;
+        }
+        .sapMListUl li {
+            height: auto;
+            margin-top: 10px;
+        }
+        .sapMSLIDescription {
+            white-space: normal;
+        }
+        .sapUiBody {
+            margin: 0;
+        }
+        .sapMLIB {
+            border: 0px;
+        }
+        .sapMLIB[aria-selected=true]{
+            background: #eee;
+        }
+        .sapMLIB[aria-selected=true]:hover {
+            background: #eee;
+        }
+        .sapMLIB:hover {
+            background: white;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+        window.addEventListener('message', function onMessage(event) {
+            switch (event.data[0]) {
+                case 'set data':
+                    oModel.setData(event.data[1]);
+                    break
+            }
+        })
+        var oModel = new sap.ui.model.json.JSONModel();
+        oModel.setData({
+            sample: '',
+            items: []
+        })
+        var list = new sap.m.List({
+            growing: true,
+            growingThreshold: 1000,
+            mode: sap.m.ListMode.SingleSelectMaster
+        });
+        list.bindItems({
+            path: "/items",
+            template: new sap.m.StandardListItem({
+                title: "{title}",
+                description: "{content}"
+            })
+        });
+        var app = new sap.m.App({
+            pages: [list]
+        }).placeAt("content");
+        app.setModel(oModel);
+
+    </script>
+</head>
+
+<body id="content" class="sapUiBody">
+</body>
+
+</html>

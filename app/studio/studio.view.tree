@@ -1,0 +1,93 @@
+$mol_app_studio $mol_book
+	value_overrided!id?val null
+	-
+	pages /
+		<= Preview_page $mol_page
+			title <= preview_title @ \Preview: 
+			tools /
+				<= Source_link $mol_link
+					hint <= source_title
+					sub /
+						<= Source_icon $mol_icon_source
+					arg <= source_arg *
+						source \
+						path null
+				<= Edit $mol_link
+					hint <= editor_title
+					sub /
+						<= Edit_icon $mol_icon_settings
+					arg *
+						path \
+						source null
+				<= tools_main /
+			body /
+				<= Selector $mol_app_studio_selector
+					sub /
+						<= Block $mol_view
+					path?val <=> path?val /
+			minimal_width 400
+		<= Editor_page $mol_page
+			plugins /
+				<= Speech_filter $mol_speech
+					event_catch?val <=> speech_filter?val null
+					patterns <= speech_filter_patterns /
+						\find (.+?)
+			title <= editor_title @ \Properties
+			event_top?val <=> event_front_up?val
+			tools /
+				- <= Speech_toggle $mol_check_icon
+					Icon <= Speech_toggle_icon $mol_icon_microphone
+					checked?val <=> speech_enabled?val false
+					hint <= speech_toggle_hint @ \Speech contol
+				<= Editor_close $mol_link
+					sub /
+						<= Editor_close_icon $mol_icon_cross
+					arg <= editor_close_arg *
+						path null
+			body /
+				<= Filter_bar $mol_bar sub <= filter_bar_items /
+					<= Filter $mol_search
+						hint <= filter_hint @ \Filter properties
+						query?val <=> prop_filter?val \
+					<= Prop_add $mol_button_minor
+						event_click?val <=> event_add?val null
+						sub / <= Prop_add_icon $mol_icon_plus
+						hint <= prop_add_hint @ \Add this property
+				<= Fields $mol_list
+					rows <= fields /
+			minimal_width 400
+		<= Source_page $mol_page
+			title <= source_title @ \Source code
+			minimal_width 400
+			tools /
+				<= Source_close $mol_link
+					sub /
+						<= Source_close_icon $mol_icon_cross
+					arg <= source_close_arg *
+						source null
+			body /
+				<= Source $mol_text
+					text <= source \
+	Placeholder null
+	-
+	Prop!id $mol_app_studio_field
+		path <= prop_path!id /
+		prop!path?val <=> prop_default!path?val $mol_tree
+		props!name?val <=> props_all!name?val $mol_tree
+		prop_arg!id <= prop_arg!id *
+		prop_value!id <= prop_value_base!id null
+		bind_options <= prop_options /
+		object_options <= view_options /
+		prop_add?val <=> prop_add?val \
+		highlight <= prop_filter
+	-
+	class_name_self?val \App
+	class_name_base?val \$mol_view
+	class_self?val $mol_tree
+	classes $mol_tree
+
+$mol_app_studio_selector $mol_demo_large
+	event *
+		contextmenu?event <=> select?event null
+		dblclick?event <=> select?event null
+	path?val /

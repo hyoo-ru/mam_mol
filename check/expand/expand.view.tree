@@ -1,0 +1,9 @@
+$mol_check_expand $mol_check
+	minimal_height 32
+	Icon $mol_icon_chevron
+	level 0
+	style *
+		^
+		paddingLeft <= level_style \0px
+	checked?val <=> expanded?val false
+	enabled <= expandable false

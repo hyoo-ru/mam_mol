@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+	html {
+		font: 12pt/1.25 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+	}
+	
+	body {
+		margin: 0;
+	}
+	
+	.list {
+		padding: .5rem;
+	}
+	
+	.list-header {
+		padding: .5rem;
+		margin: 0;
+		font-size: 1.5em;
+		font-weight: normal;
+	}
+	
+	.list-item {
+		padding: .5rem;
+		cursor: pointer;
+	}
+	
+	.list-item-selected {
+		background: #eee;
+	}
+	
+	.list-item-title {
+		font-weight: bold;
+	}
+
+	[ng-cloak] {
+		display: none !important;
+	}
+</style>
+
+<body>
+
+<div
+	class="list"
+	ng-app="test"
+	ng-controller="controller"
+	ng-cloak
+	>
+	<div
+		ng-repeat="item in data.items track by $index"
+		ng-class="{
+			'list-item' : true ,
+			'list-item-selected' : item.id === $parent.selected ,
+		}"
+		ng-click="select(item)"
+		>
+		<div class="list-item-title">
+			{{item.title}}
+		</div>
+		<div class="list-item-content">
+			{{item.content}}
+		</div>
+	</div>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script>
+
+	angular.module( "test" , [] ).controller( "controller" , function( $scope ) {
+		
+		$scope.onMessage = function( event ) {
+			switch( event.data[ 0 ] ) {
+				case 'set data' :
+					$scope.data = event.data[ 1 ]
+					$scope.selected = null
+					break
+			}
+			$scope.$digest()
+		}
+		
+		$scope.select = function( item ) {
+			$scope.selected = item.id
+		}
+		
+		window.addEventListener( 'message' , $scope.onMessage )
+
+	} )
+
+</script>

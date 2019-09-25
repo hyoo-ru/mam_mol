@@ -1,0 +1,7 @@
+$mol_section_demo $mol_demo_large
+	title @ \Section with header
+	sub /
+		<= Text $mol_row sub /
+			<= Section $mol_section
+				head \Section header
+				Content <= Section_content $mol_filler

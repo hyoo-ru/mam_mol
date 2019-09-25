@@ -1,0 +1,96 @@
+$mol_app_demo $mol_book
+	editor_title <= detail_title \$mol
+	source_prefix \https://github.com/eigenmethod/mol/tree/master/
+	Placeholder $mol_app_demo_placeholder
+	pages <= blocks /
+	attr *
+		mol_theme <= theme
+	Menu $mol_app_demo_menu
+		hierarchy <= nav_hierarchy null
+		option!id <= nav_option!id null
+		filter?val <=> filter_string?val \
+		theme?val <=> theme?val \$mol_theme_dark
+	Detail $mol_app_demo_detail
+		minimal_width 600
+		title <= detail_title
+		source_link <= source_link \
+		body /
+			<= Detail_list $mol_list
+				rows <= main_content /
+			- <= Chat $mol_chat
+				repository_name \nin-jin/mol_chat
+				title <= title
+				link <= chat_link \
+		event_top?val <=> event_front_up?val
+	Editor!id $mol_app_studio
+		minimal_width 1000
+		title <= editor_title
+		class_name_base <= selected_class_name \
+		tools_main /
+			<= Close $mol_link
+				sub /
+					<= Close_icon $mol_icon_cross
+				arg <= close_arg *
+					edit null
+	Welcome $mol_scroll
+		sub /
+			<= Welcome_text $mol_text
+				text <= welcome_text \
+	Detail_empty_message $mol_status
+		sub /
+			<= detail_empty_prefix @ \No one demo with prefix "
+			<= selected \
+			<= detail_empty_postfix @ \"
+			
+$mol_app_demo_menu $mol_page
+	minimal_width 240
+	title @ \$mol demonstrations
+	sub /
+		<= Head
+		<= Filter $mol_search
+			query?val <=> filter?val \
+		<= Nav $mol_app_demo_nav
+			hierarchy <= hierarchy null
+			record!id <= option!id null
+			needle <= filter?val \
+		<= Themes $mol_switch
+			value?val <=> theme?val \$mol_theme_dark
+			options *
+				$mol_theme_light <= theme_light_title @ \Light theme
+				$mol_theme_dark <= theme_dark_title @ \Dark theme
+		
+$mol_app_demo_detail $mol_page
+	tools /
+		<= Source_link $mol_link
+			sub /
+				<= Source_icon $mol_icon_source
+			uri <= source_link \
+			target \_blank
+		<= Edit $mol_link
+			sub /
+				<= Edit_speck $mol_speck
+					value \β
+				<= Edit_icon $mol_icon_settings
+			arg *
+				edit \
+				path \
+		<= Close $mol_link 
+			sub /
+				<= Close_icon $mol_icon_cross
+			arg <= close_arg *
+				demo null
+
+$mol_app_demo_nav $mol_grid
+	row_height 40
+	hierarchy_col \title
+	Head null
+	-
+	Option!id $mol_link
+		arg <= arg!id *
+		sub /
+			<= Expand!id $mol_check_expand
+				expanded?val <=> cell_expanded!id?val
+				level <= cell_level!id
+			<= Content!id $mol_view
+				sub /
+					<= cell_content!id

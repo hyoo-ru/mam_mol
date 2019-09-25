@@ -1,0 +1,120 @@
+$mol_scroll $mol_view
+	minimal_height 0
+	moving_hor?val false
+	moving_vert?val false
+	field *
+		^
+		scrollTop <= scroll_top?val 0
+		scrollLeft <= scroll_left?val 0
+		scrollBottom <= scroll_bottom?val 0
+		scrollRight <= scroll_right?val 0
+	event_async *
+		^
+		scroll?event <=> event_scroll?event null
+		- DOMSubtreeModified?event <=> event_repos?event null
+	Strut $mol_view
+		style *
+			transform <= strut_transform \
+
+$mol_list $mol_view
+	sub <= rows /
+	Empty null
+
+$mol_perf_uibench_table $mol_list
+	state null
+	dom_name \table
+	attr_static *
+		^
+		class \Table
+	sub <= rows /
+	Row!index $mol_perf_uibench_table_row
+		state <= row_state!index null
+
+$mol_perf_uibench_table_row $mol_view
+	state null
+	minimal_height 18
+	dom_name \tr
+	attr *
+		^
+		class <= classes \TableRow
+		data-id <= id 0
+	sub /
+		<= Head $mol_perf_uibench_table_cell
+			text <= head_text \
+		<= cells /
+	Cell!index $mol_perf_uibench_table_cell
+		text <= cell_state!index null
+
+$mol_perf_uibench_table_cell $mol_view
+	dom_name \td
+	attr_static *
+		^
+		class \TableCell
+	event *
+		^
+		click?val <=> click?val null
+	sub /
+		<= text \
+
+
+$mol_perf_uibench_anim $mol_view
+	state null
+	attr_static *
+		^
+		class \Anim
+	sub <= boxes /
+	Box!index $mol_perf_uibench_anim_box
+		state <= box_state!index null
+
+$mol_perf_uibench_anim_box $mol_view
+	state null
+	attr *
+		^
+		class \AnimBox
+		data-id <= id \
+	style *
+		^
+		borderRadius <= style_radius \
+		background <= style_color \
+
+
+$mol_perf_uibench_tree $mol_view
+	state null
+	attr_static *
+		^
+		class \Tree
+	sub /
+		<= Root $mol_perf_uibench_tree_branch
+			state <= root_state null
+
+$mol_perf_uibench_tree_branch $mol_list
+	state null
+	dom_name \ul
+	attr_static *
+		^
+		class \TreeNode
+	Branch!index $mol_perf_uibench_tree_branch
+		state <= branch_state!index null
+	Leaf!index $mol_perf_uibench_tree_leaf
+		text <= leaf_state!index null
+
+$mol_perf_uibench_tree_leaf $mol_view
+	minimal_height 26
+	dom_name \li
+	attr_static *
+		^
+		class \TreeLeaf
+	sub /
+		<= text \
+
+$mol_perf_uibench $mol_scroll
+	attr_static *
+		^
+		class \Main
+	sub /
+		<= Table $mol_perf_uibench_table
+			state <= table_state null
+		<= Anim $mol_perf_uibench_anim
+			state <= anim_state null
+		<= Tree $mol_perf_uibench_tree
+			state <= tree_state null

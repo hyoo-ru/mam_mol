@@ -1,0 +1,7 @@
+{
+	"$mol_app_demo_detail_empty_prefix": "No one demo with prefix \"",
+	"$mol_app_demo_detail_empty_postfix": "\"",
+	"$mol_app_demo_menu_title": "$mol demonstrations",
+	"$mol_app_demo_menu_theme_light_title": "Light theme",
+	"$mol_app_demo_menu_theme_dark_title": "Dark theme"
+}

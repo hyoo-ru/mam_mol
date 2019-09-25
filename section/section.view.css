@@ -1,0 +1,7 @@
+[mol_section_head] {
+	font-size: 1.5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	flex-wrap: wrap;
+}

@@ -1,0 +1,5 @@
+$mol_plugin $mol_object
+	dom_node null
+	attr_static *
+	event *
+	event_async *

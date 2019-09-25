@@ -1,0 +1,4 @@
+$mol_app_hello_demo $mol_demo_large
+	title @ \Simpliest application
+	sub /
+		<= App $mol_app_hello
