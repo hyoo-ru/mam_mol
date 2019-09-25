@@ -6,7 +6,7 @@ namespace $.$$ {
 			const paths = this.paths()
 			
 			const sources = paths.map( path => {
-				return $mol_file.relative( path ).content()
+				return $mol_file.relative( path ).content().toString()
 			} )
 			
 			const content = sources.map( ( source , index )=> {
