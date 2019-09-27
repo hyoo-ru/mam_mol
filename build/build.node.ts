@@ -380,8 +380,7 @@ namespace $ {
 			var mapping = this.modMeta( parent.path() )
 			
 			if( mod.exists() ) {
-				if( mod.resolve( '.git' ).exists() ) {
-					console.log( '.git', mod.resolve( '.git' ).path() )
+				if( mod.resolve( '.git' ).type() === 'dir' ) {
 					try {
 						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
 						process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )

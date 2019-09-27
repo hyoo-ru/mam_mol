@@ -2852,8 +2852,7 @@ var $;
             this.modEnsure(parent.path());
             var mapping = this.modMeta(parent.path());
             if (mod.exists()) {
-                if (mod.resolve('.git').exists()) {
-                    console.log('.git', mod.resolve('.git').path());
+                if (mod.resolve('.git').type() === 'dir') {
                     try {
                         process.stdout.write($.$mol_exec(mod.path(), 'git', '--no-pager', 'log', '--oneline', 'HEAD..origin/master').stdout);
                     }
