@@ -29,7 +29,8 @@ jobs:
       run: |
         cd ..
         ls
-        mv mol mam
+        mkdir mam/mol
+        mv mol/* mam/mol
         cd mam
         yarn
         yarn start mol/app/demo
