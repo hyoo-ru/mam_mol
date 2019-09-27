@@ -2779,6 +2779,12 @@ var $;
 })($ || ($ = {}));
 //todomvc.view.js.map
 ;
+var $node = $node || {} ; $node[ "/mol/app/todomvc/todomvc_active.svg" ] = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAtMTggMTAwIDEzNSI+DQoJPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNTAiIGZpbGw9Im5vbmUiICBzdHJva2U9IiNlZGVkZWQiIHN0cm9rZS13aWR0aD0iMyIvPg0KPC9zdmc+"
+
+;
+var $node = $node || {} ; $node[ "/mol/app/todomvc/todomvc_completed.svg" ] = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAtMTggMTAwIDEzNSI+DQoJPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2JkZGFkNSIgc3Ryb2tlLXdpZHRoPSIzIi8+DQoJPHBhdGggZmlsbD0iJTIzNWRjMmFmIiBkPSJNNzIgMjVMNDIgNzEgMjcgNTZsLTQgNCAyMCAyMCAzNC01MnoiLz4NCjwvc3ZnPg0K"
+
+;
 "use strict";
 var $;
 (function ($_1) {
