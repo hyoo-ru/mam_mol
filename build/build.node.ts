@@ -381,6 +381,7 @@ namespace $ {
 			
 			if( mod.exists() ) {
 				if( mod.resolve( '.git' ).exists() ) {
+					console.log( '.git', mod.resolve( '.git' ).path() )
 					try {
 						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
 						process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
