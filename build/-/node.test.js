@@ -1,8 +1,6 @@
 require( "source-map-support" ).install()
-
 ;
-process.on( 'unhandledRejection' , up => { throw up } )
-;
+process.on( 'unhandledRejection' , up => { throw up } );
 "use strict"
 /// Fake namespace for optional overrides
 ///
@@ -843,7 +841,7 @@ var $;
     function $mol_exec(dir, command, ...args) {
         let [app, ...args0] = command.split(' ');
         args = [...args0, ...args];
-        console.info(`${$node.chalk.gray($node.path.relative('', dir))}> ${$node.chalk.blue(app)} ${$node.chalk.cyan(args.join(' '))}`);
+        console.info(`${$node.colorette.gray($node.path.relative('', dir))}> ${$node.colorette.blue(app)} ${$node.colorette.cyan(args.join(' '))}`);
         var res = $node['child_process'].spawnSync(app, args, {
             cwd: $node.path.resolve(dir),
             shell: true,
@@ -2777,7 +2775,7 @@ var $;
                     file.content(error, $.$mol_atom_force_cache);
                 }
                 else {
-                    console.error($node.chalk.red(diagnostic.messageText));
+                    console.error($node.colorette.red(diagnostic.messageText));
                 }
             }, () => { });
             const builder = $node.typescript.createWatchProgram(host);
@@ -2872,7 +2870,7 @@ var $;
                         process.stdout.write($.$mol_exec(mod.path(), 'git', '--no-pager', 'log', '--oneline', 'HEAD..origin/master').stdout);
                     }
                     catch (error) {
-                        console.error($node.chalk.red(error.message));
+                        console.error($node.colorette.red(error.message));
                     }
                 }
                 return false;
@@ -3029,8 +3027,8 @@ var $;
             return res.map(r => r.valueOf());
         }
         logBundle(target, duration) {
-            const path = $node.chalk.green(target.relate(this.root()));
-            const time = $node.chalk.cyan(`${duration.toString().padStart(5)}ms`);
+            const path = $node.colorette.green(target.relate(this.root()));
+            const time = $node.colorette.cyan(`${duration.toString().padStart(5)}ms`);
             console.log(`Built in ${time}: ${path}`);
         }
         bundleJS({ path, exclude, bundle, moduleTarget }) {
@@ -3211,7 +3209,7 @@ var $;
                 $.$mol_atom_fence(() => json = target.exists() && JSON.parse(target.content().toString()));
             }
             catch (error) {
-                console.error($node.chalk.yellow(error));
+                console.error($node.colorette.yellow(error));
             }
             if (!json)
                 json = {
@@ -3331,7 +3329,7 @@ var $;
                     for (let key in locale) {
                         if (key in locales['en'])
                             continue;
-                        console.warn($node.chalk.yellow(`Not translated to "en": ${$node.chalk.cyan(key)}`));
+                        console.warn($node.colorette.yellow(`Not translated to "en": ${$node.colorette.cyan(key)}`));
                     }
                 }
                 const locale_sorted = {};
@@ -6474,4 +6472,5 @@ var $;
     $.$mol_jsx_view = $mol_jsx_view;
 })($ || ($ = {}));
 //view.js.map
+
 //# sourceMappingURL=node.test.js.map

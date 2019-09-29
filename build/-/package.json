@@ -6,19 +6,18 @@
   "browser": "web.esm.js",
   "types": "web.d.ts",
   "dependencies": {
-    "chalk": "*",
-    "path": "*",
-    "child": "*",
+    "colorette": "*",
     "jsdom": "*",
     "chokidar": "*",
-    "fs": "*",
     "sourcemap-codec": "*",
     "typescript": "*",
     "postcss": "*",
-    " ": "*",
+    "postcss-custom-properties": "*",
+    "postcss-color-function": "*",
     "express": "*",
     "portastic": "*",
     "compression": "*",
+    "body-parser": "*",
     "serve-index": "*"
   }
 }
