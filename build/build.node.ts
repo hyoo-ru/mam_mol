@@ -271,7 +271,7 @@ namespace $ {
 						
 					} else {
 						
-						console.error( diagnostic.messageText )
+						console.error( $node.chalk.red( diagnostic.messageText ) )
 
 					}
 					
@@ -417,7 +417,7 @@ namespace $ {
 						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
 						process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
 					} catch( error ) {
-						console.error( error.message )
+						console.error( $node.chalk.red( error.message ) )
 					}
 				}
 				return false
@@ -623,14 +623,15 @@ namespace $ {
 			return res.map( r => r.valueOf() )
 		}
 		
-		logBundle( target : $mol_file ) {
-			var time = new Date().toLocaleTimeString()
-			var path = target.relate( this.root() )
-			console.log( `${time} Built ${path}` )
+		logBundle( target : $mol_file , duration : number ) {
+			const path = $node.chalk.green( target.relate( this.root() ) )
+			const time = $node.chalk.cyan( `${ duration.toString().padStart( 5 ) }ms` )
+			console.log( `Built in ${ time }: ${ path }` )
 		}
 		
 		@ $mol_mem_key
 		bundleJS( { path , exclude , bundle , moduleTarget } : { path : string , exclude : string[] , bundle : string, moduleTarget? : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			var mt = moduleTarget ? `.${moduleTarget}` : ''
 			var target = pack.resolve( `-/${bundle}${mt}.js` )
@@ -685,7 +686,7 @@ namespace $ {
 			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
 			targetMap.content( concater.toString() )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 
 			if( errors.length ) $mol_fail_hidden( new Error( errors.map( error => error.message ).join( '\n' ) ) )
 			
@@ -694,6 +695,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		bundleTestJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var root = this.root()
@@ -741,7 +743,7 @@ namespace $ {
 			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
 			targetMap.content( concater.toString() )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			if( errors.length ) $mol_fail_hidden( new Error( errors.map( error => error.message ).join( '\n' ) ) )
 			
@@ -750,6 +752,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		bundleTestHtml( { path } : { path : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var source = pack.resolve( `index.html` )
@@ -771,13 +774,14 @@ namespace $ {
 			
 			target.content( content )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
 		}
 
 		@ $mol_mem_key
 		bundleDTS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/${bundle}.d.ts` )
@@ -796,13 +800,14 @@ namespace $ {
 			
 			target.content( concater.content )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
 		}
 		
 		@ $mol_mem_key
 		bundleViewTree( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/${bundle}.view.tree` )
@@ -814,7 +819,7 @@ namespace $ {
 			
 			target.content( sources.map( src => src.content().toString() ).join( '\n' ) )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
 		}
@@ -840,6 +845,7 @@ namespace $ {
 
 		@ $mol_mem_key
 		bundlePackageJSON( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/package.json` )
@@ -851,7 +857,7 @@ namespace $ {
 			try {
 				$mol_atom_fence( ()=> json = target.exists() && JSON.parse( target.content().toString() ) )
 			} catch( error ) {
-				console.error( error )
+				console.error( $node.chalk.yellow( error ) )
 			}
 
 			if( !json ) json = {
@@ -874,7 +880,7 @@ namespace $ {
 			
 			target.content( JSON.stringify( json , null , '  ' ) )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
 		}
@@ -889,21 +895,23 @@ namespace $ {
 			
 			const targets : $mol_file[] = []
 
+			const start = Date.now()
 			const html = pack.resolve( 'index.html' )
 			const html_target = pack.resolve( '-/index.html' )
 			html_target.content( html.content() )
 			targets.push( html_target )
-			this.logBundle( html_target )
+			this.logBundle( html_target , Date.now() - start )
 
 			sources.forEach( source => {
 				const tree = $mol_tree.fromString( source.content().toString() , source.path() )
 				
 				tree.select( 'deploy' ).sub.forEach( deploy => {
+					const start = Date.now()
 					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
 					const target = pack.resolve( `-/${ file.relate( root ) }` )
 					target.content( file.content() )
 					targets.push( target )
-					this.logBundle( target )
+					this.logBundle( target , Date.now() - start )
 				} )
 				
 			} )
@@ -913,6 +921,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		bundleCordova( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+			const start = Date.now()
 			const pack = $mol_file.absolute( path )
 			const cordova = pack.resolve( '-cordova' )
 			
@@ -935,7 +944,7 @@ namespace $ {
 				return target
 			} ) )
 			
-			this.logBundle( cordova )
+			this.logBundle( cordova , Date.now() - start )
 			
 			return targets
 		}
@@ -944,6 +953,7 @@ namespace $ {
 		bundleCSS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			if( bundle === 'node' ) return []
 			
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			var sources = this.sourcesCSS( { path , exclude } )
 			if( !sources.length ) return []
@@ -970,7 +980,7 @@ namespace $ {
 			target.content( result.css )
 			targetMap.content( JSON.stringify( result.map , null , '\t' ) )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target , targetMap ]
 		}
@@ -998,6 +1008,7 @@ namespace $ {
 			)
 			
 			const targets = Object.keys( locales ).map( lang => {
+				const start = Date.now()
 				const target = pack.resolve( `-/${bundle}.locale=${ lang }.json` )
 				
 				const locale = locales[ lang ]
@@ -1006,7 +1017,7 @@ namespace $ {
 					
 					for( let key in locale ) {
 						if( key in locales[ 'en' ] ) continue
-						console.warn( `Not translated to "en": ${ key }` )
+						console.warn( $node.chalk.yellow( `Not translated to "en": ${ $node.chalk.cyan( key ) }` ) )
 					}
 
 				}
@@ -1019,7 +1030,7 @@ namespace $ {
 
 				target.content( JSON.stringify( locale_sorted , null , '\t' ) )
 				
-				this.logBundle( target )
+				this.logBundle( target , Date.now() - start )
 				
 				return target
 			} )
@@ -1029,6 +1040,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		bundleDepsJSON( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var list = this.sourcesAll( { path , exclude } )
@@ -1061,7 +1073,7 @@ namespace $ {
 			var target = pack.resolve( `-/${bundle}.deps.json` )
 			target.content( JSON.stringify( data ) )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
 		}

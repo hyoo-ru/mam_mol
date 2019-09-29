@@ -6,6 +6,7 @@
   "browser": "web.esm.js",
   "types": "web.d.ts",
   "dependencies": {
+    "chalk": "*",
     "jsdom": "*"
   }
 }

@@ -35,7 +35,7 @@ var $;
     function $mol_exec(dir, command, ...args) {
         let [app, ...args0] = command.split(' ');
         args = [...args0, ...args];
-        console.info(`${$node.path.relative('', dir)}> ${app} ${args.join(' ')}`);
+        console.info(`${$node.chalk.gray($node.path.relative('', dir))}> ${$node.chalk.blue(app)} ${$node.chalk.cyan(args.join(' '))}`);
         var res = $node['child_process'].spawnSync(app, args, {
             cwd: $node.path.resolve(dir),
             shell: true,

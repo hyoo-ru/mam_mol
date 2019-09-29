@@ -550,7 +550,7 @@ declare namespace $ {
             path: string;
             bundle?: string;
         }): Object[];
-        logBundle(target: $mol_file): void;
+        logBundle(target: $mol_file, duration: number): void;
         bundleJS({ path, exclude, bundle, moduleTarget }: {
             path: string;
             exclude: string[];

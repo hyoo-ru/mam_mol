@@ -843,7 +843,7 @@ var $;
     function $mol_exec(dir, command, ...args) {
         let [app, ...args0] = command.split(' ');
         args = [...args0, ...args];
-        console.info(`${$node.path.relative('', dir)}> ${app} ${args.join(' ')}`);
+        console.info(`${$node.chalk.gray($node.path.relative('', dir))}> ${$node.chalk.blue(app)} ${$node.chalk.cyan(args.join(' '))}`);
         var res = $node['child_process'].spawnSync(app, args, {
             cwd: $node.path.resolve(dir),
             shell: true,
@@ -2777,7 +2777,7 @@ var $;
                     file.content(error, $.$mol_atom_force_cache);
                 }
                 else {
-                    console.error(diagnostic.messageText);
+                    console.error($node.chalk.red(diagnostic.messageText));
                 }
             }, () => { });
             const builder = $node.typescript.createWatchProgram(host);
@@ -2872,7 +2872,7 @@ var $;
                         process.stdout.write($.$mol_exec(mod.path(), 'git', '--no-pager', 'log', '--oneline', 'HEAD..origin/master').stdout);
                     }
                     catch (error) {
-                        console.error(error.message);
+                        console.error($node.chalk.red(error.message));
                     }
                 }
                 return false;
@@ -3028,12 +3028,13 @@ var $;
             }
             return res.map(r => r.valueOf());
         }
-        logBundle(target) {
-            var time = new Date().toLocaleTimeString();
-            var path = target.relate(this.root());
-            console.log(`${time} Built ${path}`);
+        logBundle(target, duration) {
+            const path = $node.chalk.green(target.relate(this.root()));
+            const time = $node.chalk.cyan(`${duration.toString().padStart(5)}ms`);
+            console.log(`Built in ${time}: ${path}`);
         }
         bundleJS({ path, exclude, bundle, moduleTarget }) {
+            const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var mt = moduleTarget ? `.${moduleTarget}` : '';
             var target = pack.resolve(`-/${bundle}${mt}.js`);
@@ -3081,12 +3082,13 @@ var $;
             }
             target.content(concater.content + '\n//# sourceMappingURL=' + targetMap.relate(target.parent()) + '\n');
             targetMap.content(concater.toString());
-            this.logBundle(target);
+            this.logBundle(target, Date.now() - start);
             if (errors.length)
                 $.$mol_fail_hidden(new Error(errors.map(error => error.message).join('\n')));
             return [target, targetMap];
         }
         bundleTestJS({ path, exclude, bundle }) {
+            const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var root = this.root();
             var target = pack.resolve(`-/${bundle}.test.js`);
@@ -3128,12 +3130,13 @@ var $;
             });
             target.content(concater.content + '\n//# sourceMappingURL=' + targetMap.relate(target.parent()) + '\n');
             targetMap.content(concater.toString());
-            this.logBundle(target);
+            this.logBundle(target, Date.now() - start);
             if (errors.length)
                 $.$mol_fail_hidden(new Error(errors.map(error => error.message).join('\n')));
             return [target, targetMap];
         }
         bundleTestHtml({ path }) {
+            const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var source = pack.resolve(`index.html`);
             var target = pack.resolve(`-/web.test.html`);
@@ -3151,10 +3154,11 @@ var $;
 </script>
 `;
             target.content(content);
-            this.logBundle(target);
+            this.logBundle(target, Date.now() - start);
             return [target];
         }
         bundleDTS({ path, exclude, bundle }) {
+            const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var target = pack.resolve(`-/${bundle}.d.ts`);
             var sources = this.sourcesDTS({ path, exclude });
@@ -3167,10 +3171,11 @@ var $;
                 concater.add(src.content().toString(), src.relate(target.parent()));
             });
             target.content(concater.content);
-            this.logBundle(target);
+            this.logBundle(target, Date.now() - start);
             return [target];
         }
         bundleViewTree({ path, exclude, bundle }) {
+            const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var target = pack.resolve(`-/${bundle}.view.tree`);
             var sources = this.sourcesAll({ path, exclude })
@@ -3178,7 +3183,7 @@ var $;
             if (sources.length === 0)
                 return [];
             target.content(sources.map(src => src.content().toString()).join('\n'));
-            this.logBundle(target);
+            this.logBundle(target, Date.now() - start);
             return [target];
         }
         nodeDeps({ path, exclude }) {
@@ -3196,6 +3201,7 @@ var $;
             return [...res];
         }
         bundlePackageJSON({ path, exclude }) {
+            const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var target = pack.resolve(`-/package.json`);
             exclude = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
@@ -3205,7 +3211,7 @@ var $;
                 $.$mol_atom_fence(() => json = target.exists() && JSON.parse(target.content().toString()));
             }
             catch (error) {
-                console.error(error);
+                console.error($node.chalk.yellow(error));
             }
             if (!json)
                 json = {
@@ -3225,7 +3231,7 @@ var $;
                 json.dependencies[dep] = `*`;
             }
             target.content(JSON.stringify(json, null, '  '));
-            this.logBundle(target);
+            this.logBundle(target, Date.now() - start);
             return [target];
         }
         bundleFiles({ path, exclude }) {
@@ -3234,24 +3240,27 @@ var $;
             var sources = this.sourcesAll({ path, exclude })
                 .filter(src => /meta.tree$/.test(src.ext()));
             const targets = [];
+            const start = Date.now();
             const html = pack.resolve('index.html');
             const html_target = pack.resolve('-/index.html');
             html_target.content(html.content());
             targets.push(html_target);
-            this.logBundle(html_target);
+            this.logBundle(html_target, Date.now() - start);
             sources.forEach(source => {
                 const tree = $.$mol_tree.fromString(source.content().toString(), source.path());
                 tree.select('deploy').sub.forEach(deploy => {
+                    const start = Date.now();
                     const file = root.resolve(deploy.value.replace(/^\//, ''));
                     const target = pack.resolve(`-/${file.relate(root)}`);
                     target.content(file.content());
                     targets.push(target);
-                    this.logBundle(target);
+                    this.logBundle(target, Date.now() - start);
                 });
             });
             return targets;
         }
         bundleCordova({ path, exclude }) {
+            const start = Date.now();
             const pack = $.$mol_file.absolute(path);
             const cordova = pack.resolve('-cordova');
             const config = pack.resolve('config.xml');
@@ -3269,12 +3278,13 @@ var $;
                 target.content(source.content());
                 return target;
             }));
-            this.logBundle(cordova);
+            this.logBundle(cordova, Date.now() - start);
             return targets;
         }
         bundleCSS({ path, exclude, bundle }) {
             if (bundle === 'node')
                 return [];
+            const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var sources = this.sourcesCSS({ path, exclude });
             if (!sources.length)
@@ -3295,7 +3305,7 @@ var $;
             var result = processor.process(root, { to: target.relate(), map: { inline: false } });
             target.content(result.css);
             targetMap.content(JSON.stringify(result.map, null, '\t'));
-            this.logBundle(target);
+            this.logBundle(target, Date.now() - start);
             return [target, targetMap];
         }
         bundleLocale({ path, exclude, bundle }) {
@@ -3314,13 +3324,14 @@ var $;
                 }
             });
             const targets = Object.keys(locales).map(lang => {
+                const start = Date.now();
                 const target = pack.resolve(`-/${bundle}.locale=${lang}.json`);
                 const locale = locales[lang];
                 if (lang !== 'en' && locales['en']) {
                     for (let key in locale) {
                         if (key in locales['en'])
                             continue;
-                        console.warn(`Not translated to "en": ${key}`);
+                        console.warn($node.chalk.yellow(`Not translated to "en": ${$node.chalk.cyan(key)}`));
                     }
                 }
                 const locale_sorted = {};
@@ -3328,12 +3339,13 @@ var $;
                     locale_sorted[key] = locale[key];
                 }
                 target.content(JSON.stringify(locale_sorted, null, '\t'));
-                this.logBundle(target);
+                this.logBundle(target, Date.now() - start);
                 return target;
             });
             return targets;
         }
         bundleDepsJSON({ path, exclude, bundle }) {
+            const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var list = this.sourcesAll({ path, exclude });
             if (!list.length)
@@ -3359,7 +3371,7 @@ var $;
             };
             var target = pack.resolve(`-/${bundle}.deps.json`);
             target.content(JSON.stringify(data));
-            this.logBundle(target);
+            this.logBundle(target, Date.now() - start);
             return [target];
         }
     }
