@@ -291,16 +291,45 @@ namespace $ {
 		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 
 			var sources = this.sourcesAll( { path , exclude } )
-			.filter( src => /(js|tsx?)$/.test( src.ext() ) )
-			if( !sources.length ) return []
 			
+			const image_types = {
+				'svg' : 'image/svg+xml' ,
+				'png' : 'image/png' ,
+				'jpg' : 'image/jpeg' ,
+				'jpeg' : 'image/jpeg' ,
+				'gif' : 'image/gif' ,
+				'webp' : 'image/webp' ,
+			}
+
 			sources = sources.map(
 				src => {
-					if( !/tsx?$/.test( src.ext() ) ) return src
+
+					const ext = src.ext().replace( /^.*\./ , '' )
+
+					if( image_types[ ext ] ) {
+
+						const ext = src.ext()
+
+						const script = src.parent().resolve( `-image/${ src.name() }.js` )
+						const payload = src.content().toString( 'base64' )
+
+						const path = src.relate( this.root() )
+						const uri = `data:${ image_types[ext] };base64,${ payload }`
+						script.content( `var $node = $node || {} ; $node[ ${ JSON.stringify( '/' + path ) } ] = ${ JSON.stringify( uri ) }\n` )
+						
+						return script
+					}
+
+					if( /^tsx?$/.test( ext ) ) {
+						return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
+					}
 					
-					return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
+					if( 'js' === ext ) {
+						return src
+					}
+					
 				}
-			)
+			).filter( Boolean ) as $mol_file[]
 			
 			return sources
 		}
@@ -383,7 +412,7 @@ namespace $ {
 			var mapping = this.modMeta( parent.path() )
 			
 			if( mod.exists() ) {
-				if( mod.resolve( '.git' ).exists() ) {
+				if( mod.type() === 'dir' && mod.resolve( '.git' ).type() === 'dir' ) {
 					try {
 						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
 						process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
