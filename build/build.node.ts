@@ -640,7 +640,8 @@ namespace $ {
 			var sources = this.sourcesJS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			this.tsCompile({ path , exclude , bundle })
+			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
+			this.tsCompile({ path , exclude : exclude_ext , bundle })
 			
 			var concater = new $mol_sourcemap_builder( target.name(), ';')
 

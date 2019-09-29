@@ -203,7 +203,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -339,6 +339,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -353,6 +354,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -517,6 +519,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -525,6 +530,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;

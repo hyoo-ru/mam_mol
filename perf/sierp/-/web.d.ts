@@ -316,29 +316,130 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_perf_sierp extends $mol_view {
+        /**
+         *  ```
+         *  size_target 25
+         *  ```
+         **/
         size_target(): number;
+        /**
+         *  ```
+         *  elapsed?val 0
+         *  ```
+         **/
         elapsed(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  style * transform <= transform
+         *  ```
+         **/
         style(): {
             "transform": string;
         };
+        /**
+         *  ```
+         *  transform \
+         *  ```
+         **/
         transform(): string;
+        /**
+         *  ```
+         *  sub / <= Dots
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Dots $mol_view sub <= dots
+         *  ```
+         **/
         Dots(): $mol_view;
+        /**
+         *  ```
+         *  dots /
+         *  ```
+         **/
         dots(): any[];
+        /**
+         *  ```
+         *  Dot!id $mol_perf_sierp_dot
+         *  	left <= left!id
+         *  	top <= top!id
+         *  	size <= size!id
+         *  	text <= text
+         *  ```
+         **/
         Dot(id: any): $mol_perf_sierp_dot;
+        /**
+         *  ```
+         *  left!id 0
+         *  ```
+         **/
         left(id: any): number;
+        /**
+         *  ```
+         *  top!id 0
+         *  ```
+         **/
         top(id: any): number;
+        /**
+         *  ```
+         *  size!id 25
+         *  ```
+         **/
         size(id: any): number;
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text(): string;
     }
 }
 declare namespace $ {
     class $mol_perf_sierp_dot extends $mol_view {
+        /**
+         *  ```
+         *  size 25
+         *  ```
+         **/
         size(): number;
+        /**
+         *  ```
+         *  size_px \25px
+         *  ```
+         **/
         size_px(): string;
+        /**
+         *  ```
+         *  hover?val false
+         *  ```
+         **/
         hover(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  sub / <= text
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text(): string;
+        /**
+         *  ```
+         *  style *
+         *  	width <= width
+         *  	height <= height
+         *  	left <= left
+         *  	top <= top
+         *  	borderRadius <= radius
+         *  	lineHeight <= size_px
+         *  	background <= color
+         *  ```
+         **/
         style(): {
             "width": number;
             "height": number;
@@ -348,17 +449,64 @@ declare namespace $ {
             "lineHeight": string;
             "background": string;
         };
+        /**
+         *  ```
+         *  width <= size
+         *  ```
+         **/
         width(): number;
+        /**
+         *  ```
+         *  height <= size
+         *  ```
+         **/
         height(): number;
+        /**
+         *  ```
+         *  left 0
+         *  ```
+         **/
         left(): number;
+        /**
+         *  ```
+         *  top 0
+         *  ```
+         **/
         top(): number;
+        /**
+         *  ```
+         *  radius <= size
+         *  ```
+         **/
         radius(): number;
+        /**
+         *  ```
+         *  color \
+         *  ```
+         **/
         color(): string;
+        /**
+         *  ```
+         *  event_async *
+         *  	mouseenter?val <=> enter?val
+         *  	mouseleave?val <=> leave?val
+         *  ```
+         **/
         event_async(): {
             "mouseenter": (val?: any) => any;
             "mouseleave": (val?: any) => any;
         };
+        /**
+         *  ```
+         *  enter?val null
+         *  ```
+         **/
         enter(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  leave?val null
+         *  ```
+         **/
         leave(val?: any, force?: $mol_atom_force): any;
     }
 }

@@ -211,7 +211,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -347,6 +347,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -361,6 +362,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -525,6 +527,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -533,6 +538,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;
@@ -1137,6 +1145,7 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1188,6 +1197,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
+    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -1229,13 +1239,18 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
+        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '');
         }
+        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
+        /// Raw child views
         sub() {
             return null;
         }
+        /// Visible sub views with defined context()
+        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -1248,6 +1263,7 @@ var $;
             });
             return sub;
         }
+        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -1260,6 +1276,7 @@ var $;
             });
             return min;
         }
+        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -1435,36 +1452,98 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_scroll extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 0
+         *  ```
+         **/
         minimal_height() {
             return 0;
         }
+        /**
+         *  ```
+         *  moving_hor?val false
+         *  ```
+         **/
         moving_hor(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  moving_vert?val false
+         *  ```
+         **/
         moving_vert(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	scrollTop <= scroll_top?val
+         *  	scrollLeft <= scroll_left?val
+         *  	scrollBottom <= scroll_bottom?val
+         *  	scrollRight <= scroll_right?val
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "scrollTop": this.scroll_top(), "scrollLeft": this.scroll_left(), "scrollBottom": this.scroll_bottom(), "scrollRight": this.scroll_right() }));
         }
+        /**
+         *  ```
+         *  scroll_top?val 0
+         *  ```
+         **/
         scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_left?val 0
+         *  ```
+         **/
         scroll_left(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_bottom?val 0
+         *  ```
+         **/
         scroll_bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_right?val 0
+         *  ```
+         **/
         scroll_right(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  event_async *
+         *  	^
+         *  	scroll?event <=> event_scroll?event
+         *  ```
+         **/
         event_async() {
             return (Object.assign(Object.assign({}, super.event_async()), { "scroll": (event) => this.event_scroll(event) }));
         }
+        /**
+         *  ```
+         *  event_scroll?event null
+         *  ```
+         **/
         event_scroll(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  Strut $mol_view style * transform <= strut_transform
+         *  ```
+         **/
         Strut() {
             return ((obj) => {
                 obj.style = () => ({
@@ -1473,6 +1552,11 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  strut_transform \
+         *  ```
+         **/
         strut_transform() {
             return "";
         }
@@ -1538,6 +1622,13 @@ var $;
         $$.$mol_scroll_moving_hor = $mol_scroll_moving_hor;
         class $mol_scroll extends $.$mol_scroll {
             constructor() {
+                // scroll_top( next? : number ) {
+                // 	return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
+                // }
+                // 
+                // scroll_left( next? : number ) {
+                // 	return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
+                // }
                 super(...arguments);
                 this._moving_task_timer = null;
             }
@@ -1637,12 +1728,27 @@ var $;
 var $;
 (function ($) {
     class $mol_list extends $.$mol_view {
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
         sub() {
             return this.rows();
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Empty null
+         *  ```
+         **/
         Empty() {
             return null;
         }
@@ -1745,27 +1851,64 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_perf_uibench_table extends $.$mol_list {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state() {
             return null;
         }
+        /**
+         *  ```
+         *  dom_name \table
+         *  ```
+         **/
         dom_name() {
             return "table";
         }
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \Table
+         *  ```
+         **/
         attr_static() {
             return (Object.assign(Object.assign({}, super.attr_static()), { "class": "Table" }));
         }
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
         sub() {
             return this.rows();
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Row!index $mol_perf_uibench_table_row state <= row_state!index
+         *  ```
+         **/
         Row(index) {
             return ((obj) => {
                 obj.state = () => this.row_state(index);
                 return obj;
             })(new this.$.$mol_perf_uibench_table_row());
         }
+        /**
+         *  ```
+         *  row_state!index null
+         *  ```
+         **/
         row_state(index) {
             return null;
         }
@@ -1777,45 +1920,110 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_perf_uibench_table_row extends $.$mol_view {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state() {
             return null;
         }
+        /**
+         *  ```
+         *  minimal_height 18
+         *  ```
+         **/
         minimal_height() {
             return 18;
         }
+        /**
+         *  ```
+         *  dom_name \tr
+         *  ```
+         **/
         dom_name() {
             return "tr";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	class <= classes
+         *  	data-id <= id
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "class": this.classes(), "data-id": this.id() }));
         }
+        /**
+         *  ```
+         *  classes \TableRow
+         *  ```
+         **/
         classes() {
             return "TableRow";
         }
+        /**
+         *  ```
+         *  id 0
+         *  ```
+         **/
         id() {
             return 0;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Head
+         *  	<= cells
+         *  ```
+         **/
         sub() {
             return [].concat(this.Head(), this.cells());
         }
+        /**
+         *  ```
+         *  Head $mol_perf_uibench_table_cell text <= head_text
+         *  ```
+         **/
         Head() {
             return ((obj) => {
                 obj.text = () => this.head_text();
                 return obj;
             })(new this.$.$mol_perf_uibench_table_cell());
         }
+        /**
+         *  ```
+         *  head_text \
+         *  ```
+         **/
         head_text() {
             return "";
         }
+        /**
+         *  ```
+         *  cells /
+         *  ```
+         **/
         cells() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Cell!index $mol_perf_uibench_table_cell text <= cell_state!index
+         *  ```
+         **/
         Cell(index) {
             return ((obj) => {
                 obj.text = () => this.cell_state(index);
                 return obj;
             })(new this.$.$mol_perf_uibench_table_cell());
         }
+        /**
+         *  ```
+         *  cell_state!index null
+         *  ```
+         **/
         cell_state(index) {
             return null;
         }
@@ -1830,21 +2038,55 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_perf_uibench_table_cell extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \td
+         *  ```
+         **/
         dom_name() {
             return "td";
         }
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \TableCell
+         *  ```
+         **/
         attr_static() {
             return (Object.assign(Object.assign({}, super.attr_static()), { "class": "TableCell" }));
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?val <=> click?val
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (val) => this.click(val) }));
         }
+        /**
+         *  ```
+         *  click?val null
+         *  ```
+         **/
         click(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  sub / <= text
+         *  ```
+         **/
         sub() {
             return [].concat(this.text());
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
@@ -1948,24 +2190,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_perf_uibench_anim extends $.$mol_view {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state() {
             return null;
         }
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \Anim
+         *  ```
+         **/
         attr_static() {
             return (Object.assign(Object.assign({}, super.attr_static()), { "class": "Anim" }));
         }
+        /**
+         *  ```
+         *  sub <= boxes
+         *  ```
+         **/
         sub() {
             return this.boxes();
         }
+        /**
+         *  ```
+         *  boxes /
+         *  ```
+         **/
         boxes() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Box!index $mol_perf_uibench_anim_box state <= box_state!index
+         *  ```
+         **/
         Box(index) {
             return ((obj) => {
                 obj.state = () => this.box_state(index);
                 return obj;
             })(new this.$.$mol_perf_uibench_anim_box());
         }
+        /**
+         *  ```
+         *  box_state!index null
+         *  ```
+         **/
         box_state(index) {
             return null;
         }
@@ -1977,21 +2251,57 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_perf_uibench_anim_box extends $.$mol_view {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state() {
             return null;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	class \AnimBox
+         *  	data-id <= id
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "class": "AnimBox", "data-id": this.id() }));
         }
+        /**
+         *  ```
+         *  id \
+         *  ```
+         **/
         id() {
             return "";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	borderRadius <= style_radius
+         *  	background <= style_color
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "borderRadius": this.style_radius(), "background": this.style_color() }));
         }
+        /**
+         *  ```
+         *  style_radius \
+         *  ```
+         **/
         style_radius() {
             return "";
         }
+        /**
+         *  ```
+         *  style_color \
+         *  ```
+         **/
         style_color() {
             return "";
         }
@@ -2058,21 +2368,48 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_perf_uibench_tree extends $.$mol_view {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state() {
             return null;
         }
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \Tree
+         *  ```
+         **/
         attr_static() {
             return (Object.assign(Object.assign({}, super.attr_static()), { "class": "Tree" }));
         }
+        /**
+         *  ```
+         *  sub / <= Root
+         *  ```
+         **/
         sub() {
             return [].concat(this.Root());
         }
+        /**
+         *  ```
+         *  Root $mol_perf_uibench_tree_branch state <= root_state
+         *  ```
+         **/
         Root() {
             return ((obj) => {
                 obj.state = () => this.root_state();
                 return obj;
             })(new this.$.$mol_perf_uibench_tree_branch());
         }
+        /**
+         *  ```
+         *  root_state null
+         *  ```
+         **/
         root_state() {
             return null;
         }
@@ -2084,30 +2421,67 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_perf_uibench_tree_branch extends $.$mol_list {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state() {
             return null;
         }
+        /**
+         *  ```
+         *  dom_name \ul
+         *  ```
+         **/
         dom_name() {
             return "ul";
         }
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \TreeNode
+         *  ```
+         **/
         attr_static() {
             return (Object.assign(Object.assign({}, super.attr_static()), { "class": "TreeNode" }));
         }
+        /**
+         *  ```
+         *  Branch!index $mol_perf_uibench_tree_branch state <= branch_state!index
+         *  ```
+         **/
         Branch(index) {
             return ((obj) => {
                 obj.state = () => this.branch_state(index);
                 return obj;
             })(new this.$.$mol_perf_uibench_tree_branch());
         }
+        /**
+         *  ```
+         *  branch_state!index null
+         *  ```
+         **/
         branch_state(index) {
             return null;
         }
+        /**
+         *  ```
+         *  Leaf!index $mol_perf_uibench_tree_leaf text <= leaf_state!index
+         *  ```
+         **/
         Leaf(index) {
             return ((obj) => {
                 obj.text = () => this.leaf_state(index);
                 return obj;
             })(new this.$.$mol_perf_uibench_tree_leaf());
         }
+        /**
+         *  ```
+         *  leaf_state!index null
+         *  ```
+         **/
         leaf_state(index) {
             return null;
         }
@@ -2122,18 +2496,45 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_perf_uibench_tree_leaf extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 26
+         *  ```
+         **/
         minimal_height() {
             return 26;
         }
+        /**
+         *  ```
+         *  dom_name \li
+         *  ```
+         **/
         dom_name() {
             return "li";
         }
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \TreeLeaf
+         *  ```
+         **/
         attr_static() {
             return (Object.assign(Object.assign({}, super.attr_static()), { "class": "TreeLeaf" }));
         }
+        /**
+         *  ```
+         *  sub / <= text
+         *  ```
+         **/
         sub() {
             return [].concat(this.text());
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
@@ -2202,36 +2603,81 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_perf_uibench extends $.$mol_scroll {
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \Main
+         *  ```
+         **/
         attr_static() {
             return (Object.assign(Object.assign({}, super.attr_static()), { "class": "Main" }));
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Table
+         *  	<= Anim
+         *  	<= Tree
+         *  ```
+         **/
         sub() {
             return [].concat(this.Table(), this.Anim(), this.Tree());
         }
+        /**
+         *  ```
+         *  Table $mol_perf_uibench_table state <= table_state
+         *  ```
+         **/
         Table() {
             return ((obj) => {
                 obj.state = () => this.table_state();
                 return obj;
             })(new this.$.$mol_perf_uibench_table());
         }
+        /**
+         *  ```
+         *  table_state null
+         *  ```
+         **/
         table_state() {
             return null;
         }
+        /**
+         *  ```
+         *  Anim $mol_perf_uibench_anim state <= anim_state
+         *  ```
+         **/
         Anim() {
             return ((obj) => {
                 obj.state = () => this.anim_state();
                 return obj;
             })(new this.$.$mol_perf_uibench_anim());
         }
+        /**
+         *  ```
+         *  anim_state null
+         *  ```
+         **/
         anim_state() {
             return null;
         }
+        /**
+         *  ```
+         *  Tree $mol_perf_uibench_tree state <= tree_state
+         *  ```
+         **/
         Tree() {
             return ((obj) => {
                 obj.state = () => this.tree_state();
                 return obj;
             })(new this.$.$mol_perf_uibench_tree());
         }
+        /**
+         *  ```
+         *  tree_state null
+         *  ```
+         **/
         tree_state() {
             return null;
         }
@@ -2838,6 +3284,7 @@ var $;
 //jsx.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -2879,6 +3326,10 @@ var $;
             const dom = $.$mol_jsx_make(Button, { id: "/foo", hint: "click me" }, () => 'hey!');
             $.$mol_assert_equal(dom.outerHTML, '<button title="click me" id="/foo">hey!</button>');
         },
+        // 'Standart classes as component'() {
+        // 	const dom = <HTMLButtonElement id="/foo" title="click me">hey!</HTMLButtonElement>
+        // 	$mol_assert_equal( dom.outerHTML , '<button title="click me" id="/foo">hey!</button>' )
+        // } ,
         'Nested guid generation'() {
             const Foo = () => {
                 return $.$mol_jsx_make("div", null,
@@ -2968,6 +3419,7 @@ var $;
 //make.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -3070,11 +3522,14 @@ var $;
                 $.$mol_mem_key
             ], X.prototype, "foo", null);
             const x = new X;
+            // get
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
             $.$mol_assert_equal(x.foo(0), x.foo(0));
             $.$mol_assert_unique(x.foo(0), x.foo(1));
+            // set
             x.foo(0, 321);
             $.$mol_assert_equal(x.foo(0).valueOf(), 321);
+            // reset
             x.foo(0, null);
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
         },
@@ -3118,6 +3573,26 @@ var $;
             x.foo(5);
             $.$mol_assert_equal(x.xxx(), 7);
         },
+        //'must fail on recursive dependency'() {
+        //
+        //	class X extends $mol_object {
+        //
+        //		@ $mol_prop()
+        //		foo() : number {
+        //			return this.foo() + 1
+        //		}
+        //
+        //	}
+        //
+        //	var x = new X
+        //
+        //	try {
+        //		x.foo().valueOf()
+        //		$mol_assert_fail( 'Not tracked recursive dependency' )
+        //	} catch( error ) {
+        //		$mol_assert_equal( error.message , 'Recursive dependency! .foo()' )
+        //	}
+        //} ,
         'must be deferred destroyed when no longer referenced'() {
             let foo;
             let foo_destroyed = false;
@@ -3321,6 +3796,7 @@ var $;
 //parse.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -3571,6 +4047,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// @todo right orderinng
     $.$mol_after_mock_queue = [];
     function $mol_after_mock_warp() {
         const queue = $.$mol_after_mock_queue.splice(0);
@@ -3739,7 +4216,7 @@ var $;
             let master = slave && slave.master;
             if (!master || master.constructor !== $mol_fiber) {
                 master = new $mol_fiber;
-                master.cursor = -3;
+                master.cursor = -3 /* persist */;
                 master.error = request.call(this, ...args).then(res => master.push(res), err => master.fail(err));
                 const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
                 master[Symbol.toStringTag] = prefix + (request.name || $mol_fiber_sync.name);
@@ -3815,7 +4292,7 @@ var $;
             super(...arguments);
             this.value = undefined;
             this.error = null;
-            this.cursor = 0;
+            this.cursor = 0 /* obsolete */;
             this.masters = [];
         }
         static wrap(task) {
@@ -3858,7 +4335,7 @@ var $;
         wake() {
             this.$.$mol_log(this, '⏰');
             try {
-                if (this.cursor > -2)
+                if (this.cursor > -2 /* actual */)
                     return this.get();
             }
             catch (error) {
@@ -3894,16 +4371,16 @@ var $;
         wait(promise) {
             this.error = promise;
             this.$.$mol_log(this, '💤');
-            this.cursor = 0;
+            this.cursor = 0 /* obsolete */;
             return promise;
         }
         complete() {
-            if (this.cursor <= -2)
+            if (this.cursor <= -2 /* actual */)
                 return;
             for (let index = 0; index < this.masters.length; index += 2) {
                 this.complete_master(index);
             }
-            this.cursor = -2;
+            this.cursor = -2 /* actual */;
         }
         complete_master(master_index) {
             this.disobey(master_index);
@@ -3937,12 +4414,12 @@ var $;
             }
         }
         get() {
-            if (this.cursor > 0)
+            if (this.cursor > 0 /* obsolete */)
                 this.$.$mol_fail(new Error('Cyclic dependency'));
             const slave = $mol_fiber_1.current;
             if (slave)
                 slave.master = this;
-            if (this.cursor > -2)
+            if (this.cursor > -2 /* actual */)
                 this.update();
             if (this.error)
                 return this.$.$mol_fail_hidden(this.error);
@@ -3955,6 +4432,7 @@ var $;
             const overtime = now - $mol_fiber_1.deadline;
             if (overtime < 0)
                 return;
+            /// after debugger
             if (overtime > 500) {
                 $mol_fiber_1.deadline = now + $mol_fiber_1.quant;
                 return;
@@ -3965,7 +4443,7 @@ var $;
             return this.masters[this.cursor];
         }
         set master(next) {
-            if (this.cursor === -1)
+            if (this.cursor === -1 /* doubt */)
                 return;
             const cursor = this.cursor;
             const prev = this.masters[this.cursor];
@@ -4459,7 +4937,7 @@ var $;
             return value;
         }
         pull() {
-            if (this.cursor === 0)
+            if (this.cursor === 0 /* obsolete */)
                 return super.pull();
             this.$.$mol_log(this, '⏭');
             const masters = this.masters;
@@ -4473,15 +4951,15 @@ var $;
                 catch (error) {
                     if ('then' in error)
                         $.$mol_fail_hidden(error);
-                    this.cursor = 0;
+                    this.cursor = 0 /* obsolete */;
                 }
-                if (this.cursor !== 0)
+                if (this.cursor !== 0 /* obsolete */)
                     continue;
                 this.$.$mol_log(this, '⏯');
                 return super.pull();
             }
             this.$.$mol_log(this, '✔✔', this.value);
-            this.cursor = -2;
+            this.cursor = -2 /* actual */;
             return this.value;
         }
         get value() { return this._value; }
@@ -4504,7 +4982,7 @@ var $;
         }
         put(next) {
             this.push(next);
-            this.cursor = -3;
+            this.cursor = -3 /* persist */;
         }
         complete_master(master_index) {
             if (this.masters[master_index] instanceof $mol_atom2_1) {
@@ -4527,16 +5005,16 @@ var $;
         }
         dislead(slave_index) {
             if (slave_index < 0)
-                return;
+                return; // slave is fiber
             this.$.$mol_log(this, '☌', this.slaves[slave_index]);
             this.slaves[slave_index] = undefined;
             this.slaves[slave_index + 1] = undefined;
             $.$mol_array_trim(this.slaves);
-            if (this.cursor > -3 && this.alone)
+            if (this.cursor > -3 /* persist */ && this.alone)
                 $mol_atom2_1.reap(this);
         }
         obsolete(master_index = -1) {
-            if (this.cursor > 0) {
+            if (this.cursor > 0 /* obsolete */) {
                 if (master_index >= this.cursor - 2)
                     return;
                 const path = [];
@@ -4547,15 +5025,15 @@ var $;
                 }
                 this.$.$mol_fail(new Error(`Obsoleted while calculation \n\n${path.join('\n')}\n`));
             }
-            if (this.cursor === 0)
+            if (this.cursor === 0 /* obsolete */)
                 return;
             this.$.$mol_log(this, '✘');
-            if (this.cursor !== -1)
+            if (this.cursor !== -1 /* doubt */)
                 this.doubt_slaves();
-            this.cursor = 0;
+            this.cursor = 0 /* obsolete */;
         }
         doubt(master_index = -1) {
-            if (this.cursor > 0) {
+            if (this.cursor > 0 /* obsolete */) {
                 if (master_index >= this.cursor - 2)
                     return;
                 const path = [];
@@ -4566,10 +5044,10 @@ var $;
                 }
                 this.$.$mol_fail(new Error(`Doubted while calculation \n\n${path.join('\n')}\n`));
             }
-            if (this.cursor >= -1)
+            if (this.cursor >= -1 /* doubt */)
                 return;
             this.$.$mol_log(this, '�');
-            this.cursor = -1;
+            this.cursor = -1 /* doubt */;
             this.doubt_slaves();
         }
         obsolete_slaves() {
@@ -4588,9 +5066,9 @@ var $;
         }
         get fresh() {
             return () => {
-                if (this.cursor !== -2)
+                if (this.cursor !== -2 /* actual */)
                     return;
-                this.cursor = 0;
+                this.cursor = 0 /* obsolete */;
                 $.$mol_fiber_solid.run(() => this.update());
             };
         }
@@ -4608,7 +5086,7 @@ var $;
             if (!this.abort())
                 return;
             this.$.$mol_log(this, '🕱', this.value);
-            this.cursor = -3;
+            this.cursor = -3 /* persist */;
             for (let index = 0; index < this.masters.length; index += 2) {
                 this.complete_master(index);
             }
@@ -4831,6 +5309,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -4917,6 +5396,7 @@ var $;
 //view.test.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     class $mol_jsx_view extends $.$mol_object2 {

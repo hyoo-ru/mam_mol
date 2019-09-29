@@ -196,7 +196,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -332,6 +332,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -346,6 +347,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -510,6 +512,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -518,6 +523,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;
@@ -977,11 +985,11 @@ var $;
         }
         content(next, force) {
             if (next === void 0) {
-                return this.stat() && $node.fs.readFileSync(this.path());
+                return this.stat() && $node.fs.readFileSync(this.path()); //.toString()
             }
             this.parent().exists(true);
             $node.fs.writeFileSync(this.path(), next);
-            return next;
+            return next; //.toString()
         }
         reader() {
             return $node.fs.createReadStream(this.path());
@@ -1628,6 +1636,7 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1679,6 +1688,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
+    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -1720,13 +1730,18 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
+        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '');
         }
+        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
+        /// Raw child views
         sub() {
             return null;
         }
+        /// Visible sub views with defined context()
+        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -1739,6 +1754,7 @@ var $;
             });
             return sub;
         }
+        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -1751,6 +1767,7 @@ var $;
             });
             return min;
         }
+        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -2225,6 +2242,7 @@ var $;
                                     const object_args = value.select('/', '').sub.map(arg => getValue(arg)).join(' , ');
                                     return '(( obj )=>{\n' + overs.join('') + '\t\t\treturn obj\n\t\t})( new this.$.' + value.type + '( ' + object_args + ' ) )';
                                 case (value.type === '*'):
+                                    //needReturn = false
                                     var opts = [];
                                     value.sub.forEach(opt => {
                                         if (opt.type === '-')
@@ -2516,7 +2534,7 @@ var $;
             for (let line of lines) {
                 const mergedLine = [];
                 for (let segment of line) {
-                    const mergedSegment = [segment[0]];
+                    const mergedSegment = [segment[0]]; // generatedColumn
                     if (segment.length > 1) {
                         const [, sourceIndex] = segment;
                         const source = bundleSourceRoot + sourceRoot + raw.sources[sourceIndex];
@@ -2531,9 +2549,9 @@ var $;
                         mergedSegment.push(mergedSourceIndex);
                     }
                     if (segment.length > 2)
-                        mergedSegment.push(segment[2]);
+                        mergedSegment.push(segment[2]); // originalLine
                     if (segment.length > 3)
-                        mergedSegment.push(segment[3]);
+                        mergedSegment.push(segment[3]); // originalColumn
                     if (segment.length > 4) {
                         const nameIndex = segment[4];
                         const name = raw.names[nameIndex];
@@ -2639,6 +2657,7 @@ var $;
                 mods.push(child);
                 return true;
             });
+            // .sort( ( a , b )=> a.path().length - b.path().length )
             return mods;
         }
         modsRecursive({ path, exclude }) {
@@ -2857,6 +2876,7 @@ var $;
             }
         }
         modEnsure(path) {
+            // Prevent automatic state clear on every bundle build
             $.$mol_atom_current().destructor = () => { };
             var mod = $.$mol_file.absolute(path);
             if (mod === this.root())
@@ -2867,6 +2887,7 @@ var $;
             if (mod.exists()) {
                 if (mod.type() === 'dir' && mod.resolve('.git').type() === 'dir') {
                     try {
+                        //$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
                         process.stdout.write($.$mol_exec(mod.path(), 'git', '--no-pager', 'log', '--oneline', 'HEAD..origin/master').stdout);
                     }
                     catch (error) {
@@ -2923,6 +2944,7 @@ var $;
                         if (index.exists())
                             dep = index;
                     }
+                    //if( dep.type() === 'file' ) dep = dep.parent()
                     if (mod === dep)
                         return;
                     if (dep === this.root())
@@ -3040,7 +3062,8 @@ var $;
             var sources = this.sourcesJS({ path, exclude });
             if (sources.length === 0)
                 return [];
-            this.tsCompile({ path, exclude, bundle });
+            var exclude_ext = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
+            this.tsCompile({ path, exclude: exclude_ext, bundle });
             var concater = new $.$mol_sourcemap_builder(target.name(), ';');
             if (bundle === 'node') {
                 concater.add('require' + '( "source-map-support" ).install(); var exports = void 0;\n');
@@ -3289,7 +3312,7 @@ var $;
                 return [];
             var target = pack.resolve(`-/${bundle}.css`);
             var targetMap = pack.resolve(`-/${bundle}.css.map`);
-            var root = null;
+            var root = null; //$node['postcss'].root({})
             sources.forEach(src => {
                 var root2 = $node['postcss'].parse(src.content(), { from: src.path() });
                 root = root ? root.append(root2) : root2;
@@ -3482,8 +3505,8 @@ var $;
     $mol_build.dependors['js'] = source => {
         var depends = {};
         var lines = String(source.content())
-            .replace(/\/\*[^]*?\*\//g, '')
-            .replace(/\/\/.*$/gm, '')
+            .replace(/\/\*[^]*?\*\//g, '') // drop block comments
+            .replace(/\/\/.*$/gm, '') // drop inline comments
             .split('\n');
         lines.forEach(function (line) {
             var indent = /^([\s\t]*)/.exec(line);
@@ -3502,8 +3525,8 @@ var $;
     $mol_build.dependors['ts'] = $mol_build.dependors['tsx'] = $mol_build.dependors['jam.js'] = source => {
         var depends = {};
         var lines = String(source.content())
-            .replace(/\/\*(?!\*)[\s\S]*?\*\//g, '')
-            .replace(/\/\/.*$/gm, '')
+            .replace(/\/\*(?!\*)[\s\S]*?\*\//g, '') // drop block comments except doc-comments
+            .replace(/\/\/.*$/gm, '') // drop inline comments
             .split('\n');
         lines.forEach(function (line) {
             var indent = /^([\s\t]*)/.exec(line);
@@ -3533,8 +3556,8 @@ var $;
     $mol_build.dependors['css'] = $mol_build.dependors['view.css'] = source => {
         var depends = {};
         var lines = String(source.content())
-            .replace(/\/\*[^]*?\*\//g, '')
-            .replace(/\/\/.*$/gm, '')
+            .replace(/\/\*[^]*?\*\//g, '') // drop block comments
+            .replace(/\/\/.*$/gm, '') // drop inline comments
             .split('\n');
         lines.forEach(function (line) {
             var indent = /^([\s\t]*)/.exec(line);
@@ -4225,6 +4248,7 @@ var $;
 //jsx.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -4266,6 +4290,10 @@ var $;
             const dom = $.$mol_jsx_make(Button, { id: "/foo", hint: "click me" }, () => 'hey!');
             $.$mol_assert_equal(dom.outerHTML, '<button title="click me" id="/foo">hey!</button>');
         },
+        // 'Standart classes as component'() {
+        // 	const dom = <HTMLButtonElement id="/foo" title="click me">hey!</HTMLButtonElement>
+        // 	$mol_assert_equal( dom.outerHTML , '<button title="click me" id="/foo">hey!</button>' )
+        // } ,
         'Nested guid generation'() {
             const Foo = () => {
                 return $.$mol_jsx_make("div", null,
@@ -4355,6 +4383,7 @@ var $;
 //make.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -4457,11 +4486,14 @@ var $;
                 $.$mol_mem_key
             ], X.prototype, "foo", null);
             const x = new X;
+            // get
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
             $.$mol_assert_equal(x.foo(0), x.foo(0));
             $.$mol_assert_unique(x.foo(0), x.foo(1));
+            // set
             x.foo(0, 321);
             $.$mol_assert_equal(x.foo(0).valueOf(), 321);
+            // reset
             x.foo(0, null);
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
         },
@@ -4505,6 +4537,26 @@ var $;
             x.foo(5);
             $.$mol_assert_equal(x.xxx(), 7);
         },
+        //'must fail on recursive dependency'() {
+        //
+        //	class X extends $mol_object {
+        //
+        //		@ $mol_prop()
+        //		foo() : number {
+        //			return this.foo() + 1
+        //		}
+        //
+        //	}
+        //
+        //	var x = new X
+        //
+        //	try {
+        //		x.foo().valueOf()
+        //		$mol_assert_fail( 'Not tracked recursive dependency' )
+        //	} catch( error ) {
+        //		$mol_assert_equal( error.message , 'Recursive dependency! .foo()' )
+        //	}
+        //} ,
         'must be deferred destroyed when no longer referenced'() {
             let foo;
             let foo_destroyed = false;
@@ -4873,6 +4925,7 @@ var $;
 //parse.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -5123,6 +5176,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// @todo right orderinng
     $.$mol_after_mock_queue = [];
     function $mol_after_mock_warp() {
         const queue = $.$mol_after_mock_queue.splice(0);
@@ -5291,7 +5345,7 @@ var $;
             let master = slave && slave.master;
             if (!master || master.constructor !== $mol_fiber) {
                 master = new $mol_fiber;
-                master.cursor = -3;
+                master.cursor = -3 /* persist */;
                 master.error = request.call(this, ...args).then(res => master.push(res), err => master.fail(err));
                 const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
                 master[Symbol.toStringTag] = prefix + (request.name || $mol_fiber_sync.name);
@@ -5367,7 +5421,7 @@ var $;
             super(...arguments);
             this.value = undefined;
             this.error = null;
-            this.cursor = 0;
+            this.cursor = 0 /* obsolete */;
             this.masters = [];
         }
         static wrap(task) {
@@ -5410,7 +5464,7 @@ var $;
         wake() {
             this.$.$mol_log(this, '⏰');
             try {
-                if (this.cursor > -2)
+                if (this.cursor > -2 /* actual */)
                     return this.get();
             }
             catch (error) {
@@ -5446,16 +5500,16 @@ var $;
         wait(promise) {
             this.error = promise;
             this.$.$mol_log(this, '💤');
-            this.cursor = 0;
+            this.cursor = 0 /* obsolete */;
             return promise;
         }
         complete() {
-            if (this.cursor <= -2)
+            if (this.cursor <= -2 /* actual */)
                 return;
             for (let index = 0; index < this.masters.length; index += 2) {
                 this.complete_master(index);
             }
-            this.cursor = -2;
+            this.cursor = -2 /* actual */;
         }
         complete_master(master_index) {
             this.disobey(master_index);
@@ -5489,12 +5543,12 @@ var $;
             }
         }
         get() {
-            if (this.cursor > 0)
+            if (this.cursor > 0 /* obsolete */)
                 this.$.$mol_fail(new Error('Cyclic dependency'));
             const slave = $mol_fiber_1.current;
             if (slave)
                 slave.master = this;
-            if (this.cursor > -2)
+            if (this.cursor > -2 /* actual */)
                 this.update();
             if (this.error)
                 return this.$.$mol_fail_hidden(this.error);
@@ -5507,6 +5561,7 @@ var $;
             const overtime = now - $mol_fiber_1.deadline;
             if (overtime < 0)
                 return;
+            /// after debugger
             if (overtime > 500) {
                 $mol_fiber_1.deadline = now + $mol_fiber_1.quant;
                 return;
@@ -5517,7 +5572,7 @@ var $;
             return this.masters[this.cursor];
         }
         set master(next) {
-            if (this.cursor === -1)
+            if (this.cursor === -1 /* doubt */)
                 return;
             const cursor = this.cursor;
             const prev = this.masters[this.cursor];
@@ -6011,7 +6066,7 @@ var $;
             return value;
         }
         pull() {
-            if (this.cursor === 0)
+            if (this.cursor === 0 /* obsolete */)
                 return super.pull();
             this.$.$mol_log(this, '⏭');
             const masters = this.masters;
@@ -6025,15 +6080,15 @@ var $;
                 catch (error) {
                     if ('then' in error)
                         $.$mol_fail_hidden(error);
-                    this.cursor = 0;
+                    this.cursor = 0 /* obsolete */;
                 }
-                if (this.cursor !== 0)
+                if (this.cursor !== 0 /* obsolete */)
                     continue;
                 this.$.$mol_log(this, '⏯');
                 return super.pull();
             }
             this.$.$mol_log(this, '✔✔', this.value);
-            this.cursor = -2;
+            this.cursor = -2 /* actual */;
             return this.value;
         }
         get value() { return this._value; }
@@ -6056,7 +6111,7 @@ var $;
         }
         put(next) {
             this.push(next);
-            this.cursor = -3;
+            this.cursor = -3 /* persist */;
         }
         complete_master(master_index) {
             if (this.masters[master_index] instanceof $mol_atom2_1) {
@@ -6079,16 +6134,16 @@ var $;
         }
         dislead(slave_index) {
             if (slave_index < 0)
-                return;
+                return; // slave is fiber
             this.$.$mol_log(this, '☌', this.slaves[slave_index]);
             this.slaves[slave_index] = undefined;
             this.slaves[slave_index + 1] = undefined;
             $.$mol_array_trim(this.slaves);
-            if (this.cursor > -3 && this.alone)
+            if (this.cursor > -3 /* persist */ && this.alone)
                 $mol_atom2_1.reap(this);
         }
         obsolete(master_index = -1) {
-            if (this.cursor > 0) {
+            if (this.cursor > 0 /* obsolete */) {
                 if (master_index >= this.cursor - 2)
                     return;
                 const path = [];
@@ -6099,15 +6154,15 @@ var $;
                 }
                 this.$.$mol_fail(new Error(`Obsoleted while calculation \n\n${path.join('\n')}\n`));
             }
-            if (this.cursor === 0)
+            if (this.cursor === 0 /* obsolete */)
                 return;
             this.$.$mol_log(this, '✘');
-            if (this.cursor !== -1)
+            if (this.cursor !== -1 /* doubt */)
                 this.doubt_slaves();
-            this.cursor = 0;
+            this.cursor = 0 /* obsolete */;
         }
         doubt(master_index = -1) {
-            if (this.cursor > 0) {
+            if (this.cursor > 0 /* obsolete */) {
                 if (master_index >= this.cursor - 2)
                     return;
                 const path = [];
@@ -6118,10 +6173,10 @@ var $;
                 }
                 this.$.$mol_fail(new Error(`Doubted while calculation \n\n${path.join('\n')}\n`));
             }
-            if (this.cursor >= -1)
+            if (this.cursor >= -1 /* doubt */)
                 return;
             this.$.$mol_log(this, '�');
-            this.cursor = -1;
+            this.cursor = -1 /* doubt */;
             this.doubt_slaves();
         }
         obsolete_slaves() {
@@ -6140,9 +6195,9 @@ var $;
         }
         get fresh() {
             return () => {
-                if (this.cursor !== -2)
+                if (this.cursor !== -2 /* actual */)
                     return;
-                this.cursor = 0;
+                this.cursor = 0 /* obsolete */;
                 $.$mol_fiber_solid.run(() => this.update());
             };
         }
@@ -6160,7 +6215,7 @@ var $;
             if (!this.abort())
                 return;
             this.$.$mol_log(this, '🕱', this.value);
-            this.cursor = -3;
+            this.cursor = -3 /* persist */;
             for (let index = 0; index < this.masters.length; index += 2) {
                 this.complete_master(index);
             }
@@ -6357,6 +6412,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -6443,6 +6499,7 @@ var $;
 //view.test.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     class $mol_jsx_view extends $.$mol_object2 {

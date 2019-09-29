@@ -201,7 +201,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -359,6 +359,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -373,6 +374,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -566,6 +568,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -574,6 +579,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;
@@ -1186,6 +1194,7 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1237,6 +1246,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
+    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -1278,13 +1288,18 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
+        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '');
         }
+        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
+        /// Raw child views
         sub() {
             return null;
         }
+        /// Visible sub views with defined context()
+        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -1297,6 +1312,7 @@ var $;
             });
             return sub;
         }
+        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -1309,6 +1325,7 @@ var $;
             });
             return min;
         }
+        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -1478,6 +1495,7 @@ var $;
 var $;
 (function ($) {
     if ($.$mol_dom_context.document) {
+        /// Autoattach view roots to loaded DOM.
         const event_name = self.cordova ? 'deviceready' : 'DOMContentLoaded';
         $.$mol_dom_context.document.addEventListener(event_name, $.$mol_log_group(`$mol_view ${event_name}`, (event) => {
             $.$mol_view.autobind();
@@ -1500,39 +1518,107 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_button extends $.$mol_view {
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  click?event null
+         *  ```
+         **/
         click(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_click?event null
+         *  ```
+         **/
         event_click(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?event <=> event_activate?event
+         *  	keypress?event <=> event_key_press?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.event_activate(event), "keypress": (event) => this.event_key_press(event) }));
         }
+        /**
+         *  ```
+         *  event_activate?event null
+         *  ```
+         **/
         event_activate(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_key_press?event null
+         *  ```
+         **/
         event_key_press(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	disabled <= disabled
+         *  	role \button
+         *  	tabindex <= tab_index
+         *  	title <= hint
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "disabled": this.disabled(), "role": "button", "tabindex": this.tab_index(), "title": this.hint() }));
         }
+        /**
+         *  ```
+         *  disabled false
+         *  ```
+         **/
         disabled() {
             return false;
         }
+        /**
+         *  ```
+         *  tab_index 0
+         *  ```
+         **/
         tab_index() {
             return 0;
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= title
+         *  ```
+         **/
         sub() {
             return [].concat(this.title());
         }
@@ -1571,7 +1657,7 @@ var $;
                 this.click(next);
             }
             event_key_press(event) {
-                if (event.keyCode === 13) {
+                if (event.keyCode === 13 /* enter */) {
                     return this.event_activate(event);
                 }
             }
@@ -1593,6 +1679,13 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_button_major extends $.$mol_button_typed {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_theme \$mol_theme_accent
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_theme": "$mol_theme_accent" }));
         }
@@ -1616,27 +1709,68 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check extends $.$mol_button_minor {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_check_checked <= checked?val
+         *  	aria-checked <= checked?val
+         *  	role \checkbox
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_check_checked": this.checked(), "aria-checked": this.checked(), "role": "checkbox" }));
         }
+        /**
+         *  ```
+         *  checked?val false
+         *  ```
+         **/
         checked(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Icon
+         *  	<= label
+         *  ```
+         **/
         sub() {
             return [].concat(this.Icon(), this.label());
         }
+        /**
+         *  ```
+         *  Icon null
+         *  ```
+         **/
         Icon() {
             return null;
         }
+        /**
+         *  ```
+         *  label / <= Title
+         *  ```
+         **/
         label() {
             return [].concat(this.Title());
         }
+        /**
+         *  ```
+         *  Title $mol_view sub / <= title
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.title());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
@@ -1678,36 +1812,98 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_scroll extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 0
+         *  ```
+         **/
         minimal_height() {
             return 0;
         }
+        /**
+         *  ```
+         *  moving_hor?val false
+         *  ```
+         **/
         moving_hor(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  moving_vert?val false
+         *  ```
+         **/
         moving_vert(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	scrollTop <= scroll_top?val
+         *  	scrollLeft <= scroll_left?val
+         *  	scrollBottom <= scroll_bottom?val
+         *  	scrollRight <= scroll_right?val
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "scrollTop": this.scroll_top(), "scrollLeft": this.scroll_left(), "scrollBottom": this.scroll_bottom(), "scrollRight": this.scroll_right() }));
         }
+        /**
+         *  ```
+         *  scroll_top?val 0
+         *  ```
+         **/
         scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_left?val 0
+         *  ```
+         **/
         scroll_left(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_bottom?val 0
+         *  ```
+         **/
         scroll_bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_right?val 0
+         *  ```
+         **/
         scroll_right(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  event_async *
+         *  	^
+         *  	scroll?event <=> event_scroll?event
+         *  ```
+         **/
         event_async() {
             return (Object.assign(Object.assign({}, super.event_async()), { "scroll": (event) => this.event_scroll(event) }));
         }
+        /**
+         *  ```
+         *  event_scroll?event null
+         *  ```
+         **/
         event_scroll(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  Strut $mol_view style * transform <= strut_transform
+         *  ```
+         **/
         Strut() {
             return ((obj) => {
                 obj.style = () => ({
@@ -1716,6 +1912,11 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  strut_transform \
+         *  ```
+         **/
         strut_transform() {
             return "";
         }
@@ -1781,6 +1982,13 @@ var $;
         $$.$mol_scroll_moving_hor = $mol_scroll_moving_hor;
         class $mol_scroll extends $.$mol_scroll {
             constructor() {
+                // scroll_top( next? : number ) {
+                // 	return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
+                // }
+                // 
+                // scroll_left( next? : number ) {
+                // 	return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
+                // }
                 super(...arguments);
                 this._moving_task_timer = null;
             }
@@ -1880,12 +2088,27 @@ var $;
 var $;
 (function ($) {
     class $mol_list extends $.$mol_view {
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
         sub() {
             return this.rows();
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Empty null
+         *  ```
+         **/
         Empty() {
             return null;
         }
@@ -1988,18 +2211,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_app_bench_list_mol extends $.$mol_scroll {
+        /**
+         *  ```
+         *  sub / <= List
+         *  ```
+         **/
         sub() {
             return [].concat(this.List());
         }
+        /**
+         *  ```
+         *  List $mol_list rows / <= rows
+         *  ```
+         **/
         List() {
             return ((obj) => {
                 obj.rows = () => [].concat(this.rows());
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Row!id $mol_app_bench_list_mol_row
+         *  	checked?val <=> row_selected!id?val
+         *  	title <= row_title!id
+         *  	content <= row_content!id
+         *  ```
+         **/
         Row(id) {
             return ((obj) => {
                 obj.checked = (val) => this.row_selected(id, val);
@@ -2008,12 +2254,27 @@ var $;
                 return obj;
             })(new this.$.$mol_app_bench_list_mol_row());
         }
+        /**
+         *  ```
+         *  row_selected!id?val false
+         *  ```
+         **/
         row_selected(id, val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  row_title!id \
+         *  ```
+         **/
         row_title(id) {
             return "";
         }
+        /**
+         *  ```
+         *  row_content!id \
+         *  ```
+         **/
         row_content(id) {
             return "";
         }
@@ -2031,30 +2292,67 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_app_bench_list_mol_row extends $.$mol_check {
+        /**
+         *  ```
+         *  selected?val false
+         *  ```
+         **/
         selected(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  minimal_height 56
+         *  ```
+         **/
         minimal_height() {
             return 56;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Title
+         *  	<= Content
+         *  ```
+         **/
         sub() {
             return [].concat(this.Title(), this.Content());
         }
+        /**
+         *  ```
+         *  Title $mol_view sub / <= title
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.title());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
+        /**
+         *  ```
+         *  Content $mol_view sub / <= content
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.content());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  content \
+         *  ```
+         **/
         content() {
             return "";
         }

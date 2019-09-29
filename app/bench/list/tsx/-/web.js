@@ -265,6 +265,7 @@ var $;
 //object2.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     class $mol_jsx_view extends $.$mol_object2 {
@@ -313,6 +314,7 @@ var $;
 //attach.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     class $mol_app_bench_list_tsx_item extends $.$mol_jsx_view {

@@ -218,7 +218,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -354,6 +354,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -368,6 +369,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -532,6 +534,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -540,6 +545,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;
@@ -1144,6 +1152,7 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1195,6 +1204,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
+    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -1236,13 +1246,18 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
+        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '');
         }
+        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
+        /// Raw child views
         sub() {
             return null;
         }
+        /// Visible sub views with defined context()
+        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -1255,6 +1270,7 @@ var $;
             });
             return sub;
         }
+        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -1267,6 +1283,7 @@ var $;
             });
             return min;
         }
+        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -1436,15 +1453,35 @@ var $;
 var $;
 (function ($) {
     class $mol_plugin extends $.$mol_object {
+        /**
+         *  ```
+         *  dom_node null
+         *  ```
+         **/
         dom_node() {
             return null;
         }
+        /**
+         *  ```
+         *  attr_static *
+         *  ```
+         **/
         attr_static() {
             return ({});
         }
+        /**
+         *  ```
+         *  event *
+         *  ```
+         **/
         event() {
             return ({});
         }
+        /**
+         *  ```
+         *  event_async *
+         *  ```
+         **/
         event_async() {
             return ({});
         }
@@ -1527,24 +1564,59 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_meter extends $.$mol_plugin {
+        /**
+         *  ```
+         *  zoom 1
+         *  ```
+         **/
         zoom() {
             return 1;
         }
+        /**
+         *  ```
+         *  width?val 0
+         *  ```
+         **/
         width(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  height?val 0
+         *  ```
+         **/
         height(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  left?val 0
+         *  ```
+         **/
         left(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  right?val 0
+         *  ```
+         **/
         right(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  bottom?val 0
+         *  ```
+         **/
         bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  top?val 0
+         *  ```
+         **/
         top(val, force) {
             return (val !== void 0) ? val : 0;
         }
@@ -1593,6 +1665,7 @@ var $;
                         return { left, top, right, bottom, width, height, zoom: win.devicePixelRatio || 1 };
                     }
                     catch (error) {
+                        // IE11
                     }
                 }
                 const size = $.$mol_window.size();
@@ -1667,81 +1740,226 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_touch extends $.$mol_plugin {
+        /**
+         *  ```
+         *  start_zoom?val 0
+         *  ```
+         **/
         start_zoom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  start_distance?val 0
+         *  ```
+         **/
         start_distance(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  zoom?val 1
+         *  ```
+         **/
         zoom(val, force) {
             return (val !== void 0) ? val : 1;
         }
+        /**
+         *  ```
+         *  start_pan?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         start_pan(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  pan?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         pan(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  pos?val /
+         *  	NaN
+         *  	NaN
+         *  ```
+         **/
         pos(val, force) {
             return (val !== void 0) ? val : [].concat(NaN, NaN);
         }
+        /**
+         *  ```
+         *  start_pos?val null
+         *  ```
+         **/
         start_pos(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_precision 16
+         *  ```
+         **/
         swipe_precision() {
             return 16;
         }
+        /**
+         *  ```
+         *  swipe_right?val null
+         *  ```
+         **/
         swipe_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_bottom?val null
+         *  ```
+         **/
         swipe_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_left?val null
+         *  ```
+         **/
         swipe_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_top?val null
+         *  ```
+         **/
         swipe_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_right?val null
+         *  ```
+         **/
         swipe_from_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_bottom?val null
+         *  ```
+         **/
         swipe_from_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_left?val null
+         *  ```
+         **/
         swipe_from_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_top?val null
+         *  ```
+         **/
         swipe_from_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_right?val null
+         *  ```
+         **/
         swipe_to_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_bottom?val null
+         *  ```
+         **/
         swipe_to_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_left?val null
+         *  ```
+         **/
         swipe_to_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_top?val null
+         *  ```
+         **/
         swipe_to_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	touchstart?event <=> event_start?event
+         *  	touchmove?event <=> event_move?event
+         *  	touchend?event <=> event_end?event
+         *  	mousedown?event <=> event_start?event
+         *  	mousemove?event <=> event_move?event
+         *  	mouseup?event <=> event_end?event
+         *  	mouseleave?event <=> event_leave?event
+         *  	wheel?event <=> event_wheel?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "touchstart": (event) => this.event_start(event), "touchmove": (event) => this.event_move(event), "touchend": (event) => this.event_end(event), "mousedown": (event) => this.event_start(event), "mousemove": (event) => this.event_move(event), "mouseup": (event) => this.event_end(event), "mouseleave": (event) => this.event_leave(event), "wheel": (event) => this.event_wheel(event) }));
         }
+        /**
+         *  ```
+         *  event_start?event null
+         *  ```
+         **/
         event_start(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_move?event null
+         *  ```
+         **/
         event_move(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_end?event null
+         *  ```
+         **/
         event_end(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_leave?event null
+         *  ```
+         **/
         event_leave(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_wheel?event null
+         *  ```
+         **/
         event_wheel(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -2012,6 +2230,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_ghost extends $.$mol_view {
+        /**
+         *  ```
+         *  Sub $mol_view
+         *  ```
+         **/
         Sub() {
             return ((obj) => {
                 return obj;
@@ -2073,26 +2296,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_book extends $.$mol_view {
+        /**
+         *  ```
+         *  sub <= pages_wrapped
+         *  ```
+         **/
         sub() {
             return this.pages_wrapped();
         }
+        /**
+         *  ```
+         *  pages_wrapped /
+         *  ```
+         **/
         pages_wrapped() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  pages /
+         *  ```
+         **/
         pages() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  plugins /
+         *  	<= Meter
+         *  	<= Touch
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Meter(), this.Touch());
         }
         width() {
             return this.Meter().width();
         }
+        /**
+         *  ```
+         *  Meter $mol_meter width => width
+         *  ```
+         **/
         Meter() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_meter());
         }
+        /**
+         *  ```
+         *  Touch $mol_touch
+         *  	swipe_from_left?val <=> event_front_up?val
+         *  	swipe_to_left?val <=> event_front_down?val
+         *  ```
+         **/
         Touch() {
             return ((obj) => {
                 obj.swipe_from_left = (val) => this.event_front_up(val);
@@ -2100,12 +2357,29 @@ var $;
                 return obj;
             })(new this.$.$mol_touch());
         }
+        /**
+         *  ```
+         *  event_front_up?val null
+         *  ```
+         **/
         event_front_up(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  event_front_down?val null
+         *  ```
+         **/
         event_front_down(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Page!index $mol_book_page
+         *  	Sub <= page!index
+         *  	visible <= page_visible!index
+         *  ```
+         **/
         Page(index) {
             return ((obj) => {
                 obj.Sub = () => this.page(index);
@@ -2113,12 +2387,27 @@ var $;
                 return obj;
             })(new this.$.$mol_book_page());
         }
+        /**
+         *  ```
+         *  page!index null
+         *  ```
+         **/
         page(index) {
             return null;
         }
+        /**
+         *  ```
+         *  page_visible!index true
+         *  ```
+         **/
         page_visible(index) {
             return true;
         }
+        /**
+         *  ```
+         *  Placeholder $mol_book_placeholder title <= title
+         *  ```
+         **/
         Placeholder() {
             return ((obj) => {
                 obj.title = () => this.title();
@@ -2148,9 +2437,21 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_book_placeholder extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_width 400
+         *  ```
+         **/
         minimal_width() {
             return 400;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex null
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "tabindex": null }));
         }
@@ -2159,9 +2460,23 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_book_page extends $.$mol_ghost {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex 0
+         *  	mol_book_page_focused <= focused
+         *  	mol_book_page_visible <= visible
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "tabindex": 0, "mol_book_page_focused": this.focused(), "mol_book_page_visible": this.visible() }));
         }
+        /**
+         *  ```
+         *  visible true
+         *  ```
+         **/
         visible() {
             return true;
         }
@@ -2437,11 +2752,11 @@ var $;
         }
         content(next, force) {
             if (next === void 0) {
-                return this.stat() && $node.fs.readFileSync(this.path());
+                return this.stat() && $node.fs.readFileSync(this.path()); //.toString()
             }
             this.parent().exists(true);
             $node.fs.writeFileSync(this.path(), next);
-            return next;
+            return next; //.toString()
         }
         reader() {
             return $node.fs.createReadStream(this.path());
@@ -2664,42 +2979,115 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_link extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  dom_name \a
+         *  ```
+         **/
         dom_name() {
             return "a";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	href <= uri
+         *  	title <= hint
+         *  	target <= target
+         *  	download <= file_name
+         *  	mol_link_current <= current
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "href": this.uri(), "title": this.hint(), "target": this.target(), "download": this.file_name(), "mol_link_current": this.current() }));
         }
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri() {
             return "";
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  target \_self
+         *  ```
+         **/
         target() {
             return "_self";
         }
+        /**
+         *  ```
+         *  file_name \
+         *  ```
+         **/
         file_name() {
             return "";
         }
+        /**
+         *  ```
+         *  current false
+         *  ```
+         **/
         current() {
             return false;
         }
+        /**
+         *  ```
+         *  sub / <= title
+         *  ```
+         **/
         sub() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  arg *
+         *  ```
+         **/
         arg() {
             return ({});
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?event <=> click?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.click(event) }));
         }
+        /**
+         *  ```
+         *  click?event <=> event_click?event
+         *  ```
+         **/
         click(event, force) {
             return this.event_click(event);
         }
+        /**
+         *  ```
+         *  event_click?event null
+         *  ```
+         **/
         event_click(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -2797,18 +3185,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_svg extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \svg
+         *  ```
+         **/
         dom_name() {
             return "svg";
         }
+        /**
+         *  ```
+         *  dom_name_space \http://www.w3.org/2000/svg
+         *  ```
+         **/
         dom_name_space() {
             return "http://www.w3.org/2000/svg";
         }
+        /**
+         *  ```
+         *  text_width?text 0
+         *  ```
+         **/
         text_width(text, force) {
             return (text !== void 0) ? text : 0;
         }
+        /**
+         *  ```
+         *  font_size 16
+         *  ```
+         **/
         font_size() {
             return 16;
         }
+        /**
+         *  ```
+         *  font_family \
+         *  ```
+         **/
         font_family() {
             return "";
         }
@@ -2867,15 +3280,38 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_root extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \svg
+         *  ```
+         **/
         dom_name() {
             return "svg";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	viewBox <= view_box
+         *  	preserveAspectRatio <= aspect
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "viewBox": this.view_box(), "preserveAspectRatio": this.aspect() }));
         }
+        /**
+         *  ```
+         *  view_box \0 0 100 100
+         *  ```
+         **/
         view_box() {
             return "0 0 100 100";
         }
+        /**
+         *  ```
+         *  aspect \xMidYMid
+         *  ```
+         **/
         aspect() {
             return "xMidYMid";
         }
@@ -2888,12 +3324,29 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_path extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \path
+         *  ```
+         **/
         dom_name() {
             return "path";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	d <= geometry
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "d": this.geometry() }));
         }
+        /**
+         *  ```
+         *  geometry \
+         *  ```
+         **/
         geometry() {
             return "";
         }
@@ -2912,24 +3365,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_icon extends $.$mol_svg_root {
+        /**
+         *  ```
+         *  view_box \0 0 24 24
+         *  ```
+         **/
         view_box() {
             return "0 0 24 24";
         }
+        /**
+         *  ```
+         *  minimal_width 16
+         *  ```
+         **/
         minimal_width() {
             return 16;
         }
+        /**
+         *  ```
+         *  minimal_height 16
+         *  ```
+         **/
         minimal_height() {
             return 16;
         }
+        /**
+         *  ```
+         *  sub / <= Path
+         *  ```
+         **/
         sub() {
             return [].concat(this.Path());
         }
+        /**
+         *  ```
+         *  Path $mol_svg_path geometry <= path
+         *  ```
+         **/
         Path() {
             return ((obj) => {
                 obj.geometry = () => this.path();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  path \
+         *  ```
+         **/
         path() {
             return "";
         }
@@ -2945,6 +3428,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_folder extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M10,4H4C2.89,4 2,4.89 2,6V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z
+         *  ```
+         **/
         path() {
             return "M10,4H4C2.89,4 2,4.89 2,6V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z";
         }
@@ -2957,6 +3445,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_file extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M13,9V3.5L18.5,9M6,2C4.89,2 4,2.89 4,4V20C4,21.1 4.9,22 6,22H18C19.1,22 20,21.1 20,20V8L14,2H6Z
+         *  ```
+         **/
         path() {
             return "M13,9V3.5L18.5,9M6,2C4.89,2 4,2.89 4,4V20C4,21.1 4.9,22 6,22H18C19.1,22 20,21.1 20,20V8L14,2H6Z";
         }
@@ -2969,6 +3462,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_cross extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+         *  ```
+         **/
         path() {
             return "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z";
         }
@@ -2990,39 +3488,107 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_button extends $.$mol_view {
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  click?event null
+         *  ```
+         **/
         click(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_click?event null
+         *  ```
+         **/
         event_click(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?event <=> event_activate?event
+         *  	keypress?event <=> event_key_press?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.event_activate(event), "keypress": (event) => this.event_key_press(event) }));
         }
+        /**
+         *  ```
+         *  event_activate?event null
+         *  ```
+         **/
         event_activate(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_key_press?event null
+         *  ```
+         **/
         event_key_press(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	disabled <= disabled
+         *  	role \button
+         *  	tabindex <= tab_index
+         *  	title <= hint
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "disabled": this.disabled(), "role": "button", "tabindex": this.tab_index(), "title": this.hint() }));
         }
+        /**
+         *  ```
+         *  disabled false
+         *  ```
+         **/
         disabled() {
             return false;
         }
+        /**
+         *  ```
+         *  tab_index 0
+         *  ```
+         **/
         tab_index() {
             return 0;
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= title
+         *  ```
+         **/
         sub() {
             return [].concat(this.title());
         }
@@ -3061,7 +3627,7 @@ var $;
                 this.click(next);
             }
             event_key_press(event) {
-                if (event.keyCode === 13) {
+                if (event.keyCode === 13 /* enter */) {
                     return this.event_activate(event);
                 }
             }
@@ -3083,6 +3649,13 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_button_major extends $.$mol_button_typed {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_theme \$mol_theme_accent
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_theme": "$mol_theme_accent" }));
         }
@@ -3106,36 +3679,98 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_scroll extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 0
+         *  ```
+         **/
         minimal_height() {
             return 0;
         }
+        /**
+         *  ```
+         *  moving_hor?val false
+         *  ```
+         **/
         moving_hor(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  moving_vert?val false
+         *  ```
+         **/
         moving_vert(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	scrollTop <= scroll_top?val
+         *  	scrollLeft <= scroll_left?val
+         *  	scrollBottom <= scroll_bottom?val
+         *  	scrollRight <= scroll_right?val
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "scrollTop": this.scroll_top(), "scrollLeft": this.scroll_left(), "scrollBottom": this.scroll_bottom(), "scrollRight": this.scroll_right() }));
         }
+        /**
+         *  ```
+         *  scroll_top?val 0
+         *  ```
+         **/
         scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_left?val 0
+         *  ```
+         **/
         scroll_left(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_bottom?val 0
+         *  ```
+         **/
         scroll_bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_right?val 0
+         *  ```
+         **/
         scroll_right(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  event_async *
+         *  	^
+         *  	scroll?event <=> event_scroll?event
+         *  ```
+         **/
         event_async() {
             return (Object.assign(Object.assign({}, super.event_async()), { "scroll": (event) => this.event_scroll(event) }));
         }
+        /**
+         *  ```
+         *  event_scroll?event null
+         *  ```
+         **/
         event_scroll(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  Strut $mol_view style * transform <= strut_transform
+         *  ```
+         **/
         Strut() {
             return ((obj) => {
                 obj.style = () => ({
@@ -3144,6 +3779,11 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  strut_transform \
+         *  ```
+         **/
         strut_transform() {
             return "";
         }
@@ -3209,6 +3849,13 @@ var $;
         $$.$mol_scroll_moving_hor = $mol_scroll_moving_hor;
         class $mol_scroll extends $.$mol_scroll {
             constructor() {
+                // scroll_top( next? : number ) {
+                // 	return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
+                // }
+                // 
+                // scroll_left( next? : number ) {
+                // 	return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
+                // }
                 super(...arguments);
                 this._moving_task_timer = null;
             }
@@ -3371,9 +4018,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_page extends $.$mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Head
+         *  	<= Body
+         *  	<= Foot
+         *  ```
+         **/
         sub() {
             return [].concat(this.Head(), this.Body(), this.Foot());
         }
+        /**
+         *  ```
+         *  Head $mol_view
+         *  	attr * mol_theme \$mol_theme_base
+         *  	sub <= head
+         *  ```
+         **/
         Head() {
             return ((obj) => {
                 obj.attr = () => ({
@@ -3383,9 +4045,23 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  head /
+         *  	<= Title
+         *  	<= Tools
+         *  ```
+         **/
         head() {
             return [].concat(this.Title(), this.Tools());
         }
+        /**
+         *  ```
+         *  Title $mol_button
+         *  	sub / <= title
+         *  	event_click?val <=> event_top?val
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.title());
@@ -3393,18 +4069,40 @@ var $;
                 return obj;
             })(new this.$.$mol_button());
         }
+        /**
+         *  ```
+         *  event_top?val null
+         *  ```
+         **/
         event_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Tools $mol_view sub <= tools
+         *  ```
+         **/
         Tools() {
             return ((obj) => {
                 obj.sub = () => this.tools();
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  tools /
+         *  ```
+         **/
         tools() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Body $mol_scroll
+         *  	scroll_top?val <=> body_scroll_top?val
+         *  	sub <= body
+         *  ```
+         **/
         Body() {
             return ((obj) => {
                 obj.scroll_top = (val) => this.body_scroll_top(val);
@@ -3412,12 +4110,29 @@ var $;
                 return obj;
             })(new this.$.$mol_scroll());
         }
+        /**
+         *  ```
+         *  body_scroll_top?val 0
+         *  ```
+         **/
         body_scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  body /
+         *  ```
+         **/
         body() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Foot $mol_view
+         *  	attr * mol_theme \$mol_theme_base
+         *  	sub <= foot
+         *  ```
+         **/
         Foot() {
             return ((obj) => {
                 obj.attr = () => ({
@@ -3427,6 +4142,11 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  foot /
+         *  ```
+         **/
         foot() {
             return [].concat();
         }
@@ -3475,12 +4195,27 @@ var $;
 var $;
 (function ($) {
     class $mol_list extends $.$mol_view {
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
         sub() {
             return this.rows();
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Empty null
+         *  ```
+         **/
         Empty() {
             return null;
         }
@@ -3592,27 +4327,68 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check extends $.$mol_button_minor {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_check_checked <= checked?val
+         *  	aria-checked <= checked?val
+         *  	role \checkbox
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_check_checked": this.checked(), "aria-checked": this.checked(), "role": "checkbox" }));
         }
+        /**
+         *  ```
+         *  checked?val false
+         *  ```
+         **/
         checked(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Icon
+         *  	<= label
+         *  ```
+         **/
         sub() {
             return [].concat(this.Icon(), this.label());
         }
+        /**
+         *  ```
+         *  Icon null
+         *  ```
+         **/
         Icon() {
             return null;
         }
+        /**
+         *  ```
+         *  label / <= Title
+         *  ```
+         **/
         label() {
             return [].concat(this.Title());
         }
+        /**
+         *  ```
+         *  Title $mol_view sub / <= title
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.title());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
@@ -3648,6 +4424,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_tick extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
+         *  ```
+         **/
         path() {
             return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
         }
@@ -3666,6 +4447,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check_box extends $.$mol_check {
+        /**
+         *  ```
+         *  Icon $mol_icon_tick
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 return obj;
@@ -3683,6 +4469,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_chevron extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
+         *  ```
+         **/
         path() {
             return "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z";
         }
@@ -3701,32 +4492,79 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check_expand extends $.$mol_check {
+        /**
+         *  ```
+         *  minimal_height 32
+         *  ```
+         **/
         minimal_height() {
             return 32;
         }
+        /**
+         *  ```
+         *  Icon $mol_icon_chevron
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_chevron());
         }
+        /**
+         *  ```
+         *  level 0
+         *  ```
+         **/
         level() {
             return 0;
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	paddingLeft <= level_style
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "paddingLeft": this.level_style() }));
         }
+        /**
+         *  ```
+         *  level_style \0px
+         *  ```
+         **/
         level_style() {
             return "0px";
         }
+        /**
+         *  ```
+         *  checked?val <=> expanded?val
+         *  ```
+         **/
         checked(val, force) {
             return this.expanded(val);
         }
+        /**
+         *  ```
+         *  expanded?val false
+         *  ```
+         **/
         expanded(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  enabled <= expandable
+         *  ```
+         **/
         enabled() {
             return this.expandable();
         }
+        /**
+         *  ```
+         *  expandable false
+         *  ```
+         **/
         expandable() {
             return false;
         }
@@ -3772,24 +4610,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_dimmer extends $.$mol_view {
+        /**
+         *  ```
+         *  haystack \
+         *  ```
+         **/
         haystack() {
             return "";
         }
+        /**
+         *  ```
+         *  needle \
+         *  ```
+         **/
         needle() {
             return "";
         }
+        /**
+         *  ```
+         *  sub <= parts
+         *  ```
+         **/
         sub() {
             return this.parts();
         }
+        /**
+         *  ```
+         *  parts /
+         *  ```
+         **/
         parts() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Low!id $mol_view sub / <= string!id
+         *  ```
+         **/
         Low(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.string(id));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  string!id \
+         *  ```
+         **/
         string(id) {
             return "";
         }
@@ -3851,30 +4719,77 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_grid extends $.$mol_scroll {
+        /**
+         *  ```
+         *  row_ids /
+         *  ```
+         **/
         row_ids() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  row_id!index null
+         *  ```
+         **/
         row_id(index) {
             return null;
         }
+        /**
+         *  ```
+         *  col_ids /
+         *  ```
+         **/
         col_ids() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  records *
+         *  ```
+         **/
         records() {
             return ({});
         }
+        /**
+         *  ```
+         *  record!id null
+         *  ```
+         **/
         record(id) {
             return null;
         }
+        /**
+         *  ```
+         *  hierarchy null
+         *  ```
+         **/
         hierarchy() {
             return null;
         }
+        /**
+         *  ```
+         *  hierarchy_col \
+         *  ```
+         **/
         hierarchy_col() {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= Table
+         *  ```
+         **/
         sub() {
             return [].concat(this.Table());
         }
+        /**
+         *  ```
+         *  Table $mol_grid_table
+         *  	offset <= gap_top
+         *  	sub / <= rows_visible
+         *  ```
+         **/
         Table() {
             return ((obj) => {
                 obj.offset = () => this.gap_top();
@@ -3882,15 +4797,37 @@ var $;
                 return obj;
             })(new this.$.$mol_grid_table());
         }
+        /**
+         *  ```
+         *  gap_top 0
+         *  ```
+         **/
         gap_top() {
             return 0;
         }
+        /**
+         *  ```
+         *  rows_visible /
+         *  ```
+         **/
         rows_visible() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Head $mol_grid_row
+         *  	height <= row_height
+         *  	cells <= head_cells
+         *  ```
+         **/
         Head() {
             return ((obj) => {
                 obj.height = () => this.row_height();
@@ -3898,12 +4835,29 @@ var $;
                 return obj;
             })(new this.$.$mol_grid_row());
         }
+        /**
+         *  ```
+         *  row_height 40
+         *  ```
+         **/
         row_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  head_cells /
+         *  ```
+         **/
         head_cells() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Row!id $mol_grid_row
+         *  	height <= row_height
+         *  	cells <= cells!id
+         *  ```
+         **/
         Row(id) {
             return ((obj) => {
                 obj.height = () => this.row_height();
@@ -3911,38 +4865,85 @@ var $;
                 return obj;
             })(new this.$.$mol_grid_row());
         }
+        /**
+         *  ```
+         *  cells!id /
+         *  ```
+         **/
         cells(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Cell!id $mol_view
+         *  ```
+         **/
         Cell(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  cell!id null
+         *  ```
+         **/
         cell(id) {
             return null;
         }
+        /**
+         *  ```
+         *  Cell_text!id $mol_grid_cell sub / <= cell_content_text!id
+         *  ```
+         **/
         Cell_text(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.cell_content_text(id));
                 return obj;
             })(new this.$.$mol_grid_cell());
         }
+        /**
+         *  ```
+         *  cell_content_text!id <= cell_content!id
+         *  ```
+         **/
         cell_content_text(id) {
             return this.cell_content(id);
         }
+        /**
+         *  ```
+         *  cell_content!id /
+         *  ```
+         **/
         cell_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Cell_number!id $mol_grid_number sub / <= cell_content_number!id
+         *  ```
+         **/
         Cell_number(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.cell_content_number(id));
                 return obj;
             })(new this.$.$mol_grid_number());
         }
+        /**
+         *  ```
+         *  cell_content_number!id <= cell_content!id
+         *  ```
+         **/
         cell_content_number(id) {
             return this.cell_content(id);
         }
+        /**
+         *  ```
+         *  Col_head!id $mol_float
+         *  	dom_name \th
+         *  	sub / <= col_head_content!id
+         *  ```
+         **/
         Col_head(id) {
             return ((obj) => {
                 obj.dom_name = () => "th";
@@ -3950,9 +4951,22 @@ var $;
                 return obj;
             })(new this.$.$mol_float());
         }
+        /**
+         *  ```
+         *  col_head_content!id /
+         *  ```
+         **/
         col_head_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Cell_branch!id $mol_check_expand
+         *  	level <= cell_level!id
+         *  	label <= cell_content!id
+         *  	expanded?val <=> cell_expanded!id?val
+         *  ```
+         **/
         Cell_branch(id) {
             return ((obj) => {
                 obj.level = () => this.cell_level(id);
@@ -3961,15 +4975,37 @@ var $;
                 return obj;
             })(new this.$.$mol_check_expand());
         }
+        /**
+         *  ```
+         *  cell_level!id 0
+         *  ```
+         **/
         cell_level(id) {
             return 0;
         }
+        /**
+         *  ```
+         *  cell_expanded!id?val false
+         *  ```
+         **/
         cell_expanded(id, val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Cell_content!id / <= Cell_dimmer!id
+         *  ```
+         **/
         Cell_content(id) {
             return [].concat(this.Cell_dimmer(id));
         }
+        /**
+         *  ```
+         *  Cell_dimmer!id $mol_dimmer
+         *  	needle <= needle
+         *  	haystack <= cell_value!id
+         *  ```
+         **/
         Cell_dimmer(id) {
             return ((obj) => {
                 obj.needle = () => this.needle();
@@ -3977,9 +5013,19 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  needle \
+         *  ```
+         **/
         needle() {
             return "";
         }
+        /**
+         *  ```
+         *  cell_value!id \
+         *  ```
+         **/
         cell_value(id) {
             return "";
         }
@@ -4018,12 +5064,29 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_table extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \table
+         *  ```
+         **/
         dom_name() {
             return "table";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	top <= offset
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "top": this.offset() }));
         }
+        /**
+         *  ```
+         *  offset 0
+         *  ```
+         **/
         offset() {
             return 0;
         }
@@ -4032,9 +5095,21 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_gap extends $.$mol_view {
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	top <= offset
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "top": this.offset() }));
         }
+        /**
+         *  ```
+         *  offset 0
+         *  ```
+         **/
         offset() {
             return 0;
         }
@@ -4043,18 +5118,45 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_row extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \tr
+         *  ```
+         **/
         dom_name() {
             return "tr";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	height <= height
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "height": this.height() }));
         }
+        /**
+         *  ```
+         *  height 40
+         *  ```
+         **/
         height() {
             return 40;
         }
+        /**
+         *  ```
+         *  sub <= cells
+         *  ```
+         **/
         sub() {
             return this.cells();
         }
+        /**
+         *  ```
+         *  cells /
+         *  ```
+         **/
         cells() {
             return [].concat();
         }
@@ -4063,6 +5165,11 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_cell extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \td
+         *  ```
+         **/
         dom_name() {
             return "td";
         }
@@ -4269,12 +5376,30 @@ var $;
 var $;
 (function ($) {
     class $mol_image extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \img
+         *  ```
+         **/
         dom_name() {
             return "img";
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	src <= uri
+         *  	alt <= title
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "src": this.uri(), "alt": this.title() }));
         }
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri() {
             return "";
         }
@@ -4293,24 +5418,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_link_iconed extends $.$mol_link {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Icon
+         *  	<= content
+         *  ```
+         **/
         sub() {
             return [].concat(this.Icon(), this.content());
         }
+        /**
+         *  ```
+         *  Icon $mol_image uri <= icon
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 obj.uri = () => this.icon();
                 return obj;
             })(new this.$.$mol_image());
         }
+        /**
+         *  ```
+         *  icon \
+         *  ```
+         **/
         icon() {
             return "";
         }
+        /**
+         *  ```
+         *  content / <= title
+         *  ```
+         **/
         content() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  title <= uri
+         *  ```
+         **/
         title() {
             return this.uri();
         }
+        /**
+         *  ```
+         *  host \
+         *  ```
+         **/
         host() {
             return "";
         }
@@ -4482,24 +5639,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_text extends $.$mol_list {
+        /**
+         *  ```
+         *  uri_base \
+         *  ```
+         **/
         uri_base() {
             return "";
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
+        /**
+         *  ```
+         *  tokens /
+         *  ```
+         **/
         tokens() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Quote!id $mol_text text <= quote_text!id
+         *  ```
+         **/
         Quote(id) {
             return ((obj) => {
                 obj.text = () => this.quote_text(id);
                 return obj;
             })(new this.$.$mol_text());
         }
+        /**
+         *  ```
+         *  quote_text!id \
+         *  ```
+         **/
         quote_text(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Row!id $mol_text_row
+         *  	sub <= block_content!id
+         *  	type <= block_type!id
+         *  ```
+         **/
         Row(id) {
             return ((obj) => {
                 obj.sub = () => this.block_content(id);
@@ -4507,27 +5696,59 @@ var $;
                 return obj;
             })(new this.$.$mol_text_row());
         }
+        /**
+         *  ```
+         *  block_content!id /
+         *  ```
+         **/
         block_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  block_type!id \
+         *  ```
+         **/
         block_type(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Span!id $mol_text_span
+         *  ```
+         **/
         Span(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_text_span());
         }
+        /**
+         *  ```
+         *  Link!id $mol_text_link
+         *  ```
+         **/
         Link(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_text_link());
         }
+        /**
+         *  ```
+         *  Image!id $mol_text_image
+         *  ```
+         **/
         Image(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_text_image());
         }
+        /**
+         *  ```
+         *  Header!id $mol_text_header
+         *  	level <= header_level!id
+         *  	content <= header_content!id
+         *  ```
+         **/
         Header(id) {
             return ((obj) => {
                 obj.level = () => this.header_level(id);
@@ -4535,12 +5756,29 @@ var $;
                 return obj;
             })(new this.$.$mol_text_header());
         }
+        /**
+         *  ```
+         *  header_level!id 0
+         *  ```
+         **/
         header_level(id) {
             return 0;
         }
+        /**
+         *  ```
+         *  header_content!id /
+         *  ```
+         **/
         header_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table!id $mol_grid
+         *  	head_cells <= table_head_cells!id
+         *  	rows <= table_rows!id
+         *  ```
+         **/
         Table(id) {
             return ((obj) => {
                 obj.head_cells = () => this.table_head_cells(id);
@@ -4548,30 +5786,65 @@ var $;
                 return obj;
             })(new this.$.$mol_grid());
         }
+        /**
+         *  ```
+         *  table_head_cells!id /
+         *  ```
+         **/
         table_head_cells(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  table_rows!id /
+         *  ```
+         **/
         table_rows(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table_row!id $mol_grid_row cells <= table_cells!id
+         *  ```
+         **/
         Table_row(id) {
             return ((obj) => {
                 obj.cells = () => this.table_cells(id);
                 return obj;
             })(new this.$.$mol_grid_row());
         }
+        /**
+         *  ```
+         *  table_cells!id /
+         *  ```
+         **/
         table_cells(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table_cell!id $mol_grid_cell sub <= table_cell_content!id
+         *  ```
+         **/
         Table_cell(id) {
             return ((obj) => {
                 obj.sub = () => this.table_cell_content(id);
                 return obj;
             })(new this.$.$mol_grid_cell());
         }
+        /**
+         *  ```
+         *  table_cell_content!id /
+         *  ```
+         **/
         table_cell_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table_cell_head!id $mol_float sub <= table_cell_content!id
+         *  ```
+         **/
         Table_cell_head(id) {
             return ((obj) => {
                 obj.sub = () => this.table_cell_content(id);
@@ -4613,12 +5886,29 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_row extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type \
+         *  ```
+         **/
         type() {
             return "";
         }
@@ -4627,21 +5917,53 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_header extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \h
+         *  ```
+         **/
         dom_name() {
             return "h";
         }
+        /**
+         *  ```
+         *  minimal_height 50
+         *  ```
+         **/
         minimal_height() {
             return 50;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_header_level <= level?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_header_level": this.level() }));
         }
+        /**
+         *  ```
+         *  level?val 0
+         *  ```
+         **/
         level(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  sub <= content
+         *  ```
+         **/
         sub() {
             return this.content();
         }
+        /**
+         *  ```
+         *  content /
+         *  ```
+         **/
         content() {
             return [].concat();
         }
@@ -4653,18 +5975,45 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_span extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \span
+         *  ```
+         **/
         dom_name() {
             return "span";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  sub <= content?val
+         *  ```
+         **/
         sub() {
             return this.content();
         }
+        /**
+         *  ```
+         *  content?val /
+         *  ```
+         **/
         content(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
@@ -4679,18 +6028,45 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_link extends $.$mol_link_iconed {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  uri <= link?val
+         *  ```
+         **/
         uri() {
             return this.link();
         }
+        /**
+         *  ```
+         *  link?val \
+         *  ```
+         **/
         link(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  content?val /
+         *  ```
+         **/
         content(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
@@ -4708,21 +6084,55 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_image extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \object
+         *  ```
+         **/
         dom_name() {
             return "object";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	allowfullscreen true
+         *  	mol_text_type <= type?val
+         *  	data <= link?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "allowfullscreen": true, "mol_text_type": this.type(), "data": this.link() }));
         }
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  link?val \
+         *  ```
+         **/
         link(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  sub / <= title?val
+         *  ```
+         **/
         sub() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  title?val \
+         *  ```
+         **/
         title(val, force) {
             return (val !== void 0) ? val : "";
         }
@@ -4895,6 +6305,8 @@ var $;
 //text.view.js.map
 ;
 "use strict";
+/// Install: 
+///     npm install pdfjs-dist
 var $;
 (function ($) {
     $.$lib_pdfjs = require('pdfjs-dist/build/pdf.min.js');
@@ -4934,6 +6346,7 @@ var $;
         concat(...args) {
             const ranges = args.map(range => range.valueOf());
             return this.valueOf().concat(...ranges);
+            //return new $mol_range_list( [ this ].concat( args ) )
         }
         slice(start = 0, end) {
             const source = this;
@@ -4998,6 +6411,31 @@ var $;
         }
     }
     $.$mol_range_lazy = $mol_range_lazy;
+    // export class $mol_range_list< Value > extends $mol_range_common< Value > {
+    //
+    // 	constructor( private list : Value[][] ) {
+    // 		super()
+    // 	}
+    //
+    // 	get( id : number ) {
+    // 		var subId = id
+    // 		for( var range of this.list ) {
+    // 			var nextId = subId - range.length
+    // 			if( nextId < 0 ) return range.get( subId )
+    // 			subId = nextId
+    // 		}
+    // 		return
+    // 	}
+    //
+    // 	get length () {
+    // 		var length = 0
+    // 		this.list.forEach( range => {
+    // 			length += range.length
+    // 		} )
+    // 		return length
+    // 	}
+    //
+    // }
 })($ || ($ = {}));
 //range.js.map
 ;
@@ -5011,27 +6449,57 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_embed_pdf extends $.$mol_scroll {
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri() {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= Pages
+         *  ```
+         **/
         sub() {
             return [].concat(this.Pages());
         }
+        /**
+         *  ```
+         *  Pages $mol_list rows <= pages
+         *  ```
+         **/
         Pages() {
             return ((obj) => {
                 obj.rows = () => this.pages();
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  pages /
+         *  ```
+         **/
         pages() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Page!index $mol_embed_pdf_page page <= page!index
+         *  ```
+         **/
         Page(index) {
             return ((obj) => {
                 obj.page = () => this.page(index);
                 return obj;
             })(new this.$.$mol_embed_pdf_page());
         }
+        /**
+         *  ```
+         *  page!index null
+         *  ```
+         **/
         page(index) {
             return null;
         }
@@ -5046,47 +6514,109 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_embed_pdf_page extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \canvas
+         *  ```
+         **/
         dom_name() {
             return "canvas";
         }
+        /**
+         *  ```
+         *  page null
+         *  ```
+         **/
         page() {
             return null;
         }
+        /**
+         *  ```
+         *  max_width 640
+         *  ```
+         **/
         max_width() {
             return 640;
         }
+        /**
+         *  ```
+         *  scale_over 1.25
+         *  ```
+         **/
         scale_over() {
             return 1.25;
         }
+        /**
+         *  ```
+         *  plugins / <= Touch
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Touch());
         }
+        /**
+         *  ```
+         *  Touch $mol_touch zoom?val <=> scale?val
+         *  ```
+         **/
         Touch() {
             return ((obj) => {
                 obj.zoom = (val) => this.scale(val);
                 return obj;
             })(new this.$.$mol_touch());
         }
+        /**
+         *  ```
+         *  scale?val 1
+         *  ```
+         **/
         scale(val, force) {
             return (val !== void 0) ? val : 1;
         }
+        /**
+         *  ```
+         *  style * zoom <= zoom
+         *  ```
+         **/
         style() {
             return ({
                 "zoom": this.zoom(),
             });
         }
+        /**
+         *  ```
+         *  zoom 0.8
+         *  ```
+         **/
         zoom() {
             return 0.8;
         }
+        /**
+         *  ```
+         *  field *
+         *  	width <= width
+         *  	height <= height
+         *  ```
+         **/
         field() {
             return ({
                 "width": this.width(),
                 "height": this.height(),
             });
         }
+        /**
+         *  ```
+         *  width 0
+         *  ```
+         **/
         width() {
             return 0;
         }
+        /**
+         *  ```
+         *  height 0
+         *  ```
+         **/
         height() {
             return 0;
         }
@@ -5190,21 +6720,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_embed_native extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \object
+         *  ```
+         **/
         dom_name() {
             return "object";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	data <= uri
+         *  	type <= mime
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "data": this.uri(), "type": this.mime() }));
         }
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri() {
             return "";
         }
+        /**
+         *  ```
+         *  mime \
+         *  ```
+         **/
         mime() {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= Open
+         *  ```
+         **/
         sub() {
             return [].concat(this.Open());
         }
+        /**
+         *  ```
+         *  Open $mol_link
+         *  	uri <= uri
+         *  	sub / <= Open_button
+         *  ```
+         **/
         Open() {
             return ((obj) => {
                 obj.uri = () => this.uri();
@@ -5212,12 +6777,22 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Open_button $mol_button_major title <= open_label
+         *  ```
+         **/
         Open_button() {
             return ((obj) => {
                 obj.title = () => this.open_label();
                 return obj;
             })(new this.$.$mol_button_major());
         }
+        /**
+         *  ```
+         *  open_label @ \Open
+         *  ```
+         **/
         open_label() {
             return this.$.$mol_locale.text("$mol_embed_native_open_label");
         }
@@ -5242,15 +6817,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_embed extends $.$mol_ghost {
+        /**
+         *  ```
+         *  Pdf $mol_embed_pdf uri <= uri
+         *  ```
+         **/
         Pdf() {
             return ((obj) => {
                 obj.uri = () => this.uri();
                 return obj;
             })(new this.$.$mol_embed_pdf());
         }
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri() {
             return "";
         }
+        /**
+         *  ```
+         *  Native $mol_embed_native
+         *  	uri <= uri
+         *  	mime <= mime
+         *  ```
+         **/
         Native() {
             return ((obj) => {
                 obj.uri = () => this.uri();
@@ -5258,6 +6850,11 @@ var $;
                 return obj;
             })(new this.$.$mol_embed_native());
         }
+        /**
+         *  ```
+         *  mime \
+         *  ```
+         **/
         mime() {
             return "";
         }
@@ -5500,27 +7097,69 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_app_files extends $.$mol_book {
+        /**
+         *  ```
+         *  uri_current <= uri_root
+         *  ```
+         **/
         uri_current() {
             return this.uri_root();
         }
+        /**
+         *  ```
+         *  uri_root <= uri_root_default
+         *  ```
+         **/
         uri_root() {
             return this.uri_root_default();
         }
+        /**
+         *  ```
+         *  uri_root_default \
+         *  ```
+         **/
         uri_root_default() {
             return "";
         }
+        /**
+         *  ```
+         *  credentials *
+         *  	login \
+         *  	password \
+         *  ```
+         **/
         credentials() {
             return ({
                 "login": "",
                 "password": "",
             });
         }
+        /**
+         *  ```
+         *  title <= title_root
+         *  ```
+         **/
         title() {
             return this.title_root();
         }
+        /**
+         *  ```
+         *  title_root @ \Documents
+         *  ```
+         **/
         title_root() {
             return this.$.$mol_locale.text("$mol_app_files_title_root");
         }
+        /**
+         *  ```
+         *  Folder!folder $mol_app_files_folder
+         *  	title <= webdav_title!folder
+         *  	description <= webdav_description!folder
+         *  	tools <= page_tools!folder
+         *  	rows <= folder_rows!folder
+         *  	event_top?val <=> event_front_up?val
+         *  ```
+         **/
         Folder(folder) {
             return ((obj) => {
                 obj.title = () => this.webdav_title(folder);
@@ -5531,15 +7170,41 @@ var $;
                 return obj;
             })(new this.$.$mol_app_files_folder());
         }
+        /**
+         *  ```
+         *  webdav_title!folder \
+         *  ```
+         **/
         webdav_title(folder) {
             return "";
         }
+        /**
+         *  ```
+         *  webdav_description!folder \
+         *  ```
+         **/
         webdav_description(folder) {
             return "";
         }
+        /**
+         *  ```
+         *  folder_rows!folder /
+         *  ```
+         **/
         folder_rows(folder) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Folder_row!uri $mol_link
+         *  	minimal_height 40
+         *  	arg <= folder_row_arg!uri
+         *  	current <= folder_row_current!uri
+         *  	sub /
+         *  		<= folder_row_icon!uri
+         *  		<= Folder_row_info!uri
+         *  ```
+         **/
         Folder_row(uri) {
             return ((obj) => {
                 obj.minimal_height = () => 40;
@@ -5549,39 +7214,91 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  folder_row_arg!uri *
+         *  ```
+         **/
         folder_row_arg(uri) {
             return ({});
         }
+        /**
+         *  ```
+         *  folder_row_current!uri false
+         *  ```
+         **/
         folder_row_current(uri) {
             return false;
         }
+        /**
+         *  ```
+         *  folder_row_icon!uri null
+         *  ```
+         **/
         folder_row_icon(uri) {
             return null;
         }
+        /**
+         *  ```
+         *  Folder_row_info!uri $mol_view sub /
+         *  	<= Folder_row_descr!uri
+         *  	<= Folder_row_title!uri
+         *  ```
+         **/
         Folder_row_info(uri) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Folder_row_descr(uri), this.Folder_row_title(uri));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  Folder_row_descr!uri $mol_view sub / <= folder_row_descr!uri
+         *  ```
+         **/
         Folder_row_descr(uri) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.folder_row_descr(uri));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  folder_row_descr!uri \
+         *  ```
+         **/
         folder_row_descr(uri) {
             return "";
         }
+        /**
+         *  ```
+         *  Folder_row_title!uri $mol_view sub / <= folder_row_title!uri
+         *  ```
+         **/
         Folder_row_title(uri) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.folder_row_title(uri));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  folder_row_title!uri \
+         *  ```
+         **/
         folder_row_title(uri) {
             return "";
         }
+        /**
+         *  ```
+         *  File!file $mol_app_files_file
+         *  	title <= webdav_title!file
+         *  	tools <= page_tools!file
+         *  	src <= file_uri!file
+         *  	mime <= file_mime!file
+         *  	event_top?val <=> event_front_up?val
+         *  ```
+         **/
         File(file) {
             return ((obj) => {
                 obj.title = () => this.webdav_title(file);
@@ -5592,34 +7309,76 @@ var $;
                 return obj;
             })(new this.$.$mol_app_files_file());
         }
+        /**
+         *  ```
+         *  file_uri!file \
+         *  ```
+         **/
         file_uri(file) {
             return "";
         }
+        /**
+         *  ```
+         *  file_mime!file \
+         *  ```
+         **/
         file_mime(file) {
             return "";
         }
+        /**
+         *  ```
+         *  Icon_folder!uri $mol_icon_folder
+         *  ```
+         **/
         Icon_folder(uri) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_folder());
         }
+        /**
+         *  ```
+         *  Icon_file!uri $mol_icon_file
+         *  ```
+         **/
         Icon_file(uri) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_file());
         }
+        /**
+         *  ```
+         *  Placeholder $mol_book_placeholder title <= title
+         *  ```
+         **/
         Placeholder() {
             return ((obj) => {
                 obj.title = () => this.title();
                 return obj;
             })(new this.$.$mol_book_placeholder());
         }
+        /**
+         *  ```
+         *  tools_root /
+         *  ```
+         **/
         tools_root() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  page_tools!uri / <= Close!uri
+         *  ```
+         **/
         page_tools(uri) {
             return [].concat(this.Close(uri));
         }
+        /**
+         *  ```
+         *  Close!uri $mol_link
+         *  	sub / <= Close_icon!uri
+         *  	arg <= close_arg!uri
+         *  ```
+         **/
         Close(uri) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Close_icon(uri));
@@ -5627,11 +7386,21 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Close_icon!uri $mol_icon_cross
+         *  ```
+         **/
         Close_icon(uri) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
+        /**
+         *  ```
+         *  close_arg!uri *
+         *  ```
+         **/
         close_arg(uri) {
             return ({});
         }
@@ -5673,27 +7442,59 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_app_files_folder extends $.$mol_page {
+        /**
+         *  ```
+         *  minimal_width 400
+         *  ```
+         **/
         minimal_width() {
             return 400;
         }
+        /**
+         *  ```
+         *  body /
+         *  	<= Description
+         *  	<= Folder_rows
+         *  ```
+         **/
         body() {
             return [].concat(this.Description(), this.Folder_rows());
         }
+        /**
+         *  ```
+         *  Description $mol_text text <= description
+         *  ```
+         **/
         Description() {
             return ((obj) => {
                 obj.text = () => this.description();
                 return obj;
             })(new this.$.$mol_text());
         }
+        /**
+         *  ```
+         *  description \
+         *  ```
+         **/
         description() {
             return "";
         }
+        /**
+         *  ```
+         *  Folder_rows $mol_list rows <= rows
+         *  ```
+         **/
         Folder_rows() {
             return ((obj) => {
                 obj.rows = () => this.rows();
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
@@ -5708,12 +7509,29 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_app_files_file extends $.$mol_page {
+        /**
+         *  ```
+         *  minimal_width 800
+         *  ```
+         **/
         minimal_width() {
             return 800;
         }
+        /**
+         *  ```
+         *  body / <= Embed
+         *  ```
+         **/
         body() {
             return [].concat(this.Embed());
         }
+        /**
+         *  ```
+         *  Embed $mol_embed
+         *  	uri <= src
+         *  	mime <= mime
+         *  ```
+         **/
         Embed() {
             return ((obj) => {
                 obj.uri = () => this.src();
@@ -5721,9 +7539,19 @@ var $;
                 return obj;
             })(new this.$.$mol_embed());
         }
+        /**
+         *  ```
+         *  src \
+         *  ```
+         **/
         src() {
             return "";
         }
+        /**
+         *  ```
+         *  mime \
+         *  ```
+         **/
         mime() {
             return "";
         }
@@ -5933,9 +7761,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_app_files_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  sub / <= App
+         *  ```
+         **/
         sub() {
             return [].concat(this.App());
         }
+        /**
+         *  ```
+         *  App $mol_app_files
+         *  	title_root <= title
+         *  	uri_root_default <= uri_root
+         *  ```
+         **/
         App() {
             return ((obj) => {
                 obj.title_root = () => this.title();
@@ -5943,9 +7783,19 @@ var $;
                 return obj;
             })(new this.$.$mol_app_files());
         }
+        /**
+         *  ```
+         *  title @ \WebDAV client
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_app_files_demo_title");
         }
+        /**
+         *  ```
+         *  uri_root \https://ajaxexplorer.com:443/User5df12c6/
+         *  ```
+         **/
         uri_root() {
             return "https://ajaxexplorer.com:443/User5df12c6/";
         }
@@ -5964,6 +7814,7 @@ var $;
     (function ($$) {
         class $mol_app_files_demo extends $.$mol_app_files_demo {
             render() {
+                // Ensure for webdav resource are created at server
                 $.$mol_http.resource(this.uri_root()).text();
                 return super.render();
             }

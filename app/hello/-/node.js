@@ -218,7 +218,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -354,6 +354,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -368,6 +369,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -532,6 +534,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -540,6 +545,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;
@@ -1144,6 +1152,7 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1195,6 +1204,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
+    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -1236,13 +1246,18 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
+        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '');
         }
+        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
+        /// Raw child views
         sub() {
             return null;
         }
+        /// Visible sub views with defined context()
+        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -1255,6 +1270,7 @@ var $;
             });
             return sub;
         }
+        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -1267,6 +1283,7 @@ var $;
             });
             return min;
         }
+        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -1445,57 +1462,159 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_string extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \input
+         *  ```
+         **/
         dom_name() {
             return "input";
         }
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  debounce 0
+         *  ```
+         **/
         debounce() {
             return 0;
         }
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  autocomplete false
+         *  ```
+         **/
         autocomplete() {
             return false;
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	disabled <= disabled
+         *  	value <= value_changed?val
+         *  	placeholder <= hint
+         *  	type <= type?val
+         *  	spellcheck <= spellcheck
+         *  	autocomplete <= autocomplete_native
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "disabled": this.disabled(), "value": this.value_changed(), "placeholder": this.hint(), "type": this.type(), "spellcheck": this.spellcheck(), "autocomplete": this.autocomplete_native() }));
         }
+        /**
+         *  ```
+         *  disabled false
+         *  ```
+         **/
         disabled() {
             return false;
         }
+        /**
+         *  ```
+         *  value_changed?val <=> value?val
+         *  ```
+         **/
         value_changed(val, force) {
             return this.value(val);
         }
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  type?val \text
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "text";
         }
+        /**
+         *  ```
+         *  spellcheck false
+         *  ```
+         **/
         spellcheck() {
             return false;
         }
+        /**
+         *  ```
+         *  autocomplete_native \
+         *  ```
+         **/
         autocomplete_native() {
             return "";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	maxlength <= length_max
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "maxlength": this.length_max() }));
         }
+        /**
+         *  ```
+         *  length_max Infinity
+         *  ```
+         **/
         length_max() {
             return Infinity;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	input?event <=> event_change?event
+         *  	keydown?event <=> event_key_press?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "input": (event) => this.event_change(event), "keydown": (event) => this.event_key_press(event) }));
         }
+        /**
+         *  ```
+         *  event_change?event null
+         *  ```
+         **/
         event_change(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_key_press?event null
+         *  ```
+         **/
         event_key_press(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -1540,7 +1659,7 @@ var $;
             event_key_press(next) {
                 if (!next)
                     return;
-                if (next.keyCode === 13) {
+                if (next.keyCode === 13 /* enter */) {
                     this.value(next.target.value);
                 }
             }
@@ -1566,9 +1685,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_app_hello extends $.$mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Name
+         *  	<= Greeting
+         *  ```
+         **/
         sub() {
             return [].concat(this.Name(), this.Greeting());
         }
+        /**
+         *  ```
+         *  Name $mol_string
+         *  	hint <= name_hint
+         *  	value?val <=> name?val
+         *  ```
+         **/
         Name() {
             return ((obj) => {
                 obj.hint = () => this.name_hint();
@@ -1576,18 +1709,38 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  name_hint \Name
+         *  ```
+         **/
         name_hint() {
             return "Name";
         }
+        /**
+         *  ```
+         *  name?val \
+         *  ```
+         **/
         name(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Greeting $mol_view sub / <= greeting
+         *  ```
+         **/
         Greeting() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.greeting());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  greeting \
+         *  ```
+         **/
         greeting() {
             return "";
         }

@@ -324,6 +324,12 @@ var $;
             return super.toString(pattern);
         }
     }
+    /// Mnemonics:
+    ///  * single letter for numbers: M - month number, D - day of month.
+    ///  * uppercase letters for dates, lowercase for times: M - month number , m - minutes number
+    ///  * repeated letters for define register count: YYYY - full year, YY - shot year, MM - padded month number
+    ///  * words for word representation: Month - month name, WeekDay - day of week name
+    ///  * shortcuts: WD - short day of week, Mon - short month name.
     $mol_time_moment.patterns = {
         'YYYY': (moment) => {
             if (moment.year == null)

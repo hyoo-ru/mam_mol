@@ -311,24 +311,91 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
+        /**
+         *  ```
+         *  minimal_height 0
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  moving_hor?val false
+         *  ```
+         **/
         moving_hor(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  moving_vert?val false
+         *  ```
+         **/
         moving_vert(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	scrollTop <= scroll_top?val
+         *  	scrollLeft <= scroll_left?val
+         *  	scrollBottom <= scroll_bottom?val
+         *  	scrollRight <= scroll_right?val
+         *  ```
+         **/
         field(): {
             "scrollTop": any;
             "scrollLeft": any;
             "scrollBottom": any;
             "scrollRight": any;
         };
+        /**
+         *  ```
+         *  scroll_top?val 0
+         *  ```
+         **/
         scroll_top(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  scroll_left?val 0
+         *  ```
+         **/
         scroll_left(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  scroll_bottom?val 0
+         *  ```
+         **/
         scroll_bottom(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  scroll_right?val 0
+         *  ```
+         **/
         scroll_right(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_async *
+         *  	^
+         *  	scroll?event <=> event_scroll?event
+         *  ```
+         **/
         event_async(): {
             "scroll": (event?: any) => any;
         };
+        /**
+         *  ```
+         *  event_scroll?event null
+         *  ```
+         **/
         event_scroll(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Strut $mol_view style * transform <= strut_transform
+         *  ```
+         **/
         Strut(): $mol_view;
+        /**
+         *  ```
+         *  strut_transform \
+         *  ```
+         **/
         strut_transform(): string;
     }
 }
@@ -355,8 +422,23 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_list extends $mol_view {
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows(): any[];
+        /**
+         *  ```
+         *  Empty null
+         *  ```
+         **/
         Empty(): any;
     }
 }
@@ -373,47 +455,183 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_perf_uibench_table extends $mol_list {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state(): any;
+        /**
+         *  ```
+         *  dom_name \table
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \Table
+         *  ```
+         **/
         attr_static(): {
             "class": string;
         };
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows(): any[];
+        /**
+         *  ```
+         *  Row!index $mol_perf_uibench_table_row state <= row_state!index
+         *  ```
+         **/
         Row(index: any): $mol_perf_uibench_table_row;
+        /**
+         *  ```
+         *  row_state!index null
+         *  ```
+         **/
         row_state(index: any): any;
     }
 }
 declare namespace $ {
     class $mol_perf_uibench_table_row extends $mol_view {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state(): any;
+        /**
+         *  ```
+         *  minimal_height 18
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  dom_name \tr
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	class <= classes
+         *  	data-id <= id
+         *  ```
+         **/
         attr(): {
             "class": string;
             "data-id": number;
         };
+        /**
+         *  ```
+         *  classes \TableRow
+         *  ```
+         **/
         classes(): string;
+        /**
+         *  ```
+         *  id 0
+         *  ```
+         **/
         id(): number;
+        /**
+         *  ```
+         *  sub /
+         *  	<= Head
+         *  	<= cells
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Head $mol_perf_uibench_table_cell text <= head_text
+         *  ```
+         **/
         Head(): $mol_perf_uibench_table_cell;
+        /**
+         *  ```
+         *  head_text \
+         *  ```
+         **/
         head_text(): string;
+        /**
+         *  ```
+         *  cells /
+         *  ```
+         **/
         cells(): any[];
+        /**
+         *  ```
+         *  Cell!index $mol_perf_uibench_table_cell text <= cell_state!index
+         *  ```
+         **/
         Cell(index: any): $mol_perf_uibench_table_cell;
+        /**
+         *  ```
+         *  cell_state!index null
+         *  ```
+         **/
         cell_state(index: any): any;
     }
 }
 declare namespace $ {
     class $mol_perf_uibench_table_cell extends $mol_view {
+        /**
+         *  ```
+         *  dom_name \td
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \TableCell
+         *  ```
+         **/
         attr_static(): {
             "class": string;
         };
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?val <=> click?val
+         *  ```
+         **/
         event(): {
             "click": (val?: any) => any;
         };
+        /**
+         *  ```
+         *  click?val null
+         *  ```
+         **/
         click(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  sub / <= text
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text(): string;
     }
 }
@@ -447,29 +665,97 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_perf_uibench_anim extends $mol_view {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state(): any;
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \Anim
+         *  ```
+         **/
         attr_static(): {
             "class": string;
         };
+        /**
+         *  ```
+         *  sub <= boxes
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  boxes /
+         *  ```
+         **/
         boxes(): any[];
+        /**
+         *  ```
+         *  Box!index $mol_perf_uibench_anim_box state <= box_state!index
+         *  ```
+         **/
         Box(index: any): $mol_perf_uibench_anim_box;
+        /**
+         *  ```
+         *  box_state!index null
+         *  ```
+         **/
         box_state(index: any): any;
     }
 }
 declare namespace $ {
     class $mol_perf_uibench_anim_box extends $mol_view {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state(): any;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	class \AnimBox
+         *  	data-id <= id
+         *  ```
+         **/
         attr(): {
             "class": string;
             "data-id": string;
         };
+        /**
+         *  ```
+         *  id \
+         *  ```
+         **/
         id(): string;
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	borderRadius <= style_radius
+         *  	background <= style_color
+         *  ```
+         **/
         style(): {
             "borderRadius": string;
             "background": string;
         };
+        /**
+         *  ```
+         *  style_radius \
+         *  ```
+         **/
         style_radius(): string;
+        /**
+         *  ```
+         *  style_color \
+         *  ```
+         **/
         style_color(): string;
     }
 }
@@ -496,36 +782,127 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_perf_uibench_tree extends $mol_view {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state(): any;
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \Tree
+         *  ```
+         **/
         attr_static(): {
             "class": string;
         };
+        /**
+         *  ```
+         *  sub / <= Root
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Root $mol_perf_uibench_tree_branch state <= root_state
+         *  ```
+         **/
         Root(): $mol_perf_uibench_tree_branch;
+        /**
+         *  ```
+         *  root_state null
+         *  ```
+         **/
         root_state(): any;
     }
 }
 declare namespace $ {
     class $mol_perf_uibench_tree_branch extends $mol_list {
+        /**
+         *  ```
+         *  state null
+         *  ```
+         **/
         state(): any;
+        /**
+         *  ```
+         *  dom_name \ul
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \TreeNode
+         *  ```
+         **/
         attr_static(): {
             "class": string;
         };
+        /**
+         *  ```
+         *  Branch!index $mol_perf_uibench_tree_branch state <= branch_state!index
+         *  ```
+         **/
         Branch(index: any): $mol_perf_uibench_tree_branch;
+        /**
+         *  ```
+         *  branch_state!index null
+         *  ```
+         **/
         branch_state(index: any): any;
+        /**
+         *  ```
+         *  Leaf!index $mol_perf_uibench_tree_leaf text <= leaf_state!index
+         *  ```
+         **/
         Leaf(index: any): $mol_perf_uibench_tree_leaf;
+        /**
+         *  ```
+         *  leaf_state!index null
+         *  ```
+         **/
         leaf_state(index: any): any;
     }
 }
 declare namespace $ {
     class $mol_perf_uibench_tree_leaf extends $mol_view {
+        /**
+         *  ```
+         *  minimal_height 26
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  dom_name \li
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \TreeLeaf
+         *  ```
+         **/
         attr_static(): {
             "class": string;
         };
+        /**
+         *  ```
+         *  sub / <= text
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text(): string;
     }
 }
@@ -549,15 +926,60 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_perf_uibench extends $mol_scroll {
+        /**
+         *  ```
+         *  attr_static *
+         *  	^
+         *  	class \Main
+         *  ```
+         **/
         attr_static(): {
             "class": string;
         };
+        /**
+         *  ```
+         *  sub /
+         *  	<= Table
+         *  	<= Anim
+         *  	<= Tree
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Table $mol_perf_uibench_table state <= table_state
+         *  ```
+         **/
         Table(): $mol_perf_uibench_table;
+        /**
+         *  ```
+         *  table_state null
+         *  ```
+         **/
         table_state(): any;
+        /**
+         *  ```
+         *  Anim $mol_perf_uibench_anim state <= anim_state
+         *  ```
+         **/
         Anim(): $mol_perf_uibench_anim;
+        /**
+         *  ```
+         *  anim_state null
+         *  ```
+         **/
         anim_state(): any;
+        /**
+         *  ```
+         *  Tree $mol_perf_uibench_tree state <= tree_state
+         *  ```
+         **/
         Tree(): $mol_perf_uibench_tree;
+        /**
+         *  ```
+         *  tree_state null
+         *  ```
+         **/
         tree_state(): any;
     }
 }

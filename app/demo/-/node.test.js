@@ -226,7 +226,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -362,6 +362,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -376,6 +377,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -540,6 +542,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -548,6 +553,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;
@@ -1152,6 +1160,7 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1203,6 +1212,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
+    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -1244,13 +1254,18 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
+        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '');
         }
+        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
+        /// Raw child views
         sub() {
             return null;
         }
+        /// Visible sub views with defined context()
+        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -1263,6 +1278,7 @@ var $;
             });
             return sub;
         }
+        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -1275,6 +1291,7 @@ var $;
             });
             return min;
         }
+        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -1444,12 +1461,27 @@ var $;
 var $;
 (function ($) {
     class $mol_list extends $.$mol_view {
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
         sub() {
             return this.rows();
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Empty null
+         *  ```
+         **/
         Empty() {
             return null;
         }
@@ -1552,24 +1584,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_card extends $.$mol_list {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_card_status_type <= status
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_card_status_type": this.status() }));
         }
+        /**
+         *  ```
+         *  status \
+         *  ```
+         **/
         status() {
             return "";
         }
+        /**
+         *  ```
+         *  rows /
+         *  	<= Content
+         *  	<= Status
+         *  ```
+         **/
         rows() {
             return [].concat(this.Content(), this.Status());
         }
+        /**
+         *  ```
+         *  Content $mol_view sub <= content
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.sub = () => this.content();
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  content /
+         *  ```
+         **/
         content() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Status $mol_view
+         *  	minimal_height 30
+         *  	sub / <= status_text
+         *  ```
+         **/
         Status() {
             return ((obj) => {
                 obj.minimal_height = () => 30;
@@ -1577,6 +1645,11 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  status_text <= status
+         *  ```
+         **/
         status_text() {
             return this.status();
         }
@@ -1613,9 +1686,19 @@ var $;
 var $;
 (function ($) {
     class $mol_tiler extends $.$mol_view {
+        /**
+         *  ```
+         *  sub / <= items
+         *  ```
+         **/
         sub() {
             return [].concat(this.items());
         }
+        /**
+         *  ```
+         *  items /
+         *  ```
+         **/
         items() {
             return [].concat();
         }
@@ -1796,42 +1879,115 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_link extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  dom_name \a
+         *  ```
+         **/
         dom_name() {
             return "a";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	href <= uri
+         *  	title <= hint
+         *  	target <= target
+         *  	download <= file_name
+         *  	mol_link_current <= current
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "href": this.uri(), "title": this.hint(), "target": this.target(), "download": this.file_name(), "mol_link_current": this.current() }));
         }
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri() {
             return "";
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  target \_self
+         *  ```
+         **/
         target() {
             return "_self";
         }
+        /**
+         *  ```
+         *  file_name \
+         *  ```
+         **/
         file_name() {
             return "";
         }
+        /**
+         *  ```
+         *  current false
+         *  ```
+         **/
         current() {
             return false;
         }
+        /**
+         *  ```
+         *  sub / <= title
+         *  ```
+         **/
         sub() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  arg *
+         *  ```
+         **/
         arg() {
             return ({});
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?event <=> click?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.click(event) }));
         }
+        /**
+         *  ```
+         *  click?event <=> event_click?event
+         *  ```
+         **/
         click(event, force) {
             return this.event_click(event);
         }
+        /**
+         *  ```
+         *  event_click?event null
+         *  ```
+         **/
         event_click(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -1907,39 +2063,107 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_button extends $.$mol_view {
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  click?event null
+         *  ```
+         **/
         click(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_click?event null
+         *  ```
+         **/
         event_click(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?event <=> event_activate?event
+         *  	keypress?event <=> event_key_press?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.event_activate(event), "keypress": (event) => this.event_key_press(event) }));
         }
+        /**
+         *  ```
+         *  event_activate?event null
+         *  ```
+         **/
         event_activate(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_key_press?event null
+         *  ```
+         **/
         event_key_press(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	disabled <= disabled
+         *  	role \button
+         *  	tabindex <= tab_index
+         *  	title <= hint
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "disabled": this.disabled(), "role": "button", "tabindex": this.tab_index(), "title": this.hint() }));
         }
+        /**
+         *  ```
+         *  disabled false
+         *  ```
+         **/
         disabled() {
             return false;
         }
+        /**
+         *  ```
+         *  tab_index 0
+         *  ```
+         **/
         tab_index() {
             return 0;
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= title
+         *  ```
+         **/
         sub() {
             return [].concat(this.title());
         }
@@ -1978,7 +2202,7 @@ var $;
                 this.click(next);
             }
             event_key_press(event) {
-                if (event.keyCode === 13) {
+                if (event.keyCode === 13 /* enter */) {
                     return this.event_activate(event);
                 }
             }
@@ -2000,6 +2224,13 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_button_major extends $.$mol_button_typed {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_theme \$mol_theme_accent
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_theme": "$mol_theme_accent" }));
         }
@@ -2081,18 +2312,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_svg extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \svg
+         *  ```
+         **/
         dom_name() {
             return "svg";
         }
+        /**
+         *  ```
+         *  dom_name_space \http://www.w3.org/2000/svg
+         *  ```
+         **/
         dom_name_space() {
             return "http://www.w3.org/2000/svg";
         }
+        /**
+         *  ```
+         *  text_width?text 0
+         *  ```
+         **/
         text_width(text, force) {
             return (text !== void 0) ? text : 0;
         }
+        /**
+         *  ```
+         *  font_size 16
+         *  ```
+         **/
         font_size() {
             return 16;
         }
+        /**
+         *  ```
+         *  font_family \
+         *  ```
+         **/
         font_family() {
             return "";
         }
@@ -2151,15 +2407,38 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_root extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \svg
+         *  ```
+         **/
         dom_name() {
             return "svg";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	viewBox <= view_box
+         *  	preserveAspectRatio <= aspect
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "viewBox": this.view_box(), "preserveAspectRatio": this.aspect() }));
         }
+        /**
+         *  ```
+         *  view_box \0 0 100 100
+         *  ```
+         **/
         view_box() {
             return "0 0 100 100";
         }
+        /**
+         *  ```
+         *  aspect \xMidYMid
+         *  ```
+         **/
         aspect() {
             return "xMidYMid";
         }
@@ -2172,12 +2451,29 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_path extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \path
+         *  ```
+         **/
         dom_name() {
             return "path";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	d <= geometry
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "d": this.geometry() }));
         }
+        /**
+         *  ```
+         *  geometry \
+         *  ```
+         **/
         geometry() {
             return "";
         }
@@ -2196,24 +2492,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_icon extends $.$mol_svg_root {
+        /**
+         *  ```
+         *  view_box \0 0 24 24
+         *  ```
+         **/
         view_box() {
             return "0 0 24 24";
         }
+        /**
+         *  ```
+         *  minimal_width 16
+         *  ```
+         **/
         minimal_width() {
             return 16;
         }
+        /**
+         *  ```
+         *  minimal_height 16
+         *  ```
+         **/
         minimal_height() {
             return 16;
         }
+        /**
+         *  ```
+         *  sub / <= Path
+         *  ```
+         **/
         sub() {
             return [].concat(this.Path());
         }
+        /**
+         *  ```
+         *  Path $mol_svg_path geometry <= path
+         *  ```
+         **/
         Path() {
             return ((obj) => {
                 obj.geometry = () => this.path();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  path \
+         *  ```
+         **/
         path() {
             return "";
         }
@@ -2229,6 +2555,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_attach extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z
+         *  ```
+         **/
         path() {
             return "M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z";
         }
@@ -2263,33 +2594,70 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_attach extends $.$mol_card {
+        /**
+         *  ```
+         *  Content $mol_tiler items <= content
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.items = () => this.content();
                 return obj;
             })(new this.$.$mol_tiler());
         }
+        /**
+         *  ```
+         *  content /
+         *  	<= items?val
+         *  	<= Add
+         *  ```
+         **/
         content() {
             return [].concat(this.items(), this.Add());
         }
+        /**
+         *  ```
+         *  items?val /
+         *  ```
+         **/
         items(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
+        /**
+         *  ```
+         *  Add $mol_attach_add file_new?val <=> attach_new?val
+         *  ```
+         **/
         Add() {
             return ((obj) => {
                 obj.file_new = (val) => this.attach_new(val);
                 return obj;
             })(new this.$.$mol_attach_add());
         }
+        /**
+         *  ```
+         *  attach_new?val \
+         *  ```
+         **/
         attach_new(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Item!id $mol_attach_item title <= attach_title
+         *  ```
+         **/
         Item(id) {
             return ((obj) => {
                 obj.title = () => this.attach_title();
                 return obj;
             })(new this.$.$mol_attach_item());
         }
+        /**
+         *  ```
+         *  attach_title \
+         *  ```
+         **/
         attach_title() {
             return "";
         }
@@ -2313,24 +2681,63 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_attach_item extends $.$mol_link {
+        /**
+         *  ```
+         *  url_thumb?val \
+         *  ```
+         **/
         url_thumb(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  uri?val <=> url_load?val
+         *  ```
+         **/
         uri(val, force) {
             return this.url_load(val);
         }
+        /**
+         *  ```
+         *  url_load?val \
+         *  ```
+         **/
         url_load(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	backgroundImage <= style_bg
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "backgroundImage": this.style_bg() }));
         }
+        /**
+         *  ```
+         *  style_bg \
+         *  ```
+         **/
         style_bg() {
             return "";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	download <= title
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "download": this.title() }));
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
@@ -2348,20 +2755,49 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_attach_add extends $.$mol_button_minor {
+        /**
+         *  ```
+         *  minimal_height 60
+         *  ```
+         **/
         minimal_height() {
             return 60;
         }
+        /**
+         *  ```
+         *  file_new?val \
+         *  ```
+         **/
         file_new(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Icon
+         *  	<= Input
+         *  ```
+         **/
         sub() {
             return [].concat(this.Icon(), this.Input());
         }
+        /**
+         *  ```
+         *  Icon $mol_icon_attach
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_attach());
         }
+        /**
+         *  ```
+         *  Input $mol_attach_add_input
+         *  	event_capture?val <=> event_capture?val
+         *  	event_picked?val <=> event_picked?val
+         *  ```
+         **/
         Input() {
             return ((obj) => {
                 obj.event_capture = (val) => this.event_capture(val);
@@ -2369,9 +2805,19 @@ var $;
                 return obj;
             })(new this.$.$mol_attach_add_input());
         }
+        /**
+         *  ```
+         *  event_capture?val null
+         *  ```
+         **/
         event_capture(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  event_picked?val null
+         *  ```
+         **/
         event_picked(val, force) {
             return (val !== void 0) ? val : null;
         }
@@ -2395,30 +2841,81 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_attach_add_input extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \input
+         *  ```
+         **/
         dom_name() {
             return "input";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	type <= type
+         *  	accept <= accept
+         *  	multiple <= multiple
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "type": this.type(), "accept": this.accept(), "multiple": this.multiple() }));
         }
+        /**
+         *  ```
+         *  type \file
+         *  ```
+         **/
         type() {
             return "file";
         }
+        /**
+         *  ```
+         *  accept \image/*;capture=camera
+         *  ```
+         **/
         accept() {
             return "image/*;capture=camera";
         }
+        /**
+         *  ```
+         *  multiple true
+         *  ```
+         **/
         multiple() {
             return true;
         }
+        /**
+         *  ```
+         *  event_click?val <=> event_capture?val
+         *  ```
+         **/
         event_click(val, force) {
             return this.event_capture(val);
         }
+        /**
+         *  ```
+         *  event_capture?val null
+         *  ```
+         **/
         event_capture(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	change?val <=> event_picked?val
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "change": (val) => this.event_picked(val) }));
         }
+        /**
+         *  ```
+         *  event_picked?val null
+         *  ```
+         **/
         event_picked(val, force) {
             return (val !== void 0) ? val : null;
         }
@@ -2675,11 +3172,11 @@ var $;
         }
         content(next, force) {
             if (next === void 0) {
-                return this.stat() && $node.fs.readFileSync(this.path());
+                return this.stat() && $node.fs.readFileSync(this.path()); //.toString()
             }
             this.parent().exists(true);
             $node.fs.writeFileSync(this.path(), next);
-            return next;
+            return next; //.toString()
         }
         reader() {
             return $node.fs.createReadStream(this.path());
@@ -2817,21 +3314,51 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_attach_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Attach files an show them
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_attach_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Filled
+         *  ```
+         **/
         sub() {
             return [].concat(this.Filled());
         }
+        /**
+         *  ```
+         *  Filled $mol_attach items?val <=> filled_items?val
+         *  ```
+         **/
         Filled() {
             return ((obj) => {
                 obj.items = (val) => this.filled_items(val);
                 return obj;
             })(new this.$.$mol_attach());
         }
+        /**
+         *  ```
+         *  filled_items?val /
+         *  	<= Item1
+         *  	<= Item2
+         *  	<= Item3
+         *  ```
+         **/
         filled_items(val, force) {
             return (val !== void 0) ? val : [].concat(this.Item1(), this.Item2(), this.Item3());
         }
+        /**
+         *  ```
+         *  Item1 $mol_attach_item
+         *  	url_thumb \mol/logo/logo.svg
+         *  	url_load \logo/logo.svg
+         *  ```
+         **/
         Item1() {
             return ((obj) => {
                 obj.url_thumb = () => "mol/logo/logo.svg";
@@ -2839,6 +3366,13 @@ var $;
                 return obj;
             })(new this.$.$mol_attach_item());
         }
+        /**
+         *  ```
+         *  Item2 $mol_attach_item
+         *  	url_thumb \mol/logo/logo.svg
+         *  	url_load \logo/logo.svg
+         *  ```
+         **/
         Item2() {
             return ((obj) => {
                 obj.url_thumb = () => "mol/logo/logo.svg";
@@ -2846,6 +3380,13 @@ var $;
                 return obj;
             })(new this.$.$mol_attach_item());
         }
+        /**
+         *  ```
+         *  Item3 $mol_attach_item
+         *  	url_thumb \mol/logo/logo.svg
+         *  	url_load \logo/logo.svg
+         *  ```
+         **/
         Item3() {
             return ((obj) => {
                 obj.url_thumb = () => "mol/logo/logo.svg";
@@ -2892,57 +3433,159 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_string extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \input
+         *  ```
+         **/
         dom_name() {
             return "input";
         }
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  debounce 0
+         *  ```
+         **/
         debounce() {
             return 0;
         }
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  autocomplete false
+         *  ```
+         **/
         autocomplete() {
             return false;
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	disabled <= disabled
+         *  	value <= value_changed?val
+         *  	placeholder <= hint
+         *  	type <= type?val
+         *  	spellcheck <= spellcheck
+         *  	autocomplete <= autocomplete_native
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "disabled": this.disabled(), "value": this.value_changed(), "placeholder": this.hint(), "type": this.type(), "spellcheck": this.spellcheck(), "autocomplete": this.autocomplete_native() }));
         }
+        /**
+         *  ```
+         *  disabled false
+         *  ```
+         **/
         disabled() {
             return false;
         }
+        /**
+         *  ```
+         *  value_changed?val <=> value?val
+         *  ```
+         **/
         value_changed(val, force) {
             return this.value(val);
         }
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  type?val \text
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "text";
         }
+        /**
+         *  ```
+         *  spellcheck false
+         *  ```
+         **/
         spellcheck() {
             return false;
         }
+        /**
+         *  ```
+         *  autocomplete_native \
+         *  ```
+         **/
         autocomplete_native() {
             return "";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	maxlength <= length_max
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "maxlength": this.length_max() }));
         }
+        /**
+         *  ```
+         *  length_max Infinity
+         *  ```
+         **/
         length_max() {
             return Infinity;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	input?event <=> event_change?event
+         *  	keydown?event <=> event_key_press?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "input": (event) => this.event_change(event), "keydown": (event) => this.event_key_press(event) }));
         }
+        /**
+         *  ```
+         *  event_change?event null
+         *  ```
+         **/
         event_change(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_key_press?event null
+         *  ```
+         **/
         event_key_press(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -2987,7 +3630,7 @@ var $;
             event_key_press(next) {
                 if (!next)
                     return;
-                if (next.keyCode === 13) {
+                if (next.keyCode === 13 /* enter */) {
                     this.value(next.target.value);
                 }
             }
@@ -3013,27 +3656,68 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check extends $.$mol_button_minor {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_check_checked <= checked?val
+         *  	aria-checked <= checked?val
+         *  	role \checkbox
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_check_checked": this.checked(), "aria-checked": this.checked(), "role": "checkbox" }));
         }
+        /**
+         *  ```
+         *  checked?val false
+         *  ```
+         **/
         checked(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Icon
+         *  	<= label
+         *  ```
+         **/
         sub() {
             return [].concat(this.Icon(), this.label());
         }
+        /**
+         *  ```
+         *  Icon null
+         *  ```
+         **/
         Icon() {
             return null;
         }
+        /**
+         *  ```
+         *  label / <= Title
+         *  ```
+         **/
         label() {
             return [].concat(this.Title());
         }
+        /**
+         *  ```
+         *  Title $mol_view sub / <= title
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.title());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
@@ -3069,6 +3753,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_tick extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
+         *  ```
+         **/
         path() {
             return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
         }
@@ -3087,6 +3776,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check_box extends $.$mol_check {
+        /**
+         *  ```
+         *  Icon $mol_icon_tick
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 return obj;
@@ -3110,18 +3804,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_bar_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Group of controls as one control
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_bar_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Two
+         *  	<= Three
+         *  ```
+         **/
         sub() {
             return [].concat(this.Two(), this.Three());
         }
+        /**
+         *  ```
+         *  Two $mol_bar sub /
+         *  	<= Two_mail
+         *  	<= Two_submit
+         *  ```
+         **/
         Two() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Two_mail(), this.Two_submit());
                 return obj;
             })(new this.$.$mol_bar());
         }
+        /**
+         *  ```
+         *  Two_mail $mol_string
+         *  	hint <= mail_hint
+         *  	value?val <=> mail?val
+         *  ```
+         **/
         Two_mail() {
             return ((obj) => {
                 obj.hint = () => this.mail_hint();
@@ -3129,27 +3849,62 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  mail_hint \E-mail
+         *  ```
+         **/
         mail_hint() {
             return "E-mail";
         }
+        /**
+         *  ```
+         *  mail?val \
+         *  ```
+         **/
         mail(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Two_submit $mol_button_minor title <= submit_title
+         *  ```
+         **/
         Two_submit() {
             return ((obj) => {
                 obj.title = () => this.submit_title();
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  submit_title \Submit
+         *  ```
+         **/
         submit_title() {
             return "Submit";
         }
+        /**
+         *  ```
+         *  Three $mol_bar sub /
+         *  	<= Three_mail
+         *  	<= Three_confirm
+         *  	<= Three_submit
+         *  ```
+         **/
         Three() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Three_mail(), this.Three_confirm(), this.Three_submit());
                 return obj;
             })(new this.$.$mol_bar());
         }
+        /**
+         *  ```
+         *  Three_mail $mol_string
+         *  	hint <= mail_hint
+         *  	value?val <=> mail?val
+         *  ```
+         **/
         Three_mail() {
             return ((obj) => {
                 obj.hint = () => this.mail_hint();
@@ -3157,6 +3912,13 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  Three_confirm $mol_check_box
+         *  	title <= confirm_title
+         *  	checked?val <=> confirmed?val
+         *  ```
+         **/
         Three_confirm() {
             return ((obj) => {
                 obj.title = () => this.confirm_title();
@@ -3164,12 +3926,27 @@ var $;
                 return obj;
             })(new this.$.$mol_check_box());
         }
+        /**
+         *  ```
+         *  confirm_title \Confirm
+         *  ```
+         **/
         confirm_title() {
             return "Confirm";
         }
+        /**
+         *  ```
+         *  confirmed?val false
+         *  ```
+         **/
         confirmed(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Three_submit $mol_button_minor title <= submit_title
+         *  ```
+         **/
         Three_submit() {
             return ((obj) => {
                 obj.title = () => this.submit_title();
@@ -3218,9 +3995,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_portion_indicator extends $.$mol_view {
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	width <= width_style
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "width": this.width_style() }));
         }
+        /**
+         *  ```
+         *  width_style \0
+         *  ```
+         **/
         width_style() {
             return "0";
         }
@@ -3229,18 +4018,38 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_portion extends $.$mol_view {
+        /**
+         *  ```
+         *  portion 0
+         *  ```
+         **/
         portion() {
             return 0;
         }
+        /**
+         *  ```
+         *  sub / <= indicator
+         *  ```
+         **/
         sub() {
             return [].concat(this.indicator());
         }
+        /**
+         *  ```
+         *  indicator $mol_portion_indicator width_style <= indicator_width_style
+         *  ```
+         **/
         indicator() {
             return ((obj) => {
                 obj.width_style = () => this.indicator_width_style();
                 return obj;
             })(new this.$.$mol_portion_indicator());
         }
+        /**
+         *  ```
+         *  indicator_width_style \0
+         *  ```
+         **/
         indicator_width_style() {
             return "0";
         }
@@ -3277,36 +4086,98 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_scroll extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 0
+         *  ```
+         **/
         minimal_height() {
             return 0;
         }
+        /**
+         *  ```
+         *  moving_hor?val false
+         *  ```
+         **/
         moving_hor(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  moving_vert?val false
+         *  ```
+         **/
         moving_vert(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	scrollTop <= scroll_top?val
+         *  	scrollLeft <= scroll_left?val
+         *  	scrollBottom <= scroll_bottom?val
+         *  	scrollRight <= scroll_right?val
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "scrollTop": this.scroll_top(), "scrollLeft": this.scroll_left(), "scrollBottom": this.scroll_bottom(), "scrollRight": this.scroll_right() }));
         }
+        /**
+         *  ```
+         *  scroll_top?val 0
+         *  ```
+         **/
         scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_left?val 0
+         *  ```
+         **/
         scroll_left(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_bottom?val 0
+         *  ```
+         **/
         scroll_bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_right?val 0
+         *  ```
+         **/
         scroll_right(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  event_async *
+         *  	^
+         *  	scroll?event <=> event_scroll?event
+         *  ```
+         **/
         event_async() {
             return (Object.assign(Object.assign({}, super.event_async()), { "scroll": (event) => this.event_scroll(event) }));
         }
+        /**
+         *  ```
+         *  event_scroll?event null
+         *  ```
+         **/
         event_scroll(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  Strut $mol_view style * transform <= strut_transform
+         *  ```
+         **/
         Strut() {
             return ((obj) => {
                 obj.style = () => ({
@@ -3315,6 +4186,11 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  strut_transform \
+         *  ```
+         **/
         strut_transform() {
             return "";
         }
@@ -3380,6 +4256,13 @@ var $;
         $$.$mol_scroll_moving_hor = $mol_scroll_moving_hor;
         class $mol_scroll extends $.$mol_scroll {
             constructor() {
+                // scroll_top( next? : number ) {
+                // 	return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
+                // }
+                // 
+                // scroll_left( next? : number ) {
+                // 	return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
+                // }
                 super(...arguments);
                 this._moving_task_timer = null;
             }
@@ -3488,6 +4371,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_chevron extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
+         *  ```
+         **/
         path() {
             return "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z";
         }
@@ -3506,32 +4394,79 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check_expand extends $.$mol_check {
+        /**
+         *  ```
+         *  minimal_height 32
+         *  ```
+         **/
         minimal_height() {
             return 32;
         }
+        /**
+         *  ```
+         *  Icon $mol_icon_chevron
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_chevron());
         }
+        /**
+         *  ```
+         *  level 0
+         *  ```
+         **/
         level() {
             return 0;
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	paddingLeft <= level_style
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "paddingLeft": this.level_style() }));
         }
+        /**
+         *  ```
+         *  level_style \0px
+         *  ```
+         **/
         level_style() {
             return "0px";
         }
+        /**
+         *  ```
+         *  checked?val <=> expanded?val
+         *  ```
+         **/
         checked(val, force) {
             return this.expanded(val);
         }
+        /**
+         *  ```
+         *  expanded?val false
+         *  ```
+         **/
         expanded(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  enabled <= expandable
+         *  ```
+         **/
         enabled() {
             return this.expandable();
         }
+        /**
+         *  ```
+         *  expandable false
+         *  ```
+         **/
         expandable() {
             return false;
         }
@@ -3577,24 +4512,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_dimmer extends $.$mol_view {
+        /**
+         *  ```
+         *  haystack \
+         *  ```
+         **/
         haystack() {
             return "";
         }
+        /**
+         *  ```
+         *  needle \
+         *  ```
+         **/
         needle() {
             return "";
         }
+        /**
+         *  ```
+         *  sub <= parts
+         *  ```
+         **/
         sub() {
             return this.parts();
         }
+        /**
+         *  ```
+         *  parts /
+         *  ```
+         **/
         parts() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Low!id $mol_view sub / <= string!id
+         *  ```
+         **/
         Low(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.string(id));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  string!id \
+         *  ```
+         **/
         string(id) {
             return "";
         }
@@ -3713,30 +4678,77 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_grid extends $.$mol_scroll {
+        /**
+         *  ```
+         *  row_ids /
+         *  ```
+         **/
         row_ids() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  row_id!index null
+         *  ```
+         **/
         row_id(index) {
             return null;
         }
+        /**
+         *  ```
+         *  col_ids /
+         *  ```
+         **/
         col_ids() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  records *
+         *  ```
+         **/
         records() {
             return ({});
         }
+        /**
+         *  ```
+         *  record!id null
+         *  ```
+         **/
         record(id) {
             return null;
         }
+        /**
+         *  ```
+         *  hierarchy null
+         *  ```
+         **/
         hierarchy() {
             return null;
         }
+        /**
+         *  ```
+         *  hierarchy_col \
+         *  ```
+         **/
         hierarchy_col() {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= Table
+         *  ```
+         **/
         sub() {
             return [].concat(this.Table());
         }
+        /**
+         *  ```
+         *  Table $mol_grid_table
+         *  	offset <= gap_top
+         *  	sub / <= rows_visible
+         *  ```
+         **/
         Table() {
             return ((obj) => {
                 obj.offset = () => this.gap_top();
@@ -3744,15 +4756,37 @@ var $;
                 return obj;
             })(new this.$.$mol_grid_table());
         }
+        /**
+         *  ```
+         *  gap_top 0
+         *  ```
+         **/
         gap_top() {
             return 0;
         }
+        /**
+         *  ```
+         *  rows_visible /
+         *  ```
+         **/
         rows_visible() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Head $mol_grid_row
+         *  	height <= row_height
+         *  	cells <= head_cells
+         *  ```
+         **/
         Head() {
             return ((obj) => {
                 obj.height = () => this.row_height();
@@ -3760,12 +4794,29 @@ var $;
                 return obj;
             })(new this.$.$mol_grid_row());
         }
+        /**
+         *  ```
+         *  row_height 40
+         *  ```
+         **/
         row_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  head_cells /
+         *  ```
+         **/
         head_cells() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Row!id $mol_grid_row
+         *  	height <= row_height
+         *  	cells <= cells!id
+         *  ```
+         **/
         Row(id) {
             return ((obj) => {
                 obj.height = () => this.row_height();
@@ -3773,38 +4824,85 @@ var $;
                 return obj;
             })(new this.$.$mol_grid_row());
         }
+        /**
+         *  ```
+         *  cells!id /
+         *  ```
+         **/
         cells(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Cell!id $mol_view
+         *  ```
+         **/
         Cell(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  cell!id null
+         *  ```
+         **/
         cell(id) {
             return null;
         }
+        /**
+         *  ```
+         *  Cell_text!id $mol_grid_cell sub / <= cell_content_text!id
+         *  ```
+         **/
         Cell_text(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.cell_content_text(id));
                 return obj;
             })(new this.$.$mol_grid_cell());
         }
+        /**
+         *  ```
+         *  cell_content_text!id <= cell_content!id
+         *  ```
+         **/
         cell_content_text(id) {
             return this.cell_content(id);
         }
+        /**
+         *  ```
+         *  cell_content!id /
+         *  ```
+         **/
         cell_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Cell_number!id $mol_grid_number sub / <= cell_content_number!id
+         *  ```
+         **/
         Cell_number(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.cell_content_number(id));
                 return obj;
             })(new this.$.$mol_grid_number());
         }
+        /**
+         *  ```
+         *  cell_content_number!id <= cell_content!id
+         *  ```
+         **/
         cell_content_number(id) {
             return this.cell_content(id);
         }
+        /**
+         *  ```
+         *  Col_head!id $mol_float
+         *  	dom_name \th
+         *  	sub / <= col_head_content!id
+         *  ```
+         **/
         Col_head(id) {
             return ((obj) => {
                 obj.dom_name = () => "th";
@@ -3812,9 +4910,22 @@ var $;
                 return obj;
             })(new this.$.$mol_float());
         }
+        /**
+         *  ```
+         *  col_head_content!id /
+         *  ```
+         **/
         col_head_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Cell_branch!id $mol_check_expand
+         *  	level <= cell_level!id
+         *  	label <= cell_content!id
+         *  	expanded?val <=> cell_expanded!id?val
+         *  ```
+         **/
         Cell_branch(id) {
             return ((obj) => {
                 obj.level = () => this.cell_level(id);
@@ -3823,15 +4934,37 @@ var $;
                 return obj;
             })(new this.$.$mol_check_expand());
         }
+        /**
+         *  ```
+         *  cell_level!id 0
+         *  ```
+         **/
         cell_level(id) {
             return 0;
         }
+        /**
+         *  ```
+         *  cell_expanded!id?val false
+         *  ```
+         **/
         cell_expanded(id, val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Cell_content!id / <= Cell_dimmer!id
+         *  ```
+         **/
         Cell_content(id) {
             return [].concat(this.Cell_dimmer(id));
         }
+        /**
+         *  ```
+         *  Cell_dimmer!id $mol_dimmer
+         *  	needle <= needle
+         *  	haystack <= cell_value!id
+         *  ```
+         **/
         Cell_dimmer(id) {
             return ((obj) => {
                 obj.needle = () => this.needle();
@@ -3839,9 +4972,19 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  needle \
+         *  ```
+         **/
         needle() {
             return "";
         }
+        /**
+         *  ```
+         *  cell_value!id \
+         *  ```
+         **/
         cell_value(id) {
             return "";
         }
@@ -3880,12 +5023,29 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_table extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \table
+         *  ```
+         **/
         dom_name() {
             return "table";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	top <= offset
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "top": this.offset() }));
         }
+        /**
+         *  ```
+         *  offset 0
+         *  ```
+         **/
         offset() {
             return 0;
         }
@@ -3894,9 +5054,21 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_gap extends $.$mol_view {
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	top <= offset
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "top": this.offset() }));
         }
+        /**
+         *  ```
+         *  offset 0
+         *  ```
+         **/
         offset() {
             return 0;
         }
@@ -3905,18 +5077,45 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_row extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \tr
+         *  ```
+         **/
         dom_name() {
             return "tr";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	height <= height
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "height": this.height() }));
         }
+        /**
+         *  ```
+         *  height 40
+         *  ```
+         **/
         height() {
             return 40;
         }
+        /**
+         *  ```
+         *  sub <= cells
+         *  ```
+         **/
         sub() {
             return this.cells();
         }
+        /**
+         *  ```
+         *  cells /
+         *  ```
+         **/
         cells() {
             return [].concat();
         }
@@ -3925,6 +5124,11 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_cell extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \td
+         *  ```
+         **/
         dom_name() {
             return "td";
         }
@@ -4131,6 +5335,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_sort extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M10,13V11H18V13H10M10,19V17H14V19H10M10,7V5H22V7H10M6,17H8.5L5,20.5L1.5,17H4V7H1.5L5,3.5L8.5,7H6V17Z
+         *  ```
+         **/
         path() {
             return "M10,13V11H18V13H10M10,19V17H14V19H10M10,7V5H22V7H10M6,17H8.5L5,20.5L1.5,17H4V7H1.5L5,3.5L8.5,7H6V17Z";
         }
@@ -4143,6 +5352,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_sort_asc extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M10,11V13H18V11H10M10,5V7H14V5H10M10,17V19H22V17H10M6,7H8.5L5,3.5L1.5,7H4V20H6V7Z
+         *  ```
+         **/
         path() {
             return "M10,11V13H18V11H10M10,5V7H14V5H10M10,17V19H22V17H10M6,7H8.5L5,3.5L1.5,7H4V20H6V7Z";
         }
@@ -4161,15 +5375,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_bench extends $.$mol_grid {
+        /**
+         *  ```
+         *  records <= result
+         *  ```
+         **/
         records() {
             return this.result();
         }
+        /**
+         *  ```
+         *  result *
+         *  ```
+         **/
         result() {
             return ({});
         }
+        /**
+         *  ```
+         *  col_sort?val \
+         *  ```
+         **/
         col_sort(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Col_head!id $mol_bench_head
+         *  	event_click?val <=> event_sort_toggle!id?val
+         *  	sub <= col_head_content!id
+         *  ```
+         **/
         Col_head(id) {
             return ((obj) => {
                 obj.event_click = (val) => this.event_sort_toggle(id, val);
@@ -4177,32 +5413,76 @@ var $;
                 return obj;
             })(new this.$.$mol_bench_head());
         }
+        /**
+         *  ```
+         *  event_sort_toggle!id?val null
+         *  ```
+         **/
         event_sort_toggle(id, val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  col_head_content!id /
+         *  	<= col_head_label!id
+         *  	<= Col_head_sort!id
+         *  ```
+         **/
         col_head_content(id) {
             return [].concat(this.col_head_label(id), this.Col_head_sort(id));
         }
+        /**
+         *  ```
+         *  col_head_label!id /
+         *  ```
+         **/
         col_head_label(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Col_head_sort!id $mol_icon_sort_asc
+         *  ```
+         **/
         Col_head_sort(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_sort_asc());
         }
+        /**
+         *  ```
+         *  cell_content_number!id /
+         *  	<= result_value!id
+         *  	<= Result_portion!id
+         *  ```
+         **/
         cell_content_number(id) {
             return [].concat(this.result_value(id), this.Result_portion(id));
         }
+        /**
+         *  ```
+         *  result_value!id \
+         *  ```
+         **/
         result_value(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Result_portion!id $mol_portion portion <= result_portion!id
+         *  ```
+         **/
         Result_portion(id) {
             return ((obj) => {
                 obj.portion = () => this.result_portion(id);
                 return obj;
             })(new this.$.$mol_portion());
         }
+        /**
+         *  ```
+         *  result_portion!id 0
+         *  ```
+         **/
         result_portion(id) {
             return 0;
         }
@@ -4226,18 +5506,47 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_bench_head extends $.$mol_float {
+        /**
+         *  ```
+         *  horizontal false
+         *  ```
+         **/
         horizontal() {
             return false;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?val <=> event_click?val
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (val) => this.event_click(val) }));
         }
+        /**
+         *  ```
+         *  event_click?val null
+         *  ```
+         **/
         event_click(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	title <= hint
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "title": this.hint() }));
         }
+        /**
+         *  ```
+         *  hint @ \Click to sort by this column
+         *  ```
+         **/
         hint() {
             return this.$.$mol_locale.text("$mol_bench_head_hint");
         }
@@ -4349,12 +5658,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_bench_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Benchmarking results visualization
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_bench_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= View
+         *  ```
+         **/
         sub() {
             return [].concat(this.View());
         }
+        /**
+         *  ```
+         *  View $mol_bench
+         *  	col_sort?val <=> col_sort?val
+         *  	result <= result
+         *  ```
+         **/
         View() {
             return ((obj) => {
                 obj.col_sort = (val) => this.col_sort(val);
@@ -4362,9 +5688,19 @@ var $;
                 return obj;
             })(new this.$.$mol_bench());
         }
+        /**
+         *  ```
+         *  col_sort?val \mid
+         *  ```
+         **/
         col_sort(val, force) {
             return (val !== void 0) ? val : "mid";
         }
+        /**
+         *  ```
+         *  result *
+         *  ```
+         **/
         result() {
             return ({});
         }
@@ -4411,15 +5747,35 @@ var $;
 var $;
 (function ($) {
     class $mol_plugin extends $.$mol_object {
+        /**
+         *  ```
+         *  dom_node null
+         *  ```
+         **/
         dom_node() {
             return null;
         }
+        /**
+         *  ```
+         *  attr_static *
+         *  ```
+         **/
         attr_static() {
             return ({});
         }
+        /**
+         *  ```
+         *  event *
+         *  ```
+         **/
         event() {
             return ({});
         }
+        /**
+         *  ```
+         *  event_async *
+         *  ```
+         **/
         event_async() {
             return ({});
         }
@@ -4469,24 +5825,59 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_meter extends $.$mol_plugin {
+        /**
+         *  ```
+         *  zoom 1
+         *  ```
+         **/
         zoom() {
             return 1;
         }
+        /**
+         *  ```
+         *  width?val 0
+         *  ```
+         **/
         width(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  height?val 0
+         *  ```
+         **/
         height(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  left?val 0
+         *  ```
+         **/
         left(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  right?val 0
+         *  ```
+         **/
         right(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  bottom?val 0
+         *  ```
+         **/
         bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  top?val 0
+         *  ```
+         **/
         top(val, force) {
             return (val !== void 0) ? val : 0;
         }
@@ -4535,6 +5926,7 @@ var $;
                         return { left, top, right, bottom, width, height, zoom: win.devicePixelRatio || 1 };
                     }
                     catch (error) {
+                        // IE11
                     }
                 }
                 const size = $.$mol_window.size();
@@ -4609,81 +6001,226 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_touch extends $.$mol_plugin {
+        /**
+         *  ```
+         *  start_zoom?val 0
+         *  ```
+         **/
         start_zoom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  start_distance?val 0
+         *  ```
+         **/
         start_distance(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  zoom?val 1
+         *  ```
+         **/
         zoom(val, force) {
             return (val !== void 0) ? val : 1;
         }
+        /**
+         *  ```
+         *  start_pan?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         start_pan(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  pan?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         pan(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  pos?val /
+         *  	NaN
+         *  	NaN
+         *  ```
+         **/
         pos(val, force) {
             return (val !== void 0) ? val : [].concat(NaN, NaN);
         }
+        /**
+         *  ```
+         *  start_pos?val null
+         *  ```
+         **/
         start_pos(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_precision 16
+         *  ```
+         **/
         swipe_precision() {
             return 16;
         }
+        /**
+         *  ```
+         *  swipe_right?val null
+         *  ```
+         **/
         swipe_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_bottom?val null
+         *  ```
+         **/
         swipe_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_left?val null
+         *  ```
+         **/
         swipe_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_top?val null
+         *  ```
+         **/
         swipe_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_right?val null
+         *  ```
+         **/
         swipe_from_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_bottom?val null
+         *  ```
+         **/
         swipe_from_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_left?val null
+         *  ```
+         **/
         swipe_from_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_top?val null
+         *  ```
+         **/
         swipe_from_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_right?val null
+         *  ```
+         **/
         swipe_to_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_bottom?val null
+         *  ```
+         **/
         swipe_to_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_left?val null
+         *  ```
+         **/
         swipe_to_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_top?val null
+         *  ```
+         **/
         swipe_to_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	touchstart?event <=> event_start?event
+         *  	touchmove?event <=> event_move?event
+         *  	touchend?event <=> event_end?event
+         *  	mousedown?event <=> event_start?event
+         *  	mousemove?event <=> event_move?event
+         *  	mouseup?event <=> event_end?event
+         *  	mouseleave?event <=> event_leave?event
+         *  	wheel?event <=> event_wheel?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "touchstart": (event) => this.event_start(event), "touchmove": (event) => this.event_move(event), "touchend": (event) => this.event_end(event), "mousedown": (event) => this.event_start(event), "mousemove": (event) => this.event_move(event), "mouseup": (event) => this.event_end(event), "mouseleave": (event) => this.event_leave(event), "wheel": (event) => this.event_wheel(event) }));
         }
+        /**
+         *  ```
+         *  event_start?event null
+         *  ```
+         **/
         event_start(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_move?event null
+         *  ```
+         **/
         event_move(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_end?event null
+         *  ```
+         **/
         event_end(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_leave?event null
+         *  ```
+         **/
         event_leave(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_wheel?event null
+         *  ```
+         **/
         event_wheel(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -4954,6 +6491,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_ghost extends $.$mol_view {
+        /**
+         *  ```
+         *  Sub $mol_view
+         *  ```
+         **/
         Sub() {
             return ((obj) => {
                 return obj;
@@ -5015,26 +6557,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_book extends $.$mol_view {
+        /**
+         *  ```
+         *  sub <= pages_wrapped
+         *  ```
+         **/
         sub() {
             return this.pages_wrapped();
         }
+        /**
+         *  ```
+         *  pages_wrapped /
+         *  ```
+         **/
         pages_wrapped() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  pages /
+         *  ```
+         **/
         pages() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  plugins /
+         *  	<= Meter
+         *  	<= Touch
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Meter(), this.Touch());
         }
         width() {
             return this.Meter().width();
         }
+        /**
+         *  ```
+         *  Meter $mol_meter width => width
+         *  ```
+         **/
         Meter() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_meter());
         }
+        /**
+         *  ```
+         *  Touch $mol_touch
+         *  	swipe_from_left?val <=> event_front_up?val
+         *  	swipe_to_left?val <=> event_front_down?val
+         *  ```
+         **/
         Touch() {
             return ((obj) => {
                 obj.swipe_from_left = (val) => this.event_front_up(val);
@@ -5042,12 +6618,29 @@ var $;
                 return obj;
             })(new this.$.$mol_touch());
         }
+        /**
+         *  ```
+         *  event_front_up?val null
+         *  ```
+         **/
         event_front_up(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  event_front_down?val null
+         *  ```
+         **/
         event_front_down(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Page!index $mol_book_page
+         *  	Sub <= page!index
+         *  	visible <= page_visible!index
+         *  ```
+         **/
         Page(index) {
             return ((obj) => {
                 obj.Sub = () => this.page(index);
@@ -5055,12 +6648,27 @@ var $;
                 return obj;
             })(new this.$.$mol_book_page());
         }
+        /**
+         *  ```
+         *  page!index null
+         *  ```
+         **/
         page(index) {
             return null;
         }
+        /**
+         *  ```
+         *  page_visible!index true
+         *  ```
+         **/
         page_visible(index) {
             return true;
         }
+        /**
+         *  ```
+         *  Placeholder $mol_book_placeholder title <= title
+         *  ```
+         **/
         Placeholder() {
             return ((obj) => {
                 obj.title = () => this.title();
@@ -5090,9 +6698,21 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_book_placeholder extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_width 400
+         *  ```
+         **/
         minimal_width() {
             return 400;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex null
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "tabindex": null }));
         }
@@ -5101,9 +6721,23 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_book_page extends $.$mol_ghost {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex 0
+         *  	mol_book_page_focused <= focused
+         *  	mol_book_page_visible <= visible
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "tabindex": 0, "mol_book_page_focused": this.focused(), "mol_book_page_visible": this.visible() }));
         }
+        /**
+         *  ```
+         *  visible true
+         *  ```
+         **/
         visible() {
             return true;
         }
@@ -5236,12 +6870,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_book_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Adaprive layout for various sizes of screen
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_book_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= View
+         *  ```
+         **/
         sub() {
             return [].concat(this.View());
         }
+        /**
+         *  ```
+         *  View $mol_book
+         *  	Placeholder <= Placeholder
+         *  	pages /
+         *  		<= Addon
+         *  		<= Main
+         *  ```
+         **/
         View() {
             return ((obj) => {
                 obj.Placeholder = () => this.Placeholder();
@@ -5249,6 +6902,13 @@ var $;
                 return obj;
             })(new this.$.$mol_book());
         }
+        /**
+         *  ```
+         *  Placeholder $mol_book_placeholder
+         *  	minimal_width 200
+         *  	sub / \ Placeholder
+         *  ```
+         **/
         Placeholder() {
             return ((obj) => {
                 obj.minimal_width = () => 200;
@@ -5256,6 +6916,13 @@ var $;
                 return obj;
             })(new this.$.$mol_book_placeholder());
         }
+        /**
+         *  ```
+         *  Addon $mol_view
+         *  	minimal_width 250
+         *  	sub / \ Addon
+         *  ```
+         **/
         Addon() {
             return ((obj) => {
                 obj.minimal_width = () => 250;
@@ -5263,6 +6930,13 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  Main $mol_view
+         *  	minimal_width 400
+         *  	sub / \ Main
+         *  ```
+         **/
         Main() {
             return ((obj) => {
                 obj.minimal_width = () => 400;
@@ -5297,21 +6971,52 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_button_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \All types of buttons in every states
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_button_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Major_enabled
+         *  	<= Major_disabled
+         *  	<= Minor_enabled
+         *  	<= Minor_disabled
+         *  ```
+         **/
         sub() {
             return [].concat(this.Major_enabled(), this.Major_disabled(), this.Minor_enabled(), this.Minor_disabled());
         }
+        /**
+         *  ```
+         *  Major_enabled $mol_button_major title <= major_label
+         *  ```
+         **/
         Major_enabled() {
             return ((obj) => {
                 obj.title = () => this.major_label();
                 return obj;
             })(new this.$.$mol_button_major());
         }
+        /**
+         *  ```
+         *  major_label @ \Click me!
+         *  ```
+         **/
         major_label() {
             return this.$.$mol_locale.text("$mol_button_demo_major_label");
         }
+        /**
+         *  ```
+         *  Major_disabled $mol_button_major
+         *  	title <= major_label
+         *  	enabled false
+         *  ```
+         **/
         Major_disabled() {
             return ((obj) => {
                 obj.title = () => this.major_label();
@@ -5319,15 +7024,32 @@ var $;
                 return obj;
             })(new this.$.$mol_button_major());
         }
+        /**
+         *  ```
+         *  Minor_enabled $mol_button_minor title <= minor_label
+         *  ```
+         **/
         Minor_enabled() {
             return ((obj) => {
                 obj.title = () => this.minor_label();
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  minor_label @ \Or click me..
+         *  ```
+         **/
         minor_label() {
             return this.$.$mol_locale.text("$mol_button_demo_minor_label");
         }
+        /**
+         *  ```
+         *  Minor_disabled $mol_button_minor
+         *  	title <= minor_label
+         *  	enabled false
+         *  ```
+         **/
         Minor_disabled() {
             return ((obj) => {
                 obj.title = () => this.minor_label();
@@ -5650,6 +7372,12 @@ var $;
             return super.toString(pattern);
         }
     }
+    /// Mnemonics:
+    ///  * single letter for numbers: M - month number, D - day of month.
+    ///  * uppercase letters for dates, lowercase for times: M - month number , m - minutes number
+    ///  * repeated letters for define register count: YYYY - full year, YY - shot year, MM - padded month number
+    ///  * words for word representation: Month - month name, WeekDay - day of week name
+    ///  * shortcuts: WD - short day of week, Mon - short month name.
     $mol_time_moment.patterns = {
         'YYYY': (moment) => {
             if (moment.year == null)
@@ -5887,9 +7615,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_calendar extends $.$mol_list {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Title
+         *  	<= Weekdays
+         *  	<= Weeks
+         *  ```
+         **/
         sub() {
             return [].concat(this.Title(), this.Weekdays(), this.Weeks());
         }
+        /**
+         *  ```
+         *  Title $mol_view
+         *  	minimal_height 24
+         *  	sub / <= title
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.minimal_height = () => 24;
@@ -5897,27 +7640,59 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
+        /**
+         *  ```
+         *  Weekdays $mol_view sub / <= weekdays
+         *  ```
+         **/
         Weekdays() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.weekdays());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  weekdays /
+         *  ```
+         **/
         weekdays() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Weeks $mol_list rows / <= weeks
+         *  ```
+         **/
         Weeks() {
             return ((obj) => {
                 obj.rows = () => [].concat(this.weeks());
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  weeks /
+         *  ```
+         **/
         weeks() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Weekday!index $mol_calendar_day
+         *  	holiday <= weekend!index
+         *  	sub / <= weekday!index
+         *  ```
+         **/
         Weekday(index) {
             return ((obj) => {
                 obj.holiday = () => this.weekend(index);
@@ -5925,21 +7700,50 @@ var $;
                 return obj;
             })(new this.$.$mol_calendar_day());
         }
+        /**
+         *  ```
+         *  weekend!index false
+         *  ```
+         **/
         weekend(index) {
             return false;
         }
+        /**
+         *  ```
+         *  weekday!index \
+         *  ```
+         **/
         weekday(index) {
             return "";
         }
+        /**
+         *  ```
+         *  Week!row $mol_view sub / <= week_days!row
+         *  ```
+         **/
         Week(row) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.week_days(row));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  week_days!row /
+         *  ```
+         **/
         week_days(row) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Day!day $mol_calendar_day
+         *  	ghost <= day_ghost!day
+         *  	holiday <= day_holiday!day
+         *  	selected <= day_selected!day
+         *  	sub <= day_content!day
+         *  ```
+         **/
         Day(day) {
             return ((obj) => {
                 obj.ghost = () => this.day_ghost(day);
@@ -5949,24 +7753,59 @@ var $;
                 return obj;
             })(new this.$.$mol_calendar_day());
         }
+        /**
+         *  ```
+         *  day_ghost!day false
+         *  ```
+         **/
         day_ghost(day) {
             return false;
         }
+        /**
+         *  ```
+         *  day_holiday!day false
+         *  ```
+         **/
         day_holiday(day) {
             return false;
         }
+        /**
+         *  ```
+         *  day_selected!day false
+         *  ```
+         **/
         day_selected(day) {
             return false;
         }
+        /**
+         *  ```
+         *  day_content!day / <= day_text!day
+         *  ```
+         **/
         day_content(day) {
             return [].concat(this.day_text(day));
         }
+        /**
+         *  ```
+         *  day_text!day \
+         *  ```
+         **/
         day_text(day) {
             return "";
         }
+        /**
+         *  ```
+         *  month_string \
+         *  ```
+         **/
         month_string() {
             return "";
         }
+        /**
+         *  ```
+         *  month_moment $mol_time_moment
+         *  ```
+         **/
         month_moment() {
             return ((obj) => {
                 return obj;
@@ -5998,12 +7837,30 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_calendar_day extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 32
+         *  ```
+         **/
         minimal_height() {
             return 32;
         }
+        /**
+         *  ```
+         *  minimal_width 36
+         *  ```
+         **/
         minimal_width() {
             return 36;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	mol_calendar_holiday <= holiday
+         *  	mol_calendar_ghost <= ghost
+         *  	mol_calendar_selected <= selected
+         *  ```
+         **/
         attr() {
             return ({
                 "mol_calendar_holiday": this.holiday(),
@@ -6011,12 +7868,27 @@ var $;
                 "mol_calendar_selected": this.selected(),
             });
         }
+        /**
+         *  ```
+         *  holiday false
+         *  ```
+         **/
         holiday() {
             return false;
         }
+        /**
+         *  ```
+         *  ghost false
+         *  ```
+         **/
         ghost() {
             return false;
         }
+        /**
+         *  ```
+         *  selected false
+         *  ```
+         **/
         selected() {
             return false;
         }
@@ -6157,15 +8029,51 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_calendar_demo_holiday extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Days of month 2018-01 with custom holidays
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_calendar_demo_holiday_title");
         }
+        /**
+         *  ```
+         *  holidays /
+         *  	\2018-01-01
+         *  	\2018-01-02
+         *  	\2018-01-03
+         *  	\2018-01-04
+         *  	\2018-01-05
+         *  	\2018-01-06
+         *  	\2018-01-07
+         *  	\2018-01-08
+         *  	\2018-01-13
+         *  	\2018-01-14
+         *  	\2018-01-20
+         *  	\2018-01-21
+         *  	\2018-01-27
+         *  	\2018-01-28
+         *  ```
+         **/
         holidays() {
             return [].concat("2018-01-01", "2018-01-02", "2018-01-03", "2018-01-04", "2018-01-05", "2018-01-06", "2018-01-07", "2018-01-08", "2018-01-13", "2018-01-14", "2018-01-20", "2018-01-21", "2018-01-27", "2018-01-28");
         }
+        /**
+         *  ```
+         *  sub / <= Calendar
+         *  ```
+         **/
         sub() {
             return [].concat(this.Calendar());
         }
+        /**
+         *  ```
+         *  Calendar $mol_calendar
+         *  	month_string <= month
+         *  	day_holiday!day <= holiday!day
+         *  ```
+         **/
         Calendar() {
             return ((obj) => {
                 obj.month_string = () => this.month();
@@ -6173,9 +8081,19 @@ var $;
                 return obj;
             })(new this.$.$mol_calendar());
         }
+        /**
+         *  ```
+         *  month \2018-01
+         *  ```
+         **/
         month() {
             return "2018-01";
         }
+        /**
+         *  ```
+         *  holiday!day false
+         *  ```
+         **/
         holiday(day) {
             return false;
         }
@@ -6212,18 +8130,42 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_calendar_demo_selection extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Days of month 2018-01 with custom selection
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_calendar_demo_selection_title");
         }
+        /**
+         *  ```
+         *  interval_config *
+         *  	start \2018-01-10
+         *  	end \2018-01-20
+         *  ```
+         **/
         interval_config() {
             return ({
                 "start": "2018-01-10",
                 "end": "2018-01-20",
             });
         }
+        /**
+         *  ```
+         *  sub / <= Calendar
+         *  ```
+         **/
         sub() {
             return [].concat(this.Calendar());
         }
+        /**
+         *  ```
+         *  Calendar $mol_calendar
+         *  	month_string <= month
+         *  	day_selected!day <= selected!day
+         *  ```
+         **/
         Calendar() {
             return ((obj) => {
                 obj.month_string = () => this.month();
@@ -6231,9 +8173,19 @@ var $;
                 return obj;
             })(new this.$.$mol_calendar());
         }
+        /**
+         *  ```
+         *  month \2018-01
+         *  ```
+         **/
         month() {
             return "2018-01";
         }
+        /**
+         *  ```
+         *  selected!day false
+         *  ```
+         **/
         selected(day) {
             return false;
         }
@@ -6286,18 +8238,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_calendar_demo_simple extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Days of curret month
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_calendar_demo_simple_title");
         }
+        /**
+         *  ```
+         *  sub / <= Calendar
+         *  ```
+         **/
         sub() {
             return [].concat(this.Calendar());
         }
+        /**
+         *  ```
+         *  Calendar $mol_calendar month_moment <= today
+         *  ```
+         **/
         Calendar() {
             return ((obj) => {
                 obj.month_moment = () => this.today();
                 return obj;
             })(new this.$.$mol_calendar());
         }
+        /**
+         *  ```
+         *  today $mol_time_moment
+         *  ```
+         **/
         today() {
             return ((obj) => {
                 return obj;
@@ -6425,12 +8397,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_card_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Cards with optional status
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_card_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Simple
+         *  	<= Pending
+         *  ```
+         **/
         sub() {
             return [].concat(this.Simple(), this.Pending());
         }
+        /**
+         *  ```
+         *  Simple $mol_card Content $mol_row sub / \Hello world!
+         *  ```
+         **/
         Simple() {
             return ((obj) => {
                 obj.Content = () => ((obj) => {
@@ -6440,6 +8429,13 @@ var $;
                 return obj;
             })(new this.$.$mol_card());
         }
+        /**
+         *  ```
+         *  Pending $mol_card
+         *  	Content $mol_row sub / \Hello pending!
+         *  	status \pending
+         *  ```
+         **/
         Pending() {
             return ((obj) => {
                 obj.Content = () => ((obj) => {
@@ -6465,6 +8461,11 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_group extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \g
+         *  ```
+         **/
         dom_name() {
             return "g";
         }
@@ -6567,24 +8568,69 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_graph extends $.$mol_svg_group {
+        /**
+         *  ```
+         *  series_x /number
+         *  ```
+         **/
         series_x() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  series_y /number
+         *  ```
+         **/
         series_y() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_plot_graph_type <= type
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_plot_graph_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type \solid
+         *  ```
+         **/
         type() {
             return "solid";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	color <= color
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "color": this.color() }));
         }
+        /**
+         *  ```
+         *  color \
+         *  ```
+         **/
         color() {
             return "";
         }
+        /**
+         *  ```
+         *  viewport $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         viewport() {
             return ((obj) => {
                 return obj;
@@ -6594,17 +8640,49 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  shift /number
+         *  	0
+         *  	0
+         *  ```
+         **/
         shift() {
             return [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  scale /number
+         *  	1
+         *  	1
+         *  ```
+         **/
         scale() {
             return [].concat(1, 1);
         }
+        /**
+         *  ```
+         *  cursor_position $mol_vector_2d /
+         *  	NaN
+         *  	NaN
+         *  ```
+         **/
         cursor_position() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_2d(NaN, NaN));
         }
+        /**
+         *  ```
+         *  dimensions_pane $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         dimensions_pane() {
             return ((obj) => {
                 return obj;
@@ -6614,6 +8692,17 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  dimensions $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         dimensions() {
             return ((obj) => {
                 return obj;
@@ -6623,11 +8712,29 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  size_real $mol_vector_2d /
+         *  	0
+         *  	0
+         *  ```
+         **/
         size_real() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_2d(0, 0));
         }
+        /**
+         *  ```
+         *  gap $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		0
+         *  		0
+         *  	$mol_vector_range /
+         *  		0
+         *  		0
+         *  ```
+         **/
         gap() {
             return ((obj) => {
                 return obj;
@@ -6637,21 +8744,51 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(0, 0))));
         }
+        /**
+         *  ```
+         *  indexes /number
+         *  ```
+         **/
         indexes() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  points /readonly[number,number]
+         *  ```
+         **/
         points() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  front /$mol_svg
+         *  ```
+         **/
         front() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  back /$mol_svg
+         *  ```
+         **/
         back() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  hue NaN
+         *  ```
+         **/
         hue() {
             return NaN;
         }
+        /**
+         *  ```
+         *  Sample null
+         *  ```
+         **/
         Sample() {
             return null;
         }
@@ -6678,15 +8815,39 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_plot_graph_sample extends $.$mol_view {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_plot_graph_type <= type
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_plot_graph_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type \solid
+         *  ```
+         **/
         type() {
             return "solid";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	color <= color
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "color": this.color() }));
         }
+        /**
+         *  ```
+         *  color \black
+         *  ```
+         **/
         color() {
             return "black";
         }
@@ -6763,33 +8924,89 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_pane extends $.$mol_svg_root {
+        /**
+         *  ```
+         *  aspect \none
+         *  ```
+         **/
         aspect() {
             return "none";
         }
+        /**
+         *  ```
+         *  hue_base?val NaN
+         *  ```
+         **/
         hue_base(val, force) {
             return (val !== void 0) ? val : NaN;
         }
+        /**
+         *  ```
+         *  hue_shift?val 111
+         *  ```
+         **/
         hue_shift(val, force) {
             return (val !== void 0) ? val : 111;
         }
+        /**
+         *  ```
+         *  gap_hor 48
+         *  ```
+         **/
         gap_hor() {
             return 48;
         }
+        /**
+         *  ```
+         *  gap_vert 24
+         *  ```
+         **/
         gap_vert() {
             return 24;
         }
+        /**
+         *  ```
+         *  gap_left <= gap_hor
+         *  ```
+         **/
         gap_left() {
             return this.gap_hor();
         }
+        /**
+         *  ```
+         *  gap_right <= gap_hor
+         *  ```
+         **/
         gap_right() {
             return this.gap_hor();
         }
+        /**
+         *  ```
+         *  gap_top <= gap_vert
+         *  ```
+         **/
         gap_top() {
             return this.gap_vert();
         }
+        /**
+         *  ```
+         *  gap_bottom <= gap_vert
+         *  ```
+         **/
         gap_bottom() {
             return this.gap_vert();
         }
+        /**
+         *  ```
+         *  gap $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		<= gap_left
+         *  		<= gap_right
+         *  	$mol_vector_range /
+         *  		<= gap_bottom
+         *  		<= gap_top
+         *  ```
+         **/
         gap() {
             return ((obj) => {
                 return obj;
@@ -6799,6 +9016,17 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(this.gap_bottom(), this.gap_top()))));
         }
+        /**
+         *  ```
+         *  shift_limit $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		0
+         *  		0
+         *  	$mol_vector_range /
+         *  		0
+         *  		0
+         *  ```
+         **/
         shift_limit() {
             return ((obj) => {
                 return obj;
@@ -6808,12 +9036,37 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(0, 0))));
         }
+        /**
+         *  ```
+         *  shift_default /number
+         *  	0
+         *  	0
+         *  ```
+         **/
         shift_default() {
             return [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  shift?val /number
+         *  	0
+         *  	0
+         *  ```
+         **/
         shift(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  scale_limit $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		0
+         *  		Infinity
+         *  	$mol_vector_range /
+         *  		0
+         *  		Infinity
+         *  ```
+         **/
         scale_limit() {
             return ((obj) => {
                 return obj;
@@ -6823,28 +9076,77 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(0, Infinity))));
         }
+        /**
+         *  ```
+         *  scale_default /number
+         *  	0
+         *  	0
+         *  ```
+         **/
         scale_default() {
             return [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  scale?val /number
+         *  	1
+         *  	1
+         *  ```
+         **/
         scale(val, force) {
             return (val !== void 0) ? val : [].concat(1, 1);
         }
+        /**
+         *  ```
+         *  scale_x?val 0
+         *  ```
+         **/
         scale_x(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scale_y?val 0
+         *  ```
+         **/
         scale_y(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  size $mol_vector_2d /
+         *  	0
+         *  	0
+         *  ```
+         **/
         size() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_2d(0, 0));
         }
+        /**
+         *  ```
+         *  size_real $mol_vector_2d /
+         *  	1
+         *  	1
+         *  ```
+         **/
         size_real() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_2d(1, 1));
         }
+        /**
+         *  ```
+         *  dimensions_viewport $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         dimensions_viewport() {
             return ((obj) => {
                 return obj;
@@ -6854,6 +9156,17 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  dimensions $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         dimensions() {
             return ((obj) => {
                 return obj;
@@ -6863,26 +9176,65 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  sub <= graphs_sorted
+         *  ```
+         **/
         sub() {
             return this.graphs_sorted();
         }
+        /**
+         *  ```
+         *  graphs_sorted /$mol_svg
+         *  ```
+         **/
         graphs_sorted() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  graphs_colored <= graphs_positioned
+         *  ```
+         **/
         graphs_colored() {
             return this.graphs_positioned();
         }
+        /**
+         *  ```
+         *  graphs_positioned <= graphs
+         *  ```
+         **/
         graphs_positioned() {
             return this.graphs();
         }
+        /**
+         *  ```
+         *  graphs /$mol_plot_graph
+         *  ```
+         **/
         graphs() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  cursor_position?val $mol_vector_2d /
+         *  	NaN
+         *  	NaN
+         *  ```
+         **/
         cursor_position(val, force) {
             return (val !== void 0) ? val : ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_2d(NaN, NaN));
         }
+        /**
+         *  ```
+         *  plugins /
+         *  	<= Meter
+         *  	<= Touch
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Meter(), this.Touch());
         }
@@ -6892,11 +9244,26 @@ var $;
         height() {
             return this.Meter().height();
         }
+        /**
+         *  ```
+         *  Meter $mol_meter
+         *  	width => width
+         *  	height => height
+         *  ```
+         **/
         Meter() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_meter());
         }
+        /**
+         *  ```
+         *  Touch $mol_touch
+         *  	zoom?val <=> scale_x?val
+         *  	pan?val <=> shift?val
+         *  	pos?val <=> cursor_position?val
+         *  ```
+         **/
         Touch() {
             return ((obj) => {
                 obj.zoom = (val) => this.scale_x(val);
@@ -6905,9 +9272,21 @@ var $;
                 return obj;
             })(new this.$.$mol_touch());
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	dblclick?event <=> reset?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "dblclick": (event) => this.reset(event) }));
         }
+        /**
+         *  ```
+         *  reset?event null
+         *  ```
+         **/
         reset(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -7144,36 +9523,78 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_chart_legend extends $.$mol_scroll {
+        /**
+         *  ```
+         *  graphs /$mol_plot_graph
+         *  ```
+         **/
         graphs() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  sub <= graph_legends
+         *  ```
+         **/
         sub() {
             return this.graph_legends();
         }
+        /**
+         *  ```
+         *  graph_legends /$mol_view
+         *  ```
+         **/
         graph_legends() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Graph_legend!id $mol_view sub /
+         *  	<= Graph_sample_box!id
+         *  	<= Graph_title!id
+         *  ```
+         **/
         Graph_legend(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Graph_sample_box(id), this.Graph_title(id));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  Graph_sample_box!id $mol_view sub / <= Graph_sample!id
+         *  ```
+         **/
         Graph_sample_box(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Graph_sample(id));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  Graph_sample!id null
+         *  ```
+         **/
         Graph_sample(id) {
             return null;
         }
+        /**
+         *  ```
+         *  Graph_title!id $mol_view sub / <= graph_title!id
+         *  ```
+         **/
         Graph_title(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.graph_title(id));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  graph_title!id \
+         *  ```
+         **/
         graph_title(id) {
             return "";
         }
@@ -7234,30 +9655,84 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_chart extends $.$mol_view {
+        /**
+         *  ```
+         *  gap_hor 48
+         *  ```
+         **/
         gap_hor() {
             return 48;
         }
+        /**
+         *  ```
+         *  gap_vert 24
+         *  ```
+         **/
         gap_vert() {
             return 24;
         }
+        /**
+         *  ```
+         *  gap_left <= gap_hor
+         *  ```
+         **/
         gap_left() {
             return this.gap_hor();
         }
+        /**
+         *  ```
+         *  gap_right <= gap_hor
+         *  ```
+         **/
         gap_right() {
             return this.gap_hor();
         }
+        /**
+         *  ```
+         *  gap_bottom <= gap_vert
+         *  ```
+         **/
         gap_bottom() {
             return this.gap_vert();
         }
+        /**
+         *  ```
+         *  gap_top <= gap_vert
+         *  ```
+         **/
         gap_top() {
             return this.gap_vert();
         }
+        /**
+         *  ```
+         *  graphs /$mol_plot_graph
+         *  ```
+         **/
         graphs() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Plot
+         *  	<= Legend
+         *  ```
+         **/
         sub() {
             return [].concat(this.Plot(), this.Legend());
         }
+        /**
+         *  ```
+         *  Plot $mol_plot_pane
+         *  	gap_left <= gap_left
+         *  	gap_right <= gap_right
+         *  	gap_bottom <= gap_bottom
+         *  	gap_top <= gap_top
+         *  	graphs <= graphs
+         *  	hue_base?val <= hue_base
+         *  	hue_shift?val <= hue_shift
+         *  ```
+         **/
         Plot() {
             return ((obj) => {
                 obj.gap_left = () => this.gap_left();
@@ -7270,12 +9745,27 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_pane());
         }
+        /**
+         *  ```
+         *  hue_base 140
+         *  ```
+         **/
         hue_base() {
             return 140;
         }
+        /**
+         *  ```
+         *  hue_shift 111
+         *  ```
+         **/
         hue_shift() {
             return 111;
         }
+        /**
+         *  ```
+         *  Legend $mol_chart_legend graphs <= graphs
+         *  ```
+         **/
         Legend() {
             return ((obj) => {
                 obj.graphs = () => this.graphs();
@@ -7303,24 +9793,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_bar extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	stroke-width <= stroke_width
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "stroke-width": this.stroke_width() }));
         }
+        /**
+         *  ```
+         *  stroke_width \1rem
+         *  ```
+         **/
         stroke_width() {
             return "1rem";
         }
+        /**
+         *  ```
+         *  sub / <= Curve
+         *  ```
+         **/
         sub() {
             return [].concat(this.Curve());
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  Sample $mol_plot_graph_sample color <= color
+         *  ```
+         **/
         Sample() {
             return ((obj) => {
                 obj.color = () => this.color();
@@ -7436,21 +9958,46 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_group extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  sub <= graphs_enriched
+         *  ```
+         **/
         sub() {
             return this.graphs_enriched();
         }
+        /**
+         *  ```
+         *  graphs_enriched <= graphs
+         *  ```
+         **/
         graphs_enriched() {
             return this.graphs();
         }
+        /**
+         *  ```
+         *  graphs /$mol_plot_graph
+         *  ```
+         **/
         graphs() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Sample $mol_plot_graph_sample sub <= graph_samples
+         *  ```
+         **/
         Sample() {
             return ((obj) => {
                 obj.sub = () => this.graph_samples();
                 return obj;
             })(new this.$.$mol_plot_graph_sample());
         }
+        /**
+         *  ```
+         *  graph_samples /$mol_view
+         *  ```
+         **/
         graph_samples() {
             return [].concat();
         }
@@ -7540,27 +10087,64 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_line extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  threshold 4
+         *  ```
+         **/
         threshold() {
             return 4;
         }
+        /**
+         *  ```
+         *  spacing 2
+         *  ```
+         **/
         spacing() {
             return 2;
         }
+        /**
+         *  ```
+         *  color_fill \none
+         *  ```
+         **/
         color_fill() {
             return "none";
         }
+        /**
+         *  ```
+         *  sub / <= Curve
+         *  ```
+         **/
         sub() {
             return [].concat(this.Curve());
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  Sample $mol_plot_graph_sample
+         *  	color <= color
+         *  	type <= type
+         *  ```
+         **/
         Sample() {
             return ((obj) => {
                 obj.color = () => this.color();
@@ -7696,27 +10280,64 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_dot extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  points_max Infinity
+         *  ```
+         **/
         points_max() {
             return Infinity;
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	stroke-width <= diameter
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "stroke-width": this.diameter() }));
         }
+        /**
+         *  ```
+         *  diameter 8
+         *  ```
+         **/
         diameter() {
             return 8;
         }
+        /**
+         *  ```
+         *  sub / <= Curve
+         *  ```
+         **/
         sub() {
             return [].concat(this.Curve());
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  Sample $mol_plot_graph_sample color <= color
+         *  ```
+         **/
         Sample() {
             return ((obj) => {
                 obj.color = () => this.color();
@@ -7751,6 +10372,7 @@ var $;
             }
             indexes() {
                 const radius = this.diameter() / 2;
+                // calculate by cpu
                 const points_max = this.points_max();
                 const viewport = this.viewport();
                 const viewport_left = viewport.x.min - radius;
@@ -7823,24 +10445,64 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_rect extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \rect
+         *  ```
+         **/
         dom_name() {
             return "rect";
         }
+        /**
+         *  ```
+         *  pos /
+         *  ```
+         **/
         pos() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	width <= width
+         *  	height <= height
+         *  	x <= pos_x
+         *  	y <= pos_y
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "width": this.width(), "height": this.height(), "x": this.pos_x(), "y": this.pos_y() }));
         }
+        /**
+         *  ```
+         *  width \0
+         *  ```
+         **/
         width() {
             return "0";
         }
+        /**
+         *  ```
+         *  height \0
+         *  ```
+         **/
         height() {
             return "0";
         }
+        /**
+         *  ```
+         *  pos_x \
+         *  ```
+         **/
         pos_x() {
             return "";
         }
+        /**
+         *  ```
+         *  pos_y \
+         *  ```
+         **/
         pos_y() {
             return "";
         }
@@ -7871,27 +10533,71 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_text extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \text
+         *  ```
+         **/
         dom_name() {
             return "text";
         }
+        /**
+         *  ```
+         *  pos /
+         *  ```
+         **/
         pos() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	x <= pos_x
+         *  	y <= pos_y
+         *  	text-anchor <= align
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "x": this.pos_x(), "y": this.pos_y(), "text-anchor": this.align() }));
         }
+        /**
+         *  ```
+         *  pos_x \
+         *  ```
+         **/
         pos_x() {
             return "";
         }
+        /**
+         *  ```
+         *  pos_y \
+         *  ```
+         **/
         pos_y() {
             return "";
         }
+        /**
+         *  ```
+         *  align \middle
+         *  ```
+         **/
         align() {
             return "middle";
         }
+        /**
+         *  ```
+         *  sub / <= text
+         *  ```
+         **/
         sub() {
             return [].concat(this.text());
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
@@ -7928,12 +10634,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_svg_text_box extends $.$mol_svg_group {
+        /**
+         *  ```
+         *  font_size 16
+         *  ```
+         **/
         font_size() {
             return 16;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Back
+         *  	<= Text
+         *  ```
+         **/
         sub() {
             return [].concat(this.Back(), this.Text());
         }
+        /**
+         *  ```
+         *  Back $mol_svg_rect
+         *  	width <= box_width
+         *  	height <= box_height
+         *  	pos /
+         *  		<= box_pos_x
+         *  		<= box_pos_y
+         *  ```
+         **/
         Back() {
             return ((obj) => {
                 obj.width = () => this.box_width();
@@ -7942,18 +10670,48 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_rect());
         }
+        /**
+         *  ```
+         *  box_width \0.5rem
+         *  ```
+         **/
         box_width() {
             return "0.5rem";
         }
+        /**
+         *  ```
+         *  box_height \1rem
+         *  ```
+         **/
         box_height() {
             return "1rem";
         }
+        /**
+         *  ```
+         *  box_pos_x <= pos_x
+         *  ```
+         **/
         box_pos_x() {
             return this.pos_x();
         }
+        /**
+         *  ```
+         *  box_pos_y \0
+         *  ```
+         **/
         box_pos_y() {
             return "0";
         }
+        /**
+         *  ```
+         *  Text $mol_svg_text
+         *  	pos /
+         *  		<= pos_x
+         *  		<= pos_y
+         *  	align <= align
+         *  	sub / <= text
+         *  ```
+         **/
         Text() {
             return ((obj) => {
                 obj.pos = () => [].concat(this.pos_x(), this.pos_y());
@@ -7962,15 +10720,35 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_text());
         }
+        /**
+         *  ```
+         *  pos_x \0
+         *  ```
+         **/
         pos_x() {
             return "0";
         }
+        /**
+         *  ```
+         *  pos_y \100%
+         *  ```
+         **/
         pos_y() {
             return "100%";
         }
+        /**
+         *  ```
+         *  align \start
+         *  ```
+         **/
         align() {
             return "start";
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
@@ -8047,40 +10825,107 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_ruler extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  step 0
+         *  ```
+         **/
         step() {
             return 0;
         }
+        /**
+         *  ```
+         *  scale_axis 1
+         *  ```
+         **/
         scale_axis() {
             return 1;
         }
+        /**
+         *  ```
+         *  scale_step 1
+         *  ```
+         **/
         scale_step() {
             return 1;
         }
+        /**
+         *  ```
+         *  shift_axis 1
+         *  ```
+         **/
         shift_axis() {
             return 1;
         }
+        /**
+         *  ```
+         *  dimensions_axis $mol_vector_range /
+         *  	Infinity
+         *  	-Infinity
+         *  ```
+         **/
         dimensions_axis() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity));
         }
+        /**
+         *  ```
+         *  viewport_axis $mol_vector_range /
+         *  	Infinity
+         *  	-Infinity
+         *  ```
+         **/
         viewport_axis() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity));
         }
+        /**
+         *  ```
+         *  axis_points /number
+         *  ```
+         **/
         axis_points() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  normalize?val 0
+         *  ```
+         **/
         normalize(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  precision 1
+         *  ```
+         **/
         precision() {
             return 1;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Background
+         *  	<= Curve
+         *  	<= labels_formatted
+         *  	<= Title
+         *  ```
+         **/
         sub() {
             return [].concat(this.Background(), this.Curve(), this.labels_formatted(), this.Title());
         }
+        /**
+         *  ```
+         *  Background $mol_svg_rect
+         *  	pos_x <= background_x
+         *  	pos_y <= background_y
+         *  	width <= background_width
+         *  	height <= background_height
+         *  ```
+         **/
         Background() {
             return ((obj) => {
                 obj.pos_x = () => this.background_x();
@@ -8090,30 +10935,74 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_rect());
         }
+        /**
+         *  ```
+         *  background_x \0
+         *  ```
+         **/
         background_x() {
             return "0";
         }
+        /**
+         *  ```
+         *  background_y \0
+         *  ```
+         **/
         background_y() {
             return "0";
         }
+        /**
+         *  ```
+         *  background_width \100%
+         *  ```
+         **/
         background_width() {
             return "100%";
         }
+        /**
+         *  ```
+         *  background_height \14
+         *  ```
+         **/
         background_height() {
             return "14";
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  labels_formatted /
+         *  ```
+         **/
         labels_formatted() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Title $mol_svg_text_box
+         *  	pos_x <= title_pos_x
+         *  	pos_y <= title_pos_y
+         *  	align <= title_align
+         *  	text <= title
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.pos_x = () => this.title_pos_x();
@@ -8123,15 +11012,38 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_text_box());
         }
+        /**
+         *  ```
+         *  title_pos_x \0
+         *  ```
+         **/
         title_pos_x() {
             return "0";
         }
+        /**
+         *  ```
+         *  title_pos_y \100%
+         *  ```
+         **/
         title_pos_y() {
             return "100%";
         }
+        /**
+         *  ```
+         *  title_align \start
+         *  ```
+         **/
         title_align() {
             return "start";
         }
+        /**
+         *  ```
+         *  Label!index $mol_svg_text
+         *  	pos <= label_pos!index
+         *  	text <= label_text!index
+         *  	align <= label_align
+         *  ```
+         **/
         Label(index) {
             return ((obj) => {
                 obj.pos = () => this.label_pos(index);
@@ -8140,18 +11052,45 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_text());
         }
+        /**
+         *  ```
+         *  label_pos!index /
+         *  	<= label_pos_x!index
+         *  	<= label_pos_y!index
+         *  ```
+         **/
         label_pos(index) {
             return [].concat(this.label_pos_x(index), this.label_pos_y(index));
         }
+        /**
+         *  ```
+         *  label_pos_x!index \
+         *  ```
+         **/
         label_pos_x(index) {
             return "";
         }
+        /**
+         *  ```
+         *  label_pos_y!index \
+         *  ```
+         **/
         label_pos_y(index) {
             return "";
         }
+        /**
+         *  ```
+         *  label_text!index \
+         *  ```
+         **/
         label_text(index) {
             return "";
         }
+        /**
+         *  ```
+         *  label_align \
+         *  ```
+         **/
         label_align() {
             return "";
         }
@@ -8275,21 +11214,51 @@ var $;
 var $;
 (function ($) {
     class $mol_plot_ruler_vert extends $.$mol_plot_ruler {
+        /**
+         *  ```
+         *  title_align \end
+         *  ```
+         **/
         title_align() {
             return "end";
         }
+        /**
+         *  ```
+         *  label_align \end
+         *  ```
+         **/
         label_align() {
             return "end";
         }
+        /**
+         *  ```
+         *  title_pos_y \14
+         *  ```
+         **/
         title_pos_y() {
             return "14";
         }
+        /**
+         *  ```
+         *  label_pos_x!v <= title_pos_x
+         *  ```
+         **/
         label_pos_x(v) {
             return this.title_pos_x();
         }
+        /**
+         *  ```
+         *  background_height \100%
+         *  ```
+         **/
         background_height() {
             return "100%";
         }
+        /**
+         *  ```
+         *  background_width <= title_pos_x
+         *  ```
+         **/
         background_width() {
             return this.title_pos_x();
         }
@@ -8343,21 +11312,51 @@ var $;
 var $;
 (function ($) {
     class $mol_plot_ruler_hor extends $.$mol_plot_ruler {
+        /**
+         *  ```
+         *  title_align \start
+         *  ```
+         **/
         title_align() {
             return "start";
         }
+        /**
+         *  ```
+         *  label_align \middle
+         *  ```
+         **/
         label_align() {
             return "middle";
         }
+        /**
+         *  ```
+         *  title_pos_x \0
+         *  ```
+         **/
         title_pos_x() {
             return "0";
         }
+        /**
+         *  ```
+         *  title_pos_y \100%
+         *  ```
+         **/
         title_pos_y() {
             return "100%";
         }
+        /**
+         *  ```
+         *  label_pos_y!v <= title_pos_y
+         *  ```
+         **/
         label_pos_y(v) {
             return this.title_pos_y();
         }
+        /**
+         *  ```
+         *  background_width \100%
+         *  ```
+         **/
         background_width() {
             return "100%";
         }
@@ -8414,6 +11413,11 @@ var $;
 var $;
 (function ($) {
     class $mol_plot_mark_hor extends $.$mol_plot_ruler_hor {
+        /**
+         *  ```
+         *  labels /string
+         *  ```
+         **/
         labels() {
             return [].concat();
         }
@@ -8530,18 +11534,49 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_mark_cross extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  labels /string
+         *  ```
+         **/
         labels() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  title_x_gap 4
+         *  ```
+         **/
         title_x_gap() {
             return 4;
         }
+        /**
+         *  ```
+         *  threshold 16
+         *  ```
+         **/
         threshold() {
             return 16;
         }
+        /**
+         *  ```
+         *  graphs /$mol_plot_graph
+         *  ```
+         **/
         graphs() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  dimensions $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         dimensions() {
             return ((obj) => {
                 return obj;
@@ -8551,18 +11586,44 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Curve
+         *  	<= Label_x
+         *  	<= Label_y
+         *  ```
+         **/
         sub() {
             return [].concat(this.Curve(), this.Label_x(), this.Label_y());
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  Label_x $mol_svg_text_box
+         *  	pos_x <= title_x_pos_x
+         *  	pos_y <= title_x_pos_y
+         *  	text <= title_x
+         *  ```
+         **/
         Label_x() {
             return ((obj) => {
                 obj.pos_x = () => this.title_x_pos_x();
@@ -8571,15 +11632,38 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_text_box());
         }
+        /**
+         *  ```
+         *  title_x_pos_x \0
+         *  ```
+         **/
         title_x_pos_x() {
             return "0";
         }
+        /**
+         *  ```
+         *  title_x_pos_y \100%
+         *  ```
+         **/
         title_x_pos_y() {
             return "100%";
         }
+        /**
+         *  ```
+         *  title_x \
+         *  ```
+         **/
         title_x() {
             return "";
         }
+        /**
+         *  ```
+         *  Label_y $mol_svg_text_box
+         *  	pos_x <= title_y_pos_x
+         *  	pos_y <= title_y_pos_y
+         *  	text <= title_y
+         *  ```
+         **/
         Label_y() {
             return ((obj) => {
                 obj.pos_x = () => this.title_y_pos_x();
@@ -8588,12 +11672,27 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_text_box());
         }
+        /**
+         *  ```
+         *  title_y_pos_x \0
+         *  ```
+         **/
         title_y_pos_x() {
             return "0";
         }
+        /**
+         *  ```
+         *  title_y_pos_y \0
+         *  ```
+         **/
         title_y_pos_y() {
             return "0";
         }
+        /**
+         *  ```
+         *  title_y \
+         *  ```
+         **/
         title_y() {
             return "";
         }
@@ -8717,18 +11816,45 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_chart_demo_simple extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Simple chart with hadcoded series
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_chart_demo_simple_title");
         }
+        /**
+         *  ```
+         *  sub / <= Chart
+         *  ```
+         **/
         sub() {
             return [].concat(this.Chart());
         }
+        /**
+         *  ```
+         *  Chart $mol_chart graphs /
+         *  	<= Plan
+         *  	<= Fact
+         *  	<= Vert_ruler
+         *  	<= Marker_hor
+         *  	<= Marker_cross
+         *  ```
+         **/
         Chart() {
             return ((obj) => {
                 obj.graphs = () => [].concat(this.Plan(), this.Fact(), this.Vert_ruler(), this.Marker_hor(), this.Marker_cross());
                 return obj;
             })(new this.$.$mol_chart());
         }
+        /**
+         *  ```
+         *  Plan $mol_plot_bar
+         *  	title <= plan_title
+         *  	series_y <= plan
+         *  ```
+         **/
         Plan() {
             return ((obj) => {
                 obj.title = () => this.plan_title();
@@ -8736,12 +11862,36 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_bar());
         }
+        /**
+         *  ```
+         *  plan_title @ \Plan
+         *  ```
+         **/
         plan_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_simple_plan_title");
         }
+        /**
+         *  ```
+         *  plan /
+         *  	10
+         *  	20
+         *  	30
+         *  	40
+         *  ```
+         **/
         plan() {
             return [].concat(10, 20, 30, 40);
         }
+        /**
+         *  ```
+         *  Fact $mol_plot_group
+         *  	title <= fact_title
+         *  	series_y <= facts
+         *  	graphs /
+         *  		<= Fact_line
+         *  		<= Fact_dots
+         *  ```
+         **/
         Fact() {
             return ((obj) => {
                 obj.title = () => this.fact_title();
@@ -8750,31 +11900,71 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_group());
         }
+        /**
+         *  ```
+         *  fact_title @ \Fact
+         *  ```
+         **/
         fact_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_simple_fact_title");
         }
+        /**
+         *  ```
+         *  facts /
+         *  	5
+         *  	10
+         *  	30
+         *  ```
+         **/
         facts() {
             return [].concat(5, 10, 30);
         }
+        /**
+         *  ```
+         *  Fact_line $mol_plot_line
+         *  ```
+         **/
         Fact_line() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_plot_line());
         }
+        /**
+         *  ```
+         *  Fact_dots $mol_plot_dot
+         *  ```
+         **/
         Fact_dots() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_plot_dot());
         }
+        /**
+         *  ```
+         *  Vert_ruler $mol_plot_ruler_vert title <= vert_title
+         *  ```
+         **/
         Vert_ruler() {
             return ((obj) => {
                 obj.title = () => this.vert_title();
                 return obj;
             })(new this.$.$mol_plot_ruler_vert());
         }
+        /**
+         *  ```
+         *  vert_title @ \pcs
+         *  ```
+         **/
         vert_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_simple_vert_title");
         }
+        /**
+         *  ```
+         *  Marker_hor $mol_plot_mark_hor
+         *  	title <= marker_hor_title
+         *  	labels <= months
+         *  ```
+         **/
         Marker_hor() {
             return ((obj) => {
                 obj.title = () => this.marker_hor_title();
@@ -8782,12 +11972,35 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_mark_hor());
         }
+        /**
+         *  ```
+         *  marker_hor_title @ \Months
+         *  ```
+         **/
         marker_hor_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_simple_marker_hor_title");
         }
+        /**
+         *  ```
+         *  months /string
+         *  	\January
+         *  	\February
+         *  	\March
+         *  	\April
+         *  ```
+         **/
         months() {
             return [].concat("January", "February", "March", "April");
         }
+        /**
+         *  ```
+         *  Marker_cross $mol_plot_mark_cross
+         *  	labels <= months
+         *  	graphs /
+         *  		<= Plan
+         *  		<= Fact_dots
+         *  ```
+         **/
         Marker_cross() {
             return ((obj) => {
                 obj.labels = () => this.months();
@@ -8834,27 +12047,62 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_fill extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  points /readonly[number,number]
+         *  ```
+         **/
         points() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  threshold 4
+         *  ```
+         **/
         threshold() {
             return 4;
         }
+        /**
+         *  ```
+         *  spacing 2
+         *  ```
+         **/
         spacing() {
             return 2;
         }
+        /**
+         *  ```
+         *  sub / <= Curve
+         *  ```
+         **/
         sub() {
             return [].concat(this.Curve());
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  Sample $mol_plot_graph_sample color <= color
+         *  ```
+         **/
         Sample() {
             return ((obj) => {
                 obj.color = () => this.color();
@@ -8973,24 +12221,65 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_chart_demo_styles extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Chart with various styles of graphs.
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_chart_demo_styles_title");
         }
+        /**
+         *  ```
+         *  samples_count 15
+         *  ```
+         **/
         samples_count() {
             return 15;
         }
+        /**
+         *  ```
+         *  sub / <= Chart
+         *  ```
+         **/
         sub() {
             return [].concat(this.Chart());
         }
+        /**
+         *  ```
+         *  Chart $mol_chart graphs <= graphs
+         *  ```
+         **/
         Chart() {
             return ((obj) => {
                 obj.graphs = () => this.graphs();
                 return obj;
             })(new this.$.$mol_chart());
         }
+        /**
+         *  ```
+         *  graphs /
+         *  	<= Receipts
+         *  	<= Receipts_confirmed
+         *  	<= Maximum
+         *  	<= Waste
+         *  	<= Purchases
+         *  	<= Taxes
+         *  	<= Energy
+         *  	<= Day
+         *  ```
+         **/
         graphs() {
             return [].concat(this.Receipts(), this.Receipts_confirmed(), this.Maximum(), this.Waste(), this.Purchases(), this.Taxes(), this.Energy(), this.Day());
         }
+        /**
+         *  ```
+         *  Receipts $mol_plot_bar
+         *  	title <= receipts_title
+         *  	series_x <= series_x
+         *  	series_y <= series_2_y
+         *  ```
+         **/
         Receipts() {
             return ((obj) => {
                 obj.title = () => this.receipts_title();
@@ -8999,15 +12288,38 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_bar());
         }
+        /**
+         *  ```
+         *  receipts_title @ \Receipts
+         *  ```
+         **/
         receipts_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_styles_receipts_title");
         }
+        /**
+         *  ```
+         *  series_x /
+         *  ```
+         **/
         series_x() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  series_2_y /
+         *  ```
+         **/
         series_2_y() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Receipts_confirmed $mol_plot_bar
+         *  	title <= receipts_confirmed_title
+         *  	series_x <= series_x
+         *  	series_y <= series_3_y
+         *  ```
+         **/
         Receipts_confirmed() {
             return ((obj) => {
                 obj.title = () => this.receipts_confirmed_title();
@@ -9016,12 +12328,30 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_bar());
         }
+        /**
+         *  ```
+         *  receipts_confirmed_title @ \Confirmed receipts
+         *  ```
+         **/
         receipts_confirmed_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_styles_receipts_confirmed_title");
         }
+        /**
+         *  ```
+         *  series_3_y /
+         *  ```
+         **/
         series_3_y() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Maximum $mol_plot_dot
+         *  	title <= maximum_title
+         *  	series_x <= series_x
+         *  	series_y <= series_1_y
+         *  ```
+         **/
         Maximum() {
             return ((obj) => {
                 obj.title = () => this.maximum_title();
@@ -9030,12 +12360,31 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_dot());
         }
+        /**
+         *  ```
+         *  maximum_title @ \Maximum
+         *  ```
+         **/
         maximum_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_styles_maximum_title");
         }
+        /**
+         *  ```
+         *  series_1_y /
+         *  ```
+         **/
         series_1_y() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Waste $mol_plot_line
+         *  	type \dashed
+         *  	title <= waste_title
+         *  	series_x <= series_x
+         *  	series_y <= series_4_y
+         *  ```
+         **/
         Waste() {
             return ((obj) => {
                 obj.type = () => "dashed";
@@ -9045,12 +12394,34 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_line());
         }
+        /**
+         *  ```
+         *  waste_title @ \Waste
+         *  ```
+         **/
         waste_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_styles_waste_title");
         }
+        /**
+         *  ```
+         *  series_4_y /
+         *  ```
+         **/
         series_4_y() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Purchases $mol_plot_group
+         *  	title <= purchases_title
+         *  	series_x <= series_x
+         *  	series_y <= series_5_y
+         *  	graphs /
+         *  		<= Purchases_fill
+         *  		<= Purchases_line
+         *  		<= Purchases_dots
+         *  ```
+         **/
         Purchases() {
             return ((obj) => {
                 obj.title = () => this.purchases_title();
@@ -9060,27 +12431,64 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_group());
         }
+        /**
+         *  ```
+         *  purchases_title @ \Purchases
+         *  ```
+         **/
         purchases_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_styles_purchases_title");
         }
+        /**
+         *  ```
+         *  series_5_y /
+         *  ```
+         **/
         series_5_y() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Purchases_fill $mol_plot_fill
+         *  ```
+         **/
         Purchases_fill() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_plot_fill());
         }
+        /**
+         *  ```
+         *  Purchases_line $mol_plot_line
+         *  ```
+         **/
         Purchases_line() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_plot_line());
         }
+        /**
+         *  ```
+         *  Purchases_dots $mol_plot_dot
+         *  ```
+         **/
         Purchases_dots() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_plot_dot());
         }
+        /**
+         *  ```
+         *  Taxes $mol_plot_group
+         *  	title <= taxes_title
+         *  	series_x <= series_x
+         *  	series_y <= series_6_y
+         *  	graphs /
+         *  		<= Taxes_fill
+         *  		<= Taxes_line
+         *  		<= Taxes_dots
+         *  ```
+         **/
         Taxes() {
             return ((obj) => {
                 obj.title = () => this.taxes_title();
@@ -9090,37 +12498,79 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_group());
         }
+        /**
+         *  ```
+         *  taxes_title @ \Taxes
+         *  ```
+         **/
         taxes_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_styles_taxes_title");
         }
+        /**
+         *  ```
+         *  series_6_y /
+         *  ```
+         **/
         series_6_y() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Taxes_fill $mol_plot_fill
+         *  ```
+         **/
         Taxes_fill() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_plot_fill());
         }
+        /**
+         *  ```
+         *  Taxes_line $mol_plot_line type \dashed
+         *  ```
+         **/
         Taxes_line() {
             return ((obj) => {
                 obj.type = () => "dashed";
                 return obj;
             })(new this.$.$mol_plot_line());
         }
+        /**
+         *  ```
+         *  Taxes_dots $mol_plot_dot
+         *  ```
+         **/
         Taxes_dots() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_plot_dot());
         }
+        /**
+         *  ```
+         *  Energy $mol_plot_ruler_vert title <= energy_title
+         *  ```
+         **/
         Energy() {
             return ((obj) => {
                 obj.title = () => this.energy_title();
                 return obj;
             })(new this.$.$mol_plot_ruler_vert());
         }
+        /**
+         *  ```
+         *  energy_title @ \kJ
+         *  ```
+         **/
         energy_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_styles_energy_title");
         }
+        /**
+         *  ```
+         *  Day $mol_plot_mark_hor
+         *  	title <= day_title
+         *  	series_x <= series_x
+         *  ```
+         **/
         Day() {
             return ((obj) => {
                 obj.title = () => this.day_title();
@@ -9128,6 +12578,11 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_mark_hor());
         }
+        /**
+         *  ```
+         *  day_title @ \Day
+         *  ```
+         **/
         day_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_styles_day_title");
         }
@@ -9266,24 +12721,63 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_chart_demo_forces extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Fake wheel forces
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_chart_demo_forces_title");
         }
+        /**
+         *  ```
+         *  samples_count 10000
+         *  ```
+         **/
         samples_count() {
             return 10000;
         }
+        /**
+         *  ```
+         *  points_max 600
+         *  ```
+         **/
         points_max() {
             return 600;
         }
+        /**
+         *  ```
+         *  sub / <= Chart
+         *  ```
+         **/
         sub() {
             return [].concat(this.Chart());
         }
+        /**
+         *  ```
+         *  Chart $mol_chart graphs /
+         *  	<= Forces_left
+         *  	<= Forces_right
+         *  	<= Vert_ruler
+         *  	<= Hor_ruler
+         *  	<= Cross
+         *  ```
+         **/
         Chart() {
             return ((obj) => {
                 obj.graphs = () => [].concat(this.Forces_left(), this.Forces_right(), this.Vert_ruler(), this.Hor_ruler(), this.Cross());
                 return obj;
             })(new this.$.$mol_chart());
         }
+        /**
+         *  ```
+         *  Forces_left $mol_plot_dot
+         *  	title <= forces_left_title
+         *  	series_x <= forces_left_x
+         *  	series_y <= forces_left_y
+         *  	points_max <= points_max
+         *  ```
+         **/
         Forces_left() {
             return ((obj) => {
                 obj.title = () => this.forces_left_title();
@@ -9293,15 +12787,39 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_dot());
         }
+        /**
+         *  ```
+         *  forces_left_title @ \Left wheel
+         *  ```
+         **/
         forces_left_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_forces_forces_left_title");
         }
+        /**
+         *  ```
+         *  forces_left_x /number
+         *  ```
+         **/
         forces_left_x() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  forces_left_y /number
+         *  ```
+         **/
         forces_left_y() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Forces_right $mol_plot_dot
+         *  	title <= forces_right_title
+         *  	series_x <= forces_right_x
+         *  	series_y <= forces_right_y
+         *  	points_max <= points_max
+         *  ```
+         **/
         Forces_right() {
             return ((obj) => {
                 obj.title = () => this.forces_right_title();
@@ -9311,24 +12829,56 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_dot());
         }
+        /**
+         *  ```
+         *  forces_right_title @ \Right wheel
+         *  ```
+         **/
         forces_right_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_forces_forces_right_title");
         }
+        /**
+         *  ```
+         *  forces_right_x /number
+         *  ```
+         **/
         forces_right_x() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  forces_right_y /number
+         *  ```
+         **/
         forces_right_y() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Vert_ruler $mol_plot_ruler_vert title <= vert_title
+         *  ```
+         **/
         Vert_ruler() {
             return ((obj) => {
                 obj.title = () => this.vert_title();
                 return obj;
             })(new this.$.$mol_plot_ruler_vert());
         }
+        /**
+         *  ```
+         *  vert_title @ \kN
+         *  ```
+         **/
         vert_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_forces_vert_title");
         }
+        /**
+         *  ```
+         *  Hor_ruler $mol_plot_ruler_hor
+         *  	title <= hor_title
+         *  	series_x <= forces_left_x
+         *  ```
+         **/
         Hor_ruler() {
             return ((obj) => {
                 obj.title = () => this.hor_title();
@@ -9336,9 +12886,21 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_ruler_hor());
         }
+        /**
+         *  ```
+         *  hor_title @ \cm
+         *  ```
+         **/
         hor_title() {
             return this.$.$mol_locale.text("$mol_chart_demo_forces_hor_title");
         }
+        /**
+         *  ```
+         *  Cross $mol_plot_mark_cross graphs /
+         *  	<= Forces_left
+         *  	<= Forces_right
+         *  ```
+         **/
         Cross() {
             return ((obj) => {
                 obj.graphs = () => [].concat(this.Forces_left(), this.Forces_right());
@@ -9437,12 +12999,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check_box_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Checkboxes in various states
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_check_box_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Labeled_base
+         *  	<= Labeled_checked
+         *  	<= Labeled_disabled
+         *  	<= Alone_base
+         *  	<= Alone_checked
+         *  	<= Alone_disabled
+         *  ```
+         **/
         sub() {
             return [].concat(this.Labeled_base(), this.Labeled_checked(), this.Labeled_disabled(), this.Alone_base(), this.Alone_checked(), this.Alone_disabled());
         }
+        /**
+         *  ```
+         *  Labeled_base $mol_check_box
+         *  	checked?val <=> base_checked?val
+         *  	title <= c1Label
+         *  ```
+         **/
         Labeled_base() {
             return ((obj) => {
                 obj.checked = (val) => this.base_checked(val);
@@ -9450,12 +13035,29 @@ var $;
                 return obj;
             })(new this.$.$mol_check_box());
         }
+        /**
+         *  ```
+         *  base_checked?val false
+         *  ```
+         **/
         base_checked(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  c1Label @ \Base
+         *  ```
+         **/
         c1Label() {
             return this.$.$mol_locale.text("$mol_check_box_demo_c1Label");
         }
+        /**
+         *  ```
+         *  Labeled_checked $mol_check_box
+         *  	title <= c2Label
+         *  	checked?val <=> checked_checked?val
+         *  ```
+         **/
         Labeled_checked() {
             return ((obj) => {
                 obj.title = () => this.c2Label();
@@ -9463,12 +13065,30 @@ var $;
                 return obj;
             })(new this.$.$mol_check_box());
         }
+        /**
+         *  ```
+         *  c2Label @ \Checked
+         *  ```
+         **/
         c2Label() {
             return this.$.$mol_locale.text("$mol_check_box_demo_c2Label");
         }
+        /**
+         *  ```
+         *  checked_checked?val true
+         *  ```
+         **/
         checked_checked(val, force) {
             return (val !== void 0) ? val : true;
         }
+        /**
+         *  ```
+         *  Labeled_disabled $mol_check_box
+         *  	title <= c6Label
+         *  	checked true
+         *  	enabled false
+         *  ```
+         **/
         Labeled_disabled() {
             return ((obj) => {
                 obj.title = () => this.c6Label();
@@ -9477,21 +13097,43 @@ var $;
                 return obj;
             })(new this.$.$mol_check_box());
         }
+        /**
+         *  ```
+         *  c6Label @ \Disabled
+         *  ```
+         **/
         c6Label() {
             return this.$.$mol_locale.text("$mol_check_box_demo_c6Label");
         }
+        /**
+         *  ```
+         *  Alone_base $mol_check_box checked?val <=> base_checked?val
+         *  ```
+         **/
         Alone_base() {
             return ((obj) => {
                 obj.checked = (val) => this.base_checked(val);
                 return obj;
             })(new this.$.$mol_check_box());
         }
+        /**
+         *  ```
+         *  Alone_checked $mol_check_box checked?val <=> checked_checked?val
+         *  ```
+         **/
         Alone_checked() {
             return ((obj) => {
                 obj.checked = (val) => this.checked_checked(val);
                 return obj;
             })(new this.$.$mol_check_box());
         }
+        /**
+         *  ```
+         *  Alone_disabled $mol_check_box
+         *  	checked true
+         *  	enabled false
+         *  ```
+         **/
         Alone_disabled() {
             return ((obj) => {
                 obj.checked = () => true;
@@ -9538,12 +13180,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check_expand_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Checkbox-expand in various states
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_check_expand_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Labeled_base
+         *  	<= Labeled_expanded
+         *  	<= Empty_base
+         *  	<= Empty_expanded
+         *  	<= Disabled
+         *  ```
+         **/
         sub() {
             return [].concat(this.Labeled_base(), this.Labeled_expanded(), this.Empty_base(), this.Empty_expanded(), this.Disabled());
         }
+        /**
+         *  ```
+         *  Labeled_base $mol_check_expand
+         *  	checked?val <=> base_expanded?val
+         *  	title <= c1Label
+         *  ```
+         **/
         Labeled_base() {
             return ((obj) => {
                 obj.checked = (val) => this.base_expanded(val);
@@ -9551,12 +13215,29 @@ var $;
                 return obj;
             })(new this.$.$mol_check_expand());
         }
+        /**
+         *  ```
+         *  base_expanded?val false
+         *  ```
+         **/
         base_expanded(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  c1Label @ \Base
+         *  ```
+         **/
         c1Label() {
             return this.$.$mol_locale.text("$mol_check_expand_demo_c1Label");
         }
+        /**
+         *  ```
+         *  Labeled_expanded $mol_check_expand
+         *  	title <= c2Label
+         *  	checked?val <=> expanded_expanded?val
+         *  ```
+         **/
         Labeled_expanded() {
             return ((obj) => {
                 obj.title = () => this.c2Label();
@@ -9564,24 +13245,51 @@ var $;
                 return obj;
             })(new this.$.$mol_check_expand());
         }
+        /**
+         *  ```
+         *  c2Label @ \Expanded
+         *  ```
+         **/
         c2Label() {
             return this.$.$mol_locale.text("$mol_check_expand_demo_c2Label");
         }
+        /**
+         *  ```
+         *  expanded_expanded?val true
+         *  ```
+         **/
         expanded_expanded(val, force) {
             return (val !== void 0) ? val : true;
         }
+        /**
+         *  ```
+         *  Empty_base $mol_check_expand checked?val <=> base_expanded?val
+         *  ```
+         **/
         Empty_base() {
             return ((obj) => {
                 obj.checked = (val) => this.base_expanded(val);
                 return obj;
             })(new this.$.$mol_check_expand());
         }
+        /**
+         *  ```
+         *  Empty_expanded $mol_check_expand checked?val <=> expanded_expanded?val
+         *  ```
+         **/
         Empty_expanded() {
             return ((obj) => {
                 obj.checked = (val) => this.expanded_expanded(val);
                 return obj;
             })(new this.$.$mol_check_expand());
         }
+        /**
+         *  ```
+         *  Disabled $mol_check_expand
+         *  	title <= c5Label
+         *  	disabled true
+         *  ```
+         **/
         Disabled() {
             return ((obj) => {
                 obj.title = () => this.c5Label();
@@ -9589,6 +13297,11 @@ var $;
                 return obj;
             })(new this.$.$mol_check_expand());
         }
+        /**
+         *  ```
+         *  c5Label @ \Non expandable
+         *  ```
+         **/
         c5Label() {
             return this.$.$mol_locale.text("$mol_check_expand_demo_c5Label");
         }
@@ -9631,6 +13344,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_microphone extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M12,2C13.66,2 15,3.34 15,5V11C15,12.66 13.66,14 12,14C10.34,14 9,12.66 9,11V5C9,3.34 10.34,2 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7C7,13.76 9.24,16 12,16C14.76,16 17,13.76 17,11H19Z
+         *  ```
+         **/
         path() {
             return "M12,2C13.66,2 15,3.34 15,5V11C15,12.66 13.66,14 12,14C10.34,14 9,12.66 9,11V5C9,3.34 10.34,2 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7C7,13.76 9.24,16 12,16C14.76,16 17,13.76 17,11H19Z";
         }
@@ -9649,12 +13367,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check_icon_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Iconic checkboxes in various states
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_check_icon_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Base
+         *  	<= Checked
+         *  	<= Disabled
+         *  ```
+         **/
         sub() {
             return [].concat(this.Base(), this.Checked(), this.Disabled());
         }
+        /**
+         *  ```
+         *  Base $mol_check_icon
+         *  	Icon <= Base_icon
+         *  	checked?val <=> base_checked?val
+         *  ```
+         **/
         Base() {
             return ((obj) => {
                 obj.Icon = () => this.Base_icon();
@@ -9662,14 +13400,31 @@ var $;
                 return obj;
             })(new this.$.$mol_check_icon());
         }
+        /**
+         *  ```
+         *  Base_icon $mol_icon_microphone
+         *  ```
+         **/
         Base_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_microphone());
         }
+        /**
+         *  ```
+         *  base_checked?val false
+         *  ```
+         **/
         base_checked(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Checked $mol_check_icon
+         *  	Icon <= Checked_icon
+         *  	checked?val <=> checked_checked?val
+         *  ```
+         **/
         Checked() {
             return ((obj) => {
                 obj.Icon = () => this.Checked_icon();
@@ -9677,14 +13432,32 @@ var $;
                 return obj;
             })(new this.$.$mol_check_icon());
         }
+        /**
+         *  ```
+         *  Checked_icon $mol_icon_microphone
+         *  ```
+         **/
         Checked_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_microphone());
         }
+        /**
+         *  ```
+         *  checked_checked?val true
+         *  ```
+         **/
         checked_checked(val, force) {
             return (val !== void 0) ? val : true;
         }
+        /**
+         *  ```
+         *  Disabled $mol_check_box
+         *  	Icon <= Disabled_icon
+         *  	checked true
+         *  	enabled false
+         *  ```
+         **/
         Disabled() {
             return ((obj) => {
                 obj.Icon = () => this.Disabled_icon();
@@ -9693,6 +13466,11 @@ var $;
                 return obj;
             })(new this.$.$mol_check_box());
         }
+        /**
+         *  ```
+         *  Disabled_icon $mol_icon_microphone
+         *  ```
+         **/
         Disabled_icon() {
             return ((obj) => {
                 return obj;
@@ -9737,17 +13515,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_pop extends $.$mol_view {
+        /**
+         *  ```
+         *  event * keydown?event <=> keydown?event
+         *  ```
+         **/
         event() {
             return ({
                 "keydown": (event) => this.keydown(event),
             });
         }
+        /**
+         *  ```
+         *  keydown?event null
+         *  ```
+         **/
         keydown(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  showed?val false
+         *  ```
+         **/
         showed(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  plugins / <= Meter
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Meter());
         }
@@ -9763,17 +13561,46 @@ var $;
         right() {
             return this.Meter().right();
         }
+        /**
+         *  ```
+         *  Meter $mol_meter
+         *  	top => top
+         *  	bottom => bottom
+         *  	left => left
+         *  	right => right
+         *  ```
+         **/
         Meter() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_meter());
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Anchor
+         *  	<= Bubble
+         *  ```
+         **/
         sub() {
             return [].concat(this.Anchor(), this.Bubble());
         }
+        /**
+         *  ```
+         *  Anchor null
+         *  ```
+         **/
         Anchor() {
             return null;
         }
+        /**
+         *  ```
+         *  Bubble $mol_pop_bubble
+         *  	align <= align
+         *  	content <= bubble_content
+         *  	height_max <= height_max
+         *  ```
+         **/
         Bubble() {
             return ((obj) => {
                 obj.align = () => this.align();
@@ -9782,12 +13609,27 @@ var $;
                 return obj;
             })(new this.$.$mol_pop_bubble());
         }
+        /**
+         *  ```
+         *  align \bottom_center
+         *  ```
+         **/
         align() {
             return "bottom_center";
         }
+        /**
+         *  ```
+         *  bubble_content /
+         *  ```
+         **/
         bubble_content() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  height_max 9999
+         *  ```
+         **/
         height_max() {
             return 9999;
         }
@@ -9808,21 +13650,56 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_pop_bubble extends $.$mol_scroll {
+        /**
+         *  ```
+         *  sub <= content
+         *  ```
+         **/
         sub() {
             return this.content();
         }
+        /**
+         *  ```
+         *  content /
+         *  ```
+         **/
         content() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	maxHeight <= height_max
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "maxHeight": this.height_max() }));
         }
+        /**
+         *  ```
+         *  height_max 9999
+         *  ```
+         **/
         height_max() {
             return 9999;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_pop_align <= align
+         *  	tabindex 0
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_pop_align": this.align(), "tabindex": 0 }));
         }
+        /**
+         *  ```
+         *  align \
+         *  ```
+         **/
         align() {
             return "";
         }
@@ -9855,7 +13732,7 @@ var $;
             keydown(event) {
                 if (event.defaultPrevented)
                     return;
-                if (event.keyCode === 27) {
+                if (event.keyCode === 27 /* escape */) {
                     event.preventDefault();
                     this.showed(false);
                 }
@@ -9876,45 +13753,117 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_nav extends $.$mol_plugin {
+        /**
+         *  ```
+         *  cycle?val false
+         *  ```
+         **/
         cycle(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  mod_ctrl false
+         *  ```
+         **/
         mod_ctrl() {
             return false;
         }
+        /**
+         *  ```
+         *  mod_shift false
+         *  ```
+         **/
         mod_shift() {
             return false;
         }
+        /**
+         *  ```
+         *  mod_alt false
+         *  ```
+         **/
         mod_alt() {
             return false;
         }
+        /**
+         *  ```
+         *  keys_x?val /
+         *  ```
+         **/
         keys_x(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
+        /**
+         *  ```
+         *  keys_y?val /
+         *  ```
+         **/
         keys_y(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
+        /**
+         *  ```
+         *  current_x?val \
+         *  ```
+         **/
         current_x(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  current_y?val \
+         *  ```
+         **/
         current_y(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  event_up?event null
+         *  ```
+         **/
         event_up(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_down?event null
+         *  ```
+         **/
         event_down(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_left?event null
+         *  ```
+         **/
         event_left(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_right?event null
+         *  ```
+         **/
         event_right(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	keydown?event <=> event_key?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "keydown": (event) => this.event_key(event) }));
         }
+        /**
+         *  ```
+         *  event_key?event null
+         *  ```
+         **/
         event_key(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -9969,12 +13918,12 @@ var $;
                 if (this.mod_alt() && !event.altKey)
                     return;
                 switch (event.keyCode) {
-                    case 38: return this.event_up(event);
-                    case 40: return this.event_down(event);
-                    case 37: return this.event_left(event);
-                    case 39: return this.event_right(event);
-                    case 33: return this.event_up(event);
-                    case 34: return this.event_down(event);
+                    case 38 /* up */: return this.event_up(event);
+                    case 40 /* down */: return this.event_down(event);
+                    case 37 /* left */: return this.event_left(event);
+                    case 39 /* right */: return this.event_right(event);
+                    case 33 /* pageUp */: return this.event_up(event);
+                    case 34 /* pageDown */: return this.event_down(event);
                 }
             }
             event_up(event) {
@@ -10069,18 +14018,45 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_select extends $.$mol_pop {
+        /**
+         *  ```
+         *  dictionary *
+         *  ```
+         **/
         dictionary() {
             return ({});
         }
+        /**
+         *  ```
+         *  options /
+         *  ```
+         **/
         options() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  Option_row!id $mol_button_minor
+         *  	event_click?event <=> event_select!id?event
+         *  	sub <= option_content!id
+         *  ```
+         **/
         Option_row(id) {
             return ((obj) => {
                 obj.event_click = (event) => this.event_select(id, event);
@@ -10088,12 +14064,30 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  event_select!id?event null
+         *  ```
+         **/
         event_select(id, event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  option_content!id / <= Option_label!id
+         *  ```
+         **/
         option_content(id) {
             return [].concat(this.Option_label(id));
         }
+        /**
+         *  ```
+         *  Option_label!id $mol_dimmer
+         *  	minimal_height 40
+         *  	haystack <= option_label!id
+         *  	needle <= filter_pattern?val
+         *  ```
+         **/
         Option_label(id) {
             return ((obj) => {
                 obj.minimal_height = () => 40;
@@ -10102,24 +14096,57 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  option_label!id \
+         *  ```
+         **/
         option_label(id) {
             return "";
         }
+        /**
+         *  ```
+         *  filter_pattern?val \
+         *  ```
+         **/
         filter_pattern(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  No_options $mol_view sub / <= no_options_message
+         *  ```
+         **/
         No_options() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.no_options_message());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  no_options_message @ \No options
+         *  ```
+         **/
         no_options_message() {
             return this.$.$mol_locale.text("$mol_select_no_options_message");
         }
+        /**
+         *  ```
+         *  plugins / <= Nav
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Nav());
         }
+        /**
+         *  ```
+         *  Nav $mol_nav
+         *  	keys_y <= nav_components
+         *  	current_y?component <=> option_focused?component
+         *  	cycle?val <=> nav_cycle?val
+         *  ```
+         **/
         Nav() {
             return ((obj) => {
                 obj.keys_y = () => this.nav_components();
@@ -10128,24 +14155,63 @@ var $;
                 return obj;
             })(new this.$.$mol_nav());
         }
+        /**
+         *  ```
+         *  nav_components /
+         *  	<= Filter
+         *  	<= option_rows
+         *  ```
+         **/
         nav_components() {
             return [].concat(this.Filter(), this.option_rows());
         }
+        /**
+         *  ```
+         *  option_focused?component null
+         *  ```
+         **/
         option_focused(component, force) {
             return (component !== void 0) ? component : null;
         }
+        /**
+         *  ```
+         *  nav_cycle?val true
+         *  ```
+         **/
         nav_cycle(val, force) {
             return (val !== void 0) ? val : true;
         }
+        /**
+         *  ```
+         *  showed?val <=> options_showed?val
+         *  ```
+         **/
         showed(val, force) {
             return this.options_showed(val);
         }
+        /**
+         *  ```
+         *  options_showed?val false
+         *  ```
+         **/
         options_showed(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Anchor <= Trigger
+         *  ```
+         **/
         Anchor() {
             return this.Trigger();
         }
+        /**
+         *  ```
+         *  Trigger $mol_button_minor
+         *  	click?event <=> open?event
+         *  	sub <= trigger_content
+         *  ```
+         **/
         Trigger() {
             return ((obj) => {
                 obj.click = (event) => this.open(event);
@@ -10153,15 +14219,41 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  open?event null
+         *  ```
+         **/
         open(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  trigger_content /
+         *  	<= option_content_current
+         *  	<= Filter
+         *  	<= Trigger_icon
+         *  ```
+         **/
         trigger_content() {
             return [].concat(this.option_content_current(), this.Filter(), this.Trigger_icon());
         }
+        /**
+         *  ```
+         *  option_content_current /
+         *  ```
+         **/
         option_content_current() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Filter $mol_string
+         *  	value?val <=> filter_pattern?val
+         *  	hint <= filter_hint
+         *  	debounce <= debounce
+         *  ```
+         **/
         Filter() {
             return ((obj) => {
                 obj.value = (val) => this.filter_pattern(val);
@@ -10170,32 +14262,74 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  filter_hint <= hint
+         *  ```
+         **/
         filter_hint() {
             return this.hint();
         }
+        /**
+         *  ```
+         *  hint @ \Search..
+         *  ```
+         **/
         hint() {
             return this.$.$mol_locale.text("$mol_select_hint");
         }
+        /**
+         *  ```
+         *  debounce 200
+         *  ```
+         **/
         debounce() {
             return 200;
         }
+        /**
+         *  ```
+         *  Trigger_icon $mol_icon_chevron
+         *  ```
+         **/
         Trigger_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_chevron());
         }
+        /**
+         *  ```
+         *  bubble_content / <= Menu
+         *  ```
+         **/
         bubble_content() {
             return [].concat(this.Menu());
         }
+        /**
+         *  ```
+         *  Menu $mol_list rows <= menu_content
+         *  ```
+         **/
         Menu() {
             return ((obj) => {
                 obj.rows = () => this.menu_content();
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  menu_content /
+         *  	<= Filter
+         *  	<= option_rows
+         *  ```
+         **/
         menu_content() {
             return [].concat(this.Filter(), this.option_rows());
         }
+        /**
+         *  ```
+         *  option_rows /
+         *  ```
+         **/
         option_rows() {
             return [].concat();
         }
@@ -10359,6 +14493,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_cross extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+         *  ```
+         **/
         path() {
             return "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z";
         }
@@ -10377,12 +14516,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_search extends $.$mol_bar {
+        /**
+         *  ```
+         *  query?val \
+         *  ```
+         **/
         query(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Suggest
+         *  	<= Clear
+         *  ```
+         **/
         sub() {
             return [].concat(this.Suggest(), this.Clear());
         }
+        /**
+         *  ```
+         *  Suggest $mol_select
+         *  	value?val <=> suggest_selected?val
+         *  	filter_pattern?val <=> suggest_selected?val
+         *  	hint <= hint
+         *  	filter_pattern?val <=> query?val
+         *  	options_showed <= suggests_showed
+         *  	options <= suggests
+         *  	Trigger_icon null
+         *  	debounce <= debounce
+         *  ```
+         **/
         Suggest() {
             return ((obj) => {
                 obj.value = (val) => this.suggest_selected(val);
@@ -10396,21 +14560,53 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
+        /**
+         *  ```
+         *  suggest_selected?val \
+         *  ```
+         **/
         suggest_selected(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  hint @ \Search...
+         *  ```
+         **/
         hint() {
             return this.$.$mol_locale.text("$mol_search_hint");
         }
+        /**
+         *  ```
+         *  suggests_showed false
+         *  ```
+         **/
         suggests_showed() {
             return false;
         }
+        /**
+         *  ```
+         *  suggests /
+         *  ```
+         **/
         suggests() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  debounce 200
+         *  ```
+         **/
         debounce() {
             return 200;
         }
+        /**
+         *  ```
+         *  Clear $mol_button_minor
+         *  	sub / <= Clear_icon
+         *  	event_click?val <=> event_clear?val
+         *  ```
+         **/
         Clear() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Clear_icon());
@@ -10418,11 +14614,21 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  Clear_icon $mol_icon_cross
+         *  ```
+         **/
         Clear_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
+        /**
+         *  ```
+         *  event_clear?val null
+         *  ```
+         **/
         event_clear(val, force) {
             return (val !== void 0) ? val : null;
         }
@@ -10491,9 +14697,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_code extends $.$mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Manual
+         *  	<= Scan
+         *  ```
+         **/
         sub() {
             return [].concat(this.Manual(), this.Scan());
         }
+        /**
+         *  ```
+         *  Manual $mol_search
+         *  	query?val <=> value?val
+         *  	hint <= hint
+         *  	debounce <= debounce
+         *  ```
+         **/
         Manual() {
             return ((obj) => {
                 obj.query = (val) => this.value(val);
@@ -10502,18 +14723,45 @@ var $;
                 return obj;
             })(new this.$.$mol_search());
         }
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  hint <= format
+         *  ```
+         **/
         hint() {
             return this.format();
         }
+        /**
+         *  ```
+         *  format \
+         *  ```
+         **/
         format() {
             return "";
         }
+        /**
+         *  ```
+         *  debounce 200
+         *  ```
+         **/
         debounce() {
             return 200;
         }
+        /**
+         *  ```
+         *  Scan $mol_button
+         *  	event_click?val <=> event_scan?val
+         *  	sub / <= scan_label
+         *  ```
+         **/
         Scan() {
             return ((obj) => {
                 obj.event_click = (val) => this.event_scan(val);
@@ -10521,9 +14769,19 @@ var $;
                 return obj;
             })(new this.$.$mol_button());
         }
+        /**
+         *  ```
+         *  event_scan?val null
+         *  ```
+         **/
         event_scan(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  scan_label @ \Scan
+         *  ```
+         **/
         scan_label() {
             return this.$.$mol_locale.text("$mol_code_scan_label");
         }
@@ -10581,60 +14839,124 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_code_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Barcode scanner with various formats support
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_code_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Qr
+         *  	<= Matrix
+         *  	<= Upc_e
+         *  	<= Upc_a
+         *  	<= Ean_8
+         *  	<= Ean_13
+         *  	<= Code_128
+         *  	<= Code_39
+         *  	<= Itf
+         *  ```
+         **/
         sub() {
             return [].concat(this.Qr(), this.Matrix(), this.Upc_e(), this.Upc_a(), this.Ean_8(), this.Ean_13(), this.Code_128(), this.Code_39(), this.Itf());
         }
+        /**
+         *  ```
+         *  Qr $mol_code format \QR_CODE
+         *  ```
+         **/
         Qr() {
             return ((obj) => {
                 obj.format = () => "QR_CODE";
                 return obj;
             })(new this.$.$mol_code());
         }
+        /**
+         *  ```
+         *  Matrix $mol_code format \DATA_MATRIX
+         *  ```
+         **/
         Matrix() {
             return ((obj) => {
                 obj.format = () => "DATA_MATRIX";
                 return obj;
             })(new this.$.$mol_code());
         }
+        /**
+         *  ```
+         *  Upc_e $mol_code format \UPC_E
+         *  ```
+         **/
         Upc_e() {
             return ((obj) => {
                 obj.format = () => "UPC_E";
                 return obj;
             })(new this.$.$mol_code());
         }
+        /**
+         *  ```
+         *  Upc_a $mol_code format \UPC_A
+         *  ```
+         **/
         Upc_a() {
             return ((obj) => {
                 obj.format = () => "UPC_A";
                 return obj;
             })(new this.$.$mol_code());
         }
+        /**
+         *  ```
+         *  Ean_8 $mol_code format \EAN_8
+         *  ```
+         **/
         Ean_8() {
             return ((obj) => {
                 obj.format = () => "EAN_8";
                 return obj;
             })(new this.$.$mol_code());
         }
+        /**
+         *  ```
+         *  Ean_13 $mol_code format \EAN_13
+         *  ```
+         **/
         Ean_13() {
             return ((obj) => {
                 obj.format = () => "EAN_13";
                 return obj;
             })(new this.$.$mol_code());
         }
+        /**
+         *  ```
+         *  Code_128 $mol_code format \CODE_128
+         *  ```
+         **/
         Code_128() {
             return ((obj) => {
                 obj.format = () => "CODE_128";
                 return obj;
             })(new this.$.$mol_code());
         }
+        /**
+         *  ```
+         *  Code_39 $mol_code format \CODE_39
+         *  ```
+         **/
         Code_39() {
             return ((obj) => {
                 obj.format = () => "CODE_39";
                 return obj;
             })(new this.$.$mol_code());
         }
+        /**
+         *  ```
+         *  Itf $mol_code format \ITF
+         *  ```
+         **/
         Itf() {
             return ((obj) => {
                 obj.format = () => "ITF";
@@ -10698,9 +15020,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_date extends $.$mol_pop {
+        /**
+         *  ```
+         *  Anchor <= Input
+         *  ```
+         **/
         Anchor() {
             return this.Input();
         }
+        /**
+         *  ```
+         *  Input $mol_string
+         *  	value?val <=> value?val
+         *  	hint <= hint
+         *  	length_max 10
+         *  ```
+         **/
         Input() {
             return ((obj) => {
                 obj.value = (val) => this.value(val);
@@ -10709,15 +15044,38 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  hint \YYYY-MM-DD
+         *  ```
+         **/
         hint() {
             return "YYYY-MM-DD";
         }
+        /**
+         *  ```
+         *  bubble_content / <= Calendar
+         *  ```
+         **/
         bubble_content() {
             return [].concat(this.Calendar());
         }
+        /**
+         *  ```
+         *  Calendar $mol_date_calendar
+         *  	month_string <= value
+         *  	day_selected!day <= day_selected!day
+         *  	day_click!day?event <=> day_click!day?event
+         *  ```
+         **/
         Calendar() {
             return ((obj) => {
                 obj.month_string = () => this.value();
@@ -10726,15 +15084,35 @@ var $;
                 return obj;
             })(new this.$.$mol_date_calendar());
         }
+        /**
+         *  ```
+         *  day_selected!day false
+         *  ```
+         **/
         day_selected(day) {
             return false;
         }
+        /**
+         *  ```
+         *  day_click!day?event null
+         *  ```
+         **/
         day_click(day, event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  value_number?val NaN
+         *  ```
+         **/
         value_number(val, force) {
             return (val !== void 0) ? val : NaN;
         }
+        /**
+         *  ```
+         *  value_moment?val $mol_time_moment
+         *  ```
+         **/
         value_moment(val, force) {
             return (val !== void 0) ? val : ((obj) => {
                 return obj;
@@ -10763,9 +15141,21 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_date_calendar extends $.$mol_calendar {
+        /**
+         *  ```
+         *  day_content!day / <= Day_button!day
+         *  ```
+         **/
         day_content(day) {
             return [].concat(this.Day_button(day));
         }
+        /**
+         *  ```
+         *  Day_button!day $mol_button
+         *  	title <= day_text!day
+         *  	event_click?event <=> day_click!day?event
+         *  ```
+         **/
         Day_button(day) {
             return ((obj) => {
                 obj.title = () => this.day_text(day);
@@ -10773,6 +15163,11 @@ var $;
                 return obj;
             })(new this.$.$mol_button());
         }
+        /**
+         *  ```
+         *  day_click!day?event null
+         *  ```
+         **/
         day_click(day, event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -10853,32 +15248,64 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_date_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  sub / <= View
+         *  ```
+         **/
         sub() {
             return [].concat(this.View());
         }
+        /**
+         *  ```
+         *  View $mol_view sub /
+         *  	<= Date
+         *  	<= Formatted
+         *  ```
+         **/
         View() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Date(), this.Formatted());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  Date $mol_date value_moment?val <=> date?val
+         *  ```
+         **/
         Date() {
             return ((obj) => {
                 obj.value_moment = (val) => this.date(val);
                 return obj;
             })(new this.$.$mol_date());
         }
+        /**
+         *  ```
+         *  date?val $mol_time_moment
+         *  ```
+         **/
         date(val, force) {
             return (val !== void 0) ? val : ((obj) => {
                 return obj;
             })(new this.$.$mol_time_moment());
         }
+        /**
+         *  ```
+         *  Formatted $mol_view sub / <= formatted
+         *  ```
+         **/
         Formatted() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.formatted());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  formatted \
+         *  ```
+         **/
         formatted() {
             return "";
         }
@@ -10924,9 +15351,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_switch extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  Option!id $mol_check
+         *  	checked?val <=> option_checked!id?val
+         *  	title <= option_title!id
+         *  	enabled <= option_enabled!id
+         *  ```
+         **/
         Option(id) {
             return ((obj) => {
                 obj.checked = (val) => this.option_checked(id, val);
@@ -10935,27 +15375,67 @@ var $;
                 return obj;
             })(new this.$.$mol_check());
         }
+        /**
+         *  ```
+         *  option_checked!id?val false
+         *  ```
+         **/
         option_checked(id, val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  option_title!id \
+         *  ```
+         **/
         option_title(id) {
             return "";
         }
+        /**
+         *  ```
+         *  option_enabled!id <= enabled
+         *  ```
+         **/
         option_enabled(id) {
             return this.enabled();
         }
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  value?val null
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  options *
+         *  ```
+         **/
         options() {
             return ({});
         }
+        /**
+         *  ```
+         *  sub <= items
+         *  ```
+         **/
         sub() {
             return this.items();
         }
+        /**
+         *  ```
+         *  items /
+         *  ```
+         **/
         items() {
             return [].concat();
         }
@@ -11021,6 +15501,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_deck extends $.$mol_list {
+        /**
+         *  ```
+         *  items / *
+         *  	title \
+         *  	Content $mol_view
+         *  ```
+         **/
         items() {
             return [].concat(({
                 "title": "",
@@ -11029,9 +15516,23 @@ var $;
                 })(new this.$.$mol_view()),
             }));
         }
+        /**
+         *  ```
+         *  rows /
+         *  	<= Switch
+         *  	<= Content
+         *  ```
+         **/
         rows() {
             return [].concat(this.Switch(), this.Content());
         }
+        /**
+         *  ```
+         *  Switch $mol_switch
+         *  	value?val <=> current?val
+         *  	options <= switch_options
+         *  ```
+         **/
         Switch() {
             return ((obj) => {
                 obj.value = (val) => this.current(val);
@@ -11039,12 +15540,27 @@ var $;
                 return obj;
             })(new this.$.$mol_switch());
         }
+        /**
+         *  ```
+         *  current?val \0
+         *  ```
+         **/
         current(val, force) {
             return (val !== void 0) ? val : "0";
         }
+        /**
+         *  ```
+         *  switch_options *
+         *  ```
+         **/
         switch_options() {
             return ({});
         }
+        /**
+         *  ```
+         *  Content null
+         *  ```
+         **/
         Content() {
             return null;
         }
@@ -11106,87 +15622,186 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_deck_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Simple deck with tabbar
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_deck_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Deck
+         *  ```
+         **/
         sub() {
             return [].concat(this.Deck());
         }
+        /**
+         *  ```
+         *  Deck $mol_deck items /
+         *  	<= greeterItem
+         *  	<= questerItem
+         *  	<= commanderItem
+         *  ```
+         **/
         Deck() {
             return ((obj) => {
                 obj.items = () => [].concat(this.greeterItem(), this.questerItem(), this.commanderItem());
                 return obj;
             })(new this.$.$mol_deck());
         }
+        /**
+         *  ```
+         *  greeterItem *
+         *  	title <= greeterLabel
+         *  	Content <= greeterContent
+         *  ```
+         **/
         greeterItem() {
             return ({
                 "title": this.greeterLabel(),
                 "Content": this.greeterContent(),
             });
         }
+        /**
+         *  ```
+         *  greeterLabel @ \Greeting
+         *  ```
+         **/
         greeterLabel() {
             return this.$.$mol_locale.text("$mol_deck_demo_greeterLabel");
         }
+        /**
+         *  ```
+         *  greeterContent $mol_row sub / <= greeterMessager
+         *  ```
+         **/
         greeterContent() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.greeterMessager());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  greeterMessager $mol_view sub / <= greeterMessage
+         *  ```
+         **/
         greeterMessager() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.greeterMessage());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  greeterMessage @ \Hello, world!
+         *  ```
+         **/
         greeterMessage() {
             return this.$.$mol_locale.text("$mol_deck_demo_greeterMessage");
         }
+        /**
+         *  ```
+         *  questerItem *
+         *  	title <= questerLabel
+         *  	Content <= questerContent
+         *  ```
+         **/
         questerItem() {
             return ({
                 "title": this.questerLabel(),
                 "Content": this.questerContent(),
             });
         }
+        /**
+         *  ```
+         *  questerLabel @ \Question
+         *  ```
+         **/
         questerLabel() {
             return this.$.$mol_locale.text("$mol_deck_demo_questerLabel");
         }
+        /**
+         *  ```
+         *  questerContent $mol_row sub / <= questerMessager
+         *  ```
+         **/
         questerContent() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.questerMessager());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  questerMessager $mol_view sub / <= questerMessage
+         *  ```
+         **/
         questerMessager() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.questerMessage());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  questerMessage @ \How are you?
+         *  ```
+         **/
         questerMessage() {
             return this.$.$mol_locale.text("$mol_deck_demo_questerMessage");
         }
+        /**
+         *  ```
+         *  commanderItem *
+         *  	title <= commanderLabel
+         *  	Content <= commanderContent
+         *  ```
+         **/
         commanderItem() {
             return ({
                 "title": this.commanderLabel(),
                 "Content": this.commanderContent(),
             });
         }
+        /**
+         *  ```
+         *  commanderLabel @ \Command
+         *  ```
+         **/
         commanderLabel() {
             return this.$.$mol_locale.text("$mol_deck_demo_commanderLabel");
         }
+        /**
+         *  ```
+         *  commanderContent $mol_row sub / <= commanderMessager
+         *  ```
+         **/
         commanderContent() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.commanderMessager());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  commanderMessager $mol_view sub / <= commanderMessage
+         *  ```
+         **/
         commanderMessager() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.commanderMessage());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  commanderMessage @ \Let us do it right!
+         *  ```
+         **/
         commanderMessage() {
             return this.$.$mol_locale.text("$mol_deck_demo_commanderMessage");
         }
@@ -11226,12 +15841,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_dimmer_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Text with highlighted found substring
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_dimmer_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= one
+         *  	<= two
+         *  	<= three
+         *  	<= four
+         *  	<= five
+         *  	<= six
+         *  ```
+         **/
         sub() {
             return [].concat(this.one(), this.two(), this.three(), this.four(), this.five(), this.six());
         }
+        /**
+         *  ```
+         *  one $mol_dimmer
+         *  	haystack \Don't put all your eggs in one basket
+         *  	needle \eggs
+         *  ```
+         **/
         one() {
             return ((obj) => {
                 obj.haystack = () => "Don't put all your eggs in one basket";
@@ -11239,6 +15877,13 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  two $mol_dimmer
+         *  	haystack \Don't look a gift horse in the mouth.
+         *  	needle \oo
+         *  ```
+         **/
         two() {
             return ((obj) => {
                 obj.haystack = () => "Don't look a gift horse in the mouth.";
@@ -11246,6 +15891,13 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  three $mol_dimmer
+         *  	haystack \There is no word you are looking for
+         *  	needle \luck
+         *  ```
+         **/
         three() {
             return ((obj) => {
                 obj.haystack = () => "There is no word you are looking for";
@@ -11253,6 +15905,13 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  four $mol_dimmer
+         *  	haystack \ooAAooAAoo
+         *  	needle \oo
+         *  ```
+         **/
         four() {
             return ((obj) => {
                 obj.haystack = () => "ooAAooAAoo";
@@ -11260,6 +15919,13 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  five $mol_dimmer
+         *  	haystack \Let's search this string
+         *  	needle \Let's search this string
+         *  ```
+         **/
         five() {
             return ((obj) => {
                 obj.haystack = () => "Let's search this string";
@@ -11267,6 +15933,13 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  six $mol_dimmer
+         *  	haystack \Let's search nothing
+         *  	needle \
+         *  ```
+         **/
         six() {
             return ((obj) => {
                 obj.haystack = () => "Let's search nothing";
@@ -11307,15 +15980,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_expander extends $.$mol_list {
+        /**
+         *  ```
+         *  rows /
+         *  	<= Label
+         *  	<= Content
+         *  ```
+         **/
         rows() {
             return [].concat(this.Label(), this.Content());
         }
+        /**
+         *  ```
+         *  Label $mol_view sub /
+         *  	<= Trigger
+         *  	<= tools
+         *  ```
+         **/
         Label() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Trigger(), this.tools());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  Trigger $mol_check_expand
+         *  	checked?val <=> expanded?val
+         *  	label <= label
+         *  ```
+         **/
         Trigger() {
             return ((obj) => {
                 obj.checked = (val) => this.expanded(val);
@@ -11323,21 +16017,46 @@ var $;
                 return obj;
             })(new this.$.$mol_check_expand());
         }
+        /**
+         *  ```
+         *  expanded?val false
+         *  ```
+         **/
         expanded(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  label / <= title
+         *  ```
+         **/
         label() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  tools /
+         *  ```
+         **/
         tools() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Content $mol_view sub <= content
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.sub = () => this.content();
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  content /
+         *  ```
+         **/
         content() {
             return [].concat();
         }
@@ -11380,9 +16099,27 @@ var $;
 var $;
 (function ($) {
     class $mol_filler extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 500
+         *  ```
+         **/
         minimal_height() {
             return 500;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	\Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.
+         *  	\Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. Fusce eget orci a orci congue vestibulum. Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. Curabitur venenatis pulvinar tellus gravida ornare. Sed et erat faucibus nunc euismod ultricies ut id justo. Nullam cursus suscipit nisi, et ultrices justo sodales nec. Fusce venenatis facilisis lectus ac semper. Aliquam at massa ipsum. Quisque bibendum purus convallis nulla ultrices ultricies. Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. Fusce vel volutpat elit. Nam sagittis nisi dui.
+         *  	\Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.
+         *  	\Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.
+         *  	\Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.
+         *  	\Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. Fusce eget orci a orci congue vestibulum. Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. Curabitur venenatis pulvinar tellus gravida ornare. Sed et erat faucibus nunc euismod ultricies ut id justo. Nullam cursus suscipit nisi, et ultrices justo sodales nec. Fusce venenatis facilisis lectus ac semper. Aliquam at massa ipsum. Quisque bibendum purus convallis nulla ultrices ultricies. Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. Fusce vel volutpat elit. Nam sagittis nisi dui.
+         *  	\Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.
+         *  	\Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.
+         *  ```
+         **/
         sub() {
             return [].concat("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.", "Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. Fusce eget orci a orci congue vestibulum. Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. Curabitur venenatis pulvinar tellus gravida ornare. Sed et erat faucibus nunc euismod ultricies ut id justo. Nullam cursus suscipit nisi, et ultrices justo sodales nec. Fusce venenatis facilisis lectus ac semper. Aliquam at massa ipsum. Quisque bibendum purus convallis nulla ultrices ultricies. Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. Fusce vel volutpat elit. Nam sagittis nisi dui.", "Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.", "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.", "Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. Fusce eget orci a orci congue vestibulum. Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. Curabitur venenatis pulvinar tellus gravida ornare. Sed et erat faucibus nunc euismod ultricies ut id justo. Nullam cursus suscipit nisi, et ultrices justo sodales nec. Fusce venenatis facilisis lectus ac semper. Aliquam at massa ipsum. Quisque bibendum purus convallis nulla ultrices ultricies. Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. Fusce vel volutpat elit. Nam sagittis nisi dui.", "Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.", "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.");
         }
@@ -11401,12 +16138,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_expander_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Simple spoiler
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_expander_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Expander
+         *  ```
+         **/
         sub() {
             return [].concat(this.Expander());
         }
+        /**
+         *  ```
+         *  Expander $mol_expander
+         *  	title \Lorem Ipsum
+         *  	Content $mol_filler
+         *  ```
+         **/
         Expander() {
             return ((obj) => {
                 obj.title = () => "Lorem Ipsum";
@@ -11434,56 +16188,115 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_float_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Floating header example
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_float_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Scroll
+         *  ```
+         **/
         sub() {
             return [].concat(this.Scroll());
         }
+        /**
+         *  ```
+         *  Scroll $mol_scroll sub /
+         *  	<= Head
+         *  	<= content
+         *  ```
+         **/
         Scroll() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Head(), this.content());
                 return obj;
             })(new this.$.$mol_scroll());
         }
+        /**
+         *  ```
+         *  Head $mol_float sub / <= Head_card
+         *  ```
+         **/
         Head() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Head_card());
                 return obj;
             })(new this.$.$mol_float());
         }
+        /**
+         *  ```
+         *  Head_card $mol_card sub / <= Head_row
+         *  ```
+         **/
         Head_card() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Head_row());
                 return obj;
             })(new this.$.$mol_card());
         }
+        /**
+         *  ```
+         *  Head_row $mol_row sub / <= Head_content
+         *  ```
+         **/
         Head_row() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Head_content());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Head_content $mol_view sub / \Float header
+         *  ```
+         **/
         Head_content() {
             return ((obj) => {
                 obj.sub = () => [].concat("Float header");
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  content / <= Content
+         *  ```
+         **/
         content() {
             return [].concat(this.Content());
         }
+        /**
+         *  ```
+         *  Content $mol_row sub /
+         *  	<= Filler1
+         *  	<= Filler2
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Filler1(), this.Filler2());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Filler1 $mol_filler
+         *  ```
+         **/
         Filler1() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_filler());
         }
+        /**
+         *  ```
+         *  Filler2 $mol_filler
+         *  ```
+         **/
         Filler2() {
             return ((obj) => {
                 return obj;
@@ -11528,36 +16341,85 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_form extends $.$mol_view {
+        /**
+         *  ```
+         *  submit_blocked false
+         *  ```
+         **/
         submit_blocked() {
             return false;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	keydown?event <=> keydown?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "keydown": (event) => this.keydown(event) }));
         }
+        /**
+         *  ```
+         *  keydown?event null
+         *  ```
+         **/
         keydown(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  submit?event null
+         *  ```
+         **/
         submit(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Bar_fields
+         *  	<= Bar_buttons
+         *  ```
+         **/
         sub() {
             return [].concat(this.Bar_fields(), this.Bar_buttons());
         }
+        /**
+         *  ```
+         *  Bar_fields $mol_view sub <= form_fields
+         *  ```
+         **/
         Bar_fields() {
             return ((obj) => {
                 obj.sub = () => this.form_fields();
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  form_fields /
+         *  ```
+         **/
         form_fields() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Bar_buttons $mol_row sub <= buttons
+         *  ```
+         **/
         Bar_buttons() {
             return ((obj) => {
                 obj.sub = () => this.buttons();
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  buttons /
+         *  ```
+         **/
         buttons() {
             return [].concat();
         }
@@ -11594,7 +16456,7 @@ var $;
                 return this.form_fields().some(field => field.bid());
             }
             keydown(next) {
-                if (next.ctrlKey && next.keyCode === 13 && !this.submit_blocked())
+                if (next.ctrlKey && next.keyCode === 13 /* enter */ && !this.submit_blocked())
                     this.submit(event);
             }
         }
@@ -11616,24 +16478,51 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_labeler extends $.$mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Title
+         *  	<= Content
+         *  ```
+         **/
         sub() {
             return [].concat(this.Title(), this.Content());
         }
+        /**
+         *  ```
+         *  Title $mol_view sub <= label
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => this.label();
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  label / <= title
+         *  ```
+         **/
         label() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  Content $mol_view sub / <= content
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.content());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  content null
+         *  ```
+         **/
         content() {
             return null;
         }
@@ -11658,24 +16547,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_form_field extends $.$mol_labeler {
+        /**
+         *  ```
+         *  label /
+         *  	<= name
+         *  	<= Bid
+         *  ```
+         **/
         label() {
             return [].concat(this.name(), this.Bid());
         }
+        /**
+         *  ```
+         *  name \
+         *  ```
+         **/
         name() {
             return "";
         }
+        /**
+         *  ```
+         *  Bid $mol_view sub / <= bid
+         *  ```
+         **/
         Bid() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.bid());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  bid \
+         *  ```
+         **/
         bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Content <= control
+         *  ```
+         **/
         Content() {
             return this.control();
         }
+        /**
+         *  ```
+         *  control null
+         *  ```
+         **/
         control() {
             return null;
         }
@@ -11697,21 +16618,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_form_demo_bids extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Sign Up form demo
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_title");
         }
+        /**
+         *  ```
+         *  message_required @ \Required
+         *  ```
+         **/
         message_required() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_message_required");
         }
+        /**
+         *  ```
+         *  message_no_spaces @ \No spaces!
+         *  ```
+         **/
         message_no_spaces() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_message_no_spaces");
         }
+        /**
+         *  ```
+         *  message_need_more_letters @ \{count} or more letters
+         *  ```
+         **/
         message_need_more_letters() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_message_need_more_letters");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Form
+         *  	<= Message
+         *  ```
+         **/
         sub() {
             return [].concat(this.Form(), this.Message());
         }
+        /**
+         *  ```
+         *  Form $mol_form
+         *  	submit?val <=> submit?val
+         *  	form_fields /
+         *  		<= Name_first_field
+         *  		<= Name_nick_field
+         *  		<= Name_second_field
+         *  		<= Sex_field
+         *  	buttons / <= Submit
+         *  ```
+         **/
         Form() {
             return ((obj) => {
                 obj.submit = (val) => this.submit(val);
@@ -11720,9 +16680,22 @@ var $;
                 return obj;
             })(new this.$.$mol_form());
         }
+        /**
+         *  ```
+         *  submit?val null
+         *  ```
+         **/
         submit(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Name_first_field $mol_form_field
+         *  	name <= name_first_label
+         *  	bid <= name_first_bid
+         *  	control <= Name_first_control
+         *  ```
+         **/
         Name_first_field() {
             return ((obj) => {
                 obj.name = () => this.name_first_label();
@@ -11731,12 +16704,29 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  name_first_label @ \First Name
+         *  ```
+         **/
         name_first_label() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_name_first_label");
         }
+        /**
+         *  ```
+         *  name_first_bid \
+         *  ```
+         **/
         name_first_bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Name_first_control $mol_string
+         *  	hint <= name_first_hint
+         *  	value?val <=> name_first?val
+         *  ```
+         **/
         Name_first_control() {
             return ((obj) => {
                 obj.hint = () => this.name_first_hint();
@@ -11744,12 +16734,30 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  name_first_hint @ \Jack
+         *  ```
+         **/
         name_first_hint() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_name_first_hint");
         }
+        /**
+         *  ```
+         *  name_first?val \
+         *  ```
+         **/
         name_first(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Name_nick_field $mol_form_field
+         *  	name <= name_nick_label
+         *  	bid <= name_nick_bid
+         *  	control <= Name_nick_control
+         *  ```
+         **/
         Name_nick_field() {
             return ((obj) => {
                 obj.name = () => this.name_nick_label();
@@ -11758,12 +16766,29 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  name_nick_label @ \Nick Name
+         *  ```
+         **/
         name_nick_label() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_name_nick_label");
         }
+        /**
+         *  ```
+         *  name_nick_bid \
+         *  ```
+         **/
         name_nick_bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Name_nick_control $mol_string
+         *  	hint <= name_nick_hint
+         *  	value?val <=> name_nick?val
+         *  ```
+         **/
         Name_nick_control() {
             return ((obj) => {
                 obj.hint = () => this.name_nick_hint();
@@ -11771,12 +16796,30 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  name_nick_hint @ \Capitan
+         *  ```
+         **/
         name_nick_hint() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_name_nick_hint");
         }
+        /**
+         *  ```
+         *  name_nick?val \
+         *  ```
+         **/
         name_nick(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Name_second_field $mol_form_field
+         *  	name <= name_second_label
+         *  	bid <= name_second_bid
+         *  	control <= Name_second_control
+         *  ```
+         **/
         Name_second_field() {
             return ((obj) => {
                 obj.name = () => this.name_second_label();
@@ -11785,12 +16828,29 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  name_second_label @ \Second Name
+         *  ```
+         **/
         name_second_label() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_name_second_label");
         }
+        /**
+         *  ```
+         *  name_second_bid \
+         *  ```
+         **/
         name_second_bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Name_second_control $mol_string
+         *  	hint <= name_second_hint
+         *  	value?val <=> name_second?val
+         *  ```
+         **/
         Name_second_control() {
             return ((obj) => {
                 obj.hint = () => this.name_second_hint();
@@ -11798,12 +16858,30 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  name_second_hint @ \Sparrow
+         *  ```
+         **/
         name_second_hint() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_name_second_hint");
         }
+        /**
+         *  ```
+         *  name_second?val \
+         *  ```
+         **/
         name_second(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Sex_field $mol_form_field
+         *  	name <= sex_label
+         *  	bid <= sex_bid
+         *  	control / <= Sex_control
+         *  ```
+         **/
         Sex_field() {
             return ((obj) => {
                 obj.name = () => this.sex_label();
@@ -11812,12 +16890,29 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  sex_label @ \Sex
+         *  ```
+         **/
         sex_label() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_sex_label");
         }
+        /**
+         *  ```
+         *  sex_bid \
+         *  ```
+         **/
         sex_bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Sex_control $mol_switch
+         *  	value?val <=> sex?val
+         *  	options <= sex_options
+         *  ```
+         **/
         Sex_control() {
             return ((obj) => {
                 obj.value = (val) => this.sex(val);
@@ -11825,9 +16920,22 @@ var $;
                 return obj;
             })(new this.$.$mol_switch());
         }
+        /**
+         *  ```
+         *  sex?val \
+         *  ```
+         **/
         sex(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  sex_options *
+         *  	male <= sex_option_male
+         *  	intersex <= sex_option_intersex
+         *  	female <= sex_option_female
+         *  ```
+         **/
         sex_options() {
             return ({
                 "male": this.sex_option_male(),
@@ -11835,15 +16943,38 @@ var $;
                 "female": this.sex_option_female(),
             });
         }
+        /**
+         *  ```
+         *  sex_option_male @ \Male
+         *  ```
+         **/
         sex_option_male() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_sex_option_male");
         }
+        /**
+         *  ```
+         *  sex_option_intersex @ \Intersex
+         *  ```
+         **/
         sex_option_intersex() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_sex_option_intersex");
         }
+        /**
+         *  ```
+         *  sex_option_female @ \Female
+         *  ```
+         **/
         sex_option_female() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_sex_option_female");
         }
+        /**
+         *  ```
+         *  Submit $mol_button_major
+         *  	sub / <= submit_text
+         *  	click?val <=> submit?val
+         *  	disabled <= submit_blocked
+         *  ```
+         **/
         Submit() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.submit_text());
@@ -11852,18 +16983,38 @@ var $;
                 return obj;
             })(new this.$.$mol_button_major());
         }
+        /**
+         *  ```
+         *  submit_text @ \Sign Up
+         *  ```
+         **/
         submit_text() {
             return this.$.$mol_locale.text("$mol_form_demo_bids_submit_text");
         }
+        /**
+         *  ```
+         *  submit_blocked true
+         *  ```
+         **/
         submit_blocked() {
             return true;
         }
+        /**
+         *  ```
+         *  Message $mol_view sub / <= message?val
+         *  ```
+         **/
         Message() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.message());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  message?val \
+         *  ```
+         **/
         message(val, force) {
             return (val !== void 0) ? val : "";
         }
@@ -12004,6 +17155,7 @@ var $;
         concat(...args) {
             const ranges = args.map(range => range.valueOf());
             return this.valueOf().concat(...ranges);
+            //return new $mol_range_list( [ this ].concat( args ) )
         }
         slice(start = 0, end) {
             const source = this;
@@ -12068,6 +17220,31 @@ var $;
         }
     }
     $.$mol_range_lazy = $mol_range_lazy;
+    // export class $mol_range_list< Value > extends $mol_range_common< Value > {
+    //
+    // 	constructor( private list : Value[][] ) {
+    // 		super()
+    // 	}
+    //
+    // 	get( id : number ) {
+    // 		var subId = id
+    // 		for( var range of this.list ) {
+    // 			var nextId = subId - range.length
+    // 			if( nextId < 0 ) return range.get( subId )
+    // 			subId = nextId
+    // 		}
+    // 		return
+    // 	}
+    //
+    // 	get length () {
+    // 		var length = 0
+    // 		this.list.forEach( range => {
+    // 			length += range.length
+    // 		} )
+    // 		return length
+    // 	}
+    //
+    // }
 })($ || ($ = {}));
 //range.js.map
 ;
@@ -12081,12 +17258,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_grid_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Grid with large count of cells
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_grid_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Grid
+         *  ```
+         **/
         sub() {
             return [].concat(this.Grid());
         }
+        /**
+         *  ```
+         *  Grid $mol_grid
+         *  	row_height 40
+         *  	records <= records
+         *  	col_head_content!col <= col_head_content!col
+         *  ```
+         **/
         Grid() {
             return ((obj) => {
                 obj.row_height = () => 40;
@@ -12095,9 +17290,19 @@ var $;
                 return obj;
             })(new this.$.$mol_grid());
         }
+        /**
+         *  ```
+         *  records *
+         *  ```
+         **/
         records() {
             return ({});
         }
+        /**
+         *  ```
+         *  col_head_content!col /
+         *  ```
+         **/
         col_head_content(col) {
             return [].concat();
         }
@@ -12158,12 +17363,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_labeler_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Labeled content of some types
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_labeler_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Provider
+         *  	<= Name
+         *  ```
+         **/
         sub() {
             return [].concat(this.Provider(), this.Name());
         }
+        /**
+         *  ```
+         *  Provider $mol_labeler
+         *  	title \Provider
+         *  	content \ACME Provider Inc.
+         *  ```
+         **/
         Provider() {
             return ((obj) => {
                 obj.title = () => "Provider";
@@ -12171,6 +17395,13 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
+        /**
+         *  ```
+         *  Name $mol_labeler
+         *  	title \User name
+         *  	Content <= Name_control
+         *  ```
+         **/
         Name() {
             return ((obj) => {
                 obj.title = () => "User name";
@@ -12178,6 +17409,13 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
+        /**
+         *  ```
+         *  Name_control $mol_string
+         *  	hint \Jack Sparrow
+         *  	value?val <=> user_name?val
+         *  ```
+         **/
         Name_control() {
             return ((obj) => {
                 obj.hint = () => "Jack Sparrow";
@@ -12185,6 +17423,11 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  user_name?val \
+         *  ```
+         **/
         user_name(val, force) {
             return (val !== void 0) ? val : "";
         }
@@ -12215,21 +17458,53 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_link_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Some hyperlinks
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_link_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= This
+         *  	<= Red
+         *  	<= Green
+         *  	<= Blue
+         *  	<= External
+         *  ```
+         **/
         sub() {
             return [].concat(this.This(), this.Red(), this.Green(), this.Blue(), this.External());
         }
+        /**
+         *  ```
+         *  This $mol_link sub / <= this_label
+         *  ```
+         **/
         This() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.this_label());
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  this_label @ \This page
+         *  ```
+         **/
         this_label() {
             return this.$.$mol_locale.text("$mol_link_demo_this_label");
         }
+        /**
+         *  ```
+         *  Red $mol_link
+         *  	arg * color \red
+         *  	sub / <= red_label
+         *  ```
+         **/
         Red() {
             return ((obj) => {
                 obj.arg = () => ({
@@ -12239,9 +17514,21 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  red_label @ \Red
+         *  ```
+         **/
         red_label() {
             return this.$.$mol_locale.text("$mol_link_demo_red_label");
         }
+        /**
+         *  ```
+         *  Green $mol_link
+         *  	arg * color \green
+         *  	sub / <= green_label
+         *  ```
+         **/
         Green() {
             return ((obj) => {
                 obj.arg = () => ({
@@ -12251,9 +17538,21 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  green_label @ \Green
+         *  ```
+         **/
         green_label() {
             return this.$.$mol_locale.text("$mol_link_demo_green_label");
         }
+        /**
+         *  ```
+         *  Blue $mol_link
+         *  	arg * color \blue
+         *  	sub / <= blue_label
+         *  ```
+         **/
         Blue() {
             return ((obj) => {
                 obj.arg = () => ({
@@ -12263,9 +17562,22 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  blue_label @ \Blue
+         *  ```
+         **/
         blue_label() {
             return this.$.$mol_locale.text("$mol_link_demo_blue_label");
         }
+        /**
+         *  ```
+         *  External $mol_link
+         *  	uri \http://example.org
+         *  	title \example.org
+         *  	hint <= external_hint
+         *  ```
+         **/
         External() {
             return ((obj) => {
                 obj.uri = () => "http://example.org";
@@ -12274,6 +17586,11 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  external_hint @ \external link
+         *  ```
+         **/
         external_hint() {
             return this.$.$mol_locale.text("$mol_link_demo_external_hint");
         }
@@ -12301,12 +17618,30 @@ var $;
 var $;
 (function ($) {
     class $mol_image extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \img
+         *  ```
+         **/
         dom_name() {
             return "img";
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	src <= uri
+         *  	alt <= title
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "src": this.uri(), "alt": this.title() }));
         }
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri() {
             return "";
         }
@@ -12325,24 +17660,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_link_iconed extends $.$mol_link {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Icon
+         *  	<= content
+         *  ```
+         **/
         sub() {
             return [].concat(this.Icon(), this.content());
         }
+        /**
+         *  ```
+         *  Icon $mol_image uri <= icon
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 obj.uri = () => this.icon();
                 return obj;
             })(new this.$.$mol_image());
         }
+        /**
+         *  ```
+         *  icon \
+         *  ```
+         **/
         icon() {
             return "";
         }
+        /**
+         *  ```
+         *  content / <= title
+         *  ```
+         **/
         content() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  title <= uri
+         *  ```
+         **/
         title() {
             return this.uri();
         }
+        /**
+         *  ```
+         *  host \
+         *  ```
+         **/
         host() {
             return "";
         }
@@ -12398,21 +17765,48 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_link_iconed_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Link with icon
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_link_iconed_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Input
+         *  	<= Output
+         *  ```
+         **/
         sub() {
             return [].concat(this.Input(), this.Output());
         }
+        /**
+         *  ```
+         *  Input $mol_string value?val <=> uri?val
+         *  ```
+         **/
         Input() {
             return ((obj) => {
                 obj.value = (val) => this.uri(val);
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  uri?val \https://www.google.com/search?q=%24mol
+         *  ```
+         **/
         uri(val, force) {
             return (val !== void 0) ? val : "https://www.google.com/search?q=%24mol";
         }
+        /**
+         *  ```
+         *  Output $mol_link_iconed uri <= uri?val
+         *  ```
+         **/
         Output() {
             return ((obj) => {
                 obj.uri = () => this.uri();
@@ -12443,27 +17837,59 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_list_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Large list of rows with dynamic content
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_list_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Scroll
+         *  ```
+         **/
         sub() {
             return [].concat(this.Scroll());
         }
+        /**
+         *  ```
+         *  Scroll $mol_scroll sub / <= List
+         *  ```
+         **/
         Scroll() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.List());
                 return obj;
             })(new this.$.$mol_scroll());
         }
+        /**
+         *  ```
+         *  List $mol_list rows <= rows
+         *  ```
+         **/
         List() {
             return ((obj) => {
                 obj.rows = () => this.rows();
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Row!id $mol_expander
+         *  	title <= row_text!id
+         *  	content / <= Content!id
+         *  ```
+         **/
         Row(id) {
             return ((obj) => {
                 obj.title = () => this.row_text(id);
@@ -12471,15 +17897,30 @@ var $;
                 return obj;
             })(new this.$.$mol_expander());
         }
+        /**
+         *  ```
+         *  row_text!id \
+         *  ```
+         **/
         row_text(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Content!id $mol_row sub / <= Text
+         *  ```
+         **/
         Content(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Text());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Text $mol_filler
+         *  ```
+         **/
         Text() {
             return ((obj) => {
                 return obj;
@@ -12620,12 +18061,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_map_yandex extends $.$mol_view {
+        /**
+         *  ```
+         *  zoom?val 2
+         *  ```
+         **/
         zoom(val, force) {
             return (val !== void 0) ? val : 2;
         }
+        /**
+         *  ```
+         *  center?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         center(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  objects /
+         *  ```
+         **/
         objects() {
             return [].concat();
         }
@@ -12696,15 +18154,37 @@ var $;
 var $;
 (function ($) {
     class $mol_map_yandex_mark extends $.$mol_object {
+        /**
+         *  ```
+         *  pos /
+         *  	0
+         *  	0
+         *  ```
+         **/
         pos() {
             return [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
+        /**
+         *  ```
+         *  content \
+         *  ```
+         **/
         content() {
             return "";
         }
@@ -12754,12 +18234,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_map_yandex_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Simple Yandex Maps wrapper
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_map_yandex_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Map
+         *  ```
+         **/
         sub() {
             return [].concat(this.Map());
         }
+        /**
+         *  ```
+         *  Map $mol_map_yandex
+         *  	center?val <=> center?val
+         *  	zoom?val <=> zoom?val
+         *  	objects / <= Place
+         *  ```
+         **/
         Map() {
             return ((obj) => {
                 obj.center = (val) => this.center(val);
@@ -12768,12 +18266,32 @@ var $;
                 return obj;
             })(new this.$.$mol_map_yandex());
         }
+        /**
+         *  ```
+         *  center?val /
+         *  	59.9
+         *  	30.3
+         *  ```
+         **/
         center(val, force) {
             return (val !== void 0) ? val : [].concat(59.9, 30.3);
         }
+        /**
+         *  ```
+         *  zoom?val 10
+         *  ```
+         **/
         zoom(val, force) {
             return (val !== void 0) ? val : 10;
         }
+        /**
+         *  ```
+         *  Place $mol_map_yandex_mark
+         *  	pos <= place_pos
+         *  	title <= place_title
+         *  	content <= place_content
+         *  ```
+         **/
         Place() {
             return ((obj) => {
                 obj.pos = () => this.place_pos();
@@ -12782,12 +18300,29 @@ var $;
                 return obj;
             })(new this.$.$mol_map_yandex_mark());
         }
+        /**
+         *  ```
+         *  place_pos /
+         *  	59.9
+         *  	30.3
+         *  ```
+         **/
         place_pos() {
             return [].concat(59.9, 30.3);
         }
+        /**
+         *  ```
+         *  place_title \Saint-Petersburg
+         *  ```
+         **/
         place_title() {
             return "Saint-Petersburg";
         }
+        /**
+         *  ```
+         *  place_content \It is Russia's second-largest city after Moscow
+         *  ```
+         **/
         place_content() {
             return "It is Russia's second-largest city after Moscow";
         }
@@ -12934,24 +18469,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_text extends $.$mol_list {
+        /**
+         *  ```
+         *  uri_base \
+         *  ```
+         **/
         uri_base() {
             return "";
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
+        /**
+         *  ```
+         *  tokens /
+         *  ```
+         **/
         tokens() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Quote!id $mol_text text <= quote_text!id
+         *  ```
+         **/
         Quote(id) {
             return ((obj) => {
                 obj.text = () => this.quote_text(id);
                 return obj;
             })(new this.$.$mol_text());
         }
+        /**
+         *  ```
+         *  quote_text!id \
+         *  ```
+         **/
         quote_text(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Row!id $mol_text_row
+         *  	sub <= block_content!id
+         *  	type <= block_type!id
+         *  ```
+         **/
         Row(id) {
             return ((obj) => {
                 obj.sub = () => this.block_content(id);
@@ -12959,27 +18526,59 @@ var $;
                 return obj;
             })(new this.$.$mol_text_row());
         }
+        /**
+         *  ```
+         *  block_content!id /
+         *  ```
+         **/
         block_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  block_type!id \
+         *  ```
+         **/
         block_type(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Span!id $mol_text_span
+         *  ```
+         **/
         Span(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_text_span());
         }
+        /**
+         *  ```
+         *  Link!id $mol_text_link
+         *  ```
+         **/
         Link(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_text_link());
         }
+        /**
+         *  ```
+         *  Image!id $mol_text_image
+         *  ```
+         **/
         Image(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_text_image());
         }
+        /**
+         *  ```
+         *  Header!id $mol_text_header
+         *  	level <= header_level!id
+         *  	content <= header_content!id
+         *  ```
+         **/
         Header(id) {
             return ((obj) => {
                 obj.level = () => this.header_level(id);
@@ -12987,12 +18586,29 @@ var $;
                 return obj;
             })(new this.$.$mol_text_header());
         }
+        /**
+         *  ```
+         *  header_level!id 0
+         *  ```
+         **/
         header_level(id) {
             return 0;
         }
+        /**
+         *  ```
+         *  header_content!id /
+         *  ```
+         **/
         header_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table!id $mol_grid
+         *  	head_cells <= table_head_cells!id
+         *  	rows <= table_rows!id
+         *  ```
+         **/
         Table(id) {
             return ((obj) => {
                 obj.head_cells = () => this.table_head_cells(id);
@@ -13000,30 +18616,65 @@ var $;
                 return obj;
             })(new this.$.$mol_grid());
         }
+        /**
+         *  ```
+         *  table_head_cells!id /
+         *  ```
+         **/
         table_head_cells(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  table_rows!id /
+         *  ```
+         **/
         table_rows(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table_row!id $mol_grid_row cells <= table_cells!id
+         *  ```
+         **/
         Table_row(id) {
             return ((obj) => {
                 obj.cells = () => this.table_cells(id);
                 return obj;
             })(new this.$.$mol_grid_row());
         }
+        /**
+         *  ```
+         *  table_cells!id /
+         *  ```
+         **/
         table_cells(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table_cell!id $mol_grid_cell sub <= table_cell_content!id
+         *  ```
+         **/
         Table_cell(id) {
             return ((obj) => {
                 obj.sub = () => this.table_cell_content(id);
                 return obj;
             })(new this.$.$mol_grid_cell());
         }
+        /**
+         *  ```
+         *  table_cell_content!id /
+         *  ```
+         **/
         table_cell_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table_cell_head!id $mol_float sub <= table_cell_content!id
+         *  ```
+         **/
         Table_cell_head(id) {
             return ((obj) => {
                 obj.sub = () => this.table_cell_content(id);
@@ -13065,12 +18716,29 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_row extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type \
+         *  ```
+         **/
         type() {
             return "";
         }
@@ -13079,21 +18747,53 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_header extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \h
+         *  ```
+         **/
         dom_name() {
             return "h";
         }
+        /**
+         *  ```
+         *  minimal_height 50
+         *  ```
+         **/
         minimal_height() {
             return 50;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_header_level <= level?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_header_level": this.level() }));
         }
+        /**
+         *  ```
+         *  level?val 0
+         *  ```
+         **/
         level(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  sub <= content
+         *  ```
+         **/
         sub() {
             return this.content();
         }
+        /**
+         *  ```
+         *  content /
+         *  ```
+         **/
         content() {
             return [].concat();
         }
@@ -13105,18 +18805,45 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_span extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \span
+         *  ```
+         **/
         dom_name() {
             return "span";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  sub <= content?val
+         *  ```
+         **/
         sub() {
             return this.content();
         }
+        /**
+         *  ```
+         *  content?val /
+         *  ```
+         **/
         content(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
@@ -13131,18 +18858,45 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_link extends $.$mol_link_iconed {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  uri <= link?val
+         *  ```
+         **/
         uri() {
             return this.link();
         }
+        /**
+         *  ```
+         *  link?val \
+         *  ```
+         **/
         link(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  content?val /
+         *  ```
+         **/
         content(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
@@ -13160,21 +18914,55 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_image extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \object
+         *  ```
+         **/
         dom_name() {
             return "object";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	allowfullscreen true
+         *  	mol_text_type <= type?val
+         *  	data <= link?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "allowfullscreen": true, "mol_text_type": this.type(), "data": this.link() }));
         }
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  link?val \
+         *  ```
+         **/
         link(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  sub / <= title?val
+         *  ```
+         **/
         sub() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  title?val \
+         *  ```
+         **/
         title(val, force) {
             return (val !== void 0) ? val : "";
         }
@@ -13356,38 +19144,85 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_message extends $.$mol_view {
+        /**
+         *  ```
+         *  moment $mol_time_moment
+         *  ```
+         **/
         moment() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_time_moment());
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Info
+         *  	<= Avatar_link
+         *  	<= Text
+         *  ```
+         **/
         sub() {
             return [].concat(this.Info(), this.Avatar_link(), this.Text());
         }
+        /**
+         *  ```
+         *  Info $mol_row sub /
+         *  	<= Name
+         *  	<= Moment
+         *  ```
+         **/
         Info() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Name(), this.Moment());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Name $mol_view sub / <= name
+         *  ```
+         **/
         Name() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.name());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  name \
+         *  ```
+         **/
         name() {
             return " ";
         }
+        /**
+         *  ```
+         *  Moment $mol_view sub / <= moment_string
+         *  ```
+         **/
         Moment() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.moment_string());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  moment_string \
+         *  ```
+         **/
         moment_string() {
             return "";
         }
+        /**
+         *  ```
+         *  Avatar_link $mol_link
+         *  	uri <= avatar_link
+         *  	sub / <= Avatar
+         *  ```
+         **/
         Avatar_link() {
             return ((obj) => {
                 obj.uri = () => this.avatar_link();
@@ -13395,9 +19230,21 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  avatar_link \
+         *  ```
+         **/
         avatar_link() {
             return "";
         }
+        /**
+         *  ```
+         *  Avatar $mol_image
+         *  	title \
+         *  	uri <= avatar
+         *  ```
+         **/
         Avatar() {
             return ((obj) => {
                 obj.title = () => "";
@@ -13405,15 +19252,30 @@ var $;
                 return obj;
             })(new this.$.$mol_image());
         }
+        /**
+         *  ```
+         *  avatar \
+         *  ```
+         **/
         avatar() {
             return "";
         }
+        /**
+         *  ```
+         *  Text $mol_text text <= text
+         *  ```
+         **/
         Text() {
             return ((obj) => {
                 obj.text = () => this.text();
                 return obj;
             })(new this.$.$mol_text());
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
@@ -13468,12 +19330,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_message_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Generic user message
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_message_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Message_short
+         *  	<= Message_long
+         *  ```
+         **/
         sub() {
             return [].concat(this.Message_short(), this.Message_long());
         }
+        /**
+         *  ```
+         *  Message_short $mol_message
+         *  	name \Jin
+         *  	moment $mol_time_moment
+         *  	avatar \https://avatars3.githubusercontent.com/u/442988?v=4
+         *  	avatar_link \https://github.com/nin-jin
+         *  	text \Hello, **everybody!**
+         *  ```
+         **/
         Message_short() {
             return ((obj) => {
                 obj.name = () => "Jin";
@@ -13486,6 +19370,15 @@ var $;
                 return obj;
             })(new this.$.$mol_message());
         }
+        /**
+         *  ```
+         *  Message_long $mol_message
+         *  	name \Great Teacher Onizuka
+         *  	moment $mol_time_moment
+         *  	avatar_link \https://en.wikipedia.org/wiki/Great_Teacher_Onizuka
+         *  	text \The story focuses on 22-year-old ex-[bōsōzoku](https://en.wikipedia.org/wiki/Bōsōzoku) member Eikichi Onizuka, who becomes a teacher at a private middle school, Holy Forest Academy, in [Tokyo](https://en.wikipedia.org/wiki/Tokyo), [Japan](https://en.wikipedia.org/wiki/Japan). It won the 1998 [Kodansha Manga Award](https://en.wikipedia.org/wiki/Kodansha_Manga_Award) for shōnen and is a continuation of Tohru Fujisawa's other manga series [Shonan Junai Gumi](https://en.wikipedia.org/wiki/Shonan_Junai_Gumi) (lit. "Shōnan True Love Group") and Bad Company, both of which focus on the life of Onizuka before he becomes a teacher in Great Teacher Onizuka.
+         *  ```
+         **/
         Message_long() {
             return ((obj) => {
                 obj.name = () => "Great Teacher Onizuka";
@@ -13518,9 +19411,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_meter_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Real time offset and size metering
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_meter_demo_title");
         }
+        /**
+         *  ```
+         *  plugins / <= Meter
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Meter());
         }
@@ -13530,20 +19433,48 @@ var $;
         height() {
             return this.Meter().height();
         }
+        /**
+         *  ```
+         *  Meter $mol_meter
+         *  	top => top
+         *  	height => height
+         *  ```
+         **/
         Meter() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_meter());
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Top
+         *  	<= Height
+         *  ```
+         **/
         sub() {
             return [].concat(this.Top(), this.Height());
         }
+        /**
+         *  ```
+         *  Top $mol_view sub /
+         *  	\Offset from top:
+         *  	<= top
+         *  ```
+         **/
         Top() {
             return ((obj) => {
                 obj.sub = () => [].concat("Offset from top: ", this.top());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  Height $mol_view sub /
+         *  	\Component height:
+         *  	<= height
+         *  ```
+         **/
         Height() {
             return ((obj) => {
                 obj.sub = () => [].concat("Component height: ", this.height());
@@ -13568,6 +19499,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_minus extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M19,13H5V11H19V13Z
+         *  ```
+         **/
         path() {
             return "M19,13H5V11H19V13Z";
         }
@@ -13580,6 +19516,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_plus extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+         *  ```
+         **/
         path() {
             return "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z";
         }
@@ -13598,21 +19539,59 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_number extends $.$mol_view {
+        /**
+         *  ```
+         *  precision_view <= precision
+         *  ```
+         **/
         precision_view() {
             return this.precision();
         }
+        /**
+         *  ```
+         *  precision 1
+         *  ```
+         **/
         precision() {
             return 1;
         }
+        /**
+         *  ```
+         *  precision_change <= precision
+         *  ```
+         **/
         precision_change() {
             return this.precision();
         }
+        /**
+         *  ```
+         *  value?val NaN
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : NaN;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= String
+         *  	<= Dec
+         *  	<= Inc
+         *  ```
+         **/
         sub() {
             return [].concat(this.String(), this.Dec(), this.Inc());
         }
+        /**
+         *  ```
+         *  String $mol_string
+         *  	type \number
+         *  	value?val <=> value_string?val
+         *  	hint <= hint
+         *  	enabled <= string_enabled
+         *  	debounce <= debounce
+         *  ```
+         **/
         String() {
             return ((obj) => {
                 obj.type = () => "number";
@@ -13623,21 +19602,54 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  value_string?val \
+         *  ```
+         **/
         value_string(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  string_enabled <= enabled
+         *  ```
+         **/
         string_enabled() {
             return this.enabled();
         }
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  debounce 200
+         *  ```
+         **/
         debounce() {
             return 200;
         }
+        /**
+         *  ```
+         *  Dec $mol_button_minor
+         *  	event_click?val <=> event_dec?val
+         *  	enabled <= dec_enabled
+         *  	sub / <= dec_icon
+         *  ```
+         **/
         Dec() {
             return ((obj) => {
                 obj.event_click = (val) => this.event_dec(val);
@@ -13646,17 +19658,40 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  event_dec?val null
+         *  ```
+         **/
         event_dec(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  dec_enabled <= enabled
+         *  ```
+         **/
         dec_enabled() {
             return this.enabled();
         }
+        /**
+         *  ```
+         *  dec_icon $mol_icon_minus
+         *  ```
+         **/
         dec_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_minus());
         }
+        /**
+         *  ```
+         *  Inc $mol_button_minor
+         *  	event_click?val <=> event_inc?val
+         *  	enabled <= inc_enabled
+         *  	sub / <= inc_icon
+         *  ```
+         **/
         Inc() {
             return ((obj) => {
                 obj.event_click = (val) => this.event_inc(val);
@@ -13665,12 +19700,27 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  event_inc?val null
+         *  ```
+         **/
         event_inc(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  inc_enabled <= enabled
+         *  ```
+         **/
         inc_enabled() {
             return this.enabled();
         }
+        /**
+         *  ```
+         *  inc_icon $mol_icon_plus
+         *  ```
+         **/
         inc_icon() {
             return ((obj) => {
                 return obj;
@@ -13752,26 +19802,68 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_number_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Number input control with various configuration
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_number_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= zero
+         *  	<= one
+         *  	<= two
+         *  	<= three
+         *  	<= four
+         *  	<= five
+         *  	<= six
+         *  	<= seven
+         *  	<= eight
+         *  	<= nine
+         *  ```
+         **/
         sub() {
             return [].concat(this.zero(), this.one(), this.two(), this.three(), this.four(), this.five(), this.six(), this.seven(), this.eight(), this.nine());
         }
+        /**
+         *  ```
+         *  zero $mol_number
+         *  ```
+         **/
         zero() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  one $mol_number value?val <=> year?val
+         *  ```
+         **/
         one() {
             return ((obj) => {
                 obj.value = (val) => this.year(val);
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  year?val NaN
+         *  ```
+         **/
         year(val, force) {
             return (val !== void 0) ? val : NaN;
         }
+        /**
+         *  ```
+         *  two $mol_number
+         *  	value?val <=> year?val
+         *  	hint \2016
+         *  ```
+         **/
         two() {
             return ((obj) => {
                 obj.value = (val) => this.year(val);
@@ -13779,6 +19871,14 @@ var $;
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  three $mol_number
+         *  	value?val <=> age?val
+         *  	hint \18-99
+         *  	enabled false
+         *  ```
+         **/
         three() {
             return ((obj) => {
                 obj.value = (val) => this.age(val);
@@ -13787,9 +19887,21 @@ var $;
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  age?val 32
+         *  ```
+         **/
         age(val, force) {
             return (val !== void 0) ? val : 32;
         }
+        /**
+         *  ```
+         *  four $mol_number
+         *  	value?val <=> year?val
+         *  	string_enabled false
+         *  ```
+         **/
         four() {
             return ((obj) => {
                 obj.value = (val) => this.year(val);
@@ -13797,6 +19909,13 @@ var $;
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  five $mol_number
+         *  	value?val <=> age?val
+         *  	dec_enabled false
+         *  ```
+         **/
         five() {
             return ((obj) => {
                 obj.value = (val) => this.age(val);
@@ -13804,6 +19923,13 @@ var $;
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  six $mol_number
+         *  	value?val <=> year?val
+         *  	inc_enabled false
+         *  ```
+         **/
         six() {
             return ((obj) => {
                 obj.value = (val) => this.year(val);
@@ -13811,6 +19937,13 @@ var $;
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  seven $mol_number
+         *  	value?val <=> year?val
+         *  	precision_change 10
+         *  ```
+         **/
         seven() {
             return ((obj) => {
                 obj.value = (val) => this.year(val);
@@ -13818,6 +19951,13 @@ var $;
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  eight $mol_number
+         *  	value?val <=> year?val
+         *  	precision_view 0.01
+         *  ```
+         **/
         eight() {
             return ((obj) => {
                 obj.value = (val) => this.year(val);
@@ -13825,6 +19965,13 @@ var $;
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  nine $mol_number
+         *  	value?val <=> year?val
+         *  	precision 1000
+         *  ```
+         **/
         nine() {
             return ((obj) => {
                 obj.value = (val) => this.year(val);
@@ -13883,9 +20030,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_page extends $.$mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Head
+         *  	<= Body
+         *  	<= Foot
+         *  ```
+         **/
         sub() {
             return [].concat(this.Head(), this.Body(), this.Foot());
         }
+        /**
+         *  ```
+         *  Head $mol_view
+         *  	attr * mol_theme \$mol_theme_base
+         *  	sub <= head
+         *  ```
+         **/
         Head() {
             return ((obj) => {
                 obj.attr = () => ({
@@ -13895,9 +20057,23 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  head /
+         *  	<= Title
+         *  	<= Tools
+         *  ```
+         **/
         head() {
             return [].concat(this.Title(), this.Tools());
         }
+        /**
+         *  ```
+         *  Title $mol_button
+         *  	sub / <= title
+         *  	event_click?val <=> event_top?val
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.title());
@@ -13905,18 +20081,40 @@ var $;
                 return obj;
             })(new this.$.$mol_button());
         }
+        /**
+         *  ```
+         *  event_top?val null
+         *  ```
+         **/
         event_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Tools $mol_view sub <= tools
+         *  ```
+         **/
         Tools() {
             return ((obj) => {
                 obj.sub = () => this.tools();
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  tools /
+         *  ```
+         **/
         tools() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Body $mol_scroll
+         *  	scroll_top?val <=> body_scroll_top?val
+         *  	sub <= body
+         *  ```
+         **/
         Body() {
             return ((obj) => {
                 obj.scroll_top = (val) => this.body_scroll_top(val);
@@ -13924,12 +20122,29 @@ var $;
                 return obj;
             })(new this.$.$mol_scroll());
         }
+        /**
+         *  ```
+         *  body_scroll_top?val 0
+         *  ```
+         **/
         body_scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  body /
+         *  ```
+         **/
         body() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Foot $mol_view
+         *  	attr * mol_theme \$mol_theme_base
+         *  	sub <= foot
+         *  ```
+         **/
         Foot() {
             return ((obj) => {
                 obj.attr = () => ({
@@ -13939,6 +20154,11 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  foot /
+         *  ```
+         **/
         foot() {
             return [].concat();
         }
@@ -13993,12 +20213,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_page_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Page with header, body and footer
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_page_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Page
+         *  ```
+         **/
         sub() {
             return [].concat(this.Page());
         }
+        /**
+         *  ```
+         *  Page $mol_page
+         *  	tools / <= Button
+         *  	body / <= Content
+         *  	foot / <= Foot_content
+         *  ```
+         **/
         Page() {
             return ((obj) => {
                 obj.tools = () => [].concat(this.Button());
@@ -14007,29 +20245,54 @@ var $;
                 return obj;
             })(new this.$.$mol_page());
         }
+        /**
+         *  ```
+         *  Button $mol_button_minor title \Toolbar Button
+         *  ```
+         **/
         Button() {
             return ((obj) => {
                 obj.title = () => "Toolbar Button";
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  Content $mol_row sub / <= Text
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Text());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Text $mol_filler
+         *  ```
+         **/
         Text() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_filler());
         }
+        /**
+         *  ```
+         *  Foot_content $mol_row sub / <= Foot_text
+         *  ```
+         **/
         Foot_content() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Foot_text());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Foot_text $mol_view sub / \Footer
+         *  ```
+         **/
         Foot_text() {
             return ((obj) => {
                 obj.sub = () => [].concat("Footer");
@@ -14069,9 +20332,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_paginator extends $.$mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Backward
+         *  	<= Value
+         *  	<= Forward
+         *  ```
+         **/
         sub() {
             return [].concat(this.Backward(), this.Value(), this.Forward());
         }
+        /**
+         *  ```
+         *  Backward $mol_button_minor
+         *  	hint <= backward_hint
+         *  	click?event <=> backward?event
+         *  	sub / <= Backward_icon
+         *  ```
+         **/
         Backward() {
             return ((obj) => {
                 obj.hint = () => this.backward_hint();
@@ -14080,26 +20359,59 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  backward_hint @ \Назад
+         *  ```
+         **/
         backward_hint() {
             return this.$.$mol_locale.text("$mol_paginator_backward_hint");
         }
+        /**
+         *  ```
+         *  backward?event null
+         *  ```
+         **/
         backward(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  Backward_icon $mol_icon_chevron
+         *  ```
+         **/
         Backward_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_chevron());
         }
+        /**
+         *  ```
+         *  Value $mol_view sub / <= value?val
+         *  ```
+         **/
         Value() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.value());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  value?val 0
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  Forward $mol_button_minor
+         *  	hint <= forward_hint
+         *  	click?event <=> forward?event
+         *  	sub / <= Forward_icon
+         *  ```
+         **/
         Forward() {
             return ((obj) => {
                 obj.hint = () => this.forward_hint();
@@ -14108,12 +20420,27 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  forward_hint @ \Вперёд
+         *  ```
+         **/
         forward_hint() {
             return this.$.$mol_locale.text("$mol_paginator_forward_hint");
         }
+        /**
+         *  ```
+         *  forward?event null
+         *  ```
+         **/
         forward(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  Forward_icon $mol_icon_chevron
+         *  ```
+         **/
         Forward_icon() {
             return ((obj) => {
                 return obj;
@@ -14176,18 +20503,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_paginator_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Page switcher
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_paginator_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Pages
+         *  ```
+         **/
         sub() {
             return [].concat(this.Pages());
         }
+        /**
+         *  ```
+         *  Pages $mol_paginator value?val <=> page?val
+         *  ```
+         **/
         Pages() {
             return ((obj) => {
                 obj.value = (val) => this.page(val);
                 return obj;
             })(new this.$.$mol_paginator());
         }
+        /**
+         *  ```
+         *  page?val 0
+         *  ```
+         **/
         page(val, force) {
             return (val !== void 0) ? val : 0;
         }
@@ -14212,21 +20559,55 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Dynamic lightweight graphs
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_plot_demo_title");
         }
+        /**
+         *  ```
+         *  count?val 20
+         *  ```
+         **/
         count(val, force) {
             return (val !== void 0) ? val : 20;
         }
+        /**
+         *  ```
+         *  sub / <= Plot
+         *  ```
+         **/
         sub() {
             return [].concat(this.Plot());
         }
+        /**
+         *  ```
+         *  Plot $mol_plot_pane graphs /
+         *  	<= Saturation
+         *  	<= Input
+         *  	<= Output
+         *  	<= Voltage
+         *  	<= Time
+         *  ```
+         **/
         Plot() {
             return ((obj) => {
                 obj.graphs = () => [].concat(this.Saturation(), this.Input(), this.Output(), this.Voltage(), this.Time());
                 return obj;
             })(new this.$.$mol_plot_pane());
         }
+        /**
+         *  ```
+         *  Saturation $mol_plot_group
+         *  	series_y <= saturation_series
+         *  	graphs /
+         *  		<= Saturation_fill
+         *  		<= Saturation_line
+         *  ```
+         **/
         Saturation() {
             return ((obj) => {
                 obj.series_y = () => this.saturation_series();
@@ -14234,20 +20615,44 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_group());
         }
+        /**
+         *  ```
+         *  saturation_series /
+         *  ```
+         **/
         saturation_series() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Saturation_fill $mol_plot_fill
+         *  ```
+         **/
         Saturation_fill() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_plot_fill());
         }
+        /**
+         *  ```
+         *  Saturation_line $mol_plot_line type \dashed
+         *  ```
+         **/
         Saturation_line() {
             return ((obj) => {
                 obj.type = () => "dashed";
                 return obj;
             })(new this.$.$mol_plot_line());
         }
+        /**
+         *  ```
+         *  Input $mol_plot_group
+         *  	series_y <= input_series
+         *  	graphs /
+         *  		<= Input_line
+         *  		<= Input_dots
+         *  ```
+         **/
         Input() {
             return ((obj) => {
                 obj.series_y = () => this.input_series();
@@ -14255,43 +20660,88 @@ var $;
                 return obj;
             })(new this.$.$mol_plot_group());
         }
+        /**
+         *  ```
+         *  input_series /
+         *  ```
+         **/
         input_series() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Input_line $mol_plot_line
+         *  ```
+         **/
         Input_line() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_plot_line());
         }
+        /**
+         *  ```
+         *  Input_dots $mol_plot_dot
+         *  ```
+         **/
         Input_dots() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_plot_dot());
         }
+        /**
+         *  ```
+         *  Output $mol_plot_bar series_y <= output_series
+         *  ```
+         **/
         Output() {
             return ((obj) => {
                 obj.series_y = () => this.output_series();
                 return obj;
             })(new this.$.$mol_plot_bar());
         }
+        /**
+         *  ```
+         *  output_series /
+         *  ```
+         **/
         output_series() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Voltage $mol_plot_ruler_vert title <= Voltage_title
+         *  ```
+         **/
         Voltage() {
             return ((obj) => {
                 obj.title = () => this.Voltage_title();
                 return obj;
             })(new this.$.$mol_plot_ruler_vert());
         }
+        /**
+         *  ```
+         *  Voltage_title @ \V
+         *  ```
+         **/
         Voltage_title() {
             return this.$.$mol_locale.text("$mol_plot_demo_Voltage_title");
         }
+        /**
+         *  ```
+         *  Time $mol_plot_ruler_hor title <= Time_title
+         *  ```
+         **/
         Time() {
             return ((obj) => {
                 obj.title = () => this.Time_title();
                 return obj;
             })(new this.$.$mol_plot_ruler_hor());
         }
+        /**
+         *  ```
+         *  Time_title @ \ms
+         *  ```
+         **/
         Time_title() {
             return this.$.$mol_locale.text("$mol_plot_demo_Time_title");
         }
@@ -14394,12 +20844,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_pop_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Pop up block with various alignment
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_pop_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Pop
+         *  ```
+         **/
         sub() {
             return [].concat(this.Pop());
         }
+        /**
+         *  ```
+         *  Pop $mol_pop
+         *  	Anchor <= Show
+         *  	showed <= showed
+         *  	bubble_content / <= Content
+         *  ```
+         **/
         Pop() {
             return ((obj) => {
                 obj.Anchor = () => this.Show();
@@ -14408,24 +20876,49 @@ var $;
                 return obj;
             })(new this.$.$mol_pop());
         }
+        /**
+         *  ```
+         *  Show $mol_button_minor title <= show_text
+         *  ```
+         **/
         Show() {
             return ((obj) => {
                 obj.title = () => this.show_text();
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  show_text @ \?
+         *  ```
+         **/
         show_text() {
             return this.$.$mol_locale.text("$mol_pop_demo_show_text");
         }
+        /**
+         *  ```
+         *  showed <= focused
+         *  ```
+         **/
         showed() {
             return this.focused();
         }
+        /**
+         *  ```
+         *  Content $mol_row sub / <= bubble_hint
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.bubble_hint());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  bubble_hint @ \This is $mol_pop
+         *  ```
+         **/
         bubble_hint() {
             return this.$.$mol_locale.text("$mol_pop_demo_bubble_hint");
         }
@@ -14453,21 +20946,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_pop_over extends $.$mol_pop {
+        /**
+         *  ```
+         *  showed <= hovered?val
+         *  ```
+         **/
         showed() {
             return this.hovered();
         }
+        /**
+         *  ```
+         *  hovered?val false
+         *  ```
+         **/
         hovered(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex 0
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "tabindex": 0 }));
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	mouseenter?event <=> event_show?event
+         *  	mouseleave?event <=> event_hide?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "mouseenter": (event) => this.event_show(event), "mouseleave": (event) => this.event_hide(event) }));
         }
+        /**
+         *  ```
+         *  event_show?event null
+         *  ```
+         **/
         event_show(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_hide?event null
+         *  ```
+         **/
         event_hide(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -14516,18 +21044,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_pop_over_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Menu that opens on mouse over
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_pop_over_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Menu
+         *  ```
+         **/
         sub() {
             return [].concat(this.Menu());
         }
+        /**
+         *  ```
+         *  Menu $mol_row sub /
+         *  	<= File
+         *  	<= Help
+         *  ```
+         **/
         Menu() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.File(), this.Help());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  File $mol_pop_over
+         *  	align \bottom_right
+         *  	Anchor <= file_title
+         *  	bubble_content / <= File_menu
+         *  ```
+         **/
         File() {
             return ((obj) => {
                 obj.align = () => "bottom_right";
@@ -14536,42 +21089,93 @@ var $;
                 return obj;
             })(new this.$.$mol_pop_over());
         }
+        /**
+         *  ```
+         *  file_title @ \File
+         *  ```
+         **/
         file_title() {
             return this.$.$mol_locale.text("$mol_pop_over_demo_file_title");
         }
+        /**
+         *  ```
+         *  File_menu $mol_list rows /
+         *  	<= Open
+         *  	<= Export
+         *  	<= Save
+         *  ```
+         **/
         File_menu() {
             return ((obj) => {
                 obj.rows = () => [].concat(this.Open(), this.Export(), this.Save());
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  Open $mol_button_minor title <= open_title
+         *  ```
+         **/
         Open() {
             return ((obj) => {
                 obj.title = () => this.open_title();
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  open_title @ \Open
+         *  ```
+         **/
         open_title() {
             return this.$.$mol_locale.text("$mol_pop_over_demo_open_title");
         }
+        /**
+         *  ```
+         *  Export $mol_button_minor title <= export_title
+         *  ```
+         **/
         Export() {
             return ((obj) => {
                 obj.title = () => this.export_title();
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  export_title @ \Export
+         *  ```
+         **/
         export_title() {
             return this.$.$mol_locale.text("$mol_pop_over_demo_export_title");
         }
+        /**
+         *  ```
+         *  Save $mol_button_minor title <= save_title
+         *  ```
+         **/
         Save() {
             return ((obj) => {
                 obj.title = () => this.save_title();
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  save_title @ \Save
+         *  ```
+         **/
         save_title() {
             return this.$.$mol_locale.text("$mol_pop_over_demo_save_title");
         }
+        /**
+         *  ```
+         *  Help $mol_pop_over
+         *  	align \bottom_right
+         *  	Anchor <= help_title
+         *  	bubble_content / <= Help_menu
+         *  ```
+         **/
         Help() {
             return ((obj) => {
                 obj.align = () => "bottom_right";
@@ -14580,30 +21184,62 @@ var $;
                 return obj;
             })(new this.$.$mol_pop_over());
         }
+        /**
+         *  ```
+         *  help_title @ \About
+         *  ```
+         **/
         help_title() {
             return this.$.$mol_locale.text("$mol_pop_over_demo_help_title");
         }
+        /**
+         *  ```
+         *  Help_menu $mol_list rows /
+         *  	<= Updates
+         *  	<= About
+         *  ```
+         **/
         Help_menu() {
             return ((obj) => {
                 obj.rows = () => [].concat(this.Updates(), this.About());
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  Updates $mol_button_minor title <= updates_title
+         *  ```
+         **/
         Updates() {
             return ((obj) => {
                 obj.title = () => this.updates_title();
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  updates_title @ \Updates
+         *  ```
+         **/
         updates_title() {
             return this.$.$mol_locale.text("$mol_pop_over_demo_updates_title");
         }
+        /**
+         *  ```
+         *  About $mol_button_minor title <= about_title
+         *  ```
+         **/
         About() {
             return ((obj) => {
                 obj.title = () => this.about_title();
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  about_title @ \About
+         *  ```
+         **/
         about_title() {
             return this.$.$mol_locale.text("$mol_pop_over_demo_about_title");
         }
@@ -14652,36 +21288,79 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_portion_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Progress bar in various states
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_portion_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Empty
+         *  	<= Partial
+         *  	<= Full
+         *  ```
+         **/
         sub() {
             return [].concat(this.Empty(), this.Partial(), this.Full());
         }
+        /**
+         *  ```
+         *  Empty $mol_portion portion <= fist
+         *  ```
+         **/
         Empty() {
             return ((obj) => {
                 obj.portion = () => this.fist();
                 return obj;
             })(new this.$.$mol_portion());
         }
+        /**
+         *  ```
+         *  fist 0
+         *  ```
+         **/
         fist() {
             return 0;
         }
+        /**
+         *  ```
+         *  Partial $mol_portion portion <= second
+         *  ```
+         **/
         Partial() {
             return ((obj) => {
                 obj.portion = () => this.second();
                 return obj;
             })(new this.$.$mol_portion());
         }
+        /**
+         *  ```
+         *  second 0.5
+         *  ```
+         **/
         second() {
             return 0.5;
         }
+        /**
+         *  ```
+         *  Full $mol_portion portion <= third
+         *  ```
+         **/
         Full() {
             return ((obj) => {
                 obj.portion = () => this.third();
                 return obj;
             })(new this.$.$mol_portion());
         }
+        /**
+         *  ```
+         *  third 1
+         *  ```
+         **/
         third() {
             return 1;
         }
@@ -14709,18 +21388,48 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_row_demo_form extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Some controls in one row with equal paddings and wrapping support
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_row_demo_form_title");
         }
+        /**
+         *  ```
+         *  sub / <= Row
+         *  ```
+         **/
         sub() {
             return [].concat(this.Row());
         }
+        /**
+         *  ```
+         *  Row $mol_row sub /
+         *  	<= Name
+         *  	<= Count
+         *  	<= Progress
+         *  	<= Publish
+         *  	<= Drop
+         *  ```
+         **/
         Row() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Name(), this.Count(), this.Progress(), this.Publish(), this.Drop());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Name $mol_search
+         *  	hint <= name_hint
+         *  	query?val <=> name?val
+         *  	suggests /
+         *  		<= suggest1
+         *  		<= suggest2
+         *  ```
+         **/
         Name() {
             return ((obj) => {
                 obj.hint = () => this.name_hint();
@@ -14729,18 +21438,45 @@ var $;
                 return obj;
             })(new this.$.$mol_search());
         }
+        /**
+         *  ```
+         *  name_hint @ \Jack Sparrow
+         *  ```
+         **/
         name_hint() {
             return this.$.$mol_locale.text("$mol_row_demo_form_name_hint");
         }
+        /**
+         *  ```
+         *  name?val \
+         *  ```
+         **/
         name(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  suggest1 @ \Jack Sparrow
+         *  ```
+         **/
         suggest1() {
             return this.$.$mol_locale.text("$mol_row_demo_form_suggest1");
         }
+        /**
+         *  ```
+         *  suggest2 @ \Bruce Wayne
+         *  ```
+         **/
         suggest2() {
             return this.$.$mol_locale.text("$mol_row_demo_form_suggest2");
         }
+        /**
+         *  ```
+         *  Count $mol_number
+         *  	hint <= count_hint
+         *  	value?val <=> count?val
+         *  ```
+         **/
         Count() {
             return ((obj) => {
                 obj.hint = () => this.count_hint();
@@ -14748,21 +21484,48 @@ var $;
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  count_hint @ \Count
+         *  ```
+         **/
         count_hint() {
             return this.$.$mol_locale.text("$mol_row_demo_form_count_hint");
         }
+        /**
+         *  ```
+         *  count?val null
+         *  ```
+         **/
         count(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Progress $mol_portion portion <= progress
+         *  ```
+         **/
         Progress() {
             return ((obj) => {
                 obj.portion = () => this.progress();
                 return obj;
             })(new this.$.$mol_portion());
         }
+        /**
+         *  ```
+         *  progress 0.33
+         *  ```
+         **/
         progress() {
             return 0.33;
         }
+        /**
+         *  ```
+         *  Publish $mol_check_box
+         *  	title <= publish_label
+         *  	checked?val <=> publish?val
+         *  ```
+         **/
         Publish() {
             return ((obj) => {
                 obj.title = () => this.publish_label();
@@ -14770,18 +21533,38 @@ var $;
                 return obj;
             })(new this.$.$mol_check_box());
         }
+        /**
+         *  ```
+         *  publish_label @ \Shared
+         *  ```
+         **/
         publish_label() {
             return this.$.$mol_locale.text("$mol_row_demo_form_publish_label");
         }
+        /**
+         *  ```
+         *  publish?val false
+         *  ```
+         **/
         publish(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Drop $mol_button_minor title <= drop_title
+         *  ```
+         **/
         Drop() {
             return ((obj) => {
                 obj.title = () => this.drop_title();
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  drop_title @ \Drop
+         *  ```
+         **/
         drop_title() {
             return this.$.$mol_locale.text("$mol_row_demo_form_drop_title");
         }
@@ -15069,12 +21852,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_row_demo_products extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Product catalog
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_row_demo_products_title");
         }
+        /**
+         *  ```
+         *  count 500
+         *  ```
+         **/
         count() {
             return 500;
         }
+        /**
+         *  ```
+         *  Product!id $mol_card
+         *  	minimal_width 140
+         *  	minimal_height 100
+         *  	content / <= product_title!id
+         *  ```
+         **/
         Product(id) {
             return ((obj) => {
                 obj.minimal_width = () => 140;
@@ -15083,24 +21884,49 @@ var $;
                 return obj;
             })(new this.$.$mol_card());
         }
+        /**
+         *  ```
+         *  product_title!id \
+         *  ```
+         **/
         product_title(id) {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= Catalog
+         *  ```
+         **/
         sub() {
             return [].concat(this.Catalog());
         }
+        /**
+         *  ```
+         *  Catalog $mol_scroll sub / <= Products
+         *  ```
+         **/
         Catalog() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Products());
                 return obj;
             })(new this.$.$mol_scroll());
         }
+        /**
+         *  ```
+         *  Products $mol_row sub <= products
+         *  ```
+         **/
         Products() {
             return ((obj) => {
                 obj.sub = () => this.products();
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  products /
+         *  ```
+         **/
         products() {
             return [].concat();
         }
@@ -15155,34 +21981,72 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_scroll_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Simple scroll pane
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_scroll_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Scroll
+         *  ```
+         **/
         sub() {
             return [].concat(this.Scroll());
         }
+        /**
+         *  ```
+         *  Scroll $mol_scroll sub / <= Content
+         *  ```
+         **/
         Scroll() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Content());
                 return obj;
             })(new this.$.$mol_scroll());
         }
+        /**
+         *  ```
+         *  Content $mol_row sub /
+         *  	<= One
+         *  	<= Two
+         *  	<= Tree
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.One(), this.Two(), this.Tree());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  One $mol_filler
+         *  ```
+         **/
         One() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_filler());
         }
+        /**
+         *  ```
+         *  Two $mol_filler
+         *  ```
+         **/
         Two() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_filler());
         }
+        /**
+         *  ```
+         *  Tree $mol_filler
+         *  ```
+         **/
         Tree() {
             return ((obj) => {
                 return obj;
@@ -15218,21 +22082,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_search_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Simple search field with suggest
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_search_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Search
+         *  ```
+         **/
         sub() {
             return [].concat(this.Search());
         }
         query() {
             return this.Search().query();
         }
+        /**
+         *  ```
+         *  Search $mol_search
+         *  	query => query
+         *  	suggests <= suggests
+         *  ```
+         **/
         Search() {
             return ((obj) => {
                 obj.suggests = () => this.suggests();
                 return obj;
             })(new this.$.$mol_search());
         }
+        /**
+         *  ```
+         *  suggests /
+         *  ```
+         **/
         suggests() {
             return [].concat();
         }
@@ -15281,18 +22167,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_section extends $.$mol_list {
+        /**
+         *  ```
+         *  rows /
+         *  	<= Head
+         *  	<= Content
+         *  ```
+         **/
         rows() {
             return [].concat(this.Head(), this.Content());
         }
+        /**
+         *  ```
+         *  Head $mol_view sub / <= head
+         *  ```
+         **/
         Head() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.head());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  head null
+         *  ```
+         **/
         head() {
             return null;
         }
+        /**
+         *  ```
+         *  Content null
+         *  ```
+         **/
         Content() {
             return null;
         }
@@ -15314,18 +22222,40 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_section_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Section with header
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_section_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Text
+         *  ```
+         **/
         sub() {
             return [].concat(this.Text());
         }
+        /**
+         *  ```
+         *  Text $mol_row sub / <= Section
+         *  ```
+         **/
         Text() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Section());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Section $mol_section
+         *  	head \Section header
+         *  	Content <= Section_content
+         *  ```
+         **/
         Section() {
             return ((obj) => {
                 obj.head = () => "Section header";
@@ -15333,6 +22263,11 @@ var $;
                 return obj;
             })(new this.$.$mol_section());
         }
+        /**
+         *  ```
+         *  Section_content $mol_filler
+         *  ```
+         **/
         Section_content() {
             return ((obj) => {
                 return obj;
@@ -15517,12 +22452,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_select_demo_colors extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Color picker with filter and custom rows
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_select_demo_colors_title");
         }
+        /**
+         *  ```
+         *  sub / <= Color
+         *  ```
+         **/
         sub() {
             return [].concat(this.Color());
         }
+        /**
+         *  ```
+         *  Color $mol_select
+         *  	value?val <=> color?val
+         *  	dictionary <= colors
+         *  	option_label!id <= color_name!id
+         *  	option_content!id <= option_content!id
+         *  ```
+         **/
         Color() {
             return ((obj) => {
                 obj.value = (val) => this.color(val);
@@ -15532,18 +22486,47 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
+        /**
+         *  ```
+         *  color?val \
+         *  ```
+         **/
         color(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  colors *
+         *  ```
+         **/
         colors() {
             return ({});
         }
+        /**
+         *  ```
+         *  color_name!id \
+         *  ```
+         **/
         color_name(id) {
             return "";
         }
+        /**
+         *  ```
+         *  option_content!id / <= Color_option!id
+         *  ```
+         **/
         option_content(id) {
             return [].concat(this.Color_option(id));
         }
+        /**
+         *  ```
+         *  Color_option!id $mol_row
+         *  	sub /
+         *  		<= Color_preview!id
+         *  		<= color_name!id
+         *  	minimal_height 40
+         *  ```
+         **/
         Color_option(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Color_preview(id), this.color_name(id));
@@ -15551,12 +22534,22 @@ var $;
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Color_preview!id $mol_select_colors_color_preview color <= option_color!id
+         *  ```
+         **/
         Color_preview(id) {
             return ((obj) => {
                 obj.color = () => this.option_color(id);
                 return obj;
             })(new this.$.$mol_select_colors_color_preview());
         }
+        /**
+         *  ```
+         *  option_color!id \
+         *  ```
+         **/
         option_color(id) {
             return "";
         }
@@ -15577,9 +22570,21 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_select_colors_color_preview extends $.$mol_view {
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	background <= color
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "background": this.color() }));
         }
+        /**
+         *  ```
+         *  color \
+         *  ```
+         **/
         color() {
             return "";
         }
@@ -15619,12 +22624,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_select_demo_month extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Month picker with filter
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_select_demo_month_title");
         }
+        /**
+         *  ```
+         *  sub / <= Month
+         *  ```
+         **/
         sub() {
             return [].concat(this.Month());
         }
+        /**
+         *  ```
+         *  Month $mol_select
+         *  	no_options_message \Not found
+         *  	value?val <=> month?val
+         *  	dictionary <= months
+         *  ```
+         **/
         Month() {
             return ((obj) => {
                 obj.no_options_message = () => "Not found";
@@ -15633,9 +22656,31 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
+        /**
+         *  ```
+         *  month?val \jan
+         *  ```
+         **/
         month(val, force) {
             return (val !== void 0) ? val : "jan";
         }
+        /**
+         *  ```
+         *  months *
+         *  	jan \January
+         *  	feb \February
+         *  	mar \March
+         *  	apr \April
+         *  	may \May
+         *  	jun \June
+         *  	jul \July
+         *  	aug \August
+         *  	sep \September
+         *  	oct \October
+         *  	nov \November
+         *  	dec \December
+         *  ```
+         **/
         months() {
             return ({
                 "jan": "January",
@@ -15673,12 +22718,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_select_demo_priority extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Priority picker
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_select_demo_priority_title");
         }
+        /**
+         *  ```
+         *  sub / <= Priority
+         *  ```
+         **/
         sub() {
             return [].concat(this.Priority());
         }
+        /**
+         *  ```
+         *  Priority $mol_select
+         *  	Filter null
+         *  	value?val <=> priority?val
+         *  	options /
+         *  		\Highest
+         *  		\High
+         *  		\Medium
+         *  		\Low
+         *  		\Lowest
+         *  ```
+         **/
         Priority() {
             return ((obj) => {
                 obj.Filter = () => null;
@@ -15687,6 +22755,11 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
+        /**
+         *  ```
+         *  priority?val \Lowest
+         *  ```
+         **/
         priority(val, force) {
             return (val !== void 0) ? val : "Lowest";
         }
@@ -15705,14 +22778,29 @@ var $;
 var $;
 (function ($) {
     class $mol_speck extends $.$mol_view {
+        /**
+         *  ```
+         *  attr * mol_theme \$mol_theme_accent
+         *  ```
+         **/
         attr() {
             return ({
                 "mol_theme": "$mol_theme_accent",
             });
         }
+        /**
+         *  ```
+         *  sub / <= value
+         *  ```
+         **/
         sub() {
             return [].concat(this.value());
         }
+        /**
+         *  ```
+         *  value null
+         *  ```
+         **/
         value() {
             return null;
         }
@@ -15725,6 +22813,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_settings extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M12,15.5C10.07,15.5 8.5,13.93 8.5,12C8.5,10.07 10.07,8.5 12,8.5C13.93,8.5 15.5,10.07 15.5,12C15.5,13.93 13.93,15.5 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z
+         *  ```
+         **/
         path() {
             return "M12,15.5C10.07,15.5 8.5,13.93 8.5,12C8.5,10.07 10.07,8.5 12,8.5C13.93,8.5 15.5,10.07 15.5,12C15.5,13.93 13.93,15.5 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z";
         }
@@ -15737,6 +22830,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_menu extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z
+         *  ```
+         **/
         path() {
             return "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z";
         }
@@ -15755,66 +22853,143 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_speck_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Link
+         *  	<= String
+         *  	<= Button
+         *  	<= Card
+         *  ```
+         **/
         sub() {
             return [].concat(this.Link(), this.String(), this.Button(), this.Card());
         }
+        /**
+         *  ```
+         *  Link $mol_link sub /
+         *  	<= Link_speck
+         *  	<= Link_icon
+         *  ```
+         **/
         Link() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Link_speck(), this.Link_icon());
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Link_speck $mol_speck value \β
+         *  ```
+         **/
         Link_speck() {
             return ((obj) => {
                 obj.value = () => "β";
                 return obj;
             })(new this.$.$mol_speck());
         }
+        /**
+         *  ```
+         *  Link_icon $mol_icon_settings
+         *  ```
+         **/
         Link_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_settings());
         }
+        /**
+         *  ```
+         *  String $mol_view sub /
+         *  	<= String_speck
+         *  	<= String_field
+         *  ```
+         **/
         String() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.String_speck(), this.String_field());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  String_speck $mol_speck value <= string_speck
+         *  ```
+         **/
         String_speck() {
             return ((obj) => {
                 obj.value = () => this.string_speck();
                 return obj;
             })(new this.$.$mol_speck());
         }
+        /**
+         *  ```
+         *  string_speck @ \New
+         *  ```
+         **/
         string_speck() {
             return this.$.$mol_locale.text("$mol_speck_demo_string_speck");
         }
+        /**
+         *  ```
+         *  String_field $mol_string
+         *  ```
+         **/
         String_field() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  Button $mol_button_minor sub /
+         *  	<= Button_speck
+         *  	<= Button_icon
+         *  ```
+         **/
         Button() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Button_speck(), this.Button_icon());
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  Button_speck $mol_speck value <= notification_count
+         *  ```
+         **/
         Button_speck() {
             return ((obj) => {
                 obj.value = () => this.notification_count();
                 return obj;
             })(new this.$.$mol_speck());
         }
+        /**
+         *  ```
+         *  notification_count 8
+         *  ```
+         **/
         notification_count() {
             return 8;
         }
+        /**
+         *  ```
+         *  Button_icon $mol_icon_menu
+         *  ```
+         **/
         Button_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_menu());
         }
+        /**
+         *  ```
+         *  Card $mol_card
+         *  	content / <= Card_speck
+         *  	status <= card_status
+         *  ```
+         **/
         Card() {
             return ((obj) => {
                 obj.content = () => [].concat(this.Card_speck());
@@ -15822,11 +22997,21 @@ var $;
                 return obj;
             })(new this.$.$mol_card());
         }
+        /**
+         *  ```
+         *  Card_speck $mol_speck
+         *  ```
+         **/
         Card_speck() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_speck());
         }
+        /**
+         *  ```
+         *  card_status @ \Created
+         *  ```
+         **/
         card_status() {
             return this.$.$mol_locale.text("$mol_speck_demo_card_status");
         }
@@ -16058,9 +23243,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_speech_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Toggle
+         *  	<= Message
+         *  	<= Speak
+         *  ```
+         **/
         sub() {
             return [].concat(this.Toggle(), this.Message(), this.Speak());
         }
+        /**
+         *  ```
+         *  Toggle $mol_check_icon
+         *  	Icon <= Toggle_icon
+         *  	checked?val <=> hearing?val
+         *  ```
+         **/
         Toggle() {
             return ((obj) => {
                 obj.Icon = () => this.Toggle_icon();
@@ -16068,23 +23268,50 @@ var $;
                 return obj;
             })(new this.$.$mol_check_icon());
         }
+        /**
+         *  ```
+         *  Toggle_icon $mol_icon_microphone
+         *  ```
+         **/
         Toggle_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_microphone());
         }
+        /**
+         *  ```
+         *  hearing?val false
+         *  ```
+         **/
         hearing(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Message $mol_view sub / <= message
+         *  ```
+         **/
         Message() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.message());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  message \
+         *  ```
+         **/
         message() {
             return "";
         }
+        /**
+         *  ```
+         *  Speak $mol_button_major
+         *  	click?val <=> speak?val
+         *  	sub / \Speak
+         *  ```
+         **/
         Speak() {
             return ((obj) => {
                 obj.click = (val) => this.speak(val);
@@ -16092,6 +23319,11 @@ var $;
                 return obj;
             })(new this.$.$mol_button_major());
         }
+        /**
+         *  ```
+         *  speak?val false
+         *  ```
+         **/
         speak(val, force) {
             return (val !== void 0) ? val : false;
         }
@@ -16170,21 +23402,52 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_string_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \String input field in various states
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_string_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Simple
+         *  	<= Hint
+         *  	<= Filled
+         *  	<= Disabled
+         *  ```
+         **/
         sub() {
             return [].concat(this.Simple(), this.Hint(), this.Filled(), this.Disabled());
         }
+        /**
+         *  ```
+         *  Simple $mol_string value?val <=> name?val
+         *  ```
+         **/
         Simple() {
             return ((obj) => {
                 obj.value = (val) => this.name(val);
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  name?val \
+         *  ```
+         **/
         name(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Hint $mol_string
+         *  	hint \Batman
+         *  	value?val <=> name?val
+         *  ```
+         **/
         Hint() {
             return ((obj) => {
                 obj.hint = () => "Batman";
@@ -16192,15 +23455,32 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  Filled $mol_string value?val <=> name2?val
+         *  ```
+         **/
         Filled() {
             return ((obj) => {
                 obj.value = (val) => this.name2(val);
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  name2?val \Jocker
+         *  ```
+         **/
         name2(val, force) {
             return (val !== void 0) ? val : "Jocker";
         }
+        /**
+         *  ```
+         *  Disabled $mol_string
+         *  	disabled true
+         *  	value?val <=> name2?val
+         *  ```
+         **/
         Disabled() {
             return ((obj) => {
                 obj.disabled = () => true;
@@ -16241,12 +23521,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_switch_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Color switchers in various state
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_switch_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Enabled
+         *  	<= Disabled
+         *  ```
+         **/
         sub() {
             return [].concat(this.Enabled(), this.Disabled());
         }
+        /**
+         *  ```
+         *  Enabled $mol_switch
+         *  	value?val <=> color?val
+         *  	options *
+         *  		red <= option_red
+         *  		green <= option_green
+         *  		blue <= option_blue
+         *  ```
+         **/
         Enabled() {
             return ((obj) => {
                 obj.value = (val) => this.color(val);
@@ -16258,18 +23560,49 @@ var $;
                 return obj;
             })(new this.$.$mol_switch());
         }
+        /**
+         *  ```
+         *  color?val \red
+         *  ```
+         **/
         color(val, force) {
             return (val !== void 0) ? val : "red";
         }
+        /**
+         *  ```
+         *  option_red @ \Red
+         *  ```
+         **/
         option_red() {
             return this.$.$mol_locale.text("$mol_switch_demo_option_red");
         }
+        /**
+         *  ```
+         *  option_green @ \Green
+         *  ```
+         **/
         option_green() {
             return this.$.$mol_locale.text("$mol_switch_demo_option_green");
         }
+        /**
+         *  ```
+         *  option_blue @ \Blue
+         *  ```
+         **/
         option_blue() {
             return this.$.$mol_locale.text("$mol_switch_demo_option_blue");
         }
+        /**
+         *  ```
+         *  Disabled $mol_switch
+         *  	value?val <=> color?val
+         *  	enabled false
+         *  	options *
+         *  		red <= option_red
+         *  		green <= option_green
+         *  		blue <= option_blue
+         *  ```
+         **/
         Disabled() {
             return ((obj) => {
                 obj.value = (val) => this.color(val);
@@ -16306,18 +23639,75 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_text_demo extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  title @ \Markdow visualization example
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_text_demo_title");
         }
+        /**
+         *  ```
+         *  sub / <= Scroll
+         *  ```
+         **/
         sub() {
             return [].concat(this.Scroll());
         }
+        /**
+         *  ```
+         *  Scroll $mol_scroll sub / <= Text
+         *  ```
+         **/
         Scroll() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Text());
                 return obj;
             })(new this.$.$mol_scroll());
         }
+        /**
+         *  ```
+         *  Text $mol_text text \
+         *  	\# [Benchmarks](app/bench)
+         *  	\## Benchmark 1
+         *  	\### Benchmark 1.1
+         *  	\#### Benchmark 1.1.1
+         *  	\##### Benchmark 1.1.1.1
+         *  	\
+         *  	\* [$mol_app_bench_list](app/bench/list) - Frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/#becnh=list#sort=fill#))
+         *  	\* [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
+         *  	\* [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
+         *  	\* [Line charts comparison](app/bench/chart/rope) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
+         *  	\* [Bar charts comparison](app/bench/chart/bar) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
+         *  	\
+         *  	\# Quick start
+         *  	\
+         *  	\**Create MAM project**
+         *  	\
+         *  	\Easy way is checkout [this preconfigured ~~PMS~~MAM repository](http://github.com/eigenmethod/mam/) and start dev server:
+         *  	\
+         *  	\```sh
+         *  	\git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
+         *  	\npm start
+         *  	\```
+         *  	\
+         *  	\|           | **Column 1** | **Column 2** | **Column 3**
+         *  	\|-----------|--------------|--------------|---------
+         *  	\| **Row 1** | Cell 1x1     | Cell 2x1     | Cell 3x1
+         *  	\| **Row 2** | Cell 1x2     | Cell 2x2     | Cell 3x2
+         *  	\| **Row 3** | Cell 1x3     | Cell 2x3     | Cell 3x3
+         *  	\| **Row 4** | Cell 1x4     | Cell 2x4     | Cell 3x4
+         *  	\| **Row 5** | Cell 1x5     | Cell 2x5     | Cell 3x5
+         *  	\| **Row 6** | Cell 1x6     | Cell 2x6     | Cell 3x6
+         *  	\| **Row 7** | Cell 1x7     | Cell 2x7     | Cell 3x7
+         *  	\| **Row 8** | Cell 1x8     | Cell 2x8     | Cell 3x8
+         *  	\| **Row 9** | Cell 1x9     | Cell 2x9     | Cell 3x9
+         *  	\
+         *  	\Build status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)
+         *  	\
+         *  ```
+         **/
         Text() {
             return ((obj) => {
                 obj.text = () => "# [Benchmarks](app/bench)\n## Benchmark 1\n### Benchmark 1.1\n#### Benchmark 1.1.1\n##### Benchmark 1.1.1.1\n\n* [$mol_app_bench_list](app/bench/list) - Frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/#becnh=list#sort=fill#))\n* [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))\n* [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)\n* [Line charts comparison](app/bench/chart/rope) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))\n* [Bar charts comparison](app/bench/chart/bar) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))\n\n# Quick start\n\n**Create MAM project**\n\nEasy way is checkout [this preconfigured ~~PMS~~MAM repository](http://github.com/eigenmethod/mam/) and start dev server:\n\n```sh\ngit clone https://github.com/eigenmethod/mam.git ./mam && cd mam\nnpm start\n```\n\n|           | **Column 1** | **Column 2** | **Column 3**\n|-----------|--------------|--------------|---------\n| **Row 1** | Cell 1x1     | Cell 2x1     | Cell 3x1\n| **Row 2** | Cell 1x2     | Cell 2x2     | Cell 3x2\n| **Row 3** | Cell 1x3     | Cell 2x3     | Cell 3x3\n| **Row 4** | Cell 1x4     | Cell 2x4     | Cell 3x4\n| **Row 5** | Cell 1x5     | Cell 2x5     | Cell 3x5\n| **Row 6** | Cell 1x6     | Cell 2x6     | Cell 3x6\n| **Row 7** | Cell 1x7     | Cell 2x7     | Cell 3x7\n| **Row 8** | Cell 1x8     | Cell 2x8     | Cell 3x8\n| **Row 9** | Cell 1x9     | Cell 2x9     | Cell 3x9\n\nBuild status: [![Build Status](https://travis-ci.org/eigenmethod/mol.svg?branch=master)](https://travis-ci.org/eigenmethod/mol)\n";
@@ -16345,17 +23735,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_textarea extends $.$mol_view {
+        /**
+         *  ```
+         *  event * keydown?event <=> press?event
+         *  ```
+         **/
         event() {
             return ({
                 "keydown": (event) => this.press(event),
             });
         }
+        /**
+         *  ```
+         *  press?event null
+         *  ```
+         **/
         press(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Edit
+         *  	<= View
+         *  ```
+         **/
         sub() {
             return [].concat(this.Edit(), this.View());
         }
+        /**
+         *  ```
+         *  Edit $mol_string
+         *  	dom_name \textarea
+         *  	value?val <=> value?val
+         *  	hint <= hint
+         *  	debounce 0
+         *  	enabled <= enabled
+         *  ```
+         **/
         Edit() {
             return ((obj) => {
                 obj.dom_name = () => "textarea";
@@ -16366,21 +23783,46 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  View $mol_text text <= text
+         *  ```
+         **/
         View() {
             return ((obj) => {
                 obj.text = () => this.text();
                 return obj;
             })(new this.$.$mol_text());
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
@@ -16423,10 +23865,10 @@ var $;
             }
             press(event) {
                 switch (event.keyCode) {
-                    case 9:
+                    case 9 /* tab */:
                         this.indent_inc();
                         break;
-                    case event.shiftKey && 9:
+                    case event.shiftKey && 9 /* tab */:
                         this.indent_dec();
                         break;
                     default: return;
@@ -16449,12 +23891,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_textarea_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Text input field in various states
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_textarea_demo_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Empty_descr
+         *  	<= Filled_descr
+         *  	<= Disabled
+         *  ```
+         **/
         sub() {
             return [].concat(this.Empty_descr(), this.Filled_descr(), this.Disabled());
         }
+        /**
+         *  ```
+         *  Empty_descr $mol_textarea
+         *  	hint \source code
+         *  	value?val <=> empty_descr?val
+         *  ```
+         **/
         Empty_descr() {
             return ((obj) => {
                 obj.hint = () => "source code";
@@ -16462,18 +23924,43 @@ var $;
                 return obj;
             })(new this.$.$mol_textarea());
         }
+        /**
+         *  ```
+         *  empty_descr?val \
+         *  ```
+         **/
         empty_descr(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Filled_descr $mol_textarea value?val <=> filled_descr?val
+         *  ```
+         **/
         Filled_descr() {
             return ((obj) => {
                 obj.value = (val) => this.filled_descr(val);
                 return obj;
             })(new this.$.$mol_textarea());
         }
+        /**
+         *  ```
+         *  filled_descr?val \
+         *  	\function hello( name = 'World' ) {
+         *  	\	return `Hello, ${ name }!`
+         *  	\}
+         *  ```
+         **/
         filled_descr(val, force) {
             return (val !== void 0) ? val : "function hello( name = 'World' ) {\n\treturn `Hello, ${ name }!`\n}";
         }
+        /**
+         *  ```
+         *  Disabled $mol_textarea
+         *  	enabled false
+         *  	value?val <=> filled_descr?val
+         *  ```
+         **/
         Disabled() {
             return ((obj) => {
                 obj.enabled = () => false;
@@ -16505,9 +23992,19 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_mol extends $.$mol_icon {
+        /**
+         *  ```
+         *  view_box \-39 0 287 326
+         *  ```
+         **/
         view_box() {
             return "-39 0 287 326";
         }
+        /**
+         *  ```
+         *  path \M183.9,224.1c-4.6,0-8.8,1.3-12.5,3.4l-60.8-66.5V48.9c4.3-1.1,8.2-3.3,11.3-6.3l36.8,26.8c-0.7,2.3-1.1,4.8-1.1,7.4c0,13.7,11.1,24.8,24.8,24.8s24.8-11.1,24.8-24.8S196.2,52,182.5,52c-6.4,0-12.3,2.5-16.7,6.5l-37.2-27.1c0.6-2.1,0.9-4.3,0.9-6.5c0-13.7-11.1-24.8-24.8-24.8S79.9,11.1,79.9,24.8c0,2.6,0.4,5.1,1.2,7.5L42.3,59.2C37.8,54.7,31.6,52,24.8,52C11.1,52,0,63.1,0,76.8s11.1,24.8,24.8,24.8c4.1,0,8-1,11.5-2.8L97.7,166v110.9c-4.2,1.1-8,3.3-11,6.2l-36.8-26.8c0.7-2.3,1.1-4.8,1.1-7.4c0-13.7-11.1-24.8-24.8-24.8S1.4,235.2,1.4,248.9s11.1,24.8,24.8,24.8c6.4,0,12.3-2.5,16.7-6.5l37.2,27.1c-0.6,2.1-0.9,4.3-0.9,6.5c0,13.7,11.1,24.8,24.8,24.8s24.8-11.1,24.8-24.8c0-2.6-0.4-5.1-1.2-7.5l38.8-26.9c4.5,4.5,10.7,7.2,17.5,7.2c13.7,0,24.8-11.1,24.8-24.8S197.6,224.1,183.9,224.1z M182.5,64.9c6.5,0,11.9,5.3,11.9,11.9c0,6.5-5.3,11.9-11.9,11.9c-6.5,0-11.9-5.3-11.9-11.9C170.6,70.2,175.9,64.9,182.5,64.9z M104.7,12.9c6.5,0,11.9,5.3,11.9,11.9c0,6.5-5.3,11.9-11.9,11.9c-6.5,0-11.9-5.3-11.9-11.9C92.8,18.3,98.1,12.9,104.7,12.9z M24.8,88.6c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9s11.9,5.3,11.9,11.9C36.7,83.3,31.3,88.6,24.8,88.6z M45.8,89.9c2.4-3.8,3.8-8.3,3.8-13.2c0-2.2-0.3-4.3-0.8-6.3l39.3-27.3c2.7,2.5,6,4.4,9.6,5.4v98.2L45.8,89.9z M162.3,236.7c-2,3.6-3.2,7.8-3.2,12.2c0,2.2,0.3,4.3,0.9,6.3l-39.3,27.3c-2.8-2.6-6.2-4.5-10-5.5v-96.8L162.3,236.7z M26.2,260.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C38.1,255.4,32.8,260.7,26.2,260.7z M104,312.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C115.9,307.4,110.5,312.7,104,312.7z M183.9,260.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C195.7,255.4,190.4,260.7,183.9,260.7z
+         *  ```
+         **/
         path() {
             return "M183.9,224.1c-4.6,0-8.8,1.3-12.5,3.4l-60.8-66.5V48.9c4.3-1.1,8.2-3.3,11.3-6.3l36.8,26.8c-0.7,2.3-1.1,4.8-1.1,7.4c0,13.7,11.1,24.8,24.8,24.8s24.8-11.1,24.8-24.8S196.2,52,182.5,52c-6.4,0-12.3,2.5-16.7,6.5l-37.2-27.1c0.6-2.1,0.9-4.3,0.9-6.5c0-13.7-11.1-24.8-24.8-24.8S79.9,11.1,79.9,24.8c0,2.6,0.4,5.1,1.2,7.5L42.3,59.2C37.8,54.7,31.6,52,24.8,52C11.1,52,0,63.1,0,76.8s11.1,24.8,24.8,24.8c4.1,0,8-1,11.5-2.8L97.7,166v110.9c-4.2,1.1-8,3.3-11,6.2l-36.8-26.8c0.7-2.3,1.1-4.8,1.1-7.4c0-13.7-11.1-24.8-24.8-24.8S1.4,235.2,1.4,248.9s11.1,24.8,24.8,24.8c6.4,0,12.3-2.5,16.7-6.5l37.2,27.1c-0.6,2.1-0.9,4.3-0.9,6.5c0,13.7,11.1,24.8,24.8,24.8s24.8-11.1,24.8-24.8c0-2.6-0.4-5.1-1.2-7.5l38.8-26.9c4.5,4.5,10.7,7.2,17.5,7.2c13.7,0,24.8-11.1,24.8-24.8S197.6,224.1,183.9,224.1z M182.5,64.9c6.5,0,11.9,5.3,11.9,11.9c0,6.5-5.3,11.9-11.9,11.9c-6.5,0-11.9-5.3-11.9-11.9C170.6,70.2,175.9,64.9,182.5,64.9z M104.7,12.9c6.5,0,11.9,5.3,11.9,11.9c0,6.5-5.3,11.9-11.9,11.9c-6.5,0-11.9-5.3-11.9-11.9C92.8,18.3,98.1,12.9,104.7,12.9z M24.8,88.6c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9s11.9,5.3,11.9,11.9C36.7,83.3,31.3,88.6,24.8,88.6z M45.8,89.9c2.4-3.8,3.8-8.3,3.8-13.2c0-2.2-0.3-4.3-0.8-6.3l39.3-27.3c2.7,2.5,6,4.4,9.6,5.4v98.2L45.8,89.9z M162.3,236.7c-2,3.6-3.2,7.8-3.2,12.2c0,2.2,0.3,4.3,0.9,6.3l-39.3,27.3c-2.8-2.6-6.2-4.5-10-5.5v-96.8L162.3,236.7z M26.2,260.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C38.1,255.4,32.8,260.7,26.2,260.7z M104,312.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C115.9,307.4,110.5,312.7,104,312.7z M183.9,260.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C195.7,255.4,190.4,260.7,183.9,260.7z";
         }
@@ -16535,44 +24032,100 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_app_demo_placeholder extends $.$mol_book_placeholder {
+        /**
+         *  ```
+         *  sub / <= Content
+         *  ```
+         **/
         sub() {
             return [].concat(this.Content());
         }
+        /**
+         *  ```
+         *  Content $mol_card content /
+         *  	<= Title
+         *  	<= Description
+         *  	<= Advantages
+         *  	<= Links
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.content = () => [].concat(this.Title(), this.Description(), this.Advantages(), this.Links());
                 return obj;
             })(new this.$.$mol_card());
         }
+        /**
+         *  ```
+         *  Title $mol_view sub /
+         *  	<= Logo
+         *  	<= title
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Logo(), this.title());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  Logo $mol_icon_mol
+         *  ```
+         **/
         Logo() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_mol());
         }
+        /**
+         *  ```
+         *  title \mol
+         *  ```
+         **/
         title() {
             return "mol";
         }
+        /**
+         *  ```
+         *  Description $mol_view sub / <= description
+         *  ```
+         **/
         Description() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.description());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  description @ \Reactive micro-modular ui framework. Very simple, but very powerful! $mol has small size of code, reactive architecture, components with adaptive design, that can be easily configured.
+         *  ```
+         **/
         description() {
             return this.$.$mol_locale.text("$mol_app_demo_placeholder_description");
         }
+        /**
+         *  ```
+         *  Advantages $mol_view sub /
+         *  	<= Technology
+         *  	<= Code
+         *  	<= Programming
+         *  ```
+         **/
         Advantages() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Technology(), this.Code(), this.Programming());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  Technology $mol_app_placeholder_advantage
+         *  	image \mol/app/demo/placeholder/technology.svg
+         *  	title <= technology
+         *  ```
+         **/
         Technology() {
             return ((obj) => {
                 obj.image = () => "mol/app/demo/placeholder/technology.svg";
@@ -16580,9 +24133,21 @@ var $;
                 return obj;
             })(new this.$.$mol_app_placeholder_advantage());
         }
+        /**
+         *  ```
+         *  technology @ \Flexible adaptive interface
+         *  ```
+         **/
         technology() {
             return this.$.$mol_locale.text("$mol_app_demo_placeholder_technology");
         }
+        /**
+         *  ```
+         *  Code $mol_app_placeholder_advantage
+         *  	image \mol/app/demo/placeholder/code_rate.svg
+         *  	title <= code_rate
+         *  ```
+         **/
         Code() {
             return ((obj) => {
                 obj.image = () => "mol/app/demo/placeholder/code_rate.svg";
@@ -16590,9 +24155,21 @@ var $;
                 return obj;
             })(new this.$.$mol_app_placeholder_advantage());
         }
+        /**
+         *  ```
+         *  code_rate @ \Quick and easy development
+         *  ```
+         **/
         code_rate() {
             return this.$.$mol_locale.text("$mol_app_demo_placeholder_code_rate");
         }
+        /**
+         *  ```
+         *  Programming $mol_app_placeholder_advantage
+         *  	image \mol/app/demo/placeholder/programming.svg
+         *  	title <= programming
+         *  ```
+         **/
         Programming() {
             return ((obj) => {
                 obj.image = () => "mol/app/demo/placeholder/programming.svg";
@@ -16600,21 +24177,45 @@ var $;
                 return obj;
             })(new this.$.$mol_app_placeholder_advantage());
         }
+        /**
+         *  ```
+         *  programming @ \High-speed applications
+         *  ```
+         **/
         programming() {
             return this.$.$mol_locale.text("$mol_app_demo_placeholder_programming");
         }
+        /**
+         *  ```
+         *  Links $mol_row sub /
+         *  	<= Github_link
+         *  	<= Showcase_link
+         *  ```
+         **/
         Links() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Github_link(), this.Showcase_link());
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Github_link $mol_link_iconed uri \https://github.com/eigenmethod/mol
+         *  ```
+         **/
         Github_link() {
             return ((obj) => {
                 obj.uri = () => "https://github.com/eigenmethod/mol";
                 return obj;
             })(new this.$.$mol_link_iconed());
         }
+        /**
+         *  ```
+         *  Showcase_link $mol_link_iconed
+         *  	title <= showcase_title
+         *  	uri \https://showcase.hyoo.ru
+         *  ```
+         **/
         Showcase_link() {
             return ((obj) => {
                 obj.title = () => this.showcase_title();
@@ -16622,6 +24223,11 @@ var $;
                 return obj;
             })(new this.$.$mol_link_iconed());
         }
+        /**
+         *  ```
+         *  showcase_title @ \Applications showcase
+         *  ```
+         **/
         showcase_title() {
             return this.$.$mol_locale.text("$mol_app_demo_placeholder_showcase_title");
         }
@@ -16663,18 +24269,40 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_app_placeholder_advantage extends $.$mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Image
+         *  	<= title
+         *  ```
+         **/
         sub() {
             return [].concat(this.Image(), this.title());
         }
+        /**
+         *  ```
+         *  Image $mol_image uri <= image
+         *  ```
+         **/
         Image() {
             return ((obj) => {
                 obj.uri = () => this.image();
                 return obj;
             })(new this.$.$mol_image());
         }
+        /**
+         *  ```
+         *  image \
+         *  ```
+         **/
         image() {
             return "";
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
@@ -16690,6 +24318,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_source extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z
+         *  ```
+         **/
         path() {
             return "M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z";
         }
@@ -17186,6 +24819,7 @@ var $;
                                     const object_args = value.select('/', '').sub.map(arg => getValue(arg)).join(' , ');
                                     return '(( obj )=>{\n' + overs.join('') + '\t\t\treturn obj\n\t\t})( new this.$.' + value.type + '( ' + object_args + ' ) )';
                                 case (value.type === '*'):
+                                    //needReturn = false
                                     var opts = [];
                                     value.sub.forEach(opt => {
                                         if (opt.type === '-')
@@ -17287,9 +24921,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_app_studio_field extends $.$mol_expander {
+        /**
+         *  ```
+         *  path /
+         *  ```
+         **/
         path() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Trigger $mol_app_studio_field_title
+         *  	checked?val <=> expanded?val
+         *  	Title <= Trigger_label
+         *  	type <= type
+         *  ```
+         **/
         Trigger() {
             return ((obj) => {
                 obj.checked = (val) => this.expanded(val);
@@ -17298,9 +24945,21 @@ var $;
                 return obj;
             })(new this.$.$mol_app_studio_field_title());
         }
+        /**
+         *  ```
+         *  expanded?val false
+         *  ```
+         **/
         expanded(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Trigger_label $mol_dimmer
+         *  	needle <= highlight
+         *  	haystack <= title
+         *  ```
+         **/
         Trigger_label() {
             return ((obj) => {
                 obj.needle = () => this.highlight();
@@ -17308,12 +24967,33 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  highlight \
+         *  ```
+         **/
         highlight() {
             return "";
         }
+        /**
+         *  ```
+         *  tools /
+         *  	<= Type
+         *  	<= Object
+         *  ```
+         **/
         tools() {
             return [].concat(this.Type(), this.Object());
         }
+        /**
+         *  ```
+         *  Type $mol_select
+         *  	value?val <=> type?val
+         *  	hint <= type_hint
+         *  	Trigger_icon null
+         *  	dictionary <= types
+         *  ```
+         **/
         Type() {
             return ((obj) => {
                 obj.value = (val) => this.type(val);
@@ -17323,12 +25003,37 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
+        /**
+         *  ```
+         *  type?val \null
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "null";
         }
+        /**
+         *  ```
+         *  type_hint @ \Type...
+         *  ```
+         **/
         type_hint() {
             return this.$.$mol_locale.text("$mol_app_studio_field_type_hint");
         }
+        /**
+         *  ```
+         *  types *
+         *  	get \<=
+         *  	bind \<=>
+         *  	object \Object
+         *  	string \Text
+         *  	locale \Localization
+         *  	number \Number
+         *  	bool \Flag
+         *  	list \List
+         *  	dict \Dictionary
+         *  	null \None
+         *  ```
+         **/
         types() {
             return ({
                 "get": "<=",
@@ -17343,6 +25048,15 @@ var $;
                 "null": "None",
             });
         }
+        /**
+         *  ```
+         *  Object $mol_select
+         *  	value?val <=> class?val
+         *  	options <= object_options
+         *  	hint <= object_hint
+         *  	Trigger_icon null
+         *  ```
+         **/
         Object() {
             return ((obj) => {
                 obj.value = (val) => this.class(val);
@@ -17352,18 +25066,54 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
+        /**
+         *  ```
+         *  class?val null
+         *  ```
+         **/
         class(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  object_options /
+         *  ```
+         **/
         object_options() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  object_hint @ \Class...
+         *  ```
+         **/
         object_hint() {
             return this.$.$mol_locale.text("$mol_app_studio_field_object_hint");
         }
+        /**
+         *  ```
+         *  content /
+         *  	<= Bool
+         *  	<= Number
+         *  	<= String
+         *  	<= Bind
+         *  	<= List
+         *  	<= Dict
+         *  	<= Overs
+         *  ```
+         **/
         content() {
             return [].concat(this.Bool(), this.Number(), this.String(), this.Bind(), this.List(), this.Dict(), this.Overs());
         }
+        /**
+         *  ```
+         *  Bool $mol_switch
+         *  	value?val <=> value_bool?val
+         *  	options *
+         *  		true \True
+         *  		false \False
+         *  ```
+         **/
         Bool() {
             return ((obj) => {
                 obj.value = (val) => this.value_bool(val);
@@ -17374,9 +25124,21 @@ var $;
                 return obj;
             })(new this.$.$mol_switch());
         }
+        /**
+         *  ```
+         *  value_bool?val null
+         *  ```
+         **/
         value_bool(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Number $mol_number
+         *  	value?val <=> value_number?val
+         *  	hint <= hint
+         *  ```
+         **/
         Number() {
             return ((obj) => {
                 obj.value = (val) => this.value_number(val);
@@ -17384,12 +25146,29 @@ var $;
                 return obj;
             })(new this.$.$mol_number());
         }
+        /**
+         *  ```
+         *  value_number?val NaN
+         *  ```
+         **/
         value_number(val, force) {
             return (val !== void 0) ? val : NaN;
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  String $mol_textarea
+         *  	value?val <=> value_string?val
+         *  	hint <= hint
+         *  ```
+         **/
         String() {
             return ((obj) => {
                 obj.value = (val) => this.value_string(val);
@@ -17397,9 +25176,24 @@ var $;
                 return obj;
             })(new this.$.$mol_textarea());
         }
+        /**
+         *  ```
+         *  value_string?val null
+         *  ```
+         **/
         value_string(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Bind $mol_select
+         *  	value?val <=> bind?val
+         *  	options <= bind_options
+         *  	hint <= bind_hint
+         *  	No_options <= Prop_add
+         *  	Trigger_icon null
+         *  ```
+         **/
         Bind() {
             return ((obj) => {
                 obj.value = (val) => this.bind(val);
@@ -17410,15 +25204,37 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
+        /**
+         *  ```
+         *  bind?val null
+         *  ```
+         **/
         bind(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  bind_options /
+         *  ```
+         **/
         bind_options() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  bind_hint @ \Property..
+         *  ```
+         **/
         bind_hint() {
             return this.$.$mol_locale.text("$mol_app_studio_field_bind_hint");
         }
+        /**
+         *  ```
+         *  Prop_add $mol_button_minor
+         *  	title <= prop_add_label
+         *  	event_click?val <=> event_prop_add?val
+         *  ```
+         **/
         Prop_add() {
             return ((obj) => {
                 obj.title = () => this.prop_add_label();
@@ -17426,21 +25242,52 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  prop_add_label @ \Add property
+         *  ```
+         **/
         prop_add_label() {
             return this.$.$mol_locale.text("$mol_app_studio_field_prop_add_label");
         }
+        /**
+         *  ```
+         *  event_prop_add?val null
+         *  ```
+         **/
         event_prop_add(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  List $mol_list rows /
+         *  	<= list_rows
+         *  	<= Add
+         *  ```
+         **/
         List() {
             return ((obj) => {
                 obj.rows = () => [].concat(this.list_rows(), this.Add());
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  list_rows /
+         *  ```
+         **/
         list_rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Add $mol_select
+         *  	hint <= add_hint
+         *  	value?val <=> add_item?val
+         *  	dictionary <= item_types
+         *  	Trigger_icon <= List_trigger_icon
+         *  ```
+         **/
         Add() {
             return ((obj) => {
                 obj.hint = () => this.add_hint();
@@ -17450,12 +25297,34 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
+        /**
+         *  ```
+         *  add_hint @ \Add item..
+         *  ```
+         **/
         add_hint() {
             return this.$.$mol_locale.text("$mol_app_studio_field_add_hint");
         }
+        /**
+         *  ```
+         *  add_item?val \
+         *  ```
+         **/
         add_item(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  item_types *
+         *  	get \<=
+         *  	string \Text
+         *  	number \Number
+         *  	bool \Flag
+         *  	list \List
+         *  	dict \Dictionary
+         *  	null \None
+         *  ```
+         **/
         item_types() {
             return ({
                 "get": "<=",
@@ -17467,26 +25336,58 @@ var $;
                 "null": "None",
             });
         }
+        /**
+         *  ```
+         *  List_trigger_icon $mol_icon_plus
+         *  ```
+         **/
         List_trigger_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_plus());
         }
+        /**
+         *  ```
+         *  Dict $mol_list rows /
+         *  	<= pairs
+         *  	<= Add_pair
+         *  ```
+         **/
         Dict() {
             return ((obj) => {
                 obj.rows = () => [].concat(this.pairs(), this.Add_pair());
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  pairs /
+         *  ```
+         **/
         pairs() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Add_pair $mol_bar sub /
+         *  	<= Add_pair_key
+         *  	<= Add_pair_submit
+         *  ```
+         **/
         Add_pair() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Add_pair_key(), this.Add_pair_submit());
                 return obj;
             })(new this.$.$mol_bar());
         }
+        /**
+         *  ```
+         *  Add_pair_key $mol_search
+         *  	hint <= add_pair_hint
+         *  	query?val <=> add_pair_key?val
+         *  	suggests <= key_suggests
+         *  ```
+         **/
         Add_pair_key() {
             return ((obj) => {
                 obj.hint = () => this.add_pair_hint();
@@ -17495,15 +25396,37 @@ var $;
                 return obj;
             })(new this.$.$mol_search());
         }
+        /**
+         *  ```
+         *  add_pair_hint @ \Add key..
+         *  ```
+         **/
         add_pair_hint() {
             return this.$.$mol_locale.text("$mol_app_studio_field_add_pair_hint");
         }
+        /**
+         *  ```
+         *  add_pair_key?val \
+         *  ```
+         **/
         add_pair_key(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  key_suggests /
+         *  ```
+         **/
         key_suggests() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Add_pair_submit $mol_button_minor
+         *  	event_click?val <=> add_pair?val
+         *  	sub / <= Add_pair_submit_icon
+         *  ```
+         **/
         Add_pair_submit() {
             return ((obj) => {
                 obj.event_click = (val) => this.add_pair(val);
@@ -17511,23 +25434,54 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  add_pair?val \
+         *  ```
+         **/
         add_pair(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Add_pair_submit_icon $mol_icon_plus
+         *  ```
+         **/
         Add_pair_submit_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_plus());
         }
+        /**
+         *  ```
+         *  Overs $mol_list rows /
+         *  	<= overs
+         *  	<= Add_over
+         *  ```
+         **/
         Overs() {
             return ((obj) => {
                 obj.rows = () => [].concat(this.overs(), this.Add_over());
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  overs /
+         *  ```
+         **/
         overs() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Add_over $mol_select
+         *  	hint <= add_over_hint
+         *  	value?val <=> add_over?val
+         *  	Trigger_icon <= Overs_trigger_icon
+         *  	options <= over_options
+         *  ```
+         **/
         Add_over() {
             return ((obj) => {
                 obj.hint = () => this.add_over_hint();
@@ -17537,20 +25491,53 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
+        /**
+         *  ```
+         *  add_over_hint @ \Add override..
+         *  ```
+         **/
         add_over_hint() {
             return this.$.$mol_locale.text("$mol_app_studio_field_add_over_hint");
         }
+        /**
+         *  ```
+         *  add_over?val \
+         *  ```
+         **/
         add_over(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Overs_trigger_icon $mol_icon_plus
+         *  ```
+         **/
         Overs_trigger_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_plus());
         }
+        /**
+         *  ```
+         *  over_options /
+         *  ```
+         **/
         over_options() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Prop!id $mol_app_studio_field
+         *  	path <= prop_path!id
+         *  	prop_arg!id <= prop_arg!id
+         *  	prop!path?val <=> prop!path?val
+         *  	props!name?val <=> props!name?val
+         *  	prop_value!id <= prop_value!id
+         *  	bind_options <= bind_options
+         *  	prop_add?val <=> prop_add?val
+         *  	object_options <= object_options
+         *  ```
+         **/
         Prop(id) {
             return ((obj) => {
                 obj.path = () => this.prop_path(id);
@@ -17564,25 +25551,55 @@ var $;
                 return obj;
             })(new this.$.$mol_app_studio_field());
         }
+        /**
+         *  ```
+         *  prop_path!id /
+         *  ```
+         **/
         prop_path(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  prop_arg!id *
+         *  ```
+         **/
         prop_arg(id) {
             return ({});
         }
+        /**
+         *  ```
+         *  prop!path?val $mol_tree
+         *  ```
+         **/
         prop(path, val, force) {
             return (val !== void 0) ? val : ((obj) => {
                 return obj;
             })(new this.$.$mol_tree());
         }
+        /**
+         *  ```
+         *  props!name?val $mol_tree
+         *  ```
+         **/
         props(name, val, force) {
             return (val !== void 0) ? val : ((obj) => {
                 return obj;
             })(new this.$.$mol_tree());
         }
+        /**
+         *  ```
+         *  prop_value!id null
+         *  ```
+         **/
         prop_value(id) {
             return null;
         }
+        /**
+         *  ```
+         *  prop_add?val null
+         *  ```
+         **/
         prop_add(val, force) {
             return (val !== void 0) ? val : null;
         }
@@ -17699,9 +25716,21 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_app_studio_field_title extends $.$mol_check_expand {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_app_studio_field_title_type <= type
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_app_studio_field_title_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type \null
+         *  ```
+         **/
         type() {
             return "null";
         }
@@ -18056,12 +26085,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_app_studio extends $.$mol_book {
+        /**
+         *  ```
+         *  value_overrided!id?val null
+         *  ```
+         **/
         value_overrided(id, val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  pages /
+         *  	<= Preview_page
+         *  	<= Editor_page
+         *  	<= Source_page
+         *  ```
+         **/
         pages() {
             return [].concat(this.Preview_page(), this.Editor_page(), this.Source_page());
         }
+        /**
+         *  ```
+         *  Preview_page $mol_page
+         *  	title <= preview_title
+         *  	tools /
+         *  		<= Source_link
+         *  		<= Edit
+         *  		<= tools_main
+         *  	body / <= Selector
+         *  	minimal_width 400
+         *  ```
+         **/
         Preview_page() {
             return ((obj) => {
                 obj.title = () => this.preview_title();
@@ -18071,9 +26125,22 @@ var $;
                 return obj;
             })(new this.$.$mol_page());
         }
+        /**
+         *  ```
+         *  preview_title @ \Preview:
+         *  ```
+         **/
         preview_title() {
             return this.$.$mol_locale.text("$mol_app_studio_preview_title");
         }
+        /**
+         *  ```
+         *  Source_link $mol_link
+         *  	hint <= source_title
+         *  	sub / <= Source_icon
+         *  	arg <= source_arg
+         *  ```
+         **/
         Source_link() {
             return ((obj) => {
                 obj.hint = () => this.source_title();
@@ -18082,17 +26149,39 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Source_icon $mol_icon_source
+         *  ```
+         **/
         Source_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_source());
         }
+        /**
+         *  ```
+         *  source_arg *
+         *  	source \
+         *  	path null
+         *  ```
+         **/
         source_arg() {
             return ({
                 "source": "",
                 "path": null,
             });
         }
+        /**
+         *  ```
+         *  Edit $mol_link
+         *  	hint <= editor_title
+         *  	sub / <= Edit_icon
+         *  	arg *
+         *  		path \
+         *  		source null
+         *  ```
+         **/
         Edit() {
             return ((obj) => {
                 obj.hint = () => this.editor_title();
@@ -18104,14 +26193,31 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Edit_icon $mol_icon_settings
+         *  ```
+         **/
         Edit_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_settings());
         }
+        /**
+         *  ```
+         *  tools_main /
+         *  ```
+         **/
         tools_main() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Selector $mol_app_studio_selector
+         *  	sub / <= Block
+         *  	path?val <=> path?val
+         *  ```
+         **/
         Selector() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Block());
@@ -18119,14 +26225,37 @@ var $;
                 return obj;
             })(new this.$.$mol_app_studio_selector());
         }
+        /**
+         *  ```
+         *  Block $mol_view
+         *  ```
+         **/
         Block() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  path?val /
+         *  ```
+         **/
         path(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
+        /**
+         *  ```
+         *  Editor_page $mol_page
+         *  	plugins / <= Speech_filter
+         *  	title <= editor_title
+         *  	event_top?val <=> event_front_up?val
+         *  	tools / <= Editor_close
+         *  	body /
+         *  		<= Filter_bar
+         *  		<= Fields
+         *  	minimal_width 400
+         *  ```
+         **/
         Editor_page() {
             return ((obj) => {
                 obj.plugins = () => [].concat(this.Speech_filter());
@@ -18138,6 +26267,13 @@ var $;
                 return obj;
             })(new this.$.$mol_page());
         }
+        /**
+         *  ```
+         *  Speech_filter $mol_speech
+         *  	event_catch?val <=> speech_filter?val
+         *  	patterns <= speech_filter_patterns
+         *  ```
+         **/
         Speech_filter() {
             return ((obj) => {
                 obj.event_catch = (val) => this.speech_filter(val);
@@ -18145,15 +26281,37 @@ var $;
                 return obj;
             })(new this.$.$mol_speech());
         }
+        /**
+         *  ```
+         *  speech_filter?val null
+         *  ```
+         **/
         speech_filter(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  speech_filter_patterns / \find (.+?)
+         *  ```
+         **/
         speech_filter_patterns() {
             return [].concat("find (.+?)");
         }
+        /**
+         *  ```
+         *  editor_title @ \Properties
+         *  ```
+         **/
         editor_title() {
             return this.$.$mol_locale.text("$mol_app_studio_editor_title");
         }
+        /**
+         *  ```
+         *  Editor_close $mol_link
+         *  	sub / <= Editor_close_icon
+         *  	arg <= editor_close_arg
+         *  ```
+         **/
         Editor_close() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Editor_close_icon());
@@ -18161,25 +26319,54 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Editor_close_icon $mol_icon_cross
+         *  ```
+         **/
         Editor_close_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
+        /**
+         *  ```
+         *  editor_close_arg * path null
+         *  ```
+         **/
         editor_close_arg() {
             return ({
                 "path": null,
             });
         }
+        /**
+         *  ```
+         *  Filter_bar $mol_bar sub <= filter_bar_items
+         *  ```
+         **/
         Filter_bar() {
             return ((obj) => {
                 obj.sub = () => this.filter_bar_items();
                 return obj;
             })(new this.$.$mol_bar());
         }
+        /**
+         *  ```
+         *  filter_bar_items /
+         *  	<= Filter
+         *  	<= Prop_add
+         *  ```
+         **/
         filter_bar_items() {
             return [].concat(this.Filter(), this.Prop_add());
         }
+        /**
+         *  ```
+         *  Filter $mol_search
+         *  	hint <= filter_hint
+         *  	query?val <=> prop_filter?val
+         *  ```
+         **/
         Filter() {
             return ((obj) => {
                 obj.hint = () => this.filter_hint();
@@ -18187,12 +26374,30 @@ var $;
                 return obj;
             })(new this.$.$mol_search());
         }
+        /**
+         *  ```
+         *  filter_hint @ \Filter properties
+         *  ```
+         **/
         filter_hint() {
             return this.$.$mol_locale.text("$mol_app_studio_filter_hint");
         }
+        /**
+         *  ```
+         *  prop_filter?val \
+         *  ```
+         **/
         prop_filter(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Prop_add $mol_button_minor
+         *  	event_click?val <=> event_add?val
+         *  	sub / <= Prop_add_icon
+         *  	hint <= prop_add_hint
+         *  ```
+         **/
         Prop_add() {
             return ((obj) => {
                 obj.event_click = (val) => this.event_add(val);
@@ -18201,26 +26406,60 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  event_add?val null
+         *  ```
+         **/
         event_add(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Prop_add_icon $mol_icon_plus
+         *  ```
+         **/
         Prop_add_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_plus());
         }
+        /**
+         *  ```
+         *  prop_add_hint @ \Add this property
+         *  ```
+         **/
         prop_add_hint() {
             return this.$.$mol_locale.text("$mol_app_studio_prop_add_hint");
         }
+        /**
+         *  ```
+         *  Fields $mol_list rows <= fields
+         *  ```
+         **/
         Fields() {
             return ((obj) => {
                 obj.rows = () => this.fields();
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  fields /
+         *  ```
+         **/
         fields() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Source_page $mol_page
+         *  	title <= source_title
+         *  	minimal_width 400
+         *  	tools / <= Source_close
+         *  	body / <= Source
+         *  ```
+         **/
         Source_page() {
             return ((obj) => {
                 obj.title = () => this.source_title();
@@ -18230,9 +26469,21 @@ var $;
                 return obj;
             })(new this.$.$mol_page());
         }
+        /**
+         *  ```
+         *  source_title @ \Source code
+         *  ```
+         **/
         source_title() {
             return this.$.$mol_locale.text("$mol_app_studio_source_title");
         }
+        /**
+         *  ```
+         *  Source_close $mol_link
+         *  	sub / <= Source_close_icon
+         *  	arg <= source_close_arg
+         *  ```
+         **/
         Source_close() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Source_close_icon());
@@ -18240,28 +26491,67 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Source_close_icon $mol_icon_cross
+         *  ```
+         **/
         Source_close_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
+        /**
+         *  ```
+         *  source_close_arg * source null
+         *  ```
+         **/
         source_close_arg() {
             return ({
                 "source": null,
             });
         }
+        /**
+         *  ```
+         *  Source $mol_text text <= source
+         *  ```
+         **/
         Source() {
             return ((obj) => {
                 obj.text = () => this.source();
                 return obj;
             })(new this.$.$mol_text());
         }
+        /**
+         *  ```
+         *  source \
+         *  ```
+         **/
         source() {
             return "";
         }
+        /**
+         *  ```
+         *  Placeholder null
+         *  ```
+         **/
         Placeholder() {
             return null;
         }
+        /**
+         *  ```
+         *  Prop!id $mol_app_studio_field
+         *  	path <= prop_path!id
+         *  	prop!path?val <=> prop_default!path?val
+         *  	props!name?val <=> props_all!name?val
+         *  	prop_arg!id <= prop_arg!id
+         *  	prop_value!id <= prop_value_base!id
+         *  	bind_options <= prop_options
+         *  	object_options <= view_options
+         *  	prop_add?val <=> prop_add?val
+         *  	highlight <= prop_filter
+         *  ```
+         **/
         Prop(id) {
             return ((obj) => {
                 obj.path = () => this.prop_path(id);
@@ -18276,45 +26566,105 @@ var $;
                 return obj;
             })(new this.$.$mol_app_studio_field());
         }
+        /**
+         *  ```
+         *  prop_path!id /
+         *  ```
+         **/
         prop_path(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  prop_default!path?val $mol_tree
+         *  ```
+         **/
         prop_default(path, val, force) {
             return (val !== void 0) ? val : ((obj) => {
                 return obj;
             })(new this.$.$mol_tree());
         }
+        /**
+         *  ```
+         *  props_all!name?val $mol_tree
+         *  ```
+         **/
         props_all(name, val, force) {
             return (val !== void 0) ? val : ((obj) => {
                 return obj;
             })(new this.$.$mol_tree());
         }
+        /**
+         *  ```
+         *  prop_arg!id *
+         *  ```
+         **/
         prop_arg(id) {
             return ({});
         }
+        /**
+         *  ```
+         *  prop_value_base!id null
+         *  ```
+         **/
         prop_value_base(id) {
             return null;
         }
+        /**
+         *  ```
+         *  prop_options /
+         *  ```
+         **/
         prop_options() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  view_options /
+         *  ```
+         **/
         view_options() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  prop_add?val \
+         *  ```
+         **/
         prop_add(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  class_name_self?val \App
+         *  ```
+         **/
         class_name_self(val, force) {
             return (val !== void 0) ? val : "App";
         }
+        /**
+         *  ```
+         *  class_name_base?val \$mol_view
+         *  ```
+         **/
         class_name_base(val, force) {
             return (val !== void 0) ? val : "$mol_view";
         }
+        /**
+         *  ```
+         *  class_self?val $mol_tree
+         *  ```
+         **/
         class_self(val, force) {
             return (val !== void 0) ? val : ((obj) => {
                 return obj;
             })(new this.$.$mol_tree());
         }
+        /**
+         *  ```
+         *  classes $mol_tree
+         *  ```
+         **/
         classes() {
             return ((obj) => {
                 return obj;
@@ -18424,15 +26774,32 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_app_studio_selector extends $.$mol_demo_large {
+        /**
+         *  ```
+         *  event *
+         *  	contextmenu?event <=> select?event
+         *  	dblclick?event <=> select?event
+         *  ```
+         **/
         event() {
             return ({
                 "contextmenu": (event) => this.select(event),
                 "dblclick": (event) => this.select(event),
             });
         }
+        /**
+         *  ```
+         *  select?event null
+         *  ```
+         **/
         select(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  path?val /
+         *  ```
+         **/
         path(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
@@ -18764,18 +27131,43 @@ var $;
 var $;
 (function ($) {
     class $mol_status extends $.$mol_view {
+        /**
+         *  ```
+         *  status null
+         *  ```
+         **/
         status() {
             return null;
         }
+        /**
+         *  ```
+         *  minimal_height 24
+         *  ```
+         **/
         minimal_height() {
             return 24;
         }
+        /**
+         *  ```
+         *  minimal_width 0
+         *  ```
+         **/
         minimal_width() {
             return 0;
         }
+        /**
+         *  ```
+         *  sub / <= message
+         *  ```
+         **/
         sub() {
             return [].concat(this.message());
         }
+        /**
+         *  ```
+         *  message \
+         *  ```
+         **/
         message() {
             return "";
         }
@@ -18819,31 +27211,75 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_app_demo extends $.$mol_book {
+        /**
+         *  ```
+         *  editor_title <= detail_title
+         *  ```
+         **/
         editor_title() {
             return this.detail_title();
         }
+        /**
+         *  ```
+         *  detail_title \$mol
+         *  ```
+         **/
         detail_title() {
             return "$mol";
         }
+        /**
+         *  ```
+         *  source_prefix \https://github.com/eigenmethod/mol/tree/master/
+         *  ```
+         **/
         source_prefix() {
             return "https://github.com/eigenmethod/mol/tree/master/";
         }
+        /**
+         *  ```
+         *  Placeholder $mol_app_demo_placeholder
+         *  ```
+         **/
         Placeholder() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_app_demo_placeholder());
         }
+        /**
+         *  ```
+         *  pages <= blocks
+         *  ```
+         **/
         pages() {
             return this.blocks();
         }
+        /**
+         *  ```
+         *  blocks /
+         *  ```
+         **/
         blocks() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  attr * mol_theme <= theme
+         *  ```
+         **/
         attr() {
             return ({
                 "mol_theme": this.theme(),
             });
         }
+        /**
+         *  ```
+         *  Menu $mol_app_demo_menu
+         *  	hierarchy <= nav_hierarchy
+         *  	option!id <= nav_option!id
+         *  	filter?val <=> filter_string?val
+         *  	theme?val <=> theme?val
+         *  ```
+         **/
         Menu() {
             return ((obj) => {
                 obj.hierarchy = () => this.nav_hierarchy();
@@ -18853,18 +27289,48 @@ var $;
                 return obj;
             })(new this.$.$mol_app_demo_menu());
         }
+        /**
+         *  ```
+         *  nav_hierarchy null
+         *  ```
+         **/
         nav_hierarchy() {
             return null;
         }
+        /**
+         *  ```
+         *  nav_option!id null
+         *  ```
+         **/
         nav_option(id) {
             return null;
         }
+        /**
+         *  ```
+         *  filter_string?val \
+         *  ```
+         **/
         filter_string(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  theme?val \$mol_theme_dark
+         *  ```
+         **/
         theme(val, force) {
             return (val !== void 0) ? val : "$mol_theme_dark";
         }
+        /**
+         *  ```
+         *  Detail $mol_app_demo_detail
+         *  	minimal_width 600
+         *  	title <= detail_title
+         *  	source_link <= source_link
+         *  	body / <= Detail_list
+         *  	event_top?val <=> event_front_up?val
+         *  ```
+         **/
         Detail() {
             return ((obj) => {
                 obj.minimal_width = () => 600;
@@ -18875,18 +27341,42 @@ var $;
                 return obj;
             })(new this.$.$mol_app_demo_detail());
         }
+        /**
+         *  ```
+         *  source_link \
+         *  ```
+         **/
         source_link() {
             return "";
         }
+        /**
+         *  ```
+         *  Detail_list $mol_list rows <= main_content
+         *  ```
+         **/
         Detail_list() {
             return ((obj) => {
                 obj.rows = () => this.main_content();
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  main_content /
+         *  ```
+         **/
         main_content() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Editor!id $mol_app_studio
+         *  	minimal_width 1000
+         *  	title <= editor_title
+         *  	class_name_base <= selected_class_name
+         *  	tools_main / <= Close
+         *  ```
+         **/
         Editor(id) {
             return ((obj) => {
                 obj.minimal_width = () => 1000;
@@ -18896,9 +27386,21 @@ var $;
                 return obj;
             })(new this.$.$mol_app_studio());
         }
+        /**
+         *  ```
+         *  selected_class_name \
+         *  ```
+         **/
         selected_class_name() {
             return "";
         }
+        /**
+         *  ```
+         *  Close $mol_link
+         *  	sub / <= Close_icon
+         *  	arg <= close_arg
+         *  ```
+         **/
         Close() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Close_icon());
@@ -18906,43 +27408,91 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Close_icon $mol_icon_cross
+         *  ```
+         **/
         Close_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
+        /**
+         *  ```
+         *  close_arg * edit null
+         *  ```
+         **/
         close_arg() {
             return ({
                 "edit": null,
             });
         }
+        /**
+         *  ```
+         *  Welcome $mol_scroll sub / <= Welcome_text
+         *  ```
+         **/
         Welcome() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Welcome_text());
                 return obj;
             })(new this.$.$mol_scroll());
         }
+        /**
+         *  ```
+         *  Welcome_text $mol_text text <= welcome_text
+         *  ```
+         **/
         Welcome_text() {
             return ((obj) => {
                 obj.text = () => this.welcome_text();
                 return obj;
             })(new this.$.$mol_text());
         }
+        /**
+         *  ```
+         *  welcome_text \
+         *  ```
+         **/
         welcome_text() {
             return "";
         }
+        /**
+         *  ```
+         *  Detail_empty_message $mol_status sub /
+         *  	<= detail_empty_prefix
+         *  	<= selected
+         *  	<= detail_empty_postfix
+         *  ```
+         **/
         Detail_empty_message() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.detail_empty_prefix(), this.selected(), this.detail_empty_postfix());
                 return obj;
             })(new this.$.$mol_status());
         }
+        /**
+         *  ```
+         *  detail_empty_prefix @ \No one demo with prefix "
+         *  ```
+         **/
         detail_empty_prefix() {
             return this.$.$mol_locale.text("$mol_app_demo_detail_empty_prefix");
         }
+        /**
+         *  ```
+         *  selected \
+         *  ```
+         **/
         selected() {
             return "";
         }
+        /**
+         *  ```
+         *  detail_empty_postfix @ \"
+         *  ```
+         **/
         detail_empty_postfix() {
             return this.$.$mol_locale.text("$mol_app_demo_detail_empty_postfix");
         }
@@ -18987,24 +27537,61 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_app_demo_menu extends $.$mol_page {
+        /**
+         *  ```
+         *  minimal_width 240
+         *  ```
+         **/
         minimal_width() {
             return 240;
         }
+        /**
+         *  ```
+         *  title @ \$mol demonstrations
+         *  ```
+         **/
         title() {
             return this.$.$mol_locale.text("$mol_app_demo_menu_title");
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Head
+         *  	<= Filter
+         *  	<= Nav
+         *  	<= Themes
+         *  ```
+         **/
         sub() {
             return [].concat(this.Head(), this.Filter(), this.Nav(), this.Themes());
         }
+        /**
+         *  ```
+         *  Filter $mol_search query?val <=> filter?val
+         *  ```
+         **/
         Filter() {
             return ((obj) => {
                 obj.query = (val) => this.filter(val);
                 return obj;
             })(new this.$.$mol_search());
         }
+        /**
+         *  ```
+         *  filter?val \
+         *  ```
+         **/
         filter(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Nav $mol_app_demo_nav
+         *  	hierarchy <= hierarchy
+         *  	record!id <= option!id
+         *  	needle <= filter?val
+         *  ```
+         **/
         Nav() {
             return ((obj) => {
                 obj.hierarchy = () => this.hierarchy();
@@ -19013,12 +27600,31 @@ var $;
                 return obj;
             })(new this.$.$mol_app_demo_nav());
         }
+        /**
+         *  ```
+         *  hierarchy null
+         *  ```
+         **/
         hierarchy() {
             return null;
         }
+        /**
+         *  ```
+         *  option!id null
+         *  ```
+         **/
         option(id) {
             return null;
         }
+        /**
+         *  ```
+         *  Themes $mol_switch
+         *  	value?val <=> theme?val
+         *  	options *
+         *  		$mol_theme_light <= theme_light_title
+         *  		$mol_theme_dark <= theme_dark_title
+         *  ```
+         **/
         Themes() {
             return ((obj) => {
                 obj.value = (val) => this.theme(val);
@@ -19029,12 +27635,27 @@ var $;
                 return obj;
             })(new this.$.$mol_switch());
         }
+        /**
+         *  ```
+         *  theme?val \$mol_theme_dark
+         *  ```
+         **/
         theme(val, force) {
             return (val !== void 0) ? val : "$mol_theme_dark";
         }
+        /**
+         *  ```
+         *  theme_light_title @ \Light theme
+         *  ```
+         **/
         theme_light_title() {
             return this.$.$mol_locale.text("$mol_app_demo_menu_theme_light_title");
         }
+        /**
+         *  ```
+         *  theme_dark_title @ \Dark theme
+         *  ```
+         **/
         theme_dark_title() {
             return this.$.$mol_locale.text("$mol_app_demo_menu_theme_dark_title");
         }
@@ -19058,9 +27679,25 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_app_demo_detail extends $.$mol_page {
+        /**
+         *  ```
+         *  tools /
+         *  	<= Source_link
+         *  	<= Edit
+         *  	<= Close
+         *  ```
+         **/
         tools() {
             return [].concat(this.Source_link(), this.Edit(), this.Close());
         }
+        /**
+         *  ```
+         *  Source_link $mol_link
+         *  	sub / <= Source_icon
+         *  	uri <= source_link
+         *  	target \_blank
+         *  ```
+         **/
         Source_link() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Source_icon());
@@ -19069,14 +27706,35 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Source_icon $mol_icon_source
+         *  ```
+         **/
         Source_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_source());
         }
+        /**
+         *  ```
+         *  source_link \
+         *  ```
+         **/
         source_link() {
             return "";
         }
+        /**
+         *  ```
+         *  Edit $mol_link
+         *  	sub /
+         *  		<= Edit_speck
+         *  		<= Edit_icon
+         *  	arg *
+         *  		edit \
+         *  		path \
+         *  ```
+         **/
         Edit() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Edit_speck(), this.Edit_icon());
@@ -19087,17 +27745,34 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Edit_speck $mol_speck value \β
+         *  ```
+         **/
         Edit_speck() {
             return ((obj) => {
                 obj.value = () => "β";
                 return obj;
             })(new this.$.$mol_speck());
         }
+        /**
+         *  ```
+         *  Edit_icon $mol_icon_settings
+         *  ```
+         **/
         Edit_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_settings());
         }
+        /**
+         *  ```
+         *  Close $mol_link
+         *  	sub / <= Close_icon
+         *  	arg <= close_arg
+         *  ```
+         **/
         Close() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Close_icon());
@@ -19105,11 +27780,21 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Close_icon $mol_icon_cross
+         *  ```
+         **/
         Close_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
+        /**
+         *  ```
+         *  close_arg * demo null
+         *  ```
+         **/
         close_arg() {
             return ({
                 "demo": null,
@@ -19141,15 +27826,39 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_app_demo_nav extends $.$mol_grid {
+        /**
+         *  ```
+         *  row_height 40
+         *  ```
+         **/
         row_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  hierarchy_col \title
+         *  ```
+         **/
         hierarchy_col() {
             return "title";
         }
+        /**
+         *  ```
+         *  Head null
+         *  ```
+         **/
         Head() {
             return null;
         }
+        /**
+         *  ```
+         *  Option!id $mol_link
+         *  	arg <= arg!id
+         *  	sub /
+         *  		<= Expand!id
+         *  		<= Content!id
+         *  ```
+         **/
         Option(id) {
             return ((obj) => {
                 obj.arg = () => this.arg(id);
@@ -19157,9 +27866,21 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  arg!id *
+         *  ```
+         **/
         arg(id) {
             return ({});
         }
+        /**
+         *  ```
+         *  Expand!id $mol_check_expand
+         *  	expanded?val <=> cell_expanded!id?val
+         *  	level <= cell_level!id
+         *  ```
+         **/
         Expand(id) {
             return ((obj) => {
                 obj.expanded = (val) => this.cell_expanded(id, val);
@@ -19167,6 +27888,11 @@ var $;
                 return obj;
             })(new this.$.$mol_check_expand());
         }
+        /**
+         *  ```
+         *  Content!id $mol_view sub / <= cell_content!id
+         *  ```
+         **/
         Content(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.cell_content(id));
@@ -19203,6 +27929,9 @@ var $;
                 const selected = this.selected();
                 if (selected) {
                     const names = this.names_demo();
+                    /*if( names.length === 1 ) {
+                        return `$${ selected.replace( /_demo.* / , '' ) }: ${ this.Sample_large( names[0] ).Widget().title() }`
+                    }*/
                     return `$${selected}`;
                 }
                 return super.title();
@@ -19913,6 +28642,7 @@ var $;
 //jsx.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -19954,6 +28684,10 @@ var $;
             const dom = $.$mol_jsx_make(Button, { id: "/foo", hint: "click me" }, () => 'hey!');
             $.$mol_assert_equal(dom.outerHTML, '<button title="click me" id="/foo">hey!</button>');
         },
+        // 'Standart classes as component'() {
+        // 	const dom = <HTMLButtonElement id="/foo" title="click me">hey!</HTMLButtonElement>
+        // 	$mol_assert_equal( dom.outerHTML , '<button title="click me" id="/foo">hey!</button>' )
+        // } ,
         'Nested guid generation'() {
             const Foo = () => {
                 return $.$mol_jsx_make("div", null,
@@ -20043,6 +28777,7 @@ var $;
 //make.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -20145,11 +28880,14 @@ var $;
                 $.$mol_mem_key
             ], X.prototype, "foo", null);
             const x = new X;
+            // get
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
             $.$mol_assert_equal(x.foo(0), x.foo(0));
             $.$mol_assert_unique(x.foo(0), x.foo(1));
+            // set
             x.foo(0, 321);
             $.$mol_assert_equal(x.foo(0).valueOf(), 321);
+            // reset
             x.foo(0, null);
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
         },
@@ -20193,6 +28931,26 @@ var $;
             x.foo(5);
             $.$mol_assert_equal(x.xxx(), 7);
         },
+        //'must fail on recursive dependency'() {
+        //
+        //	class X extends $mol_object {
+        //
+        //		@ $mol_prop()
+        //		foo() : number {
+        //			return this.foo() + 1
+        //		}
+        //
+        //	}
+        //
+        //	var x = new X
+        //
+        //	try {
+        //		x.foo().valueOf()
+        //		$mol_assert_fail( 'Not tracked recursive dependency' )
+        //	} catch( error ) {
+        //		$mol_assert_equal( error.message , 'Recursive dependency! .foo()' )
+        //	}
+        //} ,
         'must be deferred destroyed when no longer referenced'() {
             let foo;
             let foo_destroyed = false;
@@ -20860,6 +29618,7 @@ var $;
             $.$mol_assert_equal(list[2], 5);
             $.$mol_assert_equal(list[3], 7);
             $.$mol_assert_equal(calls, 10);
+            // $mol_assert_equal( calls , 6 ) // TODO: lazy filter
         },
         'reduce'() {
             let calls = 0;
@@ -21066,6 +29825,7 @@ var $;
 //parse.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -21263,6 +30023,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// @todo right orderinng
     $.$mol_after_mock_queue = [];
     function $mol_after_mock_warp() {
         const queue = $.$mol_after_mock_queue.splice(0);
@@ -21431,7 +30192,7 @@ var $;
             let master = slave && slave.master;
             if (!master || master.constructor !== $mol_fiber) {
                 master = new $mol_fiber;
-                master.cursor = -3;
+                master.cursor = -3 /* persist */;
                 master.error = request.call(this, ...args).then(res => master.push(res), err => master.fail(err));
                 const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
                 master[Symbol.toStringTag] = prefix + (request.name || $mol_fiber_sync.name);
@@ -21507,7 +30268,7 @@ var $;
             super(...arguments);
             this.value = undefined;
             this.error = null;
-            this.cursor = 0;
+            this.cursor = 0 /* obsolete */;
             this.masters = [];
         }
         static wrap(task) {
@@ -21550,7 +30311,7 @@ var $;
         wake() {
             this.$.$mol_log(this, '⏰');
             try {
-                if (this.cursor > -2)
+                if (this.cursor > -2 /* actual */)
                     return this.get();
             }
             catch (error) {
@@ -21586,16 +30347,16 @@ var $;
         wait(promise) {
             this.error = promise;
             this.$.$mol_log(this, '💤');
-            this.cursor = 0;
+            this.cursor = 0 /* obsolete */;
             return promise;
         }
         complete() {
-            if (this.cursor <= -2)
+            if (this.cursor <= -2 /* actual */)
                 return;
             for (let index = 0; index < this.masters.length; index += 2) {
                 this.complete_master(index);
             }
-            this.cursor = -2;
+            this.cursor = -2 /* actual */;
         }
         complete_master(master_index) {
             this.disobey(master_index);
@@ -21629,12 +30390,12 @@ var $;
             }
         }
         get() {
-            if (this.cursor > 0)
+            if (this.cursor > 0 /* obsolete */)
                 this.$.$mol_fail(new Error('Cyclic dependency'));
             const slave = $mol_fiber_1.current;
             if (slave)
                 slave.master = this;
-            if (this.cursor > -2)
+            if (this.cursor > -2 /* actual */)
                 this.update();
             if (this.error)
                 return this.$.$mol_fail_hidden(this.error);
@@ -21647,6 +30408,7 @@ var $;
             const overtime = now - $mol_fiber_1.deadline;
             if (overtime < 0)
                 return;
+            /// after debugger
             if (overtime > 500) {
                 $mol_fiber_1.deadline = now + $mol_fiber_1.quant;
                 return;
@@ -21657,7 +30419,7 @@ var $;
             return this.masters[this.cursor];
         }
         set master(next) {
-            if (this.cursor === -1)
+            if (this.cursor === -1 /* doubt */)
                 return;
             const cursor = this.cursor;
             const prev = this.masters[this.cursor];
@@ -22151,7 +30913,7 @@ var $;
             return value;
         }
         pull() {
-            if (this.cursor === 0)
+            if (this.cursor === 0 /* obsolete */)
                 return super.pull();
             this.$.$mol_log(this, '⏭');
             const masters = this.masters;
@@ -22165,15 +30927,15 @@ var $;
                 catch (error) {
                     if ('then' in error)
                         $.$mol_fail_hidden(error);
-                    this.cursor = 0;
+                    this.cursor = 0 /* obsolete */;
                 }
-                if (this.cursor !== 0)
+                if (this.cursor !== 0 /* obsolete */)
                     continue;
                 this.$.$mol_log(this, '⏯');
                 return super.pull();
             }
             this.$.$mol_log(this, '✔✔', this.value);
-            this.cursor = -2;
+            this.cursor = -2 /* actual */;
             return this.value;
         }
         get value() { return this._value; }
@@ -22196,7 +30958,7 @@ var $;
         }
         put(next) {
             this.push(next);
-            this.cursor = -3;
+            this.cursor = -3 /* persist */;
         }
         complete_master(master_index) {
             if (this.masters[master_index] instanceof $mol_atom2_1) {
@@ -22219,16 +30981,16 @@ var $;
         }
         dislead(slave_index) {
             if (slave_index < 0)
-                return;
+                return; // slave is fiber
             this.$.$mol_log(this, '☌', this.slaves[slave_index]);
             this.slaves[slave_index] = undefined;
             this.slaves[slave_index + 1] = undefined;
             $.$mol_array_trim(this.slaves);
-            if (this.cursor > -3 && this.alone)
+            if (this.cursor > -3 /* persist */ && this.alone)
                 $mol_atom2_1.reap(this);
         }
         obsolete(master_index = -1) {
-            if (this.cursor > 0) {
+            if (this.cursor > 0 /* obsolete */) {
                 if (master_index >= this.cursor - 2)
                     return;
                 const path = [];
@@ -22239,15 +31001,15 @@ var $;
                 }
                 this.$.$mol_fail(new Error(`Obsoleted while calculation \n\n${path.join('\n')}\n`));
             }
-            if (this.cursor === 0)
+            if (this.cursor === 0 /* obsolete */)
                 return;
             this.$.$mol_log(this, '✘');
-            if (this.cursor !== -1)
+            if (this.cursor !== -1 /* doubt */)
                 this.doubt_slaves();
-            this.cursor = 0;
+            this.cursor = 0 /* obsolete */;
         }
         doubt(master_index = -1) {
-            if (this.cursor > 0) {
+            if (this.cursor > 0 /* obsolete */) {
                 if (master_index >= this.cursor - 2)
                     return;
                 const path = [];
@@ -22258,10 +31020,10 @@ var $;
                 }
                 this.$.$mol_fail(new Error(`Doubted while calculation \n\n${path.join('\n')}\n`));
             }
-            if (this.cursor >= -1)
+            if (this.cursor >= -1 /* doubt */)
                 return;
             this.$.$mol_log(this, '�');
-            this.cursor = -1;
+            this.cursor = -1 /* doubt */;
             this.doubt_slaves();
         }
         obsolete_slaves() {
@@ -22280,9 +31042,9 @@ var $;
         }
         get fresh() {
             return () => {
-                if (this.cursor !== -2)
+                if (this.cursor !== -2 /* actual */)
                     return;
-                this.cursor = 0;
+                this.cursor = 0 /* obsolete */;
                 $.$mol_fiber_solid.run(() => this.update());
             };
         }
@@ -22300,7 +31062,7 @@ var $;
             if (!this.abort())
                 return;
             this.$.$mol_log(this, '🕱', this.value);
-            this.cursor = -3;
+            this.cursor = -3 /* persist */;
             for (let index = 0; index < this.masters.length; index += 2) {
                 this.complete_master(index);
             }
@@ -22497,6 +31259,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -22583,6 +31346,7 @@ var $;
 //view.test.js.map
 ;
 "use strict";
+/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     class $mol_jsx_view extends $.$mol_object2 {

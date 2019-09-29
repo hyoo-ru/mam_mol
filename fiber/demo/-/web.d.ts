@@ -150,6 +150,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    /**
+     * Recursive `Partial`.
+     *
+     * 	let props : $mol_type_partial_deep< HTMLElement > = { style : { display : 'block' } }
+     */
     type $mol_type_partial_deep<Val> = {
         [field in keyof Val]?: $mol_type_partial_deep<Val[field]>;
     };
@@ -171,9 +176,11 @@ declare namespace JSX {
         childNodes: Array<Node | string>;
         valueOf(): Element;
     }
+    /** Props for html elements */
     type IntrinsicElements = {
         [key in keyof HTMLElementTagNameMap]?: $.$mol_type_partial_deep<HTMLElementTagNameMap[key]>;
     };
+    /** Additional undeclared props */
     interface IntrinsicAttributes {
         id?: string;
     }
@@ -202,6 +209,7 @@ declare namespace $ {
     }, Children extends Array<Node | string>>(Elem: string | ((props: Props, ...children: Children) => Element) | typeof $mol_jsx_view, props: Props, ...childNodes: Children): Element;
 }
 
+/** @jsx $mol_jsx_make */
 declare namespace $ {
     class $mol_fiber_demo extends $mol_object2 {
         static step(sandbox: HTMLElement): void;
@@ -217,6 +225,7 @@ declare namespace $ {
     }
 }
 
+/** @jsx $mol_jsx_make */
 declare namespace $ {
     class $mol_jsx_view extends $mol_object2 {
         static of<This extends typeof $mol_jsx_view>(this: This, node: Element): InstanceType<This>;

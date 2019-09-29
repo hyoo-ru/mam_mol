@@ -201,7 +201,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -359,6 +359,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -373,6 +374,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -566,6 +568,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -574,6 +579,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;
@@ -1186,6 +1194,7 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1237,6 +1246,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
+    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -1278,13 +1288,18 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
+        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '');
         }
+        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
+        /// Raw child views
         sub() {
             return null;
         }
+        /// Visible sub views with defined context()
+        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -1297,6 +1312,7 @@ var $;
             });
             return sub;
         }
+        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -1309,6 +1325,7 @@ var $;
             });
             return min;
         }
+        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -1478,6 +1495,7 @@ var $;
 var $;
 (function ($) {
     if ($.$mol_dom_context.document) {
+        /// Autoattach view roots to loaded DOM.
         const event_name = self.cordova ? 'deviceready' : 'DOMContentLoaded';
         $.$mol_dom_context.document.addEventListener(event_name, $.$mol_log_group(`$mol_view ${event_name}`, (event) => {
             $.$mol_view.autobind();
@@ -1530,32 +1548,76 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_perf_sierp extends $.$mol_view {
+        /**
+         *  ```
+         *  size_target 25
+         *  ```
+         **/
         size_target() {
             return 25;
         }
+        /**
+         *  ```
+         *  elapsed?val 0
+         *  ```
+         **/
         elapsed(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  style * transform <= transform
+         *  ```
+         **/
         style() {
             return ({
                 "transform": this.transform(),
             });
         }
+        /**
+         *  ```
+         *  transform \
+         *  ```
+         **/
         transform() {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= Dots
+         *  ```
+         **/
         sub() {
             return [].concat(this.Dots());
         }
+        /**
+         *  ```
+         *  Dots $mol_view sub <= dots
+         *  ```
+         **/
         Dots() {
             return ((obj) => {
                 obj.sub = () => this.dots();
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  dots /
+         *  ```
+         **/
         dots() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Dot!id $mol_perf_sierp_dot
+         *  	left <= left!id
+         *  	top <= top!id
+         *  	size <= size!id
+         *  	text <= text
+         *  ```
+         **/
         Dot(id) {
             return ((obj) => {
                 obj.left = () => this.left(id);
@@ -1565,15 +1627,35 @@ var $;
                 return obj;
             })(new this.$.$mol_perf_sierp_dot());
         }
+        /**
+         *  ```
+         *  left!id 0
+         *  ```
+         **/
         left(id) {
             return 0;
         }
+        /**
+         *  ```
+         *  top!id 0
+         *  ```
+         **/
         top(id) {
             return 0;
         }
+        /**
+         *  ```
+         *  size!id 25
+         *  ```
+         **/
         size(id) {
             return 25;
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
@@ -1591,21 +1673,58 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_perf_sierp_dot extends $.$mol_view {
+        /**
+         *  ```
+         *  size 25
+         *  ```
+         **/
         size() {
             return 25;
         }
+        /**
+         *  ```
+         *  size_px \25px
+         *  ```
+         **/
         size_px() {
             return "25px";
         }
+        /**
+         *  ```
+         *  hover?val false
+         *  ```
+         **/
         hover(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  sub / <= text
+         *  ```
+         **/
         sub() {
             return [].concat(this.text());
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
+        /**
+         *  ```
+         *  style *
+         *  	width <= width
+         *  	height <= height
+         *  	left <= left
+         *  	top <= top
+         *  	borderRadius <= radius
+         *  	lineHeight <= size_px
+         *  	background <= color
+         *  ```
+         **/
         style() {
             return ({
                 "width": this.width(),
@@ -1617,33 +1736,80 @@ var $;
                 "background": this.color(),
             });
         }
+        /**
+         *  ```
+         *  width <= size
+         *  ```
+         **/
         width() {
             return this.size();
         }
+        /**
+         *  ```
+         *  height <= size
+         *  ```
+         **/
         height() {
             return this.size();
         }
+        /**
+         *  ```
+         *  left 0
+         *  ```
+         **/
         left() {
             return 0;
         }
+        /**
+         *  ```
+         *  top 0
+         *  ```
+         **/
         top() {
             return 0;
         }
+        /**
+         *  ```
+         *  radius <= size
+         *  ```
+         **/
         radius() {
             return this.size();
         }
+        /**
+         *  ```
+         *  color \
+         *  ```
+         **/
         color() {
             return "";
         }
+        /**
+         *  ```
+         *  event_async *
+         *  	mouseenter?val <=> enter?val
+         *  	mouseleave?val <=> leave?val
+         *  ```
+         **/
         event_async() {
             return ({
                 "mouseenter": (val) => this.enter(val),
                 "mouseleave": (val) => this.leave(val),
             });
         }
+        /**
+         *  ```
+         *  enter?val null
+         *  ```
+         **/
         enter(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  leave?val null
+         *  ```
+         **/
         leave(val, force) {
             return (val !== void 0) ? val : null;
         }
@@ -1687,6 +1853,7 @@ var $;
                 const size = id.size / 2;
                 const e = performance.now() + 0.8;
                 while (performance.now() < e) {
+                    // Artificially long execution time.
                 }
                 return [
                     ...this.SierpinskiTriangle({ left: id.left, top: id.top - size / 2, size: size }),

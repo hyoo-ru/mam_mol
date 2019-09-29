@@ -203,7 +203,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -339,6 +339,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -353,6 +354,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -517,6 +519,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -525,6 +530,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;
@@ -984,11 +992,11 @@ var $;
         }
         content(next, force) {
             if (next === void 0) {
-                return this.stat() && $node.fs.readFileSync(this.path());
+                return this.stat() && $node.fs.readFileSync(this.path()); //.toString()
             }
             this.parent().exists(true);
             $node.fs.writeFileSync(this.path(), next);
-            return next;
+            return next; //.toString()
         }
         reader() {
             return $node.fs.createReadStream(this.path());
@@ -1635,6 +1643,7 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1686,6 +1695,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
+    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -1727,13 +1737,18 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
+        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '');
         }
+        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
+        /// Raw child views
         sub() {
             return null;
         }
+        /// Visible sub views with defined context()
+        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -1746,6 +1761,7 @@ var $;
             });
             return sub;
         }
+        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -1758,6 +1774,7 @@ var $;
             });
             return min;
         }
+        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -2232,6 +2249,7 @@ var $;
                                     const object_args = value.select('/', '').sub.map(arg => getValue(arg)).join(' , ');
                                     return '(( obj )=>{\n' + overs.join('') + '\t\t\treturn obj\n\t\t})( new this.$.' + value.type + '( ' + object_args + ' ) )';
                                 case (value.type === '*'):
+                                    //needReturn = false
                                     var opts = [];
                                     value.sub.forEach(opt => {
                                         if (opt.type === '-')
@@ -2523,7 +2541,7 @@ var $;
             for (let line of lines) {
                 const mergedLine = [];
                 for (let segment of line) {
-                    const mergedSegment = [segment[0]];
+                    const mergedSegment = [segment[0]]; // generatedColumn
                     if (segment.length > 1) {
                         const [, sourceIndex] = segment;
                         const source = bundleSourceRoot + sourceRoot + raw.sources[sourceIndex];
@@ -2538,9 +2556,9 @@ var $;
                         mergedSegment.push(mergedSourceIndex);
                     }
                     if (segment.length > 2)
-                        mergedSegment.push(segment[2]);
+                        mergedSegment.push(segment[2]); // originalLine
                     if (segment.length > 3)
-                        mergedSegment.push(segment[3]);
+                        mergedSegment.push(segment[3]); // originalColumn
                     if (segment.length > 4) {
                         const nameIndex = segment[4];
                         const name = raw.names[nameIndex];
@@ -2646,6 +2664,7 @@ var $;
                 mods.push(child);
                 return true;
             });
+            // .sort( ( a , b )=> a.path().length - b.path().length )
             return mods;
         }
         modsRecursive({ path, exclude }) {
@@ -2864,6 +2883,7 @@ var $;
             }
         }
         modEnsure(path) {
+            // Prevent automatic state clear on every bundle build
             $.$mol_atom_current().destructor = () => { };
             var mod = $.$mol_file.absolute(path);
             if (mod === this.root())
@@ -2874,6 +2894,7 @@ var $;
             if (mod.exists()) {
                 if (mod.type() === 'dir' && mod.resolve('.git').type() === 'dir') {
                     try {
+                        //$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
                         process.stdout.write($.$mol_exec(mod.path(), 'git', '--no-pager', 'log', '--oneline', 'HEAD..origin/master').stdout);
                     }
                     catch (error) {
@@ -2930,6 +2951,7 @@ var $;
                         if (index.exists())
                             dep = index;
                     }
+                    //if( dep.type() === 'file' ) dep = dep.parent()
                     if (mod === dep)
                         return;
                     if (dep === this.root())
@@ -3047,7 +3069,8 @@ var $;
             var sources = this.sourcesJS({ path, exclude });
             if (sources.length === 0)
                 return [];
-            this.tsCompile({ path, exclude, bundle });
+            var exclude_ext = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
+            this.tsCompile({ path, exclude: exclude_ext, bundle });
             var concater = new $.$mol_sourcemap_builder(target.name(), ';');
             if (bundle === 'node') {
                 concater.add('require' + '( "source-map-support" ).install(); var exports = void 0;\n');
@@ -3296,7 +3319,7 @@ var $;
                 return [];
             var target = pack.resolve(`-/${bundle}.css`);
             var targetMap = pack.resolve(`-/${bundle}.css.map`);
-            var root = null;
+            var root = null; //$node['postcss'].root({})
             sources.forEach(src => {
                 var root2 = $node['postcss'].parse(src.content(), { from: src.path() });
                 root = root ? root.append(root2) : root2;
@@ -3489,8 +3512,8 @@ var $;
     $mol_build.dependors['js'] = source => {
         var depends = {};
         var lines = String(source.content())
-            .replace(/\/\*[^]*?\*\//g, '')
-            .replace(/\/\/.*$/gm, '')
+            .replace(/\/\*[^]*?\*\//g, '') // drop block comments
+            .replace(/\/\/.*$/gm, '') // drop inline comments
             .split('\n');
         lines.forEach(function (line) {
             var indent = /^([\s\t]*)/.exec(line);
@@ -3509,8 +3532,8 @@ var $;
     $mol_build.dependors['ts'] = $mol_build.dependors['tsx'] = $mol_build.dependors['jam.js'] = source => {
         var depends = {};
         var lines = String(source.content())
-            .replace(/\/\*(?!\*)[\s\S]*?\*\//g, '')
-            .replace(/\/\/.*$/gm, '')
+            .replace(/\/\*(?!\*)[\s\S]*?\*\//g, '') // drop block comments except doc-comments
+            .replace(/\/\/.*$/gm, '') // drop inline comments
             .split('\n');
         lines.forEach(function (line) {
             var indent = /^([\s\t]*)/.exec(line);
@@ -3540,8 +3563,8 @@ var $;
     $mol_build.dependors['css'] = $mol_build.dependors['view.css'] = source => {
         var depends = {};
         var lines = String(source.content())
-            .replace(/\/\*[^]*?\*\//g, '')
-            .replace(/\/\/.*$/gm, '')
+            .replace(/\/\*[^]*?\*\//g, '') // drop block comments
+            .replace(/\/\/.*$/gm, '') // drop inline comments
             .split('\n');
         lines.forEach(function (line) {
             var indent = /^([\s\t]*)/.exec(line);

@@ -201,7 +201,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -359,6 +359,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -373,6 +374,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -566,6 +568,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -574,6 +579,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;
@@ -1186,6 +1194,7 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1237,6 +1246,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
+    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -1278,13 +1288,18 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
+        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '');
         }
+        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
+        /// Raw child views
         sub() {
             return null;
         }
+        /// Visible sub views with defined context()
+        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -1297,6 +1312,7 @@ var $;
             });
             return sub;
         }
+        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -1309,6 +1325,7 @@ var $;
             });
             return min;
         }
+        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -1478,6 +1495,7 @@ var $;
 var $;
 (function ($) {
     if ($.$mol_dom_context.document) {
+        /// Autoattach view roots to loaded DOM.
         const event_name = self.cordova ? 'deviceready' : 'DOMContentLoaded';
         $.$mol_dom_context.document.addEventListener(event_name, $.$mol_log_group(`$mol_view ${event_name}`, (event) => {
             $.$mol_view.autobind();
@@ -1555,18 +1573,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_svg extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \svg
+         *  ```
+         **/
         dom_name() {
             return "svg";
         }
+        /**
+         *  ```
+         *  dom_name_space \http://www.w3.org/2000/svg
+         *  ```
+         **/
         dom_name_space() {
             return "http://www.w3.org/2000/svg";
         }
+        /**
+         *  ```
+         *  text_width?text 0
+         *  ```
+         **/
         text_width(text, force) {
             return (text !== void 0) ? text : 0;
         }
+        /**
+         *  ```
+         *  font_size 16
+         *  ```
+         **/
         font_size() {
             return 16;
         }
+        /**
+         *  ```
+         *  font_family \
+         *  ```
+         **/
         font_family() {
             return "";
         }
@@ -1625,15 +1668,38 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_root extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \svg
+         *  ```
+         **/
         dom_name() {
             return "svg";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	viewBox <= view_box
+         *  	preserveAspectRatio <= aspect
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "viewBox": this.view_box(), "preserveAspectRatio": this.aspect() }));
         }
+        /**
+         *  ```
+         *  view_box \0 0 100 100
+         *  ```
+         **/
         view_box() {
             return "0 0 100 100";
         }
+        /**
+         *  ```
+         *  aspect \xMidYMid
+         *  ```
+         **/
         aspect() {
             return "xMidYMid";
         }
@@ -1730,6 +1796,11 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_group extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \g
+         *  ```
+         **/
         dom_name() {
             return "g";
         }
@@ -1748,24 +1819,69 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_graph extends $.$mol_svg_group {
+        /**
+         *  ```
+         *  series_x /number
+         *  ```
+         **/
         series_x() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  series_y /number
+         *  ```
+         **/
         series_y() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_plot_graph_type <= type
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_plot_graph_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type \solid
+         *  ```
+         **/
         type() {
             return "solid";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	color <= color
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "color": this.color() }));
         }
+        /**
+         *  ```
+         *  color \
+         *  ```
+         **/
         color() {
             return "";
         }
+        /**
+         *  ```
+         *  viewport $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         viewport() {
             return ((obj) => {
                 return obj;
@@ -1775,17 +1891,49 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  shift /number
+         *  	0
+         *  	0
+         *  ```
+         **/
         shift() {
             return [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  scale /number
+         *  	1
+         *  	1
+         *  ```
+         **/
         scale() {
             return [].concat(1, 1);
         }
+        /**
+         *  ```
+         *  cursor_position $mol_vector_2d /
+         *  	NaN
+         *  	NaN
+         *  ```
+         **/
         cursor_position() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_2d(NaN, NaN));
         }
+        /**
+         *  ```
+         *  dimensions_pane $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         dimensions_pane() {
             return ((obj) => {
                 return obj;
@@ -1795,6 +1943,17 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  dimensions $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         dimensions() {
             return ((obj) => {
                 return obj;
@@ -1804,11 +1963,29 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  size_real $mol_vector_2d /
+         *  	0
+         *  	0
+         *  ```
+         **/
         size_real() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_2d(0, 0));
         }
+        /**
+         *  ```
+         *  gap $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		0
+         *  		0
+         *  	$mol_vector_range /
+         *  		0
+         *  		0
+         *  ```
+         **/
         gap() {
             return ((obj) => {
                 return obj;
@@ -1818,21 +1995,51 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(0, 0))));
         }
+        /**
+         *  ```
+         *  indexes /number
+         *  ```
+         **/
         indexes() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  points /readonly[number,number]
+         *  ```
+         **/
         points() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  front /$mol_svg
+         *  ```
+         **/
         front() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  back /$mol_svg
+         *  ```
+         **/
         back() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  hue NaN
+         *  ```
+         **/
         hue() {
             return NaN;
         }
+        /**
+         *  ```
+         *  Sample null
+         *  ```
+         **/
         Sample() {
             return null;
         }
@@ -1859,15 +2066,39 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_plot_graph_sample extends $.$mol_view {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_plot_graph_type <= type
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_plot_graph_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type \solid
+         *  ```
+         **/
         type() {
             return "solid";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	color <= color
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "color": this.color() }));
         }
+        /**
+         *  ```
+         *  color \black
+         *  ```
+         **/
         color() {
             return "black";
         }
@@ -1938,15 +2169,35 @@ var $;
 var $;
 (function ($) {
     class $mol_plugin extends $.$mol_object {
+        /**
+         *  ```
+         *  dom_node null
+         *  ```
+         **/
         dom_node() {
             return null;
         }
+        /**
+         *  ```
+         *  attr_static *
+         *  ```
+         **/
         attr_static() {
             return ({});
         }
+        /**
+         *  ```
+         *  event *
+         *  ```
+         **/
         event() {
             return ({});
         }
+        /**
+         *  ```
+         *  event_async *
+         *  ```
+         **/
         event_async() {
             return ({});
         }
@@ -1996,24 +2247,59 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_meter extends $.$mol_plugin {
+        /**
+         *  ```
+         *  zoom 1
+         *  ```
+         **/
         zoom() {
             return 1;
         }
+        /**
+         *  ```
+         *  width?val 0
+         *  ```
+         **/
         width(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  height?val 0
+         *  ```
+         **/
         height(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  left?val 0
+         *  ```
+         **/
         left(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  right?val 0
+         *  ```
+         **/
         right(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  bottom?val 0
+         *  ```
+         **/
         bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  top?val 0
+         *  ```
+         **/
         top(val, force) {
             return (val !== void 0) ? val : 0;
         }
@@ -2062,6 +2348,7 @@ var $;
                         return { left, top, right, bottom, width, height, zoom: win.devicePixelRatio || 1 };
                     }
                     catch (error) {
+                        // IE11
                     }
                 }
                 const size = $.$mol_window.size();
@@ -2136,81 +2423,226 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_touch extends $.$mol_plugin {
+        /**
+         *  ```
+         *  start_zoom?val 0
+         *  ```
+         **/
         start_zoom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  start_distance?val 0
+         *  ```
+         **/
         start_distance(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  zoom?val 1
+         *  ```
+         **/
         zoom(val, force) {
             return (val !== void 0) ? val : 1;
         }
+        /**
+         *  ```
+         *  start_pan?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         start_pan(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  pan?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         pan(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  pos?val /
+         *  	NaN
+         *  	NaN
+         *  ```
+         **/
         pos(val, force) {
             return (val !== void 0) ? val : [].concat(NaN, NaN);
         }
+        /**
+         *  ```
+         *  start_pos?val null
+         *  ```
+         **/
         start_pos(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_precision 16
+         *  ```
+         **/
         swipe_precision() {
             return 16;
         }
+        /**
+         *  ```
+         *  swipe_right?val null
+         *  ```
+         **/
         swipe_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_bottom?val null
+         *  ```
+         **/
         swipe_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_left?val null
+         *  ```
+         **/
         swipe_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_top?val null
+         *  ```
+         **/
         swipe_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_right?val null
+         *  ```
+         **/
         swipe_from_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_bottom?val null
+         *  ```
+         **/
         swipe_from_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_left?val null
+         *  ```
+         **/
         swipe_from_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_top?val null
+         *  ```
+         **/
         swipe_from_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_right?val null
+         *  ```
+         **/
         swipe_to_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_bottom?val null
+         *  ```
+         **/
         swipe_to_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_left?val null
+         *  ```
+         **/
         swipe_to_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_top?val null
+         *  ```
+         **/
         swipe_to_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	touchstart?event <=> event_start?event
+         *  	touchmove?event <=> event_move?event
+         *  	touchend?event <=> event_end?event
+         *  	mousedown?event <=> event_start?event
+         *  	mousemove?event <=> event_move?event
+         *  	mouseup?event <=> event_end?event
+         *  	mouseleave?event <=> event_leave?event
+         *  	wheel?event <=> event_wheel?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "touchstart": (event) => this.event_start(event), "touchmove": (event) => this.event_move(event), "touchend": (event) => this.event_end(event), "mousedown": (event) => this.event_start(event), "mousemove": (event) => this.event_move(event), "mouseup": (event) => this.event_end(event), "mouseleave": (event) => this.event_leave(event), "wheel": (event) => this.event_wheel(event) }));
         }
+        /**
+         *  ```
+         *  event_start?event null
+         *  ```
+         **/
         event_start(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_move?event null
+         *  ```
+         **/
         event_move(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_end?event null
+         *  ```
+         **/
         event_end(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_leave?event null
+         *  ```
+         **/
         event_leave(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_wheel?event null
+         *  ```
+         **/
         event_wheel(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -2481,33 +2913,89 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_pane extends $.$mol_svg_root {
+        /**
+         *  ```
+         *  aspect \none
+         *  ```
+         **/
         aspect() {
             return "none";
         }
+        /**
+         *  ```
+         *  hue_base?val NaN
+         *  ```
+         **/
         hue_base(val, force) {
             return (val !== void 0) ? val : NaN;
         }
+        /**
+         *  ```
+         *  hue_shift?val 111
+         *  ```
+         **/
         hue_shift(val, force) {
             return (val !== void 0) ? val : 111;
         }
+        /**
+         *  ```
+         *  gap_hor 48
+         *  ```
+         **/
         gap_hor() {
             return 48;
         }
+        /**
+         *  ```
+         *  gap_vert 24
+         *  ```
+         **/
         gap_vert() {
             return 24;
         }
+        /**
+         *  ```
+         *  gap_left <= gap_hor
+         *  ```
+         **/
         gap_left() {
             return this.gap_hor();
         }
+        /**
+         *  ```
+         *  gap_right <= gap_hor
+         *  ```
+         **/
         gap_right() {
             return this.gap_hor();
         }
+        /**
+         *  ```
+         *  gap_top <= gap_vert
+         *  ```
+         **/
         gap_top() {
             return this.gap_vert();
         }
+        /**
+         *  ```
+         *  gap_bottom <= gap_vert
+         *  ```
+         **/
         gap_bottom() {
             return this.gap_vert();
         }
+        /**
+         *  ```
+         *  gap $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		<= gap_left
+         *  		<= gap_right
+         *  	$mol_vector_range /
+         *  		<= gap_bottom
+         *  		<= gap_top
+         *  ```
+         **/
         gap() {
             return ((obj) => {
                 return obj;
@@ -2517,6 +3005,17 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(this.gap_bottom(), this.gap_top()))));
         }
+        /**
+         *  ```
+         *  shift_limit $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		0
+         *  		0
+         *  	$mol_vector_range /
+         *  		0
+         *  		0
+         *  ```
+         **/
         shift_limit() {
             return ((obj) => {
                 return obj;
@@ -2526,12 +3025,37 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(0, 0))));
         }
+        /**
+         *  ```
+         *  shift_default /number
+         *  	0
+         *  	0
+         *  ```
+         **/
         shift_default() {
             return [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  shift?val /number
+         *  	0
+         *  	0
+         *  ```
+         **/
         shift(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  scale_limit $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		0
+         *  		Infinity
+         *  	$mol_vector_range /
+         *  		0
+         *  		Infinity
+         *  ```
+         **/
         scale_limit() {
             return ((obj) => {
                 return obj;
@@ -2541,28 +3065,77 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(0, Infinity))));
         }
+        /**
+         *  ```
+         *  scale_default /number
+         *  	0
+         *  	0
+         *  ```
+         **/
         scale_default() {
             return [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  scale?val /number
+         *  	1
+         *  	1
+         *  ```
+         **/
         scale(val, force) {
             return (val !== void 0) ? val : [].concat(1, 1);
         }
+        /**
+         *  ```
+         *  scale_x?val 0
+         *  ```
+         **/
         scale_x(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scale_y?val 0
+         *  ```
+         **/
         scale_y(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  size $mol_vector_2d /
+         *  	0
+         *  	0
+         *  ```
+         **/
         size() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_2d(0, 0));
         }
+        /**
+         *  ```
+         *  size_real $mol_vector_2d /
+         *  	1
+         *  	1
+         *  ```
+         **/
         size_real() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_2d(1, 1));
         }
+        /**
+         *  ```
+         *  dimensions_viewport $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         dimensions_viewport() {
             return ((obj) => {
                 return obj;
@@ -2572,6 +3145,17 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  dimensions $mol_vector_2d /
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  	$mol_vector_range /
+         *  		Infinity
+         *  		-Infinity
+         *  ```
+         **/
         dimensions() {
             return ((obj) => {
                 return obj;
@@ -2581,26 +3165,65 @@ var $;
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity))));
         }
+        /**
+         *  ```
+         *  sub <= graphs_sorted
+         *  ```
+         **/
         sub() {
             return this.graphs_sorted();
         }
+        /**
+         *  ```
+         *  graphs_sorted /$mol_svg
+         *  ```
+         **/
         graphs_sorted() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  graphs_colored <= graphs_positioned
+         *  ```
+         **/
         graphs_colored() {
             return this.graphs_positioned();
         }
+        /**
+         *  ```
+         *  graphs_positioned <= graphs
+         *  ```
+         **/
         graphs_positioned() {
             return this.graphs();
         }
+        /**
+         *  ```
+         *  graphs /$mol_plot_graph
+         *  ```
+         **/
         graphs() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  cursor_position?val $mol_vector_2d /
+         *  	NaN
+         *  	NaN
+         *  ```
+         **/
         cursor_position(val, force) {
             return (val !== void 0) ? val : ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_2d(NaN, NaN));
         }
+        /**
+         *  ```
+         *  plugins /
+         *  	<= Meter
+         *  	<= Touch
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Meter(), this.Touch());
         }
@@ -2610,11 +3233,26 @@ var $;
         height() {
             return this.Meter().height();
         }
+        /**
+         *  ```
+         *  Meter $mol_meter
+         *  	width => width
+         *  	height => height
+         *  ```
+         **/
         Meter() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_meter());
         }
+        /**
+         *  ```
+         *  Touch $mol_touch
+         *  	zoom?val <=> scale_x?val
+         *  	pan?val <=> shift?val
+         *  	pos?val <=> cursor_position?val
+         *  ```
+         **/
         Touch() {
             return ((obj) => {
                 obj.zoom = (val) => this.scale_x(val);
@@ -2623,9 +3261,21 @@ var $;
                 return obj;
             })(new this.$.$mol_touch());
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	dblclick?event <=> reset?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "dblclick": (event) => this.reset(event) }));
         }
+        /**
+         *  ```
+         *  reset?event null
+         *  ```
+         **/
         reset(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -2856,12 +3506,29 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_path extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \path
+         *  ```
+         **/
         dom_name() {
             return "path";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	d <= geometry
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "d": this.geometry() }));
         }
+        /**
+         *  ```
+         *  geometry \
+         *  ```
+         **/
         geometry() {
             return "";
         }
@@ -2880,27 +3547,64 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_line extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  threshold 4
+         *  ```
+         **/
         threshold() {
             return 4;
         }
+        /**
+         *  ```
+         *  spacing 2
+         *  ```
+         **/
         spacing() {
             return 2;
         }
+        /**
+         *  ```
+         *  color_fill \none
+         *  ```
+         **/
         color_fill() {
             return "none";
         }
+        /**
+         *  ```
+         *  sub / <= Curve
+         *  ```
+         **/
         sub() {
             return [].concat(this.Curve());
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  Sample $mol_plot_graph_sample
+         *  	color <= color
+         *  	type <= type
+         *  ```
+         **/
         Sample() {
             return ((obj) => {
                 obj.color = () => this.color();
@@ -3018,24 +3722,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_bar extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	stroke-width <= stroke_width
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "stroke-width": this.stroke_width() }));
         }
+        /**
+         *  ```
+         *  stroke_width \1rem
+         *  ```
+         **/
         stroke_width() {
             return "1rem";
         }
+        /**
+         *  ```
+         *  sub / <= Curve
+         *  ```
+         **/
         sub() {
             return [].concat(this.Curve());
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  Sample $mol_plot_graph_sample color <= color
+         *  ```
+         **/
         Sample() {
             return ((obj) => {
                 obj.color = () => this.color();
@@ -3169,27 +3905,64 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_dot extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  points_max Infinity
+         *  ```
+         **/
         points_max() {
             return Infinity;
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	stroke-width <= diameter
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "stroke-width": this.diameter() }));
         }
+        /**
+         *  ```
+         *  diameter 8
+         *  ```
+         **/
         diameter() {
             return 8;
         }
+        /**
+         *  ```
+         *  sub / <= Curve
+         *  ```
+         **/
         sub() {
             return [].concat(this.Curve());
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  Sample $mol_plot_graph_sample color <= color
+         *  ```
+         **/
         Sample() {
             return ((obj) => {
                 obj.color = () => this.color();
@@ -3224,6 +3997,7 @@ var $;
             }
             indexes() {
                 const radius = this.diameter() / 2;
+                // calculate by cpu
                 const points_max = this.points_max();
                 const viewport = this.viewport();
                 const viewport_left = viewport.x.min - radius;
@@ -3302,27 +4076,62 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_fill extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  points /readonly[number,number]
+         *  ```
+         **/
         points() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  threshold 4
+         *  ```
+         **/
         threshold() {
             return 4;
         }
+        /**
+         *  ```
+         *  spacing 2
+         *  ```
+         **/
         spacing() {
             return 2;
         }
+        /**
+         *  ```
+         *  sub / <= Curve
+         *  ```
+         **/
         sub() {
             return [].concat(this.Curve());
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  Sample $mol_plot_graph_sample color <= color
+         *  ```
+         **/
         Sample() {
             return ((obj) => {
                 obj.color = () => this.color();
@@ -3441,21 +4250,46 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_group extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  sub <= graphs_enriched
+         *  ```
+         **/
         sub() {
             return this.graphs_enriched();
         }
+        /**
+         *  ```
+         *  graphs_enriched <= graphs
+         *  ```
+         **/
         graphs_enriched() {
             return this.graphs();
         }
+        /**
+         *  ```
+         *  graphs /$mol_plot_graph
+         *  ```
+         **/
         graphs() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Sample $mol_plot_graph_sample sub <= graph_samples
+         *  ```
+         **/
         Sample() {
             return ((obj) => {
                 obj.sub = () => this.graph_samples();
                 return obj;
             })(new this.$.$mol_plot_graph_sample());
         }
+        /**
+         *  ```
+         *  graph_samples /$mol_view
+         *  ```
+         **/
         graph_samples() {
             return [].concat();
         }
@@ -3539,24 +4373,64 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_rect extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \rect
+         *  ```
+         **/
         dom_name() {
             return "rect";
         }
+        /**
+         *  ```
+         *  pos /
+         *  ```
+         **/
         pos() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	width <= width
+         *  	height <= height
+         *  	x <= pos_x
+         *  	y <= pos_y
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "width": this.width(), "height": this.height(), "x": this.pos_x(), "y": this.pos_y() }));
         }
+        /**
+         *  ```
+         *  width \0
+         *  ```
+         **/
         width() {
             return "0";
         }
+        /**
+         *  ```
+         *  height \0
+         *  ```
+         **/
         height() {
             return "0";
         }
+        /**
+         *  ```
+         *  pos_x \
+         *  ```
+         **/
         pos_x() {
             return "";
         }
+        /**
+         *  ```
+         *  pos_y \
+         *  ```
+         **/
         pos_y() {
             return "";
         }
@@ -3587,27 +4461,71 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_text extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \text
+         *  ```
+         **/
         dom_name() {
             return "text";
         }
+        /**
+         *  ```
+         *  pos /
+         *  ```
+         **/
         pos() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	x <= pos_x
+         *  	y <= pos_y
+         *  	text-anchor <= align
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "x": this.pos_x(), "y": this.pos_y(), "text-anchor": this.align() }));
         }
+        /**
+         *  ```
+         *  pos_x \
+         *  ```
+         **/
         pos_x() {
             return "";
         }
+        /**
+         *  ```
+         *  pos_y \
+         *  ```
+         **/
         pos_y() {
             return "";
         }
+        /**
+         *  ```
+         *  align \middle
+         *  ```
+         **/
         align() {
             return "middle";
         }
+        /**
+         *  ```
+         *  sub / <= text
+         *  ```
+         **/
         sub() {
             return [].concat(this.text());
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
@@ -3644,12 +4562,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_svg_text_box extends $.$mol_svg_group {
+        /**
+         *  ```
+         *  font_size 16
+         *  ```
+         **/
         font_size() {
             return 16;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Back
+         *  	<= Text
+         *  ```
+         **/
         sub() {
             return [].concat(this.Back(), this.Text());
         }
+        /**
+         *  ```
+         *  Back $mol_svg_rect
+         *  	width <= box_width
+         *  	height <= box_height
+         *  	pos /
+         *  		<= box_pos_x
+         *  		<= box_pos_y
+         *  ```
+         **/
         Back() {
             return ((obj) => {
                 obj.width = () => this.box_width();
@@ -3658,18 +4598,48 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_rect());
         }
+        /**
+         *  ```
+         *  box_width \0.5rem
+         *  ```
+         **/
         box_width() {
             return "0.5rem";
         }
+        /**
+         *  ```
+         *  box_height \1rem
+         *  ```
+         **/
         box_height() {
             return "1rem";
         }
+        /**
+         *  ```
+         *  box_pos_x <= pos_x
+         *  ```
+         **/
         box_pos_x() {
             return this.pos_x();
         }
+        /**
+         *  ```
+         *  box_pos_y \0
+         *  ```
+         **/
         box_pos_y() {
             return "0";
         }
+        /**
+         *  ```
+         *  Text $mol_svg_text
+         *  	pos /
+         *  		<= pos_x
+         *  		<= pos_y
+         *  	align <= align
+         *  	sub / <= text
+         *  ```
+         **/
         Text() {
             return ((obj) => {
                 obj.pos = () => [].concat(this.pos_x(), this.pos_y());
@@ -3678,15 +4648,35 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_text());
         }
+        /**
+         *  ```
+         *  pos_x \0
+         *  ```
+         **/
         pos_x() {
             return "0";
         }
+        /**
+         *  ```
+         *  pos_y \100%
+         *  ```
+         **/
         pos_y() {
             return "100%";
         }
+        /**
+         *  ```
+         *  align \start
+         *  ```
+         **/
         align() {
             return "start";
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
@@ -3763,40 +4753,107 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_plot_ruler extends $.$mol_plot_graph {
+        /**
+         *  ```
+         *  step 0
+         *  ```
+         **/
         step() {
             return 0;
         }
+        /**
+         *  ```
+         *  scale_axis 1
+         *  ```
+         **/
         scale_axis() {
             return 1;
         }
+        /**
+         *  ```
+         *  scale_step 1
+         *  ```
+         **/
         scale_step() {
             return 1;
         }
+        /**
+         *  ```
+         *  shift_axis 1
+         *  ```
+         **/
         shift_axis() {
             return 1;
         }
+        /**
+         *  ```
+         *  dimensions_axis $mol_vector_range /
+         *  	Infinity
+         *  	-Infinity
+         *  ```
+         **/
         dimensions_axis() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity));
         }
+        /**
+         *  ```
+         *  viewport_axis $mol_vector_range /
+         *  	Infinity
+         *  	-Infinity
+         *  ```
+         **/
         viewport_axis() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_vector_range(Infinity, -Infinity));
         }
+        /**
+         *  ```
+         *  axis_points /number
+         *  ```
+         **/
         axis_points() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  normalize?val 0
+         *  ```
+         **/
         normalize(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  precision 1
+         *  ```
+         **/
         precision() {
             return 1;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Background
+         *  	<= Curve
+         *  	<= labels_formatted
+         *  	<= Title
+         *  ```
+         **/
         sub() {
             return [].concat(this.Background(), this.Curve(), this.labels_formatted(), this.Title());
         }
+        /**
+         *  ```
+         *  Background $mol_svg_rect
+         *  	pos_x <= background_x
+         *  	pos_y <= background_y
+         *  	width <= background_width
+         *  	height <= background_height
+         *  ```
+         **/
         Background() {
             return ((obj) => {
                 obj.pos_x = () => this.background_x();
@@ -3806,30 +4863,74 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_rect());
         }
+        /**
+         *  ```
+         *  background_x \0
+         *  ```
+         **/
         background_x() {
             return "0";
         }
+        /**
+         *  ```
+         *  background_y \0
+         *  ```
+         **/
         background_y() {
             return "0";
         }
+        /**
+         *  ```
+         *  background_width \100%
+         *  ```
+         **/
         background_width() {
             return "100%";
         }
+        /**
+         *  ```
+         *  background_height \14
+         *  ```
+         **/
         background_height() {
             return "14";
         }
+        /**
+         *  ```
+         *  Curve $mol_svg_path geometry <= curve
+         *  ```
+         **/
         Curve() {
             return ((obj) => {
                 obj.geometry = () => this.curve();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  curve \
+         *  ```
+         **/
         curve() {
             return "";
         }
+        /**
+         *  ```
+         *  labels_formatted /
+         *  ```
+         **/
         labels_formatted() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Title $mol_svg_text_box
+         *  	pos_x <= title_pos_x
+         *  	pos_y <= title_pos_y
+         *  	align <= title_align
+         *  	text <= title
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.pos_x = () => this.title_pos_x();
@@ -3839,15 +4940,38 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_text_box());
         }
+        /**
+         *  ```
+         *  title_pos_x \0
+         *  ```
+         **/
         title_pos_x() {
             return "0";
         }
+        /**
+         *  ```
+         *  title_pos_y \100%
+         *  ```
+         **/
         title_pos_y() {
             return "100%";
         }
+        /**
+         *  ```
+         *  title_align \start
+         *  ```
+         **/
         title_align() {
             return "start";
         }
+        /**
+         *  ```
+         *  Label!index $mol_svg_text
+         *  	pos <= label_pos!index
+         *  	text <= label_text!index
+         *  	align <= label_align
+         *  ```
+         **/
         Label(index) {
             return ((obj) => {
                 obj.pos = () => this.label_pos(index);
@@ -3856,18 +4980,45 @@ var $;
                 return obj;
             })(new this.$.$mol_svg_text());
         }
+        /**
+         *  ```
+         *  label_pos!index /
+         *  	<= label_pos_x!index
+         *  	<= label_pos_y!index
+         *  ```
+         **/
         label_pos(index) {
             return [].concat(this.label_pos_x(index), this.label_pos_y(index));
         }
+        /**
+         *  ```
+         *  label_pos_x!index \
+         *  ```
+         **/
         label_pos_x(index) {
             return "";
         }
+        /**
+         *  ```
+         *  label_pos_y!index \
+         *  ```
+         **/
         label_pos_y(index) {
             return "";
         }
+        /**
+         *  ```
+         *  label_text!index \
+         *  ```
+         **/
         label_text(index) {
             return "";
         }
+        /**
+         *  ```
+         *  label_align \
+         *  ```
+         **/
         label_align() {
             return "";
         }
@@ -3991,21 +5142,51 @@ var $;
 var $;
 (function ($) {
     class $mol_plot_ruler_vert extends $.$mol_plot_ruler {
+        /**
+         *  ```
+         *  title_align \end
+         *  ```
+         **/
         title_align() {
             return "end";
         }
+        /**
+         *  ```
+         *  label_align \end
+         *  ```
+         **/
         label_align() {
             return "end";
         }
+        /**
+         *  ```
+         *  title_pos_y \14
+         *  ```
+         **/
         title_pos_y() {
             return "14";
         }
+        /**
+         *  ```
+         *  label_pos_x!v <= title_pos_x
+         *  ```
+         **/
         label_pos_x(v) {
             return this.title_pos_x();
         }
+        /**
+         *  ```
+         *  background_height \100%
+         *  ```
+         **/
         background_height() {
             return "100%";
         }
+        /**
+         *  ```
+         *  background_width <= title_pos_x
+         *  ```
+         **/
         background_width() {
             return this.title_pos_x();
         }
@@ -4059,21 +5240,51 @@ var $;
 var $;
 (function ($) {
     class $mol_plot_ruler_hor extends $.$mol_plot_ruler {
+        /**
+         *  ```
+         *  title_align \start
+         *  ```
+         **/
         title_align() {
             return "start";
         }
+        /**
+         *  ```
+         *  label_align \middle
+         *  ```
+         **/
         label_align() {
             return "middle";
         }
+        /**
+         *  ```
+         *  title_pos_x \0
+         *  ```
+         **/
         title_pos_x() {
             return "0";
         }
+        /**
+         *  ```
+         *  title_pos_y \100%
+         *  ```
+         **/
         title_pos_y() {
             return "100%";
         }
+        /**
+         *  ```
+         *  label_pos_y!v <= title_pos_y
+         *  ```
+         **/
         label_pos_y(v) {
             return this.title_pos_y();
         }
+        /**
+         *  ```
+         *  background_width \100%
+         *  ```
+         **/
         background_width() {
             return "100%";
         }
