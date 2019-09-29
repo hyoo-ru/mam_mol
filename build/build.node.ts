@@ -271,7 +271,7 @@ namespace $ {
 						
 					} else {
 						
-						console.error( $node.chalk.red( diagnostic.messageText ) )
+						console.error( $node.colorette.red( diagnostic.messageText ) )
 
 					}
 					
@@ -417,7 +417,7 @@ namespace $ {
 						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
 						process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
 					} catch( error ) {
-						console.error( $node.chalk.red( error.message ) )
+						console.error( $node.colorette.red( error.message ) )
 					}
 				}
 				return false
@@ -624,8 +624,8 @@ namespace $ {
 		}
 		
 		logBundle( target : $mol_file , duration : number ) {
-			const path = $node.chalk.green( target.relate( this.root() ) )
-			const time = $node.chalk.cyan( `${ duration.toString().padStart( 5 ) }ms` )
+			const path = $node.colorette.green( target.relate( this.root() ) )
+			const time = $node.colorette.cyan( `${ duration.toString().padStart( 5 ) }ms` )
 			console.log( `Built in ${ time }: ${ path }` )
 		}
 		
@@ -857,7 +857,7 @@ namespace $ {
 			try {
 				$mol_atom_fence( ()=> json = target.exists() && JSON.parse( target.content().toString() ) )
 			} catch( error ) {
-				console.error( $node.chalk.yellow( error ) )
+				console.error( $node.colorette.yellow( error ) )
 			}
 
 			if( !json ) json = {
@@ -1017,7 +1017,7 @@ namespace $ {
 					
 					for( let key in locale ) {
 						if( key in locales[ 'en' ] ) continue
-						console.warn( $node.chalk.yellow( `Not translated to "en": ${ $node.chalk.cyan( key ) }` ) )
+						console.warn( $node.colorette.yellow( `Not translated to "en": ${ $node.colorette.cyan( key ) }` ) )
 					}
 
 				}
