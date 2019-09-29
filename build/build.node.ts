@@ -165,12 +165,14 @@ namespace $ {
 					
 					for( let file of files ) {
 						if( file === this.root() ) continue
+
+							const from = src.relate( this.root() )
+							if(!( from in graph.nodes )) continue
 						
-							graph.link(
-								src.relate( this.root() ) ,
-								file.relate( this.root() ) ,
-								{ priority : deps[ p ] }
-							)
+							const to = file.relate( this.root() )
+							if(!( to in graph.nodes )) continue
+						
+							graph.link( from , to , { priority : deps[ p ] } )
 						}
 					
 				}
@@ -186,14 +188,15 @@ namespace $ {
 		sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const sortedPaths = this.graph( { path , exclude } ).sorted
 			
-			let sources : $mol_file[] = []
+			const sources = new Set< $mol_file >()
 			sortedPaths.forEach( path => {
-				this.sourcesSorted( { path : this.root().resolve( path ).path() , exclude } ).forEach( src => {
-					if( sources.indexOf( src ) === -1 ) sources.push( src )
+				const mod = this.root().resolve( path )
+				this.sourcesSorted( { path : mod.path() , exclude } ).forEach( src => {
+					sources.add( src )
 				} )
 			} )
 			
-			return sources
+			return [ ... sources ]
 		}
 		
 		@ $mol_mem
@@ -1030,6 +1033,15 @@ namespace $ {
 			
 			var list = this.sourcesAll( { path , exclude } )
 			if( !list.length ) return []
+
+			var origs = list.filter( src => !/\/-/.test( src.path() ) )
+			
+			var sloc = {} as Record< string , number >
+			for( const src of origs ) {
+				const ext = src.name().replace( /^.*\./ , '' )
+				const count = src.content().toString().trim().split( /[\n\r]\s*/ ).length
+				sloc[ ext ] = ( sloc[ ext ] || 0 ) + count
+			}
 			
 			var graph = this.graph( { path , exclude } )
 			
@@ -1042,6 +1054,7 @@ namespace $ {
 				files : list.map( src => src.relate( this.root() ) ) ,
 				edgesIn : graph.edgesIn ,
 				edgesOut : graph.edgesOut ,
+				sloc ,
 				deps
 			}
 			
@@ -1170,7 +1183,7 @@ namespace $ {
 		} )
 		
 		tree.select( 'include' ).sub.forEach( leaf => {
-			depends[ leaf.value ] = Number.MIN_SAFE_INTEGER
+			depends[ leaf.value ] = -9000
 		} )
 		
 		return depends

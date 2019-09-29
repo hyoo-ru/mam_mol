@@ -2720,7 +2720,13 @@ var $;
                     for (let file of files) {
                         if (file === this.root())
                             continue;
-                        graph.link(src.relate(this.root()), file.relate(this.root()), { priority: deps[p] });
+                        const from = src.relate(this.root());
+                        if (!(from in graph.nodes))
+                            continue;
+                        const to = file.relate(this.root());
+                        if (!(to in graph.nodes))
+                            continue;
+                        graph.link(from, to, { priority: deps[p] });
                     }
                 }
             }
@@ -2730,14 +2736,14 @@ var $;
         }
         sourcesAll({ path, exclude }) {
             const sortedPaths = this.graph({ path, exclude }).sorted;
-            let sources = [];
+            const sources = new Set();
             sortedPaths.forEach(path => {
-                this.sourcesSorted({ path: this.root().resolve(path).path(), exclude }).forEach(src => {
-                    if (sources.indexOf(src) === -1)
-                        sources.push(src);
+                const mod = this.root().resolve(path);
+                this.sourcesSorted({ path: mod.path(), exclude }).forEach(src => {
+                    sources.add(src);
                 });
             });
-            return sources;
+            return [...sources];
         }
         tsOptions() {
             const rawOptions = JSON.parse(this.root().resolve('tsconfig.json').content() + '').compilerOptions;
@@ -3341,6 +3347,13 @@ var $;
             var list = this.sourcesAll({ path, exclude });
             if (!list.length)
                 return [];
+            var origs = list.filter(src => !/\/-/.test(src.path()));
+            var sloc = {};
+            for (const src of origs) {
+                const ext = src.name().replace(/^.*\./, '');
+                const count = src.content().toString().trim().split(/[\n\r]\s*/).length;
+                sloc[ext] = (sloc[ext] || 0) + count;
+            }
             var graph = this.graph({ path, exclude });
             var deps = {};
             for (let dep in graph.nodes) {
@@ -3350,6 +3363,7 @@ var $;
                 files: list.map(src => src.relate(this.root())),
                 edgesIn: graph.edgesIn,
                 edgesOut: graph.edgesOut,
+                sloc,
                 deps
             };
             var target = pack.resolve(`-/${bundle}.deps.json`);
@@ -3538,7 +3552,7 @@ var $;
             depends[leaf.value] = 0;
         });
         tree.select('include').sub.forEach(leaf => {
-            depends[leaf.value] = Number.MIN_SAFE_INTEGER;
+            depends[leaf.value] = -9000;
         });
         return depends;
     };
