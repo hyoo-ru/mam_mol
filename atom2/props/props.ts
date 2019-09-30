@@ -1,22 +1,22 @@
 namespace $ {
 
 	export function $mol_atom2_props< Host , Key , Value >(
-		obj? : Host ,
-		name? : string ,
-		descr? : TypedPropertyDescriptor< ( key : Key , next? : Value )=> Value >
+		obj : Host ,
+		name : string ,
+		descr : TypedPropertyDescriptor< ( key : Key , next? : Value )=> Value >
 	) {
 
-		const value = descr.value
+		const value = descr.value!
 		const store = new WeakMap< Object , { [ key : string ] : $mol_atom2<Value> } >()
 		
-		descr.value = function $mol_atom2_props_value( key : Key , next? : Value , force? : $mol_atom_force ) {
+		descr.value = function $mol_atom2_props_value( this : Host , key : Key , next? : Value , force? : $mol_atom_force ) {
 			
 			if(force)console.warn('force')
 
 			const host : Host = this
 			const key_str = JSON.stringify( key ) || ''
 		
-			let dict = store.get( host )
+			let dict = store.get( host )!
 			if( !dict ) store.set( host , dict = {} )
 			
 			let atom : $mol_atom2<Value> = dict[ key_str ]
@@ -26,7 +26,7 @@ namespace $ {
 				atom[ Symbol.toStringTag ] = `${ host }.${ name }(${key_str})`
 				atom.calculate = value.bind( host , key )
 				atom.abort = ()=> {
-					dict[ key_str ] = null
+					dict[ key_str ] = null as any
 					atom.forget()
 					return true
 				}
