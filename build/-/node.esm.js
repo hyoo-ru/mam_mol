@@ -2542,8 +2542,8 @@ var $;
                 const mergedLine = [];
                 for (let segment of line) {
                     const mergedSegment = [segment[0]]; // generatedColumn
-                    if (segment.length > 1) {
-                        const [, sourceIndex] = segment;
+                    if (segment.length >= 2) {
+                        const sourceIndex = segment[1];
                         const source = bundleSourceRoot + sourceRoot + raw.sources[sourceIndex];
                         let mergedSourceIndex = source_indexes.get(source);
                         if (mergedSourceIndex === undefined) {
@@ -2555,11 +2555,11 @@ var $;
                         }
                         mergedSegment.push(mergedSourceIndex);
                     }
-                    if (segment.length > 2)
+                    if (segment.length >= 3)
                         mergedSegment.push(segment[2]); // originalLine
-                    if (segment.length > 3)
+                    if (segment.length >= 4)
                         mergedSegment.push(segment[3]); // originalColumn
-                    if (segment.length > 4) {
+                    if (segment.length >= 5) {
                         const nameIndex = segment[4];
                         const name = raw.names[nameIndex];
                         let mergedNameIndex = name_indexes.get(name);
