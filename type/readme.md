@@ -37,3 +37,4 @@ type first_of_tuple = Assert<
 
 - [`piotrwitek/utility-types`](https://github.com/piotrwitek/utility-types) - Collection of utility types, complementing TypeScript built-in mapped types and aliases (think "lodash" for static types).
 - [`pirix-gh/ts-toolbelt`](https://github.com/pirix-gh/ts-toolbelt) - All the types you need for TypeScript.
+- [`ksxnodemodules/typescript-tuple`](https://github.com/ksxnodemodules/typescript-tuple) - Generics to work with tuples in TypeScript 
