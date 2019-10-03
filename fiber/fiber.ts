@@ -448,13 +448,13 @@ namespace $ {
 
 	}
 
-	export let $mol_fiber_token_runned = new $mol_dev_format_token( ' ► ' )
-	export let $mol_fiber_token_changed1 = new $mol_dev_format_token( ' ˸ ' )
-	export let $mol_fiber_token_changed2 = new $mol_dev_format_token( ' 🠈 ' )
-	export let $mol_fiber_token_actualized = new $mol_dev_format_token( ' ✓ ' )
-	export let $mol_fiber_token_sleeped = new $mol_dev_format_token( ' 💤 ' )
-	export let $mol_fiber_token_failed = new $mol_dev_format_token( ' 🔥 ' )
-	export let $mol_fiber_token_destructed = new $mol_dev_format_token( ' 🕱 ' )
+	export let $mol_fiber_token_runned = new $mol_log2_token( ' ► ' )
+	export let $mol_fiber_token_changed1 = new $mol_log2_token( ' ˸ ' )
+	export let $mol_fiber_token_changed2 = new $mol_log2_token( ' 🠈 ' )
+	export let $mol_fiber_token_actualized = new $mol_log2_token( ' ✓ ' )
+	export let $mol_fiber_token_sleeped = new $mol_log2_token( ' 💤 ' )
+	export let $mol_fiber_token_failed = new $mol_log2_token( ' 🔥 ' )
+	export let $mol_fiber_token_destructed = new $mol_log2_token( ' 🕱 ' )
 
 	$mol_log2_legend.info( $mol_fiber_token_runned , '$mol_fiber starts execution' )
 	$mol_log2_legend.info( new $mol_log2_line( $mol_fiber_token_changed1 , $mol_fiber_token_changed2 ) , '$mol_fiber value is changed to different value' )

@@ -268,13 +268,13 @@ namespace $ {
 		
 	}
 
-	export let $mol_atom2_token_revalidation = new $mol_dev_format_token( ' ⏭ ' )
-	export let $mol_atom2_token_stumbled = new $mol_dev_format_token( ' ⏯ ' )
-	export let $mol_atom2_token_revalidated = new $mol_dev_format_token( ' ✔ ' )
-	export let $mol_atom2_token_leaded = new $mol_dev_format_token( ' ☍ ' )
-	export let $mol_atom2_token_disleaded = new $mol_dev_format_token( ' ☌ ' )
-	export let $mol_atom2_token_obsoleted = new $mol_dev_format_token( ' ✘ ' )
-	export let $mol_atom2_token_doubted = new $mol_dev_format_token( ' � ' )
+	export let $mol_atom2_token_revalidation = new $mol_log2_token( ' ⏭ ' )
+	export let $mol_atom2_token_stumbled = new $mol_log2_token( ' ⏯ ' )
+	export let $mol_atom2_token_revalidated = new $mol_log2_token( ' ✔ ' )
+	export let $mol_atom2_token_leaded = new $mol_log2_token( ' ☍ ' )
+	export let $mol_atom2_token_disleaded = new $mol_log2_token( ' ☌ ' )
+	export let $mol_atom2_token_obsoleted = new $mol_log2_token( ' ✘ ' )
+	export let $mol_atom2_token_doubted = new $mol_log2_token( ' � ' )
 
 	$mol_log2_legend.info( $mol_atom2_token_revalidation , '$mol_atom2 starts masters cheking for changes' )
 	$mol_log2_legend.info( $mol_atom2_token_stumbled , '$mol_atom2 is obsoleted while masters checking' )

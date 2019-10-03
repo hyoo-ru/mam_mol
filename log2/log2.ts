@@ -130,7 +130,20 @@ namespace $ {
 
 	}
 
-	export let $mol_log2_token_empty = new $mol_dev_format_token( '' )
+	@ $mol_class
+	export class $mol_log2_token extends Array<any> {
+
+		constructor( ... items : any[] ) {
+			super( ... items )
+		}
+
+		[ $mol_dev_format_head ]() {
+			return $mol_dev_format_accent( ... this )
+		}
+
+	}
+
+	export let $mol_log2_token_empty = new $mol_log2_token( '' )
 
 	export let $mol_log2_legend = new $mol_log2_table( '$mol_log2_legend' , [] )
 

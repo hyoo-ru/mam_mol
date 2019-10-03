@@ -39,19 +39,6 @@ namespace $ {
 
 	})
 
-	@ $mol_class
-	export class $mol_dev_format_token extends Array<any> {
-
-		constructor( ... items : any[] ) {
-			super( ... items )
-		}
-
-		[ $mol_dev_format_head ]() {
-			return $mol_dev_format_accent( ... this )
-		}
-
-	}
-
 	export function $mol_dev_format_native( obj : any ) {
 		
 		if( typeof obj === 'undefined' ) return $mol_dev_format_shade( 'undefined' )
