@@ -83,7 +83,7 @@ namespace $ {
 		 * 
 		 * Exclude all atom logs:
 		 * 
-		 * 	$mol_log2.excludes = [ , /🠈|⏭|⏯|►|💤|☍|☌|✔|✘|🕱|�/ ]
+		 * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
 		 * 
 		 * Disable logs:
 		 * 

@@ -247,7 +247,7 @@ namespace $ {
 			
 			if( !$mol_compare_any( this.value , value ) ) {
 		
-				this.$.$mol_log2.info( this , $mol_fiber_token_changed , this.value )
+				this.$.$mol_log2.info( this , $mol_fiber_token_changed1 , value , $mol_fiber_token_changed2 , this.value )
 				
 				this.obsolete_slaves()
 				
@@ -440,22 +440,24 @@ namespace $ {
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_span( {} ,
 				$mol_dev_format_native( this ) ,
-				$mol_dev_format_accent( ' ˸ ' ) ,
+				$mol_dev_format_accent( '❨' ) ,
 				$mol_dev_format_auto( this.error || this.value ) ,
+				$mol_dev_format_accent( '❩' ) ,
 			)
 		}
 
 	}
 
 	export let $mol_fiber_token_runned = new $mol_dev_format_token( ' ► ' )
-	export let $mol_fiber_token_changed = new $mol_dev_format_token( ' 🠈 ' )
+	export let $mol_fiber_token_changed1 = new $mol_dev_format_token( ' ˸ ' )
+	export let $mol_fiber_token_changed2 = new $mol_dev_format_token( ' 🠈 ' )
 	export let $mol_fiber_token_actualized = new $mol_dev_format_token( ' ✓ ' )
 	export let $mol_fiber_token_sleeped = new $mol_dev_format_token( ' 💤 ' )
 	export let $mol_fiber_token_failed = new $mol_dev_format_token( ' 🔥 ' )
 	export let $mol_fiber_token_destructed = new $mol_dev_format_token( ' 🕱 ' )
 
 	$mol_log2_legend.info( $mol_fiber_token_runned , '$mol_fiber starts execution' )
-	$mol_log2_legend.info( $mol_fiber_token_changed , '$mol_fiber value is changed to different value' )
+	$mol_log2_legend.info( new $mol_log2_line( $mol_fiber_token_changed1 , $mol_fiber_token_changed2 ) , '$mol_fiber value is changed to different value' )
 	$mol_log2_legend.info( $mol_fiber_token_actualized , 'Actual $mol_fiber value is same as before' )
 	$mol_log2_legend.info( $mol_fiber_token_sleeped , '$mol_fiber can not run now and awaits on promise' )
 	$mol_log2_legend.info( $mol_fiber_token_failed , '$mol_fiber is failed and will be throw an Error or Promise' )
