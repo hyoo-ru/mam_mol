@@ -39,6 +39,96 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_dev_format_register(config: {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => false;
+    } | {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => boolean;
+        body: (val: any, config: any) => any;
+    }): void;
+    let $mol_dev_format_head: symbol;
+    let $mol_dev_format_body: symbol;
+    function $mol_dev_format_native(obj: any): any;
+    function $mol_dev_format_auto(obj: any): any;
+    function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
+    let $mol_dev_format_div: any;
+    let $mol_dev_format_span: any;
+    let $mol_dev_format_ol: any;
+    let $mol_dev_format_li: any;
+    let $mol_dev_format_table: any;
+    let $mol_dev_format_tr: any;
+    let $mol_dev_format_td: any;
+    let $mol_dev_format_accent: any;
+    let $mol_dev_format_strong: any;
+    let $mol_dev_format_string: any;
+    let $mol_dev_format_shade: any;
+    let $mol_dev_format_indent: any;
+}
+
+declare namespace $ {
+    function $mol_log(path: any, ...values: any[]): void;
+}
+
+declare namespace $ {
+    function $mol_log_context(next?: () => void): () => void;
+}
+
+declare namespace $ {
+    function $mol_log_debug(next?: () => void): () => void;
+}
+
+declare namespace $ {
+    var $mol_log_filter: (next?: string) => string;
+}
+
+declare namespace $ {
+    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
+}
+
+declare namespace $ {
+    class $mol_log2 extends $mol_wrapper {
+        readonly args: any[];
+        static current: $mol_log2;
+        static wrap<This extends {
+            $: $mol_ambient_context;
+        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+        constructor(id: string, args: any[]);
+        stream: $mol_log2_line[];
+        flush(): void;
+        info(...values: any[]): void;
+        static info(...values: any[]): void;
+        /**
+         * Enable all logs
+         *
+         * 	$mol_log2.excludes = []
+         *
+         * Exclude all atom logs:
+         *
+         * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
+         *
+         * Disable logs:
+         *
+         * 	$mol_log2.excludes = null
+         */
+        static excludes: RegExp[];
+    }
+    class $mol_log2_table extends $mol_log2 {
+    }
+    class $mol_log2_hidden extends $mol_log2 {
+        flush(): void;
+    }
+    class $mol_log2_line extends Array<any> {
+        constructor(...items: any[]);
+    }
+    class $mol_log2_token extends Array<any> {
+        constructor(...items: any[]);
+    }
+    let $mol_log2_token_empty: $mol_log2_token;
+    let $mol_log2_legend: $mol_log2_table;
+}
+
+declare namespace $ {
     function $mol_fail(error: any): never;
 }
 
@@ -61,26 +151,6 @@ declare namespace $ {
         task: () => void;
         constructor(task: () => void);
     }
-}
-
-declare namespace $ {
-    function $mol_log(path: any, ...values: any[]): void;
-}
-
-declare namespace $ {
-    function $mol_log_context(next?: () => void): () => void;
-}
-
-declare namespace $ {
-    function $mol_log_debug(next?: () => void): () => void;
-}
-
-declare namespace $ {
-    var $mol_log_filter: (next?: string) => string;
-}
-
-declare namespace $ {
-    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
 }
 
 declare namespace $ {
@@ -135,7 +205,7 @@ declare namespace $ {
         schedule(): void;
         wake(): Value;
         push(value: Value): Value;
-        fail(error: Error): Error;
+        fail(error: Error | PromiseLike<Value>): Error | PromiseLike<Value>;
         wait(promise: PromiseLike<Value>): PromiseLike<Value>;
         complete(): void;
         complete_master(master_index: number): void;
@@ -155,6 +225,13 @@ declare namespace $ {
         abort(): boolean;
         destructor(): void;
     }
+    let $mol_fiber_token_runned: $mol_log2_token;
+    let $mol_fiber_token_changed1: $mol_log2_token;
+    let $mol_fiber_token_changed2: $mol_log2_token;
+    let $mol_fiber_token_actualized: $mol_log2_token;
+    let $mol_fiber_token_sleeped: $mol_log2_token;
+    let $mol_fiber_token_failed: $mol_log2_token;
+    let $mol_fiber_token_destructed: $mol_log2_token;
 }
 
 declare namespace $ {

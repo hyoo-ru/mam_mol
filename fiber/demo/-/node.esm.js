@@ -32,7 +32,7 @@ var $;
     function $mol_class(Class) {
         Class[Symbol.toStringTag] = Class.name;
         if (!Class.prototype.hasOwnProperty(Symbol.toStringTag)) {
-            Class.prototype[Symbol.toStringTag] = '<' + Class.name + '>';
+            Class.prototype[Symbol.toStringTag] = Class.name;
         }
         return Class;
     }
@@ -139,53 +139,94 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_fail(error) {
-        throw error;
+    // https://docs.google.com/document/d/1FTascZXT9cxfetuPRT2eXPQKXui4nWFivUnS_335T3U/preview#
+    $['devtoolsFormatters'] = $['devtoolsFormatters'] || [];
+    function $mol_dev_format_register(config) {
+        $['devtoolsFormatters'].push(config);
     }
-    $.$mol_fail = $mol_fail;
-})($ || ($ = {}));
-//fail.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail_hidden(error) {
-        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
+    $.$mol_dev_format_register = $mol_dev_format_register;
+    $.$mol_dev_format_head = Symbol('$mol_dev_format_head');
+    $.$mol_dev_format_body = Symbol('$mol_dev_format_body');
+    $mol_dev_format_register({
+        header: (val, config = false) => {
+            if (config)
+                return null;
+            if (!val)
+                return null;
+            if ($.$mol_dev_format_head in val) {
+                return val[$.$mol_dev_format_head]();
+            }
+            return null;
+        },
+        hasBody: val => val[$.$mol_dev_format_body],
+        body: val => val[$.$mol_dev_format_body](),
+    });
+    function $mol_dev_format_native(obj) {
+        if (typeof obj === 'undefined')
+            return $.$mol_dev_format_shade('undefined');
+        if (typeof obj !== 'object')
+            return obj;
+        return [
+            'object',
+            {
+                object: obj,
+                config: true,
+            },
+        ];
     }
-    $.$mol_fail_hidden = $mol_fail_hidden;
-})($ || ($ = {}));
-//hidden.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_after_timeout extends $.$mol_object2 {
-        constructor(delay, task) {
-            super();
-            this.delay = delay;
-            this.task = task;
-            this.id = setTimeout(task, delay);
+    $.$mol_dev_format_native = $mol_dev_format_native;
+    function $mol_dev_format_auto(obj) {
+        if (obj == null)
+            return $.$mol_dev_format_shade(String(obj));
+        if (typeof obj === 'object' && $.$mol_dev_format_head in obj) {
+            return obj[$.$mol_dev_format_head]();
         }
-        destructor() {
-            clearTimeout(this.id);
-        }
+        return [
+            'object',
+            {
+                object: obj,
+                config: false,
+            },
+        ];
     }
-    $.$mol_after_timeout = $mol_after_timeout;
-})($ || ($ = {}));
-//timeout.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_after_frame extends $.$mol_after_timeout {
-        constructor(task) {
-            super(16, task);
-            this.task = task;
-        }
+    $.$mol_dev_format_auto = $mol_dev_format_auto;
+    function $mol_dev_format_element(element, style, ...content) {
+        const styles = [];
+        for (let key in style)
+            styles.push(`${key} : ${style[key]}`);
+        return [
+            element,
+            {
+                style: styles.join(' ; '),
+            },
+            ...content,
+        ];
     }
-    $.$mol_after_frame = $mol_after_frame;
+    $.$mol_dev_format_element = $mol_dev_format_element;
+    $.$mol_dev_format_div = $mol_dev_format_element.bind(null, 'div');
+    $.$mol_dev_format_span = $mol_dev_format_element.bind(null, 'span');
+    $.$mol_dev_format_ol = $mol_dev_format_element.bind(null, 'ol');
+    $.$mol_dev_format_li = $mol_dev_format_element.bind(null, 'li');
+    $.$mol_dev_format_table = $mol_dev_format_element.bind(null, 'table');
+    $.$mol_dev_format_tr = $mol_dev_format_element.bind(null, 'tr');
+    $.$mol_dev_format_td = $mol_dev_format_element.bind(null, 'td');
+    $.$mol_dev_format_accent = $.$mol_dev_format_span.bind(null, {
+        'color': 'magenta',
+    });
+    $.$mol_dev_format_strong = $.$mol_dev_format_span.bind(null, {
+        'font-weight': 'bold',
+    });
+    $.$mol_dev_format_string = $.$mol_dev_format_span.bind(null, {
+        'color': 'green',
+    });
+    $.$mol_dev_format_shade = $.$mol_dev_format_span.bind(null, {
+        'color': 'gray',
+    });
+    $.$mol_dev_format_indent = $.$mol_dev_format_div.bind(null, {
+        'margin-left': '13px'
+    });
 })($ || ($ = {}));
-//frame.node.js.map
+//format.js.map
 ;
 "use strict";
 var $;
@@ -275,6 +316,186 @@ var $;
     $.$mol_log_group = $mol_log_group;
 })($ || ($ = {}));
 //log_group.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_log2_1;
+    let $mol_log2 = $mol_log2_1 = class $mol_log2 extends $.$mol_wrapper {
+        constructor(id, args) {
+            super();
+            this.args = args;
+            this.stream = [];
+            this[Symbol.toStringTag] = id;
+        }
+        static wrap(task) {
+            const Inner = this;
+            const wrapped = function (...args) {
+                const outer = $mol_log2_1.current;
+                const inner = $mol_log2_1.current = new Inner(`${this || ''}.${task.name}`, args);
+                try {
+                    return task.call(this, ...args);
+                }
+                finally {
+                    $mol_log2_1.current = outer;
+                    inner.flush();
+                }
+            };
+            return wrapped;
+        }
+        flush() {
+            if (this.stream.length === 0)
+                return;
+            console.debug(this);
+        }
+        info(...values) {
+            this.stream.push(new $mol_log2_line(...values));
+        }
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_span({}, $.$mol_dev_format_strong(`${this}`), '(', ...this.args.map($.$mol_dev_format_auto), ') ', $.$mol_dev_format_auto(this.stream));
+        }
+        static info(...values) {
+            const excludes = this.excludes;
+            if (!excludes)
+                return;
+            const skip = excludes.some((regexp, index) => {
+                return regexp && regexp.test(String(values[index])) || false;
+            });
+            if (skip)
+                return;
+            if (!$mol_log2_1.current) {
+                console.warn(new Error(`$mol_log.current is not defined. Wrap entry point to $mol_log!`));
+                $mol_log2_1.current = new $mol_log2_1('$mol_log2_default', []);
+                console.debug($mol_log2_1.current);
+            }
+            $mol_log2_1.current.info(...values);
+        }
+    };
+    $mol_log2.current = null;
+    /**
+     * Enable all logs
+     *
+     * 	$mol_log2.excludes = []
+     *
+     * Exclude all atom logs:
+     *
+     * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
+     *
+     * Disable logs:
+     *
+     * 	$mol_log2.excludes = null
+     */
+    $mol_log2.excludes = null;
+    $mol_log2 = $mol_log2_1 = __decorate([
+        $.$mol_class
+    ], $mol_log2);
+    $.$mol_log2 = $mol_log2;
+    let $mol_log2_table = class $mol_log2_table extends $mol_log2 {
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_span({}, $.$mol_dev_format_strong(`${this}(`), ...this.args.map($.$mol_dev_format_auto), $.$mol_dev_format_strong(`) `));
+        }
+        [$.$mol_dev_format_body]() {
+            return $.$mol_dev_format_table({}, ...this.stream.map($.$mol_dev_format_auto));
+        }
+    };
+    $mol_log2_table = __decorate([
+        $.$mol_class
+    ], $mol_log2_table);
+    $.$mol_log2_table = $mol_log2_table;
+    let $mol_log2_hidden = class $mol_log2_hidden extends $mol_log2 {
+        flush() { }
+    };
+    $mol_log2_hidden = __decorate([
+        $.$mol_class
+    ], $mol_log2_hidden);
+    $.$mol_log2_hidden = $mol_log2_hidden;
+    let $mol_log2_line = class $mol_log2_line extends Array {
+        constructor(...items) {
+            super(...items);
+        }
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_tr({}, ...this.map(item => $.$mol_dev_format_td({}, $.$mol_dev_format_auto(item))));
+        }
+    };
+    $mol_log2_line = __decorate([
+        $.$mol_class
+    ], $mol_log2_line);
+    $.$mol_log2_line = $mol_log2_line;
+    let $mol_log2_token = class $mol_log2_token extends Array {
+        constructor(...items) {
+            super(...items);
+        }
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_accent(...this);
+        }
+    };
+    $mol_log2_token = __decorate([
+        $.$mol_class
+    ], $mol_log2_token);
+    $.$mol_log2_token = $mol_log2_token;
+    $.$mol_log2_token_empty = new $mol_log2_token('');
+    $.$mol_log2_legend = new $mol_log2_table('$mol_log2_legend', []);
+    if (!$mol_log2.excludes)
+        $.$mol_log2_legend.info($.$mol_log2_token_empty, 'Use `$mol_log2.excludes : null | RegExp[]` to toggle logs');
+})($ || ($ = {}));
+//log2.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail(error) {
+        throw error;
+    }
+    $.$mol_fail = $mol_fail;
+})($ || ($ = {}));
+//fail.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_hidden(error) {
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
+    }
+    $.$mol_fail_hidden = $mol_fail_hidden;
+})($ || ($ = {}));
+//hidden.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_after_timeout extends $.$mol_object2 {
+        constructor(delay, task) {
+            super();
+            this.delay = delay;
+            this.task = task;
+            this.id = setTimeout(task, delay);
+        }
+        destructor() {
+            clearTimeout(this.id);
+        }
+    }
+    $.$mol_after_timeout = $mol_after_timeout;
+})($ || ($ = {}));
+//timeout.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_after_frame extends $.$mol_after_timeout {
+        constructor(task) {
+            super(16, task);
+            this.task = task;
+        }
+    }
+    $.$mol_after_frame = $mol_after_frame;
+})($ || ($ = {}));
+//frame.node.js.map
 ;
 "use strict";
 var $;
@@ -444,7 +665,7 @@ var $;
             if (!master || master.constructor !== $mol_fiber) {
                 master = new $mol_fiber;
                 master.cursor = -3 /* persist */;
-                master.error = request.call(this, ...args).then(res => master.push(res), err => master.fail(err));
+                master.error = request.call(this, ...args).then($.$mol_log2.func(master.push).bind(master), $.$mol_log2.func(master.fail).bind(master));
                 const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
                 master[Symbol.toStringTag] = prefix + (request.name || $mol_fiber_sync.name);
             }
@@ -505,7 +726,7 @@ var $;
                 }
             }
             Object.defineProperty(wrapped, 'name', {
-                value: `${task.name || '<anonymous>'}|${this.name}`
+                value: `${task.name || ''}|${this.name}`
             });
             return $mol_fiber.func(wrapped);
         }
@@ -557,10 +778,9 @@ var $;
             return promise;
         }
         schedule() {
-            $mol_fiber_1.schedule().then($.$mol_log_group('$mol_fiber_scheduled', this.wake.bind(this)));
+            $mol_fiber_1.schedule().then(() => this.wake());
         }
         wake() {
-            this.$.$mol_log(this, '⏰');
             try {
                 if (this.cursor > -2 /* actual */)
                     return this.get();
@@ -574,12 +794,12 @@ var $;
         push(value) {
             value = this.$.$mol_conform(value, this.value);
             if (!$.$mol_compare_any(this.value, value)) {
-                this.$.$mol_log(this, value, '🠈', this.value);
+                this.$.$mol_log2.info(this, $.$mol_fiber_token_changed1, value, $.$mol_fiber_token_changed2, this.value);
                 this.obsolete_slaves();
                 this.forget();
             }
             else {
-                this.$.$mol_log(this, '✔', value);
+                this.$.$mol_log2.info(this, $.$mol_fiber_token_actualized);
                 if (this.error)
                     this.obsolete_slaves();
             }
@@ -590,14 +810,14 @@ var $;
         }
         fail(error) {
             this.complete();
+            this.$.$mol_log2.info(this, $.$mol_fiber_token_failed);
             this.error = error;
-            this.$.$mol_log(this, '🔥', error.message);
             this.obsolete_slaves();
             return error;
         }
         wait(promise) {
             this.error = promise;
-            this.$.$mol_log(this, '💤');
+            this.$.$mol_log2.info(this, $.$mol_fiber_token_sleeped);
             this.cursor = 0 /* obsolete */;
             return promise;
         }
@@ -621,13 +841,13 @@ var $;
                 this.error = null;
                 this.limit();
                 $mol_fiber_1.current = this;
-                this.$.$mol_log(this, '►');
+                this.$.$mol_log2.info(this, $.$mol_fiber_token_runned);
                 this.pull();
             }
             catch (error) {
                 if ('then' in error) {
                     if (!slave) {
-                        const listener = this.wake.bind(this);
+                        const listener = () => this.wake();
                         error = error.then(listener, listener);
                     }
                     this.wait(error);
@@ -709,8 +929,11 @@ var $;
         destructor() {
             if (!this.abort())
                 return;
-            this.$.$mol_log(this, '🕱', this.value);
+            this.$.$mol_log2.info(this, $.$mol_fiber_token_destructed);
             this.complete();
+        }
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_span({}, $.$mol_dev_format_native(this), $.$mol_dev_format_accent('❨'), $.$mol_dev_format_auto(this.error || this.value), $.$mol_dev_format_accent('❩'));
         }
     };
     $mol_fiber.quant = 32;
@@ -718,10 +941,26 @@ var $;
     $mol_fiber.current = null;
     $mol_fiber.scheduled = null;
     $mol_fiber.queue = [];
+    __decorate([
+        $.$mol_log2.method
+    ], $mol_fiber.prototype, "wake", null);
     $mol_fiber = $mol_fiber_1 = __decorate([
         $.$mol_class
     ], $mol_fiber);
     $.$mol_fiber = $mol_fiber;
+    $.$mol_fiber_token_runned = new $.$mol_log2_token(' ► ');
+    $.$mol_fiber_token_changed1 = new $.$mol_log2_token(' ˸ ');
+    $.$mol_fiber_token_changed2 = new $.$mol_log2_token(' 🠈 ');
+    $.$mol_fiber_token_actualized = new $.$mol_log2_token(' ✓ ');
+    $.$mol_fiber_token_sleeped = new $.$mol_log2_token(' 💤 ');
+    $.$mol_fiber_token_failed = new $.$mol_log2_token(' 🔥 ');
+    $.$mol_fiber_token_destructed = new $.$mol_log2_token(' 🕱 ');
+    $.$mol_log2_legend.info($.$mol_fiber_token_runned, '$mol_fiber starts execution');
+    $.$mol_log2_legend.info(new $.$mol_log2_line($.$mol_fiber_token_changed1, $.$mol_fiber_token_changed2), '$mol_fiber value is changed to different value');
+    $.$mol_log2_legend.info($.$mol_fiber_token_actualized, 'Actual $mol_fiber value is same as before');
+    $.$mol_log2_legend.info($.$mol_fiber_token_sleeped, '$mol_fiber can not run now and awaits on promise');
+    $.$mol_log2_legend.info($.$mol_fiber_token_failed, '$mol_fiber is failed and will be throw an Error or Promise');
+    $.$mol_log2_legend.info($.$mol_fiber_token_destructed, '$mol_fiber fully destructed');
 })($ || ($ = {}));
 //fiber.js.map
 ;
