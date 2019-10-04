@@ -1,5 +1,6 @@
 namespace $ {
 
+	@ $mol_class
 	export class $mol_fetch_response extends $mol_object2 {
 
 		constructor( readonly native : Response ) {
@@ -57,6 +58,7 @@ namespace $ {
 
 	}
 
+	@ $mol_class
 	export class $mol_fetch extends $mol_object2 {
 		
 		static request = $mol_fiber_sync( ( input : RequestInfo , init : RequestInit = {} )=> {
@@ -125,3 +127,4 @@ namespace $ {
 	}
 
 }
+
