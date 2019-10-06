@@ -67,8 +67,8 @@ namespace $ {
 				master = new $mol_fiber
 				master.cursor = $mol_fiber_status.persist
 				master.error = ( request.call( this , ... args ) as PromiseLike< Value > ).then(
-					res => master!.push( res ) ,
-					err => master!.fail( err ) ,
+					$mol_log2.func( master!.push ).bind( master! ) ,
+					$mol_log2.func( master!.fail ).bind( master! ) ,
 				)
 				const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
 				master[ Symbol.toStringTag ] = prefix + ( request.name || $mol_fiber_sync.name )
@@ -148,7 +148,7 @@ namespace $ {
 			}
 
 			Object.defineProperty( wrapped , 'name' , {
-				value : `${ task.name || '<anonymous>' }|${ this.name }`
+				value : `${ task.name || '' }|${ this.name }`
 			} )
 
 			return $mol_fiber.func( wrapped )
@@ -228,11 +228,11 @@ namespace $ {
 		calculate! : ()=> Value
 		
 		schedule() {
-			$mol_fiber.schedule().then( $mol_log_group( '$mol_fiber_scheduled' , this.wake.bind( this ) ) )
+			$mol_fiber.schedule().then( ()=> this.wake() )
 		}
 
+		@ $mol_log2.method
 		wake() {
-			this.$.$mol_log( this , '⏰' )
 			try {
 				if( this.cursor > $mol_fiber_status.actual ) return this.get()
 			} catch( error ) {
@@ -247,14 +247,14 @@ namespace $ {
 			
 			if( !$mol_compare_any( this.value , value ) ) {
 		
-				this.$.$mol_log( this , value , '🠈' , this.value  )
+				this.$.$mol_log2.info( this , $mol_fiber_token_changed1 , value , $mol_fiber_token_changed2 , this.value )
 				
 				this.obsolete_slaves()
 				
 				this.forget()
 				
 			} else {
-				this.$.$mol_log( this , '✔' , value )
+				this.$.$mol_log2.info( this , $mol_fiber_token_actualized )
 				if( this.error ) this.obsolete_slaves()
 			}
 			
@@ -266,13 +266,13 @@ namespace $ {
 			return value
 		}
 
-		fail( error : Error ) : Error {
+		fail( error : Error | PromiseLike< Value > ) : Error | PromiseLike< Value > {
 			
 			this.complete()	
 			
-			this.error = error
+			this.$.$mol_log2.info( this , $mol_fiber_token_failed )
 			
-			this.$.$mol_log( this , '🔥' , error.message )
+			this.error = error
 
 			this.obsolete_slaves()
 
@@ -281,7 +281,7 @@ namespace $ {
 
 		wait( promise : PromiseLike< Value > ) : PromiseLike< Value > {
 			this.error = promise
-			this.$.$mol_log( this , '💤' )
+			this.$.$mol_log2.info( this , $mol_fiber_token_sleeped )
 			this.cursor = $mol_fiber_status.obsolete
 			return promise
 		}
@@ -317,7 +317,7 @@ namespace $ {
 				
 				$mol_fiber.current = this
 
-				this.$.$mol_log( this , '►' )
+				this.$.$mol_log2.info( this , $mol_fiber_token_runned )
 
 				this.pull()
 
@@ -326,7 +326,7 @@ namespace $ {
 				if( 'then' in error ) {
 					
 					if( !slave ) {
-						const listener = this.wake.bind( this )
+						const listener = ()=> this.wake()
 						error = error.then( listener , listener )
 					}
 
@@ -433,10 +433,34 @@ namespace $ {
 		destructor() {
 			if( !this.abort() ) return
 			
-			this.$.$mol_log( this , '🕱' , this.value )
+			this.$.$mol_log2.info( this , $mol_fiber_token_destructed )
 			this.complete()
 		}
 
+		[ $mol_dev_format_head ]() {
+			return $mol_dev_format_span( {} ,
+				$mol_dev_format_native( this ) ,
+				$mol_dev_format_accent( '❨' ) ,
+				$mol_dev_format_auto( this.error || this.value ) ,
+				$mol_dev_format_accent( '❩' ) ,
+			)
+		}
+
 	}
+
+	export let $mol_fiber_token_runned = new $mol_log2_token( ' ► ' )
+	export let $mol_fiber_token_changed1 = new $mol_log2_token( ' ˸ ' )
+	export let $mol_fiber_token_changed2 = new $mol_log2_token( ' 🠈 ' )
+	export let $mol_fiber_token_actualized = new $mol_log2_token( ' ✓ ' )
+	export let $mol_fiber_token_sleeped = new $mol_log2_token( ' 💤 ' )
+	export let $mol_fiber_token_failed = new $mol_log2_token( ' 🔥 ' )
+	export let $mol_fiber_token_destructed = new $mol_log2_token( ' 🕱 ' )
+
+	$mol_log2_legend.info( $mol_fiber_token_runned , '$mol_fiber starts execution' )
+	$mol_log2_legend.info( new $mol_log2_line( $mol_fiber_token_changed1 , $mol_fiber_token_changed2 ) , '$mol_fiber value is changed to different value' )
+	$mol_log2_legend.info( $mol_fiber_token_actualized , 'Actual $mol_fiber value is same as before' )
+	$mol_log2_legend.info( $mol_fiber_token_sleeped , '$mol_fiber can not run now and awaits on promise' )
+	$mol_log2_legend.info( $mol_fiber_token_failed , '$mol_fiber is failed and will be throw an Error or Promise' )
+	$mol_log2_legend.info( $mol_fiber_token_destructed , '$mol_fiber fully destructed' )
 
 }

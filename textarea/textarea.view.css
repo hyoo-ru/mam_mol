@@ -28,6 +28,7 @@
 	caret-color: var(--mol_theme_text);
 	resize: none;
 	white-space: pre-wrap;
+	tab-size: 4;
 }
 
 [mol_textarea_edit][mol_textarea_edit] {

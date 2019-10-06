@@ -23,5 +23,10 @@ namespace $.$$ {
 		disabled() {
 			return !this.enabled()
 		}
+
+		autocomplete_native() {
+			return this.autocomplete() ? 'on' : 'off'
+		}
+
 	}
 }

@@ -270,7 +270,7 @@ namespace $ {
 						if( propName[2] ) decl = '\t@ $' + 'mol_mem_key\n' + decl
 						else decl = '\t@ $' + 'mol_mem\n' + decl
 					}
-					decl = '\t/**\n\t * ```\n\t * ' + param.toString().trim().split( '\n' ).join( '\n\t * ' ) + '\n\t * ```\n\t **/\n' + decl
+					decl = '\t/**\n\t *  ```\n' + param.toString().trim().replace( /^/mg , '\t *  ' ) + '\n\t *  ```\n\t **/\n' + decl
 					
 					members[ propName[1] ] = decl
 				} )

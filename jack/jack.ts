@@ -52,7 +52,7 @@ namespace $ {
 							type ,
 							sub : [ input.clone({
 								type : 'ambient' ,
-								sub : [ input.clone({ type }) ] ,
+								sub : [] ,
 							}) ] ,
 						}) )
 					} ,

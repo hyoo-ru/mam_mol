@@ -1,0 +1,78 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+#     - name: Set up NodeJS
+#       uses: actions/setup-node@v1
+    
+    - name: Checkout sources
+      uses: actions/checkout@v1
+    
+    - name: Checkout MAM
+      uses: actions/checkout@v1
+      with:
+        repository: eigenmethod/mam
+        ref: master
+        path: mam
+    
+    - name: Build app
+      run: |
+        cd ..
+        ls
+        mkdir mam/mol
+        mv mol/* mam/mol
+        cd mam
+        yarn
+        yarn start mol/app/demo
+        node ./mol/app/demo/-/node.test.js
+        node ./mol/build/-/node.test.js mol/app/hello
+        node ./mol/build/-/node.test.js mol/app/supplies
+        node ./mol/build/-/node.test.js mol/app/habhub
+        node ./mol/build/-/node.test.js mol/app/todomvc
+        node ./mol/build/-/node.test.js mol/perf/sierp
+        node ./mol/build/-/node.test.js mol/perf/uibench
+        node ./mol/build/-/node.test.js mol/perf/dbmon 
+        node ./mol/build/-/node.test.js mol/app/bench/bench
+        node ./mol/build/-/node.test.js mol/app/bench/list/mol
+        node ./mol/build/-/node.test.js mol/app/bench/list/tsx
+        node ./mol/build/-/node.test.js mol/app/bench/chart/rope/mol
+        node ./mol/build/-/node.test.js mol/app/bench/chart/bar/mol
+        node ./mol/build/-/node.test.js mol/app/taxon
+        node ./mol/build/-/node.test.js mol/app/taxon/demo
+        node ./mol/build/-/node.test.js mol/app/users
+        node ./mol/build/-/node.test.js mol/mem
+        node ./mol/build/-/node.test.js mol/app/quine
+        node ./mol/build/-/node.test.js mol/app/lamps
+        node ./mol/build/-/node.test.js mol/app/files/demo
+        node ./mol/build/-/node.test.js mol/app/questions
+        node ./mol/build/-/node.test.js mol/app/calc
+        node ./mol/build/-/node.test.js mol/chat/service
+        node ./mol/build/-/node.test.js mol/app/life
+        node ./mol/build/-/node.test.js mol/time/all
+        node ./mol/build/-/node.test.js mol/plot/all
+        node ./mol/build/-/node.test.js mol/fiber/demo
+        node ./mol/build/-/node.test.js mol/app/report
+        node ./mol/build/-/node.test.js mol/app/tree
+        node ./mol/build/-/node.test.js mol/app/request
+        node ./mol/build/-/node.test.js mol/app/rdf
+        node ./mol/build/-/node.test.js mol/app/jsperf
+        node ./mol/build/-/node.test.js mol/app/issues
+        node ./mol/build/-/node.test.js mol/syntax2
+        node ./mol/build/-/node.test.js mol/func/sandbox/demo
+        node ./mol/build/-/node.test.js mol/app/portal
+        
+    - name: Deploy on GitHub Pages
+      uses: alex-page/blazing-fast-gh-pages-deploy@v1.0.1
+      with:
+        repo-token: ${{ secrets.GH_PAT }}
+        site-directory: '../mam/mol'
