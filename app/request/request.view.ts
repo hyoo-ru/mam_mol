@@ -25,25 +25,27 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		resource() {
-			this.request_body()
-			const resource = this.$.$mol_http.resource( this.uri() )
-			resource.headers = ()=> this.request_headers_dict()
-			return resource
+		response() {
+			const body = this.request_body()
+			return this.$.$mol_fetch.response( this.uri() , {
+				method : body ? 'put' : 'get' ,
+				headers : this.request_headers_dict() ,
+				body : body || undefined ,
+			} )
 		}
 
 		@ $mol_mem
 		response_headers() {
-			return this.resource().response().getAllResponseHeaders()
+			let lines = [] as string[]
+			for( const [ name , value ] of this.response().headers() ) {
+				lines.push( `${name}: ${value}` )
+			}
+			return lines.join('\n')
 		}
 
 		@ $mol_mem
 		response_body() {
-			if( this.request_body() ) {
-				return this.resource().text( this.request_body() )
-			} else {
-				return this.resource().text()
-			}
+			return this.response().text()
 		}
 
 	}
