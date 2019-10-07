@@ -53,7 +53,7 @@ const Length = $mol_data_nominal({ Length : $mol_data_integer })
 
 let len = Length(10)
 len = Length(20) // Validate
-len = 20 as ReturnType< typeof Length > // Cast
+len = 20 as typeof Length.Value // Cast
 
 len = 20 // Compile time error
 len = Weight(20) // Compile time error
