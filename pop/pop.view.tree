@@ -1,4 +1,5 @@
 $mol_pop $mol_view
+	event * keydown?event <=> keydown?event null
 	showed?val false
 	plugins /$mol_plugin
 		<= Meter $mol_meter

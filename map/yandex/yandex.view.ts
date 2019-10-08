@@ -46,7 +46,8 @@ namespace $.$$ {
 				api.geoObjects.add( obj.object() )
 			}
 			
-			super.render()
+			this.dom_node_actual()
+
 		}
 
 	}

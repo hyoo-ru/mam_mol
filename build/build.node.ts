@@ -1,5 +1,5 @@
 namespace $ {
-	
+
 	export function $mol_build_start( paths : string[] ) {
 		var build = $mol_build.relative( '.' )
 		if( paths.length > 0 ) {
@@ -21,7 +21,7 @@ namespace $ {
 	}
 	
 	setTimeout( $mol_fiber_root( ()=> $mol_fiber_unlimit( ()=> $mol_build_start( process.argv.slice( 2 ) ) as any ) ) )
-	
+
 	export class $mol_build extends $mol_object {
 		
 		@ $mol_mem_key
@@ -54,7 +54,7 @@ namespace $ {
 			.forEach(
 				child => {
 					const name = child.name()
-					if( !/^\w/i.test( name ) ) return false
+					if( !/^[a-z0-9]/i.test( name ) ) return false
 					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
 					
 					if( /(meta\.tree)$/.test( name ) ) {
@@ -166,12 +166,14 @@ namespace $ {
 					
 					for( let file of files ) {
 						if( file === this.root() ) continue
+
+							const from = src.relate( this.root() )
+							if(!( from in graph.nodes )) continue
 						
-							graph.link(
-								src.relate( this.root() ) ,
-								file.relate( this.root() ) ,
-								{ priority : deps[ p ] }
-							)
+							const to = file.relate( this.root() )
+							if(!( to in graph.nodes )) continue
+						
+							graph.link( from , to , { priority : deps[ p ] } )
 						}
 					
 				}
@@ -187,20 +189,21 @@ namespace $ {
 		sourcesAll( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const sortedPaths = this.graph( { path , exclude } ).sorted
 			
-			let sources : $mol_file[] = []
+			const sources = new Set< $mol_file >()
 			sortedPaths.forEach( path => {
-				this.sourcesSorted( { path : this.root().resolve( path ).path() , exclude } ).forEach( src => {
-					if( sources.indexOf( src ) === -1 ) sources.push( src )
+				const mod = this.root().resolve( path )
+				this.sourcesSorted( { path : mod.path() , exclude } ).forEach( src => {
+					sources.add( src )
 				} )
 			} )
 			
-			return sources
+			return [ ... sources ]
 		}
 		
 		@ $mol_mem
 		tsOptions() {
-			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() ).compilerOptions
-			const res = $node['typescript'].convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
+			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() + '').compilerOptions
+			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
 			if( res.errors.length ) throw res.errors
 			return res.options
 		}
@@ -208,18 +211,33 @@ namespace $ {
 		@ $mol_mem_key
 		tsSource( { path , target } : { path : string , target : number } ) {
 			const content = $mol_file.absolute( path ).content().toString()
-			return $node['typescript'].createSourceFile( path , content , target )
+			return $node.typescript.createSourceFile( path , content , target )
 		}
 
 		@ $mol_mem_key
-		tsPaths( { path , exclude } : { path : string , exclude? : string[] } ) {
-			return this.sourcesAll( { path , exclude } ).filter( src => /tsx?$/.test( src.ext() ) ).map( src => src.path() )
+		tsPaths( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+
+			const sources = this.sourcesAll( { path , exclude } ).filter( src => /tsx?$/.test( src.ext() ) )
+
+			if( sources.length && bundle === 'node' ) {
+				const types = [] as string[]
+				
+				for( let dep of this.nodeDeps({ path , exclude }) ) {
+					types.push( '\t' + JSON.stringify( dep ) + ' : typeof import( ' + JSON.stringify( dep ) + ' )' )
+				}
+				
+				const node_types = $mol_file.absolute( path ).resolve( `-node/deps.d.ts` )
+				node_types.content( 'interface $node {\n ' + types.join( '\n' ) + '\n}' )
+				sources.push( node_types )
+			}
+
+			return sources.map( src => src.path() )
 		}
 		
 		@ $mol_mem_key
-		tsCompile( { path , exclude } : { path : string , exclude? : string[] } ) {
+		tsCompile( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
 
-			const paths = this.tsPaths({ path , exclude })
+			const paths = this.tsPaths({ path , exclude , bundle })
 			if( !paths.length ) return null
 
 			var host = $node.typescript.createWatchCompilerHost(
@@ -254,7 +272,7 @@ namespace $ {
 						
 					} else {
 						
-						console.error( diagnostic.messageText )
+						console.error( $node.colorette.red( diagnostic.messageText ) )
 
 					}
 					
@@ -273,16 +291,45 @@ namespace $ {
 		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 
 			var sources = this.sourcesAll( { path , exclude } )
-			.filter( src => /(js|tsx?)$/.test( src.ext() ) )
-			if( !sources.length ) return []
 			
+			const image_types = {
+				'svg' : 'image/svg+xml' ,
+				'png' : 'image/png' ,
+				'jpg' : 'image/jpeg' ,
+				'jpeg' : 'image/jpeg' ,
+				'gif' : 'image/gif' ,
+				'webp' : 'image/webp' ,
+			}
+
 			sources = sources.map(
 				src => {
-					if( !/tsx?$/.test( src.ext() ) ) return src
+
+					const ext = src.ext().replace( /^.*\./ , '' )
+
+					if( image_types[ ext ] ) {
+
+						const ext = src.ext()
+
+						const script = src.parent().resolve( `-image/${ src.name() }.js` )
+						const payload = src.content().toString( 'base64' )
+
+						const path = src.relate( this.root() )
+						const uri = `data:${ image_types[ext] };base64,${ payload }`
+						script.content( `var $node = $node || {} ; $node[ ${ JSON.stringify( '/' + path ) } ] = ${ JSON.stringify( uri ) }\n` )
+						
+						return script
+					}
+
+					if( /^tsx?$/.test( ext ) ) {
+						return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
+					}
 					
-					return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
+					if( 'js' === ext ) {
+						return src
+					}
+					
 				}
-			)
+			).filter( Boolean ) as $mol_file[]
 			
 			return sources
 		}
@@ -353,6 +400,9 @@ namespace $ {
 		@ $mol_mem_key
 		modEnsure( path : string ) {
 
+			// Prevent automatic state clear on every bundle build
+			$mol_atom2.current.destructor = ()=> {}
+
 			var mod = $mol_file.absolute( path )
 			if( mod === this.root() ) return false
 
@@ -362,12 +412,12 @@ namespace $ {
 			var mapping = this.modMeta( parent.path() )
 			
 			if( mod.exists() ) {
-				if( mod.resolve( '.git' ).exists() ) {
+				if( mod.type() === 'dir' && mod.resolve( '.git' ).type() === 'dir' ) {
 					try {
 						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
 						process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
 					} catch( error ) {
-						console.error( error.message )
+						console.error( $node.colorette.red( error.message ) )
 					}
 				}
 				return false
@@ -577,14 +627,15 @@ namespace $ {
 			return res.map( r => r.valueOf() )
 		}
 		
-		logBundle( target : $mol_file ) {
-			var time = new Date().toLocaleTimeString()
-			var path = target.relate( this.root() )
-			console.log( `${time} Built ${path}` )
+		logBundle( target : $mol_file , duration : number ) {
+			const path = $node.colorette.green( target.relate( this.root() ) )
+			const time = $node.colorette.cyan( `${ duration.toString().padStart( 5 ) }ms` )
+			console.log( `Built in ${ time }: ${ path }` )
 		}
 		
 		@ $mol_mem_key
-		bundleJS( { path , exclude , bundle , moduleTarget } : { path : string , exclude? : string[] , bundle : string, moduleTarget? : string } ) : $mol_file[] {
+		bundleJS( { path , exclude , bundle , moduleTarget } : { path : string , exclude : string[] , bundle : string, moduleTarget? : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			var mt = moduleTarget ? `.${moduleTarget}` : ''
 			var target = pack.resolve( `-/${bundle}${mt}.js` )
@@ -593,18 +644,19 @@ namespace $ {
 			var sources = this.sourcesJS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			this.tsCompile({ path , exclude })
+			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
+			this.tsCompile({ path , exclude : exclude_ext , bundle })
 			
-			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
+			var concater = new $mol_sourcemap_builder( target.name(), ';')
+
 			if( bundle === 'node' ) {
-				concater.add( '' , 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
-				concater.add( '' , "process.on( 'unhandledRejection' , up => { throw up } )" )
+				concater.add( 'require'+'( "source-map-support" ).install(); var exports = void 0;\n' )
+				concater.add( "process.on( 'unhandledRejection' , up => { throw up } )" )
 			} else {
-				concater.add( '' , 'function require'+'( path ){ return $node[ path ] }' )
+				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 			}
 
 			const errors = [] as Error[]
-			
 			sources.forEach(
 				( src )=> {
 					if( bundle === 'node' ) {
@@ -612,42 +664,34 @@ namespace $ {
 							return
 						}
 					}
-					
 					try {
-						var content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
+						const content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
+						const isCommonJs = /module\.exports/.test( content )
+					
+						if( isCommonJs ) {
+							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n`, '-' )
+						}
+	
+						const srcMap = src.parent().resolve( src.name() + '.map' ).content()
+						if(content) concater.add( content, src.relate( target.parent() ), srcMap + '')
+						
+						if( isCommonJs ) {
+							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
+							const idShort = idFull.replace( /\/index\.js$/ , '' )
+							concater.add( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
+						}
 					} catch( error ) {
-						content = ''
 						errors.push( error )
-					}
-					
-					var srcMap = src.parent().resolve( src.name() + '.map' ).content()
-					if( srcMap ) {
-						var map = JSON.parse( srcMap )
-						map.sourceRoot = src.parent().relate( target.parent() )
-					}
-					
-					const isCommonJs = /module\.exports/.test( content )
-					
-					if( isCommonJs ) {
-						concater.add( '-' , `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n` )
-					}
-					
-					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
-					
-					if( isCommonJs ) {
-						const idFull = src.relate( this.root().resolve( 'node_modules' ) )
-						const idShort = idFull.replace( /\/index\.js$/ , '' )
-						concater.add( '-' , `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n` )
 					}
 				}
 			)
 			if( moduleTarget === 'esm' ) {
-				concater.add( '-', 'export default $')
+				concater.add( 'export default $', '-' )
 			}
-			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() ) )
-			targetMap.content( concater.sourceMap )
+			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
+			targetMap.content( concater.toString() )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 
 			if( errors.length ) $mol_fail_hidden( new Error( errors.map( error => error.message ).join( '\n' ) ) )
 			
@@ -656,29 +700,30 @@ namespace $ {
 		
 		@ $mol_mem_key
 		bundleTestJS( { path , exclude , bundle } : { path : string , exclude : string[] , bundle : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var root = this.root()
 			var target = pack.resolve( `-/${bundle}.test.js` )
 			var targetMap = pack.resolve( `-/${bundle}.test.js.map` )
 			
-			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() , '\n;\n' )
+			var concater = new $mol_sourcemap_builder( target.name(), ';')
 			
 			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 			var sources = this.sourcesJS( { path , exclude : exclude_ext } )
 			var sourcesNoTest = this.sourcesJS( { path , exclude } )
 			var sourcesTest = sources.filter( src => sourcesNoTest.indexOf( src ) === -1 )
 			if( bundle === 'node' ) {
-				concater.add( '' , 'require'+'( "source-map-support" ).install()\n' )
-				concater.add( '' , "process.on( 'unhandledRejection' , up => { throw up } )" )
+				concater.add( 'require'+'( "source-map-support" ).install()\n' )
+				concater.add( "process.on( 'unhandledRejection' , up => { throw up } )" )
 				sources = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {
-				concater.add( '' , 'function require'+'( path ){ return $node[ path ] }' )
+				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
 				sources = sourcesTest
 			}
 			if( sources.length === 0 ) return []
 			
-			this.tsCompile({ path , exclude : exclude_ext })
+			this.tsCompile({ path , exclude : exclude_ext , bundle })
 			
 			const errors = [] as Error[]
 			
@@ -689,28 +734,21 @@ namespace $ {
 							return
 						}
 					}
-					
+					let content = ''					
 					try {
-						var content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )
-					} catch( error ) {
-						content = ''
+						content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
+						const srcMap = src.parent().resolve( src.name() + '.map' ).content()
+						if(content) concater.add( content, src.relate( target.parent() ), srcMap + '')
+						} catch( error ) {
 						errors.push( error )
 					}
-					
-					var srcMap = src.parent().resolve( src.name() + '.map' ).content()
-					if( srcMap ) {
-						var map = JSON.parse( srcMap )
-						map.sourceRoot = src.parent().relate( target.parent() )
-					}
-					
-					concater.add( src.relate( target.parent() ) , content , map && JSON.stringify( map ) )
 				}
 			)
 			
-			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() ) )
-			targetMap.content( concater.sourceMap )
+			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
+			targetMap.content( concater.toString() )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			if( errors.length ) $mol_fail_hidden( new Error( errors.map( error => error.message ).join( '\n' ) ) )
 			
@@ -719,6 +757,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		bundleTestHtml( { path } : { path : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var source = pack.resolve( `index.html` )
@@ -740,13 +779,14 @@ namespace $ {
 			
 			target.content( content )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
 		}
 
 		@ $mol_mem_key
 		bundleDTS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/${bundle}.d.ts` )
@@ -754,25 +794,25 @@ namespace $ {
 			var sources = this.sourcesDTS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var concater = new $node[ 'concat-with-sourcemaps' ]( true , target.name() )
+			var concater = new $mol_sourcemap_builder( target.name() )
 			
 			sources.forEach(
 				function( src ) {
 					if( !src.content() ) return
-					var content = src.content().toString()
-					concater.add( src.relate( target.parent() ) , content )
+					concater.add( src.content().toString(), src.relate( target.parent() ) )
 				}
 			)
 			
 			target.content( concater.content )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
 		}
 		
 		@ $mol_mem_key
 		bundleViewTree( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/${bundle}.view.tree` )
@@ -784,24 +824,45 @@ namespace $ {
 			
 			target.content( sources.map( src => src.content().toString() ).join( '\n' ) )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
 		}
 
 		@ $mol_mem_key
+		nodeDeps( { path , exclude } : { path : string , exclude : string[] } ) : string[] {
+			
+			var res = new Set<string>()
+			var sources = this.sourcesAll( { path , exclude } )
+			
+			for( let src of sources ) {
+				let deps = this.srcDeps( src.path() )
+				for( let dep in deps ) {
+					if( !/^\/node(?:_modules)?\//.test( dep ) ) continue
+					let mod = dep.replace( /^\/node(?:_modules)?\// , '' ).replace( /\/.*/g , '' )
+					res.add( mod )
+				}
+			}
+
+			return [ ... res ]
+
+		}
+
+		@ $mol_mem_key
 		bundlePackageJSON( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var target = pack.resolve( `-/package.json` )
 			
-			var sources = this.sourcesAll( { path , exclude : exclude.filter( ex => ex !== 'test' && ex !== 'dev' ) } )
+			exclude = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
+			var sources = this.sourcesAll( { path , exclude } )
 			
 			var json : any
 			try {
-				$mol_fiber_fence( ()=> json = target.exists() && JSON.parse( target.content() ) )
+				$mol_fiber_fence( ()=> json = target.exists() && JSON.parse( target.content().toString() ) )
 			} catch( error ) {
-				console.error( error )
+				console.error( $node.colorette.yellow( error ) )
 			}
 
 			if( !json ) json = {
@@ -817,18 +878,14 @@ namespace $ {
 			json.version = json.version.replace( /\d+$/, ( build : string )=> parseInt( build ) + 1 )
 			json.dependencies = {}
 			
-			for( let src of sources ) {
-				let deps = this.srcDeps( src.path() )
-				for( let dep in deps ) {
-					if( !/^\/node(?:_modules)?\//.test( dep ) ) continue
-					let mod = dep.replace( /^\/node(?:_modules)?\// , '' ).replace( /\/.*/g , '' )
-					json.dependencies[ mod ] = `*`
-				}
+			for( let dep of this.nodeDeps({ path , exclude }) ) {
+				if( require('module').builtinModules.includes(dep) ) continue
+				json.dependencies[ dep ] = `*`
 			}
 			
 			target.content( JSON.stringify( json , null , '  ' ) )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
 		}
@@ -843,21 +900,23 @@ namespace $ {
 			
 			const targets : $mol_file[] = []
 
+			const start = Date.now()
 			const html = pack.resolve( 'index.html' )
 			const html_target = pack.resolve( '-/index.html' )
 			html_target.content( html.content() )
 			targets.push( html_target )
-			this.logBundle( html_target )
+			this.logBundle( html_target , Date.now() - start )
 
 			sources.forEach( source => {
 				const tree = $mol_tree.fromString( source.content().toString() , source.path() )
 				
 				tree.select( 'deploy' ).sub.forEach( deploy => {
+					const start = Date.now()
 					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
 					const target = pack.resolve( `-/${ file.relate( root ) }` )
 					target.content( file.content() )
 					targets.push( target )
-					this.logBundle( target )
+					this.logBundle( target , Date.now() - start )
 				} )
 				
 			} )
@@ -867,6 +926,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		bundleCordova( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+			const start = Date.now()
 			const pack = $mol_file.absolute( path )
 			const cordova = pack.resolve( '-cordova' )
 			
@@ -889,7 +949,7 @@ namespace $ {
 				return target
 			} ) )
 			
-			this.logBundle( cordova )
+			this.logBundle( cordova , Date.now() - start )
 			
 			return targets
 		}
@@ -898,6 +958,7 @@ namespace $ {
 		bundleCSS( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			if( bundle === 'node' ) return []
 			
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			var sources = this.sourcesCSS( { path , exclude } )
 			if( !sources.length ) return []
@@ -924,7 +985,7 @@ namespace $ {
 			target.content( result.css )
 			targetMap.content( JSON.stringify( result.map , null , '\t' ) )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target , targetMap ]
 		}
@@ -944,7 +1005,7 @@ namespace $ {
 					
 					if( !locales[ lang ] ) locales[ lang ] = {}
 					
-					const loc = JSON.parse( src.content() )
+					const loc = JSON.parse( src.content().toString() )
 					for( let key in loc ) {
 						locales[ lang ][ key ] = loc[ key ]
 					}
@@ -952,6 +1013,7 @@ namespace $ {
 			)
 			
 			const targets = Object.keys( locales ).map( lang => {
+				const start = Date.now()
 				const target = pack.resolve( `-/${bundle}.locale=${ lang }.json` )
 				
 				const locale = locales[ lang ]
@@ -960,7 +1022,7 @@ namespace $ {
 					
 					for( let key in locale ) {
 						if( key in locales[ 'en' ] ) continue
-						console.warn( `Not translated to "en": ${ key }` )
+						console.warn( $node.colorette.yellow( `Not translated to "en": ${ $node.colorette.cyan( key ) }` ) )
 					}
 
 				}
@@ -973,7 +1035,7 @@ namespace $ {
 
 				target.content( JSON.stringify( locale_sorted , null , '\t' ) )
 				
-				this.logBundle( target )
+				this.logBundle( target , Date.now() - start )
 				
 				return target
 			} )
@@ -983,10 +1045,20 @@ namespace $ {
 		
 		@ $mol_mem_key
 		bundleDepsJSON( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
+			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
 			var list = this.sourcesAll( { path , exclude } )
 			if( !list.length ) return []
+
+			var origs = list.filter( src => !/\/-/.test( src.path() ) )
+			
+			var sloc = {} as Record< string , number >
+			for( const src of origs ) {
+				const ext = src.name().replace( /^.*\./ , '' )
+				const count = src.content().toString().trim().split( /[\n\r]\s*/ ).length
+				sloc[ ext ] = ( sloc[ ext ] || 0 ) + count
+			}
 			
 			var graph = this.graph( { path , exclude } )
 			
@@ -999,13 +1071,14 @@ namespace $ {
 				files : list.map( src => src.relate( this.root() ) ) ,
 				edgesIn : graph.edgesIn ,
 				edgesOut : graph.edgesOut ,
+				sloc ,
 				deps
 			}
 			
 			var target = pack.resolve( `-/${bundle}.deps.json` )
 			target.content( JSON.stringify( data ) )
 			
-			this.logBundle( target )
+			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
 		}
@@ -1063,8 +1136,11 @@ namespace $ {
 				var priority = -indent[ 0 ].replace( /\t/g , '    ' ).length / 4
 				
 				line.replace(
-					/\$(([a-z0-9]{2,})(?:[._][a-z0-9]+|\[\s*['"](?:[^\/]*?)['"]\s*\])*)/ig , ( str , name , pack )=> {
-						$mol_build_depsMerge( depends , { [ '/' + name.replace( /[_.\[\]'"]+/g , '/' ) ] : priority } )
+					/\$([a-z0-9]{2,})(?:((?:[._A-Z0-9][a-z0-9]+)+)|\[\s*['"]([^'"]+?)['"]\s*\])?/g , ( str , pack , path , name )=> {
+						if( path ) path = '/' + pack + path.replace( /(?=[A-Z])/g , '_' ).toLowerCase().replace( /[_.\[\]'"]+/g , '/' )
+						if( name ) name = '/' + pack + '/' + name
+						pack = '/' + pack
+						$mol_build_depsMerge( depends , { [ path || name || pack ] : priority } )
 						return str
 					}
 				)
@@ -1124,7 +1200,7 @@ namespace $ {
 		} )
 		
 		tree.select( 'include' ).sub.forEach( leaf => {
-			depends[ leaf.value ] = Number.MIN_SAFE_INTEGER
+			depends[ leaf.value ] = -9000
 		} )
 		
 		return depends

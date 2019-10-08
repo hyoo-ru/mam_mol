@@ -63,19 +63,20 @@ namespace $.$$ {
 				])
 			}
 
-			if( typeof TouchEvent === 'undefined' ) return
-			if(!( event instanceof TouchEvent )) return
-
 			if( pos ) {
 				const start_pos = this.start_pos()
 				if( !start_pos ) return
 
-				const precision = this.swipe_precision()
-
+				
 				if( this.pan !== $mol_touch.prototype.pan ) {
 					this.pan([ start_pan[0] + pos[0] - start_pos[0] , start_pan[1] + pos[1] - start_pos[1] ])
 					event.preventDefault()
 				}
+
+				if( typeof TouchEvent === 'undefined' ) return
+				if(!( event instanceof TouchEvent )) return
+	
+				const precision = this.swipe_precision()
 				
 				if(
 					(
@@ -131,7 +132,10 @@ namespace $.$$ {
 
 			}
 			
-			if( typeof TouchEvent !== 'undefined' && event instanceof TouchEvent && event.touches.length === 2 ) {
+			if( typeof TouchEvent === 'undefined' ) return
+			if(!( event instanceof TouchEvent )) return
+
+			if( event.touches.length === 2 ) {
 
 				if( this.zoom === $mol_touch.prototype.zoom ) return
 
@@ -151,6 +155,7 @@ namespace $.$$ {
 
 				event.preventDefault()
 			}
+			
 		}
 
 		swipe_left( event? : TouchEvent | MouseEvent ) {
@@ -182,13 +187,18 @@ namespace $.$$ {
 		}
 
 		event_wheel( event? : WheelEvent ) {
+
+			if( this.pan !== $mol_touch.prototype.pan ) {
+				event.preventDefault()
+			}
+
 			const zoom_prev = this.zoom() || 0.001
 			const zoom_next = zoom_prev * ( 1 - .1 * Math.sign( event.deltaY ) )
 			const mult = zoom_next / zoom_prev
 			this.zoom( zoom_next )
 
 			const pan_prev = this.pan()
-			const center = [ event.layerX , event.layerY ]
+			const center = [ event.offsetX , event.offsetY ]
 			const pan_next = [ ( pan_prev[0] - center[0] ) * mult + center[0] , ( pan_prev[1] - center[1] ) * mult + center[1] ]
 
 			this.pan( pan_next )

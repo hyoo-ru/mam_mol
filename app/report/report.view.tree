@@ -4,10 +4,9 @@ $mol_app_report $mol_page
 		<= descriptor $mol_view
 			sub / <= description \
 		<= tabler $mol_app_report_tabler
-			rows /
+			rows <= rows /
 				<= headRower $mol_app_report_rower
 					cells <= headCells /
-				<= rows /
 	rower!id $mol_app_report_rower
 		cells <= rowerCells!id /
 	cell!id $mol_app_report_cell

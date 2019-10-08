@@ -111,6 +111,69 @@ namespace $ {
 
 		} ,
 
+		'nested views and actions' () {
+
+			class Person extends $mol_store<{
+				name : {
+					first : string
+					last : string
+				}
+			}> {
+				
+				get full_name() {
+					const name = this.value( 'name' )
+					return name.first + ' ' + name.last
+				}
+
+				swap_names() {
+					const name = this.value( 'name' )
+					this.value( 'name' , {
+						first : name.last ,
+						last : name.first ,
+					} )
+				}
+
+			}
+
+			class Band extends $mol_store<{
+				name : string
+				members : Record< string , ReturnType< Person['data'] > >
+			}> {
+
+				get members() {
+					
+					const lens = this.sub( 'members' )
+					
+					return new Proxy( {} , {
+						get : ( _ , id : string )=> lens.sub( id , new Person ) ,
+					} )
+
+				}
+
+			}
+
+			const band = new Band({
+				name : 'Dream Team' ,
+				members : {
+					foo : {
+						name : {
+							first : 'Foo' ,
+							last : 'Bar' ,
+						} ,
+					}
+				}
+			})
+
+			const person = band.members[ 'foo' ]
+
+			$mol_assert_equal( person.full_name , 'Foo Bar' )
+
+			person.swap_names()
+
+			$mol_assert_equal( band.data().members['foo'].name.first , 'Bar' )
+			$mol_assert_equal( band.data().members['foo'].name.last , 'Foo' )
+
+		} ,
 
 	})
 

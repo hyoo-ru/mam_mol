@@ -58,12 +58,14 @@ class $my_app extends $mol_jsx_view {
 	@ $mol_mem
 	valueOf() { return super.valueOf() }
 
+	// fibered action
+	@ $mol_fiber.method
 	change( event : Event ) {
 		this.title = 'World'
 	}
 
 	render() {
-		return <div onclick={ $mol_fiber_root( event => this.change( event ) ) }>{ this.title }</div>
+		return <div onclick={ event => this.change( event ) }>{ this.title }</div>
 	}
 
 }

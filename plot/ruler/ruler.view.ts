@@ -17,7 +17,7 @@ namespace $.$$ {
 			if( step > step_max ) step /= 2
 			if( step > step_max ) step /= 2
 
-			return step
+			return Math.max( step , Math.abs( dims.min ) / 1e10 , Math.abs( dims.max ) / 1e10 )
 		}
 
 		snap_to_grid(coord: number) {

@@ -4,9 +4,9 @@ namespace $ {
 		let [ app , ... args0 ] = command.split( ' ' )
 		args = [ ... args0 , ... args ]
 
-		console.info( `${ $node.path.relative( '' , dir ) }> ${app} ${ args.join( ' ' ) }` )
+		console.info( `${ $node.colorette.gray( $node.path.relative( '' , dir ) ) }> ${ $node.colorette.blue( app ) } ${ $node.colorette.cyan( args.join( ' ' ) ) }` )
 
-		var res = $node.child_process.spawnSync(
+		var res = $node['child_process'].spawnSync(
 			app ,
 			args,
 			{
@@ -15,8 +15,8 @@ namespace $ {
 			}
 		)
 		
-		if( res.status || res.error ) return $mol_fail( res.error || new Error( res.stderr ) )
-		if( !res.stdout ) res.stdout = ''
+		if( res.status || res.error ) return $mol_fail( res.error || new Error( res.stderr.toString() ) )
+		if( !res.stdout ) res.stdout = new Buffer('')
 
 		return res
 	}

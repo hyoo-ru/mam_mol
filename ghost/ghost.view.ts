@@ -13,7 +13,9 @@ namespace $.$$ {
 		}
 		
 		dom_tree() {
-			const node = this.Sub().dom_tree()
+			const Sub = this.Sub()
+			Sub.$ = this.$
+			const node = Sub.dom_tree()
 			this.dom_node_actual()
 			return node
 		}

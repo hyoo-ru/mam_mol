@@ -7,14 +7,21 @@ namespace $.$$ {
 			
 			return next || ''
 		}
+
+		open() {
+			this.options_showed( true )
+		}
 		
 		@ $mol_mem
-		options_showed() {
-			const showed = this.focused() || this.filter_pattern().length > 0
+		options_showed( next? : boolean ) {
+
+			this.focused()
+
+			if( next === undefined ) next = this.filter_pattern().length > 0
 			
-			if( showed && this.Filter() ) new $mol_defer( $mol_fiber_root( ()=> this.Filter().focused( true ) ) )
+			if( next && this.Filter() ) new $mol_defer( $mol_fiber_root( ()=> this.Filter().focused( true ) ) )
 			
-			return showed
+			return next
 		}
 		
 		@ $mol_mem

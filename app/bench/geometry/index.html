@@ -31,6 +31,7 @@
 <iframe id="sandbox"></iframe>
 
 <script>
+	if( window.parent === window ) document.location = '//eigenmethod.github.io/mol/app/bench/#bench=' + encodeURIComponent( location.href )
 
 	function meta() {
 		done( {

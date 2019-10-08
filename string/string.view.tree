@@ -3,6 +3,7 @@ $mol_string $mol_view
 	enabled true
 	debounce 0
 	minimal_height 40
+	autocomplete false
 	field *
 		^
 		disabled <= disabled false
@@ -10,6 +11,7 @@ $mol_string $mol_view
 		placeholder <= hint \
 		type <= type?val \text
 		spellcheck <= spellcheck false
+		autocomplete <= autocomplete_native \
 	attr *
 		^
 		maxlength <= length_max Infinity

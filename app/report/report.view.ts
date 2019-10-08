@@ -188,7 +188,7 @@ namespace $.$$ {
 		}
 		
 		rows() {
-			const rows : $mol_app_report_rower[] = []
+			const rows : $mol_app_report_rower[] = super.rows().slice()
 			
 			const visit = ( pos : number[] , format : $mol_app_report_formatRow )=> {
 				rows.push( this.rower( pos ) )

@@ -33,12 +33,10 @@ namespace $ {
 				test
 					name \\name of struct node as value node
 					case type
-						int 1
-						\\foo
-						type float 1.1
-					case
-						\\int
-						\\
+						one
+						\\one
+					case tree
+						\\ONE
 						\\
 				test
 					name \\first element of list
@@ -46,14 +44,14 @@ namespace $ {
 						one
 						two
 						three
-					case ONE
+					case tree ONE
 				test
 					name \\list without first element
 					case headless
 						one
 						two
 						three
-					case
+					case tree
 						TWO
 						THREE
 				test
@@ -62,13 +60,13 @@ namespace $ {
 						one
 						two
 						three
-					case
+					case tree
 						THREE
 						TWO
 						ONE
 				test
 					name \\quote tree
-					name \\tree node by type, value and sub list
+					name \\make tree node by type, value and sub list
 					case tree head
 						\\
 						\\one
@@ -87,31 +85,39 @@ namespace $ {
 							one
 							two
 							three
-					case ONE
+					case tree ONE
 				test
 					name \\define and use custom simple macro
 					case jack
 						let tree
 							tree ambient
 							PI tree float 3.14
-						out tree PI
-					case float 3.14
+							pi PI
+						out tree pi
+					case tree float 3.14
 				test
 					name \\define and use custom macro with arguments
 					case jack
-						let
-							ambient
-							tree tail head headless from
-						out tree tail
+						let tree tail head reversed from
+						out tree tail tree
 							one
 							two
 							three
-					case tree TWO
+					case tree THREE
 			`).hack({
+
 				... $mol_jack.meta ,
+				
+				// Should processed
 				'one' : input => [ input.clone({ type : 'ONE' }) ] ,
 				'two' : input => [ input.clone({ type : 'TWO' }) ] ,
 				'three' : input => [ input.clone({ type : 'THREE' }) ] ,
+				
+				// Shouldn't processed
+				'ONE' : input => [ input.clone({ type : 'XXX' }) ] ,
+				'TWO' : input => [ input.clone({ type : 'XXX' }) ] ,
+				'THREE' : input => [ input.clone({ type : 'XXX' }) ] ,
+
 			})
 
 		} ,

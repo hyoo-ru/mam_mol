@@ -26,10 +26,21 @@ const foo = Foo.make({
 })
 
 // another way
-const foo2 = new Foo.make({
+const foo2 = new Foo
 foo2.$ = $.$mol_ambient({
 	console : {
 		log : ()=> undefined
 	}
 })
+```
+
+Global functions inherits context automatically:
+
+```typescript
+function $my_hello( this : $mol_ambient_context , name : string ) {
+	this.console.log( `Hello, ${ name }!` )
+}
+
+// call in context
+$.$my_hello( 'Jin' )
 ```

@@ -20,6 +20,17 @@ namespace $.$$ {
 			
 			return `${ vert }_${ hor }`
 		}
+
+		keydown( event? : KeyboardEvent ) {
+
+			if( event.defaultPrevented ) return 
+			
+			if( event.keyCode === $mol_keyboard_code.escape ) {
+				event.preventDefault()
+				this.showed( false )
+			}
+			
+		}
 		
 	}
 }
