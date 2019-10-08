@@ -3250,7 +3250,7 @@ var $;
     function $mol_font_measure(size, face, text) {
         const canvas = $.$mol_font_canvas();
         canvas.font = size + 'px ' + face;
-        return Math.ceil(canvas.measureText(text).width);
+        return canvas.measureText(text).width;
     }
     $.$mol_font_measure = $mol_font_measure;
 })($ || ($ = {}));
