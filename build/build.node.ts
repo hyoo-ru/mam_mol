@@ -401,7 +401,7 @@ namespace $ {
 		modEnsure( path : string ) {
 
 			// Prevent automatic state clear on every bundle build
-			$mol_atom2.current.destructor = ()=> {}
+			$mol_atom2.current!.destructor = ()=> {}
 
 			var mod = $mol_file.absolute( path )
 			if( mod === this.root() ) return false

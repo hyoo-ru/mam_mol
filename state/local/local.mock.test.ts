@@ -6,7 +6,7 @@ namespace $ {
 			static state = {} as Record< string , any >
 						
 			@ $mol_mem_key
-			static value< Value >( key : string , next = this.state[ key ] as Value ) {
+			static value< Value >( key : string , next = this.state[ key ] as Value , force? : $mol_mem_force ) {
 				return this.state[ key ] = ( next || null )
 			}
 

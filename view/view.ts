@@ -203,7 +203,6 @@ namespace $ {
 			const sub = this.sub_visible()
 			
 			const nodes = sub.map( child => {
-				if( child == null ) return null
 				return ( child instanceof $mol_view ) ? child.dom_node() : String( child )
 			})
 			
@@ -266,7 +265,7 @@ namespace $ {
 			return names
 		}
 		
-		attr_static() : { [ key : string ] : string|number|boolean } {
+		attr_static() : { [ key : string ] : string|number|boolean|null } {
 			let attrs : any = {}
 			
 			for( let name of this.view_names() ) attrs[ name.replace( /\$/g , '' ).replace( /^(?=\d)/ , '_' ).toLowerCase() ] = ''
@@ -274,7 +273,7 @@ namespace $ {
 			return attrs
 		}
 		
-		attr() : { [ key : string ] : string|number|boolean } {
+		attr() : { [ key : string ] : string|number|boolean|null } {
 			return {
 				'mol_view_error' : null ,
 			}
