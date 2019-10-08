@@ -55,7 +55,7 @@ class $my_app extends $mol_jsx_view {
 	title = 'Hello'
 
 	// reactive subtree cache
-	@ $mol_atom2_prop
+	@ $mol_mem
 	valueOf() { return super.valueOf() }
 
 	change( event : Event ) {
