@@ -4,7 +4,7 @@ namespace $ {
 		el : Element ,
 		childNodes : NodeList | Array< Node | string | null >
 	) {
-		const node_set = new Set< Node | string | null >( [ ... childNodes ] )
+		const node_set = new Set< Node | string | null >( childNodes )
 		
 		let nextNode : Node | null = el.firstChild
 		for( let view of childNodes ) {
