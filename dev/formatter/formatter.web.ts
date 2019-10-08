@@ -1,1 +1,0 @@
-globalThis['devtoolsFormatters'] = globalThis['devtoolsFormatters'] || []

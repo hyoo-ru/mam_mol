@@ -18,6 +18,7 @@ module $ {
 
 		'Simple property' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				@ $mol_atom2_field
@@ -34,6 +35,7 @@ module $ {
 
 		'Instant actualization' () {
 
+			@ $mol_class
 			class Source extends $mol_object2 {
 
 				@ $mol_atom2_field
@@ -41,6 +43,7 @@ module $ {
 
 			}
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				@ $mol_atom2_field
@@ -60,6 +63,7 @@ module $ {
 
 		'Access to cached value' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				@ $mol_atom2_field
@@ -76,6 +80,7 @@ module $ {
 
 		'Do not recalc slaves on equal changes' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				@ $mol_atom2_field
@@ -97,6 +102,7 @@ module $ {
 
 		'Do not recalc grand slave on equal direct slave result ' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				@ $mol_atom2_field
@@ -121,6 +127,7 @@ module $ {
 
 		'Recalc when [not changed master] changes [following master]' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				@ $mol_atom2_field
@@ -151,6 +158,7 @@ module $ {
 
 		'Branch switching' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 				
 				@ $mol_atom2_field
@@ -183,6 +191,7 @@ module $ {
 
 		'Forbidden self invalidation' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 				
 				@ $mol_atom2_field
@@ -205,6 +214,7 @@ module $ {
 
 		'Side effect inside computation' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 				
 				@ $mol_atom2_field
@@ -226,6 +236,7 @@ module $ {
 
 		'Forbidden cyclic dependency' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 				
 				@ $mol_atom2_field
@@ -242,6 +253,7 @@ module $ {
 
 		'Forget sub fibers on complete' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				static counter = 0
@@ -268,10 +280,12 @@ module $ {
 
 			let counter = 0
 
+			@ $mol_class
 			class Having extends $mol_object2 {
 				destructor() { counter++ }
 			}
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				@ $mol_atom2_field
@@ -301,6 +315,7 @@ module $ {
 
 		async 'Do not destroy putted value' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				@ $mol_atom2_field
@@ -330,6 +345,7 @@ module $ {
 
 		'Restore after error' () {
 
+			@ $mol_class
 			class App extends $mol_object2 {
 
 				@ $mol_atom2_field
