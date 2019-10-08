@@ -203,6 +203,7 @@ namespace $ {
 			const sub = this.sub_visible()
 			
 			const nodes = sub.map( child => {
+				if( child == null ) return null
 				return ( child instanceof $mol_view ) ? child.dom_node() : String( child )
 			})
 			
