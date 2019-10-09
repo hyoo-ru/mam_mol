@@ -27,7 +27,6 @@ jobs:
     
     - name: Build app
       run: |
-        node -v
         cd ..
         ls
         mkdir mam/mol
