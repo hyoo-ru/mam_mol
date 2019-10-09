@@ -68,3 +68,7 @@ const Duration = $mol_data_wrapper( $mol_data_variant( $mol_data_string , $mol_d
 JSON.stringify( Duration( 'P1D' ) ) // "P1DT"
 JSON.stringify( Duration( 1000 ) ) // "PT1S"
 ```
+
+# Similar projects
+
+- [gcanti/io-ts](https://github.com/gcanti/io-ts) - Runtime type system for IO decoding/encoding
