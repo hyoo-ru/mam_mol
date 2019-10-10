@@ -1,12 +1,19 @@
 namespace $ {
 
+	[].map
+
 	export class $mol_vector< Value , Length extends number > extends Array< Value > {
 
 		length! : Length
 
 		constructor( ... values : Value[] & { length : Length } ) { super( ... values ) }
 		
-		map! : < Res >( convert : ( value : Value , index : number , array : this ) => Res , self? : any )=> $mol_vector< Res , Length >
+		map< Res >(
+			convert : ( value : Value , index : number , array : this ) => Res ,
+			self? : any ,
+		) : $mol_vector< Res , Length > {
+			return super.map( convert , self ) as any
+		}
 
 		merged< Patch >(
 			patches : readonly Patch[] & { length : Length } ,
