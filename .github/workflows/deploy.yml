@@ -27,7 +27,7 @@ jobs:
         cd ..
         ls
         mkdir mam/mol
-        mv mol/* mol/.* mam/mol
+        mv mol/* mol/.nojekyll mam/mol
         cd mam
         yarn
         yarn start mol/app/demo
