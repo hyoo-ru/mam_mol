@@ -561,17 +561,33 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	/**
 	 *  ```
 	 *  Lamp_row!id $mol_link
-	 *  	title <= lamp_title!id
+	 *  	sub / <= Lamp_row_dimmer!id
 	 *  	arg <= lamp_arg!id
 	 *  ```
 	 **/
 	@ $mol_mem_key
 	Lamp_row( id : any ) {
 		return (( obj )=>{
-			obj.title = () => this.lamp_title(id)
+			obj.sub = () => [].concat( this.Lamp_row_dimmer(id) )
 			obj.arg = () => this.lamp_arg(id)
 			return obj
 		})( new this.$.$mol_link(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  Lamp_row_dimmer!id $mol_dimmer
+	 *  	needle <= filter
+	 *  	haystack <= lamp_title!id
+	 *  ```
+	 **/
+	@ $mol_mem_key
+	Lamp_row_dimmer( id : any ) {
+		return (( obj )=>{
+			obj.needle = () => this.filter()
+			obj.haystack = () => this.lamp_title(id)
+			return obj
+		})( new this.$.$mol_dimmer(  ) )
 	}
 
 	/**

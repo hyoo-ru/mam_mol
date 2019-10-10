@@ -2961,11 +2961,19 @@ declare namespace $ {
         /**
          *  ```
          *  Lamp_row!id $mol_link
-         *  	title <= lamp_title!id
+         *  	sub / <= Lamp_row_dimmer!id
          *  	arg <= lamp_arg!id
          *  ```
          **/
         Lamp_row(id: any): $mol_link;
+        /**
+         *  ```
+         *  Lamp_row_dimmer!id $mol_dimmer
+         *  	needle <= filter
+         *  	haystack <= lamp_title!id
+         *  ```
+         **/
+        Lamp_row_dimmer(id: any): $mol_dimmer;
         /**
          *  ```
          *  lamp_title!id \

@@ -6908,16 +6908,30 @@ var $;
         /**
          *  ```
          *  Lamp_row!id $mol_link
-         *  	title <= lamp_title!id
+         *  	sub / <= Lamp_row_dimmer!id
          *  	arg <= lamp_arg!id
          *  ```
          **/
         Lamp_row(id) {
             return ((obj) => {
-                obj.title = () => this.lamp_title(id);
+                obj.sub = () => [].concat(this.Lamp_row_dimmer(id));
                 obj.arg = () => this.lamp_arg(id);
                 return obj;
             })(new this.$.$mol_link());
+        }
+        /**
+         *  ```
+         *  Lamp_row_dimmer!id $mol_dimmer
+         *  	needle <= filter
+         *  	haystack <= lamp_title!id
+         *  ```
+         **/
+        Lamp_row_dimmer(id) {
+            return ((obj) => {
+                obj.needle = () => this.filter();
+                obj.haystack = () => this.lamp_title(id);
+                return obj;
+            })(new this.$.$mol_dimmer());
         }
         /**
          *  ```
@@ -7011,6 +7025,9 @@ var $;
     __decorate([
         $.$mol_mem_key
     ], $mol_app_lamps.prototype, "Lamp_row", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_lamps.prototype, "Lamp_row_dimmer", null);
     $.$mol_app_lamps = $mol_app_lamps;
 })($ || ($ = {}));
 //lamps.view.tree.js.map
