@@ -556,9 +556,9 @@ declare namespace $ {
             exclude?: string[];
         }): $mol_file[];
         static dependors: {
-            [index: string]: (source: $mol_file) => {
+            [index: string]: undefined | ((source: $mol_file) => {
                 [index: string]: number;
-            };
+            });
         };
         srcDeps(path: string): {
             [index: string]: number;

@@ -2546,7 +2546,7 @@ declare namespace $ {
         constructor(...values: Value[] & {
             length: Length;
         });
-        map: <Res>(convert: (value: Value, index: number, array: this) => Res, self?: any) => $mol_vector<Res, Length>;
+        map<Res>(convert: (value: Value, index: number, array: this) => Res, self?: any): $mol_vector<Res, Length>;
         merged<Patch>(patches: readonly Patch[] & {
             length: Length;
         }, combine: (value: Value, patch: Patch) => Value): this;

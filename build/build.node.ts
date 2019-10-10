@@ -353,7 +353,7 @@ namespace $ {
 			return this.sourcesAll( { path , exclude } ).filter( src => /(css)$/.test( src.ext() ) )
 		}
 		
-		static dependors : { [ index : string ] : ( source : $mol_file )=> { [ index : string ] : number } } = {}
+		static dependors : { [ index : string ] : undefined | ( ( source : $mol_file )=> { [ index : string ] : number } ) } = {}
 		
 		@ $mol_mem_key
 		srcDeps( path : string ) {
