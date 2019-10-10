@@ -12,9 +12,6 @@ jobs:
     
     steps:
     
-#     - name: Set up NodeJS
-#       uses: actions/setup-node@v1
-    
     - name: Checkout sources
       uses: actions/checkout@v1
     
@@ -29,8 +26,7 @@ jobs:
       run: |
         cd ..
         ls
-        mkdir mam/mol
-        mv mol/* mam/mol
+        mv mol mam/mol
         cd mam
         yarn
         yarn start mol/app/demo
@@ -70,9 +66,11 @@ jobs:
         node ./mol/build/-/node.test.js mol/syntax2
         node ./mol/build/-/node.test.js mol/func/sandbox/demo
         node ./mol/build/-/node.test.js mol/app/portal
+        cd ..
+        mv mam/mol mol
         
     - name: Deploy on GitHub Pages
       uses: alex-page/blazing-fast-gh-pages-deploy@v1.0.1
       with:
         repo-token: ${{ secrets.GH_PAT }}
-        site-directory: '../mam/mol'
+        site-directory: '.'
