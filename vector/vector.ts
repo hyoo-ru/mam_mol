@@ -1,7 +1,5 @@
 namespace $ {
 
-	[].map
-
 	export class $mol_vector< Value , Length extends number > extends Array< Value > {
 
 		length! : Length

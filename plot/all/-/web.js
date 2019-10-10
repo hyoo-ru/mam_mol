@@ -1711,7 +1711,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    [].map;
     class $mol_vector extends Array {
         constructor(...values) { super(...values); }
         map(convert, self) {
