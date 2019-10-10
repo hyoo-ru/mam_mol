@@ -1157,7 +1157,7 @@ namespace $ {
 	$mol_build.dependors[ 'view.ts' ] = source => {
 		var treeName = './' + source.name().replace( /ts$/ , 'tree' )
 		var depends : { [ index : string ] : number } = { [ treeName ] : 0 }
-		$mol_build_depsMerge( depends , $mol_build.dependors[ 'ts' ]( source ) )
+		$mol_build_depsMerge( depends , $mol_build.dependors[ 'ts' ]!( source ) )
 		return depends
 	}
 	
