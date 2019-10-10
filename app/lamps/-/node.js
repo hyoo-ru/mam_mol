@@ -6935,7 +6935,7 @@ var $;
         }
         /**
          *  ```
-         *  Lamp_row!id $mol_lamps_lamp_row
+         *  Lamp_row!id $mol_app_lamps_lamp_row
          *  	title <= lamp_title!id
          *  	arg <= lamp_arg!id
          *  ```
@@ -6945,7 +6945,7 @@ var $;
                 obj.title = () => this.lamp_title(id);
                 obj.arg = () => this.lamp_arg(id);
                 return obj;
-            })(new this.$.$mol_lamps_lamp_row());
+            })(new this.$.$mol_app_lamps_lamp_row());
         }
         /**
          *  ```
@@ -7042,7 +7042,7 @@ var $;
     $.$mol_app_lamps = $mol_app_lamps;
 })($ || ($ = {}));
 (function ($) {
-    class $mol_lamps_lamp_row extends $.$mol_link {
+    class $mol_app_lamps_lamp_row extends $.$mol_link {
         /**
          *  ```
          *  minimal_height 40
@@ -7060,7 +7060,7 @@ var $;
             return [].concat(this.title());
         }
     }
-    $.$mol_lamps_lamp_row = $mol_lamps_lamp_row;
+    $.$mol_app_lamps_lamp_row = $mol_app_lamps_lamp_row;
 })($ || ($ = {}));
 //lamps.view.tree.js.map
 ;
