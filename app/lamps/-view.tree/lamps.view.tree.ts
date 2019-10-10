@@ -560,7 +560,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 
 	/**
 	 *  ```
-	 *  Lamp_row!id $mol_app_lamps_lamp_row
+	 *  Lamp_row!id $mol_link
 	 *  	title <= lamp_title!id
 	 *  	arg <= lamp_arg!id
 	 *  ```
@@ -571,7 +571,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 			obj.title = () => this.lamp_title(id)
 			obj.arg = () => this.lamp_arg(id)
 			return obj
-		})( new this.$.$mol_app_lamps_lamp_row(  ) )
+		})( new this.$.$mol_link(  ) )
 	}
 
 	/**
@@ -591,28 +591,6 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	lamp_arg( id : any ) {
 		return ({
 		})
-	}
-
-} }
-
-namespace $ { export class $mol_app_lamps_lamp_row extends $mol_link {
-
-	/**
-	 *  ```
-	 *  minimal_height 40
-	 *  ```
-	 **/
-	minimal_height() {
-		return 40
-	}
-
-	/**
-	 *  ```
-	 *  sub / <= title
-	 *  ```
-	 **/
-	sub() {
-		return [].concat( this.title() )
 	}
 
 } }

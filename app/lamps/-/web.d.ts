@@ -2960,12 +2960,12 @@ declare namespace $ {
         photo(): string;
         /**
          *  ```
-         *  Lamp_row!id $mol_app_lamps_lamp_row
+         *  Lamp_row!id $mol_link
          *  	title <= lamp_title!id
          *  	arg <= lamp_arg!id
          *  ```
          **/
-        Lamp_row(id: any): $mol_app_lamps_lamp_row;
+        Lamp_row(id: any): $mol_link;
         /**
          *  ```
          *  lamp_title!id \
@@ -2980,22 +2980,6 @@ declare namespace $ {
         lamp_arg(id: any): {};
     }
 }
-declare namespace $ {
-    class $mol_app_lamps_lamp_row extends $mol_link {
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
-        minimal_height(): number;
-        /**
-         *  ```
-         *  sub / <= title
-         *  ```
-         **/
-        sub(): any[];
-    }
-}
 
 declare namespace $.$$ {
     class $mol_app_lamps extends $.$mol_app_lamps {
@@ -3008,7 +2992,7 @@ declare namespace $.$$ {
         lamps_dict(): {
             [key: string]: any;
         };
-        lamp_rows(): $mol_app_lamps_lamp_row[];
+        lamp_rows(): $.$mol_link[];
         lamp_title(id: string): any;
         _filter_timer: any;
         filter(next?: string, force?: $mol_atom_force): string;

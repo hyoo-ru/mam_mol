@@ -6928,7 +6928,7 @@ var $;
         }
         /**
          *  ```
-         *  Lamp_row!id $mol_app_lamps_lamp_row
+         *  Lamp_row!id $mol_link
          *  	title <= lamp_title!id
          *  	arg <= lamp_arg!id
          *  ```
@@ -6938,7 +6938,7 @@ var $;
                 obj.title = () => this.lamp_title(id);
                 obj.arg = () => this.lamp_arg(id);
                 return obj;
-            })(new this.$.$mol_app_lamps_lamp_row());
+            })(new this.$.$mol_link());
         }
         /**
          *  ```
@@ -7033,27 +7033,6 @@ var $;
         $.$mol_mem_key
     ], $mol_app_lamps.prototype, "Lamp_row", null);
     $.$mol_app_lamps = $mol_app_lamps;
-})($ || ($ = {}));
-(function ($) {
-    class $mol_app_lamps_lamp_row extends $.$mol_link {
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
-        minimal_height() {
-            return 40;
-        }
-        /**
-         *  ```
-         *  sub / <= title
-         *  ```
-         **/
-        sub() {
-            return [].concat(this.title());
-        }
-    }
-    $.$mol_app_lamps_lamp_row = $mol_app_lamps_lamp_row;
 })($ || ($ = {}));
 //lamps.view.tree.js.map
 ;
