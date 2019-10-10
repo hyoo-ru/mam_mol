@@ -26,7 +26,8 @@ jobs:
       run: |
         cd ..
         ls
-        mv mol mam/mol
+        mkdir mam/mol
+        mv mol/* mol/.* mam/mol
         cd mam
         yarn
         yarn start mol/app/demo
@@ -66,11 +67,9 @@ jobs:
         node ./mol/build/-/node.test.js mol/syntax2
         node ./mol/build/-/node.test.js mol/func/sandbox/demo
         node ./mol/build/-/node.test.js mol/app/portal
-        cd ..
-        mv mam/mol mol
         
     - name: Deploy on GitHub Pages
       uses: alex-page/blazing-fast-gh-pages-deploy@v1.0.1
       with:
         repo-token: ${{ secrets.GH_PAT }}
-        site-directory: './'
+        site-directory: '../mam/mol'
