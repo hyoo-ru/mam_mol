@@ -1721,6 +1721,7 @@ var $;
         $mol_keyboard_code[$mol_keyboard_code["graveAccent"] = 192] = "graveAccent";
         $mol_keyboard_code[$mol_keyboard_code["bracketOpen"] = 219] = "bracketOpen";
         $mol_keyboard_code[$mol_keyboard_code["slashBack"] = 220] = "slashBack";
+        $mol_keyboard_code[$mol_keyboard_code["slashBackLeft"] = 226] = "slashBackLeft";
         $mol_keyboard_code[$mol_keyboard_code["bracketClose"] = 221] = "bracketClose";
         $mol_keyboard_code[$mol_keyboard_code["quoteSingle"] = 222] = "quoteSingle";
     })($mol_keyboard_code = $.$mol_keyboard_code || ($.$mol_keyboard_code = {}));

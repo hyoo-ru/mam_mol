@@ -2730,6 +2730,7 @@ var $;
         $mol_keyboard_code[$mol_keyboard_code["graveAccent"] = 192] = "graveAccent";
         $mol_keyboard_code[$mol_keyboard_code["bracketOpen"] = 219] = "bracketOpen";
         $mol_keyboard_code[$mol_keyboard_code["slashBack"] = 220] = "slashBack";
+        $mol_keyboard_code[$mol_keyboard_code["slashBackLeft"] = 226] = "slashBackLeft";
         $mol_keyboard_code[$mol_keyboard_code["bracketClose"] = 221] = "bracketClose";
         $mol_keyboard_code[$mol_keyboard_code["quoteSingle"] = 222] = "quoteSingle";
     })($mol_keyboard_code = $.$mol_keyboard_code || ($.$mol_keyboard_code = {}));
@@ -7052,7 +7053,7 @@ var $;
                 this._filter_timer = null;
             }
             lamps_all() {
-                return $.$mol_csv_parse($.$mol_http.resource('http://lamptest.ru/led.php').text());
+                return $.$mol_csv_parse($.$mol_http.resource('//lamptest.ru/led.php').text());
             }
             lamps() {
                 return this.lamps_all().filter($.$mol_match_text(this.filter(), (lamp) => Object.keys(lamp).map(field => lamp[field])));
