@@ -12,9 +12,6 @@ jobs:
     
     steps:
     
-#     - name: Set up NodeJS
-#       uses: actions/setup-node@v1
-    
     - name: Checkout sources
       uses: actions/checkout@v1
     
@@ -29,8 +26,7 @@ jobs:
       run: |
         cd ..
         ls
-        mkdir mam/mol
-        mv mol/* mam/mol
+        mv mol mam/mol
         cd mam
         yarn
         yarn start mol/app/demo
