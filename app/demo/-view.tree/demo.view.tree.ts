@@ -486,8 +486,8 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 
 	/**
 	 *  ```
-	 *  Source_link $mol_link
-	 *  	sub / <= Source_icon
+	 *  Source_link $mol_link_iconed
+	 *  	title \
 	 *  	uri <= source_link
 	 *  	target \_blank
 	 *  ```
@@ -495,23 +495,11 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	@ $mol_mem
 	Source_link() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Source_icon() )
+			obj.title = () => ""
 			obj.uri = () => this.source_link()
 			obj.target = () => "_blank"
 			return obj
-		})( new this.$.$mol_link(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  Source_icon $mol_icon_source
-	 *  ```
-	 **/
-	@ $mol_mem
-	Source_icon() {
-		return (( obj )=>{
-			return obj
-		})( new this.$.$mol_icon_source(  ) )
+		})( new this.$.$mol_link_iconed(  ) )
 	}
 
 	/**

@@ -28238,29 +28238,19 @@ var $;
         }
         /**
          *  ```
-         *  Source_link $mol_link
-         *  	sub / <= Source_icon
+         *  Source_link $mol_link_iconed
+         *  	title \
          *  	uri <= source_link
          *  	target \_blank
          *  ```
          **/
         Source_link() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.Source_icon());
+                obj.title = () => "";
                 obj.uri = () => this.source_link();
                 obj.target = () => "_blank";
                 return obj;
-            })(new this.$.$mol_link());
-        }
-        /**
-         *  ```
-         *  Source_icon $mol_icon_source
-         *  ```
-         **/
-        Source_icon() {
-            return ((obj) => {
-                return obj;
-            })(new this.$.$mol_icon_source());
+            })(new this.$.$mol_link_iconed());
         }
         /**
          *  ```
@@ -28350,9 +28340,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_detail.prototype, "Source_link", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_detail.prototype, "Source_icon", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_detail.prototype, "Edit", null);

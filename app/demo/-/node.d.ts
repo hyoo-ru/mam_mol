@@ -13629,19 +13629,13 @@ declare namespace $ {
         tools(): any[];
         /**
          *  ```
-         *  Source_link $mol_link
-         *  	sub / <= Source_icon
+         *  Source_link $mol_link_iconed
+         *  	title \
          *  	uri <= source_link
          *  	target \_blank
          *  ```
          **/
-        Source_link(): $mol_link;
-        /**
-         *  ```
-         *  Source_icon $mol_icon_source
-         *  ```
-         **/
-        Source_icon(): $mol_icon_source;
+        Source_link(): $$.$mol_link_iconed;
         /**
          *  ```
          *  source_link \

@@ -405,6 +405,10 @@ sans-serif;
 	vertical-align: -10%;
 }
 
+[mol_theme="$mol_theme_dark"] [mol_link_iconed_icon] {
+	filter: invert(1);
+}
+
 [mol_row] {
 	display: flex;
 	flex-wrap: wrap;
