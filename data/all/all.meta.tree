@@ -1,0 +1,15 @@
+include \/mol/data/array
+include \/mol/data/boolean
+include \/mol/data/const
+include \/mol/data/email
+include \/mol/data/instance
+include \/mol/data/integer
+include \/mol/data/nominal
+include \/mol/data/number
+include \/mol/data/optional
+include \/mol/data/pattern
+include \/mol/data/record
+include \/mol/data/string
+include \/mol/data/string
+include \/mol/data/variant
+include \/mol/data/wrapper
