@@ -61,9 +61,8 @@ $mol_app_demo_menu $mol_page
 		
 $mol_app_demo_detail $mol_page
 	tools /
-		<= Source_link $mol_link
-			sub /
-				<= Source_icon $mol_icon_source
+		<= Source_link $mol_link_iconed
+			title \
 			uri <= source_link \
 			target \_blank
 		<= Edit $mol_link
