@@ -97,6 +97,7 @@ namespace $ {
     graveAccent = 192,
     bracketOpen = 219,
     slashBack = 220,
+    slashBackLeft = 226,
     bracketClose = 221,
     quoteSingle = 222
   }

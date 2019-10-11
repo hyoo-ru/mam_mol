@@ -69,11 +69,8 @@ $mol_app_lamps $mol_book
 						<= Photo $mol_image
 							uri <= photo \
 							title <= title
-	Lamp_row!id $mol_lamps_lamp_row
-		title <= lamp_title!id \
+	Lamp_row!id $mol_link
+		sub / <= Lamp_row_dimmer!id $mol_dimmer
+			needle <= filter
+			haystack <= lamp_title!id \
 		arg <= lamp_arg!id *
-
-$mol_lamps_lamp_row $mol_link
-	minimal_height 40
-	sub /
-		<= title

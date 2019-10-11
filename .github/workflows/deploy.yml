@@ -12,9 +12,6 @@ jobs:
     
     steps:
     
-#     - name: Set up NodeJS
-#       uses: actions/setup-node@v1
-    
     - name: Checkout sources
       uses: actions/checkout@v1
     
@@ -30,7 +27,7 @@ jobs:
         cd ..
         ls
         mkdir mam/mol
-        mv mol/* mam/mol
+        mv mol/* mol/.nojekyll mam/mol
         cd mam
         yarn
         yarn start mol/app/demo

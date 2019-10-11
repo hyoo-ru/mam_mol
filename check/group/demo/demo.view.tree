@@ -1,0 +1,35 @@
+$mol_check_group_demo $mol_demo_small
+	title @ \Group of checkboxes
+	sub /
+		<= All $mol_check_group
+			title \SPECIAL
+			checks /
+				<= Strength
+				<= Perception
+				<= Endurance
+				<= Charisma
+				<= Intelligence
+				<= Agility
+				<= Luck
+		<= Partial $mol_list rows /
+			<= Strength $mol_check_box
+				title <= strength_title \Strength
+				checked?val <=> strength?val false
+			<= Perception $mol_check_box
+				title <= perception_title \Perception
+				checked?val <=> perception?val true
+			<= Endurance $mol_check_box
+				title <= endurance_title \Endurance
+				checked?val <=> endurance?val false
+			<= Charisma $mol_check_box
+				title <= charisma_title \Charisma
+				checked?val <=> charisma?val false
+			<= Intelligence $mol_check_box
+				title <= intelligence_title \Intelligence
+				checked?val <=> intelligence?val true
+			<= Agility $mol_check_box
+				title <= agility_title \Agility
+				checked?val <=> agility?val true
+			<= Luck $mol_check_box
+				title <= luck_title \Luck
+				checked?val <=> luck?val true
