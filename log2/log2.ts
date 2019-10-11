@@ -12,7 +12,7 @@ namespace $ {
 			const wrapped = function( this : This , ... args : Args ) {
 				
 				const outer = $mol_log2.current
-				const inner = $mol_log2.current = new Inner( `${ this || '' }.${ task.name }` , args )
+				const inner = $mol_log2.current = new Inner( this , task.name , args )
 				
 				try {
 					return task.call( this , ... args )
@@ -27,11 +27,12 @@ namespace $ {
 		}
 
 		constructor(
-			id : string ,
+			readonly host : any ,
+			readonly id : string ,
 			readonly args : any[] ,
 		) {
 			super()
-			this[ Symbol.toStringTag ] = id
+			this[ Symbol.toStringTag ] = host ? `${ host }.${ id }` : id
 		}
 
 		stream = [] as $mol_log2_line[]
@@ -47,7 +48,9 @@ namespace $ {
 
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_span( {} ,
-				$mol_dev_format_strong( `${this}` ) ,
+				... $mol_maybe( this.host ).map( $mol_dev_format_auto ) ,
+				'.' ,
+				$mol_dev_format_strong( this.id ) ,
 				'(',
 				... this.args.map( $mol_dev_format_auto ) ,
 				') ' ,
@@ -68,7 +71,7 @@ namespace $ {
 			
 			if( !$mol_log2.current ) {
 				console.warn( new Error( `$mol_log.current is not defined. Wrap entry point to $mol_log!` ) )
-				$mol_log2.current = new $mol_log2( '$mol_log2_default' , [] )
+				$mol_log2.current = new $mol_log2( null , '$mol_log2_default' , [] )
 				console.debug( $mol_log2.current )
 			}
 
@@ -145,7 +148,7 @@ namespace $ {
 
 	export let $mol_log2_token_empty = new $mol_log2_token( '' )
 
-	export let $mol_log2_legend = new $mol_log2_table( '$mol_log2_legend' , [] )
+	export let $mol_log2_legend = new $mol_log2_table( null , '$mol_log2_legend' , [] )
 
 	if( !$mol_log2.excludes ) $mol_log2_legend.info( $mol_log2_token_empty , 'Use `$mol_log2.excludes : null | RegExp[]` to toggle logs' )
 

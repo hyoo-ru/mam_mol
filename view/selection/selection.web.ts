@@ -7,10 +7,7 @@ namespace $ {
 			( event : FocusEvent )=> {
 				new $mol_after_tick(
 					$mol_fiber_root(
-						$mol_log_group(
-							'$mol_view_selection focus' ,
-							()=> $mol_view_selection.focus( event ) ,
-						)
+						()=> $mol_view_selection.focus( event )
 					)
 				)
 			} ,
@@ -22,10 +19,7 @@ namespace $ {
 			( event : FocusEvent )=> {
 				new $mol_after_tick(
 					$mol_fiber_root(
-						$mol_log_group(
-							'$mol_view_selection focus' ,
-							()=> $mol_view_selection.blur( event ) ,
-						)
+						()=> $mol_view_selection.blur( event )
 					)
 				)
 			} ,

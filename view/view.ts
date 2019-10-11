@@ -17,11 +17,18 @@ namespace $ {
 	/// Reactive statefull lazy ViewModel
 	export class $mol_view extends $mol_object {
 		
-		@ $mol_atom2_field
-		static get Root() {
-			return $mol_atom2_dict({
-				get: ( id : number )=> new this
-			})
+		@ $mol_mem_key
+		static Root( id: number ) {
+			return new this
+		}
+
+		@ $mol_mem
+		autorun() {
+			return $mol_atom2_autorun( ()=> {
+				this.dom_tree()
+				document.title = this.title()
+				return this
+			} )
 		}
 
 		static autobind() {
@@ -37,14 +44,10 @@ namespace $ {
 					continue
 				}
 				
-				const view = View.Root[ i ]
-				
-				$mol_atom2_autorun(()=>{
-					view.dom_node( nodes.item( i ) )
-					view.dom_tree()
-					document.title = view.title()
-					return view
-				})
+				const view = View.Root( i )
+				view.dom_node( nodes.item( i ) )
+				view.autorun()
+
 			}
 			
 		}
@@ -139,14 +142,17 @@ namespace $ {
 			
 			const node = next || $mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
-			node.setAttribute( 'id' , this.dom_id() )
+			const id = this.dom_id()
+			node.setAttribute( 'id' , id )
+			node.toString = $mol_const( '<#' + id + '>' )
+
 			$mol_dom_render_attributes( node , this.attr_static() )
 			
 			const events = this.event()
 			for( let event_name in events ) {
 				node.addEventListener(
 					event_name ,
-					$mol_fiber_solid.func( $mol_log_group( `${ this } ${ event_name }` , events[ event_name ] ) ) ,
+					$mol_fiber_solid.func( $mol_log2.func( events[ event_name ] ) ) ,
 					{ passive : false } as any ,
 				)
 			}
