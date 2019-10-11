@@ -6159,6 +6159,240 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_square extends $mol_icon {
+        /**
+         *  ```
+         *  path \M3,3V21H21V3
+         *  ```
+         **/
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_square_small extends $mol_icon {
+        /**
+         *  ```
+         *  path \M10,14V10H14V14H10Z
+         *  ```
+         **/
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_check_group extends $mol_check_box {
+        /**
+         *  ```
+         *  checks /$mol_check
+         *  ```
+         **/
+        checks(): readonly $mol_check[];
+        /**
+         *  ```
+         *  full true
+         *  ```
+         **/
+        full(): boolean;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_check_group extends $.$mol_check_group {
+        checked(next?: boolean): boolean;
+        full(): boolean;
+        Icon(): $mol_icon_tick | $mol_icon_square_small;
+    }
+}
+
+declare namespace $ {
+    class $mol_check_group_demo extends $mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Group of checkboxes
+         *  ```
+         **/
+        title(): string;
+        /**
+         *  ```
+         *  sub /
+         *  	<= All
+         *  	<= Partial
+         *  ```
+         **/
+        sub(): any[];
+        /**
+         *  ```
+         *  All $mol_check_group
+         *  	title \SPECIAL
+         *  	checks /
+         *  		<= Strength
+         *  		<= Perception
+         *  		<= Endurance
+         *  		<= Charisma
+         *  		<= Intelligence
+         *  		<= Agility
+         *  		<= Luck
+         *  ```
+         **/
+        All(): $mol_check_group;
+        /**
+         *  ```
+         *  Partial $mol_list rows /
+         *  	<= Strength
+         *  	<= Perception
+         *  	<= Endurance
+         *  	<= Charisma
+         *  	<= Intelligence
+         *  	<= Agility
+         *  	<= Luck
+         *  ```
+         **/
+        Partial(): $mol_list;
+        /**
+         *  ```
+         *  Strength $mol_check_box
+         *  	title <= strength_title
+         *  	checked?val <=> strength?val
+         *  ```
+         **/
+        Strength(): $mol_check_box;
+        /**
+         *  ```
+         *  strength_title \Strength
+         *  ```
+         **/
+        strength_title(): string;
+        /**
+         *  ```
+         *  strength?val false
+         *  ```
+         **/
+        strength(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Perception $mol_check_box
+         *  	title <= perception_title
+         *  	checked?val <=> perception?val
+         *  ```
+         **/
+        Perception(): $mol_check_box;
+        /**
+         *  ```
+         *  perception_title \Perception
+         *  ```
+         **/
+        perception_title(): string;
+        /**
+         *  ```
+         *  perception?val true
+         *  ```
+         **/
+        perception(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Endurance $mol_check_box
+         *  	title <= endurance_title
+         *  	checked?val <=> endurance?val
+         *  ```
+         **/
+        Endurance(): $mol_check_box;
+        /**
+         *  ```
+         *  endurance_title \Endurance
+         *  ```
+         **/
+        endurance_title(): string;
+        /**
+         *  ```
+         *  endurance?val false
+         *  ```
+         **/
+        endurance(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Charisma $mol_check_box
+         *  	title <= charisma_title
+         *  	checked?val <=> charisma?val
+         *  ```
+         **/
+        Charisma(): $mol_check_box;
+        /**
+         *  ```
+         *  charisma_title \Charisma
+         *  ```
+         **/
+        charisma_title(): string;
+        /**
+         *  ```
+         *  charisma?val false
+         *  ```
+         **/
+        charisma(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Intelligence $mol_check_box
+         *  	title <= intelligence_title
+         *  	checked?val <=> intelligence?val
+         *  ```
+         **/
+        Intelligence(): $mol_check_box;
+        /**
+         *  ```
+         *  intelligence_title \Intelligence
+         *  ```
+         **/
+        intelligence_title(): string;
+        /**
+         *  ```
+         *  intelligence?val true
+         *  ```
+         **/
+        intelligence(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Agility $mol_check_box
+         *  	title <= agility_title
+         *  	checked?val <=> agility?val
+         *  ```
+         **/
+        Agility(): $mol_check_box;
+        /**
+         *  ```
+         *  agility_title \Agility
+         *  ```
+         **/
+        agility_title(): string;
+        /**
+         *  ```
+         *  agility?val true
+         *  ```
+         **/
+        agility(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Luck $mol_check_box
+         *  	title <= luck_title
+         *  	checked?val <=> luck?val
+         *  ```
+         **/
+        Luck(): $mol_check_box;
+        /**
+         *  ```
+         *  luck_title \Luck
+         *  ```
+         **/
+        luck_title(): string;
+        /**
+         *  ```
+         *  luck?val true
+         *  ```
+         **/
+        luck(val?: any, force?: $mol_atom_force): any;
+    }
+}
+
+declare namespace $ {
     class $mol_check_icon extends $mol_check {
     }
 }

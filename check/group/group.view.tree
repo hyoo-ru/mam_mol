@@ -1,0 +1,3 @@
+$mol_check_group $mol_check_box
+	checks /$mol_check
+	full true

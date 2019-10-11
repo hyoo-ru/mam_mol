@@ -1,0 +1,14 @@
+[mol_check_group_demo] {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+[mol_check_group_demo_partial] {
+	display: flex;
+	flex-direction: column;
+}
+
+[mol_check_group_demo_all] {
+	box-shadow: 0 1px 0 0px var(--mol_theme_line);
+}

@@ -1094,6 +1094,50 @@ $mol_check_expand_demo $mol_demo_small
 			title <= c5Label @ \Non expandable
 			disabled true
 
+$mol_check_group $mol_check_box
+	checks /$mol_check
+	full true
+
+$mol_icon_square $mol_icon path \M3,3V21H21V3
+
+$mol_icon_square_small $mol_icon path \M10,14V10H14V14H10Z
+
+$mol_check_group_demo $mol_demo_small
+	title @ \Group of checkboxes
+	sub /
+		<= All $mol_check_group
+			title \SPECIAL
+			checks /
+				<= Strength
+				<= Perception
+				<= Endurance
+				<= Charisma
+				<= Intelligence
+				<= Agility
+				<= Luck
+		<= Partial $mol_list rows /
+			<= Strength $mol_check_box
+				title <= strength_title \Strength
+				checked?val <=> strength?val false
+			<= Perception $mol_check_box
+				title <= perception_title \Perception
+				checked?val <=> perception?val true
+			<= Endurance $mol_check_box
+				title <= endurance_title \Endurance
+				checked?val <=> endurance?val false
+			<= Charisma $mol_check_box
+				title <= charisma_title \Charisma
+				checked?val <=> charisma?val false
+			<= Intelligence $mol_check_box
+				title <= intelligence_title \Intelligence
+				checked?val <=> intelligence?val true
+			<= Agility $mol_check_box
+				title <= agility_title \Agility
+				checked?val <=> agility?val true
+			<= Luck $mol_check_box
+				title <= luck_title \Luck
+				checked?val <=> luck?val true
+
 $mol_check_icon $mol_check
 
 $mol_icon_microphone $mol_icon path \M12,2C13.66,2 15,3.34 15,5V11C15,12.66 13.66,14 12,14C10.34,14 9,12.66 9,11V5C9,3.34 10.34,2 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7C7,13.76 9.24,16 12,16C14.76,16 17,13.76 17,11H19Z

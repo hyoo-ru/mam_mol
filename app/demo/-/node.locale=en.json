@@ -60,6 +60,7 @@
 	"$mol_check_expand_demo_c2Label": "Expanded",
 	"$mol_check_expand_demo_c5Label": "Non expandable",
 	"$mol_check_expand_demo_title": "Checkbox-expand in various states",
+	"$mol_check_group_demo_title": "Group of checkboxes",
 	"$mol_check_icon_demo_title": "Iconic checkboxes in various states",
 	"$mol_code_demo_title": "Barcode scanner with various formats support",
 	"$mol_code_scan_label": "Scan",

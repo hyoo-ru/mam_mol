@@ -13443,6 +13443,436 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_square extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M3,3V21H21V3
+         *  ```
+         **/
+        path() {
+            return "M3,3V21H21V3";
+        }
+    }
+    $.$mol_icon_square = $mol_icon_square;
+})($ || ($ = {}));
+//square.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_square_small extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M10,14V10H14V14H10Z
+         *  ```
+         **/
+        path() {
+            return "M10,14V10H14V14H10Z";
+        }
+    }
+    $.$mol_icon_square_small = $mol_icon_square_small;
+})($ || ($ = {}));
+//small.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_check_group extends $.$mol_check_box {
+        /**
+         *  ```
+         *  checks /$mol_check
+         *  ```
+         **/
+        checks() {
+            return [].concat();
+        }
+        /**
+         *  ```
+         *  full true
+         *  ```
+         **/
+        full() {
+            return true;
+        }
+    }
+    $.$mol_check_group = $mol_check_group;
+})($ || ($ = {}));
+//group.view.tree.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_check_group extends $.$mol_check_group {
+            checked(next) {
+                if (next !== undefined) {
+                    for (const check of this.checks()) {
+                        check.checked(next);
+                    }
+                }
+                return this.checks().some(check => check.checked());
+            }
+            full() {
+                return this.checks().every(check => check.checked());
+            }
+            Icon() {
+                return this.full() ? new $.$mol_icon_tick : new $.$mol_icon_square_small;
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_check_group.prototype, "checked", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_check_group.prototype, "full", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_check_group.prototype, "Icon", null);
+        $$.$mol_check_group = $mol_check_group;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//group.view.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    class $mol_check_group_demo extends $.$mol_demo_small {
+        /**
+         *  ```
+         *  title @ \Group of checkboxes
+         *  ```
+         **/
+        title() {
+            return this.$.$mol_locale.text("$mol_check_group_demo_title");
+        }
+        /**
+         *  ```
+         *  sub /
+         *  	<= All
+         *  	<= Partial
+         *  ```
+         **/
+        sub() {
+            return [].concat(this.All(), this.Partial());
+        }
+        /**
+         *  ```
+         *  All $mol_check_group
+         *  	title \SPECIAL
+         *  	checks /
+         *  		<= Strength
+         *  		<= Perception
+         *  		<= Endurance
+         *  		<= Charisma
+         *  		<= Intelligence
+         *  		<= Agility
+         *  		<= Luck
+         *  ```
+         **/
+        All() {
+            return ((obj) => {
+                obj.title = () => "SPECIAL";
+                obj.checks = () => [].concat(this.Strength(), this.Perception(), this.Endurance(), this.Charisma(), this.Intelligence(), this.Agility(), this.Luck());
+                return obj;
+            })(new this.$.$mol_check_group());
+        }
+        /**
+         *  ```
+         *  Partial $mol_list rows /
+         *  	<= Strength
+         *  	<= Perception
+         *  	<= Endurance
+         *  	<= Charisma
+         *  	<= Intelligence
+         *  	<= Agility
+         *  	<= Luck
+         *  ```
+         **/
+        Partial() {
+            return ((obj) => {
+                obj.rows = () => [].concat(this.Strength(), this.Perception(), this.Endurance(), this.Charisma(), this.Intelligence(), this.Agility(), this.Luck());
+                return obj;
+            })(new this.$.$mol_list());
+        }
+        /**
+         *  ```
+         *  Strength $mol_check_box
+         *  	title <= strength_title
+         *  	checked?val <=> strength?val
+         *  ```
+         **/
+        Strength() {
+            return ((obj) => {
+                obj.title = () => this.strength_title();
+                obj.checked = (val) => this.strength(val);
+                return obj;
+            })(new this.$.$mol_check_box());
+        }
+        /**
+         *  ```
+         *  strength_title \Strength
+         *  ```
+         **/
+        strength_title() {
+            return "Strength";
+        }
+        /**
+         *  ```
+         *  strength?val false
+         *  ```
+         **/
+        strength(val, force) {
+            return (val !== void 0) ? val : false;
+        }
+        /**
+         *  ```
+         *  Perception $mol_check_box
+         *  	title <= perception_title
+         *  	checked?val <=> perception?val
+         *  ```
+         **/
+        Perception() {
+            return ((obj) => {
+                obj.title = () => this.perception_title();
+                obj.checked = (val) => this.perception(val);
+                return obj;
+            })(new this.$.$mol_check_box());
+        }
+        /**
+         *  ```
+         *  perception_title \Perception
+         *  ```
+         **/
+        perception_title() {
+            return "Perception";
+        }
+        /**
+         *  ```
+         *  perception?val true
+         *  ```
+         **/
+        perception(val, force) {
+            return (val !== void 0) ? val : true;
+        }
+        /**
+         *  ```
+         *  Endurance $mol_check_box
+         *  	title <= endurance_title
+         *  	checked?val <=> endurance?val
+         *  ```
+         **/
+        Endurance() {
+            return ((obj) => {
+                obj.title = () => this.endurance_title();
+                obj.checked = (val) => this.endurance(val);
+                return obj;
+            })(new this.$.$mol_check_box());
+        }
+        /**
+         *  ```
+         *  endurance_title \Endurance
+         *  ```
+         **/
+        endurance_title() {
+            return "Endurance";
+        }
+        /**
+         *  ```
+         *  endurance?val false
+         *  ```
+         **/
+        endurance(val, force) {
+            return (val !== void 0) ? val : false;
+        }
+        /**
+         *  ```
+         *  Charisma $mol_check_box
+         *  	title <= charisma_title
+         *  	checked?val <=> charisma?val
+         *  ```
+         **/
+        Charisma() {
+            return ((obj) => {
+                obj.title = () => this.charisma_title();
+                obj.checked = (val) => this.charisma(val);
+                return obj;
+            })(new this.$.$mol_check_box());
+        }
+        /**
+         *  ```
+         *  charisma_title \Charisma
+         *  ```
+         **/
+        charisma_title() {
+            return "Charisma";
+        }
+        /**
+         *  ```
+         *  charisma?val false
+         *  ```
+         **/
+        charisma(val, force) {
+            return (val !== void 0) ? val : false;
+        }
+        /**
+         *  ```
+         *  Intelligence $mol_check_box
+         *  	title <= intelligence_title
+         *  	checked?val <=> intelligence?val
+         *  ```
+         **/
+        Intelligence() {
+            return ((obj) => {
+                obj.title = () => this.intelligence_title();
+                obj.checked = (val) => this.intelligence(val);
+                return obj;
+            })(new this.$.$mol_check_box());
+        }
+        /**
+         *  ```
+         *  intelligence_title \Intelligence
+         *  ```
+         **/
+        intelligence_title() {
+            return "Intelligence";
+        }
+        /**
+         *  ```
+         *  intelligence?val true
+         *  ```
+         **/
+        intelligence(val, force) {
+            return (val !== void 0) ? val : true;
+        }
+        /**
+         *  ```
+         *  Agility $mol_check_box
+         *  	title <= agility_title
+         *  	checked?val <=> agility?val
+         *  ```
+         **/
+        Agility() {
+            return ((obj) => {
+                obj.title = () => this.agility_title();
+                obj.checked = (val) => this.agility(val);
+                return obj;
+            })(new this.$.$mol_check_box());
+        }
+        /**
+         *  ```
+         *  agility_title \Agility
+         *  ```
+         **/
+        agility_title() {
+            return "Agility";
+        }
+        /**
+         *  ```
+         *  agility?val true
+         *  ```
+         **/
+        agility(val, force) {
+            return (val !== void 0) ? val : true;
+        }
+        /**
+         *  ```
+         *  Luck $mol_check_box
+         *  	title <= luck_title
+         *  	checked?val <=> luck?val
+         *  ```
+         **/
+        Luck() {
+            return ((obj) => {
+                obj.title = () => this.luck_title();
+                obj.checked = (val) => this.luck(val);
+                return obj;
+            })(new this.$.$mol_check_box());
+        }
+        /**
+         *  ```
+         *  luck_title \Luck
+         *  ```
+         **/
+        luck_title() {
+            return "Luck";
+        }
+        /**
+         *  ```
+         *  luck?val true
+         *  ```
+         **/
+        luck(val, force) {
+            return (val !== void 0) ? val : true;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "All", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "Partial", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "Strength", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "strength", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "Perception", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "perception", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "Endurance", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "endurance", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "Charisma", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "charisma", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "Intelligence", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "intelligence", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "Agility", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "agility", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "Luck", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_check_group_demo.prototype, "luck", null);
+    $.$mol_check_group_demo = $mol_check_group_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_check_icon extends $.$mol_check {
     }
     $.$mol_check_icon = $mol_check_icon;
