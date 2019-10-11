@@ -13443,36 +13443,36 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_square extends $.$mol_icon {
+    class $mol_icon_check extends $.$mol_icon {
         /**
          *  ```
-         *  path \M3,3V21H21V3
+         *  path \M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
          *  ```
          **/
         path() {
-            return "M3,3V21H21V3";
+            return "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z";
         }
     }
-    $.$mol_icon_square = $mol_icon_square;
+    $.$mol_icon_check = $mol_icon_check;
 })($ || ($ = {}));
-//square.view.tree.js.map
+//check.view.tree.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_square_small extends $.$mol_icon {
+    class $mol_icon_check_all extends $.$mol_icon {
         /**
          *  ```
-         *  path \M10,14V10H14V14H10Z
+         *  path \M0.41,13.41L6,19L7.41,17.58L1.83,12M22.24,5.58L11.66,16.17L7.5,12L6.07,13.41L11.66,19L23.66,7M18,7L16.59,5.58L10.24,11.93L11.66,13.34L18,7Z
          *  ```
          **/
         path() {
-            return "M10,14V10H14V14H10Z";
+            return "M0.41,13.41L6,19L7.41,17.58L1.83,12M22.24,5.58L11.66,16.17L7.5,12L6.07,13.41L11.66,19L23.66,7M18,7L16.59,5.58L10.24,11.93L11.66,13.34L18,7Z";
         }
     }
-    $.$mol_icon_square_small = $mol_icon_square_small;
+    $.$mol_icon_check_all = $mol_icon_check_all;
 })($ || ($ = {}));
-//small.view.tree.js.map
+//all.view.tree.js.map
 ;
 "use strict";
 var $;
@@ -13523,7 +13523,7 @@ var $;
                 return this.checks().every(check => check.checked());
             }
             Icon() {
-                return this.full() ? new $.$mol_icon_tick : new $.$mol_icon_square_small;
+                return this.full() ? new $.$mol_icon_check_all : new $.$mol_icon_tick;
             }
         }
         __decorate([
