@@ -19,12 +19,13 @@ A various type of checkboxes.
 
 Returns checked state of checkbox. User can switch them when checkbox is enabled.
 
-**`enabled() : false`**
+**`enabled() : boolean`**
 
 Returns true if checkbox can be switched by user.
 
 ## Variants of visualization
 
 - [$mol_check_box](box) - simple checkbox
+- [$mol_check_group](group) - checkbox for group of check boxes
 - [$mol_check_expand](expand) - expander for hierarchical structures
 - [$mol_check_icon](icon) - iconed thumbler
