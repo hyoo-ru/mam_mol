@@ -22,7 +22,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		Icon() {
-			return this.full() ? new $mol_icon_tick : new $mol_icon_square_small
+			return this.full() ? new $mol_icon_check_all : new $mol_icon_tick
 		}
 
 	}
