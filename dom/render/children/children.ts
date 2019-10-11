@@ -2,10 +2,9 @@ namespace $ {
 
 	export function $mol_dom_render_children (
 		el : Element ,
-		childNodes : NodeList | Array< Node | string >
+		childNodes : NodeList | Array< Node | string | null >
 	) {
-		const node_list = [] as ( Node | string )[]
-		const node_set = new Set< Node | string >( [ ... childNodes ] )
+		const node_set = new Set< Node | string | null >( childNodes )
 		
 		let nextNode : Node | null = el.firstChild
 		for( let view of childNodes ) {
