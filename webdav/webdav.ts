@@ -11,7 +11,7 @@ namespace $ {
 		
 		@ $mol_mem
 		data_tree() {
-			const dom = this.response().responseXML as XMLDocument
+			const dom = this.response().xml() as XMLDocument
 			const responses = dom.querySelectorAll( 'response' ) as any as Element[]
 			
 			const data = {} as { [ uri : string ] : Element }
