@@ -178,12 +178,19 @@ namespace $ {
 
 			} catch( error ) {
 				
-				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
+				const need_catch = $mol_fail_catch( error )
+
+				if( need_catch ) {
+					$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
+				}
+				
 				if( error instanceof Promise ) $mol_fail_hidden( error )
 				
-				try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
+				if( need_catch ) {
+					try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
+					console.error( error )
+				}
 				
-				console.error( error )
 			}
 			
 			return node
