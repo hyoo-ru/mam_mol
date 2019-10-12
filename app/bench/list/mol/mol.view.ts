@@ -13,10 +13,10 @@ namespace $.$$ {
 
 		@ $mol_mem
 		static listener() {
-			return new $mol_dom_listener( window , 'message' , ( event : MessageEvent )=> {
+			return new $mol_dom_listener( window , 'message' , $mol_fiber_root( ( event : MessageEvent )=> {
 				if( event.data[0] !== 'set data' ) return
 				this.data( event.data[1] )
-			} )
+			} ) )
 		}
 		
 		@ $mol_mem
