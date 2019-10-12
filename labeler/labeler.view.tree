@@ -4,5 +4,4 @@ $mol_labeler $mol_view
 			sub <= label /$mol_view_content
 				<= title
 		<= Content $mol_view
-			sub /
-				<= content null
+			sub <= content /
