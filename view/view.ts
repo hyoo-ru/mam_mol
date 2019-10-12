@@ -178,8 +178,8 @@ namespace $ {
 
 			} catch( error ) {
 				
+				$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
 				if( error instanceof Promise ) $mol_fail_hidden( error )
-				$mol_dom_render_attributes( node , { mol_view_error : error.name } )
 				
 				try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
 				
