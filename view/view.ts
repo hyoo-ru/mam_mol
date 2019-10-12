@@ -166,13 +166,16 @@ namespace $ {
 			
 			try {
 
+				$mol_dom_render_attributes( node , { mol_view_error : null } )
+
 				for( let plugin of this.plugins() ) {
 					if( plugin instanceof $mol_plugin ) {
 						plugin.render()
 					}
 				}
-				this.render()
 				
+				this.render()
+
 			} catch( error ) {
 				
 				if( error instanceof Promise ) $mol_fail_hidden( error )
@@ -280,9 +283,7 @@ namespace $ {
 		}
 		
 		attr() : { [ key : string ] : string|number|boolean|null } {
-			return {
-				'mol_view_error' : null ,
-			}
+			return {}
 		}
 		
 		style() : { [ key : string ] : string|number } {

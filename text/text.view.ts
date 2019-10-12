@@ -46,22 +46,26 @@ namespace $.$$ {
 			} )
 		}
 		
+		@ $mol_mem_key
 		table_rows( blockId : number ) {
 			return this.cell_contents( blockId )
 			.slice( 1 )
 			.map( ( row , rowId )=> this.Table_row({ block : blockId , row : rowId + 1 }) )
 		}
 		
+		@ $mol_mem_key
 		table_head_cells( blockId : number ) {
 			return this.cell_contents( blockId )[ 0 ]
 			.map( ( cell , cellId )=> this.Table_cell_head({ block : blockId , row : 0 , cell : cellId }) )
 		}
 		
+		@ $mol_mem_key
 		table_cells( id : { block : number , row : number } ) {
 			return this.cell_contents( id.block )[ id.row ]
 			.map( ( cell , cellId )=> this.Table_cell({ block : id.block , row : id.row , cell : cellId }) )
 		}
 		
+		@ $mol_mem_key
 		table_cell_content( id : { block : number , row : number , cell : number } ) {
 			return this.text2spans( `${ id.block }/${ id.row }/${ id.cell }` , this.cell_contents( id.block )[ id.row ][ id.cell ] )
 		}
@@ -75,6 +79,7 @@ namespace $.$$ {
 			return url.toString()
 		}
 		
+		@ $mol_fiber.method
 		text2spans( prefix : string , text : string ) {
 			return this.$.$mol_syntax_md_line.tokenize( text ).map( ( token , index )=> {
 				const id = `${prefix}/${index}`
@@ -120,6 +125,7 @@ namespace $.$$ {
 			} )
 		}
 		
+		@ $mol_fiber.method
 		code2spans( prefix : string , text : string ) {
 			return this.$.$mol_syntax_md_code.tokenize( text ).map( ( token , index )=> {
 				const id = `${prefix}/${index}`
