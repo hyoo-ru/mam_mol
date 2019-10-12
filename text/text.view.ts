@@ -6,6 +6,7 @@ namespace $.$$ {
 			return this.$.$mol_syntax_md_flow.tokenize( this.text() ) as readonly $mol_syntax_token[]
 		}
 		
+		@ $mol_mem
 		rows() {
 			return this.tokens().map( ( token , index )=> {
 				switch( token.name ) {
@@ -144,6 +145,7 @@ namespace $.$$ {
 			} )
 		}
 		
+		@ $mol_mem_key
 		block_content( indexBlock : number ) : ($mol_view|string)[] {
 			
 			const token = this.tokens()[ indexBlock ]

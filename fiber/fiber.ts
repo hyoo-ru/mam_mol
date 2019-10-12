@@ -245,17 +245,16 @@ namespace $ {
 			
 			value = this.$.$mol_conform( value , this.value )
 			
-			if( !$mol_compare_any( this.value , value ) ) {
+			if( this.error || !Object.is( this.value , value ) ) {
 		
-				this.$.$mol_log2.info( this , $mol_fiber_token_changed1 , value , $mol_fiber_token_changed2 , this.value )
+				this.$.$mol_log2.info( this , $mol_fiber_token_changed1 , value , $mol_fiber_token_changed2 , this.error || this.value )
 				
 				this.obsolete_slaves()
 				
 				this.forget()
 				
 			} else {
-				this.$.$mol_log2.info( this , $mol_fiber_token_actualized )
-				if( this.error ) this.obsolete_slaves()
+				this.$.$mol_log2.info( this , $mol_fiber_token_actualized , value )
 			}
 			
 			this.error = null
@@ -270,7 +269,7 @@ namespace $ {
 			
 			this.complete()	
 			
-			this.$.$mol_log2.info( this , $mol_fiber_token_failed )
+			this.$.$mol_log2.info( this , $mol_fiber_token_failed , error )
 			
 			this.error = error
 
@@ -281,7 +280,7 @@ namespace $ {
 
 		wait( promise : PromiseLike< Value > ) : PromiseLike< Value > {
 			this.error = promise
-			this.$.$mol_log2.info( this , $mol_fiber_token_sleeped )
+			this.$.$mol_log2.info( this , $mol_fiber_token_sleeped , promise )
 			this.cursor = $mol_fiber_status.obsolete
 			return promise
 		}
@@ -305,14 +304,13 @@ namespace $ {
 			this.push( this.calculate() )
 		}
 
+		@ $mol_log2_indent.method
 		update() {
 
 			const slave = $mol_fiber.current
 			
 			try {
 					
-				this.error = null
-				
 				this.limit()
 				
 				$mol_fiber.current = this
@@ -438,12 +436,7 @@ namespace $ {
 		}
 
 		[ $mol_dev_format_head ]() {
-			return $mol_dev_format_span( {} ,
-				$mol_dev_format_native( this ) ,
-				$mol_dev_format_accent( '❨' ) ,
-				$mol_dev_format_auto( this.error || this.value ) ,
-				$mol_dev_format_accent( '❩' ) ,
-			)
+			return $mol_dev_format_native( this )
 		}
 
 	}

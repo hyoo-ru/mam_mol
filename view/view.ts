@@ -152,7 +152,7 @@ namespace $ {
 			for( let event_name in events ) {
 				node.addEventListener(
 					event_name ,
-					$mol_fiber_solid.func( $mol_log2.func( events[ event_name ] ) ) ,
+					$mol_log2.func( $mol_fiber_root( events[ event_name ] ) ) ,
 					{ passive : false } as any ,
 				)
 			}
@@ -165,7 +165,7 @@ namespace $ {
 			const node = this.dom_node( next )
 			
 			try {
-				
+
 				for( let plugin of this.plugins() ) {
 					if( plugin instanceof $mol_plugin ) {
 						plugin.render()
@@ -174,7 +174,6 @@ namespace $ {
 				this.render()
 				
 			} catch( error ) {
-				
 				
 				if( error instanceof Promise ) $mol_fail_hidden( error )
 				$mol_dom_render_attributes( node , { mol_view_error : error.name } )
@@ -305,6 +304,13 @@ namespace $ {
 		
 		plugins() {
 			return [] as readonly $mol_view[]
+		}
+
+		[ $mol_dev_format_head ]() {
+			return $mol_dev_format_span( {} ,
+				$mol_dev_format_native( this ) ,
+				$mol_dev_format_auto( $mol_atom2_value( ()=> this.sub() ) ) ,
+			)
 		}
 
 	}

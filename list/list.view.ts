@@ -1,6 +1,7 @@
 namespace $.$$ {
 	export class $mol_list extends $.$mol_list {
 		
+		@ $mol_mem
 		sub() {
 			const rows = this.rows()
 			return ( rows.length === 0 ) ? [ this.Empty() ] : rows

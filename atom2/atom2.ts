@@ -90,11 +90,11 @@ namespace $ {
 
 				if( this.cursor as $mol_fiber_status !== $mol_fiber_status.obsolete ) continue
 
-				this.$.$mol_log2.info( this , $mol_atom2_token_stumbled )
+				this.$.$mol_log2.info( this , $mol_atom2_token_stumbled , this._error || this._value )
 				return super.pull()
 			}
 
-			this.$.$mol_log2.info( this , $mol_atom2_token_revalidated )
+			this.$.$mol_log2.info( this , $mol_atom2_token_revalidated , this._error || this._value )
 			this.cursor = $mol_fiber_status.actual
 
 			return this.value
@@ -194,7 +194,7 @@ namespace $ {
 			
 			if( this.cursor === $mol_fiber_status.obsolete ) return
 			
-			this.$.$mol_log2.info( this , $mol_atom2_token_obsoleted )
+			this.$.$mol_log2.info( this , $mol_atom2_token_obsoleted , this._error || this._value )
 			if( this.cursor !== $mol_fiber_status.doubt ) this.doubt_slaves()
 			
 			this.cursor = $mol_fiber_status.obsolete
@@ -219,13 +219,14 @@ namespace $ {
 			
 			if( this.cursor >= $mol_fiber_status.doubt ) return
 				
-			this.$.$mol_log2.info( this , $mol_atom2_token_doubted )
+			this.$.$mol_log2.info( this , $mol_atom2_token_doubted , this._error || this._value )
 			this.cursor = $mol_fiber_status.doubt
 			
 			this.doubt_slaves()
 
 		}
 
+		@ $mol_log2_indent.method
 		obsolete_slaves() {
 			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
 				const slave = this.slaves[ index ] as $mol_atom2
@@ -233,6 +234,7 @@ namespace $ {
 			}
 		}
 
+		@ $mol_log2_indent.method
 		doubt_slaves() {
 			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
 				const slave = this.slaves[ index ] as $mol_atom2
