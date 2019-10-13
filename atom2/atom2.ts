@@ -50,6 +50,8 @@ namespace $ {
 		slaves = [] as ( $mol_fiber | number | undefined )[]
 		
 		rescue( master : $mol_atom2 , cursor : number ) {
+
+			if(!( master instanceof $mol_atom2 )) return
 			
 			const master_index = this.masters.length
 			const slave_index = this.masters[ cursor + 1 ] as number + 1
