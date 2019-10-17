@@ -65,7 +65,15 @@ namespace $ {
 			if( $mol_compare_deep( value , head ) ) {
 				head = value
 			} else {
-				return $mol_fail( new Error( `Not like\n${ head }\n${ value }` ) )
+
+				const print = ( val : any ) => {
+					if( !val ) return val
+					if( 'outerHTML' in val ) return val.outerHTML
+					return val
+				}
+				
+				return $mol_fail( new Error( `Not like\n${ print( head ) }\n${ print( value ) }` ) )
+
 			}
 
 		}
