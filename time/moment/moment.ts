@@ -124,13 +124,13 @@ namespace $ {
 			var duration = new $mol_time_duration( config )
 			var moment = new $mol_time_moment().merge( this )
 
-			var second = ( moment.second || 0 ) + ( duration.second || 0 )
+			var second = ( moment.second! ) + ( duration.second || 0 )
 			var native = new Date(
-				( moment.year || 0 ) + ( duration.year || 0 ) ,
-				( moment.month || 1 ) + ( duration.month || 0 ) ,
-				( moment.day || 1 ) + 1 + ( duration.day || 0 ) ,
-				( moment.hour || 0 ) + ( duration.hour || 0 ) ,
-				( moment.minute || 0 ) + ( duration.minute || 0 ) ,
+				( moment.year! ) + ( duration.year || 0 ) ,
+				( moment.month! ) + ( duration.month || 0 ) ,
+				( moment.day! ) + 1 + ( duration.day || 0 ) ,
+				( moment.hour! ) + ( duration.hour || 0 ) ,
+				( moment.minute! ) + ( duration.minute || 0 ) ,
 				Math.floor( second ) ,
 				( second - Math.floor( second ) ) * 1000
 			)
