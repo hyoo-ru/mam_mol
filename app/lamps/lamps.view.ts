@@ -32,6 +32,7 @@ namespace $.$$ {
 			return dict
 		}
 		
+		@ $mol_mem
 		lamp_rows() {
 			return [...super.lamp_rows(), ...this.lamps().map( lamp => this.Lamp_row( lamp[ 'no' ] ) )]
 		}

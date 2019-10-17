@@ -364,9 +364,9 @@ namespace $ {
 			const overtime = now - $mol_fiber.deadline
 			if( overtime < 0 ) return
 
-			/// after debugger
-			if( overtime > 500 ) {
-				$mol_fiber.deadline = now + $mol_fiber.quant
+			/// after long freeze
+			if( overtime > $mol_fiber.quant * 2 ) {
+				$mol_fiber.deadline = now + overtime
 				return
 			}
 
