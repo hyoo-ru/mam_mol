@@ -4,7 +4,7 @@ namespace $ {
 		
 		'valueOf()' : number
 		
-		constructor( value? : number ) {
+		constructor( value : number ) {
 			super()
 			this[ 'valueOf()' ] = value
 		}

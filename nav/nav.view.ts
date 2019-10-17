@@ -50,7 +50,7 @@ namespace $.$$ {
 			this.current_y( this.keys_y()[ index_new ] )
 		}
 		
-		event_left( event? : KeyboardEvent ) {
+		event_left( event : KeyboardEvent ) {
 			const keys = this.keys_x()
 			if( keys.length < 2 ) return
 			
@@ -66,7 +66,7 @@ namespace $.$$ {
 			this.current_x( this.keys_x()[ index_new ] )
 		}
 		
-		event_right( event? : KeyboardEvent ) {
+		event_right( event : KeyboardEvent ) {
 			const keys = this.keys_x()
 			if( keys.length < 2 ) return
 			

@@ -22,7 +22,7 @@ namespace $ {
 		method_get() { return 'Get' }
 		method_put() { return 'Put' }
 		
-		credentials() { return null as {
+		credentials() { return null as any as {
 			login? : string
 			password? : string
 		} }

@@ -121,13 +121,15 @@ namespace $.$$ {
 
 		@ $mol_mem
 		shift(next?: readonly [number, number], force?: $mol_mem_force) {
+
 			if (next === undefined) {
 				if (!this.graph_touched) return this.shift_default()
 				next = $mol_atom2_value( ()=> this.shift() ) || this.shift_default()
 			}
+
 			this.graph_touched = true
 
-			return new this.$.$mol_vector_2d( ...next ).limited(this.shift_limit())
+			return new this.$.$mol_vector_2d( ...next! ).limited(this.shift_limit())
 		}
 
 		reset(event?: Event) {

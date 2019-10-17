@@ -3,7 +3,7 @@ namespace $ {
 	export class $mol_file extends $mol_object {
 		
 		@ $mol_mem_key
-		static absolute( path : string ) {
+		static absolute( path : string ) : $mol_file {
 			return $mol_file.make({
 				path : $mol_const( path )
 			})
@@ -14,7 +14,7 @@ namespace $ {
 		}
 
 		static base = $mol_dom_context.document
-		? new URL( '.' , $mol_dom_context.document.currentScript['src'] ).toString()
+		? new URL( '.' , $mol_dom_context.document.currentScript!['src'] ).toString()
 		: ''
 		
 		path() {

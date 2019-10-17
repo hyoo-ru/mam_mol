@@ -46,7 +46,7 @@ namespace $.$$ {
 			const hierarchy = {} as { [ prefix : string ] : $mol_grid_node }
 			const root = hierarchy[ '' ] = {
 				id : '' ,
-				parent : null as $mol_grid_node ,
+				parent : null as any as $mol_grid_node ,
 				sub : [] as $mol_grid_node[] ,
 			}
 			
@@ -155,7 +155,7 @@ namespace $.$$ {
 		}
 
 		Placeholder() {
-			return this.selected() ? null : super.Placeholder()
+			return this.selected() ? ( null as any as $mol_app_demo_placeholder ) : super.Placeholder()
 		}
 		
 		@ $mol_mem 
@@ -174,8 +174,13 @@ namespace $.$$ {
 		}
 
 		source_link(){
-			var pieces = $mol_state_arg.value('demo').split('_').slice(1) 
-			var source_link = this.source_prefix() + pieces.join('/')
+			
+			const demo = $mol_state_arg.value('demo')
+			if( !demo ) return this.source_prefix()
+
+			const pieces = demo.split('_').slice(1)
+			const source_link = this.source_prefix() + pieces.join('/')
+
 			return source_link
 		}
 

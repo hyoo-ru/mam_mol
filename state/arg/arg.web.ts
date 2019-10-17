@@ -10,7 +10,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		static dict( next? : { [ key : string ] : string } ) {
+		static dict( next? : { [ key : string ] : string | null } ) {
 			var href = this.href( next && this.make_link( next ) ).split( /#/ )[1] || ''
 			var chunks = href.split( /[\/\?#&;]/g )
 			
@@ -19,7 +19,7 @@ namespace $ {
 				chunk => {
 					if( !chunk ) return
 					var vals = chunk.split( '=' ).map( decodeURIComponent )
-					params[ vals.shift() ] = vals.join( '=' )
+					params[ vals.shift()! ] = vals.join( '=' )
 				}
 			)
 			
@@ -41,7 +41,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		static value( key : string , next? : string ) {
+		static value( key : string , next? : string | null ) {
 			const nextDict = ( next === void 0 ) ? void 0 : $mol_merge_dict( this.dict() , { [ key ] : next } ) 
 			const next2 = this.dict( nextDict )[ key ]
 			return ( next2 == null ) ? null : next2
@@ -51,11 +51,12 @@ namespace $ {
 			return this.make_link( $mol_merge_dict( this.dict_cut( Object.keys( next ) ) , next ) )
 		}
 		
-		static make_link( next : { [ key : string ] : string } ) {
+		static make_link( next : { [ key : string ] : string | null } ) {
 			const chunks : string[] = []
 			for( let key in next ) {
 				if( null == next[ key ] ) continue
-				chunks.push( [ key ].concat( next[ key ] ? next[ key ] : [] ).map( this.encode ).join( '=' ) )
+				const val = next[ key ]
+				chunks.push( [ key ].concat( val ? [ val ] : [] ).map( this.encode ).join( '=' ) )
 			}
 			
 			return new URL( '#' + chunks.join( '/' ) , window.location.href ).toString()

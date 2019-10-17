@@ -305,7 +305,7 @@ namespace $.$$ {
 	
 	export class $mol_app_studio_selector extends $.$mol_app_studio_selector {
 
-		select( event? : Event ) {
+		select( event : Event ) {
 			const target = ( event.target as HTMLElement ).id
 			const self = this.dom_node().id
 

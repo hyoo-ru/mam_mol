@@ -10,7 +10,6 @@ namespace $.$$ {
 		@ $mol_mem
 		row_offsets() : number[] {
 			var sub = this.sub()
-			if( !sub ) return null
 			
 			let heightLimit = this.$.$mol_view_visible_height()
 			var offset = 0

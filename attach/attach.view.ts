@@ -2,13 +2,12 @@ namespace $.$$ {
 
 	export class $mol_attach extends $.$mol_attach {
 
-		attach_new( next? : string ) : string {
+		attach_new( next? : string ) {
 			const items = this.items()
 			const item = this.Item( items.length )
 			item.url_thumb( next )
 			item.url_load( next )
 			this.items( items.concat( item ) )
-			return void 0
 		}
 
 		content() {
@@ -31,7 +30,7 @@ namespace $.$$ {
 			return next
 		}
 		
-		event_capture( next? : Event ) {
+		event_capture( next : Event ) {
 			if( !$mol_cordova_camera() ) return
 			
 			next.preventDefault()
@@ -45,7 +44,7 @@ namespace $.$$ {
 			} )
 		}
 
-		event_picked( next? : Event ) {
+		event_picked( next : Event ) {
 			var files = [].slice.call( ( next.target as HTMLInputElement ).files )
 			for( var file of files ) {
 				this.file_new( URL.createObjectURL( file ) )

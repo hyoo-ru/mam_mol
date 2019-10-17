@@ -11,14 +11,13 @@ namespace $.$$ {
 		@ $mol_mem
 		rows_visible() {
 			const rows = this.rows()
-			if( !rows ) return null
 			
 			const view_window = this.view_window()
 			
-			return [].concat(
+			return [
 				this.Head() ,
-				rows.slice( view_window.top , view_window.bottom ).valueOf() ,
-			)
+				... rows.slice( view_window.top , view_window.bottom ) ,
+			]
 		}
 		
 		@ $mol_mem
@@ -29,7 +28,6 @@ namespace $.$$ {
 		@ $mol_mem
 		view_window() {
 			const rows = this.rows()
-			if( !rows ) return null
 			
 			const count = rows.length
 			const context = this.$$
@@ -129,7 +127,7 @@ namespace $.$$ {
 			const hierarchy : { [ id : string ] : $mol_grid_node } = {}
 			const root = hierarchy[ '' ] = {
 				id : '' ,
-				parent : null as $mol_grid_node ,
+				parent : null as any as $mol_grid_node ,
 				sub : [] as $mol_grid_node[] ,
 			}
 			this.record_ids().map( id => {

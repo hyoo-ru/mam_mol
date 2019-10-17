@@ -38,6 +38,7 @@ namespace $.$$ {
 
 		sex_bid() {
 			if( !this.sex() ) return this.message_required()
+			return ''
 		}
 
 		submit( next? : Event ) {

@@ -7,7 +7,7 @@ namespace $.$$ {
 			const win = this.$.$mol_dom_context
 			
 			if( node !== $mol_dom_context.document.body ) {
-				new $mol_after_frame( $mol_atom2.current.fresh )
+				new $mol_after_frame( $mol_atom2.current!.fresh )
 				
 				try {
 					const { left , top , right , bottom , width , height } = node.getBoundingClientRect()

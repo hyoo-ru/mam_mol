@@ -59,22 +59,22 @@ namespace $ {
 			this.minute = config.minute
 			this.second = config.second
 			
-			if( config.offset !== undefined ) this.offset = config.offset && new $mol_time_duration( config.offset )
+			if( config.offset !== undefined ) this.offset = config.offset ? new $mol_time_duration( config.offset ) : undefined
 		}
 
-		readonly year : number
-		readonly month : number
-		readonly day : number
-		readonly hour : number
-		readonly minute : number
-		readonly second : number
-		readonly offset : $mol_time_duration
+		readonly year : number | undefined
+		readonly month : number | undefined
+		readonly day : number | undefined
+		readonly hour : number | undefined
+		readonly minute : number | undefined
+		readonly second : number | undefined
+		readonly offset : $mol_time_duration | undefined
 
 		get weekday() {
 			return ( this.native.getDay() + 6 ) % 7
 		}
 
-		private _native : Date
+		private _native : Date | undefined
 		get native() {
 			if( this._native ) return this._native
 			
@@ -90,7 +90,7 @@ namespace $ {
 			) )
 		}
 
-		private _normal : $mol_time_moment
+		private _normal : $mol_time_moment | undefined
 		get normal() {
 			if( this._normal ) return this._normal
 			
@@ -124,13 +124,13 @@ namespace $ {
 			var duration = new $mol_time_duration( config )
 			var moment = new $mol_time_moment().merge( this )
 
-			var second = ( moment.second + ( duration.second || 0 ) )
+			var second = ( moment.second || 0 ) + ( duration.second || 0 )
 			var native = new Date(
-				moment.year + ( duration.year || 0 ) ,
-				moment.month + ( duration.month || 0 ) ,
-				moment.day + 1 + ( duration.day || 0 ) ,
-				moment.hour + ( duration.hour || 0 ) ,
-				moment.minute + ( duration.minute || 0 ) ,
+				( moment.year || 0 ) + ( duration.year || 0 ) ,
+				( moment.month || 1 ) + ( duration.month || 0 ) ,
+				( moment.day || 1 ) + 1 + ( duration.day || 0 ) ,
+				( moment.hour || 0 ) + ( duration.hour || 0 ) ,
+				( moment.minute || 0 ) + ( duration.minute || 0 ) ,
 				Math.floor( second ) ,
 				( second - Math.floor( second ) ) * 1000
 			)
@@ -150,7 +150,7 @@ namespace $ {
 
 		toOffset( config : $mol_time_duration_config ) {
 			const duration = new $mol_time_duration( config )
-			const offset = this.offset || new $mol_time_moment().offset
+			const offset = this.offset || new $mol_time_moment().offset!
 		 	const moment = this.shift( duration.summ( offset.mult( -1 ) ) )
 			return moment.merge({ offset : duration })
 		}

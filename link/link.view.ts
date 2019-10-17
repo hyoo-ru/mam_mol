@@ -31,7 +31,7 @@ namespace $.$$ {
 		}
 
 		file_name() {
-			return null as string
+			return null as unknown as string
 		}
 		
 	}

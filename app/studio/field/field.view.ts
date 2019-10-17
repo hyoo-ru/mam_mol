@@ -144,15 +144,13 @@ namespace $.$$ {
 			return ( this.props( this.class() ) as $mol_tree ).sub.map( item => item.type )
 		}
 
-		add_over( name? : string ) : string {
-			if( !name ) return null
+		add_over( name? : string ) {
+			if( !name ) return
 			
 			this.value( this.value().insert( new $mol_tree({ type : name }) , name ) )
-
-			return null
 		}
 
-		add_pair( event? : Event ) : string {
+		add_pair( event? : Event ) {
 			if( !event ) return
 			
 			const name = this.add_pair_key()

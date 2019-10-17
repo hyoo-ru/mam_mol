@@ -8,7 +8,7 @@ namespace $.$$ {
 			if (Number.isNaN(cursor_x) || Number.isNaN(cursor_y)) return null
 			const graphs = this.graphs()
 			let index: number = 0
-			let graph: $.$mol_plot_graph = null
+			let graph: $.$mol_plot_graph = null as any
 			const [shift_x, shift_y] = this.shift()
 			const [scale_x, scale_y] = this.scale()
 			for (let current of graphs) {
