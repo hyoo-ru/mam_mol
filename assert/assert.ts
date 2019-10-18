@@ -68,6 +68,7 @@ namespace $ {
 
 				const print = ( val : any ) => {
 					if( !val ) return val
+					if( typeof val !== 'object' ) return val
 					if( 'outerHTML' in val ) return val.outerHTML
 					return val
 				}
