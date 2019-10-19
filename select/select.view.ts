@@ -13,14 +13,8 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		options_showed( next? : boolean ) {
-
+		options_showed( next = false ) {
 			this.focused()
-
-			if( next === undefined ) next = this.filter_pattern().length > 0
-			
-			if( next && this.Filter() ) new $mol_defer( $mol_fiber_root( ()=> this.Filter().focused( true ) ) )
-			
 			return next
 		}
 		
