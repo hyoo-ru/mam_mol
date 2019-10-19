@@ -434,6 +434,10 @@ namespace $ {
 				throw new Error( `Root package "${ mod.relate( this.root() ) }" not found` )
 			}
 
+			if( parent.name() === 'node_modules' ) {
+				$node[ mod.name() ] // force autoinstall through npm
+			}
+
 			return false
 		}
 		
