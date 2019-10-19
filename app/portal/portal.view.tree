@@ -29,7 +29,7 @@ $mol_app_portal $mol_book
 			event_front_up?event <=> event_front_up?event
 			title_root => files_title
 			tools_root / <= Close_app
-			uri_root_default \https://ajaxexplorer.com:443/User5df12c6/
+			uri_root_default \http://ajaxexplorer.com/User5df12c6/
 		<= Supplies_app $mol_app_supplies
 			event_front_up?event <=> event_front_up?event
 			list_title => supplies_title
