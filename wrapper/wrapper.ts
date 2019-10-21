@@ -23,9 +23,12 @@ namespace $ {
 
 		static get class() {
 
-			return < Args extends any[] , Result extends object >(
-				Class : new ( ... args : Args )=> Result
+			return < Class extends new ( ... args : any[] )=> any >(
+				Class : Class
 			) => {
+
+				type Args = ConstructorParameters< Class >
+				type Result = InstanceType< Class >
 
 				const construct = ( target : new ( ... args : Args )=> Result , args : Args )=> new Class( ... args )
 
