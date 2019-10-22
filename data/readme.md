@@ -84,7 +84,7 @@ import {
 const Int = Nominal({ Int: Integer })
 
 const i = Int(1)
-const j: typeof Int.Value = i + 1
+const j: typeof Int.Value = Int( i + 1 )
 ```
 
 # Similar projects
