@@ -69,6 +69,24 @@ JSON.stringify( Duration( 'P1D' ) ) // "P1DT"
 JSON.stringify( Duration( 1000 ) ) // "PT1S"
 ```
 
+# Using from NPM
+
+```
+npm install mol_data_all
+```
+
+```
+import {
+  $mol_data_nominal as Nominal,
+  $mol_data_integer as Integer,
+} from "mol_data_all"
+
+const Int = Nominal({ Int: Integer })
+
+const i = Int(1)
+const j: typeof Int.Value = i + 1
+```
+
 # Similar projects
 
 - [gcanti/io-ts](https://github.com/gcanti/io-ts) - Runtime type system for IO decoding/encoding
