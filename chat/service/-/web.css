@@ -560,13 +560,13 @@ sans-serif;
 [mol_grid_table] {
 	border-spacing: 0;
 	display: block; /** prevent full repaint on scroll **/
-	transform: translateZ(0);
 	position: relative;
 	box-shadow: inset 0 0 0 .5px var(--mol_theme_line);
 }
 
 [mol_grid_table] > * {
 	display: table-row;
+	transform: translateZ(0);
 	transition: none;
 }
 
