@@ -11,7 +11,7 @@ $mol_app_portal $mol_book
 			<= Habhub_link $mol_link
 				title <= habhub_title
 				arg * app \habhub
-			<= Files_link $mol_link
+			- <= Files_link $mol_link
 				title <= files_title
 				arg * app \files
 			<= Supplies_link $mol_link
@@ -25,7 +25,7 @@ $mol_app_portal $mol_book
 			event_front_up?event <=> event_front_up?event
 			menu_title => habhub_title
 			tools_root / <= Close_app
-		<= Files_app $mol_app_files
+		- <= Files_app $mol_app_files
 			event_front_up?event <=> event_front_up?event
 			title_root => files_title
 			tools_root / <= Close_app
