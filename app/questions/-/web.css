@@ -599,7 +599,7 @@ sans-serif;
 }
 
 [mol_grid_head] {
-	transform: translateZ(0);
+	transform: none;
 }
 
 [mol_grid_head] > * {
