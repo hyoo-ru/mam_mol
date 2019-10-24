@@ -3,6 +3,16 @@ namespace $ {
 
 	$mol_test({
 
+		'nulls & undefineds'() {
+
+			$mol_assert_ok( $mol_compare_deep( null , null ) )
+			$mol_assert_ok( $mol_compare_deep( undefined , undefined ) )
+			
+			$mol_assert_not( $mol_compare_deep( undefined , null ) )
+			$mol_assert_not( $mol_compare_deep( {} , null ) )
+			
+		} ,
+
 		'number'() {
 			$mol_assert_ok( $mol_compare_deep( 1 , 1 ) )
 			$mol_assert_ok( $mol_compare_deep( Number.NaN , Number.NaN ) )

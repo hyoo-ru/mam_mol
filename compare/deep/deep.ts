@@ -15,6 +15,8 @@ namespace $ {
 		if( a_type === 'function' ) return String( a ) === String( b )
 		if( a_type !== 'object' ) return false
 
+		if( !a || !b ) return false
+
 		if( a instanceof Error ) return false
 		if( a['constructor'] !== b['constructor'] ) return false
 
