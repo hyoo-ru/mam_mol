@@ -275,6 +275,7 @@ namespace $ {
 
 			for( let Class of ( this.constructor as typeof $mol_view ).view_classes() ) {
 				const name = $mol_func_name( Class )
+				if( !name ) continue
 				if( names.indexOf( name ) < 0 ) names.push( name )
 			}
 
