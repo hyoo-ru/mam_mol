@@ -61,8 +61,8 @@ namespace $ {
 		
 		@ $mol_mem
 		json< Content >( next? : Content , force? : $mol_mem_force ) : Content {
-			// const next2 = next && JSON.stringify( next , null , '\t' )
-			return this.response( next , force ).json()
+			const next2 = next && JSON.stringify( next , null , '\t' )
+			return this.response( next2 , force ).json()
 		}
 		
 	}
