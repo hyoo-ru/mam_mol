@@ -4,13 +4,13 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		lamps_all() {
-			return $mol_csv_parse( $mol_http.resource( '//lamptest.ru/led.php' ).text() )
+			return $mol_csv_parse( $mol_fetch.text( '//lamptest.ru/led.php' ) )
 		}
 		
 		@ $mol_mem
 		lamps() {
 			return this.lamps_all().filter(
-				$mol_fiber_func(
+				$mol_fiber.func(
 					$mol_match_text(
 						this.filter() ,
 						( lamp : any )=> {
