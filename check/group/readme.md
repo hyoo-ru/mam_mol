@@ -2,7 +2,7 @@
 
 Checkbox for group of check boxes.
 
-## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_check_group)
+## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_check_group_demo)
 
 ## Usage example
 
