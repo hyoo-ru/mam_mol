@@ -7340,102 +7340,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    console.warn('$mol_http is deprecated. Use $mol_fetch instead.');
-    class $mol_http extends $.$mol_object {
-        static resource(uri) {
-            const resolver = $.$mol_dom_context.document.createElement('a');
-            resolver.href = uri;
-            return this.resource_absolute(resolver.href);
-        }
-        static resource_absolute(uri) {
-            return $mol_http.make({
-                uri: $.$mol_const(uri)
-            });
-        }
-        uri() { return ''; }
-        method_get() { return 'Get'; }
-        method_put() { return 'Put'; }
-        credentials() {
-            return null;
-        }
-        headers() {
-            return {};
-        }
-        response_type() {
-            return '';
-        }
-        response(next, force) {
-            const creds = this.credentials();
-            const method = (next === void 0) ? this.method_get() : this.method_put();
-            const uri = this.uri();
-            const headers = this.headers();
-            return $.$mol_fetch.response(uri, {
-                credentials: creds ? 'include' : undefined,
-                method,
-                headers,
-                body: next
-            });
-        }
-        text(next, force) {
-            return this.response(next, force).text();
-        }
-        xml(next, force) {
-            return this.response(next, force).xml();
-        }
-        json(next, force) {
-            // const next2 = next && JSON.stringify( next , null , '\t' )
-            return this.response(next, force).json();
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_http.prototype, "json", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_http, "resource_absolute", null);
-    $.$mol_http = $mol_http;
-})($ || ($ = {}));
-//http.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    class $mol_http_resource extends $.$mol_http {
-        static item(uri) {
-            return $.$mol_http.resource(uri);
-        }
-    }
-    __decorate([
-        $.$mol_deprecated('Use $mol_http.resource insted.')
-    ], $mol_http_resource, "item", null);
-    $.$mol_http_resource = $mol_http_resource;
-    class $mol_http_resource_json {
-        static item(uri) {
-            return $.$mol_http.resource(uri);
-        }
-    }
-    __decorate([
-        $.$mol_deprecated('Use $mol_http.resource insted.')
-    ], $mol_http_resource_json, "item", null);
-    $.$mol_http_resource_json = $mol_http_resource_json;
-})($ || ($ = {}));
-//resource.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
     class $mol_app_questions extends $.$mol_book {
         /**
          *  ```
@@ -7783,6 +7687,12 @@ var $;
 //questions.view.tree.js.map
 ;
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var $;
 (function ($) {
     var $$;
@@ -7800,7 +7710,7 @@ var $;
             }
             menu_rows() {
                 const res = [];
-                const count = Math.min(10000, this.questions_count());
+                const count = Math.min(1000, this.questions_count());
                 for (let i = 0; i < count; ++i) {
                     res.push(this.Question_link(i));
                 }
@@ -7839,22 +7749,22 @@ var $;
             }
             questions_count() {
                 let uri = `https://api.stackexchange.com/2.2/questions?site=stackoverflow&filter=total`;
-                return $.$mol_http.resource(uri).json().total;
+                return $.$mol_fetch.json(uri).total;
             }
             questions_data(page) {
                 const uri = `https://api.stackexchange.com/2.2/questions?order=desc&sort=creation&site=stackoverflow&pagesize=${this.data_page_size()}&page=${page + 1}`;
-                return $.$mol_http.resource(uri).json();
+                return $.$mol_fetch.json(uri);
             }
             data_page_size() {
                 return 100;
             }
             question_full(id) {
                 const uri = `https://api.stackexchange.com/2.2/questions/${id}?site=stackoverflow&filter=!9YdnSJ*_T`;
-                return $.$mol_http.resource(uri).json().items[0];
+                return $.$mol_fetch.json(uri).items[0];
             }
             question_answers(id) {
                 const uri = `https://api.stackexchange.com/2.2/questions/${id}/answers?order=desc&sort=votes&site=stackoverflow&filter=!-*f(6sFKn6ub`;
-                return $.$mol_http.resource(uri).json().items;
+                return $.$mol_fetch.json(uri).items;
             }
             answers(id) {
                 return this.question_answers(id).map((answer, index) => this.Answer({ question: id, answer: index }));
@@ -7863,6 +7773,18 @@ var $;
                 return this.question_answers(id.question)[id.answer].body_markdown;
             }
         }
+        __decorate([
+            $.$mol_mem
+        ], $mol_app_questions.prototype, "questions_count", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_app_questions.prototype, "questions_data", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_app_questions.prototype, "question_full", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_app_questions.prototype, "question_answers", null);
         $$.$mol_app_questions = $mol_app_questions;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

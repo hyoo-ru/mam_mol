@@ -16,7 +16,7 @@ namespace $.$$ {
 		
 		menu_rows() {
 			const res = [] as any
-			const count = Math.min( 10000 , this.questions_count() )
+			const count = Math.min( 1000 , this.questions_count() )
 			for( let i = 0 ; i < count ; ++i ) {
 				res.push( this.Question_link( i ) )
 			}
@@ -63,47 +63,50 @@ namespace $.$$ {
 			return this.questions_data( page ).items[ index % page_size ]
 		}
 		
+		@ $mol_mem
 		questions_count() {
 			let uri = `https://api.stackexchange.com/2.2/questions?site=stackoverflow&filter=total`
-			return $mol_http.resource( uri ).json<{ total : number }>().total
+			return $mol_fetch.json( uri ).total as number
 		}
 		
+		@ $mol_mem_key
 		questions_data( page : number ) {
 			const uri = `https://api.stackexchange.com/2.2/questions?order=desc&sort=creation&site=stackoverflow&pagesize=${ this.data_page_size() }&page=${ page + 1 }`
-			type Item = {
-				title : string
-				creation_date : number
-				question_id : number
-				tags : string[]
-				owner : {
-					display_name : string
-				}
+			return $mol_fetch.json( uri ) as {
+				items : Array<{
+					title : string
+					creation_date : number
+					question_id : number
+					tags : string[]
+					owner : {
+						display_name : string
+					}
+				}>
 			}
-			return $mol_http.resource( uri ).json<{ items : Item[] }>()
 		}
 		
 		data_page_size() {
 			return 100
 		}
 		
+		@ $mol_mem_key
 		question_full( id : number ) {
 			const uri = `https://api.stackexchange.com/2.2/questions/${ id }?site=stackoverflow&filter=!9YdnSJ*_T`
-			type Item = {
+			return $mol_fetch.json( uri ).items[0] as {
 				title : string
 				body_markdown : string
 				link : string
 			}
-			return $mol_http.resource( uri ).json<{ items : Item[] }>().items[0]
 		}
 		
+		@ $mol_mem_key
 		question_answers( id : number ) {
 			const uri = `https://api.stackexchange.com/2.2/questions/${ id }/answers?order=desc&sort=votes&site=stackoverflow&filter=!-*f(6sFKn6ub`
-			type Item = {
+			return $mol_fetch.json( uri ).items as Array<{
 				score : number
 				body_markdown : string
 				share_link : string
-			}
-			return $mol_http.resource( uri ).json<{ items : Item[] }>().items
+			}>
 		}
 		
 		answers( id : number ) {
