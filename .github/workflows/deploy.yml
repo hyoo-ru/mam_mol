@@ -67,7 +67,7 @@ jobs:
         node ./mol/build/-/node.test.js mol/app/portal
         
     - name: Deploy on GitHub Pages
-      if: github.ref == 'master'
+      if: github.ref == 'refs/heads/master'
       uses: alex-page/blazing-fast-gh-pages-deploy@v1.0.1
       with:
         repo-token: ${{ secrets.GH_PAT }}
