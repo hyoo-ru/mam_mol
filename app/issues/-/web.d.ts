@@ -3203,7 +3203,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_shared extends $mol_object2 {
-        static cache<Value>(key: string, next?: Value): Value;
+        static cache<Value>(key: string, next?: Value): any;
     }
 }
 
@@ -3529,7 +3529,7 @@ declare namespace $.$$ {
         project_ids(next?: string[]): string[];
         projects(): $mol_app_issues_project[];
         project_id(index: number, next?: string): string;
-        capacities(): number[];
+        capacities(): any[];
         project_labels(): any[];
     }
     class $mol_app_issues_project extends $.$mol_app_issues_project {
@@ -3546,7 +3546,7 @@ declare namespace $.$$ {
         issues(): {
             created_at: string;
         }[];
-        capacity(): number;
+        capacity(): any;
         capacity_text(): string;
     }
 }

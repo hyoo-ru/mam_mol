@@ -7690,8 +7690,8 @@ var $;
             return this.response(next, force).xml();
         }
         json(next, force) {
-            // const next2 = next && JSON.stringify( next , null , '\t' )
-            return this.response(next, force).json();
+            const next2 = next && JSON.stringify(next, null, '\t');
+            return this.response(next2, force).json();
         }
     }
     __decorate([
@@ -7840,9 +7840,13 @@ var $;
 (function ($) {
     class $mol_shared extends $.$mol_object2 {
         static cache(key, next) {
-            const resource = this.$.$mol_http.resource('https://shared-cache.herokuapp.com/' + key);
-            resource.headers = () => ({ 'Content-Type': 'application/json' });
-            return resource.json(next);
+            return this.$.$mol_fetch.json('https://shared-cache.herokuapp.com/' + key, next && {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify(next, null, '\t'),
+            });
         }
     }
     $.$mol_shared = $mol_shared;
@@ -8836,6 +8840,9 @@ var $;
         __decorate([
             $.$mol_mem_key
         ], $mol_app_issues_project.prototype, "issues", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_app_issues_project.prototype, "capacity", null);
         $$.$mol_app_issues_project = $mol_app_issues_project;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

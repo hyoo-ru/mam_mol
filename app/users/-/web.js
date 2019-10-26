@@ -4637,8 +4637,8 @@ var $;
             return this.response(next, force).xml();
         }
         json(next, force) {
-            // const next2 = next && JSON.stringify( next , null , '\t' )
-            return this.response(next, force).json();
+            const next2 = next && JSON.stringify(next, null, '\t');
+            return this.response(next2, force).json();
         }
     }
     __decorate([
