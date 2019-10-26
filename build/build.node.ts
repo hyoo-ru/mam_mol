@@ -398,10 +398,8 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
+		@ $mol_fiber.method
 		modEnsure( path : string ) {
-
-			// Prevent automatic state clear on every bundle build
-			$mol_atom2.current!.destructor = ()=> {}
 
 			var mod = $mol_file.absolute( path )
 			if( mod === this.root() ) return false
@@ -424,7 +422,6 @@ namespace $ {
 			}
 
 			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
-				console.log( '> git clone' , repo.value , mod.path() )
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.path() )
 				mod.stat( undefined , $mol_mem_force_cache )
 				return true
