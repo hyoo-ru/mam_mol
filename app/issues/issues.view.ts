@@ -74,6 +74,7 @@ namespace $.$$ {
 			)
 		}
 
+		@ $mol_mem
 		capacity() {
 			if( !this.id() ) return 0
 
