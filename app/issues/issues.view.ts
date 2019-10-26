@@ -48,7 +48,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		project() {
-			return this.$.$mol_http.resource( this.uri_project() ).json() as {
+			return this.$.$mol_fetch.json( this.uri_project() ) as {
 				open_issues_count : number
 				homepage : string
 			}
@@ -61,7 +61,7 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		issues_page( page : number ) {
-			return this.$.$mol_http.resource( this.uri_issues() + '&page=' + page ).json() as {
+			return this.$.$mol_fetch.json( this.uri_issues() + '&page=' + page ) as {
 				created_at : string
 			}[]
 		}
@@ -90,7 +90,7 @@ namespace $.$$ {
 				}
 
 			} catch( error ) {
-				if( error instanceof $mol_atom_wait ) $mol_fail_hidden( error )
+				if( error instanceof Promise ) return $mol_fail_hidden( error )
 				console.error( error )
 			}
 
