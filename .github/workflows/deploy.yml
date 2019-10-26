@@ -1,9 +1,6 @@
 name: Deploy
 
-on:
-  push:
-    branches:
-    - master
+on: [push, pull_request]
 
 jobs:
   build:
@@ -69,6 +66,7 @@ jobs:
         node ./mol/build/-/node.test.js mol/app/portal
         
     - name: Deploy on GitHub Pages
+      if: github.event == 'push' && github.ref == 'master'
       uses: alex-page/blazing-fast-gh-pages-deploy@v1.0.1
       with:
         repo-token: ${{ secrets.GH_PAT }}
