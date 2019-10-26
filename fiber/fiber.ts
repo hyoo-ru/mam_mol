@@ -180,8 +180,9 @@ namespace $ {
 
 		}
 
-		static quant = 16
+		static quant = 32
 		static deadline = 0
+		static liveline = 0
 
 		static current = null as null | $mol_fiber
 		
@@ -192,8 +193,11 @@ namespace $ {
 	
 			while( $mol_fiber.queue.length > 0 ) {
 
-				if( Date.now() > $mol_fiber.deadline ) {
+				const now = Date.now()
+
+				if( now >= $mol_fiber.deadline ) {
 					$mol_fiber.schedule()
+					$mol_fiber.liveline = now
 					return 
 				}
 
@@ -208,10 +212,21 @@ namespace $ {
 
 			if( !$mol_fiber.scheduled ) {
 
-				$mol_fiber.scheduled = new $mol_after_frame( ()=> {
-					$mol_fiber.deadline = Math.max( $mol_fiber.deadline , Date.now() + $mol_fiber.quant )
+				$mol_fiber.scheduled = new $mol_after_frame( async ()=> {
+					
+					const now = Date.now()
+					let quant = $mol_fiber.quant
+					
+					if( $mol_fiber.liveline ) {
+						quant = Math.max( quant , Math.floor( ( now - $mol_fiber.liveline ) / 2 ) )
+						$mol_fiber.liveline = 0
+					}
+					
+					$mol_fiber.deadline = now + quant
 					$mol_fiber.scheduled = null
-					$mol_fiber.tick()
+					
+					await $mol_fiber.tick()
+
 				} )
 
 			}
@@ -357,18 +372,10 @@ namespace $ {
 
 		limit() {
 
+			if( !$mol_fiber.deadline ) return
 			if( !$mol_fiber.current ) return
 
-			const now = Date.now()
-
-			const overtime = now - $mol_fiber.deadline
-			if( overtime < 0 ) return
-
-			/// after long freeze
-			if( overtime > $mol_fiber.quant * 2 ) {
-				$mol_fiber.deadline = now + overtime
-				return
-			}
+			if( Date.now() < $mol_fiber.deadline ) return
 
 			this.$.$mol_fail_hidden( $mol_fiber.schedule() )
 		}
