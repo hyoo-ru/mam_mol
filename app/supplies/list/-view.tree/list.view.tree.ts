@@ -2,11 +2,11 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 
 	/**
 	 *  ```
-	 *  supplies /
+	 *  supplies /$mol_app_supplies_domain_supply
 	 *  ```
 	 **/
 	supplies() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_app_supplies_domain_supply )[]
 	}
 
 	/**
@@ -18,7 +18,7 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Head() , this.Search_bar() , this.Body() )
+		return [ this.Head() , this.Search_bar() , this.Body() ] as readonly any[]
 	}
 
 	/**
@@ -29,7 +29,7 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	@ $mol_mem
 	Search_bar() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Search() )
+			obj.sub = () => [ this.Search() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_float(  ) )
 	}
@@ -65,7 +65,7 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	search_query( val? : any , force? : $mol_atom_force ) {
+	search_query( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -75,7 +75,7 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Supply_rows() )
+		return [ this.Supply_rows() ] as readonly any[]
 	}
 
 	/**
@@ -93,11 +93,11 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 
 	/**
 	 *  ```
-	 *  supply_rows /
+	 *  supply_rows /$mol_view
 	 *  ```
 	 **/
 	supply_rows() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**

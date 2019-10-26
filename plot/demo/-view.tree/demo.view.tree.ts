@@ -15,7 +15,7 @@ namespace $ { export class $mol_plot_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	@ $mol_mem
-	count( val? : any , force? : $mol_atom_force ) {
+	count( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 20
 	}
 
@@ -25,7 +25,7 @@ namespace $ { export class $mol_plot_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Plot() )
+		return [ this.Plot() ] as readonly any[]
 	}
 
 	/**
@@ -41,7 +41,7 @@ namespace $ { export class $mol_plot_demo extends $mol_demo_large {
 	@ $mol_mem
 	Plot() {
 		return (( obj )=>{
-			obj.graphs = () => [].concat( this.Saturation() , this.Input() , this.Output() , this.Voltage() , this.Time() )
+			obj.graphs = () => [ this.Saturation() , this.Input() , this.Output() , this.Voltage() , this.Time() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_pane(  ) )
 	}
@@ -59,7 +59,7 @@ namespace $ { export class $mol_plot_demo extends $mol_demo_large {
 	Saturation() {
 		return (( obj )=>{
 			obj.series_y = () => this.saturation_series()
-			obj.graphs = () => [].concat( this.Saturation_fill() , this.Saturation_line() )
+			obj.graphs = () => [ this.Saturation_fill() , this.Saturation_line() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_group(  ) )
 	}
@@ -70,7 +70,7 @@ namespace $ { export class $mol_plot_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	saturation_series() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -111,7 +111,7 @@ namespace $ { export class $mol_plot_demo extends $mol_demo_large {
 	Input() {
 		return (( obj )=>{
 			obj.series_y = () => this.input_series()
-			obj.graphs = () => [].concat( this.Input_line() , this.Input_dots() )
+			obj.graphs = () => [ this.Input_line() , this.Input_dots() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_group(  ) )
 	}
@@ -122,7 +122,7 @@ namespace $ { export class $mol_plot_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	input_series() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -168,7 +168,7 @@ namespace $ { export class $mol_plot_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	output_series() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**

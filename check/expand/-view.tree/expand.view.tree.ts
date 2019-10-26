@@ -59,7 +59,7 @@ namespace $ { export class $mol_check_expand extends $mol_check {
 	 *  ```
 	 **/
 	@ $mol_mem
-	checked( val? : any , force? : $mol_atom_force ) {
+	checked( val? : any , force? : $mol_mem_force ) {
 		return this.expanded( val )
 	}
 
@@ -69,7 +69,7 @@ namespace $ { export class $mol_check_expand extends $mol_check {
 	 *  ```
 	 **/
 	@ $mol_mem
-	expanded( val? : any , force? : $mol_atom_force ) {
+	expanded( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 

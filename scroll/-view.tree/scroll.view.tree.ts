@@ -11,26 +11,6 @@ namespace $ { export class $mol_scroll extends $mol_view {
 
 	/**
 	 *  ```
-	 *  moving_hor?val false
-	 *  ```
-	 **/
-	@ $mol_mem
-	moving_hor( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : false
-	}
-
-	/**
-	 *  ```
-	 *  moving_vert?val false
-	 *  ```
-	 **/
-	@ $mol_mem
-	moving_vert( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : false
-	}
-
-	/**
-	 *  ```
 	 *  field *
 	 *  	^
 	 *  	scrollTop <= scroll_top?val
@@ -55,7 +35,7 @@ namespace $ { export class $mol_scroll extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	scroll_top( val? : any , force? : $mol_atom_force ) {
+	scroll_top( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -65,7 +45,7 @@ namespace $ { export class $mol_scroll extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	scroll_left( val? : any , force? : $mol_atom_force ) {
+	scroll_left( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -75,7 +55,7 @@ namespace $ { export class $mol_scroll extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	scroll_bottom( val? : any , force? : $mol_atom_force ) {
+	scroll_bottom( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -85,20 +65,20 @@ namespace $ { export class $mol_scroll extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	scroll_right( val? : any , force? : $mol_atom_force ) {
+	scroll_right( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
 	/**
 	 *  ```
-	 *  event_async *
+	 *  event *
 	 *  	^
 	 *  	scroll?event <=> event_scroll?event
 	 *  ```
 	 **/
-	event_async() {
+	event() {
 		return ({
-			...super.event_async() ,
+			...super.event() ,
 			"scroll" :  ( event? : any )=>  this.event_scroll( event ) ,
 		})
 	}
@@ -109,7 +89,7 @@ namespace $ { export class $mol_scroll extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_scroll( event? : any , force? : $mol_atom_force ) {
+	event_scroll( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

@@ -17,7 +17,7 @@ namespace $ { export class $mol_link_iconed_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Input() , this.Output() )
+		return [ this.Input() , this.Output() ] as readonly any[]
 	}
 
 	/**
@@ -39,7 +39,7 @@ namespace $ { export class $mol_link_iconed_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	uri( val? : any , force? : $mol_atom_force ) {
+	uri( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "https://www.google.com/search?q=%24mol"
 	}
 

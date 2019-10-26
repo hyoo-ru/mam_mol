@@ -229,6 +229,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_maybe(value) {
+        return (value == null) ? [] : [value];
+    }
+    $.$mol_maybe = $mol_maybe;
+})($ || ($ = {}));
+//maybe.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_log(path, ...values) {
         if ($.$mol_log_filter() == null)
             return;
@@ -348,17 +358,19 @@ var $;
 (function ($) {
     var $mol_log2_1;
     let $mol_log2 = $mol_log2_1 = class $mol_log2 extends $.$mol_wrapper {
-        constructor(id, args) {
+        constructor(host, id, args) {
             super();
+            this.host = host;
+            this.id = id;
             this.args = args;
             this.stream = [];
-            this[Symbol.toStringTag] = id;
+            this[Symbol.toStringTag] = host ? `${host}.${id}` : id;
         }
         static wrap(task) {
             const Inner = this;
             const wrapped = function (...args) {
                 const outer = $mol_log2_1.current;
-                const inner = $mol_log2_1.current = new Inner(`${this || ''}.${task.name}`, args);
+                const inner = $mol_log2_1.current = new Inner(this, task.name, args);
                 try {
                     return task.call(this, ...args);
                 }
@@ -375,13 +387,13 @@ var $;
             console.debug(this);
         }
         info(...values) {
-            this.stream.push(new $mol_log2_line(...values));
+            this.stream.push(new $mol_log2_line(...$mol_log2_1.prefix, ...values));
         }
         [$.$mol_dev_format_head]() {
-            return $.$mol_dev_format_span({}, $.$mol_dev_format_strong(`${this}`), '(', ...this.args.map($.$mol_dev_format_auto), ') ', $.$mol_dev_format_auto(this.stream));
+            return $.$mol_dev_format_span({}, ...$.$mol_maybe(this.host).map($.$mol_dev_format_auto), '.', $.$mol_dev_format_strong(this.id), '(', ...this.args.map($.$mol_dev_format_auto), ') ', $.$mol_dev_format_auto(this.stream));
         }
         static info(...values) {
-            const excludes = this.excludes;
+            const excludes = $mol_log2_1.excludes;
             if (!excludes)
                 return;
             const skip = excludes.some((regexp, index) => {
@@ -391,7 +403,7 @@ var $;
                 return;
             if (!$mol_log2_1.current) {
                 console.warn(new Error(`$mol_log.current is not defined. Wrap entry point to $mol_log!`));
-                $mol_log2_1.current = new $mol_log2_1('$mol_log2_default', []);
+                $mol_log2_1.current = new $mol_log2_1(null, '$mol_log2_default', []);
                 console.debug($mol_log2_1.current);
             }
             $mol_log2_1.current.info(...values);
@@ -412,10 +424,27 @@ var $;
      * 	$mol_log2.excludes = null
      */
     $mol_log2.excludes = null;
+    $mol_log2.prefix = [];
     $mol_log2 = $mol_log2_1 = __decorate([
         $.$mol_class
     ], $mol_log2);
     $.$mol_log2 = $mol_log2;
+    class $mol_log2_indent extends $.$mol_wrapper {
+        static wrap(task) {
+            const Inner = this;
+            const wrapped = function (...args) {
+                try {
+                    $mol_log2.prefix.push($.$mol_log2_token_indent);
+                    return task.call(this, ...args);
+                }
+                finally {
+                    $mol_log2.prefix.pop();
+                }
+            };
+            return wrapped;
+        }
+    }
+    $.$mol_log2_indent = $mol_log2_indent;
     let $mol_log2_table = class $mol_log2_table extends $mol_log2 {
         [$.$mol_dev_format_head]() {
             return $.$mol_dev_format_span({}, $.$mol_dev_format_strong(`${this}(`), ...this.args.map($.$mol_dev_format_auto), $.$mol_dev_format_strong(`) `));
@@ -460,7 +489,8 @@ var $;
     ], $mol_log2_token);
     $.$mol_log2_token = $mol_log2_token;
     $.$mol_log2_token_empty = new $mol_log2_token('');
-    $.$mol_log2_legend = new $mol_log2_table('$mol_log2_legend', []);
+    $.$mol_log2_token_indent = new $mol_log2_token('\t');
+    $.$mol_log2_legend = new $mol_log2_table(null, '$mol_log2_legend', []);
     if (!$mol_log2.excludes)
         $.$mol_log2_legend.info($.$mol_log2_token_empty, 'Use `$mol_log2.excludes : null | RegExp[]` to toggle logs');
 })($ || ($ = {}));
@@ -771,8 +801,10 @@ var $;
         }
         static async tick() {
             while ($mol_fiber_1.queue.length > 0) {
-                if (Date.now() > $mol_fiber_1.deadline) {
+                const now = Date.now();
+                if (now >= $mol_fiber_1.deadline) {
                     $mol_fiber_1.schedule();
+                    $mol_fiber_1.liveline = now;
                     return;
                 }
                 const task = $mol_fiber_1.queue.shift();
@@ -781,10 +813,16 @@ var $;
         }
         static schedule() {
             if (!$mol_fiber_1.scheduled) {
-                $mol_fiber_1.scheduled = new $.$mol_after_frame(() => {
-                    $mol_fiber_1.deadline = Math.max($mol_fiber_1.deadline, Date.now() + $mol_fiber_1.quant);
+                $mol_fiber_1.scheduled = new $.$mol_after_frame(async () => {
+                    const now = Date.now();
+                    let quant = $mol_fiber_1.quant;
+                    if ($mol_fiber_1.liveline) {
+                        quant = Math.max(quant, Math.floor((now - $mol_fiber_1.liveline) / 2));
+                        $mol_fiber_1.liveline = 0;
+                    }
+                    $mol_fiber_1.deadline = now + quant;
                     $mol_fiber_1.scheduled = null;
-                    $mol_fiber_1.tick();
+                    await $mol_fiber_1.tick();
                 });
             }
             const promise = new this.$.Promise(done => this.queue.push(() => (done(), promise)));
@@ -806,15 +844,13 @@ var $;
         }
         push(value) {
             value = this.$.$mol_conform(value, this.value);
-            if (!$.$mol_compare_any(this.value, value)) {
-                this.$.$mol_log2.info(this, $.$mol_fiber_token_changed1, value, $.$mol_fiber_token_changed2, this.value);
+            if (this.error || !Object.is(this.value, value)) {
+                this.$.$mol_log2.info(this, $.$mol_fiber_token_changed1, value, $.$mol_fiber_token_changed2, this.error || this.value);
                 this.obsolete_slaves();
                 this.forget();
             }
             else {
-                this.$.$mol_log2.info(this, $.$mol_fiber_token_actualized);
-                if (this.error)
-                    this.obsolete_slaves();
+                this.$.$mol_log2.info(this, $.$mol_fiber_token_actualized, value);
             }
             this.error = null;
             this.value = value;
@@ -823,14 +859,14 @@ var $;
         }
         fail(error) {
             this.complete();
-            this.$.$mol_log2.info(this, $.$mol_fiber_token_failed);
+            this.$.$mol_log2.info(this, $.$mol_fiber_token_failed, error);
             this.error = error;
             this.obsolete_slaves();
             return error;
         }
         wait(promise) {
             this.error = promise;
-            this.$.$mol_log2.info(this, $.$mol_fiber_token_sleeped);
+            this.$.$mol_log2.info(this, $.$mol_fiber_token_sleeped, promise);
             this.cursor = 0 /* obsolete */;
             return promise;
         }
@@ -851,7 +887,6 @@ var $;
         update() {
             const slave = $mol_fiber_1.current;
             try {
-                this.error = null;
                 this.limit();
                 $mol_fiber_1.current = this;
                 this.$.$mol_log2.info(this, $.$mol_fiber_token_runned);
@@ -886,17 +921,12 @@ var $;
             return this.value;
         }
         limit() {
+            if (!$mol_fiber_1.deadline)
+                return;
             if (!$mol_fiber_1.current)
                 return;
-            const now = Date.now();
-            const overtime = now - $mol_fiber_1.deadline;
-            if (overtime < 0)
+            if (Date.now() < $mol_fiber_1.deadline)
                 return;
-            /// after debugger
-            if (overtime > 500) {
-                $mol_fiber_1.deadline = now + $mol_fiber_1.quant;
-                return;
-            }
             this.$.$mol_fail_hidden($mol_fiber_1.schedule());
         }
         get master() {
@@ -946,17 +976,21 @@ var $;
             this.complete();
         }
         [$.$mol_dev_format_head]() {
-            return $.$mol_dev_format_span({}, $.$mol_dev_format_native(this), $.$mol_dev_format_accent('❨'), $.$mol_dev_format_auto(this.error || this.value), $.$mol_dev_format_accent('❩'));
+            return $.$mol_dev_format_native(this);
         }
     };
     $mol_fiber.quant = 32;
     $mol_fiber.deadline = 0;
+    $mol_fiber.liveline = 0;
     $mol_fiber.current = null;
     $mol_fiber.scheduled = null;
     $mol_fiber.queue = [];
     __decorate([
         $.$mol_log2.method
     ], $mol_fiber.prototype, "wake", null);
+    __decorate([
+        $.$mol_log2_indent.method
+    ], $mol_fiber.prototype, "update", null);
     $mol_fiber = $mol_fiber_1 = __decorate([
         $.$mol_class
     ], $mol_fiber);
@@ -1012,25 +1046,11 @@ var $;
 var $;
 (function ($) {
     function $mol_dom_render_children(el, childNodes) {
-        const node_list = [];
-        const node_set = new Set();
-        for (let i = 0; i < childNodes.length; ++i) {
-            let node = childNodes[i];
-            if (node == null)
-                continue;
-            if (Object(node) === node) {
-                if (node['dom_tree'])
-                    node = node['dom_tree']();
-                node_list.push(node);
-                node_set.add(node);
-            }
-            else {
-                node_list.push(String(node));
-            }
-        }
+        const node_set = new Set(childNodes);
         let nextNode = el.firstChild;
-        for (let view_ of node_list) {
-            const view = view_.valueOf();
+        for (let view of childNodes) {
+            if (view == null)
+                continue;
             if (view instanceof $.$mol_dom_context.Node) {
                 while (true) {
                     if (!nextNode) {

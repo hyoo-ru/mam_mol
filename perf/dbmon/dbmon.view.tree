@@ -4,7 +4,7 @@ $mol_perf_dbmon $mol_scroll
 		<= Databases $mol_list
 			rows <= databases /
 	Database!id $mol_view
-		sub /
+		sub <= database!id /
 			<= Name!id $mol_view
 				sub /
 					<= name!id \

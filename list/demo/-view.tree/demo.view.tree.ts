@@ -15,7 +15,7 @@ namespace $ { export class $mol_list_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Scroll() )
+		return [ this.Scroll() ] as readonly any[]
 	}
 
 	/**
@@ -26,7 +26,7 @@ namespace $ { export class $mol_list_demo extends $mol_demo_large {
 	@ $mol_mem
 	Scroll() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.List() )
+			obj.sub = () => [ this.List() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -50,7 +50,7 @@ namespace $ { export class $mol_list_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -64,7 +64,7 @@ namespace $ { export class $mol_list_demo extends $mol_demo_large {
 	Row( id : any ) {
 		return (( obj )=>{
 			obj.title = () => this.row_text(id)
-			obj.content = () => [].concat( this.Content(id) )
+			obj.content = () => [ this.Content(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_expander(  ) )
 	}
@@ -86,7 +86,7 @@ namespace $ { export class $mol_list_demo extends $mol_demo_large {
 	@ $mol_mem_key
 	Content( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Text() )
+			obj.sub = () => [ this.Text() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}

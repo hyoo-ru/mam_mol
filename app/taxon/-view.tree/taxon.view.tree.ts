@@ -56,11 +56,14 @@ namespace $ { export class $mol_app_taxon extends $mol_page {
 
 	/**
 	 *  ```
-	 *  record!id null
+	 *  record!id $mol_app_taxon_data_row
 	 *  ```
 	 **/
+	@ $mol_mem_key
 	record( id : any ) {
-		return null as any
+		return (( obj )=>{
+			return obj
+		})( new this.$.$mol_app_taxon_data_row(  ) )
 	}
 
 } }

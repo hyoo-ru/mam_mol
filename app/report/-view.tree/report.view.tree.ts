@@ -17,7 +17,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.descriptor() , this.tabler() )
+		return [ this.descriptor() , this.tabler() ] as readonly any[]
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	@ $mol_mem
 	descriptor() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.description() )
+			obj.sub = () => [ this.description() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -44,17 +44,24 @@ namespace $ { export class $mol_app_report extends $mol_page {
 
 	/**
 	 *  ```
-	 *  tabler $mol_app_report_tabler rows /
-	 *  	<= headRower
-	 *  	<= rows
+	 *  tabler $mol_app_report_tabler rows <= rows
 	 *  ```
 	 **/
 	@ $mol_mem
 	tabler() {
 		return (( obj )=>{
-			obj.rows = () => [].concat( this.headRower() , this.rows() )
+			obj.rows = () => this.rows()
 			return obj
 		})( new this.$.$mol_app_report_tabler(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  rows / <= headRower
+	 *  ```
+	 **/
+	rows() {
+		return [ this.headRower() ] as readonly any[]
 	}
 
 	/**
@@ -76,16 +83,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	 *  ```
 	 **/
 	headCells() {
-		return [].concat(  )
-	}
-
-	/**
-	 *  ```
-	 *  rows /
-	 *  ```
-	 **/
-	rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -107,7 +105,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	 *  ```
 	 **/
 	rowerCells( id : any ) {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -163,7 +161,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	@ $mol_mem_key
 	texter( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.cell_value(id) )
+			obj.sub = () => [ this.cell_value(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -174,7 +172,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	cell_value( id : any , val? : any , force? : $mol_atom_force ) {
+	cell_value( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -245,7 +243,7 @@ namespace $ { export class $mol_app_report_tabler extends $mol_view {
 	 *  ```
 	 **/
 	rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 } }
@@ -276,7 +274,7 @@ namespace $ { export class $mol_app_report_rower extends $mol_view {
 	 *  ```
 	 **/
 	cells() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 } }
@@ -332,7 +330,7 @@ namespace $ { export class $mol_app_report_cell extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.content() )
+		return [ this.content() ] as readonly any[]
 	}
 
 	/**

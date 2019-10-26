@@ -31,6 +31,10 @@ $mol_touch $mol_plugin
 	swipe_to_left?val null
 	swipe_to_top?val null
 	-
+	style *
+		^
+		touch-action \none
+	-
 	event *
 		^
 		touchstart?event <=> event_start?event null

@@ -24,7 +24,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Chart() )
+		return [ this.Chart() ] as readonly any[]
 	}
 
 	/**
@@ -54,7 +54,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	graphs() {
-		return [].concat( this.Receipts() , this.Receipts_confirmed() , this.Maximum() , this.Waste() , this.Purchases() , this.Taxes() , this.Energy() , this.Day() )
+		return [ this.Receipts() , this.Receipts_confirmed() , this.Maximum() , this.Waste() , this.Purchases() , this.Taxes() , this.Energy() , this.Day() ] as readonly any[]
 	}
 
 	/**
@@ -86,20 +86,20 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  series_x /
+	 *  series_x /number
 	 *  ```
 	 **/
 	series_x() {
-		return [].concat(  )
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
 	 *  ```
-	 *  series_2_y /
+	 *  series_2_y /number
 	 *  ```
 	 **/
 	series_2_y() {
-		return [].concat(  )
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -131,11 +131,11 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  series_3_y /
+	 *  series_3_y /number
 	 *  ```
 	 **/
 	series_3_y() {
-		return [].concat(  )
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -167,11 +167,11 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  series_1_y /
+	 *  series_1_y /number
 	 *  ```
 	 **/
 	series_1_y() {
-		return [].concat(  )
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -205,11 +205,11 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  series_4_y /
+	 *  series_4_y /number
 	 *  ```
 	 **/
 	series_4_y() {
-		return [].concat(  )
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -230,7 +230,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 			obj.title = () => this.purchases_title()
 			obj.series_x = () => this.series_x()
 			obj.series_y = () => this.series_5_y()
-			obj.graphs = () => [].concat( this.Purchases_fill() , this.Purchases_line() , this.Purchases_dots() )
+			obj.graphs = () => [ this.Purchases_fill() , this.Purchases_line() , this.Purchases_dots() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_group(  ) )
 	}
@@ -246,11 +246,11 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  series_5_y /
+	 *  series_5_y /number
 	 *  ```
 	 **/
 	series_5_y() {
-		return [].concat(  )
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -307,7 +307,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 			obj.title = () => this.taxes_title()
 			obj.series_x = () => this.series_x()
 			obj.series_y = () => this.series_6_y()
-			obj.graphs = () => [].concat( this.Taxes_fill() , this.Taxes_line() , this.Taxes_dots() )
+			obj.graphs = () => [ this.Taxes_fill() , this.Taxes_line() , this.Taxes_dots() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_group(  ) )
 	}
@@ -323,11 +323,11 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  series_6_y /
+	 *  series_6_y /number
 	 *  ```
 	 **/
 	series_6_y() {
-		return [].concat(  )
+		return [  ] as readonly ( number )[]
 	}
 
 	/**

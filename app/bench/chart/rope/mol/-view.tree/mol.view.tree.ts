@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_bench_chart_rope_mol extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Chart() )
+		return [ this.Chart() ] as readonly any[]
 	}
 
 	/**
@@ -20,7 +20,7 @@ namespace $ { export class $mol_app_bench_chart_rope_mol extends $mol_view {
 	@ $mol_mem
 	Chart() {
 		return (( obj )=>{
-			obj.graphs = () => [].concat( this.Vert() , this.Hor() , this.graphs() )
+			obj.graphs = () => [ this.Vert() , this.Hor() , this.graphs() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_chart(  ) )
 	}
@@ -57,7 +57,7 @@ namespace $ { export class $mol_app_bench_chart_rope_mol extends $mol_view {
 	 *  ```
 	 **/
 	graphs() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -75,7 +75,7 @@ namespace $ { export class $mol_app_bench_chart_rope_mol extends $mol_view {
 		return (( obj )=>{
 			obj.title = () => this.graph_title(id)
 			obj.series_y = () => this.series(id)
-			obj.graphs = () => [].concat( this.Line(id) , this.Dots(id) )
+			obj.graphs = () => [ this.Line(id) , this.Dots(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_group(  ) )
 	}
@@ -95,7 +95,7 @@ namespace $ { export class $mol_app_bench_chart_rope_mol extends $mol_view {
 	 *  ```
 	 **/
 	series( id : any ) {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**

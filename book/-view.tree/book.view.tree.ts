@@ -11,31 +11,31 @@ namespace $ { export class $mol_book extends $mol_view {
 
 	/**
 	 *  ```
-	 *  pages_wrapped /
+	 *  pages_wrapped /$mol_view
 	 *  ```
 	 **/
 	pages_wrapped() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
 	 *  ```
-	 *  pages /
+	 *  pages /$mol_view
 	 *  ```
 	 **/
 	pages() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
 	 *  ```
-	 *  plugins /
+	 *  plugins /$mol_plugin
 	 *  	<= Meter
 	 *  	<= Touch
 	 *  ```
 	 **/
 	plugins() {
-		return [].concat( this.Meter() , this.Touch() )
+		return [ this.Meter() , this.Touch() ] as readonly ( $mol_plugin )[]
 	}
 
 	width() {
@@ -76,7 +76,7 @@ namespace $ { export class $mol_book extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_front_up( val? : any , force? : $mol_atom_force ) {
+	event_front_up( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -86,7 +86,7 @@ namespace $ { export class $mol_book extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_front_down( val? : any , force? : $mol_atom_force ) {
+	event_front_down( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -170,9 +170,24 @@ namespace $ { export class $mol_book_page extends $mol_ghost {
 
 	/**
 	 *  ```
-	 *  attr *
+	 *  attr_static *
 	 *  	^
 	 *  	tabindex 0
+	 *  	mol_book_page_visible true
+	 *  ```
+	 **/
+	attr_static() {
+		return ({
+			...super.attr_static() ,
+			"tabindex" :  0 ,
+			"mol_book_page_visible" :  true ,
+		})
+	}
+
+	/**
+	 *  ```
+	 *  attr *
+	 *  	^
 	 *  	mol_book_page_focused <= focused
 	 *  	mol_book_page_visible <= visible
 	 *  ```
@@ -180,7 +195,6 @@ namespace $ { export class $mol_book_page extends $mol_ghost {
 	attr() {
 		return ({
 			...super.attr() ,
-			"tabindex" :  0 ,
 			"mol_book_page_focused" :  this.focused() ,
 			"mol_book_page_visible" :  this.visible() ,
 		})

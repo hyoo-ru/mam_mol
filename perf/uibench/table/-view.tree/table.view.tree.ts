@@ -47,7 +47,7 @@ namespace $ { export class $mol_perf_uibench_table extends $mol_list {
 	 *  ```
 	 **/
 	rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -145,7 +145,7 @@ namespace $ { export class $mol_perf_uibench_table_row extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Head() , this.cells() )
+		return [ this.Head() , this.cells() ] as readonly any[]
 	}
 
 	/**
@@ -176,7 +176,7 @@ namespace $ { export class $mol_perf_uibench_table_row extends $mol_view {
 	 *  ```
 	 **/
 	cells() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -248,7 +248,7 @@ namespace $ { export class $mol_perf_uibench_table_cell extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	click( val? : any , force? : $mol_atom_force ) {
+	click( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -258,7 +258,7 @@ namespace $ { export class $mol_perf_uibench_table_cell extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.text() )
+		return [ this.text() ] as readonly any[]
 	}
 
 	/**

@@ -8,7 +8,7 @@ namespace $.$$ {
 			let sub = this.sub()
 			if( !sub ) return next
 			
-			const context = this.context_sub()
+			const context = this.$$
 			const widthLimit = context.$mol_view_visible_width()
 			
 			let allHeight = 0
@@ -40,9 +40,16 @@ namespace $.$$ {
 		
 		sub_visible() {
 			const sub = this.sub()
+			
+			const context = this.$$
+			for( let i = 0 ; i < sub.length ; ++ i ) {
+				const child = sub[ i ]
+				if( child instanceof $mol_view ) {
+					child.$ = context
+				}
+			}
+			
 			const visible = [] as (string | number | boolean | $mol_view | Node)[]
-
-			const context = this.context_sub()
 			const heightLimit = context.$mol_view_visible_height()
 			const offsets = this.item_offsets_top()
 
@@ -50,13 +57,7 @@ namespace $.$$ {
 
 			for( let i = 0 ; i < offsets.length - 1 ; ++i ) {
 				if( offsets[ i ] > heightLimit ) break
-
 				const child = sub[ i ]
-
-				if( child instanceof $mol_view ) {
-					child.context( context )
-				}
-
 				visible.push( child )
 			}
 

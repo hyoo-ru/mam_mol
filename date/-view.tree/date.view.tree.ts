@@ -33,7 +33,7 @@ namespace $ { export class $mol_date extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value( val? : any , force? : $mol_atom_force ) {
+	value( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -52,7 +52,7 @@ namespace $ { export class $mol_date extends $mol_pop {
 	 *  ```
 	 **/
 	bubble_content() {
-		return [].concat( this.Calendar() )
+		return [ this.Calendar() ] as readonly any[]
 	}
 
 	/**
@@ -88,7 +88,7 @@ namespace $ { export class $mol_date extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	day_click( day : any , event? : any , force? : $mol_atom_force ) {
+	day_click( day : any , event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -98,7 +98,7 @@ namespace $ { export class $mol_date extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value_number( val? : any , force? : $mol_atom_force ) {
+	value_number( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : NaN
 	}
 
@@ -108,7 +108,7 @@ namespace $ { export class $mol_date extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value_moment( val? : any , force? : $mol_atom_force ) {
+	value_moment( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : (( obj )=>{
 			return obj
 		})( new this.$.$mol_time_moment(  ) )
@@ -124,7 +124,7 @@ namespace $ { export class $mol_date_calendar extends $mol_calendar {
 	 *  ```
 	 **/
 	day_content( day : any ) {
-		return [].concat( this.Day_button(day) )
+		return [ this.Day_button(day) ] as readonly any[]
 	}
 
 	/**
@@ -149,7 +149,7 @@ namespace $ { export class $mol_date_calendar extends $mol_calendar {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	day_click( day : any , event? : any , force? : $mol_atom_force ) {
+	day_click( day : any , event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

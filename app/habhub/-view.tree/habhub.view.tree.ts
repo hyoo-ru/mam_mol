@@ -8,7 +8,7 @@ namespace $ { export class $mol_app_habhub extends $mol_book {
 	 *  ```
 	 **/
 	pages() {
-		return [].concat( this.Menu_page() , this.Details() )
+		return [ this.Menu_page() , this.Details() ] as readonly any[]
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace $ { export class $mol_app_habhub extends $mol_book {
 			obj.title = () => this.menu_title()
 			obj.event_top = ( val? : any ) => this.event_front_up( val )
 			obj.tools = () => this.tools_root()
-			obj.body = () => [].concat( this.Menu() )
+			obj.body = () => [ this.Menu() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
 	}
@@ -48,7 +48,7 @@ namespace $ { export class $mol_app_habhub extends $mol_book {
 	 *  ```
 	 **/
 	tools_root() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -70,7 +70,7 @@ namespace $ { export class $mol_app_habhub extends $mol_book {
 	 *  ```
 	 **/
 	menu_rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -90,9 +90,9 @@ namespace $ { export class $mol_app_habhub extends $mol_book {
 			obj.minimal_width = () => 600
 			obj.title = () => this.gist_current_title()
 			obj.event_top = ( val? : any ) => this.event_front_up( val )
-			obj.tools = () => [].concat( this.Close() )
+			obj.tools = () => [ this.Close() ] as readonly any[]
 			obj.body_scroll_top = ( val? : any ) => this.details_scroll_top( val )
-			obj.body = () => [].concat( this.Details_content() )
+			obj.body = () => [ this.Details_content() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
 	}
@@ -117,7 +117,7 @@ namespace $ { export class $mol_app_habhub extends $mol_book {
 	Close() {
 		return (( obj )=>{
 			obj.arg = () => this.close_arg()
-			obj.sub = () => [].concat( this.Close_icon() )
+			obj.sub = () => [ this.Close_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -151,7 +151,7 @@ namespace $ { export class $mol_app_habhub extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	details_scroll_top( val? : any , force? : $mol_atom_force ) {
+	details_scroll_top( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -163,7 +163,7 @@ namespace $ { export class $mol_app_habhub extends $mol_book {
 	@ $mol_mem
 	Details_content() {
 		return (( obj )=>{
-			obj.rows = () => [].concat( this.Datails_text() )
+			obj.rows = () => [ this.Datails_text() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}

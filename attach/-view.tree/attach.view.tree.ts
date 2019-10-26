@@ -15,23 +15,21 @@ namespace $ { export class $mol_attach extends $mol_card {
 
 	/**
 	 *  ```
-	 *  content /
-	 *  	<= items?val
-	 *  	<= Add
+	 *  content /$mol_view
 	 *  ```
 	 **/
 	content() {
-		return [].concat( this.items() , this.Add() )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
 	 *  ```
-	 *  items?val /
+	 *  items?val /$mol_view
 	 *  ```
 	 **/
 	@ $mol_mem
-	items( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat(  )
+	items( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -53,7 +51,7 @@ namespace $ { export class $mol_attach extends $mol_card {
 	 *  ```
 	 **/
 	@ $mol_mem
-	attach_new( val? : any , force? : $mol_atom_force ) {
+	attach_new( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -89,7 +87,7 @@ namespace $ { export class $mol_attach_item extends $mol_link {
 	 *  ```
 	 **/
 	@ $mol_mem
-	url_thumb( val? : any , force? : $mol_atom_force ) {
+	url_thumb( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -99,7 +97,7 @@ namespace $ { export class $mol_attach_item extends $mol_link {
 	 *  ```
 	 **/
 	@ $mol_mem
-	uri( val? : any , force? : $mol_atom_force ) {
+	uri( val? : any , force? : $mol_mem_force ) {
 		return this.url_load( val )
 	}
 
@@ -109,7 +107,7 @@ namespace $ { export class $mol_attach_item extends $mol_link {
 	 *  ```
 	 **/
 	@ $mol_mem
-	url_load( val? : any , force? : $mol_atom_force ) {
+	url_load( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -178,7 +176,7 @@ namespace $ { export class $mol_attach_add extends $mol_button_minor {
 	 *  ```
 	 **/
 	@ $mol_mem
-	file_new( val? : any , force? : $mol_atom_force ) {
+	file_new( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -190,7 +188,7 @@ namespace $ { export class $mol_attach_add extends $mol_button_minor {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Icon() , this.Input() )
+		return [ this.Icon() , this.Input() ] as readonly any[]
 	}
 
 	/**
@@ -227,7 +225,7 @@ namespace $ { export class $mol_attach_add extends $mol_button_minor {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_capture( val? : any , force? : $mol_atom_force ) {
+	event_capture( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -237,7 +235,7 @@ namespace $ { export class $mol_attach_add extends $mol_button_minor {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_picked( val? : any , force? : $mol_atom_force ) {
+	event_picked( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -305,7 +303,7 @@ namespace $ { export class $mol_attach_add_input extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_click( val? : any , force? : $mol_atom_force ) {
+	event_click( val? : any , force? : $mol_mem_force ) {
 		return this.event_capture( val )
 	}
 
@@ -315,7 +313,7 @@ namespace $ { export class $mol_attach_add_input extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_capture( val? : any , force? : $mol_atom_force ) {
+	event_capture( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -339,7 +337,7 @@ namespace $ { export class $mol_attach_add_input extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_picked( val? : any , force? : $mol_atom_force ) {
+	event_picked( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 

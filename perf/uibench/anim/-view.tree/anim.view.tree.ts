@@ -38,7 +38,7 @@ namespace $ { export class $mol_perf_uibench_anim extends $mol_view {
 	 *  ```
 	 **/
 	boxes() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**

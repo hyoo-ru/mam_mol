@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_bench_chart_bar_mol extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Chart() )
+		return [ this.Chart() ] as readonly any[]
 	}
 
 	/**
@@ -20,7 +20,7 @@ namespace $ { export class $mol_app_bench_chart_bar_mol extends $mol_view {
 	@ $mol_mem
 	Chart() {
 		return (( obj )=>{
-			obj.graphs = () => [].concat( this.Vert() , this.Hor() , this.graphs() )
+			obj.graphs = () => [ this.Vert() , this.Hor() , this.graphs() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_chart(  ) )
 	}
@@ -60,7 +60,7 @@ namespace $ { export class $mol_app_bench_chart_bar_mol extends $mol_view {
 	 *  ```
 	 **/
 	hor_series() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -69,7 +69,7 @@ namespace $ { export class $mol_app_bench_chart_bar_mol extends $mol_view {
 	 *  ```
 	 **/
 	graphs() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -103,7 +103,7 @@ namespace $ { export class $mol_app_bench_chart_bar_mol extends $mol_view {
 	 *  ```
 	 **/
 	series( id : any ) {
-		return [].concat(  ) as readonly ( number )[]
+		return [  ] as readonly ( number )[]
 	}
 
 } }

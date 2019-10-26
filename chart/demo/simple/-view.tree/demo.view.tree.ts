@@ -15,7 +15,7 @@ namespace $ { export class $mol_chart_demo_simple extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Chart() )
+		return [ this.Chart() ] as readonly any[]
 	}
 
 	/**
@@ -31,7 +31,7 @@ namespace $ { export class $mol_chart_demo_simple extends $mol_demo_large {
 	@ $mol_mem
 	Chart() {
 		return (( obj )=>{
-			obj.graphs = () => [].concat( this.Plan() , this.Fact() , this.Vert_ruler() , this.Marker_hor() , this.Marker_cross() )
+			obj.graphs = () => [ this.Plan() , this.Fact() , this.Vert_ruler() , this.Marker_hor() , this.Marker_cross() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_chart(  ) )
 	}
@@ -71,7 +71,7 @@ namespace $ { export class $mol_chart_demo_simple extends $mol_demo_large {
 	 *  ```
 	 **/
 	plan() {
-		return [].concat( 10 , 20 , 30 , 40 )
+		return [ 10 , 20 , 30 , 40 ] as readonly any[]
 	}
 
 	/**
@@ -89,7 +89,7 @@ namespace $ { export class $mol_chart_demo_simple extends $mol_demo_large {
 		return (( obj )=>{
 			obj.title = () => this.fact_title()
 			obj.series_y = () => this.facts()
-			obj.graphs = () => [].concat( this.Fact_line() , this.Fact_dots() )
+			obj.graphs = () => [ this.Fact_line() , this.Fact_dots() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_group(  ) )
 	}
@@ -112,7 +112,7 @@ namespace $ { export class $mol_chart_demo_simple extends $mol_demo_large {
 	 *  ```
 	 **/
 	facts() {
-		return [].concat( 5 , 10 , 30 )
+		return [ 5 , 10 , 30 ] as readonly any[]
 	}
 
 	/**
@@ -196,7 +196,7 @@ namespace $ { export class $mol_chart_demo_simple extends $mol_demo_large {
 	 *  ```
 	 **/
 	months() {
-		return [].concat( "January" , "February" , "March" , "April" ) as readonly ( string )[]
+		return [ "January" , "February" , "March" , "April" ] as readonly ( string )[]
 	}
 
 	/**
@@ -212,7 +212,7 @@ namespace $ { export class $mol_chart_demo_simple extends $mol_demo_large {
 	Marker_cross() {
 		return (( obj )=>{
 			obj.labels = () => this.months()
-			obj.graphs = () => [].concat( this.Plan() , this.Fact_dots() )
+			obj.graphs = () => [ this.Plan() , this.Fact_dots() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_mark_cross(  ) )
 	}

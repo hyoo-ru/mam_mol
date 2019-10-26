@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_demo_placeholder extends $mol_book_placehold
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Content() )
+		return [ this.Content() ] as readonly any[]
 	}
 
 	/**
@@ -21,7 +21,7 @@ namespace $ { export class $mol_app_demo_placeholder extends $mol_book_placehold
 	@ $mol_mem
 	Content() {
 		return (( obj )=>{
-			obj.content = () => [].concat( this.Title() , this.Description() , this.Advantages() , this.Links() )
+			obj.content = () => [ this.Title() , this.Description() , this.Advantages() , this.Links() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_card(  ) )
 	}
@@ -36,7 +36,7 @@ namespace $ { export class $mol_app_demo_placeholder extends $mol_book_placehold
 	@ $mol_mem
 	Title() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Logo() , this.title() )
+			obj.sub = () => [ this.Logo() , this.title() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -70,7 +70,7 @@ namespace $ { export class $mol_app_demo_placeholder extends $mol_book_placehold
 	@ $mol_mem
 	Description() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.description() )
+			obj.sub = () => [ this.description() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -95,7 +95,7 @@ namespace $ { export class $mol_app_demo_placeholder extends $mol_book_placehold
 	@ $mol_mem
 	Advantages() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Technology() , this.Code() , this.Programming() )
+			obj.sub = () => [ this.Technology() , this.Code() , this.Programming() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -185,7 +185,7 @@ namespace $ { export class $mol_app_demo_placeholder extends $mol_book_placehold
 	@ $mol_mem
 	Links() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Github_link() , this.Showcase_link() )
+			obj.sub = () => [ this.Github_link() , this.Showcase_link() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -240,7 +240,7 @@ namespace $ { export class $mol_app_placeholder_advantage extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Image() , this.title() )
+		return [ this.Image() , this.title() ] as readonly any[]
 	}
 
 	/**

@@ -17,7 +17,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.All() , this.Partial() )
+		return [ this.All() , this.Partial() ] as readonly any[]
 	}
 
 	/**
@@ -38,7 +38,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	All() {
 		return (( obj )=>{
 			obj.title = () => "SPECIAL"
-			obj.checks = () => [].concat( this.Strength() , this.Perception() , this.Endurance() , this.Charisma() , this.Intelligence() , this.Agility() , this.Luck() )
+			obj.checks = () => [ this.Strength() , this.Perception() , this.Endurance() , this.Charisma() , this.Intelligence() , this.Agility() , this.Luck() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_check_group(  ) )
 	}
@@ -58,7 +58,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	@ $mol_mem
 	Partial() {
 		return (( obj )=>{
-			obj.rows = () => [].concat( this.Strength() , this.Perception() , this.Endurance() , this.Charisma() , this.Intelligence() , this.Agility() , this.Luck() )
+			obj.rows = () => [ this.Strength() , this.Perception() , this.Endurance() , this.Charisma() , this.Intelligence() , this.Agility() , this.Luck() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}
@@ -94,7 +94,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	strength( val? : any , force? : $mol_atom_force ) {
+	strength( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -129,7 +129,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	perception( val? : any , force? : $mol_atom_force ) {
+	perception( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : true
 	}
 
@@ -164,7 +164,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	endurance( val? : any , force? : $mol_atom_force ) {
+	endurance( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -199,7 +199,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	charisma( val? : any , force? : $mol_atom_force ) {
+	charisma( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -234,7 +234,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	intelligence( val? : any , force? : $mol_atom_force ) {
+	intelligence( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : true
 	}
 
@@ -269,7 +269,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	agility( val? : any , force? : $mol_atom_force ) {
+	agility( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : true
 	}
 
@@ -304,7 +304,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	luck( val? : any , force? : $mol_atom_force ) {
+	luck( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : true
 	}
 

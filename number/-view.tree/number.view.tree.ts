@@ -33,7 +33,7 @@ namespace $ { export class $mol_number extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value( val? : any , force? : $mol_atom_force ) {
+	value( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : NaN
 	}
 
@@ -46,7 +46,7 @@ namespace $ { export class $mol_number extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.String() , this.Dec() , this.Inc() )
+		return [ this.String() , this.Dec() , this.Inc() ] as readonly any[]
 	}
 
 	/**
@@ -77,7 +77,7 @@ namespace $ { export class $mol_number extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value_string( val? : any , force? : $mol_atom_force ) {
+	value_string( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -130,7 +130,7 @@ namespace $ { export class $mol_number extends $mol_view {
 		return (( obj )=>{
 			obj.event_click = ( val? : any ) => this.event_dec( val )
 			obj.enabled = () => this.dec_enabled()
-			obj.sub = () => [].concat( this.dec_icon() )
+			obj.sub = () => [ this.dec_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -141,7 +141,7 @@ namespace $ { export class $mol_number extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_dec( val? : any , force? : $mol_atom_force ) {
+	event_dec( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -179,7 +179,7 @@ namespace $ { export class $mol_number extends $mol_view {
 		return (( obj )=>{
 			obj.event_click = ( val? : any ) => this.event_inc( val )
 			obj.enabled = () => this.inc_enabled()
-			obj.sub = () => [].concat( this.inc_icon() )
+			obj.sub = () => [ this.inc_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -190,7 +190,7 @@ namespace $ { export class $mol_number extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_inc( val? : any , force? : $mol_atom_force ) {
+	event_inc( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 

@@ -15,7 +15,7 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Map() )
+		return [ this.Map() ] as readonly any[]
 	}
 
 	/**
@@ -31,7 +31,7 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 		return (( obj )=>{
 			obj.center = ( val? : any ) => this.center( val )
 			obj.zoom = ( val? : any ) => this.zoom( val )
-			obj.objects = () => [].concat( this.Place() )
+			obj.objects = () => [ this.Place() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_map_yandex(  ) )
 	}
@@ -44,8 +44,8 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	@ $mol_mem
-	center( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat( 59.9 , 30.3 )
+	center( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [ 59.9 , 30.3 ] as readonly any[]
 	}
 
 	/**
@@ -54,7 +54,7 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	@ $mol_mem
-	zoom( val? : any , force? : $mol_atom_force ) {
+	zoom( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 10
 	}
 
@@ -84,7 +84,7 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	place_pos() {
-		return [].concat( 59.9 , 30.3 )
+		return [ 59.9 , 30.3 ] as readonly any[]
 	}
 
 	/**

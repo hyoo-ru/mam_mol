@@ -1,6 +1,7 @@
 namespace $.$$ {
 	export class $mol_list extends $.$mol_list {
 		
+		@ $mol_mem
 		sub() {
 			const rows = this.rows()
 			return ( rows.length === 0 ) ? [ this.Empty() ] : rows
@@ -9,7 +10,6 @@ namespace $.$$ {
 		@ $mol_mem
 		row_offsets() : number[] {
 			var sub = this.sub()
-			if( !sub ) return null
 			
 			let heightLimit = this.$.$mol_view_visible_height()
 			var offset = 0
@@ -40,15 +40,19 @@ namespace $.$$ {
 			var sub = this.sub()
 			if( !sub ) return sub
 			
+			for( let i = 0 ; i < sub.length ; ++ i ) {
+				const child = sub[ i ]
+				if( child instanceof $mol_view ) {
+					child.$ = this.row_context( i )
+				}
+			}
+
 			var limit = this.row_offsets().length
 			
 			var next : $mol_view[] = []
 			for( let i = 0 ; i < limit ; ++ i ) {
 				const child = sub[ i ]
 				if( child == null ) continue 
-				if( child instanceof $mol_view ) {
-					child.$ = this.row_context( i )
-				}
 				next.push( child )
 			}
 			
@@ -59,7 +63,7 @@ namespace $.$$ {
 		minimal_height() {
 			var height = 0
 			var sub = this.sub()
-			if( sub ) sub.forEach( child => {
+			if( sub ) sub.forEach( ( child : any )=> {
 				if( child instanceof $mol_view ) {
 					height += child.minimal_height()
 				}

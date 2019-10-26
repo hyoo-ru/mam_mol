@@ -103,25 +103,11 @@ var $;
 var $;
 (function ($) {
     function $mol_dom_render_children(el, childNodes) {
-        const node_list = [];
-        const node_set = new Set();
-        for (let i = 0; i < childNodes.length; ++i) {
-            let node = childNodes[i];
-            if (node == null)
-                continue;
-            if (Object(node) === node) {
-                if (node['dom_tree'])
-                    node = node['dom_tree']();
-                node_list.push(node);
-                node_set.add(node);
-            }
-            else {
-                node_list.push(String(node));
-            }
-        }
+        const node_set = new Set(childNodes);
         let nextNode = el.firstChild;
-        for (let view_ of node_list) {
-            const view = view_.valueOf();
+        for (let view of childNodes) {
+            if (view == null)
+                continue;
             if (view instanceof $.$mol_dom_context.Node) {
                 while (true) {
                     if (!nextNode) {
@@ -380,6 +366,7 @@ var $;
         }
         onItemSelect(item) {
             this.selected = item.id;
+            this.valueOf(); // force rerender
         }
         render() {
             return ($.$mol_jsx_make("div", { classList: ['list'] }, this.data.items.map(item => ($.$mol_jsx_make($mol_app_bench_list_tsx_item, { id: '/item:' + item.id, title: item.title, content: item.content, selected: item.id === this.selected, onSelect: () => this.onItemSelect(item) })))));

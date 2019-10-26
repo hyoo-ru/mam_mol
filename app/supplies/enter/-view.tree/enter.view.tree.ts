@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	entered( val? : any , force? : $mol_atom_force ) {
+	entered( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -25,7 +25,7 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.form() )
+		return [ this.form() ] as readonly any[]
 	}
 
 	/**
@@ -40,8 +40,8 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	@ $mol_mem
 	form() {
 		return (( obj )=>{
-			obj.form_fields = () => [].concat( this.loginField() , this.passwordField() )
-			obj.buttons = () => [].concat( this.submit() )
+			obj.form_fields = () => [ this.loginField() , this.passwordField() ] as readonly any[]
+			obj.buttons = () => [ this.submit() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_form(  ) )
 	}
@@ -90,7 +90,7 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	login( val? : any , force? : $mol_atom_force ) {
+	login( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -141,7 +141,7 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	password( val? : any , force? : $mol_atom_force ) {
+	password( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -156,7 +156,7 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	@ $mol_mem
 	submit() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.submitLabel() )
+			obj.sub = () => [ this.submitLabel() ] as readonly any[]
 			obj.event_click = ( val? : any ) => this.event_submit( val )
 			obj.disabled = () => this.submit_blocked()
 			return obj
@@ -178,7 +178,7 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_submit( val? : any , force? : $mol_atom_force ) {
+	event_submit( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 

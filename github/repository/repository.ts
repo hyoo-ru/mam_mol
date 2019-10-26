@@ -113,12 +113,12 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		items( next? : $mol_github_issue[] , force? : $mol_atom_force ) {
+		items( next? : $mol_github_issue[] , force? : $mol_mem_force ) {
 			return this.json( undefined , force ).map( json => $mol_github_issue.item( json.url ) )
 		}
 
 		@ $mol_mem_key
-		add( config : { title : string , text? : string } , next? : $mol_github_issue , force? : $mol_atom_force ) {
+		add( config : { title : string , text? : string } , next? : $mol_github_issue , force? : $mol_mem_force ) {
 			if( !config ) return
 
 			const resource = $mol_http.resource( this.uri() + '?' )
@@ -133,14 +133,14 @@ namespace $ {
 				const comment = $mol_github_issue.item( json.url )
 				comment.json_update( json )
 
-				this.json( undefined , $mol_atom_force_cache )
+				this.json( undefined , $mol_mem_force_cache )
 				
 				return comment
 
 			} catch( error ) {
 				
 				if( error.message === 'Unauthorized' ) {
-					$mol_github_auth.token_last( undefined , $mol_atom_force_update ).valueOf()
+					$mol_github_auth.token_last( undefined , $mol_mem_force_update ).valueOf()
 				}
 				
 				throw error

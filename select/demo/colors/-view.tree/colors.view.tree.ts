@@ -15,7 +15,7 @@ namespace $ { export class $mol_select_demo_colors extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Color() )
+		return [ this.Color() ] as readonly any[]
 	}
 
 	/**
@@ -44,7 +44,7 @@ namespace $ { export class $mol_select_demo_colors extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	color( val? : any , force? : $mol_atom_force ) {
+	color( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -73,7 +73,7 @@ namespace $ { export class $mol_select_demo_colors extends $mol_demo_small {
 	 *  ```
 	 **/
 	option_content( id : any ) {
-		return [].concat( this.Color_option(id) )
+		return [ this.Color_option(id) ] as readonly any[]
 	}
 
 	/**
@@ -88,7 +88,7 @@ namespace $ { export class $mol_select_demo_colors extends $mol_demo_small {
 	@ $mol_mem_key
 	Color_option( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Color_preview(id) , this.color_name(id) )
+			obj.sub = () => [ this.Color_preview(id) , this.color_name(id) ] as readonly any[]
 			obj.minimal_height = () => 40
 			return obj
 		})( new this.$.$mol_row(  ) )

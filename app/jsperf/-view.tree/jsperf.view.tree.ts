@@ -33,7 +33,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Prefix() , this.Cases() , this.Chart() , this.Postfix() )
+		return [ this.Prefix() , this.Cases() , this.Chart() , this.Postfix() ] as readonly any[]
 	}
 
 	/**
@@ -58,7 +58,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	prefix( val? : any , force? : $mol_atom_force ) {
+	prefix( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -90,7 +90,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	cases() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -107,7 +107,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	Chart() {
 		return (( obj )=>{
 			obj.gap_bottom = () => 0
-			obj.graphs = () => [].concat( this.Frequencies() , this.Frequencies_ruler() , this.Frequencies_mark_hor() )
+			obj.graphs = () => [ this.Frequencies() , this.Frequencies_ruler() , this.Frequencies_mark_hor() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_pane(  ) )
 	}
@@ -131,7 +131,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	frequencies() {
-		return [].concat(  ) as readonly ( number )[]
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -169,7 +169,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	labels() {
-		return [].concat(  ) as readonly ( string )[]
+		return [  ] as readonly ( string )[]
 	}
 
 	/**
@@ -194,7 +194,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	postfix( val? : any , force? : $mol_atom_force ) {
+	postfix( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -229,7 +229,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	source( index : any , val? : any , force? : $mol_atom_force ) {
+	source( index : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -239,7 +239,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	results( index : any , val? : any , force? : $mol_atom_force ) {
+	results( index : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -253,7 +253,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [].concat( this.Permalink() , this.New() , this.Optimized() , this.Run() )
+		return [ this.Permalink() , this.New() , this.Optimized() , this.Run() ] as readonly any[]
 	}
 
 	/**
@@ -271,7 +271,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 			obj.uri = () => this.permalink()
 			obj.hint = () => this.parmalink_hint()
 			obj.target = () => "_blank"
-			obj.sub = () => [].concat( this.Permalink_icon() )
+			obj.sub = () => [ this.Permalink_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -319,7 +319,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 		return (( obj )=>{
 			obj.uri = () => "#"
 			obj.hint = () => this.new_hint()
-			obj.sub = () => [].concat( this.New_icon() )
+			obj.sub = () => [ this.New_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -376,7 +376,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	optimized( val? : any , force? : $mol_atom_force ) {
+	optimized( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : true
 	}
 
@@ -411,7 +411,7 @@ namespace $ { export class $mol_app_jsperf extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	run( event? : any , force? : $mol_atom_force ) {
+	run( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -425,7 +425,7 @@ namespace $ { export class $mol_app_jsperf_case extends $mol_view {
 	 *  ```
 	 **/
 	results() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -443,7 +443,7 @@ namespace $ { export class $mol_app_jsperf_case extends $mol_view {
 	 *  ```
 	 **/
 	columns() {
-		return [].concat( this.Source() )
+		return [ this.Source() ] as readonly any[]
 	}
 
 	/**
@@ -468,7 +468,7 @@ namespace $ { export class $mol_app_jsperf_case extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	source( val? : any , force? : $mol_atom_force ) {
+	source( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -531,7 +531,7 @@ namespace $ { export class $mol_app_jsperf_case_result extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Stats() , this.Portion() , this.Error() )
+		return [ this.Stats() , this.Portion() , this.Error() ] as readonly any[]
 	}
 
 	/**
@@ -547,7 +547,7 @@ namespace $ { export class $mol_app_jsperf_case_result extends $mol_view {
 	@ $mol_mem
 	Stats() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Frequency() , " ≈ " , this.Time() , " ⋅ " , this.Iterations() )
+			obj.sub = () => [ this.Frequency() , " ≈ " , this.Time() , " ⋅ " , this.Iterations() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -560,7 +560,7 @@ namespace $ { export class $mol_app_jsperf_case_result extends $mol_view {
 	@ $mol_mem
 	Frequency() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.frequency() )
+			obj.sub = () => [ this.frequency() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -582,7 +582,7 @@ namespace $ { export class $mol_app_jsperf_case_result extends $mol_view {
 	@ $mol_mem
 	Time() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.time() )
+			obj.sub = () => [ this.time() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -604,7 +604,7 @@ namespace $ { export class $mol_app_jsperf_case_result extends $mol_view {
 	@ $mol_mem
 	Iterations() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.iterations() )
+			obj.sub = () => [ this.iterations() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -648,7 +648,7 @@ namespace $ { export class $mol_app_jsperf_case_result extends $mol_view {
 	@ $mol_mem
 	Error() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.error() )
+			obj.sub = () => [ this.error() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

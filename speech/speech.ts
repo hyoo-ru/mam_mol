@@ -3,15 +3,15 @@ namespace $ {
 	export class $mol_speech extends $mol_plugin {
 		
 		@ $mol_mem
-		static speaker( next? : SpeechSynthesis , force? : $mol_atom_force ) {
+		static speaker( next? : SpeechSynthesis , force? : $mol_mem_force ) {
 
 			const API = window.speechSynthesis
 
 			if( API.getVoices().length ) return API
 
-			const on_voices = ( event : SpeechSynthesisEvent )=> {
+			const on_voices = ( event : Event )=> {
 				if( !API.getVoices().length ) return
-				this.speaker( API , $mol_atom_force_cache )
+				this.speaker( API , $mol_mem_force_cache )
 				API.removeEventListener( 'voiceschanged' , on_voices )
 			}
 
@@ -45,6 +45,8 @@ namespace $ {
 			utter.pitch = pitch
 			
 			speaker.speak( utter )
+
+			return null as null
 		}
 
 		@ $mol_mem
@@ -67,16 +69,19 @@ namespace $ {
 			api.continuous = true
 			api.lang = $mol_locale.lang()
 			
-			api.onnomatch = ( event : any )=> {
+			api.onnomatch = $mol_fiber_root( ( event : any )=> {
 				this.event_result( null )
-			}
-			api.onresult = ( event : any )=> {
+				return null
+			})
+			api.onresult = $mol_fiber_root(( event : any )=> {
 				this.event_result( event )
-			}
-			api.onerror = ( event : Event & { error : string } )=> {
+				return null
+			} )
+			api.onerror = $mol_fiber_root( ( event : Event & { error : string } )=> {
 				console.error( new Error( event.error ) )
 				this.event_result( null )
-			}
+				return null
+			} )
 			api.onend = ( event : any )=> {
 				if( this.hearing() ) api.start()
 			}
@@ -102,7 +107,7 @@ namespace $ {
 			results : Array< { transcript : string }[] & { isFinal : boolean } >
 		} ) {
 			this.hearer()
-			return event
+			return event || null
 		}
 
 		@ $mol_mem

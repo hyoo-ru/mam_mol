@@ -29,11 +29,11 @@ namespace $ { export class $mol_dimmer extends $mol_view {
 
 	/**
 	 *  ```
-	 *  parts /
+	 *  parts /$mol_view_content
 	 *  ```
 	 **/
 	parts() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -44,7 +44,7 @@ namespace $ { export class $mol_dimmer extends $mol_view {
 	@ $mol_mem_key
 	Low( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.string(id) )
+			obj.sub = () => [ this.string(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

@@ -60,18 +60,35 @@ namespace $ { export class $mol_chart extends $mol_view {
 	 *  ```
 	 **/
 	graphs() {
-		return [].concat(  ) as readonly ( $mol_plot_graph )[]
+		return [  ] as readonly ( $mol_plot_graph )[]
 	}
 
 	/**
 	 *  ```
 	 *  sub /
-	 *  	<= Plot
 	 *  	<= Legend
+	 *  	<= Plot
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Plot() , this.Legend() )
+		return [ this.Legend() , this.Plot() ] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  Legend $mol_chart_legend graphs <= graphs_colored
+	 *  ```
+	 **/
+	@ $mol_mem
+	Legend() {
+		return (( obj )=>{
+			obj.graphs = () => this.graphs_colored()
+			return obj
+		})( new this.$.$mol_chart_legend(  ) )
+	}
+
+	graphs_colored() {
+		return this.Plot().graphs_colored(  )
 	}
 
 	/**
@@ -82,6 +99,7 @@ namespace $ { export class $mol_chart extends $mol_view {
 	 *  	gap_bottom <= gap_bottom
 	 *  	gap_top <= gap_top
 	 *  	graphs <= graphs
+	 *  	graphs_colored => graphs_colored
 	 *  	hue_base?val <= hue_base
 	 *  	hue_shift?val <= hue_shift
 	 *  ```
@@ -116,19 +134,6 @@ namespace $ { export class $mol_chart extends $mol_view {
 	 **/
 	hue_shift() {
 		return 111
-	}
-
-	/**
-	 *  ```
-	 *  Legend $mol_chart_legend graphs <= graphs
-	 *  ```
-	 **/
-	@ $mol_mem
-	Legend() {
-		return (( obj )=>{
-			obj.graphs = () => this.graphs()
-			return obj
-		})( new this.$.$mol_chart_legend(  ) )
 	}
 
 } }

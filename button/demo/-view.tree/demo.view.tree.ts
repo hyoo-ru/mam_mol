@@ -19,7 +19,7 @@ namespace $ { export class $mol_button_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Major_enabled() , this.Major_disabled() , this.Minor_enabled() , this.Minor_disabled() )
+		return [ this.Major_enabled() , this.Major_disabled() , this.Minor_enabled() , this.Minor_disabled() ] as readonly any[]
 	}
 
 	/**

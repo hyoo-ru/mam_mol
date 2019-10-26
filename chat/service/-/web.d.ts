@@ -10,46 +10,64 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    namespace $$ { }
-    class $mol_object {
+    function $mol_class<Class extends any>(Class: Class): Class;
+}
+
+declare namespace $ {
+    class $mol_object2 extends Object {
         static $: $mol_ambient_context;
-        readonly $: $mol_ambient_context;
-        static make<Instance>(this: {
-            new (): Instance;
-        }, config: Partial<Instance>): Instance;
-        static toString(): string;
-        'object_owner()': any;
-        object_owner(next?: any): any;
-        'object_host()': any;
-        object_host(next?: any): any;
-        'object_field()': string;
-        object_field(next?: string): string;
-        object_id(next?: string): any;
+        static readonly $$: $mol_ambient_context;
+        $: typeof $mol_object2.$;
+        readonly $$: $mol_ambient_context;
+        constructor(init?: (obj: any) => void);
+        static make<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: Instance) => void): Instance;
+        static toString(): any;
+        destructor(): void;
         toString(): any;
         toJSON(): any;
-        destructor(): void;
     }
 }
 
 declare namespace $ {
-    function $mol_compare_any(a: any, b: any): boolean;
+    class $mol_wrapper extends $mol_object2 {
+        static wrap: (task: (...ags: any[]) => any) => (...ags: any[]) => any;
+        static run<Result>(task: () => Result): Result;
+        static func<Args extends any[], Result, Host = void>(func: (this: Host, ...args: Args) => Result): (this: Host, ...args: Args) => Result;
+        static readonly class: <Class extends new (...args: any[]) => any>(Class: Class) => Class;
+        static readonly method: <Host, Field extends keyof Host, Args extends any[], Result>(obj: Host, name: Field, descr: TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>) => TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>;
+    }
 }
 
 declare namespace $ {
-    const $mol_conform_stack: any[];
-    function $mol_conform<Target, Source>(target: Target, source: Source): Target;
-    const $mol_conform_handlers: WeakMap<Object, (target: any, source: any) => any>;
-    function $mol_conform_handler<Class>(cl: {
-        new (...args: any[]): Class;
-    }, handler: (target: Class, source: Class) => Class): void;
+    function $mol_dev_format_register(config: {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => false;
+    } | {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => boolean;
+        body: (val: any, config: any) => any;
+    }): void;
+    let $mol_dev_format_head: symbol;
+    let $mol_dev_format_body: symbol;
+    function $mol_dev_format_native(obj: any): any;
+    function $mol_dev_format_auto(obj: any): any;
+    function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
+    let $mol_dev_format_div: any;
+    let $mol_dev_format_span: any;
+    let $mol_dev_format_ol: any;
+    let $mol_dev_format_li: any;
+    let $mol_dev_format_table: any;
+    let $mol_dev_format_tr: any;
+    let $mol_dev_format_td: any;
+    let $mol_dev_format_accent: any;
+    let $mol_dev_format_strong: any;
+    let $mol_dev_format_string: any;
+    let $mol_dev_format_shade: any;
+    let $mol_dev_format_indent: any;
 }
 
 declare namespace $ {
-    function $mol_fail(error: any): never;
-}
-
-declare namespace $ {
-    function $mol_fail_hidden(error: any): never;
+    function $mol_maybe<Value>(value: Value | null | undefined): Value[];
 }
 
 declare namespace $ {
@@ -73,84 +91,270 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_defer extends $mol_object {
-        run: () => void;
-        constructor(run: () => void);
+    class $mol_log2 extends $mol_wrapper {
+        readonly host: any;
+        readonly id: string;
+        readonly args: any[];
+        static current: $mol_log2;
+        static wrap<This extends {
+            $: $mol_ambient_context;
+        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+        constructor(host: any, id: string, args: any[]);
+        stream: $mol_log2_line[];
+        flush(): void;
+        info(...values: any[]): void;
+        static info(...values: any[]): void;
+        /**
+         * Enable all logs
+         *
+         * 	$mol_log2.excludes = []
+         *
+         * Exclude all atom logs:
+         *
+         * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
+         *
+         * Disable logs:
+         *
+         * 	$mol_log2.excludes = null
+         */
+        static excludes: RegExp[];
+        static prefix: any[];
+    }
+    class $mol_log2_indent extends $mol_wrapper {
+        static wrap<This extends {
+            $: $mol_ambient_context;
+        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+    }
+    class $mol_log2_table extends $mol_log2 {
+    }
+    class $mol_log2_hidden extends $mol_log2 {
+        flush(): void;
+    }
+    class $mol_log2_line extends Array<any> {
+        constructor(...items: any[]);
+    }
+    class $mol_log2_token extends Array<any> {
+        constructor(...items: any[]);
+    }
+    let $mol_log2_token_empty: $mol_log2_token;
+    let $mol_log2_token_indent: $mol_log2_token;
+    let $mol_log2_legend: $mol_log2_table;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+declare namespace $ {
+    function $mol_fail_hidden(error: any): never;
+}
+
+declare namespace $ {
+    class $mol_after_frame extends $mol_object2 {
+        task: () => void;
+        id: any;
+        constructor(task: () => void);
         destructor(): void;
-        static all: $mol_defer[];
-        static timer: any;
-        static scheduleNative: (handler: () => void) => any;
-        static schedule(): void;
-        static unschedule(): void;
-        static add(defer: $mol_defer): void;
-        static drop(defer: $mol_defer): void;
-        static run(): void;
     }
 }
 
 declare namespace $ {
-    var $mol_state_stack: Map<string, any>;
+    function $mol_compare_any(a: any, b: any): boolean;
 }
 
 declare namespace $ {
-    enum $mol_atom_status {
-        obsolete = "obsolete",
-        checking = "checking",
-        pulling = "pulling",
-        actual = "actual"
+    const $mol_conform_stack: any[];
+    function $mol_conform<Target, Source>(target: Target, source: Source): Target;
+    const $mol_conform_handlers: WeakMap<Object, (target: any, source: any) => any>;
+    function $mol_conform_handler<Class>(cl: {
+        new (...args: any[]): Class;
+    }, handler: (target: Class, source: Class) => Class): void;
+}
+
+declare namespace $ {
+    function $mol_array_trim<Item>(array: Item[]): Item[];
+}
+
+declare namespace $ {
+    const enum $mol_fiber_status {
+        persist = -3,
+        actual = -2,
+        doubt = -1,
+        obsolete = 0
     }
-    function $mol_atom_fence<Task extends () => any>(task: Task): any;
-    class $mol_atom<Value = any> extends $mol_object {
-        masters: Set<$mol_atom<any>> | null;
-        slaves: Set<$mol_atom<any>> | null;
-        status: $mol_atom_status;
-        readonly handler: (next?: Value, force?: $mol_atom_force) => Value | void;
-        'value()': Value | Error | undefined;
-        constructor(id: string, handler?: (next?: Value, force?: $mol_atom_force) => Value | void);
-        destructor(): void;
-        unlink(): void;
-        get(force?: $mol_atom_force): Value;
-        actualize(force?: $mol_atom_force): void;
-        pull(force?: $mol_atom_force): any;
-        _next: Value | undefined;
-        _ignore: Value | undefined;
-        set(next: Value): Value;
-        push(next_raw?: Value | Error): Value;
+    function $mol_fiber_defer<Value = void>(calculate: () => Value): $mol_fiber<any>;
+    function $mol_fiber_func<This, Args extends any[], Result>(calculate: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
+    function $mol_fiber_root<Calculate extends (this: This, ...args: any[]) => Result, Result = void, This = void>(calculate: Calculate): Calculate;
+    function $mol_fiber_method<Host, Value>(obj: Host, name: keyof Host, descr: TypedPropertyDescriptor<(this: Host, ...args: any[]) => Value>): TypedPropertyDescriptor<(this: Host, ...args: any[]) => Value>;
+    function $mol_fiber_sync<Args extends any[], Value = void, This = void>(request: (this: This, ...args: Args) => PromiseLike<Value>): (...args: Args) => Value;
+    function $mol_fiber_warp(): Promise<void>;
+    function $mol_fiber_fence(func: () => any): any;
+    function $mol_fiber_unlimit<Result>(task: () => Result): Result;
+    class $mol_fiber_solid extends $mol_wrapper {
+        static func<This, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
+    }
+    class $mol_fiber<Value = any> extends $mol_wrapper {
+        static wrap<This, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+        static quant: number;
+        static deadline: number;
+        static liveline: number;
+        static current: $mol_fiber<any>;
+        static scheduled: $mol_after_frame;
+        static queue: (() => PromiseLike<any>)[];
+        static tick(): Promise<void>;
+        static schedule(): Promise<any>;
+        value: Value;
+        error: Error | PromiseLike<Value>;
+        cursor: $mol_fiber_status;
+        masters: (number | $mol_fiber<any>)[];
+        calculate: () => Value;
+        schedule(): void;
+        wake(): Value;
+        push(value: Value): Value;
+        fail(error: Error | PromiseLike<Value>): Error | PromiseLike<Value>;
+        wait(promise: PromiseLike<Value>): PromiseLike<Value>;
+        complete(): void;
+        complete_master(master_index: number): void;
+        pull(): void;
+        update(): void;
+        get(): Value;
+        limit(): void;
+        master: $mol_fiber;
+        rescue(master: $mol_fiber, master_index: number): void;
+        obey(master: $mol_fiber, master_index: number): number;
+        lead(slave: $mol_fiber, master_index: number): number;
+        dislead(slave_index: number): void;
+        disobey(master_index: number): void;
         obsolete_slaves(): void;
-        check_slaves(): void;
-        check(): void;
-        obsolete(): void;
-        lead(slave: $mol_atom<any>): void;
-        dislead(slave: $mol_atom<any>): void;
-        obey(master: $mol_atom<any>): void;
-        disobey(master: $mol_atom<any>): void;
-        disobey_all(): void;
-        cache(next?: Value | Error): Error | Value;
-        value(next?: Value, force?: $mol_atom_force): Value;
-        static stack: $mol_atom<any>[];
-        static updating: $mol_atom<any>[];
-        static reaping: Set<$mol_atom<any>>;
-        static scheduled: boolean;
-        static actualize(atom: $mol_atom<any>): void;
-        static reap(atom: $mol_atom<any>): void;
-        static unreap(atom: $mol_atom<any>): void;
-        static schedule(): void;
-        static sync(): void;
-        then<Next>(done: (prev?: Value) => Next, fail?: (error: Error) => Next): $mol_atom<any>;
-        catch(fail: (error: Error) => Value): $mol_atom<any>;
+        obsolete(master_index: number): void;
+        forget(): void;
+        abort(): boolean;
+        destructor(): void;
     }
-    function $mol_atom_current<Value = any>(): $mol_atom<Value>;
-    class $mol_atom_wait extends Error {
-        name: string;
+    let $mol_fiber_token_runned: $mol_log2_token;
+    let $mol_fiber_token_changed1: $mol_log2_token;
+    let $mol_fiber_token_changed2: $mol_log2_token;
+    let $mol_fiber_token_actualized: $mol_log2_token;
+    let $mol_fiber_token_sleeped: $mol_log2_token;
+    let $mol_fiber_token_failed: $mol_log2_token;
+    let $mol_fiber_token_destructed: $mol_log2_token;
+}
+
+declare namespace $ {
+    const $mol_owning_map: WeakMap<any, any>;
+    function $mol_owning_allow<Having>(having: Having): having is Having & {
+        destructor(): void;
+    };
+    function $mol_owning_get<Having, Owner extends object>(having: Having, Owner?: {
+        new (): Owner;
+    }): Owner | null;
+    function $mol_owning_check<Owner, Having>(owner: Owner, having: Having): having is Having & {
+        destructor(): void;
+    };
+    function $mol_owning_catch<Owner, Having>(owner: Owner, having: Having): boolean;
+}
+
+declare namespace $ {
+    function $mol_atom2_value<Value>(task: () => Value): Value;
+    class $mol_atom2<Value = any> extends $mol_fiber<Value> {
+        static readonly current: $mol_atom2<any>;
+        static cached: boolean;
+        static reap_task: $mol_fiber<any>;
+        static reap_queue: $mol_atom2<any>[];
+        static reap(atom: $mol_atom2): void;
+        slaves: (number | $mol_fiber<any>)[];
+        rescue(master: $mol_atom2, cursor: number): void;
+        get(): Value;
+        pull(): void | Value;
+        _value: Value;
+        value: Value;
+        _error: Error | PromiseLike<Value>;
+        error: null | Error | PromiseLike<Value>;
+        put(next: Value): Value;
+        complete_master(master_index: number): void;
+        obey(master: $mol_fiber, master_index: number): number;
+        lead(slave: $mol_fiber, master_index: number): number;
+        dislead(slave_index: number): void;
+        obsolete(master_index?: number): void;
+        doubt(master_index?: number): void;
+        obsolete_slaves(): void;
+        doubt_slaves(): void;
+        readonly fresh: (this: void) => void;
+        readonly alone: boolean;
+        readonly derived: boolean;
+        destructor(): void;
     }
-    class $mol_atom_force extends Object {
-        $mol_atom_force: boolean;
-        static $mol_atom_force: boolean;
+    let $mol_atom2_token_revalidation: $mol_log2_token;
+    let $mol_atom2_token_stumbled: $mol_log2_token;
+    let $mol_atom2_token_revalidated: $mol_log2_token;
+    let $mol_atom2_token_leaded: $mol_log2_token;
+    let $mol_atom2_token_disleaded: $mol_log2_token;
+    let $mol_atom2_token_obsoleted: $mol_log2_token;
+    let $mol_atom2_token_doubted: $mol_log2_token;
+}
+
+declare namespace $ {
+    function $mol_const<Value>(value: Value): {
+        (): Value;
+        '()': Value;
+    };
+}
+
+declare namespace $ {
+    function $mol_atom2_field<Host extends object, Field extends keyof Host, Value extends Host[Field]>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Value>): any;
+}
+
+declare namespace $ {
+    namespace $$ { }
+    const $mol_object_field: unique symbol;
+    class $mol_object extends Object {
+        static $: $mol_ambient_context;
+        static readonly $$: $mol_ambient_context;
+        _$: $mol_ambient_context;
+        $: $mol_ambient_context;
+        readonly $$: $mol_ambient_context;
+        static make<Instance>(this: {
+            new (): Instance;
+        }, config: Partial<Instance>): Instance;
+        static toString(): string;
+        toString(): string;
+        toJSON(): string;
+        destructor(): void;
+        [Symbol.toStringTag]: string;
+    }
+}
+
+declare namespace $ {
+    class $mol_mem_force extends Object {
+        constructor();
+        $mol_mem_force: boolean;
+        static $mol_mem_force: boolean;
         static toString(): string;
     }
-    class $mol_atom_force_cache extends $mol_atom_force {
+    class $mol_mem_force_cache extends $mol_mem_force {
     }
-    class $mol_atom_force_update extends $mol_atom_force {
+    class $mol_mem_force_update extends $mol_mem_force {
+    }
+    class $mol_mem_force_fail extends $mol_mem_force_cache {
+    }
+}
+
+declare namespace $ {
+    function $mol_mem<Host extends object, Field extends keyof Host, Value>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<(next?: Value, force?: $mol_mem_force) => Value>): any;
+}
+
+declare namespace $ {
+    class $mol_window extends $mol_object {
+        static size(next?: {
+            width: number;
+            height: number;
+        }, force?: $mol_mem_force): {
+            width: number;
+            height: number;
+        };
     }
 }
 
@@ -170,20 +374,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_mem<Host, Value>(obj: Host, name: string, descr: TypedPropertyDescriptor<(next?: Value, force?: $mol_atom_force) => Value>): void;
-    function $mol_mem_key<Host, Key, Value>(obj: Host, name: string, descr: TypedPropertyDescriptor<(key: Key, next?: Value, force?: $mol_atom_force) => Value>): void;
+    function $mol_mem_key<Host extends object, Field extends keyof Host, Key, Value>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<(key: Key, next?: Value, force?: $mol_mem_force) => Value>): any;
 }
 
 declare namespace $ {
-    class $mol_window extends $mol_object {
-        static size(next?: {
-            width: number;
-            height: number;
-        }, force?: $mol_atom_force): {
-            width: number;
-            height: number;
-        };
-    }
+    function $mol_atom2_autorun(calculate: () => any): $mol_atom2<unknown>;
 }
 
 declare namespace $ {
@@ -194,19 +389,36 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_defer extends $mol_object {
+        run: () => void;
+        constructor(run: () => void);
+        destructor(): void;
+        static all: $mol_defer[];
+        static timer: any;
+        static scheduleNative: (handler: () => void) => any;
+        static schedule(): void;
+        static unschedule(): void;
+        static add(defer: $mol_defer): void;
+        static drop(defer: $mol_defer): void;
+        static run(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_after_tick extends $mol_object2 {
+        task: () => void;
+        promise: any;
+        cancelled: boolean;
+        constructor(task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
     class $mol_view_selection extends $mol_object {
-        static focused(next?: Element[], force?: $mol_atom_force): Element[];
-        static position(next?: {
-            start: number;
-            end: number;
-            id: string;
-        }, force?: $mol_atom_force): {
-            start: number;
-            end: number;
-            id: string;
-        };
-        static onFocus(event: FocusEvent): void;
-        static onBlur(event: FocusEvent): void;
+        static focused(next?: Element[]): Element[];
+        static focus(event: FocusEvent): void;
+        static blur(event: FocusEvent): void;
     }
 }
 
@@ -215,23 +427,12 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_dom_render_attributes(el: Element, attrs: {
-        [key: string]: string | number | boolean;
+        [key: string]: string | number | boolean | null;
     }): void;
 }
 
 declare namespace $ {
-    function $mol_dom_render_events(el: Element, events: {
-        [key: string]: (event: Event) => any;
-    }): void;
-    function $mol_dom_render_events_async(el: Element, events: {
-        [key: string]: (event: Event) => any;
-    }): void;
-}
-
-declare namespace $ {
-    function $mol_dom_render_children(el: Element, childNodes: NodeList | readonly (Node | string | number | boolean | {
-        dom_tree: () => Node;
-    })[]): void;
+    function $mol_fail_catch(error: object): boolean;
 }
 
 declare namespace $ {
@@ -247,24 +448,31 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_dom_render_children(el: Element, childNodes: NodeList | Array<Node | string | null>): void;
+}
+
+declare namespace $ {
     function $mol_func_name(func: Function): string;
     function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
 }
 
 declare namespace $ {
-    namespace $$ { }
-    namespace $mol { }
+    function $mol_deprecated<Host extends {
+        constructor: Function;
+    }, Method extends Function>(message: string): (host: Host, field: string, descr: TypedPropertyDescriptor<Method>) => void;
+}
+
+declare namespace $ {
+    type $mol_view_content = $mol_view | Node | string | number | boolean;
     function $mol_view_visible_width(): number;
     function $mol_view_visible_height(): number;
     function $mol_view_state_key(suffix: string): string;
     class $mol_view extends $mol_object {
         static Root(id: number): $mol_view;
+        autorun(): $mol_atom2<unknown>;
         static autobind(): void;
         title(): string;
         focused(next?: boolean): boolean;
-        context(next?: $mol_ambient_context): $mol_ambient_context;
-        $: $mol_ambient_context;
-        context_sub(): $mol_ambient_context;
         state_key(suffix?: string): string;
         dom_name(): string;
         dom_name_space(): string;
@@ -273,18 +481,19 @@ declare namespace $ {
         minimal_width(): number;
         minimal_height(): number;
         content_height(): number;
-        dom_id(): any;
+        dom_id(): string;
         dom_node(next?: Element): Element;
         dom_tree(next?: Element): Element;
+        dom_node_actual(): Element;
         render(): void;
         static view_classes(): (typeof $mol_view)[];
         view_names_owned(): string[];
         view_names(): string[];
         attr_static(): {
-            [key: string]: string | number | boolean;
+            [key: string]: string | number | boolean | null;
         };
         attr(): {
-            [key: string]: string | number | boolean;
+            [key: string]: string | number | boolean | null;
         };
         style(): {
             [key: string]: string | number;
@@ -315,13 +524,13 @@ declare namespace $ {
          *  sub <= rows
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly $mol_view[];
         /**
          *  ```
-         *  rows /
+         *  rows /$mol_view
          *  ```
          **/
-        rows(): any[];
+        rows(): readonly $mol_view[];
         /**
          *  ```
          *  Empty null
@@ -333,11 +542,18 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_list extends $.$mol_list {
-        sub(): any[];
+        sub(): any[] | readonly $mol_view[];
         row_offsets(): number[];
         row_context(index: number): $mol_ambient_context;
-        sub_visible(): any[];
+        sub_visible(): any[] | readonly $mol_view[];
         minimal_height(): number;
+    }
+}
+
+declare namespace $ {
+    class $mol_atom_wait extends Promise<void> {
+        message: string;
+        constructor(message?: string);
     }
 }
 
@@ -366,7 +582,7 @@ declare namespace $ {
          *  sub / <= message
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly any[];
         /**
          *  ```
          *  message \
@@ -555,13 +771,13 @@ declare namespace $ {
          *  value_changed?val <=> value?val
          *  ```
          **/
-        value_changed(val?: any, force?: $mol_atom_force): any;
+        value_changed(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  value?val \
          *  ```
          **/
-        value(val?: any, force?: $mol_atom_force): any;
+        value(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  hint \
@@ -573,7 +789,7 @@ declare namespace $ {
          *  type?val \text
          *  ```
          **/
-        type(val?: any, force?: $mol_atom_force): any;
+        type(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  spellcheck false
@@ -619,19 +835,18 @@ declare namespace $ {
          *  event_change?event null
          *  ```
          **/
-        event_change(event?: any, force?: $mol_atom_force): any;
+        event_change(event?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  event_key_press?event null
          *  ```
          **/
-        event_key_press(event?: any, force?: $mol_atom_force): any;
+        event_key_press(event?: any, force?: $mol_mem_force): any;
     }
 }
 
 declare namespace $.$$ {
     class $mol_string extends $.$mol_string {
-        _timer: any;
         event_change(next?: Event): void;
         event_key_press(next?: KeyboardEvent): void;
         disabled(): boolean;
@@ -647,7 +862,7 @@ declare namespace $ {
             setItem(key: string, value: string): void;
             removeItem(key: string): void;
         };
-        static value<Value>(key: string, next?: Value, force?: $mol_atom_force): Value;
+        static value<Value>(key: string, next?: Value, force?: $mol_mem_force): Value | null;
         prefix(): string;
         value(key: string, next?: Value): Value;
     }
@@ -657,49 +872,35 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_const<Value>(value: Value): {
-        (): Value;
-        '()': Value;
-    };
+    function $mol_dom_parse(text: string, type?: SupportedType): Document;
 }
 
-declare namespace $ {
-    function $mol_maybe<Value>(value: Value | null | undefined): Value[];
-}
+declare var $node: any;
 
 declare namespace $ {
-    class $mol_http extends $mol_object {
-        static resource(uri: string): $mol_http;
-        static resource_absolute(uri: string): $mol_http;
-        uri(): string;
-        method_get(): string;
-        method_put(): string;
-        credentials(): {
-            login?: string;
-            password?: string;
-        };
-        headers(): {};
-        response_type(): '' | 'text' | 'document' | 'json' | 'blob' | 'arraybuffer';
-        'request()': XMLHttpRequest;
-        request(): XMLHttpRequest;
-        destructor(): void;
-        response(next?: any, force?: $mol_atom_force): XMLHttpRequest;
-        text(next?: string, force?: $mol_atom_force): string;
-        xml(next?: string, force?: $mol_atom_force): Document;
-        json<Content>(next?: Content, force?: $mol_atom_force): Content;
+    class $mol_fetch_response extends $mol_object2 {
+        readonly native: Response;
+        constructor(native: Response);
+        headers(): Headers;
+        mime(): string;
+        stream(): ReadableStream<Uint8Array>;
+        text(): string;
+        json(): any;
+        buffer(): any;
+        xml(): Document;
+        xhtml(): Document;
+        html(): Document;
     }
-}
-
-declare namespace $ {
-    function $mol_deprecated<Host, Method extends Function>(message: string): (host: Host, field: string, descr: TypedPropertyDescriptor<Method>) => void;
-}
-
-declare namespace $ {
-    class $mol_http_resource extends $mol_http {
-        static item(uri: string): $mol_http;
-    }
-    class $mol_http_resource_json {
-        static item(uri: string): $mol_http;
+    class $mol_fetch extends $mol_object2 {
+        static request: (input: RequestInfo, init?: RequestInit) => Response;
+        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array>;
+        static text(input: RequestInfo, init?: RequestInit): string;
+        static json(input: RequestInfo, init?: RequestInit): any;
+        static buffer(input: RequestInfo, init?: RequestInit): void;
+        static xml(input: RequestInfo, init?: RequestInit): Document;
+        static xhtml(input: RequestInfo, init?: RequestInit): Document;
+        static html(input: RequestInfo, init?: RequestInit): Document;
     }
 }
 
@@ -712,7 +913,7 @@ declare namespace $ {
         parent(): $mol_file;
         name(): string;
         ext(): string;
-        content(next?: string, force?: $mol_atom_force): string;
+        content(next?: string, force?: $mol_mem_force): string;
         resolve(path: string): $mol_file;
         relate(base?: $mol_file): void;
     }
@@ -750,13 +951,13 @@ declare namespace $ {
          *  click?event null
          *  ```
          **/
-        click(event?: any, force?: $mol_atom_force): any;
+        click(event?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  event_click?event null
          *  ```
          **/
-        event_click(event?: any, force?: $mol_atom_force): any;
+        event_click(event?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  event *
@@ -774,13 +975,13 @@ declare namespace $ {
          *  event_activate?event null
          *  ```
          **/
-        event_activate(event?: any, force?: $mol_atom_force): any;
+        event_activate(event?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  event_key_press?event null
          *  ```
          **/
-        event_key_press(event?: any, force?: $mol_atom_force): any;
+        event_key_press(event?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  attr *
@@ -817,10 +1018,10 @@ declare namespace $ {
         hint(): string;
         /**
          *  ```
-         *  sub / <= title
+         *  sub /$mol_view_content <= title
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly (string | number | boolean | Node | $mol_view)[];
     }
 }
 
@@ -916,13 +1117,13 @@ declare namespace $ {
     };
     class $mol_time_moment extends $mol_time_base {
         constructor(config?: $mol_time_moment_config);
-        readonly year: number;
-        readonly month: number;
-        readonly day: number;
-        readonly hour: number;
-        readonly minute: number;
-        readonly second: number;
-        readonly offset: $mol_time_duration;
+        readonly year: number | undefined;
+        readonly month: number | undefined;
+        readonly day: number | undefined;
+        readonly hour: number | undefined;
+        readonly minute: number | undefined;
+        readonly second: number | undefined;
+        readonly offset: $mol_time_duration | undefined;
         readonly weekday: number;
         private _native;
         readonly native: Date;
@@ -992,21 +1193,21 @@ declare namespace $ {
 declare namespace $ {
     class $mol_state_arg extends $mol_object {
         prefix: string;
-        static href(next?: string, force?: $mol_atom_force): string;
+        static href(next?: string, force?: $mol_mem_force): string;
         static dict(next?: {
-            [key: string]: string;
+            [key: string]: string | null;
         }): {
             [key: string]: string;
         };
         static dict_cut(except: string[]): {
             [key: string]: string;
         };
-        static value(key: string, next?: string): string;
+        static value(key: string, next?: string | null): string;
         static link(next: {
             [key: string]: string;
         }): string;
         static make_link(next: {
-            [key: string]: string;
+            [key: string]: string | null;
         }): string;
         static encode(str: string): string;
         constructor(prefix?: string);
@@ -1082,10 +1283,10 @@ declare namespace $ {
         current(): boolean;
         /**
          *  ```
-         *  sub / <= title
+         *  sub /$mol_view_content <= title
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly (string | number | boolean | Node | $mol_view)[];
         /**
          *  ```
          *  arg *
@@ -1107,13 +1308,13 @@ declare namespace $ {
          *  click?event <=> event_click?event
          *  ```
          **/
-        click(event?: any, force?: $mol_atom_force): any;
+        click(event?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  event_click?event null
          *  ```
          **/
-        event_click(event?: any, force?: $mol_atom_force): any;
+        event_click(event?: any, force?: $mol_mem_force): any;
     }
 }
 
@@ -1156,6 +1357,38 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    interface $mol_syntax_token {
+        name: string;
+        found: string;
+        chunks: string[];
+    }
+    class $mol_syntax {
+        constructor(lexems: {
+            [name: string]: RegExp;
+        });
+        'lexems()': {
+            [name: string]: RegExp;
+        };
+        lexems(): {
+            [name: string]: RegExp;
+        };
+        'rules()': {
+            regExp: RegExp;
+            name: string;
+            size: number;
+        }[];
+        rules(): {
+            regExp: RegExp;
+            name: string;
+            size: number;
+        }[];
+        'regExp()': RegExp;
+        regExp(): RegExp;
+        tokenize(text: string): $mol_syntax_token[];
+    }
+}
+
+declare namespace $ {
     class $mol_scroll extends $mol_view {
         /**
          *  ```
@@ -1163,18 +1396,6 @@ declare namespace $ {
          *  ```
          **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  moving_hor?val false
-         *  ```
-         **/
-        moving_hor(val?: any, force?: $mol_atom_force): any;
-        /**
-         *  ```
-         *  moving_vert?val false
-         *  ```
-         **/
-        moving_vert(val?: any, force?: $mol_atom_force): any;
         /**
          *  ```
          *  field *
@@ -1196,33 +1417,33 @@ declare namespace $ {
          *  scroll_top?val 0
          *  ```
          **/
-        scroll_top(val?: any, force?: $mol_atom_force): any;
+        scroll_top(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  scroll_left?val 0
          *  ```
          **/
-        scroll_left(val?: any, force?: $mol_atom_force): any;
+        scroll_left(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  scroll_bottom?val 0
          *  ```
          **/
-        scroll_bottom(val?: any, force?: $mol_atom_force): any;
+        scroll_bottom(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  scroll_right?val 0
          *  ```
          **/
-        scroll_right(val?: any, force?: $mol_atom_force): any;
+        scroll_right(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
-         *  event_async *
+         *  event *
          *  	^
          *  	scroll?event <=> event_scroll?event
          *  ```
          **/
-        event_async(): {
+        event(): {
             "scroll": (event?: any) => any;
         };
         /**
@@ -1230,7 +1451,7 @@ declare namespace $ {
          *  event_scroll?event null
          *  ```
          **/
-        event_scroll(event?: any, force?: $mol_atom_force): any;
+        event_scroll(event?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  Strut $mol_view style * transform <= strut_transform
@@ -1250,19 +1471,13 @@ declare namespace $.$$ {
     function $mol_scroll_top(): number;
     function $mol_scroll_left(): number;
     function $mol_scroll_moving(): boolean;
-    function $mol_scroll_moving_vert(): boolean;
-    function $mol_scroll_moving_hor(): boolean;
     class $mol_scroll extends $.$mol_scroll {
         scroll_bottom(next?: number): number;
         scroll_right(next?: number): number;
         event_scroll(next?: Event): void;
-        event_repos(next?: Event): void;
-        _moving_task_timer: any;
-        moving_task_stop(): void;
-        moving(): any;
-        context_sub(): $mol_ambient_context;
+        readonly $$: $mol_ambient_context;
         strut_transform(): string;
-        sub_visible(): (string | number | boolean | Node | $mol_view)[];
+        sub_visible(): readonly (string | number | boolean | Node | $mol_view)[];
     }
 }
 
@@ -1295,7 +1510,7 @@ declare namespace $ {
          *  checked?val false
          *  ```
          **/
-        checked(val?: any, force?: $mol_atom_force): any;
+        checked(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  sub /
@@ -1303,7 +1518,7 @@ declare namespace $ {
          *  	<= label
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly any[];
         /**
          *  ```
          *  Icon null
@@ -1315,7 +1530,7 @@ declare namespace $ {
          *  label / <= Title
          *  ```
          **/
-        label(): any[];
+        label(): readonly any[];
         /**
          *  ```
          *  Title $mol_view sub / <= title
@@ -1334,12 +1549,23 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_check extends $.$mol_check {
         event_click(next?: Event): void;
+        sub(): any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_after_timeout extends $mol_object2 {
+        delay: number;
+        task: () => void;
+        id: any;
+        constructor(delay: number, task: () => void);
+        destructor(): void;
     }
 }
 
 declare namespace $ {
     class $mol_state_time extends $mol_object {
-        static now(precision?: number, next?: number, force?: $mol_atom_force): number;
+        static now(precision?: number, next?: number): number;
     }
 }
 
@@ -1370,7 +1596,7 @@ declare namespace $ {
          *  text_width?text 0
          *  ```
          **/
-        text_width(text?: any, force?: $mol_atom_force): any;
+        text_width(text?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  font_size 16
@@ -1482,7 +1708,7 @@ declare namespace $ {
          *  sub / <= Path
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly any[];
         /**
          *  ```
          *  Path $mol_svg_path geometry <= path
@@ -1572,13 +1798,13 @@ declare namespace $ {
          *  checked?val <=> expanded?val
          *  ```
          **/
-        checked(val?: any, force?: $mol_atom_force): any;
+        checked(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  expanded?val false
          *  ```
          **/
-        expanded(val?: any, force?: $mol_atom_force): any;
+        expanded(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  enabled <= expandable
@@ -1620,13 +1846,13 @@ declare namespace $ {
          *  sub <= parts
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly (string | number | boolean | Node | $mol_view)[];
         /**
          *  ```
-         *  parts /
+         *  parts /$mol_view_content
          *  ```
          **/
-        parts(): any[];
+        parts(): readonly (string | number | boolean | Node | $mol_view)[];
         /**
          *  ```
          *  Low!id $mol_view sub / <= string!id
@@ -1668,10 +1894,10 @@ declare namespace $ {
     class $mol_grid extends $mol_scroll {
         /**
          *  ```
-         *  row_ids /
+         *  row_ids /string[]
          *  ```
          **/
-        row_ids(): any[];
+        row_ids(): readonly string[][];
         /**
          *  ```
          *  row_id!index null
@@ -1683,7 +1909,7 @@ declare namespace $ {
          *  col_ids /
          *  ```
          **/
-        col_ids(): any[];
+        col_ids(): readonly any[];
         /**
          *  ```
          *  records *
@@ -1713,12 +1939,12 @@ declare namespace $ {
          *  sub / <= Table
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly any[];
         /**
          *  ```
          *  Table $mol_grid_table
          *  	offset <= gap_top
-         *  	sub / <= rows_visible
+         *  	sub <= rows_visible
          *  ```
          **/
         Table(): $$.$mol_grid_table;
@@ -1730,16 +1956,16 @@ declare namespace $ {
         gap_top(): number;
         /**
          *  ```
-         *  rows_visible /
+         *  rows_visible /$mol_view
          *  ```
          **/
-        rows_visible(): any[];
+        rows_visible(): readonly $mol_view[];
         /**
          *  ```
          *  rows /
          *  ```
          **/
-        rows(): any[];
+        rows(): readonly any[];
         /**
          *  ```
          *  Head $mol_grid_row
@@ -1756,10 +1982,10 @@ declare namespace $ {
         row_height(): number;
         /**
          *  ```
-         *  head_cells /
+         *  head_cells /$mol_view
          *  ```
          **/
-        head_cells(): any[];
+        head_cells(): readonly $mol_view[];
         /**
          *  ```
          *  Row!id $mol_grid_row
@@ -1770,10 +1996,10 @@ declare namespace $ {
         Row(id: any): $mol_grid_row;
         /**
          *  ```
-         *  cells!id /
+         *  cells!id /$mol_view
          *  ```
          **/
-        cells(id: any): any[];
+        cells(id: any): readonly $mol_view[];
         /**
          *  ```
          *  Cell!id $mol_view
@@ -1788,7 +2014,7 @@ declare namespace $ {
         cell(id: any): any;
         /**
          *  ```
-         *  Cell_text!id $mol_grid_cell sub / <= cell_content_text!id
+         *  Cell_text!id $mol_grid_cell sub <= cell_content_text!id
          *  ```
          **/
         Cell_text(id: any): $mol_grid_cell;
@@ -1797,16 +2023,16 @@ declare namespace $ {
          *  cell_content_text!id <= cell_content!id
          *  ```
          **/
-        cell_content_text(id: any): any[];
+        cell_content_text(id: any): readonly (string | number | boolean | Node | $mol_view)[];
         /**
          *  ```
-         *  cell_content!id /
+         *  cell_content!id /$mol_view_content
          *  ```
          **/
-        cell_content(id: any): any[];
+        cell_content(id: any): readonly (string | number | boolean | Node | $mol_view)[];
         /**
          *  ```
-         *  Cell_number!id $mol_grid_number sub / <= cell_content_number!id
+         *  Cell_number!id $mol_grid_number sub <= cell_content_number!id
          *  ```
          **/
         Cell_number(id: any): $mol_grid_number;
@@ -1815,21 +2041,21 @@ declare namespace $ {
          *  cell_content_number!id <= cell_content!id
          *  ```
          **/
-        cell_content_number(id: any): any[];
+        cell_content_number(id: any): readonly (string | number | boolean | Node | $mol_view)[];
         /**
          *  ```
          *  Col_head!id $mol_float
          *  	dom_name \th
-         *  	sub / <= col_head_content!id
+         *  	sub <= col_head_content!id
          *  ```
          **/
         Col_head(id: any): $mol_float;
         /**
          *  ```
-         *  col_head_content!id /
+         *  col_head_content!id /$mol_view_content
          *  ```
          **/
-        col_head_content(id: any): any[];
+        col_head_content(id: any): readonly (string | number | boolean | Node | $mol_view)[];
         /**
          *  ```
          *  Cell_branch!id $mol_check_expand
@@ -1850,13 +2076,13 @@ declare namespace $ {
          *  cell_expanded!id?val false
          *  ```
          **/
-        cell_expanded(id: any, val?: any, force?: $mol_atom_force): any;
+        cell_expanded(id: any, val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  Cell_content!id / <= Cell_dimmer!id
          *  ```
          **/
-        Cell_content(id: any): any[];
+        Cell_content(id: any): readonly any[];
         /**
          *  ```
          *  Cell_dimmer!id $mol_dimmer
@@ -1864,7 +2090,7 @@ declare namespace $ {
          *  	haystack <= cell_value!id
          *  ```
          **/
-        Cell_dimmer(id: any): $mol_dimmer;
+        Cell_dimmer(id: any): $$.$mol_dimmer;
         /**
          *  ```
          *  needle \
@@ -1954,13 +2180,13 @@ declare namespace $ {
          *  sub <= cells
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly $mol_view[];
         /**
          *  ```
-         *  cells /
+         *  cells /$mol_view
          *  ```
          **/
-        cells(): any[];
+        cells(): readonly $mol_view[];
     }
 }
 declare namespace $ {
@@ -1985,7 +2211,7 @@ declare namespace $.$$ {
         sub: $mol_grid_node[];
     }
     class $mol_grid extends $.$mol_grid {
-        rows_visible(): any[];
+        rows_visible(): $mol_view[];
         rows_visible_max(): number;
         view_window(): {
             top: number;
@@ -1995,10 +2221,10 @@ declare namespace $.$$ {
         gap_top(): number;
         height(): number;
         content_height(): number;
-        head_cells(): $mol_float[];
-        col_head_content(colId: string): string[];
-        rows(): $mol_grid_row[];
-        cells(row_id: string[]): $mol_view[];
+        head_cells(): readonly $mol_view[];
+        col_head_content(colId: string): readonly string[];
+        rows(): readonly $mol_view[];
+        cells(row_id: string[]): readonly $mol_view[];
         col_type(col_id: string): "number" | "text" | "branch";
         Cell(id: {
             row: string[];
@@ -2012,7 +2238,7 @@ declare namespace $.$$ {
         record(id: string): any;
         record_ids(): string[];
         row_id(index: number): string;
-        col_ids(): string[];
+        col_ids(): readonly string[];
         hierarchy(): {
             [id: string]: $mol_grid_node;
         };
@@ -2021,7 +2247,7 @@ declare namespace $.$$ {
         cell_level(id: {
             row: string[];
         }): number;
-        row_ids(): string[][];
+        row_ids(): readonly string[][];
         row_expanded(row_id: string[], next?: boolean): boolean;
         row_expanded_default(row_id: string[]): boolean;
         cell_expanded(id: {
@@ -2029,7 +2255,7 @@ declare namespace $.$$ {
         }, next?: boolean): boolean;
     }
     class $mol_grid_table extends $.$mol_grid_table {
-        context_sub(): $mol_ambient_context;
+        readonly $$: $mol_ambient_context;
     }
 }
 
@@ -2037,12 +2263,10 @@ declare namespace $ {
     class $mol_link_iconed extends $mol_link {
         /**
          *  ```
-         *  sub /
-         *  	<= Icon
-         *  	<= content
+         *  sub / <= Icon
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly any[];
         /**
          *  ```
          *  Icon $mol_image uri <= icon
@@ -2060,7 +2284,7 @@ declare namespace $ {
          *  content / <= title
          *  ```
          **/
-        content(): any[];
+        content(): readonly any[];
         /**
          *  ```
          *  title <= uri
@@ -2081,38 +2305,7 @@ declare namespace $.$$ {
         icon(): string;
         host(): string;
         title(): string;
-    }
-}
-
-declare namespace $ {
-    interface $mol_syntax_token {
-        name: string;
-        found: string;
-        chunks: string[];
-    }
-    class $mol_syntax {
-        constructor(lexems: {
-            [name: string]: RegExp;
-        });
-        'lexems()': {
-            [name: string]: RegExp;
-        };
-        lexems(): {
-            [name: string]: RegExp;
-        };
-        'rules()': {
-            regExp: RegExp;
-            name: string;
-            size: number;
-        }[];
-        rules(): {
-            regExp: RegExp;
-            name: string;
-            size: number;
-        }[];
-        'regExp()': RegExp;
-        regExp(): RegExp;
-        tokenize(text: string): $mol_syntax_token[];
+        sub(): any[];
     }
 }
 
@@ -2138,16 +2331,16 @@ declare namespace $ {
         text(): string;
         /**
          *  ```
-         *  tokens /
+         *  tokens /$mol_syntax_token
          *  ```
          **/
-        tokens(): any[];
+        tokens(): readonly $mol_syntax_token[];
         /**
          *  ```
          *  Quote!id $mol_text text <= quote_text!id
          *  ```
          **/
-        Quote(id: any): $mol_text;
+        Quote(id: any): $$.$mol_text;
         /**
          *  ```
          *  quote_text!id \
@@ -2167,7 +2360,7 @@ declare namespace $ {
          *  block_content!id /
          *  ```
          **/
-        block_content(id: any): any[];
+        block_content(id: any): readonly any[];
         /**
          *  ```
          *  block_type!id \
@@ -2211,7 +2404,7 @@ declare namespace $ {
          *  header_content!id /
          *  ```
          **/
-        header_content(id: any): any[];
+        header_content(id: any): readonly any[];
         /**
          *  ```
          *  Table!id $mol_grid
@@ -2219,19 +2412,19 @@ declare namespace $ {
          *  	rows <= table_rows!id
          *  ```
          **/
-        Table(id: any): $mol_grid;
+        Table(id: any): $$.$mol_grid;
         /**
          *  ```
          *  table_head_cells!id /
          *  ```
          **/
-        table_head_cells(id: any): any[];
+        table_head_cells(id: any): readonly any[];
         /**
          *  ```
          *  table_rows!id /
          *  ```
          **/
-        table_rows(id: any): any[];
+        table_rows(id: any): readonly any[];
         /**
          *  ```
          *  Table_row!id $mol_grid_row cells <= table_cells!id
@@ -2243,7 +2436,7 @@ declare namespace $ {
          *  table_cells!id /
          *  ```
          **/
-        table_cells(id: any): any[];
+        table_cells(id: any): readonly any[];
         /**
          *  ```
          *  Table_cell!id $mol_grid_cell sub <= table_cell_content!id
@@ -2255,7 +2448,7 @@ declare namespace $ {
          *  table_cell_content!id /
          *  ```
          **/
-        table_cell_content(id: any): any[];
+        table_cell_content(id: any): readonly any[];
         /**
          *  ```
          *  Table_cell_head!id $mol_float sub <= table_cell_content!id
@@ -2319,19 +2512,19 @@ declare namespace $ {
          *  level?val 0
          *  ```
          **/
-        level(val?: any, force?: $mol_atom_force): any;
+        level(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  sub <= content
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly any[];
         /**
          *  ```
          *  content /
          *  ```
          **/
-        content(): any[];
+        content(): readonly any[];
     }
 }
 declare namespace $ {
@@ -2357,7 +2550,7 @@ declare namespace $ {
          *  type?val \
          *  ```
          **/
-        type(val?: any, force?: $mol_atom_force): any;
+        type(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  sub <= content?val
@@ -2369,7 +2562,7 @@ declare namespace $ {
          *  content?val /
          *  ```
          **/
-        content(val?: any, force?: $mol_atom_force): any;
+        content(val?: any, force?: $mol_mem_force): any;
     }
 }
 declare namespace $ {
@@ -2387,20 +2580,14 @@ declare namespace $ {
             "title": string;
             "target": string;
             "download": string;
-            "mol_link_current": boolean; /**
-             *  ```
-             *  Row!id $mol_text_row
-             *  	sub <= block_content!id
-             *  	type <= block_type!id
-             *  ```
-             **/
+            "mol_link_current": boolean;
         };
         /**
          *  ```
          *  type?val \
          *  ```
          **/
-        type(val?: any, force?: $mol_atom_force): any;
+        type(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  uri <= link?val
@@ -2412,13 +2599,13 @@ declare namespace $ {
          *  link?val \
          *  ```
          **/
-        link(val?: any, force?: $mol_atom_force): any;
+        link(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  content?val /
          *  ```
          **/
-        content(val?: any, force?: $mol_atom_force): any;
+        content(val?: any, force?: $mol_mem_force): any;
     }
 }
 declare namespace $ {
@@ -2448,32 +2635,32 @@ declare namespace $ {
          *  type?val \
          *  ```
          **/
-        type(val?: any, force?: $mol_atom_force): any;
+        type(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  link?val \
          *  ```
          **/
-        link(val?: any, force?: $mol_atom_force): any;
+        link(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  sub / <= title?val
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly any[];
         /**
          *  ```
          *  title?val \
          *  ```
          **/
-        title(val?: any, force?: $mol_atom_force): any;
+        title(val?: any, force?: $mol_mem_force): any;
     }
 }
 
 declare namespace $.$$ {
     class $mol_text extends $.$mol_text {
-        tokens(): $mol_syntax_token[];
-        rows(): ($.$mol_grid | $.$mol_text | $mol_text_row | $mol_text_header)[];
+        tokens(): readonly $mol_syntax_token[];
+        rows(): ($mol_grid | $mol_text | $mol_text_row | $mol_text_header)[];
         header_level(index: number): number;
         header_content(index: number): ($mol_text_span | $mol_text_link | $mol_text_image)[];
         quote_text(index: number): string;
@@ -2514,7 +2701,7 @@ declare namespace $ {
          *  	<= Text
          *  ```
          **/
-        sub(): any[];
+        sub(): readonly any[];
         /**
          *  ```
          *  Info $mol_row sub /
@@ -2522,7 +2709,7 @@ declare namespace $ {
          *  	<= Moment
          *  ```
          **/
-        Info(): $mol_row;
+        Info(): $$.$mol_row;
         /**
          *  ```
          *  Name $mol_view sub / <= name
@@ -2554,7 +2741,7 @@ declare namespace $ {
          *  	sub / <= Avatar
          *  ```
          **/
-        Avatar_link(): $mol_link;
+        Avatar_link(): $$.$mol_link;
         /**
          *  ```
          *  avatar_link \
@@ -2580,7 +2767,7 @@ declare namespace $ {
          *  Text $mol_text text <= text
          *  ```
          **/
-        Text(): $mol_text;
+        Text(): $$.$mol_text;
         /**
          *  ```
          *  text \
@@ -2597,6 +2784,35 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_http extends $mol_object {
+        static resource(uri: string): $mol_http;
+        static resource_absolute(uri: string): $mol_http;
+        uri(): string;
+        method_get(): string;
+        method_put(): string;
+        credentials(): {
+            login?: string;
+            password?: string;
+        };
+        headers(): {};
+        response_type(): '' | 'text' | 'document' | 'json' | 'blob' | 'arraybuffer';
+        response(next?: any, force?: $mol_mem_force): $mol_fetch_response;
+        text(next?: string, force?: $mol_mem_force): string;
+        xml(next?: string, force?: $mol_mem_force): Document;
+        json<Content>(next?: Content, force?: $mol_mem_force): Content;
+    }
+}
+
+declare namespace $ {
+    class $mol_http_resource extends $mol_http {
+        static item(uri: string): $mol_http;
+    }
+    class $mol_http_resource_json {
+        static item(uri: string): $mol_http;
+    }
+}
+
+declare namespace $ {
     class $mol_model<Raw> extends $mol_object {
         static item<Raw, Instance extends $mol_model<Raw>>(this: {
             new (): Instance;
@@ -2607,7 +2823,7 @@ declare namespace $ {
         uri(): string;
         resource_url(): string;
         method_put(): string;
-        json(next?: Raw, force?: $mol_atom_force): Raw;
+        json(next?: Raw, force?: $mol_mem_force): Raw;
         json_update(patch: Partial<Raw>): Raw & Partial<Raw>;
     }
     function $mol_model_prop<Value, Json>(field: string, make: (json: Json) => Value): <Raw, Host extends $mol_model<Raw>>(host: Host, prop: string, descr: TypedPropertyDescriptor<(next?: Value) => Value>) => void;
@@ -2627,8 +2843,8 @@ declare namespace $ {
             token: string;
         };
         static scopes(next?: string[]): string[];
-        static code(next?: string, force?: $mol_atom_force): string;
-        static token_last(next?: string, force?: $mol_atom_force): string;
+        static code(next?: string, force?: $mol_mem_force): string;
+        static token_last(next?: string, force?: $mol_mem_force): string;
         static token(scopes: string[]): string;
     }
 }
@@ -2738,10 +2954,10 @@ declare namespace $ {
     }
     class $mol_github_issue_comments extends $mol_model<$mol_github_comment_json[]> {
         json_update(patch: $mol_github_repository_json[]): $mol_github_repository_json[];
-        items(next?: $mol_github_comment[], force?: $mol_atom_force): $mol_github_comment[];
+        items(next?: $mol_github_comment[], force?: $mol_mem_force): $mol_github_comment[];
         add(config: {
             text: string;
-        }, next?: $mol_github_comment, force?: $mol_atom_force): $mol_github_comment;
+        }, next?: $mol_github_comment, force?: $mol_mem_force): $mol_github_comment;
     }
 }
 
@@ -2823,11 +3039,11 @@ declare namespace $ {
     }
     class $mol_github_repository_issues extends $mol_model<$mol_github_issue_json[]> {
         json_update(patch: $mol_github_issue_json[]): $mol_github_issue_json[];
-        items(next?: $mol_github_issue[], force?: $mol_atom_force): $mol_github_issue[];
+        items(next?: $mol_github_issue[], force?: $mol_mem_force): $mol_github_issue[];
         add(config: {
             title: string;
             text?: string;
-        }, next?: $mol_github_issue, force?: $mol_atom_force): $mol_github_issue;
+        }, next?: $mol_github_issue, force?: $mol_mem_force): $mol_github_issue;
     }
 }
 
@@ -2839,7 +3055,7 @@ declare namespace $ {
     }
     class $mol_github_search_issues extends $mol_model<$mol_github_search_issues_json> {
         json_update(patch: $mol_github_search_issues_json): $mol_github_search_issues_json & Partial<$mol_github_search_issues_json>;
-        items(next?: $mol_github_issue[], force?: $mol_atom_force): $mol_github_issue[];
+        items(next?: $mol_github_issue[], force?: $mol_mem_force): $mol_github_issue[];
         resource_url(): string;
     }
 }
@@ -2848,11 +3064,11 @@ declare namespace $ {
     class $mol_rpc_client_frame<Handlers> extends $mol_object {
         static item<Handlers>(uri: string): $mol_rpc_client_frame<Handlers>;
         uri(): string;
-        frame(): HTMLFrameElement;
+        frame(): HTMLIFrameElement;
         call({ name, args }: {
             name: string;
             args: any[];
-        }): void;
+        }): unknown;
         proxy(): any;
     }
 }
@@ -2867,25 +3083,25 @@ declare namespace $ {
          *  	<= Add
          *  ```
          **/
-        rows(): any[];
+        rows(): readonly any[];
         /**
          *  ```
          *  posts /
          *  ```
          **/
-        posts(): any[];
+        posts(): readonly any[];
         /**
          *  ```
          *  Add_status $mol_status status <= adding?next
          *  ```
          **/
-        Add_status(): $mol_status;
+        Add_status(): $$.$mol_status;
         /**
          *  ```
          *  adding?next null
          *  ```
          **/
-        adding(next?: any, force?: $mol_atom_force): any;
+        adding(next?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  Add $mol_bar sub /
@@ -2901,7 +3117,7 @@ declare namespace $ {
          *  	value?val <=> add_body?val
          *  ```
          **/
-        Add_body(): $mol_string;
+        Add_body(): $$.$mol_string;
         /**
          *  ```
          *  add_hint @ \New message...
@@ -2913,7 +3129,7 @@ declare namespace $ {
          *  add_body?val \
          *  ```
          **/
-        add_body(val?: any, force?: $mol_atom_force): any;
+        add_body(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  Add_submit $mol_button_major
@@ -2940,7 +3156,7 @@ declare namespace $ {
          *  add?event null
          *  ```
          **/
-        add(event?: any, force?: $mol_atom_force): any;
+        add(event?: any, force?: $mol_mem_force): any;
         /**
          *  ```
          *  Post!index $mol_message
@@ -3024,7 +3240,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_chat extends $.$mol_chat {
         repository(): $mol_github_repository;
-        issue(next?: $mol_github_issue, force?: $mol_atom_force): $mol_github_issue;
+        issue(next?: $mol_github_issue, force?: $mol_mem_force): $mol_github_issue;
         issue_ensured(): $mol_github_issue;
         seed(): string;
         teaser(): string;
@@ -3041,7 +3257,7 @@ declare namespace $.$$ {
             comment_add: (issue_uri: string, text: string) => $mol_github_comment_json;
             comment_list: (issue_uri: string) => $mol_github_comment_json[];
         };
-        adding(text: string, force?: $mol_atom_force): string;
+        adding(text: string, force?: $mol_mem_force): string;
         add(): void;
     }
 }
@@ -3082,5 +3298,18 @@ declare namespace $ {
         };
         guard_issue(issue_uri: string): number;
         guard_repo(repo_uri: string): number;
+    }
+}
+
+declare namespace $ {
+    class $mol_plugin extends $mol_view {
+        dom_node(next?: Element): Element;
+        attr_static(): {
+            [key: string]: string | number | boolean;
+        };
+        event(): {
+            [key: string]: (event: Event) => void;
+        };
+        render(): void;
     }
 }

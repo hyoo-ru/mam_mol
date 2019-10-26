@@ -17,7 +17,7 @@ namespace $ { export class $mol_app_life extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [].concat( this.Store_link() , this.Time() )
+		return [ this.Store_link() , this.Time() ] as readonly any[]
 	}
 
 	/**
@@ -33,7 +33,7 @@ namespace $ { export class $mol_app_life extends $mol_page {
 		return (( obj )=>{
 			obj.uri = () => this.store_link()
 			obj.hint = () => this.store_link_hint()
-			obj.sub = () => [].concat( this.Stored() )
+			obj.sub = () => [ this.Stored() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -44,7 +44,7 @@ namespace $ { export class $mol_app_life extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	store_link( val? : any , force? : $mol_atom_force ) {
+	store_link( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -77,7 +77,7 @@ namespace $ { export class $mol_app_life extends $mol_page {
 	 *  		1 <= time_slowest_label
 	 *  		5 <= time_slow_label
 	 *  		25 <= time_fast_label
-	 *  		60 <= time_fastest_label
+	 *  		1000 <= time_fastest_label
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -88,7 +88,7 @@ namespace $ { export class $mol_app_life extends $mol_page {
 			"1" :  this.time_slowest_label() ,
 			"5" :  this.time_slow_label() ,
 			"25" :  this.time_fast_label() ,
-			"60" :  this.time_fastest_label() ,
+			"1000" :  this.time_fastest_label() ,
 		})
 			return obj
 		})( new this.$.$mol_switch(  ) )
@@ -100,7 +100,7 @@ namespace $ { export class $mol_app_life extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	speed( val? : any , force? : $mol_atom_force ) {
+	speed( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -148,7 +148,7 @@ namespace $ { export class $mol_app_life extends $mol_page {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Head() , this.Map() )
+		return [ this.Head() , this.Map() ] as readonly any[]
 	}
 
 	snapshot_current() {

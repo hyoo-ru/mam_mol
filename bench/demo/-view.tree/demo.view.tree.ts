@@ -15,7 +15,7 @@ namespace $ { export class $mol_bench_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.View() )
+		return [ this.View() ] as readonly any[]
 	}
 
 	/**
@@ -40,7 +40,7 @@ namespace $ { export class $mol_bench_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	col_sort( val? : any , force? : $mol_atom_force ) {
+	col_sort( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "mid"
 	}
 

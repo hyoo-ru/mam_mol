@@ -8,15 +8,14 @@ namespace $.$$ {
 			
 			let args = this.$.$mol_state_arg.dict()
 			if( next ) args = this.$.$mol_state_arg.dict({ ... args , ... next })
-
 			const ids = Object.keys( args ).filter( param => this.id2coord( param ) )
 			
 			for( let id of ids ) formulas[ id ] = args[ id ]
-
+			
 			return formulas
 		}
 
-		@ $mol_mem
+		@ $mol_mem_key
 		formula_name( id : string ) {
 			
 			const found = /^(\w*)\s*=/u.exec( this.formulas()[ id ] )
@@ -141,7 +140,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		pos( next? : string ) : string {
-			new $mol_defer( ()=> this.Edit_current().Edit().focused( true ) )
+			new $mol_defer( $mol_fiber_root( ()=> this.Edit_current().Edit().focused( true ) ) )
 			return next || super.pos()
 		}
 
@@ -203,7 +202,7 @@ namespace $.$$ {
 			return super.hint().replace( '{funcs}' , Object.getOwnPropertyNames( Math ).join( ', ' ) )
 		}
 
-		@ $mol_mem
+		@ $mol_mem_key
 		cell_content( id : string ) {
 			
 			const name = this.formula_name( id )

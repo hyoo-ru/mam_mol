@@ -9,7 +9,7 @@ namespace $ { export class $mol_chat extends $mol_list {
 	 *  ```
 	 **/
 	rows() {
-		return [].concat( this.posts() , this.Add_status() , this.Add() )
+		return [ this.posts() , this.Add_status() , this.Add() ] as readonly any[]
 	}
 
 	/**
@@ -18,7 +18,7 @@ namespace $ { export class $mol_chat extends $mol_list {
 	 *  ```
 	 **/
 	posts() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -40,7 +40,7 @@ namespace $ { export class $mol_chat extends $mol_list {
 	 *  ```
 	 **/
 	@ $mol_mem
-	adding( next? : any , force? : $mol_atom_force ) {
+	adding( next? : any , force? : $mol_mem_force ) {
 		return ( next !== void 0 ) ? next : null as any
 	}
 
@@ -54,7 +54,7 @@ namespace $ { export class $mol_chat extends $mol_list {
 	@ $mol_mem
 	Add() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Add_body() , this.Add_submit() )
+			obj.sub = () => [ this.Add_body() , this.Add_submit() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -90,7 +90,7 @@ namespace $ { export class $mol_chat extends $mol_list {
 	 *  ```
 	 **/
 	@ $mol_mem
-	add_body( val? : any , force? : $mol_atom_force ) {
+	add_body( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -136,7 +136,7 @@ namespace $ { export class $mol_chat extends $mol_list {
 	 *  ```
 	 **/
 	@ $mol_mem
-	add( event? : any , force? : $mol_atom_force ) {
+	add( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

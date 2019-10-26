@@ -15,7 +15,7 @@ namespace $ { export class $mol_app_issues extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [].concat( this.Sources() )
+		return [ this.Sources() ] as readonly any[]
 	}
 
 	/**
@@ -29,7 +29,7 @@ namespace $ { export class $mol_app_issues extends $mol_page {
 	Sources() {
 		return (( obj )=>{
 			obj.uri = () => "https://github.com/eigenmethod/mol/tree/master/app/issues"
-			obj.content = () => [].concat(  )
+			obj.content = () => [  ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link_iconed(  ) )
 	}
@@ -43,7 +43,7 @@ namespace $ { export class $mol_app_issues extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Projects() , this.Chart() , this.Description() )
+		return [ this.Projects() , this.Chart() , this.Description() ] as readonly any[]
 	}
 
 	/**
@@ -65,7 +65,7 @@ namespace $ { export class $mol_app_issues extends $mol_page {
 	 *  ```
 	 **/
 	projects() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -82,7 +82,7 @@ namespace $ { export class $mol_app_issues extends $mol_page {
 	Chart() {
 		return (( obj )=>{
 			obj.gap_left = () => 76
-			obj.graphs = () => [].concat( this.Capacities() , this.Capacities_ruler() , this.Capacities_ruler_hor() )
+			obj.graphs = () => [ this.Capacities() , this.Capacities_ruler() , this.Capacities_ruler_hor() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_pane(  ) )
 	}
@@ -106,7 +106,7 @@ namespace $ { export class $mol_app_issues extends $mol_page {
 	 *  ```
 	 **/
 	capacities() {
-		return [].concat(  ) as readonly ( number )[]
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -144,7 +144,7 @@ namespace $ { export class $mol_app_issues extends $mol_page {
 	 *  ```
 	 **/
 	project_labels() {
-		return [].concat(  ) as readonly ( string )[]
+		return [  ] as readonly ( string )[]
 	}
 
 	/**
@@ -155,7 +155,7 @@ namespace $ { export class $mol_app_issues extends $mol_page {
 	@ $mol_mem
 	Description() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.description() )
+			obj.sub = () => [ this.description() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -188,7 +188,7 @@ namespace $ { export class $mol_app_issues extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	project_id( index : any , val? : any , force? : $mol_atom_force ) {
+	project_id( index : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -213,7 +213,7 @@ namespace $ { export class $mol_app_issues_project extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Input() , this.Capacity() )
+		return [ this.Input() , this.Capacity() ] as readonly any[]
 	}
 
 	/**
@@ -226,7 +226,7 @@ namespace $ { export class $mol_app_issues_project extends $mol_view {
 	@ $mol_mem
 	Input() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Id() , this.Homepage() )
+			obj.sub = () => [ this.Id() , this.Homepage() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -255,7 +255,7 @@ namespace $ { export class $mol_app_issues_project extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	id( val? : any , force? : $mol_atom_force ) {
+	id( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -270,7 +270,7 @@ namespace $ { export class $mol_app_issues_project extends $mol_view {
 	Homepage() {
 		return (( obj )=>{
 			obj.uri = () => this.homepage()
-			obj.content = () => [].concat(  )
+			obj.content = () => [  ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link_iconed(  ) )
 	}
@@ -297,7 +297,7 @@ namespace $ { export class $mol_app_issues_project extends $mol_view {
 		return (( obj )=>{
 			obj.minimal_height = () => 80
 			obj.minimal_width = () => 80
-			obj.sub = () => [].concat( this.capacity_text() )
+			obj.sub = () => [ this.capacity_text() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

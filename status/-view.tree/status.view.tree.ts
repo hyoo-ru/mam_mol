@@ -33,7 +33,7 @@ namespace $ { export class $mol_status extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.message() )
+		return [ this.message() ] as readonly any[]
 	}
 
 	/**

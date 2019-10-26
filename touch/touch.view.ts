@@ -4,7 +4,7 @@ namespace $.$$ {
 			return this.dom_node().getBoundingClientRect()
 		}
 		
-		event_start( event? : TouchEvent | MouseEvent ) {
+		event_start( event : TouchEvent | MouseEvent ) {
 			if( event.defaultPrevented ) return
 
 			this.start_pan( this.pan() )
@@ -33,18 +33,18 @@ namespace $.$$ {
 
 		}
 
-		event_leave( event? : TouchEvent | MouseEvent ) {
+		event_leave( event : TouchEvent | MouseEvent ) {
 			if( event.defaultPrevented ) return
 			if( event instanceof MouseEvent ) this.pos(super.pos())
 		}
 		
-		event_move( event? : TouchEvent | MouseEvent ) {
+		event_move( event : TouchEvent | MouseEvent ) {
 			if( event.defaultPrevented ) return
 
 			const start_pan = this.start_pan()
 
-			let pos: [number, number]
-			let cursor_pos: [number, number]
+			let pos!: [number, number]
+			let cursor_pos!: [number, number]
 			if( event instanceof MouseEvent ) {
 				cursor_pos = [ event.pageX , event.pageY ]
 				if( event.buttons === 1 ) pos = cursor_pos
@@ -186,7 +186,7 @@ namespace $.$$ {
 			this.start_pos( null )
 		}
 
-		event_wheel( event? : WheelEvent ) {
+		event_wheel( event : WheelEvent ) {
 
 			if( this.pan !== $mol_touch.prototype.pan ) {
 				event.preventDefault()

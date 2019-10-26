@@ -24,7 +24,7 @@ namespace $ { export class $mol_svg extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	text_width( text? : any , force? : $mol_atom_force ) {
+	text_width( text? : any , force? : $mol_mem_force ) {
 		return ( text !== void 0 ) ? text : 0
 	}
 

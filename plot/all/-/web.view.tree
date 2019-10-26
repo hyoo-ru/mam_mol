@@ -28,10 +28,10 @@ $mol_plot_graph $mol_svg_group
 		color <= color \
 	-
 	viewport $mol_vector_2d /
-		$mol_vector_range /
+		<= viewport_x $mol_vector_range /
 			Infinity
 			-Infinity
-		$mol_vector_range /
+		<= viewport_y $mol_vector_range /
 			Infinity
 			-Infinity
 	shift /number
@@ -44,31 +44,31 @@ $mol_plot_graph $mol_svg_group
 		NaN
 		NaN
 	dimensions_pane $mol_vector_2d /
-		$mol_vector_range /
+		<= dimensions_pane_x $mol_vector_range /
 			Infinity
 			-Infinity
-		$mol_vector_range /
+		<= dimensions_pane_y $mol_vector_range /
 			Infinity
 			-Infinity
 	dimensions $mol_vector_2d /
-		$mol_vector_range /
+		<= dimensions_x $mol_vector_range /
 			Infinity
 			-Infinity
-		$mol_vector_range /
+		<= dimensions_y $mol_vector_range /
 			Infinity
 			-Infinity
 	size_real $mol_vector_2d /
 		0
 		0
 	gap $mol_vector_2d /
-		$mol_vector_range /
+		<= gap_x $mol_vector_range /
 			0
 			0
-		$mol_vector_range /
+		<= gap_y $mol_vector_range /
 			0
 			0
 	indexes /number
-	points /readonly[number,number]
+	points /readonly(number)[]
 	front /$mol_svg
 	back /$mol_svg
 	hue NaN
@@ -81,12 +81,6 @@ $mol_plot_graph_sample $mol_view
 	style *
 		^
 		color <= color \black
-
-$mol_plugin $mol_object
-	dom_node null
-	attr_static *
-	event *
-	event_async *
 
 $mol_meter $mol_plugin
 	zoom 1
@@ -132,6 +126,10 @@ $mol_touch $mol_plugin
 	swipe_to_left?val null
 	swipe_to_top?val null
 	-
+	style *
+		^
+		touch-action \none
+	-
 	event *
 		^
 		touchstart?event <=> event_start?event null
@@ -156,18 +154,18 @@ $mol_plot_pane $mol_svg_root
 	gap_top <= gap_vert
 	gap_bottom <= gap_vert
 	gap $mol_vector_2d /
-		$mol_vector_range /
+		<= gap_x $mol_vector_range /
 			<= gap_left
 			<= gap_right
-		$mol_vector_range /
+		<= gap_y $mol_vector_range /
 			<= gap_bottom
 			<= gap_top
 	-
 	shift_limit $mol_vector_2d /
-		$mol_vector_range /
+		<= shift_limit_x $mol_vector_range /
 			0
 			0
-		$mol_vector_range /
+		<= shift_limit_y $mol_vector_range /
 			0
 			0
 	shift_default /number
@@ -177,10 +175,10 @@ $mol_plot_pane $mol_svg_root
 		0
 		0
 	scale_limit $mol_vector_2d /
-		$mol_vector_range /
+		<= scale_limit_x $mol_vector_range /
 			0
 			Infinity
-		$mol_vector_range /
+		<= scale_limit_y $mol_vector_range /
 			0
 			Infinity
 	scale_default /number
@@ -198,17 +196,17 @@ $mol_plot_pane $mol_svg_root
 		1
 		1
 	dimensions_viewport $mol_vector_2d /
-		$mol_vector_range /
+		<= dimensions_viewport_x $mol_vector_range /
 			Infinity
 			-Infinity
-		$mol_vector_range /
+		<= dimensions_viewport_y $mol_vector_range /
 			Infinity
 			-Infinity
 	dimensions $mol_vector_2d /
-		$mol_vector_range /
+		<= dimensions_x $mol_vector_range /
 			Infinity
 			-Infinity
-		$mol_vector_range /
+		<= dimensions_y $mol_vector_range /
 			Infinity
 			-Infinity
 	-
@@ -219,6 +217,7 @@ $mol_plot_pane $mol_svg_root
 		NaN
 	-
 	plugins /
+		^
 		<= Meter $mol_meter
 			width => width
 			height => height

@@ -84,7 +84,7 @@ namespace $ { export class $mol_string extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value_changed( val? : any , force? : $mol_atom_force ) {
+	value_changed( val? : any , force? : $mol_mem_force ) {
 		return this.value( val )
 	}
 
@@ -94,7 +94,7 @@ namespace $ { export class $mol_string extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value( val? : any , force? : $mol_atom_force ) {
+	value( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -113,7 +113,7 @@ namespace $ { export class $mol_string extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	type( val? : any , force? : $mol_atom_force ) {
+	type( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "text"
 	}
 
@@ -180,7 +180,7 @@ namespace $ { export class $mol_string extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_change( event? : any , force? : $mol_atom_force ) {
+	event_change( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -190,7 +190,7 @@ namespace $ { export class $mol_string extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_key_press( event? : any , force? : $mol_atom_force ) {
+	event_key_press( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

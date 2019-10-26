@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_taxon_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.App() )
+		return [ this.App() ] as readonly any[]
 	}
 
 	/**
@@ -39,12 +39,14 @@ namespace $ { export class $mol_app_taxon_demo extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  record!path *
+	 *  record!path $mol_app_taxon_data_row
 	 *  ```
 	 **/
+	@ $mol_mem_key
 	record( path : any ) {
-		return ({
-		})
+		return (( obj )=>{
+			return obj
+		})( new this.$.$mol_app_taxon_data_row(  ) )
 	}
 
 } }

@@ -17,7 +17,7 @@ namespace $ { export class $mol_app_request extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Uri_input() , this.Data() )
+		return [ this.Uri_input() , this.Data() ] as readonly any[]
 	}
 
 	/**
@@ -42,7 +42,7 @@ namespace $ { export class $mol_app_request extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	uri( val? : any , force? : $mol_atom_force ) {
+	uri( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -65,7 +65,7 @@ namespace $ { export class $mol_app_request extends $mol_page {
 	@ $mol_mem
 	Data() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Request() , this.Response() )
+			obj.sub = () => [ this.Request() , this.Response() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -80,7 +80,7 @@ namespace $ { export class $mol_app_request extends $mol_page {
 	@ $mol_mem
 	Request() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Request_headers() , this.Request_body() )
+			obj.sub = () => [ this.Request_headers() , this.Request_body() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -129,7 +129,7 @@ namespace $ { export class $mol_app_request extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	request_headers( val? : any , force? : $mol_atom_force ) {
+	request_headers( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -177,7 +177,7 @@ namespace $ { export class $mol_app_request extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	request_body( val? : any , force? : $mol_atom_force ) {
+	request_body( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -191,7 +191,7 @@ namespace $ { export class $mol_app_request extends $mol_page {
 	@ $mol_mem
 	Response() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Response_headers() , this.Response_body() )
+			obj.sub = () => [ this.Response_headers() , this.Response_body() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}

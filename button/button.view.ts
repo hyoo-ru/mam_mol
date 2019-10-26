@@ -20,7 +20,7 @@ namespace $.$$ {
 		} 
 		
 		tab_index() {
-			return this.enabled() ? super.tab_index() : null
+			return this.enabled() ? super.tab_index() : -1
 		}
 		
 	}

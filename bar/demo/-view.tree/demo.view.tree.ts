@@ -17,7 +17,7 @@ namespace $ { export class $mol_bar_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Two() , this.Three() )
+		return [ this.Two() , this.Three() ] as readonly any[]
 	}
 
 	/**
@@ -30,7 +30,7 @@ namespace $ { export class $mol_bar_demo extends $mol_demo_small {
 	@ $mol_mem
 	Two() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Two_mail() , this.Two_submit() )
+			obj.sub = () => [ this.Two_mail() , this.Two_submit() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -66,7 +66,7 @@ namespace $ { export class $mol_bar_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	mail( val? : any , force? : $mol_atom_force ) {
+	mail( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -103,7 +103,7 @@ namespace $ { export class $mol_bar_demo extends $mol_demo_small {
 	@ $mol_mem
 	Three() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Three_mail() , this.Three_confirm() , this.Three_submit() )
+			obj.sub = () => [ this.Three_mail() , this.Three_confirm() , this.Three_submit() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -155,7 +155,7 @@ namespace $ { export class $mol_bar_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	confirmed( val? : any , force? : $mol_atom_force ) {
+	confirmed( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 

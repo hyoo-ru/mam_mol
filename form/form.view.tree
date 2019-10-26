@@ -6,6 +6,6 @@ $mol_form $mol_view
 	submit?event null
 	sub /
 		<= Bar_fields $mol_view
-			sub <= form_fields /
+			sub <= form_fields /$mol_form_field
 		<= Bar_buttons $mol_row
-			sub <= buttons /
+			sub <= buttons /$mol_view

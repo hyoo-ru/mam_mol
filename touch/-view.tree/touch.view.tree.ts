@@ -6,7 +6,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	start_zoom( val? : any , force? : $mol_atom_force ) {
+	start_zoom( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -16,7 +16,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	start_distance( val? : any , force? : $mol_atom_force ) {
+	start_distance( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -26,7 +26,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	zoom( val? : any , force? : $mol_atom_force ) {
+	zoom( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 1
 	}
 
@@ -38,8 +38,8 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	start_pan( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat( 0 , 0 )
+	start_pan( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [ 0 , 0 ] as readonly any[]
 	}
 
 	/**
@@ -50,8 +50,8 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	pan( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat( 0 , 0 )
+	pan( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [ 0 , 0 ] as readonly any[]
 	}
 
 	/**
@@ -62,8 +62,8 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	pos( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat( NaN , NaN )
+	pos( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [ NaN , NaN ] as readonly any[]
 	}
 
 	/**
@@ -72,7 +72,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	start_pos( val? : any , force? : $mol_atom_force ) {
+	start_pos( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -91,7 +91,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_right( val? : any , force? : $mol_atom_force ) {
+	swipe_right( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -101,7 +101,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_bottom( val? : any , force? : $mol_atom_force ) {
+	swipe_bottom( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -111,7 +111,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_left( val? : any , force? : $mol_atom_force ) {
+	swipe_left( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -121,7 +121,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_top( val? : any , force? : $mol_atom_force ) {
+	swipe_top( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -131,7 +131,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_from_right( val? : any , force? : $mol_atom_force ) {
+	swipe_from_right( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -141,7 +141,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_from_bottom( val? : any , force? : $mol_atom_force ) {
+	swipe_from_bottom( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -151,7 +151,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_from_left( val? : any , force? : $mol_atom_force ) {
+	swipe_from_left( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -161,7 +161,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_from_top( val? : any , force? : $mol_atom_force ) {
+	swipe_from_top( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -171,7 +171,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_to_right( val? : any , force? : $mol_atom_force ) {
+	swipe_to_right( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -181,7 +181,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_to_bottom( val? : any , force? : $mol_atom_force ) {
+	swipe_to_bottom( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -191,7 +191,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_to_left( val? : any , force? : $mol_atom_force ) {
+	swipe_to_left( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -201,8 +201,22 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	swipe_to_top( val? : any , force? : $mol_atom_force ) {
+	swipe_to_top( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
+	}
+
+	/**
+	 *  ```
+	 *  style *
+	 *  	^
+	 *  	touch-action \none
+	 *  ```
+	 **/
+	style() {
+		return ({
+			...super.style() ,
+			"touch-action" :  "none" ,
+		})
 	}
 
 	/**
@@ -239,7 +253,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_start( event? : any , force? : $mol_atom_force ) {
+	event_start( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -249,7 +263,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_move( event? : any , force? : $mol_atom_force ) {
+	event_move( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -259,7 +273,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_end( event? : any , force? : $mol_atom_force ) {
+	event_end( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -269,7 +283,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_leave( event? : any , force? : $mol_atom_force ) {
+	event_leave( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -279,7 +293,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_wheel( event? : any , force? : $mol_atom_force ) {
+	event_wheel( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

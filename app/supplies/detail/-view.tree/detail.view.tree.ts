@@ -24,7 +24,7 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [].concat( this.Close() )
+		return [ this.Close() ] as readonly any[]
 	}
 
 	/**
@@ -37,7 +37,7 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	@ $mol_mem
 	Close() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Close_icon() )
+			obj.sub = () => [ this.Close_icon() ] as readonly any[]
 			obj.arg = () => this.close_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -72,7 +72,7 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Content() )
+		return [ this.Content() ] as readonly any[]
 	}
 
 	/**
@@ -86,7 +86,7 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	@ $mol_mem
 	Content() {
 		return (( obj )=>{
-			obj.rows = () => [].concat( this.Descr_card() , this.Attach_section() , this.Positions_section() )
+			obj.rows = () => [ this.Descr_card() , this.Attach_section() , this.Positions_section() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}
@@ -114,7 +114,7 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	@ $mol_mem
 	Descr_deck() {
 		return (( obj )=>{
-			obj.items = () => [].concat( this.Org() , this.Cons() )
+			obj.items = () => [ this.Org() , this.Cons() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_deck(  ) )
 	}
@@ -165,21 +165,21 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 **/
 	org_items() {
-		return [].concat( this.Provider() , this.Consumer() , this.Supply_group() , this.Ballance_unit_item() )
+		return [ this.Provider() , this.Consumer() , this.Supply_group() , this.Ballance_unit_item() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
 	 *  Provider $mol_labeler
 	 *  	title <= provider_title
-	 *  	content <= provider_name
+	 *  	content / <= provider_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Provider() {
 		return (( obj )=>{
 			obj.title = () => this.provider_title()
-			obj.content = () => this.provider_name()
+			obj.content = () => [ this.provider_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -206,14 +206,14 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 *  Consumer $mol_labeler
 	 *  	title <= customer_label
-	 *  	content <= consumer_name
+	 *  	content / <= consumer_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Consumer() {
 		return (( obj )=>{
 			obj.title = () => this.customer_label()
-			obj.content = () => this.consumer_name()
+			obj.content = () => [ this.consumer_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -240,14 +240,14 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 *  Supply_group $mol_labeler
 	 *  	title <= supply_group_title
-	 *  	content <= supply_group_name
+	 *  	content / <= supply_group_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Supply_group() {
 		return (( obj )=>{
 			obj.title = () => this.supply_group_title()
-			obj.content = () => this.supply_group_name()
+			obj.content = () => [ this.supply_group_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -274,14 +274,14 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 *  Ballance_unit_item $mol_labeler
 	 *  	title <= ballance_unit_title
-	 *  	content <= ballance_unit_name
+	 *  	content / <= ballance_unit_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Ballance_unit_item() {
 		return (( obj )=>{
 			obj.title = () => this.ballance_unit_title()
-			obj.content = () => this.ballance_unit_name()
+			obj.content = () => [ this.ballance_unit_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -350,21 +350,21 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 **/
 	cons_items() {
-		return [].concat( this.Contract() , this.Pay_method() , this.Manager() , this.Debitor() )
+		return [ this.Contract() , this.Pay_method() , this.Manager() , this.Debitor() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
 	 *  Contract $mol_labeler
 	 *  	title <= contract_title
-	 *  	content <= contract_id
+	 *  	content / <= contract_id
 	 *  ```
 	 **/
 	@ $mol_mem
 	Contract() {
 		return (( obj )=>{
 			obj.title = () => this.contract_title()
-			obj.content = () => this.contract_id()
+			obj.content = () => [ this.contract_id() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -391,14 +391,14 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 *  Pay_method $mol_labeler
 	 *  	title <= pay_method_title
-	 *  	content <= pay_method_name
+	 *  	content / <= pay_method_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Pay_method() {
 		return (( obj )=>{
 			obj.title = () => this.pay_method_title()
-			obj.content = () => this.pay_method_name()
+			obj.content = () => [ this.pay_method_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -425,14 +425,14 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 *  Manager $mol_labeler
 	 *  	title <= manager_title
-	 *  	content <= manager_name
+	 *  	content / <= manager_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Manager() {
 		return (( obj )=>{
 			obj.title = () => this.manager_title()
-			obj.content = () => this.manager_name()
+			obj.content = () => [ this.manager_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -459,14 +459,14 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 *  Debitor $mol_labeler
 	 *  	title <= debitod_title
-	 *  	content <= debitor_name
+	 *  	content / <= debitor_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Debitor() {
 		return (( obj )=>{
 			obj.title = () => this.debitod_title()
-			obj.content = () => this.debitor_name()
+			obj.content = () => [ this.debitor_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -492,14 +492,14 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	/**
 	 *  ```
 	 *  Attach_section $mol_section
-	 *  	head <= attach_title
+	 *  	head / <= attach_title
 	 *  	Content <= Attach
 	 *  ```
 	 **/
 	@ $mol_mem
 	Attach_section() {
 		return (( obj )=>{
-			obj.head = () => this.attach_title()
+			obj.head = () => [ this.attach_title() ] as readonly any[]
 			obj.Content = () => this.Attach()
 			return obj
 		})( new this.$.$mol_section(  ) )
@@ -532,11 +532,11 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 
 	/**
 	 *  ```
-	 *  attachments /
+	 *  attachments /$mol_view
 	 *  ```
 	 **/
 	attachments() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -545,7 +545,7 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	attach_new( val? : any , force? : $mol_atom_force ) {
+	attach_new( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -573,7 +573,7 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 **/
 	positions_head() {
-		return [].concat( this.positions_title() , this.Cost() )
+		return [ this.positions_title() , this.Cost() ] as readonly any[]
 	}
 
 	/**
@@ -589,14 +589,14 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 *  Cost $mol_labeler
 	 *  	title <= cost_title
-	 *  	content <= Cost_value
+	 *  	content / <= Cost_value
 	 *  ```
 	 **/
 	@ $mol_mem
 	Cost() {
 		return (( obj )=>{
 			obj.title = () => this.cost_title()
-			obj.content = () => this.Cost_value()
+			obj.content = () => [ this.Cost_value() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -651,11 +651,11 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 
 	/**
 	 *  ```
-	 *  positions /
+	 *  positions /$mol_view
 	 *  ```
 	 **/
 	positions() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -664,7 +664,7 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 **/
 	foot() {
-		return [].concat( this.Actions() )
+		return [ this.Actions() ] as readonly any[]
 	}
 
 	/**
@@ -686,7 +686,7 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 **/
 	actions() {
-		return [].concat( this.Approve() )
+		return [ this.Approve() ] as readonly any[]
 	}
 
 	/**
@@ -711,7 +711,7 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	approved( val? : any , force? : $mol_atom_force ) {
+	approved( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 

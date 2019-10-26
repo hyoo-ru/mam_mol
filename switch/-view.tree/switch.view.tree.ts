@@ -33,7 +33,7 @@ namespace $ { export class $mol_switch extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	option_checked( id : any , val? : any , force? : $mol_atom_force ) {
+	option_checked( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -70,7 +70,7 @@ namespace $ { export class $mol_switch extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value( val? : any , force? : $mol_atom_force ) {
+	value( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -95,11 +95,11 @@ namespace $ { export class $mol_switch extends $mol_view {
 
 	/**
 	 *  ```
-	 *  items /
+	 *  items /$mol_check
 	 *  ```
 	 **/
 	items() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_check )[]
 	}
 
 } }

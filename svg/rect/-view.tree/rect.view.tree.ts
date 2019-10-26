@@ -15,7 +15,7 @@ namespace $ { export class $mol_svg_rect extends $mol_svg {
 	 *  ```
 	 **/
 	pos() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**

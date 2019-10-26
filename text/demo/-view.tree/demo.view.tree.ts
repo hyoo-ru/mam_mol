@@ -15,7 +15,7 @@ namespace $ { export class $mol_text_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Scroll() )
+		return [ this.Scroll() ] as readonly any[]
 	}
 
 	/**
@@ -26,7 +26,7 @@ namespace $ { export class $mol_text_demo extends $mol_demo_large {
 	@ $mol_mem
 	Scroll() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Text() )
+			obj.sub = () => [ this.Text() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}

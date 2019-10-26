@@ -6,7 +6,7 @@ namespace $ {
 		
 		constructor( value? : number ) {
 			super()
-			this[ 'valueOf()' ] = value
+			if( value !== undefined ) this[ 'valueOf()' ] = value
 		}
 		
 		prefix() {

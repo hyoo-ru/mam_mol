@@ -12,7 +12,7 @@ namespace $ {
 			const wrapped = function( this : This , ... args : Args ) {
 				
 				const outer = $mol_log2.current
-				const inner = $mol_log2.current = new Inner( `${ this || '' }.${ task.name }` , args )
+				const inner = $mol_log2.current = new Inner( this , task.name , args )
 				
 				try {
 					return task.call( this , ... args )
@@ -27,11 +27,12 @@ namespace $ {
 		}
 
 		constructor(
-			id : string ,
+			readonly host : any ,
+			readonly id : string ,
 			readonly args : any[] ,
 		) {
 			super()
-			this[ Symbol.toStringTag ] = id
+			this[ Symbol.toStringTag ] = host ? `${ host }.${ id }` : id
 		}
 
 		stream = [] as $mol_log2_line[]
@@ -42,12 +43,14 @@ namespace $ {
 		}
 
 		info( ... values : any[] ) {
-			this.stream.push( new $mol_log2_line( ... values ) )
+			this.stream.push( new $mol_log2_line( ... $mol_log2.prefix , ... values ) )
 		}
 
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_span( {} ,
-				$mol_dev_format_strong( `${this}` ) ,
+				... $mol_maybe( this.host ).map( $mol_dev_format_auto ) ,
+				'.' ,
+				$mol_dev_format_strong( this.id ) ,
 				'(',
 				... this.args.map( $mol_dev_format_auto ) ,
 				') ' ,
@@ -57,7 +60,7 @@ namespace $ {
 
 		static info( ... values : any[] ) {
 			
-			const excludes = this.excludes
+			const excludes = $mol_log2.excludes
 			if( !excludes ) return
 			
 			const skip = excludes.some( ( regexp , index )=> {
@@ -68,7 +71,7 @@ namespace $ {
 			
 			if( !$mol_log2.current ) {
 				console.warn( new Error( `$mol_log.current is not defined. Wrap entry point to $mol_log!` ) )
-				$mol_log2.current = new $mol_log2( '$mol_log2_default' , [] )
+				$mol_log2.current = new $mol_log2( null , '$mol_log2_default' , [] )
 				console.debug( $mol_log2.current )
 			}
 
@@ -90,6 +93,29 @@ namespace $ {
 		 * 	$mol_log2.excludes = null
 		 */
 		static excludes = null as any as null | ( undefined | RegExp )[]
+
+		static prefix = [] as any[]
+
+	}
+
+	export class $mol_log2_indent extends $mol_wrapper {
+
+		static wrap< This extends { $ : $mol_ambient_context } , Args extends any[] , Result >( task : ( this : This , ... args : Args )=> Result ) {
+
+			const Inner = this
+
+			const wrapped = function( this : This , ... args : Args ) {
+				try {
+					$mol_log2.prefix.push( $mol_log2_token_indent )
+					return task.call( this , ... args )
+				} finally {
+					$mol_log2.prefix.pop()
+				}
+
+			}
+
+			return wrapped
+		}
 
 	}
 	
@@ -125,7 +151,11 @@ namespace $ {
 		}
 
 		[ $mol_dev_format_head ]() {
-			return $mol_dev_format_tr( {} , ... this.map( item => $mol_dev_format_td( {} , $mol_dev_format_auto( item ) ) ) )
+			return $mol_dev_format_tr( {} ,
+				... this.map( item => $mol_dev_format_td( {} ,
+					$mol_dev_format_auto( item )
+				) )
+			)
 		}
 
 	}
@@ -144,8 +174,9 @@ namespace $ {
 	}
 
 	export let $mol_log2_token_empty = new $mol_log2_token( '' )
+	export let $mol_log2_token_indent = new $mol_log2_token( '\t' )
 
-	export let $mol_log2_legend = new $mol_log2_table( '$mol_log2_legend' , [] )
+	export let $mol_log2_legend = new $mol_log2_table( null , '$mol_log2_legend' , [] )
 
 	if( !$mol_log2.excludes ) $mol_log2_legend.info( $mol_log2_token_empty , 'Use `$mol_log2.excludes : null | RegExp[]` to toggle logs' )
 

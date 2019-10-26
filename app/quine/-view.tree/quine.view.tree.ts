@@ -15,7 +15,7 @@ namespace $ { export class $mol_app_quine extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Content() )
+		return [ this.Content() ] as readonly any[]
 	}
 
 	/**
@@ -26,7 +26,7 @@ namespace $ { export class $mol_app_quine extends $mol_page {
 	@ $mol_mem
 	Content() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Text() )
+			obj.sub = () => [ this.Text() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -63,7 +63,7 @@ namespace $ { export class $mol_app_quine extends $mol_page {
 	 *  ```
 	 **/
 	paths() {
-		return [].concat( "mol/app/quine/quine.view.tree" , "mol/app/quine/quine.view.ts" , "mol/app/quine/index.html" , "mol/app/quine/quine.locale=ru.json" )
+		return [ "mol/app/quine/quine.view.tree" , "mol/app/quine/quine.view.ts" , "mol/app/quine/index.html" , "mol/app/quine/quine.locale=ru.json" ] as readonly any[]
 	}
 
 } }

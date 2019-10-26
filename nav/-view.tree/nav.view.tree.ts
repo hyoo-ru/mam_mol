@@ -6,7 +6,7 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	cycle( val? : any , force? : $mol_atom_force ) {
+	cycle( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -43,8 +43,8 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	keys_x( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat(  )
+	keys_x( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [  ] as readonly any[]
 	}
 
 	/**
@@ -53,8 +53,8 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	keys_y( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat(  )
+	keys_y( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [  ] as readonly any[]
 	}
 
 	/**
@@ -63,7 +63,7 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	current_x( val? : any , force? : $mol_atom_force ) {
+	current_x( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -73,7 +73,7 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	current_y( val? : any , force? : $mol_atom_force ) {
+	current_y( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -83,7 +83,7 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_up( event? : any , force? : $mol_atom_force ) {
+	event_up( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -93,7 +93,7 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_down( event? : any , force? : $mol_atom_force ) {
+	event_down( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -103,7 +103,7 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_left( event? : any , force? : $mol_atom_force ) {
+	event_left( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -113,7 +113,7 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_right( event? : any , force? : $mol_atom_force ) {
+	event_right( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -137,7 +137,7 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_key( event? : any , force? : $mol_atom_force ) {
+	event_key( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

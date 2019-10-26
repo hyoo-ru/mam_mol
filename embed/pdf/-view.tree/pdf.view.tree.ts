@@ -15,7 +15,7 @@ namespace $ { export class $mol_embed_pdf extends $mol_scroll {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Pages() )
+		return [ this.Pages() ] as readonly any[]
 	}
 
 	/**
@@ -37,7 +37,7 @@ namespace $ { export class $mol_embed_pdf extends $mol_scroll {
 	 *  ```
 	 **/
 	pages() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -108,7 +108,7 @@ namespace $ { export class $mol_embed_pdf_page extends $mol_view {
 	 *  ```
 	 **/
 	plugins() {
-		return [].concat( this.Touch() )
+		return [ this.Touch() ] as readonly any[]
 	}
 
 	/**
@@ -130,7 +130,7 @@ namespace $ { export class $mol_embed_pdf_page extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	scale( val? : any , force? : $mol_atom_force ) {
+	scale( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 1
 	}
 

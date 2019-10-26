@@ -10,7 +10,7 @@ namespace $ { export class $mol_speck_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Link() , this.String() , this.Button() , this.Card() )
+		return [ this.Link() , this.String() , this.Button() , this.Card() ] as readonly any[]
 	}
 
 	/**
@@ -23,7 +23,7 @@ namespace $ { export class $mol_speck_demo extends $mol_demo_small {
 	@ $mol_mem
 	Link() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Link_speck() , this.Link_icon() )
+			obj.sub = () => [ this.Link_speck() , this.Link_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -63,7 +63,7 @@ namespace $ { export class $mol_speck_demo extends $mol_demo_small {
 	@ $mol_mem
 	String() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.String_speck() , this.String_field() )
+			obj.sub = () => [ this.String_speck() , this.String_field() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -112,7 +112,7 @@ namespace $ { export class $mol_speck_demo extends $mol_demo_small {
 	@ $mol_mem
 	Button() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Button_speck() , this.Button_icon() )
+			obj.sub = () => [ this.Button_speck() , this.Button_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -161,7 +161,7 @@ namespace $ { export class $mol_speck_demo extends $mol_demo_small {
 	@ $mol_mem
 	Card() {
 		return (( obj )=>{
-			obj.content = () => [].concat( this.Card_speck() )
+			obj.content = () => [ this.Card_speck() ] as readonly any[]
 			obj.status = () => this.card_status()
 			return obj
 		})( new this.$.$mol_card(  ) )

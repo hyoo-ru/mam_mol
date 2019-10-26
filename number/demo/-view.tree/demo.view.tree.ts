@@ -25,7 +25,7 @@ namespace $ { export class $mol_number_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.zero() , this.one() , this.two() , this.three() , this.four() , this.five() , this.six() , this.seven() , this.eight() , this.nine() )
+		return [ this.zero() , this.one() , this.two() , this.three() , this.four() , this.five() , this.six() , this.seven() , this.eight() , this.nine() ] as readonly any[]
 	}
 
 	/**
@@ -59,7 +59,7 @@ namespace $ { export class $mol_number_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	year( val? : any , force? : $mol_atom_force ) {
+	year( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : NaN
 	}
 
@@ -103,7 +103,7 @@ namespace $ { export class $mol_number_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	age( val? : any , force? : $mol_atom_force ) {
+	age( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 32
 	}
 

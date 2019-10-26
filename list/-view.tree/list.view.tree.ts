@@ -11,11 +11,11 @@ namespace $ { export class $mol_list extends $mol_view {
 
 	/**
 	 *  ```
-	 *  rows /
+	 *  rows /$mol_view
 	 *  ```
 	 **/
 	rows() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**

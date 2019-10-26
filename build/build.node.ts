@@ -11,7 +11,8 @@ namespace $ {
 					}
 				)
 				process.exit(0)
-			} catch {
+			} catch(error) {
+				console.log(error)
 				process.exit(1)
 			}
 		} else {
@@ -19,7 +20,7 @@ namespace $ {
 		}
 	}
 	
-	setTimeout( ()=> $mol_build_start( process.argv.slice( 2 ) ) )
+	setTimeout( $mol_fiber_root( ()=> $mol_fiber_unlimit( ()=> $mol_build_start( process.argv.slice( 2 ) ) as any ) ) )
 
 	export class $mol_build extends $mol_object {
 		
@@ -249,7 +250,7 @@ namespace $ {
 					... $node.typescript.sys ,
 					setTimeout : ( cb : any )=> cb(),
 					writeFile : ( path : string , content : string )=> {
-						$mol_file.relative( path ).content( content , $mol_atom_force_cache )
+						$mol_file.relative( path ).content( content , $mol_mem_force_cache )
 					} ,
 				},
 				
@@ -267,7 +268,7 @@ namespace $ {
 							getNewLine : ()=> '\n' ,
 						}) )
 						
-						file.content( error as any , $mol_atom_force_cache )
+						file.content( error as any , $mol_mem_force_fail )
 						
 					} else {
 						
@@ -284,7 +285,6 @@ namespace $ {
 			const builder = $node.typescript.createWatchProgram( host )
 
 			return $mol_object.make({ destructor : ()=> { builder.updateRootFileNames([]) } })
-
 		}
 		
 		@ $mol_mem_key
@@ -398,10 +398,8 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
+		@ $mol_fiber.method
 		modEnsure( path : string ) {
-
-			// Prevent automatic state clear on every bundle build
-			$mol_atom_current().destructor = ()=> {}
 
 			var mod = $mol_file.absolute( path )
 			if( mod === this.root() ) return false
@@ -424,14 +422,17 @@ namespace $ {
 			}
 
 			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
-				console.log( '> git clone' , repo.value , mod.path() )
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.path() )
-				mod.stat( undefined , $mol_atom_force_cache )
+				mod.stat( undefined , $mol_mem_force_cache )
 				return true
 			}
 			
 			if( parent === this.root() ) {
 				throw new Error( `Root package "${ mod.relate( this.root() ) }" not found` )
+			}
+
+			if( parent.name() === 'node_modules' ) {
+				$node[ mod.name() ] // force autoinstall through npm
 			}
 
 			return false
@@ -517,10 +518,12 @@ namespace $ {
 		bundleAll( { path } : { path : string } ) {
 
 			const once = ( action : ()=> void )=> {
-				const task = new $mol_atom( '$mol_build_start' , action )
-				task.value()
+				const task = new $mol_atom2
+				task[ Symbol.toStringTag ] = `${ this }/once`
+				task.calculate = action
+				task.get()
 				task.destructor()
-				$mol_atom.sync()
+				$mol_atom2.tick()
 			}
 
 			once( ()=> {
@@ -532,6 +535,7 @@ namespace $ {
 				this.bundle({ path , bundle : 'web.d.ts' })
 				this.bundle({ path , bundle : 'web.view.tree' })
 				this.bundle({ path , bundle : 'web.locale=en.json' })
+				return null
 			} )
 
 			once( ()=> {
@@ -541,6 +545,7 @@ namespace $ {
 				this.bundle({ path , bundle : 'node.d.ts' })
 				this.bundle({ path , bundle : 'node.view.tree' })
 				this.bundle({ path , bundle : 'node.locale=en.json' })
+				return null
 			} )
 
 			this.bundle({ path , bundle : 'package.json' })
@@ -856,7 +861,7 @@ namespace $ {
 			
 			var json : any
 			try {
-				$mol_atom_fence( ()=> json = target.exists() && JSON.parse( target.content().toString() ) )
+				$mol_fiber_fence( ()=> json = target.exists() && JSON.parse( target.content().toString() ) )
 			} catch( error ) {
 				console.error( $node.colorette.yellow( error ) )
 			}

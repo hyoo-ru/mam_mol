@@ -11,11 +11,29 @@ namespace $ { export class $mol_grid_demo extends $mol_demo_large {
 
 	/**
 	 *  ```
+	 *  rows 1000
+	 *  ```
+	 **/
+	rows() {
+		return 1000
+	}
+
+	/**
+	 *  ```
+	 *  cols 20
+	 *  ```
+	 **/
+	cols() {
+		return 20
+	}
+
+	/**
+	 *  ```
 	 *  sub / <= Grid
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Grid() )
+		return [ this.Grid() ] as readonly any[]
 	}
 
 	/**
@@ -52,7 +70,7 @@ namespace $ { export class $mol_grid_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	col_head_content( col : any ) {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 } }

@@ -42,7 +42,7 @@ namespace $ { export class $mol_portion extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.indicator() )
+		return [ this.indicator() ] as readonly any[]
 	}
 
 	/**

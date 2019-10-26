@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	lamp_current_id( val? : any , force? : $mol_atom_force ) {
+	lamp_current_id( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -18,7 +18,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	 *  ```
 	 **/
 	pages() {
-		return [].concat( this.Addon_page() , this.Main_page() )
+		return [ this.Addon_page() , this.Main_page() ] as readonly any[]
 	}
 
 	/**
@@ -36,7 +36,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 			obj.minimal_width = () => 400
 			obj.title = () => "LampTest.ru"
 			obj.body_scroll_top = ( val? : any ) => this.menu_scroll_top( val )
-			obj.body = () => [].concat( this.Menu() )
+			obj.body = () => [ this.Menu() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
 	}
@@ -47,23 +47,30 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	menu_scroll_top( val? : any , force? : $mol_atom_force ) {
+	menu_scroll_top( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
 	/**
 	 *  ```
-	 *  Menu $mol_list rows /
-	 *  	<= Filter_panel
-	 *  	<= lamp_rows
+	 *  Menu $mol_list rows <= lamp_rows
 	 *  ```
 	 **/
 	@ $mol_mem
 	Menu() {
 		return (( obj )=>{
-			obj.rows = () => [].concat( this.Filter_panel() , this.lamp_rows() )
+			obj.rows = () => this.lamp_rows()
 			return obj
 		})( new this.$.$mol_list(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  lamp_rows / <= Filter_panel
+	 *  ```
+	 **/
+	lamp_rows() {
+		return [ this.Filter_panel() ] as readonly any[]
 	}
 
 	/**
@@ -74,7 +81,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	@ $mol_mem
 	Filter_panel() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Filter() )
+			obj.sub = () => [ this.Filter() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_float(  ) )
 	}
@@ -110,17 +117,8 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	filter( val? : any , force? : $mol_atom_force ) {
+	filter( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
-	}
-
-	/**
-	 *  ```
-	 *  lamp_rows /
-	 *  ```
-	 **/
-	lamp_rows() {
-		return [].concat(  )
 	}
 
 	/**
@@ -141,8 +139,8 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 			obj.minimal_width = () => 400
 			obj.title = () => this.title()
 			obj.event_top = ( val? : any ) => this.event_front_up( val )
-			obj.tools = () => [].concat( this.Close() )
-			obj.body = () => [].concat( this.Info() , this.Gallery() )
+			obj.tools = () => [ this.Close() ] as readonly any[]
+			obj.body = () => [ this.Info() , this.Gallery() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
 	}
@@ -166,7 +164,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	@ $mol_mem
 	Close() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Close_icon() )
+			obj.sub = () => [ this.Close_icon() ] as readonly any[]
 			obj.arg = () => ({
 			"lamp" :  null as any ,
 		})
@@ -197,7 +195,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	@ $mol_mem
 	Info() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Stat() , this.Body() , this.Light() )
+			obj.sub = () => [ this.Stat() , this.Body() , this.Light() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -210,7 +208,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	@ $mol_mem
 	Stat() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Rating() )
+			obj.sub = () => [ this.Rating() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -226,7 +224,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	Rating() {
 		return (( obj )=>{
 			obj.title = () => this.rating_title()
-			obj.content = () => [].concat( this.rating() )
+			obj.content = () => [ this.rating() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -260,7 +258,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	@ $mol_mem
 	Body() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Type() , this.Shape() , this.Base() )
+			obj.sub = () => [ this.Type() , this.Shape() , this.Base() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -276,7 +274,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	Type() {
 		return (( obj )=>{
 			obj.title = () => this.type_title()
-			obj.content = () => [].concat( this.type() )
+			obj.content = () => [ this.type() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -310,7 +308,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	Shape() {
 		return (( obj )=>{
 			obj.title = () => this.shape_title()
-			obj.content = () => [].concat( this.shape() )
+			obj.content = () => [ this.shape() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -344,7 +342,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	Base() {
 		return (( obj )=>{
 			obj.title = () => this.base_title()
-			obj.content = () => [].concat( this.base() )
+			obj.content = () => [ this.base() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -379,7 +377,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	@ $mol_mem
 	Light() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Temp() , this.Cri() , this.Ripple() , this.Angle() )
+			obj.sub = () => [ this.Temp() , this.Cri() , this.Ripple() , this.Angle() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -395,7 +393,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	Temp() {
 		return (( obj )=>{
 			obj.title = () => this.Temp_title()
-			obj.content = () => [].concat( this.temp() )
+			obj.content = () => [ this.temp() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -429,7 +427,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	Cri() {
 		return (( obj )=>{
 			obj.title = () => this.cri_title()
-			obj.content = () => [].concat( this.cri() )
+			obj.content = () => [ this.cri() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -463,7 +461,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	Ripple() {
 		return (( obj )=>{
 			obj.title = () => this.ripple_title()
-			obj.content = () => [].concat( this.ripple() )
+			obj.content = () => [ this.ripple() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -497,7 +495,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	Angle() {
 		return (( obj )=>{
 			obj.title = () => this.angle_title()
-			obj.content = () => [].concat( this.angle() )
+			obj.content = () => [ this.angle() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -528,7 +526,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	@ $mol_mem
 	Gallery() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Photo() )
+			obj.sub = () => [ this.Photo() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -568,7 +566,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	@ $mol_mem_key
 	Lamp_row( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Lamp_row_dimmer(id) )
+			obj.sub = () => [ this.Lamp_row_dimmer(id) ] as readonly any[]
 			obj.arg = () => this.lamp_arg(id)
 			return obj
 		})( new this.$.$mol_link(  ) )

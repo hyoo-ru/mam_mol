@@ -8,7 +8,7 @@ namespace $ { export class $mol_form_field extends $mol_labeler {
 	 *  ```
 	 **/
 	label() {
-		return [].concat( this.name() , this.Bid() )
+		return [ this.name() , this.Bid() ] as readonly any[]
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace $ { export class $mol_form_field extends $mol_labeler {
 	@ $mol_mem
 	Bid() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.bid() )
+			obj.sub = () => [ this.bid() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

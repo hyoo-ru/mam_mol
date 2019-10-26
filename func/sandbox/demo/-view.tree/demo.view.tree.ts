@@ -15,7 +15,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [].concat( this.Source() )
+		return [ this.Source() ] as readonly any[]
 	}
 
 	/**
@@ -63,7 +63,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	keydown( event? : any , force? : $mol_atom_force ) {
+	keydown( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -76,7 +76,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Input() , this.Result() , this.Snippets() )
+		return [ this.Input() , this.Result() , this.Snippets() ] as readonly any[]
 	}
 
 	/**
@@ -89,7 +89,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	@ $mol_mem
 	Input() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Code() , this.Run() )
+			obj.sub = () => [ this.Code() , this.Run() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -116,7 +116,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	script( val? : any , force? : $mol_atom_force ) {
+	script( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -142,7 +142,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	run( event? : any , force? : $mol_atom_force ) {
+	run( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -154,7 +154,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	@ $mol_mem
 	Result() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.result() )
+			obj.sub = () => [ this.result() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -165,7 +165,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	result( val? : any , force? : $mol_atom_force ) {
+	result( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -188,7 +188,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	snippets() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -230,7 +230,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	snippet_codes() {
-		return [].concat( "return document.cookie" , "let evil = eval\nreturn evil( 'document.cookie' )" , "let Function = ( ()=>{} ).constructor\nlet getCookie = Function( 'return document.cookie' )\nreturn getCookie()" , "let NumberProto = (0).__proto__\nNumberProto.toString = null" )
+		return [ "return document.cookie" , "let evil = eval\nreturn evil( 'document.cookie' )" , "let Function = ( ()=>{} ).constructor\nlet getCookie = Function( 'return document.cookie' )\nreturn getCookie()" , "let NumberProto = (0).__proto__\nNumberProto.toString = null" ] as readonly any[]
 	}
 
 } }
@@ -263,7 +263,7 @@ namespace $ { export class $mol_func_sandbox_demo_snippet extends $mol_link {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Text() )
+		return [ this.Text() ] as readonly any[]
 	}
 
 	/**

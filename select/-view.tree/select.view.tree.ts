@@ -12,11 +12,11 @@ namespace $ { export class $mol_select extends $mol_pop {
 
 	/**
 	 *  ```
-	 *  options /
+	 *  options /string
 	 *  ```
 	 **/
 	options() {
-		return [].concat(  )
+		return [  ] as readonly ( string )[]
 	}
 
 	/**
@@ -25,7 +25,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value( val? : any , force? : $mol_atom_force ) {
+	value( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -60,7 +60,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	event_select( id : any , event? : any , force? : $mol_atom_force ) {
+	event_select( id : any , event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -70,7 +70,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	option_content( id : any ) {
-		return [].concat( this.Option_label(id) )
+		return [ this.Option_label(id) ] as readonly any[]
 	}
 
 	/**
@@ -106,7 +106,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	filter_pattern( val? : any , force? : $mol_atom_force ) {
+	filter_pattern( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -118,7 +118,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	@ $mol_mem
 	No_options() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.no_options_message() )
+			obj.sub = () => [ this.no_options_message() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -134,11 +134,13 @@ namespace $ { export class $mol_select extends $mol_pop {
 
 	/**
 	 *  ```
-	 *  plugins / <= Nav
+	 *  plugins /
+	 *  	^
+	 *  	<= Nav
 	 *  ```
 	 **/
 	plugins() {
-		return [].concat( this.Nav() )
+		return [ ...super.plugins() , this.Nav() ] as readonly any[]
 	}
 
 	/**
@@ -161,13 +163,11 @@ namespace $ { export class $mol_select extends $mol_pop {
 
 	/**
 	 *  ```
-	 *  nav_components /
-	 *  	<= Filter
-	 *  	<= option_rows
+	 *  nav_components /$mol_view
 	 *  ```
 	 **/
 	nav_components() {
-		return [].concat( this.Filter() , this.option_rows() )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -176,7 +176,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	option_focused( component? : any , force? : $mol_atom_force ) {
+	option_focused( component? : any , force? : $mol_mem_force ) {
 		return ( component !== void 0 ) ? component : null as any
 	}
 
@@ -186,7 +186,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	nav_cycle( val? : any , force? : $mol_atom_force ) {
+	nav_cycle( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : true
 	}
 
@@ -196,7 +196,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	showed( val? : any , force? : $mol_atom_force ) {
+	showed( val? : any , force? : $mol_mem_force ) {
 		return this.options_showed( val )
 	}
 
@@ -206,7 +206,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	options_showed( val? : any , force? : $mol_atom_force ) {
+	options_showed( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -241,29 +241,57 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	open( event? : any , force? : $mol_atom_force ) {
+	open( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
 	/**
 	 *  ```
-	 *  trigger_content /
-	 *  	<= option_content_current
-	 *  	<= Filter
-	 *  	<= Trigger_icon
+	 *  trigger_content /$mol_view_content
 	 *  ```
 	 **/
 	trigger_content() {
-		return [].concat( this.option_content_current() , this.Filter() , this.Trigger_icon() )
+		return [  ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
 	 *  ```
-	 *  option_content_current /
+	 *  bubble_content / <= Menu
+	 *  ```
+	 **/
+	bubble_content() {
+		return [ this.Menu() ] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  Menu $mol_list rows <= menu_content
+	 *  ```
+	 **/
+	@ $mol_mem
+	Menu() {
+		return (( obj )=>{
+			obj.rows = () => this.menu_content()
+			return obj
+		})( new this.$.$mol_list(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  menu_content /$mol_view
+	 *  ```
+	 **/
+	menu_content() {
+		return [  ] as readonly ( $mol_view )[]
+	}
+
+	/**
+	 *  ```
+	 *  option_content_current /$mol_view_content
 	 *  ```
 	 **/
 	option_content_current() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -321,48 +349,6 @@ namespace $ { export class $mol_select extends $mol_pop {
 		return (( obj )=>{
 			return obj
 		})( new this.$.$mol_icon_chevron(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  bubble_content / <= Menu
-	 *  ```
-	 **/
-	bubble_content() {
-		return [].concat( this.Menu() )
-	}
-
-	/**
-	 *  ```
-	 *  Menu $mol_list rows <= menu_content
-	 *  ```
-	 **/
-	@ $mol_mem
-	Menu() {
-		return (( obj )=>{
-			obj.rows = () => this.menu_content()
-			return obj
-		})( new this.$.$mol_list(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  menu_content /
-	 *  	<= Filter
-	 *  	<= option_rows
-	 *  ```
-	 **/
-	menu_content() {
-		return [].concat( this.Filter() , this.option_rows() )
-	}
-
-	/**
-	 *  ```
-	 *  option_rows /
-	 *  ```
-	 **/
-	option_rows() {
-		return [].concat(  )
 	}
 
 } }

@@ -11,18 +11,24 @@ namespace $.$$ {
 
 		@ $mol_mem
 		snapshot_current() {
-			return [ ... this.future() ].map( key => key.toString( 16 ) ).join( '~' )
+			return [ ... this.state() ].map( key => key.toString( 16 ) ).join( '~' )
 		}
 
 		@ $mol_mem
-		future( next? : Set<number> ) {
+		cycle() {
+			
+			if( !this.speed() ) return null
 
+			this.state()
+			
+			return new this.$.$mol_after_timeout( 1000 / this.speed() || 0 , this.step.bind( this ) )
+		}
+
+		@ $mol_fiber_solid.method
+		step() {
+			
 			let prev = this.state()
-
-			if( !this.speed() ) return prev
-			
-			this.$.$mol_state_time.now( 1000 / this.speed() )
-			
+		
 			const state = new Set<number>()
 			const skip = new Set<number>()
 
@@ -50,23 +56,24 @@ namespace $.$$ {
 				}
 
 			}
-			
-			return this.state( state )
+
+			this.state( state )
+
 		}
 
 		@ $mol_mem
 		population() {
-			return this.future().size
+			return this.state().size
 		}
 
 		@ $mol_mem
 		points_x() {
-			return [ ... this.future().keys() ].map(key => $mol_coord_high( key ))
+			return [ ... this.state().keys() ].map(key => $mol_coord_high( key ))
 		}
 
 		@ $mol_mem
 		points_y() {
-			return [ ... this.future().keys() ].map(key => $mol_coord_low( key ))
+			return [ ... this.state().keys() ].map(key => $mol_coord_low( key ))
 		}
 
 		@ $mol_mem
@@ -109,6 +116,11 @@ namespace $.$$ {
 		@ $mol_mem
 		pan( next? : number[] ) {
 			return next || this.size_real().map( v => v / 2 )
+		}
+
+		dom_tree() {
+			this.cycle()
+			return super.dom_tree()
 		}
 		
 	}

@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	formula( id : any , val? : any , force? : $mol_atom_force ) {
+	formula( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -18,7 +18,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	head() {
-		return [].concat( this.Title_edit() , this.Tools() )
+		return [ this.Title_edit() , this.Tools() ] as readonly any[]
 	}
 
 	/**
@@ -40,7 +40,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	title( val? : any , force? : $mol_atom_force ) {
+	title( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : this.$.$mol_locale.text( "$mol_app_calc_title" )
 	}
 
@@ -50,7 +50,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [].concat( this.Download() )
+		return [ this.Download() ] as readonly any[]
 	}
 
 	/**
@@ -70,7 +70,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 			obj.file_name = () => this.download_file()
 			obj.uri = () => this.download_uri()
 			obj.click = ( event? : any ) => this.download_generate( event )
-			obj.sub = () => [].concat( this.Download_icon() )
+			obj.sub = () => [ this.Download_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -99,7 +99,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	download_uri( val? : any , force? : $mol_atom_force ) {
+	download_uri( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -109,7 +109,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	download_generate( event? : any , force? : $mol_atom_force ) {
+	download_generate( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -135,7 +135,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Head() , this.Body() , this.Hint() , this.Current() )
+		return [ this.Head() , this.Body() , this.Hint() , this.Current() ] as readonly any[]
 	}
 
 	/**
@@ -164,7 +164,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	col_ids() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -173,7 +173,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	row_ids() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -182,7 +182,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	head_cells() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -191,7 +191,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	cells( row : any ) {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -229,7 +229,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	@ $mol_mem
 	Current() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Pos() , this.Edit_current() , this.Hint_trigger() )
+			obj.sub = () => [ this.Pos() , this.Edit_current() , this.Hint_trigger() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -256,7 +256,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	pos( val? : any , force? : $mol_atom_force ) {
+	pos( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "A1"
 	}
 
@@ -294,7 +294,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	hint_showed( val? : any , force? : $mol_atom_force ) {
+	hint_showed( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -337,7 +337,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	Col_head( id : any ) {
 		return (( obj )=>{
 			obj.dom_name = () => "th"
-			obj.sub = () => [].concat( this.col_title(id) )
+			obj.sub = () => [ this.col_title(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_float(  ) )
 	}
@@ -362,7 +362,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	Row_head( id : any ) {
 		return (( obj )=>{
 			obj.dom_name = () => "th"
-			obj.sub = () => [].concat( this.row_title(id) )
+			obj.sub = () => [ this.row_title(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_float(  ) )
 	}
@@ -407,7 +407,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	selected( id : any , val? : any , force? : $mol_atom_force ) {
+	selected( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -417,7 +417,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	plugins() {
-		return [].concat( this.Nav() )
+		return [ this.Nav() ] as readonly any[]
 	}
 
 	/**
@@ -448,7 +448,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	current_col( val? : any , force? : $mol_atom_force ) {
+	current_col( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "A"
 	}
 
@@ -458,7 +458,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	current_row( val? : any , force? : $mol_atom_force ) {
+	current_row( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 1
 	}
 
@@ -479,7 +479,7 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	paste( event? : any , force? : $mol_atom_force ) {
+	paste( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -502,7 +502,7 @@ namespace $ { export class $mol_app_calc_cell extends $mol_button {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.value() )
+		return [ this.value() ] as readonly any[]
 	}
 
 	/**
@@ -536,7 +536,7 @@ namespace $ { export class $mol_app_calc_cell extends $mol_button {
 	 *  ```
 	 **/
 	@ $mol_mem
-	selected( val? : any , force? : $mol_atom_force ) {
+	selected( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -546,7 +546,7 @@ namespace $ { export class $mol_app_calc_cell extends $mol_button {
 	 *  ```
 	 **/
 	@ $mol_mem
-	type( val? : any , force? : $mol_atom_force ) {
+	type( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 

@@ -75,7 +75,7 @@ namespace $ {
 			@ $mol_class
 			class Task {
 
-				@ $mol_atom2_prop
+				@ $mol_mem
 				title( next? : string ) { return next || 'foo' }
 				
 			}
@@ -83,10 +83,10 @@ namespace $ {
 			@ $mol_class
 			class App extends $mol_jsx_view {
 				
-				@ $mol_atom2_prop
+				@ $mol_mem
 				task() { return new Task }
 
-				@ $mol_atom2_prop
+				@ $mol_mem
 				valueOf() {
 					return super.valueOf()
 				}

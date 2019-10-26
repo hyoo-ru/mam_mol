@@ -74,7 +74,8 @@ namespace $ {
 				}
 			}
 
-			const native = $mol_dom_context.fetch || $node['node-fetch']
+			let native = $mol_dom_context.fetch
+			if( !native ) native = $node['node-fetch']
 		
 			return native( input , init )
 

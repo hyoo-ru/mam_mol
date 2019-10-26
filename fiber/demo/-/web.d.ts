@@ -33,7 +33,7 @@ declare namespace $ {
         static wrap: (task: (...ags: any[]) => any) => (...ags: any[]) => any;
         static run<Result>(task: () => Result): Result;
         static func<Args extends any[], Result, Host = void>(func: (this: Host, ...args: Args) => Result): (this: Host, ...args: Args) => Result;
-        static readonly class: <Args extends any[], Result extends object>(Class: new (...args: Args) => Result) => new (...args: Args) => Result;
+        static readonly class: <Class extends new (...args: any[]) => any>(Class: Class) => Class;
         static readonly method: <Host, Field extends keyof Host, Args extends any[], Result>(obj: Host, name: Field, descr: TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>) => TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>;
     }
 }
@@ -67,6 +67,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_maybe<Value>(value: Value | null | undefined): Value[];
+}
+
+declare namespace $ {
     function $mol_log(path: any, ...values: any[]): void;
 }
 
@@ -88,12 +92,14 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_log2 extends $mol_wrapper {
+        readonly host: any;
+        readonly id: string;
         readonly args: any[];
         static current: $mol_log2;
         static wrap<This extends {
             $: $mol_ambient_context;
         }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
-        constructor(id: string, args: any[]);
+        constructor(host: any, id: string, args: any[]);
         stream: $mol_log2_line[];
         flush(): void;
         info(...values: any[]): void;
@@ -112,6 +118,12 @@ declare namespace $ {
          * 	$mol_log2.excludes = null
          */
         static excludes: RegExp[];
+        static prefix: any[];
+    }
+    class $mol_log2_indent extends $mol_wrapper {
+        static wrap<This extends {
+            $: $mol_ambient_context;
+        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
     }
     class $mol_log2_table extends $mol_log2 {
     }
@@ -125,6 +137,7 @@ declare namespace $ {
         constructor(...items: any[]);
     }
     let $mol_log2_token_empty: $mol_log2_token;
+    let $mol_log2_token_indent: $mol_log2_token;
     let $mol_log2_legend: $mol_log2_table;
 }
 
@@ -187,6 +200,7 @@ declare namespace $ {
         static wrap<This, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
         static quant: number;
         static deadline: number;
+        static liveline: number;
         static current: $mol_fiber<any>;
         static scheduled: $mol_after_frame;
         static queue: (() => PromiseLike<any>)[];
@@ -278,9 +292,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_dom_render_children(el: Element, childNodes: NodeList | readonly (Node | string | number | boolean | {
-        dom_tree: () => Node;
-    })[]): void;
+    function $mol_dom_render_children(el: Element, childNodes: NodeList | Array<Node | string | null>): void;
 }
 
 declare namespace $ {

@@ -21,7 +21,7 @@ namespace $.$$ {
 			return `${ vert }_${ hor }`
 		}
 
-		keydown( event? : KeyboardEvent ) {
+		keydown( event : KeyboardEvent ) {
 
 			if( event.defaultPrevented ) return 
 			

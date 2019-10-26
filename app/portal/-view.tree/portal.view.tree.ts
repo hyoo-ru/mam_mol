@@ -9,7 +9,6 @@ namespace $ { export class $mol_app_portal extends $mol_book {
 	 *  	minimal_width 200
 	 *  	body /
 	 *  		<= Habhub_link
-	 *  		<= Files_link
 	 *  		<= Supplies_link
 	 *  ```
 	 **/
@@ -20,7 +19,7 @@ namespace $ { export class $mol_app_portal extends $mol_book {
 			obj.tools = () => this.tools_root()
 			obj.title = () => this.menu_title()
 			obj.minimal_width = () => 200
-			obj.body = () => [].concat( this.Habhub_link() , this.Files_link() , this.Supplies_link() )
+			obj.body = () => [ this.Habhub_link() , this.Supplies_link() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
 	}
@@ -31,7 +30,7 @@ namespace $ { export class $mol_app_portal extends $mol_book {
 	 *  ```
 	 **/
 	tools_root() {
-		return [].concat( this.Sources() )
+		return [ this.Sources() ] as readonly any[]
 	}
 
 	/**
@@ -79,24 +78,6 @@ namespace $ { export class $mol_app_portal extends $mol_book {
 
 	/**
 	 *  ```
-	 *  Files_link $mol_link
-	 *  	title <= files_title
-	 *  	arg * app \files
-	 *  ```
-	 **/
-	@ $mol_mem
-	Files_link() {
-		return (( obj )=>{
-			obj.title = () => this.files_title()
-			obj.arg = () => ({
-			"app" :  "files" ,
-		})
-			return obj
-		})( new this.$.$mol_link(  ) )
-	}
-
-	/**
-	 *  ```
 	 *  Supplies_link $mol_link
 	 *  	title <= supplies_title
 	 *  	arg * app \supplies
@@ -126,7 +107,7 @@ namespace $ { export class $mol_app_portal extends $mol_book {
 			obj.arg = () => ({
 			"app" :  null as any ,
 		})
-			obj.sub = () => [].concat( this.Close_app_icon() )
+			obj.sub = () => [ this.Close_app_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -147,12 +128,11 @@ namespace $ { export class $mol_app_portal extends $mol_book {
 	 *  ```
 	 *  pages /
 	 *  	<= Habhub_app
-	 *  	<= Files_app
 	 *  	<= Supplies_app
 	 *  ```
 	 **/
 	pages() {
-		return [].concat( this.Habhub_app() , this.Files_app() , this.Supplies_app() )
+		return [ this.Habhub_app() , this.Supplies_app() ] as readonly any[]
 	}
 
 	habhub_title() {
@@ -171,32 +151,9 @@ namespace $ { export class $mol_app_portal extends $mol_book {
 	Habhub_app() {
 		return (( obj )=>{
 			obj.event_front_up = ( event? : any ) => this.event_front_up( event )
-			obj.tools_root = () => [].concat( this.Close_app() )
+			obj.tools_root = () => [ this.Close_app() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_app_habhub(  ) )
-	}
-
-	files_title() {
-		return this.Files_app().title_root(  )
-	}
-
-	/**
-	 *  ```
-	 *  Files_app $mol_app_files
-	 *  	event_front_up?event <=> event_front_up?event
-	 *  	title_root => files_title
-	 *  	tools_root / <= Close_app
-	 *  	uri_root_default \https://ajaxexplorer.com:443/User5df12c6/
-	 *  ```
-	 **/
-	@ $mol_mem
-	Files_app() {
-		return (( obj )=>{
-			obj.event_front_up = ( event? : any ) => this.event_front_up( event )
-			obj.tools_root = () => [].concat( this.Close_app() )
-			obj.uri_root_default = () => "https://ajaxexplorer.com:443/User5df12c6/"
-			return obj
-		})( new this.$.$mol_app_files(  ) )
 	}
 
 	supplies_title() {
@@ -215,7 +172,7 @@ namespace $ { export class $mol_app_portal extends $mol_book {
 	Supplies_app() {
 		return (( obj )=>{
 			obj.event_front_up = ( event? : any ) => this.event_front_up( event )
-			obj.tools_root = () => [].concat( this.Close_app() )
+			obj.tools_root = () => [ this.Close_app() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_app_supplies(  ) )
 	}

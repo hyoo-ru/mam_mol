@@ -95,7 +95,7 @@ namespace $ {
 							pi PI
 						out tree pi
 					case tree float 3.14
-				tree test
+				test
 					name \\define and use custom macro with arguments
 					case jack
 						let tree tail head reversed from

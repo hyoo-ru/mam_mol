@@ -12,7 +12,7 @@ $mol_app_life $mol_page
 				1 <= time_slowest_label @ \Slowest
 				5 <= time_slow_label @ \Slow
 				25 <= time_fast_label @ \Fast
-				60 <= time_fastest_label @ \Fastest
+				1000 <= time_fastest_label @ \Fastest
 	-
 	sub /
 		<= Head

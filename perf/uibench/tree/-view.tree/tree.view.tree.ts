@@ -29,7 +29,7 @@ namespace $ { export class $mol_perf_uibench_tree extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Root() )
+		return [ this.Root() ] as readonly any[]
 	}
 
 	/**
@@ -176,7 +176,7 @@ namespace $ { export class $mol_perf_uibench_tree_leaf extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.text() )
+		return [ this.text() ] as readonly any[]
 	}
 
 	/**

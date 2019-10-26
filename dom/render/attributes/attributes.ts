@@ -2,7 +2,7 @@ namespace $ {
 	
 	export function $mol_dom_render_attributes (
 		el : Element ,
-		attrs : { [ key : string ] : string|number|boolean }
+		attrs : { [ key : string ] : string|number|boolean|null }
 	) {
 		for( let name in attrs ) {
 			let val = attrs[ name ] as any

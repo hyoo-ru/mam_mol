@@ -18,7 +18,7 @@ namespace $ { export class $mol_cost extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Prefix() , this.Value() , this.Postfix() )
+		return [ this.Prefix() , this.Value() , this.Postfix() ] as readonly any[]
 	}
 
 	/**
@@ -29,7 +29,7 @@ namespace $ { export class $mol_cost extends $mol_view {
 	@ $mol_mem
 	Prefix() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.prefix() )
+			obj.sub = () => [ this.prefix() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -51,7 +51,7 @@ namespace $ { export class $mol_cost extends $mol_view {
 	@ $mol_mem
 	Value() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.value_view() )
+			obj.sub = () => [ this.value_view() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -73,7 +73,7 @@ namespace $ { export class $mol_cost extends $mol_view {
 	@ $mol_mem
 	Postfix() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.postfix() )
+			obj.sub = () => [ this.postfix() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

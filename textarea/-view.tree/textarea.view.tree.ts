@@ -17,7 +17,7 @@ namespace $ { export class $mol_textarea extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	press( event? : any , force? : $mol_atom_force ) {
+	press( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -29,7 +29,7 @@ namespace $ { export class $mol_textarea extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Edit() , this.View() )
+		return [ this.Edit() , this.View() ] as readonly any[]
 	}
 
 	/**
@@ -60,7 +60,7 @@ namespace $ { export class $mol_textarea extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value( val? : any , force? : $mol_atom_force ) {
+	value( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 

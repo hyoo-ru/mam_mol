@@ -17,7 +17,7 @@ namespace $ { export class $mol_switch_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Enabled() , this.Disabled() )
+		return [ this.Enabled() , this.Disabled() ] as readonly any[]
 	}
 
 	/**
@@ -49,7 +49,7 @@ namespace $ { export class $mol_switch_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	color( val? : any , force? : $mol_atom_force ) {
+	color( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "red"
 	}
 

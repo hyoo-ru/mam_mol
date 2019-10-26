@@ -13,7 +13,7 @@ $mol_button $mol_view
 		role \button
 		tabindex <= tab_index 0
 		title <= hint \
-	sub /
+	sub /$mol_view_content
 		<= title
 
 $mol_button_typed $mol_button
@@ -27,18 +27,15 @@ $mol_button_minor $mol_button_typed
 
 $mol_scroll $mol_view
 	minimal_height 0
-	moving_hor?val false
-	moving_vert?val false
 	field *
 		^
 		scrollTop <= scroll_top?val 0
 		scrollLeft <= scroll_left?val 0
 		scrollBottom <= scroll_bottom?val 0
 		scrollRight <= scroll_right?val 0
-	event_async *
+	event *
 		^
 		scroll?event <=> event_scroll?event null
-		- DOMSubtreeModified?event <=> event_repos?event null
 	Strut $mol_view
 		style *
 			transform <= strut_transform \
@@ -53,13 +50,13 @@ $mol_page $mol_view
 						<= title
 					event_click?val <=> event_top?val null
 				<= Tools $mol_view
-					sub <= tools /
+					sub <= tools /$mol_view_content
 		<= Body $mol_scroll
 			scroll_top?val <=> body_scroll_top?val 0
-			sub <= body /
+			sub <= body /$mol_view_content
 		<= Foot $mol_view
 			attr * mol_theme \$mol_theme_base
-			sub <= foot /
+			sub <= foot /$mol_view
 
 $mol_string $mol_view
 	dom_name \input
@@ -93,7 +90,8 @@ $mol_link $mol_view
 		target <= target \_self
 		download <= file_name \
 		mol_link_current <= current false
-	sub / <= title
+	sub /$mol_view_content
+		<= title
 	arg *
 	event *
 		^
@@ -165,13 +163,13 @@ $mol_check_expand $mol_check
 $mol_dimmer $mol_view
 	haystack \
 	needle \
-	sub <= parts /
+	sub <= parts /$mol_view_content
 	Low!id $mol_view
 		sub /
 			<= string!id \
 
 $mol_grid $mol_scroll
-	row_ids /
+	row_ids /string[]
 	row_id!index null
 	col_ids /
 	records *
@@ -182,31 +180,27 @@ $mol_grid $mol_scroll
 	sub /
 		<= Table $mol_grid_table
 			offset <= gap_top 0
-			sub /
-				<= rows_visible /
+			sub <= rows_visible /$mol_view
 	rows /
 	Head $mol_grid_row
 		height <= row_height 40
-		cells <= head_cells /
+		cells <= head_cells /$mol_view
 	Row!id $mol_grid_row
 		height <= row_height 40
-		cells <= cells!id /
+		cells <= cells!id /$mol_view
 	-
 	Cell!id $mol_view
 	cell!id null
 	Cell_text!id $mol_grid_cell
-		sub /
-			<= cell_content_text!id <= cell_content!id /
+		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
 	Cell_number!id $mol_grid_number
-		sub /
-			<= cell_content_number!id <= cell_content!id /
+		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
 	Col_head!id $mol_float
 		dom_name \th
-		sub /
-			<= col_head_content!id /
+		sub <= col_head_content!id /$mol_view_content
 	Cell_branch!id $mol_check_expand
 		level <= cell_level!id 0
-		label <= cell_content!id /
+		label <= cell_content!id /$mol_view_content
 		expanded?val <=> cell_expanded!id?val false
 	Cell_content!id /
 		<= Cell_dimmer!id $mol_dimmer
@@ -229,7 +223,7 @@ $mol_grid_row $mol_view
 	style *
 		^
 		height <= height 40
-	sub <= cells /
+	sub <= cells /$mol_view
 
 $mol_grid_cell $mol_view
 	dom_name \td
@@ -237,7 +231,7 @@ $mol_grid_cell $mol_view
 $mol_grid_number $mol_grid_cell
 
 $mol_list $mol_view
-	sub <= rows /
+	sub <= rows /$mol_view
 	Empty null
 
 $mol_image $mol_view
@@ -251,14 +245,14 @@ $mol_link_iconed $mol_link
 	sub /
 		<= Icon $mol_image
 			uri <= icon \
-		<= content /
-			<= title <= uri
+	content /
+		<= title <= uri
 	host \
 
 $mol_text $mol_list
 	uri_base \
 	text \
-	tokens /
+	tokens /$mol_syntax_token
 	Quote!id $mol_text
 		text <= quote_text!id \
 	Row!id $mol_text_row
@@ -336,12 +330,6 @@ $mol_textarea $mol_view
 $mol_check_icon $mol_check
 
 $mol_icon_hint $mol_icon path \M10,19H13V22H10V19M12,2C17.35,2.22 19.68,7.62 16.5,11.67C15.67,12.67 14.33,13.33 13.67,14.17C13,15 13,16 13,17H10C10,15.33 10,13.92 10.67,12.92C11.33,11.92 12.67,11.33 13.5,10.67C15.92,8.43 15.32,5.26 12,5A3,3 0 0,0 9,8H6A6,6 0 0,1 12,2Z
-
-$mol_plugin $mol_object
-	dom_node null
-	attr_static *
-	event *
-	event_async *
 
 $mol_nav $mol_plugin
 	cycle?val false

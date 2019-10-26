@@ -15,7 +15,7 @@ namespace $ { export class $mol_attach_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Filled() )
+		return [ this.Filled() ] as readonly any[]
 	}
 
 	/**
@@ -40,8 +40,8 @@ namespace $ { export class $mol_attach_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	filled_items( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat( this.Item1() , this.Item2() , this.Item3() )
+	filled_items( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [ this.Item1() , this.Item2() , this.Item3() ] as readonly any[]
 	}
 
 	/**

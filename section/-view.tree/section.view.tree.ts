@@ -8,29 +8,29 @@ namespace $ { export class $mol_section extends $mol_list {
 	 *  ```
 	 **/
 	rows() {
-		return [].concat( this.Head() , this.Content() )
+		return [ this.Head() , this.Content() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
-	 *  Head $mol_view sub / <= head
+	 *  Head $mol_view sub <= head
 	 *  ```
 	 **/
 	@ $mol_mem
 	Head() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.head() )
+			obj.sub = () => this.head()
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  head null
+	 *  head /
 	 *  ```
 	 **/
 	head() {
-		return null as any
+		return [  ] as readonly any[]
 	}
 
 	/**

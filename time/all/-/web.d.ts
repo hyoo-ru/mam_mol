@@ -57,13 +57,13 @@ declare namespace $ {
     };
     class $mol_time_moment extends $mol_time_base {
         constructor(config?: $mol_time_moment_config);
-        readonly year: number;
-        readonly month: number;
-        readonly day: number;
-        readonly hour: number;
-        readonly minute: number;
-        readonly second: number;
-        readonly offset: $mol_time_duration;
+        readonly year: number | undefined;
+        readonly month: number | undefined;
+        readonly day: number | undefined;
+        readonly hour: number | undefined;
+        readonly minute: number | undefined;
+        readonly second: number | undefined;
+        readonly offset: $mol_time_duration | undefined;
         readonly weekday: number;
         private _native;
         readonly native: Date;

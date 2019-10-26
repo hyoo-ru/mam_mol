@@ -70,7 +70,7 @@ namespace $ { export class $mol_plot_ruler extends $mol_plot_graph {
 	 *  ```
 	 **/
 	axis_points() {
-		return [].concat(  ) as readonly ( number )[]
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -79,7 +79,7 @@ namespace $ { export class $mol_plot_ruler extends $mol_plot_graph {
 	 *  ```
 	 **/
 	@ $mol_mem
-	normalize( val? : any , force? : $mol_atom_force ) {
+	normalize( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -102,7 +102,7 @@ namespace $ { export class $mol_plot_ruler extends $mol_plot_graph {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Background() , this.Curve() , this.labels_formatted() , this.Title() )
+		return [ this.Background() , this.Curve() , this.labels_formatted() , this.Title() ] as readonly any[]
 	}
 
 	/**
@@ -189,7 +189,7 @@ namespace $ { export class $mol_plot_ruler extends $mol_plot_graph {
 	 *  ```
 	 **/
 	labels_formatted() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -265,7 +265,7 @@ namespace $ { export class $mol_plot_ruler extends $mol_plot_graph {
 	 *  ```
 	 **/
 	label_pos( index : any ) {
-		return [].concat( this.label_pos_x(index) , this.label_pos_y(index) )
+		return [ this.label_pos_x(index) , this.label_pos_y(index) ] as readonly any[]
 	}
 
 	/**

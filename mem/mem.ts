@@ -1,97 +1,69 @@
 namespace $ {
-	
-	export function $mol_mem< Host , Value >(
-		obj : Host ,
-		name : string ,
-		descr : TypedPropertyDescriptor< ( next? : Value , force? : $mol_atom_force )=> Value >
-	) {
 
-		const value = descr.value!
-		const store = new WeakMap< Object , $mol_atom<Value> >()
+	export function $mol_mem<
+		Host extends object ,
+		Field extends keyof Host ,
+		Value ,
+	>(
+		proto : Host ,
+		name : Field ,
+		descr? : TypedPropertyDescriptor< ( next? : Value , force? : $mol_mem_force )=> Value >
+	) : any {
+
+		const value = descr!.value!
 		
-		descr.value = function $mol_mem_value( next? : Value , force? : $mol_atom_force ) {
-			const host : any = this
-		
-			let atom = store.get( host )
-			if( !atom ) {
-				
-				const id = `${ host }.${ name }()`
-				atom = new $mol_atom<Value>( id , function( ... args : any[] ) {
-					const v = value.call( host , ... args )
-					if( v instanceof $mol_object ) {
-						if( !v.object_host() ) {
-							v.object_host( host )
-							v.object_field( name )
-							v.object_id( id )
-						}
-					}
-					return v
-				} )
+		const store = new WeakMap< Host , $mol_atom2< Value > >()
 
-				atom.object_owner( host )
-				
-				const destructor = atom.destructor
-				atom.destructor = ()=> {
-					store.delete( host )
-					destructor.call( atom )
-				}
-
-				store.set( host , atom )
+		Object.defineProperty( proto , name + "()" , {
+			get : function() {
+				return store.get( this )
 			}
+		} )
+
+		const get_cache = ( host : Host )=> {
 			
-			return atom.value( next , force )
+			let cache = store.get( host )!
+			if( cache ) return cache
+
+			let cache2 = new $mol_atom2
+			cache2.calculate = value.bind( host )
+			cache2[ Symbol.toStringTag ] = `${ host }.${ name }()`
+			cache2.abort = ()=> {
+				store.delete( host )
+				cache2.forget()
+				return true
+			}
+			$mol_owning_catch( host , cache2 )
+			cache2[ $mol_object_field ] = name
+			store.set( host , cache2 )
+
+			return cache2
 		}
 		
-		Object.defineProperty( obj , name + "()" , { get : function() { return store.get( this ) } } )
-
-		descr.value[ 'value' ] = value
-	}
-
-	export function $mol_mem_key< Host , Key , Value >(
-		obj : Host ,
-		name : string ,
-		descr : TypedPropertyDescriptor< ( key : Key , next? : Value , force? : $mol_atom_force )=> Value >
-	) {
-		const value = descr.value!
-		const store = new WeakMap< Object , Map< any , $mol_atom<Value> > >()
-		
-		descr.value = function $mol_mem_key_value( key : Key , next? : Value , force? : $mol_atom_force ) {
-			const host : any = this
+		return {
 			
-			let dict = store.get( host )
-			if( !dict ) store.set( host , dict = new $mol_dict )
-			
-			let atom = dict.get( key )
-			if( !atom ) {
+			value( this : Host , next? : Value , force? : $mol_mem_force ) {
 				
-				const id = `${ host }.${ name }(${ JSON.stringify( key ) })`
-				atom = new $mol_atom<Value>( id , function( ... args: any[] ) {
-					const v = value.call( host , key , ... args )
-					if( v instanceof $mol_object ) {
-						if( !v.object_host() ) {
-							v.object_host( host )
-							v.object_field( name )
-							v.object_id( id )
-						}
-					}
-					return v
-				} )
-
-				const destructor = atom.destructor
-				atom.destructor = ()=> {
-					dict!.delete( key )
-					destructor.call( atom )
+				if( next === undefined ) {
+					
+					const cache = get_cache( this )
+					if( force === $mol_mem_force_cache ) cache.obsolete( Number.NaN )
+					
+					if( $mol_atom2.current ) return cache.get()
+					else return $mol_fiber.run( ()=> cache.get() )
+				
 				}
-
-				dict.set( key , atom )
-
+				
+				return $mol_fiber.run( ()=> {
+					if( force === $mol_mem_force_fail ) return get_cache( this ).fail( next as any )
+					if( force !== $mol_mem_force_cache ) next = value.call( this , next )
+					return get_cache( this ).put( next )
+				} )
+				
 			}
-			
-			return atom.value( next , force )
+
 		}
-		
-		Object.defineProperty( obj , name + "()" , { get : function() { return store.get( this ) } } )
-		void( ( descr.value as any )[ 'value' ] = value )
+
 	}
 	
 }

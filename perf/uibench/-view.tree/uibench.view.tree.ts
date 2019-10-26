@@ -23,7 +23,7 @@ namespace $ { export class $mol_perf_uibench extends $mol_scroll {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Table() , this.Anim() , this.Tree() )
+		return [ this.Table() , this.Anim() , this.Tree() ] as readonly any[]
 	}
 
 	/**

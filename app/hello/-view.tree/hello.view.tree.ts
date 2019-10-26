@@ -8,7 +8,7 @@ namespace $ { export class $mol_app_hello extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Name() , this.Greeting() )
+		return [ this.Name() , this.Greeting() ] as readonly any[]
 	}
 
 	/**
@@ -42,7 +42,7 @@ namespace $ { export class $mol_app_hello extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	name( val? : any , force? : $mol_atom_force ) {
+	name( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -54,7 +54,7 @@ namespace $ { export class $mol_app_hello extends $mol_view {
 	@ $mol_mem
 	Greeting() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.greeting() )
+			obj.sub = () => [ this.greeting() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

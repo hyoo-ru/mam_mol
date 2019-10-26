@@ -17,21 +17,21 @@ namespace $ { export class $mol_labeler_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Provider() , this.Name() )
+		return [ this.Provider() , this.Name() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
 	 *  Provider $mol_labeler
 	 *  	title \Provider
-	 *  	content \ACME Provider Inc.
+	 *  	content / \ACME Provider Inc.
 	 *  ```
 	 **/
 	@ $mol_mem
 	Provider() {
 		return (( obj )=>{
 			obj.title = () => "Provider"
-			obj.content = () => "ACME Provider Inc."
+			obj.content = () => [ "ACME Provider Inc." ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -74,7 +74,7 @@ namespace $ { export class $mol_labeler_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	user_name( val? : any , force? : $mol_atom_force ) {
+	user_name( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 

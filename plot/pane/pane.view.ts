@@ -74,10 +74,10 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		scale(next?: readonly [number, number], force?: $mol_atom_force) {
+		scale(next?: readonly [number, number], force?: $mol_mem_force) {
 			if (next === undefined) {
 				if (!this.graph_touched) return this.scale_default()
-				next = $mol_atom_current()['value()'] || this.scale_default()
+				next = $mol_atom2_value( ()=> this.scale() ) || this.scale_default()
 			}
 			this.graph_touched = true
 
@@ -120,20 +120,22 @@ namespace $.$$ {
 		graph_touched: boolean = false
 
 		@ $mol_mem
-		shift(next?: readonly [number, number], force?: $mol_atom_force) {
+		shift(next?: readonly [number, number], force?: $mol_mem_force) {
+
 			if (next === undefined) {
 				if (!this.graph_touched) return this.shift_default()
-				next = $mol_atom_current()['value()'] || this.shift_default()
+				next = $mol_atom2_value( ()=> this.shift() ) || this.shift_default()
 			}
+
 			this.graph_touched = true
 
-			return new this.$.$mol_vector_2d( ...next ).limited(this.shift_limit())
+			return new this.$.$mol_vector_2d( ...next! ).limited(this.shift_limit())
 		}
 
 		reset(event?: Event) {
 			this.graph_touched = false
-			this.scale(this.scale_default(), $mol_atom_force_cache)
-			this.shift(this.shift_default(), $mol_atom_force_cache)
+			this.scale(this.scale_default(), $mol_mem_force_cache)
+			this.shift(this.shift_default(), $mol_mem_force_cache)
 		}
 
 		@ $mol_mem
@@ -164,7 +166,7 @@ namespace $.$$ {
 		@ $mol_mem
 		graphs_sorted() {
 			const graphs = this.graphs_colored()
-			const sorted = []
+			const sorted = [] as $.$mol_svg[]
 			
 			for( let graph of graphs ) sorted.push(...graph.back())
 			for( let graph of graphs ) sorted.push(...graph.front())

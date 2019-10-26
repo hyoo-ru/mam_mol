@@ -18,7 +18,7 @@ namespace $ { export class $mol_portion_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Empty() , this.Partial() , this.Full() )
+		return [ this.Empty() , this.Partial() , this.Full() ] as readonly any[]
 	}
 
 	/**

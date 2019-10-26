@@ -1,30 +1,21 @@
 $mol_scroll $mol_view
 	minimal_height 0
-	moving_hor?val false
-	moving_vert?val false
 	field *
 		^
 		scrollTop <= scroll_top?val 0
 		scrollLeft <= scroll_left?val 0
 		scrollBottom <= scroll_bottom?val 0
 		scrollRight <= scroll_right?val 0
-	event_async *
+	event *
 		^
 		scroll?event <=> event_scroll?event null
-		- DOMSubtreeModified?event <=> event_repos?event null
 	Strut $mol_view
 		style *
 			transform <= strut_transform \
 
 $mol_list $mol_view
-	sub <= rows /
+	sub <= rows /$mol_view
 	Empty null
-
-$mol_plugin $mol_object
-	dom_node null
-	attr_static *
-	event *
-	event_async *
 
 $mol_meter $mol_plugin
 	zoom 1
@@ -40,7 +31,7 @@ $mol_meter $mol_plugin
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
 	showed?val false
-	plugins /
+	plugins /$mol_plugin
 		<= Meter $mol_meter
 			top => top
 			bottom => bottom
@@ -50,11 +41,11 @@ $mol_pop $mol_view
 		<= Anchor null
 		<= Bubble $mol_pop_bubble
 			align <= align \bottom_center
-			content <= bubble_content /
+			content <= bubble_content /$mol_view_content
 			height_max <= height_max 9999
 
 $mol_pop_bubble $mol_scroll
-	sub <= content /
+	sub <= content /$mol_view_content
 	style *
 		^
 		maxHeight <= height_max 9999
@@ -79,7 +70,7 @@ $mol_perf_dbmon $mol_scroll
 		<= Databases $mol_list
 			rows <= databases /
 	Database!id $mol_view
-		sub /
+		sub <= database!id /
 			<= Name!id $mol_view
 				sub /
 					<= name!id \

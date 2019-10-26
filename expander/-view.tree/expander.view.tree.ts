@@ -8,20 +8,20 @@ namespace $ { export class $mol_expander extends $mol_list {
 	 *  ```
 	 **/
 	rows() {
-		return [].concat( this.Label() , this.Content() )
+		return [ this.Label() , this.Content() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
 	 *  Label $mol_view sub /
 	 *  	<= Trigger
-	 *  	<= tools
+	 *  	<= Tools
 	 *  ```
 	 **/
 	@ $mol_mem
 	Label() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Trigger() , this.tools() )
+			obj.sub = () => [ this.Trigger() , this.Tools() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -48,7 +48,7 @@ namespace $ { export class $mol_expander extends $mol_list {
 	 *  ```
 	 **/
 	@ $mol_mem
-	expanded( val? : any , force? : $mol_atom_force ) {
+	expanded( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -58,16 +58,16 @@ namespace $ { export class $mol_expander extends $mol_list {
 	 *  ```
 	 **/
 	label() {
-		return [].concat( this.title() )
+		return [ this.title() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
-	 *  tools /
+	 *  Tools null
 	 *  ```
 	 **/
-	tools() {
-		return [].concat(  )
+	Tools() {
+		return null as any
 	}
 
 	/**
@@ -89,7 +89,7 @@ namespace $ { export class $mol_expander extends $mol_list {
 	 *  ```
 	 **/
 	content() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 } }

@@ -2,13 +2,11 @@ namespace $ { export class $mol_link_iconed extends $mol_link {
 
 	/**
 	 *  ```
-	 *  sub /
-	 *  	<= Icon
-	 *  	<= content
+	 *  sub / <= Icon
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Icon() , this.content() )
+		return [ this.Icon() ] as readonly any[]
 	}
 
 	/**
@@ -39,7 +37,7 @@ namespace $ { export class $mol_link_iconed extends $mol_link {
 	 *  ```
 	 **/
 	content() {
-		return [].concat( this.title() )
+		return [ this.title() ] as readonly any[]
 	}
 
 	/**

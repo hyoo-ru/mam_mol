@@ -21,7 +21,7 @@ namespace $ { export class $mol_check_box_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Labeled_base() , this.Labeled_checked() , this.Labeled_disabled() , this.Alone_base() , this.Alone_checked() , this.Alone_disabled() )
+		return [ this.Labeled_base() , this.Labeled_checked() , this.Labeled_disabled() , this.Alone_base() , this.Alone_checked() , this.Alone_disabled() ] as readonly any[]
 	}
 
 	/**
@@ -46,7 +46,7 @@ namespace $ { export class $mol_check_box_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	base_checked( val? : any , force? : $mol_atom_force ) {
+	base_checked( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -90,7 +90,7 @@ namespace $ { export class $mol_check_box_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	checked_checked( val? : any , force? : $mol_atom_force ) {
+	checked_checked( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : true
 	}
 

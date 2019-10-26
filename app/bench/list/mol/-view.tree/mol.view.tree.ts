@@ -6,18 +6,18 @@ namespace $ { export class $mol_app_bench_list_mol extends $mol_scroll {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.List() )
+		return [ this.List() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
-	 *  List $mol_list rows / <= rows
+	 *  List $mol_list rows <= rows
 	 *  ```
 	 **/
 	@ $mol_mem
 	List() {
 		return (( obj )=>{
-			obj.rows = () => [].concat( this.rows() )
+			obj.rows = () => this.rows()
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}
@@ -28,7 +28,7 @@ namespace $ { export class $mol_app_bench_list_mol extends $mol_scroll {
 	 *  ```
 	 **/
 	rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -55,7 +55,7 @@ namespace $ { export class $mol_app_bench_list_mol extends $mol_scroll {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	row_selected( id : any , val? : any , force? : $mol_atom_force ) {
+	row_selected( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -87,7 +87,7 @@ namespace $ { export class $mol_app_bench_list_mol_row extends $mol_check {
 	 *  ```
 	 **/
 	@ $mol_mem
-	selected( val? : any , force? : $mol_atom_force ) {
+	selected( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -108,7 +108,7 @@ namespace $ { export class $mol_app_bench_list_mol_row extends $mol_check {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Title() , this.Content() )
+		return [ this.Title() , this.Content() ] as readonly any[]
 	}
 
 	/**
@@ -119,7 +119,7 @@ namespace $ { export class $mol_app_bench_list_mol_row extends $mol_check {
 	@ $mol_mem
 	Title() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.title() )
+			obj.sub = () => [ this.title() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -141,7 +141,7 @@ namespace $ { export class $mol_app_bench_list_mol_row extends $mol_check {
 	@ $mol_mem
 	Content() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.content() )
+			obj.sub = () => [ this.content() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

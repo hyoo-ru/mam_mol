@@ -15,7 +15,7 @@ namespace $ { export class $mol_svg_text extends $mol_svg {
 	 *  ```
 	 **/
 	pos() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -69,7 +69,7 @@ namespace $ { export class $mol_svg_text extends $mol_svg {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.text() )
+		return [ this.text() ] as readonly any[]
 	}
 
 	/**

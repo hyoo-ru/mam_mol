@@ -17,6 +17,10 @@ namespace $.$$ {
 			return decodeURIComponent( this.uri().split( this.host() , 2 )[1] )
 		}
 
+		sub() {
+			return [ this.Icon() , ... this.content() ]
+		}
+
 	}
 
 }

@@ -9,7 +9,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Backward() , this.Value() , this.Forward() )
+		return [ this.Backward() , this.Value() , this.Forward() ] as readonly any[]
 	}
 
 	/**
@@ -25,7 +25,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 		return (( obj )=>{
 			obj.hint = () => this.backward_hint()
 			obj.click = ( event? : any ) => this.backward( event )
-			obj.sub = () => [].concat( this.Backward_icon() )
+			obj.sub = () => [ this.Backward_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -45,7 +45,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	backward( event? : any , force? : $mol_atom_force ) {
+	backward( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -69,7 +69,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 	@ $mol_mem
 	Value() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.value() )
+			obj.sub = () => [ this.value() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -80,7 +80,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value( val? : any , force? : $mol_atom_force ) {
+	value( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -97,7 +97,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 		return (( obj )=>{
 			obj.hint = () => this.forward_hint()
 			obj.click = ( event? : any ) => this.forward( event )
-			obj.sub = () => [].concat( this.Forward_icon() )
+			obj.sub = () => [ this.Forward_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -117,7 +117,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	forward( event? : any , force? : $mol_atom_force ) {
+	forward( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

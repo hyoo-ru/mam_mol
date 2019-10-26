@@ -49,7 +49,7 @@ namespace $ { export class $mol_embed_native extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Open() )
+		return [ this.Open() ] as readonly any[]
 	}
 
 	/**
@@ -63,7 +63,7 @@ namespace $ { export class $mol_embed_native extends $mol_view {
 	Open() {
 		return (( obj )=>{
 			obj.uri = () => this.uri()
-			obj.sub = () => [].concat( this.Open_button() )
+			obj.sub = () => [ this.Open_button() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}

@@ -21,7 +21,7 @@ namespace $ { export class $mol_dimmer_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.one() , this.two() , this.three() , this.four() , this.five() , this.six() )
+		return [ this.one() , this.two() , this.three() , this.four() , this.five() , this.six() ] as readonly any[]
 	}
 
 	/**

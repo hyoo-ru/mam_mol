@@ -15,7 +15,7 @@ namespace $ { export class $mol_search_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Search() )
+		return [ this.Search() ] as readonly any[]
 	}
 
 	query() {
@@ -43,7 +43,7 @@ namespace $ { export class $mol_search_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	suggests() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 } }

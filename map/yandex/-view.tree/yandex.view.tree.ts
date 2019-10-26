@@ -6,7 +6,7 @@ namespace $ { export class $mol_map_yandex extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	zoom( val? : any , force? : $mol_atom_force ) {
+	zoom( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 2
 	}
 
@@ -18,8 +18,8 @@ namespace $ { export class $mol_map_yandex extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	center( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat( 0 , 0 )
+	center( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [ 0 , 0 ] as readonly any[]
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace $ { export class $mol_map_yandex extends $mol_view {
 	 *  ```
 	 **/
 	objects() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 } }

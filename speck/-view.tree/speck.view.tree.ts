@@ -17,7 +17,7 @@ namespace $ { export class $mol_speck extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.value() )
+		return [ this.value() ] as readonly any[]
 	}
 
 	/**

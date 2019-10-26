@@ -15,20 +15,20 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Scroll() )
+		return [ this.Scroll() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
 	 *  Scroll $mol_scroll sub /
 	 *  	<= Head
-	 *  	<= content
+	 *  	<= Content
 	 *  ```
 	 **/
 	@ $mol_mem
 	Scroll() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Head() , this.content() )
+			obj.sub = () => [ this.Head() , this.Content() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -41,7 +41,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Head() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Head_card() )
+			obj.sub = () => [ this.Head_card() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_float(  ) )
 	}
@@ -54,7 +54,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Head_card() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Head_row() )
+			obj.sub = () => [ this.Head_row() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_card(  ) )
 	}
@@ -67,7 +67,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Head_row() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Head_content() )
+			obj.sub = () => [ this.Head_content() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -80,18 +80,9 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Head_content() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( "Float header" )
+			obj.sub = () => [ "Float header" ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  content / <= Content
-	 *  ```
-	 **/
-	content() {
-		return [].concat( this.Content() )
 	}
 
 	/**
@@ -104,7 +95,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Content() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Filler1() , this.Filler2() )
+			obj.sub = () => [ this.Filler1() , this.Filler2() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}

@@ -6,7 +6,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 	 *  ```
 	 **/
 	@ $mol_mem
-	query( val? : any , force? : $mol_atom_force ) {
+	query( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -18,7 +18,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Suggest() , this.Clear() )
+		return [ this.Suggest() , this.Clear() ] as readonly any[]
 	}
 
 	/**
@@ -55,7 +55,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 	 *  ```
 	 **/
 	@ $mol_mem
-	suggest_selected( val? : any , force? : $mol_atom_force ) {
+	suggest_selected( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -79,11 +79,11 @@ namespace $ { export class $mol_search extends $mol_bar {
 
 	/**
 	 *  ```
-	 *  suggests /
+	 *  suggests /string
 	 *  ```
 	 **/
 	suggests() {
-		return [].concat(  )
+		return [  ] as readonly ( string )[]
 	}
 
 	/**
@@ -105,7 +105,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 	@ $mol_mem
 	Clear() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Clear_icon() )
+			obj.sub = () => [ this.Clear_icon() ] as readonly any[]
 			obj.event_click = ( val? : any ) => this.event_clear( val )
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
@@ -129,7 +129,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_clear( val? : any , force? : $mol_atom_force ) {
+	event_clear( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 

@@ -19,7 +19,7 @@ namespace $ { export class $mol_string_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Simple() , this.Hint() , this.Filled() , this.Disabled() )
+		return [ this.Simple() , this.Hint() , this.Filled() , this.Disabled() ] as readonly any[]
 	}
 
 	/**
@@ -41,7 +41,7 @@ namespace $ { export class $mol_string_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	name( val? : any , force? : $mol_atom_force ) {
+	name( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -80,7 +80,7 @@ namespace $ { export class $mol_string_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	name2( val? : any , force? : $mol_atom_force ) {
+	name2( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "Jocker"
 	}
 

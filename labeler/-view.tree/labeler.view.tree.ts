@@ -8,7 +8,7 @@ namespace $ { export class $mol_labeler extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Title() , this.Content() )
+		return [ this.Title() , this.Content() ] as readonly any[]
 	}
 
 	/**
@@ -26,33 +26,33 @@ namespace $ { export class $mol_labeler extends $mol_view {
 
 	/**
 	 *  ```
-	 *  label / <= title
+	 *  label /$mol_view_content <= title
 	 *  ```
 	 **/
 	label() {
-		return [].concat( this.title() )
+		return [ this.title() ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
 	 *  ```
-	 *  Content $mol_view sub / <= content
+	 *  Content $mol_view sub <= content
 	 *  ```
 	 **/
 	@ $mol_mem
 	Content() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.content() )
+			obj.sub = () => this.content()
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  content null
+	 *  content /
 	 *  ```
 	 **/
 	content() {
-		return null as any
+		return [  ] as readonly any[]
 	}
 
 } }

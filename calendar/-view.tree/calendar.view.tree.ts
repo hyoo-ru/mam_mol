@@ -9,7 +9,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Title() , this.Weekdays() , this.Weeks() )
+		return [ this.Title() , this.Weekdays() , this.Weeks() ] as readonly any[]
 	}
 
 	/**
@@ -23,7 +23,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	Title() {
 		return (( obj )=>{
 			obj.minimal_height = () => 24
-			obj.sub = () => [].concat( this.title() )
+			obj.sub = () => [ this.title() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -39,46 +39,46 @@ namespace $ { export class $mol_calendar extends $mol_list {
 
 	/**
 	 *  ```
-	 *  Weekdays $mol_view sub / <= weekdays
+	 *  Weekdays $mol_view sub <= weekdays
 	 *  ```
 	 **/
 	@ $mol_mem
 	Weekdays() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.weekdays() )
+			obj.sub = () => this.weekdays()
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  weekdays /
+	 *  weekdays /$mol_view
 	 *  ```
 	 **/
 	weekdays() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
 	 *  ```
-	 *  Weeks $mol_list rows / <= weeks
+	 *  Weeks $mol_list rows <= weeks
 	 *  ```
 	 **/
 	@ $mol_mem
 	Weeks() {
 		return (( obj )=>{
-			obj.rows = () => [].concat( this.weeks() )
+			obj.rows = () => this.weeks()
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  weeks /
+	 *  weeks /$mol_view
 	 *  ```
 	 **/
 	weeks() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -92,7 +92,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	Weekday( index : any ) {
 		return (( obj )=>{
 			obj.holiday = () => this.weekend(index)
-			obj.sub = () => [].concat( this.weekday(index) )
+			obj.sub = () => [ this.weekday(index) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_calendar_day(  ) )
 	}
@@ -117,24 +117,24 @@ namespace $ { export class $mol_calendar extends $mol_list {
 
 	/**
 	 *  ```
-	 *  Week!row $mol_view sub / <= week_days!row
+	 *  Week!row $mol_view sub <= week_days!row
 	 *  ```
 	 **/
 	@ $mol_mem_key
 	Week( row : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.week_days(row) )
+			obj.sub = () => this.week_days(row)
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  week_days!row /
+	 *  week_days!row /$mol_view
 	 *  ```
 	 **/
 	week_days( row : any ) {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -190,7 +190,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	 *  ```
 	 **/
 	day_content( day : any ) {
-		return [].concat( this.day_text(day) )
+		return [ this.day_text(day) ] as readonly any[]
 	}
 
 	/**

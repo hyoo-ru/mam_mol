@@ -15,7 +15,7 @@ namespace $ { export class $mol_app_rdf extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [].concat( this.Source() )
+		return [ this.Source() ] as readonly any[]
 	}
 
 	/**
@@ -43,7 +43,7 @@ namespace $ { export class $mol_app_rdf extends $mol_page {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Head() , this.Uri() , this.Body() )
+		return [ this.Head() , this.Uri() , this.Body() ] as readonly any[]
 	}
 
 	/**
@@ -68,7 +68,7 @@ namespace $ { export class $mol_app_rdf extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	uri( val? : any , force? : $mol_atom_force ) {
+	uri( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "http://dbpedia.org/ontology/"
 	}
 
@@ -87,7 +87,7 @@ namespace $ { export class $mol_app_rdf extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Subjects() )
+		return [ this.Subjects() ] as readonly any[]
 	}
 
 	/**
@@ -109,7 +109,7 @@ namespace $ { export class $mol_app_rdf extends $mol_page {
 	 *  ```
 	 **/
 	subject_rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -122,7 +122,7 @@ namespace $ { export class $mol_app_rdf extends $mol_page {
 	@ $mol_mem_key
 	Subject_row( uri : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Subject(uri) , this.Predicates(uri) )
+			obj.sub = () => [ this.Subject(uri) , this.Predicates(uri) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -180,7 +180,7 @@ namespace $ { export class $mol_app_rdf extends $mol_page {
 	 *  ```
 	 **/
 	predicate_rows( uri : any ) {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -193,7 +193,7 @@ namespace $ { export class $mol_app_rdf extends $mol_page {
 	@ $mol_mem_key
 	Predicate_row( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Predicate(id) , this.Objects(id) )
+			obj.sub = () => [ this.Predicate(id) , this.Objects(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -251,7 +251,7 @@ namespace $ { export class $mol_app_rdf extends $mol_page {
 	 *  ```
 	 **/
 	object_rows( id : any ) {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -296,7 +296,7 @@ namespace $ { export class $mol_app_rdf extends $mol_page {
 	@ $mol_mem_key
 	Value( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.value(id) )
+			obj.sub = () => [ this.value(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

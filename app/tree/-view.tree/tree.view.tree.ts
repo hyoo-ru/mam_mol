@@ -17,7 +17,7 @@ namespace $ { export class $mol_app_tree extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Source() , this.Result() )
+		return [ this.Source() , this.Result() ] as readonly any[]
 	}
 
 	/**
@@ -42,7 +42,7 @@ namespace $ { export class $mol_app_tree extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	source( val? : any , force? : $mol_atom_force ) {
+	source( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -63,7 +63,7 @@ namespace $ { export class $mol_app_tree extends $mol_page {
 	@ $mol_mem
 	Result() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Result_text() )
+			obj.sub = () => [ this.Result_text() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}

@@ -18,6 +18,7 @@ $mol_app_life_map $mol_plot_pane
 			series_y <= points_y /number
 	-
 	plugins /
+		^
 		<= Touch $mol_touch
 			zoom?val <=> zoom?val
 			pan?val <=> pan?val

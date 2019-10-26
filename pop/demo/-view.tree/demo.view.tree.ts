@@ -15,7 +15,7 @@ namespace $ { export class $mol_pop_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Pop() )
+		return [ this.Pop() ] as readonly any[]
 	}
 
 	/**
@@ -31,7 +31,7 @@ namespace $ { export class $mol_pop_demo extends $mol_demo_small {
 		return (( obj )=>{
 			obj.Anchor = () => this.Show()
 			obj.showed = () => this.showed()
-			obj.bubble_content = () => [].concat( this.Content() )
+			obj.bubble_content = () => [ this.Content() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_pop(  ) )
 	}
@@ -75,7 +75,7 @@ namespace $ { export class $mol_pop_demo extends $mol_demo_small {
 	@ $mol_mem
 	Content() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.bubble_hint() )
+			obj.sub = () => [ this.bubble_hint() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}

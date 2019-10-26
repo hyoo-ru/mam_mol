@@ -3,4 +3,4 @@ $mol_app_taxon_demo $mol_demo_large
 		<= App $mol_app_taxon
 			hierarchy_field \name
 			hierarchy <= hierarchy *
-			record!path <= record!path *
+			record!path <= record!path $mol_app_taxon_data_row

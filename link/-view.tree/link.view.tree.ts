@@ -87,11 +87,11 @@ namespace $ { export class $mol_link extends $mol_view {
 
 	/**
 	 *  ```
-	 *  sub / <= title
+	 *  sub /$mol_view_content <= title
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.title() )
+		return [ this.title() ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -124,7 +124,7 @@ namespace $ { export class $mol_link extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	click( event? : any , force? : $mol_atom_force ) {
+	click( event? : any , force? : $mol_mem_force ) {
 		return this.event_click( event )
 	}
 
@@ -134,7 +134,7 @@ namespace $ { export class $mol_link extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_click( event? : any , force? : $mol_atom_force ) {
+	event_click( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

@@ -2,6 +2,25 @@ declare namespace $ { }
 export = $;
 
 declare namespace $ {
+    function $mol_class<Class extends any>(Class: Class): Class;
+}
+
+declare namespace $ {
+    class $mol_mem_force extends Object {
+        constructor();
+        $mol_mem_force: boolean;
+        static $mol_mem_force: boolean;
+        static toString(): string;
+    }
+    class $mol_mem_force_cache extends $mol_mem_force {
+    }
+    class $mol_mem_force_update extends $mol_mem_force {
+    }
+    class $mol_mem_force_fail extends $mol_mem_force_cache {
+    }
+}
+
+declare namespace $ {
     namespace $$ {
         let $$: typeof $;
     }
@@ -10,46 +29,60 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    namespace $$ { }
-    class $mol_object {
+    class $mol_object2 extends Object {
         static $: $mol_ambient_context;
-        readonly $: $mol_ambient_context;
-        static make<Instance>(this: {
-            new (): Instance;
-        }, config: Partial<Instance>): Instance;
-        static toString(): string;
-        'object_owner()': any;
-        object_owner(next?: any): any;
-        'object_host()': any;
-        object_host(next?: any): any;
-        'object_field()': string;
-        object_field(next?: string): string;
-        object_id(next?: string): any;
+        static readonly $$: $mol_ambient_context;
+        $: typeof $mol_object2.$;
+        readonly $$: $mol_ambient_context;
+        constructor(init?: (obj: any) => void);
+        static make<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: Instance) => void): Instance;
+        static toString(): any;
+        destructor(): void;
         toString(): any;
         toJSON(): any;
-        destructor(): void;
     }
 }
 
 declare namespace $ {
-    function $mol_compare_any(a: any, b: any): boolean;
+    class $mol_wrapper extends $mol_object2 {
+        static wrap: (task: (...ags: any[]) => any) => (...ags: any[]) => any;
+        static run<Result>(task: () => Result): Result;
+        static func<Args extends any[], Result, Host = void>(func: (this: Host, ...args: Args) => Result): (this: Host, ...args: Args) => Result;
+        static readonly class: <Class extends new (...args: any[]) => any>(Class: Class) => Class;
+        static readonly method: <Host, Field extends keyof Host, Args extends any[], Result>(obj: Host, name: Field, descr: TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>) => TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>;
+    }
 }
 
 declare namespace $ {
-    const $mol_conform_stack: any[];
-    function $mol_conform<Target, Source>(target: Target, source: Source): Target;
-    const $mol_conform_handlers: WeakMap<Object, (target: any, source: any) => any>;
-    function $mol_conform_handler<Class>(cl: {
-        new (...args: any[]): Class;
-    }, handler: (target: Class, source: Class) => Class): void;
+    function $mol_dev_format_register(config: {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => false;
+    } | {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => boolean;
+        body: (val: any, config: any) => any;
+    }): void;
+    let $mol_dev_format_head: symbol;
+    let $mol_dev_format_body: symbol;
+    function $mol_dev_format_native(obj: any): any;
+    function $mol_dev_format_auto(obj: any): any;
+    function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
+    let $mol_dev_format_div: any;
+    let $mol_dev_format_span: any;
+    let $mol_dev_format_ol: any;
+    let $mol_dev_format_li: any;
+    let $mol_dev_format_table: any;
+    let $mol_dev_format_tr: any;
+    let $mol_dev_format_td: any;
+    let $mol_dev_format_accent: any;
+    let $mol_dev_format_strong: any;
+    let $mol_dev_format_string: any;
+    let $mol_dev_format_shade: any;
+    let $mol_dev_format_indent: any;
 }
 
 declare namespace $ {
-    function $mol_fail(error: any): never;
-}
-
-declare namespace $ {
-    function $mol_fail_hidden(error: any): never;
+    function $mol_maybe<Value>(value: Value | null | undefined): Value[];
 }
 
 declare namespace $ {
@@ -73,103 +106,242 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_defer extends $mol_object {
-        run: () => void;
-        constructor(run: () => void);
+    class $mol_log2 extends $mol_wrapper {
+        readonly host: any;
+        readonly id: string;
+        readonly args: any[];
+        static current: $mol_log2;
+        static wrap<This extends {
+            $: $mol_ambient_context;
+        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+        constructor(host: any, id: string, args: any[]);
+        stream: $mol_log2_line[];
+        flush(): void;
+        info(...values: any[]): void;
+        static info(...values: any[]): void;
+        /**
+         * Enable all logs
+         *
+         * 	$mol_log2.excludes = []
+         *
+         * Exclude all atom logs:
+         *
+         * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
+         *
+         * Disable logs:
+         *
+         * 	$mol_log2.excludes = null
+         */
+        static excludes: RegExp[];
+        static prefix: any[];
+    }
+    class $mol_log2_indent extends $mol_wrapper {
+        static wrap<This extends {
+            $: $mol_ambient_context;
+        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+    }
+    class $mol_log2_table extends $mol_log2 {
+    }
+    class $mol_log2_hidden extends $mol_log2 {
+        flush(): void;
+    }
+    class $mol_log2_line extends Array<any> {
+        constructor(...items: any[]);
+    }
+    class $mol_log2_token extends Array<any> {
+        constructor(...items: any[]);
+    }
+    let $mol_log2_token_empty: $mol_log2_token;
+    let $mol_log2_token_indent: $mol_log2_token;
+    let $mol_log2_legend: $mol_log2_table;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+declare namespace $ {
+    function $mol_fail_hidden(error: any): never;
+}
+
+declare namespace $ {
+    class $mol_after_frame extends $mol_object2 {
+        task: () => void;
+        id: any;
+        constructor(task: () => void);
         destructor(): void;
-        static all: $mol_defer[];
-        static timer: any;
-        static scheduleNative: (handler: () => void) => any;
-        static schedule(): void;
-        static unschedule(): void;
-        static add(defer: $mol_defer): void;
-        static drop(defer: $mol_defer): void;
-        static run(): void;
     }
 }
 
 declare namespace $ {
-    var $mol_state_stack: Map<string, any>;
+    function $mol_compare_any(a: any, b: any): boolean;
 }
 
 declare namespace $ {
-    enum $mol_atom_status {
-        obsolete = "obsolete",
-        checking = "checking",
-        pulling = "pulling",
-        actual = "actual"
+    const $mol_conform_stack: any[];
+    function $mol_conform<Target, Source>(target: Target, source: Source): Target;
+    const $mol_conform_handlers: WeakMap<Object, (target: any, source: any) => any>;
+    function $mol_conform_handler<Class>(cl: {
+        new (...args: any[]): Class;
+    }, handler: (target: Class, source: Class) => Class): void;
+}
+
+declare namespace $ {
+    function $mol_array_trim<Item>(array: Item[]): Item[];
+}
+
+declare namespace $ {
+    const enum $mol_fiber_status {
+        persist = -3,
+        actual = -2,
+        doubt = -1,
+        obsolete = 0
     }
-    function $mol_atom_fence<Task extends () => any>(task: Task): any;
-    class $mol_atom<Value = any> extends $mol_object {
-        masters: Set<$mol_atom<any>> | null;
-        slaves: Set<$mol_atom<any>> | null;
-        status: $mol_atom_status;
-        readonly handler: (next?: Value, force?: $mol_atom_force) => Value | void;
-        'value()': Value | Error | undefined;
-        constructor(id: string, handler?: (next?: Value, force?: $mol_atom_force) => Value | void);
-        destructor(): void;
-        unlink(): void;
-        get(force?: $mol_atom_force): Value;
-        actualize(force?: $mol_atom_force): void;
-        pull(force?: $mol_atom_force): any;
-        _next: Value | undefined;
-        _ignore: Value | undefined;
-        set(next: Value): Value;
-        push(next_raw?: Value | Error): Value;
+    function $mol_fiber_defer<Value = void>(calculate: () => Value): $mol_fiber<any>;
+    function $mol_fiber_func<This, Args extends any[], Result>(calculate: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
+    function $mol_fiber_root<Calculate extends (this: This, ...args: any[]) => Result, Result = void, This = void>(calculate: Calculate): Calculate;
+    function $mol_fiber_method<Host, Value>(obj: Host, name: keyof Host, descr: TypedPropertyDescriptor<(this: Host, ...args: any[]) => Value>): TypedPropertyDescriptor<(this: Host, ...args: any[]) => Value>;
+    function $mol_fiber_sync<Args extends any[], Value = void, This = void>(request: (this: This, ...args: Args) => PromiseLike<Value>): (...args: Args) => Value;
+    function $mol_fiber_warp(): Promise<void>;
+    function $mol_fiber_fence(func: () => any): any;
+    function $mol_fiber_unlimit<Result>(task: () => Result): Result;
+    class $mol_fiber_solid extends $mol_wrapper {
+        static func<This, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
+    }
+    class $mol_fiber<Value = any> extends $mol_wrapper {
+        static wrap<This, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+        static quant: number;
+        static deadline: number;
+        static liveline: number;
+        static current: $mol_fiber<any>;
+        static scheduled: $mol_after_frame;
+        static queue: (() => PromiseLike<any>)[];
+        static tick(): Promise<void>;
+        static schedule(): Promise<any>;
+        value: Value;
+        error: Error | PromiseLike<Value>;
+        cursor: $mol_fiber_status;
+        masters: (number | $mol_fiber<any>)[];
+        calculate: () => Value;
+        schedule(): void;
+        wake(): Value;
+        push(value: Value): Value;
+        fail(error: Error | PromiseLike<Value>): Error | PromiseLike<Value>;
+        wait(promise: PromiseLike<Value>): PromiseLike<Value>;
+        complete(): void;
+        complete_master(master_index: number): void;
+        pull(): void;
+        update(): void;
+        get(): Value;
+        limit(): void;
+        master: $mol_fiber;
+        rescue(master: $mol_fiber, master_index: number): void;
+        obey(master: $mol_fiber, master_index: number): number;
+        lead(slave: $mol_fiber, master_index: number): number;
+        dislead(slave_index: number): void;
+        disobey(master_index: number): void;
         obsolete_slaves(): void;
-        check_slaves(): void;
-        check(): void;
-        obsolete(): void;
-        lead(slave: $mol_atom<any>): void;
-        dislead(slave: $mol_atom<any>): void;
-        obey(master: $mol_atom<any>): void;
-        disobey(master: $mol_atom<any>): void;
-        disobey_all(): void;
-        cache(next?: Value | Error): Error | Value;
-        value(next?: Value, force?: $mol_atom_force): Value;
-        static stack: $mol_atom<any>[];
-        static updating: $mol_atom<any>[];
-        static reaping: Set<$mol_atom<any>>;
-        static scheduled: boolean;
-        static actualize(atom: $mol_atom<any>): void;
-        static reap(atom: $mol_atom<any>): void;
-        static unreap(atom: $mol_atom<any>): void;
-        static schedule(): void;
-        static sync(): void;
-        then<Next>(done: (prev?: Value) => Next, fail?: (error: Error) => Next): $mol_atom<any>;
-        catch(fail: (error: Error) => Value): $mol_atom<any>;
+        obsolete(master_index: number): void;
+        forget(): void;
+        abort(): boolean;
+        destructor(): void;
     }
-    function $mol_atom_current<Value = any>(): $mol_atom<Value>;
-    class $mol_atom_wait extends Error {
-        name: string;
+    let $mol_fiber_token_runned: $mol_log2_token;
+    let $mol_fiber_token_changed1: $mol_log2_token;
+    let $mol_fiber_token_changed2: $mol_log2_token;
+    let $mol_fiber_token_actualized: $mol_log2_token;
+    let $mol_fiber_token_sleeped: $mol_log2_token;
+    let $mol_fiber_token_failed: $mol_log2_token;
+    let $mol_fiber_token_destructed: $mol_log2_token;
+}
+
+declare namespace $ {
+    const $mol_owning_map: WeakMap<any, any>;
+    function $mol_owning_allow<Having>(having: Having): having is Having & {
+        destructor(): void;
+    };
+    function $mol_owning_get<Having, Owner extends object>(having: Having, Owner?: {
+        new (): Owner;
+    }): Owner | null;
+    function $mol_owning_check<Owner, Having>(owner: Owner, having: Having): having is Having & {
+        destructor(): void;
+    };
+    function $mol_owning_catch<Owner, Having>(owner: Owner, having: Having): boolean;
+}
+
+declare namespace $ {
+    function $mol_atom2_value<Value>(task: () => Value): Value;
+    class $mol_atom2<Value = any> extends $mol_fiber<Value> {
+        static readonly current: $mol_atom2<any>;
+        static cached: boolean;
+        static reap_task: $mol_fiber<any>;
+        static reap_queue: $mol_atom2<any>[];
+        static reap(atom: $mol_atom2): void;
+        slaves: (number | $mol_fiber<any>)[];
+        rescue(master: $mol_atom2, cursor: number): void;
+        get(): Value;
+        pull(): void | Value;
+        _value: Value;
+        value: Value;
+        _error: Error | PromiseLike<Value>;
+        error: null | Error | PromiseLike<Value>;
+        put(next: Value): Value;
+        complete_master(master_index: number): void;
+        obey(master: $mol_fiber, master_index: number): number;
+        lead(slave: $mol_fiber, master_index: number): number;
+        dislead(slave_index: number): void;
+        obsolete(master_index?: number): void;
+        doubt(master_index?: number): void;
+        obsolete_slaves(): void;
+        doubt_slaves(): void;
+        readonly fresh: (this: void) => void;
+        readonly alone: boolean;
+        readonly derived: boolean;
+        destructor(): void;
     }
-    class $mol_atom_force extends Object {
-        $mol_atom_force: boolean;
-        static $mol_atom_force: boolean;
+    let $mol_atom2_token_revalidation: $mol_log2_token;
+    let $mol_atom2_token_stumbled: $mol_log2_token;
+    let $mol_atom2_token_revalidated: $mol_log2_token;
+    let $mol_atom2_token_leaded: $mol_log2_token;
+    let $mol_atom2_token_disleaded: $mol_log2_token;
+    let $mol_atom2_token_obsoleted: $mol_log2_token;
+    let $mol_atom2_token_doubted: $mol_log2_token;
+}
+
+declare namespace $ {
+    function $mol_const<Value>(value: Value): {
+        (): Value;
+        '()': Value;
+    };
+}
+
+declare namespace $ {
+    function $mol_atom2_field<Host extends object, Field extends keyof Host, Value extends Host[Field]>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Value>): any;
+}
+
+declare namespace $ {
+    namespace $$ { }
+    const $mol_object_field: unique symbol;
+    class $mol_object extends Object {
+        static $: $mol_ambient_context;
+        static readonly $$: $mol_ambient_context;
+        _$: $mol_ambient_context;
+        $: $mol_ambient_context;
+        readonly $$: $mol_ambient_context;
+        static make<Instance>(this: {
+            new (): Instance;
+        }, config: Partial<Instance>): Instance;
         static toString(): string;
-    }
-    class $mol_atom_force_cache extends $mol_atom_force {
-    }
-    class $mol_atom_force_update extends $mol_atom_force {
-    }
-}
-
-declare namespace $ {
-    function $mol_dict_key(value: any): any;
-    class $mol_dict<Key, Value> extends Map<Key, Value> {
-        get(key: Key): Value;
-        has(key: Key): boolean;
-        set(key: Key, value: Value): this;
-        delete(key: Key): boolean;
-        forEach(back: (value: Value, key: Key, dict: Map<Key, Value>) => void, context?: any): void;
-        [Symbol.iterator](): {
-            [Symbol.iterator](): any;
-            next(): IteratorResult<[Key, Value], any>;
-        };
+        toString(): string;
+        toJSON(): string;
+        destructor(): void;
+        [Symbol.toStringTag]: string;
     }
 }
 
 declare namespace $ {
-    function $mol_mem<Host, Value>(obj: Host, name: string, descr: TypedPropertyDescriptor<(next?: Value, force?: $mol_atom_force) => Value>): void;
-    function $mol_mem_key<Host, Key, Value>(obj: Host, name: string, descr: TypedPropertyDescriptor<(key: Key, next?: Value, force?: $mol_atom_force) => Value>): void;
+    function $mol_mem<Host extends object, Field extends keyof Host, Value>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<(next?: Value, force?: $mol_mem_force) => Value>): any;
 }

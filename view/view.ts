@@ -1,8 +1,6 @@
-
 namespace $ {
-	
-	export namespace $$ { let $$ }
-	export namespace $mol { let $mol }
+
+	export type $mol_view_content = $mol_view|Node|string|number|boolean
 	
 	export function $mol_view_visible_width() {
 		return $mol_window.size().width
@@ -20,12 +18,21 @@ namespace $ {
 	export class $mol_view extends $mol_object {
 		
 		@ $mol_mem_key
-		static Root( id : number ) {
+		static Root( id: number ) {
 			return new this
 		}
 
 		@ $mol_mem
+		autorun() {
+			return $mol_atom2_autorun( ()=> {
+				this.dom_tree()
+				document.title = this.title()
+				return this
+			} )
+		}
+
 		static autobind() {
+			
 			const nodes = $mol_dom_context.document.querySelectorAll( '[mol_view_root]' )
 			
 			for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
@@ -38,10 +45,9 @@ namespace $ {
 				}
 				
 				const view = View.Root( i )
-				
-				view.dom_tree( nodes.item( i ) )
-				
-				document.title = view.title()
+				view.dom_node( nodes.item( i ) )
+				view.autorun()
+
 			}
 			
 		}
@@ -53,24 +59,9 @@ namespace $ {
 		@ $mol_mem
 		focused( next?: boolean ) {
 			let node = this.dom_node()
-			const value = $mol_view_selection.focused( next === undefined ? undefined : next ? [ node ] : [] ) || []
+			const value = $mol_view_selection.focused( next === undefined ? undefined : ( next ? [ node ] : [] ) )
 			return value.indexOf( node ) !== -1
 		} 
-		
-		@ $mol_mem
-		context( next? : $mol_ambient_context ) {
-			return next || $ as $mol_ambient_context
-		}
-		get $() {
-			return this.context()
-		}
-		set $( next : $mol_ambient_context ) {
-			this.context( next )
-		}
-		
-		context_sub() {
-			return this.context()
-		}
 		
 		state_key( suffix = '' ) {
 			return this.$.$mol_view_state_key( suffix )
@@ -78,7 +69,7 @@ namespace $ {
 		
 		/// Name of element that created when element not found in DOM
 		dom_name() {
-			return this.constructor.toString().replace( '$' , '' )
+			return this.constructor.toString().replace( '$' , '' ) || 'div'
 		}
 		
 		/// NameSpace of element that created when element not found in DOM
@@ -86,15 +77,17 @@ namespace $ {
 		
 		/// Raw child views
 		sub() {
-			return null as readonly ($mol_view|Node|string|number|boolean)[] | null
+			return [] as readonly ($mol_view|Node|string|number|boolean)[]
 		}
 		
-		/// Visible sub views with defined context()
+		/// Visible sub views with defined ambient context
 		/// Render all by default
 		sub_visible() {
+
 			const sub = this.sub()
 			if( !sub ) return sub
-			const context = this.context_sub()
+			const context = this.$$
+
 			sub.forEach( child => {
 				if( child instanceof $mol_view ) {
 					child.$ = context
@@ -146,12 +139,23 @@ namespace $ {
 		
 		@ $mol_mem
 		dom_node( next? : Element ) {
-			const node = next || this.$.$mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
+			
+			const node = next || $mol_dom_context.document.createElementNS( this.dom_name_space() , this.dom_name() )
 
-			node.setAttribute( 'id' , this.dom_id() )
+			const id = this.dom_id()
+			node.setAttribute( 'id' , id )
+			node.toString = $mol_const( '<#' + id + '>' )
+
 			$mol_dom_render_attributes( node , this.attr_static() )
-			$mol_dom_render_events( node , this.event() )
-			$mol_dom_render_events_async( node , this.event_async() )
+			
+			const events = this.event()
+			for( let event_name in events ) {
+				node.addEventListener(
+					event_name ,
+					$mol_log2.func( $mol_fiber_root( events[ event_name ] ) ) ,
+					{ passive : false } as any ,
+				)
+			}
 
 			return node
 		}
@@ -161,43 +165,66 @@ namespace $ {
 			const node = this.dom_node( next )
 			
 			try {
-				
+
+				$mol_dom_render_attributes( node , { mol_view_error : null } )
+
 				for( let plugin of this.plugins() ) {
-					plugin.dom_node( node )
-					plugin.render()
+					if( plugin instanceof $mol_plugin ) {
+						plugin.render()
+					}
 				}
-				this.render()
 				
+				this.render()
+
 			} catch( error ) {
 				
-				$mol_dom_render_attributes( node , { mol_view_error : error.name } )
-				
-				if( error instanceof $mol_atom_wait ) return node
-				
-				try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
-				
-				if( error[ '$mol_atom_catched' ] ) return node
-				
-				console.error( error )
+				const need_catch = $mol_fail_catch( error )
 
-				error[ '$mol_atom_catched' ] = true
+				if( need_catch ) {
+					$mol_dom_render_attributes( node , { mol_view_error : error.name || error.constructor.name } )
+				}
+				
+				if( error instanceof Promise ) $mol_fail_hidden( error )
+				
+				if( need_catch ) {
+					try { void( ( node as HTMLElement ).innerText = error.message ) } catch( e ) {}
+					console.error( error )
+				}
+				
 			}
 			
 			return node
 		}
-		
-		render() {
+
+		@ $mol_mem
+		dom_node_actual() {
 			const node = this.dom_node()
-			
-			const sub = this.sub_visible()
-			if( sub ) $mol_dom_render_children( node , sub )
-			
-			$mol_dom_render_attributes( node , this.attr() )
-			$mol_dom_render_styles( node , this.style() )
-			
+
+			const attr = this.attr()
+			const style = this.style()
 			const fields = this.field()
+
+			$mol_dom_render_attributes( node , attr )
+			$mol_dom_render_styles( node , style )
 			$mol_dom_render_fields( node , fields )
-			new $mol_defer( ()=> $mol_dom_render_fields( node , fields ) )
+
+			return node
+		}
+
+		render() {
+
+			const node = this.dom_node_actual()
+
+			const sub = this.sub_visible()
+			
+			const nodes = sub.map( child => {
+				if( child == null ) return null
+				return ( child instanceof $mol_view ) ? child.dom_node() : String( child )
+			})
+			
+			$mol_dom_render_children( node , nodes )
+
+			for( const el of sub ) if( el && typeof el === 'object' && 'dom_tree' in el ) el['dom_tree']()
 		}
 
 		@ $mol_mem
@@ -218,11 +245,11 @@ namespace $ {
 		
 		view_names_owned() {
 			const names = [] as string[]
-			let owner = this.object_host()
+			let owner = $mol_owning_get( this , $mol_view )
 
 			if( owner instanceof $mol_view ) {
 
-				const suffix = this.object_field()
+				const suffix = this[ $mol_object_field ]
 				const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1)
 				
 				for( let Class of ( owner.constructor as typeof $mol_view ).view_classes() ) {
@@ -248,13 +275,14 @@ namespace $ {
 
 			for( let Class of ( this.constructor as typeof $mol_view ).view_classes() ) {
 				const name = $mol_func_name( Class )
+				if( !name ) continue
 				if( names.indexOf( name ) < 0 ) names.push( name )
 			}
 
 			return names
 		}
 		
-		attr_static() : { [ key : string ] : string|number|boolean } {
+		attr_static() : { [ key : string ] : string|number|boolean|null } {
 			let attrs : any = {}
 			
 			for( let name of this.view_names() ) attrs[ name.replace( /\$/g , '' ).replace( /^(?=\d)/ , '_' ).toLowerCase() ] = ''
@@ -262,10 +290,8 @@ namespace $ {
 			return attrs
 		}
 		
-		attr() : { [ key : string ] : string|number|boolean } {
-			return {
-				'mol_view_error' : false ,
-			}
+		attr() : { [ key : string ] : string|number|boolean|null } {
+			return {}
 		}
 		
 		style() : { [ key : string ] : string|number } {
@@ -280,6 +306,7 @@ namespace $ {
 			return {}
 		}
 		
+		@ $mol_deprecated( 'Use $mol_view::event instead.' )
 		event_async() : { [ key : string ] : ( event : Event )=> void } {
 			return {}
 		}
@@ -287,7 +314,14 @@ namespace $ {
 		plugins() {
 			return [] as readonly $mol_view[]
 		}
-		
+
+		[ $mol_dev_format_head ]() {
+			return $mol_dev_format_span( {} ,
+				$mol_dev_format_native( this ) ,
+				$mol_dev_format_auto( $mol_atom2_value( ()=> this.sub() ) ) ,
+			)
+		}
+
 	}
 	
 }

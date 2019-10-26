@@ -105,7 +105,7 @@ namespace $ { export class $mol_app_files extends $mol_book {
 	 *  ```
 	 **/
 	folder_rows( folder : any ) {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -125,7 +125,7 @@ namespace $ { export class $mol_app_files extends $mol_book {
 			obj.minimal_height = () => 40
 			obj.arg = () => this.folder_row_arg(uri)
 			obj.current = () => this.folder_row_current(uri)
-			obj.sub = () => [].concat( this.folder_row_icon(uri) , this.Folder_row_info(uri) )
+			obj.sub = () => [ this.folder_row_icon(uri) , this.Folder_row_info(uri) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -168,7 +168,7 @@ namespace $ { export class $mol_app_files extends $mol_book {
 	@ $mol_mem_key
 	Folder_row_info( uri : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Folder_row_descr(uri) , this.Folder_row_title(uri) )
+			obj.sub = () => [ this.Folder_row_descr(uri) , this.Folder_row_title(uri) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -181,7 +181,7 @@ namespace $ { export class $mol_app_files extends $mol_book {
 	@ $mol_mem_key
 	Folder_row_descr( uri : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.folder_row_descr(uri) )
+			obj.sub = () => [ this.folder_row_descr(uri) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -203,7 +203,7 @@ namespace $ { export class $mol_app_files extends $mol_book {
 	@ $mol_mem_key
 	Folder_row_title( uri : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.folder_row_title(uri) )
+			obj.sub = () => [ this.folder_row_title(uri) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -300,7 +300,7 @@ namespace $ { export class $mol_app_files extends $mol_book {
 	 *  ```
 	 **/
 	tools_root() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -309,7 +309,7 @@ namespace $ { export class $mol_app_files extends $mol_book {
 	 *  ```
 	 **/
 	page_tools( uri : any ) {
-		return [].concat( this.Close(uri) )
+		return [ this.Close(uri) ] as readonly any[]
 	}
 
 	/**
@@ -322,7 +322,7 @@ namespace $ { export class $mol_app_files extends $mol_book {
 	@ $mol_mem_key
 	Close( uri : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Close_icon(uri) )
+			obj.sub = () => [ this.Close_icon(uri) ] as readonly any[]
 			obj.arg = () => this.close_arg(uri)
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -371,7 +371,7 @@ namespace $ { export class $mol_app_files_folder extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Description() , this.Folder_rows() )
+		return [ this.Description() , this.Folder_rows() ] as readonly any[]
 	}
 
 	/**
@@ -415,7 +415,7 @@ namespace $ { export class $mol_app_files_folder extends $mol_page {
 	 *  ```
 	 **/
 	rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 } }
@@ -437,7 +437,7 @@ namespace $ { export class $mol_app_files_file extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.Embed() )
+		return [ this.Embed() ] as readonly any[]
 	}
 
 	/**

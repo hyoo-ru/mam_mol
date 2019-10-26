@@ -15,7 +15,7 @@ namespace $ { export class $mol_select_demo_priority extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Priority() )
+		return [ this.Priority() ] as readonly any[]
 	}
 
 	/**
@@ -36,7 +36,7 @@ namespace $ { export class $mol_select_demo_priority extends $mol_demo_small {
 		return (( obj )=>{
 			obj.Filter = () => null as any
 			obj.value = ( val? : any ) => this.priority( val )
-			obj.options = () => [].concat( "Highest " , "High" , "Medium" , "Low" , "Lowest" )
+			obj.options = () => [ "Highest " , "High" , "Medium" , "Low" , "Lowest" ] as readonly any[]
 			return obj
 		})( new this.$.$mol_select(  ) )
 	}
@@ -47,7 +47,7 @@ namespace $ { export class $mol_select_demo_priority extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	priority( val? : any , force? : $mol_atom_force ) {
+	priority( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "Lowest"
 	}
 

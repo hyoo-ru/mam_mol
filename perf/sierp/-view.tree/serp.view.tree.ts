@@ -15,7 +15,7 @@ namespace $ { export class $mol_perf_sierp extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	elapsed( val? : any , force? : $mol_atom_force ) {
+	elapsed( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -45,7 +45,7 @@ namespace $ { export class $mol_perf_sierp extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Dots() )
+		return [ this.Dots() ] as readonly any[]
 	}
 
 	/**
@@ -67,7 +67,7 @@ namespace $ { export class $mol_perf_sierp extends $mol_view {
 	 *  ```
 	 **/
 	dots() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -154,7 +154,7 @@ namespace $ { export class $mol_perf_sierp_dot extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	hover( val? : any , force? : $mol_atom_force ) {
+	hover( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -164,7 +164,7 @@ namespace $ { export class $mol_perf_sierp_dot extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.text() )
+		return [ this.text() ] as readonly any[]
 	}
 
 	/**
@@ -256,13 +256,15 @@ namespace $ { export class $mol_perf_sierp_dot extends $mol_view {
 
 	/**
 	 *  ```
-	 *  event_async *
+	 *  event *
+	 *  	^
 	 *  	mouseenter?val <=> enter?val
 	 *  	mouseleave?val <=> leave?val
 	 *  ```
 	 **/
-	event_async() {
+	event() {
 		return ({
+			...super.event() ,
 			"mouseenter" :  ( val? : any )=>  this.enter( val ) ,
 			"mouseleave" :  ( val? : any )=>  this.leave( val ) ,
 		})
@@ -274,7 +276,7 @@ namespace $ { export class $mol_perf_sierp_dot extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	enter( val? : any , force? : $mol_atom_force ) {
+	enter( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -284,7 +286,7 @@ namespace $ { export class $mol_perf_sierp_dot extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	leave( val? : any , force? : $mol_atom_force ) {
+	leave( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 

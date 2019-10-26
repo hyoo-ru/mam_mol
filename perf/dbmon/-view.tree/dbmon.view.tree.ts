@@ -15,7 +15,7 @@ namespace $ { export class $mol_perf_dbmon extends $mol_scroll {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Databases() )
+		return [ this.Databases() ] as readonly any[]
 	}
 
 	/**
@@ -37,23 +37,32 @@ namespace $ { export class $mol_perf_dbmon extends $mol_scroll {
 	 *  ```
 	 **/
 	databases() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
 	 *  ```
-	 *  Database!id $mol_view sub /
-	 *  	<= Name!id
-	 *  	<= Query_count!id
-	 *  	<= top_queries!id
+	 *  Database!id $mol_view sub <= database!id
 	 *  ```
 	 **/
 	@ $mol_mem_key
 	Database( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Name(id) , this.Query_count(id) , this.top_queries(id) )
+			obj.sub = () => this.database(id)
 			return obj
 		})( new this.$.$mol_view(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  database!id /
+	 *  	<= Name!id
+	 *  	<= Query_count!id
+	 *  	<= top_queries!id
+	 *  ```
+	 **/
+	database( id : any ) {
+		return [ this.Name(id) , this.Query_count(id) , this.top_queries(id) ] as readonly any[]
 	}
 
 	/**
@@ -64,7 +73,7 @@ namespace $ { export class $mol_perf_dbmon extends $mol_scroll {
 	@ $mol_mem_key
 	Name( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.name(id) )
+			obj.sub = () => [ this.name(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -118,7 +127,7 @@ namespace $ { export class $mol_perf_dbmon extends $mol_scroll {
 	 *  ```
 	 **/
 	top_queries( id : any ) {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -176,7 +185,7 @@ namespace $ { export class $mol_perf_dbmon_query_count extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Label() )
+		return [ this.Label() ] as readonly any[]
 	}
 
 	/**
@@ -192,7 +201,7 @@ namespace $ { export class $mol_perf_dbmon_query_count extends $mol_view {
 			obj.attr = () => ({
 			"mol_perf_dbmon_query_count_label" :  this.label_mod() ,
 		})
-			obj.sub = () => [].concat( this.count() )
+			obj.sub = () => [ this.count() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -250,7 +259,7 @@ namespace $ { export class $mol_perf_dbmon_query extends $mol_pop_over {
 			obj.attr = () => ({
 			"mol_perf_dbmon_query_elapsed" :  this.elapsed_mod() ,
 		})
-			obj.sub = () => [].concat( this.elapsed() )
+			obj.sub = () => [ this.elapsed() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -279,7 +288,7 @@ namespace $ { export class $mol_perf_dbmon_query extends $mol_pop_over {
 	 *  ```
 	 **/
 	bubble_content() {
-		return [].concat( this.value() )
+		return [ this.value() ] as readonly any[]
 	}
 
 	/**

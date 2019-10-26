@@ -24,7 +24,7 @@ namespace $ { export class $mol_check extends $mol_button_minor {
 	 *  ```
 	 **/
 	@ $mol_mem
-	checked( val? : any , force? : $mol_atom_force ) {
+	checked( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -36,7 +36,7 @@ namespace $ { export class $mol_check extends $mol_button_minor {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Icon() , this.label() )
+		return [ this.Icon() , this.label() ] as readonly any[]
 	}
 
 	/**
@@ -54,7 +54,7 @@ namespace $ { export class $mol_check extends $mol_button_minor {
 	 *  ```
 	 **/
 	label() {
-		return [].concat( this.Title() )
+		return [ this.Title() ] as readonly any[]
 	}
 
 	/**
@@ -65,7 +65,7 @@ namespace $ { export class $mol_check extends $mol_button_minor {
 	@ $mol_mem
 	Title() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.title() )
+			obj.sub = () => [ this.title() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

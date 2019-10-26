@@ -26,8 +26,8 @@ namespace $ { export class $mol_app_life_map extends $mol_plot_pane {
 	 *  ```
 	 **/
 	@ $mol_mem
-	pan( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat( 0 , 0 )
+	pan( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [ 0 , 0 ] as readonly any[]
 	}
 
 	/**
@@ -36,7 +36,7 @@ namespace $ { export class $mol_app_life_map extends $mol_plot_pane {
 	 *  ```
 	 **/
 	@ $mol_mem
-	zoom( val? : any , force? : $mol_atom_force ) {
+	zoom( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 16
 	}
 
@@ -48,7 +48,7 @@ namespace $ { export class $mol_app_life_map extends $mol_plot_pane {
 	 *  ```
 	 **/
 	scale() {
-		return [].concat( this.zoom() , this.zoom() )
+		return [ this.zoom() , this.zoom() ] as readonly any[]
 	}
 
 	/**
@@ -66,7 +66,7 @@ namespace $ { export class $mol_app_life_map extends $mol_plot_pane {
 	 *  ```
 	 **/
 	graphs() {
-		return [].concat( this.Points() )
+		return [ this.Points() ] as readonly any[]
 	}
 
 	/**
@@ -93,7 +93,7 @@ namespace $ { export class $mol_app_life_map extends $mol_plot_pane {
 	 *  ```
 	 **/
 	points_x() {
-		return [].concat(  ) as readonly ( number )[]
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -102,16 +102,18 @@ namespace $ { export class $mol_app_life_map extends $mol_plot_pane {
 	 *  ```
 	 **/
 	points_y() {
-		return [].concat(  ) as readonly ( number )[]
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
 	 *  ```
-	 *  plugins / <= Touch
+	 *  plugins /
+	 *  	^
+	 *  	<= Touch
 	 *  ```
 	 **/
 	plugins() {
-		return [].concat( this.Touch() )
+		return [ ...super.plugins() , this.Touch() ] as readonly any[]
 	}
 
 	/**
@@ -188,7 +190,7 @@ namespace $ { export class $mol_app_life_map extends $mol_plot_pane {
 	 *  ```
 	 **/
 	@ $mol_mem
-	draw_start( event? : any , force? : $mol_atom_force ) {
+	draw_start( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -198,7 +200,7 @@ namespace $ { export class $mol_app_life_map extends $mol_plot_pane {
 	 *  ```
 	 **/
 	@ $mol_mem
-	draw_end( event? : any , force? : $mol_atom_force ) {
+	draw_end( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

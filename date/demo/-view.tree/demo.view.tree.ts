@@ -6,7 +6,7 @@ namespace $ { export class $mol_date_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.View() )
+		return [ this.View() ] as readonly any[]
 	}
 
 	/**
@@ -19,7 +19,7 @@ namespace $ { export class $mol_date_demo extends $mol_demo_small {
 	@ $mol_mem
 	View() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Date() , this.Formatted() )
+			obj.sub = () => [ this.Date() , this.Formatted() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -43,7 +43,7 @@ namespace $ { export class $mol_date_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	date( val? : any , force? : $mol_atom_force ) {
+	date( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : (( obj )=>{
 			return obj
 		})( new this.$.$mol_time_moment(  ) )
@@ -57,7 +57,7 @@ namespace $ { export class $mol_date_demo extends $mol_demo_small {
 	@ $mol_mem
 	Formatted() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.formatted() )
+			obj.sub = () => [ this.formatted() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

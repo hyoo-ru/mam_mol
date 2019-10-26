@@ -24,7 +24,7 @@ namespace $ { export class $mol_code_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Qr() , this.Matrix() , this.Upc_e() , this.Upc_a() , this.Ean_8() , this.Ean_13() , this.Code_128() , this.Code_39() , this.Itf() )
+		return [ this.Qr() , this.Matrix() , this.Upc_e() , this.Upc_a() , this.Ean_8() , this.Ean_13() , this.Code_128() , this.Code_39() , this.Itf() ] as readonly any[]
 	}
 
 	/**

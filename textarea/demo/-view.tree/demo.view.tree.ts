@@ -18,7 +18,7 @@ namespace $ { export class $mol_textarea_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Empty_descr() , this.Filled_descr() , this.Disabled() )
+		return [ this.Empty_descr() , this.Filled_descr() , this.Disabled() ] as readonly any[]
 	}
 
 	/**
@@ -43,7 +43,7 @@ namespace $ { export class $mol_textarea_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	empty_descr( val? : any , force? : $mol_atom_force ) {
+	empty_descr( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -69,7 +69,7 @@ namespace $ { export class $mol_textarea_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	filled_descr( val? : any , force? : $mol_atom_force ) {
+	filled_descr( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "function hello( name = 'World' ) {\n\treturn `Hello, ${ name }!`\n}"
 	}
 

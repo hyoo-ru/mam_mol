@@ -54,7 +54,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	 *  ```
 	 **/
 	blocks() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -112,7 +112,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	filter_string( val? : any , force? : $mol_atom_force ) {
+	filter_string( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -122,7 +122,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	theme( val? : any , force? : $mol_atom_force ) {
+	theme( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "$mol_theme_dark"
 	}
 
@@ -142,7 +142,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 			obj.minimal_width = () => 600
 			obj.title = () => this.detail_title()
 			obj.source_link = () => this.source_link()
-			obj.body = () => [].concat( this.Detail_list() )
+			obj.body = () => [ this.Detail_list() ] as readonly any[]
 			obj.event_top = ( val? : any ) => this.event_front_up( val )
 			return obj
 		})( new this.$.$mol_app_demo_detail(  ) )
@@ -176,7 +176,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	 *  ```
 	 **/
 	main_content() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -194,7 +194,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 			obj.minimal_width = () => 1000
 			obj.title = () => this.editor_title()
 			obj.class_name_base = () => this.selected_class_name()
-			obj.tools_main = () => [].concat( this.Close() )
+			obj.tools_main = () => [ this.Close() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_app_studio(  ) )
 	}
@@ -218,7 +218,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	@ $mol_mem
 	Close() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Close_icon() )
+			obj.sub = () => [ this.Close_icon() ] as readonly any[]
 			obj.arg = () => this.close_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -255,7 +255,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	@ $mol_mem
 	Welcome() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Welcome_text() )
+			obj.sub = () => [ this.Welcome_text() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -293,7 +293,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	@ $mol_mem
 	Detail_empty_message() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.detail_empty_prefix() , this.selected() , this.detail_empty_postfix() )
+			obj.sub = () => [ this.detail_empty_prefix() , this.selected() , this.detail_empty_postfix() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_status(  ) )
 	}
@@ -357,7 +357,7 @@ namespace $ { export class $mol_app_demo_menu extends $mol_page {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Head() , this.Filter() , this.Nav() , this.Themes() )
+		return [ this.Head() , this.Filter() , this.Nav() , this.Themes() ] as readonly any[]
 	}
 
 	/**
@@ -379,7 +379,7 @@ namespace $ { export class $mol_app_demo_menu extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	filter( val? : any , force? : $mol_atom_force ) {
+	filter( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -446,7 +446,7 @@ namespace $ { export class $mol_app_demo_menu extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	theme( val? : any , force? : $mol_atom_force ) {
+	theme( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "$mol_theme_dark"
 	}
 
@@ -481,7 +481,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [].concat( this.Source_link() , this.Edit() , this.Close() )
+		return [ this.Source_link() , this.Edit() , this.Close() ] as readonly any[]
 	}
 
 	/**
@@ -525,7 +525,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	@ $mol_mem
 	Edit() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Edit_speck() , this.Edit_icon() )
+			obj.sub = () => [ this.Edit_speck() , this.Edit_icon() ] as readonly any[]
 			obj.arg = () => ({
 			"edit" :  "" ,
 			"path" :  "" ,
@@ -569,7 +569,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	@ $mol_mem
 	Close() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Close_icon() )
+			obj.sub = () => [ this.Close_icon() ] as readonly any[]
 			obj.arg = () => this.close_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -642,7 +642,7 @@ namespace $ { export class $mol_app_demo_nav extends $mol_grid {
 	Option( id : any ) {
 		return (( obj )=>{
 			obj.arg = () => this.arg(id)
-			obj.sub = () => [].concat( this.Expand(id) , this.Content(id) )
+			obj.sub = () => [ this.Expand(id) , this.Content(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -681,7 +681,7 @@ namespace $ { export class $mol_app_demo_nav extends $mol_grid {
 	@ $mol_mem_key
 	Content( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.cell_content(id) )
+			obj.sub = () => [ this.cell_content(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

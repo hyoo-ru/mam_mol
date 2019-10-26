@@ -15,7 +15,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	@ $mol_mem
-	hue_base( val? : any , force? : $mol_atom_force ) {
+	hue_base( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : NaN
 	}
 
@@ -25,7 +25,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	@ $mol_mem
-	hue_shift( val? : any , force? : $mol_atom_force ) {
+	hue_shift( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 111
 	}
 
@@ -86,45 +86,85 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	/**
 	 *  ```
 	 *  gap $mol_vector_2d /
-	 *  	$mol_vector_range /
-	 *  		<= gap_left
-	 *  		<= gap_right
-	 *  	$mol_vector_range /
-	 *  		<= gap_bottom
-	 *  		<= gap_top
+	 *  	<= gap_x
+	 *  	<= gap_y
 	 *  ```
 	 **/
 	@ $mol_mem
 	gap() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_2d( (( obj )=>{
+		})( new this.$.$mol_vector_2d( this.gap_x() , this.gap_y() ) )
+	}
+
+	/**
+	 *  ```
+	 *  gap_x $mol_vector_range /
+	 *  	<= gap_left
+	 *  	<= gap_right
+	 *  ```
+	 **/
+	@ $mol_mem
+	gap_x() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( this.gap_left() , this.gap_right() ) ) , (( obj )=>{
+		})( new this.$.$mol_vector_range( this.gap_left() , this.gap_right() ) )
+	}
+
+	/**
+	 *  ```
+	 *  gap_y $mol_vector_range /
+	 *  	<= gap_bottom
+	 *  	<= gap_top
+	 *  ```
+	 **/
+	@ $mol_mem
+	gap_y() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( this.gap_bottom() , this.gap_top() ) ) ) )
+		})( new this.$.$mol_vector_range( this.gap_bottom() , this.gap_top() ) )
 	}
 
 	/**
 	 *  ```
 	 *  shift_limit $mol_vector_2d /
-	 *  	$mol_vector_range /
-	 *  		0
-	 *  		0
-	 *  	$mol_vector_range /
-	 *  		0
-	 *  		0
+	 *  	<= shift_limit_x
+	 *  	<= shift_limit_y
 	 *  ```
 	 **/
 	@ $mol_mem
 	shift_limit() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_2d( (( obj )=>{
+		})( new this.$.$mol_vector_2d( this.shift_limit_x() , this.shift_limit_y() ) )
+	}
+
+	/**
+	 *  ```
+	 *  shift_limit_x $mol_vector_range /
+	 *  	0
+	 *  	0
+	 *  ```
+	 **/
+	@ $mol_mem
+	shift_limit_x() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( 0 , 0 ) ) , (( obj )=>{
+		})( new this.$.$mol_vector_range( 0 , 0 ) )
+	}
+
+	/**
+	 *  ```
+	 *  shift_limit_y $mol_vector_range /
+	 *  	0
+	 *  	0
+	 *  ```
+	 **/
+	@ $mol_mem
+	shift_limit_y() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( 0 , 0 ) ) ) )
+		})( new this.$.$mol_vector_range( 0 , 0 ) )
 	}
 
 	/**
@@ -135,7 +175,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	shift_default() {
-		return [].concat( 0 , 0 ) as readonly ( number )[]
+		return [ 0 , 0 ] as readonly ( number )[]
 	}
 
 	/**
@@ -146,30 +186,50 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	@ $mol_mem
-	shift( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat( 0 , 0 ) as readonly ( number )[]
+	shift( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [ 0 , 0 ] as readonly ( number )[]
 	}
 
 	/**
 	 *  ```
 	 *  scale_limit $mol_vector_2d /
-	 *  	$mol_vector_range /
-	 *  		0
-	 *  		Infinity
-	 *  	$mol_vector_range /
-	 *  		0
-	 *  		Infinity
+	 *  	<= scale_limit_x
+	 *  	<= scale_limit_y
 	 *  ```
 	 **/
 	@ $mol_mem
 	scale_limit() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_2d( (( obj )=>{
+		})( new this.$.$mol_vector_2d( this.scale_limit_x() , this.scale_limit_y() ) )
+	}
+
+	/**
+	 *  ```
+	 *  scale_limit_x $mol_vector_range /
+	 *  	0
+	 *  	Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	scale_limit_x() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( 0 , Infinity ) ) , (( obj )=>{
+		})( new this.$.$mol_vector_range( 0 , Infinity ) )
+	}
+
+	/**
+	 *  ```
+	 *  scale_limit_y $mol_vector_range /
+	 *  	0
+	 *  	Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	scale_limit_y() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( 0 , Infinity ) ) ) )
+		})( new this.$.$mol_vector_range( 0 , Infinity ) )
 	}
 
 	/**
@@ -180,7 +240,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	scale_default() {
-		return [].concat( 0 , 0 ) as readonly ( number )[]
+		return [ 0 , 0 ] as readonly ( number )[]
 	}
 
 	/**
@@ -191,8 +251,8 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	@ $mol_mem
-	scale( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat( 1 , 1 ) as readonly ( number )[]
+	scale( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [ 1 , 1 ] as readonly ( number )[]
 	}
 
 	/**
@@ -201,7 +261,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	@ $mol_mem
-	scale_x( val? : any , force? : $mol_atom_force ) {
+	scale_x( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -211,7 +271,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	@ $mol_mem
-	scale_y( val? : any , force? : $mol_atom_force ) {
+	scale_y( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -246,45 +306,85 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	/**
 	 *  ```
 	 *  dimensions_viewport $mol_vector_2d /
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
+	 *  	<= dimensions_viewport_x
+	 *  	<= dimensions_viewport_y
 	 *  ```
 	 **/
 	@ $mol_mem
 	dimensions_viewport() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_2d( (( obj )=>{
+		})( new this.$.$mol_vector_2d( this.dimensions_viewport_x() , this.dimensions_viewport_y() ) )
+	}
+
+	/**
+	 *  ```
+	 *  dimensions_viewport_x $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	dimensions_viewport_x() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) , (( obj )=>{
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
+	}
+
+	/**
+	 *  ```
+	 *  dimensions_viewport_y $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	dimensions_viewport_y() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) ) )
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
 	}
 
 	/**
 	 *  ```
 	 *  dimensions $mol_vector_2d /
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
+	 *  	<= dimensions_x
+	 *  	<= dimensions_y
 	 *  ```
 	 **/
 	@ $mol_mem
 	dimensions() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_2d( (( obj )=>{
+		})( new this.$.$mol_vector_2d( this.dimensions_x() , this.dimensions_y() ) )
+	}
+
+	/**
+	 *  ```
+	 *  dimensions_x $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	dimensions_x() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) , (( obj )=>{
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
+	}
+
+	/**
+	 *  ```
+	 *  dimensions_y $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	dimensions_y() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) ) )
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
 	}
 
 	/**
@@ -302,7 +402,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	graphs_sorted() {
-		return [].concat(  ) as readonly ( $mol_svg )[]
+		return [  ] as readonly ( $mol_svg )[]
 	}
 
 	/**
@@ -329,7 +429,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	graphs() {
-		return [].concat(  ) as readonly ( $mol_plot_graph )[]
+		return [  ] as readonly ( $mol_plot_graph )[]
 	}
 
 	/**
@@ -340,7 +440,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	@ $mol_mem
-	cursor_position( val? : any , force? : $mol_atom_force ) {
+	cursor_position( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : (( obj )=>{
 			return obj
 		})( new this.$.$mol_vector_2d( NaN , NaN ) )
@@ -349,12 +449,13 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	/**
 	 *  ```
 	 *  plugins /
+	 *  	^
 	 *  	<= Meter
 	 *  	<= Touch
 	 *  ```
 	 **/
 	plugins() {
-		return [].concat( this.Meter() , this.Touch() )
+		return [ ...super.plugins() , this.Meter() , this.Touch() ] as readonly any[]
 	}
 
 	width() {
@@ -417,7 +518,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	@ $mol_mem
-	reset( event? : any , force? : $mol_atom_force ) {
+	reset( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

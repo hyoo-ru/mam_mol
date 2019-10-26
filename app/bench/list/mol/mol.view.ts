@@ -10,14 +10,19 @@ namespace $.$$ {
 	}
 
 	export class $mol_app_bench_list_mol extends $.$mol_app_bench_list_mol {
+
+		@ $mol_mem
+		static listener() {
+			return new $mol_dom_listener( window , 'message' , $mol_fiber_root( ( event : MessageEvent )=> {
+				if( event.data[0] !== 'set data' ) return
+				this.data( event.data[1] )
+			} ) )
+		}
 		
 		@ $mol_mem
-		static data( next? : $mol_app_bench_list_mol_data , force? : $mol_atom_force ) : $mol_app_bench_list_mol_data {
-			window.addEventListener( 'message' , event => {
-				if( event.data[0] !== 'set data' ) return
-				this.data( event.data[1] , $mol_atom_force_cache )
-			} )
-			return { sample : '' , items : [] }
+		static data( next? : $mol_app_bench_list_mol_data ) {
+			this.listener()
+			return next || { sample : '' , items : [] }
 		}
 
 		items() {

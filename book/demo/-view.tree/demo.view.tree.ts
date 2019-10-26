@@ -15,7 +15,7 @@ namespace $ { export class $mol_book_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.View() )
+		return [ this.View() ] as readonly any[]
 	}
 
 	/**
@@ -31,7 +31,7 @@ namespace $ { export class $mol_book_demo extends $mol_demo_large {
 	View() {
 		return (( obj )=>{
 			obj.Placeholder = () => this.Placeholder()
-			obj.pages = () => [].concat( this.Addon() , this.Main() )
+			obj.pages = () => [ this.Addon() , this.Main() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_book(  ) )
 	}
@@ -47,7 +47,7 @@ namespace $ { export class $mol_book_demo extends $mol_demo_large {
 	Placeholder() {
 		return (( obj )=>{
 			obj.minimal_width = () => 200
-			obj.sub = () => [].concat( " Placeholder" )
+			obj.sub = () => [ " Placeholder" ] as readonly any[]
 			return obj
 		})( new this.$.$mol_book_placeholder(  ) )
 	}
@@ -63,7 +63,7 @@ namespace $ { export class $mol_book_demo extends $mol_demo_large {
 	Addon() {
 		return (( obj )=>{
 			obj.minimal_width = () => 250
-			obj.sub = () => [].concat( " Addon" )
+			obj.sub = () => [ " Addon" ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -79,7 +79,7 @@ namespace $ { export class $mol_book_demo extends $mol_demo_large {
 	Main() {
 		return (( obj )=>{
 			obj.minimal_width = () => 400
-			obj.sub = () => [].concat( " Main" )
+			obj.sub = () => [ " Main" ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	path() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -33,7 +33,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	expanded( val? : any , force? : $mol_atom_force ) {
+	expanded( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -64,13 +64,26 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 
 	/**
 	 *  ```
+	 *  Tools $mol_view sub <= tools
+	 *  ```
+	 **/
+	@ $mol_mem
+	Tools() {
+		return (( obj )=>{
+			obj.sub = () => this.tools()
+			return obj
+		})( new this.$.$mol_view(  ) )
+	}
+
+	/**
+	 *  ```
 	 *  tools /
 	 *  	<= Type
 	 *  	<= Object
 	 *  ```
 	 **/
 	tools() {
-		return [].concat( this.Type() , this.Object() )
+		return [ this.Type() , this.Object() ] as readonly any[]
 	}
 
 	/**
@@ -99,7 +112,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	type( val? : any , force? : $mol_atom_force ) {
+	type( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "null"
 	}
 
@@ -168,7 +181,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	class( val? : any , force? : $mol_atom_force ) {
+	class( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -178,7 +191,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	object_options() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -203,7 +216,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	content() {
-		return [].concat( this.Bool() , this.Number() , this.String() , this.Bind() , this.List() , this.Dict() , this.Overs() )
+		return [ this.Bool() , this.Number() , this.String() , this.Bind() , this.List() , this.Dict() , this.Overs() ] as readonly any[]
 	}
 
 	/**
@@ -233,7 +246,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value_bool( val? : any , force? : $mol_atom_force ) {
+	value_bool( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -259,7 +272,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value_number( val? : any , force? : $mol_atom_force ) {
+	value_number( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : NaN
 	}
 
@@ -294,7 +307,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	value_string( val? : any , force? : $mol_atom_force ) {
+	value_string( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -326,7 +339,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	bind( val? : any , force? : $mol_atom_force ) {
+	bind( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -336,7 +349,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	bind_options() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -379,21 +392,19 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_prop_add( val? : any , force? : $mol_atom_force ) {
+	event_prop_add( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
 	/**
 	 *  ```
-	 *  List $mol_list rows /
-	 *  	<= list_rows
-	 *  	<= Add
+	 *  List $mol_list rows <= list_rows
 	 *  ```
 	 **/
 	@ $mol_mem
 	List() {
 		return (( obj )=>{
-			obj.rows = () => [].concat( this.list_rows() , this.Add() )
+			obj.rows = () => this.list_rows()
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}
@@ -404,7 +415,51 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	list_rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  Dict $mol_list rows <= pairs
+	 *  ```
+	 **/
+	@ $mol_mem
+	Dict() {
+		return (( obj )=>{
+			obj.rows = () => this.pairs()
+			return obj
+		})( new this.$.$mol_list(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  pairs /
+	 *  ```
+	 **/
+	pairs() {
+		return [  ] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  Overs $mol_list rows <= overs
+	 *  ```
+	 **/
+	@ $mol_mem
+	Overs() {
+		return (( obj )=>{
+			obj.rows = () => this.overs()
+			return obj
+		})( new this.$.$mol_list(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  overs /
+	 *  ```
+	 **/
+	overs() {
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -442,7 +497,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	add_item( val? : any , force? : $mol_atom_force ) {
+	add_item( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -484,30 +539,6 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 
 	/**
 	 *  ```
-	 *  Dict $mol_list rows /
-	 *  	<= pairs
-	 *  	<= Add_pair
-	 *  ```
-	 **/
-	@ $mol_mem
-	Dict() {
-		return (( obj )=>{
-			obj.rows = () => [].concat( this.pairs() , this.Add_pair() )
-			return obj
-		})( new this.$.$mol_list(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  pairs /
-	 *  ```
-	 **/
-	pairs() {
-		return [].concat(  )
-	}
-
-	/**
-	 *  ```
 	 *  Add_pair $mol_bar sub /
 	 *  	<= Add_pair_key
 	 *  	<= Add_pair_submit
@@ -516,7 +547,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	@ $mol_mem
 	Add_pair() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Add_pair_key() , this.Add_pair_submit() )
+			obj.sub = () => [ this.Add_pair_key() , this.Add_pair_submit() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -554,7 +585,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	add_pair_key( val? : any , force? : $mol_atom_force ) {
+	add_pair_key( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -564,7 +595,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	key_suggests() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -578,7 +609,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	Add_pair_submit() {
 		return (( obj )=>{
 			obj.event_click = ( val? : any ) => this.add_pair( val )
-			obj.sub = () => [].concat( this.Add_pair_submit_icon() )
+			obj.sub = () => [ this.Add_pair_submit_icon() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -589,7 +620,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	add_pair( val? : any , force? : $mol_atom_force ) {
+	add_pair( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -603,30 +634,6 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 		return (( obj )=>{
 			return obj
 		})( new this.$.$mol_icon_plus(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  Overs $mol_list rows /
-	 *  	<= overs
-	 *  	<= Add_over
-	 *  ```
-	 **/
-	@ $mol_mem
-	Overs() {
-		return (( obj )=>{
-			obj.rows = () => [].concat( this.overs() , this.Add_over() )
-			return obj
-		})( new this.$.$mol_list(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  overs /
-	 *  ```
-	 **/
-	overs() {
-		return [].concat(  )
 	}
 
 	/**
@@ -664,7 +671,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	add_over( val? : any , force? : $mol_atom_force ) {
+	add_over( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -686,7 +693,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	over_options() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -723,7 +730,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	prop_path( id : any ) {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -742,7 +749,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	prop( path : any , val? : any , force? : $mol_atom_force ) {
+	prop( path : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : (( obj )=>{
 			return obj
 		})( new this.$.$mol_tree(  ) )
@@ -754,7 +761,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	props( name : any , val? : any , force? : $mol_atom_force ) {
+	props( name : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : (( obj )=>{
 			return obj
 		})( new this.$.$mol_tree(  ) )
@@ -775,7 +782,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	@ $mol_mem
-	prop_add( val? : any , force? : $mol_atom_force ) {
+	prop_add( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 

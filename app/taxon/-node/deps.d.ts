@@ -5,4 +5,5 @@ interface $node {
 	"jsdom" : typeof import( "jsdom" )
 	"chokidar" : typeof import( "chokidar" )
 	"fs" : typeof import( "fs" )
+	"node-fetch" : typeof import( "node-fetch" )
 }

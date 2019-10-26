@@ -19,7 +19,7 @@ namespace $ { export class $mol_app_supplies extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	entered( val? : any , force? : $mol_atom_force ) {
+	entered( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -47,11 +47,11 @@ namespace $ { export class $mol_app_supplies extends $mol_book {
 
 	/**
 	 *  ```
-	 *  supplies /
+	 *  supplies /$mol_app_supplies_domain_supply
 	 *  ```
 	 **/
 	supplies() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_app_supplies_domain_supply )[]
 	}
 
 	/**
@@ -60,7 +60,7 @@ namespace $ { export class $mol_app_supplies extends $mol_book {
 	 *  ```
 	 **/
 	tools_root() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -78,7 +78,7 @@ namespace $ { export class $mol_app_supplies extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	supply_id( val? : any , force? : $mol_atom_force ) {
+	supply_id( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 

@@ -15,7 +15,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Page() )
+		return [ this.Page() ] as readonly any[]
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	@ $mol_mem
 	Page() {
 		return (( obj )=>{
-			obj.rows = () => [].concat( this.Title() , this.Panel() )
+			obj.rows = () => [ this.Title() , this.Panel() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}
@@ -44,7 +44,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	Title() {
 		return (( obj )=>{
 			obj.minimal_height = () => 176
-			obj.sub = () => [].concat( this.title() )
+			obj.sub = () => [ this.title() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -71,7 +71,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	panels() {
-		return [].concat( this.Head() , this.List() , this.Foot() )
+		return [ this.Head() , this.List() , this.Foot() ] as readonly any[]
 	}
 
 	/**
@@ -98,7 +98,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	Head_content() {
-		return [].concat( this.Head_complete() , this.Add() )
+		return [ this.Head_complete() , this.Add() ] as readonly any[]
 	}
 
 	/**
@@ -134,7 +134,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	@ $mol_mem
-	completed_all( val? : any , force? : $mol_atom_force ) {
+	completed_all( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -160,7 +160,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	@ $mol_mem
-	task_title_new( val? : any , force? : $mol_atom_force ) {
+	task_title_new( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -170,7 +170,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_add( event? : any , force? : $mol_atom_force ) {
+	event_add( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -189,11 +189,11 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 
 	/**
 	 *  ```
-	 *  task_rows /
+	 *  task_rows /$mol_view
 	 *  ```
 	 **/
 	task_rows() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -218,7 +218,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	foot_content() {
-		return [].concat( this.Pending() , this.Filter() , this.Sweep() )
+		return [ this.Pending() , this.Filter() , this.Sweep() ] as readonly any[]
 	}
 
 	/**
@@ -229,7 +229,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	@ $mol_mem
 	Pending() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.pending_message() )
+			obj.sub = () => [ this.pending_message() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -265,7 +265,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	filterOptions() {
-		return [].concat( this.Filter_all() , this.Filter_active() , this.Filter_completed() )
+		return [ this.Filter_all() , this.Filter_active() , this.Filter_completed() ] as readonly any[]
 	}
 
 	/**
@@ -278,7 +278,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	@ $mol_mem
 	Filter_all() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.filter_all_label() )
+			obj.sub = () => [ this.filter_all_label() ] as readonly any[]
 			obj.arg = () => ({
 			"completed" :  null as any ,
 		})
@@ -305,7 +305,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	@ $mol_mem
 	Filter_active() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.filter_active_label() )
+			obj.sub = () => [ this.filter_active_label() ] as readonly any[]
 			obj.arg = () => ({
 			"completed" :  "false" ,
 		})
@@ -332,7 +332,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	@ $mol_mem
 	Filter_completed() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.filter_completed_label() )
+			obj.sub = () => [ this.filter_completed_label() ] as readonly any[]
 			obj.arg = () => ({
 			"completed" :  "true" ,
 		})
@@ -362,7 +362,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 		return (( obj )=>{
 			obj.enabled = () => this.sweep_enabled()
 			obj.event_click = ( event? : any ) => this.event_sweep( event )
-			obj.sub = () => [].concat( this.sweep_label() )
+			obj.sub = () => [ this.sweep_label() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -382,7 +382,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_sweep( event? : any , force? : $mol_atom_force ) {
+	event_sweep( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -419,7 +419,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	task_completed( id : any , val? : any , force? : $mol_atom_force ) {
+	task_completed( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -429,7 +429,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	task_title( id : any , val? : any , force? : $mol_atom_force ) {
+	task_title( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -439,7 +439,7 @@ namespace $ { export class $mol_app_todomvc extends $mol_scroll {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	event_task_drop( id : any , event? : any , force? : $mol_atom_force ) {
+	event_task_drop( id : any , event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -476,7 +476,7 @@ namespace $ { export class $mol_app_todomvc_add extends $mol_string {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_press( event? : any , force? : $mol_atom_force ) {
+	event_press( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -486,7 +486,7 @@ namespace $ { export class $mol_app_todomvc_add extends $mol_string {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_done( event? : any , force? : $mol_atom_force ) {
+	event_done( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -512,7 +512,7 @@ namespace $ { export class $mol_app_todomvc_task_row extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Complete() , this.Title() , this.Drop() )
+		return [ this.Complete() , this.Title() , this.Drop() ] as readonly any[]
 	}
 
 	/**
@@ -534,7 +534,7 @@ namespace $ { export class $mol_app_todomvc_task_row extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	completed( val? : any , force? : $mol_atom_force ) {
+	completed( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -569,7 +569,7 @@ namespace $ { export class $mol_app_todomvc_task_row extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	title( val? : any , force? : $mol_atom_force ) {
+	title( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -583,7 +583,7 @@ namespace $ { export class $mol_app_todomvc_task_row extends $mol_view {
 	@ $mol_mem
 	Drop() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( "✖" )
+			obj.sub = () => [ "✖" ] as readonly any[]
 			obj.event_click = ( event? : any ) => this.event_drop( event )
 			return obj
 		})( new this.$.$mol_button_typed(  ) )
@@ -595,7 +595,7 @@ namespace $ { export class $mol_app_todomvc_task_row extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_drop( event? : any , force? : $mol_atom_force ) {
+	event_drop( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

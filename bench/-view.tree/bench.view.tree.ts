@@ -25,7 +25,7 @@ namespace $ { export class $mol_bench extends $mol_grid {
 	 *  ```
 	 **/
 	@ $mol_mem
-	col_sort( val? : any , force? : $mol_atom_force ) {
+	col_sort( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -51,28 +51,28 @@ namespace $ { export class $mol_bench extends $mol_grid {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	event_sort_toggle( id : any , val? : any , force? : $mol_atom_force ) {
+	event_sort_toggle( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
 	/**
 	 *  ```
 	 *  col_head_content!id /
-	 *  	<= col_head_label!id
+	 *  	<= col_head_title!id
 	 *  	<= Col_head_sort!id
 	 *  ```
 	 **/
 	col_head_content( id : any ) {
-		return [].concat( this.col_head_label(id) , this.Col_head_sort(id) )
+		return [ this.col_head_title(id) , this.Col_head_sort(id) ] as readonly any[]
 	}
 
 	/**
 	 *  ```
-	 *  col_head_label!id /
+	 *  col_head_title!id \
 	 *  ```
 	 **/
-	col_head_label( id : any ) {
-		return [].concat(  )
+	col_head_title( id : any ) {
+		return ""
 	}
 
 	/**
@@ -95,7 +95,7 @@ namespace $ { export class $mol_bench extends $mol_grid {
 	 *  ```
 	 **/
 	cell_content_number( id : any ) {
-		return [].concat( this.result_value(id) , this.Result_portion(id) )
+		return [ this.result_value(id) , this.Result_portion(id) ] as readonly any[]
 	}
 
 	/**
@@ -162,7 +162,7 @@ namespace $ { export class $mol_bench_head extends $mol_float {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_click( val? : any , force? : $mol_atom_force ) {
+	event_click( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 

@@ -2,20 +2,20 @@ namespace $ { export class $mol_tiler extends $mol_view {
 
 	/**
 	 *  ```
-	 *  sub / <= items
+	 *  sub <= items
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.items() )
+		return this.items()
 	}
 
 	/**
 	 *  ```
-	 *  items /
+	 *  items /$mol_view
 	 *  ```
 	 **/
 	items() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 } }

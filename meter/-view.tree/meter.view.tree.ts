@@ -15,7 +15,7 @@ namespace $ { export class $mol_meter extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	width( val? : any , force? : $mol_atom_force ) {
+	width( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -25,7 +25,7 @@ namespace $ { export class $mol_meter extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	height( val? : any , force? : $mol_atom_force ) {
+	height( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -35,7 +35,7 @@ namespace $ { export class $mol_meter extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	left( val? : any , force? : $mol_atom_force ) {
+	left( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -45,7 +45,7 @@ namespace $ { export class $mol_meter extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	right( val? : any , force? : $mol_atom_force ) {
+	right( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -55,7 +55,7 @@ namespace $ { export class $mol_meter extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	bottom( val? : any , force? : $mol_atom_force ) {
+	bottom( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
@@ -65,7 +65,7 @@ namespace $ { export class $mol_meter extends $mol_plugin {
 	 *  ```
 	 **/
 	@ $mol_mem
-	top( val? : any , force? : $mol_atom_force ) {
+	top( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 

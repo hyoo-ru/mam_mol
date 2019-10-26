@@ -15,7 +15,7 @@ namespace $ { export class $mol_paginator_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Pages() )
+		return [ this.Pages() ] as readonly any[]
 	}
 
 	/**
@@ -37,7 +37,7 @@ namespace $ { export class $mol_paginator_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	page( val? : any , force? : $mol_atom_force ) {
+	page( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 

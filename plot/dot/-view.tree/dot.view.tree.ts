@@ -38,7 +38,7 @@ namespace $ { export class $mol_plot_dot extends $mol_plot_graph {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Curve() )
+		return [ this.Curve() ] as readonly any[]
 	}
 
 	/**

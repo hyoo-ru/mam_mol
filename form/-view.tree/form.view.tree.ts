@@ -29,7 +29,7 @@ namespace $ { export class $mol_form extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	keydown( event? : any , force? : $mol_atom_force ) {
+	keydown( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -39,7 +39,7 @@ namespace $ { export class $mol_form extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	submit( event? : any , force? : $mol_atom_force ) {
+	submit( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -51,7 +51,7 @@ namespace $ { export class $mol_form extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Bar_fields() , this.Bar_buttons() )
+		return [ this.Bar_fields() , this.Bar_buttons() ] as readonly any[]
 	}
 
 	/**
@@ -69,11 +69,11 @@ namespace $ { export class $mol_form extends $mol_view {
 
 	/**
 	 *  ```
-	 *  form_fields /
+	 *  form_fields /$mol_form_field
 	 *  ```
 	 **/
 	form_fields() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_form_field )[]
 	}
 
 	/**
@@ -91,11 +91,11 @@ namespace $ { export class $mol_form extends $mol_view {
 
 	/**
 	 *  ```
-	 *  buttons /
+	 *  buttons /$mol_view
 	 *  ```
 	 **/
 	buttons() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 } }

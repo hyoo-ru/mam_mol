@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_files_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.App() )
+		return [ this.App() ] as readonly any[]
 	}
 
 	/**
@@ -36,11 +36,11 @@ namespace $ { export class $mol_app_files_demo extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  uri_root \https://ajaxexplorer.com:443/User5df12c6/
+	 *  uri_root \http://ajaxexplorer.com/User5df12c6/
 	 *  ```
 	 **/
 	uri_root() {
-		return "https://ajaxexplorer.com:443/User5df12c6/"
+		return "http://ajaxexplorer.com/User5df12c6/"
 	}
 
 } }

@@ -11,14 +11,13 @@ namespace $.$$ {
 		@ $mol_mem
 		rows_visible() {
 			const rows = this.rows()
-			if( !rows ) return null
 			
 			const view_window = this.view_window()
 			
-			return [].concat(
+			return [
 				this.Head() ,
-				rows.slice( view_window.top , view_window.bottom ).valueOf() ,
-			)
+				... rows.slice( view_window.top , view_window.bottom ) ,
+			]
 		}
 		
 		@ $mol_mem
@@ -29,10 +28,9 @@ namespace $.$$ {
 		@ $mol_mem
 		view_window() {
 			const rows = this.rows()
-			if( !rows ) return null
 			
 			const count = rows.length
-			const context = this.context_sub()
+			const context = this.$$
 			const scrollTop = context.$mol_scroll_top()
 			
 			const top = Math.max( 0 , Math.floor( scrollTop / this.row_height() ) - 1 )
@@ -57,20 +55,20 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		head_cells() {
-			return this.col_ids().map( colId => this.Col_head( colId ) )
+			return this.col_ids().map( colId => this.Col_head( colId ) ) as readonly $mol_view[]
 		}
 		
 		col_head_content( colId : string ) {
-			return [ colId ]
+			return [ colId ] as readonly string[]
 		}
 		
 		@ $mol_mem
 		rows() {
-			return this.row_ids().map( id => this.Row( id ) )
+			return this.row_ids().map( id => this.Row( id ) ) as readonly $mol_view[]
 		}
 		
 		cells( row_id : string[] ) {
-			return this.col_ids().map( col_id => this.Cell({ row : row_id , col : col_id }) )
+			return this.col_ids().map( col_id => this.Cell({ row : row_id , col : col_id }) ) as readonly $mol_view[]
 		}
 		
 		@ $mol_mem_key
@@ -121,7 +119,7 @@ namespace $.$$ {
 			const record = this.record( rowFirst[ rowFirst.length - 1 ] )
 			if( !record ) return []
 			
-			return Object.keys( record )
+			return Object.keys( record ) as readonly string[]
 		}
 		
 		@ $mol_mem
@@ -129,7 +127,7 @@ namespace $.$$ {
 			const hierarchy : { [ id : string ] : $mol_grid_node } = {}
 			const root = hierarchy[ '' ] = {
 				id : '' ,
-				parent : null as $mol_grid_node ,
+				parent : null as any as $mol_grid_node ,
 				sub : [] as $mol_grid_node[] ,
 			}
 			this.record_ids().map( id => {
@@ -167,7 +165,7 @@ namespace $.$$ {
 			
 			this.row_sub_ids( this.row_root_id() ).forEach( child => add( child ) )
 			
-			return next
+			return next as readonly string[][]
 		}
 		
 		row_expanded( row_id : string[] , next? : boolean ) {
@@ -191,8 +189,8 @@ namespace $.$$ {
 	
 	export class $mol_grid_table extends $.$mol_grid_table {
 		
-		@ $mol_mem
-		context_sub( ) {
+		@ $mol_atom2_field
+		get $$( ) {
 			return this.$.$mol_ambient({
 				$mol_scroll_top : ()=> this.$.$mol_scroll_top() - this.offset() ,
 			})			

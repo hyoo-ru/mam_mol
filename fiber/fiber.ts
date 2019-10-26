@@ -182,6 +182,7 @@ namespace $ {
 
 		static quant = 32
 		static deadline = 0
+		static liveline = 0
 
 		static current = null as null | $mol_fiber
 		
@@ -192,8 +193,11 @@ namespace $ {
 	
 			while( $mol_fiber.queue.length > 0 ) {
 
-				if( Date.now() > $mol_fiber.deadline ) {
+				const now = Date.now()
+
+				if( now >= $mol_fiber.deadline ) {
 					$mol_fiber.schedule()
+					$mol_fiber.liveline = now
 					return 
 				}
 
@@ -208,10 +212,21 @@ namespace $ {
 
 			if( !$mol_fiber.scheduled ) {
 
-				$mol_fiber.scheduled = new $mol_after_frame( ()=> {
-					$mol_fiber.deadline = Math.max( $mol_fiber.deadline , Date.now() + $mol_fiber.quant )
+				$mol_fiber.scheduled = new $mol_after_frame( async ()=> {
+					
+					const now = Date.now()
+					let quant = $mol_fiber.quant
+					
+					if( $mol_fiber.liveline ) {
+						quant = Math.max( quant , Math.floor( ( now - $mol_fiber.liveline ) / 2 ) )
+						$mol_fiber.liveline = 0
+					}
+					
+					$mol_fiber.deadline = now + quant
 					$mol_fiber.scheduled = null
-					$mol_fiber.tick()
+					
+					await $mol_fiber.tick()
+
 				} )
 
 			}
@@ -245,17 +260,16 @@ namespace $ {
 			
 			value = this.$.$mol_conform( value , this.value )
 			
-			if( !$mol_compare_any( this.value , value ) ) {
+			if( this.error || !Object.is( this.value , value ) ) {
 		
-				this.$.$mol_log2.info( this , $mol_fiber_token_changed1 , value , $mol_fiber_token_changed2 , this.value )
+				this.$.$mol_log2.info( this , $mol_fiber_token_changed1 , value , $mol_fiber_token_changed2 , this.error || this.value )
 				
 				this.obsolete_slaves()
 				
 				this.forget()
 				
 			} else {
-				this.$.$mol_log2.info( this , $mol_fiber_token_actualized )
-				if( this.error ) this.obsolete_slaves()
+				this.$.$mol_log2.info( this , $mol_fiber_token_actualized , value )
 			}
 			
 			this.error = null
@@ -270,7 +284,7 @@ namespace $ {
 			
 			this.complete()	
 			
-			this.$.$mol_log2.info( this , $mol_fiber_token_failed )
+			this.$.$mol_log2.info( this , $mol_fiber_token_failed , error )
 			
 			this.error = error
 
@@ -281,7 +295,7 @@ namespace $ {
 
 		wait( promise : PromiseLike< Value > ) : PromiseLike< Value > {
 			this.error = promise
-			this.$.$mol_log2.info( this , $mol_fiber_token_sleeped )
+			this.$.$mol_log2.info( this , $mol_fiber_token_sleeped , promise )
 			this.cursor = $mol_fiber_status.obsolete
 			return promise
 		}
@@ -305,14 +319,13 @@ namespace $ {
 			this.push( this.calculate() )
 		}
 
+		@ $mol_log2_indent.method
 		update() {
 
 			const slave = $mol_fiber.current
 			
 			try {
 					
-				this.error = null
-				
 				this.limit()
 				
 				$mol_fiber.current = this
@@ -359,18 +372,10 @@ namespace $ {
 
 		limit() {
 
+			if( !$mol_fiber.deadline ) return
 			if( !$mol_fiber.current ) return
 
-			const now = Date.now()
-
-			const overtime = now - $mol_fiber.deadline
-			if( overtime < 0 ) return
-
-			/// after debugger
-			if( overtime > 500 ) {
-				$mol_fiber.deadline = now + $mol_fiber.quant
-				return
-			}
+			if( Date.now() < $mol_fiber.deadline ) return
 
 			this.$.$mol_fail_hidden( $mol_fiber.schedule() )
 		}
@@ -438,12 +443,7 @@ namespace $ {
 		}
 
 		[ $mol_dev_format_head ]() {
-			return $mol_dev_format_span( {} ,
-				$mol_dev_format_native( this ) ,
-				$mol_dev_format_accent( '❨' ) ,
-				$mol_dev_format_auto( this.error || this.value ) ,
-				$mol_dev_format_accent( '❩' ) ,
-			)
+			return $mol_dev_format_native( this )
 		}
 
 	}

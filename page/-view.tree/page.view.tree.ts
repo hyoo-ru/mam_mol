@@ -9,7 +9,7 @@ namespace $ { export class $mol_page extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Head() , this.Body() , this.Foot() )
+		return [ this.Head() , this.Body() , this.Foot() ] as readonly any[]
 	}
 
 	/**
@@ -38,7 +38,7 @@ namespace $ { export class $mol_page extends $mol_view {
 	 *  ```
 	 **/
 	head() {
-		return [].concat( this.Title() , this.Tools() )
+		return [ this.Title() , this.Tools() ] as readonly any[]
 	}
 
 	/**
@@ -51,7 +51,7 @@ namespace $ { export class $mol_page extends $mol_view {
 	@ $mol_mem
 	Title() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.title() )
+			obj.sub = () => [ this.title() ] as readonly any[]
 			obj.event_click = ( val? : any ) => this.event_top( val )
 			return obj
 		})( new this.$.$mol_button(  ) )
@@ -63,7 +63,7 @@ namespace $ { export class $mol_page extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_top( val? : any , force? : $mol_atom_force ) {
+	event_top( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -82,11 +82,11 @@ namespace $ { export class $mol_page extends $mol_view {
 
 	/**
 	 *  ```
-	 *  tools /
+	 *  tools /$mol_view_content
 	 *  ```
 	 **/
 	tools() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -111,17 +111,17 @@ namespace $ { export class $mol_page extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	body_scroll_top( val? : any , force? : $mol_atom_force ) {
+	body_scroll_top( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : 0
 	}
 
 	/**
 	 *  ```
-	 *  body /
+	 *  body /$mol_view_content
 	 *  ```
 	 **/
 	body() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -144,11 +144,11 @@ namespace $ { export class $mol_page extends $mol_view {
 
 	/**
 	 *  ```
-	 *  foot /
+	 *  foot /$mol_view
 	 *  ```
 	 **/
 	foot() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 } }

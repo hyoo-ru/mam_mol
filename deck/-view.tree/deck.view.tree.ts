@@ -4,28 +4,37 @@ namespace $ { export class $mol_deck extends $mol_list {
 	 *  ```
 	 *  items / *
 	 *  	title \
-	 *  	Content $mol_view
+	 *  	Content <= Content
 	 *  ```
 	 **/
-	@ $mol_mem
 	items() {
-		return [].concat( ({
+		return [ ({
 			"title" :  "" ,
-			"Content" :  (( obj )=>{
-			return obj
-		})( new this.$.$mol_view(  ) ) ,
-		}) )
+			"Content" :  this.Content() ,
+		}) ] as readonly any[]
 	}
 
 	/**
 	 *  ```
-	 *  rows /
+	 *  Content $mol_view
+	 *  ```
+	 **/
+	@ $mol_mem
+	Content() {
+		return (( obj )=>{
+			return obj
+		})( new this.$.$mol_view(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  rows /$mol_view
 	 *  	<= Switch
 	 *  	<= Content
 	 *  ```
 	 **/
 	rows() {
-		return [].concat( this.Switch() , this.Content() )
+		return [ this.Switch() , this.Content() ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -50,7 +59,7 @@ namespace $ { export class $mol_deck extends $mol_list {
 	 *  ```
 	 **/
 	@ $mol_mem
-	current( val? : any , force? : $mol_atom_force ) {
+	current( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "0"
 	}
 
@@ -62,15 +71,6 @@ namespace $ { export class $mol_deck extends $mol_list {
 	switch_options() {
 		return ({
 		})
-	}
-
-	/**
-	 *  ```
-	 *  Content null
-	 *  ```
-	 **/
-	Content() {
-		return null as any
 	}
 
 } }

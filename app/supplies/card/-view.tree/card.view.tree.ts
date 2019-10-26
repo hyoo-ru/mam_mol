@@ -24,7 +24,7 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Card() )
+		return [ this.Card() ] as readonly any[]
 	}
 
 	/**
@@ -54,13 +54,13 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 
 	/**
 	 *  ```
-	 *  Group $mol_row sub / <= items
+	 *  Group $mol_row sub <= items
 	 *  ```
 	 **/
 	@ $mol_mem
 	Group() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.items() )
+			obj.sub = () => this.items()
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -74,21 +74,21 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	 *  ```
 	 **/
 	items() {
-		return [].concat( this.Code_item() , this.Cost_item() , this.Provider_item() )
+		return [ this.Code_item() , this.Cost_item() , this.Provider_item() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
 	 *  Code_item $mol_labeler
 	 *  	title <= code_title
-	 *  	content <= code
+	 *  	content / <= code
 	 *  ```
 	 **/
 	@ $mol_mem
 	Code_item() {
 		return (( obj )=>{
 			obj.title = () => this.code_title()
-			obj.content = () => this.code()
+			obj.content = () => [ this.code() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -115,14 +115,14 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	 *  ```
 	 *  Cost_item $mol_labeler
 	 *  	title <= cost_title
-	 *  	content <= Cost
+	 *  	content / <= Cost
 	 *  ```
 	 **/
 	@ $mol_mem
 	Cost_item() {
 		return (( obj )=>{
 			obj.title = () => this.cost_title()
-			obj.content = () => this.Cost()
+			obj.content = () => [ this.Cost() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -166,14 +166,14 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	 *  ```
 	 *  Provider_item $mol_labeler
 	 *  	title <= provider_title
-	 *  	content <= provider_name
+	 *  	content / <= provider_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Provider_item() {
 		return (( obj )=>{
 			obj.title = () => this.provider_title()
-			obj.content = () => this.provider_name()
+			obj.content = () => [ this.provider_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}

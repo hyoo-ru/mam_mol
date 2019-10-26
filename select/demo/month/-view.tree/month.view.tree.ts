@@ -15,7 +15,7 @@ namespace $ { export class $mol_select_demo_month extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Month() )
+		return [ this.Month() ] as readonly any[]
 	}
 
 	/**
@@ -42,7 +42,7 @@ namespace $ { export class $mol_select_demo_month extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	month( val? : any , force? : $mol_atom_force ) {
+	month( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "jan"
 	}
 

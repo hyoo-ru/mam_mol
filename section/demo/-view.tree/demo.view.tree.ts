@@ -15,7 +15,7 @@ namespace $ { export class $mol_section_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Text() )
+		return [ this.Text() ] as readonly any[]
 	}
 
 	/**
@@ -26,7 +26,7 @@ namespace $ { export class $mol_section_demo extends $mol_demo_large {
 	@ $mol_mem
 	Text() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Section() )
+			obj.sub = () => [ this.Section() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -34,14 +34,14 @@ namespace $ { export class $mol_section_demo extends $mol_demo_large {
 	/**
 	 *  ```
 	 *  Section $mol_section
-	 *  	head \Section header
+	 *  	head / \Section header
 	 *  	Content <= Section_content
 	 *  ```
 	 **/
 	@ $mol_mem
 	Section() {
 		return (( obj )=>{
-			obj.head = () => "Section header"
+			obj.head = () => [ "Section header" ] as readonly any[]
 			obj.Content = () => this.Section_content()
 			return obj
 		})( new this.$.$mol_section(  ) )

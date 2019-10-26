@@ -2,11 +2,11 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 
 	/**
 	 *  ```
-	 *  row_ids /
+	 *  row_ids /string[]
 	 *  ```
 	 **/
 	row_ids() {
-		return [].concat(  )
+		return [  ] as readonly ( string[] )[]
 	}
 
 	/**
@@ -24,7 +24,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	col_ids() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -70,21 +70,21 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Table() )
+		return [ this.Table() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
 	 *  Table $mol_grid_table
 	 *  	offset <= gap_top
-	 *  	sub / <= rows_visible
+	 *  	sub <= rows_visible
 	 *  ```
 	 **/
 	@ $mol_mem
 	Table() {
 		return (( obj )=>{
 			obj.offset = () => this.gap_top()
-			obj.sub = () => [].concat( this.rows_visible() )
+			obj.sub = () => this.rows_visible()
 			return obj
 		})( new this.$.$mol_grid_table(  ) )
 	}
@@ -100,11 +100,11 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 
 	/**
 	 *  ```
-	 *  rows_visible /
+	 *  rows_visible /$mol_view
 	 *  ```
 	 **/
 	rows_visible() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -113,7 +113,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -143,11 +143,11 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 
 	/**
 	 *  ```
-	 *  head_cells /
+	 *  head_cells /$mol_view
 	 *  ```
 	 **/
 	head_cells() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -168,11 +168,11 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 
 	/**
 	 *  ```
-	 *  cells!id /
+	 *  cells!id /$mol_view
 	 *  ```
 	 **/
 	cells( id : any ) {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -198,13 +198,13 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 
 	/**
 	 *  ```
-	 *  Cell_text!id $mol_grid_cell sub / <= cell_content_text!id
+	 *  Cell_text!id $mol_grid_cell sub <= cell_content_text!id
 	 *  ```
 	 **/
 	@ $mol_mem_key
 	Cell_text( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.cell_content_text(id) )
+			obj.sub = () => this.cell_content_text(id)
 			return obj
 		})( new this.$.$mol_grid_cell(  ) )
 	}
@@ -220,22 +220,22 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 
 	/**
 	 *  ```
-	 *  cell_content!id /
+	 *  cell_content!id /$mol_view_content
 	 *  ```
 	 **/
 	cell_content( id : any ) {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
 	 *  ```
-	 *  Cell_number!id $mol_grid_number sub / <= cell_content_number!id
+	 *  Cell_number!id $mol_grid_number sub <= cell_content_number!id
 	 *  ```
 	 **/
 	@ $mol_mem_key
 	Cell_number( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.cell_content_number(id) )
+			obj.sub = () => this.cell_content_number(id)
 			return obj
 		})( new this.$.$mol_grid_number(  ) )
 	}
@@ -253,25 +253,25 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 *  Col_head!id $mol_float
 	 *  	dom_name \th
-	 *  	sub / <= col_head_content!id
+	 *  	sub <= col_head_content!id
 	 *  ```
 	 **/
 	@ $mol_mem_key
 	Col_head( id : any ) {
 		return (( obj )=>{
 			obj.dom_name = () => "th"
-			obj.sub = () => [].concat( this.col_head_content(id) )
+			obj.sub = () => this.col_head_content(id)
 			return obj
 		})( new this.$.$mol_float(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  col_head_content!id /
+	 *  col_head_content!id /$mol_view_content
 	 *  ```
 	 **/
 	col_head_content( id : any ) {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -307,7 +307,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	cell_expanded( id : any , val? : any , force? : $mol_atom_force ) {
+	cell_expanded( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -317,7 +317,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	Cell_content( id : any ) {
-		return [].concat( this.Cell_dimmer(id) )
+		return [ this.Cell_dimmer(id) ] as readonly any[]
 	}
 
 	/**
@@ -464,11 +464,11 @@ namespace $ { export class $mol_grid_row extends $mol_view {
 
 	/**
 	 *  ```
-	 *  cells /
+	 *  cells /$mol_view
 	 *  ```
 	 **/
 	cells() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 } }

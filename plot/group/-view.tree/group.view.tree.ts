@@ -24,7 +24,7 @@ namespace $ { export class $mol_plot_group extends $mol_plot_graph {
 	 *  ```
 	 **/
 	graphs() {
-		return [].concat(  ) as readonly ( $mol_plot_graph )[]
+		return [  ] as readonly ( $mol_plot_graph )[]
 	}
 
 	/**
@@ -46,7 +46,7 @@ namespace $ { export class $mol_plot_group extends $mol_plot_graph {
 	 *  ```
 	 **/
 	graph_samples() {
-		return [].concat(  ) as readonly ( $mol_view )[]
+		return [  ] as readonly ( $mol_view )[]
 	}
 
 } }

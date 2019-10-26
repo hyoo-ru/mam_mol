@@ -6,8 +6,17 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	value_overrided( id : any , val? : any , force? : $mol_atom_force ) {
+	value_overrided( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
+	}
+
+	/**
+	 *  ```
+	 *  tools_main /
+	 *  ```
+	 **/
+	tools_main() {
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -19,17 +28,14 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	pages() {
-		return [].concat( this.Preview_page() , this.Editor_page() , this.Source_page() )
+		return [ this.Preview_page() , this.Editor_page() , this.Source_page() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
 	 *  Preview_page $mol_page
 	 *  	title <= preview_title
-	 *  	tools /
-	 *  		<= Source_link
-	 *  		<= Edit
-	 *  		<= tools_main
+	 *  	tools <= preview_tools
 	 *  	body / <= Selector
 	 *  	minimal_width 400
 	 *  ```
@@ -38,8 +44,8 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	Preview_page() {
 		return (( obj )=>{
 			obj.title = () => this.preview_title()
-			obj.tools = () => [].concat( this.Source_link() , this.Edit() , this.tools_main() )
-			obj.body = () => [].concat( this.Selector() )
+			obj.tools = () => this.preview_tools()
+			obj.body = () => [ this.Selector() ] as readonly any[]
 			obj.minimal_width = () => 400
 			return obj
 		})( new this.$.$mol_page(  ) )
@@ -56,6 +62,17 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 
 	/**
 	 *  ```
+	 *  preview_tools /
+	 *  	<= Source_link
+	 *  	<= Edit
+	 *  ```
+	 **/
+	preview_tools() {
+		return [ this.Source_link() , this.Edit() ] as readonly any[]
+	}
+
+	/**
+	 *  ```
 	 *  Source_link $mol_link
 	 *  	hint <= source_title
 	 *  	sub / <= Source_icon
@@ -66,7 +83,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	Source_link() {
 		return (( obj )=>{
 			obj.hint = () => this.source_title()
-			obj.sub = () => [].concat( this.Source_icon() )
+			obj.sub = () => [ this.Source_icon() ] as readonly any[]
 			obj.arg = () => this.source_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -112,7 +129,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	Edit() {
 		return (( obj )=>{
 			obj.hint = () => this.editor_title()
-			obj.sub = () => [].concat( this.Edit_icon() )
+			obj.sub = () => [ this.Edit_icon() ] as readonly any[]
 			obj.arg = () => ({
 			"path" :  "" ,
 			"source" :  null as any ,
@@ -135,15 +152,6 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 
 	/**
 	 *  ```
-	 *  tools_main /
-	 *  ```
-	 **/
-	tools_main() {
-		return [].concat(  )
-	}
-
-	/**
-	 *  ```
 	 *  Selector $mol_app_studio_selector
 	 *  	sub / <= Block
 	 *  	path?val <=> path?val
@@ -152,7 +160,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	@ $mol_mem
 	Selector() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Block() )
+			obj.sub = () => [ this.Block() ] as readonly any[]
 			obj.path = ( val? : any ) => this.path( val )
 			return obj
 		})( new this.$.$mol_app_studio_selector(  ) )
@@ -176,8 +184,8 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	path( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat(  )
+	path( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [  ] as readonly any[]
 	}
 
 	/**
@@ -196,11 +204,11 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	@ $mol_mem
 	Editor_page() {
 		return (( obj )=>{
-			obj.plugins = () => [].concat( this.Speech_filter() )
+			obj.plugins = () => [ this.Speech_filter() ] as readonly any[]
 			obj.title = () => this.editor_title()
 			obj.event_top = ( val? : any ) => this.event_front_up( val )
-			obj.tools = () => [].concat( this.Editor_close() )
-			obj.body = () => [].concat( this.Filter_bar() , this.Fields() )
+			obj.tools = () => [ this.Editor_close() ] as readonly any[]
+			obj.body = () => [ this.Filter_bar() , this.Fields() ] as readonly any[]
 			obj.minimal_width = () => 400
 			return obj
 		})( new this.$.$mol_page(  ) )
@@ -228,7 +236,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	speech_filter( val? : any , force? : $mol_atom_force ) {
+	speech_filter( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -238,7 +246,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	speech_filter_patterns() {
-		return [].concat( "find (.+?)" )
+		return [ "find (.+?)" ] as readonly any[]
 	}
 
 	/**
@@ -260,7 +268,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	@ $mol_mem
 	Editor_close() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Editor_close_icon() )
+			obj.sub = () => [ this.Editor_close_icon() ] as readonly any[]
 			obj.arg = () => this.editor_close_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -310,7 +318,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	filter_bar_items() {
-		return [].concat( this.Filter() , this.Prop_add() )
+		return [ this.Filter() , this.Prop_add() ] as readonly any[]
 	}
 
 	/**
@@ -344,7 +352,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	prop_filter( val? : any , force? : $mol_atom_force ) {
+	prop_filter( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -360,7 +368,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	Prop_add() {
 		return (( obj )=>{
 			obj.event_click = ( val? : any ) => this.event_add( val )
-			obj.sub = () => [].concat( this.Prop_add_icon() )
+			obj.sub = () => [ this.Prop_add_icon() ] as readonly any[]
 			obj.hint = () => this.prop_add_hint()
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
@@ -372,7 +380,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_add( val? : any , force? : $mol_atom_force ) {
+	event_add( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -416,7 +424,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	fields() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -433,8 +441,8 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 		return (( obj )=>{
 			obj.title = () => this.source_title()
 			obj.minimal_width = () => 400
-			obj.tools = () => [].concat( this.Source_close() )
-			obj.body = () => [].concat( this.Source() )
+			obj.tools = () => [ this.Source_close() ] as readonly any[]
+			obj.body = () => [ this.Source() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
 	}
@@ -458,7 +466,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	@ $mol_mem
 	Source_close() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Source_close_icon() )
+			obj.sub = () => [ this.Source_close_icon() ] as readonly any[]
 			obj.arg = () => this.source_close_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -554,7 +562,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	prop_path( id : any ) {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -563,7 +571,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	prop_default( path : any , val? : any , force? : $mol_atom_force ) {
+	prop_default( path : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : (( obj )=>{
 			return obj
 		})( new this.$.$mol_tree(  ) )
@@ -575,7 +583,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	props_all( name : any , val? : any , force? : $mol_atom_force ) {
+	props_all( name : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : (( obj )=>{
 			return obj
 		})( new this.$.$mol_tree(  ) )
@@ -606,7 +614,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	prop_options() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -615,7 +623,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	view_options() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -624,7 +632,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	prop_add( val? : any , force? : $mol_atom_force ) {
+	prop_add( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -634,7 +642,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	class_name_self( val? : any , force? : $mol_atom_force ) {
+	class_name_self( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "App"
 	}
 
@@ -644,7 +652,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	class_name_base( val? : any , force? : $mol_atom_force ) {
+	class_name_base( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : "$mol_view"
 	}
 
@@ -654,7 +662,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	@ $mol_mem
-	class_self( val? : any , force? : $mol_atom_force ) {
+	class_self( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : (( obj )=>{
 			return obj
 		})( new this.$.$mol_tree(  ) )
@@ -674,7 +682,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 
 } }
 
-namespace $ { export class $mol_app_studio_selector extends $mol_demo_large {
+namespace $ { export class $mol_app_studio_selector extends $mol_view {
 
 	/**
 	 *  ```
@@ -696,7 +704,7 @@ namespace $ { export class $mol_app_studio_selector extends $mol_demo_large {
 	 *  ```
 	 **/
 	@ $mol_mem
-	select( event? : any , force? : $mol_atom_force ) {
+	select( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -706,8 +714,8 @@ namespace $ { export class $mol_app_studio_selector extends $mol_demo_large {
 	 *  ```
 	 **/
 	@ $mol_mem
-	path( val? : any , force? : $mol_atom_force ) {
-		return ( val !== void 0 ) ? val : [].concat(  )
+	path( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : [  ] as readonly any[]
 	}
 
 } }

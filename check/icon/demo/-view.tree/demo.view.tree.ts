@@ -18,7 +18,7 @@ namespace $ { export class $mol_check_icon_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Base() , this.Checked() , this.Disabled() )
+		return [ this.Base() , this.Checked() , this.Disabled() ] as readonly any[]
 	}
 
 	/**
@@ -55,7 +55,7 @@ namespace $ { export class $mol_check_icon_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	base_checked( val? : any , force? : $mol_atom_force ) {
+	base_checked( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -93,7 +93,7 @@ namespace $ { export class $mol_check_icon_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	checked_checked( val? : any , force? : $mol_atom_force ) {
+	checked_checked( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : true
 	}
 

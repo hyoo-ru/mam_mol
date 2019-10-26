@@ -17,7 +17,7 @@ namespace $ { export class $mol_svg_text_box extends $mol_svg_group {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Back() , this.Text() )
+		return [ this.Back() , this.Text() ] as readonly any[]
 	}
 
 	/**
@@ -35,7 +35,7 @@ namespace $ { export class $mol_svg_text_box extends $mol_svg_group {
 		return (( obj )=>{
 			obj.width = () => this.box_width()
 			obj.height = () => this.box_height()
-			obj.pos = () => [].concat( this.box_pos_x() , this.box_pos_y() )
+			obj.pos = () => [ this.box_pos_x() , this.box_pos_y() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_svg_rect(  ) )
 	}
@@ -89,9 +89,9 @@ namespace $ { export class $mol_svg_text_box extends $mol_svg_group {
 	@ $mol_mem
 	Text() {
 		return (( obj )=>{
-			obj.pos = () => [].concat( this.pos_x() , this.pos_y() )
+			obj.pos = () => [ this.pos_x() , this.pos_y() ] as readonly any[]
 			obj.align = () => this.align()
-			obj.sub = () => [].concat( this.text() )
+			obj.sub = () => [ this.text() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_svg_text(  ) )
 	}

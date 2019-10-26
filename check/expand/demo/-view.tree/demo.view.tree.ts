@@ -20,7 +20,7 @@ namespace $ { export class $mol_check_expand_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Labeled_base() , this.Labeled_expanded() , this.Empty_base() , this.Empty_expanded() , this.Disabled() )
+		return [ this.Labeled_base() , this.Labeled_expanded() , this.Empty_base() , this.Empty_expanded() , this.Disabled() ] as readonly any[]
 	}
 
 	/**
@@ -45,7 +45,7 @@ namespace $ { export class $mol_check_expand_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	base_expanded( val? : any , force? : $mol_atom_force ) {
+	base_expanded( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -89,7 +89,7 @@ namespace $ { export class $mol_check_expand_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	expanded_expanded( val? : any , force? : $mol_atom_force ) {
+	expanded_expanded( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : true
 	}
 

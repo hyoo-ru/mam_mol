@@ -1,15 +1,15 @@
 namespace $.$$ {
 	export class $mol_string extends $.$mol_string {
 		
-		_timer = null as any
+		// _timer = null as any
 		
 		event_change( next? : Event ) {
 			if( !next ) return
 			
-			clearTimeout( this._timer )
-			this._timer = setTimeout( $mol_log_group( `${ this }.event_change()` , () => {
+			// clearTimeout( this._timer )
+			// this._timer = setTimeout( $mol_log_group( `${ this }.event_change()` , () => {
 				this.value( ( next.target as HTMLInputElement ).value ) 
-			} ) , this.debounce() )
+			// } ) , this.debounce() )
 		}
 		
 		event_key_press( next? : KeyboardEvent ) { 

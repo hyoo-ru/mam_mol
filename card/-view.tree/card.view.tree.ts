@@ -25,13 +25,13 @@ namespace $ { export class $mol_card extends $mol_list {
 
 	/**
 	 *  ```
-	 *  rows /
+	 *  rows /$mol_view
 	 *  	<= Content
 	 *  	<= Status
 	 *  ```
 	 **/
 	rows() {
-		return [].concat( this.Content() , this.Status() )
+		return [ this.Content() , this.Status() ] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -49,11 +49,11 @@ namespace $ { export class $mol_card extends $mol_list {
 
 	/**
 	 *  ```
-	 *  content /
+	 *  content /$mol_view_content
 	 *  ```
 	 **/
 	content() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -67,7 +67,7 @@ namespace $ { export class $mol_card extends $mol_list {
 	Status() {
 		return (( obj )=>{
 			obj.minimal_height = () => 30
-			obj.sub = () => [].concat( this.status_text() )
+			obj.sub = () => [ this.status_text() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

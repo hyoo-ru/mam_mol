@@ -15,7 +15,7 @@ namespace $ { export class $mol_pop_over extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	hovered( val? : any , force? : $mol_atom_force ) {
+	hovered( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -55,7 +55,7 @@ namespace $ { export class $mol_pop_over extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_show( event? : any , force? : $mol_atom_force ) {
+	event_show( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -65,7 +65,7 @@ namespace $ { export class $mol_pop_over extends $mol_pop {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_hide( event? : any , force? : $mol_atom_force ) {
+	event_hide( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 

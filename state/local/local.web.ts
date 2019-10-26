@@ -1,7 +1,8 @@
 namespace $ {
 
 	self.addEventListener( 'storage' , event => {
-		$.$mol_state_local.value( event.key , void 0 , $mol_atom_force_cache )
+		if( !event.key ) return // @TODO clear support
+		$.$mol_state_local.value( event.key , undefined , $mol_mem_force_cache )
 	} )
 
 }

@@ -9,7 +9,7 @@ namespace $ { export class $mol_speech_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Toggle() , this.Message() , this.Speak() )
+		return [ this.Toggle() , this.Message() , this.Speak() ] as readonly any[]
 	}
 
 	/**
@@ -46,7 +46,7 @@ namespace $ { export class $mol_speech_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	hearing( val? : any , force? : $mol_atom_force ) {
+	hearing( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
@@ -58,7 +58,7 @@ namespace $ { export class $mol_speech_demo extends $mol_demo_small {
 	@ $mol_mem
 	Message() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.message() )
+			obj.sub = () => [ this.message() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -83,7 +83,7 @@ namespace $ { export class $mol_speech_demo extends $mol_demo_small {
 	Speak() {
 		return (( obj )=>{
 			obj.click = ( val? : any ) => this.speak( val )
-			obj.sub = () => [].concat( "Speak" )
+			obj.sub = () => [ "Speak" ] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_major(  ) )
 	}
@@ -94,7 +94,7 @@ namespace $ { export class $mol_speech_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	speak( val? : any , force? : $mol_atom_force ) {
+	speak( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 

@@ -15,7 +15,7 @@ namespace $ { export class $mol_calendar_demo_simple extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Calendar() )
+		return [ this.Calendar() ] as readonly any[]
 	}
 
 	/**

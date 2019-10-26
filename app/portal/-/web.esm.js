@@ -39,173 +39,202 @@ var $;
 ;
 "use strict";
 var $;
-(function ($_1) {
-    let $$;
-    (function ($$) {
-        let $;
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-    class $mol_object {
-        get $() {
-            const owner = this.object_owner();
-            return (owner && owner.$ || $);
+(function ($) {
+    function $mol_class(Class) {
+        Class[Symbol.toStringTag] = Class.name;
+        if (!Class.prototype.hasOwnProperty(Symbol.toStringTag)) {
+            Class.prototype[Symbol.toStringTag] = Class.name;
         }
-        static make(config) {
-            const instance = new this;
-            for (let key in config)
-                instance[key] = config[key];
-            return instance;
+        return Class;
+    }
+    $.$mol_class = $mol_class;
+})($ || ($ = {}));
+//class.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_object2_1;
+    let $mol_object2 = $mol_object2_1 = class $mol_object2 extends Object {
+        constructor(init) {
+            super();
+            if (init)
+                init(this);
         }
-        static toString() {
-            return this.name;
+        static get $$() { return this.$; }
+        get $$() { return this.$; }
+        static make(init) {
+            return new this(init);
         }
-        object_owner(next) {
-            return this['object_owner()'] || (this['object_owner()'] = next);
-        }
-        object_host(next) {
-            return this['object_host()'] || (this['object_host()'] = next);
-        }
-        object_field(next) {
-            return this['object_field()'] || (this['object_field()'] = next) || '';
-        }
-        object_id(next) {
-            return this[Symbol.toStringTag] || (this[Symbol.toStringTag] = next) || '';
-        }
+        static toString() { return this[Symbol.toStringTag] || this.name; }
+        destructor() { }
         toString() {
-            return this.object_id();
+            return this[Symbol.toStringTag];
         }
         toJSON() {
             return this.toString();
         }
-        destructor() { }
-    }
-    $mol_object.$ = $;
-    $_1.$mol_object = $mol_object;
+    };
+    $mol_object2.$ = $;
+    $mol_object2 = $mol_object2_1 = __decorate([
+        $.$mol_class
+    ], $mol_object2);
+    $.$mol_object2 = $mol_object2;
+    Object.defineProperty($mol_object2.prototype, '$', { value: $mol_object2.$, enumerable: false, writable: true });
 })($ || ($ = {}));
-//object.js.map
+//object2.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    let $mol_wrapper = class $mol_wrapper extends $.$mol_object2 {
+        static run(task) {
+            return this.func(task)();
+        }
+        static func(func) {
+            const wrapped = this.wrap(func);
+            Object.defineProperty(wrapped, 'name', {
+                value: `${func.name || '<anonymous>'}|${this.name}`
+            });
+            return wrapped;
+        }
+        static get class() {
+            return (Class) => {
+                const construct = (target, args) => new Class(...args);
+                const handler = {
+                    construct: this.func(construct)
+                };
+                handler[Symbol.toStringTag] = Class.name + '#';
+                return new Proxy(Class, handler);
+            };
+        }
+        static get method() {
+            return (obj, name, descr) => {
+                descr.value = this.func(descr.value);
+                return descr;
+            };
+        }
+    };
+    $mol_wrapper = __decorate([
+        $.$mol_class
+    ], $mol_wrapper);
+    $.$mol_wrapper = $mol_wrapper;
+})($ || ($ = {}));
+//wrapper.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    function $mol_compare_any(a, b) {
-        if (a === b)
-            return true;
-        if (!Number.isNaN(a))
-            return false;
-        if (!Number.isNaN(b))
-            return false;
-        return true;
+    // https://docs.google.com/document/d/1FTascZXT9cxfetuPRT2eXPQKXui4nWFivUnS_335T3U/preview#
+    $['devtoolsFormatters'] = $['devtoolsFormatters'] || [];
+    function $mol_dev_format_register(config) {
+        $['devtoolsFormatters'].push(config);
     }
-    $.$mol_compare_any = $mol_compare_any;
-})($ || ($ = {}));
-//any.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    const cache = new WeakMap();
-    $.$mol_conform_stack = [];
-    function $mol_conform(target, source) {
-        if ($.$mol_compare_any(target, source))
-            return source;
-        if (!target || typeof target !== 'object')
-            return target;
-        if (!source || typeof source !== 'object')
-            return target;
-        if (target instanceof Error)
-            return target;
-        if (source instanceof Error)
-            return target;
-        if (target['constructor'] !== source['constructor'])
-            return target;
-        if (cache.get(target))
-            return target;
-        cache.set(target, true);
-        const conform = $.$mol_conform_handlers.get(target['constructor']);
-        if (!conform)
-            return target;
-        if ($.$mol_conform_stack.indexOf(target) !== -1)
-            return target;
-        $.$mol_conform_stack.push(target);
-        try {
-            return conform(target, source);
-        }
-        finally {
-            $.$mol_conform_stack.pop();
-        }
-    }
-    $.$mol_conform = $mol_conform;
-    $.$mol_conform_handlers = new WeakMap();
-    function $mol_conform_handler(cl, handler) {
-        $.$mol_conform_handlers.set(cl, handler);
-    }
-    $.$mol_conform_handler = $mol_conform_handler;
-    function $mol_conform_array(target, source) {
-        if (source.length !== target.length)
-            return target;
-        for (let i = 0; i < target.length; ++i) {
-            if (!$.$mol_compare_any(source[i], target[i]))
-                return target;
-        }
-        return source;
-    }
-    $mol_conform_handler(Array, $mol_conform_array);
-    $mol_conform_handler(Uint8Array, $mol_conform_array);
-    $mol_conform_handler(Uint16Array, $mol_conform_array);
-    $mol_conform_handler(Uint32Array, $mol_conform_array);
-    $mol_conform_handler(Object, (target, source) => {
-        let count = 0;
-        let equal = true;
-        for (let key in target) {
-            const conformed = $mol_conform(target[key], source[key]);
-            if (conformed !== target[key]) {
-                try {
-                    target[key] = conformed;
-                }
-                catch (error) { }
-                if (!$.$mol_compare_any(conformed, target[key]))
-                    equal = false;
+    $.$mol_dev_format_register = $mol_dev_format_register;
+    $.$mol_dev_format_head = Symbol('$mol_dev_format_head');
+    $.$mol_dev_format_body = Symbol('$mol_dev_format_body');
+    $mol_dev_format_register({
+        header: (val, config = false) => {
+            if (config)
+                return null;
+            if (!val)
+                return null;
+            if ($.$mol_dev_format_head in val) {
+                return val[$.$mol_dev_format_head]();
             }
-            if (!$.$mol_compare_any(conformed, source[key]))
-                equal = false;
-            ++count;
+            return null;
+        },
+        hasBody: val => val[$.$mol_dev_format_body],
+        body: val => val[$.$mol_dev_format_body](),
+    });
+    function $mol_dev_format_native(obj) {
+        if (typeof obj === 'undefined')
+            return $.$mol_dev_format_shade('undefined');
+        if (typeof obj !== 'object')
+            return obj;
+        return [
+            'object',
+            {
+                object: obj,
+                config: true,
+            },
+        ];
+    }
+    $.$mol_dev_format_native = $mol_dev_format_native;
+    function $mol_dev_format_auto(obj) {
+        if (obj == null)
+            return $.$mol_dev_format_shade(String(obj));
+        if (typeof obj === 'object' && $.$mol_dev_format_head in obj) {
+            return obj[$.$mol_dev_format_head]();
         }
-        for (let key in source)
-            if (--count < 0)
-                break;
-        return (equal && count === 0) ? source : target;
+        return [
+            'object',
+            {
+                object: obj,
+                config: false,
+            },
+        ];
+    }
+    $.$mol_dev_format_auto = $mol_dev_format_auto;
+    function $mol_dev_format_element(element, style, ...content) {
+        const styles = [];
+        for (let key in style)
+            styles.push(`${key} : ${style[key]}`);
+        return [
+            element,
+            {
+                style: styles.join(' ; '),
+            },
+            ...content,
+        ];
+    }
+    $.$mol_dev_format_element = $mol_dev_format_element;
+    $.$mol_dev_format_div = $mol_dev_format_element.bind(null, 'div');
+    $.$mol_dev_format_span = $mol_dev_format_element.bind(null, 'span');
+    $.$mol_dev_format_ol = $mol_dev_format_element.bind(null, 'ol');
+    $.$mol_dev_format_li = $mol_dev_format_element.bind(null, 'li');
+    $.$mol_dev_format_table = $mol_dev_format_element.bind(null, 'table');
+    $.$mol_dev_format_tr = $mol_dev_format_element.bind(null, 'tr');
+    $.$mol_dev_format_td = $mol_dev_format_element.bind(null, 'td');
+    $.$mol_dev_format_accent = $.$mol_dev_format_span.bind(null, {
+        'color': 'magenta',
     });
-    $mol_conform_handler(Date, (target, source) => {
-        if (target.getTime() === source.getTime())
-            return source;
-        return target;
+    $.$mol_dev_format_strong = $.$mol_dev_format_span.bind(null, {
+        'font-weight': 'bold',
     });
-    $mol_conform_handler(RegExp, (target, source) => {
-        if (target.toString() === source.toString())
-            return source;
-        return target;
+    $.$mol_dev_format_string = $.$mol_dev_format_span.bind(null, {
+        'color': 'green',
+    });
+    $.$mol_dev_format_shade = $.$mol_dev_format_span.bind(null, {
+        'color': 'gray',
+    });
+    $.$mol_dev_format_indent = $.$mol_dev_format_div.bind(null, {
+        'margin-left': '13px'
     });
 })($ || ($ = {}));
-//conform.js.map
+//format.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    function $mol_fail(error) {
-        throw error;
+    function $mol_maybe(value) {
+        return (value == null) ? [] : [value];
     }
-    $.$mol_fail = $mol_fail;
+    $.$mol_maybe = $mol_maybe;
 })($ || ($ = {}));
-//fail.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail_hidden(error) {
-        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
-    }
-    $.$mol_fail_hidden = $mol_fail_hidden;
-})($ || ($ = {}));
-//hidden.js.map
+//maybe.js.map
 ;
 "use strict";
 var $;
@@ -319,6 +348,1359 @@ var $;
 //log_group.js.map
 ;
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_log2_1;
+    let $mol_log2 = $mol_log2_1 = class $mol_log2 extends $.$mol_wrapper {
+        constructor(host, id, args) {
+            super();
+            this.host = host;
+            this.id = id;
+            this.args = args;
+            this.stream = [];
+            this[Symbol.toStringTag] = host ? `${host}.${id}` : id;
+        }
+        static wrap(task) {
+            const Inner = this;
+            const wrapped = function (...args) {
+                const outer = $mol_log2_1.current;
+                const inner = $mol_log2_1.current = new Inner(this, task.name, args);
+                try {
+                    return task.call(this, ...args);
+                }
+                finally {
+                    $mol_log2_1.current = outer;
+                    inner.flush();
+                }
+            };
+            return wrapped;
+        }
+        flush() {
+            if (this.stream.length === 0)
+                return;
+            console.debug(this);
+        }
+        info(...values) {
+            this.stream.push(new $mol_log2_line(...$mol_log2_1.prefix, ...values));
+        }
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_span({}, ...$.$mol_maybe(this.host).map($.$mol_dev_format_auto), '.', $.$mol_dev_format_strong(this.id), '(', ...this.args.map($.$mol_dev_format_auto), ') ', $.$mol_dev_format_auto(this.stream));
+        }
+        static info(...values) {
+            const excludes = $mol_log2_1.excludes;
+            if (!excludes)
+                return;
+            const skip = excludes.some((regexp, index) => {
+                return regexp && regexp.test(String(values[index])) || false;
+            });
+            if (skip)
+                return;
+            if (!$mol_log2_1.current) {
+                console.warn(new Error(`$mol_log.current is not defined. Wrap entry point to $mol_log!`));
+                $mol_log2_1.current = new $mol_log2_1(null, '$mol_log2_default', []);
+                console.debug($mol_log2_1.current);
+            }
+            $mol_log2_1.current.info(...values);
+        }
+    };
+    $mol_log2.current = null;
+    /**
+     * Enable all logs
+     *
+     * 	$mol_log2.excludes = []
+     *
+     * Exclude all atom logs:
+     *
+     * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
+     *
+     * Disable logs:
+     *
+     * 	$mol_log2.excludes = null
+     */
+    $mol_log2.excludes = null;
+    $mol_log2.prefix = [];
+    $mol_log2 = $mol_log2_1 = __decorate([
+        $.$mol_class
+    ], $mol_log2);
+    $.$mol_log2 = $mol_log2;
+    class $mol_log2_indent extends $.$mol_wrapper {
+        static wrap(task) {
+            const Inner = this;
+            const wrapped = function (...args) {
+                try {
+                    $mol_log2.prefix.push($.$mol_log2_token_indent);
+                    return task.call(this, ...args);
+                }
+                finally {
+                    $mol_log2.prefix.pop();
+                }
+            };
+            return wrapped;
+        }
+    }
+    $.$mol_log2_indent = $mol_log2_indent;
+    let $mol_log2_table = class $mol_log2_table extends $mol_log2 {
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_span({}, $.$mol_dev_format_strong(`${this}(`), ...this.args.map($.$mol_dev_format_auto), $.$mol_dev_format_strong(`) `));
+        }
+        [$.$mol_dev_format_body]() {
+            return $.$mol_dev_format_table({}, ...this.stream.map($.$mol_dev_format_auto));
+        }
+    };
+    $mol_log2_table = __decorate([
+        $.$mol_class
+    ], $mol_log2_table);
+    $.$mol_log2_table = $mol_log2_table;
+    let $mol_log2_hidden = class $mol_log2_hidden extends $mol_log2 {
+        flush() { }
+    };
+    $mol_log2_hidden = __decorate([
+        $.$mol_class
+    ], $mol_log2_hidden);
+    $.$mol_log2_hidden = $mol_log2_hidden;
+    let $mol_log2_line = class $mol_log2_line extends Array {
+        constructor(...items) {
+            super(...items);
+        }
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_tr({}, ...this.map(item => $.$mol_dev_format_td({}, $.$mol_dev_format_auto(item))));
+        }
+    };
+    $mol_log2_line = __decorate([
+        $.$mol_class
+    ], $mol_log2_line);
+    $.$mol_log2_line = $mol_log2_line;
+    let $mol_log2_token = class $mol_log2_token extends Array {
+        constructor(...items) {
+            super(...items);
+        }
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_accent(...this);
+        }
+    };
+    $mol_log2_token = __decorate([
+        $.$mol_class
+    ], $mol_log2_token);
+    $.$mol_log2_token = $mol_log2_token;
+    $.$mol_log2_token_empty = new $mol_log2_token('');
+    $.$mol_log2_token_indent = new $mol_log2_token('\t');
+    $.$mol_log2_legend = new $mol_log2_table(null, '$mol_log2_legend', []);
+    if (!$mol_log2.excludes)
+        $.$mol_log2_legend.info($.$mol_log2_token_empty, 'Use `$mol_log2.excludes : null | RegExp[]` to toggle logs');
+})($ || ($ = {}));
+//log2.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    console.debug($.$mol_log2_legend);
+})($ || ($ = {}));
+//log2.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail(error) {
+        throw error;
+    }
+    $.$mol_fail = $mol_fail;
+})($ || ($ = {}));
+//fail.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_hidden(error) {
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
+    }
+    $.$mol_fail_hidden = $mol_fail_hidden;
+})($ || ($ = {}));
+//hidden.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_after_frame extends $.$mol_object2 {
+        constructor(task) {
+            super();
+            this.task = task;
+            this.id = requestAnimationFrame(task);
+        }
+        destructor() {
+            cancelAnimationFrame(this.id);
+        }
+    }
+    $.$mol_after_frame = $mol_after_frame;
+})($ || ($ = {}));
+//frame.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_compare_any(a, b) {
+        if (a === b)
+            return true;
+        if (!Number.isNaN(a))
+            return false;
+        if (!Number.isNaN(b))
+            return false;
+        return true;
+    }
+    $.$mol_compare_any = $mol_compare_any;
+})($ || ($ = {}));
+//any.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const cache = new WeakMap();
+    $.$mol_conform_stack = [];
+    function $mol_conform(target, source) {
+        if ($.$mol_compare_any(target, source))
+            return source;
+        if (!target || typeof target !== 'object')
+            return target;
+        if (!source || typeof source !== 'object')
+            return target;
+        if (target instanceof Error)
+            return target;
+        if (source instanceof Error)
+            return target;
+        if (target['constructor'] !== source['constructor'])
+            return target;
+        if (cache.get(target))
+            return target;
+        cache.set(target, true);
+        const conform = $.$mol_conform_handlers.get(target['constructor']);
+        if (!conform)
+            return target;
+        if ($.$mol_conform_stack.indexOf(target) !== -1)
+            return target;
+        $.$mol_conform_stack.push(target);
+        try {
+            return conform(target, source);
+        }
+        finally {
+            $.$mol_conform_stack.pop();
+        }
+    }
+    $.$mol_conform = $mol_conform;
+    $.$mol_conform_handlers = new WeakMap();
+    function $mol_conform_handler(cl, handler) {
+        $.$mol_conform_handlers.set(cl, handler);
+    }
+    $.$mol_conform_handler = $mol_conform_handler;
+    function $mol_conform_array(target, source) {
+        if (source.length !== target.length)
+            return target;
+        for (let i = 0; i < target.length; ++i) {
+            if (!$.$mol_compare_any(source[i], target[i]))
+                return target;
+        }
+        return source;
+    }
+    $mol_conform_handler(Array, $mol_conform_array);
+    $mol_conform_handler(Uint8Array, $mol_conform_array);
+    $mol_conform_handler(Uint16Array, $mol_conform_array);
+    $mol_conform_handler(Uint32Array, $mol_conform_array);
+    $mol_conform_handler(Object, (target, source) => {
+        let count = 0;
+        let equal = true;
+        for (let key in target) {
+            const conformed = $mol_conform(target[key], source[key]);
+            if (conformed !== target[key]) {
+                try {
+                    target[key] = conformed;
+                }
+                catch (error) { }
+                if (!$.$mol_compare_any(conformed, target[key]))
+                    equal = false;
+            }
+            if (!$.$mol_compare_any(conformed, source[key]))
+                equal = false;
+            ++count;
+        }
+        for (let key in source)
+            if (--count < 0)
+                break;
+        return (equal && count === 0) ? source : target;
+    });
+    $mol_conform_handler(Date, (target, source) => {
+        if (target.getTime() === source.getTime())
+            return source;
+        return target;
+    });
+    $mol_conform_handler(RegExp, (target, source) => {
+        if (target.toString() === source.toString())
+            return source;
+        return target;
+    });
+})($ || ($ = {}));
+//conform.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_array_trim(array) {
+        let last = array.length;
+        while (last > 0) {
+            --last;
+            const value = array[last];
+            if (value === undefined)
+                array.pop();
+            else
+                break;
+        }
+        return array;
+    }
+    $.$mol_array_trim = $mol_array_trim;
+})($ || ($ = {}));
+//trim.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_fiber_1;
+    function $mol_fiber_defer(calculate) {
+        const fiber = new $mol_fiber;
+        fiber.calculate = calculate;
+        fiber[Symbol.toStringTag] = calculate.name;
+        fiber.schedule();
+        return fiber;
+    }
+    $.$mol_fiber_defer = $mol_fiber_defer;
+    function $mol_fiber_func(calculate) {
+        console.warn('$mol_fiber_func is deprecated. Use $mol_fiber.func instead.');
+        return $mol_fiber.func(calculate);
+    }
+    $.$mol_fiber_func = $mol_fiber_func;
+    function $mol_fiber_root(calculate) {
+        const wrapper = function (...args) {
+            const fiber = new $mol_fiber();
+            fiber.calculate = calculate.bind(this, ...args);
+            return fiber.wake();
+        };
+        wrapper[Symbol.toStringTag] = calculate.name;
+        return wrapper;
+    }
+    $.$mol_fiber_root = $mol_fiber_root;
+    function $mol_fiber_method(obj, name, descr) {
+        console.warn('$mol_fiber_method is deprecated. Use $mol_fiber.method instead.');
+        return $mol_fiber.method(obj, name, descr);
+    }
+    $.$mol_fiber_method = $mol_fiber_method;
+    function $mol_fiber_sync(request) {
+        return function $mol_fiber_sync_wrapper(...args) {
+            const slave = $mol_fiber.current;
+            let master = slave && slave.master;
+            if (!master || master.constructor !== $mol_fiber) {
+                master = new $mol_fiber;
+                master.cursor = -3 /* persist */;
+                master.error = request.call(this, ...args).then($.$mol_log2.func(master.push).bind(master), $.$mol_log2.func(master.fail).bind(master));
+                const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
+                master[Symbol.toStringTag] = prefix + (request.name || $mol_fiber_sync.name);
+            }
+            return master.get();
+        };
+    }
+    $.$mol_fiber_sync = $mol_fiber_sync;
+    async function $mol_fiber_warp() {
+        const deadline = $mol_fiber.deadline;
+        try {
+            $mol_fiber.deadline = Number.POSITIVE_INFINITY;
+            while ($mol_fiber.queue.length)
+                await $mol_fiber.tick();
+            return Promise.resolve();
+        }
+        finally {
+            $mol_fiber.deadline = deadline;
+        }
+    }
+    $.$mol_fiber_warp = $mol_fiber_warp;
+    function $mol_fiber_fence(func) {
+        const prev = $mol_fiber.current;
+        try {
+            $mol_fiber.current = null;
+            return func();
+        }
+        finally {
+            $mol_fiber.current = prev;
+        }
+    }
+    $.$mol_fiber_fence = $mol_fiber_fence;
+    function $mol_fiber_unlimit(task) {
+        const deadline = $mol_fiber.deadline;
+        try {
+            $mol_fiber.deadline = Number.POSITIVE_INFINITY;
+            return task();
+        }
+        finally {
+            $mol_fiber.deadline = deadline;
+        }
+    }
+    $.$mol_fiber_unlimit = $mol_fiber_unlimit;
+    let $mol_fiber_solid = class $mol_fiber_solid extends $.$mol_wrapper {
+        static func(task) {
+            function wrapped(...args) {
+                const deadline = $mol_fiber.deadline;
+                try {
+                    $mol_fiber.deadline = Number.POSITIVE_INFINITY;
+                    return task.call(this, ...args);
+                }
+                catch (error) {
+                    if ('then' in error)
+                        $.$mol_fail(new Error('Solid fiber can not be suspended.'));
+                    return $.$mol_fail_hidden(error);
+                }
+                finally {
+                    $mol_fiber.deadline = deadline;
+                }
+            }
+            Object.defineProperty(wrapped, 'name', {
+                value: `${task.name || ''}|${this.name}`
+            });
+            return $mol_fiber.func(wrapped);
+        }
+    };
+    $mol_fiber_solid = __decorate([
+        $.$mol_class
+    ], $mol_fiber_solid);
+    $.$mol_fiber_solid = $mol_fiber_solid;
+    let $mol_fiber = $mol_fiber_1 = class $mol_fiber extends $.$mol_wrapper {
+        constructor() {
+            super(...arguments);
+            this.value = undefined;
+            this.error = null;
+            this.cursor = 0 /* obsolete */;
+            this.masters = [];
+        }
+        static wrap(task) {
+            return function (...args) {
+                const slave = $mol_fiber_1.current;
+                let master = slave && slave.master;
+                if (!master || master.constructor !== $mol_fiber_1) {
+                    master = new $mol_fiber_1;
+                    master.calculate = task.bind(this, ...args);
+                    const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
+                    master[Symbol.toStringTag] = `${prefix}${task.name}`;
+                }
+                return master.get();
+            };
+        }
+        static async tick() {
+            while ($mol_fiber_1.queue.length > 0) {
+                const now = Date.now();
+                if (now >= $mol_fiber_1.deadline) {
+                    $mol_fiber_1.schedule();
+                    $mol_fiber_1.liveline = now;
+                    return;
+                }
+                const task = $mol_fiber_1.queue.shift();
+                await task();
+            }
+        }
+        static schedule() {
+            if (!$mol_fiber_1.scheduled) {
+                $mol_fiber_1.scheduled = new $.$mol_after_frame(async () => {
+                    const now = Date.now();
+                    let quant = $mol_fiber_1.quant;
+                    if ($mol_fiber_1.liveline) {
+                        quant = Math.max(quant, Math.floor((now - $mol_fiber_1.liveline) / 2));
+                        $mol_fiber_1.liveline = 0;
+                    }
+                    $mol_fiber_1.deadline = now + quant;
+                    $mol_fiber_1.scheduled = null;
+                    await $mol_fiber_1.tick();
+                });
+            }
+            const promise = new this.$.Promise(done => this.queue.push(() => (done(), promise)));
+            return promise;
+        }
+        schedule() {
+            $mol_fiber_1.schedule().then(() => this.wake());
+        }
+        wake() {
+            try {
+                if (this.cursor > -2 /* actual */)
+                    return this.get();
+            }
+            catch (error) {
+                if ('then' in error)
+                    return;
+                $.$mol_fail_hidden(error);
+            }
+        }
+        push(value) {
+            value = this.$.$mol_conform(value, this.value);
+            if (this.error || !Object.is(this.value, value)) {
+                this.$.$mol_log2.info(this, $.$mol_fiber_token_changed1, value, $.$mol_fiber_token_changed2, this.error || this.value);
+                this.obsolete_slaves();
+                this.forget();
+            }
+            else {
+                this.$.$mol_log2.info(this, $.$mol_fiber_token_actualized, value);
+            }
+            this.error = null;
+            this.value = value;
+            this.complete();
+            return value;
+        }
+        fail(error) {
+            this.complete();
+            this.$.$mol_log2.info(this, $.$mol_fiber_token_failed, error);
+            this.error = error;
+            this.obsolete_slaves();
+            return error;
+        }
+        wait(promise) {
+            this.error = promise;
+            this.$.$mol_log2.info(this, $.$mol_fiber_token_sleeped, promise);
+            this.cursor = 0 /* obsolete */;
+            return promise;
+        }
+        complete() {
+            if (this.cursor <= -2 /* actual */)
+                return;
+            for (let index = 0; index < this.masters.length; index += 2) {
+                this.complete_master(index);
+            }
+            this.cursor = -2 /* actual */;
+        }
+        complete_master(master_index) {
+            this.disobey(master_index);
+        }
+        pull() {
+            this.push(this.calculate());
+        }
+        update() {
+            const slave = $mol_fiber_1.current;
+            try {
+                this.limit();
+                $mol_fiber_1.current = this;
+                this.$.$mol_log2.info(this, $.$mol_fiber_token_runned);
+                this.pull();
+            }
+            catch (error) {
+                if ('then' in error) {
+                    if (!slave) {
+                        const listener = () => this.wake();
+                        error = error.then(listener, listener);
+                    }
+                    this.wait(error);
+                }
+                else {
+                    this.fail(error);
+                }
+            }
+            finally {
+                $mol_fiber_1.current = slave;
+            }
+        }
+        get() {
+            if (this.cursor > 0 /* obsolete */)
+                this.$.$mol_fail(new Error('Cyclic dependency'));
+            const slave = $mol_fiber_1.current;
+            if (slave)
+                slave.master = this;
+            if (this.cursor > -2 /* actual */)
+                this.update();
+            if (this.error)
+                return this.$.$mol_fail_hidden(this.error);
+            return this.value;
+        }
+        limit() {
+            if (!$mol_fiber_1.deadline)
+                return;
+            if (!$mol_fiber_1.current)
+                return;
+            if (Date.now() < $mol_fiber_1.deadline)
+                return;
+            this.$.$mol_fail_hidden($mol_fiber_1.schedule());
+        }
+        get master() {
+            return this.masters[this.cursor];
+        }
+        set master(next) {
+            if (this.cursor === -1 /* doubt */)
+                return;
+            const cursor = this.cursor;
+            const prev = this.masters[this.cursor];
+            if (prev !== next) {
+                if (prev)
+                    this.rescue(prev, cursor);
+                this.masters[cursor] = next;
+                this.masters[cursor + 1] = this.obey(next, cursor);
+            }
+            this.cursor = cursor + 2;
+        }
+        rescue(master, master_index) { }
+        obey(master, master_index) { return -1; }
+        lead(slave, master_index) { return -1; }
+        dislead(slave_index) {
+            this.destructor();
+        }
+        disobey(master_index) {
+            const master = this.masters[master_index];
+            if (!master)
+                return;
+            master.dislead(this.masters[master_index + 1]);
+            this.masters[master_index] = undefined;
+            this.masters[master_index + 1] = undefined;
+            this.$.$mol_array_trim(this.masters);
+        }
+        obsolete_slaves() { }
+        obsolete(master_index) { }
+        forget() {
+            this.value = undefined;
+        }
+        abort() {
+            this.forget();
+            return true;
+        }
+        destructor() {
+            if (!this.abort())
+                return;
+            this.$.$mol_log2.info(this, $.$mol_fiber_token_destructed);
+            this.complete();
+        }
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_native(this);
+        }
+    };
+    $mol_fiber.quant = 32;
+    $mol_fiber.deadline = 0;
+    $mol_fiber.liveline = 0;
+    $mol_fiber.current = null;
+    $mol_fiber.scheduled = null;
+    $mol_fiber.queue = [];
+    __decorate([
+        $.$mol_log2.method
+    ], $mol_fiber.prototype, "wake", null);
+    __decorate([
+        $.$mol_log2_indent.method
+    ], $mol_fiber.prototype, "update", null);
+    $mol_fiber = $mol_fiber_1 = __decorate([
+        $.$mol_class
+    ], $mol_fiber);
+    $.$mol_fiber = $mol_fiber;
+    $.$mol_fiber_token_runned = new $.$mol_log2_token(' ► ');
+    $.$mol_fiber_token_changed1 = new $.$mol_log2_token(' ˸ ');
+    $.$mol_fiber_token_changed2 = new $.$mol_log2_token(' 🠈 ');
+    $.$mol_fiber_token_actualized = new $.$mol_log2_token(' ✓ ');
+    $.$mol_fiber_token_sleeped = new $.$mol_log2_token(' 💤 ');
+    $.$mol_fiber_token_failed = new $.$mol_log2_token(' 🔥 ');
+    $.$mol_fiber_token_destructed = new $.$mol_log2_token(' 🕱 ');
+    $.$mol_log2_legend.info($.$mol_fiber_token_runned, '$mol_fiber starts execution');
+    $.$mol_log2_legend.info(new $.$mol_log2_line($.$mol_fiber_token_changed1, $.$mol_fiber_token_changed2), '$mol_fiber value is changed to different value');
+    $.$mol_log2_legend.info($.$mol_fiber_token_actualized, 'Actual $mol_fiber value is same as before');
+    $.$mol_log2_legend.info($.$mol_fiber_token_sleeped, '$mol_fiber can not run now and awaits on promise');
+    $.$mol_log2_legend.info($.$mol_fiber_token_failed, '$mol_fiber is failed and will be throw an Error or Promise');
+    $.$mol_log2_legend.info($.$mol_fiber_token_destructed, '$mol_fiber fully destructed');
+})($ || ($ = {}));
+//fiber.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_owning_map = new WeakMap();
+    function $mol_owning_allow(having) {
+        if (!having)
+            return false;
+        if (typeof having !== 'object')
+            return false;
+        if (!('destructor' in having))
+            return false;
+        return true;
+    }
+    $.$mol_owning_allow = $mol_owning_allow;
+    function $mol_owning_get(having, Owner) {
+        if (!$mol_owning_allow(having))
+            return null;
+        while (true) {
+            const owner = $.$mol_owning_map.get(having);
+            if (!owner)
+                return owner;
+            if (!Owner)
+                return owner;
+            if (owner instanceof Owner)
+                return owner;
+            having = owner;
+        }
+    }
+    $.$mol_owning_get = $mol_owning_get;
+    function $mol_owning_check(owner, having) {
+        if (!$mol_owning_allow(having))
+            return false;
+        if ($.$mol_owning_map.get(having) !== owner)
+            return false;
+        return true;
+    }
+    $.$mol_owning_check = $mol_owning_check;
+    function $mol_owning_catch(owner, having) {
+        if (!$mol_owning_allow(having))
+            return false;
+        if ($.$mol_owning_map.get(having))
+            return false;
+        $.$mol_owning_map.set(having, owner);
+        return true;
+    }
+    $.$mol_owning_catch = $mol_owning_catch;
+})($ || ($ = {}));
+//owning.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $mol_atom2_1;
+    function $mol_atom2_value(task) {
+        const cached = $mol_atom2.cached;
+        try {
+            $mol_atom2.cached = true;
+            return task();
+        }
+        finally {
+            $mol_atom2.cached = cached;
+        }
+    }
+    $.$mol_atom2_value = $mol_atom2_value;
+    let $mol_atom2 = $mol_atom2_1 = class $mol_atom2 extends $.$mol_fiber {
+        constructor() {
+            super(...arguments);
+            this.slaves = [];
+            this._value = undefined;
+            this._error = null;
+        }
+        static get current() {
+            const atom = $.$mol_fiber.current;
+            if (atom instanceof $mol_atom2_1)
+                return atom;
+            return null;
+        }
+        static reap(atom) {
+            this.reap_queue.push(atom);
+            if (this.reap_task)
+                return;
+            this.reap_task = $.$mol_fiber_defer(() => {
+                this.reap_task = null;
+                while (true) {
+                    const atom = this.reap_queue.pop();
+                    if (!atom)
+                        break;
+                    if (!atom.alone)
+                        continue;
+                    atom.destructor();
+                }
+            });
+        }
+        rescue(master, cursor) {
+            if (!(master instanceof $mol_atom2_1))
+                return;
+            const master_index = this.masters.length;
+            const slave_index = this.masters[cursor + 1] + 1;
+            master.slaves[slave_index] = master_index;
+            this.masters.push(master, this.masters[cursor + 1]);
+        }
+        get() {
+            if ($mol_atom2_1.cached)
+                return this.value;
+            const value = super.get();
+            if (value === undefined)
+                $.$mol_fail(new Error(`Not defined: ${this}`));
+            return value;
+        }
+        pull() {
+            if (this.cursor === 0 /* obsolete */)
+                return super.pull();
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_revalidation);
+            const masters = this.masters;
+            for (let index = 0; index < masters.length; index += 2) {
+                const master = masters[index];
+                if (!master)
+                    continue;
+                try {
+                    master.get();
+                }
+                catch (error) {
+                    if ('then' in error)
+                        $.$mol_fail_hidden(error);
+                    this.cursor = 0 /* obsolete */;
+                }
+                if (this.cursor !== 0 /* obsolete */)
+                    continue;
+                this.$.$mol_log2.info(this, $.$mol_atom2_token_stumbled, this._error || this._value);
+                return super.pull();
+            }
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_revalidated, this._error || this._value);
+            this.cursor = -2 /* actual */;
+            return this.value;
+        }
+        get value() { return this._value; }
+        set value(next) {
+            const prev = this._value;
+            if (prev && this.$.$mol_owning_check(this, prev))
+                prev.destructor();
+            if (next && this.$.$mol_owning_catch(this, next)) {
+                next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                next[$.$mol_object_field] = this[$.$mol_object_field];
+            }
+            this._value = next;
+        }
+        get error() { return this._error; }
+        set error(next) {
+            const prev = this._error;
+            if (prev && this.$.$mol_owning_check(this, prev))
+                prev.destructor();
+            if (next && this.$.$mol_owning_catch(this, next)) {
+                next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                next[$.$mol_object_field] = this[$.$mol_object_field];
+            }
+            this._error = next;
+        }
+        put(next) {
+            this.cursor = this.masters.length;
+            next = this.push(next);
+            this.cursor = -3 /* persist */;
+            return next;
+        }
+        complete_master(master_index) {
+            if (this.masters[master_index] instanceof $mol_atom2_1) {
+                if (master_index >= this.cursor)
+                    this.disobey(master_index);
+            }
+            else {
+                this.disobey(master_index);
+            }
+        }
+        obey(master, master_index) {
+            return master.lead(this, master_index);
+        }
+        lead(slave, master_index) {
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_leaded, slave);
+            const slave_index = this.slaves.length;
+            this.slaves[slave_index] = slave;
+            this.slaves[slave_index + 1] = master_index;
+            return slave_index;
+        }
+        dislead(slave_index) {
+            if (slave_index < 0)
+                return; // slave is fiber
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_disleaded, this.slaves[slave_index]);
+            this.slaves[slave_index] = undefined;
+            this.slaves[slave_index + 1] = undefined;
+            $.$mol_array_trim(this.slaves);
+            if (this.cursor > -3 /* persist */ && this.alone)
+                $mol_atom2_1.reap(this);
+        }
+        obsolete(master_index = -1) {
+            if (this.cursor > 0 /* obsolete */) {
+                if (master_index >= this.cursor - 2)
+                    return;
+                const path = [];
+                let current = this;
+                collect: while (current) {
+                    path.push(current);
+                    current = current.masters[current.cursor - 2];
+                }
+                this.$.$mol_fail(new Error(`Obsoleted while calculation \n\n${path.join('\n')}\n`));
+            }
+            if (this.cursor === 0 /* obsolete */)
+                return;
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_obsoleted, this._error || this._value);
+            if (this.cursor !== -1 /* doubt */)
+                this.doubt_slaves();
+            this.cursor = 0 /* obsolete */;
+        }
+        doubt(master_index = -1) {
+            if (this.cursor > 0 /* obsolete */) {
+                if (master_index >= this.cursor - 2)
+                    return;
+                const path = [];
+                let current = this;
+                collect: while (current) {
+                    path.push(current);
+                    current = current.masters[current.cursor - 2];
+                }
+                this.$.$mol_fail(new Error(`Doubted while calculation \n\n${path.join('\n')}\n`));
+            }
+            if (this.cursor >= -1 /* doubt */)
+                return;
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_doubted, this._error || this._value);
+            this.cursor = -1 /* doubt */;
+            this.doubt_slaves();
+        }
+        obsolete_slaves() {
+            for (let index = 0; index < this.slaves.length; index += 2) {
+                const slave = this.slaves[index];
+                if (slave)
+                    slave.obsolete(this.slaves[index + 1]);
+            }
+        }
+        doubt_slaves() {
+            for (let index = 0; index < this.slaves.length; index += 2) {
+                const slave = this.slaves[index];
+                if (slave)
+                    slave.doubt(this.slaves[index + 1]);
+            }
+        }
+        get fresh() {
+            return $.$mol_log2_hidden.func(() => {
+                if (this.cursor !== -2 /* actual */)
+                    return;
+                this.cursor = 0 /* obsolete */;
+                $.$mol_fiber_solid.run(() => this.update());
+            });
+        }
+        get alone() {
+            return this.slaves.length === 0;
+        }
+        get derived() {
+            for (let index = 0; index < this.masters.length; index += 2) {
+                if (this.masters[index])
+                    return true;
+            }
+            return false;
+        }
+        destructor() {
+            if (!this.abort())
+                return;
+            this.$.$mol_log2.info(this, $.$mol_fiber_token_destructed);
+            this.cursor = -3 /* persist */;
+            for (let index = 0; index < this.masters.length; index += 2) {
+                this.complete_master(index);
+            }
+        }
+    };
+    $mol_atom2.cached = false;
+    $mol_atom2.reap_task = null;
+    $mol_atom2.reap_queue = [];
+    __decorate([
+        $.$mol_log2_indent.method
+    ], $mol_atom2.prototype, "obsolete_slaves", null);
+    __decorate([
+        $.$mol_log2_indent.method
+    ], $mol_atom2.prototype, "doubt_slaves", null);
+    $mol_atom2 = $mol_atom2_1 = __decorate([
+        $.$mol_class
+    ], $mol_atom2);
+    $.$mol_atom2 = $mol_atom2;
+    $.$mol_atom2_token_revalidation = new $.$mol_log2_token(' ⏭ ');
+    $.$mol_atom2_token_stumbled = new $.$mol_log2_token(' ⏯ ');
+    $.$mol_atom2_token_revalidated = new $.$mol_log2_token(' ✔ ');
+    $.$mol_atom2_token_leaded = new $.$mol_log2_token(' ☍ ');
+    $.$mol_atom2_token_disleaded = new $.$mol_log2_token(' ☌ ');
+    $.$mol_atom2_token_obsoleted = new $.$mol_log2_token(' ✘ ');
+    $.$mol_atom2_token_doubted = new $.$mol_log2_token(' � ');
+    $.$mol_log2_legend.info($.$mol_atom2_token_revalidation, '$mol_atom2 starts masters cheking for changes');
+    $.$mol_log2_legend.info($.$mol_atom2_token_stumbled, '$mol_atom2 is obsoleted while masters checking');
+    $.$mol_log2_legend.info($.$mol_atom2_token_revalidated, '$mol_atom2 is actual becasue there is no changed masters');
+    $.$mol_log2_legend.info($.$mol_atom2_token_leaded, '$mol_atom2 leads some slave');
+    $.$mol_log2_legend.info($.$mol_atom2_token_disleaded, '$mol_atom2 disleads some slave');
+    $.$mol_log2_legend.info($.$mol_atom2_token_obsoleted, '$mol_atom2 is obsoleted because some master is changed');
+    $.$mol_log2_legend.info($.$mol_atom2_token_doubted, '$mol_atom2 is doubted because some master is doubted or obsoleted');
+})($ || ($ = {}));
+//atom2.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_const(value) {
+        var getter = (() => value);
+        getter['()'] = value;
+        getter[Symbol.toStringTag] = value;
+        return getter;
+    }
+    $.$mol_const = $mol_const;
+})($ || ($ = {}));
+//const.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_atom2_field(proto, name, descr) {
+        if (!descr)
+            descr = Object.getOwnPropertyDescriptor(proto, name);
+        const get = descr ? (descr.get || $.$mol_const(descr.value)) : (() => undefined);
+        const set = descr && descr.set || function (next) { get_cache(this).put(next); };
+        const store = new WeakMap();
+        Object.defineProperty(proto, name + "@", {
+            get: function () {
+                return store.get(this);
+            }
+        });
+        const get_cache = (host) => {
+            let cache = store.get(host);
+            if (!cache) {
+                cache = new $.$mol_atom2;
+                cache.calculate = get.bind(host);
+                cache[Symbol.toStringTag] = `${host}.${name}`;
+                cache.abort = () => {
+                    store.delete(host);
+                    cache.forget();
+                    return true;
+                };
+                store.set(host, cache);
+            }
+            return cache;
+        };
+        return {
+            get() {
+                return get_cache(this).get();
+            },
+            set,
+        };
+    }
+    $.$mol_atom2_field = $mol_atom2_field;
+})($ || ($ = {}));
+//field.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($_1) {
+    let $$;
+    (function ($$) {
+        let $;
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+    $_1.$mol_object_field = Symbol('$mol_object_field');
+    class $mol_object extends Object {
+        constructor() {
+            super(...arguments);
+            this[Symbol.toStringTag] = `${this.constructor.name}.make()`;
+        }
+        static get $$() { return this.$; }
+        get $() {
+            if (this._$)
+                return this._$;
+            const owner = $_1.$mol_owning_get(this);
+            return this._$ = (owner && owner.$$ || $);
+        }
+        set $(next) {
+            this._$ = next;
+        }
+        get $$() { return this.$; }
+        static make(config) {
+            const instance = new this;
+            for (let key in config)
+                instance[key] = config[key];
+            return instance;
+        }
+        static toString() {
+            return this.name;
+        }
+        // 'object_owner()' : any
+        // object_owner( next? : any ) {
+        // 	return this[ 'object_owner()' ] || ( this[ 'object_owner()' ] = next || $mol_owning_get( this ) )
+        // }
+        // 'object_host()' : any
+        // object_host( next? : any ) {
+        // 	return this[ 'object_host()' ] || ( this[ 'object_host()' ] = next || $mol_owning_get( $mol_owning_get( this ) ) )
+        // }
+        // 'object_field()' : string
+        // object_field( next? : string ) {
+        // 	return this[ 'object_field()' ] || ( this[ 'object_field()' ] = next || `${ this }`.replace( /^(.*)\(.*?$/g , '$1' ).replace( /^.*\./g , ''  ) )
+        // }
+        // object_id( next? : string ) {
+        // 	return this[ Symbol.toStringTag ] || ( this[ Symbol.toStringTag ] = next ) || ''
+        // }
+        toString() {
+            return this[Symbol.toStringTag];
+        }
+        toJSON() {
+            return this.toString();
+        }
+        destructor() { }
+    }
+    $mol_object.$ = $;
+    __decorate([
+        $_1.$mol_atom2_field
+    ], $mol_object.prototype, "_$", void 0);
+    $_1.$mol_object = $mol_object;
+    Object.defineProperty($mol_object.prototype, '$', { value: $mol_object.$, enumerable: false, writable: true });
+    $mol_object.prototype[Symbol.toStringTag] = '$mol_object.make()';
+})($ || ($ = {}));
+//object.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    let $mol_mem_force = class $mol_mem_force extends Object {
+        constructor() {
+            super();
+            this.$mol_mem_force = true;
+        }
+        static toString() { return this.name; }
+    };
+    $mol_mem_force.$mol_mem_force = true;
+    $mol_mem_force = __decorate([
+        $.$mol_class
+    ], $mol_mem_force);
+    $.$mol_mem_force = $mol_mem_force;
+    class $mol_mem_force_cache extends $mol_mem_force {
+    }
+    $.$mol_mem_force_cache = $mol_mem_force_cache;
+    class $mol_mem_force_update extends $mol_mem_force {
+    }
+    $.$mol_mem_force_update = $mol_mem_force_update;
+    class $mol_mem_force_fail extends $mol_mem_force_cache {
+    }
+    $.$mol_mem_force_fail = $mol_mem_force_fail;
+})($ || ($ = {}));
+//force.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_mem(proto, name, descr) {
+        const value = descr.value;
+        const store = new WeakMap();
+        Object.defineProperty(proto, name + "()", {
+            get: function () {
+                return store.get(this);
+            }
+        });
+        const get_cache = (host) => {
+            let cache = store.get(host);
+            if (cache)
+                return cache;
+            let cache2 = new $.$mol_atom2;
+            cache2.calculate = value.bind(host);
+            cache2[Symbol.toStringTag] = `${host}.${name}()`;
+            cache2.abort = () => {
+                store.delete(host);
+                cache2.forget();
+                return true;
+            };
+            $.$mol_owning_catch(host, cache2);
+            cache2[$.$mol_object_field] = name;
+            store.set(host, cache2);
+            return cache2;
+        };
+        return {
+            value(next, force) {
+                if (next === undefined) {
+                    const cache = get_cache(this);
+                    if (force === $.$mol_mem_force_cache)
+                        cache.obsolete(Number.NaN);
+                    if ($.$mol_atom2.current)
+                        return cache.get();
+                    else
+                        return $.$mol_fiber.run(() => cache.get());
+                }
+                return $.$mol_fiber.run(() => {
+                    if (force === $.$mol_mem_force_fail)
+                        return get_cache(this).fail(next);
+                    if (force !== $.$mol_mem_force_cache)
+                        next = value.call(this, next);
+                    return get_cache(this).put(next);
+                });
+            }
+        };
+    }
+    $.$mol_mem = $mol_mem;
+})($ || ($ = {}));
+//mem.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    class $mol_window extends $.$mol_object {
+        static size(next, force) {
+            return next || {
+                width: self.innerWidth,
+                height: self.innerHeight,
+            };
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_window, "size", null);
+    $.$mol_window = $mol_window;
+    self.addEventListener('resize', $.$mol_fiber_root($.$mol_log_group(`$mol_window resize`, () => {
+        $mol_window.size(undefined, $.$mol_mem_force_cache);
+    })));
+})($ || ($ = {}));
+//window.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dict_key(value) {
+        if (!value)
+            return value;
+        if (typeof value !== 'object')
+            return value;
+        if (Array.isArray(value))
+            return value.join(' , ');
+        if (Object.getPrototypeOf(Object.getPrototypeOf(value)) === null)
+            return JSON.stringify(value);
+        return value;
+    }
+    $.$mol_dict_key = $mol_dict_key;
+    class $mol_dict extends Map {
+        get(key) {
+            return super.get($mol_dict_key(key));
+        }
+        has(key) {
+            return super.has($mol_dict_key(key));
+        }
+        set(key, value) {
+            return super.set($mol_dict_key(key), value);
+        }
+        delete(key) {
+            return super.delete($mol_dict_key(key));
+        }
+        forEach(back, context) {
+            return super.forEach((val, key, dict) => {
+                if (typeof key === 'string')
+                    key = JSON.parse(key);
+                return back.call(this, val, key, dict);
+            }, context);
+        }
+        [Symbol.iterator]() {
+            const iterator = super[Symbol.iterator]();
+            return {
+                [Symbol.iterator]() {
+                    return this;
+                },
+                next() {
+                    const iteration = iterator.next();
+                    if (!iteration.done) {
+                        const key = iteration.value[0];
+                        if (typeof key === 'string')
+                            iteration.value[0] = JSON.parse(key);
+                    }
+                    return iteration;
+                }
+            };
+        }
+    }
+    $.$mol_dict = $mol_dict;
+})($ || ($ = {}));
+//dict.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_mem_key(proto, name, descr) {
+        const value = descr.value;
+        const store = new WeakMap();
+        Object.defineProperty(proto, name + "()", {
+            get: function () {
+                return store.get(this);
+            }
+        });
+        const get_cache = (host, key) => {
+            let dict = store.get(host);
+            if (!dict)
+                store.set(host, dict = new $.$mol_dict);
+            let cache = dict.get(key);
+            if (cache)
+                return cache;
+            let cache2 = new $.$mol_atom2;
+            cache2[Symbol.toStringTag] = `${host}.${name}(${JSON.stringify(key)})`;
+            cache2.calculate = value.bind(host, key);
+            cache2.abort = () => {
+                dict.delete(key);
+                if (dict.size === 0)
+                    store.delete(host);
+                cache2.forget();
+                return true;
+            };
+            $.$mol_owning_catch(host, cache2);
+            cache2[$.$mol_object_field] = name;
+            dict.set(key, cache2);
+            return cache2;
+        };
+        return {
+            value(key, next, force) {
+                if (next === undefined) {
+                    const cache = get_cache(this, key);
+                    if (force === $.$mol_mem_force_cache)
+                        cache.obsolete();
+                    if ($.$mol_atom2.current)
+                        return cache.get();
+                    else
+                        return $.$mol_fiber.run(() => cache.get());
+                }
+                return $.$mol_fiber.run(() => {
+                    if (force === $.$mol_mem_force_fail)
+                        return get_cache(this, key).fail(next);
+                    if (force !== $.$mol_mem_force_cache)
+                        next = value.call(this, key, next);
+                    return get_cache(this, key).put(next);
+                });
+            }
+        };
+    }
+    $.$mol_mem_key = $mol_mem_key;
+})($ || ($ = {}));
+//key.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_atom2_autorun(calculate) {
+        return $.$mol_atom2.make(atom => {
+            atom.calculate = calculate;
+            atom.obsolete_slaves = atom.schedule;
+            atom.doubt_slaves = atom.schedule;
+            atom[Symbol.toStringTag] = calculate[Symbol.toStringTag] || calculate.name || '$mol_atom2_autorun';
+            atom.schedule();
+        });
+    }
+    $.$mol_atom2_autorun = $mol_atom2_autorun;
+})($ || ($ = {}));
+//autorun.js.map
+;
+"use strict";
+var $;
+(function ($) {
+})($ || ($ = {}));
+//context.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_dom_context = self;
+})($ || ($ = {}));
+//context.web.js.map
+;
+"use strict";
 var $;
 (function ($) {
     class $mol_defer extends $.$mol_object {
@@ -374,517 +1756,24 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    /// Global storage of temporary state
-    $.$mol_state_stack = new Map();
-})($ || ($ = {}));
-//stack.js.map
-;
-void function() {
-
-	if( typeof alert === 'function' ) {
-		var nativeAlert = alert
-		window.alert = function alert( message ) {
-			console.warn( 'Alerts causes atom synchronization problems in IE. Use custom notificator instead.' )
-			return nativeAlert( message )
-		}
-	}
-
-	if( typeof confirm === 'function' ) {
-		var nativeConfirm = confirm
-		window.confirm = function confirm( question ) {
-			console.warn( 'Confirms causes atom synchronization problems in IE. Use custom dialog instead.' )
-			return nativeConfirm( question )
-		}
-	}
-
-	if( typeof confirm === 'function' ) {
-		var nativePrompt = prompt
-		window.prompt = function prompt( question , def ) {
-			console.warn( 'Prompts causes atom synchronization problems in IE. Use custom dialog instead.' )
-			return nativePrompt( question , def )
-		}
-	}
-
-}()
-
-;
-"use strict";
-var $;
-(function ($) {
-    let $mol_atom_status;
-    (function ($mol_atom_status) {
-        $mol_atom_status["obsolete"] = "obsolete";
-        $mol_atom_status["checking"] = "checking";
-        $mol_atom_status["pulling"] = "pulling";
-        $mol_atom_status["actual"] = "actual";
-    })($mol_atom_status = $.$mol_atom_status || ($.$mol_atom_status = {}));
-    function $mol_atom_fence(task) {
-        const slave = $mol_atom.stack[0];
-        $mol_atom.stack[0] = null;
-        try {
-            return task();
-        }
-        finally {
-            $mol_atom.stack[0] = slave;
-        }
-    }
-    $.$mol_atom_fence = $mol_atom_fence;
-    class $mol_atom extends $.$mol_object {
-        constructor(id, handler = next => next) {
+    class $mol_after_tick extends $.$mol_object2 {
+        constructor(task) {
             super();
-            this.masters = null;
-            this.slaves = null;
-            this.status = $mol_atom_status.obsolete;
-            this.object_id(id);
-            this.handler = handler;
+            this.task = task;
+            this.cancelled = false;
+            this.promise = Promise.resolve().then(() => {
+                if (this.cancelled)
+                    return;
+                task();
+            });
         }
         destructor() {
-            this.unlink();
-            this.status = $mol_atom_status.actual;
-            const value = this['value()'];
-            if (value instanceof $.$mol_object) {
-                if (value.object_owner() === this)
-                    value.destructor();
-            }
-            this['value()'] = undefined;
-        }
-        unlink() {
-            this.disobey_all();
-            if (this.slaves)
-                this.check_slaves();
-        }
-        get(force) {
-            const slave = $mol_atom.stack[0];
-            if (slave) {
-                this.lead(slave);
-                slave.obey(this);
-            }
-            this.actualize(force);
-            const value = this['value()'];
-            if (typeof Proxy !== 'function' && value instanceof Error) {
-                throw value;
-            }
-            return value;
-        }
-        actualize(force) {
-            if (this.status === $mol_atom_status.pulling) {
-                throw new Error(`Cyclic atom dependency of ${this}`);
-            }
-            if (!force && this.status === $mol_atom_status.actual)
-                return;
-            const slave = $mol_atom.stack[0];
-            $mol_atom.stack[0] = this;
-            if (!force && this.status === $mol_atom_status.checking) {
-                this.masters.forEach(master => {
-                    if (this.status !== $mol_atom_status.checking)
-                        return;
-                    master.actualize();
-                });
-                if (this.status === $mol_atom_status.checking) {
-                    this.status = $mol_atom_status.actual;
-                }
-            }
-            if (force || this.status !== $mol_atom_status.actual) {
-                const oldMasters = this.masters;
-                this.masters = null;
-                if (oldMasters)
-                    oldMasters.forEach(master => {
-                        master.dislead(this);
-                    });
-                this.status = $mol_atom_status.pulling;
-                const next = this.pull(force);
-                if (next === undefined) {
-                    this.status = $mol_atom_status.actual;
-                }
-                else {
-                    this.push(next);
-                }
-            }
-            $mol_atom.stack[0] = slave;
-        }
-        pull(force) {
-            try {
-                return this.handler(this._next, force);
-            }
-            catch (error) {
-                if (error['$mol_atom_catched'])
-                    return error;
-                if (error instanceof $mol_atom_wait)
-                    return error;
-                console.error(error.stack || error);
-                if (!(error instanceof Error)) {
-                    error = new Error(error.message || error);
-                }
-                error['$mol_atom_catched'] = true;
-                return error;
-            }
-        }
-        set(next) {
-            return this.value(next);
-        }
-        push(next_raw) {
-            if (!(next_raw instanceof $mol_atom_wait)) {
-                this._ignore = this._next;
-                this._next = undefined;
-            }
-            this.status = next_raw === undefined ? $mol_atom_status.obsolete : $mol_atom_status.actual;
-            const prev = this['value()'];
-            let next = (next_raw instanceof Error || prev instanceof Error) ? next_raw : $.$mol_conform(next_raw, prev);
-            if (next === prev)
-                return prev;
-            if (prev instanceof $.$mol_object) {
-                if (prev.object_owner() === this)
-                    prev.destructor();
-            }
-            if (next instanceof $.$mol_object) {
-                next.object_owner(this);
-            }
-            if ((typeof Proxy === 'function') && (next instanceof Error)) {
-                next = new Proxy(next, {
-                    get(target) {
-                        return $.$mol_fail_hidden(target.valueOf());
-                    },
-                    ownKeys(target) {
-                        return $.$mol_fail_hidden(target.valueOf());
-                    },
-                });
-            }
-            this['value()'] = next;
-            $.$mol_log(this, prev, '➔', next);
-            this.obsolete_slaves();
-            return next;
-        }
-        obsolete_slaves() {
-            if (!this.slaves)
-                return;
-            this.slaves.forEach(slave => slave.obsolete());
-        }
-        check_slaves() {
-            if (this.slaves) {
-                this.slaves.forEach(slave => slave.check());
-            }
-            else {
-                $mol_atom.actualize(this);
-            }
-        }
-        check() {
-            //if( this.status === $mol_atom_status.pulling ) {
-            //	throw new Error( `May be obsolated while pulling ${ this }` )
-            //}
-            if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
-                this.status = $mol_atom_status.checking;
-                this.check_slaves();
-            }
-        }
-        obsolete() {
-            if (this.status === $mol_atom_status.obsolete)
-                return;
-            //if( this.status === $mol_atom_status.pulling ) {
-            //	throw new Error( `Obsolated while pulling ${ this }` )
-            //} 
-            this.status = $mol_atom_status.obsolete;
-            this.check_slaves();
-            return;
-        }
-        lead(slave) {
-            if (!this.slaves) {
-                this.slaves = new Set();
-                $mol_atom.unreap(this);
-            }
-            this.slaves.add(slave);
-        }
-        dislead(slave) {
-            if (!this.slaves)
-                return;
-            if (this.slaves.size === 1) {
-                this.slaves = null;
-                $mol_atom.reap(this);
-            }
-            else {
-                this.slaves.delete(slave);
-            }
-        }
-        obey(master) {
-            if (!this.masters)
-                this.masters = new Set();
-            this.masters.add(master);
-        }
-        disobey(master) {
-            if (!this.masters)
-                return;
-            this.masters.delete(master);
-        }
-        disobey_all() {
-            if (!this.masters)
-                return;
-            this.masters.forEach(master => master.dislead(this));
-            this.masters = null;
-        }
-        cache(next) {
-            if (next === undefined)
-                return this['value()'];
-            return this['value()'] = next;
-        }
-        value(next, force) {
-            if (force === $mol_atom_force_cache)
-                return this.push(next);
-            if (next !== undefined) {
-                if (force === $mol_atom_force)
-                    return this.push(next);
-                let next_normal = $.$mol_conform(next, this._ignore);
-                if (next_normal === this._ignore)
-                    return this.get(force);
-                if (!(this['value()'] instanceof Error)) {
-                    next_normal = $.$mol_conform(next, this['value()']);
-                    if (next_normal === this['value()'])
-                        return this.get(force);
-                }
-                this._next = next_normal;
-                this._ignore = next_normal;
-                force = $mol_atom_force_update;
-            }
-            return this.get(force);
-        }
-        static actualize(atom) {
-            $mol_atom.updating.push(atom);
-            $mol_atom.schedule();
-        }
-        static reap(atom) {
-            $mol_atom.reaping.add(atom);
-            $mol_atom.schedule();
-        }
-        static unreap(atom) {
-            $mol_atom.reaping.delete(atom);
-        }
-        static schedule() {
-            if (this.scheduled)
-                return;
-            new $.$mol_defer($.$mol_log_group('$mol_atom.sync()', () => {
-                if (!this.scheduled)
-                    return;
-                this.scheduled = false;
-                this.sync();
-            }));
-            this.scheduled = true;
-        }
-        static sync() {
-            this.schedule();
-            while (true) {
-                const atom = this.updating.shift();
-                if (!atom)
-                    break;
-                if (this.reaping.has(atom))
-                    continue;
-                if (atom.status !== $mol_atom_status.actual)
-                    atom.get();
-            }
-            while (this.reaping.size) {
-                this.reaping.forEach(atom => {
-                    this.reaping.delete(atom);
-                    if (!atom.slaves)
-                        atom.destructor();
-                });
-            }
-            this.scheduled = false;
-        }
-        then(done, fail) {
-            let prev;
-            let next;
-            const atom = new $mol_atom(`${this}.then(${done})`, () => {
-                try {
-                    if (prev == undefined) {
-                        const val = this.get();
-                        if (val instanceof $mol_atom_wait)
-                            return val;
-                        if (val)
-                            val['valueOf']();
-                        prev = val;
-                    }
-                    if (next == undefined) {
-                        const val = done(prev);
-                        if (val instanceof $mol_atom_wait)
-                            return val;
-                        if (val)
-                            val['valueOf']();
-                        next = val;
-                    }
-                    return next;
-                }
-                catch (error) {
-                    if (error instanceof $mol_atom_wait)
-                        return error;
-                    if (fail)
-                        return fail(error);
-                    return error;
-                }
-            });
-            $mol_atom.actualize(atom);
-            return atom;
-        }
-        catch(fail) {
-            return this.then(next => next, fail);
+            this.cancelled = true;
         }
     }
-    $mol_atom.stack = [];
-    $mol_atom.updating = [];
-    $mol_atom.reaping = new Set();
-    $mol_atom.scheduled = false;
-    $.$mol_atom = $mol_atom;
-    $.$mol_state_stack.set('$mol_atom.stack', $mol_atom.stack);
-    function $mol_atom_current() {
-        return $mol_atom.stack[0];
-    }
-    $.$mol_atom_current = $mol_atom_current;
-    class $mol_atom_wait extends Error {
-        constructor() {
-            super(...arguments);
-            this.name = '$mol_atom_wait';
-        }
-    }
-    $.$mol_atom_wait = $mol_atom_wait;
-    class $mol_atom_force extends Object {
-        static toString() { return this.name; }
-    }
-    $.$mol_atom_force = $mol_atom_force;
-    class $mol_atom_force_cache extends $mol_atom_force {
-    }
-    $.$mol_atom_force_cache = $mol_atom_force_cache;
-    class $mol_atom_force_update extends $mol_atom_force {
-    }
-    $.$mol_atom_force_update = $mol_atom_force_update;
+    $.$mol_after_tick = $mol_after_tick;
 })($ || ($ = {}));
-//atom.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dict_key(value) {
-        if (!value)
-            return JSON.stringify(value);
-        if (typeof value !== 'object')
-            return JSON.stringify(value);
-        if (value instanceof Array)
-            return JSON.stringify(value);
-        if (value.constructor === Object)
-            return JSON.stringify(value);
-        return value;
-    }
-    $.$mol_dict_key = $mol_dict_key;
-    class $mol_dict extends Map {
-        get(key) {
-            return super.get($mol_dict_key(key));
-        }
-        has(key) {
-            return super.has($mol_dict_key(key));
-        }
-        set(key, value) {
-            return super.set($mol_dict_key(key), value);
-        }
-        delete(key) {
-            return super.delete($mol_dict_key(key));
-        }
-        forEach(back, context) {
-            return super.forEach((val, key, dict) => {
-                if (typeof key === 'string')
-                    key = JSON.parse(key);
-                return back.call(this, val, key, dict);
-            }, context);
-        }
-        [Symbol.iterator]() {
-            const iterator = super[Symbol.iterator]();
-            return {
-                [Symbol.iterator]() {
-                    return this;
-                },
-                next() {
-                    const iteration = iterator.next();
-                    if (!iteration.done) {
-                        const key = iteration.value[0];
-                        if (typeof key === 'string')
-                            iteration.value[0] = JSON.parse(key);
-                    }
-                    return iteration;
-                }
-            };
-        }
-    }
-    $.$mol_dict = $mol_dict;
-})($ || ($ = {}));
-//dict.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_mem(obj, name, descr) {
-        const value = descr.value;
-        const store = new WeakMap();
-        descr.value = function $mol_mem_value(next, force) {
-            const host = this;
-            let atom = store.get(host);
-            if (!atom) {
-                const id = `${host}.${name}()`;
-                atom = new $.$mol_atom(id, function (...args) {
-                    const v = value.call(host, ...args);
-                    if (v instanceof $.$mol_object) {
-                        if (!v.object_host()) {
-                            v.object_host(host);
-                            v.object_field(name);
-                            v.object_id(id);
-                        }
-                    }
-                    return v;
-                });
-                atom.object_owner(host);
-                const destructor = atom.destructor;
-                atom.destructor = () => {
-                    store.delete(host);
-                    destructor.call(atom);
-                };
-                store.set(host, atom);
-            }
-            return atom.value(next, force);
-        };
-        Object.defineProperty(obj, name + "()", { get: function () { return store.get(this); } });
-        descr.value['value'] = value;
-    }
-    $.$mol_mem = $mol_mem;
-    function $mol_mem_key(obj, name, descr) {
-        const value = descr.value;
-        const store = new WeakMap();
-        descr.value = function $mol_mem_key_value(key, next, force) {
-            const host = this;
-            let dict = store.get(host);
-            if (!dict)
-                store.set(host, dict = new $.$mol_dict);
-            let atom = dict.get(key);
-            if (!atom) {
-                const id = `${host}.${name}(${JSON.stringify(key)})`;
-                atom = new $.$mol_atom(id, function (...args) {
-                    const v = value.call(host, key, ...args);
-                    if (v instanceof $.$mol_object) {
-                        if (!v.object_host()) {
-                            v.object_host(host);
-                            v.object_field(name);
-                            v.object_id(id);
-                        }
-                    }
-                    return v;
-                });
-                const destructor = atom.destructor;
-                atom.destructor = () => {
-                    dict.delete(key);
-                    destructor.call(atom);
-                };
-                dict.set(key, atom);
-            }
-            return atom.value(next, force);
-        };
-        Object.defineProperty(obj, name + "()", { get: function () { return store.get(this); } });
-        void (descr.value['value'] = value);
-    }
-    $.$mol_mem_key = $mol_mem_key;
-})($ || ($ = {}));
-//mem.js.map
+//tick.js.map
 ;
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -895,156 +1784,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    class $mol_window extends $.$mol_object {
-        static size(next, force) {
-            return next || {
-                width: self.innerWidth,
-                height: self.innerHeight,
-            };
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_window, "size", null);
-    $.$mol_window = $mol_window;
-    self.addEventListener('resize', $.$mol_log_group(`$mol_window resize`, () => {
-        $mol_window.size(undefined, $.$mol_atom_force_cache);
-    }));
-})($ || ($ = {}));
-//window.web.js.map
-;
-"use strict";
-var $;
-(function ($) {
-})($ || ($ = {}));
-//context.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_dom_context = self;
-})($ || ($ = {}));
-//context.web.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    class $mol_view_selection extends $.$mol_object {
-        static focused(next, force) {
+    let $mol_view_selection = class $mol_view_selection extends $.$mol_object {
+        static focused(next) {
             if (next === undefined)
                 return [];
-            const node = next[0];
-            const atom = $.$mol_atom_current();
-            new $.$mol_defer(() => {
-                if (node)
-                    return node.focus();
-                const el = atom.cache()[0];
-                if (el)
-                    el.blur();
-            });
-            return undefined;
-        }
-        static position(next, force) {
-            if (next !== undefined) {
-                var start = next.start;
-                var end = next.end;
-                if (!(start <= end))
-                    throw new Error(`Wrong offsets (${start},${end})`);
-                var root = $.$mol_dom_context.document.getElementById(next.id);
-                root.focus();
-                var range = new Range;
-                var cur = root.firstChild;
-                while (cur !== root) {
-                    while (cur.firstChild)
-                        cur = cur.firstChild;
-                    if (cur.nodeValue) {
-                        var length = cur.nodeValue.length;
-                        if (length >= start)
-                            break;
-                        start -= length;
-                    }
-                    while (!cur.nextSibling) {
-                        cur = cur.parentNode;
-                        if (cur === root) {
-                            start = root.childNodes.length;
-                            break;
-                        }
-                    }
-                }
-                range.setStart(cur, start);
-                var cur = root.firstChild;
-                while (cur !== root) {
-                    while (cur.firstChild)
-                        cur = cur.firstChild;
-                    if (cur.nodeValue) {
-                        var length = cur.nodeValue.length;
-                        if (length >= end)
-                            break;
-                        end -= length;
-                    }
-                    while (!cur.nextSibling) {
-                        cur = cur.parentNode;
-                        if (cur === root) {
-                            end = root.childNodes.length;
-                            break;
-                        }
-                    }
-                }
-                range.setEnd(cur, end);
-                var sel = $.$mol_dom_context.document.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(range);
-                return next;
-            }
-            else {
-                var sel = $.$mol_dom_context.document.getSelection();
-                if (sel.rangeCount === 0)
-                    return null;
-                var range = sel.getRangeAt(0);
-                var el = range.commonAncestorContainer;
-                while (el && !el.id)
-                    el = el.parentElement;
-                if (!el)
-                    return { id: null, start: 0, end: 0 };
-                var meter = new Range;
-                meter.selectNodeContents(el);
-                meter.setEnd(range.startContainer, range.startOffset);
-                var startOffset = meter.toString().length;
-                meter.setEnd(range.endContainer, range.endOffset);
-                var endOffset = meter.toString().length;
-                return { id: el.id, start: startOffset, end: endOffset };
-            }
-        }
-        static onFocus(event) {
             const parents = [];
-            let element = event.target;
+            let element = next[0];
             while (element) {
                 parents.push(element);
                 element = element.parentNode;
             }
-            this.focused(parents, $.$mol_atom_force_cache);
-        }
-        static onBlur(event) {
-            const focused = this.focused();
-            setTimeout($.$mol_log_group('$mol_view_selection blur', () => {
-                if (focused !== this.focused())
-                    return;
-                this.focused([], $.$mol_atom_force_cache);
+            new $.$mol_defer($.$mol_log2.func(() => {
+                const element = $.$mol_atom2_value(() => this.focused())[0];
+                if (element)
+                    element.focus();
+                else
+                    $.$mol_dom_context.blur();
             }));
+            return parents;
         }
-    }
+        static focus(event) {
+            this.focused([event.target]);
+        }
+        static blur(event) {
+            this.focused([]);
+        }
+    };
     __decorate([
         $.$mol_mem
     ], $mol_view_selection, "focused", null);
     __decorate([
-        $.$mol_mem
-    ], $mol_view_selection, "position", null);
+        $.$mol_log2.method
+    ], $mol_view_selection, "focus", null);
+    __decorate([
+        $.$mol_log2.method
+    ], $mol_view_selection, "blur", null);
+    $mol_view_selection = __decorate([
+        $.$mol_class
+    ], $mol_view_selection);
     $.$mol_view_selection = $mol_view_selection;
 })($ || ($ = {}));
 //selection.js.map
@@ -1053,11 +1830,12 @@ var $;
 var $;
 (function ($) {
     if ($.$mol_dom_context.document) {
-        $.$mol_dom_context.document.addEventListener('selectionchange', event => {
-            $.$mol_view_selection.position(undefined, $.$mol_atom_force_cache);
-        });
-        $.$mol_dom_context.document.addEventListener('focus', $.$mol_log_group('$mol_view_selection focus', (event) => $.$mol_view_selection.onFocus(event)), true);
-        $.$mol_dom_context.document.addEventListener('blur', (event) => $.$mol_view_selection.onBlur(event), true);
+        $.$mol_dom_context.document.addEventListener('focus', (event) => {
+            new $.$mol_after_tick($.$mol_fiber_root(() => $.$mol_view_selection.focus(event)));
+        }, true);
+        $.$mol_dom_context.document.addEventListener('blur', (event) => {
+            new $.$mol_after_tick($.$mol_fiber_root(() => $.$mol_view_selection.blur(event)));
+        }, true);
     }
 })($ || ($ = {}));
 //selection.web.js.map
@@ -1081,44 +1859,63 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_dom_render_events(el, events) {
-        for (let name in events) {
-            el.addEventListener(name, $.$mol_log_group(el.id + ' ' + name, events[name]), { passive: false });
-        }
+    const cacthed = new WeakMap();
+    function $mol_fail_catch(error) {
+        if (cacthed.get(error))
+            return false;
+        cacthed.set(error, true);
+        return true;
     }
-    $.$mol_dom_render_events = $mol_dom_render_events;
-    function $mol_dom_render_events_async(el, events) {
-        for (let name in events) {
-            el.addEventListener(name, $.$mol_log_group(el.id + ' ' + name, events[name]), { passive: true });
-        }
-    }
-    $.$mol_dom_render_events_async = $mol_dom_render_events_async;
+    $.$mol_fail_catch = $mol_fail_catch;
 })($ || ($ = {}));
-//events.js.map
+//catch.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_render_styles(el, styles) {
+        for (let name in styles) {
+            let val = styles[name];
+            const style = el.style;
+            const cur = style[name];
+            if (typeof val === 'number') {
+                if (parseFloat(cur) == val)
+                    continue;
+                style[name] = `${val}px`;
+            }
+            if (cur !== val)
+                style[name] = val;
+        }
+    }
+    $.$mol_dom_render_styles = $mol_dom_render_styles;
+})($ || ($ = {}));
+//styles.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_dom_render_fields(el, fields) {
+        for (let key in fields) {
+            const val = fields[key];
+            if (val === undefined)
+                continue;
+            // if( el[ key ] === val ) continue
+            el[key] = val;
+        }
+    }
+    $.$mol_dom_render_fields = $mol_dom_render_fields;
+})($ || ($ = {}));
+//fields.js.map
 ;
 "use strict";
 var $;
 (function ($) {
     function $mol_dom_render_children(el, childNodes) {
-        const node_list = [];
-        const node_set = new Set();
-        for (let i = 0; i < childNodes.length; ++i) {
-            let node = childNodes[i];
-            if (node == null)
-                continue;
-            if (Object(node) === node) {
-                if (node['dom_tree'])
-                    node = node['dom_tree']();
-                node_list.push(node);
-                node_set.add(node);
-            }
-            else {
-                node_list.push(String(node));
-            }
-        }
+        const node_set = new Set(childNodes);
         let nextNode = el.firstChild;
-        for (let view_ of node_list) {
-            const view = view_.valueOf();
+        for (let view of childNodes) {
+            if (view == null)
+                continue;
             if (view instanceof $.$mol_dom_context.Node) {
                 while (true) {
                     if (!nextNode) {
@@ -1168,43 +1965,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_dom_render_styles(el, styles) {
-        for (let name in styles) {
-            let val = styles[name];
-            const style = el.style;
-            const cur = style[name];
-            if (typeof val === 'number') {
-                if (parseFloat(cur) == val)
-                    continue;
-                style[name] = `${val}px`;
-            }
-            if (cur !== val)
-                style[name] = val;
-        }
-    }
-    $.$mol_dom_render_styles = $mol_dom_render_styles;
-})($ || ($ = {}));
-//styles.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_render_fields(el, fields) {
-        for (let key in fields) {
-            const val = fields[key];
-            if (val === undefined)
-                continue;
-            // if( el[ key ] === val ) continue
-            el[key] = val;
-        }
-    }
-    $.$mol_dom_render_fields = $mol_dom_render_fields;
-})($ || ($ = {}));
-//fields.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_func_name(func) {
         return func.name;
     }
@@ -1218,6 +1978,22 @@ var $;
 //name.js.map
 ;
 "use strict";
+var $;
+(function ($) {
+    function $mol_deprecated(message) {
+        return function (host, field, descr) {
+            const value = descr.value;
+            descr.value = function $mol_deprecated_wrapper() {
+                console.warn(`${host.constructor.name}::${field} is deprecated. ${message}`);
+                return value.apply(this, arguments);
+            };
+        };
+    }
+    $.$mol_deprecated = $mol_deprecated;
+})($ || ($ = {}));
+//deprecated.js.map
+;
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1226,14 +2002,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    let $$;
-    (function ($$_1) {
-        let $$;
-    })($$ = $.$$ || ($.$$ = {}));
-    let $mol;
-    (function ($mol_1) {
-        let $mol;
-    })($mol = $.$mol || ($.$mol = {}));
     function $mol_view_visible_width() {
         return $.$mol_window.size().width;
     }
@@ -1251,6 +2019,13 @@ var $;
         static Root(id) {
             return new this;
         }
+        autorun() {
+            return $.$mol_atom2_autorun(() => {
+                this.dom_tree();
+                document.title = this.title();
+                return this;
+            });
+        }
         static autobind() {
             const nodes = $.$mol_dom_context.document.querySelectorAll('[mol_view_root]');
             for (let i = nodes.length - 1; i >= 0; --i) {
@@ -1261,8 +2036,8 @@ var $;
                     continue;
                 }
                 const view = View.Root(i);
-                view.dom_tree(nodes.item(i));
-                document.title = view.title();
+                view.dom_node(nodes.item(i));
+                view.autorun();
             }
         }
         title() {
@@ -1270,41 +2045,29 @@ var $;
         }
         focused(next) {
             let node = this.dom_node();
-            const value = $.$mol_view_selection.focused(next === undefined ? undefined : next ? [node] : []) || [];
+            const value = $.$mol_view_selection.focused(next === undefined ? undefined : (next ? [node] : []));
             return value.indexOf(node) !== -1;
-        }
-        context(next) {
-            return next || $;
-        }
-        get $() {
-            return this.context();
-        }
-        set $(next) {
-            this.context(next);
-        }
-        context_sub() {
-            return this.context();
         }
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
         /// Name of element that created when element not found in DOM
         dom_name() {
-            return this.constructor.toString().replace('$', '');
+            return this.constructor.toString().replace('$', '') || 'div';
         }
         /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
         /// Raw child views
         sub() {
-            return null;
+            return [];
         }
-        /// Visible sub views with defined context()
+        /// Visible sub views with defined ambient context
         /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
                 return sub;
-            const context = this.context_sub();
+            const context = this.$$;
             sub.forEach(child => {
                 if (child instanceof $mol_view) {
                     child.$ = context;
@@ -1345,47 +2108,67 @@ var $;
             return this.toString();
         }
         dom_node(next) {
-            const node = next || this.$.$mol_dom_context.document.createElementNS(this.dom_name_space(), this.dom_name());
-            node.setAttribute('id', this.dom_id());
+            const node = next || $.$mol_dom_context.document.createElementNS(this.dom_name_space(), this.dom_name());
+            const id = this.dom_id();
+            node.setAttribute('id', id);
+            node.toString = $.$mol_const('<#' + id + '>');
             $.$mol_dom_render_attributes(node, this.attr_static());
-            $.$mol_dom_render_events(node, this.event());
-            $.$mol_dom_render_events_async(node, this.event_async());
+            const events = this.event();
+            for (let event_name in events) {
+                node.addEventListener(event_name, $.$mol_log2.func($.$mol_fiber_root(events[event_name])), { passive: false });
+            }
             return node;
         }
         dom_tree(next) {
             const node = this.dom_node(next);
             try {
+                $.$mol_dom_render_attributes(node, { mol_view_error: null });
                 for (let plugin of this.plugins()) {
-                    plugin.dom_node(node);
-                    plugin.render();
+                    if (plugin instanceof $.$mol_plugin) {
+                        plugin.render();
+                    }
                 }
                 this.render();
             }
             catch (error) {
-                $.$mol_dom_render_attributes(node, { mol_view_error: error.name });
-                if (error instanceof $.$mol_atom_wait)
-                    return node;
-                try {
-                    void (node.innerText = error.message);
+                const need_catch = $.$mol_fail_catch(error);
+                if (need_catch) {
+                    $.$mol_dom_render_attributes(node, { mol_view_error: error.name || error.constructor.name });
                 }
-                catch (e) { }
-                if (error['$mol_atom_catched'])
-                    return node;
-                console.error(error);
-                error['$mol_atom_catched'] = true;
+                if (error instanceof Promise)
+                    $.$mol_fail_hidden(error);
+                if (need_catch) {
+                    try {
+                        void (node.innerText = error.message);
+                    }
+                    catch (e) { }
+                    console.error(error);
+                }
             }
             return node;
         }
-        render() {
+        dom_node_actual() {
             const node = this.dom_node();
-            const sub = this.sub_visible();
-            if (sub)
-                $.$mol_dom_render_children(node, sub);
-            $.$mol_dom_render_attributes(node, this.attr());
-            $.$mol_dom_render_styles(node, this.style());
+            const attr = this.attr();
+            const style = this.style();
             const fields = this.field();
+            $.$mol_dom_render_attributes(node, attr);
+            $.$mol_dom_render_styles(node, style);
             $.$mol_dom_render_fields(node, fields);
-            new $.$mol_defer(() => $.$mol_dom_render_fields(node, fields));
+            return node;
+        }
+        render() {
+            const node = this.dom_node_actual();
+            const sub = this.sub_visible();
+            const nodes = sub.map(child => {
+                if (child == null)
+                    return null;
+                return (child instanceof $mol_view) ? child.dom_node() : String(child);
+            });
+            $.$mol_dom_render_children(node, nodes);
+            for (const el of sub)
+                if (el && typeof el === 'object' && 'dom_tree' in el)
+                    el['dom_tree']();
         }
         static view_classes() {
             const proto = this.prototype;
@@ -1401,9 +2184,9 @@ var $;
         }
         view_names_owned() {
             const names = [];
-            let owner = this.object_host();
+            let owner = $.$mol_owning_get(this, $mol_view);
             if (owner instanceof $mol_view) {
-                const suffix = this.object_field();
+                const suffix = this[$.$mol_object_field];
                 const suffix2 = '_' + suffix[0].toLowerCase() + suffix.substring(1);
                 for (let Class of owner.constructor.view_classes()) {
                     if (suffix in Class.prototype)
@@ -1425,6 +2208,8 @@ var $;
             }
             for (let Class of this.constructor.view_classes()) {
                 const name = $.$mol_func_name(Class);
+                if (!name)
+                    continue;
                 if (names.indexOf(name) < 0)
                     names.push(name);
             }
@@ -1437,9 +2222,7 @@ var $;
             return attrs;
         }
         attr() {
-            return {
-                'mol_view_error': false,
-            };
+            return {};
         }
         style() {
             return {};
@@ -1456,13 +2239,16 @@ var $;
         plugins() {
             return [];
         }
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_span({}, $.$mol_dev_format_native(this), $.$mol_dev_format_auto($.$mol_atom2_value(() => this.sub())));
+        }
     }
     __decorate([
         $.$mol_mem
-    ], $mol_view.prototype, "focused", null);
+    ], $mol_view.prototype, "autorun", null);
     __decorate([
         $.$mol_mem
-    ], $mol_view.prototype, "context", null);
+    ], $mol_view.prototype, "focused", null);
     __decorate([
         $.$mol_mem
     ], $mol_view.prototype, "minimal_width", null);
@@ -1477,13 +2263,16 @@ var $;
     ], $mol_view.prototype, "dom_tree", null);
     __decorate([
         $.$mol_mem
+    ], $mol_view.prototype, "dom_node_actual", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_view.prototype, "view_names", null);
+    __decorate([
+        $.$mol_deprecated('Use $mol_view::event instead.')
+    ], $mol_view.prototype, "event_async", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_view, "Root", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_view, "autobind", null);
     __decorate([
         $.$mol_mem
     ], $mol_view, "view_classes", null);
@@ -1497,118 +2286,49 @@ var $;
     if ($.$mol_dom_context.document) {
         /// Autoattach view roots to loaded DOM.
         const event_name = self.cordova ? 'deviceready' : 'DOMContentLoaded';
-        $.$mol_dom_context.document.addEventListener(event_name, $.$mol_log_group(`$mol_view ${event_name}`, (event) => {
+        $.$mol_dom_context.document.addEventListener(event_name, $.$mol_fiber_root($.$mol_log2.func((event) => {
             $.$mol_view.autobind();
             $.$mol_defer.run();
-        }));
+        })));
     }
 })($ || ($ = {}));
 //view.web.js.map
 ;
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var $;
 (function ($) {
-    class $mol_plugin extends $.$mol_object {
-        /**
-         *  ```
-         *  dom_node null
-         *  ```
-         **/
-        dom_node() {
-            return null;
+    class $mol_plugin extends $.$mol_view {
+        dom_node(next) {
+            const node = next || $.$mol_owning_get(this, $.$mol_view).dom_node();
+            $.$mol_dom_render_attributes(node, this.attr_static());
+            const events = this.event();
+            for (let event_name in events) {
+                node.addEventListener(event_name, $.$mol_log2.func($.$mol_fiber_root(events[event_name])), { passive: false });
+            }
+            return node;
         }
-        /**
-         *  ```
-         *  attr_static *
-         *  ```
-         **/
         attr_static() {
-            return ({});
+            return {};
         }
-        /**
-         *  ```
-         *  event *
-         *  ```
-         **/
         event() {
-            return ({});
+            return {};
         }
-        /**
-         *  ```
-         *  event_async *
-         *  ```
-         **/
-        event_async() {
-            return ({});
-        }
-    }
-    $.$mol_plugin = $mol_plugin;
-})($ || ($ = {}));
-//plugin.view.tree.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_plugin extends $.$mol_plugin {
-            dom_node() {
-                const node = this.object_host().dom_node();
-                $.$mol_dom_render_attributes(node, this.attr_static());
-                $.$mol_dom_render_events(node, this.event());
-                $.$mol_dom_render_events_async(node, this.event_async());
-                return node;
-            }
-            render() {
-                return this.dom_node();
-            }
-        }
-        __decorate([
-            $.$mol_mem
-        ], $mol_plugin.prototype, "dom_node", null);
-        $$.$mol_plugin = $mol_plugin;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//plugin.view.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    class $mol_state_time extends $.$mol_object {
-        static now(precision, next, force) {
-            const atom = $.$mol_atom_current();
-            const handler = () => {
-                atom['value()'] = Date.now();
-                atom.obsolete_slaves();
-                if (precision > 0) {
-                    setTimeout(handler, precision);
-                }
-                else {
-                    requestAnimationFrame(handler);
-                }
-            };
-            handler();
-            return Date.now();
+        render() {
+            this.dom_node_actual();
         }
     }
     __decorate([
-        $.$mol_mem_key
-    ], $mol_state_time, "now", null);
-    $.$mol_state_time = $mol_state_time;
+        $.$mol_mem
+    ], $mol_plugin.prototype, "dom_node", null);
+    $.$mol_plugin = $mol_plugin;
 })($ || ($ = {}));
-//time.js.map
+//plugin.js.map
 ;
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1715,7 +2435,7 @@ var $;
                 const node = this.dom_node();
                 const win = this.$.$mol_dom_context;
                 if (node !== $.$mol_dom_context.document.body) {
-                    $.$mol_state_time.now();
+                    new $.$mol_after_frame($.$mol_atom2.current.fresh);
                     try {
                         const { left, top, right, bottom, width, height } = node.getBoundingClientRect();
                         return { left, top, right, bottom, width, height, zoom: win.devicePixelRatio || 1 };
@@ -1828,7 +2548,7 @@ var $;
          *  ```
          **/
         start_pan(val, force) {
-            return (val !== void 0) ? val : [].concat(0, 0);
+            return (val !== void 0) ? val : [0, 0];
         }
         /**
          *  ```
@@ -1838,7 +2558,7 @@ var $;
          *  ```
          **/
         pan(val, force) {
-            return (val !== void 0) ? val : [].concat(0, 0);
+            return (val !== void 0) ? val : [0, 0];
         }
         /**
          *  ```
@@ -1848,7 +2568,7 @@ var $;
          *  ```
          **/
         pos(val, force) {
-            return (val !== void 0) ? val : [].concat(NaN, NaN);
+            return (val !== void 0) ? val : [NaN, NaN];
         }
         /**
          *  ```
@@ -1961,6 +2681,16 @@ var $;
          **/
         swipe_to_top(val, force) {
             return (val !== void 0) ? val : null;
+        }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	touch-action \none
+         *  ```
+         **/
+        style() {
+            return (Object.assign(Object.assign({}, super.style()), { "touch-action": "none" }));
         }
         /**
          *  ```
@@ -2277,6 +3007,24 @@ var $;
 //touch.view.js.map
 ;
 "use strict";
+var $;
+(function ($) {
+    function $mol_dom_render_events(el, events) {
+        for (let name in events) {
+            el.addEventListener(name, $.$mol_log_group(el.id + ' ' + name, events[name]), { passive: false });
+        }
+    }
+    $.$mol_dom_render_events = $mol_dom_render_events;
+    function $mol_dom_render_events_async(el, events) {
+        for (let name in events) {
+            el.addEventListener(name, $.$mol_log_group(el.id + ' ' + name, events[name]), { passive: true });
+        }
+    }
+    $.$mol_dom_render_events_async = $mol_dom_render_events_async;
+})($ || ($ = {}));
+//events.js.map
+;
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2320,14 +3068,13 @@ var $;
                 const node = this.Sub().dom_node();
                 $.$mol_dom_render_attributes(node, this.attr_static());
                 $.$mol_dom_render_events(node, this.event());
-                $.$mol_dom_render_events_async(node, this.event_async());
                 return node;
             }
             dom_tree() {
                 const Sub = this.Sub();
                 Sub.$ = this.$;
                 const node = Sub.dom_tree();
-                super.render();
+                this.dom_node_actual();
                 return node;
             }
             title() {
@@ -2362,29 +3109,29 @@ var $;
         }
         /**
          *  ```
-         *  pages_wrapped /
+         *  pages_wrapped /$mol_view
          *  ```
          **/
         pages_wrapped() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
-         *  pages /
+         *  pages /$mol_view
          *  ```
          **/
         pages() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
-         *  plugins /
+         *  plugins /$mol_plugin
          *  	<= Meter
          *  	<= Touch
          *  ```
          **/
         plugins() {
-            return [].concat(this.Meter(), this.Touch());
+            return [this.Meter(), this.Touch()];
         }
         width() {
             return this.Meter().width();
@@ -2518,15 +3265,25 @@ var $;
     class $mol_book_page extends $.$mol_ghost {
         /**
          *  ```
-         *  attr *
+         *  attr_static *
          *  	^
          *  	tabindex 0
+         *  	mol_book_page_visible true
+         *  ```
+         **/
+        attr_static() {
+            return (Object.assign(Object.assign({}, super.attr_static()), { "tabindex": 0, "mol_book_page_visible": true }));
+        }
+        /**
+         *  ```
+         *  attr *
+         *  	^
          *  	mol_book_page_focused <= focused
          *  	mol_book_page_visible <= visible
          *  ```
          **/
         attr() {
-            return (Object.assign(Object.assign({}, super.attr()), { "tabindex": 0, "mol_book_page_focused": this.focused(), "mol_book_page_visible": this.visible() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "mol_book_page_focused": this.focused(), "mol_book_page_visible": this.visible() }));
         }
         /**
          *  ```
@@ -2554,7 +3311,7 @@ var $;
     (function ($$) {
         class $mol_book extends $.$mol_book {
             pages_extended() {
-                return [this.Placeholder()].concat(this.pages());
+                return [this.Placeholder(), ...this.pages()];
             }
             break_point() {
                 const pages = this.pages_extended();
@@ -2845,11 +3602,11 @@ var $;
         }
         /**
          *  ```
-         *  sub / <= title
+         *  sub /$mol_view_content <= title
          *  ```
          **/
         sub() {
-            return [].concat(this.title());
+            return [this.title()];
         }
     }
     __decorate([
@@ -2891,7 +3648,7 @@ var $;
                 }
             }
             tab_index() {
-                return this.enabled() ? super.tab_index() : null;
+                return this.enabled() ? super.tab_index() : -1;
             }
         }
         $$.$mol_button = $mol_button;
@@ -2948,22 +3705,6 @@ var $;
         }
         /**
          *  ```
-         *  moving_hor?val false
-         *  ```
-         **/
-        moving_hor(val, force) {
-            return (val !== void 0) ? val : false;
-        }
-        /**
-         *  ```
-         *  moving_vert?val false
-         *  ```
-         **/
-        moving_vert(val, force) {
-            return (val !== void 0) ? val : false;
-        }
-        /**
-         *  ```
          *  field *
          *  	^
          *  	scrollTop <= scroll_top?val
@@ -3009,13 +3750,13 @@ var $;
         }
         /**
          *  ```
-         *  event_async *
+         *  event *
          *  	^
          *  	scroll?event <=> event_scroll?event
          *  ```
          **/
-        event_async() {
-            return (Object.assign(Object.assign({}, super.event_async()), { "scroll": (event) => this.event_scroll(event) }));
+        event() {
+            return (Object.assign(Object.assign({}, super.event()), { "scroll": (event) => this.event_scroll(event) }));
         }
         /**
          *  ```
@@ -3047,12 +3788,6 @@ var $;
             return "";
         }
     }
-    __decorate([
-        $.$mol_mem
-    ], $mol_scroll.prototype, "moving_hor", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_scroll.prototype, "moving_vert", null);
     __decorate([
         $.$mol_mem
     ], $mol_scroll.prototype, "scroll_top", null);
@@ -3098,26 +3833,14 @@ var $;
             return false;
         }
         $$.$mol_scroll_moving = $mol_scroll_moving;
-        function $mol_scroll_moving_vert() {
-            return false;
-        }
-        $$.$mol_scroll_moving_vert = $mol_scroll_moving_vert;
-        function $mol_scroll_moving_hor() {
-            return false;
-        }
-        $$.$mol_scroll_moving_hor = $mol_scroll_moving_hor;
         class $mol_scroll extends $.$mol_scroll {
-            constructor() {
-                // scroll_top( next? : number ) {
-                // 	return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
-                // }
-                // 
-                // scroll_left( next? : number ) {
-                // 	return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
-                // }
-                super(...arguments);
-                this._moving_task_timer = null;
-            }
+            // scroll_top( next? : number ) {
+            // 	return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
+            // }
+            // 
+            // scroll_left( next? : number ) {
+            // 	return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
+            // }
             scroll_bottom(next) {
                 return next || 0;
             }
@@ -3125,37 +3848,15 @@ var $;
                 return next || 0;
             }
             event_scroll(next) {
-                this.moving_vert(this.scroll_top() !== this.dom_node().scrollTop);
-                this.moving_hor(this.scroll_left() !== this.dom_node().scrollLeft);
-                this.moving_task_stop();
-                new $.$mol_defer($.$mol_log_group(`${this}.event_scroll()`, () => {
-                    const el = this.dom_node();
-                    const top = Math.max(0, el.scrollTop);
-                    const left = Math.max(0, el.scrollLeft);
-                    this.scroll_top(top);
-                    this.scroll_left(left);
-                    this.scroll_bottom(Math.max(0, el.scrollHeight - top - el.offsetHeight));
-                    this.scroll_right(Math.max(0, el.scrollWidth - left - el.offsetWidth));
-                }));
+                const el = this.dom_node();
+                const top = Math.max(0, el.scrollTop);
+                const left = Math.max(0, el.scrollLeft);
+                this.scroll_top(top);
+                this.scroll_left(left);
+                this.scroll_bottom(Math.max(0, el.scrollHeight - top - el.offsetHeight));
+                this.scroll_right(Math.max(0, el.scrollWidth - left - el.offsetWidth));
             }
-            event_repos(next) {
-                new $.$mol_defer(() => {
-                    const el = this.dom_node();
-                    this.scroll_bottom(Math.max(0, el.scrollHeight - this.scroll_top() - el.offsetHeight));
-                    this.scroll_right(Math.max(0, el.scrollWidth - this.scroll_left() - el.offsetWidth));
-                });
-            }
-            moving_task_stop() {
-                clearTimeout(this._moving_task_timer);
-                this._moving_task_timer = setTimeout($.$mol_log_group(`${this}.moving_task_stop()`, () => {
-                    this.moving_vert(false);
-                    this.moving_hor(false);
-                }), 50);
-            }
-            moving() {
-                return this.moving_hor() || this.moving_vert();
-            }
-            context_sub() {
+            get $$() {
                 return this.$.$mol_ambient({
                     $mol_view_visible_height: () => {
                         const sizeWin = $.$mol_window.size();
@@ -3169,25 +3870,21 @@ var $;
                     },
                     $mol_scroll_top: () => this.scroll_top(),
                     $mol_scroll_left: () => this.scroll_left(),
-                    $mol_scroll_moving: () => this.moving(),
-                    $mol_scroll_moving_vert: () => this.moving_vert(),
-                    $mol_scroll_moving_hor: () => this.moving_hor(),
                 });
             }
             strut_transform() {
-                try {
-                    return `translate3d( 0 , ${this.content_height()}px , 0 )`;
-                }
-                catch (error) {
-                    return '';
-                }
+                // try {
+                return `translate3d( 0 , ${this.content_height()}px , 0 )`;
+                // } catch( error ) {
+                // 	return ''
+                // }
             }
             sub_visible() {
                 const sub = [
-                    this.Strut(),
                     ...(this.sub() || []),
+                    this.Strut(),
                 ];
-                const context = this.context_sub();
+                const context = this.$$;
                 sub.forEach(child => {
                     if (child instanceof $.$mol_view) {
                         child.$ = context;
@@ -3203,8 +3900,8 @@ var $;
             $.$mol_mem
         ], $mol_scroll.prototype, "scroll_right", null);
         __decorate([
-            $.$mol_mem
-        ], $mol_scroll.prototype, "context_sub", null);
+            $.$mol_atom2_field
+        ], $mol_scroll.prototype, "$$", null);
         $$.$mol_scroll = $mol_scroll;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -3286,7 +3983,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Head(), this.Body(), this.Foot());
+            return [this.Head(), this.Body(), this.Foot()];
         }
         /**
          *  ```
@@ -3312,7 +4009,7 @@ var $;
          *  ```
          **/
         head() {
-            return [].concat(this.Title(), this.Tools());
+            return [this.Title(), this.Tools()];
         }
         /**
          *  ```
@@ -3323,7 +4020,7 @@ var $;
          **/
         Title() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.title());
+                obj.sub = () => [this.title()];
                 obj.event_click = (val) => this.event_top(val);
                 return obj;
             })(new this.$.$mol_button());
@@ -3349,11 +4046,11 @@ var $;
         }
         /**
          *  ```
-         *  tools /
+         *  tools /$mol_view_content
          *  ```
          **/
         tools() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -3379,11 +4076,11 @@ var $;
         }
         /**
          *  ```
-         *  body /
+         *  body /$mol_view_content
          *  ```
          **/
         body() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -3403,11 +4100,11 @@ var $;
         }
         /**
          *  ```
-         *  foot /
+         *  foot /$mol_view
          *  ```
          **/
         foot() {
-            return [].concat();
+            return [];
         }
     }
     __decorate([
@@ -3480,9 +4177,10 @@ var $;
             this.prefix = prefix;
         }
         static href(next, force) {
-            if (next)
-                history.replaceState(history.state, $.$mol_dom_context.document.title, next);
-            return window.location.href;
+            if (next === undefined)
+                return window.location.href;
+            history.replaceState(history.state, $.$mol_dom_context.document.title, next);
+            return next;
         }
         static dict(next) {
             var href = this.href(next && this.make_link(next)).split(/#/)[1] || '';
@@ -3519,7 +4217,8 @@ var $;
             for (let key in next) {
                 if (null == next[key])
                     continue;
-                chunks.push([key].concat(next[key] ? next[key] : []).map(this.encode).join('='));
+                const val = next[key];
+                chunks.push([key].concat(val ? [val] : []).map(this.encode).join('='));
             }
             return new URL('#' + chunks.join('/'), window.location.href).toString();
         }
@@ -3554,9 +4253,9 @@ var $;
         $.$mol_mem_key
     ], $mol_state_arg, "value", null);
     $.$mol_state_arg = $mol_state_arg;
-    self.addEventListener('hashchange', $.$mol_log_group('$mol_state_arg hashchange', (event) => {
-        $mol_state_arg.href(undefined, $.$mol_atom_force_cache);
-    }));
+    self.addEventListener('hashchange', $.$mol_fiber_root($.$mol_log_group('$mol_state_arg hashchange', (event) => {
+        $mol_state_arg.href(window.location.href);
+    })));
 })($ || ($ = {}));
 //arg.web.js.map
 ;
@@ -3642,11 +4341,11 @@ var $;
         }
         /**
          *  ```
-         *  sub / <= title
+         *  sub /$mol_view_content <= title
          *  ```
          **/
         sub() {
-            return [].concat(this.title());
+            return [this.title()];
         }
         /**
          *  ```
@@ -3724,7 +4423,8 @@ var $;
             event_click(event) {
                 if (!event || event.defaultPrevented)
                     return;
-                setTimeout($.$mol_log_group(`${this}.event_click()`, () => this.focused(false)), 50);
+                this.focused(false);
+                // setTimeout( $mol_log_group( `${ this }.event_click()` , ()=> this.focused( false ) ) , 50 )
             }
             file_name() {
                 return null;
@@ -3789,13 +4489,11 @@ var $;
     class $mol_link_iconed extends $.$mol_link {
         /**
          *  ```
-         *  sub /
-         *  	<= Icon
-         *  	<= content
+         *  sub / <= Icon
          *  ```
          **/
         sub() {
-            return [].concat(this.Icon(), this.content());
+            return [this.Icon()];
         }
         /**
          *  ```
@@ -3822,7 +4520,7 @@ var $;
          *  ```
          **/
         content() {
-            return [].concat(this.title());
+            return [this.title()];
         }
         /**
          *  ```
@@ -3869,6 +4567,9 @@ var $;
             }
             title() {
                 return decodeURIComponent(this.uri().split(this.host(), 2)[1]);
+            }
+            sub() {
+                return [this.Icon(), ...this.content()];
             }
         }
         __decorate([
@@ -3943,7 +4644,9 @@ var $;
 var $;
 (function ($) {
     self.addEventListener('storage', event => {
-        $.$mol_state_local.value(event.key, void 0, $.$mol_atom_force_cache);
+        if (!event.key)
+            return; // @TODO clear support
+        $.$mol_state_local.value(event.key, undefined, $.$mol_mem_force_cache);
     });
 })($ || ($ = {}));
 //local.web.js.map
@@ -3951,25 +4654,22 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_const(value) {
-        var getter = (() => value);
-        getter['()'] = value;
-        getter[Symbol.toStringTag] = value;
-        return getter;
+    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
+        const parser = new $.$mol_dom_context.DOMParser();
+        const doc = parser.parseFromString(text, type);
+        const error = doc.getElementsByTagName('parsererror')[0];
+        if (error)
+            throw new Error(error.textContent);
+        return doc;
     }
-    $.$mol_const = $mol_const;
+    $.$mol_dom_parse = $mol_dom_parse;
 })($ || ($ = {}));
-//const.js.map
+//parse.js.map
 ;
 "use strict";
-var $;
-(function ($) {
-    function $mol_maybe(value) {
-        return (value == null) ? [] : [value];
-    }
-    $.$mol_maybe = $mol_maybe;
-})($ || ($ = {}));
-//maybe.js.map
+// @ts-ignore
+var $node = $node || {};
+//node.web.js.map
 ;
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -3980,137 +4680,146 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    class $mol_http extends $.$mol_object {
-        static resource(uri) {
-            const resolver = $.$mol_dom_context.document.createElement('a');
-            resolver.href = uri;
-            return this.resource_absolute(resolver.href);
-        }
-        static resource_absolute(uri) {
-            return $mol_http.make({
-                uri: $.$mol_const(uri)
-            });
-        }
-        uri() { return ''; }
-        method_get() { return 'Get'; }
-        method_put() { return 'Put'; }
-        credentials() {
-            return null;
+    let $mol_fetch_response = class $mol_fetch_response extends $.$mol_object2 {
+        constructor(native) {
+            super();
+            this.native = native;
         }
         headers() {
-            return {};
+            return this.native.headers;
         }
-        response_type() {
-            return '';
+        mime() {
+            return this.headers().get('content-type');
         }
-        request() {
-            if (this['request()'])
-                return this['request()'];
-            var next = this['request()'] = new $.$mol_dom_context.XMLHttpRequest;
-            next.withCredentials = Boolean(this.credentials());
-            next.onload = $.$mol_log_group(this.object_id() + ' load', (event) => {
-                if ((next.status === 0) || (Math.floor(next.status / 100) === 2)) {
-                    this.response(next, $.$mol_atom_force_cache);
-                }
-                else {
-                    this.response(new Error('HTTP Error\n' + next.statusText + '\n' + next.responseText), $.$mol_atom_force_cache);
-                }
-            });
-            next.onerror = $.$mol_log_group(this.object_id() + ' error', (event) => {
-                const right_event = event;
-                new $.$mol_defer(() => {
-                    this.response(right_event.error || new Error('Unknown HTTP error'), $.$mol_atom_force_cache);
-                });
-            });
-            return next;
+        stream() {
+            return this.native.body;
         }
-        destructor() {
-            const native = this['request()'];
-            if (native)
-                native.abort();
+        text() {
+            const response = this.native;
+            const parse = $.$mol_fiber_sync(response.text);
+            return parse.call(response);
         }
-        response(next, force) {
-            const creds = this.credentials();
-            const native = this.request();
-            const method = (next === void 0) ? this.method_get() : this.method_put();
-            const uri = this.uri();
-            native.open(method, uri, true, creds && creds.login, creds && creds.password);
-            native.responseType = this.response_type();
-            const headers = this.headers();
-            for (let name in headers)
-                native.setRequestHeader(name, headers[name]);
-            native.send(...$.$mol_maybe(next));
-            return $.$mol_fail_hidden(new $.$mol_atom_wait(`${method} ${uri}`));
+        json() {
+            const response = this.native;
+            const parse = $.$mol_fiber_sync(response.json);
+            return parse.call(response);
         }
-        text(next, force) {
-            return this.response(next, force).responseText;
+        buffer() {
+            const response = this.native;
+            const parse = $.$mol_fiber_sync(response.arrayBuffer);
+            return parse.call(response);
         }
-        xml(next, force) {
-            return this.response(next, force).responseXML;
+        xml() {
+            return $.$mol_dom_parse(this.text(), 'application/xml');
         }
-        json(next, force) {
-            const next2 = next && JSON.stringify(next, null, '\t');
-            return JSON.parse(this.text(next2, force));
+        xhtml() {
+            return $.$mol_dom_parse(this.text(), 'application/xhtml+xml');
         }
-    }
+        html() {
+            return $.$mol_dom_parse(this.text(), 'text/html');
+        }
+    };
     __decorate([
-        $.$mol_mem
-    ], $mol_http.prototype, "response", null);
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "stream", null);
     __decorate([
-        $.$mol_mem
-    ], $mol_http.prototype, "json", null);
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "text", null);
     __decorate([
-        $.$mol_mem_key
-    ], $mol_http, "resource_absolute", null);
-    $.$mol_http = $mol_http;
-})($ || ($ = {}));
-//http.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_deprecated(message) {
-        return function (host, field, descr) {
-            const value = descr.value;
-            descr.value = function $mol_deprecated_wrapper() {
-                console.warn(`${host.constructor}::${field} is deprecated. ${message}`);
-                return value.apply(this, arguments);
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "json", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "buffer", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "xml", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "xhtml", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "html", null);
+    $mol_fetch_response = __decorate([
+        $.$mol_class
+    ], $mol_fetch_response);
+    $.$mol_fetch_response = $mol_fetch_response;
+    let $mol_fetch = class $mol_fetch extends $.$mol_object2 {
+        static response(input, init) {
+            const response = this.request(input, init);
+            if (Math.floor(response.status / 100) === 2)
+                return new $mol_fetch_response(response);
+            throw new Error(response.statusText || `HTTP Error ${response.status}`);
+        }
+        static stream(input, init) {
+            return this.response(input, init).stream();
+        }
+        static text(input, init) {
+            return this.response(input, init).text();
+        }
+        static json(input, init) {
+            return this.response(input, init).json();
+        }
+        static buffer(input, init) {
+            this.response(input, init).buffer();
+        }
+        static xml(input, init) {
+            return this.response(input, init).xml();
+        }
+        static xhtml(input, init) {
+            return this.response(input, init).xhtml();
+        }
+        static html(input, init) {
+            return this.response(input, init).html();
+        }
+    };
+    $mol_fetch.request = $.$mol_fiber_sync((input, init = {}) => {
+        if (typeof AbortController === 'function') {
+            var controller = new AbortController();
+            init.signal = controller.signal;
+            const fiber = $.$mol_fiber.current;
+            fiber.abort = () => {
+                if (fiber.cursor === -2 /* actual */)
+                    return true;
+                controller.abort();
+                return true;
             };
-        };
-    }
-    $.$mol_deprecated = $mol_deprecated;
-})($ || ($ = {}));
-//deprecated.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    class $mol_http_resource extends $.$mol_http {
-        static item(uri) {
-            return $.$mol_http.resource(uri);
         }
-    }
+        let native = $.$mol_dom_context.fetch;
+        if (!native)
+            native = $node['node-fetch'];
+        return native(input, init);
+    });
     __decorate([
-        $.$mol_deprecated('Use $mol_http.resource insted.')
-    ], $mol_http_resource, "item", null);
-    $.$mol_http_resource = $mol_http_resource;
-    class $mol_http_resource_json {
-        static item(uri) {
-            return $.$mol_http.resource(uri);
-        }
-    }
+        $.$mol_fiber.method
+    ], $mol_fetch, "response", null);
     __decorate([
-        $.$mol_deprecated('Use $mol_http.resource insted.')
-    ], $mol_http_resource_json, "item", null);
-    $.$mol_http_resource_json = $mol_http_resource_json;
+        $.$mol_fiber.method
+    ], $mol_fetch, "stream", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "text", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "json", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "buffer", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "xml", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "xhtml", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "html", null);
+    $mol_fetch = __decorate([
+        $.$mol_class
+    ], $mol_fetch);
+    $.$mol_fetch = $mol_fetch;
 })($ || ($ = {}));
-//resource.js.map
+//fetch.js.map
 ;
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -4144,7 +4853,7 @@ var $;
             return match && match[1].substring(1);
         }
         content(next, force) {
-            return $.$mol_http.resource(this.path()).text(next);
+            return $.$mol_fetch.text(this.path());
         }
         resolve(path) {
             let res = this.path() + '/' + path;
@@ -4199,7 +4908,7 @@ var $;
                 return this.source(lang).valueOf();
             }
             catch (error) {
-                if (error instanceof $.$mol_atom_wait)
+                if ('then' in error)
                     $.$mol_fail_hidden(error);
                 const def = this.lang_default();
                 if (lang === def)
@@ -4235,6 +4944,51 @@ var $;
     $.$mol_locale = $mol_locale;
 })($ || ($ = {}));
 //locale.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_after_timeout extends $.$mol_object2 {
+        constructor(delay, task) {
+            super();
+            this.delay = delay;
+            this.task = task;
+            this.id = setTimeout(task, delay);
+        }
+        destructor() {
+            clearTimeout(this.id);
+        }
+    }
+    $.$mol_after_timeout = $mol_after_timeout;
+})($ || ($ = {}));
+//timeout.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    class $mol_state_time extends $.$mol_object {
+        static now(precision = 0, next) {
+            if (precision > 0) {
+                new $.$mol_after_timeout(precision, $.$mol_atom2.current.fresh);
+            }
+            else {
+                new $.$mol_after_frame($.$mol_atom2.current.fresh);
+            }
+            return Date.now();
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_state_time, "now", null);
+    $.$mol_state_time = $mol_state_time;
+})($ || ($ = {}));
+//time.js.map
 ;
 "use strict";
 var $;
@@ -4481,7 +5235,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Path());
+            return [this.Path()];
         }
         /**
          *  ```
@@ -4541,11 +5295,11 @@ var $;
         }
         /**
          *  ```
-         *  rows /
+         *  rows /$mol_view
          *  ```
          **/
         rows() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -4578,8 +5332,6 @@ var $;
             }
             row_offsets() {
                 var sub = this.sub();
-                if (!sub)
-                    return null;
                 let heightLimit = this.$.$mol_view_visible_height();
                 var offset = 0;
                 var next = [];
@@ -4602,15 +5354,18 @@ var $;
                 var sub = this.sub();
                 if (!sub)
                     return sub;
+                for (let i = 0; i < sub.length; ++i) {
+                    const child = sub[i];
+                    if (child instanceof $.$mol_view) {
+                        child.$ = this.row_context(i);
+                    }
+                }
                 var limit = this.row_offsets().length;
                 var next = [];
                 for (let i = 0; i < limit; ++i) {
                     const child = sub[i];
                     if (child == null)
                         continue;
-                    if (child instanceof $.$mol_view) {
-                        child.$ = this.row_context(i);
-                    }
                     next.push(child);
                 }
                 return next;
@@ -4619,7 +5374,7 @@ var $;
                 var height = 0;
                 var sub = this.sub();
                 if (sub)
-                    sub.forEach(child => {
+                    sub.forEach((child) => {
                         if (child instanceof $.$mol_view) {
                             height += child.minimal_height();
                         }
@@ -4627,6 +5382,9 @@ var $;
                 return height;
             }
         }
+        __decorate([
+            $.$mol_mem
+        ], $mol_list.prototype, "sub", null);
         __decorate([
             $.$mol_mem
         ], $mol_list.prototype, "row_offsets", null);
@@ -4643,6 +5401,83 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //list.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_syntax {
+        constructor(lexems) {
+            this['lexems()'] = lexems;
+        }
+        lexems() {
+            return this['lexems()'];
+        }
+        rules() {
+            let rules = this['rules()'];
+            if (rules)
+                return rules;
+            rules = [];
+            let lexems = this.lexems();
+            for (let name in lexems) {
+                rules.push({
+                    name: name,
+                    regExp: lexems[name],
+                    size: RegExp('^$|' + lexems[name].source).exec('').length - 1,
+                });
+            }
+            return this['rules()'] = rules;
+        }
+        regExp() {
+            let regExp = this['regExp()'];
+            if (regExp)
+                return regExp;
+            const parts = '(' + this.rules().map(rule => rule.regExp.source).join(')|(') + ')';
+            regExp = RegExp(`([^]*?)(?:(${parts})|$(?![^]))`, 'gm');
+            return this['regExp()'] = regExp;
+        }
+        tokenize(text) {
+            const tokens = [];
+            const rules = this.rules();
+            const regExp = this.regExp();
+            const regExpSize = RegExp('^$|' + regExp.source).exec('').length - 1;
+            let position = 0;
+            parsing: while (position < text.length) {
+                regExp.lastIndex = position;
+                var found = regExp.exec(text);
+                if (position === regExp.lastIndex)
+                    throw new Error('Empty token');
+                position = regExp.lastIndex;
+                var prefix = found[1];
+                if (prefix) {
+                    tokens.push({
+                        name: '',
+                        found: prefix,
+                        chunks: [],
+                    });
+                }
+                var suffix = found[2];
+                if (suffix) {
+                    let offset = 4;
+                    for (let rule of rules) {
+                        if (found[offset - 1]) {
+                            tokens.push({
+                                name: rule.name,
+                                found: suffix,
+                                chunks: found.slice(offset, offset + rule.size)
+                            });
+                            continue parsing;
+                        }
+                        offset += rule.size + 1;
+                    }
+                    throw new Error('Something wrong');
+                }
+            }
+            return tokens;
+        }
+    }
+    $.$mol_syntax = $mol_syntax;
+})($ || ($ = {}));
+//syntax.js.map
 ;
 "use strict";
 var $;
@@ -4691,7 +5526,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Icon(), this.label());
+            return [this.Icon(), this.label()];
         }
         /**
          *  ```
@@ -4707,7 +5542,7 @@ var $;
          *  ```
          **/
         label() {
-            return [].concat(this.Title());
+            return [this.Title()];
         }
         /**
          *  ```
@@ -4716,7 +5551,7 @@ var $;
          **/
         Title() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.title());
+                obj.sub = () => [this.title()];
                 return obj;
             })(new this.$.$mol_view());
         }
@@ -4749,6 +5584,12 @@ var $;
                 this.checked(!this.checked());
                 if (next)
                     next.preventDefault();
+            }
+            sub() {
+                return [
+                    ...$.$mol_maybe(this.Icon()),
+                    ...this.label(),
+                ];
             }
         }
         $$.$mol_check = $mol_check;
@@ -4972,11 +5813,11 @@ var $;
         }
         /**
          *  ```
-         *  parts /
+         *  parts /$mol_view_content
          *  ```
          **/
         parts() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -4985,7 +5826,7 @@ var $;
          **/
         Low(id) {
             return ((obj) => {
-                obj.sub = () => [].concat(this.string(id));
+                obj.sub = () => [this.string(id)];
                 return obj;
             })(new this.$.$mol_view());
         }
@@ -5057,11 +5898,11 @@ var $;
     class $mol_grid extends $.$mol_scroll {
         /**
          *  ```
-         *  row_ids /
+         *  row_ids /string[]
          *  ```
          **/
         row_ids() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5077,7 +5918,7 @@ var $;
          *  ```
          **/
         col_ids() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5117,19 +5958,19 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Table());
+            return [this.Table()];
         }
         /**
          *  ```
          *  Table $mol_grid_table
          *  	offset <= gap_top
-         *  	sub / <= rows_visible
+         *  	sub <= rows_visible
          *  ```
          **/
         Table() {
             return ((obj) => {
                 obj.offset = () => this.gap_top();
-                obj.sub = () => [].concat(this.rows_visible());
+                obj.sub = () => this.rows_visible();
                 return obj;
             })(new this.$.$mol_grid_table());
         }
@@ -5143,11 +5984,11 @@ var $;
         }
         /**
          *  ```
-         *  rows_visible /
+         *  rows_visible /$mol_view
          *  ```
          **/
         rows_visible() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5155,7 +5996,7 @@ var $;
          *  ```
          **/
         rows() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5181,11 +6022,11 @@ var $;
         }
         /**
          *  ```
-         *  head_cells /
+         *  head_cells /$mol_view
          *  ```
          **/
         head_cells() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5203,11 +6044,11 @@ var $;
         }
         /**
          *  ```
-         *  cells!id /
+         *  cells!id /$mol_view
          *  ```
          **/
         cells(id) {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5229,12 +6070,12 @@ var $;
         }
         /**
          *  ```
-         *  Cell_text!id $mol_grid_cell sub / <= cell_content_text!id
+         *  Cell_text!id $mol_grid_cell sub <= cell_content_text!id
          *  ```
          **/
         Cell_text(id) {
             return ((obj) => {
-                obj.sub = () => [].concat(this.cell_content_text(id));
+                obj.sub = () => this.cell_content_text(id);
                 return obj;
             })(new this.$.$mol_grid_cell());
         }
@@ -5248,20 +6089,20 @@ var $;
         }
         /**
          *  ```
-         *  cell_content!id /
+         *  cell_content!id /$mol_view_content
          *  ```
          **/
         cell_content(id) {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
-         *  Cell_number!id $mol_grid_number sub / <= cell_content_number!id
+         *  Cell_number!id $mol_grid_number sub <= cell_content_number!id
          *  ```
          **/
         Cell_number(id) {
             return ((obj) => {
-                obj.sub = () => [].concat(this.cell_content_number(id));
+                obj.sub = () => this.cell_content_number(id);
                 return obj;
             })(new this.$.$mol_grid_number());
         }
@@ -5277,23 +6118,23 @@ var $;
          *  ```
          *  Col_head!id $mol_float
          *  	dom_name \th
-         *  	sub / <= col_head_content!id
+         *  	sub <= col_head_content!id
          *  ```
          **/
         Col_head(id) {
             return ((obj) => {
                 obj.dom_name = () => "th";
-                obj.sub = () => [].concat(this.col_head_content(id));
+                obj.sub = () => this.col_head_content(id);
                 return obj;
             })(new this.$.$mol_float());
         }
         /**
          *  ```
-         *  col_head_content!id /
+         *  col_head_content!id /$mol_view_content
          *  ```
          **/
         col_head_content(id) {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5333,7 +6174,7 @@ var $;
          *  ```
          **/
         Cell_content(id) {
-            return [].concat(this.Cell_dimmer(id));
+            return [this.Cell_dimmer(id)];
         }
         /**
          *  ```
@@ -5490,11 +6331,11 @@ var $;
         }
         /**
          *  ```
-         *  cells /
+         *  cells /$mol_view
          *  ```
          **/
         cells() {
-            return [].concat();
+            return [];
         }
     }
     $.$mol_grid_row = $mol_grid_row;
@@ -5533,20 +6374,19 @@ var $;
         class $mol_grid extends $.$mol_grid {
             rows_visible() {
                 const rows = this.rows();
-                if (!rows)
-                    return null;
                 const view_window = this.view_window();
-                return [].concat(this.Head(), rows.slice(view_window.top, view_window.bottom).valueOf());
+                return [
+                    this.Head(),
+                    ...rows.slice(view_window.top, view_window.bottom),
+                ];
             }
             rows_visible_max() {
                 return Math.ceil(this.$.$mol_view_visible_height() / this.row_height());
             }
             view_window() {
                 const rows = this.rows();
-                if (!rows)
-                    return null;
                 const count = rows.length;
-                const context = this.context_sub();
+                const context = this.$$;
                 const scrollTop = context.$mol_scroll_top();
                 const top = Math.max(0, Math.floor(scrollTop / this.row_height()) - 1);
                 const bottom = Math.min(count, top + this.rows_visible_max());
@@ -5694,96 +6534,19 @@ var $;
         ], $mol_grid.prototype, "row_ids", null);
         $$.$mol_grid = $mol_grid;
         class $mol_grid_table extends $.$mol_grid_table {
-            context_sub() {
+            get $$() {
                 return this.$.$mol_ambient({
                     $mol_scroll_top: () => this.$.$mol_scroll_top() - this.offset(),
                 });
             }
         }
         __decorate([
-            $.$mol_mem
-        ], $mol_grid_table.prototype, "context_sub", null);
+            $.$mol_atom2_field
+        ], $mol_grid_table.prototype, "$$", null);
         $$.$mol_grid_table = $mol_grid_table;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //grid.view.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_syntax {
-        constructor(lexems) {
-            this['lexems()'] = lexems;
-        }
-        lexems() {
-            return this['lexems()'];
-        }
-        rules() {
-            let rules = this['rules()'];
-            if (rules)
-                return rules;
-            rules = [];
-            let lexems = this.lexems();
-            for (let name in lexems) {
-                rules.push({
-                    name: name,
-                    regExp: lexems[name],
-                    size: RegExp('^$|' + lexems[name].source).exec('').length - 1,
-                });
-            }
-            return this['rules()'] = rules;
-        }
-        regExp() {
-            let regExp = this['regExp()'];
-            if (regExp)
-                return regExp;
-            const parts = '(' + this.rules().map(rule => rule.regExp.source).join(')|(') + ')';
-            regExp = RegExp(`([^]*?)(?:(${parts})|$(?![^]))`, 'gm');
-            return this['regExp()'] = regExp;
-        }
-        tokenize(text) {
-            const tokens = [];
-            const rules = this.rules();
-            const regExp = this.regExp();
-            const regExpSize = RegExp('^$|' + regExp.source).exec('').length - 1;
-            let position = 0;
-            parsing: while (position < text.length) {
-                regExp.lastIndex = position;
-                var found = regExp.exec(text);
-                if (position === regExp.lastIndex)
-                    throw new Error('Empty token');
-                position = regExp.lastIndex;
-                var prefix = found[1];
-                if (prefix) {
-                    tokens.push({
-                        name: '',
-                        found: prefix,
-                        chunks: [],
-                    });
-                }
-                var suffix = found[2];
-                if (suffix) {
-                    let offset = 4;
-                    for (let rule of rules) {
-                        if (found[offset - 1]) {
-                            tokens.push({
-                                name: rule.name,
-                                found: suffix,
-                                chunks: found.slice(offset, offset + rule.size)
-                            });
-                            continue parsing;
-                        }
-                        offset += rule.size + 1;
-                    }
-                    throw new Error('Something wrong');
-                }
-            }
-            return tokens;
-        }
-    }
-    $.$mol_syntax = $mol_syntax;
-})($ || ($ = {}));
-//syntax.js.map
 ;
 "use strict";
 var $;
@@ -5852,11 +6615,11 @@ var $;
         }
         /**
          *  ```
-         *  tokens /
+         *  tokens /$mol_syntax_token
          *  ```
          **/
         tokens() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5897,7 +6660,7 @@ var $;
          *  ```
          **/
         block_content(id) {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5965,7 +6728,7 @@ var $;
          *  ```
          **/
         header_content(id) {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5987,7 +6750,7 @@ var $;
          *  ```
          **/
         table_head_cells(id) {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -5995,7 +6758,7 @@ var $;
          *  ```
          **/
         table_rows(id) {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -6014,7 +6777,7 @@ var $;
          *  ```
          **/
         table_cells(id) {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -6033,7 +6796,7 @@ var $;
          *  ```
          **/
         table_cell_content(id) {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -6160,7 +6923,7 @@ var $;
          *  ```
          **/
         content() {
-            return [].concat();
+            return [];
         }
     }
     __decorate([
@@ -6210,7 +6973,7 @@ var $;
          *  ```
          **/
         content(val, force) {
-            return (val !== void 0) ? val : [].concat();
+            return (val !== void 0) ? val : [];
         }
     }
     __decorate([
@@ -6263,7 +7026,7 @@ var $;
          *  ```
          **/
         content(val, force) {
-            return (val !== void 0) ? val : [].concat();
+            return (val !== void 0) ? val : [];
         }
     }
     __decorate([
@@ -6321,7 +7084,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.title());
+            return [this.title()];
         }
         /**
          *  ```
@@ -6492,12 +7255,132 @@ var $;
             $.$mol_mem
         ], $mol_text.prototype, "tokens", null);
         __decorate([
+            $.$mol_mem
+        ], $mol_text.prototype, "rows", null);
+        __decorate([
             $.$mol_mem_key
         ], $mol_text.prototype, "cell_contents", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_text.prototype, "table_rows", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_text.prototype, "table_head_cells", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_text.prototype, "table_cells", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_text.prototype, "table_cell_content", null);
+        __decorate([
+            $.$mol_fiber.method
+        ], $mol_text.prototype, "text2spans", null);
+        __decorate([
+            $.$mol_fiber.method
+        ], $mol_text.prototype, "code2spans", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_text.prototype, "block_content", null);
         $$.$mol_text = $mol_text;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //text.view.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    console.warn('$mol_http is deprecated. Use $mol_fetch instead.');
+    class $mol_http extends $.$mol_object {
+        static resource(uri) {
+            const resolver = $.$mol_dom_context.document.createElement('a');
+            resolver.href = uri;
+            return this.resource_absolute(resolver.href);
+        }
+        static resource_absolute(uri) {
+            return $mol_http.make({
+                uri: $.$mol_const(uri)
+            });
+        }
+        uri() { return ''; }
+        method_get() { return 'Get'; }
+        method_put() { return 'Put'; }
+        credentials() {
+            return null;
+        }
+        headers() {
+            return {};
+        }
+        response_type() {
+            return '';
+        }
+        response(next, force) {
+            const creds = this.credentials();
+            const method = (next === void 0) ? this.method_get() : this.method_put();
+            const uri = this.uri();
+            const headers = this.headers();
+            return $.$mol_fetch.response(uri, {
+                credentials: creds ? 'include' : undefined,
+                method,
+                headers,
+                body: next
+            });
+        }
+        text(next, force) {
+            return this.response(next, force).text();
+        }
+        xml(next, force) {
+            return this.response(next, force).xml();
+        }
+        json(next, force) {
+            // const next2 = next && JSON.stringify( next , null , '\t' )
+            return this.response(next, force).json();
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_http.prototype, "json", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_http, "resource_absolute", null);
+    $.$mol_http = $mol_http;
+})($ || ($ = {}));
+//http.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    class $mol_http_resource extends $.$mol_http {
+        static item(uri) {
+            return $.$mol_http.resource(uri);
+        }
+    }
+    __decorate([
+        $.$mol_deprecated('Use $mol_http.resource insted.')
+    ], $mol_http_resource, "item", null);
+    $.$mol_http_resource = $mol_http_resource;
+    class $mol_http_resource_json {
+        static item(uri) {
+            return $.$mol_http.resource(uri);
+        }
+    }
+    __decorate([
+        $.$mol_deprecated('Use $mol_http.resource insted.')
+    ], $mol_http_resource_json, "item", null);
+    $.$mol_http_resource_json = $mol_http_resource_json;
+})($ || ($ = {}));
+//resource.js.map
 ;
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6807,7 +7690,7 @@ var $;
             this.minute = config.minute;
             this.second = config.second;
             if (config.offset !== undefined)
-                this.offset = config.offset && new $.$mol_time_duration(config.offset);
+                this.offset = config.offset ? new $.$mol_time_duration(config.offset) : undefined;
         }
         get weekday() {
             return (this.native.getDay() + 6) % 7;
@@ -6847,8 +7730,8 @@ var $;
         shift(config) {
             var duration = new $.$mol_time_duration(config);
             var moment = new $mol_time_moment().merge(this);
-            var second = (moment.second + (duration.second || 0));
-            var native = new Date(moment.year + (duration.year || 0), moment.month + (duration.month || 0), moment.day + 1 + (duration.day || 0), moment.hour + (duration.hour || 0), moment.minute + (duration.minute || 0), Math.floor(second), (second - Math.floor(second)) * 1000);
+            var second = (moment.second) + (duration.second || 0);
+            var native = new Date((moment.year) + (duration.year || 0), (moment.month) + (duration.month || 0), (moment.day) + 1 + (duration.day || 0), (moment.hour) + (duration.hour || 0), (moment.minute) + (duration.minute || 0), Math.floor(second), (second - Math.floor(second)) * 1000);
             if (isNaN(native.valueOf()))
                 throw new Error('Wrong time');
             return new $mol_time_moment({
@@ -7044,6 +7927,21 @@ var $;
 //moment.js.map
 ;
 "use strict";
+var $;
+(function ($) {
+    console.warn('$mol_atom_wait is deprecated. Use $mol_fiber_sync instead.');
+    class $mol_atom_wait extends Promise {
+        constructor(message = 'Wait...') {
+            super(() => { });
+            this.message = message;
+        }
+    }
+    $.$mol_atom_wait = $mol_atom_wait;
+    $mol_atom_wait.prototype.constructor = Promise;
+})($ || ($ = {}));
+//wait.js.map
+;
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7086,10 +7984,10 @@ var $;
                     const found = search.match(/\bcode=([^&]+)/);
                     if (!found)
                         return;
-                    this.code(found[1], $.$mol_atom_force_cache);
+                    this.code(found[1], $.$mol_mem_force_cache);
                 }
                 else {
-                    this.code(new Error('Can not get auth code'), $.$mol_atom_force_cache);
+                    this.code(new Error('Can not get auth code'), $.$mol_mem_force_cache);
                 }
                 clearInterval(timer);
                 win.close();
@@ -7323,12 +8221,12 @@ var $;
                 const json = resource.json({ body: config.text }, force);
                 const comment = $.$mol_github_comment.item(json.url);
                 comment.json_update(json);
-                this.json(undefined, $.$mol_atom_force_cache);
+                this.json(undefined, $.$mol_mem_force_cache);
                 return comment;
             }
             catch (error) {
                 if (error.message === 'Unauthorized') {
-                    $.$mol_github_auth.token_last(undefined, $.$mol_atom_force_update).valueOf();
+                    $.$mol_github_auth.token_last(undefined, $.$mol_mem_force_update).valueOf();
                 }
                 throw error;
             }
@@ -7395,7 +8293,7 @@ var $;
          *  ```
          **/
         pages() {
-            return [].concat(this.Menu_page(), this.Details());
+            return [this.Menu_page(), this.Details()];
         }
         /**
          *  ```
@@ -7413,7 +8311,7 @@ var $;
                 obj.title = () => this.menu_title();
                 obj.event_top = (val) => this.event_front_up(val);
                 obj.tools = () => this.tools_root();
-                obj.body = () => [].concat(this.Menu());
+                obj.body = () => [this.Menu()];
                 return obj;
             })(new this.$.$mol_page());
         }
@@ -7431,7 +8329,7 @@ var $;
          *  ```
          **/
         tools_root() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -7450,7 +8348,7 @@ var $;
          *  ```
          **/
         menu_rows() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -7468,9 +8366,9 @@ var $;
                 obj.minimal_width = () => 600;
                 obj.title = () => this.gist_current_title();
                 obj.event_top = (val) => this.event_front_up(val);
-                obj.tools = () => [].concat(this.Close());
+                obj.tools = () => [this.Close()];
                 obj.body_scroll_top = (val) => this.details_scroll_top(val);
-                obj.body = () => [].concat(this.Details_content());
+                obj.body = () => [this.Details_content()];
                 return obj;
             })(new this.$.$mol_page());
         }
@@ -7492,7 +8390,7 @@ var $;
         Close() {
             return ((obj) => {
                 obj.arg = () => this.close_arg();
-                obj.sub = () => [].concat(this.Close_icon());
+                obj.sub = () => [this.Close_icon()];
                 return obj;
             })(new this.$.$mol_link());
         }
@@ -7531,7 +8429,7 @@ var $;
          **/
         Details_content() {
             return ((obj) => {
-                obj.rows = () => [].concat(this.Datails_text());
+                obj.rows = () => [this.Datails_text()];
                 return obj;
             })(new this.$.$mol_list());
         }
@@ -7681,171 +8579,144 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_folder extends $.$mol_icon {
-        /**
-         *  ```
-         *  path \M10,4H4C2.89,4 2,4.89 2,6V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z
-         *  ```
-         **/
-        path() {
-            return "M10,4H4C2.89,4 2,4.89 2,6V18C2,19.1 2.9,20 4,20H20C21.1,20 22,19.1 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z";
+    class $mol_unit extends $.$mol_object {
+        constructor(value) {
+            super();
+            if (value !== undefined)
+                this['valueOf()'] = value;
         }
-    }
-    $.$mol_icon_folder = $mol_icon_folder;
-})($ || ($ = {}));
-//folder.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_file extends $.$mol_icon {
-        /**
-         *  ```
-         *  path \M13,9V3.5L18.5,9M6,2C4.89,2 4,2.89 4,4V20C4,21.1 4.9,22 6,22H18C19.1,22 20,21.1 20,20V8L14,2H6Z
-         *  ```
-         **/
-        path() {
-            return "M13,9V3.5L18.5,9M6,2C4.89,2 4,2.89 4,4V20C4,21.1 4.9,22 6,22H18C19.1,22 20,21.1 20,20V8L14,2H6Z";
+        prefix() {
+            return '';
         }
-    }
-    $.$mol_icon_file = $mol_icon_file;
-})($ || ($ = {}));
-//file.view.tree.js.map
-;
-"use strict";
-/// Install: 
-///     npm install pdfjs-dist
-var $;
-(function ($) {
-    $.$lib_pdfjs = require('pdfjs-dist/build/pdf.min.js');
-    $.$lib_pdfjs.disableRange = true;
-    $.$lib_pdfjs.GlobalWorkerOptions.workerSrc = '-/node_modules/pdfjs-dist/build/pdf.worker.min.js';
-})($ || ($ = {}));
-//pdfjs.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_range_in(source) {
-        return new $mol_range_lazy(source);
-    }
-    $.$mol_range_in = $mol_range_in;
-    class $mol_range_common {
-        item(id) {
-            return;
-        }
-        get length() {
-            return 0;
-        }
-        get '0'() {
-            throw new Error('Direct access to items not supported. Use item( id : number ) method instead.');
-        }
-        forEach(handle) {
-            const length = this.length;
-            for (let i = 0; i < length; ++i) {
-                handle(this.item(i), i);
-            }
+        postfix() {
+            return '';
         }
         valueOf() {
-            const list = [];
-            this.forEach(val => list.push(val));
-            return list;
+            return this['valueOf()'];
         }
-        concat(...args) {
-            const ranges = args.map(range => range.valueOf());
-            return this.valueOf().concat(...ranges);
-            //return new $mol_range_list( [ this ].concat( args ) )
+        delimiter() {
+            return ' ';
         }
-        slice(start = 0, end) {
-            const source = this;
-            return new $mol_range_lazy({
-                item(id) {
-                    return source.item(id + start);
-                },
-                get length() {
-                    return Math.min(end, source.length) - start;
-                }
-            });
+        value_view() {
+            return this.valueOf().toLocaleString();
         }
-        map(proceed) {
-            const source = this;
-            return new $mol_range_lazy({
-                item(id) {
-                    return proceed(source.item(id), id);
-                },
-                get length() {
-                    return source.length;
-                }
-            });
+        toString() {
+            return this.prefix() + this.value_view() + this.postfix();
         }
-        join(delim = ',') {
-            const list = [];
-            this.forEach(val => list.push(val));
-            return list.join(delim);
+        static summ(a, b) {
+            var Class = a.constructor;
+            if (Class !== b.constructor)
+                throw new Error(`Not same measure: ${Class} , ${b.constructor}`);
+            return new Class(a.valueOf() + b.valueOf());
         }
-        every(check) {
-            let res = true;
-            this.forEach((val, id) => {
-                if (!res)
-                    return;
-                res = check(val, id);
-            });
-            return res;
-        }
-        some(check) {
-            let res = false;
-            this.forEach((val, id) => {
-                if (res)
-                    return;
-                res = check(val, id);
-            });
-            return res;
+        mult(m) {
+            var Class = this.constructor;
+            return new Class(this.valueOf() * m);
         }
     }
-    $.$mol_range_common = $mol_range_common;
-    class $mol_range_lazy extends $mol_range_common {
-        constructor(source = {
-            item(id) { return undefined; },
-            length: 0
-        }) {
-            super();
-            this.source = source;
-        }
-        item(id) {
-            return this.source.item(id);
-        }
-        get length() {
-            return this.source.length;
-        }
-    }
-    $.$mol_range_lazy = $mol_range_lazy;
-    // export class $mol_range_list< Value > extends $mol_range_common< Value > {
-    //
-    // 	constructor( private list : Value[][] ) {
-    // 		super()
-    // 	}
-    //
-    // 	get( id : number ) {
-    // 		var subId = id
-    // 		for( var range of this.list ) {
-    // 			var nextId = subId - range.length
-    // 			if( nextId < 0 ) return range.get( subId )
-    // 			subId = nextId
-    // 		}
-    // 		return
-    // 	}
-    //
-    // 	get length () {
-    // 		var length = 0
-    // 		this.list.forEach( range => {
-    // 			length += range.length
-    // 		} )
-    // 		return length
-    // 	}
-    //
-    // }
+    $.$mol_unit = $mol_unit;
 })($ || ($ = {}));
-//range.js.map
+//unit.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_unit_money extends $.$mol_unit {
+    }
+    $.$mol_unit_money = $mol_unit_money;
+    class $mol_unit_money_usd extends $mol_unit_money {
+        prefix() {
+            return '$';
+        }
+    }
+    $.$mol_unit_money_usd = $mol_unit_money_usd;
+    class $mol_unit_money_rur extends $mol_unit_money {
+        postfix() {
+            return ' ₽';
+        }
+    }
+    $.$mol_unit_money_rur = $mol_unit_money_rur;
+})($ || ($ = {}));
+//money.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_stub_select_random(list) {
+        return list[Math.floor(Math.random() * list.length)];
+    }
+    $.$mol_stub_select_random = $mol_stub_select_random;
+    function $mol_stub_strings(prefix = '', count = 10, length = 10) {
+        if (prefix.length >= length)
+            return [];
+        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split('');
+        let strings = [];
+        for (let i = 0; i < count; i++) {
+            let text = prefix;
+            for (let j = prefix.length; j < length; j++) {
+                text += $mol_stub_select_random(possible);
+            }
+            strings.push(text);
+        }
+        return strings;
+    }
+    $.$mol_stub_strings = $mol_stub_strings;
+    function $mol_stub_code(length = 8) {
+        var max = Math.pow(16, length);
+        var min = Math.pow(16, length - 1);
+        var value = min + Math.floor(Math.random() * (max - min));
+        return value.toString(16).toUpperCase();
+    }
+    $.$mol_stub_code = $mol_stub_code;
+    function $mol_stub_price(max = 1000) {
+        var min = Math.floor(max / 16 / 16);
+        var value = min + Math.floor(Math.random() * (max - min));
+        return new $.$mol_unit_money_usd(value);
+    }
+    $.$mol_stub_price = $mol_stub_price;
+    function $mol_stub_product_name() {
+        var name = $mol_stub_select_random([
+            'Monitor 15"',
+            'Monitor 17"',
+            'Monitor 19"',
+            'Graphics card',
+            'Frame grabber card'
+        ]);
+        var port = $mol_stub_select_random(['D-SUB', 'DVI', 'HDMI']);
+        var resolution = $mol_stub_select_random(['VGA', 'Full HD', '4K']);
+        return [name, port, resolution].join(', ');
+    }
+    $.$mol_stub_product_name = $mol_stub_product_name;
+    function $mol_stub_company_name_big() {
+        var product = $mol_stub_select_random(['Everything', 'Something', 'Anything', 'Nothing']);
+        var type = $mol_stub_select_random(['Company', 'Corporation', 'Holding']);
+        return `A ${type} that makes ${product}`;
+    }
+    $.$mol_stub_company_name_big = $mol_stub_company_name_big;
+    function $mol_stub_company_name_small() {
+        return $mol_stub_select_random(['ACME inc.', 'Dream Company', 'Just Company']);
+    }
+    $.$mol_stub_company_name_small = $mol_stub_company_name_small;
+    function $mol_stub_company_name() {
+        return $mol_stub_select_random([$mol_stub_company_name_small, $mol_stub_company_name_big])();
+    }
+    $.$mol_stub_company_name = $mol_stub_company_name;
+    function $mol_stub_person_name() {
+        var first = $mol_stub_select_random(['Ivan', 'Petr', 'Sidor']);
+        var last = $mol_stub_select_random(['Ivanov', 'Petrov', 'Sidorov']);
+        return `${first} ${last}`;
+    }
+    $.$mol_stub_person_name = $mol_stub_person_name;
+    function $mol_stub_city() {
+        return $mol_stub_select_random(['Moscow', 'London', 'Washington', 'Buenos Aires']);
+    }
+    $.$mol_stub_city = $mol_stub_city;
+    function $mol_stub_time(maxShift = 60 * 24 * 365) {
+        return new $.$mol_time_moment().shift({ minute: Math.round(Math.random() * maxShift) });
+    }
+    $.$mol_stub_time = $mol_stub_time;
+})($ || ($ = {}));
+//stub.js.map
 ;
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7856,1130 +8727,295 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    class $mol_embed_pdf extends $.$mol_scroll {
-        /**
-         *  ```
-         *  uri \
-         *  ```
-         **/
-        uri() {
-            return "";
+    /// Поставщик
+    class $mol_app_supplies_domain_provider extends $.$mol_object {
+        id() { return void 0; }
+        name() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_provider = $mol_app_supplies_domain_provider;
+    /// Группа закупок
+    class $mol_app_supplies_domain_supply_group extends $.$mol_object {
+        id() { return void 0; }
+        name() { return void 0; }
+        manager() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_supply_group = $mol_app_supplies_domain_supply_group;
+    /// Закупочный дивизион
+    class $mol_app_supplies_domain_supply_division extends $.$mol_object {
+        id() { return void 0; }
+        name() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_supply_division = $mol_app_supplies_domain_supply_division;
+    /// Способ оплаты
+    class $mol_app_supplies_domain_pay_method extends $.$mol_object {
+        id() { return void 0; }
+        name() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_pay_method = $mol_app_supplies_domain_pay_method;
+    /// Дебитор
+    class $mol_app_supplies_domain_debitor extends $.$mol_object {
+        id() { return void 0; }
+        name() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_debitor = $mol_app_supplies_domain_debitor;
+    /// Продукт
+    class $mol_app_supplies_domain_supply_position extends $.$mol_object {
+        name() { return void 0; }
+        supply_moment() { return void 0; }
+        division() { return void 0; }
+        store() { return void 0; }
+        price() { return void 0; }
+        quantity() { return void 0; }
+        cost() {
+            return this.price().mult(this.quantity());
         }
-        /**
-         *  ```
-         *  sub / <= Pages
-         *  ```
-         **/
-        sub() {
-            return [].concat(this.Pages());
-        }
-        /**
-         *  ```
-         *  Pages $mol_list rows <= pages
-         *  ```
-         **/
-        Pages() {
-            return ((obj) => {
-                obj.rows = () => this.pages();
-                return obj;
-            })(new this.$.$mol_list());
-        }
-        /**
-         *  ```
-         *  pages /
-         *  ```
-         **/
-        pages() {
-            return [].concat();
-        }
-        /**
-         *  ```
-         *  Page!index $mol_embed_pdf_page page <= page!index
-         *  ```
-         **/
-        Page(index) {
-            return ((obj) => {
-                obj.page = () => this.page(index);
-                return obj;
-            })(new this.$.$mol_embed_pdf_page());
-        }
-        /**
-         *  ```
-         *  page!index null
-         *  ```
-         **/
-        page(index) {
-            return null;
-        }
+    }
+    $.$mol_app_supplies_domain_supply_position = $mol_app_supplies_domain_supply_position;
+    /// Вложение
+    class $mol_app_supplies_domain_attachment extends $.$mol_object {
+        url_thumb() { return void 0; }
+        url_load() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_attachment = $mol_app_supplies_domain_attachment;
+    /// Работник
+    class $mol_app_supplies_domain_person extends $.$mol_object {
+        id() { return void 0; }
+        name() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_person = $mol_app_supplies_domain_person;
+    /// Договор
+    class $mol_app_supplies_domain_contract extends $.$mol_object {
+        id() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_contract = $mol_app_supplies_domain_contract;
+    /// Балансовая единица
+    class $mol_app_supplies_domain_ballance_unit extends $.$mol_object {
+        id() { return void 0; }
+        name() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_ballance_unit = $mol_app_supplies_domain_ballance_unit;
+    /// Закупочная организация
+    class $mol_app_supplies_domain_consumer extends $.$mol_object {
+        id() { return void 0; }
+        name() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_consumer = $mol_app_supplies_domain_consumer;
+    /// Склад для доставки
+    class $mol_app_supplies_domain_store extends $.$mol_object {
+        id() { return void 0; }
+        name() { return void 0; }
+    }
+    $.$mol_app_supplies_domain_store = $mol_app_supplies_domain_store;
+    /// Заявка на закупку
+    class $mol_app_supplies_domain_supply extends $.$mol_object {
+        id() { return void 0; }
+        provider() { return void 0; }
+        consumer() { return void 0; }
+        group() { return void 0; }
+        status(next) { return next; }
+        ballance_unit() { return void 0; }
+        manager() { return void 0; }
+        contract() { return void 0; }
+        pay_method() { return void 0; }
+        debitor() { return void 0; }
+        positions() { return void 0; }
+        attachments(next) { return next || []; }
+        cost() { return void 0; }
     }
     __decorate([
         $.$mol_mem
-    ], $mol_embed_pdf.prototype, "Pages", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_embed_pdf.prototype, "Page", null);
-    $.$mol_embed_pdf = $mol_embed_pdf;
-})($ || ($ = {}));
-(function ($) {
-    class $mol_embed_pdf_page extends $.$mol_view {
-        /**
-         *  ```
-         *  dom_name \canvas
-         *  ```
-         **/
-        dom_name() {
-            return "canvas";
-        }
-        /**
-         *  ```
-         *  page null
-         *  ```
-         **/
-        page() {
-            return null;
-        }
-        /**
-         *  ```
-         *  max_width 640
-         *  ```
-         **/
-        max_width() {
-            return 640;
-        }
-        /**
-         *  ```
-         *  scale_over 1.25
-         *  ```
-         **/
-        scale_over() {
-            return 1.25;
-        }
-        /**
-         *  ```
-         *  plugins / <= Touch
-         *  ```
-         **/
-        plugins() {
-            return [].concat(this.Touch());
-        }
-        /**
-         *  ```
-         *  Touch $mol_touch zoom?val <=> scale?val
-         *  ```
-         **/
-        Touch() {
-            return ((obj) => {
-                obj.zoom = (val) => this.scale(val);
-                return obj;
-            })(new this.$.$mol_touch());
-        }
-        /**
-         *  ```
-         *  scale?val 1
-         *  ```
-         **/
-        scale(val, force) {
-            return (val !== void 0) ? val : 1;
-        }
-        /**
-         *  ```
-         *  style * zoom <= zoom
-         *  ```
-         **/
-        style() {
-            return ({
-                "zoom": this.zoom(),
-            });
-        }
-        /**
-         *  ```
-         *  zoom 0.8
-         *  ```
-         **/
-        zoom() {
-            return 0.8;
-        }
-        /**
-         *  ```
-         *  field *
-         *  	width <= width
-         *  	height <= height
-         *  ```
-         **/
-        field() {
-            return ({
-                "width": this.width(),
-                "height": this.height(),
-            });
-        }
-        /**
-         *  ```
-         *  width 0
-         *  ```
-         **/
-        width() {
-            return 0;
-        }
-        /**
-         *  ```
-         *  height 0
-         *  ```
-         **/
-        height() {
-            return 0;
-        }
-    }
+    ], $mol_app_supplies_domain_supply.prototype, "status", null);
     __decorate([
         $.$mol_mem
-    ], $mol_embed_pdf_page.prototype, "Touch", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_embed_pdf_page.prototype, "scale", null);
-    $.$mol_embed_pdf_page = $mol_embed_pdf_page;
-})($ || ($ = {}));
-//pdf.view.tree.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_embed_pdf extends $.$mol_embed_pdf {
-            document(doc, force) {
-                var loadingTask = $.$lib_pdfjs.getDocument(this.uri()).promise
-                    .then((doc) => this.document(doc, $.$mol_atom_force_cache))
-                    .catch((error) => this.document(error, $.$mol_atom_force_cache));
-                throw new $.$mol_atom_wait(`Loading PDF document: ${this.uri()}`);
-            }
-            page(index, page, force) {
-                this.document().getPage(index + 1)
-                    .then((page) => this.page(index, page, $.$mol_atom_force_cache))
-                    .catch((error) => this.page(index, error, $.$mol_atom_force_cache));
-                throw new $.$mol_atom_wait(`Rendering PDF page=${index}`);
-            }
-            pages() {
-                return $.$mol_range_in({
-                    item: index => this.Page(index),
-                    length: this.document().numPages,
-                }).valueOf();
-            }
-        }
-        __decorate([
-            $.$mol_mem
-        ], $mol_embed_pdf.prototype, "document", null);
-        __decorate([
-            $.$mol_mem_key
-        ], $mol_embed_pdf.prototype, "page", null);
-        $$.$mol_embed_pdf = $mol_embed_pdf;
-        class $mol_embed_pdf_page extends $.$mol_embed_pdf_page {
-            viewport() {
-                return this.page().getViewport(this.scale_over());
-            }
-            zoom() {
-                return this.scale() / this.scale_over();
-            }
-            width() {
-                return Math.floor(this.viewport().width);
-            }
-            height() {
-                return Math.floor(this.viewport().height);
-            }
-            minimal_width() {
-                return this.width() * this.zoom();
-            }
-            minimal_height() {
-                return this.height() * this.zoom();
-            }
-            paint(next, force) {
-                this.page().render({
-                    canvasContext: this.dom_node().getContext('2d'),
-                    viewport: this.viewport(),
-                })
-                    .then(() => this.paint(null, $.$mol_atom_force_cache))
-                    .catch((error) => this.paint(error, $.$mol_atom_force_cache));
-                throw new $.$mol_atom_wait('Painting...');
-            }
-            render() {
-                super.render();
-                this.paint();
-            }
-        }
-        __decorate([
-            $.$mol_mem
-        ], $mol_embed_pdf_page.prototype, "paint", null);
-        $$.$mol_embed_pdf_page = $mol_embed_pdf_page;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//pdf.view.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    class $mol_embed_native extends $.$mol_view {
-        /**
-         *  ```
-         *  dom_name \object
-         *  ```
-         **/
-        dom_name() {
-            return "object";
-        }
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	data <= uri
-         *  	type <= mime
-         *  ```
-         **/
-        attr() {
-            return (Object.assign(Object.assign({}, super.attr()), { "data": this.uri(), "type": this.mime() }));
-        }
-        /**
-         *  ```
-         *  uri \
-         *  ```
-         **/
-        uri() {
-            return "";
-        }
-        /**
-         *  ```
-         *  mime \
-         *  ```
-         **/
-        mime() {
-            return "";
-        }
-        /**
-         *  ```
-         *  sub / <= Open
-         *  ```
-         **/
-        sub() {
-            return [].concat(this.Open());
-        }
-        /**
-         *  ```
-         *  Open $mol_link
-         *  	uri <= uri
-         *  	sub / <= Open_button
-         *  ```
-         **/
-        Open() {
-            return ((obj) => {
-                obj.uri = () => this.uri();
-                obj.sub = () => [].concat(this.Open_button());
-                return obj;
-            })(new this.$.$mol_link());
-        }
-        /**
-         *  ```
-         *  Open_button $mol_button_major title <= open_label
-         *  ```
-         **/
-        Open_button() {
-            return ((obj) => {
-                obj.title = () => this.open_label();
-                return obj;
-            })(new this.$.$mol_button_major());
-        }
-        /**
-         *  ```
-         *  open_label @ \Open
-         *  ```
-         **/
-        open_label() {
-            return this.$.$mol_locale.text("$mol_embed_native_open_label");
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_embed_native.prototype, "Open", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_embed_native.prototype, "Open_button", null);
-    $.$mol_embed_native = $mol_embed_native;
-})($ || ($ = {}));
-//native.view.tree.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    class $mol_embed extends $.$mol_ghost {
-        /**
-         *  ```
-         *  Pdf $mol_embed_pdf uri <= uri
-         *  ```
-         **/
-        Pdf() {
-            return ((obj) => {
-                obj.uri = () => this.uri();
-                return obj;
-            })(new this.$.$mol_embed_pdf());
-        }
-        /**
-         *  ```
-         *  uri \
-         *  ```
-         **/
-        uri() {
-            return "";
-        }
-        /**
-         *  ```
-         *  Native $mol_embed_native
-         *  	uri <= uri
-         *  	mime <= mime
-         *  ```
-         **/
-        Native() {
-            return ((obj) => {
-                obj.uri = () => this.uri();
-                obj.mime = () => this.mime();
-                return obj;
-            })(new this.$.$mol_embed_native());
-        }
-        /**
-         *  ```
-         *  mime \
-         *  ```
-         **/
-        mime() {
-            return "";
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_embed.prototype, "Pdf", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_embed.prototype, "Native", null);
-    $.$mol_embed = $mol_embed;
-})($ || ($ = {}));
-//embed.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_embed extends $.$mol_embed {
-            Sub() {
-                if (this.mime() === 'application/pdf') {
-                    return this.Pdf();
-                }
-                return this.Native();
-            }
-        }
-        $$.$mol_embed = $mol_embed;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//embed.view.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    class $mol_webdav extends $.$mol_http {
-        static item(uri) {
-            return this.make({
-                uri: $.$mol_const(uri),
-            });
-        }
-        data_tree() {
-            const dom = this.response().responseXML;
-            const responses = dom.querySelectorAll('response');
-            const data = {};
-            for (let response of responses) {
-                const uri = this.resolve(response.querySelector('href').textContent).uri();
-                data[uri] = response;
-            }
-            return data;
-        }
-        data_self() {
-            return this.parent().data_tree();
-        }
-        parent() {
-            return $mol_webdav.item(this.uri().replace(/\/[^\/]*\/?$/, '/'));
-        }
-        sub() {
-            const next = [];
-            for (let uri of Object.keys(this.data_tree())) {
-                if (uri == this.uri())
-                    continue;
-                next.push($mol_webdav.item(uri));
+    ], $mol_app_supplies_domain_supply.prototype, "attachments", null);
+    $.$mol_app_supplies_domain_supply = $mol_app_supplies_domain_supply;
+    /// Статус заявки на закупку
+    let $mol_app_supplies_domain_supply_status;
+    (function ($mol_app_supplies_domain_supply_status) {
+        $mol_app_supplies_domain_supply_status[$mol_app_supplies_domain_supply_status["pending"] = 'pending'] = "pending";
+        $mol_app_supplies_domain_supply_status[$mol_app_supplies_domain_supply_status["approved"] = 'approved'] = "approved";
+    })($mol_app_supplies_domain_supply_status = $.$mol_app_supplies_domain_supply_status || ($.$mol_app_supplies_domain_supply_status = {}));
+    /// Демонстрационный бизнес домен
+    class $mol_app_supplies_domain_mock extends $.$mol_object {
+        supplies() {
+            var next = [];
+            for (var i = 1; i <= 100; ++i) {
+                next.push(this.supply((i * 123456789 % 987654321).toString(16).toUpperCase()));
             }
             return next;
         }
-        depth() {
-            return 1;
-        }
-        headers() {
-            return {
-                'Depth': String(this.depth())
-            };
-        }
-        method_get() {
-            return 'PROPFIND';
-        }
-        resolve(uri) {
-            if (!uri)
-                return this;
-            if (/^[-\w]+:/.test(uri)) {
-                return $mol_webdav.item(uri);
+        positions(supply) {
+            var next = [];
+            var count = 10 + Math.floor(Math.random() * 30);
+            for (var i = 1; i <= count; ++i) {
+                next.push(this.position({
+                    supply,
+                    position: (i * 123456789 % 987654321).toString(16).toUpperCase()
+                }));
             }
-            if (uri[0] === '/') {
-                return $mol_webdav.item(this.uri().replace(/^([^\/]+\/\/[^\/]+).*/, '$1') + uri);
-            }
-            let res = this.uri() + '/' + uri;
-            while (true) {
-                let prev = res;
-                res = res.replace(/\/[^\/]+\/\.\.\//, '/');
-                if (prev === res)
-                    break;
-            }
-            while (true) {
-                let prev = res;
-                res = res.replace(/\/\.\.\/[^\/]+\//, '/');
-                if (prev === res)
-                    break;
-            }
-            return this.constructor.item(res);
+            return next;
         }
-        prop(prop) {
-            return this.data_self()[this.uri()].querySelector(prop).textContent;
+        supply_status(id, next) {
+            return next || $.$mol_stub_select_random([
+                $mol_app_supplies_domain_supply_status.pending,
+                $mol_app_supplies_domain_supply_status.approved
+            ]);
         }
-        type() {
-            return this.data_self()[this.uri()].querySelector('collection') ? 'dir' : 'file';
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_webdav.prototype, "data_tree", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_webdav.prototype, "sub", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_webdav, "item", null);
-    $.$mol_webdav = $mol_webdav;
-})($ || ($ = {}));
-//webdav.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    class $mol_app_files extends $.$mol_book {
-        /**
-         *  ```
-         *  uri_current <= uri_root
-         *  ```
-         **/
-        uri_current() {
-            return this.uri_root();
-        }
-        /**
-         *  ```
-         *  uri_root <= uri_root_default
-         *  ```
-         **/
-        uri_root() {
-            return this.uri_root_default();
-        }
-        /**
-         *  ```
-         *  uri_root_default \
-         *  ```
-         **/
-        uri_root_default() {
-            return "";
-        }
-        /**
-         *  ```
-         *  credentials *
-         *  	login \
-         *  	password \
-         *  ```
-         **/
-        credentials() {
-            return ({
-                "login": "",
-                "password": "",
+        supply(id) {
+            return $mol_app_supplies_domain_supply.make({
+                id: $.$mol_const(id),
+                cost: () => new $.$mol_unit_money_usd(this.positions(id).reduce((sum, pos) => sum + pos.cost().valueOf(), 0)),
+                status: (next) => this.supply_status(id, next),
+                provider: $.$mol_const(this.provider($.$mol_stub_code(2))),
+                consumer: $.$mol_const(this.consumer($.$mol_stub_code(2))),
+                group: $.$mol_const(this.supply_group($.$mol_stub_code(2))),
+                contract: $.$mol_const(this.contract($.$mol_stub_code(8))),
+                manager: $.$mol_const(this.person($.$mol_stub_code(2))),
+                ballance_unit: $.$mol_const(this.ballance_unit($.$mol_stub_code(2))),
+                pay_method: $.$mol_const(this.pay_method($.$mol_stub_code(1))),
+                debitor: $.$mol_const(this.debitor($.$mol_stub_code(2))),
+                positions: () => this.positions(id),
+                attachments: (next) => this.attachments(id, next),
             });
         }
-        /**
-         *  ```
-         *  title <= title_root
-         *  ```
-         **/
-        title() {
-            return this.title_root();
+        provider(id) {
+            return $mol_app_supplies_domain_provider.make({
+                id: $.$mol_const(id),
+                name: $.$mol_const($.$mol_stub_company_name()),
+            });
         }
-        /**
-         *  ```
-         *  title_root @ \Documents
-         *  ```
-         **/
-        title_root() {
-            return this.$.$mol_locale.text("$mol_app_files_title_root");
+        consumer(id) {
+            return $mol_app_supplies_domain_consumer.make({
+                id: $.$mol_const(id),
+                name: $.$mol_const($.$mol_stub_company_name()),
+            });
         }
-        /**
-         *  ```
-         *  Folder!folder $mol_app_files_folder
-         *  	title <= webdav_title!folder
-         *  	description <= webdav_description!folder
-         *  	tools <= page_tools!folder
-         *  	rows <= folder_rows!folder
-         *  	event_top?val <=> event_front_up?val
-         *  ```
-         **/
-        Folder(folder) {
-            return ((obj) => {
-                obj.title = () => this.webdav_title(folder);
-                obj.description = () => this.webdav_description(folder);
-                obj.tools = () => this.page_tools(folder);
-                obj.rows = () => this.folder_rows(folder);
-                obj.event_top = (val) => this.event_front_up(val);
-                return obj;
-            })(new this.$.$mol_app_files_folder());
+        ballance_unit(id) {
+            return $mol_app_supplies_domain_ballance_unit.make({
+                id: $.$mol_const(id),
+                name: $.$mol_const($.$mol_stub_select_random([
+                    'ACME Enterprise',
+                    'ACME Customer',
+                    'ACME Inside'
+                ])),
+            });
         }
-        /**
-         *  ```
-         *  webdav_title!folder \
-         *  ```
-         **/
-        webdav_title(folder) {
-            return "";
+        division(id) {
+            return $mol_app_supplies_domain_supply_division.make({
+                id: $.$mol_const(id),
+                name: $.$mol_const($.$mol_stub_code(4)),
+            });
         }
-        /**
-         *  ```
-         *  webdav_description!folder \
-         *  ```
-         **/
-        webdav_description(folder) {
-            return "";
+        supply_group(id) {
+            return $mol_app_supplies_domain_supply_group.make({
+                id: $.$mol_const(id),
+                name: $.$mol_const($.$mol_stub_person_name() + ' Group'),
+            });
         }
-        /**
-         *  ```
-         *  folder_rows!folder /
-         *  ```
-         **/
-        folder_rows(folder) {
-            return [].concat();
+        store(id) {
+            return $mol_app_supplies_domain_store.make({
+                id: $.$mol_const(id),
+                name: $.$mol_const($.$mol_stub_city() + ' #' + $.$mol_stub_code(2)),
+            });
         }
-        /**
-         *  ```
-         *  Folder_row!uri $mol_link
-         *  	minimal_height 40
-         *  	arg <= folder_row_arg!uri
-         *  	current <= folder_row_current!uri
-         *  	sub /
-         *  		<= folder_row_icon!uri
-         *  		<= Folder_row_info!uri
-         *  ```
-         **/
-        Folder_row(uri) {
-            return ((obj) => {
-                obj.minimal_height = () => 40;
-                obj.arg = () => this.folder_row_arg(uri);
-                obj.current = () => this.folder_row_current(uri);
-                obj.sub = () => [].concat(this.folder_row_icon(uri), this.Folder_row_info(uri));
-                return obj;
-            })(new this.$.$mol_link());
+        person(id) {
+            return $mol_app_supplies_domain_person.make({
+                id: $.$mol_const(id),
+                name: $.$mol_const($.$mol_stub_person_name()),
+            });
         }
-        /**
-         *  ```
-         *  folder_row_arg!uri *
-         *  ```
-         **/
-        folder_row_arg(uri) {
-            return ({});
+        contract(id) {
+            return $mol_app_supplies_domain_person.make({
+                id: $.$mol_const(id),
+            });
         }
-        /**
-         *  ```
-         *  folder_row_current!uri false
-         *  ```
-         **/
-        folder_row_current(uri) {
-            return false;
+        pay_method(id) {
+            return $mol_app_supplies_domain_pay_method.make({
+                id: $.$mol_const(id),
+                name: $.$mol_const($.$mol_stub_select_random(['Accounting', 'Cash'])),
+            });
         }
-        /**
-         *  ```
-         *  folder_row_icon!uri null
-         *  ```
-         **/
-        folder_row_icon(uri) {
-            return null;
+        debitor(id) {
+            return $mol_app_supplies_domain_pay_method.make({
+                id: $.$mol_const(id),
+                name: $.$mol_const($.$mol_stub_company_name()),
+            });
         }
-        /**
-         *  ```
-         *  Folder_row_info!uri $mol_view sub /
-         *  	<= Folder_row_descr!uri
-         *  	<= Folder_row_title!uri
-         *  ```
-         **/
-        Folder_row_info(uri) {
-            return ((obj) => {
-                obj.sub = () => [].concat(this.Folder_row_descr(uri), this.Folder_row_title(uri));
-                return obj;
-            })(new this.$.$mol_view());
+        position(id) {
+            return $mol_app_supplies_domain_supply_position.make({
+                name: $.$mol_const($.$mol_stub_product_name()),
+                supply_moment: $.$mol_const($.$mol_stub_time(60 * 24 * 365)),
+                store: $.$mol_const(this.store($.$mol_stub_code(2))),
+                division: $.$mol_const(this.division($.$mol_stub_code(2))),
+                price: $.$mol_const($.$mol_stub_price(1000)),
+                quantity: $.$mol_const(Math.round(Math.random() * 30)),
+            });
         }
-        /**
-         *  ```
-         *  Folder_row_descr!uri $mol_view sub / <= folder_row_descr!uri
-         *  ```
-         **/
-        Folder_row_descr(uri) {
-            return ((obj) => {
-                obj.sub = () => [].concat(this.folder_row_descr(uri));
-                return obj;
-            })(new this.$.$mol_view());
+        attachments(id, next) {
+            return next || [];
         }
-        /**
-         *  ```
-         *  folder_row_descr!uri \
-         *  ```
-         **/
-        folder_row_descr(uri) {
-            return "";
-        }
-        /**
-         *  ```
-         *  Folder_row_title!uri $mol_view sub / <= folder_row_title!uri
-         *  ```
-         **/
-        Folder_row_title(uri) {
-            return ((obj) => {
-                obj.sub = () => [].concat(this.folder_row_title(uri));
-                return obj;
-            })(new this.$.$mol_view());
-        }
-        /**
-         *  ```
-         *  folder_row_title!uri \
-         *  ```
-         **/
-        folder_row_title(uri) {
-            return "";
-        }
-        /**
-         *  ```
-         *  File!file $mol_app_files_file
-         *  	title <= webdav_title!file
-         *  	tools <= page_tools!file
-         *  	src <= file_uri!file
-         *  	mime <= file_mime!file
-         *  	event_top?val <=> event_front_up?val
-         *  ```
-         **/
-        File(file) {
-            return ((obj) => {
-                obj.title = () => this.webdav_title(file);
-                obj.tools = () => this.page_tools(file);
-                obj.src = () => this.file_uri(file);
-                obj.mime = () => this.file_mime(file);
-                obj.event_top = (val) => this.event_front_up(val);
-                return obj;
-            })(new this.$.$mol_app_files_file());
-        }
-        /**
-         *  ```
-         *  file_uri!file \
-         *  ```
-         **/
-        file_uri(file) {
-            return "";
-        }
-        /**
-         *  ```
-         *  file_mime!file \
-         *  ```
-         **/
-        file_mime(file) {
-            return "";
-        }
-        /**
-         *  ```
-         *  Icon_folder!uri $mol_icon_folder
-         *  ```
-         **/
-        Icon_folder(uri) {
-            return ((obj) => {
-                return obj;
-            })(new this.$.$mol_icon_folder());
-        }
-        /**
-         *  ```
-         *  Icon_file!uri $mol_icon_file
-         *  ```
-         **/
-        Icon_file(uri) {
-            return ((obj) => {
-                return obj;
-            })(new this.$.$mol_icon_file());
-        }
-        /**
-         *  ```
-         *  Placeholder $mol_book_placeholder title <= title
-         *  ```
-         **/
-        Placeholder() {
-            return ((obj) => {
-                obj.title = () => this.title();
-                return obj;
-            })(new this.$.$mol_book_placeholder());
-        }
-        /**
-         *  ```
-         *  tools_root /
-         *  ```
-         **/
-        tools_root() {
-            return [].concat();
-        }
-        /**
-         *  ```
-         *  page_tools!uri / <= Close!uri
-         *  ```
-         **/
-        page_tools(uri) {
-            return [].concat(this.Close(uri));
-        }
-        /**
-         *  ```
-         *  Close!uri $mol_link
-         *  	sub / <= Close_icon!uri
-         *  	arg <= close_arg!uri
-         *  ```
-         **/
-        Close(uri) {
-            return ((obj) => {
-                obj.sub = () => [].concat(this.Close_icon(uri));
-                obj.arg = () => this.close_arg(uri);
-                return obj;
-            })(new this.$.$mol_link());
-        }
-        /**
-         *  ```
-         *  Close_icon!uri $mol_icon_cross
-         *  ```
-         **/
-        Close_icon(uri) {
-            return ((obj) => {
-                return obj;
-            })(new this.$.$mol_icon_cross());
-        }
-        /**
-         *  ```
-         *  close_arg!uri *
-         *  ```
-         **/
-        close_arg(uri) {
-            return ({});
-        }
-    }
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_files.prototype, "Folder", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_files.prototype, "Folder_row", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_files.prototype, "Folder_row_info", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_files.prototype, "Folder_row_descr", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_files.prototype, "Folder_row_title", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_files.prototype, "File", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_files.prototype, "Icon_folder", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_files.prototype, "Icon_file", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_files.prototype, "Placeholder", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_files.prototype, "Close", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_files.prototype, "Close_icon", null);
-    $.$mol_app_files = $mol_app_files;
-})($ || ($ = {}));
-(function ($) {
-    class $mol_app_files_folder extends $.$mol_page {
-        /**
-         *  ```
-         *  minimal_width 400
-         *  ```
-         **/
-        minimal_width() {
-            return 400;
-        }
-        /**
-         *  ```
-         *  body /
-         *  	<= Description
-         *  	<= Folder_rows
-         *  ```
-         **/
-        body() {
-            return [].concat(this.Description(), this.Folder_rows());
-        }
-        /**
-         *  ```
-         *  Description $mol_text text <= description
-         *  ```
-         **/
-        Description() {
-            return ((obj) => {
-                obj.text = () => this.description();
-                return obj;
-            })(new this.$.$mol_text());
-        }
-        /**
-         *  ```
-         *  description \
-         *  ```
-         **/
-        description() {
-            return "";
-        }
-        /**
-         *  ```
-         *  Folder_rows $mol_list rows <= rows
-         *  ```
-         **/
-        Folder_rows() {
-            return ((obj) => {
-                obj.rows = () => this.rows();
-                return obj;
-            })(new this.$.$mol_list());
-        }
-        /**
-         *  ```
-         *  rows /
-         *  ```
-         **/
-        rows() {
-            return [].concat();
+        attachment(id) {
+            const image = $.$mol_const('data:image/svg+xml;base64,PHN2ZyBpZD0i0KHQu9C+0LlfMSIgZGF0YS1uYW1lPSLQodC70L7QuSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjUuNyA2NDUuNDQiPgoJPGRlZnM+CgkJPHN0eWxlPi5jbHMtMXtmaWxsOiM0YzdjNGQ7fS5jbHMtMntmaWxsOiM2ZmMwNTg7fTwvc3R5bGU+Cgk8L2RlZnM+Cgk8dGl0bGU+JG1vbF9zeW1ib2w8L3RpdGxlPgoJPHBvbHlnb24gY2xhc3M9ImNscy0xIgoJCQkgcG9pbnRzPSI4MC43OCAyMTcuNTYgMjE0LjAzIDExNC42MSAzNTEuMTIgMjIwLjUzIDQyNS43IDE2Mi45MSAyMTQuODQgMCAzLjk4IDE2Mi45MSA0LjM1IDE2My4xOSAzLjM1IDE2My45NiAzNDQuOTMgNDI3Ljg3IDIxMS42NyA1MzAuODMgNzQuNTggNDI0LjkxIDAgNDgyLjUzIDIxMC44NiA2NDUuNDQgNDIxLjcyIDQ4Mi41MyA0MjEuMDIgNDgxLjk5IDQyMi4wMyA0ODEuMjEgODAuNzggMjE3LjU2Ii8+Cgk8cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMjA5LjU0IDQ0MC44MyA1OC4zNiAzMjIuNzIgMjA5LjU0IDIwNC42MSAzNjcuMzQgMzIyLjcyIDIwOS41NCA0NDAuODMiLz4KPC9zdmc+Cg==');
+            return $mol_app_supplies_domain_attachment.make({
+                url_thumb: image,
+                url_load: image,
+            });
         }
     }
     __decorate([
         $.$mol_mem
-    ], $mol_app_files_folder.prototype, "Description", null);
+    ], $mol_app_supplies_domain_mock.prototype, "supplies", null);
     __decorate([
-        $.$mol_mem
-    ], $mol_app_files_folder.prototype, "Folder_rows", null);
-    $.$mol_app_files_folder = $mol_app_files_folder;
-})($ || ($ = {}));
-(function ($) {
-    class $mol_app_files_file extends $.$mol_page {
-        /**
-         *  ```
-         *  minimal_width 800
-         *  ```
-         **/
-        minimal_width() {
-            return 800;
-        }
-        /**
-         *  ```
-         *  body / <= Embed
-         *  ```
-         **/
-        body() {
-            return [].concat(this.Embed());
-        }
-        /**
-         *  ```
-         *  Embed $mol_embed
-         *  	uri <= src
-         *  	mime <= mime
-         *  ```
-         **/
-        Embed() {
-            return ((obj) => {
-                obj.uri = () => this.src();
-                obj.mime = () => this.mime();
-                return obj;
-            })(new this.$.$mol_embed());
-        }
-        /**
-         *  ```
-         *  src \
-         *  ```
-         **/
-        src() {
-            return "";
-        }
-        /**
-         *  ```
-         *  mime \
-         *  ```
-         **/
-        mime() {
-            return "";
-        }
-    }
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "positions", null);
     __decorate([
-        $.$mol_mem
-    ], $mol_app_files_file.prototype, "Embed", null);
-    $.$mol_app_files_file = $mol_app_files_file;
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "supply_status", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "supply", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "provider", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "consumer", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "ballance_unit", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "division", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "supply_group", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "store", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "person", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "contract", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "pay_method", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "debitor", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "position", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "attachments", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_app_supplies_domain_mock.prototype, "attachment", null);
+    $.$mol_app_supplies_domain_mock = $mol_app_supplies_domain_mock;
 })($ || ($ = {}));
-//files.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_app_files extends $.$mol_app_files {
-            pages() {
-                return [
-                    ...this.webdavs().map((webdav) => (this.webdav_type(webdav.uri()) === 'dir')
-                        ? this.Folder(webdav.uri())
-                        : this.File(webdav.uri())),
-                ];
-            }
-            uri_root(next) {
-                return $.$mol_state_arg.value(this.state_key('root'), next) || this.uri_root_default();
-            }
-            uri_current(next) {
-                return $.$mol_state_arg.value(this.state_key('current'), next) || super.uri_current();
-            }
-            root() {
-                return $.$mol_webdav.item(this.uri_root());
-            }
-            current() {
-                const root = this.uri_root();
-                const current = this.uri_current();
-                if (current.substring(0, root.length) !== root)
-                    return this.root();
-                return $.$mol_webdav.item(current);
-            }
-            webdav(uri) {
-                const webdav = $.$mol_webdav.item(uri);
-                webdav.credentials = () => this.credentials();
-                return webdav;
-            }
-            folder_row_current(uri) {
-                return this.webdavs().indexOf(this.webdav(uri)) !== -1;
-            }
-            webdavs() {
-                const root = this.root();
-                const current = this.current();
-                const webdavs = [current];
-                let webdav = current;
-                while (webdav !== root) {
-                    webdav = webdav.parent();
-                    webdavs.unshift(webdav);
-                }
-                return webdavs;
-            }
-            webdav_type(uri) {
-                const webdav = this.webdav(uri);
-                if (webdav === this.root() || webdav.type() === 'dir')
-                    return 'dir';
-                return 'file';
-            }
-            webdav_title(uri) {
-                const webdav = this.webdav(uri);
-                if (webdav === this.root())
-                    return this.title_root();
-                return webdav.prop('displayname') || '';
-            }
-            folder_rows(uri) {
-                return this.webdav(uri).sub().map(webdav => this.Folder_row(webdav.uri()));
-            }
-            folder_row_arg(uri) {
-                return { 'current': uri };
-            }
-            folder_row_icon(uri) {
-                return this.webdav_type(uri) === 'dir'
-                    ? this.Icon_folder(uri)
-                    : this.Icon_file(uri);
-            }
-            folder_row_title(uri) {
-                return this.webdav(uri).prop('displayname');
-            }
-            folder_row_descr(uri) {
-                if (this.webdav_type(uri) !== 'file')
-                    return '';
-                const size = this.file_size(uri);
-                return `${size.toLocaleString()} B`;
-            }
-            file_uri(uri) {
-                return uri;
-            }
-            file_mime(uri) {
-                return this.webdav(uri).prop('getcontenttype');
-            }
-            file_size(uri) {
-                return Number(this.webdav(uri).prop('getcontentlength'));
-            }
-            title() {
-                return this.webdav_title(this.uri_current());
-            }
-            page_tools(uri) {
-                return uri === this.uri_root()
-                    ? this.tools_root()
-                    : [this.Close(uri)];
-            }
-            close_arg(uri) {
-                return { 'current': this.webdav(uri).parent().uri() };
-            }
-        }
-        $$.$mol_app_files = $mol_app_files;
-        class $mol_app_files_folder extends $.$mol_app_files_folder {
-            body() {
-                return [
-                    ...this.description() ? [this.Description()] : [],
-                    this.Folder_rows(),
-                ];
-            }
-        }
-        $$.$mol_app_files_folder = $mol_app_files_folder;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//files.view.js.map
+//domain.js.map
 ;
 "use strict";
 var $;
@@ -9028,11 +9064,11 @@ var $;
         }
         /**
          *  ```
-         *  plugins / <= Meter
+         *  plugins /$mol_plugin <= Meter
          *  ```
          **/
         plugins() {
-            return [].concat(this.Meter());
+            return [this.Meter()];
         }
         top() {
             return this.Meter().top();
@@ -9068,7 +9104,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Anchor(), this.Bubble());
+            return [this.Anchor(), this.Bubble()];
         }
         /**
          *  ```
@@ -9104,11 +9140,11 @@ var $;
         }
         /**
          *  ```
-         *  bubble_content /
+         *  bubble_content /$mol_view_content
          *  ```
          **/
         bubble_content() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -9145,11 +9181,11 @@ var $;
         }
         /**
          *  ```
-         *  content /
+         *  content /$mol_view_content
          *  ```
          **/
         content() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -9276,7 +9312,7 @@ var $;
          *  ```
          **/
         keys_x(val, force) {
-            return (val !== void 0) ? val : [].concat();
+            return (val !== void 0) ? val : [];
         }
         /**
          *  ```
@@ -9284,7 +9320,7 @@ var $;
          *  ```
          **/
         keys_y(val, force) {
-            return (val !== void 0) ? val : [].concat();
+            return (val !== void 0) ? val : [];
         }
         /**
          *  ```
@@ -9669,17 +9705,14 @@ var $;
     var $$;
     (function ($$) {
         class $mol_string extends $.$mol_string {
-            constructor() {
-                super(...arguments);
-                this._timer = null;
-            }
+            // _timer = null as any
             event_change(next) {
                 if (!next)
                     return;
-                clearTimeout(this._timer);
-                this._timer = setTimeout($.$mol_log_group(`${this}.event_change()`, () => {
-                    this.value(next.target.value);
-                }), this.debounce());
+                // clearTimeout( this._timer )
+                // this._timer = setTimeout( $mol_log_group( `${ this }.event_change()` , () => {
+                this.value(next.target.value);
+                // } ) , this.debounce() )
             }
             event_key_press(next) {
                 if (!next)
@@ -9736,11 +9769,11 @@ var $;
         }
         /**
          *  ```
-         *  options /
+         *  options /string
          *  ```
          **/
         options() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -9786,7 +9819,7 @@ var $;
          *  ```
          **/
         option_content(id) {
-            return [].concat(this.Option_label(id));
+            return [this.Option_label(id)];
         }
         /**
          *  ```
@@ -9827,7 +9860,7 @@ var $;
          **/
         No_options() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.no_options_message());
+                obj.sub = () => [this.no_options_message()];
                 return obj;
             })(new this.$.$mol_view());
         }
@@ -9841,11 +9874,13 @@ var $;
         }
         /**
          *  ```
-         *  plugins / <= Nav
+         *  plugins /
+         *  	^
+         *  	<= Nav
          *  ```
          **/
         plugins() {
-            return [].concat(this.Nav());
+            return [...super.plugins(), this.Nav()];
         }
         /**
          *  ```
@@ -9865,13 +9900,11 @@ var $;
         }
         /**
          *  ```
-         *  nav_components /
-         *  	<= Filter
-         *  	<= option_rows
+         *  nav_components /$mol_view
          *  ```
          **/
         nav_components() {
-            return [].concat(this.Filter(), this.option_rows());
+            return [];
         }
         /**
          *  ```
@@ -9937,22 +9970,46 @@ var $;
         }
         /**
          *  ```
-         *  trigger_content /
-         *  	<= option_content_current
-         *  	<= Filter
-         *  	<= Trigger_icon
+         *  trigger_content /$mol_view_content
          *  ```
          **/
         trigger_content() {
-            return [].concat(this.option_content_current(), this.Filter(), this.Trigger_icon());
+            return [];
         }
         /**
          *  ```
-         *  option_content_current /
+         *  bubble_content / <= Menu
+         *  ```
+         **/
+        bubble_content() {
+            return [this.Menu()];
+        }
+        /**
+         *  ```
+         *  Menu $mol_list rows <= menu_content
+         *  ```
+         **/
+        Menu() {
+            return ((obj) => {
+                obj.rows = () => this.menu_content();
+                return obj;
+            })(new this.$.$mol_list());
+        }
+        /**
+         *  ```
+         *  menu_content /$mol_view
+         *  ```
+         **/
+        menu_content() {
+            return [];
+        }
+        /**
+         *  ```
+         *  option_content_current /$mol_view_content
          *  ```
          **/
         option_content_current() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -10004,43 +10061,6 @@ var $;
                 return obj;
             })(new this.$.$mol_icon_chevron());
         }
-        /**
-         *  ```
-         *  bubble_content / <= Menu
-         *  ```
-         **/
-        bubble_content() {
-            return [].concat(this.Menu());
-        }
-        /**
-         *  ```
-         *  Menu $mol_list rows <= menu_content
-         *  ```
-         **/
-        Menu() {
-            return ((obj) => {
-                obj.rows = () => this.menu_content();
-                return obj;
-            })(new this.$.$mol_list());
-        }
-        /**
-         *  ```
-         *  menu_content /
-         *  	<= Filter
-         *  	<= option_rows
-         *  ```
-         **/
-        menu_content() {
-            return [].concat(this.Filter(), this.option_rows());
-        }
-        /**
-         *  ```
-         *  option_rows /
-         *  ```
-         **/
-        option_rows() {
-            return [].concat();
-        }
     }
     __decorate([
         $.$mol_mem
@@ -10083,13 +10103,13 @@ var $;
     ], $mol_select.prototype, "open", null);
     __decorate([
         $.$mol_mem
+    ], $mol_select.prototype, "Menu", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_select.prototype, "Filter", null);
     __decorate([
         $.$mol_mem
     ], $mol_select.prototype, "Trigger_icon", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_select.prototype, "Menu", null);
     $.$mol_select = $mol_select;
 })($ || ($ = {}));
 //select.view.tree.js.map
@@ -10114,12 +10134,8 @@ var $;
             open() {
                 this.options_showed(true);
             }
-            options_showed(next) {
+            options_showed(next = false) {
                 this.focused();
-                if (next === undefined)
-                    next = this.filter_pattern().length > 0;
-                if (next && this.Filter())
-                    new $.$mol_defer(() => this.Filter().focused(true));
                 return next;
             }
             options() {
@@ -10130,7 +10146,7 @@ var $;
                 options = options.filter($.$mol_match_text(this.filter_pattern(), (id) => [this.option_label(id)]));
                 const index = options.indexOf(this.value());
                 if (index >= 0)
-                    options.splice(index, 1);
+                    options = [...options.slice(0, index), ...options.slice(index + 1)];
                 return options;
             }
             option_label(id) {
@@ -10223,7 +10239,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Suggest(), this.Clear());
+            return [this.Suggest(), this.Clear()];
         }
         /**
          *  ```
@@ -10277,11 +10293,11 @@ var $;
         }
         /**
          *  ```
-         *  suggests /
+         *  suggests /string
          *  ```
          **/
         suggests() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -10300,7 +10316,7 @@ var $;
          **/
         Clear() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.Clear_icon());
+                obj.sub = () => [this.Clear_icon()];
                 obj.event_click = (val) => this.event_clear(val);
                 return obj;
             })(new this.$.$mol_button_minor());
@@ -10412,7 +10428,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Manual(), this.Scan());
+            return [this.Manual(), this.Scan()];
         }
         /**
          *  ```
@@ -10472,7 +10488,7 @@ var $;
         Scan() {
             return ((obj) => {
                 obj.event_click = (val) => this.event_scan(val);
-                obj.sub = () => [].concat(this.scan_label());
+                obj.sub = () => [this.scan_label()];
                 return obj;
             })(new this.$.$mol_button());
         }
@@ -10518,8 +10534,11 @@ var $;
             scan_support() {
                 return Boolean($.$mol_cordova.plugins.barcodeScanner);
             }
-            Scan() {
-                return this.scan_support() ? super.Scan() : null;
+            sub() {
+                return [
+                    this.Manual(),
+                    ...this.scan_support() ? [this.Scan()] : [],
+                ];
             }
             event_scan() {
                 $.$mol_cordova.plugins.barcodeScanner.scan((result) => {
@@ -10566,13 +10585,13 @@ var $;
         }
         /**
          *  ```
-         *  rows /
+         *  rows /$mol_view
          *  	<= Content
          *  	<= Status
          *  ```
          **/
         rows() {
-            return [].concat(this.Content(), this.Status());
+            return [this.Content(), this.Status()];
         }
         /**
          *  ```
@@ -10587,11 +10606,11 @@ var $;
         }
         /**
          *  ```
-         *  content /
+         *  content /$mol_view_content
          *  ```
          **/
         content() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -10603,7 +10622,7 @@ var $;
         Status() {
             return ((obj) => {
                 obj.minimal_height = () => 30;
-                obj.sub = () => [].concat(this.status_text());
+                obj.sub = () => [this.status_text()];
                 return obj;
             })(new this.$.$mol_view());
         }
@@ -10675,7 +10694,7 @@ var $;
                 let sub = this.sub();
                 if (!sub)
                     return next;
-                const context = this.context_sub();
+                const context = this.$$;
                 const widthLimit = context.$mol_view_visible_width();
                 let allHeight = 0;
                 let rowWidth = 0;
@@ -10701,8 +10720,14 @@ var $;
             }
             sub_visible() {
                 const sub = this.sub();
+                const context = this.$$;
+                for (let i = 0; i < sub.length; ++i) {
+                    const child = sub[i];
+                    if (child instanceof $.$mol_view) {
+                        child.$ = context;
+                    }
+                }
                 const visible = [];
-                const context = this.context_sub();
                 const heightLimit = context.$mol_view_visible_height();
                 const offsets = this.item_offsets_top();
                 let height = 0;
@@ -10710,9 +10735,6 @@ var $;
                     if (offsets[i] > heightLimit)
                         break;
                     const child = sub[i];
-                    if (child instanceof $.$mol_view) {
-                        child.context(context);
-                    }
                     visible.push(child);
                 }
                 return visible;
@@ -10748,7 +10770,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Title(), this.Content());
+            return [this.Title(), this.Content()];
         }
         /**
          *  ```
@@ -10763,30 +10785,30 @@ var $;
         }
         /**
          *  ```
-         *  label / <= title
+         *  label /$mol_view_content <= title
          *  ```
          **/
         label() {
-            return [].concat(this.title());
+            return [this.title()];
         }
         /**
          *  ```
-         *  Content $mol_view sub / <= content
+         *  Content $mol_view sub <= content
          *  ```
          **/
         Content() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.content());
+                obj.sub = () => this.content();
                 return obj;
             })(new this.$.$mol_view());
         }
         /**
          *  ```
-         *  content null
+         *  content /
          *  ```
          **/
         content() {
-            return null;
+            return [];
         }
     }
     __decorate([
@@ -10798,68 +10820,6 @@ var $;
     $.$mol_labeler = $mol_labeler;
 })($ || ($ = {}));
 //labeler.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_unit extends $.$mol_object {
-        constructor(value) {
-            super();
-            this['valueOf()'] = value;
-        }
-        prefix() {
-            return '';
-        }
-        postfix() {
-            return '';
-        }
-        valueOf() {
-            return this['valueOf()'];
-        }
-        delimiter() {
-            return ' ';
-        }
-        value_view() {
-            return this.valueOf().toLocaleString();
-        }
-        toString() {
-            return this.prefix() + this.value_view() + this.postfix();
-        }
-        static summ(a, b) {
-            var Class = a.constructor;
-            if (Class !== b.constructor)
-                throw new Error(`Not same measure: ${Class} , ${b.constructor}`);
-            return new Class(a.valueOf() + b.valueOf());
-        }
-        mult(m) {
-            var Class = this.constructor;
-            return new Class(this.valueOf() * m);
-        }
-    }
-    $.$mol_unit = $mol_unit;
-})($ || ($ = {}));
-//unit.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_unit_money extends $.$mol_unit {
-    }
-    $.$mol_unit_money = $mol_unit_money;
-    class $mol_unit_money_usd extends $mol_unit_money {
-        prefix() {
-            return '$';
-        }
-    }
-    $.$mol_unit_money_usd = $mol_unit_money_usd;
-    class $mol_unit_money_rur extends $mol_unit_money {
-        postfix() {
-            return ' ₽';
-        }
-    }
-    $.$mol_unit_money_rur = $mol_unit_money_rur;
-})($ || ($ = {}));
-//money.js.map
 ;
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10888,7 +10848,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Prefix(), this.Value(), this.Postfix());
+            return [this.Prefix(), this.Value(), this.Postfix()];
         }
         /**
          *  ```
@@ -10897,7 +10857,7 @@ var $;
          **/
         Prefix() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.prefix());
+                obj.sub = () => [this.prefix()];
                 return obj;
             })(new this.$.$mol_view());
         }
@@ -10916,7 +10876,7 @@ var $;
          **/
         Value() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.value_view());
+                obj.sub = () => [this.value_view()];
                 return obj;
             })(new this.$.$mol_view());
         }
@@ -10935,7 +10895,7 @@ var $;
          **/
         Postfix() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.postfix());
+                obj.sub = () => [this.postfix()];
                 return obj;
             })(new this.$.$mol_view());
         }
@@ -10986,384 +10946,6 @@ var $;
 //cost.view.js.map
 ;
 "use strict";
-var $;
-(function ($) {
-    function $mol_stub_select_random(list) {
-        return list[Math.floor(Math.random() * list.length)];
-    }
-    $.$mol_stub_select_random = $mol_stub_select_random;
-    function $mol_stub_strings(prefix = '', count = 10, length = 10) {
-        if (prefix.length >= length)
-            return [];
-        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split('');
-        let strings = [];
-        for (let i = 0; i < count; i++) {
-            let text = prefix;
-            for (let j = prefix.length; j < length; j++) {
-                text += $mol_stub_select_random(possible);
-            }
-            strings.push(text);
-        }
-        return strings;
-    }
-    $.$mol_stub_strings = $mol_stub_strings;
-    function $mol_stub_code(length = 8) {
-        var max = Math.pow(16, length);
-        var min = Math.pow(16, length - 1);
-        var value = min + Math.floor(Math.random() * (max - min));
-        return value.toString(16).toUpperCase();
-    }
-    $.$mol_stub_code = $mol_stub_code;
-    function $mol_stub_price(max = 1000) {
-        var min = Math.floor(max / 16 / 16);
-        var value = min + Math.floor(Math.random() * (max - min));
-        return new $.$mol_unit_money_usd(value);
-    }
-    $.$mol_stub_price = $mol_stub_price;
-    function $mol_stub_product_name() {
-        var name = $mol_stub_select_random([
-            'Monitor 15"',
-            'Monitor 17"',
-            'Monitor 19"',
-            'Graphics card',
-            'Frame grabber card'
-        ]);
-        var port = $mol_stub_select_random(['D-SUB', 'DVI', 'HDMI']);
-        var resolution = $mol_stub_select_random(['VGA', 'Full HD', '4K']);
-        return [name, port, resolution].join(', ');
-    }
-    $.$mol_stub_product_name = $mol_stub_product_name;
-    function $mol_stub_company_name_big() {
-        var product = $mol_stub_select_random(['Everything', 'Something', 'Anything', 'Nothing']);
-        var type = $mol_stub_select_random(['Company', 'Corporation', 'Holding']);
-        return `A ${type} that makes ${product}`;
-    }
-    $.$mol_stub_company_name_big = $mol_stub_company_name_big;
-    function $mol_stub_company_name_small() {
-        return $mol_stub_select_random(['ACME inc.', 'Dream Company', 'Just Company']);
-    }
-    $.$mol_stub_company_name_small = $mol_stub_company_name_small;
-    function $mol_stub_company_name() {
-        return $mol_stub_select_random([$mol_stub_company_name_small, $mol_stub_company_name_big])();
-    }
-    $.$mol_stub_company_name = $mol_stub_company_name;
-    function $mol_stub_person_name() {
-        var first = $mol_stub_select_random(['Ivan', 'Petr', 'Sidor']);
-        var last = $mol_stub_select_random(['Ivanov', 'Petrov', 'Sidorov']);
-        return `${first} ${last}`;
-    }
-    $.$mol_stub_person_name = $mol_stub_person_name;
-    function $mol_stub_city() {
-        return $mol_stub_select_random(['Moscow', 'London', 'Washington', 'Buenos Aires']);
-    }
-    $.$mol_stub_city = $mol_stub_city;
-    function $mol_stub_time(maxShift = 60 * 24 * 365) {
-        return new $.$mol_time_moment().shift({ minute: Math.round(Math.random() * maxShift) });
-    }
-    $.$mol_stub_time = $mol_stub_time;
-})($ || ($ = {}));
-//stub.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    /// Поставщик
-    class $mol_app_supplies_domain_provider extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_provider = $mol_app_supplies_domain_provider;
-    /// Группа закупок
-    class $mol_app_supplies_domain_supply_group extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
-        manager() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_supply_group = $mol_app_supplies_domain_supply_group;
-    /// Закупочный дивизион
-    class $mol_app_supplies_domain_supply_division extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_supply_division = $mol_app_supplies_domain_supply_division;
-    /// Способ оплаты
-    class $mol_app_supplies_domain_pay_method extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_pay_method = $mol_app_supplies_domain_pay_method;
-    /// Дебитор
-    class $mol_app_supplies_domain_debitor extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_debitor = $mol_app_supplies_domain_debitor;
-    /// Продукт
-    class $mol_app_supplies_domain_supply_position extends $.$mol_object {
-        name() { return void 0; }
-        supply_moment() { return void 0; }
-        division() { return void 0; }
-        store() { return void 0; }
-        price() { return void 0; }
-        quantity() { return void 0; }
-        cost() {
-            return this.price().mult(this.quantity());
-        }
-    }
-    $.$mol_app_supplies_domain_supply_position = $mol_app_supplies_domain_supply_position;
-    /// Вложение
-    class $mol_app_supplies_domain_attachment extends $.$mol_object {
-        url_thumb() { return void 0; }
-        url_load() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_attachment = $mol_app_supplies_domain_attachment;
-    /// Работник
-    class $mol_app_supplies_domain_person extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_person = $mol_app_supplies_domain_person;
-    /// Договор
-    class $mol_app_supplies_domain_contract extends $.$mol_object {
-        id() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_contract = $mol_app_supplies_domain_contract;
-    /// Балансовая единица
-    class $mol_app_supplies_domain_ballance_unit extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_ballance_unit = $mol_app_supplies_domain_ballance_unit;
-    /// Закупочная организация
-    class $mol_app_supplies_domain_consumer extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_consumer = $mol_app_supplies_domain_consumer;
-    /// Склад для доставки
-    class $mol_app_supplies_domain_store extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
-    }
-    $.$mol_app_supplies_domain_store = $mol_app_supplies_domain_store;
-    /// Заявка на закупку
-    class $mol_app_supplies_domain_supply extends $.$mol_object {
-        id() { return void 0; }
-        provider() { return void 0; }
-        consumer() { return void 0; }
-        group() { return void 0; }
-        status(next) { return next; }
-        ballance_unit() { return void 0; }
-        manager() { return void 0; }
-        contract() { return void 0; }
-        pay_method() { return void 0; }
-        debitor() { return void 0; }
-        positions() { return void 0; }
-        attachments(next) { return next || []; }
-        cost() { return void 0; }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_supplies_domain_supply.prototype, "status", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_supplies_domain_supply.prototype, "attachments", null);
-    $.$mol_app_supplies_domain_supply = $mol_app_supplies_domain_supply;
-    /// Статус заявки на закупку
-    let $mol_app_supplies_domain_supply_status;
-    (function ($mol_app_supplies_domain_supply_status) {
-        $mol_app_supplies_domain_supply_status[$mol_app_supplies_domain_supply_status["pending"] = 'pending'] = "pending";
-        $mol_app_supplies_domain_supply_status[$mol_app_supplies_domain_supply_status["approved"] = 'approved'] = "approved";
-    })($mol_app_supplies_domain_supply_status = $.$mol_app_supplies_domain_supply_status || ($.$mol_app_supplies_domain_supply_status = {}));
-    /// Демонстрационный бизнес домен
-    class $mol_app_supplies_domain_mock extends $.$mol_object {
-        supplies() {
-            var next = [];
-            for (var i = 1; i <= 100; ++i) {
-                next.push(this.supply((i * 123456789 % 987654321).toString(16).toUpperCase()));
-            }
-            return next;
-        }
-        positions(supply) {
-            var next = [];
-            var count = 10 + Math.floor(Math.random() * 30);
-            for (var i = 1; i <= count; ++i) {
-                next.push(this.position({
-                    supply,
-                    position: (i * 123456789 % 987654321).toString(16).toUpperCase()
-                }));
-            }
-            return next;
-        }
-        supply_status(id, next) {
-            return next || $.$mol_stub_select_random([
-                $mol_app_supplies_domain_supply_status.pending,
-                $mol_app_supplies_domain_supply_status.approved
-            ]);
-        }
-        supply(id) {
-            return $mol_app_supplies_domain_supply.make({
-                id: $.$mol_const(id),
-                cost: () => new $.$mol_unit_money_usd(this.positions(id).reduce((sum, pos) => sum + pos.cost().valueOf(), 0)),
-                status: (next) => this.supply_status(id, next),
-                provider: $.$mol_const(this.provider($.$mol_stub_code(2))),
-                consumer: $.$mol_const(this.consumer($.$mol_stub_code(2))),
-                group: $.$mol_const(this.supply_group($.$mol_stub_code(2))),
-                contract: $.$mol_const(this.contract($.$mol_stub_code(8))),
-                manager: $.$mol_const(this.person($.$mol_stub_code(2))),
-                ballance_unit: $.$mol_const(this.ballance_unit($.$mol_stub_code(2))),
-                pay_method: $.$mol_const(this.pay_method($.$mol_stub_code(1))),
-                debitor: $.$mol_const(this.debitor($.$mol_stub_code(2))),
-                positions: () => this.positions(id),
-                attachments: (next) => this.attachments(id, next),
-            });
-        }
-        provider(id) {
-            return $mol_app_supplies_domain_provider.make({
-                id: $.$mol_const(id),
-                name: $.$mol_const($.$mol_stub_company_name()),
-            });
-        }
-        consumer(id) {
-            return $mol_app_supplies_domain_consumer.make({
-                id: $.$mol_const(id),
-                name: $.$mol_const($.$mol_stub_company_name()),
-            });
-        }
-        ballance_unit(id) {
-            return $mol_app_supplies_domain_ballance_unit.make({
-                id: $.$mol_const(id),
-                name: $.$mol_const($.$mol_stub_select_random([
-                    'ACME Enterprise',
-                    'ACME Customer',
-                    'ACME Inside'
-                ])),
-            });
-        }
-        division(id) {
-            return $mol_app_supplies_domain_supply_division.make({
-                id: $.$mol_const(id),
-                name: $.$mol_const($.$mol_stub_code(4)),
-            });
-        }
-        supply_group(id) {
-            return $mol_app_supplies_domain_supply_group.make({
-                id: $.$mol_const(id),
-                name: $.$mol_const($.$mol_stub_person_name() + ' Group'),
-            });
-        }
-        store(id) {
-            return $mol_app_supplies_domain_store.make({
-                id: $.$mol_const(id),
-                name: $.$mol_const($.$mol_stub_city() + ' #' + $.$mol_stub_code(2)),
-            });
-        }
-        person(id) {
-            return $mol_app_supplies_domain_person.make({
-                id: $.$mol_const(id),
-                name: $.$mol_const($.$mol_stub_person_name()),
-            });
-        }
-        contract(id) {
-            return $mol_app_supplies_domain_person.make({
-                id: $.$mol_const(id),
-            });
-        }
-        pay_method(id) {
-            return $mol_app_supplies_domain_pay_method.make({
-                id: $.$mol_const(id),
-                name: $.$mol_const($.$mol_stub_select_random(['Accounting', 'Cash'])),
-            });
-        }
-        debitor(id) {
-            return $mol_app_supplies_domain_pay_method.make({
-                id: $.$mol_const(id),
-                name: $.$mol_const($.$mol_stub_company_name()),
-            });
-        }
-        position(id) {
-            return $mol_app_supplies_domain_supply_position.make({
-                name: $.$mol_const($.$mol_stub_product_name()),
-                supply_moment: $.$mol_const($.$mol_stub_time(60 * 24 * 365)),
-                store: $.$mol_const(this.store($.$mol_stub_code(2))),
-                division: $.$mol_const(this.division($.$mol_stub_code(2))),
-                price: $.$mol_const($.$mol_stub_price(1000)),
-                quantity: $.$mol_const(Math.round(Math.random() * 30)),
-            });
-        }
-        attachments(id, next) {
-            return next || [];
-        }
-        attachment(id) {
-            const image = $.$mol_const('data:image/svg+xml;base64,PHN2ZyBpZD0i0KHQu9C+0LlfMSIgZGF0YS1uYW1lPSLQodC70L7QuSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjUuNyA2NDUuNDQiPgoJPGRlZnM+CgkJPHN0eWxlPi5jbHMtMXtmaWxsOiM0YzdjNGQ7fS5jbHMtMntmaWxsOiM2ZmMwNTg7fTwvc3R5bGU+Cgk8L2RlZnM+Cgk8dGl0bGU+JG1vbF9zeW1ib2w8L3RpdGxlPgoJPHBvbHlnb24gY2xhc3M9ImNscy0xIgoJCQkgcG9pbnRzPSI4MC43OCAyMTcuNTYgMjE0LjAzIDExNC42MSAzNTEuMTIgMjIwLjUzIDQyNS43IDE2Mi45MSAyMTQuODQgMCAzLjk4IDE2Mi45MSA0LjM1IDE2My4xOSAzLjM1IDE2My45NiAzNDQuOTMgNDI3Ljg3IDIxMS42NyA1MzAuODMgNzQuNTggNDI0LjkxIDAgNDgyLjUzIDIxMC44NiA2NDUuNDQgNDIxLjcyIDQ4Mi41MyA0MjEuMDIgNDgxLjk5IDQyMi4wMyA0ODEuMjEgODAuNzggMjE3LjU2Ii8+Cgk8cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMjA5LjU0IDQ0MC44MyA1OC4zNiAzMjIuNzIgMjA5LjU0IDIwNC42MSAzNjcuMzQgMzIyLjcyIDIwOS41NCA0NDAuODMiLz4KPC9zdmc+Cg==');
-            return $mol_app_supplies_domain_attachment.make({
-                url_thumb: image,
-                url_load: image,
-            });
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_supplies_domain_mock.prototype, "supplies", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "positions", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "supply_status", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "supply", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "provider", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "consumer", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "ballance_unit", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "division", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "supply_group", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "store", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "person", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "contract", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "pay_method", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "debitor", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "position", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "attachments", null);
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_app_supplies_domain_mock.prototype, "attachment", null);
-    $.$mol_app_supplies_domain_mock = $mol_app_supplies_domain_mock;
-})($ || ($ = {}));
-//domain.js.map
-;
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11395,7 +10977,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Card());
+            return [this.Card()];
         }
         /**
          *  ```
@@ -11421,12 +11003,12 @@ var $;
         }
         /**
          *  ```
-         *  Group $mol_row sub / <= items
+         *  Group $mol_row sub <= items
          *  ```
          **/
         Group() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.items());
+                obj.sub = () => this.items();
                 return obj;
             })(new this.$.$mol_row());
         }
@@ -11439,19 +11021,19 @@ var $;
          *  ```
          **/
         items() {
-            return [].concat(this.Code_item(), this.Cost_item(), this.Provider_item());
+            return [this.Code_item(), this.Cost_item(), this.Provider_item()];
         }
         /**
          *  ```
          *  Code_item $mol_labeler
          *  	title <= code_title
-         *  	content <= code
+         *  	content / <= code
          *  ```
          **/
         Code_item() {
             return ((obj) => {
                 obj.title = () => this.code_title();
-                obj.content = () => this.code();
+                obj.content = () => [this.code()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -11475,13 +11057,13 @@ var $;
          *  ```
          *  Cost_item $mol_labeler
          *  	title <= cost_title
-         *  	content <= Cost
+         *  	content / <= Cost
          *  ```
          **/
         Cost_item() {
             return ((obj) => {
                 obj.title = () => this.cost_title();
-                obj.content = () => this.Cost();
+                obj.content = () => [this.Cost()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -11519,13 +11101,13 @@ var $;
          *  ```
          *  Provider_item $mol_labeler
          *  	title <= provider_title
-         *  	content <= provider_name
+         *  	content / <= provider_name
          *  ```
          **/
         Provider_item() {
             return ((obj) => {
                 obj.title = () => this.provider_title();
-                obj.content = () => this.provider_name();
+                obj.content = () => [this.provider_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -11610,11 +11192,11 @@ var $;
     class $mol_app_supplies_list extends $.$mol_page {
         /**
          *  ```
-         *  supplies /
+         *  supplies /$mol_app_supplies_domain_supply
          *  ```
          **/
         supplies() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -11625,7 +11207,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Head(), this.Search_bar(), this.Body());
+            return [this.Head(), this.Search_bar(), this.Body()];
         }
         /**
          *  ```
@@ -11634,7 +11216,7 @@ var $;
          **/
         Search_bar() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.Search());
+                obj.sub = () => [this.Search()];
                 return obj;
             })(new this.$.$mol_float());
         }
@@ -11674,7 +11256,7 @@ var $;
          *  ```
          **/
         body() {
-            return [].concat(this.Supply_rows());
+            return [this.Supply_rows()];
         }
         /**
          *  ```
@@ -11689,11 +11271,11 @@ var $;
         }
         /**
          *  ```
-         *  supply_rows /
+         *  supply_rows /$mol_view
          *  ```
          **/
         supply_rows() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -11877,11 +11459,11 @@ var $;
         }
         /**
          *  ```
-         *  items /
+         *  items /$mol_check
          *  ```
          **/
         items() {
-            return [].concat();
+            return [];
         }
     }
     __decorate([
@@ -11949,26 +11531,34 @@ var $;
          *  ```
          *  items / *
          *  	title \
-         *  	Content $mol_view
+         *  	Content <= Content
          *  ```
          **/
         items() {
-            return [].concat(({
-                "title": "",
-                "Content": ((obj) => {
-                    return obj;
-                })(new this.$.$mol_view()),
-            }));
+            return [({
+                    "title": "",
+                    "Content": this.Content(),
+                })];
         }
         /**
          *  ```
-         *  rows /
+         *  Content $mol_view
+         *  ```
+         **/
+        Content() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_view());
+        }
+        /**
+         *  ```
+         *  rows /$mol_view
          *  	<= Switch
          *  	<= Content
          *  ```
          **/
         rows() {
-            return [].concat(this.Switch(), this.Content());
+            return [this.Switch(), this.Content()];
         }
         /**
          *  ```
@@ -12000,18 +11590,10 @@ var $;
         switch_options() {
             return ({});
         }
-        /**
-         *  ```
-         *  Content null
-         *  ```
-         **/
-        Content() {
-            return null;
-        }
     }
     __decorate([
         $.$mol_mem
-    ], $mol_deck.prototype, "items", null);
+    ], $mol_deck.prototype, "Content", null);
     __decorate([
         $.$mol_mem
     ], $mol_deck.prototype, "Switch", null);
@@ -12074,26 +11656,26 @@ var $;
          *  ```
          **/
         rows() {
-            return [].concat(this.Head(), this.Content());
+            return [this.Head(), this.Content()];
         }
         /**
          *  ```
-         *  Head $mol_view sub / <= head
+         *  Head $mol_view sub <= head
          *  ```
          **/
         Head() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.head());
+                obj.sub = () => this.head();
                 return obj;
             })(new this.$.$mol_view());
         }
         /**
          *  ```
-         *  head null
+         *  head /
          *  ```
          **/
         head() {
-            return null;
+            return [];
         }
         /**
          *  ```
@@ -12117,19 +11699,19 @@ var $;
     class $mol_tiler extends $.$mol_view {
         /**
          *  ```
-         *  sub / <= items
+         *  sub <= items
          *  ```
          **/
         sub() {
-            return [].concat(this.items());
+            return this.items();
         }
         /**
          *  ```
-         *  items /
+         *  items /$mol_view
          *  ```
          **/
         items() {
-            return [].concat();
+            return [];
         }
     }
     $.$mol_tiler = $mol_tiler;
@@ -12253,21 +11835,19 @@ var $;
         }
         /**
          *  ```
-         *  content /
-         *  	<= items?val
-         *  	<= Add
+         *  content /$mol_view
          *  ```
          **/
         content() {
-            return [].concat(this.items(), this.Add());
+            return [];
         }
         /**
          *  ```
-         *  items?val /
+         *  items?val /$mol_view
          *  ```
          **/
         items(val, force) {
-            return (val !== void 0) ? val : [].concat();
+            return (val !== void 0) ? val : [];
         }
         /**
          *  ```
@@ -12425,7 +12005,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Icon(), this.Input());
+            return [this.Icon(), this.Input()];
         }
         /**
          *  ```
@@ -12591,7 +12171,9 @@ var $;
                 item.url_thumb(next);
                 item.url_load(next);
                 this.items(items.concat(item));
-                return void 0;
+            }
+            content() {
+                return [...this.items(), this.Add()];
             }
         }
         $$.$mol_attach = $mol_attach;
@@ -12602,7 +12184,7 @@ var $;
         }
         $$.$mol_attach_item = $mol_attach_item;
         class $mol_attach_add extends $.$mol_attach_add {
-            file_new(next) {
+            file_new(next, force) {
                 return next;
             }
             event_capture(next) {
@@ -12612,7 +12194,7 @@ var $;
                 $.$mol_cordova_camera().getPicture((url) => {
                     this.file_new(url);
                 }, (error) => {
-                    this.file_new(error);
+                    this.file_new(error, $.$mol_mem_force_fail);
                 }, {
                     quality: 50
                 });
@@ -12675,7 +12257,7 @@ var $;
          **/
         Row() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.Main_group(), this.Addon_group(), this.Supply_group());
+                obj.sub = () => [this.Main_group(), this.Addon_group(), this.Supply_group()];
                 return obj;
             })(new this.$.$mol_view());
         }
@@ -12688,7 +12270,7 @@ var $;
          **/
         Main_group() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.Product_item(), this.Cost_item());
+                obj.sub = () => [this.Product_item(), this.Cost_item()];
                 return obj;
             })(new this.$.$mol_row());
         }
@@ -12696,13 +12278,13 @@ var $;
          *  ```
          *  Product_item $mol_labeler
          *  	title <= product_title
-         *  	content <= product_name
+         *  	content / <= product_name
          *  ```
          **/
         Product_item() {
             return ((obj) => {
                 obj.title = () => this.product_title();
-                obj.content = () => this.product_name();
+                obj.content = () => [this.product_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -12726,13 +12308,13 @@ var $;
          *  ```
          *  Cost_item $mol_labeler
          *  	title <= cost_title
-         *  	content <= Cost
+         *  	content / <= Cost
          *  ```
          **/
         Cost_item() {
             return ((obj) => {
                 obj.title = () => this.cost_title();
-                obj.content = () => this.Cost();
+                obj.content = () => [this.Cost()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -12775,7 +12357,7 @@ var $;
          **/
         Addon_group() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.Division_item(), this.Price_item());
+                obj.sub = () => [this.Division_item(), this.Price_item()];
                 return obj;
             })(new this.$.$mol_row());
         }
@@ -12783,13 +12365,13 @@ var $;
          *  ```
          *  Division_item $mol_labeler
          *  	title <= division_title
-         *  	content <= division_name
+         *  	content / <= division_name
          *  ```
          **/
         Division_item() {
             return ((obj) => {
                 obj.title = () => this.division_title();
-                obj.content = () => this.division_name();
+                obj.content = () => [this.division_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -12813,13 +12395,13 @@ var $;
          *  ```
          *  Price_item $mol_labeler
          *  	title <= price_label
-         *  	content <= Price
+         *  	content / <= Price
          *  ```
          **/
         Price_item() {
             return ((obj) => {
                 obj.title = () => this.price_label();
-                obj.content = () => this.Price();
+                obj.content = () => [this.Price()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -12863,7 +12445,7 @@ var $;
          **/
         Supply_group() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.Quantity_item(), this.Supply_date_item(), this.Store_item());
+                obj.sub = () => [this.Quantity_item(), this.Supply_date_item(), this.Store_item()];
                 return obj;
             })(new this.$.$mol_row());
         }
@@ -12871,13 +12453,13 @@ var $;
          *  ```
          *  Quantity_item $mol_labeler
          *  	title <= quantity_title
-         *  	content <= quantity
+         *  	content / <= quantity
          *  ```
          **/
         Quantity_item() {
             return ((obj) => {
                 obj.title = () => this.quantity_title();
-                obj.content = () => this.quantity();
+                obj.content = () => [this.quantity()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -12901,13 +12483,13 @@ var $;
          *  ```
          *  Supply_date_item $mol_labeler
          *  	title <= supply_date_title
-         *  	content <= supply_date
+         *  	content / <= supply_date
          *  ```
          **/
         Supply_date_item() {
             return ((obj) => {
                 obj.title = () => this.supply_date_title();
-                obj.content = () => this.supply_date();
+                obj.content = () => [this.supply_date()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -12931,13 +12513,13 @@ var $;
          *  ```
          *  Store_item $mol_labeler
          *  	title <= store_title
-         *  	content <= store_name
+         *  	content / <= store_name
          *  ```
          **/
         Store_item() {
             return ((obj) => {
                 obj.title = () => this.store_title();
-                obj.content = () => this.store_name();
+                obj.content = () => [this.store_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -13075,7 +12657,7 @@ var $;
          *  ```
          **/
         tools() {
-            return [].concat(this.Close());
+            return [this.Close()];
         }
         /**
          *  ```
@@ -13086,7 +12668,7 @@ var $;
          **/
         Close() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.Close_icon());
+                obj.sub = () => [this.Close_icon()];
                 obj.arg = () => this.close_arg();
                 return obj;
             })(new this.$.$mol_link());
@@ -13117,7 +12699,7 @@ var $;
          *  ```
          **/
         body() {
-            return [].concat(this.Content());
+            return [this.Content()];
         }
         /**
          *  ```
@@ -13129,7 +12711,7 @@ var $;
          **/
         Content() {
             return ((obj) => {
-                obj.rows = () => [].concat(this.Descr_card(), this.Attach_section(), this.Positions_section());
+                obj.rows = () => [this.Descr_card(), this.Attach_section(), this.Positions_section()];
                 return obj;
             })(new this.$.$mol_list());
         }
@@ -13153,7 +12735,7 @@ var $;
          **/
         Descr_deck() {
             return ((obj) => {
-                obj.items = () => [].concat(this.Org(), this.Cons());
+                obj.items = () => [this.Org(), this.Cons()];
                 return obj;
             })(new this.$.$mol_deck());
         }
@@ -13199,19 +12781,19 @@ var $;
          *  ```
          **/
         org_items() {
-            return [].concat(this.Provider(), this.Consumer(), this.Supply_group(), this.Ballance_unit_item());
+            return [this.Provider(), this.Consumer(), this.Supply_group(), this.Ballance_unit_item()];
         }
         /**
          *  ```
          *  Provider $mol_labeler
          *  	title <= provider_title
-         *  	content <= provider_name
+         *  	content / <= provider_name
          *  ```
          **/
         Provider() {
             return ((obj) => {
                 obj.title = () => this.provider_title();
-                obj.content = () => this.provider_name();
+                obj.content = () => [this.provider_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -13235,13 +12817,13 @@ var $;
          *  ```
          *  Consumer $mol_labeler
          *  	title <= customer_label
-         *  	content <= consumer_name
+         *  	content / <= consumer_name
          *  ```
          **/
         Consumer() {
             return ((obj) => {
                 obj.title = () => this.customer_label();
-                obj.content = () => this.consumer_name();
+                obj.content = () => [this.consumer_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -13265,13 +12847,13 @@ var $;
          *  ```
          *  Supply_group $mol_labeler
          *  	title <= supply_group_title
-         *  	content <= supply_group_name
+         *  	content / <= supply_group_name
          *  ```
          **/
         Supply_group() {
             return ((obj) => {
                 obj.title = () => this.supply_group_title();
-                obj.content = () => this.supply_group_name();
+                obj.content = () => [this.supply_group_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -13295,13 +12877,13 @@ var $;
          *  ```
          *  Ballance_unit_item $mol_labeler
          *  	title <= ballance_unit_title
-         *  	content <= ballance_unit_name
+         *  	content / <= ballance_unit_name
          *  ```
          **/
         Ballance_unit_item() {
             return ((obj) => {
                 obj.title = () => this.ballance_unit_title();
-                obj.content = () => this.ballance_unit_name();
+                obj.content = () => [this.ballance_unit_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -13363,19 +12945,19 @@ var $;
          *  ```
          **/
         cons_items() {
-            return [].concat(this.Contract(), this.Pay_method(), this.Manager(), this.Debitor());
+            return [this.Contract(), this.Pay_method(), this.Manager(), this.Debitor()];
         }
         /**
          *  ```
          *  Contract $mol_labeler
          *  	title <= contract_title
-         *  	content <= contract_id
+         *  	content / <= contract_id
          *  ```
          **/
         Contract() {
             return ((obj) => {
                 obj.title = () => this.contract_title();
-                obj.content = () => this.contract_id();
+                obj.content = () => [this.contract_id()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -13399,13 +12981,13 @@ var $;
          *  ```
          *  Pay_method $mol_labeler
          *  	title <= pay_method_title
-         *  	content <= pay_method_name
+         *  	content / <= pay_method_name
          *  ```
          **/
         Pay_method() {
             return ((obj) => {
                 obj.title = () => this.pay_method_title();
-                obj.content = () => this.pay_method_name();
+                obj.content = () => [this.pay_method_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -13429,13 +13011,13 @@ var $;
          *  ```
          *  Manager $mol_labeler
          *  	title <= manager_title
-         *  	content <= manager_name
+         *  	content / <= manager_name
          *  ```
          **/
         Manager() {
             return ((obj) => {
                 obj.title = () => this.manager_title();
-                obj.content = () => this.manager_name();
+                obj.content = () => [this.manager_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -13459,13 +13041,13 @@ var $;
          *  ```
          *  Debitor $mol_labeler
          *  	title <= debitod_title
-         *  	content <= debitor_name
+         *  	content / <= debitor_name
          *  ```
          **/
         Debitor() {
             return ((obj) => {
                 obj.title = () => this.debitod_title();
-                obj.content = () => this.debitor_name();
+                obj.content = () => [this.debitor_name()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -13488,13 +13070,13 @@ var $;
         /**
          *  ```
          *  Attach_section $mol_section
-         *  	head <= attach_title
+         *  	head / <= attach_title
          *  	Content <= Attach
          *  ```
          **/
         Attach_section() {
             return ((obj) => {
-                obj.head = () => this.attach_title();
+                obj.head = () => [this.attach_title()];
                 obj.Content = () => this.Attach();
                 return obj;
             })(new this.$.$mol_section());
@@ -13523,11 +13105,11 @@ var $;
         }
         /**
          *  ```
-         *  attachments /
+         *  attachments /$mol_view
          *  ```
          **/
         attachments() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -13559,7 +13141,7 @@ var $;
          *  ```
          **/
         positions_head() {
-            return [].concat(this.positions_title(), this.Cost());
+            return [this.positions_title(), this.Cost()];
         }
         /**
          *  ```
@@ -13573,13 +13155,13 @@ var $;
          *  ```
          *  Cost $mol_labeler
          *  	title <= cost_title
-         *  	content <= Cost_value
+         *  	content / <= Cost_value
          *  ```
          **/
         Cost() {
             return ((obj) => {
                 obj.title = () => this.cost_title();
-                obj.content = () => this.Cost_value();
+                obj.content = () => [this.Cost_value()];
                 return obj;
             })(new this.$.$mol_labeler());
         }
@@ -13626,11 +13208,11 @@ var $;
         }
         /**
          *  ```
-         *  positions /
+         *  positions /$mol_view
          *  ```
          **/
         positions() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -13638,7 +13220,7 @@ var $;
          *  ```
          **/
         foot() {
-            return [].concat(this.Actions());
+            return [this.Actions()];
         }
         /**
          *  ```
@@ -13657,7 +13239,7 @@ var $;
          *  ```
          **/
         actions() {
-            return [].concat(this.Approve());
+            return [this.Approve()];
         }
         /**
          *  ```
@@ -13922,6 +13504,77 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
+    class $mol_form_field extends $.$mol_labeler {
+        /**
+         *  ```
+         *  label /
+         *  	<= name
+         *  	<= Bid
+         *  ```
+         **/
+        label() {
+            return [this.name(), this.Bid()];
+        }
+        /**
+         *  ```
+         *  name \
+         *  ```
+         **/
+        name() {
+            return "";
+        }
+        /**
+         *  ```
+         *  Bid $mol_view sub / <= bid
+         *  ```
+         **/
+        Bid() {
+            return ((obj) => {
+                obj.sub = () => [this.bid()];
+                return obj;
+            })(new this.$.$mol_view());
+        }
+        /**
+         *  ```
+         *  bid \
+         *  ```
+         **/
+        bid() {
+            return "";
+        }
+        /**
+         *  ```
+         *  Content <= control
+         *  ```
+         **/
+        Content() {
+            return this.control();
+        }
+        /**
+         *  ```
+         *  control null
+         *  ```
+         **/
+        control() {
+            return null;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_form_field.prototype, "Bid", null);
+    $.$mol_form_field = $mol_form_field;
+})($ || ($ = {}));
+//field.view.tree.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
     class $mol_form extends $.$mol_view {
         /**
          *  ```
@@ -13965,7 +13618,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.Bar_fields(), this.Bar_buttons());
+            return [this.Bar_fields(), this.Bar_buttons()];
         }
         /**
          *  ```
@@ -13980,11 +13633,11 @@ var $;
         }
         /**
          *  ```
-         *  form_fields /
+         *  form_fields /$mol_form_field
          *  ```
          **/
         form_fields() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -13999,11 +13652,11 @@ var $;
         }
         /**
          *  ```
-         *  buttons /
+         *  buttons /$mol_view
          *  ```
          **/
         buttons() {
-            return [].concat();
+            return [];
         }
     }
     __decorate([
@@ -14059,77 +13712,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    class $mol_form_field extends $.$mol_labeler {
-        /**
-         *  ```
-         *  label /
-         *  	<= name
-         *  	<= Bid
-         *  ```
-         **/
-        label() {
-            return [].concat(this.name(), this.Bid());
-        }
-        /**
-         *  ```
-         *  name \
-         *  ```
-         **/
-        name() {
-            return "";
-        }
-        /**
-         *  ```
-         *  Bid $mol_view sub / <= bid
-         *  ```
-         **/
-        Bid() {
-            return ((obj) => {
-                obj.sub = () => [].concat(this.bid());
-                return obj;
-            })(new this.$.$mol_view());
-        }
-        /**
-         *  ```
-         *  bid \
-         *  ```
-         **/
-        bid() {
-            return "";
-        }
-        /**
-         *  ```
-         *  Content <= control
-         *  ```
-         **/
-        Content() {
-            return this.control();
-        }
-        /**
-         *  ```
-         *  control null
-         *  ```
-         **/
-        control() {
-            return null;
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_form_field.prototype, "Bid", null);
-    $.$mol_form_field = $mol_form_field;
-})($ || ($ = {}));
-//field.view.tree.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
     class $mol_app_supplies_enter extends $.$mol_view {
         /**
          *  ```
@@ -14153,7 +13735,7 @@ var $;
          *  ```
          **/
         sub() {
-            return [].concat(this.form());
+            return [this.form()];
         }
         /**
          *  ```
@@ -14166,8 +13748,8 @@ var $;
          **/
         form() {
             return ((obj) => {
-                obj.form_fields = () => [].concat(this.loginField(), this.passwordField());
-                obj.buttons = () => [].concat(this.submit());
+                obj.form_fields = () => [this.loginField(), this.passwordField()];
+                obj.buttons = () => [this.submit()];
                 return obj;
             })(new this.$.$mol_form());
         }
@@ -14266,7 +13848,7 @@ var $;
          **/
         submit() {
             return ((obj) => {
-                obj.sub = () => [].concat(this.submitLabel());
+                obj.sub = () => [this.submitLabel()];
                 obj.event_click = (val) => this.event_submit(val);
                 obj.disabled = () => this.submit_blocked();
                 return obj;
@@ -14397,11 +13979,11 @@ var $;
         }
         /**
          *  ```
-         *  supplies /
+         *  supplies /$mol_app_supplies_domain_supply
          *  ```
          **/
         supplies() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -14409,7 +13991,7 @@ var $;
          *  ```
          **/
         tools_root() {
-            return [].concat();
+            return [];
         }
         /**
          *  ```
@@ -14546,7 +14128,6 @@ var $;
          *  	minimal_width 200
          *  	body /
          *  		<= Habhub_link
-         *  		<= Files_link
          *  		<= Supplies_link
          *  ```
          **/
@@ -14556,7 +14137,7 @@ var $;
                 obj.tools = () => this.tools_root();
                 obj.title = () => this.menu_title();
                 obj.minimal_width = () => 200;
-                obj.body = () => [].concat(this.Habhub_link(), this.Files_link(), this.Supplies_link());
+                obj.body = () => [this.Habhub_link(), this.Supplies_link()];
                 return obj;
             })(new this.$.$mol_page());
         }
@@ -14566,7 +14147,7 @@ var $;
          *  ```
          **/
         tools_root() {
-            return [].concat(this.Sources());
+            return [this.Sources()];
         }
         /**
          *  ```
@@ -14608,22 +14189,6 @@ var $;
         }
         /**
          *  ```
-         *  Files_link $mol_link
-         *  	title <= files_title
-         *  	arg * app \files
-         *  ```
-         **/
-        Files_link() {
-            return ((obj) => {
-                obj.title = () => this.files_title();
-                obj.arg = () => ({
-                    "app": "files",
-                });
-                return obj;
-            })(new this.$.$mol_link());
-        }
-        /**
-         *  ```
          *  Supplies_link $mol_link
          *  	title <= supplies_title
          *  	arg * app \supplies
@@ -14650,7 +14215,7 @@ var $;
                 obj.arg = () => ({
                     "app": null,
                 });
-                obj.sub = () => [].concat(this.Close_app_icon());
+                obj.sub = () => [this.Close_app_icon()];
                 return obj;
             })(new this.$.$mol_link());
         }
@@ -14668,12 +14233,11 @@ var $;
          *  ```
          *  pages /
          *  	<= Habhub_app
-         *  	<= Files_app
          *  	<= Supplies_app
          *  ```
          **/
         pages() {
-            return [].concat(this.Habhub_app(), this.Files_app(), this.Supplies_app());
+            return [this.Habhub_app(), this.Supplies_app()];
         }
         habhub_title() {
             return this.Habhub_app().menu_title();
@@ -14689,29 +14253,9 @@ var $;
         Habhub_app() {
             return ((obj) => {
                 obj.event_front_up = (event) => this.event_front_up(event);
-                obj.tools_root = () => [].concat(this.Close_app());
+                obj.tools_root = () => [this.Close_app()];
                 return obj;
             })(new this.$.$mol_app_habhub());
-        }
-        files_title() {
-            return this.Files_app().title_root();
-        }
-        /**
-         *  ```
-         *  Files_app $mol_app_files
-         *  	event_front_up?event <=> event_front_up?event
-         *  	title_root => files_title
-         *  	tools_root / <= Close_app
-         *  	uri_root_default \https://ajaxexplorer.com:443/User5df12c6/
-         *  ```
-         **/
-        Files_app() {
-            return ((obj) => {
-                obj.event_front_up = (event) => this.event_front_up(event);
-                obj.tools_root = () => [].concat(this.Close_app());
-                obj.uri_root_default = () => "https://ajaxexplorer.com:443/User5df12c6/";
-                return obj;
-            })(new this.$.$mol_app_files());
         }
         supplies_title() {
             return this.Supplies_app().list_title();
@@ -14727,7 +14271,7 @@ var $;
         Supplies_app() {
             return ((obj) => {
                 obj.event_front_up = (event) => this.event_front_up(event);
-                obj.tools_root = () => [].concat(this.Close_app());
+                obj.tools_root = () => [this.Close_app()];
                 return obj;
             })(new this.$.$mol_app_supplies());
         }
@@ -14743,9 +14287,6 @@ var $;
     ], $mol_app_portal.prototype, "Habhub_link", null);
     __decorate([
         $.$mol_mem
-    ], $mol_app_portal.prototype, "Files_link", null);
-    __decorate([
-        $.$mol_mem
     ], $mol_app_portal.prototype, "Supplies_link", null);
     __decorate([
         $.$mol_mem
@@ -14756,9 +14297,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_app_portal.prototype, "Habhub_app", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_portal.prototype, "Files_app", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_portal.prototype, "Supplies_app", null);
@@ -14775,7 +14313,7 @@ var $;
             pages() {
                 switch (this.$.$mol_state_arg.value('app')) {
                     case 'habhub': return [this.Menu(), ...this.Habhub_app().pages()];
-                    case 'files': return [this.Menu(), ...this.Files_app().pages()];
+                    // case 'files' : return [ this.Menu() , ... this.Files_app().pages() ]
                     case 'supplies': return [this.Menu(), ...this.Supplies_app().pages()];
                     default: return [this.Menu()];
                 }
@@ -14843,12 +14381,12 @@ var $;
                 const json = resource.json({ title: config.title, body: config.text }, force);
                 const comment = $.$mol_github_issue.item(json.url);
                 comment.json_update(json);
-                this.json(undefined, $.$mol_atom_force_cache);
+                this.json(undefined, $.$mol_mem_force_cache);
                 return comment;
             }
             catch (error) {
                 if (error.message === 'Unauthorized') {
-                    $.$mol_github_auth.token_last(undefined, $.$mol_atom_force_update).valueOf();
+                    $.$mol_github_auth.token_last(undefined, $.$mol_mem_force_update).valueOf();
                 }
                 throw error;
             }

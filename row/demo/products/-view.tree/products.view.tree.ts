@@ -31,7 +31,7 @@ namespace $ { export class $mol_row_demo_products extends $mol_demo_large {
 		return (( obj )=>{
 			obj.minimal_width = () => 140
 			obj.minimal_height = () => 100
-			obj.content = () => [].concat( this.product_title(id) )
+			obj.content = () => [ this.product_title(id) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_card(  ) )
 	}
@@ -51,7 +51,7 @@ namespace $ { export class $mol_row_demo_products extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Catalog() )
+		return [ this.Catalog() ] as readonly any[]
 	}
 
 	/**
@@ -62,7 +62,7 @@ namespace $ { export class $mol_row_demo_products extends $mol_demo_large {
 	@ $mol_mem
 	Catalog() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Products() )
+			obj.sub = () => [ this.Products() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -86,7 +86,7 @@ namespace $ { export class $mol_row_demo_products extends $mol_demo_large {
 	 *  ```
 	 **/
 	products() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 } }

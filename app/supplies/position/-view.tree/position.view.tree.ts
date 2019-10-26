@@ -41,7 +41,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	@ $mol_mem
 	Row() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Main_group() , this.Addon_group() , this.Supply_group() )
+			obj.sub = () => [ this.Main_group() , this.Addon_group() , this.Supply_group() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -56,7 +56,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	@ $mol_mem
 	Main_group() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Product_item() , this.Cost_item() )
+			obj.sub = () => [ this.Product_item() , this.Cost_item() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -65,14 +65,14 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	 *  ```
 	 *  Product_item $mol_labeler
 	 *  	title <= product_title
-	 *  	content <= product_name
+	 *  	content / <= product_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Product_item() {
 		return (( obj )=>{
 			obj.title = () => this.product_title()
-			obj.content = () => this.product_name()
+			obj.content = () => [ this.product_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -99,14 +99,14 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	 *  ```
 	 *  Cost_item $mol_labeler
 	 *  	title <= cost_title
-	 *  	content <= Cost
+	 *  	content / <= Cost
 	 *  ```
 	 **/
 	@ $mol_mem
 	Cost_item() {
 		return (( obj )=>{
 			obj.title = () => this.cost_title()
-			obj.content = () => this.Cost()
+			obj.content = () => [ this.Cost() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -156,7 +156,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	@ $mol_mem
 	Addon_group() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Division_item() , this.Price_item() )
+			obj.sub = () => [ this.Division_item() , this.Price_item() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -165,14 +165,14 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	 *  ```
 	 *  Division_item $mol_labeler
 	 *  	title <= division_title
-	 *  	content <= division_name
+	 *  	content / <= division_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Division_item() {
 		return (( obj )=>{
 			obj.title = () => this.division_title()
-			obj.content = () => this.division_name()
+			obj.content = () => [ this.division_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -199,14 +199,14 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	 *  ```
 	 *  Price_item $mol_labeler
 	 *  	title <= price_label
-	 *  	content <= Price
+	 *  	content / <= Price
 	 *  ```
 	 **/
 	@ $mol_mem
 	Price_item() {
 		return (( obj )=>{
 			obj.title = () => this.price_label()
-			obj.content = () => this.Price()
+			obj.content = () => [ this.Price() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -257,7 +257,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	@ $mol_mem
 	Supply_group() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Quantity_item() , this.Supply_date_item() , this.Store_item() )
+			obj.sub = () => [ this.Quantity_item() , this.Supply_date_item() , this.Store_item() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -266,14 +266,14 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	 *  ```
 	 *  Quantity_item $mol_labeler
 	 *  	title <= quantity_title
-	 *  	content <= quantity
+	 *  	content / <= quantity
 	 *  ```
 	 **/
 	@ $mol_mem
 	Quantity_item() {
 		return (( obj )=>{
 			obj.title = () => this.quantity_title()
-			obj.content = () => this.quantity()
+			obj.content = () => [ this.quantity() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -300,14 +300,14 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	 *  ```
 	 *  Supply_date_item $mol_labeler
 	 *  	title <= supply_date_title
-	 *  	content <= supply_date
+	 *  	content / <= supply_date
 	 *  ```
 	 **/
 	@ $mol_mem
 	Supply_date_item() {
 		return (( obj )=>{
 			obj.title = () => this.supply_date_title()
-			obj.content = () => this.supply_date()
+			obj.content = () => [ this.supply_date() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -334,14 +334,14 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	 *  ```
 	 *  Store_item $mol_labeler
 	 *  	title <= store_title
-	 *  	content <= store_name
+	 *  	content / <= store_name
 	 *  ```
 	 **/
 	@ $mol_mem
 	Store_item() {
 		return (( obj )=>{
 			obj.title = () => this.store_title()
-			obj.content = () => this.store_name()
+			obj.content = () => [ this.store_name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}

@@ -17,7 +17,7 @@ namespace $ { export class $mol_pop extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	keydown( event? : any , force? : $mol_atom_force ) {
+	keydown( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
 	}
 
@@ -27,17 +27,17 @@ namespace $ { export class $mol_pop extends $mol_view {
 	 *  ```
 	 **/
 	@ $mol_mem
-	showed( val? : any , force? : $mol_atom_force ) {
+	showed( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
 	}
 
 	/**
 	 *  ```
-	 *  plugins / <= Meter
+	 *  plugins /$mol_plugin <= Meter
 	 *  ```
 	 **/
 	plugins() {
-		return [].concat( this.Meter() )
+		return [ this.Meter() ] as readonly ( $mol_plugin )[]
 	}
 
 	top() {
@@ -80,7 +80,7 @@ namespace $ { export class $mol_pop extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Anchor() , this.Bubble() )
+		return [ this.Anchor() , this.Bubble() ] as readonly any[]
 	}
 
 	/**
@@ -121,11 +121,11 @@ namespace $ { export class $mol_pop extends $mol_view {
 
 	/**
 	 *  ```
-	 *  bubble_content /
+	 *  bubble_content /$mol_view_content
 	 *  ```
 	 **/
 	bubble_content() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -152,11 +152,11 @@ namespace $ { export class $mol_pop_bubble extends $mol_scroll {
 
 	/**
 	 *  ```
-	 *  content /
+	 *  content /$mol_view_content
 	 *  ```
 	 **/
 	content() {
-		return [].concat(  )
+		return [  ] as readonly ( $mol_view_content )[]
 	}
 
 	/**

@@ -58,11 +58,11 @@ namespace $.$$ {
 		}
 
 		value_bool( next? : string ) {
-			return this.value( next === undefined ? undefined : new $mol_tree({ type : String( next ) }) ).type
+			return this.value( next === undefined ? null : new $mol_tree({ type : String( next ) }) ).type
 		}
 
 		value_number( next? : string ) {
-			return this.value( next === undefined ? undefined : new $mol_tree({ type : String( next ) }) ).type
+			return this.value( next === undefined ? null : new $mol_tree({ type : String( next ) }) ).type
 		}
 
 		value_string( next? : string ) {
@@ -75,11 +75,11 @@ namespace $.$$ {
 		}
 
 		pairs() {
-			return this.value().sub.map( pair => this.Prop([ ... this.path() , pair.type , null ]) )
+			return [ ... this.value().sub.map( pair => this.Prop([ ... this.path() , pair.type , null ]) ) , this.Add_pair() ]
 		}
 
 		overs() {
-			return this.value().sub.map( over => this.Prop([ ... this.path() , over.type , null ]) )
+			return [ ... this.value().sub.map( over => this.Prop([ ... this.path() , over.type , null ]) ) , this.Add_over() ]
 		}
 
 		hint() {
@@ -99,13 +99,13 @@ namespace $.$$ {
 		content() {
 			const type = this.type()
 			return [
-				( type === 'bool' ) ? this.Bool() : null ,
-				( type === 'number' ) ? this.Number() : null ,
-				( type === 'string' ) ? this.String() : null ,
-				( type === 'locale' ) ? this.String() : null ,
-				( type === 'list' ) ? this.List() : null ,
-				( type === 'dict' ) ? this.Dict() : null ,
-				( type === 'object' ) ? this.Overs() : null ,
+				... ( type === 'bool' ) ? [ this.Bool() ] : [] ,
+				... ( type === 'number' ) ? [ this.Number() ] : [] ,
+				... ( type === 'string' ) ? [ this.String() ] : [] ,
+				... ( type === 'locale' ) ? [ this.String() ] : [] ,
+				... ( type === 'list' ) ? [ this.List() ] : [] ,
+				... ( type === 'dict' ) ? [ this.Dict() ] : [] ,
+				... ( type === 'object' ) ? [ this.Overs() ] : [] ,
 				... ( [ 'get' , 'bind' ].indexOf( type ) >= 0 && this.bind() ) ? [ this.Prop([ this.Bind().value() , null ]) ] : [] ,
 			]
 		}
@@ -122,7 +122,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		list_rows() {
-			return this.value().sub.map( ( item , index )=> this.Prop([ ... this.path() , index ]) )
+			return [ ... this.value().sub.map( ( item , index )=> this.Prop([ ... this.path() , index ]) ) , this.Add() ]
 		}
 
 		prop_path( path : $mol_tree_path ) {
@@ -135,7 +135,7 @@ namespace $.$$ {
 			const items = this.value()
 			this.value( items.insert( new $mol_tree({ type }) , items.sub.length ) )
 
-			this.list_rows()[ items.sub.length ].type( type )
+			// this.list_rows()[ items.sub.length ].type( type )
 
 			return null
 		}
@@ -144,15 +144,13 @@ namespace $.$$ {
 			return ( this.props( this.class() ) as $mol_tree ).sub.map( item => item.type )
 		}
 
-		add_over( name? : string ) : string {
-			if( !name ) return null
+		add_over( name? : string ) {
+			if( !name ) return
 			
 			this.value( this.value().insert( new $mol_tree({ type : name }) , name ) )
-
-			return null
 		}
 
-		add_pair( event? : Event ) : string {
+		add_pair( event? : Event ) {
 			if( !event ) return
 			
 			const name = this.add_pair_key()

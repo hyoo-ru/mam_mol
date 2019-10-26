@@ -15,7 +15,7 @@ namespace $ { export class $mol_meter_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	plugins() {
-		return [].concat( this.Meter() )
+		return [ this.Meter() ] as readonly any[]
 	}
 
 	top() {
@@ -48,7 +48,7 @@ namespace $ { export class $mol_meter_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Top() , this.Height() )
+		return [ this.Top() , this.Height() ] as readonly any[]
 	}
 
 	/**
@@ -61,7 +61,7 @@ namespace $ { export class $mol_meter_demo extends $mol_demo_small {
 	@ $mol_mem
 	Top() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( "Offset from top: " , this.top() )
+			obj.sub = () => [ "Offset from top: " , this.top() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -76,7 +76,7 @@ namespace $ { export class $mol_meter_demo extends $mol_demo_small {
 	@ $mol_mem
 	Height() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( "Component height: " , this.height() )
+			obj.sub = () => [ "Component height: " , this.height() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}

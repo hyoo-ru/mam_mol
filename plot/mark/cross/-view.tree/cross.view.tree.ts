@@ -6,7 +6,7 @@ namespace $ { export class $mol_plot_mark_cross extends $mol_plot_graph {
 	 *  ```
 	 **/
 	labels() {
-		return [].concat(  ) as readonly ( string )[]
+		return [  ] as readonly ( string )[]
 	}
 
 	/**
@@ -33,29 +33,49 @@ namespace $ { export class $mol_plot_mark_cross extends $mol_plot_graph {
 	 *  ```
 	 **/
 	graphs() {
-		return [].concat(  ) as readonly ( $mol_plot_graph )[]
+		return [  ] as readonly ( $mol_plot_graph )[]
 	}
 
 	/**
 	 *  ```
 	 *  dimensions $mol_vector_2d /
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
+	 *  	<= dimensions_x
+	 *  	<= dimensions_y
 	 *  ```
 	 **/
 	@ $mol_mem
 	dimensions() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_2d( (( obj )=>{
+		})( new this.$.$mol_vector_2d( this.dimensions_x() , this.dimensions_y() ) )
+	}
+
+	/**
+	 *  ```
+	 *  dimensions_x $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	dimensions_x() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) , (( obj )=>{
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
+	}
+
+	/**
+	 *  ```
+	 *  dimensions_y $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	dimensions_y() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) ) )
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
 	}
 
 	/**
@@ -67,7 +87,7 @@ namespace $ { export class $mol_plot_mark_cross extends $mol_plot_graph {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Curve() , this.Label_x() , this.Label_y() )
+		return [ this.Curve() , this.Label_x() , this.Label_y() ] as readonly any[]
 	}
 
 	/**

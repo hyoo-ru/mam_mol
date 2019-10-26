@@ -258,7 +258,7 @@ var $;
             this.minute = config.minute;
             this.second = config.second;
             if (config.offset !== undefined)
-                this.offset = config.offset && new $.$mol_time_duration(config.offset);
+                this.offset = config.offset ? new $.$mol_time_duration(config.offset) : undefined;
         }
         get weekday() {
             return (this.native.getDay() + 6) % 7;
@@ -298,8 +298,8 @@ var $;
         shift(config) {
             var duration = new $.$mol_time_duration(config);
             var moment = new $mol_time_moment().merge(this);
-            var second = (moment.second + (duration.second || 0));
-            var native = new Date(moment.year + (duration.year || 0), moment.month + (duration.month || 0), moment.day + 1 + (duration.day || 0), moment.hour + (duration.hour || 0), moment.minute + (duration.minute || 0), Math.floor(second), (second - Math.floor(second)) * 1000);
+            var second = (moment.second) + (duration.second || 0);
+            var native = new Date((moment.year) + (duration.year || 0), (moment.month) + (duration.month || 0), (moment.day) + 1 + (duration.day || 0), (moment.hour) + (duration.hour || 0), (moment.minute) + (duration.minute || 0), Math.floor(second), (second - Math.floor(second)) * 1000);
             if (isNaN(native.valueOf()))
                 throw new Error('Wrong time');
             return new $mol_time_moment({

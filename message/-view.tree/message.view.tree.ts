@@ -21,7 +21,7 @@ namespace $ { export class $mol_message extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Info() , this.Avatar_link() , this.Text() )
+		return [ this.Info() , this.Avatar_link() , this.Text() ] as readonly any[]
 	}
 
 	/**
@@ -34,7 +34,7 @@ namespace $ { export class $mol_message extends $mol_view {
 	@ $mol_mem
 	Info() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Name() , this.Moment() )
+			obj.sub = () => [ this.Name() , this.Moment() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -47,7 +47,7 @@ namespace $ { export class $mol_message extends $mol_view {
 	@ $mol_mem
 	Name() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.name() )
+			obj.sub = () => [ this.name() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -69,7 +69,7 @@ namespace $ { export class $mol_message extends $mol_view {
 	@ $mol_mem
 	Moment() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.moment_string() )
+			obj.sub = () => [ this.moment_string() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -94,7 +94,7 @@ namespace $ { export class $mol_message extends $mol_view {
 	Avatar_link() {
 		return (( obj )=>{
 			obj.uri = () => this.avatar_link()
-			obj.sub = () => [].concat( this.Avatar() )
+			obj.sub = () => [ this.Avatar() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}

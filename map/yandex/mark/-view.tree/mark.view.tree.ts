@@ -8,7 +8,7 @@ namespace $ { export class $mol_map_yandex_mark extends $mol_object {
 	 *  ```
 	 **/
 	pos() {
-		return [].concat( 0 , 0 )
+		return [ 0 , 0 ] as readonly any[]
 	}
 
 	/**

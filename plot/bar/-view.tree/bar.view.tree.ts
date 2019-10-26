@@ -29,7 +29,7 @@ namespace $ { export class $mol_plot_bar extends $mol_plot_graph {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Curve() )
+		return [ this.Curve() ] as readonly any[]
 	}
 
 	/**

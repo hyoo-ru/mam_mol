@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	 *  ```
 	 **/
 	head() {
-		return [].concat( this.Head_row() )
+		return [ this.Head_row() ] as readonly any[]
 	}
 
 	/**
@@ -17,7 +17,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	@ $mol_mem
 	Head_row() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Filter() )
+			obj.sub = () => [ this.Filter() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -53,7 +53,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	query( val? : any , force? : $mol_atom_force ) {
+	query( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -63,7 +63,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [].concat( this.List() )
+		return [ this.List() ] as readonly any[]
 	}
 
 	/**
@@ -88,7 +88,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	 *  ```
 	 **/
 	user_rows() {
-		return [].concat(  )
+		return [  ] as readonly any[]
 	}
 
 	/**
@@ -99,7 +99,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	@ $mol_mem
 	Empty() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.empty_message() )
+			obj.sub = () => [ this.empty_message() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -125,7 +125,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	@ $mol_mem
 	Foot() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.Reload() , this.Add() , this.Save() , this.Message() )
+			obj.sub = () => [ this.Reload() , this.Add() , this.Save() , this.Message() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -140,7 +140,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	@ $mol_mem
 	Reload() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.reload_label() )
+			obj.sub = () => [ this.reload_label() ] as readonly any[]
 			obj.event_click = ( val? : any ) => this.event_reload( val )
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
@@ -161,7 +161,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_reload( val? : any , force? : $mol_atom_force ) {
+	event_reload( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -177,7 +177,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	Add() {
 		return (( obj )=>{
 			obj.enabled = () => this.loaded()
-			obj.sub = () => [].concat( this.add_label() )
+			obj.sub = () => [ this.add_label() ] as readonly any[]
 			obj.event_click = ( val? : any ) => this.event_add( val )
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
@@ -207,7 +207,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_add( val? : any , force? : $mol_atom_force ) {
+	event_add( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -223,7 +223,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	Save() {
 		return (( obj )=>{
 			obj.enabled = () => this.changed()
-			obj.sub = () => [].concat( this.save_label() )
+			obj.sub = () => [ this.save_label() ] as readonly any[]
 			obj.event_click = ( val? : any ) => this.event_save( val )
 			return obj
 		})( new this.$.$mol_button_major(  ) )
@@ -253,7 +253,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_save( val? : any , force? : $mol_atom_force ) {
+	event_save( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -285,7 +285,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	 *  ```
 	 **/
 	plugins() {
-		return [].concat( this.Touch() )
+		return [ this.Touch() ] as readonly any[]
 	}
 
 	/**
@@ -323,7 +323,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	user_name( id : any , val? : any , force? : $mol_atom_force ) {
+	user_name( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -333,7 +333,7 @@ namespace $ { export class $mol_app_users extends $mol_page {
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	event_user_drop( id : any , val? : any , force? : $mol_atom_force ) {
+	event_user_drop( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -358,7 +358,7 @@ namespace $ { export class $mol_app_users_row extends $mol_row {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Title() , this.Drop() )
+		return [ this.Title() , this.Drop() ] as readonly any[]
 	}
 
 	/**
@@ -380,7 +380,7 @@ namespace $ { export class $mol_app_users_row extends $mol_row {
 	 *  ```
 	 **/
 	@ $mol_mem
-	title( val? : any , force? : $mol_atom_force ) {
+	title( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -394,7 +394,7 @@ namespace $ { export class $mol_app_users_row extends $mol_row {
 	@ $mol_mem
 	Drop() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.drop_label() )
+			obj.sub = () => [ this.drop_label() ] as readonly any[]
 			obj.event_click = ( val? : any ) => this.event_drop( val )
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
@@ -415,7 +415,7 @@ namespace $ { export class $mol_app_users_row extends $mol_row {
 	 *  ```
 	 **/
 	@ $mol_mem
-	event_drop( val? : any , force? : $mol_atom_force ) {
+	event_drop( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 

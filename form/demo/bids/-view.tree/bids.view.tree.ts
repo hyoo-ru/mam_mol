@@ -44,7 +44,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Form() , this.Message() )
+		return [ this.Form() , this.Message() ] as readonly any[]
 	}
 
 	/**
@@ -63,8 +63,8 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	Form() {
 		return (( obj )=>{
 			obj.submit = ( val? : any ) => this.submit( val )
-			obj.form_fields = () => [].concat( this.Name_first_field() , this.Name_nick_field() , this.Name_second_field() , this.Sex_field() )
-			obj.buttons = () => [].concat( this.Submit() )
+			obj.form_fields = () => [ this.Name_first_field() , this.Name_nick_field() , this.Name_second_field() , this.Sex_field() ] as readonly any[]
+			obj.buttons = () => [ this.Submit() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_form(  ) )
 	}
@@ -75,7 +75,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	submit( val? : any , force? : $mol_atom_force ) {
+	submit( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
 	}
 
@@ -146,7 +146,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	name_first( val? : any , force? : $mol_atom_force ) {
+	name_first( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -217,7 +217,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	name_nick( val? : any , force? : $mol_atom_force ) {
+	name_nick( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -288,7 +288,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	name_second( val? : any , force? : $mol_atom_force ) {
+	name_second( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -297,7 +297,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  Sex_field $mol_form_field
 	 *  	name <= sex_label
 	 *  	bid <= sex_bid
-	 *  	control / <= Sex_control
+	 *  	control <= Sex_control
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -305,7 +305,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 		return (( obj )=>{
 			obj.name = () => this.sex_label()
 			obj.bid = () => this.sex_bid()
-			obj.control = () => [].concat( this.Sex_control() )
+			obj.control = () => this.Sex_control()
 			return obj
 		})( new this.$.$mol_form_field(  ) )
 	}
@@ -350,7 +350,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	sex( val? : any , force? : $mol_atom_force ) {
+	sex( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 
@@ -408,7 +408,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	@ $mol_mem
 	Submit() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.submit_text() )
+			obj.sub = () => [ this.submit_text() ] as readonly any[]
 			obj.click = ( val? : any ) => this.submit( val )
 			obj.disabled = () => this.submit_blocked()
 			return obj
@@ -441,7 +441,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	@ $mol_mem
 	Message() {
 		return (( obj )=>{
-			obj.sub = () => [].concat( this.message() )
+			obj.sub = () => [ this.message() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -452,7 +452,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  ```
 	 **/
 	@ $mol_mem
-	message( val? : any , force? : $mol_atom_force ) {
+	message( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
 	}
 

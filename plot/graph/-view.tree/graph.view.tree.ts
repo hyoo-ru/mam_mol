@@ -6,7 +6,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	series_x() {
-		return [].concat(  ) as readonly ( number )[]
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -15,7 +15,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	series_y() {
-		return [].concat(  ) as readonly ( number )[]
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
@@ -67,23 +67,43 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	/**
 	 *  ```
 	 *  viewport $mol_vector_2d /
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
+	 *  	<= viewport_x
+	 *  	<= viewport_y
 	 *  ```
 	 **/
 	@ $mol_mem
 	viewport() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_2d( (( obj )=>{
+		})( new this.$.$mol_vector_2d( this.viewport_x() , this.viewport_y() ) )
+	}
+
+	/**
+	 *  ```
+	 *  viewport_x $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	viewport_x() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) , (( obj )=>{
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
+	}
+
+	/**
+	 *  ```
+	 *  viewport_y $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	viewport_y() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) ) )
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
 	}
 
 	/**
@@ -94,7 +114,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	shift() {
-		return [].concat( 0 , 0 ) as readonly ( number )[]
+		return [ 0 , 0 ] as readonly ( number )[]
 	}
 
 	/**
@@ -105,7 +125,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	scale() {
-		return [].concat( 1 , 1 ) as readonly ( number )[]
+		return [ 1 , 1 ] as readonly ( number )[]
 	}
 
 	/**
@@ -125,45 +145,85 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	/**
 	 *  ```
 	 *  dimensions_pane $mol_vector_2d /
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
+	 *  	<= dimensions_pane_x
+	 *  	<= dimensions_pane_y
 	 *  ```
 	 **/
 	@ $mol_mem
 	dimensions_pane() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_2d( (( obj )=>{
+		})( new this.$.$mol_vector_2d( this.dimensions_pane_x() , this.dimensions_pane_y() ) )
+	}
+
+	/**
+	 *  ```
+	 *  dimensions_pane_x $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	dimensions_pane_x() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) , (( obj )=>{
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
+	}
+
+	/**
+	 *  ```
+	 *  dimensions_pane_y $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	dimensions_pane_y() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) ) )
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
 	}
 
 	/**
 	 *  ```
 	 *  dimensions $mol_vector_2d /
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
-	 *  	$mol_vector_range /
-	 *  		Infinity
-	 *  		-Infinity
+	 *  	<= dimensions_x
+	 *  	<= dimensions_y
 	 *  ```
 	 **/
 	@ $mol_mem
 	dimensions() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_2d( (( obj )=>{
+		})( new this.$.$mol_vector_2d( this.dimensions_x() , this.dimensions_y() ) )
+	}
+
+	/**
+	 *  ```
+	 *  dimensions_x $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	dimensions_x() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) , (( obj )=>{
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
+	}
+
+	/**
+	 *  ```
+	 *  dimensions_y $mol_vector_range /
+	 *  	Infinity
+	 *  	-Infinity
+	 *  ```
+	 **/
+	@ $mol_mem
+	dimensions_y() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( Infinity , -Infinity ) ) ) )
+		})( new this.$.$mol_vector_range( Infinity , -Infinity ) )
 	}
 
 	/**
@@ -183,23 +243,43 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	/**
 	 *  ```
 	 *  gap $mol_vector_2d /
-	 *  	$mol_vector_range /
-	 *  		0
-	 *  		0
-	 *  	$mol_vector_range /
-	 *  		0
-	 *  		0
+	 *  	<= gap_x
+	 *  	<= gap_y
 	 *  ```
 	 **/
 	@ $mol_mem
 	gap() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_2d( (( obj )=>{
+		})( new this.$.$mol_vector_2d( this.gap_x() , this.gap_y() ) )
+	}
+
+	/**
+	 *  ```
+	 *  gap_x $mol_vector_range /
+	 *  	0
+	 *  	0
+	 *  ```
+	 **/
+	@ $mol_mem
+	gap_x() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( 0 , 0 ) ) , (( obj )=>{
+		})( new this.$.$mol_vector_range( 0 , 0 ) )
+	}
+
+	/**
+	 *  ```
+	 *  gap_y $mol_vector_range /
+	 *  	0
+	 *  	0
+	 *  ```
+	 **/
+	@ $mol_mem
+	gap_y() {
+		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_vector_range( 0 , 0 ) ) ) )
+		})( new this.$.$mol_vector_range( 0 , 0 ) )
 	}
 
 	/**
@@ -208,16 +288,16 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	indexes() {
-		return [].concat(  ) as readonly ( number )[]
+		return [  ] as readonly ( number )[]
 	}
 
 	/**
 	 *  ```
-	 *  points /readonly[number,number]
+	 *  points /readonly(number)[]
 	 *  ```
 	 **/
 	points() {
-		return [].concat(  ) as readonly ( readonly[number,number] )[]
+		return [  ] as readonly ( readonly(number)[] )[]
 	}
 
 	/**
@@ -226,7 +306,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	front() {
-		return [].concat(  ) as readonly ( $mol_svg )[]
+		return [  ] as readonly ( $mol_svg )[]
 	}
 
 	/**
@@ -235,7 +315,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	back() {
-		return [].concat(  ) as readonly ( $mol_svg )[]
+		return [  ] as readonly ( $mol_svg )[]
 	}
 
 	/**

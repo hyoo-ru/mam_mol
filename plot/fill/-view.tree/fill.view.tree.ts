@@ -6,7 +6,7 @@ namespace $ { export class $mol_plot_fill extends $mol_plot_graph {
 	 *  ```
 	 **/
 	points() {
-		return [].concat(  ) as readonly ( readonly[number,number] )[]
+		return [  ] as readonly ( readonly[number,number] )[]
 	}
 
 	/**
@@ -33,7 +33,7 @@ namespace $ { export class $mol_plot_fill extends $mol_plot_graph {
 	 *  ```
 	 **/
 	sub() {
-		return [].concat( this.Curve() )
+		return [ this.Curve() ] as readonly any[]
 	}
 
 	/**

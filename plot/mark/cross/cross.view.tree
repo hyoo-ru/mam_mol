@@ -4,10 +4,10 @@ $mol_plot_mark_cross $mol_plot_graph
 	threshold 16
 	graphs /$mol_plot_graph
 	dimensions $mol_vector_2d /
-		$mol_vector_range /
+		<= dimensions_x $mol_vector_range /
 			Infinity
 			-Infinity
-		$mol_vector_range /
+		<= dimensions_y $mol_vector_range /
 			Infinity
 			-Infinity
 	sub /

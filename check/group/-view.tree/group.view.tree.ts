@@ -6,7 +6,7 @@ namespace $ { export class $mol_check_group extends $mol_check_box {
 	 *  ```
 	 **/
 	checks() {
-		return [].concat(  ) as readonly ( $mol_check )[]
+		return [  ] as readonly ( $mol_check )[]
 	}
 
 	/**
