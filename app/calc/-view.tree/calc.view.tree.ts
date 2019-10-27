@@ -46,20 +46,69 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 
 	/**
 	 *  ```
-	 *  tools / <= Download
+	 *  tools /
+	 *  	<= Snapshot
+	 *  	<= Download
 	 *  ```
 	 **/
 	tools() {
-		return [ this.Download() ] as readonly any[]
+		return [ this.Snapshot() , this.Download() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
-	 *  Download $mol_link
+	 *  Snapshot $mol_link_lazy
+	 *  	hint <= snapshot_hint
+	 *  	uri_generated <= snapshot_uri
+	 *  	sub / <= Snapshot_icon
+	 *  ```
+	 **/
+	@ $mol_mem
+	Snapshot() {
+		return (( obj )=>{
+			obj.hint = () => this.snapshot_hint()
+			obj.uri_generated = () => this.snapshot_uri()
+			obj.sub = () => [ this.Snapshot_icon() ] as readonly any[]
+			return obj
+		})( new this.$.$mol_link_lazy(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  snapshot_hint @ \Snapshot
+	 *  ```
+	 **/
+	snapshot_hint() {
+		return this.$.$mol_locale.text( "$mol_app_calc_snapshot_hint" )
+	}
+
+	/**
+	 *  ```
+	 *  snapshot_uri \
+	 *  ```
+	 **/
+	snapshot_uri() {
+		return ""
+	}
+
+	/**
+	 *  ```
+	 *  Snapshot_icon $mol_icon_stored
+	 *  ```
+	 **/
+	@ $mol_mem
+	Snapshot_icon() {
+		return (( obj )=>{
+			return obj
+		})( new this.$.$mol_icon_stored(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  Download $mol_link_lazy
 	 *  	hint <= download_hint
 	 *  	file_name <= download_file
-	 *  	uri <= download_uri?val
-	 *  	click?event <=> download_generate?event
+	 *  	uri_generated <= download_uri?val
 	 *  	sub / <= Download_icon
 	 *  ```
 	 **/
@@ -68,11 +117,10 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 		return (( obj )=>{
 			obj.hint = () => this.download_hint()
 			obj.file_name = () => this.download_file()
-			obj.uri = () => this.download_uri()
-			obj.click = ( event? : any ) => this.download_generate( event )
+			obj.uri_generated = () => this.download_uri()
 			obj.sub = () => [ this.Download_icon() ] as readonly any[]
 			return obj
-		})( new this.$.$mol_link(  ) )
+		})( new this.$.$mol_link_lazy(  ) )
 	}
 
 	/**
@@ -105,16 +153,6 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 
 	/**
 	 *  ```
-	 *  download_generate?event null
-	 *  ```
-	 **/
-	@ $mol_mem
-	download_generate( event? : any , force? : $mol_mem_force ) {
-		return ( event !== void 0 ) ? event : null as any
-	}
-
-	/**
-	 *  ```
 	 *  Download_icon $mol_icon_load
 	 *  ```
 	 **/
@@ -129,93 +167,13 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 	 *  ```
 	 *  sub /
 	 *  	<= Head
-	 *  	<= Body
-	 *  	<= Hint
 	 *  	<= Current
+	 *  	<= Hint
+	 *  	<= Body
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Head() , this.Body() , this.Hint() , this.Current() ] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  Body $mol_grid
-	 *  	col_ids <= col_ids
-	 *  	row_ids <= row_ids
-	 *  	head_cells <= head_cells
-	 *  	cells!row <= cells!row
-	 *  ```
-	 **/
-	@ $mol_mem
-	Body() {
-		return (( obj )=>{
-			obj.col_ids = () => this.col_ids()
-			obj.row_ids = () => this.row_ids()
-			obj.head_cells = () => this.head_cells()
-			obj.cells = ( row : any ) => this.cells(row)
-			return obj
-		})( new this.$.$mol_grid(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  col_ids /
-	 *  ```
-	 **/
-	col_ids() {
-		return [  ] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  row_ids /
-	 *  ```
-	 **/
-	row_ids() {
-		return [  ] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  head_cells /
-	 *  ```
-	 **/
-	head_cells() {
-		return [  ] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  cells!row /
-	 *  ```
-	 **/
-	cells( row : any ) {
-		return [  ] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  Hint $mol_text text <= hint
-	 *  ```
-	 **/
-	@ $mol_mem
-	Hint() {
-		return (( obj )=>{
-			obj.text = () => this.hint()
-			return obj
-		})( new this.$.$mol_text(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  hint @ \
-	 *  	\**$.A1** - result of A1, **$$.A1** - formula of A1, **a=** - define variable, **_.a** - value of variable, **__.a** - cell id of variable, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
-	 *  	\**You can use**: {funcs}.
-	 *  ```
-	 **/
-	hint() {
-		return this.$.$mol_locale.text( "$mol_app_calc_hint" )
+		return [ this.Head() , this.Current() , this.Hint() , this.Body() ] as readonly any[]
 	}
 
 	/**
@@ -308,6 +266,86 @@ namespace $ { export class $mol_app_calc extends $mol_page {
 		return (( obj )=>{
 			return obj
 		})( new this.$.$mol_icon_hint(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  Hint $mol_text text <= hint
+	 *  ```
+	 **/
+	@ $mol_mem
+	Hint() {
+		return (( obj )=>{
+			obj.text = () => this.hint()
+			return obj
+		})( new this.$.$mol_text(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  hint @ \
+	 *  	\**$.A1** - result of A1, **$$.A1** - formula of A1, **a=** - define variable, **_.a** - value of variable, **__.a** - cell id of variable, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
+	 *  	\**You can use**: {funcs}.
+	 *  ```
+	 **/
+	hint() {
+		return this.$.$mol_locale.text( "$mol_app_calc_hint" )
+	}
+
+	/**
+	 *  ```
+	 *  Body $mol_grid
+	 *  	col_ids <= col_ids
+	 *  	row_ids <= row_ids
+	 *  	head_cells <= head_cells
+	 *  	cells!row <= cells!row
+	 *  ```
+	 **/
+	@ $mol_mem
+	Body() {
+		return (( obj )=>{
+			obj.col_ids = () => this.col_ids()
+			obj.row_ids = () => this.row_ids()
+			obj.head_cells = () => this.head_cells()
+			obj.cells = ( row : any ) => this.cells(row)
+			return obj
+		})( new this.$.$mol_grid(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  col_ids /
+	 *  ```
+	 **/
+	col_ids() {
+		return [  ] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  row_ids /
+	 *  ```
+	 **/
+	row_ids() {
+		return [  ] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  head_cells /
+	 *  ```
+	 **/
+	head_cells() {
+		return [  ] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  cells!row /
+	 *  ```
+	 **/
+	cells( row : any ) {
+		return [  ] as readonly any[]
 	}
 
 	/**

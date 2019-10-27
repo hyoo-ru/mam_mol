@@ -3933,6 +3933,84 @@ var $;
 //link.view.js.map
 ;
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    class $mol_link_lazy extends $.$mol_link {
+        /**
+         *  ```
+         *  uri?val \
+         *  ```
+         **/
+        uri(val, force) {
+            return (val !== void 0) ? val : "";
+        }
+        /**
+         *  ```
+         *  uri_generated \
+         *  ```
+         **/
+        uri_generated() {
+            return "";
+        }
+        /**
+         *  ```
+         *  current false
+         *  ```
+         **/
+        current() {
+            return false;
+        }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	mousedown?event <=> generate?event
+         *  ```
+         **/
+        event() {
+            return (Object.assign(Object.assign({}, super.event()), { "mousedown": (event) => this.generate(event) }));
+        }
+        /**
+         *  ```
+         *  generate?event null
+         *  ```
+         **/
+        generate(event, force) {
+            return (event !== void 0) ? event : null;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_link_lazy.prototype, "uri", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_link_lazy.prototype, "generate", null);
+    $.$mol_link_lazy = $mol_link_lazy;
+})($ || ($ = {}));
+//lazy.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_link_lazy extends $.$mol_link_lazy {
+            generate(event) {
+                this.uri(this.uri_generated());
+            }
+        }
+        $$.$mol_link_lazy = $mol_link_lazy;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//lazy.view.js.map
+;
+"use strict";
 var $;
 (function ($) {
     class $mol_after_timeout extends $.$mol_object2 {
@@ -4254,6 +4332,23 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_stored extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z
+         *  ```
+         **/
+        path() {
+            return "M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z";
+        }
+    }
+    $.$mol_icon_stored = $mol_icon_stored;
+})($ || ($ = {}));
+//stored.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_load extends $.$mol_icon {
         /**
          *  ```
@@ -4267,6 +4362,213 @@ var $;
     $.$mol_icon_load = $mol_icon_load;
 })($ || ($ = {}));
 //load.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_bar extends $.$mol_view {
+    }
+    $.$mol_bar = $mol_bar;
+})($ || ($ = {}));
+//bar.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_list extends $.$mol_view {
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
+        sub() {
+            return this.rows();
+        }
+        /**
+         *  ```
+         *  rows /$mol_view
+         *  ```
+         **/
+        rows() {
+            return [];
+        }
+        /**
+         *  ```
+         *  Empty null
+         *  ```
+         **/
+        Empty() {
+            return null;
+        }
+    }
+    $.$mol_list = $mol_list;
+})($ || ($ = {}));
+//list.view.tree.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_list extends $.$mol_list {
+            sub() {
+                const rows = this.rows();
+                return (rows.length === 0) ? [this.Empty()] : rows;
+            }
+            row_offsets() {
+                var sub = this.sub();
+                let heightLimit = this.$.$mol_view_visible_height();
+                var offset = 0;
+                var next = [];
+                for (let child of sub) {
+                    next.push(offset);
+                    if (child instanceof $.$mol_view) {
+                        offset += child.minimal_height();
+                    }
+                    if (offset > heightLimit)
+                        break;
+                }
+                return next;
+            }
+            row_context(index) {
+                return this.$.$mol_ambient({
+                    $mol_view_visible_height: () => this.$.$mol_view_visible_height() - this.row_offsets()[index],
+                });
+            }
+            sub_visible() {
+                var sub = this.sub();
+                if (!sub)
+                    return sub;
+                for (let i = 0; i < sub.length; ++i) {
+                    const child = sub[i];
+                    if (child instanceof $.$mol_view) {
+                        child.$ = this.row_context(i);
+                    }
+                }
+                var limit = this.row_offsets().length;
+                var next = [];
+                for (let i = 0; i < limit; ++i) {
+                    const child = sub[i];
+                    if (child == null)
+                        continue;
+                    next.push(child);
+                }
+                return next;
+            }
+            minimal_height() {
+                var height = 0;
+                var sub = this.sub();
+                if (sub)
+                    sub.forEach((child) => {
+                        if (child instanceof $.$mol_view) {
+                            height += child.minimal_height();
+                        }
+                    });
+                return height;
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_list.prototype, "sub", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_list.prototype, "row_offsets", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_list.prototype, "row_context", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_list.prototype, "sub_visible", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_list.prototype, "minimal_height", null);
+        $$.$mol_list = $mol_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//list.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_syntax {
+        constructor(lexems) {
+            this['lexems()'] = lexems;
+        }
+        lexems() {
+            return this['lexems()'];
+        }
+        rules() {
+            let rules = this['rules()'];
+            if (rules)
+                return rules;
+            rules = [];
+            let lexems = this.lexems();
+            for (let name in lexems) {
+                rules.push({
+                    name: name,
+                    regExp: lexems[name],
+                    size: RegExp('^$|' + lexems[name].source).exec('').length - 1,
+                });
+            }
+            return this['rules()'] = rules;
+        }
+        regExp() {
+            let regExp = this['regExp()'];
+            if (regExp)
+                return regExp;
+            const parts = '(' + this.rules().map(rule => rule.regExp.source).join(')|(') + ')';
+            regExp = RegExp(`([^]*?)(?:(${parts})|$(?![^]))`, 'gm');
+            return this['regExp()'] = regExp;
+        }
+        tokenize(text) {
+            const tokens = [];
+            const rules = this.rules();
+            const regExp = this.regExp();
+            const regExpSize = RegExp('^$|' + regExp.source).exec('').length - 1;
+            let position = 0;
+            parsing: while (position < text.length) {
+                regExp.lastIndex = position;
+                var found = regExp.exec(text);
+                if (position === regExp.lastIndex)
+                    throw new Error('Empty token');
+                position = regExp.lastIndex;
+                var prefix = found[1];
+                if (prefix) {
+                    tokens.push({
+                        name: '',
+                        found: prefix,
+                        chunks: [],
+                    });
+                }
+                var suffix = found[2];
+                if (suffix) {
+                    let offset = 4;
+                    for (let rule of rules) {
+                        if (found[offset - 1]) {
+                            tokens.push({
+                                name: rule.name,
+                                found: suffix,
+                                chunks: found.slice(offset, offset + rule.size)
+                            });
+                            continue parsing;
+                        }
+                        offset += rule.size + 1;
+                    }
+                    throw new Error('Something wrong');
+                }
+            }
+            return tokens;
+        }
+    }
+    $.$mol_syntax = $mol_syntax;
+})($ || ($ = {}));
+//syntax.js.map
 ;
 "use strict";
 var $;
@@ -5340,204 +5642,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_list extends $.$mol_view {
-        /**
-         *  ```
-         *  sub <= rows
-         *  ```
-         **/
-        sub() {
-            return this.rows();
-        }
-        /**
-         *  ```
-         *  rows /$mol_view
-         *  ```
-         **/
-        rows() {
-            return [];
-        }
-        /**
-         *  ```
-         *  Empty null
-         *  ```
-         **/
-        Empty() {
-            return null;
-        }
-    }
-    $.$mol_list = $mol_list;
-})($ || ($ = {}));
-//list.view.tree.js.map
-;
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_list extends $.$mol_list {
-            sub() {
-                const rows = this.rows();
-                return (rows.length === 0) ? [this.Empty()] : rows;
-            }
-            row_offsets() {
-                var sub = this.sub();
-                let heightLimit = this.$.$mol_view_visible_height();
-                var offset = 0;
-                var next = [];
-                for (let child of sub) {
-                    next.push(offset);
-                    if (child instanceof $.$mol_view) {
-                        offset += child.minimal_height();
-                    }
-                    if (offset > heightLimit)
-                        break;
-                }
-                return next;
-            }
-            row_context(index) {
-                return this.$.$mol_ambient({
-                    $mol_view_visible_height: () => this.$.$mol_view_visible_height() - this.row_offsets()[index],
-                });
-            }
-            sub_visible() {
-                var sub = this.sub();
-                if (!sub)
-                    return sub;
-                for (let i = 0; i < sub.length; ++i) {
-                    const child = sub[i];
-                    if (child instanceof $.$mol_view) {
-                        child.$ = this.row_context(i);
-                    }
-                }
-                var limit = this.row_offsets().length;
-                var next = [];
-                for (let i = 0; i < limit; ++i) {
-                    const child = sub[i];
-                    if (child == null)
-                        continue;
-                    next.push(child);
-                }
-                return next;
-            }
-            minimal_height() {
-                var height = 0;
-                var sub = this.sub();
-                if (sub)
-                    sub.forEach((child) => {
-                        if (child instanceof $.$mol_view) {
-                            height += child.minimal_height();
-                        }
-                    });
-                return height;
-            }
-        }
-        __decorate([
-            $.$mol_mem
-        ], $mol_list.prototype, "sub", null);
-        __decorate([
-            $.$mol_mem
-        ], $mol_list.prototype, "row_offsets", null);
-        __decorate([
-            $.$mol_mem_key
-        ], $mol_list.prototype, "row_context", null);
-        __decorate([
-            $.$mol_mem
-        ], $mol_list.prototype, "sub_visible", null);
-        __decorate([
-            $.$mol_mem
-        ], $mol_list.prototype, "minimal_height", null);
-        $$.$mol_list = $mol_list;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//list.view.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_syntax {
-        constructor(lexems) {
-            this['lexems()'] = lexems;
-        }
-        lexems() {
-            return this['lexems()'];
-        }
-        rules() {
-            let rules = this['rules()'];
-            if (rules)
-                return rules;
-            rules = [];
-            let lexems = this.lexems();
-            for (let name in lexems) {
-                rules.push({
-                    name: name,
-                    regExp: lexems[name],
-                    size: RegExp('^$|' + lexems[name].source).exec('').length - 1,
-                });
-            }
-            return this['rules()'] = rules;
-        }
-        regExp() {
-            let regExp = this['regExp()'];
-            if (regExp)
-                return regExp;
-            const parts = '(' + this.rules().map(rule => rule.regExp.source).join(')|(') + ')';
-            regExp = RegExp(`([^]*?)(?:(${parts})|$(?![^]))`, 'gm');
-            return this['regExp()'] = regExp;
-        }
-        tokenize(text) {
-            const tokens = [];
-            const rules = this.rules();
-            const regExp = this.regExp();
-            const regExpSize = RegExp('^$|' + regExp.source).exec('').length - 1;
-            let position = 0;
-            parsing: while (position < text.length) {
-                regExp.lastIndex = position;
-                var found = regExp.exec(text);
-                if (position === regExp.lastIndex)
-                    throw new Error('Empty token');
-                position = regExp.lastIndex;
-                var prefix = found[1];
-                if (prefix) {
-                    tokens.push({
-                        name: '',
-                        found: prefix,
-                        chunks: [],
-                    });
-                }
-                var suffix = found[2];
-                if (suffix) {
-                    let offset = 4;
-                    for (let rule of rules) {
-                        if (found[offset - 1]) {
-                            tokens.push({
-                                name: rule.name,
-                                found: suffix,
-                                chunks: found.slice(offset, offset + rule.size)
-                            });
-                            continue parsing;
-                        }
-                        offset += rule.size + 1;
-                    }
-                    throw new Error('Something wrong');
-                }
-            }
-            return tokens;
-        }
-    }
-    $.$mol_syntax = $mol_syntax;
-})($ || ($ = {}));
-//syntax.js.map
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_image extends $.$mol_view {
         /**
          *  ```
@@ -6416,15 +6520,6 @@ var $;
 //text.view.js.map
 ;
 "use strict";
-var $;
-(function ($) {
-    class $mol_bar extends $.$mol_view {
-    }
-    $.$mol_bar = $mol_bar;
-})($ || ($ = {}));
-//bar.view.tree.js.map
-;
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7002,19 +7097,62 @@ var $;
         }
         /**
          *  ```
-         *  tools / <= Download
+         *  tools /
+         *  	<= Snapshot
+         *  	<= Download
          *  ```
          **/
         tools() {
-            return [this.Download()];
+            return [this.Snapshot(), this.Download()];
         }
         /**
          *  ```
-         *  Download $mol_link
+         *  Snapshot $mol_link_lazy
+         *  	hint <= snapshot_hint
+         *  	uri_generated <= snapshot_uri
+         *  	sub / <= Snapshot_icon
+         *  ```
+         **/
+        Snapshot() {
+            return ((obj) => {
+                obj.hint = () => this.snapshot_hint();
+                obj.uri_generated = () => this.snapshot_uri();
+                obj.sub = () => [this.Snapshot_icon()];
+                return obj;
+            })(new this.$.$mol_link_lazy());
+        }
+        /**
+         *  ```
+         *  snapshot_hint @ \Snapshot
+         *  ```
+         **/
+        snapshot_hint() {
+            return this.$.$mol_locale.text("$mol_app_calc_snapshot_hint");
+        }
+        /**
+         *  ```
+         *  snapshot_uri \
+         *  ```
+         **/
+        snapshot_uri() {
+            return "";
+        }
+        /**
+         *  ```
+         *  Snapshot_icon $mol_icon_stored
+         *  ```
+         **/
+        Snapshot_icon() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_icon_stored());
+        }
+        /**
+         *  ```
+         *  Download $mol_link_lazy
          *  	hint <= download_hint
          *  	file_name <= download_file
-         *  	uri <= download_uri?val
-         *  	click?event <=> download_generate?event
+         *  	uri_generated <= download_uri?val
          *  	sub / <= Download_icon
          *  ```
          **/
@@ -7022,11 +7160,10 @@ var $;
             return ((obj) => {
                 obj.hint = () => this.download_hint();
                 obj.file_name = () => this.download_file();
-                obj.uri = () => this.download_uri();
-                obj.click = (event) => this.download_generate(event);
+                obj.uri_generated = () => this.download_uri();
                 obj.sub = () => [this.Download_icon()];
                 return obj;
-            })(new this.$.$mol_link());
+            })(new this.$.$mol_link_lazy());
         }
         /**
          *  ```
@@ -7054,14 +7191,6 @@ var $;
         }
         /**
          *  ```
-         *  download_generate?event null
-         *  ```
-         **/
-        download_generate(event, force) {
-            return (event !== void 0) ? event : null;
-        }
-        /**
-         *  ```
          *  Download_icon $mol_icon_load
          *  ```
          **/
@@ -7074,84 +7203,13 @@ var $;
          *  ```
          *  sub /
          *  	<= Head
-         *  	<= Body
-         *  	<= Hint
          *  	<= Current
+         *  	<= Hint
+         *  	<= Body
          *  ```
          **/
         sub() {
-            return [this.Head(), this.Body(), this.Hint(), this.Current()];
-        }
-        /**
-         *  ```
-         *  Body $mol_grid
-         *  	col_ids <= col_ids
-         *  	row_ids <= row_ids
-         *  	head_cells <= head_cells
-         *  	cells!row <= cells!row
-         *  ```
-         **/
-        Body() {
-            return ((obj) => {
-                obj.col_ids = () => this.col_ids();
-                obj.row_ids = () => this.row_ids();
-                obj.head_cells = () => this.head_cells();
-                obj.cells = (row) => this.cells(row);
-                return obj;
-            })(new this.$.$mol_grid());
-        }
-        /**
-         *  ```
-         *  col_ids /
-         *  ```
-         **/
-        col_ids() {
-            return [];
-        }
-        /**
-         *  ```
-         *  row_ids /
-         *  ```
-         **/
-        row_ids() {
-            return [];
-        }
-        /**
-         *  ```
-         *  head_cells /
-         *  ```
-         **/
-        head_cells() {
-            return [];
-        }
-        /**
-         *  ```
-         *  cells!row /
-         *  ```
-         **/
-        cells(row) {
-            return [];
-        }
-        /**
-         *  ```
-         *  Hint $mol_text text <= hint
-         *  ```
-         **/
-        Hint() {
-            return ((obj) => {
-                obj.text = () => this.hint();
-                return obj;
-            })(new this.$.$mol_text());
-        }
-        /**
-         *  ```
-         *  hint @ \
-         *  	\**$.A1** - result of A1, **$$.A1** - formula of A1, **a=** - define variable, **_.a** - value of variable, **__.a** - cell id of variable, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
-         *  	\**You can use**: {funcs}.
-         *  ```
-         **/
-        hint() {
-            return this.$.$mol_locale.text("$mol_app_calc_hint");
+            return [this.Head(), this.Current(), this.Hint(), this.Body()];
         }
         /**
          *  ```
@@ -7230,6 +7288,77 @@ var $;
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_hint());
+        }
+        /**
+         *  ```
+         *  Hint $mol_text text <= hint
+         *  ```
+         **/
+        Hint() {
+            return ((obj) => {
+                obj.text = () => this.hint();
+                return obj;
+            })(new this.$.$mol_text());
+        }
+        /**
+         *  ```
+         *  hint @ \
+         *  	\**$.A1** - result of A1, **$$.A1** - formula of A1, **a=** - define variable, **_.a** - value of variable, **__.a** - cell id of variable, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
+         *  	\**You can use**: {funcs}.
+         *  ```
+         **/
+        hint() {
+            return this.$.$mol_locale.text("$mol_app_calc_hint");
+        }
+        /**
+         *  ```
+         *  Body $mol_grid
+         *  	col_ids <= col_ids
+         *  	row_ids <= row_ids
+         *  	head_cells <= head_cells
+         *  	cells!row <= cells!row
+         *  ```
+         **/
+        Body() {
+            return ((obj) => {
+                obj.col_ids = () => this.col_ids();
+                obj.row_ids = () => this.row_ids();
+                obj.head_cells = () => this.head_cells();
+                obj.cells = (row) => this.cells(row);
+                return obj;
+            })(new this.$.$mol_grid());
+        }
+        /**
+         *  ```
+         *  col_ids /
+         *  ```
+         **/
+        col_ids() {
+            return [];
+        }
+        /**
+         *  ```
+         *  row_ids /
+         *  ```
+         **/
+        row_ids() {
+            return [];
+        }
+        /**
+         *  ```
+         *  head_cells /
+         *  ```
+         **/
+        head_cells() {
+            return [];
+        }
+        /**
+         *  ```
+         *  cells!row /
+         *  ```
+         **/
+        cells(row) {
+            return [];
         }
         /**
          *  ```
@@ -7393,22 +7522,19 @@ var $;
     ], $mol_app_calc.prototype, "title", null);
     __decorate([
         $.$mol_mem
+    ], $mol_app_calc.prototype, "Snapshot", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_calc.prototype, "Snapshot_icon", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_app_calc.prototype, "Download", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_calc.prototype, "download_uri", null);
     __decorate([
         $.$mol_mem
-    ], $mol_app_calc.prototype, "download_generate", null);
-    __decorate([
-        $.$mol_mem
     ], $mol_app_calc.prototype, "Download_icon", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_calc.prototype, "Body", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_calc.prototype, "Hint", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_calc.prototype, "Current", null);
@@ -7430,6 +7556,12 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_app_calc.prototype, "Hint_trigger_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_calc.prototype, "Hint", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_calc.prototype, "Body", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_app_calc.prototype, "Edit", null);
@@ -7539,7 +7671,7 @@ var $;
                 const formulas = {};
                 let args = this.$.$mol_state_arg.dict();
                 if (next)
-                    args = this.$.$mol_state_arg.dict(Object.assign(Object.assign({}, args), next));
+                    return Object.assign(Object.assign({}, $.$mol_atom2_value(() => this.formulas() || {})), next);
                 const ids = Object.keys(args).filter(param => this.id2coord(param));
                 for (let id of ids)
                     formulas[id] = args[id];
@@ -7565,10 +7697,10 @@ var $;
                 return vars;
             }
             id2coord(id) {
-                const parsed = /^([A-Z]+)(\d+)$/.exec(id);
+                const parsed = /^([A-Z]+)(\d+)$/i.exec(id);
                 if (!parsed)
                     return null;
-                return [this.string2number(parsed[1]), Number(parsed[2])];
+                return [this.string2number(parsed[1].toUpperCase()), Number(parsed[2])];
             }
             coord2id(coord) {
                 return `${this.number2string(coord[0])}${coord[1]}`;
@@ -7670,14 +7802,30 @@ var $;
                     '__': new Proxy({}, { get: (_, name) => {
                             return this.refs()[name];
                         } }),
+                    'RANGE': (from, to) => this.results([from, to]),
+                    'SUM': (values) => values.reduce((accum, item) => accum + item, 0),
+                    'AVG': (values) => values.reduce((accum, item) => accum + item, 0) / values.length,
+                    'MAX': (values) => values.reduce((max, item) => item > max ? item : max, undefined),
+                    'MIN': (values) => values.reduce((min, item) => item < min ? item : min, undefined),
                 });
+            }
+            results(range) {
+                const start = this.id2coord(range[0]);
+                const end = this.id2coord(range[1]);
+                const ids = [];
+                for (let row = start[0]; row <= end[0]; ++row) {
+                    for (let col = start[1]; col <= end[1]; ++col) {
+                        ids.push(this.result(this.coord2id([row, col])));
+                    }
+                }
+                return ids;
             }
             sub() {
                 return [
                     this.Head(),
-                    this.Body(),
-                    ...this.hint_showed() ? [this.Hint()] : [],
                     this.Current(),
+                    ...this.hint_showed() ? [this.Hint()] : [],
+                    this.Body(),
                 ];
             }
             hint() {
@@ -7695,6 +7843,7 @@ var $;
                 if (!/^(\w*)?\s*=/u.test(formula))
                     return () => formula;
                 const code = 'return ' + formula
+                    .replace(/([A-Z]+[0-9]+):([A-Z]+[0-9]+)/g, (found, from, to) => `RANGE('${from.toLowerCase()}','${to.toLowerCase()}')`)
                     .replace(/@([A-Z]+[0-9]+)\b/g, '$$.$1')
                     .replace(/([^.])([A-Z]+[0-9]+)\b/g, '$1$.$2')
                     .replace(/^(\w*)?\s*=/u, '');
@@ -7708,6 +7857,8 @@ var $;
                     return '';
                 if (isNaN(res))
                     return res;
+                if (res && typeof res === 'object')
+                    return JSON.stringify(res);
                 return Number(res);
             }
             paste(event) {
@@ -7725,10 +7876,13 @@ var $;
                 this.formulas(patch);
                 event.preventDefault();
             }
+            snapshot_uri() {
+                return this.$.$mol_state_arg.make_link(Object.assign({ title: this.title() }, this.formulas()));
+            }
             download_file() {
                 return `${this.title()}.csv`;
             }
-            download_generate(event) {
+            download_uri() {
                 const table = [];
                 const dims = this.dimensions();
                 for (let row = 1; row < dims.rows; ++row) {
@@ -7739,8 +7893,7 @@ var $;
                     }
                 }
                 const content = table.map(row => row.map(val => `"${val.replace(/"/g, '""')}"`).join(';')).join('\n');
-                this.download_uri(`data:text/csv;charset=utf-8,${encodeURIComponent(content)}`);
-                $.$mol_defer.run();
+                return `data:text/csv;charset=utf-8,${encodeURIComponent(content)}`;
             }
         }
         __decorate([
@@ -7763,6 +7916,9 @@ var $;
         ], $mol_app_calc.prototype, "row_ids", null);
         __decorate([
             $.$mol_mem
+        ], $mol_app_calc.prototype, "title", null);
+        __decorate([
+            $.$mol_mem
         ], $mol_app_calc.prototype, "head_cells", null);
         __decorate([
             $.$mol_mem_key
@@ -7779,6 +7935,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_app_calc.prototype, "sandbox", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_app_calc.prototype, "results", null);
         __decorate([
             $.$mol_mem
         ], $mol_app_calc.prototype, "hint", null);

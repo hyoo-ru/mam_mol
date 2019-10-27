@@ -97,6 +97,15 @@ $mol_link $mol_view
 		^
 		click?event <=> click?event <=> event_click?event null
 
+$mol_link_lazy $mol_link
+	uri?val \
+	uri_generated \
+	current false
+	event *
+		^
+		mousedown?event <=> generate?event null
+
+
 $mol_svg $mol_view
 	dom_name \svg
 	dom_name_space \http://www.w3.org/2000/svg
@@ -126,7 +135,15 @@ $mol_icon $mol_svg_root
 		<= Path $mol_svg_path
 			geometry <= path \
 
+$mol_icon_stored $mol_icon path \M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z
+
 $mol_icon_load $mol_icon path \M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z
+
+$mol_bar $mol_view
+
+$mol_list $mol_view
+	sub <= rows /$mol_view
+	Empty null
 
 $mol_float $mol_view
 
@@ -230,10 +247,6 @@ $mol_grid_cell $mol_view
 
 $mol_grid_number $mol_grid_cell
 
-$mol_list $mol_view
-	sub <= rows /$mol_view
-	Empty null
-
 $mol_image $mol_view
 	dom_name \img
 	field *
@@ -312,8 +325,6 @@ $mol_text_image $mol_view
 	sub /
 		<= title?val \
 
-$mol_bar $mol_view
-
 $mol_textarea $mol_view
 	event *
 		keydown?event <=> press?event null
@@ -359,24 +370,19 @@ $mol_app_calc $mol_page
 			value?val <=> title?val @ \Spreedsheet
 		<= Tools
 	tools /
-		<= Download $mol_link
+		<= Snapshot $mol_link_lazy
+			hint <= snapshot_hint @ \Snapshot
+			uri_generated <= snapshot_uri \
+			sub /
+				<= Snapshot_icon $mol_icon_stored
+		<= Download $mol_link_lazy
 			hint <= download_hint @ \Download
 			file_name <= download_file \
-			uri <= download_uri?val \
-			click?event <=> download_generate?event null
+			uri_generated <= download_uri?val \
 			sub /
 				<= Download_icon $mol_icon_load
 	sub /
 		<= Head
-		<= Body $mol_grid
-			col_ids <= col_ids /
-			row_ids <= row_ids /
-			head_cells <= head_cells /
-			cells!row <= cells!row /
-		<= Hint $mol_text
-			text <= hint @ \
-				\**$.A1** - result of A1, **$$.A1** - formula of A1, **a=** - define variable, **_.a** - value of variable, **__.a** - cell id of variable, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
-				\**You can use**: {funcs}.
 		<= Current $mol_bar
 			sub /
 				<= Pos $mol_string
@@ -386,6 +392,15 @@ $mol_app_calc $mol_page
 				<= Hint_trigger $mol_check_icon
 					checked?val <=> hint_showed?val false
 					Icon <= Hint_trigger_icon $mol_icon_hint
+		<= Hint $mol_text
+			text <= hint @ \
+				\**$.A1** - result of A1, **$$.A1** - formula of A1, **a=** - define variable, **_.a** - value of variable, **__.a** - cell id of variable, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
+				\**You can use**: {funcs}.
+		<= Body $mol_grid
+			col_ids <= col_ids /
+			row_ids <= row_ids /
+			head_cells <= head_cells /
+			cells!row <= cells!row /
 	Edit!id $mol_textarea
 		hint \=
 		value?val <=> formula!id?val \

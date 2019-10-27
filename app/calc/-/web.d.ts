@@ -1320,6 +1320,52 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_link_lazy extends $mol_link {
+        /**
+         *  ```
+         *  uri?val \
+         *  ```
+         **/
+        uri(val?: any, force?: $mol_mem_force): any;
+        /**
+         *  ```
+         *  uri_generated \
+         *  ```
+         **/
+        uri_generated(): string;
+        /**
+         *  ```
+         *  current false
+         *  ```
+         **/
+        current(): boolean;
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	mousedown?event <=> generate?event
+         *  ```
+         **/
+        event(): {
+            "mousedown": (event?: any) => any;
+            "click": (event?: any) => any;
+        };
+        /**
+         *  ```
+         *  generate?event null
+         *  ```
+         **/
+        generate(event?: any, force?: $mol_mem_force): any;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_link_lazy extends $.$mol_link_lazy {
+        generate(event?: Event): void;
+    }
+}
+
+declare namespace $ {
     class $mol_after_timeout extends $mol_object2 {
         delay: number;
         task: () => void;
@@ -1491,6 +1537,17 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_stored extends $mol_icon {
+        /**
+         *  ```
+         *  path \M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z
+         *  ```
+         **/
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_load extends $mol_icon {
         /**
          *  ```
@@ -1498,6 +1555,76 @@ declare namespace $ {
          *  ```
          **/
         path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_bar extends $mol_view {
+    }
+}
+
+declare namespace $ {
+    class $mol_list extends $mol_view {
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
+        sub(): readonly $mol_view[];
+        /**
+         *  ```
+         *  rows /$mol_view
+         *  ```
+         **/
+        rows(): readonly $mol_view[];
+        /**
+         *  ```
+         *  Empty null
+         *  ```
+         **/
+        Empty(): any;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_list extends $.$mol_list {
+        sub(): any[] | readonly $mol_view[];
+        row_offsets(): number[];
+        row_context(index: number): $mol_ambient_context;
+        sub_visible(): any[] | readonly $mol_view[];
+        minimal_height(): number;
+    }
+}
+
+declare namespace $ {
+    interface $mol_syntax_token {
+        name: string;
+        found: string;
+        chunks: string[];
+    }
+    class $mol_syntax {
+        constructor(lexems: {
+            [name: string]: RegExp;
+        });
+        'lexems()': {
+            [name: string]: RegExp;
+        };
+        lexems(): {
+            [name: string]: RegExp;
+        };
+        'rules()': {
+            regExp: RegExp;
+            name: string;
+            size: number;
+        }[];
+        rules(): {
+            regExp: RegExp;
+            name: string;
+            size: number;
+        }[];
+        'regExp()': RegExp;
+        regExp(): RegExp;
+        tokenize(text: string): $mol_syntax_token[];
     }
 }
 
@@ -2095,71 +2222,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_list extends $mol_view {
-        /**
-         *  ```
-         *  sub <= rows
-         *  ```
-         **/
-        sub(): readonly $mol_view[];
-        /**
-         *  ```
-         *  rows /$mol_view
-         *  ```
-         **/
-        rows(): readonly $mol_view[];
-        /**
-         *  ```
-         *  Empty null
-         *  ```
-         **/
-        Empty(): any;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_list extends $.$mol_list {
-        sub(): any[] | readonly $mol_view[];
-        row_offsets(): number[];
-        row_context(index: number): $mol_ambient_context;
-        sub_visible(): any[] | readonly $mol_view[];
-        minimal_height(): number;
-    }
-}
-
-declare namespace $ {
-    interface $mol_syntax_token {
-        name: string;
-        found: string;
-        chunks: string[];
-    }
-    class $mol_syntax {
-        constructor(lexems: {
-            [name: string]: RegExp;
-        });
-        'lexems()': {
-            [name: string]: RegExp;
-        };
-        lexems(): {
-            [name: string]: RegExp;
-        };
-        'rules()': {
-            regExp: RegExp;
-            name: string;
-            size: number;
-        }[];
-        rules(): {
-            regExp: RegExp;
-            name: string;
-            size: number;
-        }[];
-        'regExp()': RegExp;
-        regExp(): RegExp;
-        tokenize(text: string): $mol_syntax_token[];
-    }
-}
-
-declare namespace $ {
     class $mol_image extends $mol_view {
         /**
          *  ```
@@ -2615,11 +2677,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_bar extends $mol_view {
-    }
-}
-
-declare namespace $ {
     class $mol_textarea extends $mol_view {
         /**
          *  ```
@@ -2871,21 +2928,49 @@ declare namespace $ {
         title(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
-         *  tools / <= Download
+         *  tools /
+         *  	<= Snapshot
+         *  	<= Download
          *  ```
          **/
         tools(): readonly any[];
         /**
          *  ```
-         *  Download $mol_link
+         *  Snapshot $mol_link_lazy
+         *  	hint <= snapshot_hint
+         *  	uri_generated <= snapshot_uri
+         *  	sub / <= Snapshot_icon
+         *  ```
+         **/
+        Snapshot(): $$.$mol_link_lazy;
+        /**
+         *  ```
+         *  snapshot_hint @ \Snapshot
+         *  ```
+         **/
+        snapshot_hint(): string;
+        /**
+         *  ```
+         *  snapshot_uri \
+         *  ```
+         **/
+        snapshot_uri(): string;
+        /**
+         *  ```
+         *  Snapshot_icon $mol_icon_stored
+         *  ```
+         **/
+        Snapshot_icon(): $mol_icon_stored;
+        /**
+         *  ```
+         *  Download $mol_link_lazy
          *  	hint <= download_hint
          *  	file_name <= download_file
-         *  	uri <= download_uri?val
-         *  	click?event <=> download_generate?event
+         *  	uri_generated <= download_uri?val
          *  	sub / <= Download_icon
          *  ```
          **/
-        Download(): $$.$mol_link;
+        Download(): $$.$mol_link_lazy;
         /**
          *  ```
          *  download_hint @ \Download
@@ -2906,12 +2991,6 @@ declare namespace $ {
         download_uri(val?: any, force?: $mol_mem_force): any;
         /**
          *  ```
-         *  download_generate?event null
-         *  ```
-         **/
-        download_generate(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
          *  Download_icon $mol_icon_load
          *  ```
          **/
@@ -2920,60 +2999,12 @@ declare namespace $ {
          *  ```
          *  sub /
          *  	<= Head
-         *  	<= Body
-         *  	<= Hint
          *  	<= Current
+         *  	<= Hint
+         *  	<= Body
          *  ```
          **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Body $mol_grid
-         *  	col_ids <= col_ids
-         *  	row_ids <= row_ids
-         *  	head_cells <= head_cells
-         *  	cells!row <= cells!row
-         *  ```
-         **/
-        Body(): $$.$mol_grid;
-        /**
-         *  ```
-         *  col_ids /
-         *  ```
-         **/
-        col_ids(): readonly any[];
-        /**
-         *  ```
-         *  row_ids /
-         *  ```
-         **/
-        row_ids(): readonly any[];
-        /**
-         *  ```
-         *  head_cells /
-         *  ```
-         **/
-        head_cells(): readonly any[];
-        /**
-         *  ```
-         *  cells!row /
-         *  ```
-         **/
-        cells(row: any): readonly any[];
-        /**
-         *  ```
-         *  Hint $mol_text text <= hint
-         *  ```
-         **/
-        Hint(): $$.$mol_text;
-        /**
-         *  ```
-         *  hint @ \
-         *  	\**$.A1** - result of A1, **$$.A1** - formula of A1, **a=** - define variable, **_.a** - value of variable, **__.a** - cell id of variable, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
-         *  	\**You can use**: {funcs}.
-         *  ```
-         **/
-        hint(): string;
         /**
          *  ```
          *  Current $mol_bar sub /
@@ -3023,6 +3054,54 @@ declare namespace $ {
          *  ```
          **/
         Hint_trigger_icon(): $mol_icon_hint;
+        /**
+         *  ```
+         *  Hint $mol_text text <= hint
+         *  ```
+         **/
+        Hint(): $$.$mol_text;
+        /**
+         *  ```
+         *  hint @ \
+         *  	\**$.A1** - result of A1, **$$.A1** - formula of A1, **a=** - define variable, **_.a** - value of variable, **__.a** - cell id of variable, use [**JavaScript**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference).
+         *  	\**You can use**: {funcs}.
+         *  ```
+         **/
+        hint(): string;
+        /**
+         *  ```
+         *  Body $mol_grid
+         *  	col_ids <= col_ids
+         *  	row_ids <= row_ids
+         *  	head_cells <= head_cells
+         *  	cells!row <= cells!row
+         *  ```
+         **/
+        Body(): $$.$mol_grid;
+        /**
+         *  ```
+         *  col_ids /
+         *  ```
+         **/
+        col_ids(): readonly any[];
+        /**
+         *  ```
+         *  row_ids /
+         *  ```
+         **/
+        row_ids(): readonly any[];
+        /**
+         *  ```
+         *  head_cells /
+         *  ```
+         **/
+        head_cells(): readonly any[];
+        /**
+         *  ```
+         *  cells!row /
+         *  ```
+         **/
+        cells(row: any): readonly any[];
         /**
          *  ```
          *  Edit!id $mol_textarea
@@ -3208,14 +3287,16 @@ declare namespace $.$$ {
         formula(id: string, next?: string): string;
         formula_current(next?: string): string;
         sandbox(): $mol_func_sandbox;
+        results(range: [string, string]): string[];
         sub(): ($mol_view | $mol_grid)[];
         hint(): string;
         cell_content(id: string): any;
         func(id: string): any;
         result(id: string): any;
         paste(event?: ClipboardEvent): void;
+        snapshot_uri(): string;
         download_file(): string;
-        download_generate(event?: Event): void;
+        download_uri(): string;
     }
     class $mol_app_calc_cell extends $.$mol_app_calc_cell {
         click(event?: Event): void;

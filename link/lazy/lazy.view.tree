@@ -1,0 +1,8 @@
+$mol_link_lazy $mol_link
+	uri?val \
+	uri_generated \
+	current false
+	event *
+		^
+		mousedown?event <=> generate?event null
+
