@@ -19430,7 +19430,7 @@ var $;
     (function ($$) {
         class $mol_link_iconed extends $.$mol_link_iconed {
             icon() {
-                return `https://favicon.yandex.net/favicon/${this.host()}?color=0,0,255,0&size=32`;
+                return `https://favicon.yandex.net/favicon/${this.host()}?color=0,0,0,0&size=32&stub=1`;
             }
             host() {
                 const url = new URL(this.uri());
@@ -20704,7 +20704,7 @@ var $;
                     const id = `${prefix}/${index}`;
                     switch (token.name) {
                         case 'text-link': {
-                            if (/^#|(\w+script+:)+/.test(token.chunks[1])) {
+                            if (/^(\w+script+:)+/.test(token.chunks[1])) {
                                 const span = this.Span(id);
                                 span.content(this.text2spans(id, token.chunks[0]));
                                 return span;
@@ -25590,38 +25590,60 @@ var $;
 //demo.view.tree.js.map
 ;
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var $;
 (function ($) {
-    class $mol_icon_mol extends $.$mol_icon {
+    class $mol_app_demo_main extends $.$mol_page {
         /**
          *  ```
-         *  view_box \-39 0 287 326
+         *  minimal_width 400
          *  ```
          **/
-        view_box() {
-            return "-39 0 287 326";
+        minimal_width() {
+            return 400;
         }
         /**
          *  ```
-         *  path \M183.9,224.1c-4.6,0-8.8,1.3-12.5,3.4l-60.8-66.5V48.9c4.3-1.1,8.2-3.3,11.3-6.3l36.8,26.8c-0.7,2.3-1.1,4.8-1.1,7.4c0,13.7,11.1,24.8,24.8,24.8s24.8-11.1,24.8-24.8S196.2,52,182.5,52c-6.4,0-12.3,2.5-16.7,6.5l-37.2-27.1c0.6-2.1,0.9-4.3,0.9-6.5c0-13.7-11.1-24.8-24.8-24.8S79.9,11.1,79.9,24.8c0,2.6,0.4,5.1,1.2,7.5L42.3,59.2C37.8,54.7,31.6,52,24.8,52C11.1,52,0,63.1,0,76.8s11.1,24.8,24.8,24.8c4.1,0,8-1,11.5-2.8L97.7,166v110.9c-4.2,1.1-8,3.3-11,6.2l-36.8-26.8c0.7-2.3,1.1-4.8,1.1-7.4c0-13.7-11.1-24.8-24.8-24.8S1.4,235.2,1.4,248.9s11.1,24.8,24.8,24.8c6.4,0,12.3-2.5,16.7-6.5l37.2,27.1c-0.6,2.1-0.9,4.3-0.9,6.5c0,13.7,11.1,24.8,24.8,24.8s24.8-11.1,24.8-24.8c0-2.6-0.4-5.1-1.2-7.5l38.8-26.9c4.5,4.5,10.7,7.2,17.5,7.2c13.7,0,24.8-11.1,24.8-24.8S197.6,224.1,183.9,224.1z M182.5,64.9c6.5,0,11.9,5.3,11.9,11.9c0,6.5-5.3,11.9-11.9,11.9c-6.5,0-11.9-5.3-11.9-11.9C170.6,70.2,175.9,64.9,182.5,64.9z M104.7,12.9c6.5,0,11.9,5.3,11.9,11.9c0,6.5-5.3,11.9-11.9,11.9c-6.5,0-11.9-5.3-11.9-11.9C92.8,18.3,98.1,12.9,104.7,12.9z M24.8,88.6c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9s11.9,5.3,11.9,11.9C36.7,83.3,31.3,88.6,24.8,88.6z M45.8,89.9c2.4-3.8,3.8-8.3,3.8-13.2c0-2.2-0.3-4.3-0.8-6.3l39.3-27.3c2.7,2.5,6,4.4,9.6,5.4v98.2L45.8,89.9z M162.3,236.7c-2,3.6-3.2,7.8-3.2,12.2c0,2.2,0.3,4.3,0.9,6.3l-39.3,27.3c-2.8-2.6-6.2-4.5-10-5.5v-96.8L162.3,236.7z M26.2,260.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C38.1,255.4,32.8,260.7,26.2,260.7z M104,312.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C115.9,307.4,110.5,312.7,104,312.7z M183.9,260.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C195.7,255.4,190.4,260.7,183.9,260.7z
+         *  body / <= Description
          *  ```
          **/
-        path() {
-            return "M183.9,224.1c-4.6,0-8.8,1.3-12.5,3.4l-60.8-66.5V48.9c4.3-1.1,8.2-3.3,11.3-6.3l36.8,26.8c-0.7,2.3-1.1,4.8-1.1,7.4c0,13.7,11.1,24.8,24.8,24.8s24.8-11.1,24.8-24.8S196.2,52,182.5,52c-6.4,0-12.3,2.5-16.7,6.5l-37.2-27.1c0.6-2.1,0.9-4.3,0.9-6.5c0-13.7-11.1-24.8-24.8-24.8S79.9,11.1,79.9,24.8c0,2.6,0.4,5.1,1.2,7.5L42.3,59.2C37.8,54.7,31.6,52,24.8,52C11.1,52,0,63.1,0,76.8s11.1,24.8,24.8,24.8c4.1,0,8-1,11.5-2.8L97.7,166v110.9c-4.2,1.1-8,3.3-11,6.2l-36.8-26.8c0.7-2.3,1.1-4.8,1.1-7.4c0-13.7-11.1-24.8-24.8-24.8S1.4,235.2,1.4,248.9s11.1,24.8,24.8,24.8c6.4,0,12.3-2.5,16.7-6.5l37.2,27.1c-0.6,2.1-0.9,4.3-0.9,6.5c0,13.7,11.1,24.8,24.8,24.8s24.8-11.1,24.8-24.8c0-2.6-0.4-5.1-1.2-7.5l38.8-26.9c4.5,4.5,10.7,7.2,17.5,7.2c13.7,0,24.8-11.1,24.8-24.8S197.6,224.1,183.9,224.1z M182.5,64.9c6.5,0,11.9,5.3,11.9,11.9c0,6.5-5.3,11.9-11.9,11.9c-6.5,0-11.9-5.3-11.9-11.9C170.6,70.2,175.9,64.9,182.5,64.9z M104.7,12.9c6.5,0,11.9,5.3,11.9,11.9c0,6.5-5.3,11.9-11.9,11.9c-6.5,0-11.9-5.3-11.9-11.9C92.8,18.3,98.1,12.9,104.7,12.9z M24.8,88.6c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9s11.9,5.3,11.9,11.9C36.7,83.3,31.3,88.6,24.8,88.6z M45.8,89.9c2.4-3.8,3.8-8.3,3.8-13.2c0-2.2-0.3-4.3-0.8-6.3l39.3-27.3c2.7,2.5,6,4.4,9.6,5.4v98.2L45.8,89.9z M162.3,236.7c-2,3.6-3.2,7.8-3.2,12.2c0,2.2,0.3,4.3,0.9,6.3l-39.3,27.3c-2.8-2.6-6.2-4.5-10-5.5v-96.8L162.3,236.7z M26.2,260.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C38.1,255.4,32.8,260.7,26.2,260.7z M104,312.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C115.9,307.4,110.5,312.7,104,312.7z M183.9,260.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C195.7,255.4,190.4,260.7,183.9,260.7z";
+        body() {
+            return [this.Description()];
+        }
+        /**
+         *  ```
+         *  Description $mol_text
+         *  	text <= description
+         *  	uri_base \https://github.com/eigenmethod/mol/
+         *  ```
+         **/
+        Description() {
+            return ((obj) => {
+                obj.text = () => this.description();
+                obj.uri_base = () => "https://github.com/eigenmethod/mol/";
+                return obj;
+            })(new this.$.$mol_text());
+        }
+        /**
+         *  ```
+         *  description \
+         *  ```
+         **/
+        description() {
+            return "";
         }
     }
-    $.$mol_icon_mol = $mol_icon_mol;
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_main.prototype, "Description", null);
+    $.$mol_app_demo_main = $mol_app_demo_main;
 })($ || ($ = {}));
-//mol.view.tree.js.map
-;
-var $node = $node || {} ; $node[ "/mol/app/demo/placeholder/code_rate.svg" ] = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NzkgNDc5Ij4KICA8ZyBmaWxsPSIjNkM5MUNGIj4KICAgIDxwYXRoIGQ9Ik0yNzkgMjQ2bDgyLjYtMTE0YzItMyAxLjgtNy4yLS44LTkuOC0yLjYtMi42LTYuNy0zLTkuNy0uOEwyMzcgMjA0Yy0yMC42IDEuNC0zNyAxOC42LTM3IDM5LjUgMCAyMS44IDE3LjcgMzkuNSAzOS41IDM5LjUgMjEgMCAzOC0xNi40IDM5LjQtMzd6bS00LTIwYy00LTcuNy0xMC4zLTE0LTE4LTE4bDY1LTQ3LTQ3IDY1em0tNjAgMTcuNWMwLTEzLjUgMTEtMjQuNSAyNC41LTI0LjVzMjQuNSAxMSAyNC41IDI0LjUtMTEgMjQuNS0yNC41IDI0LjUtMjQuNS0xMS0yNC41LTI0LjV6Ii8+CiAgICA8cGF0aCBkPSJNNDc5IDI0My40YzAtMy40IDAtNi44LS4yLTEwLjMtMS4yLTI3LjUtNy4yLTU0LjYtMTcuNi04MGwtLjQtMS4yLS43LTEuM2MtMTEuNS0yNy4zLTI4LjMtNTIuNS00OS42LTc0LjNsLS4yLS4yLTEuMy0yYy0uNy0uNC0xLjQtMS0yLTEuMi0yMi0yMS41LTQ3LjMtMzguNC03NS01MC0uMi0uMy0uNS0uNC0uOC0uNi0uNCAwLS43LS4yLTEtLjNDMzA2LjQgMTIgMjgxIDYgMjU1IDQuNGMtNS0uMy0xMC0uNS0xNS4yLS41aC0uMy0uM2MtMjguNCAwLTU2IDUtODIuNiAxNC43LTMwLjIgMTEuMi01Ny40IDI4LTgxIDUwLjJsLTUuMyA1SDcwdi4zYy0yMSAyMS0zNy43IDQ1LjMtNDkuNiA3Mi40QzYuOCAxNzcuMyAwIDIwOS43IDAgMjQzLjVjMCA0OCAxNC4zIDk0LjYgNDEuMyAxMzQuM0M0OC42IDM4OC42IDYwLjggMzk1IDc0IDM5NWgxMy41YzQgMCA3LjUtMy40IDcuNS03LjVzLTMuNC03LjUtNy41LTcuNUg3NGMtOC4yIDAtMTUuOC00LTIwLjMtMTAuNi03LjItMTAuNi0xMy40LTIxLjYtMTguNi0zM2wyMi42LTkuNGMzLjgtMS42IDUuNi02IDQtOS44LTEuNS00LTYtNS43LTkuNy00bC0yMi43IDkuMkMyMC43IDI5OS43IDE2IDI3NS42IDE1IDI1MWgyNC41YzQgMCA3LjUtMy40IDcuNS03LjVzLTMuNC03LjUtNy41LTcuNUgxNWMxLTI0LjYgNS43LTQ4LjYgMTQuMy03MS41TDUyIDE3NGMuOC4zIDEuOC41IDIuNy41IDMgMCA1LjgtMS44IDctNC43IDEuNS0zLjgtLjMtOC4yLTQtOS44TDM1IDE1MC43YzEwLjItMjIuNCAyMy44LTQyLjcgNDAuNS02MC41bDE3LjMgMTcuMmMxLjQgMS40IDMuNCAyLjIgNS4zIDIuMnM0LS44IDUuNC0yLjJjMy0zIDMtNy43IDAtMTAuNkw4NiA3OS41YzE4LjMtMTcgMzguNy0zMC42IDYwLjctNDAuNmw5LjMgMjIuNmMxLjIgMyA0IDQuNiA3IDQuNiAxIDAgMi0uMiAyLjgtLjUgNC0xLjYgNS43LTYgNC05LjhMMTYwLjYgMzNjMjIuNy04LjUgNDYuNy0xMy4zIDcxLjUtMTR2MjQuM2MwIDQgMy40IDcuNSA3LjUgNy41czcuNS0zLjQgNy41LTcuNVYxOWw3IC41YzIyLjIgMS40IDQ0IDYgNjQuNCAxNEwzMDkgNTUuOGMtMS41IDMuNy4zIDggNC4yIDkuNyAxIC4zIDIgLjUgMi44LjUgMyAwIDUuOC0xLjcgNy00LjZsOS4zLTIyLjRjMjIgMTAgNDIuMyAyMy43IDYwLjMgNDAuNmwtMTcgMTdjLTMgMy0zIDcuNyAwIDEwLjYgMS41IDEuNCAzLjQgMi4yIDUuMyAyLjJzMy44LS44IDUuMi0yLjJsMTctMTdjMTcgMTggMzAuNSAzOC40IDQwLjYgNjAuNGwtMjIuNCA5LjJjLTMuOCAxLjYtNS42IDYtNCA5LjggMSAzIDQgNC43IDcgNC43LjggMCAxLjgtLjIgMi43LS42bDIyLjYtOS40YzguMyAyMiAxMy4yIDQ1LjMgMTQuMiA2OS4ydjIuMmgtMjQuM2MtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjVINDY0Yy0xIDI0LjctNS43IDQ4LjctMTQuMyA3MS41TDQyNyAzMTNjLTMuNy0xLjUtOCAuMy05LjcgNC4yLTEuNSAzLjguMyA4LjIgNCA5LjhsMjIuNiA5LjNjLTUuMyAxMS41LTExLjUgMjIuNS0xOC43IDMzLTQuNSA2LjctMTIgMTAuNy0yMC4yIDEwLjdoLTEzLjVjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41SDQwNWMxMy4yIDAgMjUuNC02LjQgMzIuNy0xNy4yIDI3LTM5LjggNDEuMy04NiA0MS4zLTEzNC4ydi0uMnoiLz4KICAgIDxwYXRoIGQ9Ik0zMjcuNSAzMDBoLTE3NmMtMjEuOCAwLTM5LjUgMTcuNy0zOS41IDM5LjV2OTZjMCAyMS44IDE3LjcgMzkuNSAzOS41IDM5LjVoMTc2YzIxLjggMCAzOS41LTE3LjcgMzkuNS0zOS41di05NmMwLTIxLjgtMTcuNy0zOS41LTM5LjUtMzkuNXpNMzUyIDQzNS41YzAgMTMuNS0xMSAyNC41LTI0LjUgMjQuNWgtMTc2Yy0xMy41IDAtMjQuNS0xMS0yNC41LTI0LjV2LTk2YzAtMTMuNSAxMS0yNC41IDI0LjUtMjQuNWgxNzZjMTMuNSAwIDI0LjUgMTEgMjQuNSAyNC41djk2eiIvPgogICAgPHBhdGggZD0iTTIwNC44IDM0Mi4yYy0zLTMtNy43LTMtMTAuNiAwbC00MCA0MGMtMyAzLTMgNy43IDAgMTAuNmw0MCA0MGMxLjUgMS41IDMuNCAyLjIgNS4zIDIuMnMzLjgtLjcgNS4zLTIuMmMzLTMgMy03LjcgMC0xMC42TDE3MCAzODcuNWwzNC44LTM0LjdjMy0zIDMtNy43IDAtMTAuNnpNMjg0LjggMzQyLjJjLTMtMy03LjctMy0xMC42IDAtMyAzLTMgNy43IDAgMTAuNmwzNC43IDM0LjctMzQuOCAzNC43Yy0zIDMtMyA3LjcgMCAxMC42IDEuNSAxLjUgMy40IDIuMiA1LjMgMi4yczMuOC0uNyA1LjMtMi4ybDQwLTQwYzMtMyAzLTcuNyAwLTEwLjZsLTQwLTQwek0yMzkuNSAzOTZjLTIgMC00IC44LTUuMyAyLjItMS40IDEuNC0yLjIgMy4zLTIuMiA1LjNzLjggNCAyLjIgNS4zYzEuNCAxLjQgMy4zIDIuMiA1LjMgMi4yczQtLjggNS4zLTIuMmMxLjQtMS40IDIuMi0zLjMgMi4yLTUuM3MtLjgtNC0yLjItNS4zYy0xLjQtMS40LTMuMy0yLjItNS4zLTIuMnpNMjYzLjUgMzk2Yy0yIDAtNCAuOC01LjMgMi4yLTEuNCAxLjQtMi4yIDMuMy0yLjIgNS4zcy44IDQgMi4yIDUuM2MxLjQgMS40IDMuMyAyLjIgNS4zIDIuMnM0LS44IDUuMy0yLjJjMS40LTEuNCAyLjItMy4zIDIuMi01LjNzLS44LTQtMi4yLTUuM2MtMS40LTEuNC0zLjMtMi4yLTUuMy0yLjJ6TTIxNS41IDM5NmMtMiAwLTQgLjgtNS4zIDIuMi0xLjQgMS40LTIuMiAzLjMtMi4yIDUuM3MuOCA0IDIuMiA1LjNjMS40IDEuNCAzLjMgMi4yIDUuMyAyLjJzNC0uOCA1LjMtMi4yYzEuNC0xLjQgMi4yLTMuMyAyLjItNS4zcy0uOC00LTIuMi01LjNjLTEuNC0xLjQtMy4zLTIuMi01LjMtMi4yeiIvPgogIDwvZz4KPC9zdmc+Cg=="
-
-;
-var $node = $node || {} ; $node[ "/mol/app/demo/placeholder/technology.svg" ] = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTEgNTExIj4KICA8ZyBmaWxsPSIjNkM5MUNGIiBzdHJva2U9IiM2QzkxQ0YiPgogICAgPHBhdGggZD0iTTQ4Ny41IDI0aC00NjRDMTAuNSAyNCAwIDM0LjUgMCA0Ny41djMwNGMwIDEzIDEwLjUgMjMuNSAyMy41IDIzLjVoMTU4TDE3MCA0MTZoLTM0LjNjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41aDEzNmM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjVoLTg2bDExLjctNDFoNzQuM2M0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjVoLTI0OGMtNC43IDAtOC41LTMuOC04LjUtOC41di0zMDRjMC00LjcgMy44LTguNSA4LjUtOC41aDQ2NGM0LjcgMCA4LjUgMy44IDguNSA4LjV2MzA0YzAgNCAzLjQgNy41IDcuNSA3LjVzNy41LTMuNCA3LjUtNy41di0zMDRjMC0xMy0xMC41LTIzLjUtMjMuNS0yMy41eiIvPgogICAgPHBhdGggZD0iTTQ3MS41IDU2aC00MzJjLTQgMC03LjUgMy40LTcuNSA3LjV2MjcyYzAgNCAzLjQgNy41IDcuNSA3LjVoMjMyYzQgMCA3LjUtMy40IDcuNS03LjVzLTMuNC03LjUtNy41LTcuNUg0N1YxMzVoNDE3djMyLjVjMCA0IDMuNCA3LjUgNy41IDcuNXM3LjUtMy40IDcuNS03LjV2LTEwNGMwLTQtMy40LTcuNS03LjUtNy41ek00NyAxMjBWNzFoNDE3djQ5SDQ3eiIvPgogICAgPHBhdGggZD0iTTM5MS41IDg4aC0yNDBjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41aDI0MGM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjV6TTQzOS41IDg4aC0xNmMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjVoMTZjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41ek03MS41IDg4Yy0yIDAtNCAuOC01LjMgMi4yLTEuNCAxLjQtMi4yIDMuMy0yLjIgNS4zcy44IDQgMi4yIDUuM2MxLjQgMS40IDMuMyAyLjIgNS4zIDIuMnM0LS44IDUuMy0yLjJjMS40LTEuNCAyLjItMy4zIDIuMi01LjNzLS44LTQtMi4yLTUuM2MtMS40LTEuNC0zLjMtMi4yLTUuMy0yLjJ6TTk1LjUgODhjLTIgMC00IC44LTUuMyAyLjItMS40IDEuNC0yLjIgMy4zLTIuMiA1LjNzLjggNCAyLjIgNS4zYzEuNCAxLjQgMy4zIDIuMiA1LjMgMi4yczQtLjggNS4zLTIuMmMxLjQtMS40IDIuMi0zLjMgMi4yLTUuM3MtLjgtNC0yLjItNS4zYy0xLjQtMS40LTMuMy0yLjItNS4zLTIuMnpNMTE5LjUgODhjLTIgMC00IC44LTUuMyAyLjItMS40IDEuNC0yLjIgMy4zLTIuMiA1LjNzLjggNCAyLjIgNS4zYzEuNCAxLjQgMy4zIDIuMiA1LjMgMi4yczQtLjggNS4zLTIuMmMxLjQtMS40IDIuMi0zLjMgMi4yLTUuM3MtLjgtNC0yLjItNS4zYy0xLjQtMS40LTMuMy0yLjItNS4zLTIuMnpNNDU1LjUgMTkyaC0xMzZjLTEzIDAtMjMuNSAxMC41LTIzLjUgMjMuNXYyNDhjMCAxMyAxMC41IDIzLjUgMjMuNSAyMy41aDEzNmMxMyAwIDIzLjUtMTAuNSAyMy41LTIzLjV2LTI0OGMwLTEzLTEwLjUtMjMuNS0yMy41LTIzLjV6TTMxMSAyMzloMTUzdjMzSDMxMXYtMzN6bTAgNDhoMTUzdjE1M0gzMTFWMjg3em04LjUtODBoMTM2YzQuNyAwIDguNSAzLjggOC41IDguNXY4LjVIMzExdi04LjVjMC00LjcgMy44LTguNSA4LjUtOC41em0xMzYgMjY1aC0xMzZjLTQuNyAwLTguNS0zLjgtOC41LTguNVY0NTVoMTUzdjguNWMwIDQuNy0zLjggOC41LTguNSA4LjV6Ii8+CiAgICA8cGF0aCBkPSJNNDE1LjUgMjQ4aC04OGMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjVoODhjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41ek00NDcuNSAyNDhoLThjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41aDhjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41ek04Ny41IDE2MEM3OSAxNjAgNzIgMTY3IDcyIDE3NS41djEwNGMwIDguNSA3IDE1LjUgMTUuNSAxNS41aDEyMGM4LjUgMCAxNS41LTcgMTUuNS0xNS41di0xMDRjMC04LjUtNy0xNS41LTE1LjUtMTUuNWgtMTIwem03MS4zIDY3LjVMMjA4IDE4NHY4N2wtNDkuMi00My41em0tMTEuMy0xMEw5OS4zIDE3NWg5Ni40bC00OC4yIDQyLjV6TTg3IDI3MXYtODdsNDkuMiA0My41TDg3IDI3MXptNjAuNS0zMy41bDQ4LjIgNDIuNUg5OS4zbDQ4LjItNDIuNXpNMjU1LjUgMTc1aDE4NGM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjVoLTE4NGMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjV6TTI3MS41IDIwMGgtMTZjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41aDE2YzQgMCA3LjUtMy40IDcuNS03LjVzLTMuNC03LjUtNy41LTcuNXpNMjcxLjUgMjQwaC0xNmMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjVoMTZjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41ek0yNzEuNSAyODBoLTE2Yy00IDAtNy41IDMuNC03LjUgNy41czMuNCA3LjUgNy41IDcuNWgxNmM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjV6TTQzMS41IDMwNGgtODhjLTguNSAwLTE1LjUgNy0xNS41IDE1LjV2NTZjMCA4LjUgNyAxNS41IDE1LjUgMTUuNWg4OGM4LjUgMCAxNS41LTcgMTUuNS0xNS41di01NmMwLTguNS03LTE1LjUtMTUuNS0xNS41em0tMzAgNDMuNUw0MzIgMzI4djM5bC0zMC41LTE5LjV6bS0xNC05TDM1Ni43IDMxOWg2MS42bC0zMC44IDE5LjZ6TTM0MyAzNjd2LTM5bDMwLjUgMTkuNUwzNDMgMzY3em00NC41LTEwLjZsMzAuOCAxOS42aC02MS42bDMwLjgtMTkuNnpNNDM5LjUgNDA4aC0xMDRjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41aDEwNGM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjV6Ii8+CiAgPC9nPgo8L3N2Zz4K"
-
-;
-var $node = $node || {} ; $node[ "/mol/app/demo/placeholder/programming.svg" ] = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTEgNTExIj4KICA8ZyBmaWxsPSIjNkM5MUNGIj4KICAgIDxwYXRoIGQ9Ik0zOS41IDEwM2MyIDAgNC0uOCA1LjMtMi4yIDEuNC0xLjQgMi4yLTMuMyAyLjItNS4zcy0uOC00LTIuMi01LjNjLTEuNC0xLjQtMy4zLTIuMi01LjMtMi4ycy00IC44LTUuMyAyLjJjLTEuNCAxLjQtMi4yIDMuMy0yLjIgNS4zcy44IDQgMi4yIDUuM2MxLjQgMS40IDMuMyAyLjIgNS4zIDIuMnpNNjMuNSAxMDNjMiAwIDQtLjggNS4zLTIuMiAxLjQtMS40IDIuMi0zLjMgMi4yLTUuM3MtLjgtNC0yLjItNS4zYy0xLjQtMS40LTMuMy0yLjItNS4zLTIuMnMtNCAuOC01LjMgMi4yYy0xLjQgMS40LTIuMiAzLjMtMi4yIDUuM3MuOCA0IDIuMiA1LjNjMS40IDEuNCAzLjMgMi4yIDUuMyAyLjJ6TTg3LjUgMTAzYzIgMCA0LS44IDUuMy0yLjIgMS40LTEuNCAyLjItMy4zIDIuMi01LjNzLS44LTQtMi4yLTUuM2MtMS40LTEuNC0zLjMtMi4yLTUuMy0yLjJzLTQgLjgtNS4zIDIuMmMtMS40IDEuNC0yLjIgMy4zLTIuMiA1LjNzLjggNCAyLjIgNS4zYzEuNCAxLjQgMy4zIDIuMiA1LjMgMi4yek00NTUuNSAxMDNoMTZjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41aC0xNmMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjV6TTQzOS41IDMxMmgtODBjLTEzIDAtMjMuNSAxMC41LTIzLjUgMjMuNXY1NmMwIDEzIDEwLjUgMjMuNSAyMy41IDIzLjVoODBjMTMgMCAyMy41LTEwLjUgMjMuNS0yMy41di01NmMwLTEzLTEwLjUtMjMuNS0yMy41LTIzLjV6bTguNSA3OS41YzAgNC43LTMuOCA4LjUtOC41IDguNWgtODBjLTQuNyAwLTguNS0zLjgtOC41LTguNXYtNTZjMC00LjcgMy44LTguNSA4LjUtOC41aDgwYzQuNyAwIDguNSAzLjggOC41IDguNXY1NnpNMzU5LjUgMjMxYzEzIDAgMjMuNS0xMC41IDIzLjUtMjMuNVMzNzIuNSAxODQgMzU5LjUgMTg0IDMzNiAxOTQuNSAzMzYgMjA3LjVzMTAuNSAyMy41IDIzLjUgMjMuNXptMC0zMmM0LjcgMCA4LjUgMy44IDguNSA4LjVzLTMuOCA4LjUtOC41IDguNS04LjUtMy44LTguNS04LjUgMy44LTguNSA4LjUtOC41eiIvPgogICAgPHBhdGggZD0iTTQyMy41IDM0NGgtNDhjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41aDQ4YzQgMCA3LjUtMy40IDcuNS03LjVzLTMuNC03LjUtNy41LTcuNXpNMzk5LjUgMzY4aC0yNGMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjVoMjRjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41ek0zOS41IDE3NWgxNmM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjVoLTE2Yy00IDAtNy41IDMuNC03LjUgNy41czMuNCA3LjUgNy41IDcuNXpNMzkuNSAyMTVoMTZjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41aC0xNmMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjV6TTYzLjUgMjQwaC04Yy00IDAtNy41IDMuNC03LjUgNy41czMuNCA3LjUgNy41IDcuNWg4YzQgMCA3LjUtMy40IDcuNS03LjVzLTMuNC03LjUtNy41LTcuNXpNMzkuNSAyOTVoMTZjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41aC0xNmMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjV6TTg3LjUgMTc1aDMyYzQgMCA3LjUtMy40IDcuNS03LjVzLTMuNC03LjUtNy41LTcuNWgtMzJjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41ek04Ny41IDI5NWg2NGM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjVoLTY0Yy00IDAtNy41IDMuNC03LjUgNy41czMuNCA3LjUgNy41IDcuNXpNODcuNSAyMTVoODBjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41aC04MGMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjV6TTk1LjUgMjQwYy00IDAtNy41IDMuNC03LjUgNy41czMuNCA3LjUgNy41IDcuNWgzMmM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjVoLTMyek0xOTEgMjQ3LjVjMC00LTMuNC03LjUtNy41LTcuNWgtMjRjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41aDI0YzQgMCA3LjUtMy40IDcuNS03LjV6TTIxNS41IDI0MGMtMiAwLTQgLjgtNS4zIDIuMi0xLjQgMS40LTIuMiAzLjMtMi4yIDUuM3MuOCA0IDIuMiA1LjNjMS40IDEuNCAzLjMgMi4yIDUuMyAyLjJzNC0uOCA1LjMtMi4yYzEuNC0xLjQgMi4yLTMuMyAyLjItNS4zcy0uOC00LTIuMi01LjNjLTEuNC0xLjQtMy4zLTIuMi01LjMtMi4yek0xOTQuMiAzMjIuMmMtMS40IDEuNC0yLjIgMy4zLTIuMiA1LjNzLjggNCAyLjIgNS4zYzEuNCAxLjQgMy4zIDIuMiA1LjMgMi4yczQtLjggNS4zLTIuMmMxLjQtMS40IDIuMi0zLjMgMi4yLTUuM3MtLjgtNC0yLjItNS4zYy0xLjQtMS40LTMuMy0yLjItNS4zLTIuMnMtNCAuOC01LjMgMi4yek02My41IDMyMGgtOGMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjVoOGM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjV6TTE3NSAzMjcuNWMwLTQtMy40LTcuNS03LjUtNy41aC03MmMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjVoNzJjNCAwIDcuNS0zLjQgNy41LTcuNXpNNjMuNSAzNjBoLThjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41aDhjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41ek05NS41IDM2MGMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjVoNDhjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41aC00OHpNMjA3IDM2Ny41YzAtNC0zLjQtNy41LTcuNS03LjVoLTI0Yy00IDAtNy41IDMuNC03LjUgNy41czMuNCA3LjUgNy41IDcuNWgyNGM0IDAgNy41LTMuNCA3LjUtNy41ek01NS41IDQwMGgtMTZjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41aDE2YzQgMCA3LjUtMy40IDcuNS03LjVzLTMuNC03LjUtNy41LTcuNXpNMTExLjUgNDAwaC0yNGMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjVoMjRjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41ek0yMjMuNSA0MDBoLTE2Yy00IDAtNy41IDMuNC03LjUgNy41czMuNCA3LjUgNy41IDcuNWgxNmM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjV6TTE1MS41IDE3NWg2NGM0IDAgNy41LTMuNCA3LjUtNy41cy0zLjQtNy41LTcuNS03LjVoLTY0Yy00IDAtNy41IDMuNC03LjUgNy41czMuNCA3LjUgNy41IDcuNXpNMTc1LjUgNDAwaC0zMmMtNCAwLTcuNSAzLjQtNy41IDcuNXMzLjQgNy41IDcuNSA3LjVoMzJjNCAwIDcuNS0zLjQgNy41LTcuNXMtMy40LTcuNS03LjUtNy41eiIvPgogICAgPHBhdGggZD0iTTQ3MS41IDU2SDI2M1YzOS41YzAtNC0zLjQtNy41LTcuNS03LjVzLTcuNSAzLjQtNy41IDcuNVY1NkgzOS41QzE3LjcgNTYgMCA3My43IDAgOTUuNXYzMjBDMCA0MzcuMyAxNy43IDQ1NSAzOS41IDQ1NUgyNDh2MTYuNWMwIDQgMy40IDcuNSA3LjUgNy41czcuNS0zLjQgNy41LTcuNVY0NTVoMjA4LjVjMjEuOCAwIDM5LjUtMTcuNyAzOS41LTM5LjV2LTMyMGMwLTIxLjgtMTcuNy0zOS41LTM5LjUtMzkuNXptMCAxNUM0ODUgNzEgNDk2IDgyIDQ5NiA5NS41VjEyMEgyNjN2LTE3aDE2MC41YzQgMCA3LjUtMy40IDcuNS03LjVzLTMuNC03LjUtNy41LTcuNUgyNjNWNzFoMjA4LjV6bS00MzIgMEgyNDh2MTdIMTE5LjVjLTQgMC03LjUgMy40LTcuNSA3LjVzMy40IDcuNSA3LjUgNy41SDI0OHYxN0gxNVY5NS41QzE1IDgyIDI2IDcxIDM5LjUgNzF6bTAgMzY5QzI2IDQ0MCAxNSA0MjkgMTUgNDE1LjVWMTM1aDIzM3YzMDVIMzkuNXpNMjYzIDMyN2gzMi41YzQuNyAwIDguNSAzLjggOC41IDguNXY1NmMwIDQuNy0zLjggOC41LTguNSA4LjVIMjYzdi03M3ptMC01Mi40bDQ4LjUtNDguNSA0Mi43IDQyLjhjMyAzIDcuNyAzIDEwLjYgMGw4My4yLTgzLjJ2ODZjMCA0LjYtMy44IDguNC04LjUgOC40SDI2M3YtNS40em05Ni41LTIxLjdMMzE2LjggMjEwYy0zLTMtNy43LTMtMTAuNiAwTDI2MyAyNTMuNFYxNzVoMTc0LjRsLTc4IDc4em0xMTIgMTg3SDI2M3YtMjVoMzIuNWMxMyAwIDIzLjUtMTAuNSAyMy41LTIzLjV2LTU2YzAtMTMtMTAuNS0yMy41LTIzLjUtMjMuNUgyNjN2LTE3aDE3Ni41YzEzIDAgMjMuNS0xMC41IDIzLjUtMjMuNXYtODhjMC0xMy0xMC41LTIzLjUtMjMuNS0yMy41SDI2M3YtMjVoMjMzdjI4MC41YzAgMTMuNS0xMSAyNC41LTI0LjUgMjQuNXoiLz4KICA8L2c+Cjwvc3ZnPgo="
-
+//main.view.tree.js.map
 ;
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -25632,288 +25654,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var $;
 (function ($) {
-    class $mol_app_demo_placeholder extends $.$mol_book_placeholder {
-        /**
-         *  ```
-         *  sub / <= Content
-         *  ```
-         **/
-        sub() {
-            return [this.Content()];
+    var $$;
+    (function ($$) {
+        class $mol_app_demo_main extends $.$mol_app_demo_main {
+            description() {
+                return $.$mol_file.relative('/mol/readme.md').content();
+            }
         }
-        /**
-         *  ```
-         *  Content $mol_card content /
-         *  	<= Title
-         *  	<= Description
-         *  	<= Advantages
-         *  	<= Links
-         *  ```
-         **/
-        Content() {
-            return ((obj) => {
-                obj.content = () => [this.Title(), this.Description(), this.Advantages(), this.Links()];
-                return obj;
-            })(new this.$.$mol_card());
-        }
-        /**
-         *  ```
-         *  Title $mol_view sub /
-         *  	<= Logo
-         *  	<= title
-         *  ```
-         **/
-        Title() {
-            return ((obj) => {
-                obj.sub = () => [this.Logo(), this.title()];
-                return obj;
-            })(new this.$.$mol_view());
-        }
-        /**
-         *  ```
-         *  Logo $mol_icon_mol
-         *  ```
-         **/
-        Logo() {
-            return ((obj) => {
-                return obj;
-            })(new this.$.$mol_icon_mol());
-        }
-        /**
-         *  ```
-         *  title \mol
-         *  ```
-         **/
-        title() {
-            return "mol";
-        }
-        /**
-         *  ```
-         *  Description $mol_view sub / <= description
-         *  ```
-         **/
-        Description() {
-            return ((obj) => {
-                obj.sub = () => [this.description()];
-                return obj;
-            })(new this.$.$mol_view());
-        }
-        /**
-         *  ```
-         *  description @ \Reactive micro-modular ui framework. Very simple, but very powerful! $mol has small size of code, reactive architecture, components with adaptive design, that can be easily configured.
-         *  ```
-         **/
-        description() {
-            return this.$.$mol_locale.text("$mol_app_demo_placeholder_description");
-        }
-        /**
-         *  ```
-         *  Advantages $mol_view sub /
-         *  	<= Technology
-         *  	<= Code
-         *  	<= Programming
-         *  ```
-         **/
-        Advantages() {
-            return ((obj) => {
-                obj.sub = () => [this.Technology(), this.Code(), this.Programming()];
-                return obj;
-            })(new this.$.$mol_view());
-        }
-        /**
-         *  ```
-         *  Technology $mol_app_placeholder_advantage
-         *  	image \mol/app/demo/placeholder/technology.svg
-         *  	title <= technology
-         *  ```
-         **/
-        Technology() {
-            return ((obj) => {
-                obj.image = () => "mol/app/demo/placeholder/technology.svg";
-                obj.title = () => this.technology();
-                return obj;
-            })(new this.$.$mol_app_placeholder_advantage());
-        }
-        /**
-         *  ```
-         *  technology @ \Flexible adaptive interface
-         *  ```
-         **/
-        technology() {
-            return this.$.$mol_locale.text("$mol_app_demo_placeholder_technology");
-        }
-        /**
-         *  ```
-         *  Code $mol_app_placeholder_advantage
-         *  	image \mol/app/demo/placeholder/code_rate.svg
-         *  	title <= code_rate
-         *  ```
-         **/
-        Code() {
-            return ((obj) => {
-                obj.image = () => "mol/app/demo/placeholder/code_rate.svg";
-                obj.title = () => this.code_rate();
-                return obj;
-            })(new this.$.$mol_app_placeholder_advantage());
-        }
-        /**
-         *  ```
-         *  code_rate @ \Quick and easy development
-         *  ```
-         **/
-        code_rate() {
-            return this.$.$mol_locale.text("$mol_app_demo_placeholder_code_rate");
-        }
-        /**
-         *  ```
-         *  Programming $mol_app_placeholder_advantage
-         *  	image \mol/app/demo/placeholder/programming.svg
-         *  	title <= programming
-         *  ```
-         **/
-        Programming() {
-            return ((obj) => {
-                obj.image = () => "mol/app/demo/placeholder/programming.svg";
-                obj.title = () => this.programming();
-                return obj;
-            })(new this.$.$mol_app_placeholder_advantage());
-        }
-        /**
-         *  ```
-         *  programming @ \High-speed applications
-         *  ```
-         **/
-        programming() {
-            return this.$.$mol_locale.text("$mol_app_demo_placeholder_programming");
-        }
-        /**
-         *  ```
-         *  Links $mol_row sub /
-         *  	<= Github_link
-         *  	<= Showcase_link
-         *  ```
-         **/
-        Links() {
-            return ((obj) => {
-                obj.sub = () => [this.Github_link(), this.Showcase_link()];
-                return obj;
-            })(new this.$.$mol_row());
-        }
-        /**
-         *  ```
-         *  Github_link $mol_link_iconed uri \https://github.com/eigenmethod/mol
-         *  ```
-         **/
-        Github_link() {
-            return ((obj) => {
-                obj.uri = () => "https://github.com/eigenmethod/mol";
-                return obj;
-            })(new this.$.$mol_link_iconed());
-        }
-        /**
-         *  ```
-         *  Showcase_link $mol_link_iconed
-         *  	title <= showcase_title
-         *  	uri \https://showcase.hyoo.ru
-         *  ```
-         **/
-        Showcase_link() {
-            return ((obj) => {
-                obj.title = () => this.showcase_title();
-                obj.uri = () => "https://showcase.hyoo.ru";
-                return obj;
-            })(new this.$.$mol_link_iconed());
-        }
-        /**
-         *  ```
-         *  showcase_title @ \Applications showcase
-         *  ```
-         **/
-        showcase_title() {
-            return this.$.$mol_locale.text("$mol_app_demo_placeholder_showcase_title");
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Content", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Title", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Logo", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Description", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Advantages", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Technology", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Code", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Programming", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Links", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Github_link", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_demo_placeholder.prototype, "Showcase_link", null);
-    $.$mol_app_demo_placeholder = $mol_app_demo_placeholder;
+        __decorate([
+            $.$mol_mem
+        ], $mol_app_demo_main.prototype, "description", null);
+        $$.$mol_app_demo_main = $mol_app_demo_main;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-(function ($) {
-    class $mol_app_placeholder_advantage extends $.$mol_view {
-        /**
-         *  ```
-         *  sub /
-         *  	<= Image
-         *  	<= title
-         *  ```
-         **/
-        sub() {
-            return [this.Image(), this.title()];
-        }
-        /**
-         *  ```
-         *  Image $mol_image uri <= image
-         *  ```
-         **/
-        Image() {
-            return ((obj) => {
-                obj.uri = () => this.image();
-                return obj;
-            })(new this.$.$mol_image());
-        }
-        /**
-         *  ```
-         *  image \
-         *  ```
-         **/
-        image() {
-            return "";
-        }
-        /**
-         *  ```
-         *  title \
-         *  ```
-         **/
-        title() {
-            return "";
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_app_placeholder_advantage.prototype, "Image", null);
-    $.$mol_app_placeholder_advantage = $mol_app_placeholder_advantage;
-})($ || ($ = {}));
-//placeholder.view.tree.js.map
+//main.view.js.map
 ;
 "use strict";
 var $;
@@ -28870,13 +28624,22 @@ var $;
         }
         /**
          *  ```
-         *  Placeholder $mol_app_demo_placeholder
+         *  Placeholder null
          *  ```
          **/
         Placeholder() {
+            return null;
+        }
+        /**
+         *  ```
+         *  Main $mol_app_demo_main event_top?event <=> event_front_up?event
+         *  ```
+         **/
+        Main() {
             return ((obj) => {
+                obj.event_top = (event) => this.event_front_up(event);
                 return obj;
-            })(new this.$.$mol_app_demo_placeholder());
+            })(new this.$.$mol_app_demo_main());
         }
         /**
          *  ```
@@ -28911,6 +28674,7 @@ var $;
          *  	option!id <= nav_option!id
          *  	filter?val <=> filter_string?val
          *  	theme?val <=> theme?val
+         *  	event_top?event <=> event_front_up?event
          *  ```
          **/
         Menu() {
@@ -28919,6 +28683,7 @@ var $;
                 obj.option = (id) => this.nav_option(id);
                 obj.filter = (val) => this.filter_string(val);
                 obj.theme = (val) => this.theme(val);
+                obj.event_top = (event) => this.event_front_up(event);
                 return obj;
             })(new this.$.$mol_app_demo_menu());
         }
@@ -29132,7 +28897,7 @@ var $;
     }
     __decorate([
         $.$mol_mem
-    ], $mol_app_demo.prototype, "Placeholder", null);
+    ], $mol_app_demo.prototype, "Main", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo.prototype, "Menu", null);
@@ -29675,10 +29440,10 @@ var $;
                     else
                         sub.push(this.Detail());
                 }
+                else {
+                    sub.push(this.Main());
+                }
                 return sub;
-            }
-            Placeholder() {
-                return this.selected() ? null : super.Placeholder();
             }
             main_content() {
                 const names = this.names_demo();

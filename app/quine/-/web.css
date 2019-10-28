@@ -597,7 +597,7 @@ sans-serif;
 
 [mol_link_iconed_icon] {
 	box-shadow: none;
-	margin-right: 1px;
+	margin-right: 2px;
 	height: 1em;
 	vertical-align: -10%;
 }
@@ -696,7 +696,6 @@ monospace;
 
 [mol_text_link]:hover ,
 [mol_text_link]:focus {
-	text-decoration: underline;
 	outline: none;
 }
 

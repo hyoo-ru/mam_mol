@@ -149,15 +149,13 @@ namespace $.$$ {
 			if( this.selected() ) {
 				if( this.editing() && this.names_demo().length === 1 ) sub.push( ... this.Editor( this.selected() ).pages() )
 				else sub.push( this.Detail() )
+			} else {
+				sub.push( this.Main() )
 			}
 			
 			return sub
 		}
 
-		Placeholder() {
-			return this.selected() ? ( null as any as $mol_app_demo_placeholder ) : super.Placeholder()
-		}
-		
 		@ $mol_mem 
 		main_content() {
 			const names = this.names_demo()

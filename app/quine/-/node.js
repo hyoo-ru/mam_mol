@@ -5354,7 +5354,7 @@ var $;
     (function ($$) {
         class $mol_link_iconed extends $.$mol_link_iconed {
             icon() {
-                return `https://favicon.yandex.net/favicon/${this.host()}?color=0,0,255,0&size=32`;
+                return `https://favicon.yandex.net/favicon/${this.host()}?color=0,0,0,0&size=32&stub=1`;
             }
             host() {
                 const url = new URL(this.uri());
@@ -6013,7 +6013,7 @@ var $;
                     const id = `${prefix}/${index}`;
                     switch (token.name) {
                         case 'text-link': {
-                            if (/^#|(\w+script+:)+/.test(token.chunks[1])) {
+                            if (/^(\w+script+:)+/.test(token.chunks[1])) {
                                 const span = this.Span(id);
                                 span.content(this.text2spans(id, token.chunks[0]));
                                 return span;

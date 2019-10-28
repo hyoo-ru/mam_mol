@@ -12339,181 +12339,39 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_icon_mol extends $mol_icon {
+    class $mol_app_demo_main extends $mol_page {
         /**
          *  ```
-         *  view_box \-39 0 287 326
+         *  minimal_width 400
          *  ```
          **/
-        view_box(): string;
+        minimal_width(): number;
         /**
          *  ```
-         *  path \M183.9,224.1c-4.6,0-8.8,1.3-12.5,3.4l-60.8-66.5V48.9c4.3-1.1,8.2-3.3,11.3-6.3l36.8,26.8c-0.7,2.3-1.1,4.8-1.1,7.4c0,13.7,11.1,24.8,24.8,24.8s24.8-11.1,24.8-24.8S196.2,52,182.5,52c-6.4,0-12.3,2.5-16.7,6.5l-37.2-27.1c0.6-2.1,0.9-4.3,0.9-6.5c0-13.7-11.1-24.8-24.8-24.8S79.9,11.1,79.9,24.8c0,2.6,0.4,5.1,1.2,7.5L42.3,59.2C37.8,54.7,31.6,52,24.8,52C11.1,52,0,63.1,0,76.8s11.1,24.8,24.8,24.8c4.1,0,8-1,11.5-2.8L97.7,166v110.9c-4.2,1.1-8,3.3-11,6.2l-36.8-26.8c0.7-2.3,1.1-4.8,1.1-7.4c0-13.7-11.1-24.8-24.8-24.8S1.4,235.2,1.4,248.9s11.1,24.8,24.8,24.8c6.4,0,12.3-2.5,16.7-6.5l37.2,27.1c-0.6,2.1-0.9,4.3-0.9,6.5c0,13.7,11.1,24.8,24.8,24.8s24.8-11.1,24.8-24.8c0-2.6-0.4-5.1-1.2-7.5l38.8-26.9c4.5,4.5,10.7,7.2,17.5,7.2c13.7,0,24.8-11.1,24.8-24.8S197.6,224.1,183.9,224.1z M182.5,64.9c6.5,0,11.9,5.3,11.9,11.9c0,6.5-5.3,11.9-11.9,11.9c-6.5,0-11.9-5.3-11.9-11.9C170.6,70.2,175.9,64.9,182.5,64.9z M104.7,12.9c6.5,0,11.9,5.3,11.9,11.9c0,6.5-5.3,11.9-11.9,11.9c-6.5,0-11.9-5.3-11.9-11.9C92.8,18.3,98.1,12.9,104.7,12.9z M24.8,88.6c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9s11.9,5.3,11.9,11.9C36.7,83.3,31.3,88.6,24.8,88.6z M45.8,89.9c2.4-3.8,3.8-8.3,3.8-13.2c0-2.2-0.3-4.3-0.8-6.3l39.3-27.3c2.7,2.5,6,4.4,9.6,5.4v98.2L45.8,89.9z M162.3,236.7c-2,3.6-3.2,7.8-3.2,12.2c0,2.2,0.3,4.3,0.9,6.3l-39.3,27.3c-2.8-2.6-6.2-4.5-10-5.5v-96.8L162.3,236.7z M26.2,260.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C38.1,255.4,32.8,260.7,26.2,260.7z M104,312.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C115.9,307.4,110.5,312.7,104,312.7z M183.9,260.7c-6.5,0-11.9-5.3-11.9-11.9c0-6.5,5.3-11.9,11.9-11.9c6.5,0,11.9,5.3,11.9,11.9C195.7,255.4,190.4,260.7,183.9,260.7z
+         *  body / <= Description
          *  ```
          **/
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_app_demo_placeholder extends $mol_book_placeholder {
+        body(): readonly any[];
         /**
          *  ```
-         *  sub / <= Content
+         *  Description $mol_text
+         *  	text <= description
+         *  	uri_base \https://github.com/eigenmethod/mol/
          *  ```
          **/
-        sub(): readonly any[];
+        Description(): $$.$mol_text;
         /**
          *  ```
-         *  Content $mol_card content /
-         *  	<= Title
-         *  	<= Description
-         *  	<= Advantages
-         *  	<= Links
-         *  ```
-         **/
-        Content(): $$.$mol_card;
-        /**
-         *  ```
-         *  Title $mol_view sub /
-         *  	<= Logo
-         *  	<= title
-         *  ```
-         **/
-        Title(): $mol_view;
-        /**
-         *  ```
-         *  Logo $mol_icon_mol
-         *  ```
-         **/
-        Logo(): $mol_icon_mol;
-        /**
-         *  ```
-         *  title \mol
-         *  ```
-         **/
-        title(): string;
-        /**
-         *  ```
-         *  Description $mol_view sub / <= description
-         *  ```
-         **/
-        Description(): $mol_view;
-        /**
-         *  ```
-         *  description @ \Reactive micro-modular ui framework. Very simple, but very powerful! $mol has small size of code, reactive architecture, components with adaptive design, that can be easily configured.
+         *  description \
          *  ```
          **/
         description(): string;
-        /**
-         *  ```
-         *  Advantages $mol_view sub /
-         *  	<= Technology
-         *  	<= Code
-         *  	<= Programming
-         *  ```
-         **/
-        Advantages(): $mol_view;
-        /**
-         *  ```
-         *  Technology $mol_app_placeholder_advantage
-         *  	image \mol/app/demo/placeholder/technology.svg
-         *  	title <= technology
-         *  ```
-         **/
-        Technology(): $mol_app_placeholder_advantage;
-        /**
-         *  ```
-         *  technology @ \Flexible adaptive interface
-         *  ```
-         **/
-        technology(): string;
-        /**
-         *  ```
-         *  Code $mol_app_placeholder_advantage
-         *  	image \mol/app/demo/placeholder/code_rate.svg
-         *  	title <= code_rate
-         *  ```
-         **/
-        Code(): $mol_app_placeholder_advantage;
-        /**
-         *  ```
-         *  code_rate @ \Quick and easy development
-         *  ```
-         **/
-        code_rate(): string;
-        /**
-         *  ```
-         *  Programming $mol_app_placeholder_advantage
-         *  	image \mol/app/demo/placeholder/programming.svg
-         *  	title <= programming
-         *  ```
-         **/
-        Programming(): $mol_app_placeholder_advantage;
-        /**
-         *  ```
-         *  programming @ \High-speed applications
-         *  ```
-         **/
-        programming(): string;
-        /**
-         *  ```
-         *  Links $mol_row sub /
-         *  	<= Github_link
-         *  	<= Showcase_link
-         *  ```
-         **/
-        Links(): $$.$mol_row;
-        /**
-         *  ```
-         *  Github_link $mol_link_iconed uri \https://github.com/eigenmethod/mol
-         *  ```
-         **/
-        Github_link(): $$.$mol_link_iconed;
-        /**
-         *  ```
-         *  Showcase_link $mol_link_iconed
-         *  	title <= showcase_title
-         *  	uri \https://showcase.hyoo.ru
-         *  ```
-         **/
-        Showcase_link(): $$.$mol_link_iconed;
-        /**
-         *  ```
-         *  showcase_title @ \Applications showcase
-         *  ```
-         **/
-        showcase_title(): string;
     }
 }
-declare namespace $ {
-    class $mol_app_placeholder_advantage extends $mol_view {
-        /**
-         *  ```
-         *  sub /
-         *  	<= Image
-         *  	<= title
-         *  ```
-         **/
-        sub(): readonly any[];
-        /**
-         *  ```
-         *  Image $mol_image uri <= image
-         *  ```
-         **/
-        Image(): $mol_image;
-        /**
-         *  ```
-         *  image \
-         *  ```
-         **/
-        image(): string;
-        /**
-         *  ```
-         *  title \
-         *  ```
-         **/
-        title(): string;
+
+declare namespace $.$$ {
+    class $mol_app_demo_main extends $.$mol_app_demo_main {
+        description(): string;
     }
 }
 
@@ -13690,10 +13548,16 @@ declare namespace $ {
         source_prefix(): string;
         /**
          *  ```
-         *  Placeholder $mol_app_demo_placeholder
+         *  Placeholder null
          *  ```
          **/
-        Placeholder(): $mol_app_demo_placeholder;
+        Placeholder(): any;
+        /**
+         *  ```
+         *  Main $mol_app_demo_main event_top?event <=> event_front_up?event
+         *  ```
+         **/
+        Main(): $$.$mol_app_demo_main;
         /**
          *  ```
          *  pages <= blocks
@@ -13721,6 +13585,7 @@ declare namespace $ {
          *  	option!id <= nav_option!id
          *  	filter?val <=> filter_string?val
          *  	theme?val <=> theme?val
+         *  	event_top?event <=> event_front_up?event
          *  ```
          **/
         Menu(): $mol_app_demo_menu;
@@ -14094,7 +13959,6 @@ declare namespace $.$$ {
         Widget(): Record<string, $mol_view>;
         names_demo(): string[];
         blocks(): $mol_view[];
-        Placeholder(): $mol_app_demo_placeholder;
         main_content(): $mol_view[] | $mol_status[];
         logo_uri(): string;
         source_link(): string;

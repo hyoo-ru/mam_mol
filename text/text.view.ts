@@ -86,7 +86,7 @@ namespace $.$$ {
 				
 				switch( token.name ) {
 					case 'text-link' : {
-						if( /^#|(\w+script+:)+/.test( token.chunks[ 1 ] ) ) {
+						if( /^(\w+script+:)+/.test( token.chunks[ 1 ] ) ) {
 							const span = this.Span( id )
 							span.content( this.text2spans( id , token.chunks[ 0 ] ) )
 							return span

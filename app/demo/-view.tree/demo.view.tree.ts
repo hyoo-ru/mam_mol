@@ -29,14 +29,24 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 
 	/**
 	 *  ```
-	 *  Placeholder $mol_app_demo_placeholder
+	 *  Placeholder null
+	 *  ```
+	 **/
+	Placeholder() {
+		return null as any
+	}
+
+	/**
+	 *  ```
+	 *  Main $mol_app_demo_main event_top?event <=> event_front_up?event
 	 *  ```
 	 **/
 	@ $mol_mem
-	Placeholder() {
+	Main() {
 		return (( obj )=>{
+			obj.event_top = ( event? : any ) => this.event_front_up( event )
 			return obj
-		})( new this.$.$mol_app_demo_placeholder(  ) )
+		})( new this.$.$mol_app_demo_main(  ) )
 	}
 
 	/**
@@ -75,6 +85,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	 *  	option!id <= nav_option!id
 	 *  	filter?val <=> filter_string?val
 	 *  	theme?val <=> theme?val
+	 *  	event_top?event <=> event_front_up?event
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -84,6 +95,7 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 			obj.option = ( id : any ) => this.nav_option(id)
 			obj.filter = ( val? : any ) => this.filter_string( val )
 			obj.theme = ( val? : any ) => this.theme( val )
+			obj.event_top = ( event? : any ) => this.event_front_up( event )
 			return obj
 		})( new this.$.$mol_app_demo_menu(  ) )
 	}
