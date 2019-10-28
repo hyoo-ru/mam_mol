@@ -14,6 +14,7 @@
 	align-self: stretch;
 }
 
+[mol_app_demo_main],
 [mol_app_demo_detail],
 [mol_app_empty_message] {
 	flex: 1000 1 600px;

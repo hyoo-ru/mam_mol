@@ -83,7 +83,6 @@
 
 [mol_text_link]:hover ,
 [mol_text_link]:focus {
-	text-decoration: underline;
 	outline: none;
 }
 
