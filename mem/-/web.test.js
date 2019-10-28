@@ -490,7 +490,7 @@ var $;
                     if (!$mol_compare_deep(a_next.value, b_next.value))
                         return result = false;
                 }
-                return true;
+                return result = true;
             }
             let count = 0;
             for (let key in a) {
@@ -501,7 +501,7 @@ var $;
             for (let key in b) {
                 --count;
                 if (count < 0)
-                    return false;
+                    return result = false;
             }
             const a_val = a['valueOf']();
             if (Object.is(a_val, a))
