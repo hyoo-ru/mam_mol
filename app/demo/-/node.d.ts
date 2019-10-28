@@ -12304,6 +12304,26 @@ declare namespace $ {
         title(): string;
         /**
          *  ```
+         *  project_uri \https://github.com/eigenmethod/mol/
+         *  ```
+         **/
+        project_uri(): string;
+        /**
+         *  ```
+         *  tools / <= Project
+         *  ```
+         **/
+        tools(): readonly any[];
+        /**
+         *  ```
+         *  Project $mol_link_iconed
+         *  	uri <= project_uri
+         *  	title \
+         *  ```
+         **/
+        Project(): $$.$mol_link_iconed;
+        /**
+         *  ```
          *  body / <= Description
          *  ```
          **/
@@ -12312,7 +12332,7 @@ declare namespace $ {
          *  ```
          *  Description $mol_text
          *  	text <= description
-         *  	uri_base \https://github.com/eigenmethod/mol/
+         *  	uri_base <= project_uri
          *  ```
          **/
         Description(): $$.$mol_text;

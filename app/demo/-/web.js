@@ -25617,6 +25617,36 @@ var $;
         }
         /**
          *  ```
+         *  project_uri \https://github.com/eigenmethod/mol/
+         *  ```
+         **/
+        project_uri() {
+            return "https://github.com/eigenmethod/mol/";
+        }
+        /**
+         *  ```
+         *  tools / <= Project
+         *  ```
+         **/
+        tools() {
+            return [this.Project()];
+        }
+        /**
+         *  ```
+         *  Project $mol_link_iconed
+         *  	uri <= project_uri
+         *  	title \
+         *  ```
+         **/
+        Project() {
+            return ((obj) => {
+                obj.uri = () => this.project_uri();
+                obj.title = () => "";
+                return obj;
+            })(new this.$.$mol_link_iconed());
+        }
+        /**
+         *  ```
          *  body / <= Description
          *  ```
          **/
@@ -25627,13 +25657,13 @@ var $;
          *  ```
          *  Description $mol_text
          *  	text <= description
-         *  	uri_base \https://github.com/eigenmethod/mol/
+         *  	uri_base <= project_uri
          *  ```
          **/
         Description() {
             return ((obj) => {
                 obj.text = () => this.description();
-                obj.uri_base = () => "https://github.com/eigenmethod/mol/";
+                obj.uri_base = () => this.project_uri();
                 return obj;
             })(new this.$.$mol_text());
         }
@@ -25646,6 +25676,9 @@ var $;
             return "";
         }
     }
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_main.prototype, "Project", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_main.prototype, "Description", null);

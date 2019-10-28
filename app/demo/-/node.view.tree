@@ -2200,10 +2200,15 @@ $mol_textarea_demo $mol_demo_small
 $mol_app_demo_main $mol_page
 	minimal_width 400
 	title \$mol libs for web ui
+	project_uri \https://github.com/eigenmethod/mol/
+	tools /
+		<= Project $mol_link_iconed
+			uri <= project_uri
+			title \
 	body /
 		<= Description $mol_text
 			text <= description \
-			uri_base \https://github.com/eigenmethod/mol/
+			uri_base <= project_uri
 
 $mol_icon_source $mol_icon path \M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z
 
