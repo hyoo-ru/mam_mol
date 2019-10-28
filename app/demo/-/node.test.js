@@ -25453,7 +25453,7 @@ var $;
     (function ($$) {
         class $mol_app_demo_main extends $.$mol_app_demo_main {
             description() {
-                return $.$mol_file.relative('/mol/readme.md').content();
+                return $.$mol_file.relative('mol/readme.md').content();
             }
         }
         __decorate([
