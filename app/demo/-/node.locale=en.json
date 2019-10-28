@@ -3,7 +3,7 @@
 	"$mol_app_demo_detail_empty_prefix": "No one demo with prefix \"",
 	"$mol_app_demo_menu_theme_dark_title": "Dark theme",
 	"$mol_app_demo_menu_theme_light_title": "Light theme",
-	"$mol_app_demo_menu_title": "$mol demonstrations",
+	"$mol_app_demo_menu_title": "Demos",
 	"$mol_app_studio_editor_title": "Properties",
 	"$mol_app_studio_field_add_hint": "Add item..",
 	"$mol_app_studio_field_add_over_hint": "Add override..",

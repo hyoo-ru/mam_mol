@@ -4,7 +4,7 @@
 	"$mol_app_bench_sandbox_title": "Песочница",
 	"$mol_app_demo_detail_empty_postfix": "\" ни одного демо не найдено",
 	"$mol_app_demo_detail_empty_prefix": "По префиксу \"",
-	"$mol_app_demo_menu_title": "$mol демонстрации",
+	"$mol_app_demo_menu_title": "Демки",
 	"$mol_app_studio_editor_title": "Свойства",
 	"$mol_app_studio_field_bind_hint": "Свойство...",
 	"$mol_app_studio_field_object_hint": "Класс...",

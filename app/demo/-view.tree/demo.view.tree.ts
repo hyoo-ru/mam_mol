@@ -352,7 +352,7 @@ namespace $ { export class $mol_app_demo_menu extends $mol_page {
 
 	/**
 	 *  ```
-	 *  title @ \$mol demonstrations
+	 *  title @ \Demos
 	 *  ```
 	 **/
 	title() {

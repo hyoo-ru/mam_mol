@@ -47,7 +47,7 @@ $mol_app_demo $mol_book
 			
 $mol_app_demo_menu $mol_page
 	minimal_width 240
-	title @ \$mol demonstrations
+	title @ \Demos
 	sub /
 		<= Head
 		<= Filter $mol_search

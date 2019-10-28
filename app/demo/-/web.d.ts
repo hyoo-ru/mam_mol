@@ -12348,6 +12348,12 @@ declare namespace $ {
         minimal_width(): number;
         /**
          *  ```
+         *  title \$mol libs for web ui
+         *  ```
+         **/
+        title(): string;
+        /**
+         *  ```
          *  body / <= Description
          *  ```
          **/
@@ -13737,7 +13743,7 @@ declare namespace $ {
         minimal_width(): number;
         /**
          *  ```
-         *  title @ \$mol demonstrations
+         *  title @ \Demos
          *  ```
          **/
         title(): string;

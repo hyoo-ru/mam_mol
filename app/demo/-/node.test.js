@@ -25404,6 +25404,14 @@ var $;
         }
         /**
          *  ```
+         *  title \$mol libs for web ui
+         *  ```
+         **/
+        title() {
+            return "$mol libs for web ui";
+        }
+        /**
+         *  ```
          *  body / <= Description
          *  ```
          **/
@@ -28905,7 +28913,7 @@ var $;
         }
         /**
          *  ```
-         *  title @ \$mol demonstrations
+         *  title @ \Demos
          *  ```
          **/
         title() {

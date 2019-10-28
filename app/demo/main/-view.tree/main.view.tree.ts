@@ -11,6 +11,15 @@ namespace $ { export class $mol_app_demo_main extends $mol_page {
 
 	/**
 	 *  ```
+	 *  title \$mol libs for web ui
+	 *  ```
+	 **/
+	title() {
+		return "$mol libs for web ui"
+	}
+
+	/**
+	 *  ```
 	 *  body / <= Description
 	 *  ```
 	 **/
