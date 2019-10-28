@@ -49,6 +49,7 @@ var $;
 (function ($) {
     const a_stack = [];
     const b_stack = [];
+    let cache = null;
     function $mol_compare_deep(a, b) {
         if (Object.is(a, b))
             return true;
@@ -72,8 +73,21 @@ var $;
         if (ref >= 0) {
             return Object.is(b_stack[ref], b);
         }
+        if (!cache)
+            cache = new WeakMap;
+        let a_cache = cache.get(a);
+        if (a_cache) {
+            const b_cache = a_cache.get(b);
+            if (typeof b_cache === 'boolean')
+                return b_cache;
+        }
+        else {
+            a_cache = new WeakMap();
+            cache.set(a, a_cache);
+        }
         a_stack.push(a);
         b_stack.push(b);
+        let result;
         try {
             if (a[Symbol.iterator]) {
                 const a_iter = a[Symbol.iterator]();
@@ -82,34 +96,42 @@ var $;
                     const a_next = a_iter.next();
                     const b_next = b_iter.next();
                     if (a_next.done !== a_next.done)
-                        return false;
+                        return result = false;
                     if (a_next.done)
                         break;
                     if (!$mol_compare_deep(a_next.value, b_next.value))
-                        return false;
+                        return result = false;
                 }
                 return true;
             }
             let count = 0;
             for (let key in a) {
                 if (!$mol_compare_deep(a[key], b[key]))
-                    return false;
+                    return result = false;
                 ++count;
             }
-            for (let _ in b)
-                if (--count < 0)
+            for (let key in b) {
+                --count;
+                if (count < 0)
                     return false;
+            }
             const a_val = a['valueOf']();
             if (Object.is(a_val, a))
-                return true;
+                return result = true;
             const b_val = b['valueOf']();
             if (!Object.is(a_val, b_val))
-                return false;
-            return true;
+                return result = false;
+            return result = true;
         }
         finally {
             a_stack.pop();
             b_stack.pop();
+            if (a_stack.length === 0) {
+                cache = null;
+            }
+            else {
+                a_cache.set(b, result);
+            }
         }
     }
     $.$mol_compare_deep = $mol_compare_deep;

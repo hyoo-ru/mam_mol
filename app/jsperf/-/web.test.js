@@ -332,6 +332,10 @@ var $;
                 "foo",
                 $.$mol_jsx_make("hr", null))));
         },
+        'Element with handlers'() {
+            $.$mol_assert_ok($.$mol_compare_deep($.$mol_jsx_make("div", { onclick: () => 1 }), $.$mol_jsx_make("div", { onclick: () => 1 })));
+            $.$mol_assert_not($.$mol_compare_deep($.$mol_jsx_make("div", { onclick: () => 1 }), $.$mol_jsx_make("div", { onclick: () => 2 })));
+        },
         'Date'() {
             $.$mol_assert_ok($.$mol_compare_deep(new Date(12345), new Date(12345)));
             $.$mol_assert_not($.$mol_compare_deep(new Date(12345), new Date(12346)));

@@ -98,6 +98,11 @@ namespace $ {
 			$mol_assert_not( $mol_compare_deep( <div>foo<br/></div> , <div>foo<hr/></div> ) )
 		} ,
 		
+		'Element with handlers'() {
+			$mol_assert_ok( $mol_compare_deep( <div onclick={ ()=> 1 } /> , <div onclick={ ()=> 1 } /> ) )
+			$mol_assert_not( $mol_compare_deep( <div onclick={ ()=> 1 } /> , <div onclick={ ()=> 2 } /> ) )
+		} ,
+		
 		'Date'() {
 			$mol_assert_ok( $mol_compare_deep( new Date( 12345 ) , new Date( 12345 ) ) )
 			$mol_assert_not( $mol_compare_deep( new Date( 12345 ) , new Date( 12346 ) ) )
