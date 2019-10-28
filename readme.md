@@ -4,6 +4,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Contents
 
+- [Levels](#levels)
 - [Features](#features)
 - [Applications](https://showcase.hyoo.ru/)
 - [Benchmarks](#benchmarks)
@@ -17,6 +18,13 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Contributors](#contributors)
 - [Cool stuff](#cool-stuff)
 - [Donate](#donate)
+
+# Levels
+
+1. **Library.** $mol is just set of small libs. Honor libs: jQuery, React, Redux, MobX.
+2. **Low level framework.** $mol very flexible, but simple. Honor low fw: Angular, Vue, Ember.
+3. **high level framework.** $mol has many costomizable ui components. Honor high fw: Ext, OpenUI5.
+4. **Platform.** $mol doesn't fit it yet. Honor platforms: Drupal, SAP, 1C.
 
 # Features
 
