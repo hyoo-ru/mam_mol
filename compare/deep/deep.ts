@@ -48,7 +48,7 @@ namespace $ {
 		a_stack.push( a )
 		b_stack.push( b )
 
-		let result : boolean
+		let result! : boolean
 
 		try {
 
@@ -69,7 +69,7 @@ namespace $ {
 
 				}
 
-				return true
+				return result = true
 
 			}
 
@@ -87,7 +87,7 @@ namespace $ {
 
 				--count
 				
-				if( count < 0 ) return false
+				if( count < 0 ) return result = false
 				
 			}
 	
