@@ -4036,7 +4036,7 @@ var $;
                     version: '0.0.0',
                     main: 'node.js',
                     module: 'node.esm.js',
-                    browser: 'web.esm.js',
+                    browser: 'web.js',
                     types: 'web.d.ts',
                     dependencies: {}
                 };
