@@ -16,9 +16,9 @@ declare namespace $ {
 declare namespace $ {
     class $mol_object2 extends Object {
         static $: $mol_ambient_context;
-        static readonly $$: $mol_ambient_context;
+        static get $$(): $mol_ambient_context;
         $: typeof $mol_object2.$;
-        readonly $$: $mol_ambient_context;
+        get $$(): $mol_ambient_context;
         constructor(init?: (obj: any) => void);
         static make<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: Instance) => void): Instance;
         static toString(): any;
@@ -33,8 +33,8 @@ declare namespace $ {
         static wrap: (task: (...ags: any[]) => any) => (...ags: any[]) => any;
         static run<Result>(task: () => Result): Result;
         static func<Args extends any[], Result, Host = void>(func: (this: Host, ...args: Args) => Result): (this: Host, ...args: Args) => Result;
-        static readonly class: <Class extends new (...args: any[]) => any>(Class: Class) => Class;
-        static readonly method: <Host, Field extends keyof Host, Args extends any[], Result>(obj: Host, name: Field, descr: TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>) => TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>;
+        static get class(): <Class extends new (...args: any[]) => any>(Class: Class) => Class;
+        static get method(): <Host, Field extends keyof Host, Args extends any[], Result>(obj: Host, name: Field, descr: TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>) => TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>;
     }
 }
 
@@ -222,7 +222,8 @@ declare namespace $ {
         update(): void;
         get(): Value;
         limit(): void;
-        master: $mol_fiber;
+        get master(): $mol_fiber;
+        set master(next: $mol_fiber);
         rescue(master: $mol_fiber, master_index: number): void;
         obey(master: $mol_fiber, master_index: number): number;
         lead(slave: $mol_fiber, master_index: number): number;
@@ -260,7 +261,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_atom2_value<Value>(task: () => Value): Value;
     class $mol_atom2<Value = any> extends $mol_fiber<Value> {
-        static readonly current: $mol_atom2<any>;
+        static get current(): $mol_atom2<any>;
         static cached: boolean;
         static reap_task: $mol_fiber<any>;
         static reap_queue: $mol_atom2<any>[];
@@ -270,9 +271,11 @@ declare namespace $ {
         get(): Value;
         pull(): void | Value;
         _value: Value;
-        value: Value;
+        get value(): Value;
+        set value(next: Value);
         _error: Error | PromiseLike<Value>;
-        error: null | Error | PromiseLike<Value>;
+        get error(): null | Error | PromiseLike<Value>;
+        set error(next: null | Error | PromiseLike<Value>);
         put(next: Value): Value;
         complete_master(master_index: number): void;
         obey(master: $mol_fiber, master_index: number): number;
@@ -282,9 +285,9 @@ declare namespace $ {
         doubt(master_index?: number): void;
         obsolete_slaves(): void;
         doubt_slaves(): void;
-        readonly fresh: (this: void) => void;
-        readonly alone: boolean;
-        readonly derived: boolean;
+        get fresh(): (this: void) => void;
+        get alone(): boolean;
+        get derived(): boolean;
         destructor(): void;
     }
     let $mol_atom2_token_revalidation: $mol_log2_token;
@@ -312,10 +315,11 @@ declare namespace $ {
     const $mol_object_field: unique symbol;
     class $mol_object extends Object {
         static $: $mol_ambient_context;
-        static readonly $$: $mol_ambient_context;
+        static get $$(): $mol_ambient_context;
         _$: $mol_ambient_context;
-        $: $mol_ambient_context;
-        readonly $$: $mol_ambient_context;
+        get $(): $mol_ambient_context;
+        set $(next: $mol_ambient_context);
+        get $$(): $mol_ambient_context;
         static make<Instance>(this: {
             new (): Instance;
         }, config: Partial<Instance>): Instance;
@@ -838,7 +842,7 @@ declare namespace $.$$ {
         scroll_bottom(next?: number): number;
         scroll_right(next?: number): number;
         event_scroll(next?: Event): void;
-        readonly $$: $mol_ambient_context;
+        get $$(): $mol_ambient_context;
         strut_transform(): string;
         sub_visible(): readonly (string | number | boolean | Node | $mol_view)[];
     }
@@ -1402,28 +1406,28 @@ declare namespace $ {
     }
     class $mol_vector_1d<Value> extends $mol_vector<Value, 1> {
         [0]: Value;
-        readonly x: Value;
+        get x(): Value;
     }
     class $mol_vector_2d<Value> extends $mol_vector<Value, 2> {
         [0]: Value;
         [1]: Value;
-        readonly x: Value;
-        readonly y: Value;
+        get x(): Value;
+        get y(): Value;
     }
     class $mol_vector_3d<Value> extends $mol_vector<Value, 3> {
         [0]: Value;
         [1]: Value;
         [2]: Value;
-        readonly x: Value;
-        readonly y: Value;
-        readonly z: Value;
+        get x(): Value;
+        get y(): Value;
+        get z(): Value;
     }
     class $mol_vector_range<Value> extends $mol_vector<Value, 2> {
         [0]: Value;
         [1]: Value;
-        readonly min: Value;
-        readonly max: Value;
-        readonly inversed: $mol_vector_range<Value>;
+        get min(): Value;
+        get max(): Value;
+        get inversed(): $mol_vector_range<Value>;
         expanded0(value: Value): $mol_vector_range<Value>;
     }
     let $mol_vector_range_full: $mol_vector_range<number>;
@@ -1992,7 +1996,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_touch extends $.$mol_touch {
-        rect(): ClientRect | DOMRect;
+        rect(): DOMRect;
         event_start(event: TouchEvent | MouseEvent): void;
         event_leave(event: TouchEvent | MouseEvent): void;
         event_move(event: TouchEvent | MouseEvent): void;
@@ -3241,11 +3245,11 @@ declare namespace $ {
         readonly minute: number | undefined;
         readonly second: number | undefined;
         readonly offset: $mol_time_duration | undefined;
-        readonly weekday: number;
+        get weekday(): number;
         private _native;
-        readonly native: Date;
+        get native(): Date;
         private _normal;
-        readonly normal: $mol_time_moment;
+        get normal(): $mol_time_moment;
         merge(config: $mol_time_moment_config): $mol_time_moment;
         shift(config: $mol_time_duration_config): $mol_time_moment;
         toOffset(config: $mol_time_duration_config): $mol_time_moment;
@@ -3295,11 +3299,11 @@ declare namespace $ {
     class $mol_time_interval extends $mol_time_base {
         constructor(config: $mol_time_interval_config);
         private _start;
-        readonly start: $mol_time_moment;
+        get start(): $mol_time_moment;
         private _end;
-        readonly end: $mol_time_moment;
+        get end(): $mol_time_moment;
         private _duration;
-        readonly duration: $mol_time_duration;
+        get duration(): $mol_time_duration;
         toJSON(): string;
         toString(): string;
     }

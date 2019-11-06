@@ -16,9 +16,9 @@ declare namespace $ {
 declare namespace $ {
     class $mol_object2 extends Object {
         static $: $mol_ambient_context;
-        static readonly $$: $mol_ambient_context;
+        static get $$(): $mol_ambient_context;
         $: typeof $mol_object2.$;
-        readonly $$: $mol_ambient_context;
+        get $$(): $mol_ambient_context;
         constructor(init?: (obj: any) => void);
         static make<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: Instance) => void): Instance;
         static toString(): any;
@@ -33,8 +33,8 @@ declare namespace $ {
         static wrap: (task: (...ags: any[]) => any) => (...ags: any[]) => any;
         static run<Result>(task: () => Result): Result;
         static func<Args extends any[], Result, Host = void>(func: (this: Host, ...args: Args) => Result): (this: Host, ...args: Args) => Result;
-        static readonly class: <Class extends new (...args: any[]) => any>(Class: Class) => Class;
-        static readonly method: <Host, Field extends keyof Host, Args extends any[], Result>(obj: Host, name: Field, descr: TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>) => TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>;
+        static get class(): <Class extends new (...args: any[]) => any>(Class: Class) => Class;
+        static get method(): <Host, Field extends keyof Host, Args extends any[], Result>(obj: Host, name: Field, descr: TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>) => TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>;
     }
 }
 
@@ -222,7 +222,8 @@ declare namespace $ {
         update(): void;
         get(): Value;
         limit(): void;
-        master: $mol_fiber;
+        get master(): $mol_fiber;
+        set master(next: $mol_fiber);
         rescue(master: $mol_fiber, master_index: number): void;
         obey(master: $mol_fiber, master_index: number): number;
         lead(slave: $mol_fiber, master_index: number): number;
@@ -260,7 +261,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_atom2_value<Value>(task: () => Value): Value;
     class $mol_atom2<Value = any> extends $mol_fiber<Value> {
-        static readonly current: $mol_atom2<any>;
+        static get current(): $mol_atom2<any>;
         static cached: boolean;
         static reap_task: $mol_fiber<any>;
         static reap_queue: $mol_atom2<any>[];
@@ -270,9 +271,11 @@ declare namespace $ {
         get(): Value;
         pull(): void | Value;
         _value: Value;
-        value: Value;
+        get value(): Value;
+        set value(next: Value);
         _error: Error | PromiseLike<Value>;
-        error: null | Error | PromiseLike<Value>;
+        get error(): null | Error | PromiseLike<Value>;
+        set error(next: null | Error | PromiseLike<Value>);
         put(next: Value): Value;
         complete_master(master_index: number): void;
         obey(master: $mol_fiber, master_index: number): number;
@@ -282,9 +285,9 @@ declare namespace $ {
         doubt(master_index?: number): void;
         obsolete_slaves(): void;
         doubt_slaves(): void;
-        readonly fresh: (this: void) => void;
-        readonly alone: boolean;
-        readonly derived: boolean;
+        get fresh(): (this: void) => void;
+        get alone(): boolean;
+        get derived(): boolean;
         destructor(): void;
     }
     let $mol_atom2_token_revalidation: $mol_log2_token;
@@ -312,10 +315,11 @@ declare namespace $ {
     const $mol_object_field: unique symbol;
     class $mol_object extends Object {
         static $: $mol_ambient_context;
-        static readonly $$: $mol_ambient_context;
+        static get $$(): $mol_ambient_context;
         _$: $mol_ambient_context;
-        $: $mol_ambient_context;
-        readonly $$: $mol_ambient_context;
+        get $(): $mol_ambient_context;
+        set $(next: $mol_ambient_context);
+        get $$(): $mol_ambient_context;
         static make<Instance>(this: {
             new (): Instance;
         }, config: Partial<Instance>): Instance;
@@ -838,7 +842,7 @@ declare namespace $.$$ {
         scroll_bottom(next?: number): number;
         scroll_right(next?: number): number;
         event_scroll(next?: Event): void;
-        readonly $$: $mol_ambient_context;
+        get $$(): $mol_ambient_context;
         strut_transform(): string;
         sub_visible(): readonly (string | number | boolean | Node | $mol_view)[];
     }
@@ -1792,7 +1796,7 @@ declare namespace $.$$ {
         }, next?: boolean): boolean;
     }
     class $mol_grid_table extends $.$mol_grid_table {
-        readonly $$: $mol_ambient_context;
+        get $$(): $mol_ambient_context;
     }
 }
 
@@ -1988,11 +1992,11 @@ declare namespace $ {
         readonly minute: number | undefined;
         readonly second: number | undefined;
         readonly offset: $mol_time_duration | undefined;
-        readonly weekday: number;
+        get weekday(): number;
         private _native;
-        readonly native: Date;
+        get native(): Date;
         private _normal;
-        readonly normal: $mol_time_moment;
+        get normal(): $mol_time_moment;
         merge(config: $mol_time_moment_config): $mol_time_moment;
         shift(config: $mol_time_duration_config): $mol_time_moment;
         toOffset(config: $mol_time_duration_config): $mol_time_moment;

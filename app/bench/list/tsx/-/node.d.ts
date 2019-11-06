@@ -88,9 +88,9 @@ declare namespace $ {
 declare namespace $ {
     class $mol_object2 extends Object {
         static $: $mol_ambient_context;
-        static readonly $$: $mol_ambient_context;
+        static get $$(): $mol_ambient_context;
         $: typeof $mol_object2.$;
-        readonly $$: $mol_ambient_context;
+        get $$(): $mol_ambient_context;
         constructor(init?: (obj: any) => void);
         static make<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: Instance) => void): Instance;
         static toString(): any;

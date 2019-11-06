@@ -64,11 +64,11 @@ declare namespace $ {
         readonly minute: number | undefined;
         readonly second: number | undefined;
         readonly offset: $mol_time_duration | undefined;
-        readonly weekday: number;
+        get weekday(): number;
         private _native;
-        readonly native: Date;
+        get native(): Date;
         private _normal;
-        readonly normal: $mol_time_moment;
+        get normal(): $mol_time_moment;
         merge(config: $mol_time_moment_config): $mol_time_moment;
         shift(config: $mol_time_duration_config): $mol_time_moment;
         toOffset(config: $mol_time_duration_config): $mol_time_moment;
@@ -118,11 +118,11 @@ declare namespace $ {
     class $mol_time_interval extends $mol_time_base {
         constructor(config: $mol_time_interval_config);
         private _start;
-        readonly start: $mol_time_moment;
+        get start(): $mol_time_moment;
         private _end;
-        readonly end: $mol_time_moment;
+        get end(): $mol_time_moment;
         private _duration;
-        readonly duration: $mol_time_duration;
+        get duration(): $mol_time_duration;
         toJSON(): string;
         toString(): string;
     }

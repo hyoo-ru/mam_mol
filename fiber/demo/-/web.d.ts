@@ -16,9 +16,9 @@ declare namespace $ {
 declare namespace $ {
     class $mol_object2 extends Object {
         static $: $mol_ambient_context;
-        static readonly $$: $mol_ambient_context;
+        static get $$(): $mol_ambient_context;
         $: typeof $mol_object2.$;
-        readonly $$: $mol_ambient_context;
+        get $$(): $mol_ambient_context;
         constructor(init?: (obj: any) => void);
         static make<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: Instance) => void): Instance;
         static toString(): any;
@@ -33,8 +33,8 @@ declare namespace $ {
         static wrap: (task: (...ags: any[]) => any) => (...ags: any[]) => any;
         static run<Result>(task: () => Result): Result;
         static func<Args extends any[], Result, Host = void>(func: (this: Host, ...args: Args) => Result): (this: Host, ...args: Args) => Result;
-        static readonly class: <Class extends new (...args: any[]) => any>(Class: Class) => Class;
-        static readonly method: <Host, Field extends keyof Host, Args extends any[], Result>(obj: Host, name: Field, descr: TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>) => TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>;
+        static get class(): <Class extends new (...args: any[]) => any>(Class: Class) => Class;
+        static get method(): <Host, Field extends keyof Host, Args extends any[], Result>(obj: Host, name: Field, descr: TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>) => TypedPropertyDescriptor<(this: Host, ...args: Args) => Result>;
     }
 }
 
@@ -222,7 +222,8 @@ declare namespace $ {
         update(): void;
         get(): Value;
         limit(): void;
-        master: $mol_fiber;
+        get master(): $mol_fiber;
+        set master(next: $mol_fiber);
         rescue(master: $mol_fiber, master_index: number): void;
         obey(master: $mol_fiber, master_index: number): number;
         lead(slave: $mol_fiber, master_index: number): number;
