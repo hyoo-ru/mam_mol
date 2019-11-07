@@ -6,7 +6,7 @@ function require( path ){ return $node[ path ] };
 //assert.js.map
 ;
 "use strict";
-//partial.test.js.map
+//deep.test.js.map
 ;
 "use strict";
 var $;

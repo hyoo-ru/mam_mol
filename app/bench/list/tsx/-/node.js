@@ -27,7 +27,7 @@ module.exports;
 $node[ "../mol/mol.js" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {} )
 ;
 "use strict";
-//partial.js.map
+//deep.js.map
 ;
 "use strict";
 var $;

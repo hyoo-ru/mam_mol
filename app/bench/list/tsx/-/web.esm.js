@@ -25,7 +25,7 @@ $.$mol = $  // deprecated
 
 ;
 "use strict";
-//partial.js.map
+//deep.js.map
 ;
 "use strict";
 var $;
