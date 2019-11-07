@@ -1,4 +1,16 @@
 [mol_list] {
 	will-change: contents;
 	display: block;
+	/* display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	align-content: stretch; */
+	transition: none;
+}
+
+[mol_list_gap_top] ,
+[mol_list_gap_bottom] {
+	display: block;
+	flex: none;
+	transition: none;
 }

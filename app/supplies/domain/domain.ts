@@ -141,7 +141,7 @@ namespace $ {
 		@ $mol_mem
 		supplies() {
 			var next : $mol_app_supplies_domain_supply[] = []
-			for( var i = 1 ; i <= 100 ; ++i ) {
+			for( var i = 1 ; i <= 1000 ; ++i ) {
 				next.push( this.supply( ( i * 123456789 % 987654321 ).toString( 16 ).toUpperCase() ) )
 			}
 			return next

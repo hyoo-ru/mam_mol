@@ -31,10 +31,6 @@
 	background: none;
 }
 
-[mol_scroll] > * {
-	transform: translateZ(0);
-}
-
 @media print {
 	[mol_scroll] {
 		overflow: visible;

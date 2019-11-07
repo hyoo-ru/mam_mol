@@ -7,55 +7,135 @@ namespace $.$$ {
 			return ( rows.length === 0 ) ? [ this.Empty() ] : rows
 		}
 		
+		normal_direction = true
+		
 		@ $mol_mem
-		row_offsets() : number[] {
-			var sub = this.sub()
+		view_window() : [ number , number ] {
 			
-			let heightLimit = this.$.$mol_view_visible_height()
-			var offset = 0
+			const kids = this.sub()
+			if( kids.length < 3 ) return [ 0 , kids.length ]
 			
-			var next : number[] = []
-			for( let child of sub ) {
-				next.push( offset )
+			let [ min , max ] = $mol_atom2_value( ()=> this.view_window() || [ 0 , 1 ] )
+
+			max = Math.min( max , kids.length )
+			min = Math.min( min , max )
+
+			const ext = 200
+
+			const window_height = $mol_window.size().height
+			let bottom_free = window_height
+			let top_free = 0
+
+			if( max > 0 ) {
+
+				const rect = kids[ max - 1 ].view_rect()
+				if( rect ) {
+					bottom_free -= rect.bottom
+				} else {
+					bottom_free = 0
+				}
+
+				if( bottom_free > window_height ) {
+	
+					const factor = ( - rect.bottom + window_height / 2 ) / $mol_atom2_value( ()=> this.gap_bottom() )
+					if( factor < 1 ) {
+
+						this.normal_direction = false
+
+						max += Math.floor( ( kids.length - max ) * factor )
+						max = Math.min( kids.length , Math.max( 1 , max ) )
+	
+						kids[ max - 1 ].view_rect()
+	
+						return [ max - 1 , max ]
+					}
+					
+				}
+
+			}
+
+			if( true ) {
+
+				const rect = kids[ min ].view_rect()
+				if( rect ) top_free += rect.top
 				
-				if( child instanceof $mol_view ) {
-					offset += child.minimal_height()
+				if( top_free > window_height ) {
+	
+					const factor = ( rect.top - window_height / 2 ) / $mol_atom2_value( ()=> this.gap_top() )
+					if( factor < 1 ) {
+
+						this.normal_direction = true
+
+						min = Math.floor( min * ( 1 - factor ) )
+						kids[ min ].view_rect()
+	
+						return [ min , min + 1 ]
+					}
+					
 				}
 				
-				if( offset > heightLimit ) break
+			}
+
+			while( top_free > 0 && min > 0 ) {
+				-- min
+				top_free -= kids[ min ].minimal_height()
+				this.normal_direction = false
+			}
+
+			while( bottom_free > 0 && max < kids.length ) {
+				bottom_free -= kids[ max ].minimal_height()
+				++ max
+				this.normal_direction = true
+			}
+
+			if( !this.normal_direction && max > min + 1 ) {
+				const rect = kids[ max - 1 ].view_rect()
+				if( rect && rect.top > $mol_window.size().height + ext ) {
+					-- max
+				}
 			}
 			
-			return next
+			if( this.normal_direction && min < max - 1 ) {
+				const rect = kids[min].view_rect()
+				if( rect && rect.bottom < -ext ) {
+					++ min
+				}
+			}
+			
+			kids[min].view_rect()
+			if( max > 0 ) kids[ max - 1 ].view_rect()
+			
+			return [ min , max ]
 		}
-		
-		@ $mol_mem_key
-		row_context( index : number ) {
-			return this.$.$mol_ambient({
-				$mol_view_visible_height : ()=> this.$.$mol_view_visible_height() - this.row_offsets()[ index ] ,
-			})
+
+		@ $mol_mem
+		gap_top() {
+			const skipped = this.sub().slice( 0 , this.view_window()[0] )
+			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.approximated_height() , 0 ) )
 		}
-		
+
+		@ $mol_mem
+		gap_bottom() {
+			const skipped = this.sub().slice( this.view_window()[1] )
+			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.approximated_height() , 0 ) )
+		}
+
 		@ $mol_mem
 		sub_visible() {
+
 			var sub = this.sub()
-			if( !sub ) return sub
-			
+			const context = this.$
 			for( let i = 0 ; i < sub.length ; ++ i ) {
 				const child = sub[ i ]
 				if( child instanceof $mol_view ) {
-					child.$ = this.row_context( i )
+					child.$ = context
 				}
 			}
 
-			var limit = this.row_offsets().length
-			
-			var next : $mol_view[] = []
-			for( let i = 0 ; i < limit ; ++ i ) {
-				const child = sub[ i ]
-				if( child == null ) continue 
-				next.push( child )
-			}
-			
+			const next = sub.slice( ... this.view_window() )
+			if( this.gap_top() ) next.unshift( this.Gap_top() )
+			if( this.gap_bottom() ) next.push( this.Gap_bottom() )
+
 			return next
 		}
 		

@@ -133,6 +133,30 @@ namespace $ {
 			return min
 		}
 
+		@ $mol_mem
+		approximated_height() {
+			return Math.max( this.view_rect_cache()?.height ?? 0 , this.minimal_height() )
+		}
+
+		static watchers = new Set< $mol_view >()
+
+		@ $mol_mem
+		view_rect() {
+			this.view_rect_watcher()
+			return this.view_rect_cache()
+		}
+
+		@ $mol_mem
+		view_rect_cache( next = null as ClientRect | null ) {
+			return next
+		}
+
+		@ $mol_mem
+		view_rect_watcher() {
+			$mol_view.watchers.add( this )
+			return { destructor : ()=> $mol_view.watchers.delete( this ) }
+		}
+
 		dom_id() {
 			return this.toString()
 		}
@@ -323,5 +347,17 @@ namespace $ {
 		}
 
 	}
+
+	function $mol_view_watch() {
+		$mol_fiber_unlimit( ()=> {
+			for( const view of $mol_view.watchers ) {
+				const rect = view.dom_node().getBoundingClientRect().toJSON()
+				if( rect.height ) view.view_rect_cache( rect )
+			}
+			new $mol_after_frame( $mol_view_watch )
+		} )
+	}
+
+	$mol_view_watch()
 	
 }
