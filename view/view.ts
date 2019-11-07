@@ -319,7 +319,10 @@ namespace $ {
 		}
 		
 		style() : { [ key : string ] : string|number } {
-			return {}
+			return {
+				minHeight : this.minimal_height() ,
+				minWidth : this.minimal_width() ,
+			}
 		}
 		
 		field() : { [ key : string ] : any } {

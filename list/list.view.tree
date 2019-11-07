@@ -3,4 +3,3 @@ $mol_list $mol_view
 	Empty $mol_view
 	Gap_top $mol_view style * paddingTop <= gap_top 0
 	Gap_bottom $mol_view style * paddingTop <= gap_bottom 0
-	style * minHeight <= minimal_height
