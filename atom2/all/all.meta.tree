@@ -1,3 +1,5 @@
 include \/mol/atom2/autorun
 include \/mol/atom2/field
 include \/mol/atom2/dict
+include \/mol/mem
+include \/mol/mem/key
