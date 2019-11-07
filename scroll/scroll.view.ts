@@ -20,18 +20,6 @@ namespace $.$$ {
 			return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
 		}
 
-		@ $mol_mem
-		scroll_bottom( next? : number ) { return next || 0 }
-		
-		@ $mol_mem
-		scroll_right( next? : number ) { return next || 0 }
-		
-		@ $mol_mem
-		scroll_shift_x( next? : number ) { return next || 0 }
-		
-		@ $mol_mem
-		scroll_shift_y( next? : number ) { return next || 0 }
-		
 		event_scroll( next? : Event ) {
 			
 			const el = this.dom_node() as HTMLElement

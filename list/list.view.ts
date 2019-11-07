@@ -123,16 +123,10 @@ namespace $.$$ {
 		@ $mol_mem
 		sub_visible() {
 
-			var sub = this.sub()
-			const context = this.$
-			for( let i = 0 ; i < sub.length ; ++ i ) {
-				const child = sub[ i ]
-				if( child instanceof $mol_view ) {
-					child.$ = context
-				}
-			}
+			var sub = super.sub_visible()
 
 			const next = sub.slice( ... this.view_window() )
+			
 			if( this.gap_top() ) next.unshift( this.Gap_top() )
 			if( this.gap_bottom() ) next.push( this.Gap_bottom() )
 

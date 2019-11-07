@@ -85,14 +85,14 @@ namespace $ {
 		sub_visible() {
 
 			const sub = this.sub()
-			if( !sub ) return sub
+			
 			const context = this.$$
 
-			sub.forEach( child => {
+			for( const child of sub ) {
 				if( child instanceof $mol_view ) {
 					child.$ = context
 				}
-			} )
+			}
 			
 			return sub
 		}
