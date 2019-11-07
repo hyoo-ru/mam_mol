@@ -2179,85 +2179,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_image extends $mol_view {
-        /**
-         *  ```
-         *  dom_name \img
-         *  ```
-         **/
-        dom_name(): string;
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	src <= uri
-         *  	alt <= title
-         *  ```
-         **/
-        field(): {
-            "src": string;
-            "alt": string;
-        };
-        /**
-         *  ```
-         *  uri \
-         *  ```
-         **/
-        uri(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_link_iconed extends $mol_link {
-        /**
-         *  ```
-         *  sub / <= Icon
-         *  ```
-         **/
-        sub(): readonly any[];
-        /**
-         *  ```
-         *  Icon $mol_image uri <= icon
-         *  ```
-         **/
-        Icon(): $mol_image;
-        /**
-         *  ```
-         *  icon \
-         *  ```
-         **/
-        icon(): string;
-        /**
-         *  ```
-         *  content / <= title
-         *  ```
-         **/
-        content(): readonly any[];
-        /**
-         *  ```
-         *  title <= uri
-         *  ```
-         **/
-        title(): string;
-        /**
-         *  ```
-         *  host \
-         *  ```
-         **/
-        host(): string;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_link_iconed extends $.$mol_link_iconed {
-        icon(): string;
-        host(): string;
-        title(): string;
-        sub(): any[];
-    }
-}
-
-declare namespace $ {
     var $mol_syntax_md_flow: $mol_syntax;
     var $mol_syntax_md_line: $mol_syntax;
     const $mol_syntax_md_code: $mol_syntax;
@@ -2514,7 +2435,7 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    class $mol_text_link extends $mol_link_iconed {
+    class $mol_text_link extends $mol_link {
         /**
          *  ```
          *  attr *
@@ -2548,6 +2469,12 @@ declare namespace $ {
          *  ```
          **/
         link(val?: any, force?: $mol_mem_force): any;
+        /**
+         *  ```
+         *  sub <= content?val
+         *  ```
+         **/
+        sub(): any;
         /**
          *  ```
          *  content?val /

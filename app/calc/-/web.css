@@ -617,32 +617,6 @@ sans-serif;
 	vertical-align: inherit;
 }
 
-[mol_image] {
-	box-shadow: 0 0 0 1px var(--mol_theme_line);
-	border-radius: 0px;
-	border-radius: var(--mol_skin_round);
-	overflow: hidden;
-	flex: 0 1 auto;
-	max-width: 100%;
-}
-
-[mol_link_iconed] {
-	align-items: center;
-	color: #3a8ccb;
-	color: var(--mol_skin_base);
-}
-
-[mol_link_iconed_icon] {
-	box-shadow: none;
-	margin-right: 2px;
-	height: 1em;
-	vertical-align: -10%;
-}
-
-[mol_theme="$mol_theme_dark"] [mol_link_iconed_icon] {
-	filter: invert(1);
-}
-
 [mol_text] {
 	line-height: 1.5;
 	box-sizing: border-box;

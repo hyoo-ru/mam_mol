@@ -402,7 +402,7 @@ namespace $ { export class $mol_text_span extends $mol_view {
 
 } }
 
-namespace $ { export class $mol_text_link extends $mol_link_iconed {
+namespace $ { export class $mol_text_link extends $mol_link {
 
 	/**
 	 *  ```
@@ -445,6 +445,15 @@ namespace $ { export class $mol_text_link extends $mol_link_iconed {
 	@ $mol_mem
 	link( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
+	}
+
+	/**
+	 *  ```
+	 *  sub <= content?val
+	 *  ```
+	 **/
+	sub() {
+		return this.content()
 	}
 
 	/**

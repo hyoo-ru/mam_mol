@@ -2774,7 +2774,7 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    class $mol_text_link extends $mol_link_iconed {
+    class $mol_text_link extends $mol_link {
         /**
          *  ```
          *  attr *
@@ -2808,6 +2808,12 @@ declare namespace $ {
          *  ```
          **/
         link(val?: any, force?: $mol_mem_force): any;
+        /**
+         *  ```
+         *  sub <= content?val
+         *  ```
+         **/
+        sub(): any;
         /**
          *  ```
          *  content?val /
