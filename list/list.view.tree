@@ -1,5 +1,5 @@
 $mol_list $mol_view
 	sub <= rows /$mol_view
 	Empty $mol_view
-	Gap_top $mol_view style * paddingTop <= gap_top 0
-	Gap_bottom $mol_view style * paddingTop <= gap_bottom 0
+	Gap_top $mol_view minimal_height <= gap_top 0
+	Gap_bottom $mol_view minimal_height <= gap_bottom 0
