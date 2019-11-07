@@ -1,9 +1,18 @@
 namespace $ {
 
 	export function $mol_data_record< Sub extends Record< string , any > >( sub : Sub ) {
-		return (( val : { [ key in keyof Sub ] : Parameters< Sub[key] >[0] } ) => {
 
-			let res = {} as { [ key in keyof Sub ] : ReturnType< Sub[key] > }
+		type Input = $mol_type_partial_undefined<{
+			[ key in keyof Sub ] : Parameters< Sub[key] >[0]
+		}>
+
+		type Output = $mol_type_partial_undefined<{
+			[ key in keyof Sub ] : ReturnType< Sub[key] >
+		}>
+
+		return (( val : Input ) => {
+
+			let res = {} as Output
 			
 			for( const field in sub ) {
 
@@ -15,7 +24,8 @@ namespace $ {
 
 			}
 			
-			return res as { readonly [ key in keyof Sub ] : ReturnType< Sub[key] > }
+			return res as Readonly< Output >
+			
 		})
 
 	}
