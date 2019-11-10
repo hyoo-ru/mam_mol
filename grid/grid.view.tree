@@ -1,4 +1,5 @@
 $mol_grid $mol_scroll
+	row_height 40
 	row_ids /string[]
 	row_id!index null
 	col_ids /
@@ -9,17 +10,13 @@ $mol_grid $mol_scroll
 	-
 	sub /
 		<= Table $mol_grid_table
-			offset <= gap_top 0
-			sub <= rows_visible /$mol_view
-	rows /
+			sub <= rows /$mol_view
 	Head $mol_grid_row
-		height <= row_height 40
 		cells <= head_cells /$mol_view
 	Row!id $mol_grid_row
-		height <= row_height 40
 		cells <= cells!id /$mol_view
 	-
-	Cell!id $mol_view
+	Cell!id $mol_view minimal_height 40
 	cell!id null
 	Cell_text!id $mol_grid_cell
 		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
@@ -37,22 +34,11 @@ $mol_grid $mol_scroll
 			needle <= needle \
 			haystack <= cell_value!id \
 
-$mol_grid_table $mol_view
+$mol_grid_table $mol_list
 	dom_name \table
-	style *
-		^
-		top <= offset 0
-
-$mol_grid_gap $mol_view
-	style *
-		^
-		top <= offset 0
 
 $mol_grid_row $mol_view
 	dom_name \tr
-	style *
-		^
-		height <= height 40
 	sub <= cells /$mol_view
 
 $mol_grid_cell $mol_view

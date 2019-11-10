@@ -8,51 +8,18 @@ namespace $.$$ {
 	
 	export class $mol_grid extends $.$mol_grid {
 		
-		@ $mol_mem
-		rows_visible() {
-			const rows = this.rows()
+		// @ $mol_mem
+		// rows_visible() {
+		// 	const rows = this.rows()
 			
-			const view_window = this.view_window()
+		// 	const view_window = this.view_window()
 			
-			return [
-				this.Head() ,
-				... rows.slice( view_window.top , view_window.bottom ) ,
-			]
-		}
-		
-		@ $mol_mem
-		rows_visible_max() {
-			return Math.ceil( this.$.$mol_view_visible_height() / this.row_height() )
-		}
-		
-		@ $mol_mem
-		view_window() {
-			const rows = this.rows()
-			
-			const count = rows.length
-			const context = this.$$
-			const scrollTop = context.$mol_scroll_top()
-			
-			const top = Math.max( 0 , Math.floor( scrollTop / this.row_height() ) - 1 )
-			const bottom = Math.min( count , top + this.rows_visible_max() )
-			
-			return { top , bottom , count }
-		}
-		
-		gap_top() {
-			const view_window = this.view_window()
-			return view_window.top * this.row_height()
-		}
-		
-		height() {
-			const view_window = this.view_window()
-			return view_window.count * this.row_height()
-		}
-
-		content_height() {
-			return this.rows().length * this.row_height()
-		}
-		
+		// 	return [
+		// 		this.Head() ,
+		// 		... rows.slice( view_window.top , view_window.bottom ) ,
+		// 	]
+		// }
+				
 		@ $mol_mem
 		head_cells() {
 			return this.col_ids().map( colId => this.Col_head( colId ) ) as readonly $mol_view[]
@@ -187,13 +154,4 @@ namespace $.$$ {
 		
 	}
 	
-	export class $mol_grid_table extends $.$mol_grid_table {
-		
-		@ $mol_atom2_field
-		get $$( ) {
-			return this.$.$mol_ambient({
-				$mol_scroll_top : ()=> this.$.$mol_scroll_top() - this.offset() ,
-			})			
-		}
-	}
 }
