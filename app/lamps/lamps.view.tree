@@ -32,6 +32,12 @@ $mol_app_lamps $mol_book
 									title <= rating_title @ \Rating
 									content /
 										<= rating 0
+						<= Props $mol_row
+							sub /
+								<= Wattage $mol_labeler
+									title <= wattage_title @ \Wattage
+									content /
+										<= wattage \
 						<= Body $mol_row
 							sub /
 								<= Type $mol_labeler
