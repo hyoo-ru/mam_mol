@@ -44,12 +44,12 @@ $mol_text_span $mol_view
 		mol_text_type <= type?val \
 	sub <= content?val /
 
-$mol_text_link $mol_link_iconed
+$mol_text_link $mol_link
 	attr *
 		^
 		mol_text_type <= type?val \
 	uri <= link?val \
-	content?val /
+	sub <= content?val /
 
 $mol_text_image $mol_view
 	dom_name \object

@@ -160,9 +160,9 @@ namespace $ {
 	@ $mol_class
 	export class $mol_fiber< Value = any > extends $mol_wrapper {
 
-		static wrap< This , Args extends any[] , Result >( task : ( this : This , ... args : Args )=> Result ) {
+		static wrap< Func extends ( ... args : any[] )=> any >( task : Func ) {
 			
-			return function( this : This , ... args : Args ) {
+			return function( this : ThisParameterType< Func > , ... args : Parameters< Func > ) {
 
 				const slave = $mol_fiber.current
 
