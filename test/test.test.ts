@@ -29,7 +29,7 @@ namespace $ {
 			await test( context )
 		}
 		
-		console.info( '$mol_test' , $mol_test_all.length )
+		console.info( '$mol_test completed' , $mol_test_all.length )
 	}
 	
 	let scheduled = false

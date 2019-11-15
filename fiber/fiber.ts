@@ -357,7 +357,9 @@ namespace $ {
 
 		get() {
 
-			if( this.cursor > $mol_fiber_status.obsolete ) this.$.$mol_fail( new Error( 'Cyclic dependency' ) )
+			if( this.cursor > $mol_fiber_status.obsolete ) {
+				this.$.$mol_fail( new Error( `Cyclic dependency at ${ this }` ) )
+			}
 			
 			const slave = $mol_fiber.current
 			if( slave ) slave.master = this
