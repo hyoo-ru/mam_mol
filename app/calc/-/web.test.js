@@ -24,7 +24,7 @@ var $;
                 await mock(context);
             await test(context);
         }
-        console.info('$mol_test', $_1.$mol_test_all.length);
+        console.info('$mol_test completed', $_1.$mol_test_all.length);
     }
     $_1.$mol_test_run = $mol_test_run;
     let scheduled = false;
@@ -570,7 +570,7 @@ var $;
                         return val.outerHTML;
                     return val;
                 };
-                return $.$mol_fail(new Error(`Not like\n${print(head)}\n${print(value)}`));
+                return $.$mol_fail(new Error(`Not like\n${print(head)}\n---\n${print(value)}`));
             }
         }
     }

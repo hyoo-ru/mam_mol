@@ -958,8 +958,9 @@ var $;
             }
         }
         get() {
-            if (this.cursor > 0 /* obsolete */)
-                this.$.$mol_fail(new Error('Cyclic dependency'));
+            if (this.cursor > 0 /* obsolete */) {
+                this.$.$mol_fail(new Error(`Cyclic dependency at ${this}`));
+            }
             const slave = $mol_fiber_1.current;
             if (slave)
                 slave.master = this;

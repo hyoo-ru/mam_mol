@@ -24,7 +24,7 @@ var $;
                 await mock(context);
             await test(context);
         }
-        console.info('$mol_test', $_1.$mol_test_all.length);
+        console.info('$mol_test completed', $_1.$mol_test_all.length);
     }
     $_1.$mol_test_run = $mol_test_run;
     let scheduled = false;
