@@ -13,7 +13,6 @@ const User = $mol_data_record({
 	birthday : $mol_data_wrapper( $mol_data_string , $mol_time_moment ) ,
 	phone : $mol_data_variant( $mol_data_string , $mol_data_integer ) ,
 	mail : $mol_data_email ,
-	get friends() { return $mol_data_array( User ) } ,
 })
 
 // Ensure this is a User
@@ -23,7 +22,6 @@ const ann = User({
 	birthday : '1984-08-04T12:00:00Z' ,
 	phone : 791234567890,
 	mail : 'foo@example.org' ,
-	friends : [] ,
 })
 
 // typeof ann === {
@@ -32,7 +30,6 @@ const ann = User({
 // 	readonly birthday: $mol_time_duration;
 // 	readonly phone: string | number;
 // 	readonly mail: string;
-// 	readonly friends: readonly User[];
 // }
 
 // Allow only Users
