@@ -180,7 +180,7 @@ namespace $ {
 
 		}
 
-		static quant = Infinity
+		static quant = 16
 		static deadline = 0
 		static liveline = 0
 

@@ -114,21 +114,17 @@ namespace $ {
 		}
 		
 		/// Minimal height that used for lazy rendering
-		minimal_height() {
-			return this.content_height()
-		}
-
 		@ $mol_mem
-		content_height() {
-			const sub = this.sub()
-			if( !sub ) return 0
+		minimal_height() {
 			
 			let min = 0
-			sub.forEach( view => {
+			for( const view of this.sub() ) {
+
 				if( view instanceof $mol_view ) {
 					min = Math.max( min , view.minimal_height() )
 				}
-			} )
+
+			} 
 			
 			return min
 		}
@@ -148,6 +144,7 @@ namespace $ {
 
 		@ $mol_mem
 		view_rect_cache( next = null as ClientRect | null ) {
+			if($mol_atom2.current) $mol_atom2.current.destructor = ()=>{}
 			return next
 		}
 
@@ -249,6 +246,7 @@ namespace $ {
 			$mol_dom_render_children( node , nodes )
 
 			for( const el of sub ) if( el && typeof el === 'object' && 'dom_tree' in el ) el['dom_tree']()
+
 		}
 
 		@ $mol_mem
@@ -319,10 +317,7 @@ namespace $ {
 		}
 		
 		style() : { [ key : string ] : string|number } {
-			return {
-				minHeight : this.minimal_height() ,
-				minWidth : this.minimal_width() ,
-			}
+			return {}
 		}
 		
 		field() : { [ key : string ] : any } {

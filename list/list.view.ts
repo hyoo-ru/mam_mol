@@ -19,10 +19,9 @@ namespace $.$$ {
 
 			max = Math.min( max , kids.length )
 			min = Math.min( min , max )
-
-			const ext = 200
-
+			
 			const window_height = $mol_window.size().height
+			const ext = window_height
 			let bottom_free = window_height
 			let top_free = 0
 
@@ -76,13 +75,13 @@ namespace $.$$ {
 				
 			}
 
-			while( top_free > 0 && min > 0 ) {
+			while( top_free > -ext && min > 0 ) {
 				-- min
 				top_free -= kids[ min ].minimal_height()
 				this.normal_direction = false
 			}
 
-			while( bottom_free > 0 && max < kids.length ) {
+			while( bottom_free > -ext && max < kids.length ) {
 				bottom_free -= kids[ max ].minimal_height()
 				++ max
 				this.normal_direction = true
