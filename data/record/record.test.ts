@@ -10,24 +10,24 @@ namespace $ {
 			$mol_data_record({ age : $mol_data_number })( { age : 0 , name : 'Jin' } as any )
 		} ,
 
-		'Recursive record' () {
+		// 'Recursive record' () {
 
-			const User = $mol_data_record({
-				name : $mol_data_string ,
-				get kids() { return $mol_data_array( User ) } ,
-			})
+		// 	const User = $mol_data_record({
+		// 		name : $mol_data_string ,
+		// 		get kids() { return $mol_data_array( User ) } ,
+		// 	})
 
-			User({
-				name : 'Jin' ,
-				kids : [
-					{
-						name : 'John' ,
-						kids : [] ,
-					}
-				] ,
-			})
+		// 	User({
+		// 		name : 'Jin' ,
+		// 		kids : [
+		// 			{
+		// 				name : 'John' ,
+		// 				kids : [] ,
+		// 			}
+		// 		] ,
+		// 	})
 		
-		} ,
+		// } ,
 
 		'Shrinks record' () {
 			$mol_assert_fail( ()=> {

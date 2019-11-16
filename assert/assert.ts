@@ -73,7 +73,7 @@ namespace $ {
 					return val
 				}
 				
-				return $mol_fail( new Error( `Not like\n${ print( head ) }\n${ print( value ) }` ) )
+				return $mol_fail( new Error( `Not like\n${ print( head ) }\n---\n${ print( value ) }` ) )
 
 			}
 
