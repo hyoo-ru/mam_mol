@@ -6378,9 +6378,12 @@ var $;
             return this.native.body;
         }
         text() {
-            const response = this.native;
-            const parse = $.$mol_fiber_sync(response.text);
-            return parse.call(response);
+            const buffer = this.buffer();
+            const native = this.native;
+            const mime = native.headers.get('content-type');
+            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
+            const decoder = new TextDecoder(charset);
+            return decoder.decode(buffer);
         }
         json() {
             const response = this.native;

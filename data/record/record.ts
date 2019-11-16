@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_data_record< Sub extends Record< string , any > >( sub : Sub ) {
+	export function $mol_data_record< Sub extends Record< string , $mol_data_value< any > > >( sub : Sub ) {
 
 		type Input = $mol_type_partial_undefined<{
 			[ key in keyof Sub ] : Parameters< Sub[key] >[0]

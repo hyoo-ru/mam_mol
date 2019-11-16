@@ -2931,6 +2931,7 @@ declare namespace $ {
          *  ```
          *  Info $mol_row sub /
          *  	<= Stat
+         *  	<= Props
          *  	<= Body
          *  	<= Light
          *  ```
@@ -2962,6 +2963,32 @@ declare namespace $ {
          *  ```
          **/
         rating(): number;
+        /**
+         *  ```
+         *  Props $mol_row sub / <= Wattage
+         *  ```
+         **/
+        Props(): $$.$mol_row;
+        /**
+         *  ```
+         *  Wattage $mol_labeler
+         *  	title <= wattage_title
+         *  	content / <= wattage
+         *  ```
+         **/
+        Wattage(): $mol_labeler;
+        /**
+         *  ```
+         *  wattage_title @ \Wattage
+         *  ```
+         **/
+        wattage_title(): string;
+        /**
+         *  ```
+         *  wattage \
+         *  ```
+         **/
+        wattage(): string;
         /**
          *  ```
          *  Body $mol_row sub /
@@ -3177,6 +3204,7 @@ declare namespace $.$$ {
         lamps_all(): {
             [key: string]: any;
         }[];
+        lamps2(): string;
         lamps(): {
             [key: string]: any;
         }[];
@@ -3201,6 +3229,7 @@ declare namespace $.$$ {
         base(): string;
         type(): string;
         temp(): string;
+        wattage(): string;
         matt(): boolean;
         ripple(): string;
         rating_cri(): 1 | 2 | 3 | 5 | 4 | 4.5 | 3.5;

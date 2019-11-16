@@ -188,6 +188,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	 *  ```
 	 *  Info $mol_row sub /
 	 *  	<= Stat
+	 *  	<= Props
 	 *  	<= Body
 	 *  	<= Light
 	 *  ```
@@ -195,7 +196,7 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	@ $mol_mem
 	Info() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Stat() , this.Body() , this.Light() ] as readonly any[]
+			obj.sub = () => [ this.Stat() , this.Props() , this.Body() , this.Light() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -245,6 +246,53 @@ namespace $ { export class $mol_app_lamps extends $mol_book {
 	 **/
 	rating() {
 		return 0
+	}
+
+	/**
+	 *  ```
+	 *  Props $mol_row sub / <= Wattage
+	 *  ```
+	 **/
+	@ $mol_mem
+	Props() {
+		return (( obj )=>{
+			obj.sub = () => [ this.Wattage() ] as readonly any[]
+			return obj
+		})( new this.$.$mol_row(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  Wattage $mol_labeler
+	 *  	title <= wattage_title
+	 *  	content / <= wattage
+	 *  ```
+	 **/
+	@ $mol_mem
+	Wattage() {
+		return (( obj )=>{
+			obj.title = () => this.wattage_title()
+			obj.content = () => [ this.wattage() ] as readonly any[]
+			return obj
+		})( new this.$.$mol_labeler(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  wattage_title @ \Wattage
+	 *  ```
+	 **/
+	wattage_title() {
+		return this.$.$mol_locale.text( "$mol_app_lamps_wattage_title" )
+	}
+
+	/**
+	 *  ```
+	 *  wattage \
+	 *  ```
+	 **/
+	wattage() {
+		return ""
 	}
 
 	/**

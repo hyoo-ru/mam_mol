@@ -7031,9 +7031,12 @@ var $;
             return this.native.body;
         }
         text() {
-            const response = this.native;
-            const parse = $.$mol_fiber_sync(response.text);
-            return parse.call(response);
+            const buffer = this.buffer();
+            const native = this.native;
+            const mime = native.headers.get('content-type');
+            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
+            const decoder = new TextDecoder(charset);
+            return decoder.decode(buffer);
         }
         json() {
             const response = this.native;
@@ -7331,13 +7334,14 @@ var $;
          *  ```
          *  Info $mol_row sub /
          *  	<= Stat
+         *  	<= Props
          *  	<= Body
          *  	<= Light
          *  ```
          **/
         Info() {
             return ((obj) => {
-                obj.sub = () => [this.Stat(), this.Body(), this.Light()];
+                obj.sub = () => [this.Stat(), this.Props(), this.Body(), this.Light()];
                 return obj;
             })(new this.$.$mol_row());
         }
@@ -7381,6 +7385,47 @@ var $;
          **/
         rating() {
             return 0;
+        }
+        /**
+         *  ```
+         *  Props $mol_row sub / <= Wattage
+         *  ```
+         **/
+        Props() {
+            return ((obj) => {
+                obj.sub = () => [this.Wattage()];
+                return obj;
+            })(new this.$.$mol_row());
+        }
+        /**
+         *  ```
+         *  Wattage $mol_labeler
+         *  	title <= wattage_title
+         *  	content / <= wattage
+         *  ```
+         **/
+        Wattage() {
+            return ((obj) => {
+                obj.title = () => this.wattage_title();
+                obj.content = () => [this.wattage()];
+                return obj;
+            })(new this.$.$mol_labeler());
+        }
+        /**
+         *  ```
+         *  wattage_title @ \Wattage
+         *  ```
+         **/
+        wattage_title() {
+            return this.$.$mol_locale.text("$mol_app_lamps_wattage_title");
+        }
+        /**
+         *  ```
+         *  wattage \
+         *  ```
+         **/
+        wattage() {
+            return "";
         }
         /**
          *  ```
@@ -7740,6 +7785,12 @@ var $;
     ], $mol_app_lamps.prototype, "Rating", null);
     __decorate([
         $.$mol_mem
+    ], $mol_app_lamps.prototype, "Props", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_lamps.prototype, "Wattage", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_app_lamps.prototype, "Body", null);
     __decorate([
         $.$mol_mem
@@ -7795,6 +7846,9 @@ var $;
         class $mol_app_lamps extends $.$mol_app_lamps {
             lamps_all() {
                 return $.$mol_csv_parse($.$mol_fetch.text('//lamptest.ru/led.php'));
+            }
+            lamps2() {
+                return $.$mol_fetch.text('//lamptest.ru/led.php');
             }
             lamps() {
                 return this.lamps_all().filter($.$mol_fiber.func($.$mol_match_text(this.filter(), (lamp) => {
@@ -7869,6 +7923,9 @@ var $;
             }
             temp() {
                 return `${this.lamp()['color_l']}`;
+            }
+            wattage() {
+                return `${this.lamp()['power_l']}W`;
             }
             matt() {
                 return this.lamp()['matt'] == 1;
@@ -7948,6 +8005,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_app_lamps.prototype, "lamps_all", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_app_lamps.prototype, "lamps2", null);
         __decorate([
             $.$mol_mem
         ], $mol_app_lamps.prototype, "lamps", null);
