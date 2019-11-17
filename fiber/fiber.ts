@@ -180,7 +180,7 @@ namespace $ {
 
 		}
 
-		static quant = 16
+		static quant = 160000
 		static deadline = 0
 		static liveline = 0
 

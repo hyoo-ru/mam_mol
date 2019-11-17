@@ -7,8 +7,6 @@ namespace $.$$ {
 			return ( rows.length === 0 ) ? [ this.Empty() ] : rows
 		}
 		
-		normal_direction = true
-		
 		@ $mol_mem
 		view_window() : [ number , number ] {
 			
@@ -17,104 +15,114 @@ namespace $.$$ {
 			
 			let [ min , max ] = $mol_atom2_value( ()=> this.view_window() || [ 0 , 1 ] )
 
-			max = Math.min( max , kids.length )
-			min = Math.min( min , max )
+			let max2 = max = Math.min( max , kids.length )
+			let min2 = min = Math.max( 0 , Math.min( min , max - 1 ) )
 			
 			const window_height = $mol_window.size().height
-			const ext = window_height
-			let bottom_free = window_height
-			let top_free = 0
+			const over = 0//window_height
+			const limit_top = -over
+			const limit_bottom = window_height + over
 
-			if( max > 0 ) {
+			const before = this.Gap_before().view_rect()
+			const after = this.Gap_after().view_rect()
 
-				const rect = kids[ max - 1 ].view_rect()
-				if( rect ) {
-					bottom_free -= rect.bottom
-				} else {
-					bottom_free = 0
-				}
+			const top = before?.bottom ?? 0
+			const bottom = after?.top ?? 0
 
-				if( bottom_free > window_height ) {
-	
-					const factor = ( - rect.bottom + window_height / 2 ) / $mol_atom2_value( ()=> this.gap_bottom() )
-					if( factor < 1 ) {
-
-						this.normal_direction = false
-
-						max += Math.floor( ( kids.length - max ) * factor )
-						max = Math.min( kids.length , Math.max( 1 , max ) )
-	
-						kids[ max - 1 ].view_rect()
-	
-						return [ max - 1 , max ]
-					}
-					
-				}
-
+			console.log( 'lim', top , limit_top , bottom , limit_bottom)
+			if( top <= limit_top && bottom >= limit_bottom ) {
+				console.log('nop',min,max)
+				return [ min , max ] 
 			}
 
-			if( true ) {
+			if( bottom < limit_top ) {
 
-				const rect = kids[ min ].view_rect()
-				if( rect ) top_free += rect.top
+				const factor = ( - top + window_height / 2 ) / after.height
+				if( factor < 1 ) {
+
+					max += Math.floor( ( kids.length - max ) * factor )
+					max = Math.min( kids.length , Math.max( 1 , max ) )
+
+					return [ max - 1 , max ]
+
+				}
 				
-				if( top_free > window_height ) {
-	
-					const factor = ( rect.top - window_height / 2 ) / $mol_atom2_value( ()=> this.gap_top() )
-					if( factor < 1 ) {
+			}
 
-						this.normal_direction = true
+			if( top > limit_bottom ) {
 
-						min = Math.floor( min * ( 1 - factor ) )
-						kids[ min ].view_rect()
-	
-						return [ min , min + 1 ]
-					}
+				const factor = ( bottom - window_height / 2 ) / before.height
+				if( factor < 1 ) {
+
+					min = Math.floor( min * ( 1 - factor ) )
+
+					return [ min , min + 1 ]
 					
 				}
 				
 			}
 
-			while( top_free > -ext && min > 0 ) {
-				-- min
-				top_free -= kids[ min ].minimal_height()
-				this.normal_direction = false
+			let top2 = top
+			let bottom2 = bottom
+
+			if( top <= limit_top ) {
+
+				min2 = max
+				top2 = bottom
+
+				while( top2 >= limit_top && min2 > min ) {
+					-- min2
+					top2 -= kids[ min2 ].minimal_height()
+				}
+
+				console.log( 'tdec' , top, min, min2 )
+
+			} else {
+
+				while( top2 >= limit_top && min2 > 0 ) {
+					-- min2
+					top2 -= kids[ min2 ].minimal_height()
+				}
+	
+				console.log( 'tinc' , top , top2 , min, min2 )
 			}
 
-			while( bottom_free > -ext && max < kids.length ) {
-				bottom_free -= kids[ max ].minimal_height()
-				++ max
-				this.normal_direction = true
+			if( bottom >= limit_bottom ) {
+
+				// if( min > 0 ) {
+
+				max2 = min
+				bottom2 = top
+
+				while( bottom2 < limit_bottom && max2 <= max ) {
+					bottom2 += kids[ max2 ].minimal_height()
+					++ max2
+				}
+
+				console.log( 'bdec' , bottom, max, max2 )
+			// }
+
+			} else {
+
+				while( bottom2 < limit_bottom && max2 < kids.length ) {
+					bottom2 += kids[ max2 ].minimal_height()
+					++ max2
+				}
+	
+				console.log( 'binc' , bottom , bottom2 , max, max2 )
 			}
 
-			if( !this.normal_direction && max > min + 1 ) {
-				const rect = kids[ max - 1 ].view_rect()
-				if( rect && rect.top > $mol_window.size().height + ext ) {
-					-- max
-				}
-			}
-			
-			if( this.normal_direction && min < max - 1 ) {
-				const rect = kids[min].view_rect()
-				if( rect && rect.bottom < -ext ) {
-					++ min
-				}
-			}
-			
-			kids[min].view_rect()
-			if( max > 0 ) kids[ max - 1 ].view_rect()
-			
-			return [ min , max ]
+			return [ min2 , max2 ]
 		}
 
 		@ $mol_mem
-		gap_top() {
+		gap_before() {
 			const skipped = this.sub().slice( 0 , this.view_window()[0] )
 			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.approximated_height() , 0 ) )
 		}
 
 		@ $mol_mem
-		gap_bottom() {
+		gap_after() {
 			const skipped = this.sub().slice( this.view_window()[1] )
 			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.approximated_height() , 0 ) )
 		}
@@ -126,8 +134,10 @@ namespace $.$$ {
 
 			const next = sub.slice( ... this.view_window() )
 			
-			if( this.gap_top() ) next.unshift( this.Gap_top() )
-			if( this.gap_bottom() ) next.push( this.Gap_bottom() )
+			// if( this.gap_before() ) 
+			next.unshift( this.Gap_before() )
+			// if( this.gap_after() ) 
+			next.push( this.Gap_after() )
 
 			return next
 		}

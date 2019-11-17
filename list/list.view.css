@@ -8,8 +8,8 @@
 	transition: none;
 }
 
-[mol_list_gap_top] ,
-[mol_list_gap_bottom] {
+[mol_list_gap_before] ,
+[mol_list_gap_after] {
 	display: block;
 	flex: none;
 	transition: none;
