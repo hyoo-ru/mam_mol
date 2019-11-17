@@ -33,13 +33,11 @@ const ann = User({
 // }
 
 // Allow only Users
-function printFriends( user : ReturnType< typeof User > ) {
-	for( const friend of user.friends ) {
-		console.log( friend.name )
-	}
+function printName( user : typeof User.Value ) {
+	console.log( user.name )
 }
 
-printFriends( ann )
+printName( ann )
 ```
 
 ## Units
