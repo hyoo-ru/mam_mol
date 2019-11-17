@@ -58,7 +58,13 @@ len = Length( 20.1 ) // Run time error
 ## (De)Serialization
 
 ```typescript
-const Duration = $mol_data_wrapper( $mol_data_variant( $mol_data_string , $mol_data_integer ) , $mol_time_duration )
+const Duration = $mol_data_wrapper(
+	$mol_data_variant(
+		$mol_data_string ,
+		$mol_data_integer ,
+	) ,
+	$mol_time_duration ,
+)
 
 JSON.stringify( Duration( 'P1D' ) ) // "P1DT"
 JSON.stringify( Duration( 1000 ) ) // "PT1S"
