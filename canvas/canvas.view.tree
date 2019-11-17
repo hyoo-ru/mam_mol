@@ -1,0 +1,7 @@
+$mol_canvas $mol_view
+	dom_name \canvas
+	attr *
+		^
+		width <= width 400
+		height <= height 300
+	paint null
