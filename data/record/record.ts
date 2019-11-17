@@ -10,7 +10,7 @@ namespace $ {
 			[ key in keyof Sub ] : ReturnType< Sub[key] >
 		}>
 
-		return (( val : Input ) => {
+		return $mol_data_setup( ( val : Input ) => {
 
 			let res = {} as Output
 			
@@ -26,7 +26,7 @@ namespace $ {
 			
 			return res as Readonly< Output >
 			
-		})
+		} , sub )
 
 	}
 	

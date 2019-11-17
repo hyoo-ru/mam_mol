@@ -1,7 +1,8 @@
 namespace $ {
 
 	export function $mol_data_variant< Sub extends $mol_data_value[] >( ... sub : Sub ) {
-		return ( val : Parameters< Sub[ number ] >[0] ) => {
+
+		return $mol_data_setup( ( val : Parameters< Sub[ number ] >[0] ) => {
 			
 			const errors = [] as String[]
 			
@@ -14,7 +15,8 @@ namespace $ {
 			}
 			
 			return $mol_fail( new Error( errors.join( ' and ' ) ) )
-		}
+		} , sub )
+
 	}
 	
 }
