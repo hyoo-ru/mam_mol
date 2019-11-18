@@ -6842,7 +6842,7 @@ var $;
         text() {
             const buffer = this.buffer();
             const native = this.native;
-            const mime = native.headers.get('content-type');
+            const mime = native.headers.get('content-type') || '';
             const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
             const decoder = new TextDecoder(charset);
             return decoder.decode(buffer);
