@@ -3453,7 +3453,7 @@ var $;
         }
         static href(next, force) {
             if (next === undefined)
-                return window.location.href;
+                return $.$mol_dom_context.location.href;
             history.replaceState(history.state, $.$mol_dom_context.document.title, next);
             return next;
         }
@@ -3495,7 +3495,7 @@ var $;
                 const val = next[key];
                 chunks.push([key].concat(val ? [val] : []).map(this.encode).join('='));
             }
-            return new URL('#' + chunks.join('/'), window.location.href).toString();
+            return new URL('#' + chunks.join('/'), $.$mol_dom_context.location.href).toString();
         }
         static encode(str) {
             return encodeURIComponent(str).replace(/\(/g, '%28').replace(/\)/g, '%29');
@@ -3529,7 +3529,7 @@ var $;
     ], $mol_state_arg, "value", null);
     $.$mol_state_arg = $mol_state_arg;
     self.addEventListener('hashchange', $.$mol_fiber_root($.$mol_log_group('$mol_state_arg hashchange', (event) => {
-        $mol_state_arg.href(window.location.href);
+        $mol_state_arg.href($.$mol_dom_context.location.href);
     })));
 })($ || ($ = {}));
 //arg.web.js.map

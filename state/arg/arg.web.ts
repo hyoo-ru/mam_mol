@@ -4,7 +4,7 @@ namespace $ {
 		
 		@ $mol_mem
 		static href( next? : string , force? : $mol_mem_force ) {
-			if( next === undefined ) return window.location.href
+			if( next === undefined ) return $mol_dom_context.location.href
 			history.replaceState( history.state , $mol_dom_context.document.title , next )
 			return next
 		}
@@ -59,7 +59,7 @@ namespace $ {
 				chunks.push( [ key ].concat( val ? [ val ] : [] ).map( this.encode ).join( '=' ) )
 			}
 			
-			return new URL( '#' + chunks.join( '/' ) , window.location.href ).toString()
+			return new URL( '#' + chunks.join( '/' ) , $mol_dom_context.location.href ).toString()
 		}
 
 		static encode( str : string ) {
@@ -90,7 +90,7 @@ namespace $ {
 	}
 	
 	self.addEventListener( 'hashchange' , $mol_fiber_root( $mol_log_group( '$mol_state_arg hashchange' , ( event : HashChangeEvent )=> {
-		$mol_state_arg.href( window.location.href ) 
+		$mol_state_arg.href( $mol_dom_context.location.href ) 
 	} ) ) )
 	
 }

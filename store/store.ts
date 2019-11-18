@@ -10,7 +10,7 @@ namespace $ {
 
 		@ $mol_mem
 		data( next? : Data ) {
-			return next
+			return next!
 		}
 
 		snapshot( next? : string ) {
@@ -20,11 +20,11 @@ namespace $ {
 		value< Key extends keyof Data >( key : Key , next? : Data[ Key ] ) {
 			
 			const data = this.data()
-			if( next === undefined ) return data[ key ]
+			if( next === undefined ) return data[ key ]!
 			
 			this.data( Object.assign( {} , data , { [ key ] : next } ) )
 
-			return next
+			return next!
 		}
 
 		sub<
@@ -34,12 +34,12 @@ namespace $ {
 
 			if( !lens ) lens = new $mol_store< Data[ Key ] >() as any
 
-			lens.data = next => {
+			lens!.data = next => {
 				if( next == undefined ) return this.value( key )
 				return this.value( key , next )
 			}
 
-			return lens
+			return lens!
 
 		}
 
