@@ -54,13 +54,13 @@ namespace $ {
 		return $mol_fiber.method( obj , name , descr )
 	}
 
-	export function $mol_fiber_async< Value >( task : ()=> Value ) {
+	export function $mol_fiber_async< Args extends any[] , Value >( task : ( ... args : Args )=> Value ) {
 
-		return new Promise< Value >( $mol_fiber_root( ( done , fail )=> {
+		return ( ... args : Args )=> new Promise< Value >( $mol_fiber_root( ( done , fail )=> {
 
 			try {
 
-				done( task() )
+				done( task( ... args ) )
 
 			} catch( error ) {
 
