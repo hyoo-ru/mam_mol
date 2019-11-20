@@ -54,6 +54,26 @@ namespace $ {
 		return $mol_fiber.method( obj , name , descr )
 	}
 
+	export function $mol_fiber_async< Value >( task : ()=> Value ) {
+
+		return new Promise< Value >( $mol_fiber_root( ( done , fail )=> {
+
+			try {
+
+				done( task() )
+
+			} catch( error ) {
+
+				if( 'then' in error ) return $mol_fail_hidden( error )
+
+				fail( error )
+
+			}
+
+		} ) )
+
+	}
+
 	export function $mol_fiber_sync< Args extends any[] , Value = void , This = void >(
 		request : ( this : This , ... args : Args )=> PromiseLike< Value >
 	) : ( ... args : Args )=> Value {

@@ -164,6 +164,16 @@ var $;
 //class.js.map
 ;
 "use strict";
+var $;
+(function ($) {
+    function $mol_fail_hidden(error) {
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
+    }
+    $.$mol_fail_hidden = $mol_fail_hidden;
+})($ || ($ = {}));
+//hidden.js.map
+;
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -589,16 +599,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_fail_hidden(error) {
-        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
-    }
-    $.$mol_fail_hidden = $mol_fail_hidden;
-})($ || ($ = {}));
-//hidden.js.map
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_after_timeout extends $.$mol_object2 {
         constructor(delay, task) {
             super();
@@ -788,6 +788,19 @@ var $;
         return $mol_fiber.method(obj, name, descr);
     }
     $.$mol_fiber_method = $mol_fiber_method;
+    function $mol_fiber_async(task) {
+        return new Promise($mol_fiber_root((done, fail) => {
+            try {
+                done(task());
+            }
+            catch (error) {
+                if ('then' in error)
+                    return $.$mol_fail_hidden(error);
+                fail(error);
+            }
+        }));
+    }
+    $.$mol_fiber_async = $mol_fiber_async;
     function $mol_fiber_sync(request) {
         return function $mol_fiber_sync_wrapper(...args) {
             const slave = $mol_fiber.current;
