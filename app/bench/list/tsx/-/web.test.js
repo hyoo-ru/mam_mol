@@ -1272,9 +1272,9 @@ var $;
     }
     $.$mol_fiber_method = $mol_fiber_method;
     function $mol_fiber_async(task) {
-        return new Promise($mol_fiber_root((done, fail) => {
+        return (...args) => new Promise($mol_fiber_root((done, fail) => {
             try {
-                done(task());
+                done(task(...args));
             }
             catch (error) {
                 if ('then' in error)
