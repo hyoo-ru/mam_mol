@@ -10,6 +10,7 @@ namespace $ {
 				try {
 					return type( val ) as ReturnType< Sub[ number ] >
 				} catch ( error ) {
+					if( error instanceof Promise ) return $mol_fail_hidden( error )
 					errors.push( error.message )
 				}
 			}
