@@ -7533,7 +7533,7 @@ var $;
             if (typeof config === 'number')
                 config = new Date(config);
             if (typeof config === 'string') {
-                var parsed = /^(?:(\d\d\d\d)(?:-?(\d\d)(?:-?(\d\d))?)?)?(?:[T ](\d\d)(?::?(\d\d)(?::?(\d\d(?:\.\d\d\d)?))?)?(Z|[\+\-]\d\d(?::?(?:\d\d)?)?)?)?$/.exec(config);
+                var parsed = /^(?:(\d\d\d\d)(?:-?(\d\d)(?:-?(\d\d))?)?)?(?:[T ](\d\d)(?::?(\d\d)(?::?(\d\d(?:\.\d+)?))?)?(Z|[\+\-]\d\d(?::?(?:\d\d)?)?)?)?$/.exec(config);
                 if (!parsed)
                     throw new Error(`Can not parse time moment (${config})`);
                 if (parsed[1])
@@ -7572,8 +7572,9 @@ var $;
             this.hour = config.hour;
             this.minute = config.minute;
             this.second = config.second;
-            if (config.offset !== undefined)
-                this.offset = config.offset && new $.$mol_time_duration(config.offset);
+            if (config.offset !== undefined) {
+                this.offset = new $.$mol_time_duration(config.offset);
+            }
         }
         get weekday() {
             return (this.native.getDay() + 6) % 7;
