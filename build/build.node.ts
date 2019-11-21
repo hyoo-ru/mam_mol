@@ -667,7 +667,7 @@ namespace $ {
 					}
 					try {
 						const content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
-						const isCommonJs = /module\.exports/.test( content )
+						const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test( content )
 					
 						if( isCommonJs ) {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
@@ -1111,7 +1111,7 @@ namespace $ {
 				
 				line.replace(
 					/require\(\s*['"](.*?)['"]\s*\)/ig , ( str , path )=> {
-						if( !/\.[^\/]$/.test( path ) ) path += '.js'
+						path = path.replace( /(\/[^\/.]+)$/ , '$1.js' ).replace( /\/$/, '/index.js' )
 						if( path[0] === '.' ) path = '../' + path
 						$mol_build_depsMerge( depends , { [ path ] : priority } )
 						return str

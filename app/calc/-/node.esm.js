@@ -1703,6 +1703,10 @@ var $node = new Proxy({}, { get(target, name, wrapper) {
             return require(name);
         if (!require('fs').existsSync(`./node_modules/${name}`)) {
             $.$mol_exec('.', 'npm', 'install', name);
+            try {
+                $.$mol_exec('.', 'npm', 'install', '@types/' + name);
+            }
+            catch (_a) { }
         }
         return require(name);
     } });

@@ -1665,6 +1665,10 @@ var $node = new Proxy({}, { get(target, name, wrapper) {
             return require(name);
         if (!require('fs').existsSync(`./node_modules/${name}`)) {
             $.$mol_exec('.', 'npm', 'install', name);
+            try {
+                $.$mol_exec('.', 'npm', 'install', '@types/' + name);
+            }
+            catch (_a) { }
         }
         return require(name);
     } });
@@ -3891,7 +3895,7 @@ var $;
                 }
                 try {
                     const content = (src.content() || '').toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
-                    const isCommonJs = /module\.exports/.test(content);
+                    const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test(content);
                     if (isCommonJs) {
                         concater.add(`\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate(this.root().resolve('node_modules')) + `/" ) ] }; \n`, '-');
                     }
@@ -4323,8 +4327,7 @@ var $;
             var indent = /^([\s\t]*)/.exec(line);
             var priority = -indent[0].replace(/\t/g, '    ').length / 4;
             line.replace(/require\(\s*['"](.*?)['"]\s*\)/ig, (str, path) => {
-                if (!/\.[^\/]$/.test(path))
-                    path += '.js';
+                path = path.replace(/(\/[^\/.]+)$/, '$1.js').replace(/\/$/, '/index.js');
                 if (path[0] === '.')
                     path = '../' + path;
                 $mol_build_depsMerge(depends, { [path]: priority });

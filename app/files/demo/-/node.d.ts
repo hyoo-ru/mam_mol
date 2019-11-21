@@ -2844,14 +2844,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    let $lib_pdfjs: any;
-}
-
-declare namespace $ {
-    class $mol_atom_wait extends Promise<void> {
-        message: string;
-        constructor(message?: string);
-    }
+    let $lib_pdfjs: typeof import("pdfjs-dist");
 }
 
 declare namespace $ {
@@ -2880,6 +2873,13 @@ declare namespace $ {
         });
         item(id: number): Value;
         get length(): number;
+    }
+}
+
+declare namespace $ {
+    class $mol_atom_wait extends Promise<void> {
+        message: string;
+        constructor(message?: string);
     }
 }
 

@@ -1696,6 +1696,10 @@ var $node = new Proxy({}, { get(target, name, wrapper) {
             return require(name);
         if (!require('fs').existsSync(`./node_modules/${name}`)) {
             $.$mol_exec('.', 'npm', 'install', name);
+            try {
+                $.$mol_exec('.', 'npm', 'install', '@types/' + name);
+            }
+            catch (_a) { }
         }
         return require(name);
     } });
@@ -7048,25 +7052,9 @@ var $;
 var $;
 (function ($) {
     $.$lib_pdfjs = require('pdfjs-dist/build/pdf.min.js');
-    $.$lib_pdfjs.disableRange = true;
     $.$lib_pdfjs.GlobalWorkerOptions.workerSrc = '-/node_modules/pdfjs-dist/build/pdf.worker.min.js';
 })($ || ($ = {}));
 //pdfjs.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    console.warn('$mol_atom_wait is deprecated. Use $mol_fiber_sync instead.');
-    class $mol_atom_wait extends Promise {
-        constructor(message = 'Wait...') {
-            super(() => { });
-            this.message = message;
-        }
-    }
-    $.$mol_atom_wait = $mol_atom_wait;
-    $mol_atom_wait.prototype.constructor = Promise;
-})($ || ($ = {}));
-//wait.js.map
 ;
 "use strict";
 var $;
@@ -7191,6 +7179,21 @@ var $;
     // }
 })($ || ($ = {}));
 //range.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    console.warn('$mol_atom_wait is deprecated. Use $mol_fiber_sync instead.');
+    class $mol_atom_wait extends Promise {
+        constructor(message = 'Wait...') {
+            super(() => { });
+            this.message = message;
+        }
+    }
+    $.$mol_atom_wait = $mol_atom_wait;
+    $mol_atom_wait.prototype.constructor = Promise;
+})($ || ($ = {}));
+//wait.js.map
 ;
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7397,16 +7400,10 @@ var $;
     (function ($$) {
         class $mol_embed_pdf extends $.$mol_embed_pdf {
             document(doc, force) {
-                var loadingTask = $.$lib_pdfjs.getDocument(this.uri()).promise
-                    .then((doc) => this.document(doc, $.$mol_mem_force_cache))
-                    .catch((error) => this.document(error, $.$mol_mem_force_cache));
-                throw new $.$mol_atom_wait(`Loading PDF document: ${this.uri()}`);
+                return $.$mol_fiber_sync(() => $.$lib_pdfjs.getDocument(this.uri()).promise)();
             }
             page(index, page, force) {
-                this.document().getPage(index + 1)
-                    .then((page) => this.page(index, page, $.$mol_mem_force_cache))
-                    .catch((error) => this.page(index, error, $.$mol_mem_force_cache));
-                throw new $.$mol_atom_wait(`Rendering PDF page=${index}`);
+                return $.$mol_fiber_sync(() => this.document().getPage(index + 1))();
             }
             pages() {
                 return $.$mol_range_in({
