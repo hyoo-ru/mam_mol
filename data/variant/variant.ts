@@ -1,7 +1,8 @@
 namespace $ {
 
 	export function $mol_data_variant< Sub extends $mol_data_value[] >( ... sub : Sub ) {
-		return ( val : Parameters< Sub[ number ] >[0] ) => {
+
+		return $mol_data_setup( ( val : Parameters< Sub[ number ] >[0] ) => {
 			
 			const errors = [] as String[]
 			
@@ -9,12 +10,14 @@ namespace $ {
 				try {
 					return type( val ) as ReturnType< Sub[ number ] >
 				} catch ( error ) {
+					if( error instanceof Promise ) return $mol_fail_hidden( error )
 					errors.push( error.message )
 				}
 			}
 			
 			return $mol_fail( new Error( errors.join( ' and ' ) ) )
-		}
+		} , sub )
+
 	}
 	
 }

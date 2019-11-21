@@ -8,6 +8,11 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		lamps2() {
+			return $mol_fetch.text( '//lamptest.ru/led.php' )
+		}
+		
+		@ $mol_mem
 		lamps() {
 			return this.lamps_all().filter(
 				$mol_fiber.func(
@@ -114,6 +119,10 @@ namespace $.$$ {
 		
 		temp() {
 			return `${ this.lamp()[ 'color_l' ] }`
+		}
+		
+		wattage() {
+			return `${ this.lamp()[ 'power_l' ] }W`
 		}
 		
 		matt() {
