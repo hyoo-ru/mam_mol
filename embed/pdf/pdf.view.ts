@@ -4,20 +4,12 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		document( doc? : any , force? : $mol_mem_force ) : any {
-			var loadingTask = $lib_pdfjs.getDocument( this.uri() ).promise
-			.then( ( doc : any )=> this.document( doc , $mol_mem_force_cache ) )
-			.catch( ( error : Error )=> this.document( error , $mol_mem_force_cache ) )
-			
-			throw new $mol_atom_wait( `Loading PDF document: ${ this.uri() }` )
+			return $mol_fiber_sync( ()=> $lib_pdfjs.getDocument( this.uri() ).promise as PromiseLike<any> )()
 		}
 		
 		@ $mol_mem_key
 		page( index : number , page? : any , force? : $mol_mem_force ) : any {
-			this.document().getPage( index + 1 )
-			.then( ( page : any )=> this.page( index , page , $mol_mem_force_cache ) )
-			.catch( ( error : Error )=> this.page( index , error , $mol_mem_force_cache ) )
-			
-			throw new $mol_atom_wait( `Rendering PDF page=${ index }` )
+			return $mol_fiber_sync( ()=> this.document().getPage( index + 1 ) )()
 		}
 		
 		pages() {
