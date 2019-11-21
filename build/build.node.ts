@@ -670,7 +670,7 @@ namespace $ {
 						const isCommonJs = /module\.exports/.test( content )
 					
 						if( isCommonJs ) {
-							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; \n`, '-' )
+							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
 	
 						const srcMap = src.parent().resolve( src.name() + '.map' ).content()
@@ -678,7 +678,7 @@ namespace $ {
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
-							const idShort = idFull.replace( /\/index\.js$/ , '' )
+							const idShort = idFull.replace( /\/index\.js$/ , '' ).replace( /\.js$/ , '' )
 							concater.add( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
 						}
 					} catch( error ) {
