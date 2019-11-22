@@ -6,7 +6,7 @@ namespace $ {
 
 			if( val as object instanceof Instance ) return val
 			
-			return $mol_fail( new Error( `is not a ${ Instance.name }` ) )
+			return $mol_fail( new $mol_data_error( `${ val } is not a ${ Instance.name }` ) )
 			
 		} , Instance )
 

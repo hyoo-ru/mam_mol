@@ -12,19 +12,19 @@ namespace $ {
 		'Is super class' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_instance( Date )( new Object as any )
-			} , 'is not a Date' )
+			} , '[object Object] is not a Date' )
 		} ,
 
 		'Is another class' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_instance( Date )( new Array as any )
-			} , 'is not a Date' )
+			} , ' is not a Date' )
 		} ,
 
 		'Is not object' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_instance( Date )( null as any )
-			} , 'is not a Date' )
+			} , 'null is not a Date' )
 		} ,
 
 	})

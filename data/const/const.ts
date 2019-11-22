@@ -6,7 +6,7 @@ namespace $ {
 			
 			if( Object.is( val , ref ) ) return ref
 			
-			return $mol_fail( new Error( `is not ${ ref }` ) )
+			return $mol_fail( new $mol_data_error( `${ val } is not ${ ref }` ) )
 
 		} , ref )
 

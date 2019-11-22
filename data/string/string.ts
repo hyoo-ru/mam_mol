@@ -4,7 +4,7 @@ namespace $ {
 		
 		if( typeof val === 'string' ) return val
 		
-		return $mol_fail( new Error( 'is not a string' ) )
+		return $mol_fail( new $mol_data_error( `${ typeof val } is not a string` ) )
 	}
 	
 }
