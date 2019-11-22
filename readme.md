@@ -78,8 +78,8 @@ npm install && npm start
 **Setup your editor**
 
 - Use MAM directory as root of your project in editor
-- [Install plugins for *.tree files](https://github.com/nin-jin/tree.d#ide-support)
-- If your editor ignores .editorconfig use this preferences: TABs for indents, LF for line endings.
+- [Install plugin for *.tree files](https://github.com/nin-jin/tree.d#ide-support)
+- [Install .editorconfig plugin](https://editorconfig.org/#download) or use this preferences: **TABs for indents, LF for line endings**.
 
 **Create your application component**
 
