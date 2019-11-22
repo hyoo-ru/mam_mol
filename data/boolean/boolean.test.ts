@@ -12,13 +12,13 @@ namespace $ {
 		'Is not boolean' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_boolean( '' as any )
-			} , 'is not a boolean' )
+			} , 'string is not a boolean' )
 		} ,
 
 		'Is object boolean' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_boolean( new Boolean( '' ) as any )
-			} , 'is not a boolean' )
+			} , 'object is not a boolean' )
 		} ,
 
 	})

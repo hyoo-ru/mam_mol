@@ -8,7 +8,7 @@ namespace $ {
 		'Is not fit' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_pattern( /^-$/ )( '+' )
-			} , 'is not a /^-$/' )
+			} , '+ is not a /^-$/' )
 		} ,
 
 	})

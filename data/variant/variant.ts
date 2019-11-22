@@ -7,15 +7,25 @@ namespace $ {
 			const errors = [] as String[]
 			
 			for( const type of sub ) {
+
 				try {
+
 					return type( val ) as ReturnType< Sub[ number ] >
+
 				} catch ( error ) {
-					if( error instanceof Promise ) return $mol_fail_hidden( error )
-					errors.push( error.message )
+
+					if( error instanceof $mol_data_error ) {
+						errors.push( error.message )
+					} else {
+						return $mol_fail_hidden( error )
+					}
+
 				}
+
 			}
 			
-			return $mol_fail( new Error( errors.join( ' and ' ) ) )
+			return $mol_fail( new $mol_data_error( errors.join( ' and ' ) ) )
+
 		} , sub )
 
 	}
