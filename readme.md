@@ -8,7 +8,6 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Features](#features)
 - [Applications](https://showcase.hyoo.ru/)
 - [Benchmarks](#benchmarks)
-- [Oganizations using $mol](#organizations-using-mol)
 - [Articles](#articles)
 - [Discussions](https://teleg.run/mam_mol)
 - [Quick start](#quick-start)
@@ -66,7 +65,7 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 [Video of this process](https://www.youtube.com/watch?v=PyK3if5sgN0)
 
-**Create MAM project**
+## Create MAM project
 
 Easy way is checkout this [preconfigured MAM repository](http://github.com/eigenmethod/mam) and start dev server:
 
@@ -75,13 +74,13 @@ git clone https://github.com/eigenmethod/mam.git ./mam && cd mam
 npm install && npm start
 ```
 
-**Setup your editor**
+## Setup your editor
 
 - Use MAM directory as root of your project in editor
-- [Install plugins for *.tree files](https://github.com/nin-jin/tree.d#ide-support)
-- If your editor ignores .editorconfig use this preferences: TABs for indents, LF for line endings.
+- [Install plugin for *.tree files](https://github.com/nin-jin/tree.d#ide-support)
+- [Install .editorconfig plugin](https://editorconfig.org/#download) or use this preferences: **TABs for indents, LF for line endings**.
 
-**Create your application component**
+## Create your application component
 
 In examples we will use namespace `my` and application name `hello`, but you could use your own namespace and application name.
 
@@ -222,7 +221,7 @@ Add **styles** at `./my/hello/hello.view.css`:
 }
 ```
 
-[That is all!](https://mol.jso.org/app/hello/)
+[That is all!](https://mol.js.org/app/hello/)
 
 # Tutorials
 
