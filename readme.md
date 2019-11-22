@@ -8,7 +8,6 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 - [Features](#features)
 - [Applications](https://showcase.hyoo.ru/)
 - [Benchmarks](#benchmarks)
-- [Oganizations using $mol](#organizations-using-mol)
 - [Articles](#articles)
 - [Discussions](https://teleg.run/mam_mol)
 - [Quick start](#quick-start)
