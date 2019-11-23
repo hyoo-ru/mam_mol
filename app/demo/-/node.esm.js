@@ -24739,6 +24739,8 @@ var $;
             if (this.type === '*') {
                 var obj = {};
                 for (var child of this.sub) {
+                    if (child.type === '-')
+                        continue;
                     var key = child.type || child.clone({ sub: child.sub.slice(0, child.sub.length - 1) }).value;
                     var val = child.sub[child.sub.length - 1].toJSON();
                     if (val !== undefined)
@@ -24749,6 +24751,8 @@ var $;
             if (this.type === '/') {
                 var res = [];
                 this.sub.forEach(child => {
+                    if (child.type === '-')
+                        return;
                     var val = child.toJSON();
                     if (val !== undefined)
                         res.push(val);
