@@ -112,19 +112,6 @@ declare namespace $ {
         flush(): void;
         info(...values: any[]): void;
         static info(...values: any[]): void;
-        /**
-         * Enable all logs
-         *
-         * 	$mol_log2.excludes = []
-         *
-         * Exclude all atom logs:
-         *
-         * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
-         *
-         * Disable logs:
-         *
-         * 	$mol_log2.excludes = null
-         */
         static excludes: RegExp[];
         static prefix: any[];
     }
@@ -625,93 +612,25 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_button extends $mol_view {
-        /**
-         *  ```
-         *  enabled true
-         *  ```
-         **/
         enabled(): boolean;
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  click?event null
-         *  ```
-         **/
         click(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_click?event null
-         *  ```
-         **/
         event_click(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	click?event <=> event_activate?event
-         *  	keypress?event <=> event_key_press?event
-         *  ```
-         **/
         event(): {
             "click": (event?: any) => any;
             "keypress": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_activate?event null
-         *  ```
-         **/
         event_activate(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_key_press?event null
-         *  ```
-         **/
         event_key_press(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	disabled <= disabled
-         *  	role \button
-         *  	tabindex <= tab_index
-         *  	title <= hint
-         *  ```
-         **/
         attr(): {
             "disabled": boolean;
             "role": string;
             "tabindex": number;
             "title": string;
         };
-        /**
-         *  ```
-         *  disabled false
-         *  ```
-         **/
         disabled(): boolean;
-        /**
-         *  ```
-         *  tab_index 0
-         *  ```
-         **/
         tab_index(): number;
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint(): string;
-        /**
-         *  ```
-         *  sub /$mol_view_content <= title
-         *  ```
-         **/
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
     }
 }
@@ -731,13 +650,6 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_theme \$mol_theme_accent
-         *  ```
-         **/
         attr(): {
             "mol_theme": string;
             "disabled": boolean;
@@ -754,79 +666,22 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
-        /**
-         *  ```
-         *  minimal_height 0
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	scrollTop <= scroll_top?val
-         *  	scrollLeft <= scroll_left?val
-         *  	scrollBottom <= scroll_bottom?val
-         *  	scrollRight <= scroll_right?val
-         *  ```
-         **/
         field(): {
             "scrollTop": any;
             "scrollLeft": any;
             "scrollBottom": any;
             "scrollRight": any;
         };
-        /**
-         *  ```
-         *  scroll_top?val 0
-         *  ```
-         **/
         scroll_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_left?val 0
-         *  ```
-         **/
         scroll_left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_bottom?val 0
-         *  ```
-         **/
         scroll_bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_right?val 0
-         *  ```
-         **/
         scroll_right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	scroll?event <=> event_scroll?event
-         *  ```
-         **/
         event(): {
             "scroll": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_scroll?event null
-         *  ```
-         **/
         event_scroll(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Strut $mol_view style * transform <= strut_transform
-         *  ```
-         **/
         Strut(): $mol_view;
-        /**
-         *  ```
-         *  strut_transform \
-         *  ```
-         **/
         strut_transform(): string;
     }
 }
@@ -861,90 +716,17 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_page extends $mol_view {
-        /**
-         *  ```
-         *  sub /
-         *  	<= Head
-         *  	<= Body
-         *  	<= Foot
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Head $mol_view
-         *  	attr * mol_theme \$mol_theme_base
-         *  	sub <= head
-         *  ```
-         **/
         Head(): $mol_view;
-        /**
-         *  ```
-         *  head /
-         *  	<= Title
-         *  	<= Tools
-         *  ```
-         **/
         head(): readonly any[];
-        /**
-         *  ```
-         *  Title $mol_button
-         *  	sub / <= title
-         *  	event_click?val <=> event_top?val
-         *  ```
-         **/
         Title(): $$.$mol_button;
-        /**
-         *  ```
-         *  event_top?val null
-         *  ```
-         **/
         event_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Tools $mol_view sub <= tools
-         *  ```
-         **/
         Tools(): $mol_view;
-        /**
-         *  ```
-         *  tools /$mol_view_content
-         *  ```
-         **/
         tools(): readonly (string | number | boolean | Node | $mol_view)[];
-        /**
-         *  ```
-         *  Body $mol_scroll
-         *  	scroll_top?val <=> body_scroll_top?val
-         *  	sub <= body
-         *  ```
-         **/
         Body(): $$.$mol_scroll;
-        /**
-         *  ```
-         *  body_scroll_top?val 0
-         *  ```
-         **/
         body_scroll_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  body /$mol_view_content
-         *  ```
-         **/
         body(): readonly (string | number | boolean | Node | $mol_view)[];
-        /**
-         *  ```
-         *  Foot $mol_view
-         *  	attr * mol_theme \$mol_theme_base
-         *  	sub <= foot
-         *  ```
-         **/
         Foot(): $mol_view;
-        /**
-         *  ```
-         *  foot /$mol_view
-         *  ```
-         **/
         foot(): readonly $mol_view[];
     }
 }
@@ -1032,29 +814,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_link extends $mol_view {
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  dom_name \a
-         *  ```
-         **/
         dom_name(): string;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	href <= uri
-         *  	title <= hint
-         *  	target <= target
-         *  	download <= file_name
-         *  	mol_link_current <= current
-         *  ```
-         **/
         attr(): {
             "href": string;
             "title": string;
@@ -1062,69 +823,17 @@ declare namespace $ {
             "download": string;
             "mol_link_current": boolean;
         };
-        /**
-         *  ```
-         *  uri \
-         *  ```
-         **/
         uri(): string;
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint(): string;
-        /**
-         *  ```
-         *  target \_self
-         *  ```
-         **/
         target(): string;
-        /**
-         *  ```
-         *  file_name \
-         *  ```
-         **/
         file_name(): string;
-        /**
-         *  ```
-         *  current false
-         *  ```
-         **/
         current(): boolean;
-        /**
-         *  ```
-         *  sub /$mol_view_content <= title
-         *  ```
-         **/
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
-        /**
-         *  ```
-         *  arg *
-         *  ```
-         **/
         arg(): {};
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	click?event <=> click?event
-         *  ```
-         **/
         event(): {
             "click": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  click?event <=> event_click?event
-         *  ```
-         **/
         click(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_click?event null
-         *  ```
-         **/
         event_click(event?: any, force?: $mol_mem_force): any;
     }
 }
@@ -1140,70 +849,22 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_image extends $mol_view {
-        /**
-         *  ```
-         *  dom_name \img
-         *  ```
-         **/
         dom_name(): string;
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	src <= uri
-         *  	alt <= title
-         *  ```
-         **/
         field(): {
             "src": string;
             "alt": string;
         };
-        /**
-         *  ```
-         *  uri \
-         *  ```
-         **/
         uri(): string;
     }
 }
 
 declare namespace $ {
     class $mol_link_iconed extends $mol_link {
-        /**
-         *  ```
-         *  sub / <= Icon
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Icon $mol_image uri <= icon
-         *  ```
-         **/
         Icon(): $mol_image;
-        /**
-         *  ```
-         *  icon \
-         *  ```
-         **/
         icon(): string;
-        /**
-         *  ```
-         *  content / <= title
-         *  ```
-         **/
         content(): readonly any[];
-        /**
-         *  ```
-         *  title <= uri
-         *  ```
-         **/
         title(): string;
-        /**
-         *  ```
-         *  host \
-         *  ```
-         **/
         host(): string;
     }
 }
@@ -1219,48 +880,11 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_string extends $mol_view {
-        /**
-         *  ```
-         *  dom_name \input
-         *  ```
-         **/
         dom_name(): string;
-        /**
-         *  ```
-         *  enabled true
-         *  ```
-         **/
         enabled(): boolean;
-        /**
-         *  ```
-         *  debounce 0
-         *  ```
-         **/
         debounce(): number;
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  autocomplete false
-         *  ```
-         **/
         autocomplete(): boolean;
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	disabled <= disabled
-         *  	value <= value_changed?val
-         *  	placeholder <= hint
-         *  	type <= type?val
-         *  	spellcheck <= spellcheck
-         *  	autocomplete <= autocomplete_native
-         *  ```
-         **/
         field(): {
             "disabled": boolean;
             "value": any;
@@ -1269,87 +893,22 @@ declare namespace $ {
             "spellcheck": boolean;
             "autocomplete": string;
         };
-        /**
-         *  ```
-         *  disabled false
-         *  ```
-         **/
         disabled(): boolean;
-        /**
-         *  ```
-         *  value_changed?val <=> value?val
-         *  ```
-         **/
         value_changed(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  value?val \
-         *  ```
-         **/
         value(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint(): string;
-        /**
-         *  ```
-         *  type?val \text
-         *  ```
-         **/
         type(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  spellcheck false
-         *  ```
-         **/
         spellcheck(): boolean;
-        /**
-         *  ```
-         *  autocomplete_native \
-         *  ```
-         **/
         autocomplete_native(): string;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	maxlength <= length_max
-         *  ```
-         **/
         attr(): {
             "maxlength": number;
         };
-        /**
-         *  ```
-         *  length_max Infinity
-         *  ```
-         **/
         length_max(): number;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	input?event <=> event_change?event
-         *  	keydown?event <=> event_key_press?event
-         *  ```
-         **/
         event(): {
             "input": (event?: any) => any;
             "keydown": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_change?event null
-         *  ```
-         **/
         event_change(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_key_press?event null
-         *  ```
-         **/
         event_key_press(event?: any, force?: $mol_mem_force): any;
     }
 }
@@ -1365,23 +924,8 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_list extends $mol_view {
-        /**
-         *  ```
-         *  sub <= rows
-         *  ```
-         **/
         sub(): readonly $mol_view[];
-        /**
-         *  ```
-         *  rows /$mol_view
-         *  ```
-         **/
         rows(): readonly $mol_view[];
-        /**
-         *  ```
-         *  Empty null
-         *  ```
-         **/
         Empty(): any;
     }
 }
@@ -1429,184 +973,32 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_app_rdf extends $mol_page {
-        /**
-         *  ```
-         *  title @ \RDF graph browser
-         *  ```
-         **/
         title(): string;
-        /**
-         *  ```
-         *  tools / <= Source
-         *  ```
-         **/
         tools(): readonly any[];
-        /**
-         *  ```
-         *  Source $mol_link_iconed
-         *  	uri \https://github.com/eigenmethod/mol/tree/master/app/rdf
-         *  	title \
-         *  ```
-         **/
         Source(): $$.$mol_link_iconed;
-        /**
-         *  ```
-         *  sub /
-         *  	<= Head
-         *  	<= Uri
-         *  	<= Body
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Uri $mol_string
-         *  	value?val <=> uri?val
-         *  	hint <= uri_hint
-         *  ```
-         **/
         Uri(): $$.$mol_string;
-        /**
-         *  ```
-         *  uri?val \http://dbpedia.org/ontology/
-         *  ```
-         **/
         uri(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  uri_hint \URI
-         *  ```
-         **/
         uri_hint(): string;
-        /**
-         *  ```
-         *  body / <= Subjects
-         *  ```
-         **/
         body(): readonly any[];
-        /**
-         *  ```
-         *  Subjects $mol_list rows <= subject_rows
-         *  ```
-         **/
         Subjects(): $$.$mol_list;
-        /**
-         *  ```
-         *  subject_rows /
-         *  ```
-         **/
         subject_rows(): readonly any[];
-        /**
-         *  ```
-         *  Subject_row!uri $mol_view sub /
-         *  	<= Subject!uri
-         *  	<= Predicates!uri
-         *  ```
-         **/
         Subject_row(uri: any): $mol_view;
-        /**
-         *  ```
-         *  Subject!uri $mol_link
-         *  	title <= subject_title!uri
-         *  	uri <= subject_uri!uri
-         *  ```
-         **/
         Subject(uri: any): $$.$mol_link;
-        /**
-         *  ```
-         *  subject_title!uri \
-         *  ```
-         **/
         subject_title(uri: any): string;
-        /**
-         *  ```
-         *  subject_uri!uri \
-         *  ```
-         **/
         subject_uri(uri: any): string;
-        /**
-         *  ```
-         *  Predicates!uri $mol_list rows <= predicate_rows!uri
-         *  ```
-         **/
         Predicates(uri: any): $$.$mol_list;
-        /**
-         *  ```
-         *  predicate_rows!uri /
-         *  ```
-         **/
         predicate_rows(uri: any): readonly any[];
-        /**
-         *  ```
-         *  Predicate_row!id $mol_view sub /
-         *  	<= Predicate!id
-         *  	<= Objects!id
-         *  ```
-         **/
         Predicate_row(id: any): $mol_view;
-        /**
-         *  ```
-         *  Predicate!id $mol_link
-         *  	title <= predicate_title!id
-         *  	uri <= predicate_uri!id
-         *  ```
-         **/
         Predicate(id: any): $$.$mol_link;
-        /**
-         *  ```
-         *  predicate_title!id \
-         *  ```
-         **/
         predicate_title(id: any): string;
-        /**
-         *  ```
-         *  predicate_uri!id \
-         *  ```
-         **/
         predicate_uri(id: any): string;
-        /**
-         *  ```
-         *  Objects!id $mol_list rows <= object_rows!id
-         *  ```
-         **/
         Objects(id: any): $$.$mol_list;
-        /**
-         *  ```
-         *  object_rows!id /
-         *  ```
-         **/
         object_rows(id: any): readonly any[];
-        /**
-         *  ```
-         *  Resource!id $mol_link
-         *  	title <= resource_title!id
-         *  	uri <= resource_uri!id
-         *  ```
-         **/
         Resource(id: any): $$.$mol_link;
-        /**
-         *  ```
-         *  resource_title!id \
-         *  ```
-         **/
         resource_title(id: any): string;
-        /**
-         *  ```
-         *  resource_uri!id \
-         *  ```
-         **/
         resource_uri(id: any): string;
-        /**
-         *  ```
-         *  Value!id $mol_view sub / <= value!id
-         *  ```
-         **/
         Value(id: any): $mol_view;
-        /**
-         *  ```
-         *  value!id \
-         *  ```
-         **/
         value(id: any): string;
     }
 }

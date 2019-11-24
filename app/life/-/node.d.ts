@@ -112,19 +112,6 @@ declare namespace $ {
         flush(): void;
         info(...values: any[]): void;
         static info(...values: any[]): void;
-        /**
-         * Enable all logs
-         *
-         * 	$mol_log2.excludes = []
-         *
-         * Exclude all atom logs:
-         *
-         * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
-         *
-         * Disable logs:
-         *
-         * 	$mol_log2.excludes = null
-         */
         static excludes: RegExp[];
         static prefix: any[];
     }
@@ -543,29 +530,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_link extends $mol_view {
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  dom_name \a
-         *  ```
-         **/
         dom_name(): string;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	href <= uri
-         *  	title <= hint
-         *  	target <= target
-         *  	download <= file_name
-         *  	mol_link_current <= current
-         *  ```
-         **/
         attr(): {
             "href": string;
             "title": string;
@@ -573,69 +539,17 @@ declare namespace $ {
             "download": string;
             "mol_link_current": boolean;
         };
-        /**
-         *  ```
-         *  uri \
-         *  ```
-         **/
         uri(): string;
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint(): string;
-        /**
-         *  ```
-         *  target \_self
-         *  ```
-         **/
         target(): string;
-        /**
-         *  ```
-         *  file_name \
-         *  ```
-         **/
         file_name(): string;
-        /**
-         *  ```
-         *  current false
-         *  ```
-         **/
         current(): boolean;
-        /**
-         *  ```
-         *  sub /$mol_view_content <= title
-         *  ```
-         **/
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
-        /**
-         *  ```
-         *  arg *
-         *  ```
-         **/
         arg(): {};
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	click?event <=> click?event
-         *  ```
-         **/
         event(): {
             "click": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  click?event <=> event_click?event
-         *  ```
-         **/
         click(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_click?event null
-         *  ```
-         **/
         event_click(event?: any, force?: $mol_mem_force): any;
     }
 }
@@ -665,35 +579,10 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_svg extends $mol_view {
-        /**
-         *  ```
-         *  dom_name \svg
-         *  ```
-         **/
         dom_name(): string;
-        /**
-         *  ```
-         *  dom_name_space \http://www.w3.org/2000/svg
-         *  ```
-         **/
         dom_name_space(): string;
-        /**
-         *  ```
-         *  text_width?text 0
-         *  ```
-         **/
         text_width(text?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  font_size 16
-         *  ```
-         **/
         font_size(): number;
-        /**
-         *  ```
-         *  font_family \
-         *  ```
-         **/
         font_family(): string;
     }
 }
@@ -709,35 +598,12 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_svg_root extends $mol_svg {
-        /**
-         *  ```
-         *  dom_name \svg
-         *  ```
-         **/
         dom_name(): string;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	viewBox <= view_box
-         *  	preserveAspectRatio <= aspect
-         *  ```
-         **/
         attr(): {
             "viewBox": string;
             "preserveAspectRatio": string;
         };
-        /**
-         *  ```
-         *  view_box \0 0 100 100
-         *  ```
-         **/
         view_box(): string;
-        /**
-         *  ```
-         *  aspect \xMidYMid
-         *  ```
-         **/
         aspect(): string;
     }
 }
@@ -815,260 +681,55 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_svg_group extends $mol_svg {
-        /**
-         *  ```
-         *  dom_name \g
-         *  ```
-         **/
         dom_name(): string;
     }
 }
 
 declare namespace $ {
     class $mol_plot_graph extends $mol_svg_group {
-        /**
-         *  ```
-         *  series_x /number
-         *  ```
-         **/
         series_x(): readonly number[];
-        /**
-         *  ```
-         *  series_y /number
-         *  ```
-         **/
         series_y(): readonly number[];
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_plot_graph_type <= type
-         *  ```
-         **/
         attr(): {
             "mol_plot_graph_type": string;
         };
-        /**
-         *  ```
-         *  type \solid
-         *  ```
-         **/
         type(): string;
-        /**
-         *  ```
-         *  style *
-         *  	^
-         *  	color <= color
-         *  ```
-         **/
         style(): {
             "color": string;
         };
-        /**
-         *  ```
-         *  color \
-         *  ```
-         **/
         color(): string;
-        /**
-         *  ```
-         *  viewport $mol_vector_2d /
-         *  	<= viewport_x
-         *  	<= viewport_y
-         *  ```
-         **/
         viewport(): $mol_vector_2d<$mol_vector_range<number>>;
-        /**
-         *  ```
-         *  viewport_x $mol_vector_range /
-         *  	Infinity
-         *  	-Infinity
-         *  ```
-         **/
         viewport_x(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  viewport_y $mol_vector_range /
-         *  	Infinity
-         *  	-Infinity
-         *  ```
-         **/
         viewport_y(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  shift /number
-         *  	0
-         *  	0
-         *  ```
-         **/
         shift(): readonly number[];
-        /**
-         *  ```
-         *  scale /number
-         *  	1
-         *  	1
-         *  ```
-         **/
         scale(): readonly number[];
-        /**
-         *  ```
-         *  cursor_position $mol_vector_2d /
-         *  	NaN
-         *  	NaN
-         *  ```
-         **/
         cursor_position(): $mol_vector_2d<number>;
-        /**
-         *  ```
-         *  dimensions_pane $mol_vector_2d /
-         *  	<= dimensions_pane_x
-         *  	<= dimensions_pane_y
-         *  ```
-         **/
         dimensions_pane(): $mol_vector_2d<$mol_vector_range<number>>;
-        /**
-         *  ```
-         *  dimensions_pane_x $mol_vector_range /
-         *  	Infinity
-         *  	-Infinity
-         *  ```
-         **/
         dimensions_pane_x(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  dimensions_pane_y $mol_vector_range /
-         *  	Infinity
-         *  	-Infinity
-         *  ```
-         **/
         dimensions_pane_y(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  dimensions $mol_vector_2d /
-         *  	<= dimensions_x
-         *  	<= dimensions_y
-         *  ```
-         **/
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
-        /**
-         *  ```
-         *  dimensions_x $mol_vector_range /
-         *  	Infinity
-         *  	-Infinity
-         *  ```
-         **/
         dimensions_x(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  dimensions_y $mol_vector_range /
-         *  	Infinity
-         *  	-Infinity
-         *  ```
-         **/
         dimensions_y(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  size_real $mol_vector_2d /
-         *  	0
-         *  	0
-         *  ```
-         **/
         size_real(): $mol_vector_2d<number>;
-        /**
-         *  ```
-         *  gap $mol_vector_2d /
-         *  	<= gap_x
-         *  	<= gap_y
-         *  ```
-         **/
         gap(): $mol_vector_2d<$mol_vector_range<number>>;
-        /**
-         *  ```
-         *  gap_x $mol_vector_range /
-         *  	0
-         *  	0
-         *  ```
-         **/
         gap_x(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  gap_y $mol_vector_range /
-         *  	0
-         *  	0
-         *  ```
-         **/
         gap_y(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  indexes /number
-         *  ```
-         **/
         indexes(): readonly number[];
-        /**
-         *  ```
-         *  points /readonly(number)[]
-         *  ```
-         **/
         points(): readonly (readonly number[])[];
-        /**
-         *  ```
-         *  front /$mol_svg
-         *  ```
-         **/
         front(): readonly $mol_svg[];
-        /**
-         *  ```
-         *  back /$mol_svg
-         *  ```
-         **/
         back(): readonly $mol_svg[];
-        /**
-         *  ```
-         *  hue NaN
-         *  ```
-         **/
         hue(): number;
-        /**
-         *  ```
-         *  Sample null
-         *  ```
-         **/
         Sample(): any;
     }
 }
 declare namespace $ {
     class $mol_plot_graph_sample extends $mol_view {
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_plot_graph_type <= type
-         *  ```
-         **/
         attr(): {
             "mol_plot_graph_type": string;
         };
-        /**
-         *  ```
-         *  type \solid
-         *  ```
-         **/
         type(): string;
-        /**
-         *  ```
-         *  style *
-         *  	^
-         *  	color <= color
-         *  ```
-         **/
         style(): {
             "color": string;
         };
-        /**
-         *  ```
-         *  color \black
-         *  ```
-         **/
         color(): string;
     }
 }
@@ -1099,47 +760,12 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_meter extends $mol_plugin {
-        /**
-         *  ```
-         *  zoom 1
-         *  ```
-         **/
         zoom(): number;
-        /**
-         *  ```
-         *  width?val 0
-         *  ```
-         **/
         width(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  height?val 0
-         *  ```
-         **/
         height(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  left?val 0
-         *  ```
-         **/
         left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  right?val 0
-         *  ```
-         **/
         right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  bottom?val 0
-         *  ```
-         **/
         bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  top?val 0
-         *  ```
-         **/
         top(val?: any, force?: $mol_mem_force): any;
     }
 }
@@ -1167,156 +793,29 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_touch extends $mol_plugin {
-        /**
-         *  ```
-         *  start_zoom?val 0
-         *  ```
-         **/
         start_zoom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  start_distance?val 0
-         *  ```
-         **/
         start_distance(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  zoom?val 1
-         *  ```
-         **/
         zoom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  start_pan?val /
-         *  	0
-         *  	0
-         *  ```
-         **/
         start_pan(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  pan?val /
-         *  	0
-         *  	0
-         *  ```
-         **/
         pan(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  pos?val /
-         *  	NaN
-         *  	NaN
-         *  ```
-         **/
         pos(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  start_pos?val null
-         *  ```
-         **/
         start_pos(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_precision 16
-         *  ```
-         **/
         swipe_precision(): number;
-        /**
-         *  ```
-         *  swipe_right?val null
-         *  ```
-         **/
         swipe_right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_bottom?val null
-         *  ```
-         **/
         swipe_bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_left?val null
-         *  ```
-         **/
         swipe_left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_top?val null
-         *  ```
-         **/
         swipe_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_from_right?val null
-         *  ```
-         **/
         swipe_from_right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_from_bottom?val null
-         *  ```
-         **/
         swipe_from_bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_from_left?val null
-         *  ```
-         **/
         swipe_from_left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_from_top?val null
-         *  ```
-         **/
         swipe_from_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_to_right?val null
-         *  ```
-         **/
         swipe_to_right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_to_bottom?val null
-         *  ```
-         **/
         swipe_to_bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_to_left?val null
-         *  ```
-         **/
         swipe_to_left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_to_top?val null
-         *  ```
-         **/
         swipe_to_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  style *
-         *  	^
-         *  	touch-action \none
-         *  ```
-         **/
         style(): {
             "touch-action": string;
         };
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	touchstart?event <=> event_start?event
-         *  	touchmove?event <=> event_move?event
-         *  	touchend?event <=> event_end?event
-         *  	mousedown?event <=> event_start?event
-         *  	mousemove?event <=> event_move?event
-         *  	mouseup?event <=> event_end?event
-         *  	mouseleave?event <=> event_leave?event
-         *  	wheel?event <=> event_wheel?event
-         *  ```
-         **/
         event(): {
             "touchstart": (event?: any) => any;
             "touchmove": (event?: any) => any;
@@ -1327,35 +826,10 @@ declare namespace $ {
             "mouseleave": (event?: any) => any;
             "wheel": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_start?event null
-         *  ```
-         **/
         event_start(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_move?event null
-         *  ```
-         **/
         event_move(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_end?event null
-         *  ```
-         **/
         event_end(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_leave?event null
-         *  ```
-         **/
         event_leave(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_wheel?event null
-         *  ```
-         **/
         event_wheel(event?: any, force?: $mol_mem_force): any;
     }
 }
@@ -1377,321 +851,52 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_plot_pane extends $mol_svg_root {
-        /**
-         *  ```
-         *  aspect \none
-         *  ```
-         **/
         aspect(): string;
-        /**
-         *  ```
-         *  hue_base?val NaN
-         *  ```
-         **/
         hue_base(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  hue_shift?val 111
-         *  ```
-         **/
         hue_shift(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  gap_hor 48
-         *  ```
-         **/
         gap_hor(): number;
-        /**
-         *  ```
-         *  gap_vert 24
-         *  ```
-         **/
         gap_vert(): number;
-        /**
-         *  ```
-         *  gap_left <= gap_hor
-         *  ```
-         **/
         gap_left(): number;
-        /**
-         *  ```
-         *  gap_right <= gap_hor
-         *  ```
-         **/
         gap_right(): number;
-        /**
-         *  ```
-         *  gap_top <= gap_vert
-         *  ```
-         **/
         gap_top(): number;
-        /**
-         *  ```
-         *  gap_bottom <= gap_vert
-         *  ```
-         **/
         gap_bottom(): number;
-        /**
-         *  ```
-         *  gap $mol_vector_2d /
-         *  	<= gap_x
-         *  	<= gap_y
-         *  ```
-         **/
         gap(): $mol_vector_2d<$mol_vector_range<number>>;
-        /**
-         *  ```
-         *  gap_x $mol_vector_range /
-         *  	<= gap_left
-         *  	<= gap_right
-         *  ```
-         **/
         gap_x(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  gap_y $mol_vector_range /
-         *  	<= gap_bottom
-         *  	<= gap_top
-         *  ```
-         **/
         gap_y(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  shift_limit $mol_vector_2d /
-         *  	<= shift_limit_x
-         *  	<= shift_limit_y
-         *  ```
-         **/
         shift_limit(): $mol_vector_2d<$mol_vector_range<number>>;
-        /**
-         *  ```
-         *  shift_limit_x $mol_vector_range /
-         *  	0
-         *  	0
-         *  ```
-         **/
         shift_limit_x(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  shift_limit_y $mol_vector_range /
-         *  	0
-         *  	0
-         *  ```
-         **/
         shift_limit_y(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  shift_default /number
-         *  	0
-         *  	0
-         *  ```
-         **/
         shift_default(): readonly number[];
-        /**
-         *  ```
-         *  shift?val /number
-         *  	0
-         *  	0
-         *  ```
-         **/
         shift(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scale_limit $mol_vector_2d /
-         *  	<= scale_limit_x
-         *  	<= scale_limit_y
-         *  ```
-         **/
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
-        /**
-         *  ```
-         *  scale_limit_x $mol_vector_range /
-         *  	0
-         *  	Infinity
-         *  ```
-         **/
         scale_limit_x(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  scale_limit_y $mol_vector_range /
-         *  	0
-         *  	Infinity
-         *  ```
-         **/
         scale_limit_y(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  scale_default /number
-         *  	0
-         *  	0
-         *  ```
-         **/
         scale_default(): readonly number[];
-        /**
-         *  ```
-         *  scale?val /number
-         *  	1
-         *  	1
-         *  ```
-         **/
         scale(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scale_x?val 0
-         *  ```
-         **/
         scale_x(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scale_y?val 0
-         *  ```
-         **/
         scale_y(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  size $mol_vector_2d /
-         *  	0
-         *  	0
-         *  ```
-         **/
         size(): $mol_vector_2d<number>;
-        /**
-         *  ```
-         *  size_real $mol_vector_2d /
-         *  	1
-         *  	1
-         *  ```
-         **/
         size_real(): $mol_vector_2d<number>;
-        /**
-         *  ```
-         *  dimensions_viewport $mol_vector_2d /
-         *  	<= dimensions_viewport_x
-         *  	<= dimensions_viewport_y
-         *  ```
-         **/
         dimensions_viewport(): $mol_vector_2d<$mol_vector_range<number>>;
-        /**
-         *  ```
-         *  dimensions_viewport_x $mol_vector_range /
-         *  	Infinity
-         *  	-Infinity
-         *  ```
-         **/
         dimensions_viewport_x(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  dimensions_viewport_y $mol_vector_range /
-         *  	Infinity
-         *  	-Infinity
-         *  ```
-         **/
         dimensions_viewport_y(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  dimensions $mol_vector_2d /
-         *  	<= dimensions_x
-         *  	<= dimensions_y
-         *  ```
-         **/
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
-        /**
-         *  ```
-         *  dimensions_x $mol_vector_range /
-         *  	Infinity
-         *  	-Infinity
-         *  ```
-         **/
         dimensions_x(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  dimensions_y $mol_vector_range /
-         *  	Infinity
-         *  	-Infinity
-         *  ```
-         **/
         dimensions_y(): $mol_vector_range<number>;
-        /**
-         *  ```
-         *  sub <= graphs_sorted
-         *  ```
-         **/
         sub(): readonly $mol_svg[];
-        /**
-         *  ```
-         *  graphs_sorted /$mol_svg
-         *  ```
-         **/
         graphs_sorted(): readonly $mol_svg[];
-        /**
-         *  ```
-         *  graphs_colored <= graphs_positioned
-         *  ```
-         **/
         graphs_colored(): readonly $mol_plot_graph[];
-        /**
-         *  ```
-         *  graphs_positioned <= graphs
-         *  ```
-         **/
         graphs_positioned(): readonly $mol_plot_graph[];
-        /**
-         *  ```
-         *  graphs /$mol_plot_graph
-         *  ```
-         **/
         graphs(): readonly $mol_plot_graph[];
-        /**
-         *  ```
-         *  cursor_position?val $mol_vector_2d /
-         *  	NaN
-         *  	NaN
-         *  ```
-         **/
         cursor_position(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  plugins /
-         *  	^
-         *  	<= Meter
-         *  	<= Touch
-         *  ```
-         **/
         plugins(): readonly any[];
         width(): number;
         height(): number;
-        /**
-         *  ```
-         *  Meter $mol_meter
-         *  	width => width
-         *  	height => height
-         *  ```
-         **/
         Meter(): $$.$mol_meter;
-        /**
-         *  ```
-         *  Touch $mol_touch
-         *  	zoom?val <=> scale_x?val
-         *  	pan?val <=> shift?val
-         *  	pos?val <=> cursor_position?val
-         *  ```
-         **/
         Touch(): $$.$mol_touch;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	dblclick?event <=> reset?event
-         *  ```
-         **/
         event(): {
             "dblclick": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  reset?event null
-         *  ```
-         **/
         reset(event?: any, force?: $mol_mem_force): any;
     }
 }
@@ -1722,27 +927,10 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_svg_path extends $mol_svg {
-        /**
-         *  ```
-         *  dom_name \path
-         *  ```
-         **/
         dom_name(): string;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	d <= geometry
-         *  ```
-         **/
         attr(): {
             "d": string;
         };
-        /**
-         *  ```
-         *  geometry \
-         *  ```
-         **/
         geometry(): string;
     }
 }
@@ -1755,52 +943,15 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_plot_dot extends $mol_plot_graph {
-        /**
-         *  ```
-         *  points_max Infinity
-         *  ```
-         **/
         points_max(): number;
-        /**
-         *  ```
-         *  style *
-         *  	^
-         *  	stroke-width <= diameter
-         *  ```
-         **/
         style(): {
             "stroke-width": number;
             "color": string;
         };
-        /**
-         *  ```
-         *  diameter 8
-         *  ```
-         **/
         diameter(): number;
-        /**
-         *  ```
-         *  sub / <= Curve
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Curve $mol_svg_path geometry <= curve
-         *  ```
-         **/
         Curve(): $mol_svg_path;
-        /**
-         *  ```
-         *  curve \
-         *  ```
-         **/
         curve(): string;
-        /**
-         *  ```
-         *  Sample $mol_plot_graph_sample color <= color
-         *  ```
-         **/
         Sample(): $mol_plot_graph_sample;
     }
 }
@@ -1815,137 +966,28 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_app_life_map extends $mol_plot_pane {
-        /**
-         *  ```
-         *  gap_hor 0
-         *  ```
-         **/
         gap_hor(): number;
-        /**
-         *  ```
-         *  gap_vert 0
-         *  ```
-         **/
         gap_vert(): number;
-        /**
-         *  ```
-         *  pan?val /
-         *  	0
-         *  	0
-         *  ```
-         **/
         pan(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  zoom?val 16
-         *  ```
-         **/
         zoom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scale /
-         *  	<= zoom
-         *  	<= zoom
-         *  ```
-         **/
         scale(): readonly any[];
-        /**
-         *  ```
-         *  shift <= pan
-         *  ```
-         **/
         shift(): any;
-        /**
-         *  ```
-         *  graphs / <= Points
-         *  ```
-         **/
         graphs(): readonly any[];
-        /**
-         *  ```
-         *  Points $mol_plot_dot
-         *  	diameter <= zoom
-         *  	series_x <= points_x
-         *  	series_y <= points_y
-         *  ```
-         **/
         Points(): $$.$mol_plot_dot;
-        /**
-         *  ```
-         *  points_x /number
-         *  ```
-         **/
         points_x(): readonly number[];
-        /**
-         *  ```
-         *  points_y /number
-         *  ```
-         **/
         points_y(): readonly number[];
-        /**
-         *  ```
-         *  plugins /
-         *  	^
-         *  	<= Touch
-         *  ```
-         **/
         plugins(): readonly any[];
-        /**
-         *  ```
-         *  Touch $mol_touch
-         *  	zoom?val <=> zoom?val
-         *  	pan?val <=> pan?val
-         *  ```
-         **/
         Touch(): $$.$mol_touch;
-        /**
-         *  ```
-         *  snapshot \
-         *  ```
-         **/
         snapshot(): string;
-        /**
-         *  ```
-         *  snapshot_current \
-         *  ```
-         **/
         snapshot_current(): string;
-        /**
-         *  ```
-         *  speed 0
-         *  ```
-         **/
         speed(): number;
-        /**
-         *  ```
-         *  population 0
-         *  ```
-         **/
         population(): number;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	mousedown?event <=> draw_start?event
-         *  	mouseup?event <=> draw_end?event
-         *  ```
-         **/
         event(): {
             "mousedown": (event?: any) => any;
             "mouseup": (event?: any) => any;
             "dblclick": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  draw_start?event null
-         *  ```
-         **/
         draw_start(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  draw_end?event null
-         *  ```
-         **/
         draw_end(event?: any, force?: $mol_mem_force): any;
     }
 }
@@ -2075,93 +1117,25 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_button extends $mol_view {
-        /**
-         *  ```
-         *  enabled true
-         *  ```
-         **/
         enabled(): boolean;
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  click?event null
-         *  ```
-         **/
         click(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_click?event null
-         *  ```
-         **/
         event_click(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	click?event <=> event_activate?event
-         *  	keypress?event <=> event_key_press?event
-         *  ```
-         **/
         event(): {
             "click": (event?: any) => any;
             "keypress": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_activate?event null
-         *  ```
-         **/
         event_activate(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_key_press?event null
-         *  ```
-         **/
         event_key_press(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	disabled <= disabled
-         *  	role \button
-         *  	tabindex <= tab_index
-         *  	title <= hint
-         *  ```
-         **/
         attr(): {
             "disabled": boolean;
             "role": string;
             "tabindex": number;
             "title": string;
         };
-        /**
-         *  ```
-         *  disabled false
-         *  ```
-         **/
         disabled(): boolean;
-        /**
-         *  ```
-         *  tab_index 0
-         *  ```
-         **/
         tab_index(): number;
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint(): string;
-        /**
-         *  ```
-         *  sub /$mol_view_content <= title
-         *  ```
-         **/
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
     }
 }
@@ -2181,13 +1155,6 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_theme \$mol_theme_accent
-         *  ```
-         **/
         attr(): {
             "mol_theme": string;
             "disabled": boolean;
@@ -2204,79 +1171,22 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
-        /**
-         *  ```
-         *  minimal_height 0
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	scrollTop <= scroll_top?val
-         *  	scrollLeft <= scroll_left?val
-         *  	scrollBottom <= scroll_bottom?val
-         *  	scrollRight <= scroll_right?val
-         *  ```
-         **/
         field(): {
             "scrollTop": any;
             "scrollLeft": any;
             "scrollBottom": any;
             "scrollRight": any;
         };
-        /**
-         *  ```
-         *  scroll_top?val 0
-         *  ```
-         **/
         scroll_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_left?val 0
-         *  ```
-         **/
         scroll_left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_bottom?val 0
-         *  ```
-         **/
         scroll_bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_right?val 0
-         *  ```
-         **/
         scroll_right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	scroll?event <=> event_scroll?event
-         *  ```
-         **/
         event(): {
             "scroll": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_scroll?event null
-         *  ```
-         **/
         event_scroll(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Strut $mol_view style * transform <= strut_transform
-         *  ```
-         **/
         Strut(): $mol_view;
-        /**
-         *  ```
-         *  strut_transform \
-         *  ```
-         **/
         strut_transform(): string;
     }
 }
@@ -2311,90 +1221,17 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_page extends $mol_view {
-        /**
-         *  ```
-         *  sub /
-         *  	<= Head
-         *  	<= Body
-         *  	<= Foot
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Head $mol_view
-         *  	attr * mol_theme \$mol_theme_base
-         *  	sub <= head
-         *  ```
-         **/
         Head(): $mol_view;
-        /**
-         *  ```
-         *  head /
-         *  	<= Title
-         *  	<= Tools
-         *  ```
-         **/
         head(): readonly any[];
-        /**
-         *  ```
-         *  Title $mol_button
-         *  	sub / <= title
-         *  	event_click?val <=> event_top?val
-         *  ```
-         **/
         Title(): $$.$mol_button;
-        /**
-         *  ```
-         *  event_top?val null
-         *  ```
-         **/
         event_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Tools $mol_view sub <= tools
-         *  ```
-         **/
         Tools(): $mol_view;
-        /**
-         *  ```
-         *  tools /$mol_view_content
-         *  ```
-         **/
         tools(): readonly (string | number | boolean | Node | $mol_view)[];
-        /**
-         *  ```
-         *  Body $mol_scroll
-         *  	scroll_top?val <=> body_scroll_top?val
-         *  	sub <= body
-         *  ```
-         **/
         Body(): $$.$mol_scroll;
-        /**
-         *  ```
-         *  body_scroll_top?val 0
-         *  ```
-         **/
         body_scroll_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  body /$mol_view_content
-         *  ```
-         **/
         body(): readonly (string | number | boolean | Node | $mol_view)[];
-        /**
-         *  ```
-         *  Foot $mol_view
-         *  	attr * mol_theme \$mol_theme_base
-         *  	sub <= foot
-         *  ```
-         **/
         Foot(): $mol_view;
-        /**
-         *  ```
-         *  foot /$mol_view
-         *  ```
-         **/
         foot(): readonly $mol_view[];
     }
 }
@@ -2459,67 +1296,23 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_icon extends $mol_svg_root {
-        /**
-         *  ```
-         *  view_box \0 0 24 24
-         *  ```
-         **/
         view_box(): string;
-        /**
-         *  ```
-         *  minimal_width 16
-         *  ```
-         **/
         minimal_width(): number;
-        /**
-         *  ```
-         *  minimal_height 16
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  sub / <= Path
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Path $mol_svg_path geometry <= path
-         *  ```
-         **/
         Path(): $mol_svg_path;
-        /**
-         *  ```
-         *  path \
-         *  ```
-         **/
         path(): string;
     }
 }
 
 declare namespace $ {
     class $mol_icon_stored extends $mol_icon {
-        /**
-         *  ```
-         *  path \M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z
-         *  ```
-         **/
         path(): string;
     }
 }
 
 declare namespace $ {
     class $mol_check extends $mol_button_minor {
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_check_checked <= checked?val
-         *  	aria-checked <= checked?val
-         *  	role \checkbox
-         *  ```
-         **/
         attr(): {
             "mol_check_checked": any;
             "aria-checked": any;
@@ -2528,43 +1321,11 @@ declare namespace $ {
             "tabindex": number;
             "title": string;
         };
-        /**
-         *  ```
-         *  checked?val false
-         *  ```
-         **/
         checked(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  sub /
-         *  	<= Icon
-         *  	<= label
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Icon null
-         *  ```
-         **/
         Icon(): any;
-        /**
-         *  ```
-         *  label / <= Title
-         *  ```
-         **/
         label(): readonly any[];
-        /**
-         *  ```
-         *  Title $mol_view sub / <= title
-         *  ```
-         **/
         Title(): $mol_view;
-        /**
-         *  ```
-         *  title \
-         *  ```
-         **/
         title(): string;
     }
 }
@@ -2578,68 +1339,15 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_switch extends $mol_view {
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  Option!id $mol_check
-         *  	checked?val <=> option_checked!id?val
-         *  	title <= option_title!id
-         *  	enabled <= option_enabled!id
-         *  ```
-         **/
         Option(id: any): $$.$mol_check;
-        /**
-         *  ```
-         *  option_checked!id?val false
-         *  ```
-         **/
         option_checked(id: any, val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  option_title!id \
-         *  ```
-         **/
         option_title(id: any): string;
-        /**
-         *  ```
-         *  option_enabled!id <= enabled
-         *  ```
-         **/
         option_enabled(id: any): boolean;
-        /**
-         *  ```
-         *  enabled true
-         *  ```
-         **/
         enabled(): boolean;
-        /**
-         *  ```
-         *  value?val null
-         *  ```
-         **/
         value(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  options *
-         *  ```
-         **/
         options(): {};
-        /**
-         *  ```
-         *  sub <= items
-         *  ```
-         **/
         sub(): readonly $mol_check[];
-        /**
-         *  ```
-         *  items /$mol_check
-         *  ```
-         **/
         items(): readonly $mol_check[];
     }
 }
@@ -2658,114 +1366,22 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_app_life extends $mol_page {
-        /**
-         *  ```
-         *  title @ \Life of {population} cells
-         *  ```
-         **/
         title(): string;
-        /**
-         *  ```
-         *  tools /
-         *  	<= Store_link
-         *  	<= Time
-         *  ```
-         **/
         tools(): readonly any[];
-        /**
-         *  ```
-         *  Store_link $mol_link
-         *  	uri <= store_link?val
-         *  	hint <= store_link_hint
-         *  	sub / <= Stored
-         *  ```
-         **/
         Store_link(): $$.$mol_link;
-        /**
-         *  ```
-         *  store_link?val \
-         *  ```
-         **/
         store_link(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  store_link_hint @ \Store snapshot
-         *  ```
-         **/
         store_link_hint(): string;
-        /**
-         *  ```
-         *  Stored $mol_icon_stored
-         *  ```
-         **/
         Stored(): $mol_icon_stored;
-        /**
-         *  ```
-         *  Time $mol_switch
-         *  	value?val <=> speed?val
-         *  	options *
-         *  		1 <= time_slowest_label
-         *  		5 <= time_slow_label
-         *  		25 <= time_fast_label
-         *  		1000 <= time_fastest_label
-         *  ```
-         **/
         Time(): $$.$mol_switch;
-        /**
-         *  ```
-         *  speed?val 0
-         *  ```
-         **/
         speed(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  time_slowest_label @ \Slowest
-         *  ```
-         **/
         time_slowest_label(): string;
-        /**
-         *  ```
-         *  time_slow_label @ \Slow
-         *  ```
-         **/
         time_slow_label(): string;
-        /**
-         *  ```
-         *  time_fast_label @ \Fast
-         *  ```
-         **/
         time_fast_label(): string;
-        /**
-         *  ```
-         *  time_fastest_label @ \Fastest
-         *  ```
-         **/
         time_fastest_label(): string;
-        /**
-         *  ```
-         *  sub /
-         *  	<= Head
-         *  	<= Map
-         *  ```
-         **/
         sub(): readonly any[];
         snapshot_current(): string;
         population(): number;
-        /**
-         *  ```
-         *  Map $mol_app_life_map
-         *  	speed <= speed
-         *  	snapshot <= snapshot
-         *  	snapshot_current => snapshot_current
-         *  	population => population
-         *  ```
-         **/
         Map(): $$.$mol_app_life_map;
-        /**
-         *  ```
-         *  snapshot \0~-2ffff~10002~-20000~-1fffe~3~10003~20003
-         *  ```
-         **/
         snapshot(): string;
     }
 }

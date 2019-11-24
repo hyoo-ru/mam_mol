@@ -112,19 +112,6 @@ declare namespace $ {
         flush(): void;
         info(...values: any[]): void;
         static info(...values: any[]): void;
-        /**
-         * Enable all logs
-         *
-         * 	$mol_log2.excludes = []
-         *
-         * Exclude all atom logs:
-         *
-         * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
-         *
-         * Disable logs:
-         *
-         * 	$mol_log2.excludes = null
-         */
         static excludes: RegExp[];
         static prefix: any[];
     }
@@ -625,93 +612,25 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_button extends $mol_view {
-        /**
-         *  ```
-         *  enabled true
-         *  ```
-         **/
         enabled(): boolean;
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  click?event null
-         *  ```
-         **/
         click(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_click?event null
-         *  ```
-         **/
         event_click(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	click?event <=> event_activate?event
-         *  	keypress?event <=> event_key_press?event
-         *  ```
-         **/
         event(): {
             "click": (event?: any) => any;
             "keypress": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_activate?event null
-         *  ```
-         **/
         event_activate(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_key_press?event null
-         *  ```
-         **/
         event_key_press(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	disabled <= disabled
-         *  	role \button
-         *  	tabindex <= tab_index
-         *  	title <= hint
-         *  ```
-         **/
         attr(): {
             "disabled": boolean;
             "role": string;
             "tabindex": number;
             "title": string;
         };
-        /**
-         *  ```
-         *  disabled false
-         *  ```
-         **/
         disabled(): boolean;
-        /**
-         *  ```
-         *  tab_index 0
-         *  ```
-         **/
         tab_index(): number;
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint(): string;
-        /**
-         *  ```
-         *  sub /$mol_view_content <= title
-         *  ```
-         **/
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
     }
 }
@@ -731,13 +650,6 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_theme \$mol_theme_accent
-         *  ```
-         **/
         attr(): {
             "mol_theme": string;
             "disabled": boolean;
@@ -754,79 +666,22 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
-        /**
-         *  ```
-         *  minimal_height 0
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	scrollTop <= scroll_top?val
-         *  	scrollLeft <= scroll_left?val
-         *  	scrollBottom <= scroll_bottom?val
-         *  	scrollRight <= scroll_right?val
-         *  ```
-         **/
         field(): {
             "scrollTop": any;
             "scrollLeft": any;
             "scrollBottom": any;
             "scrollRight": any;
         };
-        /**
-         *  ```
-         *  scroll_top?val 0
-         *  ```
-         **/
         scroll_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_left?val 0
-         *  ```
-         **/
         scroll_left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_bottom?val 0
-         *  ```
-         **/
         scroll_bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_right?val 0
-         *  ```
-         **/
         scroll_right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	scroll?event <=> event_scroll?event
-         *  ```
-         **/
         event(): {
             "scroll": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_scroll?event null
-         *  ```
-         **/
         event_scroll(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Strut $mol_view style * transform <= strut_transform
-         *  ```
-         **/
         Strut(): $mol_view;
-        /**
-         *  ```
-         *  strut_transform \
-         *  ```
-         **/
         strut_transform(): string;
     }
 }
@@ -861,90 +716,17 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_page extends $mol_view {
-        /**
-         *  ```
-         *  sub /
-         *  	<= Head
-         *  	<= Body
-         *  	<= Foot
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Head $mol_view
-         *  	attr * mol_theme \$mol_theme_base
-         *  	sub <= head
-         *  ```
-         **/
         Head(): $mol_view;
-        /**
-         *  ```
-         *  head /
-         *  	<= Title
-         *  	<= Tools
-         *  ```
-         **/
         head(): readonly any[];
-        /**
-         *  ```
-         *  Title $mol_button
-         *  	sub / <= title
-         *  	event_click?val <=> event_top?val
-         *  ```
-         **/
         Title(): $$.$mol_button;
-        /**
-         *  ```
-         *  event_top?val null
-         *  ```
-         **/
         event_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Tools $mol_view sub <= tools
-         *  ```
-         **/
         Tools(): $mol_view;
-        /**
-         *  ```
-         *  tools /$mol_view_content
-         *  ```
-         **/
         tools(): readonly (string | number | boolean | Node | $mol_view)[];
-        /**
-         *  ```
-         *  Body $mol_scroll
-         *  	scroll_top?val <=> body_scroll_top?val
-         *  	sub <= body
-         *  ```
-         **/
         Body(): $$.$mol_scroll;
-        /**
-         *  ```
-         *  body_scroll_top?val 0
-         *  ```
-         **/
         body_scroll_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  body /$mol_view_content
-         *  ```
-         **/
         body(): readonly (string | number | boolean | Node | $mol_view)[];
-        /**
-         *  ```
-         *  Foot $mol_view
-         *  	attr * mol_theme \$mol_theme_base
-         *  	sub <= foot
-         *  ```
-         **/
         Foot(): $mol_view;
-        /**
-         *  ```
-         *  foot /$mol_view
-         *  ```
-         **/
         foot(): readonly $mol_view[];
     }
 }
@@ -974,48 +756,11 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_string extends $mol_view {
-        /**
-         *  ```
-         *  dom_name \input
-         *  ```
-         **/
         dom_name(): string;
-        /**
-         *  ```
-         *  enabled true
-         *  ```
-         **/
         enabled(): boolean;
-        /**
-         *  ```
-         *  debounce 0
-         *  ```
-         **/
         debounce(): number;
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  autocomplete false
-         *  ```
-         **/
         autocomplete(): boolean;
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	disabled <= disabled
-         *  	value <= value_changed?val
-         *  	placeholder <= hint
-         *  	type <= type?val
-         *  	spellcheck <= spellcheck
-         *  	autocomplete <= autocomplete_native
-         *  ```
-         **/
         field(): {
             "disabled": boolean;
             "value": any;
@@ -1024,87 +769,22 @@ declare namespace $ {
             "spellcheck": boolean;
             "autocomplete": string;
         };
-        /**
-         *  ```
-         *  disabled false
-         *  ```
-         **/
         disabled(): boolean;
-        /**
-         *  ```
-         *  value_changed?val <=> value?val
-         *  ```
-         **/
         value_changed(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  value?val \
-         *  ```
-         **/
         value(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint(): string;
-        /**
-         *  ```
-         *  type?val \text
-         *  ```
-         **/
         type(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  spellcheck false
-         *  ```
-         **/
         spellcheck(): boolean;
-        /**
-         *  ```
-         *  autocomplete_native \
-         *  ```
-         **/
         autocomplete_native(): string;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	maxlength <= length_max
-         *  ```
-         **/
         attr(): {
             "maxlength": number;
         };
-        /**
-         *  ```
-         *  length_max Infinity
-         *  ```
-         **/
         length_max(): number;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	input?event <=> event_change?event
-         *  	keydown?event <=> event_key_press?event
-         *  ```
-         **/
         event(): {
             "input": (event?: any) => any;
             "keydown": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_change?event null
-         *  ```
-         **/
         event_change(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_key_press?event null
-         *  ```
-         **/
         event_key_press(event?: any, force?: $mol_mem_force): any;
     }
 }
@@ -1172,23 +852,8 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_list extends $mol_view {
-        /**
-         *  ```
-         *  sub <= rows
-         *  ```
-         **/
         sub(): readonly $mol_view[];
-        /**
-         *  ```
-         *  rows /$mol_view
-         *  ```
-         **/
         rows(): readonly $mol_view[];
-        /**
-         *  ```
-         *  Empty null
-         *  ```
-         **/
         Empty(): any;
     }
 }
@@ -1212,35 +877,10 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_status extends $mol_view {
-        /**
-         *  ```
-         *  status null
-         *  ```
-         **/
         status(): any;
-        /**
-         *  ```
-         *  minimal_height 24
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  minimal_width 0
-         *  ```
-         **/
         minimal_width(): number;
-        /**
-         *  ```
-         *  sub / <= message
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  message \
-         *  ```
-         **/
         message(): string;
     }
 }
@@ -1266,156 +906,29 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_touch extends $mol_plugin {
-        /**
-         *  ```
-         *  start_zoom?val 0
-         *  ```
-         **/
         start_zoom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  start_distance?val 0
-         *  ```
-         **/
         start_distance(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  zoom?val 1
-         *  ```
-         **/
         zoom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  start_pan?val /
-         *  	0
-         *  	0
-         *  ```
-         **/
         start_pan(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  pan?val /
-         *  	0
-         *  	0
-         *  ```
-         **/
         pan(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  pos?val /
-         *  	NaN
-         *  	NaN
-         *  ```
-         **/
         pos(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  start_pos?val null
-         *  ```
-         **/
         start_pos(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_precision 16
-         *  ```
-         **/
         swipe_precision(): number;
-        /**
-         *  ```
-         *  swipe_right?val null
-         *  ```
-         **/
         swipe_right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_bottom?val null
-         *  ```
-         **/
         swipe_bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_left?val null
-         *  ```
-         **/
         swipe_left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_top?val null
-         *  ```
-         **/
         swipe_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_from_right?val null
-         *  ```
-         **/
         swipe_from_right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_from_bottom?val null
-         *  ```
-         **/
         swipe_from_bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_from_left?val null
-         *  ```
-         **/
         swipe_from_left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_from_top?val null
-         *  ```
-         **/
         swipe_from_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_to_right?val null
-         *  ```
-         **/
         swipe_to_right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_to_bottom?val null
-         *  ```
-         **/
         swipe_to_bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_to_left?val null
-         *  ```
-         **/
         swipe_to_left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  swipe_to_top?val null
-         *  ```
-         **/
         swipe_to_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  style *
-         *  	^
-         *  	touch-action \none
-         *  ```
-         **/
         style(): {
             "touch-action": string;
         };
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	touchstart?event <=> event_start?event
-         *  	touchmove?event <=> event_move?event
-         *  	touchend?event <=> event_end?event
-         *  	mousedown?event <=> event_start?event
-         *  	mousemove?event <=> event_move?event
-         *  	mouseup?event <=> event_end?event
-         *  	mouseleave?event <=> event_leave?event
-         *  	wheel?event <=> event_wheel?event
-         *  ```
-         **/
         event(): {
             "touchstart": (event?: any) => any;
             "touchmove": (event?: any) => any;
@@ -1426,35 +939,10 @@ declare namespace $ {
             "mouseleave": (event?: any) => any;
             "wheel": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_start?event null
-         *  ```
-         **/
         event_start(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_move?event null
-         *  ```
-         **/
         event_move(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_end?event null
-         *  ```
-         **/
         event_end(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_leave?event null
-         *  ```
-         **/
         event_leave(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_wheel?event null
-         *  ```
-         **/
         event_wheel(event?: any, force?: $mol_mem_force): any;
     }
 }
@@ -1559,247 +1047,45 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_app_users extends $mol_page {
-        /**
-         *  ```
-         *  head / <= Head_row
-         *  ```
-         **/
         head(): readonly any[];
-        /**
-         *  ```
-         *  Head_row $mol_row sub / <= Filter
-         *  ```
-         **/
         Head_row(): $$.$mol_row;
-        /**
-         *  ```
-         *  Filter $mol_string
-         *  	hint <= filter_hint
-         *  	value?val <=> query?val
-         *  ```
-         **/
         Filter(): $$.$mol_string;
-        /**
-         *  ```
-         *  filter_hint @ \Search users on GitHub
-         *  ```
-         **/
         filter_hint(): string;
-        /**
-         *  ```
-         *  query?val \
-         *  ```
-         **/
         query(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  body / <= List
-         *  ```
-         **/
         body(): readonly any[];
-        /**
-         *  ```
-         *  List $mol_list
-         *  	rows <= user_rows
-         *  	Empty <= Empty
-         *  ```
-         **/
         List(): $$.$mol_list;
-        /**
-         *  ```
-         *  user_rows /
-         *  ```
-         **/
         user_rows(): readonly any[];
-        /**
-         *  ```
-         *  Empty $mol_view sub / <= empty_message
-         *  ```
-         **/
         Empty(): $mol_view;
-        /**
-         *  ```
-         *  empty_message @ \Users not found
-         *  ```
-         **/
         empty_message(): string;
-        /**
-         *  ```
-         *  Foot $mol_row sub /
-         *  	<= Reload
-         *  	<= Add
-         *  	<= Save
-         *  	<= Message
-         *  ```
-         **/
         Foot(): $$.$mol_row;
-        /**
-         *  ```
-         *  Reload $mol_button_minor
-         *  	sub / <= reload_label
-         *  	event_click?val <=> event_reload?val
-         *  ```
-         **/
         Reload(): $mol_button_minor;
-        /**
-         *  ```
-         *  reload_label @ \Reload
-         *  ```
-         **/
         reload_label(): string;
-        /**
-         *  ```
-         *  event_reload?val null
-         *  ```
-         **/
         event_reload(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Add $mol_button_minor
-         *  	enabled <= loaded
-         *  	sub / <= add_label
-         *  	event_click?val <=> event_add?val
-         *  ```
-         **/
         Add(): $mol_button_minor;
-        /**
-         *  ```
-         *  loaded false
-         *  ```
-         **/
         loaded(): boolean;
-        /**
-         *  ```
-         *  add_label @ \Add
-         *  ```
-         **/
         add_label(): string;
-        /**
-         *  ```
-         *  event_add?val null
-         *  ```
-         **/
         event_add(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Save $mol_button_major
-         *  	enabled <= changed
-         *  	sub / <= save_label
-         *  	event_click?val <=> event_save?val
-         *  ```
-         **/
         Save(): $mol_button_major;
-        /**
-         *  ```
-         *  changed false
-         *  ```
-         **/
         changed(): boolean;
-        /**
-         *  ```
-         *  save_label @ \Save
-         *  ```
-         **/
         save_label(): string;
-        /**
-         *  ```
-         *  event_save?val null
-         *  ```
-         **/
         event_save(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Message $mol_status status <= users_master
-         *  ```
-         **/
         Message(): $$.$mol_status;
-        /**
-         *  ```
-         *  users_master null
-         *  ```
-         **/
         users_master(): any;
-        /**
-         *  ```
-         *  plugins / <= Touch
-         *  ```
-         **/
         plugins(): readonly any[];
-        /**
-         *  ```
-         *  Touch $mol_touch swipe_bottom?val <=> event_reload?val
-         *  ```
-         **/
         Touch(): $$.$mol_touch;
-        /**
-         *  ```
-         *  User_row!id $mol_app_users_row
-         *  	title?val <=> user_name!id?val
-         *  	event_drop?val <=> event_user_drop!id?val
-         *  ```
-         **/
         User_row(id: any): $mol_app_users_row;
-        /**
-         *  ```
-         *  user_name!id?val \
-         *  ```
-         **/
         user_name(id: any, val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_user_drop!id?val null
-         *  ```
-         **/
         event_user_drop(id: any, val?: any, force?: $mol_mem_force): any;
     }
 }
 declare namespace $ {
     class $mol_app_users_row extends $mol_row {
-        /**
-         *  ```
-         *  minimal_height 68
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  sub /
-         *  	<= Title
-         *  	<= Drop
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Title $mol_string value?val <=> title?val
-         *  ```
-         **/
         Title(): $$.$mol_string;
-        /**
-         *  ```
-         *  title?val \
-         *  ```
-         **/
         title(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Drop $mol_button_minor
-         *  	sub / <= drop_label
-         *  	event_click?val <=> event_drop?val
-         *  ```
-         **/
         Drop(): $mol_button_minor;
-        /**
-         *  ```
-         *  drop_label \Drop
-         *  ```
-         **/
         drop_label(): string;
-        /**
-         *  ```
-         *  event_drop?val null
-         *  ```
-         **/
         event_drop(val?: any, force?: $mol_mem_force): any;
     }
 }

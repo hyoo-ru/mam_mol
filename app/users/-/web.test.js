@@ -107,7 +107,6 @@ var $;
 //jsx.js.map
 ;
 "use strict";
-/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -149,10 +148,6 @@ var $;
             const dom = $.$mol_jsx_make(Button, { id: "/foo", hint: "click me" }, () => 'hey!');
             $.$mol_assert_equal(dom.outerHTML, '<button title="click me" id="/foo">hey!</button>');
         },
-        // 'Standart classes as component'() {
-        // 	const dom = <HTMLButtonElement id="/foo" title="click me">hey!</HTMLButtonElement>
-        // 	$mol_assert_equal( dom.outerHTML , '<button title="click me" id="/foo">hey!</button>' )
-        // } ,
         'Nested guid generation'() {
             const Foo = () => {
                 return $.$mol_jsx_make("div", null,
@@ -242,7 +237,6 @@ var $;
 //make.js.map
 ;
 "use strict";
-/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -725,7 +719,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    /// @todo right orderinng
     $.$mol_after_mock_queue = [];
     function $mol_after_mock_warp() {
         const queue = $.$mol_after_mock_queue.splice(0);
@@ -1384,15 +1377,6 @@ var $;
             x.foo(5);
             $.$mol_assert_equal(x.xxx(), 7);
         },
-        // 'must fail on recursive dependency'() {
-        // 	class App extends $mol_object {
-        // 		@ $mol_mem
-        // 		static foo() : number {
-        // 			return this.foo() + 1
-        // 		}
-        // 	}
-        // 	$mol_assert_fail( ()=> App.foo() )
-        // } ,
         async 'must be deferred destroyed when no longer referenced'() {
             let foo;
             let foo_destroyed = false;
@@ -1468,7 +1452,6 @@ var $;
 //mem.test.js.map
 ;
 "use strict";
-/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -1583,14 +1566,11 @@ var $;
                 $.$mol_mem_key
             ], X.prototype, "foo", null);
             const x = new X;
-            // get
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
             $.$mol_assert_equal(x.foo(0), x.foo(0));
             $.$mol_assert_unique(x.foo(0), x.foo(1));
-            // set
             x.foo(0, 321);
             $.$mol_assert_equal(x.foo(0).valueOf(), 321);
-            // reset
             x.foo(0, null);
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
         },
@@ -1903,7 +1883,6 @@ var $;
 //equals.js.map
 ;
 "use strict";
-/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -1934,7 +1913,6 @@ var $;
 //attach.js.map
 ;
 "use strict";
-/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     $.$mol_test({
@@ -2036,7 +2014,6 @@ var $;
 //view.test.js.map
 ;
 "use strict";
-/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     class $mol_jsx_view extends $.$mol_object2 {

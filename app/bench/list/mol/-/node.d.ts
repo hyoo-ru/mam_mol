@@ -112,19 +112,6 @@ declare namespace $ {
         flush(): void;
         info(...values: any[]): void;
         static info(...values: any[]): void;
-        /**
-         * Enable all logs
-         *
-         * 	$mol_log2.excludes = []
-         *
-         * Exclude all atom logs:
-         *
-         * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
-         *
-         * Disable logs:
-         *
-         * 	$mol_log2.excludes = null
-         */
         static excludes: RegExp[];
         static prefix: any[];
     }
@@ -625,93 +612,25 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_button extends $mol_view {
-        /**
-         *  ```
-         *  enabled true
-         *  ```
-         **/
         enabled(): boolean;
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  click?event null
-         *  ```
-         **/
         click(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_click?event null
-         *  ```
-         **/
         event_click(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	click?event <=> event_activate?event
-         *  	keypress?event <=> event_key_press?event
-         *  ```
-         **/
         event(): {
             "click": (event?: any) => any;
             "keypress": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_activate?event null
-         *  ```
-         **/
         event_activate(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_key_press?event null
-         *  ```
-         **/
         event_key_press(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	disabled <= disabled
-         *  	role \button
-         *  	tabindex <= tab_index
-         *  	title <= hint
-         *  ```
-         **/
         attr(): {
             "disabled": boolean;
             "role": string;
             "tabindex": number;
             "title": string;
         };
-        /**
-         *  ```
-         *  disabled false
-         *  ```
-         **/
         disabled(): boolean;
-        /**
-         *  ```
-         *  tab_index 0
-         *  ```
-         **/
         tab_index(): number;
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint(): string;
-        /**
-         *  ```
-         *  sub /$mol_view_content <= title
-         *  ```
-         **/
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
     }
 }
@@ -731,13 +650,6 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_theme \$mol_theme_accent
-         *  ```
-         **/
         attr(): {
             "mol_theme": string;
             "disabled": boolean;
@@ -754,15 +666,6 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_check extends $mol_button_minor {
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_check_checked <= checked?val
-         *  	aria-checked <= checked?val
-         *  	role \checkbox
-         *  ```
-         **/
         attr(): {
             "mol_check_checked": any;
             "aria-checked": any;
@@ -771,43 +674,11 @@ declare namespace $ {
             "tabindex": number;
             "title": string;
         };
-        /**
-         *  ```
-         *  checked?val false
-         *  ```
-         **/
         checked(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  sub /
-         *  	<= Icon
-         *  	<= label
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Icon null
-         *  ```
-         **/
         Icon(): any;
-        /**
-         *  ```
-         *  label / <= Title
-         *  ```
-         **/
         label(): readonly any[];
-        /**
-         *  ```
-         *  Title $mol_view sub / <= title
-         *  ```
-         **/
         Title(): $mol_view;
-        /**
-         *  ```
-         *  title \
-         *  ```
-         **/
         title(): string;
     }
 }
@@ -821,79 +692,22 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
-        /**
-         *  ```
-         *  minimal_height 0
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	scrollTop <= scroll_top?val
-         *  	scrollLeft <= scroll_left?val
-         *  	scrollBottom <= scroll_bottom?val
-         *  	scrollRight <= scroll_right?val
-         *  ```
-         **/
         field(): {
             "scrollTop": any;
             "scrollLeft": any;
             "scrollBottom": any;
             "scrollRight": any;
         };
-        /**
-         *  ```
-         *  scroll_top?val 0
-         *  ```
-         **/
         scroll_top(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_left?val 0
-         *  ```
-         **/
         scroll_left(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_bottom?val 0
-         *  ```
-         **/
         scroll_bottom(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  scroll_right?val 0
-         *  ```
-         **/
         scroll_right(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	scroll?event <=> event_scroll?event
-         *  ```
-         **/
         event(): {
             "scroll": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_scroll?event null
-         *  ```
-         **/
         event_scroll(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Strut $mol_view style * transform <= strut_transform
-         *  ```
-         **/
         Strut(): $mol_view;
-        /**
-         *  ```
-         *  strut_transform \
-         *  ```
-         **/
         strut_transform(): string;
     }
 }
@@ -914,23 +728,8 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_list extends $mol_view {
-        /**
-         *  ```
-         *  sub <= rows
-         *  ```
-         **/
         sub(): readonly $mol_view[];
-        /**
-         *  ```
-         *  rows /$mol_view
-         *  ```
-         **/
         rows(): readonly $mol_view[];
-        /**
-         *  ```
-         *  Empty null
-         *  ```
-         **/
         Empty(): any;
     }
 }
@@ -962,98 +761,23 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_app_bench_list_mol extends $mol_scroll {
-        /**
-         *  ```
-         *  sub / <= List
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  List $mol_list rows <= rows
-         *  ```
-         **/
         List(): $$.$mol_list;
-        /**
-         *  ```
-         *  rows /
-         *  ```
-         **/
         rows(): readonly any[];
-        /**
-         *  ```
-         *  Row!id $mol_app_bench_list_mol_row
-         *  	checked?val <=> row_selected!id?val
-         *  	title <= row_title!id
-         *  	content <= row_content!id
-         *  ```
-         **/
         Row(id: any): $mol_app_bench_list_mol_row;
-        /**
-         *  ```
-         *  row_selected!id?val false
-         *  ```
-         **/
         row_selected(id: any, val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  row_title!id \
-         *  ```
-         **/
         row_title(id: any): string;
-        /**
-         *  ```
-         *  row_content!id \
-         *  ```
-         **/
         row_content(id: any): string;
     }
 }
 declare namespace $ {
     class $mol_app_bench_list_mol_row extends $mol_check {
-        /**
-         *  ```
-         *  selected?val false
-         *  ```
-         **/
         selected(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  minimal_height 56
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  sub /
-         *  	<= Title
-         *  	<= Content
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Title $mol_view sub / <= title
-         *  ```
-         **/
         Title(): $mol_view;
-        /**
-         *  ```
-         *  title \
-         *  ```
-         **/
         title(): string;
-        /**
-         *  ```
-         *  Content $mol_view sub / <= content
-         *  ```
-         **/
         Content(): $mol_view;
-        /**
-         *  ```
-         *  content \
-         *  ```
-         **/
         content(): string;
     }
 }

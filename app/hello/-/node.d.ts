@@ -112,19 +112,6 @@ declare namespace $ {
         flush(): void;
         info(...values: any[]): void;
         static info(...values: any[]): void;
-        /**
-         * Enable all logs
-         *
-         * 	$mol_log2.excludes = []
-         *
-         * Exclude all atom logs:
-         *
-         * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
-         *
-         * Disable logs:
-         *
-         * 	$mol_log2.excludes = null
-         */
         static excludes: RegExp[];
         static prefix: any[];
     }
@@ -625,48 +612,11 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_string extends $mol_view {
-        /**
-         *  ```
-         *  dom_name \input
-         *  ```
-         **/
         dom_name(): string;
-        /**
-         *  ```
-         *  enabled true
-         *  ```
-         **/
         enabled(): boolean;
-        /**
-         *  ```
-         *  debounce 0
-         *  ```
-         **/
         debounce(): number;
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height(): number;
-        /**
-         *  ```
-         *  autocomplete false
-         *  ```
-         **/
         autocomplete(): boolean;
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	disabled <= disabled
-         *  	value <= value_changed?val
-         *  	placeholder <= hint
-         *  	type <= type?val
-         *  	spellcheck <= spellcheck
-         *  	autocomplete <= autocomplete_native
-         *  ```
-         **/
         field(): {
             "disabled": boolean;
             "value": any;
@@ -675,87 +625,22 @@ declare namespace $ {
             "spellcheck": boolean;
             "autocomplete": string;
         };
-        /**
-         *  ```
-         *  disabled false
-         *  ```
-         **/
         disabled(): boolean;
-        /**
-         *  ```
-         *  value_changed?val <=> value?val
-         *  ```
-         **/
         value_changed(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  value?val \
-         *  ```
-         **/
         value(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint(): string;
-        /**
-         *  ```
-         *  type?val \text
-         *  ```
-         **/
         type(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  spellcheck false
-         *  ```
-         **/
         spellcheck(): boolean;
-        /**
-         *  ```
-         *  autocomplete_native \
-         *  ```
-         **/
         autocomplete_native(): string;
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	maxlength <= length_max
-         *  ```
-         **/
         attr(): {
             "maxlength": number;
         };
-        /**
-         *  ```
-         *  length_max Infinity
-         *  ```
-         **/
         length_max(): number;
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	input?event <=> event_change?event
-         *  	keydown?event <=> event_key_press?event
-         *  ```
-         **/
         event(): {
             "input": (event?: any) => any;
             "keydown": (event?: any) => any;
         };
-        /**
-         *  ```
-         *  event_change?event null
-         *  ```
-         **/
         event_change(event?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  event_key_press?event null
-         *  ```
-         **/
         event_key_press(event?: any, force?: $mol_mem_force): any;
     }
 }
@@ -771,45 +656,11 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_app_hello extends $mol_view {
-        /**
-         *  ```
-         *  sub /
-         *  	<= Name
-         *  	<= Greeting
-         *  ```
-         **/
         sub(): readonly any[];
-        /**
-         *  ```
-         *  Name $mol_string
-         *  	hint <= name_hint
-         *  	value?val <=> name?val
-         *  ```
-         **/
         Name(): $$.$mol_string;
-        /**
-         *  ```
-         *  name_hint \Name
-         *  ```
-         **/
         name_hint(): string;
-        /**
-         *  ```
-         *  name?val \
-         *  ```
-         **/
         name(val?: any, force?: $mol_mem_force): any;
-        /**
-         *  ```
-         *  Greeting $mol_view sub / <= greeting
-         *  ```
-         **/
         Greeting(): $mol_view;
-        /**
-         *  ```
-         *  greeting \
-         *  ```
-         **/
         greeting(): string;
     }
 }

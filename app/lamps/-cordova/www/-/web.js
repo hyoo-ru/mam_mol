@@ -73,7 +73,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
+        throw error;
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -153,7 +153,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    // https://docs.google.com/document/d/1FTascZXT9cxfetuPRT2eXPQKXui4nWFivUnS_335T3U/preview#
     $['devtoolsFormatters'] = $['devtoolsFormatters'] || [];
     function $mol_dev_format_register(config) {
         $['devtoolsFormatters'].push(config);
@@ -420,19 +419,6 @@ var $;
         }
     };
     $mol_log2.current = null;
-    /**
-     * Enable all logs
-     *
-     * 	$mol_log2.excludes = []
-     *
-     * Exclude all atom logs:
-     *
-     * 	$mol_log2.excludes = [ , /˸|🠈|⏭|⏯|►|💤|☍|☌|✓|✔|✘|🕱|�/ ]
-     *
-     * Disable logs:
-     *
-     * 	$mol_log2.excludes = null
-     */
     $mol_log2.excludes = null;
     $mol_log2.prefix = [];
     $mol_log2 = $mol_log2_1 = __decorate([
@@ -704,7 +690,7 @@ var $;
             let master = slave && slave.master;
             if (!master || master.constructor !== $mol_fiber) {
                 master = new $mol_fiber;
-                master.cursor = -3 /* persist */;
+                master.cursor = -3;
                 master.error = request.call(this, ...args).then($.$mol_log2.func(master.push).bind(master), $.$mol_log2.func(master.fail).bind(master));
                 const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
                 master[Symbol.toStringTag] = prefix + (request.name || $mol_fiber_sync.name);
@@ -780,7 +766,7 @@ var $;
             super(...arguments);
             this.value = undefined;
             this.error = null;
-            this.cursor = 0 /* obsolete */;
+            this.cursor = 0;
             this.masters = [];
         }
         static wrap(task) {
@@ -830,7 +816,7 @@ var $;
         }
         wake() {
             try {
-                if (this.cursor > -2 /* actual */)
+                if (this.cursor > -2)
                     return this.get();
             }
             catch (error) {
@@ -864,16 +850,16 @@ var $;
         wait(promise) {
             this.error = promise;
             this.$.$mol_log2.info(this, $.$mol_fiber_token_sleeped, promise);
-            this.cursor = 0 /* obsolete */;
+            this.cursor = 0;
             return promise;
         }
         complete() {
-            if (this.cursor <= -2 /* actual */)
+            if (this.cursor <= -2)
                 return;
             for (let index = 0; index < this.masters.length; index += 2) {
                 this.complete_master(index);
             }
-            this.cursor = -2 /* actual */;
+            this.cursor = -2;
         }
         complete_master(master_index) {
             this.disobey(master_index);
@@ -906,13 +892,13 @@ var $;
             }
         }
         get() {
-            if (this.cursor > 0 /* obsolete */) {
+            if (this.cursor > 0) {
                 this.$.$mol_fail(new Error(`Cyclic dependency at ${this}`));
             }
             const slave = $mol_fiber_1.current;
             if (slave)
                 slave.master = this;
-            if (this.cursor > -2 /* actual */)
+            if (this.cursor > -2)
                 this.update();
             if (this.error)
                 return this.$.$mol_fail_hidden(this.error);
@@ -931,7 +917,7 @@ var $;
             return this.masters[this.cursor];
         }
         set master(next) {
-            if (this.cursor === -1 /* doubt */)
+            if (this.cursor === -1)
                 return;
             const cursor = this.cursor;
             const prev = this.masters[this.cursor];
@@ -1119,7 +1105,7 @@ var $;
             return value;
         }
         pull() {
-            if (this.cursor === 0 /* obsolete */)
+            if (this.cursor === 0)
                 return super.pull();
             this.$.$mol_log2.info(this, $.$mol_atom2_token_revalidation);
             const masters = this.masters;
@@ -1133,15 +1119,15 @@ var $;
                 catch (error) {
                     if ('then' in error)
                         $.$mol_fail_hidden(error);
-                    this.cursor = 0 /* obsolete */;
+                    this.cursor = 0;
                 }
-                if (this.cursor !== 0 /* obsolete */)
+                if (this.cursor !== 0)
                     continue;
                 this.$.$mol_log2.info(this, $.$mol_atom2_token_stumbled, this._error || this._value);
                 return super.pull();
             }
             this.$.$mol_log2.info(this, $.$mol_atom2_token_revalidated, this._error || this._value);
-            this.cursor = -2 /* actual */;
+            this.cursor = -2;
             return this.value;
         }
         get value() { return this._value; }
@@ -1169,7 +1155,7 @@ var $;
         put(next) {
             this.cursor = this.masters.length;
             next = this.push(next);
-            this.cursor = -3 /* persist */;
+            this.cursor = -3;
             return next;
         }
         complete_master(master_index) {
@@ -1193,16 +1179,16 @@ var $;
         }
         dislead(slave_index) {
             if (slave_index < 0)
-                return; // slave is fiber
+                return;
             this.$.$mol_log2.info(this, $.$mol_atom2_token_disleaded, this.slaves[slave_index]);
             this.slaves[slave_index] = undefined;
             this.slaves[slave_index + 1] = undefined;
             $.$mol_array_trim(this.slaves);
-            if (this.cursor > -3 /* persist */ && this.alone)
+            if (this.cursor > -3 && this.alone)
                 $mol_atom2_1.reap(this);
         }
         obsolete(master_index = -1) {
-            if (this.cursor > 0 /* obsolete */) {
+            if (this.cursor > 0) {
                 if (master_index >= this.cursor - 2)
                     return;
                 const path = [];
@@ -1213,15 +1199,15 @@ var $;
                 }
                 this.$.$mol_fail(new Error(`Obsoleted while calculation \n\n${path.join('\n')}\n`));
             }
-            if (this.cursor === 0 /* obsolete */)
+            if (this.cursor === 0)
                 return;
             this.$.$mol_log2.info(this, $.$mol_atom2_token_obsoleted, this._error || this._value);
-            if (this.cursor !== -1 /* doubt */)
+            if (this.cursor !== -1)
                 this.doubt_slaves();
-            this.cursor = 0 /* obsolete */;
+            this.cursor = 0;
         }
         doubt(master_index = -1) {
-            if (this.cursor > 0 /* obsolete */) {
+            if (this.cursor > 0) {
                 if (master_index >= this.cursor - 2)
                     return;
                 const path = [];
@@ -1232,10 +1218,10 @@ var $;
                 }
                 this.$.$mol_fail(new Error(`Doubted while calculation \n\n${path.join('\n')}\n`));
             }
-            if (this.cursor >= -1 /* doubt */)
+            if (this.cursor >= -1)
                 return;
             this.$.$mol_log2.info(this, $.$mol_atom2_token_doubted, this._error || this._value);
-            this.cursor = -1 /* doubt */;
+            this.cursor = -1;
             this.doubt_slaves();
         }
         obsolete_slaves() {
@@ -1254,9 +1240,9 @@ var $;
         }
         get fresh() {
             return $.$mol_log2_hidden.func(() => {
-                if (this.cursor !== -2 /* actual */)
+                if (this.cursor !== -2)
                     return;
-                this.cursor = 0 /* obsolete */;
+                this.cursor = 0;
                 $.$mol_fiber_solid.run(() => this.update());
             });
         }
@@ -1274,7 +1260,7 @@ var $;
             if (!this.abort())
                 return;
             this.$.$mol_log2.info(this, $.$mol_fiber_token_destructed);
-            this.cursor = -3 /* persist */;
+            this.cursor = -3;
             for (let index = 0; index < this.masters.length; index += 2) {
                 this.complete_master(index);
             }
@@ -1396,21 +1382,6 @@ var $;
         static toString() {
             return this.name;
         }
-        // 'object_owner()' : any
-        // object_owner( next? : any ) {
-        // 	return this[ 'object_owner()' ] || ( this[ 'object_owner()' ] = next || $mol_owning_get( this ) )
-        // }
-        // 'object_host()' : any
-        // object_host( next? : any ) {
-        // 	return this[ 'object_host()' ] || ( this[ 'object_host()' ] = next || $mol_owning_get( $mol_owning_get( this ) ) )
-        // }
-        // 'object_field()' : string
-        // object_field( next? : string ) {
-        // 	return this[ 'object_field()' ] || ( this[ 'object_field()' ] = next || `${ this }`.replace( /^(.*)\(.*?$/g , '$1' ).replace( /^.*\./g , ''  ) )
-        // }
-        // object_id( next? : string ) {
-        // 	return this[ Symbol.toStringTag ] || ( this[ Symbol.toStringTag ] = next ) || ''
-        // }
         toString() {
             return this[Symbol.toStringTag];
         }
@@ -1715,7 +1686,6 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
-            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -1867,7 +1837,6 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
-            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1976,7 +1945,6 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
-    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -2013,18 +1981,13 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
-        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '') || 'div';
         }
-        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
-        /// Raw child views
         sub() {
             return [];
         }
-        /// Visible sub views with defined ambient context
-        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -2037,7 +2000,6 @@ var $;
             });
             return sub;
         }
-        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -2050,7 +2012,6 @@ var $;
             });
             return min;
         }
-        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -2246,7 +2207,6 @@ var $;
 var $;
 (function ($) {
     if ($.$mol_dom_context.document) {
-        /// Autoattach view roots to loaded DOM.
         const event_name = self.cordova ? 'deviceready' : 'DOMContentLoaded';
         $.$mol_dom_context.document.addEventListener(event_name, $.$mol_fiber_root($.$mol_log2.func((event) => {
             $.$mol_view.autobind();
@@ -2290,59 +2250,24 @@ var $;
 var $;
 (function ($) {
     class $mol_meter extends $.$mol_plugin {
-        /**
-         *  ```
-         *  zoom 1
-         *  ```
-         **/
         zoom() {
             return 1;
         }
-        /**
-         *  ```
-         *  width?val 0
-         *  ```
-         **/
         width(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  height?val 0
-         *  ```
-         **/
         height(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  left?val 0
-         *  ```
-         **/
         left(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  right?val 0
-         *  ```
-         **/
         right(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  bottom?val 0
-         *  ```
-         **/
         bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  top?val 0
-         *  ```
-         **/
         top(val, force) {
             return (val !== void 0) ? val : 0;
         }
@@ -2385,7 +2310,6 @@ var $;
                         return { left, top, right, bottom, width, height, zoom: win.devicePixelRatio || 1 };
                     }
                     catch (error) {
-                        // IE11
                     }
                 }
                 const size = $.$mol_window.size();
@@ -2454,236 +2378,84 @@ var $;
 var $;
 (function ($) {
     class $mol_touch extends $.$mol_plugin {
-        /**
-         *  ```
-         *  start_zoom?val 0
-         *  ```
-         **/
         start_zoom(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  start_distance?val 0
-         *  ```
-         **/
         start_distance(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  zoom?val 1
-         *  ```
-         **/
         zoom(val, force) {
             return (val !== void 0) ? val : 1;
         }
-        /**
-         *  ```
-         *  start_pan?val /
-         *  	0
-         *  	0
-         *  ```
-         **/
         start_pan(val, force) {
             return (val !== void 0) ? val : [0, 0];
         }
-        /**
-         *  ```
-         *  pan?val /
-         *  	0
-         *  	0
-         *  ```
-         **/
         pan(val, force) {
             return (val !== void 0) ? val : [0, 0];
         }
-        /**
-         *  ```
-         *  pos?val /
-         *  	NaN
-         *  	NaN
-         *  ```
-         **/
         pos(val, force) {
             return (val !== void 0) ? val : [NaN, NaN];
         }
-        /**
-         *  ```
-         *  start_pos?val null
-         *  ```
-         **/
         start_pos(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_precision 16
-         *  ```
-         **/
         swipe_precision() {
             return 16;
         }
-        /**
-         *  ```
-         *  swipe_right?val null
-         *  ```
-         **/
         swipe_right(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_bottom?val null
-         *  ```
-         **/
         swipe_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_left?val null
-         *  ```
-         **/
         swipe_left(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_top?val null
-         *  ```
-         **/
         swipe_top(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_from_right?val null
-         *  ```
-         **/
         swipe_from_right(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_from_bottom?val null
-         *  ```
-         **/
         swipe_from_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_from_left?val null
-         *  ```
-         **/
         swipe_from_left(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_from_top?val null
-         *  ```
-         **/
         swipe_from_top(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_to_right?val null
-         *  ```
-         **/
         swipe_to_right(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_to_bottom?val null
-         *  ```
-         **/
         swipe_to_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_to_left?val null
-         *  ```
-         **/
         swipe_to_left(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  swipe_to_top?val null
-         *  ```
-         **/
         swipe_to_top(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  style *
-         *  	^
-         *  	touch-action \none
-         *  ```
-         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "touch-action": "none" }));
         }
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	touchstart?event <=> event_start?event
-         *  	touchmove?event <=> event_move?event
-         *  	touchend?event <=> event_end?event
-         *  	mousedown?event <=> event_start?event
-         *  	mousemove?event <=> event_move?event
-         *  	mouseup?event <=> event_end?event
-         *  	mouseleave?event <=> event_leave?event
-         *  	wheel?event <=> event_wheel?event
-         *  ```
-         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "touchstart": (event) => this.event_start(event), "touchmove": (event) => this.event_move(event), "touchend": (event) => this.event_end(event), "mousedown": (event) => this.event_start(event), "mousemove": (event) => this.event_move(event), "mouseup": (event) => this.event_end(event), "mouseleave": (event) => this.event_leave(event), "wheel": (event) => this.event_wheel(event) }));
         }
-        /**
-         *  ```
-         *  event_start?event null
-         *  ```
-         **/
         event_start(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event_move?event null
-         *  ```
-         **/
         event_move(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event_end?event null
-         *  ```
-         **/
         event_end(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event_leave?event null
-         *  ```
-         **/
         event_leave(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event_wheel?event null
-         *  ```
-         **/
         event_wheel(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -2966,11 +2738,6 @@ var $;
 var $;
 (function ($) {
     class $mol_ghost extends $.$mol_view {
-        /**
-         *  ```
-         *  Sub $mol_view
-         *  ```
-         **/
         Sub() {
             return ((obj) => {
                 return obj;
@@ -3019,60 +2786,26 @@ var $;
 var $;
 (function ($) {
     class $mol_book extends $.$mol_view {
-        /**
-         *  ```
-         *  sub <= pages_wrapped
-         *  ```
-         **/
         sub() {
             return this.pages_wrapped();
         }
-        /**
-         *  ```
-         *  pages_wrapped /$mol_view
-         *  ```
-         **/
         pages_wrapped() {
             return [];
         }
-        /**
-         *  ```
-         *  pages /$mol_view
-         *  ```
-         **/
         pages() {
             return [];
         }
-        /**
-         *  ```
-         *  plugins /$mol_plugin
-         *  	<= Meter
-         *  	<= Touch
-         *  ```
-         **/
         plugins() {
             return [this.Meter(), this.Touch()];
         }
         width() {
             return this.Meter().width();
         }
-        /**
-         *  ```
-         *  Meter $mol_meter width => width
-         *  ```
-         **/
         Meter() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_meter());
         }
-        /**
-         *  ```
-         *  Touch $mol_touch
-         *  	swipe_from_left?val <=> event_front_up?val
-         *  	swipe_to_left?val <=> event_front_down?val
-         *  ```
-         **/
         Touch() {
             return ((obj) => {
                 obj.swipe_from_left = (val) => this.event_front_up(val);
@@ -3080,29 +2813,12 @@ var $;
                 return obj;
             })(new this.$.$mol_touch());
         }
-        /**
-         *  ```
-         *  event_front_up?val null
-         *  ```
-         **/
         event_front_up(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  event_front_down?val null
-         *  ```
-         **/
         event_front_down(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  Page!index $mol_book_page
-         *  	Sub <= page!index
-         *  	visible <= page_visible!index
-         *  ```
-         **/
         Page(index) {
             return ((obj) => {
                 obj.Sub = () => this.page(index);
@@ -3110,27 +2826,12 @@ var $;
                 return obj;
             })(new this.$.$mol_book_page());
         }
-        /**
-         *  ```
-         *  page!index null
-         *  ```
-         **/
         page(index) {
             return null;
         }
-        /**
-         *  ```
-         *  page_visible!index true
-         *  ```
-         **/
         page_visible(index) {
             return true;
         }
-        /**
-         *  ```
-         *  Placeholder $mol_book_placeholder title <= title
-         *  ```
-         **/
         Placeholder() {
             return ((obj) => {
                 obj.title = () => this.title();
@@ -3160,21 +2861,9 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_book_placeholder extends $.$mol_view {
-        /**
-         *  ```
-         *  minimal_width 400
-         *  ```
-         **/
         minimal_width() {
             return 400;
         }
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	tabindex null
-         *  ```
-         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "tabindex": null }));
         }
@@ -3183,33 +2872,12 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_book_page extends $.$mol_ghost {
-        /**
-         *  ```
-         *  attr_static *
-         *  	^
-         *  	tabindex 0
-         *  	mol_book_page_visible true
-         *  ```
-         **/
         attr_static() {
             return (Object.assign(Object.assign({}, super.attr_static()), { "tabindex": 0, "mol_book_page_visible": true }));
         }
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_book_page_focused <= focused
-         *  	mol_book_page_visible <= visible
-         *  ```
-         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_book_page_focused": this.focused(), "mol_book_page_visible": this.visible() }));
         }
-        /**
-         *  ```
-         *  visible true
-         *  ```
-         **/
         visible() {
             return true;
         }
@@ -3412,107 +3080,39 @@ var $;
 var $;
 (function ($) {
     class $mol_button extends $.$mol_view {
-        /**
-         *  ```
-         *  enabled true
-         *  ```
-         **/
         enabled() {
             return true;
         }
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height() {
             return 40;
         }
-        /**
-         *  ```
-         *  click?event null
-         *  ```
-         **/
         click(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event_click?event null
-         *  ```
-         **/
         event_click(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	click?event <=> event_activate?event
-         *  	keypress?event <=> event_key_press?event
-         *  ```
-         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.event_activate(event), "keypress": (event) => this.event_key_press(event) }));
         }
-        /**
-         *  ```
-         *  event_activate?event null
-         *  ```
-         **/
         event_activate(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event_key_press?event null
-         *  ```
-         **/
         event_key_press(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	disabled <= disabled
-         *  	role \button
-         *  	tabindex <= tab_index
-         *  	title <= hint
-         *  ```
-         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "disabled": this.disabled(), "role": "button", "tabindex": this.tab_index(), "title": this.hint() }));
         }
-        /**
-         *  ```
-         *  disabled false
-         *  ```
-         **/
         disabled() {
             return false;
         }
-        /**
-         *  ```
-         *  tab_index 0
-         *  ```
-         **/
         tab_index() {
             return 0;
         }
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint() {
             return "";
         }
-        /**
-         *  ```
-         *  sub /$mol_view_content <= title
-         *  ```
-         **/
         sub() {
             return [this.title()];
         }
@@ -3573,13 +3173,6 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_button_major extends $.$mol_button_typed {
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_theme \$mol_theme_accent
-         *  ```
-         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_theme": "$mol_theme_accent" }));
         }
@@ -3597,82 +3190,30 @@ var $;
 var $;
 (function ($) {
     class $mol_scroll extends $.$mol_view {
-        /**
-         *  ```
-         *  minimal_height 0
-         *  ```
-         **/
         minimal_height() {
             return 0;
         }
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	scrollTop <= scroll_top?val
-         *  	scrollLeft <= scroll_left?val
-         *  	scrollBottom <= scroll_bottom?val
-         *  	scrollRight <= scroll_right?val
-         *  ```
-         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "scrollTop": this.scroll_top(), "scrollLeft": this.scroll_left(), "scrollBottom": this.scroll_bottom(), "scrollRight": this.scroll_right() }));
         }
-        /**
-         *  ```
-         *  scroll_top?val 0
-         *  ```
-         **/
         scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  scroll_left?val 0
-         *  ```
-         **/
         scroll_left(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  scroll_bottom?val 0
-         *  ```
-         **/
         scroll_bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  scroll_right?val 0
-         *  ```
-         **/
         scroll_right(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	scroll?event <=> event_scroll?event
-         *  ```
-         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "scroll": (event) => this.event_scroll(event) }));
         }
-        /**
-         *  ```
-         *  event_scroll?event null
-         *  ```
-         **/
         event_scroll(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  Strut $mol_view style * transform <= strut_transform
-         *  ```
-         **/
         Strut() {
             return ((obj) => {
                 obj.style = () => ({
@@ -3681,11 +3222,6 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
-        /**
-         *  ```
-         *  strut_transform \
-         *  ```
-         **/
         strut_transform() {
             return "";
         }
@@ -3730,13 +3266,6 @@ var $;
         }
         $$.$mol_scroll_moving = $mol_scroll_moving;
         class $mol_scroll extends $.$mol_scroll {
-            // scroll_top( next? : number ) {
-            // 	return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
-            // }
-            // 
-            // scroll_left( next? : number ) {
-            // 	return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
-            // }
             scroll_bottom(next) {
                 return next || 0;
             }
@@ -3769,11 +3298,7 @@ var $;
                 });
             }
             strut_transform() {
-                // try {
                 return `translate3d( 0 , ${this.content_height()}px , 0 )`;
-                // } catch( error ) {
-                // 	return ''
-                // }
             }
             sub_visible() {
                 const sub = [
@@ -3858,24 +3383,9 @@ var $;
 var $;
 (function ($) {
     class $mol_page extends $.$mol_view {
-        /**
-         *  ```
-         *  sub /
-         *  	<= Head
-         *  	<= Body
-         *  	<= Foot
-         *  ```
-         **/
         sub() {
             return [this.Head(), this.Body(), this.Foot()];
         }
-        /**
-         *  ```
-         *  Head $mol_view
-         *  	attr * mol_theme \$mol_theme_base
-         *  	sub <= head
-         *  ```
-         **/
         Head() {
             return ((obj) => {
                 obj.attr = () => ({
@@ -3885,23 +3395,9 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
-        /**
-         *  ```
-         *  head /
-         *  	<= Title
-         *  	<= Tools
-         *  ```
-         **/
         head() {
             return [this.Title(), this.Tools()];
         }
-        /**
-         *  ```
-         *  Title $mol_button
-         *  	sub / <= title
-         *  	event_click?val <=> event_top?val
-         *  ```
-         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => [this.title()];
@@ -3909,40 +3405,18 @@ var $;
                 return obj;
             })(new this.$.$mol_button());
         }
-        /**
-         *  ```
-         *  event_top?val null
-         *  ```
-         **/
         event_top(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  Tools $mol_view sub <= tools
-         *  ```
-         **/
         Tools() {
             return ((obj) => {
                 obj.sub = () => this.tools();
                 return obj;
             })(new this.$.$mol_view());
         }
-        /**
-         *  ```
-         *  tools /$mol_view_content
-         *  ```
-         **/
         tools() {
             return [];
         }
-        /**
-         *  ```
-         *  Body $mol_scroll
-         *  	scroll_top?val <=> body_scroll_top?val
-         *  	sub <= body
-         *  ```
-         **/
         Body() {
             return ((obj) => {
                 obj.scroll_top = (val) => this.body_scroll_top(val);
@@ -3950,29 +3424,12 @@ var $;
                 return obj;
             })(new this.$.$mol_scroll());
         }
-        /**
-         *  ```
-         *  body_scroll_top?val 0
-         *  ```
-         **/
         body_scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  body /$mol_view_content
-         *  ```
-         **/
         body() {
             return [];
         }
-        /**
-         *  ```
-         *  Foot $mol_view
-         *  	attr * mol_theme \$mol_theme_base
-         *  	sub <= foot
-         *  ```
-         **/
         Foot() {
             return ((obj) => {
                 obj.attr = () => ({
@@ -3982,11 +3439,6 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
-        /**
-         *  ```
-         *  foot /$mol_view
-         *  ```
-         **/
         foot() {
             return [];
         }
@@ -4035,27 +3487,12 @@ var $;
 var $;
 (function ($) {
     class $mol_list extends $.$mol_view {
-        /**
-         *  ```
-         *  sub <= rows
-         *  ```
-         **/
         sub() {
             return this.rows();
         }
-        /**
-         *  ```
-         *  rows /$mol_view
-         *  ```
-         **/
         rows() {
             return [];
         }
-        /**
-         *  ```
-         *  Empty null
-         *  ```
-         **/
         Empty() {
             return null;
         }
@@ -4168,37 +3605,17 @@ var $;
 var $;
 (function ($) {
     class $mol_pop extends $.$mol_view {
-        /**
-         *  ```
-         *  event * keydown?event <=> keydown?event
-         *  ```
-         **/
         event() {
             return ({
                 "keydown": (event) => this.keydown(event),
             });
         }
-        /**
-         *  ```
-         *  keydown?event null
-         *  ```
-         **/
         keydown(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  showed?val false
-         *  ```
-         **/
         showed(val, force) {
             return (val !== void 0) ? val : false;
         }
-        /**
-         *  ```
-         *  plugins /$mol_plugin <= Meter
-         *  ```
-         **/
         plugins() {
             return [this.Meter()];
         }
@@ -4214,46 +3631,17 @@ var $;
         right() {
             return this.Meter().right();
         }
-        /**
-         *  ```
-         *  Meter $mol_meter
-         *  	top => top
-         *  	bottom => bottom
-         *  	left => left
-         *  	right => right
-         *  ```
-         **/
         Meter() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_meter());
         }
-        /**
-         *  ```
-         *  sub /
-         *  	<= Anchor
-         *  	<= Bubble
-         *  ```
-         **/
         sub() {
             return [this.Anchor(), this.Bubble()];
         }
-        /**
-         *  ```
-         *  Anchor null
-         *  ```
-         **/
         Anchor() {
             return null;
         }
-        /**
-         *  ```
-         *  Bubble $mol_pop_bubble
-         *  	align <= align
-         *  	content <= bubble_content
-         *  	height_max <= height_max
-         *  ```
-         **/
         Bubble() {
             return ((obj) => {
                 obj.align = () => this.align();
@@ -4262,27 +3650,12 @@ var $;
                 return obj;
             })(new this.$.$mol_pop_bubble());
         }
-        /**
-         *  ```
-         *  align \bottom_center
-         *  ```
-         **/
         align() {
             return "bottom_center";
         }
-        /**
-         *  ```
-         *  bubble_content /$mol_view_content
-         *  ```
-         **/
         bubble_content() {
             return [];
         }
-        /**
-         *  ```
-         *  height_max 9999
-         *  ```
-         **/
         height_max() {
             return 9999;
         }
@@ -4303,56 +3676,21 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_pop_bubble extends $.$mol_scroll {
-        /**
-         *  ```
-         *  sub <= content
-         *  ```
-         **/
         sub() {
             return this.content();
         }
-        /**
-         *  ```
-         *  content /$mol_view_content
-         *  ```
-         **/
         content() {
             return [];
         }
-        /**
-         *  ```
-         *  style *
-         *  	^
-         *  	maxHeight <= height_max
-         *  ```
-         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "maxHeight": this.height_max() }));
         }
-        /**
-         *  ```
-         *  height_max 9999
-         *  ```
-         **/
         height_max() {
             return 9999;
         }
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	mol_pop_align <= align
-         *  	tabindex 0
-         *  ```
-         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_pop_align": this.align(), "tabindex": 0 }));
         }
-        /**
-         *  ```
-         *  align \
-         *  ```
-         **/
         align() {
             return "";
         }
@@ -4400,54 +3738,24 @@ var $;
 var $;
 (function ($) {
     class $mol_dimmer extends $.$mol_view {
-        /**
-         *  ```
-         *  haystack \
-         *  ```
-         **/
         haystack() {
             return "";
         }
-        /**
-         *  ```
-         *  needle \
-         *  ```
-         **/
         needle() {
             return "";
         }
-        /**
-         *  ```
-         *  sub <= parts
-         *  ```
-         **/
         sub() {
             return this.parts();
         }
-        /**
-         *  ```
-         *  parts /$mol_view_content
-         *  ```
-         **/
         parts() {
             return [];
         }
-        /**
-         *  ```
-         *  Low!id $mol_view sub / <= string!id
-         *  ```
-         **/
         Low(id) {
             return ((obj) => {
                 obj.sub = () => [this.string(id)];
                 return obj;
             })(new this.$.$mol_view());
         }
-        /**
-         *  ```
-         *  string!id \
-         *  ```
-         **/
         string(id) {
             return "";
         }
@@ -4549,7 +3857,7 @@ var $;
 (function ($) {
     self.addEventListener('storage', event => {
         if (!event.key)
-            return; // @TODO clear support
+            return;
         $.$mol_state_local.value(event.key, undefined, $.$mol_mem_force_cache);
     });
 })($ || ($ = {}));
@@ -4571,7 +3879,6 @@ var $;
 //parse.js.map
 ;
 "use strict";
-// @ts-ignore
 var $node = $node || {};
 //node.web.js.map
 ;
@@ -4680,7 +3987,7 @@ var $;
             init.signal = controller.signal;
             const fiber = $.$mol_fiber.current;
             fiber.abort = () => {
-                if (fiber.cursor === -2 /* actual */)
+                if (fiber.cursor === -2)
                     return true;
                 controller.abort();
                 return true;
@@ -4838,117 +4145,45 @@ var $;
 var $;
 (function ($) {
     class $mol_nav extends $.$mol_plugin {
-        /**
-         *  ```
-         *  cycle?val false
-         *  ```
-         **/
         cycle(val, force) {
             return (val !== void 0) ? val : false;
         }
-        /**
-         *  ```
-         *  mod_ctrl false
-         *  ```
-         **/
         mod_ctrl() {
             return false;
         }
-        /**
-         *  ```
-         *  mod_shift false
-         *  ```
-         **/
         mod_shift() {
             return false;
         }
-        /**
-         *  ```
-         *  mod_alt false
-         *  ```
-         **/
         mod_alt() {
             return false;
         }
-        /**
-         *  ```
-         *  keys_x?val /
-         *  ```
-         **/
         keys_x(val, force) {
             return (val !== void 0) ? val : [];
         }
-        /**
-         *  ```
-         *  keys_y?val /
-         *  ```
-         **/
         keys_y(val, force) {
             return (val !== void 0) ? val : [];
         }
-        /**
-         *  ```
-         *  current_x?val \
-         *  ```
-         **/
         current_x(val, force) {
             return (val !== void 0) ? val : "";
         }
-        /**
-         *  ```
-         *  current_y?val \
-         *  ```
-         **/
         current_y(val, force) {
             return (val !== void 0) ? val : "";
         }
-        /**
-         *  ```
-         *  event_up?event null
-         *  ```
-         **/
         event_up(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event_down?event null
-         *  ```
-         **/
         event_down(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event_left?event null
-         *  ```
-         **/
         event_left(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event_right?event null
-         *  ```
-         **/
         event_right(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	keydown?event <=> event_key?event
-         *  ```
-         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "keydown": (event) => this.event_key(event) }));
         }
-        /**
-         *  ```
-         *  event_key?event null
-         *  ```
-         **/
         event_key(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -5081,159 +4316,57 @@ var $;
 var $;
 (function ($) {
     class $mol_string extends $.$mol_view {
-        /**
-         *  ```
-         *  dom_name \input
-         *  ```
-         **/
         dom_name() {
             return "input";
         }
-        /**
-         *  ```
-         *  enabled true
-         *  ```
-         **/
         enabled() {
             return true;
         }
-        /**
-         *  ```
-         *  debounce 0
-         *  ```
-         **/
         debounce() {
             return 0;
         }
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height() {
             return 40;
         }
-        /**
-         *  ```
-         *  autocomplete false
-         *  ```
-         **/
         autocomplete() {
             return false;
         }
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	disabled <= disabled
-         *  	value <= value_changed?val
-         *  	placeholder <= hint
-         *  	type <= type?val
-         *  	spellcheck <= spellcheck
-         *  	autocomplete <= autocomplete_native
-         *  ```
-         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "disabled": this.disabled(), "value": this.value_changed(), "placeholder": this.hint(), "type": this.type(), "spellcheck": this.spellcheck(), "autocomplete": this.autocomplete_native() }));
         }
-        /**
-         *  ```
-         *  disabled false
-         *  ```
-         **/
         disabled() {
             return false;
         }
-        /**
-         *  ```
-         *  value_changed?val <=> value?val
-         *  ```
-         **/
         value_changed(val, force) {
             return this.value(val);
         }
-        /**
-         *  ```
-         *  value?val \
-         *  ```
-         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint() {
             return "";
         }
-        /**
-         *  ```
-         *  type?val \text
-         *  ```
-         **/
         type(val, force) {
             return (val !== void 0) ? val : "text";
         }
-        /**
-         *  ```
-         *  spellcheck false
-         *  ```
-         **/
         spellcheck() {
             return false;
         }
-        /**
-         *  ```
-         *  autocomplete_native \
-         *  ```
-         **/
         autocomplete_native() {
             return "";
         }
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	maxlength <= length_max
-         *  ```
-         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "maxlength": this.length_max() }));
         }
-        /**
-         *  ```
-         *  length_max Infinity
-         *  ```
-         **/
         length_max() {
             return Infinity;
         }
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	input?event <=> event_change?event
-         *  	keydown?event <=> event_key_press?event
-         *  ```
-         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "input": (event) => this.event_change(event), "keydown": (event) => this.event_key_press(event) }));
         }
-        /**
-         *  ```
-         *  event_change?event null
-         *  ```
-         **/
         event_change(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  event_key_press?event null
-         *  ```
-         **/
         event_key_press(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -5263,14 +4396,10 @@ var $;
     var $$;
     (function ($$) {
         class $mol_string extends $.$mol_string {
-            // _timer = null as any
             event_change(next) {
                 if (!next)
                     return;
-                // clearTimeout( this._timer )
-                // this._timer = setTimeout( $mol_log_group( `${ this }.event_change()` , () => {
                 this.value(next.target.value);
-                // } ) , this.debounce() )
             }
             event_key_press(next) {
                 if (!next)
@@ -5359,43 +4488,18 @@ var $;
 var $;
 (function ($) {
     class $mol_svg extends $.$mol_view {
-        /**
-         *  ```
-         *  dom_name \svg
-         *  ```
-         **/
         dom_name() {
             return "svg";
         }
-        /**
-         *  ```
-         *  dom_name_space \http://www.w3.org/2000/svg
-         *  ```
-         **/
         dom_name_space() {
             return "http://www.w3.org/2000/svg";
         }
-        /**
-         *  ```
-         *  text_width?text 0
-         *  ```
-         **/
         text_width(text, force) {
             return (text !== void 0) ? text : 0;
         }
-        /**
-         *  ```
-         *  font_size 16
-         *  ```
-         **/
         font_size() {
             return 16;
         }
-        /**
-         *  ```
-         *  font_family \
-         *  ```
-         **/
         font_family() {
             return "";
         }
@@ -5448,38 +4552,15 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_root extends $.$mol_svg {
-        /**
-         *  ```
-         *  dom_name \svg
-         *  ```
-         **/
         dom_name() {
             return "svg";
         }
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	viewBox <= view_box
-         *  	preserveAspectRatio <= aspect
-         *  ```
-         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "viewBox": this.view_box(), "preserveAspectRatio": this.aspect() }));
         }
-        /**
-         *  ```
-         *  view_box \0 0 100 100
-         *  ```
-         **/
         view_box() {
             return "0 0 100 100";
         }
-        /**
-         *  ```
-         *  aspect \xMidYMid
-         *  ```
-         **/
         aspect() {
             return "xMidYMid";
         }
@@ -5492,29 +4573,12 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_path extends $.$mol_svg {
-        /**
-         *  ```
-         *  dom_name \path
-         *  ```
-         **/
         dom_name() {
             return "path";
         }
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	d <= geometry
-         *  ```
-         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "d": this.geometry() }));
         }
-        /**
-         *  ```
-         *  geometry \
-         *  ```
-         **/
         geometry() {
             return "";
         }
@@ -5527,54 +4591,24 @@ var $;
 var $;
 (function ($) {
     class $mol_icon extends $.$mol_svg_root {
-        /**
-         *  ```
-         *  view_box \0 0 24 24
-         *  ```
-         **/
         view_box() {
             return "0 0 24 24";
         }
-        /**
-         *  ```
-         *  minimal_width 16
-         *  ```
-         **/
         minimal_width() {
             return 16;
         }
-        /**
-         *  ```
-         *  minimal_height 16
-         *  ```
-         **/
         minimal_height() {
             return 16;
         }
-        /**
-         *  ```
-         *  sub / <= Path
-         *  ```
-         **/
         sub() {
             return [this.Path()];
         }
-        /**
-         *  ```
-         *  Path $mol_svg_path geometry <= path
-         *  ```
-         **/
         Path() {
             return ((obj) => {
                 obj.geometry = () => this.path();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
-        /**
-         *  ```
-         *  path \
-         *  ```
-         **/
         path() {
             return "";
         }
@@ -5590,11 +4624,6 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_chevron extends $.$mol_icon {
-        /**
-         *  ```
-         *  path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
-         *  ```
-         **/
         path() {
             return "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z";
         }
@@ -5623,45 +4652,18 @@ var $;
 var $;
 (function ($) {
     class $mol_select extends $.$mol_pop {
-        /**
-         *  ```
-         *  dictionary *
-         *  ```
-         **/
         dictionary() {
             return ({});
         }
-        /**
-         *  ```
-         *  options /string
-         *  ```
-         **/
         options() {
             return [];
         }
-        /**
-         *  ```
-         *  value?val \
-         *  ```
-         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height() {
             return 40;
         }
-        /**
-         *  ```
-         *  Option_row!id $mol_button_minor
-         *  	event_click?event <=> event_select!id?event
-         *  	sub <= option_content!id
-         *  ```
-         **/
         Option_row(id) {
             return ((obj) => {
                 obj.event_click = (event) => this.event_select(id, event);
@@ -5669,30 +4671,12 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
-        /**
-         *  ```
-         *  event_select!id?event null
-         *  ```
-         **/
         event_select(id, event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  option_content!id / <= Option_label!id
-         *  ```
-         **/
         option_content(id) {
             return [this.Option_label(id)];
         }
-        /**
-         *  ```
-         *  Option_label!id $mol_dimmer
-         *  	minimal_height 40
-         *  	haystack <= option_label!id
-         *  	needle <= filter_pattern?val
-         *  ```
-         **/
         Option_label(id) {
             return ((obj) => {
                 obj.minimal_height = () => 40;
@@ -5701,59 +4685,24 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
-        /**
-         *  ```
-         *  option_label!id \
-         *  ```
-         **/
         option_label(id) {
             return "";
         }
-        /**
-         *  ```
-         *  filter_pattern?val \
-         *  ```
-         **/
         filter_pattern(val, force) {
             return (val !== void 0) ? val : "";
         }
-        /**
-         *  ```
-         *  No_options $mol_view sub / <= no_options_message
-         *  ```
-         **/
         No_options() {
             return ((obj) => {
                 obj.sub = () => [this.no_options_message()];
                 return obj;
             })(new this.$.$mol_view());
         }
-        /**
-         *  ```
-         *  no_options_message @ \No options
-         *  ```
-         **/
         no_options_message() {
             return this.$.$mol_locale.text("$mol_select_no_options_message");
         }
-        /**
-         *  ```
-         *  plugins /
-         *  	^
-         *  	<= Nav
-         *  ```
-         **/
         plugins() {
             return [...super.plugins(), this.Nav()];
         }
-        /**
-         *  ```
-         *  Nav $mol_nav
-         *  	keys_y <= nav_components
-         *  	current_y?component <=> option_focused?component
-         *  	cycle?val <=> nav_cycle?val
-         *  ```
-         **/
         Nav() {
             return ((obj) => {
                 obj.keys_y = () => this.nav_components();
@@ -5762,61 +4711,24 @@ var $;
                 return obj;
             })(new this.$.$mol_nav());
         }
-        /**
-         *  ```
-         *  nav_components /$mol_view
-         *  ```
-         **/
         nav_components() {
             return [];
         }
-        /**
-         *  ```
-         *  option_focused?component null
-         *  ```
-         **/
         option_focused(component, force) {
             return (component !== void 0) ? component : null;
         }
-        /**
-         *  ```
-         *  nav_cycle?val true
-         *  ```
-         **/
         nav_cycle(val, force) {
             return (val !== void 0) ? val : true;
         }
-        /**
-         *  ```
-         *  showed?val <=> options_showed?val
-         *  ```
-         **/
         showed(val, force) {
             return this.options_showed(val);
         }
-        /**
-         *  ```
-         *  options_showed?val false
-         *  ```
-         **/
         options_showed(val, force) {
             return (val !== void 0) ? val : false;
         }
-        /**
-         *  ```
-         *  Anchor <= Trigger
-         *  ```
-         **/
         Anchor() {
             return this.Trigger();
         }
-        /**
-         *  ```
-         *  Trigger $mol_button_minor
-         *  	click?event <=> open?event
-         *  	sub <= trigger_content
-         *  ```
-         **/
         Trigger() {
             return ((obj) => {
                 obj.click = (event) => this.open(event);
@@ -5824,65 +4736,27 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
-        /**
-         *  ```
-         *  open?event null
-         *  ```
-         **/
         open(event, force) {
             return (event !== void 0) ? event : null;
         }
-        /**
-         *  ```
-         *  trigger_content /$mol_view_content
-         *  ```
-         **/
         trigger_content() {
             return [];
         }
-        /**
-         *  ```
-         *  bubble_content / <= Menu
-         *  ```
-         **/
         bubble_content() {
             return [this.Menu()];
         }
-        /**
-         *  ```
-         *  Menu $mol_list rows <= menu_content
-         *  ```
-         **/
         Menu() {
             return ((obj) => {
                 obj.rows = () => this.menu_content();
                 return obj;
             })(new this.$.$mol_list());
         }
-        /**
-         *  ```
-         *  menu_content /$mol_view
-         *  ```
-         **/
         menu_content() {
             return [];
         }
-        /**
-         *  ```
-         *  option_content_current /$mol_view_content
-         *  ```
-         **/
         option_content_current() {
             return [];
         }
-        /**
-         *  ```
-         *  Filter $mol_string
-         *  	value?val <=> filter_pattern?val
-         *  	hint <= filter_hint
-         *  	debounce <= debounce
-         *  ```
-         **/
         Filter() {
             return ((obj) => {
                 obj.value = (val) => this.filter_pattern(val);
@@ -5891,35 +4765,15 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
-        /**
-         *  ```
-         *  filter_hint <= hint
-         *  ```
-         **/
         filter_hint() {
             return this.hint();
         }
-        /**
-         *  ```
-         *  hint @ \Search..
-         *  ```
-         **/
         hint() {
             return this.$.$mol_locale.text("$mol_select_hint");
         }
-        /**
-         *  ```
-         *  debounce 200
-         *  ```
-         **/
         debounce() {
             return 200;
         }
-        /**
-         *  ```
-         *  Trigger_icon $mol_icon_chevron
-         *  ```
-         **/
         Trigger_icon() {
             return ((obj) => {
                 return obj;
@@ -6075,11 +4929,6 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_cross extends $.$mol_icon {
-        /**
-         *  ```
-         *  path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
-         *  ```
-         **/
         path() {
             return "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z";
         }
@@ -6092,37 +4941,12 @@ var $;
 var $;
 (function ($) {
     class $mol_search extends $.$mol_bar {
-        /**
-         *  ```
-         *  query?val \
-         *  ```
-         **/
         query(val, force) {
             return (val !== void 0) ? val : "";
         }
-        /**
-         *  ```
-         *  sub /
-         *  	<= Suggest
-         *  	<= Clear
-         *  ```
-         **/
         sub() {
             return [this.Suggest(), this.Clear()];
         }
-        /**
-         *  ```
-         *  Suggest $mol_select
-         *  	value?val <=> suggest_selected?val
-         *  	filter_pattern?val <=> suggest_selected?val
-         *  	hint <= hint
-         *  	filter_pattern?val <=> query?val
-         *  	options_showed <= suggests_showed
-         *  	options <= suggests
-         *  	Trigger_icon null
-         *  	debounce <= debounce
-         *  ```
-         **/
         Suggest() {
             return ((obj) => {
                 obj.value = (val) => this.suggest_selected(val);
@@ -6136,53 +4960,21 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
-        /**
-         *  ```
-         *  suggest_selected?val \
-         *  ```
-         **/
         suggest_selected(val, force) {
             return (val !== void 0) ? val : "";
         }
-        /**
-         *  ```
-         *  hint @ \Search...
-         *  ```
-         **/
         hint() {
             return this.$.$mol_locale.text("$mol_search_hint");
         }
-        /**
-         *  ```
-         *  suggests_showed false
-         *  ```
-         **/
         suggests_showed() {
             return false;
         }
-        /**
-         *  ```
-         *  suggests /string
-         *  ```
-         **/
         suggests() {
             return [];
         }
-        /**
-         *  ```
-         *  debounce 200
-         *  ```
-         **/
         debounce() {
             return 200;
         }
-        /**
-         *  ```
-         *  Clear $mol_button_minor
-         *  	sub / <= Clear_icon
-         *  	event_click?val <=> event_clear?val
-         *  ```
-         **/
         Clear() {
             return ((obj) => {
                 obj.sub = () => [this.Clear_icon()];
@@ -6190,21 +4982,11 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
-        /**
-         *  ```
-         *  Clear_icon $mol_icon_cross
-         *  ```
-         **/
         Clear_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
-        /**
-         *  ```
-         *  event_clear?val null
-         *  ```
-         **/
         event_clear(val, force) {
             return (val !== void 0) ? val : null;
         }
@@ -6283,24 +5065,9 @@ var $;
 var $;
 (function ($) {
     class $mol_code extends $.$mol_view {
-        /**
-         *  ```
-         *  sub /
-         *  	<= Manual
-         *  	<= Scan
-         *  ```
-         **/
         sub() {
             return [this.Manual(), this.Scan()];
         }
-        /**
-         *  ```
-         *  Manual $mol_search
-         *  	query?val <=> value?val
-         *  	hint <= hint
-         *  	debounce <= debounce
-         *  ```
-         **/
         Manual() {
             return ((obj) => {
                 obj.query = (val) => this.value(val);
@@ -6309,45 +5076,18 @@ var $;
                 return obj;
             })(new this.$.$mol_search());
         }
-        /**
-         *  ```
-         *  value?val \
-         *  ```
-         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
-        /**
-         *  ```
-         *  hint <= format
-         *  ```
-         **/
         hint() {
             return this.format();
         }
-        /**
-         *  ```
-         *  format \
-         *  ```
-         **/
         format() {
             return "";
         }
-        /**
-         *  ```
-         *  debounce 200
-         *  ```
-         **/
         debounce() {
             return 200;
         }
-        /**
-         *  ```
-         *  Scan $mol_button
-         *  	event_click?val <=> event_scan?val
-         *  	sub / <= scan_label
-         *  ```
-         **/
         Scan() {
             return ((obj) => {
                 obj.event_click = (val) => this.event_scan(val);
@@ -6355,19 +5095,9 @@ var $;
                 return obj;
             })(new this.$.$mol_button());
         }
-        /**
-         *  ```
-         *  event_scan?val null
-         *  ```
-         **/
         event_scan(val, force) {
             return (val !== void 0) ? val : null;
         }
-        /**
-         *  ```
-         *  scan_label @ \Scan
-         *  ```
-         **/
         scan_label() {
             return this.$.$mol_locale.text("$mol_code_scan_label");
         }
@@ -6528,115 +5258,42 @@ var $;
 var $;
 (function ($) {
     class $mol_link extends $.$mol_view {
-        /**
-         *  ```
-         *  minimal_height 40
-         *  ```
-         **/
         minimal_height() {
             return 40;
         }
-        /**
-         *  ```
-         *  dom_name \a
-         *  ```
-         **/
         dom_name() {
             return "a";
         }
-        /**
-         *  ```
-         *  attr *
-         *  	^
-         *  	href <= uri
-         *  	title <= hint
-         *  	target <= target
-         *  	download <= file_name
-         *  	mol_link_current <= current
-         *  ```
-         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "href": this.uri(), "title": this.hint(), "target": this.target(), "download": this.file_name(), "mol_link_current": this.current() }));
         }
-        /**
-         *  ```
-         *  uri \
-         *  ```
-         **/
         uri() {
             return "";
         }
-        /**
-         *  ```
-         *  hint \
-         *  ```
-         **/
         hint() {
             return "";
         }
-        /**
-         *  ```
-         *  target \_self
-         *  ```
-         **/
         target() {
             return "_self";
         }
-        /**
-         *  ```
-         *  file_name \
-         *  ```
-         **/
         file_name() {
             return "";
         }
-        /**
-         *  ```
-         *  current false
-         *  ```
-         **/
         current() {
             return false;
         }
-        /**
-         *  ```
-         *  sub /$mol_view_content <= title
-         *  ```
-         **/
         sub() {
             return [this.title()];
         }
-        /**
-         *  ```
-         *  arg *
-         *  ```
-         **/
         arg() {
             return ({});
         }
-        /**
-         *  ```
-         *  event *
-         *  	^
-         *  	click?event <=> click?event
-         *  ```
-         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.click(event) }));
         }
-        /**
-         *  ```
-         *  click?event <=> event_click?event
-         *  ```
-         **/
         click(event, force) {
             return this.event_click(event);
         }
-        /**
-         *  ```
-         *  event_click?event null
-         *  ```
-         **/
         event_click(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -6677,7 +5334,6 @@ var $;
                 if (!event || event.defaultPrevented)
                     return;
                 this.focused(false);
-                // setTimeout( $mol_log_group( `${ this }.event_click()` , ()=> this.focused( false ) ) , 50 )
             }
             file_name() {
                 return null;
@@ -6781,51 +5437,24 @@ var $;
 var $;
 (function ($) {
     class $mol_labeler extends $.$mol_view {
-        /**
-         *  ```
-         *  sub /
-         *  	<= Title
-         *  	<= Content
-         *  ```
-         **/
         sub() {
             return [this.Title(), this.Content()];
         }
-        /**
-         *  ```
-         *  Title $mol_view sub <= label
-         *  ```
-         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => this.label();
                 return obj;
             })(new this.$.$mol_view());
         }
-        /**
-         *  ```
-         *  label /$mol_view_content <= title
-         *  ```
-         **/
         label() {
             return [this.title()];
         }
-        /**
-         *  ```
-         *  Content $mol_view sub <= content
-         *  ```
-         **/
         Content() {
             return ((obj) => {
                 obj.sub = () => this.content();
                 return obj;
             })(new this.$.$mol_view());
         }
-        /**
-         *  ```
-         *  content /
-         *  ```
-         **/
         content() {
             return [];
         }
@@ -6844,30 +5473,12 @@ var $;
 var $;
 (function ($) {
     class $mol_image extends $.$mol_view {
-        /**
-         *  ```
-         *  dom_name \img
-         *  ```
-         **/
         dom_name() {
             return "img";
         }
-        /**
-         *  ```
-         *  field *
-         *  	^
-         *  	src <= uri
-         *  	alt <= title
-         *  ```
-         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "src": this.uri(), "alt": this.title() }));
         }
-        /**
-         *  ```
-         *  uri \
-         *  ```
-         **/
         uri() {
             return "";
         }
@@ -6902,33 +5513,12 @@ var $;
 var $;
 (function ($) {
     class $mol_app_lamps extends $.$mol_book {
-        /**
-         *  ```
-         *  lamp_current_id?val \
-         *  ```
-         **/
         lamp_current_id(val, force) {
             return (val !== void 0) ? val : "";
         }
-        /**
-         *  ```
-         *  pages /
-         *  	<= Addon_page
-         *  	<= Main_page
-         *  ```
-         **/
         pages() {
             return [this.Addon_page(), this.Main_page()];
         }
-        /**
-         *  ```
-         *  Addon_page $mol_page
-         *  	minimal_width 400
-         *  	title \LampTest.ru
-         *  	body_scroll_top?val <=> menu_scroll_top?val
-         *  	body / <= Menu
-         *  ```
-         **/
         Addon_page() {
             return ((obj) => {
                 obj.minimal_width = () => 400;
@@ -6938,51 +5528,24 @@ var $;
                 return obj;
             })(new this.$.$mol_page());
         }
-        /**
-         *  ```
-         *  menu_scroll_top?val 0
-         *  ```
-         **/
         menu_scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
-        /**
-         *  ```
-         *  Menu $mol_list rows <= lamp_rows
-         *  ```
-         **/
         Menu() {
             return ((obj) => {
                 obj.rows = () => this.lamp_rows();
                 return obj;
             })(new this.$.$mol_list());
         }
-        /**
-         *  ```
-         *  lamp_rows / <= Filter_panel
-         *  ```
-         **/
         lamp_rows() {
             return [this.Filter_panel()];
         }
-        /**
-         *  ```
-         *  Filter_panel $mol_float sub / <= Filter
-         *  ```
-         **/
         Filter_panel() {
             return ((obj) => {
                 obj.sub = () => [this.Filter()];
                 return obj;
             })(new this.$.$mol_float());
         }
-        /**
-         *  ```
-         *  Filter $mol_code
-         *  	hint <= filter_hint
-         *  	value?val <=> filter?val
-         *  ```
-         **/
         Filter() {
             return ((obj) => {
                 obj.hint = () => this.filter_hint();
@@ -6990,34 +5553,12 @@ var $;
                 return obj;
             })(new this.$.$mol_code());
         }
-        /**
-         *  ```
-         *  filter_hint @ \Filter...
-         *  ```
-         **/
         filter_hint() {
             return this.$.$mol_locale.text("$mol_app_lamps_filter_hint");
         }
-        /**
-         *  ```
-         *  filter?val \
-         *  ```
-         **/
         filter(val, force) {
             return (val !== void 0) ? val : "";
         }
-        /**
-         *  ```
-         *  Main_page $mol_page
-         *  	minimal_width 400
-         *  	title <= title
-         *  	event_top?val <=> event_front_up?val
-         *  	tools / <= Close
-         *  	body /
-         *  		<= Info
-         *  		<= Gallery
-         *  ```
-         **/
         Main_page() {
             return ((obj) => {
                 obj.minimal_width = () => 400;
@@ -7028,21 +5569,9 @@ var $;
                 return obj;
             })(new this.$.$mol_page());
         }
-        /**
-         *  ```
-         *  title \
-         *  ```
-         **/
         title() {
             return "";
         }
-        /**
-         *  ```
-         *  Close $mol_link
-         *  	sub / <= Close_icon
-         *  	arg * lamp null
-         *  ```
-         **/
         Close() {
             return ((obj) => {
                 obj.sub = () => [this.Close_icon()];
@@ -7052,49 +5581,23 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
-        /**
-         *  ```
-         *  Close_icon $mol_icon_cross
-         *  ```
-         **/
         Close_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
-        /**
-         *  ```
-         *  Info $mol_row sub /
-         *  	<= Stat
-         *  	<= Props
-         *  	<= Body
-         *  	<= Light
-         *  ```
-         **/
         Info() {
             return ((obj) => {
                 obj.sub = () => [this.Stat(), this.Props(), this.Body(), this.Light()];
                 return obj;
             })(new this.$.$mol_row());
         }
-        /**
-         *  ```
-         *  Stat $mol_row sub / <= Rating
-         *  ```
-         **/
         Stat() {
             return ((obj) => {
                 obj.sub = () => [this.Rating()];
                 return obj;
             })(new this.$.$mol_row());
         }
-        /**
-         *  ```
-         *  Rating $mol_labeler
-         *  	title <= rating_title
-         *  	content / <= rating
-         *  ```
-         **/
         Rating() {
             return ((obj) => {
                 obj.title = () => this.rating_title();
@@ -7102,40 +5605,18 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
-        /**
-         *  ```
-         *  rating_title @ \Rating
-         *  ```
-         **/
         rating_title() {
             return this.$.$mol_locale.text("$mol_app_lamps_rating_title");
         }
-        /**
-         *  ```
-         *  rating 0
-         *  ```
-         **/
         rating() {
             return 0;
         }
-        /**
-         *  ```
-         *  Props $mol_row sub / <= Wattage
-         *  ```
-         **/
         Props() {
             return ((obj) => {
                 obj.sub = () => [this.Wattage()];
                 return obj;
             })(new this.$.$mol_row());
         }
-        /**
-         *  ```
-         *  Wattage $mol_labeler
-         *  	title <= wattage_title
-         *  	content / <= wattage
-         *  ```
-         **/
         Wattage() {
             return ((obj) => {
                 obj.title = () => this.wattage_title();
@@ -7143,43 +5624,18 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
-        /**
-         *  ```
-         *  wattage_title @ \Wattage
-         *  ```
-         **/
         wattage_title() {
             return this.$.$mol_locale.text("$mol_app_lamps_wattage_title");
         }
-        /**
-         *  ```
-         *  wattage \
-         *  ```
-         **/
         wattage() {
             return "";
         }
-        /**
-         *  ```
-         *  Body $mol_row sub /
-         *  	<= Type
-         *  	<= Shape
-         *  	<= Base
-         *  ```
-         **/
         Body() {
             return ((obj) => {
                 obj.sub = () => [this.Type(), this.Shape(), this.Base()];
                 return obj;
             })(new this.$.$mol_row());
         }
-        /**
-         *  ```
-         *  Type $mol_labeler
-         *  	title <= type_title
-         *  	content / <= type
-         *  ```
-         **/
         Type() {
             return ((obj) => {
                 obj.title = () => this.type_title();
@@ -7187,29 +5643,12 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
-        /**
-         *  ```
-         *  type_title @ \Type
-         *  ```
-         **/
         type_title() {
             return this.$.$mol_locale.text("$mol_app_lamps_type_title");
         }
-        /**
-         *  ```
-         *  type \
-         *  ```
-         **/
         type() {
             return "";
         }
-        /**
-         *  ```
-         *  Shape $mol_labeler
-         *  	title <= shape_title
-         *  	content / <= shape
-         *  ```
-         **/
         Shape() {
             return ((obj) => {
                 obj.title = () => this.shape_title();
@@ -7217,29 +5656,12 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
-        /**
-         *  ```
-         *  shape_title @ \Shape
-         *  ```
-         **/
         shape_title() {
             return this.$.$mol_locale.text("$mol_app_lamps_shape_title");
         }
-        /**
-         *  ```
-         *  shape \
-         *  ```
-         **/
         shape() {
             return "";
         }
-        /**
-         *  ```
-         *  Base $mol_labeler
-         *  	title <= base_title
-         *  	content / <= base
-         *  ```
-         **/
         Base() {
             return ((obj) => {
                 obj.title = () => this.base_title();
@@ -7247,44 +5669,18 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
-        /**
-         *  ```
-         *  base_title @ \Base
-         *  ```
-         **/
         base_title() {
             return this.$.$mol_locale.text("$mol_app_lamps_base_title");
         }
-        /**
-         *  ```
-         *  base \
-         *  ```
-         **/
         base() {
             return "";
         }
-        /**
-         *  ```
-         *  Light $mol_row sub /
-         *  	<= Temp
-         *  	<= Cri
-         *  	<= Ripple
-         *  	<= Angle
-         *  ```
-         **/
         Light() {
             return ((obj) => {
                 obj.sub = () => [this.Temp(), this.Cri(), this.Ripple(), this.Angle()];
                 return obj;
             })(new this.$.$mol_row());
         }
-        /**
-         *  ```
-         *  Temp $mol_labeler
-         *  	title <= Temp_title
-         *  	content / <= temp
-         *  ```
-         **/
         Temp() {
             return ((obj) => {
                 obj.title = () => this.Temp_title();
@@ -7292,29 +5688,12 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
-        /**
-         *  ```
-         *  Temp_title @ \Temperature
-         *  ```
-         **/
         Temp_title() {
             return this.$.$mol_locale.text("$mol_app_lamps_Temp_title");
         }
-        /**
-         *  ```
-         *  temp \
-         *  ```
-         **/
         temp() {
             return "";
         }
-        /**
-         *  ```
-         *  Cri $mol_labeler
-         *  	title <= cri_title
-         *  	content / <= cri
-         *  ```
-         **/
         Cri() {
             return ((obj) => {
                 obj.title = () => this.cri_title();
@@ -7322,29 +5701,12 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
-        /**
-         *  ```
-         *  cri_title @ \CRI
-         *  ```
-         **/
         cri_title() {
             return this.$.$mol_locale.text("$mol_app_lamps_cri_title");
         }
-        /**
-         *  ```
-         *  cri \
-         *  ```
-         **/
         cri() {
             return "";
         }
-        /**
-         *  ```
-         *  Ripple $mol_labeler
-         *  	title <= ripple_title
-         *  	content / <= ripple
-         *  ```
-         **/
         Ripple() {
             return ((obj) => {
                 obj.title = () => this.ripple_title();
@@ -7352,29 +5714,12 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
-        /**
-         *  ```
-         *  ripple_title @ \Ripple
-         *  ```
-         **/
         ripple_title() {
             return this.$.$mol_locale.text("$mol_app_lamps_ripple_title");
         }
-        /**
-         *  ```
-         *  ripple \
-         *  ```
-         **/
         ripple() {
             return "";
         }
-        /**
-         *  ```
-         *  Angle $mol_labeler
-         *  	title <= angle_title
-         *  	content / <= angle
-         *  ```
-         **/
         Angle() {
             return ((obj) => {
                 obj.title = () => this.angle_title();
@@ -7382,40 +5727,18 @@ var $;
                 return obj;
             })(new this.$.$mol_labeler());
         }
-        /**
-         *  ```
-         *  angle_title @ \Angle
-         *  ```
-         **/
         angle_title() {
             return this.$.$mol_locale.text("$mol_app_lamps_angle_title");
         }
-        /**
-         *  ```
-         *  angle \
-         *  ```
-         **/
         angle() {
             return "";
         }
-        /**
-         *  ```
-         *  Gallery $mol_row sub / <= Photo
-         *  ```
-         **/
         Gallery() {
             return ((obj) => {
                 obj.sub = () => [this.Photo()];
                 return obj;
             })(new this.$.$mol_row());
         }
-        /**
-         *  ```
-         *  Photo $mol_image
-         *  	uri <= photo
-         *  	title <= title
-         *  ```
-         **/
         Photo() {
             return ((obj) => {
                 obj.uri = () => this.photo();
@@ -7423,21 +5746,9 @@ var $;
                 return obj;
             })(new this.$.$mol_image());
         }
-        /**
-         *  ```
-         *  photo \
-         *  ```
-         **/
         photo() {
             return "";
         }
-        /**
-         *  ```
-         *  Lamp_row!id $mol_link
-         *  	sub / <= Lamp_row_dimmer!id
-         *  	arg <= lamp_arg!id
-         *  ```
-         **/
         Lamp_row(id) {
             return ((obj) => {
                 obj.sub = () => [this.Lamp_row_dimmer(id)];
@@ -7445,13 +5756,6 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
-        /**
-         *  ```
-         *  Lamp_row_dimmer!id $mol_dimmer
-         *  	needle <= filter
-         *  	haystack <= lamp_title!id
-         *  ```
-         **/
         Lamp_row_dimmer(id) {
             return ((obj) => {
                 obj.needle = () => this.filter();
@@ -7459,19 +5763,9 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
-        /**
-         *  ```
-         *  lamp_title!id \
-         *  ```
-         **/
         lamp_title(id) {
             return "";
         }
-        /**
-         *  ```
-         *  lamp_arg!id *
-         *  ```
-         **/
         lamp_arg(id) {
             return ({});
         }

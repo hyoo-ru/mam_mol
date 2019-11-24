@@ -253,7 +253,6 @@ var $;
 //object2.js.map
 ;
 "use strict";
-/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     class $mol_jsx_view extends $.$mol_object2 {
@@ -302,7 +301,6 @@ var $;
 //attach.js.map
 ;
 "use strict";
-/** @jsx $mol_jsx_make */
 var $;
 (function ($) {
     class $mol_app_bench_list_tsx_item extends $.$mol_jsx_view {
@@ -334,7 +332,7 @@ var $;
         }
         onItemSelect(item) {
             this.selected = item.id;
-            this.valueOf(); // force rerender
+            this.valueOf();
         }
         render() {
             return ($.$mol_jsx_make("div", { classList: ['list'] }, this.data.items.map(item => ($.$mol_jsx_make($mol_app_bench_list_tsx_item, { id: '/item:' + item.id, title: item.title, content: item.content, selected: item.id === this.selected, onSelect: () => this.onItemSelect(item) })))));

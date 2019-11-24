@@ -1457,8 +1457,7 @@ monospace;
 
 [mol_link_iconed] {
 	align-items: center;
-	color: #3a8ccb;
-	color: var(--mol_skin_base);
+	color: var(--mol_theme_control);
 }
 
 [mol_link_iconed_icon] {
