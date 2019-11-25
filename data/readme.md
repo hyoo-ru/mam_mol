@@ -1,6 +1,12 @@
 # $mol_data
 
-Defines static typed DTO with strict runtime validation and user friendly error messages like `["friends"][0]["phone"] is not a string and is not a number`.
+Defines static typed DTO with strict runtime validation and user friendly error messages like:
+
+```
+["friends"][0]["phone"] false is not any of variants
+boolean is not a string
+boolean is not a number
+```
 
 # Usage examples
 
