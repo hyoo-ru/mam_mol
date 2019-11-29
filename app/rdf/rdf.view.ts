@@ -7,16 +7,12 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		resource() {
-			const resource = this.$.$mol_http.resource( this.uri() )
-			resource.response_type = ()=> 'document'
-			resource.headers = ()=> ({ Accept : 'application/rdf+xml' })
-			return resource
-		}
-
-		@ $mol_mem
 		response() {
-			return this.resource().xml()
+			return this.$.$mol_fetch.xml( this.uri() , {
+				headers : {
+					Accept : 'application/rdf+xml' ,
+				} ,
+			} )
 		}
 
 		@ $mol_mem

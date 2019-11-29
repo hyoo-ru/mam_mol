@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_link_iconed extends $.$mol_link_iconed {
 
 		icon() {
-			return `https://favicon.yandex.net/favicon/${ this.host() }?color=0,0,255,0&size=32`
+			return `https://favicon.yandex.net/favicon/${ this.host() }?color=0,0,0,0&size=32&stub=1`
 		}
 
 		@ $mol_mem
@@ -15,6 +15,10 @@ namespace $.$$ {
 		@ $mol_mem
 		title() {
 			return decodeURIComponent( this.uri().split( this.host() , 2 )[1] )
+		}
+
+		sub() {
+			return [ this.Icon() , ... this.content() ]
 		}
 
 	}

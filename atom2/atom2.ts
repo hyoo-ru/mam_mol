@@ -50,6 +50,8 @@ namespace $ {
 		slaves = [] as ( $mol_fiber | number | undefined )[]
 		
 		rescue( master : $mol_atom2 , cursor : number ) {
+
+			if(!( master instanceof $mol_atom2 )) return
 			
 			const master_index = this.masters.length
 			const slave_index = this.masters[ cursor + 1 ] as number + 1
@@ -72,7 +74,7 @@ namespace $ {
 			
 			if( this.cursor === $mol_fiber_status.obsolete ) return super.pull()
 
-			this.$.$mol_log( this , '⏭' )
+			this.$.$mol_log2.info( this , $mol_atom2_token_revalidation )
 			
 			const masters = this.masters
 
@@ -90,11 +92,11 @@ namespace $ {
 
 				if( this.cursor as $mol_fiber_status !== $mol_fiber_status.obsolete ) continue
 
-				this.$.$mol_log( this , '⏯' )
+				this.$.$mol_log2.info( this , $mol_atom2_token_stumbled , this._error || this._value )
 				return super.pull()
 			}
 
-			this.$.$mol_log( this , '✔✔' , this.value )
+			this.$.$mol_log2.info( this , $mol_atom2_token_revalidated , this._error || this._value )
 			this.cursor = $mol_fiber_status.actual
 
 			return this.value
@@ -107,7 +109,11 @@ namespace $ {
 			const prev = this._value
 
 			if( prev && this.$.$mol_owning_check( this , prev ) ) prev.destructor()
-			if( next && this.$.$mol_owning_catch( this , next ) ) next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+
+			if( next && this.$.$mol_owning_catch( this , next ) ) {
+				next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+				next[ $mol_object_field ] = this[ $mol_object_field ]
+			}
 
 			this._value = next
 		}
@@ -119,14 +125,20 @@ namespace $ {
 			const prev = this._error
 
 			if( prev && this.$.$mol_owning_check( this , prev ) ) prev.destructor()
-			if( next && this.$.$mol_owning_catch( this , next ) ) next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+
+			if( next && this.$.$mol_owning_catch( this , next ) ) {
+				next[ Symbol.toStringTag ] = this[ Symbol.toStringTag ]
+				next[ $mol_object_field ] = this[ $mol_object_field ]
+			}
 
 			this._error = next
 		}
 
 		put( next : Value ) {
-			this.push( next )
+			this.cursor = this.masters.length
+			next = this.push( next )
 			this.cursor = $mol_fiber_status.persist
+			return next
 		}
 
 		complete_master( master_index : number ) {
@@ -143,7 +155,7 @@ namespace $ {
 
 		lead( slave : $mol_fiber , master_index : number ) {
 			
-			this.$.$mol_log( this , '☍' , slave )
+			this.$.$mol_log2.info( this , $mol_atom2_token_leaded , slave )
 			
 			const slave_index = this.slaves.length
 			this.slaves[ slave_index ] = slave
@@ -156,7 +168,7 @@ namespace $ {
 
 			if( slave_index < 0 ) return // slave is fiber
 			
-			this.$.$mol_log( this , '☌' , this.slaves[ slave_index ] )
+			this.$.$mol_log2.info( this , $mol_atom2_token_disleaded , this.slaves[ slave_index ] )
 
 			this.slaves[ slave_index ] = undefined
 			this.slaves[ slave_index + 1 ] = undefined
@@ -184,7 +196,7 @@ namespace $ {
 			
 			if( this.cursor === $mol_fiber_status.obsolete ) return
 			
-			this.$.$mol_log( this , '✘' )
+			this.$.$mol_log2.info( this , $mol_atom2_token_obsoleted , this._error || this._value )
 			if( this.cursor !== $mol_fiber_status.doubt ) this.doubt_slaves()
 			
 			this.cursor = $mol_fiber_status.obsolete
@@ -209,13 +221,14 @@ namespace $ {
 			
 			if( this.cursor >= $mol_fiber_status.doubt ) return
 				
-			this.$.$mol_log( this , '�' )
+			this.$.$mol_log2.info( this , $mol_atom2_token_doubted , this._error || this._value )
 			this.cursor = $mol_fiber_status.doubt
 			
 			this.doubt_slaves()
 
 		}
 
+		@ $mol_log2_indent.method
 		obsolete_slaves() {
 			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
 				const slave = this.slaves[ index ] as $mol_atom2
@@ -223,6 +236,7 @@ namespace $ {
 			}
 		}
 
+		@ $mol_log2_indent.method
 		doubt_slaves() {
 			for( let index = 0 ; index < this.slaves.length ; index += 2 ) {
 				const slave = this.slaves[ index ] as $mol_atom2
@@ -231,12 +245,12 @@ namespace $ {
 		}
 
 		get fresh() {
-			return ()=> {
+			return $mol_log2_hidden.func( ()=> {
 				if( this.cursor !== $mol_fiber_status.actual ) return
 
 				this.cursor = $mol_fiber_status.obsolete
 				$mol_fiber_solid.run( ()=> this.update() )
-			}
+			} )
 		}
 
 		get alone() {
@@ -256,7 +270,7 @@ namespace $ {
 
 			if( !this.abort() ) return
 			
-			this.$.$mol_log( this , '🕱' , this.value )
+			this.$.$mol_log2.info( this , $mol_fiber_token_destructed )
 
 			this.cursor = $mol_fiber_status.persist
 
@@ -267,5 +281,21 @@ namespace $ {
 		}
 		
 	}
+
+	export let $mol_atom2_token_revalidation = new $mol_log2_token( ' ⏭ ' )
+	export let $mol_atom2_token_stumbled = new $mol_log2_token( ' ⏯ ' )
+	export let $mol_atom2_token_revalidated = new $mol_log2_token( ' ✔ ' )
+	export let $mol_atom2_token_leaded = new $mol_log2_token( ' ☍ ' )
+	export let $mol_atom2_token_disleaded = new $mol_log2_token( ' ☌ ' )
+	export let $mol_atom2_token_obsoleted = new $mol_log2_token( ' ✘ ' )
+	export let $mol_atom2_token_doubted = new $mol_log2_token( ' � ' )
+
+	$mol_log2_legend.info( $mol_atom2_token_revalidation , '$mol_atom2 starts masters cheking for changes' )
+	$mol_log2_legend.info( $mol_atom2_token_stumbled , '$mol_atom2 is obsoleted while masters checking' )
+	$mol_log2_legend.info( $mol_atom2_token_revalidated , '$mol_atom2 is actual becasue there is no changed masters' )
+	$mol_log2_legend.info( $mol_atom2_token_leaded , '$mol_atom2 leads some slave' )
+	$mol_log2_legend.info( $mol_atom2_token_disleaded , '$mol_atom2 disleads some slave' )
+	$mol_log2_legend.info( $mol_atom2_token_obsoleted , '$mol_atom2 is obsoleted because some master is changed' )
+	$mol_log2_legend.info( $mol_atom2_token_doubted , '$mol_atom2 is doubted because some master is doubted or obsoleted' )
 
 }

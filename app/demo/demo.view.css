@@ -14,9 +14,13 @@
 	align-self: stretch;
 }
 
+[mol_app_demo_main],
 [mol_app_demo_detail],
 [mol_app_empty_message] {
 	flex: 1000 1 600px;
+}
+
+[mol_app_demo_detail] {
 	background: var(--mol_theme_field);
 }
 
@@ -28,6 +32,7 @@
 [mol_app_demo_nav_table] {
 	padding: .5rem;
 	width: 100%;
+	box-sizing: border-box;
 }
 
 [mol_app_demo_nav_row] {
@@ -50,10 +55,6 @@
 
 [mol_app_demo_nav_content] {
 	flex-grow: 1;
-}
-
-[mol_app_demo_main] {
-	overflow: auto;
 }
 
 [mol_app_demo_menu_themes] {

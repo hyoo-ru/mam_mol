@@ -1,12 +1,9 @@
 $mol_app_bench $mol_view
 	sub /
-		<= Addon_page $mol_page
-			title <= addon_title @ \Samples
-			body /
-				<= Filter $mol_search
-					query?val <=> filter?val \
-				<= Menu $mol_list
-					rows <= menu_options /
+		<= Sandbox_page $mol_page
+			title <= sandbox_title @ \Sandbox
+			Body <= Sandbox $mol_scroll
+				dom_name \iframe
 		<= Main_page $mol_page
 			title <= title
 			body /
@@ -16,17 +13,19 @@ $mol_app_bench $mol_view
 							<= Descr $mol_text
 								text <= description \
 					<= Param_fields $mol_row
-						sub /
-							<= param_fields /
+						sub <= param_fields /
 					<= Result $mol_bench
 						result <= result null
-						col_head_label!id /
-							<= result_col_title!id /
+						col_head_title!id
+							<= result_col_title!id \
 						col_sort?val <=> result_col_sort?val \
-		<= Sandbox_page $mol_page
-			title <= sandbox_title @ \Sandbox
-			Body <= Sandbox $mol_scroll
-				dom_name \iframe
+		<= Addon_page $mol_page
+			title <= addon_title @ \Samples
+			body /
+				<= Filter $mol_search
+					query?val <=> filter?val \
+				<= Menu $mol_list
+					rows <= menu_options /
 	-
 	Menu_option!id $mol_check_box
 		minimal_height 36

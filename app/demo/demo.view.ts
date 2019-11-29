@@ -46,7 +46,7 @@ namespace $.$$ {
 			const hierarchy = {} as { [ prefix : string ] : $mol_grid_node }
 			const root = hierarchy[ '' ] = {
 				id : '' ,
-				parent : null as $mol_grid_node ,
+				parent : null as any as $mol_grid_node ,
 				sub : [] as $mol_grid_node[] ,
 			}
 			
@@ -105,10 +105,14 @@ namespace $.$$ {
 			return $mol_state_arg.value( 'edit' ) != null
 		}
 
-		@ $mol_mem_key
-		Widget( name : string ) {
-			const Class : typeof $mol_view = this.$[ '$' + name ]
-			return new Class()
+		@ $mol_mem
+		Widget() {
+			return $mol_atom2_dict({
+				get : ( name : string )=> {
+					const Class : typeof $mol_view = this.$[ '$' + name ]
+					return new Class()
+				}
+			})
 		}
 		
 		@ $mol_mem
@@ -145,15 +149,13 @@ namespace $.$$ {
 			if( this.selected() ) {
 				if( this.editing() && this.names_demo().length === 1 ) sub.push( ... this.Editor( this.selected() ).pages() )
 				else sub.push( this.Detail() )
+			} else {
+				sub.push( this.Main() )
 			}
 			
 			return sub
 		}
 
-		Placeholder() {
-			return this.selected() ? null : super.Placeholder()
-		}
-		
 		@ $mol_mem 
 		main_content() {
 			const names = this.names_demo()
@@ -161,7 +163,7 @@ namespace $.$$ {
 				case 0 :
 					return [ this.Detail_empty_message() ]
 				default :
-					return this.names_demo().map( name => this.Widget( name ) )
+					return this.names_demo().map( name => this.Widget()[ name ] )
 			}
 		}
 		
@@ -170,8 +172,13 @@ namespace $.$$ {
 		}
 
 		source_link(){
-			var pieces = $mol_state_arg.value('demo').split('_').slice(1) 
-			var source_link = this.source_prefix() + pieces.join('/')
+			
+			const demo = $mol_state_arg.value('demo')
+			if( !demo ) return this.source_prefix()
+
+			const pieces = demo.split('_').slice(1)
+			const source_link = this.source_prefix() + pieces.join('/')
+
 			return source_link
 		}
 

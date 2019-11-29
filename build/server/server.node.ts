@@ -3,12 +3,17 @@ namespace $ {
 	export class $mol_build_server extends $mol_server {
 		
 		expressGenerator() {
-			return ( req : any , res : any , next : () => void )=> {
+			return $mol_fiber_root( ( req : any , res : any , next : () => any )=> {
 				try {
-					return this.generator( req.url ).valueOf() && next()
+					return $mol_fiber_unlimit( ()=> this.generator( req.url ) && next() )
 				} catch( error ) {
+					if( typeof error.then === 'function' ) $mol_fail_hidden( error )
+					console.error( error.stack )
 					if( req.url.match( /\.js$/ ) ) {
-						res.send( `console.error( ${ JSON.stringify( error.message ) } )` ).end()
+						const script = ( error as Error ).message.split( '\n\n' ).map( msg => {
+							return `console.error( ${ JSON.stringify( msg ) } )`
+						} ).join( '\n' )
+						res.send( script ).end()
 					} else if( req.url.match( /\.css$/ ) ) {
 						const message = JSON.stringify( error.message.replace( /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g , '' ) )
 							.replace( /\\n/g , '\\a' )
@@ -19,7 +24,7 @@ namespace $ {
 						throw error
 					}
 				}
-			}
+			} )
 		}
 		
 		build() : $mol_build {

@@ -44,25 +44,25 @@ namespace $ {
 			if( config.duration !== undefined ) this._duration = new $mol_time_duration( config.duration )
 		}
 
-		private _start : $mol_time_moment
+		private _start : $mol_time_moment | undefined
 		get start() {
 			if( this._start ) return this._start
 			
-			return this._start = this._end.shift( this._duration.mult( -1 ) )
+			return this._start = this._end!.shift( this._duration!.mult( -1 ) )
 		}
 
-		private _end : $mol_time_moment
+		private _end : $mol_time_moment | undefined
 		get end() {
 			if( this._end ) return this._end
 			
-			return this._end = this._start.shift( this._duration )
+			return this._end = this._start!.shift( this._duration! )
 		}
 
-		private _duration : $mol_time_duration
+		private _duration : $mol_time_duration | undefined
 		get duration() {
 			if( this._duration ) return this._duration
 			
-			return this._duration = new $mol_time_duration( this._end.valueOf() - this._start.valueOf() )
+			return this._duration = new $mol_time_duration( this._end!.valueOf() - this._start!.valueOf() )
 		}
 
 		toJSON() { return this.toString() }

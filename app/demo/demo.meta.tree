@@ -21,6 +21,7 @@ include \/mol/chart/demo/forces
 - include \/mol/chat/demo
 include \/mol/check/box/demo
 include \/mol/check/expand/demo
+include \/mol/check/group/demo
 include \/mol/check/icon/demo
 include \/mol/code/demo
 include \/mol/date/demo

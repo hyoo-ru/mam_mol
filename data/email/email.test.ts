@@ -8,19 +8,19 @@ namespace $ {
 		'Has not host' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_email( 'foo@' )
-			} , 'is not a /.+@.+/' )
+			} , 'foo@ is not a /.+@.+/' )
 		} ,
 
 		'Has not name' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_email( '@bar' )
-			} , 'is not a /.+@.+/' )
+			} , '@bar is not a /.+@.+/' )
 		} ,
 
 		'Has not @' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_email( 'foo.bar' )
-			} , 'is not a /.+@.+/' )
+			} , 'foo.bar is not a /.+@.+/' )
 		} ,
 
 	})

@@ -11,8 +11,11 @@ namespace $ {
 
 		'Is null' () {
 			$mol_assert_fail( ()=> {
-				$mol_data_optional( $mol_data_number )( null as any )
-			} , 'is not a number' )
+
+				const Type = $mol_data_optional( $mol_data_number )
+				Type( null as any )
+
+			} , 'object is not a number' )
 		} ,
 
 	})

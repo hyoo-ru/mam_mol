@@ -32,7 +32,7 @@ $mol_form_demo_bids $mol_demo_small
 				<= Sex_field $mol_form_field
 					name <= sex_label @ \Sex
 					bid <= sex_bid \
-					control / <= Sex_control $mol_switch
+					control <= Sex_control $mol_switch
 						value?val <=> sex?val \
 						options <= sex_options *
 							male <= sex_option_male @ \Male

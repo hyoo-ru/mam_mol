@@ -1,119 +1,41 @@
 namespace $ {
 	
+	@ $mol_class
 	export class $mol_view_selection extends $mol_object {
 		
 		@ $mol_mem
-		static focused( next? : Element[] , force? : $mol_atom_force ) {
+		static focused( next? : Element[] ) : Element[] {
 			if( next === undefined ) return [] as Element[]
 			
-			const node = next[ 0 ] as HTMLElement
-			
-			const atom = $mol_atom_current< HTMLElement >()
-			new $mol_defer( ()=> {
-				if( node ) return node.focus()
-
-				const el = atom.cache()![0]
-				if( el ) el.blur()
-			} )
-
-			return undefined
-		}
-		
-		@ $mol_mem
-		static position( next? : { start : number , end : number , id : string } , force? : $mol_atom_force ) {
-			if( next !== undefined ) {
-				
-				var start = next.start
-				var end = next.end
-				if( !( start <= end ) ) throw new Error( `Wrong offsets (${start},${end})` )
-				
-				var root = $mol_dom_context.document.getElementById( next.id )!
-				root.focus()
-				
-				var range = new Range
-				
-				var cur : Node = root.firstChild!
-				while( cur !== root ) {
-					while( cur.firstChild ) cur = cur.firstChild
-					if( cur.nodeValue ) {
-						var length = cur.nodeValue.length
-						if( length >= start )  break
-						start -= length
-					}
-					while( !cur.nextSibling ) {
-						cur = cur.parentNode!
-						if( cur === root ) {
-							start = root.childNodes.length
-							break
-						}
-					}
-				}
-				range.setStart( cur , start )
-				
-				var cur : Node = root.firstChild!
-				while( cur !== root ) {
-					while( cur.firstChild ) cur = cur.firstChild
-					if( cur.nodeValue ) {
-						var length = cur.nodeValue.length
-						if( length >= end )  break
-						end -= length
-					}
-					while( !cur.nextSibling ) {
-						cur = cur.parentNode!
-						if( cur === root ) {
-							end = root.childNodes.length
-							break
-						}
-					}
-				}
-				range.setEnd( cur , end )
-				
-				var sel = $mol_dom_context.document.getSelection()!
-				sel.removeAllRanges()
-				sel.addRange( range )
-				
-				return next
-			} else {
-				var sel = $mol_dom_context.document.getSelection()
-				if( sel.rangeCount === 0 ) return null
-				var range = sel.getRangeAt( 0 )
-				
-				var el = range.commonAncestorContainer as Element
-				while( el && !el.id ) el = el.parentElement!
-				
-				if( !el ) return { id : null , start : 0 , end : 0 }
-				
-				var meter = new Range
-				meter.selectNodeContents( el )
-				
-				meter.setEnd( range.startContainer , range.startOffset )
-				var startOffset = meter.toString().length
-				
-				meter.setEnd( range.endContainer , range.endOffset )
-				var endOffset = meter.toString().length
-				
-				return { id : el.id , start : startOffset , end : endOffset }
-			}
-		}
-		
-		static onFocus( event : FocusEvent ) {
 			const parents : Element[] = []
-			let element = event.target as HTMLElement
+			let element = next[ 0 ] as HTMLElement
 			
 			while( element ) {
 				parents.push( element )
 				element = element.parentNode as HTMLElement
 			}
 
-			this.focused( parents , $mol_atom_force_cache )
+			new $mol_defer( $mol_log2.func( ()=> {
+
+				const element = $mol_atom2_value( ()=> this.focused() )[0] as HTMLElement
+				
+				if( element ) element.focus()
+				else $mol_dom_context.blur()
+
+			} ) )
+
+			return parents
 		}
 		
-		static onBlur( event : FocusEvent ) {
-			const focused = this.focused()
-			setTimeout( $mol_log_group( '$mol_view_selection blur' , ()=> {
-				if( focused !== this.focused() ) return
-				this.focused( [] , $mol_atom_force_cache )
-			} ) )
+		@ $mol_log2.method
+		static focus( event : FocusEvent ) {
+			this.focused( [ event.target as Element ] )
+
+		}
+		
+		@ $mol_log2.method
+		static blur( event : FocusEvent ) {
+			this.focused( [] )
 		}
 	}
 	

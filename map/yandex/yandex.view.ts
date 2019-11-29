@@ -7,14 +7,12 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		api( next? : any , force? : $mol_atom_force ) : any {
+		api( next? : any , force? : $mol_mem_force ) : any {
 			
 			const ymaps = $mol_map_yandex.api()
 
-			if( !ymaps.Map ) {
-				ymaps.ready( ()=> this.api( undefined , $mol_atom_force_cache ) )
-				throw new $mol_atom_wait( 'Loading maps api modules...' )
-			}
+			const load_map = $mol_fiber_sync( ()=> new Promise( done => ymaps.ready( done ) ) )
+			load_map()
 
 			const api = new ymaps.Map( this.dom_node() , {
 				center : [ 0 , 0 ] ,
@@ -23,8 +21,12 @@ namespace $.$$ {
 
 			api.controls.remove( 'fullscreenControl' )
 			api.controls.remove( 'typeSelector' )
-			
-			api.events.add( [ 'actionend' ] , ( event : any )=> this.update( event ) )
+
+			api.events.add( [ 'actionend' ] , ( event : any )=> {
+				new $mol_after_frame( $mol_fiber_root( ()=> {
+					this.update( event ) 
+				} ) )
+			} )
 
 			return api
 		}
@@ -44,7 +46,8 @@ namespace $.$$ {
 				api.geoObjects.add( obj.object() )
 			}
 			
-			super.render()
+			this.dom_node_actual()
+
 		}
 
 	}

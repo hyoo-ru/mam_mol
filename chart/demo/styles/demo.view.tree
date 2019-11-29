@@ -6,33 +6,33 @@ $mol_chart_demo_styles $mol_demo_large
 			graphs <= graphs /
 				<= Receipts $mol_plot_bar
 					title <= receipts_title @ \Receipts
-					series_x <= series_x /
-					series_y <= series_2_y /
+					series_x <= series_x /number
+					series_y <= series_2_y /number
 				<= Receipts_confirmed $mol_plot_bar
 					title <= receipts_confirmed_title @ \Confirmed receipts
-					series_x <= series_x /
-					series_y <= series_3_y /
+					series_x <= series_x /number
+					series_y <= series_3_y /number
 				<= Maximum $mol_plot_dot
 					title <= maximum_title @ \Maximum
-					series_x <= series_x /
-					series_y <= series_1_y /
+					series_x <= series_x /number
+					series_y <= series_1_y /number
 				<= Waste $mol_plot_line
 					type \dashed
 					title <= waste_title @ \Waste
-					series_x <= series_x /
-					series_y <= series_4_y /
+					series_x <= series_x /number
+					series_y <= series_4_y /number
 				<= Purchases $mol_plot_group
 					title <= purchases_title @ \Purchases
-					series_x <= series_x /
-					series_y <= series_5_y /
+					series_x <= series_x /number
+					series_y <= series_5_y /number
 					graphs /
 						<= Purchases_fill $mol_plot_fill
 						<= Purchases_line $mol_plot_line 
 						<= Purchases_dots $mol_plot_dot 
 				<= Taxes $mol_plot_group
 					title <= taxes_title @ \Taxes
-					series_x <= series_x /
-					series_y <= series_6_y /
+					series_x <= series_x /number
+					series_y <= series_6_y /number
 					graphs /
 						<= Taxes_fill $mol_plot_fill
 						<= Taxes_line $mol_plot_line
@@ -42,4 +42,4 @@ $mol_chart_demo_styles $mol_demo_large
 					title <= energy_title @ \kJ
 				<= Day $mol_plot_mark_hor
 					title <= day_title @ \Day
-					series_x <= series_x /
+					series_x <= series_x /number

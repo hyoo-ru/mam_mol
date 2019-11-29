@@ -37,8 +37,8 @@
 
 <body>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/react/16.0.0/umd/react.production.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/react-dom/16.0.0/umd/react-dom.production.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/react/16.10.2/umd/react.production.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/react-dom/16.10.2/umd/react-dom.production.min.js"></script>
 <script>
 	
 	var Test = function(){
@@ -48,7 +48,7 @@
 				sample : '' ,
 				items : []
 			} ,
-			selected : null
+			selected : -1
 		}
 		this.onMessage = this.onMessage.bind( this )
 	}
@@ -72,7 +72,7 @@
 		onMessage : function( event ) {
 			switch( event.data[ 0 ] ) {
 				case 'set data' :
-					this.setState( { data : event.data[ 1 ] , selected : null } )
+					this.setState( { data : event.data[ 1 ] , selected : -1 } )
 					break
 			}
 		} ,

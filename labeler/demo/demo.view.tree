@@ -3,7 +3,7 @@ $mol_labeler_demo $mol_demo_small
 	sub /
 		<= Provider $mol_labeler
 			title \Provider
-			content \ACME Provider Inc.
+			content / \ACME Provider Inc.
 		<= Name $mol_labeler
 			title \User name
 			Content <= Name_control $mol_string

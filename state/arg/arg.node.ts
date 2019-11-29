@@ -8,7 +8,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		static dict( next? : { [ key : string ] : string } ) {
+		static dict( next? : { [ key : string ] : string | null } ) {
 			if( next !== void 0 ) this.href( this.make_link( next ) )
 			
 			var href = this.href()
@@ -19,7 +19,7 @@ namespace $ {
 				chunk => {
 					if( !chunk ) return
 					var vals = chunk.split( '=' ).map( decodeURIComponent )
-					params[ vals.shift() ] = vals.join('=')
+					params[ vals.shift()! ] = vals.join('=')
 				}
 			)
 			
@@ -27,7 +27,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		static value( key : string , next? : string ) {
+		static value( key : string , next? : string | null ) {
 			if( next === void 0 ) return this.dict()[ key ] || null
 			this.href( this.link( { [ key ] : next } ) )
 			return next

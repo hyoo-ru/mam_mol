@@ -50,6 +50,7 @@ namespace $ {
 		
 		onItemSelect( item : { id : number } ) {
 			this.selected = item.id
+			this.valueOf() // force rerender
 		}
 
 		render() { return (

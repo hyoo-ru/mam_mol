@@ -6,5 +6,12 @@ namespace $.$$ {
 			if( next ) next.preventDefault()
 		}
 
+		sub() {
+			return [
+				... $mol_maybe( this.Icon() ) ,
+				... this.label() ,
+			]
+		}
+
 	}
 }

@@ -36,7 +36,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		graph_samples() {
-			return this.graphs().map( graph => graph.Sample() )
+			return this.graphs_enriched().map( graph => graph.Sample() )
 		}
 		
 		back() {

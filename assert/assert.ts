@@ -61,10 +61,22 @@ namespace $ {
 	
 	export function $mol_assert_like< Value >( head : Value , ... tail : Value[] ) {
 		for( let value of tail ) {
-			value = $mol_conform( value , head )
-			if( Number.isNaN( value as any as number ) && Number.isNaN( head as any as number ) ) continue
-			if( head !== value ) $mol_fail( new Error( `Not like\n${ head }\n${ value }` ) )
-			head = value
+
+			if( $mol_compare_deep( value , head ) ) {
+				head = value
+			} else {
+
+				const print = ( val : any ) => {
+					if( !val ) return val
+					if( typeof val !== 'object' ) return val
+					if( 'outerHTML' in val ) return val.outerHTML
+					return val
+				}
+				
+				return $mol_fail( new Error( `Not like\n${ print( head ) }\n---\n${ print( value ) }` ) )
+
+			}
+
 		}
 	}
 	

@@ -26,11 +26,12 @@ namespace $.$$ {
 
 		event_click( event? : Event ) {
 			if( !event || event.defaultPrevented ) return
-			setTimeout( $mol_log_group( `${ this }.event_click()` , ()=> this.focused( false ) ) , 50 )
+			this.focused( false )
+			// setTimeout( $mol_log_group( `${ this }.event_click()` , ()=> this.focused( false ) ) , 50 )
 		}
 
 		file_name() {
-			return null as string
+			return null as unknown as string
 		}
 		
 	}

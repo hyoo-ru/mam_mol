@@ -18,13 +18,13 @@ namespace $.$$ {
 				const point_x = Math.round(shift_x + series_x[index] * scale_x)
 				const point_y = Math.round(shift_y + series_y[index] * scale_y)
 
-				return [point_x, point_y] as const
-			})
+				return [point_x, point_y]
+			}) as readonly( readonly number[] )[]
 		}
 		
 		@ $mol_mem
 		series_x() {
-			return this.series_y().map((val, index) => index)
+			return this.series_y().map((val, index) => index) as readonly number[]
 		}
 
 		@ $mol_mem
@@ -49,7 +49,7 @@ namespace $.$$ {
 		}
 		
 		front() {
-			return [ this ]
+			return [ this ] as unknown as readonly $.$mol_svg[]
 		}
 		
 	}

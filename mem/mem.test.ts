@@ -1,50 +1,25 @@
 namespace $ {
 	$mol_test( {
 
-		'cached property with simple key'() {				
+		'Property method' () {
 
-			class X extends $mol_object {
-				@ $mol_mem_key
-				foo( id : number , next? : Number | null ) {
-					if( next == null ) return new Number( 123 )
-					return new Number( next )
-				}
+			class App extends $mol_object2 {
+
+				@ $mol_mem
+				static value( next = 1 ) { return next + 1 }
+
 			}
-			const x = new X
 
-			// get
-			$mol_assert_equal( x.foo( 0 ).valueOf() , 123 )
-			$mol_assert_equal( x.foo( 0 ) , x.foo( 0 ) )
-			$mol_assert_unique( x.foo( 0 ) , x.foo( 1 ) )
+			$mol_assert_equal( App.value() , 2 )
 
-			// set
-			x.foo( 0 , 321 )
-			$mol_assert_equal( x.foo( 0 ).valueOf() , 321 )
+			App.value( 2 )
+			$mol_assert_equal( App.value() , 3 )
 
-			// reset
-			x.foo( 0 , null )
-			
-			$mol_assert_equal( x.foo( 0 ).valueOf() , 123 )
-
-		} ,
-
-		'cached property with complex key'() {
-
-			class X extends $mol_object {
-				@ $mol_mem_key
-				foo( ids : number[] ) {
-					return Math.random()
-				}
-			}
-			const x = new X
-
-			$mol_assert_equal( x.foo( [ 0 , 1 ] ) , x.foo( [ 0 , 1 ] ) )
-			$mol_assert_unique( x.foo( [ 0 , 1 ] ) , x.foo( [ 0 , 2 ] ) )
 		} ,
 
 		'auto sync of properties'() {
 
-			class X extends $mol_object {
+			class X extends $mol_object2 {
 
 				@ $mol_mem
 				foo( next? : number ) {
@@ -71,33 +46,27 @@ namespace $ {
 			$mol_assert_equal( x.xxx() , 7 )
 		} ,
 
-		//'must fail on recursive dependency'() {
-		//
-		//	class X extends $mol_object {
-		//
-		//		@ $mol_prop()
-		//		foo() : number {
-		//			return this.foo() + 1
-		//		}
-		//
-		//	}
-		//
-		//	var x = new X
-		//
-		//	try {
-		//		x.foo().valueOf()
-		//		$mol_assert_fail( 'Not tracked recursive dependency' )
-		//	} catch( error ) {
-		//		$mol_assert_equal( error.message , 'Recursive dependency! .foo()' )
-		//	}
-		//} ,
+		// 'must fail on recursive dependency'() {
+		
+		// 	class App extends $mol_object {
+		
+		// 		@ $mol_mem
+		// 		static foo() : number {
+		// 			return this.foo() + 1
+		// 		}
+		
+		// 	}
+		
+		// 	$mol_assert_fail( ()=> App.foo() )
 
-		'must be deferred destroyed when no longer referenced'() {
+		// } ,
+
+		async 'must be deferred destroyed when no longer referenced'() {
 
 			let foo : any
 			let foo_destroyed = false
 
-			class B extends $mol_object {
+			class B extends $mol_object2 {
 
 				@ $mol_mem
 				showing( next? : boolean ) {
@@ -128,7 +97,8 @@ namespace $ {
 
 			b.showing( false )
 			b.bar()
-			$mol_defer.run()
+
+			await $mol_fiber_warp()
 			$mol_assert_ok( foo_destroyed )
 			$mol_assert_not( b.bar() )
 
@@ -139,12 +109,12 @@ namespace $ {
 
 		'wait for data'() {
 
-			class Test extends $mol_object {
+			class Test extends $mol_object2 {
 
 				@ $mol_mem
-				source( next? : string , force? : $mol_atom_force ) : string {
+				source( next? : string , force? : $mol_mem_force ) : string {
 					new $mol_defer( () => {
-						this.source( 'Jin' , $mol_atom_force_cache )
+						this.source( 'Jin' , $mol_mem_force_cache )
 					} )
 					return $mol_fail_hidden( new $mol_atom_wait( 'Wait for data!' ) )
 				}
@@ -163,7 +133,7 @@ namespace $ {
 
 			const t = new Test
 
-			$mol_assert_fail( ()=> t.target().valueOf() , $mol_atom_wait )
+			$mol_assert_fail( ()=> t.target().valueOf() , Promise )
 
 			$mol_defer.run()
 

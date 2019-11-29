@@ -13,6 +13,10 @@ namespace $.$$ {
 			]
 		}
 
+		preview_tools() {
+			return [ this.Source_link() , this.Edit() , ... this.tools_main() ]
+		}
+
 		@ $mol_mem
 		classes_static() {
 			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n'
@@ -32,7 +36,7 @@ namespace $.$$ {
 			if( next !== undefined ) {
 				this.classes( this.classes().insert( next , name ) )
 			}
-			return this.classes().select( name ).sub[0]
+			return this.classes().select( name ).sub[0] || null
 		}
 
 		class_self( next? : $mol_tree ) {
@@ -48,7 +52,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		props_all( name : string , next? : $mol_tree , force? : $mol_atom_force ) {
+		props_all( name : string , next? : $mol_tree , force? : $mol_mem_force ) {
 			if( next ) return next
 			
 			const props_all : { [ name : string ] : $mol_tree } = {}
@@ -109,20 +113,20 @@ namespace $.$$ {
 			if( next ) {
 				prop = prop.insert( next , ... path.slice(1) )
 				this.class_self( this.class_self().insert( prop , 0 , path[0] ) )
-				this.props_all( this.class_name_self() , undefined , $mol_atom_force_cache )
+				this.props_all( this.class_name_self() , undefined , $mol_mem_force_cache )
 			}
-			return prop.select( ... path.slice(1) ).sub[0]
+			return prop.select( ... path.slice(1) ).sub[0] || null
 		}
 		
 		@ $mol_mem_key
 		prop_self( path : $mol_tree_path ) {
-			return this.class_self().select( null , ... path ).sub[0]
+			return this.class_self().select( null , ... path ).sub[0] || null
 		}
 		
 		@ $mol_mem_key
 		prop_type( path : $mol_tree_path ) {
 			const prop = this.prop( path )
-			return ( prop && prop.type !== '-' ) ? $mol_view_tree_value_type( prop ) : undefined
+			return ( prop && prop.type !== '-' ) ? $mol_view_tree_value_type( prop ) : null
 		}
 
 		@ $mol_mem_key
@@ -183,14 +187,17 @@ namespace $.$$ {
 			const field = String( path2.shift() ).replace( /[?!].*/ , '' )
 			
 			let val = element[ field ] && element[ field ][ '$mol_app_studio_original' ]
+
 			if( typeof val === 'function' ) {
 				val = val.call( element , next )
 				while( val && path2.length ) {
 					const field = path2.shift()
-					if( field === null ) continue
+					if( field == null ) continue
 					val = val[ field ]
 				}
 			}
+
+			if( val === undefined ) val = null
 
 			return val
 		}
@@ -227,7 +234,7 @@ namespace $.$$ {
 				case 'dict' : return over && over.sub.reduce( ( dict , item )=> ({ ... dict , [ item.type ] : this.prop_value_view([ ... path , item.type , null ]) }) , {} )
 			}
 
-			return undefined
+			return null
 		}
 
 		@ $mol_mem_key
@@ -252,7 +259,7 @@ namespace $.$$ {
 				obj[ field ] = ( next? : any )=> {
 					const val = this.prop_value_view([ ... path , prop.type , null ])
 					if( next === undefined ) {
-						if( val !== undefined ) return val
+						if( val !== null ) return val
 					}
 					return value.call( obj , next )
 				}
@@ -298,7 +305,7 @@ namespace $.$$ {
 	
 	export class $mol_app_studio_selector extends $.$mol_app_studio_selector {
 
-		select( event? : Event ) {
+		select( event : Event ) {
 			const target = ( event.target as HTMLElement ).id
 			const self = this.dom_node().id
 

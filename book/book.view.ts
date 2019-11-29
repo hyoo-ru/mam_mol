@@ -4,7 +4,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		pages_extended() : $mol_view[] {
-			return [ this.Placeholder() ].concat( this.pages() )
+			return [ this.Placeholder() , ... this.pages() ]
 		}
 		
 		@ $mol_mem

@@ -5,8 +5,11 @@ namespace $.$$ {
 			return Boolean( $mol_cordova.plugins.barcodeScanner ) 
 		}
 		
-		Scan() {
-			return this.scan_support() ? super.Scan() : null 
+		sub() {
+			return [
+				this.Manual() ,
+				... this.scan_support() ? [ this.Scan() ] : [] ,
+			]
 		}
 		
 		event_scan() {

@@ -11,19 +11,19 @@ namespace $ {
 			)
 		}
 
+		@ $mol_fiber_method
 		handle( { id , name , args } : { id : string , name : string , args : any[] } ) {
+
 			const handler = this.handlers()[ name ] || this.handlers()[ '' ]
 			if( !handler ) return
 
-			new $mol_atom( 'handle' , ()=> handler( ... args ) )
-			.then(
-				result => {
-					this.$.$mol_dom_context.parent.postMessage( { id , result } , '*' )
-				} ,
-				error => {
-					this.$.$mol_dom_context.parent.postMessage( { id , error : error.message } , '*' )
-				} ,
-			)
+			try {
+				const result = handler( ... args )
+				this.$.$mol_dom_context.parent.postMessage( { id , result } , '*' )
+			} catch( error ) {
+				this.$.$mol_dom_context.parent.postMessage( { id , error : error.message } , '*' )
+			}
+
 		}
 
 		handlers() {

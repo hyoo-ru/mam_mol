@@ -1,5 +1,6 @@
 namespace $ {
 
+	@ $mol_class
 	export class $mol_fetch_response extends $mol_object2 {
 
 		constructor( readonly native : Response ) {
@@ -21,9 +22,16 @@ namespace $ {
 
 		@ $mol_fiber.method
 		text() {
-			const response = this.native
-			const parse = $mol_fiber_sync( response.text )
-			return parse.call( response ) as string
+
+			const buffer = this.buffer()
+
+			const native = this.native
+			const mime = native.headers.get( 'content-type' ) || ''
+			const [,charset] = /charset=(.*)/.exec( mime ) || [, 'utf-8']
+			
+			const decoder = new TextDecoder( charset )
+			return decoder.decode( buffer )
+
 		}	
 
 		@ $mol_fiber.method
@@ -57,6 +65,7 @@ namespace $ {
 
 	}
 
+	@ $mol_class
 	export class $mol_fetch extends $mol_object2 {
 		
 		static request = $mol_fiber_sync( ( input : RequestInfo , init : RequestInit = {} )=> {
@@ -72,7 +81,8 @@ namespace $ {
 				}
 			}
 
-			const native = $mol_dom_context.fetch || $node['node-fetch']
+			let native = $mol_dom_context.fetch
+			if( !native ) native = $node['node-fetch']
 		
 			return native( input , init )
 
@@ -125,3 +135,4 @@ namespace $ {
 	}
 
 }
+

@@ -7,13 +7,21 @@ namespace $.$$ {
 
 		@ $mol_mem
 		data() {
-			$mol_state_time.now( ENV.timeout )
+			$mol_state_time.now( ENV.timeout || 15 )
 			Monitoring.renderRate.ping();
 			return ENV.generateData().toArray()
 		}
 
 		databases() {
 			return Object.keys( this.data() ).map( index => this.Database( index ) )
+		}
+
+		database( id : string ) {
+			return [
+				this.Name( id ) ,
+				this.Query_count( id ) ,
+				... this.top_queries( id ) ,
+			]
 		}
 
 		name( id : string ) {

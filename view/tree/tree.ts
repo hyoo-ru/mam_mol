@@ -144,7 +144,7 @@ namespace $ {
 					needCache = true
 				}
 				
-				const getValue = ( value : $mol_tree )=> { try {
+				const getValue = ( value : $mol_tree , definition? : boolean )=> { try {
 					switch( true ) {
 						case( value.type === '' ) :
 							return JSON.stringify( value.value )
@@ -166,8 +166,9 @@ namespace $ {
 								var val = getValue( item )
 								if( val ) items.push( val )
 							} )
-							return `[].concat( ${ items.join(' , ') } )` + ( item_type ? ` as readonly ( ${ item_type } )[]` : '' )
+							return `[ ${ items.join(' , ') } ]` + ( item_type ? ` as readonly ( ${ item_type } )[]` : ` as readonly any[]` )
 						case( value.type[0] === '$' ) :
+							if( !definition ) throw value.error( 'Objects should be bound' )
 							needCache = true
 							var overs : string[] = []
 							value.sub.forEach( over => {
@@ -254,14 +255,14 @@ namespace $ {
 				if( param.sub.length > 1 ) throw new Error( 'Too more sub' )
 				
 				param.sub.forEach( child => {
-					var val = getValue( child )
+					var val = getValue( child , true )
 					if( !val ) return
 					
 					propDefs[ propName[1] ] = param
 					
 					var args : string[] = []
 					if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
-					if( propName[3] ) args.push( ` ${ propName[3] }? : any , force? : $${''}mol_atom_force ` )
+					if( propName[3] ) args.push( ` ${ propName[3] }? : any , force? : $${''}mol_mem_force ` )
 					if( needSet && param.sub[0].type !== '<=>' ) val = ( needReturn ? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : ` : `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t` ) + val
 					if( needReturn ) val = 'return ' + val
 					var decl = '\t' + propName[1] +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'

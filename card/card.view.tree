@@ -2,9 +2,9 @@ $mol_card $mol_list
 	attr *
 		^
 		mol_card_status_type <= status \
-	rows /
+	rows /$mol_view
 		<= Content $mol_view
-			sub <= content /
+			sub <= content /$mol_view_content
 		<= Status $mol_view
 			minimal_height 30
 			sub /

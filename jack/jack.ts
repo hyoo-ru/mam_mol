@@ -62,7 +62,7 @@ namespace $ {
 
 				for( const def of input.select( 'let' , '' ).hack( lets ).sub ) {
 					
-					defs[ def.type ] = ( input , ctx ) => {
+					defs[ def.type ] = ( input , ctx )=> {
 						
 						const exec : $mol_tree_context = {
 							... defs ,

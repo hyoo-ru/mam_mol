@@ -3,12 +3,10 @@ namespace $.$$ {
 	export class $mol_app_files extends $.$mol_app_files {
 		
 		pages() {
-			return [
-				... this.webdavs().map( ( webdav ) => ( this.webdav_type( webdav.uri() ) === 'dir' )
-					? this.Folder( webdav.uri() )
-					: this.File( webdav.uri() )
-				) ,
-			]
+			return this.webdavs().map( ( webdav ) => ( this.webdav_type( webdav.uri() ) === 'dir' )
+				? this.Folder( webdav.uri() )
+				: this.File( webdav.uri() )
+			)
 		}
 		
 		uri_root( next?: string ) {

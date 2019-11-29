@@ -8,7 +8,6 @@ namespace $.$$ {
 
 			$mol_dom_render_attributes( node , this.attr_static() )
 			$mol_dom_render_events( node , this.event() )
-			$mol_dom_render_events_async( node , this.event_async() )
 
 			return node
 		}
@@ -17,7 +16,7 @@ namespace $.$$ {
 			const Sub = this.Sub()
 			Sub.$ = this.$
 			const node = Sub.dom_tree()
-			super.render()
+			this.dom_node_actual()
 			return node
 		}
 

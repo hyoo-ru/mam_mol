@@ -5,7 +5,7 @@ namespace $ {
 		Class[ Symbol.toStringTag ] = Class.name
 		
 		if( !Class.prototype.hasOwnProperty( Symbol.toStringTag ) ) {
-			Class.prototype[ Symbol.toStringTag ] = '<' + Class.name + '>'
+			Class.prototype[ Symbol.toStringTag ] = Class.name
 		}
 
 		return Class

@@ -30,6 +30,13 @@ namespace $.$$ {
 		state() {
 			return { props : [] as any[] , active : false , id : 0 }
 		}
+
+		sub() {
+			return [
+				this.Head() ,
+				... this.cells() ,
+			]
+		}
 		
 		head_text() {
 			return '#' + this.id()

@@ -1,7 +1,9 @@
 $mol_app_demo $mol_book
 	editor_title <= detail_title \$mol
 	source_prefix \https://github.com/eigenmethod/mol/tree/master/
-	Placeholder $mol_app_demo_placeholder
+	Placeholder null
+	Main $mol_app_demo_main
+		event_top?event <=> event_front_up?event
 	pages <= blocks /
 	attr *
 		mol_theme <= theme
@@ -10,6 +12,7 @@ $mol_app_demo $mol_book
 		option!id <= nav_option!id null
 		filter?val <=> filter_string?val \
 		theme?val <=> theme?val \$mol_theme_dark
+		event_top?event <=> event_front_up?event
 	Detail $mol_app_demo_detail
 		minimal_width 600
 		title <= detail_title
@@ -44,7 +47,7 @@ $mol_app_demo $mol_book
 			
 $mol_app_demo_menu $mol_page
 	minimal_width 240
-	title @ \$mol demonstrations
+	title @ \Demos
 	sub /
 		<= Head
 		<= Filter $mol_search
@@ -61,9 +64,8 @@ $mol_app_demo_menu $mol_page
 		
 $mol_app_demo_detail $mol_page
 	tools /
-		<= Source_link $mol_link
-			sub /
-				<= Source_icon $mol_icon_source
+		<= Source_link $mol_link_iconed
+			title \
 			uri <= source_link \
 			target \_blank
 		<= Edit $mol_link

@@ -20,7 +20,7 @@ $mol_app_todomvc $mol_scroll
 									value?val <=> task_title_new?val \
 									event_done?event <=> event_add?event null
 						<= List $mol_list
-							rows <= task_rows /
+							rows <= task_rows /$mol_view
 						<= Foot $mol_view
 							sub <= foot_content /
 								<= Pending $mol_view

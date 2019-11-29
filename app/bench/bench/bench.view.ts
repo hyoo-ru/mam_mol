@@ -8,54 +8,49 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		sandbox( next? : HTMLIFrameElement , force? : $mol_atom_force ) : HTMLIFrameElement {
-			const next2 = this.Sandbox().dom_node() as HTMLIFrameElement
+		sandbox() : HTMLIFrameElement {
+
+			const next = this.Sandbox().dom_node() as HTMLIFrameElement
+		
+			const src = this.bench()
 			
-			next2.src = this.bench()
+			return $mol_fiber_sync( ()=> new Promise< typeof next >( ( done , fail )=> {
+				next.onload = ()=> done( next )
+				next.src = src
+			} ) )()
 			
-			next2.onload = event => {
-				next2.onload = null
-				this.sandbox( next2 , $mol_atom_force_cache )
-			}
-			
-			throw new $mol_atom_wait( `Loading sandbox...` )
 		}
 
-		'command_current()' : any[]
-		
 		@ $mol_mem
-		command_current( next? : any[] ) {
-			return next
+		command_last( next? : any[] | null ) {
+			return next || null
 		}
 		
 		@ $mol_mem_key
-		command_result< Result >( command : any[] , next? : Result ) : Result {
+		command_result< Result >( command : any[] ) : Result {
+			
 			const sandbox = this.sandbox()
-			sandbox.valueOf()
+			new $mol_defer( ()=> this.command_last( command ) )
 			
-			if( next !== void 0 ) return next
-			
-			const current = this.command_current()
-			if( current && current !== command ) throw new $mol_atom_wait( `Waiting for ${ JSON.stringify( current ) }...` )
-			this.command_current( command )
-
-			requestAnimationFrame( ()=> {
-				sandbox.contentWindow.postMessage( command , '*' )
+			return $mol_fiber_sync( ()=> new Promise< Result >( done => requestAnimationFrame( ()=> {
 				
 				const handle = ( event : MessageEvent )=> {
+					
 					if( event.data[ 0 ] !== 'done' ) return
 					window.removeEventListener( 'message' , handle )
 					
-					this.command_current( null )
-					this.command_result( command , event.data[ 1 ] )
+					done( event.data[ 1 ] )
 				}
-
+				
 				window.addEventListener( 'message' , handle )
-			} )
-			
-			throw new $mol_atom_wait( `Running ${ command }...` )
+				
+				sandbox.contentWindow.postMessage( command , '*' )
+
+			} ) ) )()
+
 		}
 		
+		@ $mol_mem
 		meta() {
 			type meta = {
 				title : { [ lang : string ] : string }
@@ -107,6 +102,7 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		result_sample( sample_id : string )  {
+
 			const result : { [ key : string ] : any } = {
 				sample : this.sample_title( sample_id ) ,
 			}
@@ -130,17 +126,19 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		sandbox_title() {
-			const command = this.command_current()
-			if( !command ) return
+		sandbox_title() : string {
+
+			const command = this.command_last()
+			
+			if( !command ) return super.sandbox_title()
 			if( command[0] === 'meta' ) return super.sandbox_title()
 			
 			return `${ this.sample_title( command[1] ) }: ${ this.step_title( command[0] ) }`
 		}
 
 		result_col_title( col_id : string ) {
-			if( col_id === 'sample' ) return [ this.result_col_title_sample() ]
-			return this.step_title( col_id )
+			if( col_id === 'sample' ) return this.result_col_title_sample()
+			return this.step_title( col_id ).join(' ')
 		}
 		
 		step_title( step : string ) {

@@ -1,11 +1,15 @@
 [mol_link_iconed] {
 	align-items: center;
-	color: var(--mol_skin_base);
+	color: var(--mol_theme_control);
 }
 
 [mol_link_iconed_icon] {
 	box-shadow: none;
-	margin-right: 1px;
+	margin-right: 2px;
 	height: 1em;
 	vertical-align: -10%;
+}
+
+[mol_theme="$mol_theme_dark"] [mol_link_iconed_icon] {
+	filter: invert(1);
 }

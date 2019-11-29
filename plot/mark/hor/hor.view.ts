@@ -1,13 +1,13 @@
 namespace $.$$ {
 	export class $mol_plot_mark_hor extends $.$mol_plot_mark_hor {
 		@ $mol_mem
-		series_x(): number[] {
+		series_x(): readonly number[] {
 			return this.labels().map((val, index) => index)
 		}
 
 		@ $mol_mem
-		labels(): string[] {
-			return this.series_x().map(val => String(val))
+		labels() {
+			return this.series_x().map(val => String(val)) as readonly string[]
 		}
 
 		@ $mol_mem

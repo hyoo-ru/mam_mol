@@ -12,7 +12,6 @@ namespace $.$$ {
 			const next = [] as number[]
 			const [shift, limit] = this.limit()
 			for (let i = shift; i < limit; i++) next.push(i)
-
 			return next
 		}
 		

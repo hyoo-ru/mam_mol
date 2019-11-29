@@ -6,6 +6,10 @@
 	display: block;
 }
 
+[mol_app_lamps_menu] {
+	min-height: 100%;
+}
+
 [mol_app_lamps_lamp_row] {
 	display: flex;
 	flex: 0 0 auto;

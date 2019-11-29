@@ -1,9 +1,6 @@
 name: Deploy
 
-on:
-  push:
-    branches:
-    - master
+on: push
 
 jobs:
   build:
@@ -11,9 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    
-#     - name: Set up NodeJS
-#       uses: actions/setup-node@v1
     
     - name: Checkout sources
       uses: actions/checkout@v1
@@ -27,10 +21,11 @@ jobs:
     
     - name: Build app
       run: |
+        pwd
         cd ..
         ls
         mkdir mam/mol
-        mv mol/* mam/mol
+        mv mol/* mol/.nojekyll mam/mol
         cd mam
         yarn
         yarn start mol/app/demo
@@ -72,6 +67,7 @@ jobs:
         node ./mol/build/-/node.test.js mol/app/portal
         
     - name: Deploy on GitHub Pages
+      if: github.ref == 'refs/heads/master'
       uses: alex-page/blazing-fast-gh-pages-deploy@v1.0.1
       with:
         repo-token: ${{ secrets.GH_PAT }}

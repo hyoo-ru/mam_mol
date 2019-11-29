@@ -3,20 +3,23 @@ namespace $.$$ {
 	export class $mol_app_calc extends $.$mol_app_calc {
 
 		@ $mol_mem
-		formulas( next? : { [ key : string ] : string } ) {
+		formulas( next? : { [ key : string ] : string } ) :  { [ key : string ] : string } {
 			const formulas : typeof next = {}
 			
 			let args = this.$.$mol_state_arg.dict()
-			if( next ) args = this.$.$mol_state_arg.dict({ ... args , ... next })
-
+			if( next ) return {
+				... $mol_atom2_value( ()=> this.formulas() || {} ) ,
+				... next
+			}
+			
 			const ids = Object.keys( args ).filter( param => this.id2coord( param ) )
 			
 			for( let id of ids ) formulas[ id ] = args[ id ]
-
+			
 			return formulas
 		}
 
-		@ $mol_mem
+		@ $mol_mem_key
 		formula_name( id : string ) {
 			
 			const found = /^(\w*)\s*=/u.exec( this.formulas()[ id ] )
@@ -46,10 +49,10 @@ namespace $.$$ {
 
 		id2coord( id : string ) : [ number , number ] {
 			
-			const parsed = /^([A-Z]+)(\d+)$/.exec( id )
+			const parsed = /^([A-Z]+)(\d+)$/i.exec( id )
 			if( !parsed ) return null
 
-			return [ this.string2number( parsed[1] ) , Number( parsed[2] ) ]
+			return [ this.string2number( parsed[1].toUpperCase() ) , Number( parsed[2] ) ]
 		}
 
 		coord2id( coord : [ number , number ] ) : string {
@@ -112,6 +115,7 @@ namespace $.$$ {
 			return numb + 1
 		}
 
+		@ $mol_mem
 		title( next? : string ) {
 			const title = this.$.$mol_state_arg.value( `title` , next )
 			return title == undefined ? super.title() : title
@@ -141,7 +145,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		pos( next? : string ) : string {
-			new $mol_defer( ()=> this.Edit_current().Edit().focused( true ) )
+			new $mol_defer( $mol_fiber_root( ()=> this.Edit_current().Edit().focused( true ) ) )
 			return next || super.pos()
 		}
 
@@ -174,27 +178,60 @@ namespace $.$$ {
 		@ $mol_mem
 		sandbox() {
 			return new $mol_func_sandbox( Math , {
+
 				'$' : new Proxy( {} , { get : ( _ , id : string ) : any => {
 					return this.result( id )
 				} } ) ,
+				
 				'$$' : new Proxy( {} , { get : ( _ , id : string ) : any => {
 					return this.formula( id )
 				} } ) ,
+				
 				'_' : new Proxy( {} , { get : ( _ , name : string ) : any => {
 					return this.result( this.refs()[ name ] )
 				} } ) ,
+				
 				'__' : new Proxy( {} , { get : ( _ , name : string ) : any => {
 					return this.refs()[ name ]
 				} } ) ,
+
+				'RANGE' : ( from : string , to : string )=> this.results([ from , to ]) ,
+
+				'SUM' : ( values : number[] )=> values.reduce( ( accum , item ) => accum + item , 0 ) ,
+				
+				'AVG' : ( values : number[] )=> values.reduce( ( accum , item ) => accum + item , 0 ) / values.length ,
+
+				'MAX' : ( values : number[] )=> values.reduce( ( max , item ) => item > max ? item : max , undefined ) ,
+
+				'MIN' : ( values : number[] )=> values.reduce( ( min , item ) => item < min ? item : min , undefined ) ,
+
 			} )
+		}
+
+		@ $mol_mem_key
+		results( range : [ string , string ] ) {
+			
+			const start = this.id2coord( range[0] )
+			const end = this.id2coord( range[1] )
+
+			const ids = [] as string[]
+
+			for( let row = start[0] ; row <= end[0] ; ++row ) {
+				for( let col = start[1] ; col <= end[1] ; ++col ) {
+					ids.push( this.result( this.coord2id([ row , col ]) ) )
+				}
+			}
+
+			return ids
+
 		}
 
 		sub() {
 			return [
 				this.Head() ,
-				this.Body() ,
-				... this.hint_showed() ? [ this.Hint() ] : [] ,
 				this.Current() ,
+				... this.hint_showed() ? [ this.Hint() ] : [] ,
+				this.Body() ,
 			]
 		}
 
@@ -203,7 +240,7 @@ namespace $.$$ {
 			return super.hint().replace( '{funcs}' , Object.getOwnPropertyNames( Math ).join( ', ' ) )
 		}
 
-		@ $mol_mem
+		@ $mol_mem_key
 		cell_content( id : string ) {
 			
 			const name = this.formula_name( id )
@@ -220,6 +257,7 @@ namespace $.$$ {
 			if( !/^(\w*)?\s*=/u.test( formula ) ) return ()=> formula
 			
 			const code = 'return ' + formula
+			.replace( /([A-Z]+[0-9]+):([A-Z]+[0-9]+)/g , ( found , from , to )=> `RANGE('${ from.toLowerCase() }','${ to.toLowerCase() }')` )
 			.replace( /@([A-Z]+[0-9]+)\b/g , '$$.$1' )
 			.replace( /([^.])([A-Z]+[0-9]+)\b/g , '$1$.$2' )
 			.replace( /^(\w*)?\s*=/u , '' )
@@ -233,6 +271,7 @@ namespace $.$$ {
 			if( res === undefined ) return ''
 			if( res === '' ) return ''
 			if( isNaN( res ) ) return res
+			if( res && typeof res === 'object' ) return JSON.stringify( res )
 			return Number( res )
 		}
 
@@ -255,28 +294,37 @@ namespace $.$$ {
 			event.preventDefault()
 		}
 
+		snapshot_uri() {
+			return this.$.$mol_state_arg.make_link({
+				title : this.title() ,
+				... this.formulas() ,
+			})
+		}
+
 		download_file() {
 			return `${ this.title() }.csv`
 		}
 
-		download_generate( event? : Event ) {
+		download_uri() {
+
 			const table : string[][] = []
 			const dims = this.dimensions()
 
 			for( let row = 1 ; row < dims.rows ; ++ row ) {
+
 				const row_data = [] as any[]
 				table.push( row_data )
 				
 				for( let col = 0 ; col < dims.cols ; ++ col ) {
 					row_data[ col ] = String( this.result( this.coord2id([ col , row ]) ) )
 				}
+
 			}
 
 			const content = table.map( row => row.map( val => `"${ val.replace( /"/g , '""' ) }"` ).join( ';' ) ).join( '\n' )
 
-			this.download_uri( `data:text/csv;charset=utf-8,${ encodeURIComponent( content ) }` )
+			return `data:text/csv;charset=utf-8,${ encodeURIComponent( content ) }`
 			
-			$mol_defer.run()
 		}
 
 	}

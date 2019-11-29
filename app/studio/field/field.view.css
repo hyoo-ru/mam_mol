@@ -7,6 +7,10 @@
 	flex-wrap: wrap;
 }
 
+[mol_app_studio_field_tools] {
+	display: flex;
+}
+
 [mol_app_studio_field_label_icon] {
 	margin: .75rem 0;
 }
