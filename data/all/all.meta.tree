@@ -5,6 +5,7 @@ include \/mol/data/email
 include \/mol/data/instance
 include \/mol/data/integer
 include \/mol/data/nominal
+include \/mol/data/nullable
 include \/mol/data/number
 include \/mol/data/optional
 include \/mol/data/pattern
