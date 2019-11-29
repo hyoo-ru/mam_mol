@@ -6,7 +6,7 @@ namespace $.$$ {
 
 			const app = $mol_app_todomvc.make({ $ })
 
-			$mol_assert_equal( app.task_ids().toString() , '' )
+			$mol_assert_like( app.task_ids() , [] )
 
 			app.Add().value( 'test title' )
 			app.Add().event_done()
