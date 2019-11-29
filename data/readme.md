@@ -3,9 +3,9 @@
 Defines static typed DTO with strict runtime validation and user friendly error messages like:
 
 ```
-["friends"][0]["phone"] null is not any of variants
-object is not a string
-object is not a number
+["friends"][0]["phone"] undefined is not any of variants
+undefined is not a string
+undefined is not a number
 ```
 
 # Usage examples

@@ -1880,7 +1880,7 @@ var $;
         $_1.$mol_test({
             'task add'($) {
                 const app = $$.$mol_app_todomvc.make({ $ });
-                $_1.$mol_assert_equal(app.task_ids().toString(), '');
+                $_1.$mol_assert_like(app.task_ids(), []);
                 app.Add().value('test title');
                 app.Add().event_done();
                 $_1.$mol_assert_like(app.task_ids(), [1]);
