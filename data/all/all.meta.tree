@@ -2,6 +2,7 @@ include \/mol/data/array
 include \/mol/data/boolean
 include \/mol/data/const
 include \/mol/data/email
+include \/mol/data/enum
 include \/mol/data/instance
 include \/mol/data/integer
 include \/mol/data/nominal
