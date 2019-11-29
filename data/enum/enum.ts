@@ -1,12 +1,29 @@
 namespace $ {
 
-	export function $mol_data_enum(name: string, e: Record<number|string,number|string>) {
-		return (key : number ) => {
-			const keyNumber = $mol_data_number(key)
-			if ( !(keyNumber in e) ) return $mol_fail( new Error( `key ${keyNumber} is not a type of ${name} enum` ) )
+	export function $mol_data_enum<
+		Dict extends Record< number | string , number | string >
+	>( name : string , dict : Dict ) {
 
-			return e[keyNumber]
+		type Value = Dict[ keyof Dict ]
+
+		const index = {} as Record< Value , keyof Dict >
+
+		for( let key in dict ) {
+			if( Number.isNaN( Number( key ) ) ) {
+				index[ dict[ key ] ] = key
+			}
 		}
+
+		return $mol_data_setup( ( value : Value ) => {
+
+			if ( typeof index[ value ] !== 'string' ) {
+				return $mol_fail( new $mol_data_error( `${value} is not value of ${name} enum` ) )
+			}
+
+			return value
+
+		} , { name , dict } )
+
 	}
 	
 }
