@@ -438,6 +438,10 @@ sans-serif;
 	display: block;
 }
 
+[mol_list] > * {
+	display: block;
+}
+
 [mol_link] {
 	text-decoration: none;
 	color: var(--mol_theme_control);

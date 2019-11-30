@@ -247,6 +247,10 @@ sans-serif;
 	display: block;
 }
 
+[mol_list] > * {
+	display: block;
+}
+
 [mol_pop] {
 	position: relative;
 	display: inline-flex;

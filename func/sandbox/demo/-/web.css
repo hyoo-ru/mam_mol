@@ -483,6 +483,10 @@ sans-serif;
 	display: block;
 }
 
+[mol_list] > * {
+	display: block;
+}
+
 [mol_float] {
 	position: sticky;
 	top: 0;

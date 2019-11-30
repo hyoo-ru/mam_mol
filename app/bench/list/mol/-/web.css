@@ -313,6 +313,10 @@ sans-serif;
 	display: block;
 }
 
+[mol_list] > * {
+	display: block;
+}
+
 [mol_app_bench_list_mol] {
 	padding: .5rem;
 }

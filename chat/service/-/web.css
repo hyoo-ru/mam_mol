@@ -193,6 +193,10 @@ sans-serif;
 	display: block;
 }
 
+[mol_list] > * {
+	display: block;
+}
+
 [mol_status] {
 	text-align: center;
 	padding: .5rem;

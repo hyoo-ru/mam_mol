@@ -247,4 +247,8 @@ sans-serif;
 	display: block;
 }
 
+[mol_list] > * {
+	display: block;
+}
+
 /*# sourceMappingURL=web.css.map */

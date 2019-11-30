@@ -474,6 +474,10 @@ sans-serif;
 	display: block;
 }
 
+[mol_list] > * {
+	display: block;
+}
+
 [mol_string] {
 	box-sizing: border-box;
 	outline-offset: 0;

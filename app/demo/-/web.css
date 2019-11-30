@@ -193,6 +193,10 @@ sans-serif;
 	display: block;
 }
 
+[mol_list] > * {
+	display: block;
+}
+
 [mol_card] {
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
 	background: var(--mol_theme_back);
