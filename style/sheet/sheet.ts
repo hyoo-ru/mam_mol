@@ -59,7 +59,9 @@ namespace $ {
 
 			}
 			
-			rules.push( `${ prefix }${ suffix } {\n${ props.join('') }}\n` )
+			if( props.length ) {
+				rules.push( `${ prefix }${ suffix } {\n${ props.join('') }}\n` )
+			}
 
 		}
 
