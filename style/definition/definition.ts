@@ -2,7 +2,7 @@ namespace $ {
 
 	export type $mol_style_definition< Obj > = Partial< 
 		CSSStyleDeclaration
-		& Record< $mol_style_pseudo_class , Partial< CSSStyleDeclaration > >
+		& Record< $mol_style_pseudo_class | $mol_style_pseudo_element , Partial< CSSStyleDeclaration > >
 		& $mol_type_omit< {
 			[ key in keyof Obj ] :
 				Obj[ key ] extends ()=> infer T
