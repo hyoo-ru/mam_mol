@@ -2,83 +2,85 @@ namespace $ {
 
 	export type $mol_tree_path = Array< string | number | null >
 
-	export type $mol_tree_hack = ( input : $mol_tree , context : $mol_tree_context )=> $mol_tree[]
+	export type $mol_tree_hack = ( input : $mol_tree , context : $mol_tree_context )=> readonly $mol_tree[]
 	export type $mol_tree_context = Record< string , $mol_tree_hack >
 	export type $mol_tree_library = Record< string , $mol_tree_context >
 	
 	export class $mol_tree {
 		
-		type : string
-		data : string
-		sub : $mol_tree[]
-		baseUri : string
-		row : number
-		col : number
+		readonly type : string
+		readonly data : string
+		readonly sub : readonly $mol_tree[]
+		readonly baseUri : string
+		readonly row : number
+		readonly col : number
 		
-		constructor(
-			config : {
-				type? : string
-				value? : string
-				data? : string
-				sub? : $mol_tree[]
-				baseUri? : string
-				row? : number
-				col? : number
-			} = {}
-		) {
+		constructor( config : Partial<$mol_tree> = {} ) {
+
 			this.type = config.type || ''
+			
 			if( config.value !== undefined ) {
+
 				var sub = $mol_tree.values( config.value )
+				
 				if( config.type || sub.length > 1 ) {
-					this.sub = sub.concat( config.sub || [] )
+
+					this.sub = [ ... sub , ...( config.sub || [] ) ]
 					this.data = config.data || ''
+
 				} else {
+
 					this.data = sub[ 0 ].data
 					this.sub = config.sub || []
+
 				}
+
 			} else {
+				
 				this.data = config.data || ''
 				this.sub = config.sub || []
+
 			}
+			
 			this.baseUri = config.baseUri || ''
 			this.row = config.row || 0
 			this.col = config.col || 0
+
 		}
 		
 		static values( str : string , baseUri? : string ) {
-			return str.split( '\n' ).map(
-				( data , index ) => new $mol_tree(
-					{
-						data : data ,
-						baseUri : baseUri ,
-						row : index + 1
-					}
-				)
-			)
+
+			return str.split( '\n' ).map( ( data , index ) => new $mol_tree( {
+				data : data ,
+				baseUri : baseUri ,
+				row : index + 1
+			} ) )
+
 		}
 		
-		clone(
-			config : {
-				type? : string
-				value? : string
-				data? : string
-				sub? : $mol_tree[]
-				baseUri? : string
-				row? : number
-				col? : number
-			}
-		) {
-			return new $mol_tree(
-				{
-					type : ( 'type' in config ) ? config.type : this.type ,
-					data : ( 'data' in config ) ? config.data : this.data ,
-					sub : ( 'sub' in config ) ? config.sub : this.sub ,
-					baseUri : ( 'baseUri' in config ) ? config.baseUri : this.baseUri ,
-					row : ( 'row' in config ) ? config.row : this.row ,
-					col : ( 'col' in config ) ? config.col : this.col ,
-					value : config.value
-				}
-			)
+		clone( config : Partial<$mol_tree> = {} ) {
+
+			return new $mol_tree({
+				type : ( 'type' in config ) ? config.type : this.type ,
+				data : ( 'data' in config ) ? config.data : this.data ,
+				sub : ( 'sub' in config ) ? config.sub : this.sub ,
+				baseUri : ( 'baseUri' in config ) ? config.baseUri : this.baseUri ,
+				row : ( 'row' in config ) ? config.row : this.row ,
+				col : ( 'col' in config ) ? config.col : this.col ,
+				value : config.value
+			})
+
+		}
+		
+		make( config : Partial<$mol_tree> ) {
+
+			return new $mol_tree({
+				baseUri : this.baseUri ,
+				row : this.row ,
+				col : this.col ,
+				... config ,
+			})
+
 		}
 		
 		static fromString( str : string , baseUri? : string ) {
@@ -89,117 +91,122 @@ namespace $ {
 			var row = 0
 			var prefix = str.replace( /^\n?(\t*)[\s\S]*/ , '$1' )
 			var lines = str.replace( new RegExp( '^\\t{0,' + prefix.length + '}' , 'mg' ) , '' ).split( '\n' )
-			lines.forEach(
-				line => {
-					++row
-					
-					var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec( line )
-					if( !chunks || chunks[4] ) throw new Error( `Syntax error at ${baseUri}:${row}\n${line}` )
-					
-					var indent = chunks[ 1 ]
-					var path = chunks[ 2 ]
-					var data = chunks[ 3 ]
-					
-					var deep = indent.length
-					var types = path ? path.replace( / $/ , '' ).split( / +/ ) : []
-					
-					if( stack.length <= deep ) throw new Error( `Too many tabs at ${baseUri}:${row}\n${line}` )
-					
-					stack.length = deep + 1
-					var parent = stack[ deep ];
-					
-					let col = deep
-					types.forEach(
-						type => {
-							if( !type ) throw new Error( `Unexpected space symbol ${baseUri}:${row}\n${line}` )
-							var next = new $mol_tree({ type , baseUri , row , col })
-							parent.sub.push( next )	
-							parent = next
-							col += type.length + 1
-						}
-					)
-					
-					if( data ) {
-						var next = new $mol_tree({ data : data.substring( 1 ) , baseUri , row , col })
-						parent.sub.push( next )
-						parent = next
-					}
-					
-					stack.push( parent )
-					
+
+			lines.forEach( line => {
+
+				++row
+				
+				var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec( line )
+				if( !chunks || chunks[4] ) throw new Error( `Syntax error at ${baseUri}:${row}\n${line}` )
+				
+				var indent = chunks[ 1 ]
+				var path = chunks[ 2 ]
+				var data = chunks[ 3 ]
+				
+				var deep = indent.length
+				var types = path ? path.replace( / $/ , '' ).split( / +/ ) : []
+				
+				if( stack.length <= deep ) throw new Error( `Too many tabs at ${baseUri}:${row}\n${line}` )
+				
+				stack.length = deep + 1
+				var parent = stack[ deep ];
+				
+				let col = deep
+				types.forEach( type => {
+					if( !type ) throw new Error( `Unexpected space symbol ${baseUri}:${row}\n${line}` )
+					var next = new $mol_tree({ type , baseUri , row , col })
+					const parent_sub = parent.sub as $mol_tree[]
+					parent_sub.push( next )	
+					parent = next
+					col += type.length + 1
+				} )
+				
+				if( data ) {
+					var next = new $mol_tree({ data : data.substring( 1 ) , baseUri , row , col })
+					const parent_sub = parent.sub as $mol_tree[]
+					parent_sub.push( next )
+					parent = next
 				}
-			)
+				
+				stack.push( parent )
+				
+			} )
 			
 			return root
 		}
 		
 		static fromJSON( json : any , baseUri = '' ) : $mol_tree {
+
 			var type = $mol_typeof( json )
 			switch( type ) {
+
 				case 'Boolean' :
 				case 'Null' :
 				case 'Number' :
-					return new $mol_tree(
-						{
-							type : String( json ) ,
-							baseUri : baseUri
-						}
-					)
+					return new $mol_tree({
+						type : String( json ) ,
+						baseUri : baseUri
+					})
+				
 				case 'String' :
-					return new $mol_tree(
-						{
-							value : json ,
-							baseUri : baseUri
-						}
-					)
+					return new $mol_tree({
+						value : json ,
+						baseUri : baseUri
+					})
+
 				case 'Array' :
-					return new $mol_tree(
-						{
-							type : "/" ,
-							sub : ( json as any[] ).map( json => $mol_tree.fromJSON( json , baseUri ) )
-						}
-					)
+					return new $mol_tree({
+						type : "/" ,
+						sub : ( json as any[] ).map( json => $mol_tree.fromJSON( json , baseUri ) )
+					})
+
 				case 'Date' :
-					return new $mol_tree(
-						{
-							type : "" ,
-							value : json.toISOString() ,
-							baseUri : baseUri
-						}
-					)
+					return new $mol_tree({
+						value : json.toISOString() ,
+						baseUri : baseUri
+					})
+				
 				case 'Object' :
+
 					var sub : $mol_tree[] = []
+					
 					for( var key in json ) {
+
 						if( json[ key ] === undefined ) continue
+
+						const subsub = $mol_tree.fromJSON( json[ key ] , baseUri )
+						
 						if( /^[^\n\t\\ ]+$/.test( key ) ) {
-							var child = new $mol_tree(
-								{
-									type : key ,
-									baseUri : baseUri
-								}
-							)
+
+							var child = new $mol_tree({
+								type : key ,
+								baseUri : baseUri ,
+								sub : [ subsub ] ,
+							} )
+							
 						} else {
-							var child = new $mol_tree(
-								{
-									value : key ,
-									baseUri : baseUri
-								}
-							)
+							
+							var child = new $mol_tree({
+								value : key ,
+								baseUri : baseUri ,
+								sub : [ subsub ] ,
+							} )
+
 						}
-						child.sub.push(
-							$mol_tree.fromJSON( json[ key ] , baseUri )
-						)
+
 						sub.push( child )
+						
 					}
-					return new $mol_tree(
-						{
-							type : "*" ,
-							sub : sub ,
-							baseUri : baseUri
-						}
-					)
+					
+					return new $mol_tree({
+						type : "*" ,
+						sub : sub ,
+						baseUri : baseUri
+					})
+				
+				default: return $mol_fail( new Error( `Unsupported type (${type}) at ${baseUri}` ) )
 			}
-			throw new Error( `Unsupported type (${type}) at ${baseUri}` )
+
 		}
 		
 		get uri() {
