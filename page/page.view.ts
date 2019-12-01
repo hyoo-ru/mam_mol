@@ -8,7 +8,7 @@ namespace $.$$ {
 		
 	}
 
-	$mol_style( $mol_page , {
+	$mol_style_define( $mol_page , {
 
 		display: 'flex' ,
 		margin: '0' ,
@@ -25,6 +25,10 @@ namespace $.$$ {
 		overflow: 'hidden' ,
 		boxShadow: `inset 0 0 0 .5px ${ $mol_theme.line }` ,
 
+		':focus': {
+			outline: 'none',
+		} ,
+
 		Head: {
 			display: 'flex' ,
 			flexWrap: 'wrap' ,
@@ -37,16 +41,28 @@ namespace $.$$ {
 		},
 
 		Title: {
+
 			flex: '1000 1 50%',
 			padding: '.5rem',
 			wordBreak: 'normal',
-			cursor: 'default',		
+			cursor: 'default',
+
+			':empty': {
+				display: 'none',
+			},
+	
 		},
 
 		Tools: {
+			
 			flex: '1 1 auto',
 			display: 'flex',
 			justifyContent: 'flex-end',
+
+			':empty': {
+				display: 'none',
+			},
+
 		},
 
 		Body: {
