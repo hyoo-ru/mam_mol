@@ -1383,35 +1383,20 @@ declare namespace $ {
 
 declare namespace $ {
     type $mol_tree_path = Array<string | number | null>;
-    type $mol_tree_hack = (input: $mol_tree, context: $mol_tree_context) => $mol_tree[];
+    type $mol_tree_hack = (input: $mol_tree, context: $mol_tree_context) => readonly $mol_tree[];
     type $mol_tree_context = Record<string, $mol_tree_hack>;
     type $mol_tree_library = Record<string, $mol_tree_context>;
     class $mol_tree {
-        type: string;
-        data: string;
-        sub: $mol_tree[];
-        baseUri: string;
-        row: number;
-        col: number;
-        constructor(config?: {
-            type?: string;
-            value?: string;
-            data?: string;
-            sub?: $mol_tree[];
-            baseUri?: string;
-            row?: number;
-            col?: number;
-        });
+        readonly type: string;
+        readonly data: string;
+        readonly sub: readonly $mol_tree[];
+        readonly baseUri: string;
+        readonly row: number;
+        readonly col: number;
+        constructor(config?: Partial<$mol_tree>);
         static values(str: string, baseUri?: string): $mol_tree[];
-        clone(config: {
-            type?: string;
-            value?: string;
-            data?: string;
-            sub?: $mol_tree[];
-            baseUri?: string;
-            row?: number;
-            col?: number;
-        }): $mol_tree;
+        clone(config?: Partial<$mol_tree>): $mol_tree;
+        make(config: Partial<$mol_tree>): $mol_tree;
         static fromString(str: string, baseUri?: string): $mol_tree;
         static fromJSON(json: any, baseUri?: string): $mol_tree;
         get uri(): string;

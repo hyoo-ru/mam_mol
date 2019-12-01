@@ -16757,7 +16757,7 @@ var $;
             if (config.value !== undefined) {
                 var sub = $mol_tree.values(config.value);
                 if (config.type || sub.length > 1) {
-                    this.sub = sub.concat(config.sub || []);
+                    this.sub = [...sub, ...(config.sub || [])];
                     this.data = config.data || '';
                 }
                 else {
@@ -16780,7 +16780,7 @@ var $;
                 row: index + 1
             }));
         }
-        clone(config) {
+        clone(config = {}) {
             return new $mol_tree({
                 type: ('type' in config) ? config.type : this.type,
                 data: ('data' in config) ? config.data : this.data,
@@ -16790,6 +16790,9 @@ var $;
                 col: ('col' in config) ? config.col : this.col,
                 value: config.value
             });
+        }
+        make(config) {
+            return new $mol_tree(Object.assign({ baseUri: this.baseUri, row: this.row, col: this.col }, config));
         }
         static fromString(str, baseUri) {
             var root = new $mol_tree({ baseUri: baseUri });
@@ -16816,13 +16819,15 @@ var $;
                     if (!type)
                         throw new Error(`Unexpected space symbol ${baseUri}:${row}\n${line}`);
                     var next = new $mol_tree({ type, baseUri, row, col });
-                    parent.sub.push(next);
+                    const parent_sub = parent.sub;
+                    parent_sub.push(next);
                     parent = next;
                     col += type.length + 1;
                 });
                 if (data) {
                     var next = new $mol_tree({ data: data.substring(1), baseUri, row, col });
-                    parent.sub.push(next);
+                    const parent_sub = parent.sub;
+                    parent_sub.push(next);
                     parent = next;
                 }
                 stack.push(parent);
@@ -16851,7 +16856,6 @@ var $;
                     });
                 case 'Date':
                     return new $mol_tree({
-                        type: "",
                         value: json.toISOString(),
                         baseUri: baseUri
                     });
@@ -16860,19 +16864,21 @@ var $;
                     for (var key in json) {
                         if (json[key] === undefined)
                             continue;
+                        const subsub = $mol_tree.fromJSON(json[key], baseUri);
                         if (/^[^\n\t\\ ]+$/.test(key)) {
                             var child = new $mol_tree({
                                 type: key,
-                                baseUri: baseUri
+                                baseUri: baseUri,
+                                sub: [subsub],
                             });
                         }
                         else {
                             var child = new $mol_tree({
                                 value: key,
-                                baseUri: baseUri
+                                baseUri: baseUri,
+                                sub: [subsub],
                             });
                         }
-                        child.sub.push($mol_tree.fromJSON(json[key], baseUri));
                         sub.push(child);
                     }
                     return new $mol_tree({
@@ -16880,8 +16886,8 @@ var $;
                         sub: sub,
                         baseUri: baseUri
                     });
+                default: return $.$mol_fail(new Error(`Unsupported type (${type}) at ${baseUri}`));
             }
-            throw new Error(`Unsupported type (${type}) at ${baseUri}`);
         }
         get uri() {
             return this.baseUri + '#' + this.row + ':' + this.col;
