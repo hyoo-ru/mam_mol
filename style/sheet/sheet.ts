@@ -17,7 +17,7 @@ namespace $ {
 
 				if( /^[a-z]/.test(key) ) {
 
-					const name = key.replace( /[A-Z]/ , letter => '-' + letter.toLowerCase() )
+					const name = key.replace( /[A-Z]/g , letter => '-' + letter.toLowerCase() )
 					const val = config[key]
 					props.push(`\t${ name }: ${ val };\n`)
 
@@ -28,6 +28,28 @@ namespace $ {
 				} else if( key[0] === '$' ) {
 
 					make_class( prefix + '] ' + key.replace( '$' , '[' ) , suffix , config[key] as any )
+
+				} else if( key === '>' ) {
+
+					const types = config[key] as any
+
+					for( let type in types ) {
+						make_class( prefix + '] > [' + type , suffix , types[type] as any )
+					}
+
+				} else if( key === '@media' ) {
+
+					const media = config[key] as any
+
+					for( let query in media ) {
+
+						rules.push('}\n')
+						
+						make_class( prefix , suffix , media[query] as any )
+						
+						rules.push( `${ key } ${ query } {\n` )
+
+					}
 
 				} else {
 
