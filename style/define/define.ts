@@ -25,6 +25,10 @@ namespace $ {
 
 					make_class( prefix + '_' + key.toLowerCase() , suffix , config[key] )
 
+				} else if( key[0] === '$' ) {
+
+					make_class( prefix + '] ' + key.replace( '$' , '[' ) , suffix , config[key] )
+
 				} else {
 
 					make_class( prefix , suffix + key , config[key] )
