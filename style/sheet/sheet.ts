@@ -34,7 +34,7 @@ namespace $ {
 					const types = config[key] as any
 
 					for( let type in types ) {
-						make_class( prefix + '] > [' + type , suffix , types[type] as any )
+						make_class( prefix + '] > ' + type.replace( '$' , '[' ) , suffix , types[type] as any )
 					}
 
 				} else if( key === '@media' ) {
