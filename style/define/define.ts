@@ -1,7 +1,7 @@
 namespace $ {
 
 	export function $mol_style_define<
-		Component extends object
+		Component extends $mol_view
 	>(
 		Component : new()=> Component ,
 		config : $mol_style_definition< Component > ,

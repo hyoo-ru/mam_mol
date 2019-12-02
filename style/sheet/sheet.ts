@@ -1,7 +1,7 @@
 namespace $ {
 
 	export function $mol_style_sheet<
-		Component extends object
+		Component extends $mol_view
 	>(
 		Component : new()=> Component ,
 		config : $mol_style_definition< Component > ,
@@ -13,7 +13,7 @@ namespace $ {
 
 			const props = [] as string[]
 			
-			for( let key in config ) {
+			for( const key of Object.keys( config ).reverse() ) {
 
 				if( /^[a-z]/.test(key) ) {
 
@@ -35,6 +35,16 @@ namespace $ {
 
 					for( let type in types ) {
 						make_class( prefix + '] > ' + type.replace( '$' , '[' ) , suffix , types[type] as any )
+					}
+
+				} else if( key === '@' ) {
+
+					const attrs = config[key] as any
+
+					for( let name in attrs ) {
+						for( let val in attrs[name] ) {
+							make_class( prefix + '][' + name + '=' + JSON.stringify( val ) , suffix , attrs[name][val] as any )
+						}
 					}
 
 				} else if( key === '@media' ) {
@@ -60,7 +70,7 @@ namespace $ {
 			}
 			
 			if( props.length ) {
-				rules.push( `${ prefix }${ suffix } {\n${ props.join('') }}\n` )
+				rules.push( `${ prefix }${ suffix } {\n${ props.reverse().join('') }}\n` )
 			}
 
 		}

@@ -106,6 +106,34 @@ $mol_style_define( $mol_list , {
 }
 ```
 
+## Attributes
+
+```typescript
+class $mol_link extends $mol_view {
+	attr() {
+		return {
+			'mol_link_current' : true
+		}
+	}
+}
+
+$mol_style_define( $mol_button_major , {
+	'@': {
+		mol_link_current: {
+			'true': {
+				color: 'black',
+			},
+		},
+	},
+} )
+```
+
+```css
+[mol_link][mol_link_current="true"] {
+	color: black;
+}
+```
+
 ## Pseudo classes
 
 ```typescript

@@ -70,6 +70,29 @@ namespace $ {
 			
 		},
 
+		'component block styles with attribute value'() {
+		
+			class $mol_style_sheet_test extends $mol_view {
+				attr() { return {
+					mol_theme: '$mol_theme_dark'
+				} }
+			}
+
+			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
+				'@' : {
+					mol_theme: {
+						'$mol_theme_dark': {
+							color: 'red',
+							display: 'block',
+						},
+					},
+				},
+			} )
+
+			$mol_assert_equal( sheet , '[mol_style_sheet_test][mol_theme="$mol_theme_dark"] {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			
+		},
+
 		'component element styles'() {
 		
 			class $mol_style_sheet_test extends $mol_view {
