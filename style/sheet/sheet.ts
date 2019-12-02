@@ -43,7 +43,7 @@ namespace $ {
 
 					for( let name in attrs ) {
 						for( let val in attrs[name] ) {
-							make_class( prefix + '][' + name + '=' + JSON.stringify( val ) , suffix , attrs[name][val] as any )
+							make_class( prefix , suffix + '[' + name + '=' + JSON.stringify( val ) + ']' , attrs[name][val] as any )
 						}
 					}
 

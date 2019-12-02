@@ -12,55 +12,44 @@ namespace $ {
 			: never
 	} , unknown , never >
 
-	type Pseudos< Obj extends $mol_view > = Record<
-		$mol_style_pseudo_class | $mol_style_pseudo_element ,
-		Partial< $mol_style_properties >
-	>
+	type Pseudos< Obj extends $mol_view > = {
+		[ key in $mol_style_pseudo_class | $mol_style_pseudo_element ] : $mol_style_definition< Obj >
+	}
 
 	type Kids< Obj extends $mol_view > = {
-		'>' : Partial<
-			Record<
-				$mol_view_all ,
-				Partial< $mol_style_properties >
-			>
-		>
+		'>' : {
+			[ key in $mol_view_all ]?: $mol_style_definition< Obj >
+		}
 	}
 	
 	type Attrs< Obj extends $mol_view > = {
-		'@' : Partial<
-			Record<
-				keyof ReturnType< Obj['attr'] > ,
-				Record<
-					string ,
-					Partial< $mol_style_properties >
-				>
+		'@' : {
+			[ key in keyof ReturnType< Obj['attr'] > ]?: Record<
+				string ,
+				$mol_style_definition< Obj >
 			>
-		>
+		}
 	}
 
 	type Medias< Obj extends $mol_view > = {
 		'@media' : Record<
 			string ,
-			Partial< $mol_style_properties >
+			$mol_style_definition< Obj >
 		>
 	}
 
-	type Views< Obj extends $mol_view > = Record<
-		$mol_view_all ,
-		Partial< $mol_style_properties >
-	>
+	type Views< Obj extends $mol_view > = {
+		[ key in $mol_view_all ]: $mol_style_definition< Obj >
+	}
 
-	type Mods< Obj extends $mol_view > =
+	export type $mol_style_definition< Obj extends $mol_view > = Partial <
 		$mol_style_properties
 		& Pseudos<Obj>
 		& Attrs<Obj>
 		& Medias<Obj>
-
-	export type $mol_style_definition< Obj extends $mol_view > = Partial< 
-		Mods<Obj>
 		& Kids<Obj>
-		& Views<Obj>
 		& Elements<Obj>
+		& Views<Obj>
 	>
 
 }
