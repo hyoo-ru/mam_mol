@@ -117,7 +117,7 @@ class $mol_link extends $mol_view {
 	}
 }
 
-$mol_style_define( $mol_button_major , {
+$mol_style_define( $mol_link , {
 	'@': {
 		mol_link_current: {
 			'true': {
