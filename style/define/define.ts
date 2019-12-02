@@ -9,7 +9,10 @@ namespace $ {
 
 		const doc = $mol_dom_context.document
 		const el = doc.createElement('style');
-		el.innerHTML = $mol_style_sheet( Component , config )
+		
+		el.id = `$mol_style:${ Component.name }`
+		el.innerHTML += $mol_style_sheet( Component , config )
+		
 		doc.head.appendChild( el )
 
 		return el
