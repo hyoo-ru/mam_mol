@@ -7,15 +7,10 @@ namespace $ {
 		config : $mol_style_definition< Component > ,
 	) {
 
-		const doc = $mol_dom_context.document
-		const el = doc.createElement('style');
-		
-		el.id = `$mol_style:${ Component.name }`
-		el.innerHTML += $mol_style_sheet( Component , config )
-		
-		doc.head.appendChild( el )
-
-		return el
+		return $mol_style_attach(
+			Component.name,
+			$mol_style_sheet( Component , config ),
+		)
 
 	}
 
