@@ -167,10 +167,6 @@ namespace $ {
 		
 			}
 
-			Object.defineProperty( wrapped , 'name' , {
-				value : `${ task.name || '' }|${ this.name }`
-			} )
-
 			return $mol_fiber.func( wrapped )
 
 		}

@@ -12,13 +12,7 @@ namespace $ {
 		static func< Args extends any[] , Result , Host = void >(
 			func : ( this : Host , ... args : Args )=> Result
 		) : ( this : Host , ... args : Args )=> Result {
-			const wrapped = this.wrap( func )
-			
-			Object.defineProperty( wrapped , 'name' , {
-				value : `${ func.name || '<anonymous>' }|${ this.name }`
-			} )
-			
-			return wrapped
+			return this.wrap( func )
 		}
 
 		static get class() {
