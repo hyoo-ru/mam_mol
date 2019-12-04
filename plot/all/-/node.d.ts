@@ -2,23 +2,15 @@ declare namespace $ { }
 export = $;
 
 declare namespace $ {
+    function $mol_class<Class extends any>(Class: Class): Class;
+}
+
+declare namespace $ {
     namespace $$ {
         let $$: typeof $;
     }
     type $mol_ambient_context = (typeof globalThis) & (typeof $.$$) & (typeof $);
     function $mol_ambient(this: $mol_ambient_context, overrides: Partial<$mol_ambient_context>): $mol_ambient_context;
-}
-
-declare namespace $ {
-    function $mol_class<Class extends any>(Class: Class): Class;
-}
-
-declare namespace $ {
-    function $mol_fail(error: any): never;
-}
-
-declare namespace $ {
-    function $mol_fail_hidden(error: any): never;
 }
 
 declare namespace $ {
@@ -34,6 +26,65 @@ declare namespace $ {
         toString(): any;
         toJSON(): any;
     }
+}
+
+declare namespace $ {
+    class $mol_after_tick extends $mol_object2 {
+        task: () => void;
+        promise: any;
+        cancelled: boolean;
+        constructor(task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+/// <reference types="node" />
+declare namespace $ {
+    function $mol_exec(dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
+}
+
+interface $node {
+    [key: string]: any;
+}
+declare var $node: $node;
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    var $mol_dom_context: Window & Pick<typeof globalThis, 'Node' | 'Element' | 'HTMLElement' | 'XMLHttpRequest' | 'DOMParser' | 'XMLSerializer'>;
+}
+
+declare namespace $ {
+    function $mol_style_attach(id: string, text: string): HTMLStyleElement;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    const enum $mol_theme {
+        back = "var(--mol_theme_back)",
+        hover = "var(--mol_theme_hover)",
+        current = "var(--mol_theme_current)",
+        text = "var(--mol_theme_text)",
+        control = "var(--mol_theme_control)",
+        shade = "var(--mol_theme_shade)",
+        line = "var(--mol_theme_line)",
+        focus = "var(--mol_theme_focus)",
+        field = "var(--mol_theme_field)"
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    function $mol_fail_hidden(error: any): never;
 }
 
 declare namespace $ {
@@ -378,23 +429,6 @@ declare namespace $ {
     function $mol_atom2_autorun(calculate: () => any): $mol_atom2<unknown>;
 }
 
-/// <reference types="node" />
-declare namespace $ {
-    function $mol_exec(dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
-}
-
-interface $node {
-    [key: string]: any;
-}
-declare var $node: $node;
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    var $mol_dom_context: Window & Pick<typeof globalThis, 'Node' | 'Element' | 'HTMLElement' | 'XMLHttpRequest' | 'DOMParser' | 'XMLSerializer'>;
-}
-
 declare namespace $ {
     class $mol_defer extends $mol_object {
         run: () => void;
@@ -451,9 +485,16 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_deprecated<Host extends {
-        constructor: Function;
-    }, Method extends Function>(message: string): (host: Host, field: string, descr: TypedPropertyDescriptor<Method>) => void;
+    function $mol_deprecated(message: string): <Method extends (this: Host, ...args: readonly any[]) => any, Host extends { [key in Field]: Method; }, Field extends keyof Host>(host: Host, field: Field, descr: TypedPropertyDescriptor<Method>) => void;
+}
+
+declare namespace $ {
+    type $mol_type_keys_extract<Input, Lower, Upper> = {
+        [Field in keyof Input]: Lower extends Input[Field] ? never : Input[Field] extends Upper ? Field : never;
+    }[keyof Input];
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -503,6 +544,7 @@ declare namespace $ {
         };
         plugins(): readonly $mol_view[];
     }
+    type $mol_view_all = $mol_type_keys_extract<$mol_ambient_context, any, $mol_ambient_context['$mol_view']>;
 }
 
 declare namespace $ {
@@ -536,6 +578,9 @@ declare namespace $.$$ {
         font_family(): any;
         text_width(text: string): number;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -625,6 +670,9 @@ declare namespace $ {
     class $mol_svg_group extends $mol_svg {
         dom_name(): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -792,6 +840,9 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_plot_pane extends $mol_svg_root {
         aspect(): string;
         hue_base(val?: any, force?: $mol_mem_force): any;
@@ -878,6 +929,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_plot_line extends $mol_plot_graph {
         threshold(): number;
         spacing(): number;
@@ -894,6 +948,9 @@ declare namespace $.$$ {
         indexes(): number[];
         curve(): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -927,6 +984,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_plot_dot extends $mol_plot_graph {
         points_max(): number;
         style(): {
@@ -947,6 +1007,9 @@ declare namespace $.$$ {
         indexes(): number[];
         curve(): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -1014,6 +1077,9 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_svg_text extends $mol_svg {
         dom_name(): string;
         pos(): readonly any[];
@@ -1035,6 +1101,9 @@ declare namespace $.$$ {
         pos_x(): any;
         pos_y(): any;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -1064,6 +1133,9 @@ declare namespace $.$$ {
 
 declare namespace $ {
     function $mol_math_round_expand(val: number, gap?: number): number;
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -1114,6 +1186,9 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_plot_ruler_vert extends $mol_plot_ruler {
         title_align(): string;
         label_align(): string;
@@ -1135,6 +1210,9 @@ declare namespace $.$$ {
         title_pos_x(): string;
         label_pos_y(index: number): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {

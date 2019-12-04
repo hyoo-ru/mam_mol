@@ -40,6 +40,8 @@ namespace $ {
 			
 			var [ path , path , bundle ] = matched
 			path = build.root().resolve( path ).path()
+
+			if( bundle === 'web.css' ) console.warn( $node.colorette.yellow( 'Deprecation: CSS compiles into JS bundle now! You do not need web.css' ) )
 			
 			try {
 				return build.bundle( { path , bundle } )

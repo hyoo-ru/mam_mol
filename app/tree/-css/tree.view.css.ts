@@ -1,0 +1,3 @@
+namespace $ { $mol_style_attach( "mol/app/tree/tree.view.css",
+ "[mol_app_tree_body] {\n\tdisplay: flex;\n}\n\n[mol_app_tree_source] {\n\tflex: 50% 1 1;\n\twhite-space: pre;\n\tfont-family: var(--mol_skin_font_monospace);\n}\n\n[mol_app_tree_source_view] {\n\tflex: 33% 1 1;\n}\n\n[mol_app_tree_result] {\n\tflex: 50% 1 1;\n\toutline: 0 0 0 1px var(--mol_theme_line);\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[mol_app_tree_result_text] {\n\tflex: auto 1 0;\n}\n\n"
+) }

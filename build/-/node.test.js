@@ -2087,6 +2087,9 @@ var $;
 //tree.js.map
 ;
 "use strict";
+//theme.js.map
+;
+"use strict";
 var $;
 (function ($) {
     class $mol_window extends $.$mol_object {
@@ -2367,17 +2370,20 @@ var $;
 var $;
 (function ($) {
     function $mol_deprecated(message) {
-        return function (host, field, descr) {
+        return (host, field, descr) => {
             const value = descr.value;
-            descr.value = function $mol_deprecated_wrapper() {
+            descr.value = function $mol_deprecated_wrapper(...args) {
                 console.warn(`${host.constructor.name}::${field} is deprecated. ${message}`);
-                return value.apply(this, arguments);
+                return value.call(this, ...args);
             };
         };
     }
     $.$mol_deprecated = $mol_deprecated;
 })($ || ($ = {}));
 //deprecated.js.map
+;
+"use strict";
+//extract.js.map
 ;
 "use strict";
 var $;
@@ -3357,6 +3363,15 @@ var $;
                     locale.content(JSON.stringify(res.locales, null, '\t'));
                     mods.push(script, locale);
                 }
+                else if (/(\.css)$/.test(name)) {
+                    const script = child.parent().resolve(`-css/${child.name()}.ts`);
+                    const id = child.relate(this.root());
+                    const styles = child.content().toString();
+                    const code = 'namespace $ { $' + `mol_style_attach( ${JSON.stringify(id)},\n ${JSON.stringify(styles)}\n) }`;
+                    script.content(code);
+                    mods.push(child, script);
+                    return true;
+                }
                 mods.push(child);
                 return true;
             });
@@ -4011,23 +4026,13 @@ var $;
                 return [];
             const start = Date.now();
             var pack = $.$mol_file.absolute(path);
-            var sources = this.sourcesCSS({ path, exclude });
-            if (!sources.length)
-                return [];
+            var sources = [];
             var target = pack.resolve(`-/${bundle}.css`);
             var targetMap = pack.resolve(`-/${bundle}.css.map`);
-            var root = null;
-            sources.forEach(src => {
-                var root2 = $node['postcss'].parse(src.content(), { from: src.path() });
-                root = root ? root.append(root2) : root2;
-            });
-            var processor = $node['postcss']([
-                $node['postcss-custom-properties']({
-                    preserve: true,
-                }),
-                $node['postcss-color-function'](),
-            ]);
-            var result = processor.process(root, { to: target.relate(), map: { inline: false } });
+            const result = {
+                css: '/* CSS compiles into js bundle now! */',
+                map: '/* CSS compiles into js bundle now! */',
+            };
             target.content(result.css);
             targetMap.content(JSON.stringify(result.map, null, '\t'));
             this.logBundle(target, Date.now() - start);
@@ -4258,7 +4263,9 @@ var $;
         return depends;
     };
     $mol_build.dependors['css'] = $mol_build.dependors['view.css'] = source => {
-        var depends = {};
+        var depends = {
+            '/mol/style/attach': 0,
+        };
         var lines = String(source.content())
             .replace(/\/\*[^]*?\*\//g, '')
             .replace(/\/\/.*$/gm, '')
@@ -4397,6 +4404,8 @@ var $;
             var build = this.build();
             var [path, path, bundle] = matched;
             path = build.root().resolve(path).path();
+            if (bundle === 'web.css')
+                console.warn($node.colorette.yellow('Deprecation: CSS compiles into JS bundle now! You do not need web.css'));
             try {
                 return build.bundle({ path, bundle });
             }
@@ -6171,6 +6180,9 @@ var $;
     });
 })($ || ($ = {}));
 //autorun.test.js.map
+;
+"use strict";
+//extract.test.js.map
 ;
 "use strict";
 var $;

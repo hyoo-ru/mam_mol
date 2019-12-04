@@ -1,0 +1,3 @@
+namespace $ { $mol_style_attach( "mol/app/issues/issues.view.css",
+ "[mol_app_issues_body] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[mol_app_issues_projects] {\n\tflex: 0 0 auto;\n}\n\n[mol_app_issues_project] {\n\tflex: 1 1 14rem;\n}\n\n[mol_app_issues_project_input] {\n\tdisplay: flex;\n}\n\n[mol_app_issues_project_id] {\n\tfont-weight: bold;\n}\n\n[mol_app_issues_project_capacity] {\n\tdisplay: block;\n\tpadding: 1rem;\n\tfont-size: 2rem;\n\tline-height: 1;\n}\n\n[mol_app_issues_chart] {\n\tflex: 1 0 10rem;\n\tmargin: 0 0.5rem;\n}\n\n[mol_app_issues_description] {\n\tpadding: 1rem;\n}\n"
+) }
