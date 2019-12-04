@@ -339,11 +339,7 @@ var $;
             return this.func(task)();
         }
         static func(func) {
-            const wrapped = this.wrap(func);
-            Object.defineProperty(wrapped, 'name', {
-                value: `${func.name || '<anonymous>'}|${this.name}`
-            });
-            return wrapped;
+            return this.wrap(func);
         }
         static get class() {
             return (Class) => {
@@ -955,9 +951,6 @@ var $;
                     $mol_fiber.deadline = deadline;
                 }
             }
-            Object.defineProperty(wrapped, 'name', {
-                value: `${task.name || ''}|${this.name}`
-            });
             return $mol_fiber.func(wrapped);
         }
     };
