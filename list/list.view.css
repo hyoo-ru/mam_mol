@@ -2,3 +2,7 @@
 	will-change: contents;
 	display: block;
 }
+
+[mol_list] > * {
+	display: block;
+}

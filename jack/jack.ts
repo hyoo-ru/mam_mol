@@ -12,11 +12,9 @@ namespace $ {
 
 			pipe : input => [ input ] ,
 			
-			type : ( input , jack )=> input.hack( jack ).sub.map( child => child.clone({
-				type : '' ,
-				sub : [],
-				value : child.type ,
-			}) ) ,
+			type : ( input , jack )=> input.hack( jack ).sub.map(
+				child => child.make({ value : child.type })
+			) ,
 			
 			head : ( input , jack )=> input.hack( jack ).sub.slice( 0 , 1 ) ,
 			
@@ -24,23 +22,38 @@ namespace $ {
 			
 			reversed : ( input , jack )=> input.hack( jack ).sub.slice().reverse() ,
 
-			make : ( input , jack )=> [ input.clone({
-				type : input.select( 'type' , '' ).hack( jack ).value || '' ,
-				value : input.select( 'value' , '' ).hack( jack ).value || undefined ,
-				sub : input.select( 'sub' , '' ).hack( jack ).sub ,
-			}) ] ,
+			make : ( input , jack )=> {
+
+				let type , value , sub
+
+				for( const kid of input.sub ) {
+
+					switch( kid.type ) {
+						case 'type' : type = kid.hack( jack ).value ; break
+						case 'value' : value = kid.hack( jack ).value ; break
+						case 'sub' : sub = kid.hack( jack ).sub ; break
+						default : return $mol_fail( kid.error( `Wrong node type ${ kid.type }` ) )
+					}
+
+				}
+
+				return [ input.make({ type , value , sub }) ]
+
+			} ,
 			
 			test : ( input , jack )=> {
 
-				const results = input.select( 'case' ).sub.map( Case => Case.hack( jack ) )
+				const cases = input.select( 'case' ).sub
+				const results = cases.map( Case => Case.hack( jack ) )
 		
 				try {
 					$mol_assert_equal( ... results.map( String ) )
 				} catch( error ) {
-					$mol_fail_hidden( input.error( error.message ) )
+					return $mol_fail_hidden( input.error( error.message ) )
 				}
 		
-				return [ input.clone({ sub : results }) ]
+				return [ input ]
+
 			} ,
 
 			jack : ( input , ambient )=> {

@@ -9,27 +9,39 @@ namespace $ {
 				'test' : $mol_jack.meta.test ,
 			}
 
-			$mol_assert_equal( $mol_tree.fromString( `
-				test
-					case foo
-					case 777
-			` ).hack( root ).toString() , $mol_tree.fromString( `
-				test
-					case 777
-					case 777
-			` ).toString() )
+			$mol_assert_like(
 
-			$mol_assert_fail( ()=> $mol_tree.fromString( `
-				test
-					case foo
-					case bar
-			` ).hack( root ) )
+				$mol_tree.fromString( `
+					test
+						case foo
+						case 777
+				` )
+				.hack( root )
+				.toString() ,
+
+				$mol_tree.fromString( `
+					test
+						case foo
+						case 777
+				` )
+				.toString() ,
+
+			)
+
+			$mol_assert_fail( ()=> {
+				$mol_tree.fromString( `
+					test
+						case \foo
+						case \bar
+				` )
+				.hack( root )
+			} )
 
 		} ,
 
 		'jack test'() {
 
-			$mol_tree.fromString(`
+			const tests = $mol_tree.fromString(`
 				test
 					name \\name of struct node as value node
 					case type
@@ -95,7 +107,7 @@ namespace $ {
 							pi PI
 						out tree pi
 					case tree float 3.14
-				test
+				tree test
 					name \\define and use custom macro with arguments
 					case jack
 						let tree tail head reversed from
@@ -104,7 +116,9 @@ namespace $ {
 							two
 							three
 					case tree THREE
-			`).hack({
+			`)
+			
+			const res = tests.hack({
 
 				... $mol_jack.meta ,
 				
