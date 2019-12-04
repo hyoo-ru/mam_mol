@@ -187,7 +187,7 @@ $mol_style_define( $mol_scroll , {
 ```css
 @media print {
 	[mol_scroll] {
-		display: block;
+		overflow: visible;
 	}
 }
 ```
