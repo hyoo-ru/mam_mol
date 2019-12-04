@@ -53,17 +53,14 @@ interface $node {
 declare var $node: $node;
 
 declare namespace $ {
-}
-
-declare namespace $ {
     var $mol_dom_context: Window & Pick<typeof globalThis, 'Node' | 'Element' | 'HTMLElement' | 'XMLHttpRequest' | 'DOMParser' | 'XMLSerializer'>;
 }
 
 declare namespace $ {
-    function $mol_style_attach(id: string, text: string): HTMLStyleElement;
 }
 
 declare namespace $ {
+    function $mol_style_attach(id: string, text: string): HTMLStyleElement;
 }
 
 declare namespace $ {
@@ -134,6 +131,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
+}
+
+declare namespace $ {
     function $mol_log_context(next?: () => void): () => void;
 }
 
@@ -143,10 +144,6 @@ declare namespace $ {
 
 declare namespace $ {
     var $mol_log_filter: (next?: string) => string;
-}
-
-declare namespace $ {
-    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
 }
 
 declare namespace $ {
@@ -548,6 +545,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
     enum $mol_keyboard_code {
         backspace = 8,
         tab = 9,
@@ -653,9 +653,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_string extends $mol_view {
         dom_name(): string;
         enabled(): boolean;
@@ -717,6 +714,9 @@ declare namespace $.$$ {
     class $mol_app_hello extends $.$mol_app_hello {
         greeting(): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {

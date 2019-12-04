@@ -98,6 +98,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
+}
+
+declare namespace $ {
     function $mol_log_context(next?: () => void): () => void;
 }
 
@@ -107,10 +111,6 @@ declare namespace $ {
 
 declare namespace $ {
     var $mol_log_filter: (next?: string) => string;
-}
-
-declare namespace $ {
-    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
 }
 
 declare namespace $ {

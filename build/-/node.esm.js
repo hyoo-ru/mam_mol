@@ -3376,12 +3376,12 @@ var $;
                     const styles = child.content().toString();
                     const code = 'namespace $ { $' + `mol_style_attach( ${JSON.stringify(id)},\n ${JSON.stringify(styles)}\n) }`;
                     script.content(code);
-                    mods.push(child, script);
-                    return true;
+                    mods.push(script);
                 }
                 mods.push(child);
                 return true;
             });
+            mods.sort((a, b) => a.name().length - b.name().length);
             return mods;
         }
         modsRecursive({ path, exclude }) {

@@ -1,6 +1,11 @@
 require( "source-map-support" ).install()
 ;
 process.on( 'unhandledRejection' , up => { throw up } );
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+module.exports;
+//mol.js.map
+;
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -21,11 +26,6 @@ $.$$ = $
 
 $.$mol = $  // deprecated
 
-;
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-module.exports;
-//mol.js.map
 ;
 "use strict";
 var $;

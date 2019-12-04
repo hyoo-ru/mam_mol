@@ -1,9 +1,9 @@
 function require( path ){ return $node[ path ] };
 "use strict";
-//assert.test.js.map
+//assert.js.map
 ;
 "use strict";
-//assert.js.map
+//assert.test.js.map
 ;
 "use strict";
 //deep.test.js.map
@@ -30,6 +30,40 @@ var $;
     $.$mol_log = $mol_log;
 })($ || ($ = {}));
 //log.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_log_group(name, task) {
+        const filter = $.$mol_log_filter();
+        if (filter == null)
+            return task;
+        return function $mol_log_group_wrapper(...args) {
+            let started = false;
+            let prev = $.$mol_log_context();
+            $.$mol_log_context(() => {
+                if (prev)
+                    prev();
+                started = true;
+                if (filter || prev)
+                    console.group(name);
+                else
+                    console.groupCollapsed(name);
+                $.$mol_log_context(prev = null);
+            });
+            try {
+                return task.apply(this, args);
+            }
+            finally {
+                if (started)
+                    console.groupEnd();
+                $.$mol_log_context(prev);
+            }
+        };
+    }
+    $.$mol_log_group = $mol_log_group;
+})($ || ($ = {}));
+//log_group.js.map
 ;
 "use strict";
 var $;
@@ -84,40 +118,6 @@ var $;
         console.info('Use $mol_log_filter( needle : string|null ) to toggle logs');
 })($ || ($ = {}));
 //log_filter.web.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_log_group(name, task) {
-        const filter = $.$mol_log_filter();
-        if (filter == null)
-            return task;
-        return function $mol_log_group_wrapper(...args) {
-            let started = false;
-            let prev = $.$mol_log_context();
-            $.$mol_log_context(() => {
-                if (prev)
-                    prev();
-                started = true;
-                if (filter || prev)
-                    console.group(name);
-                else
-                    console.groupCollapsed(name);
-                $.$mol_log_context(prev = null);
-            });
-            try {
-                return task.apply(this, args);
-            }
-            finally {
-                if (started)
-                    console.groupEnd();
-                $.$mol_log_context(prev);
-            }
-        };
-    }
-    $.$mol_log_group = $mol_log_group;
-})($ || ($ = {}));
-//log_group.js.map
 ;
 "use strict";
 var $;
@@ -212,38 +212,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_test({
-        'must be false'() {
-            $.$mol_assert_not(0);
-        },
-        'must be true'() {
-            $.$mol_assert_ok(1);
-        },
-        'two must be equal'() {
-            $.$mol_assert_equal(2, 2);
-        },
-        'three must be equal'() {
-            $.$mol_assert_equal(2, 2, 2);
-        },
-        'two must be unique'() {
-            $.$mol_assert_unique([3], [3]);
-        },
-        'three must be unique'() {
-            $.$mol_assert_unique([3], [3], [3]);
-        },
-        'two must be alike'() {
-            $.$mol_assert_like([3], [3]);
-        },
-        'three must be alike'() {
-            $.$mol_assert_like([3], [3], [3]);
-        },
-    });
-})($ || ($ = {}));
-//assert.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_assert_ok(value) {
         if (value)
             return;
@@ -328,6 +296,38 @@ var $;
     $.$mol_assert_like = $mol_assert_like;
 })($ || ($ = {}));
 //assert.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'must be false'() {
+            $.$mol_assert_not(0);
+        },
+        'must be true'() {
+            $.$mol_assert_ok(1);
+        },
+        'two must be equal'() {
+            $.$mol_assert_equal(2, 2);
+        },
+        'three must be equal'() {
+            $.$mol_assert_equal(2, 2, 2);
+        },
+        'two must be unique'() {
+            $.$mol_assert_unique([3], [3]);
+        },
+        'three must be unique'() {
+            $.$mol_assert_unique([3], [3], [3]);
+        },
+        'two must be alike'() {
+            $.$mol_assert_like([3], [3]);
+        },
+        'three must be alike'() {
+            $.$mol_assert_like([3], [3], [3]);
+        },
+    });
+})($ || ($ = {}));
+//assert.test.js.map
 ;
 "use strict";
 var $;
@@ -422,6 +422,67 @@ var $;
     });
 })($ || ($ = {}));
 //attach.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    let $mol_mem_force = class $mol_mem_force extends Object {
+        constructor() {
+            super();
+            this.$mol_mem_force = true;
+        }
+        static toString() { return this.name; }
+    };
+    $mol_mem_force.$mol_mem_force = true;
+    $mol_mem_force = __decorate([
+        $.$mol_class
+    ], $mol_mem_force);
+    $.$mol_mem_force = $mol_mem_force;
+    class $mol_mem_force_cache extends $mol_mem_force {
+    }
+    $.$mol_mem_force_cache = $mol_mem_force_cache;
+    class $mol_mem_force_update extends $mol_mem_force {
+    }
+    $.$mol_mem_force_update = $mol_mem_force_update;
+    class $mol_mem_force_fail extends $mol_mem_force_cache {
+    }
+    $.$mol_mem_force_fail = $mol_mem_force_fail;
+})($ || ($ = {}));
+//force.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    let $mol_wrapper = class $mol_wrapper extends $.$mol_object2 {
+        static run(task) {
+            return this.func(task)();
+        }
+        static func(func) {
+            return this.wrap(func);
+        }
+        static get class() {
+            return (Class) => {
+                const construct = (target, args) => new Class(...args);
+                const handler = {
+                    construct: this.func(construct)
+                };
+                handler[Symbol.toStringTag] = Class.name + '#';
+                return new Proxy(Class, handler);
+            };
+        }
+        static get method() {
+            return (obj, name, descr) => {
+                descr.value = this.func(descr.value);
+                return descr;
+            };
+        }
+    };
+    $mol_wrapper = __decorate([
+        $.$mol_class
+    ], $mol_wrapper);
+    $.$mol_wrapper = $mol_wrapper;
+})($ || ($ = {}));
+//wrapper.js.map
 ;
 "use strict";
 var $;
@@ -541,40 +602,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let $mol_wrapper = class $mol_wrapper extends $.$mol_object2 {
-        static run(task) {
-            return this.func(task)();
-        }
-        static func(func) {
-            return this.wrap(func);
-        }
-        static get class() {
-            return (Class) => {
-                const construct = (target, args) => new Class(...args);
-                const handler = {
-                    construct: this.func(construct)
-                };
-                handler[Symbol.toStringTag] = Class.name + '#';
-                return new Proxy(Class, handler);
-            };
-        }
-        static get method() {
-            return (obj, name, descr) => {
-                descr.value = this.func(descr.value);
-                return descr;
-            };
-        }
-    };
-    $mol_wrapper = __decorate([
-        $.$mol_class
-    ], $mol_wrapper);
-    $.$mol_wrapper = $mol_wrapper;
-})($ || ($ = {}));
-//wrapper.js.map
-;
-"use strict";
-var $;
-(function ($) {
     $['devtoolsFormatters'] = $['devtoolsFormatters'] || [];
     function $mol_dev_format_register(config) {
         $['devtoolsFormatters'].push(config);
@@ -666,6 +693,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_maybe(value) {
+        return (value == null) ? [] : [value];
+    }
+    $.$mol_maybe = $mol_maybe;
+})($ || ($ = {}));
+//maybe.js.map
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_test({
         'all cases of using maybe'() {
             $.$mol_assert_equal($.$mol_maybe(0)[0], 0);
@@ -678,29 +715,6 @@ var $;
     });
 })($ || ($ = {}));
 //maybe.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_maybe(value) {
-        return (value == null) ? [] : [value];
-    }
-    $.$mol_maybe = $mol_maybe;
-})($ || ($ = {}));
-//maybe.js.map
-;
-"use strict";
-var $;
-(function ($_1) {
-    $_1.$mol_test_mocks.push($ => {
-        var _a;
-        $.$mol_log2 = (_a = class extends $_1.$mol_log2 {
-            },
-            _a.current = new $_1.$mol_log2(null, '$mol_log2_mock', []),
-            _a);
-    });
-})($ || ($ = {}));
-//log2.test.js.map
 ;
 "use strict";
 var $;
@@ -841,6 +855,19 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    $_1.$mol_test_mocks.push($ => {
+        var _a;
+        $.$mol_log2 = (_a = class extends $_1.$mol_log2 {
+            },
+            _a.current = new $_1.$mol_log2(null, '$mol_log2_mock', []),
+            _a);
+    });
+})($ || ($ = {}));
+//log2.test.js.map
+;
+"use strict";
+var $;
 (function ($) {
     $.$mol_after_mock_queue = [];
     function $mol_after_mock_warp() {
@@ -876,15 +903,6 @@ var $;
 ;
 "use strict";
 var $;
-(function ($_1) {
-    $_1.$mol_test_mocks.push($ => {
-        $.$mol_after_frame = $_1.$mol_after_mock_commmon;
-    });
-})($ || ($ = {}));
-//frame.test.js.map
-;
-"use strict";
-var $;
 (function ($) {
     class $mol_after_frame extends $.$mol_object2 {
         constructor(task) {
@@ -899,6 +917,31 @@ var $;
     $.$mol_after_frame = $mol_after_frame;
 })($ || ($ = {}));
 //frame.web.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
+    $_1.$mol_test_mocks.push($ => {
+        $.$mol_after_frame = $_1.$mol_after_mock_commmon;
+    });
+})($ || ($ = {}));
+//frame.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_compare_any(a, b) {
+        if (a === b)
+            return true;
+        if (!Number.isNaN(a))
+            return false;
+        if (!Number.isNaN(b))
+            return false;
+        return true;
+    }
+    $.$mol_compare_any = $mol_compare_any;
+})($ || ($ = {}));
+//any.js.map
 ;
 "use strict";
 var $;
@@ -923,18 +966,90 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_compare_any(a, b) {
-        if (a === b)
-            return true;
-        if (!Number.isNaN(a))
-            return false;
-        if (!Number.isNaN(b))
-            return false;
-        return true;
+    const cache = new WeakMap();
+    $.$mol_conform_stack = [];
+    function $mol_conform(target, source) {
+        if ($.$mol_compare_any(target, source))
+            return source;
+        if (!target || typeof target !== 'object')
+            return target;
+        if (!source || typeof source !== 'object')
+            return target;
+        if (target instanceof Error)
+            return target;
+        if (source instanceof Error)
+            return target;
+        if (target['constructor'] !== source['constructor'])
+            return target;
+        if (cache.get(target))
+            return target;
+        cache.set(target, true);
+        const conform = $.$mol_conform_handlers.get(target['constructor']);
+        if (!conform)
+            return target;
+        if ($.$mol_conform_stack.indexOf(target) !== -1)
+            return target;
+        $.$mol_conform_stack.push(target);
+        try {
+            return conform(target, source);
+        }
+        finally {
+            $.$mol_conform_stack.pop();
+        }
     }
-    $.$mol_compare_any = $mol_compare_any;
+    $.$mol_conform = $mol_conform;
+    $.$mol_conform_handlers = new WeakMap();
+    function $mol_conform_handler(cl, handler) {
+        $.$mol_conform_handlers.set(cl, handler);
+    }
+    $.$mol_conform_handler = $mol_conform_handler;
+    function $mol_conform_array(target, source) {
+        if (source.length !== target.length)
+            return target;
+        for (let i = 0; i < target.length; ++i) {
+            if (!$.$mol_compare_any(source[i], target[i]))
+                return target;
+        }
+        return source;
+    }
+    $mol_conform_handler(Array, $mol_conform_array);
+    $mol_conform_handler(Uint8Array, $mol_conform_array);
+    $mol_conform_handler(Uint16Array, $mol_conform_array);
+    $mol_conform_handler(Uint32Array, $mol_conform_array);
+    $mol_conform_handler(Object, (target, source) => {
+        let count = 0;
+        let equal = true;
+        for (let key in target) {
+            const conformed = $mol_conform(target[key], source[key]);
+            if (conformed !== target[key]) {
+                try {
+                    target[key] = conformed;
+                }
+                catch (error) { }
+                if (!$.$mol_compare_any(conformed, target[key]))
+                    equal = false;
+            }
+            if (!$.$mol_compare_any(conformed, source[key]))
+                equal = false;
+            ++count;
+        }
+        for (let key in source)
+            if (--count < 0)
+                break;
+        return (equal && count === 0) ? source : target;
+    });
+    $mol_conform_handler(Date, (target, source) => {
+        if (target.getTime() === source.getTime())
+            return source;
+        return target;
+    });
+    $mol_conform_handler(RegExp, (target, source) => {
+        if (target.toString() === source.toString())
+            return source;
+        return target;
+    });
 })($ || ($ = {}));
-//any.js.map
+//conform.js.map
 ;
 "use strict";
 var $;
@@ -1062,108 +1177,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const cache = new WeakMap();
-    $.$mol_conform_stack = [];
-    function $mol_conform(target, source) {
-        if ($.$mol_compare_any(target, source))
-            return source;
-        if (!target || typeof target !== 'object')
-            return target;
-        if (!source || typeof source !== 'object')
-            return target;
-        if (target instanceof Error)
-            return target;
-        if (source instanceof Error)
-            return target;
-        if (target['constructor'] !== source['constructor'])
-            return target;
-        if (cache.get(target))
-            return target;
-        cache.set(target, true);
-        const conform = $.$mol_conform_handlers.get(target['constructor']);
-        if (!conform)
-            return target;
-        if ($.$mol_conform_stack.indexOf(target) !== -1)
-            return target;
-        $.$mol_conform_stack.push(target);
-        try {
-            return conform(target, source);
-        }
-        finally {
-            $.$mol_conform_stack.pop();
-        }
-    }
-    $.$mol_conform = $mol_conform;
-    $.$mol_conform_handlers = new WeakMap();
-    function $mol_conform_handler(cl, handler) {
-        $.$mol_conform_handlers.set(cl, handler);
-    }
-    $.$mol_conform_handler = $mol_conform_handler;
-    function $mol_conform_array(target, source) {
-        if (source.length !== target.length)
-            return target;
-        for (let i = 0; i < target.length; ++i) {
-            if (!$.$mol_compare_any(source[i], target[i]))
-                return target;
-        }
-        return source;
-    }
-    $mol_conform_handler(Array, $mol_conform_array);
-    $mol_conform_handler(Uint8Array, $mol_conform_array);
-    $mol_conform_handler(Uint16Array, $mol_conform_array);
-    $mol_conform_handler(Uint32Array, $mol_conform_array);
-    $mol_conform_handler(Object, (target, source) => {
-        let count = 0;
-        let equal = true;
-        for (let key in target) {
-            const conformed = $mol_conform(target[key], source[key]);
-            if (conformed !== target[key]) {
-                try {
-                    target[key] = conformed;
-                }
-                catch (error) { }
-                if (!$.$mol_compare_any(conformed, target[key]))
-                    equal = false;
-            }
-            if (!$.$mol_compare_any(conformed, source[key]))
-                equal = false;
-            ++count;
-        }
-        for (let key in source)
-            if (--count < 0)
-                break;
-        return (equal && count === 0) ? source : target;
-    });
-    $mol_conform_handler(Date, (target, source) => {
-        if (target.getTime() === source.getTime())
-            return source;
-        return target;
-    });
-    $mol_conform_handler(RegExp, (target, source) => {
-        if (target.toString() === source.toString())
-            return source;
-        return target;
-    });
-})($ || ($ = {}));
-//conform.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'trim array'() {
-            const array = [undefined, null, 0, false, null, undefined, undefined];
-            const correct = [undefined, null, 0, false, null];
-            $.$mol_array_trim(array);
-            $.$mol_assert_like(array, correct);
-        }
-    });
-})($ || ($ = {}));
-//trim.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_array_trim(array) {
         let last = array.length;
         while (last > 0) {
@@ -1182,13 +1195,17 @@ var $;
 ;
 "use strict";
 var $;
-(function ($_1) {
-    $_1.$mol_test_mocks.push(async ($) => {
-        await $_1.$mol_fiber_warp();
-        $_1.$mol_fiber.deadline = Date.now() + 100;
+(function ($) {
+    $.$mol_test({
+        'trim array'() {
+            const array = [undefined, null, 0, false, null, undefined, undefined];
+            const correct = [undefined, null, 0, false, null];
+            $.$mol_array_trim(array);
+            $.$mol_assert_like(array, correct);
+        }
     });
 })($ || ($ = {}));
-//fiber.test.js.map
+//trim.test.js.map
 ;
 "use strict";
 var $;
@@ -1545,6 +1562,16 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    $_1.$mol_test_mocks.push(async ($) => {
+        await $_1.$mol_fiber_warp();
+        $_1.$mol_fiber.deadline = Date.now() + 100;
+    });
+})($ || ($ = {}));
+//fiber.test.js.map
+;
+"use strict";
+var $;
 (function ($) {
     $.$mol_owning_map = new WeakMap();
     function $mol_owning_allow(having) {
@@ -1591,6 +1618,258 @@ var $;
     $.$mol_owning_catch = $mol_owning_catch;
 })($ || ($ = {}));
 //owning.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $mol_atom2_1;
+    function $mol_atom2_value(task) {
+        const cached = $mol_atom2.cached;
+        try {
+            $mol_atom2.cached = true;
+            return task();
+        }
+        finally {
+            $mol_atom2.cached = cached;
+        }
+    }
+    $.$mol_atom2_value = $mol_atom2_value;
+    let $mol_atom2 = $mol_atom2_1 = class $mol_atom2 extends $.$mol_fiber {
+        constructor() {
+            super(...arguments);
+            this.slaves = [];
+            this._value = undefined;
+            this._error = null;
+        }
+        static get current() {
+            const atom = $.$mol_fiber.current;
+            if (atom instanceof $mol_atom2_1)
+                return atom;
+            return null;
+        }
+        static reap(atom) {
+            this.reap_queue.push(atom);
+            if (this.reap_task)
+                return;
+            this.reap_task = $.$mol_fiber_defer(() => {
+                this.reap_task = null;
+                while (true) {
+                    const atom = this.reap_queue.pop();
+                    if (!atom)
+                        break;
+                    if (!atom.alone)
+                        continue;
+                    atom.destructor();
+                }
+            });
+        }
+        rescue(master, cursor) {
+            if (!(master instanceof $mol_atom2_1))
+                return;
+            const master_index = this.masters.length;
+            const slave_index = this.masters[cursor + 1] + 1;
+            master.slaves[slave_index] = master_index;
+            this.masters.push(master, this.masters[cursor + 1]);
+        }
+        get() {
+            if ($mol_atom2_1.cached)
+                return this.value;
+            const value = super.get();
+            if (value === undefined)
+                $.$mol_fail(new Error(`Not defined: ${this}`));
+            return value;
+        }
+        pull() {
+            if (this.cursor === 0)
+                return super.pull();
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_revalidation);
+            const masters = this.masters;
+            for (let index = 0; index < masters.length; index += 2) {
+                const master = masters[index];
+                if (!master)
+                    continue;
+                try {
+                    master.get();
+                }
+                catch (error) {
+                    if ('then' in error)
+                        $.$mol_fail_hidden(error);
+                    this.cursor = 0;
+                }
+                if (this.cursor !== 0)
+                    continue;
+                this.$.$mol_log2.info(this, $.$mol_atom2_token_stumbled, this._error || this._value);
+                return super.pull();
+            }
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_revalidated, this._error || this._value);
+            this.cursor = -2;
+            return this.value;
+        }
+        get value() { return this._value; }
+        set value(next) {
+            const prev = this._value;
+            if (prev && this.$.$mol_owning_check(this, prev))
+                prev.destructor();
+            if (next && this.$.$mol_owning_catch(this, next)) {
+                next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                next[$.$mol_object_field] = this[$.$mol_object_field];
+            }
+            this._value = next;
+        }
+        get error() { return this._error; }
+        set error(next) {
+            const prev = this._error;
+            if (prev && this.$.$mol_owning_check(this, prev))
+                prev.destructor();
+            if (next && this.$.$mol_owning_catch(this, next)) {
+                next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                next[$.$mol_object_field] = this[$.$mol_object_field];
+            }
+            this._error = next;
+        }
+        put(next) {
+            this.cursor = this.masters.length;
+            next = this.push(next);
+            this.cursor = -3;
+            return next;
+        }
+        complete_master(master_index) {
+            if (this.masters[master_index] instanceof $mol_atom2_1) {
+                if (master_index >= this.cursor)
+                    this.disobey(master_index);
+            }
+            else {
+                this.disobey(master_index);
+            }
+        }
+        obey(master, master_index) {
+            return master.lead(this, master_index);
+        }
+        lead(slave, master_index) {
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_leaded, slave);
+            const slave_index = this.slaves.length;
+            this.slaves[slave_index] = slave;
+            this.slaves[slave_index + 1] = master_index;
+            return slave_index;
+        }
+        dislead(slave_index) {
+            if (slave_index < 0)
+                return;
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_disleaded, this.slaves[slave_index]);
+            this.slaves[slave_index] = undefined;
+            this.slaves[slave_index + 1] = undefined;
+            $.$mol_array_trim(this.slaves);
+            if (this.cursor > -3 && this.alone)
+                $mol_atom2_1.reap(this);
+        }
+        obsolete(master_index = -1) {
+            if (this.cursor > 0) {
+                if (master_index >= this.cursor - 2)
+                    return;
+                const path = [];
+                let current = this;
+                collect: while (current) {
+                    path.push(current);
+                    current = current.masters[current.cursor - 2];
+                }
+                this.$.$mol_fail(new Error(`Obsoleted while calculation \n\n${path.join('\n')}\n`));
+            }
+            if (this.cursor === 0)
+                return;
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_obsoleted, this._error || this._value);
+            if (this.cursor !== -1)
+                this.doubt_slaves();
+            this.cursor = 0;
+        }
+        doubt(master_index = -1) {
+            if (this.cursor > 0) {
+                if (master_index >= this.cursor - 2)
+                    return;
+                const path = [];
+                let current = this;
+                collect: while (current) {
+                    path.push(current);
+                    current = current.masters[current.cursor - 2];
+                }
+                this.$.$mol_fail(new Error(`Doubted while calculation \n\n${path.join('\n')}\n`));
+            }
+            if (this.cursor >= -1)
+                return;
+            this.$.$mol_log2.info(this, $.$mol_atom2_token_doubted, this._error || this._value);
+            this.cursor = -1;
+            this.doubt_slaves();
+        }
+        obsolete_slaves() {
+            for (let index = 0; index < this.slaves.length; index += 2) {
+                const slave = this.slaves[index];
+                if (slave)
+                    slave.obsolete(this.slaves[index + 1]);
+            }
+        }
+        doubt_slaves() {
+            for (let index = 0; index < this.slaves.length; index += 2) {
+                const slave = this.slaves[index];
+                if (slave)
+                    slave.doubt(this.slaves[index + 1]);
+            }
+        }
+        get fresh() {
+            return $.$mol_log2_hidden.func(() => {
+                if (this.cursor !== -2)
+                    return;
+                this.cursor = 0;
+                $.$mol_fiber_solid.run(() => this.update());
+            });
+        }
+        get alone() {
+            return this.slaves.length === 0;
+        }
+        get derived() {
+            for (let index = 0; index < this.masters.length; index += 2) {
+                if (this.masters[index])
+                    return true;
+            }
+            return false;
+        }
+        destructor() {
+            if (!this.abort())
+                return;
+            this.$.$mol_log2.info(this, $.$mol_fiber_token_destructed);
+            this.cursor = -3;
+            for (let index = 0; index < this.masters.length; index += 2) {
+                this.complete_master(index);
+            }
+        }
+    };
+    $mol_atom2.cached = false;
+    $mol_atom2.reap_task = null;
+    $mol_atom2.reap_queue = [];
+    __decorate([
+        $.$mol_log2_indent.method
+    ], $mol_atom2.prototype, "obsolete_slaves", null);
+    __decorate([
+        $.$mol_log2_indent.method
+    ], $mol_atom2.prototype, "doubt_slaves", null);
+    $mol_atom2 = $mol_atom2_1 = __decorate([
+        $.$mol_class
+    ], $mol_atom2);
+    $.$mol_atom2 = $mol_atom2;
+    $.$mol_atom2_token_revalidation = new $.$mol_log2_token(' ⏭ ');
+    $.$mol_atom2_token_stumbled = new $.$mol_log2_token(' ⏯ ');
+    $.$mol_atom2_token_revalidated = new $.$mol_log2_token(' ✔ ');
+    $.$mol_atom2_token_leaded = new $.$mol_log2_token(' ☍ ');
+    $.$mol_atom2_token_disleaded = new $.$mol_log2_token(' ☌ ');
+    $.$mol_atom2_token_obsoleted = new $.$mol_log2_token(' ✘ ');
+    $.$mol_atom2_token_doubted = new $.$mol_log2_token(' � ');
+    $.$mol_log2_legend.info($.$mol_atom2_token_revalidation, '$mol_atom2 starts masters cheking for changes');
+    $.$mol_log2_legend.info($.$mol_atom2_token_stumbled, '$mol_atom2 is obsoleted while masters checking');
+    $.$mol_log2_legend.info($.$mol_atom2_token_revalidated, '$mol_atom2 is actual becasue there is no changed masters');
+    $.$mol_log2_legend.info($.$mol_atom2_token_leaded, '$mol_atom2 leads some slave');
+    $.$mol_log2_legend.info($.$mol_atom2_token_disleaded, '$mol_atom2 disleads some slave');
+    $.$mol_log2_legend.info($.$mol_atom2_token_obsoleted, '$mol_atom2 is obsoleted because some master is changed');
+    $.$mol_log2_legend.info($.$mol_atom2_token_doubted, '$mol_atom2 is doubted because some master is doubted or obsoleted');
+})($ || ($ = {}));
+//atom2.js.map
 ;
 "use strict";
 var $;
@@ -1971,254 +2250,15 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var $mol_atom2_1;
-    function $mol_atom2_value(task) {
-        const cached = $mol_atom2.cached;
-        try {
-            $mol_atom2.cached = true;
-            return task();
-        }
-        finally {
-            $mol_atom2.cached = cached;
-        }
+    function $mol_const(value) {
+        var getter = (() => value);
+        getter['()'] = value;
+        getter[Symbol.toStringTag] = value;
+        return getter;
     }
-    $.$mol_atom2_value = $mol_atom2_value;
-    let $mol_atom2 = $mol_atom2_1 = class $mol_atom2 extends $.$mol_fiber {
-        constructor() {
-            super(...arguments);
-            this.slaves = [];
-            this._value = undefined;
-            this._error = null;
-        }
-        static get current() {
-            const atom = $.$mol_fiber.current;
-            if (atom instanceof $mol_atom2_1)
-                return atom;
-            return null;
-        }
-        static reap(atom) {
-            this.reap_queue.push(atom);
-            if (this.reap_task)
-                return;
-            this.reap_task = $.$mol_fiber_defer(() => {
-                this.reap_task = null;
-                while (true) {
-                    const atom = this.reap_queue.pop();
-                    if (!atom)
-                        break;
-                    if (!atom.alone)
-                        continue;
-                    atom.destructor();
-                }
-            });
-        }
-        rescue(master, cursor) {
-            if (!(master instanceof $mol_atom2_1))
-                return;
-            const master_index = this.masters.length;
-            const slave_index = this.masters[cursor + 1] + 1;
-            master.slaves[slave_index] = master_index;
-            this.masters.push(master, this.masters[cursor + 1]);
-        }
-        get() {
-            if ($mol_atom2_1.cached)
-                return this.value;
-            const value = super.get();
-            if (value === undefined)
-                $.$mol_fail(new Error(`Not defined: ${this}`));
-            return value;
-        }
-        pull() {
-            if (this.cursor === 0)
-                return super.pull();
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_revalidation);
-            const masters = this.masters;
-            for (let index = 0; index < masters.length; index += 2) {
-                const master = masters[index];
-                if (!master)
-                    continue;
-                try {
-                    master.get();
-                }
-                catch (error) {
-                    if ('then' in error)
-                        $.$mol_fail_hidden(error);
-                    this.cursor = 0;
-                }
-                if (this.cursor !== 0)
-                    continue;
-                this.$.$mol_log2.info(this, $.$mol_atom2_token_stumbled, this._error || this._value);
-                return super.pull();
-            }
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_revalidated, this._error || this._value);
-            this.cursor = -2;
-            return this.value;
-        }
-        get value() { return this._value; }
-        set value(next) {
-            const prev = this._value;
-            if (prev && this.$.$mol_owning_check(this, prev))
-                prev.destructor();
-            if (next && this.$.$mol_owning_catch(this, next)) {
-                next[Symbol.toStringTag] = this[Symbol.toStringTag];
-                next[$.$mol_object_field] = this[$.$mol_object_field];
-            }
-            this._value = next;
-        }
-        get error() { return this._error; }
-        set error(next) {
-            const prev = this._error;
-            if (prev && this.$.$mol_owning_check(this, prev))
-                prev.destructor();
-            if (next && this.$.$mol_owning_catch(this, next)) {
-                next[Symbol.toStringTag] = this[Symbol.toStringTag];
-                next[$.$mol_object_field] = this[$.$mol_object_field];
-            }
-            this._error = next;
-        }
-        put(next) {
-            this.cursor = this.masters.length;
-            next = this.push(next);
-            this.cursor = -3;
-            return next;
-        }
-        complete_master(master_index) {
-            if (this.masters[master_index] instanceof $mol_atom2_1) {
-                if (master_index >= this.cursor)
-                    this.disobey(master_index);
-            }
-            else {
-                this.disobey(master_index);
-            }
-        }
-        obey(master, master_index) {
-            return master.lead(this, master_index);
-        }
-        lead(slave, master_index) {
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_leaded, slave);
-            const slave_index = this.slaves.length;
-            this.slaves[slave_index] = slave;
-            this.slaves[slave_index + 1] = master_index;
-            return slave_index;
-        }
-        dislead(slave_index) {
-            if (slave_index < 0)
-                return;
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_disleaded, this.slaves[slave_index]);
-            this.slaves[slave_index] = undefined;
-            this.slaves[slave_index + 1] = undefined;
-            $.$mol_array_trim(this.slaves);
-            if (this.cursor > -3 && this.alone)
-                $mol_atom2_1.reap(this);
-        }
-        obsolete(master_index = -1) {
-            if (this.cursor > 0) {
-                if (master_index >= this.cursor - 2)
-                    return;
-                const path = [];
-                let current = this;
-                collect: while (current) {
-                    path.push(current);
-                    current = current.masters[current.cursor - 2];
-                }
-                this.$.$mol_fail(new Error(`Obsoleted while calculation \n\n${path.join('\n')}\n`));
-            }
-            if (this.cursor === 0)
-                return;
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_obsoleted, this._error || this._value);
-            if (this.cursor !== -1)
-                this.doubt_slaves();
-            this.cursor = 0;
-        }
-        doubt(master_index = -1) {
-            if (this.cursor > 0) {
-                if (master_index >= this.cursor - 2)
-                    return;
-                const path = [];
-                let current = this;
-                collect: while (current) {
-                    path.push(current);
-                    current = current.masters[current.cursor - 2];
-                }
-                this.$.$mol_fail(new Error(`Doubted while calculation \n\n${path.join('\n')}\n`));
-            }
-            if (this.cursor >= -1)
-                return;
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_doubted, this._error || this._value);
-            this.cursor = -1;
-            this.doubt_slaves();
-        }
-        obsolete_slaves() {
-            for (let index = 0; index < this.slaves.length; index += 2) {
-                const slave = this.slaves[index];
-                if (slave)
-                    slave.obsolete(this.slaves[index + 1]);
-            }
-        }
-        doubt_slaves() {
-            for (let index = 0; index < this.slaves.length; index += 2) {
-                const slave = this.slaves[index];
-                if (slave)
-                    slave.doubt(this.slaves[index + 1]);
-            }
-        }
-        get fresh() {
-            return $.$mol_log2_hidden.func(() => {
-                if (this.cursor !== -2)
-                    return;
-                this.cursor = 0;
-                $.$mol_fiber_solid.run(() => this.update());
-            });
-        }
-        get alone() {
-            return this.slaves.length === 0;
-        }
-        get derived() {
-            for (let index = 0; index < this.masters.length; index += 2) {
-                if (this.masters[index])
-                    return true;
-            }
-            return false;
-        }
-        destructor() {
-            if (!this.abort())
-                return;
-            this.$.$mol_log2.info(this, $.$mol_fiber_token_destructed);
-            this.cursor = -3;
-            for (let index = 0; index < this.masters.length; index += 2) {
-                this.complete_master(index);
-            }
-        }
-    };
-    $mol_atom2.cached = false;
-    $mol_atom2.reap_task = null;
-    $mol_atom2.reap_queue = [];
-    __decorate([
-        $.$mol_log2_indent.method
-    ], $mol_atom2.prototype, "obsolete_slaves", null);
-    __decorate([
-        $.$mol_log2_indent.method
-    ], $mol_atom2.prototype, "doubt_slaves", null);
-    $mol_atom2 = $mol_atom2_1 = __decorate([
-        $.$mol_class
-    ], $mol_atom2);
-    $.$mol_atom2 = $mol_atom2;
-    $.$mol_atom2_token_revalidation = new $.$mol_log2_token(' ⏭ ');
-    $.$mol_atom2_token_stumbled = new $.$mol_log2_token(' ⏯ ');
-    $.$mol_atom2_token_revalidated = new $.$mol_log2_token(' ✔ ');
-    $.$mol_atom2_token_leaded = new $.$mol_log2_token(' ☍ ');
-    $.$mol_atom2_token_disleaded = new $.$mol_log2_token(' ☌ ');
-    $.$mol_atom2_token_obsoleted = new $.$mol_log2_token(' ✘ ');
-    $.$mol_atom2_token_doubted = new $.$mol_log2_token(' � ');
-    $.$mol_log2_legend.info($.$mol_atom2_token_revalidation, '$mol_atom2 starts masters cheking for changes');
-    $.$mol_log2_legend.info($.$mol_atom2_token_stumbled, '$mol_atom2 is obsoleted while masters checking');
-    $.$mol_log2_legend.info($.$mol_atom2_token_revalidated, '$mol_atom2 is actual becasue there is no changed masters');
-    $.$mol_log2_legend.info($.$mol_atom2_token_leaded, '$mol_atom2 leads some slave');
-    $.$mol_log2_legend.info($.$mol_atom2_token_disleaded, '$mol_atom2 disleads some slave');
-    $.$mol_log2_legend.info($.$mol_atom2_token_obsoleted, '$mol_atom2 is obsoleted because some master is changed');
-    $.$mol_log2_legend.info($.$mol_atom2_token_doubted, '$mol_atom2 is doubted because some master is doubted or obsoleted');
+    $.$mol_const = $mol_const;
 })($ || ($ = {}));
-//atom2.js.map
+//const.js.map
 ;
 "use strict";
 var $;
@@ -2232,19 +2272,6 @@ var $;
     });
 })($ || ($ = {}));
 //const.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_const(value) {
-        var getter = (() => value);
-        getter['()'] = value;
-        getter[Symbol.toStringTag] = value;
-        return getter;
-    }
-    $.$mol_const = $mol_const;
-})($ || ($ = {}));
-//const.js.map
 ;
 "use strict";
 var $;
@@ -2285,25 +2312,6 @@ var $;
     $.$mol_atom2_field = $mol_atom2_field;
 })($ || ($ = {}));
 //field.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'init with overload'() {
-            class X extends $.$mol_object {
-                foo() {
-                    return 1;
-                }
-            }
-            var x = X.make({
-                foo: () => 2,
-            });
-            $.$mol_assert_equal(x.foo(), 2);
-        },
-    });
-})($ || ($ = {}));
-//object.test.js.map
 ;
 "use strict";
 var $;
@@ -2355,6 +2363,25 @@ var $;
     $mol_object.prototype[Symbol.toStringTag] = '$mol_object.make()';
 })($ || ($ = {}));
 //object.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'init with overload'() {
+            class X extends $.$mol_object {
+                foo() {
+                    return 1;
+                }
+            }
+            var x = X.make({
+                foo: () => 2,
+            });
+            $.$mol_assert_equal(x.foo(), 2);
+        },
+    });
+})($ || ($ = {}));
+//object.test.js.map
 ;
 "use strict";
 var $;
@@ -2411,33 +2438,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let $mol_mem_force = class $mol_mem_force extends Object {
-        constructor() {
-            super();
-            this.$mol_mem_force = true;
-        }
-        static toString() { return this.name; }
-    };
-    $mol_mem_force.$mol_mem_force = true;
-    $mol_mem_force = __decorate([
-        $.$mol_class
-    ], $mol_mem_force);
-    $.$mol_mem_force = $mol_mem_force;
-    class $mol_mem_force_cache extends $mol_mem_force {
-    }
-    $.$mol_mem_force_cache = $mol_mem_force_cache;
-    class $mol_mem_force_update extends $mol_mem_force {
-    }
-    $.$mol_mem_force_update = $mol_mem_force_update;
-    class $mol_mem_force_fail extends $mol_mem_force_cache {
-    }
-    $.$mol_mem_force_fail = $mol_mem_force_fail;
-})($ || ($ = {}));
-//force.js.map
-;
-"use strict";
-var $;
-(function ($) {
     console.warn('$mol_atom_wait is deprecated. Use $mol_fiber_sync instead.');
     class $mol_atom_wait extends Promise {
         constructor(message = 'Wait...') {
@@ -2449,6 +2449,59 @@ var $;
     $mol_atom_wait.prototype.constructor = Promise;
 })($ || ($ = {}));
 //wait.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_mem(proto, name, descr) {
+        const value = descr.value;
+        const store = new WeakMap();
+        Object.defineProperty(proto, name + "()", {
+            get: function () {
+                return store.get(this);
+            }
+        });
+        const get_cache = (host) => {
+            let cache = store.get(host);
+            if (cache)
+                return cache;
+            let cache2 = new $.$mol_atom2;
+            cache2.calculate = value.bind(host);
+            cache2[Symbol.toStringTag] = `${host}.${name}()`;
+            cache2.abort = () => {
+                store.delete(host);
+                cache2.forget();
+                return true;
+            };
+            $.$mol_owning_catch(host, cache2);
+            cache2[$.$mol_object_field] = name;
+            store.set(host, cache2);
+            return cache2;
+        };
+        return {
+            value(next, force) {
+                if (next === undefined) {
+                    const cache = get_cache(this);
+                    if (force === $.$mol_mem_force_cache)
+                        cache.obsolete(Number.NaN);
+                    if ($.$mol_atom2.current)
+                        return cache.get();
+                    else
+                        return $.$mol_fiber.run(() => cache.get());
+                }
+                return $.$mol_fiber.run(() => {
+                    if (force === $.$mol_mem_force_fail)
+                        return get_cache(this).fail(next);
+                    if (force !== $.$mol_mem_force_cache)
+                        next = value.call(this, next);
+                    return get_cache(this).put(next);
+                });
+            }
+        };
+    }
+    $.$mol_mem = $mol_mem;
+})($ || ($ = {}));
+//mem.js.map
 ;
 "use strict";
 var $;
@@ -2569,55 +2622,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_mem(proto, name, descr) {
-        const value = descr.value;
-        const store = new WeakMap();
-        Object.defineProperty(proto, name + "()", {
-            get: function () {
-                return store.get(this);
-            }
+    function $mol_atom2_autorun(calculate) {
+        return $.$mol_atom2.make(atom => {
+            atom.calculate = calculate;
+            atom.obsolete_slaves = atom.schedule;
+            atom.doubt_slaves = atom.schedule;
+            atom[Symbol.toStringTag] = calculate[Symbol.toStringTag] || calculate.name || '$mol_atom2_autorun';
+            atom.schedule();
         });
-        const get_cache = (host) => {
-            let cache = store.get(host);
-            if (cache)
-                return cache;
-            let cache2 = new $.$mol_atom2;
-            cache2.calculate = value.bind(host);
-            cache2[Symbol.toStringTag] = `${host}.${name}()`;
-            cache2.abort = () => {
-                store.delete(host);
-                cache2.forget();
-                return true;
-            };
-            $.$mol_owning_catch(host, cache2);
-            cache2[$.$mol_object_field] = name;
-            store.set(host, cache2);
-            return cache2;
-        };
-        return {
-            value(next, force) {
-                if (next === undefined) {
-                    const cache = get_cache(this);
-                    if (force === $.$mol_mem_force_cache)
-                        cache.obsolete(Number.NaN);
-                    if ($.$mol_atom2.current)
-                        return cache.get();
-                    else
-                        return $.$mol_fiber.run(() => cache.get());
-                }
-                return $.$mol_fiber.run(() => {
-                    if (force === $.$mol_mem_force_fail)
-                        return get_cache(this).fail(next);
-                    if (force !== $.$mol_mem_force_cache)
-                        next = value.call(this, next);
-                    return get_cache(this).put(next);
-                });
-            }
-        };
     }
-    $.$mol_mem = $mol_mem;
+    $.$mol_atom2_autorun = $mol_atom2_autorun;
 })($ || ($ = {}));
-//mem.js.map
+//autorun.js.map
 ;
 "use strict";
 var $;
@@ -2658,22 +2674,6 @@ var $;
     });
 })($ || ($ = {}));
 //autorun.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_atom2_autorun(calculate) {
-        return $.$mol_atom2.make(atom => {
-            atom.calculate = calculate;
-            atom.obsolete_slaves = atom.schedule;
-            atom.doubt_slaves = atom.schedule;
-            atom[Symbol.toStringTag] = calculate[Symbol.toStringTag] || calculate.name || '$mol_atom2_autorun';
-            atom.schedule();
-        });
-    }
-    $.$mol_atom2_autorun = $mol_atom2_autorun;
-})($ || ($ = {}));
-//autorun.js.map
 ;
 "use strict";
 var $;
@@ -2777,10 +2777,104 @@ var $;
 //view.test.js.map
 ;
 "use strict";
+//equals.js.map
+;
+"use strict";
 //equals.test.js.map
 ;
 "use strict";
-//equals.js.map
+var $;
+(function ($) {
+    const a_stack = [];
+    const b_stack = [];
+    let cache = null;
+    function $mol_compare_deep(a, b) {
+        if (Object.is(a, b))
+            return true;
+        const a_type = typeof a;
+        const b_type = typeof b;
+        if (a_type !== b_type)
+            return false;
+        if (a_type === 'function')
+            return String(a) === String(b);
+        if (a_type !== 'object')
+            return false;
+        if (!a || !b)
+            return false;
+        if (a instanceof Error)
+            return false;
+        if (a['constructor'] !== b['constructor'])
+            return false;
+        if (a instanceof RegExp)
+            return Object.is(String(a), String(b));
+        const ref = a_stack.indexOf(a);
+        if (ref >= 0) {
+            return Object.is(b_stack[ref], b);
+        }
+        if (!cache)
+            cache = new WeakMap;
+        let a_cache = cache.get(a);
+        if (a_cache) {
+            const b_cache = a_cache.get(b);
+            if (typeof b_cache === 'boolean')
+                return b_cache;
+        }
+        else {
+            a_cache = new WeakMap();
+            cache.set(a, a_cache);
+        }
+        a_stack.push(a);
+        b_stack.push(b);
+        let result;
+        try {
+            if (a[Symbol.iterator]) {
+                const a_iter = a[Symbol.iterator]();
+                const b_iter = b[Symbol.iterator]();
+                while (true) {
+                    const a_next = a_iter.next();
+                    const b_next = b_iter.next();
+                    if (a_next.done !== a_next.done)
+                        return result = false;
+                    if (a_next.done)
+                        break;
+                    if (!$mol_compare_deep(a_next.value, b_next.value))
+                        return result = false;
+                }
+                return result = true;
+            }
+            let count = 0;
+            for (let key in a) {
+                if (!$mol_compare_deep(a[key], b[key]))
+                    return result = false;
+                ++count;
+            }
+            for (let key in b) {
+                --count;
+                if (count < 0)
+                    return result = false;
+            }
+            const a_val = a['valueOf']();
+            if (Object.is(a_val, a))
+                return result = true;
+            const b_val = b['valueOf']();
+            if (!Object.is(a_val, b_val))
+                return result = false;
+            return result = true;
+        }
+        finally {
+            a_stack.pop();
+            b_stack.pop();
+            if (a_stack.length === 0) {
+                cache = null;
+            }
+            else {
+                a_cache.set(b, result);
+            }
+        }
+    }
+    $.$mol_compare_deep = $mol_compare_deep;
+})($ || ($ = {}));
+//deep.js.map
 ;
 "use strict";
 var $;
@@ -2903,99 +2997,5 @@ var $;
     });
 })($ || ($ = {}));
 //deep.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    const a_stack = [];
-    const b_stack = [];
-    let cache = null;
-    function $mol_compare_deep(a, b) {
-        if (Object.is(a, b))
-            return true;
-        const a_type = typeof a;
-        const b_type = typeof b;
-        if (a_type !== b_type)
-            return false;
-        if (a_type === 'function')
-            return String(a) === String(b);
-        if (a_type !== 'object')
-            return false;
-        if (!a || !b)
-            return false;
-        if (a instanceof Error)
-            return false;
-        if (a['constructor'] !== b['constructor'])
-            return false;
-        if (a instanceof RegExp)
-            return Object.is(String(a), String(b));
-        const ref = a_stack.indexOf(a);
-        if (ref >= 0) {
-            return Object.is(b_stack[ref], b);
-        }
-        if (!cache)
-            cache = new WeakMap;
-        let a_cache = cache.get(a);
-        if (a_cache) {
-            const b_cache = a_cache.get(b);
-            if (typeof b_cache === 'boolean')
-                return b_cache;
-        }
-        else {
-            a_cache = new WeakMap();
-            cache.set(a, a_cache);
-        }
-        a_stack.push(a);
-        b_stack.push(b);
-        let result;
-        try {
-            if (a[Symbol.iterator]) {
-                const a_iter = a[Symbol.iterator]();
-                const b_iter = b[Symbol.iterator]();
-                while (true) {
-                    const a_next = a_iter.next();
-                    const b_next = b_iter.next();
-                    if (a_next.done !== a_next.done)
-                        return result = false;
-                    if (a_next.done)
-                        break;
-                    if (!$mol_compare_deep(a_next.value, b_next.value))
-                        return result = false;
-                }
-                return result = true;
-            }
-            let count = 0;
-            for (let key in a) {
-                if (!$mol_compare_deep(a[key], b[key]))
-                    return result = false;
-                ++count;
-            }
-            for (let key in b) {
-                --count;
-                if (count < 0)
-                    return result = false;
-            }
-            const a_val = a['valueOf']();
-            if (Object.is(a_val, a))
-                return result = true;
-            const b_val = b['valueOf']();
-            if (!Object.is(a_val, b_val))
-                return result = false;
-            return result = true;
-        }
-        finally {
-            a_stack.pop();
-            b_stack.pop();
-            if (a_stack.length === 0) {
-                cache = null;
-            }
-            else {
-                a_cache.set(b, result);
-            }
-        }
-    }
-    $.$mol_compare_deep = $mol_compare_deep;
-})($ || ($ = {}));
-//deep.js.map
 
 //# sourceMappingURL=web.test.js.map

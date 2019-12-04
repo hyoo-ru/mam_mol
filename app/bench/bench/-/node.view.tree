@@ -1,3 +1,65 @@
+$mol_app_bench $mol_view
+	sub /
+		<= Sandbox_page $mol_page
+			title <= sandbox_title @ \Sandbox
+			Body <= Sandbox $mol_scroll
+				dom_name \iframe
+		<= Main_page $mol_page
+			title <= title
+			body /
+				<= Inform $mol_view sub /
+					<= Descr_scroll $mol_scroll
+						sub /
+							<= Descr $mol_text
+								text <= description \
+					<= Param_fields $mol_row
+						sub <= param_fields /
+					<= Result $mol_bench
+						result <= result null
+						col_head_title!id
+							<= result_col_title!id \
+						col_sort?val <=> result_col_sort?val \
+		<= Addon_page $mol_page
+			title <= addon_title @ \Samples
+			body /
+				<= Filter $mol_search
+					query?val <=> filter?val \
+				<= Menu $mol_list
+					rows <= menu_options /
+	-
+	Menu_option!id $mol_check_box
+		minimal_height 36
+		checked?val <=> menu_option_checked!id?val false
+		title <= sample_title!id \
+	-
+	Param!id $mol_labeler
+		title <= param_title!id \
+		content /
+			<= Param_value!id $mol_number
+				value?val <=> param_value!id?val \
+				precision_change <= param_precision!id 0
+				debounce 1000
+	-
+	result_col_title_sample @ \Sample
+
+$mol_page $mol_view
+	sub /
+		<= Head $mol_view
+			attr * mol_theme \$mol_theme_base
+			sub <= head /
+				<= Title $mol_button
+					sub /
+						<= title
+					event_click?val <=> event_top?val null
+				<= Tools $mol_view
+					sub <= tools /$mol_view_content
+		<= Body $mol_scroll
+			scroll_top?val <=> body_scroll_top?val 0
+			sub <= body /$mol_view_content
+		<= Foot $mol_view
+			attr * mol_theme \$mol_theme_base
+			sub <= foot /$mol_view
+
 $mol_button $mol_view
 	enabled true
 	minimal_height 40
@@ -39,176 +101,6 @@ $mol_scroll $mol_view
 	Strut $mol_view
 		style *
 			transform <= strut_transform \
-
-$mol_page $mol_view
-	sub /
-		<= Head $mol_view
-			attr * mol_theme \$mol_theme_base
-			sub <= head /
-				<= Title $mol_button
-					sub /
-						<= title
-					event_click?val <=> event_top?val null
-				<= Tools $mol_view
-					sub <= tools /$mol_view_content
-		<= Body $mol_scroll
-			scroll_top?val <=> body_scroll_top?val 0
-			sub <= body /$mol_view_content
-		<= Foot $mol_view
-			attr * mol_theme \$mol_theme_base
-			sub <= foot /$mol_view
-
-$mol_list $mol_view
-	sub <= rows /$mol_view
-	Empty null
-
-$mol_float $mol_view
-
-$mol_check $mol_button_minor
-	attr *
-		^
-		mol_check_checked <= checked?val false
-		aria-checked <= checked?val false
-		role \checkbox
-	sub /
-		<= Icon null
-		<= label /
-			<= Title $mol_view
-				sub /
-					<= title \
-
-$mol_svg $mol_view
-	dom_name \svg
-	dom_name_space \http://www.w3.org/2000/svg
-	text_width?text 0
-	font_size 16
-	font_family \
-
-$mol_svg_root $mol_svg
-	dom_name \svg
-	attr *
-		^
-		viewBox <= view_box \0 0 100 100
-		preserveAspectRatio <= aspect \xMidYMid
-
-$mol_svg_path $mol_svg
-	dom_name \path
-	attr *
-		^
-		d <= geometry \
-
-
-$mol_icon $mol_svg_root
-	view_box \0 0 24 24
-	minimal_width 16
-	minimal_height 16
-	sub /
-		<= Path $mol_svg_path
-			geometry <= path \
-
-$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
-
-$mol_check_box $mol_check
-	Icon $mol_icon_tick
-
-$mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
-
-$mol_check_expand $mol_check
-	minimal_height 32
-	Icon $mol_icon_chevron
-	level 0
-	style *
-		^
-		paddingLeft <= level_style \0px
-	checked?val <=> expanded?val false
-	enabled <= expandable false
-
-$mol_dimmer $mol_view
-	haystack \
-	needle \
-	sub <= parts /$mol_view_content
-	Low!id $mol_view
-		sub /
-			<= string!id \
-
-$mol_grid $mol_scroll
-	row_ids /string[]
-	row_id!index null
-	col_ids /
-	records *
-	record!id null
-	hierarchy null
-	hierarchy_col \
-	-
-	sub /
-		<= Table $mol_grid_table
-			offset <= gap_top 0
-			sub <= rows_visible /$mol_view
-	rows /
-	Head $mol_grid_row
-		height <= row_height 40
-		cells <= head_cells /$mol_view
-	Row!id $mol_grid_row
-		height <= row_height 40
-		cells <= cells!id /$mol_view
-	-
-	Cell!id $mol_view
-	cell!id null
-	Cell_text!id $mol_grid_cell
-		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
-	Cell_number!id $mol_grid_number
-		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
-	Col_head!id $mol_float
-		dom_name \th
-		sub <= col_head_content!id /$mol_view_content
-	Cell_branch!id $mol_check_expand
-		level <= cell_level!id 0
-		label <= cell_content!id /$mol_view_content
-		expanded?val <=> cell_expanded!id?val false
-	Cell_content!id /
-		<= Cell_dimmer!id $mol_dimmer
-			needle <= needle \
-			haystack <= cell_value!id \
-
-$mol_grid_table $mol_view
-	dom_name \table
-	style *
-		^
-		top <= offset 0
-
-$mol_grid_gap $mol_view
-	style *
-		^
-		top <= offset 0
-
-$mol_grid_row $mol_view
-	dom_name \tr
-	style *
-		^
-		height <= height 40
-	sub <= cells /$mol_view
-
-$mol_grid_cell $mol_view
-	dom_name \td
-
-$mol_grid_number $mol_grid_cell
-
-$mol_link $mol_view
-	minimal_height 40
-	dom_name \a
-	attr *
-		^
-		href <= uri \
-		title <= hint \
-		target <= target \_self
-		download <= file_name \
-		mol_link_current <= current false
-	sub /$mol_view_content
-		<= title
-	arg *
-	event *
-		^
-		click?event <=> click?event <=> event_click?event null
 
 $mol_text $mol_list
 	uri_base \
@@ -273,24 +165,161 @@ $mol_text_image $mol_view
 	sub /
 		<= title?val \
 
+$mol_list $mol_view
+	sub <= rows /$mol_view
+	Empty null
+
+$mol_grid $mol_scroll
+	row_ids /string[]
+	row_id!index null
+	col_ids /
+	records *
+	record!id null
+	hierarchy null
+	hierarchy_col \
+	-
+	sub /
+		<= Table $mol_grid_table
+			offset <= gap_top 0
+			sub <= rows_visible /$mol_view
+	rows /
+	Head $mol_grid_row
+		height <= row_height 40
+		cells <= head_cells /$mol_view
+	Row!id $mol_grid_row
+		height <= row_height 40
+		cells <= cells!id /$mol_view
+	-
+	Cell!id $mol_view
+	cell!id null
+	Cell_text!id $mol_grid_cell
+		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
+	Cell_number!id $mol_grid_number
+		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
+	Col_head!id $mol_float
+		dom_name \th
+		sub <= col_head_content!id /$mol_view_content
+	Cell_branch!id $mol_check_expand
+		level <= cell_level!id 0
+		label <= cell_content!id /$mol_view_content
+		expanded?val <=> cell_expanded!id?val false
+	Cell_content!id /
+		<= Cell_dimmer!id $mol_dimmer
+			needle <= needle \
+			haystack <= cell_value!id \
+
+$mol_grid_table $mol_view
+	dom_name \table
+	style *
+		^
+		top <= offset 0
+
+$mol_grid_gap $mol_view
+	style *
+		^
+		top <= offset 0
+
+$mol_grid_row $mol_view
+	dom_name \tr
+	style *
+		^
+		height <= height 40
+	sub <= cells /$mol_view
+
+$mol_grid_cell $mol_view
+	dom_name \td
+
+$mol_grid_number $mol_grid_cell
+
+$mol_float $mol_view
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked?val false
+		aria-checked <= checked?val false
+		role \checkbox
+	sub /
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_check_expand $mol_check
+	minimal_height 32
+	Icon $mol_icon_chevron
+	level 0
+	style *
+		^
+		paddingLeft <= level_style \0px
+	checked?val <=> expanded?val false
+	enabled <= expandable false
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	text_width?text 0
+	font_size 16
+	font_family \
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
+$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
+
+$mol_check_box $mol_check
+	Icon $mol_icon_tick
+
+$mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
+
+$mol_dimmer $mol_view
+	haystack \
+	needle \
+	sub <= parts /$mol_view_content
+	Low!id $mol_view
+		sub /
+			<= string!id \
+
+$mol_link $mol_view
+	minimal_height 40
+	dom_name \a
+	attr *
+		^
+		href <= uri \
+		title <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+	sub /$mol_view_content
+		<= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null
+
 $mol_row $mol_view
 
 $mol_row_sub $mol_view
-
-$mol_portion_indicator $mol_view
-	style *
-		^
-		width <= width_style \0
-
-$mol_portion $mol_view
-	portion 0
-	sub /
-		<= indicator $mol_portion_indicator
-			width_style <= indicator_width_style \0
-
-$mol_icon_sort $mol_icon path \M10,13V11H18V13H10M10,19V17H14V19H10M10,7V5H22V7H10M6,17H8.5L5,20.5L1.5,17H4V7H1.5L5,3.5L8.5,7H6V17Z
-
-$mol_icon_sort_asc $mol_icon path \M10,11V13H18V11H10M10,5V7H14V5H10M10,17V19H22V17H10M6,7H8.5L5,3.5L1.5,7H4V20H6V7Z
 
 $mol_bench $mol_grid
 	records <= result *
@@ -317,18 +346,74 @@ $mol_bench_head $mol_float
 		^
 		title <= hint @ \Click to sort by this column
 
+$mol_portion_indicator $mol_view
+	style *
+		^
+		width <= width_style \0
+
+$mol_portion $mol_view
+	portion 0
+	sub /
+		<= indicator $mol_portion_indicator
+			width_style <= indicator_width_style \0
+
+$mol_icon_sort $mol_icon path \M10,13V11H18V13H10M10,19V17H14V19H10M10,7V5H22V7H10M6,17H8.5L5,20.5L1.5,17H4V7H1.5L5,3.5L8.5,7H6V17Z
+
+$mol_icon_sort_asc $mol_icon path \M10,11V13H18V11H10M10,5V7H14V5H10M10,17V19H22V17H10M6,7H8.5L5,3.5L1.5,7H4V20H6V7Z
+
+$mol_search $mol_bar
+	query?val \
+	sub /
+		<= Suggest $mol_select
+			value?val <=> suggest_selected?val \
+			filter_pattern?val <=> suggest_selected?val \
+			hint <= hint @ \Search...
+			filter_pattern?val <=> query?val
+			options_showed <= suggests_showed false
+			options <= suggests /string
+			Trigger_icon null
+			debounce <= debounce 200
+		<= Clear $mol_button_minor
+			sub /
+				<= Clear_icon $mol_icon_cross
+			event_click?val <=> event_clear?val null
+
 $mol_bar $mol_view
 
-$mol_meter $mol_plugin
-	zoom 1
-	-
-	width?val 0
-	height?val 0
-	-
-	left?val 0
-	right?val 0
-	bottom?val 0
-	top?val 0
+$mol_select $mol_pop
+	dictionary *
+	options /string
+	value?val \
+	minimal_height 40
+	Option_row!id $mol_button_minor
+		event_click?event <=> event_select!id?event null
+		sub <= option_content!id /
+			<= Option_label!id $mol_dimmer
+				minimal_height 40
+				haystack <= option_label!id \
+				needle <= filter_pattern?val \
+	No_options $mol_view
+		sub /
+			<= no_options_message @ \No options
+	plugins /
+		^
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y?component <=> option_focused?component null
+			cycle?val <=> nav_cycle?val true
+	showed?val <=> options_showed?val false
+	Anchor <= Trigger $mol_button_minor
+		click?event <=> open?event null
+		sub <= trigger_content /$mol_view_content
+	bubble_content /
+		<= Menu $mol_list
+			rows <= menu_content /$mol_view
+	option_content_current /$mol_view_content
+	Filter $mol_string
+		value?val <=> filter_pattern?val \
+		hint <= filter_hint <= hint @ \Search..
+		debounce <= debounce 200
+	Trigger_icon $mol_icon_chevron
 
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
@@ -355,6 +440,17 @@ $mol_pop_bubble $mol_scroll
 		^
 		mol_pop_align <= align \
 		tabindex 0
+
+$mol_meter $mol_plugin
+	zoom 1
+	-
+	width?val 0
+	height?val 0
+	-
+	left?val 0
+	right?val 0
+	bottom?val 0
+	top?val 0
 
 $mol_nav $mol_plugin
 	cycle?val false
@@ -399,59 +495,7 @@ $mol_string $mol_view
 		input?event <=> event_change?event null
 		keydown?event <=> event_key_press?event null
 
-$mol_select $mol_pop
-	dictionary *
-	options /string
-	value?val \
-	minimal_height 40
-	Option_row!id $mol_button_minor
-		event_click?event <=> event_select!id?event null
-		sub <= option_content!id /
-			<= Option_label!id $mol_dimmer
-				minimal_height 40
-				haystack <= option_label!id \
-				needle <= filter_pattern?val \
-	No_options $mol_view
-		sub /
-			<= no_options_message @ \No options
-	plugins /
-		^
-		<= Nav $mol_nav
-			keys_y <= nav_components /$mol_view
-			current_y?component <=> option_focused?component null
-			cycle?val <=> nav_cycle?val true
-	showed?val <=> options_showed?val false
-	Anchor <= Trigger $mol_button_minor
-		click?event <=> open?event null
-		sub <= trigger_content /$mol_view_content
-	bubble_content /
-		<= Menu $mol_list
-			rows <= menu_content /$mol_view
-	option_content_current /$mol_view_content
-	Filter $mol_string
-		value?val <=> filter_pattern?val \
-		hint <= filter_hint <= hint @ \Search..
-		debounce <= debounce 200
-	Trigger_icon $mol_icon_chevron
-
 $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
-
-$mol_search $mol_bar
-	query?val \
-	sub /
-		<= Suggest $mol_select
-			value?val <=> suggest_selected?val \
-			filter_pattern?val <=> suggest_selected?val \
-			hint <= hint @ \Search...
-			filter_pattern?val <=> query?val
-			options_showed <= suggests_showed false
-			options <= suggests /string
-			Trigger_icon null
-			debounce <= debounce 200
-		<= Clear $mol_button_minor
-			sub /
-				<= Clear_icon $mol_icon_cross
-			event_click?val <=> event_clear?val null
 
 $mol_labeler $mol_view
 	sub /
@@ -460,10 +504,6 @@ $mol_labeler $mol_view
 				<= title
 		<= Content $mol_view
 			sub <= content /
-
-$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
-
-$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
 
 $mol_number $mol_view
 	precision_view <= precision 1
@@ -485,46 +525,6 @@ $mol_number $mol_view
 			enabled <= inc_enabled <= enabled true
 			sub / <= inc_icon $mol_icon_plus
 
-$mol_app_bench $mol_view
-	sub /
-		<= Sandbox_page $mol_page
-			title <= sandbox_title @ \Sandbox
-			Body <= Sandbox $mol_scroll
-				dom_name \iframe
-		<= Main_page $mol_page
-			title <= title
-			body /
-				<= Inform $mol_view sub /
-					<= Descr_scroll $mol_scroll
-						sub /
-							<= Descr $mol_text
-								text <= description \
-					<= Param_fields $mol_row
-						sub <= param_fields /
-					<= Result $mol_bench
-						result <= result null
-						col_head_title!id
-							<= result_col_title!id \
-						col_sort?val <=> result_col_sort?val \
-		<= Addon_page $mol_page
-			title <= addon_title @ \Samples
-			body /
-				<= Filter $mol_search
-					query?val <=> filter?val \
-				<= Menu $mol_list
-					rows <= menu_options /
-	-
-	Menu_option!id $mol_check_box
-		minimal_height 36
-		checked?val <=> menu_option_checked!id?val false
-		title <= sample_title!id \
-	-
-	Param!id $mol_labeler
-		title <= param_title!id \
-		content /
-			<= Param_value!id $mol_number
-				value?val <=> param_value!id?val \
-				precision_change <= param_precision!id 0
-				debounce 1000
-	-
-	result_col_title_sample @ \Sample
+$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
+
+$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z

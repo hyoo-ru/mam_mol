@@ -1,3 +1,60 @@
+$mol_app_report $mol_page
+	title @ \Pump #1337 - Technical passport
+	body /
+		<= descriptor $mol_view
+			sub / <= description \
+		<= tabler $mol_app_report_tabler
+			rows <= rows /
+				<= headRower $mol_app_report_rower
+					cells <= headCells /
+	rower!id $mol_app_report_rower
+		cells <= rowerCells!id /
+	cell!id $mol_app_report_cell
+		content <= cell_content!id null
+		rows <= cellrows!id 1
+		cols <= cellCols!id 1
+	texter!id $mol_view
+		sub / <= cell_value!id?val null
+	select!id $mol_select
+		value?val <=> cell_value!id?val null
+		dictionary <= cell_options!id *
+	number!id $mol_number
+		value?val <=> cell_value!id?val null
+
+$mol_app_report_tabler $mol_view
+	dom_name \table
+	sub <= rows /
+	
+$mol_app_report_rower $mol_view
+	dom_name \tr
+	sub <= cells /
+
+$mol_app_report_cell $mol_view
+	dom_name \td
+	attr *
+		^
+		colspan <= cols 1
+		rowspan <= rows 1
+	sub / <= content null
+
+$mol_page $mol_view
+	sub /
+		<= Head $mol_view
+			attr * mol_theme \$mol_theme_base
+			sub <= head /
+				<= Title $mol_button
+					sub /
+						<= title
+					event_click?val <=> event_top?val null
+				<= Tools $mol_view
+					sub <= tools /$mol_view_content
+		<= Body $mol_scroll
+			scroll_top?val <=> body_scroll_top?val 0
+			sub <= body /$mol_view_content
+		<= Foot $mol_view
+			attr * mol_theme \$mol_theme_base
+			sub <= foot /$mol_view
+
 $mol_button $mol_view
 	enabled true
 	minimal_height 40
@@ -40,34 +97,40 @@ $mol_scroll $mol_view
 		style *
 			transform <= strut_transform \
 
-$mol_page $mol_view
-	sub /
-		<= Head $mol_view
-			attr * mol_theme \$mol_theme_base
-			sub <= head /
-				<= Title $mol_button
-					sub /
-						<= title
-					event_click?val <=> event_top?val null
-				<= Tools $mol_view
-					sub <= tools /$mol_view_content
-		<= Body $mol_scroll
-			scroll_top?val <=> body_scroll_top?val 0
-			sub <= body /$mol_view_content
-		<= Foot $mol_view
-			attr * mol_theme \$mol_theme_base
-			sub <= foot /$mol_view
-
-$mol_meter $mol_plugin
-	zoom 1
-	-
-	width?val 0
-	height?val 0
-	-
-	left?val 0
-	right?val 0
-	bottom?val 0
-	top?val 0
+$mol_select $mol_pop
+	dictionary *
+	options /string
+	value?val \
+	minimal_height 40
+	Option_row!id $mol_button_minor
+		event_click?event <=> event_select!id?event null
+		sub <= option_content!id /
+			<= Option_label!id $mol_dimmer
+				minimal_height 40
+				haystack <= option_label!id \
+				needle <= filter_pattern?val \
+	No_options $mol_view
+		sub /
+			<= no_options_message @ \No options
+	plugins /
+		^
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y?component <=> option_focused?component null
+			cycle?val <=> nav_cycle?val true
+	showed?val <=> options_showed?val false
+	Anchor <= Trigger $mol_button_minor
+		click?event <=> open?event null
+		sub <= trigger_content /$mol_view_content
+	bubble_content /
+		<= Menu $mol_list
+			rows <= menu_content /$mol_view
+	option_content_current /$mol_view_content
+	Filter $mol_string
+		value?val <=> filter_pattern?val \
+		hint <= filter_hint <= hint @ \Search..
+		debounce <= debounce 200
+	Trigger_icon $mol_icon_chevron
 
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
@@ -94,6 +157,17 @@ $mol_pop_bubble $mol_scroll
 		^
 		mol_pop_align <= align \
 		tabindex 0
+
+$mol_meter $mol_plugin
+	zoom 1
+	-
+	width?val 0
+	height?val 0
+	-
+	left?val 0
+	right?val 0
+	bottom?val 0
+	top?val 0
 
 $mol_dimmer $mol_view
 	haystack \
@@ -181,45 +255,6 @@ $mol_icon $mol_svg_root
 
 $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 
-$mol_select $mol_pop
-	dictionary *
-	options /string
-	value?val \
-	minimal_height 40
-	Option_row!id $mol_button_minor
-		event_click?event <=> event_select!id?event null
-		sub <= option_content!id /
-			<= Option_label!id $mol_dimmer
-				minimal_height 40
-				haystack <= option_label!id \
-				needle <= filter_pattern?val \
-	No_options $mol_view
-		sub /
-			<= no_options_message @ \No options
-	plugins /
-		^
-		<= Nav $mol_nav
-			keys_y <= nav_components /$mol_view
-			current_y?component <=> option_focused?component null
-			cycle?val <=> nav_cycle?val true
-	showed?val <=> options_showed?val false
-	Anchor <= Trigger $mol_button_minor
-		click?event <=> open?event null
-		sub <= trigger_content /$mol_view_content
-	bubble_content /
-		<= Menu $mol_list
-			rows <= menu_content /$mol_view
-	option_content_current /$mol_view_content
-	Filter $mol_string
-		value?val <=> filter_pattern?val \
-		hint <= filter_hint <= hint @ \Search..
-		debounce <= debounce 200
-	Trigger_icon $mol_icon_chevron
-
-$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
-
-$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
-
 $mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
@@ -240,41 +275,6 @@ $mol_number $mol_view
 			enabled <= inc_enabled <= enabled true
 			sub / <= inc_icon $mol_icon_plus
 
-$mol_app_report $mol_page
-	title @ \Pump #1337 - Technical passport
-	body /
-		<= descriptor $mol_view
-			sub / <= description \
-		<= tabler $mol_app_report_tabler
-			rows <= rows /
-				<= headRower $mol_app_report_rower
-					cells <= headCells /
-	rower!id $mol_app_report_rower
-		cells <= rowerCells!id /
-	cell!id $mol_app_report_cell
-		content <= cell_content!id null
-		rows <= cellrows!id 1
-		cols <= cellCols!id 1
-	texter!id $mol_view
-		sub / <= cell_value!id?val null
-	select!id $mol_select
-		value?val <=> cell_value!id?val null
-		dictionary <= cell_options!id *
-	number!id $mol_number
-		value?val <=> cell_value!id?val null
+$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
 
-$mol_app_report_tabler $mol_view
-	dom_name \table
-	sub <= rows /
-	
-$mol_app_report_rower $mol_view
-	dom_name \tr
-	sub <= cells /
-
-$mol_app_report_cell $mol_view
-	dom_name \td
-	attr *
-		^
-		colspan <= cols 1
-		rowspan <= rows 1
-	sub / <= content null
+$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z

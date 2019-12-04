@@ -1,3 +1,12 @@
+$mol_app_hello $mol_view
+	sub /
+		<= Name $mol_string
+			hint <= name_hint \Name
+			value?val <=> name?val \
+		<= Greeting $mol_view
+			sub /
+				<= greeting \
+
 $mol_string $mol_view
 	dom_name \input
 	enabled true
@@ -19,12 +28,3 @@ $mol_string $mol_view
 		^
 		input?event <=> event_change?event null
 		keydown?event <=> event_key_press?event null
-
-$mol_app_hello $mol_view
-	sub /
-		<= Name $mol_string
-			hint <= name_hint \Name
-			value?val <=> name?val \
-		<= Greeting $mol_view
-			sub /
-				<= greeting \

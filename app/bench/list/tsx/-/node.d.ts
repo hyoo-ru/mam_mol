@@ -2,12 +2,6 @@ declare namespace $ { }
 export = $;
 
 declare namespace $ {
-    type $mol_type_partial_deep<Val> = {
-        [field in keyof Val]?: $mol_type_partial_deep<Val[field]>;
-    };
-}
-
-declare namespace $ {
     function $mol_fail(error: any): never;
 }
 
@@ -22,10 +16,22 @@ interface $node {
 declare var $node: $node;
 
 declare namespace $ {
+    var $mol_dom_context: Window & Pick<typeof globalThis, 'Node' | 'Element' | 'HTMLElement' | 'XMLHttpRequest' | 'DOMParser' | 'XMLSerializer'>;
 }
 
 declare namespace $ {
-    var $mol_dom_context: Window & Pick<typeof globalThis, 'Node' | 'Element' | 'HTMLElement' | 'XMLHttpRequest' | 'DOMParser' | 'XMLSerializer'>;
+}
+
+declare namespace $ {
+    type $mol_type_partial_deep<Val> = {
+        [field in keyof Val]?: $mol_type_partial_deep<Val[field]>;
+    };
+}
+
+declare namespace $ {
+    let $mol_jsx_prefix: string;
+    let $mol_jsx_booked: Set<string>;
+    let $mol_jsx_document: JSX.ElementClass['ownerDocument'];
 }
 
 declare namespace JSX {
@@ -48,12 +54,6 @@ declare namespace JSX {
     }
     interface ElementChildrenAttribute {
     }
-}
-
-declare namespace $ {
-    let $mol_jsx_prefix: string;
-    let $mol_jsx_booked: Set<string>;
-    let $mol_jsx_document: JSX.ElementClass['ownerDocument'];
 }
 
 declare namespace $ {

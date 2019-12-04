@@ -50,9 +50,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     const enum $mol_theme {
         back = "var(--mol_theme_back)",
         hover = "var(--mol_theme_hover)",
@@ -124,6 +121,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
+}
+
+declare namespace $ {
     function $mol_log_context(next?: () => void): () => void;
 }
 
@@ -133,10 +134,6 @@ declare namespace $ {
 
 declare namespace $ {
     var $mol_log_filter: (next?: string) => string;
-}
-
-declare namespace $ {
-    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
 }
 
 declare namespace $ {
@@ -535,6 +532,9 @@ declare namespace $ {
     type $mol_view_all = $mol_type_keys_extract<$mol_ambient_context, any, $mol_ambient_context['$mol_view']>;
 }
 
+declare namespace $ {
+}
+
 interface Window {
     cordova: any;
 }
@@ -647,9 +647,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_string extends $mol_view {
         dom_name(): string;
         enabled(): boolean;
@@ -711,6 +708,9 @@ declare namespace $.$$ {
     class $mol_app_hello extends $.$mol_app_hello {
         greeting(): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {

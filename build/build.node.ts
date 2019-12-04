@@ -96,8 +96,8 @@ namespace $ {
 						const code = 'namespace $ { $'+`mol_style_attach( ${ JSON.stringify( id ) },\n ${ JSON.stringify( styles ) }\n) }`
 						script.content( code )
 						
-						mods.push( child , script )
-						return true
+						mods.push( script )
+
 					}
 
 					mods.push( child )
@@ -105,7 +105,8 @@ namespace $ {
 					return true
 				}
 			)
-			// .sort( ( a , b )=> a.path().length - b.path().length )
+			
+			mods.sort( ( a , b )=> a.name().length - b.name().length )
 			
 			return mods
 		}

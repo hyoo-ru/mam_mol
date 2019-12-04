@@ -1,69 +1,3 @@
-$mol_scroll $mol_view
-	minimal_height 0
-	field *
-		^
-		scrollTop <= scroll_top?val 0
-		scrollLeft <= scroll_left?val 0
-		scrollBottom <= scroll_bottom?val 0
-		scrollRight <= scroll_right?val 0
-	event *
-		^
-		scroll?event <=> event_scroll?event null
-	Strut $mol_view
-		style *
-			transform <= strut_transform \
-
-$mol_list $mol_view
-	sub <= rows /$mol_view
-	Empty null
-
-$mol_meter $mol_plugin
-	zoom 1
-	-
-	width?val 0
-	height?val 0
-	-
-	left?val 0
-	right?val 0
-	bottom?val 0
-	top?val 0
-
-$mol_pop $mol_view
-	event * keydown?event <=> keydown?event null
-	showed?val false
-	plugins /$mol_plugin
-		<= Meter $mol_meter
-			top => top
-			bottom => bottom
-			left => left
-			right => right
-	sub /
-		<= Anchor null
-		<= Bubble $mol_pop_bubble
-			align <= align \bottom_center
-			content <= bubble_content /$mol_view_content
-			height_max <= height_max 9999
-
-$mol_pop_bubble $mol_scroll
-	sub <= content /$mol_view_content
-	style *
-		^
-		maxHeight <= height_max 9999
-	attr *
-		^
-		mol_pop_align <= align \
-		tabindex 0
-
-$mol_pop_over $mol_pop
-	showed <= hovered?val false
-	attr *
-		^
-		tabindex 0
-	event *
-		^
-		mouseenter?event <=> event_show?event null
-		mouseleave?event <=> event_hide?event null
-
 $mol_perf_dbmon $mol_scroll
 	title \dbmon ($mol)
 	sub /
@@ -99,3 +33,69 @@ $mol_perf_dbmon_query $mol_pop_over
 	bubble_content /
 		<= value \
 	align \left_center
+
+$mol_scroll $mol_view
+	minimal_height 0
+	field *
+		^
+		scrollTop <= scroll_top?val 0
+		scrollLeft <= scroll_left?val 0
+		scrollBottom <= scroll_bottom?val 0
+		scrollRight <= scroll_right?val 0
+	event *
+		^
+		scroll?event <=> event_scroll?event null
+	Strut $mol_view
+		style *
+			transform <= strut_transform \
+
+$mol_list $mol_view
+	sub <= rows /$mol_view
+	Empty null
+
+$mol_pop $mol_view
+	event * keydown?event <=> keydown?event null
+	showed?val false
+	plugins /$mol_plugin
+		<= Meter $mol_meter
+			top => top
+			bottom => bottom
+			left => left
+			right => right
+	sub /
+		<= Anchor null
+		<= Bubble $mol_pop_bubble
+			align <= align \bottom_center
+			content <= bubble_content /$mol_view_content
+			height_max <= height_max 9999
+
+$mol_pop_bubble $mol_scroll
+	sub <= content /$mol_view_content
+	style *
+		^
+		maxHeight <= height_max 9999
+	attr *
+		^
+		mol_pop_align <= align \
+		tabindex 0
+
+$mol_meter $mol_plugin
+	zoom 1
+	-
+	width?val 0
+	height?val 0
+	-
+	left?val 0
+	right?val 0
+	bottom?val 0
+	top?val 0
+
+$mol_pop_over $mol_pop
+	showed <= hovered?val false
+	attr *
+		^
+		tabindex 0
+	event *
+		^
+		mouseenter?event <=> event_show?event null
+		mouseleave?event <=> event_hide?event null
