@@ -1,6 +1,6 @@
 # $mol_style
 
-Staticaly typed css style sheets.
+Staticaly typed css style sheets. Following samples show which CSS code are generated from TS code.
 
 ## BEM Block
 

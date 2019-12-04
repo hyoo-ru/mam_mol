@@ -9,7 +9,7 @@ namespace $ {
 		text : string ,
 	) {
 
-		all.push( `/*${ id }*/\n${ text }`)
+		all.push( `/* ${ id } */\n\n${ text }`)
 
 		if( timer ) return el!
 		
@@ -19,7 +19,7 @@ namespace $ {
 		doc.head.appendChild( el )
 
 		timer = new $mol_after_tick( ()=> {
-			el.innerHTML = '\n' + all.join( '\n' )
+			el.innerHTML = '\n' + all.join( '\n\n' )
 			all = []
 			el = null
 			timer = null
