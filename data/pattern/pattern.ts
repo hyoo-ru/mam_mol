@@ -7,7 +7,7 @@ namespace $ {
 			const val2 = $mol_data_string( val )
 			if( pattern.test( val2 ) ) return val2
 			
-			return $mol_fail( new Error( `is not a ${ pattern }` ) )
+			return $mol_fail( new $mol_data_error( `${ val } is not a ${ pattern }` ) )
 
 		} , pattern )
 

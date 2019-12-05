@@ -14,3 +14,7 @@
 	flex: none;
 	transition: none;
 }
+
+[mol_list] > * {
+	display: block;
+}

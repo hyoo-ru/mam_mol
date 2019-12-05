@@ -19,7 +19,12 @@ namespace $ {
 				try {
 					res[field] = sub[field]( val[field] )
 				} catch( error ) {
-					return $mol_fail_hidden( new Error( `[${ JSON.stringify( field ) }] ${ error.message || error }` ) )
+
+					if( 'then' in error ) return $mol_fail_hidden( error )
+					
+					error.message = `[${ JSON.stringify( field ) }] ${ error.message }`
+					return $mol_fail( error )
+
 				}
 
 			}

@@ -167,10 +167,6 @@ namespace $ {
 		
 			}
 
-			Object.defineProperty( wrapped , 'name' , {
-				value : `${ task.name || '' }|${ this.name }`
-			} )
-
 			return $mol_fiber.func( wrapped )
 
 		}
@@ -182,7 +178,7 @@ namespace $ {
 
 		static wrap< Func extends ( ... args : any[] )=> any >( task : Func ) {
 			
-			return function( this : ThisParameterType< Func > , ... args : Parameters< Func > ) {
+			return function $mol_fiber_wrapper( this : ThisParameterType< Func > , ... args : Parameters< Func > ) {
 
 				const slave = $mol_fiber.current
 

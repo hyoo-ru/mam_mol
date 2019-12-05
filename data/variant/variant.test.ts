@@ -12,7 +12,7 @@ namespace $ {
 		'Is false' () {
 			$mol_assert_fail( ()=> {
 				$mol_data_variant( $mol_data_number , $mol_data_string )( false as any )
-			} , 'is not a number and is not a string' )
+			} , 'false is not any of variants\nboolean is not a number\nboolean is not a string' )
 		} ,
 
 	})
