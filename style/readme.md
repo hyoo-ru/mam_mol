@@ -27,7 +27,7 @@ class $mol_page extends $mol_view {
 }
 
 $mol_style_define( $mol_page , {
-	Body {
+	Body: {
 		overflow: 'scroll',
 	},
 } )
@@ -53,8 +53,8 @@ class $mol_page extends $mol_view {
 }
 
 $mol_style_define( $mol_page , {
-	Body {
-		Strut {
+	Body: {
+		Strut: {
 			display: 'none',
 		},
 	},
@@ -74,7 +74,7 @@ class $mol_button extends $mol_view {}
 class $my_app extends $mol_view {}
 
 $mol_style_define( $my_app , {
-	$mol_button {
+	$mol_button: {
 		cursor: 'pointer',
 	},
 } )
@@ -93,7 +93,7 @@ class $mol_list extends $mol_view {}
 
 $mol_style_define( $mol_list , {
 	'>': {
-		$mol_view {
+		$mol_view: {
 			display: 'block',
 		},
 	},
