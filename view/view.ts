@@ -129,11 +129,6 @@ namespace $ {
 			return min
 		}
 
-		@ $mol_mem
-		approximated_height() {
-			return Math.max( this.view_rect_cache()?.height ?? 0 , this.minimal_height() )
-		}
-
 		static watchers = new Set< $mol_view >()
 
 		@ $mol_mem

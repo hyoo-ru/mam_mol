@@ -29,9 +29,9 @@ namespace $.$$ {
 			const top = before?.bottom ?? 0
 			const bottom = after?.top ?? 0
 
-			console.log( 'lim', top , limit_top , bottom , limit_bottom)
+			// console.log( 'lim', top , limit_top , bottom , limit_bottom)
 			if( top <= limit_top && bottom >= limit_bottom ) {
-				console.log('nop',min,max)
+				// console.log('nop',min,max)
 				return [ min2 , max2 ]
 			}
 
@@ -75,7 +75,7 @@ namespace $.$$ {
 					top2 -= kids[ min2 ].minimal_height()
 				}
 
-				console.log( 'tdec' , top, min, min2 )
+				// console.log( 'tdec' , top, min, min2 )
 
 			} else {
 
@@ -84,7 +84,7 @@ namespace $.$$ {
 					top2 -= kids[ min2 ].minimal_height()
 				}
 	
-				console.log( 'tinc' , top , top2 , min, min2 )
+				// console.log( 'tinc' , top , top2 , min, min2 )
 			}
 
 			if( bottom >= limit_bottom ) {
@@ -99,7 +99,7 @@ namespace $.$$ {
 					++ max2
 				}
 
-				console.log( 'bdec' , bottom, max, max2 )
+				// console.log( 'bdec' , bottom, max, max2 )
 			// }
 
 			} else {
@@ -109,7 +109,7 @@ namespace $.$$ {
 					++ max2
 				}
 	
-				console.log( 'binc' , bottom , bottom2 , max, max2 )
+				// console.log( 'binc' , bottom , bottom2 , max, max2 )
 			}
 
 			return [ min2 , max2 ]
@@ -118,13 +118,13 @@ namespace $.$$ {
 		@ $mol_mem
 		gap_before() {
 			const skipped = this.sub().slice( 0 , this.view_window()[0] )
-			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.approximated_height() , 0 ) )
+			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.minimal_height() , 0 ) )
 		}
 
 		@ $mol_mem
 		gap_after() {
 			const skipped = this.sub().slice( this.view_window()[1] )
-			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.approximated_height() , 0 ) )
+			return Math.max( 0 , skipped.reduce( ( sum , view )=> sum + view.minimal_height() , 0 ) )
 		}
 
 		@ $mol_mem
