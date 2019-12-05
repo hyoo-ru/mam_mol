@@ -13,7 +13,6 @@ namespace $.$$ {
 		maxHeight: '100%',
 		maxWidth: '100%',
 		webkitOverflowScrolling: 'touch',
-		background: 'none !important', // prevent large gpu layer
 	
 		'::-webkit-scrollbar': {
 			width: '.5rem',
