@@ -3962,7 +3962,6 @@ var $;
             maxHeight: '100%',
             maxWidth: '100%',
             webkitOverflowScrolling: 'touch',
-            background: 'none !important',
             '::-webkit-scrollbar': {
                 width: '.5rem',
                 height: '.5rem',
