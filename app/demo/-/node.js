@@ -857,7 +857,7 @@ var $;
             this.masters = [];
         }
         static wrap(task) {
-            return function (...args) {
+            return function $mol_fiber_wrapper(...args) {
                 const slave = $mol_fiber_1.current;
                 let master = slave && slave.master;
                 if (!master || master.constructor !== $mol_fiber_1) {
