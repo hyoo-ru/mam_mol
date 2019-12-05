@@ -350,7 +350,8 @@ namespace $ {
 		$mol_fiber_unlimit( ()=> {
 			for( const view of $mol_view.watchers ) {
 				const rect = view.dom_node().getBoundingClientRect().toJSON()
-				if( rect.height ) view.view_rect_cache( rect )
+				//if( rect.height ) 
+				view.view_rect_cache( rect )
 			}
 			new $mol_after_frame( $mol_view_watch )
 		} )

@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_atom2_value< Value >( task : ()=> Value ) {
+	export function $mol_atom2_value< Value >( task : ()=> Value ) : Value | undefined {
 		const cached = $mol_atom2.cached
 		try {
 			$mol_atom2.cached = true

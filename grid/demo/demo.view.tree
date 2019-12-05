@@ -4,6 +4,5 @@ $mol_grid_demo $mol_demo_large
 	cols 20
 	sub /
 		<= Grid $mol_grid
-			row_height 40
 			records <= records *
 			col_head_content!col <= col_head_content!col /

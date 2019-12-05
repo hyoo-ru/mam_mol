@@ -10,7 +10,7 @@
 
 [mol_list_gap_before] ,
 [mol_list_gap_after] {
-	display: block;
+	display: block !important;
 	flex: none;
 	transition: none;
 }

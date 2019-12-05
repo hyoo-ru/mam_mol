@@ -8,7 +8,7 @@ namespace $.$$ {
 			
 			let args = this.$.$mol_state_arg.dict()
 			if( next ) return {
-				... $mol_atom2_value( ()=> this.formulas() || {} ) ,
+				... $mol_atom2_value( ()=> this.formulas() ) ?? {} ,
 				... next
 			}
 			

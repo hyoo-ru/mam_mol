@@ -16,7 +16,7 @@ $mol_grid $mol_scroll
 	Row!id $mol_grid_row
 		cells <= cells!id /$mol_view
 	-
-	Cell!id $mol_view minimal_height 40
+	Cell!id $mol_view
 	cell!id null
 	Cell_text!id $mol_grid_cell
 		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
@@ -43,5 +43,6 @@ $mol_grid_row $mol_view
 
 $mol_grid_cell $mol_view
 	dom_name \td
+	minimal_height 40
 
 $mol_grid_number $mol_grid_cell

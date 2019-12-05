@@ -22,7 +22,7 @@ namespace $.$$ {
 		@ $mol_mem
 		saturation_series() {
 			const input = this.output_series()
-			const prev = ( $mol_atom2_value( ()=> this.saturation_series() ) || [] ) as number[]
+			const prev : number[] = ( $mol_atom2_value( ()=> this.saturation_series() ) ) ?? []
 			return input.map( ( val , i )=> {
 				const next = ( val + 9 * ( prev[ i ] || 0 ) ) / 10
 				return ( Math.abs( next ) > Math.abs( val ) ) ? next : val
