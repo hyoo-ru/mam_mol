@@ -19,25 +19,25 @@ namespace $.$$ {
 			let min2 = min = Math.max( 0 , Math.min( min , max - 1 ) )
 			
 			const window_height = $mol_window.size().height
-			const over = 0//window_height
+			const over = 0 //Math.ceil( window_height / 2 )
 			const limit_top = -over
 			const limit_bottom = window_height + over
 
-			const before = this.Gap_before().view_rect()
-			const after = this.Gap_after().view_rect()
+			const rect = this.view_rect()
 
-			const top = before?.bottom ?? 0
-			const bottom = after?.top ?? 0
+			const gap_before = $mol_atom2_value( ()=> this.gap_before() ) ?? 0
+			const gap_after = $mol_atom2_value( ()=> this.gap_after() ) ?? 0
 
-			// console.log( 'lim', top , limit_top , bottom , limit_bottom)
+			const top = ( rect?.top ?? 0 ) + gap_before
+			const bottom = ( rect?.bottom ?? 0 ) - gap_after
+
 			if( top <= limit_top && bottom >= limit_bottom ) {
-				// console.log('nop',min,max)
 				return [ min2 , max2 ]
 			}
 
 			if( bottom < limit_top ) {
 
-				const factor = ( - top + window_height / 2 ) / after.height
+				const factor = ( - top + window_height / 2 ) / gap_after
 				if( factor < 1 ) {
 
 					max += Math.floor( ( kids.length - max ) * factor )
@@ -51,7 +51,7 @@ namespace $.$$ {
 
 			if( top > limit_bottom ) {
 
-				const factor = ( bottom - window_height / 2 ) / before.height
+				const factor = ( bottom - window_height / 2 ) / gap_before
 				if( factor < 1 ) {
 
 					min = Math.floor( min * ( 1 - factor ) )
@@ -75,8 +75,6 @@ namespace $.$$ {
 					top2 -= kids[ min2 ].minimal_height()
 				}
 
-				// console.log( 'tdec' , top, min, min2 )
-
 			} else {
 
 				while( top2 >= limit_top && min2 > 0 ) {
@@ -84,12 +82,9 @@ namespace $.$$ {
 					top2 -= kids[ min2 ].minimal_height()
 				}
 	
-				// console.log( 'tinc' , top , top2 , min, min2 )
 			}
 
 			if( bottom >= limit_bottom ) {
-
-				// if( min > 0 ) {
 
 				max2 = min
 				bottom2 = top
@@ -99,9 +94,6 @@ namespace $.$$ {
 					++ max2
 				}
 
-				// console.log( 'bdec' , bottom, max, max2 )
-			// }
-
 			} else {
 
 				while( bottom2 < limit_bottom && max2 < kids.length ) {
@@ -109,7 +101,6 @@ namespace $.$$ {
 					++ max2
 				}
 	
-				// console.log( 'binc' , bottom , bottom2 , max, max2 )
 			}
 
 			return [ min2 , max2 ]
