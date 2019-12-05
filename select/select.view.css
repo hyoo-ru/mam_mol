@@ -31,6 +31,7 @@
 	padding: .5rem 1rem;
 	text-align: left;
 	min-height: 1.5em;
+	display: block;
 }
 
 [mol_select_clear_option_content] {
