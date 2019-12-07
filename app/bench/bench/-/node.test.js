@@ -2090,6 +2090,8 @@ var $;
         if (timer)
             return el;
         const doc = $.$mol_dom_context.document;
+        if (!doc)
+            return null;
         el = doc.createElement('style');
         el.id = `$mol_style_attach`;
         doc.head.appendChild(el);
