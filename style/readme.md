@@ -4,9 +4,11 @@ Staticaly typed css style sheets. Following samples show which CSS code are gene
 
 ## BEM Block
 
-```typescript
-class $mol_page extends $mol_view {}
+```tree
+$mol_page $mol_view
+```
 
+```typescript
 $mol_style_define( $mol_page , {
 	flexDirection: 'column',
 } )
@@ -20,14 +22,16 @@ $mol_style_define( $mol_page , {
 
 ## BEM Element
 
-```typescript
-class $mol_page extends $mol_view {
-	@ $mol_mem
-	Body() { return new $mol_scroll }
+```tree
+$mol_page $mol_view
+	sub /
+		<= Body $mol_scroll
 }
+```
 
+```typescript
 $mol_style_define( $mol_page , {
-	Body {
+	Body: {
 		overflow: 'scroll',
 	},
 } )
@@ -41,20 +45,19 @@ $mol_style_define( $mol_page , {
 
 ## BEM Element of Element etc
 
+```tree
+$mol_scroll $mol_view
+	sub /
+		<= Strut $mol_view
+$mol_page $mol_view
+	sub /
+		<= Body $mol_scroll
+```
+
 ```typescript
-class $mol_scroll extends $mol_view {
-	@ $mol_mem
-	Strut() { return new $mol_view }
-}
-
-class $mol_page extends $mol_view {
-	@ $mol_mem
-	Body() { return new $mol_scroll }
-}
-
 $mol_style_define( $mol_page , {
-	Body {
-		Strut {
+	Body: {
+		Strut: {
 			display: 'none',
 		},
 	},
@@ -69,12 +72,14 @@ $mol_style_define( $mol_page , {
 
 ## Nested components by class name
 
-```typescript
-class $mol_button extends $mol_view {}
-class $my_app extends $mol_view {}
+```tree
+$mol_button $mol_view
+$my_app $mol_view
+```
 
+```typescript
 $mol_style_define( $my_app , {
-	$mol_button {
+	$mol_button: {
 		cursor: 'pointer',
 	},
 } )
@@ -88,12 +93,14 @@ $mol_style_define( $my_app , {
 
 ## Child components by class name
 
-```typescript
-class $mol_list extends $mol_view {}
+```tree
+$mol_list $mol_view
+```
 
+```typescript
 $mol_style_define( $mol_list , {
 	'>': {
-		$mol_view {
+		$mol_view: {
 			display: 'block',
 		},
 	},
@@ -108,15 +115,13 @@ $mol_style_define( $mol_list , {
 
 ## Attributes
 
-```typescript
-class $mol_link extends $mol_view {
-	attr() {
-		return {
-			'mol_link_current' : true
-		}
-	}
-}
+```tree
+$mol_link $mol_view
+	attr *
+		mol_link_current true
+```
 
+```typescript
 $mol_style_define( $mol_link , {
 	'@': {
 		mol_link_current: {
@@ -136,9 +141,11 @@ $mol_style_define( $mol_link , {
 
 ## Pseudo classes
 
-```typescript
-class $mol_string extends $mol_view {}
+```tree
+$mol_string $mol_view
+```
 
+```typescript
 $mol_style_define( $mol_string , {
 	':focus': {
 		outline: 'none',
@@ -154,9 +161,11 @@ $mol_style_define( $mol_string , {
 
 ## Pseudo elements
 
-```typescript
-class $mol_text extends $mol_view {}
+```tree
+$mol_text $mol_view
+```
 
+```typescript
 $mol_style_define( $mol_text , {
 	'::first-child': {
 		fontWeight: 'bolder',
@@ -172,9 +181,11 @@ $mol_style_define( $mol_text , {
 
 ## Media queries
 
-```typescript
-class $mol_scroll extends $mol_view {}
+```tree
+$mol_scroll $mol_view
+```
 
+```typescript
 $mol_style_define( $mol_scroll , {
 	'@media': {
 		'print': {
@@ -194,9 +205,11 @@ $mol_style_define( $mol_scroll , {
 
 ## Theming
 
-```typescript
-class $mol_page extends $mol_view {}
+```tree
+$mol_page $mol_view
+```
 
+```typescript
 $mol_style_define( $mol_page , {
 	background: $mol_theme.back,
 	boxShadow: `0 0 0 1px ${ $mol_theme.line }`,
