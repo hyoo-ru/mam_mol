@@ -33,6 +33,10 @@ namespace $.$$ {
 		file_name() {
 			return null as unknown as string
 		}
+
+		minimal_height() {
+			return Math.max( super.minimal_height() || 40 )
+		}
 		
 	}
 	

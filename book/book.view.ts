@@ -63,11 +63,6 @@ namespace $.$$ {
 			this.page(1).focused( false )
 		}
 
-		@ $mol_mem
-		minimal_width() {
-			return this.pages().reduce( ( sum , page )=> page.minimal_width() + sum , 0 )
-		}
-		
 	}
 
 }

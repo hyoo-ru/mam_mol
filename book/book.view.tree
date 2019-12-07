@@ -1,5 +1,6 @@
 $mol_book $mol_view
 	sub <= pages_wrapped /$mol_view
+	minimal_width 0
 	pages /$mol_view
 	plugins /$mol_plugin
 		<= Meter $mol_meter

@@ -19,7 +19,7 @@ namespace $.$$ {
 			let min2 = min = Math.max( 0 , Math.min( min , max - 1 ) )
 			
 			const window_height = $mol_window.size().height
-			const over = 0 //Math.ceil( window_height / 2 )
+			const over = Math.ceil( window_height / 4 )
 			const limit_top = -over
 			const limit_bottom = window_height + over
 
@@ -28,79 +28,55 @@ namespace $.$$ {
 			const gap_before = $mol_atom2_value( ()=> this.gap_before() ) ?? 0
 			const gap_after = $mol_atom2_value( ()=> this.gap_after() ) ?? 0
 
-			const top = ( rect?.top ?? 0 ) + gap_before
-			const bottom = ( rect?.bottom ?? 0 ) - gap_after
+			let top = ( rect?.top ?? 0 ) + gap_before
+			let bottom = ( rect?.bottom ?? 0 ) - gap_after
 
 			if( top <= limit_top && bottom >= limit_bottom ) {
 				return [ min2 , max2 ]
 			}
 
-			if( bottom < limit_top ) {
+			if(( bottom < limit_top )||( top > limit_bottom )) {
 
-				const factor = ( - top + window_height / 2 ) / gap_after
-				if( factor < 1 ) {
-
-					max += Math.floor( ( kids.length - max ) * factor )
-					max = Math.min( kids.length , Math.max( 1 , max ) )
-
-					return [ max - 1 , max ]
-
-				}
+				min = 0
+				top = ( rect?.top ?? 0 )
 				
-			}
-
-			if( top > limit_bottom ) {
-
-				const factor = ( bottom - window_height / 2 ) / gap_before
-				if( factor < 1 ) {
-
-					min = Math.floor( min * ( 1 - factor ) )
-
-					return [ min , min + 1 ]
+				while( min < ( kids.length - 1 ) ) {
 					
+					const height = kids[ min ].minimal_height()
+					if( top + height >= limit_top ) break
+					
+					top += height
+					++ min
+
 				}
-				
+
+				min2 = min
+				max2 = max = min + 1
+				bottom = 0
+	
 			}
 
 			let top2 = top
 			let bottom2 = bottom
 
 			if( top <= limit_top ) {
-
 				min2 = max
 				top2 = bottom
-
-				while( top2 >= limit_top && min2 > min ) {
-					-- min2
-					top2 -= kids[ min2 ].minimal_height()
-				}
-
-			} else {
-
-				while( top2 >= limit_top && min2 > 0 ) {
-					-- min2
-					top2 -= kids[ min2 ].minimal_height()
-				}
-	
 			}
 
 			if( bottom >= limit_bottom ) {
-
 				max2 = min
 				bottom2 = top
+			}
 
-				while( bottom2 < limit_bottom && max2 < kids.length ) {
-					bottom2 += kids[ max2 ].minimal_height()
-					++ max2
-				}
+			while( bottom2 < limit_bottom && max2 < kids.length ) {
+				bottom2 += kids[ max2 ].minimal_height()
+				++ max2
+			}
 
-			} else {
-
-				while( bottom2 < limit_bottom && max2 < kids.length ) {
-					bottom2 += kids[ max2 ].minimal_height()
-					++ max2
-				}
-	
+			while( top2 >= limit_top && min2 > 0 ) {
+				-- min2
+				top2 -= kids[ min2 ].minimal_height()
 			}
 
 			return [ min2 , max2 ]
@@ -125,10 +101,8 @@ namespace $.$$ {
 
 			const next = sub.slice( ... this.view_window() )
 			
-			// if( this.gap_before() ) 
-			next.unshift( this.Gap_before() )
-			// if( this.gap_after() ) 
-			next.push( this.Gap_after() )
+			if( this.gap_before() ) next.unshift( this.Gap_before() )
+			if( this.gap_after() ) next.push( this.Gap_after() )
 
 			return next
 		}

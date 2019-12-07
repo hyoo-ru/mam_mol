@@ -1,4 +1,6 @@
 namespace $.$$ {
+
+	@ $mol_class
 	export class $mol_touch extends $.$mol_touch {
 		rect() {
 			return this.dom_node().getBoundingClientRect()
@@ -188,6 +190,8 @@ namespace $.$$ {
 
 		event_wheel( event : WheelEvent ) {
 
+			if( this.pan === $mol_touch.prototype.pan && this.zoom === $mol_touch.prototype.zoom ) return
+			
 			if( this.pan !== $mol_touch.prototype.pan ) {
 				event.preventDefault()
 			}
@@ -205,4 +209,5 @@ namespace $.$$ {
 		}
 		
 	}
+	
 }

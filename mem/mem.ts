@@ -41,6 +41,8 @@ namespace $ {
 		}
 		
 		return {
+
+			... descr || {} ,
 			
 			value( this : Host , next? : Value , force? : $mol_mem_force ) {
 				

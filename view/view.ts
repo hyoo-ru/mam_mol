@@ -235,7 +235,7 @@ namespace $ {
 			
 			const nodes = sub.map( child => {
 				if( child == null ) return null
-				return ( child instanceof $mol_view ) ? child.dom_node() : String( child )
+				return ( child instanceof $mol_view ) ? child.dom_node_actual() : String( child )
 			})
 			
 			$mol_dom_render_children( node , nodes )
@@ -312,7 +312,10 @@ namespace $ {
 		}
 		
 		style() : { [ key : string ] : string|number } {
-			return {}
+			return {
+				minHeight: this.minimal_height(),
+				minWidth: this.minimal_width(),
+			}
 		}
 		
 		field() : { [ key : string ] : any } {

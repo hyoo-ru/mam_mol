@@ -23,9 +23,10 @@ namespace $.$$ {
 		event_scroll( next? : Event ) {
 			
 			const el = this.dom_node() as HTMLElement
-			
-			this.scroll_top( Math.max( 0 , el.scrollTop ) )
-			this.scroll_left( Math.max( 0 , el.scrollLeft ) )
+			new $mol_after_frame( $mol_fiber_solid.func( ()=> {
+				this.scroll_top( Math.max( 0 , el.scrollTop ) )
+				this.scroll_left( Math.max( 0 , el.scrollLeft ) )
+			} ) )
 
 		}
 		

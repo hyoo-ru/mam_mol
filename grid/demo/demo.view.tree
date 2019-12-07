@@ -1,7 +1,7 @@
 $mol_grid_demo $mol_demo_large
 	title @ \Grid with large count of cells
 	rows 1000
-	cols 20
+	cols 10
 	sub /
 		<= Grid $mol_grid
 			records <= records *
