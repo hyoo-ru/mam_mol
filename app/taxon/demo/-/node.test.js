@@ -4804,7 +4804,7 @@ var $;
             this.hour = config.hour;
             this.minute = config.minute;
             this.second = config.second;
-            if (config.offset !== undefined) {
+            if (config.offset != null) {
                 this.offset = new $.$mol_time_duration(config.offset);
             }
         }
