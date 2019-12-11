@@ -469,6 +469,7 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_logo](logo)** - $mol logotypes
 - **[$mol_icon](icon)** - css styled icons
 - **[$mol_skin](skin)** - theming
+- **[$mol_style](style)** - css-in-ts
 
 ## Testing
 
