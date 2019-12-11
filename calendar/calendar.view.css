@@ -9,13 +9,10 @@
 	text-align: center;
 }
 
-[mol_calendar_weeks] {
-	display: table-row-group;
-}
-
 [mol_calendar_weekdays] ,
 [mol_calendar_week] {
 	display: table-row;
+	padding: 0;
 }
 
 [mol_calendar_day] {
