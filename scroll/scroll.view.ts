@@ -30,14 +30,6 @@ namespace $.$$ {
 
 		}
 		
-		@ $mol_atom2_field
-		get $$( ) {
-			return this.$.$mol_ambient({
-				$mol_scroll_top : ()=> this.scroll_top() ,
-				$mol_scroll_left : ()=> this.scroll_left() ,
-			})
-		}
-		
 	}
 
 }

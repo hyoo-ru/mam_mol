@@ -355,7 +355,7 @@ namespace $ {
 		} )
 	}
 
-	$mol_view_watch()
+	if( $mol_dom_context.document ) $mol_view_watch()
 	
 	export type $mol_view_all = $mol_type_keys_extract< $mol_ambient_context , any , $mol_ambient_context['$mol_view'] >
 
