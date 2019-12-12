@@ -118,13 +118,15 @@ namespace $ {
 		minimal_height() {
 			
 			let min = 0
-			for( const view of this.sub() ) {
+			try {
+				for( const view of this.sub() ) {
 
-				if( view instanceof $mol_view ) {
-					min = Math.max( min , view.minimal_height() )
-				}
-
-			} 
+					if( view instanceof $mol_view ) {
+						min = Math.max( min , view.minimal_height() )
+					}
+					
+				} 
+			} catch {}
 			
 			return min
 		}
@@ -314,7 +316,7 @@ namespace $ {
 		style() : { [ key : string ] : string|number } {
 			return {
 				minHeight: this.minimal_height(),
-				minWidth: this.minimal_width(),
+				// minWidth: this.minimal_width(),
 			}
 		}
 		

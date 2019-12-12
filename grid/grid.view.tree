@@ -14,6 +14,7 @@ $mol_grid $mol_scroll
 	Head $mol_grid_row
 		cells <= head_cells /$mol_view
 	Row!id $mol_grid_row
+		minimal_height <= row_height
 		cells <= cells!id /$mol_view
 	-
 	Cell!id $mol_view
