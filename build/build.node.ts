@@ -879,8 +879,10 @@ namespace $ {
 				console.error( $node.colorette.yellow( error ) )
 			}
 
+			const name = pack.relate( this.root() ).replace( /\//g , '_' )
+
 			if( !json ) json = {
-				name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
+				name ,
 				version : '0.0.0' ,
 				main : 'node.js' ,
 				module : 'node.esm.js',
@@ -889,7 +891,14 @@ namespace $ {
 				dependencies : <{ [ key : string ] : string }>{}
 			}
 
-			json.version = json.version.replace( /\d+$/, ( build : string )=> parseInt( build ) + 1 )
+			let version = json.version
+			
+			try {
+				version = $mol_exec( '' , 'npm' , 'view' , name , 'version' ).stdout.toString().trim()
+			} catch { }
+
+			json.version = version.replace( /\d+$/, ( build : string )=> parseInt( build ) + 1 )
+
 			json.dependencies = {}
 			
 			for( let dep of this.nodeDeps({ path , exclude }) ) {

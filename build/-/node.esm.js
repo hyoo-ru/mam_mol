@@ -3960,9 +3960,10 @@ var $;
             catch (error) {
                 console.error($node.colorette.yellow(error));
             }
+            const name = pack.relate(this.root()).replace(/\//g, '_');
             if (!json)
                 json = {
-                    name: pack.relate(this.root()).replace(/\//g, '_'),
+                    name,
                     version: '0.0.0',
                     main: 'node.js',
                     module: 'node.esm.js',
@@ -3970,7 +3971,12 @@ var $;
                     types: 'web.d.ts',
                     dependencies: {}
                 };
-            json.version = json.version.replace(/\d+$/, (build) => parseInt(build) + 1);
+            let version = json.version;
+            try {
+                version = $.$mol_exec('', 'npm', 'view', name, 'version').stdout.toString().trim();
+            }
+            catch (_a) { }
+            json.version = version.replace(/\d+$/, (build) => parseInt(build) + 1);
             json.dependencies = {};
             for (let dep of this.nodeDeps({ path, exclude })) {
                 if (require('module').builtinModules.includes(dep))
