@@ -3950,33 +3950,31 @@ var $;
         bundlePackageJSON({ path, exclude }) {
             const start = Date.now();
             var pack = $.$mol_file.absolute(path);
-            var target = pack.resolve(`-/package.json`);
+            const source = pack.resolve(`package.json`);
+            const target = pack.resolve(`-/package.json`);
             exclude = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
             var sources = this.sourcesAll({ path, exclude });
-            var json;
-            try {
-                $.$mol_fiber_fence(() => json = target.exists() && JSON.parse(target.content().toString()));
+            let name = pack.relate(this.root()).replace(/\//g, '_');
+            let json = {
+                name,
+                version: '0.0.0',
+                main: 'node.js',
+                module: 'node.esm.js',
+                browser: 'web.js',
+                types: 'web.d.ts',
+                dependencies: {}
+            };
+            if (source.exists()) {
+                json = JSON.parse(source.content().toString());
             }
-            catch (error) {
-                console.error($node.colorette.yellow(error));
-            }
-            const name = pack.relate(this.root()).replace(/\//g, '_');
-            if (!json)
-                json = {
-                    name,
-                    version: '0.0.0',
-                    main: 'node.js',
-                    module: 'node.esm.js',
-                    browser: 'web.js',
-                    types: 'web.d.ts',
-                    dependencies: {}
-                };
-            let version = json.version;
+            let version = json.version.split('.');
+            name = json.name || name;
             try {
-                version = $.$mol_exec('', 'npm', 'view', name, 'version').stdout.toString().trim();
+                version[2] = $.$mol_exec('', 'npm', 'view', name, 'version').stdout.toString().trim().split('.')[2];
             }
             catch (_a) { }
-            json.version = version.replace(/\d+$/, (build) => parseInt(build) + 1);
+            version[2] = String(Number(version[2]) + 1);
+            json.version = version.join('.');
             json.dependencies = {};
             for (let dep of this.nodeDeps({ path, exclude })) {
                 if (require('module').builtinModules.includes(dep))
