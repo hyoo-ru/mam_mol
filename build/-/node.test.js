@@ -3958,7 +3958,7 @@ var $;
                 dependencies: {}
             };
             if (source.exists()) {
-                json = JSON.parse(source.content().toString());
+                Object.assign(json, JSON.parse(source.content().toString()));
             }
             let version = json.version.split('.');
             name = json.name || name;
