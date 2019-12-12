@@ -29,15 +29,13 @@ namespace $ {
 		}
 		
 		expressHandlers() : any[] {
-			return [].concat.apply(
-				[] , [
-					this.expressCompressor() ,
-					this.expressBodier() ,
-					this.expressGenerator() ,
-					this.expressFiler() ,
-					this.expressDirector() ,
-				]
-			)
+			return [
+				this.expressCompressor() ,
+				this.expressBodier() ,
+				this.expressGenerator() ,
+				this.expressFiler() ,
+				this.expressDirector() ,
+			]
 		}
 		
 		expressCompressor() {

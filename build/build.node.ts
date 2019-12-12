@@ -867,20 +867,16 @@ namespace $ {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
-			var target = pack.resolve( `-/package.json` )
+			const source = pack.resolve( `package.json` )
+			const target = pack.resolve( `-/package.json` )
 			
 			exclude = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
 			var sources = this.sourcesAll( { path , exclude } )
 			
-			var json : any
-			try {
-				$mol_fiber_fence( ()=> json = target.exists() && JSON.parse( target.content().toString() ) )
-			} catch( error ) {
-				console.error( $node.colorette.yellow( error ) )
-			}
-
-			if( !json ) json = {
-				name : pack.relate( this.root() ).replace( /\//g , '_' ) ,
+			let name = pack.relate( this.root() ).replace( /\//g , '_' )
+			
+			let json = {
+				name ,
 				version : '0.0.0' ,
 				main : 'node.js' ,
 				module : 'node.esm.js',
@@ -889,7 +885,21 @@ namespace $ {
 				dependencies : <{ [ key : string ] : string }>{}
 			}
 
-			json.version = json.version.replace( /\d+$/, ( build : string )=> parseInt( build ) + 1 )
+			if( source.exists() ) {
+				Object.assign( json , JSON.parse( source.content().toString() ) )
+			}
+
+			let version = json.version.split('.')
+			name = json.name || name
+			
+			try {
+				version[2] = $mol_exec( '' , 'npm' , 'view' , name , 'version' ).stdout.toString().trim().split('.')[2]
+			} catch { }
+
+			version[2] = String( Number( version[2] ) + 1 )
+
+			json.version = version.join( '.' )
+
 			json.dependencies = {}
 			
 			for( let dep of this.nodeDeps({ path , exclude }) ) {
