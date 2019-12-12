@@ -4319,13 +4319,13 @@ var $;
             return `${this} started at http://127.0.0.1:${port}/`;
         }
         expressHandlers() {
-            return [].concat.apply([], [
+            return [
                 this.expressCompressor(),
                 this.expressBodier(),
                 this.expressGenerator(),
                 this.expressFiler(),
                 this.expressDirector(),
-            ]);
+            ];
         }
         expressCompressor() {
             return $node['compression']();
