@@ -55,6 +55,24 @@ namespace $ {
 			
 		}
 
+		static get field() {
+			
+			return <
+				Host ,
+				Field extends keyof Host ,
+				Args extends any[] ,
+				Result ,
+			>(
+				obj : Host ,
+				name : Field ,
+				descr : TypedPropertyDescriptor< Result >
+			) => {
+				descr.get = descr.set = this.func( descr.get! )
+				return descr
+			}
+			
+		}
+
 	}
 
 }

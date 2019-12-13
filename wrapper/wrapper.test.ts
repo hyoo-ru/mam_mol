@@ -45,6 +45,40 @@ namespace $ {
 
 		} ,
 
+		'decorate field getter' () {
+
+			class Plus1 extends $mol_wrapper {
+
+				static last = 0
+		
+				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
+		
+					return function( this : This , ... args : Args ) {
+						return Plus1.last = ( task.call( this , ... args ) || 0 ) + 1 as number
+					}
+		
+				}
+				
+			}
+		
+			class Foo {
+
+				@ Plus1.field
+				static get two() {
+					return 1
+				}
+				static set two( next : number ) {}
+				
+			}
+			
+			$mol_assert_equal( Foo.two , 2 )
+			
+			Foo.two = 3
+			$mol_assert_equal( Plus1.last , 2 )
+			$mol_assert_equal( Foo.two , 2 )
+
+		} ,
+
 		'decorate instance method' () {
 
 			class Plus1 extends $mol_wrapper {
