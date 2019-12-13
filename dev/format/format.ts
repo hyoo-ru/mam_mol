@@ -88,8 +88,18 @@ namespace $ {
 
 	}
 
+	export function $mol_dev_format_span( style : object , ...content : any[] ) {
+		return $mol_dev_format_element(
+			'span' ,
+			{
+				'vertical-align' : '7%',
+				... style ,
+			} ,
+			... content ,
+		)
+	}
+
 	export let $mol_dev_format_div = $mol_dev_format_element.bind( null , 'div' )
-	export let $mol_dev_format_span = $mol_dev_format_element.bind( null , 'span' )
 	export let $mol_dev_format_ol = $mol_dev_format_element.bind( null , 'ol' )
 	export let $mol_dev_format_li = $mol_dev_format_element.bind( null , 'li' )
 	export let $mol_dev_format_table = $mol_dev_format_element.bind( null , 'table' )

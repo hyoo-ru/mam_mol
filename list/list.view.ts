@@ -19,7 +19,7 @@ namespace $.$$ {
 			let min2 = min = Math.max( 0 , Math.min( min , max - 1 ) )
 			
 			const window_height = $mol_window.size().height
-			const over = Math.ceil( window_height / 4 )
+			const over = Math.ceil( window_height * this.over_render() )
 			const limit_top = -over
 			const limit_bottom = window_height + over
 

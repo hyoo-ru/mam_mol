@@ -4,7 +4,6 @@ namespace $ {
 
 		'run callback' () {
 
-			@ $mol_class
 			class Plus1 extends $mol_wrapper {
 		
 				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
@@ -23,7 +22,6 @@ namespace $ {
 
 		'wrap function' () {
 		
-			@ $mol_class
 			class Plus1 extends $mol_wrapper {
 		
 				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
@@ -49,7 +47,6 @@ namespace $ {
 
 		'decorate instance method' () {
 
-			@ $mol_class
 			class Plus1 extends $mol_wrapper {
 		
 				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
@@ -82,7 +79,6 @@ namespace $ {
 
 		'decorate static method' () {
 			
-			@ $mol_class
 			class Plus1 extends $mol_wrapper {
 		
 				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> number ) {
@@ -95,7 +91,6 @@ namespace $ {
 				
 			}
 		
-			@ $mol_class
 			class Foo {
 
 				static level = 2
@@ -113,7 +108,6 @@ namespace $ {
 
 		'decorate class' () {
 			
-			@ $mol_class
 			class BarInc extends $mol_wrapper {
 
 				static wrap< This , Args extends any[] >( task : ( this : This , ... args : Args )=> Foo ) {
@@ -131,7 +125,6 @@ namespace $ {
 			}
 			
 			@ BarInc.class
-			@ $mol_class
 			class Foo {
 				constructor( public bar : number ) {}
 			}

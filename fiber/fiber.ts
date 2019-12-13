@@ -139,7 +139,6 @@ namespace $ {
 
 	}
 
-	@ $mol_class
 	export class $mol_fiber_solid extends $mol_wrapper {
 
 		static func< This , Args extends any[] , Result >( task : ( this : This , ... args : Args )=> Result ) {
@@ -173,7 +172,6 @@ namespace $ {
 
 	}
 
-	@ $mol_class
 	export class $mol_fiber< Value = any > extends $mol_wrapper {
 
 		static wrap< Func extends ( ... args : any[] )=> any >( task : Func ) {

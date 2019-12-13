@@ -10,7 +10,6 @@ namespace $ {
 		}
 	}
 
-	@ $mol_class
 	export class $mol_atom2< Value = any > extends $mol_fiber< Value > {
 
 		static get current() {
@@ -99,7 +98,6 @@ namespace $ {
 			this.$.$mol_log2.info( this , $mol_atom2_token_revalidated , this._error || this._value )
 			this.cursor = $mol_fiber_status.actual
 
-			return this.value
 		}
 		
 		_value = undefined as unknown as Value

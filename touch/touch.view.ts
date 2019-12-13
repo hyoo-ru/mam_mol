@@ -1,6 +1,5 @@
 namespace $.$$ {
 
-	@ $mol_class
 	export class $mol_touch extends $.$mol_touch {
 		rect() {
 			return this.dom_node().getBoundingClientRect()

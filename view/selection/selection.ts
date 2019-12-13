@@ -1,6 +1,5 @@
 namespace $ {
 	
-	@ $mol_class
 	export class $mol_view_selection extends $mol_object {
 		
 		@ $mol_mem

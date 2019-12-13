@@ -1,73 +1,65 @@
-namespace $.$$ {
-	export class $mol_row extends $.$mol_row {
+// namespace $.$$ {
+// 	export class $mol_row extends $.$mol_row {
 		
-		@ $mol_mem
-		item_offsets_top() : number[] {
-			let next : number[] = []
+// 		@ $mol_mem
+// 		item_offsets_top() : number[] {
+// 			let next : number[] = []
 			
-			let sub = this.sub()
-			if( !sub ) return next
+// 			let sub = this.sub()
+// 			if( !sub ) return next
 			
-			const context = this.$$
-			const widthLimit = context.$mol_view_visible_width()
+// 			// const context = this.$
+// 			const widthLimit = 9000//context.$mol_view_visible_width()
 			
-			let allHeight = 0
-			let rowWidth = 0
-			let row_height = 0
+// 			let allHeight = 0
+// 			let rowWidth = 0
+// 			let row_height = 0
 			
-			for( let child of sub ) {
-				next.push( allHeight )
+// 			for( let child of sub ) {
+// 				next.push( allHeight )
 				
-				if(!( child instanceof $mol_view )) continue
+// 				if(!( child instanceof $mol_view )) continue
 				
-				const width = child.minimal_width()
-				const height = child.minimal_height()
+// 				const width = child.minimal_width()
+// 				const height = child.minimal_height()
 				
-				rowWidth += width
-				if( rowWidth > widthLimit ) {
-					allHeight += row_height
-					rowWidth = width
-					row_height = height
-				} else {
-					row_height = Math.max( row_height , height )
-				}
-			}
+// 				rowWidth += width
+// 				if( rowWidth > widthLimit ) {
+// 					allHeight += row_height
+// 					rowWidth = width
+// 					row_height = height
+// 				} else {
+// 					row_height = Math.max( row_height , height )
+// 				}
+// 			}
 			
-			next.push( allHeight + row_height )
+// 			next.push( allHeight + row_height )
 			
-			return next
-		}
+// 			return next
+// 		}
 		
-		sub_visible() {
-			const sub = this.sub()
+// 		// sub_visible() {
+// 		// 	const sub = this.sub()
 			
-			const context = this.$$
-			for( let i = 0 ; i < sub.length ; ++ i ) {
-				const child = sub[ i ]
-				if( child instanceof $mol_view ) {
-					child.$ = context
-				}
-			}
-			
-			const visible = [] as (string | number | boolean | $mol_view | Node)[]
-			const heightLimit = context.$mol_view_visible_height()
-			const offsets = this.item_offsets_top()
+// 		// 	const visible = [] as (string | number | boolean | $mol_view | Node)[]
+// 		// 	const heightLimit = context.$mol_view_visible_height()
+// 		// 	const offsets = this.item_offsets_top()
 
-			let height = 0
+// 		// 	let height = 0
 
-			for( let i = 0 ; i < offsets.length - 1 ; ++i ) {
-				if( offsets[ i ] > heightLimit ) break
-				const child = sub[ i ]
-				visible.push( child )
-			}
+// 		// 	for( let i = 0 ; i < offsets.length - 1 ; ++i ) {
+// 		// 		if( offsets[ i ] > heightLimit ) break
+// 		// 		const child = sub[ i ]
+// 		// 		visible.push( child )
+// 		// 	}
 
-			return visible
-		}
+// 		// 	return visible
+// 		// }
 		
-		minimal_height() {
-			const offsets = this.item_offsets_top()
-			return offsets[ offsets.length - 1 ]
-		}
+// 		minimal_height() {
+// 			const offsets = this.item_offsets_top()
+// 			return offsets[ offsets.length - 1 ]
+// 		}
 		
-	} 
-}
+// 	} 
+// }

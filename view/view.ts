@@ -18,8 +18,8 @@ namespace $ {
 	export class $mol_view extends $mol_object {
 		
 		@ $mol_mem_key
-		static Root( id: number ) {
-			return new this
+		static Root< This extends typeof $mol_view >( this : This , id: number ) {
+			return new this as InstanceType< This >
 		}
 
 		@ $mol_mem
@@ -36,6 +36,7 @@ namespace $ {
 			const nodes = $mol_dom_context.document.querySelectorAll( '[mol_view_root]' )
 			
 			for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
+
 				const name = nodes.item( i ).getAttribute( 'mol_view_root' )!
 				
 				const View = $[ name ]
@@ -83,18 +84,7 @@ namespace $ {
 		/// Visible sub views with defined ambient context
 		/// Render all by default
 		sub_visible() {
-
-			const sub = this.sub()
-			
-			const context = this.$$
-
-			for( const child of sub ) {
-				if( child instanceof $mol_view ) {
-					child.$ = context
-				}
-			}
-			
-			return sub
+			return this.sub()
 		}
 		
 		/// Minimal width that used for lazy rendering
@@ -126,7 +116,9 @@ namespace $ {
 					}
 					
 				} 
-			} catch {}
+			} catch( error ) {
+				if( 'then' in error ) $mol_fail_hidden( error )
+			}
 			
 			return min
 		}
@@ -339,7 +331,9 @@ namespace $ {
 
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_span( {} ,
+				$mol_dev_format_shade( '<' ) ,
 				$mol_dev_format_native( this ) ,
+				$mol_dev_format_shade( '>' ) ,
 				$mol_dev_format_auto( $mol_atom2_value( ()=> this.sub() ) ) ,
 			)
 		}

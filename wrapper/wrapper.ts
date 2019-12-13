@@ -1,6 +1,5 @@
 namespace $ {
 
-	@ $mol_class
 	export class $mol_wrapper extends $mol_object2 {
 
 		static wrap : ( task : ( ... ags : any[] )=> any )=> ( ... ags : any[] )=> any

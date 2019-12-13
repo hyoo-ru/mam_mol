@@ -1,6 +1,5 @@
 namespace $ {
 
-	@ $mol_class
 	export class $mol_mem_force extends Object {
 		constructor(){ super() }
 		$mol_mem_force = true

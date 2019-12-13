@@ -30,7 +30,7 @@ namespace $ {
 			const list = $mol_fiber_sync( ()=> api.list() )()
 			const next = {} as Record< string , $mol_orient_db >
 			
-			for( const item of list ) next[ item.name ] = $mol_orient_db.make( db => {
+			for( const item of list ) next[ item.name ] = $mol_orient_db.create( db => {
 				db.api = item
 				db.server = this
 			} )
@@ -44,7 +44,7 @@ namespace $ {
 			const api = this.api
 			const resp = $mol_fiber_sync( ()=> api.create({ name , type , storage }) )()
 			
-			return this.db[ name ] = $mol_orient_db.make( db => {
+			return this.db[ name ] = $mol_orient_db.create( db => {
 				db.api = resp
 				db.server = this
 			} )

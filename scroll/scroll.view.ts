@@ -20,10 +20,12 @@ namespace $.$$ {
 			return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
 		}
 
+		event_scroll_time : $mol_after_frame
 		event_scroll( next? : Event ) {
 			
 			const el = this.dom_node() as HTMLElement
-			new $mol_after_frame( $mol_fiber_solid.func( ()=> {
+			if( this.event_scroll_time ) this.event_scroll_time.destructor()
+			this.event_scroll_time = new $mol_after_frame( $mol_fiber_solid.func( ()=> {
 				this.scroll_top( Math.max( 0 , el.scrollTop ) )
 				this.scroll_left( Math.max( 0 , el.scrollLeft ) )
 			} ) )
