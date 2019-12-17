@@ -3587,7 +3587,7 @@ var $;
         }
         watcher() {
             const watcher = $node.chokidar.watch(this.path(), {
-                persistent: false,
+                persistent: true,
                 ignored: /(^\.|___$)/,
                 depth: 0,
                 ignoreInitial: true,
