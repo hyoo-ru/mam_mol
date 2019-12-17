@@ -339,7 +339,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    var $mol_dom_context: Window & Pick<typeof globalThis, 'Node' | 'Element' | 'HTMLElement' | 'XMLHttpRequest' | 'DOMParser' | 'XMLSerializer'>;
+    var $mol_dom_context: typeof globalThis;
 }
 
 declare namespace $ {
