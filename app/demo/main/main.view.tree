@@ -1,7 +1,7 @@
 $mol_app_demo_main $mol_page
 	minimal_width 400
 	title \$mol libs for web ui
-	project_uri \https://github.com/eigenmethod/mol/
+	project_uri \https://github.com/eigenmethod/mol/tree/master/
 	tools /
 		<= Project $mol_link_iconed
 			uri <= project_uri
