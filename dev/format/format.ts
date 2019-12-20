@@ -92,7 +92,7 @@ namespace $ {
 		return $mol_dev_format_element(
 			'span' ,
 			{
-				'vertical-align' : '7%',
+				'vertical-align' : '8%',
 				... style ,
 			} ,
 			... content ,

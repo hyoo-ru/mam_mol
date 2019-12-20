@@ -110,12 +110,11 @@ namespace $.$$ {
 		@ $mol_mem
 		minimal_height() {
 			var height = 0
-			var sub = this.sub()
-			if( sub ) sub.forEach( ( child : any )=> {
+			for( const child of this.sub() ) {
 				if( child instanceof $mol_view ) {
 					height += child.minimal_height()
 				}
-			} )
+			}
 			return height
 		}
 
