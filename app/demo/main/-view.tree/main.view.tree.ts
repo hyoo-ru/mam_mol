@@ -20,11 +20,11 @@ namespace $ { export class $mol_app_demo_main extends $mol_page {
 
 	/**
 	 *  ```
-	 *  project_uri \https://github.com/eigenmethod/mol/
+	 *  project_uri \https://github.com/eigenmethod/mol/tree/master/
 	 *  ```
 	 **/
 	project_uri() {
-		return "https://github.com/eigenmethod/mol/"
+		return "https://github.com/eigenmethod/mol/tree/master/"
 	}
 
 	/**

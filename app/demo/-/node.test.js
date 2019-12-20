@@ -5136,7 +5136,7 @@ var $;
             return "$mol libs for web ui";
         }
         project_uri() {
-            return "https://github.com/eigenmethod/mol/";
+            return "https://github.com/eigenmethod/mol/tree/master/";
         }
         tools() {
             return [this.Project()];
@@ -19851,7 +19851,7 @@ var $;
             return "$mol";
         }
         source_prefix() {
-            return "https://github.com/eigenmethod/mol/tree/master/";
+            return "https://github.com/eigenmethod/mol/tree/master";
         }
         Placeholder() {
             return null;
