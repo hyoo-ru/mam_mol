@@ -3,15 +3,15 @@ namespace $.$$ {
 	export class $mol_infinite_demo extends $.$mol_infinite_demo {
 		
 		@ $mol_fiber.method
-		after( anchor : $mol_view ) {
+		after( anchor_id = 0 ) {
 			return [ ... $mol_range2(
-				id => this.Item( $mol_stub_code() ) ,
+				index => anchor_id + index ,
 				()=> this.chunk_size() 
 			) ]
 		}
 
-		item_title( id : string ) {
-			return id
+		item_title( id : number ) {
+			return `Row #${id}`
 		}
 		
 	}

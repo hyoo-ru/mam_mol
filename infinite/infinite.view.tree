@@ -1,2 +1,3 @@
 $mol_infinite $mol_list
-	after!id /$mol_view
+	after!id /
+	Row!id $mol_view
