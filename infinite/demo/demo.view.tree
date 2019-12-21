@@ -1,0 +1,11 @@
+$mol_infinite_demo $mol_demo_large
+	title @ \Infinite list demo
+	chunk_size 20
+	sub /
+		<= Scroll $mol_scroll sub /
+			<= List $mol_infinite
+				after!id <= after!id /$mol_view
+	Item!id $mol_row
+		minimal_height 40
+		sub /
+			<= item_title!id \
