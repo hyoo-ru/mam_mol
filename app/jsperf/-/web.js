@@ -2087,8 +2087,8 @@ var $;
             self.addEventListener('fetch', (event) => {
                 event.respondWith(fetch(event.request)
                     .then(response => {
-                    caches.open('v1')
-                        .then(cache => cache.put(event.request, response));
+                    event.waitUntil(caches.open('v1')
+                        .then(cache => cache.put(event.request, response)));
                     return response.clone();
                 })
                     .catch(error => {
