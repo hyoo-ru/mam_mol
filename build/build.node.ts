@@ -16,7 +16,7 @@ namespace $ {
 				process.exit(1)
 			}
 		} else {
-			build.server().express()
+			build.server().socket()
 		}
 	}
 	
