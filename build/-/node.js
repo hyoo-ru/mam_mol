@@ -3316,7 +3316,7 @@ var $;
             }
         }
         else {
-            build.server().express();
+            build.server().socket();
         }
     }
     $.$mol_build_start = $mol_build_start;
@@ -4312,15 +4312,22 @@ var $;
         express() {
             var express = $node['express']();
             this.expressHandlers().forEach(plugin => express.use(plugin));
+            return express;
+        }
+        http() {
+            const server = $node.http.createServer(this.express());
             $node['portastic'].find({
                 min: this.port(),
                 max: this.port() + 1000,
                 retrieve: 1
             }).then((ports) => {
-                express.listen(ports[0]);
+                server.listen(ports[0]);
                 console.log(this.messageStart(ports[0]));
             });
-            return express;
+            return server;
+        }
+        socket() {
+            return new $node.ws.Server({ server: this.http() });
         }
         messageStart(port) {
             return `${this} started at http://127.0.0.1:${port}/`;
@@ -4369,6 +4376,12 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_server.prototype, "express", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_server.prototype, "http", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_server.prototype, "socket", null);
     $.$mol_server = $mol_server;
 })($ || ($ = {}));
 //server.node.js.map

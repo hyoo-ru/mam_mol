@@ -842,9 +842,12 @@ declare namespace $ {
     }
 }
 
+/// <reference types="node" />
 declare namespace $ {
     class $mol_server extends $mol_object {
         express(): any;
+        http(): import("http").Server;
+        socket(): any;
         messageStart(port: number): string;
         expressHandlers(): any[];
         expressCompressor(): any;

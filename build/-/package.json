@@ -13,6 +13,7 @@
     "typescript": "*",
     "express": "*",
     "portastic": "*",
+    "ws": "*",
     "compression": "*",
     "body-parser": "*",
     "serve-index": "*"

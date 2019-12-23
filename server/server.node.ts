@@ -8,6 +8,14 @@ namespace $ {
 			
 			this.expressHandlers().forEach( plugin => express.use( plugin ) )
 			
+			return express
+		}
+
+		@ $mol_mem
+		http() {
+
+			const server = $node.http.createServer( this.express() )
+
 			$node['portastic'].find(
 				{
 					min : this.port() ,
@@ -16,14 +24,20 @@ namespace $ {
 				}
 			).then(
 				( ports : number[] ) => {
-					express.listen( ports[ 0 ] )
+					server.listen( ports[ 0 ] )
 					console.log( this.messageStart( ports[ 0 ] ) )
 				}
 			)
-			
-			return express
+
+			return server
+
 		}
-		
+
+		@ $mol_mem
+		socket() {
+			return new $node.ws.Server({ server : this.http() })
+		}
+
 		messageStart( port : number ) {
 			return `${ this } started at http://127.0.0.1:${ port }/`
 		}
