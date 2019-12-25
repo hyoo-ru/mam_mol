@@ -2257,18 +2257,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_typeof(value) {
-        var str = {}.toString.apply(value);
-        var type = str.substring(8, str.length - 1);
-        return type;
-    }
-    $.$mol_typeof = $mol_typeof;
-})($ || ($ = {}));
-//typeof.js.map
-;
-"use strict";
-var $;
-(function ($) {
+    $.$mol_tree_convert = Symbol('$mol_tree_convert');
     class $mol_tree {
         constructor(config = {}) {
             this.type = config.type || '';
@@ -2353,31 +2342,36 @@ var $;
             return root;
         }
         static fromJSON(json, baseUri = '') {
-            var type = $.$mol_typeof(json);
-            switch (type) {
-                case 'Boolean':
-                case 'Null':
-                case 'Number':
+            switch (true) {
+                case typeof json === 'boolean':
+                case typeof json === 'number':
+                case json === null:
                     return new $mol_tree({
                         type: String(json),
                         baseUri: baseUri
                     });
-                case 'String':
+                case typeof json === 'string':
                     return new $mol_tree({
                         value: json,
                         baseUri: baseUri
                     });
-                case 'Array':
+                case Array.isArray(json):
                     return new $mol_tree({
                         type: "/",
                         sub: json.map(json => $mol_tree.fromJSON(json, baseUri))
                     });
-                case 'Date':
+                case json instanceof Date:
                     return new $mol_tree({
                         value: json.toISOString(),
                         baseUri: baseUri
                     });
-                case 'Object':
+                default:
+                    if (typeof json[$.$mol_tree_convert] === 'function') {
+                        return json[$.$mol_tree_convert]();
+                    }
+                    if (typeof json.toJSON === 'function') {
+                        return $mol_tree.fromJSON(json.toJSON());
+                    }
                     var sub = [];
                     for (var key in json) {
                         if (json[key] === undefined)
@@ -2404,7 +2398,6 @@ var $;
                         sub: sub,
                         baseUri: baseUri
                     });
-                default: return $.$mol_fail(new Error(`Unsupported type (${type}) at ${baseUri}`));
             }
         }
         get uri() {

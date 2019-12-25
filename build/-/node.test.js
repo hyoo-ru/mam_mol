@@ -1780,18 +1780,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_typeof(value) {
-        var str = {}.toString.apply(value);
-        var type = str.substring(8, str.length - 1);
-        return type;
-    }
-    $.$mol_typeof = $mol_typeof;
-})($ || ($ = {}));
-//typeof.js.map
-;
-"use strict";
-var $;
-(function ($) {
+    $.$mol_tree_convert = Symbol('$mol_tree_convert');
     class $mol_tree {
         constructor(config = {}) {
             this.type = config.type || '';
@@ -1876,31 +1865,36 @@ var $;
             return root;
         }
         static fromJSON(json, baseUri = '') {
-            var type = $.$mol_typeof(json);
-            switch (type) {
-                case 'Boolean':
-                case 'Null':
-                case 'Number':
+            switch (true) {
+                case typeof json === 'boolean':
+                case typeof json === 'number':
+                case json === null:
                     return new $mol_tree({
                         type: String(json),
                         baseUri: baseUri
                     });
-                case 'String':
+                case typeof json === 'string':
                     return new $mol_tree({
                         value: json,
                         baseUri: baseUri
                     });
-                case 'Array':
+                case Array.isArray(json):
                     return new $mol_tree({
                         type: "/",
                         sub: json.map(json => $mol_tree.fromJSON(json, baseUri))
                     });
-                case 'Date':
+                case json instanceof Date:
                     return new $mol_tree({
                         value: json.toISOString(),
                         baseUri: baseUri
                     });
-                case 'Object':
+                default:
+                    if (typeof json[$.$mol_tree_convert] === 'function') {
+                        return json[$.$mol_tree_convert]();
+                    }
+                    if (typeof json.toJSON === 'function') {
+                        return $mol_tree.fromJSON(json.toJSON());
+                    }
                     var sub = [];
                     for (var key in json) {
                         if (json[key] === undefined)
@@ -1927,7 +1921,6 @@ var $;
                         sub: sub,
                         baseUri: baseUri
                     });
-                default: return $.$mol_fail(new Error(`Unsupported type (${type}) at ${baseUri}`));
             }
         }
         get uri() {
@@ -4320,7 +4313,20 @@ var $;
             return server;
         }
         socket() {
-            return new $node.ws.Server({ server: this.http() });
+            const socket = new $node.ws.Server({
+                server: this.http(),
+                perMessageDeflate: {
+                    zlibDeflateOptions: {
+                        chunkSize: 1024,
+                        memLevel: 7,
+                        level: 3
+                    },
+                    zlibInflateOptions: {
+                        chunkSize: 10 * 1024
+                    },
+                }
+            });
+            return socket;
         }
         messageStart(port) {
             return `${this} started at http://127.0.0.1:${port}/`;
@@ -6086,30 +6092,6 @@ var $;
     });
 })($ || ($ = {}));
 //key.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'scalars'() {
-            $.$mol_assert_equal($.$mol_typeof(void 0), 'Undefined');
-            $.$mol_assert_equal($.$mol_typeof(null), 'Null');
-            $.$mol_assert_equal($.$mol_typeof(0), 'Number');
-            $.$mol_assert_equal($.$mol_typeof(''), 'String');
-            $.$mol_assert_equal($.$mol_typeof(false), 'Boolean');
-        },
-        'common objects'() {
-            $.$mol_assert_equal($.$mol_typeof({}), 'Object');
-            $.$mol_assert_equal($.$mol_typeof([]), 'Array');
-            $.$mol_assert_equal($.$mol_typeof(arguments), 'Arguments');
-        },
-        'special classes'() {
-            $.$mol_assert_equal($.$mol_typeof(new Date), 'Date');
-            $.$mol_assert_equal($.$mol_typeof(new RegExp('')), 'RegExp');
-        },
-    });
-})($ || ($ = {}));
-//typeof.test.js.map
 ;
 "use strict";
 var $;

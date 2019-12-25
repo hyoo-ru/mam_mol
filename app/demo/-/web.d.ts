@@ -4997,10 +4997,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_typeof(value: any): any;
-}
-
-declare namespace $ {
+    const $mol_tree_convert: unique symbol;
     type $mol_tree_path = Array<string | number | null>;
     type $mol_tree_hack = (input: $mol_tree, context: $mol_tree_context) => readonly $mol_tree[];
     type $mol_tree_context = Record<string, $mol_tree_hack>;

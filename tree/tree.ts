@@ -1,5 +1,6 @@
 namespace $ {
 
+	export const $mol_tree_convert : unique symbol = Symbol( '$mol_tree_convert' )
 	export type $mol_tree_path = Array< string | number | null >
 
 	export type $mol_tree_hack = ( input : $mol_tree , context : $mol_tree_context )=> readonly $mol_tree[]
@@ -137,36 +138,47 @@ namespace $ {
 		
 		static fromJSON( json : any , baseUri = '' ) : $mol_tree {
 
-			var type = $mol_typeof( json )
-			switch( type ) {
+			switch( true ) {
 
-				case 'Boolean' :
-				case 'Null' :
-				case 'Number' :
+				case typeof json === 'boolean' :
+				case typeof json === 'number' :
+				case json === null :
+
 					return new $mol_tree({
 						type : String( json ) ,
 						baseUri : baseUri
 					})
 				
-				case 'String' :
+				case typeof json === 'string' :
+
 					return new $mol_tree({
 						value : json ,
 						baseUri : baseUri
 					})
 
-				case 'Array' :
+				case Array.isArray( json ) :
+
 					return new $mol_tree({
 						type : "/" ,
 						sub : ( json as any[] ).map( json => $mol_tree.fromJSON( json , baseUri ) )
 					})
 
-				case 'Date' :
+				case json instanceof Date :
+
 					return new $mol_tree({
 						value : json.toISOString() ,
 						baseUri : baseUri
 					})
 				
-				case 'Object' :
+				default :
+
+					if( typeof json[ $mol_tree_convert ] === 'function' ) {
+						return json[ $mol_tree_convert ]()
+					}
+
+					if( typeof json.toJSON === 'function' ) {
+						return $mol_tree.fromJSON( json.toJSON() )
+					}
 
 					var sub : $mol_tree[] = []
 					
@@ -204,7 +216,6 @@ namespace $ {
 						baseUri : baseUri
 					})
 				
-				default: return $mol_fail( new Error( `Unsupported type (${type}) at ${baseUri}` ) )
 			}
 
 		}
