@@ -14,3 +14,4 @@ include \/mol/type/pick
 include \/mol/type/prepend
 include \/mol/type/reverse
 include \/mol/type/tail
+include \/mol/type/unary
