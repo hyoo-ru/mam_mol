@@ -4,7 +4,7 @@ namespace $ {
 
 		'no functions'() {
 			
-			const stringify = $mol_pipe()
+			const stringify = $mol_data_pipe()
 			
 			type Type = $mol_type_assert<
 				typeof stringify,
@@ -15,7 +15,7 @@ namespace $ {
 
 		'single function'() {
 			
-			const stringify = $mol_pipe(
+			const stringify = $mol_data_pipe(
 				( input : number )=> input.toString() ,
 			)
 			
@@ -30,7 +30,7 @@ namespace $ {
 
 		'two functions'() {
 
-			const isLong = $mol_pipe(
+			const isLong = $mol_data_pipe(
 				( input : number )=> input.toString() ,
 				( input : string )=> input.length > 2  ,
 			)
@@ -47,7 +47,7 @@ namespace $ {
 
 		'three functions'() {
 
-			const pattern = $mol_pipe(
+			const pattern = $mol_data_pipe(
 				( input : number )=> input.toString() ,
 				( input : string )=> new RegExp( input )  ,
 				( input : RegExp )=> input.toString()  ,
