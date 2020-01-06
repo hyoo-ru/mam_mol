@@ -25,7 +25,7 @@ namespace $ {
 	}
 
 	/**
-	 * Combines list of unary functions to one.
+	 * Combines list of unary functions/classes to one function.
 	 * 
 	 * 	const reparse = $mol_pipe( JSON.stringify , JSON.parse )
 	 **/
