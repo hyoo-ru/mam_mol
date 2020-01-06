@@ -20,7 +20,7 @@ namespace $ {
 	 * 
 	 * 	const reparse = $mol_pipe( JSON.stringify , JSON.parse )
 	 **/
-	export function $mol_pipe<
+	export function $mol_data_pipe<
 		Funcs extends $mol_type_unary[]
 	>(
 		... funcs : Funcs & Guard<Funcs>
@@ -30,11 +30,14 @@ namespace $ {
 		$mol_type_foot< Funcs >
 	> {
 
-		return ( input : Funcs[0] )=> {
-			let value : any = input
-			for( const func of funcs as any ) value = func( value )
-			return value
-		}
+		return $mol_data_setup(
+			( input : Funcs[0] )=> {
+				let value : any = input
+				for( const func of funcs as any ) value = func( value )
+				return value
+			} ,
+			{ funcs }
+		)
 
 	}
 
