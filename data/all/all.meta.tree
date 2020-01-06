@@ -15,5 +15,4 @@ include \/mol/data/string
 include \/mol/data/string
 include \/mol/data/variant
 include \/mol/data/wrapper
-include \/mol/data/wrapper2
 include \/mol/data/pipe

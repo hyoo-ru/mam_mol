@@ -16,7 +16,7 @@ undefined is not a number
 const User = $mol_data_record({
 	name : $mol_data_string ,
 	age : $mol_data_optional( $mol_data_integer ) ,
-	birthday : $mol_data_pipe( $mol_data_string , $mol_data_wrapper2( $mol_time_moment ) ) ,
+	birthday : $mol_data_pipe( $mol_data_string , $mol_time_moment ) ,
 	phone : $mol_data_variant( $mol_data_string , $mol_data_integer ) ,
 	mail : $mol_data_email ,
 })
@@ -69,7 +69,7 @@ const Duration = $mol_data_pipe(
 		$mol_data_string ,
 		$mol_data_integer ,
 	) ,
-	$mol_data_wrapper( $mol_time_duration ) ,
+	$mol_time_duration ,
 )
 
 JSON.stringify( Duration( 'P1D' ) ) // "P1DT"

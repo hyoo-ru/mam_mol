@@ -11,6 +11,8 @@ namespace $ {
 		Index extends number
 	> = Func extends ( ... params : infer Params ) => any
 		? Params[ Index ]
-		: never
+		: Func extends new( ... params : infer Params2 ) => any
+			? Params2[ Index ]
+			: never
 
 }
