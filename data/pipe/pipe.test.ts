@@ -62,6 +62,26 @@ namespace $ {
 			
 		},
 
+		'classes'() {
+
+			class Box {
+				constructor( public value : string ) {}
+			}
+
+			const boxify = $mol_data_pipe(
+				( input : number )=> input.toString() ,
+				Box
+			)
+			
+			type Type = $mol_type_assert<
+				typeof boxify,
+				( input : number )=> Box
+			>
+	
+			$mol_assert_like( boxify( 5 ) , new Box( '5' ) )
+			
+		},
+
 	})
 
 }
