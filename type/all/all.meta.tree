@@ -7,9 +7,11 @@ include \/mol/type/keys/exclude
 include \/mol/type/keys/extract
 include \/mol/type/merge
 include \/mol/type/omit
+include \/mol/type/param
 include \/mol/type/partial/deep
 include \/mol/type/partial/undefined
 include \/mol/type/pick
 include \/mol/type/prepend
 include \/mol/type/reverse
 include \/mol/type/tail
+include \/mol/type/unary
