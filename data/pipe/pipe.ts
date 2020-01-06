@@ -4,11 +4,11 @@ namespace $ {
 		Funcs extends $mol_type_unary[] ,
 		Index extends keyof Funcs
 	> = $mol_type_param<
-			Index extends keyof $mol_type_tail< Funcs >
-				? $mol_type_tail< Funcs >[ Index ]
-				: any ,
-			0
-		>
+		Index extends keyof $mol_type_tail< Funcs >
+			? $mol_type_tail< Funcs >[ Index ]
+			: any ,
+		0
+	>
 
 	type Guard<
 		Funcs extends $mol_type_unary[]
