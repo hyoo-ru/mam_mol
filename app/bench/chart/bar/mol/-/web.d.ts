@@ -762,7 +762,7 @@ declare namespace $ {
 
 declare namespace $ {
     type Elements<Obj extends $mol_view> = $mol_type_omit<{
-        [key in keyof Obj]: Obj[key] extends () => infer T ? (unknown extends T ? never : T extends $mol_view ? $mol_style_definition<T> : never) : never;
+        [key in keyof Obj]: Obj[key] extends (id?: any) => infer T ? (unknown extends T ? never : T extends $mol_view ? $mol_style_definition<T> : never) : never;
     }, unknown, never>;
     type Pseudos<Obj extends $mol_view> = {
         [key in $mol_style_pseudo_class | $mol_style_pseudo_element]: $mol_style_definition<Obj>;
