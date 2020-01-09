@@ -107,16 +107,13 @@ namespace $ {
 			$mol_assert_unique( b.bar() , bar )
 		} ,
 
-		'wait for data'() {
+		async 'wait for data'() {
 
 			class Test extends $mol_object2 {
 
 				@ $mol_mem
-				source( next? : string , force? : $mol_mem_force ) : string {
-					new $mol_defer( () => {
-						this.source( 'Jin' , $mol_mem_force_cache )
-					} )
-					return $mol_fail_hidden( new $mol_atom_wait( 'Wait for data!' ) )
+				source() : string {
+					return $mol_fiber_sync( ()=> new Promise< string >( done => done( 'Jin' ) ) )()
 				}
 
 				@ $mol_mem
@@ -135,7 +132,7 @@ namespace $ {
 
 			$mol_assert_fail( ()=> t.target().valueOf() , Promise )
 
-			$mol_defer.run()
+			await $mol_fiber_warp()
 
 			$mol_assert_equal( t.target() , 'Jin' )
 		} ,
