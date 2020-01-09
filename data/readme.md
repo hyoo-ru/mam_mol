@@ -16,7 +16,7 @@ undefined is not a number
 const User = $mol_data_record({
 	name : $mol_data_string ,
 	age : $mol_data_optional( $mol_data_integer ) ,
-	birthday : $mol_data_wrapper( $mol_data_string , $mol_time_moment ) ,
+	birthday : $mol_data_pipe( $mol_data_string , $mol_time_moment ) ,
 	phone : $mol_data_variant( $mol_data_string , $mol_data_integer ) ,
 	mail : $mol_data_email ,
 })
@@ -64,7 +64,7 @@ len = Length( 20.1 ) // Run time error
 ## (De)Serialization
 
 ```typescript
-const Duration = $mol_data_wrapper(
+const Duration = $mol_data_pipe(
 	$mol_data_variant(
 		$mol_data_string ,
 		$mol_data_integer ,
@@ -82,7 +82,7 @@ JSON.stringify( Duration( 1000 ) ) // "PT1S"
 npm install mol_data_all
 ```
 
-```
+```typescript
 import {
   $mol_data_nominal as Nominal,
   $mol_data_integer as Integer,
