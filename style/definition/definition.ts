@@ -2,7 +2,7 @@ namespace $ {
 
 	type Elements< Obj extends $mol_view > = $mol_type_omit< {
 		[ key in keyof Obj ] :
-			Obj[ key ] extends ()=> infer T
+			Obj[ key ] extends ( id? : any )=> infer T
 			? ( unknown extends T
 				? never
 				: T extends $mol_view
