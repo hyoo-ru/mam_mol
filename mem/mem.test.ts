@@ -132,7 +132,7 @@ namespace $ {
 
 			$mol_assert_fail( ()=> t.target().valueOf() , Promise )
 
-			$mol_defer.run()
+			await $mol_fiber_warp()
 
 			$mol_assert_equal( t.target() , 'Jin' )
 		} ,
