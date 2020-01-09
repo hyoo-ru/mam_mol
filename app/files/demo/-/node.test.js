@@ -3184,6 +3184,16 @@ var $;
                 $.$mol_dom_render_events(node, this.event());
                 return node;
             }
+            dom_node_actual() {
+                const node = this.Sub().dom_node_actual();
+                const attr = this.attr();
+                const style = this.style();
+                const fields = this.field();
+                $.$mol_dom_render_attributes(node, attr);
+                $.$mol_dom_render_styles(node, style);
+                $.$mol_dom_render_fields(node, fields);
+                return node;
+            }
             dom_tree() {
                 const Sub = this.Sub();
                 Sub.$ = this.$;
@@ -3198,6 +3208,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_ghost.prototype, "dom_node", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_ghost.prototype, "dom_node_actual", null);
         $$.$mol_ghost = $mol_ghost;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
