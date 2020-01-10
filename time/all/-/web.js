@@ -263,9 +263,7 @@ var $;
             this.hour = config.hour;
             this.minute = config.minute;
             this.second = config.second;
-            if (config.offset != null) {
-                this.offset = new $.$mol_time_duration(config.offset);
-            }
+            this.offset = config.offset && new $.$mol_time_duration(config.offset);
         }
         get weekday() {
             return (this.native.getDay() + 6) % 7;
