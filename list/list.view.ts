@@ -1,4 +1,7 @@
 namespace $.$$ {
+
+	const anchoring = $mol_dom_context.CSS.supports('overflow-anchor:auto')
+
 	export class $mol_list extends $.$mol_list {
 		
 		@ $mol_mem
@@ -37,7 +40,7 @@ namespace $.$$ {
 			}
 
 			// jumps when fully over limits
-			if(( bottom < limit_top )||( top > limit_bottom )) {
+			if( anchoring && (( bottom < limit_top )||( top > limit_bottom )) ) {
 
 				min = 0
 				top = ( rect?.top ?? 0 )
@@ -62,7 +65,7 @@ namespace $.$$ {
 			let bottom2 = bottom
 
 			// force recalc min when overlapse top limit
-			if( top <= limit_top ) {
+			if( anchoring && ( top <= limit_top ) ) {
 				min2 = max
 				top2 = bottom
 			}
@@ -80,7 +83,7 @@ namespace $.$$ {
 			}
 
 			// extend max to cover bottom limit
-			while( top2 >= limit_top && min2 > 0 ) {
+			while( anchoring && (( top2 >= limit_top )&&( min2 > 0 )) ) {
 				-- min2
 				top2 -= kids[ min2 ].minimal_height()
 			}
