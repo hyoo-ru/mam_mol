@@ -1,6 +1,6 @@
 namespace $.$$ {
 
-	const anchoring = $mol_dom_context.CSS.supports('overflow-anchor:auto')
+	const anchoring = $mol_dom_context.CSS ? $mol_dom_context.CSS.supports('overflow-anchor:auto') : false
 
 	export class $mol_list extends $.$mol_list {
 		
