@@ -13,28 +13,30 @@ namespace $.$$ {
 			const kids = this.sub()
 			if( kids.length < 3 ) return [ 0 , kids.length ]
 			
-			let [ min , max ] = $mol_atom2_value( ()=> this.view_window() ) ?? [ 0 , 1 ]
+			let [ min , max ] = $mol_mem_cached( ()=> this.view_window() ) ?? [ 0 , 0 ]
 
 			let max2 = max = Math.min( max , kids.length )
 			let min2 = min = Math.max( 0 , Math.min( min , max - 1 ) )
 			
-			const window_height = $mol_window.size().height
+			const window_height = this.$.$mol_window.size().height
 			const over = Math.ceil( window_height * this.over_render() )
 			const limit_top = -over
 			const limit_bottom = window_height + over
 
 			const rect = this.view_rect()
 
-			const gap_before = $mol_atom2_value( ()=> this.gap_before() ) ?? 0
-			const gap_after = $mol_atom2_value( ()=> this.gap_after() ) ?? 0
+			const gap_before = $mol_mem_cached( ()=> this.gap_before() ) ?? 0
+			const gap_after = $mol_mem_cached( ()=> this.gap_after() ) ?? 0
 
 			let top = ( rect?.top ?? 0 ) + gap_before
 			let bottom = ( rect?.bottom ?? 0 ) - gap_after
 
+			// change nothing when already covers all limits
 			if( top <= limit_top && bottom >= limit_bottom ) {
 				return [ min2 , max2 ]
 			}
 
+			// jumps when fully over limits
 			if(( bottom < limit_top )||( top > limit_bottom )) {
 
 				min = 0
@@ -53,27 +55,31 @@ namespace $.$$ {
 				min2 = min
 				max2 = max = min + 1
 				bottom = 0
-	
+
 			}
 
 			let top2 = top
 			let bottom2 = bottom
 
+			// force recalc min when overlapse top limit
 			if( top <= limit_top ) {
 				min2 = max
 				top2 = bottom
 			}
 
+			// force recalc max when overlapse bottom limit
 			if( bottom >= limit_bottom ) {
 				max2 = min
 				bottom2 = top
 			}
 
+			// extend min to cover top limit
 			while( bottom2 < limit_bottom && max2 < kids.length ) {
 				bottom2 += kids[ max2 ].minimal_height()
 				++ max2
 			}
 
+			// extend max to cover bottom limit
 			while( top2 >= limit_top && min2 > 0 ) {
 				-- min2
 				top2 -= kids[ min2 ].minimal_height()
@@ -97,7 +103,7 @@ namespace $.$$ {
 		@ $mol_mem
 		sub_visible() {
 
-			var sub = super.sub_visible()
+			var sub = this.sub()
 
 			const next = sub.slice( ... this.view_window() )
 			
@@ -109,13 +115,8 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		minimal_height() {
-			var height = 0
-			for( const child of this.sub() ) {
-				if( child instanceof $mol_view ) {
-					height += child.minimal_height()
-				}
-			}
-			return height
+			const visible = this.sub_visible()
+			return visible.reduce( ( sum , view )=> sum + view.minimal_height() , 0 )
 		}
 
 	}

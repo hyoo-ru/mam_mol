@@ -19,7 +19,7 @@ namespace $ {
 		}
 
 		destructor() {
-			const api = $mol_atom2_value( ()=> this.api )
+			const api = $mol_mem_cached( ()=> this.api )
 			if( api ) api.close()
 		}
 

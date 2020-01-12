@@ -126,14 +126,8 @@ namespace $ {
 		static watchers = new Set< $mol_view >()
 
 		@ $mol_mem
-		view_rect() {
-			this.view_rect_watcher()
-			return this.view_rect_cache()
-		}
-
-		@ $mol_mem
-		view_rect_cache( next = null as ClientRect | null ) {
-			if($mol_atom2.current) $mol_atom2.current.destructor = ()=>{}
+		view_rect( next = null as ClientRect | null ) {
+			if( $mol_atom2.current ) this.view_rect_watcher()
 			return next
 		}
 
@@ -306,10 +300,7 @@ namespace $ {
 		}
 		
 		style() : { [ key : string ] : string|number } {
-			return {
-				minHeight: this.minimal_height(),
-				// minWidth: this.minimal_width(),
-			}
+			return {}
 		}
 		
 		field() : { [ key : string ] : any } {
@@ -331,10 +322,9 @@ namespace $ {
 
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_span( {} ,
-				$mol_dev_format_shade( '<' ) ,
 				$mol_dev_format_native( this ) ,
-				$mol_dev_format_shade( '>' ) ,
-				$mol_dev_format_auto( $mol_atom2_value( ()=> this.sub() ) ) ,
+				$mol_dev_format_shade( '/' ) ,
+				$mol_dev_format_auto( $mol_mem_cached( ()=> this.sub() ) ) ,
 			)
 		}
 
@@ -345,7 +335,7 @@ namespace $ {
 			for( const view of $mol_view.watchers ) {
 				const rect = view.dom_node().getBoundingClientRect().toJSON()
 				//if( rect.height ) 
-				view.view_rect_cache( rect )
+				view.view_rect( rect )
 			}
 			new $mol_after_frame( $mol_view_watch )
 		} )

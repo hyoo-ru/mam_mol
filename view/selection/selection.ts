@@ -16,7 +16,7 @@ namespace $ {
 
 			new $mol_defer( $mol_log2.func( ()=> {
 
-				const element = $mol_atom2_value( ()=> this.focused() )![0] as HTMLElement
+				const element = $mol_mem_cached( ()=> this.focused() )![0] as HTMLElement
 				
 				if( element ) element.focus()
 				else $mol_dom_context.blur()

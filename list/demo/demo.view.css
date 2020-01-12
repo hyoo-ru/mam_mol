@@ -2,3 +2,8 @@
 	padding-left: 1rem;
 	display: block;
 }
+
+[mol_list_demo_row] [mol_list_demo_row] {
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	background: hsla( 0deg , 0% , 50% , .05 );
+}

@@ -9,6 +9,7 @@ $mol_grid $mol_scroll
 	hierarchy_col \
 	-
 	sub /
+		<= Head
 		<= Table $mol_grid_table
 			sub <= rows /$mol_view
 	Head $mol_grid_row
