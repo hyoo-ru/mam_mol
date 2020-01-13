@@ -76,13 +76,13 @@ namespace $.$$ {
 				bottom2 = top
 			}
 
-			// extend min to cover top limit
+			// extend max to cover bottom limit
 			while( bottom2 < limit_bottom && max2 < kids.length ) {
 				bottom2 += kids[ max2 ].minimal_height()
 				++ max2
 			}
 
-			// extend max to cover bottom limit
+			// extend min to cover top limit
 			while( anchoring && (( top2 >= limit_top )&&( min2 > 0 )) ) {
 				-- min2
 				top2 -= kids[ min2 ].minimal_height()

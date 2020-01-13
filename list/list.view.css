@@ -13,6 +13,7 @@
 	display: block !important;
 	flex: none;
 	transition: none;
+	overflow-anchor: none;
 }
 
 [mol_list] > * {
