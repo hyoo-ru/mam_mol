@@ -1,13 +1,16 @@
 namespace $.$$ {
 
-	const anchoring = $mol_dom_context.CSS ? $mol_dom_context.CSS.supports('overflow-anchor:auto') : false
-
 	export class $mol_list extends $.$mol_list {
 		
 		@ $mol_mem
 		sub() {
 			const rows = this.rows()
 			return ( rows.length === 0 ) ? [ this.Empty() ] : rows
+		}
+
+		render_visible_only() {
+			if ( !$mol_dom_context.CSS ) return false
+			return $mol_dom_context.CSS.supports( 'overflow-anchor:auto' )
 		}
 		
 		@ $mol_mem
@@ -21,8 +24,9 @@ namespace $.$$ {
 			let max2 = max = Math.min( max , kids.length )
 			let min2 = min = Math.max( 0 , Math.min( min , max - 1 ) )
 			
+			const anchoring = this.render_visible_only()
 			const window_height = this.$.$mol_window.size().height
-			const over = Math.ceil( window_height * this.over_render() )
+			const over = Math.ceil( window_height * this.render_over() )
 			const limit_top = -over
 			const limit_bottom = window_height + over
 

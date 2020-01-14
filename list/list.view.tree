@@ -1,5 +1,6 @@
 $mol_list $mol_view
-	over_render 0.25
+	render_visible_only true
+	render_over 0.25
 	sub <= rows /$mol_view
 	Empty $mol_view
 	Gap_before $mol_view style * paddingTop <= gap_before 0
