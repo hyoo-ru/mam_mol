@@ -32,7 +32,7 @@
 		$mol_fiber_defer( ()=> {
 			uibench.run(
 				$mol_fiber_root(function (state) {
-					$mol_perf_uibench.Root[0].state(state)
+					$mol_perf_uibench.Root(0).state(state)
 					$mol_fiber_warp()
 				}),
 				function (samples) {

@@ -56,8 +56,8 @@ namespace $.$$ {
 				}
 
 				min2 = min
-				max2 = max = min + 1
-				bottom = 0
+				max2 = max = min
+				bottom = top
 
 			}
 
