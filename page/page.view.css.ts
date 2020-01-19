@@ -28,7 +28,7 @@ namespace $.$$ {
 			flex: '0 0 auto' ,
 			position: 'relative' ,
 			margin: '0' ,
-			minHeight: 'calc( 1.5em + 1rem )' ,
+			minHeight: 'calc( 1.5em + 2rem )' ,
 			padding: '.5rem' ,
 		},
 
