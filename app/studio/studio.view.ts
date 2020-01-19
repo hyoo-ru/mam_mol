@@ -20,7 +20,7 @@ namespace $.$$ {
 		@ $mol_mem
 		classes_static() {
 			const view_tree = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tdom_name \\\n\n'
-			const source = view_tree + $mol_http.resource( 'web.view.tree' ).text()
+			const source = view_tree + $mol_fetch.text( 'web.view.tree' )
 			return $mol_view_tree_classes( $mol_tree.fromString( source ) )
 		}
 		

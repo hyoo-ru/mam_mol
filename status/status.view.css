@@ -5,11 +5,11 @@
 	display: block;
 }
 
-[mol_status]:not([mol_view_error="$mol_atom_wait"]) {
+[mol_status]:not([mol_view_error="Promise"]) {
 	background: var(--mol_skin_warn);
 	color: var(--mol_skin_warn_text);
 }
 
-[mol_status]:not([mol_view_error="$mol_atom_wait"]):empty {
+[mol_status]:not([mol_view_error="Promise"]):empty {
 	display: none;
 }
