@@ -13,6 +13,19 @@ namespace $ {
 			$mol_defer.run()
 		} ) ) )
 		
+		function $mol_view_watch() {
+			$mol_fiber_unlimit( ()=> {
+				for( const view of $mol_view.watchers ) {
+					const rect = view.dom_node().getBoundingClientRect().toJSON()
+					//if( rect.height ) 
+					view.view_rect( rect )
+				}
+				new $mol_after_frame( $mol_view_watch )
+			} )
+		}
+	
+		$mol_view_watch()
+	
 	}
 	
 }

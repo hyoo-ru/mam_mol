@@ -330,19 +330,6 @@ namespace $ {
 
 	}
 
-	function $mol_view_watch() {
-		$mol_fiber_unlimit( ()=> {
-			for( const view of $mol_view.watchers ) {
-				const rect = view.dom_node().getBoundingClientRect().toJSON()
-				//if( rect.height ) 
-				view.view_rect( rect )
-			}
-			new $mol_after_frame( $mol_view_watch )
-		} )
-	}
-
-	if( $mol_dom_context.document ) $mol_view_watch()
-	
 	export type $mol_view_all = $mol_type_keys_extract< $mol_ambient_context , any , $mol_ambient_context['$mol_view'] >
 
 }
