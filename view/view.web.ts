@@ -16,9 +16,7 @@ namespace $ {
 		function $mol_view_watch() {
 			$mol_fiber_unlimit( ()=> {
 				for( const view of $mol_view.watchers ) {
-					const rect = view.dom_node().getBoundingClientRect().toJSON()
-					//if( rect.height ) 
-					view.view_rect( rect )
+					view.view_rect( view.dom_node().getBoundingClientRect().toJSON() )
 				}
 				new $mol_after_frame( $mol_view_watch )
 			} )

@@ -1,6 +1,6 @@
 # $mol_row
 
-Horizontal list of blocks with margins between and around.
+Horizontal list of blocks with margins between and around that can wraps to next line.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_row)
 

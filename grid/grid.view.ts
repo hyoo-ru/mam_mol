@@ -8,18 +8,6 @@ namespace $.$$ {
 	
 	export class $mol_grid extends $.$mol_grid {
 		
-		// @ $mol_mem
-		// rows_visible() {
-		// 	const rows = this.rows()
-			
-		// 	const view_window = this.view_window()
-			
-		// 	return [
-		// 		this.Head() ,
-		// 		... rows.slice( view_window.top , view_window.bottom ) ,
-		// 	]
-		// }
-				
 		@ $mol_mem
 		head_cells() {
 			return this.col_ids().map( colId => this.Col_head( colId ) ) as readonly $mol_view[]

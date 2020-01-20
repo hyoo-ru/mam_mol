@@ -7,6 +7,3 @@ $mol_scroll $mol_view
 	event *
 		^
 		scroll?event <=> event_scroll?event null
-	Strut $mol_view
-		style *
-			transform <= strut_transform \
