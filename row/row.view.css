@@ -12,15 +12,7 @@
 	max-width: 100%;
 }
 
-[mol_row] > * ,
-[mol_row_sub] > * {
+[mol_row] > * {
 	margin: .5rem;
 	max-width: 100%;
-}
-
-[mol_row_sub] {
-	margin: 0;
-	display: flex;
-	flex-wrap: wrap;
-	flex: 1 1 auto;
 }

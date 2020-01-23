@@ -1,6 +1,5 @@
 namespace $ {
 
-	@ $mol_class
 	export class $mol_log2 extends $mol_wrapper {
 
 		static current = null as null | $mol_log2
@@ -119,7 +118,6 @@ namespace $ {
 
 	}
 	
-	@ $mol_class
 	export class $mol_log2_table extends $mol_log2 {
 
 		[ $mol_dev_format_head ]() {
@@ -136,14 +134,12 @@ namespace $ {
 
 	}
 
-	@ $mol_class
 	export class $mol_log2_hidden extends $mol_log2 {
 
 		flush() {}
 
 	}
 
-	@ $mol_class
 	export class $mol_log2_line extends Array<any> {
 
 		constructor( ... items : any[] ) {
@@ -160,7 +156,6 @@ namespace $ {
 
 	}
 
-	@ $mol_class
 	export class $mol_log2_token extends Array<any> {
 
 		constructor( ... items : any[] ) {

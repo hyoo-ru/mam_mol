@@ -1,5 +1,16 @@
 namespace $ {
 
+	export let $mol_mem_cached = $mol_atom2_value
+
+	export function $mol_mem_persist() {
+
+		const atom = $mol_atom2.current
+		if( atom.hasOwnProperty( 'destructor' ) ) return
+		
+		atom.destructor = ()=> {}
+		
+	}
+
 	export function $mol_mem<
 		Host extends object ,
 		Field extends keyof Host ,
@@ -41,6 +52,8 @@ namespace $ {
 		}
 		
 		return {
+
+			... descr || {} ,
 			
 			value( this : Host , next? : Value , force? : $mol_mem_force ) {
 				

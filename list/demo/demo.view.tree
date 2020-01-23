@@ -3,12 +3,10 @@ $mol_list_demo $mol_demo_large
 	sub /
 		<= Scroll $mol_scroll
 			sub /
-				<= List $mol_list
-					rows <= rows /
+				<= Content $mol_list
+					rows <= root_rows /
 	Row!id $mol_expander
-		title <= row_text!id \
-		content /
-			<= Content!id $mol_row
-				sub /
-					<= Text $mol_filler
-			
+		title <= row_title!id \
+		expanded?val <=> row_expanded!id?val false
+		Content <= Row_content!id $mol_list
+			rows <= row_content!id /

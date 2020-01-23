@@ -139,7 +139,7 @@ namespace $.$$ {
 
 					}
 
-					return $mol_app_jsperf_stats.make( stats => {
+					return $mol_app_jsperf_stats.create( stats => {
 						stats.elapsed = time_run
 						stats.iterations = iteration
 					} )
@@ -150,7 +150,7 @@ namespace $.$$ {
 
 					console.error( error )
 
-					return $mol_app_jsperf_stats.make( stats => {
+					return $mol_app_jsperf_stats.create( stats => {
 						stats.error = error.message
 						stats.elapsed = 0
 						stats.iterations = Number.NEGATIVE_INFINITY

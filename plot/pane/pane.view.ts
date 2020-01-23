@@ -77,7 +77,7 @@ namespace $.$$ {
 		scale(next?: readonly [number, number], force?: $mol_mem_force) {
 			if (next === undefined) {
 				if (!this.graph_touched) return this.scale_default()
-				next = $mol_atom2_value( ()=> this.scale() ) || this.scale_default()
+				next = $mol_mem_cached( ()=> this.scale() ) || this.scale_default()
 			}
 			this.graph_touched = true
 
@@ -124,7 +124,7 @@ namespace $.$$ {
 
 			if (next === undefined) {
 				if (!this.graph_touched) return this.shift_default()
-				next = $mol_atom2_value( ()=> this.shift() ) || this.shift_default()
+				next = $mol_mem_cached( ()=> this.shift() ) || this.shift_default()
 			}
 
 			this.graph_touched = true

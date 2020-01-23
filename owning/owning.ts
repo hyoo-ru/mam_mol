@@ -9,7 +9,7 @@ namespace $ {
 	} {
 		if( !having ) return false
 		if( typeof having !== 'object' ) return false
-		if(!( 'destructor' in having )) return false
+		if( typeof having['destructor'] !== 'function' ) return false
 		return true
 	}
 

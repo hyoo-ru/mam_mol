@@ -1,20 +1,26 @@
 namespace $ {
 
-	@ $mol_class
 	export class $mol_object2 extends Object {
 		
 		static $ = $ as $mol_ambient_context
-		static get $$() { return this.$ }
-
-		$! : typeof $mol_object2.$
-		get $$() { return this.$ }
+		
+		[ $mol_ambient_ref ] = null as any as $mol_ambient_context
+		get $() {
+			if( this[ $mol_ambient_ref ] ) return this[ $mol_ambient_ref ]
+			const owner = $mol_owning_get( this ) as any
+			return this[ $mol_ambient_ref ] = owner?.$ || $mol_object2.$ as $mol_ambient_context
+		}
+		set $( next : $mol_ambient_context ) {
+			if( this[ $mol_ambient_ref ] ) $mol_fail_hidden( new Error( 'Context already defined' ) )
+			this[ $mol_ambient_ref ] = next
+		}
 
 		constructor( init? : ( obj : any )=> void ) {
 			super()
 			if( init ) init( this )
 		}
 
-		public static make< Instance >(
+		public static create< Instance >(
 			this : new( init? : ( instance : any )=> void )=> Instance ,
 			init? : ( instance : Instance )=> void
 		) : Instance {
@@ -26,7 +32,7 @@ namespace $ {
 		destructor() { }
 
 		toString() {
-			return this[ Symbol.toStringTag ]
+			return this[ Symbol.toStringTag ] || this.constructor.name + '()'
 		}
 		
 		toJSON() {
@@ -35,6 +41,4 @@ namespace $ {
 
 	}
 
-	Object.defineProperty( $mol_object2.prototype, '$' , { value : $mol_object2.$ , enumerable : false , writable : true } )
-	
 }

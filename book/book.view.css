@@ -58,6 +58,7 @@
 	outline: none;
 }
 
+/*
 @keyframes mol_book_page_show {
 	from {
 		transform: translateX( 100% );
@@ -69,3 +70,4 @@
 [mol_book_page]:not(:first-child) {
 	animation: mol_book_page_show .25s ease-out;
 }
+*/

@@ -1,7 +1,6 @@
 /** @jsx $mol_jsx_make */
 namespace $ {
 
-	@ $mol_class
 	export class $mol_fiber_demo extends $mol_object2 {
 
 		@ $mol_fiber_solid.method

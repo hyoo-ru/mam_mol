@@ -4,11 +4,28 @@ namespace $ {
 		el : Element ,
 		attrs : { [ key : string ] : string|number|boolean|null }
 	) {
+
 		for( let name in attrs ) {
+
 			let val = attrs[ name ] as any
-			if( val === null || val === false ) el.removeAttribute( name )
-			else el.setAttribute( name , String( val ) )
+
+			if( val === null || val === false ) {
+
+				if( !el.hasAttribute( name ) ) continue
+				
+				el.removeAttribute( name )
+
+			} else {
+				
+				const  str = String( val )
+				if( el.getAttribute( name ) === str ) continue
+				
+				el.setAttribute( name , str )
+
+			}
+
 		}
+
 	}
 
 }

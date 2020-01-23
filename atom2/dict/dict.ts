@@ -45,13 +45,16 @@ namespace $ {
 		const proxy = new Proxy( store , {
 
 			get( store , key : Key , proxy ) {
+				if( typeof key === 'symbol' ) return store[ key ]
 				if( key in $mol_object2.prototype ) return store[ key ]
 				return get_cache( key ).get()
 			} ,
 
 			set( store , key : Key , value : Value , proxy ) {
-				
-				if( key in $mol_object2.prototype ) {
+
+				if( typeof key === 'symbol' ) {
+					store[ key ] = value as any
+				} else if( key in $mol_object2.prototype ) {
 					store[ key ] = value as any
 				} else {
 					if( config.set ) value = config.set.call( null , value , key , proxy )

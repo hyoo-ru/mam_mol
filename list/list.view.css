@@ -1,6 +1,19 @@
 [mol_list] {
 	will-change: contents;
 	display: block;
+	/* display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	align-content: stretch; */
+	transition: none;
+}
+
+[mol_list_gap_before] ,
+[mol_list_gap_after] {
+	display: block !important;
+	flex: none;
+	transition: none;
+	overflow-anchor: none;
 }
 
 [mol_list] > * {

@@ -58,6 +58,14 @@ namespace $.$mol {
 		}
 
 		@ $mol_mem
+		sub() {
+			return [
+				... super.sub() ,
+				... this.weeks() ,
+			]
+		}
+
+		@ $mol_mem
 		weeks() {
 			const weeks : $mol_view[] = []
 			let count = this.weeks_count()

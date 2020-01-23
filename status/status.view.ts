@@ -8,7 +8,7 @@ namespace $.$$ {
 				if( status ) status.valueOf()
 				return null
 			} catch( error ) {
-				if( error instanceof $mol_atom_wait ) throw error
+				if( error instanceof Promise ) $mol_fail_hidden( error )
 				return error.message
 			}
 		}
