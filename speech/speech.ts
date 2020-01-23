@@ -3,21 +3,24 @@ namespace $ {
 	export class $mol_speech extends $mol_plugin {
 		
 		@ $mol_mem
-		static speaker( next? : SpeechSynthesis , force? : $mol_mem_force ) {
+		static speaker() {
 
-			const API = window.speechSynthesis
+			return $mol_fiber_sync( ()=> new Promise< SpeechSynthesis >( done => {
 
-			if( API.getVoices().length ) return API
+				const API = $mol_dom_context.speechSynthesis
 
-			const on_voices = ( event : Event )=> {
-				if( !API.getVoices().length ) return
-				this.speaker( API , $mol_mem_force_cache )
-				API.removeEventListener( 'voiceschanged' , on_voices )
-			}
+				if( API.getVoices().length ) return done( API )
 
-			API.addEventListener( 'voiceschanged' , on_voices )
+				const on_voices = ( event : Event )=> {
+					if( !API.getVoices().length ) return
+					API.removeEventListener( 'voiceschanged' , on_voices )
+					done( API )
+				}
+
+				API.addEventListener( 'voiceschanged' , on_voices )
 			
-			throw new $mol_atom_wait( 'Waiting for voice..' )
+			} ) )()
+
 		}
 
 		@ $mol_mem

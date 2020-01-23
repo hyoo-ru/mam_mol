@@ -139,7 +139,6 @@ namespace $ {
 
 	}
 
-	@ $mol_class
 	export class $mol_fiber_solid extends $mol_wrapper {
 
 		static func< This , Args extends any[] , Result >( task : ( this : This , ... args : Args )=> Result ) {
@@ -173,7 +172,6 @@ namespace $ {
 
 	}
 
-	@ $mol_class
 	export class $mol_fiber< Value = any > extends $mol_wrapper {
 
 		static wrap< Func extends ( ... args : any[] )=> any >( task : Func ) {
@@ -196,13 +194,13 @@ namespace $ {
 
 		}
 
-		static quant = 32
+		static quant = 16
 		static deadline = 0
 		static liveline = 0
 
 		static current = null as null | $mol_fiber
 		
-		static scheduled = null as null | $mol_after_frame
+		static scheduled = null as null | $mol_after_tick
 		static queue = [] as ( ()=> PromiseLike< any > )[]
 		
 		static async tick() {
@@ -228,7 +226,7 @@ namespace $ {
 
 			if( !$mol_fiber.scheduled ) {
 
-				$mol_fiber.scheduled = new $mol_after_frame( async ()=> {
+				$mol_fiber.scheduled = new $mol_after_tick( async ()=> {
 					
 					const now = Date.now()
 					let quant = $mol_fiber.quant
@@ -342,7 +340,7 @@ namespace $ {
 			
 			try {
 					
-				this.limit()
+				// this.limit()
 				
 				$mol_fiber.current = this
 

@@ -18,8 +18,8 @@ namespace $ {
 	export class $mol_view extends $mol_object {
 		
 		@ $mol_mem_key
-		static Root( id: number ) {
-			return new this
+		static Root< This extends typeof $mol_view >( this : This , id: number ) {
+			return new this as InstanceType< This >
 		}
 
 		@ $mol_mem
@@ -36,6 +36,7 @@ namespace $ {
 			const nodes = $mol_dom_context.document.querySelectorAll( '[mol_view_root]' )
 			
 			for( let i = nodes.length - 1 ; i >= 0 ; --i ) {
+
 				const name = nodes.item( i ).getAttribute( 'mol_view_root' )!
 				
 				const View = $[ name ]
@@ -83,18 +84,7 @@ namespace $ {
 		/// Visible sub views with defined ambient context
 		/// Render all by default
 		sub_visible() {
-
-			const sub = this.sub()
-			if( !sub ) return sub
-			const context = this.$$
-
-			sub.forEach( child => {
-				if( child instanceof $mol_view ) {
-					child.$ = context
-				}
-			} )
-			
-			return sub
+			return this.sub()
 		}
 		
 		/// Minimal width that used for lazy rendering
@@ -114,23 +104,37 @@ namespace $ {
 		}
 		
 		/// Minimal height that used for lazy rendering
+		@ $mol_mem
 		minimal_height() {
-			return this.content_height()
+			
+			let min = 0
+			try {
+				for( const view of this.sub() ) {
+
+					if( view instanceof $mol_view ) {
+						min = Math.max( min , view.minimal_height() )
+					}
+					
+				} 
+			} catch( error ) {
+				if( 'then' in error ) $mol_fail_hidden( error )
+			}
+			
+			return min
+		}
+
+		static watchers = new Set< $mol_view >()
+
+		@ $mol_mem
+		view_rect( next = null as ClientRect | null ) {
+			if( $mol_atom2.current ) this.view_rect_watcher()
+			return next
 		}
 
 		@ $mol_mem
-		content_height() {
-			const sub = this.sub()
-			if( !sub ) return 0
-			
-			let min = 0
-			sub.forEach( view => {
-				if( view instanceof $mol_view ) {
-					min = Math.max( min , view.minimal_height() )
-				}
-			} )
-			
-			return min
+		view_rect_watcher() {
+			$mol_view.watchers.add( this )
+			return { destructor : ()=> $mol_view.watchers.delete( this ) }
 		}
 
 		dom_id() {
@@ -219,12 +223,13 @@ namespace $ {
 			
 			const nodes = sub.map( child => {
 				if( child == null ) return null
-				return ( child instanceof $mol_view ) ? child.dom_node() : String( child )
+				return ( child instanceof $mol_view ) ? child.dom_node_actual() : String( child )
 			})
 			
 			$mol_dom_render_children( node , nodes )
 
 			for( const el of sub ) if( el && typeof el === 'object' && 'dom_tree' in el ) el['dom_tree']()
+
 		}
 
 		@ $mol_mem
@@ -318,12 +323,13 @@ namespace $ {
 		[ $mol_dev_format_head ]() {
 			return $mol_dev_format_span( {} ,
 				$mol_dev_format_native( this ) ,
-				$mol_dev_format_auto( $mol_atom2_value( ()=> this.sub() ) ) ,
+				$mol_dev_format_shade( '/' ) ,
+				$mol_dev_format_auto( $mol_mem_cached( ()=> this.sub() ) ) ,
 			)
 		}
 
 	}
-	
+
 	export type $mol_view_all = $mol_type_keys_extract< $mol_ambient_context , any , $mol_ambient_context['$mol_view'] >
 
 }

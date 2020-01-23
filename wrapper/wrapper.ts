@@ -1,6 +1,5 @@
 namespace $ {
 
-	@ $mol_class
 	export class $mol_wrapper extends $mol_object2 {
 
 		static wrap : ( task : ( ... ags : any[] )=> any )=> ( ... ags : any[] )=> any
@@ -51,6 +50,24 @@ namespace $ {
 				descr : TypedPropertyDescriptor< ( this : Host , ... args : Args )=> Result >
 			) => {
 				descr.value = this.func( descr.value! )
+				return descr
+			}
+			
+		}
+
+		static get field() {
+			
+			return <
+				Host ,
+				Field extends keyof Host ,
+				Args extends any[] ,
+				Result ,
+			>(
+				obj : Host ,
+				name : Field ,
+				descr : TypedPropertyDescriptor< Result >
+			) => {
+				descr.get = descr.set = this.func( descr.get! )
 				return descr
 			}
 			

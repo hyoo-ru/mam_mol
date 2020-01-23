@@ -82,21 +82,16 @@ $mol_button_minor $mol_button_typed
 
 $mol_scroll $mol_view
 	minimal_height 0
+	_event_scroll_timer?val null
 	field *
 		^
 		scrollTop <= scroll_top?val 0
 		scrollLeft <= scroll_left?val 0
-		scrollBottom <= scroll_bottom?val 0
-		scrollRight <= scroll_right?val 0
 	event *
 		^
 		scroll?event <=> event_scroll?event null
-	Strut $mol_view
-		style *
-			transform <= strut_transform \
 
 $mol_link $mol_view
-	minimal_height 40
 	dom_name \a
 	attr *
 		^
@@ -228,10 +223,18 @@ $mol_text_image $mol_view
 		<= title?val \
 
 $mol_list $mol_view
+	render_visible_only true
+	render_over 0
 	sub <= rows /$mol_view
-	Empty null
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
 
 $mol_grid $mol_scroll
+	row_height 40
 	row_ids /string[]
 	row_id!index null
 	col_ids /
@@ -241,15 +244,13 @@ $mol_grid $mol_scroll
 	hierarchy_col \
 	-
 	sub /
+		<= Head
 		<= Table $mol_grid_table
-			offset <= gap_top 0
-			sub <= rows_visible /$mol_view
-	rows /
+			sub <= rows /$mol_view
 	Head $mol_grid_row
-		height <= row_height 40
 		cells <= head_cells /$mol_view
 	Row!id $mol_grid_row
-		height <= row_height 40
+		minimal_height <= row_height
 		cells <= cells!id /$mol_view
 	-
 	Cell!id $mol_view
@@ -270,26 +271,16 @@ $mol_grid $mol_scroll
 			needle <= needle \
 			haystack <= cell_value!id \
 
-$mol_grid_table $mol_view
+$mol_grid_table $mol_list
 	dom_name \table
-	style *
-		^
-		top <= offset 0
-
-$mol_grid_gap $mol_view
-	style *
-		^
-		top <= offset 0
 
 $mol_grid_row $mol_view
 	dom_name \tr
-	style *
-		^
-		height <= height 40
 	sub <= cells /$mol_view
 
 $mol_grid_cell $mol_view
 	dom_name \td
+	minimal_height 40
 
 $mol_grid_number $mol_grid_cell
 
@@ -309,7 +300,7 @@ $mol_check $mol_button_minor
 					<= title \
 
 $mol_check_expand $mol_check
-	minimal_height 32
+	minimal_height 40
 	Icon $mol_icon_chevron
 	level 0
 	style *

@@ -2,11 +2,11 @@ namespace $ { export class $mol_check_expand extends $mol_check {
 
 	/**
 	 *  ```
-	 *  minimal_height 32
+	 *  minimal_height 40
 	 *  ```
 	 **/
 	minimal_height() {
-		return 32
+		return 40
 	}
 
 	/**

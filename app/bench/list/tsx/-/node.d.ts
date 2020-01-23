@@ -1,15 +1,6 @@
 declare namespace $ { }
 export = $;
 
-declare namespace $ {
-    function $mol_fail(error: any): never;
-}
-
-/// <reference types="node" />
-declare namespace $ {
-    function $mol_exec(dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
-}
-
 interface $node {
     [key: string]: any;
 }
@@ -57,6 +48,10 @@ declare namespace JSX {
 }
 
 declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+declare namespace $ {
     function $mol_dom_render_children(el: Element, childNodes: NodeList | Array<Node | string | null>): void;
 }
 
@@ -67,25 +62,40 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_class<Class extends any>(Class: Class): Class;
-}
-
-declare namespace $ {
     namespace $$ {
         let $$: typeof $;
     }
+    const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = (typeof globalThis) & (typeof $.$$) & (typeof $);
     function $mol_ambient(this: $mol_ambient_context, overrides: Partial<$mol_ambient_context>): $mol_ambient_context;
 }
 
 declare namespace $ {
+    const $mol_owning_map: WeakMap<any, any>;
+    function $mol_owning_allow<Having>(having: Having): having is Having & {
+        destructor(): void;
+    };
+    function $mol_owning_get<Having, Owner extends object>(having: Having, Owner?: {
+        new (): Owner;
+    }): Owner | null;
+    function $mol_owning_check<Owner, Having>(owner: Owner, having: Having): having is Having & {
+        destructor(): void;
+    };
+    function $mol_owning_catch<Owner, Having>(owner: Owner, having: Having): boolean;
+}
+
+declare namespace $ {
+    function $mol_fail_hidden(error: any): never;
+}
+
+declare namespace $ {
     class $mol_object2 extends Object {
         static $: $mol_ambient_context;
-        static get $$(): $mol_ambient_context;
-        $: typeof $mol_object2.$;
-        get $$(): $mol_ambient_context;
+        [$mol_ambient_ref]: $mol_ambient_context;
+        get $(): $mol_ambient_context;
+        set $(next: $mol_ambient_context);
         constructor(init?: (obj: any) => void);
-        static make<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: Instance) => void): Instance;
+        static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: Instance) => void): Instance;
         static toString(): any;
         destructor(): void;
         toString(): any;
@@ -133,4 +143,9 @@ declare namespace $ {
         }): void;
         render(): JSX.Element;
     }
+}
+
+/// <reference types="node" />
+declare namespace $ {
+    function $mol_exec(dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
 }

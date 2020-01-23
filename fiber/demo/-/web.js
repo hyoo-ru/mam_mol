@@ -55,23 +55,10 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_class(Class) {
-        Class[Symbol.toStringTag] = Class.name;
-        if (!Class.prototype.hasOwnProperty(Symbol.toStringTag)) {
-            Class.prototype[Symbol.toStringTag] = Class.name;
-        }
-        return Class;
-    }
-    $.$mol_class = $mol_class;
-})($ || ($ = {}));
-//class.js.map
-;
-"use strict";
-var $;
-(function ($) {
     let $$;
     (function ($$_1) {
     })($$ = $.$$ || ($.$$ = {}));
+    $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
     function $mol_ambient(overrides) {
         return Object.setPrototypeOf(overrides, this);
     }
@@ -82,40 +69,97 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var $mol_object2_1;
-    let $mol_object2 = $mol_object2_1 = class $mol_object2 extends Object {
+    $.$mol_owning_map = new WeakMap();
+    function $mol_owning_allow(having) {
+        if (!having)
+            return false;
+        if (typeof having !== 'object')
+            return false;
+        if (typeof having['destructor'] !== 'function')
+            return false;
+        return true;
+    }
+    $.$mol_owning_allow = $mol_owning_allow;
+    function $mol_owning_get(having, Owner) {
+        if (!$mol_owning_allow(having))
+            return null;
+        while (true) {
+            const owner = $.$mol_owning_map.get(having);
+            if (!owner)
+                return owner;
+            if (!Owner)
+                return owner;
+            if (owner instanceof Owner)
+                return owner;
+            having = owner;
+        }
+    }
+    $.$mol_owning_get = $mol_owning_get;
+    function $mol_owning_check(owner, having) {
+        if (!$mol_owning_allow(having))
+            return false;
+        if ($.$mol_owning_map.get(having) !== owner)
+            return false;
+        return true;
+    }
+    $.$mol_owning_check = $mol_owning_check;
+    function $mol_owning_catch(owner, having) {
+        if (!$mol_owning_allow(having))
+            return false;
+        if ($.$mol_owning_map.get(having))
+            return false;
+        $.$mol_owning_map.set(having, owner);
+        return true;
+    }
+    $.$mol_owning_catch = $mol_owning_catch;
+})($ || ($ = {}));
+//owning.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var _a;
+    class $mol_object2 extends Object {
         constructor(init) {
             super();
+            this[_a] = null;
             if (init)
                 init(this);
         }
-        static get $$() { return this.$; }
-        get $$() { return this.$; }
-        static make(init) {
+        get $() {
+            var _b;
+            if (this[$.$mol_ambient_ref])
+                return this[$.$mol_ambient_ref];
+            const owner = $.$mol_owning_get(this);
+            return this[$.$mol_ambient_ref] = ((_b = owner) === null || _b === void 0 ? void 0 : _b.$) || $mol_object2.$;
+        }
+        set $(next) {
+            if (this[$.$mol_ambient_ref])
+                $.$mol_fail_hidden(new Error('Context already defined'));
+            this[$.$mol_ambient_ref] = next;
+        }
+        static create(init) {
             return new this(init);
         }
         static toString() { return this[Symbol.toStringTag] || this.name; }
         destructor() { }
         toString() {
-            return this[Symbol.toStringTag];
+            return this[Symbol.toStringTag] || this.constructor.name + '()';
         }
         toJSON() {
             return this.toString();
         }
-    };
+    }
+    _a = $.$mol_ambient_ref;
     $mol_object2.$ = $;
-    $mol_object2 = $mol_object2_1 = __decorate([
-        $.$mol_class
-    ], $mol_object2);
     $.$mol_object2 = $mol_object2;
-    Object.defineProperty($mol_object2.prototype, '$', { value: $mol_object2.$, enumerable: false, writable: true });
 })($ || ($ = {}));
 //object2.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    let $mol_wrapper = class $mol_wrapper extends $.$mol_object2 {
+    class $mol_wrapper extends $.$mol_object2 {
         static run(task) {
             return this.func(task)();
         }
@@ -138,10 +182,13 @@ var $;
                 return descr;
             };
         }
-    };
-    $mol_wrapper = __decorate([
-        $.$mol_class
-    ], $mol_wrapper);
+        static get field() {
+            return (obj, name, descr) => {
+                descr.get = descr.set = this.func(descr.get);
+                return descr;
+            };
+        }
+    }
     $.$mol_wrapper = $mol_wrapper;
 })($ || ($ = {}));
 //wrapper.js.map
@@ -212,23 +259,26 @@ var $;
         ];
     }
     $.$mol_dev_format_element = $mol_dev_format_element;
+    function $mol_dev_format_span(style, ...content) {
+        return $mol_dev_format_element('span', Object.assign({ 'vertical-align': '8%' }, style), ...content);
+    }
+    $.$mol_dev_format_span = $mol_dev_format_span;
     $.$mol_dev_format_div = $mol_dev_format_element.bind(null, 'div');
-    $.$mol_dev_format_span = $mol_dev_format_element.bind(null, 'span');
     $.$mol_dev_format_ol = $mol_dev_format_element.bind(null, 'ol');
     $.$mol_dev_format_li = $mol_dev_format_element.bind(null, 'li');
     $.$mol_dev_format_table = $mol_dev_format_element.bind(null, 'table');
     $.$mol_dev_format_tr = $mol_dev_format_element.bind(null, 'tr');
     $.$mol_dev_format_td = $mol_dev_format_element.bind(null, 'td');
-    $.$mol_dev_format_accent = $.$mol_dev_format_span.bind(null, {
+    $.$mol_dev_format_accent = $mol_dev_format_span.bind(null, {
         'color': 'magenta',
     });
-    $.$mol_dev_format_strong = $.$mol_dev_format_span.bind(null, {
+    $.$mol_dev_format_strong = $mol_dev_format_span.bind(null, {
         'font-weight': 'bold',
     });
-    $.$mol_dev_format_string = $.$mol_dev_format_span.bind(null, {
+    $.$mol_dev_format_string = $mol_dev_format_span.bind(null, {
         'color': 'green',
     });
-    $.$mol_dev_format_shade = $.$mol_dev_format_span.bind(null, {
+    $.$mol_dev_format_shade = $mol_dev_format_span.bind(null, {
         'color': 'gray',
     });
     $.$mol_dev_format_indent = $.$mol_dev_format_div.bind(null, {
@@ -361,8 +411,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var $mol_log2_1;
-    let $mol_log2 = $mol_log2_1 = class $mol_log2 extends $.$mol_wrapper {
+    class $mol_log2 extends $.$mol_wrapper {
         constructor(host, id, args) {
             super();
             this.host = host;
@@ -374,13 +423,13 @@ var $;
         static wrap(task) {
             const Inner = this;
             const wrapped = function (...args) {
-                const outer = $mol_log2_1.current;
-                const inner = $mol_log2_1.current = new Inner(this, task.name, args);
+                const outer = $mol_log2.current;
+                const inner = $mol_log2.current = new Inner(this, task.name, args);
                 try {
                     return task.call(this, ...args);
                 }
                 finally {
-                    $mol_log2_1.current = outer;
+                    $mol_log2.current = outer;
                     inner.flush();
                 }
             };
@@ -392,13 +441,13 @@ var $;
             console.debug(this);
         }
         info(...values) {
-            this.stream.push(new $mol_log2_line(...$mol_log2_1.prefix, ...values));
+            this.stream.push(new $mol_log2_line(...$mol_log2.prefix, ...values));
         }
         [$.$mol_dev_format_head]() {
             return $.$mol_dev_format_span({}, ...$.$mol_maybe(this.host).map($.$mol_dev_format_auto), '.', $.$mol_dev_format_strong(this.id), '(', ...this.args.map($.$mol_dev_format_auto), ') ', $.$mol_dev_format_auto(this.stream));
         }
         static info(...values) {
-            const excludes = $mol_log2_1.excludes;
+            const excludes = $mol_log2.excludes;
             if (!excludes)
                 return;
             const skip = excludes.some((regexp, index) => {
@@ -406,20 +455,17 @@ var $;
             });
             if (skip)
                 return;
-            if (!$mol_log2_1.current) {
+            if (!$mol_log2.current) {
                 console.warn(new Error(`$mol_log.current is not defined. Wrap entry point to $mol_log!`));
-                $mol_log2_1.current = new $mol_log2_1(null, '$mol_log2_default', []);
-                console.debug($mol_log2_1.current);
+                $mol_log2.current = new $mol_log2(null, '$mol_log2_default', []);
+                console.debug($mol_log2.current);
             }
-            $mol_log2_1.current.info(...values);
+            $mol_log2.current.info(...values);
         }
-    };
+    }
     $mol_log2.current = null;
     $mol_log2.excludes = null;
     $mol_log2.prefix = [];
-    $mol_log2 = $mol_log2_1 = __decorate([
-        $.$mol_class
-    ], $mol_log2);
     $.$mol_log2 = $mol_log2;
     class $mol_log2_indent extends $.$mol_wrapper {
         static wrap(task) {
@@ -437,48 +483,36 @@ var $;
         }
     }
     $.$mol_log2_indent = $mol_log2_indent;
-    let $mol_log2_table = class $mol_log2_table extends $mol_log2 {
+    class $mol_log2_table extends $mol_log2 {
         [$.$mol_dev_format_head]() {
             return $.$mol_dev_format_span({}, $.$mol_dev_format_strong(`${this}(`), ...this.args.map($.$mol_dev_format_auto), $.$mol_dev_format_strong(`) `));
         }
         [$.$mol_dev_format_body]() {
             return $.$mol_dev_format_table({}, ...this.stream.map($.$mol_dev_format_auto));
         }
-    };
-    $mol_log2_table = __decorate([
-        $.$mol_class
-    ], $mol_log2_table);
+    }
     $.$mol_log2_table = $mol_log2_table;
-    let $mol_log2_hidden = class $mol_log2_hidden extends $mol_log2 {
+    class $mol_log2_hidden extends $mol_log2 {
         flush() { }
-    };
-    $mol_log2_hidden = __decorate([
-        $.$mol_class
-    ], $mol_log2_hidden);
+    }
     $.$mol_log2_hidden = $mol_log2_hidden;
-    let $mol_log2_line = class $mol_log2_line extends Array {
+    class $mol_log2_line extends Array {
         constructor(...items) {
             super(...items);
         }
         [$.$mol_dev_format_head]() {
             return $.$mol_dev_format_tr({}, ...this.map(item => $.$mol_dev_format_td({}, $.$mol_dev_format_auto(item))));
         }
-    };
-    $mol_log2_line = __decorate([
-        $.$mol_class
-    ], $mol_log2_line);
+    }
     $.$mol_log2_line = $mol_log2_line;
-    let $mol_log2_token = class $mol_log2_token extends Array {
+    class $mol_log2_token extends Array {
         constructor(...items) {
             super(...items);
         }
         [$.$mol_dev_format_head]() {
             return $.$mol_dev_format_accent(...this);
         }
-    };
-    $mol_log2_token = __decorate([
-        $.$mol_class
-    ], $mol_log2_token);
+    }
     $.$mol_log2_token = $mol_log2_token;
     $.$mol_log2_token_empty = new $mol_log2_token('');
     $.$mol_log2_token_indent = new $mol_log2_token('\t');
@@ -498,19 +532,24 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_after_frame extends $.$mol_object2 {
+    class $mol_after_tick extends $.$mol_object2 {
         constructor(task) {
             super();
             this.task = task;
-            this.id = requestAnimationFrame(task);
+            this.cancelled = false;
+            this.promise = Promise.resolve().then(() => {
+                if (this.cancelled)
+                    return;
+                task();
+            });
         }
         destructor() {
-            cancelAnimationFrame(this.id);
+            this.cancelled = true;
         }
     }
-    $.$mol_after_frame = $mol_after_frame;
+    $.$mol_after_tick = $mol_after_tick;
 })($ || ($ = {}));
-//frame.web.js.map
+//tick.js.map
 ;
 "use strict";
 var $;
@@ -638,7 +677,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    var $mol_fiber_1;
     function $mol_fiber_defer(calculate) {
         const fiber = new $mol_fiber;
         fiber.calculate = calculate;
@@ -730,7 +768,7 @@ var $;
         }
     }
     $.$mol_fiber_unlimit = $mol_fiber_unlimit;
-    let $mol_fiber_solid = class $mol_fiber_solid extends $.$mol_wrapper {
+    class $mol_fiber_solid extends $.$mol_wrapper {
         static func(task) {
             function wrapped(...args) {
                 const deadline = $mol_fiber.deadline;
@@ -749,12 +787,9 @@ var $;
             }
             return $mol_fiber.func(wrapped);
         }
-    };
-    $mol_fiber_solid = __decorate([
-        $.$mol_class
-    ], $mol_fiber_solid);
+    }
     $.$mol_fiber_solid = $mol_fiber_solid;
-    let $mol_fiber = $mol_fiber_1 = class $mol_fiber extends $.$mol_wrapper {
+    class $mol_fiber extends $.$mol_wrapper {
         constructor() {
             super(...arguments);
             this.value = undefined;
@@ -764,10 +799,10 @@ var $;
         }
         static wrap(task) {
             return function $mol_fiber_wrapper(...args) {
-                const slave = $mol_fiber_1.current;
+                const slave = $mol_fiber.current;
                 let master = slave && slave.master;
-                if (!master || master.constructor !== $mol_fiber_1) {
-                    master = new $mol_fiber_1;
+                if (!master || master.constructor !== $mol_fiber) {
+                    master = new $mol_fiber;
                     master.calculate = task.bind(this, ...args);
                     const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
                     master[Symbol.toStringTag] = `${prefix}${task.name}`;
@@ -776,36 +811,36 @@ var $;
             };
         }
         static async tick() {
-            while ($mol_fiber_1.queue.length > 0) {
+            while ($mol_fiber.queue.length > 0) {
                 const now = Date.now();
-                if (now >= $mol_fiber_1.deadline) {
-                    $mol_fiber_1.schedule();
-                    $mol_fiber_1.liveline = now;
+                if (now >= $mol_fiber.deadline) {
+                    $mol_fiber.schedule();
+                    $mol_fiber.liveline = now;
                     return;
                 }
-                const task = $mol_fiber_1.queue.shift();
+                const task = $mol_fiber.queue.shift();
                 await task();
             }
         }
         static schedule() {
-            if (!$mol_fiber_1.scheduled) {
-                $mol_fiber_1.scheduled = new $.$mol_after_frame(async () => {
+            if (!$mol_fiber.scheduled) {
+                $mol_fiber.scheduled = new $.$mol_after_tick(async () => {
                     const now = Date.now();
-                    let quant = $mol_fiber_1.quant;
-                    if ($mol_fiber_1.liveline) {
-                        quant = Math.max(quant, Math.floor((now - $mol_fiber_1.liveline) / 2));
-                        $mol_fiber_1.liveline = 0;
+                    let quant = $mol_fiber.quant;
+                    if ($mol_fiber.liveline) {
+                        quant = Math.max(quant, Math.floor((now - $mol_fiber.liveline) / 2));
+                        $mol_fiber.liveline = 0;
                     }
-                    $mol_fiber_1.deadline = now + quant;
-                    $mol_fiber_1.scheduled = null;
-                    await $mol_fiber_1.tick();
+                    $mol_fiber.deadline = now + quant;
+                    $mol_fiber.scheduled = null;
+                    await $mol_fiber.tick();
                 });
             }
             const promise = new this.$.Promise(done => this.queue.push(() => (done(), promise)));
             return promise;
         }
         schedule() {
-            $mol_fiber_1.schedule().then(() => this.wake());
+            $mol_fiber.schedule().then(() => this.wake());
         }
         wake() {
             try {
@@ -861,10 +896,9 @@ var $;
             this.push(this.calculate());
         }
         update() {
-            const slave = $mol_fiber_1.current;
+            const slave = $mol_fiber.current;
             try {
-                this.limit();
-                $mol_fiber_1.current = this;
+                $mol_fiber.current = this;
                 this.$.$mol_log2.info(this, $.$mol_fiber_token_runned);
                 this.pull();
             }
@@ -881,14 +915,14 @@ var $;
                 }
             }
             finally {
-                $mol_fiber_1.current = slave;
+                $mol_fiber.current = slave;
             }
         }
         get() {
             if (this.cursor > 0) {
                 this.$.$mol_fail(new Error(`Cyclic dependency at ${this}`));
             }
-            const slave = $mol_fiber_1.current;
+            const slave = $mol_fiber.current;
             if (slave)
                 slave.master = this;
             if (this.cursor > -2)
@@ -898,13 +932,13 @@ var $;
             return this.value;
         }
         limit() {
-            if (!$mol_fiber_1.deadline)
+            if (!$mol_fiber.deadline)
                 return;
-            if (!$mol_fiber_1.current)
+            if (!$mol_fiber.current)
                 return;
-            if (Date.now() < $mol_fiber_1.deadline)
+            if (Date.now() < $mol_fiber.deadline)
                 return;
-            this.$.$mol_fail_hidden($mol_fiber_1.schedule());
+            this.$.$mol_fail_hidden($mol_fiber.schedule());
         }
         get master() {
             return this.masters[this.cursor];
@@ -955,8 +989,8 @@ var $;
         [$.$mol_dev_format_head]() {
             return $.$mol_dev_format_native(this);
         }
-    };
-    $mol_fiber.quant = 32;
+    }
+    $mol_fiber.quant = 16;
     $mol_fiber.deadline = 0;
     $mol_fiber.liveline = 0;
     $mol_fiber.current = null;
@@ -968,9 +1002,6 @@ var $;
     __decorate([
         $.$mol_log2_indent.method
     ], $mol_fiber.prototype, "update", null);
-    $mol_fiber = $mol_fiber_1 = __decorate([
-        $.$mol_class
-    ], $mol_fiber);
     $.$mol_fiber = $mol_fiber;
     $.$mol_fiber_token_runned = new $.$mol_log2_token(' ► ');
     $.$mol_fiber_token_changed1 = new $.$mol_log2_token(' ˸ ');
@@ -1141,7 +1172,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let $mol_fiber_demo = class $mol_fiber_demo extends $.$mol_object2 {
+    class $mol_fiber_demo extends $.$mol_object2 {
         static step(sandbox) {
             if (Math.random() > .999)
                 throw new Error('Test error');
@@ -1175,7 +1206,7 @@ var $;
             $.$mol_fiber_defer(() => this.green_task());
             $.$mol_fiber_defer(() => this.blue_task());
         }
-    };
+    }
     $mol_fiber_demo.now = $.$mol_fiber.func(Date.now);
     $mol_fiber_demo.load = $.$mol_fiber_sync(async (uri) => (await fetch(uri)).text());
     __decorate([
@@ -1184,9 +1215,6 @@ var $;
     __decorate([
         $.$mol_fiber.method
     ], $mol_fiber_demo, "walk", null);
-    $mol_fiber_demo = __decorate([
-        $.$mol_class
-    ], $mol_fiber_demo);
     $.$mol_fiber_demo = $mol_fiber_demo;
 })($ || ($ = {}));
 //demo.js.map

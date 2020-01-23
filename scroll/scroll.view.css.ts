@@ -31,22 +31,6 @@ namespace $.$$ {
 			background: $mol_theme.control,
 		},
 
-		'>': {
-			$mol_view : {
-				transform: 'translateZ(0)',
-			}
-		},
-
-		Strut: {
-			position: 'absolute',
-			top: '0',
-			display: 'block',
-			padding: '1px 1px 0 0',
-			margin: '-1px 0 0 0',
-			zIndex: '0', 
-			transition: 'none',
-		},
-		
 		'@media' : {
 			'print' : {
 				overflow: 'visible',

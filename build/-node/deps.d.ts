@@ -1,10 +1,10 @@
 interface $node {
- 	"colorette" : typeof import( "colorette" )
+ 	"jsdom" : typeof import( "jsdom" )
 	"path" : typeof import( "path" )
-	"child_process" : typeof import( "child_process" )
-	"jsdom" : typeof import( "jsdom" )
 	"chokidar" : typeof import( "chokidar" )
 	"fs" : typeof import( "fs" )
+	"colorette" : typeof import( "colorette" )
+	"child_process" : typeof import( "child_process" )
 	"sourcemap-codec" : typeof import( "sourcemap-codec" )
 	"typescript" : typeof import( "typescript" )
 	"express" : typeof import( "express" )

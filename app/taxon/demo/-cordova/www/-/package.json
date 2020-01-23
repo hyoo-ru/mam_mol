@@ -6,9 +6,9 @@
   "browser": "web.js",
   "types": "web.d.ts",
   "dependencies": {
-    "colorette": "*",
     "jsdom": "*",
     "node-fetch": "*",
-    "chokidar": "*"
+    "chokidar": "*",
+    "colorette": "*"
   }
 }

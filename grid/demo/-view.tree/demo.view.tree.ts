@@ -20,11 +20,11 @@ namespace $ { export class $mol_grid_demo extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  cols 20
+	 *  cols 10
 	 *  ```
 	 **/
 	cols() {
-		return 20
+		return 10
 	}
 
 	/**
@@ -39,7 +39,6 @@ namespace $ { export class $mol_grid_demo extends $mol_demo_large {
 	/**
 	 *  ```
 	 *  Grid $mol_grid
-	 *  	row_height 40
 	 *  	records <= records
 	 *  	col_head_content!col <= col_head_content!col
 	 *  ```
@@ -47,7 +46,6 @@ namespace $ { export class $mol_grid_demo extends $mol_demo_large {
 	@ $mol_mem
 	Grid() {
 		return (( obj )=>{
-			obj.row_height = () => 40
 			obj.records = () => this.records()
 			obj.col_head_content = ( col : any ) => this.col_head_content(col)
 			return obj

@@ -4,17 +4,16 @@ $mol_calendar $mol_list
 			minimal_height 24
 			sub /
 				<= title \
-		<= Weekdays $mol_view
+		<= Weekdays $mol_hor
 			sub <= weekdays /$mol_view
-		<= Weeks $mol_list
-			rows <= weeks /$mol_view
+	weeks /$mol_view
 	-
 	Weekday!index $mol_calendar_day
 		holiday <= weekend!index false
 		sub /
 			<= weekday!index \
 	-
-	Week!row $mol_view
+	Week!row $mol_hor
 		sub <= week_days!row /$mol_view
 	-
 	Day!day $mol_calendar_day

@@ -141,7 +141,7 @@ namespace $ {
 		@ $mol_mem
 		supplies() {
 			var next : $mol_app_supplies_domain_supply[] = []
-			for( var i = 1 ; i <= 100 ; ++i ) {
+			for( var i = 1 ; i <= 1000 ; ++i ) {
 				next.push( this.supply( ( i * 123456789 % 987654321 ).toString( 16 ).toUpperCase() ) )
 			}
 			return next
@@ -172,7 +172,7 @@ namespace $ {
 		supply( id : string ) {
 			return $mol_app_supplies_domain_supply.make({
 				id : $mol_const( id ) ,
-				cost : ()=> new $mol_unit_money_usd( this.positions( id ).reduce( ( sum , pos )=> sum + pos.cost().valueOf() , 0 ) ) ,
+				cost : $mol_const( $mol_stub_price( 100000 ) ) ,
 				status : ( next? : $mol_app_supplies_domain_supply_status )=> this.supply_status( id , next ) ,
 				provider : $mol_const( this.provider( $mol_stub_code( 2 ) ) ) ,
 				consumer : $mol_const( this.consumer( $mol_stub_code( 2 ) ) ) ,

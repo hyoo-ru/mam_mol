@@ -11,6 +11,8 @@
 
 [mol_app_demo_menu_nav] {
 	flex: auto;
+	display: flex;
+	flex-direction: column;
 	align-self: stretch;
 }
 
@@ -85,12 +87,11 @@
 	display: flex;
 	flex-direction: column;
 	margin: .5rem;
-	height: calc( 100% - 1rem );
 }
 
 [mol_app_demo_detail_list] > [mol_demo_large] {
 	margin: .5rem;
-	height: calc( 100% - 2rem );
+	height: calc( 100vh - 100px );
 	width: calc( 100% - 1rem );
 }
 

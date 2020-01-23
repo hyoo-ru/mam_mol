@@ -2,6 +2,15 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 
 	/**
 	 *  ```
+	 *  row_height 40
+	 *  ```
+	 **/
+	row_height() {
+		return 40
+	}
+
+	/**
+	 *  ```
 	 *  row_ids /string[]
 	 *  ```
 	 **/
@@ -66,79 +75,48 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 
 	/**
 	 *  ```
-	 *  sub / <= Table
+	 *  sub /
+	 *  	<= Head
+	 *  	<= Table
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Table() ] as readonly any[]
+		return [ this.Head() , this.Table() ] as readonly any[]
 	}
 
 	/**
 	 *  ```
-	 *  Table $mol_grid_table
-	 *  	offset <= gap_top
-	 *  	sub <= rows_visible
+	 *  Table $mol_grid_table sub <= rows
 	 *  ```
 	 **/
 	@ $mol_mem
 	Table() {
 		return (( obj )=>{
-			obj.offset = () => this.gap_top()
-			obj.sub = () => this.rows_visible()
+			obj.sub = () => this.rows()
 			return obj
 		})( new this.$.$mol_grid_table(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  gap_top 0
+	 *  rows /$mol_view
 	 *  ```
 	 **/
-	gap_top() {
-		return 0
-	}
-
-	/**
-	 *  ```
-	 *  rows_visible /$mol_view
-	 *  ```
-	 **/
-	rows_visible() {
+	rows() {
 		return [  ] as readonly ( $mol_view )[]
 	}
 
 	/**
 	 *  ```
-	 *  rows /
-	 *  ```
-	 **/
-	rows() {
-		return [  ] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  Head $mol_grid_row
-	 *  	height <= row_height
-	 *  	cells <= head_cells
+	 *  Head $mol_grid_row cells <= head_cells
 	 *  ```
 	 **/
 	@ $mol_mem
 	Head() {
 		return (( obj )=>{
-			obj.height = () => this.row_height()
 			obj.cells = () => this.head_cells()
 			return obj
 		})( new this.$.$mol_grid_row(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  row_height 40
-	 *  ```
-	 **/
-	row_height() {
-		return 40
 	}
 
 	/**
@@ -153,14 +131,14 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	/**
 	 *  ```
 	 *  Row!id $mol_grid_row
-	 *  	height <= row_height
+	 *  	minimal_height <= row_height
 	 *  	cells <= cells!id
 	 *  ```
 	 **/
 	@ $mol_mem_key
 	Row( id : any ) {
 		return (( obj )=>{
-			obj.height = () => this.row_height()
+			obj.minimal_height = () => this.row_height()
 			obj.cells = () => this.cells(id)
 			return obj
 		})( new this.$.$mol_grid_row(  ) )
@@ -356,7 +334,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 
 } }
 
-namespace $ { export class $mol_grid_table extends $mol_view {
+namespace $ { export class $mol_grid_table extends $mol_list {
 
 	/**
 	 *  ```
@@ -365,56 +343,6 @@ namespace $ { export class $mol_grid_table extends $mol_view {
 	 **/
 	dom_name() {
 		return "table"
-	}
-
-	/**
-	 *  ```
-	 *  style *
-	 *  	^
-	 *  	top <= offset
-	 *  ```
-	 **/
-	style() {
-		return ({
-			...super.style() ,
-			"top" :  this.offset() ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  offset 0
-	 *  ```
-	 **/
-	offset() {
-		return 0
-	}
-
-} }
-
-namespace $ { export class $mol_grid_gap extends $mol_view {
-
-	/**
-	 *  ```
-	 *  style *
-	 *  	^
-	 *  	top <= offset
-	 *  ```
-	 **/
-	style() {
-		return ({
-			...super.style() ,
-			"top" :  this.offset() ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  offset 0
-	 *  ```
-	 **/
-	offset() {
-		return 0
 	}
 
 } }
@@ -428,29 +356,6 @@ namespace $ { export class $mol_grid_row extends $mol_view {
 	 **/
 	dom_name() {
 		return "tr"
-	}
-
-	/**
-	 *  ```
-	 *  style *
-	 *  	^
-	 *  	height <= height
-	 *  ```
-	 **/
-	style() {
-		return ({
-			...super.style() ,
-			"height" :  this.height() ,
-		})
-	}
-
-	/**
-	 *  ```
-	 *  height 40
-	 *  ```
-	 **/
-	height() {
-		return 40
 	}
 
 	/**
@@ -482,6 +387,15 @@ namespace $ { export class $mol_grid_cell extends $mol_view {
 	 **/
 	dom_name() {
 		return "td"
+	}
+
+	/**
+	 *  ```
+	 *  minimal_height 40
+	 *  ```
+	 **/
+	minimal_height() {
+		return 40
 	}
 
 } }

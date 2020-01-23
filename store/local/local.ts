@@ -1,6 +1,5 @@
 namespace $ {
 
-	@ $mol_class
 	export class $mol_store_local_class extends $mol_store< Record< string , any > > {
 
 		@ $mol_mem

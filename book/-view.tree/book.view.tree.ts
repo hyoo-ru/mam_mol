@@ -20,6 +20,15 @@ namespace $ { export class $mol_book extends $mol_view {
 
 	/**
 	 *  ```
+	 *  minimal_width 0
+	 *  ```
+	 **/
+	minimal_width() {
+		return 0
+	}
+
+	/**
+	 *  ```
 	 *  pages /$mol_view
 	 *  ```
 	 **/

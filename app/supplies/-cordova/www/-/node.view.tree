@@ -1,4 +1,7 @@
 $mol_app_supplies $mol_book
+	attr *
+		^
+		mol_theme \$mol_theme_auto
 	-
 	enter $mol_app_supplies_enter
 		entered?val <=> entered?val false
@@ -81,18 +84,14 @@ $mol_button_minor $mol_button_typed
 
 $mol_scroll $mol_view
 	minimal_height 0
+	_event_scroll_timer?val null
 	field *
 		^
 		scrollTop <= scroll_top?val 0
 		scrollLeft <= scroll_left?val 0
-		scrollBottom <= scroll_bottom?val 0
-		scrollRight <= scroll_right?val 0
 	event *
 		^
 		scroll?event <=> event_scroll?event null
-	Strut $mol_view
-		style *
-			transform <= strut_transform \
 
 $mol_float $mol_view
 
@@ -228,8 +227,15 @@ $mol_nav $mol_plugin
 		keydown?event <=> event_key?event null
 
 $mol_list $mol_view
+	render_visible_only true
+	render_over 0
 	sub <= rows /$mol_view
-	Empty null
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
 
 $mol_string $mol_view
 	dom_name \input
@@ -307,7 +313,6 @@ $mol_app_supplies_card $mol_link
 						content / <= provider_name \
 
 $mol_link $mol_view
-	minimal_height 40
 	dom_name \a
 	attr *
 		^
@@ -337,14 +342,14 @@ $mol_card $mol_list
 
 $mol_row $mol_view
 
-$mol_row_sub $mol_view
-
-$mol_labeler $mol_view
-	sub /
+$mol_labeler $mol_list
+	rows /
 		<= Title $mol_view
+			minimal_height 21
 			sub <= label /$mol_view_content
 				<= title
 		<= Content $mol_view
+			minimal_height 24
 			sub <= content /
 
 $mol_cost $mol_view
@@ -568,6 +573,7 @@ $mol_app_supplies_position $mol_card
 
 $mol_book $mol_view
 	sub <= pages_wrapped /$mol_view
+	minimal_width 0
 	pages /$mol_view
 	plugins /$mol_plugin
 		<= Meter $mol_meter

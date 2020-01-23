@@ -1,5 +1,4 @@
 $mol_link $mol_view
-	minimal_height 40
 	dom_name \a
 	attr *
 		^

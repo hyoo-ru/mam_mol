@@ -2,15 +2,6 @@ namespace $ { export class $mol_link extends $mol_view {
 
 	/**
 	 *  ```
-	 *  minimal_height 40
-	 *  ```
-	 **/
-	minimal_height() {
-		return 40
-	}
-
-	/**
-	 *  ```
 	 *  dom_name \a
 	 *  ```
 	 **/

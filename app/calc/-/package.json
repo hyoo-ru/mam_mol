@@ -6,8 +6,8 @@
   "browser": "web.js",
   "types": "web.d.ts",
   "dependencies": {
-    "colorette": "*",
     "jsdom": "*",
-    "chokidar": "*"
+    "chokidar": "*",
+    "colorette": "*"
   }
 }

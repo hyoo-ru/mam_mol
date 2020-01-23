@@ -6,9 +6,9 @@
   "browser": "web.esm.js",
   "types": "web.d.ts",
   "dependencies": {
-    "colorette": "*",
     "jsdom": "*",
     "chokidar": "*",
+    "colorette": "*",
     "sourcemap-codec": "*",
     "typescript": "*",
     "express": "*",

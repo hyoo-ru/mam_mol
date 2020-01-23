@@ -2,6 +2,20 @@ namespace $ { export class $mol_app_supplies extends $mol_book {
 
 	/**
 	 *  ```
+	 *  attr *
+	 *  	^
+	 *  	mol_theme \$mol_theme_auto
+	 *  ```
+	 **/
+	attr() {
+		return ({
+			...super.attr() ,
+			"mol_theme" :  "$mol_theme_auto" ,
+		})
+	}
+
+	/**
+	 *  ```
 	 *  enter $mol_app_supplies_enter entered?val <=> entered?val
 	 *  ```
 	 **/

@@ -11,12 +11,20 @@ namespace $ { export class $mol_scroll extends $mol_view {
 
 	/**
 	 *  ```
+	 *  _event_scroll_timer?val null
+	 *  ```
+	 **/
+	@ $mol_mem
+	_event_scroll_timer( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : null as any
+	}
+
+	/**
+	 *  ```
 	 *  field *
 	 *  	^
 	 *  	scrollTop <= scroll_top?val
 	 *  	scrollLeft <= scroll_left?val
-	 *  	scrollBottom <= scroll_bottom?val
-	 *  	scrollRight <= scroll_right?val
 	 *  ```
 	 **/
 	field() {
@@ -24,8 +32,6 @@ namespace $ { export class $mol_scroll extends $mol_view {
 			...super.field() ,
 			"scrollTop" :  this.scroll_top() ,
 			"scrollLeft" :  this.scroll_left() ,
-			"scrollBottom" :  this.scroll_bottom() ,
-			"scrollRight" :  this.scroll_right() ,
 		})
 	}
 
@@ -51,26 +57,6 @@ namespace $ { export class $mol_scroll extends $mol_view {
 
 	/**
 	 *  ```
-	 *  scroll_bottom?val 0
-	 *  ```
-	 **/
-	@ $mol_mem
-	scroll_bottom( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : 0
-	}
-
-	/**
-	 *  ```
-	 *  scroll_right?val 0
-	 *  ```
-	 **/
-	@ $mol_mem
-	scroll_right( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : 0
-	}
-
-	/**
-	 *  ```
 	 *  event *
 	 *  	^
 	 *  	scroll?event <=> event_scroll?event
@@ -91,30 +77,6 @@ namespace $ { export class $mol_scroll extends $mol_view {
 	@ $mol_mem
 	event_scroll( event? : any , force? : $mol_mem_force ) {
 		return ( event !== void 0 ) ? event : null as any
-	}
-
-	/**
-	 *  ```
-	 *  Strut $mol_view style * transform <= strut_transform
-	 *  ```
-	 **/
-	@ $mol_mem
-	Strut() {
-		return (( obj )=>{
-			obj.style = () => ({
-			"transform" :  this.strut_transform() ,
-		})
-			return obj
-		})( new this.$.$mol_view(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  strut_transform \
-	 *  ```
-	 **/
-	strut_transform() {
-		return ""
 	}
 
 } }

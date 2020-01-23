@@ -5,7 +5,6 @@ namespace $ {
 		
 		'Class as component'() {
 
-			@ $mol_class
 			class Foo extends $mol_jsx_view {
 
 				title = ''
@@ -24,7 +23,6 @@ namespace $ {
 		
 		'View by element'() {
 
-			@ $mol_class
 			class Br extends $mol_jsx_view {
 
 				render() {
@@ -44,7 +42,6 @@ namespace $ {
 
 			const doc = $mol_dom_parse( '<html><body id="/foo"></body></html>' )
 			
-			@ $mol_class
 			class Title extends $mol_jsx_view {
 
 				value = 'foo'
@@ -72,7 +69,6 @@ namespace $ {
 
 			const doc = $mol_dom_parse( '<html><body id="/foo"></body></html>' )
 			
-			@ $mol_class
 			class Task {
 
 				@ $mol_mem
@@ -80,7 +76,6 @@ namespace $ {
 				
 			}
 
-			@ $mol_class
 			class App extends $mol_jsx_view {
 				
 				@ $mol_mem

@@ -1,4 +1,7 @@
 $mol_app_supplies $mol_book
+	attr *
+		^
+		mol_theme \$mol_theme_auto
 	-
 	enter $mol_app_supplies_enter
 		entered?val <=> entered?val false
