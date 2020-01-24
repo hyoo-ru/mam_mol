@@ -20,11 +20,11 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 
 	/**
 	 *  ```
-	 *  source_prefix \https://github.com/eigenmethod/mol/tree/master
+	 *  source_prefix \https://github.com/eigenmethod/mol/tree/master/
 	 *  ```
 	 **/
 	source_prefix() {
-		return "https://github.com/eigenmethod/mol/tree/master"
+		return "https://github.com/eigenmethod/mol/tree/master/"
 	}
 
 	/**

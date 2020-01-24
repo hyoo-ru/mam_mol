@@ -19741,7 +19741,7 @@ var $;
             return "$mol";
         }
         source_prefix() {
-            return "https://github.com/eigenmethod/mol/tree/master";
+            return "https://github.com/eigenmethod/mol/tree/master/";
         }
         Placeholder() {
             return null;

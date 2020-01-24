@@ -1,6 +1,6 @@
 $mol_app_demo $mol_book
 	editor_title <= detail_title \$mol
-	source_prefix \https://github.com/eigenmethod/mol/tree/master
+	source_prefix \https://github.com/eigenmethod/mol/tree/master/
 	Placeholder null
 	Main $mol_app_demo_main
 		event_top?event <=> event_front_up?event
