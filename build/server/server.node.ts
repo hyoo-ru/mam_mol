@@ -3,7 +3,11 @@ namespace $ {
 	export class $mol_build_server extends $mol_server {
 		
 		expressGenerator() {
-			return $mol_fiber_root( ( req : any , res : any , next : () => any )=> {
+			return $mol_fiber_root( (
+				req : typeof $node.express.request ,
+				res : typeof $node.express.response ,
+				next : () => any
+			)=> {
 				try {
 					return $mol_fiber_unlimit( ()=> this.generator( req.url ) && next() )
 				} catch( error ) {

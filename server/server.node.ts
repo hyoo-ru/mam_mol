@@ -69,6 +69,7 @@ namespace $ {
 				this.expressGenerator() ,
 				this.expressFiler() ,
 				this.expressDirector() ,
+				this.expressIndexRedirector()
 			]
 		}
 		
@@ -94,6 +95,23 @@ namespace $ {
 		
 		expressDirector() {
 			return $node['serve-index']( this.rootPublic() , { icons : true } )
+		}
+
+		expressIndexRedirector() {
+			return (
+				req : typeof $node.express.request ,
+				res : typeof $node.express.response ,
+				next : () => void
+			) => {
+				const {pathname, origin, search, hash} = new URL(req.url)
+				const match = pathname.match(/(.*?)(\/\-)?((?:\/)|(?:\/[^\/]*))?$/)
+				if (! match) return next()
+				const [, prefix, buildDir, name] = match
+				if (buildDir) return next()
+				if (! name) return next()
+
+				res.redirect(301, `${origin}${prefix ?? ''}/-${name}${search}${hash}`)
+			}
 		}
 		
 		expressGenerator() {
