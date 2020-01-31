@@ -67,9 +67,9 @@ namespace $ {
 				this.expressCompressor() ,
 				this.expressBodier() ,
 				this.expressGenerator() ,
-				this.expressFiler() ,
+				this.expressIndexRedirector() ,
 				this.expressDirector() ,
-				this.expressIndexRedirector()
+				this.expressFiler() ,
 			]
 		}
 		
@@ -88,7 +88,8 @@ namespace $ {
 		expressFiler() {
 			return $node['express'].static(
 				$node.path.resolve( this.rootPublic() ) , {
-					maxAge : this.cacheTime()
+					maxAge : this.cacheTime(),
+					index: false
 				}
 			)
 		}
@@ -103,14 +104,9 @@ namespace $ {
 				res : typeof $node.express.response ,
 				next : () => void
 			) => {
-				const {pathname, origin, search, hash} = new URL(req.url)
-				const match = pathname.match(/(.*?)(\/\-)?((?:\/)|(?:\/[^\/]*))?$/)
-				if (! match) return next()
-				const [, prefix, buildDir, name] = match
-				if (buildDir) return next()
-				if (! name) return next()
-
-				res.redirect(301, `${origin}${prefix ?? ''}/-${name}${search}${hash}`)
+				const newUrl =  req.url.replace( /(?:\/-)?(\/(?:[^\/]+\.html?)(?:[\?#].*)?)$/ , '/-$1' )
+				if (req.url === newUrl) next()
+				else res.redirect(301, newUrl)
 			}
 		}
 		

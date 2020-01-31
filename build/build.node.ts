@@ -774,7 +774,6 @@ namespace $ {
 			const start = Date.now()
 			var pack = $mol_file.absolute( path )
 			
-			var source = pack.resolve( `index.html` )
 			var target = pack.resolve( `-/web.test.html` )
 
 			const content = `
@@ -782,13 +781,8 @@ namespace $ {
 <meta charset="utf-8" />
 <body>
 <script src="web.js" charset="utf-8"></script>
-<script>
-	addEventListener( 'load' , function() {
-		var script = document.createElement( 'script' )
-		script.src = 'web.test.js'
-		document.body.appendChild( script )
-	} )
-</script>
+<script src="web.test.js"></script>
+</body>
 `
 			
 			target.content( content )
