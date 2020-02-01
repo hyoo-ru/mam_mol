@@ -4,7 +4,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		bench( next? : string ) {
-			return $mol_state_arg.value( this.state_key( 'bench' ) , next ) || 'https://mol.js.org/app/bench/list/'
+			return $mol_state_arg.value( this.state_key( 'bench' ) , next ) || '../list/index.html'
 		}
 		
 		@ $mol_mem
