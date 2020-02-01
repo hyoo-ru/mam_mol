@@ -34,7 +34,8 @@ namespace $ {
 		
 		@ $mol_log2.method
 		static blur( event : FocusEvent ) {
-			this.focused( [] )
+			const element = $mol_mem_cached( ()=> this.focused() )![0] as HTMLElement
+			if( element === event.target ) this.focused( [] )
 		}
 	}
 	

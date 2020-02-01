@@ -17,7 +17,7 @@ namespace $ {
 		$mol_dom_context.document.addEventListener(
 			'blur' ,
 			( event : FocusEvent )=> {
-				new $mol_after_tick(
+				new $mol_after_timeout( 0 ,
 					$mol_fiber_root(
 						()=> $mol_view_selection.blur( event )
 					)
