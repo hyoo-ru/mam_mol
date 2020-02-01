@@ -2569,6 +2569,7 @@ declare namespace $ {
         minimal_height(): number;
         Option(id: any): $$.$mol_check;
         option_checked(id: any, val?: any, force?: $mol_mem_force): any;
+        option_label(id: any): readonly any[];
         option_title(id: any): string;
         option_enabled(id: any): boolean;
         enabled(): boolean;

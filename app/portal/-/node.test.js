@@ -1706,7 +1706,9 @@ var $;
             this.focused([event.target]);
         }
         static blur(event) {
-            this.focused([]);
+            const element = $.$mol_mem_cached(() => this.focused())[0];
+            if (element === event.target)
+                this.focused([]);
         }
     }
     __decorate([
@@ -8916,13 +8918,16 @@ var $;
         Option(id) {
             return ((obj) => {
                 obj.checked = (val) => this.option_checked(id, val);
-                obj.title = () => this.option_title(id);
+                obj.label = () => this.option_label(id);
                 obj.enabled = () => this.option_enabled(id);
                 return obj;
             })(new this.$.$mol_check());
         }
         option_checked(id, val, force) {
             return (val !== void 0) ? val : false;
+        }
+        option_label(id) {
+            return [this.option_title(id)];
         }
         option_title(id) {
             return "";

@@ -1617,6 +1617,24 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_after_timeout extends $.$mol_object2 {
+        constructor(delay, task) {
+            super();
+            this.delay = delay;
+            this.task = task;
+            this.id = setTimeout(task, delay);
+        }
+        destructor() {
+            clearTimeout(this.id);
+        }
+    }
+    $.$mol_after_timeout = $mol_after_timeout;
+})($ || ($ = {}));
+//timeout.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_view_selection extends $.$mol_object {
         static focused(next) {
             if (next === undefined)
@@ -1640,7 +1658,9 @@ var $;
             this.focused([event.target]);
         }
         static blur(event) {
-            this.focused([]);
+            const element = $.$mol_mem_cached(() => this.focused())[0];
+            if (element === event.target)
+                this.focused([]);
         }
     }
     __decorate([
@@ -1664,7 +1684,7 @@ var $;
             new $.$mol_after_tick($.$mol_fiber_root(() => $.$mol_view_selection.focus(event)));
         }, true);
         $.$mol_dom_context.document.addEventListener('blur', (event) => {
-            new $.$mol_after_tick($.$mol_fiber_root(() => $.$mol_view_selection.blur(event)));
+            new $.$mol_after_timeout(0, $.$mol_fiber_root(() => $.$mol_view_selection.blur(event)));
         }, true);
     }
 })($ || ($ = {}));
@@ -2274,24 +2294,6 @@ var $;
     $.$mol_vector_matrix = $mol_vector_matrix;
 })($ || ($ = {}));
 //vector.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_after_timeout extends $.$mol_object2 {
-        constructor(delay, task) {
-            super();
-            this.delay = delay;
-            this.task = task;
-            this.id = setTimeout(task, delay);
-        }
-        destructor() {
-            clearTimeout(this.id);
-        }
-    }
-    $.$mol_after_timeout = $mol_after_timeout;
-})($ || ($ = {}));
-//timeout.js.map
 ;
 "use strict";
 var $;

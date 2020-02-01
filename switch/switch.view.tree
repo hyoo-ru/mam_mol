@@ -2,7 +2,7 @@ $mol_switch $mol_view
 	minimal_height 40
 	Option!id $mol_check
 		checked?val <=> option_checked!id?val false
-		title <= option_title!id \
+		label <= option_label!id / <= option_title!id \
 		enabled <= option_enabled!id <= enabled true
 	value?val null
 	options *

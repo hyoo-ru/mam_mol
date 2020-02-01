@@ -1599,7 +1599,9 @@ var $;
             this.focused([event.target]);
         }
         static blur(event) {
-            this.focused([]);
+            const element = $.$mol_mem_cached(() => this.focused())[0];
+            if (element === event.target)
+                this.focused([]);
         }
     }
     __decorate([

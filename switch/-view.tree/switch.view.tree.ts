@@ -13,7 +13,7 @@ namespace $ { export class $mol_switch extends $mol_view {
 	 *  ```
 	 *  Option!id $mol_check
 	 *  	checked?val <=> option_checked!id?val
-	 *  	title <= option_title!id
+	 *  	label <= option_label!id
 	 *  	enabled <= option_enabled!id
 	 *  ```
 	 **/
@@ -21,7 +21,7 @@ namespace $ { export class $mol_switch extends $mol_view {
 	Option( id : any ) {
 		return (( obj )=>{
 			obj.checked = ( val? : any ) => this.option_checked(id , val )
-			obj.title = () => this.option_title(id)
+			obj.label = () => this.option_label(id)
 			obj.enabled = () => this.option_enabled(id)
 			return obj
 		})( new this.$.$mol_check(  ) )
@@ -35,6 +35,15 @@ namespace $ { export class $mol_switch extends $mol_view {
 	@ $mol_mem_key
 	option_checked( id : any , val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : false
+	}
+
+	/**
+	 *  ```
+	 *  option_label!id / <= option_title!id
+	 *  ```
+	 **/
+	option_label( id : any ) {
+		return [ this.option_title(id) ] as readonly any[]
 	}
 
 	/**
