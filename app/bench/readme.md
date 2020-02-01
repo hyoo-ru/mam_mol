@@ -56,7 +56,7 @@ type meta = {
 
 Description supports markdown. For every sample and step benchmark will receive message ```[ step , sample, params ]```.
 
-Deploy benchmark to web server. In example: ```//localhost:8080/mol/app/bench/geometry/```
+Deploy benchmark to web server. In example: ```//localhost:9080/mol/app/bench/geometry/index.html```
 
 Open [$mol_app_bench](http://eigenmethod.github.io/mol/app/bench/) and type in developer console command like this to switch to your benchmark:
 

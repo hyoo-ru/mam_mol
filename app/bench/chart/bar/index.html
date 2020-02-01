@@ -132,7 +132,7 @@
 		sandbox.src = 'about:blank'
 		setTimeout( function() {
 			var start = Date.now()
-			sandbox.src = sample + '/'
+			sandbox.src = '../' + sample + '/index.html'
 			sandbox.onload = function() {
 				done( Date.now() - start + ' ms' )
 				sandbox.onload = null
