@@ -68,8 +68,8 @@ namespace $ {
 				this.expressBodier() ,
 				this.expressGenerator() ,
 				this.expressIndexRedirector() ,
-				this.expressDirector() ,
 				this.expressFiler() ,
+				this.expressDirector() ,
 			]
 		}
 		
@@ -88,8 +88,7 @@ namespace $ {
 		expressFiler() {
 			return $node['express'].static(
 				$node.path.resolve( this.rootPublic() ) , {
-					maxAge : this.cacheTime(),
-					index: false
+					maxAge : this.cacheTime()
 				}
 			)
 		}
@@ -104,9 +103,15 @@ namespace $ {
 				res : typeof $node.express.response ,
 				next : () => void
 			) => {
-				const newUrl =  req.url.replace( /(?:\/-)?(\/(?:[^\/]+\.html?)(?:[\?#].*)?)$/ , '/-$1' )
-				if (req.url === newUrl) next()
-				else res.redirect(301, newUrl)
+				const match =  req.url.match( /(.*[^\-]\/)([\?#].*)?$/ )
+				if (! match) return next()
+
+				const file = $mol_file.absolute(this.rootPublic())
+					.resolve(`${req.path}index.html`)
+
+				if (! file.exists()) return next()
+
+				res.redirect(301, `${match[1]}-/index.html${match[2] ?? ''}`)
 			}
 		}
 		

@@ -36,14 +36,14 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		generator( path : string ) {
-			var matched = path.match( /^((?:\/\w+)+)\/-\/(\w+(?:.\w+)+)$/ )
+		generator( url : string ) {
+			const matched = url.match( /^(.*)\/-\/(\w+(?:.\w+)+)$/ )
 			if( !matched ) return <$mol_file[]>[]
 			
-			var build = this.build()
+			const build = this.build()
 			
-			var [ path , path , bundle ] = matched
-			path = build.root().resolve( path ).path()
+			const [ , rawpath , bundle ] = matched
+			const path = build.root().resolve( rawpath ).path()
 
 			if( bundle === 'web.css' ) console.warn( $node.colorette.yellow( 'Deprecation: CSS compiles into JS bundle now! You do not need web.css' ) )
 			
