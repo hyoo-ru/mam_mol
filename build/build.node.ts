@@ -781,7 +781,7 @@ namespace $ {
 <meta charset="utf-8" />
 <body>
 <script src="web.js" charset="utf-8"></script>
-<script src="web.test.js"></script>
+<script src="web.test.js" defer></script>
 </body>
 `
 			
