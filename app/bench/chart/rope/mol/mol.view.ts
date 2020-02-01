@@ -34,7 +34,7 @@ namespace $.$$ {
 		}
 		
 		series( id : number ) {
-			return $mol_app_bench_chart_rope_mol.data().graphs[ id ]
+			return $mol_app_bench_chart_rope_mol.data().graphs[ id ] ?? [] as number[]
 		}
 	}
 
