@@ -64,19 +64,11 @@ Open [$mol_app_bench](http://eigenmethod.github.io/mol/app/bench/) and type in d
 $mol_app_bench.root(0).bench( '//localhost:9080/mol/app/bench/geometry/' )
 ```
 
-## Running benches from localhost
+## Running custom benches from localhost
 
-```
-http://localhost:9080/mol/app/bench/#bench=..%2Fchart%2Fbar
-```
+Pass url to benchmark in ` bench ` parameter to ` http://localhost:9080/mol/app/bench/ `
 
-```
-http://localhost:9080/mol/app/bench/#bench=..%2Fchart%2Frope
-```
-
-```
-http://localhost:9080/mol/app/bench/#bench=..%2Felements
-```
+Example:
 
 ```
 http://localhost:9080/mol/app/bench/#bench=..%2Fgeometry
