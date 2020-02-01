@@ -21,7 +21,12 @@ namespace $.$$ {
 		}
 		
 		graphs() {
-			return $mol_app_bench_chart_bar_mol.data().graphs.map( ( g , i )=> this.Graph( i ) )
+			const data = $mol_app_bench_chart_bar_mol.data()
+
+			return [
+				...super.graphs(),
+				...data.graphs.map( ( g , i )=> this.Graph( i ) ),
+			]
 		}
 		
 		graph_title( id : number ) {

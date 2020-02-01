@@ -64,6 +64,24 @@ Open [$mol_app_bench](http://eigenmethod.github.io/mol/app/bench/) and type in d
 $mol_app_bench.root(0).bench( '//localhost:9080/mol/app/bench/geometry/' )
 ```
 
+## Running benches from localhost
+
+```
+http://localhost:9080/mol/app/bench/#bench=..%2Fchart%2Fbar
+```
+
+```
+http://localhost:9080/mol/app/bench/#bench=..%2Fchart%2Frope
+```
+
+```
+http://localhost:9080/mol/app/bench/#bench=..%2Felements
+```
+
+```
+http://localhost:9080/mol/app/bench/#bench=..%2Fgeometry
+```
+
 ## Articles
 
 - [$mol_app_bench: готовим JS бенчмарки быстро и просто](https://habrahabr.ru/post/322162/)
