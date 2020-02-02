@@ -72,3 +72,4 @@ jobs:
       with:
         repo-token: ${{ secrets.GH_PAT }}
         site-directory: '../mam/mol'
+
