@@ -3798,20 +3798,14 @@ var $;
         bundleTestHtml({ path }) {
             const start = Date.now();
             var pack = $.$mol_file.absolute(path);
-            var source = pack.resolve(`index.html`);
             var target = pack.resolve(`-/web.test.html`);
             const content = `
 <!doctype html>
 <meta charset="utf-8" />
 <body>
 <script src="web.js" charset="utf-8"></script>
-<script>
-	addEventListener( 'load' , function() {
-		var script = document.createElement( 'script' )
-		script.src = 'web.test.js'
-		document.body.appendChild( script )
-	} )
-</script>
+<script src="web.test.js" defer></script>
+</body>
 `;
             target.content(content);
             this.logBundle(target, Date.now() - start);
@@ -4263,6 +4257,7 @@ var $;
                 this.expressCompressor(),
                 this.expressBodier(),
                 this.expressGenerator(),
+                this.expressIndexRedirector(),
                 this.expressFiler(),
                 this.expressDirector(),
             ];
@@ -4282,6 +4277,19 @@ var $;
         }
         expressDirector() {
             return $node['serve-index'](this.rootPublic(), { icons: true });
+        }
+        expressIndexRedirector() {
+            return (req, res, next) => {
+                var _a;
+                const match = req.url.match(/(.*[^\-]\/)([\?#].*)?$/);
+                if (!match)
+                    return next();
+                const file = $.$mol_file.absolute(this.rootPublic())
+                    .resolve(`${req.path}index.html`);
+                if (!file.exists())
+                    return next();
+                res.redirect(301, `${match[1]}-/index.html${_a = match[2], (_a !== null && _a !== void 0 ? _a : '')}`);
+            };
         }
         expressGenerator() {
             return (req, res, next) => next();
@@ -4347,13 +4355,13 @@ var $;
         build() {
             return $.$mol_fail(new Error('Not implemented'));
         }
-        generator(path) {
-            var matched = path.match(/^((?:\/\w+)+)\/-\/(\w+(?:.\w+)+)$/);
+        generator(url) {
+            const matched = url.match(/^(.*)\/-\/(\w+(?:.\w+)+)$/);
             if (!matched)
                 return [];
-            var build = this.build();
-            var [path, path, bundle] = matched;
-            path = build.root().resolve(path).path();
+            const build = this.build();
+            const [, rawpath, bundle] = matched;
+            const path = build.root().resolve(rawpath).path();
             if (bundle === 'web.css')
                 console.warn($node.colorette.yellow('Deprecation: CSS compiles into JS bundle now! You do not need web.css'));
             try {

@@ -11,18 +11,26 @@ namespace $ { export class $mol_app_bench_chart_bar_mol extends $mol_view {
 
 	/**
 	 *  ```
-	 *  Chart $mol_chart graphs /
-	 *  	<= Vert
-	 *  	<= Hor
-	 *  	<= graphs
+	 *  Chart $mol_chart graphs <= graphs
 	 *  ```
 	 **/
 	@ $mol_mem
 	Chart() {
 		return (( obj )=>{
-			obj.graphs = () => [ this.Vert() , this.Hor() , this.graphs() ] as readonly any[]
+			obj.graphs = () => this.graphs()
 			return obj
 		})( new this.$.$mol_chart(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  graphs /$mol_plot_graph
+	 *  	<= Vert
+	 *  	<= Hor
+	 *  ```
+	 **/
+	graphs() {
+		return [ this.Vert() , this.Hor() ] as readonly ( $mol_plot_graph )[]
 	}
 
 	/**
@@ -56,20 +64,11 @@ namespace $ { export class $mol_app_bench_chart_bar_mol extends $mol_view {
 
 	/**
 	 *  ```
-	 *  hor_series /
+	 *  hor_series /number
 	 *  ```
 	 **/
 	hor_series() {
-		return [  ] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  graphs /
-	 *  ```
-	 **/
-	graphs() {
-		return [  ] as readonly any[]
+		return [  ] as readonly ( number )[]
 	}
 
 	/**

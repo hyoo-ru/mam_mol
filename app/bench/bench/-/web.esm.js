@@ -6779,7 +6779,7 @@ var $;
     (function ($$) {
         class $mol_app_bench extends $.$mol_app_bench {
             bench(next) {
-                return $.$mol_state_arg.value(this.state_key('bench'), next) || 'list/';
+                return $.$mol_state_arg.value(this.state_key('bench'), next) || '../list/';
             }
             sandbox() {
                 const next = this.Sandbox().dom_node();

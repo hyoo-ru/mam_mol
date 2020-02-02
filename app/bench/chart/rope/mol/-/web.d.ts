@@ -1339,9 +1339,9 @@ declare namespace $ {
     class $mol_app_bench_chart_rope_mol extends $mol_view {
         sub(): readonly any[];
         Chart(): $mol_chart;
+        graphs(): readonly $mol_plot_graph[];
         Vert(): $$.$mol_plot_ruler_vert;
         Hor(): $$.$mol_plot_ruler_hor;
-        graphs(): readonly any[];
         Graph(id: any): $$.$mol_plot_group;
         graph_title(id: any): string;
         series(id: any): readonly any[];
@@ -1357,7 +1357,7 @@ declare namespace $.$$ {
     }
     class $mol_app_bench_chart_rope_mol extends $.$mol_app_bench_chart_rope_mol {
         static data(next?: $mol_app_bench_chart_rope_mol_data, force?: $mol_mem_force): $mol_app_bench_chart_rope_mol_data;
-        graphs(): $mol_plot_group[];
+        graphs(): $.$mol_plot_graph[];
         graph_title(id: number): string;
         series(id: number): number[];
     }

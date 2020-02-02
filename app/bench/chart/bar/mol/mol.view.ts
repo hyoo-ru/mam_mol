@@ -21,7 +21,12 @@ namespace $.$$ {
 		}
 		
 		graphs() {
-			return $mol_app_bench_chart_bar_mol.data().graphs.map( ( g , i )=> this.Graph( i ) )
+			const data = $mol_app_bench_chart_bar_mol.data()
+
+			return [
+				...super.graphs(),
+				...data.graphs.map( ( g , i )=> this.Graph( i ) ),
+			]
 		}
 		
 		graph_title( id : number ) {
@@ -29,7 +34,7 @@ namespace $.$$ {
 		}
 		
 		series( id : number ) {
-			return $mol_app_bench_chart_bar_mol.data().graphs[ id ]
+			return $mol_app_bench_chart_bar_mol.data().graphs[ id ] ?? [] as number[]
 		}
 		
 		hor_series() {

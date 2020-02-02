@@ -833,6 +833,7 @@ declare namespace $ {
         expressBodier(): any;
         expressFiler(): any;
         expressDirector(): any;
+        expressIndexRedirector(): (req: any, res: any, next: () => void) => void;
         expressGenerator(): (req: any, res: any, next: () => void) => void;
         bodyLimit(): string;
         cacheTime(): number;
@@ -845,7 +846,7 @@ declare namespace $ {
     class $mol_build_server extends $mol_server {
         expressGenerator(): (req: any, res: any, next: () => any) => any;
         build(): $mol_build;
-        generator(path: string): $mol_file[] | Object[];
+        generator(url: string): $mol_file[] | Object[];
         port(): number;
     }
 }

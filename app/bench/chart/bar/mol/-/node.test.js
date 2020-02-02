@@ -4972,9 +4972,12 @@ var $;
         }
         Chart() {
             return ((obj) => {
-                obj.graphs = () => [this.Vert(), this.Hor(), this.graphs()];
+                obj.graphs = () => this.graphs();
                 return obj;
             })(new this.$.$mol_chart());
+        }
+        graphs() {
+            return [this.Vert(), this.Hor()];
         }
         Vert() {
             return ((obj) => {
@@ -4990,9 +4993,6 @@ var $;
             })(new this.$.$mol_plot_mark_hor());
         }
         hor_series() {
-            return [];
-        }
-        graphs() {
             return [];
         }
         Graph(id) {
@@ -5043,13 +5043,18 @@ var $;
                 return { sample: '', graphs: [] };
             }
             graphs() {
-                return $mol_app_bench_chart_bar_mol.data().graphs.map((g, i) => this.Graph(i));
+                const data = $mol_app_bench_chart_bar_mol.data();
+                return [
+                    ...super.graphs(),
+                    ...data.graphs.map((g, i) => this.Graph(i)),
+                ];
             }
             graph_title(id) {
                 return `Graph #${id}`;
             }
             series(id) {
-                return $mol_app_bench_chart_bar_mol.data().graphs[id];
+                var _a;
+                return _a = $mol_app_bench_chart_bar_mol.data().graphs[id], (_a !== null && _a !== void 0 ? _a : []);
             }
             hor_series() {
                 return $.$mol_range2().slice(0, this.series(0).length);

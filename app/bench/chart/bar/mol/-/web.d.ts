@@ -1328,10 +1328,10 @@ declare namespace $ {
     class $mol_app_bench_chart_bar_mol extends $mol_view {
         sub(): readonly any[];
         Chart(): $mol_chart;
+        graphs(): readonly $mol_plot_graph[];
         Vert(): $$.$mol_plot_ruler_vert;
         Hor(): $$.$mol_plot_mark_hor;
-        hor_series(): readonly any[];
-        graphs(): readonly any[];
+        hor_series(): readonly number[];
         Graph(id: any): $$.$mol_plot_bar;
         graph_title(id: any): string;
         series(id: any): readonly number[];
@@ -1345,7 +1345,7 @@ declare namespace $.$$ {
     }
     class $mol_app_bench_chart_bar_mol extends $.$mol_app_bench_chart_bar_mol {
         static data(next?: $mol_app_bench_chart_bar_mol_data, force?: $mol_mem_force): $mol_app_bench_chart_bar_mol_data;
-        graphs(): $mol_plot_bar[];
+        graphs(): ($.$mol_plot_graph | $mol_plot_bar)[];
         graph_title(id: number): string;
         series(id: number): number[];
         hor_series(): number[];
