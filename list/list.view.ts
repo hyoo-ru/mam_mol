@@ -122,8 +122,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		minimal_height() {
-			const visible = this.sub_visible()
-			return visible.reduce( ( sum , view )=> sum + view.minimal_height() , 0 )
+			return this.sub().reduce( ( sum , view )=> sum + view.minimal_height() , 0 )
 		}
 
 	}
