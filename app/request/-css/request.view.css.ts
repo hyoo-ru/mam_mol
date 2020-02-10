@@ -1,3 +1,0 @@
-namespace $ { $mol_style_attach( "mol/app/request/request.view.css",
- "[mol_app_request_uri_input] {\n\tflex: 0 0 auto;\n}\n\n[mol_app_request_body] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[mol_app_request_data] {\n\tdisplay: flex;\n\tflex: auto;\n}\n\n[mol_app_request_request] > * ,\n[mol_app_request_response] > * {\n\tmargin: .5rem;\n}\n\n[mol_app_request_request] {\n\tflex: 1 1 33%;\n\tpadding: .5rem;\n}\n\n[mol_app_request_response] {\n\tflex: 1 1 66%;\n\tpadding: .5rem;\n}\n\n"
-) }

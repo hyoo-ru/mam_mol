@@ -1,3 +1,0 @@
-namespace $ { $mol_style_attach( "mol/app/lamps/lamps.view.css",
- "[mol_app_lamps_title] {\n\tflex: 0 1 auto;\n}\n\n[mol_app_lamps_filter] {\n\tdisplay: block;\n}\n\n[mol_app_lamps_menu] {\n\tmin-height: 100%;\n}\n\n[mol_app_lamps_lamp_row] {\n\tdisplay: flex;\n\tflex: 0 0 auto;\n\tpadding: .5rem 1rem;\n}\n\n[mol_app_lamps_lamp_row_link] {\n\tdisplay: flex;\n\tflex: 1 1 auto;\n\talign-items: flex-start;\n}\n\n[mol_app_lamps_lamp_row_title] {\n\tflex: 1000 1 auto;\n}\n\n[mol_app_lamps_lamp_row_thumb] {\n\theight : 3rem;\n\tdisplay: block;\n}\n\n[mol_app_lamps_addon_page] {\n\tflex: 1 1 400px;\n}\n\n[mol_app_lamps_main_page] {\n\tflex: 1000 1 400px;\n}\n\n[mol_app_lamps_light] ,\n[mol_app_lamps_body] {\n\tjustify-content: space-between;\n}\n"
-) }

@@ -1,1 +1,0 @@
-var $node = $node || {} ; $node[ "/mol/app/todomvc/todomvc_active.svg" ] = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAtMTggMTAwIDEzNSI+DQoJPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNTAiIGZpbGw9Im5vbmUiICBzdHJva2U9IiNlZGVkZWQiIHN0cm9rZS13aWR0aD0iMyIvPg0KPC9zdmc+"
