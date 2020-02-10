@@ -77,7 +77,15 @@ namespace $ {
 
 			for( let key in a ) {
 
-				if( !$mol_compare_deep( a[key] , b[key] ) ) return result = false
+				try {
+
+					if( !$mol_compare_deep( a[key] , b[key] ) ) return result = false
+				
+				} catch( error ) {
+
+					$mol_fail_hidden( new $mol_error_mix( `Failed ${ JSON.stringify( key ) } fields comparison of ${a} and ${b}` , error ) )
+
+				}
 				
 				++ count
 

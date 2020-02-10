@@ -126,8 +126,13 @@ namespace $ {
 		static watchers = new Set< $mol_view >()
 
 		@ $mol_mem
-		view_rect( next = null as ClientRect | null ) {
+		view_rect() {
 			if( $mol_atom2.current ) this.view_rect_watcher()
+			return this.view_rect_cache()
+		}
+
+		@ $mol_mem
+		view_rect_cache( next = null as ClientRect | null ) {
 			return next
 		}
 

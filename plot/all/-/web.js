@@ -60,7 +60,7 @@ var $;
     })($$ = $.$$ || ($.$$ = {}));
     $.$mol_ambient_ref = Symbol('$mol_ambient_ref');
     function $mol_ambient(overrides) {
-        return Object.setPrototypeOf(overrides, this);
+        return Object.setPrototypeOf(overrides, this || $);
     }
     $.$mol_ambient = $mol_ambient;
 })($ || ($ = {}));
@@ -2120,9 +2120,12 @@ var $;
             }
             return min;
         }
-        view_rect(next = null) {
+        view_rect() {
             if ($.$mol_atom2.current)
                 this.view_rect_watcher();
+            return this.view_rect_cache();
+        }
+        view_rect_cache(next = null) {
             return next;
         }
         view_rect_watcher() {
@@ -2286,6 +2289,9 @@ var $;
     ], $mol_view.prototype, "view_rect", null);
     __decorate([
         $.$mol_mem
+    ], $mol_view.prototype, "view_rect_cache", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_view.prototype, "view_rect_watcher", null);
     __decorate([
         $.$mol_mem
@@ -2331,7 +2337,7 @@ var $;
         function $mol_view_watch() {
             $.$mol_fiber_unlimit(() => {
                 for (const view of $.$mol_view.watchers) {
-                    view.view_rect(view.dom_node().getBoundingClientRect().toJSON());
+                    view.view_rect_cache(view.dom_node().getBoundingClientRect().toJSON());
                 }
                 new $.$mol_after_frame($mol_view_watch);
             });

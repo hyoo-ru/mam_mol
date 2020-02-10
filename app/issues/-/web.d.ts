@@ -15,7 +15,7 @@ declare namespace $ {
     }
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = (typeof globalThis) & (typeof $.$$) & (typeof $);
-    function $mol_ambient(this: $mol_ambient_context, overrides: Partial<$mol_ambient_context>): $mol_ambient_context;
+    function $mol_ambient(this: $mol_ambient_context | void, overrides: Partial<$mol_ambient_context>): $mol_ambient_context;
 }
 
 declare namespace $ {
@@ -723,7 +723,8 @@ declare namespace $ {
         minimal_width(): number;
         minimal_height(): number;
         static watchers: Set<$mol_view>;
-        view_rect(next?: ClientRect): ClientRect;
+        view_rect(): ClientRect;
+        view_rect_cache(next?: ClientRect): ClientRect;
         view_rect_watcher(): {
             destructor: () => boolean;
         };
