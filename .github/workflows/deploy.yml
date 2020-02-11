@@ -51,7 +51,6 @@ jobs:
         node ./mol/build/-/node.test.js mol/app/files/demo
         node ./mol/build/-/node.test.js mol/app/questions
         node ./mol/build/-/node.test.js mol/chat/service
-        node ./mol/build/-/node.test.js mol/app/life
         node ./mol/build/-/node.test.js mol/time/all
         node ./mol/build/-/node.test.js mol/plot/all
         node ./mol/build/-/node.test.js mol/fiber/demo
