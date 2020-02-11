@@ -1,3 +1,0 @@
-namespace $ { $mol_style_attach( "mol/app/life/life.view.css",
- "[mol_app_life_tools] {\n\tjustify-content: space-between;\n}\n\n[mol_app_life_time] {\n\tflex: 0 1 auto;\n\tbox-shadow: none;\n\tpadding: 0;\n}\n\n[mol_app_life_time_option] {\n\tpadding: .5rem;\n\tbackground: none;\n\tbox-shadow: none;\n\tcolor: inherit;\n}\n\n[mol_app_life_store_link] {\n\talign-items: center;\n}\n\n[mol_app_life_store_link][mol_link_current] {\n\topacity: .5;\n}\n\n[mol_app_life_map] {\n\tflex: auto;\n\tdisplay: flex;\n}\n"
-) }
