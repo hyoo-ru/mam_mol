@@ -1,4 +1,4 @@
-namespace $ { export class $mol_list_demo extends $mol_demo_large {
+namespace $ { export class $mol_list_demo_tree extends $mol_demo_large {
 
 	/**
 	 *  ```
@@ -6,7 +6,7 @@ namespace $ { export class $mol_list_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	title() {
-		return this.$.$mol_locale.text( "$mol_list_demo_title" )
+		return this.$.$mol_locale.text( "$mol_list_demo_tree_title" )
 	}
 
 	/**

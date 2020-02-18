@@ -1289,6 +1289,8 @@ var $;
     $.$mol_mem_cached = $.$mol_atom2_value;
     function $mol_mem_persist() {
         const atom = $.$mol_atom2.current;
+        if (!atom)
+            return;
         if (atom.hasOwnProperty('destructor'))
             return;
         atom.destructor = () => { };

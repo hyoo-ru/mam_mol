@@ -292,11 +292,11 @@ namespace $ { export class $my_remover extends $mol_view {
 } }
 ```
 
-We could declare as value an instance of another class directly. In the next example it is being declared a property `List`, and which value would be a component type of `$mol_list_demo`, and then it put into a list of child components `sub`:
+We could declare as value an instance of another class directly. In the next example it is being declared a property `List`, and which value would be a component type of `$mol_list_demo_tree`, and then it put into a list of child components `sub`:
 
 ```tree
 $my_app $mol_view
-	List $mol_list_demo
+	List $mol_list_demo_tree
 	sub /
 		<= List -
 ```
@@ -306,7 +306,7 @@ namespace $ { export class $my_app extends $mol_view {
 
 	@ $mol_mem
 	List() {
-		const obj = new $mol_list_demo
+		const obj = new $mol_list_demo_tree
 		return obj
 	}
 

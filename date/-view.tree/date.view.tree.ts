@@ -14,6 +14,7 @@ namespace $ { export class $mol_date extends $mol_pop {
 	 *  Input $mol_string
 	 *  	value?val <=> value?val
 	 *  	hint <= hint
+	 *  	enabled <= enabled
 	 *  	length_max 10
 	 *  ```
 	 **/
@@ -22,6 +23,7 @@ namespace $ { export class $mol_date extends $mol_pop {
 		return (( obj )=>{
 			obj.value = ( val? : any ) => this.value( val )
 			obj.hint = () => this.hint()
+			obj.enabled = () => this.enabled()
 			obj.length_max = () => 10
 			return obj
 		})( new this.$.$mol_string(  ) )
@@ -44,6 +46,15 @@ namespace $ { export class $mol_date extends $mol_pop {
 	 **/
 	hint() {
 		return "YYYY-MM-DD"
+	}
+
+	/**
+	 *  ```
+	 *  enabled true
+	 *  ```
+	 **/
+	enabled() {
+		return true
 	}
 
 	/**

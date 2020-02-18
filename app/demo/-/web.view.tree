@@ -1489,6 +1489,7 @@ $mol_date $mol_pop
 	Anchor <= Input $mol_string
 		value?val <=> value?val \
 		hint <= hint \YYYY-MM-DD
+		enabled <= enabled true
 		length_max 10
 	-
 	bubble_content /
@@ -1777,7 +1778,61 @@ $mol_link_iconed_demo $mol_demo_small
 			uri <= uri?val
 			
 
-$mol_list_demo $mol_demo_large
+$mol_list_demo_table $mol_demo_large
+	title @ \Large list of rows with dynamic content
+	count 100
+	sub /
+		<= Scroll $mol_scroll
+			sub /
+				<= Rows $mol_list
+					rows <= rows /
+	Row!id $mol_row
+		sub <= row_content!id /
+			<= Id!id $mol_view sub / <= row_id!id \
+			<= Title!id $mol_view sub / <= row_title!id \
+			<= Editable!id $mol_check_box
+				title <= editable_title @ \Editable
+				checked?val <=> row_editable!id?val false
+			<= Priority!id $mol_switch
+				enabled <= row_editable!id
+				value?val <=> row_priority!id?val \
+				options *
+					minor \Minor
+					major \Major
+					critical \Critical
+			<= Date!id $mol_date
+				value_moment?val <=> row_moment!id?val $mol_time_moment
+				enabled <= row_editable!id
+			<= Number!id $mol_number
+				value?val <=> row_number!id?val 0
+				enabled <= row_editable!id
+			<= Link!id $mol_link_iconed uri <= row_uri!id \
+
+$mol_number $mol_view
+	precision_view <= precision 1
+	precision_change <= precision 1
+	value?val NaN
+	sub /
+		<= String $mol_string
+			type \number
+			value?val <=> value_string?val \
+			hint <= hint \
+			enabled <= string_enabled <= enabled true
+			debounce <= debounce 200
+		<= Dec $mol_button_minor
+			event_click?val <=> event_dec?val null
+			enabled <= dec_enabled <= enabled true
+			sub / <= dec_icon $mol_icon_minus
+		<= Inc $mol_button_minor
+			event_click?val <=> event_inc?val null
+			enabled <= inc_enabled <= enabled true
+			sub / <= inc_icon $mol_icon_plus
+
+$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
+
+$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+
+$mol_list_demo_tree $mol_demo_large
 	title @ \Large list of rows with dynamic content
 	sub /
 		<= Scroll $mol_scroll
@@ -1871,30 +1926,6 @@ $mol_meter_demo $mol_demo_small
 			sub /
 				\Component height: 
 				<= height
-
-$mol_number $mol_view
-	precision_view <= precision 1
-	precision_change <= precision 1
-	value?val NaN
-	sub /
-		<= String $mol_string
-			type \number
-			value?val <=> value_string?val \
-			hint <= hint \
-			enabled <= string_enabled <= enabled true
-			debounce <= debounce 200
-		<= Dec $mol_button_minor
-			event_click?val <=> event_dec?val null
-			enabled <= dec_enabled <= enabled true
-			sub / <= dec_icon $mol_icon_minus
-		<= Inc $mol_button_minor
-			event_click?val <=> event_inc?val null
-			enabled <= inc_enabled <= enabled true
-			sub / <= inc_icon $mol_icon_plus
-
-$mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
-
-$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
 
 $mol_number_demo $mol_demo_small
 	title @ \Number input control with various configuration
