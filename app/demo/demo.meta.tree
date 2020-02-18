@@ -35,7 +35,8 @@ include \/mol/infinite/demo
 include \/mol/labeler/demo
 include \/mol/link/demo
 include \/mol/link/iconed/demo
-include \/mol/list/demo
+include \/mol/list/demo/table
+include \/mol/list/demo/tree
 include \/mol/map/yandex/demo
 include \/mol/message/demo
 include \/mol/meter/demo
