@@ -2,6 +2,7 @@ $mol_date $mol_pop
 	Anchor <= Input $mol_string
 		value?val <=> value?val \
 		hint <= hint \YYYY-MM-DD
+		enabled <= enabled true
 		length_max 10
 	-
 	bubble_content /
