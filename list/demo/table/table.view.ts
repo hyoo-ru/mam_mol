@@ -8,7 +8,7 @@ namespace $.$$ {
 		}
 
 		row_id( id : number ) {
-			return id
+			return String( id )
 		}
 
 		@ $mol_mem_key
