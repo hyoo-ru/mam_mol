@@ -1,7 +1,9 @@
 name: Deploy
 
-on: push
-
+on:
+  push:
+  schedule:
+  - cron: "0 7 * * *"
 
 jobs:
   build:
@@ -33,8 +35,6 @@ jobs:
         node ./mol/app/demo/-/node.test.js
         node ./mol/build/-/node.test.js mol/app/hello
         node ./mol/build/-/node.test.js mol/app/supplies
-        node ./mol/build/-/node.test.js mol/app/habhub
-        node ./mol/build/-/node.test.js mol/app/todomvc
         node ./mol/build/-/node.test.js mol/perf/sierp
         node ./mol/build/-/node.test.js mol/perf/uibench
         node ./mol/build/-/node.test.js mol/perf/dbmon 
@@ -48,28 +48,21 @@ jobs:
         node ./mol/build/-/node.test.js mol/app/users
         node ./mol/build/-/node.test.js mol/mem
         node ./mol/build/-/node.test.js mol/app/quine
-        node ./mol/build/-/node.test.js mol/app/lamps
         node ./mol/build/-/node.test.js mol/app/files/demo
         node ./mol/build/-/node.test.js mol/app/questions
-        node ./mol/build/-/node.test.js mol/app/calc
         node ./mol/build/-/node.test.js mol/chat/service
-        node ./mol/build/-/node.test.js mol/app/life
         node ./mol/build/-/node.test.js mol/time/all
         node ./mol/build/-/node.test.js mol/plot/all
         node ./mol/build/-/node.test.js mol/fiber/demo
         node ./mol/build/-/node.test.js mol/app/report
-        node ./mol/build/-/node.test.js mol/app/tree
-        node ./mol/build/-/node.test.js mol/app/request
-        node ./mol/build/-/node.test.js mol/app/rdf
         node ./mol/build/-/node.test.js mol/app/jsperf
-        node ./mol/build/-/node.test.js mol/app/issues
         node ./mol/build/-/node.test.js mol/syntax2
         node ./mol/build/-/node.test.js mol/func/sandbox/demo
         node ./mol/build/-/node.test.js mol/app/portal
         
     - name: Deploy on GitHub Pages
       if: github.ref == 'refs/heads/master'
-      uses: alex-page/blazing-fast-gh-pages-deploy@v1.0.1
+      uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
       with:
         repo-token: ${{ secrets.GH_PAT }}
         site-directory: '../mam/mol'

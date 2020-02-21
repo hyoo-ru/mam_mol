@@ -1,4 +1,4 @@
-$mol_list_demo $mol_demo_large
+$mol_list_demo_tree $mol_demo_large
 	title @ \Large list of rows with dynamic content
 	sub /
 		<= Scroll $mol_scroll

@@ -5,6 +5,8 @@ namespace $ {
 	export function $mol_mem_persist() {
 
 		const atom = $mol_atom2.current
+		if( !atom ) return
+		
 		if( atom.hasOwnProperty( 'destructor' ) ) return
 		
 		atom.destructor = ()=> {}
