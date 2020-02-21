@@ -685,13 +685,13 @@ declare namespace $ {
         minimal_height(): number;
         _event_scroll_timer(val?: any, force?: $mol_mem_force): any;
         field(): {
-            "scrollTop": any;
-            "scrollLeft": any;
+            scrollTop: any;
+            scrollLeft: any;
         };
         scroll_top(val?: any, force?: $mol_mem_force): any;
         scroll_left(val?: any, force?: $mol_mem_force): any;
         event(): {
-            "scroll": (event?: any) => any;
+            scroll: (event?: any) => any;
         };
         event_scroll(event?: any, force?: $mol_mem_force): any;
     }
@@ -829,16 +829,16 @@ declare namespace $ {
         click(event?: any, force?: $mol_mem_force): any;
         event_click(event?: any, force?: $mol_mem_force): any;
         event(): {
-            "click": (event?: any) => any;
-            "keypress": (event?: any) => any;
+            click: (event?: any) => any;
+            keypress: (event?: any) => any;
         };
         event_activate(event?: any, force?: $mol_mem_force): any;
         event_key_press(event?: any, force?: $mol_mem_force): any;
         attr(): {
-            "disabled": boolean;
-            "role": string;
-            "tabindex": number;
-            "title": string;
+            disabled: boolean;
+            role: string;
+            tabindex: number;
+            title: string;
         };
         disabled(): boolean;
         tab_index(): number;
@@ -866,11 +866,11 @@ declare namespace $ {
 declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
         attr(): {
-            "mol_theme": string;
-            "disabled": boolean;
-            "role": string;
-            "tabindex": number;
-            "title": string;
+            mol_theme: string;
+            disabled: boolean;
+            role: string;
+            tabindex: number;
+            title: string;
         };
     }
 }
@@ -885,12 +885,12 @@ declare namespace $ {
 declare namespace $ {
     class $mol_check extends $mol_button_minor {
         attr(): {
-            "mol_check_checked": any;
+            mol_check_checked: any;
             "aria-checked": any;
-            "role": string;
-            "disabled": boolean;
-            "tabindex": number;
-            "title": string;
+            role: string;
+            disabled: boolean;
+            tabindex: number;
+            title: string;
         };
         checked(val?: any, force?: $mol_mem_force): any;
         sub(): readonly any[];
@@ -948,8 +948,8 @@ declare namespace $ {
     class $mol_svg_root extends $mol_svg {
         dom_name(): string;
         attr(): {
-            "viewBox": string;
-            "preserveAspectRatio": string;
+            viewBox: string;
+            preserveAspectRatio: string;
         };
         view_box(): string;
         aspect(): string;
@@ -960,7 +960,7 @@ declare namespace $ {
     class $mol_svg_path extends $mol_svg {
         dom_name(): string;
         attr(): {
-            "d": string;
+            d: string;
         };
         geometry(): string;
     }
@@ -1007,7 +1007,7 @@ declare namespace $ {
         Icon(): $mol_icon_chevron;
         level(): number;
         style(): {
-            "paddingLeft": string;
+            paddingLeft: string;
         };
         level_style(): string;
         checked(val?: any, force?: $mol_mem_force): any;
@@ -1353,7 +1353,7 @@ declare namespace $ {
             '#m': (duration: $mol_time_duration) => string;
             '#s': (duration: $mol_time_duration) => string;
             '+hh': (duration: $mol_time_duration) => string;
-            'mm': (duration: $mol_time_duration) => string;
+            mm: (duration: $mol_time_duration) => string;
         };
     }
 }
@@ -1389,35 +1389,35 @@ declare namespace $ {
         toJSON(): string;
         toString(pattern?: string): string;
         static patterns: {
-            'YYYY': (moment: $mol_time_moment) => string;
-            'AD': (moment: $mol_time_moment) => string;
-            'YY': (moment: $mol_time_moment) => string;
-            'Month': (moment: $mol_time_moment) => string;
+            YYYY: (moment: $mol_time_moment) => string;
+            AD: (moment: $mol_time_moment) => string;
+            YY: (moment: $mol_time_moment) => string;
+            Month: (moment: $mol_time_moment) => string;
             'DD Month': (moment: $mol_time_moment) => string;
             'D Month': (moment: $mol_time_moment) => string;
-            'Mon': (moment: $mol_time_moment) => string;
+            Mon: (moment: $mol_time_moment) => string;
             'DD Mon': (moment: $mol_time_moment) => string;
             'D Mon': (moment: $mol_time_moment) => string;
             '-MM': (moment: $mol_time_moment) => string;
-            'MM': (moment: $mol_time_moment) => string;
-            'M': (moment: $mol_time_moment) => string;
-            'WeekDay': (moment: $mol_time_moment) => string;
-            'WD': (moment: $mol_time_moment) => string;
+            MM: (moment: $mol_time_moment) => string;
+            M: (moment: $mol_time_moment) => string;
+            WeekDay: (moment: $mol_time_moment) => string;
+            WD: (moment: $mol_time_moment) => string;
             '-DD': (moment: $mol_time_moment) => string;
-            'DD': (moment: $mol_time_moment) => string;
-            'D': (moment: $mol_time_moment) => string;
-            'Thh': (moment: $mol_time_moment) => string;
-            'hh': (moment: $mol_time_moment) => string;
-            'h': (moment: $mol_time_moment) => string;
+            DD: (moment: $mol_time_moment) => string;
+            D: (moment: $mol_time_moment) => string;
+            Thh: (moment: $mol_time_moment) => string;
+            hh: (moment: $mol_time_moment) => string;
+            h: (moment: $mol_time_moment) => string;
             ':mm': (moment: $mol_time_moment) => string;
-            'mm': (moment: $mol_time_moment) => string;
-            'm': (moment: $mol_time_moment) => string;
+            mm: (moment: $mol_time_moment) => string;
+            m: (moment: $mol_time_moment) => string;
             ':ss': (moment: $mol_time_moment) => string;
-            'ss': (moment: $mol_time_moment) => string;
-            's': (moment: $mol_time_moment) => string;
+            ss: (moment: $mol_time_moment) => string;
+            s: (moment: $mol_time_moment) => string;
             '.sss': (moment: $mol_time_moment) => string;
-            'sss': (moment: $mol_time_moment) => string;
-            'Z': (moment: $mol_time_moment) => string;
+            sss: (moment: $mol_time_moment) => string;
+            Z: (moment: $mol_time_moment) => string;
         };
     }
 }

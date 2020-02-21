@@ -629,13 +629,13 @@ declare namespace $ {
         minimal_height(): number;
         _event_scroll_timer(val?: any, force?: $mol_mem_force): any;
         field(): {
-            "scrollTop": any;
-            "scrollLeft": any;
+            scrollTop: any;
+            scrollLeft: any;
         };
         scroll_top(val?: any, force?: $mol_mem_force): any;
         scroll_left(val?: any, force?: $mol_mem_force): any;
         event(): {
-            "scroll": (event?: any) => any;
+            scroll: (event?: any) => any;
         };
         event_scroll(event?: any, force?: $mol_mem_force): any;
     }
@@ -837,7 +837,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_pop extends $mol_view {
         event(): {
-            "keydown": (event?: any) => any;
+            keydown: (event?: any) => any;
         };
         keydown(event?: any, force?: $mol_mem_force): any;
         showed(val?: any, force?: $mol_mem_force): any;
@@ -860,12 +860,12 @@ declare namespace $ {
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
         content(): readonly (string | number | boolean | Node | $mol_view)[];
         style(): {
-            "maxHeight": number;
+            maxHeight: number;
         };
         height_max(): number;
         attr(): {
-            "mol_pop_align": string;
-            "tabindex": number;
+            mol_pop_align: string;
+            tabindex: number;
         };
         align(): string;
     }
@@ -888,12 +888,12 @@ declare namespace $ {
         showed(): any;
         hovered(val?: any, force?: $mol_mem_force): any;
         attr(): {
-            "tabindex": number;
+            tabindex: number;
         };
         event(): {
-            "mouseenter": (event?: any) => any;
-            "mouseleave": (event?: any) => any;
-            "keydown": (event?: any) => any;
+            mouseenter: (event?: any) => any;
+            mouseleave: (event?: any) => any;
+            keydown: (event?: any) => any;
         };
         event_show(event?: any, force?: $mol_mem_force): any;
         event_hide(event?: any, force?: $mol_mem_force): any;

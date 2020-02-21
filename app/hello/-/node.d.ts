@@ -628,12 +628,12 @@ declare namespace $ {
         minimal_height(): number;
         autocomplete(): boolean;
         field(): {
-            "disabled": boolean;
-            "value": any;
-            "placeholder": string;
-            "type": any;
-            "spellcheck": boolean;
-            "autocomplete": string;
+            disabled: boolean;
+            value: any;
+            placeholder: string;
+            type: any;
+            spellcheck: boolean;
+            autocomplete: string;
         };
         disabled(): boolean;
         value_changed(val?: any, force?: $mol_mem_force): any;
@@ -643,12 +643,12 @@ declare namespace $ {
         spellcheck(): boolean;
         autocomplete_native(): string;
         attr(): {
-            "maxlength": number;
+            maxlength: number;
         };
         length_max(): number;
         event(): {
-            "input": (event?: any) => any;
-            "keydown": (event?: any) => any;
+            input: (event?: any) => any;
+            keydown: (event?: any) => any;
         };
         event_change(event?: any, force?: $mol_mem_force): any;
         event_key_press(event?: any, force?: $mol_mem_force): any;

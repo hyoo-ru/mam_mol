@@ -127,11 +127,10 @@ var $;
                 init(this);
         }
         get $() {
-            var _b;
             if (this[$.$mol_ambient_ref])
                 return this[$.$mol_ambient_ref];
             const owner = $.$mol_owning_get(this);
-            return this[$.$mol_ambient_ref] = ((_b = owner) === null || _b === void 0 ? void 0 : _b.$) || $mol_object2.$;
+            return this[$.$mol_ambient_ref] = (owner === null || owner === void 0 ? void 0 : owner.$) || $mol_object2.$;
         }
         set $(next) {
             if (this[$.$mol_ambient_ref])
@@ -3643,7 +3642,7 @@ var $;
                 var _a;
                 if (next === undefined && store.has(this))
                     return store.get(this);
-                const val = (_a = task.call(this, next), (_a !== null && _a !== void 0 ? _a : next));
+                const val = (_a = task.call(this, next)) !== null && _a !== void 0 ? _a : next;
                 store.set(this, val);
                 return val;
             };
@@ -4197,11 +4196,11 @@ var $;
                 return $.$mol_dom_context.CSS.supports('overflow-anchor:auto');
             }
             view_window() {
-                var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+                var _a, _b, _c, _d, _e, _f;
                 const kids = this.sub();
                 if (kids.length < 3)
                     return [0, kids.length];
-                let [min, max] = (_a = $.$mol_mem_cached(() => this.view_window()), (_a !== null && _a !== void 0 ? _a : [0, 0]));
+                let [min, max] = (_a = $.$mol_mem_cached(() => this.view_window())) !== null && _a !== void 0 ? _a : [0, 0];
                 let max2 = max = Math.min(max, kids.length);
                 let min2 = min = Math.max(0, Math.min(min, max - 1));
                 const anchoring = this.render_visible_only();
@@ -4210,16 +4209,16 @@ var $;
                 const limit_top = -over;
                 const limit_bottom = window_height + over;
                 const rect = this.view_rect();
-                const gap_before = (_b = $.$mol_mem_cached(() => this.gap_before()), (_b !== null && _b !== void 0 ? _b : 0));
-                const gap_after = (_c = $.$mol_mem_cached(() => this.gap_after()), (_c !== null && _c !== void 0 ? _c : 0));
-                let top = (_e = (_d = rect) === null || _d === void 0 ? void 0 : _d.top, (_e !== null && _e !== void 0 ? _e : 0)) + gap_before;
-                let bottom = (_g = (_f = rect) === null || _f === void 0 ? void 0 : _f.bottom, (_g !== null && _g !== void 0 ? _g : 0)) - gap_after;
+                const gap_before = (_b = $.$mol_mem_cached(() => this.gap_before())) !== null && _b !== void 0 ? _b : 0;
+                const gap_after = (_c = $.$mol_mem_cached(() => this.gap_after())) !== null && _c !== void 0 ? _c : 0;
+                let top = ((_d = rect === null || rect === void 0 ? void 0 : rect.top) !== null && _d !== void 0 ? _d : 0) + gap_before;
+                let bottom = ((_e = rect === null || rect === void 0 ? void 0 : rect.bottom) !== null && _e !== void 0 ? _e : 0) - gap_after;
                 if (top <= limit_top && bottom >= limit_bottom) {
                     return [min2, max2];
                 }
                 if (anchoring && ((bottom < limit_top) || (top > limit_bottom))) {
                     min = 0;
-                    top = (_j = (_h = rect) === null || _h === void 0 ? void 0 : _h.top, (_j !== null && _j !== void 0 ? _j : 0));
+                    top = ((_f = rect === null || rect === void 0 ? void 0 : rect.top) !== null && _f !== void 0 ? _f : 0);
                     while (min < (kids.length - 1)) {
                         const height = kids[min].minimal_height();
                         if (top + height >= limit_top)

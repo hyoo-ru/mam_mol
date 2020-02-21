@@ -127,11 +127,10 @@ var $;
                 init(this);
         }
         get $() {
-            var _b;
             if (this[$.$mol_ambient_ref])
                 return this[$.$mol_ambient_ref];
             const owner = $.$mol_owning_get(this);
-            return this[$.$mol_ambient_ref] = ((_b = owner) === null || _b === void 0 ? void 0 : _b.$) || $mol_object2.$;
+            return this[$.$mol_ambient_ref] = (owner === null || owner === void 0 ? void 0 : owner.$) || $mol_object2.$;
         }
         set $(next) {
             if (this[$.$mol_ambient_ref])
@@ -2826,7 +2825,7 @@ var $;
                 var _a;
                 if (next === undefined && store.has(this))
                     return store.get(this);
-                const val = (_a = task.call(this, next), (_a !== null && _a !== void 0 ? _a : next));
+                const val = (_a = task.call(this, next)) !== null && _a !== void 0 ? _a : next;
                 store.set(this, val);
                 return val;
             };
@@ -5115,7 +5114,7 @@ var $;
             }
             series(id) {
                 var _a;
-                return _a = $mol_app_bench_chart_bar_mol.data().graphs[id], (_a !== null && _a !== void 0 ? _a : []);
+                return (_a = $mol_app_bench_chart_bar_mol.data().graphs[id]) !== null && _a !== void 0 ? _a : [];
             }
             hor_series() {
                 return $.$mol_range2().slice(0, this.series(0).length);

@@ -552,7 +552,7 @@ declare namespace $ {
         size_target(): number;
         elapsed(val?: any, force?: $mol_mem_force): any;
         style(): {
-            "transform": string;
+            transform: string;
         };
         transform(): string;
         sub(): readonly any[];
@@ -573,13 +573,13 @@ declare namespace $ {
         sub(): readonly any[];
         text(): string;
         style(): {
-            "width": number;
-            "height": number;
-            "left": number;
-            "top": number;
-            "borderRadius": number;
-            "lineHeight": string;
-            "background": string;
+            width: number;
+            height: number;
+            left: number;
+            top: number;
+            borderRadius: number;
+            lineHeight: string;
+            background: string;
         };
         width(): number;
         height(): number;
@@ -588,8 +588,8 @@ declare namespace $ {
         radius(): number;
         color(): string;
         event(): {
-            "mouseenter": (val?: any) => any;
-            "mouseleave": (val?: any) => any;
+            mouseenter: (val?: any) => any;
+            mouseleave: (val?: any) => any;
         };
         enter(val?: any, force?: $mol_mem_force): any;
         leave(val?: any, force?: $mol_mem_force): any;

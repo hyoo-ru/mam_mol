@@ -652,8 +652,8 @@ declare namespace $ {
     class $mol_svg_root extends $mol_svg {
         dom_name(): string;
         attr(): {
-            "viewBox": string;
-            "preserveAspectRatio": string;
+            viewBox: string;
+            preserveAspectRatio: string;
         };
         view_box(): string;
         aspect(): string;
@@ -671,11 +671,11 @@ declare namespace $ {
         series_x(): readonly number[];
         series_y(): readonly number[];
         attr(): {
-            "mol_plot_graph_type": string;
+            mol_plot_graph_type: string;
         };
         type(): string;
         style(): {
-            "color": string;
+            color: string;
         };
         color(): string;
         viewport(): $mol_vector_2d<$mol_vector_range<number>>;
@@ -705,11 +705,11 @@ declare namespace $ {
 declare namespace $ {
     class $mol_plot_graph_sample extends $mol_view {
         attr(): {
-            "mol_plot_graph_type": string;
+            mol_plot_graph_type: string;
         };
         type(): string;
         style(): {
-            "color": string;
+            color: string;
         };
         color(): string;
     }
@@ -801,14 +801,14 @@ declare namespace $ {
             "touch-action": string;
         };
         event(): {
-            "touchstart": (event?: any) => any;
-            "touchmove": (event?: any) => any;
-            "touchend": (event?: any) => any;
-            "mousedown": (event?: any) => any;
-            "mousemove": (event?: any) => any;
-            "mouseup": (event?: any) => any;
-            "mouseleave": (event?: any) => any;
-            "wheel": (event?: any) => any;
+            touchstart: (event?: any) => any;
+            touchmove: (event?: any) => any;
+            touchend: (event?: any) => any;
+            mousedown: (event?: any) => any;
+            mousemove: (event?: any) => any;
+            mouseup: (event?: any) => any;
+            mouseleave: (event?: any) => any;
+            wheel: (event?: any) => any;
         };
         event_start(event?: any, force?: $mol_mem_force): any;
         event_move(event?: any, force?: $mol_mem_force): any;
@@ -879,7 +879,7 @@ declare namespace $ {
         Meter(): $$.$mol_meter;
         Touch(): $$.$mol_touch;
         event(): {
-            "dblclick": (event?: any) => any;
+            dblclick: (event?: any) => any;
         };
         reset(event?: any, force?: $mol_mem_force): any;
     }
@@ -916,7 +916,7 @@ declare namespace $ {
     class $mol_svg_path extends $mol_svg {
         dom_name(): string;
         attr(): {
-            "d": string;
+            d: string;
         };
         geometry(): string;
     }
@@ -948,7 +948,7 @@ declare namespace $ {
     class $mol_plot_bar extends $mol_plot_graph {
         style(): {
             "stroke-width": string;
-            "color": string;
+            color: string;
         };
         stroke_width(): string;
         sub(): readonly any[];
@@ -982,7 +982,7 @@ declare namespace $ {
         points_max(): number;
         style(): {
             "stroke-width": number;
-            "color": string;
+            color: string;
         };
         diameter(): number;
         sub(): readonly any[];
@@ -1055,10 +1055,10 @@ declare namespace $ {
         dom_name(): string;
         pos(): readonly any[];
         attr(): {
-            "width": string;
-            "height": string;
-            "x": string;
-            "y": string;
+            width: string;
+            height: string;
+            x: string;
+            y: string;
         };
         width(): string;
         height(): string;
@@ -1079,8 +1079,8 @@ declare namespace $ {
         dom_name(): string;
         pos(): readonly any[];
         attr(): {
-            "x": string;
-            "y": string;
+            x: string;
+            y: string;
             "text-anchor": string;
         };
         pos_x(): string;

@@ -683,14 +683,14 @@ declare namespace $ {
             "touch-action": string;
         };
         event(): {
-            "touchstart": (event?: any) => any;
-            "touchmove": (event?: any) => any;
-            "touchend": (event?: any) => any;
-            "mousedown": (event?: any) => any;
-            "mousemove": (event?: any) => any;
-            "mouseup": (event?: any) => any;
-            "mouseleave": (event?: any) => any;
-            "wheel": (event?: any) => any;
+            touchstart: (event?: any) => any;
+            touchmove: (event?: any) => any;
+            touchend: (event?: any) => any;
+            mousedown: (event?: any) => any;
+            mousemove: (event?: any) => any;
+            mouseup: (event?: any) => any;
+            mouseleave: (event?: any) => any;
+            wheel: (event?: any) => any;
         };
         event_start(event?: any, force?: $mol_mem_force): any;
         event_move(event?: any, force?: $mol_mem_force): any;
@@ -761,19 +761,19 @@ declare namespace $ {
     class $mol_book_placeholder extends $mol_view {
         minimal_width(): number;
         attr(): {
-            "tabindex": any;
+            tabindex: any;
         };
     }
 }
 declare namespace $ {
     class $mol_book_page extends $mol_ghost {
         attr_static(): {
-            "tabindex": number;
-            "mol_book_page_visible": boolean;
+            tabindex: number;
+            mol_book_page_visible: boolean;
         };
         attr(): {
-            "mol_book_page_focused": boolean;
-            "mol_book_page_visible": boolean;
+            mol_book_page_focused: boolean;
+            mol_book_page_visible: boolean;
         };
         visible(): boolean;
     }
@@ -978,16 +978,16 @@ declare namespace $ {
         click(event?: any, force?: $mol_mem_force): any;
         event_click(event?: any, force?: $mol_mem_force): any;
         event(): {
-            "click": (event?: any) => any;
-            "keypress": (event?: any) => any;
+            click: (event?: any) => any;
+            keypress: (event?: any) => any;
         };
         event_activate(event?: any, force?: $mol_mem_force): any;
         event_key_press(event?: any, force?: $mol_mem_force): any;
         attr(): {
-            "disabled": boolean;
-            "role": string;
-            "tabindex": number;
-            "title": string;
+            disabled: boolean;
+            role: string;
+            tabindex: number;
+            title: string;
         };
         disabled(): boolean;
         tab_index(): number;
@@ -1015,11 +1015,11 @@ declare namespace $ {
 declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
         attr(): {
-            "mol_theme": string;
-            "disabled": boolean;
-            "role": string;
-            "tabindex": number;
-            "title": string;
+            mol_theme: string;
+            disabled: boolean;
+            role: string;
+            tabindex: number;
+            title: string;
         };
     }
 }
@@ -1039,13 +1039,13 @@ declare namespace $ {
         minimal_height(): number;
         _event_scroll_timer(val?: any, force?: $mol_mem_force): any;
         field(): {
-            "scrollTop": any;
-            "scrollLeft": any;
+            scrollTop: any;
+            scrollLeft: any;
         };
         scroll_top(val?: any, force?: $mol_mem_force): any;
         scroll_left(val?: any, force?: $mol_mem_force): any;
         event(): {
-            "scroll": (event?: any) => any;
+            scroll: (event?: any) => any;
         };
         event_scroll(event?: any, force?: $mol_mem_force): any;
     }
@@ -1171,11 +1171,11 @@ declare namespace $ {
     class $mol_link extends $mol_view {
         dom_name(): string;
         attr(): {
-            "href": string;
-            "title": string;
-            "target": string;
-            "download": string;
-            "mol_link_current": boolean;
+            href: string;
+            title: string;
+            target: string;
+            download: string;
+            mol_link_current: boolean;
         };
         uri(): string;
         hint(): string;
@@ -1185,7 +1185,7 @@ declare namespace $ {
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
         arg(): {};
         event(): {
-            "click": (event?: any) => any;
+            click: (event?: any) => any;
         };
         click(event?: any, force?: $mol_mem_force): any;
         event_click(event?: any, force?: $mol_mem_force): any;
@@ -1245,8 +1245,8 @@ declare namespace $ {
     class $mol_svg_root extends $mol_svg {
         dom_name(): string;
         attr(): {
-            "viewBox": string;
-            "preserveAspectRatio": string;
+            viewBox: string;
+            preserveAspectRatio: string;
         };
         view_box(): string;
         aspect(): string;
@@ -1257,7 +1257,7 @@ declare namespace $ {
     class $mol_svg_path extends $mol_svg {
         dom_name(): string;
         attr(): {
-            "d": string;
+            d: string;
         };
         geometry(): string;
     }
@@ -1341,12 +1341,12 @@ declare namespace $ {
 declare namespace $ {
     class $mol_check extends $mol_button_minor {
         attr(): {
-            "mol_check_checked": any;
+            mol_check_checked: any;
             "aria-checked": any;
-            "role": string;
-            "disabled": boolean;
-            "tabindex": number;
-            "title": string;
+            role: string;
+            disabled: boolean;
+            tabindex: number;
+            title: string;
         };
         checked(val?: any, force?: $mol_mem_force): any;
         sub(): readonly any[];
@@ -1391,7 +1391,7 @@ declare namespace $ {
         Icon(): $mol_icon_chevron;
         level(): number;
         style(): {
-            "paddingLeft": string;
+            paddingLeft: string;
         };
         level_style(): string;
         checked(val?: any, force?: $mol_mem_force): any;
@@ -1566,7 +1566,7 @@ declare namespace $ {
     class $mol_text_row extends $mol_view {
         minimal_height(): number;
         attr(): {
-            "mol_text_type": string;
+            mol_text_type: string;
         };
         type(): string;
     }
@@ -1576,7 +1576,7 @@ declare namespace $ {
         dom_name(): string;
         minimal_height(): number;
         attr(): {
-            "mol_text_header_level": any;
+            mol_text_header_level: any;
         };
         level(val?: any, force?: $mol_mem_force): any;
         sub(): readonly any[];
@@ -1587,7 +1587,7 @@ declare namespace $ {
     class $mol_text_span extends $mol_view {
         dom_name(): string;
         attr(): {
-            "mol_text_type": any;
+            mol_text_type: any;
         };
         type(val?: any, force?: $mol_mem_force): any;
         sub(): any;
@@ -1597,12 +1597,12 @@ declare namespace $ {
 declare namespace $ {
     class $mol_text_link extends $mol_link {
         attr(): {
-            "mol_text_type": any;
-            "href": string;
-            "title": string;
-            "target": string;
-            "download": string;
-            "mol_link_current": boolean;
+            mol_text_type: any;
+            href: string;
+            title: string;
+            target: string;
+            download: string;
+            mol_link_current: boolean;
         };
         type(val?: any, force?: $mol_mem_force): any;
         uri(): any;
@@ -1615,9 +1615,9 @@ declare namespace $ {
     class $mol_text_image extends $mol_view {
         dom_name(): string;
         attr(): {
-            "allowfullscreen": boolean;
-            "mol_text_type": any;
-            "data": any;
+            allowfullscreen: boolean;
+            mol_text_type: any;
+            data: any;
         };
         type(val?: any, force?: $mol_mem_force): any;
         link(val?: any, force?: $mol_mem_force): any;

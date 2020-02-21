@@ -9,7 +9,7 @@ namespace $ {
 
 		let rules = [] as string[]
 
-		const make_class = ( prefix : string , suffix : string , config : $mol_style_definition<any> )=> {
+		const make_class = ( prefix : string , suffix : string , config : $mol_style_definition<Component> )=> {
 
 			const props = [] as string[]
 			

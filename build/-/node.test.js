@@ -122,11 +122,10 @@ var $;
                 init(this);
         }
         get $() {
-            var _b;
             if (this[$.$mol_ambient_ref])
                 return this[$.$mol_ambient_ref];
             const owner = $.$mol_owning_get(this);
-            return this[$.$mol_ambient_ref] = ((_b = owner) === null || _b === void 0 ? void 0 : _b.$) || $mol_object2.$;
+            return this[$.$mol_ambient_ref] = (owner === null || owner === void 0 ? void 0 : owner.$) || $mol_object2.$;
         }
         set $(next) {
             if (this[$.$mol_ambient_ref])
@@ -4289,7 +4288,7 @@ var $;
                     .resolve(`${req.path}index.html`);
                 if (!file.exists())
                     return next();
-                res.redirect(301, `${match[1]}-/index.html${_a = match[2], (_a !== null && _a !== void 0 ? _a : '')}`);
+                res.redirect(301, `${match[1]}-/index.html${(_a = match[2]) !== null && _a !== void 0 ? _a : ''}`);
             };
         }
         expressGenerator() {
