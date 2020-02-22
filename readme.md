@@ -45,11 +45,11 @@ Reactive micro-modular ui framework. Very simple, but very powerful!
 
 # Benchmarks
 
-- [$mol_app_bench_list](app/bench/list) - Frameworks comparison ([online](http://eigenmethod.github.io/mol/app/bench/#becnh=list/sort=fill/sample=angular-1-5-5~mol~native-html~react-15-3-2~native-dom))
-- [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
+- [$hyoo_bench_list](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/list) - Frameworks comparison ([online](http://bench.hyoo.ru/#becnh=list/sort=fill/sample=angular-1-5-5~mol~native-html~react-15-3-2~native-dom))
+- [ToDoMVC benchmark](https://github.com/eigenmethod/todomvc/tree/master/benchmark) ([online](http://bench.hyoo.ru/#bench=http:%2F%2Feigenmethod.github.io%2Ftodomvc%2Fbenchmark%2F#sample=angular2%7Eangularjs%7Eknockoutjs%7Emol%7Epolymer%7Ereact-alt%7Evanillajs%7Evue#sort=fill#))
 - [WebPageTest - Loading progress of ToDOMVC applications on some frameworks](https://www.webpagetest.org/video/compare.php?tests=161217_V8_6RFK%2C161217_G9_6RFM%2C161217_YZ_6RFN%2C161217_DM_6RFP%2C161217_2B_6RFQ%2C161217_RJ_6RFR%2C161217_2R_6RFS%2C161217_H5_6RFT%2C161217_CW_6RFV&thumbSize=150&ival=100&end=all)
-- [Line charts comparison](app/bench/chart/rope) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
-- [Bar charts comparison](app/bench/chart/bar) ([online](http://eigenmethod.github.io/mol/app/bench/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
+- [Line charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/rope) ([online](http://bench.hyoo.ru/#bench=chart%2Frope%2F/sort=fill/sample=hcharts~mol))
+- [Bar charts comparison](https://github.com/hyoo-ru/bench.hyoo.ru/tree/master/chart/bar) ([online](http://bench.hyoo.ru/#bench=chart%2Fbar%2F/sort=fill/sample=hcharts~mol))
 - [React vs React Fiber vs $mol](https://github.com/nin-jin/sierpinski) ([online](https://nin-jin.github.io/sierpinski))
 
 # Articles
@@ -223,7 +223,7 @@ Add **styles** at `./my/hello/hello.view.css`:
 # Tutorials
 
 - [$mol_app_calc: вечеринка электронных таблиц](https://github.com/nin-jin/HabHub/issues/10)
-- [$mol_app_bench: готовим JS бенчмарки быстро и просто](https://github.com/nin-jin/HabHub/issues/8)
+- [$hyoo_bench: готовим JS бенчмарки быстро и просто](https://github.com/nin-jin/HabHub/issues/8)
 - [$mol_app_habhub: чтение статей с GitHub](https://github.com/nin-jin/HabHub/issues/5)
 
 # Rationale
@@ -248,7 +248,7 @@ There are the full set of supports bundles:
 
 **Support of Source Maps**. Sources are compiled and integrate to maps, they are fully self-sufficient.
 
-**Development server**, witch would be compile bundles as needed. For example, when requested `http://localhost:9080/mol/app/todomvc/-/web.js` the `js` bundle is being built of `mol/app/todomvc` for `web` environment. Rebuilding would be occur only if some source file would be changed.
+**Development server**, witch would be compile bundles as needed. For example, when requested `http://localhost:9080/hyoo/todomvc/-/web.js` the `js` bundle is being built of `hyoo/todomvc` for `web` environment. Rebuilding would be occur only if some source file would be changed.
 
 **Transpilling of modern CSS into CSS supported by browsers** ([postcss-cssnext](https://github.com/MoOx/postcss-cssnext)): vendor prefixes and variables etc.
 
@@ -326,15 +326,15 @@ Details: [$mol_mem](mem), [$mol_atom2](atom2).
 
 A special attention is payed while developing $mol to debugging possibilities and researching of code's working process.
 
-For every DOM-element is formed a people friendly `id` automatically like `$mol_app_todomvc.root(0).taskRow(0).titler()`, which is valid javascript code, this one could be executed at a console, received a link to the component, whom the component is corresponds to. Unfolding the content of the component you'd see names and values its fields like:
+For every DOM-element is formed a people friendly `id` automatically like `$hyoo_todomvc.root(0).taskRow(0).titler()`, which is valid javascript code, this one could be executed at a console, received a link to the component, whom the component is corresponds to. Unfolding the content of the component you'd see names and values its fields like:
 
 ```
-$mol_app_todomvc
-    dom_node() : div#$mol_app_todomvc.root(0)
+$hyoo_todomvc
+    dom_node() : div#$hyoo_todomvc.root(0)
     task(1474385802391) : Object
     task(1474386443175) : Object
-    taskRow(0) : $mol_app_todomvc_task_rowRow
-    taskRow(1) : $mol_app_todomvc_task_rowRow
+    taskRow(0) : $hyoo_todomvc_task_rowRow
+    taskRow(1) : $hyoo_todomvc_task_rowRow
     taskrows() : Array[2]
 ```
 

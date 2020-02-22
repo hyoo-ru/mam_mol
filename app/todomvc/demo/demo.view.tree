@@ -1,3 +1,0 @@
-$mol_app_todomvc_demo $mol_demo_large
-	sub /
-		<= App $mol_app_todomvc
