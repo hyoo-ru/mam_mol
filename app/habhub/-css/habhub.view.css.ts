@@ -1,3 +1,0 @@
-namespace $ { $mol_style_attach( "mol/app/habhub/habhub.view.css",
- "[mol_app_habhub] {\n\tmargin: 0;\n}\n\n[mol_app_habhub_menu_page] {\n\tflex: 1 1000 400px;\n\twidth: 100%;\n}\n\n[mol_app_habhub_menu] {\n\tdisplay: flex;\n\tflex-direction: column;\n\tpadding: .5rem;\n}\n\n[mol_app_habhub_placeholder] {\n\tflex: 1000 1 600px;\n}\n\n[mol_app_habhub_details] {\n\tflex: 1000 1 600px;\n}\n\n[mol_app_habhub_details_text] {\n}\n\n[mol_app_habhub_details_chat] {\n\tbox-shadow: none;\n}\n"
-) }

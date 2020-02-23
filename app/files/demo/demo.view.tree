@@ -1,5 +1,0 @@
-$mol_app_files_demo $mol_demo_large
-	sub /
-		<= App $mol_app_files
-			title_root <= title @ \WebDAV client
-			uri_root_default <= uri_root \http://ajaxexplorer.com/User5df12c6/
