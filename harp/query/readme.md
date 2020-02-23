@@ -1,5 +1,7 @@
 # $mol_harp_query
 
+**Unstable**
+
 [HARP](https://gist.github.com/nin-jin/60545f6dbba22b0e2a1a4e2a3d2528a3) query language wrapper.
 It's powerful easy to read and debug graph query language for REST API's.
 
