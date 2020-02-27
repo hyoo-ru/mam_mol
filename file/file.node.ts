@@ -38,21 +38,21 @@ namespace $ {
 			} ) )
 
 			watcher.on( 'error' , ( error : Error )=> {
-				this.stat( error , $mol_mem_force_cache )
+				this.stat( error as any , $mol_mem_force_cache )
 			} )
 			
 			return watcher
 		}
 		
 		@ $mol_mem
-		stat( next? : any , force? : $mol_mem_force ) {
-			var path = this.path()
-			
+		stat( next? : ReturnType<typeof $node.fs.statSync> | null , force? : $mol_mem_force ) {
+			const path = this.path()
+			let stat: typeof next
 			try {
-				var stat = next || $node.fs.statSync( path )
+				stat = next || $node.fs.statSync( path )
 			} catch( error ) {
 				if( error.code === 'ENOENT' ) return null
-				return error
+				return $mol_fail_hidden(error)
 			}
 			
 			this.parent().watcher()
@@ -66,9 +66,9 @@ namespace $ {
 		}
 		
 		exists( next? : boolean ) {
-			var exists = !!this.stat()
+			const exists = !!this.stat()
 			
-			if( next === void 0 ) {
+			if( next === undefined ) {
 				return exists
 			} else {
 				if( next == exists ) return exists
@@ -92,7 +92,7 @@ namespace $ {
 		
 		@ $mol_mem
 		type() {
-			var stat = this.stat()
+			const stat = this.stat()
 			
 			if( stat ) {
 				if( stat.isFile() ) return 'file'
@@ -114,14 +114,17 @@ namespace $ {
 		}
 		
 		ext() {
-			var match = /((?:\.\w+)+)$/.exec( this.path() )
+			const match = /((?:\.\w+)+)$/.exec( this.path() )
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 		
 		@ $mol_mem
 		content( next? : string | Buffer , force? : $mol_mem_force ) {
-			if( next === void 0 ) {
-				return this.stat() && $node.fs.readFileSync( this.path() )//.toString()
+			if( next === undefined ) {
+				if (! this.stat()) {
+					throw new Error(`${this} not found`)
+				}
+				return $node.fs.readFileSync( this.path() )//.toString()
 			}
 			
 			this.parent().exists( true )
@@ -169,7 +172,7 @@ namespace $ {
 			exclude? : RegExp
 		) {
 			
-			var found : $mol_file[] = []
+			let found : $mol_file[] = []
 			this.sub().forEach(
 				child => {
 					if( exclude && child.path().match( exclude ) ) return
