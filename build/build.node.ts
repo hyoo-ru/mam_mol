@@ -750,8 +750,8 @@ namespace $ {
 					let content = ''					
 					try {
 						content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
-						const srcMap = src.parent().resolve( src.name() + '.map' ).content()
-						if(content) concater.add( content, src.relate( target.parent() ), srcMap + '')
+						const srcMap = src.parent().resolve( src.name() + '.map' )
+						if(content && srcMap.exists()) concater.add( content, src.relate( target.parent() ), srcMap.content() + '')
 						} catch( error ) {
 						errors.push( error )
 					}
