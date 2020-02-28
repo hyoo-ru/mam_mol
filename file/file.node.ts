@@ -45,16 +45,10 @@ namespace $ {
 		}
 		
 		@ $mol_mem
-		stat( next? : ReturnType<typeof $node.fs.statSync> | null , force? : $mol_mem_force ) {
+		stat( next? : ReturnType<typeof $node.fs.statSync> , force? : $mol_mem_force ) {
 			const path = this.path()
 			let stat: typeof next
-			try {
-				stat = next || $node.fs.statSync( path )
-			} catch( error ) {
-				if( error.code === 'ENOENT' ) return null
-				return $mol_fail_hidden(error)
-			}
-			
+			stat = next ?? $node.fs.statSync( path )
 			this.parent().watcher()
 			
 			return stat
@@ -66,7 +60,13 @@ namespace $ {
 		}
 		
 		exists( next? : boolean ) {
-			const exists = !!this.stat()
+			let exists = true
+			try {
+				this.stat()
+			} catch (error) {
+				if( error.code === 'ENOENT' ) exists = false
+				else return $mol_fail_hidden(error)
+			}
 			
 			if( next === undefined ) {
 				return exists

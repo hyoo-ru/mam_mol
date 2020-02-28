@@ -680,7 +680,6 @@ namespace $ {
 						}
 					}
 					try {
-						if( ! src.exists() ) return
 						const content = ( src.content() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test( content )
 					
@@ -751,7 +750,6 @@ namespace $ {
 					}
 					let content = ''					
 					try {
-						if (! src.exists()) return
 						content = ( src.content() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const srcMap = src.parent().resolve( src.name() + '.map' )
 						if ( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : undefined)
