@@ -121,7 +121,7 @@ namespace $ {
 		@ $mol_mem
 		content( next? : string | Buffer , force? : $mol_mem_force ) {
 			if( next === undefined ) {
-				if (! this.stat()) {
+				if (! this.exists()) {
 					throw new Error(`${this} not found`)
 				}
 				return $node.fs.readFileSync( this.path() )//.toString()
