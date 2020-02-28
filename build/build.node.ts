@@ -679,14 +679,15 @@ namespace $ {
 						}
 					}
 					try {
-						const content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
+						if( ! src.exists() ) return
+						const content = ( src.content() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test( content )
 					
 						if( isCommonJs ) {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
 						const srcMap = src.parent().resolve( src.name() + '.map' );
-						if(content) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : '')
+						if( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : '')
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
@@ -706,7 +707,7 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 
-			if( errors.length ) $mol_fail_hidden( new Error( errors.map( error => error.message ).join( '\n' ) ) )
+			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Bundling ${path}`, ...errors ) )
 			
 			return [ target , targetMap ]
 		}
@@ -749,9 +750,10 @@ namespace $ {
 					}
 					let content = ''					
 					try {
-						content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
+						if (! src.exists()) return
+						content = ( src.content() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const srcMap = src.parent().resolve( src.name() + '.map' )
-						if(content) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : '')
+						if ( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : '')
 					} catch( error ) {
 						errors.push( error )
 					}
@@ -763,7 +765,7 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 			
-			if( errors.length ) $mol_fail_hidden( new Error( errors.map( error => error.message ).join( '\n' ) ) )
+			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Bundling ${path}`, ...errors ) )
 			
 			return [ target , targetMap ]
 		}
@@ -805,7 +807,7 @@ namespace $ {
 			
 			sources.forEach(
 				function( src ) {
-					if( !src.content() ) return
+					if( ! src.exists() || ! src.content() ) return
 					concater.add( src.content().toString(), src.relate( target.parent() ) )
 				}
 			)
