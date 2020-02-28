@@ -71,7 +71,7 @@ namespace $ {
 			if( next === undefined ) {
 				return exists
 			} else {
-				if( next == exists ) return exists
+				if( next === exists ) return exists
 				
 				if( next ) {
 					this.parent().exists( true )
@@ -94,18 +94,14 @@ namespace $ {
 		type() {
 			const stat = this.stat()
 			
-			if( stat ) {
-				if( stat.isFile() ) return 'file'
-				if( stat.isDirectory() ) return 'dir'
-				if( stat.isBlockDevice() ) return 'blocks'
-				if( stat.isCharacterDevice() ) return 'chars'
-				if( stat.isSymbolicLink() ) return 'link'
-				if( stat.isFIFO() ) return 'fifo'
-				if( stat.isSocket() ) return 'socket'
-			} else {
-				return null
-			}
-			
+			if( stat.isFile() ) return 'file'
+			if( stat.isDirectory() ) return 'dir'
+			if( stat.isBlockDevice() ) return 'blocks'
+			if( stat.isCharacterDevice() ) return 'chars'
+			if( stat.isSymbolicLink() ) return 'link'
+			if( stat.isFIFO() ) return 'fifo'
+			if( stat.isSocket() ) return 'socket'
+		
 			throw new Error( `Unknown file type ${this.path()}` )
 		}
 		
@@ -121,9 +117,7 @@ namespace $ {
 		@ $mol_mem
 		content( next? : string | Buffer , force? : $mol_mem_force ) {
 			if( next === undefined ) {
-				if (! this.exists()) {
-					throw new Error(`${this} not found`)
-				}
+				this.stat()
 				return $node.fs.readFileSync( this.path() )//.toString()
 			}
 			
@@ -143,16 +137,12 @@ namespace $ {
 		
 		@ $mol_mem
 		sub() : $mol_file[] {
-			this.stat()
-			
-			switch( this.type() ) {
-				case 'dir' :
-					return ( <string[]> $node.fs.readdirSync( this.path() ) )
-					.filter( name => !/^\.+$/.test( name ) )
-					.map( name => this.resolve( name ) )
-			}
-			
-			return []
+			if (! this.exists() ) return []
+			if ( this.type() !== 'dir') return []
+
+			return $node.fs.readdirSync( this.path() )
+				.filter( name => !/^\.+$/.test( name ) )
+				.map( name => this.resolve( name ) )
 		}
 		
 		resolve( path : string ) : $mol_file {

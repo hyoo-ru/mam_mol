@@ -1,4 +1,5 @@
 namespace $ {
+	Error.stackTraceLimit = Infinity;
 
 	export function $mol_build_start( paths : string[] ) {
 		var build = $mol_build.relative( '.' )
@@ -128,15 +129,15 @@ namespace $ {
 						}
 					}
 					return mods
-				case null :
-					throw new Error( `Module not found: "${mod.relate()}"` )
+				default :
+					throw new Error( `Unsupported type "${mod.type()}" of "${mod.relate()}"` )
 			}
-			throw new Error( `Unsopported type "${mod.type()}" of "${mod.relate()}"` )
 		}
 		
 		@ $mol_mem_key
 		sources( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const mod = $mol_file.absolute( path )
+			if ( ! mod.exists() ) return []
 			switch( mod.type() ) {
 				case 'file' :
 					return [ mod ]
@@ -401,6 +402,7 @@ namespace $ {
 		@ $mol_mem_key
 		dependencies( { path , exclude } : { path : string , exclude? : string[] } ) {
 			var mod = $mol_file.absolute( path )
+			if ( ! mod.exists() ) return {}
 			switch( mod.type() ) {
 				case 'file' :
 					return this.srcDeps( path )
@@ -424,7 +426,8 @@ namespace $ {
 			var mapping = this.modMeta( parent.path() )
 			
 			if( mod.exists() ) {
-				if( mod.type() === 'dir' && mod.resolve( '.git' ).type() === 'dir' ) {
+				const git_dir = mod.resolve( '.git' )
+				if( mod.type() === 'dir' && git_dir.exists() && git_dir.type() === 'dir' ) {
 					try {
 						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
 						process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
@@ -489,7 +492,8 @@ namespace $ {
 					try {
 						this.modEnsure( dep.path() )
 					} catch( error ) {
-						throw new Error( `${ error.message }\nDependency "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" ` )
+						error.message = `${ error.message }\nDependency "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
+						$mol_fail_hidden(error)
 					}
 					
 					while( !dep.exists() ) dep = dep.parent()
