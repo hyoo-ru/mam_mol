@@ -8,8 +8,8 @@ Bubble that can be shown anchored to ancor element.
 
 ```
 <= Hint $mol_pop
-    showed <= hint_showed?val 0
-    align \bottom_center
+	showed <= hint_showed?val 0
+	align \bottom_center
 	Anchor <= Hint_trigger $mol_check
 		title \?
 		checked?val <=> hint_showed?val 0
