@@ -56,9 +56,10 @@ namespace $ {
 					const name = child.name()
 					if( !/^[a-z0-9]/i.test( name ) ) return false
 					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
+
+					if (! child.exists()) return false
 					
 					if( /(meta\.tree)$/.test( name ) ) {
-
 						const tree = $mol_tree.fromString( child.content().toString() , child.path() )
 
 						let content = ''
@@ -921,10 +922,12 @@ namespace $ {
 
 			const start = Date.now()
 			const html = pack.resolve( 'index.html' )
-			const html_target = pack.resolve( '-/index.html' )
-			html_target.content( html.content() )
-			targets.push( html_target )
-			this.logBundle( html_target , Date.now() - start )
+			if ( html.exists() ) {
+				const html_target = pack.resolve( '-/index.html' )
+				html_target.content( html.content() )
+				targets.push( html_target )
+				this.logBundle( html_target , Date.now() - start )	
+			}
 
 			sources.forEach( source => {
 				const tree = $mol_tree.fromString( source.content().toString() , source.path() )
@@ -932,6 +935,7 @@ namespace $ {
 				tree.select( 'deploy' ).sub.forEach( deploy => {
 					const start = Date.now()
 					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
+					if ( ! file.exists() ) return
 					const target = pack.resolve( `-/${ file.relate( root ) }` )
 					target.content( file.content() )
 					targets.push( target )
@@ -956,17 +960,22 @@ namespace $ {
 			config_target.content( config.content() )
 			
 			const html = pack.resolve( 'index.html' )
-			const html_target = cordova.resolve( 'www/index.html' )
-			html_target.content( html.content() )
+
+			const targets = [ config_target ]
+
+			if( html.exists() ) {
+				const html_target = cordova.resolve( 'www/index.html' )
+				html_target.content( html.content() )
+				targets.push(html_target)
+			}
 			
 			const sources = pack.resolve( '-' ).find().filter( src => src.type() === 'file' )
-			
-			const targets = [ config_target , html_target ]
-			.concat( sources.map( source => {
+
+			for (const source of sources) {
 				const target = cordova.resolve( `www/${ source.relate( pack ) }` )
 				target.content( source.content() )
-				return target
-			} ) )
+				targets.push(target)
+			}
 			
 			this.logBundle( cordova , Date.now() - start )
 			
