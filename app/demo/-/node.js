@@ -121,9 +121,8 @@ var $;
 var $;
 (function ($) {
     var _a;
-    class $mol_object2 extends Object {
+    class $mol_object2 {
         constructor(init) {
-            super();
             this[_a] = null;
             if (init)
                 init(this);

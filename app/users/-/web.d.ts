@@ -33,7 +33,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_object2 extends Object {
+    class $mol_object2 {
         static $: $mol_ambient_context;
         [$mol_ambient_ref]: $mol_ambient_context;
         get $(): $mol_ambient_context;
