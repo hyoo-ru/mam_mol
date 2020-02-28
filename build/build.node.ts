@@ -686,7 +686,7 @@ namespace $ {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
 						const srcMap = src.parent().resolve( src.name() + '.map' );
-						if(content && srcMap.exists()) concater.add( content, src.relate( target.parent() ), srcMap.content() + '')
+						if(content) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : '')
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
@@ -751,8 +751,8 @@ namespace $ {
 					try {
 						content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const srcMap = src.parent().resolve( src.name() + '.map' )
-						if(content && srcMap.exists()) concater.add( content, src.relate( target.parent() ), srcMap.content() + '')
-						} catch( error ) {
+						if(content) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : '')
+					} catch( error ) {
 						errors.push( error )
 					}
 				}
