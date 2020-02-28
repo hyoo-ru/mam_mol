@@ -59,7 +59,7 @@ namespace $ {
 			this.minute = config.minute
 			this.second = config.second
 			
-			this.offset = config.offset == null ? config.offset : new $mol_time_duration( config.offset ) 
+			this.offset = config.offset == null ? config.offset as undefined : new $mol_time_duration( config.offset ) 
 
 		}
 
