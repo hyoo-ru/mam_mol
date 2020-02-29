@@ -711,7 +711,7 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 
-			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Bundling ${path}`, ...errors ) )
+			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
 			
 			return [ target , targetMap ]
 		}
@@ -768,7 +768,7 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 			
-			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Bundling ${path}`, ...errors ) )
+			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
 			
 			return [ target , targetMap ]
 		}
