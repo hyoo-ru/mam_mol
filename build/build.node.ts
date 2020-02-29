@@ -1,6 +1,4 @@
 namespace $ {
-	Error.stackTraceLimit = Infinity;
-
 	export function $mol_build_start( paths : string[] ) {
 		var build = $mol_build.relative( '.' )
 		if( paths.length > 0 ) {
