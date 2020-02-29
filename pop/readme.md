@@ -1,6 +1,6 @@
 # $mol_pop
 
-Bubble that can be shown anchored to ancor element.
+`Bubble` that can be shown anchored to `Ancрor` element.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_pop)
 
@@ -21,19 +21,19 @@ Bubble that can be shown anchored to ancor element.
 
 **`Anchor() : $mol_view`**
 
-A component respect of which will be shown a Bubble
+`Bubble` will follow the `Anchor` component.
 
 **`bubble_content() : $mol_view[]`**
 
-A list of components in Bubble
+Content of `Bubble`.
 
 **`showed() : boolean`**
 
-Show or Hide Bubble of options depending on the takes value.
+Shows `Bubble` if `true`.
 
 **`align() : string`**
 
-Returns a string and apply Bubble align
+Align of `Bubble` to `Anchor`.
 
 ## Supported aligns
 
