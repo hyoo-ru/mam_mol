@@ -1,6 +1,6 @@
 namespace $ {
 
-	export class $mol_object2 extends Object {
+	export class $mol_object2 {
 		
 		static $ = $ as $mol_ambient_context
 		
@@ -16,7 +16,6 @@ namespace $ {
 		}
 
 		constructor( init? : ( obj : any )=> void ) {
-			super()
 			if( init ) init( this )
 		}
 

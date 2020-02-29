@@ -12,7 +12,7 @@ namespace $ {
 				
 				const val = task.call( this , next ) ?? next
 				
-				store.set( this , val )
+				store.set( this , val! )
 				
 				return val
 
