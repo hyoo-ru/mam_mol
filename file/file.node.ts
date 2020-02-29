@@ -38,23 +38,17 @@ namespace $ {
 			} ) )
 
 			watcher.on( 'error' , ( error : Error )=> {
-				this.stat( error , $mol_mem_force_cache )
+				this.stat( error as any , $mol_mem_force_cache )
 			} )
 			
 			return watcher
 		}
 		
 		@ $mol_mem
-		stat( next? : any , force? : $mol_mem_force ) {
-			var path = this.path()
-			
-			try {
-				var stat = next || $node.fs.statSync( path )
-			} catch( error ) {
-				if( error.code === 'ENOENT' ) return null
-				return error
-			}
-			
+		stat( next? : ReturnType<typeof $node.fs.statSync> , force? : $mol_mem_force ) {
+			const path = this.path()
+			let stat: typeof next
+			stat = next ?? $node.fs.statSync( path )
 			this.parent().watcher()
 			
 			return stat
@@ -66,12 +60,18 @@ namespace $ {
 		}
 		
 		exists( next? : boolean ) {
-			var exists = !!this.stat()
+			let exists = true
+			try {
+				this.stat()
+			} catch (error) {
+				if( error.code === 'ENOENT' ) exists = false
+				else return $mol_fail_hidden(error)
+			}
 			
-			if( next === void 0 ) {
+			if( next === undefined ) {
 				return exists
 			} else {
-				if( next == exists ) return exists
+				if( next === exists ) return exists
 				
 				if( next ) {
 					this.parent().exists( true )
@@ -92,20 +92,16 @@ namespace $ {
 		
 		@ $mol_mem
 		type() {
-			var stat = this.stat()
+			const stat = this.stat()
 			
-			if( stat ) {
-				if( stat.isFile() ) return 'file'
-				if( stat.isDirectory() ) return 'dir'
-				if( stat.isBlockDevice() ) return 'blocks'
-				if( stat.isCharacterDevice() ) return 'chars'
-				if( stat.isSymbolicLink() ) return 'link'
-				if( stat.isFIFO() ) return 'fifo'
-				if( stat.isSocket() ) return 'socket'
-			} else {
-				return null
-			}
-			
+			if( stat.isFile() ) return 'file'
+			if( stat.isDirectory() ) return 'dir'
+			if( stat.isBlockDevice() ) return 'blocks'
+			if( stat.isCharacterDevice() ) return 'chars'
+			if( stat.isSymbolicLink() ) return 'link'
+			if( stat.isFIFO() ) return 'fifo'
+			if( stat.isSocket() ) return 'socket'
+		
 			throw new Error( `Unknown file type ${this.path()}` )
 		}
 		
@@ -114,14 +110,15 @@ namespace $ {
 		}
 		
 		ext() {
-			var match = /((?:\.\w+)+)$/.exec( this.path() )
+			const match = /((?:\.\w+)+)$/.exec( this.path() )
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 		
 		@ $mol_mem
 		content( next? : string | Buffer , force? : $mol_mem_force ) {
-			if( next === void 0 ) {
-				return this.stat() && $node.fs.readFileSync( this.path() )//.toString()
+			if( next === undefined ) {
+				this.stat()
+				return $node.fs.readFileSync( this.path() )//.toString()
 			}
 			
 			this.parent().exists( true )
@@ -140,16 +137,12 @@ namespace $ {
 		
 		@ $mol_mem
 		sub() : $mol_file[] {
-			this.stat()
-			
-			switch( this.type() ) {
-				case 'dir' :
-					return ( <string[]> $node.fs.readdirSync( this.path() ) )
-					.filter( name => !/^\.+$/.test( name ) )
-					.map( name => this.resolve( name ) )
-			}
-			
-			return []
+			if (! this.exists() ) return []
+			if ( this.type() !== 'dir') return []
+
+			return $node.fs.readdirSync( this.path() )
+				.filter( name => !/^\.+$/.test( name ) )
+				.map( name => this.resolve( name ) )
 		}
 		
 		resolve( path : string ) : $mol_file {
@@ -169,7 +162,7 @@ namespace $ {
 			exclude? : RegExp
 		) {
 			
-			var found : $mol_file[] = []
+			let found : $mol_file[] = []
 			this.sub().forEach(
 				child => {
 					if( exclude && child.path().match( exclude ) ) return
