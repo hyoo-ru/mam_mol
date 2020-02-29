@@ -3,6 +3,7 @@ require( "source-map-support" ).install()
 process.on( 'unhandledRejection' , up => { throw up } );
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+Error.stackTraceLimit = Infinity;
 module.exports;
 //mol.js.map
 ;

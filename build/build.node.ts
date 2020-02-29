@@ -1,5 +1,4 @@
 namespace $ {
-
 	export function $mol_build_start( paths : string[] ) {
 		var build = $mol_build.relative( '.' )
 		if( paths.length > 0 ) {
@@ -56,9 +55,10 @@ namespace $ {
 					const name = child.name()
 					if( !/^[a-z0-9]/i.test( name ) ) return false
 					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
+
+					if (! child.exists()) return false
 					
 					if( /(meta\.tree)$/.test( name ) ) {
-
 						const tree = $mol_tree.fromString( child.content().toString() , child.path() )
 
 						let content = ''
@@ -127,15 +127,15 @@ namespace $ {
 						}
 					}
 					return mods
-				case null :
-					throw new Error( `Module not found: "${mod.relate()}"` )
+				default :
+					throw new Error( `Unsupported type "${mod.type()}" of "${mod.relate()}"` )
 			}
-			throw new Error( `Unsopported type "${mod.type()}" of "${mod.relate()}"` )
 		}
 		
 		@ $mol_mem_key
 		sources( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const mod = $mol_file.absolute( path )
+			if ( ! mod.exists() ) return []
 			switch( mod.type() ) {
 				case 'file' :
 					return [ mod ]
@@ -400,6 +400,7 @@ namespace $ {
 		@ $mol_mem_key
 		dependencies( { path , exclude } : { path : string , exclude? : string[] } ) {
 			var mod = $mol_file.absolute( path )
+			if ( ! mod.exists() ) return {}
 			switch( mod.type() ) {
 				case 'file' :
 					return this.srcDeps( path )
@@ -423,7 +424,8 @@ namespace $ {
 			var mapping = this.modMeta( parent.path() )
 			
 			if( mod.exists() ) {
-				if( mod.type() === 'dir' && mod.resolve( '.git' ).type() === 'dir' ) {
+				const git_dir = mod.resolve( '.git' )
+				if( mod.type() === 'dir' && git_dir.exists() && git_dir.type() === 'dir' ) {
 					try {
 						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
 						process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
@@ -488,7 +490,8 @@ namespace $ {
 					try {
 						this.modEnsure( dep.path() )
 					} catch( error ) {
-						throw new Error( `${ error.message }\nDependency "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" ` )
+						error.message = `${ error.message }\nDependency "${ dep.relate( this.root() ) }" from "${ mod.relate( this.root() ) }" `
+						$mol_fail_hidden(error)
 					}
 					
 					while( !dep.exists() ) dep = dep.parent()
@@ -679,15 +682,14 @@ namespace $ {
 						}
 					}
 					try {
-						const content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
+						const content = ( src.content() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test( content )
 					
 						if( isCommonJs ) {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
-	
-						const srcMap = src.parent().resolve( src.name() + '.map' ).content()
-						if(content) concater.add( content, src.relate( target.parent() ), srcMap + '')
+						const srcMap = src.parent().resolve( src.name() + '.map' );
+						if( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : undefined)
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
@@ -707,7 +709,7 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 
-			if( errors.length ) $mol_fail_hidden( new Error( errors.map( error => error.message ).join( '\n' ) ) )
+			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
 			
 			return [ target , targetMap ]
 		}
@@ -750,10 +752,10 @@ namespace $ {
 					}
 					let content = ''					
 					try {
-						content = ( src.content() || '' ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
-						const srcMap = src.parent().resolve( src.name() + '.map' ).content()
-						if(content) concater.add( content, src.relate( target.parent() ), srcMap + '')
-						} catch( error ) {
+						content = ( src.content() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
+						const srcMap = src.parent().resolve( src.name() + '.map' )
+						if ( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : undefined)
+					} catch( error ) {
 						errors.push( error )
 					}
 				}
@@ -764,7 +766,7 @@ namespace $ {
 			
 			this.logBundle( target , Date.now() - start )
 			
-			if( errors.length ) $mol_fail_hidden( new Error( errors.map( error => error.message ).join( '\n' ) ) )
+			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
 			
 			return [ target , targetMap ]
 		}
@@ -806,7 +808,7 @@ namespace $ {
 			
 			sources.forEach(
 				function( src ) {
-					if( !src.content() ) return
+					if( ! src.exists() || ! src.content() ) return
 					concater.add( src.content().toString(), src.relate( target.parent() ) )
 				}
 			)
@@ -920,10 +922,12 @@ namespace $ {
 
 			const start = Date.now()
 			const html = pack.resolve( 'index.html' )
-			const html_target = pack.resolve( '-/index.html' )
-			html_target.content( html.content() )
-			targets.push( html_target )
-			this.logBundle( html_target , Date.now() - start )
+			if ( html.exists() ) {
+				const html_target = pack.resolve( '-/index.html' )
+				html_target.content( html.content() )
+				targets.push( html_target )
+				this.logBundle( html_target , Date.now() - start )	
+			}
 
 			sources.forEach( source => {
 				const tree = $mol_tree.fromString( source.content().toString() , source.path() )
@@ -931,6 +935,7 @@ namespace $ {
 				tree.select( 'deploy' ).sub.forEach( deploy => {
 					const start = Date.now()
 					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
+					if ( ! file.exists() ) return
 					const target = pack.resolve( `-/${ file.relate( root ) }` )
 					target.content( file.content() )
 					targets.push( target )
@@ -955,17 +960,22 @@ namespace $ {
 			config_target.content( config.content() )
 			
 			const html = pack.resolve( 'index.html' )
-			const html_target = cordova.resolve( 'www/index.html' )
-			html_target.content( html.content() )
+
+			const targets = [ config_target ]
+
+			if( html.exists() ) {
+				const html_target = cordova.resolve( 'www/index.html' )
+				html_target.content( html.content() )
+				targets.push(html_target)
+			}
 			
 			const sources = pack.resolve( '-' ).find().filter( src => src.type() === 'file' )
-			
-			const targets = [ config_target , html_target ]
-			.concat( sources.map( source => {
+
+			for (const source of sources) {
 				const target = cordova.resolve( `www/${ source.relate( pack ) }` )
 				target.content( source.content() )
-				return target
-			} ) )
+				targets.push(target)
+			}
 			
 			this.logBundle( cordova , Date.now() - start )
 			

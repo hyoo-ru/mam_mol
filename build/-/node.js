@@ -28,6 +28,7 @@ void function( module ) { var exports = module.exports = this; function require(
 ;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+Error.stackTraceLimit = Infinity;
 module.exports;
 //mol.js.map
 ;
@@ -1532,15 +1533,9 @@ var $;
             return watcher;
         }
         stat(next, force) {
-            var path = this.path();
-            try {
-                var stat = next || $node.fs.statSync(path);
-            }
-            catch (error) {
-                if (error.code === 'ENOENT')
-                    return null;
-                return error;
-            }
+            const path = this.path();
+            let stat;
+            stat = next !== null && next !== void 0 ? next : $node.fs.statSync(path);
             this.parent().watcher();
             return stat;
         }
@@ -1548,12 +1543,21 @@ var $;
             return this.stat().mtime.getTime().toString(36).toUpperCase();
         }
         exists(next) {
-            var exists = !!this.stat();
-            if (next === void 0) {
+            let exists = true;
+            try {
+                this.stat();
+            }
+            catch (error) {
+                if (error.code === 'ENOENT')
+                    exists = false;
+                else
+                    return $.$mol_fail_hidden(error);
+            }
+            if (next === undefined) {
                 return exists;
             }
             else {
-                if (next == exists)
+                if (next === exists)
                     return exists;
                 if (next) {
                     this.parent().exists(true);
@@ -1570,38 +1574,34 @@ var $;
             return this.resolve('..');
         }
         type() {
-            var stat = this.stat();
-            if (stat) {
-                if (stat.isFile())
-                    return 'file';
-                if (stat.isDirectory())
-                    return 'dir';
-                if (stat.isBlockDevice())
-                    return 'blocks';
-                if (stat.isCharacterDevice())
-                    return 'chars';
-                if (stat.isSymbolicLink())
-                    return 'link';
-                if (stat.isFIFO())
-                    return 'fifo';
-                if (stat.isSocket())
-                    return 'socket';
-            }
-            else {
-                return null;
-            }
+            const stat = this.stat();
+            if (stat.isFile())
+                return 'file';
+            if (stat.isDirectory())
+                return 'dir';
+            if (stat.isBlockDevice())
+                return 'blocks';
+            if (stat.isCharacterDevice())
+                return 'chars';
+            if (stat.isSymbolicLink())
+                return 'link';
+            if (stat.isFIFO())
+                return 'fifo';
+            if (stat.isSocket())
+                return 'socket';
             throw new Error(`Unknown file type ${this.path()}`);
         }
         name() {
             return $node.path.basename(this.path());
         }
         ext() {
-            var match = /((?:\.\w+)+)$/.exec(this.path());
+            const match = /((?:\.\w+)+)$/.exec(this.path());
             return match ? match[1].substring(1) : '';
         }
         content(next, force) {
-            if (next === void 0) {
-                return this.stat() && $node.fs.readFileSync(this.path());
+            if (next === undefined) {
+                this.stat();
+                return $node.fs.readFileSync(this.path());
             }
             this.parent().exists(true);
             $node.fs.writeFileSync(this.path(), next);
@@ -1614,14 +1614,13 @@ var $;
             return $node.fs.createWriteStream(this.path());
         }
         sub() {
-            this.stat();
-            switch (this.type()) {
-                case 'dir':
-                    return $node.fs.readdirSync(this.path())
-                        .filter(name => !/^\.+$/.test(name))
-                        .map(name => this.resolve(name));
-            }
-            return [];
+            if (!this.exists())
+                return [];
+            if (this.type() !== 'dir')
+                return [];
+            return $node.fs.readdirSync(this.path())
+                .filter(name => !/^\.+$/.test(name))
+                .map(name => this.resolve(name));
         }
         resolve(path) {
             return this.constructor.relative($node.path.join(this.path(), path));
@@ -1633,7 +1632,7 @@ var $;
             $node.fs.appendFileSync(this.path(), next);
         }
         find(include, exclude) {
-            var found = [];
+            let found = [];
             this.sub().forEach(child => {
                 if (exclude && child.path().match(exclude))
                     return;
@@ -3219,6 +3218,52 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_diff_path(...paths) {
+        const limit = Math.min(...paths.map(path => path.length));
+        lookup: for (var i = 0; i < limit; ++i) {
+            const first = paths[0][i];
+            for (let j = 1; j < paths.length; ++j) {
+                if (paths[j][i] !== first)
+                    break lookup;
+            }
+        }
+        return {
+            prefix: paths[0].slice(0, i),
+            suffix: paths.map(path => path.slice(i)),
+        };
+    }
+    $.$mol_diff_path = $mol_diff_path;
+})($ || ($ = {}));
+//path.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_error_mix extends Error {
+        constructor(message, ...errors) {
+            super(message);
+            this.errors = errors;
+            if (errors.length) {
+                const stacks = [...errors.map(error => error.stack), this.stack];
+                const diff = $.$mol_diff_path(...stacks.map(stack => {
+                    if (!stack)
+                        return [];
+                    return stack.split('\n').reverse();
+                }));
+                const head = diff.prefix.reverse().join('\n');
+                const tails = diff.suffix.map(path => path.reverse().map(line => line.replace(/^(?!\s+at)/, '\tat (.) ')).join('\n')).join('\n\tat (.) -----\n');
+                this.stack = `Error: ${this.constructor.name}\n\tat (.) /"""\\\n${tails}\n\tat (.) \\___/\n${head}`;
+                this.message += errors.map(error => '\n' + error.message).join('');
+            }
+        }
+    }
+    $.$mol_error_mix = $mol_error_mix;
+})($ || ($ = {}));
+//mix.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_build_start(paths) {
         var build = $mol_build.relative('.');
         if (paths.length > 0) {
@@ -3265,6 +3310,8 @@ var $;
                 if (!/^[a-z0-9]/i.test(name))
                     return false;
                 if (exclude && RegExp('[.=](' + exclude.join('|') + ')[.]', 'i').test(name))
+                    return false;
+                if (!child.exists())
                     return false;
                 if (/(meta\.tree)$/.test(name)) {
                     const tree = $.$mol_tree.fromString(child.content().toString(), child.path());
@@ -3320,13 +3367,14 @@ var $;
                         }
                     }
                     return mods;
-                case null:
-                    throw new Error(`Module not found: "${mod.relate()}"`);
+                default:
+                    throw new Error(`Unsupported type "${mod.type()}" of "${mod.relate()}"`);
             }
-            throw new Error(`Unsopported type "${mod.type()}" of "${mod.relate()}"`);
         }
         sources({ path, exclude }) {
             const mod = $.$mol_file.absolute(path);
+            if (!mod.exists())
+                return [];
             switch (mod.type()) {
                 case 'file':
                     return [mod];
@@ -3509,6 +3557,8 @@ var $;
         }
         dependencies({ path, exclude }) {
             var mod = $.$mol_file.absolute(path);
+            if (!mod.exists())
+                return {};
             switch (mod.type()) {
                 case 'file':
                     return this.srcDeps(path);
@@ -3526,7 +3576,8 @@ var $;
             this.modEnsure(parent.path());
             var mapping = this.modMeta(parent.path());
             if (mod.exists()) {
-                if (mod.type() === 'dir' && mod.resolve('.git').type() === 'dir') {
+                const git_dir = mod.resolve('.git');
+                if (mod.type() === 'dir' && git_dir.exists() && git_dir.type() === 'dir') {
                     try {
                         process.stdout.write($.$mol_exec(mod.path(), 'git', '--no-pager', 'log', '--oneline', 'HEAD..origin/master').stdout);
                     }
@@ -3577,7 +3628,8 @@ var $;
                         this.modEnsure(dep.path());
                     }
                     catch (error) {
-                        throw new Error(`${error.message}\nDependency "${dep.relate(this.root())}" from "${mod.relate(this.root())}" `);
+                        error.message = `${error.message}\nDependency "${dep.relate(this.root())}" from "${mod.relate(this.root())}" `;
+                        $.$mol_fail_hidden(error);
                     }
                     while (!dep.exists())
                         dep = dep.parent();
@@ -3725,14 +3777,14 @@ var $;
                     }
                 }
                 try {
-                    const content = (src.content() || '').toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
+                    const content = (src.content()).toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
                     const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test(content);
                     if (isCommonJs) {
                         concater.add(`\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate(this.root().resolve('node_modules')) + `/" ) ] }; \n`, '-');
                     }
-                    const srcMap = src.parent().resolve(src.name() + '.map').content();
+                    const srcMap = src.parent().resolve(src.name() + '.map');
                     if (content)
-                        concater.add(content, src.relate(target.parent()), srcMap + '');
+                        concater.add(content, src.relate(target.parent()), srcMap.exists() ? String(srcMap.content()) : undefined);
                     if (isCommonJs) {
                         const idFull = src.relate(this.root().resolve('node_modules'));
                         const idShort = idFull.replace(/\/index\.js$/, '').replace(/\.js$/, '');
@@ -3750,7 +3802,7 @@ var $;
             targetMap.content(concater.toString());
             this.logBundle(target, Date.now() - start);
             if (errors.length)
-                $.$mol_fail_hidden(new Error(errors.map(error => error.message).join('\n')));
+                $.$mol_fail_hidden(new $.$mol_error_mix(`Build fail ${path}`, ...errors));
             return [target, targetMap];
         }
         bundleTestJS({ path, exclude, bundle }) {
@@ -3785,10 +3837,10 @@ var $;
                 }
                 let content = '';
                 try {
-                    content = (src.content() || '').toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
-                    const srcMap = src.parent().resolve(src.name() + '.map').content();
+                    content = (src.content()).toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
+                    const srcMap = src.parent().resolve(src.name() + '.map');
                     if (content)
-                        concater.add(content, src.relate(target.parent()), srcMap + '');
+                        concater.add(content, src.relate(target.parent()), srcMap.exists() ? String(srcMap.content()) : undefined);
                 }
                 catch (error) {
                     errors.push(error);
@@ -3798,7 +3850,7 @@ var $;
             targetMap.content(concater.toString());
             this.logBundle(target, Date.now() - start);
             if (errors.length)
-                $.$mol_fail_hidden(new Error(errors.map(error => error.message).join('\n')));
+                $.$mol_fail_hidden(new $.$mol_error_mix(`Build fail ${path}`, ...errors));
             return [target, targetMap];
         }
         bundleTestHtml({ path }) {
@@ -3826,7 +3878,7 @@ var $;
                 return [];
             var concater = new $.$mol_sourcemap_builder(target.name());
             sources.forEach(function (src) {
-                if (!src.content())
+                if (!src.exists() || !src.content())
                     return;
                 concater.add(src.content().toString(), src.relate(target.parent()));
             });
@@ -3906,15 +3958,19 @@ var $;
             const targets = [];
             const start = Date.now();
             const html = pack.resolve('index.html');
-            const html_target = pack.resolve('-/index.html');
-            html_target.content(html.content());
-            targets.push(html_target);
-            this.logBundle(html_target, Date.now() - start);
+            if (html.exists()) {
+                const html_target = pack.resolve('-/index.html');
+                html_target.content(html.content());
+                targets.push(html_target);
+                this.logBundle(html_target, Date.now() - start);
+            }
             sources.forEach(source => {
                 const tree = $.$mol_tree.fromString(source.content().toString(), source.path());
                 tree.select('deploy').sub.forEach(deploy => {
                     const start = Date.now();
                     const file = root.resolve(deploy.value.replace(/^\//, ''));
+                    if (!file.exists())
+                        return;
                     const target = pack.resolve(`-/${file.relate(root)}`);
                     target.content(file.content());
                     targets.push(target);
@@ -3933,15 +3989,18 @@ var $;
             const config_target = cordova.resolve('config.xml');
             config_target.content(config.content());
             const html = pack.resolve('index.html');
-            const html_target = cordova.resolve('www/index.html');
-            html_target.content(html.content());
+            const targets = [config_target];
+            if (html.exists()) {
+                const html_target = cordova.resolve('www/index.html');
+                html_target.content(html.content());
+                targets.push(html_target);
+            }
             const sources = pack.resolve('-').find().filter(src => src.type() === 'file');
-            const targets = [config_target, html_target]
-                .concat(sources.map(source => {
+            for (const source of sources) {
                 const target = cordova.resolve(`www/${source.relate(pack)}`);
                 target.content(source.content());
-                return target;
-            }));
+                targets.push(target);
+            }
             this.logBundle(cordova, Date.now() - start);
             return targets;
         }

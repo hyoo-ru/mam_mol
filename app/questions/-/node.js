@@ -7,6 +7,7 @@ void function( module ) { var exports = module.exports = this; function require(
 ;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+Error.stackTraceLimit = Infinity;
 module.exports;
 //mol.js.map
 ;
@@ -3954,15 +3955,9 @@ var $;
             return watcher;
         }
         stat(next, force) {
-            var path = this.path();
-            try {
-                var stat = next || $node.fs.statSync(path);
-            }
-            catch (error) {
-                if (error.code === 'ENOENT')
-                    return null;
-                return error;
-            }
+            const path = this.path();
+            let stat;
+            stat = next !== null && next !== void 0 ? next : $node.fs.statSync(path);
             this.parent().watcher();
             return stat;
         }
@@ -3970,12 +3965,21 @@ var $;
             return this.stat().mtime.getTime().toString(36).toUpperCase();
         }
         exists(next) {
-            var exists = !!this.stat();
-            if (next === void 0) {
+            let exists = true;
+            try {
+                this.stat();
+            }
+            catch (error) {
+                if (error.code === 'ENOENT')
+                    exists = false;
+                else
+                    return $.$mol_fail_hidden(error);
+            }
+            if (next === undefined) {
                 return exists;
             }
             else {
-                if (next == exists)
+                if (next === exists)
                     return exists;
                 if (next) {
                     this.parent().exists(true);
@@ -3992,38 +3996,34 @@ var $;
             return this.resolve('..');
         }
         type() {
-            var stat = this.stat();
-            if (stat) {
-                if (stat.isFile())
-                    return 'file';
-                if (stat.isDirectory())
-                    return 'dir';
-                if (stat.isBlockDevice())
-                    return 'blocks';
-                if (stat.isCharacterDevice())
-                    return 'chars';
-                if (stat.isSymbolicLink())
-                    return 'link';
-                if (stat.isFIFO())
-                    return 'fifo';
-                if (stat.isSocket())
-                    return 'socket';
-            }
-            else {
-                return null;
-            }
+            const stat = this.stat();
+            if (stat.isFile())
+                return 'file';
+            if (stat.isDirectory())
+                return 'dir';
+            if (stat.isBlockDevice())
+                return 'blocks';
+            if (stat.isCharacterDevice())
+                return 'chars';
+            if (stat.isSymbolicLink())
+                return 'link';
+            if (stat.isFIFO())
+                return 'fifo';
+            if (stat.isSocket())
+                return 'socket';
             throw new Error(`Unknown file type ${this.path()}`);
         }
         name() {
             return $node.path.basename(this.path());
         }
         ext() {
-            var match = /((?:\.\w+)+)$/.exec(this.path());
+            const match = /((?:\.\w+)+)$/.exec(this.path());
             return match ? match[1].substring(1) : '';
         }
         content(next, force) {
-            if (next === void 0) {
-                return this.stat() && $node.fs.readFileSync(this.path());
+            if (next === undefined) {
+                this.stat();
+                return $node.fs.readFileSync(this.path());
             }
             this.parent().exists(true);
             $node.fs.writeFileSync(this.path(), next);
@@ -4036,14 +4036,13 @@ var $;
             return $node.fs.createWriteStream(this.path());
         }
         sub() {
-            this.stat();
-            switch (this.type()) {
-                case 'dir':
-                    return $node.fs.readdirSync(this.path())
-                        .filter(name => !/^\.+$/.test(name))
-                        .map(name => this.resolve(name));
-            }
-            return [];
+            if (!this.exists())
+                return [];
+            if (this.type() !== 'dir')
+                return [];
+            return $node.fs.readdirSync(this.path())
+                .filter(name => !/^\.+$/.test(name))
+                .map(name => this.resolve(name));
         }
         resolve(path) {
             return this.constructor.relative($node.path.join(this.path(), path));
@@ -4055,7 +4054,7 @@ var $;
             $node.fs.appendFileSync(this.path(), next);
         }
         find(include, exclude) {
-            var found = [];
+            let found = [];
             this.sub().forEach(child => {
                 if (exclude && child.path().match(exclude))
                     return;

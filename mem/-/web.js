@@ -5,6 +5,7 @@ void function( module ) { var exports = module.exports = this; function require(
 ;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+Error.stackTraceLimit = Infinity;
 module.exports;
 //mol.js.map
 ;

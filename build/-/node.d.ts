@@ -352,8 +352,8 @@ declare namespace $ {
         static relative(path: string): $mol_file;
         path(): string;
         watcher(): import("chokidar").FSWatcher;
-        stat(next?: any, force?: $mol_mem_force): any;
-        version(): any;
+        stat(next?: ReturnType<typeof $node.fs.statSync>, force?: $mol_mem_force): import("fs").Stats | import("fs").BigIntStats;
+        version(): string;
         exists(next?: boolean): boolean;
         parent(): $mol_file;
         type(): "dir" | "link" | "file" | "blocks" | "chars" | "fifo" | "socket";
@@ -672,6 +672,20 @@ declare namespace $ {
         add(content: string, file?: string, raw?: $mol_sourcemap_raw | string): void;
     }
     export {};
+}
+
+declare namespace $ {
+    function $mol_diff_path<Item>(...paths: Item[][]): {
+        prefix: Item[];
+        suffix: Item[][];
+    };
+}
+
+declare namespace $ {
+    class $mol_error_mix extends Error {
+        errors: Error[];
+        constructor(message: string, ...errors: Error[]);
+    }
 }
 
 declare namespace $ {
