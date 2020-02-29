@@ -4,21 +4,21 @@ namespace $ {
 
 		constructor(
 			public name = '' ,
-			public order? : 'asc' | 'desc' ,
-			public filter? : 'only' | 'except' ,
+			public order? : '+' | '-' ,
+			public filter? : '=' | '@' ,
 			public values : $mol_vector_range< string | undefined >[] = [] ,
-			public fetch : $mol_harp_query[] = [] ,
+			public fetch = {} as Record< string , $mol_harp_query > ,
 		) {}
 
 		toJSON() {
 			return this.toString()
 		}
 
-		toString() {
+		toString() : string {
 
-			const name = this.name
-			const order = { asc : '+' , desc : '-' }[ this.order ] || ''
-			const filter = { only : '=' , except : '!=' }[ this.filter ] || ''
+			const order = this.order ?? ''
+			const name = this.name ?? ''
+			const filter = this.filter ?? ''
 			
 			const value = this.values.map( ({ min , max }) => {
 
@@ -31,25 +31,25 @@ namespace $ {
 
 			} ).join( ',' )
 
-			const fetch = this.fetch.map( harp => `[${ harp }]` ).join( '' )
+			const fetch = Object.values( this.fetch ).map( harp => `[${ harp }]` ).join( '' )
 
 			return order + name + filter + value + fetch
 
 		}
 
 		static syntax = new $mol_syntax2({
-			'filter' : /!?=/ ,
+			'filter' : /[=@]/ ,
 			'list' : /,/ ,
 			'range' : /&/ ,
 			'fetch_open' : /\[/ ,
 			'fetch_close' : /\]/ ,
 		})
 
-		static parse( uri : string ) {
+		static parse< This extends typeof $mol_harp_query >( this : This , uri : string ) {
 
-			let stack = [] as $mol_harp_query[][]
-			let queries = [] as $mol_harp_query[]
+			let queries = {} as Record< string , $mol_harp_query >
 			let query : $mol_harp_query | undefined
+			let stack = [] as typeof queries[]
 			let range : $mol_vector_range< string | undefined > | undefined
 	
 			function fail_at( offset : number ) {
@@ -72,9 +72,9 @@ namespace $ {
 	
 						const [ , order , name ] = /^([+-]?)(.*)$/.exec( text )
 	
-						query = new this( name , { '+' : 'asc' , '-' : 'desc' }[ order ] )
+						query = new this( name , order as any )
 						
-						queries.push( query )
+						queries[ name ] = query
 	
 					}
 					
@@ -84,10 +84,10 @@ namespace $ {
 	
 					if( !query ) {
 						query = new this
-						queries.push( query )
+						queries[ '' ] = query
 					}
 					
-					query.filter = { '=' : 'only' , '!=' : 'except' }[ filter ]
+					query.filter = filter as any
 					
 				} ,
 	
@@ -115,7 +115,7 @@ namespace $ {
 					
 					if( !query ) {
 						query = new this
-						queries.push( query )
+						queries[ '' ] = query
 					}
 	
 					stack.push( queries )
@@ -132,7 +132,7 @@ namespace $ {
 					}
 					
 					queries = stack.pop()
-					query = queries[ queries.length - 1 ]
+					query = Object.values( queries ).slice( -1 )[0]
 	
 				} ,
 	
@@ -143,7 +143,7 @@ namespace $ {
 				range = undefined
 			}
 			
-			return queries[0]
+			return Object.values( queries )[0] as InstanceType< This > 
 		}
 	
 	}

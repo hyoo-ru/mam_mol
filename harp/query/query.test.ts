@@ -35,7 +35,7 @@ namespace $ {
 
 			const harp = $mol_harp_query.parse( '[age]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'age' )
+			$mol_assert_equal( harp.fetch.age.name , 'age' )
 			
 			$mol_assert_equal( harp.toString() , '[age]' )
 
@@ -48,7 +48,7 @@ namespace $ {
 			$mol_assert_equal( harp.name , 'user' )
 			$mol_assert_equal( harp.values[0].min , 'jin' )
 			$mol_assert_equal( harp.values[0].max , 'jin' )
-			$mol_assert_equal( harp.fetch[0].name , 'friend' )
+			$mol_assert_equal( harp.fetch.friend.name , 'friend' )
 
 		} ,
 		
@@ -56,8 +56,8 @@ namespace $ {
 
 			const harp = $mol_harp_query.parse( '[age][friend]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'age' )
-			$mol_assert_equal( harp.fetch[1].name , 'friend' )
+			$mol_assert_equal( harp.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.friend.name , 'friend' )
 
 			$mol_assert_equal( harp.toString() , '[age][friend]' )
 
@@ -67,8 +67,8 @@ namespace $ {
 
 			const harp = $mol_harp_query.parse( '[friend[age]]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'friend' )
-			$mol_assert_equal( harp.fetch[0].fetch[0].name , 'age' )
+			$mol_assert_equal( harp.fetch.friend.name , 'friend' )
+			$mol_assert_equal( harp.fetch.friend.fetch.age.name , 'age' )
 
 			$mol_assert_equal( harp.toString() , '[friend[age]]' )
 
@@ -88,8 +88,8 @@ namespace $ {
 			
 			const harp = $mol_harp_query.parse( '[+age]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'age' )
-			$mol_assert_equal( harp.fetch[0].order , 'asc' )
+			$mol_assert_equal( harp.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.age.order , '+' )
 
 			$mol_assert_equal( harp.toString() , '[+age]' )
 
@@ -99,8 +99,8 @@ namespace $ {
 			
 			const harp = $mol_harp_query.parse( '[-age]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'age' )
-			$mol_assert_equal( harp.fetch[0].order , 'desc' )
+			$mol_assert_equal( harp.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.age.order , '-' )
 			
 			$mol_assert_equal( harp.toString() , '[-age]' )
 
@@ -110,8 +110,8 @@ namespace $ {
 			
 			const harp = $mol_harp_query.parse( '[age]' )
 			
-			$mol_assert_equal( harp.fetch[0].filter , undefined )
-			$mol_assert_equal( harp.fetch[0].values.length , 0 )
+			$mol_assert_equal( harp.fetch.age.filter , undefined )
+			$mol_assert_equal( harp.fetch.age.values.length , 0 )
 		
 			$mol_assert_equal( harp.toString() , '[age]' )
 
@@ -121,10 +121,10 @@ namespace $ {
 			
 			const harp = $mol_harp_query.parse( '[age=18]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'age' )
-			$mol_assert_equal( harp.fetch[0].filter , 'only' )
-			$mol_assert_equal( harp.fetch[0].values[0].min , '18' )
-			$mol_assert_equal( harp.fetch[0].values[0].max , '18' )
+			$mol_assert_equal( harp.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.age.filter , '=' )
+			$mol_assert_equal( harp.fetch.age.values[0].min , '18' )
+			$mol_assert_equal( harp.fetch.age.values[0].max , '18' )
 			
 			$mol_assert_equal( harp.toString() , '[age=18]' )
 
@@ -132,14 +132,14 @@ namespace $ {
 		
 		'filter except' () {
 			
-			const harp = $mol_harp_query.parse( '[age!=18]' )
+			const harp = $mol_harp_query.parse( '[age@18]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'age' )
-			$mol_assert_equal( harp.fetch[0].filter , 'except' )
-			$mol_assert_equal( harp.fetch[0].values[0].min , '18' )
-			$mol_assert_equal( harp.fetch[0].values[0].max , '18' )
+			$mol_assert_equal( harp.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.age.filter , '@' )
+			$mol_assert_equal( harp.fetch.age.values[0].min , '18' )
+			$mol_assert_equal( harp.fetch.age.values[0].max , '18' )
 			
-			$mol_assert_equal( harp.toString() , '[age!=18]' )
+			$mol_assert_equal( harp.toString() , '[age@18]' )
 
 		} ,
 		
@@ -147,10 +147,10 @@ namespace $ {
 			
 			const harp = $mol_harp_query.parse( '[age=10&18]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'age' )
-			$mol_assert_equal( harp.fetch[0].filter , 'only' )
-			$mol_assert_equal( harp.fetch[0].values[0].min , '10' )
-			$mol_assert_equal( harp.fetch[0].values[0].max , '18' )
+			$mol_assert_equal( harp.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.age.filter , '=' )
+			$mol_assert_equal( harp.fetch.age.values[0].min , '10' )
+			$mol_assert_equal( harp.fetch.age.values[0].max , '18' )
 			
 			$mol_assert_equal( harp.toString() , '[age=10&18]' )
 
@@ -160,10 +160,10 @@ namespace $ {
 			
 			const harp = $mol_harp_query.parse( '[age=&18]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'age' )
-			$mol_assert_equal( harp.fetch[0].filter , 'only' )
-			$mol_assert_equal( harp.fetch[0].values[0].min , undefined )
-			$mol_assert_equal( harp.fetch[0].values[0].max , '18' )
+			$mol_assert_equal( harp.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.age.filter , '=' )
+			$mol_assert_equal( harp.fetch.age.values[0].min , undefined )
+			$mol_assert_equal( harp.fetch.age.values[0].max , '18' )
 			
 			$mol_assert_equal( harp.toString() , '[age=&18]' )
 
@@ -173,10 +173,10 @@ namespace $ {
 			
 			const harp = $mol_harp_query.parse( '[age=18&]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'age' )
-			$mol_assert_equal( harp.fetch[0].filter , 'only' )
-			$mol_assert_equal( harp.fetch[0].values[0].min , '18' )
-			$mol_assert_equal( harp.fetch[0].values[0].max , undefined )
+			$mol_assert_equal( harp.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.age.filter , '=' )
+			$mol_assert_equal( harp.fetch.age.values[0].min , '18' )
+			$mol_assert_equal( harp.fetch.age.values[0].max , undefined )
 			
 			$mol_assert_equal( harp.toString() , '[age=18&]' )
 
@@ -186,10 +186,10 @@ namespace $ {
 			
 			const harp = $mol_harp_query.parse( '[age=10%2618]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'age' )
-			$mol_assert_equal( harp.fetch[0].filter , 'only' )
-			$mol_assert_equal( harp.fetch[0].values[0].min , '10&18' )
-			$mol_assert_equal( harp.fetch[0].values[0].max , '10&18' )
+			$mol_assert_equal( harp.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.age.filter , '=' )
+			$mol_assert_equal( harp.fetch.age.values[0].min , '10&18' )
+			$mol_assert_equal( harp.fetch.age.values[0].max , '10&18' )
 			
 			$mol_assert_equal( harp.toString() , '[age=10%2618]' )
 
@@ -199,12 +199,12 @@ namespace $ {
 			
 			const harp = $mol_harp_query.parse( '[size=M,L]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'size' )
-			$mol_assert_equal( harp.fetch[0].filter , 'only' )
-			$mol_assert_equal( harp.fetch[0].values[0].min , 'M' )
-			$mol_assert_equal( harp.fetch[0].values[0].max , 'M' )
-			$mol_assert_equal( harp.fetch[0].values[1].min , 'L' )
-			$mol_assert_equal( harp.fetch[0].values[1].max , 'L' )
+			$mol_assert_equal( harp.fetch.size.name , 'size' )
+			$mol_assert_equal( harp.fetch.size.filter , '=' )
+			$mol_assert_equal( harp.fetch.size.values[0].min , 'M' )
+			$mol_assert_equal( harp.fetch.size.values[0].max , 'M' )
+			$mol_assert_equal( harp.fetch.size.values[1].min , 'L' )
+			$mol_assert_equal( harp.fetch.size.values[1].max , 'L' )
 			
 			$mol_assert_equal( harp.toString() , '[size=M,L]' )
 
@@ -214,10 +214,10 @@ namespace $ {
 			
 			const harp = $mol_harp_query.parse( '[=0]' )
 			
-			$mol_assert_equal( harp.fetch[0].name , '' )
-			$mol_assert_equal( harp.fetch[0].filter , 'only' )
-			$mol_assert_equal( harp.fetch[0].values[0].min , '0' )
-			$mol_assert_equal( harp.fetch[0].values[0].max , '0' )
+			$mol_assert_equal( harp.fetch[''].name , '' )
+			$mol_assert_equal( harp.fetch[''].filter , '=' )
+			$mol_assert_equal( harp.fetch[''].values[0].min , '0' )
+			$mol_assert_equal( harp.fetch[''].values[0].max , '0' )
 			
 			$mol_assert_equal( harp.toString() , '[=0]' )
 
@@ -225,25 +225,25 @@ namespace $ {
 		
 		'complex uri' () {
 			
-			const harp = $mol_harp_query.parse( '[user[size!=&XS,XL&]][user[age=18%26]]' )
+			const harp = $mol_harp_query.parse( '[image[size@&XS,XL&]][user[age=18%26]]' )
 			
 			$mol_assert_equal( harp.name , '' )
 			
-			$mol_assert_equal( harp.fetch[0].name , 'user' )
-			$mol_assert_equal( harp.fetch[0].fetch[0].name , 'size' )
-			$mol_assert_equal( harp.fetch[0].fetch[0].filter , 'except' )
-			$mol_assert_equal( harp.fetch[0].fetch[0].values[0].min , undefined )
-			$mol_assert_equal( harp.fetch[0].fetch[0].values[0].max , 'XS' )
-			$mol_assert_equal( harp.fetch[0].fetch[0].values[1].min , 'XL' )
-			$mol_assert_equal( harp.fetch[0].fetch[0].values[1].max , undefined )
+			$mol_assert_equal( harp.fetch.image.name , 'image' )
+			$mol_assert_equal( harp.fetch.image.fetch.size.name , 'size' )
+			$mol_assert_equal( harp.fetch.image.fetch.size.filter , '@' )
+			$mol_assert_equal( harp.fetch.image.fetch.size.values[0].min , undefined )
+			$mol_assert_equal( harp.fetch.image.fetch.size.values[0].max , 'XS' )
+			$mol_assert_equal( harp.fetch.image.fetch.size.values[1].min , 'XL' )
+			$mol_assert_equal( harp.fetch.image.fetch.size.values[1].max , undefined )
 			
-			$mol_assert_equal( harp.fetch[1].name , 'user' )
-			$mol_assert_equal( harp.fetch[1].fetch[0].name , 'age' )
-			$mol_assert_equal( harp.fetch[1].fetch[0].filter , 'only' )
-			$mol_assert_equal( harp.fetch[1].fetch[0].values[0].min , '18&' )
-			$mol_assert_equal( harp.fetch[1].fetch[0].values[0].max , '18&' )
+			$mol_assert_equal( harp.fetch.user.name , 'user' )
+			$mol_assert_equal( harp.fetch.user.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.user.fetch.age.filter , '=' )
+			$mol_assert_equal( harp.fetch.user.fetch.age.values[0].min , '18&' )
+			$mol_assert_equal( harp.fetch.user.fetch.age.values[0].max , '18&' )
 			
-			$mol_assert_equal( harp.toString() , '[user[size!=&XS,XL&]][user[age=18%26]]' )
+			$mol_assert_equal( harp.toString() , '[image[size@&XS,XL&]][user[age=18%26]]' )
 			
 		} ,
 		
