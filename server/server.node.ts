@@ -87,7 +87,7 @@ namespace $ {
 		
 		expressFiler() {
 			return $node['express'].static(
-				$node.path.resolve( this.rootPublic() ) , {
+				$node.path.resolve( this.rootPublic() ) ,{
 					maxAge : this.cacheTime()
 				}
 			)

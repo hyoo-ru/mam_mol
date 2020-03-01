@@ -1,1 +1,1 @@
-<script> document.location = 'app/demo/-/' + document.location.hash </script>
+<script> document.location = location.pathname.replace( /-\/.*$/ , '' ) +  'app/demo/' + location.hash </script>
