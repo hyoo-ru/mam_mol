@@ -4,11 +4,6 @@ Pausable synchronous executions.
 Frees main thread every 8ms and continues fiber in next animation frame.
 Fibers must be idempotent because can be restarted for continuation.
 
-## Online demos
-
-- [Concurrency and errors handling](http://eigenmethod.github.io/mol/fiber/)
-- [Cancelling at any step (request, processing)](http://plnkr.co/edit/pL1nQmIHrIojyV0GHtVH?p=preview)
-
 ## API
 
 ### $mol_fiber.run
