@@ -136,7 +136,7 @@ npm install mol_fiber
 ```
 
 ```
-const { $mol_fiber_defer : fiber } = require( 'mol_fiber' )
+const { $mol_fiber_defer : defer } = require( 'mol_fiber' )
 ```
 
 ```
