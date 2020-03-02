@@ -11,16 +11,16 @@ Fibers must be idempotent because can be restarted for continuation.
 
 ## API
 
-### $mol_fiber_start
+### $mol_fiber.run
 
 Creates fiber for handler and immediately starts it.
 Handler executed only once in parent execution.
 Use it to wrap non idempotent code.
 
 ```typescript
-$mol_fiber_start( ()=> {
-	$mol_fiber_start( ()=> console.log( 1 ) ) // 1
-	$mol_fiber_start( ()=> console.log( 2 ) ) // 2
+$mol_fiber_defer( ()=> {
+	$mol_fiber.run( ()=> console.log( 1 ) ) // 1
+	$mol_fiber.run( ()=> console.log( 2 ) ) // 2
 } )
 ```
 
@@ -35,12 +35,12 @@ $mol_fiber_defer( ()=> console.log( 1 ) ) // 1
 $mol_fiber_defer( ()=> console.log( 2 ) ) // 2
 ```
 
-### $mol_fiber_func
+### $mol_fiber.func
 
 Converts function to fiber.
 
 ```typescript
-const log = $mol_fiber_func( console.log )
+const log = $mol_fiber.func( console.log )
 
 $mol_fiber_defer( ()=> {
 	log( 1 ) // 1
@@ -116,7 +116,7 @@ $mol_fiber_warp()
 ## Error handling
 
 ```
-$mol_fiber_start( ()=> {
+$mol_fiber_defer( ()=> {
 	try {
 		console.log( get_text( 'example.org' )	 )
 	} catch( error ) {
@@ -131,7 +131,7 @@ $mol_fiber_start( ()=> {
 ### Via bundle from CDN
 
 ```
-<script src="http://mol.js.org/fiber/-/web.js"></script>
+<script src="https://mol.js.org/fiber/-/web.js"></script>
 ```
 
 ### Via NPM
@@ -141,16 +141,16 @@ npm install mol_fiber
 ```
 
 ```
-const { $mol_fiber_start : fiber } = require( 'mol_fiber' )
+const { $mol_fiber_defer : fiber } = require( 'mol_fiber' )
 ```
 
 ```
-import { $mol_fiber_start as fiber } from 'mol_fiber'
+import { $mol_fiber_defer as defer } from 'mol_fiber'
 ```
 
 ## Logs
 
-Logs can be enabled through [$mol_log_filter](../log).
+Logs can be enabled through [$mol_log.excludes](../log2).
 
 Legend:
 
