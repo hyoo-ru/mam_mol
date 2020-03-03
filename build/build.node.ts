@@ -425,10 +425,20 @@ namespace $ {
 			
 			if( mod.exists() ) {
 				const git_dir = mod.resolve( '.git' )
-				if( mod.type() === 'dir' && git_dir.exists() && git_dir.type() === 'dir' ) {
+				if( mod.type() === 'dir' ) {
 					try {
-						//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
-						process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
+						if( git_dir.exists() && git_dir.type() === 'dir' ) {
+							//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
+							process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
+						} else {
+							for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
+								$mol_exec( mod.path() , 'git' , 'init' )
+								$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , 'master' , 'origin' , repo.value )
+								$mol_exec( mod.path() , 'git' , 'pull' )
+								mod.stat( undefined , $mol_mem_force_cache )
+								return true
+							}
+						}
 					} catch( error ) {
 						console.error( $node.colorette.red( error.message ) )
 					}
