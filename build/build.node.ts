@@ -624,9 +624,6 @@ namespace $ {
 					if( !type || type === 'test.js' ) {
 						res = res.concat( this.bundleTestJS( { path , exclude , bundle : env } ) )
 					}
-					if( !type || type === 'test.html' ) {
-						res = res.concat( this.bundleTestHtml({ path }) )
-					}
 					if( !type || type === 'd.ts' ) {
 						res = res.concat( this.bundleDTS( { path , exclude , bundle : env } ) )
 					}
@@ -649,6 +646,10 @@ namespace $ {
 			
 			if( !bundle || bundle === 'package.json' ) {
 				res = res.concat( this.bundlePackageJSON( { path , exclude : [ 'web' ] } ) )
+			}
+			
+			if( !bundle || bundle === 'test.html' ) {
+				res = res.concat( this.bundleTestHtml( { path } ) )
 			}
 			
 			return res.map( r => r.valueOf() )
@@ -783,25 +784,28 @@ namespace $ {
 		
 		@ $mol_mem_key
 		bundleTestHtml( { path } : { path : string } ) : $mol_file[] {
-			const start = Date.now()
-			var pack = $mol_file.absolute( path )
 			
-			var target = pack.resolve( `-/web.test.html` )
+			const start = Date.now()
+			
+			const pack = $mol_file.absolute( path )
+			const source = pack.resolve( 'index.html' )
+			const target = pack.resolve( `-/test.html` )
 
-			const content = `
-<!doctype html>
-<meta charset="utf-8" />
-<body>
-<script src="web.js" charset="utf-8"></script>
-<script src="web.test.js" defer></script>
-</body>
-`
+			let content = source.exists()
+				? source.content().toString()
+				: `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`
+			
+			content = content.replace(
+				/<\/body>|$/ ,
+				`<script src="web.test.js" charset="utf-8" defer></script>$1`,
+			)
 			
 			target.content( content )
 			
 			this.logBundle( target , Date.now() - start )
 			
 			return [ target ]
+
 		}
 
 		@ $mol_mem_key

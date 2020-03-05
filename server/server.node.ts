@@ -67,7 +67,7 @@ namespace $ {
 				this.expressCompressor() ,
 				this.expressBodier() ,
 				this.expressGenerator() ,
-				this.expressIndexRedirector() ,
+				this.expressIndex() ,
 				this.expressFiler() ,
 				this.expressDirector() ,
 			]
@@ -97,22 +97,12 @@ namespace $ {
 			return $node['serve-index']( this.rootPublic() , { icons : true } )
 		}
 
-		expressIndexRedirector() {
+		expressIndex() {
 			return (
 				req : typeof $node.express.request ,
 				res : typeof $node.express.response ,
 				next : () => void
-			) => {
-				const match =  req.url.match( /(.*[^\-]\/)([\?#].*)?$/ )
-				if (! match) return next()
-
-				const file = $mol_file.absolute(this.rootPublic())
-					.resolve(`${req.path}index.html`)
-
-				if (! file.exists()) return next()
-
-				res.redirect(301, `${match[1]}-/index.html${match[2] ?? ''}`)
-			}
+			) => next()
 		}
 		
 		expressGenerator() {

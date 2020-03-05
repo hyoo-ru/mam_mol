@@ -55,6 +55,24 @@ namespace $ {
 			
 		}
 		
+		expressIndex() {
+			return (
+				req : typeof $node.express.request ,
+				res : typeof $node.express.response ,
+				next : () => void
+			) => {
+				const match =  req.url.match( /(.*[^\-]\/)([\?#].*)?$/ )
+				if (! match) return next()
+
+				const file = $mol_file.absolute(this.rootPublic())
+					.resolve(`${req.path}index.html`)
+
+				if (! file.exists()) return next()
+
+				res.redirect(301, `${match[1]}-/test.html${match[2] ?? ''}`)
+			}
+		}
+		
 		port() {
 			return 9080
 		}
