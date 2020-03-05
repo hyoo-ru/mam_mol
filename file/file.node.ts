@@ -43,7 +43,11 @@ namespace $ {
 				this.stat( error as any , $mol_mem_force_cache )
 			} )
 			
-			return watcher
+			return {
+				destructor() {
+					watcher.removeAllListeners()
+				}
+			}
 		}
 
 		reset() {
