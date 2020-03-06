@@ -16,7 +16,7 @@ jobs:
       uses: hyoo-ru/mam_build@master2
       with:
         package: mol
-        modules: app/demo app/hello mol/app/supplies mol/perf/sierp mol/perf/uibench mol/perf/dbmon mol/app/taxon mol/app/taxon/demo mol/mem mol/app/quine mol/app/questions mol/time/all mol/plot/all mol/fiber/demo mol/app/report mol/syntax2 mol/func/sandbox/demo
+        modules: app/demo app/hello app/supplies perf/sierp perf/uibench perf/dbmon app/taxon app/taxon/demo mem app/quine app/questions time/all plot/all fiber/demo app/report syntax2 func/sandbox/demo
         
     - name: Deploy on GitHub Pages
       if: github.ref == 'refs/heads/master'
