@@ -796,8 +796,8 @@ namespace $ {
 				: `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`
 			
 			content = content.replace(
-				/<\/body>|$/ ,
-				`<script src="web.test.js" charset="utf-8" defer></script>$0`,
+				/(<\/body>|$)/ ,
+				`<script src="web.test.js" charset="utf-8" defer></script>$1`,
 			)
 			
 			target.content( content )
