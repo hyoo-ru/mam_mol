@@ -1,3 +1,0 @@
-namespace $ { $mol_style_attach( "mol/portion/portion.view.css",
- "[mol_portion] {\n\tdisplay: inline-flex;\n\tflex: 0 1 8rem;\n\twidth: 8rem;\n\tmax-height: calc( 1rem + 1.5em );\n\tmin-height: .5rem;\n\talign-self: stretch;\n\tvertical-align: inherit;\n\tborder-radius: var(--mol_skin_round);\n\tbox-shadow: inset 0 0 0 .5px var(--mol_theme_line);\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_portion_indicator] {\n\tbackground-color: var(--mol_skin_base);\n\tcolor: var(--mol_theme_control);\n\tborder-radius: var(--mol_skin_round);\n}\n"
-) }

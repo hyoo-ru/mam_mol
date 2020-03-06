@@ -1,2 +1,0 @@
-declare namespace $ { }
-export = $;

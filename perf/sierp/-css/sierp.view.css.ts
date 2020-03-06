@@ -1,3 +1,0 @@
-namespace $ { $mol_style_attach( "mol/perf/sierp/sierp.view.css",
- "[mol_perf_sierp] {\n\tposition: absolute;\n\tdisplay: block;\n\ttransform-origin: 0 0;\n\tleft: 50%;\n\ttop: 50%;\n\twidth: 10px;\n\theight: 10px;\n\tzoom: .75;\n\ttransition: none;\n}\n\n[mol_perf_sierp_dot] {\n\tposition: absolute;\n\tdisplay: block;\n\tbackground: #61dafb;\n\tfont: normal 15px sans-serif;\n\ttext-align: center;\n\tcursor: pointer;\n}\n"
-) }

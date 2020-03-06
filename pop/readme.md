@@ -1,6 +1,6 @@
 # $mol_pop
 
-`Bubble` that can be shown anchored to `Ancрor` element.
+`Bubble` that can be shown anchored to `Anchor` element.
 
 ## [Online demo](http://eigenmethod.github.io/mol/#demo=mol_pop)
 

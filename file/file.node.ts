@@ -26,22 +26,38 @@ namespace $ {
 				depth :  0 ,
 				ignoreInitial : true ,
 			} )
-			
-			watcher.on( 'all' , ( type : string , path : string )=> $mol_fiber_unlimit( ()=> {
+
+			const handler = ( type : string , path : string )=> $mol_fiber_unlimit( ()=> {
 				
 				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
-				file.stat( undefined , $mol_mem_force_cache )
+				file.reset()
 
 				if( type === 'change' ) return
-				file.parent().stat( undefined , $mol_mem_force_cache )
 
-			} ) )
+				file.parent().reset()
+			} )
+
+			watcher.on( 'all' , handler )
 
 			watcher.on( 'error' , ( error : Error )=> {
 				this.stat( error as any , $mol_mem_force_cache )
 			} )
 			
-			return watcher
+			return {
+				destructor() {
+					watcher.removeAllListeners()
+				}
+			}
+		}
+
+		reset() {
+			try {
+				this.stat( undefined , $mol_mem_force_cache )
+				return true
+			} catch (error) {
+				if( error.code !== 'ENOENT' ) return $mol_fail_hidden(error)
+				return false
+			}
 		}
 		
 		@ $mol_mem

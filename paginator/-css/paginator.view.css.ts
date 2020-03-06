@@ -1,3 +1,0 @@
-namespace $ { $mol_style_attach( "mol/paginator/paginator.view.css",
- "[mol_paginator] {\n\tdisplay: flex;\n}\n\n[mol_paginator_backward] ,\n[mol_paginator_forward] {\n\tpadding: .5rem;\n\tmargin: 0 -.5rem;\n\ttransform: scale( 0 , 0 );\n}\n\n[mol_paginator_value] {\n\tpadding: .5rem;\n\tdisplay: flex;\n    align-items: center;\n}\n\n[mol_paginator]:hover [mol_paginator_backward] ,\n[mol_paginator_backward]:focus {\n\ttransform: scale( -1 , 1 );\n}\n\n[mol_paginator]:hover [mol_paginator_forward] ,\n[mol_paginator_forward]:focus {\n\ttransform: scale( 1 , 1 );\n}\n"
-) }
