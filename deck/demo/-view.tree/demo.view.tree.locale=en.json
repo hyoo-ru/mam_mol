@@ -1,0 +1,9 @@
+{
+	"$mol_deck_demo_title": "Simple deck with tabbar",
+	"$mol_deck_demo_greeterLabel": "Greeting",
+	"$mol_deck_demo_greeterMessage": "Hello, world!",
+	"$mol_deck_demo_questerLabel": "Question",
+	"$mol_deck_demo_questerMessage": "How are you?",
+	"$mol_deck_demo_commanderLabel": "Command",
+	"$mol_deck_demo_commanderMessage": "Let us do it right!"
+}

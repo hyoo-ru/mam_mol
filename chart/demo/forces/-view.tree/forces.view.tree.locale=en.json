@@ -1,0 +1,7 @@
+{
+	"$mol_chart_demo_forces_title": "Fake wheel forces",
+	"$mol_chart_demo_forces_forces_left_title": "Left wheel",
+	"$mol_chart_demo_forces_forces_right_title": "Right wheel",
+	"$mol_chart_demo_forces_vert_title": "kN",
+	"$mol_chart_demo_forces_hor_title": "cm"
+}

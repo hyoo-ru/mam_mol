@@ -1,0 +1,3 @@
+namespace $ { $mol_style_attach( "mol/message/message.view.css",
+ "[mol_message] {\n\tmax-width: 58rem;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n}\n\n[mol_message_avatar_link] {\n\tdisplay: flex;\n\tflex-direction: column;\n\tflex: none;\n\tpadding: 0;\n}\n\n[mol_message_avatar] {\n\twidth: 3.5rem;\n\theight: 3.5rem;\n}\n\n[mol_message_text] {\n\tflex: 1000 1 10rem;\n}\n\n[mol_message_info] {\n\tflex: 1 1 100%;\n\tpadding: 0;\n\tbox-shadow: none;\n\tdisplay: flex;\n\talign-items: baseline;\n\tjustify-content: space-between;\n\tfont-size: .75rem;\n\tline-height: 1rem;\n}\n\n[mol_message_info] > * {\n\tmargin: 0;\n}\n\n[mol_message_name] {\n\tfont-weight: bolder;\n}\n"
+) }

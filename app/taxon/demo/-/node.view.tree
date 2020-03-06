@@ -1,0 +1,202 @@
+$mol_app_taxon $mol_page
+	title @ \Big hierarchical table demo
+	Body <= Grid $mol_grid
+		hierarchy <= hierarchy null
+		hierarchy_col <= hierarchy_field \Butxt
+		record!id <= record!id $mol_app_taxon_data_row
+
+$mol_grid $mol_scroll
+	row_height 40
+	row_ids /string[]
+	row_id!index null
+	col_ids /
+	records *
+	record!id null
+	hierarchy null
+	hierarchy_col \
+	-
+	sub /
+		<= Head
+		<= Table $mol_grid_table
+			sub <= rows /$mol_view
+	Head $mol_grid_row
+		cells <= head_cells /$mol_view
+	Row!id $mol_grid_row
+		minimal_height <= row_height
+		cells <= cells!id /$mol_view
+	-
+	Cell!id $mol_view
+	cell!id null
+	Cell_text!id $mol_grid_cell
+		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
+	Cell_number!id $mol_grid_number
+		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
+	Col_head!id $mol_float
+		dom_name \th
+		sub <= col_head_content!id /$mol_view_content
+	Cell_branch!id $mol_check_expand
+		level <= cell_level!id 0
+		label <= cell_content!id /$mol_view_content
+		expanded?val <=> cell_expanded!id?val false
+	Cell_content!id /
+		<= Cell_dimmer!id $mol_dimmer
+			needle <= needle \
+			haystack <= cell_value!id \
+
+$mol_grid_table $mol_list
+	dom_name \table
+
+$mol_grid_row $mol_view
+	dom_name \tr
+	sub <= cells /$mol_view
+
+$mol_grid_cell $mol_view
+	dom_name \td
+	minimal_height 40
+
+$mol_grid_number $mol_grid_cell
+
+$mol_scroll $mol_view
+	minimal_height 0
+	_event_scroll_timer?val null
+	field *
+		^
+		scrollTop <= scroll_top?val 0
+		scrollLeft <= scroll_left?val 0
+	event *
+		^
+		scroll?event <=> event_scroll?event null
+
+$mol_float $mol_view
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked?val false
+		aria-checked <= checked?val false
+		role \checkbox
+	sub /
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_button $mol_view
+	enabled true
+	minimal_height 40
+	click?event null
+	event_click?event null
+	event *
+		^
+		click?event <=> event_activate?event null
+		keypress?event <=> event_key_press?event null 
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint \
+	sub /$mol_view_content
+		<= title
+
+$mol_button_typed $mol_button
+
+$mol_button_major $mol_button_typed
+	attr *
+		^
+		mol_theme \$mol_theme_accent
+
+$mol_button_minor $mol_button_typed
+
+$mol_check_expand $mol_check
+	minimal_height 40
+	Icon $mol_icon_chevron
+	level 0
+	style *
+		^
+		paddingLeft <= level_style \0px
+	checked?val <=> expanded?val false
+	enabled <= expandable false
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	text_width?text 0
+	font_size 16
+	font_family \
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
+$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
+
+$mol_check_box $mol_check
+	Icon $mol_icon_tick
+
+$mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
+
+$mol_dimmer $mol_view
+	haystack \
+	needle \
+	sub <= parts /$mol_view_content
+	Low!id $mol_view
+		sub /
+			<= string!id \
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0
+	sub <= rows /$mol_view
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
+
+$mol_page $mol_view
+	sub /
+		<= Head $mol_view
+			attr * mol_theme \$mol_theme_base
+			sub <= head /
+				<= Title $mol_button
+					sub /
+						<= title
+					event_click?val <=> event_top?val null
+				<= Tools $mol_view
+					sub <= tools /$mol_view_content
+		<= Body $mol_scroll
+			scroll_top?val <=> body_scroll_top?val 0
+			sub <= body /$mol_view_content
+		<= Foot $mol_view
+			attr * mol_theme \$mol_theme_base
+			sub <= foot /$mol_view
+
+$mol_app_taxon_demo $mol_demo_large
+	sub /
+		<= App $mol_app_taxon
+			hierarchy_field \name
+			hierarchy <= hierarchy *
+			record!path <= record!path $mol_app_taxon_data_row
+
+$mol_demo_large $mol_view

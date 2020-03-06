@@ -1,0 +1,9 @@
+{
+	"$mol_app_studio_field_type_hint": "Type...",
+	"$mol_app_studio_field_object_hint": "Class...",
+	"$mol_app_studio_field_bind_hint": "Property..",
+	"$mol_app_studio_field_prop_add_label": "Add property",
+	"$mol_app_studio_field_add_hint": "Add item..",
+	"$mol_app_studio_field_add_pair_hint": "Add key..",
+	"$mol_app_studio_field_add_over_hint": "Add override.."
+}

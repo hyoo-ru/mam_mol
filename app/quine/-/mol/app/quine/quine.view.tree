@@ -1,0 +1,13 @@
+$mol_app_quine $mol_page
+	title @ \Quine - Application that prints self sources
+	body /
+		<= Content $mol_row
+			sub /
+				<= Text $mol_text
+					text <= content \
+	-
+	paths /
+		\mol/app/quine/quine.view.tree
+		\mol/app/quine/quine.view.ts
+		\mol/app/quine/index.html
+		\mol/app/quine/quine.locale=ru.json

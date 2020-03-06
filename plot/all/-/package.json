@@ -1,0 +1,12 @@
+{
+  "name": "mol_plot_all",
+  "version": "0.0.2",
+  "main": "node.js",
+  "module": "node.esm.js",
+  "browser": "web.js",
+  "types": "web.d.ts",
+  "dependencies": {
+    "jsdom": "*",
+    "colorette": "*"
+  }
+}

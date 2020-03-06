@@ -18,7 +18,7 @@ jobs:
         package: mol
         modules: app/demo app/hello app/supplies perf/sierp perf/uibench perf/dbmon app/taxon app/taxon/demo mem app/quine app/questions time/all plot/all fiber/demo app/report syntax2 func/sandbox/demo
         
-    - name: Clean up
+    - name: Consolidate apps
       run: |
         rm -rf mol/.git
         rm -rf mol/.gitignore

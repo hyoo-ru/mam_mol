@@ -1,0 +1,14 @@
+{
+  "name": "mol_app_taxon",
+  "version": "0.0.1",
+  "main": "node.js",
+  "module": "node.esm.js",
+  "browser": "web.js",
+  "types": "web.d.ts",
+  "dependencies": {
+    "jsdom": "*",
+    "node-fetch": "*",
+    "chokidar": "*",
+    "colorette": "*"
+  }
+}

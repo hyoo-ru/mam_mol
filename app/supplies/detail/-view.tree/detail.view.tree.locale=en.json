@@ -1,0 +1,17 @@
+{
+	"$mol_app_supplies_detail_title": "Supply",
+	"$mol_app_supplies_detail_org_title": "Organization",
+	"$mol_app_supplies_detail_provider_title": "Provider",
+	"$mol_app_supplies_detail_customer_label": "Consumer",
+	"$mol_app_supplies_detail_supply_group_title": "Supply Group",
+	"$mol_app_supplies_detail_ballance_unit_title": "Ballance Unit",
+	"$mol_app_supplies_detail_cons_title": "Consumer",
+	"$mol_app_supplies_detail_contract_title": "Contract",
+	"$mol_app_supplies_detail_pay_method_title": "Pay Method",
+	"$mol_app_supplies_detail_manager_title": "Manager",
+	"$mol_app_supplies_detail_debitod_title": "Debitor",
+	"$mol_app_supplies_detail_attach_title": "Attachments",
+	"$mol_app_supplies_detail_positions_title": "Positions",
+	"$mol_app_supplies_detail_cost_title": "Cost",
+	"$mol_app_supplies_detail_approved_title": "Approved"
+}
