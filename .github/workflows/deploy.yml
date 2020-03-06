@@ -18,6 +18,10 @@ jobs:
         package: mol
         modules: app/demo app/hello app/supplies perf/sierp perf/uibench perf/dbmon app/taxon app/taxon/demo mem app/quine app/questions time/all plot/all fiber/demo app/report syntax2 func/sandbox/demo
         
+    - name: Consolidate apps
+      run: |
+        rm -rf mol/.git
+        
     - name: Deploy on GitHub Pages
       if: github.ref == 'refs/heads/master'
       uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
