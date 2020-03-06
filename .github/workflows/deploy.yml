@@ -23,5 +23,5 @@ jobs:
       uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
       with:
         repo-token: ${{ secrets.GH_PAT }}
-        site-directory: mol
+        site-directory: mol/mol
 
