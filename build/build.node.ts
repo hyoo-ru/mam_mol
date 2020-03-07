@@ -263,7 +263,9 @@ namespace $ {
 					... $node.typescript.sys ,
 					setTimeout : ( cb : any )=> cb(),
 					writeFile : ( path : string , content : string )=> {
-						$mol_file.relative( path ).content( content , $mol_mem_force_cache )
+						const file = $mol_file.relative( path )
+						file.content( content , $mol_mem_force_cache )
+						file.exists( true , $mol_mem_force_cache )
 					} ,
 				},
 				
