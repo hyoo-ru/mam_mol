@@ -3,9 +3,7 @@
 Pausable synchronous executions.
 Fibers must be idempotent because can be restarted for continuation.
 
-**Unstable**
-
-## API
+**[Unstable]**
 
 ## $mol_fiber2.async
 
@@ -17,7 +15,7 @@ const result_promise = $mol_fiber2.async( ()=> {
 } )
 ```
 
-### $mol_fiber.wait
+## $mol_fiber.wait
 
 Starts async function and waits it completition. 
 
@@ -29,7 +27,7 @@ const result_promise = $mol_fiber2.async( ()=> {
 } )
 ```
 
-### $mol_fiber.func
+## $mol_fiber.func
 
 Converts unindempotent function to idempotent.
 
