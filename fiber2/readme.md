@@ -1,7 +1,7 @@
 # $mol_fiber2
 
 Pausable synchronous executions.
-Fibers must be idempotent because its can be restarted for continuation.
+Fibers must be idempotent because its may be restarted for continuation.
 
 **[Unstable]**
 
