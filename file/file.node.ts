@@ -1,8 +1,31 @@
 namespace $ {
-	
+
+	function $mol_file_node_stat_convert(stat: ReturnType<typeof $node.fs.statSync>): $mol_file_stat {
+		let type: $mol_file_type | undefined
+		if (stat.isDirectory()) type = 'dir'
+		if (stat.isFile()) type = 'file'
+		if (stat.isSymbolicLink()) type = 'link'
+
+		if (! type) throw new Error(`Unsupported file type ${this.path()}`)
+
+		return {
+			type, 
+			size: stat.size,
+			atime: stat.atime,
+			mtime: stat.mtime,
+			ctime: stat.ctime	
+		}
+	}
+
 	export class $mol_file_node extends $mol_file {
-		
-		static relative( path : string ) : $mol_file {
+		@ $mol_mem_key
+		static absolute( path : string ) {
+			return this.make({
+				path : $mol_const( path )
+			})
+		}
+
+		static relative( path : string ) {
 			return this.absolute( $node.path.resolve( path ).replace( /\\/g , '/' ) )
 		}
 		
@@ -38,73 +61,32 @@ namespace $ {
 			}
 		}
 
-		reset() {
-			try {
-				this.stat( undefined , $mol_mem_force_cache )
-				return true
-			} catch (error) {
-				if( error.code !== 'ENOENT' ) return $mol_fail_hidden(error)
-				return false
-			}
-		}
-		
 		@ $mol_mem
-		stat( next? : ReturnType<typeof $node.fs.statSync> , force? : $mol_mem_force ) {
-			const stat = next ?? $node.fs.statSync( this.path() )
+		stat( next? : $mol_file_stat, force? : $mol_mem_force ) {
+			let stat = next
+
+			try {
+				stat = next ?? $mol_file_node_stat_convert($node.fs.statSync( this.path() ))
+			} catch (error) {
+				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found: ${this.path()}`)
+
+				return $mol_fail_hidden(error)
+			}
+
 			this.parent().watcher()
 			
 			return stat
 		}
+
+		ensure(next?: boolean) {
+			if (next) $node.fs.mkdirSync( this.path() )
+			else $node.fs.unlinkSync( this.path() )
+
+			return true
+		} 
 		
 		@ $mol_mem
-		version() {
-			return this.stat().mtime.getTime().toString( 36 ).toUpperCase()
-		}
-
-		exists( next? : boolean ) {
-			let exists = true
-			try {
-				this.stat()
-			} catch (error) {
-				if( error.code === 'ENOENT' ) exists = false
-				else return $mol_fail_hidden(error)
-			}
-
-			if( next === undefined ) {
-				return exists
-			} else {
-				if( next === exists ) return exists
-				
-				if( next ) {
-					this.parent().exists( true )
-					$node.fs.mkdirSync( this.path() )
-				} else {
-					$node.fs.unlinkSync( this.path() )
-				}
-				
-				this.stat( undefined , $mol_mem_force_cache )
-				
-				return next
-			}
-		}
-		
-		@ $mol_mem
-		type() {
-			const stat = this.stat()
-
-			if( stat.isFile() ) return 'file'
-			if( stat.isDirectory() ) return 'dir'
-			if( stat.isBlockDevice() ) return 'blocks'
-			if( stat.isCharacterDevice() ) return 'chars'
-			if( stat.isSymbolicLink() ) return 'link'
-			if( stat.isFIFO() ) return 'fifo'
-			if( stat.isSocket() ) return 'socket'
-		
-			throw new Error( `Unknown file type ${this.path()}` )
-		}
-		
-		@ $mol_mem
-		content( next? : string | Buffer , force? : $mol_mem_force ) {
+		content( next? : $mol_file_content , force? : $mol_mem_force ): $mol_file_content {
 			if( next === undefined ) {
 				this.stat()
 				return $node.fs.readFileSync( this.path() )
@@ -116,39 +98,6 @@ namespace $ {
 			return next
 		}
 
-		content_cached(content: string | Buffer) {
-			this.content(content, $mol_mem_force_cache)
-			const date = new Date()
-			const time = date.getTime()
-			this.stat( {
-				isFile() { return true },
-				isDirectory() { return false },
-				isBlockDevice() { return false },
-				isCharacterDevice() { return false },
-				isSymbolicLink() { return false },
-				isFIFO() { return false },
-				isSocket() { return false },	
-				dev: 0,
-				ino: 0,
-				mode: 0,
-				nlink: 0,
-				uid: 0,
-				gid: 0,
-				rdev: 0,
-				size: 0,
-				blksize: 0,
-				blocks: 0,
-				atimeMs: time,
-				mtimeMs: time,
-				ctimeMs: time,
-				birthtimeMs: time,
-				atime: date,
-				mtime: date,
-				ctime: date,
-				birthtime: date
-			} , $mol_mem_force_cache )	
-		}
-		
 		reader() {
 			return $node.fs.createReadStream( this.path() )
 		}
@@ -167,15 +116,15 @@ namespace $ {
 				.map( name => this.resolve( name ) )
 		}
 		
-		resolve( path : string ) : $mol_file {
-			return ( this.constructor as typeof $mol_file ).relative( $node.path.join( this.path() , path ) )
+		resolve( path : string ) {
+			return ( this.constructor as typeof $mol_file_node ).relative( $node.path.join( this.path() , path ) )
 		}
 		
-		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )) {
+		relate( base = ( this.constructor as typeof $mol_file_node ).relative( '.' )) {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
 		
-		append( next : string ) {
+		append( next : $mol_file_content ) {
 			$node.fs.appendFileSync( this.path() , next )
 		}		
 	}

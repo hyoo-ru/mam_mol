@@ -1,15 +1,25 @@
 namespace $ {
 
-	export type $mol_file_type = 'file' | 'dir' | 'blocks' | 'chars' | 'link' | 'fifo' | 'socket'
+	export type $mol_file_type = 'file' | 'dir' | 'link'
 
-	export class $mol_file extends $mol_object {
+	export type $mol_file_content = string | Uint8Array
+
+	export interface $mol_file_stat {
+		type: $mol_file_type
+        size: number;
+        atime: Date;
+        mtime: Date;
+        ctime: Date;
+	}
+
+	export class $mol_file_not_found extends Error {}
+
+	export abstract class $mol_file extends $mol_object {		
 		@ $mol_mem_key
-		static absolute( path : string ) {
-			return this.make({
-				path : $mol_const( path )
-			})
+		static absolute( path : string ): $mol_file {
+			throw new Error( 'Not implemented yet' )
 		}
-		
+
 		static relative( path : string ) : $mol_file {
 			throw new Error( 'Not implemented yet' )
 		}
@@ -22,24 +32,48 @@ namespace $ {
 			return this.resolve( '..' )
 		}
 
-		watcher() {
-			return {
-				destructor() {}
+		abstract stat( next? : $mol_file_stat, force? : $mol_mem_force ): $mol_file_stat
+
+		reset(): void {
+			try {
+				this.stat(undefined, $mol_mem_force_cache)
+			} catch (error) {
+				if (error instanceof $mol_file_not_found) return
+				return $mol_fail_hidden(error)
 			}
 		}
-
-		reset() {}
 		
 		version() {
-			throw new Error( 'Not implemented yet' )
+			return this.stat().mtime.getTime().toString( 36 ).toUpperCase()
 		}
 
-		exists(next?: boolean): boolean {
-			throw new Error( 'Not implemented yet' )
+		abstract ensure(next?: boolean): boolean
+
+		abstract watcher(): {
+			destructor(): void
 		}
 		
-		type(): $mol_file_type {
-			throw new Error( 'Not implemented yet' )
+		exists( next? : boolean ) {
+			let exists = true
+			try {
+				this.stat()
+			} catch (error) {
+				if (error instanceof $mol_file_not_found) exists = false
+				else return $mol_fail_hidden(error)
+			}
+
+			if( next === undefined ) return exists
+			if( next === exists ) return exists
+
+			if( next ) this.parent().exists( true )
+			this.ensure(next)
+			this.reset()
+			
+			return next
+		}
+		
+		type() {
+			return this.stat().type
 		}
 		
 		name() {
@@ -51,39 +85,29 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 
-		@ $mol_mem
-		content( next? : string | Buffer , force? : $mol_mem_force ) {
-			return next ? next : ''
-		}
+		abstract content( next? : $mol_file_content , force? : $mol_mem_force ): $mol_file_content
 
-		content_cached(content: string | Buffer) {
-			this.content(content, $mol_mem_force_cache)
-			this.exists(true)
-		}
-
-		sub() {
-			return [] as $mol_file[]
-		}
-		
-		resolve( path : string ) {
-			let res = this.path() + '/' + path
-			
-			while( true ) {
-				let prev = res
-				res = res.replace( /\/[^\/.]+\/\.\.\// , '/' )
-				if( prev === res ) break
+		content_cached(content: $mol_file_content) {
+			const ctime = new Date()
+			const stat: $mol_file_stat = {
+				type: 'file',
+				size: content.length,
+				ctime,
+				atime: ctime,
+				mtime: ctime
 			}
-			
-			return ( this.constructor as typeof $mol_file ).absolute( res )
+
+			this.content(content, $mol_mem_force_cache)
+			this.stat(stat , $mol_mem_force_cache)
 		}
 		
-		relate( base?: $mol_file ): string {
-			throw new Error( 'Not implemented yet' )
-		}
+		abstract sub(): $mol_file[]
+
+		abstract resolve(path: string): $mol_file
+
+		abstract relate( base?: $mol_file ): string
 		
-		append( next : string ) {
-			throw new Error( 'Not implemented yet' )
-		}
+		abstract append( next : $mol_file_content ): void
 		
 		find(
 			include? : RegExp ,
