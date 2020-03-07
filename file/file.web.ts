@@ -1,60 +1,20 @@
 namespace $ {
 	
-	export class $mol_file extends $mol_object {
-		
-		@ $mol_mem_key
-		static absolute( path : string ) : $mol_file {
-			return $mol_file.make({
-				path : $mol_const( path )
-			})
-		}
-		
+	export class $mol_file_web extends $mol_file {
+
 		static relative( path : string ) : $mol_file {
 			return this.absolute( new URL( path , this.base ).toString() )
 		}
 
 		static base = $mol_dom_context.document
-		? new URL( '.' , $mol_dom_context.document.currentScript!['src'] ).toString()
-		: ''
-		
-		path() {
-			return '.'
-		}
-		
-		parent() {
-			return this.resolve( '..' )
-		}
-		
-		name() {
-			return this.path().replace( /^.*\//, '' )
-		}
-		
-		ext() {
-			var match = /((?:\.\w+)+)$/.exec( this.path() )
-			return match && match[ 1 ].substring( 1 )
-		}
+			? new URL( '.' , $mol_dom_context.document.currentScript!['src'] ).toString()
+			: ''
 		
 		@ $mol_mem
 		content( next? : string , force? : $mol_mem_force ) {
 			return $mol_fetch.text( this.path() )
 		}
-		
-		resolve( path : string ) : $mol_file {
-			let res = this.path() + '/' + path
-			
-			while( true ) {
-				let prev = res
-				res = res.replace( /\/[^\/.]+\/\.\.\// , '/' )
-				if( prev === res ) break
-			}
-			
-			return ( this.constructor as typeof $mol_file ).absolute( res )
-		}
-		
-		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' ) ) {
-			throw new Error( 'Not implemented yet' )
-		}
-		
 	}
-	
+
+	$.$mol_file = $mol_file_web
 }

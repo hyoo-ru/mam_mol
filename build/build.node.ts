@@ -263,15 +263,13 @@ namespace $ {
 					... $node.typescript.sys ,
 					setTimeout : ( cb : any )=> cb(),
 					writeFile : ( path : string , content : string )=> {
-						const file = $mol_file.relative( path )
-						file.content( content , $mol_mem_force_cache )
-						file.exists( true , $mol_mem_force_cache )
+						$mol_file.relative( path ).content_cached( content )
 					} ,
 				},
 				
 				$node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
 
-				( diagnostic : any )=> {
+				( diagnostic )=> {
 
 					if( diagnostic.file ) {
 
@@ -286,9 +284,7 @@ namespace $ {
 						file.content( error as any , $mol_mem_force_fail )
 						
 					} else {
-						
-						console.error( $node.colorette.red( diagnostic.messageText ) )
-
+						console.error( $node.colorette.red( String(diagnostic.messageText) ) )
 					}
 					
 				} ,
@@ -437,7 +433,7 @@ namespace $ {
 								$mol_exec( mod.path() , 'git' , 'init' )
 								$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , 'master' , 'origin' , repo.value )
 								$mol_exec( mod.path() , 'git' , 'pull' )
-								mod.stat( undefined , $mol_mem_force_cache )
+								mod.reset()
 								return true
 							}
 						}
@@ -450,7 +446,7 @@ namespace $ {
 
 			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
 				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.path() )
-				mod.stat( undefined , $mol_mem_force_cache )
+				mod.reset()
 				return true
 			}
 			
@@ -702,7 +698,7 @@ namespace $ {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
 						const srcMap = src.parent().resolve( src.name() + '.map' );
-						if( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : undefined)
+						if( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? String(srcMap.content()) : null)
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
@@ -1094,36 +1090,36 @@ namespace $ {
 		@ $mol_mem_key
 		bundleDepsJSON( { path , exclude , bundle } : { path : string , exclude? : string[] , bundle : string } ) : $mol_file[] {
 			const start = Date.now()
-			var pack = $mol_file.absolute( path )
+			const pack = $mol_file.absolute( path )
 			
-			var list = this.sourcesAll( { path , exclude } )
+			const list = this.sourcesAll( { path , exclude } )
 			if( !list.length ) return []
 
-			var origs = list.filter( src => !/\/-/.test( src.path() ) )
+			const origs = list.filter( src => !/\/-/.test( src.path() ) )
 			
-			var sloc = {} as Record< string , number >
+			const sloc = {} as Record< string , number >
 			for( const src of origs ) {
 				const ext = src.name().replace( /^.*\./ , '' )
 				const count = src.content().toString().trim().split( /[\n\r]\s*/ ).length
 				sloc[ ext ] = ( sloc[ ext ] || 0 ) + count
 			}
 			
-			var graph = this.graph( { path , exclude } )
+			const graph = this.graph( { path , exclude } )
 			
-			var deps : any = {}
+			const deps = {} as Record<string, Record<string, number>>
 			for( let dep in graph.nodes ) {
 				deps[ dep ] = this.dependencies( { path : this.root().resolve( dep ).path() , exclude } )
 			}
 			
-			var data = {
+			const data = {
 				files : list.map( src => src.relate( this.root() ) ) ,
 				edgesIn : graph.edgesIn ,
 				edgesOut : graph.edgesOut ,
 				sloc ,
 				deps
-			}
+			} as const
 			
-			var target = pack.resolve( `-/${bundle}.deps.json` )
+			const target = pack.resolve( `-/${bundle}.deps.json` )
 			target.content( JSON.stringify( data ) )
 			
 			this.logBundle( target , Date.now() - start )

@@ -1,25 +1,13 @@
 namespace $ {
 	
-	export class $mol_file extends $mol_object {
-		
-		@ $mol_mem_key
-		static absolute( path : string ) {
-			return $mol_file.make({
-				path : $mol_const( path )
-			})
-		}
+	export class $mol_file_node extends $mol_file {
 		
 		static relative( path : string ) : $mol_file {
-			return $mol_file.absolute( $node.path.resolve( path ).replace( /\\/g , '/' ) )
-		}
-		
-		path() {
-			return '.'
+			return this.absolute( $node.path.resolve( path ).replace( /\\/g , '/' ) )
 		}
 		
 		@ $mol_mem
 		watcher() {
-
 			const watcher = $node.chokidar.watch( this.path() , {
 				persistent : true ,
 				ignored : /(^\.|___$)/ ,
@@ -62,9 +50,7 @@ namespace $ {
 		
 		@ $mol_mem
 		stat( next? : ReturnType<typeof $node.fs.statSync> , force? : $mol_mem_force ) {
-			const path = this.path()
-			let stat: typeof next
-			stat = next ?? $node.fs.statSync( path )
+			const stat = next ?? $node.fs.statSync( this.path() )
 			this.parent().watcher()
 			
 			return stat
@@ -75,8 +61,7 @@ namespace $ {
 			return this.stat().mtime.getTime().toString( 36 ).toUpperCase()
 		}
 
-		@ $mol_mem
-		exists( next? : boolean, force?: $mol_mem_force_cache ) {
+		exists( next? : boolean ) {
 			let exists = true
 			try {
 				this.stat()
@@ -84,7 +69,7 @@ namespace $ {
 				if( error.code === 'ENOENT' ) exists = false
 				else return $mol_fail_hidden(error)
 			}
-			
+
 			if( next === undefined ) {
 				return exists
 			} else {
@@ -103,14 +88,10 @@ namespace $ {
 			}
 		}
 		
-		parent() {
-			return this.resolve( '..' )
-		}
-		
 		@ $mol_mem
 		type() {
 			const stat = this.stat()
-			
+
 			if( stat.isFile() ) return 'file'
 			if( stat.isDirectory() ) return 'dir'
 			if( stat.isBlockDevice() ) return 'blocks'
@@ -122,26 +103,50 @@ namespace $ {
 			throw new Error( `Unknown file type ${this.path()}` )
 		}
 		
-		name() {
-			return $node.path.basename( this.path() )
-		}
-		
-		ext() {
-			const match = /((?:\.\w+)+)$/.exec( this.path() )
-			return match ? match[ 1 ].substring( 1 ) : ''
-		}
-		
 		@ $mol_mem
 		content( next? : string | Buffer , force? : $mol_mem_force ) {
 			if( next === undefined ) {
 				this.stat()
-				return $node.fs.readFileSync( this.path() )//.toString()
+				return $node.fs.readFileSync( this.path() )
 			}
 			
 			this.parent().exists( true )
 			$node.fs.writeFileSync( this.path() , next )
 			
-			return next//.toString()
+			return next
+		}
+
+		content_cached(content: string | Buffer) {
+			this.content(content, $mol_mem_force_cache)
+			const date = new Date()
+			const time = date.getTime()
+			this.stat( {
+				isFile() { return true },
+				isDirectory() { return false },
+				isBlockDevice() { return false },
+				isCharacterDevice() { return false },
+				isSymbolicLink() { return false },
+				isFIFO() { return false },
+				isSocket() { return false },	
+				dev: 0,
+				ino: 0,
+				mode: 0,
+				nlink: 0,
+				uid: 0,
+				gid: 0,
+				rdev: 0,
+				size: 0,
+				blksize: 0,
+				blocks: 0,
+				atimeMs: time,
+				mtimeMs: time,
+				ctimeMs: time,
+				birthtimeMs: time,
+				atime: date,
+				mtime: date,
+				ctime: date,
+				birthtime: date
+			} , $mol_mem_force_cache )	
 		}
 		
 		reader() {
@@ -166,31 +171,14 @@ namespace $ {
 			return ( this.constructor as typeof $mol_file ).relative( $node.path.join( this.path() , path ) )
 		}
 		
-		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' ) ) {
+		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )) {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
 		
 		append( next : string ) {
 			$node.fs.appendFileSync( this.path() , next )
-		}
-		
-		find(
-			include? : RegExp ,
-			exclude? : RegExp
-		) {
-			
-			let found : $mol_file[] = []
-			this.sub().forEach(
-				child => {
-					if( exclude && child.path().match( exclude ) ) return
-					if( !include || child.path().match( include ) ) found.push( child )
-					if( child.type() === 'dir' ) found = found.concat( child.find( include , exclude ) )
-				}
-			)
-			
-			return found
-		}
-		
+		}		
 	}
-	
+
+	$.$mol_file = $mol_file_node
 }
