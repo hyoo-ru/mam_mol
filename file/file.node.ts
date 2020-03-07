@@ -74,8 +74,9 @@ namespace $ {
 		version() {
 			return this.stat().mtime.getTime().toString( 36 ).toUpperCase()
 		}
-		
-		exists( next? : boolean ) {
+
+		@ $mol_mem
+		exists( next? : boolean, force?: $mol_mem_force_cache ) {
 			let exists = true
 			try {
 				this.stat()

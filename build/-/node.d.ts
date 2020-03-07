@@ -357,7 +357,7 @@ declare namespace $ {
         reset(): boolean;
         stat(next?: ReturnType<typeof $node.fs.statSync>, force?: $mol_mem_force): import("fs").Stats | import("fs").BigIntStats;
         version(): string;
-        exists(next?: boolean): boolean;
+        exists(next?: boolean, force?: $mol_mem_force_cache): boolean;
         parent(): $mol_file;
         type(): "dir" | "link" | "file" | "blocks" | "chars" | "fifo" | "socket";
         name(): string;

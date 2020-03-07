@@ -1558,7 +1558,7 @@ var $;
         version() {
             return this.stat().mtime.getTime().toString(36).toUpperCase();
         }
-        exists(next) {
+        exists(next, force) {
             let exists = true;
             try {
                 this.stat();
@@ -1669,6 +1669,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_file.prototype, "version", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_file.prototype, "exists", null);
     __decorate([
         $.$mol_mem
     ], $mol_file.prototype, "type", null);
@@ -3489,7 +3492,9 @@ var $;
             if (!paths.length)
                 return null;
             var host = $node.typescript.createWatchCompilerHost(paths, this.tsOptions(), Object.assign(Object.assign({}, $node.typescript.sys), { setTimeout: (cb) => cb(), writeFile: (path, content) => {
-                    $.$mol_file.relative(path).content(content, $.$mol_mem_force_cache);
+                    const file = $.$mol_file.relative(path);
+                    file.content(content, $.$mol_mem_force_cache);
+                    file.exists(true, $.$mol_mem_force_cache);
                 } }), $node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram, (diagnostic) => {
                 if (diagnostic.file) {
                     const file = $.$mol_file.absolute(diagnostic.file.fileName.replace(/\.tsx?$/, '.js'));
