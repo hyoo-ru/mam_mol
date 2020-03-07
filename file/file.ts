@@ -95,7 +95,7 @@ namespace $ {
 			for (const child of sub) {
 				const child_path = child.path()
 
-				if( exclude && child_path.match( exclude ) ) return
+				if( exclude && child_path.match( exclude ) ) continue
 
 				if( !include || child_path.match( include ) ) found.push( child )
 
