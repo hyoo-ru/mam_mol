@@ -3,7 +3,7 @@
 Pausable synchronous executions.
 Fibers must be idempotent because can be restarted for continuation.
 
-**Unstable**
+**[Unstable]**
 
 ## $mol_fiber2.async
 
