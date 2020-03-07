@@ -1,6 +1,19 @@
 require( "source-map-support" ).install(); var exports = void 0;
 ;
 process.on( 'unhandledRejection' , up => { throw up } );
+
+var $node = $node || {}
+void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; 
+;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+Error.stackTraceLimit = Infinity;
+module.exports;
+//mol.js.map
+;
+
+$node[ "../mol/mol.js" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {} )
+;
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -21,19 +34,6 @@ $.$$ = $
 
 $.$mol = $  // deprecated
 
-;
-
-var $node = $node || {}
-void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; 
-;
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-Error.stackTraceLimit = Infinity;
-module.exports;
-//mol.js.map
-;
-
-$node[ "../mol/mol.js" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {} )
 ;
 "use strict";
 var $;
@@ -324,38 +324,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let context = null;
-    function $mol_log_context(next = context) {
-        return context = next;
-    }
-    $.$mol_log_context = $mol_log_context;
-})($ || ($ = {}));
-//log_context.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    let debug;
-    function $mol_log_debug(next = debug) {
-        return debug = next;
-    }
-    $.$mol_log_debug = $mol_log_debug;
-})($ || ($ = {}));
-//log_debug.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    let filter;
-    $.$mol_log_filter = function $mol_log_filter(next = filter) {
-        return filter = next;
-    };
-})($ || ($ = {}));
-//log_filter.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_log_group(name, task) {
         const filter = $.$mol_log_filter();
         if (filter == null)
@@ -386,6 +354,38 @@ var $;
     $.$mol_log_group = $mol_log_group;
 })($ || ($ = {}));
 //log_group.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    let context = null;
+    function $mol_log_context(next = context) {
+        return context = next;
+    }
+    $.$mol_log_context = $mol_log_context;
+})($ || ($ = {}));
+//log_context.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    let debug;
+    function $mol_log_debug(next = debug) {
+        return debug = next;
+    }
+    $.$mol_log_debug = $mol_log_debug;
+})($ || ($ = {}));
+//log_debug.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    let filter;
+    $.$mol_log_filter = function $mol_log_filter(next = filter) {
+        return filter = next;
+    };
+})($ || ($ = {}));
+//log_filter.node.js.map
 ;
 "use strict";
 var $;
@@ -2012,9 +2012,6 @@ var $;
 //exec.node.js.map
 ;
 "use strict";
-//theme.js.map
-;
-"use strict";
 var $;
 (function ($) {
     class $mol_window extends $.$mol_object {
@@ -2048,15 +2045,15 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_dom_context = new $node.jsdom.JSDOM('', { url: 'https://localhost/' }).window;
 })($ || ($ = {}));
-//context.node.js.map
+//context.js.map
 ;
 "use strict";
 var $;
 (function ($) {
+    $.$mol_dom_context = new $node.jsdom.JSDOM('', { url: 'https://localhost/' }).window;
 })($ || ($ = {}));
-//context.js.map
+//context.node.js.map
 ;
 "use strict";
 var $;
@@ -2315,6 +2312,9 @@ var $;
 ;
 "use strict";
 //extract.js.map
+;
+"use strict";
+//theme.js.map
 ;
 "use strict";
 var $;

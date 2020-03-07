@@ -95,6 +95,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
+}
+
+declare namespace $ {
     function $mol_log_context(next?: () => void): () => void;
 }
 
@@ -104,10 +108,6 @@ declare namespace $ {
 
 declare namespace $ {
     var $mol_log_filter: (next?: string) => string;
-}
-
-declare namespace $ {
-    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
 }
 
 declare namespace $ {
@@ -411,20 +411,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    const enum $mol_theme {
-        back = "var(--mol_theme_back)",
-        hover = "var(--mol_theme_hover)",
-        current = "var(--mol_theme_current)",
-        text = "var(--mol_theme_text)",
-        control = "var(--mol_theme_control)",
-        shade = "var(--mol_theme_shade)",
-        line = "var(--mol_theme_line)",
-        focus = "var(--mol_theme_focus)",
-        field = "var(--mol_theme_field)"
-    }
-}
-
-declare namespace $ {
     class $mol_window extends $mol_object {
         static size(next?: {
             width: number;
@@ -441,10 +427,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    var $mol_dom_context: typeof globalThis;
 }
 
 declare namespace $ {
-    var $mol_dom_context: typeof globalThis;
 }
 
 declare namespace $ {
@@ -510,6 +496,20 @@ declare namespace $ {
     type $mol_type_keys_extract<Input, Lower, Upper> = {
         [Field in keyof Input]: Lower extends Input[Field] ? never : Input[Field] extends Upper ? Field : never;
     }[keyof Input];
+}
+
+declare namespace $ {
+    const enum $mol_theme {
+        back = "var(--mol_theme_back)",
+        hover = "var(--mol_theme_hover)",
+        current = "var(--mol_theme_current)",
+        text = "var(--mol_theme_text)",
+        control = "var(--mol_theme_control)",
+        shade = "var(--mol_theme_shade)",
+        line = "var(--mol_theme_line)",
+        focus = "var(--mol_theme_focus)",
+        field = "var(--mol_theme_field)"
+    }
 }
 
 declare namespace $ {
@@ -604,7 +604,7 @@ declare namespace $ {
     function $mol_view_tree_prop_key(prop: $mol_tree): string;
     function $mol_view_tree_prop_next(prop: $mol_tree): string;
     function $mol_view_tree_prop_value(prop: $mol_tree): $mol_tree;
-    function $mol_view_tree_value_type(val: $mol_tree): "string" | "object" | "number" | "null" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list";
+    function $mol_view_tree_value_type(val: $mol_tree): "object" | "string" | "number" | "null" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list";
     function $mol_view_tree_compile(tree: $mol_tree): {
         script: string;
         locales: {
