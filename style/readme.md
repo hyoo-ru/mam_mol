@@ -245,10 +245,10 @@ $mol_style_define( $my_view , {
 
 ```typescript
 const { calc , fit_content } = $mol_style_func
-const { px , per } = $mol_style_unit
+const { per } = $mol_style_unit
 
 $mol_style_define( $my_view , {
-	width : calc( `${ per(100) } - ${ px(1) }` ),
+	width : calc( `100% - 1px` ),
 	height : fit_content( per(50) ),
 } )
 ```
