@@ -78,14 +78,14 @@ namespace $ {
 			return []
 		}
 		
-		relate( base = ( this.constructor as typeof $mol_file_web ).relative( '.' )): string {
+		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )): string {
 			console.warn('$mol_file_web.relate() not implemented')
 
 			return base.path()
 		}
 		
 		append( next : string ) {
-			console.warn('$mol_file_web.append() not implemented')
+			throw new Error('$mol_file_web.append() not implemented')
 		}
 	}
 

@@ -3,9 +3,10 @@ namespace $ {
 
 		static encode(str: string | Uint8Array): string {
 			if (! str) return ''
-			if (str instanceof Buffer) return str.toString('base64')
+			if (Buffer.isBuffer(str)) return str.toString('base64')
+			if ( typeof str === 'object' ) throw new Error('Not supported Uint8Array to base64')
 
-			return new Buffer(this.ensure_string(str)).toString('base64')
+			return new Buffer(str).toString('base64')
 		}
 
 		static decode(str: string): Uint8Array {
