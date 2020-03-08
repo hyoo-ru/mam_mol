@@ -431,10 +431,6 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_cost](cost)** - prints currency values
 - **[$mol_message](message)** - user message
 
-## Widgets
-
-- **[$mol_chat](chat)** - GitHub based comments everywere
-
 ## Charts
 
 - **[$mol_chart](chart)** - Plot pane with legend
@@ -444,7 +440,7 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_plot_bar](plot/bar)** - Bar graph
 - **[$mol_plot_line](plot/line)** - Linear graph
 - **[$mol_plot_dot](plot/dot)** - Dots graph
-- **[$mol_plot_fill](plot/fil)** - Filling graph
+- **[$mol_plot_fill](plot/fill)** - Filling graph
 - **[$mol_plot_group](plot/group)** - Group of graph as single graph
 - **[$mol_plot_ruler_vert](plot/ruler/vert)** - Verical ruler
 - **[$mol_plot_ruler_hor](plot/ruler/hor)** - Horizontal ruler
@@ -478,7 +474,6 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_exec](exec)** - synchronous execute of system command
 - **[$mol_file](file)** - reactive file system wrapper
 - **[$mol_window](window)** - reactive view port configuration
-- **[$mol_hyperhive](hypehive)** - [HypeHive API](http://hhive.eap.eigenmethod.com/)
 
 ## Time
 

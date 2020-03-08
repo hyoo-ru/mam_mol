@@ -6,4 +6,5 @@ $mol_switch $mol_view
 		enabled <= option_enabled!id <= enabled true
 	value?val null
 	options *
+	keys /string
 	sub <= items /$mol_check
