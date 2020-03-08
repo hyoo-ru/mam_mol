@@ -42,7 +42,7 @@ namespace $ {
 		[ key in $mol_view_all ]: $mol_style_definition< Obj >
 	}
 
-	export type $mol_style_definition< Obj extends $mol_view > = Partial <
+	export type $mol_style_definition< Obj extends $mol_view > = $mol_type_partial_deep<
 		$mol_style_properties
 		& Pseudos<Obj>
 		& Attrs<Obj>

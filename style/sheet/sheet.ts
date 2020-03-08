@@ -19,7 +19,14 @@ namespace $ {
 
 					const name = key.replace( /[A-Z]/g , letter => '-' + letter.toLowerCase() )
 					const val = config[key]
-					props.push(`\t${ name }: ${ val };\n`)
+					
+					if( val.constructor === Object ) {
+						for( let suffix in val ) {
+							props.push(`\t${ name }-${ suffix }: ${ val[ suffix ] };\n`)
+						}
+					} else {
+						props.push(`\t${ name }: ${ val };\n`)
+					}
 
 				} else if( /^[A-Z]/.test(key) ) {
 
