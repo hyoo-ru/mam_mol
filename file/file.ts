@@ -67,6 +67,7 @@ namespace $ {
 
 			if( next ) this.parent().exists( true )
 			this.ensure(next)
+			this.stat( undefined , $mol_mem_force_cache )
 			this.reset()
 			
 			return next
@@ -101,8 +102,8 @@ namespace $ {
 			this.stat(stat, $mol_mem_force_cache)
 		}
 
-		content(next?: string, $force?: $mol_mem_force): string {
-			return this.buffer(next === undefined ? undefined : $mol_buffer.from(next), $force).toString()
+		content(next?: string, force?: $mol_mem_force): string {
+			return this.buffer(next === undefined ? undefined : $mol_buffer.from(next), force).toString()
 		}
 
 		abstract sub(): $mol_file[]
