@@ -38,6 +38,22 @@ namespace $ {
 			
 		},
 
+		'various functions'() {
+		
+			class $mol_style_sheet_test extends $mol_view {}
+
+			const { calc , fit_content } = $mol_style_func
+			const { px , per } = $mol_style_unit
+
+			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
+				width : calc( `${ per(100) } - ${ px(1) }` ),
+				height : fit_content( per(50) ),
+			} )
+
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\twidth: calc(100% - 1px);\n\theight: fit-content(50%);\n}\n' )
+			
+		},
+
 		'property groups'() {
 		
 			class $mol_style_sheet_test extends $mol_view {}

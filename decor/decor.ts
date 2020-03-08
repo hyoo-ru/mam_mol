@@ -11,7 +11,7 @@ namespace $ {
 		postfix() { return '' }
 
 		toString(){
-			return this.prefix() + this.valueOf() + this.postfix()
+			return `${ this.prefix() }${ this.valueOf() }${ this.postfix() }`
 		}
 
 	}
