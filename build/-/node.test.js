@@ -3876,6 +3876,9 @@ var $;
             this.logBundle(target, Date.now() - start);
             if (errors.length)
                 $.$mol_fail_hidden(new $.$mol_error_mix(`Build fail ${path}`, ...errors));
+            if (bundle === 'node') {
+                console.log($.$mol_exec(this.root().path(), 'node', target.path()).stdout.toString());
+            }
             return [target, targetMap];
         }
         bundleTestHtml({ path }) {
@@ -6442,6 +6445,19 @@ var $;
     });
 })($ || ($ = {}));
 //path.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_build_start = () => { };
+    $.$mol_test({
+        'Completed'() {
+            console.log('All tests passes.');
+            process.exit(0);
+        }
+    });
+})($ || ($ = {}));
+//build.node.test.js.map
 ;
 "use strict";
 //equals.js.map
