@@ -1,7 +1,18 @@
 namespace $ {
+
+	function $mol_base64_uint_to_binary(bytes: Uint8Array): string {
+		let binary = ''
+
+		for (const byte of bytes) {
+			binary += String.fromCharCode( byte )
+		}
+
+		return binary
+	}
+
 	export class $mol_base64_web extends $mol_base64 {
 		static encode(str: string | Uint8Array): string {
-			return $mol_dom_context.btoa(this.ensure_string(str))
+			return $mol_dom_context.btoa(typeof str === 'string' ? str : $mol_base64_uint_to_binary(str))
 		}
 	
 		static decode(base64: string): Uint8Array {
