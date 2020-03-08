@@ -100,6 +100,8 @@
 	"$mol_map_yandex_demo_title": "Simple Yandex Maps wrapper",
 	"$mol_message_demo_title": "Generic user message",
 	"$mol_meter_demo_title": "Real time offset and size metering",
+	"$mol_nav_demo_hint": "Select option and use keys to switch",
+	"$mol_nav_demo_title": "Number input control with various configuration",
 	"$mol_number_demo_title": "Number input control with various configuration",
 	"$mol_page_demo_title": "Page with header, body and footer",
 	"$mol_paginator_backward_hint": "Назад",

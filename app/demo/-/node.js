@@ -12969,6 +12969,9 @@ var $;
         options() {
             return ({});
         }
+        keys() {
+            return [];
+        }
         sub() {
             return this.items();
         }
@@ -13001,8 +13004,11 @@ var $;
             options() {
                 return {};
             }
+            keys() {
+                return Object.keys(this.options());
+            }
             items() {
-                return Object.keys(this.options()).map(key => this.Option(key));
+                return this.keys().map(key => this.Option(key));
             }
             option_title(key) {
                 return this.options()[key];
@@ -13013,6 +13019,9 @@ var $;
                 this.value(next ? key : null);
             }
         }
+        __decorate([
+            $.$mol_mem
+        ], $mol_switch.prototype, "keys", null);
         __decorate([
             $.$mol_mem
         ], $mol_switch.prototype, "items", null);
@@ -15564,6 +15573,108 @@ var $;
     $.$mol_meter_demo = $mol_meter_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_nav_demo extends $.$mol_demo_small {
+        title() {
+            return this.$.$mol_locale.text("$mol_nav_demo_title");
+        }
+        plugins() {
+            return [this.Nav()];
+        }
+        Nav() {
+            return ((obj) => {
+                obj.keys_x = () => this.tab_list();
+                obj.current_x = (val) => this.tab_current(val);
+                obj.keys_y = () => this.row_list();
+                obj.current_y = (val) => this.row_current(val);
+                return obj;
+            })(new this.$.$mol_nav());
+        }
+        sub() {
+            return [this.Hint(), this.Tab_list(), this.Row_list()];
+        }
+        Hint() {
+            return ((obj) => {
+                obj.sub = () => [this.hint()];
+                return obj;
+            })(new this.$.$mol_view());
+        }
+        hint() {
+            return this.$.$mol_locale.text("$mol_nav_demo_hint");
+        }
+        tab_list() {
+            return this.Tab_list().keys();
+        }
+        Tab_list() {
+            return ((obj) => {
+                obj.value = (val) => this.tab_current(val);
+                obj.options = () => ({
+                    "first": "First",
+                    "second": "Second",
+                    "third": "Third",
+                });
+                return obj;
+            })(new this.$.$mol_switch());
+        }
+        tab_current(val, force) {
+            return (val !== void 0) ? val : "";
+        }
+        row_list() {
+            return this.Row_list().keys();
+        }
+        Row_list() {
+            return ((obj) => {
+                obj.value = (val) => this.row_current(val);
+                obj.options = () => ({
+                    "first": "First",
+                    "second": "Second",
+                    "third": "Third",
+                });
+                return obj;
+            })(new this.$.$mol_switch());
+        }
+        row_current(val, force) {
+            return (val !== void 0) ? val : "";
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_nav_demo.prototype, "Nav", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_nav_demo.prototype, "Hint", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_nav_demo.prototype, "Tab_list", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_nav_demo.prototype, "tab_current", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_nav_demo.prototype, "Row_list", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_nav_demo.prototype, "row_current", null);
+    $.$mol_nav_demo = $mol_nav_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_define($.$mol_nav_demo, {
+        display: 'flex',
+        flexDirection: 'column',
+        Row_list: {
+            display: 'flex',
+            flexDirection: 'column',
+        },
+    });
+})($ || ($ = {}));
+//demo.view.tree.css.js.map
 ;
 "use strict";
 var $;

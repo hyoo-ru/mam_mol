@@ -10,8 +10,13 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		keys() {
+			return Object.keys( this.options() )
+		}
+
+		@ $mol_mem
 		items() {
-			return Object.keys( this.options() ).map( key => this.Option( key ) )
+			return this.keys().map( key => this.Option( key ) )
 		}
 		
 		option_title( key : string ) {

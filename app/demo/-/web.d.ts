@@ -3554,6 +3554,7 @@ declare namespace $ {
         enabled(): boolean;
         value(val?: any, force?: $mol_mem_force): any;
         options(): {};
+        keys(): readonly string[];
         sub(): readonly $mol_check[];
         items(): readonly $mol_check[];
     }
@@ -3565,6 +3566,7 @@ declare namespace $.$$ {
         options(): {
             [key: string]: string;
         };
+        keys(): string[];
         items(): $mol_check[];
         option_title(key: string): string;
         option_checked(key: string, next?: boolean): boolean;
@@ -4183,6 +4185,26 @@ declare namespace $ {
         Top(): $mol_view;
         Height(): $mol_view;
     }
+}
+
+declare namespace $ {
+    class $mol_nav_demo extends $mol_demo_small {
+        title(): string;
+        plugins(): readonly any[];
+        Nav(): $$.$mol_nav;
+        sub(): readonly any[];
+        Hint(): $mol_view;
+        hint(): string;
+        tab_list(): string[];
+        Tab_list(): $$.$mol_switch;
+        tab_current(val?: any, force?: $mol_mem_force): any;
+        row_list(): string[];
+        Row_list(): $$.$mol_switch;
+        row_current(val?: any, force?: $mol_mem_force): any;
+    }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {

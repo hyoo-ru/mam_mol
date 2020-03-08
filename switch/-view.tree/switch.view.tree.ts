@@ -95,6 +95,15 @@ namespace $ { export class $mol_switch extends $mol_view {
 
 	/**
 	 *  ```
+	 *  keys /string
+	 *  ```
+	 **/
+	keys() {
+		return [  ] as readonly ( string )[]
+	}
+
+	/**
+	 *  ```
 	 *  sub <= items
 	 *  ```
 	 **/

@@ -1,0 +1,25 @@
+$mol_nav_demo $mol_demo_small
+	title @ \Number input control with various configuration
+	plugins /
+		<= Nav $mol_nav
+			keys_x <= tab_list
+			current_x?val <=> tab_current?val
+			keys_y <= row_list
+			current_y?val <=> row_current?val
+	sub /
+		<= Hint $mol_view sub / <= hint @ \Select option and use keys to switch
+		<= Tab_list $mol_switch
+			keys => tab_list
+			value?val <=> tab_current?val \
+			options *
+				first \First
+				second \Second
+				third \Third
+		<= Row_list $mol_switch
+			keys => row_list
+			value?val <=> row_current?val \
+			options *
+				first \First
+				second \Second
+				third \Third
+
