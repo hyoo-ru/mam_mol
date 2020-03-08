@@ -474,7 +474,6 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_exec](exec)** - synchronous execute of system command
 - **[$mol_file](file)** - reactive file system wrapper
 - **[$mol_window](window)** - reactive view port configuration
-- **[$mol_hyperhive](hypehive)** - [HypeHive API](http://hhive.eap.eigenmethod.com/)
 
 ## Time
 
