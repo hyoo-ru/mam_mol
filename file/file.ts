@@ -2,7 +2,7 @@ namespace $ {
 
 	export type $mol_file_type = 'file' | 'dir' | 'link'
 
-	export type $mol_file_content = string | Uint8Array
+	export type $mol_file_content = string | $mol_buffer
 
 	export interface $mol_file_stat {
 		type: $mol_file_type
@@ -85,9 +85,9 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 
-		abstract content( next? : $mol_file_content , force? : $mol_mem_force ): $mol_file_content
+		abstract buffer( next? : $mol_buffer , force? : $mol_mem_force ): $mol_buffer
 
-		content_cached(content: $mol_file_content) {
+		content_cached(content: string) {
 			const ctime = new Date()
 			const stat: $mol_file_stat = {
 				type: 'file',
@@ -98,9 +98,13 @@ namespace $ {
 			}
 
 			this.content(content, $mol_mem_force_cache)
-			this.stat(stat , $mol_mem_force_cache)
+			this.stat(stat, $mol_mem_force_cache)
 		}
-		
+
+		content(next?: string, $force?: $mol_mem_force): string {
+			return this.buffer(next === undefined ? undefined : $mol_buffer.from(next), $force).toString()
+		}
+
 		abstract sub(): $mol_file[]
 
 		abstract resolve(path: string): $mol_file

@@ -86,14 +86,14 @@ namespace $ {
 		} 
 		
 		@ $mol_mem
-		content( next? : $mol_file_content , force? : $mol_mem_force ): $mol_file_content {
+		buffer( next? : $mol_buffer , force? : $mol_mem_force ) {
 			if( next === undefined ) {
 				this.stat()
-				return $node.fs.readFileSync( this.path() )
+				return $mol_buffer.from($node.fs.readFileSync( this.path() ))
 			}
 			
 			this.parent().exists( true )
-			$node.fs.writeFileSync( this.path() , next )
+			$node.fs.writeFileSync( this.path() , next.original )
 			
 			return next
 		}
@@ -125,7 +125,7 @@ namespace $ {
 		}
 		
 		append( next : $mol_file_content ) {
-			$node.fs.appendFileSync( this.path() , next )
+			$node.fs.appendFileSync( this.path() , next instanceof $mol_buffer ? next.original : next )
 		}		
 	}
 

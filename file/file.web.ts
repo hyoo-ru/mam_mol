@@ -18,11 +18,13 @@ namespace $ {
 			: ''
 		
 		@ $mol_mem
-		content( next? : $mol_file_content , force? : $mol_mem_force ) {
+		buffer( next? : $mol_buffer , force? : $mol_mem_force ): $mol_buffer {
+			if (next !== undefined) throw new Error(`Saving content not supported: ${this.path}`)
+
 			const response = $mol_fetch.response(this.path())
 			if (response.native.status === 404) throw new $mol_file_not_found(`File not found: ${this.path()}`)
 
-			return response.text()
+			return $mol_buffer.from(response.buffer())
 		}
 
 		watcher() {
@@ -84,7 +86,7 @@ namespace $ {
 			return base.path()
 		}
 		
-		append( next : string ) {
+		append( next : $mol_file_content ) {
 			throw new Error('$mol_file_web.append() not implemented')
 		}
 	}

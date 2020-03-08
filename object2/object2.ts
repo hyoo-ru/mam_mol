@@ -1,5 +1,7 @@
 namespace $ {
 
+	type Writeable<T> = { -readonly [P in keyof T]: T[P] };
+
 	export class $mol_object2 {
 		
 		static $ = $ as $mol_ambient_context
@@ -21,7 +23,7 @@ namespace $ {
 
 		public static create< Instance >(
 			this : new( init? : ( instance : any )=> void )=> Instance ,
-			init? : ( instance : Instance )=> void
+			init? : ( instance : Writeable<Instance> )=> void
 		) : Instance {
 			return new this( init )
 		}
@@ -39,5 +41,4 @@ namespace $ {
 		}
 
 	}
-
 }
