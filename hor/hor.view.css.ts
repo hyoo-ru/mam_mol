@@ -5,7 +5,11 @@ namespace $ {
 		alignItems: 'flex-start',
 		alignContent: 'flex-start',
 		justifyContent: 'flex-start',
-		flex: '1 0 auto'
+		flex: {
+			grow: 1,
+			shrink: 0,
+			basis: 'auto',
+		},
 	} )
 
 }

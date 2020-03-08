@@ -10,6 +10,8 @@ namespace $ {
 	| 'auto' | 'max-content' | 'min-content' | $mol_style_func<'fit-content'>
 	| Length | Common
 
+	type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
+
 	interface Overrides {
 
 		/** Distribution of space between and around content items along a flexbox's cross-axis or a grid's block axis. */
@@ -32,11 +34,14 @@ namespace $ {
 		| Common
 
 		/** What to do when an element's content is too big to fit in its block formatting context. It is a shorthand for `overflowX` and `overflowY`. */
-		overflow : {
+		overflow : Overflow | {
+
 			/** What shows when content overflows a block-level element's left and right edges. */
-			x :  'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
+			x :  Overflow
+			
 			/** What shows when content overflows a block-level element's top and bottom edges. */
-			y :  'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
+			y :  Overflow
+			
 		}
 
 		webkitOverflowScrolling : 'auto' | 'touch'

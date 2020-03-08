@@ -19,17 +19,29 @@ namespace $.$$ {
 		Id: {
 			textAlign: 'right',
 			padding: '.5rem .5rem',
-			flex: '0 0 3rem',
+			flex: {
+				grow: 0,
+				shrink: 0,
+				basis: $mol_style_unit.rem(3),
+			},
 		},
 		
 		Title: {
 			fontWeight: 'bolder',
-			flex: '1 1 20rem',
+			flex: {
+				grow: 1,
+				shrink: 1,
+				basis: $mol_style_unit.rem(20),
+			},
 			padding: '.5rem .5rem',
 		},
 		
 		Link: {
-			flex: '1000 1 10rem',
+			flex: {
+				grow: 1000,
+				shrink: 1,
+				basis: $mol_style_unit.rem(10),
+			},
 			padding: '.5rem 1rem',
 		},
 
@@ -41,7 +53,11 @@ namespace $.$$ {
 
 		Priority: {
 			
-			flex: 'none',
+			flex: {
+				grow: 0,
+				shrink: 0,
+				basis: 'auto',
+			},
 			padding: '.5rem',
 			
 			Option: {
