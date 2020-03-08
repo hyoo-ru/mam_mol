@@ -1,4 +1,5 @@
 namespace $ {
+	
 	export function $mol_build_start( paths : string[] ) {
 		var build = $mol_build.relative( '.' )
 		if( paths.length > 0 ) {
@@ -780,6 +781,10 @@ namespace $ {
 			this.logBundle( target , Date.now() - start )
 			
 			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
+
+			if( bundle === 'node' ) {
+				console.log( $mol_exec( this.root().path() , 'node' , target.path() ).stdout.toString() )
+			}
 			
 			return [ target , targetMap ]
 		}
