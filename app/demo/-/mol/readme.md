@@ -431,10 +431,6 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_cost](cost)** - prints currency values
 - **[$mol_message](message)** - user message
 
-## Widgets
-
-- **[$mol_chat](chat)** - GitHub based comments everywere
-
 ## Charts
 
 - **[$mol_chart](chart)** - Plot pane with legend
