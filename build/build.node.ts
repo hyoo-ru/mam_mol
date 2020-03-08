@@ -1,4 +1,10 @@
 namespace $ {
+	const decoder = new TextDecoder('utf8')
+
+	function ensure_string(src: string | Uint8Array): string {
+		return typeof src === 'string' ? src : decoder.decode(src)
+	}	
+
 	export function $mol_build_start( paths : string[] ) {
 		var build = $mol_build.relative( '.' )
 		if( paths.length > 0 ) {
@@ -59,7 +65,7 @@ namespace $ {
 					if (! child.exists()) return false
 					
 					if( /(meta\.tree)$/.test( name ) ) {
-						const tree = $mol_tree.fromString( $mol_base64.ensure_string(child.content()) , child.path() )
+						const tree = $mol_tree.fromString( ensure_string(child.content()) , child.path() )
 
 						let content = ''
 						for( const step of tree.select( 'build' , '' ).sub ) {
@@ -80,7 +86,7 @@ namespace $ {
 						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
 						
-						const tree = $mol_tree.fromString( $mol_base64.ensure_string(child.content()) , child.path() )
+						const tree = $mol_tree.fromString( ensure_string(child.content()) , child.path() )
 						const res = $mol_view_tree_compile( tree )
 						script.content( res.script )
 						locale.content( JSON.stringify( res.locales , null , '\t' ) )
@@ -92,7 +98,7 @@ namespace $ {
 						const script = child.parent().resolve( `-css/${ child.name() }.ts` )
 						
 						const id = child.relate( this.root() )
-						const styles = $mol_base64.ensure_string(child.content())
+						const styles = ensure_string(child.content())
 						const code = 'namespace $ { $'+`mol_style_attach( ${ JSON.stringify( id ) },\n ${ JSON.stringify( styles ) }\n) }`
 						script.content( code )
 						
@@ -215,7 +221,7 @@ namespace $ {
 		
 		@ $mol_mem
 		tsOptions() {
-			const rawOptions = JSON.parse( $mol_base64.ensure_string(this.root().resolve( 'tsconfig.json' ).content()) ).compilerOptions
+			const rawOptions = JSON.parse( ensure_string(this.root().resolve( 'tsconfig.json' ).content()) ).compilerOptions
 			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
 			if( res.errors.length ) throw res.errors
 			return res.options
@@ -223,7 +229,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		tsSource( { path , target } : { path : string , target : number } ) {
-			const content = $mol_base64.ensure_string($mol_file.absolute( path ).content())
+			const content = ensure_string($mol_file.absolute( path ).content())
 			return $node.typescript.createSourceFile( path , content , target )
 		}
 
@@ -469,7 +475,7 @@ namespace $ {
 			const pack = $mol_file.absolute( path )
 			for( const file of pack.sub() ) {
 				if( !/\.meta\.tree$/.test( file.name() ) ) continue
-				decls.push( ... $mol_tree.fromString( $mol_base64.ensure_string(file.content()) , file.path() ).sub )
+				decls.push( ... $mol_tree.fromString( ensure_string(file.content()) , file.path() ).sub )
 			}
 			
 			return new $mol_tree({ sub : decls })
@@ -691,14 +697,14 @@ namespace $ {
 						}
 					}
 					try {
-						const content = $mol_base64.ensure_string(src.content()).replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
+						const content = ensure_string(src.content()).replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test( content )
 					
 						if( isCommonJs ) {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
 						const srcMap = src.parent().resolve( src.name() + '.map' );
-						if( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? $mol_base64.ensure_string(srcMap.content()) : null)
+						if( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? ensure_string(srcMap.content()) : null)
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
@@ -761,9 +767,9 @@ namespace $ {
 					}
 					let content = ''					
 					try {
-						content = $mol_base64.ensure_string(src.content()).replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
+						content = ensure_string(src.content()).replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const srcMap = src.parent().resolve( src.name() + '.map' )
-						if ( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? $mol_base64.ensure_string(srcMap.content()) : undefined)
+						if ( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? ensure_string(srcMap.content()) : undefined)
 					} catch( error ) {
 						errors.push( error )
 					}
@@ -790,7 +796,7 @@ namespace $ {
 			const target = pack.resolve( `-/test.html` )
 
 			let content = source.exists()
-				? $mol_base64.ensure_string(source.content())
+				? ensure_string(source.content())
 				: `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`
 			
 			content = content.replace(
@@ -821,7 +827,7 @@ namespace $ {
 			sources.forEach(
 				function( src ) {
 					if( ! src.exists() || ! src.content() ) return
-					concater.add( $mol_base64.ensure_string(src.content()), src.relate( target.parent() ) )
+					concater.add( ensure_string(src.content()), src.relate( target.parent() ) )
 				}
 			)
 			
@@ -844,7 +850,7 @@ namespace $ {
 			
 			if( sources.length === 0 ) return []
 			
-			target.content( sources.map( src => $mol_base64.ensure_string(src.content()) ).join( '\n' ) )
+			target.content( sources.map( src => ensure_string(src.content()) ).join( '\n' ) )
 			
 			this.logBundle( target , Date.now() - start )
 			
@@ -894,7 +900,7 @@ namespace $ {
 			}
 
 			if( source.exists() ) {
-				Object.assign( json , JSON.parse( $mol_base64.ensure_string(source.content()) ) )
+				Object.assign( json , JSON.parse( ensure_string(source.content()) ) )
 			}
 
 			let version = json.version.split('.')
@@ -942,7 +948,7 @@ namespace $ {
 			}
 
 			sources.forEach( source => {
-				const tree = $mol_tree.fromString( $mol_base64.ensure_string(source.content()) , source.path() )
+				const tree = $mol_tree.fromString( ensure_string(source.content()) , source.path() )
 				
 				tree.select( 'deploy' ).sub.forEach( deploy => {
 					const start = Date.now()
@@ -1049,7 +1055,7 @@ namespace $ {
 					
 					if( !locales[ lang ] ) locales[ lang ] = {}
 					
-					const loc = JSON.parse( $mol_base64.ensure_string(src.content()) )
+					const loc = JSON.parse( ensure_string(src.content()) )
 					for( let key in loc ) {
 						locales[ lang ][ key ] = loc[ key ]
 					}
@@ -1100,7 +1106,7 @@ namespace $ {
 			const sloc = {} as Record< string , number >
 			for( const src of origs ) {
 				const ext = src.name().replace( /^.*\./ , '' )
-				const count = $mol_base64.ensure_string(src.content()).trim().split( /[\n\r]\s*/ ).length
+				const count = ensure_string(src.content()).trim().split( /[\n\r]\s*/ ).length
 				sloc[ ext ] = ( sloc[ ext ] || 0 ) + count
 			}
 			
@@ -1142,7 +1148,7 @@ namespace $ {
 	$mol_build.dependors[ 'js' ] = source => {
 		var depends : { [ index : string ] : number } = {}
 		
-		var lines = $mol_base64.ensure_string( source.content() )
+		var lines = ensure_string( source.content() )
 		.replace( /\/\*[^]*?\*\//g , '' ) // drop block comments
 		.replace( /\/\/.*$/gm , '' ) // drop inline comments
 		.split( '\n' )
@@ -1169,7 +1175,7 @@ namespace $ {
 	$mol_build.dependors[ 'ts' ] = $mol_build.dependors[ 'tsx' ] = $mol_build.dependors[ 'jam.js' ] = source => {
 		var depends : { [ index : string ] : number } = {}
 		
-		var lines = $mol_base64.ensure_string( source.content() )
+		var lines = ensure_string( source.content() )
 		.replace( /\/\*(?!\*)[\s\S]*?\*\//g , '' ) // drop block comments except doc-comments
 		.replace( /\/\/.*$/gm , '' ) // drop inline comments
 		.split( '\n' )
@@ -1215,7 +1221,7 @@ namespace $ {
 			'/mol/style/attach': 0,
 		}
 		
-		var lines = $mol_base64.ensure_string( source.content() )
+		var lines = ensure_string( source.content() )
 		.replace( /\/\*[^]*?\*\//g , '' ) // drop block comments
 		.replace( /\/\/.*$/gm , '' ) // drop inline comments
 		.split( '\n' )
@@ -1240,7 +1246,7 @@ namespace $ {
 	$mol_build.dependors[ 'meta.tree' ] = source => {
 		const depends : { [ index : string ] : number } = {}
 		
-		const tree = $mol_tree.fromString( $mol_base64.ensure_string(source.content()) , source.path() )
+		const tree = $mol_tree.fromString( ensure_string(source.content()) , source.path() )
 		
 		tree.select( 'require' ).sub.forEach( leaf => {
 			depends[ leaf.value ] = 0
