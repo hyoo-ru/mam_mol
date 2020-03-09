@@ -18,7 +18,7 @@ namespace $ {
 			: ''
 		
 		@ $mol_mem
-		buffer( next? : $mol_buffer , force? : $mol_mem_force ): $mol_buffer {
+		buffer( next? : $mol_buffer , force? : $mol_mem_force ) {
 			if (next !== undefined) throw new Error(`Saving content not supported: ${this.path}`)
 
 			const response = $mol_fetch.response(this.path())

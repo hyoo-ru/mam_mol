@@ -60,7 +60,7 @@ namespace $ {
 					if (! child.exists()) return false
 					
 					if( /(meta\.tree)$/.test( name ) ) {
-						const tree = $mol_tree.fromString( child.content().toString() , child.path() )
+						const tree = $mol_tree.fromString( child.content() , child.path() )
 
 						let content = ''
 						for( const step of tree.select( 'build' , '' ).sub ) {
@@ -81,7 +81,7 @@ namespace $ {
 						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
 						
-						const tree = $mol_tree.fromString( child.content().toString() , child.path() )
+						const tree = $mol_tree.fromString( child.content() , child.path() )
 						const res = $mol_view_tree_compile( tree )
 						script.content( res.script )
 						locale.content( JSON.stringify( res.locales , null , '\t' ) )
@@ -93,7 +93,7 @@ namespace $ {
 						const script = child.parent().resolve( `-css/${ child.name() }.ts` )
 						
 						const id = child.relate( this.root() )
-						const styles = child.content().toString()
+						const styles = child.content()
 						const code = 'namespace $ { $'+`mol_style_attach( ${ JSON.stringify( id ) },\n ${ JSON.stringify( styles ) }\n) }`
 						script.content( code )
 						
@@ -224,7 +224,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		tsSource( { path , target } : { path : string , target : number } ) {
-			const content = $mol_file.absolute( path ).content().toString()
+			const content = $mol_file.absolute( path ).content()
 			return $node.typescript.createSourceFile( path , content , target )
 		}
 
@@ -470,7 +470,7 @@ namespace $ {
 			const pack = $mol_file.absolute( path )
 			for( const file of pack.sub() ) {
 				if( !/\.meta\.tree$/.test( file.name() ) ) continue
-				decls.push( ... $mol_tree.fromString( file.content().toString() , file.path() ).sub )
+				decls.push( ... $mol_tree.fromString( file.content() , file.path() ).sub )
 			}
 			
 			return new $mol_tree({ sub : decls })
@@ -795,7 +795,7 @@ namespace $ {
 			const target = pack.resolve( `-/test.html` )
 
 			let content = source.exists()
-				? source.content().toString()
+				? source.content()
 				: `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`
 			
 			content = content.replace(
@@ -826,7 +826,7 @@ namespace $ {
 			sources.forEach(
 				function( src ) {
 					if( ! src.exists() || ! src.content() ) return
-					concater.add( src.content().toString(), src.relate( target.parent() ) )
+					concater.add( src.content(), src.relate( target.parent() ) )
 				}
 			)
 			
@@ -849,7 +849,7 @@ namespace $ {
 			
 			if( sources.length === 0 ) return []
 			
-			target.content( sources.map( src => src.content().toString() ).join( '\n' ) )
+			target.content( sources.map( src => src.content() ).join( '\n' ) )
 			
 			this.logBundle( target , Date.now() - start )
 			
@@ -899,7 +899,7 @@ namespace $ {
 			}
 
 			if( source.exists() ) {
-				Object.assign( json , JSON.parse( source.content().toString() ) )
+				Object.assign( json , JSON.parse( source.content() ) )
 			}
 
 			let version = json.version.split('.')
@@ -947,7 +947,7 @@ namespace $ {
 			}
 
 			sources.forEach( source => {
-				const tree = $mol_tree.fromString( source.content().toString() , source.path() )
+				const tree = $mol_tree.fromString( source.content() , source.path() )
 				
 				tree.select( 'deploy' ).sub.forEach( deploy => {
 					const start = Date.now()
@@ -1054,7 +1054,7 @@ namespace $ {
 					
 					if( !locales[ lang ] ) locales[ lang ] = {}
 					
-					const loc = JSON.parse( src.content().toString() )
+					const loc = JSON.parse( src.content() )
 					for( let key in loc ) {
 						locales[ lang ][ key ] = loc[ key ]
 					}
@@ -1105,7 +1105,7 @@ namespace $ {
 			const sloc = {} as Record< string , number >
 			for( const src of origs ) {
 				const ext = src.name().replace( /^.*\./ , '' )
-				const count = src.content().toString().trim().split( /[\n\r]\s*/ ).length
+				const count = src.content().trim().split( /[\n\r]\s*/ ).length
 				sloc[ ext ] = ( sloc[ ext ] || 0 ) + count
 			}
 			
@@ -1245,7 +1245,7 @@ namespace $ {
 	$mol_build.dependors[ 'meta.tree' ] = source => {
 		const depends : { [ index : string ] : number } = {}
 		
-		const tree = $mol_tree.fromString( source.content().toString() , source.path() )
+		const tree = $mol_tree.fromString( source.content() , source.path() )
 		
 		tree.select( 'require' ).sub.forEach( leaf => {
 			depends[ leaf.value ] = 0

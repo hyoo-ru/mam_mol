@@ -2,7 +2,7 @@ namespace $ {
 
 	export type $mol_file_type = 'file' | 'dir' | 'link'
 
-	export type $mol_file_content = string | $mol_buffer
+	export type $mol_file_content = string | $mol_buffer | Uint8Array
 
 	export interface $mol_file_stat {
 		type: $mol_file_type
@@ -67,7 +67,6 @@ namespace $ {
 
 			if( next ) this.parent().exists( true )
 			this.ensure(next)
-			this.stat( undefined , $mol_mem_force_cache )
 			this.reset()
 			
 			return next
@@ -86,7 +85,11 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 
-		abstract buffer( next? : $mol_buffer , force? : $mol_mem_force ): $mol_buffer
+		abstract buffer( next? : $mol_file_content , force? : $mol_mem_force ): $mol_file_content
+
+		content(next?: string, force?: $mol_mem_force) {
+			return this.buffer(next === undefined ? undefined : next, force).toString()
+		}
 
 		content_cached(content: string) {
 			const ctime = new Date()
@@ -99,13 +102,9 @@ namespace $ {
 			}
 
 			this.content(content, $mol_mem_force_cache)
-			this.stat(stat, $mol_mem_force_cache)
+			this.stat(stat , $mol_mem_force_cache)
 		}
-
-		content(next?: string, force?: $mol_mem_force): string {
-			return this.buffer(next === undefined ? undefined : $mol_buffer.from(next), force).toString()
-		}
-
+		
 		abstract sub(): $mol_file[]
 
 		abstract resolve(path: string): $mol_file
