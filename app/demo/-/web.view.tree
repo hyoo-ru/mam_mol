@@ -1845,10 +1845,14 @@ $mol_list_demo_tree $mol_demo_large
 				<= Content $mol_list
 					rows <= root_rows /
 	Row!id $mol_expander
-		title <= row_title!id \
+		label / <= Row_title!id $mol_paragraph sub / <= row_title!id \
 		expanded?val <=> row_expanded!id?val false
 		Content <= Row_content!id $mol_list
 			rows <= row_content!id /
+
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 8
 
 $mol_map_yandex $mol_view
 	zoom?val 2

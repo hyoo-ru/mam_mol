@@ -4011,6 +4011,21 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_paragraph extends $mol_view {
+        line_height(): number;
+        letter_width(): number;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_paragraph extends $.$mol_paragraph {
+        content_width(): number;
+        minimal_width(): number;
+        minimal_height(): number;
+    }
+}
+
+declare namespace $ {
     class $mol_list_demo_tree extends $mol_demo_large {
         title(): string;
         sub(): readonly any[];
@@ -4018,6 +4033,7 @@ declare namespace $ {
         Content(): $$.$mol_list;
         root_rows(): readonly any[];
         Row(id: any): $$.$mol_expander;
+        Row_title(id: any): $$.$mol_paragraph;
         row_title(id: any): string;
         row_expanded(id: any, val?: any, force?: $mol_mem_force): any;
         Row_content(id: any): $$.$mol_list;

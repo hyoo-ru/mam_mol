@@ -56,7 +56,7 @@ namespace $ { export class $mol_list_demo_tree extends $mol_demo_large {
 	/**
 	 *  ```
 	 *  Row!id $mol_expander
-	 *  	title <= row_title!id
+	 *  	label / <= Row_title!id
 	 *  	expanded?val <=> row_expanded!id?val
 	 *  	Content <= Row_content!id
 	 *  ```
@@ -64,11 +64,24 @@ namespace $ { export class $mol_list_demo_tree extends $mol_demo_large {
 	@ $mol_mem_key
 	Row( id : any ) {
 		return (( obj )=>{
-			obj.title = () => this.row_title(id)
+			obj.label = () => [ this.Row_title(id) ] as readonly any[]
 			obj.expanded = ( val? : any ) => this.row_expanded(id , val )
 			obj.Content = () => this.Row_content(id)
 			return obj
 		})( new this.$.$mol_expander(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  Row_title!id $mol_paragraph sub / <= row_title!id
+	 *  ```
+	 **/
+	@ $mol_mem_key
+	Row_title( id : any ) {
+		return (( obj )=>{
+			obj.sub = () => [ this.row_title(id) ] as readonly any[]
+			return obj
+		})( new this.$.$mol_paragraph(  ) )
 	}
 
 	/**

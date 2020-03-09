@@ -15196,6 +15196,63 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_paragraph extends $.$mol_view {
+        line_height() {
+            return 24;
+        }
+        letter_width() {
+            return 8;
+        }
+    }
+    $.$mol_paragraph = $mol_paragraph;
+})($ || ($ = {}));
+//paragraph.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_paragraph extends $.$mol_paragraph {
+            content_width() {
+                let width = 0;
+                const letter = this.letter_width();
+                for (const kid of this.sub()) {
+                    if (!kid)
+                        continue;
+                    if (kid instanceof $.$mol_view) {
+                        width += kid.minimal_width();
+                    }
+                    else if (typeof kid !== 'object') {
+                        width += String(kid).length * letter;
+                    }
+                }
+                return width;
+            }
+            minimal_width() {
+                return Math.min(this.$.$mol_window.size().width, this.content_width());
+            }
+            minimal_height() {
+                return Math.ceil(this.content_width() / this.minimal_width()) * this.line_height();
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_paragraph.prototype, "content_width", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_paragraph.prototype, "minimal_width", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_paragraph.prototype, "minimal_height", null);
+        $$.$mol_paragraph = $mol_paragraph;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//paragraph.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_list_demo_tree extends $.$mol_demo_large {
         title() {
             return this.$.$mol_locale.text("$mol_list_demo_tree_title");
@@ -15220,11 +15277,17 @@ var $;
         }
         Row(id) {
             return ((obj) => {
-                obj.title = () => this.row_title(id);
+                obj.label = () => [this.Row_title(id)];
                 obj.expanded = (val) => this.row_expanded(id, val);
                 obj.Content = () => this.Row_content(id);
                 return obj;
             })(new this.$.$mol_expander());
+        }
+        Row_title(id) {
+            return ((obj) => {
+                obj.sub = () => [this.row_title(id)];
+                return obj;
+            })(new this.$.$mol_paragraph());
         }
         row_title(id) {
             return "";
@@ -15251,6 +15314,9 @@ var $;
     __decorate([
         $.$mol_mem_key
     ], $mol_list_demo_tree.prototype, "Row", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_list_demo_tree.prototype, "Row_title", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_list_demo_tree.prototype, "row_expanded", null);
