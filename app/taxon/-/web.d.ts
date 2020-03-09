@@ -641,9 +641,92 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_style_properties = CSSStyleDeclaration & {
-        webkitOverflowScrolling: 'auto' | 'touch';
+    type $mol_type_partial_deep<Val> = {
+        [field in keyof Val]?: $mol_type_partial_deep<Val[field]>;
     };
+}
+
+declare namespace $ {
+    type $mol_type_override<Base, Over> = Omit<Base, keyof Over> & Over;
+}
+
+declare namespace $ {
+    class $mol_decor<Value> {
+        readonly value: Value;
+        constructor(value: Value);
+        prefix(): string;
+        valueOf(): Value;
+        postfix(): string;
+        toString(): string;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_unit_length = '%' | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt' | 'cap' | 'ch' | 'em' | 'rem' | 'ex' | 'ic' | 'lh' | 'rlh' | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax';
+    class $mol_style_unit<Literal extends $mol_style_unit_length> extends $mol_decor<number> {
+        readonly literal: Literal;
+        constructor(value: number, literal: Literal);
+        postfix(): Literal;
+        static per(value: number): $mol_style_unit<"%">;
+        static px(value: number): $mol_style_unit<"px">;
+        static mm(value: number): $mol_style_unit<"mm">;
+        static cm(value: number): $mol_style_unit<"cm">;
+        static Q(value: number): $mol_style_unit<"Q">;
+        static in(value: number): $mol_style_unit<"in">;
+        static pc(value: number): $mol_style_unit<"pc">;
+        static pt(value: number): $mol_style_unit<"pt">;
+        static cap(value: number): $mol_style_unit<"cap">;
+        static ch(value: number): $mol_style_unit<"ch">;
+        static em(value: number): $mol_style_unit<"em">;
+        static rem(value: number): $mol_style_unit<"rem">;
+        static ex(value: number): $mol_style_unit<"ex">;
+        static ic(value: number): $mol_style_unit<"ic">;
+        static lh(value: number): $mol_style_unit<"lh">;
+        static rlh(value: number): $mol_style_unit<"rlh">;
+        static vh(value: number): $mol_style_unit<"vh">;
+        static vw(value: number): $mol_style_unit<"vw">;
+        static vi(value: number): $mol_style_unit<"vi">;
+        static vb(value: number): $mol_style_unit<"vb">;
+        static vmin(value: number): $mol_style_unit<"vmin">;
+        static vmax(value: number): $mol_style_unit<"vmax">;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_func_name = 'calc' | 'fit-content';
+    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
+        readonly name: Name;
+        constructor(value: Value, name: Name);
+        prefix(): string;
+        postfix(): string;
+        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
+        static fit_content(value: number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>): $mol_style_func<"fit-content", number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<"calc", unknown>>;
+    }
+}
+
+declare namespace $ {
+    export type $mol_style_properties = $mol_type_override<CSSStyleDeclaration, Overrides>;
+    type Common = 'inherit' | 'initial' | 'unset';
+    type Length = number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>;
+    type Size = 'auto' | 'max-content' | 'min-content' | $mol_style_func<'fit-content'> | Length | Common;
+    type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
+    interface Overrides {
+        alignContent: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | ['first' | 'last', 'baseline'] | ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
+        display: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
+        overflow: Overflow | {
+            x: Overflow;
+            y: Overflow;
+        };
+        webkitOverflowScrolling: 'auto' | 'touch';
+        width: Size;
+        height: Size;
+        flex: {
+            grow: number | Common;
+            shrink: number | Common;
+            basis: Size;
+        };
+    }
+    export {};
 }
 
 declare namespace $ {
@@ -669,7 +752,7 @@ declare namespace $ {
     type Views<Obj extends $mol_view> = {
         [key in $mol_view_all]: $mol_style_definition<Obj>;
     };
-    export type $mol_style_definition<Obj extends $mol_view> = Partial<$mol_style_properties & Pseudos<Obj> & Attrs<Obj> & Medias<Obj> & Kids<Obj> & Elements<Obj> & Views<Obj>>;
+    export type $mol_style_definition<Obj extends $mol_view> = $mol_type_partial_deep<$mol_style_properties & Pseudos<Obj> & Attrs<Obj> & Medias<Obj> & Kids<Obj> & Elements<Obj> & Views<Obj>>;
     export {};
 }
 
