@@ -2,7 +2,7 @@
 
 Buttons which switching the sate;
 
-## [Online demo](http://eigenmethod.github.io/mol//#demo=mol_switch_demo)
+## [Online demo](http://mol.js.org/#demo=mol_switch_demo)
 
 ## Usage example
 

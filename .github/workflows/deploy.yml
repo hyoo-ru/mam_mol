@@ -21,6 +21,7 @@ jobs:
     - name: Consolidate apps
       run: |
         rm -rf mol/.git
+        rm -rf mol/.github
         rm -rf mol/.gitignore
         
     - name: Deploy on GitHub Pages
