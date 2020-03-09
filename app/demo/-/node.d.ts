@@ -5367,6 +5367,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_code_not_equal extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_code_not_equal_variant extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_app_demo extends $mol_book {
         editor_title(): string;
         detail_title(): string;
@@ -5422,12 +5434,16 @@ declare namespace $ {
 declare namespace $ {
     class $mol_app_demo_detail extends $mol_page {
         tools(): readonly any[];
-        Source_link(): $$.$mol_link_iconed;
+        Source_link(): $$.$mol_link;
         source_link(): string;
+        source_hint(): string;
+        Source_icon(): $mol_icon_code_not_equal_variant;
         Edit(): $$.$mol_link;
+        edit_hint(): string;
         Edit_speck(): $mol_speck;
         Edit_icon(): $mol_icon_settings;
         Close(): $$.$mol_link;
+        close_hint(): string;
         Close_icon(): $mol_icon_cross;
         close_arg(): {
             demo: any;

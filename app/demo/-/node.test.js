@@ -20133,6 +20133,30 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_code_not_equal extends $.$mol_icon {
+        path() {
+            return "M6,15H8V17H6M11,13H18V15H11M11,9H18V11H11M6,7H8V13H6M5,3C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3H5Z";
+        }
+    }
+    $.$mol_icon_code_not_equal = $mol_icon_code_not_equal;
+})($ || ($ = {}));
+//equal.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_code_not_equal_variant extends $.$mol_icon {
+        path() {
+            return "M11,6.5V9.33L8.33,12L11,14.67V17.5L5.5,12M13,6.43L18.57,12L13,17.57V14.74L15.74,12L13,9.26M5,3C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3H5Z";
+        }
+    }
+    $.$mol_icon_code_not_equal_variant = $mol_icon_code_not_equal_variant;
+})($ || ($ = {}));
+//variant.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_app_demo extends $.$mol_book {
         editor_title() {
             return this.detail_title();
@@ -20383,17 +20407,27 @@ var $;
         }
         Source_link() {
             return ((obj) => {
-                obj.title = () => "";
                 obj.uri = () => this.source_link();
                 obj.target = () => "_blank";
+                obj.hint = () => this.source_hint();
+                obj.sub = () => [this.Source_icon()];
                 return obj;
-            })(new this.$.$mol_link_iconed());
+            })(new this.$.$mol_link());
         }
         source_link() {
             return "";
         }
+        source_hint() {
+            return this.$.$mol_locale.text("$mol_app_demo_detail_source_hint");
+        }
+        Source_icon() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_icon_code_not_equal_variant());
+        }
         Edit() {
             return ((obj) => {
+                obj.hint = () => this.edit_hint();
                 obj.sub = () => [this.Edit_speck(), this.Edit_icon()];
                 obj.arg = () => ({
                     "edit": "",
@@ -20401,6 +20435,9 @@ var $;
                 });
                 return obj;
             })(new this.$.$mol_link());
+        }
+        edit_hint() {
+            return this.$.$mol_locale.text("$mol_app_demo_detail_edit_hint");
         }
         Edit_speck() {
             return ((obj) => {
@@ -20415,10 +20452,14 @@ var $;
         }
         Close() {
             return ((obj) => {
+                obj.hint = () => this.close_hint();
                 obj.sub = () => [this.Close_icon()];
                 obj.arg = () => this.close_arg();
                 return obj;
             })(new this.$.$mol_link());
+        }
+        close_hint() {
+            return this.$.$mol_locale.text("$mol_app_demo_detail_close_hint");
         }
         Close_icon() {
             return ((obj) => {
@@ -20434,6 +20475,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_detail.prototype, "Source_link", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_detail.prototype, "Source_icon", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_detail.prototype, "Edit", null);

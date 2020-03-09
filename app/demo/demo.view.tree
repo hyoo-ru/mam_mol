@@ -64,11 +64,14 @@ $mol_app_demo_menu $mol_page
 		
 $mol_app_demo_detail $mol_page
 	tools /
-		<= Source_link $mol_link_iconed
-			title \
+		<= Source_link $mol_link
 			uri <= source_link \
 			target \_blank
+			hint <= source_hint @ \Source code of this demo
+			sub /
+				<= Source_icon $mol_icon_code_not_equal_variant
 		<= Edit $mol_link
+			hint <= edit_hint @ \Edit this demo online
 			sub /
 				<= Edit_speck $mol_speck
 					value \β
@@ -77,6 +80,7 @@ $mol_app_demo_detail $mol_page
 				edit \
 				path \
 		<= Close $mol_link 
+			hint <= close_hint @ \Close panel
 			sub /
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *

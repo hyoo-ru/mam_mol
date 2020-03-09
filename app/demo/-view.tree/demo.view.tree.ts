@@ -498,20 +498,22 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 
 	/**
 	 *  ```
-	 *  Source_link $mol_link_iconed
-	 *  	title \
+	 *  Source_link $mol_link
 	 *  	uri <= source_link
 	 *  	target \_blank
+	 *  	hint <= source_hint
+	 *  	sub / <= Source_icon
 	 *  ```
 	 **/
 	@ $mol_mem
 	Source_link() {
 		return (( obj )=>{
-			obj.title = () => ""
 			obj.uri = () => this.source_link()
 			obj.target = () => "_blank"
+			obj.hint = () => this.source_hint()
+			obj.sub = () => [ this.Source_icon() ] as readonly any[]
 			return obj
-		})( new this.$.$mol_link_iconed(  ) )
+		})( new this.$.$mol_link(  ) )
 	}
 
 	/**
@@ -525,7 +527,29 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 
 	/**
 	 *  ```
+	 *  source_hint @ \Source code of this demo
+	 *  ```
+	 **/
+	source_hint() {
+		return this.$.$mol_locale.text( "$mol_app_demo_detail_source_hint" )
+	}
+
+	/**
+	 *  ```
+	 *  Source_icon $mol_icon_code_not_equal_variant
+	 *  ```
+	 **/
+	@ $mol_mem
+	Source_icon() {
+		return (( obj )=>{
+			return obj
+		})( new this.$.$mol_icon_code_not_equal_variant(  ) )
+	}
+
+	/**
+	 *  ```
 	 *  Edit $mol_link
+	 *  	hint <= edit_hint
 	 *  	sub /
 	 *  		<= Edit_speck
 	 *  		<= Edit_icon
@@ -537,6 +561,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	@ $mol_mem
 	Edit() {
 		return (( obj )=>{
+			obj.hint = () => this.edit_hint()
 			obj.sub = () => [ this.Edit_speck() , this.Edit_icon() ] as readonly any[]
 			obj.arg = () => ({
 			"edit" :  "" ,
@@ -544,6 +569,15 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 		})
 			return obj
 		})( new this.$.$mol_link(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  edit_hint @ \Edit this demo online
+	 *  ```
+	 **/
+	edit_hint() {
+		return this.$.$mol_locale.text( "$mol_app_demo_detail_edit_hint" )
 	}
 
 	/**
@@ -574,6 +608,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	/**
 	 *  ```
 	 *  Close $mol_link
+	 *  	hint <= close_hint
 	 *  	sub / <= Close_icon
 	 *  	arg <= close_arg
 	 *  ```
@@ -581,10 +616,20 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	@ $mol_mem
 	Close() {
 		return (( obj )=>{
+			obj.hint = () => this.close_hint()
 			obj.sub = () => [ this.Close_icon() ] as readonly any[]
 			obj.arg = () => this.close_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  close_hint @ \Close panel
+	 *  ```
+	 **/
+	close_hint() {
+		return this.$.$mol_locale.text( "$mol_app_demo_detail_close_hint" )
 	}
 
 	/**

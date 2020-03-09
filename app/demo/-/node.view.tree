@@ -64,11 +64,14 @@ $mol_app_demo_menu $mol_page
 		
 $mol_app_demo_detail $mol_page
 	tools /
-		<= Source_link $mol_link_iconed
-			title \
+		<= Source_link $mol_link
 			uri <= source_link \
 			target \_blank
+			hint <= source_hint @ \Source code of this demo
+			sub /
+				<= Source_icon $mol_icon_code_not_equal_variant
 		<= Edit $mol_link
+			hint <= edit_hint @ \Edit this demo online
 			sub /
 				<= Edit_speck $mol_speck
 					value \β
@@ -77,6 +80,7 @@ $mol_app_demo_detail $mol_page
 				edit \
 				path \
 		<= Close $mol_link 
+			hint <= close_hint @ \Close panel
 			sub /
 				<= Close_icon $mol_icon_cross
 			arg <= close_arg *
@@ -2573,3 +2577,7 @@ $mol_status $mol_view
 	minimal_width 0
 	sub /
 		<= message \
+
+$mol_icon_code_not_equal $mol_icon path \M6,15H8V17H6M11,13H18V15H11M11,9H18V11H11M6,7H8V13H6M5,3C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3H5Z
+
+$mol_icon_code_not_equal_variant $mol_icon path \M11,6.5V9.33L8.33,12L11,14.67V17.5L5.5,12M13,6.43L18.57,12L13,17.57V14.74L15.74,12L13,9.26M5,3C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3H5Z
