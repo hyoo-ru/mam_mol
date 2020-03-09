@@ -103,6 +103,10 @@ namespace $ {
 			return min
 		}
 		
+		maximal_width() {
+			return this.minimal_width()
+		}
+		
 		/// Minimal height that used for lazy rendering
 		@ $mol_mem
 		minimal_height() {
