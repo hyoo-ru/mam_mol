@@ -58,10 +58,13 @@ namespace $.$$ {
 			const props_all : { [ name : string ] : $mol_tree } = {}
 
 			const collect = ( name : string )=> {
+
+				const props = this.props_self( name )
+				for( let prop of props.sub ) props_all[ prop.type ] = undefined as any
+				
 				const sup = this.class( name )
 				if( sup ) collect( $mol_view_tree_super_name( sup ) )
 
-				const props = this.props_self( name )
 				for( let prop of props.sub ) props_all[ prop.type ] = prop
 			}
 

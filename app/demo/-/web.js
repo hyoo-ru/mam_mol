@@ -19810,10 +19810,12 @@ var $;
                     return next;
                 const props_all = {};
                 const collect = (name) => {
+                    const props = this.props_self(name);
+                    for (let prop of props.sub)
+                        props_all[prop.type] = undefined;
                     const sup = this.class(name);
                     if (sup)
                         collect($.$mol_view_tree_super_name(sup));
-                    const props = this.props_self(name);
                     for (let prop of props.sub)
                         props_all[prop.type] = prop;
                 };
