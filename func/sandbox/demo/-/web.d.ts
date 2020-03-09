@@ -661,6 +661,7 @@ declare namespace $ {
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
         sub_visible(): readonly (string | number | boolean | Node | $mol_view)[];
         minimal_width(): number;
+        maximal_width(): number;
         minimal_height(): number;
         static watchers: Set<$mol_view>;
         view_rect(): ClientRect;
@@ -1366,6 +1367,21 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_paragraph extends $mol_view {
+        line_height(): number;
+        letter_width(): number;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_paragraph extends $.$mol_paragraph {
+        maximal_width(): number;
+        minimal_width(): number;
+        minimal_height(): number;
+    }
+}
+
+declare namespace $ {
     class $mol_text extends $mol_list {
         uri_base(): string;
         text(): string;
@@ -1392,8 +1408,7 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    class $mol_text_row extends $mol_view {
-        minimal_height(): number;
+    class $mol_text_row extends $mol_paragraph {
         attr(): {
             mol_text_type: string;
         };
@@ -1401,9 +1416,8 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    class $mol_text_header extends $mol_view {
+    class $mol_text_header extends $mol_paragraph {
         dom_name(): string;
-        minimal_height(): number;
         attr(): {
             mol_text_header_level: any;
         };
@@ -1413,7 +1427,7 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    class $mol_text_span extends $mol_view {
+    class $mol_text_span extends $mol_paragraph {
         dom_name(): string;
         attr(): {
             mol_text_type: any;

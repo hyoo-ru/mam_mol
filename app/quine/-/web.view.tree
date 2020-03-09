@@ -95,21 +95,19 @@ $mol_text $mol_list
 	Table_cell_head!id $mol_float
 		sub <= table_cell_content!id /
 
-$mol_text_row $mol_view
-	minimal_height 40
+$mol_text_row $mol_paragraph
 	attr *
 		^
 		mol_text_type <= type \
 
-$mol_text_header $mol_view
+$mol_text_header $mol_paragraph
 	dom_name \h
-	minimal_height 50
 	attr *
 		^
 		mol_text_header_level <= level?val 0
 	sub <= content /
 
-$mol_text_span $mol_view
+$mol_text_span $mol_paragraph
 	dom_name \span
 	attr *
 		^
@@ -263,6 +261,10 @@ $mol_dimmer $mol_view
 	Low!id $mol_view
 		sub /
 			<= string!id \
+
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 8
 
 $mol_link $mol_view
 	dom_name \a

@@ -2151,6 +2151,9 @@ var $;
             });
             return min;
         }
+        maximal_width() {
+            return this.minimal_width();
+        }
         minimal_height() {
             let min = 0;
             try {

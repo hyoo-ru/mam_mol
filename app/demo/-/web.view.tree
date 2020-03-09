@@ -357,21 +357,19 @@ $mol_text $mol_list
 	Table_cell_head!id $mol_float
 		sub <= table_cell_content!id /
 
-$mol_text_row $mol_view
-	minimal_height 40
+$mol_text_row $mol_paragraph
 	attr *
 		^
 		mol_text_type <= type \
 
-$mol_text_header $mol_view
+$mol_text_header $mol_paragraph
 	dom_name \h
-	minimal_height 50
 	attr *
 		^
 		mol_text_header_level <= level?val 0
 	sub <= content /
 
-$mol_text_span $mol_view
+$mol_text_span $mol_paragraph
 	dom_name \span
 	attr *
 		^
@@ -394,6 +392,10 @@ $mol_text_image $mol_view
 		data <= link?val \
 	sub /
 		<= title?val \
+
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 8
 
 $mol_demo_large $mol_view
 
@@ -1849,10 +1851,6 @@ $mol_list_demo_tree $mol_demo_large
 		expanded?val <=> row_expanded!id?val false
 		Content <= Row_content!id $mol_list
 			rows <= row_content!id /
-
-$mol_paragraph $mol_view
-	line_height 24
-	letter_width 8
 
 $mol_map_yandex $mol_view
 	zoom?val 2

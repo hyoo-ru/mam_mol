@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_paragraph extends $.$mol_paragraph {
 
 		@ $mol_mem
-		content_width() {
+		maximal_width() {
 
 			let width = 0
 			const letter = this.letter_width()
@@ -13,7 +13,7 @@ namespace $.$$ {
 				if( !kid ) continue
 				
 				if( kid instanceof $mol_view ) {
-					width += kid.minimal_width()
+					width += kid.maximal_width()
 				} else if( typeof kid !== 'object' ) {
 					width += String( kid ).length * letter
 				}
@@ -21,17 +21,17 @@ namespace $.$$ {
 			}
 			
 			return width
-			
+
 		}
 
 		@ $mol_mem
 		minimal_width() {
-			return Math.min( this.$.$mol_window.size().width , this.content_width() )
+			return Math.max( Math.min( this.$.$mol_window.size().width , this.maximal_width() ) , this.letter_width() )
 		}
 
 		@ $mol_mem
 		minimal_height() {
-			return Math.ceil( this.content_width() / this.minimal_width() ) * this.line_height()
+			return Math.ceil( this.maximal_width() / this.minimal_width() ) * this.line_height()
 		}
 
 	}

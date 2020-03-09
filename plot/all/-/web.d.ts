@@ -579,6 +579,7 @@ declare namespace $ {
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
         sub_visible(): readonly (string | number | boolean | Node | $mol_view)[];
         minimal_width(): number;
+        maximal_width(): number;
         minimal_height(): number;
         static watchers: Set<$mol_view>;
         view_rect(): ClientRect;

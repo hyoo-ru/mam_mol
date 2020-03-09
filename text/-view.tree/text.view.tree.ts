@@ -246,16 +246,7 @@ namespace $ { export class $mol_text extends $mol_list {
 
 } }
 
-namespace $ { export class $mol_text_row extends $mol_view {
-
-	/**
-	 *  ```
-	 *  minimal_height 40
-	 *  ```
-	 **/
-	minimal_height() {
-		return 40
-	}
+namespace $ { export class $mol_text_row extends $mol_paragraph {
 
 	/**
 	 *  ```
@@ -282,7 +273,7 @@ namespace $ { export class $mol_text_row extends $mol_view {
 
 } }
 
-namespace $ { export class $mol_text_header extends $mol_view {
+namespace $ { export class $mol_text_header extends $mol_paragraph {
 
 	/**
 	 *  ```
@@ -291,15 +282,6 @@ namespace $ { export class $mol_text_header extends $mol_view {
 	 **/
 	dom_name() {
 		return "h"
-	}
-
-	/**
-	 *  ```
-	 *  minimal_height 50
-	 *  ```
-	 **/
-	minimal_height() {
-		return 50
 	}
 
 	/**
@@ -346,7 +328,7 @@ namespace $ { export class $mol_text_header extends $mol_view {
 
 } }
 
-namespace $ { export class $mol_text_span extends $mol_view {
+namespace $ { export class $mol_text_span extends $mol_paragraph {
 
 	/**
 	 *  ```
