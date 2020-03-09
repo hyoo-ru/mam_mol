@@ -6,7 +6,7 @@ namespace $ {
 	const decoder = new TextDecoder('utf8')
 
 	export class $mol_buffer extends $mol_object2 {
-		readonly original: Uint8Array
+		original: Uint8Array
 
 		get length() {
 			return this.original.length

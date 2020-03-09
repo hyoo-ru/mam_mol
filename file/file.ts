@@ -85,10 +85,10 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 
-		abstract buffer( next? : $mol_file_content , force? : $mol_mem_force ): $mol_file_content
+		abstract buffer( next? : $mol_buffer , force? : $mol_mem_force ): $mol_buffer
 
 		content(next?: string, force?: $mol_mem_force) {
-			return this.buffer(next === undefined ? undefined : next, force).toString()
+			return this.buffer(next === undefined ? undefined : $mol_buffer.from(next), force).toString()
 		}
 
 		content_cached(content: string) {

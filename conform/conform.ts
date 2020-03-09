@@ -62,6 +62,11 @@ namespace $ {
 	$mol_conform_handler( Uint16Array , $mol_conform_array )
 	$mol_conform_handler( Uint32Array , $mol_conform_array )
 
+	$mol_conform_handler( $mol_buffer , ( target, source ) => {
+		const original = $mol_conform_array(target.original, source.original)
+		return original !== source.original ? target : source
+	} )
+
 	$mol_conform_handler( Object , ( target , source )=> {
 
 		let count = 0

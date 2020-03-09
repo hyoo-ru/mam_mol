@@ -86,7 +86,7 @@ namespace $ {
 		} 
 		
 		@ $mol_mem
-		buffer( next? : $mol_file_content , force? : $mol_mem_force ) {
+		buffer( next? : $mol_buffer , force? : $mol_mem_force ) {
 			if( next === undefined ) {
 				this.stat()
 				return $mol_buffer.from($node.fs.readFileSync( this.path() ))
