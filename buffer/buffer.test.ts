@@ -27,5 +27,45 @@ namespace $ {
 
 			$mol_assert_like( buffer.original, new Uint8Array([26,10,0,73,72,120,218]))
 		},
+
+		'buffer conform from same string are equal'() {
+
+			const source = $mol_buffer.from('123')
+			const target = $mol_buffer.from('123')
+
+			const result = $mol_conform( target , source )
+
+			$mol_assert_equal( result , source )
+		} ,
+
+		'buffer conform from different string are not equal'() {
+
+			const source = $mol_buffer.from('123')
+			const target = $mol_buffer.from('1234')
+
+			const result = $mol_conform( target , source )
+
+			$mol_assert_ok( result !== source )
+		} ,
+
+		'buffer conform from same Uint8Array are equal'() {
+
+			const source = $mol_buffer.from(new Uint8Array([12, 13, 5]))
+			const target = $mol_buffer.from(new Uint8Array([12, 13, 5]))
+
+			const result = $mol_conform( target , source )
+
+			$mol_assert_equal( result , source )
+		} ,
+
+		'buffer conform from different Uint8Array are not equal'() {
+
+			const source = $mol_buffer.from(new Uint8Array([12, 13]))
+			const target = $mol_buffer.from(new Uint8Array([12, 13, 5]))
+
+			const result = $mol_conform( target , source )
+
+			$mol_assert_ok( result !== source )
+		} ,
 	})
 }

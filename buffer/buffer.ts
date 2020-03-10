@@ -27,4 +27,9 @@ namespace $ {
 			return decoder.decode(this.original)
 		}
 	}
+
+	$mol_conform_handler( $mol_buffer , ( target, source ) => {
+		const original = $mol_conform_array(target.original, source.original)
+		return original !== source.original ? target : source
+	} )
 }

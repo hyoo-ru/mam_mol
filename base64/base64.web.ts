@@ -1,6 +1,6 @@
 namespace $ {
 
-	function $mol_base64_binary(bytes: Uint8Array | string): string {
+	function binary_string(bytes: Uint8Array | string): string {
 		let binary = ''
 		if (typeof bytes !== 'string') {
 			for (const byte of bytes) binary += String.fromCharCode( byte )
@@ -12,7 +12,7 @@ namespace $ {
 	}
 
 	export function $mol_base64_encode_web(str: string | Uint8Array): string {
-		return $mol_dom_context.btoa($mol_base64_binary(str))
+		return $mol_dom_context.btoa(binary_string(str))
 	}
 
 	$.$mol_base64_encode = $mol_base64_encode_web
