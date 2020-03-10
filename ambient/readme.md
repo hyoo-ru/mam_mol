@@ -17,21 +17,32 @@ class Foo extends $mol_object2 {
 	}
 }
 
-const foo = Foo.make({
-	$ : $.$mol_ambient({ // ambient context override
-		console : { // console override
-			log : ()=> undefined // noop console.log
-		}
-	})
+const context_mock = $.$mol_ambient({ // ambient context override
+	console : { // console override
+		log : ()=> undefined // noop console.log
+	}
 })
+
+const foo = Foo.create( foo => foo.$ = context_mock )
 
 // another way
 const foo2 = new Foo
-foo2.$ = $.$mol_ambient({
-	console : {
-		log : ()=> undefined
-	}
-})
+foo2.$ = context_mock
+```
+
+Contexts may be inherited through owning tree:
+
+```
+class Bar extends $mol_object2 {
+	
+	@ $mol_mem
+	Foo () { return new Foo }
+
+}
+
+const bar = new Bar
+bar.$ = context_mock
+bar.Foo().logger.log( 'noop' )
 ```
 
 Global functions inherits context automatically:
