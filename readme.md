@@ -376,11 +376,6 @@ The name of the field corresponds to calling the property, the content of the fi
 - **[$mol_state_stack](state/stack)** - state of current stack of execution
 - **[$mol_state_time](state/time)** - reactive current time stamp 
 
-## Communication modules
-
-- **[$mol_http](http)** - Reactive [HTTP](https://wikipedia.org/wiki/HTTP) client
-- **[$mol_webdav](webdav)** - Reactive [WebDAV](https://wikipedia.org/wiki/WebDAV) client
-
 ## Simple components
 
 - **[$mol_view](view)** - reactive view model base class with lazy error-proof renderer
@@ -470,10 +465,12 @@ The name of the field corresponds to calling the property, the content of the fi
 
 ## API
 
-- **[$mol_cordova](cordova)** - [Apache Cordova](https://cordova.apache.org) API
-- **[$mol_exec](exec)** - synchronous execute of system command
-- **[$mol_file](file)** - reactive file system wrapper
 - **[$mol_window](window)** - reactive view port configuration
+- **[$mol_fetch](fetch)** - Reactive [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+- **[$mol_webdav](webdav)** - Reactive [WebDAV](https://wikipedia.org/wiki/WebDAV) client
+- **[$mol_file](file)** - isomorphic reactive file system wrapper
+- **[$mol_exec](exec)** - synchronous execute of system command
+- **[$mol_cordova](cordova)** - [Apache Cordova](https://cordova.apache.org) API
 
 ## Time
 

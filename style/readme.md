@@ -222,3 +222,60 @@ $mol_style_define( $mol_page , {
 	boxShadow: 0 0 0 1px var(--mol_theme_line);
 }
 ```
+
+## CSS Units
+
+```typescript
+const { px , per } = $mol_style_unit
+
+$mol_style_define( $my_view , {
+	width : per(50),
+	height : px(50),
+} )
+```
+
+```css
+[my_view] {
+	width: 50%;
+	height: 50px;
+}
+```
+
+## CSS Functions
+
+```typescript
+const { calc , fit_content } = $mol_style_func
+const { per } = $mol_style_unit
+
+$mol_style_define( $my_view , {
+	width : calc( `100% - 1px` ),
+	height : fit_content( per(50) ),
+} )
+```
+
+```css
+[my_view] {
+	width: calc(100% - 1px);
+	height: fit-content(50%);
+}
+```
+
+## Property groups
+
+```typescript
+$mol_style_define( $my_view , {
+	flex : {
+		grow : 1,
+		shrink : 0,
+		basis : 'auto',
+	},
+} )
+```
+
+```css
+[my_view] {
+	flex-grow: 1;
+	flex-shrink: 0;
+	flex-basis: auto;
+}
+```

@@ -4,7 +4,11 @@ namespace $.$$ {
 
 		display: 'block',
 		overflow: 'auto',
-		flex: '1 1 auto',
+		flex: {
+			grow: 1,
+			shrink: 1,
+			basis: 'auto',
+		},
 		alignSelf: 'stretch',
 		boxSizing: 'border-box',
 		willChange: 'scroll-position',
@@ -34,8 +38,8 @@ namespace $.$$ {
 		'@media' : {
 			'print' : {
 				overflow: 'visible',
-			}
-		}
+			},
+		},
 
 	})
 
