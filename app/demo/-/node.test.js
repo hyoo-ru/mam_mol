@@ -2880,7 +2880,7 @@ var $;
     var $$;
     (function ($$) {
         class $mol_check extends $.$mol_check {
-            event_click(next) {
+            click(next) {
                 this.checked(!this.checked());
                 if (next)
                     next.preventDefault();
