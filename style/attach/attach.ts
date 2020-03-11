@@ -21,7 +21,7 @@ namespace $ {
 		doc.head.appendChild( el )
 
 		timer = new $mol_after_tick( ()=> {
-			el.innerHTML = '\n' + all.join( '\n\n' )
+			el!.innerHTML = '\n' + all.join( '\n\n' )
 			all = []
 			el = null
 			timer = null
