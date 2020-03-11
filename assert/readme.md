@@ -19,8 +19,8 @@ $mol_assert_equal( 1 , 1 , 2 ) // Fails because 1 !== 2
 **`$mol_assert_like< Value >( ... args : Value[] )`** - all arguments must be like each other (deep structural comparison).
 
 ```typescript
-$mol_assert_equal( [1] , [1] , [1] ) // Passes
-$mol_assert_equal( [1] , [1] , [2] ) // Fails because 1 !== 2
+$mol_assert_like( [1] , [1] , [1] ) // Passes
+$mol_assert_like( [1] , [1] , [2] ) // Fails because 1 !== 2
 ```
 
 **`$mol_assert_fail( handler : ()=> any , ErrorRight? : any )`** - handler must throw an error.
