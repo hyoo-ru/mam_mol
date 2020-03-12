@@ -6,10 +6,10 @@ namespace $ {
 
 	export interface $mol_file_stat {
 		type: $mol_file_type
-        size: number;
-        atime: Date;
-        mtime: Date;
-        ctime: Date;
+		size: number
+		atime: Date
+		mtime: Date
+		ctime: Date
 	}
 
 	export class $mol_file_not_found extends Error {}
@@ -87,11 +87,11 @@ namespace $ {
 
 		abstract buffer( next? : $mol_buffer , force? : $mol_mem_force ): $mol_buffer
 
-		content(next?: string, force?: $mol_mem_force) {
+		text(next?: string, force?: $mol_mem_force) {
 			return this.buffer(next === undefined ? undefined : $mol_buffer.from(next), force).toString()
 		}
 
-		content_cached(content: string) {
+		text_cached(content: string) {
 			const ctime = new Date()
 			const stat: $mol_file_stat = {
 				type: 'file',
@@ -101,7 +101,7 @@ namespace $ {
 				mtime: ctime
 			}
 
-			this.content(content, $mol_mem_force_cache)
+			this.text(content, $mol_mem_force_cache)
 			this.stat(stat , $mol_mem_force_cache)
 		}
 		

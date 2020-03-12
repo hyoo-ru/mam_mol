@@ -9,13 +9,5 @@ namespace $ {
 		'base64 encode binary'() {
 			$mol_assert_equal($mol_base64_encode(png), 'GgoASUh42g==')
 		},
-
-		'base64 decode string'() {
-			$mol_assert_like($mol_base64_decode('SGVsbG8sIM6nzqjOqdCr'), new TextEncoder().encode('Hello, ΧΨΩЫ'))
-		},
-
-		'base64 decode binary'() {
-			$mol_assert_like($mol_base64_decode('GgoASUh42g=='), png)
-		},
 	})
 }

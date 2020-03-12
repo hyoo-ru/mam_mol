@@ -60,7 +60,7 @@ namespace $ {
 					if (! child.exists()) return false
 					
 					if( /(meta\.tree)$/.test( name ) ) {
-						const tree = $mol_tree.fromString( child.content() , child.path() )
+						const tree = $mol_tree.fromString( child.text() , child.path() )
 
 						let content = ''
 						for( const step of tree.select( 'build' , '' ).sub ) {
@@ -72,7 +72,7 @@ namespace $ {
 
 						if( content ) {
 							const script = child.parent().resolve( `-meta.tree/${ child.name() }.ts` )
-							script.content( content )
+							script.text( content )
 							mods.push( script )
 						}
 
@@ -81,10 +81,10 @@ namespace $ {
 						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
 						
-						const tree = $mol_tree.fromString( child.content() , child.path() )
+						const tree = $mol_tree.fromString( child.text() , child.path() )
 						const res = $mol_view_tree_compile( tree )
-						script.content( res.script )
-						locale.content( JSON.stringify( res.locales , null , '\t' ) )
+						script.text( res.script )
+						locale.text( JSON.stringify( res.locales , null , '\t' ) )
 						
 						mods.push( script , locale )
 
@@ -93,9 +93,9 @@ namespace $ {
 						const script = child.parent().resolve( `-css/${ child.name() }.ts` )
 						
 						const id = child.relate( this.root() )
-						const styles = child.content()
+						const styles = child.text()
 						const code = 'namespace $ { $'+`mol_style_attach( ${ JSON.stringify( id ) },\n ${ JSON.stringify( styles ) }\n) }`
-						script.content( code )
+						script.text( code )
 						
 						mods.push( script )
 
@@ -216,7 +216,7 @@ namespace $ {
 		
 		@ $mol_mem
 		tsOptions() {
-			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).content() + '').compilerOptions
+			const rawOptions = JSON.parse( this.root().resolve( 'tsconfig.json' ).text() + '').compilerOptions
 			const res = $node.typescript.convertCompilerOptionsFromJson( rawOptions , "." , 'tsconfig.json' )
 			if( res.errors.length ) throw res.errors
 			return res.options
@@ -224,7 +224,7 @@ namespace $ {
 		
 		@ $mol_mem_key
 		tsSource( { path , target } : { path : string , target : number } ) {
-			const content = $mol_file.absolute( path ).content()
+			const content = $mol_file.absolute( path ).text()
 			return $node.typescript.createSourceFile( path , content , target )
 		}
 
@@ -241,7 +241,7 @@ namespace $ {
 				}
 				
 				const node_types = $mol_file.absolute( path ).resolve( `-node/deps.d.ts` )
-				node_types.content( 'interface $node {\n ' + types.join( '\n' ) + '\n}' )
+				node_types.text( 'interface $node {\n ' + types.join( '\n' ) + '\n}' )
 				sources.push( node_types )
 			}
 
@@ -264,7 +264,7 @@ namespace $ {
 					... $node.typescript.sys ,
 					setTimeout : ( cb : any )=> cb(),
 					writeFile : ( path : string , content : string )=> {
-						$mol_file.relative( path ).content_cached( content )
+						$mol_file.relative( path ).text_cached( content )
 					} ,
 				},
 				
@@ -282,7 +282,7 @@ namespace $ {
 							getNewLine : ()=> '\n' ,
 						}) )
 						
-						file.content( error as any , $mol_mem_force_fail )
+						file.text( error as any , $mol_mem_force_fail )
 						
 					} else {
 						console.error( $node.colorette.red( String(diagnostic.messageText) ) )
@@ -327,7 +327,7 @@ namespace $ {
 
 						const path = src.relate( this.root() )
 						const uri = `data:${ image_types[ext] };base64,${ payload }`
-						script.content( `var $node = $node || {} ; $node[ ${ JSON.stringify( '/' + path ) } ] = ${ JSON.stringify( uri ) }\n` )
+						script.text( `var $node = $node || {} ; $node[ ${ JSON.stringify( '/' + path ) } ] = ${ JSON.stringify( uri ) }\n` )
 						
 						return script
 					}
@@ -470,7 +470,7 @@ namespace $ {
 			const pack = $mol_file.absolute( path )
 			for( const file of pack.sub() ) {
 				if( !/\.meta\.tree$/.test( file.name() ) ) continue
-				decls.push( ... $mol_tree.fromString( file.content() , file.path() ).sub )
+				decls.push( ... $mol_tree.fromString( file.text() , file.path() ).sub )
 			}
 			
 			return new $mol_tree({ sub : decls })
@@ -692,14 +692,14 @@ namespace $ {
 						}
 					}
 					try {
-						const content = ( src.content() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
+						const content = ( src.text() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test( content )
 					
 						if( isCommonJs ) {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
 						const srcMap = src.parent().resolve( src.name() + '.map' );
-						if( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? srcMap.content() : null)
+						if( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? srcMap.text() : null)
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
@@ -714,8 +714,8 @@ namespace $ {
 			if( moduleTarget === 'esm' ) {
 				concater.add( 'export default $', '-' )
 			}
-			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
-			targetMap.content( concater.toString() )
+			target.text( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
+			targetMap.text( concater.toString() )
 			
 			this.logBundle( target , Date.now() - start )
 
@@ -762,17 +762,17 @@ namespace $ {
 					}
 					let content = ''					
 					try {
-						content = ( src.content() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
+						content = ( src.text() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
 						const srcMap = src.parent().resolve( src.name() + '.map' )
-						if ( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? srcMap.content() : undefined)
+						if ( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? srcMap.text() : undefined)
 					} catch( error ) {
 						errors.push( error )
 					}
 				}
 			)
 			
-			target.content( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
-			targetMap.content( concater.toString() )
+			target.text( concater.content + '\n//# sourceMappingURL=' + targetMap.relate( target.parent() )+'\n' )
+			targetMap.text( concater.toString() )
 			
 			this.logBundle( target , Date.now() - start )
 			
@@ -795,7 +795,7 @@ namespace $ {
 			const target = pack.resolve( `-/test.html` )
 
 			let content = source.exists()
-				? source.content()
+				? source.text()
 				: `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`
 			
 			content = content.replace(
@@ -803,7 +803,7 @@ namespace $ {
 				`<script src="web.test.js" charset="utf-8" defer></script>$1`,
 			)
 			
-			target.content( content )
+			target.text( content )
 			
 			this.logBundle( target , Date.now() - start )
 			
@@ -825,12 +825,12 @@ namespace $ {
 			
 			sources.forEach(
 				function( src ) {
-					if( ! src.exists() || ! src.content() ) return
-					concater.add( src.content(), src.relate( target.parent() ) )
+					if( ! src.exists() || ! src.text() ) return
+					concater.add( src.text(), src.relate( target.parent() ) )
 				}
 			)
 			
-			target.content( concater.content )
+			target.text( concater.content )
 			
 			this.logBundle( target , Date.now() - start )
 			
@@ -849,7 +849,7 @@ namespace $ {
 			
 			if( sources.length === 0 ) return []
 			
-			target.content( sources.map( src => src.content() ).join( '\n' ) )
+			target.text( sources.map( src => src.text() ).join( '\n' ) )
 			
 			this.logBundle( target , Date.now() - start )
 			
@@ -899,7 +899,7 @@ namespace $ {
 			}
 
 			if( source.exists() ) {
-				Object.assign( json , JSON.parse( source.content() ) )
+				Object.assign( json , JSON.parse( source.text() ) )
 			}
 
 			let version = json.version.split('.')
@@ -920,7 +920,7 @@ namespace $ {
 				json.dependencies[ dep ] = `*`
 			}
 			
-			target.content( JSON.stringify( json , null , '  ' ) )
+			target.text( JSON.stringify( json , null , '  ' ) )
 			
 			this.logBundle( target , Date.now() - start )
 			
@@ -941,20 +941,20 @@ namespace $ {
 			const html = pack.resolve( 'index.html' )
 			if ( html.exists() ) {
 				const html_target = pack.resolve( '-/index.html' )
-				html_target.content( html.content() )
+				html_target.text( html.text() )
 				targets.push( html_target )
 				this.logBundle( html_target , Date.now() - start )	
 			}
 
 			sources.forEach( source => {
-				const tree = $mol_tree.fromString( source.content() , source.path() )
+				const tree = $mol_tree.fromString( source.text() , source.path() )
 				
 				tree.select( 'deploy' ).sub.forEach( deploy => {
 					const start = Date.now()
 					const file = root.resolve( deploy.value.replace( /^\// , '' ) )
 					if ( ! file.exists() ) return
 					const target = pack.resolve( `-/${ file.relate( root ) }` )
-					target.content( file.content() )
+					target.text( file.text() )
 					targets.push( target )
 					this.logBundle( target , Date.now() - start )
 				} )
@@ -974,7 +974,7 @@ namespace $ {
 			if( !config.exists() ) return []
 			
 			const config_target = cordova.resolve( 'config.xml' )
-			config_target.content( config.content() )
+			config_target.text( config.text() )
 			
 			const html = pack.resolve( 'index.html' )
 
@@ -982,7 +982,7 @@ namespace $ {
 
 			if( html.exists() ) {
 				const html_target = cordova.resolve( 'www/index.html' )
-				html_target.content( html.content() )
+				html_target.text( html.text() )
 				targets.push(html_target)
 			}
 			
@@ -990,7 +990,7 @@ namespace $ {
 
 			for (const source of sources) {
 				const target = cordova.resolve( `www/${ source.relate( pack ) }` )
-				target.content( source.content() )
+				target.text( source.text() )
 				targets.push(target)
 			}
 			
@@ -1031,8 +1031,8 @@ namespace $ {
 				map : '/* CSS compiles into js bundle now! */',
 			}
 			
-			target.content( result.css )
-			targetMap.content( JSON.stringify( result.map , null , '\t' ) )
+			target.text( result.css )
+			targetMap.text( JSON.stringify( result.map , null , '\t' ) )
 			
 			this.logBundle( target , Date.now() - start )
 			
@@ -1054,7 +1054,7 @@ namespace $ {
 					
 					if( !locales[ lang ] ) locales[ lang ] = {}
 					
-					const loc = JSON.parse( src.content() )
+					const loc = JSON.parse( src.text() )
 					for( let key in loc ) {
 						locales[ lang ][ key ] = loc[ key ]
 					}
@@ -1082,7 +1082,7 @@ namespace $ {
 					locale_sorted[ key ] = locale[ key ]
 				}
 
-				target.content( JSON.stringify( locale_sorted , null , '\t' ) )
+				target.text( JSON.stringify( locale_sorted , null , '\t' ) )
 				
 				this.logBundle( target , Date.now() - start )
 				
@@ -1105,7 +1105,7 @@ namespace $ {
 			const sloc = {} as Record< string , number >
 			for( const src of origs ) {
 				const ext = src.name().replace( /^.*\./ , '' )
-				const count = src.content().trim().split( /[\n\r]\s*/ ).length
+				const count = src.text().trim().split( /[\n\r]\s*/ ).length
 				sloc[ ext ] = ( sloc[ ext ] || 0 ) + count
 			}
 			
@@ -1125,7 +1125,7 @@ namespace $ {
 			} as const
 			
 			const target = pack.resolve( `-/${bundle}.deps.json` )
-			target.content( JSON.stringify( data ) )
+			target.text( JSON.stringify( data ) )
 			
 			this.logBundle( target , Date.now() - start )
 			
@@ -1147,7 +1147,7 @@ namespace $ {
 	$mol_build.dependors[ 'js' ] = source => {
 		var depends : { [ index : string ] : number } = {}
 		
-		var lines = String( source.content() )
+		var lines = String( source.text() )
 		.replace( /\/\*[^]*?\*\//g , '' ) // drop block comments
 		.replace( /\/\/.*$/gm , '' ) // drop inline comments
 		.split( '\n' )
@@ -1174,7 +1174,7 @@ namespace $ {
 	$mol_build.dependors[ 'ts' ] = $mol_build.dependors[ 'tsx' ] = $mol_build.dependors[ 'jam.js' ] = source => {
 		var depends : { [ index : string ] : number } = {}
 		
-		var lines = String( source.content() )
+		var lines = String( source.text() )
 		.replace( /\/\*(?!\*)[\s\S]*?\*\//g , '' ) // drop block comments except doc-comments
 		.replace( /\/\/.*$/gm , '' ) // drop inline comments
 		.split( '\n' )
@@ -1220,7 +1220,7 @@ namespace $ {
 			'/mol/style/attach': 0,
 		}
 		
-		var lines = String( source.content() )
+		var lines = String( source.text() )
 		.replace( /\/\*[^]*?\*\//g , '' ) // drop block comments
 		.replace( /\/\/.*$/gm , '' ) // drop inline comments
 		.split( '\n' )
@@ -1245,7 +1245,7 @@ namespace $ {
 	$mol_build.dependors[ 'meta.tree' ] = source => {
 		const depends : { [ index : string ] : number } = {}
 		
-		const tree = $mol_tree.fromString( source.content() , source.path() )
+		const tree = $mol_tree.fromString( source.text() , source.path() )
 		
 		tree.select( 'require' ).sub.forEach( leaf => {
 			depends[ leaf.value ] = 0

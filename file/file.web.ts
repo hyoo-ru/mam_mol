@@ -27,19 +27,15 @@ namespace $ {
 			return $mol_buffer.from(response.buffer())
 		}
 
-		watcher() {
-			console.warn('$mol_file_web.watcher() not implemented')
-
-			return {
-				destructor() {}
-			}
+		watcher(): { destructor(): void } {
+			throw new Error('$mol_file_web.watcher() not implemented')
 		}
 
 		@ $mol_mem
 		stat( next? : $mol_file_stat, force? : $mol_mem_force ) {
 			let stat = next
 			if (next === undefined) {
-				const content = this.content()
+				const content = this.text()
 				const ctime = new Date()
 				stat = {
 					type: 'file',
@@ -67,23 +63,17 @@ namespace $ {
 			return ( this.constructor as typeof $mol_file_web ).absolute( res )
 		}
 
-		ensure(next?: boolean) {
-			console.warn('$mol_file_web.ensure() not implemented')
-
-			return true
+		ensure(next?: boolean): boolean {
+			throw new Error('$mol_file_web.ensure() not implemented')
 		} 
 
 		@ $mol_mem
 		sub() : $mol_file[] {
-			console.warn('$mol_file_web.sub() not implemented')
-
-			return []
+			throw new Error('$mol_file_web.sub() not implemented')
 		}
 		
 		relate( base = ( this.constructor as typeof $mol_file ).relative( '.' )): string {
-			console.warn('$mol_file_web.relate() not implemented')
-
-			return base.path()
+			throw new Error('$mol_file_web.relate() not implemented')
 		}
 		
 		append( next : $mol_file_content ) {

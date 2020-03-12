@@ -1,6 +1,6 @@
 namespace $ {
 
-	function $mol_file_node_stat_convert(stat: ReturnType<typeof $node.fs.statSync>): $mol_file_stat {
+	function stat_convert(stat: ReturnType<typeof $node.fs.statSync>): $mol_file_stat {
 		let type: $mol_file_type | undefined
 		if (stat.isDirectory()) type = 'dir'
 		if (stat.isFile()) type = 'file'
@@ -13,7 +13,7 @@ namespace $ {
 			size: stat.size,
 			atime: stat.atime,
 			mtime: stat.mtime,
-			ctime: stat.ctime	
+			ctime: stat.ctime
 		}
 	}
 
@@ -66,7 +66,7 @@ namespace $ {
 			let stat = next
 
 			try {
-				stat = next ?? $mol_file_node_stat_convert($node.fs.statSync( this.path() ))
+				stat = next ?? stat_convert($node.fs.statSync( this.path() ))
 			} catch (error) {
 				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found: ${this.path()}`)
 
