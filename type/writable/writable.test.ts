@@ -1,11 +1,9 @@
 namespace $ {
 
-	const b: $mol_type_writable<{
+	type some_value =  $mol_type_assert<$mol_type_writable<{
 		readonly a: number
-	}> = {
-		a: 1
-	}
-
-	b.a = 2
+	}> , {
+		a: number
+	} >
 
 }
