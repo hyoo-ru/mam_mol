@@ -81,11 +81,11 @@ namespace $ {
 			
 			const utc = this.toOffset( 'Z' )
 			return this._native = new Date( Date.UTC(
-				( utc.year || 0 ) ,
-				( utc.month || 0 ) ,
-				( utc.day || 0 ) + 1,
-				( utc.hour || 0 ) ,
-				( utc.minute || 0 ) ,
+				( utc.year ?? 0 ) ,
+				( utc.month ?? 0 ) ,
+				( utc.day ?? 0 ) + 1,
+				( utc.hour ?? 0 ) ,
+				( utc.minute ?? 0 ) ,
 				( utc.second && Math.floor( utc.second ) || 0 ) ,
 				( utc.second && Math.floor( ( utc.second - Math.floor( utc.second ) ) * 1000 ) || 0 ) ,
 			) )
@@ -121,7 +121,7 @@ namespace $ {
 			})
 		}
 
-		shift( config : $mol_time_duration_config ) {
+		shift( config : $mol_time_duration_config, keepTime = false ) {
 			const duration = new $mol_time_duration( config )
 			const moment = new $mol_time_moment().merge({
 				year: this.year,
@@ -133,7 +133,7 @@ namespace $ {
 				offset: this.offset ?? 0
 			})
 
-			const second = moment.second + ( duration.second ?? 0 )
+			const second = moment.second! + ( duration.second ?? 0 )
 			const native = new Date(
 				moment.year! + ( duration.year ?? 0 ) ,
 				moment.month! + ( duration.month ?? 0 ) ,
@@ -147,12 +147,12 @@ namespace $ {
 			if( isNaN( native.valueOf() ) ) throw new Error( 'Wrong time' )
 
 			return new $mol_time_moment({
-				year : ( this.year === undefined ) ? undefined : native.getFullYear(),
-				month : ( this.month === undefined ) ? undefined : native.getMonth(),
-				day : ( this.day === undefined ) ? undefined : native.getDate() - 1,
-				hour : native.getHours(),
-				minute : native.getMinutes(),
-				second : native.getSeconds() + native.getMilliseconds() / 1000,
+				year : this.year === undefined ? undefined : native.getFullYear(),
+				month : this.month === undefined ? undefined : native.getMonth(),
+				day : this.day === undefined ? undefined : native.getDate() - 1,
+				hour : this.hour === undefined && ! keepTime ? undefined : native.getHours(),
+				minute : this.minute === undefined && ! keepTime ? undefined : native.getMinutes(),
+				second : this.second === undefined && ! keepTime ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
 				offset : this.offset,
 			})
 		}
@@ -160,7 +160,7 @@ namespace $ {
 		toOffset( config : $mol_time_duration_config ) {
 			const duration = new $mol_time_duration( config )
 			const offset = this.offset || new $mol_time_moment().offset!
-		 	const moment = this.shift( duration.summ( offset.mult( -1 ) ) )
+		 	const moment = this.shift( duration.summ( offset.mult( -1 ) ), true )
 			return moment.merge({ offset : duration })
 		}
 
