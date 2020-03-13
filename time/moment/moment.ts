@@ -80,14 +80,15 @@ namespace $ {
 			if( this._native ) return this._native
 			
 			const utc = this.toOffset( 'Z' )
+
 			return this._native = new Date( Date.UTC(
-				( utc.year ?? 0 ) ,
-				( utc.month ?? 0 ) ,
-				( utc.day ?? 0 ) + 1,
-				( utc.hour ?? 0 ) ,
-				( utc.minute ?? 0 ) ,
-				( utc.second && Math.floor( utc.second ) || 0 ) ,
-				( utc.second && Math.floor( ( utc.second - Math.floor( utc.second ) ) * 1000 ) || 0 ) ,
+				utc.year ?? 0 ,
+				utc.month ?? 0 ,
+				( utc.day ?? 0 ) + 1 ,
+				utc.hour ?? 0 ,
+				utc.minute ?? 0 ,
+				utc.second != undefined ? Math.floor(utc.second ) : 0 ,
+				utc.second != undefined ? Math.floor( ( utc.second - Math.floor( utc.second ) ) * 1000 ) : 0 ,
 			) )
 		}
 
@@ -98,26 +99,26 @@ namespace $ {
 			const moment = new $mol_time_moment( this.native )
 			
 			return this._normal = new $mol_time_moment({
-				year : ( this.year === undefined ) ? undefined : moment.year ,
-				month : ( this.month === undefined ) ? undefined : moment.month ,
-				day : ( this.day === undefined ) ? undefined : moment.day ,
-				hour : ( this.hour === undefined ) ? undefined : moment.hour ,
-				minute : ( this.minute === undefined ) ? undefined : moment.minute ,
-				second : ( this.second === undefined ) ? undefined : moment.second ,
-				offset : ( this.offset === undefined ) ? undefined : moment.offset ,
+				year : this.year === undefined ? undefined : moment.year ,
+				month : this.month === undefined ? undefined : moment.month ,
+				day : this.day === undefined ? undefined : moment.day ,
+				hour : this.hour === undefined ? undefined : moment.hour ,
+				minute : this.minute === undefined ? undefined : moment.minute ,
+				second : this.second === undefined ? undefined : moment.second ,
+				offset : this.offset === undefined ? undefined : moment.offset ,
 			})
 		}
 
 		merge( config : $mol_time_moment_config ) {
 			const moment = new $mol_time_moment( config )
 			return new $mol_time_moment({
-				year : ( moment.year === undefined ) ? this.year : moment.year ,
-				month : ( moment.month === undefined ) ? this.month : moment.month ,
-				day : ( moment.day === undefined ) ? this.day : moment.day ,
-				hour : ( moment.hour === undefined ) ? this.hour : moment.hour ,
-				minute : ( moment.minute === undefined ) ? this.minute : moment.minute ,
-				second : ( moment.second === undefined ) ? this.second : moment.second ,
-				offset : ( moment.offset === undefined ) ? this.offset : moment.offset ,
+				year : moment.year === undefined ? this.year : moment.year ,
+				month : moment.month === undefined ? this.month : moment.month ,
+				day : moment.day === undefined ? this.day : moment.day ,
+				hour : moment.hour === undefined ? this.hour : moment.hour ,
+				minute : moment.minute === undefined ? this.minute : moment.minute ,
+				second : moment.second === undefined ? this.second : moment.second ,
+				offset : moment.offset === undefined ? this.offset : moment.offset ,
 			})
 		}
 
