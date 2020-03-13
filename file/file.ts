@@ -91,18 +91,22 @@ namespace $ {
 			return this.buffer(next === undefined ? undefined : $mol_buffer.from(next), force).toString()
 		}
 
-		text_cached(content: string) {
+		buffer_cached(buffer: $mol_buffer) {
 			const ctime = new Date()
 			const stat: $mol_file_stat = {
 				type: 'file',
-				size: content.length,
+				size: buffer.length,
 				ctime,
 				atime: ctime,
 				mtime: ctime
 			}
 
-			this.text(content, $mol_mem_force_cache)
+			this.buffer(buffer, $mol_mem_force_cache)
 			this.stat(stat , $mol_mem_force_cache)
+		}
+
+		text_cached(content: string) {
+			this.buffer_cached($mol_buffer.from(content))
 		}
 		
 		abstract sub(): $mol_file[]
