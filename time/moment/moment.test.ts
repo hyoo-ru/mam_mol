@@ -46,16 +46,6 @@ namespace $ {
 			)
 		} ,
 		
-		'shifting'() {
-			$mol_assert_equal( new $mol_time_moment( 'T15:54:58.243+03:00' ).shift( {} ).toString() , 'T15:54:58.243+03:00' )
-			$mol_assert_equal( new $mol_time_moment( '2014-01-02' ).shift( 'P1Y' ).toString() , '2015-01-02' )
-			$mol_assert_equal( new $mol_time_moment( '2014-01-02' ).shift( 'P12M' ).toString() , '2015-01-02' )
-			$mol_assert_equal( new $mol_time_moment( '2014-01-02' ).shift( 'P365D' ).toString() , '2015-01-02' )
-			$mol_assert_equal( new $mol_time_moment( '2014-01-02' ).shift( 'PT8760h' ).toString() , '2015-01-02' )
-			$mol_assert_equal( new $mol_time_moment( '2014-01' ).shift( 'PT8760h' ).toString() , '2015-01' )
-			$mol_assert_equal( new $mol_time_moment( '2014-01' ).shift( 'PT-8760h' ).toString() , '2013-01' )
-		} ,
-		
 		'normalization'() {
 			$mol_assert_equal(
 				new $mol_time_moment( '2015-07-35' ).normal.toString() ,
@@ -68,5 +58,14 @@ namespace $ {
 			$mol_assert_equal( new $mol_time_moment( '2017-09-18' ).weekday , 0 )
 		} ,
 
+		'shifting'() {
+			$mol_assert_equal( new $mol_time_moment( 'T15:54:58.243+03:00' ).shift( {} ).toString() , 'T15:54:58.243+03:00' )
+			$mol_assert_equal( new $mol_time_moment( '2014-01-02' ).shift( 'P1Y' ).toString() , '2015-01-02' )
+			$mol_assert_equal( new $mol_time_moment( '2014-01-02' ).shift( 'P12M' ).toString() , '2015-01-02' )
+			$mol_assert_equal( new $mol_time_moment( '2014-01-02' ).shift( 'P365D' ).toString() , '2015-01-02' )
+			$mol_assert_equal( new $mol_time_moment( '2014-01-02' ).shift( 'PT8760h' ).toString() , '2015-01-02' )
+			$mol_assert_equal( new $mol_time_moment( '2014-01' ).shift( 'PT8760h' ).toString() , '2015-01' )
+			$mol_assert_equal( new $mol_time_moment( '2014-01' ).shift( 'PT-8760h' ).toString() , '2013-01' )
+		} ,
 	} )
 }
