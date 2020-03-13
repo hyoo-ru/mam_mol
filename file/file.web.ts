@@ -36,6 +36,7 @@ namespace $ {
 			let stat = next
 			if (next === undefined) {
 				const content = this.text()
+				// @todo взять дату из хедеров фетча, когда file.web будет переписан на webdav
 				const ctime = new Date()
 				stat = {
 					type: 'file',
