@@ -2368,7 +2368,7 @@ var $;
             return this.$.$mol_view_state_key(suffix);
         }
         dom_name() {
-            return this.constructor.toString().replace('$', '') || 'div';
+            return this.constructor.toString().replace('$', '').replace(/^(?=\d+)/, '_') || 'div';
         }
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
         sub() {

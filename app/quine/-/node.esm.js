@@ -2138,7 +2138,7 @@ var $;
             return this.$.$mol_view_state_key(suffix);
         }
         dom_name() {
-            return this.constructor.toString().replace('$', '') || 'div';
+            return this.constructor.toString().replace('$', '').replace(/^(?=\d+)/, '_') || 'div';
         }
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
         sub() {
@@ -2488,6 +2488,7 @@ var $;
 (function ($) {
     function $mol_style_sheet(Component, config) {
         let rules = [];
+        const qname = (name) => name.replace('$', '').replace(/^(?=\d+)/, '_');
         const make_class = (prefix, suffix, config) => {
             const props = [];
             for (const key of Object.keys(config).reverse()) {
@@ -2507,12 +2508,12 @@ var $;
                     make_class(prefix + '_' + key.toLowerCase(), suffix, config[key]);
                 }
                 else if (key[0] === '$') {
-                    make_class(prefix + '] ' + key.replace('$', '['), suffix, config[key]);
+                    make_class(prefix + '] [' + qname(key), suffix, config[key]);
                 }
                 else if (key === '>') {
                     const types = config[key];
                     for (let type in types) {
-                        make_class(prefix + '] > ' + type.replace('$', '['), suffix, types[type]);
+                        make_class(prefix + '] > [' + qname(type), suffix, types[type]);
                     }
                 }
                 else if (key === '@') {
@@ -2539,7 +2540,7 @@ var $;
                 rules.push(`${prefix}${suffix} {\n${props.reverse().join('')}}\n`);
             }
         };
-        make_class(Component.name.replace('$', '['), ']', config);
+        make_class('[' + qname(Component.name), ']', config);
         return rules.reverse().join('');
     }
     $.$mol_style_sheet = $mol_style_sheet;
