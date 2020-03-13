@@ -1716,15 +1716,6 @@ $mol_form_demo_bids $mol_demo_small
 					disabled <= submit_blocked true
 		<= Message $mol_view sub / <= message?val \
 
-$mol_grid_demo $mol_demo_large
-	title @ \Grid with large count of cells
-	rows 1000
-	cols 10
-	sub /
-		<= Grid $mol_grid
-			records <= records *
-			col_head_content!col <= col_head_content!col /
-
 $mol_infinite $mol_list
 	after!id /
 	Row!id $mol_view

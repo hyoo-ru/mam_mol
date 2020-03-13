@@ -3870,39 +3870,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_range2<Item = number>(item?: (index: number) => Item, size?: () => number): Item[];
-    class $mol_range2_array<Item> extends Array<Item> {
-        concat(...tail: this[]): Item[];
-        filter<Context>(check: (val: Item, index: number, list: Item[]) => boolean, context?: Context): Item[];
-        forEach<Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => void, context?: Context): void;
-        map<Item_out, Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => Item_out, context?: Context): Item_out[];
-        reduce<Result>(merge: (result: Result, val: Item, index: number, list: Item[]) => Result, result?: Result): Result;
-        slice(from?: number, to?: number): Item[];
-        some<Context>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
-        every<Context = null>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
-    }
-}
-
-declare namespace $ {
-    class $mol_grid_demo extends $mol_demo_large {
-        title(): string;
-        rows(): number;
-        cols(): number;
-        sub(): readonly any[];
-        Grid(): $$.$mol_grid;
-        records(): {};
-        col_head_content(col: any): readonly any[];
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_grid_demo extends $.$mol_grid_demo {
-        records(): string[][];
-        col_head_content(id: string): string[];
-    }
-}
-
-declare namespace $ {
     class $mol_infinite extends $mol_list {
         after(id: any): readonly any[];
         Row(id: any): $mol_view;
@@ -3913,6 +3880,20 @@ declare namespace $.$$ {
     class $mol_infinite extends $.$mol_infinite {
         row_ids(): readonly $mol_view[];
         rows(): $mol_view[];
+    }
+}
+
+declare namespace $ {
+    function $mol_range2<Item = number>(item?: (index: number) => Item, size?: () => number): Item[];
+    class $mol_range2_array<Item> extends Array<Item> {
+        concat(...tail: this[]): Item[];
+        filter<Context>(check: (val: Item, index: number, list: Item[]) => boolean, context?: Context): Item[];
+        forEach<Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => void, context?: Context): void;
+        map<Item_out, Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => Item_out, context?: Context): Item_out[];
+        reduce<Result>(merge: (result: Result, val: Item, index: number, list: Item[]) => Result, result?: Result): Result;
+        slice(from?: number, to?: number): Item[];
+        some<Context>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
+        every<Context = null>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
     }
 }
 

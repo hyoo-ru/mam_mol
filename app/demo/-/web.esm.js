@@ -14310,6 +14310,63 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_infinite extends $.$mol_list {
+        after(id) {
+            return [];
+        }
+        Row(id) {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_view());
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_infinite.prototype, "Row", null);
+    $.$mol_infinite = $mol_infinite;
+})($ || ($ = {}));
+//infinite.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_infinite extends $.$mol_infinite {
+            row_ids() {
+                var _a;
+                let ids = (_a = $.$mol_mem_cached(() => this.row_ids())) !== null && _a !== void 0 ? _a : [];
+                if (ids.length === 0)
+                    ids = this.after(undefined);
+                if (ids.length === 0)
+                    return [];
+                const rect = this.view_rect();
+                if (!rect)
+                    return ids;
+                const window_height = $.$mol_window.size().height;
+                if (rect.bottom < window_height * 3) {
+                    ids = [...ids, ...this.after(ids[ids.length - 1])];
+                }
+                return ids;
+            }
+            rows() {
+                return this.row_ids().map(id => this.Row(id));
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_infinite.prototype, "row_ids", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_infinite.prototype, "rows", null);
+        $$.$mol_infinite = $mol_infinite;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//infinite.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_range2(item = index => index, size = () => Number.POSITIVE_INFINITY) {
         return new Proxy(new $mol_range2_array(), {
             get(target, field) {
@@ -14407,123 +14464,6 @@ var $;
     $.$mol_range2_array = $mol_range2_array;
 })($ || ($ = {}));
 //range2.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_grid_demo extends $.$mol_demo_large {
-        title() {
-            return this.$.$mol_locale.text("$mol_grid_demo_title");
-        }
-        rows() {
-            return 1000;
-        }
-        cols() {
-            return 10;
-        }
-        sub() {
-            return [this.Grid()];
-        }
-        Grid() {
-            return ((obj) => {
-                obj.records = () => this.records();
-                obj.col_head_content = (col) => this.col_head_content(col);
-                return obj;
-            })(new this.$.$mol_grid());
-        }
-        records() {
-            return ({});
-        }
-        col_head_content(col) {
-            return [];
-        }
-    }
-    __decorate([
-        $.$mol_mem
-    ], $mol_grid_demo.prototype, "Grid", null);
-    $.$mol_grid_demo = $mol_grid_demo;
-})($ || ($ = {}));
-//demo.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_grid_demo extends $.$mol_grid_demo {
-            records() {
-                return $.$mol_range2(index => $.$mol_range2(colId => colId === 0 ? `Row ${index + 1}` : `Row ${index + 1} Cell ${colId}`, () => this.cols()), () => this.rows());
-            }
-            col_head_content(id) {
-                if (id == '0')
-                    return [];
-                return [`Col ${id}`];
-            }
-        }
-        __decorate([
-            $.$mol_mem
-        ], $mol_grid_demo.prototype, "records", null);
-        $$.$mol_grid_demo = $mol_grid_demo;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//demo.view.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_infinite extends $.$mol_list {
-        after(id) {
-            return [];
-        }
-        Row(id) {
-            return ((obj) => {
-                return obj;
-            })(new this.$.$mol_view());
-        }
-    }
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_infinite.prototype, "Row", null);
-    $.$mol_infinite = $mol_infinite;
-})($ || ($ = {}));
-//infinite.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_infinite extends $.$mol_infinite {
-            row_ids() {
-                var _a;
-                let ids = (_a = $.$mol_mem_cached(() => this.row_ids())) !== null && _a !== void 0 ? _a : [];
-                if (ids.length === 0)
-                    ids = this.after(undefined);
-                if (ids.length === 0)
-                    return [];
-                const rect = this.view_rect();
-                if (!rect)
-                    return ids;
-                const window_height = $.$mol_window.size().height;
-                if (rect.bottom < window_height * 3) {
-                    ids = [...ids, ...this.after(ids[ids.length - 1])];
-                }
-                return ids;
-            }
-            rows() {
-                return this.row_ids().map(id => this.Row(id));
-            }
-        }
-        __decorate([
-            $.$mol_mem
-        ], $mol_infinite.prototype, "row_ids", null);
-        __decorate([
-            $.$mol_mem
-        ], $mol_infinite.prototype, "rows", null);
-        $$.$mol_infinite = $mol_infinite;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//infinite.view.js.map
 ;
 "use strict";
 var $;
