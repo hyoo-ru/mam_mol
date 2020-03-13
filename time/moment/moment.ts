@@ -121,7 +121,7 @@ namespace $ {
 			})
 		}
 
-		shift( config : $mol_time_duration_config, keepTime = false ) {
+		shift( config : $mol_time_duration_config ) {
 			const duration = new $mol_time_duration( config )
 			const moment = new $mol_time_moment().merge({
 				year: this.year,
@@ -150,17 +150,22 @@ namespace $ {
 				year : this.year === undefined ? undefined : native.getFullYear(),
 				month : this.month === undefined ? undefined : native.getMonth(),
 				day : this.day === undefined ? undefined : native.getDate() - 1,
-				hour : this.hour === undefined && ! keepTime ? undefined : native.getHours(),
-				minute : this.minute === undefined && ! keepTime ? undefined : native.getMinutes(),
-				second : this.second === undefined && ! keepTime ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
+				hour : this.hour === undefined ? undefined : native.getHours(),
+				minute : this.minute === undefined ? undefined : native.getMinutes(),
+				second : this.second === undefined ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
 				offset : this.offset,
 			})
 		}
 
 		toOffset( config : $mol_time_duration_config ) {
+			if (this.hour === undefined) return this.merge(this)
+			if (this.minute === undefined) return this.merge(this)
+			if (this.second === undefined) return this.merge(this)
+
 			const duration = new $mol_time_duration( config )
 			const offset = this.offset || new $mol_time_moment().offset!
-		 	const moment = this.shift( duration.summ( offset.mult( -1 ) ), true )
+		 	const moment = this.shift( duration.summ( offset.mult( -1 ) ) )
+
 			return moment.merge({ offset : duration })
 		}
 
