@@ -282,7 +282,7 @@ namespace $ {
 							getNewLine : ()=> '\n' ,
 						}) )
 						
-						file.text( error as any , $mol_mem_force_fail )
+						file.fail( error )
 						
 					} else {
 						console.error( $node.colorette.red( String(diagnostic.messageText) ) )

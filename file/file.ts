@@ -91,6 +91,11 @@ namespace $ {
 			return this.buffer(next === undefined ? undefined : $mol_buffer.from(next), force).toString()
 		}
 
+		fail(error: Error) {
+			this.buffer(error as any, $mol_mem_force_fail)
+			this.stat(error as any, $mol_mem_force_fail)
+		}
+
 		buffer_cached(buffer: $mol_buffer) {
 			const ctime = new Date()
 			const stat: $mol_file_stat = {

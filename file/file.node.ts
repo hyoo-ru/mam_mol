@@ -51,7 +51,7 @@ namespace $ {
 			watcher.on( 'all' , handler )
 
 			watcher.on( 'error' , ( error : Error )=> {
-				this.stat( error as any , $mol_mem_force_cache )
+				this.stat( error as any , $mol_mem_force_fail )
 			} )
 			
 			return {
