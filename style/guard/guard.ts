@@ -1,6 +1,7 @@
 namespace $ {
 
-	export type $mol_style_guard< View extends $mol_view , Config > = $mol_style_properties
+	export type $mol_style_guard< View extends $mol_view , Config > =
+	& $mol_style_properties
 	& {
 		[ key in keyof Config ]? : key extends keyof $mol_style_properties
 			? unknown
@@ -13,7 +14,7 @@ namespace $ {
 								Extract< $mol_type_result< $mol_view_all[ view ] > , $mol_view >,
 								Config[key][view]
 							>
-							: $mol_type_error<'Unknown view'>
+							: $mol_type_error<[ 'Unknown View' , view ]>
 					}
 					: key extends '@'
 						? {
@@ -21,7 +22,7 @@ namespace $ {
 								? {
 									[ val in keyof Config[key][name] ] : $mol_style_guard< View , Config[key][name][val] >
 								}
-								: $mol_type_error<'Unknown attr'>
+								: $mol_type_error<[ 'Unknown Attribute' , name ]>
 						}
 						: key extends '@media'
 							? {
@@ -36,9 +37,9 @@ namespace $ {
 									? View[ key ] extends ( id? : any )=> infer Sub
 										? Sub extends $mol_view
 											? $mol_style_guard< Sub , Config[ key ] >
-											: $mol_type_error<'Wrong property'>
-										: $mol_type_error<'Unknown Element'>
-									: $mol_type_error<'Unknown Element'>
+											: $mol_type_error<[ 'Wrong Property' , key ]>
+										: $mol_type_error<[ 'Property is not Element' , key ]>
+									: $mol_type_error<[ 'Unknown Property' , key ]>
 	}
 
 }
