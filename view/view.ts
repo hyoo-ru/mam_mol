@@ -70,7 +70,7 @@ namespace $ {
 		
 		/// Name of element that created when element not found in DOM
 		dom_name() {
-			return this.constructor.toString().replace( '$' , '' ) || 'div'
+			return this.constructor.toString().replace( '$' , '' ).replace( /^(?=\d+)/ , '_' ) || 'div'
 		}
 		
 		/// NameSpace of element that created when element not found in DOM

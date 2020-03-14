@@ -9,6 +9,8 @@ namespace $ {
 
 		let rules = [] as string[]
 
+		const qname = ( name : string )=> name.replace( '$' , '' ).replace( /^(?=\d+)/ , '_' )
+
 		const make_class = ( prefix : string , suffix : string , config : $mol_style_definition<Component> )=> {
 
 			const props = [] as string[]
@@ -34,14 +36,14 @@ namespace $ {
 
 				} else if( key[0] === '$' ) {
 
-					make_class( prefix + '] ' + key.replace( '$' , '[' ) , suffix , config[key] as any )
+					make_class( prefix + '] [' + qname( key ) , suffix , config[key] as any )
 
 				} else if( key === '>' ) {
 
 					const types = config[key] as any
 
 					for( let type in types ) {
-						make_class( prefix + '] > ' + type.replace( '$' , '[' ) , suffix , types[type] as any )
+						make_class( prefix + '] > [' + qname( type ) , suffix , types[type] as any )
 					}
 
 				} else if( key === '@' ) {
@@ -82,7 +84,7 @@ namespace $ {
 
 		}
 
-		make_class( Component.name.replace( '$' , '[' ) , ']' , config )
+		make_class( '[' + qname( Component.name ) , ']' , config )
 
 		return rules.reverse().join('')
 

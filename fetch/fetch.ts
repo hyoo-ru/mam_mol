@@ -44,7 +44,7 @@ namespace $ {
 		buffer() {
 			const response = this.native
 			const parse = $mol_fiber_sync( response.arrayBuffer )
-			return parse.call( response )
+			return parse.call( response ) as ArrayBuffer
 		}	
 
 		@ $mol_fiber.method
