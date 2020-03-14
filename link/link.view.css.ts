@@ -1,12 +1,14 @@
 namespace $ {
 
+	const { rem } = $mol_style_unit
+
 	$mol_style_define( $mol_link , {
 		
 		textDecoration: 'none',
 		color: $mol_theme.control,
 		stroke: 'currentColor',
 		cursor: 'pointer',
-		padding: '.5rem',
+		padding: rem(.5),
 		boxSizing: 'border-box',
 		position: 'relative',
 

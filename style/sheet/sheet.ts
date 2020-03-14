@@ -1,17 +1,18 @@
 namespace $ {
 
 	export function $mol_style_sheet<
-		Component extends $mol_view
+		Component extends $mol_view,
+		Config extends $mol_style_guard< Component , Config >,
 	>(
-		Component : new()=> Component ,
-		config : $mol_style_definition< Component > ,
+		Component : new()=> Component,
+		config0 : Config ,
 	) {
 
 		let rules = [] as string[]
 
 		const qname = ( name : string )=> name.replace( '$' , '' ).replace( /^(?=\d+)/ , '_' )
 
-		const make_class = ( prefix : string , suffix : string , config : $mol_style_definition<Component> )=> {
+		const make_class = ( prefix : string , suffix : string , config : typeof config0 )=> {
 
 			const props = [] as string[]
 			
@@ -22,7 +23,9 @@ namespace $ {
 					const name = key.replace( /[A-Z]/g , letter => '-' + letter.toLowerCase() )
 					const val = config[key]
 					
-					if( val.constructor === Object ) {
+					if( Array.isArray( val ) ) {
+						props.push(`\t${ name }: ${ val.join(' ') };\n`)
+					} else if( val.constructor === Object ) {
 						for( let suffix in val ) {
 							props.push(`\t${ name }-${ suffix }: ${ val[ suffix ] };\n`)
 						}
@@ -84,7 +87,7 @@ namespace $ {
 
 		}
 
-		make_class( '[' + qname( Component.name ) , ']' , config )
+		make_class( '[' + qname( Component.name ) , ']' , config0 )
 
 		return rules.reverse().join('')
 

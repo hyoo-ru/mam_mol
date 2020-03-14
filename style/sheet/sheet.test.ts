@@ -70,6 +70,20 @@ namespace $ {
 			
 		},
 
+		'property shorthand'() {
+		
+			class $mol_style_sheet_test extends $mol_view {}
+
+			const { px } = $mol_style_unit
+
+			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
+				padding : [ 0 , 'auto' ]
+			} )
+
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tpadding: 0 auto;\n}\n' )
+			
+		},
+
 		'component block styles with pseudo class'() {
 		
 			class $mol_style_sheet_test extends $mol_view {}

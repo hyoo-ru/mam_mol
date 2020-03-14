@@ -304,7 +304,7 @@ namespace $ {
 			return attrs
 		}
 		
-		attr() : { [ key : string ] : string|number|boolean|null } {
+		attr() {
 			return {}
 		}
 		
@@ -339,6 +339,6 @@ namespace $ {
 
 	}
 
-	export type $mol_view_all = $mol_type_keys_extract< $mol_ambient_context , any , $mol_ambient_context['$mol_view'] >
+	export type $mol_view_all = $mol_type_pick< $mol_ambient_context , any , typeof $mol_view >
 
 }
