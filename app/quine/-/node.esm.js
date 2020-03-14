@@ -119,6 +119,9 @@ var $;
 //hidden.js.map
 ;
 "use strict";
+//writable.js.map
+;
+"use strict";
 var $;
 (function ($) {
     var _a;
@@ -156,6 +159,191 @@ var $;
     $.$mol_object2 = $mol_object2;
 })($ || ($ = {}));
 //object2.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_decode(base64) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_decode = $mol_base64_decode;
+})($ || ($ = {}));
+//decode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_decode_node(base64Str) {
+        return new Uint8Array(Buffer.from(base64Str, 'base64'));
+    }
+    $.$mol_base64_decode_node = $mol_base64_decode_node;
+    $.$mol_base64_decode = $mol_base64_decode_node;
+})($ || ($ = {}));
+//decode.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode(src) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_encode = $mol_base64_encode;
+})($ || ($ = {}));
+//encode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode_node(str) {
+        if (!str)
+            return '';
+        if (Buffer.isBuffer(str))
+            return str.toString('base64');
+        return Buffer.from(str).toString('base64');
+    }
+    $.$mol_base64_encode_node = $mol_base64_encode_node;
+    $.$mol_base64_encode = $mol_base64_encode_node;
+})($ || ($ = {}));
+//encode.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_compare_any(a, b) {
+        if (a === b)
+            return true;
+        if (!Number.isNaN(a))
+            return false;
+        if (!Number.isNaN(b))
+            return false;
+        return true;
+    }
+    $.$mol_compare_any = $mol_compare_any;
+})($ || ($ = {}));
+//any.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const cache = new WeakMap();
+    $.$mol_conform_stack = [];
+    function $mol_conform(target, source) {
+        if ($.$mol_compare_any(target, source))
+            return source;
+        if (!target || typeof target !== 'object')
+            return target;
+        if (!source || typeof source !== 'object')
+            return target;
+        if (target instanceof Error)
+            return target;
+        if (source instanceof Error)
+            return target;
+        if (target['constructor'] !== source['constructor'])
+            return target;
+        if (cache.get(target))
+            return target;
+        cache.set(target, true);
+        const conform = $.$mol_conform_handlers.get(target['constructor']);
+        if (!conform)
+            return target;
+        if ($.$mol_conform_stack.indexOf(target) !== -1)
+            return target;
+        $.$mol_conform_stack.push(target);
+        try {
+            return conform(target, source);
+        }
+        finally {
+            $.$mol_conform_stack.pop();
+        }
+    }
+    $.$mol_conform = $mol_conform;
+    $.$mol_conform_handlers = new WeakMap();
+    function $mol_conform_handler(cl, handler) {
+        $.$mol_conform_handlers.set(cl, handler);
+    }
+    $.$mol_conform_handler = $mol_conform_handler;
+    function $mol_conform_array(target, source) {
+        if (source.length !== target.length)
+            return target;
+        for (let i = 0; i < target.length; ++i) {
+            if (!$.$mol_compare_any(source[i], target[i]))
+                return target;
+        }
+        return source;
+    }
+    $.$mol_conform_array = $mol_conform_array;
+    $mol_conform_handler(Array, $mol_conform_array);
+    $mol_conform_handler(Uint8Array, $mol_conform_array);
+    $mol_conform_handler(Uint16Array, $mol_conform_array);
+    $mol_conform_handler(Uint32Array, $mol_conform_array);
+    $mol_conform_handler(Object, (target, source) => {
+        let count = 0;
+        let equal = true;
+        for (let key in target) {
+            const conformed = $mol_conform(target[key], source[key]);
+            if (conformed !== target[key]) {
+                try {
+                    target[key] = conformed;
+                }
+                catch (error) { }
+                if (!$.$mol_compare_any(conformed, target[key]))
+                    equal = false;
+            }
+            if (!$.$mol_compare_any(conformed, source[key]))
+                equal = false;
+            ++count;
+        }
+        for (let key in source)
+            if (--count < 0)
+                break;
+        return (equal && count === 0) ? source : target;
+    });
+    $mol_conform_handler(Date, (target, source) => {
+        if (target.getTime() === source.getTime())
+            return source;
+        return target;
+    });
+    $mol_conform_handler(RegExp, (target, source) => {
+        if (target.toString() === source.toString())
+            return source;
+        return target;
+    });
+})($ || ($ = {}));
+//conform.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const encoder = new TextEncoder();
+    class $mol_buffer extends $.$mol_object2 {
+        get length() {
+            return this.original.length;
+        }
+        static from(value, code = 'utf8') {
+            return $mol_buffer.create(t => {
+                if (typeof value === 'string') {
+                    if (code === 'base64')
+                        t.original = $.$mol_base64_decode(value);
+                    else
+                        t.original = encoder.encode(value);
+                }
+                else
+                    t.original = value;
+            });
+        }
+        toString(code = 'utf8') {
+            if (code === 'base64')
+                return $.$mol_base64_encode(this.original);
+            return new TextDecoder(code).decode(this.original);
+        }
+    }
+    $.$mol_buffer = $mol_buffer;
+    $.$mol_conform_handler($mol_buffer, (target, source) => {
+        const original = $.$mol_conform_array(target.original, source.original);
+        return original !== source.original ? target : source;
+    });
+})($ || ($ = {}));
+//buffer.js.map
 ;
 "use strict";
 var $;
@@ -542,110 +730,6 @@ var $;
     $.$mol_after_tick = $mol_after_tick;
 })($ || ($ = {}));
 //tick.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_compare_any(a, b) {
-        if (a === b)
-            return true;
-        if (!Number.isNaN(a))
-            return false;
-        if (!Number.isNaN(b))
-            return false;
-        return true;
-    }
-    $.$mol_compare_any = $mol_compare_any;
-})($ || ($ = {}));
-//any.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    const cache = new WeakMap();
-    $.$mol_conform_stack = [];
-    function $mol_conform(target, source) {
-        if ($.$mol_compare_any(target, source))
-            return source;
-        if (!target || typeof target !== 'object')
-            return target;
-        if (!source || typeof source !== 'object')
-            return target;
-        if (target instanceof Error)
-            return target;
-        if (source instanceof Error)
-            return target;
-        if (target['constructor'] !== source['constructor'])
-            return target;
-        if (cache.get(target))
-            return target;
-        cache.set(target, true);
-        const conform = $.$mol_conform_handlers.get(target['constructor']);
-        if (!conform)
-            return target;
-        if ($.$mol_conform_stack.indexOf(target) !== -1)
-            return target;
-        $.$mol_conform_stack.push(target);
-        try {
-            return conform(target, source);
-        }
-        finally {
-            $.$mol_conform_stack.pop();
-        }
-    }
-    $.$mol_conform = $mol_conform;
-    $.$mol_conform_handlers = new WeakMap();
-    function $mol_conform_handler(cl, handler) {
-        $.$mol_conform_handlers.set(cl, handler);
-    }
-    $.$mol_conform_handler = $mol_conform_handler;
-    function $mol_conform_array(target, source) {
-        if (source.length !== target.length)
-            return target;
-        for (let i = 0; i < target.length; ++i) {
-            if (!$.$mol_compare_any(source[i], target[i]))
-                return target;
-        }
-        return source;
-    }
-    $mol_conform_handler(Array, $mol_conform_array);
-    $mol_conform_handler(Uint8Array, $mol_conform_array);
-    $mol_conform_handler(Uint16Array, $mol_conform_array);
-    $mol_conform_handler(Uint32Array, $mol_conform_array);
-    $mol_conform_handler(Object, (target, source) => {
-        let count = 0;
-        let equal = true;
-        for (let key in target) {
-            const conformed = $mol_conform(target[key], source[key]);
-            if (conformed !== target[key]) {
-                try {
-                    target[key] = conformed;
-                }
-                catch (error) { }
-                if (!$.$mol_compare_any(conformed, target[key]))
-                    equal = false;
-            }
-            if (!$.$mol_compare_any(conformed, source[key]))
-                equal = false;
-            ++count;
-        }
-        for (let key in source)
-            if (--count < 0)
-                break;
-        return (equal && count === 0) ? source : target;
-    });
-    $mol_conform_handler(Date, (target, source) => {
-        if (target.getTime() === source.getTime())
-            return source;
-        return target;
-    });
-    $mol_conform_handler(RegExp, (target, source) => {
-        if (target.toString() === source.toString())
-            return source;
-        return target;
-    });
-})($ || ($ = {}));
-//conform.js.map
 ;
 "use strict";
 var $;
@@ -1459,19 +1543,6 @@ var $;
 //key.js.map
 ;
 "use strict";
-var $;
-(function ($) {
-    function $mol_const(value) {
-        var getter = (() => value);
-        getter['()'] = value;
-        getter[Symbol.toStringTag] = value;
-        return getter;
-    }
-    $.$mol_const = $mol_const;
-})($ || ($ = {}));
-//const.js.map
-;
-"use strict";
 var $node = new Proxy({}, { get(target, name, wrapper) {
         const path = require('path');
         const fs = require('fs');
@@ -1501,17 +1572,155 @@ var $node = new Proxy({}, { get(target, name, wrapper) {
 "use strict";
 var $;
 (function ($) {
+    function $mol_const(value) {
+        var getter = (() => value);
+        getter['()'] = value;
+        getter[Symbol.toStringTag] = value;
+        return getter;
+    }
+    $.$mol_const = $mol_const;
+})($ || ($ = {}));
+//const.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_not_found extends Error {
+    }
+    $.$mol_file_not_found = $mol_file_not_found;
     class $mol_file extends $.$mol_object {
         static absolute(path) {
-            return $mol_file.make({
+            throw new Error('Not implemented yet');
+        }
+        static relative(path) {
+            throw new Error('Not implemented yet');
+        }
+        path() {
+            return '.';
+        }
+        parent() {
+            return this.resolve('..');
+        }
+        reset() {
+            try {
+                this.stat(undefined, $.$mol_mem_force_cache);
+            }
+            catch (error) {
+                if (error instanceof $mol_file_not_found)
+                    return;
+                return $.$mol_fail_hidden(error);
+            }
+        }
+        version() {
+            return this.stat().mtime.getTime().toString(36).toUpperCase();
+        }
+        exists(next) {
+            let exists = true;
+            try {
+                this.stat();
+            }
+            catch (error) {
+                if (error instanceof $mol_file_not_found)
+                    exists = false;
+                else
+                    return $.$mol_fail_hidden(error);
+            }
+            if (next === undefined)
+                return exists;
+            if (next === exists)
+                return exists;
+            if (next)
+                this.parent().exists(true);
+            this.ensure(next);
+            this.reset();
+            return next;
+        }
+        type() {
+            return this.stat().type;
+        }
+        name() {
+            return this.path().replace(/^.*\//, '');
+        }
+        ext() {
+            const match = /((?:\.\w+)+)$/.exec(this.path());
+            return match ? match[1].substring(1) : '';
+        }
+        text(next, force) {
+            return this.buffer(next === undefined ? undefined : $.$mol_buffer.from(next), force).toString();
+        }
+        fail(error) {
+            this.buffer(error, $.$mol_mem_force_fail);
+            this.stat(error, $.$mol_mem_force_fail);
+        }
+        buffer_cached(buffer) {
+            const ctime = new Date();
+            const stat = {
+                type: 'file',
+                size: buffer.length,
+                ctime,
+                atime: ctime,
+                mtime: ctime
+            };
+            this.buffer(buffer, $.$mol_mem_force_cache);
+            this.stat(stat, $.$mol_mem_force_cache);
+        }
+        text_cached(content) {
+            this.buffer_cached($.$mol_buffer.from(content));
+        }
+        find(include, exclude) {
+            const found = [];
+            const sub = this.sub();
+            for (const child of sub) {
+                const child_path = child.path();
+                if (exclude && child_path.match(exclude))
+                    continue;
+                if (!include || child_path.match(include))
+                    found.push(child);
+                if (child.type() === 'dir') {
+                    const sub_child = child.find(include, exclude);
+                    for (const child of sub_child)
+                        found.push(child);
+                }
+            }
+            return found;
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_file, "absolute", null);
+    $.$mol_file = $mol_file;
+})($ || ($ = {}));
+//file.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function stat_convert(stat) {
+        let type;
+        if (stat.isDirectory())
+            type = 'dir';
+        if (stat.isFile())
+            type = 'file';
+        if (stat.isSymbolicLink())
+            type = 'link';
+        if (!type)
+            throw new Error(`Unsupported file type ${this.path()}`);
+        return {
+            type,
+            size: stat.size,
+            atime: stat.atime,
+            mtime: stat.mtime,
+            ctime: stat.ctime
+        };
+    }
+    class $mol_file_node extends $.$mol_file {
+        static absolute(path) {
+            return this.make({
                 path: $.$mol_const(path)
             });
         }
         static relative(path) {
-            return $mol_file.absolute($node.path.resolve(path).replace(/\\/g, '/'));
-        }
-        path() {
-            return '.';
+            return this.absolute($node.path.resolve(path).replace(/\\/g, '/'));
         }
         watcher() {
             const watcher = $node.chokidar.watch(this.path(), {
@@ -1521,7 +1730,7 @@ var $;
                 ignoreInitial: true,
             });
             const handler = (type, path) => $.$mol_fiber_unlimit(() => {
-                const file = $mol_file.relative(path.replace(/\\/g, '/'));
+                const file = $.$mol_file.relative(path.replace(/\\/g, '/'));
                 file.reset();
                 if (type === 'change')
                     return;
@@ -1529,7 +1738,7 @@ var $;
             });
             watcher.on('all', handler);
             watcher.on('error', (error) => {
-                this.stat(error, $.$mol_mem_force_cache);
+                this.stat(error, $.$mol_mem_force_fail);
             });
             return {
                 destructor() {
@@ -1537,97 +1746,34 @@ var $;
                 }
             };
         }
-        reset() {
-            try {
-                this.stat(undefined, $.$mol_mem_force_cache);
-                return true;
-            }
-            catch (error) {
-                if (error.code !== 'ENOENT')
-                    return $.$mol_fail_hidden(error);
-                return false;
-            }
-        }
         stat(next, force) {
-            const path = this.path();
-            let stat;
-            stat = next !== null && next !== void 0 ? next : $node.fs.statSync(path);
-            this.parent().watcher();
-            return stat;
-        }
-        version() {
-            return this.stat().mtime.getTime().toString(36).toUpperCase();
-        }
-        exists(next, force) {
-            let exists = true;
+            let stat = next;
             try {
-                this.stat();
+                stat = next !== null && next !== void 0 ? next : stat_convert($node.fs.statSync(this.path()));
             }
             catch (error) {
                 if (error.code === 'ENOENT')
-                    exists = false;
-                else
-                    return $.$mol_fail_hidden(error);
+                    error = new $.$mol_file_not_found(`File not found: ${this.path()}`);
+                return $.$mol_fail_hidden(error);
             }
-            if (next === undefined) {
-                return exists;
-            }
-            else {
-                if (next === exists)
-                    return exists;
-                if (next) {
-                    this.parent().exists(true);
-                    $node.fs.mkdirSync(this.path());
-                }
-                else {
-                    $node.fs.unlinkSync(this.path());
-                }
-                this.stat(undefined, $.$mol_mem_force_cache);
-                return next;
-            }
+            this.parent().watcher();
+            return stat;
         }
-        parent() {
-            return this.resolve('..');
+        ensure(next) {
+            if (next)
+                $node.fs.mkdirSync(this.path());
+            else
+                $node.fs.unlinkSync(this.path());
+            return true;
         }
-        type() {
-            const stat = this.stat();
-            if (stat.isFile())
-                return 'file';
-            if (stat.isDirectory())
-                return 'dir';
-            if (stat.isBlockDevice())
-                return 'blocks';
-            if (stat.isCharacterDevice())
-                return 'chars';
-            if (stat.isSymbolicLink())
-                return 'link';
-            if (stat.isFIFO())
-                return 'fifo';
-            if (stat.isSocket())
-                return 'socket';
-            throw new Error(`Unknown file type ${this.path()}`);
-        }
-        name() {
-            return $node.path.basename(this.path());
-        }
-        ext() {
-            const match = /((?:\.\w+)+)$/.exec(this.path());
-            return match ? match[1].substring(1) : '';
-        }
-        content(next, force) {
+        buffer(next, force) {
             if (next === undefined) {
                 this.stat();
-                return $node.fs.readFileSync(this.path());
+                return $.$mol_buffer.from($node.fs.readFileSync(this.path()));
             }
             this.parent().exists(true);
             $node.fs.writeFileSync(this.path(), next);
             return next;
-        }
-        reader() {
-            return $node.fs.createReadStream(this.path());
-        }
-        writer() {
-            return $node.fs.createWriteStream(this.path());
         }
         sub() {
             if (!this.exists())
@@ -1645,46 +1791,26 @@ var $;
             return $node.path.relative(base.path(), this.path()).replace(/\\/g, '/');
         }
         append(next) {
-            $node.fs.appendFileSync(this.path(), next);
-        }
-        find(include, exclude) {
-            let found = [];
-            this.sub().forEach(child => {
-                if (exclude && child.path().match(exclude))
-                    return;
-                if (!include || child.path().match(include))
-                    found.push(child);
-                if (child.type() === 'dir')
-                    found = found.concat(child.find(include, exclude));
-            });
-            return found;
+            $node.fs.appendFileSync(this.path(), next instanceof $.$mol_buffer ? next.original : next);
         }
     }
     __decorate([
         $.$mol_mem
-    ], $mol_file.prototype, "watcher", null);
+    ], $mol_file_node.prototype, "watcher", null);
     __decorate([
         $.$mol_mem
-    ], $mol_file.prototype, "stat", null);
+    ], $mol_file_node.prototype, "stat", null);
     __decorate([
         $.$mol_mem
-    ], $mol_file.prototype, "version", null);
+    ], $mol_file_node.prototype, "buffer", null);
     __decorate([
         $.$mol_mem
-    ], $mol_file.prototype, "exists", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_file.prototype, "type", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_file.prototype, "content", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_file.prototype, "sub", null);
+    ], $mol_file_node.prototype, "sub", null);
     __decorate([
         $.$mol_mem_key
-    ], $mol_file, "absolute", null);
-    $.$mol_file = $mol_file;
+    ], $mol_file_node, "absolute", null);
+    $.$mol_file_node = $mol_file_node;
+    $.$mol_file = $mol_file_node;
 })($ || ($ = {}));
 //file.node.js.map
 ;
@@ -3218,7 +3344,7 @@ var $;
             return $.$mol_state_local.value('locale', next) || $.$mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
         }
         static source(lang) {
-            return JSON.parse($.$mol_file.relative(`web.locale=${lang}.json`).content().toString());
+            return JSON.parse($.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
         }
         static texts(lang, next) {
             if (next)
@@ -5139,7 +5265,7 @@ var $;
             content() {
                 const paths = this.paths();
                 const sources = paths.map(path => {
-                    return $.$mol_file.relative(path).content().toString();
+                    return $.$mol_file.relative(path).text().toString();
                 });
                 const content = sources.map((source, index) => {
                     const header = `# ${paths[index].replace(/.*\//, '')}\n`;

@@ -117,6 +117,9 @@ var $;
 //owning.js.map
 ;
 "use strict";
+//writable.js.map
+;
+"use strict";
 var $;
 (function ($) {
     var _a;
@@ -615,6 +618,7 @@ var $;
         }
         return source;
     }
+    $.$mol_conform_array = $mol_conform_array;
     $mol_conform_handler(Array, $mol_conform_array);
     $mol_conform_handler(Uint8Array, $mol_conform_array);
     $mol_conform_handler(Uint16Array, $mol_conform_array);
@@ -4316,14 +4320,102 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_file extends $.$mol_object {
-        static absolute(path) {
-            return $mol_file.make({
-                path: $.$mol_const(path)
+    function $mol_base64_decode(base64) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_decode = $mol_base64_decode;
+})($ || ($ = {}));
+//decode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_decode_web(base64Str) {
+        return new Uint8Array($.$mol_dom_context.atob(base64Str).split('').map(c => c.charCodeAt(0)));
+    }
+    $.$mol_base64_decode_web = $mol_base64_decode_web;
+    $.$mol_base64_decode = $mol_base64_decode_web;
+})($ || ($ = {}));
+//decode.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode(src) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_encode = $mol_base64_encode;
+})($ || ($ = {}));
+//encode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function binary_string(bytes) {
+        let binary = '';
+        if (typeof bytes !== 'string') {
+            for (const byte of bytes)
+                binary += String.fromCharCode(byte);
+        }
+        else {
+            binary = unescape(encodeURIComponent(bytes));
+        }
+        return binary;
+    }
+    function $mol_base64_encode_web(str) {
+        return $.$mol_dom_context.btoa(binary_string(str));
+    }
+    $.$mol_base64_encode_web = $mol_base64_encode_web;
+    $.$mol_base64_encode = $mol_base64_encode_web;
+})($ || ($ = {}));
+//encode.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const encoder = new TextEncoder();
+    class $mol_buffer extends $.$mol_object2 {
+        get length() {
+            return this.original.length;
+        }
+        static from(value, code = 'utf8') {
+            return $mol_buffer.create(t => {
+                if (typeof value === 'string') {
+                    if (code === 'base64')
+                        t.original = $.$mol_base64_decode(value);
+                    else
+                        t.original = encoder.encode(value);
+                }
+                else
+                    t.original = value;
             });
         }
+        toString(code = 'utf8') {
+            if (code === 'base64')
+                return $.$mol_base64_encode(this.original);
+            return new TextDecoder(code).decode(this.original);
+        }
+    }
+    $.$mol_buffer = $mol_buffer;
+    $.$mol_conform_handler($mol_buffer, (target, source) => {
+        const original = $.$mol_conform_array(target.original, source.original);
+        return original !== source.original ? target : source;
+    });
+})($ || ($ = {}));
+//buffer.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_not_found extends Error {
+    }
+    $.$mol_file_not_found = $mol_file_not_found;
+    class $mol_file extends $.$mol_object {
+        static absolute(path) {
+            throw new Error('Not implemented yet');
+        }
         static relative(path) {
-            return this.absolute(new URL(path, this.base).toString());
+            throw new Error('Not implemented yet');
         }
         path() {
             return '.';
@@ -4331,15 +4423,135 @@ var $;
         parent() {
             return this.resolve('..');
         }
+        reset() {
+            try {
+                this.stat(undefined, $.$mol_mem_force_cache);
+            }
+            catch (error) {
+                if (error instanceof $mol_file_not_found)
+                    return;
+                return $.$mol_fail_hidden(error);
+            }
+        }
+        version() {
+            return this.stat().mtime.getTime().toString(36).toUpperCase();
+        }
+        exists(next) {
+            let exists = true;
+            try {
+                this.stat();
+            }
+            catch (error) {
+                if (error instanceof $mol_file_not_found)
+                    exists = false;
+                else
+                    return $.$mol_fail_hidden(error);
+            }
+            if (next === undefined)
+                return exists;
+            if (next === exists)
+                return exists;
+            if (next)
+                this.parent().exists(true);
+            this.ensure(next);
+            this.reset();
+            return next;
+        }
+        type() {
+            return this.stat().type;
+        }
         name() {
             return this.path().replace(/^.*\//, '');
         }
         ext() {
-            var match = /((?:\.\w+)+)$/.exec(this.path());
-            return match && match[1].substring(1);
+            const match = /((?:\.\w+)+)$/.exec(this.path());
+            return match ? match[1].substring(1) : '';
         }
-        content(next, force) {
-            return $.$mol_fetch.text(this.path());
+        text(next, force) {
+            return this.buffer(next === undefined ? undefined : $.$mol_buffer.from(next), force).toString();
+        }
+        fail(error) {
+            this.buffer(error, $.$mol_mem_force_fail);
+            this.stat(error, $.$mol_mem_force_fail);
+        }
+        buffer_cached(buffer) {
+            const ctime = new Date();
+            const stat = {
+                type: 'file',
+                size: buffer.length,
+                ctime,
+                atime: ctime,
+                mtime: ctime
+            };
+            this.buffer(buffer, $.$mol_mem_force_cache);
+            this.stat(stat, $.$mol_mem_force_cache);
+        }
+        text_cached(content) {
+            this.buffer_cached($.$mol_buffer.from(content));
+        }
+        find(include, exclude) {
+            const found = [];
+            const sub = this.sub();
+            for (const child of sub) {
+                const child_path = child.path();
+                if (exclude && child_path.match(exclude))
+                    continue;
+                if (!include || child_path.match(include))
+                    found.push(child);
+                if (child.type() === 'dir') {
+                    const sub_child = child.find(include, exclude);
+                    for (const child of sub_child)
+                        found.push(child);
+                }
+            }
+            return found;
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_file, "absolute", null);
+    $.$mol_file = $mol_file;
+})($ || ($ = {}));
+//file.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_file_web extends $.$mol_file {
+        static absolute(path) {
+            return this.make({
+                path: $.$mol_const(path)
+            });
+        }
+        static relative(path) {
+            return this.absolute(new URL(path, this.base).toString());
+        }
+        buffer(next, force) {
+            if (next !== undefined)
+                throw new Error(`Saving content not supported: ${this.path}`);
+            const response = $.$mol_fetch.response(this.path());
+            if (response.native.status === 404)
+                throw new $.$mol_file_not_found(`File not found: ${this.path()}`);
+            return $.$mol_buffer.from(new Uint8Array(response.buffer()));
+        }
+        watcher() {
+            throw new Error('$mol_file_web.watcher() not implemented');
+        }
+        stat(next, force) {
+            let stat = next;
+            if (next === undefined) {
+                const content = this.text();
+                const ctime = new Date();
+                stat = {
+                    type: 'file',
+                    size: content.length,
+                    ctime,
+                    atime: ctime,
+                    mtime: ctime
+                };
+            }
+            this.parent().watcher();
+            return stat;
         }
         resolve(path) {
             let res = this.path() + '/' + path;
@@ -4351,20 +4563,36 @@ var $;
             }
             return this.constructor.absolute(res);
         }
+        ensure(next) {
+            throw new Error('$mol_file_web.ensure() not implemented');
+        }
+        sub() {
+            throw new Error('$mol_file_web.sub() not implemented');
+        }
         relate(base = this.constructor.relative('.')) {
-            throw new Error('Not implemented yet');
+            throw new Error('$mol_file_web.relate() not implemented');
+        }
+        append(next) {
+            throw new Error('$mol_file_web.append() not implemented');
         }
     }
-    $mol_file.base = $.$mol_dom_context.document
+    $mol_file_web.base = $.$mol_dom_context.document
         ? new URL('.', $.$mol_dom_context.document.currentScript['src']).toString()
         : '';
     __decorate([
         $.$mol_mem
-    ], $mol_file.prototype, "content", null);
+    ], $mol_file_web.prototype, "buffer", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_file_web.prototype, "stat", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_file_web.prototype, "sub", null);
     __decorate([
         $.$mol_mem_key
-    ], $mol_file, "absolute", null);
-    $.$mol_file = $mol_file;
+    ], $mol_file_web, "absolute", null);
+    $.$mol_file_web = $mol_file_web;
+    $.$mol_file = $mol_file_web;
 })($ || ($ = {}));
 //file.web.js.map
 ;
@@ -4379,7 +4607,7 @@ var $;
             return $.$mol_state_local.value('locale', next) || $.$mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
         }
         static source(lang) {
-            return JSON.parse($.$mol_file.relative(`web.locale=${lang}.json`).content().toString());
+            return JSON.parse($.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
         }
         static texts(lang, next) {
             if (next)

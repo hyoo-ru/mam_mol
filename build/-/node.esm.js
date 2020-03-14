@@ -119,6 +119,9 @@ var $;
 //owning.js.map
 ;
 "use strict";
+//writable.js.map
+;
+"use strict";
 var $;
 (function ($) {
     var _a;
@@ -588,6 +591,7 @@ var $;
         }
         return source;
     }
+    $.$mol_conform_array = $mol_conform_array;
     $mol_conform_handler(Array, $mol_conform_array);
     $mol_conform_handler(Uint8Array, $mol_conform_array);
     $mol_conform_handler(Uint16Array, $mol_conform_array);
@@ -1472,6 +1476,86 @@ var $;
 //const.js.map
 ;
 "use strict";
+var $;
+(function ($) {
+    function $mol_base64_decode(base64) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_decode = $mol_base64_decode;
+})($ || ($ = {}));
+//decode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_decode_node(base64Str) {
+        return new Uint8Array(Buffer.from(base64Str, 'base64'));
+    }
+    $.$mol_base64_decode_node = $mol_base64_decode_node;
+    $.$mol_base64_decode = $mol_base64_decode_node;
+})($ || ($ = {}));
+//decode.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode(src) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_encode = $mol_base64_encode;
+})($ || ($ = {}));
+//encode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode_node(str) {
+        if (!str)
+            return '';
+        if (Buffer.isBuffer(str))
+            return str.toString('base64');
+        return Buffer.from(str).toString('base64');
+    }
+    $.$mol_base64_encode_node = $mol_base64_encode_node;
+    $.$mol_base64_encode = $mol_base64_encode_node;
+})($ || ($ = {}));
+//encode.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const encoder = new TextEncoder();
+    class $mol_buffer extends $.$mol_object2 {
+        get length() {
+            return this.original.length;
+        }
+        static from(value, code = 'utf8') {
+            return $mol_buffer.create(t => {
+                if (typeof value === 'string') {
+                    if (code === 'base64')
+                        t.original = $.$mol_base64_decode(value);
+                    else
+                        t.original = encoder.encode(value);
+                }
+                else
+                    t.original = value;
+            });
+        }
+        toString(code = 'utf8') {
+            if (code === 'base64')
+                return $.$mol_base64_encode(this.original);
+            return new TextDecoder(code).decode(this.original);
+        }
+    }
+    $.$mol_buffer = $mol_buffer;
+    $.$mol_conform_handler($mol_buffer, (target, source) => {
+        const original = $.$mol_conform_array(target.original, source.original);
+        return original !== source.original ? target : source;
+    });
+})($ || ($ = {}));
+//buffer.js.map
+;
+"use strict";
 var $node = new Proxy({}, { get(target, name, wrapper) {
         const path = require('path');
         const fs = require('fs');
@@ -1501,17 +1585,142 @@ var $node = new Proxy({}, { get(target, name, wrapper) {
 "use strict";
 var $;
 (function ($) {
+    class $mol_file_not_found extends Error {
+    }
+    $.$mol_file_not_found = $mol_file_not_found;
     class $mol_file extends $.$mol_object {
         static absolute(path) {
-            return $mol_file.make({
+            throw new Error('Not implemented yet');
+        }
+        static relative(path) {
+            throw new Error('Not implemented yet');
+        }
+        path() {
+            return '.';
+        }
+        parent() {
+            return this.resolve('..');
+        }
+        reset() {
+            try {
+                this.stat(undefined, $.$mol_mem_force_cache);
+            }
+            catch (error) {
+                if (error instanceof $mol_file_not_found)
+                    return;
+                return $.$mol_fail_hidden(error);
+            }
+        }
+        version() {
+            return this.stat().mtime.getTime().toString(36).toUpperCase();
+        }
+        exists(next) {
+            let exists = true;
+            try {
+                this.stat();
+            }
+            catch (error) {
+                if (error instanceof $mol_file_not_found)
+                    exists = false;
+                else
+                    return $.$mol_fail_hidden(error);
+            }
+            if (next === undefined)
+                return exists;
+            if (next === exists)
+                return exists;
+            if (next)
+                this.parent().exists(true);
+            this.ensure(next);
+            this.reset();
+            return next;
+        }
+        type() {
+            return this.stat().type;
+        }
+        name() {
+            return this.path().replace(/^.*\//, '');
+        }
+        ext() {
+            const match = /((?:\.\w+)+)$/.exec(this.path());
+            return match ? match[1].substring(1) : '';
+        }
+        text(next, force) {
+            return this.buffer(next === undefined ? undefined : $.$mol_buffer.from(next), force).toString();
+        }
+        fail(error) {
+            this.buffer(error, $.$mol_mem_force_fail);
+            this.stat(error, $.$mol_mem_force_fail);
+        }
+        buffer_cached(buffer) {
+            const ctime = new Date();
+            const stat = {
+                type: 'file',
+                size: buffer.length,
+                ctime,
+                atime: ctime,
+                mtime: ctime
+            };
+            this.buffer(buffer, $.$mol_mem_force_cache);
+            this.stat(stat, $.$mol_mem_force_cache);
+        }
+        text_cached(content) {
+            this.buffer_cached($.$mol_buffer.from(content));
+        }
+        find(include, exclude) {
+            const found = [];
+            const sub = this.sub();
+            for (const child of sub) {
+                const child_path = child.path();
+                if (exclude && child_path.match(exclude))
+                    continue;
+                if (!include || child_path.match(include))
+                    found.push(child);
+                if (child.type() === 'dir') {
+                    const sub_child = child.find(include, exclude);
+                    for (const child of sub_child)
+                        found.push(child);
+                }
+            }
+            return found;
+        }
+    }
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_file, "absolute", null);
+    $.$mol_file = $mol_file;
+})($ || ($ = {}));
+//file.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function stat_convert(stat) {
+        let type;
+        if (stat.isDirectory())
+            type = 'dir';
+        if (stat.isFile())
+            type = 'file';
+        if (stat.isSymbolicLink())
+            type = 'link';
+        if (!type)
+            throw new Error(`Unsupported file type ${this.path()}`);
+        return {
+            type,
+            size: stat.size,
+            atime: stat.atime,
+            mtime: stat.mtime,
+            ctime: stat.ctime
+        };
+    }
+    class $mol_file_node extends $.$mol_file {
+        static absolute(path) {
+            return this.make({
                 path: $.$mol_const(path)
             });
         }
         static relative(path) {
-            return $mol_file.absolute($node.path.resolve(path).replace(/\\/g, '/'));
-        }
-        path() {
-            return '.';
+            return this.absolute($node.path.resolve(path).replace(/\\/g, '/'));
         }
         watcher() {
             const watcher = $node.chokidar.watch(this.path(), {
@@ -1521,7 +1730,7 @@ var $;
                 ignoreInitial: true,
             });
             const handler = (type, path) => $.$mol_fiber_unlimit(() => {
-                const file = $mol_file.relative(path.replace(/\\/g, '/'));
+                const file = $.$mol_file.relative(path.replace(/\\/g, '/'));
                 file.reset();
                 if (type === 'change')
                     return;
@@ -1529,7 +1738,7 @@ var $;
             });
             watcher.on('all', handler);
             watcher.on('error', (error) => {
-                this.stat(error, $.$mol_mem_force_cache);
+                this.stat(error, $.$mol_mem_force_fail);
             });
             return {
                 destructor() {
@@ -1537,97 +1746,34 @@ var $;
                 }
             };
         }
-        reset() {
-            try {
-                this.stat(undefined, $.$mol_mem_force_cache);
-                return true;
-            }
-            catch (error) {
-                if (error.code !== 'ENOENT')
-                    return $.$mol_fail_hidden(error);
-                return false;
-            }
-        }
         stat(next, force) {
-            const path = this.path();
-            let stat;
-            stat = next !== null && next !== void 0 ? next : $node.fs.statSync(path);
-            this.parent().watcher();
-            return stat;
-        }
-        version() {
-            return this.stat().mtime.getTime().toString(36).toUpperCase();
-        }
-        exists(next, force) {
-            let exists = true;
+            let stat = next;
             try {
-                this.stat();
+                stat = next !== null && next !== void 0 ? next : stat_convert($node.fs.statSync(this.path()));
             }
             catch (error) {
                 if (error.code === 'ENOENT')
-                    exists = false;
-                else
-                    return $.$mol_fail_hidden(error);
+                    error = new $.$mol_file_not_found(`File not found: ${this.path()}`);
+                return $.$mol_fail_hidden(error);
             }
-            if (next === undefined) {
-                return exists;
-            }
-            else {
-                if (next === exists)
-                    return exists;
-                if (next) {
-                    this.parent().exists(true);
-                    $node.fs.mkdirSync(this.path());
-                }
-                else {
-                    $node.fs.unlinkSync(this.path());
-                }
-                this.stat(undefined, $.$mol_mem_force_cache);
-                return next;
-            }
+            this.parent().watcher();
+            return stat;
         }
-        parent() {
-            return this.resolve('..');
+        ensure(next) {
+            if (next)
+                $node.fs.mkdirSync(this.path());
+            else
+                $node.fs.unlinkSync(this.path());
+            return true;
         }
-        type() {
-            const stat = this.stat();
-            if (stat.isFile())
-                return 'file';
-            if (stat.isDirectory())
-                return 'dir';
-            if (stat.isBlockDevice())
-                return 'blocks';
-            if (stat.isCharacterDevice())
-                return 'chars';
-            if (stat.isSymbolicLink())
-                return 'link';
-            if (stat.isFIFO())
-                return 'fifo';
-            if (stat.isSocket())
-                return 'socket';
-            throw new Error(`Unknown file type ${this.path()}`);
-        }
-        name() {
-            return $node.path.basename(this.path());
-        }
-        ext() {
-            const match = /((?:\.\w+)+)$/.exec(this.path());
-            return match ? match[1].substring(1) : '';
-        }
-        content(next, force) {
+        buffer(next, force) {
             if (next === undefined) {
                 this.stat();
-                return $node.fs.readFileSync(this.path());
+                return $.$mol_buffer.from($node.fs.readFileSync(this.path()));
             }
             this.parent().exists(true);
             $node.fs.writeFileSync(this.path(), next);
             return next;
-        }
-        reader() {
-            return $node.fs.createReadStream(this.path());
-        }
-        writer() {
-            return $node.fs.createWriteStream(this.path());
         }
         sub() {
             if (!this.exists())
@@ -1645,46 +1791,26 @@ var $;
             return $node.path.relative(base.path(), this.path()).replace(/\\/g, '/');
         }
         append(next) {
-            $node.fs.appendFileSync(this.path(), next);
-        }
-        find(include, exclude) {
-            let found = [];
-            this.sub().forEach(child => {
-                if (exclude && child.path().match(exclude))
-                    return;
-                if (!include || child.path().match(include))
-                    found.push(child);
-                if (child.type() === 'dir')
-                    found = found.concat(child.find(include, exclude));
-            });
-            return found;
+            $node.fs.appendFileSync(this.path(), next instanceof $.$mol_buffer ? next.original : next);
         }
     }
     __decorate([
         $.$mol_mem
-    ], $mol_file.prototype, "watcher", null);
+    ], $mol_file_node.prototype, "watcher", null);
     __decorate([
         $.$mol_mem
-    ], $mol_file.prototype, "stat", null);
+    ], $mol_file_node.prototype, "stat", null);
     __decorate([
         $.$mol_mem
-    ], $mol_file.prototype, "version", null);
+    ], $mol_file_node.prototype, "buffer", null);
     __decorate([
         $.$mol_mem
-    ], $mol_file.prototype, "exists", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_file.prototype, "type", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_file.prototype, "content", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_file.prototype, "sub", null);
+    ], $mol_file_node.prototype, "sub", null);
     __decorate([
         $.$mol_mem_key
-    ], $mol_file, "absolute", null);
-    $.$mol_file = $mol_file;
+    ], $mol_file_node, "absolute", null);
+    $.$mol_file_node = $mol_file_node;
+    $.$mol_file = $mol_file_node;
 })($ || ($ = {}));
 //file.node.js.map
 ;
@@ -2667,7 +2793,7 @@ var $;
             return $.$mol_state_local.value('locale', next) || $.$mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
         }
         static source(lang) {
-            return JSON.parse($.$mol_file.relative(`web.locale=${lang}.json`).content().toString());
+            return JSON.parse($.$mol_file.relative(`web.locale=${lang}.json`).text().toString());
         }
         static texts(lang, next) {
             if (next)
@@ -3336,7 +3462,7 @@ var $;
                 if (!child.exists())
                     return false;
                 if (/(meta\.tree)$/.test(name)) {
-                    const tree = $.$mol_tree.fromString(child.content().toString(), child.path());
+                    const tree = $.$mol_tree.fromString(child.text(), child.path());
                     let content = '';
                     for (const step of tree.select('build', '').sub) {
                         const res = $.$mol_exec(child.parent().path(), step.value).stdout.toString().trim();
@@ -3345,25 +3471,25 @@ var $;
                     }
                     if (content) {
                         const script = child.parent().resolve(`-meta.tree/${child.name()}.ts`);
-                        script.content(content);
+                        script.text(content);
                         mods.push(script);
                     }
                 }
                 else if (/(view\.tree)$/.test(name)) {
                     const script = child.parent().resolve(`-view.tree/${child.name()}.ts`);
                     const locale = child.parent().resolve(`-view.tree/${child.name()}.locale=en.json`);
-                    const tree = $.$mol_tree.fromString(child.content().toString(), child.path());
+                    const tree = $.$mol_tree.fromString(child.text(), child.path());
                     const res = $.$mol_view_tree_compile(tree);
-                    script.content(res.script);
-                    locale.content(JSON.stringify(res.locales, null, '\t'));
+                    script.text(res.script);
+                    locale.text(JSON.stringify(res.locales, null, '\t'));
                     mods.push(script, locale);
                 }
                 else if (/(\.css)$/.test(name)) {
                     const script = child.parent().resolve(`-css/${child.name()}.ts`);
                     const id = child.relate(this.root());
-                    const styles = child.content().toString();
+                    const styles = child.text();
                     const code = 'namespace $ { $' + `mol_style_attach( ${JSON.stringify(id)},\n ${JSON.stringify(styles)}\n) }`;
-                    script.content(code);
+                    script.text(code);
                     mods.push(script);
                 }
                 mods.push(child);
@@ -3467,14 +3593,14 @@ var $;
             return [...sources];
         }
         tsOptions() {
-            const rawOptions = JSON.parse(this.root().resolve('tsconfig.json').content() + '').compilerOptions;
+            const rawOptions = JSON.parse(this.root().resolve('tsconfig.json').text() + '').compilerOptions;
             const res = $node.typescript.convertCompilerOptionsFromJson(rawOptions, ".", 'tsconfig.json');
             if (res.errors.length)
                 throw res.errors;
             return res.options;
         }
         tsSource({ path, target }) {
-            const content = $.$mol_file.absolute(path).content().toString();
+            const content = $.$mol_file.absolute(path).text();
             return $node.typescript.createSourceFile(path, content, target);
         }
         tsPaths({ path, exclude, bundle }) {
@@ -3485,7 +3611,7 @@ var $;
                     types.push('\t' + JSON.stringify(dep) + ' : typeof import( ' + JSON.stringify(dep) + ' )');
                 }
                 const node_types = $.$mol_file.absolute(path).resolve(`-node/deps.d.ts`);
-                node_types.content('interface $node {\n ' + types.join('\n') + '\n}');
+                node_types.text('interface $node {\n ' + types.join('\n') + '\n}');
                 sources.push(node_types);
             }
             return sources.map(src => src.path());
@@ -3495,9 +3621,7 @@ var $;
             if (!paths.length)
                 return null;
             var host = $node.typescript.createWatchCompilerHost(paths, this.tsOptions(), Object.assign(Object.assign({}, $node.typescript.sys), { setTimeout: (cb) => cb(), writeFile: (path, content) => {
-                    const file = $.$mol_file.relative(path);
-                    file.content(content, $.$mol_mem_force_cache);
-                    file.exists(true, $.$mol_mem_force_cache);
+                    $.$mol_file.relative(path).text_cached(content);
                 } }), $node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram, (diagnostic) => {
                 if (diagnostic.file) {
                     const file = $.$mol_file.absolute(diagnostic.file.fileName.replace(/\.tsx?$/, '.js'));
@@ -3506,10 +3630,10 @@ var $;
                         getCanonicalFileName: (path) => path.toLowerCase(),
                         getNewLine: () => '\n',
                     }));
-                    file.content(error, $.$mol_mem_force_fail);
+                    file.fail(error);
                 }
                 else {
-                    console.error($node.colorette.red(diagnostic.messageText));
+                    console.error($node.colorette.red(String(diagnostic.messageText)));
                 }
             }, () => { });
             const builder = $node.typescript.createWatchProgram(host);
@@ -3530,10 +3654,10 @@ var $;
                 if (image_types[ext]) {
                     const ext = src.ext();
                     const script = src.parent().resolve(`-image/${src.name()}.js`);
-                    const payload = src.content().toString('base64');
+                    const payload = src.buffer().toString('base64');
                     const path = src.relate(this.root());
                     const uri = `data:${image_types[ext]};base64,${payload}`;
-                    script.content(`var $node = $node || {} ; $node[ ${JSON.stringify('/' + path)} ] = ${JSON.stringify(uri)}\n`);
+                    script.text(`var $node = $node || {} ; $node[ ${JSON.stringify('/' + path)} ] = ${JSON.stringify(uri)}\n`);
                     return script;
                 }
                 if (/^tsx?$/.test(ext)) {
@@ -3611,7 +3735,7 @@ var $;
                                 $.$mol_exec(mod.path(), 'git', 'init');
                                 $.$mol_exec(mod.path(), 'git', 'remote', 'add', '--track', 'master', 'origin', repo.value);
                                 $.$mol_exec(mod.path(), 'git', 'pull');
-                                mod.stat(undefined, $.$mol_mem_force_cache);
+                                mod.reset();
                                 return true;
                             }
                         }
@@ -3624,7 +3748,7 @@ var $;
             }
             for (let repo of mapping.select('pack', mod.name(), 'git').sub) {
                 $.$mol_exec(this.root().path(), 'git', 'clone', repo.value, mod.path());
-                mod.stat(undefined, $.$mol_mem_force_cache);
+                mod.reset();
                 return true;
             }
             if (parent === this.root()) {
@@ -3641,7 +3765,7 @@ var $;
             for (const file of pack.sub()) {
                 if (!/\.meta\.tree$/.test(file.name()))
                     continue;
-                decls.push(...$.$mol_tree.fromString(file.content().toString(), file.path()).sub);
+                decls.push(...$.$mol_tree.fromString(file.text(), file.path()).sub);
             }
             return new $.$mol_tree({ sub: decls });
         }
@@ -3812,14 +3936,14 @@ var $;
                     }
                 }
                 try {
-                    const content = (src.content()).toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
+                    const content = (src.text()).toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
                     const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test(content);
                     if (isCommonJs) {
                         concater.add(`\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate(this.root().resolve('node_modules')) + `/" ) ] }; \n`, '-');
                     }
                     const srcMap = src.parent().resolve(src.name() + '.map');
                     if (content)
-                        concater.add(content, src.relate(target.parent()), srcMap.exists() ? String(srcMap.content()) : undefined);
+                        concater.add(content, src.relate(target.parent()), srcMap.exists() ? srcMap.text() : null);
                     if (isCommonJs) {
                         const idFull = src.relate(this.root().resolve('node_modules'));
                         const idShort = idFull.replace(/\/index\.js$/, '').replace(/\.js$/, '');
@@ -3833,8 +3957,8 @@ var $;
             if (moduleTarget === 'esm') {
                 concater.add('export default $', '-');
             }
-            target.content(concater.content + '\n//# sourceMappingURL=' + targetMap.relate(target.parent()) + '\n');
-            targetMap.content(concater.toString());
+            target.text(concater.content + '\n//# sourceMappingURL=' + targetMap.relate(target.parent()) + '\n');
+            targetMap.text(concater.toString());
             this.logBundle(target, Date.now() - start);
             if (errors.length)
                 $.$mol_fail_hidden(new $.$mol_error_mix(`Build fail ${path}`, ...errors));
@@ -3872,17 +3996,17 @@ var $;
                 }
                 let content = '';
                 try {
-                    content = (src.content()).toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
+                    content = (src.text()).toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
                     const srcMap = src.parent().resolve(src.name() + '.map');
                     if (content)
-                        concater.add(content, src.relate(target.parent()), srcMap.exists() ? String(srcMap.content()) : undefined);
+                        concater.add(content, src.relate(target.parent()), srcMap.exists() ? srcMap.text() : undefined);
                 }
                 catch (error) {
                     errors.push(error);
                 }
             });
-            target.content(concater.content + '\n//# sourceMappingURL=' + targetMap.relate(target.parent()) + '\n');
-            targetMap.content(concater.toString());
+            target.text(concater.content + '\n//# sourceMappingURL=' + targetMap.relate(target.parent()) + '\n');
+            targetMap.text(concater.toString());
             this.logBundle(target, Date.now() - start);
             if (errors.length)
                 $.$mol_fail_hidden(new $.$mol_error_mix(`Build fail ${path}`, ...errors));
@@ -3897,10 +4021,10 @@ var $;
             const source = pack.resolve('index.html');
             const target = pack.resolve(`-/test.html`);
             let content = source.exists()
-                ? source.content().toString()
+                ? source.text()
                 : `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`;
             content = content.replace(/(<\/body>|$)/, `<script src="web.test.js" charset="utf-8" defer></script>$1`);
-            target.content(content);
+            target.text(content);
             this.logBundle(target, Date.now() - start);
             return [target];
         }
@@ -3913,11 +4037,11 @@ var $;
                 return [];
             var concater = new $.$mol_sourcemap_builder(target.name());
             sources.forEach(function (src) {
-                if (!src.exists() || !src.content())
+                if (!src.exists() || !src.text())
                     return;
-                concater.add(src.content().toString(), src.relate(target.parent()));
+                concater.add(src.text(), src.relate(target.parent()));
             });
-            target.content(concater.content);
+            target.text(concater.content);
             this.logBundle(target, Date.now() - start);
             return [target];
         }
@@ -3929,7 +4053,7 @@ var $;
                 .filter(src => /view.tree$/.test(src.ext()));
             if (sources.length === 0)
                 return [];
-            target.content(sources.map(src => src.content().toString()).join('\n'));
+            target.text(sources.map(src => src.text()).join('\n'));
             this.logBundle(target, Date.now() - start);
             return [target];
         }
@@ -3965,7 +4089,7 @@ var $;
                 dependencies: {}
             };
             if (source.exists()) {
-                Object.assign(json, JSON.parse(source.content().toString()));
+                Object.assign(json, JSON.parse(source.text()));
             }
             let version = json.version.split('.');
             name = json.name || name;
@@ -3981,7 +4105,7 @@ var $;
                     continue;
                 json.dependencies[dep] = `*`;
             }
-            target.content(JSON.stringify(json, null, '  '));
+            target.text(JSON.stringify(json, null, '  '));
             this.logBundle(target, Date.now() - start);
             return [target];
         }
@@ -3995,19 +4119,19 @@ var $;
             const html = pack.resolve('index.html');
             if (html.exists()) {
                 const html_target = pack.resolve('-/index.html');
-                html_target.content(html.content());
+                html_target.text(html.text());
                 targets.push(html_target);
                 this.logBundle(html_target, Date.now() - start);
             }
             sources.forEach(source => {
-                const tree = $.$mol_tree.fromString(source.content().toString(), source.path());
+                const tree = $.$mol_tree.fromString(source.text(), source.path());
                 tree.select('deploy').sub.forEach(deploy => {
                     const start = Date.now();
                     const file = root.resolve(deploy.value.replace(/^\//, ''));
                     if (!file.exists())
                         return;
                     const target = pack.resolve(`-/${file.relate(root)}`);
-                    target.content(file.content());
+                    target.text(file.text());
                     targets.push(target);
                     this.logBundle(target, Date.now() - start);
                 });
@@ -4022,18 +4146,18 @@ var $;
             if (!config.exists())
                 return [];
             const config_target = cordova.resolve('config.xml');
-            config_target.content(config.content());
+            config_target.text(config.text());
             const html = pack.resolve('index.html');
             const targets = [config_target];
             if (html.exists()) {
                 const html_target = cordova.resolve('www/index.html');
-                html_target.content(html.content());
+                html_target.text(html.text());
                 targets.push(html_target);
             }
             const sources = pack.resolve('-').find().filter(src => src.type() === 'file');
             for (const source of sources) {
                 const target = cordova.resolve(`www/${source.relate(pack)}`);
-                target.content(source.content());
+                target.text(source.text());
                 targets.push(target);
             }
             this.logBundle(cordova, Date.now() - start);
@@ -4051,8 +4175,8 @@ var $;
                 css: '/* CSS compiles into js bundle now! */',
                 map: '/* CSS compiles into js bundle now! */',
             };
-            target.content(result.css);
-            targetMap.content(JSON.stringify(result.map, null, '\t'));
+            target.text(result.css);
+            targetMap.text(JSON.stringify(result.map, null, '\t'));
             this.logBundle(target, Date.now() - start);
             return [target, targetMap];
         }
@@ -4066,7 +4190,7 @@ var $;
                 const [ext, lang] = /locale=(\w+)\.json$/.exec(src.name());
                 if (!locales[lang])
                     locales[lang] = {};
-                const loc = JSON.parse(src.content().toString());
+                const loc = JSON.parse(src.text());
                 for (let key in loc) {
                     locales[lang][key] = loc[key];
                 }
@@ -4086,7 +4210,7 @@ var $;
                 for (let key of Object.keys(locale).sort()) {
                     locale_sorted[key] = locale[key];
                 }
-                target.content(JSON.stringify(locale_sorted, null, '\t'));
+                target.text(JSON.stringify(locale_sorted, null, '\t'));
                 this.logBundle(target, Date.now() - start);
                 return target;
             });
@@ -4094,31 +4218,31 @@ var $;
         }
         bundleDepsJSON({ path, exclude, bundle }) {
             const start = Date.now();
-            var pack = $.$mol_file.absolute(path);
-            var list = this.sourcesAll({ path, exclude });
+            const pack = $.$mol_file.absolute(path);
+            const list = this.sourcesAll({ path, exclude });
             if (!list.length)
                 return [];
-            var origs = list.filter(src => !/\/-/.test(src.path()));
-            var sloc = {};
+            const origs = list.filter(src => !/\/-/.test(src.path()));
+            const sloc = {};
             for (const src of origs) {
                 const ext = src.name().replace(/^.*\./, '');
-                const count = src.content().toString().trim().split(/[\n\r]\s*/).length;
+                const count = src.text().trim().split(/[\n\r]\s*/).length;
                 sloc[ext] = (sloc[ext] || 0) + count;
             }
-            var graph = this.graph({ path, exclude });
-            var deps = {};
+            const graph = this.graph({ path, exclude });
+            const deps = {};
             for (let dep in graph.nodes) {
                 deps[dep] = this.dependencies({ path: this.root().resolve(dep).path(), exclude });
             }
-            var data = {
+            const data = {
                 files: list.map(src => src.relate(this.root())),
                 edgesIn: graph.edgesIn,
                 edgesOut: graph.edgesOut,
                 sloc,
                 deps
             };
-            var target = pack.resolve(`-/${bundle}.deps.json`);
-            target.content(JSON.stringify(data));
+            const target = pack.resolve(`-/${bundle}.deps.json`);
+            target.text(JSON.stringify(data));
             this.logBundle(target, Date.now() - start);
             return [target];
         }
@@ -4232,7 +4356,7 @@ var $;
     }
     $mol_build.dependors['js'] = source => {
         var depends = {};
-        var lines = String(source.content())
+        var lines = String(source.text())
             .replace(/\/\*[^]*?\*\//g, '')
             .replace(/\/\/.*$/gm, '')
             .split('\n');
@@ -4251,7 +4375,7 @@ var $;
     };
     $mol_build.dependors['ts'] = $mol_build.dependors['tsx'] = $mol_build.dependors['jam.js'] = source => {
         var depends = {};
-        var lines = String(source.content())
+        var lines = String(source.text())
             .replace(/\/\*(?!\*)[\s\S]*?\*\//g, '')
             .replace(/\/\/.*$/gm, '')
             .split('\n');
@@ -4284,7 +4408,7 @@ var $;
         var depends = {
             '/mol/style/attach': 0,
         };
-        var lines = String(source.content())
+        var lines = String(source.text())
             .replace(/\/\*[^]*?\*\//g, '')
             .replace(/\/\/.*$/gm, '')
             .split('\n');
@@ -4300,7 +4424,7 @@ var $;
     };
     $mol_build.dependors['meta.tree'] = source => {
         const depends = {};
-        const tree = $.$mol_tree.fromString(source.content().toString(), source.path());
+        const tree = $.$mol_tree.fromString(source.text(), source.path());
         tree.select('require').sub.forEach(leaf => {
             depends[leaf.value] = 0;
         });

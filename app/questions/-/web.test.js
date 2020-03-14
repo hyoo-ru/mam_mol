@@ -1,5 +1,14 @@
 function require( path ){ return $node[ path ] };
 "use strict";
+//assert.js.map
+;
+"use strict";
+//assert.test.js.map
+;
+"use strict";
+//writable.test.js.map
+;
+"use strict";
 var $;
 (function ($_1) {
     let $$;
@@ -78,12 +87,6 @@ var $;
     });
 })($ || ($ = {}));
 //test.test.js.map
-;
-"use strict";
-//assert.js.map
-;
-"use strict";
-//assert.test.js.map
 ;
 "use strict";
 //deep.test.js.map
@@ -2063,6 +2066,88 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const png = new Uint8Array([0x1a, 0x0a, 0x00, 0x49, 0x48, 0x78, 0xda]);
+    $.$mol_test({
+        'base64 decode string'() {
+            $.$mol_assert_like($.$mol_base64_decode('SGVsbG8sIM6nzqjOqdCr'), new TextEncoder().encode('Hello, ΧΨΩЫ'));
+        },
+        'base64 decode binary'() {
+            $.$mol_assert_like($.$mol_base64_decode('GgoASUh42g=='), png);
+        },
+    });
+})($ || ($ = {}));
+//decode.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const png = new Uint8Array([0x1a, 0x0a, 0x00, 0x49, 0x48, 0x78, 0xda]);
+    $.$mol_test({
+        'base64 encode string'() {
+            $.$mol_assert_equal($.$mol_base64_encode('Hello, ΧΨΩЫ'), 'SGVsbG8sIM6nzqjOqdCr');
+        },
+        'base64 encode binary'() {
+            $.$mol_assert_equal($.$mol_base64_encode(png), 'GgoASUh42g==');
+        },
+    });
+})($ || ($ = {}));
+//encode.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'buffer from utf8 string'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const buffer = $.$mol_buffer.from(str);
+            $.$mol_assert_equal(buffer.toString(), str);
+        },
+        'buffer length equals binary string length'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const buffer = $.$mol_buffer.from(str);
+            $.$mol_assert_equal(buffer.length, 15);
+        },
+        'buffer base64 encode'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const buffer = $.$mol_buffer.from(str);
+            $.$mol_assert_equal(buffer.toString('base64'), 'SGVsbG8sIM6nzqjOqdCr');
+        },
+        'buffer base64 decode'() {
+            const str = 'GgoASUh42g==';
+            const buffer = $.$mol_buffer.from(str, 'base64');
+            $.$mol_assert_like(buffer.original, new Uint8Array([26, 10, 0, 73, 72, 120, 218]));
+        },
+        'buffer conform from same string are equal'() {
+            const source = $.$mol_buffer.from('123');
+            const target = $.$mol_buffer.from('123');
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, source);
+        },
+        'buffer conform from different string are not equal'() {
+            const source = $.$mol_buffer.from('123');
+            const target = $.$mol_buffer.from('1234');
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_ok(result !== source);
+        },
+        'buffer conform from same Uint8Array are equal'() {
+            const source = $.$mol_buffer.from(new Uint8Array([12, 13, 5]));
+            const target = $.$mol_buffer.from(new Uint8Array([12, 13, 5]));
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, source);
+        },
+        'buffer conform from different Uint8Array are not equal'() {
+            const source = $.$mol_buffer.from(new Uint8Array([12, 13]));
+            const target = $.$mol_buffer.from(new Uint8Array([12, 13, 5]));
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_ok(result !== source);
+        },
+    });
+})($ || ($ = {}));
+//buffer.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_test({
         'search numbers'() {
             const syntax = new $.$mol_syntax({
@@ -2124,6 +2209,12 @@ var $;
     });
 })($ || ($ = {}));
 //md.test.js.map
+;
+"use strict";
+//equals.js.map
+;
+"use strict";
+//equals.test.js.map
 ;
 "use strict";
 var $;
@@ -2206,12 +2297,6 @@ var $;
     $.$mol_error_mix = $mol_error_mix;
 })($ || ($ = {}));
 //mix.js.map
-;
-"use strict";
-//equals.js.map
-;
-"use strict";
-//equals.test.js.map
 ;
 "use strict";
 var $;

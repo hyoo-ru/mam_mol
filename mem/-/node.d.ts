@@ -33,13 +33,19 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_type_writable<T> = {
+        -readonly [P in keyof T]: T[P];
+    };
+}
+
+declare namespace $ {
     class $mol_object2 {
         static $: $mol_ambient_context;
         [$mol_ambient_ref]: $mol_ambient_context;
         get $(): $mol_ambient_context;
         set $(next: $mol_ambient_context);
         constructor(init?: (obj: any) => void);
-        static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: Instance) => void): Instance;
+        static create<Instance>(this: new (init?: (instance: any) => void) => Instance, init?: (instance: $mol_type_writable<Instance>) => void): Instance;
         static toString(): any;
         destructor(): void;
         toString(): any;
@@ -169,6 +175,10 @@ declare namespace $ {
     function $mol_conform_handler<Class>(cl: {
         new (...args: any[]): Class;
     }, handler: (target: Class, source: Class) => Class): void;
+    function $mol_conform_array<Value, List extends {
+        [index: number]: Value;
+        length: number;
+    }>(target: List, source: List): List;
 }
 
 declare namespace $ {

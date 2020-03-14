@@ -40,7 +40,7 @@ namespace $ {
 		$mol_conform_handlers.set( cl , handler )
 	}
 
-	function $mol_conform_array<
+	export function $mol_conform_array<
 		Value ,
 		List extends {
 			[ index : number ] : Value

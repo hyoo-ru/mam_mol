@@ -117,6 +117,9 @@ var $;
 //owning.js.map
 ;
 "use strict";
+//writable.js.map
+;
+"use strict";
 var $;
 (function ($) {
     var _a;
@@ -615,6 +618,7 @@ var $;
         }
         return source;
     }
+    $.$mol_conform_array = $mol_conform_array;
     $mol_conform_handler(Array, $mol_conform_array);
     $mol_conform_handler(Uint8Array, $mol_conform_array);
     $mol_conform_handler(Uint16Array, $mol_conform_array);
