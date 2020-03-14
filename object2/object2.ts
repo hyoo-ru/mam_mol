@@ -21,7 +21,7 @@ namespace $ {
 
 		public static create< Instance >(
 			this : new( init? : ( instance : any )=> void )=> Instance ,
-			init? : ( instance : Instance )=> void
+			init? : ( instance : $mol_type_writable<Instance> )=> void
 		) : Instance {
 			return new this( init )
 		}
@@ -39,5 +39,4 @@ namespace $ {
 		}
 
 	}
-
 }

@@ -4,7 +4,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		description() {
-			return $mol_file.relative( 'mol/readme.md' ).content() as string
+			return $mol_file.relative( 'mol/readme.md' ).text() as string
 		}
 
 	}
