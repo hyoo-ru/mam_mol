@@ -159,9 +159,9 @@ namespace $ {
 		}
 
 		toOffset( config : $mol_time_duration_config ) {
-			if (this.hour === undefined) return this.merge(this)
-			if (this.minute === undefined) return this.merge(this)
-			if (this.second === undefined) return this.merge(this)
+			if (this.hour === undefined) return this
+			if (this.minute === undefined) return this
+			if (this.second === undefined) return this
 
 			const duration = new $mol_time_duration( config )
 			const offset = this.offset || new $mol_time_moment().offset!
