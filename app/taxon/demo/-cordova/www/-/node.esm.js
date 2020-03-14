@@ -4996,7 +4996,7 @@ var $;
             if (typeof config === 'number')
                 config = new Date(config);
             if (typeof config === 'string') {
-                var parsed = /^(?:(\d\d\d\d)(?:-?(\d\d)(?:-?(\d\d))?)?)?(?:[T ](\d\d)(?::?(\d\d)(?::?(\d\d(?:\.\d+)?))?)?(Z|[\+\-]\d\d(?::?(?:\d\d)?)?)?)?$/.exec(config);
+                const parsed = /^(?:(\d\d\d\d)(?:-?(\d\d)(?:-?(\d\d))?)?)?(?:[T ](\d\d)(?::?(\d\d)(?::?(\d\d(?:\.\d+)?))?)?(Z|[\+\-]\d\d(?::?(?:\d\d)?)?)?)?$/.exec(config);
                 if (!parsed)
                     throw new Error(`Can not parse time moment (${config})`);
                 if (parsed[1])
@@ -5022,7 +5022,7 @@ var $;
                 this.hour = config.getHours();
                 this.minute = config.getMinutes();
                 this.second = config.getSeconds() + config.getMilliseconds() / 1000;
-                var offset = -config.getTimezoneOffset();
+                const offset = -config.getTimezoneOffset();
                 this.offset = new $.$mol_time_duration({
                     hour: (offset < 0) ? Math.ceil(offset / 60) : Math.floor(offset / 60),
                     minute: offset % 60
@@ -5041,55 +5041,71 @@ var $;
             return (this.native.getDay() + 6) % 7;
         }
         get native() {
+            var _a, _b, _c, _d, _e;
             if (this._native)
                 return this._native;
-            var utc = this.toOffset('Z');
-            return this._native = new Date(Date.UTC((utc.year || 0), (utc.month || 0), (utc.day || 0) + 1, (utc.hour || 0), (utc.minute || 0), (utc.second && Math.floor(utc.second) || 0), (utc.second && Math.floor((utc.second - Math.floor(utc.second)) * 1000) || 0)));
+            const utc = this.toOffset('Z');
+            return this._native = new Date(Date.UTC((_a = utc.year) !== null && _a !== void 0 ? _a : 0, (_b = utc.month) !== null && _b !== void 0 ? _b : 0, ((_c = utc.day) !== null && _c !== void 0 ? _c : 0) + 1, (_d = utc.hour) !== null && _d !== void 0 ? _d : 0, (_e = utc.minute) !== null && _e !== void 0 ? _e : 0, utc.second != undefined ? Math.floor(utc.second) : 0, utc.second != undefined ? Math.floor((utc.second - Math.floor(utc.second)) * 1000) : 0));
         }
         get normal() {
             if (this._normal)
                 return this._normal;
             const moment = new $mol_time_moment(this.native);
             return this._normal = new $mol_time_moment({
-                year: (this.year === undefined) ? undefined : moment.year,
-                month: (this.month === undefined) ? undefined : moment.month,
-                day: (this.day === undefined) ? undefined : moment.day,
-                hour: (this.hour === undefined) ? undefined : moment.hour,
-                minute: (this.minute === undefined) ? undefined : moment.minute,
-                second: (this.second === undefined) ? undefined : moment.second,
-                offset: (this.offset === undefined) ? undefined : moment.offset,
+                year: this.year === undefined ? undefined : moment.year,
+                month: this.month === undefined ? undefined : moment.month,
+                day: this.day === undefined ? undefined : moment.day,
+                hour: this.hour === undefined ? undefined : moment.hour,
+                minute: this.minute === undefined ? undefined : moment.minute,
+                second: this.second === undefined ? undefined : moment.second,
+                offset: this.offset === undefined ? undefined : moment.offset,
             });
         }
         merge(config) {
-            var moment = new $mol_time_moment(config);
+            const moment = new $mol_time_moment(config);
             return new $mol_time_moment({
-                year: (moment.year === undefined) ? this.year : moment.year,
-                month: (moment.month === undefined) ? this.month : moment.month,
-                day: (moment.day === undefined) ? this.day : moment.day,
-                hour: (moment.hour === undefined) ? this.hour : moment.hour,
-                minute: (moment.minute === undefined) ? this.minute : moment.minute,
-                second: (moment.second === undefined) ? this.second : moment.second,
-                offset: (moment.offset === undefined) ? this.offset : moment.offset,
+                year: moment.year === undefined ? this.year : moment.year,
+                month: moment.month === undefined ? this.month : moment.month,
+                day: moment.day === undefined ? this.day : moment.day,
+                hour: moment.hour === undefined ? this.hour : moment.hour,
+                minute: moment.minute === undefined ? this.minute : moment.minute,
+                second: moment.second === undefined ? this.second : moment.second,
+                offset: moment.offset === undefined ? this.offset : moment.offset,
             });
         }
         shift(config) {
-            var duration = new $.$mol_time_duration(config);
-            var moment = new $mol_time_moment().merge(this);
-            var second = (moment.second) + (duration.second || 0);
-            var native = new Date((moment.year) + (duration.year || 0), (moment.month) + (duration.month || 0), (moment.day) + 1 + (duration.day || 0), (moment.hour) + (duration.hour || 0), (moment.minute) + (duration.minute || 0), Math.floor(second), (second - Math.floor(second)) * 1000);
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+            const duration = new $.$mol_time_duration(config);
+            const moment = new $mol_time_moment().merge({
+                year: this.year,
+                month: this.month,
+                day: this.day,
+                hour: (_a = this.hour) !== null && _a !== void 0 ? _a : 0,
+                minute: (_b = this.minute) !== null && _b !== void 0 ? _b : 0,
+                second: (_c = this.second) !== null && _c !== void 0 ? _c : 0,
+                offset: (_d = this.offset) !== null && _d !== void 0 ? _d : 0
+            });
+            const second = moment.second + ((_e = duration.second) !== null && _e !== void 0 ? _e : 0);
+            const native = new Date(moment.year + ((_f = duration.year) !== null && _f !== void 0 ? _f : 0), moment.month + ((_g = duration.month) !== null && _g !== void 0 ? _g : 0), moment.day + 1 + ((_h = duration.day) !== null && _h !== void 0 ? _h : 0), moment.hour + ((_j = duration.hour) !== null && _j !== void 0 ? _j : 0), moment.minute + ((_k = duration.minute) !== null && _k !== void 0 ? _k : 0), Math.floor(second), (second - Math.floor(second)) * 1000);
             if (isNaN(native.valueOf()))
                 throw new Error('Wrong time');
             return new $mol_time_moment({
-                year: (this.year === undefined) ? undefined : native.getFullYear(),
-                month: (this.month === undefined) ? undefined : native.getMonth(),
-                day: (this.day === undefined) ? undefined : native.getDate() - 1,
-                hour: (this.hour === undefined) ? undefined : native.getHours(),
-                minute: (this.minute === undefined) ? undefined : native.getMinutes(),
-                second: (this.second === undefined) ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
+                year: this.year === undefined ? undefined : native.getFullYear(),
+                month: this.month === undefined ? undefined : native.getMonth(),
+                day: this.day === undefined ? undefined : native.getDate() - 1,
+                hour: this.hour === undefined ? undefined : native.getHours(),
+                minute: this.minute === undefined ? undefined : native.getMinutes(),
+                second: this.second === undefined ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
                 offset: this.offset,
             });
         }
         toOffset(config) {
+            if (this.hour === undefined)
+                return this;
+            if (this.minute === undefined)
+                return this;
+            if (this.second === undefined)
+                return this;
             const duration = new $.$mol_time_duration(config);
             const offset = this.offset || new $mol_time_moment().offset;
             const moment = this.shift(duration.summ(offset.mult(-1)));
@@ -5147,7 +5163,7 @@ var $;
         'MM': (moment) => {
             if (moment.month == null)
                 return '';
-            var month = moment.month + 1;
+            const month = moment.month + 1;
             return (month < 10)
                 ? ('0' + month)
                 : ('' + month);
@@ -5175,7 +5191,7 @@ var $;
         'DD': (moment) => {
             if (moment.day == null)
                 return '';
-            var day = moment.day + 1;
+            const day = moment.day + 1;
             return (day < 10)
                 ? ('0' + day)
                 : String(day);
@@ -5227,7 +5243,7 @@ var $;
         'ss': (moment) => {
             if (moment.second == null)
                 return '';
-            var second = Math.floor(moment.second);
+            const second = Math.floor(moment.second);
             return (second < 10)
                 ? ('0' + second)
                 : String(second);
@@ -5247,7 +5263,7 @@ var $;
         'sss': (moment) => {
             if (moment.second == null)
                 return '';
-            var millisecond = Math.floor((moment.second - Math.floor(moment.second)) * 1000);
+            const millisecond = Math.floor((moment.second - Math.floor(moment.second)) * 1000);
             return (millisecond < 10)
                 ? ('00' + millisecond)
                 : (millisecond < 100)
@@ -5255,7 +5271,7 @@ var $;
                     : String(millisecond);
         },
         'Z': (moment) => {
-            var offset = moment.offset;
+            const offset = moment.offset;
             if (!offset)
                 return '';
             return offset.toString('+hh:mm');

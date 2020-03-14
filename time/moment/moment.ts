@@ -20,7 +20,7 @@ namespace $ {
 			
 			if( typeof config === 'string' ) {
 				
-				var parsed = /^(?:(\d\d\d\d)(?:-?(\d\d)(?:-?(\d\d))?)?)?(?:[T ](\d\d)(?::?(\d\d)(?::?(\d\d(?:\.\d+)?))?)?(Z|[\+\-]\d\d(?::?(?:\d\d)?)?)?)?$/.exec( config )
+				const parsed = /^(?:(\d\d\d\d)(?:-?(\d\d)(?:-?(\d\d))?)?)?(?:[T ](\d\d)(?::?(\d\d)(?::?(\d\d(?:\.\d+)?))?)?(Z|[\+\-]\d\d(?::?(?:\d\d)?)?)?)?$/.exec( config )
 				if( !parsed ) throw new Error( `Can not parse time moment (${ config })` )
 
 				if( parsed[1] ) this.year = Number( parsed[1] )
@@ -43,7 +43,7 @@ namespace $ {
 				this.minute = config.getMinutes()
 				this.second = config.getSeconds() + config.getMilliseconds() / 1000
 				
-				var offset = - config.getTimezoneOffset()
+				const offset = - config.getTimezoneOffset()
 				this.offset = new $mol_time_duration({
 					hour : ( offset < 0 ) ? Math.ceil( offset / 60 ) : Math.floor( offset / 60 ) ,
 					minute : offset % 60
@@ -79,15 +79,16 @@ namespace $ {
 		get native() {
 			if( this._native ) return this._native
 			
-			var utc = this.toOffset( 'Z' )
+			const utc = this.toOffset( 'Z' )
+
 			return this._native = new Date( Date.UTC(
-				( utc.year || 0 ) ,
-				( utc.month || 0 ) ,
-				( utc.day || 0 ) + 1,
-				( utc.hour || 0 ) ,
-				( utc.minute || 0 ) ,
-				( utc.second && Math.floor( utc.second ) || 0 ) ,
-				( utc.second && Math.floor( ( utc.second - Math.floor( utc.second ) ) * 1000 ) || 0 ) ,
+				utc.year ?? 0 ,
+				utc.month ?? 0 ,
+				( utc.day ?? 0 ) + 1 ,
+				utc.hour ?? 0 ,
+				utc.minute ?? 0 ,
+				utc.second != undefined ? Math.floor(utc.second ) : 0 ,
+				utc.second != undefined ? Math.floor( ( utc.second - Math.floor( utc.second ) ) * 1000 ) : 0 ,
 			) )
 		}
 
@@ -98,40 +99,48 @@ namespace $ {
 			const moment = new $mol_time_moment( this.native )
 			
 			return this._normal = new $mol_time_moment({
-				year : ( this.year === undefined ) ? undefined : moment.year ,
-				month : ( this.month === undefined ) ? undefined : moment.month ,
-				day : ( this.day === undefined ) ? undefined : moment.day ,
-				hour : ( this.hour === undefined ) ? undefined : moment.hour ,
-				minute : ( this.minute === undefined ) ? undefined : moment.minute ,
-				second : ( this.second === undefined ) ? undefined : moment.second ,
-				offset : ( this.offset === undefined ) ? undefined : moment.offset ,
+				year : this.year === undefined ? undefined : moment.year ,
+				month : this.month === undefined ? undefined : moment.month ,
+				day : this.day === undefined ? undefined : moment.day ,
+				hour : this.hour === undefined ? undefined : moment.hour ,
+				minute : this.minute === undefined ? undefined : moment.minute ,
+				second : this.second === undefined ? undefined : moment.second ,
+				offset : this.offset === undefined ? undefined : moment.offset ,
 			})
 		}
 
 		merge( config : $mol_time_moment_config ) {
-			var moment = new $mol_time_moment( config )
+			const moment = new $mol_time_moment( config )
 			return new $mol_time_moment({
-				year : ( moment.year === undefined ) ? this.year : moment.year ,
-				month : ( moment.month === undefined ) ? this.month : moment.month ,
-				day : ( moment.day === undefined ) ? this.day : moment.day ,
-				hour : ( moment.hour === undefined ) ? this.hour : moment.hour ,
-				minute : ( moment.minute === undefined ) ? this.minute : moment.minute ,
-				second : ( moment.second === undefined ) ? this.second : moment.second ,
-				offset : ( moment.offset === undefined ) ? this.offset : moment.offset ,
+				year : moment.year === undefined ? this.year : moment.year ,
+				month : moment.month === undefined ? this.month : moment.month ,
+				day : moment.day === undefined ? this.day : moment.day ,
+				hour : moment.hour === undefined ? this.hour : moment.hour ,
+				minute : moment.minute === undefined ? this.minute : moment.minute ,
+				second : moment.second === undefined ? this.second : moment.second ,
+				offset : moment.offset === undefined ? this.offset : moment.offset ,
 			})
 		}
 
 		shift( config : $mol_time_duration_config ) {
-			var duration = new $mol_time_duration( config )
-			var moment = new $mol_time_moment().merge( this )
+			const duration = new $mol_time_duration( config )
+			const moment = new $mol_time_moment().merge({
+				year: this.year,
+				month: this.month,
+				day: this.day,
+				hour: this.hour ?? 0,
+				minute: this.minute ?? 0,
+				second: this.second ?? 0,
+				offset: this.offset ?? 0
+			})
 
-			var second = ( moment.second! ) + ( duration.second || 0 )
-			var native = new Date(
-				( moment.year! ) + ( duration.year || 0 ) ,
-				( moment.month! ) + ( duration.month || 0 ) ,
-				( moment.day! ) + 1 + ( duration.day || 0 ) ,
-				( moment.hour! ) + ( duration.hour || 0 ) ,
-				( moment.minute! ) + ( duration.minute || 0 ) ,
+			const second = moment.second! + ( duration.second ?? 0 )
+			const native = new Date(
+				moment.year! + ( duration.year ?? 0 ) ,
+				moment.month! + ( duration.month ?? 0 ) ,
+				moment.day! + 1 + ( duration.day ?? 0 ) ,
+				moment.hour! + ( duration.hour ?? 0 ) ,
+				moment.minute! + ( duration.minute ?? 0 ) ,
 				Math.floor( second ) ,
 				( second - Math.floor( second ) ) * 1000
 			)
@@ -139,20 +148,25 @@ namespace $ {
 			if( isNaN( native.valueOf() ) ) throw new Error( 'Wrong time' )
 
 			return new $mol_time_moment({
-				year : ( this.year === undefined ) ? undefined : native.getFullYear(),
-				month : ( this.month === undefined ) ? undefined : native.getMonth(),
-				day : ( this.day === undefined ) ? undefined : native.getDate() - 1,
-				hour : ( this.hour === undefined ) ? undefined : native.getHours(),
-				minute : ( this.minute === undefined ) ? undefined : native.getMinutes(),
-				second : ( this.second === undefined ) ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
+				year : this.year === undefined ? undefined : native.getFullYear(),
+				month : this.month === undefined ? undefined : native.getMonth(),
+				day : this.day === undefined ? undefined : native.getDate() - 1,
+				hour : this.hour === undefined ? undefined : native.getHours(),
+				minute : this.minute === undefined ? undefined : native.getMinutes(),
+				second : this.second === undefined ? undefined : native.getSeconds() + native.getMilliseconds() / 1000,
 				offset : this.offset,
 			})
 		}
 
 		toOffset( config : $mol_time_duration_config ) {
+			if (this.hour === undefined) return this
+			if (this.minute === undefined) return this
+			if (this.second === undefined) return this
+
 			const duration = new $mol_time_duration( config )
 			const offset = this.offset || new $mol_time_moment().offset!
 		 	const moment = this.shift( duration.summ( offset.mult( -1 ) ) )
+
 			return moment.merge({ offset : duration })
 		}
 
@@ -209,7 +223,7 @@ namespace $ {
 			} ,
 			'MM' : ( moment : $mol_time_moment )=> {
 				if( moment.month == null ) return ''
-				var month = moment.month + 1
+				const month = moment.month + 1
 				return ( month < 10 )
 					? ( '0' + month )
 					: ( '' + month )
@@ -232,7 +246,7 @@ namespace $ {
 			} ,
 			'DD' : ( moment : $mol_time_moment )=> {
 				if( moment.day == null ) return ''
-				var day = moment.day + 1
+				const day = moment.day + 1
 				return ( day < 10 )
 					? ( '0' + day )
 					: String( day )
@@ -275,7 +289,7 @@ namespace $ {
 			},
 			'ss' : ( moment : $mol_time_moment )=> {
 				if( moment.second == null ) return ''
-				var second = Math.floor( moment.second )
+				const second = Math.floor( moment.second )
 				return ( second < 10 )
 					? ( '0' + second )
 					: String( second )
@@ -291,7 +305,7 @@ namespace $ {
 			},
 			'sss' : ( moment : $mol_time_moment )=> {
 				if( moment.second == null ) return ''
-				var millisecond = Math.floor( ( moment.second - Math.floor( moment.second ) ) * 1000 )
+				const millisecond = Math.floor( ( moment.second - Math.floor( moment.second ) ) * 1000 )
 				return ( millisecond < 10 )
 					? ( '00' + millisecond )
 					: ( millisecond < 100 )
@@ -299,7 +313,7 @@ namespace $ {
 					: String( millisecond )
 			},
 			'Z' : ( moment : $mol_time_moment )=> {
-				var offset = moment.offset
+				const offset = moment.offset
 				if( !offset ) return ''
 
 				return offset.toString( '+hh:mm' )
