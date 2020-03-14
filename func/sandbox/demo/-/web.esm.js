@@ -3372,6 +3372,7 @@ var $;
         Icon() {
             return ((obj) => {
                 obj.uri = () => this.icon();
+                obj.title = () => "";
                 return obj;
             })(new this.$.$mol_image());
         }
