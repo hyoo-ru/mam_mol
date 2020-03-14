@@ -1,7 +1,5 @@
 namespace $ {
 
-	type $mol_type_error< Message > = '$mol_type_error' & { $mol_type_error : Message }
-
 	export type $mol_style_guard< View extends $mol_view , Config > = $mol_style_properties
 	& {
 		[ key in keyof Config ]? : key extends keyof $mol_style_properties
