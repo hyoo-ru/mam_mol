@@ -11,30 +11,30 @@ namespace $ {
 	const encoder = new TextEncoder()
 
 	export class $mol_buffer extends $mol_object2 {
-		original: Uint8Array
+		native: Uint8Array
 
 		get length() {
-			return this.original.length
+			return this.native.length
 		}
 
 		static from(value: string | Uint8Array, code: $mol_buffer_encoding = 'utf8') {
 			return $mol_buffer.create(t => {
 				if (typeof value === 'string') {
-					if (code === 'base64') t.original = $mol_base64_decode(value)
-					else t.original = encoder.encode(value)
-				} else t.original = value
+					if (code === 'base64') t.native = $mol_base64_decode(value)
+					else t.native = encoder.encode(value)
+				} else t.native = value
 			})
 		}
 
 		toString(code: $mol_buffer_encoding_full = 'utf8') {
-			if (code === 'base64') return $mol_base64_encode(this.original)
+			if (code === 'base64') return $mol_base64_encode(this.native)
 
-			return new TextDecoder(code).decode(this.original)
+			return new TextDecoder(code).decode(this.native)
 		}
 	}
 
 	$mol_conform_handler( $mol_buffer , ( target, source ) => {
-		const original = $mol_conform_array(target.original, source.original)
-		return original !== source.original ? target : source
+		const original = $mol_conform_array(target.native, source.native)
+		return original !== source.native ? target : source
 	} )
 }
