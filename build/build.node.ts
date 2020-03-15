@@ -42,7 +42,10 @@ namespace $ {
 					const result = this.modsRecursive({
 						path: this.root().path()
 					})
-					this.logBundle(this.root(), Date.now() - start)
+
+					const duration = Date.now() - start
+					const time = $node.colorette.cyan( `${ duration.toString().padStart( 5 ) }ms` )
+					console.log( `Watch tree in ${ time }` )
 
 					return result
 				} catch (error) {

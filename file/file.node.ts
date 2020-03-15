@@ -94,7 +94,7 @@ namespace $ {
 			
 			this.parent().exists( true )
 
-			$node.fs.writeFileSync( this.path() , next.original )
+			$node.fs.writeFileSync( this.path() , next.native )
 			
 			return next
 		}
@@ -118,7 +118,7 @@ namespace $ {
 		}
 		
 		append( next : $mol_file_content ) {
-			$node.fs.appendFileSync( this.path() , next instanceof $mol_buffer ? next.original : next )
+			$node.fs.appendFileSync( this.path() , next instanceof $mol_buffer ? next.native : next )
 		}		
 	}
 
