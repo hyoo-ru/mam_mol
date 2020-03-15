@@ -2130,7 +2130,7 @@ var $;
         'buffer base64 decode'() {
             const str = 'GgoASUh42g==';
             const buffer = $.$mol_buffer.from(str, 'base64');
-            $.$mol_assert_like(buffer.original, new Uint8Array([26, 10, 0, 73, 72, 120, 218]));
+            $.$mol_assert_like(buffer.native, new Uint8Array([26, 10, 0, 73, 72, 120, 218]));
         },
         'buffer conform from same string are equal'() {
             const source = $.$mol_buffer.from('123');

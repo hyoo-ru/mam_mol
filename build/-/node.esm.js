@@ -1527,30 +1527,30 @@ var $;
     const encoder = new TextEncoder();
     class $mol_buffer extends $.$mol_object2 {
         get length() {
-            return this.original.length;
+            return this.native.length;
         }
         static from(value, code = 'utf8') {
             return $mol_buffer.create(t => {
                 if (typeof value === 'string') {
                     if (code === 'base64')
-                        t.original = $.$mol_base64_decode(value);
+                        t.native = $.$mol_base64_decode(value);
                     else
-                        t.original = encoder.encode(value);
+                        t.native = encoder.encode(value);
                 }
                 else
-                    t.original = value;
+                    t.native = value;
             });
         }
         toString(code = 'utf8') {
             if (code === 'base64')
-                return $.$mol_base64_encode(this.original);
-            return new TextDecoder(code).decode(this.original);
+                return $.$mol_base64_encode(this.native);
+            return new TextDecoder(code).decode(this.native);
         }
     }
     $.$mol_buffer = $mol_buffer;
     $.$mol_conform_handler($mol_buffer, (target, source) => {
-        const original = $.$mol_conform_array(target.original, source.original);
-        return original !== source.original ? target : source;
+        const original = $.$mol_conform_array(target.native, source.native);
+        return original !== source.native ? target : source;
     });
 })($ || ($ = {}));
 //buffer.js.map
@@ -1772,7 +1772,7 @@ var $;
                 return $.$mol_buffer.from($node.fs.readFileSync(this.path()));
             }
             this.parent().exists(true);
-            $node.fs.writeFileSync(this.path(), next);
+            $node.fs.writeFileSync(this.path(), next.native);
             return next;
         }
         sub() {
@@ -1791,7 +1791,7 @@ var $;
             return $node.path.relative(base.path(), this.path()).replace(/\\/g, '/');
         }
         append(next) {
-            $node.fs.appendFileSync(this.path(), next instanceof $.$mol_buffer ? next.original : next);
+            $node.fs.appendFileSync(this.path(), next instanceof $.$mol_buffer ? next.native : next);
         }
     }
     __decorate([
@@ -1813,6 +1813,22 @@ var $;
     $.$mol_file = $mol_file_node;
 })($ || ($ = {}));
 //file.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_atom2_autorun(calculate) {
+        return $.$mol_atom2.create(atom => {
+            atom.calculate = calculate;
+            atom.obsolete_slaves = atom.schedule;
+            atom.doubt_slaves = atom.schedule;
+            atom[Symbol.toStringTag] = calculate[Symbol.toStringTag] || calculate.name || '$mol_atom2_autorun';
+            atom.schedule();
+        });
+    }
+    $.$mol_atom2_autorun = $mol_atom2_autorun;
+})($ || ($ = {}));
+//autorun.js.map
 ;
 "use strict";
 var $;
@@ -2151,22 +2167,6 @@ var $;
     $.$mol_window = $mol_window;
 })($ || ($ = {}));
 //window.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_atom2_autorun(calculate) {
-        return $.$mol_atom2.create(atom => {
-            atom.calculate = calculate;
-            atom.obsolete_slaves = atom.schedule;
-            atom.doubt_slaves = atom.schedule;
-            atom[Symbol.toStringTag] = calculate[Symbol.toStringTag] || calculate.name || '$mol_atom2_autorun';
-            atom.schedule();
-        });
-    }
-    $.$mol_atom2_autorun = $mol_atom2_autorun;
-})($ || ($ = {}));
-//autorun.js.map
 ;
 "use strict";
 var $;
@@ -3455,7 +3455,26 @@ var $;
         static relative(path) {
             return $mol_build.root($.$mol_file.relative(path).path());
         }
+        watch() {
+            return $.$mol_atom2_autorun(() => {
+                const start = Date.now();
+                try {
+                    const result = this.modsRecursive({
+                        path: this.root().path()
+                    });
+                    const duration = Date.now() - start;
+                    const time = $node.colorette.cyan(`${duration.toString().padStart(5)}ms`);
+                    console.log(`Watch tree in ${time}`);
+                    return result;
+                }
+                catch (error) {
+                    console.error(error);
+                    return error;
+                }
+            });
+        }
         server() {
+            this.watch();
             return $.$mol_build_server.make({
                 build: $.$mol_const(this),
             });

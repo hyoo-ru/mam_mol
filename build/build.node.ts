@@ -34,9 +34,31 @@ namespace $ {
 		static relative( path : string ) {
 			return $mol_build.root( $mol_file.relative( path ).path() )
 		}
+
+		watch() {
+			return $mol_atom2_autorun(() => {
+				const start = Date.now()
+				try {
+					const result = this.modsRecursive({
+						path: this.root().path()
+					})
+
+					const duration = Date.now() - start
+					const time = $node.colorette.cyan( `${ duration.toString().padStart( 5 ) }ms` )
+					console.log( `Watch tree in ${ time }` )
+
+					return result
+				} catch (error) {
+					console.error(error)
+					return error
+				}
+			})
+		}
 		
 		@ $mol_mem
 		server() {
+			this.watch()
+
 			return $mol_build_server.make({
 				build : $mol_const( this ) ,
 			})
@@ -80,7 +102,6 @@ namespace $ {
 
 						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
-						
 						const tree = $mol_tree.fromString( child.text() , child.path() )
 						const res = $mol_view_tree_compile( tree )
 						script.text( res.script )
