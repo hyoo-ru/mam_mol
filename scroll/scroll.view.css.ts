@@ -1,26 +1,24 @@
 namespace $.$$ {
 
+	const { per , rem } = $mol_style_unit
+
 	$mol_style_define( $mol_scroll , {
 
 		display: 'block',
 		overflow: 'auto',
-		flex: {
-			grow: 1,
-			shrink: 1,
-			basis: 'auto',
-		},
+		flex: 'auto',
 		alignSelf: 'stretch',
 		boxSizing: 'border-box',
 		willChange: 'scroll-position',
 		transform: 'translateZ(0)', // enforce gpu scroll in all agents
 		boxShadow: `inset 0 0 0 .5px ${ $mol_theme.line }`,
-		maxHeight: '100%',
-		maxWidth: '100%',
+		maxHeight: per(100),
+		maxWidth: per(100),
 		webkitOverflowScrolling: 'touch',
 	
 		'::-webkit-scrollbar': {
-			width: '.5rem',
-			height: '.5rem',
+			width: rem(.5),
+			height: rem(.5),
 		},
 		
 		'::-webkit-scrollbar-corner': {

@@ -1,15 +1,18 @@
 namespace $.$$ {
+
+	const { rem } = $mol_style_unit
+	
 	$mol_style_define( $mol_list_demo_table , {
 
 		Row: {
 
-			padding: '0',
+			padding: 0,
 			boxShadow: `0 0 0 .5px ${ $mol_theme.line }`,
 
 			'>': {
 				
 				$mol_view: {
-					margin: '0',
+					margin: 0,
 				},
 
 			},
@@ -18,11 +21,11 @@ namespace $.$$ {
 
 		Id: {
 			textAlign: 'right',
-			padding: '.5rem .5rem',
+			padding: rem(.5),
 			flex: {
 				grow: 0,
 				shrink: 0,
-				basis: $mol_style_unit.rem(3),
+				basis: rem(3),
 			},
 		},
 		
@@ -31,18 +34,18 @@ namespace $.$$ {
 			flex: {
 				grow: 1,
 				shrink: 1,
-				basis: $mol_style_unit.rem(20),
+				basis: rem(20),
 			},
-			padding: '.5rem .5rem',
+			padding: rem(.5),
 		},
 		
 		Link: {
 			flex: {
 				grow: 1000,
 				shrink: 1,
-				basis: $mol_style_unit.rem(10),
+				basis: rem(10),
 			},
-			padding: '.5rem 1rem',
+			padding: [ rem(.5) , rem(1) ],
 		},
 
 		Editable: {
@@ -53,18 +56,15 @@ namespace $.$$ {
 
 		Priority: {
 			
-			flex: {
-				grow: 0,
-				shrink: 0,
-				basis: 'auto',
-			},
-			padding: '.5rem',
+			flex: 'none',
+			padding: rem(.5),
 			
 			Option: {
-				padding: '0 .5rem',
+				padding: [ 0 , rem(.5) ],
 			},
 			
 		},
 
 	})
+
 }

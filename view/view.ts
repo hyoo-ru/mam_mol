@@ -70,7 +70,7 @@ namespace $ {
 		
 		/// Name of element that created when element not found in DOM
 		dom_name() {
-			return this.constructor.toString().replace( '$' , '' ).replace( /^(?=\d+)/ , '_' ) || 'div'
+			return $mol_dom_qname( this.constructor.toString() ) || 'div'
 		}
 		
 		/// NameSpace of element that created when element not found in DOM
@@ -304,7 +304,7 @@ namespace $ {
 			return attrs
 		}
 		
-		attr() : { [ key : string ] : string|number|boolean|null } {
+		attr() {
 			return {}
 		}
 		
@@ -339,6 +339,6 @@ namespace $ {
 
 	}
 
-	export type $mol_view_all = $mol_type_keys_extract< $mol_ambient_context , any , $mol_ambient_context['$mol_view'] >
+	export type $mol_view_all = $mol_type_pick< $mol_ambient_context , any , typeof $mol_view >
 
 }
