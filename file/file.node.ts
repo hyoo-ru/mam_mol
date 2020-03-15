@@ -93,7 +93,8 @@ namespace $ {
 			}
 			
 			this.parent().exists( true )
-			$node.fs.writeFileSync( this.path() , next )
+
+			$node.fs.writeFileSync( this.path() , next.original )
 			
 			return next
 		}
