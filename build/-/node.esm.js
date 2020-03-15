@@ -2280,6 +2280,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_dom_qname(name) {
+        return name.replace(/\W/, '').replace(/^(?=\d+)/, '_');
+    }
+    $.$mol_dom_qname = $mol_dom_qname;
+})($ || ($ = {}));
+//qname.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_dom_render_attributes(el, attrs) {
         for (let name in attrs) {
             let val = attrs[name];
@@ -2440,6 +2450,9 @@ var $;
 //extract.js.map
 ;
 "use strict";
+//pick.js.map
+;
+"use strict";
 //theme.js.map
 ;
 "use strict";
@@ -2494,7 +2507,7 @@ var $;
             return this.$.$mol_view_state_key(suffix);
         }
         dom_name() {
-            return this.constructor.toString().replace('$', '').replace(/^(?=\d+)/, '_') || 'div';
+            return $.$mol_dom_qname(this.constructor.toString()) || 'div';
         }
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
         sub() {

@@ -525,6 +525,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_dom_qname(name: string): string;
+}
+
+declare namespace $ {
     function $mol_dom_render_attributes(el: Element, attrs: {
         [key: string]: string | number | boolean | null;
     }): void;
@@ -563,6 +567,10 @@ declare namespace $ {
     type $mol_type_keys_extract<Input, Lower, Upper> = {
         [Field in keyof Input]: Lower extends Input[Field] ? never : Input[Field] extends Upper ? Field : never;
     }[keyof Input];
+}
+
+declare namespace $ {
+    type $mol_type_pick<Input, Lower, Upper> = Pick<Input, $mol_type_keys_extract<Input, Lower, Upper>>;
 }
 
 declare namespace $ {
@@ -615,9 +623,7 @@ declare namespace $ {
         attr_static(): {
             [key: string]: string | number | boolean | null;
         };
-        attr(): {
-            [key: string]: string | number | boolean | null;
-        };
+        attr(): {};
         style(): {
             [key: string]: string | number;
         };
@@ -632,7 +638,7 @@ declare namespace $ {
         };
         plugins(): readonly $mol_view[];
     }
-    type $mol_view_all = $mol_type_keys_extract<$mol_ambient_context, any, $mol_ambient_context['$mol_view']>;
+    type $mol_view_all = $mol_type_pick<$mol_ambient_context, any, typeof $mol_view>;
 }
 
 declare namespace $ {

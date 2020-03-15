@@ -89,6 +89,9 @@ var $;
 //test.test.js.map
 ;
 "use strict";
+//deep.js.map
+;
+"use strict";
 //deep.test.js.map
 ;
 "use strict";
@@ -1850,6 +1853,9 @@ var $;
 //view.test.js.map
 ;
 "use strict";
+//result.test.js.map
+;
+"use strict";
 var $;
 (function ($) {
     class $mol_style_sheet_test1 extends $.$mol_view {
@@ -1901,6 +1907,15 @@ var $;
                 }
             });
             $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tflex-grow: 5;\n}\n');
+        },
+        'property shorthand'() {
+            class $mol_style_sheet_test extends $.$mol_view {
+            }
+            const { px } = $.$mol_style_unit;
+            const sheet = $.$mol_style_sheet($mol_style_sheet_test, {
+                padding: [0, 'auto']
+            });
+            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tpadding: 0 auto;\n}\n');
         },
         'component block styles with pseudo class'() {
             class $mol_style_sheet_test extends $.$mol_view {

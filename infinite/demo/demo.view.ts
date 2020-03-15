@@ -16,9 +16,11 @@ namespace $.$$ {
 		
 	}
 
+	const { rem } = $mol_style_unit
+
 	$mol_style_define( $mol_infinite_demo , {
 		List : {
-			padding: '.5rem',
+			padding: rem(.5),
 		}
 	} )
 

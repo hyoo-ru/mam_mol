@@ -462,6 +462,60 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_decor<Value> {
+        readonly value: Value;
+        constructor(value: Value);
+        prefix(): string;
+        valueOf(): Value;
+        postfix(): string;
+        toString(): string;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_unit_length = '%' | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt' | 'cap' | 'ch' | 'em' | 'rem' | 'ex' | 'ic' | 'lh' | 'rlh' | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax';
+    class $mol_style_unit<Literal extends $mol_style_unit_length> extends $mol_decor<number> {
+        readonly literal: Literal;
+        constructor(value: number, literal: Literal);
+        postfix(): Literal;
+        static per(value: number): $mol_style_unit<"%">;
+        static px(value: number): $mol_style_unit<"px">;
+        static mm(value: number): $mol_style_unit<"mm">;
+        static cm(value: number): $mol_style_unit<"cm">;
+        static Q(value: number): $mol_style_unit<"Q">;
+        static in(value: number): $mol_style_unit<"in">;
+        static pc(value: number): $mol_style_unit<"pc">;
+        static pt(value: number): $mol_style_unit<"pt">;
+        static cap(value: number): $mol_style_unit<"cap">;
+        static ch(value: number): $mol_style_unit<"ch">;
+        static em(value: number): $mol_style_unit<"em">;
+        static rem(value: number): $mol_style_unit<"rem">;
+        static ex(value: number): $mol_style_unit<"ex">;
+        static ic(value: number): $mol_style_unit<"ic">;
+        static lh(value: number): $mol_style_unit<"lh">;
+        static rlh(value: number): $mol_style_unit<"rlh">;
+        static vh(value: number): $mol_style_unit<"vh">;
+        static vw(value: number): $mol_style_unit<"vw">;
+        static vi(value: number): $mol_style_unit<"vi">;
+        static vb(value: number): $mol_style_unit<"vb">;
+        static vmin(value: number): $mol_style_unit<"vmin">;
+        static vmax(value: number): $mol_style_unit<"vmax">;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_func_name = 'calc' | 'fit-content';
+    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
+        readonly name: Name;
+        constructor(value: Value, name: Name);
+        prefix(): string;
+        postfix(): string;
+        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
+        static fit_content(value: number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>): $mol_style_func<"fit-content", number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<"calc", unknown>>;
+    }
+}
+
+declare namespace $ {
     class $mol_window extends $mol_object {
         static size(next?: {
             width: number;
@@ -499,6 +553,10 @@ declare namespace $ {
         static focus(event: FocusEvent): void;
         static blur(event: FocusEvent): void;
     }
+}
+
+declare namespace $ {
+    function $mol_dom_qname(name: string): string;
 }
 
 declare namespace $ {
@@ -540,6 +598,10 @@ declare namespace $ {
     type $mol_type_keys_extract<Input, Lower, Upper> = {
         [Field in keyof Input]: Lower extends Input[Field] ? never : Input[Field] extends Upper ? Field : never;
     }[keyof Input];
+}
+
+declare namespace $ {
+    type $mol_type_pick<Input, Lower, Upper> = Pick<Input, $mol_type_keys_extract<Input, Lower, Upper>>;
 }
 
 declare namespace $ {
@@ -602,9 +664,7 @@ declare namespace $ {
         attr_static(): {
             [key: string]: string | number | boolean | null;
         };
-        attr(): {
-            [key: string]: string | number | boolean | null;
-        };
+        attr(): {};
         style(): {
             [key: string]: string | number;
         };
@@ -619,18 +679,62 @@ declare namespace $ {
         };
         plugins(): readonly $mol_view[];
     }
-    type $mol_view_all = $mol_type_keys_extract<$mol_ambient_context, any, $mol_ambient_context['$mol_view']>;
+    type $mol_view_all = $mol_type_pick<$mol_ambient_context, any, typeof $mol_view>;
 }
 
 declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_type_keys_exclude<Input, Lower, Upper> = Exclude<keyof Input, $mol_type_keys_extract<Input, Lower, Upper>>;
+    type $mol_type_result<Func> = Func extends (...params: any) => infer Result ? Result : Func extends new (...params: any) => infer Result ? Result : never;
 }
 
 declare namespace $ {
-    type $mol_type_omit<Input, Lower, Upper> = Pick<Input, $mol_type_keys_exclude<Input, Lower, Upper>>;
+    type $mol_type_error<Message> = '$mol_type_error' & {
+        $mol_type_error: Message;
+    };
+}
+
+declare namespace $ {
+    type $mol_type_override<Base, Over> = Omit<Base, keyof Over> & Over;
+}
+
+declare namespace $ {
+    export type $mol_style_properties = Partial<$mol_type_override<CSSStyleDeclaration, Overrides>>;
+    type Common = 'inherit' | 'initial' | 'unset';
+    type Length = number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>;
+    type Size = 'auto' | 'max-content' | 'min-content' | $mol_style_func<'fit-content'> | 0 | Length | Common;
+    type Directions = Size | [Size, Size] | {
+        top?: Size;
+        right?: Size;
+        bottom?: Size;
+        left?: Size;
+    };
+    type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
+    interface Overrides {
+        alignContent?: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | ['first' | 'last', 'baseline'] | ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
+        display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
+        overflow?: Overflow | {
+            x?: Overflow;
+            y?: Overflow;
+        };
+        webkitOverflowScrolling?: 'auto' | 'touch';
+        width?: Size;
+        minWidth?: Size;
+        maxWidth?: Size;
+        height?: Size;
+        minHeight?: Size;
+        maxHeight?: Size;
+        margin?: Directions;
+        padding?: Directions;
+        flex?: 'none' | 'auto' | {
+            grow?: number | Common;
+            shrink?: number | Common;
+            basis?: Size;
+            direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+        };
+    }
+    export {};
 }
 
 declare namespace $ {
@@ -642,127 +746,30 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_type_partial_deep<Val> = {
-        [field in keyof Val]?: $mol_type_partial_deep<Val[field]>;
+    type Descendant<Name extends keyof $mol_view_all, Config> = $mol_style_guard<Extract<$mol_type_result<$mol_view_all[Name]>, $mol_view>, Config>;
+    type Kids<Config> = {
+        [view in keyof Config]: view extends keyof $mol_view_all ? Descendant<view, Config[view]> : $mol_type_error<['Unknown View', view]>;
     };
-}
-
-declare namespace $ {
-    type $mol_type_override<Base, Over> = Omit<Base, keyof Over> & Over;
-}
-
-declare namespace $ {
-    class $mol_decor<Value> {
-        readonly value: Value;
-        constructor(value: Value);
-        prefix(): string;
-        valueOf(): Value;
-        postfix(): string;
-        toString(): string;
-    }
-}
-
-declare namespace $ {
-    type $mol_style_unit_length = '%' | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt' | 'cap' | 'ch' | 'em' | 'rem' | 'ex' | 'ic' | 'lh' | 'rlh' | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax';
-    class $mol_style_unit<Literal extends $mol_style_unit_length> extends $mol_decor<number> {
-        readonly literal: Literal;
-        constructor(value: number, literal: Literal);
-        postfix(): Literal;
-        static per(value: number): $mol_style_unit<"%">;
-        static px(value: number): $mol_style_unit<"px">;
-        static mm(value: number): $mol_style_unit<"mm">;
-        static cm(value: number): $mol_style_unit<"cm">;
-        static Q(value: number): $mol_style_unit<"Q">;
-        static in(value: number): $mol_style_unit<"in">;
-        static pc(value: number): $mol_style_unit<"pc">;
-        static pt(value: number): $mol_style_unit<"pt">;
-        static cap(value: number): $mol_style_unit<"cap">;
-        static ch(value: number): $mol_style_unit<"ch">;
-        static em(value: number): $mol_style_unit<"em">;
-        static rem(value: number): $mol_style_unit<"rem">;
-        static ex(value: number): $mol_style_unit<"ex">;
-        static ic(value: number): $mol_style_unit<"ic">;
-        static lh(value: number): $mol_style_unit<"lh">;
-        static rlh(value: number): $mol_style_unit<"rlh">;
-        static vh(value: number): $mol_style_unit<"vh">;
-        static vw(value: number): $mol_style_unit<"vw">;
-        static vi(value: number): $mol_style_unit<"vi">;
-        static vb(value: number): $mol_style_unit<"vb">;
-        static vmin(value: number): $mol_style_unit<"vmin">;
-        static vmax(value: number): $mol_style_unit<"vmax">;
-    }
-}
-
-declare namespace $ {
-    type $mol_style_func_name = 'calc' | 'fit-content';
-    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
-        readonly name: Name;
-        constructor(value: Value, name: Name);
-        prefix(): string;
-        postfix(): string;
-        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
-        static fit_content(value: number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>): $mol_style_func<"fit-content", number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<"calc", unknown>>;
-    }
-}
-
-declare namespace $ {
-    export type $mol_style_properties = $mol_type_override<CSSStyleDeclaration, Overrides>;
-    type Common = 'inherit' | 'initial' | 'unset';
-    type Length = number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>;
-    type Size = 'auto' | 'max-content' | 'min-content' | $mol_style_func<'fit-content'> | Length | Common;
-    type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
-    interface Overrides {
-        alignContent: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | ['first' | 'last', 'baseline'] | ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
-        display: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
-        overflow: Overflow | {
-            x: Overflow;
-            y: Overflow;
-        };
-        webkitOverflowScrolling: 'auto' | 'touch';
-        width: Size;
-        height: Size;
-        flex: {
-            grow: number | Common;
-            shrink: number | Common;
-            basis: Size;
-        };
-    }
+    type Attrs<View extends $mol_view, Config> = {
+        [name in keyof Config]: name extends keyof ReturnType<View['attr']> ? {
+            [val in keyof Config[name]]: $mol_style_guard<View, Config[name][val]>;
+        } : $mol_type_error<['Unknown Attribute', name]>;
+    };
+    type Medias<View extends $mol_view, Config> = {
+        [query in keyof Config]: $mol_style_guard<View, Config[query]>;
+    };
+    export type $mol_style_guard<View extends $mol_view, Config> = $mol_style_properties & {
+        [key in keyof Config]: key extends keyof $mol_style_properties ? unknown : key extends $mol_style_pseudo_class | $mol_style_pseudo_element ? $mol_style_guard<View, Config[key]> : key extends '>' ? Kids<Config[key]> : key extends '@' ? Attrs<View, Config[key]> : key extends '@media' ? Medias<View, Config[key]> : key extends keyof $mol_view_all ? Descendant<key, Config[key]> : key extends keyof View ? View[key] extends (id?: any) => infer Sub ? Sub extends $mol_view ? $mol_style_guard<Sub, Config[key]> : $mol_type_error<['Wrong Property', key]> : $mol_type_error<['Property is not Element', key]> : $mol_type_error<['Unknown Property', key]>;
+    };
     export {};
 }
 
 declare namespace $ {
-    type Elements<Obj extends $mol_view> = $mol_type_omit<{
-        [key in keyof Obj]: Obj[key] extends (id?: any) => infer T ? (unknown extends T ? never : T extends $mol_view ? $mol_style_definition<T> : never) : never;
-    }, unknown, never>;
-    type Pseudos<Obj extends $mol_view> = {
-        [key in $mol_style_pseudo_class | $mol_style_pseudo_element]: $mol_style_definition<Obj>;
-    };
-    type Kids<Obj extends $mol_view> = {
-        '>': {
-            [key in $mol_view_all]?: $mol_style_definition<Obj>;
-        };
-    };
-    type Attrs<Obj extends $mol_view> = {
-        '@': {
-            [key in keyof ReturnType<Obj['attr']>]?: Record<string, $mol_style_definition<Obj>>;
-        };
-    };
-    type Medias<Obj extends $mol_view> = {
-        '@media': Record<string, $mol_style_definition<Obj>>;
-    };
-    type Views<Obj extends $mol_view> = {
-        [key in $mol_view_all]: $mol_style_definition<Obj>;
-    };
-    export type $mol_style_definition<Obj extends $mol_view> = $mol_type_partial_deep<$mol_style_properties & Pseudos<Obj> & Attrs<Obj> & Medias<Obj> & Kids<Obj> & Elements<Obj> & Views<Obj>>;
-    export {};
+    function $mol_style_sheet<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config0: Config): string;
 }
 
 declare namespace $ {
-    function $mol_style_sheet<Component extends $mol_view>(Component: new () => Component, config: $mol_style_definition<Component>): string;
-}
-
-declare namespace $ {
-    function $mol_style_define<Component extends $mol_view>(Component: new () => Component, config: $mol_style_definition<Component>): HTMLStyleElement;
+    function $mol_style_define<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config: Config): HTMLStyleElement;
 }
 
 declare namespace $ {

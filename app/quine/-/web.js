@@ -2008,6 +2008,83 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_decor {
+        constructor(value) {
+            this.value = value;
+        }
+        prefix() { return ''; }
+        valueOf() { return this.value; }
+        postfix() { return ''; }
+        toString() {
+            return `${this.prefix()}${this.valueOf()}${this.postfix()}`;
+        }
+    }
+    $.$mol_decor = $mol_decor;
+})($ || ($ = {}));
+//decor.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_style_unit extends $.$mol_decor {
+        constructor(value, literal) {
+            super(value);
+            this.literal = literal;
+        }
+        postfix() {
+            return this.literal;
+        }
+        static per(value) { return new $mol_style_unit(value, '%'); }
+        static px(value) { return new $mol_style_unit(value, 'px'); }
+        static mm(value) { return new $mol_style_unit(value, 'mm'); }
+        static cm(value) { return new $mol_style_unit(value, 'cm'); }
+        static Q(value) { return new $mol_style_unit(value, 'Q'); }
+        static in(value) { return new $mol_style_unit(value, 'in'); }
+        static pc(value) { return new $mol_style_unit(value, 'pc'); }
+        static pt(value) { return new $mol_style_unit(value, 'pt'); }
+        static cap(value) { return new $mol_style_unit(value, 'cap'); }
+        static ch(value) { return new $mol_style_unit(value, 'ch'); }
+        static em(value) { return new $mol_style_unit(value, 'em'); }
+        static rem(value) { return new $mol_style_unit(value, 'rem'); }
+        static ex(value) { return new $mol_style_unit(value, 'ex'); }
+        static ic(value) { return new $mol_style_unit(value, 'ic'); }
+        static lh(value) { return new $mol_style_unit(value, 'lh'); }
+        static rlh(value) { return new $mol_style_unit(value, 'rlh'); }
+        static vh(value) { return new $mol_style_unit(value, 'vh'); }
+        static vw(value) { return new $mol_style_unit(value, 'vw'); }
+        static vi(value) { return new $mol_style_unit(value, 'vi'); }
+        static vb(value) { return new $mol_style_unit(value, 'vb'); }
+        static vmin(value) { return new $mol_style_unit(value, 'vmin'); }
+        static vmax(value) { return new $mol_style_unit(value, 'vmax'); }
+    }
+    $.$mol_style_unit = $mol_style_unit;
+})($ || ($ = {}));
+//unit.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_style_func extends $.$mol_decor {
+        constructor(value, name) {
+            super(value);
+            this.name = name;
+        }
+        prefix() { return this.name + '('; }
+        postfix() { return ')'; }
+        static calc(value) {
+            return new $mol_style_func(value, 'calc');
+        }
+        static fit_content(value) {
+            return new $mol_style_func(value, 'fit-content');
+        }
+    }
+    $.$mol_style_func = $mol_style_func;
+})($ || ($ = {}));
+//func.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_window extends $.$mol_object {
         static size(next, force) {
             return next || {
@@ -2173,6 +2250,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_dom_qname(name) {
+        return name.replace(/\W/, '').replace(/^(?=\d+)/, '_');
+    }
+    $.$mol_dom_qname = $mol_dom_qname;
+})($ || ($ = {}));
+//qname.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_dom_render_attributes(el, attrs) {
         for (let name in attrs) {
             let val = attrs[name];
@@ -2333,6 +2420,9 @@ var $;
 //extract.js.map
 ;
 "use strict";
+//pick.js.map
+;
+"use strict";
 var $;
 (function ($) {
     let all = [];
@@ -2446,7 +2536,7 @@ var $;
             return this.$.$mol_view_state_key(suffix);
         }
         dom_name() {
-            return this.constructor.toString().replace('$', '').replace(/^(?=\d+)/, '_') || 'div';
+            return $.$mol_dom_qname(this.constructor.toString()) || 'div';
         }
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
         sub() {
@@ -2713,10 +2803,16 @@ var $;
 //view.web.js.map
 ;
 "use strict";
-//exclude.js.map
+//result.js.map
 ;
 "use strict";
-//omit.js.map
+//error.js.map
+;
+"use strict";
+//override.js.map
+;
+"use strict";
+//properties.js.map
 ;
 "use strict";
 //class.js.map
@@ -2725,107 +2821,23 @@ var $;
 //element.js.map
 ;
 "use strict";
-//deep.js.map
-;
-"use strict";
-//override.js.map
+//guard.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    class $mol_decor {
-        constructor(value) {
-            this.value = value;
-        }
-        prefix() { return ''; }
-        valueOf() { return this.value; }
-        postfix() { return ''; }
-        toString() {
-            return `${this.prefix()}${this.valueOf()}${this.postfix()}`;
-        }
-    }
-    $.$mol_decor = $mol_decor;
-})($ || ($ = {}));
-//decor.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_style_unit extends $.$mol_decor {
-        constructor(value, literal) {
-            super(value);
-            this.literal = literal;
-        }
-        postfix() {
-            return this.literal;
-        }
-        static per(value) { return new $mol_style_unit(value, '%'); }
-        static px(value) { return new $mol_style_unit(value, 'px'); }
-        static mm(value) { return new $mol_style_unit(value, 'mm'); }
-        static cm(value) { return new $mol_style_unit(value, 'cm'); }
-        static Q(value) { return new $mol_style_unit(value, 'Q'); }
-        static in(value) { return new $mol_style_unit(value, 'in'); }
-        static pc(value) { return new $mol_style_unit(value, 'pc'); }
-        static pt(value) { return new $mol_style_unit(value, 'pt'); }
-        static cap(value) { return new $mol_style_unit(value, 'cap'); }
-        static ch(value) { return new $mol_style_unit(value, 'ch'); }
-        static em(value) { return new $mol_style_unit(value, 'em'); }
-        static rem(value) { return new $mol_style_unit(value, 'rem'); }
-        static ex(value) { return new $mol_style_unit(value, 'ex'); }
-        static ic(value) { return new $mol_style_unit(value, 'ic'); }
-        static lh(value) { return new $mol_style_unit(value, 'lh'); }
-        static rlh(value) { return new $mol_style_unit(value, 'rlh'); }
-        static vh(value) { return new $mol_style_unit(value, 'vh'); }
-        static vw(value) { return new $mol_style_unit(value, 'vw'); }
-        static vi(value) { return new $mol_style_unit(value, 'vi'); }
-        static vb(value) { return new $mol_style_unit(value, 'vb'); }
-        static vmin(value) { return new $mol_style_unit(value, 'vmin'); }
-        static vmax(value) { return new $mol_style_unit(value, 'vmax'); }
-    }
-    $.$mol_style_unit = $mol_style_unit;
-})($ || ($ = {}));
-//unit.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_style_func extends $.$mol_decor {
-        constructor(value, name) {
-            super(value);
-            this.name = name;
-        }
-        prefix() { return this.name + '('; }
-        postfix() { return ')'; }
-        static calc(value) {
-            return new $mol_style_func(value, 'calc');
-        }
-        static fit_content(value) {
-            return new $mol_style_func(value, 'fit-content');
-        }
-    }
-    $.$mol_style_func = $mol_style_func;
-})($ || ($ = {}));
-//func.js.map
-;
-"use strict";
-//properties.js.map
-;
-"use strict";
-//definition.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_style_sheet(Component, config) {
+    function $mol_style_sheet(Component, config0) {
         let rules = [];
-        const qname = (name) => name.replace('$', '').replace(/^(?=\d+)/, '_');
         const make_class = (prefix, suffix, config) => {
             const props = [];
             for (const key of Object.keys(config).reverse()) {
                 if (/^[a-z]/.test(key)) {
                     const name = key.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
                     const val = config[key];
-                    if (val.constructor === Object) {
+                    if (Array.isArray(val)) {
+                        props.push(`\t${name}: ${val.join(' ')};\n`);
+                    }
+                    else if (val.constructor === Object) {
                         for (let suffix in val) {
                             props.push(`\t${name}-${suffix}: ${val[suffix]};\n`);
                         }
@@ -2838,12 +2850,12 @@ var $;
                     make_class(prefix + '_' + key.toLowerCase(), suffix, config[key]);
                 }
                 else if (key[0] === '$') {
-                    make_class(prefix + '] [' + qname(key), suffix, config[key]);
+                    make_class(prefix + '] [' + $.$mol_dom_qname(key), suffix, config[key]);
                 }
                 else if (key === '>') {
                     const types = config[key];
                     for (let type in types) {
-                        make_class(prefix + '] > [' + qname(type), suffix, types[type]);
+                        make_class(prefix + '] > [' + $.$mol_dom_qname(type), suffix, types[type]);
                     }
                 }
                 else if (key === '@') {
@@ -2870,7 +2882,7 @@ var $;
                 rules.push(`${prefix}${suffix} {\n${props.reverse().join('')}}\n`);
             }
         };
-        make_class('[' + qname(Component.name), ']', config);
+        make_class('[' + $.$mol_dom_qname(Component.name), ']', config0);
         return rules.reverse().join('');
     }
     $.$mol_style_sheet = $mol_style_sheet;
@@ -3219,25 +3231,22 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        const { per, rem } = $.$mol_style_unit;
         $.$mol_style_define($$.$mol_scroll, {
             display: 'block',
             overflow: 'auto',
-            flex: {
-                grow: 1,
-                shrink: 1,
-                basis: 'auto',
-            },
+            flex: 'auto',
             alignSelf: 'stretch',
             boxSizing: 'border-box',
             willChange: 'scroll-position',
             transform: 'translateZ(0)',
             boxShadow: `inset 0 0 0 .5px ${"var(--mol_theme_line)"}`,
-            maxHeight: '100%',
-            maxWidth: '100%',
+            maxHeight: per(100),
+            maxWidth: per(100),
             webkitOverflowScrolling: 'touch',
             '::-webkit-scrollbar': {
-                width: '.5rem',
-                height: '.5rem',
+                width: rem(.5),
+                height: rem(.5),
             },
             '::-webkit-scrollbar-corner': {
                 background: "var(--mol_theme_line)",
@@ -3370,19 +3379,17 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        const { per, rem } = $.$mol_style_unit;
+        const { calc } = $.$mol_style_func;
         $.$mol_style_define($$.$mol_page, {
             display: 'flex',
-            margin: '0',
+            margin: 0,
             flexDirection: 'column',
-            flex: {
-                grow: 1,
-                shrink: 1,
-                basis: 'auto',
-            },
+            flex: 'auto',
             position: 'relative',
             alignSelf: 'stretch',
-            maxWidth: '100%',
-            maxHeight: '100%',
+            maxWidth: per(100),
+            maxHeight: per(100),
             boxSizing: 'border-box',
             background: "var(--mol_theme_back)",
             color: "var(--mol_theme_text)",
@@ -3396,15 +3403,11 @@ var $;
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'space-between',
-                flex: {
-                    grow: 0,
-                    shrink: 0,
-                    basis: 'auto',
-                },
+                flex: 'none',
                 position: 'relative',
-                margin: '0',
-                minHeight: 'calc( 1.5em + 2rem )',
-                padding: '.5rem',
+                margin: 0,
+                minHeight: calc(`1.5em + 2rem`),
+                padding: rem(.5),
             },
             Title: {
                 flex: {
@@ -3412,7 +3415,7 @@ var $;
                     shrink: 1,
                     basis: $.$mol_style_unit.per(50),
                 },
-                padding: '.5rem',
+                padding: rem(.5),
                 wordBreak: 'normal',
                 cursor: 'default',
                 ':empty': {
@@ -3420,11 +3423,7 @@ var $;
                 },
             },
             Tools: {
-                flex: {
-                    grow: 1,
-                    shrink: 1,
-                    basis: 'auto',
-                },
+                flex: 'auto',
                 display: 'flex',
                 justifyContent: 'flex-end',
                 ':empty': {
@@ -3437,17 +3436,13 @@ var $;
                     shrink: 1,
                     basis: $.$mol_style_unit.per(100),
                 },
-                margin: '0',
+                margin: 0,
             },
             Foot: {
                 display: 'flex',
                 justifyContent: 'space-between',
-                flex: {
-                    grow: 0,
-                    shrink: 0,
-                    basis: 'auto',
-                },
-                margin: '0',
+                flex: 'none',
+                margin: 0,
                 overflow: 'hidden',
             },
         });
@@ -4963,12 +4958,13 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    const { rem } = $.$mol_style_unit;
     $.$mol_style_define($.$mol_link, {
         textDecoration: 'none',
         color: "var(--mol_theme_control)",
         stroke: 'currentColor',
         cursor: 'pointer',
-        padding: '.5rem',
+        padding: rem(.5),
         boxSizing: 'border-box',
         position: 'relative',
         ':hover': {
