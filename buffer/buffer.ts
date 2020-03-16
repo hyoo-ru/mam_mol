@@ -11,7 +11,7 @@ namespace $ {
 	const encoder = new TextEncoder()
 
 	export class $mol_buffer extends $mol_object2 {
-		native: Uint8Array
+		native!: Uint8Array
 
 		get length() {
 			return this.native.length
