@@ -4173,7 +4173,7 @@ var $;
         if (stat.isSymbolicLink())
             type = 'link';
         if (!type)
-            throw new Error(`Unsupported file type ${this.path()}`);
+            return $.$mol_fail(new Error(`Unsupported file type`));
         return {
             type,
             size: stat.size,

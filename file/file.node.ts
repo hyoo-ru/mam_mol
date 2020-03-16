@@ -6,7 +6,7 @@ namespace $ {
 		if (stat.isFile()) type = 'file'
 		if (stat.isSymbolicLink()) type = 'link'
 
-		if (! type) throw new Error(`Unsupported file type ${this.path()}`)
+		if (! type) return $mol_fail( new Error(`Unsupported file type`) )
 
 		return {
 			type, 
