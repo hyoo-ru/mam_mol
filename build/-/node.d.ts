@@ -350,6 +350,11 @@ declare namespace $ {
     };
 }
 
+interface $node {
+    [key: string]: any;
+}
+declare var $node: $node;
+
 declare namespace $ {
     function $mol_base64_decode(base64: string): Uint8Array;
 }
@@ -376,11 +381,6 @@ declare namespace $ {
         toString(code?: $mol_buffer_encoding_full): string;
     }
 }
-
-interface $node {
-    [key: string]: any;
-}
-declare var $node: $node;
 
 declare namespace $ {
     type $mol_file_type = 'file' | 'dir' | 'link';

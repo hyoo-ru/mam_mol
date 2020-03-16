@@ -1,6 +1,11 @@
 declare namespace $ { }
 export = $;
 
+interface $node {
+    [key: string]: any;
+}
+declare var $node: $node;
+
 declare namespace $ {
     namespace $$ {
         let $$: typeof $;
@@ -369,11 +374,6 @@ declare namespace $ {
 declare namespace $ {
     function $mol_mem_key<Host extends object, Field extends keyof Host, Key, Value>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<(key: Key, next?: Value, force?: $mol_mem_force) => Value>): any;
 }
-
-interface $node {
-    [key: string]: any;
-}
-declare var $node: $node;
 
 declare namespace $ {
     function $mol_const<Value>(value: Value): {

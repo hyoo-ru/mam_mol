@@ -1,6 +1,8 @@
 declare namespace $ { }
 export = $;
 
+declare var $node: any;
+
 declare namespace $ {
     namespace $$ {
         let $$: typeof $;
@@ -100,7 +102,7 @@ declare namespace $ {
         native: Uint8Array;
         get length(): number;
         static from(value: string | Uint8Array, code?: $mol_buffer_encoding): $mol_buffer;
-        toString(code?: $mol_buffer_encoding_full): string;
+        toString(code?: $mol_buffer_encoding_full): any;
     }
 }
 
@@ -391,8 +393,6 @@ declare namespace $ {
     function $mol_dom_parse(text: string, type?: SupportedType): Document;
 }
 
-declare var $node: any;
-
 declare namespace $ {
     class $mol_fetch_response extends $mol_object2 {
         readonly native: Response;
@@ -449,7 +449,7 @@ declare namespace $ {
         name(): string;
         ext(): string;
         abstract buffer(next?: $mol_buffer, force?: $mol_mem_force): $mol_buffer;
-        text(next?: string, force?: $mol_mem_force): string;
+        text(next?: string, force?: $mol_mem_force): any;
         fail(error: Error): void;
         buffer_cached(buffer: $mol_buffer): void;
         text_cached(content: string): void;
