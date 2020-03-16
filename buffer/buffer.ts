@@ -11,6 +11,8 @@ namespace $ {
 	const TextEncoder = globalThis.TextEncoder ?? $node.util.TextEncoder
 	const TextDecoder = globalThis.TextDecoder ?? $node.util.TextDecoder
 
+	const encoder = new TextEncoder()
+
 	export class $mol_buffer extends $mol_object2 {
 		native!: Uint8Array
 
