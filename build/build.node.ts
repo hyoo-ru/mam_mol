@@ -16,7 +16,7 @@ namespace $ {
 				process.exit(1)
 			}
 		} else {
-			build.server().socket()
+			$mol_atom2_autorun(() => build.server().start() )
 		}
 	}
 	
@@ -35,30 +35,8 @@ namespace $ {
 			return $mol_build.root( $mol_file.relative( path ).path() )
 		}
 
-		watch() {
-			return $mol_atom2_autorun(() => {
-				const start = Date.now()
-				try {
-					const result = this.modsRecursive({
-						path: this.root().path()
-					})
-
-					const duration = Date.now() - start
-					const time = $node.colorette.cyan( `${ duration.toString().padStart( 5 ) }ms` )
-					console.log( `Watch tree in ${ time }` )
-
-					return result
-				} catch (error) {
-					console.error(error)
-					return error
-				}
-			})
-		}
-		
 		@ $mol_mem
 		server() {
-			this.watch()
-
 			return $mol_build_server.make({
 				build : $mol_const( this ) ,
 			})
@@ -601,6 +579,7 @@ namespace $ {
 
 		}
 		
+		@ $mol_mem_key
 		bundle( { path , bundle = '' } : { path : string , bundle? : string } ) {
 			
 			bundle = bundle && bundle.replace( /\.map$/ , '' )
@@ -672,7 +651,7 @@ namespace $ {
 				res = res.concat( this.bundleTestHtml( { path } ) )
 			}
 			
-			return res.map( r => r.valueOf() )
+			return res
 		}
 		
 		logBundle( target : $mol_file , duration : number ) {

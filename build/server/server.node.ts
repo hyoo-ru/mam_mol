@@ -9,7 +9,7 @@ namespace $ {
 				next : () => any
 			)=> {
 				try {
-					return $mol_fiber_unlimit( ()=> this.generator( req.url ) && next() )
+					return $mol_fiber_unlimit( ()=> this.generator( req.url ) && Promise.resolve().then( next ) )
 				} catch( error ) {
 					if( typeof error.then === 'function' ) $mol_fail_hidden( error )
 					console.error( error.stack )
@@ -34,9 +34,13 @@ namespace $ {
 		build() : $mol_build {
 			return $mol_fail( new Error( 'Not implemented' ) )
 		}
+
+		@ $mol_mem
+		last_path( next = '' ) { return next }
 		
 		@ $mol_mem_key
 		generator( url : string ) {
+
 			const matched = url.match( /^(.*)\/-\/(\w+(?:.\w+)+)$/ )
 			if( !matched ) return <$mol_file[]>[]
 			
@@ -47,11 +51,13 @@ namespace $ {
 
 			if( bundle === 'web.css' ) console.warn( $node.colorette.yellow( 'Deprecation: CSS compiles into JS bundle now! You do not need web.css' ) )
 			
-			try {
-				return build.bundle( { path , bundle } )
-			} finally {
-				build.bundleFiles( { path , exclude : [ 'node' ] } )
-			}
+			this.last_path( path )
+			return true
+			// try {
+			// 	return build.bundle( { path , bundle } ).map( file => file.text() )
+			// } finally {
+			// 	build.bundleFiles( { path , exclude : [ 'node' ] } )
+			// }
 			
 		}
 		
@@ -75,6 +81,56 @@ namespace $ {
 		
 		port() {
 			return 9080
+		}
+
+		@ $mol_mem
+		watch() {
+			// return $mol_atom2_autorun(() => {
+
+				if( !this.last_path() ) return false
+				
+				const start = Date.now()
+				try {
+
+					const build = this.build()
+					const path = this.last_path()
+
+					// build.bundle({ path , bundle : 'web.deps.json' })
+					build.bundle({ path , bundle : 'web.js' }).forEach(f=>f.buffer())
+					// build.bundle({ path , bundle : 'web.test.js' })
+					// build.bundle({ path , bundle : 'web.test.html' })
+					// build.bundle({ path , bundle : 'web.d.ts' })
+					// build.bundle({ path , bundle : 'web.view.tree' })
+					// build.bundle({ path , bundle : 'web.locale=en.json' })
+					// build.bundleFiles( { path , exclude : [ 'node' ] } )
+					// build.bundleCordova( { path , exclude : [ 'node' ] } )
+	
+					const duration = Date.now() - start
+					const time = $node.colorette.cyan( `${ duration.toString().padStart( 5 ) }ms` )
+					console.log( `Build in ${ time }: ${ this.last_path() }` )
+
+					for( const client of this.socket().clients ) {
+						client.send('$mol_build_server:obsoleted')
+					}
+					console.log('$mol_build_server:obsoleted')
+					
+				// 	return result
+				} catch (error) {
+					console.error(error)
+					return error
+				}
+
+				return true
+
+			// })
+		}
+		
+
+		@ $mol_mem
+		start() {
+			this.socket()
+			this.watch()
+			return true
 		}
 		
 	}

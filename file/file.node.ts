@@ -41,6 +41,7 @@ namespace $ {
 			const handler = ( type : string , path : string )=> $mol_fiber_unlimit( ()=> {
 				
 				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
+				console.log('Changed ' + file.relate())
 				file.reset()
 
 				if( type === 'change' ) return

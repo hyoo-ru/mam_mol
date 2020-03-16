@@ -200,7 +200,7 @@ namespace $ {
 
 		static current = null as null | $mol_fiber
 		
-		static scheduled = null as null | $mol_after_tick
+		static scheduled = null as null | $mol_after_work
 		static queue = [] as ( ()=> PromiseLike< any > )[]
 		
 		static async tick() {
@@ -226,7 +226,7 @@ namespace $ {
 
 			if( !$mol_fiber.scheduled ) {
 
-				$mol_fiber.scheduled = new $mol_after_tick( async ()=> {
+				$mol_fiber.scheduled = new $mol_after_work( 0 , async ()=> {
 					
 					const now = Date.now()
 					let quant = $mol_fiber.quant
