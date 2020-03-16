@@ -3975,7 +3975,7 @@ var $;
                     }
                     const srcMap = src.parent().resolve(src.name() + '.map');
                     if (content)
-                        concater.add(content, src.relate(target.parent()), srcMap.exists() ? srcMap.text() : null);
+                        concater.add(content, src.relate(target.parent()), srcMap.exists() ? srcMap.text() : undefined);
                     if (isCommonJs) {
                         const idFull = src.relate(this.root().resolve('node_modules'));
                         const idShort = idFull.replace(/\/index\.js$/, '').replace(/\.js$/, '');
