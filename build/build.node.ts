@@ -1092,6 +1092,7 @@ namespace $ {
 					
 					for( let key in locale ) {
 						if( key in locales[ 'en' ] ) continue
+						delete locale[ key ]
 						console.warn( $node.colorette.yellow( `Not translated to "en": ${ $node.colorette.cyan( key ) }` ) )
 					}
 
