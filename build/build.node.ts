@@ -40,7 +40,8 @@ namespace $ {
 				const start = Date.now()
 				try {
 					const result = this.modsRecursive({
-						path: this.root().path()
+						path: this.root().path(),
+						exclude: ['node_modules']
 					})
 
 					const duration = Date.now() - start

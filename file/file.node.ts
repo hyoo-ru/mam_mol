@@ -36,6 +36,9 @@ namespace $ {
 				ignored : /(^\.|___$)/ ,
 				depth :  0 ,
 				ignoreInitial : true ,
+				awaitWriteFinish: {
+					stabilityThreshold: 100,
+				},
 			} )
 
 			const handler = ( type : string , path : string )=> $mol_fiber_unlimit( ()=> {
@@ -64,7 +67,7 @@ namespace $ {
 		@ $mol_mem
 		stat( next? : $mol_file_stat, force? : $mol_mem_force ) {
 			let stat = next
-
+			
 			try {
 				stat = next ?? stat_convert($node.fs.statSync( this.path() ))
 			} catch (error) {
@@ -89,7 +92,12 @@ namespace $ {
 		buffer( next? : $mol_buffer , force? : $mol_mem_force ) {
 			if( next === undefined ) {
 				this.stat()
-				return $mol_buffer.from($node.fs.readFileSync( this.path() ))
+				const data = $node.fs.readFileSync( this.path() )
+				const buffer = $mol_buffer.from(data)
+				const s = data.toString()
+				if (! s) console.log('Oops', this.path(), s)
+
+				return buffer
 			}
 			
 			this.parent().exists( true )
