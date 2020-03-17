@@ -4656,6 +4656,9 @@ var $;
                 ignored: /(^\.|___$)/,
                 depth: 0,
                 ignoreInitial: true,
+                awaitWriteFinish: {
+                    stabilityThreshold: 100,
+                },
             });
             const handler = (type, path) => $.$mol_fiber_unlimit(() => {
                 const file = $.$mol_file.relative(path.replace(/\\/g, '/'));

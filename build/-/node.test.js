@@ -1718,6 +1718,9 @@ var $;
                 ignored: /(^\.|___$)/,
                 depth: 0,
                 ignoreInitial: true,
+                awaitWriteFinish: {
+                    stabilityThreshold: 100,
+                },
             });
             const handler = (type, path) => $.$mol_fiber_unlimit(() => {
                 const file = $.$mol_file.relative(path.replace(/\\/g, '/'));
@@ -3450,7 +3453,8 @@ var $;
                 const start = Date.now();
                 try {
                     const result = this.modsRecursive({
-                        path: this.root().path()
+                        path: this.root().path(),
+                        exclude: ['node_modules']
                     });
                     const duration = Date.now() - start;
                     const time = $node.colorette.cyan(`${duration.toString().padStart(5)}ms`);
