@@ -36,6 +36,9 @@ namespace $ {
 				ignored : /(^\.|___$)/ ,
 				depth :  0 ,
 				ignoreInitial : true ,
+				awaitWriteFinish: {
+					stabilityThreshold: 100,
+				},
 			} )
 
 			const handler = ( type : string , path : string )=> $mol_fiber_unlimit( ()=> {
