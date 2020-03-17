@@ -67,7 +67,7 @@ namespace $ {
 		@ $mol_mem
 		stat( next? : $mol_file_stat, force? : $mol_mem_force ) {
 			let stat = next
-			
+
 			try {
 				stat = next ?? stat_convert($node.fs.statSync( this.path() ))
 			} catch (error) {
@@ -92,12 +92,7 @@ namespace $ {
 		buffer( next? : $mol_buffer , force? : $mol_mem_force ) {
 			if( next === undefined ) {
 				this.stat()
-				const data = $node.fs.readFileSync( this.path() )
-				const buffer = $mol_buffer.from(data)
-				const s = data.toString()
-				if (! s) console.log('Oops', this.path(), s)
-
-				return buffer
+				return  $mol_buffer.from($node.fs.readFileSync( this.path() ))
 			}
 			
 			this.parent().exists( true )
