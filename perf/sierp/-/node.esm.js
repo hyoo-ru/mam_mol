@@ -1862,11 +1862,14 @@ var $;
         if ((name === null || name === void 0 ? void 0 : name.length) > 1)
             return name;
         for (let key in $) {
-            if ($[key] !== func)
-                continue;
-            name = key;
-            Object.defineProperty(func, 'name', { value: name });
-            break;
+            try {
+                if ($[key] !== func)
+                    continue;
+                name = key;
+                Object.defineProperty(func, 'name', { value: name });
+                break;
+            }
+            catch (_a) { }
         }
         return name;
     }
