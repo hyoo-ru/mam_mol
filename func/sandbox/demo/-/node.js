@@ -2199,7 +2199,17 @@ var $;
 var $;
 (function ($) {
     function $mol_func_name(func) {
-        return func.name;
+        let name = func.name;
+        if ((name === null || name === void 0 ? void 0 : name.length) > 1)
+            return name;
+        for (let key in $) {
+            if ($[key] !== func)
+                continue;
+            name = key;
+            Object.defineProperty(func, 'name', { value: name });
+            break;
+        }
+        return name;
     }
     $.$mol_func_name = $mol_func_name;
     function $mol_func_name_from(target, source) {

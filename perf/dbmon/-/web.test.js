@@ -1692,6 +1692,20 @@ var $;
 //autorun.test.js.map
 ;
 "use strict";
+var $;
+(function ($) {
+    $.$mol_func_name_test = () => (() => { })();
+    $.$mol_test({
+        'FQN of anon function'() {
+            $.$mol_assert_equal($.$mol_func_name_test.name, '');
+            $.$mol_assert_equal($.$mol_func_name($.$mol_func_name_test), '$mol_func_name_test');
+            $.$mol_assert_equal($.$mol_func_name_test.name, '$mol_func_name_test');
+        },
+    });
+})($ || ($ = {}));
+//name.test.js.map
+;
+"use strict";
 //extract.test.js.map
 ;
 "use strict";
