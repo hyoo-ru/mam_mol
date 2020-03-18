@@ -6,10 +6,12 @@ namespace $ {
 		if( name?.length > 1 ) return name
 
 		for( let key in $ ) {
-			if( $[ key ] !== func ) continue
-			name = key
-			Object.defineProperty( func , 'name' , { value : name } )
-			break
+			try {
+				if( $[ key ] !== func ) continue
+				name = key
+				Object.defineProperty( func , 'name' , { value : name } )
+				break
+			} catch {}
 		}
 
 		return name
