@@ -8,10 +8,13 @@ namespace $ {
 		| 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr' | 'utf-16be' | 'utf-16le'
 		| 'x-user-defined' | 'replacement'
 
+	const TextEncoder = globalThis.TextEncoder ?? $node.util.TextEncoder
+	const TextDecoder = globalThis.TextDecoder ?? $node.util.TextDecoder
+
 	const encoder = new TextEncoder()
 
 	export class $mol_buffer extends $mol_object2 {
-		native: Uint8Array
+		native!: Uint8Array
 
 		get length() {
 			return this.native.length

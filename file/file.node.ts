@@ -6,7 +6,7 @@ namespace $ {
 		if (stat.isFile()) type = 'file'
 		if (stat.isSymbolicLink()) type = 'link'
 
-		if (! type) throw new Error(`Unsupported file type ${this.path()}`)
+		if (! type) return $mol_fail( new Error(`Unsupported file type`) )
 
 		return {
 			type, 
@@ -36,6 +36,9 @@ namespace $ {
 				ignored : /(^\.|___$)/ ,
 				depth :  0 ,
 				ignoreInitial : true ,
+				awaitWriteFinish: {
+					stabilityThreshold: 100,
+				},
 			} )
 
 			const handler = ( type : string , path : string )=> $mol_fiber_unlimit( ()=> {

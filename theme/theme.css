@@ -1,4 +1,4 @@
-[mol_theme] , :root {
+[mol_theme] {
 	background-color: var(--mol_theme_back);
 	color: var(--mol_theme_text);
 	fill: var(--mol_theme_text);
