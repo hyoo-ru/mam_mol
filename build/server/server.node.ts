@@ -8,25 +8,34 @@ namespace $ {
 				res : typeof $node.express.response ,
 				next : () => any
 			)=> {
+
 				try {
+
 					return $mol_fiber_unlimit( ()=> this.generate( req.url ) && Promise.resolve().then( next ) )
+				
 				} catch( error ) {
+
 					if( typeof error.then === 'function' ) $mol_fail_hidden( error )
-					console.error( $node.colorette.redBright( error.stack ) )
+					
+					if( $mol_fail_catch( error ) ) {
+						console.error( $node.colorette.red( `$mol_build_server fail ${ req.path }` ) )
+						console.error( $node.colorette.redBright( error ) + '\n' )
+					}
+					
 					if( req.url.match( /\.js$/ ) ) {
+
 						const script = ( error as Error ).message.split( '\n\n' ).map( msg => {
 							return `console.error( ${ JSON.stringify( msg ) } )`
 						} ).join( '\n' )
+						
 						res.send( script ).end()
-					} else if( req.url.match( /\.css$/ ) ) {
-						const message = JSON.stringify( error.message.replace( /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g , '' ) )
-							.replace( /\\n/g , '\\a' )
-							.replace( /\\t/g , '\\9' )
-						res.setHeader( 'content-type' , 'text/css' )
-						res.send( `body:before{ display: block; font: 1em monospace; white-space: pre-wrap; color: red; content : ${ message } }` ).end()
+
 					} else {
-						throw error
+
+						res.status(500).send( error.message ).end()
+
 					}
+
 				}
 			} )
 		}
@@ -50,11 +59,7 @@ namespace $ {
 			
 			const path = mod.path()
 
-			try {
-				return build.bundle( { path , bundle } )
-			} finally {
-				build.bundleFiles( { path , exclude : [ 'node' ] } )
-			}
+			return build.bundle( { path , bundle } )
 			
 		}
 		
@@ -90,25 +95,28 @@ namespace $ {
 				const build = this.build()
 				const bundle = build.root().resolve( path )
 
+				const { magenta , magentaBright } = $node.colorette
+
+				console.log( magenta( `$mol_build_server connection ${ magentaBright( path ) }` ) )
+
 				const autorun = $mol_atom2_autorun( ()=> {
 
 					try {
 		
-						build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] }).map( file => file.buffer() )
+						const sources = build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] })
+						for( const src of sources ) src.buffer()
 		
-						if( !$mol_atom2_value( ()=> autorun.get() ) ) return true
+					} catch( error ) {
 
-						console.log( `$mol_build_server:obsoleted ${ $node.colorette.magentaBright( path ) }` )
-						
-					} catch (error) {
-						
 						if( $mol_compare_deep( autorun.error , error ) ) return true
 						
-						console.error( $node.colorette.redBright( error.stack ) )
-
 					}
 					
-					line.send('$mol_build_server:obsoleted')
+					if( !$mol_atom2_value( ()=> autorun.get() ) ) return true
+
+					console.log( magenta( `$mol_build_obsolete ${ magentaBright( path ) }` ) )
+						
+					line.send( '$mol_build_obsolete' )
 
 					return true
 		

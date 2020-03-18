@@ -41,6 +41,8 @@ namespace $ {
 				},
 			} )
 
+			const { magenta , magentaBright } = $node.colorette
+
 			const handler = ( type : string , path : string )=> $mol_fiber_unlimit( ()=> {
 				
 				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
@@ -52,7 +54,7 @@ namespace $ {
 
 					if( $mol_compare_deep( cached , actual ) ) return
 
-					console.log( type + ' ' + $node.colorette.magenta( file.relate() ) )
+					console.log( magenta( `$mol_file ${ type } ${ magentaBright( file.relate() ) }` ) )
 
 					file.reset()
 					file.buffer( actual , $mol_mem_force_cache )
@@ -60,7 +62,7 @@ namespace $ {
 				}
 
 				if( type !== 'change' ) {
-					console.log( type + ' ' + $node.colorette.magenta( file.relate() ) )
+					console.log( magenta( type + ' ' + magentaBright( file.relate() ) ) )
 					file.parent().reset()
 				}
 

@@ -81,21 +81,12 @@ namespace $ {
 						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
 						
-						try {
-
-							const tree = $mol_tree.fromString( child.text() , child.path() )
-							const res = $mol_view_tree_compile( tree )
-							
-							script.text( res.script )
-							locale.text( JSON.stringify( res.locales , null , '\t' ) )
-							
-						} catch( error ) {
-
-							script.fail( error )
-							locale.fail( error )
-
-						}
+						const tree = $mol_tree.fromString( child.text() , child.path() )
+						const res = $mol_view_tree_compile( tree )
 						
+						script.text( res.script )
+						locale.text( JSON.stringify( res.locales , null , '\t' ) )
+							
 						mods.push( script , locale )
 
 					} else if( /(\.css)$/.test( name ) ) {
@@ -658,17 +649,30 @@ namespace $ {
 				res = res.concat( this.bundlePackageJSON( { path , exclude : [ 'web' ] } ) )
 			}
 			
+			if( !bundle || bundle === 'index.html' ) {
+				res = res.concat( this.bundleIndexHtml( { path } ) )
+			}
+			
 			if( !bundle || bundle === 'test.html' ) {
 				res = res.concat( this.bundleTestHtml( { path } ) )
+			}
+
+			if( !bundle || /\//.test( bundle ) ) {
+				res = res.concat( this.bundleFiles( { path , exclude : [ 'node' ] } ) )
 			}
 			
 			return res
 		}
 		
 		logBundle( target : $mol_file , duration : number ) {
-			const path = $node.colorette.green( target.relate( this.root() ) )
-			const time = $node.colorette.cyan( `${ duration.toString().padStart( 5 ) }ms` )
-			console.log( `Built in ${ time }: ${ path }` )
+
+			const { green , greenBright } = $node.colorette
+			
+			const path = target.relate( this.root() )
+			const time = duration.toString().padStart( 5 )
+			
+			console.log( green( `$mol_build ${ time }ms ${ greenBright( path ) }` ) )
+
 		}
 		
 		@ $mol_mem_key
@@ -811,7 +815,11 @@ namespace $ {
 			
 			content = content.replace(
 				/(<\/body>|$)/ ,
-				`<script src="web.test.js" charset="utf-8" defer></script>$1`,
+				`
+					<script src="/mol/build/client/client.js" charset="utf-8" defer></script>
+					<script src="web.test.js" charset="utf-8" defer></script>
+					$1
+				`,
 			)
 			
 			target.text( content )
@@ -939,6 +947,26 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
+		bundleIndexHtml( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+
+			const pack = $mol_file.absolute( path )
+			
+			const targets : $mol_file[] = []
+
+			const start = Date.now()
+			const html = pack.resolve( 'index.html' )
+
+			if ( html.exists() ) {
+				const html_target = pack.resolve( '-/index.html' )
+				html_target.text( html.text() )
+				targets.push( html_target )
+				this.logBundle( html_target , Date.now() - start )	
+			}
+			
+			return targets
+		}
+		
+		@ $mol_mem_key
 		bundleFiles( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
 			const root = this.root()
 			const pack = $mol_file.absolute( path )
@@ -947,15 +975,6 @@ namespace $ {
 			.filter( src => /meta.tree$/.test( src.ext() ) )
 			
 			const targets : $mol_file[] = []
-
-			const start = Date.now()
-			const html = pack.resolve( 'index.html' )
-			if ( html.exists() ) {
-				const html_target = pack.resolve( '-/index.html' )
-				html_target.text( html.text() )
-				targets.push( html_target )
-				this.logBundle( html_target , Date.now() - start )	
-			}
 
 			sources.forEach( source => {
 				const tree = $mol_tree.fromString( source.text() , source.path() )
@@ -1071,6 +1090,8 @@ namespace $ {
 					}
 				}
 			)
+
+			const { yellow , yellowBright } = $node.colorette
 			
 			const targets = Object.keys( locales ).map( lang => {
 				const start = Date.now()
@@ -1083,7 +1104,7 @@ namespace $ {
 					for( let key in locale ) {
 						if( key in locales[ 'en' ] ) continue
 						delete locale[ key ]
-						console.warn( $node.colorette.yellow( `Not translated to "en": ${ $node.colorette.cyan( key ) }` ) )
+						console.warn( yellow( `$mol_build absent in "en" locale ${ yellowBright( key ) }` ) )
 					}
 
 				}
