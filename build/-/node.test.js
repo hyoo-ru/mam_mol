@@ -6490,7 +6490,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_func_name_test = () => (() => { })();
+    $.$mol_func_name_test = (() => () => { })();
     $.$mol_test({
         'FQN of anon function'() {
             $.$mol_assert_equal($.$mol_func_name_test.name, '');
