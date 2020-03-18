@@ -92,7 +92,7 @@ namespace $ {
 		buffer( next? : $mol_buffer , force? : $mol_mem_force ) {
 			if( next === undefined ) {
 				this.stat()
-				return $mol_buffer.from($node.fs.readFileSync( this.path() ))
+				return $mol_buffer.from(new Uint8Array($node.fs.readFileSync( this.path() ).buffer))
 			}
 			
 			this.parent().exists( true )

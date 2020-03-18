@@ -37,7 +37,7 @@ namespace $ {
 	}
 
 	$mol_conform_handler( $mol_buffer , ( target, source ) => {
-		const original = $mol_conform_array(target.native, source.native)
-		return original !== source.native ? target : source
+		const equal = $mol_compare_bytes(target.native, source.native)
+		return equal ? source : target
 	} )
 }
