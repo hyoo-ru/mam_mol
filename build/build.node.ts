@@ -91,8 +91,8 @@ namespace $ {
 							
 						} catch( error ) {
 
-							script.buffer( error , $mol_mem_force_fail )
-							locale.buffer( error , $mol_mem_force_fail )
+							script.fail( error )
+							locale.fail( error )
 
 						}
 						
