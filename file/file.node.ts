@@ -41,12 +41,26 @@ namespace $ {
 			const handler = ( type : string , path : string )=> $mol_fiber_unlimit( ()=> {
 				
 				const file = $mol_file.relative( path.replace( /\\/g , '/' ) )
-				console.log('Changed ' + file.relate())
-				file.reset()
 
-				if( type === 'change' ) return
+				if( type === 'change' ) {
 
-				file.parent().reset()
+					const cached = $mol_mem_cached( ()=> file.buffer() )
+					const actual = $mol_buffer.from( $node.fs.readFileSync( file.path() ) )
+
+					if( $mol_compare_deep( cached , actual ) ) return
+
+					console.log( type + ' ' + $node.colorette.magenta( file.relate() ) )
+
+					file.reset()
+					file.buffer( actual , $mol_mem_force_cache )
+
+				}
+
+				if( type !== 'change' ) {
+					console.log( type + ' ' + $node.colorette.magenta( file.relate() ) )
+					file.parent().reset()
+				}
+
 			} )
 
 			watcher.on( 'all' , handler )
@@ -95,9 +109,11 @@ namespace $ {
 			
 			this.parent().exists( true )
 
-			$node.fs.writeFileSync( this.path() , next.native )
+			const buffer = Buffer.from( next.native )
+
+			$node.fs.writeFileSync( this.path() , buffer )
 			
-			return next
+			return $mol_buffer.from( buffer )
 		}
 
 		@ $mol_mem

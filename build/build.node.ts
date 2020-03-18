@@ -80,10 +80,21 @@ namespace $ {
 
 						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
-						const tree = $mol_tree.fromString( child.text() , child.path() )
-						const res = $mol_view_tree_compile( tree )
-						script.text( res.script )
-						locale.text( JSON.stringify( res.locales , null , '\t' ) )
+						
+						try {
+
+							const tree = $mol_tree.fromString( child.text() , child.path() )
+							const res = $mol_view_tree_compile( tree )
+							
+							script.text( res.script )
+							locale.text( JSON.stringify( res.locales , null , '\t' ) )
+							
+						} catch( error ) {
+
+							script.buffer( error , $mol_mem_force_fail )
+							locale.buffer( error , $mol_mem_force_fail )
+
+						}
 						
 						mods.push( script , locale )
 
@@ -284,7 +295,7 @@ namespace $ {
 						file.fail( error )
 						
 					} else {
-						console.error( $node.colorette.red( String(diagnostic.messageText) ) )
+						console.error( $node.colorette.redBright( String(diagnostic.messageText) ) )
 					}
 					
 				} ,
@@ -427,7 +438,7 @@ namespace $ {
 					try {
 						if( git_dir.exists() && git_dir.type() === 'dir' ) {
 							//$mol_exec( pack.path() , 'git' , '--no-pager' , 'fetch' )
-							process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
+							//process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
 						} else {
 							for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
 								$mol_exec( mod.path() , 'git' , 'init' )
@@ -438,7 +449,7 @@ namespace $ {
 							}
 						}
 					} catch( error ) {
-						console.error( $node.colorette.red( error.message ) )
+						console.error( $node.colorette.redBright( error.message ) )
 					}
 				}
 				return false

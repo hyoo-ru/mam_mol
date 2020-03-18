@@ -9,10 +9,10 @@ namespace $ {
 				next : () => any
 			)=> {
 				try {
-					return $mol_fiber_unlimit( ()=> this.generator( req.url ) && Promise.resolve().then( next ) )
+					return $mol_fiber_unlimit( ()=> this.generate( req.url ) && Promise.resolve().then( next ) )
 				} catch( error ) {
 					if( typeof error.then === 'function' ) $mol_fail_hidden( error )
-					console.error( error.stack )
+					console.error( $node.colorette.redBright( error.stack ) )
 					if( req.url.match( /\.js$/ ) ) {
 						const script = ( error as Error ).message.split( '\n\n' ).map( msg => {
 							return `console.error( ${ JSON.stringify( msg ) } )`
@@ -35,11 +35,8 @@ namespace $ {
 			return $mol_fail( new Error( 'Not implemented' ) )
 		}
 
-		@ $mol_mem
-		last_path( next = '' ) { return next }
-		
 		@ $mol_mem_key
-		generator( url : string ) {
+		generate( url : string ) {
 
 			const matched = url.match( /^(.*)\/-\/(\w+(?:.\w+)+)$/ )
 			if( !matched ) return <$mol_file[]>[]
@@ -47,17 +44,17 @@ namespace $ {
 			const build = this.build()
 			
 			const [ , rawpath , bundle ] = matched
-			const path = build.root().resolve( rawpath ).path()
+			const mod = build.root().resolve( rawpath )
 
 			if( bundle === 'web.css' ) console.warn( $node.colorette.yellow( 'Deprecation: CSS compiles into JS bundle now! You do not need web.css' ) )
 			
-			this.last_path( path )
-			return true
-			// try {
-			// 	return build.bundle( { path , bundle } ).map( file => file.text() )
-			// } finally {
-			// 	build.bundleFiles( { path , exclude : [ 'node' ] } )
-			// }
+			const path = mod.path()
+
+			try {
+				return build.bundle( { path , bundle } )
+			} finally {
+				build.bundleFiles( { path , exclude : [ 'node' ] } )
+			}
 			
 		}
 		
@@ -84,53 +81,43 @@ namespace $ {
 		}
 
 		@ $mol_mem
-		watch() {
-			// return $mol_atom2_autorun(() => {
-
-				if( !this.last_path() ) return false
-				
-				const start = Date.now()
-				try {
-
-					const build = this.build()
-					const path = this.last_path()
-
-					// build.bundle({ path , bundle : 'web.deps.json' })
-					build.bundle({ path , bundle : 'web.js' }).forEach(f=>f.buffer())
-					// build.bundle({ path , bundle : 'web.test.js' })
-					// build.bundle({ path , bundle : 'web.test.html' })
-					// build.bundle({ path , bundle : 'web.d.ts' })
-					// build.bundle({ path , bundle : 'web.view.tree' })
-					// build.bundle({ path , bundle : 'web.locale=en.json' })
-					// build.bundleFiles( { path , exclude : [ 'node' ] } )
-					// build.bundleCordova( { path , exclude : [ 'node' ] } )
-	
-					const duration = Date.now() - start
-					const time = $node.colorette.cyan( `${ duration.toString().padStart( 5 ) }ms` )
-					console.log( `Build in ${ time }: ${ this.last_path() }` )
-
-					for( const client of this.socket().clients ) {
-						client.send('$mol_build_server:obsoleted')
-					}
-					console.log('$mol_build_server:obsoleted')
-					
-				// 	return result
-				} catch (error) {
-					console.error(error)
-					return error
-				}
-
-				return true
-
-			// })
-		}
-		
-
-		@ $mol_mem
 		start() {
-			this.socket()
-			this.watch()
-			return true
+
+			return this.socket().on( 'connection' , ( line , req )=> {
+				
+				const path = req.url!.replace( /\/-.*/ , '' ).substring( 1 )
+
+				const build = this.build()
+				const bundle = build.root().resolve( path )
+
+				const autorun = $mol_atom2_autorun( ()=> {
+
+					try {
+		
+						build.sourcesAll({ path: bundle.path() , exclude : [ 'node' ] }).map( file => file.buffer() )
+		
+						if( !$mol_atom2_value( ()=> autorun.get() ) ) return true
+
+						console.log( `$mol_build_server:obsoleted ${ $node.colorette.magentaBright( path ) }` )
+						
+					} catch (error) {
+						
+						if( $mol_compare_deep( autorun.error , error ) ) return true
+						
+						console.error( $node.colorette.redBright( error.stack ) )
+
+					}
+					
+					line.send('$mol_build_server:obsoleted')
+
+					return true
+		
+				} )
+
+				line.on( 'close' , ()=> autorun.destructor() )
+
+			} )
+			
 		}
 		
 	}

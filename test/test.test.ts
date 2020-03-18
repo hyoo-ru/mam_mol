@@ -91,5 +91,17 @@ namespace $ {
 		} ,
 
 	})
+
+	function connect() {
+		const uri = document.location.origin.replace( /^http/ , 'ws' ) + document.location.pathname
+		const socket = new $mol_dom_context.WebSocket( uri )
+		socket.onclose = ()=> setTimeout( ()=> connect() , 1000 )
+		socket.onmessage = message => {
+			console.log(message)
+			if( message.data !== '$mol_build_server:obsoleted' ) return
+			$mol_dom_context.location.reload()
+		}
+	}
+	connect()
 	
 }
