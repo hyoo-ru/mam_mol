@@ -49,16 +49,16 @@ namespace $ {
 
 				if( type === 'change' ) {
 
-					const cached = $mol_mem_cached( ()=> file.buffer() )
-					const actual = $mol_buffer.from( $node.fs.readFileSync( file.path() ) )
-
-					if( $mol_compare_deep( cached , actual ) ) return
+					const cached = $mol_mem_cached( ()=> file.buffer() ).native
+					const actual = $node.fs.readFileSync( file.path() )
+					if (cached.length === actual.length)
+						for (let i = 0; i < cached.length; i++)
+							if (cached[i] !== actual[i]) return
 
 					console.log( magenta( `$mol_file ${ type } ${ magentaBright( file.relate() ) }` ) )
 
 					file.reset()
-					file.buffer( actual , $mol_mem_force_cache )
-
+					file.buffer( $mol_buffer.from(actual) , $mol_mem_force_cache )
 				}
 
 				if( type !== 'change' ) {
@@ -109,16 +109,14 @@ namespace $ {
 		buffer( next? : $mol_buffer , force? : $mol_mem_force ) {
 			if( next === undefined ) {
 				this.stat()
-				return $mol_buffer.from($node.fs.readFileSync( this.path() ))
+				return $mol_buffer.from(new Uint8Array($node.fs.readFileSync( this.path() ).buffer))
 			}
 			
 			this.parent().exists( true )
 
-			const buffer = Buffer.from( next.native )
+			$node.fs.writeFileSync( this.path() , next.native )
 
-			$node.fs.writeFileSync( this.path() , buffer )
-			
-			return $mol_buffer.from( buffer )
+			return next
 		}
 
 		@ $mol_mem
