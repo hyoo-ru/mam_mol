@@ -1,6 +1,6 @@
 namespace $ {
 
-	export const $mol_func_name_test = ()=>( ()=> {} )()
+	export const $mol_func_name_test = ( ()=> ()=> {} )()
 
 	$mol_test({
 
