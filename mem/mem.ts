@@ -62,7 +62,7 @@ namespace $ {
 				if( next === undefined ) {
 					
 					const cache = get_cache( this )
-					if( force === $mol_mem_force_cache ) cache.obsolete( Number.NaN )
+					if( force === $mol_mem_force_cache ) return cache.obsolete( Number.NaN )
 					
 					if( $mol_atom2.current ) return cache.get()
 					else return $mol_fiber.run( ()=> cache.get() )

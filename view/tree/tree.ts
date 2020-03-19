@@ -248,7 +248,7 @@ namespace $ {
 					
 					throw value.error( 'Wrong value' )
 				} catch ( err ) {
-					err.message += `\n${value.baseUri}:${value.row}:${value.col}\n${ value }`
+					// err.message += `\n${value.baseUri}:${value.row}:${value.col}\n${ value }`
 					throw err
 				} }
 				
@@ -276,7 +276,7 @@ namespace $ {
 				} )
 				
 			} catch ( err ) {
-				err.message += `\n${param.baseUri}:${param.row}:${param.col}\n${ param }`
+				// err.message += `\n${param.baseUri}:${param.row}:${param.col}\n${ param }`
 				throw err
 			} }
 			
