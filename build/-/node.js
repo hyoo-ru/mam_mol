@@ -3954,34 +3954,22 @@ var $;
             return graph;
         }
         bundleAll({ path }) {
-            const once = (action) => {
-                const task = new $.$mol_atom2;
-                task[Symbol.toStringTag] = `${this}/once`;
-                task.calculate = action;
-                task.get();
-                task.destructor();
-                $.$mol_atom2.tick();
-            };
-            once(() => {
-                this.bundle({ path, bundle: 'web.deps.json' });
-                this.bundle({ path, bundle: 'web.css' });
-                this.bundle({ path, bundle: 'web.js' });
-                this.bundle({ path, bundle: 'web.test.js' });
-                this.bundle({ path, bundle: 'web.test.html' });
-                this.bundle({ path, bundle: 'web.d.ts' });
-                this.bundle({ path, bundle: 'web.view.tree' });
-                this.bundle({ path, bundle: 'web.locale=en.json' });
-                return null;
-            });
-            once(() => {
-                this.bundle({ path, bundle: 'node.deps.json' });
-                this.bundle({ path, bundle: 'node.js' });
-                this.bundle({ path, bundle: 'node.test.js' });
-                this.bundle({ path, bundle: 'node.d.ts' });
-                this.bundle({ path, bundle: 'node.view.tree' });
-                this.bundle({ path, bundle: 'node.locale=en.json' });
-                return null;
-            });
+            this.bundle({ path, bundle: 'index.html' });
+            this.bundle({ path, bundle: 'test.html' });
+            this.bundle({ path, bundle: 'web.deps.json' });
+            this.bundle({ path, bundle: 'web.css' });
+            this.bundle({ path, bundle: 'web.js' });
+            this.bundle({ path, bundle: 'web.test.js' });
+            this.bundle({ path, bundle: 'web.test.html' });
+            this.bundle({ path, bundle: 'web.d.ts' });
+            this.bundle({ path, bundle: 'web.view.tree' });
+            this.bundle({ path, bundle: 'web.locale=en.json' });
+            this.bundle({ path, bundle: 'node.deps.json' });
+            this.bundle({ path, bundle: 'node.js' });
+            this.bundle({ path, bundle: 'node.test.js' });
+            this.bundle({ path, bundle: 'node.d.ts' });
+            this.bundle({ path, bundle: 'node.view.tree' });
+            this.bundle({ path, bundle: 'node.locale=en.json' });
             this.bundle({ path, bundle: 'package.json' });
             this.bundleFiles({ path, exclude: ['node'] });
             this.bundleCordova({ path, exclude: ['node'] });
