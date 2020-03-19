@@ -21,7 +21,7 @@ namespace $ {
 				else value = encoder.encode(value)
 			}
 
-			return new $mol_buffer(value.buffer, value.byteOffset, value.byteLength)
+			return new $mol_buffer((value as Uint8Array).buffer, (value as Uint8Array).byteOffset, (value as Uint8Array).byteLength)
 		}
 
 		toString(code: $mol_buffer_encoding_full = 'utf8'): string {

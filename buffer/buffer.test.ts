@@ -25,7 +25,7 @@ namespace $ {
 			const str = 'GgoASUh42g=='
 			const buffer = $mol_buffer.create(str, 'base64')
 
-			$mol_assert_like( buffer, new Uint8Array([26,10,0,73,72,120,218]))
+			$mol_assert_ok( $mol_compare_bytes(buffer, new Uint8Array([26,10,0,73,72,120,218])) )
 		},
 
 		'buffer conform from same string are equal'() {
