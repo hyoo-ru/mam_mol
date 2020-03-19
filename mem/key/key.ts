@@ -52,7 +52,7 @@ namespace $ {
 				if( next === undefined ) {
 					
 					const cache = get_cache( this , key )
-					if( force === $mol_mem_force_cache ) cache.obsolete()
+					if( force === $mol_mem_force_cache ) return cache.obsolete()
 
 					if( $mol_atom2.current ) return cache.get()
 					else return $mol_fiber.run( ()=> cache.get() )
