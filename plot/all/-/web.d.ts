@@ -437,7 +437,10 @@ declare namespace $ {
 declare namespace $ {
     class $mol_after_frame extends $mol_object2 {
         task: () => void;
-        id: any;
+        static queue: Set<() => void>;
+        static scheduled: number;
+        static schedule(task: () => void): void;
+        static run(): void;
         constructor(task: () => void);
         destructor(): void;
     }
