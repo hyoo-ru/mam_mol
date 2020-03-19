@@ -1259,6 +1259,22 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_atom2_autorun(calculate) {
+        return $.$mol_atom2.create(atom => {
+            atom.calculate = calculate;
+            atom.obsolete_slaves = atom.schedule;
+            atom.doubt_slaves = atom.schedule;
+            atom[Symbol.toStringTag] = calculate[Symbol.toStringTag] || calculate.name || '$mol_atom2_autorun';
+            atom.schedule();
+        });
+    }
+    $.$mol_atom2_autorun = $mol_atom2_autorun;
+})($ || ($ = {}));
+//autorun.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_mem_force extends Object {
         constructor() {
             super();
@@ -1582,6 +1598,151 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_diff_path(...paths) {
+        const limit = Math.min(...paths.map(path => path.length));
+        lookup: for (var i = 0; i < limit; ++i) {
+            const first = paths[0][i];
+            for (let j = 1; j < paths.length; ++j) {
+                if (paths[j][i] !== first)
+                    break lookup;
+            }
+        }
+        return {
+            prefix: paths[0].slice(0, i),
+            suffix: paths.map(path => path.slice(i)),
+        };
+    }
+    $.$mol_diff_path = $mol_diff_path;
+})($ || ($ = {}));
+//path.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_error_mix extends Error {
+        constructor(message, ...errors) {
+            super(message);
+            this.errors = errors;
+            if (errors.length) {
+                const stacks = [...errors.map(error => error.message), this.stack];
+                const diff = $.$mol_diff_path(...stacks.map(stack => {
+                    if (!stack)
+                        return [];
+                    return stack.split('\n').reverse();
+                }));
+                const head = diff.prefix.reverse().join('\n');
+                const tails = diff.suffix.map(path => path.reverse().map(line => line.replace(/^(?!\s+at)/, '\tat (.) ')).join('\n')).join('\n\tat (.) -----\n');
+                this.stack = `Error: ${this.constructor.name}\n\tat (.) /"""\\\n${tails}\n\tat (.) \\___/\n${head}`;
+                this.message += errors.map(error => '\n' + error.message).join('');
+            }
+        }
+    }
+    $.$mol_error_mix = $mol_error_mix;
+})($ || ($ = {}));
+//mix.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const a_stack = [];
+    const b_stack = [];
+    let cache = null;
+    function $mol_compare_deep(a, b) {
+        if (Object.is(a, b))
+            return true;
+        const a_type = typeof a;
+        const b_type = typeof b;
+        if (a_type !== b_type)
+            return false;
+        if (a_type === 'function')
+            return String(a) === String(b);
+        if (a_type !== 'object')
+            return false;
+        if (!a || !b)
+            return false;
+        if (a instanceof Error)
+            return false;
+        if (a['constructor'] !== b['constructor'])
+            return false;
+        if (a instanceof RegExp)
+            return Object.is(String(a), String(b));
+        const ref = a_stack.indexOf(a);
+        if (ref >= 0) {
+            return Object.is(b_stack[ref], b);
+        }
+        if (!cache)
+            cache = new WeakMap;
+        let a_cache = cache.get(a);
+        if (a_cache) {
+            const b_cache = a_cache.get(b);
+            if (typeof b_cache === 'boolean')
+                return b_cache;
+        }
+        else {
+            a_cache = new WeakMap();
+            cache.set(a, a_cache);
+        }
+        a_stack.push(a);
+        b_stack.push(b);
+        let result;
+        try {
+            if (a[Symbol.iterator]) {
+                const a_iter = a[Symbol.iterator]();
+                const b_iter = b[Symbol.iterator]();
+                while (true) {
+                    const a_next = a_iter.next();
+                    const b_next = b_iter.next();
+                    if (a_next.done !== a_next.done)
+                        return result = false;
+                    if (a_next.done)
+                        break;
+                    if (!$mol_compare_deep(a_next.value, b_next.value))
+                        return result = false;
+                }
+                return result = true;
+            }
+            let count = 0;
+            for (let key in a) {
+                try {
+                    if (!$mol_compare_deep(a[key], b[key]))
+                        return result = false;
+                }
+                catch (error) {
+                    $.$mol_fail_hidden(new $.$mol_error_mix(`Failed ${JSON.stringify(key)} fields comparison of ${a} and ${b}`, error));
+                }
+                ++count;
+            }
+            for (let key in b) {
+                --count;
+                if (count < 0)
+                    return result = false;
+            }
+            const a_val = a['valueOf']();
+            if (Object.is(a_val, a))
+                return result = true;
+            const b_val = b['valueOf']();
+            if (!Object.is(a_val, b_val))
+                return result = false;
+            return result = true;
+        }
+        finally {
+            a_stack.pop();
+            b_stack.pop();
+            if (a_stack.length === 0) {
+                cache = null;
+            }
+            else {
+                a_cache.set(b, result);
+            }
+        }
+    }
+    $.$mol_compare_deep = $mol_compare_deep;
+})($ || ($ = {}));
+//deep.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_file_not_found extends Error {
     }
     $.$mol_file_not_found = $mol_file_not_found;
@@ -1729,12 +1890,23 @@ var $;
                     stabilityThreshold: 100,
                 },
             });
+            const { magenta, magentaBright } = $node.colorette;
             const handler = (type, path) => $.$mol_fiber_unlimit(() => {
                 const file = $.$mol_file.relative(path.replace(/\\/g, '/'));
-                file.reset();
-                if (type === 'change')
-                    return;
-                file.parent().reset();
+                if (type === 'change') {
+                    const cached = $.$mol_mem_cached(() => file.buffer());
+                    const actual = $.$mol_buffer.from($node.fs.readFileSync(file.path()));
+                    if ($.$mol_compare_deep(cached, actual))
+                        return;
+                    console.log(magenta(`$mol_file ${type} ${magentaBright(file.relate())}`));
+                    file.reset();
+                    file.buffer(actual, $.$mol_mem_force_cache);
+                }
+                else {
+                    console.log(magenta(`$mol_file ${type} ${magentaBright(file.relate())}`));
+                    file.reset();
+                    file.parent().reset();
+                }
             });
             watcher.on('all', handler);
             watcher.on('error', (error) => {
@@ -1772,8 +1944,9 @@ var $;
                 return $.$mol_buffer.from($node.fs.readFileSync(this.path()));
             }
             this.parent().exists(true);
-            $node.fs.writeFileSync(this.path(), next.native);
-            return next;
+            const buffer = Buffer.from(next.native);
+            $node.fs.writeFileSync(this.path(), buffer);
+            return $.$mol_buffer.from(buffer);
         }
         sub() {
             if (!this.exists())
@@ -1813,22 +1986,6 @@ var $;
     $.$mol_file = $mol_file_node;
 })($ || ($ = {}));
 //file.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_atom2_autorun(calculate) {
-        return $.$mol_atom2.create(atom => {
-            atom.calculate = calculate;
-            atom.obsolete_slaves = atom.schedule;
-            atom.doubt_slaves = atom.schedule;
-            atom[Symbol.toStringTag] = calculate[Symbol.toStringTag] || calculate.name || '$mol_atom2_autorun';
-            atom.schedule();
-        });
-    }
-    $.$mol_atom2_autorun = $mol_atom2_autorun;
-})($ || ($ = {}));
-//autorun.js.map
 ;
 "use strict";
 var $;
@@ -3099,7 +3256,6 @@ var $;
                             throw value.error('Wrong value');
                         }
                         catch (err) {
-                            err.message += `\n${value.baseUri}:${value.row}:${value.col}\n${value}`;
                             throw err;
                         }
                     };
@@ -3131,7 +3287,6 @@ var $;
                     });
                 }
                 catch (err) {
-                    err.message += `\n${param.baseUri}:${param.row}:${param.col}\n${param}`;
                     throw err;
                 }
             }
@@ -3392,52 +3547,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_diff_path(...paths) {
-        const limit = Math.min(...paths.map(path => path.length));
-        lookup: for (var i = 0; i < limit; ++i) {
-            const first = paths[0][i];
-            for (let j = 1; j < paths.length; ++j) {
-                if (paths[j][i] !== first)
-                    break lookup;
-            }
-        }
-        return {
-            prefix: paths[0].slice(0, i),
-            suffix: paths.map(path => path.slice(i)),
-        };
-    }
-    $.$mol_diff_path = $mol_diff_path;
-})($ || ($ = {}));
-//path.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_error_mix extends Error {
-        constructor(message, ...errors) {
-            super(message);
-            this.errors = errors;
-            if (errors.length) {
-                const stacks = [...errors.map(error => error.stack), this.stack];
-                const diff = $.$mol_diff_path(...stacks.map(stack => {
-                    if (!stack)
-                        return [];
-                    return stack.split('\n').reverse();
-                }));
-                const head = diff.prefix.reverse().join('\n');
-                const tails = diff.suffix.map(path => path.reverse().map(line => line.replace(/^(?!\s+at)/, '\tat (.) ')).join('\n')).join('\n\tat (.) -----\n');
-                this.stack = `Error: ${this.constructor.name}\n\tat (.) /"""\\\n${tails}\n\tat (.) \\___/\n${head}`;
-                this.message += errors.map(error => '\n' + error.message).join('');
-            }
-        }
-    }
-    $.$mol_error_mix = $mol_error_mix;
-})($ || ($ = {}));
-//mix.js.map
-;
-"use strict";
-var $;
-(function ($) {
     function $mol_build_start(paths) {
         var build = $mol_build.relative('.');
         if (paths.length > 0) {
@@ -3454,7 +3563,7 @@ var $;
             }
         }
         else {
-            build.server().socket();
+            $.$mol_atom2_autorun(() => build.server().start());
         }
     }
     $.$mol_build_start = $mol_build_start;
@@ -3468,27 +3577,7 @@ var $;
         static relative(path) {
             return $mol_build.root($.$mol_file.relative(path).path());
         }
-        watch() {
-            return $.$mol_atom2_autorun(() => {
-                const start = Date.now();
-                try {
-                    const result = this.modsRecursive({
-                        path: this.root().path(),
-                        exclude: ['node_modules']
-                    });
-                    const duration = Date.now() - start;
-                    const time = $node.colorette.cyan(`${duration.toString().padStart(5)}ms`);
-                    console.log(`Watch tree in ${time}`);
-                    return result;
-                }
-                catch (error) {
-                    console.error(error);
-                    return error;
-                }
-            });
-        }
         server() {
-            this.watch();
             return $.$mol_build_server.make({
                 build: $.$mol_const(this),
             });
@@ -3679,7 +3768,7 @@ var $;
                     file.fail(error);
                 }
                 else {
-                    console.error($node.colorette.red(String(diagnostic.messageText)));
+                    console.error($node.colorette.redBright(String(diagnostic.messageText)));
                 }
             }, () => { });
             const builder = $node.typescript.createWatchProgram(host);
@@ -3774,7 +3863,6 @@ var $;
                 if (mod.type() === 'dir') {
                     try {
                         if (git_dir.exists() && git_dir.type() === 'dir') {
-                            process.stdout.write($.$mol_exec(mod.path(), 'git', '--no-pager', 'log', '--oneline', 'HEAD..origin/master').stdout);
                         }
                         else {
                             for (let repo of mapping.select('pack', mod.name(), 'git').sub) {
@@ -3787,7 +3875,7 @@ var $;
                         }
                     }
                     catch (error) {
-                        console.error($node.colorette.red(error.message));
+                        console.error($node.colorette.redBright(error.message));
                     }
                 }
                 return false;
@@ -3945,15 +4033,22 @@ var $;
             if (!bundle || bundle === 'package.json') {
                 res = res.concat(this.bundlePackageJSON({ path, exclude: ['web'] }));
             }
+            if (!bundle || bundle === 'index.html') {
+                res = res.concat(this.bundleIndexHtml({ path }));
+            }
             if (!bundle || bundle === 'test.html') {
                 res = res.concat(this.bundleTestHtml({ path }));
             }
-            return res.map(r => r.valueOf());
+            if (!bundle || /\//.test(bundle)) {
+                res = res.concat(this.bundleFiles({ path, exclude: ['node'] }));
+            }
+            return res;
         }
         logBundle(target, duration) {
-            const path = $node.colorette.green(target.relate(this.root()));
-            const time = $node.colorette.cyan(`${duration.toString().padStart(5)}ms`);
-            console.log(`Built in ${time}: ${path}`);
+            const { green, greenBright } = $node.colorette;
+            const path = target.relate(this.root());
+            const time = duration.toString().padStart(5);
+            console.log(green(`$mol_build ${time}ms ${greenBright(path)}`));
         }
         bundleJS({ path, exclude, bundle, moduleTarget }) {
             const start = Date.now();
@@ -4069,7 +4164,11 @@ var $;
             let content = source.exists()
                 ? source.text()
                 : `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`;
-            content = content.replace(/(<\/body>|$)/, `<script src="web.test.js" charset="utf-8" defer></script>$1`);
+            content = content.replace(/(<\/body>|$)/, `
+					<script src="/mol/build/client/client.js" charset="utf-8" defer></script>
+					<script src="web.test.js" charset="utf-8" defer></script>
+					$1
+				`);
             target.text(content);
             this.logBundle(target, Date.now() - start);
             return [target];
@@ -4155,11 +4254,8 @@ var $;
             this.logBundle(target, Date.now() - start);
             return [target];
         }
-        bundleFiles({ path, exclude }) {
-            const root = this.root();
+        bundleIndexHtml({ path, exclude }) {
             const pack = $.$mol_file.absolute(path);
-            var sources = this.sourcesAll({ path, exclude })
-                .filter(src => /meta.tree$/.test(src.ext()));
             const targets = [];
             const start = Date.now();
             const html = pack.resolve('index.html');
@@ -4169,6 +4265,14 @@ var $;
                 targets.push(html_target);
                 this.logBundle(html_target, Date.now() - start);
             }
+            return targets;
+        }
+        bundleFiles({ path, exclude }) {
+            const root = this.root();
+            const pack = $.$mol_file.absolute(path);
+            var sources = this.sourcesAll({ path, exclude })
+                .filter(src => /meta.tree$/.test(src.ext()));
+            const targets = [];
             sources.forEach(source => {
                 const tree = $.$mol_tree.fromString(source.text(), source.path());
                 tree.select('deploy').sub.forEach(deploy => {
@@ -4241,6 +4345,7 @@ var $;
                     locales[lang][key] = loc[key];
                 }
             });
+            const { yellow, yellowBright } = $node.colorette;
             const targets = Object.keys(locales).map(lang => {
                 const start = Date.now();
                 const target = pack.resolve(`-/${bundle}.locale=${lang}.json`);
@@ -4250,7 +4355,7 @@ var $;
                         if (key in locales['en'])
                             continue;
                         delete locale[key];
-                        console.warn($node.colorette.yellow(`Not translated to "en": ${$node.colorette.cyan(key)}`));
+                        console.warn(yellow(`$mol_build absent in "en" locale ${yellowBright(key)}`));
                     }
                 }
                 const locale_sorted = {};
@@ -4355,6 +4460,9 @@ var $;
     ], $mol_build.prototype, "graph", null);
     __decorate([
         $.$mol_mem_key
+    ], $mol_build.prototype, "bundle", null);
+    __decorate([
+        $.$mol_mem_key
     ], $mol_build.prototype, "bundleJS", null);
     __decorate([
         $.$mol_mem_key
@@ -4374,6 +4482,9 @@ var $;
     __decorate([
         $.$mol_mem_key
     ], $mol_build.prototype, "bundlePackageJSON", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_build.prototype, "bundleIndexHtml", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_build.prototype, "bundleFiles", null);
@@ -4521,7 +4632,8 @@ var $;
             return socket;
         }
         messageStart(port) {
-            return `${this} started at http://127.0.0.1:${port}/`;
+            const { green, greenBright } = $node.colorette;
+            return green(`${this} started at ${greenBright(`http://127.0.0.1:${port}/`)}`);
         }
         expressHandlers() {
             return [
@@ -4578,81 +4690,6 @@ var $;
         $.$mol_mem
     ], $mol_server.prototype, "socket", null);
     $.$mol_server = $mol_server;
-})($ || ($ = {}));
-//server.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_build_server extends $.$mol_server {
-        expressGenerator() {
-            return $.$mol_fiber_root((req, res, next) => {
-                try {
-                    return $.$mol_fiber_unlimit(() => this.generator(req.url) && next());
-                }
-                catch (error) {
-                    if (typeof error.then === 'function')
-                        $.$mol_fail_hidden(error);
-                    console.error(error.stack);
-                    if (req.url.match(/\.js$/)) {
-                        const script = error.message.split('\n\n').map(msg => {
-                            return `console.error( ${JSON.stringify(msg)} )`;
-                        }).join('\n');
-                        res.send(script).end();
-                    }
-                    else if (req.url.match(/\.css$/)) {
-                        const message = JSON.stringify(error.message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, ''))
-                            .replace(/\\n/g, '\\a')
-                            .replace(/\\t/g, '\\9');
-                        res.setHeader('content-type', 'text/css');
-                        res.send(`body:before{ display: block; font: 1em monospace; white-space: pre-wrap; color: red; content : ${message} }`).end();
-                    }
-                    else {
-                        throw error;
-                    }
-                }
-            });
-        }
-        build() {
-            return $.$mol_fail(new Error('Not implemented'));
-        }
-        generator(url) {
-            const matched = url.match(/^(.*)\/-\/(\w+(?:.\w+)+)$/);
-            if (!matched)
-                return [];
-            const build = this.build();
-            const [, rawpath, bundle] = matched;
-            const path = build.root().resolve(rawpath).path();
-            if (bundle === 'web.css')
-                console.warn($node.colorette.yellow('Deprecation: CSS compiles into JS bundle now! You do not need web.css'));
-            try {
-                return build.bundle({ path, bundle });
-            }
-            finally {
-                build.bundleFiles({ path, exclude: ['node'] });
-            }
-        }
-        expressIndex() {
-            return (req, res, next) => {
-                var _a;
-                const match = req.url.match(/(.*[^\-]\/)([\?#].*)?$/);
-                if (!match)
-                    return next();
-                const file = $.$mol_file.absolute(this.rootPublic())
-                    .resolve(`${req.path}index.html`);
-                if (!file.exists())
-                    return next();
-                res.redirect(301, `${match[1]}-/test.html${(_a = match[2]) !== null && _a !== void 0 ? _a : ''}`);
-            };
-        }
-        port() {
-            return 9080;
-        }
-    }
-    __decorate([
-        $.$mol_mem_key
-    ], $mol_build_server.prototype, "generator", null);
-    $.$mol_build_server = $mol_build_server;
 })($ || ($ = {}));
 //server.node.js.map
 ;

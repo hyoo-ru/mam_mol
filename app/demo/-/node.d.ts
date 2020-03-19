@@ -1285,6 +1285,24 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_diff_path<Item>(...paths: Item[][]): {
+        prefix: Item[];
+        suffix: Item[][];
+    };
+}
+
+declare namespace $ {
+    class $mol_error_mix extends Error {
+        errors: Error[];
+        constructor(message: string, ...errors: Error[]);
+    }
+}
+
+declare namespace $ {
+    function $mol_compare_deep<Value>(a: Value, b: Value): boolean;
+}
+
+declare namespace $ {
     type $mol_file_type = 'file' | 'dir' | 'link';
     type $mol_file_content = string | $mol_buffer | Uint8Array;
     interface $mol_file_stat {

@@ -8,7 +8,7 @@
   "dependencies": {
     "jsdom": "*",
     "chokidar": "*",
-    "node-fetch": "*",
-    "colorette": "*"
+    "colorette": "*",
+    "node-fetch": "*"
   }
 }

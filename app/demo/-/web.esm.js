@@ -19074,7 +19074,6 @@ var $;
                             throw value.error('Wrong value');
                         }
                         catch (err) {
-                            err.message += `\n${value.baseUri}:${value.row}:${value.col}\n${value}`;
                             throw err;
                         }
                     };
@@ -19106,7 +19105,6 @@ var $;
                     });
                 }
                 catch (err) {
-                    err.message += `\n${param.baseUri}:${param.row}:${param.col}\n${param}`;
                     throw err;
                 }
             }

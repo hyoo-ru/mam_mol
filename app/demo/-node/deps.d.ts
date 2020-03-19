@@ -4,7 +4,7 @@ interface $node {
 	"fs" : typeof import( "fs" )
 	"path" : typeof import( "path" )
 	"chokidar" : typeof import( "chokidar" )
-	"node-fetch" : typeof import( "node-fetch" )
 	"colorette" : typeof import( "colorette" )
+	"node-fetch" : typeof import( "node-fetch" )
 	"child_process" : typeof import( "child_process" )
 }
