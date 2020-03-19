@@ -59,11 +59,13 @@ namespace $ {
 					file.reset()
 					file.buffer( actual , $mol_mem_force_cache )
 
-				}
+				} else {
 
-				if( type !== 'change' ) {
-					console.log( magenta( type + ' ' + magentaBright( file.relate() ) ) )
+					console.log( magenta( `$mol_file ${ type } ${ magentaBright( file.relate() ) }` ) )
+					
+					file.reset()
 					file.parent().reset()
+					
 				}
 
 			} )
