@@ -1,10 +1,13 @@
 {
   "name": "mam",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "main": "node.js",
   "module": "node.esm.js",
   "browser": "web.js",
   "types": "web.d.ts",
+  "bin": {
+    "mam": "./bin/mam"
+  },
   "dependencies": {
     "colorette": "*",
     "source-map-support": "*"
