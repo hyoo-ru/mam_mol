@@ -24,7 +24,7 @@ namespace $ {
 			const response = $mol_fetch.response(this.path())
 			if (response.native.status === 404) throw new $mol_file_not_found(`File not found: ${this.path()}`)
 
-			return $mol_buffer.from(new Uint8Array(response.buffer()))
+			return $mol_buffer.create(new Uint8Array(response.buffer()))
 		}
 
 		watcher(): { destructor(): void } {

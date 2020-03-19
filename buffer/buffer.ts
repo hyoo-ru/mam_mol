@@ -13,31 +13,26 @@ namespace $ {
 
 	const encoder = new TextEncoder()
 
-	export class $mol_buffer extends $mol_object2 {
-		native!: Uint8Array
+	export class $mol_buffer extends Uint8Array {
 
-		get length() {
-			return this.native.length
+		static create(value: string | Uint8Array, code: $mol_buffer_encoding = 'utf8') {
+			if (typeof value === 'string') {
+				if (code === 'base64') value = $mol_base64_decode(value)
+				else value = encoder.encode(value)
+			}
+
+			return new $mol_buffer(value.buffer, value.byteOffset, value.byteLength)
 		}
 
-		static from(value: string | Uint8Array, code: $mol_buffer_encoding = 'utf8') {
-			return $mol_buffer.create(t => {
-				if (typeof value === 'string') {
-					if (code === 'base64') t.native = $mol_base64_decode(value)
-					else t.native = encoder.encode(value)
-				} else t.native = value
-			})
-		}
+		toString(code: $mol_buffer_encoding_full = 'utf8'): string {
+			if (code === 'base64') return $mol_base64_encode(this)
 
-		toString(code: $mol_buffer_encoding_full = 'utf8') {
-			if (code === 'base64') return $mol_base64_encode(this.native)
-
-			return new TextDecoder(code).decode(this.native)
+			return new TextDecoder(code).decode(this)
 		}
 	}
 
 	$mol_conform_handler( $mol_buffer , ( target, source ) => {
-		const equal = $mol_compare_bytes(target.native, source.native)
+		const equal = $mol_compare_bytes(target, source)
 		return equal ? source : target
 	} )
 }

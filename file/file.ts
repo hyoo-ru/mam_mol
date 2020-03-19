@@ -88,7 +88,7 @@ namespace $ {
 		abstract buffer( next? : $mol_buffer , force? : $mol_mem_force ): $mol_buffer
 
 		text(next?: string, force?: $mol_mem_force) {
-			return this.buffer(next === undefined ? undefined : $mol_buffer.from(next), force).toString()
+			return this.buffer(next === undefined ? undefined : $mol_buffer.create(next), force).toString()
 		}
 
 		fail(error: Error) {
@@ -111,7 +111,7 @@ namespace $ {
 		}
 
 		text_cached(content: string) {
-			this.buffer_cached($mol_buffer.from(content))
+			this.buffer_cached($mol_buffer.create(content))
 		}
 		
 		abstract sub(): $mol_file[]

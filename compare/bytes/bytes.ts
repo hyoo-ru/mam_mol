@@ -7,5 +7,5 @@ namespace $ {
 			if (a[i] !== b[i]) return false
 
 		return true
-    }
+	}
 }
