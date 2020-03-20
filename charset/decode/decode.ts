@@ -7,7 +7,6 @@ namespace $ {
 		| 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253'
 		| 'windows-1254'| 'windows-1255'| 'windows-1256'| 'windows-1257'| 'windows-1258' | 'x-mac-cyrillic' | 'gbk'
 		| 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr' | 'utf-16be' | 'utf-16le'
-		| 'x-user-defined' | 'replacement'
 
 	export function $mol_charset_decode(value: Uint8Array, code: $mol_charset_encoding = 'utf8') {
 		return new TextDecoder(code).decode(value)
