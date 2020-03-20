@@ -4806,5 +4806,6 @@ var $;
     $.$mol_plugin = $mol_plugin;
 })($ || ($ = {}));
 //plugin.js.map
-
-//# sourceMappingURL=node.js.map
+;
+export default $
+//# sourceMappingURL=node.esm.js.map

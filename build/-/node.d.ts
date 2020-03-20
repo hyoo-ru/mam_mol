@@ -304,6 +304,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_atom2_autorun(calculate: () => any): $mol_atom2<unknown>;
+}
+
+declare namespace $ {
     class $mol_mem_force extends Object {
         constructor();
         $mol_mem_force: boolean;
@@ -344,26 +348,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_after_timeout extends $mol_object2 {
-        delay: number;
-        task: () => void;
-        id: any;
-        constructor(delay: number, task: () => void);
-        destructor(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_after_frame extends $mol_after_timeout {
-        task: () => void;
-        constructor(task: () => void);
-    }
-}
-
-declare namespace $ {
-    class $mol_state_time extends $mol_object {
-        static now(precision?: number, next?: number): number;
-    }
+    function $mol_const<Value>(value: Value): {
+        (): Value;
+        '()': Value;
+    };
 }
 
 interface $node {
@@ -372,14 +360,143 @@ interface $node {
 declare var $node: $node;
 
 declare namespace $ {
-    var $mol_dom_context: typeof globalThis;
+    function $mol_base64_decode(base64: string): Uint8Array;
 }
 
 declare namespace $ {
+    function $mol_base64_decode_node(base64Str: string): Uint8Array;
 }
 
 declare namespace $ {
-    function $mol_style_attach(id: string, text: string): HTMLStyleElement;
+    function $mol_base64_encode(src: string | Uint8Array): string;
+}
+
+declare namespace $ {
+    function $mol_base64_encode_node(str: string | Uint8Array): string;
+}
+
+declare namespace $ {
+    type $mol_buffer_encoding = 'utf8' | 'base64';
+    type $mol_buffer_encoding_full = $mol_buffer_encoding | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr' | 'utf-16be' | 'utf-16le' | 'x-user-defined' | 'replacement';
+    class $mol_buffer extends $mol_object2 {
+        native: Uint8Array;
+        get length(): number;
+        static from(value: string | Uint8Array, code?: $mol_buffer_encoding): $mol_buffer;
+        toString(code?: $mol_buffer_encoding_full): string;
+    }
+}
+
+declare namespace $ {
+    function $mol_diff_path<Item>(...paths: Item[][]): {
+        prefix: Item[];
+        suffix: Item[][];
+    };
+}
+
+declare namespace $ {
+    class $mol_error_mix extends Error {
+        errors: Error[];
+        constructor(message: string, ...errors: Error[]);
+    }
+}
+
+declare namespace $ {
+    function $mol_compare_deep<Value>(a: Value, b: Value): boolean;
+}
+
+declare namespace $ {
+    type $mol_file_type = 'file' | 'dir' | 'link';
+    type $mol_file_content = string | $mol_buffer | Uint8Array;
+    interface $mol_file_stat {
+        type: $mol_file_type;
+        size: number;
+        atime: Date;
+        mtime: Date;
+        ctime: Date;
+    }
+    class $mol_file_not_found extends Error {
+    }
+    abstract class $mol_file extends $mol_object {
+        static absolute(path: string): $mol_file;
+        static relative(path: string): $mol_file;
+        path(): string;
+        parent(): $mol_file;
+        abstract stat(next?: $mol_file_stat, force?: $mol_mem_force): $mol_file_stat;
+        reset(): void;
+        version(): string;
+        abstract ensure(next?: boolean): boolean;
+        abstract watcher(): {
+            destructor(): void;
+        };
+        exists(next?: boolean): boolean;
+        type(): $mol_file_type;
+        name(): string;
+        ext(): string;
+        abstract buffer(next?: $mol_buffer, force?: $mol_mem_force): $mol_buffer;
+        text(next?: string, force?: $mol_mem_force): string;
+        fail(error: Error): void;
+        buffer_cached(buffer: $mol_buffer): void;
+        text_cached(content: string): void;
+        abstract sub(): $mol_file[];
+        abstract resolve(path: string): $mol_file;
+        abstract relate(base?: $mol_file): string;
+        abstract append(next: $mol_file_content): void;
+        find(include?: RegExp, exclude?: RegExp): $mol_file[];
+    }
+}
+
+declare namespace $ {
+    class $mol_file_node extends $mol_file {
+        static absolute(path: string): $mol_file_node;
+        static relative(path: string): $mol_file_node;
+        watcher(): {
+            destructor(): void;
+        };
+        stat(next?: $mol_file_stat, force?: $mol_mem_force): $mol_file_stat;
+        ensure(next?: boolean): boolean;
+        buffer(next?: $mol_buffer, force?: $mol_mem_force): $mol_buffer;
+        sub(): $mol_file[];
+        resolve(path: string): $mol_file;
+        relate(base?: $mol_file): string;
+        append(next: $mol_file_content): void;
+    }
+}
+
+declare namespace $ {
+    const $mol_tree_convert: unique symbol;
+    type $mol_tree_path = Array<string | number | null>;
+    type $mol_tree_hack = (input: $mol_tree, context: $mol_tree_context) => readonly $mol_tree[];
+    type $mol_tree_context = Record<string, $mol_tree_hack>;
+    type $mol_tree_library = Record<string, $mol_tree_context>;
+    class $mol_tree {
+        readonly type: string;
+        readonly data: string;
+        readonly sub: readonly $mol_tree[];
+        readonly baseUri: string;
+        readonly row: number;
+        readonly col: number;
+        constructor(config?: Partial<$mol_tree>);
+        static values(str: string, baseUri?: string): $mol_tree[];
+        clone(config?: Partial<$mol_tree>): $mol_tree;
+        make(config: Partial<$mol_tree>): $mol_tree;
+        static fromString(str: string, baseUri?: string): $mol_tree;
+        static fromJSON(json: any, baseUri?: string): $mol_tree;
+        get uri(): string;
+        toString(prefix?: string): string;
+        toJSON(): any;
+        get value(): string;
+        insert(value: $mol_tree, ...path: $mol_tree_path): $mol_tree;
+        select(...path: $mol_tree_path): $mol_tree;
+        filter(path: string[], value?: string): $mol_tree;
+        transform(visit: (stack: $mol_tree[], sub: () => $mol_tree[]) => $mol_tree | null, stack?: $mol_tree[]): $mol_tree | null;
+        hack(context: $mol_tree_context): $mol_tree;
+        error(message: string): Error;
+    }
+}
+
+/// <reference types="ws/node_modules/@types/node/child_process" />
+declare namespace $ {
+    function $mol_exec(dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
 }
 
 declare namespace $ {
@@ -395,7 +512,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_atom2_autorun(calculate: () => any): $mol_atom2<unknown>;
+    var $mol_dom_context: typeof globalThis;
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -424,13 +544,6 @@ declare namespace $ {
 
 declare namespace $ {
     function $mol_dom_qname(name: string): string;
-}
-
-declare namespace $ {
-    function $mol_const<Value>(value: Value): {
-        (): Value;
-        '()': Value;
-    };
 }
 
 declare namespace $ {
@@ -493,12 +606,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     type $mol_view_content = $mol_view | Node | string | number | boolean;
     function $mol_view_visible_width(): number;
     function $mol_view_visible_height(): number;
@@ -553,95 +660,297 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
-    class $mol_perf_sierp extends $mol_view {
-        size_target(): number;
-        elapsed(val?: any, force?: $mol_mem_force): any;
-        style(): {
-            transform: string;
+    class $mol_state_local<Value> extends $mol_object {
+        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+        static native(): Storage | {
+            getItem(key: string): any;
+            setItem(key: string, value: string): void;
+            removeItem(key: string): void;
         };
-        transform(): string;
-        sub(): readonly any[];
-        Dots(): $mol_view;
-        dots(): readonly any[];
-        Dot(id: any): $$.$mol_perf_sierp_dot;
-        left(id: any): number;
-        top(id: any): number;
-        size(id: any): number;
-        text(): string;
-    }
-}
-declare namespace $ {
-    class $mol_perf_sierp_dot extends $mol_view {
-        size(): number;
-        size_px(): string;
-        hover(val?: any, force?: $mol_mem_force): any;
-        sub(): readonly any[];
-        text(): string;
-        style(): {
-            width: number;
-            height: number;
-            left: number;
-            top: number;
-            borderRadius: number;
-            lineHeight: string;
-            background: string;
-        };
-        width(): number;
-        height(): number;
-        left(): number;
-        top(): number;
-        radius(): number;
-        color(): string;
-        event(): {
-            mouseenter: (val?: any) => any;
-            mouseleave: (val?: any) => any;
-        };
-        enter(val?: any, force?: $mol_mem_force): any;
-        leave(val?: any, force?: $mol_mem_force): any;
+        static value<Value>(key: string, next?: Value, force?: $mol_mem_force): Value | null;
+        prefix(): string;
+        value(key: string, next?: Value): Value;
     }
 }
 
-declare namespace $.$$ {
-    class $mol_perf_sierp extends $.$mol_perf_sierp {
-        dots(): $mol_perf_sierp_dot[];
-        data(): {
-            left: number;
-            top: number;
-            size: number;
-        }[];
-        SierpinskiTriangle(id: {
-            left: number;
-            top: number;
-            size: number;
+declare namespace $ {
+    interface $mol_locale_dict {
+        [key: string]: string;
+    }
+    class $mol_locale extends $mol_object {
+        static lang_default(): string;
+        static lang(next?: string): string;
+        static source(lang: string): any;
+        static texts(lang: string, next?: $mol_locale_dict): $mol_locale_dict;
+        static text(key: string): string;
+    }
+}
+
+declare namespace $ {
+    function $mol_view_tree_trim_remarks(def: $mol_tree): $mol_tree;
+    function $mol_view_tree_classes(defs: $mol_tree): $mol_tree;
+    function $mol_view_tree_class_name(val: $mol_tree): string;
+    function $mol_view_tree_super_name(val: $mol_tree): string;
+    function $mol_view_tree_class_props(def: $mol_tree): $mol_tree;
+    function $mol_view_tree_prop_name(prop: $mol_tree): string;
+    function $mol_view_tree_prop_key(prop: $mol_tree): string;
+    function $mol_view_tree_prop_next(prop: $mol_tree): string;
+    function $mol_view_tree_prop_value(prop: $mol_tree): $mol_tree;
+    function $mol_view_tree_value_type(val: $mol_tree): "object" | "string" | "number" | "null" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list";
+    function $mol_view_tree_compile(tree: $mol_tree): {
+        script: string;
+        locales: {
+            [key: string]: string;
+        };
+    };
+}
+
+declare namespace $ {
+    class $mol_graph<Node, Edge> {
+        nodes: {
+            [id: string]: Node | undefined;
+        };
+        edgesOut: {
+            [from: string]: {
+                [to: string]: Edge;
+            };
+        };
+        edgesIn: {
+            [to: string]: {
+                [from: string]: Edge;
+            };
+        };
+        nodeEnsure(id: string): void;
+        linkOut(from: string, to: string, edge: Edge): void;
+        linkIn(to: string, from: string, edge: Edge): void;
+        edgeOut(from: string, to: string): Edge;
+        edgeIn(to: string, from: string): Edge;
+        link(from: string, to: string, edge: Edge): void;
+        unlink(from: string, to: string): void;
+        cut_cycles(get_weight: (edge: Edge) => number): void;
+        get sorted(): string[];
+    }
+}
+
+declare namespace $ {
+    const sourcemap_codec: typeof import("sourcemap-codec");
+    type SourceMapLine = ReturnType<typeof sourcemap_codec.decode>[0];
+    export interface $mol_sourcemap_raw {
+        version: number;
+        sources: string[];
+        names: string[];
+        sourceRoot?: string;
+        sourcesContent?: (string | null)[];
+        mappings: string;
+        file: string;
+    }
+    export class $mol_sourcemap_builder {
+        readonly file: string;
+        readonly separator: string;
+        version: number;
+        protected sourceRoot: string;
+        protected separator_count: number;
+        constructor(file: string, separator?: string);
+        protected chunks: string[];
+        protected segment_lines: SourceMapLine[];
+        protected sources: string[];
+        protected source_indexes: Map<string, number>;
+        protected names: string[];
+        protected name_indexes: Map<string, number>;
+        protected sourceContent: (null | string)[];
+        get content(): string;
+        get sourcemap(): $mol_sourcemap_raw;
+        toJSON(): $mol_sourcemap_raw;
+        toString(): string;
+        protected add_chunk(content: string): void;
+        protected add_content(content: string, file?: string): void;
+        add(content: string, file?: string, raw?: $mol_sourcemap_raw | string): void;
+    }
+    export {};
+}
+
+declare namespace $ {
+    function $mol_build_start(paths: string[]): void;
+    class $mol_build extends $mol_object {
+        static root(path: string): $mol_build;
+        static relative(path: string): $mol_build;
+        server(): $mol_build_server;
+        root(): $mol_file;
+        mods({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        modsRecursive({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        sources({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        sourcesSorted({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        sourcesAll({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        tsOptions(): import("typescript").CompilerOptions;
+        tsSource({ path, target }: {
+            path: string;
+            target: number;
+        }): import("typescript").SourceFile;
+        tsPaths({ path, exclude, bundle }: {
+            path: string;
+            bundle: string;
+            exclude: string[];
+        }): string[];
+        tsCompile({ path, exclude, bundle }: {
+            path: string;
+            bundle: string;
+            exclude: string[];
+        }): $mol_object;
+        sourcesJS({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        sourcesDTS({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        sourcesCSS({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        static dependors: {
+            [index: string]: undefined | ((source: $mol_file) => {
+                [index: string]: number;
+            });
+        };
+        srcDeps(path: string): {
+            [index: string]: number;
+        };
+        modDeps({ path, exclude }: {
+            path: string;
+            exclude?: string[];
         }): {
-            left: number;
-            top: number;
-            size: number;
-        }[];
-        left(index: number): number;
-        top(index: number): number;
-        size(index: number): number;
-        text(): string;
-        transform(): string;
+            [index: string]: number;
+        };
+        dependencies({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): {
+            [index: string]: number;
+        };
+        modEnsure(path: string): boolean;
+        modMeta(path: string): $mol_tree;
+        graph({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_graph<null, {
+            priority: number;
+        }>;
+        bundleAll({ path }: {
+            path: string;
+        }): void;
+        bundle({ path, bundle }: {
+            path: string;
+            bundle?: string;
+        }): $mol_file[];
+        logBundle(target: $mol_file, duration: number): void;
+        bundleJS({ path, exclude, bundle, moduleTarget }: {
+            path: string;
+            exclude: string[];
+            bundle: string;
+            moduleTarget?: string;
+        }): $mol_file[];
+        bundleTestJS({ path, exclude, bundle }: {
+            path: string;
+            exclude: string[];
+            bundle: string;
+        }): $mol_file[];
+        bundleTestHtml({ path }: {
+            path: string;
+        }): $mol_file[];
+        bundleDTS({ path, exclude, bundle }: {
+            path: string;
+            exclude?: string[];
+            bundle: string;
+        }): $mol_file[];
+        bundleViewTree({ path, exclude, bundle }: {
+            path: string;
+            exclude?: string[];
+            bundle: string;
+        }): $mol_file[];
+        nodeDeps({ path, exclude }: {
+            path: string;
+            exclude: string[];
+        }): string[];
+        bundlePackageJSON({ path, exclude }: {
+            path: string;
+            exclude: string[];
+        }): $mol_file[];
+        bundleIndexHtml({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        bundleFiles({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        bundleCordova({ path, exclude }: {
+            path: string;
+            exclude?: string[];
+        }): $mol_file[];
+        bundleCSS({ path, exclude, bundle }: {
+            path: string;
+            exclude?: string[];
+            bundle: string;
+        }): $mol_file[];
+        bundleLocale({ path, exclude, bundle }: {
+            path: string;
+            exclude?: string[];
+            bundle: string;
+        }): $mol_file[];
+        bundleDepsJSON({ path, exclude, bundle }: {
+            path: string;
+            exclude?: string[];
+            bundle: string;
+        }): $mol_file[];
     }
-    class $mol_perf_sierp_dot extends $.$mol_perf_sierp_dot {
-        sub(): string[];
-        size_px(): string;
-        radius(): number;
-        color(): "" | "#ff0";
-        enter(next: Event): void;
-        leave(next: Event): void;
+}
+
+/// <reference types="ws/node_modules/@types/node/http" />
+declare namespace $ {
+    class $mol_server extends $mol_object {
+        express(): any;
+        http(): import("http").Server;
+        socket(): import("ws").Server;
+        messageStart(port: number): string;
+        expressHandlers(): any[];
+        expressCompressor(): any;
+        expressBodier(): any;
+        expressFiler(): any;
+        expressDirector(): any;
+        expressIndex(): (req: any, res: any, next: () => void) => void;
+        expressGenerator(): (req: any, res: any, next: () => void) => void;
+        bodyLimit(): string;
+        cacheTime(): number;
+        port(): number;
+        rootPublic(): string;
     }
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
-    function $mol_exec(dir: string, command: string, ...args: string[]): any;
+    class $mol_build_server extends $mol_server {
+        expressGenerator(): (req: any, res: any, next: () => any) => Promise<any>;
+        build(): $mol_build;
+        generate(url: string): $mol_file[];
+        expressIndex(): (req: any, res: any, next: () => void) => void;
+        port(): number;
+        start(): import("ws").Server;
+    }
 }
 
 declare namespace $ {
