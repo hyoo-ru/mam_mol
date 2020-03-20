@@ -86,7 +86,7 @@ namespace $ {
 		abstract buffer( next? : Uint8Array , force? : $mol_mem_force ): Uint8Array
 
 		text(next?: string, force?: $mol_mem_force) {
-			return this.buffer(next === undefined ? undefined : $mol_charset_encode(next), force).toString()
+			return $mol_charset_decode(this.buffer(next === undefined ? undefined : $mol_charset_encode(next), force))
 		}
 
 		fail(error: Error) {
