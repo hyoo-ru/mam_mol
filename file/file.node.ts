@@ -17,6 +17,10 @@ namespace $ {
 		}
 	}
 
+	function buffer_normalize(buf: Buffer): Uint8Array {
+		return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength)
+	}
+
 	export class $mol_file_node extends $mol_file {
 		@ $mol_mem_key
 		static absolute( path : string ) {
@@ -50,7 +54,7 @@ namespace $ {
 				if( type === 'change' ) {
 
 					const cached = $mol_mem_cached( ()=> file.buffer() )
-					const actual = $mol_buffer.create( $node.fs.readFileSync( file.path() ) )
+					const actual = buffer_normalize($node.fs.readFileSync( file.path() ))
 
 					if( $mol_compare_bytes( cached , actual ) ) return
 
@@ -105,14 +109,14 @@ namespace $ {
 			else $node.fs.unlinkSync( this.path() )
 
 			return true
-		} 
+		}
 		
 		@ $mol_mem
-		buffer( next? : $mol_buffer , force? : $mol_mem_force ) {
+		buffer( next? : Uint8Array , force? : $mol_mem_force ) {
 			if( next === undefined ) {
 				this.stat()
 
-				return $mol_buffer.create($node.fs.readFileSync( this.path() ))
+				return buffer_normalize($node.fs.readFileSync( this.path() ))
 			}
 			
 			this.parent().exists( true )
@@ -140,8 +144,8 @@ namespace $ {
 			return $node.path.relative( base.path() , this.path() ).replace( /\\/g , '/' )
 		}
 		
-		append( next : $mol_file_content ) {
-			$node.fs.appendFileSync( this.path() , next instanceof $mol_buffer ? next : next )
+		append( next : Uint8Array | string ) {
+			$node.fs.appendFileSync( this.path() , next )
 		}		
 	}
 

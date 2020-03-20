@@ -2,8 +2,6 @@ namespace $ {
 
 	export type $mol_file_type = 'file' | 'dir' | 'link'
 
-	export type $mol_file_content = string | $mol_buffer | Uint8Array
-
 	export interface $mol_file_stat {
 		type: $mol_file_type
 		size: number
@@ -85,10 +83,10 @@ namespace $ {
 			return match ? match[ 1 ].substring( 1 ) : ''
 		}
 
-		abstract buffer( next? : $mol_buffer , force? : $mol_mem_force ): $mol_buffer
+		abstract buffer( next? : Uint8Array , force? : $mol_mem_force ): Uint8Array
 
 		text(next?: string, force?: $mol_mem_force) {
-			return this.buffer(next === undefined ? undefined : $mol_buffer.create(next), force).toString()
+			return this.buffer(next === undefined ? undefined : $mol_charset_encode(next), force).toString()
 		}
 
 		fail(error: Error) {
@@ -96,7 +94,7 @@ namespace $ {
 			this.stat(error as any, $mol_mem_force_fail)
 		}
 
-		buffer_cached(buffer: $mol_buffer) {
+		buffer_cached(buffer: Uint8Array) {
 			const ctime = new Date()
 			const stat: $mol_file_stat = {
 				type: 'file',
@@ -111,7 +109,7 @@ namespace $ {
 		}
 
 		text_cached(content: string) {
-			this.buffer_cached($mol_buffer.create(content))
+			this.buffer_cached($mol_charset_encode(content))
 		}
 		
 		abstract sub(): $mol_file[]
@@ -120,7 +118,7 @@ namespace $ {
 
 		abstract relate( base?: $mol_file ): string
 		
-		abstract append( next : $mol_file_content ): void
+		abstract append( next : Uint8Array | string ): void
 		
 		find(
 			include? : RegExp ,
