@@ -1,5 +1,5 @@
 namespace $ {
-    export function $mol_compare_bytes(a: Uint8Array, b: Uint8Array): boolean {
+    export function $mol_compare_array<Value extends ArrayLike<number>>(a: Value, b: Value): boolean {
 		if (a === b) return true
 		if (a.length !== b.length) return false
 
