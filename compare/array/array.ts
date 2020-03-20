@@ -1,5 +1,5 @@
 namespace $ {
-    export function $mol_compare_array<Value extends ArrayLike<number>>(a: Value, b: Value): boolean {
+    export function $mol_compare_array<Value extends ArrayLike<unknown>>(a: Value, b: Value): boolean {
 		if (a === b) return true
 		if (a.length !== b.length) return false
 
