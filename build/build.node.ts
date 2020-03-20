@@ -324,7 +324,7 @@ namespace $ {
 						const ext = src.ext()
 
 						const script = src.parent().resolve( `-image/${ src.name() }.js` )
-						const payload = src.buffer().toString('base64')
+						const payload = $mol_base64_encode(src.buffer())
 
 						const path = src.relate( this.root() )
 						const uri = `data:${ image_types[ext] };base64,${ payload }`

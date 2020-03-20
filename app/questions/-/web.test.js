@@ -2095,13 +2095,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const png = new Uint8Array([0x1a, 0x0a, 0x00, 0x49, 0x48, 0x78, 0xda]);
     $.$mol_test({
-        'base64 decode string'() {
-            $.$mol_assert_like($.$mol_base64_decode('SGVsbG8sIM6nzqjOqdCr'), new TextEncoder().encode('Hello, ΧΨΩЫ'));
+        'decode utf8 string'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
+            $.$mol_assert_equal($.$mol_charset_decode(encoded), str);
+            $.$mol_assert_equal($.$mol_charset_decode(encoded, 'utf8'), str);
         },
-        'base64 decode binary'() {
-            $.$mol_assert_like($.$mol_base64_decode('GgoASUh42g=='), png);
+        'decode empty string'() {
+            const encoded = new Uint8Array([]);
+            $.$mol_assert_equal($.$mol_charset_decode(encoded), '');
         },
     });
 })($ || ($ = {}));
@@ -2110,69 +2113,15 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const png = new Uint8Array([0x1a, 0x0a, 0x00, 0x49, 0x48, 0x78, 0xda]);
     $.$mol_test({
-        'base64 encode string'() {
-            $.$mol_assert_equal($.$mol_base64_encode('Hello, ΧΨΩЫ'), 'SGVsbG8sIM6nzqjOqdCr');
-        },
-        'base64 encode binary'() {
-            $.$mol_assert_equal($.$mol_base64_encode(png), 'GgoASUh42g==');
+        'encode utf8 string'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
+            $.$mol_assert_like($.$mol_charset_encode(str), encoded);
         },
     });
 })($ || ($ = {}));
 //encode.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'buffer from utf8 string'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const buffer = $.$mol_buffer.from(str);
-            $.$mol_assert_equal(buffer.toString(), str);
-        },
-        'buffer length equals binary string length'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const buffer = $.$mol_buffer.from(str);
-            $.$mol_assert_equal(buffer.length, 15);
-        },
-        'buffer base64 encode'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const buffer = $.$mol_buffer.from(str);
-            $.$mol_assert_equal(buffer.toString('base64'), 'SGVsbG8sIM6nzqjOqdCr');
-        },
-        'buffer base64 decode'() {
-            const str = 'GgoASUh42g==';
-            const buffer = $.$mol_buffer.from(str, 'base64');
-            $.$mol_assert_like(buffer.native, new Uint8Array([26, 10, 0, 73, 72, 120, 218]));
-        },
-        'buffer conform from same string are equal'() {
-            const source = $.$mol_buffer.from('123');
-            const target = $.$mol_buffer.from('123');
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, source);
-        },
-        'buffer conform from different string are not equal'() {
-            const source = $.$mol_buffer.from('123');
-            const target = $.$mol_buffer.from('1234');
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_ok(result !== source);
-        },
-        'buffer conform from same Uint8Array are equal'() {
-            const source = $.$mol_buffer.from(new Uint8Array([12, 13, 5]));
-            const target = $.$mol_buffer.from(new Uint8Array([12, 13, 5]));
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, source);
-        },
-        'buffer conform from different Uint8Array are not equal'() {
-            const source = $.$mol_buffer.from(new Uint8Array([12, 13]));
-            const target = $.$mol_buffer.from(new Uint8Array([12, 13, 5]));
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_ok(result !== source);
-        },
-    });
-})($ || ($ = {}));
-//buffer.test.js.map
 ;
 "use strict";
 var $;

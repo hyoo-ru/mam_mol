@@ -28,10 +28,6 @@ $.$mol = $  // deprecated
 
 ;
 "use strict";
-var $node = $node || {};
-//node.web.js.map
-;
-"use strict";
 var $;
 (function ($) {
     let $$;
@@ -155,214 +151,6 @@ var $;
     $.$mol_object2 = $mol_object2;
 })($ || ($ = {}));
 //object2.js.map
-;
-"use strict";
-var $;
-(function ($) {
-})($ || ($ = {}));
-//context.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_dom_context = self;
-})($ || ($ = {}));
-//context.web.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_base64_decode(base64) {
-        throw new Error('Not implemented');
-    }
-    $.$mol_base64_decode = $mol_base64_decode;
-})($ || ($ = {}));
-//decode.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_base64_decode_web(base64Str) {
-        return new Uint8Array($.$mol_dom_context.atob(base64Str).split('').map(c => c.charCodeAt(0)));
-    }
-    $.$mol_base64_decode_web = $mol_base64_decode_web;
-    $.$mol_base64_decode = $mol_base64_decode_web;
-})($ || ($ = {}));
-//decode.web.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_base64_encode(src) {
-        throw new Error('Not implemented');
-    }
-    $.$mol_base64_encode = $mol_base64_encode;
-})($ || ($ = {}));
-//encode.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function binary_string(bytes) {
-        let binary = '';
-        if (typeof bytes !== 'string') {
-            for (const byte of bytes)
-                binary += String.fromCharCode(byte);
-        }
-        else {
-            binary = unescape(encodeURIComponent(bytes));
-        }
-        return binary;
-    }
-    function $mol_base64_encode_web(str) {
-        return $.$mol_dom_context.btoa(binary_string(str));
-    }
-    $.$mol_base64_encode_web = $mol_base64_encode_web;
-    $.$mol_base64_encode = $mol_base64_encode_web;
-})($ || ($ = {}));
-//encode.web.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_compare_any(a, b) {
-        if (a === b)
-            return true;
-        if (!Number.isNaN(a))
-            return false;
-        if (!Number.isNaN(b))
-            return false;
-        return true;
-    }
-    $.$mol_compare_any = $mol_compare_any;
-})($ || ($ = {}));
-//any.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    const cache = new WeakMap();
-    $.$mol_conform_stack = [];
-    function $mol_conform(target, source) {
-        if ($.$mol_compare_any(target, source))
-            return source;
-        if (!target || typeof target !== 'object')
-            return target;
-        if (!source || typeof source !== 'object')
-            return target;
-        if (target instanceof Error)
-            return target;
-        if (source instanceof Error)
-            return target;
-        if (target['constructor'] !== source['constructor'])
-            return target;
-        if (cache.get(target))
-            return target;
-        cache.set(target, true);
-        const conform = $.$mol_conform_handlers.get(target['constructor']);
-        if (!conform)
-            return target;
-        if ($.$mol_conform_stack.indexOf(target) !== -1)
-            return target;
-        $.$mol_conform_stack.push(target);
-        try {
-            return conform(target, source);
-        }
-        finally {
-            $.$mol_conform_stack.pop();
-        }
-    }
-    $.$mol_conform = $mol_conform;
-    $.$mol_conform_handlers = new WeakMap();
-    function $mol_conform_handler(cl, handler) {
-        $.$mol_conform_handlers.set(cl, handler);
-    }
-    $.$mol_conform_handler = $mol_conform_handler;
-    function $mol_conform_array(target, source) {
-        if (source.length !== target.length)
-            return target;
-        for (let i = 0; i < target.length; ++i) {
-            if (!$.$mol_compare_any(source[i], target[i]))
-                return target;
-        }
-        return source;
-    }
-    $.$mol_conform_array = $mol_conform_array;
-    $mol_conform_handler(Array, $mol_conform_array);
-    $mol_conform_handler(Uint8Array, $mol_conform_array);
-    $mol_conform_handler(Uint16Array, $mol_conform_array);
-    $mol_conform_handler(Uint32Array, $mol_conform_array);
-    $mol_conform_handler(Object, (target, source) => {
-        let count = 0;
-        let equal = true;
-        for (let key in target) {
-            const conformed = $mol_conform(target[key], source[key]);
-            if (conformed !== target[key]) {
-                try {
-                    target[key] = conformed;
-                }
-                catch (error) { }
-                if (!$.$mol_compare_any(conformed, target[key]))
-                    equal = false;
-            }
-            if (!$.$mol_compare_any(conformed, source[key]))
-                equal = false;
-            ++count;
-        }
-        for (let key in source)
-            if (--count < 0)
-                break;
-        return (equal && count === 0) ? source : target;
-    });
-    $mol_conform_handler(Date, (target, source) => {
-        if (target.getTime() === source.getTime())
-            return source;
-        return target;
-    });
-    $mol_conform_handler(RegExp, (target, source) => {
-        if (target.toString() === source.toString())
-            return source;
-        return target;
-    });
-})($ || ($ = {}));
-//conform.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var _a, _b;
-    const TextEncoder = (_a = globalThis.TextEncoder) !== null && _a !== void 0 ? _a : $node.util.TextEncoder;
-    const TextDecoder = (_b = globalThis.TextDecoder) !== null && _b !== void 0 ? _b : $node.util.TextDecoder;
-    const encoder = new TextEncoder();
-    class $mol_buffer extends $.$mol_object2 {
-        get length() {
-            return this.native.length;
-        }
-        static from(value, code = 'utf8') {
-            return $mol_buffer.create(t => {
-                if (typeof value === 'string') {
-                    if (code === 'base64')
-                        t.native = $.$mol_base64_decode(value);
-                    else
-                        t.native = encoder.encode(value);
-                }
-                else
-                    t.native = value;
-            });
-        }
-        toString(code = 'utf8') {
-            if (code === 'base64')
-                return $.$mol_base64_encode(this.native);
-            return new TextDecoder(code).decode(this.native);
-        }
-    }
-    $.$mol_buffer = $mol_buffer;
-    $.$mol_conform_handler($mol_buffer, (target, source) => {
-        const original = $.$mol_conform_array(target.native, source.native);
-        return original !== source.native ? target : source;
-    });
-})($ || ($ = {}));
-//buffer.js.map
 ;
 "use strict";
 var $;
@@ -778,6 +566,111 @@ var $;
     $.$mol_after_tick = $mol_after_tick;
 })($ || ($ = {}));
 //tick.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_compare_any(a, b) {
+        if (a === b)
+            return true;
+        if (!Number.isNaN(a))
+            return false;
+        if (!Number.isNaN(b))
+            return false;
+        return true;
+    }
+    $.$mol_compare_any = $mol_compare_any;
+})($ || ($ = {}));
+//any.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const cache = new WeakMap();
+    $.$mol_conform_stack = [];
+    function $mol_conform(target, source) {
+        if ($.$mol_compare_any(target, source))
+            return source;
+        if (!target || typeof target !== 'object')
+            return target;
+        if (!source || typeof source !== 'object')
+            return target;
+        if (target instanceof Error)
+            return target;
+        if (source instanceof Error)
+            return target;
+        if (target['constructor'] !== source['constructor'])
+            return target;
+        if (cache.get(target))
+            return target;
+        cache.set(target, true);
+        const conform = $.$mol_conform_handlers.get(target['constructor']);
+        if (!conform)
+            return target;
+        if ($.$mol_conform_stack.indexOf(target) !== -1)
+            return target;
+        $.$mol_conform_stack.push(target);
+        try {
+            return conform(target, source);
+        }
+        finally {
+            $.$mol_conform_stack.pop();
+        }
+    }
+    $.$mol_conform = $mol_conform;
+    $.$mol_conform_handlers = new WeakMap();
+    function $mol_conform_handler(cl, handler) {
+        $.$mol_conform_handlers.set(cl, handler);
+    }
+    $.$mol_conform_handler = $mol_conform_handler;
+    function $mol_conform_array(target, source) {
+        if (source.length !== target.length)
+            return target;
+        for (let i = 0; i < target.length; ++i) {
+            if (!$.$mol_compare_any(source[i], target[i]))
+                return target;
+        }
+        return source;
+    }
+    $.$mol_conform_array = $mol_conform_array;
+    $mol_conform_handler(Array, $mol_conform_array);
+    $mol_conform_handler(Uint8Array, $mol_conform_array);
+    $mol_conform_handler(Uint16Array, $mol_conform_array);
+    $mol_conform_handler(Uint32Array, $mol_conform_array);
+    $mol_conform_handler(Object, (target, source) => {
+        let count = 0;
+        let equal = true;
+        for (let key in target) {
+            const conformed = $mol_conform(target[key], source[key]);
+            if (conformed !== target[key]) {
+                try {
+                    target[key] = conformed;
+                }
+                catch (error) { }
+                if (!$.$mol_compare_any(conformed, target[key]))
+                    equal = false;
+            }
+            if (!$.$mol_compare_any(conformed, source[key]))
+                equal = false;
+            ++count;
+        }
+        for (let key in source)
+            if (--count < 0)
+                break;
+        return (equal && count === 0) ? source : target;
+    });
+    $mol_conform_handler(Date, (target, source) => {
+        if (target.getTime() === source.getTime())
+            return source;
+        return target;
+    });
+    $mol_conform_handler(RegExp, (target, source) => {
+        if (target.toString() === source.toString())
+            return source;
+        return target;
+    });
+})($ || ($ = {}));
+//conform.js.map
 ;
 "use strict";
 var $;
@@ -1591,6 +1484,35 @@ var $;
 //key.js.map
 ;
 "use strict";
+var $node = $node || {};
+//node.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var _a;
+    const TextDecoder = (_a = globalThis.TextDecoder) !== null && _a !== void 0 ? _a : $node.util.TextDecoder;
+    function $mol_charset_decode(value, code = 'utf8') {
+        return new TextDecoder(code).decode(value);
+    }
+    $.$mol_charset_decode = $mol_charset_decode;
+})($ || ($ = {}));
+//decode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var _a;
+    const TextEncoder = (_a = globalThis.TextEncoder) !== null && _a !== void 0 ? _a : $node.util.TextEncoder;
+    const encoder = new TextEncoder();
+    function $mol_charset_encode(value) {
+        return encoder.encode(value);
+    }
+    $.$mol_charset_encode = $mol_charset_encode;
+})($ || ($ = {}));
+//encode.js.map
+;
+"use strict";
 var $;
 (function ($) {
     function $mol_const(value) {
@@ -1602,6 +1524,19 @@ var $;
     $.$mol_const = $mol_const;
 })($ || ($ = {}));
 //const.js.map
+;
+"use strict";
+var $;
+(function ($) {
+})($ || ($ = {}));
+//context.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_dom_context = self;
+})($ || ($ = {}));
+//context.web.js.map
 ;
 "use strict";
 var $;
@@ -1823,7 +1758,7 @@ var $;
             return match ? match[1].substring(1) : '';
         }
         text(next, force) {
-            return this.buffer(next === undefined ? undefined : $.$mol_buffer.from(next), force).toString();
+            return $.$mol_charset_decode(this.buffer(next === undefined ? undefined : $.$mol_charset_encode(next), force));
         }
         fail(error) {
             this.buffer(error, $.$mol_mem_force_fail);
@@ -1842,7 +1777,7 @@ var $;
             this.stat(stat, $.$mol_mem_force_cache);
         }
         text_cached(content) {
-            this.buffer_cached($.$mol_buffer.from(content));
+            this.buffer_cached($.$mol_charset_encode(content));
         }
         find(include, exclude) {
             const found = [];
@@ -1887,7 +1822,7 @@ var $;
             const response = $.$mol_fetch.response(this.path());
             if (response.native.status === 404)
                 throw new $.$mol_file_not_found(`File not found: ${this.path()}`);
-            return $.$mol_buffer.from(new Uint8Array(response.buffer()));
+            return new Uint8Array(response.buffer());
         }
         watcher() {
             throw new Error('$mol_file_web.watcher() not implemented');

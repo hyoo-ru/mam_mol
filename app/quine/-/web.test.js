@@ -583,231 +583,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    const png = new Uint8Array([0x1a, 0x0a, 0x00, 0x49, 0x48, 0x78, 0xda]);
-    $.$mol_test({
-        'base64 decode string'() {
-            $.$mol_assert_like($.$mol_base64_decode('SGVsbG8sIM6nzqjOqdCr'), new TextEncoder().encode('Hello, ΧΨΩЫ'));
-        },
-        'base64 decode binary'() {
-            $.$mol_assert_like($.$mol_base64_decode('GgoASUh42g=='), png);
-        },
-    });
-})($ || ($ = {}));
-//decode.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    const png = new Uint8Array([0x1a, 0x0a, 0x00, 0x49, 0x48, 0x78, 0xda]);
-    $.$mol_test({
-        'base64 encode string'() {
-            $.$mol_assert_equal($.$mol_base64_encode('Hello, ΧΨΩЫ'), 'SGVsbG8sIM6nzqjOqdCr');
-        },
-        'base64 encode binary'() {
-            $.$mol_assert_equal($.$mol_base64_encode(png), 'GgoASUh42g==');
-        },
-    });
-})($ || ($ = {}));
-//encode.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'objects by reference'() {
-            $.$mol_assert_equal($.$mol_compare_any({}, {}), false);
-        },
-        'primitives by value'() {
-            $.$mol_assert_equal($.$mol_compare_any('a', 'a'), true);
-        },
-        'NaN by value'() {
-            $.$mol_assert_equal($.$mol_compare_any(Number.NaN, Number.NaN), true);
-        },
-        'NaN not equal zero'() {
-            $.$mol_assert_equal($.$mol_compare_any(Number.NaN, 0), false);
-        },
-    });
-})($ || ($ = {}));
-//any.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'return source when same object'() {
-            const target = {};
-            $.$mol_assert_equal($.$mol_conform(target, target), target);
-        },
-        'return target when some is not object'() {
-            const obj = { a: 1 };
-            $.$mol_assert_equal($.$mol_conform(true, obj), true);
-            $.$mol_assert_equal($.$mol_conform(obj, true), obj);
-        },
-        'return target when some is null'() {
-            const obj = { a: 1 };
-            $.$mol_assert_equal($.$mol_conform(null, obj), null);
-            $.$mol_assert_equal($.$mol_conform(obj, null), obj);
-        },
-        'return target when some is undefined'() {
-            const obj = { a: 1 };
-            $.$mol_assert_equal($.$mol_conform(undefined, obj), undefined);
-            $.$mol_assert_equal($.$mol_conform(obj, undefined), obj);
-        },
-        'return target when different keys count'() {
-            const target = [1, 2, 3];
-            const source = [1, 2, 3, undefined];
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, target);
-            $.$mol_assert_equal(result.join(','), '1,2,3');
-        },
-        'return source when array values are strong equal'() {
-            const source = [1, 2, 3];
-            $.$mol_assert_equal($.$mol_conform([1, 2, 3], source), source);
-        },
-        'return source when object values are strong equal'() {
-            const source = { a: 1, b: 2 };
-            $.$mol_assert_equal($.$mol_conform({ a: 1, b: 2 }, source), source);
-        },
-        'return target when some values are not equal'() {
-            const target = [1, 2, 3];
-            const source = [1, 2, 5];
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, target);
-            $.$mol_assert_equal(result.join(','), '1,2,3');
-        },
-        'return source when values are deep equal'() {
-            const source = { foo: { bar: 1 } };
-            $.$mol_assert_equal($.$mol_conform({ foo: { bar: 1 } }, source), source);
-        },
-        'return target with equal values from source and not equal from target'() {
-            const source = { foo: { xxx: 1 }, bar: { xxx: 2 } };
-            const target = { foo: { xxx: 1 }, bar: { xxx: 3 } };
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, target);
-            $.$mol_assert_equal(result.foo, source.foo);
-            $.$mol_assert_equal(result.bar, target.bar);
-        },
-        'return target when equal but with different class'() {
-            const target = { '0': 1 };
-            $.$mol_assert_equal($.$mol_conform(target, [1]), target);
-        },
-        'return target when conformer for class is not defined'() {
-            const Obj = class {
-            };
-            const source = new Obj;
-            const target = new Obj;
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, target);
-        },
-        'return target when has cyclic reference'() {
-            const source = { foo: {} };
-            source['self'] = source;
-            const target = { foo: {} };
-            target['self'] = target;
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, target);
-            $.$mol_assert_equal(result['self'], target);
-            $.$mol_assert_equal(result.foo, source.foo);
-        },
-        'return source when equal dates'() {
-            const source = new Date(12345);
-            const target = new Date(12345);
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, source);
-        },
-        'return source when equal regular expressions'() {
-            const source = /\x22/mig;
-            const target = /\x22/mig;
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, source);
-        },
-        'return cached value if already conformed'() {
-            const source = { foo: { xxx: 1 }, bar: { xxx: 3 } };
-            const target = { foo: { xxx: 2 }, bar: { xxx: 3 } };
-            const result = $.$mol_conform(target, source);
-            target.foo.xxx = 1;
-            $.$mol_assert_equal($.$mol_conform(target.foo, source.foo), target.foo);
-        },
-        'skip readlony fields'() {
-            const source = { foo: {}, bar: {} };
-            const target = { foo: {}, bar: {} };
-            Object.defineProperty(target, 'bar', { value: {}, writable: false });
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, target);
-            $.$mol_assert_equal(result.foo, source.foo);
-            $.$mol_assert_equal(result.bar, target.bar);
-        },
-        'object with NaN'() {
-            const source = { foo: Number.NaN };
-            const target = { foo: Number.NaN };
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, source);
-        },
-        'array with NaN'() {
-            const source = [Number.NaN];
-            const target = [Number.NaN];
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, source);
-        },
-    });
-})($ || ($ = {}));
-//conform.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'buffer from utf8 string'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const buffer = $.$mol_buffer.from(str);
-            $.$mol_assert_equal(buffer.toString(), str);
-        },
-        'buffer length equals binary string length'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const buffer = $.$mol_buffer.from(str);
-            $.$mol_assert_equal(buffer.length, 15);
-        },
-        'buffer base64 encode'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const buffer = $.$mol_buffer.from(str);
-            $.$mol_assert_equal(buffer.toString('base64'), 'SGVsbG8sIM6nzqjOqdCr');
-        },
-        'buffer base64 decode'() {
-            const str = 'GgoASUh42g==';
-            const buffer = $.$mol_buffer.from(str, 'base64');
-            $.$mol_assert_like(buffer.native, new Uint8Array([26, 10, 0, 73, 72, 120, 218]));
-        },
-        'buffer conform from same string are equal'() {
-            const source = $.$mol_buffer.from('123');
-            const target = $.$mol_buffer.from('123');
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, source);
-        },
-        'buffer conform from different string are not equal'() {
-            const source = $.$mol_buffer.from('123');
-            const target = $.$mol_buffer.from('1234');
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_ok(result !== source);
-        },
-        'buffer conform from same Uint8Array are equal'() {
-            const source = $.$mol_buffer.from(new Uint8Array([12, 13, 5]));
-            const target = $.$mol_buffer.from(new Uint8Array([12, 13, 5]));
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_equal(result, source);
-        },
-        'buffer conform from different Uint8Array are not equal'() {
-            const source = $.$mol_buffer.from(new Uint8Array([12, 13]));
-            const target = $.$mol_buffer.from(new Uint8Array([12, 13, 5]));
-            const result = $.$mol_conform(target, source);
-            $.$mol_assert_ok(result !== source);
-        },
-    });
-})($ || ($ = {}));
-//buffer.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
     $.$mol_test({
         'init with overload'() {
             class X extends $.$mol_object {
@@ -1015,6 +790,149 @@ var $;
     });
 })($ || ($ = {}));
 //tick.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'objects by reference'() {
+            $.$mol_assert_equal($.$mol_compare_any({}, {}), false);
+        },
+        'primitives by value'() {
+            $.$mol_assert_equal($.$mol_compare_any('a', 'a'), true);
+        },
+        'NaN by value'() {
+            $.$mol_assert_equal($.$mol_compare_any(Number.NaN, Number.NaN), true);
+        },
+        'NaN not equal zero'() {
+            $.$mol_assert_equal($.$mol_compare_any(Number.NaN, 0), false);
+        },
+    });
+})($ || ($ = {}));
+//any.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'return source when same object'() {
+            const target = {};
+            $.$mol_assert_equal($.$mol_conform(target, target), target);
+        },
+        'return target when some is not object'() {
+            const obj = { a: 1 };
+            $.$mol_assert_equal($.$mol_conform(true, obj), true);
+            $.$mol_assert_equal($.$mol_conform(obj, true), obj);
+        },
+        'return target when some is null'() {
+            const obj = { a: 1 };
+            $.$mol_assert_equal($.$mol_conform(null, obj), null);
+            $.$mol_assert_equal($.$mol_conform(obj, null), obj);
+        },
+        'return target when some is undefined'() {
+            const obj = { a: 1 };
+            $.$mol_assert_equal($.$mol_conform(undefined, obj), undefined);
+            $.$mol_assert_equal($.$mol_conform(obj, undefined), obj);
+        },
+        'return target when different keys count'() {
+            const target = [1, 2, 3];
+            const source = [1, 2, 3, undefined];
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, target);
+            $.$mol_assert_equal(result.join(','), '1,2,3');
+        },
+        'return source when array values are strong equal'() {
+            const source = [1, 2, 3];
+            $.$mol_assert_equal($.$mol_conform([1, 2, 3], source), source);
+        },
+        'return source when object values are strong equal'() {
+            const source = { a: 1, b: 2 };
+            $.$mol_assert_equal($.$mol_conform({ a: 1, b: 2 }, source), source);
+        },
+        'return target when some values are not equal'() {
+            const target = [1, 2, 3];
+            const source = [1, 2, 5];
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, target);
+            $.$mol_assert_equal(result.join(','), '1,2,3');
+        },
+        'return source when values are deep equal'() {
+            const source = { foo: { bar: 1 } };
+            $.$mol_assert_equal($.$mol_conform({ foo: { bar: 1 } }, source), source);
+        },
+        'return target with equal values from source and not equal from target'() {
+            const source = { foo: { xxx: 1 }, bar: { xxx: 2 } };
+            const target = { foo: { xxx: 1 }, bar: { xxx: 3 } };
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, target);
+            $.$mol_assert_equal(result.foo, source.foo);
+            $.$mol_assert_equal(result.bar, target.bar);
+        },
+        'return target when equal but with different class'() {
+            const target = { '0': 1 };
+            $.$mol_assert_equal($.$mol_conform(target, [1]), target);
+        },
+        'return target when conformer for class is not defined'() {
+            const Obj = class {
+            };
+            const source = new Obj;
+            const target = new Obj;
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, target);
+        },
+        'return target when has cyclic reference'() {
+            const source = { foo: {} };
+            source['self'] = source;
+            const target = { foo: {} };
+            target['self'] = target;
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, target);
+            $.$mol_assert_equal(result['self'], target);
+            $.$mol_assert_equal(result.foo, source.foo);
+        },
+        'return source when equal dates'() {
+            const source = new Date(12345);
+            const target = new Date(12345);
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, source);
+        },
+        'return source when equal regular expressions'() {
+            const source = /\x22/mig;
+            const target = /\x22/mig;
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, source);
+        },
+        'return cached value if already conformed'() {
+            const source = { foo: { xxx: 1 }, bar: { xxx: 3 } };
+            const target = { foo: { xxx: 2 }, bar: { xxx: 3 } };
+            const result = $.$mol_conform(target, source);
+            target.foo.xxx = 1;
+            $.$mol_assert_equal($.$mol_conform(target.foo, source.foo), target.foo);
+        },
+        'skip readlony fields'() {
+            const source = { foo: {}, bar: {} };
+            const target = { foo: {}, bar: {} };
+            Object.defineProperty(target, 'bar', { value: {}, writable: false });
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, target);
+            $.$mol_assert_equal(result.foo, source.foo);
+            $.$mol_assert_equal(result.bar, target.bar);
+        },
+        'object with NaN'() {
+            const source = { foo: Number.NaN };
+            const target = { foo: Number.NaN };
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, source);
+        },
+        'array with NaN'() {
+            const source = [Number.NaN];
+            const target = [Number.NaN];
+            const result = $.$mol_conform(target, source);
+            $.$mol_assert_equal(result, source);
+        },
+    });
+})($ || ($ = {}));
+//conform.test.js.map
 ;
 "use strict";
 var $;
@@ -1626,6 +1544,37 @@ var $;
     });
 })($ || ($ = {}));
 //key.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'decode utf8 string'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
+            $.$mol_assert_equal($.$mol_charset_decode(encoded), str);
+            $.$mol_assert_equal($.$mol_charset_decode(encoded, 'utf8'), str);
+        },
+        'decode empty string'() {
+            const encoded = new Uint8Array([]);
+            $.$mol_assert_equal($.$mol_charset_decode(encoded), '');
+        },
+    });
+})($ || ($ = {}));
+//decode.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'encode utf8 string'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
+            $.$mol_assert_like($.$mol_charset_encode(str), encoded);
+        },
+    });
+})($ || ($ = {}));
+//encode.test.js.map
 ;
 "use strict";
 var $;

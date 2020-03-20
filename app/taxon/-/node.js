@@ -4261,230 +4261,46 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_base64_decode(base64) {
-        throw new Error('Not implemented');
+    var _a;
+    const TextDecoder = (_a = globalThis.TextDecoder) !== null && _a !== void 0 ? _a : $node.util.TextDecoder;
+    function $mol_charset_decode(value, code = 'utf8') {
+        return new TextDecoder(code).decode(value);
     }
-    $.$mol_base64_decode = $mol_base64_decode;
+    $.$mol_charset_decode = $mol_charset_decode;
 })($ || ($ = {}));
 //decode.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    function $mol_base64_decode_node(base64Str) {
-        return new Uint8Array(Buffer.from(base64Str, 'base64'));
+    var _a;
+    const TextEncoder = (_a = globalThis.TextEncoder) !== null && _a !== void 0 ? _a : $node.util.TextEncoder;
+    const encoder = new TextEncoder();
+    function $mol_charset_encode(value) {
+        return encoder.encode(value);
     }
-    $.$mol_base64_decode_node = $mol_base64_decode_node;
-    $.$mol_base64_decode = $mol_base64_decode_node;
-})($ || ($ = {}));
-//decode.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_base64_encode(src) {
-        throw new Error('Not implemented');
-    }
-    $.$mol_base64_encode = $mol_base64_encode;
+    $.$mol_charset_encode = $mol_charset_encode;
 })($ || ($ = {}));
 //encode.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    function $mol_base64_encode_node(str) {
-        if (!str)
-            return '';
-        if (Buffer.isBuffer(str))
-            return str.toString('base64');
-        return Buffer.from(str).toString('base64');
-    }
-    $.$mol_base64_encode_node = $mol_base64_encode_node;
-    $.$mol_base64_encode = $mol_base64_encode_node;
-})($ || ($ = {}));
-//encode.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var _a, _b;
-    const TextEncoder = (_a = globalThis.TextEncoder) !== null && _a !== void 0 ? _a : $node.util.TextEncoder;
-    const TextDecoder = (_b = globalThis.TextDecoder) !== null && _b !== void 0 ? _b : $node.util.TextDecoder;
-    const encoder = new TextEncoder();
-    class $mol_buffer extends $.$mol_object2 {
-        get length() {
-            return this.native.length;
-        }
-        static from(value, code = 'utf8') {
-            return $mol_buffer.create(t => {
-                if (typeof value === 'string') {
-                    if (code === 'base64')
-                        t.native = $.$mol_base64_decode(value);
-                    else
-                        t.native = encoder.encode(value);
-                }
-                else
-                    t.native = value;
-            });
-        }
-        toString(code = 'utf8') {
-            if (code === 'base64')
-                return $.$mol_base64_encode(this.native);
-            return new TextDecoder(code).decode(this.native);
-        }
-    }
-    $.$mol_buffer = $mol_buffer;
-    $.$mol_conform_handler($mol_buffer, (target, source) => {
-        const original = $.$mol_conform_array(target.native, source.native);
-        return original !== source.native ? target : source;
-    });
-})($ || ($ = {}));
-//buffer.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_diff_path(...paths) {
-        const limit = Math.min(...paths.map(path => path.length));
-        lookup: for (var i = 0; i < limit; ++i) {
-            const first = paths[0][i];
-            for (let j = 1; j < paths.length; ++j) {
-                if (paths[j][i] !== first)
-                    break lookup;
-            }
-        }
-        return {
-            prefix: paths[0].slice(0, i),
-            suffix: paths.map(path => path.slice(i)),
-        };
-    }
-    $.$mol_diff_path = $mol_diff_path;
-})($ || ($ = {}));
-//path.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_error_mix extends Error {
-        constructor(message, ...errors) {
-            super(message);
-            this.errors = errors;
-            if (errors.length) {
-                const stacks = [...errors.map(error => error.message), this.stack];
-                const diff = $.$mol_diff_path(...stacks.map(stack => {
-                    if (!stack)
-                        return [];
-                    return stack.split('\n').reverse();
-                }));
-                const head = diff.prefix.reverse().join('\n');
-                const tails = diff.suffix.map(path => path.reverse().map(line => line.replace(/^(?!\s+at)/, '\tat (.) ')).join('\n')).join('\n\tat (.) -----\n');
-                this.stack = `Error: ${this.constructor.name}\n\tat (.) /"""\\\n${tails}\n\tat (.) \\___/\n${head}`;
-                this.message += errors.map(error => '\n' + error.message).join('');
-            }
-        }
-    }
-    $.$mol_error_mix = $mol_error_mix;
-})($ || ($ = {}));
-//mix.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    const a_stack = [];
-    const b_stack = [];
-    let cache = null;
-    function $mol_compare_deep(a, b) {
-        if (Object.is(a, b))
+    function $mol_compare_array(a, b) {
+        if (a === b)
             return true;
-        const a_type = typeof a;
-        const b_type = typeof b;
-        if (a_type !== b_type)
+        if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b))
             return false;
-        if (a_type === 'function')
-            return String(a) === String(b);
-        if (a_type !== 'object')
+        if (a.length !== b.length)
             return false;
-        if (!a || !b)
-            return false;
-        if (a instanceof Error)
-            return false;
-        if (a['constructor'] !== b['constructor'])
-            return false;
-        if (a instanceof RegExp)
-            return Object.is(String(a), String(b));
-        const ref = a_stack.indexOf(a);
-        if (ref >= 0) {
-            return Object.is(b_stack[ref], b);
-        }
-        if (!cache)
-            cache = new WeakMap;
-        let a_cache = cache.get(a);
-        if (a_cache) {
-            const b_cache = a_cache.get(b);
-            if (typeof b_cache === 'boolean')
-                return b_cache;
-        }
-        else {
-            a_cache = new WeakMap();
-            cache.set(a, a_cache);
-        }
-        a_stack.push(a);
-        b_stack.push(b);
-        let result;
-        try {
-            if (a[Symbol.iterator]) {
-                const a_iter = a[Symbol.iterator]();
-                const b_iter = b[Symbol.iterator]();
-                while (true) {
-                    const a_next = a_iter.next();
-                    const b_next = b_iter.next();
-                    if (a_next.done !== a_next.done)
-                        return result = false;
-                    if (a_next.done)
-                        break;
-                    if (!$mol_compare_deep(a_next.value, b_next.value))
-                        return result = false;
-                }
-                return result = true;
-            }
-            let count = 0;
-            for (let key in a) {
-                try {
-                    if (!$mol_compare_deep(a[key], b[key]))
-                        return result = false;
-                }
-                catch (error) {
-                    $.$mol_fail_hidden(new $.$mol_error_mix(`Failed ${JSON.stringify(key)} fields comparison of ${a} and ${b}`, error));
-                }
-                ++count;
-            }
-            for (let key in b) {
-                --count;
-                if (count < 0)
-                    return result = false;
-            }
-            const a_val = a['valueOf']();
-            if (Object.is(a_val, a))
-                return result = true;
-            const b_val = b['valueOf']();
-            if (!Object.is(a_val, b_val))
-                return result = false;
-            return result = true;
-        }
-        finally {
-            a_stack.pop();
-            b_stack.pop();
-            if (a_stack.length === 0) {
-                cache = null;
-            }
-            else {
-                a_cache.set(b, result);
-            }
-        }
+        for (let i = 0; i < a.length; i++)
+            if (a[i] !== b[i])
+                return false;
+        return true;
     }
-    $.$mol_compare_deep = $mol_compare_deep;
+    $.$mol_compare_array = $mol_compare_array;
 })($ || ($ = {}));
-//deep.js.map
+//array.js.map
 ;
 "use strict";
 var $;
@@ -4550,7 +4366,7 @@ var $;
             return match ? match[1].substring(1) : '';
         }
         text(next, force) {
-            return this.buffer(next === undefined ? undefined : $.$mol_buffer.from(next), force).toString();
+            return $.$mol_charset_decode(this.buffer(next === undefined ? undefined : $.$mol_charset_encode(next), force));
         }
         fail(error) {
             this.buffer(error, $.$mol_mem_force_fail);
@@ -4569,7 +4385,7 @@ var $;
             this.stat(stat, $.$mol_mem_force_cache);
         }
         text_cached(content) {
-            this.buffer_cached($.$mol_buffer.from(content));
+            this.buffer_cached($.$mol_charset_encode(content));
         }
         find(include, exclude) {
             const found = [];
@@ -4617,6 +4433,9 @@ var $;
             ctime: stat.ctime
         };
     }
+    function buffer_normalize(buf) {
+        return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
+    }
     class $mol_file_node extends $.$mol_file {
         static absolute(path) {
             return this.make({
@@ -4641,8 +4460,8 @@ var $;
                 const file = $.$mol_file.relative(path.replace(/\\/g, '/'));
                 if (type === 'change') {
                     const cached = $.$mol_mem_cached(() => file.buffer());
-                    const actual = $.$mol_buffer.from($node.fs.readFileSync(file.path()));
-                    if ($.$mol_compare_deep(cached, actual))
+                    const actual = buffer_normalize($node.fs.readFileSync(file.path()));
+                    if ($.$mol_compare_array(cached, actual))
                         return;
                     console.log(magenta(`$mol_file ${type} ${magentaBright(file.relate())}`));
                     file.reset();
@@ -4687,12 +4506,11 @@ var $;
         buffer(next, force) {
             if (next === undefined) {
                 this.stat();
-                return $.$mol_buffer.from($node.fs.readFileSync(this.path()));
+                return buffer_normalize($node.fs.readFileSync(this.path()));
             }
             this.parent().exists(true);
-            const buffer = Buffer.from(next.native);
-            $node.fs.writeFileSync(this.path(), buffer);
-            return $.$mol_buffer.from(buffer);
+            $node.fs.writeFileSync(this.path(), next);
+            return next;
         }
         sub() {
             if (!this.exists())
@@ -4710,7 +4528,7 @@ var $;
             return $node.path.relative(base.path(), this.path()).replace(/\\/g, '/');
         }
         append(next) {
-            $node.fs.appendFileSync(this.path(), next instanceof $.$mol_buffer ? next.native : next);
+            $node.fs.appendFileSync(this.path(), next);
         }
     }
     __decorate([

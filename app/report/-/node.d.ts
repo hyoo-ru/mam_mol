@@ -945,53 +945,20 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_base64_decode(base64: string): Uint8Array;
+    type $mol_charset_encoding = 'utf8' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
+    function $mol_charset_decode(value: Uint8Array, code?: $mol_charset_encoding): any;
 }
 
 declare namespace $ {
-    function $mol_base64_decode_node(base64Str: string): Uint8Array;
+    function $mol_charset_encode(value: string): any;
 }
 
 declare namespace $ {
-    function $mol_base64_encode(src: string | Uint8Array): string;
-}
-
-declare namespace $ {
-    function $mol_base64_encode_node(str: string | Uint8Array): string;
-}
-
-declare namespace $ {
-    type $mol_buffer_encoding = 'utf8' | 'base64';
-    type $mol_buffer_encoding_full = $mol_buffer_encoding | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr' | 'utf-16be' | 'utf-16le' | 'x-user-defined' | 'replacement';
-    class $mol_buffer extends $mol_object2 {
-        native: Uint8Array;
-        get length(): number;
-        static from(value: string | Uint8Array, code?: $mol_buffer_encoding): $mol_buffer;
-        toString(code?: $mol_buffer_encoding_full): any;
-    }
-}
-
-declare namespace $ {
-    function $mol_diff_path<Item>(...paths: Item[][]): {
-        prefix: Item[];
-        suffix: Item[][];
-    };
-}
-
-declare namespace $ {
-    class $mol_error_mix extends Error {
-        errors: Error[];
-        constructor(message: string, ...errors: Error[]);
-    }
-}
-
-declare namespace $ {
-    function $mol_compare_deep<Value>(a: Value, b: Value): boolean;
+    function $mol_compare_array<Value extends ArrayLike<unknown>>(a: Value, b: Value): boolean;
 }
 
 declare namespace $ {
     type $mol_file_type = 'file' | 'dir' | 'link';
-    type $mol_file_content = string | $mol_buffer | Uint8Array;
     interface $mol_file_stat {
         type: $mol_file_type;
         size: number;
@@ -1017,15 +984,15 @@ declare namespace $ {
         type(): $mol_file_type;
         name(): string;
         ext(): string;
-        abstract buffer(next?: $mol_buffer, force?: $mol_mem_force): $mol_buffer;
+        abstract buffer(next?: Uint8Array, force?: $mol_mem_force): Uint8Array;
         text(next?: string, force?: $mol_mem_force): any;
         fail(error: Error): void;
-        buffer_cached(buffer: $mol_buffer): void;
+        buffer_cached(buffer: Uint8Array): void;
         text_cached(content: string): void;
         abstract sub(): $mol_file[];
         abstract resolve(path: string): $mol_file;
         abstract relate(base?: $mol_file): string;
-        abstract append(next: $mol_file_content): void;
+        abstract append(next: Uint8Array | string): void;
         find(include?: RegExp, exclude?: RegExp): $mol_file[];
     }
 }
@@ -1039,11 +1006,11 @@ declare namespace $ {
         };
         stat(next?: $mol_file_stat, force?: $mol_mem_force): $mol_file_stat;
         ensure(next?: boolean): boolean;
-        buffer(next?: $mol_buffer, force?: $mol_mem_force): $mol_buffer;
+        buffer(next?: Uint8Array, force?: $mol_mem_force): Uint8Array;
         sub(): $mol_file[];
         resolve(path: string): $mol_file;
         relate(base?: $mol_file): any;
-        append(next: $mol_file_content): void;
+        append(next: Uint8Array | string): void;
     }
 }
 
