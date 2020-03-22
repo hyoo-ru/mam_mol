@@ -110,7 +110,7 @@ namespace $ {
 		throw val.error( 'Wrong value' )
 	}
 
-	export function $mol_view_tree_compile( tree : $mol_tree, filename: string ) {
+	export function $mol_view_tree_compile( tree : $mol_tree) {
 		const SourceNode = $node['source-map'].SourceNode;
 		type SourceNodeType = typeof $node['source-map']['SourceNode']['prototype'];
 		
@@ -167,7 +167,7 @@ namespace $ {
 								var val = getValue( item )
 								if( val ) items.push( ...val )
 							} )
-							return [`[`, new SourceNode(null, null, filename, items as any).join(' , '),  `]` , ( item_type ? ` as readonly ( ${ item_type } )[]` : ` as readonly any[]` )]
+							return [`[`, new SourceNode(null, null, tree.uri, items as any).join(' , '),  `]` , ( item_type ? ` as readonly ( ${ item_type } )[]` : ` as readonly any[]` )]
 						case( value.type[0] === '$' ) :
 							if( !definition ) throw value.error( 'Objects should be bound' )
 							needCache = true
@@ -198,7 +198,7 @@ namespace $ {
 								let args : string[] = []
 								if( overName[2] ) args.push( ` ${ overName[2] } : any ` )
 								if( overName[3] ) args.push( ` ${ overName[3] }? : any ` )
-								overs.push( ...['\t\t\tobj.' , new SourceNode(over.row, over.col, filename, overName[1]), ' = (', args.join( ',' ), ') => ' , ...v , '\n'] )
+								overs.push( ...['\t\t\tobj.' , new SourceNode(over.row, over.col, tree.uri, overName[1]), ' = (', args.join( ',' ), ') => ' , ...v , '\n'] )
 								needSet = ns
 							} )
 							const object_args = value.select( '/' , '' ).sub.map( arg => getValue( arg ) ).join( ' , ' ) as string
@@ -217,10 +217,10 @@ namespace $ {
 								var ns = needSet
 								var v = getValue( opt.sub[0] )
 								var arg = key[2] ? ` ( ${ key[2] }? : any )=> ` : ''
-								opts.push( ...['\t\t\t"', new SourceNode(opt.row, opt.col, filename, key[1]+ '" : '), arg,' ', ...v , ' ,\n'] )
+								opts.push( ...['\t\t\t"', new SourceNode(opt.row, opt.col, tree.uri, key[1]+ '" : '), arg,' ', ...v , ' ,\n'] )
 								needSet = ns
 							} )
-							return ['({\n', new SourceNode(null, null, filename, opts as any).join( '' ), '\t\t})']
+							return ['({\n', new SourceNode(null, null, tree.uri, opts as any).join( '' ), '\t\t})']
 						case( value.type === '<=>' ) :
 							needSet = true
 							if( value.sub.length === 1 ) {
@@ -270,7 +270,7 @@ namespace $ {
 						if( propName[2] ) decl = ['\t@ $' , 'mol_mem_key\n', ...decl]
 						else decl = ['\t@ $', 'mol_mem\n', ...decl]
 					}
-					decl = ['\t/**\n\t *  ```\n', param.toString().trim().replace( /^/mg , '\t *  ' ),  '\n\t *  ```\n\t **/\n' , new SourceNode(param.row, param.col, filename, decl as any)]
+					decl = ['\t/**\n\t *  ```\n', param.toString().trim().replace( /^/mg , '\t *  ' ),  '\n\t *  ```\n\t **/\n' , new SourceNode(param.row, param.col, tree.uri, decl as any)]
 					members[ propName[1] ] = decl
 				} )
 				
@@ -284,12 +284,12 @@ namespace $ {
 				return [...acc, ...items]
 			}, [])
 			
-			var classes: (string | SourceNodeType)[] = [ 'namespace $ { export class ', new SourceNode(def.row, def.col, filename, def.type ), ' extends ', new SourceNode(parent.row, parent.col, filename, parent.type), ' {\n\n', ...body, '} }\n'] 
+			var classes: (string | SourceNodeType)[] = [ 'namespace $ { export class ', new SourceNode(def.row, def.col, tree.uri, def.type ), ' extends ', new SourceNode(parent.row, parent.col, tree.uri, parent.type), ' {\n\n', ...body, '} }\n'] 
 			
 			content = [...content, ...classes]
 		}
-		
-		return { script : new SourceNode(null, null, filename, content as any) , locales : locales }
+		const codeWithSourceMap = new SourceNode(null, null, tree.uri, content as any).toStringWithSourceMap();
+		return { script : codeWithSourceMap.code, locales : locales, map: codeWithSourceMap.map.toString() }
 	}
 
 }

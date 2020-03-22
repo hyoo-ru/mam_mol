@@ -83,11 +83,10 @@ namespace $ {
 						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
 						
 						const tree = $mol_tree.fromString( child.text() , child.path() )
-						const res = $mol_view_tree_compile( tree , child.name())
-						const codeWithSourceMap = res.script.toStringWithSourceMap();
+						const res = $mol_view_tree_compile( tree )
 
-						sourceMap.text(codeWithSourceMap.map.toString());
-						script.text( codeWithSourceMap.code )
+						sourceMap.text( res.map );
+						script.text( res.script )
 						locale.text( JSON.stringify( res.locales , null , '\t' ) )
 							
 						mods.push( script , locale )
