@@ -110,9 +110,11 @@ namespace $ {
 		throw val.error( 'Wrong value' )
 	}
 
-	export function $mol_view_tree_compile( tree : $mol_tree ) {
+	export function $mol_view_tree_compile( tree : $mol_tree, filename: string ) {
+		const SourceNode = $node['source-map'].SourceNode;
+		type SourceNodeType = typeof $node['source-map']['SourceNode']['prototype'];
 		
-		var content = ''
+		var content: (string | SourceNodeType)[] = []
 		var locales : { [ key : string ] : string } = {}
 		
 		for( let def of $mol_view_tree_classes( tree ).sub ) {
@@ -121,13 +123,12 @@ namespace $ {
 			var parent = def.sub[0]
 			
 			var propDefs : { [ key : string ] : $mol_tree } = {}
-			var members : { [ key : string ] : string } = {}
+			var members : { [ key : string ] : (string | SourceNodeType)[] } = {}
 			
 			for( let param of $mol_view_tree_class_props( def ).sub ) { try {
 				var needSet = false
 				var needReturn = true
 				var needCache = false
-				var keys : string[] = []
 	
 				if( param.type === '<=>' ) {
 					param = param.sub[0]
@@ -144,19 +145,19 @@ namespace $ {
 					needCache = true
 				}
 				
-				const getValue = ( value : $mol_tree , definition? : boolean )=> { try {
+				const getValue = ( value : $mol_tree , definition? : boolean ) : (string | SourceNodeType)[]=> { try {
 					switch( true ) {
 						case( value.type === '' ) :
-							return JSON.stringify( value.value )
+							return [JSON.stringify( value.value )]
 						case( value.type === '@' ) :
 							const key = `${ def.type }_${ param.type.replace( /[?!].*/ , '' ) }`
 							locales[ key ] = value.value
-							return `this.$.$mol_locale.text( ${ JSON.stringify( key ) } )`
+							return [`this.$.$mol_locale.text( ${ JSON.stringify( key ) } )`]
 						case( value.type === '-' ) :
 							return null
 						case( value.type[0] === '/' ) :
 							const item_type = value.type.substring( 1 )
-							var items : string[] = []
+							var items : (string | SourceNodeType)[] = []
 							value.sub.forEach( item => {
 								if( item.type === '-' ) return
 								if( item.type === '^' ) {
@@ -164,13 +165,13 @@ namespace $ {
 									return
 								}
 								var val = getValue( item )
-								if( val ) items.push( val )
+								if( val ) items.push( ...val )
 							} )
-							return `[ ${ items.join(' , ') } ]` + ( item_type ? ` as readonly ( ${ item_type } )[]` : ` as readonly any[]` )
+							return [`[`, new SourceNode(null, null, filename, items as any).join(' , '),  `]` , ( item_type ? ` as readonly ( ${ item_type } )[]` : ` as readonly any[]` )]
 						case( value.type[0] === '$' ) :
 							if( !definition ) throw value.error( 'Objects should be bound' )
 							needCache = true
-							var overs : string[] = []
+							var overs : (string | SourceNodeType)[] = []
 							value.sub.forEach( over => {
 								if( /^[-\/]?$/.test( over.type ) ) return ''
 								var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
@@ -188,7 +189,7 @@ namespace $ {
 										let [ , their_name , ... their_args ] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
 										their_args = their_args.filter( Boolean )
 										
-										members[ own_name ] = `\t${ own_name }(${ own_args.join(',') }) {\n\t\treturn this.${ param.type }().${ their_name }( ${ their_args.join(' , ') } )\n\t}\n\n`
+										members[ own_name ] = [`\t${ own_name }(${ own_args.join(',') }) {\n\t\treturn this.${ param.type }().${ their_name }( ${ their_args.join(' , ') } )\n\t}\n\n`]
 										return
 									}
 								}
@@ -197,14 +198,14 @@ namespace $ {
 								let args : string[] = []
 								if( overName[2] ) args.push( ` ${ overName[2] } : any ` )
 								if( overName[3] ) args.push( ` ${ overName[3] }? : any ` )
-								overs.push( '\t\t\tobj.' + overName[1] + ' = (' + args.join( ',' ) + ') => ' + v + '\n' )
+								overs.push( ...['\t\t\tobj.' , new SourceNode(over.row, over.col, filename, overName[1]), ' = (', args.join( ',' ), ') => ' , ...v , '\n'] )
 								needSet = ns
 							} )
 							const object_args = value.select( '/' , '' ).sub.map( arg => getValue( arg ) ).join( ' , ' ) as string
-							return '(( obj )=>{\n' + overs.join( '' ) + '\t\t\treturn obj\n\t\t})( new this.$.' + value.type + '( ' + object_args + ' ) )'
+							return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new this.$.', value.type , '( ' , object_args , ' ) )']
 						case( value.type === '*' ) :
 							//needReturn = false
-							var opts : string[] = []
+							var opts : (string | SourceNodeType)[] = []
 							value.sub.forEach( opt => {
 								if( opt.type === '-' ) return ''
 								if( opt.type === '^' ) {
@@ -213,25 +214,24 @@ namespace $ {
 								}
 								
 								var key = /(.*?)(?:\?(\w+))?$/.exec( opt.type )!
-								keys.push( key[1] )
 								var ns = needSet
 								var v = getValue( opt.sub[0] )
 								var arg = key[2] ? ` ( ${ key[2] }? : any )=> ` : ''
-								opts.push( '\t\t\t"' + key[1] + '" : ' + arg + ' ' + v + ' ,\n' )
+								opts.push( ...['\t\t\t"', new SourceNode(opt.row, opt.col, filename, key[1]+ '" : '), arg,' ', ...v , ' ,\n'] )
 								needSet = ns
 							} )
-							return '({\n' + opts.join( '' ) + '\t\t})'
+							return ['({\n', new SourceNode(null, null, filename, opts as any).join( '' ), '\t\t})']
 						case( value.type === '<=>' ) :
 							needSet = true
 							if( value.sub.length === 1 ) {
 								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))$/.exec( value.sub[0].type )!
-								return 'this.' + type[1] + '(' + ( type[2] ? type[2] + ' ,' : '' ) + ' ' + type[3] + ' )'
+								return ['this.' + type[1] + '(' + ( type[2] ? type[2] + ' ,' : '' ) + ' ' + type[3] + ' )']
 							}
 							break
 						case( value.type === '<=' ) :
 							if( value.sub.length === 1 ) {
 								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( value.sub[0].type )!
-								return 'this.' + type[1] + '(' + (  type[2] ? type[2] : '' ) + ')'
+								return ['this.' + type[1] + '(' + (  type[2] ? type[2] : '' ) + ')']
 							}
 							break
 					}
@@ -239,12 +239,12 @@ namespace $ {
 					switch( value.type ) {
 						case 'true' :
 						case 'false' :
-							return value.type
+							return [value.type]
 						case 'null' :
-							return 'null as any'
+							return ['null as any']
 					}
 					
-					if( Number( value.type ).toString() == value.type ) return value.type
+					if( Number( value.type ).toString() == value.type ) return [value.type]
 					
 					throw value.error( 'Wrong value' )
 				} catch ( err ) {
@@ -263,15 +263,14 @@ namespace $ {
 					var args : string[] = []
 					if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
 					if( propName[3] ) args.push( ` ${ propName[3] }? : any , force? : $${''}mol_mem_force ` )
-					if( needSet && param.sub[0].type !== '<=>' ) val = ( needReturn ? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : ` : `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t` ) + val
-					if( needReturn ) val = 'return ' + val
-					var decl = '\t' + propName[1] +'(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n'
+					if( needSet && param.sub[0].type !== '<=>' ) val = [( needReturn ? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : ` : `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t` ) , ...val]
+					if( needReturn ) val = ['return ', ...val]
+					var decl: (string | SourceNodeType)[] = ['\t',propName[1],'(', args.join(',') , ') {\n\t\t' , ...val , '\n\t}\n\n']
 					if( needCache ) {
-						if( propName[2] ) decl = '\t@ $' + 'mol_mem_key\n' + decl
-						else decl = '\t@ $' + 'mol_mem\n' + decl
+						if( propName[2] ) decl = ['\t@ $' , 'mol_mem_key\n', ...decl]
+						else decl = ['\t@ $', 'mol_mem\n', ...decl]
 					}
-					decl = '\t/**\n\t *  ```\n' + param.toString().trim().replace( /^/mg , '\t *  ' ) + '\n\t *  ```\n\t **/\n' + decl
-					
+					decl = ['\t/**\n\t *  ```\n', param.toString().trim().replace( /^/mg , '\t *  ' ),  '\n\t *  ```\n\t **/\n' , new SourceNode(param.row, param.col, filename, decl as any)]
 					members[ propName[1] ] = decl
 				} )
 				
@@ -279,17 +278,18 @@ namespace $ {
 				// err.message += `\n${param.baseUri}:${param.row}:${param.col}\n${ param }`
 				throw err
 			} }
+
+			var body = Object.keys( members ).reduce( function( acc, name ) {
+				const items = members[ name ] ? members[name] : ['\t' , name ,'() { return null as any }\n\t}\n']
+				return [...acc, ...items]
+			}, [])
 			
-			var body = Object.keys( members ).map( function( name ) {
-				return members[ name ] || '\t' + name +'() { return null as any }\n\t}\n'
-			}).join( '' )
+			var classes: (string | SourceNodeType)[] = [ 'namespace $ { export class ', new SourceNode(def.row, def.col, filename, def.type ), ' extends ', new SourceNode(parent.row, parent.col, filename, parent.type), ' {\n\n', ...body, '} }\n'] 
 			
-			var classes = 'namespace $ { export class ' + def.type + ' extends ' + parent.type + ' {\n\n' + body + '} }\n'
-			
-			content += classes + '\n'
+			content = [...content, ...classes]
 		}
 		
-		return { script : content , locales : locales }
+		return { script : new SourceNode(null, null, filename, content as any) , locales : locales }
 	}
 
 }
