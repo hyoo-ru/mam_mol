@@ -56,7 +56,7 @@ namespace $ {
 					const cached = $mol_mem_cached( ()=> file.buffer() )
 					const actual = buffer_normalize($node.fs.readFileSync( file.path() ))
 
-					if( $mol_compare_array( cached , actual ) ) return
+					if( cached && $mol_compare_array( cached , actual ) ) return
 
 					console.log( magenta( `$mol_file ${ type } ${ magentaBright( file.relate() ) }` ) )
 
