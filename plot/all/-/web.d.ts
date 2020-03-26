@@ -663,9 +663,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_svg_root extends $mol_svg {
         dom_name(): string;
         attr(): {
@@ -675,6 +672,9 @@ declare namespace $ {
         view_box(): string;
         aspect(): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {

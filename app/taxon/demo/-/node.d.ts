@@ -800,11 +800,11 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_float extends $mol_view {
+    }
 }
 
 declare namespace $ {
-    class $mol_float extends $mol_view {
-    }
 }
 
 declare namespace $ {
@@ -1032,9 +1032,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_svg_root extends $mol_svg {
         dom_name(): string;
         attr(): {
@@ -1047,6 +1044,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_svg_path extends $mol_svg {
         dom_name(): string;
         attr(): {
@@ -1054,9 +1054,6 @@ declare namespace $ {
         };
         geometry(): string;
     }
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {
@@ -1071,18 +1068,21 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_icon_tick extends $mol_icon {
         path(): string;
     }
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_check_box extends $mol_check {
         Icon(): $mol_icon_tick;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {

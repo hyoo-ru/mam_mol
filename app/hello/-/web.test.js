@@ -89,50 +89,6 @@ var $;
 //test.test.js.map
 ;
 "use strict";
-var $;
-(function ($) {
-    $.$mol_after_mock_queue = [];
-    function $mol_after_mock_warp() {
-        const queue = $.$mol_after_mock_queue.splice(0);
-        for (const task of queue)
-            task();
-    }
-    $.$mol_after_mock_warp = $mol_after_mock_warp;
-    class $mol_after_mock_commmon extends $.$mol_object2 {
-        constructor(task) {
-            super();
-            this.task = task;
-            this.promise = Promise.resolve();
-            this.cancelled = false;
-            $.$mol_after_mock_queue.push(task);
-        }
-        destructor() {
-            const index = $.$mol_after_mock_queue.indexOf(this.task);
-            if (index >= 0)
-                $.$mol_after_mock_queue.splice(index, 1);
-        }
-    }
-    $.$mol_after_mock_commmon = $mol_after_mock_commmon;
-    class $mol_after_mock_timeout extends $mol_after_mock_commmon {
-        constructor(delay, task) {
-            super(task);
-            this.delay = delay;
-        }
-    }
-    $.$mol_after_mock_timeout = $mol_after_mock_timeout;
-})($ || ($ = {}));
-//mock.test.js.map
-;
-"use strict";
-var $;
-(function ($_1) {
-    $_1.$mol_test_mocks.push($ => {
-        $.$mol_after_tick = $_1.$mol_after_mock_commmon;
-    });
-})($ || ($ = {}));
-//tick.test.js.map
-;
-"use strict";
 //deep.js.map
 ;
 "use strict";
@@ -628,25 +584,6 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
-        'init with overload'() {
-            class X extends $.$mol_object {
-                foo() {
-                    return 1;
-                }
-            }
-            var x = X.make({
-                foo: () => 2,
-            });
-            $.$mol_assert_equal(x.foo(), 2);
-        },
-    });
-})($ || ($ = {}));
-//object.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
         'run callback'() {
             class Plus1 extends $.$mol_wrapper {
                 static wrap(task) {
@@ -790,6 +727,50 @@ var $;
     });
 })($ || ($ = {}));
 //log2.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_after_mock_queue = [];
+    function $mol_after_mock_warp() {
+        const queue = $.$mol_after_mock_queue.splice(0);
+        for (const task of queue)
+            task();
+    }
+    $.$mol_after_mock_warp = $mol_after_mock_warp;
+    class $mol_after_mock_commmon extends $.$mol_object2 {
+        constructor(task) {
+            super();
+            this.task = task;
+            this.promise = Promise.resolve();
+            this.cancelled = false;
+            $.$mol_after_mock_queue.push(task);
+        }
+        destructor() {
+            const index = $.$mol_after_mock_queue.indexOf(this.task);
+            if (index >= 0)
+                $.$mol_after_mock_queue.splice(index, 1);
+        }
+    }
+    $.$mol_after_mock_commmon = $mol_after_mock_commmon;
+    class $mol_after_mock_timeout extends $mol_after_mock_commmon {
+        constructor(delay, task) {
+            super(task);
+            this.delay = delay;
+        }
+    }
+    $.$mol_after_mock_timeout = $mol_after_mock_timeout;
+})($ || ($ = {}));
+//mock.test.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
+    $_1.$mol_test_mocks.push($ => {
+        $.$mol_after_tick = $_1.$mol_after_mock_commmon;
+    });
+})($ || ($ = {}));
+//tick.test.js.map
 ;
 "use strict";
 var $;
@@ -957,6 +938,25 @@ var $;
     });
 })($ || ($ = {}));
 //fiber.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'init with overload'() {
+            class X extends $.$mol_object {
+                foo() {
+                    return 1;
+                }
+            }
+            var x = X.make({
+                foo: () => 2,
+            });
+            $.$mol_assert_equal(x.foo(), 2);
+        },
+    });
+})($ || ($ = {}));
+//object.test.js.map
 ;
 "use strict";
 var $;
@@ -1852,21 +1852,6 @@ var $;
     $.$mol_error_mix = $mol_error_mix;
 })($ || ($ = {}));
 //mix.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
-        const parser = new $.$mol_dom_context.DOMParser();
-        const doc = parser.parseFromString(text, type);
-        const error = doc.getElementsByTagName('parsererror')[0];
-        if (error)
-            throw new Error(error.textContent);
-        return doc;
-    }
-    $.$mol_dom_parse = $mol_dom_parse;
-})($ || ($ = {}));
-//parse.js.map
 ;
 "use strict";
 var $;

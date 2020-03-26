@@ -754,11 +754,11 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_float extends $mol_view {
+    }
 }
 
 declare namespace $ {
-    class $mol_float extends $mol_view {
-    }
 }
 
 declare namespace $ {
@@ -986,9 +986,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_svg_root extends $mol_svg {
         dom_name(): string;
         attr(): {
@@ -998,6 +995,9 @@ declare namespace $ {
         view_box(): string;
         aspect(): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -1031,12 +1031,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_check_box extends $mol_check {
         Icon(): $mol_icon_tick;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -1395,9 +1395,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_image extends $mol_view {
         dom_name(): string;
         field(): {
@@ -1406,6 +1403,9 @@ declare namespace $ {
         };
         uri(): string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -1783,11 +1783,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_demo_small extends $mol_view {
+    }
 }
 
 declare namespace $ {
-    class $mol_demo_small extends $mol_view {
-    }
 }
 
 declare namespace $ {
@@ -1816,11 +1816,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_bar extends $mol_view {
+    }
 }
 
 declare namespace $ {
-    class $mol_bar extends $mol_view {
-    }
 }
 
 declare namespace $ {
@@ -2202,9 +2202,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_book_demo extends $mol_demo_large {
         title(): string;
         sub(): readonly any[];
@@ -2213,6 +2210,9 @@ declare namespace $ {
         Addon(): $mol_view;
         Main(): $mol_view;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -2356,11 +2356,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_row extends $mol_view {
+    }
 }
 
 declare namespace $ {
-    class $mol_row extends $mol_view {
-    }
 }
 
 declare namespace $ {
@@ -2748,9 +2748,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_chart extends $mol_view {
         gap_hor(): number;
         gap_vert(): number;
@@ -2766,6 +2763,9 @@ declare namespace $ {
         hue_base(): number;
         hue_shift(): number;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -3317,9 +3317,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_check_group_demo extends $mol_demo_small {
         title(): string;
         sub(): readonly any[];
@@ -3355,6 +3352,9 @@ declare namespace $ {
 declare namespace $ {
     class $mol_check_icon extends $mol_check {
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -3777,13 +3777,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_filler extends $mol_view {
         minimal_height(): number;
         sub(): readonly any[];
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -3811,9 +3811,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_labeler extends $mol_list {
         rows(): readonly any[];
         Title(): $mol_view;
@@ -3835,6 +3832,9 @@ declare namespace $ {
         Content(): any;
         control(): any;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -4005,9 +4005,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_link_iconed_demo extends $mol_demo_small {
         title(): string;
         sub(): readonly any[];
@@ -4015,6 +4012,9 @@ declare namespace $ {
         uri(val?: any, force?: $mol_mem_force): any;
         Output(): $$.$mol_link_iconed;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -4268,9 +4268,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_meter_demo extends $mol_demo_small {
         title(): string;
         plugins(): readonly any[];
@@ -4281,6 +4278,9 @@ declare namespace $ {
         Top(): $mol_view;
         Height(): $mol_view;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -4561,15 +4561,15 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_section extends $mol_list {
         rows(): readonly any[];
         Head(): $mol_view;
         head(): readonly any[];
         Content(): any;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -4950,9 +4950,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_speck extends $mol_view {
         attr(): {
             mol_theme: string;
@@ -4960,6 +4957,9 @@ declare namespace $ {
         sub(): readonly any[];
         value(): any;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -5054,9 +5054,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_string_demo extends $mol_demo_small {
         title(): string;
         sub(): readonly any[];
@@ -5067,6 +5064,9 @@ declare namespace $ {
         name2(val?: any, force?: $mol_mem_force): any;
         Disabled(): $$.$mol_string;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -5120,9 +5120,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_textarea_demo extends $mol_demo_small {
         title(): string;
         sub(): readonly any[];
@@ -5132,6 +5129,9 @@ declare namespace $ {
         filled_descr(val?: any, force?: $mol_mem_force): any;
         Disabled(): $$.$mol_textarea;
     }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {

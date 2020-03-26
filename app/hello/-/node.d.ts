@@ -2,6 +2,14 @@ declare namespace $ { }
 export = $;
 
 declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+declare namespace $ {
+    function $mol_fail_hidden(error: any): never;
+}
+
+declare namespace $ {
     namespace $$ {
         let $$: typeof $;
     }
@@ -25,14 +33,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_fail(error: any): never;
-}
-
-declare namespace $ {
-    function $mol_fail_hidden(error: any): never;
-}
-
-declare namespace $ {
     type $mol_type_writable<T> = {
         -readonly [P in keyof T]: T[P];
     };
@@ -50,71 +50,6 @@ declare namespace $ {
         destructor(): void;
         toString(): any;
         toJSON(): any;
-    }
-}
-
-declare namespace $ {
-    class $mol_after_tick extends $mol_object2 {
-        task: () => void;
-        promise: any;
-        cancelled: boolean;
-        constructor(task: () => void);
-        destructor(): void;
-    }
-}
-
-interface $node {
-    [key: string]: any;
-}
-declare var $node: $node;
-
-declare namespace $ {
-    var $mol_dom_context: typeof globalThis;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    function $mol_style_attach(id: string, text: string): HTMLStyleElement;
-}
-
-declare namespace $ {
-    const enum $mol_theme {
-        back = "var(--mol_theme_back)",
-        hover = "var(--mol_theme_hover)",
-        current = "var(--mol_theme_current)",
-        text = "var(--mol_theme_text)",
-        control = "var(--mol_theme_control)",
-        shade = "var(--mol_theme_shade)",
-        line = "var(--mol_theme_line)",
-        focus = "var(--mol_theme_focus)",
-        field = "var(--mol_theme_field)"
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-    namespace $$ { }
-    const $mol_object_field: unique symbol;
-    class $mol_object extends $mol_object2 {
-        static make<Instance>(this: {
-            new (): Instance;
-        }, config: Partial<Instance>): Instance;
-    }
-}
-
-declare namespace $ {
-    class $mol_window extends $mol_object {
-        static size(next?: {
-            width: number;
-            height: number;
-        }): {
-            width: number;
-            height: number;
-        };
     }
 }
 
@@ -220,6 +155,16 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_after_tick extends $mol_object2 {
+        task: () => void;
+        promise: any;
+        cancelled: boolean;
+        constructor(task: () => void);
+        destructor(): void;
+    }
+}
+
+declare namespace $ {
     function $mol_compare_any(a: any, b: any): boolean;
 }
 
@@ -308,6 +253,16 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    namespace $$ { }
+    const $mol_object_field: unique symbol;
+    class $mol_object extends $mol_object2 {
+        static make<Instance>(this: {
+            new (): Instance;
+        }, config: Partial<Instance>): Instance;
+    }
+}
+
+declare namespace $ {
     function $mol_atom2_value<Value>(task: () => Value): Value | undefined;
     class $mol_atom2<Value = any> extends $mol_fiber<Value> {
         static get current(): $mol_atom2<any>;
@@ -367,6 +322,82 @@ declare namespace $ {
     let $mol_mem_cached: typeof $mol_atom2_value;
     function $mol_mem_persist(): void;
     function $mol_mem<Host extends object, Field extends keyof Host, Value>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<(next?: Value, force?: $mol_mem_force) => Value>): any;
+}
+
+interface $node {
+    [key: string]: any;
+}
+declare var $node: $node;
+
+declare namespace $ {
+    var $mol_dom_context: typeof globalThis;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    function $mol_dom_parse(text: string, type?: SupportedType): Document;
+}
+
+declare namespace $ {
+    class $mol_fetch_response extends $mol_object2 {
+        readonly native: Response;
+        constructor(native: Response);
+        headers(): Headers;
+        mime(): string;
+        stream(): ReadableStream<Uint8Array>;
+        text(): string;
+        json(): any;
+        buffer(): ArrayBuffer;
+        xml(): Document;
+        xhtml(): Document;
+        html(): Document;
+    }
+    class $mol_fetch extends $mol_object2 {
+        static request: (input: RequestInfo, init?: RequestInit) => Response;
+        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array>;
+        static text(input: RequestInfo, init?: RequestInit): string;
+        static json(input: RequestInfo, init?: RequestInit): any;
+        static buffer(input: RequestInfo, init?: RequestInit): void;
+        static xml(input: RequestInfo, init?: RequestInit): Document;
+        static xhtml(input: RequestInfo, init?: RequestInit): Document;
+        static html(input: RequestInfo, init?: RequestInit): Document;
+    }
+}
+
+declare namespace $ {
+    function $mol_style_attach(id: string, text: string): HTMLStyleElement;
+}
+
+declare namespace $ {
+    const enum $mol_theme {
+        back = "var(--mol_theme_back)",
+        hover = "var(--mol_theme_hover)",
+        current = "var(--mol_theme_current)",
+        text = "var(--mol_theme_text)",
+        control = "var(--mol_theme_control)",
+        shade = "var(--mol_theme_shade)",
+        line = "var(--mol_theme_line)",
+        focus = "var(--mol_theme_focus)",
+        field = "var(--mol_theme_field)"
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_window extends $mol_object {
+        static size(next?: {
+            width: number;
+            height: number;
+        }): {
+            width: number;
+            height: number;
+        };
+    }
 }
 
 declare namespace $ {

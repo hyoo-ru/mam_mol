@@ -467,163 +467,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_window extends $mol_object {
-        static size(next?: {
-            width: number;
-            height: number;
-        }): {
-            width: number;
-            height: number;
-        };
-    }
-}
-
-declare namespace $ {
     var $mol_dom_context: typeof globalThis;
 }
 
 declare namespace $ {
-}
-
-declare namespace $ {
-    class $mol_defer extends $mol_object {
-        run: () => void;
-        constructor(run: () => void);
-        destructor(): void;
-        static all: $mol_defer[];
-        static timer: any;
-        static scheduleNative: (handler: () => void) => any;
-        static schedule(): void;
-        static unschedule(): void;
-        static add(defer: $mol_defer): void;
-        static drop(defer: $mol_defer): void;
-        static run(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_view_selection extends $mol_object {
-        static focused(next?: Element[]): Element[];
-        static focus(event: FocusEvent): void;
-        static blur(event: FocusEvent): void;
-    }
-}
-
-declare namespace $ {
-    function $mol_dom_qname(name: string): string;
-}
-
-declare namespace $ {
-    function $mol_dom_render_attributes(el: Element, attrs: {
-        [key: string]: string | number | boolean | null;
-    }): void;
-}
-
-declare namespace $ {
-    function $mol_fail_catch(error: object): boolean;
-}
-
-declare namespace $ {
-    function $mol_dom_render_styles(el: Element, styles: {
-        [key: string]: string | number;
-    }): void;
-}
-
-declare namespace $ {
-    function $mol_dom_render_fields(el: Element, fields: {
-        [key: string]: any;
-    }): void;
-}
-
-declare namespace $ {
-    function $mol_dom_render_children(el: Element, childNodes: NodeList | Array<Node | string | null>): void;
-}
-
-declare namespace $ {
-    function $mol_func_name(func: Function): string;
-    function $mol_func_name_from<Target extends Function>(target: Target, source: Function): Target;
-}
-
-declare namespace $ {
-    function $mol_deprecated(message: string): <Method extends (this: Host, ...args: readonly any[]) => any, Host extends { [key in Field]: Method; }, Field extends keyof Host>(host: Host, field: Field, descr: TypedPropertyDescriptor<Method>) => void;
-}
-
-declare namespace $ {
-    type $mol_type_keys_extract<Input, Lower, Upper> = {
-        [Field in keyof Input]: Lower extends Input[Field] ? never : Input[Field] extends Upper ? Field : never;
-    }[keyof Input];
-}
-
-declare namespace $ {
-    type $mol_type_pick<Input, Lower, Upper> = Pick<Input, $mol_type_keys_extract<Input, Lower, Upper>>;
-}
-
-declare namespace $ {
-    const enum $mol_theme {
-        back = "var(--mol_theme_back)",
-        hover = "var(--mol_theme_hover)",
-        current = "var(--mol_theme_current)",
-        text = "var(--mol_theme_text)",
-        control = "var(--mol_theme_control)",
-        shade = "var(--mol_theme_shade)",
-        line = "var(--mol_theme_line)",
-        focus = "var(--mol_theme_focus)",
-        field = "var(--mol_theme_field)"
-    }
-}
-
-declare namespace $ {
-    type $mol_view_content = $mol_view | Node | string | number | boolean;
-    function $mol_view_visible_width(): number;
-    function $mol_view_visible_height(): number;
-    function $mol_view_state_key(suffix: string): string;
-    class $mol_view extends $mol_object {
-        static Root<This extends typeof $mol_view>(this: This, id: number): InstanceType<This>;
-        autorun(): $mol_atom2<unknown>;
-        static autobind(): void;
-        title(): string;
-        focused(next?: boolean): boolean;
-        state_key(suffix?: string): string;
-        dom_name(): string;
-        dom_name_space(): string;
-        sub(): readonly (string | number | boolean | Node | $mol_view)[];
-        sub_visible(): readonly (string | number | boolean | Node | $mol_view)[];
-        minimal_width(): number;
-        maximal_width(): number;
-        minimal_height(): number;
-        static watchers: Set<$mol_view>;
-        view_rect(): ClientRect;
-        view_rect_cache(next?: ClientRect): ClientRect;
-        view_rect_watcher(): {
-            destructor: () => boolean;
-        };
-        dom_id(): any;
-        dom_node(next?: Element): Element;
-        dom_tree(next?: Element): Element;
-        dom_node_actual(): Element;
-        render(): void;
-        static view_classes(): (typeof $mol_view)[];
-        view_names_owned(): string[];
-        view_names(): string[];
-        attr_static(): {
-            [key: string]: string | number | boolean | null;
-        };
-        attr(): {};
-        style(): {
-            [key: string]: string | number;
-        };
-        field(): {
-            [key: string]: any;
-        };
-        event(): {
-            [key: string]: (event: Event) => void;
-        };
-        event_async(): {
-            [key: string]: (event: Event) => void;
-        };
-        plugins(): readonly $mol_view[];
-    }
-    type $mol_view_all = $mol_type_pick<$mol_ambient_context, any, typeof $mol_view>;
 }
 
 declare namespace $ {
@@ -766,10 +613,6 @@ declare namespace $ {
         server(): $mol_build_server;
         root(): $mol_file;
         mods({ path, exclude }: {
-            path: string;
-            exclude?: string[];
-        }): $mol_file[];
-        modsRecursive({ path, exclude }: {
             path: string;
             exclude?: string[];
         }): $mol_file[];
@@ -932,6 +775,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_fail_catch(error: object): boolean;
+}
+
+declare namespace $ {
     function $mol_compare_deep<Value>(a: Value, b: Value): boolean;
 }
 
@@ -943,18 +790,5 @@ declare namespace $ {
         expressIndex(): (req: any, res: any, next: () => void) => void;
         port(): number;
         start(): import("ws").Server;
-    }
-}
-
-declare namespace $ {
-    class $mol_plugin extends $mol_view {
-        dom_node(next?: Element): Element;
-        attr_static(): {
-            [key: string]: string | number | boolean;
-        };
-        event(): {
-            [key: string]: (event: Event) => void;
-        };
-        render(): void;
     }
 }

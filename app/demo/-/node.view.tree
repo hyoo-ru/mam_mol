@@ -215,6 +215,17 @@ $mol_check_expand $mol_check
 	checked?val <=> expanded?val false
 	enabled <= expandable false
 
+$mol_check_box $mol_check
+	Icon $mol_icon_tick
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
 $mol_svg $mol_view
 	dom_name \svg
 	dom_name_space \http://www.w3.org/2000/svg
@@ -236,18 +247,7 @@ $mol_svg_path $mol_svg
 		d <= geometry \
 
 
-$mol_icon $mol_svg_root
-	view_box \0 0 24 24
-	minimal_width 16
-	minimal_height 16
-	sub /
-		<= Path $mol_svg_path
-			geometry <= path \
-
 $mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
-
-$mol_check_box $mol_check
-	Icon $mol_icon_tick
 
 $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 
@@ -781,6 +781,27 @@ $mol_card_demo $mol_demo_small
 					\Hello pending!
 			status \pending
 
+$mol_chart $mol_view
+	gap_hor 48
+	gap_vert 24
+	gap_left <= gap_hor
+	gap_right <= gap_hor
+	gap_bottom <= gap_vert
+	gap_top <= gap_vert
+	graphs /$mol_plot_graph
+	sub /
+		<= Legend $mol_chart_legend
+			graphs <= graphs_colored
+		<= Plot $mol_plot_pane
+			gap_left <= gap_left
+			gap_right <= gap_right
+			gap_bottom <= gap_bottom
+			gap_top <= gap_top
+			graphs <= graphs
+			graphs_colored => graphs_colored
+			hue_base?val <= hue_base 140
+			hue_shift?val <= hue_shift 111
+
 $mol_plot_graph $mol_svg_group
 	series_x /number
 	series_y /number
@@ -951,27 +972,6 @@ $mol_plot_pane $mol_svg_root
 	event *
 		^
 		dblclick?event <=> reset?event null
-
-$mol_chart $mol_view
-	gap_hor 48
-	gap_vert 24
-	gap_left <= gap_hor
-	gap_right <= gap_hor
-	gap_bottom <= gap_vert
-	gap_top <= gap_vert
-	graphs /$mol_plot_graph
-	sub /
-		<= Legend $mol_chart_legend
-			graphs <= graphs_colored
-		<= Plot $mol_plot_pane
-			gap_left <= gap_left
-			gap_right <= gap_right
-			gap_bottom <= gap_bottom
-			gap_top <= gap_top
-			graphs <= graphs
-			graphs_colored => graphs_colored
-			hue_base?val <= hue_base 140
-			hue_shift?val <= hue_shift 111
 
 $mol_plot_bar $mol_plot_graph
 	style *
@@ -1653,6 +1653,13 @@ $mol_form $mol_view
 		<= Bar_buttons $mol_row
 			sub <= buttons /$mol_view
 
+$mol_form_field $mol_labeler
+	label /
+		<= name \
+		<= Bid $mol_view
+			sub / <= bid \
+	Content <= control null
+
 $mol_labeler $mol_list
 	rows /
 		<= Title $mol_view
@@ -1662,13 +1669,6 @@ $mol_labeler $mol_list
 		<= Content $mol_view
 			minimal_height 24
 			sub <= content /
-
-$mol_form_field $mol_labeler
-	label /
-		<= name \
-		<= Bid $mol_view
-			sub / <= bid \
-	Content <= control null
 
 $mol_form_demo_bids $mol_demo_small
 	title @ \Sign Up form demo
