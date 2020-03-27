@@ -14275,6 +14275,87 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_frame extends $.$mol_view {
+        dom_name() {
+            return "iframe";
+        }
+        attr() {
+            return ({
+                "src": this.uri(),
+            });
+        }
+        uri() {
+            return "";
+        }
+    }
+    $.$mol_frame = $mol_frame;
+})($ || ($ = {}));
+//frame.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_frame extends $.$mol_frame {
+            window() {
+                const node = this.dom_node();
+                this.uri();
+                return $.$mol_fiber_sync(() => new Promise((done, fail) => {
+                    node.onload = () => done(node.contentWindow);
+                    node.onerror = (event) => fail(event.error);
+                }))();
+            }
+            render() {
+                this.window();
+                return super.render();
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_frame.prototype, "window", null);
+        $$.$mol_frame = $mol_frame;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//frame.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_define($.$mol_frame, {
+        border: 'none',
+        flex: 'auto',
+    });
+})($ || ($ = {}));
+//demo.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_frame_demo extends $.$mol_demo_large {
+        title() {
+            return this.$.$mol_locale.text("$mol_frame_demo_title");
+        }
+        sub() {
+            return [this.Frame()];
+        }
+        Frame() {
+            return ((obj) => {
+                obj.uri = () => "https://mol.js.org/";
+                return obj;
+            })(new this.$.$mol_frame());
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_frame_demo.prototype, "Frame", null);
+    $.$mol_frame_demo = $mol_frame_demo;
+})($ || ($ = {}));
+//demo.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_infinite extends $.$mol_list {
         after(id) {
             return [];

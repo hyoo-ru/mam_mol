@@ -3929,6 +3929,35 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_frame extends $mol_view {
+        dom_name(): string;
+        attr(): {
+            src: string;
+        };
+        uri(): string;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_frame extends $.$mol_frame {
+        dom_node: (next?: HTMLIFrameElement) => HTMLIFrameElement;
+        window(): unknown;
+        render(): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_frame_demo extends $mol_demo_large {
+        title(): string;
+        sub(): readonly any[];
+        Frame(): $$.$mol_frame;
+    }
+}
+
+declare namespace $ {
     class $mol_infinite extends $mol_list {
         after(id: any): readonly any[];
         Row(id: any): $mol_view;
