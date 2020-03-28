@@ -257,7 +257,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		tsCompile( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+		tsCheck( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
 
 			const paths = this.tsPaths({ path , exclude , bundle })
 			if( !paths.length ) return null
@@ -276,7 +276,7 @@ namespace $ {
 					} ,
 				},
 				
-				$node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
+				$node.typescript.createSemanticDiagnosticsBuilderProgram,
 
 				( diagnostic )=> {
 
@@ -305,6 +305,45 @@ namespace $ {
 			const builder = $node.typescript.createWatchProgram( host )
 
 			return $mol_object.make({ destructor : ()=> { builder.updateRootFileNames([]) } })
+		}
+
+		@ $mol_mem_key
+		js_content( path : string ) {
+
+			const src = $mol_file.absolute( path )
+
+			if( /\.tsx?$/.test( src.name() ) ) {
+			
+				const res = $node.typescript.transpileModule( src.text() , { compilerOptions : this.tsOptions() } )
+				
+				if( res.diagnostics.length ) {
+					return $mol_fail( new Error( $node.typescript.formatDiagnostic( res.diagnostics[0] , {
+						getCurrentDirectory : ()=> this.root().path() ,
+						getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
+						getNewLine : ()=> '\n' ,
+					}) ) )
+				}
+
+				const map = JSON.parse( res.sourceMapText ) as $mol_sourcemap_raw
+				map.file = src.relate()
+				map.sources = [ src.relate() ]
+				
+				return {
+					text : res.outputText.replace( /^\/\/#\ssourceMappingURL=[^\n]*/mg , '//' + src.relate() )+'\n',
+					map : map,
+				}
+
+			} else {
+
+				const srcMap = src.parent().resolve( src.name() + '.map' );
+				
+				return {
+					text : src.text().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n',
+					map : srcMap.exists() ? JSON.parse( srcMap.text() ) as $mol_sourcemap_raw : undefined
+				}
+
+			}
+
 		}
 		
 		@ $mol_mem_key
@@ -341,7 +380,7 @@ namespace $ {
 					}
 
 					if( /^tsx?$/.test( ext ) ) {
-						return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
+						return src//.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
 					}
 					
 					if( 'js' === ext ) {
@@ -681,9 +720,6 @@ namespace $ {
 			var sources = this.sourcesJS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
-			this.tsCompile({ path , exclude : exclude_ext , bundle })
-			
 			var concater = new $mol_sourcemap_builder( target.name(), ';')
 
 			if( bundle === 'node' ) {
@@ -702,20 +738,22 @@ namespace $ {
 						}
 					}
 					try {
-						const content = ( src.text() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
-						const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test( content )
+						const content = this.js_content( src.path() )
+						
+						const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test( content.text )
 					
 						if( isCommonJs ) {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
-						const srcMap = src.parent().resolve( src.name() + '.map' );
-						if( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? srcMap.text() : undefined)
+
+						concater.add( content.text , src.relate( target.parent() ) , content.map )
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
 							const idShort = idFull.replace( /\/index\.js$/ , '' ).replace( /\.js$/ , '' )
 							concater.add( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
 						}
+
 					} catch( error ) {
 						errors.push( error )
 					}
@@ -759,22 +797,20 @@ namespace $ {
 			}
 			if( sources.length === 0 ) return []
 			
-			this.tsCompile({ path , exclude : exclude_ext , bundle })
+			this.tsCheck({ path , exclude : exclude_ext , bundle })
 			
 			const errors = [] as Error[]
 			
 			sources.forEach(
-				function( src ) {
+				( src )=> {
 					if( bundle === 'node' ) {
 						if( /node_modules\//.test( src.relate( root ) ) ) {
 							return
 						}
 					}
-					let content = ''					
 					try {
-						content = ( src.text() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
-						const srcMap = src.parent().resolve( src.name() + '.map' )
-						if ( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? srcMap.text() : undefined)
+						const content = this.js_content( src.path() )
+						concater.add( content.text, src.relate( target.parent() ), content.map)
 					} catch( error ) {
 						errors.push( error )
 					}
