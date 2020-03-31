@@ -1,0 +1,21 @@
+[mol_view] {
+  transition-duration: 0s;
+}
+[mol_splitter_divider] {
+  padding: 0 2px;
+
+  cursor: ew-resize;
+  background-color: var(--mol_skin_current);
+}
+
+[mol_splitter_divider] {
+  transition-duration: 0s;
+}
+.container {
+  display: flex;
+  width: 100%;
+}
+[mol_splitter_left],
+[mol_splitter_right] {
+  width: 100%;
+}
