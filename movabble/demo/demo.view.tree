@@ -1,8 +1,0 @@
-$mol_movabble_demo $mol_view
-	sub /
-		<= Box $mol_movabble
-			start <= hook_up null
-			done <= hook_down null
-			sub / 
-				<= dynamic \
-

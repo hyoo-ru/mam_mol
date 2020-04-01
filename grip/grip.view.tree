@@ -1,8 +1,6 @@
-$mol_movabble $mol_ghost
+$mol_grip $mol_ghost
 	pos_x?val null
 	pos_y?val null
 	start null
 	done null
 	cancel null
-	Sub <= data $mol_view
-		sub <= sub

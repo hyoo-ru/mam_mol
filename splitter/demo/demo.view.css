@@ -2,4 +2,13 @@
   height: 100%;
   width: 100%;
   display: flex;
+  
+}
+[mol_splitter_demo] * {
+	transition-duration: 0s ;
+}
+
+[mol_splitter_demo_right] {
+  display: flex;
+  flex-direction: column;
 }

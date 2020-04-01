@@ -1,11 +1,11 @@
 namespace $.$$ {
-	export class $mol_movabble extends $.$mol_movabble {
+	export class $mol_grip extends $.$mol_grip {
 		@$mol_mem
-		pos_y(val?: number, force?: $mol_mem_force): number {
+		pos_y(val?: number): number {
 			return (val !== void 0) ? val : NaN;
 		}
 		@$mol_mem
-		pos_x(val?: number, force?: $mol_mem_force): number {
+		pos_x(val?: number): number {
 			return (val !== void 0) ? val : NaN;
 		}
 		move(node: HTMLElement, callback = (event: PointerEvent) => {
@@ -32,13 +32,10 @@ namespace $.$$ {
 			};
 		}
 
-		@$mol_mem
-		data() {
-			return ((obj) => {
-				this.move(obj.dom_node() as HTMLElement)
-				obj.sub = () => this.sub()
-				return obj
-			})(new this.$.$mol_view())
+		dom_node_actual() {
+			this.move(this.dom_node() as HTMLElement)
+			return super.dom_node_actual();
 		}
+
 	}
 }

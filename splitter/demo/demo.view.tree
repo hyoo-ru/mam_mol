@@ -1,9 +1,13 @@
 $mol_splitter_demo $mol_view
 	sub /
+		<= Left $mol_view
+			sub / \left
 		<= splitter $mol_splitter
-			left <= test / \asd
-			right / \1
-		<= splitter2 $mol_splitter
-			type \vertical
-			left <= test / \asd
-			right / \1
+		<= Right $mol_view
+			sub / 
+				<= Right_one $mol_view
+					sub / \ right one
+				<= splitter2 $mol_splitter
+					type \vertical
+				<= Right_two $mol_view
+					sub / \ right two

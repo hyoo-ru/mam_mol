@@ -1,14 +1,4 @@
-$mol_splitter $mol_movabble
-	left / \
-	right / \
-	attr *
-		^
-		class \container
+$mol_splitter $mol_grip
 	type \horizontal
-	sub /
-		<= Left $mol_view
-			sub <= left
-		<= Divider $mol_view
-			sub / \
-		<= Right $mol_view
-			sub <= right
+	Sub <= Divider $mol_view
+		sub / \

@@ -1,0 +1,8 @@
+$mol_grip_demo $mol_view
+	sub /
+		<= Box $mol_grip
+			start <= start null
+			done <= done null
+			Sub <= view $mol_view 
+				sub / 
+					<= coordinates null
