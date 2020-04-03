@@ -41,7 +41,7 @@ namespace $ {
 		setTimeout( $mol_log_group( '$mol_test' , ()=> {
 			scheduled = false
  			$mol_test_run()
-		} ) , 500 )
+		} ) , 0 )
 		
 	}
 

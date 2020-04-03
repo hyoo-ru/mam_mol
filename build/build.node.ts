@@ -45,7 +45,64 @@ namespace $ {
 		root() {
 			return $mol_file.relative( '.' )
 		}
+
+		@ $mol_mem_key
+		metaTreeTranspile( path : string ) {
 		
+			const file = $mol_file.absolute( path )
+			const name = file.name()
+			
+			const tree = $mol_tree.fromString( file.text() , file.path() )
+
+			let content = ''
+			for( const step of tree.select( 'build' , '' ).sub ) {
+
+				const res = $mol_exec( file.parent().path() , step.value ).stdout.toString().trim()
+				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
+
+			}
+
+			if( !content ) return []
+
+			const script = file.parent().resolve( `-meta.tree/${ name }.ts` )
+			script.text( content )
+			return [ script ]
+
+		}
+		
+		@ $mol_mem_key
+		viewTreeTranspile( path : string ) {
+
+			const file = $mol_file.absolute( path )
+			const name = file.name()
+
+			const script = file.parent().resolve( `-view.tree/${ name }.ts` )
+			const locale = file.parent().resolve( `-view.tree/${ name }.locale=en.json` )
+			
+			const tree = $mol_tree.fromString( file.text() , file.path() )
+			const res = $mol_view_tree_compile( tree )
+
+			script.text( res.script )
+			locale.text( JSON.stringify( res.locales , null , '\t' ) )
+				
+			return [ script , locale ]
+		}
+
+		@ $mol_mem_key
+		cssTranspile( path : string ) {
+
+			const file = $mol_file.absolute( path )
+			const name = file.name()
+			const script = file.parent().resolve( `-css/${ name }.ts` )
+						
+			const id = file.relate( this.root() )
+			const styles = file.text()
+			const code = 'namespace $ { $'+`mol_style_attach( ${ JSON.stringify( id ) },\n ${ JSON.stringify( styles ) }\n) }`
+			script.text( code )
+			
+			return [ script ]
+		}
+
 		@ $mol_mem_key
 		mods( { path , exclude } : { path : string , exclude? : string[] } ) {
 
@@ -63,46 +120,11 @@ namespace $ {
 					if (! child.exists()) return false
 					
 					if( /(meta\.tree)$/.test( name ) ) {
-						const tree = $mol_tree.fromString( child.text() , child.path() )
-
-						let content = ''
-						for( const step of tree.select( 'build' , '' ).sub ) {
-
-							const res = $mol_exec( child.parent().path() , step.value ).stdout.toString().trim()
-							if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
-
-						}
-
-						if( content ) {
-							const script = child.parent().resolve( `-meta.tree/${ name }.ts` )
-							script.text( content )
-							mods.push( script )
-						}
-
+						mods.push( ... this.metaTreeTranspile( child.path() ) )
 					} else if( /(view\.tree)$/.test( name ) ) {
-
-						const script = child.parent().resolve( `-view.tree/${ name }.ts` )
-						const locale = child.parent().resolve( `-view.tree/${ name }.locale=en.json` )
-						
-						const tree = $mol_tree.fromString( child.text() , child.path() )
-						const res = $mol_view_tree_compile( tree )
-						
-						script.text( res.script )
-						locale.text( JSON.stringify( res.locales , null , '\t' ) )
-							
-						mods.push( script , locale )
-
+						mods.push( ... this.viewTreeTranspile( child.path() ) )
 					} else if( /(\.css)$/.test( name ) ) {
-
-						const script = child.parent().resolve( `-css/${ name }.ts` )
-						
-						const id = child.relate( this.root() )
-						const styles = child.text()
-						const code = 'namespace $ { $'+`mol_style_attach( ${ JSON.stringify( id ) },\n ${ JSON.stringify( styles ) }\n) }`
-						script.text( code )
-						
-						mods.push( script )
-
+						mods.push( ... this.cssTranspile( child.path() ) )
 					}
 
 					mods.push( child )
@@ -255,25 +277,37 @@ namespace $ {
 
 			return sources.map( src => src.path() )
 		}
-		
+
 		@ $mol_mem_key
-		tsCheck( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+		tsService( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
 
 			const paths = this.tsPaths({ path , exclude , bundle })
 			if( !paths.length ) return null
+
+			const watchers = new Map< string , ( path : string , kind : number )=> void >()
+			let run = ()=> {}
 
 			var host = $node.typescript.createWatchCompilerHost(
 
 				paths ,
 				
-				this.tsOptions(),
+				{
+					... this.tsOptions(),
+					noEmit : true,
+				},
 				
 				{
 					... $node.typescript.sys ,
-					setTimeout : ( cb : any )=> cb(),
-					writeFile : ( path : string , content : string )=> {
-						$mol_file.relative( path ).text_cached( content )
+					writeFile : (path , data )=> {
+						return $mol_fail( new Error( 'Write forbidden' ) )
+					},
+					setTimeout : ( cb : any )=> {
+						run = cb
 					} ,
+					watchFile : (path:string, cb:(path:string,kind:number)=>any )=> {
+						watchers.set( path , cb )
+						return { close(){ } }
+					},
 				},
 				
 				$node.typescript.createSemanticDiagnosticsBuilderProgram,
@@ -282,15 +316,13 @@ namespace $ {
 
 					if( diagnostic.file ) {
 
-						const file = $mol_file.absolute( diagnostic.file.fileName.replace( /\.tsx?$/ , '.js' ) )
-						
 						const error = new Error( $node.typescript.formatDiagnostic( diagnostic , {
 							getCurrentDirectory : ()=> this.root().path() ,
 							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
 							getNewLine : ()=> '\n' ,
 						}) )
 						
-						file.fail( error )
+						this.js_error( diagnostic.file.getSourceFile().fileName , error )
 						
 					} else {
 						console.error( $node.colorette.redBright( String(diagnostic.messageText) ) )
@@ -302,9 +334,31 @@ namespace $ {
 				
 			)
 
-			const builder = $node.typescript.createWatchProgram( host )
+			const service = $node.typescript.createWatchProgram( host )
 
-			return $mol_object.make({ destructor : ()=> { builder.updateRootFileNames([]) } })
+			const versions = {} as Record< string , number >
+
+			return {
+				recheck: ()=> {
+					for( const path of paths ) {
+						const version = $node.fs.statSync( path ).mtime.valueOf()
+						if( versions[ path ] && versions[ path ] !== version ) {
+							this.js_error(path,null)
+							const watcher = watchers.get( path )
+							if( watcher ) watcher( path , 2 )
+						}
+						versions[ path ] = version
+					}
+					run()
+				},
+				destructor : ()=> service.close()
+			}
+
+		}
+
+		@ $mol_mem_key
+		js_error( path : string , next = null as null | Error ) {
+			return next
 		}
 
 		@ $mol_mem_key
@@ -790,18 +844,24 @@ namespace $ {
 			if( bundle === 'node' ) {
 				concater.add( 'require'+'( "source-map-support" ).install()\n' )
 				concater.add( "process.on( 'unhandledRejection' , up => { throw up } )" )
-				sources = [ ... sourcesNoTest , ... sourcesTest ]
+				sourcesTest = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
-				sources = sourcesTest
 			}
 			if( sources.length === 0 ) return []
 			
-			this.tsCheck({ path , exclude : exclude_ext , bundle })
+			this.tsService({ path , exclude : exclude_ext , bundle }).recheck()
 			
 			const errors = [] as Error[]
+
+			for( const src of sources ) {
+				src.text()
+				const error = this.js_error( src.path() )
+				if( !error ) continue
+				errors.push( error )
+			}
 			
-			sources.forEach(
+			sourcesTest.forEach(
 				( src )=> {
 					if( bundle === 'node' ) {
 						if( /node_modules\//.test( src.relate( root ) ) ) {
@@ -845,12 +905,14 @@ namespace $ {
 				: `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`
 			
 			content = content.replace(
-				/(<\/body>|$)/ ,
-				`
-					<script src="/mol/build/client/client.js" charset="utf-8" defer></script>
-					<script src="web.test.js" charset="utf-8" defer></script>
-					$1
-				`,
+				/(<\/body>|$)/ , `
+				<script src="/mol/build/client/client.js" charset="utf-8"></script>
+				<script>
+					setTimeout( ()=> {
+						document.head.appendChild( document.createElement( 'script' ) ).src = 'web.test.js'
+					},250)
+				</script>
+				$1`,
 			)
 			
 			target.text( content )
