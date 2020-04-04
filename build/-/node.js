@@ -1681,7 +1681,7 @@ var $;
             return $.$mol_fail(new Error(`Unsupported file type`));
         return {
             type,
-            size: stat.size,
+            size: Number(stat.size),
             atime: stat.atime,
             mtime: stat.mtime,
             ctime: stat.ctime

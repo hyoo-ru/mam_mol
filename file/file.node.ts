@@ -10,7 +10,7 @@ namespace $ {
 
 		return {
 			type, 
-			size: stat.size,
+			size: Number(stat.size),
 			atime: stat.atime,
 			mtime: stat.mtime,
 			ctime: stat.ctime
