@@ -48,12 +48,15 @@ namespace $ {
 		
 		@ $mol_mem_key
 		mods( { path , exclude } : { path : string , exclude? : string[] } ) {
+
+			const parent = $mol_file.absolute( path )
 			const mods : $mol_file[] = []
 			
-			$mol_file.absolute( path ).sub()
-			.forEach(
+			parent.sub().forEach(
 				child => {
+					
 					const name = child.name()
+
 					if( !/^[a-z0-9]/i.test( name ) ) return false
 					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
 
@@ -71,15 +74,15 @@ namespace $ {
 						}
 
 						if( content ) {
-							const script = child.parent().resolve( `-meta.tree/${ child.name() }.ts` )
+							const script = child.parent().resolve( `-meta.tree/${ name }.ts` )
 							script.text( content )
 							mods.push( script )
 						}
 
 					} else if( /(view\.tree)$/.test( name ) ) {
 
-						const script = child.parent().resolve( `-view.tree/${ child.name() }.ts` )
-						const locale = child.parent().resolve( `-view.tree/${ child.name() }.locale=en.json` )
+						const script = child.parent().resolve( `-view.tree/${ name }.ts` )
+						const locale = child.parent().resolve( `-view.tree/${ name }.locale=en.json` )
 						
 						const tree = $mol_tree.fromString( child.text() , child.path() )
 						const res = $mol_view_tree_compile( tree )
@@ -91,7 +94,7 @@ namespace $ {
 
 					} else if( /(\.css)$/.test( name ) ) {
 
-						const script = child.parent().resolve( `-css/${ child.name() }.ts` )
+						const script = child.parent().resolve( `-css/${ name }.ts` )
 						
 						const id = child.relate( this.root() )
 						const styles = child.text()
@@ -113,26 +116,26 @@ namespace $ {
 			return mods
 		}
 		
-		@ $mol_mem_key
-		modsRecursive( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
-			var mod = $mol_file.absolute( path )
-			switch( mod.type() ) {
-				case 'file' :
-					return [ mod ]
-				case 'dir' :
-					var mods = [ mod ]
-					for( var m of this.mods( { path , exclude } ) ) {
-						if( m.type() !== 'dir' ) continue
-						for( var dep of this.modsRecursive( { path : m.path() , exclude } ) ) {
-							if( mods.indexOf( dep ) !== -1 ) continue
-							mods.push( dep )
-						}
-					}
-					return mods
-				default :
-					throw new Error( `Unsupported type "${mod.type()}" of "${mod.relate()}"` )
-			}
-		}
+		// @ $mol_mem_key
+		// modsRecursive( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		// 	var mod = $mol_file.absolute( path )
+		// 	switch( mod.type() ) {
+		// 		case 'file' :
+		// 			return [ mod ]
+		// 		case 'dir' :
+		// 			var mods = [ mod ]
+		// 			for( var m of this.mods( { path , exclude } ) ) {
+		// 				if( m.type() !== 'dir' ) continue
+		// 				for( var dep of this.modsRecursive( { path : m.path() , exclude } ) ) {
+		// 					if( mods.indexOf( dep ) !== -1 ) continue
+		// 					mods.push( dep )
+		// 				}
+		// 			}
+		// 			return mods
+		// 		default :
+		// 			throw new Error( `Unsupported type "${mod.type()}" of "${mod.relate()}"` )
+		// 	}
+		// }
 		
 		@ $mol_mem_key
 		sources( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
@@ -161,9 +164,13 @@ namespace $ {
 				for( let p in deps ) {
 					
 					var names : string[]
-					if( p[ 0 ] === '/' ) names = p.substring( 1 ).split( '/' )
-					else if( p[ 0 ] === '.' ) names = mod.resolve( p ).relate( this.root() ).split( '/' )
-					else names = [ 'node_modules' , ... p.split( '/' ) ]
+					if( p[ 0 ] === '/' ) {
+						names = p.substring( 1 ).split( '/' )
+					} else if( p[ 0 ] === '.' ) {
+						names = mod.resolve( p ).relate( this.root() ).split( '/' )
+					} else {
+						names = [ 'node_modules' , ... p.split( '/' ) ]
+					}
 					
 					let files = [ this.root() ]
 					for( let name of names ) {
@@ -182,14 +189,14 @@ namespace $ {
 					for( let file of files ) {
 						if( file === this.root() ) continue
 
-							const from = src.relate( this.root() )
-							if(!( from in graph.nodes )) continue
-						
-							const to = file.relate( this.root() )
-							if(!( to in graph.nodes )) continue
-						
-							graph.link( from , to , { priority : deps[ p ] } )
-						}
+						const from = src.relate( this.root() )
+						if(!( from in graph.nodes )) continue
+					
+						const to = file.relate( this.root() )
+						if(!( to in graph.nodes )) continue
+					
+						graph.link( from , to , { priority : deps[ p ] } )
+					}
 					
 				}
 			}
@@ -492,7 +499,7 @@ namespace $ {
 				const checkDep = ( p : string )=> {
 					
 					var dep = ( p[ 0 ] === '/' )
-					? this.root().resolve( p )
+					? this.root().resolve( p + '/' + p.replace( /.*\// , '' ) )
 					: ( p[ 0 ] === '.' )
 					? mod.resolve( p )
 					: this.root().resolve( 'node_modules' ).resolve( './' + p )
@@ -1235,7 +1242,14 @@ namespace $ {
 		return depends
 	}
 	
-	$mol_build.dependors[ 'css' ] = $mol_build.dependors[ 'view.css' ] = source => {
+	$mol_build.dependors[ 'view.css' ] = source => {
+		var treeName = './' + source.name().replace( /css$/ , 'tree' )
+		var depends : { [ index : string ] : number } = { [ treeName ] : 0 }
+		$mol_build_depsMerge( depends , $mol_build.dependors[ 'css' ]!( source ) )
+		return depends
+	}
+	
+	$mol_build.dependors[ 'css' ] = source => {
 
 		var depends : { [ index : string ] : number } = {
 			'/mol/style/attach': 0,
