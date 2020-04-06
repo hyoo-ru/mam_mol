@@ -761,10 +761,10 @@ declare namespace $ {
         socket(): import("ws").Server;
         messageStart(port: number): string;
         expressHandlers(): any[];
-        expressCompressor(): any;
+        expressCompressor(): unknown;
         expressBodier(): any;
         expressFiler(): any;
-        expressDirector(): any;
+        expressDirector(): unknown;
         expressIndex(): (req: any, res: any, next: () => void) => void;
         expressGenerator(): (req: any, res: any, next: () => void) => void;
         bodyLimit(): string;
