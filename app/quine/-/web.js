@@ -2169,10 +2169,10 @@ var $;
 var $;
 (function ($) {
     if ($.$mol_dom_context.document) {
-        $.$mol_dom_context.document.addEventListener('focus', (event) => {
+        $.$mol_dom_context.document.documentElement.addEventListener('focus', (event) => {
             new $.$mol_after_tick($.$mol_fiber_root(() => $.$mol_view_selection.focus(event)));
         }, true);
-        $.$mol_dom_context.document.addEventListener('blur', (event) => {
+        $.$mol_dom_context.document.documentElement.addEventListener('blur', (event) => {
             new $.$mol_after_timeout(0, $.$mol_fiber_root(() => $.$mol_view_selection.blur(event)));
         }, true);
     }
