@@ -3248,6 +3248,12 @@ var $;
         static vb(value) { return new $mol_style_unit(value, 'vb'); }
         static vmin(value) { return new $mol_style_unit(value, 'vmin'); }
         static vmax(value) { return new $mol_style_unit(value, 'vmax'); }
+        static deg(value) { return new $mol_style_unit(value, 'deg'); }
+        static rad(value) { return new $mol_style_unit(value, 'rad'); }
+        static grad(value) { return new $mol_style_unit(value, 'grad'); }
+        static turn(value) { return new $mol_style_unit(value, 'turn'); }
+        static s(value) { return new $mol_style_unit(value, 's'); }
+        static ms(value) { return new $mol_style_unit(value, 'ms'); }
     }
     $.$mol_style_unit = $mol_style_unit;
 })($ || ($ = {}));

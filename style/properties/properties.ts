@@ -4,11 +4,11 @@ namespace $ {
 
 	type Common = 'inherit' | 'initial' | 'unset'
 	
-	type Length = number | $mol_style_unit< $mol_style_unit_length > | $mol_style_func<'calc'>
+	type Length = 0 | $mol_style_unit< $mol_style_unit_length > | $mol_style_func<'calc'>
 
 	type Size =
-	| 'auto' | 'max-content' | 'min-content' | $mol_style_func<'fit-content'>
-	| 0 | Length | Common
+	| 'auto' | 'max-content' | 'min-content' | 'fit-content'
+	| Length | Common
 
 	type Directions =
 	| Size
@@ -47,10 +47,13 @@ namespace $ {
 		overflow? : Overflow | {
 
 			/** What shows when content overflows a block-level element's left and right edges. */
-			x? :  Overflow
+			x? :  Overflow | Common
 			
 			/** What shows when content overflows a block-level element's top and bottom edges. */
-			y? :  Overflow
+			y? :  Overflow | Common
+
+			/** A way to opt out of the browser's scroll anchoring behavior, which adjusts scroll position to minimize content shifts. */
+			anchor? : 'auto' | 'none' | Common
 			
 		}
 
