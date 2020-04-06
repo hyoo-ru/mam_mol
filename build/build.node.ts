@@ -497,9 +497,11 @@ namespace $ {
 				graph.nodes[ mod.relate( this.root() ) ] = null
 				
 				const checkDep = ( p : string )=> {
+
+					const isFile = /\.\w+$/.test( p )
 					
 					var dep = ( p[ 0 ] === '/' )
-					? this.root().resolve( p + '/' + p.replace( /.*\// , '' ) )
+					? this.root().resolve( p + ( isFile ? '' : '/' + p.replace( /.*\// , '' ) ) )
 					: ( p[ 0 ] === '.' )
 					? mod.resolve( p )
 					: this.root().resolve( 'node_modules' ).resolve( './' + p )
