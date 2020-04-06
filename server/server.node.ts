@@ -75,7 +75,7 @@ namespace $ {
 		}
 		
 		expressCompressor() {
-			return $node['compression']()
+			return $node['compression']() as unknown
 		}
 		
 		expressBodier() {
@@ -95,7 +95,7 @@ namespace $ {
 		}
 		
 		expressDirector() {
-			return $node['serve-index']( this.rootPublic() , { icons : true } )
+			return $node['serve-index']( this.rootPublic() , { icons : true } ) as unknown
 		}
 
 		expressIndex() {

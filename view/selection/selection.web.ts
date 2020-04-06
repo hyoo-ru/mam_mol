@@ -2,7 +2,7 @@ namespace $ {
 	
 	if( $mol_dom_context.document ) {
 
-		$mol_dom_context.document.addEventListener(
+		$mol_dom_context.document.documentElement.addEventListener(
 			'focus' ,
 			( event : FocusEvent )=> {
 				new $mol_after_tick(
@@ -14,7 +14,7 @@ namespace $ {
 			true ,
 		)
 		
-		$mol_dom_context.document.addEventListener(
+		$mol_dom_context.document.documentElement.addEventListener(
 			'blur' ,
 			( event : FocusEvent )=> {
 				new $mol_after_timeout( 0 ,
