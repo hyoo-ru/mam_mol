@@ -665,11 +665,11 @@ declare namespace $ {
     type Common = 'inherit' | 'initial' | 'unset';
     type Length = 0 | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>;
     type Size = 'auto' | 'max-content' | 'min-content' | 'fit-content' | Length | Common;
-    type Directions = Size | [Size, Size] | {
-        top?: Size;
-        right?: Size;
-        bottom?: Size;
-        left?: Size;
+    type Directions<Value> = Value | [Value, Value] | {
+        top?: Value;
+        right?: Value;
+        bottom?: Value;
+        left?: Value;
     };
     type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
     interface Overrides {
@@ -687,8 +687,8 @@ declare namespace $ {
         height?: Size;
         minHeight?: Size;
         maxHeight?: Size;
-        margin?: Directions;
-        padding?: Directions;
+        margin?: Directions<Length>;
+        padding?: Directions<Length>;
         flex?: 'none' | 'auto' | {
             grow?: number | Common;
             shrink?: number | Common;

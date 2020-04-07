@@ -10,14 +10,14 @@ namespace $ {
 	| 'auto' | 'max-content' | 'min-content' | 'fit-content'
 	| Length | Common
 
-	type Directions =
-	| Size
-	| [ Size , Size ]
+	type Directions< Value > =
+	| Value
+	| [ Value , Value ]
 	| {
-		top? : Size ,
-		right? : Size ,
-		bottom? : Size ,
-		left? : Size ,
+		top? : Value ,
+		right? : Value ,
+		bottom? : Value ,
+		left? : Value ,
 	}
 
 	type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
@@ -74,10 +74,10 @@ namespace $ {
 		maxHeight? : Size
 
 		/** Margin area on all four sides of an element. */
-		margin? : Directions
+		margin? : Directions<Length>
 
 		/** Padding area on all four sides of an element. */
-		padding? : Directions
+		padding? : Directions<Length>
 
 		/** How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`. */
 		flex? :
