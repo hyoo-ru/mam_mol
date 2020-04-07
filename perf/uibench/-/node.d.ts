@@ -673,8 +673,8 @@ declare namespace $ {
         height?: Size;
         minHeight?: Size;
         maxHeight?: Size;
-        margin?: Directions<Length>;
-        padding?: Directions<Length>;
+        margin?: Directions<Length | 'auto'>;
+        padding?: Directions<Length | 'auto'>;
         flex?: 'none' | 'auto' | {
             grow?: number | Common;
             shrink?: number | Common;
