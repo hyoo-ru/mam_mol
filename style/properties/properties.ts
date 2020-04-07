@@ -74,10 +74,10 @@ namespace $ {
 		maxHeight? : Size
 
 		/** Margin area on all four sides of an element. */
-		margin? : Directions<Length>
+		margin? : Directions< Length | 'auto' >
 
 		/** Padding area on all four sides of an element. */
-		padding? : Directions<Length>
+		padding? : Directions< Length | 'auto' >
 
 		/** How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`. */
 		flex? :
