@@ -87,8 +87,8 @@ namespace $ {
 				master = new $mol_fiber
 				master.cursor = $mol_fiber_status.persist
 				master.error = ( request.call( this , ... args ) as PromiseLike< Value > ).then(
-					$mol_log2.func( master!.push ).bind( master! as any ) ,
-					$mol_log2.func( master!.fail ).bind( master! as any ) ,
+					$mol_log2.func( ( next : Value )=> master!.push( next ) ) ,
+					$mol_log2.func( ( error : Error | PromiseLike< Value > )=> master!.fail( error ) ) ,
 				)
 				const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
 				master[ Symbol.toStringTag ] = prefix + ( request.name || $mol_fiber_sync.name )
