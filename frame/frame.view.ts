@@ -1,7 +1,7 @@
 namespace $.$$ {
 	export class $mol_frame extends $.$mol_frame {
 
-		dom_node : ( next? : HTMLIFrameElement )=> HTMLIFrameElement
+		dom_node! : ( next? : HTMLIFrameElement )=> HTMLIFrameElement
 		
 		@$mol_mem
 		window() {
@@ -12,7 +12,9 @@ namespace $.$$ {
 			
 			return $mol_fiber_sync(() => new Promise((done, fail) => {
 				node.onload = () => done( node.contentWindow )
-				node.onerror = ( event : ErrorEvent ) => fail( event.error )
+				node.onerror = ( event : Event | string ) => {
+					fail( typeof event === 'string' ? new Error( event ) : ( event as ErrorEvent ).error || event )
+				}
 			}))()
 			
 		}

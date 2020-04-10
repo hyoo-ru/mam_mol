@@ -10,7 +10,7 @@ namespace $ {
 			convert : ( value : Value , index : number , array : this ) => Res ,
 			self? : any ,
 		) : $mol_vector< Res , Length > {
-			return super.map( convert , self ) as any
+			return super.map( convert as any , self ) as any
 		}
 
 		merged< Patch >(

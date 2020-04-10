@@ -1,9 +1,16 @@
 namespace $.$$ {
 	
-	export interface $mol_app_report_formatCol {
+	export type $mol_app_report_formatCol =
+	| {
 		title : string
-		field? : string
-		sub? : $mol_app_report_formatCol[]
+	}
+	| {
+		title : string
+		sub : $mol_app_report_formatCol[]
+	}
+	| {
+		title : string
+		field : string
 	}
 	
 	export interface $mol_app_report_formatRow {
@@ -12,11 +19,15 @@ namespace $.$$ {
 		sub? : $mol_app_report_formatRow[]
 	}
 	
-	export interface $mol_app_report_scheme {
-		type : string
-		mask? : string
-		unit? : string
-		options? : { [ name : string ] : string }
+	export type $mol_app_report_scheme =
+	| {
+		type : 'number'
+		mask : string
+		unit : string
+	}
+	| {
+		type : 'enum'
+		options : { [ name : string ] : string }
 	}
 	
 	export class $mol_app_report extends $.$mol_app_report {
@@ -206,10 +217,10 @@ namespace $.$$ {
 		
 		formatRow( pos : number[] ) {
 			let format_rows = this.format_rows()
-			let next : $mol_app_report_formatRow = null
+			let next : $mol_app_report_formatRow = null as any
 			for( let index of pos ) {
 				next = format_rows[ index - 1 ]
-				format_rows = next.sub
+				format_rows = next.sub!
 			}
 			return next
 		}
@@ -249,7 +260,7 @@ namespace $.$$ {
 			const col = pos[ pos.length - 1 ]
 			
 			if( col === 2 ) {
-				const field = this.formatRow( pos.slice( 0 , pos.length - 1 ) ).field
+				const field = this.formatRow( pos.slice( 0 , pos.length - 1 ) ).field!
 				const scheme = this.scheme()[ field ]
 				
 				switch( scheme.type ) {
@@ -263,8 +274,10 @@ namespace $.$$ {
 		
 		@ $mol_mem_key
 		cell_options( pos : number[] ) {
-			const field = this.formatRow( pos.slice( 0 , pos.length - 1 ) ).field
-			return this.scheme()[ field ].options
+			const field = this.formatRow( pos.slice( 0 , pos.length - 1 ) ).field!
+			const scheme = this.scheme()[ field ]
+			if( scheme.type === 'enum' ) return scheme.options
+			return []
 		}
 		
 		@ $mol_mem_key

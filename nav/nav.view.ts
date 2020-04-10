@@ -2,6 +2,7 @@ namespace $.$$ {
 	export class $mol_nav extends $.$mol_nav {
 		
 		event_key( event? : KeyboardEvent ) {
+			if( !event ) return event
 			if( event.defaultPrevented ) return
 			
 			if( this.mod_ctrl() && !event.ctrlKey ) return
@@ -19,6 +20,8 @@ namespace $.$$ {
 		}
 		
 		event_up( event? : KeyboardEvent ) {
+			if( !event ) return event
+
 			const keys = this.keys_y()
 			if( keys.length < 2 ) return
 			
@@ -35,6 +38,8 @@ namespace $.$$ {
 		}
 		
 		event_down( event? : KeyboardEvent ) {
+			if( !event ) return event
+
 			const keys = this.keys_y()
 			if( keys.length < 2 ) return
 			
@@ -50,7 +55,9 @@ namespace $.$$ {
 			this.current_y( this.keys_y()[ index_new ] )
 		}
 		
-		event_left( event : KeyboardEvent ) {
+		event_left( event? : KeyboardEvent ) {
+			if( !event ) return event
+
 			const keys = this.keys_x()
 			if( keys.length < 2 ) return
 			
@@ -66,7 +73,9 @@ namespace $.$$ {
 			this.current_x( this.keys_x()[ index_new ] )
 		}
 		
-		event_right( event : KeyboardEvent ) {
+		event_right( event? : KeyboardEvent ) {
+			if( !event ) return event
+
 			const keys = this.keys_x()
 			if( keys.length < 2 ) return
 			

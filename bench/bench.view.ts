@@ -3,7 +3,7 @@ namespace $.$$ {
 	export class $mol_bench extends $.$mol_bench {
 		
 		@ $mol_mem
-		col_sort( next? : string ) {
+		col_sort( next? : string | null ) {
 			return $mol_state_arg.value( this.state_key( 'sort' ) , next )
 		}
 		
