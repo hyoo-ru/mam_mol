@@ -74,7 +74,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		scale(next?: readonly [number, number], force?: $mol_mem_force) {
+		scale(next?: readonly [number, number], force?: $mol_mem_force) : readonly [number, number] {
 			if (next === undefined) {
 				if (!this.graph_touched) return this.scale_default()
 				next = $mol_mem_cached( ()=> this.scale() ) || this.scale_default()
@@ -85,11 +85,11 @@ namespace $.$$ {
 		}
 
 		scale_x(next?: number): number {
-			return this.scale(next && [next, this.scale()[1]])[0]
+			return this.scale( next === undefined ? undefined : [ next , this.scale()[1] ] )[0]
 		}
 
 		scale_y(next?: number): number {
-			return this.scale(next && [this.scale()[0], next])[1]
+			return this.scale( next === undefined ? undefined : [ this.scale()[0] , next ] )[1]
 		}
 
 		@ $mol_mem
@@ -120,7 +120,7 @@ namespace $.$$ {
 		graph_touched: boolean = false
 
 		@ $mol_mem
-		shift(next?: readonly [number, number], force?: $mol_mem_force) {
+		shift(next?: readonly [number, number], force?: $mol_mem_force) : readonly [number, number]{
 
 			if (next === undefined) {
 				if (!this.graph_touched) return this.shift_default()

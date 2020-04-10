@@ -8,7 +8,12 @@ namespace $ {
 	export type $mol_type_partial_undefined< Val > = $mol_type_merge<
 		Partial< Val >
 		&
-		$mol_type_pick< Val , undefined , unknown >
+		Pick< Val , {
+			[ Field in keyof Val ]
+				: undefined extends Val[Field]
+				? never
+				: Field
+		}[ keyof Val ] >
 	>
 
 }

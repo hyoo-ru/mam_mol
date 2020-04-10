@@ -19,7 +19,7 @@ namespace $.$$ {
 
 		event_scroll( next? : Event ) {
 			
-			if( this._event_scroll_timer() ) this._event_scroll_timer().destructor()
+			this._event_scroll_timer()?.destructor()
 
 			const el = this.dom_node() as HTMLElement
 			

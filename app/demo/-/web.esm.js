@@ -793,7 +793,7 @@ var $;
             if (!master || master.constructor !== $mol_fiber) {
                 master = new $mol_fiber;
                 master.cursor = -3;
-                master.error = request.call(this, ...args).then($.$mol_log2.func(master.push).bind(master), $.$mol_log2.func(master.fail).bind(master));
+                master.error = request.call(this, ...args).then($.$mol_log2.func((next) => master.push(next)), $.$mol_log2.func((error) => master.fail(error)));
                 const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
                 master[Symbol.toStringTag] = prefix + (request.name || $mol_fiber_sync.name);
             }
@@ -1418,6 +1418,12 @@ var $;
     $.$mol_mem = $mol_mem;
 })($ || ($ = {}));
 //mem.js.map
+;
+"use strict";
+//param.js.map
+;
+"use strict";
+//result.js.map
 ;
 "use strict";
 var $;
@@ -2438,9 +2444,6 @@ var $;
 //unit.js.map
 ;
 "use strict";
-//result.js.map
-;
-"use strict";
 //error.js.map
 ;
 "use strict";
@@ -2613,8 +2616,8 @@ var $;
                 return next;
             }
             event_scroll(next) {
-                if (this._event_scroll_timer())
-                    this._event_scroll_timer().destructor();
+                var _a;
+                (_a = this._event_scroll_timer()) === null || _a === void 0 ? void 0 : _a.destructor();
                 const el = this.dom_node();
                 this._event_scroll_timer(new $.$mol_after_frame($.$mol_fiber_solid.func(() => {
                     this.scroll_top(Math.max(0, el.scrollTop));
@@ -9469,10 +9472,10 @@ var $;
                 return new this.$.$mol_vector_2d(...next).limited(this.scale_limit());
             }
             scale_x(next) {
-                return this.scale(next && [next, this.scale()[1]])[0];
+                return this.scale(next === undefined ? undefined : [next, this.scale()[1]])[0];
             }
             scale_y(next) {
-                return this.scale(next && [this.scale()[0], next])[1];
+                return this.scale(next === undefined ? undefined : [this.scale()[0], next])[1];
             }
             shift_limit() {
                 const dims = this.dimensions();
@@ -12520,6 +12523,8 @@ var $;
     (function ($$) {
         class $mol_nav extends $.$mol_nav {
             event_key(event) {
+                if (!event)
+                    return event;
                 if (event.defaultPrevented)
                     return;
                 if (this.mod_ctrl() && !event.ctrlKey)
@@ -12538,6 +12543,8 @@ var $;
                 }
             }
             event_up(event) {
+                if (!event)
+                    return event;
                 const keys = this.keys_y();
                 if (keys.length < 2)
                     return;
@@ -12550,6 +12557,8 @@ var $;
                 this.current_y(this.keys_y()[index_new]);
             }
             event_down(event) {
+                if (!event)
+                    return event;
                 const keys = this.keys_y();
                 if (keys.length < 2)
                     return;
@@ -12562,6 +12571,8 @@ var $;
                 this.current_y(this.keys_y()[index_new]);
             }
             event_left(event) {
+                if (!event)
+                    return event;
                 const keys = this.keys_x();
                 if (keys.length < 2)
                     return;
@@ -12574,6 +12585,8 @@ var $;
                 this.current_x(this.keys_x()[index_new]);
             }
             event_right(event) {
+                if (!event)
+                    return event;
                 const keys = this.keys_x();
                 if (keys.length < 2)
                     return;
@@ -13335,13 +13348,11 @@ var $;
     (function ($$) {
         class $mol_date extends $.$mol_date {
             value(val) {
-                if (val === '')
-                    val = null;
-                const moment1 = $.$mol_try(() => val && new $.$mol_time_moment(val.replace(/-$/, '')));
+                const moment1 = $.$mol_try(() => val && new $.$mol_time_moment(val.replace(/-$/, ''))) || null;
                 if (moment1 instanceof Error)
-                    return val;
+                    return val || '';
                 const moment2 = this.value_moment(moment1);
-                return moment2 && moment2.toString('YYYY-MM-DD');
+                return moment2 && moment2.toString('YYYY-MM-DD') || '';
             }
             value_moment(val) {
                 const stamp = this.value_number(val && val.valueOf());
@@ -14456,6 +14467,7 @@ var $;
                     return this.message_required();
                 if (value.indexOf(' ') !== -1)
                     return this.message_no_spaces();
+                return '';
             }
             name_nick(next) {
                 return $.$mol_state_local.value(this.state_key('name_nick'), next) || '';
@@ -14471,6 +14483,7 @@ var $;
                     return this.message_no_spaces();
                 if (value.length < 3)
                     return this.message_need_more_letters().replace('{count}', '3');
+                return '';
             }
             sex(next) {
                 return $.$mol_state_local.value(this.state_key('sex'), next) || '';
@@ -14530,7 +14543,9 @@ var $;
                 this.uri();
                 return $.$mol_fiber_sync(() => new Promise((done, fail) => {
                     node.onload = () => done(node.contentWindow);
-                    node.onerror = (event) => fail(event.error);
+                    node.onerror = (event) => {
+                        fail(typeof event === 'string' ? new Error(event) : event.error || event);
+                    };
                 }))();
             }
             render() {
@@ -18002,7 +18017,7 @@ var $;
                 return null;
             });
             api.onerror = $.$mol_fiber_root((event) => {
-                console.error(new Error(event.error));
+                console.error(new Error(event.error || event));
                 this.event_result(null);
                 return null;
             });
@@ -18028,11 +18043,12 @@ var $;
             return event || null;
         }
         static recognitions() {
+            var _a, _b;
             const result = this.event_result();
             if (!result)
                 return [];
-            const results = this.event_result().results;
-            return [].slice.call(this.event_result().results);
+            const results = (_b = (_a = this.event_result()) === null || _a === void 0 ? void 0 : _a.results) !== null && _b !== void 0 ? _b : [];
+            return [].slice.call(results);
         }
         static commands() {
             return this.recognitions().map(result => result[0].transcript.toLowerCase().trim().replace(/[,\.]/g, ''));
@@ -19651,23 +19667,24 @@ var $;
                 }
                 const val = this.value();
                 if (!val || val.type === '-')
-                    return;
+                    return null;
                 return $.$mol_view_tree_value_type(this.value());
             }
-            expanded(next = ['bool', 'number', 'string', 'locale'].indexOf(this.type()) >= 0) {
+            expanded(next = ['bool', 'number', 'string', 'locale'].indexOf((_a = this.type()) !== null && _a !== void 0 ? _a : '') >= 0) {
+                var _a;
                 return next;
             }
             class(next) {
-                return this.value(next && new $.$mol_tree({ type: next })).type;
+                return this.value(next && new $.$mol_tree({ type: next }) || undefined).type;
             }
             bind(next) {
-                return this.value(next && this.value().clone({ sub: [new $.$mol_tree({ type: next, sub: [new $.$mol_tree({ type: '-' })] })] })).sub[0].type;
+                return this.value(next && this.value().clone({ sub: [new $.$mol_tree({ type: next, sub: [new $.$mol_tree({ type: '-' })] })] }) || undefined).sub[0].type;
             }
             value_bool(next) {
-                return this.value(next === undefined ? null : new $.$mol_tree({ type: String(next) })).type;
+                return this.value(next && new $.$mol_tree({ type: String(next) }) || undefined).type;
             }
             value_number(next) {
-                return this.value(next === undefined ? null : new $.$mol_tree({ type: String(next) })).type;
+                return this.value(next && new $.$mol_tree({ type: String(next) }) || undefined).type;
             }
             value_string(next) {
                 let next2;
@@ -19693,7 +19710,7 @@ var $;
                     this.Type(),
                     ...(type === 'get') ? [this.Bind()] : [],
                     ...(type === 'bind') ? [this.Bind()] : [],
-                    ...(['object'].indexOf(type) >= 0) ? [this.Object()] : [],
+                    ...(['object'].indexOf(type !== null && type !== void 0 ? type : '') >= 0) ? [this.Object()] : [],
                 ];
             }
             content() {
@@ -19706,7 +19723,7 @@ var $;
                     ...(type === 'list') ? [this.List()] : [],
                     ...(type === 'dict') ? [this.Dict()] : [],
                     ...(type === 'object') ? [this.Overs()] : [],
-                    ...(['get', 'bind'].indexOf(type) >= 0 && this.bind()) ? [this.Prop([this.Bind().value(), null])] : [],
+                    ...(['get', 'bind'].indexOf(type !== null && type !== void 0 ? type : '') >= 0 && this.bind()) ? [this.Prop([this.Bind().value(), null])] : [],
                 ];
             }
             item_value(index, next) {
@@ -20291,7 +20308,7 @@ var $;
             }
             path(next) {
                 const str = $.$mol_state_arg.value(this.state_key('path'), next && next.join(','));
-                return (str == null) ? null : (str ? str.split(',') : []);
+                return (str == null) ? [] : (str ? str.split(',') : []);
             }
             view_options() {
                 return Object.keys($).filter(name => {

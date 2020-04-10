@@ -688,7 +688,7 @@ var $;
             if (!master || master.constructor !== $mol_fiber) {
                 master = new $mol_fiber;
                 master.cursor = -3;
-                master.error = request.call(this, ...args).then($.$mol_log2.func(master.push).bind(master), $.$mol_log2.func(master.fail).bind(master));
+                master.error = request.call(this, ...args).then($.$mol_log2.func((next) => master.push(next)), $.$mol_log2.func((error) => master.fail(error)));
                 const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
                 master[Symbol.toStringTag] = prefix + (request.name || $mol_fiber_sync.name);
             }
@@ -1460,6 +1460,12 @@ var $;
     $.$mol_dom_context = new $node.jsdom.JSDOM('', { url: 'https://localhost/' }).window;
 })($ || ($ = {}));
 //context.node.js.map
+;
+"use strict";
+//param.js.map
+;
+"use strict";
+//result.js.map
 ;
 "use strict";
 var $;
@@ -3497,10 +3503,10 @@ var $;
                 return new this.$.$mol_vector_2d(...next).limited(this.scale_limit());
             }
             scale_x(next) {
-                return this.scale(next && [next, this.scale()[1]])[0];
+                return this.scale(next === undefined ? undefined : [next, this.scale()[1]])[0];
             }
             scale_y(next) {
-                return this.scale(next && [this.scale()[0], next])[1];
+                return this.scale(next === undefined ? undefined : [this.scale()[0], next])[1];
             }
             shift_limit() {
                 const dims = this.dimensions();
@@ -6381,6 +6387,12 @@ var $;
     });
 })($ || ($ = {}));
 //vector.test.js.map
+;
+"use strict";
+//param.test.js.map
+;
+"use strict";
+//result.test.js.map
 ;
 "use strict";
 var $;

@@ -325,6 +325,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_type_param<Func, Index extends number> = Func extends (...params: infer Params) => any ? Params[Index] : Func extends new (...params: infer Params2) => any ? Params2[Index] : never;
+}
+
+declare namespace $ {
+    type $mol_type_result<Func> = Func extends (...params: any) => infer Result ? Result : Func extends new (...params: any) => infer Result ? Result : never;
+}
+
+declare namespace $ {
     function $mol_dict_key(value: any): any;
     class $mol_dict<Key, Value> extends Map<Key, Value> {
         get(key: Key): Value | undefined;
@@ -340,7 +348,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_mem_key<Host extends object, Field extends keyof Host, Key, Value>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<(key: Key, next?: Value, force?: $mol_mem_force) => Value>): any;
+    function $mol_mem_key<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (id: Key, next?: Value) => Value>, Key extends $mol_type_param<Prop, 0>, Value extends $mol_type_result<Prop>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): any;
 }
 
 declare namespace $ {
@@ -442,13 +450,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_type_keys_extract<Input, Lower, Upper> = {
-        [Field in keyof Input]: Lower extends Input[Field] ? never : Input[Field] extends Upper ? Field : never;
+    type $mol_type_keys_extract<Input, Upper> = {
+        [Field in keyof Input]: unknown extends Input[Field] ? never : Input[Field] extends never ? never : Input[Field] extends Upper ? Field : never;
     }[keyof Input];
 }
 
 declare namespace $ {
-    type $mol_type_pick<Input, Lower, Upper> = Pick<Input, $mol_type_keys_extract<Input, Lower, Upper>>;
+    type $mol_type_pick<Input, Upper> = Pick<Input, $mol_type_keys_extract<Input, Upper>>;
 }
 
 declare namespace $ {
@@ -526,7 +534,7 @@ declare namespace $ {
         };
         plugins(): readonly $mol_view[];
     }
-    type $mol_view_all = $mol_type_pick<$mol_ambient_context, any, typeof $mol_view>;
+    type $mol_view_all = $mol_type_pick<$mol_ambient_context, typeof $mol_view>;
 }
 
 declare namespace $ {
@@ -607,10 +615,6 @@ declare namespace $ {
         static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
         static fit_content(value: number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>): $mol_style_func<"fit-content", number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<"calc", unknown>>;
     }
-}
-
-declare namespace $ {
-    type $mol_type_result<Func> = Func extends (...params: any) => infer Result ? Result : Func extends new (...params: any) => infer Result ? Result : never;
 }
 
 declare namespace $ {
@@ -1181,11 +1185,11 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_nav extends $.$mol_nav {
-        event_key(event?: KeyboardEvent): any;
-        event_up(event?: KeyboardEvent): void;
-        event_down(event?: KeyboardEvent): void;
-        event_left(event: KeyboardEvent): void;
-        event_right(event: KeyboardEvent): void;
+        event_key(event?: KeyboardEvent): undefined;
+        event_up(event?: KeyboardEvent): undefined;
+        event_down(event?: KeyboardEvent): undefined;
+        event_left(event?: KeyboardEvent): undefined;
+        event_right(event?: KeyboardEvent): undefined;
         index_y(): any;
         index_x(): any;
     }
@@ -1503,24 +1507,30 @@ declare namespace $ {
 }
 
 declare namespace $.$$ {
-    interface $mol_app_report_formatCol {
+    type $mol_app_report_formatCol = {
         title: string;
-        field?: string;
-        sub?: $mol_app_report_formatCol[];
-    }
+    } | {
+        title: string;
+        sub: $mol_app_report_formatCol[];
+    } | {
+        title: string;
+        field: string;
+    };
     interface $mol_app_report_formatRow {
         title: string;
         field?: string;
         sub?: $mol_app_report_formatRow[];
     }
-    interface $mol_app_report_scheme {
-        type: string;
-        mask?: string;
-        unit?: string;
-        options?: {
+    type $mol_app_report_scheme = {
+        type: 'number';
+        mask: string;
+        unit: string;
+    } | {
+        type: 'enum';
+        options: {
             [name: string]: string;
         };
-    }
+    };
     class $mol_app_report extends $.$mol_app_report {
         formatCols(): $mol_app_report_formatCol[];
         format_rows(): $mol_app_report_formatRow[];
@@ -1537,7 +1547,9 @@ declare namespace $.$$ {
         rowerCells(pos: number[]): $mol_app_report_cell[];
         cellCols(pos: number[]): 1 | 2 | 0;
         cell_content(pos: number[]): $mol_view;
-        cell_options(pos: number[]): any;
+        cell_options(pos: number[]): never[] | {
+            [name: string]: string;
+        };
         cell_value(pos: number[], next: any): any;
         cell_contentName(pos: number[]): string;
         cell_contentValue(pos: number[]): string;

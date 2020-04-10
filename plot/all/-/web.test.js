@@ -1496,6 +1496,12 @@ var $;
 //vector.test.js.map
 ;
 "use strict";
+//param.test.js.map
+;
+"use strict";
+//result.test.js.map
+;
+"use strict";
 var $;
 (function ($) {
     $.$mol_test({

@@ -358,6 +358,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    type $mol_type_param<Func, Index extends number> = Func extends (...params: infer Params) => any ? Params[Index] : Func extends new (...params: infer Params2) => any ? Params2[Index] : never;
+}
+
+declare namespace $ {
+    type $mol_type_result<Func> = Func extends (...params: any) => infer Result ? Result : Func extends new (...params: any) => infer Result ? Result : never;
+}
+
+declare namespace $ {
     function $mol_dict_key(value: any): any;
     class $mol_dict<Key, Value> extends Map<Key, Value> {
         get(key: Key): Value | undefined;
@@ -373,7 +381,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_mem_key<Host extends object, Field extends keyof Host, Key, Value>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<(key: Key, next?: Value, force?: $mol_mem_force) => Value>): any;
+    function $mol_mem_key<Host extends object, Field extends keyof Host, Prop extends Extract<Host[Field], (id: Key, next?: Value) => Value>, Key extends $mol_type_param<Prop, 0>, Value extends $mol_type_result<Prop>>(proto: Host, name: Field, descr?: TypedPropertyDescriptor<Prop>): any;
 }
 
 declare namespace $ {
@@ -477,13 +485,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_type_keys_extract<Input, Lower, Upper> = {
-        [Field in keyof Input]: Lower extends Input[Field] ? never : Input[Field] extends Upper ? Field : never;
+    type $mol_type_keys_extract<Input, Upper> = {
+        [Field in keyof Input]: unknown extends Input[Field] ? never : Input[Field] extends never ? never : Input[Field] extends Upper ? Field : never;
     }[keyof Input];
 }
 
 declare namespace $ {
-    type $mol_type_pick<Input, Lower, Upper> = Pick<Input, $mol_type_keys_extract<Input, Lower, Upper>>;
+    type $mol_type_pick<Input, Upper> = Pick<Input, $mol_type_keys_extract<Input, Upper>>;
 }
 
 declare namespace $ {
@@ -540,7 +548,7 @@ declare namespace $ {
         };
         plugins(): readonly $mol_view[];
     }
-    type $mol_view_all = $mol_type_pick<$mol_ambient_context, any, typeof $mol_view>;
+    type $mol_view_all = $mol_type_pick<$mol_ambient_context, typeof $mol_view>;
 }
 
 declare namespace $ {
@@ -632,10 +640,6 @@ declare namespace $ {
         static s(value: number): $mol_style_unit<"s">;
         static ms(value: number): $mol_style_unit<"ms">;
     }
-}
-
-declare namespace $ {
-    type $mol_type_result<Func> = Func extends (...params: any) => infer Result ? Result : Func extends new (...params: any) => infer Result ? Result : never;
 }
 
 declare namespace $ {
@@ -1969,7 +1973,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_bench extends $.$mol_bench {
-        col_sort(next?: string): string | null;
+        col_sort(next?: string | null): string | null;
         row_ids(): string[][];
         result_value(id: {
             row: string[];
@@ -2740,13 +2744,13 @@ declare namespace $.$$ {
         view_box(): string;
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         scale_default(): readonly [number, number];
-        scale(next?: readonly [number, number], force?: $mol_mem_force): any;
+        scale(next?: readonly [number, number], force?: $mol_mem_force): readonly [number, number];
         scale_x(next?: number): number;
         scale_y(next?: number): number;
         shift_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         shift_default(): readonly [number, number];
         graph_touched: boolean;
-        shift(next?: readonly [number, number], force?: $mol_mem_force): any;
+        shift(next?: readonly [number, number], force?: $mol_mem_force): readonly [number, number];
         reset(event?: Event): void;
         graphs_positioned(): readonly $.$mol_plot_graph[];
         viewport(): $mol_vector_2d<$mol_vector_range<number>>;
@@ -3464,11 +3468,11 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_nav extends $.$mol_nav {
-        event_key(event?: KeyboardEvent): any;
-        event_up(event?: KeyboardEvent): void;
-        event_down(event?: KeyboardEvent): void;
-        event_left(event: KeyboardEvent): void;
-        event_right(event: KeyboardEvent): void;
+        event_key(event?: KeyboardEvent): undefined;
+        event_up(event?: KeyboardEvent): undefined;
+        event_down(event?: KeyboardEvent): undefined;
+        event_left(event?: KeyboardEvent): undefined;
+        event_right(event?: KeyboardEvent): undefined;
         index_y(): any;
         index_x(): any;
     }
@@ -3636,8 +3640,8 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_date extends $.$mol_date {
-        value(val?: string): string | null | undefined;
-        value_moment(val?: $mol_time_moment): $mol_time_moment | null;
+        value(val?: string): string;
+        value_moment(val?: $mol_time_moment | null): $mol_time_moment | null;
         showed(next?: boolean): boolean;
         day_selected(day: string): boolean;
         day_click(day: string): void;
@@ -3924,10 +3928,10 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_form_demo_bids extends $.$mol_form_demo_bids {
         name_first(next?: string): string;
-        name_first_bid(): string | undefined;
+        name_first_bid(): string;
         name_nick(next?: string): string;
         name_second(next?: string): string;
-        name_second_bid(): string | undefined;
+        name_second_bid(): string;
         sex(next?: string): string;
         sex_bid(): string;
         submit(next?: Event): void;
@@ -5041,13 +5045,13 @@ declare namespace $ {
         static speaking(next?: boolean): boolean;
         static hearer(): SpeechRecognition;
         static hearing(next?: boolean): boolean;
-        static event_result(event?: Event & {
+        static event_result(event?: null | (Event & {
             results: Array<{
                 transcript: string;
             }[] & {
                 isFinal: boolean;
             }>;
-        }): (Event & {
+        })): (Event & {
             results: ({
                 transcript: string;
             }[] & {
@@ -5366,12 +5370,12 @@ declare namespace $.$$ {
         title(): string;
         title_arg(): {};
         value(next?: $mol_tree): $mol_tree;
-        type(next?: string): "object" | "string" | "null" | "number" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list" | undefined;
+        type(next?: string): "object" | "string" | "null" | "number" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list" | null;
         expanded(next?: boolean): boolean;
-        class(next?: string): any;
-        bind(next?: string): any;
-        value_bool(next?: string): any;
-        value_number(next?: string): any;
+        class(next?: string): string;
+        bind(next?: string): string;
+        value_bool(next?: string): string;
+        value_number(next?: string): string;
         value_string(next?: string): string;
         pairs(): ($mol_bar | $mol_app_studio_field)[];
         overs(): ($mol_select | $mol_app_studio_field)[];
@@ -5382,7 +5386,7 @@ declare namespace $.$$ {
         item_class(index: number, next?: string): string | undefined;
         list_rows(): ($mol_select | $mol_app_studio_field)[];
         prop_path(path: $mol_tree_path): $mol_tree_path;
-        add_item(type?: string): string;
+        add_item(type?: string): null;
         over_options(): string[];
         add_over(name?: string): void;
         add_pair(event?: Event): void;
