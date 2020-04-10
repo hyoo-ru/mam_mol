@@ -3550,7 +3550,7 @@ var $;
                     if (!file.exists())
                         return;
                     const target = pack.resolve(`-/${file.relate(root)}`);
-                    target.text(file.text());
+                    target.buffer(file.buffer());
                     targets.push(target);
                     this.logBundle(target, Date.now() - start);
                 });

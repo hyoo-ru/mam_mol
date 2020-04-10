@@ -71,7 +71,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_style_attach(id: string, text: string): HTMLStyleElement;
+    function $mol_style_attach(id: string, text: string): HTMLStyleElement | null;
 }
 
 declare namespace $ {
@@ -127,17 +127,17 @@ declare namespace $ {
     function $mol_dev_format_auto(obj: any): any;
     function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
     function $mol_dev_format_span(style: object, ...content: any[]): any[];
-    let $mol_dev_format_div: any;
-    let $mol_dev_format_ol: any;
-    let $mol_dev_format_li: any;
-    let $mol_dev_format_table: any;
-    let $mol_dev_format_tr: any;
-    let $mol_dev_format_td: any;
-    let $mol_dev_format_accent: any;
-    let $mol_dev_format_strong: any;
-    let $mol_dev_format_string: any;
-    let $mol_dev_format_shade: any;
-    let $mol_dev_format_indent: any;
+    let $mol_dev_format_div: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_ol: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_li: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_table: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_tr: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_td: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_accent: (...args: any[]) => any[];
+    let $mol_dev_format_strong: (...args: any[]) => any[];
+    let $mol_dev_format_string: (...args: any[]) => any[];
+    let $mol_dev_format_shade: (...args: any[]) => any[];
+    let $mol_dev_format_indent: (...args: any[]) => any[];
 }
 
 declare namespace $ {
@@ -153,15 +153,15 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_log_context(next?: () => void): () => void;
+    function $mol_log_context(next?: (() => void) | null): (() => void) | null;
 }
 
 declare namespace $ {
-    function $mol_log_debug(next?: string): string;
+    function $mol_log_debug(next?: string): string | null;
 }
 
 declare namespace $ {
-    var $mol_log_filter: (next?: string) => string;
+    var $mol_log_filter: (next?: string | null | undefined) => string | null;
 }
 
 declare namespace $ {
@@ -169,22 +169,22 @@ declare namespace $ {
         readonly host: any;
         readonly id: string;
         readonly args: any[];
-        static current: $mol_log2;
+        static current: $mol_log2 | null;
         static wrap<This extends {
             $: $mol_ambient_context;
-        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
         constructor(host: any, id: string, args: any[]);
         stream: $mol_log2_line[];
         flush(): void;
         info(...values: any[]): void;
         static info(...values: any[]): void;
-        static excludes: RegExp[];
+        static excludes: (RegExp | undefined)[] | null;
         static prefix: any[];
     }
     class $mol_log2_indent extends $mol_wrapper {
         static wrap<This extends {
             $: $mol_ambient_context;
-        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
     }
     class $mol_log2_table extends $mol_log2 {
     }
@@ -250,18 +250,18 @@ declare namespace $ {
         static quant: number;
         static deadline: number;
         static liveline: number;
-        static current: $mol_fiber<any>;
-        static scheduled: $mol_after_tick;
+        static current: $mol_fiber<any> | null;
+        static scheduled: $mol_after_tick | null;
         static queue: (() => PromiseLike<any>)[];
         static tick(): Promise<void>;
         static schedule(): Promise<any>;
         value: Value;
-        error: Error | PromiseLike<Value>;
+        error: Error | PromiseLike<Value> | null;
         cursor: $mol_fiber_status;
-        masters: (number | $mol_fiber<any>)[];
+        masters: (number | $mol_fiber<any> | undefined)[];
         calculate: () => Value;
         schedule(): void;
-        wake(): Value;
+        wake(): Value | undefined;
         push(value: Value): Value;
         fail(error: Error | PromiseLike<Value>): Error | PromiseLike<Value>;
         wait(promise: PromiseLike<Value>): PromiseLike<Value>;
@@ -296,19 +296,19 @@ declare namespace $ {
 declare namespace $ {
     function $mol_atom2_value<Value>(task: () => Value): Value | undefined;
     class $mol_atom2<Value = any> extends $mol_fiber<Value> {
-        static get current(): $mol_atom2<any>;
+        static get current(): $mol_atom2<any> | null;
         static cached: boolean;
-        static reap_task: $mol_fiber<any>;
+        static reap_task: $mol_fiber<any> | null;
         static reap_queue: $mol_atom2<any>[];
         static reap(atom: $mol_atom2): void;
-        slaves: (number | $mol_fiber<any>)[];
+        slaves: (number | $mol_fiber<any> | undefined)[];
         rescue(master: $mol_atom2, cursor: number): void;
         get(): Value;
         pull(): void;
         _value: Value;
         get value(): Value;
         set value(next: Value);
-        _error: Error | PromiseLike<Value>;
+        _error: Error | PromiseLike<Value> | null;
         get error(): null | Error | PromiseLike<Value>;
         set error(next: null | Error | PromiseLike<Value>);
         put(next: Value): Value;
@@ -358,7 +358,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_dict_key(value: any): any;
     class $mol_dict<Key, Value> extends Map<Key, Value> {
-        get(key: Key): Value;
+        get(key: Key): Value | undefined;
         has(key: Key): boolean;
         set(key: Key, value: Value): this;
         delete(key: Key): boolean;
@@ -384,7 +384,7 @@ declare namespace $ {
         };
         static value<Value>(key: string, next?: Value, force?: $mol_mem_force): Value | null;
         prefix(): string;
-        value(key: string, next?: Value): Value;
+        value(key: string, next?: Value): Value | null;
     }
 }
 
@@ -532,8 +532,8 @@ declare namespace $ {
         maximal_width(): number;
         minimal_height(): number;
         static watchers: Set<$mol_view>;
-        view_rect(): ClientRect;
-        view_rect_cache(next?: ClientRect): ClientRect;
+        view_rect(): ClientRect | null;
+        view_rect_cache(next?: ClientRect | null): ClientRect | null;
         view_rect_watcher(): {
             destructor: () => boolean;
         };
@@ -591,7 +591,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_memo extends $mol_wrapper {
-        static wrap<This extends object, Value>(task: (this: This, next?: Value) => Value): (this: This, next?: Value) => any;
+        static wrap<This extends object, Value>(task: (this: This, next?: Value) => Value): (this: This, next?: Value | undefined) => Value | undefined;
     }
 }
 
@@ -743,7 +743,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_style_define<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config: Config): HTMLStyleElement;
+    function $mol_style_define<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config: Config): HTMLStyleElement | null;
 }
 
 declare namespace $ {
@@ -767,7 +767,7 @@ declare namespace $.$$ {
     class $mol_scroll extends $.$mol_scroll {
         scroll_top(next?: number): number;
         scroll_left(next?: number): number;
-        _event_scroll_timer(next?: $mol_after_frame | null): $mol_after_frame;
+        _event_scroll_timer(next?: $mol_after_frame | null): $mol_after_frame | null | undefined;
         event_scroll(next?: Event): void;
     }
 }
@@ -1237,11 +1237,11 @@ declare namespace $.$$ {
             row: string[];
         }): number;
         row_ids(): readonly string[][];
-        row_expanded(row_id: string[], next?: boolean): boolean;
+        row_expanded(row_id: string[], next?: boolean): boolean | null;
         row_expanded_default(row_id: string[]): boolean;
         cell_expanded(id: {
             row: string[];
-        }, next?: boolean): boolean;
+        }, next?: boolean): boolean | null;
     }
 }
 
@@ -1264,7 +1264,7 @@ declare namespace $ {
         static dict_cut(except: string[]): {
             [key: string]: string;
         };
-        static value(key: string, next?: string | null): string;
+        static value(key: string, next?: string | null): string | null;
         static link(next: {
             [key: string]: string;
         }): string;
@@ -1273,7 +1273,7 @@ declare namespace $ {
         }): string;
         static encode(str: string): string;
         constructor(prefix?: string);
-        value(key: string, next?: string): string;
+        value(key: string, next?: string): string | null;
         sub(postfix: string): $mol_state_arg;
         link(next: {
             [key: string]: string;
@@ -1293,11 +1293,11 @@ declare var $node: any;
 
 declare namespace $ {
     type $mol_charset_encoding = 'utf8' | 'ibm866' | 'iso-8859-2' | 'iso-8859-3' | 'iso-8859-4' | 'iso-8859-5' | 'iso-8859-6' | 'iso-8859-7' | 'iso-8859-8' | 'iso-8859-8i' | 'iso-8859-10' | 'iso-8859-13' | 'iso-8859-14' | 'iso-8859-15' | 'iso-8859-16' | 'koi8-r' | 'koi8-u' | 'koi8-r' | 'macintosh' | 'windows-874' | 'windows-1250' | 'windows-1251' | 'windows-1252' | 'windows-1253' | 'windows-1254' | 'windows-1255' | 'windows-1256' | 'windows-1257' | 'windows-1258' | 'x-mac-cyrillic' | 'gbk' | 'gb18030' | 'hz-gb-2312' | 'big5' | 'euc-jp' | 'iso-2022-jp' | 'shift-jis' | 'euc-kr' | 'iso-2022-kr';
-    function $mol_charset_decode(value: Uint8Array, code?: $mol_charset_encoding): any;
+    function $mol_charset_decode(value: Uint8Array, code?: $mol_charset_encoding): string;
 }
 
 declare namespace $ {
-    function $mol_charset_encode(value: string): any;
+    function $mol_charset_encode(value: string): Uint8Array;
 }
 
 declare namespace $ {
@@ -1309,8 +1309,8 @@ declare namespace $ {
         readonly native: Response;
         constructor(native: Response);
         headers(): Headers;
-        mime(): string;
-        stream(): ReadableStream<Uint8Array>;
+        mime(): string | null;
+        stream(): ReadableStream<Uint8Array> | null;
         text(): string;
         json(): any;
         buffer(): ArrayBuffer;
@@ -1319,9 +1319,9 @@ declare namespace $ {
         html(): Document;
     }
     class $mol_fetch extends $mol_object2 {
-        static request: (input: RequestInfo, init?: RequestInit) => Response;
+        static request: (input: RequestInfo, init?: RequestInit | undefined) => Response;
         static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
-        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array>;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array> | null;
         static text(input: RequestInfo, init?: RequestInit): string;
         static json(input: RequestInfo, init?: RequestInit): any;
         static buffer(input: RequestInfo, init?: RequestInit): void;
@@ -1359,7 +1359,7 @@ declare namespace $ {
         name(): string;
         ext(): string;
         abstract buffer(next?: Uint8Array, force?: $mol_mem_force): Uint8Array;
-        text(next?: string, force?: $mol_mem_force): any;
+        text(next?: string, force?: $mol_mem_force): string;
         fail(error: Error): void;
         buffer_cached(buffer: Uint8Array): void;
         text_cached(content: string): void;
@@ -1380,7 +1380,7 @@ declare namespace $ {
         watcher(): {
             destructor(): void;
         };
-        stat(next?: $mol_file_stat, force?: $mol_mem_force): $mol_file_stat;
+        stat(next?: $mol_file_stat, force?: $mol_mem_force): $mol_file_stat | undefined;
         resolve(path: string): $mol_file_web;
         ensure(next?: boolean): boolean;
         sub(): $mol_file[];
@@ -1835,7 +1835,7 @@ declare namespace $.$$ {
         style_bg(): string;
     }
     class $mol_attach_add extends $.$mol_attach_add {
-        file_new(next?: string, force?: $mol_mem_force_fail): string;
+        file_new(next?: string, force?: $mol_mem_force_fail): string | undefined;
         event_capture(next: Event): void;
         event_picked(next: Event): void;
     }
@@ -2021,7 +2021,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_bench extends $.$mol_bench {
-        col_sort(next?: string): string;
+        col_sort(next?: string): string | null;
         row_ids(): string[][];
         result_value(id: {
             row: string[];
@@ -2792,13 +2792,13 @@ declare namespace $.$$ {
         view_box(): string;
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         scale_default(): readonly [number, number];
-        scale(next?: readonly [number, number], force?: $mol_mem_force): readonly [number, number];
+        scale(next?: readonly [number, number], force?: $mol_mem_force): any;
         scale_x(next?: number): number;
         scale_y(next?: number): number;
         shift_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         shift_default(): readonly [number, number];
         graph_touched: boolean;
-        shift(next?: readonly [number, number], force?: $mol_mem_force): readonly [number, number];
+        shift(next?: readonly [number, number], force?: $mol_mem_force): any;
         reset(event?: Event): void;
         graphs_positioned(): readonly $.$mol_plot_graph[];
         viewport(): $mol_vector_2d<$mol_vector_range<number>>;
@@ -3170,7 +3170,7 @@ declare namespace $.$$ {
             value: $mol_vector_2d<number>;
             scaled: $mol_vector_2d<number>;
             index: number;
-        };
+        } | null;
         curve(): string;
         title_x(): string;
         title_x_pos_x(): string;
@@ -3516,7 +3516,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_nav extends $.$mol_nav {
-        event_key(event?: KeyboardEvent): void;
+        event_key(event?: KeyboardEvent): any;
         event_up(event?: KeyboardEvent): void;
         event_down(event?: KeyboardEvent): void;
         event_left(event: KeyboardEvent): void;
@@ -3688,8 +3688,8 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_date extends $.$mol_date {
-        value(val?: string): string;
-        value_moment(val?: $mol_time_moment): $mol_time_moment;
+        value(val?: string): string | null | undefined;
+        value_moment(val?: $mol_time_moment): $mol_time_moment | null;
         showed(next?: boolean): boolean;
         day_selected(day: string): boolean;
         day_click(day: string): void;
@@ -3745,7 +3745,7 @@ declare namespace $.$$ {
         keys(): string[];
         items(): $mol_check[];
         option_title(key: string): string;
-        option_checked(key: string, next?: boolean): boolean;
+        option_checked(key: string, next?: boolean): boolean | undefined;
     }
 }
 
@@ -3976,10 +3976,10 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_form_demo_bids extends $.$mol_form_demo_bids {
         name_first(next?: string): string;
-        name_first_bid(): string;
+        name_first_bid(): string | undefined;
         name_nick(next?: string): string;
         name_second(next?: string): string;
-        name_second_bid(): string;
+        name_second_bid(): string | undefined;
         sex(next?: string): string;
         sex_bid(): string;
         submit(next?: Event): void;
@@ -4040,7 +4040,7 @@ declare namespace $ {
         filter<Context>(check: (val: Item, index: number, list: Item[]) => boolean, context?: Context): Item[];
         forEach<Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => void, context?: Context): void;
         map<Item_out, Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => Item_out, context?: Context): Item_out[];
-        reduce<Result>(merge: (result: Result, val: Item, index: number, list: Item[]) => Result, result?: Result): Result;
+        reduce<Result>(merge: (result: Result, val: Item, index: number, list: Item[]) => Result, result?: Result): Result | undefined;
         slice(from?: number, to?: number): Item[];
         some<Context>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
         every<Context = null>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
@@ -5091,7 +5091,7 @@ declare namespace $ {
         static voices(): SpeechSynthesisVoice[];
         static say(text: string): null;
         static speaking(next?: boolean): boolean;
-        static hearer(): any;
+        static hearer(): SpeechRecognition;
         static hearing(next?: boolean): boolean;
         static event_result(event?: Event & {
             results: Array<{
@@ -5099,13 +5099,13 @@ declare namespace $ {
             }[] & {
                 isFinal: boolean;
             }>;
-        }): Event & {
+        }): (Event & {
             results: ({
                 transcript: string;
             }[] & {
                 isFinal: boolean;
             })[];
-        };
+        }) | null;
         static recognitions(): ({
             transcript: string;
         }[] & {
@@ -5387,20 +5387,20 @@ declare namespace $.$$ {
         title(): string;
         title_arg(): {};
         value(next?: $mol_tree): $mol_tree;
-        type(next?: string): "object" | "string" | "null" | "number" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list";
+        type(next?: string): "object" | "string" | "null" | "number" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list" | undefined;
         expanded(next?: boolean): boolean;
-        class(next?: string): string;
-        bind(next?: string): string;
-        value_bool(next?: string): string;
-        value_number(next?: string): string;
+        class(next?: string): any;
+        bind(next?: string): any;
+        value_bool(next?: string): any;
+        value_number(next?: string): any;
         value_string(next?: string): string;
         pairs(): ($mol_bar | $mol_app_studio_field)[];
         overs(): ($mol_select | $mol_app_studio_field)[];
         hint(): any;
         tools(): $mol_select[];
         content(): ($mol_list | $mol_switch | $mol_number | $mol_textarea | $mol_app_studio_field)[];
-        item_value(index: number, next?: string): string;
-        item_class(index: number, next?: string): string;
+        item_value(index: number, next?: string): string | undefined;
+        item_class(index: number, next?: string): string | undefined;
         list_rows(): ($mol_select | $mol_app_studio_field)[];
         prop_path(path: $mol_tree_path): $mol_tree_path;
         add_item(type?: string): string;
@@ -5505,13 +5505,13 @@ declare namespace $.$$ {
         fields(): $mol_app_studio_field[];
         prop_overs(path: $mol_tree_path): string[];
         prop_path(path: $mol_tree_path): $mol_tree_path;
-        prop_title(path: $mol_tree_path): string | number;
+        prop_title(path: $mol_tree_path): string | number | null;
         prop_arg(path: $mol_tree_path): {
             path: string;
         };
         prop(path: $mol_tree_path, next?: $mol_tree): $mol_tree;
         prop_self(path: $mol_tree_path): $mol_tree;
-        prop_type(path: $mol_tree_path): "object" | "string" | "null" | "number" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list";
+        prop_type(path: $mol_tree_path): "object" | "string" | "null" | "number" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list" | null;
         prop_key(path: $mol_tree_path, next?: string): string;
         prop_next(path: $mol_tree_path, next?: string): string;
         prop_default(path: $mol_tree_path, next?: $mol_tree): $mol_tree;

@@ -79,17 +79,17 @@ declare namespace $ {
     function $mol_dev_format_auto(obj: any): any;
     function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
     function $mol_dev_format_span(style: object, ...content: any[]): any[];
-    let $mol_dev_format_div: any;
-    let $mol_dev_format_ol: any;
-    let $mol_dev_format_li: any;
-    let $mol_dev_format_table: any;
-    let $mol_dev_format_tr: any;
-    let $mol_dev_format_td: any;
-    let $mol_dev_format_accent: any;
-    let $mol_dev_format_strong: any;
-    let $mol_dev_format_string: any;
-    let $mol_dev_format_shade: any;
-    let $mol_dev_format_indent: any;
+    let $mol_dev_format_div: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_ol: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_li: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_table: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_tr: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_td: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_accent: (...args: any[]) => any[];
+    let $mol_dev_format_strong: (...args: any[]) => any[];
+    let $mol_dev_format_string: (...args: any[]) => any[];
+    let $mol_dev_format_shade: (...args: any[]) => any[];
+    let $mol_dev_format_indent: (...args: any[]) => any[];
 }
 
 declare namespace $ {
@@ -105,7 +105,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_log_context(next?: () => void): () => void;
+    function $mol_log_context(next?: (() => void) | null): (() => void) | null;
 }
 
 declare namespace $ {
@@ -113,7 +113,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    var $mol_log_filter: (next?: string) => string;
+    var $mol_log_filter: (next?: string | null) => string | null;
 }
 
 declare namespace $ {
@@ -121,22 +121,22 @@ declare namespace $ {
         readonly host: any;
         readonly id: string;
         readonly args: any[];
-        static current: $mol_log2;
+        static current: $mol_log2 | null;
         static wrap<This extends {
             $: $mol_ambient_context;
-        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
         constructor(host: any, id: string, args: any[]);
         stream: $mol_log2_line[];
         flush(): void;
         info(...values: any[]): void;
         static info(...values: any[]): void;
-        static excludes: RegExp[];
+        static excludes: (RegExp | undefined)[] | null;
         static prefix: any[];
     }
     class $mol_log2_indent extends $mol_wrapper {
         static wrap<This extends {
             $: $mol_ambient_context;
-        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => any;
+        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
     }
     class $mol_log2_table extends $mol_log2 {
     }
@@ -209,18 +209,18 @@ declare namespace $ {
         static quant: number;
         static deadline: number;
         static liveline: number;
-        static current: $mol_fiber<any>;
-        static scheduled: $mol_after_tick;
+        static current: $mol_fiber<any> | null;
+        static scheduled: $mol_after_tick | null;
         static queue: (() => PromiseLike<any>)[];
         static tick(): Promise<void>;
         static schedule(): Promise<any>;
         value: Value;
-        error: Error | PromiseLike<Value>;
+        error: Error | PromiseLike<Value> | null;
         cursor: $mol_fiber_status;
-        masters: (number | $mol_fiber<any>)[];
+        masters: (number | $mol_fiber<any> | undefined)[];
         calculate: () => Value;
         schedule(): void;
-        wake(): Value;
+        wake(): Value | undefined;
         push(value: Value): Value;
         fail(error: Error | PromiseLike<Value>): Error | PromiseLike<Value>;
         wait(promise: PromiseLike<Value>): PromiseLike<Value>;
@@ -265,19 +265,19 @@ declare namespace $ {
 declare namespace $ {
     function $mol_atom2_value<Value>(task: () => Value): Value | undefined;
     class $mol_atom2<Value = any> extends $mol_fiber<Value> {
-        static get current(): $mol_atom2<any>;
+        static get current(): $mol_atom2<any> | null;
         static cached: boolean;
-        static reap_task: $mol_fiber<any>;
+        static reap_task: $mol_fiber<any> | null;
         static reap_queue: $mol_atom2<any>[];
         static reap(atom: $mol_atom2): void;
-        slaves: (number | $mol_fiber<any>)[];
+        slaves: (number | $mol_fiber<any> | undefined)[];
         rescue(master: $mol_atom2, cursor: number): void;
         get(): Value;
         pull(): void;
         _value: Value;
         get value(): Value;
         set value(next: Value);
-        _error: Error | PromiseLike<Value>;
+        _error: Error | PromiseLike<Value> | null;
         get error(): null | Error | PromiseLike<Value>;
         set error(next: null | Error | PromiseLike<Value>);
         put(next: Value): Value;
@@ -410,7 +410,7 @@ declare namespace $ {
 declare namespace $ {
     function $mol_dict_key(value: any): any;
     class $mol_dict<Key, Value> extends Map<Key, Value> {
-        get(key: Key): Value;
+        get(key: Key): Value | undefined;
         has(key: Key): boolean;
         set(key: Key, value: Value): this;
         delete(key: Key): boolean;
@@ -554,7 +554,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_style_attach(id: string, text: string): HTMLStyleElement;
+    function $mol_style_attach(id: string, text: string): HTMLStyleElement | null;
 }
 
 declare namespace $ {
@@ -597,8 +597,8 @@ declare namespace $ {
         maximal_width(): number;
         minimal_height(): number;
         static watchers: Set<$mol_view>;
-        view_rect(): ClientRect;
-        view_rect_cache(next?: ClientRect): ClientRect;
+        view_rect(): ClientRect | null;
+        view_rect_cache(next?: ClientRect | null): ClientRect | null;
         view_rect_watcher(): {
             destructor: () => boolean;
         };
@@ -903,13 +903,13 @@ declare namespace $.$$ {
         view_box(): string;
         scale_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         scale_default(): readonly [number, number];
-        scale(next?: readonly [number, number], force?: $mol_mem_force): readonly [number, number];
+        scale(next?: readonly [number, number], force?: $mol_mem_force): any;
         scale_x(next?: number): number;
         scale_y(next?: number): number;
         shift_limit(): $mol_vector_2d<$mol_vector_range<number>>;
         shift_default(): readonly [number, number];
         graph_touched: boolean;
-        shift(next?: readonly [number, number], force?: $mol_mem_force): readonly [number, number];
+        shift(next?: readonly [number, number], force?: $mol_mem_force): any;
         reset(event?: Event): void;
         graphs_positioned(): readonly $.$mol_plot_graph[];
         viewport(): $mol_vector_2d<$mol_vector_range<number>>;
