@@ -1,0 +1,10 @@
+$mol_view_tree_test_attributes_super $mol_view
+	attr *
+		^
+		a 0
+		b 2
+
+$mol_view_tree_test_attributes $mol_view_tree_test_attributes_super
+	attr *
+		^
+		a 1
