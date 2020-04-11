@@ -370,7 +370,7 @@ namespace $ {
 			
 				const res = $node.typescript.transpileModule( src.text() , { compilerOptions : this.tsOptions() } )
 				
-				if( res.diagnostics.length ) {
+				if( res.diagnostics?.length ) {
 					return $mol_fail( new Error( $node.typescript.formatDiagnostic( res.diagnostics[0] , {
 						getCurrentDirectory : ()=> this.root().path() ,
 						getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
@@ -378,7 +378,7 @@ namespace $ {
 					}) ) )
 				}
 
-				const map = JSON.parse( res.sourceMapText ) as $mol_sourcemap_raw
+				const map = JSON.parse( res.sourceMapText! ) as $mol_sourcemap_raw
 				map.file = src.relate()
 				map.sources = [ src.relate() ]
 				
@@ -852,7 +852,7 @@ namespace $ {
 			}
 			if( sources.length === 0 ) return []
 			
-			this.tsService({ path , exclude : exclude_ext , bundle }).recheck()
+			this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
 			
 			const errors = [] as Error[]
 
