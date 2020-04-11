@@ -1,10 +1,9 @@
 $mol_view_tree_test_attributes_super $mol_view
-	attr *
-		^
+	some *
 		a 0
 		b 2
 
 $mol_view_tree_test_attributes $mol_view_tree_test_attributes_super
-	attr *
+	some *
 		^
 		a 1
