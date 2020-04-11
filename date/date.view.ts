@@ -3,17 +3,16 @@ namespace $.$$ {
 
 		@ $mol_mem
 		value( val? : string ) {
-			if( val === '' ) val = null
 			
-			const moment1 = $mol_try( ()=> val && new $mol_time_moment( val.replace( /-$/ , '' ) ) )
-			if( moment1 instanceof Error ) return val
+			const moment1 = $mol_try( ()=> val && new $mol_time_moment( val.replace( /-$/ , '' ) ) ) || null
+			if( moment1 instanceof Error ) return val || ''
 
 			const moment2 = this.value_moment( moment1 )
-			return moment2 && moment2.toString( 'YYYY-MM-DD' )
+			return moment2 && moment2.toString( 'YYYY-MM-DD' ) || ''
 		}
 
 		@ $mol_mem
-		value_moment( val? : $mol_time_moment ) {
+		value_moment( val? : $mol_time_moment | null ) {
 			const stamp = this.value_number( val && val.valueOf() )
 			return isNaN( stamp ) ? null : new $mol_time_moment( stamp )
 		}

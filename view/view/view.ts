@@ -339,6 +339,6 @@ namespace $ {
 
 	}
 
-	export type $mol_view_all = $mol_type_pick< $mol_ambient_context , any , typeof $mol_view >
+	export type $mol_view_all = $mol_type_pick< $mol_ambient_context , typeof $mol_view >
 
 }

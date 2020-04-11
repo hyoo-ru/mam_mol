@@ -49,7 +49,7 @@ namespace $ {
 
 			this.parent().watcher()
 			
-			return stat
+			return stat!
 		}
 
 		resolve( path : string ) {
