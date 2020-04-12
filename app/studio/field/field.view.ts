@@ -45,7 +45,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		expanded( next = [ 'bool' , 'number' , 'string' , 'locale' ].indexOf( this.type() ?? '' ) >= 0 ) {
+		expanded( next = [ 'bool' , 'number' , 'string' , 'locale' ].indexOf( this.type() || '' ) >= 0 ) {
 			return next
 		}
 
