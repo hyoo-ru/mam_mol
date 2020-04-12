@@ -1,0 +1,4 @@
+$mol_frame $mol_view
+	dom_name \iframe
+	attr *
+		src <= uri \

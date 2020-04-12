@@ -118,7 +118,7 @@ namespace $.$$ {
 				span.type( token.name )
 				span.content(
 					token.name
-						? [].concat.apply( [] , token.chunks.map( ( text , index )=> this.text2spans( `${id}/${index}` , text ) ) )
+						? ([] as $mol_view[] ).concat.apply( [] , token.chunks.map( ( text , index )=> this.text2spans( `${id}/${index}` , text ) ) )
 						: [ token.found ]
 				)
 				return span

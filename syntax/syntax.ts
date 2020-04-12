@@ -28,7 +28,7 @@ namespace $ {
 				rules.push({
 					name : name ,
 					regExp : lexems[ name ] ,
-					size : RegExp( '^$|' + lexems[ name ].source ).exec( '' ).length - 1 , 
+					size : RegExp( '^$|' + lexems[ name ].source ).exec( '' )!.length - 1 , 
 				})
 			}
 			
@@ -51,14 +51,14 @@ namespace $ {
 			
 			const rules = this.rules()
 			const regExp = this.regExp()
-			const regExpSize = RegExp( '^$|' + regExp.source ).exec( '' ).length - 1
+			const regExpSize = RegExp( '^$|' + regExp.source ).exec( '' )!.length - 1
 			
 			let position = 0
 				
 			parsing : while( position < text.length ) {
 				
 				regExp.lastIndex = position
-				var found = regExp.exec( text )
+				var found = regExp.exec( text )!
 				
 				if( position === regExp.lastIndex ) throw new Error( 'Empty token' )
 				position = regExp.lastIndex
