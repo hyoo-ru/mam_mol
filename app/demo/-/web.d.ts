@@ -5262,6 +5262,66 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_view_tree_test_simple extends $mol_view {
+        some(): number;
+        bool(): boolean;
+        str(): string;
+        arr(): readonly any[];
+        arr_string(): readonly string[];
+    }
+}
+
+declare namespace $ {
+    class $mol_view_tree_test_binding_right extends $mol_view {
+        outer_width(v?: any): any;
+        Test(): $mol_view_tree_test_binding_right_test;
+    }
+}
+declare namespace $ {
+    class $mol_view_tree_test_binding_right_test extends $mol_view {
+        width(val?: any, force?: $mol_mem_force): any;
+    }
+}
+
+declare namespace $ {
+    class $mol_view_tree_test_binding extends $mol_view {
+        value(val?: any, force?: $mol_mem_force): any;
+        task_title_new(val?: any, force?: $mol_mem_force): any;
+        enabled(): boolean;
+        head_complete_enabled(): boolean;
+    }
+}
+
+declare namespace $ {
+    class $mol_view_tree_test_attributes_super extends $mol_view {
+        some(): {
+            a: number;
+            b: number;
+        };
+    }
+}
+declare namespace $ {
+    class $mol_view_tree_test_attributes extends $mol_view_tree_test_attributes_super {
+        some(): {
+            a: number;
+            b: number;
+        };
+    }
+}
+
+declare namespace $ {
+    class $mol_view_tree_test_attributes_subcomponent extends $mol_view {
+        Page(index: any): $mol_view_tree_test_attributes_subcomponent_page;
+        page(index: any): any;
+    }
+}
+declare namespace $ {
+    class $mol_view_tree_test_attributes_subcomponent_page extends $mol_view {
+        Sub(): any;
+    }
+}
+
+declare namespace $ {
     function $mol_view_tree_trim_remarks(def: $mol_tree): $mol_tree;
     function $mol_view_tree_classes(defs: $mol_tree): $mol_tree;
     function $mol_view_tree_class_name(val: $mol_tree): string;
