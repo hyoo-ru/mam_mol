@@ -4,20 +4,20 @@ namespace $ {
 
 	type Common = 'inherit' | 'initial' | 'unset'
 	
-	type Length = number | $mol_style_unit< $mol_style_unit_length > | $mol_style_func<'calc'>
+	type Length = 0 | $mol_style_unit< $mol_style_unit_length > | $mol_style_func<'calc'>
 
 	type Size =
-	| 'auto' | 'max-content' | 'min-content' | $mol_style_func<'fit-content'>
-	| 0 | Length | Common
+	| 'auto' | 'max-content' | 'min-content' | 'fit-content'
+	| Length | Common
 
-	type Directions =
-	| Size
-	| [ Size , Size ]
+	type Directions< Value > =
+	| Value
+	| [ Value , Value ]
 	| {
-		top? : Size ,
-		right? : Size ,
-		bottom? : Size ,
-		left? : Size ,
+		top? : Value ,
+		right? : Value ,
+		bottom? : Value ,
+		left? : Value ,
 	}
 
 	type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
@@ -47,10 +47,13 @@ namespace $ {
 		overflow? : Overflow | {
 
 			/** What shows when content overflows a block-level element's left and right edges. */
-			x? :  Overflow
+			x? :  Overflow | Common
 			
 			/** What shows when content overflows a block-level element's top and bottom edges. */
-			y? :  Overflow
+			y? :  Overflow | Common
+
+			/** A way to opt out of the browser's scroll anchoring behavior, which adjusts scroll position to minimize content shifts. */
+			anchor? : 'auto' | 'none' | Common
 			
 		}
 
@@ -71,10 +74,10 @@ namespace $ {
 		maxHeight? : Size
 
 		/** Margin area on all four sides of an element. */
-		margin? : Directions
+		margin? : Directions< Length | 'auto' >
 
 		/** Padding area on all four sides of an element. */
-		padding? : Directions
+		padding? : Directions< Length | 'auto' >
 
 		/** How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`. */
 		flex? :

@@ -12,6 +12,7 @@ namespace $.$$ {
 			if( !value ) return this.message_required()
 			if( value.indexOf( ' ' ) !== -1 ) return this.message_no_spaces()
 
+			return ''
 		}
 		
 		name_nick( next? : string ) {
@@ -30,6 +31,7 @@ namespace $.$$ {
 			if( value.indexOf( ' ' ) !== -1 ) return this.message_no_spaces()
 			if( value.length < 3 ) return this.message_need_more_letters().replace( '{count}' , '3' )
 
+			return ''
 		}
 
 		sex( next? : string ) {

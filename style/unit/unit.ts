@@ -6,8 +6,14 @@ namespace $ {
 	| 'cap' | 'ch' | 'em' | 'rem' | 'ex' | 'ic' | 'lh' | 'rlh'
 	| 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax'
 	
+	export type $mol_style_unit_angle = 'deg' | 'rad' | 'grad' | 'turn'
+	
+	export type $mol_style_unit_time = 's' | 'ms'
+
+	export type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time
+	
 	export class $mol_style_unit<
-		Literal extends $mol_style_unit_length
+		Literal extends $mol_style_unit_any
 	> extends $mol_decor< number > {
 
 		constructor(
@@ -43,6 +49,14 @@ namespace $ {
 		static vb( value : number ) { return new $mol_style_unit( value , 'vb' ) }
 		static vmin( value : number ) { return new $mol_style_unit( value , 'vmin' ) }
 		static vmax( value : number ) { return new $mol_style_unit( value , 'vmax' ) }
+		
+		static deg( value : number ) { return new $mol_style_unit( value , 'deg' ) }
+		static rad( value : number ) { return new $mol_style_unit( value , 'rad' ) }
+		static grad( value : number ) { return new $mol_style_unit( value , 'grad' ) }
+		static turn( value : number ) { return new $mol_style_unit( value , 'turn' ) }
+
+		static s( value : number ) { return new $mol_style_unit( value , 's' ) }
+		static ms( value : number ) { return new $mol_style_unit( value , 'ms' ) }
 	
 	}
 

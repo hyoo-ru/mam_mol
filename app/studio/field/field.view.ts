@@ -39,30 +39,30 @@ namespace $.$$ {
 				this.value( val )
 			}
 			const val = this.value()
-			if( !val || val.type === '-' ) return
+			if( !val || val.type === '-' ) return null
 			
 			return $mol_view_tree_value_type( this.value() )
 		}
 
 		@ $mol_mem
-		expanded( next = [ 'bool' , 'number' , 'string' , 'locale' ].indexOf( this.type() ) >= 0 ) {
+		expanded( next = [ 'bool' , 'number' , 'string' , 'locale' ].indexOf( this.type() ?? '' ) >= 0 ) {
 			return next
 		}
 
 		class( next? : string ) {
-			return this.value( next && new $mol_tree({ type : next }) ).type
+			return this.value( next && new $mol_tree({ type : next }) || undefined ).type
 		}
 
 		bind( next? : string ) {
-			return this.value( next && this.value().clone({ sub : [ new $mol_tree({ type : next , sub : [ new $mol_tree({ type : '-' }) ] }) ] }) ).sub[0].type
+			return this.value( next && this.value().clone({ sub : [ new $mol_tree({ type : next , sub : [ new $mol_tree({ type : '-' }) ] }) ] }) || undefined ).sub[0].type
 		}
 
 		value_bool( next? : string ) {
-			return this.value( next === undefined ? null : new $mol_tree({ type : String( next ) }) ).type
+			return this.value( next && new $mol_tree({ type : String( next ) }) || undefined ).type
 		}
 
 		value_number( next? : string ) {
-			return this.value( next === undefined ? null : new $mol_tree({ type : String( next ) }) ).type
+			return this.value( next && new $mol_tree({ type : String( next ) }) || undefined ).type
 		}
 
 		value_string( next? : string ) {
@@ -92,7 +92,7 @@ namespace $.$$ {
 				this.Type() ,
 				... ( type === 'get' ) ? [ this.Bind() ] : [] ,
 				... ( type === 'bind' ) ? [ this.Bind() ] : [] ,
-				... ( [ 'object' ].indexOf( type ) >= 0 ) ? [ this.Object() ] : [] ,
+				... ( [ 'object' ].indexOf( type ?? '' ) >= 0 ) ? [ this.Object() ] : [] ,
 			]
 		}
 
@@ -106,7 +106,7 @@ namespace $.$$ {
 				... ( type === 'list' ) ? [ this.List() ] : [] ,
 				... ( type === 'dict' ) ? [ this.Dict() ] : [] ,
 				... ( type === 'object' ) ? [ this.Overs() ] : [] ,
-				... ( [ 'get' , 'bind' ].indexOf( type ) >= 0 && this.bind() ) ? [ this.Prop([ this.Bind().value() , null ]) ] : [] ,
+				... ( [ 'get' , 'bind' ].indexOf( type ?? '' ) >= 0 && this.bind() ) ? [ this.Prop([ this.Bind().value() , null ]) ] : [] ,
 			]
 		}
 
@@ -129,7 +129,7 @@ namespace $.$$ {
 			return path
 		}
 
-		add_item( type? : string ) : string {
+		add_item( type? : string ) {
 			if( !type ) return null
 			
 			const items = this.value()

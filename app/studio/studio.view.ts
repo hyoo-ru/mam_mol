@@ -149,7 +149,7 @@ namespace $.$$ {
 
 		path( next? : $mol_tree_path ) : $mol_tree_path {
 			const str = $mol_state_arg.value( this.state_key( 'path' ) , next && next.join( ',' ) )
-			return ( str == null ) ? null : ( str ? str.split( ',' ) : [] )
+			return ( str == null ) ? [] : ( str ? str.split( ',' ) : [] )
 		}
 		
 		@ $mol_mem

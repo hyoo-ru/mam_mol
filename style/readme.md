@@ -10,7 +10,9 @@ $mol_page $mol_view
 
 ```typescript
 $mol_style_define( $mol_page , {
-	flexDirection: 'column',
+	flex: {
+		direction: 'column',
+	},
 } )
 ```
 
@@ -168,7 +170,9 @@ $mol_text $mol_view
 ```typescript
 $mol_style_define( $mol_text , {
 	'::first-child': {
-		fontWeight: 'bolder',
+		font: {
+			weight: 'bolder',
+		},
 	},
 } )
 ```
