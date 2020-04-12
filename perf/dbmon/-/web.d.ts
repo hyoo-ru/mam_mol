@@ -699,6 +699,7 @@ declare namespace $ {
             shrink?: number | Common;
             basis?: Size;
             direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+            wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common;
         };
     }
     export {};

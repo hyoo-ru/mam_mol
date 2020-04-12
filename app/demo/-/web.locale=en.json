@@ -150,5 +150,10 @@
 	"$mol_switch_demo_option_red": "Red",
 	"$mol_switch_demo_title": "Color switchers in various state",
 	"$mol_text_demo_title": "Markdow visualization example",
-	"$mol_textarea_demo_title": "Text input field in various states"
+	"$mol_textarea_demo_title": "Text input field in various states",
+	"$mol_toolbar_demo_approve_label": "Approve",
+	"$mol_toolbar_demo_decline_label": "Decline",
+	"$mol_toolbar_demo_replace_hint": "Replace...",
+	"$mol_toolbar_demo_search_hint": "Search...",
+	"$mol_toolbar_demo_title": "Foldable toolbar demo"
 }

@@ -698,6 +698,7 @@ declare namespace $ {
             shrink?: number | Common;
             basis?: Size;
             direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+            wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common;
         };
     }
     export {};
@@ -1036,21 +1037,6 @@ declare namespace $ {
         Path(): $mol_svg_path;
         path(): string;
     }
-}
-
-declare namespace $ {
-    class $mol_icon_tick extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_check_box extends $mol_check {
-        Icon(): $mol_icon_tick;
-    }
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {
@@ -1878,6 +1864,21 @@ declare namespace $.$$ {
         event_key_press(next?: KeyboardEvent): void;
         disabled(): boolean;
         autocomplete_native(): "on" | "off";
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_icon_tick extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_check_box extends $mol_check {
+        Icon(): $mol_icon_tick;
     }
 }
 
@@ -5175,6 +5176,79 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_toolbar extends $mol_view {
+        attr(): {
+            mol_toolbar_expanded: any;
+        };
+        sub(): readonly any[];
+        Bar(): $mol_view;
+        items(): readonly $mol_view[];
+        Expand(): $$.$mol_check_expand;
+        expanded(val?: any, force?: $mol_mem_force): any;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $.$$ {
+    class $mol_toolbar extends $.$mol_toolbar {
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_content_copy extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_content_cut extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_content_paste extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_delete extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_toolbar_demo extends $mol_demo_small {
+        title(): string;
+        sub(): readonly any[];
+        Toolbar(): $$.$mol_toolbar;
+        Approve(): $mol_button_major;
+        approve_label(): string;
+        Decline(): $mol_button_minor;
+        decline_label(): string;
+        Copy(): $mol_button_minor;
+        Copy_icon(): $mol_icon_content_copy;
+        Cut(): $mol_button_minor;
+        Cut_icon(): $mol_icon_content_cut;
+        Paste(): $mol_button_minor;
+        Paste_icon(): $mol_icon_content_paste;
+        Delete(): $mol_button_minor;
+        Delete_icon(): $mol_icon_delete;
+        Modify(): $mol_bar;
+        Search(): $$.$mol_string;
+        search_hint(): string;
+        Replace(): $$.$mol_string;
+        replace_hint(): string;
+    }
+}
+
+declare namespace $.$$ {
 }
 
 declare namespace $ {

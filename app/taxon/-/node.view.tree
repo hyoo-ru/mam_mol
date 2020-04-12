@@ -119,9 +119,6 @@ $mol_check_expand $mol_check
 	checked?val <=> expanded?val false
 	enabled <= expandable false
 
-$mol_check_box $mol_check
-	Icon $mol_icon_tick
-
 $mol_icon $mol_svg_root
 	view_box \0 0 24 24
 	minimal_width 16
@@ -150,8 +147,6 @@ $mol_svg_path $mol_svg
 		^
 		d <= geometry \
 
-
-$mol_icon_tick $mol_icon path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
 
 $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 
