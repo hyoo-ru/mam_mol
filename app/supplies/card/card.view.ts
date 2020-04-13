@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_app_supplies_card extends $.$mol_app_supplies_card {
 		
 		supply() {
-			return null as $mol_app_supplies_domain_supply
+			return null as unknown as $mol_app_supplies_domain_supply
 		}
 
 		code() {
