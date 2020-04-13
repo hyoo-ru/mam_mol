@@ -855,7 +855,7 @@ declare namespace $.$$ {
         cell_state(index: number): any;
     }
     class $mol_perf_uibench_table_cell extends $.$mol_perf_uibench_table_cell {
-        click(next?: Event): void;
+        click(next: Event): void;
     }
 }
 
@@ -987,8 +987,9 @@ declare namespace $.$$ {
     }
 }
 
+/// <reference types="node" />
 declare namespace $ {
-    function $mol_exec(dir: string, command: string, ...args: string[]): any;
+    function $mol_exec(dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
 }
 
 declare namespace $ {

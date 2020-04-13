@@ -14,17 +14,12 @@ namespace $ { export class $mol_page extends $mol_view {
 
 	/**
 	 *  ```
-	 *  Head $mol_view
-	 *  	attr * mol_theme \$mol_theme_base
-	 *  	sub <= head
+	 *  Head $mol_view sub <= head
 	 *  ```
 	 **/
 	@ $mol_mem
 	Head() {
 		return (( obj )=>{
-			obj.attr = () => ({
-			"mol_theme" :  "$mol_theme_base" ,
-		})
 			obj.sub = () => this.head()
 			return obj
 		})( new this.$.$mol_view(  ) )
@@ -126,17 +121,12 @@ namespace $ { export class $mol_page extends $mol_view {
 
 	/**
 	 *  ```
-	 *  Foot $mol_view
-	 *  	attr * mol_theme \$mol_theme_base
-	 *  	sub <= foot
+	 *  Foot $mol_view sub <= foot
 	 *  ```
 	 **/
 	@ $mol_mem
 	Foot() {
 		return (( obj )=>{
-			obj.attr = () => ({
-			"mol_theme" :  "$mol_theme_base" ,
-		})
 			obj.sub = () => this.foot()
 			return obj
 		})( new this.$.$mol_view(  ) )

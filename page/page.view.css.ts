@@ -33,6 +33,7 @@ namespace $.$$ {
 			margin: 0 ,
 			minHeight: calc(`1.5em + 2rem`) ,
 			padding: rem(.5) ,
+			background: $mol_theme.back ,
 		},
 
 		Title: {
@@ -45,6 +46,7 @@ namespace $.$$ {
 			padding: rem(.5),
 			wordBreak: 'normal',
 			cursor: 'default',
+			fontWeight: 'bolder',
 
 			':empty': {
 				display: 'none',
@@ -79,6 +81,7 @@ namespace $.$$ {
 			flex: 'none',
 			margin: 0,
 			overflow: 'hidden',
+			background: $mol_theme.back ,
 		},	
 
 	} )

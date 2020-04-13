@@ -14,8 +14,8 @@ declare namespace $ {
         static get make(): ((contexts: Object[]) => (code: string) => () => void) | ((...args: Object[]) => (code: string) => any);
         constructor(...contexts: Object[]);
         contexts: Object[];
-        _eval: (code: string) => () => void;
-        get eval(): any;
+        _eval: ((code: string) => () => void) | undefined;
+        get eval(): (code: string) => any;
     }
 }
 

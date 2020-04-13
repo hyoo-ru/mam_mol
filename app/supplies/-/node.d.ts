@@ -785,7 +785,7 @@ declare namespace $ {
         provider(): $mol_app_supplies_domain_provider;
         consumer(): $mol_app_supplies_domain_consumer;
         group(): $mol_app_supplies_domain_supply_group;
-        status(next?: $mol_app_supplies_domain_supply_status): $mol_app_supplies_domain_supply_status | undefined;
+        status(next?: $mol_app_supplies_domain_supply_status): $mol_app_supplies_domain_supply_status;
         ballance_unit(): $mol_app_supplies_domain_ballance_unit;
         manager(): $mol_app_supplies_domain_person;
         contract(): $mol_app_supplies_domain_contract;
@@ -1439,7 +1439,7 @@ declare namespace $ {
         buffer(next?: Uint8Array, force?: $mol_mem_force): Uint8Array;
         sub(): $mol_file[];
         resolve(path: string): $mol_file;
-        relate(base?: $mol_file): any;
+        relate(base?: $mol_file): string;
         append(next: Uint8Array | string): void;
     }
 }
@@ -2299,7 +2299,7 @@ declare namespace $.$$ {
         attachments(): $mol_attach_item[];
         attachment_thumb(index: number): string;
         attachment_load(index: number): string;
-        attach_new(next?: string): void;
+        attach_new(next: string): void;
         body_scroll_top(next?: number): number;
     }
 }
@@ -2536,7 +2536,7 @@ declare namespace $.$$ {
     class $mol_app_supplies extends $.$mol_app_supplies {
         entered(next?: boolean): boolean;
         pages(): $mol_view[] | $mol_app_supplies_enter[];
-        Placeholder(): $mol_book_placeholder | null;
+        Placeholder(): any;
         domain(): $mol_app_supplies_domain_mock;
         supplies(): $mol_app_supplies_domain_supply[];
         supply_id(next?: string): string;
@@ -2547,6 +2547,7 @@ declare namespace $.$$ {
 declare namespace $ {
 }
 
+/// <reference types="node" />
 declare namespace $ {
-    function $mol_exec(dir: string, command: string, ...args: string[]): any;
+    function $mol_exec(dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
 }

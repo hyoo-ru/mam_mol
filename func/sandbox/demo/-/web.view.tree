@@ -38,7 +38,6 @@ $mol_func_sandbox_demo_snippet $mol_link
 $mol_page $mol_view
 	sub /
 		<= Head $mol_view
-			attr * mol_theme \$mol_theme_base
 			sub <= head /
 				<= Title $mol_button
 					sub /
@@ -50,7 +49,6 @@ $mol_page $mol_view
 			scroll_top?val <=> body_scroll_top?val 0
 			sub <= body /$mol_view_content
 		<= Foot $mol_view
-			attr * mol_theme \$mol_theme_base
 			sub <= foot /$mol_view
 
 $mol_button $mol_view

@@ -1858,7 +1858,7 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_app_questions extends $.$mol_app_questions {
         pages(): $mol_page[];
-        Placeholder(): $mol_book_placeholder | null;
+        Placeholder(): any;
         menu_rows(): any;
         question_cur_id(): number;
         question_tags_by_index(index: number): $mol_view[];

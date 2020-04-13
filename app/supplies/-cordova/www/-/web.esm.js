@@ -3033,86 +3033,86 @@ var $;
 var $;
 (function ($) {
     class $mol_app_supplies_domain_provider extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
+        id() { return undefined; }
+        name() { return undefined; }
     }
     $.$mol_app_supplies_domain_provider = $mol_app_supplies_domain_provider;
     class $mol_app_supplies_domain_supply_group extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
-        manager() { return void 0; }
+        id() { return undefined; }
+        name() { return undefined; }
+        manager() { return undefined; }
     }
     $.$mol_app_supplies_domain_supply_group = $mol_app_supplies_domain_supply_group;
     class $mol_app_supplies_domain_supply_division extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
+        id() { return undefined; }
+        name() { return undefined; }
     }
     $.$mol_app_supplies_domain_supply_division = $mol_app_supplies_domain_supply_division;
     class $mol_app_supplies_domain_pay_method extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
+        id() { return undefined; }
+        name() { return undefined; }
     }
     $.$mol_app_supplies_domain_pay_method = $mol_app_supplies_domain_pay_method;
     class $mol_app_supplies_domain_debitor extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
+        id() { return undefined; }
+        name() { return undefined; }
     }
     $.$mol_app_supplies_domain_debitor = $mol_app_supplies_domain_debitor;
     class $mol_app_supplies_domain_supply_position extends $.$mol_object {
-        name() { return void 0; }
-        supply_moment() { return void 0; }
-        division() { return void 0; }
-        store() { return void 0; }
-        price() { return void 0; }
-        quantity() { return void 0; }
+        name() { return undefined; }
+        supply_moment() { return undefined; }
+        division() { return undefined; }
+        store() { return undefined; }
+        price() { return undefined; }
+        quantity() { return undefined; }
         cost() {
             return this.price().mult(this.quantity());
         }
     }
     $.$mol_app_supplies_domain_supply_position = $mol_app_supplies_domain_supply_position;
     class $mol_app_supplies_domain_attachment extends $.$mol_object {
-        url_thumb() { return void 0; }
-        url_load() { return void 0; }
+        url_thumb() { return undefined; }
+        url_load() { return undefined; }
     }
     $.$mol_app_supplies_domain_attachment = $mol_app_supplies_domain_attachment;
     class $mol_app_supplies_domain_person extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
+        id() { return undefined; }
+        name() { return undefined; }
     }
     $.$mol_app_supplies_domain_person = $mol_app_supplies_domain_person;
     class $mol_app_supplies_domain_contract extends $.$mol_object {
-        id() { return void 0; }
+        id() { return undefined; }
     }
     $.$mol_app_supplies_domain_contract = $mol_app_supplies_domain_contract;
     class $mol_app_supplies_domain_ballance_unit extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
+        id() { return undefined; }
+        name() { return undefined; }
     }
     $.$mol_app_supplies_domain_ballance_unit = $mol_app_supplies_domain_ballance_unit;
     class $mol_app_supplies_domain_consumer extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
+        id() { return undefined; }
+        name() { return undefined; }
     }
     $.$mol_app_supplies_domain_consumer = $mol_app_supplies_domain_consumer;
     class $mol_app_supplies_domain_store extends $.$mol_object {
-        id() { return void 0; }
-        name() { return void 0; }
+        id() { return undefined; }
+        name() { return undefined; }
     }
     $.$mol_app_supplies_domain_store = $mol_app_supplies_domain_store;
     class $mol_app_supplies_domain_supply extends $.$mol_object {
-        id() { return void 0; }
-        provider() { return void 0; }
-        consumer() { return void 0; }
-        group() { return void 0; }
+        id() { return undefined; }
+        provider() { return undefined; }
+        consumer() { return undefined; }
+        group() { return undefined; }
         status(next) { return next; }
-        ballance_unit() { return void 0; }
-        manager() { return void 0; }
-        contract() { return void 0; }
-        pay_method() { return void 0; }
-        debitor() { return void 0; }
-        positions() { return void 0; }
+        ballance_unit() { return undefined; }
+        manager() { return undefined; }
+        contract() { return undefined; }
+        pay_method() { return undefined; }
+        debitor() { return undefined; }
+        positions() { return undefined; }
         attachments(next) { return next || []; }
-        cost() { return void 0; }
+        cost() { return undefined; }
     }
     __decorate([
         $.$mol_mem
@@ -3867,9 +3867,6 @@ var $;
         }
         Head() {
             return ((obj) => {
-                obj.attr = () => ({
-                    "mol_theme": "$mol_theme_base",
-                });
                 obj.sub = () => this.head();
                 return obj;
             })(new this.$.$mol_view());
@@ -3911,9 +3908,6 @@ var $;
         }
         Foot() {
             return ((obj) => {
-                obj.attr = () => ({
-                    "mol_theme": "$mol_theme_base",
-                });
                 obj.sub = () => this.foot();
                 return obj;
             })(new this.$.$mol_view());
@@ -3999,6 +3993,7 @@ var $;
                 margin: 0,
                 minHeight: calc(`1.5em + 2rem`),
                 padding: rem(.5),
+                background: "var(--mol_theme_back)",
             },
             Title: {
                 flex: {
@@ -4009,6 +4004,7 @@ var $;
                 padding: rem(.5),
                 wordBreak: 'normal',
                 cursor: 'default',
+                fontWeight: 'bolder',
                 ':empty': {
                     display: 'none',
                 },
@@ -4035,6 +4031,7 @@ var $;
                 flex: 'none',
                 margin: 0,
                 overflow: 'hidden',
+                background: "var(--mol_theme_back)",
             },
         });
     })($$ = $.$$ || ($.$$ = {}));

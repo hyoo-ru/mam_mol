@@ -19,8 +19,8 @@ declare namespace $ {
         static get make(): ((contexts: Object[]) => (code: string) => () => void) | ((...args: Object[]) => (code: string) => any);
         constructor(...contexts: Object[]);
         contexts: Object[];
-        _eval: (code: string) => () => void;
-        get eval(): any;
+        _eval: ((code: string) => () => void) | undefined;
+        get eval(): (code: string) => any;
     }
 }
 
@@ -1663,8 +1663,9 @@ declare namespace $.$$ {
 declare namespace $ {
 }
 
+/// <reference types="node" />
 declare namespace $ {
-    function $mol_exec(dir: string, command: string, ...args: string[]): any;
+    function $mol_exec(dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
 }
 
 declare namespace $ {

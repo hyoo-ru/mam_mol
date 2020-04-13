@@ -1,9 +1,9 @@
 {
-  "name": "mol_build",
-  "version": "0.0.1",
+  "name": "mam",
+  "version": "1.11.19",
   "main": "node.js",
   "module": "node.esm.js",
-  "browser": "web.esm.js",
+  "browser": "web.js",
   "types": "web.d.ts",
   "dependencies": {
     "jsdom": "*",
@@ -17,5 +17,8 @@
     "compression": "*",
     "body-parser": "*",
     "serve-index": "*"
+  },
+  "bin": {
+    "mam": "./bin/mam"
   }
 }

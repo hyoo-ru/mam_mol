@@ -864,7 +864,7 @@ declare namespace $.$$ {
         cell_state(index: number): any;
     }
     class $mol_perf_uibench_table_cell extends $.$mol_perf_uibench_table_cell {
-        click(next?: Event): void;
+        click(next: Event): void;
     }
 }
 
