@@ -45,6 +45,7 @@ namespace $.$$ {
 			padding: rem(.5),
 			wordBreak: 'normal',
 			cursor: 'default',
+			fontWeight: 'bolder',
 
 			':empty': {
 				display: 'none',
