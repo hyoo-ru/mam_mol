@@ -11,7 +11,7 @@ namespace $.$$ {
 		}
 		
 		Placeholder() {
-			return this.question_cur_id() ? null : super.Placeholder()
+			return this.question_cur_id() ? null as any : super.Placeholder()
 		}
 		
 		menu_rows() {

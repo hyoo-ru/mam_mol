@@ -68,10 +68,10 @@ namespace $ {
 
 		contexts : Object[]
 		
-		_eval : ( code : string )=> ()=> void
+		_eval : ( ( code : string )=> ()=> void ) | undefined
 		get eval() {
 			if( this._eval ) return this._eval
-			return this._eval = $mol_func_sandbox.make( ... this.contexts )
+			return this._eval = $mol_func_sandbox.make( ... this.contexts as [Object[]] )
 		}
 
 	}
