@@ -3965,6 +3965,8 @@ var $;
                 minHeight: calc(`1.5em + 2rem`),
                 padding: rem(.5),
                 background: "var(--mol_theme_back)",
+                boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
+                zIndex: '0',
             },
             Title: {
                 flex: {
@@ -4003,6 +4005,8 @@ var $;
                 margin: 0,
                 overflow: 'hidden',
                 background: "var(--mol_theme_back)",
+                boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
+                zIndex: '0',
             },
         });
     })($$ = $.$$ || ($.$$ = {}));

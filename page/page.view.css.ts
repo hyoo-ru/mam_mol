@@ -34,6 +34,8 @@ namespace $.$$ {
 			minHeight: calc(`1.5em + 2rem`) ,
 			padding: rem(.5) ,
 			background: $mol_theme.back ,
+			boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)` ,
+			zIndex: '0',
 		},
 
 		Title: {
@@ -82,6 +84,8 @@ namespace $.$$ {
 			margin: 0,
 			overflow: 'hidden',
 			background: $mol_theme.back ,
+			boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)` ,
+			zIndex: '0',
 		},	
 
 	} )
