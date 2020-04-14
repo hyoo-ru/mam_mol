@@ -2,9 +2,10 @@ name: Deploy
 
 on:
   push:
+  pull_request:
   schedule:
   - cron: "0 7 * * *"
- 
+
 jobs:
   build:
 
@@ -16,7 +17,7 @@ jobs:
       uses: hyoo-ru/mam_build@master2
       with:
         package: mol
-        modules: app/demo app/hello app/supplies perf/sierp perf/uibench perf/dbmon app/taxon app/taxon/demo mem app/quine app/questions time/all plot/all fiber/demo app/report syntax2 func/sandbox/demo
+        modules: app/demo app/hello app/supplies perf/sierp perf/uibench perf/dbmon app/quine app/questions time/all plot/all fiber/demo app/report syntax2 func/sandbox/demo
         
     - name: Consolidate apps
       run: |

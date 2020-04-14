@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_cost extends $.$mol_cost {
 		
 		value() {
-			return null as $mol_unit_money
+			return null as unknown as $mol_unit_money
 		}
 		
 		prefix() {

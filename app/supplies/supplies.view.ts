@@ -17,7 +17,7 @@ namespace $.$$ {
 		}
 
 		Placeholder() {
-			if( !this.entered() ) return null
+			if( !this.entered() ) return null as any
 			return super.Placeholder()
 		}
 		

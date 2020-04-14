@@ -1,17 +1,22 @@
 namespace $ {
 
-	export class $mol_model< Raw > extends $mol_object {
+	export class $mol_model< Raw extends Object > extends $mol_object {
 
 		@ $mol_mem_key
-		static item< Raw , Instance extends $mol_model<Raw> >( this : { new() : Instance } , uri : string ) : Instance {
+		static item<
+			Instance extends $mol_model<{}>,
+		>(
+			this : { new() : Instance },
+			uri : string,
+		) : Instance {
 			const instance = new this
 			instance.uri = ()=> uri
 			return instance
 		}
 
 		@ $mol_mem
-		static cache< Raw >() {
-			return {} as { [ key : string ] : Raw }
+		static cache< Raw extends Object >() {
+			return {}
 		}
 
 		uri() {
@@ -23,12 +28,13 @@ namespace $ {
 		}
 
 		method_put() {
-			return 'Put'
+			return 'PUT'
 		}
 
 		@ $mol_mem
-		json( next? : Raw , force? : $mol_mem_force ) {
-			let json : Raw
+		json( next? : Partial< Raw > , force? : $mol_mem_force ) {
+			
+			let json : Raw | undefined
 			let uri = this.uri()			
 			const cache = $mol_model.cache< Raw >()
 
@@ -39,13 +45,19 @@ namespace $ {
 
 			cache[ uri ] = undefined
 
-			const resource = $mol_http.resource( this.resource_url() )
-			resource.method_put = $mol_const( this.method_put() )
+			json = $mol_fetch.json( this.resource_url() , {
+				method : next ? this.method_put() : 'GET' ,
+				body : next && JSON.stringify( next ) ,
+				headers : {
+					'content-type' : 'application/json',
+				},
+			} ) as Raw
 
-			return this.json_update( resource.json( next , force ) )
+			return this.json_update( json )
+
 		}
 
-		json_update( patch : Partial< Raw > ) {
+		json_update( patch : Partial< Raw > ) : Raw {
 			const uri = this.uri()
 			const cache =  $mol_model.cache< Raw >()
 
@@ -58,18 +70,18 @@ namespace $ {
 		field : string ,
 		make : ( json : Json )=> Value ,
 	) {
-		return < Raw , Host extends $mol_model< Raw > >(
+		return < Raw extends Object , Host extends $mol_model< Raw > >(
 			host : Host ,
 			prop : string ,
 			descr : TypedPropertyDescriptor< ( next?: Value )=> Value >
 		)=> {
 			if( field ) field = prop
 
-			const value = descr.value
+			const value = descr.value!
 
-			descr.value = function( next? : Value ) {
+			descr.value = function( this : Host , next? : Value ) {
 				const val = this.json( next === undefined ? undefined : { ... this.json() , [ field ] : next } )[ field ]
-				if( val === undefined ) return value()
+				if( val === undefined ) return value.call( this )
 				if( make ) return make( val )
 				return val
 			}

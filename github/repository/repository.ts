@@ -73,21 +73,21 @@ namespace $ {
 		
 		json_update( patch : Partial< $mol_github_repository_json > ) {
 			
-			if( patch.owner ) $mol_github_user.item( patch.owner.url ).json_update( patch.owner )
+			if( patch.owner ) $mol_github_user.item( patch.owner.url! ).json_update( patch.owner )
 			
 			return super.json_update( patch )
 		}
 
 		owner() {
-			return $mol_github_user.item( this.json().owner.url )
+			return $mol_github_user.item( this.json().owner!.url! )
 		}
 
 		name() {
-			return this.uri().match(/[^\/]+$/)[0]
+			return this.uri().match(/[^\/]+$/)![0]
 		}
 
 		name_full() {
-			return this.uri().match(/[^\/]+\/[^\/]+$/)[0]
+			return this.uri().match(/[^\/]+\/[^\/]+$/)![0]
 		}
 
 		@ $mol_mem
@@ -103,7 +103,7 @@ namespace $ {
 			
 			if( patch ) {
 				for( let issue of patch ) {
-					$mol_github_issue.item( issue.url ).json_update( issue )
+					$mol_github_issue.item( issue.url! ).json_update( issue )
 				}
 			}
 
@@ -114,23 +114,25 @@ namespace $ {
 
 		@ $mol_mem
 		items( next? : $mol_github_issue[] , force? : $mol_mem_force ) {
-			return this.json( undefined , force ).map( json => $mol_github_issue.item( json.url ) )
+			return this.json( undefined , force ).map( json => $mol_github_issue.item( json.url! ) )
 		}
 
 		@ $mol_mem_key
 		add( config : { title : string , text? : string } , next? : $mol_github_issue , force? : $mol_mem_force ) {
 			if( !config ) return
-
-			const resource = $mol_http.resource( this.uri() + '?' )
-			resource.method_put = $mol_const( 'POST' )
-			resource.headers = $mol_const({
-				'Authorization' : `token ${ $mol_github_auth.token([ 'public_repo' ]) }`
-			})
-
+			
 			try {
 				
-				const json = resource.json( { title : config.title , body : config.text } , force ) as $mol_github_issue_json
-				const comment = $mol_github_issue.item( json.url )
+				const json = $mol_fetch.json( this.uri() + '?' , {
+					method: 'POST',
+					headers : {
+						'Authorization' : `token ${ $mol_github_auth.token([ 'public_repo' ]) }`,
+						'Content-Type' : 'application/json',
+					},
+					body: JSON.stringify({ title : config.title , body : config.text })
+				} ) as $mol_github_issue_json
+
+				const comment = $mol_github_issue.item( json.url! )
 				comment.json_update( json )
 
 				this.json( undefined , $mol_mem_force_cache )

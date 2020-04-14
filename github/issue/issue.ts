@@ -24,19 +24,19 @@ namespace $ {
 
 		json_update( patch : Partial< $mol_github_issue_json > ) {
 			
-			if( patch.user ) $mol_github_user.item( patch.user.url ).json_update( patch.user )
+			if( patch.user ) $mol_github_user.item( patch.user.url! ).json_update( patch.user )
 			
-			if( patch.closed_by ) $mol_github_user.item( patch.closed_by.url ).json_update( patch.closed_by )
+			if( patch.closed_by ) $mol_github_user.item( patch.closed_by.url! ).json_update( patch.closed_by )
 			
 			if( patch.assignees ) {
 				for( let assignee of patch.assignees ) {
-					$mol_github_user.item( assignee.url ).json_update( assignee )
+					$mol_github_user.item( assignee.url! ).json_update( assignee )
 				}
 			}
 			
 			if( patch.labels ) {
 				for( let label of patch.labels ) {
-					$mol_github_label.item( label.url ).json_update( label )
+					$mol_github_label.item( label.url! ).json_update( label )
 				}
 			}
 
@@ -48,7 +48,7 @@ namespace $ {
 		}
 
 		author() {
-			return $mol_github_user.item( this.json().user.url )
+			return $mol_github_user.item( this.json().user.url! )
 		}
 
 		title() {
@@ -60,17 +60,17 @@ namespace $ {
 		}
 
 		closer() {
-			return $mol_maybe( this.json().closed_by ).map( json => $mol_github_user.item( json.url ) )[0] || null
+			return $mol_maybe( this.json().closed_by ).map( json => $mol_github_user.item( json.url! ) )[0] || null
 		}
 
 		@ $mol_mem
 		assignees() {
-			return this.json().assignees.map( json => $mol_github_user.item( json.url ) )
+			return this.json().assignees.map( json => $mol_github_user.item( json.url! ) )
 		}
 
 		@ $mol_mem
 		labels() {
-			return this.json().labels.map( json => $mol_github_label.item( json.url ) )
+			return this.json().labels.map( json => $mol_github_label.item( json.url! ) )
 		}
 
 		@ $mol_mem
@@ -87,38 +87,40 @@ namespace $ {
 
 	export class $mol_github_issue_comments extends $mol_model< $mol_github_comment_json[] > {
 		
-		json_update( patch : $mol_github_repository_json[] ) {
+		json_update( patch : Partial<$mol_github_repository_json[]> ) {
 			
 			if( patch ) {
 				for( let comment of patch ) {
-					$mol_github_comment.item( comment.url ).json_update( comment )
+					$mol_github_comment.item( comment!.url! ).json_update( comment! )
 				}
 			}
 
 			const cache = $mol_model.cache< $mol_github_comment_json[] >()
 			
-			return cache[ this.uri() ] = patch
+			return cache[ this.uri() ] = patch as $mol_github_comment_json[]
 		}
 
 		@ $mol_mem
 		items( next? : $mol_github_comment[] , force? : $mol_mem_force ) {
-			return this.json( undefined , force ).map( json => $mol_github_comment.item( json.url ) )
+			return this.json( undefined , force ).map( json => $mol_github_comment.item( json.url! ) )
 		}
 
 		@ $mol_mem_key
 		add( config : { text : string } , next? : $mol_github_comment , force? : $mol_mem_force ) {
 			if( !config ) return
 
-			const resource = $mol_http.resource( this.uri() + '?' )
-			resource.method_put = $mol_const( 'POST' )
-			resource.headers = $mol_const({
-				'Authorization' : `token ${ $mol_github_auth.token([ 'public_repo' ]) }`
-			})
-
 			try {
 				
-				const json = resource.json( { body : config.text } , force ) as $mol_github_comment_json
-				const comment = $mol_github_comment.item( json.url )
+				const json = $mol_fetch.json( this.uri() + '?' , {
+					method: 'POST',
+					headers : {
+						'Authorization' : `token ${ $mol_github_auth.token([ 'public_repo' ]) }`,
+						'Content-Type' : 'application/json',
+					},
+					body: JSON.stringify({ body : config.text })
+				} ) as $mol_github_comment_json
+
+				const comment = $mol_github_comment.item( json.url! )
 				comment.json_update( json )
 
 				this.json( undefined , $mol_mem_force_cache )

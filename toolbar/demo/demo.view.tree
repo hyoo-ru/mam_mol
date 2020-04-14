@@ -1,0 +1,23 @@
+$mol_toolbar_demo $mol_demo_small
+	title @ \Foldable toolbar demo
+	sub /
+		<= Toolbar $mol_toolbar
+			items /
+				<= Approve $mol_button_major
+					title <= approve_label @ \Approve
+				<= Decline $mol_button_minor
+					title <= decline_label @ \Decline
+				<= Copy $mol_button_minor sub /
+					<= Copy_icon $mol_icon_content_copy
+				<= Cut $mol_button_minor sub /
+					<= Cut_icon $mol_icon_content_cut
+				<= Paste $mol_button_minor sub /
+					<= Paste_icon $mol_icon_content_paste
+				<= Delete $mol_button_minor sub /
+					<= Delete_icon $mol_icon_delete
+				<= Modify $mol_bar sub /
+					<= Search $mol_string
+						hint <= search_hint @ \Search...
+					<= Replace $mol_string
+						hint <= replace_hint @ \Replace...
+			

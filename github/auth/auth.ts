@@ -31,7 +31,7 @@ namespace $ {
 
 		@ $mol_mem
 		static code( next? : string , force? : $mol_mem_force ) : string {
-			const win = $mol_dom_context.open( `${ this.code_uri() }?client_id=${ this.id() }&scope=${ this.scopes() }` , '$mol_github' )
+			const win = $mol_dom_context.open( `${ this.code_uri() }?client_id=${ this.id() }&scope=${ this.scopes() }` , '$mol_github' )!
 
 			win.focus()
 			
@@ -66,11 +66,19 @@ namespace $ {
 			
 			const auth_uri = `${ this.token_uri() }?code=${ this.code( undefined , force ) }&client_id=${ this.id() }&client_secret=${ this.secret() }`
 			
-			const resource = $mol_http.resource( auth_uri )
-			resource.headers = ()=> ({ 'Accept' : 'application/json' })
+			const response = $mol_fetch.json( auth_uri , {
+				headers: {
+					'Accept': 'application/json',
+				},
+			} ) as {
+				access_token : string
+				error_description : string
+			}
 			
-			const response = resource.json() as { access_token : string , error_description : string }
-			if( response.error_description ) throw new Error( response.error_description )
+			if( response.error_description ) {
+				return $mol_fail( new Error( response.error_description ) )
+			}
+
 			const token = response.access_token
 
 			this.cache({ ... cache , token })

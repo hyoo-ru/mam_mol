@@ -71,7 +71,7 @@ namespace $.$$ {
 
 	export class $mol_perf_uibench_table_cell extends $.$mol_perf_uibench_table_cell {
 
-		click( next? : Event ) {
+		click( next : Event ) {
 			console.log( 'Click' , this.text() )
 			next.preventDefault()
 			next.stopPropagation()

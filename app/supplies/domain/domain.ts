@@ -2,54 +2,54 @@ namespace $ {
 
 	/// Поставщик
 	export class $mol_app_supplies_domain_provider extends $mol_object {
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 		
-		name() : string { return void 0 }
+		name() : string { return undefined as any }
 	}
 
 	/// Группа закупок
 	export class $mol_app_supplies_domain_supply_group extends $mol_object {
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 		
-		name() : string { return void 0 }
+		name() : string { return undefined as any }
 		
-		manager() : $mol_app_supplies_domain_person { return void 0 }
+		manager() : $mol_app_supplies_domain_person { return undefined as any }
 	}
 
 	/// Закупочный дивизион
 	export class $mol_app_supplies_domain_supply_division extends $mol_object {
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 		
-		name() : string { return void 0 }
+		name() : string { return undefined as any }
 	}
 
 	/// Способ оплаты
 	export class $mol_app_supplies_domain_pay_method extends $mol_object {
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 		
-		name() : string { return void 0 }
+		name() : string { return undefined as any }
 	}
 
 	/// Дебитор
 	export class $mol_app_supplies_domain_debitor extends $mol_object {
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 		
-		name() : string { return void 0 }
+		name() : string { return undefined as any }
 	}
 
 	/// Продукт
 	export class $mol_app_supplies_domain_supply_position extends $mol_object {
-		name() : string { return void 0 }
+		name() : string { return undefined as any }
 		
-		supply_moment() : $mol_time_moment { return void 0 }
+		supply_moment() : $mol_time_moment { return undefined as any }
 		
-		division() : $mol_app_supplies_domain_supply_division { return void 0 }
+		division() : $mol_app_supplies_domain_supply_division { return undefined as any }
 		
-		store() : $mol_app_supplies_domain_store { return void 0 }
+		store() : $mol_app_supplies_domain_store { return undefined as any }
 		
-		price() : $mol_unit_money { return void 0 }
+		price() : $mol_unit_money { return undefined as any }
 		
-		quantity() : number { return void 0 }
+		quantity() : number { return undefined as any }
 		
 		cost() {
 			return this.price().mult( this.quantity() )
@@ -58,74 +58,74 @@ namespace $ {
 
 	/// Вложение
 	export class $mol_app_supplies_domain_attachment extends $mol_object {
-		url_thumb() : string { return void 0 }
+		url_thumb() : string { return undefined as any }
 		
-		url_load() : string { return void 0 }
+		url_load() : string { return undefined as any }
 	}
 
 	/// Работник
 	export class $mol_app_supplies_domain_person extends $mol_object {
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 		
-		name() : string { return void 0 }
+		name() : string { return undefined as any }
 	}
 
 	/// Договор
 	export class $mol_app_supplies_domain_contract extends $mol_object {
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 	}
 
 	/// Балансовая единица
 	export class $mol_app_supplies_domain_ballance_unit extends $mol_object {
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 		
-		name() : string { return void 0 }
+		name() : string { return undefined as any }
 	}
 
 	/// Закупочная организация
 	export class $mol_app_supplies_domain_consumer extends $mol_object {
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 		
-		name() : string { return void 0 }
+		name() : string { return undefined as any }
 	}
 
 	/// Склад для доставки
 	export class $mol_app_supplies_domain_store extends $mol_object {
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 		
-		name() : string { return void 0 }
+		name() : string { return undefined as any }
 	}
 
 	/// Заявка на закупку
 	export class $mol_app_supplies_domain_supply extends $mol_object {
 		
-		id() : string { return void 0 }
+		id() : string { return undefined as any }
 		
-		provider() : $mol_app_supplies_domain_provider { return void 0 }
+		provider() : $mol_app_supplies_domain_provider { return undefined as any }
 		
-		consumer() : $mol_app_supplies_domain_consumer { return void 0 }
+		consumer() : $mol_app_supplies_domain_consumer { return undefined as any }
 		
-		group() : $mol_app_supplies_domain_supply_group { return void 0 }
+		group() : $mol_app_supplies_domain_supply_group { return undefined as any }
 		
 		@ $mol_mem
-		status( next? : $mol_app_supplies_domain_supply_status ) { return next }
+		status( next? : $mol_app_supplies_domain_supply_status ) { return next! }
 		
-		ballance_unit() : $mol_app_supplies_domain_ballance_unit { return void 0 }
+		ballance_unit() : $mol_app_supplies_domain_ballance_unit { return undefined as any }
 		
-		manager() : $mol_app_supplies_domain_person { return void 0 }
+		manager() : $mol_app_supplies_domain_person { return undefined as any }
 		
-		contract() : $mol_app_supplies_domain_contract { return void 0 }
+		contract() : $mol_app_supplies_domain_contract { return undefined as any }
 		
-		pay_method() : $mol_app_supplies_domain_pay_method { return void 0 }
+		pay_method() : $mol_app_supplies_domain_pay_method { return undefined as any }
 		
-		debitor() : $mol_app_supplies_domain_debitor { return void 0 }
+		debitor() : $mol_app_supplies_domain_debitor { return undefined as any }
 		
-		positions() : $mol_app_supplies_domain_supply_position[] { return void 0 }
+		positions() : $mol_app_supplies_domain_supply_position[] { return undefined as any }
 		
 		@ $mol_mem
 		attachments( next? : $mol_app_supplies_domain_attachment[] ) { return next || [] }
 		
-		cost() : $mol_unit_money { return void 0 }
+		cost() : $mol_unit_money { return undefined as any }
 		
 	}
 

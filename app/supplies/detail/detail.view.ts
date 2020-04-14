@@ -2,7 +2,7 @@ namespace $.$$ {
 	export class $mol_app_supplies_detail extends $.$mol_app_supplies_detail {
 		
 		supply() {
-			return null as $mol_app_supplies_domain_supply
+			return null as unknown as $mol_app_supplies_domain_supply
 		}
 		
 		title() {
@@ -82,7 +82,7 @@ namespace $.$$ {
 			return this.supply().attachments()[ index ].url_load()
 		}
 
-		attach_new( next? : string ) {
+		attach_new( next : string ) {
 			var supply = this.supply()
 			var list = supply.attachments()
 			var url = $mol_const( next )

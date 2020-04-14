@@ -96,6 +96,9 @@ namespace $ {
 			/** How flex items are placed in the flex container defining the main axis and the direction (normal or reversed). */
 			direction? : 'row' | 'row-reverse' | 'column' | 'column-reverse'
 
+			/** Whether flex items are forced onto one line or can wrap onto multiple lines. If wrapping is allowed, it sets the direction that lines are stacked. */
+			wrap? : 'wrap' | 'nowrap' | 'wrap-reverse' | Common
+
 		}
 		
 	}
