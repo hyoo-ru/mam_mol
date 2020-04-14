@@ -97,7 +97,7 @@ namespace $ {
 
 			const cache = $mol_model.cache< $mol_github_comment_json[] >()
 			
-			return cache[ this.uri() ] = patch
+			return cache[ this.uri() ] = patch as $mol_github_comment_json[]
 		}
 
 		@ $mol_mem

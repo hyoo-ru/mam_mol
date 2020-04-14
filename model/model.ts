@@ -45,7 +45,7 @@ namespace $ {
 
 			cache[ uri ] = undefined
 
-			return $mol_fetch.json( this.resource_url() , {
+			json = $mol_fetch.json( this.resource_url() , {
 				method : next ? this.method_put() : 'GET' ,
 				body : next && JSON.stringify( next ) ,
 				headers : {
@@ -53,9 +53,11 @@ namespace $ {
 				},
 			} ) as Raw
 
+			return this.json_update( json )
+
 		}
 
-		json_update( patch : Partial< Raw > ) {
+		json_update( patch : Partial< Raw > ) : Raw {
 			const uri = this.uri()
 			const cache =  $mol_model.cache< Raw >()
 
