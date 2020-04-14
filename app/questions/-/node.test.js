@@ -3943,7 +3943,7 @@ var $;
             boxSizing: 'border-box',
             background: "var(--mol_theme_back)",
             color: "var(--mol_theme_text)",
-            zIndex: '1',
+            zIndex: '0',
             overflow: 'hidden',
             boxShadow: `inset 0 0 0 .5px ${"var(--mol_theme_line)"}`,
             ':focus': {
@@ -3960,7 +3960,7 @@ var $;
                 padding: rem(.5),
                 background: "var(--mol_theme_back)",
                 boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
-                zIndex: '0',
+                zIndex: '1',
             },
             Title: {
                 flex: {
