@@ -1,4 +1,6 @@
 $mol_app_questions $mol_book
+	attr *
+		mol_theme \$mol_theme_auto
 	Placeholder $mol_book_placeholder
 		minimal_width 600
 		title <= placeholder \Stack Overflow

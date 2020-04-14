@@ -12,7 +12,7 @@ namespace $ {
 			
 			if( patch ) {
 				for( let issue of patch.items ) {
-					$mol_github_issue.item( issue.url ).json_update( issue )
+					$mol_github_issue.item( issue.url! ).json_update( issue )
 				}
 			}
 
@@ -21,7 +21,7 @@ namespace $ {
 
 		@ $mol_mem
 		items( next? : $mol_github_issue[] , force? : $mol_mem_force ) {
-			return this.json( undefined , force ).items.map( json => $mol_github_issue.item( json.url ) )
+			return this.json( undefined , force ).items.map( json => $mol_github_issue.item( json.url! ) )
 		}
 
 		resource_url() {

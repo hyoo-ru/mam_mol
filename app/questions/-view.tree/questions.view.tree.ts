@@ -2,6 +2,17 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 
 	/**
 	 *  ```
+	 *  attr * mol_theme \$mol_theme_auto
+	 *  ```
+	 **/
+	attr() {
+		return ({
+			"mol_theme" :  "$mol_theme_auto" ,
+		})
+	}
+
+	/**
+	 *  ```
 	 *  Placeholder $mol_book_placeholder
 	 *  	minimal_width 600
 	 *  	title <= placeholder

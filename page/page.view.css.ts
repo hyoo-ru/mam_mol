@@ -16,7 +16,7 @@ namespace $.$$ {
 		boxSizing: 'border-box' ,
 		background: $mol_theme.back ,
 		color: $mol_theme.text ,
-		zIndex: '0' ,
+		zIndex: '1' ,
 		overflow: 'hidden',
 		boxShadow: `inset 0 0 0 .5px ${ $mol_theme.line }` ,
 
@@ -85,7 +85,7 @@ namespace $.$$ {
 			overflow: 'hidden',
 			background: $mol_theme.back ,
 			boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)` ,
-			zIndex: '0',
+			zIndex: '1',
 		},	
 
 	} )

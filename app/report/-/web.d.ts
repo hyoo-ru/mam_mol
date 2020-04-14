@@ -994,7 +994,7 @@ declare namespace $ {
         mime(): string | null;
         stream(): ReadableStream<Uint8Array> | null;
         text(): string;
-        json(): any;
+        json(): unknown;
         buffer(): ArrayBuffer;
         xml(): Document;
         xhtml(): Document;
@@ -1005,7 +1005,7 @@ declare namespace $ {
         static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
         static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array> | null;
         static text(input: RequestInfo, init?: RequestInit): string;
-        static json(input: RequestInfo, init?: RequestInit): any;
+        static json(input: RequestInfo, init?: RequestInit): unknown;
         static buffer(input: RequestInfo, init?: RequestInit): void;
         static xml(input: RequestInfo, init?: RequestInit): Document;
         static xhtml(input: RequestInfo, init?: RequestInit): Document;
