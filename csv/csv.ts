@@ -2,7 +2,7 @@ namespace $ {
 	
 	export function $mol_csv_parse( text : string , delimiter = ';' ) {
 		var lines = text.split( /\r?\n/g )
-		var header = lines.shift().split( delimiter )
+		var header = lines.shift()!.split( delimiter )
 		
 		var res : { [ key : string ] : any }[] = []
 		

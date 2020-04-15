@@ -11,7 +11,7 @@ namespace $.$$ {
 		}
 		
 		Placeholder() {
-			return this.question_cur_id() ? null : super.Placeholder()
+			return this.question_cur_id() ? null as any : super.Placeholder()
 		}
 		
 		menu_rows() {
@@ -66,7 +66,7 @@ namespace $.$$ {
 		@ $mol_mem
 		questions_count() {
 			let uri = `https://api.stackexchange.com/2.2/questions?site=stackoverflow&filter=total`
-			return $mol_fetch.json( uri ).total as number
+			return ( $mol_fetch.json( uri ) as { total : number } ).total
 		}
 		
 		@ $mol_mem_key
@@ -92,21 +92,21 @@ namespace $.$$ {
 		@ $mol_mem_key
 		question_full( id : number ) {
 			const uri = `https://api.stackexchange.com/2.2/questions/${ id }?site=stackoverflow&filter=!9YdnSJ*_T`
-			return $mol_fetch.json( uri ).items[0] as {
+			return ( $mol_fetch.json( uri ) as { items : {
 				title : string
 				body_markdown : string
 				link : string
-			}
+			}[] } ).items[0]!
 		}
 		
 		@ $mol_mem_key
 		question_answers( id : number ) {
 			const uri = `https://api.stackexchange.com/2.2/questions/${ id }/answers?order=desc&sort=votes&site=stackoverflow&filter=!-*f(6sFKn6ub`
-			return $mol_fetch.json( uri ).items as Array<{
+			return ($mol_fetch.json( uri ) as { items : Array<{
 				score : number
 				body_markdown : string
 				share_link : string
-			}>
+			}> }).items
 		}
 		
 		answers( id : number ) {

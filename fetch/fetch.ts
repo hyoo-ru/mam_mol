@@ -37,7 +37,7 @@ namespace $ {
 		json() {
 			const response = this.native
 			const parse = $mol_fiber_sync( response.json )
-			return parse.call( response )
+			return parse.call( response ) as unknown
 		}	
 
 		@ $mol_fiber.method

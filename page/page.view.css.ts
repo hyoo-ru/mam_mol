@@ -33,6 +33,9 @@ namespace $.$$ {
 			margin: 0 ,
 			minHeight: calc(`1.5em + 2rem`) ,
 			padding: rem(.5) ,
+			background: $mol_theme.back ,
+			boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)` ,
+			zIndex: '1',
 		},
 
 		Title: {
@@ -45,6 +48,7 @@ namespace $.$$ {
 			padding: rem(.5),
 			wordBreak: 'normal',
 			cursor: 'default',
+			fontWeight: 'bolder',
 
 			':empty': {
 				display: 'none',
@@ -79,6 +83,9 @@ namespace $.$$ {
 			flex: 'none',
 			margin: 0,
 			overflow: 'hidden',
+			background: $mol_theme.back ,
+			boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)` ,
+			zIndex: '1',
 		},	
 
 	} )

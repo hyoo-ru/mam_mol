@@ -8,7 +8,7 @@ namespace $ {
 		color: $mol_theme.control,
 		stroke: 'currentColor',
 		cursor: 'pointer',
-		padding: rem(.5),
+		padding: [ rem(.5) , rem(1) ],
 		boxSizing: 'border-box',
 		position: 'relative',
 

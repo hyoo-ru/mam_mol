@@ -1,0 +1,9 @@
+$mol_toolbar $mol_view
+	attr *
+		^
+		mol_toolbar_expanded <= expanded
+	sub /
+		<= Bar $mol_view
+			sub <= items /$mol_view
+		<= Expand $mol_check_expand
+			checked?val <=> expanded?val false
