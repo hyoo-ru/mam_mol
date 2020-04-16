@@ -5,7 +5,7 @@ namespace $ {
 		constructor(
 			public _node : any ,
 			public _event : string ,
-			public _handler : ( event : Event )=> any ,
+			public _handler : ( event : any )=> any ,
 			public _config : boolean|{ passive : boolean } = { passive : true }
 		) {
 			super()
