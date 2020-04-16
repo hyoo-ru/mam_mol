@@ -168,7 +168,7 @@ namespace $ {
 									return
 								}
 								var val = getValue( item )
-								if( val ) items.push( ...val )
+								if( val ) items.push( val.join("") )
 							} )
 							return [`[`, items.join(' , '),  `]` , ( item_type ? ` as readonly ( ${ item_type } )[]` : ` as readonly any[]` )]
 						case( value.type[0] === '$' ) :
