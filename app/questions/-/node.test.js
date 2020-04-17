@@ -3378,7 +3378,7 @@ var $;
 (function ($) {
     function $mol_style_sheet(Component, config0) {
         let rules = [];
-        const block = $.$mol_dom_qname(Component.name);
+        const block = $.$mol_dom_qname($.$mol_func_name(Component));
         const make_class = (prefix, path, config) => {
             const props = [];
             const selector = (prefix, path) => {
