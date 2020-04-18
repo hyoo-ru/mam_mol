@@ -3880,7 +3880,6 @@ var $;
             boxSizing: 'border-box',
             willChange: 'scroll-position',
             transform: 'translateZ(0)',
-            boxShadow: `inset 0 0 0 .5px ${"var(--mol_theme_line)"}`,
             maxHeight: per(100),
             maxWidth: per(100),
             webkitOverflowScrolling: 'touch',
