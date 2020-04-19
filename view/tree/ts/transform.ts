@@ -14,7 +14,7 @@ namespace $ {
 	function class_hack( input : $mol_tree , tree_context : $mol_tree_context ): readonly $mol_tree[] {
 		if( !/^\$\w+$/.test( input.type ) ) throw input.error( 'Wrong component name' )
 
-		const collector = new property_collector()
+		const collector = new property_collector(tree_context)
 
 		input.hack({
 			'': collector.property_visitor
@@ -25,6 +25,8 @@ namespace $ {
 
 	class property_collector {
 		protected props = new Map<string, $mol_tree>()
+
+		constructor(protected parent_context: $mol_tree_context) {}
 
 		all() {
 			return Array.from(this.props.values())
@@ -49,10 +51,8 @@ namespace $ {
 		}
 
 		property_visitor = (input : $mol_tree , tree_context : $mol_tree_context ): readonly $mol_tree[] => {
-			if( input.sub.length === 0 ) return []
-	
 			input.hack({
-				'-': this.comment_visitor.bind(this),
+				'': this.skip_visitor.bind(this),
 				'<=': this.left_visitor.bind(this),
 				'<=>': this.both_visitor.bind(this),
 				'=>': this.right_visitor.bind(this)
@@ -61,21 +61,22 @@ namespace $ {
 			return []
 		}
 
-		comment_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
-			// this.add( input.clone({ type: '//' }) )
-	
+		skip_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
 			return [ ]
 		}
 
 		left_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
+			this.add(input)
 			return [ input.hack(context) ]
 		}
 
 		both_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
+			this.add(input)
 			return [ input.hack(context) ]
 		}
 
 		right_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
+			this.add(input)
 			return [ input.hack(context) ]
 		}
 
