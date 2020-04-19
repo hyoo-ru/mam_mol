@@ -6,26 +6,32 @@ namespace $ {
 		
 		textDecoration: 'none',
 		color: $mol_theme.control,
-		stroke: 'currentColor',
+		stroke: 'currentcolor',
 		cursor: 'pointer',
 		padding: [ rem(.5) , rem(1) ],
 		boxSizing: 'border-box',
 		position: 'relative',
 
 		':hover': {
-			backgroundColor: $mol_theme.hover,
+			background: {
+				color: $mol_theme.hover,
+			},
 		},
 
 		':focus': {
 			outline: 'none',
-			backgroundColor: $mol_theme.hover,
+			background: {
+				color: $mol_theme.hover,
+			}
 		},
 
 		'@': {
 			mol_link_current: {
 				'true': {
-					backgroundColor: $mol_theme.current,
-					color: $mol_theme.text,				
+					background: {
+						color: $mol_theme.current,
+					},
+					color: $mol_theme.text,
 				}
 			}
 		},

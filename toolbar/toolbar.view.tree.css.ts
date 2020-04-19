@@ -43,7 +43,9 @@ namespace $.$$ {
 				right: rem(2),
 			},
 			maxHeight: rem(2.5),
-			background: $mol_theme.back,
+			background: {
+				color: $mol_theme.back,
+			},
 			boxShadow: `0 0 0 1px ${ $mol_theme.back }`,
 		},
 

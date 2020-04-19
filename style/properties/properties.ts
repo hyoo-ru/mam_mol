@@ -3,6 +3,11 @@ namespace $ {
 	export type $mol_style_properties = Partial< $mol_type_override< CSSStyleDeclaration , Overrides > >
 
 	type Common = 'inherit' | 'initial' | 'unset'
+
+	type Color =
+	| keyof typeof $mol_colors
+	| 'transparent' | 'currentcolor'
+	| $mol_style_func< 'hsla' | 'rgba' | 'var' >
 	
 	type Length = 0 | $mol_style_unit< $mol_style_unit_length > | $mol_style_func<'calc'>
 
@@ -31,6 +36,20 @@ namespace $ {
 		| [ 'first' | 'last' , 'baseline' ]
 		| [ 'safe' | 'unsafe' , 'start' | 'end' | 'flex-start' | 'flex-end' ]
 		| Common
+
+		/** All background style properties. */
+		background?: {
+
+			/** Background color. */
+			color?: Color | Common
+			
+			/** Background images. */
+			image?: [ $mol_style_func<'url'> ][]
+
+		}
+
+		/** Foreground color value of text and text decorations, and sets the `currentcolor` value. */
+		color? : Color | Common
 
 		/** Whether an element is treated as a block or inline element and the layout used for its children, such as flow layout, grid or flex. */
 		display? :

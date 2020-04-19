@@ -21,15 +21,21 @@ namespace $.$$ {
 		},
 		
 		'::-webkit-scrollbar-corner': {
-			background: $mol_theme.line,
+			background: {
+				color: $mol_theme.line,
+			},
 		},
 
 		'::-webkit-scrollbar-track': {
-			background: $mol_theme.line,
+			background: {
+				color: $mol_theme.line,
+			},
 		},
 
 		'::-webkit-scrollbar-thumb': {
-			background: $mol_theme.control,
+			background: {
+				color: $mol_theme.control,
+			},
 		},
 
 		'@media' : {

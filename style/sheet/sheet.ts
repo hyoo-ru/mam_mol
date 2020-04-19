@@ -26,10 +26,15 @@ namespace $ {
 				if( /^[a-z]/.test(key) ) {
 
 					const name = key.replace( /[A-Z]/g , letter => '-' + letter.toLowerCase() )
-					const val = config[key]
+					let val = config[key]
 					
 					if( Array.isArray( val ) ) {
-						props.push(`\t${ name }: ${ val.join(' ') };\n`)
+						if( Array.isArray( val[0] ) ) {
+							val = val.map( v => v.join(' ') ).join( ',' )
+						} else {
+							val = val.join(' ')
+						}
+						props.push(`\t${ name }: ${ val };\n`)
 					} else if( val.constructor === Object ) {
 						for( let suffix in val ) {
 							props.push(`\t${ name }-${ suffix }: ${ val[ suffix ] };\n`)
