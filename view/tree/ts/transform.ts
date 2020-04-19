@@ -2,86 +2,64 @@ namespace $ {
 
 	export function $mol_view_tree_ts_transform(tree: $mol_tree) {
 		return tree.hack({
-			'-': comment_hack,
-			'': class_hack
+			'-': comment,
+			'': flatten
 		})!
 	}
 
-	function comment_hack( input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
+	function comment( input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
 		return [ input.clone({ type: '//' }) ]
 	}
 
-	function class_hack( input : $mol_tree , tree_context : $mol_tree_context ): readonly $mol_tree[] {
+	function flatten( input: $mol_tree, parent_context: $mol_tree_context ) {
 		if( !/^\$\w+$/.test( input.type ) ) throw input.error( 'Wrong component name' )
 
-		const collector = new property_collector(tree_context)
+		const roots = new Map<string, $mol_tree>()
 
-		input.hack({
-			'': collector.property_visitor
-		})
-
-		return collector.all()
-	}
-
-	class property_collector {
-		protected props = new Map<string, $mol_tree>()
-
-		constructor(protected parent_context: $mol_tree_context) {}
-
-		all() {
-			return Array.from(this.props.values())
-		}
-
-		add(next: $mol_tree) {
+		const add = (next: $mol_tree) => {
 			const type = next.type
-			const prev = this.props.get(type)
-
-			if ( ! prev) {
-				this.props.set(next.type, next)
+			const prev = roots.get(type)
+			if (prev) {
+				if( prev.toString() !== next.toString() ) {
+					throw next.error( 'Property already defined with another default value' + prev.error('').message + '\n---' )
+				}
 				return
 			}
 
-			this.assert_defined(prev, next)
+			roots.set(type, next)
 		}
 
-		assert_defined(prev: $mol_tree, next: $mol_tree) {
-			if( prev.toString() !== next.toString() ) {
-				throw next.error( 'Property already defined with another default value' + prev.error('').message + '\n---' )
-			}
+		const flatten_left = (input: $mol_tree, context: $mol_tree_context) => {
+			const sub = input.sub
+			if (sub.length === 0) return []
+			const child = sub[0]
+			if (child.type === '-') return []
+
+			add(child.hack( context ))
+
+			return [ input.clone({ sub : [ child.clone({ sub: [] }) ] }) ]
 		}
 
-		property_visitor = (input : $mol_tree , tree_context : $mol_tree_context ): readonly $mol_tree[] => {
-			input.hack({
-				'': this.skip_visitor.bind(this),
-				'<=': this.left_visitor.bind(this),
-				'<=>': this.both_visitor.bind(this),
-				'=>': this.right_visitor.bind(this)
-			})
-	
-			return []
+		const flatten_right = (input: $mol_tree, context: $mol_tree_context) => {
+			const sub = input.sub
+			if (sub.length === 0) return []
+			const child = sub[0]
+
+			if( child.sub[0] ) throw child.error( 'Right binding can not have default value' )
+
+			add(child)
+
+			return [ input.clone({ sub : [ child.clone({ sub: [] }) ] }) ]
 		}
 
-		skip_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
-			return [ ]
-		}
+		input.hack({
+			...parent_context,
+			'': (input: $mol_tree, context: $mol_tree_context) => [ input.hack( context ) ],
+			'<=': flatten_left,
+			'<=>': flatten_left,
+			'=>': flatten_right,
+		})
 
-		left_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
-			this.add(input)
-			input.hack(context)
-			return [ ]
-		}
-
-		both_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
-			this.add(input)
-			input.hack(context)
-			return [ ]
-		}
-
-		right_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
-			this.add(input)
-			input.hack(context)
-			return [ ]
-		}
-
+		return Array.from(roots.values())
 	}
 }
