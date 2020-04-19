@@ -67,17 +67,20 @@ namespace $ {
 
 		left_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
 			this.add(input)
-			return [ input.hack(context) ]
+			input.hack(context)
+			return [ ]
 		}
 
 		both_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
 			this.add(input)
-			return [ input.hack(context) ]
+			input.hack(context)
+			return [ ]
 		}
 
 		right_visitor(input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
 			this.add(input)
-			return [ input.hack(context) ]
+			input.hack(context)
+			return [ ]
 		}
 
 	}
