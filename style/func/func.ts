@@ -33,7 +33,7 @@ namespace $ {
 		}
 
 		static url< Href extends string >( href : Href ) {
-			return new $mol_style_func( 'url' , `"${ CSS.escape( href ) }"` )
+			return new $mol_style_func( 'url' , `"${ $mol_dom_context.CSS.escape( href ) }"` )
 		}
 
 		static hsla(
