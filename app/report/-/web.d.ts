@@ -475,17 +475,82 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    const enum $mol_theme {
-        back = "var(--mol_theme_back)",
-        hover = "var(--mol_theme_hover)",
-        current = "var(--mol_theme_current)",
-        text = "var(--mol_theme_text)",
-        control = "var(--mol_theme_control)",
-        shade = "var(--mol_theme_shade)",
-        line = "var(--mol_theme_line)",
-        focus = "var(--mol_theme_focus)",
-        field = "var(--mol_theme_field)"
+    class $mol_decor<Value> {
+        readonly value: Value;
+        constructor(value: Value);
+        prefix(): string;
+        valueOf(): Value;
+        postfix(): string;
+        toString(): string;
     }
+}
+
+declare namespace $ {
+    type $mol_style_unit_length = '%' | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt' | 'cap' | 'ch' | 'em' | 'rem' | 'ex' | 'ic' | 'lh' | 'rlh' | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax';
+    type $mol_style_unit_angle = 'deg' | 'rad' | 'grad' | 'turn';
+    type $mol_style_unit_time = 's' | 'ms';
+    type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time;
+    class $mol_style_unit<Literal extends $mol_style_unit_any> extends $mol_decor<number> {
+        readonly literal: Literal;
+        constructor(value: number, literal: Literal);
+        postfix(): Literal;
+        static per(value: number): $mol_style_unit<"%">;
+        static px(value: number): $mol_style_unit<"px">;
+        static mm(value: number): $mol_style_unit<"mm">;
+        static cm(value: number): $mol_style_unit<"cm">;
+        static Q(value: number): $mol_style_unit<"Q">;
+        static in(value: number): $mol_style_unit<"in">;
+        static pc(value: number): $mol_style_unit<"pc">;
+        static pt(value: number): $mol_style_unit<"pt">;
+        static cap(value: number): $mol_style_unit<"cap">;
+        static ch(value: number): $mol_style_unit<"ch">;
+        static em(value: number): $mol_style_unit<"em">;
+        static rem(value: number): $mol_style_unit<"rem">;
+        static ex(value: number): $mol_style_unit<"ex">;
+        static ic(value: number): $mol_style_unit<"ic">;
+        static lh(value: number): $mol_style_unit<"lh">;
+        static rlh(value: number): $mol_style_unit<"rlh">;
+        static vh(value: number): $mol_style_unit<"vh">;
+        static vw(value: number): $mol_style_unit<"vw">;
+        static vi(value: number): $mol_style_unit<"vi">;
+        static vb(value: number): $mol_style_unit<"vb">;
+        static vmin(value: number): $mol_style_unit<"vmin">;
+        static vmax(value: number): $mol_style_unit<"vmax">;
+        static deg(value: number): $mol_style_unit<"deg">;
+        static rad(value: number): $mol_style_unit<"rad">;
+        static grad(value: number): $mol_style_unit<"grad">;
+        static turn(value: number): $mol_style_unit<"turn">;
+        static s(value: number): $mol_style_unit<"s">;
+        static ms(value: number): $mol_style_unit<"ms">;
+    }
+}
+
+declare namespace $ {
+    type $mol_style_func_name = 'calc' | 'hsla' | 'rgba' | 'var' | 'url';
+    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
+        readonly name: Name;
+        constructor(name: Name, value: Value);
+        prefix(): string;
+        postfix(): string;
+        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
+        static vary<Name extends string>(name: Name): $mol_style_func<"var", Name>;
+        static url<Href extends string>(href: Href): $mol_style_func<"url", string>;
+        static hsla(hue: number, saturation: number, lightness: number, alpha: number): $mol_style_func<"hsla", (number | $mol_style_unit<"%">)[]>;
+    }
+}
+
+declare namespace $ {
+    const $mol_theme: {
+        back: $mol_style_func<"var", "--mol_theme_back">;
+        hover: $mol_style_func<"var", "--mol_theme_hover">;
+        current: $mol_style_func<"var", "--mol_theme_current">;
+        text: $mol_style_func<"var", "--mol_theme_text">;
+        control: $mol_style_func<"var", "--mol_theme_control">;
+        shade: $mol_style_func<"var", "--mol_theme_shade">;
+        line: $mol_style_func<"var", "--mol_theme_line">;
+        focus: $mol_style_func<"var", "--mol_theme_focus">;
+        field: $mol_style_func<"var", "--mol_theme_field">;
+    };
 }
 
 declare namespace $ {
@@ -581,69 +646,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_decor<Value> {
-        readonly value: Value;
-        constructor(value: Value);
-        prefix(): string;
-        valueOf(): Value;
-        postfix(): string;
-        toString(): string;
-    }
-}
-
-declare namespace $ {
-    type $mol_style_unit_length = '%' | 'px' | 'cm' | 'mm' | 'Q' | 'in' | 'pc' | 'pt' | 'cap' | 'ch' | 'em' | 'rem' | 'ex' | 'ic' | 'lh' | 'rlh' | 'vh' | 'vw' | 'vi' | 'vb' | 'vmin' | 'vmax';
-    type $mol_style_unit_angle = 'deg' | 'rad' | 'grad' | 'turn';
-    type $mol_style_unit_time = 's' | 'ms';
-    type $mol_style_unit_any = $mol_style_unit_length | $mol_style_unit_angle | $mol_style_unit_time;
-    class $mol_style_unit<Literal extends $mol_style_unit_any> extends $mol_decor<number> {
-        readonly literal: Literal;
-        constructor(value: number, literal: Literal);
-        postfix(): Literal;
-        static per(value: number): $mol_style_unit<"%">;
-        static px(value: number): $mol_style_unit<"px">;
-        static mm(value: number): $mol_style_unit<"mm">;
-        static cm(value: number): $mol_style_unit<"cm">;
-        static Q(value: number): $mol_style_unit<"Q">;
-        static in(value: number): $mol_style_unit<"in">;
-        static pc(value: number): $mol_style_unit<"pc">;
-        static pt(value: number): $mol_style_unit<"pt">;
-        static cap(value: number): $mol_style_unit<"cap">;
-        static ch(value: number): $mol_style_unit<"ch">;
-        static em(value: number): $mol_style_unit<"em">;
-        static rem(value: number): $mol_style_unit<"rem">;
-        static ex(value: number): $mol_style_unit<"ex">;
-        static ic(value: number): $mol_style_unit<"ic">;
-        static lh(value: number): $mol_style_unit<"lh">;
-        static rlh(value: number): $mol_style_unit<"rlh">;
-        static vh(value: number): $mol_style_unit<"vh">;
-        static vw(value: number): $mol_style_unit<"vw">;
-        static vi(value: number): $mol_style_unit<"vi">;
-        static vb(value: number): $mol_style_unit<"vb">;
-        static vmin(value: number): $mol_style_unit<"vmin">;
-        static vmax(value: number): $mol_style_unit<"vmax">;
-        static deg(value: number): $mol_style_unit<"deg">;
-        static rad(value: number): $mol_style_unit<"rad">;
-        static grad(value: number): $mol_style_unit<"grad">;
-        static turn(value: number): $mol_style_unit<"turn">;
-        static s(value: number): $mol_style_unit<"s">;
-        static ms(value: number): $mol_style_unit<"ms">;
-    }
-}
-
-declare namespace $ {
-    type $mol_style_func_name = 'calc' | 'fit-content';
-    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
-        readonly name: Name;
-        constructor(value: Value, name: Name);
-        prefix(): string;
-        postfix(): string;
-        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
-        static fit_content(value: number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>): $mol_style_func<"fit-content", number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<"calc", unknown>>;
-    }
-}
-
-declare namespace $ {
     type $mol_type_error<Message, Info = {}> = Message & {
         $mol_type_error: Info;
     };
@@ -654,8 +656,161 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    const $mol_colors: {
+        aliceblue: string;
+        antiquewhite: string;
+        aqua: string;
+        aquamarine: string;
+        azure: string;
+        beige: string;
+        bisque: string;
+        black: string;
+        blanchedalmond: string;
+        blue: string;
+        blueviolet: string;
+        brown: string;
+        burlywood: string;
+        cadetblue: string;
+        chartreuse: string;
+        chocolate: string;
+        coral: string;
+        cornflowerblue: string;
+        cornsilk: string;
+        crimson: string;
+        cyan: string;
+        darkblue: string;
+        darkcyan: string;
+        darkgoldenrod: string;
+        darkgray: string;
+        darkgreen: string;
+        darkgrey: string;
+        darkkhaki: string;
+        darkmagenta: string;
+        darkolivegreen: string;
+        darkorange: string;
+        darkorchid: string;
+        darkred: string;
+        darksalmon: string;
+        darkseagreen: string;
+        darkslateblue: string;
+        darkslategrey: string;
+        darkturquoise: string;
+        darkviolet: string;
+        deeppink: string;
+        deepskyblue: string;
+        dimgray: string;
+        dimgrey: string;
+        dodgerblue: string;
+        firebrick: string;
+        floralwhite: string;
+        forestgreen: string;
+        fuchsia: string;
+        gainsboro: string;
+        ghostwhite: string;
+        gold: string;
+        goldenrod: string;
+        gray: string;
+        green: string;
+        greenyellow: string;
+        grey: string;
+        honeydew: string;
+        hotpink: string;
+        indianred: string;
+        indigo: string;
+        ivory: string;
+        khaki: string;
+        lavender: string;
+        lavenderblush: string;
+        lawngreen: string;
+        lemonchiffon: string;
+        lightblue: string;
+        lightcoral: string;
+        lightcyan: string;
+        lightgoldenrodyellow: string;
+        lightgray: string;
+        lightgreen: string;
+        lightgrey: string;
+        lightpink: string;
+        lightsalmon: string;
+        lightseagreen: string;
+        lightskyblue: string;
+        lightslategray: string;
+        lightslategrey: string;
+        lightsteelblue: string;
+        lightyellow: string;
+        lime: string;
+        limegreen: string;
+        linen: string;
+        magenta: string;
+        maroon: string;
+        mediumaquamarine: string;
+        mediumblue: string;
+        mediumorchid: string;
+        mediumpurple: string;
+        mediumseagreen: string;
+        mediumslateblue: string;
+        mediumspringgreen: string;
+        mediumturquoise: string;
+        mediumvioletred: string;
+        midnightblue: string;
+        mintcream: string;
+        mistyrose: string;
+        moccasin: string;
+        navajowhite: string;
+        navy: string;
+        oldlace: string;
+        olive: string;
+        olivedrab: string;
+        orange: string;
+        orangered: string;
+        orchid: string;
+        palegoldenrod: string;
+        palegreen: string;
+        paleturquoise: string;
+        palevioletred: string;
+        papayawhip: string;
+        peachpuff: string;
+        peru: string;
+        pink: string;
+        plum: string;
+        powderblue: string;
+        purple: string;
+        rebeccapurple: string;
+        red: string;
+        rosybrown: string;
+        royalblue: string;
+        saddlebrown: string;
+        salmon: string;
+        sandybrown: string;
+        seagreen: string;
+        seashell: string;
+        sienna: string;
+        silver: string;
+        skyblue: string;
+        slateblue: string;
+        slategray: string;
+        slategrey: string;
+        snow: string;
+        springgreen: string;
+        steelblue: string;
+        tan: string;
+        teal: string;
+        thistle: string;
+        tomato: string;
+        turquoise: string;
+        violet: string;
+        wheat: string;
+        white: string;
+        whitesmoke: string;
+        yellow: string;
+        yellowgreen: string;
+    };
+}
+
+declare namespace $ {
     export type $mol_style_properties = Partial<$mol_type_override<CSSStyleDeclaration, Overrides>>;
     type Common = 'inherit' | 'initial' | 'unset';
+    type Color = keyof typeof $mol_colors | 'transparent' | 'currentcolor' | $mol_style_func<'hsla' | 'rgba' | 'var'>;
     type Length = 0 | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>;
     type Size = 'auto' | 'max-content' | 'min-content' | 'fit-content' | Length | Common;
     type Directions<Value> = Value | [Value, Value] | {
@@ -667,6 +822,11 @@ declare namespace $ {
     type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
     interface Overrides {
         alignContent?: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | ['first' | 'last', 'baseline'] | ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
+        background?: {
+            color?: Color | Common;
+            image?: [$mol_style_func<'url'>][];
+        };
+        color?: Color | Common;
         display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
         overflow?: Overflow | {
             x?: Overflow | Common;

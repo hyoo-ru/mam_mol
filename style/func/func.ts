@@ -2,7 +2,12 @@ namespace $ {
 
 	export type $mol_style_func_name =
 	| 'calc'
-	| 'fit-content'
+	| 'hsla'
+	| 'rgba'
+	| 'var'
+	| 'url'
+
+	const { per } = $mol_style_unit
 	
 	export class $mol_style_func<
 		Name extends $mol_style_func_name ,
@@ -10,8 +15,8 @@ namespace $ {
 	> extends $mol_decor< Value > {
 
 		constructor(
-			value : Value,
 			readonly name : Name,
+			value : Value,
 		) {
 			super( value )
 		}
@@ -20,16 +25,27 @@ namespace $ {
 		postfix() { return ')' }
 
 		static calc< Value >( value : Value ) {
-			return new $mol_style_func( value , 'calc' )
+			return new $mol_style_func( 'calc' , value )
 		}
 
-		static fit_content(
-			value :
-			| number
-			| $mol_style_unit< $mol_style_unit_length >
-			| $mol_style_func<'calc'>
+		static vary< Name extends string >( name : Name ) {
+			return new $mol_style_func( 'var' , name )
+		}
+
+		static url< Href extends string >( href : Href ) {
+			return new $mol_style_func( 'url' , JSON.stringify( href ) )
+		}
+
+		static hsla(
+			hue: number,
+			saturation: number,
+			lightness: number,
+			alpha: number,
 		) {
-			return new $mol_style_func( value , 'fit-content' )
+			return new $mol_style_func(
+				'hsla',
+				[ hue , per( saturation ) , per( lightness ) , alpha ],
+			)
 		}
 	
 	}

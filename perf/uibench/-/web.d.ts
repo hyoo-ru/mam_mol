@@ -555,17 +555,31 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    const enum $mol_theme {
-        back = "var(--mol_theme_back)",
-        hover = "var(--mol_theme_hover)",
-        current = "var(--mol_theme_current)",
-        text = "var(--mol_theme_text)",
-        control = "var(--mol_theme_control)",
-        shade = "var(--mol_theme_shade)",
-        line = "var(--mol_theme_line)",
-        focus = "var(--mol_theme_focus)",
-        field = "var(--mol_theme_field)"
+    type $mol_style_func_name = 'calc' | 'hsla' | 'rgba' | 'var' | 'url';
+    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
+        readonly name: Name;
+        constructor(name: Name, value: Value);
+        prefix(): string;
+        postfix(): string;
+        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
+        static vary<Name extends string>(name: Name): $mol_style_func<"var", Name>;
+        static url<Href extends string>(href: Href): $mol_style_func<"url", string>;
+        static hsla(hue: number, saturation: number, lightness: number, alpha: number): $mol_style_func<"hsla", (number | $mol_style_unit<"%">)[]>;
     }
+}
+
+declare namespace $ {
+    const $mol_theme: {
+        back: $mol_style_func<"var", "--mol_theme_back">;
+        hover: $mol_style_func<"var", "--mol_theme_hover">;
+        current: $mol_style_func<"var", "--mol_theme_current">;
+        text: $mol_style_func<"var", "--mol_theme_text">;
+        control: $mol_style_func<"var", "--mol_theme_control">;
+        shade: $mol_style_func<"var", "--mol_theme_shade">;
+        line: $mol_style_func<"var", "--mol_theme_line">;
+        focus: $mol_style_func<"var", "--mol_theme_focus">;
+        field: $mol_style_func<"var", "--mol_theme_field">;
+    };
 }
 
 declare namespace $ {
@@ -648,20 +662,161 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    type $mol_style_func_name = 'calc' | 'fit-content';
-    class $mol_style_func<Name extends $mol_style_func_name, Value = unknown> extends $mol_decor<Value> {
-        readonly name: Name;
-        constructor(value: Value, name: Name);
-        prefix(): string;
-        postfix(): string;
-        static calc<Value>(value: Value): $mol_style_func<"calc", Value>;
-        static fit_content(value: number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>): $mol_style_func<"fit-content", number | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<"calc", unknown>>;
-    }
+    const $mol_colors: {
+        aliceblue: string;
+        antiquewhite: string;
+        aqua: string;
+        aquamarine: string;
+        azure: string;
+        beige: string;
+        bisque: string;
+        black: string;
+        blanchedalmond: string;
+        blue: string;
+        blueviolet: string;
+        brown: string;
+        burlywood: string;
+        cadetblue: string;
+        chartreuse: string;
+        chocolate: string;
+        coral: string;
+        cornflowerblue: string;
+        cornsilk: string;
+        crimson: string;
+        cyan: string;
+        darkblue: string;
+        darkcyan: string;
+        darkgoldenrod: string;
+        darkgray: string;
+        darkgreen: string;
+        darkgrey: string;
+        darkkhaki: string;
+        darkmagenta: string;
+        darkolivegreen: string;
+        darkorange: string;
+        darkorchid: string;
+        darkred: string;
+        darksalmon: string;
+        darkseagreen: string;
+        darkslateblue: string;
+        darkslategrey: string;
+        darkturquoise: string;
+        darkviolet: string;
+        deeppink: string;
+        deepskyblue: string;
+        dimgray: string;
+        dimgrey: string;
+        dodgerblue: string;
+        firebrick: string;
+        floralwhite: string;
+        forestgreen: string;
+        fuchsia: string;
+        gainsboro: string;
+        ghostwhite: string;
+        gold: string;
+        goldenrod: string;
+        gray: string;
+        green: string;
+        greenyellow: string;
+        grey: string;
+        honeydew: string;
+        hotpink: string;
+        indianred: string;
+        indigo: string;
+        ivory: string;
+        khaki: string;
+        lavender: string;
+        lavenderblush: string;
+        lawngreen: string;
+        lemonchiffon: string;
+        lightblue: string;
+        lightcoral: string;
+        lightcyan: string;
+        lightgoldenrodyellow: string;
+        lightgray: string;
+        lightgreen: string;
+        lightgrey: string;
+        lightpink: string;
+        lightsalmon: string;
+        lightseagreen: string;
+        lightskyblue: string;
+        lightslategray: string;
+        lightslategrey: string;
+        lightsteelblue: string;
+        lightyellow: string;
+        lime: string;
+        limegreen: string;
+        linen: string;
+        magenta: string;
+        maroon: string;
+        mediumaquamarine: string;
+        mediumblue: string;
+        mediumorchid: string;
+        mediumpurple: string;
+        mediumseagreen: string;
+        mediumslateblue: string;
+        mediumspringgreen: string;
+        mediumturquoise: string;
+        mediumvioletred: string;
+        midnightblue: string;
+        mintcream: string;
+        mistyrose: string;
+        moccasin: string;
+        navajowhite: string;
+        navy: string;
+        oldlace: string;
+        olive: string;
+        olivedrab: string;
+        orange: string;
+        orangered: string;
+        orchid: string;
+        palegoldenrod: string;
+        palegreen: string;
+        paleturquoise: string;
+        palevioletred: string;
+        papayawhip: string;
+        peachpuff: string;
+        peru: string;
+        pink: string;
+        plum: string;
+        powderblue: string;
+        purple: string;
+        rebeccapurple: string;
+        red: string;
+        rosybrown: string;
+        royalblue: string;
+        saddlebrown: string;
+        salmon: string;
+        sandybrown: string;
+        seagreen: string;
+        seashell: string;
+        sienna: string;
+        silver: string;
+        skyblue: string;
+        slateblue: string;
+        slategray: string;
+        slategrey: string;
+        snow: string;
+        springgreen: string;
+        steelblue: string;
+        tan: string;
+        teal: string;
+        thistle: string;
+        tomato: string;
+        turquoise: string;
+        violet: string;
+        wheat: string;
+        white: string;
+        whitesmoke: string;
+        yellow: string;
+        yellowgreen: string;
+    };
 }
 
 declare namespace $ {
     export type $mol_style_properties = Partial<$mol_type_override<CSSStyleDeclaration, Overrides>>;
     type Common = 'inherit' | 'initial' | 'unset';
+    type Color = keyof typeof $mol_colors | 'transparent' | 'currentcolor' | $mol_style_func<'hsla' | 'rgba' | 'var'>;
     type Length = 0 | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>;
     type Size = 'auto' | 'max-content' | 'min-content' | 'fit-content' | Length | Common;
     type Directions<Value> = Value | [Value, Value] | {
@@ -673,6 +828,11 @@ declare namespace $ {
     type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
     interface Overrides {
         alignContent?: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | ['first' | 'last', 'baseline'] | ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
+        background?: {
+            color?: Color | Common;
+            image?: [$mol_style_func<'url'>][];
+        };
+        color?: Color | Common;
         display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
         overflow?: Overflow | {
             x?: Overflow | Common;

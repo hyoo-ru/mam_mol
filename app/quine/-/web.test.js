@@ -1855,7 +1855,7 @@ var $;
         'various functions'() {
             class $mol_style_sheet_test extends $.$mol_view {
             }
-            const { calc, fit_content } = $.$mol_style_func;
+            const { calc } = $.$mol_style_func;
             const { px, per } = $.$mol_style_unit;
             const sheet = $.$mol_style_sheet($mol_style_sheet_test, {
                 width: calc(`${per(100)} - ${px(1)}`),
@@ -1881,6 +1881,17 @@ var $;
                 padding: [0, 'auto']
             });
             $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tpadding: 0 auto;\n}\n');
+        },
+        'sequenced values'() {
+            class $mol_style_sheet_test extends $.$mol_view {
+            }
+            const { url } = $.$mol_style_func;
+            const sheet = $.$mol_style_sheet($mol_style_sheet_test, {
+                background: {
+                    image: [[url('foo')], [url('bar')]],
+                },
+            });
+            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tbackground-image: url("foo"),url("bar");\n}\n');
         },
         'component block styles with pseudo class'() {
             class $mol_style_sheet_test extends $.$mol_view {
