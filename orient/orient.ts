@@ -76,7 +76,7 @@ namespace $ {
 		query( query : string , params : Record< string , any > = {} , limit = 100 , fetchPlan = '' ) {
 
 			const api = this.api
-			const resp = $mol_fiber_sync( ()=> api.query( query , { params , limit , fetchPlan }) )()
+			const resp = $mol_fiber_sync( ()=> api.query( query , { params , limit , fetchPlan }) as Promise<any> )()
 			
 			return resp
 		}

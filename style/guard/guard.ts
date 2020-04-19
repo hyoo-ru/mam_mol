@@ -8,7 +8,7 @@ namespace $ {
 	type Kids< Config > = {
 		[ view in keyof Config ] : view extends keyof $mol_view_all
 			? Descendant< view , Config[view] >
-			: $mol_type_error<[ 'Unknown View' , view ]>
+			: $mol_type_error< 'Unknown View' >
 	}
 	
 	type Attrs< View extends $mol_view , Config > = {
@@ -16,7 +16,7 @@ namespace $ {
 			? {
 				[ val in keyof Config[name] ] : $mol_style_guard< View , Config[name][val] >
 			}
-			: $mol_type_error<[ 'Unknown Attribute' , name ]>
+			: $mol_type_error< 'Unknown attribute' >
 	}
 
 	type Medias< View extends $mol_view , Config > = {
@@ -50,10 +50,10 @@ namespace $ {
 		? View[ key ] extends ( id? : any )=> infer Sub
 			? Sub extends $mol_view
 				? $mol_style_guard< Sub , Config[ key ] >
-				: $mol_type_error<[ 'Wrong Property' , key ]>
-			: $mol_type_error<[ 'Property is not Element' , key ]>
+				: $mol_type_error< 'Property returns non $mol_view' , { Returns : Sub } >
+			: $mol_type_error< 'Field is not a Property' >
 		
-		: $mol_type_error<[ 'Unknown Property' , key ]>
+		: $mol_type_error< 'Unknown Property or View' >
 
 	}
 
