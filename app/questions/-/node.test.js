@@ -3560,6 +3560,7 @@ var $;
     function $mol_style_sheet(Component, config0) {
         let rules = [];
         const block = $.$mol_dom_qname($.$mol_func_name(Component));
+        const kebab = (name) => name.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
         const make_class = (prefix, path, config) => {
             const props = [];
             const selector = (prefix, path) => {
@@ -3569,25 +3570,34 @@ var $;
             };
             for (const key of Object.keys(config).reverse()) {
                 if (/^[a-z]/.test(key)) {
-                    const name = key.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
-                    let val = config[key];
-                    if (Array.isArray(val)) {
-                        if (Array.isArray(val[0])) {
-                            val = val.map(v => v.join(' ')).join(',');
+                    const addProp = (keys, val) => {
+                        if (Array.isArray(val)) {
+                            if (Object(val[0]) === val[0]) {
+                                val = val.map(v => {
+                                    return Object.entries(v).map(([n, a]) => {
+                                        if (a === true)
+                                            return kebab(n);
+                                        if (a === false)
+                                            return null;
+                                        return String(a);
+                                    }).filter(Boolean).join(' ');
+                                }).join(',');
+                            }
+                            else {
+                                val = val.join(' ');
+                            }
+                            props.push(`\t${keys.join('-')}: ${val};\n`);
+                        }
+                        else if (val.constructor === Object) {
+                            for (let suffix in val) {
+                                addProp([...keys, kebab(suffix)], val[suffix]);
+                            }
                         }
                         else {
-                            val = val.join(' ');
+                            props.push(`\t${keys.join('-')}: ${val};\n`);
                         }
-                        props.push(`\t${name}: ${val};\n`);
-                    }
-                    else if (val.constructor === Object) {
-                        for (let suffix in val) {
-                            props.push(`\t${name}-${suffix}: ${val[suffix]};\n`);
-                        }
-                    }
-                    else {
-                        props.push(`\t${name}: ${val};\n`);
-                    }
+                    };
+                    addProp([kebab(key)], config[key]);
                 }
                 else if (/^[A-Z]/.test(key)) {
                     make_class(prefix, [...path, key.toLowerCase()], config[key]);
@@ -4137,7 +4147,7 @@ var $;
                 color: $.$mol_theme.back,
             },
             color: $.$mol_theme.text,
-            zIndex: '0',
+            zIndex: 0,
             overflow: 'hidden',
             boxShadow: `inset 0 0 0 .5px ${$.$mol_theme.line}`,
             ':focus': {
@@ -4156,7 +4166,7 @@ var $;
                     color: $.$mol_theme.back,
                 },
                 boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
-                zIndex: '1',
+                zIndex: 1,
             },
             Title: {
                 flex: {
@@ -4198,7 +4208,7 @@ var $;
                     color: $.$mol_theme.back,
                 },
                 boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
-                zIndex: '1',
+                zIndex: 1,
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
@@ -8462,10 +8472,10 @@ var $;
             class $mol_style_sheet_test extends $.$mol_view {
             }
             const sheet = $.$mol_style_sheet($mol_style_sheet_test, {
-                color: 'red',
                 display: 'block',
+                zIndex: 1,
             });
-            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tcolor: red;\n\tdisplay: block;\n}\n');
+            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tdisplay: block;\n\tz-index: 1;\n}\n');
         },
         'various units'() {
             class $mol_style_sheet_test extends $.$mol_view {
@@ -8517,6 +8527,35 @@ var $;
                 },
             });
             $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tbackground-image: url("foo"),url("bar");\n}\n');
+        },
+        'sequenced structs'() {
+            class $mol_style_sheet_test extends $.$mol_view {
+            }
+            const { rem } = $.$mol_style_unit;
+            const { hsla } = $.$mol_style_func;
+            const sheet = $.$mol_style_sheet($mol_style_sheet_test, {
+                box: {
+                    shadow: [
+                        {
+                            inset: true,
+                            x: 0,
+                            y: 0,
+                            blur: rem(.5),
+                            spread: 0,
+                            color: 'red',
+                        },
+                        {
+                            inset: false,
+                            x: 0,
+                            y: 0,
+                            blur: rem(.5),
+                            spread: 0,
+                            color: 'blue',
+                        },
+                    ],
+                },
+            });
+            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tbox-shadow: inset 0 0 0.5rem 0 red,0 0 0.5rem 0 blue;\n}\n');
         },
         'component block styles with pseudo class'() {
             class $mol_style_sheet_test extends $.$mol_view {

@@ -870,6 +870,16 @@ declare namespace $ {
             color?: Color | Common;
             image?: [$mol_style_func<'url'>][];
         };
+        box?: {
+            shadow?: readonly {
+                inset: boolean;
+                x: Length;
+                y: Length;
+                blur: Length;
+                spread: Length;
+                color: Color;
+            }[];
+        };
         color?: Color | Common;
         display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
         overflow?: Overflow | {
@@ -893,6 +903,7 @@ declare namespace $ {
             direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
             wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common;
         };
+        zIndex: number;
     }
     export {};
 }
