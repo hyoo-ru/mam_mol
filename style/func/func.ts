@@ -33,7 +33,7 @@ namespace $ {
 		}
 
 		static url< Href extends string >( href : Href ) {
-			return new $mol_style_func( 'url' , `"${ JSON.stringify( href ) }"` )
+			return new $mol_style_func( 'url' , JSON.stringify( href ) )
 		}
 
 		static hsla(
