@@ -1815,6 +1815,22 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_deprecated(message) {
+        return (host, field, descr) => {
+            const value = descr.value;
+            descr.value = function $mol_deprecated_wrapper(...args) {
+                console.warn(`${host.constructor.name}::${field} is deprecated. ${message}`);
+                return value.call(this, ...args);
+            };
+        };
+    }
+    $.$mol_deprecated = $mol_deprecated;
+})($ || ($ = {}));
+//deprecated.js.map
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_tree_convert = Symbol('$mol_tree_convert');
     class $mol_tree {
         constructor(config = {}) {
@@ -2110,6 +2126,9 @@ var $;
             return new Error(`${message}:\n${this} ${this.baseUri}:${this.row}:${this.col}`);
         }
     }
+    __decorate([
+        $.$mol_deprecated('Use $mol_tree:hack')
+    ], $mol_tree.prototype, "transform", null);
     $.$mol_tree = $mol_tree;
 })($ || ($ = {}));
 //tree.js.map
@@ -2532,22 +2551,6 @@ var $;
     $.$mol_func_name_from = $mol_func_name_from;
 })($ || ($ = {}));
 //name.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_deprecated(message) {
-        return (host, field, descr) => {
-            const value = descr.value;
-            descr.value = function $mol_deprecated_wrapper(...args) {
-                console.warn(`${host.constructor.name}::${field} is deprecated. ${message}`);
-                return value.call(this, ...args);
-            };
-        };
-    }
-    $.$mol_deprecated = $mol_deprecated;
-})($ || ($ = {}));
-//deprecated.js.map
 ;
 "use strict";
 //extract.js.map
