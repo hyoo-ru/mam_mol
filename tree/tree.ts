@@ -393,7 +393,7 @@ namespace $ {
 			return new $mol_tree( { sub : sub } )
 		}
 
-		/** @deprecated */
+		@deprecated( 'Use $mol_tree:hack' )
 		transform( visit : ( stack : $mol_tree[] , sub : ()=> $mol_tree[] )=> $mol_tree | null , stack : $mol_tree[] = [] ) : $mol_tree | null {
 			const sub_stack = [ this , ...stack ]
 			return visit( sub_stack , ()=> this.sub.map( node => node.transform( visit , sub_stack ) ).filter( n => n ) as $mol_tree[] )
