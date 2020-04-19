@@ -15,11 +15,11 @@ namespace $ {
 			class $mol_style_sheet_test extends $mol_view {}
 
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
-				color: 'red',
 				display: 'block',
+				zIndex: 1,
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tcolor: red;\n\tdisplay: block;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tdisplay: block;\n\tz-index: 1;\n}\n' )
 			
 		},
 
@@ -96,6 +96,40 @@ namespace $ {
 			} )
 
 			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tbackground-image: url("foo"),url("bar");\n}\n' )
+			
+		},
+
+		'sequenced structs'() {
+		
+			class $mol_style_sheet_test extends $mol_view {}
+
+			const { rem } = $mol_style_unit
+			const { hsla } = $mol_style_func
+
+			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
+				box: {
+					shadow: [
+						{
+							inset: true,
+							x: 0,
+							y: 0,
+							blur: rem(.5),
+							spread: 0,
+							color: 'red',
+						},
+						{
+							inset: false,
+							x: 0,
+							y: 0,
+							blur: rem(.5),
+							spread: 0,
+							color: 'blue',
+						},
+					],
+				},
+			} )
+
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tbox-shadow: inset 0 0 0.5rem 0 red,0 0 0.5rem 0 blue;\n}\n' )
 			
 		},
 
