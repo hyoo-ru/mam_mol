@@ -7,6 +7,10 @@ namespace $ {
 	export type $mol_tree_context = Record< string , $mol_tree_hack >
 	export type $mol_tree_library = Record< string , $mol_tree_context >
 	
+	/**
+	 * Abstract Syntax Tree with human readable serialization.
+	 * @see https://github.com/nin-jin/tree.d
+	 */
 	export class $mol_tree {
 		
 		readonly type : string
@@ -59,6 +63,7 @@ namespace $ {
 
 		}
 		
+		/** Cloning node with overrides. */
 		clone( config : Partial<$mol_tree> = {} ) {
 
 			return new $mol_tree({
@@ -73,6 +78,7 @@ namespace $ {
 
 		}
 		
+		/** Makes new derived node. */
 		make( config : Partial<$mol_tree> ) {
 
 			return new $mol_tree({
@@ -84,6 +90,7 @@ namespace $ {
 
 		}
 		
+		/** Parses tree format to AST. */
 		static fromString( str : string , baseUri? : string ) {
 			
 			var root = new $mol_tree( { baseUri : baseUri } )
@@ -136,6 +143,10 @@ namespace $ {
 			return root
 		}
 		
+		/**
+		 * Parses json.tree lang to AST.
+		 * @todo Move to $mol_tree_json_from
+		 */
 		static fromJSON( json : any , baseUri = '' ) : $mol_tree {
 
 			switch( true ) {
@@ -224,6 +235,7 @@ namespace $ {
 			return this.baseUri + '#' + this.row + ':' + this.col
 		}
 		
+		/** Serializas to tree format. */
 		toString( prefix = '' ) : string {
 			var output = ''
 			
@@ -248,6 +260,10 @@ namespace $ {
 			return output
 		}
 		
+		/**
+		 * Serializes AST to json.tree lang.
+		 * @todo Move to $mol_tree_json_to
+		 */
 		toJSON() : any {
 			if( !this.type ) return this.value
 			
@@ -296,6 +312,7 @@ namespace $ {
 			return this.data + values.join( "\n" )
 		}
 		
+		/** Makes new tree with node overrided by path. */
 		insert( value : $mol_tree , ...path : $mol_tree_path ) : $mol_tree {
 			if( path.length === 0 ) return value
 			
@@ -327,6 +344,7 @@ namespace $ {
 			}
 		}
 
+		/** Query nodes by path. */
 		select( ...path : $mol_tree_path ) {
 			var next = [ this as $mol_tree ]
 			for( var type of path ) {
@@ -357,6 +375,7 @@ namespace $ {
 			return new $mol_tree( { sub : next } )
 		}
 		
+		/** Filter subnodes by path or value. */
 		filter( path : string[] , value? : string ) {
 			var sub = this.sub.filter(
 				function( item ) {
@@ -374,11 +393,13 @@ namespace $ {
 			return new $mol_tree( { sub : sub } )
 		}
 
+		@ $mol_deprecated( 'Use $mol_tree:hack' )
 		transform( visit : ( stack : $mol_tree[] , sub : ()=> $mol_tree[] )=> $mol_tree | null , stack : $mol_tree[] = [] ) : $mol_tree | null {
 			const sub_stack = [ this , ...stack ]
 			return visit( sub_stack , ()=> this.sub.map( node => node.transform( visit , sub_stack ) ).filter( n => n ) as $mol_tree[] )
 		}
 
+		/** Transform tree through context with transformers */
 		hack( context : $mol_tree_context ) : $mol_tree {
 			
 			const sub = ( [] as $mol_tree[] ).concat( ... this.sub.map( child => {
@@ -393,6 +414,7 @@ namespace $ {
 			return this.clone({ sub })
 		}
 
+		/** Makes Error with node coordinates. */
 		error( message : string ) {
 			return new Error( `${message}:\n${ this } ${this.baseUri}:${this.row}:${this.col}` )
 		}

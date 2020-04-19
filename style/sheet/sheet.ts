@@ -10,7 +10,7 @@ namespace $ {
 
 		let rules = [] as string[]
 
-		const block = $mol_dom_qname( Component.name )
+		const block = $mol_dom_qname( $mol_func_name( Component ) )
 
 		const make_class = ( prefix : string , path : string[] , config : typeof config0 )=> {
 
