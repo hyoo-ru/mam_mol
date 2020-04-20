@@ -3572,7 +3572,7 @@ var $;
                 if (/^[a-z]/.test(key)) {
                     const addProp = (keys, val) => {
                         if (Array.isArray(val)) {
-                            if (Object(val[0]) === val[0]) {
+                            if (val[0] && [Array, Object].includes(val[0].constructor)) {
                                 val = val.map(v => {
                                     return Object.entries(v).map(([n, a]) => {
                                         if (a === true)
@@ -8513,9 +8513,9 @@ var $;
             }
             const { px } = $.$mol_style_unit;
             const sheet = $.$mol_style_sheet($mol_style_sheet_test, {
-                padding: [0, 'auto']
+                padding: [px(5), 'auto']
             });
-            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tpadding: 0 auto;\n}\n');
+            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tpadding: 5px auto;\n}\n');
         },
         'sequenced values'() {
             class $mol_style_sheet_test extends $.$mol_view {

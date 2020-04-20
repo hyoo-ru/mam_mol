@@ -76,10 +76,10 @@ namespace $ {
 			const { px } = $mol_style_unit
 
 			const sheet = $mol_style_sheet( $mol_style_sheet_test , {
-				padding : [ 0 , 'auto' ]
+				padding : [ px(5) , 'auto' ]
 			} )
 
-			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tpadding: 0 auto;\n}\n' )
+			$mol_assert_equal( sheet , '[mol_style_sheet_test] {\n\tpadding: 5px auto;\n}\n' )
 			
 		},
 
