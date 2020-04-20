@@ -30,7 +30,7 @@ namespace $ {
 
 						if( Array.isArray( val ) ) {
 
-							if( Object( val[0] ) === val[0] ) {
+							if( val[0] && [ Array , Object ].includes( val[0].constructor ) ) {
 								val = val.map( v => {
 									return Object.entries( v ).map( ([ n , a ])=> {
 										if( a === true ) return kebab( n )
