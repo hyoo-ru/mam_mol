@@ -3,7 +3,12 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		tokens() {
-			return this.$.$mol_syntax_md_flow.tokenize( this.text() ) as readonly $mol_syntax_token[]
+			const tokens = [] as { name : string , found : string , chunks: string[] }[]
+			this.$.$mol_syntax2_md_flow.tokenize(
+				this.text(),
+				( name , found , chunks )=> tokens.push({ name , found , chunks }),
+			)
+			return tokens as Readonly< typeof tokens >
 		}
 		
 		@ $mol_mem
@@ -81,74 +86,81 @@ namespace $.$$ {
 		
 		@ $mol_fiber.method
 		text2spans( prefix : string , text : string ) {
-			return this.$.$mol_syntax_md_line.tokenize( text ).map( ( token , index )=> {
-				const id = `${prefix}/${index}`
+			let index = 0
+			const spans = [] as $mol_view[]
+			this.$.$mol_syntax2_md_line.tokenize( text , ( name , found , chunks )=> {
+				const id = `${prefix}/${index++}`
 				
-				switch( token.name ) {
+				switch( name ) {
 					case 'text-link' : {
-						if( /^(\w+script+:)+/.test( token.chunks[ 1 ] ) ) {
+						if( /^(\w+script+:)+/.test( chunks[ 1 ] ) ) {
 							const span = this.Span( id )
-							span.content( this.text2spans( id , token.chunks[ 0 ] ) )
-							return span
+							span.content( this.text2spans( id , chunks[ 0 ] ) )
+							return spans.push( span )
 						} else {
 							const span = this.Link( id )
-							span.type( token.name )
-							span.link( this.uri_resolve( token.chunks[ 1 ] ) )
-							span.content( this.text2spans( id , token.chunks[ 0 ] ) )
-							return span
+							span.type( name )
+							span.link( this.uri_resolve( chunks[ 1 ] ) )
+							span.content( this.text2spans( id , chunks[ 0 ] ) )
+							return spans.push( span )
 						}
 					}
 					case 'image-link' : {
-						const span = this.Image( token.chunks[ 1 ] )
-						span.type( token.name )
-						span.link( this.uri_resolve( token.chunks[ 1 ] ) )
-						span.title( token.chunks[ 0 ] )
-						return span
+						const span = this.Image( chunks[ 1 ] )
+						span.type( name )
+						span.link( this.uri_resolve( chunks[ 1 ] ) )
+						span.title( chunks[ 0 ] )
+						return spans.push( span )
 					}
 					case 'code3' :
 					case 'code' : {
 						const span = this.Span( id )
 						span.type( 'code' )
-						span.content( this.code2spans( id , token.chunks[ 0 ] ) )
-						return span
+						span.content( this.code2spans( id , chunks[ 0 ] ) )
+						return spans.push( span )
 					}
 				}
 				
 				const span = this.Span( id )
-				span.type( token.name )
+				span.type( name )
 				span.content(
-					token.name
-						? ([] as $mol_view[] ).concat.apply( [] , token.chunks.map( ( text , index )=> this.text2spans( `${id}/${index}` , text ) ) )
-						: [ token.found ]
+					name
+						? ([] as $mol_view[] ).concat.apply( [] , chunks.map( ( text , index )=> this.text2spans( `${id}/${index}` , text ) ) )
+						: [ found ]
 				)
-				return span
+				spans.push( span )
 			} )
+			return spans
 		}
 		
 		@ $mol_fiber.method
 		code2spans( prefix : string , text : string ) {
-			return this.$.$mol_syntax_md_code.tokenize( text ).map( ( token , index )=> {
-				const id = `${prefix}/${index}`
+			let index = 0
+			const spans = [] as $mol_view[]
+			this.$.$mol_syntax2_md_code.tokenize( text , ( name , found , chunks )=> {
+				const id = `${prefix}/${index++}`
 				
 				const span = this.Span( id )
-				span.type( token.name )
+				span.type( name )
+				spans.push( span )
 				
-				switch( token.name ) {
+				switch( name ) {
 					case 'code-docs' : {
-						span.content( this.text2spans( `${id}/${index}` , token.found ) )
+						span.content( this.text2spans( `${id}/${index}` , found ) )
 						return span
 					}
 					case 'code-string' : {
-						span.content([ token.found[0] , ... this.code2spans( `${id}/${index}` , token.found.slice( 1 , token.found.length - 1 ) ) , token.found[ token.found.length - 1 ] ])
+						span.content([ found[0] , ... this.code2spans( `${id}/${index}` , found.slice( 1 , found.length - 1 ) ) , found[ found.length - 1 ] ])
 						return span
 					}
 					default : {
-						span.content([ token.found ])
+						span.content([ found ])
 						return span
 					}
 				}
 				
 			} )
+			return spans
 		}
 		
 		@ $mol_mem_key
