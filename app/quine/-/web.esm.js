@@ -3582,7 +3582,7 @@ var $;
                 padding: rem(.5),
                 wordBreak: 'normal',
                 cursor: 'default',
-                fontWeight: 'bolder',
+                textShadow: '0 0',
                 ':empty': {
                     display: 'none',
                 },
