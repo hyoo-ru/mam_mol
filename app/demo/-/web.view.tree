@@ -329,7 +329,7 @@ $mol_image $mol_view
 $mol_text $mol_list
 	uri_base \
 	text \
-	tokens /$mol_syntax_token
+	tokens /
 	Quote!id $mol_text
 		text <= quote_text!id \
 	Row!id $mol_text_row

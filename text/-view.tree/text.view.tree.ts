@@ -20,11 +20,11 @@ namespace $ { export class $mol_text extends $mol_list {
 
 	/**
 	 *  ```
-	 *  tokens /$mol_syntax_token
+	 *  tokens /
 	 *  ```
 	 **/
 	tokens() {
-		return [  ] as readonly ( $mol_syntax_token )[]
+		return [  ] as readonly any[]
 	}
 
 	/**

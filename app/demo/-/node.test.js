@@ -4876,84 +4876,58 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_syntax {
+    class $mol_syntax2 {
         constructor(lexems) {
-            this['lexems()'] = lexems;
-        }
-        lexems() {
-            return this['lexems()'];
-        }
-        rules() {
-            let rules = this['rules()'];
-            if (rules)
-                return rules;
-            rules = [];
-            let lexems = this.lexems();
+            this.lexems = lexems;
+            this.rules = [];
             for (let name in lexems) {
-                rules.push({
+                this.rules.push({
                     name: name,
                     regExp: lexems[name],
                     size: RegExp('^$|' + lexems[name].source).exec('').length - 1,
                 });
             }
-            return this['rules()'] = rules;
+            const parts = '(' + this.rules.map(rule => rule.regExp.source).join(')|(') + ')';
+            this.regexp = RegExp(`([\\s\\S]*?)(?:(${parts})|$(?![^]))`, 'gm');
         }
-        regExp() {
-            let regExp = this['regExp()'];
-            if (regExp)
-                return regExp;
-            const parts = '(' + this.rules().map(rule => rule.regExp.source).join(')|(') + ')';
-            regExp = RegExp(`([^]*?)(?:(${parts})|$(?![^]))`, 'gm');
-            return this['regExp()'] = regExp;
-        }
-        tokenize(text) {
-            const tokens = [];
-            const rules = this.rules();
-            const regExp = this.regExp();
-            const regExpSize = RegExp('^$|' + regExp.source).exec('').length - 1;
-            let position = 0;
-            parsing: while (position < text.length) {
-                regExp.lastIndex = position;
-                var found = regExp.exec(text);
-                if (position === regExp.lastIndex)
+        tokenize(text, handle) {
+            let end = 0;
+            lexing: while (end < text.length) {
+                const start = end;
+                this.regexp.lastIndex = start;
+                var found = this.regexp.exec(text);
+                end = this.regexp.lastIndex;
+                if (start === end)
                     throw new Error('Empty token');
-                position = regExp.lastIndex;
                 var prefix = found[1];
-                if (prefix) {
-                    tokens.push({
-                        name: '',
-                        found: prefix,
-                        chunks: [],
-                    });
-                }
+                if (prefix)
+                    handle('', prefix, [], start);
                 var suffix = found[2];
-                if (suffix) {
-                    let offset = 4;
-                    for (let rule of rules) {
-                        if (found[offset - 1]) {
-                            tokens.push({
-                                name: rule.name,
-                                found: suffix,
-                                chunks: found.slice(offset, offset + rule.size)
-                            });
-                            continue parsing;
-                        }
-                        offset += rule.size + 1;
+                if (!suffix)
+                    continue;
+                let offset = 4;
+                for (let rule of this.rules) {
+                    if (found[offset - 1]) {
+                        handle(rule.name, suffix, found.slice(offset, offset + rule.size), start + prefix.length);
+                        continue lexing;
                     }
-                    throw new Error('Something wrong');
+                    offset += rule.size + 1;
                 }
+                $.$mol_fail(new Error('$mol_syntax2 is broken'));
             }
-            return tokens;
+        }
+        parse(text, handlers) {
+            this.tokenize(text, (name, ...args) => handlers[name](...args));
         }
     }
-    $.$mol_syntax = $mol_syntax;
+    $.$mol_syntax2 = $mol_syntax2;
 })($ || ($ = {}));
-//syntax.js.map
+//syntax2.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_syntax_md_flow = new $.$mol_syntax({
+    $.$mol_syntax2_md_flow = new $.$mol_syntax2({
         'quote': /^((?:(?:> )(?:[^]*?)$(\r?\n?))+)([\n\r]*)/,
         'header': /^(#+)(\s*)(.*?)$([\n\r]*)/,
         'list': /^((?:(?:\s?[*+-]|\d+\.)\s+(?:[^]*?)$(?:\r?\n?))+)((?:\r?\n)*)/,
@@ -4962,7 +4936,7 @@ var $;
         'table': /((?:^\|.+?$\r?\n)+)([\n\r]*)/,
         'block': /^(.*?(?:\r?\n.+?)*)$((?:\r?\n)*)/,
     });
-    $.$mol_syntax_md_line = new $.$mol_syntax({
+    $.$mol_syntax2_md_line = new $.$mol_syntax2({
         'strong': /\*\*(.+?)\*\*/,
         'emphasis': /\*(?!\s)(.+?)\*/,
         'code3': /```(.+?)```/,
@@ -4971,7 +4945,7 @@ var $;
         'text-link': /\[(.*?(?:\[.*?\].*?)*)\]\((.*?)\)/,
         'image-link': /!\[([^\[\]]*?)\]\((.*?)\)/,
     });
-    $.$mol_syntax_md_code = new $.$mol_syntax({
+    $.$mol_syntax2_md_code = new $.$mol_syntax2({
         'code-docs': /\/\/\/.*?$/,
         'code-comment-block': /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/|<![^]*?>)/,
         'code-link': /\w+:\/\/\S*/,
@@ -4980,8 +4954,8 @@ var $;
         'code-number': /[+-]?(?:\d*\.)?\d+\w*/,
         'code-call': /\.?\w+(?=\()/,
         'code-field': /(?:\.\w+|[\w-]+\??\s*:(?!\/\/))/,
-        'code-keyword': /\b(class|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|let|const|for|do|while|until|in|of|new|if|then|else|switch|case|this|return|async|await|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void)\b/,
-        'code-global': /[$]\w*/,
+        'code-keyword': /\b(readonly|unknown|keyof|typeof|never|from|class|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|let|const|for|do|while|until|in|of|new|if|then|else|switch|case|this|return|async|await|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void)\b/,
+        'code-global': /[$]\w*|[A-Z]\w*/,
         'code-decorator': /@\s*\S+/,
         'code-tag': /<\/?[\w-]+\/?>?/,
         'code-punctuation': /[\-\[\]\{\}\(\)<=>`~!\?@#\$%&\*_\+\\\/\|'";:\.,\^]/,
@@ -5312,7 +5286,9 @@ var $;
     (function ($$) {
         class $mol_text extends $.$mol_text {
             tokens() {
-                return this.$.$mol_syntax_md_flow.tokenize(this.text());
+                const tokens = [];
+                this.$.$mol_syntax2_md_flow.tokenize(this.text(), (name, found, chunks) => tokens.push({ name, found, chunks }));
+                return tokens;
             }
             rows() {
                 return this.tokens().map((token, index) => {
@@ -5370,66 +5346,73 @@ var $;
                 return url.toString();
             }
             text2spans(prefix, text) {
-                return this.$.$mol_syntax_md_line.tokenize(text).map((token, index) => {
-                    const id = `${prefix}/${index}`;
-                    switch (token.name) {
+                let index = 0;
+                const spans = [];
+                this.$.$mol_syntax2_md_line.tokenize(text, (name, found, chunks) => {
+                    const id = `${prefix}/${index++}`;
+                    switch (name) {
                         case 'text-link': {
-                            if (/^(\w+script+:)+/.test(token.chunks[1])) {
+                            if (/^(\w+script+:)+/.test(chunks[1])) {
                                 const span = this.Span(id);
-                                span.content(this.text2spans(id, token.chunks[0]));
-                                return span;
+                                span.content(this.text2spans(id, chunks[0]));
+                                return spans.push(span);
                             }
                             else {
                                 const span = this.Link(id);
-                                span.type(token.name);
-                                span.link(this.uri_resolve(token.chunks[1]));
-                                span.content(this.text2spans(id, token.chunks[0]));
-                                return span;
+                                span.type(name);
+                                span.link(this.uri_resolve(chunks[1]));
+                                span.content(this.text2spans(id, chunks[0]));
+                                return spans.push(span);
                             }
                         }
                         case 'image-link': {
-                            const span = this.Image(token.chunks[1]);
-                            span.type(token.name);
-                            span.link(this.uri_resolve(token.chunks[1]));
-                            span.title(token.chunks[0]);
-                            return span;
+                            const span = this.Image(chunks[1]);
+                            span.type(name);
+                            span.link(this.uri_resolve(chunks[1]));
+                            span.title(chunks[0]);
+                            return spans.push(span);
                         }
                         case 'code3':
                         case 'code': {
                             const span = this.Span(id);
                             span.type('code');
-                            span.content(this.code2spans(id, token.chunks[0]));
-                            return span;
+                            span.content(this.code2spans(id, chunks[0]));
+                            return spans.push(span);
                         }
                     }
                     const span = this.Span(id);
-                    span.type(token.name);
-                    span.content(token.name
-                        ? [].concat.apply([], token.chunks.map((text, index) => this.text2spans(`${id}/${index}`, text)))
-                        : [token.found]);
-                    return span;
+                    span.type(name);
+                    span.content(name
+                        ? [].concat.apply([], chunks.map((text, index) => this.text2spans(`${id}/${index}`, text)))
+                        : [found]);
+                    spans.push(span);
                 });
+                return spans;
             }
             code2spans(prefix, text) {
-                return this.$.$mol_syntax_md_code.tokenize(text).map((token, index) => {
-                    const id = `${prefix}/${index}`;
+                let index = 0;
+                const spans = [];
+                this.$.$mol_syntax2_md_code.tokenize(text, (name, found, chunks) => {
+                    const id = `${prefix}/${index++}`;
                     const span = this.Span(id);
-                    span.type(token.name);
-                    switch (token.name) {
+                    span.type(name);
+                    spans.push(span);
+                    switch (name) {
                         case 'code-docs': {
-                            span.content(this.text2spans(`${id}/${index}`, token.found));
+                            span.content(this.text2spans(`${id}/${index}`, found));
                             return span;
                         }
                         case 'code-string': {
-                            span.content([token.found[0], ...this.code2spans(`${id}/${index}`, token.found.slice(1, token.found.length - 1)), token.found[token.found.length - 1]]);
+                            span.content([found[0], ...this.code2spans(`${id}/${index}`, found.slice(1, found.length - 1)), found[found.length - 1]]);
                             return span;
                         }
                         default: {
-                            span.content([token.found]);
+                            span.content([found]);
                             return span;
                         }
                     }
                 });
+                return spans;
             }
             block_content(indexBlock) {
                 const token = this.tokens()[indexBlock];
@@ -23932,63 +23915,32 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
-        'search numbers'() {
-            const syntax = new $.$mol_syntax({
-                'number': /[+-]?\d+(?:\.\d+)?/
-            });
-            const serial = (tokens) => {
-                return tokens.map(token => `${token.name}=${token.found}`).join('|');
+        '$mol_syntax2_md_flow'() {
+            const check = (input, right) => {
+                const tokens = [];
+                $.$mol_syntax2_md_flow.tokenize(input, (...token) => tokens.push(token));
+                $.$mol_assert_like(JSON.stringify(tokens), JSON.stringify(right));
             };
-            $.$mol_assert_equal(serial(syntax.tokenize('')), '');
-            $.$mol_assert_equal(serial(syntax.tokenize('foo')), '=foo');
-            $.$mol_assert_equal(serial(syntax.tokenize('123')), 'number=123');
-            $.$mol_assert_equal(serial(syntax.tokenize('foo123bar')), '=foo|number=123|=bar');
-            $.$mol_assert_equal(serial(syntax.tokenize('foo123bar456')), '=foo|number=123|=bar|number=456');
-            $.$mol_assert_equal(serial(syntax.tokenize('foo123\n\nbar456\n')), '=foo|number=123|=\n\nbar|number=456|=\n');
-        }
-    });
-})($ || ($ = {}));
-//syntax.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'only text'() {
-            const tokens = $.$mol_syntax_md_flow.tokenize('Hello,\nWorld..\r\n\r\n\nof Love!');
-            $.$mol_assert_equal(tokens.map(token => token.found).join('|'), 'Hello,\nWorld..\r\n\r\n\n|of Love!');
+            check('Hello,\nWorld..\r\n\r\n\nof Love!', [
+                ['block', 'Hello,\nWorld..\r\n\r\n\n', ['Hello,\nWorld..', '\r\n\r\n\n'], 0],
+                ['block', 'of Love!', ['of Love!', ''], 19],
+            ]);
+            check('# Header1\n\nHello!\n\n## Header2', [
+                ['header', '# Header1\n\n', ['#', ' ', 'Header1', '\n\n'], 0],
+                ['block', 'Hello!\n\n', ['Hello!', '\n\n'], 11],
+                ['header', '## Header2', ['##', ' ', 'Header2', ''], 19],
+            ]);
+            check('```\nstart()\n```\n\n```js\nrestart()\n```\n\nHello!\n\n```\nstop()\n```', [
+                ['code', '```\nstart()\n```\n\n', ['```', '', 'start()\n', '```', '\n\n'], 0],
+                ['code', '```js\nrestart()\n```\n\n', ['```', 'js', 'restart()\n', '```', '\n\n'], 17],
+                ['block', 'Hello!\n\n', ['Hello!', '\n\n'], 38],
+                ['code', '```\nstop()\n```', ['```', '', 'stop()\n', '```', ''], 46],
+            ]);
+            check('| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n| Cell11 | Cell12\n| Cell21 | Cell22\n', [
+                ['table', '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n', ['| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n', '\n'], 0],
+                ['table', '| Cell11 | Cell12\n| Cell21 | Cell22\n', ['| Cell11 | Cell12\n| Cell21 | Cell22\n', ''], 68],
+            ]);
         },
-        'headers and text'() {
-            const tokens = $.$mol_syntax_md_flow.tokenize('# Header1\n\nHello!\n\n## Header2');
-            $.$mol_assert_equal(tokens.length, 3);
-            $.$mol_assert_equal(tokens[0].name, 'header');
-            $.$mol_assert_equal(tokens[0].chunks.join('|'), '#| |Header1|\n\n');
-            $.$mol_assert_equal(tokens[1].name, 'block');
-            $.$mol_assert_equal(tokens[1].chunks.join('|'), 'Hello!|\n\n');
-            $.$mol_assert_equal(tokens[2].name, 'header');
-            $.$mol_assert_equal(tokens[2].found, '## Header2');
-            $.$mol_assert_equal(tokens[2].chunks.join('|'), '##| |Header2|');
-        },
-        'codes and text'() {
-            const tokens = $.$mol_syntax_md_flow.tokenize('```\nstart()\n```\n\n```js\nrestart()\n```\n\nHello!\n\n```\nstop()\n```');
-            $.$mol_assert_equal(tokens.length, 4);
-            $.$mol_assert_equal(tokens[0].name, 'code');
-            $.$mol_assert_equal(tokens[0].chunks.join('|'), '```||start()\n|```|\n\n');
-            $.$mol_assert_equal(tokens[1].name, 'code');
-            $.$mol_assert_equal(tokens[1].chunks.join('|'), '```|js|restart()\n|```|\n\n');
-            $.$mol_assert_equal(tokens[2].name, 'block');
-            $.$mol_assert_equal(tokens[2].chunks.join('|'), 'Hello!|\n\n');
-            $.$mol_assert_equal(tokens[3].name, 'code');
-            $.$mol_assert_equal(tokens[3].chunks.join('|'), '```||stop()\n|```|');
-        },
-        'table'() {
-            const tokens = $.$mol_syntax_md_flow.tokenize('| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n| Cell11 | Cell12\n| Cell21 | Cell22\n');
-            $.$mol_assert_equal(tokens.length, 2);
-            $.$mol_assert_equal(tokens[0].name, 'table');
-            $.$mol_assert_equal(tokens[0].chunks[0], '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n');
-            $.$mol_assert_equal(tokens[1].name, 'table');
-            $.$mol_assert_equal(tokens[1].chunks[0], '| Cell11 | Cell12\n| Cell21 | Cell22\n');
-        }
     });
 })($ || ($ = {}));
 //md.test.js.map

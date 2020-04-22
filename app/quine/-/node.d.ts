@@ -701,153 +701,153 @@ declare namespace $ {
 
 declare namespace $ {
     const $mol_colors: {
-        aliceblue: string;
-        antiquewhite: string;
-        aqua: string;
-        aquamarine: string;
-        azure: string;
-        beige: string;
-        bisque: string;
-        black: string;
-        blanchedalmond: string;
-        blue: string;
-        blueviolet: string;
-        brown: string;
-        burlywood: string;
-        cadetblue: string;
-        chartreuse: string;
-        chocolate: string;
-        coral: string;
-        cornflowerblue: string;
-        cornsilk: string;
-        crimson: string;
-        cyan: string;
-        darkblue: string;
-        darkcyan: string;
-        darkgoldenrod: string;
-        darkgray: string;
-        darkgreen: string;
-        darkgrey: string;
-        darkkhaki: string;
-        darkmagenta: string;
-        darkolivegreen: string;
-        darkorange: string;
-        darkorchid: string;
-        darkred: string;
-        darksalmon: string;
-        darkseagreen: string;
-        darkslateblue: string;
-        darkslategrey: string;
-        darkturquoise: string;
-        darkviolet: string;
-        deeppink: string;
-        deepskyblue: string;
-        dimgray: string;
-        dimgrey: string;
-        dodgerblue: string;
-        firebrick: string;
-        floralwhite: string;
-        forestgreen: string;
-        fuchsia: string;
-        gainsboro: string;
-        ghostwhite: string;
-        gold: string;
-        goldenrod: string;
-        gray: string;
-        green: string;
-        greenyellow: string;
-        grey: string;
-        honeydew: string;
-        hotpink: string;
-        indianred: string;
-        indigo: string;
-        ivory: string;
-        khaki: string;
-        lavender: string;
-        lavenderblush: string;
-        lawngreen: string;
-        lemonchiffon: string;
-        lightblue: string;
-        lightcoral: string;
-        lightcyan: string;
-        lightgoldenrodyellow: string;
-        lightgray: string;
-        lightgreen: string;
-        lightgrey: string;
-        lightpink: string;
-        lightsalmon: string;
-        lightseagreen: string;
-        lightskyblue: string;
-        lightslategray: string;
-        lightslategrey: string;
-        lightsteelblue: string;
-        lightyellow: string;
-        lime: string;
-        limegreen: string;
-        linen: string;
-        magenta: string;
-        maroon: string;
-        mediumaquamarine: string;
-        mediumblue: string;
-        mediumorchid: string;
-        mediumpurple: string;
-        mediumseagreen: string;
-        mediumslateblue: string;
-        mediumspringgreen: string;
-        mediumturquoise: string;
-        mediumvioletred: string;
-        midnightblue: string;
-        mintcream: string;
-        mistyrose: string;
-        moccasin: string;
-        navajowhite: string;
-        navy: string;
-        oldlace: string;
-        olive: string;
-        olivedrab: string;
-        orange: string;
-        orangered: string;
-        orchid: string;
-        palegoldenrod: string;
-        palegreen: string;
-        paleturquoise: string;
-        palevioletred: string;
-        papayawhip: string;
-        peachpuff: string;
-        peru: string;
-        pink: string;
-        plum: string;
-        powderblue: string;
-        purple: string;
-        rebeccapurple: string;
-        red: string;
-        rosybrown: string;
-        royalblue: string;
-        saddlebrown: string;
-        salmon: string;
-        sandybrown: string;
-        seagreen: string;
-        seashell: string;
-        sienna: string;
-        silver: string;
-        skyblue: string;
-        slateblue: string;
-        slategray: string;
-        slategrey: string;
-        snow: string;
-        springgreen: string;
-        steelblue: string;
-        tan: string;
-        teal: string;
-        thistle: string;
-        tomato: string;
-        turquoise: string;
-        violet: string;
-        wheat: string;
-        white: string;
-        whitesmoke: string;
-        yellow: string;
-        yellowgreen: string;
+        readonly aliceblue: "#f0f8ff";
+        readonly antiquewhite: "#faebd7";
+        readonly aqua: "#00ffff";
+        readonly aquamarine: "#7fffd4";
+        readonly azure: "#f0ffff";
+        readonly beige: "#f5f5dc";
+        readonly bisque: "#ffe4c4";
+        readonly black: "#000000";
+        readonly blanchedalmond: "#ffebcd";
+        readonly blue: "#0000ff";
+        readonly blueviolet: "#8a2be2";
+        readonly brown: "#a52a2a";
+        readonly burlywood: "#deb887";
+        readonly cadetblue: "#5f9ea0";
+        readonly chartreuse: "#7fff00";
+        readonly chocolate: "#d2691e";
+        readonly coral: "#ff7f50";
+        readonly cornflowerblue: "#6495ed";
+        readonly cornsilk: "#fff8dc";
+        readonly crimson: "#dc143c";
+        readonly cyan: "#00ffff";
+        readonly darkblue: "#00008b";
+        readonly darkcyan: "#008b8b";
+        readonly darkgoldenrod: "#b8860b";
+        readonly darkgray: "#a9a9a9";
+        readonly darkgreen: "#006400";
+        readonly darkgrey: "#a9a9a9";
+        readonly darkkhaki: "#bdb76b";
+        readonly darkmagenta: "#8b008b";
+        readonly darkolivegreen: "#556b2f";
+        readonly darkorange: "#ff8c00";
+        readonly darkorchid: "#9932cc";
+        readonly darkred: "#8b0000";
+        readonly darksalmon: "#e9967a";
+        readonly darkseagreen: "#8fbc8f";
+        readonly darkslateblue: "#483d8b";
+        readonly darkslategrey: "#2f4f4f";
+        readonly darkturquoise: "#00ced1";
+        readonly darkviolet: "#9400d3";
+        readonly deeppink: "#ff1493";
+        readonly deepskyblue: "#00bfff";
+        readonly dimgray: "#696969";
+        readonly dimgrey: "#696969";
+        readonly dodgerblue: "#1e90ff";
+        readonly firebrick: "#b22222";
+        readonly floralwhite: "#fffaf0";
+        readonly forestgreen: "#228b22";
+        readonly fuchsia: "#ff00ff";
+        readonly gainsboro: "#dcdcdc";
+        readonly ghostwhite: "#f8f8ff";
+        readonly gold: "#ffd700";
+        readonly goldenrod: "#daa520";
+        readonly gray: "#808080";
+        readonly green: "#008000";
+        readonly greenyellow: "#adff2f";
+        readonly grey: "#808080";
+        readonly honeydew: "#f0fff0";
+        readonly hotpink: "#ff69b4";
+        readonly indianred: "#cd5c5c";
+        readonly indigo: "#4b0082";
+        readonly ivory: "#fffff0";
+        readonly khaki: "#f0e68c";
+        readonly lavender: "#e6e6fa";
+        readonly lavenderblush: "#fff0f5";
+        readonly lawngreen: "#7cfc00";
+        readonly lemonchiffon: "#fffacd";
+        readonly lightblue: "#add8e6";
+        readonly lightcoral: "#f08080";
+        readonly lightcyan: "#e0ffff";
+        readonly lightgoldenrodyellow: "#fafad2";
+        readonly lightgray: "#d3d3d3";
+        readonly lightgreen: "#90ee90";
+        readonly lightgrey: "#d3d3d3";
+        readonly lightpink: "#ffb6c1";
+        readonly lightsalmon: "#ffa07a";
+        readonly lightseagreen: "#20b2aa";
+        readonly lightskyblue: "#87cefa";
+        readonly lightslategray: "#778899";
+        readonly lightslategrey: "#778899";
+        readonly lightsteelblue: "#b0c4de";
+        readonly lightyellow: "#ffffe0";
+        readonly lime: "#00ff00";
+        readonly limegreen: "#32cd32";
+        readonly linen: "#faf0e6";
+        readonly magenta: "#ff00ff";
+        readonly maroon: "#800000";
+        readonly mediumaquamarine: "#66cdaa";
+        readonly mediumblue: "#0000cd";
+        readonly mediumorchid: "#ba55d3";
+        readonly mediumpurple: "#9370db";
+        readonly mediumseagreen: "#3cb371";
+        readonly mediumslateblue: "#7b68ee";
+        readonly mediumspringgreen: "#00fa9a";
+        readonly mediumturquoise: "#48d1cc";
+        readonly mediumvioletred: "#c71585";
+        readonly midnightblue: "#191970";
+        readonly mintcream: "#f5fffa";
+        readonly mistyrose: "#ffe4e1";
+        readonly moccasin: "#ffe4b5";
+        readonly navajowhite: "#ffdead";
+        readonly navy: "#000080";
+        readonly oldlace: "#fdf5e6";
+        readonly olive: "#808000";
+        readonly olivedrab: "#6b8e23";
+        readonly orange: "#ffa500";
+        readonly orangered: "#ff4500";
+        readonly orchid: "#da70d6";
+        readonly palegoldenrod: "#eee8aa";
+        readonly palegreen: "#98fb98";
+        readonly paleturquoise: "#afeeee";
+        readonly palevioletred: "#db7093";
+        readonly papayawhip: "#ffefd5";
+        readonly peachpuff: "#ffdab9";
+        readonly peru: "#cd853f";
+        readonly pink: "#ffc0cb";
+        readonly plum: "#dda0dd";
+        readonly powderblue: "#b0e0e6";
+        readonly purple: "#800080";
+        readonly rebeccapurple: "#663399";
+        readonly red: "#ff0000";
+        readonly rosybrown: "#bc8f8f";
+        readonly royalblue: "#4169e1";
+        readonly saddlebrown: "#8b4513";
+        readonly salmon: "#fa8072";
+        readonly sandybrown: "#f4a460";
+        readonly seagreen: "#2e8b57";
+        readonly seashell: "#fff5ee";
+        readonly sienna: "#a0522d";
+        readonly silver: "#c0c0c0";
+        readonly skyblue: "#87ceeb";
+        readonly slateblue: "#6a5acd";
+        readonly slategray: "#708090";
+        readonly slategrey: "#708090";
+        readonly snow: "#fffafa";
+        readonly springgreen: "#00ff7f";
+        readonly steelblue: "#4682b4";
+        readonly tan: "#d2b48c";
+        readonly teal: "#008080";
+        readonly thistle: "#d8bfd8";
+        readonly tomato: "#ff6347";
+        readonly turquoise: "#40e0d0";
+        readonly violet: "#ee82ee";
+        readonly wheat: "#f5deb3";
+        readonly white: "#ffffff";
+        readonly whitesmoke: "#f5f5f5";
+        readonly yellow: "#ffff00";
+        readonly yellowgreen: "#9acd32";
     };
 }
 
@@ -1224,41 +1224,58 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    interface $mol_syntax_token {
-        name: string;
-        found: string;
-        chunks: string[];
-    }
-    class $mol_syntax {
-        constructor(lexems: {
-            [name: string]: RegExp;
-        });
-        'lexems()': {
-            [name: string]: RegExp;
-        };
-        lexems(): {
-            [name: string]: RegExp;
-        };
-        'rules()': {
+    class $mol_syntax2<Lexems extends {
+        [name: string]: RegExp;
+    }> {
+        lexems: Lexems;
+        constructor(lexems: Lexems);
+        rules: {
             regExp: RegExp;
             name: string;
             size: number;
         }[];
-        rules(): {
-            regExp: RegExp;
-            name: string;
-            size: number;
-        }[];
-        'regExp()': RegExp;
-        regExp(): RegExp;
-        tokenize(text: string): $mol_syntax_token[];
+        regexp: RegExp;
+        tokenize(text: string, handle: (name: string, found: string, chunks: string[], offset: number) => void): void;
+        parse(text: string, handlers: {
+            [key in keyof Lexems | '']: (found: string, chunks: string[], offset: number) => void;
+        }): void;
     }
 }
 
 declare namespace $ {
-    var $mol_syntax_md_flow: $mol_syntax;
-    var $mol_syntax_md_line: $mol_syntax;
-    const $mol_syntax_md_code: $mol_syntax;
+    var $mol_syntax2_md_flow: $mol_syntax2<{
+        quote: RegExp;
+        header: RegExp;
+        list: RegExp;
+        code: RegExp;
+        'code-indent': RegExp;
+        table: RegExp;
+        block: RegExp;
+    }>;
+    var $mol_syntax2_md_line: $mol_syntax2<{
+        strong: RegExp;
+        emphasis: RegExp;
+        code3: RegExp;
+        code: RegExp;
+        strike: RegExp;
+        'text-link': RegExp;
+        'image-link': RegExp;
+    }>;
+    const $mol_syntax2_md_code: $mol_syntax2<{
+        'code-docs': RegExp;
+        'code-comment-block': RegExp;
+        'code-link': RegExp;
+        'code-comment-inline': RegExp;
+        'code-string': RegExp;
+        'code-number': RegExp;
+        'code-call': RegExp;
+        'code-field': RegExp;
+        'code-keyword': RegExp;
+        'code-global': RegExp;
+        'code-decorator': RegExp;
+        'code-tag': RegExp;
+        'code-punctuation': RegExp;
+    }>;
 }
 
 declare namespace $ {
@@ -1637,7 +1654,7 @@ declare namespace $ {
     class $mol_text extends $mol_list {
         uri_base(): string;
         text(): string;
-        tokens(): readonly $mol_syntax_token[];
+        tokens(): readonly any[];
         Quote(id: any): $$.$mol_text;
         quote_text(id: any): string;
         Row(id: any): $mol_text_row;
@@ -1723,10 +1740,14 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_text extends $.$mol_text {
-        tokens(): readonly $mol_syntax_token[];
+        tokens(): readonly {
+            name: string;
+            found: string;
+            chunks: string[];
+        }[];
         rows(): ($mol_grid | $mol_text | $mol_text_row | $mol_text_header)[];
         header_level(index: number): number;
-        header_content(index: number): ($mol_text_span | $mol_text_link | $mol_text_image)[];
+        header_content(index: number): $mol_view[];
         quote_text(index: number): string;
         block_type(index: number): string;
         cell_contents(indexBlock: number): string[][];
@@ -1740,11 +1761,11 @@ declare namespace $.$$ {
             block: number;
             row: number;
             cell: number;
-        }): ($mol_text_span | $mol_text_link | $mol_text_image)[];
+        }): $mol_view[];
         uri_base(): string;
         uri_resolve(uri: string): string;
-        text2spans(prefix: string, text: string): ($mol_text_span | $mol_text_link | $mol_text_image)[];
-        code2spans(prefix: string, text: string): $mol_text_span[];
+        text2spans(prefix: string, text: string): $mol_view[];
+        code2spans(prefix: string, text: string): $mol_view[];
         block_content(indexBlock: number): ($mol_view | string)[];
     }
 }
