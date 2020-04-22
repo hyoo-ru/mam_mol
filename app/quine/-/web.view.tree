@@ -112,12 +112,12 @@ $mol_text_span $mol_paragraph
 		mol_text_type <= type?val \
 	sub <= content?val /
 
-$mol_text_link $mol_link
+$mol_text_link $mol_link_iconed
 	attr *
 		^
 		mol_text_type <= type?val \
 	uri <= link?val \
-	sub <= content?val /
+	content <= content?val /
 
 $mol_text_image $mol_view
 	dom_name \object
@@ -274,3 +274,19 @@ $mol_link $mol_view
 	event *
 		^
 		click?event <=> click?event <=> event_click?event null
+
+$mol_link_iconed $mol_link
+	sub /
+		<= Icon $mol_image
+			uri <= icon \
+			title \
+	content /
+		<= title <= uri
+	host \
+
+$mol_image $mol_view
+	dom_name \img
+	field *
+		^
+		src <= uri \
+		alt <= title

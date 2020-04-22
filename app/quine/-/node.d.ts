@@ -1651,6 +1651,43 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_image extends $mol_view {
+        dom_name(): string;
+        field(): {
+            src: string;
+            alt: string;
+        };
+        uri(): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_link_iconed extends $mol_link {
+        sub(): readonly any[];
+        Icon(): $mol_image;
+        icon(): string;
+        content(): readonly any[];
+        title(): string;
+        host(): string;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_link_iconed extends $.$mol_link_iconed {
+        icon(): string;
+        host(): string;
+        title(): string;
+        sub(): any[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_text extends $mol_list {
         uri_base(): string;
         text(): string;
@@ -1707,7 +1744,7 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    class $mol_text_link extends $mol_link {
+    class $mol_text_link extends $mol_link_iconed {
         attr(): {
             mol_text_type: any;
             href: string;
@@ -1719,7 +1756,6 @@ declare namespace $ {
         type(val?: any, force?: $mol_mem_force): any;
         uri(): any;
         link(val?: any, force?: $mol_mem_force): any;
-        sub(): any;
         content(val?: any, force?: $mol_mem_force): any;
     }
 }

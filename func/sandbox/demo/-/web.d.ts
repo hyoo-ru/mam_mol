@@ -1728,7 +1728,7 @@ declare namespace $ {
     }
 }
 declare namespace $ {
-    class $mol_text_link extends $mol_link {
+    class $mol_text_link extends $mol_link_iconed {
         attr(): {
             mol_text_type: any;
             href: string;
@@ -1740,7 +1740,6 @@ declare namespace $ {
         type(val?: any, force?: $mol_mem_force): any;
         uri(): any;
         link(val?: any, force?: $mol_mem_force): any;
-        sub(): any;
         content(val?: any, force?: $mol_mem_force): any;
     }
 }
