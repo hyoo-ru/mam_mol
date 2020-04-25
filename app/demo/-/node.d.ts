@@ -650,13 +650,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_after_frame extends $mol_after_timeout {
-        task: () => void;
-        constructor(task: () => void);
-    }
-}
-
-declare namespace $ {
     type $mol_type_error<Message, Info = {}> = Message & {
         $mol_type_error: Info;
     };
@@ -933,7 +926,7 @@ declare namespace $.$$ {
     class $mol_scroll extends $.$mol_scroll {
         scroll_top(next?: number): number;
         scroll_left(next?: number): number;
-        _event_scroll_timer(next?: $mol_after_frame | null): $mol_after_frame | null | undefined;
+        _event_scroll_timer(next?: $mol_after_timeout | null): $mol_after_timeout | null | undefined;
         event_scroll(next?: Event): void;
     }
 }
@@ -1137,6 +1130,13 @@ declare namespace $.$$ {
     class $mol_check extends $.$mol_check {
         click(next?: Event): void;
         sub(): any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_after_frame extends $mol_after_timeout {
+        task: () => void;
+        constructor(task: () => void);
     }
 }
 
@@ -1520,9 +1520,6 @@ declare namespace $ {
 declare namespace $.$$ {
     class $mol_page extends $.$mol_page {
         body_scroll_top(next?: number): number;
-        style(): {
-            minWidth: number;
-        };
     }
 }
 
@@ -2226,183 +2223,18 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_plugin extends $mol_view {
-        dom_node(next?: Element): Element;
-        attr_static(): {
-            [key: string]: string | number | boolean;
-        };
-        event(): {
-            [key: string]: (event: Event) => void;
-        };
-        render(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_meter extends $mol_plugin {
-        zoom(): number;
-        width(val?: any, force?: $mol_mem_force): any;
-        height(val?: any, force?: $mol_mem_force): any;
-        left(val?: any, force?: $mol_mem_force): any;
-        right(val?: any, force?: $mol_mem_force): any;
-        bottom(val?: any, force?: $mol_mem_force): any;
-        top(val?: any, force?: $mol_mem_force): any;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_meter extends $.$mol_meter {
-        rect(): {
-            left: number;
-            top: number;
-            right: number;
-            bottom: number;
-            width: number;
-            height: number;
-            zoom: number;
-        };
-        top(): number;
-        bottom(): number;
-        left(): number;
-        right(): number;
-        width(): number;
-        height(): number;
-        zoom(): number;
-    }
-}
-
-declare namespace $ {
-    class $mol_touch extends $mol_plugin {
-        start_zoom(val?: any, force?: $mol_mem_force): any;
-        start_distance(val?: any, force?: $mol_mem_force): any;
-        zoom(val?: any, force?: $mol_mem_force): any;
-        start_pan(val?: any, force?: $mol_mem_force): any;
-        pan(val?: any, force?: $mol_mem_force): any;
-        pos(val?: any, force?: $mol_mem_force): any;
-        start_pos(val?: any, force?: $mol_mem_force): any;
-        swipe_precision(): number;
-        swipe_right(val?: any, force?: $mol_mem_force): any;
-        swipe_bottom(val?: any, force?: $mol_mem_force): any;
-        swipe_left(val?: any, force?: $mol_mem_force): any;
-        swipe_top(val?: any, force?: $mol_mem_force): any;
-        swipe_from_right(val?: any, force?: $mol_mem_force): any;
-        swipe_from_bottom(val?: any, force?: $mol_mem_force): any;
-        swipe_from_left(val?: any, force?: $mol_mem_force): any;
-        swipe_from_top(val?: any, force?: $mol_mem_force): any;
-        swipe_to_right(val?: any, force?: $mol_mem_force): any;
-        swipe_to_bottom(val?: any, force?: $mol_mem_force): any;
-        swipe_to_left(val?: any, force?: $mol_mem_force): any;
-        swipe_to_top(val?: any, force?: $mol_mem_force): any;
-        style(): {
-            "touch-action": string;
-        };
-        event(): {
-            touchstart: (event?: any) => any;
-            touchmove: (event?: any) => any;
-            touchend: (event?: any) => any;
-            mousedown: (event?: any) => any;
-            mousemove: (event?: any) => any;
-            mouseup: (event?: any) => any;
-            mouseleave: (event?: any) => any;
-            wheel: (event?: any) => any;
-        };
-        event_start(event?: any, force?: $mol_mem_force): any;
-        event_move(event?: any, force?: $mol_mem_force): any;
-        event_end(event?: any, force?: $mol_mem_force): any;
-        event_leave(event?: any, force?: $mol_mem_force): any;
-        event_wheel(event?: any, force?: $mol_mem_force): any;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_touch extends $.$mol_touch {
-        rect(): DOMRect;
-        event_start(event: TouchEvent | MouseEvent): void;
-        event_leave(event: TouchEvent | MouseEvent): void;
-        event_move(event: TouchEvent | MouseEvent): void;
-        swipe_left(event?: TouchEvent | MouseEvent): void;
-        swipe_right(event?: TouchEvent | MouseEvent): void;
-        swipe_top(event?: TouchEvent | MouseEvent): void;
-        swipe_bottom(event?: TouchEvent | MouseEvent): void;
-        event_end(event?: TouchEvent | MouseEvent): void;
-        event_wheel(event: WheelEvent): void;
-    }
-}
-
-declare namespace $ {
-    function $mol_dom_render_events(el: Element, events: {
-        [key: string]: (event: Event) => any;
-    }): void;
-    function $mol_dom_render_events_async(el: Element, events: {
-        [key: string]: (event: Event) => any;
-    }): void;
-}
-
-declare namespace $ {
-    class $mol_ghost extends $mol_view {
-        Sub(): $mol_view;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_ghost extends $.$mol_ghost {
-        dom_node(): Element;
-        dom_node_actual(): Element;
-        dom_tree(): Element;
-        title(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_book extends $mol_view {
+    class $mol_book2 extends $mol_scroll {
         sub(): readonly $mol_view[];
-        pages_wrapped(): readonly $mol_view[];
-        minimal_width(): number;
         pages(): readonly $mol_view[];
-        plugins(): readonly $mol_plugin[];
-        width(): number;
-        Meter(): $$.$mol_meter;
-        Touch(): $$.$mol_touch;
-        event_front_up(val?: any, force?: $mol_mem_force): any;
-        event_front_down(val?: any, force?: $mol_mem_force): any;
-        Page(index: any): $mol_book_page;
-        page(index: any): any;
-        page_visible(index: any): boolean;
-        Placeholder(): $mol_book_placeholder;
-    }
-}
-declare namespace $ {
-    class $mol_book_placeholder extends $mol_view {
         minimal_width(): number;
-        attr(): {
-            tabindex: any;
-        };
-    }
-}
-declare namespace $ {
-    class $mol_book_page extends $mol_ghost {
-        attr_static(): {
-            tabindex: number;
-            mol_book_page_visible: boolean;
-        };
-        attr(): {
-            mol_book_page_focused: boolean;
-            mol_book_page_visible: boolean;
-        };
-        visible(): boolean;
+        Placeholder(): $mol_view;
     }
 }
 
 declare namespace $.$$ {
-    class $mol_book extends $.$mol_book {
-        pages_extended(): $mol_view[];
-        break_point(): number;
-        page(index: number): $mol_view;
-        page_visible(index: number): boolean;
-        pages_wrapped(): $mol_view[];
+    class $mol_book2 extends $.$mol_book2 {
         title(): string;
-        event_front_up(event?: Event): void;
-        event_front_down(event?: Event): void;
+        sub(): $mol_view[];
     }
 }
 
@@ -2410,13 +2242,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_book_demo extends $mol_demo_large {
+    class $mol_book2_demo extends $mol_demo_large {
         title(): string;
         sub(): readonly any[];
-        View(): $$.$mol_book;
-        Placeholder(): $mol_book_placeholder;
-        Addon(): $mol_view;
-        Main(): $mol_view;
+        View(): $$.$mol_book2;
+        First(): $mol_view;
+        Second(): $mol_view;
+        Third(): $mol_view;
     }
 }
 
@@ -2874,6 +2706,110 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_plugin extends $mol_view {
+        dom_node(next?: Element): Element;
+        attr_static(): {
+            [key: string]: string | number | boolean;
+        };
+        event(): {
+            [key: string]: (event: Event) => void;
+        };
+        render(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_meter extends $mol_plugin {
+        zoom(): number;
+        width(val?: any, force?: $mol_mem_force): any;
+        height(val?: any, force?: $mol_mem_force): any;
+        left(val?: any, force?: $mol_mem_force): any;
+        right(val?: any, force?: $mol_mem_force): any;
+        bottom(val?: any, force?: $mol_mem_force): any;
+        top(val?: any, force?: $mol_mem_force): any;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_meter extends $.$mol_meter {
+        rect(): {
+            left: number;
+            top: number;
+            right: number;
+            bottom: number;
+            width: number;
+            height: number;
+            zoom: number;
+        };
+        top(): number;
+        bottom(): number;
+        left(): number;
+        right(): number;
+        width(): number;
+        height(): number;
+        zoom(): number;
+    }
+}
+
+declare namespace $ {
+    class $mol_touch extends $mol_plugin {
+        start_zoom(val?: any, force?: $mol_mem_force): any;
+        start_distance(val?: any, force?: $mol_mem_force): any;
+        zoom(val?: any, force?: $mol_mem_force): any;
+        start_pan(val?: any, force?: $mol_mem_force): any;
+        pan(val?: any, force?: $mol_mem_force): any;
+        pos(val?: any, force?: $mol_mem_force): any;
+        start_pos(val?: any, force?: $mol_mem_force): any;
+        swipe_precision(): number;
+        swipe_right(val?: any, force?: $mol_mem_force): any;
+        swipe_bottom(val?: any, force?: $mol_mem_force): any;
+        swipe_left(val?: any, force?: $mol_mem_force): any;
+        swipe_top(val?: any, force?: $mol_mem_force): any;
+        swipe_from_right(val?: any, force?: $mol_mem_force): any;
+        swipe_from_bottom(val?: any, force?: $mol_mem_force): any;
+        swipe_from_left(val?: any, force?: $mol_mem_force): any;
+        swipe_from_top(val?: any, force?: $mol_mem_force): any;
+        swipe_to_right(val?: any, force?: $mol_mem_force): any;
+        swipe_to_bottom(val?: any, force?: $mol_mem_force): any;
+        swipe_to_left(val?: any, force?: $mol_mem_force): any;
+        swipe_to_top(val?: any, force?: $mol_mem_force): any;
+        style(): {
+            "touch-action": string;
+        };
+        event(): {
+            touchstart: (event?: any) => any;
+            touchmove: (event?: any) => any;
+            touchend: (event?: any) => any;
+            mousedown: (event?: any) => any;
+            mousemove: (event?: any) => any;
+            mouseup: (event?: any) => any;
+            mouseleave: (event?: any) => any;
+            wheel: (event?: any) => any;
+        };
+        event_start(event?: any, force?: $mol_mem_force): any;
+        event_move(event?: any, force?: $mol_mem_force): any;
+        event_end(event?: any, force?: $mol_mem_force): any;
+        event_leave(event?: any, force?: $mol_mem_force): any;
+        event_wheel(event?: any, force?: $mol_mem_force): any;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_touch extends $.$mol_touch {
+        rect(): DOMRect;
+        event_start(event: TouchEvent | MouseEvent): void;
+        event_leave(event: TouchEvent | MouseEvent): void;
+        event_move(event: TouchEvent | MouseEvent): void;
+        swipe_left(event?: TouchEvent | MouseEvent): void;
+        swipe_right(event?: TouchEvent | MouseEvent): void;
+        swipe_top(event?: TouchEvent | MouseEvent): void;
+        swipe_bottom(event?: TouchEvent | MouseEvent): void;
+        event_end(event?: TouchEvent | MouseEvent): void;
+        event_wheel(event: WheelEvent): void;
+    }
 }
 
 declare namespace $ {
@@ -5435,6 +5371,86 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_dom_render_events(el: Element, events: {
+        [key: string]: (event: Event) => any;
+    }): void;
+    function $mol_dom_render_events_async(el: Element, events: {
+        [key: string]: (event: Event) => any;
+    }): void;
+}
+
+declare namespace $ {
+    class $mol_ghost extends $mol_view {
+        Sub(): $mol_view;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_ghost extends $.$mol_ghost {
+        dom_node(): Element;
+        dom_node_actual(): Element;
+        dom_tree(): Element;
+        title(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_book extends $mol_view {
+        sub(): readonly $mol_view[];
+        pages_wrapped(): readonly $mol_view[];
+        minimal_width(): number;
+        pages(): readonly $mol_view[];
+        plugins(): readonly $mol_plugin[];
+        width(): number;
+        Meter(): $$.$mol_meter;
+        Touch(): $$.$mol_touch;
+        event_front_up(val?: any, force?: $mol_mem_force): any;
+        event_front_down(val?: any, force?: $mol_mem_force): any;
+        Page(index: any): $mol_book_page;
+        page(index: any): any;
+        page_visible(index: any): boolean;
+        Placeholder(): $mol_book_placeholder;
+    }
+}
+declare namespace $ {
+    class $mol_book_placeholder extends $mol_view {
+        minimal_width(): number;
+        attr(): {
+            tabindex: any;
+        };
+    }
+}
+declare namespace $ {
+    class $mol_book_page extends $mol_ghost {
+        attr_static(): {
+            tabindex: number;
+            mol_book_page_visible: boolean;
+        };
+        attr(): {
+            mol_book_page_focused: boolean;
+            mol_book_page_visible: boolean;
+        };
+        visible(): boolean;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_book extends $.$mol_book {
+        pages_extended(): $mol_view[];
+        break_point(): number;
+        page(index: number): $mol_view;
+        page_visible(index: number): boolean;
+        pages_wrapped(): $mol_view[];
+        title(): string;
+        event_front_up(event?: Event): void;
+        event_front_down(event?: Event): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_icon_source extends $mol_icon {
         path(): string;
     }
@@ -5735,11 +5751,10 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_app_demo extends $mol_book {
+    class $mol_app_demo extends $mol_book2 {
         editor_title(): string;
         detail_title(): string;
         source_prefix(): string;
-        Placeholder(): any;
         Main(): $$.$mol_app_demo_main;
         pages(): readonly any[];
         blocks(): readonly any[];
@@ -5773,7 +5788,6 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_app_demo_menu extends $mol_page {
-        minimal_width(): number;
         title(): string;
         sub(): readonly any[];
         Filter(): $$.$mol_search;

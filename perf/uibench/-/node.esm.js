@@ -1595,19 +1595,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_after_frame extends $.$mol_after_timeout {
-        constructor(task) {
-            super(16, task);
-            this.task = task;
-        }
-    }
-    $.$mol_after_frame = $mol_after_frame;
-})($ || ($ = {}));
-//frame.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_decor {
         constructor(value) {
             this.value = value;
@@ -2715,7 +2702,7 @@ var $;
                 var _a;
                 (_a = this._event_scroll_timer()) === null || _a === void 0 ? void 0 : _a.destructor();
                 const el = this.dom_node();
-                this._event_scroll_timer(new $.$mol_after_frame($.$mol_fiber_solid.func(() => {
+                this._event_scroll_timer(new $.$mol_after_timeout(100, $.$mol_fiber_solid.func(() => {
                     this.scroll_top(Math.max(0, el.scrollTop));
                     this.scroll_left(Math.max(0, el.scrollLeft));
                 })));

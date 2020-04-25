@@ -1,0 +1,3 @@
+namespace $ { $mol_style_attach( "mol/book2/demo/demo.view.css",
+ "[mol_book2_demo_first], \n[mol_book2_demo_second], \n[mol_book2_demo_third] {\n\talign-items: center;\n\tjustify-content: center;\n\tfont-size: 2rem;\n\tdisplay: flex;\n}\n\n\n[mol_book2_demo_first] {\n\tflex: 1 0 20rem;\n\tbackground-color: hsla(240, 100%, 50%, .2);\n}\n\n[mol_book2_demo_second] {\n\tflex: 1 0 100%;\n\tbackground-color: hsla(120, 100%, 50%, .2);\n}\n\n[mol_book2_demo_third] {\n\tflex: 1 0 60rem;\n\tbackground-color: hsla(0, 100%, 50%, .2);\n}\n"
+) }

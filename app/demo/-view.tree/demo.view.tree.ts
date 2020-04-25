@@ -1,4 +1,4 @@
-namespace $ { export class $mol_app_demo extends $mol_book {
+namespace $ { export class $mol_app_demo extends $mol_book2 {
 
 	/**
 	 *  ```
@@ -29,22 +29,12 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 
 	/**
 	 *  ```
-	 *  Placeholder null
-	 *  ```
-	 **/
-	Placeholder() {
-		return null as any
-	}
-
-	/**
-	 *  ```
-	 *  Main $mol_app_demo_main event_top?event <=> event_front_up?event
+	 *  Main $mol_app_demo_main
 	 *  ```
 	 **/
 	@ $mol_mem
 	Main() {
 		return (( obj )=>{
-			obj.event_top = ( event? : any ) => this.event_front_up( event )
 			return obj
 		})( new this.$.$mol_app_demo_main(  ) )
 	}
@@ -85,7 +75,6 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	 *  	option!id <= nav_option!id
 	 *  	filter?val <=> filter_string?val
 	 *  	theme?val <=> theme?val
-	 *  	event_top?event <=> event_front_up?event
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -95,7 +84,6 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 			obj.option = ( id : any ) => this.nav_option(id)
 			obj.filter = ( val? : any ) => this.filter_string( val )
 			obj.theme = ( val? : any ) => this.theme( val )
-			obj.event_top = ( event? : any ) => this.event_front_up( event )
 			return obj
 		})( new this.$.$mol_app_demo_menu(  ) )
 	}
@@ -141,21 +129,17 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	/**
 	 *  ```
 	 *  Detail $mol_app_demo_detail
-	 *  	minimal_width 600
 	 *  	title <= detail_title
 	 *  	source_link <= source_link
 	 *  	body / <= Detail_list
-	 *  	event_top?val <=> event_front_up?val
 	 *  ```
 	 **/
 	@ $mol_mem
 	Detail() {
 		return (( obj )=>{
-			obj.minimal_width = () => 600
 			obj.title = () => this.detail_title()
 			obj.source_link = () => this.source_link()
 			obj.body = () => [ this.Detail_list() ] as readonly any[]
-			obj.event_top = ( val? : any ) => this.event_front_up( val )
 			return obj
 		})( new this.$.$mol_app_demo_detail(  ) )
 	}
@@ -194,7 +178,6 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	/**
 	 *  ```
 	 *  Editor!id $mol_app_studio
-	 *  	minimal_width 1000
 	 *  	title <= editor_title
 	 *  	class_name_base <= selected_class_name
 	 *  	tools_main / <= Close
@@ -203,7 +186,6 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 	@ $mol_mem_key
 	Editor( id : any ) {
 		return (( obj )=>{
-			obj.minimal_width = () => 1000
 			obj.title = () => this.editor_title()
 			obj.class_name_base = () => this.selected_class_name()
 			obj.tools_main = () => [ this.Close() ] as readonly any[]
@@ -340,15 +322,6 @@ namespace $ { export class $mol_app_demo extends $mol_book {
 } }
 
 namespace $ { export class $mol_app_demo_menu extends $mol_page {
-
-	/**
-	 *  ```
-	 *  minimal_width 240
-	 *  ```
-	 **/
-	minimal_width() {
-		return 240
-	}
 
 	/**
 	 *  ```

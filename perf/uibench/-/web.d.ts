@@ -382,10 +382,11 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_after_frame extends $mol_object2 {
+    class $mol_after_timeout extends $mol_object2 {
+        delay: number;
         task: () => void;
         id: any;
-        constructor(task: () => void);
+        constructor(delay: number, task: () => void);
         destructor(): void;
     }
 }
@@ -470,16 +471,6 @@ declare namespace $ {
         static add(defer: $mol_defer): void;
         static drop(defer: $mol_defer): void;
         static run(): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_after_timeout extends $mol_object2 {
-        delay: number;
-        task: () => void;
-        id: any;
-        constructor(delay: number, task: () => void);
-        destructor(): void;
     }
 }
 
@@ -586,6 +577,15 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_after_frame extends $mol_object2 {
+        task: () => void;
+        id: any;
+        constructor(task: () => void);
+        destructor(): void;
+    }
 }
 
 declare namespace $ {
@@ -928,7 +928,7 @@ declare namespace $.$$ {
     class $mol_scroll extends $.$mol_scroll {
         scroll_top(next?: number): number;
         scroll_left(next?: number): number;
-        _event_scroll_timer(next?: $mol_after_frame | null): $mol_after_frame | null | undefined;
+        _event_scroll_timer(next?: $mol_after_timeout | null): $mol_after_timeout | null | undefined;
         event_scroll(next?: Event): void;
     }
 }

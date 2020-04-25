@@ -1,9 +1,7 @@
-$mol_app_demo $mol_book
+$mol_app_demo $mol_book2
 	editor_title <= detail_title \$mol
 	source_prefix \https://github.com/eigenmethod/mol/tree/master/
-	Placeholder null
 	Main $mol_app_demo_main
-		event_top?event <=> event_front_up?event
 	pages <= blocks /
 	attr *
 		mol_theme <= theme
@@ -12,9 +10,7 @@ $mol_app_demo $mol_book
 		option!id <= nav_option!id null
 		filter?val <=> filter_string?val \
 		theme?val <=> theme?val \$mol_theme_dark
-		event_top?event <=> event_front_up?event
 	Detail $mol_app_demo_detail
-		minimal_width 600
 		title <= detail_title
 		source_link <= source_link \
 		body /
@@ -24,9 +20,7 @@ $mol_app_demo $mol_book
 				repository_name \nin-jin/mol_chat
 				title <= title
 				link <= chat_link \
-		event_top?val <=> event_front_up?val
 	Editor!id $mol_app_studio
-		minimal_width 1000
 		title <= editor_title
 		class_name_base <= selected_class_name \
 		tools_main /
@@ -46,7 +40,6 @@ $mol_app_demo $mol_book
 			<= detail_empty_postfix @ \"
 			
 $mol_app_demo_menu $mol_page
-	minimal_width 240
 	title @ \Demos
 	sub /
 		<= Head
@@ -562,114 +555,21 @@ $mol_bench_demo $mol_demo_small
 			col_sort?val <=> col_sort?val \mid
 			result <= result *
 
-$mol_book $mol_view
-	sub <= pages_wrapped /$mol_view
+$mol_book2 $mol_scroll
+	sub <= pages /$mol_view
 	minimal_width 0
-	pages /$mol_view
-	plugins /$mol_plugin
-		<= Meter $mol_meter
-			width => width
-		<= Touch $mol_touch
-			swipe_from_left?val <=> event_front_up?val null
-			swipe_to_left?val <=> event_front_down?val null
-	Page!index $mol_book_page
-		Sub <= page!index null
-		visible <= page_visible!index true
-	Placeholder $mol_book_placeholder
-		title <= title
+	Placeholder $mol_view
 
-$mol_book_placeholder $mol_view
-	minimal_width 400
-	attr *
-		^
-		tabindex null
-
-$mol_book_page $mol_ghost
-	attr_static *
-		^
-		tabindex 0
-		mol_book_page_visible true
-	attr *
-		^
-		mol_book_page_focused <= focused
-		mol_book_page_visible <= visible true
-
-$mol_meter $mol_plugin
-	zoom 1
-	-
-	width?val 0
-	height?val 0
-	-
-	left?val 0
-	right?val 0
-	bottom?val 0
-	top?val 0
-
-$mol_touch $mol_plugin
-	start_zoom?val 0
-	start_distance?val 0
-	zoom?val 1
-	-
-	start_pan?val /
-		0
-		0
-	pan?val /
-		0
-		0
-	pos?val /
-		NaN
-		NaN
-	-
-	start_pos?val null
-	swipe_precision 16
-	-
-	swipe_right?val null
-	swipe_bottom?val null
-	swipe_left?val null
-	swipe_top?val null
-	-
-	swipe_from_right?val null
-	swipe_from_bottom?val null
-	swipe_from_left?val null
-	swipe_from_top?val null
-	-
-	swipe_to_right?val null
-	swipe_to_bottom?val null
-	swipe_to_left?val null
-	swipe_to_top?val null
-	-
-	style *
-		^
-		touch-action \none
-	-
-	event *
-		^
-		touchstart?event <=> event_start?event null
-		touchmove?event <=> event_move?event null
-		touchend?event <=> event_end?event null
-		mousedown?event <=> event_start?event null
-		mousemove?event <=> event_move?event null
-		mouseup?event <=> event_end?event null
-		mouseleave?event <=> event_leave?event null
-		wheel?event <=> event_wheel?event null
-
-$mol_ghost $mol_view
-	Sub $mol_view
-
-$mol_book_demo $mol_demo_large
+$mol_book2_demo $mol_demo_large
 	title @ \Adaprive layout for various sizes of screen
 	sub /
-		<= View $mol_book
-			Placeholder <= Placeholder $mol_book_placeholder
-				minimal_width 200
-				sub / \ Placeholder
-			pages /
-				<= Addon $mol_view
-					minimal_width 250
-					sub / \ Addon
-				<= Main $mol_view
-					minimal_width 400
-					sub / \ Main
+		<= View $mol_book2 pages /
+			<= First $mol_view
+				sub / \ First
+			<= Second $mol_view
+				sub / \ Second
+			<= Third $mol_view
+				sub / \ Third
 
 $mol_button_demo $mol_demo_small
 	title @ \All types of buttons in every states
@@ -970,6 +870,65 @@ $mol_plot_pane $mol_svg_root
 	event *
 		^
 		dblclick?event <=> reset?event null
+
+$mol_meter $mol_plugin
+	zoom 1
+	-
+	width?val 0
+	height?val 0
+	-
+	left?val 0
+	right?val 0
+	bottom?val 0
+	top?val 0
+
+$mol_touch $mol_plugin
+	start_zoom?val 0
+	start_distance?val 0
+	zoom?val 1
+	-
+	start_pan?val /
+		0
+		0
+	pan?val /
+		0
+		0
+	pos?val /
+		NaN
+		NaN
+	-
+	start_pos?val null
+	swipe_precision 16
+	-
+	swipe_right?val null
+	swipe_bottom?val null
+	swipe_left?val null
+	swipe_top?val null
+	-
+	swipe_from_right?val null
+	swipe_from_bottom?val null
+	swipe_from_left?val null
+	swipe_from_top?val null
+	-
+	swipe_to_right?val null
+	swipe_to_bottom?val null
+	swipe_to_left?val null
+	swipe_to_top?val null
+	-
+	style *
+		^
+		touch-action \none
+	-
+	event *
+		^
+		touchstart?event <=> event_start?event null
+		touchmove?event <=> event_move?event null
+		touchend?event <=> event_end?event null
+		mousedown?event <=> event_start?event null
+		mousemove?event <=> event_move?event null
+		mouseup?event <=> event_end?event null
+		mouseleave?event <=> event_leave?event null
+		wheel?event <=> event_wheel?event null
 
 $mol_plot_bar $mol_plot_graph
 	style *
@@ -2550,6 +2509,41 @@ $mol_view_tree_test_attributes_subcomponent $mol_view
 
 $mol_view_tree_test_attributes_subcomponent_page $mol_view
 	Sub null
+
+$mol_book $mol_view
+	sub <= pages_wrapped /$mol_view
+	minimal_width 0
+	pages /$mol_view
+	plugins /$mol_plugin
+		<= Meter $mol_meter
+			width => width
+		<= Touch $mol_touch
+			swipe_from_left?val <=> event_front_up?val null
+			swipe_to_left?val <=> event_front_down?val null
+	Page!index $mol_book_page
+		Sub <= page!index null
+		visible <= page_visible!index true
+	Placeholder $mol_book_placeholder
+		title <= title
+
+$mol_book_placeholder $mol_view
+	minimal_width 400
+	attr *
+		^
+		tabindex null
+
+$mol_book_page $mol_ghost
+	attr_static *
+		^
+		tabindex 0
+		mol_book_page_visible true
+	attr *
+		^
+		mol_book_page_focused <= focused
+		mol_book_page_visible <= visible true
+
+$mol_ghost $mol_view
+	Sub $mol_view
 
 $mol_icon_source $mol_icon path \M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z
 
