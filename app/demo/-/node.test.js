@@ -2746,7 +2746,7 @@ var $;
                 var _a;
                 (_a = this._event_scroll_timer()) === null || _a === void 0 ? void 0 : _a.destructor();
                 const el = this.dom_node();
-                this._event_scroll_timer(new $.$mol_after_timeout(100, $.$mol_fiber_solid.func(() => {
+                this._event_scroll_timer(new $.$mol_after_timeout(200, $.$mol_fiber_solid.func(() => {
                     this.scroll_top(Math.max(0, el.scrollTop));
                     this.scroll_left(Math.max(0, el.scrollLeft));
                 })));
@@ -6802,7 +6802,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row-reverse nowrap;\n\talign-items: stretch;\n\toverflow: hidden;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\ttransform: translateZ( 0 );\n\toverflow: auto;\n\tscroll-snap-type: x mandatory;\n}\n\n[mol_book2] > * {\n\tflex: none;\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\tz-index: 0;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: var(--mol_theme_back);\n}\n");
+    $.$mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\toverflow: hidden;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\ttransform: scaleX( -1 ); /* hack for ff: prevent invisible scroll */\n\ttransition: none;\n\toverflow: auto;\n\tscroll-snap-type: x mandatory;\n}\n\n[mol_book2] > * {\n\ttransform: scaleX( -1 ); /* hack for ff: prevent invisible scroll */\n\tflex: none;\n\tscroll-snap-stop: always;\n\tscroll-snap-align: start;\n\tposition: relative;\n\tz-index: 0;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: var(--mol_theme_back);\n}\n");
 })($ || ($ = {}));
 //book2.view.css.js.map
 ;
