@@ -10,7 +10,7 @@
 	transform: scaleX( -1 ); /* hack for ff: prevent invisible scroll */
 	transition: none;
 	overflow: auto;
-	scroll-snap-type: x mandatory;
+	scroll-snap-type: x proximity;
 }
 
 [mol_book2] > * {
