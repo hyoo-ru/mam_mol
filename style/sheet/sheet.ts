@@ -10,7 +10,8 @@ namespace $ {
 
 		let rules = [] as string[]
 
-		const block = $mol_dom_qname( Component.name )
+		const block = $mol_dom_qname( $mol_func_name( Component ) )
+		const kebab = ( name : string )=> name.replace( /[A-Z]/g , letter => '-' + letter.toLowerCase() )
 
 		const make_class = ( prefix : string , path : string[] , config : typeof config0 )=> {
 
@@ -24,19 +25,40 @@ namespace $ {
 			for( const key of Object.keys( config ).reverse() ) {
 
 				if( /^[a-z]/.test(key) ) {
-
-					const name = key.replace( /[A-Z]/g , letter => '-' + letter.toLowerCase() )
-					const val = config[key]
 					
-					if( Array.isArray( val ) ) {
-						props.push(`\t${ name }: ${ val.join(' ') };\n`)
-					} else if( val.constructor === Object ) {
-						for( let suffix in val ) {
-							props.push(`\t${ name }-${ suffix }: ${ val[ suffix ] };\n`)
+					const addProp = ( keys : string[] , val : any  )=> {
+
+						if( Array.isArray( val ) ) {
+
+							if( val[0] && [ Array , Object ].includes( val[0].constructor ) ) {
+								val = val.map( v => {
+									return Object.entries( v ).map( ([ n , a ])=> {
+										if( a === true ) return kebab( n )
+										if( a === false ) return null
+										return String( a )
+									} ).filter( Boolean ).join(' ')
+								}).join( ',' )
+							} else {
+								val = val.join(' ')
+							}
+
+							props.push(`\t${ keys.join('-') }: ${ val };\n`)
+
+						} else if( val.constructor === Object ) {
+
+							for( let suffix in val ) {
+								addProp( [ ... keys  , kebab( suffix ) ] , val[ suffix ] )
+							}
+
+						} else {
+
+							props.push(`\t${ keys.join('-') }: ${ val };\n`)
+
 						}
-					} else {
-						props.push(`\t${ name }: ${ val };\n`)
+						
 					}
+
+					addProp( [ kebab(key) ] , config[key] )
 
 				} else if( /^[A-Z]/.test(key) ) {
 

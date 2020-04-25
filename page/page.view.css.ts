@@ -14,11 +14,13 @@ namespace $.$$ {
 		maxWidth: per(100) ,
 		maxHeight: per(100) ,
 		boxSizing: 'border-box' ,
-		background: $mol_theme.back ,
+		background: {
+			color: $mol_theme.back ,
+		},
 		color: $mol_theme.text ,
-		zIndex: '0' ,
+		zIndex: 0 ,
 		overflow: 'hidden',
-		boxShadow: `inset 0 0 0 .5px ${ $mol_theme.line }` ,
+		boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)` ,
 
 		':focus': {
 			outline: 'none',
@@ -33,9 +35,11 @@ namespace $.$$ {
 			margin: 0 ,
 			minHeight: calc(`1.5em + 2rem`) ,
 			padding: rem(.5) ,
-			background: $mol_theme.back ,
+			background: {
+				color: $mol_theme.back ,
+			},
 			boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)` ,
-			zIndex: '1',
+			zIndex: 1,
 		},
 
 		Title: {
@@ -43,12 +47,12 @@ namespace $.$$ {
 			flex: {
 				grow: 1000,
 				shrink: 1,
-				basis: $mol_style_unit.per(50),
+				basis: per(50),
 			},
 			padding: rem(.5),
 			wordBreak: 'normal',
 			cursor: 'default',
-			fontWeight: 'bolder',
+			textShadow: '0 0',
 
 			':empty': {
 				display: 'none',
@@ -72,7 +76,7 @@ namespace $.$$ {
 			flex: {
 				grow: 1000,
 				shrink: 1,
-				basis: $mol_style_unit.per(100),
+				basis: per(100),
 			},
 			margin: 0,
 		},
@@ -83,9 +87,11 @@ namespace $.$$ {
 			flex: 'none',
 			margin: 0,
 			overflow: 'hidden',
-			background: $mol_theme.back ,
+			background: {
+				color: $mol_theme.back ,
+			},
 			boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)` ,
-			zIndex: '1',
+			zIndex: 1,
 		},	
 
 	} )

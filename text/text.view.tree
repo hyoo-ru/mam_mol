@@ -1,7 +1,7 @@
 $mol_text $mol_list
 	uri_base \
 	text \
-	tokens /$mol_syntax_token
+	tokens /
 	Quote!id $mol_text
 		text <= quote_text!id \
 	Row!id $mol_text_row
@@ -42,12 +42,12 @@ $mol_text_span $mol_paragraph
 		mol_text_type <= type?val \
 	sub <= content?val /
 
-$mol_text_link $mol_link
+$mol_text_link $mol_link_iconed
 	attr *
 		^
 		mol_text_type <= type?val \
 	uri <= link?val \
-	sub <= content?val /
+	content <= content?val /
 
 $mol_text_image $mol_view
 	dom_name \object

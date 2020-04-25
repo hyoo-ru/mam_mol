@@ -14,10 +14,14 @@ namespace $ {
 		)=> {
 
 			const value = descr.value!
+			let warned = false
 			
 			descr.value = function $mol_deprecated_wrapper( this : Host , ... args : Parameters< Method > ) : ReturnType< Method >  {
 
-				console.warn( `${ host.constructor.name }::${ field } is deprecated. ${ message }` )
+				if( !warned ) {
+					console.warn( `${ host.constructor.name }::${ field } is deprecated. ${ message }` )
+					warned = true
+				}
 				
 				return value.call( this , ... args )
 			

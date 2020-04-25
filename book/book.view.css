@@ -32,7 +32,7 @@
 	position: absolute;
 	top: 1rem;
 	left: 0;
-	z-index: 1;
+	z-index: 2;
 	pointer-events: none;
 	color: var(--mol_skin_base_text);
 	transform: rotate(90deg);

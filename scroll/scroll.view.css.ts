@@ -11,7 +11,6 @@ namespace $.$$ {
 		boxSizing: 'border-box',
 		willChange: 'scroll-position',
 		transform: 'translateZ(0)', // enforce gpu scroll in all agents
-		boxShadow: `inset 0 0 0 .5px ${ $mol_theme.line }`,
 		maxHeight: per(100),
 		maxWidth: per(100),
 		webkitOverflowScrolling: 'touch',
@@ -22,15 +21,21 @@ namespace $.$$ {
 		},
 		
 		'::-webkit-scrollbar-corner': {
-			background: $mol_theme.line,
+			background: {
+				color: $mol_theme.line,
+			},
 		},
 
 		'::-webkit-scrollbar-track': {
-			background: $mol_theme.line,
+			background: {
+				color: $mol_theme.line,
+			},
 		},
 
 		'::-webkit-scrollbar-thumb': {
-			background: $mol_theme.control,
+			background: {
+				color: $mol_theme.control,
+			},
 		},
 
 		'@media' : {

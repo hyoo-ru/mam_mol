@@ -1,0 +1,10 @@
+$mol_book2_demo $mol_demo_large
+	title @ \Adaprive layout for various sizes of screen
+	sub /
+		<= View $mol_book2 pages /
+			<= First $mol_view
+				sub / \ First
+			<= Second $mol_view
+				sub / \ Second
+			<= Third $mol_view
+				sub / \ Third

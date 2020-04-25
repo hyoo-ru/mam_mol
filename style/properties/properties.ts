@@ -3,6 +3,11 @@ namespace $ {
 	export type $mol_style_properties = Partial< $mol_type_override< CSSStyleDeclaration , Overrides > >
 
 	type Common = 'inherit' | 'initial' | 'unset'
+
+	type Color =
+	| keyof typeof $mol_colors
+	| 'transparent' | 'currentcolor'
+	| $mol_style_func< 'hsla' | 'rgba' | 'var' >
 	
 	type Length = 0 | $mol_style_unit< $mol_style_unit_length > | $mol_style_func<'calc'>
 
@@ -14,10 +19,10 @@ namespace $ {
 	| Value
 	| [ Value , Value ]
 	| {
-		top? : Value ,
-		right? : Value ,
-		bottom? : Value ,
-		left? : Value ,
+		top?: Value ,
+		right?: Value ,
+		bottom?: Value ,
+		left?: Value ,
 	}
 
 	type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common
@@ -32,8 +37,36 @@ namespace $ {
 		| [ 'safe' | 'unsafe' , 'start' | 'end' | 'flex-start' | 'flex-end' ]
 		| Common
 
+		/** All background style properties. */
+		background?: {
+
+			/** Background color. */
+			color?: Color | Common
+			
+			/** Background images. */
+			image?: [ $mol_style_func<'url'> ][]
+
+		}
+
+		box?: {
+
+			/** Shadow effects around an element's frame. */
+			shadow?: readonly {
+				inset: boolean
+				x: Length
+				y: Length
+				blur: Length
+				spread: Length
+				color: Color
+			}[]
+
+		}
+
+		/** Foreground color value of text and text decorations, and sets the `currentcolor` value. */
+		color?: Color | Common
+
 		/** Whether an element is treated as a block or inline element and the layout used for its children, such as flow layout, grid or flex. */
-		display? :
+		display?:
 		| 'block' | 'inline' | 'run-in' | 'list-item' | 'none'
 		| 'flow' | 'flow-root' | 'table' | 'flex' | 'grid'
 		| 'contents'
@@ -44,62 +77,65 @@ namespace $ {
 		| Common
 
 		/** What to do when an element's content is too big to fit in its block formatting context. It is a shorthand for `overflowX` and `overflowY`. */
-		overflow? : Overflow | {
+		overflow?: Overflow | {
 
 			/** What shows when content overflows a block-level element's left and right edges. */
-			x? :  Overflow | Common
+			x?: Overflow | Common
 			
 			/** What shows when content overflows a block-level element's top and bottom edges. */
-			y? :  Overflow | Common
+			y?: Overflow | Common
 
 			/** A way to opt out of the browser's scroll anchoring behavior, which adjusts scroll position to minimize content shifts. */
-			anchor? : 'auto' | 'none' | Common
+			anchor?: 'auto' | 'none' | Common
 			
 		}
 
-		webkitOverflowScrolling? : 'auto' | 'touch'
+		webkitOverflowScrolling?: 'auto' | 'touch'
 		
 		/** Element's width. By default, it sets the width of the content area, but if `boxSizing` is set to `border-box`, it sets the width of the border area. */
-		width? : Size
+		width?: Size
 		/** Minimum width of an element. It prevents the used value of the `width` property from becoming smaller than the value specified for `minWidth`. */
-		minWidth? : Size
+		minWidth?: Size
 		/** Maximum width of an element. It prevents the used value of the `width` property from becoming larger than the value specified for `maxWidth`. */
-		maxWidth? : Size
+		maxWidth?: Size
 
 		/** Height of an element. By default, the property defines the height of the content area. If box-sizing is set to border-box, however, it instead determines the height of the border area. */
-		height? : Size
+		height?: Size
 		/** Minimum height of an element. It prevents the used value of the `height` property from becoming smaller than the value specified for `minHeight`. */
-		minHeight? : Size
+		minHeight?: Size
 		/** Maximum height of an element. It prevents the used value of the `height` property from becoming larger than the value specified for `maxHeight`. */
-		maxHeight? : Size
+		maxHeight?: Size
 
 		/** Margin area on all four sides of an element. */
-		margin? : Directions< Length | 'auto' >
+		margin?: Directions< Length | 'auto' >
 
 		/** Padding area on all four sides of an element. */
-		padding? : Directions< Length | 'auto' >
+		padding?: Directions< Length | 'auto' >
 
 		/** How a flex item will grow or shrink to fit the space available in its flex container. It is a shorthand for `flexGrow`, `flexShrink`, and `flexBasis`. */
-		flex? :
+		flex?:
 		| 'none' | 'auto'
 		| {
 
 			/** Growing weight of the flex item. Negative values are considered invalid. Defaults to 1 when omitted. */
-			grow? : number | Common
+			grow?: number | Common
 			
 			/** Shrinking weight of the flex item. Negative values are considered invalid. Defaults to 1 when omitted. */
-			shrink? : number | Common
+			shrink?: number | Common
 			
 			/** Preferred size of the flex item. A value of 0 must have a unit to avoid being interpreted as a flexibility. Defaults to 0 when omitted. */
-			basis? : Size
+			basis?: Size
 
 			/** How flex items are placed in the flex container defining the main axis and the direction (normal or reversed). */
-			direction? : 'row' | 'row-reverse' | 'column' | 'column-reverse'
+			direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
 
 			/** Whether flex items are forced onto one line or can wrap onto multiple lines. If wrapping is allowed, it sets the direction that lines are stacked. */
-			wrap? : 'wrap' | 'nowrap' | 'wrap-reverse' | Common
+			wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common
 
 		}
+
+		/** Z-order of a positioned element and its descendants or flex items. Overlapping elements with a larger z-index cover those with a smaller one. */
+		zIndex: number
 		
 	}
 
