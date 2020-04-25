@@ -1,0 +1,24 @@
+[mol_book2_demo_first], 
+[mol_book2_demo_second], 
+[mol_book2_demo_third] {
+	align-items: center;
+	justify-content: center;
+	font-size: 2rem;
+	display: flex;
+}
+
+
+[mol_book2_demo_first] {
+	flex: 1 0 20rem;
+	background-color: hsla(240, 100%, 50%, .2);
+}
+
+[mol_book2_demo_second] {
+	flex: 1 0 100%;
+	background-color: hsla(120, 100%, 50%, .2);
+}
+
+[mol_book2_demo_third] {
+	flex: 1 0 60rem;
+	background-color: hsla(0, 100%, 50%, .2);
+}
