@@ -3380,6 +3380,9 @@ var $;
         }
     }
     __decorate([
+        $.$mol_mem
+    ], $mol_file.prototype, "exists", null);
+    __decorate([
         $.$mol_mem_key
     ], $mol_file, "absolute", null);
     $.$mol_file = $mol_file;
