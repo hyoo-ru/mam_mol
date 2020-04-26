@@ -51,6 +51,7 @@ namespace $ {
 			destructor(): void
 		}
 		
+		@ $mol_mem
 		exists( next? : boolean ) {
 			let exists = true
 			try {
