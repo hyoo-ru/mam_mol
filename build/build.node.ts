@@ -117,7 +117,7 @@ namespace $ {
 					if( !/^[a-z0-9]/i.test( name ) ) return false
 					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
 
-					if (! child.exists()) return false
+					// if (! child.exists()) return false
 					
 					if( /(meta\.tree)$/.test( name ) ) {
 						mods.push( ... this.metaTreeTranspile( child.path() ) )
