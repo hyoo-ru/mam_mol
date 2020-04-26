@@ -279,6 +279,37 @@ namespace $ {
 		}
 
 		@ $mol_mem_key
+		tsHost( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+			
+			const host = $node.typescript.createCompilerHost( this.tsOptions() )
+			
+			host.fileExists = ( path )=> $mol_file.relative( path ).exists()
+			host.readFile = ( path )=> $mol_file.relative( path ).text()
+			host.writeFile = ( path , text )=> {
+				const file = $mol_file.relative( path )
+				file.exists( true , $mol_mem_force_cache )
+				file.text( text , $mol_mem_force_cache )
+			}
+			
+			return host
+		}
+
+		@ $mol_mem_key
+		tsTranspiler( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+			return $node.typescript.createProgram(
+				this.tsPaths({ path , exclude , bundle }) ,
+				this.tsOptions() ,
+				this.tsHost({ path , exclude , bundle }) ,
+			)
+		}
+
+		@ $mol_mem_key
+		tsTranspile( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+			const res = this.tsTranspiler({ path , exclude , bundle }).emit()
+			return res
+		}
+
+		@ $mol_mem_key
 		tsService( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
 
 			const paths = this.tsPaths({ path , exclude , bundle })
@@ -322,7 +353,7 @@ namespace $ {
 							getNewLine : ()=> '\n' ,
 						}) )
 						
-						this.js_error( diagnostic.file.getSourceFile().fileName , error )
+						this.js_error( diagnostic.file.getSourceFile().fileName.replace( /\.tsx?$/ , '.js' ) , error )
 						
 					} else {
 						console.error( $node.colorette.redBright( String(diagnostic.messageText) ) )
@@ -343,7 +374,7 @@ namespace $ {
 					for( const path of paths ) {
 						const version = $node.fs.statSync( path ).mtime.valueOf()
 						if( versions[ path ] && versions[ path ] !== version ) {
-							this.js_error(path,null)
+							this.js_error(path.replace( /\.tsx?$/ , '.js' ),null)
 							const watcher = watchers.get( path )
 							if( watcher ) watcher( path , 2 )
 						}
@@ -401,7 +432,7 @@ namespace $ {
 		}
 		
 		@ $mol_mem_key
-		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		sourcesJS( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
 
 			var sources = this.sourcesAll( { path , exclude } )
 			
@@ -413,6 +444,8 @@ namespace $ {
 				'gif' : 'image/gif' ,
 				'webp' : 'image/webp' ,
 			}
+
+			this.tsTranspile({ path , exclude , bundle : 'web' })
 
 			sources = sources.map(
 				src => {
@@ -434,7 +467,7 @@ namespace $ {
 					}
 
 					if( /^tsx?$/.test( ext ) ) {
-						return src//.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
+						return src.parent().resolve( src.name().replace( /\.tsx?$/ , '.js' ) )
 					}
 					
 					if( 'js' === ext ) {
