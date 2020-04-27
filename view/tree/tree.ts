@@ -206,7 +206,7 @@ namespace $ {
 								needSet = ns
 							} )
 							const object_args = value.select( '/' , '' ).sub.map( arg => getValue( arg ) ).join( ' , ' ) as string
-							return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new $.', new SourceNode(value.row, value.col, fileName, value.type) , '( ' , object_args , ' ) )']
+							return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new this.$.', new SourceNode(value.row, value.col, fileName, value.type) , '( ' , object_args , ' ) )']
 						case( value.type === '*' ) :
 							//needReturn = false
 							var opts : (string | SourceNode)[] = []
