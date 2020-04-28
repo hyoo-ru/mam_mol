@@ -117,8 +117,9 @@ namespace $ {
 
 		const SourceNode = $node['source-map'].SourceNode
 		type SourceNode = InstanceType< typeof SourceNode >
+		type StringNodeArray = (string | SourceNode)[];
 		
-		var content: (string | SourceNode)[] = []
+		var content: StringNodeArray = []
 		var locales : { [ key : string ] : string } = {}
 		
 		for( let def of $mol_view_tree_classes( tree ).sub ) {
@@ -127,7 +128,7 @@ namespace $ {
 			var parent = def.sub[0]
 			
 			var propDefs : { [ key : string ] : $mol_tree } = {}
-			var members : { [ key : string ] : (string | SourceNode)[] } = {}
+			var members : { [ key : string ] : StringNodeArray } = {}
 			
 			for( let param of $mol_view_tree_class_props( def ).sub ) { try {
 				var needSet = false
@@ -149,7 +150,7 @@ namespace $ {
 					needCache = true
 				}
 				
-				const getValue = ( value : $mol_tree , definition? : boolean ) : (string | SourceNode)[] | null=> { try {
+				const getValue = ( value : $mol_tree , definition? : boolean ) : StringNodeArray | null=> { try {
 					switch( true ) {
 						case( value.type === '' ) :
 							return [JSON.stringify( value.value )]
@@ -161,7 +162,7 @@ namespace $ {
 							return null
 						case( value.type[0] === '/' ) :
 							const item_type = value.type.substring( 1 )
-							var items : (string | SourceNode)[] = []
+							var items : StringNodeArray = []
 							value.sub.forEach( item => {
 								if( item.type === '-' ) return
 								if( item.type === '^' ) {
@@ -175,7 +176,7 @@ namespace $ {
 						case( value.type[0] === '$' ) :
 							if( !definition ) throw value.error( 'Objects should be bound' )
 							needCache = true
-							var overs : (string | SourceNode)[] = []
+							var overs : StringNodeArray = []
 							value.sub.forEach( over => {
 								if( /^[-\/]?$/.test( over.type ) ) return ''
 								var overName = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
@@ -209,7 +210,7 @@ namespace $ {
 							return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new this.$.', new SourceNode(value.row, value.col, fileName, value.type) , '( ' , object_args , ' ) )']
 						case( value.type === '*' ) :
 							//needReturn = false
-							var opts : (string | SourceNode)[] = []
+							var opts : StringNodeArray = []
 							value.sub.forEach( opt => {
 								if( opt.type === '-' ) return ''
 								if( opt.type === '^' ) {
@@ -268,7 +269,7 @@ namespace $ {
 					if( propName[3] ) args.push( ` ${ propName[3] }? : any , force? : $${''}mol_mem_force ` )
 					if( needSet && param.sub[0].type !== '<=>' ) val = [( needReturn ? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : ` : `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t` ) , ...val]
 					if( needReturn ) val = ['return ', ...val]
-					var decl: (string | SourceNode)[] = ['\t', new SourceNode(param.row, param.col, fileName, propName[1]),'(', args.join(',') , ') {\n\t\t' , ...val , '\n\t}\n\n']
+					var decl: StringNodeArray = ['\t', new SourceNode(param.row, param.col, fileName, propName[1]),'(', args.join(',') , ') {\n\t\t' , ...val , '\n\t}\n\n']
 					if( needCache ) {
 						if( propName[2] ) decl = ['\t@ $' , 'mol_mem_key\n', ...decl]
 						else decl = ['\t@ $', 'mol_mem\n', ...decl]
@@ -285,8 +286,8 @@ namespace $ {
 			var body = Object.keys( members ).reduce( function( acc, name ) {
 				const items = members[ name ] ? members[name] : ['\t' , name ,'() { return null as any }\n\t}\n']
 				return [...acc, ...items]
-			}, [] as (string | SourceNode)[])
-			var classes: (string | SourceNode)[] = [ 'namespace $ { export class ', new SourceNode(def.row, def.col, fileName, def.type ), ' extends ', new SourceNode(parent.row, parent.col, fileName, parent.type), ' {\n\n', ...body, '} }\n'] 
+			}, [] as StringNodeArray)
+			var classes: StringNodeArray = [ 'namespace $ { export class ', new SourceNode(def.row, def.col, fileName, def.type ), ' extends ', new SourceNode(parent.row, parent.col, fileName, parent.type), ' {\n\n', ...body, '} }\n'] 
 			
 			content = [...content, ...classes]
 		}
