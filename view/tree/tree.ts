@@ -290,7 +290,12 @@ namespace $ {
 			
 			content = [...content, ...classes]
 		}
-		const codeWithSourceMap = new SourceNode(null as any, null as any, fileName, content as any).toStringWithSourceMap();
+
+		splittedUri.push(`-view.tree`,`${ fileName }.map`)
+
+		const node = new SourceNode(null as any, null as any, fileName, content as any);
+		node.add(`//@ sourceMappingURL=${splittedUri.join($node.path.sep)}`);
+		const codeWithSourceMap= node.toStringWithSourceMap();
 		return { script : codeWithSourceMap.code, locales : locales, map: codeWithSourceMap.map.toString() }
 	}
 
