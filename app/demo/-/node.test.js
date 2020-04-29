@@ -14034,7 +14034,7 @@ var $;
 var $;
 (function ($) {
     class $mol_drag_demo extends $.$mol_demo_large {
-        products_count() {
+        task_count() {
             return 100;
         }
         sub() {
@@ -14084,48 +14084,48 @@ var $;
         }
         List() {
             return ((obj) => {
-                obj.rows = () => this.product_cards();
+                obj.rows = () => this.task_rows();
                 return obj;
             })(new this.$.$mol_list());
         }
-        product_cards() {
+        task_rows() {
             return [];
         }
-        Product_item(prod) {
+        Task_row(task) {
             return ((obj) => {
                 obj.transfer = () => ({
-                    "text/plain": this.product_title(prod),
-                    "text/html": this.product_html(prod),
-                    "text/uri-list": this.product_uri(prod),
+                    "text/plain": this.task_title(task),
+                    "text/html": this.task_html(task),
+                    "text/uri-list": this.task_uri(task),
                 });
-                obj.Sub = () => this.Product_drop(prod);
+                obj.Sub = () => this.Task_drop(task);
                 return obj;
             })(new this.$.$mol_drag());
         }
-        product_title(prod) {
+        task_title(task) {
             return "";
         }
-        product_html(prod) {
+        task_html(task) {
             return "";
         }
-        product_uri(prod) {
+        task_uri(task) {
             return "";
         }
-        Product_drop(prod) {
+        Task_drop(task) {
             return ((obj) => {
                 obj.adopt = (transfer) => this.transfer_adopt(transfer);
-                obj.receive = (obj) => this.receive_before(prod, obj);
-                obj.Sub = () => this.Product_link(prod);
+                obj.receive = (obj) => this.receive_before(task, obj);
+                obj.Sub = () => this.Task_link(task);
                 return obj;
             })(new this.$.$mol_drop());
         }
-        receive_before(prod, obj, force) {
+        receive_before(task, obj, force) {
             return (obj !== void 0) ? obj : null;
         }
-        Product_link(prod) {
+        Task_link(task) {
             return ((obj) => {
-                obj.uri = () => this.product_uri(prod);
-                obj.sub = () => [this.product_title(prod)];
+                obj.uri = () => this.task_uri(task);
+                obj.sub = () => [this.task_title(task)];
                 return obj;
             })(new this.$.$mol_link());
         }
@@ -14159,16 +14159,16 @@ var $;
     ], $mol_drag_demo.prototype, "List", null);
     __decorate([
         $.$mol_mem_key
-    ], $mol_drag_demo.prototype, "Product_item", null);
+    ], $mol_drag_demo.prototype, "Task_row", null);
     __decorate([
         $.$mol_mem_key
-    ], $mol_drag_demo.prototype, "Product_drop", null);
+    ], $mol_drag_demo.prototype, "Task_drop", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_drag_demo.prototype, "receive_before", null);
     __decorate([
         $.$mol_mem_key
-    ], $mol_drag_demo.prototype, "Product_link", null);
+    ], $mol_drag_demo.prototype, "Task_link", null);
     $.$mol_drag_demo = $mol_drag_demo;
 })($ || ($ = {}));
 //demo.view.tree.js.map
@@ -14179,53 +14179,53 @@ var $;
     var $$;
     (function ($$) {
         class $mol_drag_demo extends $.$mol_drag_demo {
-            products(next) {
-                return next !== null && next !== void 0 ? next : [...$.$mol_range2(index => this.Product(String(index + 1)), () => this.products_count())];
+            task_list(next) {
+                return next !== null && next !== void 0 ? next : [...$.$mol_range2(index => this.Task(String(index + 1)), () => this.task_count())];
             }
-            Product(id) {
+            Task(id) {
                 return { id: id, title: `Task #${id}` };
             }
-            product_cards() {
-                return this.products().map(task => this.Product_item(task));
+            task_rows() {
+                return this.task_list().map(task => this.Task_row(task));
             }
-            product_title(product) {
-                return product.title;
+            task_title(task) {
+                return task.title;
             }
-            product_uri(product) {
-                return this.$.$mol_state_arg.make_link(Object.assign(Object.assign({}, this.$.$mol_state_arg.dict()), { 'product': product.id }));
+            task_uri(task) {
+                return this.$.$mol_state_arg.make_link(Object.assign(Object.assign({}, this.$.$mol_state_arg.dict()), { 'product': task.id }));
             }
             transfer_adopt(transfer) {
                 const uri = transfer.getData("text/uri-list");
                 if (!uri)
                     return;
-                return this.products().find(prod => this.product_uri(prod) === uri);
+                return this.task_list().find(task => this.task_uri(task) === uri);
             }
-            receive_before(prod, prod2) {
-                if (prod === prod2)
+            receive_before(anchor, task) {
+                if (anchor === task)
                     return;
-                const products = this.products().filter(p => p !== prod2);
-                const index = products.indexOf(prod);
-                products.splice(index, 0, prod2);
-                this.products(products);
+                const tasks = this.task_list().filter(p => p !== task);
+                const index = tasks.indexOf(anchor);
+                tasks.splice(index, 0, task);
+                this.task_list(tasks);
             }
-            receive(prod) {
-                const products = this.products().filter(p => p !== prod);
-                products.push(prod);
-                this.products(products);
+            receive(task) {
+                const tasks = this.task_list().filter(p => p !== task);
+                tasks.push(task);
+                this.task_list(tasks);
             }
-            receive_trash(prod) {
-                this.products(this.products().filter(p => p !== prod));
+            receive_trash(task) {
+                this.task_list(this.task_list().filter(p => p !== task));
             }
         }
         __decorate([
             $.$mol_mem
-        ], $mol_drag_demo.prototype, "products", null);
+        ], $mol_drag_demo.prototype, "task_list", null);
         __decorate([
             $.$mol_mem_key
-        ], $mol_drag_demo.prototype, "Product", null);
+        ], $mol_drag_demo.prototype, "Task", null);
         __decorate([
             $.$mol_mem_key
-        ], $mol_drag_demo.prototype, "product_uri", null);
+        ], $mol_drag_demo.prototype, "task_uri", null);
         $$.$mol_drag_demo = $mol_drag_demo;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -14238,7 +14238,7 @@ var $;
     (function ($$) {
         const { rem, px } = $.$mol_style_unit;
         $.$mol_style_define($$.$mol_drag_demo, {
-            Product_drop: {
+            Task_drop: {
                 '@': {
                     mol_drop_status: {
                         drag: {
@@ -14265,7 +14265,7 @@ var $;
                     },
                 },
             },
-            Product_link: {
+            Task_link: {
                 padding: rem(.5),
                 display: 'block',
             },

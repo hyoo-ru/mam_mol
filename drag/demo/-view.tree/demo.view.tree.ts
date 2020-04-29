@@ -2,10 +2,10 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  products_count 100
+	 *  task_count 100
 	 *  ```
 	 **/
-	products_count() {
+	task_count() {
 		return 100
 	}
 
@@ -128,116 +128,116 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  List $mol_list rows <= product_cards
+	 *  List $mol_list rows <= task_rows
 	 *  ```
 	 **/
 	@ $mol_mem
 	List() {
 		return (( obj )=>{
-			obj.rows = () => this.product_cards()
+			obj.rows = () => this.task_rows()
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  product_cards /
+	 *  task_rows /
 	 *  ```
 	 **/
-	product_cards() {
+	task_rows() {
 		return [  ] as readonly any[]
 	}
 
 	/**
 	 *  ```
-	 *  Product_item!prod $mol_drag
+	 *  Task_row!task $mol_drag
 	 *  	transfer *
-	 *  		text/plain <= product_title!prod
-	 *  		text/html <= product_html!prod
-	 *  		text/uri-list <= product_uri!prod
-	 *  	Sub <= Product_drop!prod
+	 *  		text/plain <= task_title!task
+	 *  		text/html <= task_html!task
+	 *  		text/uri-list <= task_uri!task
+	 *  	Sub <= Task_drop!task
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	Product_item( prod : any ) {
+	Task_row( task : any ) {
 		return (( obj )=>{
 			obj.transfer = () => ({
-			"text/plain" :  this.product_title(prod) ,
-			"text/html" :  this.product_html(prod) ,
-			"text/uri-list" :  this.product_uri(prod) ,
+			"text/plain" :  this.task_title(task) ,
+			"text/html" :  this.task_html(task) ,
+			"text/uri-list" :  this.task_uri(task) ,
 		})
-			obj.Sub = () => this.Product_drop(prod)
+			obj.Sub = () => this.Task_drop(task)
 			return obj
 		})( new this.$.$mol_drag(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  product_title!prod \
+	 *  task_title!task \
 	 *  ```
 	 **/
-	product_title( prod : any ) {
+	task_title( task : any ) {
 		return ""
 	}
 
 	/**
 	 *  ```
-	 *  product_html!prod \
+	 *  task_html!task \
 	 *  ```
 	 **/
-	product_html( prod : any ) {
+	task_html( task : any ) {
 		return ""
 	}
 
 	/**
 	 *  ```
-	 *  product_uri!prod \
+	 *  task_uri!task \
 	 *  ```
 	 **/
-	product_uri( prod : any ) {
+	task_uri( task : any ) {
 		return ""
 	}
 
 	/**
 	 *  ```
-	 *  Product_drop!prod $mol_drop
+	 *  Task_drop!task $mol_drop
 	 *  	adopt?transfer <=> transfer_adopt?transfer
-	 *  	receive?obj <=> receive_before!prod?obj
-	 *  	Sub <= Product_link!prod
+	 *  	receive?obj <=> receive_before!task?obj
+	 *  	Sub <= Task_link!task
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	Product_drop( prod : any ) {
+	Task_drop( task : any ) {
 		return (( obj )=>{
 			obj.adopt = ( transfer? : any ) => this.transfer_adopt( transfer )
-			obj.receive = ( obj? : any ) => this.receive_before(prod , obj )
-			obj.Sub = () => this.Product_link(prod)
+			obj.receive = ( obj? : any ) => this.receive_before(task , obj )
+			obj.Sub = () => this.Task_link(task)
 			return obj
 		})( new this.$.$mol_drop(  ) )
 	}
 
 	/**
 	 *  ```
-	 *  receive_before!prod?obj null
+	 *  receive_before!task?obj null
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	receive_before( prod : any , obj? : any , force? : $mol_mem_force ) {
+	receive_before( task : any , obj? : any , force? : $mol_mem_force ) {
 		return ( obj !== void 0 ) ? obj : null as any
 	}
 
 	/**
 	 *  ```
-	 *  Product_link!prod $mol_link
-	 *  	uri <= product_uri!prod
-	 *  	sub / <= product_title!prod
+	 *  Task_link!task $mol_link
+	 *  	uri <= task_uri!task
+	 *  	sub / <= task_title!task
 	 *  ```
 	 **/
 	@ $mol_mem_key
-	Product_link( prod : any ) {
+	Task_link( task : any ) {
 		return (( obj )=>{
-			obj.uri = () => this.product_uri(prod)
-			obj.sub = () => [ this.product_title(prod) ] as readonly any[]
+			obj.uri = () => this.task_uri(task)
+			obj.sub = () => [ this.task_title(task) ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}

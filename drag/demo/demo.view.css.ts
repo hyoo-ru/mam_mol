@@ -4,7 +4,7 @@ namespace $.$$ {
 
 	$mol_style_define( $mol_drag_demo , {
 		
-		Product_drop:{
+		Task_drop:{
 			'@': {
 				mol_drop_status: {
 					drag: {
@@ -34,7 +34,7 @@ namespace $.$$ {
 			},
 		},
 		
-		Product_link: {
+		Task_link: {
 			padding: rem(.5),
 			display: 'block',
 		},

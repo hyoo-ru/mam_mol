@@ -4069,7 +4069,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_drag_demo extends $mol_demo_large {
-        products_count(): number;
+        task_count(): number;
         sub(): readonly any[];
         Scroll(): $$.$mol_scroll;
         Trash_drop(): $$.$mol_drop;
@@ -4080,35 +4080,35 @@ declare namespace $ {
         List_drop(): $$.$mol_drop;
         receive(obj?: any, force?: $mol_mem_force): any;
         List(): $$.$mol_list;
-        product_cards(): readonly any[];
-        Product_item(prod: any): $$.$mol_drag;
-        product_title(prod: any): string;
-        product_html(prod: any): string;
-        product_uri(prod: any): string;
-        Product_drop(prod: any): $$.$mol_drop;
-        receive_before(prod: any, obj?: any, force?: $mol_mem_force): any;
-        Product_link(prod: any): $$.$mol_link;
+        task_rows(): readonly any[];
+        Task_row(task: any): $$.$mol_drag;
+        task_title(task: any): string;
+        task_html(task: any): string;
+        task_uri(task: any): string;
+        Task_drop(task: any): $$.$mol_drop;
+        receive_before(task: any, obj?: any, force?: $mol_mem_force): any;
+        Task_link(task: any): $$.$mol_link;
     }
 }
 
 declare namespace $.$$ {
-    type $mol_drag_demo_product = {
+    type $mol_drag_demo_task = {
         id: string;
         title: string;
     };
     class $mol_drag_demo extends $.$mol_drag_demo {
-        products(next?: $mol_drag_demo_product[]): $mol_drag_demo_product[];
-        Product(id: string): {
+        task_list(next?: $mol_drag_demo_task[]): $mol_drag_demo_task[];
+        Task(id: string): {
             id: string;
             title: string;
         };
-        product_cards(): $mol_drag[];
-        product_title(product: $mol_drag_demo_product): string;
-        product_uri(product: $mol_drag_demo_product): string;
-        transfer_adopt(transfer: DataTransfer): $mol_drag_demo_product | undefined;
-        receive_before(prod: $mol_drag_demo_product, prod2: $mol_drag_demo_product): void;
-        receive(prod: $mol_drag_demo_product): void;
-        receive_trash(prod: $mol_drag_demo_product): void;
+        task_rows(): $mol_drag[];
+        task_title(task: $mol_drag_demo_task): string;
+        task_uri(task: $mol_drag_demo_task): string;
+        transfer_adopt(transfer: DataTransfer): $mol_drag_demo_task | undefined;
+        receive_before(anchor: $mol_drag_demo_task, task: $mol_drag_demo_task): void;
+        receive(task: $mol_drag_demo_task): void;
+        receive_trash(task: $mol_drag_demo_task): void;
     }
 }
 

@@ -1569,7 +1569,7 @@ $mol_ghost $mol_view
 	Sub $mol_view
 
 $mol_drag_demo $mol_demo_large
-	products_count 100
+	task_count 100
 	sub /
 		<= Scroll $mol_scroll sub /
 			<= Trash_drop $mol_drop
@@ -1582,18 +1582,18 @@ $mol_drag_demo $mol_demo_large
 				adopt?transfer <=> transfer_adopt?transfer null
 				receive?obj <=> receive?obj null
 				Sub <= List $mol_list
-					rows <= product_cards /
-	Product_item!prod $mol_drag
+					rows <= task_rows /
+	Task_row!task $mol_drag
 		transfer *
-			text/plain <= product_title!prod \
-			text/html <= product_html!prod \
-			text/uri-list <= product_uri!prod \
-		Sub <= Product_drop!prod $mol_drop
+			text/plain <= task_title!task \
+			text/html <= task_html!task \
+			text/uri-list <= task_uri!task \
+		Sub <= Task_drop!task $mol_drop
 			adopt?transfer <=> transfer_adopt?transfer null
-			receive?obj <=> receive_before!prod?obj null
-			Sub <= Product_link!prod $mol_link
-				uri <= product_uri!prod \
-				sub / <= product_title!prod \
+			receive?obj <=> receive_before!task?obj null
+			Sub <= Task_link!task $mol_link
+				uri <= task_uri!task \
+				sub / <= task_title!task \
 
 
 $mol_drop $mol_ghost

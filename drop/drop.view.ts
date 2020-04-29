@@ -7,8 +7,7 @@ namespace $.$$ {
 		enter( event : DragEvent ) {
 
 			if( event.defaultPrevented ) return
-// console.log(this.receive( event.dataTransfer! ))
-			// if( !this.receive( event.dataTransfer! ) ) return
+			// if( !this.adopt( event.dataTransfer! ) ) return
 
 			setTimeout( ()=> this.status( 'drag' ) )
 			
@@ -21,7 +20,7 @@ namespace $.$$ {
 			
 			if( event.defaultPrevented ) return
 
-			// if( !this.receive( event.dataTransfer! ) ) return
+			// if( !this.adopt( event.dataTransfer! ) ) return
 			
 			event.dataTransfer!.dropEffect = 'move'
 			event.preventDefault()
