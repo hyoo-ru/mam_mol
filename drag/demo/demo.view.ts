@@ -14,7 +14,11 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		Task( id : string ) {
-			return { id : id , title : `Task #${ id }` }
+			return {
+				id : id ,
+				title : `Task #${ id }` ,
+				toJSON : ()=> id ,
+			}
 		}
 
 		task_rows() {
