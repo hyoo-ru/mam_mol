@@ -70,7 +70,7 @@ namespace $ { export class $mol_plot_ruler extends $mol_plot_graph {
 	 *  ```
 	 **/
 	axis_points() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -102,7 +102,7 @@ namespace $ { export class $mol_plot_ruler extends $mol_plot_graph {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Background() , this.Curve() , this.labels_formatted() , this.Title() ] as readonly any[]
+		return [this.Background() , this.Curve() , this.labels_formatted() , this.Title()] as readonly any[]
 	}
 
 	/**
@@ -189,7 +189,7 @@ namespace $ { export class $mol_plot_ruler extends $mol_plot_graph {
 	 *  ```
 	 **/
 	labels_formatted() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -265,7 +265,7 @@ namespace $ { export class $mol_plot_ruler extends $mol_plot_graph {
 	 *  ```
 	 **/
 	label_pos( index : any ) {
-		return [ this.label_pos_x(index) , this.label_pos_y(index) ] as readonly any[]
+		return [this.label_pos_x(index) , this.label_pos_y(index)] as readonly any[]
 	}
 
 	/**
@@ -305,4 +305,4 @@ namespace $ { export class $mol_plot_ruler extends $mol_plot_graph {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/ruler/-view.tree/ruler.view.tree.map

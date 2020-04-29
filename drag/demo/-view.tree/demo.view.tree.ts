@@ -15,7 +15,7 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.List_drop() ] as readonly any[]
+		return [this.List_drop()] as readonly any[]
 	}
 
 	/**
@@ -66,7 +66,7 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 	@ $mol_mem
 	Scroll() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Trash_drop() , this.List() ] as readonly any[]
+			obj.sub = () => [this.Trash_drop() , this.List()] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -109,7 +109,7 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 	@ $mol_mem
 	Trash() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Trash_icon() , "Trash" ] as readonly any[]
+			obj.sub = () => [this.Trash_icon() , "Trash"] as readonly any[]
 			return obj
 		})( new this.$.$mol_float(  ) )
 	}
@@ -145,7 +145,7 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	task_rows() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -237,10 +237,10 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 	Task_link( task : any ) {
 		return (( obj )=>{
 			obj.uri = () => this.task_uri(task)
-			obj.sub = () => [ this.task_title(task) ] as readonly any[]
+			obj.sub = () => [this.task_title(task)] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/drag/demo/-view.tree/demo.view.tree.map

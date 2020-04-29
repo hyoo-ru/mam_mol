@@ -47,7 +47,7 @@ namespace $ { export class $mol_perf_uibench_table extends $mol_list {
 	 *  ```
 	 **/
 	rows() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -73,7 +73,6 @@ namespace $ { export class $mol_perf_uibench_table extends $mol_list {
 	}
 
 } }
-
 namespace $ { export class $mol_perf_uibench_table_row extends $mol_view {
 
 	/**
@@ -145,7 +144,7 @@ namespace $ { export class $mol_perf_uibench_table_row extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Head() , this.cells() ] as readonly any[]
+		return [this.Head() , this.cells()] as readonly any[]
 	}
 
 	/**
@@ -176,7 +175,7 @@ namespace $ { export class $mol_perf_uibench_table_row extends $mol_view {
 	 *  ```
 	 **/
 	cells() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -202,7 +201,6 @@ namespace $ { export class $mol_perf_uibench_table_row extends $mol_view {
 	}
 
 } }
-
 namespace $ { export class $mol_perf_uibench_table_cell extends $mol_view {
 
 	/**
@@ -258,7 +256,7 @@ namespace $ { export class $mol_perf_uibench_table_cell extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.text() ] as readonly any[]
+		return [this.text()] as readonly any[]
 	}
 
 	/**
@@ -271,4 +269,4 @@ namespace $ { export class $mol_perf_uibench_table_cell extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/perf/uibench/table/-view.tree/table.view.tree.map

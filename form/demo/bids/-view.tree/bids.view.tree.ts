@@ -44,7 +44,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Form() , this.Message() ] as readonly any[]
+		return [this.Form() , this.Message()] as readonly any[]
 	}
 
 	/**
@@ -63,8 +63,8 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	Form() {
 		return (( obj )=>{
 			obj.submit = ( val? : any ) => this.submit( val )
-			obj.form_fields = () => [ this.Name_first_field() , this.Name_nick_field() , this.Name_second_field() , this.Sex_field() ] as readonly any[]
-			obj.buttons = () => [ this.Submit() ] as readonly any[]
+			obj.form_fields = () => [this.Name_first_field() , this.Name_nick_field() , this.Name_second_field() , this.Sex_field()] as readonly any[]
+			obj.buttons = () => [this.Submit()] as readonly any[]
 			return obj
 		})( new this.$.$mol_form(  ) )
 	}
@@ -408,7 +408,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	@ $mol_mem
 	Submit() {
 		return (( obj )=>{
-			obj.sub = () => [ this.submit_text() ] as readonly any[]
+			obj.sub = () => [this.submit_text()] as readonly any[]
 			obj.click = ( val? : any ) => this.submit( val )
 			obj.disabled = () => this.submit_blocked()
 			return obj
@@ -441,7 +441,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	@ $mol_mem
 	Message() {
 		return (( obj )=>{
-			obj.sub = () => [ this.message() ] as readonly any[]
+			obj.sub = () => [this.message()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -457,4 +457,4 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/form/demo/bids/-view.tree/bids.view.tree.map

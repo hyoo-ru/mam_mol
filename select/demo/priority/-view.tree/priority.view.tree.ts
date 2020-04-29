@@ -15,7 +15,7 @@ namespace $ { export class $mol_select_demo_priority extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Priority() ] as readonly any[]
+		return [this.Priority()] as readonly any[]
 	}
 
 	/**
@@ -36,7 +36,7 @@ namespace $ { export class $mol_select_demo_priority extends $mol_demo_small {
 		return (( obj )=>{
 			obj.Filter = () => null as any
 			obj.value = ( val? : any ) => this.priority( val )
-			obj.options = () => [ "Highest " , "High" , "Medium" , "Low" , "Lowest" ] as readonly any[]
+			obj.options = () => ["Highest " , "High" , "Medium" , "Low" , "Lowest"] as readonly any[]
 			return obj
 		})( new this.$.$mol_select(  ) )
 	}
@@ -52,4 +52,4 @@ namespace $ { export class $mol_select_demo_priority extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/select/demo/priority/-view.tree/priority.view.tree.map

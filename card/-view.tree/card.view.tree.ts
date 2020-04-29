@@ -31,7 +31,7 @@ namespace $ { export class $mol_card extends $mol_list {
 	 *  ```
 	 **/
 	rows() {
-		return [ this.Content() , this.Status() ] as readonly ( $mol_view )[]
+		return [this.Content() , this.Status()] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -53,7 +53,7 @@ namespace $ { export class $mol_card extends $mol_list {
 	 *  ```
 	 **/
 	content() {
-		return [  ] as readonly ( $mol_view_content )[]
+		return [] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -67,7 +67,7 @@ namespace $ { export class $mol_card extends $mol_list {
 	Status() {
 		return (( obj )=>{
 			obj.minimal_height = () => 30
-			obj.sub = () => [ this.status_text() ] as readonly any[]
+			obj.sub = () => [this.status_text()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -82,4 +82,4 @@ namespace $ { export class $mol_card extends $mol_list {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/card/-view.tree/card.view.tree.map

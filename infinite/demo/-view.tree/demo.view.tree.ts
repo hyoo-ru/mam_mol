@@ -24,7 +24,7 @@ namespace $ { export class $mol_infinite_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Scroll() ] as readonly any[]
+		return [this.Scroll()] as readonly any[]
 	}
 
 	/**
@@ -35,7 +35,7 @@ namespace $ { export class $mol_infinite_demo extends $mol_demo_large {
 	@ $mol_mem
 	Scroll() {
 		return (( obj )=>{
-			obj.sub = () => [ this.List() ] as readonly any[]
+			obj.sub = () => [this.List()] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -62,7 +62,7 @@ namespace $ { export class $mol_infinite_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	after( anchor_id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -76,7 +76,7 @@ namespace $ { export class $mol_infinite_demo extends $mol_demo_large {
 	Item( id : any ) {
 		return (( obj )=>{
 			obj.minimal_height = () => 40
-			obj.sub = () => [ this.item_title(id) ] as readonly any[]
+			obj.sub = () => [this.item_title(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -91,4 +91,4 @@ namespace $ { export class $mol_infinite_demo extends $mol_demo_large {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/infinite/demo/-view.tree/demo.view.tree.map

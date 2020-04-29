@@ -29,7 +29,7 @@ namespace $ { export class $mol_calendar_demo_selection extends $mol_demo_small 
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Calendar() ] as readonly any[]
+		return [this.Calendar()] as readonly any[]
 	}
 
 	/**
@@ -67,4 +67,4 @@ namespace $ { export class $mol_calendar_demo_selection extends $mol_demo_small 
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/calendar/demo/selection/-view.tree/selection.view.tree.map

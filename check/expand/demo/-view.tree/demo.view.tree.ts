@@ -20,7 +20,7 @@ namespace $ { export class $mol_check_expand_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Labeled_base() , this.Labeled_expanded() , this.Empty_base() , this.Empty_expanded() , this.Disabled() ] as readonly any[]
+		return [this.Labeled_base() , this.Labeled_expanded() , this.Empty_base() , this.Empty_expanded() , this.Disabled()] as readonly any[]
 	}
 
 	/**
@@ -145,4 +145,4 @@ namespace $ { export class $mol_check_expand_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/check/expand/demo/-view.tree/demo.view.tree.map

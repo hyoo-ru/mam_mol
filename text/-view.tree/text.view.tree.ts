@@ -24,7 +24,7 @@ namespace $ { export class $mol_text extends $mol_list {
 	 *  ```
 	 **/
 	tokens() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -71,7 +71,7 @@ namespace $ { export class $mol_text extends $mol_list {
 	 *  ```
 	 **/
 	block_content( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -150,7 +150,7 @@ namespace $ { export class $mol_text extends $mol_list {
 	 *  ```
 	 **/
 	header_content( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -175,7 +175,7 @@ namespace $ { export class $mol_text extends $mol_list {
 	 *  ```
 	 **/
 	table_head_cells( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -184,7 +184,7 @@ namespace $ { export class $mol_text extends $mol_list {
 	 *  ```
 	 **/
 	table_rows( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -206,7 +206,7 @@ namespace $ { export class $mol_text extends $mol_list {
 	 *  ```
 	 **/
 	table_cells( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -228,7 +228,7 @@ namespace $ { export class $mol_text extends $mol_list {
 	 *  ```
 	 **/
 	table_cell_content( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -245,7 +245,6 @@ namespace $ { export class $mol_text extends $mol_list {
 	}
 
 } }
-
 namespace $ { export class $mol_text_row extends $mol_paragraph {
 
 	/**
@@ -272,7 +271,6 @@ namespace $ { export class $mol_text_row extends $mol_paragraph {
 	}
 
 } }
-
 namespace $ { export class $mol_text_header extends $mol_paragraph {
 
 	/**
@@ -323,11 +321,10 @@ namespace $ { export class $mol_text_header extends $mol_paragraph {
 	 *  ```
 	 **/
 	content() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 } }
-
 namespace $ { export class $mol_text_span extends $mol_paragraph {
 
 	/**
@@ -379,11 +376,10 @@ namespace $ { export class $mol_text_span extends $mol_paragraph {
 	 **/
 	@ $mol_mem
 	content( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [  ] as readonly any[]
+		return ( val !== void 0 ) ? val : [] as readonly any[]
 	}
 
 } }
-
 namespace $ { export class $mol_text_link extends $mol_link_iconed {
 
 	/**
@@ -436,11 +432,10 @@ namespace $ { export class $mol_text_link extends $mol_link_iconed {
 	 **/
 	@ $mol_mem
 	content( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [  ] as readonly any[]
+		return ( val !== void 0 ) ? val : [] as readonly any[]
 	}
 
 } }
-
 namespace $ { export class $mol_text_image extends $mol_view {
 
 	/**
@@ -496,7 +491,7 @@ namespace $ { export class $mol_text_image extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.title() ] as readonly any[]
+		return [this.title()] as readonly any[]
 	}
 
 	/**
@@ -510,4 +505,4 @@ namespace $ { export class $mol_text_image extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/text/-view.tree/text.view.tree.map

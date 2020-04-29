@@ -19,7 +19,7 @@ namespace $ { export class $mol_map_yandex extends $mol_view {
 	 **/
 	@ $mol_mem
 	center( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [ 0 , 0 ] as readonly any[]
+		return ( val !== void 0 ) ? val : [0 , 0] as readonly any[]
 	}
 
 	/**
@@ -28,8 +28,8 @@ namespace $ { export class $mol_map_yandex extends $mol_view {
 	 *  ```
 	 **/
 	objects() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/map/yandex/-view.tree/yandex.view.tree.map

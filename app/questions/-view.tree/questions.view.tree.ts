@@ -49,7 +49,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 		return (( obj )=>{
 			obj.title = () => this.title_default()
 			obj.minimal_width = () => 400
-			obj.body = () => [ this.Menu_links() ] as readonly any[]
+			obj.body = () => [this.Menu_links()] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
 	}
@@ -82,7 +82,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	 *  ```
 	 **/
 	menu_rows() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -105,8 +105,8 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 			obj.minimal_width = () => 600
 			obj.title = () => this.question_title(id)
 			obj.event_top = ( val? : any ) => this.event_front_up( val )
-			obj.tools = () => [ this.Details_permalink(id) , this.Details_close(id) ] as readonly any[]
-			obj.body = () => [ this.Details_descr(id) , this.Answers(id) ] as readonly any[]
+			obj.tools = () => [this.Details_permalink(id) , this.Details_close(id)] as readonly any[]
+			obj.body = () => [this.Details_descr(id) , this.Answers(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
 	}
@@ -131,7 +131,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	Details_permalink( id : any ) {
 		return (( obj )=>{
 			obj.uri = () => this.question_permalink(id)
-			obj.sub = () => [ this.Details_permalink_icon(id) ] as readonly any[]
+			obj.sub = () => [this.Details_permalink_icon(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -167,7 +167,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	@ $mol_mem_key
 	Details_close( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.Details_close_icon(id) ] as readonly any[]
+			obj.sub = () => [this.Details_close_icon(id)] as readonly any[]
 			obj.arg = () => ({
 			"question" :  null as any ,
 		})
@@ -228,7 +228,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	 *  ```
 	 **/
 	answers( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -268,7 +268,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 		return (( obj )=>{
 			obj.minimal_height = () => 64
 			obj.arg = () => this.question_arg_by_index(index)
-			obj.sub = () => [ this.Question_title(index) , this.Question_tags(index) ] as readonly any[]
+			obj.sub = () => [this.Question_title(index) , this.Question_tags(index)] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -291,7 +291,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	@ $mol_mem_key
 	Question_title( index : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.question_title_by_index(index) ] as readonly any[]
+			obj.sub = () => [this.question_title_by_index(index)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -324,7 +324,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	 *  ```
 	 **/
 	question_tags_by_index( index : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -335,7 +335,7 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	@ $mol_mem_key
 	Tag( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.tag_name(id) ] as readonly any[]
+			obj.sub = () => [this.tag_name(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -350,4 +350,4 @@ namespace $ { export class $mol_app_questions extends $mol_book {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/questions/-view.tree/questions.view.tree.map

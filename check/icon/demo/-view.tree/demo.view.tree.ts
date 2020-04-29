@@ -18,7 +18,7 @@ namespace $ { export class $mol_check_icon_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Base() , this.Checked() , this.Disabled() ] as readonly any[]
+		return [this.Base() , this.Checked() , this.Disabled()] as readonly any[]
 	}
 
 	/**
@@ -128,4 +128,4 @@ namespace $ { export class $mol_check_icon_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/check/icon/demo/-view.tree/demo.view.tree.map

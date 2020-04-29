@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	path() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -83,7 +83,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	tools() {
-		return [ this.Type() , this.Object() ] as readonly any[]
+		return [this.Type() , this.Object()] as readonly any[]
 	}
 
 	/**
@@ -191,7 +191,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	object_options() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -216,7 +216,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	content() {
-		return [ this.Bool() , this.Number() , this.String() , this.Bind() , this.List() , this.Dict() , this.Overs() ] as readonly any[]
+		return [this.Bool() , this.Number() , this.String() , this.Bind() , this.List() , this.Dict() , this.Overs()] as readonly any[]
 	}
 
 	/**
@@ -349,7 +349,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	bind_options() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -415,7 +415,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	list_rows() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -437,7 +437,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	pairs() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -459,7 +459,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	overs() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -547,7 +547,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	@ $mol_mem
 	Add_pair() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Add_pair_key() , this.Add_pair_submit() ] as readonly any[]
+			obj.sub = () => [this.Add_pair_key() , this.Add_pair_submit()] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -595,7 +595,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	key_suggests() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -609,7 +609,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	Add_pair_submit() {
 		return (( obj )=>{
 			obj.event_click = ( val? : any ) => this.add_pair( val )
-			obj.sub = () => [ this.Add_pair_submit_icon() ] as readonly any[]
+			obj.sub = () => [this.Add_pair_submit_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -693,7 +693,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	over_options() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -730,7 +730,7 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	 *  ```
 	 **/
 	prop_path( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -787,7 +787,6 @@ namespace $ { export class $mol_app_studio_field extends $mol_expander {
 	}
 
 } }
-
 namespace $ { export class $mol_app_studio_field_title extends $mol_check_expand {
 
 	/**
@@ -814,4 +813,4 @@ namespace $ { export class $mol_app_studio_field_title extends $mol_check_expand
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/studio/field/-view.tree/field.view.tree.map

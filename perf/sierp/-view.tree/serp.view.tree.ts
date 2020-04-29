@@ -45,7 +45,7 @@ namespace $ { export class $mol_perf_sierp extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Dots() ] as readonly any[]
+		return [this.Dots()] as readonly any[]
 	}
 
 	/**
@@ -67,7 +67,7 @@ namespace $ { export class $mol_perf_sierp extends $mol_view {
 	 *  ```
 	 **/
 	dots() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -127,7 +127,6 @@ namespace $ { export class $mol_perf_sierp extends $mol_view {
 	}
 
 } }
-
 namespace $ { export class $mol_perf_sierp_dot extends $mol_view {
 
 	/**
@@ -164,7 +163,7 @@ namespace $ { export class $mol_perf_sierp_dot extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.text() ] as readonly any[]
+		return [this.text()] as readonly any[]
 	}
 
 	/**
@@ -291,4 +290,4 @@ namespace $ { export class $mol_perf_sierp_dot extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/perf/sierp/-view.tree/serp.view.tree.map

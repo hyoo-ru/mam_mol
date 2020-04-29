@@ -18,7 +18,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Suggest() , this.Clear() ] as readonly any[]
+		return [this.Suggest() , this.Clear()] as readonly any[]
 	}
 
 	/**
@@ -83,7 +83,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 	 *  ```
 	 **/
 	suggests() {
-		return [  ] as readonly ( string )[]
+		return [] as readonly ( string )[]
 	}
 
 	/**
@@ -105,7 +105,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 	@ $mol_mem
 	Clear() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Clear_icon() ] as readonly any[]
+			obj.sub = () => [this.Clear_icon()] as readonly any[]
 			obj.event_click = ( val? : any ) => this.event_clear( val )
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
@@ -134,4 +134,4 @@ namespace $ { export class $mol_search extends $mol_bar {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/search/-view.tree/search.view.tree.map

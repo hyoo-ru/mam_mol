@@ -18,7 +18,7 @@ namespace $ { export class $mol_portion_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Empty() , this.Partial() , this.Full() ] as readonly any[]
+		return [this.Empty() , this.Partial() , this.Full()] as readonly any[]
 	}
 
 	/**
@@ -88,4 +88,4 @@ namespace $ { export class $mol_portion_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/portion/demo/-view.tree/demo.view.tree.map

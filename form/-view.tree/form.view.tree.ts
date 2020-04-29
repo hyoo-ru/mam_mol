@@ -51,7 +51,7 @@ namespace $ { export class $mol_form extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Bar_fields() , this.Bar_buttons() ] as readonly any[]
+		return [this.Bar_fields() , this.Bar_buttons()] as readonly any[]
 	}
 
 	/**
@@ -73,7 +73,7 @@ namespace $ { export class $mol_form extends $mol_view {
 	 *  ```
 	 **/
 	form_fields() {
-		return [  ] as readonly ( $mol_form_field )[]
+		return [] as readonly ( $mol_form_field )[]
 	}
 
 	/**
@@ -95,8 +95,8 @@ namespace $ { export class $mol_form extends $mol_view {
 	 *  ```
 	 **/
 	buttons() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/form/-view.tree/form.view.tree.map

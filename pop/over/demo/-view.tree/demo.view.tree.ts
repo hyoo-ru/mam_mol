@@ -15,7 +15,7 @@ namespace $ { export class $mol_pop_over_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Menu() ] as readonly any[]
+		return [this.Menu()] as readonly any[]
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace $ { export class $mol_pop_over_demo extends $mol_demo_small {
 	@ $mol_mem
 	Menu() {
 		return (( obj )=>{
-			obj.sub = () => [ this.File() , this.Help() ] as readonly any[]
+			obj.sub = () => [this.File() , this.Help()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -46,7 +46,7 @@ namespace $ { export class $mol_pop_over_demo extends $mol_demo_small {
 		return (( obj )=>{
 			obj.align = () => "bottom_right"
 			obj.Anchor = () => this.file_title()
-			obj.bubble_content = () => [ this.File_menu() ] as readonly any[]
+			obj.bubble_content = () => [this.File_menu()] as readonly any[]
 			return obj
 		})( new this.$.$mol_pop_over(  ) )
 	}
@@ -71,7 +71,7 @@ namespace $ { export class $mol_pop_over_demo extends $mol_demo_small {
 	@ $mol_mem
 	File_menu() {
 		return (( obj )=>{
-			obj.rows = () => [ this.Open() , this.Export() , this.Save() ] as readonly any[]
+			obj.rows = () => [this.Open() , this.Export() , this.Save()] as readonly any[]
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}
@@ -155,7 +155,7 @@ namespace $ { export class $mol_pop_over_demo extends $mol_demo_small {
 		return (( obj )=>{
 			obj.align = () => "bottom_right"
 			obj.Anchor = () => this.help_title()
-			obj.bubble_content = () => [ this.Help_menu() ] as readonly any[]
+			obj.bubble_content = () => [this.Help_menu()] as readonly any[]
 			return obj
 		})( new this.$.$mol_pop_over(  ) )
 	}
@@ -179,7 +179,7 @@ namespace $ { export class $mol_pop_over_demo extends $mol_demo_small {
 	@ $mol_mem
 	Help_menu() {
 		return (( obj )=>{
-			obj.rows = () => [ this.Updates() , this.About() ] as readonly any[]
+			obj.rows = () => [this.Updates() , this.About()] as readonly any[]
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}
@@ -229,4 +229,4 @@ namespace $ { export class $mol_pop_over_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/pop/over/demo/-view.tree/demo.view.tree.map

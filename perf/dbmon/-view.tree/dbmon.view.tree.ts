@@ -15,7 +15,7 @@ namespace $ { export class $mol_perf_dbmon extends $mol_scroll {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Databases() ] as readonly any[]
+		return [this.Databases()] as readonly any[]
 	}
 
 	/**
@@ -37,7 +37,7 @@ namespace $ { export class $mol_perf_dbmon extends $mol_scroll {
 	 *  ```
 	 **/
 	databases() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -62,7 +62,7 @@ namespace $ { export class $mol_perf_dbmon extends $mol_scroll {
 	 *  ```
 	 **/
 	database( id : any ) {
-		return [ this.Name(id) , this.Query_count(id) , this.top_queries(id) ] as readonly any[]
+		return [this.Name(id) , this.Query_count(id) , this.top_queries(id)] as readonly any[]
 	}
 
 	/**
@@ -73,7 +73,7 @@ namespace $ { export class $mol_perf_dbmon extends $mol_scroll {
 	@ $mol_mem_key
 	Name( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.name(id) ] as readonly any[]
+			obj.sub = () => [this.name(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -127,7 +127,7 @@ namespace $ { export class $mol_perf_dbmon extends $mol_scroll {
 	 *  ```
 	 **/
 	top_queries( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -176,7 +176,6 @@ namespace $ { export class $mol_perf_dbmon extends $mol_scroll {
 	}
 
 } }
-
 namespace $ { export class $mol_perf_dbmon_query_count extends $mol_view {
 
 	/**
@@ -185,7 +184,7 @@ namespace $ { export class $mol_perf_dbmon_query_count extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Label() ] as readonly any[]
+		return [this.Label()] as readonly any[]
 	}
 
 	/**
@@ -201,7 +200,7 @@ namespace $ { export class $mol_perf_dbmon_query_count extends $mol_view {
 			obj.attr = () => ({
 			"mol_perf_dbmon_query_count_label" :  this.label_mod() ,
 		})
-			obj.sub = () => [ this.count() ] as readonly any[]
+			obj.sub = () => [this.count()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -225,7 +224,6 @@ namespace $ { export class $mol_perf_dbmon_query_count extends $mol_view {
 	}
 
 } }
-
 namespace $ { export class $mol_perf_dbmon_query extends $mol_pop_over {
 
 	/**
@@ -259,7 +257,7 @@ namespace $ { export class $mol_perf_dbmon_query extends $mol_pop_over {
 			obj.attr = () => ({
 			"mol_perf_dbmon_query_elapsed" :  this.elapsed_mod() ,
 		})
-			obj.sub = () => [ this.elapsed() ] as readonly any[]
+			obj.sub = () => [this.elapsed()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -288,7 +286,7 @@ namespace $ { export class $mol_perf_dbmon_query extends $mol_pop_over {
 	 *  ```
 	 **/
 	bubble_content() {
-		return [ this.value() ] as readonly any[]
+		return [this.value()] as readonly any[]
 	}
 
 	/**
@@ -310,4 +308,4 @@ namespace $ { export class $mol_perf_dbmon_query extends $mol_pop_over {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/perf/dbmon/-view.tree/dbmon.view.tree.map

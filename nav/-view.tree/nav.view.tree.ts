@@ -44,7 +44,7 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 **/
 	@ $mol_mem
 	keys_x( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [  ] as readonly any[]
+		return ( val !== void 0 ) ? val : [] as readonly any[]
 	}
 
 	/**
@@ -54,7 +54,7 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	 **/
 	@ $mol_mem
 	keys_y( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [  ] as readonly any[]
+		return ( val !== void 0 ) ? val : [] as readonly any[]
 	}
 
 	/**
@@ -142,4 +142,4 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/nav/-view.tree/nav.view.tree.map

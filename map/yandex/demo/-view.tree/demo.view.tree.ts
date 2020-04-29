@@ -15,7 +15,7 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Map() ] as readonly any[]
+		return [this.Map()] as readonly any[]
 	}
 
 	/**
@@ -31,7 +31,7 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 		return (( obj )=>{
 			obj.center = ( val? : any ) => this.center( val )
 			obj.zoom = ( val? : any ) => this.zoom( val )
-			obj.objects = () => [ this.Place() ] as readonly any[]
+			obj.objects = () => [this.Place()] as readonly any[]
 			return obj
 		})( new this.$.$mol_map_yandex(  ) )
 	}
@@ -45,7 +45,7 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 	 **/
 	@ $mol_mem
 	center( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [ 59.9 , 30.3 ] as readonly any[]
+		return ( val !== void 0 ) ? val : [59.9 , 30.3] as readonly any[]
 	}
 
 	/**
@@ -84,7 +84,7 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	place_pos() {
-		return [ 59.9 , 30.3 ] as readonly any[]
+		return [59.9 , 30.3] as readonly any[]
 	}
 
 	/**
@@ -106,4 +106,4 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/map/yandex/demo/-view.tree/demo.view.tree.map

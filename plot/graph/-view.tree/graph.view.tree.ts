@@ -6,7 +6,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	series_x() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -15,7 +15,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	series_y() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -114,7 +114,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	shift() {
-		return [ 0 , 0 ] as readonly ( number )[]
+		return [0 , 0] as readonly ( number )[]
 	}
 
 	/**
@@ -125,7 +125,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	scale() {
-		return [ 1 , 1 ] as readonly ( number )[]
+		return [1 , 1] as readonly ( number )[]
 	}
 
 	/**
@@ -288,7 +288,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	indexes() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -297,7 +297,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	points() {
-		return [  ] as readonly ( readonly(number)[] )[]
+		return [] as readonly ( readonly(number)[] )[]
 	}
 
 	/**
@@ -306,7 +306,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	front() {
-		return [  ] as readonly ( $mol_svg )[]
+		return [] as readonly ( $mol_svg )[]
 	}
 
 	/**
@@ -315,7 +315,7 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	 *  ```
 	 **/
 	back() {
-		return [  ] as readonly ( $mol_svg )[]
+		return [] as readonly ( $mol_svg )[]
 	}
 
 	/**
@@ -337,7 +337,6 @@ namespace $ { export class $mol_plot_graph extends $mol_svg_group {
 	}
 
 } }
-
 namespace $ { export class $mol_plot_graph_sample extends $mol_view {
 
 	/**
@@ -387,4 +386,4 @@ namespace $ { export class $mol_plot_graph_sample extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/graph/-view.tree/graph.view.tree.map

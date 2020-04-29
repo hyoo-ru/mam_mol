@@ -15,7 +15,7 @@ namespace $ { export class $mol_section_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Text() ] as readonly any[]
+		return [this.Text()] as readonly any[]
 	}
 
 	/**
@@ -26,7 +26,7 @@ namespace $ { export class $mol_section_demo extends $mol_demo_large {
 	@ $mol_mem
 	Text() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Section() ] as readonly any[]
+			obj.sub = () => [this.Section()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -41,7 +41,7 @@ namespace $ { export class $mol_section_demo extends $mol_demo_large {
 	@ $mol_mem
 	Section() {
 		return (( obj )=>{
-			obj.head = () => [ "Section header" ] as readonly any[]
+			obj.head = () => ["Section header"] as readonly any[]
 			obj.Content = () => this.Section_content()
 			return obj
 		})( new this.$.$mol_section(  ) )
@@ -60,4 +60,4 @@ namespace $ { export class $mol_section_demo extends $mol_demo_large {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/section/demo/-view.tree/demo.view.tree.map

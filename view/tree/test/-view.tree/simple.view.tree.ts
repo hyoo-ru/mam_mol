@@ -33,7 +33,7 @@ namespace $ { export class $mol_view_tree_test_simple extends $mol_view {
 	 *  ```
 	 **/
 	arr() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -42,8 +42,8 @@ namespace $ { export class $mol_view_tree_test_simple extends $mol_view {
 	 *  ```
 	 **/
 	arr_string() {
-		return [  ] as readonly ( string )[]
+		return [] as readonly ( string )[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/view/tree/test/-view.tree/simple.view.tree.map

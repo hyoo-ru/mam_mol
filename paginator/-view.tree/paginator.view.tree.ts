@@ -9,7 +9,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Backward() , this.Value() , this.Forward() ] as readonly any[]
+		return [this.Backward() , this.Value() , this.Forward()] as readonly any[]
 	}
 
 	/**
@@ -25,7 +25,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 		return (( obj )=>{
 			obj.hint = () => this.backward_hint()
 			obj.click = ( event? : any ) => this.backward( event )
-			obj.sub = () => [ this.Backward_icon() ] as readonly any[]
+			obj.sub = () => [this.Backward_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -69,7 +69,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 	@ $mol_mem
 	Value() {
 		return (( obj )=>{
-			obj.sub = () => [ this.value() ] as readonly any[]
+			obj.sub = () => [this.value()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -97,7 +97,7 @@ namespace $ { export class $mol_paginator extends $mol_view {
 		return (( obj )=>{
 			obj.hint = () => this.forward_hint()
 			obj.click = ( event? : any ) => this.forward( event )
-			obj.sub = () => [ this.Forward_icon() ] as readonly any[]
+			obj.sub = () => [this.Forward_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -134,4 +134,4 @@ namespace $ { export class $mol_paginator extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/paginator/-view.tree/paginator.view.tree.map

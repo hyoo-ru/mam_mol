@@ -19,7 +19,7 @@ namespace $ { export class $mol_string_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Simple() , this.Hint() , this.Filled() , this.Disabled() ] as readonly any[]
+		return [this.Simple() , this.Hint() , this.Filled() , this.Disabled()] as readonly any[]
 	}
 
 	/**
@@ -101,4 +101,4 @@ namespace $ { export class $mol_string_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/string/demo/-view.tree/demo.view.tree.map

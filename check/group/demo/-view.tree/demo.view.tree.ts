@@ -17,7 +17,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.All() , this.Partial() ] as readonly any[]
+		return [this.All() , this.Partial()] as readonly any[]
 	}
 
 	/**
@@ -38,7 +38,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	All() {
 		return (( obj )=>{
 			obj.title = () => "SPECIAL"
-			obj.checks = () => [ this.Strength() , this.Perception() , this.Endurance() , this.Charisma() , this.Intelligence() , this.Agility() , this.Luck() ] as readonly any[]
+			obj.checks = () => [this.Strength() , this.Perception() , this.Endurance() , this.Charisma() , this.Intelligence() , this.Agility() , this.Luck()] as readonly any[]
 			return obj
 		})( new this.$.$mol_check_group(  ) )
 	}
@@ -58,7 +58,7 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	@ $mol_mem
 	Partial() {
 		return (( obj )=>{
-			obj.rows = () => [ this.Strength() , this.Perception() , this.Endurance() , this.Charisma() , this.Intelligence() , this.Agility() , this.Luck() ] as readonly any[]
+			obj.rows = () => [this.Strength() , this.Perception() , this.Endurance() , this.Charisma() , this.Intelligence() , this.Agility() , this.Luck()] as readonly any[]
 			return obj
 		})( new this.$.$mol_list(  ) )
 	}
@@ -309,4 +309,4 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/check/group/demo/-view.tree/demo.view.tree.map

@@ -18,7 +18,7 @@ namespace $ { export class $mol_textarea_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Empty_descr() , this.Filled_descr() , this.Disabled() ] as readonly any[]
+		return [this.Empty_descr() , this.Filled_descr() , this.Disabled()] as readonly any[]
 	}
 
 	/**
@@ -90,4 +90,4 @@ namespace $ { export class $mol_textarea_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/textarea/demo/-view.tree/demo.view.tree.map

@@ -8,7 +8,7 @@ namespace $ { export class $mol_app_hello extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Name() , this.Greeting() ] as readonly any[]
+		return [this.Name() , this.Greeting()] as readonly any[]
 	}
 
 	/**
@@ -54,7 +54,7 @@ namespace $ { export class $mol_app_hello extends $mol_view {
 	@ $mol_mem
 	Greeting() {
 		return (( obj )=>{
-			obj.sub = () => [ this.greeting() ] as readonly any[]
+			obj.sub = () => [this.greeting()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -69,4 +69,4 @@ namespace $ { export class $mol_app_hello extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/hello/-view.tree/hello.view.tree.map

@@ -54,7 +54,7 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 	 *  ```
 	 **/
 	blocks() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -139,7 +139,7 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 		return (( obj )=>{
 			obj.title = () => this.detail_title()
 			obj.source_link = () => this.source_link()
-			obj.body = () => [ this.Detail_list() ] as readonly any[]
+			obj.body = () => [this.Detail_list()] as readonly any[]
 			return obj
 		})( new this.$.$mol_app_demo_detail(  ) )
 	}
@@ -172,7 +172,7 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 	 *  ```
 	 **/
 	main_content() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -188,7 +188,7 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 		return (( obj )=>{
 			obj.title = () => this.editor_title()
 			obj.class_name_base = () => this.selected_class_name()
-			obj.tools_main = () => [ this.Close() ] as readonly any[]
+			obj.tools_main = () => [this.Close()] as readonly any[]
 			return obj
 		})( new this.$.$mol_app_studio(  ) )
 	}
@@ -212,7 +212,7 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 	@ $mol_mem
 	Close() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Close_icon() ] as readonly any[]
+			obj.sub = () => [this.Close_icon()] as readonly any[]
 			obj.arg = () => this.close_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -249,7 +249,7 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 	@ $mol_mem
 	Welcome() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Welcome_text() ] as readonly any[]
+			obj.sub = () => [this.Welcome_text()] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -287,7 +287,7 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 	@ $mol_mem
 	Detail_empty_message() {
 		return (( obj )=>{
-			obj.sub = () => [ this.detail_empty_prefix() , this.selected() , this.detail_empty_postfix() ] as readonly any[]
+			obj.sub = () => [this.detail_empty_prefix() , this.selected() , this.detail_empty_postfix()] as readonly any[]
 			return obj
 		})( new this.$.$mol_status(  ) )
 	}
@@ -320,7 +320,6 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 	}
 
 } }
-
 namespace $ { export class $mol_app_demo_menu extends $mol_page {
 
 	/**
@@ -342,7 +341,7 @@ namespace $ { export class $mol_app_demo_menu extends $mol_page {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Head() , this.Filter() , this.Nav() , this.Themes() ] as readonly any[]
+		return [this.Head() , this.Filter() , this.Nav() , this.Themes()] as readonly any[]
 	}
 
 	/**
@@ -454,7 +453,6 @@ namespace $ { export class $mol_app_demo_menu extends $mol_page {
 	}
 
 } }
-
 namespace $ { export class $mol_app_demo_detail extends $mol_page {
 
 	/**
@@ -466,7 +464,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [ this.Source_link() , this.Edit() , this.Close() ] as readonly any[]
+		return [this.Source_link() , this.Edit() , this.Close()] as readonly any[]
 	}
 
 	/**
@@ -482,7 +480,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 		return (( obj )=>{
 			obj.uri = () => this.source_link()
 			obj.target = () => "_blank"
-			obj.sub = () => [ this.Source_button() ] as readonly any[]
+			obj.sub = () => [this.Source_button()] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -507,7 +505,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	Source_button() {
 		return (( obj )=>{
 			obj.hint = () => this.source_hint()
-			obj.sub = () => [ this.Source_icon() ] as readonly any[]
+			obj.sub = () => [this.Source_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_major(  ) )
 	}
@@ -549,7 +547,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	Edit() {
 		return (( obj )=>{
 			obj.hint = () => this.edit_hint()
-			obj.sub = () => [ this.Edit_speck() , this.Edit_icon() ] as readonly any[]
+			obj.sub = () => [this.Edit_speck() , this.Edit_icon()] as readonly any[]
 			obj.arg = () => ({
 			"edit" :  "" ,
 			"path" :  "" ,
@@ -604,7 +602,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	Close() {
 		return (( obj )=>{
 			obj.hint = () => this.close_hint()
-			obj.sub = () => [ this.Close_icon() ] as readonly any[]
+			obj.sub = () => [this.Close_icon()] as readonly any[]
 			obj.arg = () => this.close_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -643,7 +641,6 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	}
 
 } }
-
 namespace $ { export class $mol_app_demo_nav extends $mol_grid {
 
 	/**
@@ -686,7 +683,7 @@ namespace $ { export class $mol_app_demo_nav extends $mol_grid {
 	Option( id : any ) {
 		return (( obj )=>{
 			obj.arg = () => this.arg(id)
-			obj.sub = () => [ this.Expand(id) , this.Content(id) ] as readonly any[]
+			obj.sub = () => [this.Expand(id) , this.Content(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -725,10 +722,10 @@ namespace $ { export class $mol_app_demo_nav extends $mol_grid {
 	@ $mol_mem_key
 	Content( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.cell_content(id) ] as readonly any[]
+			obj.sub = () => [this.cell_content(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/demo/-view.tree/demo.view.tree.map

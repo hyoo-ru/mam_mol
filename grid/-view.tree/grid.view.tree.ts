@@ -15,7 +15,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	row_ids() {
-		return [  ] as readonly ( string[] )[]
+		return [] as readonly ( string[] )[]
 	}
 
 	/**
@@ -33,7 +33,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	col_ids() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -81,7 +81,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Head() , this.Table() ] as readonly any[]
+		return [this.Head() , this.Table()] as readonly any[]
 	}
 
 	/**
@@ -103,7 +103,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	rows() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -125,7 +125,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	head_cells() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -150,7 +150,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	cells( id : any ) {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -202,7 +202,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	cell_content( id : any ) {
-		return [  ] as readonly ( $mol_view_content )[]
+		return [] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -249,7 +249,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	col_head_content( id : any ) {
-		return [  ] as readonly ( $mol_view_content )[]
+		return [] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -295,7 +295,7 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	 *  ```
 	 **/
 	Cell_content( id : any ) {
-		return [ this.Cell_dimmer(id) ] as readonly any[]
+		return [this.Cell_dimmer(id)] as readonly any[]
 	}
 
 	/**
@@ -333,7 +333,6 @@ namespace $ { export class $mol_grid extends $mol_scroll {
 	}
 
 } }
-
 namespace $ { export class $mol_grid_table extends $mol_list {
 
 	/**
@@ -346,7 +345,6 @@ namespace $ { export class $mol_grid_table extends $mol_list {
 	}
 
 } }
-
 namespace $ { export class $mol_grid_row extends $mol_view {
 
 	/**
@@ -373,11 +371,10 @@ namespace $ { export class $mol_grid_row extends $mol_view {
 	 *  ```
 	 **/
 	cells() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 } }
-
 namespace $ { export class $mol_grid_cell extends $mol_view {
 
 	/**
@@ -399,8 +396,7 @@ namespace $ { export class $mol_grid_cell extends $mol_view {
 	}
 
 } }
-
 namespace $ { export class $mol_grid_number extends $mol_grid_cell {
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/grid/-view.tree/grid.view.tree.map

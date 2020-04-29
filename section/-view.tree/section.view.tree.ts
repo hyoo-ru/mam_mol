@@ -8,7 +8,7 @@ namespace $ { export class $mol_section extends $mol_list {
 	 *  ```
 	 **/
 	rows() {
-		return [ this.Head() , this.Content() ] as readonly any[]
+		return [this.Head() , this.Content()] as readonly any[]
 	}
 
 	/**
@@ -30,7 +30,7 @@ namespace $ { export class $mol_section extends $mol_list {
 	 *  ```
 	 **/
 	head() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -43,4 +43,4 @@ namespace $ { export class $mol_section extends $mol_list {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/section/-view.tree/section.view.tree.map

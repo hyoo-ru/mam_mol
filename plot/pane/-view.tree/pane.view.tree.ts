@@ -175,7 +175,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	shift_default() {
-		return [ 0 , 0 ] as readonly ( number )[]
+		return [0 , 0] as readonly ( number )[]
 	}
 
 	/**
@@ -187,7 +187,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 **/
 	@ $mol_mem
 	shift( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [ 0 , 0 ] as readonly ( number )[]
+		return ( val !== void 0 ) ? val : [0 , 0] as readonly ( number )[]
 	}
 
 	/**
@@ -240,7 +240,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	scale_default() {
-		return [ 0 , 0 ] as readonly ( number )[]
+		return [0 , 0] as readonly ( number )[]
 	}
 
 	/**
@@ -252,7 +252,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 **/
 	@ $mol_mem
 	scale( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [ 1 , 1 ] as readonly ( number )[]
+		return ( val !== void 0 ) ? val : [1 , 1] as readonly ( number )[]
 	}
 
 	/**
@@ -402,7 +402,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	graphs_sorted() {
-		return [  ] as readonly ( $mol_svg )[]
+		return [] as readonly ( $mol_svg )[]
 	}
 
 	/**
@@ -429,7 +429,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	graphs() {
-		return [  ] as readonly ( $mol_plot_graph )[]
+		return [] as readonly ( $mol_plot_graph )[]
 	}
 
 	/**
@@ -455,7 +455,7 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	 *  ```
 	 **/
 	plugins() {
-		return [ ...super.plugins() , this.Meter() , this.Touch() ] as readonly any[]
+		return [...super.plugins() , this.Meter() , this.Touch()] as readonly any[]
 	}
 
 	width() {
@@ -523,4 +523,4 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/pane/-view.tree/pane.view.tree.map

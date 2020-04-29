@@ -29,7 +29,7 @@ namespace $ { export class $mol_calendar_demo_holiday extends $mol_demo_small {
 	 *  ```
 	 **/
 	holidays() {
-		return [ "2018-01-01" , "2018-01-02" , "2018-01-03" , "2018-01-04" , "2018-01-05" , "2018-01-06" , "2018-01-07" , "2018-01-08" , "2018-01-13" , "2018-01-14" , "2018-01-20" , "2018-01-21" , "2018-01-27" , "2018-01-28" ] as readonly any[]
+		return ["2018-01-01" , "2018-01-02" , "2018-01-03" , "2018-01-04" , "2018-01-05" , "2018-01-06" , "2018-01-07" , "2018-01-08" , "2018-01-13" , "2018-01-14" , "2018-01-20" , "2018-01-21" , "2018-01-27" , "2018-01-28"] as readonly any[]
 	}
 
 	/**
@@ -38,7 +38,7 @@ namespace $ { export class $mol_calendar_demo_holiday extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Calendar() ] as readonly any[]
+		return [this.Calendar()] as readonly any[]
 	}
 
 	/**
@@ -76,4 +76,4 @@ namespace $ { export class $mol_calendar_demo_holiday extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/calendar/demo/holiday/-view.tree/holiday.view.tree.map

@@ -33,7 +33,7 @@ namespace $ { export class $mol_plot_line extends $mol_plot_graph {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Curve() ] as readonly any[]
+		return [this.Curve()] as readonly any[]
 	}
 
 	/**
@@ -75,4 +75,4 @@ namespace $ { export class $mol_plot_line extends $mol_plot_graph {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/line/-view.tree/line.view.tree.map

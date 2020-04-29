@@ -5538,10 +5538,11 @@ declare namespace $ {
     function $mol_view_tree_prop_value(prop: $mol_tree): $mol_tree;
     function $mol_view_tree_value_type(val: $mol_tree): "object" | "string" | "null" | "number" | "locale" | "bool" | "dict" | "get" | "bind" | "put" | "list";
     function $mol_view_tree_compile(tree: $mol_tree): {
-        script: string;
+        script: any;
         locales: {
             [key: string]: string;
         };
+        map: any;
     };
 }
 

@@ -21,7 +21,7 @@ namespace $ { export class $mol_check_box_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Labeled_base() , this.Labeled_checked() , this.Labeled_disabled() , this.Alone_base() , this.Alone_checked() , this.Alone_disabled() ] as readonly any[]
+		return [this.Labeled_base() , this.Labeled_checked() , this.Labeled_disabled() , this.Alone_base() , this.Alone_checked() , this.Alone_disabled()] as readonly any[]
 	}
 
 	/**
@@ -164,4 +164,4 @@ namespace $ { export class $mol_check_box_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/check/box/demo/-view.tree/demo.view.tree.map

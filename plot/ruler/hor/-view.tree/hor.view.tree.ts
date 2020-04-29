@@ -55,4 +55,4 @@ namespace $ { export class $mol_plot_ruler_hor extends $mol_plot_ruler {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/ruler/hor/-view.tree/hor.view.tree.map

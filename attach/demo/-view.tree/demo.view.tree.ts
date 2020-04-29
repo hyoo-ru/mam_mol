@@ -15,7 +15,7 @@ namespace $ { export class $mol_attach_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Filled() ] as readonly any[]
+		return [this.Filled()] as readonly any[]
 	}
 
 	/**
@@ -41,7 +41,7 @@ namespace $ { export class $mol_attach_demo extends $mol_demo_small {
 	 **/
 	@ $mol_mem
 	filled_items( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [ this.Item1() , this.Item2() , this.Item3() ] as readonly any[]
+		return ( val !== void 0 ) ? val : [this.Item1() , this.Item2() , this.Item3()] as readonly any[]
 	}
 
 	/**
@@ -93,4 +93,4 @@ namespace $ { export class $mol_attach_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/attach/demo/-view.tree/demo.view.tree.map

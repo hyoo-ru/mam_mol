@@ -6,7 +6,7 @@ namespace $ { export class $mol_chart_legend extends $mol_scroll {
 	 *  ```
 	 **/
 	graphs() {
-		return [  ] as readonly ( $mol_plot_graph )[]
+		return [] as readonly ( $mol_plot_graph )[]
 	}
 
 	/**
@@ -24,7 +24,7 @@ namespace $ { export class $mol_chart_legend extends $mol_scroll {
 	 *  ```
 	 **/
 	graph_legends() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -37,7 +37,7 @@ namespace $ { export class $mol_chart_legend extends $mol_scroll {
 	@ $mol_mem_key
 	Graph_legend( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.Graph_sample_box(id) , this.Graph_title(id) ] as readonly any[]
+			obj.sub = () => [this.Graph_sample_box(id) , this.Graph_title(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -50,7 +50,7 @@ namespace $ { export class $mol_chart_legend extends $mol_scroll {
 	@ $mol_mem_key
 	Graph_sample_box( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.Graph_sample(id) ] as readonly any[]
+			obj.sub = () => [this.Graph_sample(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -72,7 +72,7 @@ namespace $ { export class $mol_chart_legend extends $mol_scroll {
 	@ $mol_mem_key
 	Graph_title( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.graph_title(id) ] as readonly any[]
+			obj.sub = () => [this.graph_title(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -87,4 +87,4 @@ namespace $ { export class $mol_chart_legend extends $mol_scroll {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/chart/legend/-view.tree/legend.view.tree.map

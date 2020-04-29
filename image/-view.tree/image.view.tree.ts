@@ -35,4 +35,4 @@ namespace $ { export class $mol_image extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/image/-view.tree/image.view.tree.map

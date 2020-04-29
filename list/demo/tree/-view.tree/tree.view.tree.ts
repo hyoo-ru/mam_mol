@@ -15,7 +15,7 @@ namespace $ { export class $mol_list_demo_tree extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Scroll() ] as readonly any[]
+		return [this.Scroll()] as readonly any[]
 	}
 
 	/**
@@ -26,7 +26,7 @@ namespace $ { export class $mol_list_demo_tree extends $mol_demo_large {
 	@ $mol_mem
 	Scroll() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Content() ] as readonly any[]
+			obj.sub = () => [this.Content()] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -50,7 +50,7 @@ namespace $ { export class $mol_list_demo_tree extends $mol_demo_large {
 	 *  ```
 	 **/
 	root_rows() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -64,7 +64,7 @@ namespace $ { export class $mol_list_demo_tree extends $mol_demo_large {
 	@ $mol_mem_key
 	Row( id : any ) {
 		return (( obj )=>{
-			obj.label = () => [ this.Row_title(id) ] as readonly any[]
+			obj.label = () => [this.Row_title(id)] as readonly any[]
 			obj.expanded = ( val? : any ) => this.row_expanded(id , val )
 			obj.Content = () => this.Row_content(id)
 			return obj
@@ -79,7 +79,7 @@ namespace $ { export class $mol_list_demo_tree extends $mol_demo_large {
 	@ $mol_mem_key
 	Row_title( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.row_title(id) ] as readonly any[]
+			obj.sub = () => [this.row_title(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_paragraph(  ) )
 	}
@@ -122,8 +122,8 @@ namespace $ { export class $mol_list_demo_tree extends $mol_demo_large {
 	 *  ```
 	 **/
 	row_content( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/list/demo/tree/-view.tree/tree.view.tree.map

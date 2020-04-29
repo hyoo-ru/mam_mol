@@ -30,4 +30,4 @@ namespace $ { export class $mol_frame extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/frame/-view.tree/frame.view.tree.map

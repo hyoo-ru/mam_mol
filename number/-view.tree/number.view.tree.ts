@@ -46,7 +46,7 @@ namespace $ { export class $mol_number extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.String() , this.Dec() , this.Inc() ] as readonly any[]
+		return [this.String() , this.Dec() , this.Inc()] as readonly any[]
 	}
 
 	/**
@@ -130,7 +130,7 @@ namespace $ { export class $mol_number extends $mol_view {
 		return (( obj )=>{
 			obj.event_click = ( val? : any ) => this.event_dec( val )
 			obj.enabled = () => this.dec_enabled()
-			obj.sub = () => [ this.dec_icon() ] as readonly any[]
+			obj.sub = () => [this.dec_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -179,7 +179,7 @@ namespace $ { export class $mol_number extends $mol_view {
 		return (( obj )=>{
 			obj.event_click = ( val? : any ) => this.event_inc( val )
 			obj.enabled = () => this.inc_enabled()
-			obj.sub = () => [ this.inc_icon() ] as readonly any[]
+			obj.sub = () => [this.inc_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -216,4 +216,4 @@ namespace $ { export class $mol_number extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/number/-view.tree/number.view.tree.map

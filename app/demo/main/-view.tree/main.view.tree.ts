@@ -33,7 +33,7 @@ namespace $ { export class $mol_app_demo_main extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [ this.Project() ] as readonly any[]
+		return [this.Project()] as readonly any[]
 	}
 
 	/**
@@ -58,7 +58,7 @@ namespace $ { export class $mol_app_demo_main extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [ this.Description() ] as readonly any[]
+		return [this.Description()] as readonly any[]
 	}
 
 	/**
@@ -87,4 +87,4 @@ namespace $ { export class $mol_app_demo_main extends $mol_page {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/demo/main/-view.tree/main.view.tree.map

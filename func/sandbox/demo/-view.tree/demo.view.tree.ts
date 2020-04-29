@@ -15,7 +15,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	tools() {
-		return [ this.Source() ] as readonly any[]
+		return [this.Source()] as readonly any[]
 	}
 
 	/**
@@ -76,7 +76,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [ this.Input() , this.Result() , this.Snippets() ] as readonly any[]
+		return [this.Input() , this.Result() , this.Snippets()] as readonly any[]
 	}
 
 	/**
@@ -89,7 +89,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	@ $mol_mem
 	Input() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Code() , this.Run() ] as readonly any[]
+			obj.sub = () => [this.Code() , this.Run()] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -154,7 +154,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	@ $mol_mem
 	Result() {
 		return (( obj )=>{
-			obj.sub = () => [ this.result() ] as readonly any[]
+			obj.sub = () => [this.result()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -188,7 +188,7 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	snippets() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -230,11 +230,10 @@ namespace $ { export class $mol_func_sandbox_demo extends $mol_page {
 	 *  ```
 	 **/
 	snippet_codes() {
-		return [ "return document.cookie" , "let evil = eval\nreturn evil( 'document.cookie' )" , "let Function = ( ()=>{} ).constructor\nlet getCookie = Function( 'return document.cookie' )\nreturn getCookie()" , "let NumberProto = (0).__proto__\nNumberProto.toString = null" ] as readonly any[]
+		return ["return document.cookie" , "let evil = eval\nreturn evil( 'document.cookie' )" , "let Function = ( ()=>{} ).constructor\nlet getCookie = Function( 'return document.cookie' )\nreturn getCookie()" , "let NumberProto = (0).__proto__\nNumberProto.toString = null"] as readonly any[]
 	}
 
 } }
-
 namespace $ { export class $mol_func_sandbox_demo_snippet extends $mol_link {
 
 	/**
@@ -263,7 +262,7 @@ namespace $ { export class $mol_func_sandbox_demo_snippet extends $mol_link {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Text() ] as readonly any[]
+		return [this.Text()] as readonly any[]
 	}
 
 	/**
@@ -289,4 +288,4 @@ namespace $ { export class $mol_func_sandbox_demo_snippet extends $mol_link {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/func/sandbox/demo/-view.tree/demo.view.tree.map

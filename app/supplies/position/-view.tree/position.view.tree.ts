@@ -41,7 +41,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	@ $mol_mem
 	Row() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Main_group() , this.Addon_group() , this.Supply_group() ] as readonly any[]
+			obj.sub = () => [this.Main_group() , this.Addon_group() , this.Supply_group()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -56,7 +56,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	@ $mol_mem
 	Main_group() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Product_item() , this.Cost_item() ] as readonly any[]
+			obj.sub = () => [this.Product_item() , this.Cost_item()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -72,7 +72,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	Product_item() {
 		return (( obj )=>{
 			obj.title = () => this.product_title()
-			obj.content = () => [ this.product_name() ] as readonly any[]
+			obj.content = () => [this.product_name()] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -106,7 +106,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	Cost_item() {
 		return (( obj )=>{
 			obj.title = () => this.cost_title()
-			obj.content = () => [ this.Cost() ] as readonly any[]
+			obj.content = () => [this.Cost()] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -156,7 +156,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	@ $mol_mem
 	Addon_group() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Division_item() , this.Price_item() ] as readonly any[]
+			obj.sub = () => [this.Division_item() , this.Price_item()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -172,7 +172,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	Division_item() {
 		return (( obj )=>{
 			obj.title = () => this.division_title()
-			obj.content = () => [ this.division_name() ] as readonly any[]
+			obj.content = () => [this.division_name()] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -206,7 +206,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	Price_item() {
 		return (( obj )=>{
 			obj.title = () => this.price_label()
-			obj.content = () => [ this.Price() ] as readonly any[]
+			obj.content = () => [this.Price()] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -257,7 +257,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	@ $mol_mem
 	Supply_group() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Quantity_item() , this.Supply_date_item() , this.Store_item() ] as readonly any[]
+			obj.sub = () => [this.Quantity_item() , this.Supply_date_item() , this.Store_item()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -273,7 +273,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	Quantity_item() {
 		return (( obj )=>{
 			obj.title = () => this.quantity_title()
-			obj.content = () => [ this.quantity() ] as readonly any[]
+			obj.content = () => [this.quantity()] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -307,7 +307,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	Supply_date_item() {
 		return (( obj )=>{
 			obj.title = () => this.supply_date_title()
-			obj.content = () => [ this.supply_date() ] as readonly any[]
+			obj.content = () => [this.supply_date()] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -341,7 +341,7 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	Store_item() {
 		return (( obj )=>{
 			obj.title = () => this.store_title()
-			obj.content = () => [ this.store_name() ] as readonly any[]
+			obj.content = () => [this.store_name()] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -365,4 +365,4 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/supplies/position/-view.tree/position.view.tree.map

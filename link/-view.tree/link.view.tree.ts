@@ -82,7 +82,7 @@ namespace $ { export class $mol_link extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.title() ] as readonly ( $mol_view_content )[]
+		return [this.title()] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -130,4 +130,4 @@ namespace $ { export class $mol_link extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/link/-view.tree/link.view.tree.map

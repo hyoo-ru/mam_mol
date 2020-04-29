@@ -21,7 +21,7 @@ namespace $ { export class $mol_dimmer_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.one() , this.two() , this.three() , this.four() , this.five() , this.six() ] as readonly any[]
+		return [this.one() , this.two() , this.three() , this.four() , this.five() , this.six()] as readonly any[]
 	}
 
 	/**
@@ -121,4 +121,4 @@ namespace $ { export class $mol_dimmer_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/dimmer/demo/-view.tree/demo.view.tree.map

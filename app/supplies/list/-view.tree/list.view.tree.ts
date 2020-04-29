@@ -6,7 +6,7 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	 *  ```
 	 **/
 	supplies() {
-		return [  ] as readonly ( $mol_app_supplies_domain_supply )[]
+		return [] as readonly ( $mol_app_supplies_domain_supply )[]
 	}
 
 	/**
@@ -18,7 +18,7 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Head() , this.Search_bar() , this.Body() ] as readonly any[]
+		return [this.Head() , this.Search_bar() , this.Body()] as readonly any[]
 	}
 
 	/**
@@ -29,7 +29,7 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	@ $mol_mem
 	Search_bar() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Search() ] as readonly any[]
+			obj.sub = () => [this.Search()] as readonly any[]
 			return obj
 		})( new this.$.$mol_float(  ) )
 	}
@@ -75,7 +75,7 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [ this.Supply_rows() ] as readonly any[]
+		return [this.Supply_rows()] as readonly any[]
 	}
 
 	/**
@@ -97,7 +97,7 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	 *  ```
 	 **/
 	supply_rows() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -146,4 +146,4 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/supplies/list/-view.tree/list.view.tree.map

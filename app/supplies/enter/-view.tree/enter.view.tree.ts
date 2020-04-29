@@ -25,7 +25,7 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.form() ] as readonly any[]
+		return [this.form()] as readonly any[]
 	}
 
 	/**
@@ -40,8 +40,8 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	@ $mol_mem
 	form() {
 		return (( obj )=>{
-			obj.form_fields = () => [ this.loginField() , this.passwordField() ] as readonly any[]
-			obj.buttons = () => [ this.submit() ] as readonly any[]
+			obj.form_fields = () => [this.loginField() , this.passwordField()] as readonly any[]
+			obj.buttons = () => [this.submit()] as readonly any[]
 			return obj
 		})( new this.$.$mol_form(  ) )
 	}
@@ -156,7 +156,7 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	@ $mol_mem
 	submit() {
 		return (( obj )=>{
-			obj.sub = () => [ this.submitLabel() ] as readonly any[]
+			obj.sub = () => [this.submitLabel()] as readonly any[]
 			obj.event_click = ( val? : any ) => this.event_submit( val )
 			obj.disabled = () => this.submit_blocked()
 			return obj
@@ -192,4 +192,4 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/supplies/enter/-view.tree/enter.view.tree.map

@@ -17,7 +17,7 @@ namespace $ { export class $mol_bar_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Two() , this.Three() ] as readonly any[]
+		return [this.Two() , this.Three()] as readonly any[]
 	}
 
 	/**
@@ -30,7 +30,7 @@ namespace $ { export class $mol_bar_demo extends $mol_demo_small {
 	@ $mol_mem
 	Two() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Two_mail() , this.Two_submit() ] as readonly any[]
+			obj.sub = () => [this.Two_mail() , this.Two_submit()] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -103,7 +103,7 @@ namespace $ { export class $mol_bar_demo extends $mol_demo_small {
 	@ $mol_mem
 	Three() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Three_mail() , this.Three_confirm() , this.Three_submit() ] as readonly any[]
+			obj.sub = () => [this.Three_mail() , this.Three_confirm() , this.Three_submit()] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -173,4 +173,4 @@ namespace $ { export class $mol_bar_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/bar/demo/-view.tree/demo.view.tree.map

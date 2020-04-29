@@ -15,7 +15,7 @@ namespace $ { export class $mol_row_demo_form extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Row() ] as readonly any[]
+		return [this.Row()] as readonly any[]
 	}
 
 	/**
@@ -31,7 +31,7 @@ namespace $ { export class $mol_row_demo_form extends $mol_demo_small {
 	@ $mol_mem
 	Row() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Name() , this.Count() , this.Progress() , this.Publish() , this.Drop() ] as readonly any[]
+			obj.sub = () => [this.Name() , this.Count() , this.Progress() , this.Publish() , this.Drop()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -51,7 +51,7 @@ namespace $ { export class $mol_row_demo_form extends $mol_demo_small {
 		return (( obj )=>{
 			obj.hint = () => this.name_hint()
 			obj.query = ( val? : any ) => this.name( val )
-			obj.suggests = () => [ this.suggest1() , this.suggest2() ] as readonly any[]
+			obj.suggests = () => [this.suggest1() , this.suggest2()] as readonly any[]
 			return obj
 		})( new this.$.$mol_search(  ) )
 	}
@@ -208,4 +208,4 @@ namespace $ { export class $mol_row_demo_form extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/row/demo/form/-view.tree/form.view.tree.map

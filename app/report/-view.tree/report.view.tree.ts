@@ -17,7 +17,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [ this.descriptor() , this.tabler() ] as readonly any[]
+		return [this.descriptor() , this.tabler()] as readonly any[]
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	@ $mol_mem
 	descriptor() {
 		return (( obj )=>{
-			obj.sub = () => [ this.description() ] as readonly any[]
+			obj.sub = () => [this.description()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -61,7 +61,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	 *  ```
 	 **/
 	rows() {
-		return [ this.headRower() ] as readonly any[]
+		return [this.headRower()] as readonly any[]
 	}
 
 	/**
@@ -83,7 +83,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	 *  ```
 	 **/
 	headCells() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -105,7 +105,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	 *  ```
 	 **/
 	rowerCells( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -161,7 +161,7 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	@ $mol_mem_key
 	texter( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.cell_value(id) ] as readonly any[]
+			obj.sub = () => [this.cell_value(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -216,7 +216,6 @@ namespace $ { export class $mol_app_report extends $mol_page {
 	}
 
 } }
-
 namespace $ { export class $mol_app_report_tabler extends $mol_view {
 
 	/**
@@ -243,11 +242,10 @@ namespace $ { export class $mol_app_report_tabler extends $mol_view {
 	 *  ```
 	 **/
 	rows() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 } }
-
 namespace $ { export class $mol_app_report_rower extends $mol_view {
 
 	/**
@@ -274,11 +272,10 @@ namespace $ { export class $mol_app_report_rower extends $mol_view {
 	 *  ```
 	 **/
 	cells() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 } }
-
 namespace $ { export class $mol_app_report_cell extends $mol_view {
 
 	/**
@@ -330,7 +327,7 @@ namespace $ { export class $mol_app_report_cell extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.content() ] as readonly any[]
+		return [this.content()] as readonly any[]
 	}
 
 	/**
@@ -343,4 +340,4 @@ namespace $ { export class $mol_app_report_cell extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/report/-view.tree/report.view.tree.map

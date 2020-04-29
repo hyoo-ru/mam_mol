@@ -6,7 +6,7 @@ namespace $ { export class $mol_infinite extends $mol_list {
 	 *  ```
 	 **/
 	after( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -22,4 +22,4 @@ namespace $ { export class $mol_infinite extends $mol_list {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/infinite/-view.tree/infinite.view.tree.map

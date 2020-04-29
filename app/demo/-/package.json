@@ -9,6 +9,7 @@
     "jsdom": "*",
     "chokidar": "*",
     "colorette": "*",
-    "node-fetch": "*"
+    "node-fetch": "*",
+    "source-map": "*"
   }
 }

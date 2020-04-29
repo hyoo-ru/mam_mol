@@ -43,7 +43,7 @@ namespace $ { export class $mol_switch extends $mol_view {
 	 *  ```
 	 **/
 	option_label( id : any ) {
-		return [ this.option_title(id) ] as readonly any[]
+		return [this.option_title(id)] as readonly any[]
 	}
 
 	/**
@@ -99,7 +99,7 @@ namespace $ { export class $mol_switch extends $mol_view {
 	 *  ```
 	 **/
 	keys() {
-		return [  ] as readonly ( string )[]
+		return [] as readonly ( string )[]
 	}
 
 	/**
@@ -117,8 +117,8 @@ namespace $ { export class $mol_switch extends $mol_view {
 	 *  ```
 	 **/
 	items() {
-		return [  ] as readonly ( $mol_check )[]
+		return [] as readonly ( $mol_check )[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/switch/-view.tree/switch.view.tree.map

@@ -15,7 +15,7 @@ namespace $ { export class $mol_text_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Scroll() ] as readonly any[]
+		return [this.Scroll()] as readonly any[]
 	}
 
 	/**
@@ -26,7 +26,7 @@ namespace $ { export class $mol_text_demo extends $mol_demo_large {
 	@ $mol_mem
 	Scroll() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Text() ] as readonly any[]
+			obj.sub = () => [this.Text()] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -82,4 +82,4 @@ namespace $ { export class $mol_text_demo extends $mol_demo_large {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/text/demo/-view.tree/demo.view.tree.map

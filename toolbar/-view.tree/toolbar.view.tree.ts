@@ -22,7 +22,7 @@ namespace $ { export class $mol_toolbar extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Bar() , this.Expand() ] as readonly any[]
+		return [this.Bar() , this.Expand()] as readonly any[]
 	}
 
 	/**
@@ -44,7 +44,7 @@ namespace $ { export class $mol_toolbar extends $mol_view {
 	 *  ```
 	 **/
 	items() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -71,4 +71,4 @@ namespace $ { export class $mol_toolbar extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/toolbar/-view.tree/toolbar.view.tree.map

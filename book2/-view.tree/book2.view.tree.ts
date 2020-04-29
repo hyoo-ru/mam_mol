@@ -15,7 +15,7 @@ namespace $ { export class $mol_book2 extends $mol_scroll {
 	 *  ```
 	 **/
 	pages() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -40,4 +40,4 @@ namespace $ { export class $mol_book2 extends $mol_scroll {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/book2/-view.tree/book2.view.tree.map

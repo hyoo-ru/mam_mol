@@ -6,7 +6,7 @@ namespace $ { export class $mol_date_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.View() ] as readonly any[]
+		return [this.View()] as readonly any[]
 	}
 
 	/**
@@ -19,7 +19,7 @@ namespace $ { export class $mol_date_demo extends $mol_demo_small {
 	@ $mol_mem
 	View() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Date() , this.Formatted() ] as readonly any[]
+			obj.sub = () => [this.Date() , this.Formatted()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -57,7 +57,7 @@ namespace $ { export class $mol_date_demo extends $mol_demo_small {
 	@ $mol_mem
 	Formatted() {
 		return (( obj )=>{
-			obj.sub = () => [ this.formatted() ] as readonly any[]
+			obj.sub = () => [this.formatted()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -72,4 +72,4 @@ namespace $ { export class $mol_date_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/date/demo/-view.tree/demo.view.tree.map

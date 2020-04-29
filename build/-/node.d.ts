@@ -815,6 +815,7 @@ declare namespace $ {
         locales: {
             [key: string]: string;
         };
+        map: string;
     };
 }
 

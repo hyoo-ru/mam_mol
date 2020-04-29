@@ -15,7 +15,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Scroll() ] as readonly any[]
+		return [this.Scroll()] as readonly any[]
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Scroll() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Head() , this.Content() ] as readonly any[]
+			obj.sub = () => [this.Head() , this.Content()] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -41,7 +41,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Head() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Head_card() ] as readonly any[]
+			obj.sub = () => [this.Head_card()] as readonly any[]
 			return obj
 		})( new this.$.$mol_float(  ) )
 	}
@@ -54,7 +54,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Head_card() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Head_row() ] as readonly any[]
+			obj.sub = () => [this.Head_row()] as readonly any[]
 			return obj
 		})( new this.$.$mol_card(  ) )
 	}
@@ -67,7 +67,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Head_row() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Head_content() ] as readonly any[]
+			obj.sub = () => [this.Head_content()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -80,7 +80,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Head_content() {
 		return (( obj )=>{
-			obj.sub = () => [ "Float header" ] as readonly any[]
+			obj.sub = () => ["Float header"] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -95,7 +95,7 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	@ $mol_mem
 	Content() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Filler1() , this.Filler2() ] as readonly any[]
+			obj.sub = () => [this.Filler1() , this.Filler2()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -125,4 +125,4 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/float/demo/-view.tree/demo.view.tree.map

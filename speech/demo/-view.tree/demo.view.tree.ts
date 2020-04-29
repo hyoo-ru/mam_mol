@@ -9,7 +9,7 @@ namespace $ { export class $mol_speech_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Toggle() , this.Message() , this.Speak() ] as readonly any[]
+		return [this.Toggle() , this.Message() , this.Speak()] as readonly any[]
 	}
 
 	/**
@@ -58,7 +58,7 @@ namespace $ { export class $mol_speech_demo extends $mol_demo_small {
 	@ $mol_mem
 	Message() {
 		return (( obj )=>{
-			obj.sub = () => [ this.message() ] as readonly any[]
+			obj.sub = () => [this.message()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -83,7 +83,7 @@ namespace $ { export class $mol_speech_demo extends $mol_demo_small {
 	Speak() {
 		return (( obj )=>{
 			obj.click = ( val? : any ) => this.speak( val )
-			obj.sub = () => [ "Speak" ] as readonly any[]
+			obj.sub = () => ["Speak"] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_major(  ) )
 	}
@@ -99,4 +99,4 @@ namespace $ { export class $mol_speech_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/speech/demo/-view.tree/demo.view.tree.map

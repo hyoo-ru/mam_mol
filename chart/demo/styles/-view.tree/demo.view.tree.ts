@@ -24,7 +24,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Chart() ] as readonly any[]
+		return [this.Chart()] as readonly any[]
 	}
 
 	/**
@@ -54,7 +54,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	graphs() {
-		return [ this.Receipts() , this.Receipts_confirmed() , this.Maximum() , this.Waste() , this.Purchases() , this.Taxes() , this.Energy() , this.Day() ] as readonly any[]
+		return [this.Receipts() , this.Receipts_confirmed() , this.Maximum() , this.Waste() , this.Purchases() , this.Taxes() , this.Energy() , this.Day()] as readonly any[]
 	}
 
 	/**
@@ -90,7 +90,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	series_x() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -99,7 +99,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	series_2_y() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -135,7 +135,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	series_3_y() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -171,7 +171,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	series_1_y() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -209,7 +209,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	series_4_y() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -230,7 +230,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 			obj.title = () => this.purchases_title()
 			obj.series_x = () => this.series_x()
 			obj.series_y = () => this.series_5_y()
-			obj.graphs = () => [ this.Purchases_fill() , this.Purchases_line() , this.Purchases_dots() ] as readonly any[]
+			obj.graphs = () => [this.Purchases_fill() , this.Purchases_line() , this.Purchases_dots()] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_group(  ) )
 	}
@@ -250,7 +250,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	series_5_y() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -307,7 +307,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 			obj.title = () => this.taxes_title()
 			obj.series_x = () => this.series_x()
 			obj.series_y = () => this.series_6_y()
-			obj.graphs = () => [ this.Taxes_fill() , this.Taxes_line() , this.Taxes_dots() ] as readonly any[]
+			obj.graphs = () => [this.Taxes_fill() , this.Taxes_line() , this.Taxes_dots()] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_group(  ) )
 	}
@@ -327,7 +327,7 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	 *  ```
 	 **/
 	series_6_y() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -415,4 +415,4 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/chart/demo/styles/-view.tree/demo.view.tree.map

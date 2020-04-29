@@ -8,7 +8,7 @@ namespace $ { export class $mol_code extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Manual() , this.Scan() ] as readonly any[]
+		return [this.Manual() , this.Scan()] as readonly any[]
 	}
 
 	/**
@@ -77,7 +77,7 @@ namespace $ { export class $mol_code extends $mol_view {
 	Scan() {
 		return (( obj )=>{
 			obj.event_click = ( val? : any ) => this.event_scan( val )
-			obj.sub = () => [ this.scan_label() ] as readonly any[]
+			obj.sub = () => [this.scan_label()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button(  ) )
 	}
@@ -102,4 +102,4 @@ namespace $ { export class $mol_code extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/code/-view.tree/code.view.tree.map

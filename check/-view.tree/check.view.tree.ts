@@ -36,7 +36,7 @@ namespace $ { export class $mol_check extends $mol_button_minor {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Icon() , this.label() ] as readonly any[]
+		return [this.Icon() , this.label()] as readonly any[]
 	}
 
 	/**
@@ -54,7 +54,7 @@ namespace $ { export class $mol_check extends $mol_button_minor {
 	 *  ```
 	 **/
 	label() {
-		return [ this.Title() ] as readonly any[]
+		return [this.Title()] as readonly any[]
 	}
 
 	/**
@@ -65,7 +65,7 @@ namespace $ { export class $mol_check extends $mol_button_minor {
 	@ $mol_mem
 	Title() {
 		return (( obj )=>{
-			obj.sub = () => [ this.title() ] as readonly any[]
+			obj.sub = () => [this.title()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -80,4 +80,4 @@ namespace $ { export class $mol_check extends $mol_button_minor {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/check/-view.tree/check.view.tree.map

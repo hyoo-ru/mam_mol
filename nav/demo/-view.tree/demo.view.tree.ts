@@ -15,7 +15,7 @@ namespace $ { export class $mol_nav_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	plugins() {
-		return [ this.Nav() ] as readonly any[]
+		return [this.Nav()] as readonly any[]
 	}
 
 	/**
@@ -47,7 +47,7 @@ namespace $ { export class $mol_nav_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Hint() , this.Tab_list() , this.Row_list() ] as readonly any[]
+		return [this.Hint() , this.Tab_list() , this.Row_list()] as readonly any[]
 	}
 
 	/**
@@ -58,7 +58,7 @@ namespace $ { export class $mol_nav_demo extends $mol_demo_small {
 	@ $mol_mem
 	Hint() {
 		return (( obj )=>{
-			obj.sub = () => [ this.hint() ] as readonly any[]
+			obj.sub = () => [this.hint()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -149,4 +149,4 @@ namespace $ { export class $mol_nav_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/nav/demo/-view.tree/demo.view.tree.map

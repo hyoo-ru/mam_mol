@@ -24,7 +24,7 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Card() ] as readonly any[]
+		return [this.Card()] as readonly any[]
 	}
 
 	/**
@@ -74,7 +74,7 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	 *  ```
 	 **/
 	items() {
-		return [ this.Code_item() , this.Cost_item() , this.Provider_item() ] as readonly any[]
+		return [this.Code_item() , this.Cost_item() , this.Provider_item()] as readonly any[]
 	}
 
 	/**
@@ -88,7 +88,7 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	Code_item() {
 		return (( obj )=>{
 			obj.title = () => this.code_title()
-			obj.content = () => [ this.code() ] as readonly any[]
+			obj.content = () => [this.code()] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -122,7 +122,7 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	Cost_item() {
 		return (( obj )=>{
 			obj.title = () => this.cost_title()
-			obj.content = () => [ this.Cost() ] as readonly any[]
+			obj.content = () => [this.Cost()] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -173,7 +173,7 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	Provider_item() {
 		return (( obj )=>{
 			obj.title = () => this.provider_title()
-			obj.content = () => [ this.provider_name() ] as readonly any[]
+			obj.content = () => [this.provider_name()] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -197,4 +197,4 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/supplies/card/-view.tree/card.view.tree.map

@@ -20,7 +20,7 @@ namespace $ { export class $mol_link_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.This() , this.Red() , this.Green() , this.Blue() , this.External() ] as readonly any[]
+		return [this.This() , this.Red() , this.Green() , this.Blue() , this.External()] as readonly any[]
 	}
 
 	/**
@@ -31,7 +31,7 @@ namespace $ { export class $mol_link_demo extends $mol_demo_small {
 	@ $mol_mem
 	This() {
 		return (( obj )=>{
-			obj.sub = () => [ this.this_label() ] as readonly any[]
+			obj.sub = () => [this.this_label()] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -58,7 +58,7 @@ namespace $ { export class $mol_link_demo extends $mol_demo_small {
 			obj.arg = () => ({
 			"color" :  "red" ,
 		})
-			obj.sub = () => [ this.red_label() ] as readonly any[]
+			obj.sub = () => [this.red_label()] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -85,7 +85,7 @@ namespace $ { export class $mol_link_demo extends $mol_demo_small {
 			obj.arg = () => ({
 			"color" :  "green" ,
 		})
-			obj.sub = () => [ this.green_label() ] as readonly any[]
+			obj.sub = () => [this.green_label()] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -112,7 +112,7 @@ namespace $ { export class $mol_link_demo extends $mol_demo_small {
 			obj.arg = () => ({
 			"color" :  "blue" ,
 		})
-			obj.sub = () => [ this.blue_label() ] as readonly any[]
+			obj.sub = () => [this.blue_label()] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -154,4 +154,4 @@ namespace $ { export class $mol_link_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/link/demo/-view.tree/demo.view.tree.map

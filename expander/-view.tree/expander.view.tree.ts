@@ -8,7 +8,7 @@ namespace $ { export class $mol_expander extends $mol_list {
 	 *  ```
 	 **/
 	rows() {
-		return [ this.Label() , this.Content() ] as readonly any[]
+		return [this.Label() , this.Content()] as readonly any[]
 	}
 
 	/**
@@ -21,7 +21,7 @@ namespace $ { export class $mol_expander extends $mol_list {
 	@ $mol_mem
 	Label() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Trigger() , this.Tools() ] as readonly any[]
+			obj.sub = () => [this.Trigger() , this.Tools()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -58,7 +58,7 @@ namespace $ { export class $mol_expander extends $mol_list {
 	 *  ```
 	 **/
 	label() {
-		return [ this.title() ] as readonly any[]
+		return [this.title()] as readonly any[]
 	}
 
 	/**
@@ -89,8 +89,8 @@ namespace $ { export class $mol_expander extends $mol_list {
 	 *  ```
 	 **/
 	content() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/expander/-view.tree/expander.view.tree.map

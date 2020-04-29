@@ -6,7 +6,7 @@ namespace $ { export class $mol_plot_mark_cross extends $mol_plot_graph {
 	 *  ```
 	 **/
 	labels() {
-		return [  ] as readonly ( string )[]
+		return [] as readonly ( string )[]
 	}
 
 	/**
@@ -33,7 +33,7 @@ namespace $ { export class $mol_plot_mark_cross extends $mol_plot_graph {
 	 *  ```
 	 **/
 	graphs() {
-		return [  ] as readonly ( $mol_plot_graph )[]
+		return [] as readonly ( $mol_plot_graph )[]
 	}
 
 	/**
@@ -87,7 +87,7 @@ namespace $ { export class $mol_plot_mark_cross extends $mol_plot_graph {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Curve() , this.Label_x() , this.Label_y() ] as readonly any[]
+		return [this.Curve() , this.Label_x() , this.Label_y()] as readonly any[]
 	}
 
 	/**
@@ -203,4 +203,4 @@ namespace $ { export class $mol_plot_mark_cross extends $mol_plot_graph {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/mark/cross/-view.tree/cross.view.tree.map

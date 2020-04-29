@@ -15,7 +15,7 @@ namespace $ { export class $mol_page_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Page() ] as readonly any[]
+		return [this.Page()] as readonly any[]
 	}
 
 	/**
@@ -29,9 +29,9 @@ namespace $ { export class $mol_page_demo extends $mol_demo_large {
 	@ $mol_mem
 	Page() {
 		return (( obj )=>{
-			obj.tools = () => [ this.Button() ] as readonly any[]
-			obj.body = () => [ this.Content() ] as readonly any[]
-			obj.foot = () => [ this.Foot_content() ] as readonly any[]
+			obj.tools = () => [this.Button()] as readonly any[]
+			obj.body = () => [this.Content()] as readonly any[]
+			obj.foot = () => [this.Foot_content()] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
 	}
@@ -57,7 +57,7 @@ namespace $ { export class $mol_page_demo extends $mol_demo_large {
 	@ $mol_mem
 	Content() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Text() ] as readonly any[]
+			obj.sub = () => [this.Text()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -82,7 +82,7 @@ namespace $ { export class $mol_page_demo extends $mol_demo_large {
 	@ $mol_mem
 	Foot_content() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Foot_text() ] as readonly any[]
+			obj.sub = () => [this.Foot_text()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -95,10 +95,10 @@ namespace $ { export class $mol_page_demo extends $mol_demo_large {
 	@ $mol_mem
 	Foot_text() {
 		return (( obj )=>{
-			obj.sub = () => [ "Footer" ] as readonly any[]
+			obj.sub = () => ["Footer"] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/page/demo/-view.tree/demo.view.tree.map

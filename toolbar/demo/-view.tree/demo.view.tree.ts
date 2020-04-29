@@ -15,7 +15,7 @@ namespace $ { export class $mol_toolbar_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Toolbar() ] as readonly any[]
+		return [this.Toolbar()] as readonly any[]
 	}
 
 	/**
@@ -33,7 +33,7 @@ namespace $ { export class $mol_toolbar_demo extends $mol_demo_small {
 	@ $mol_mem
 	Toolbar() {
 		return (( obj )=>{
-			obj.items = () => [ this.Approve() , this.Decline() , this.Copy() , this.Cut() , this.Paste() , this.Delete() , this.Modify() ] as readonly any[]
+			obj.items = () => [this.Approve() , this.Decline() , this.Copy() , this.Cut() , this.Paste() , this.Delete() , this.Modify()] as readonly any[]
 			return obj
 		})( new this.$.$mol_toolbar(  ) )
 	}
@@ -90,7 +90,7 @@ namespace $ { export class $mol_toolbar_demo extends $mol_demo_small {
 	@ $mol_mem
 	Copy() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Copy_icon() ] as readonly any[]
+			obj.sub = () => [this.Copy_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -115,7 +115,7 @@ namespace $ { export class $mol_toolbar_demo extends $mol_demo_small {
 	@ $mol_mem
 	Cut() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Cut_icon() ] as readonly any[]
+			obj.sub = () => [this.Cut_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -140,7 +140,7 @@ namespace $ { export class $mol_toolbar_demo extends $mol_demo_small {
 	@ $mol_mem
 	Paste() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Paste_icon() ] as readonly any[]
+			obj.sub = () => [this.Paste_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -165,7 +165,7 @@ namespace $ { export class $mol_toolbar_demo extends $mol_demo_small {
 	@ $mol_mem
 	Delete() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Delete_icon() ] as readonly any[]
+			obj.sub = () => [this.Delete_icon()] as readonly any[]
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -192,7 +192,7 @@ namespace $ { export class $mol_toolbar_demo extends $mol_demo_small {
 	@ $mol_mem
 	Modify() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Search() , this.Replace() ] as readonly any[]
+			obj.sub = () => [this.Search() , this.Replace()] as readonly any[]
 			return obj
 		})( new this.$.$mol_bar(  ) )
 	}
@@ -242,4 +242,4 @@ namespace $ { export class $mol_toolbar_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/toolbar/demo/-view.tree/demo.view.tree.map

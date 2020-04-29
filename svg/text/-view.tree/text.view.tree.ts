@@ -15,7 +15,7 @@ namespace $ { export class $mol_svg_text extends $mol_svg {
 	 *  ```
 	 **/
 	pos() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -69,7 +69,7 @@ namespace $ { export class $mol_svg_text extends $mol_svg {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.text() ] as readonly any[]
+		return [this.text()] as readonly any[]
 	}
 
 	/**
@@ -82,4 +82,4 @@ namespace $ { export class $mol_svg_text extends $mol_svg {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/svg/text/-view.tree/text.view.tree.map

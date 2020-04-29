@@ -23,7 +23,6 @@ namespace $ { export class $mol_view_tree_test_attributes_subcomponent extends $
 	}
 
 } }
-
 namespace $ { export class $mol_view_tree_test_attributes_subcomponent_page extends $mol_view {
 
 	/**
@@ -36,4 +35,4 @@ namespace $ { export class $mol_view_tree_test_attributes_subcomponent_page exte
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/view/tree/test/-view.tree/subcomponent.view.tree.map

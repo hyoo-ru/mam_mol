@@ -15,7 +15,7 @@ namespace $ { export class $mol_meter_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	plugins() {
-		return [ this.Meter() ] as readonly any[]
+		return [this.Meter()] as readonly any[]
 	}
 
 	top() {
@@ -48,7 +48,7 @@ namespace $ { export class $mol_meter_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Top() , this.Height() ] as readonly any[]
+		return [this.Top() , this.Height()] as readonly any[]
 	}
 
 	/**
@@ -61,7 +61,7 @@ namespace $ { export class $mol_meter_demo extends $mol_demo_small {
 	@ $mol_mem
 	Top() {
 		return (( obj )=>{
-			obj.sub = () => [ "Offset from top: " , this.top() ] as readonly any[]
+			obj.sub = () => ["Offset from top: " , this.top()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -76,10 +76,10 @@ namespace $ { export class $mol_meter_demo extends $mol_demo_small {
 	@ $mol_mem
 	Height() {
 		return (( obj )=>{
-			obj.sub = () => [ "Component height: " , this.height() ] as readonly any[]
+			obj.sub = () => ["Component height: " , this.height()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/meter/demo/-view.tree/demo.view.tree.map

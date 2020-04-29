@@ -15,7 +15,7 @@ namespace $ { export class $mol_frame_demo extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Frame() ] as readonly any[]
+		return [this.Frame()] as readonly any[]
 	}
 
 	/**
@@ -32,4 +32,4 @@ namespace $ { export class $mol_frame_demo extends $mol_demo_large {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/frame/demo/-view.tree/demo.view.tree.map

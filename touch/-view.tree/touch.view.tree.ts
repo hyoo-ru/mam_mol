@@ -39,7 +39,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 **/
 	@ $mol_mem
 	start_pan( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [ 0 , 0 ] as readonly any[]
+		return ( val !== void 0 ) ? val : [0 , 0] as readonly any[]
 	}
 
 	/**
@@ -51,7 +51,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 **/
 	@ $mol_mem
 	pan( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [ 0 , 0 ] as readonly any[]
+		return ( val !== void 0 ) ? val : [0 , 0] as readonly any[]
 	}
 
 	/**
@@ -63,7 +63,7 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 **/
 	@ $mol_mem
 	pos( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [ NaN , NaN ] as readonly any[]
+		return ( val !== void 0 ) ? val : [NaN , NaN] as readonly any[]
 	}
 
 	/**
@@ -298,4 +298,4 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/touch/-view.tree/touch.view.tree.map

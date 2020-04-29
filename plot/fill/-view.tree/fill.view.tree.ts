@@ -6,7 +6,7 @@ namespace $ { export class $mol_plot_fill extends $mol_plot_graph {
 	 *  ```
 	 **/
 	points() {
-		return [  ] as readonly ( readonly[number,number] )[]
+		return [] as readonly ( readonly[number,number] )[]
 	}
 
 	/**
@@ -33,7 +33,7 @@ namespace $ { export class $mol_plot_fill extends $mol_plot_graph {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Curve() ] as readonly any[]
+		return [this.Curve()] as readonly any[]
 	}
 
 	/**
@@ -72,4 +72,4 @@ namespace $ { export class $mol_plot_fill extends $mol_plot_graph {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/fill/-view.tree/fill.view.tree.map

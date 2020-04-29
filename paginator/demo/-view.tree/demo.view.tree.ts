@@ -15,7 +15,7 @@ namespace $ { export class $mol_paginator_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Pages() ] as readonly any[]
+		return [this.Pages()] as readonly any[]
 	}
 
 	/**
@@ -42,4 +42,4 @@ namespace $ { export class $mol_paginator_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/paginator/demo/-view.tree/demo.view.tree.map

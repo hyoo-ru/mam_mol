@@ -8,7 +8,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Title() , this.Weekdays() ] as readonly any[]
+		return [this.Title() , this.Weekdays()] as readonly any[]
 	}
 
 	/**
@@ -22,7 +22,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	Title() {
 		return (( obj )=>{
 			obj.minimal_height = () => 24
-			obj.sub = () => [ this.title() ] as readonly any[]
+			obj.sub = () => [this.title()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -55,7 +55,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	 *  ```
 	 **/
 	weekdays() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -64,7 +64,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	 *  ```
 	 **/
 	weeks() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -78,7 +78,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	Weekday( index : any ) {
 		return (( obj )=>{
 			obj.holiday = () => this.weekend(index)
-			obj.sub = () => [ this.weekday(index) ] as readonly any[]
+			obj.sub = () => [this.weekday(index)] as readonly any[]
 			return obj
 		})( new this.$.$mol_calendar_day(  ) )
 	}
@@ -120,7 +120,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	 *  ```
 	 **/
 	week_days( row : any ) {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -176,7 +176,7 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	 *  ```
 	 **/
 	day_content( day : any ) {
-		return [ this.day_text(day) ] as readonly any[]
+		return [this.day_text(day)] as readonly any[]
 	}
 
 	/**
@@ -210,7 +210,6 @@ namespace $ { export class $mol_calendar extends $mol_list {
 	}
 
 } }
-
 namespace $ { export class $mol_calendar_day extends $mol_view {
 
 	/**
@@ -275,4 +274,4 @@ namespace $ { export class $mol_calendar_day extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/calendar/-view.tree/calendar.view.tree.map

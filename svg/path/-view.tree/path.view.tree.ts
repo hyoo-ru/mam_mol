@@ -33,4 +33,4 @@ namespace $ { export class $mol_svg_path extends $mol_svg {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/svg/path/-view.tree/path.view.tree.map

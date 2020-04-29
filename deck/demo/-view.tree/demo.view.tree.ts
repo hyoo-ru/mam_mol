@@ -15,7 +15,7 @@ namespace $ { export class $mol_deck_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Deck() ] as readonly any[]
+		return [this.Deck()] as readonly any[]
 	}
 
 	/**
@@ -29,7 +29,7 @@ namespace $ { export class $mol_deck_demo extends $mol_demo_small {
 	@ $mol_mem
 	Deck() {
 		return (( obj )=>{
-			obj.items = () => [ this.greeterItem() , this.questerItem() , this.commanderItem() ] as readonly any[]
+			obj.items = () => [this.greeterItem() , this.questerItem() , this.commanderItem()] as readonly any[]
 			return obj
 		})( new this.$.$mol_deck(  ) )
 	}
@@ -65,7 +65,7 @@ namespace $ { export class $mol_deck_demo extends $mol_demo_small {
 	@ $mol_mem
 	greeterContent() {
 		return (( obj )=>{
-			obj.sub = () => [ this.greeterMessager() ] as readonly any[]
+			obj.sub = () => [this.greeterMessager()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -78,7 +78,7 @@ namespace $ { export class $mol_deck_demo extends $mol_demo_small {
 	@ $mol_mem
 	greeterMessager() {
 		return (( obj )=>{
-			obj.sub = () => [ this.greeterMessage() ] as readonly any[]
+			obj.sub = () => [this.greeterMessage()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -123,7 +123,7 @@ namespace $ { export class $mol_deck_demo extends $mol_demo_small {
 	@ $mol_mem
 	questerContent() {
 		return (( obj )=>{
-			obj.sub = () => [ this.questerMessager() ] as readonly any[]
+			obj.sub = () => [this.questerMessager()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -136,7 +136,7 @@ namespace $ { export class $mol_deck_demo extends $mol_demo_small {
 	@ $mol_mem
 	questerMessager() {
 		return (( obj )=>{
-			obj.sub = () => [ this.questerMessage() ] as readonly any[]
+			obj.sub = () => [this.questerMessage()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -181,7 +181,7 @@ namespace $ { export class $mol_deck_demo extends $mol_demo_small {
 	@ $mol_mem
 	commanderContent() {
 		return (( obj )=>{
-			obj.sub = () => [ this.commanderMessager() ] as readonly any[]
+			obj.sub = () => [this.commanderMessager()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -194,7 +194,7 @@ namespace $ { export class $mol_deck_demo extends $mol_demo_small {
 	@ $mol_mem
 	commanderMessager() {
 		return (( obj )=>{
-			obj.sub = () => [ this.commanderMessage() ] as readonly any[]
+			obj.sub = () => [this.commanderMessage()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -209,4 +209,4 @@ namespace $ { export class $mol_deck_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/deck/demo/-view.tree/demo.view.tree.map

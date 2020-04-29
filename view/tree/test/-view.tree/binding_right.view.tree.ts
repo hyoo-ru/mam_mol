@@ -17,7 +17,6 @@ namespace $ { export class $mol_view_tree_test_binding_right extends $mol_view {
 	}
 
 } }
-
 namespace $ { export class $mol_view_tree_test_binding_right_test extends $mol_view {
 
 	/**
@@ -31,4 +30,4 @@ namespace $ { export class $mol_view_tree_test_binding_right_test extends $mol_v
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/view/tree/test/-view.tree/binding_right.view.tree.map

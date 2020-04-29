@@ -60,7 +60,7 @@ namespace $ { export class $mol_chart extends $mol_view {
 	 *  ```
 	 **/
 	graphs() {
-		return [  ] as readonly ( $mol_plot_graph )[]
+		return [] as readonly ( $mol_plot_graph )[]
 	}
 
 	/**
@@ -71,7 +71,7 @@ namespace $ { export class $mol_chart extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Legend() , this.Plot() ] as readonly any[]
+		return [this.Legend() , this.Plot()] as readonly any[]
 	}
 
 	/**
@@ -137,4 +137,4 @@ namespace $ { export class $mol_chart extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/chart/-view.tree/chart.view.tree.map

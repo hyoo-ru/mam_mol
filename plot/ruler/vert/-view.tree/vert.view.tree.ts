@@ -55,4 +55,4 @@ namespace $ { export class $mol_plot_ruler_vert extends $mol_plot_ruler {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/ruler/vert/-view.tree/vert.view.tree.map

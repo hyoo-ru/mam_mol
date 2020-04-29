@@ -19,7 +19,7 @@ namespace $ { export class $mol_button_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Major_enabled() , this.Major_disabled() , this.Minor_enabled() , this.Minor_disabled() ] as readonly any[]
+		return [this.Major_enabled() , this.Major_disabled() , this.Minor_enabled() , this.Minor_disabled()] as readonly any[]
 	}
 
 	/**
@@ -99,4 +99,4 @@ namespace $ { export class $mol_button_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/button/demo/-view.tree/demo.view.tree.map

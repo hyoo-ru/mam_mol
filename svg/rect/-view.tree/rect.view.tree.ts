@@ -15,7 +15,7 @@ namespace $ { export class $mol_svg_rect extends $mol_svg {
 	 *  ```
 	 **/
 	pos() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -75,4 +75,4 @@ namespace $ { export class $mol_svg_rect extends $mol_svg {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/svg/rect/-view.tree/rect.view.tree.map

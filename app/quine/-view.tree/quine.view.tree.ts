@@ -15,7 +15,7 @@ namespace $ { export class $mol_app_quine extends $mol_page {
 	 *  ```
 	 **/
 	body() {
-		return [ this.Content() ] as readonly any[]
+		return [this.Content()] as readonly any[]
 	}
 
 	/**
@@ -26,7 +26,7 @@ namespace $ { export class $mol_app_quine extends $mol_page {
 	@ $mol_mem
 	Content() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Text() ] as readonly any[]
+			obj.sub = () => [this.Text()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -63,8 +63,8 @@ namespace $ { export class $mol_app_quine extends $mol_page {
 	 *  ```
 	 **/
 	paths() {
-		return [ "mol/app/quine/quine.view.tree" , "mol/app/quine/quine.view.ts" , "mol/app/quine/index.html" , "mol/app/quine/quine.locale=ru.json" ] as readonly any[]
+		return ["mol/app/quine/quine.view.tree" , "mol/app/quine/quine.view.ts" , "mol/app/quine/index.html" , "mol/app/quine/quine.locale=ru.json"] as readonly any[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/quine/-view.tree/quine.view.tree.map

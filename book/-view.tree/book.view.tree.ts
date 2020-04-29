@@ -15,7 +15,7 @@ namespace $ { export class $mol_book extends $mol_view {
 	 *  ```
 	 **/
 	pages_wrapped() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -33,7 +33,7 @@ namespace $ { export class $mol_book extends $mol_view {
 	 *  ```
 	 **/
 	pages() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -44,7 +44,7 @@ namespace $ { export class $mol_book extends $mol_view {
 	 *  ```
 	 **/
 	plugins() {
-		return [ this.Meter() , this.Touch() ] as readonly ( $mol_plugin )[]
+		return [this.Meter() , this.Touch()] as readonly ( $mol_plugin )[]
 	}
 
 	width() {
@@ -147,7 +147,6 @@ namespace $ { export class $mol_book extends $mol_view {
 	}
 
 } }
-
 namespace $ { export class $mol_book_placeholder extends $mol_view {
 
 	/**
@@ -174,7 +173,6 @@ namespace $ { export class $mol_book_placeholder extends $mol_view {
 	}
 
 } }
-
 namespace $ { export class $mol_book_page extends $mol_ghost {
 
 	/**
@@ -219,4 +217,4 @@ namespace $ { export class $mol_book_page extends $mol_ghost {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/book/-view.tree/book.view.tree.map

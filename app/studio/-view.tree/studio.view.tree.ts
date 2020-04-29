@@ -16,7 +16,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	tools_main() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	pages() {
-		return [ this.Preview_page() , this.Editor_page() , this.Source_page() ] as readonly any[]
+		return [this.Preview_page() , this.Editor_page() , this.Source_page()] as readonly any[]
 	}
 
 	/**
@@ -45,7 +45,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 		return (( obj )=>{
 			obj.title = () => this.preview_title()
 			obj.tools = () => this.preview_tools()
-			obj.body = () => [ this.Selector() ] as readonly any[]
+			obj.body = () => [this.Selector()] as readonly any[]
 			obj.minimal_width = () => 400
 			return obj
 		})( new this.$.$mol_page(  ) )
@@ -68,7 +68,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	preview_tools() {
-		return [ this.Source_link() , this.Edit() ] as readonly any[]
+		return [this.Source_link() , this.Edit()] as readonly any[]
 	}
 
 	/**
@@ -83,7 +83,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	Source_link() {
 		return (( obj )=>{
 			obj.hint = () => this.source_title()
-			obj.sub = () => [ this.Source_icon() ] as readonly any[]
+			obj.sub = () => [this.Source_icon()] as readonly any[]
 			obj.arg = () => this.source_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -129,7 +129,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	Edit() {
 		return (( obj )=>{
 			obj.hint = () => this.editor_title()
-			obj.sub = () => [ this.Edit_icon() ] as readonly any[]
+			obj.sub = () => [this.Edit_icon()] as readonly any[]
 			obj.arg = () => ({
 			"path" :  "" ,
 			"source" :  null as any ,
@@ -160,7 +160,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	@ $mol_mem
 	Selector() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Block() ] as readonly any[]
+			obj.sub = () => [this.Block()] as readonly any[]
 			obj.path = ( val? : any ) => this.path( val )
 			return obj
 		})( new this.$.$mol_app_studio_selector(  ) )
@@ -185,7 +185,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 **/
 	@ $mol_mem
 	path( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [  ] as readonly any[]
+		return ( val !== void 0 ) ? val : [] as readonly any[]
 	}
 
 	/**
@@ -204,11 +204,11 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	@ $mol_mem
 	Editor_page() {
 		return (( obj )=>{
-			obj.plugins = () => [ this.Speech_filter() ] as readonly any[]
+			obj.plugins = () => [this.Speech_filter()] as readonly any[]
 			obj.title = () => this.editor_title()
 			obj.event_top = ( val? : any ) => this.event_front_up( val )
-			obj.tools = () => [ this.Editor_close() ] as readonly any[]
-			obj.body = () => [ this.Filter_bar() , this.Fields() ] as readonly any[]
+			obj.tools = () => [this.Editor_close()] as readonly any[]
+			obj.body = () => [this.Filter_bar() , this.Fields()] as readonly any[]
 			obj.minimal_width = () => 400
 			return obj
 		})( new this.$.$mol_page(  ) )
@@ -246,7 +246,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	speech_filter_patterns() {
-		return [ "find (.+?)" ] as readonly any[]
+		return ["find (.+?)"] as readonly any[]
 	}
 
 	/**
@@ -268,7 +268,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	@ $mol_mem
 	Editor_close() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Editor_close_icon() ] as readonly any[]
+			obj.sub = () => [this.Editor_close_icon()] as readonly any[]
 			obj.arg = () => this.editor_close_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -318,7 +318,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	filter_bar_items() {
-		return [ this.Filter() , this.Prop_add() ] as readonly any[]
+		return [this.Filter() , this.Prop_add()] as readonly any[]
 	}
 
 	/**
@@ -368,7 +368,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	Prop_add() {
 		return (( obj )=>{
 			obj.event_click = ( val? : any ) => this.event_add( val )
-			obj.sub = () => [ this.Prop_add_icon() ] as readonly any[]
+			obj.sub = () => [this.Prop_add_icon()] as readonly any[]
 			obj.hint = () => this.prop_add_hint()
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
@@ -424,7 +424,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	fields() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -441,8 +441,8 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 		return (( obj )=>{
 			obj.title = () => this.source_title()
 			obj.minimal_width = () => 400
-			obj.tools = () => [ this.Source_close() ] as readonly any[]
-			obj.body = () => [ this.Source() ] as readonly any[]
+			obj.tools = () => [this.Source_close()] as readonly any[]
+			obj.body = () => [this.Source()] as readonly any[]
 			return obj
 		})( new this.$.$mol_page(  ) )
 	}
@@ -466,7 +466,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	@ $mol_mem
 	Source_close() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Source_close_icon() ] as readonly any[]
+			obj.sub = () => [this.Source_close_icon()] as readonly any[]
 			obj.arg = () => this.source_close_arg()
 			return obj
 		})( new this.$.$mol_link(  ) )
@@ -562,7 +562,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	prop_path( id : any ) {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -614,7 +614,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	prop_options() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -623,7 +623,7 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	 *  ```
 	 **/
 	view_options() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -681,7 +681,6 @@ namespace $ { export class $mol_app_studio extends $mol_book {
 	}
 
 } }
-
 namespace $ { export class $mol_app_studio_selector extends $mol_view {
 
 	/**
@@ -715,8 +714,8 @@ namespace $ { export class $mol_app_studio_selector extends $mol_view {
 	 **/
 	@ $mol_mem
 	path( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : [  ] as readonly any[]
+		return ( val !== void 0 ) ? val : [] as readonly any[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/studio/-view.tree/studio.view.tree.map

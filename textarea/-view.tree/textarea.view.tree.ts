@@ -29,7 +29,7 @@ namespace $ { export class $mol_textarea extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Edit() , this.View() ] as readonly any[]
+		return [this.Edit() , this.View()] as readonly any[]
 	}
 
 	/**
@@ -105,4 +105,4 @@ namespace $ { export class $mol_textarea extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/textarea/-view.tree/textarea.view.tree.map

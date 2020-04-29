@@ -13,4 +13,4 @@ namespace $ { export class $mol_ghost extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/ghost/-view.tree/ghost.view.tree.map

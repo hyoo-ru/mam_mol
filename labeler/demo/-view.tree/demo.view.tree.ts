@@ -17,7 +17,7 @@ namespace $ { export class $mol_labeler_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Provider() , this.Name() ] as readonly any[]
+		return [this.Provider() , this.Name()] as readonly any[]
 	}
 
 	/**
@@ -31,7 +31,7 @@ namespace $ { export class $mol_labeler_demo extends $mol_demo_small {
 	Provider() {
 		return (( obj )=>{
 			obj.title = () => "Provider"
-			obj.content = () => [ "ACME Provider Inc." ] as readonly any[]
+			obj.content = () => ["ACME Provider Inc."] as readonly any[]
 			return obj
 		})( new this.$.$mol_labeler(  ) )
 	}
@@ -79,4 +79,4 @@ namespace $ { export class $mol_labeler_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/labeler/demo/-view.tree/demo.view.tree.map

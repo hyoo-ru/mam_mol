@@ -65,7 +65,7 @@ namespace $ { export class $mol_app_supplies extends $mol_book {
 	 *  ```
 	 **/
 	supplies() {
-		return [  ] as readonly ( $mol_app_supplies_domain_supply )[]
+		return [] as readonly ( $mol_app_supplies_domain_supply )[]
 	}
 
 	/**
@@ -74,7 +74,7 @@ namespace $ { export class $mol_app_supplies extends $mol_book {
 	 *  ```
 	 **/
 	tools_root() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -124,4 +124,4 @@ namespace $ { export class $mol_app_supplies extends $mol_book {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/supplies/-view.tree/supplies.view.tree.map

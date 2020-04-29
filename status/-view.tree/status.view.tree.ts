@@ -33,7 +33,7 @@ namespace $ { export class $mol_status extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.message() ] as readonly any[]
+		return [this.message()] as readonly any[]
 	}
 
 	/**
@@ -46,4 +46,4 @@ namespace $ { export class $mol_status extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/status/-view.tree/status.view.tree.map

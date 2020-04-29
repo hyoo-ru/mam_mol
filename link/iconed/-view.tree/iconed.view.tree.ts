@@ -6,7 +6,7 @@ namespace $ { export class $mol_link_iconed extends $mol_link {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Icon() ] as readonly any[]
+		return [this.Icon()] as readonly any[]
 	}
 
 	/**
@@ -40,7 +40,7 @@ namespace $ { export class $mol_link_iconed extends $mol_link {
 	 *  ```
 	 **/
 	content() {
-		return [ this.title() ] as readonly any[]
+		return [this.title()] as readonly any[]
 	}
 
 	/**
@@ -62,4 +62,4 @@ namespace $ { export class $mol_link_iconed extends $mol_link {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/link/iconed/-view.tree/iconed.view.tree.map

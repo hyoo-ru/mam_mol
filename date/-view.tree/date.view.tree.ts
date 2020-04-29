@@ -63,7 +63,7 @@ namespace $ { export class $mol_date extends $mol_pop {
 	 *  ```
 	 **/
 	bubble_content() {
-		return [ this.Calendar() ] as readonly any[]
+		return [this.Calendar()] as readonly any[]
 	}
 
 	/**
@@ -126,7 +126,6 @@ namespace $ { export class $mol_date extends $mol_pop {
 	}
 
 } }
-
 namespace $ { export class $mol_date_calendar extends $mol_calendar {
 
 	/**
@@ -135,7 +134,7 @@ namespace $ { export class $mol_date_calendar extends $mol_calendar {
 	 *  ```
 	 **/
 	day_content( day : any ) {
-		return [ this.Day_button(day) ] as readonly any[]
+		return [this.Day_button(day)] as readonly any[]
 	}
 
 	/**
@@ -165,4 +164,4 @@ namespace $ { export class $mol_date_calendar extends $mol_calendar {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/date/-view.tree/date.view.tree.map

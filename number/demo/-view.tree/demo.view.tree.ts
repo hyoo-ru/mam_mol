@@ -25,7 +25,7 @@ namespace $ { export class $mol_number_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.zero() , this.one() , this.two() , this.three() , this.four() , this.five() , this.six() , this.seven() , this.eight() , this.nine() ] as readonly any[]
+		return [this.zero() , this.one() , this.two() , this.three() , this.four() , this.five() , this.six() , this.seven() , this.eight() , this.nine()] as readonly any[]
 	}
 
 	/**
@@ -204,4 +204,4 @@ namespace $ { export class $mol_number_demo extends $mol_demo_small {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/number/demo/-view.tree/demo.view.tree.map

@@ -6,5 +6,6 @@ interface $node {
 	"chokidar" : typeof import( "chokidar" )
 	"colorette" : typeof import( "colorette" )
 	"node-fetch" : typeof import( "node-fetch" )
+	"source-map" : typeof import( "source-map" )
 	"child_process" : typeof import( "child_process" )
 }

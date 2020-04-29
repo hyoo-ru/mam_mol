@@ -15,7 +15,7 @@ namespace $ { export class $mol_select_demo_colors extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Color() ] as readonly any[]
+		return [this.Color()] as readonly any[]
 	}
 
 	/**
@@ -73,7 +73,7 @@ namespace $ { export class $mol_select_demo_colors extends $mol_demo_small {
 	 *  ```
 	 **/
 	option_content( id : any ) {
-		return [ this.Color_option(id) ] as readonly any[]
+		return [this.Color_option(id)] as readonly any[]
 	}
 
 	/**
@@ -88,7 +88,7 @@ namespace $ { export class $mol_select_demo_colors extends $mol_demo_small {
 	@ $mol_mem_key
 	Color_option( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.Color_preview(id) , this.color_name(id) ] as readonly any[]
+			obj.sub = () => [this.Color_preview(id) , this.color_name(id)] as readonly any[]
 			obj.minimal_height = () => 40
 			return obj
 		})( new this.$.$mol_row(  ) )
@@ -117,7 +117,6 @@ namespace $ { export class $mol_select_demo_colors extends $mol_demo_small {
 	}
 
 } }
-
 namespace $ { export class $mol_select_colors_color_preview extends $mol_view {
 
 	/**
@@ -144,4 +143,4 @@ namespace $ { export class $mol_select_colors_color_preview extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/select/demo/colors/-view.tree/colors.view.tree.map

@@ -63,7 +63,7 @@ namespace $ { export class $mol_bench extends $mol_grid {
 	 *  ```
 	 **/
 	col_head_content( id : any ) {
-		return [ this.col_head_title(id) , this.Col_head_sort(id) ] as readonly any[]
+		return [this.col_head_title(id) , this.Col_head_sort(id)] as readonly any[]
 	}
 
 	/**
@@ -95,7 +95,7 @@ namespace $ { export class $mol_bench extends $mol_grid {
 	 *  ```
 	 **/
 	cell_content_number( id : any ) {
-		return [ this.result_value(id) , this.Result_portion(id) ] as readonly any[]
+		return [this.result_value(id) , this.Result_portion(id)] as readonly any[]
 	}
 
 	/**
@@ -130,7 +130,6 @@ namespace $ { export class $mol_bench extends $mol_grid {
 	}
 
 } }
-
 namespace $ { export class $mol_bench_head extends $mol_float {
 
 	/**
@@ -190,4 +189,4 @@ namespace $ { export class $mol_bench_head extends $mol_float {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/bench/-view.tree/bench.view.tree.map

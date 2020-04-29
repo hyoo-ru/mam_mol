@@ -15,7 +15,7 @@ namespace $ { export class $mol_search_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Search() ] as readonly any[]
+		return [this.Search()] as readonly any[]
 	}
 
 	query() {
@@ -43,8 +43,8 @@ namespace $ { export class $mol_search_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	suggests() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/search/demo/-view.tree/demo.view.tree.map

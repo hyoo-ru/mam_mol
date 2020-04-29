@@ -21,7 +21,7 @@ namespace $ { export class $mol_message extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Info() , this.Avatar_link() , this.Text() ] as readonly any[]
+		return [this.Info() , this.Avatar_link() , this.Text()] as readonly any[]
 	}
 
 	/**
@@ -34,7 +34,7 @@ namespace $ { export class $mol_message extends $mol_view {
 	@ $mol_mem
 	Info() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Name() , this.Moment() ] as readonly any[]
+			obj.sub = () => [this.Name() , this.Moment()] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -47,7 +47,7 @@ namespace $ { export class $mol_message extends $mol_view {
 	@ $mol_mem
 	Name() {
 		return (( obj )=>{
-			obj.sub = () => [ this.name() ] as readonly any[]
+			obj.sub = () => [this.name()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -69,7 +69,7 @@ namespace $ { export class $mol_message extends $mol_view {
 	@ $mol_mem
 	Moment() {
 		return (( obj )=>{
-			obj.sub = () => [ this.moment_string() ] as readonly any[]
+			obj.sub = () => [this.moment_string()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -94,7 +94,7 @@ namespace $ { export class $mol_message extends $mol_view {
 	Avatar_link() {
 		return (( obj )=>{
 			obj.uri = () => this.avatar_link()
-			obj.sub = () => [ this.Avatar() ] as readonly any[]
+			obj.sub = () => [this.Avatar()] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -156,4 +156,4 @@ namespace $ { export class $mol_message extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/message/-view.tree/message.view.tree.map

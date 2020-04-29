@@ -33,7 +33,7 @@ namespace $ { export class $mol_dimmer extends $mol_view {
 	 *  ```
 	 **/
 	parts() {
-		return [  ] as readonly ( $mol_view_content )[]
+		return [] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -44,7 +44,7 @@ namespace $ { export class $mol_dimmer extends $mol_view {
 	@ $mol_mem_key
 	Low( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.string(id) ] as readonly any[]
+			obj.sub = () => [this.string(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -59,4 +59,4 @@ namespace $ { export class $mol_dimmer extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/dimmer/-view.tree/dimmer.view.tree.map

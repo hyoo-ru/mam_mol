@@ -17,7 +17,7 @@ namespace $ { export class $mol_card_demo extends $mol_demo_small {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Simple() , this.Pending() ] as readonly any[]
+		return [this.Simple() , this.Pending()] as readonly any[]
 	}
 
 	/**
@@ -41,7 +41,7 @@ namespace $ { export class $mol_card_demo extends $mol_demo_small {
 	@ $mol_mem
 	Simple_content() {
 		return (( obj )=>{
-			obj.sub = () => [ "Hello world!" ] as readonly any[]
+			obj.sub = () => ["Hello world!"] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
@@ -70,10 +70,10 @@ namespace $ { export class $mol_card_demo extends $mol_demo_small {
 	@ $mol_mem
 	Pending_content() {
 		return (( obj )=>{
-			obj.sub = () => [ "Hello pending!" ] as readonly any[]
+			obj.sub = () => ["Hello pending!"] as readonly any[]
 			return obj
 		})( new this.$.$mol_row(  ) )
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/card/demo/-view.tree/demo.view.tree.map

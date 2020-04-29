@@ -29,7 +29,7 @@ namespace $ { export class $mol_perf_uibench_tree extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Root() ] as readonly any[]
+		return [this.Root()] as readonly any[]
 	}
 
 	/**
@@ -55,7 +55,6 @@ namespace $ { export class $mol_perf_uibench_tree extends $mol_view {
 	}
 
 } }
-
 namespace $ { export class $mol_perf_uibench_tree_branch extends $mol_list {
 
 	/**
@@ -135,7 +134,6 @@ namespace $ { export class $mol_perf_uibench_tree_branch extends $mol_list {
 	}
 
 } }
-
 namespace $ { export class $mol_perf_uibench_tree_leaf extends $mol_view {
 
 	/**
@@ -176,7 +174,7 @@ namespace $ { export class $mol_perf_uibench_tree_leaf extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.text() ] as readonly any[]
+		return [this.text()] as readonly any[]
 	}
 
 	/**
@@ -189,4 +187,4 @@ namespace $ { export class $mol_perf_uibench_tree_leaf extends $mol_view {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/perf/uibench/tree/-view.tree/tree.view.tree.map

@@ -24,7 +24,7 @@ namespace $ { export class $mol_list_demo_table extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Scroll() ] as readonly any[]
+		return [this.Scroll()] as readonly any[]
 	}
 
 	/**
@@ -35,7 +35,7 @@ namespace $ { export class $mol_list_demo_table extends $mol_demo_large {
 	@ $mol_mem
 	Scroll() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Rows() ] as readonly any[]
+			obj.sub = () => [this.Rows()] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -59,7 +59,7 @@ namespace $ { export class $mol_list_demo_table extends $mol_demo_large {
 	 *  ```
 	 **/
 	rows() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 	/**
@@ -88,7 +88,7 @@ namespace $ { export class $mol_list_demo_table extends $mol_demo_large {
 	 *  ```
 	 **/
 	row_content( id : any ) {
-		return [ this.Id(id) , this.Title(id) , this.Editable(id) , this.Priority(id) , this.Date(id) , this.Number(id) , this.Link(id) ] as readonly any[]
+		return [this.Id(id) , this.Title(id) , this.Editable(id) , this.Priority(id) , this.Date(id) , this.Number(id) , this.Link(id)] as readonly any[]
 	}
 
 	/**
@@ -99,7 +99,7 @@ namespace $ { export class $mol_list_demo_table extends $mol_demo_large {
 	@ $mol_mem_key
 	Id( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.row_id(id) ] as readonly any[]
+			obj.sub = () => [this.row_id(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -121,7 +121,7 @@ namespace $ { export class $mol_list_demo_table extends $mol_demo_large {
 	@ $mol_mem_key
 	Title( id : any ) {
 		return (( obj )=>{
-			obj.sub = () => [ this.row_title(id) ] as readonly any[]
+			obj.sub = () => [this.row_title(id)] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -282,4 +282,4 @@ namespace $ { export class $mol_list_demo_table extends $mol_demo_large {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/list/demo/table/-view.tree/table.view.tree.map

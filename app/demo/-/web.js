@@ -19872,7 +19872,11 @@ var $;
     }
     $.$mol_view_tree_value_type = $mol_view_tree_value_type;
     function $mol_view_tree_compile(tree) {
-        var content = '';
+        const splittedUri = tree.uri.split(/[#\\\/]/);
+        splittedUri.pop();
+        const fileName = splittedUri.pop();
+        const SourceNode = $node['source-map'].SourceNode;
+        var content = [];
         var locales = {};
         for (let def of $mol_view_tree_classes(tree).sub) {
             if (!/^\$\w+$/.test(def.type))
@@ -19885,7 +19889,6 @@ var $;
                     var needSet = false;
                     var needReturn = true;
                     var needCache = false;
-                    var keys = [];
                     if (param.type === '<=>') {
                         param = param.sub[0];
                     }
@@ -19901,11 +19904,11 @@ var $;
                         try {
                             switch (true) {
                                 case (value.type === ''):
-                                    return JSON.stringify(value.value);
+                                    return [JSON.stringify(value.value)];
                                 case (value.type === '@'):
                                     const key = `${def.type}_${param.type.replace(/[?!].*/, '')}`;
                                     locales[key] = value.value;
-                                    return `this.$.$mol_locale.text( ${JSON.stringify(key)} )`;
+                                    return [`this.$.$mol_locale.text( ${JSON.stringify(key)} )`];
                                 case (value.type === '-'):
                                     return null;
                                 case (value.type[0] === '/'):
@@ -19920,9 +19923,9 @@ var $;
                                         }
                                         var val = getValue(item);
                                         if (val)
-                                            items.push(val);
+                                            items.push(val.join(""));
                                     });
-                                    return `[ ${items.join(' , ')} ]` + (item_type ? ` as readonly ( ${item_type} )[]` : ` as readonly any[]`);
+                                    return [`[`, items.join(' , '), `]`, (item_type ? ` as readonly ( ${item_type} )[]` : ` as readonly any[]`)];
                                 case (value.type[0] === '$'):
                                     if (!definition)
                                         throw value.error('Objects should be bound');
@@ -19943,7 +19946,7 @@ var $;
                                                     own_args.push(` ${own_next}? : any `);
                                                 let [, their_name, ...their_args] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec(over.type);
                                                 their_args = their_args.filter(Boolean);
-                                                members[own_name] = `\t${own_name}(${own_args.join(',')}) {\n\t\treturn this.${param.type}().${their_name}( ${their_args.join(' , ')} )\n\t}\n\n`;
+                                                members[own_name] = [`\t${own_name}(${own_args.join(',')}) {\n\t\treturn this.${param.type}().${their_name}( ${their_args.join(' , ')} )\n\t}\n\n`];
                                                 return;
                                             }
                                         }
@@ -19953,11 +19956,11 @@ var $;
                                             args.push(` ${overName[2]} : any `);
                                         if (overName[3])
                                             args.push(` ${overName[3]}? : any `);
-                                        overs.push('\t\t\tobj.' + overName[1] + ' = (' + args.join(',') + ') => ' + v + '\n');
+                                        overs.push(...['\t\t\tobj.', new SourceNode(over.row, over.col, fileName, overName[1]), ' = (', args.join(','), ') => ', ...(v || []), '\n']);
                                         needSet = ns;
                                     });
                                     const object_args = value.select('/', '').sub.map(arg => getValue(arg)).join(' , ');
-                                    return '(( obj )=>{\n' + overs.join('') + '\t\t\treturn obj\n\t\t})( new this.$.' + value.type + '( ' + object_args + ' ) )';
+                                    return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new this.$.', new SourceNode(value.row, value.col, fileName, value.type), '( ', object_args, ' ) )'];
                                 case (value.type === '*'):
                                     var opts = [];
                                     value.sub.forEach(opt => {
@@ -19968,37 +19971,36 @@ var $;
                                             return;
                                         }
                                         var key = /(.*?)(?:\?(\w+))?$/.exec(opt.type);
-                                        keys.push(key[1]);
                                         var ns = needSet;
                                         var v = getValue(opt.sub[0]);
                                         var arg = key[2] ? ` ( ${key[2]}? : any )=> ` : '';
-                                        opts.push('\t\t\t"' + key[1] + '" : ' + arg + ' ' + v + ' ,\n');
+                                        opts.push(...['\t\t\t"', new SourceNode(opt.row, opt.col, fileName, key[1] + '" : '), arg, ' ', ...(v || []), ' ,\n']);
                                         needSet = ns;
                                     });
-                                    return '({\n' + opts.join('') + '\t\t})';
+                                    return ['({\n', opts.join(''), '\t\t})'];
                                 case (value.type === '<=>'):
                                     needSet = true;
                                     if (value.sub.length === 1) {
                                         var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))$/.exec(value.sub[0].type);
-                                        return 'this.' + type[1] + '(' + (type[2] ? type[2] + ' ,' : '') + ' ' + type[3] + ' )';
+                                        return ['this.' + type[1] + '(' + (type[2] ? type[2] + ' ,' : '') + ' ' + type[3] + ' )'];
                                     }
                                     break;
                                 case (value.type === '<='):
                                     if (value.sub.length === 1) {
                                         var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec(value.sub[0].type);
-                                        return 'this.' + type[1] + '(' + (type[2] ? type[2] : '') + ')';
+                                        return ['this.' + type[1] + '(' + (type[2] ? type[2] : '') + ')'];
                                     }
                                     break;
                             }
                             switch (value.type) {
                                 case 'true':
                                 case 'false':
-                                    return value.type;
+                                    return [value.type];
                                 case 'null':
-                                    return 'null as any';
+                                    return ['null as any'];
                             }
                             if (Number(value.type).toString() == value.type)
-                                return value.type;
+                                return [value.type];
                             throw value.error('Wrong value');
                         }
                         catch (err) {
@@ -20018,17 +20020,17 @@ var $;
                         if (propName[3])
                             args.push(` ${propName[3]}? : any , force? : $${''}mol_mem_force `);
                         if (needSet && param.sub[0].type !== '<=>')
-                            val = (needReturn ? `( ${propName[3]} !== void 0 ) ? ${propName[3]} : ` : `if( ${propName[3]} !== void 0 ) return ${propName[3]}\n\t\t`) + val;
+                            val = [(needReturn ? `( ${propName[3]} !== void 0 ) ? ${propName[3]} : ` : `if( ${propName[3]} !== void 0 ) return ${propName[3]}\n\t\t`), ...val];
                         if (needReturn)
-                            val = 'return ' + val;
-                        var decl = '\t' + propName[1] + '(' + args.join(',') + ') {\n\t\t' + val + '\n\t}\n\n';
+                            val = ['return ', ...val];
+                        var decl = ['\t', new SourceNode(param.row, param.col, fileName, propName[1]), '(', args.join(','), ') {\n\t\t', ...val, '\n\t}\n\n'];
                         if (needCache) {
                             if (propName[2])
-                                decl = '\t@ $' + 'mol_mem_key\n' + decl;
+                                decl = ['\t@ $', 'mol_mem_key\n', ...decl];
                             else
-                                decl = '\t@ $' + 'mol_mem\n' + decl;
+                                decl = ['\t@ $', 'mol_mem\n', ...decl];
                         }
-                        decl = '\t/**\n\t *  ```\n' + param.toString().trim().replace(/^/mg, '\t *  ') + '\n\t *  ```\n\t **/\n' + decl;
+                        decl = ['\t/**\n\t *  ```\n', param.toString().trim().replace(/^/mg, '\t *  '), '\n\t *  ```\n\t **/\n', ...decl];
                         members[propName[1]] = decl;
                     });
                 }
@@ -20036,13 +20038,18 @@ var $;
                     throw err;
                 }
             }
-            var body = Object.keys(members).map(function (name) {
-                return members[name] || '\t' + name + '() { return null as any }\n\t}\n';
-            }).join('');
-            var classes = 'namespace $ { export class ' + def.type + ' extends ' + parent.type + ' {\n\n' + body + '} }\n';
-            content += classes + '\n';
+            var body = Object.keys(members).reduce(function (acc, name) {
+                const items = members[name] ? members[name] : ['\t', name, '() { return null as any }\n\t}\n'];
+                return [...acc, ...items];
+            }, []);
+            var classes = ['namespace $ { export class ', new SourceNode(def.row, def.col, fileName, def.type), ' extends ', new SourceNode(parent.row, parent.col, fileName, parent.type), ' {\n\n', ...body, '} }\n'];
+            content = [...content, ...classes];
         }
-        return { script: content, locales: locales };
+        splittedUri.push(`-view.tree`, `${fileName}.map`);
+        const node = new SourceNode(null, null, fileName, content);
+        node.add(`//@ sourceMappingURL=${splittedUri.join($node.path.sep)}`);
+        const codeWithSourceMap = node.toStringWithSourceMap();
+        return { script: codeWithSourceMap.code, locales: locales, map: codeWithSourceMap.map.toString() };
     }
     $.$mol_view_tree_compile = $mol_view_tree_compile;
 })($ || ($ = {}));

@@ -16,7 +16,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	options() {
-		return [  ] as readonly ( string )[]
+		return [] as readonly ( string )[]
 	}
 
 	/**
@@ -70,7 +70,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	option_content( id : any ) {
-		return [ this.Option_label(id) ] as readonly any[]
+		return [this.Option_label(id)] as readonly any[]
 	}
 
 	/**
@@ -118,7 +118,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	@ $mol_mem
 	No_options() {
 		return (( obj )=>{
-			obj.sub = () => [ this.no_options_message() ] as readonly any[]
+			obj.sub = () => [this.no_options_message()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -140,7 +140,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	plugins() {
-		return [ ...super.plugins() , this.Nav() ] as readonly any[]
+		return [...super.plugins() , this.Nav()] as readonly any[]
 	}
 
 	/**
@@ -167,7 +167,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	nav_components() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -251,7 +251,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	trigger_content() {
-		return [  ] as readonly ( $mol_view_content )[]
+		return [] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -260,7 +260,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	bubble_content() {
-		return [ this.Menu() ] as readonly any[]
+		return [this.Menu()] as readonly any[]
 	}
 
 	/**
@@ -282,7 +282,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	menu_content() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -291,7 +291,7 @@ namespace $ { export class $mol_select extends $mol_pop {
 	 *  ```
 	 **/
 	option_content_current() {
-		return [  ] as readonly ( $mol_view_content )[]
+		return [] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -352,4 +352,4 @@ namespace $ { export class $mol_select extends $mol_pop {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/select/-view.tree/select.view.tree.map

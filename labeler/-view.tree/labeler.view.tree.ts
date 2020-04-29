@@ -8,7 +8,7 @@ namespace $ { export class $mol_labeler extends $mol_list {
 	 *  ```
 	 **/
 	rows() {
-		return [ this.Title() , this.Content() ] as readonly any[]
+		return [this.Title() , this.Content()] as readonly any[]
 	}
 
 	/**
@@ -33,7 +33,7 @@ namespace $ { export class $mol_labeler extends $mol_list {
 	 *  ```
 	 **/
 	label() {
-		return [ this.title() ] as readonly ( $mol_view_content )[]
+		return [this.title()] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -58,8 +58,8 @@ namespace $ { export class $mol_labeler extends $mol_list {
 	 *  ```
 	 **/
 	content() {
-		return [  ] as readonly any[]
+		return [] as readonly any[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/labeler/-view.tree/labeler.view.tree.map

@@ -37,7 +37,7 @@ namespace $ { export class $mol_pop extends $mol_view {
 	 *  ```
 	 **/
 	plugins() {
-		return [ this.Meter() ] as readonly ( $mol_plugin )[]
+		return [this.Meter()] as readonly ( $mol_plugin )[]
 	}
 
 	top() {
@@ -80,7 +80,7 @@ namespace $ { export class $mol_pop extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Anchor() , this.Bubble() ] as readonly any[]
+		return [this.Anchor() , this.Bubble()] as readonly any[]
 	}
 
 	/**
@@ -125,7 +125,7 @@ namespace $ { export class $mol_pop extends $mol_view {
 	 *  ```
 	 **/
 	bubble_content() {
-		return [  ] as readonly ( $mol_view_content )[]
+		return [] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -138,7 +138,6 @@ namespace $ { export class $mol_pop extends $mol_view {
 	}
 
 } }
-
 namespace $ { export class $mol_pop_bubble extends $mol_scroll {
 
 	/**
@@ -156,7 +155,7 @@ namespace $ { export class $mol_pop_bubble extends $mol_scroll {
 	 *  ```
 	 **/
 	content() {
-		return [  ] as readonly ( $mol_view_content )[]
+		return [] as readonly ( $mol_view_content )[]
 	}
 
 	/**
@@ -208,4 +207,4 @@ namespace $ { export class $mol_pop_bubble extends $mol_scroll {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/pop/-view.tree/pop.view.tree.map

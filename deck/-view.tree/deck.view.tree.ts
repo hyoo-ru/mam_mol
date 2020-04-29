@@ -8,10 +8,10 @@ namespace $ { export class $mol_deck extends $mol_list {
 	 *  ```
 	 **/
 	items() {
-		return [ ({
+		return [({
 			"title" :  "" ,
 			"Content" :  this.Content() ,
-		}) ] as readonly any[]
+		})] as readonly any[]
 	}
 
 	/**
@@ -34,7 +34,7 @@ namespace $ { export class $mol_deck extends $mol_list {
 	 *  ```
 	 **/
 	rows() {
-		return [ this.Switch() , this.Content() ] as readonly ( $mol_view )[]
+		return [this.Switch() , this.Content()] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -74,4 +74,4 @@ namespace $ { export class $mol_deck extends $mol_list {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/deck/-view.tree/deck.view.tree.map

@@ -8,7 +8,7 @@ namespace $ { export class $mol_form_field extends $mol_labeler {
 	 *  ```
 	 **/
 	label() {
-		return [ this.name() , this.Bid() ] as readonly any[]
+		return [this.name() , this.Bid()] as readonly any[]
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace $ { export class $mol_form_field extends $mol_labeler {
 	@ $mol_mem
 	Bid() {
 		return (( obj )=>{
-			obj.sub = () => [ this.bid() ] as readonly any[]
+			obj.sub = () => [this.bid()] as readonly any[]
 			return obj
 		})( new this.$.$mol_view(  ) )
 	}
@@ -61,4 +61,4 @@ namespace $ { export class $mol_form_field extends $mol_labeler {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/form/field/-view.tree/field.view.tree.map

@@ -9,6 +9,7 @@
     "jsdom": "*",
     "chokidar": "*",
     "colorette": "*",
+    "source-map": "*",
     "sourcemap-codec": "*",
     "typescript": "*",
     "express": "*",

@@ -33,7 +33,7 @@ namespace $ { export class $mol_chart_demo_forces extends $mol_demo_large {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Chart() ] as readonly any[]
+		return [this.Chart()] as readonly any[]
 	}
 
 	/**
@@ -49,7 +49,7 @@ namespace $ { export class $mol_chart_demo_forces extends $mol_demo_large {
 	@ $mol_mem
 	Chart() {
 		return (( obj )=>{
-			obj.graphs = () => [ this.Forces_left() , this.Forces_right() , this.Vert_ruler() , this.Hor_ruler() , this.Cross() ] as readonly any[]
+			obj.graphs = () => [this.Forces_left() , this.Forces_right() , this.Vert_ruler() , this.Hor_ruler() , this.Cross()] as readonly any[]
 			return obj
 		})( new this.$.$mol_chart(  ) )
 	}
@@ -89,7 +89,7 @@ namespace $ { export class $mol_chart_demo_forces extends $mol_demo_large {
 	 *  ```
 	 **/
 	forces_left_x() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -98,7 +98,7 @@ namespace $ { export class $mol_chart_demo_forces extends $mol_demo_large {
 	 *  ```
 	 **/
 	forces_left_y() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -136,7 +136,7 @@ namespace $ { export class $mol_chart_demo_forces extends $mol_demo_large {
 	 *  ```
 	 **/
 	forces_right_x() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -145,7 +145,7 @@ namespace $ { export class $mol_chart_demo_forces extends $mol_demo_large {
 	 *  ```
 	 **/
 	forces_right_y() {
-		return [  ] as readonly ( number )[]
+		return [] as readonly ( number )[]
 	}
 
 	/**
@@ -205,10 +205,10 @@ namespace $ { export class $mol_chart_demo_forces extends $mol_demo_large {
 	@ $mol_mem
 	Cross() {
 		return (( obj )=>{
-			obj.graphs = () => [ this.Forces_left() , this.Forces_right() ] as readonly any[]
+			obj.graphs = () => [this.Forces_left() , this.Forces_right()] as readonly any[]
 			return obj
 		})( new this.$.$mol_plot_mark_cross(  ) )
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/chart/demo/forces/-view.tree/forces.view.tree.map

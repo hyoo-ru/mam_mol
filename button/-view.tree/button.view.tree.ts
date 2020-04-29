@@ -127,8 +127,8 @@ namespace $ { export class $mol_button extends $mol_view {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.title() ] as readonly ( $mol_view_content )[]
+		return [this.title()] as readonly ( $mol_view_content )[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/button/-view.tree/button.view.tree.map

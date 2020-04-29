@@ -23,7 +23,7 @@ namespace $ { export class $mol_perf_uibench extends $mol_scroll {
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Table() , this.Anim() , this.Tree() ] as readonly any[]
+		return [this.Table() , this.Anim() , this.Tree()] as readonly any[]
 	}
 
 	/**
@@ -93,4 +93,4 @@ namespace $ { export class $mol_perf_uibench extends $mol_scroll {
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/perf/uibench/-view.tree/uibench.view.tree.map

@@ -33,7 +33,7 @@ namespace $ { export class $mol_list extends $mol_view {
 	 *  ```
 	 **/
 	rows() {
-		return [  ] as readonly ( $mol_view )[]
+		return [] as readonly ( $mol_view )[]
 	}
 
 	/**
@@ -104,8 +104,8 @@ namespace $ { export class $mol_list extends $mol_view {
 	 *  ```
 	 **/
 	view_window() {
-		return [ 0 , 0 ] as readonly any[]
+		return [0 , 0] as readonly any[]
 	}
 
 } }
-
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/list/-view.tree/list.view.tree.map
