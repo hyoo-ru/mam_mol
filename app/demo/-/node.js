@@ -6784,10 +6784,15 @@ var $;
                 return this.pages().map(page => page.title()).reverse().join(' | ');
             }
             sub() {
-                const next = [this.Placeholder(), ...this.pages().slice().reverse()];
+                const next = [...this.pages().slice(), this.Placeholder()];
                 const prev = $.$mol_mem_cached(() => this.sub());
-                if (!prev)
+                if (!prev) {
+                    const last = next.slice(-1)[0];
+                    if (!last)
+                        return next;
+                    new $.$mol_after_frame(() => last.dom_node().scrollIntoView({ behavior: 'smooth' }));
                     return next;
+                }
                 for (let i = 1; i++;) {
                     const p = prev[prev.length - i];
                     const n = next[next.length - i];
@@ -6812,7 +6817,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\toverflow: hidden;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\ttransform: scaleX( -1 ); /* hack for ff: prevent invisible scroll */\n\ttransition: none;\n\toverflow: auto;\n\tscroll-snap-type: x proximity;\n}\n\n[mol_book2] > * {\n\ttransform: scaleX( -1 ); /* hack for ff: prevent invisible scroll */\n\tflex: none;\n\tscroll-snap-stop: always;\n\tscroll-snap-align: start;\n\tposition: relative;\n\tz-index: 0;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: var(--mol_theme_back);\n}\n");
+    $.$mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\toverflow: hidden;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\ttransform: transformZ(0);\n\ttransition: none;\n\toverflow: auto;\n\tscroll-snap-type: x proximity;\n}\n\n[mol_book2] > * {\n\tflex: none;\n\tscroll-snap-stop: always;\n\tscroll-snap-align: start;\n\tposition: relative;\n\tz-index: 0;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: var(--mol_theme_back);\n}\n");
 })($ || ($ = {}));
 //book2.view.css.js.map
 ;

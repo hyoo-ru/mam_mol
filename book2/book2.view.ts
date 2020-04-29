@@ -9,10 +9,18 @@ namespace $.$$ {
 		@ $mol_mem
 		sub() {
 			
-			const next = [ this.Placeholder() , ... this.pages().slice().reverse() ]
+			const next = [  ... this.pages().slice(),this.Placeholder() ]
 			
 			const prev = $mol_mem_cached( ()=> this.sub() )
-			if( !prev ) return next
+			if( !prev ) {
+				
+				const last = next.slice(-1)[0]
+				if( !last ) return next
+				
+				new $mol_after_frame( ()=> last.dom_node().scrollIntoView({ behavior : 'smooth' }) )
+				return next
+				
+			}
 			
 			for( let i = 1 ; i++ ; ) {
 				
