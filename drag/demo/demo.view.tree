@@ -1,17 +1,17 @@
 $mol_drag_demo $mol_demo_large
 	task_count 100
 	sub /
-		<= Scroll $mol_scroll sub /
-			<= Trash_drop $mol_drop
-				adopt?transfer <=> transfer_adopt?transfer null
-				receive?obj <=> receive_trash?obj null
-				Sub <= Trash $mol_float sub /
-					<= Trash_icon $mol_icon_trash_can_outline
-					\Trash
-			<= List_drop $mol_drop
-				adopt?transfer <=> transfer_adopt?transfer null
-				receive?obj <=> receive?obj null
-				Sub <= List $mol_list
+		<= List_drop $mol_drop
+			adopt?transfer <=> transfer_adopt?transfer null
+			receive?obj <=> receive?obj null
+			Sub <= Scroll $mol_scroll sub /
+				<= Trash_drop $mol_drop
+					adopt?transfer <=> transfer_adopt?transfer null
+					receive?obj <=> receive_trash?obj null
+					Sub <= Trash $mol_float sub /
+						<= Trash_icon $mol_icon_trash_can_outline
+						\Trash
+				<= List $mol_list
 					rows <= task_rows /
 	Task_row!task $mol_drag
 		transfer *

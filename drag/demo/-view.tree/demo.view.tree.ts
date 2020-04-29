@@ -11,24 +11,62 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  sub / <= Scroll
+	 *  sub / <= List_drop
 	 *  ```
 	 **/
 	sub() {
-		return [ this.Scroll() ] as readonly any[]
+		return [ this.List_drop() ] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  List_drop $mol_drop
+	 *  	adopt?transfer <=> transfer_adopt?transfer
+	 *  	receive?obj <=> receive?obj
+	 *  	Sub <= Scroll
+	 *  ```
+	 **/
+	@ $mol_mem
+	List_drop() {
+		return (( obj )=>{
+			obj.adopt = ( transfer? : any ) => this.transfer_adopt( transfer )
+			obj.receive = ( obj? : any ) => this.receive( obj )
+			obj.Sub = () => this.Scroll()
+			return obj
+		})( new this.$.$mol_drop(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  transfer_adopt?transfer null
+	 *  ```
+	 **/
+	@ $mol_mem
+	transfer_adopt( transfer? : any , force? : $mol_mem_force ) {
+		return ( transfer !== void 0 ) ? transfer : null as any
+	}
+
+	/**
+	 *  ```
+	 *  receive?obj null
+	 *  ```
+	 **/
+	@ $mol_mem
+	receive( obj? : any , force? : $mol_mem_force ) {
+		return ( obj !== void 0 ) ? obj : null as any
 	}
 
 	/**
 	 *  ```
 	 *  Scroll $mol_scroll sub /
 	 *  	<= Trash_drop
-	 *  	<= List_drop
+	 *  	<= List
 	 *  ```
 	 **/
 	@ $mol_mem
 	Scroll() {
 		return (( obj )=>{
-			obj.sub = () => [ this.Trash_drop() , this.List_drop() ] as readonly any[]
+			obj.sub = () => [ this.Trash_drop() , this.List() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_scroll(  ) )
 	}
@@ -49,16 +87,6 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 			obj.Sub = () => this.Trash()
 			return obj
 		})( new this.$.$mol_drop(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  transfer_adopt?transfer null
-	 *  ```
-	 **/
-	@ $mol_mem
-	transfer_adopt( transfer? : any , force? : $mol_mem_force ) {
-		return ( transfer !== void 0 ) ? transfer : null as any
 	}
 
 	/**
@@ -96,34 +124,6 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 		return (( obj )=>{
 			return obj
 		})( new this.$.$mol_icon_trash_can_outline(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  List_drop $mol_drop
-	 *  	adopt?transfer <=> transfer_adopt?transfer
-	 *  	receive?obj <=> receive?obj
-	 *  	Sub <= List
-	 *  ```
-	 **/
-	@ $mol_mem
-	List_drop() {
-		return (( obj )=>{
-			obj.adopt = ( transfer? : any ) => this.transfer_adopt( transfer )
-			obj.receive = ( obj? : any ) => this.receive( obj )
-			obj.Sub = () => this.List()
-			return obj
-		})( new this.$.$mol_drop(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  receive?obj null
-	 *  ```
-	 **/
-	@ $mol_mem
-	receive( obj? : any , force? : $mol_mem_force ) {
-		return ( obj !== void 0 ) ? obj : null as any
 	}
 
 	/**

@@ -3953,7 +3953,7 @@ declare namespace $.$$ {
     class $mol_drag extends $.$mol_drag {
         status(next?: "ready" | "drag"): "ready" | "drag";
         start(event: DragEvent): void;
-        end(): void;
+        end(event: DragEvent): void;
     }
 }
 
@@ -4019,14 +4019,14 @@ declare namespace $ {
     class $mol_drag_demo extends $mol_demo_large {
         task_count(): number;
         sub(): readonly any[];
+        List_drop(): $$.$mol_drop;
+        transfer_adopt(transfer?: any, force?: $mol_mem_force): any;
+        receive(obj?: any, force?: $mol_mem_force): any;
         Scroll(): $$.$mol_scroll;
         Trash_drop(): $$.$mol_drop;
-        transfer_adopt(transfer?: any, force?: $mol_mem_force): any;
         receive_trash(obj?: any, force?: $mol_mem_force): any;
         Trash(): $mol_float;
         Trash_icon(): $mol_icon_trash_can_outline;
-        List_drop(): $$.$mol_drop;
-        receive(obj?: any, force?: $mol_mem_force): any;
         List(): $$.$mol_list;
         task_rows(): readonly any[];
         Task_row(task: any): $$.$mol_drag;

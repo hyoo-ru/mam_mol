@@ -13789,7 +13789,7 @@ var $;
                     effectAllowed = 'all';
                 event.dataTransfer.effectAllowed = effectAllowed;
             }
-            end() {
+            end(event) {
                 setTimeout(() => this.status('ready'));
             }
         }
@@ -13976,6 +13976,8 @@ var $;
             enter(event) {
                 if (event.defaultPrevented)
                     return;
+                if (event.target !== this.dom_node())
+                    return;
                 setTimeout(() => this.status('drag'));
                 event.dataTransfer.dropEffect = 'move';
                 event.preventDefault();
@@ -14045,11 +14047,25 @@ var $;
             return 100;
         }
         sub() {
-            return [this.Scroll()];
+            return [this.List_drop()];
+        }
+        List_drop() {
+            return ((obj) => {
+                obj.adopt = (transfer) => this.transfer_adopt(transfer);
+                obj.receive = (obj) => this.receive(obj);
+                obj.Sub = () => this.Scroll();
+                return obj;
+            })(new this.$.$mol_drop());
+        }
+        transfer_adopt(transfer, force) {
+            return (transfer !== void 0) ? transfer : null;
+        }
+        receive(obj, force) {
+            return (obj !== void 0) ? obj : null;
         }
         Scroll() {
             return ((obj) => {
-                obj.sub = () => [this.Trash_drop(), this.List_drop()];
+                obj.sub = () => [this.Trash_drop(), this.List()];
                 return obj;
             })(new this.$.$mol_scroll());
         }
@@ -14060,9 +14076,6 @@ var $;
                 obj.Sub = () => this.Trash();
                 return obj;
             })(new this.$.$mol_drop());
-        }
-        transfer_adopt(transfer, force) {
-            return (transfer !== void 0) ? transfer : null;
         }
         receive_trash(obj, force) {
             return (obj !== void 0) ? obj : null;
@@ -14077,17 +14090,6 @@ var $;
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_trash_can_outline());
-        }
-        List_drop() {
-            return ((obj) => {
-                obj.adopt = (transfer) => this.transfer_adopt(transfer);
-                obj.receive = (obj) => this.receive(obj);
-                obj.Sub = () => this.List();
-                return obj;
-            })(new this.$.$mol_drop());
-        }
-        receive(obj, force) {
-            return (obj !== void 0) ? obj : null;
         }
         List() {
             return ((obj) => {
@@ -14139,13 +14141,19 @@ var $;
     }
     __decorate([
         $.$mol_mem
+    ], $mol_drag_demo.prototype, "List_drop", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_drag_demo.prototype, "transfer_adopt", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_drag_demo.prototype, "receive", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_drag_demo.prototype, "Scroll", null);
     __decorate([
         $.$mol_mem
     ], $mol_drag_demo.prototype, "Trash_drop", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_drag_demo.prototype, "transfer_adopt", null);
     __decorate([
         $.$mol_mem
     ], $mol_drag_demo.prototype, "receive_trash", null);
@@ -14155,12 +14163,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_drag_demo.prototype, "Trash_icon", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_drag_demo.prototype, "List_drop", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_drag_demo.prototype, "receive", null);
     __decorate([
         $.$mol_mem
     ], $mol_drag_demo.prototype, "List", null);
