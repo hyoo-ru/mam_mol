@@ -3899,6 +3899,171 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_dom_render_events(el: Element, events: {
+        [key: string]: (event: Event) => any;
+    }): void;
+    function $mol_dom_render_events_async(el: Element, events: {
+        [key: string]: (event: Event) => any;
+    }): void;
+}
+
+declare namespace $ {
+    class $mol_ghost extends $mol_view {
+        Sub(): $mol_view;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_ghost extends $.$mol_ghost {
+        dom_node(): Element;
+        dom_node_actual(): Element;
+        dom_tree(): Element;
+        title(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_drag extends $mol_ghost {
+        event(): {
+            dragstart: (event?: any) => any;
+            drag: (event?: any) => any;
+            dragend: (event?: any) => any;
+        };
+        start(event?: any, force?: $mol_mem_force): any;
+        move(event?: any, force?: $mol_mem_force): any;
+        end(event?: any, force?: $mol_mem_force): any;
+        attr(): {
+            draggable: boolean;
+            mol_drag_status: any;
+        };
+        status(val?: any, force?: $mol_mem_force): any;
+        transfer(): {
+            "text/plain": string;
+            "text/html": string;
+            "text/uri-list": string;
+        };
+        allow_copy(): boolean;
+        allow_link(): boolean;
+        allow_move(): boolean;
+        image(): Element;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_drag extends $.$mol_drag {
+        status(next?: "ready" | "drag"): "ready" | "drag";
+        start(event: DragEvent): void;
+        end(): void;
+    }
+}
+
+declare namespace $ {
+    function $mol_range2<Item = number>(item?: (index: number) => Item, size?: () => number): Item[];
+    class $mol_range2_array<Item> extends Array<Item> {
+        concat(...tail: this[]): Item[];
+        filter<Context>(check: (val: Item, index: number, list: Item[]) => boolean, context?: Context): Item[];
+        forEach<Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => void, context?: Context): void;
+        map<Item_out, Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => Item_out, context?: Context): Item_out[];
+        reduce<Result>(merge: (result: Result, val: Item, index: number, list: Item[]) => Result, result?: Result): Result | undefined;
+        slice(from?: number, to?: number): Item[];
+        some<Context>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
+        every<Context = null>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
+    }
+}
+
+declare namespace $ {
+    class $mol_drop extends $mol_ghost {
+        event(): {
+            dragenter: (event?: any) => any;
+            dragover: (event?: any) => any;
+            dragleave: (event?: any) => any;
+            drop: (event?: any) => any;
+        };
+        enter(event?: any, force?: $mol_mem_force): any;
+        move(event?: any, force?: $mol_mem_force): any;
+        leave(event?: any, force?: $mol_mem_force): any;
+        drop(event?: any, force?: $mol_mem_force): any;
+        attr(): {
+            mol_drop_status: any;
+        };
+        status(val?: any, force?: $mol_mem_force): any;
+        adopt(transfer?: any, force?: $mol_mem_force): any;
+        receive(transfer?: any, force?: $mol_mem_force): any;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_drop extends $.$mol_drop {
+        status(next?: "ready" | "drag"): "ready" | "drag";
+        enter(event: DragEvent): void;
+        move(event: DragEvent): void;
+        leave(event: DragEvent): void;
+        receive(transfer: DataTransfer): unknown;
+        drop(event: DragEvent): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_trash_can extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_trash_can_outline extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_drag_demo extends $mol_demo_large {
+        products_count(): number;
+        sub(): readonly any[];
+        Scroll(): $$.$mol_scroll;
+        Trash_drop(): $$.$mol_drop;
+        transfer_adopt(transfer?: any, force?: $mol_mem_force): any;
+        receive_trash(obj?: any, force?: $mol_mem_force): any;
+        Trash(): $mol_float;
+        Trash_icon(): $mol_icon_trash_can_outline;
+        List_drop(): $$.$mol_drop;
+        receive(obj?: any, force?: $mol_mem_force): any;
+        List(): $$.$mol_list;
+        product_cards(): readonly any[];
+        Product_item(prod: any): $$.$mol_drag;
+        product_title(prod: any): string;
+        product_html(prod: any): string;
+        product_uri(prod: any): string;
+        Product_drop(prod: any): $$.$mol_drop;
+        receive_before(prod: any, obj?: any, force?: $mol_mem_force): any;
+        Product_link(prod: any): $$.$mol_link;
+    }
+}
+
+declare namespace $.$$ {
+    type $mol_drag_demo_product = {
+        id: string;
+        title: string;
+    };
+    class $mol_drag_demo extends $.$mol_drag_demo {
+        products(next?: $mol_drag_demo_product[]): $mol_drag_demo_product[];
+        Product(id: string): {
+            id: string;
+            title: string;
+        };
+        product_cards(): $mol_drag[];
+        product_title(product: $mol_drag_demo_product): string;
+        product_uri(product: $mol_drag_demo_product): string;
+        transfer_adopt(transfer: DataTransfer): $mol_drag_demo_product | undefined;
+        receive_before(prod: $mol_drag_demo_product, prod2: $mol_drag_demo_product): void;
+        receive(prod: $mol_drag_demo_product): void;
+        receive_trash(prod: $mol_drag_demo_product): void;
+    }
+}
+
+declare namespace $.$$ {
+}
+
+declare namespace $ {
     class $mol_expander extends $mol_list {
         rows(): readonly any[];
         Label(): $mol_view;
@@ -4112,20 +4277,6 @@ declare namespace $.$$ {
     class $mol_infinite extends $.$mol_infinite {
         row_ids(): readonly $mol_view[];
         rows(): $mol_view[];
-    }
-}
-
-declare namespace $ {
-    function $mol_range2<Item = number>(item?: (index: number) => Item, size?: () => number): Item[];
-    class $mol_range2_array<Item> extends Array<Item> {
-        concat(...tail: this[]): Item[];
-        filter<Context>(check: (val: Item, index: number, list: Item[]) => boolean, context?: Context): Item[];
-        forEach<Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => void, context?: Context): void;
-        map<Item_out, Context>(proceed: (this: Context, val: Item, index: number, list: Item[]) => Item_out, context?: Context): Item_out[];
-        reduce<Result>(merge: (result: Result, val: Item, index: number, list: Item[]) => Result, result?: Result): Result | undefined;
-        slice(from?: number, to?: number): Item[];
-        some<Context>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
-        every<Context = null>(check: (this: Context, val: Item, index: number, list: Item[]) => boolean, context?: Context): boolean;
     }
 }
 
@@ -5368,30 +5519,6 @@ declare namespace $ {
             [key: string]: string;
         };
     };
-}
-
-declare namespace $ {
-    function $mol_dom_render_events(el: Element, events: {
-        [key: string]: (event: Event) => any;
-    }): void;
-    function $mol_dom_render_events_async(el: Element, events: {
-        [key: string]: (event: Event) => any;
-    }): void;
-}
-
-declare namespace $ {
-    class $mol_ghost extends $mol_view {
-        Sub(): $mol_view;
-    }
-}
-
-declare namespace $.$$ {
-    class $mol_ghost extends $.$mol_ghost {
-        dom_node(): Element;
-        dom_node_actual(): Element;
-        dom_tree(): Element;
-        title(): string;
-    }
 }
 
 declare namespace $ {

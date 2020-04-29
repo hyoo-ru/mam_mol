@@ -1548,6 +1548,68 @@ $mol_dimmer_demo $mol_demo_small
 			haystack \Let's search nothing
 			needle \
 
+$mol_drag $mol_ghost
+	event *
+		dragstart?event <=> start?event null
+		drag?event <=> move?event null
+		dragend?event <=> end?event null
+	attr *
+		draggable true
+		mol_drag_status <= status?val \ready
+	transfer *
+		text/plain \
+		text/html \
+		text/uri-list \
+	allow_copy true
+	allow_link true
+	allow_move true
+	image <= dom_node
+
+$mol_ghost $mol_view
+	Sub $mol_view
+
+$mol_drag_demo $mol_demo_large
+	products_count 100
+	sub /
+		<= Scroll $mol_scroll sub /
+			<= Trash_drop $mol_drop
+				adopt?transfer <=> transfer_adopt?transfer null
+				receive?obj <=> receive_trash?obj null
+				Sub <= Trash $mol_float sub /
+					<= Trash_icon $mol_icon_trash_can_outline
+					\Trash
+			<= List_drop $mol_drop
+				adopt?transfer <=> transfer_adopt?transfer null
+				receive?obj <=> receive?obj null
+				Sub <= List $mol_list
+					rows <= product_cards /
+	Product_item!prod $mol_drag
+		transfer *
+			text/plain <= product_title!prod \
+			text/html <= product_html!prod \
+			text/uri-list <= product_uri!prod \
+		Sub <= Product_drop!prod $mol_drop
+			adopt?transfer <=> transfer_adopt?transfer null
+			receive?obj <=> receive_before!prod?obj null
+			Sub <= Product_link!prod $mol_link
+				uri <= product_uri!prod \
+				sub / <= product_title!prod \
+
+
+$mol_drop $mol_ghost
+	event *
+		dragenter?event <=> enter?event null
+		dragover?event <=> move?event null
+		dragleave?event <=> leave?event null
+		drop?event <=> drop?event null
+	attr * mol_drop_status <= status?val \ready
+	adopt?transfer *
+	receive?transfer null
+
+$mol_icon_trash_can $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z
+
+$mol_icon_trash_can_outline $mol_icon path \M9,3V4H4V6H5V19C5,20.1 5.9,21 7,21H17C18.1,21 19,20.1 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z
+
 $mol_expander $mol_list
 	rows /
 		<= Label $mol_view
@@ -2541,9 +2603,6 @@ $mol_book_page $mol_ghost
 		^
 		mol_book_page_focused <= focused
 		mol_book_page_visible <= visible true
-
-$mol_ghost $mol_view
-	Sub $mol_view
 
 $mol_icon_source $mol_icon path \M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z
 
