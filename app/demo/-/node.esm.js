@@ -6784,15 +6784,9 @@ var $;
                 return this.pages().map(page => page.title()).reverse().join(' | ');
             }
             sub() {
+                var _a;
                 const next = [...this.pages().slice(), this.Placeholder()];
-                const prev = $.$mol_mem_cached(() => this.sub());
-                if (!prev) {
-                    const last = next.slice(-1)[0];
-                    if (!last)
-                        return next;
-                    new $.$mol_after_frame(() => last.dom_node().scrollIntoView({ behavior: 'smooth' }));
-                    return next;
-                }
+                const prev = (_a = $.$mol_mem_cached(() => this.sub())) !== null && _a !== void 0 ? _a : [];
                 for (let i = 1; i++;) {
                     const p = prev[prev.length - i];
                     const n = next[next.length - i];
