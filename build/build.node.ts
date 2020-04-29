@@ -82,11 +82,13 @@ namespace $ {
 					} else if( /(view\.tree)$/.test( name ) ) {
 
 						const script = child.parent().resolve( `-view.tree/${ name }.ts` )
+						const sourceMap = child.parent().resolve( `-view.tree/${ name }.map` )
 						const locale = child.parent().resolve( `-view.tree/${ name }.locale=en.json` )
 						
 						const tree = $mol_tree.fromString( child.text() , child.path() )
 						const res = $mol_view_tree_compile( tree )
-						
+
+						sourceMap.text( res.map );
 						script.text( res.script )
 						locale.text( JSON.stringify( res.locales , null , '\t' ) )
 							
