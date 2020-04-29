@@ -21713,7 +21713,7 @@ var $;
         theme(val, force) {
             return (val !== void 0) ? val : "$mol_theme_dark";
         }
-        Detail() {
+        Detail(id) {
             return ((obj) => {
                 obj.title = () => this.detail_title();
                 obj.source_link = () => this.source_link();
@@ -21805,7 +21805,7 @@ var $;
         $.$mol_mem
     ], $mol_app_demo.prototype, "theme", null);
     __decorate([
-        $.$mol_mem
+        $.$mol_mem_key
     ], $mol_app_demo.prototype, "Detail", null);
     __decorate([
         $.$mol_mem
@@ -22181,7 +22181,7 @@ var $;
                     if (this.editing() && this.names_demo().length === 1)
                         sub.push(...this.Editor(this.selected()).pages());
                     else
-                        sub.push(this.Detail());
+                        sub.push(this.Detail(this.selected()));
                 }
                 else {
                     sub.push(this.Main());

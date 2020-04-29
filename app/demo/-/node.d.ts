@@ -5891,7 +5891,7 @@ declare namespace $ {
         nav_option(id: any): any;
         filter_string(val?: any, force?: $mol_mem_force): any;
         theme(val?: any, force?: $mol_mem_force): any;
-        Detail(): $mol_app_demo_detail;
+        Detail(id: any): $mol_app_demo_detail;
         source_link(): string;
         Detail_list(): $$.$mol_list;
         main_content(): readonly any[];

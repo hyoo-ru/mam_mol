@@ -10,7 +10,7 @@ $mol_app_demo $mol_book2
 		option!id <= nav_option!id null
 		filter?val <=> filter_string?val \
 		theme?val <=> theme?val \$mol_theme_dark
-	Detail $mol_app_demo_detail
+	Detail!id $mol_app_demo_detail
 		title <= detail_title
 		source_link <= source_link \
 		body /

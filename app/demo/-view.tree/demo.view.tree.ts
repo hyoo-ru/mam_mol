@@ -128,14 +128,14 @@ namespace $ { export class $mol_app_demo extends $mol_book2 {
 
 	/**
 	 *  ```
-	 *  Detail $mol_app_demo_detail
+	 *  Detail!id $mol_app_demo_detail
 	 *  	title <= detail_title
 	 *  	source_link <= source_link
 	 *  	body / <= Detail_list
 	 *  ```
 	 **/
-	@ $mol_mem
-	Detail() {
+	@ $mol_mem_key
+	Detail( id : any ) {
 		return (( obj )=>{
 			obj.title = () => this.detail_title()
 			obj.source_link = () => this.source_link()
