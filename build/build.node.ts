@@ -77,7 +77,7 @@ namespace $ {
 			const name = file.name()
 
 			const script = file.parent().resolve( `-view.tree/${ name }.ts` )
-			const sourceMap = child.parent().resolve( `-view.tree/${ name }.map` )
+			const sourceMap = file.parent().resolve( `-view.tree/${ name }.map` )
 			const locale = file.parent().resolve( `-view.tree/${ name }.locale=en.json` )
 			
 			const tree = $mol_tree.fromString( file.text() , file.path() )
