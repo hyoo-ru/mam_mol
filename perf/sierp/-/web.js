@@ -2362,7 +2362,7 @@ var $;
 (function ($) {
     if ($.$mol_dom_context.document) {
         const event_name = self.cordova ? 'deviceready' : 'DOMContentLoaded';
-        $.$mol_dom_context.document.addEventListener(event_name, $.$mol_fiber_root($.$mol_log2.func((event) => {
+        Promise.resolve().then($.$mol_fiber_root($.$mol_log2.func(() => {
             $.$mol_view.autobind();
             $.$mol_defer.run();
         })));

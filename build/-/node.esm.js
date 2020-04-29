@@ -1595,7 +1595,7 @@ var $;
         version() {
             return this.stat().mtime.getTime().toString(36).toUpperCase();
         }
-        exists(next) {
+        exists(next, force) {
             let exists = true;
             try {
                 this.stat();
@@ -3535,31 +3535,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_base64_encode(src) {
-        throw new Error('Not implemented');
-    }
-    $.$mol_base64_encode = $mol_base64_encode;
-})($ || ($ = {}));
-//encode.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_base64_encode_node(str) {
-        if (!str)
-            return '';
-        if (Buffer.isBuffer(str))
-            return str.toString('base64');
-        return Buffer.from(str).toString('base64');
-    }
-    $.$mol_base64_encode_node = $mol_base64_encode_node;
-    $.$mol_base64_encode = $mol_base64_encode_node;
-})($ || ($ = {}));
-//encode.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
     const sourcemap_codec = $node['sourcemap-codec'];
     const path = $node.path;
     class $mol_sourcemap_builder {
@@ -3702,6 +3677,31 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_base64_encode(src) {
+        throw new Error('Not implemented');
+    }
+    $.$mol_base64_encode = $mol_base64_encode;
+})($ || ($ = {}));
+//encode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_base64_encode_node(str) {
+        if (!str)
+            return '';
+        if (Buffer.isBuffer(str))
+            return str.toString('base64');
+        return Buffer.from(str).toString('base64');
+    }
+    $.$mol_base64_encode_node = $mol_base64_encode_node;
+    $.$mol_base64_encode = $mol_base64_encode_node;
+})($ || ($ = {}));
+//encode.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_diff_path(...paths) {
         const limit = Math.min(...paths.map(path => path.length));
         lookup: for (var i = 0; i < limit; ++i) {
@@ -3786,6 +3786,45 @@ var $;
         root() {
             return $.$mol_file.relative('.');
         }
+        metaTreeTranspile(path) {
+            const file = $.$mol_file.absolute(path);
+            const name = file.name();
+            const tree = $.$mol_tree.fromString(file.text(), file.path());
+            let content = '';
+            for (const step of tree.select('build', '').sub) {
+                const res = $.$mol_exec(file.parent().path(), step.value).stdout.toString().trim();
+                if (step.type)
+                    content += `let ${step.type} = ${JSON.stringify(res)}`;
+            }
+            if (!content)
+                return [];
+            const script = file.parent().resolve(`-meta.tree/${name}.ts`);
+            script.text(content);
+            return [script];
+        }
+        viewTreeTranspile(path) {
+            const file = $.$mol_file.absolute(path);
+            const name = file.name();
+            const script = file.parent().resolve(`-view.tree/${name}.ts`);
+            const sourceMap = file.parent().resolve(`-view.tree/${name}.map`);
+            const locale = file.parent().resolve(`-view.tree/${name}.locale=en.json`);
+            const tree = $.$mol_tree.fromString(file.text(), file.path());
+            const res = $.$mol_view_tree_compile(tree);
+            script.text(res.script);
+            sourceMap.text(res.map);
+            locale.text(JSON.stringify(res.locales, null, '\t'));
+            return [script, locale];
+        }
+        cssTranspile(path) {
+            const file = $.$mol_file.absolute(path);
+            const name = file.name();
+            const script = file.parent().resolve(`-css/${name}.ts`);
+            const id = file.relate(this.root());
+            const styles = file.text();
+            const code = 'namespace $ { $' + `mol_style_attach( ${JSON.stringify(id)},\n ${JSON.stringify(styles)}\n) }`;
+            script.text(code);
+            return [script];
+        }
         mods({ path, exclude }) {
             const parent = $.$mol_file.absolute(path);
             const mods = [];
@@ -3795,40 +3834,14 @@ var $;
                     return false;
                 if (exclude && RegExp('[.=](' + exclude.join('|') + ')[.]', 'i').test(name))
                     return false;
-                if (!child.exists())
-                    return false;
                 if (/(meta\.tree)$/.test(name)) {
-                    const tree = $.$mol_tree.fromString(child.text(), child.path());
-                    let content = '';
-                    for (const step of tree.select('build', '').sub) {
-                        const res = $.$mol_exec(child.parent().path(), step.value).stdout.toString().trim();
-                        if (step.type)
-                            content += `let ${step.type} = ${JSON.stringify(res)}`;
-                    }
-                    if (content) {
-                        const script = child.parent().resolve(`-meta.tree/${name}.ts`);
-                        script.text(content);
-                        mods.push(script);
-                    }
+                    mods.push(...this.metaTreeTranspile(child.path()));
                 }
                 else if (/(view\.tree)$/.test(name)) {
-                    const script = child.parent().resolve(`-view.tree/${name}.ts`);
-                    const sourceMap = child.parent().resolve(`-view.tree/${name}.map`);
-                    const locale = child.parent().resolve(`-view.tree/${name}.locale=en.json`);
-                    const tree = $.$mol_tree.fromString(child.text(), child.path());
-                    const res = $.$mol_view_tree_compile(tree);
-                    sourceMap.text(res.map);
-                    script.text(res.script);
-                    locale.text(JSON.stringify(res.locales, null, '\t'));
-                    mods.push(script, locale);
+                    mods.push(...this.viewTreeTranspile(child.path()));
                 }
                 else if (/(\.css)$/.test(name)) {
-                    const script = child.parent().resolve(`-css/${name}.ts`);
-                    const id = child.relate(this.root());
-                    const styles = child.text();
-                    const code = 'namespace $ { $' + `mol_style_attach( ${JSON.stringify(id)},\n ${JSON.stringify(styles)}\n) }`;
-                    script.text(code);
-                    mods.push(script);
+                    mods.push(...this.cssTranspile(child.path()));
                 }
                 mods.push(child);
                 return true;
@@ -3936,28 +3949,99 @@ var $;
             }
             return sources.map(src => src.path());
         }
-        tsCompile({ path, exclude, bundle }) {
+        tsHost({ path, exclude, bundle }) {
+            const host = $node.typescript.createCompilerHost(this.tsOptions());
+            host.fileExists = (path) => $.$mol_file.relative(path).exists();
+            host.readFile = (path) => $.$mol_file.relative(path).text();
+            host.writeFile = (path, text) => {
+                const file = $.$mol_file.relative(path);
+                file.exists(true, $.$mol_mem_force_cache);
+                file.text(text, $.$mol_mem_force_cache);
+            };
+            return host;
+        }
+        tsTranspiler({ path, exclude, bundle }) {
+            return $node.typescript.createProgram(this.tsPaths({ path, exclude, bundle }), this.tsOptions(), this.tsHost({ path, exclude, bundle }));
+        }
+        tsTranspile({ path, exclude, bundle }) {
+            const res = this.tsTranspiler({ path, exclude, bundle }).emit();
+            return res;
+        }
+        tsService({ path, exclude, bundle }) {
             const paths = this.tsPaths({ path, exclude, bundle });
             if (!paths.length)
                 return null;
-            var host = $node.typescript.createWatchCompilerHost(paths, this.tsOptions(), Object.assign(Object.assign({}, $node.typescript.sys), { setTimeout: (cb) => cb(), writeFile: (path, content) => {
-                    $.$mol_file.relative(path).text_cached(content);
-                } }), $node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram, (diagnostic) => {
+            const watchers = new Map();
+            let run = () => { };
+            var host = $node.typescript.createWatchCompilerHost(paths, Object.assign(Object.assign({}, this.tsOptions()), { noEmit: true }), Object.assign(Object.assign({}, $node.typescript.sys), { writeFile: (path, data) => {
+                    return $.$mol_fail(new Error('Write forbidden'));
+                }, setTimeout: (cb) => {
+                    run = cb;
+                }, watchFile: (path, cb) => {
+                    watchers.set(path, cb);
+                    return { close() { } };
+                } }), $node.typescript.createSemanticDiagnosticsBuilderProgram, (diagnostic) => {
                 if (diagnostic.file) {
-                    const file = $.$mol_file.absolute(diagnostic.file.fileName.replace(/\.tsx?$/, '.js'));
                     const error = new Error($node.typescript.formatDiagnostic(diagnostic, {
                         getCurrentDirectory: () => this.root().path(),
                         getCanonicalFileName: (path) => path.toLowerCase(),
                         getNewLine: () => '\n',
                     }));
-                    file.fail(error);
+                    this.js_error(diagnostic.file.getSourceFile().fileName.replace(/\.tsx?$/, '.js'), error);
                 }
                 else {
                     console.error($node.colorette.redBright(String(diagnostic.messageText)));
                 }
             }, () => { });
-            const builder = $node.typescript.createWatchProgram(host);
-            return $.$mol_object.make({ destructor: () => { builder.updateRootFileNames([]); } });
+            const service = $node.typescript.createWatchProgram(host);
+            const versions = {};
+            return {
+                recheck: () => {
+                    for (const path of paths) {
+                        const version = $node.fs.statSync(path).mtime.valueOf();
+                        if (versions[path] && versions[path] !== version) {
+                            this.js_error(path.replace(/\.tsx?$/, '.js'), null);
+                            const watcher = watchers.get(path);
+                            if (watcher)
+                                watcher(path, 2);
+                        }
+                        versions[path] = version;
+                    }
+                    run();
+                },
+                destructor: () => service.close()
+            };
+        }
+        js_error(path, next = null) {
+            return next;
+        }
+        js_content(path) {
+            var _a;
+            const src = $.$mol_file.absolute(path);
+            if (/\.tsx?$/.test(src.name())) {
+                const res = $node.typescript.transpileModule(src.text(), { compilerOptions: this.tsOptions() });
+                if ((_a = res.diagnostics) === null || _a === void 0 ? void 0 : _a.length) {
+                    return $.$mol_fail(new Error($node.typescript.formatDiagnostic(res.diagnostics[0], {
+                        getCurrentDirectory: () => this.root().path(),
+                        getCanonicalFileName: (path) => path.toLowerCase(),
+                        getNewLine: () => '\n',
+                    })));
+                }
+                const map = JSON.parse(res.sourceMapText);
+                map.file = src.relate();
+                map.sources = [src.relate()];
+                return {
+                    text: res.outputText.replace(/^\/\/#\ssourceMappingURL=[^\n]*/mg, '//' + src.relate()) + '\n',
+                    map: map,
+                };
+            }
+            else {
+                const srcMap = src.parent().resolve(src.name() + '.map');
+                return {
+                    text: src.text().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n',
+                    map: srcMap.exists() ? JSON.parse(srcMap.text()) : undefined
+                };
+            }
         }
         sourcesJS({ path, exclude }) {
             var sources = this.sourcesAll({ path, exclude });
@@ -3969,6 +4053,7 @@ var $;
                 'gif': 'image/gif',
                 'webp': 'image/webp',
             };
+            this.tsTranspile({ path, exclude, bundle: 'web' });
             sources = sources.map(src => {
                 const ext = src.ext().replace(/^.*\./, '');
                 if (image_types[ext]) {
@@ -4233,8 +4318,6 @@ var $;
             var sources = this.sourcesJS({ path, exclude });
             if (sources.length === 0)
                 return [];
-            var exclude_ext = exclude.filter(ex => ex !== 'test' && ex !== 'dev');
-            this.tsCompile({ path, exclude: exclude_ext, bundle });
             var concater = new $.$mol_sourcemap_builder(target.name(), ';');
             if (bundle === 'node') {
                 concater.add('require' + '( "source-map-support" ).install(); var exports = void 0;\n');
@@ -4251,14 +4334,12 @@ var $;
                     }
                 }
                 try {
-                    const content = (src.text()).toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
-                    const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test(content);
+                    const content = this.js_content(src.path());
+                    const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test(content.text);
                     if (isCommonJs) {
                         concater.add(`\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate(this.root().resolve('node_modules')) + `/" ) ] }; \n`, '-');
                     }
-                    const srcMap = src.parent().resolve(src.name() + '.map');
-                    if (content)
-                        concater.add(content, src.relate(target.parent()), srcMap.exists() ? srcMap.text() : undefined);
+                    concater.add(content.text, src.relate(target.parent()), content.map);
                     if (isCommonJs) {
                         const idFull = src.relate(this.root().resolve('node_modules'));
                         const idShort = idFull.replace(/\/index\.js$/, '').replace(/\.js$/, '');
@@ -4280,6 +4361,7 @@ var $;
             return [target, targetMap];
         }
         bundleTestJS({ path, exclude, bundle }) {
+            var _a;
             const start = Date.now();
             var pack = $.$mol_file.absolute(path);
             var root = this.root();
@@ -4293,28 +4375,31 @@ var $;
             if (bundle === 'node') {
                 concater.add('require' + '( "source-map-support" ).install()\n');
                 concater.add("process.on( 'unhandledRejection' , up => { throw up } )");
-                sources = [...sourcesNoTest, ...sourcesTest];
+                sourcesTest = [...sourcesNoTest, ...sourcesTest];
             }
             else {
                 concater.add('function require' + '( path ){ return $node[ path ] }');
-                sources = sourcesTest;
             }
             if (sources.length === 0)
                 return [];
-            this.tsCompile({ path, exclude: exclude_ext, bundle });
+            (_a = this.tsService({ path, exclude: exclude_ext, bundle })) === null || _a === void 0 ? void 0 : _a.recheck();
             const errors = [];
-            sources.forEach(function (src) {
+            for (const src of sources) {
+                src.text();
+                const error = this.js_error(src.path());
+                if (!error)
+                    continue;
+                errors.push(error);
+            }
+            sourcesTest.forEach((src) => {
                 if (bundle === 'node') {
                     if (/node_modules\//.test(src.relate(root))) {
                         return;
                     }
                 }
-                let content = '';
                 try {
-                    content = (src.text()).toString().replace(/^\/\/#\ssourceMappingURL=/mg, '//') + '\n';
-                    const srcMap = src.parent().resolve(src.name() + '.map');
-                    if (content)
-                        concater.add(content, src.relate(target.parent()), srcMap.exists() ? srcMap.text() : undefined);
+                    const content = this.js_content(src.path());
+                    concater.add(content.text, src.relate(target.parent()), content.map);
                 }
                 catch (error) {
                     errors.push(error);
@@ -4339,10 +4424,13 @@ var $;
                 ? source.text()
                 : `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`;
             content = content.replace(/(<\/body>|$)/, `
-					<script src="/mol/build/client/client.js" charset="utf-8" defer></script>
-					<script src="web.test.js" charset="utf-8" defer></script>
-					$1
-				`);
+				<script src="/mol/build/client/client.js" charset="utf-8"></script>
+				<script>
+					setTimeout( ()=> {
+						document.head.appendChild( document.createElement( 'script' ) ).src = 'web.test.js'
+					},250)
+				</script>
+				$1`);
             target.text(content);
             this.logBundle(target, Date.now() - start);
             return [target];
@@ -4579,6 +4667,15 @@ var $;
     ], $mol_build.prototype, "server", null);
     __decorate([
         $.$mol_mem_key
+    ], $mol_build.prototype, "metaTreeTranspile", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_build.prototype, "viewTreeTranspile", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_build.prototype, "cssTranspile", null);
+    __decorate([
+        $.$mol_mem_key
     ], $mol_build.prototype, "mods", null);
     __decorate([
         $.$mol_mem_key
@@ -4600,7 +4697,22 @@ var $;
     ], $mol_build.prototype, "tsPaths", null);
     __decorate([
         $.$mol_mem_key
-    ], $mol_build.prototype, "tsCompile", null);
+    ], $mol_build.prototype, "tsHost", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_build.prototype, "tsTranspiler", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_build.prototype, "tsTranspile", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_build.prototype, "tsService", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_build.prototype, "js_error", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $mol_build.prototype, "js_content", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_build.prototype, "sourcesJS", null);

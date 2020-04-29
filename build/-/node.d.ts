@@ -403,7 +403,7 @@ declare namespace $ {
         abstract watcher(): {
             destructor(): void;
         };
-        exists(next?: boolean): boolean;
+        exists(next?: boolean, force?: $mol_mem_force): boolean;
         type(): $mol_file_type;
         name(): string;
         ext(): string;
@@ -847,14 +847,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_base64_encode(src: string | Uint8Array): string;
-}
-
-declare namespace $ {
-    function $mol_base64_encode_node(str: string | Uint8Array): string;
-}
-
-declare namespace $ {
     const sourcemap_codec: typeof import("sourcemap-codec");
     type SourceMapLine = ReturnType<typeof sourcemap_codec.decode>[0];
     export interface $mol_sourcemap_raw {
@@ -892,6 +884,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_base64_encode(src: string | Uint8Array): string;
+}
+
+declare namespace $ {
+    function $mol_base64_encode_node(str: string | Uint8Array): string;
+}
+
+declare namespace $ {
     function $mol_diff_path<Item>(...paths: Item[][]): {
         prefix: Item[];
         suffix: Item[][];
@@ -912,6 +912,9 @@ declare namespace $ {
         static relative(path: string): $mol_build;
         server(): $mol_build_server;
         root(): $mol_file;
+        metaTreeTranspile(path: string): $mol_file[];
+        viewTreeTranspile(path: string): $mol_file[];
+        cssTranspile(path: string): $mol_file[];
         mods({ path, exclude }: {
             path: string;
             exclude?: string[];
@@ -938,14 +941,37 @@ declare namespace $ {
             bundle: string;
             exclude: string[];
         }): string[];
-        tsCompile({ path, exclude, bundle }: {
+        tsHost({ path, exclude, bundle }: {
             path: string;
             bundle: string;
             exclude: string[];
-        }): $mol_object | null;
+        }): import("typescript").CompilerHost;
+        tsTranspiler({ path, exclude, bundle }: {
+            path: string;
+            bundle: string;
+            exclude: string[];
+        }): import("typescript").Program;
+        tsTranspile({ path, exclude, bundle }: {
+            path: string;
+            bundle: string;
+            exclude: string[];
+        }): import("typescript").EmitResult;
+        tsService({ path, exclude, bundle }: {
+            path: string;
+            bundle: string;
+            exclude: string[];
+        }): {
+            recheck: () => void;
+            destructor: () => void;
+        } | null;
+        js_error(path: string, next?: Error | null): Error | null;
+        js_content(path: string): {
+            text: string;
+            map: $mol_sourcemap_raw | undefined;
+        };
         sourcesJS({ path, exclude }: {
             path: string;
-            exclude?: string[];
+            exclude: string[];
         }): $mol_file[];
         sourcesDTS({ path, exclude }: {
             path: string;
