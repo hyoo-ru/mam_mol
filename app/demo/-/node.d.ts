@@ -5869,13 +5869,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_icon_code_not_equal extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_code_not_equal_variant extends $mol_icon {
+    class $mol_icon_code_braces extends $mol_icon {
         path(): string;
     }
 }
@@ -5936,8 +5930,9 @@ declare namespace $ {
         tools(): readonly any[];
         Source_link(): $$.$mol_link;
         source_link(): string;
+        Source_button(): $mol_button_major;
         source_hint(): string;
-        Source_icon(): $mol_icon_code_not_equal_variant;
+        Source_icon(): $mol_icon_code_braces;
         Edit(): $$.$mol_link;
         edit_hint(): string;
         Edit_speck(): $mol_speck;

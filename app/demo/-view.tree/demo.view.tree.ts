@@ -474,8 +474,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 	 *  Source_link $mol_link
 	 *  	uri <= source_link
 	 *  	target \_blank
-	 *  	hint <= source_hint
-	 *  	sub / <= Source_icon
+	 *  	sub / <= Source_button
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -483,8 +482,7 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 		return (( obj )=>{
 			obj.uri = () => this.source_link()
 			obj.target = () => "_blank"
-			obj.hint = () => this.source_hint()
-			obj.sub = () => [ this.Source_icon() ] as readonly any[]
+			obj.sub = () => [ this.Source_button() ] as readonly any[]
 			return obj
 		})( new this.$.$mol_link(  ) )
 	}
@@ -500,6 +498,22 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 
 	/**
 	 *  ```
+	 *  Source_button $mol_button_major
+	 *  	hint <= source_hint
+	 *  	sub / <= Source_icon
+	 *  ```
+	 **/
+	@ $mol_mem
+	Source_button() {
+		return (( obj )=>{
+			obj.hint = () => this.source_hint()
+			obj.sub = () => [ this.Source_icon() ] as readonly any[]
+			return obj
+		})( new this.$.$mol_button_major(  ) )
+	}
+
+	/**
+	 *  ```
 	 *  source_hint @ \Source code of this demo
 	 *  ```
 	 **/
@@ -509,14 +523,14 @@ namespace $ { export class $mol_app_demo_detail extends $mol_page {
 
 	/**
 	 *  ```
-	 *  Source_icon $mol_icon_code_not_equal_variant
+	 *  Source_icon $mol_icon_code_braces
 	 *  ```
 	 **/
 	@ $mol_mem
 	Source_icon() {
 		return (( obj )=>{
 			return obj
-		})( new this.$.$mol_icon_code_not_equal_variant(  ) )
+		})( new this.$.$mol_icon_code_braces(  ) )
 	}
 
 	/**

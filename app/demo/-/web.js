@@ -21647,26 +21647,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_code_not_equal extends $.$mol_icon {
+    class $mol_icon_code_braces extends $.$mol_icon {
         path() {
-            return "M6,15H8V17H6M11,13H18V15H11M11,9H18V11H11M6,7H8V13H6M5,3C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3H5Z";
+            return "M8,3C6.9,3 6,3.9 6,5V9C6,10.1 5.1,11 4,11H3V13H4C5.1,13 6,13.9 6,15V19C6,20.1 6.9,21 8,21H10V19H8V14C8,12.9 7.1,12 6,12C7.1,12 8,11.1 8,10V5H10V3M16,3C17.1,3 18,3.9 18,5V9C18,10.1 18.9,11 20,11H21V13H20C18.9,13 18,13.9 18,15V19C18,20.1 17.1,21 16,21H14V19H16V14C16,12.9 16.9,12 18,12C16.9,12 16,11.1 16,10V5H14V3H16Z";
         }
     }
-    $.$mol_icon_code_not_equal = $mol_icon_code_not_equal;
+    $.$mol_icon_code_braces = $mol_icon_code_braces;
 })($ || ($ = {}));
-//equal.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_code_not_equal_variant extends $.$mol_icon {
-        path() {
-            return "M11,6.5V9.33L8.33,12L11,14.67V17.5L5.5,12M13,6.43L18.57,12L13,17.57V14.74L15.74,12L13,9.26M5,3C3.89,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3H5Z";
-        }
-    }
-    $.$mol_icon_code_not_equal_variant = $mol_icon_code_not_equal_variant;
-})($ || ($ = {}));
-//variant.view.tree.js.map
+//braces.view.tree.js.map
 ;
 "use strict";
 var $;
@@ -21912,13 +21900,19 @@ var $;
             return ((obj) => {
                 obj.uri = () => this.source_link();
                 obj.target = () => "_blank";
-                obj.hint = () => this.source_hint();
-                obj.sub = () => [this.Source_icon()];
+                obj.sub = () => [this.Source_button()];
                 return obj;
             })(new this.$.$mol_link());
         }
         source_link() {
             return "";
+        }
+        Source_button() {
+            return ((obj) => {
+                obj.hint = () => this.source_hint();
+                obj.sub = () => [this.Source_icon()];
+                return obj;
+            })(new this.$.$mol_button_major());
         }
         source_hint() {
             return this.$.$mol_locale.text("$mol_app_demo_detail_source_hint");
@@ -21926,7 +21920,7 @@ var $;
         Source_icon() {
             return ((obj) => {
                 return obj;
-            })(new this.$.$mol_icon_code_not_equal_variant());
+            })(new this.$.$mol_icon_code_braces());
         }
         Edit() {
             return ((obj) => {
@@ -21978,6 +21972,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_detail.prototype, "Source_link", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_app_demo_detail.prototype, "Source_button", null);
     __decorate([
         $.$mol_mem
     ], $mol_app_demo_detail.prototype, "Source_icon", null);
@@ -22245,7 +22242,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/app/demo/demo.view.css", "[mol_app_demo_menu] {\n\tflex: 1 0 20rem;\n}\n\n[mol_app_demo_menu_head] {\n}\n\n[mol_app_demo_menu_tools] {\n\tpadding: 0;\n}\n\n[mol_app_demo_menu_nav] {\n\tflex: auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-self: stretch;\n}\n\n[mol_app_demo_main],\n[mol_app_demo_detail],\n[mol_app_empty_message] {\n\tflex: 1000 0 60rem;\n}\n\n[mol_app_demo_detail] {\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_app_demo_menu_filter] {\n\talign-self: stretch;\n\tflex: none;\n}\n\n[mol_app_demo_nav_table] {\n\tpadding: .5rem;\n\twidth: 100%;\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_nav_row] {\n\tdisplay: flex;\n}\n\n[mol_app_demo_nav_option] {\n\tpadding: 0 .5rem 0 0;\n\tdisplay: flex;\n\tflex: 1;\n\talign-items: center;\n\tbox-shadow: none;\n}\n\n[mol_app_demo_nav_expand] {\n\talign-self: stretch;\n\talign-items: center;\n\tpadding-right: .25rem;\n}\n\n[mol_app_demo_nav_content] {\n\tflex-grow: 1;\n}\n\n[mol_app_demo_menu_themes] {\n\tflex: none;\n}\n\n[mol_app_demo_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tpadding: .5rem;\n\talign-content: flex-start;\n\talign-items: flex-start;\n}\n\n[mol_app_demo_screen] {\n\tmax-height: 45%;\n}\n\n[mol_app_demo_detail_body] {\n\tdisplay: flex;\n\talign-items: stretch;\n\tjustify-content: flex-start;\n\tflex-direction: column;\n}\n\n[mol_app_demo_detail_list] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tmargin: .5rem;\n}\n\n[mol_app_demo_detail_list] > [mol_demo_large] {\n\tmargin: .5rem;\n\theight: calc( 100vh - 100px );\n\twidth: calc( 100% - 1rem );\n}\n\n[mol_app_demo_page_close] {\n\tcolor: inherit;\n\talign-items: center;\n\tpadding: 1rem;\n}\n\n[mol_app_demo_welcome] {\n\tflex: 1 1 auto;\n}\n\n[mol_app_demo_option_link] {\n\tpadding: 0;\n}\n\n[mol_app_demo_sample_large] {\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_detail_empty_message] {\n\tmargin: auto;\n}\n\n[mol_app_demo_chat] {\n\tflex: none;\n}\n");
+    $.$mol_style_attach("mol/app/demo/demo.view.css", "[mol_app_demo_menu] {\n\tflex: 1 0 20rem;\n}\n\n[mol_app_demo_menu_head] {\n}\n\n[mol_app_demo_menu_tools] {\n\tpadding: 0;\n}\n\n[mol_app_demo_menu_nav] {\n\tflex: auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-self: stretch;\n}\n\n[mol_app_demo_main],\n[mol_app_demo_detail],\n[mol_app_empty_message] {\n\tflex: 1000 0 60rem;\n}\n\n[mol_app_demo_detail] {\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_app_demo_menu_filter] {\n\talign-self: stretch;\n\tflex: none;\n}\n\n[mol_app_demo_nav_table] {\n\tpadding: .5rem;\n\twidth: 100%;\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_nav_row] {\n\tdisplay: flex;\n}\n\n[mol_app_demo_nav_option] {\n\tpadding: 0 .5rem 0 0;\n\tdisplay: flex;\n\tflex: 1;\n\talign-items: center;\n\tbox-shadow: none;\n}\n\n[mol_app_demo_nav_expand] {\n\talign-self: stretch;\n\talign-items: center;\n\tpadding-right: .25rem;\n}\n\n[mol_app_demo_nav_content] {\n\tflex-grow: 1;\n}\n\n[mol_app_demo_menu_themes] {\n\tflex: none;\n}\n\n[mol_app_demo_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tpadding: .5rem;\n\talign-content: flex-start;\n\talign-items: flex-start;\n}\n\n[mol_app_demo_screen] {\n\tmax-height: 45%;\n}\n\n[mol_app_demo_detail_body] {\n\tdisplay: flex;\n\talign-items: stretch;\n\tjustify-content: flex-start;\n\tflex-direction: column;\n}\n\n[mol_app_demo_detail_list] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tmargin: .5rem;\n}\n\n[mol_app_demo_detail_list] > [mol_demo_large] {\n\tmargin: .5rem;\n\theight: calc( 100vh - 100px );\n\twidth: calc( 100% - 1rem );\n}\n\n[mol_app_demo_page_close] {\n\tcolor: inherit;\n\talign-items: center;\n\tpadding: 1rem;\n}\n\n[mol_app_demo_welcome] {\n\tflex: 1 1 auto;\n}\n\n[mol_app_demo_option_link] {\n\tpadding: 0;\n}\n\n[mol_app_demo_sample_large] {\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_detail_empty_message] {\n\tmargin: auto;\n}\n\n[mol_app_demo_chat] {\n\tflex: none;\n}\n\n[mol_app_demo_detail_source_link] {\n\tpadding: 0;\n}\n");
 })($ || ($ = {}));
 //demo.view.css.js.map
 
