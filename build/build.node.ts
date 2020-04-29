@@ -45,7 +45,66 @@ namespace $ {
 		root() {
 			return $mol_file.relative( '.' )
 		}
+
+		@ $mol_mem_key
+		metaTreeTranspile( path : string ) {
 		
+			const file = $mol_file.absolute( path )
+			const name = file.name()
+			
+			const tree = $mol_tree.fromString( file.text() , file.path() )
+
+			let content = ''
+			for( const step of tree.select( 'build' , '' ).sub ) {
+
+				const res = $mol_exec( file.parent().path() , step.value ).stdout.toString().trim()
+				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
+
+			}
+
+			if( !content ) return []
+
+			const script = file.parent().resolve( `-meta.tree/${ name }.ts` )
+			script.text( content )
+			return [ script ]
+
+		}
+		
+		@ $mol_mem_key
+		viewTreeTranspile( path : string ) {
+
+			const file = $mol_file.absolute( path )
+			const name = file.name()
+
+			const script = file.parent().resolve( `-view.tree/${ name }.ts` )
+			const sourceMap = file.parent().resolve( `-view.tree/${ name }.map` )
+			const locale = file.parent().resolve( `-view.tree/${ name }.locale=en.json` )
+			
+			const tree = $mol_tree.fromString( file.text() , file.path() )
+			const res = $mol_view_tree_compile( tree )
+
+			script.text( res.script )
+			sourceMap.text( res.map )
+			locale.text( JSON.stringify( res.locales , null , '\t' ) )
+				
+			return [ script , locale ]
+		}
+
+		@ $mol_mem_key
+		cssTranspile( path : string ) {
+
+			const file = $mol_file.absolute( path )
+			const name = file.name()
+			const script = file.parent().resolve( `-css/${ name }.ts` )
+						
+			const id = file.relate( this.root() )
+			const styles = file.text()
+			const code = 'namespace $ { $'+`mol_style_attach( ${ JSON.stringify( id ) },\n ${ JSON.stringify( styles ) }\n) }`
+			script.text( code )
+			
+			return [ script ]
+		}
+
 		@ $mol_mem_key
 		mods( { path , exclude } : { path : string , exclude? : string[] } ) {
 
@@ -60,51 +119,14 @@ namespace $ {
 					if( !/^[a-z0-9]/i.test( name ) ) return false
 					if( exclude && RegExp( '[.=](' + exclude.join( '|' ) + ')[.]' , 'i' ).test( name ) ) return false
 
-					if (! child.exists()) return false
+					// if (! child.exists()) return false
 					
 					if( /(meta\.tree)$/.test( name ) ) {
-						const tree = $mol_tree.fromString( child.text() , child.path() )
-
-						let content = ''
-						for( const step of tree.select( 'build' , '' ).sub ) {
-
-							const res = $mol_exec( child.parent().path() , step.value ).stdout.toString().trim()
-							if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
-
-						}
-
-						if( content ) {
-							const script = child.parent().resolve( `-meta.tree/${ name }.ts` )
-							script.text( content )
-							mods.push( script )
-						}
-
+						mods.push( ... this.metaTreeTranspile( child.path() ) )
 					} else if( /(view\.tree)$/.test( name ) ) {
-
-						const script = child.parent().resolve( `-view.tree/${ name }.ts` )
-						const sourceMap = child.parent().resolve( `-view.tree/${ name }.map` )
-						const locale = child.parent().resolve( `-view.tree/${ name }.locale=en.json` )
-						
-						const tree = $mol_tree.fromString( child.text() , child.path() )
-						const res = $mol_view_tree_compile( tree )
-
-						sourceMap.text( res.map );
-						script.text( res.script )
-						locale.text( JSON.stringify( res.locales , null , '\t' ) )
-							
-						mods.push( script , locale )
-
+						mods.push( ... this.viewTreeTranspile( child.path() ) )
 					} else if( /(\.css)$/.test( name ) ) {
-
-						const script = child.parent().resolve( `-css/${ name }.ts` )
-						
-						const id = child.relate( this.root() )
-						const styles = child.text()
-						const code = 'namespace $ { $'+`mol_style_attach( ${ JSON.stringify( id ) },\n ${ JSON.stringify( styles ) }\n) }`
-						script.text( code )
-						
-						mods.push( script )
-
+						mods.push( ... this.cssTranspile( child.path() ) )
 					}
 
 					mods.push( child )
@@ -257,42 +279,83 @@ namespace $ {
 
 			return sources.map( src => src.path() )
 		}
-		
+
 		@ $mol_mem_key
-		tsCompile( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+		tsHost( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+			
+			const host = $node.typescript.createCompilerHost( this.tsOptions() )
+			
+			host.fileExists = ( path )=> $mol_file.relative( path ).exists()
+			host.readFile = ( path )=> $mol_file.relative( path ).text()
+			host.writeFile = ( path , text )=> {
+				const file = $mol_file.relative( path )
+				file.exists( true , $mol_mem_force_cache )
+				file.text( text , $mol_mem_force_cache )
+			}
+			
+			return host
+		}
+
+		@ $mol_mem_key
+		tsTranspiler( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+			return $node.typescript.createProgram(
+				this.tsPaths({ path , exclude , bundle }) ,
+				this.tsOptions() ,
+				this.tsHost({ path , exclude , bundle }) ,
+			)
+		}
+
+		@ $mol_mem_key
+		tsTranspile( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
+			const res = this.tsTranspiler({ path , exclude , bundle }).emit()
+			return res
+		}
+
+		@ $mol_mem_key
+		tsService( { path , exclude , bundle } : { path : string , bundle : string , exclude : string[] } ) {
 
 			const paths = this.tsPaths({ path , exclude , bundle })
 			if( !paths.length ) return null
+
+			const watchers = new Map< string , ( path : string , kind : number )=> void >()
+			let run = ()=> {}
 
 			var host = $node.typescript.createWatchCompilerHost(
 
 				paths ,
 				
-				this.tsOptions(),
+				{
+					... this.tsOptions(),
+					noEmit : true,
+				},
 				
 				{
 					... $node.typescript.sys ,
-					setTimeout : ( cb : any )=> cb(),
-					writeFile : ( path : string , content : string )=> {
-						$mol_file.relative( path ).text_cached( content )
+					writeFile : (path , data )=> {
+						return $mol_fail( new Error( 'Write forbidden' ) )
+					},
+					setTimeout : ( cb : any )=> {
+						run = cb
 					} ,
+					watchFile : (path:string, cb:(path:string,kind:number)=>any )=> {
+						watchers.set( path , cb )
+						return { close(){ } }
+					},
 				},
 				
-				$node.typescript.createEmitAndSemanticDiagnosticsBuilderProgram,
+				$node.typescript.createSemanticDiagnosticsBuilderProgram,
 
 				( diagnostic )=> {
 
 					if( diagnostic.file ) {
 
-						const file = $mol_file.absolute( diagnostic.file.fileName.replace( /\.tsx?$/ , '.js' ) )
-						
 						const error = new Error( $node.typescript.formatDiagnostic( diagnostic , {
 							getCurrentDirectory : ()=> this.root().path() ,
 							getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
 							getNewLine : ()=> '\n' ,
 						}) )
 						
-						file.fail( error )
+						this.js_error( diagnostic.file.getSourceFile().fileName.replace( /\.tsx?$/ , '.js' ) , error )
 						
 					} else {
 						console.error( $node.colorette.redBright( String(diagnostic.messageText) ) )
@@ -304,13 +367,74 @@ namespace $ {
 				
 			)
 
-			const builder = $node.typescript.createWatchProgram( host )
+			const service = $node.typescript.createWatchProgram( host )
 
-			return $mol_object.make({ destructor : ()=> { builder.updateRootFileNames([]) } })
+			const versions = {} as Record< string , number >
+
+			return {
+				recheck: ()=> {
+					for( const path of paths ) {
+						const version = $node.fs.statSync( path ).mtime.valueOf()
+						if( versions[ path ] && versions[ path ] !== version ) {
+							this.js_error(path.replace( /\.tsx?$/ , '.js' ),null)
+							const watcher = watchers.get( path )
+							if( watcher ) watcher( path , 2 )
+						}
+						versions[ path ] = version
+					}
+					run()
+				},
+				destructor : ()=> service.close()
+			}
+
+		}
+
+		@ $mol_mem_key
+		js_error( path : string , next = null as null | Error ) {
+			return next
+		}
+
+		@ $mol_mem_key
+		js_content( path : string ) {
+
+			const src = $mol_file.absolute( path )
+
+			if( /\.tsx?$/.test( src.name() ) ) {
+			
+				const res = $node.typescript.transpileModule( src.text() , { compilerOptions : this.tsOptions() } )
+				
+				if( res.diagnostics?.length ) {
+					return $mol_fail( new Error( $node.typescript.formatDiagnostic( res.diagnostics[0] , {
+						getCurrentDirectory : ()=> this.root().path() ,
+						getCanonicalFileName : ( path : string )=> path.toLowerCase() ,
+						getNewLine : ()=> '\n' ,
+					}) ) )
+				}
+
+				const map = JSON.parse( res.sourceMapText! ) as $mol_sourcemap_raw
+				map.file = src.relate()
+				map.sources = [ src.relate() ]
+				
+				return {
+					text : res.outputText.replace( /^\/\/#\ssourceMappingURL=[^\n]*/mg , '//' + src.relate() )+'\n',
+					map : map,
+				}
+
+			} else {
+
+				const srcMap = src.parent().resolve( src.name() + '.map' );
+				
+				return {
+					text : src.text().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n',
+					map : srcMap.exists() ? JSON.parse( srcMap.text() ) as $mol_sourcemap_raw : undefined
+				}
+
+			}
+
 		}
 		
 		@ $mol_mem_key
-		sourcesJS( { path , exclude } : { path : string , exclude? : string[] } ) : $mol_file[] {
+		sourcesJS( { path , exclude } : { path : string , exclude : string[] } ) : $mol_file[] {
 
 			var sources = this.sourcesAll( { path , exclude } )
 			
@@ -322,6 +446,8 @@ namespace $ {
 				'gif' : 'image/gif' ,
 				'webp' : 'image/webp' ,
 			}
+
+			this.tsTranspile({ path , exclude , bundle : 'web' })
 
 			sources = sources.map(
 				src => {
@@ -685,9 +811,6 @@ namespace $ {
 			var sources = this.sourcesJS( { path , exclude } )
 			if( sources.length === 0 ) return []
 			
-			var exclude_ext = exclude.filter( ex => ex !== 'test' && ex !== 'dev' )
-			this.tsCompile({ path , exclude : exclude_ext , bundle })
-			
 			var concater = new $mol_sourcemap_builder( target.name(), ';')
 
 			if( bundle === 'node' ) {
@@ -706,20 +829,22 @@ namespace $ {
 						}
 					}
 					try {
-						const content = ( src.text() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
-						const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test( content )
+						const content = this.js_content( src.path() )
+						
+						const isCommonJs = /module\.exports|\bexports\.\w+\s*=/.test( content.text )
 					
 						if( isCommonJs ) {
 							concater.add( `\nvar $node = $node || {}\nvoid function( module ) { var exports = module.${''}exports = this; function require( id ) { return $node[ id.replace( /^.\\// , "` + src.parent().relate( this.root().resolve( 'node_modules' ) ) + `/" ) ] }; \n`, '-' )
 						}
-						const srcMap = src.parent().resolve( src.name() + '.map' );
-						if( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? srcMap.text() : undefined)
+
+						concater.add( content.text , src.relate( target.parent() ) , content.map )
 						
 						if( isCommonJs ) {
 							const idFull = src.relate( this.root().resolve( 'node_modules' ) )
 							const idShort = idFull.replace( /\/index\.js$/ , '' ).replace( /\.js$/ , '' )
 							concater.add( `\n$${''}node[ "${ idShort }" ] = $${''}node[ "${ idFull }" ] = module.${''}exports }.call( {} , {} )\n`, '-' )
 						}
+
 					} catch( error ) {
 						errors.push( error )
 					}
@@ -756,29 +881,33 @@ namespace $ {
 			if( bundle === 'node' ) {
 				concater.add( 'require'+'( "source-map-support" ).install()\n' )
 				concater.add( "process.on( 'unhandledRejection' , up => { throw up } )" )
-				sources = [ ... sourcesNoTest , ... sourcesTest ]
+				sourcesTest = [ ... sourcesNoTest , ... sourcesTest ]
 			} else {
 				concater.add( 'function require'+'( path ){ return $node[ path ] }' )
-				sources = sourcesTest
 			}
 			if( sources.length === 0 ) return []
 			
-			this.tsCompile({ path , exclude : exclude_ext , bundle })
+			this.tsService({ path , exclude : exclude_ext , bundle })?.recheck()
 			
 			const errors = [] as Error[]
+
+			for( const src of sources ) {
+				src.text()
+				const error = this.js_error( src.path() )
+				if( !error ) continue
+				errors.push( error )
+			}
 			
-			sources.forEach(
-				function( src ) {
+			sourcesTest.forEach(
+				( src )=> {
 					if( bundle === 'node' ) {
 						if( /node_modules\//.test( src.relate( root ) ) ) {
 							return
 						}
 					}
-					let content = ''					
 					try {
-						content = ( src.text() ).toString().replace( /^\/\/#\ssourceMappingURL=/mg , '//' )+'\n'
-						const srcMap = src.parent().resolve( src.name() + '.map' )
-						if ( content ) concater.add( content, src.relate( target.parent() ), srcMap.exists() ? srcMap.text() : undefined)
+						const content = this.js_content( src.path() )
+						concater.add( content.text, src.relate( target.parent() ), content.map)
 					} catch( error ) {
 						errors.push( error )
 					}
@@ -813,12 +942,14 @@ namespace $ {
 				: `<!doctype html><meta charset="utf-8" /><body><script src="web.js" charset="utf-8"></script>`
 			
 			content = content.replace(
-				/(<\/body>|$)/ ,
-				`
-					<script src="/mol/build/client/client.js" charset="utf-8" defer></script>
-					<script src="web.test.js" charset="utf-8" defer></script>
-					$1
-				`,
+				/(<\/body>|$)/ , `
+				<script src="/mol/build/client/client.js" charset="utf-8"></script>
+				<script>
+					setTimeout( ()=> {
+						document.head.appendChild( document.createElement( 'script' ) ).src = 'web.test.js'
+					},250)
+				</script>
+				$1`,
 			)
 			
 			target.text( content )
