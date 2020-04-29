@@ -26,7 +26,7 @@ namespace $.$$ {
 			
 		}
 
-		end() {
+		end( event : DragEvent ) {
 			setTimeout( ()=> this.status( 'ready' ) )
 		}
 
