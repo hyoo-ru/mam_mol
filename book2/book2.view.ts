@@ -9,10 +9,9 @@ namespace $.$$ {
 		@ $mol_mem
 		sub() {
 			
-			const next = [ this.Placeholder() , ... this.pages().slice().reverse() ]
+			const next = [  ... this.pages().slice(),this.Placeholder() ]
 			
-			const prev = $mol_mem_cached( ()=> this.sub() )
-			if( !prev ) return next
+			const prev = $mol_mem_cached( ()=> this.sub() ) ?? []
 			
 			for( let i = 1 ; i++ ; ) {
 				

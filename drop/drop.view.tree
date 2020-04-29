@@ -1,0 +1,9 @@
+$mol_drop $mol_ghost
+	event *
+		dragenter?event <=> enter?event null
+		dragover?event <=> move?event null
+		dragleave?event <=> leave?event null
+		drop?event <=> drop?event null
+	attr * mol_drop_status <= status?val \ready
+	adopt?transfer *
+	receive?transfer null

@@ -7,14 +7,13 @@
 	align-self: stretch;
 	margin: 0;
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
-	transform: scaleX( -1 ); /* hack for ff: prevent invisible scroll */
+	transform: transformZ(0);
 	transition: none;
 	overflow: auto;
 	scroll-snap-type: x proximity;
 }
 
 [mol_book2] > * {
-	transform: scaleX( -1 ); /* hack for ff: prevent invisible scroll */
 	flex: none;
 	scroll-snap-stop: always;
 	scroll-snap-align: start;

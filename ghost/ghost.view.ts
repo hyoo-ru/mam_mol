@@ -5,7 +5,7 @@ namespace $.$$ {
 		@ $mol_mem
 		dom_node() {
 			const node = this.Sub().dom_node()
-			
+
 			$mol_dom_render_attributes( node , this.attr_static() )
 			$mol_dom_render_events( node , this.event() )
 			
@@ -14,6 +14,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		dom_node_actual() {
+			this.dom_node()
 			const node = this.Sub().dom_node_actual()
 
 			const attr = this.attr()
@@ -38,6 +39,14 @@ namespace $.$$ {
 			return this.Sub().title()
 		}
 		
+		minimal_width() {
+			return this.Sub().minimal_width()
+		}
+
+		minimal_height() {
+			return this.Sub().minimal_height()
+		}
+
 	}
 
 }
