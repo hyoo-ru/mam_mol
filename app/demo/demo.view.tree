@@ -60,9 +60,11 @@ $mol_app_demo_detail $mol_page
 		<= Source_link $mol_link
 			uri <= source_link \
 			target \_blank
-			hint <= source_hint @ \Source code of this demo
 			sub /
-				<= Source_icon $mol_icon_code_not_equal_variant
+				<= Source_button $mol_button_major
+					hint <= source_hint @ \Source code of this demo
+					sub /
+						<= Source_icon $mol_icon_code_braces
 		<= Edit $mol_link
 			hint <= edit_hint @ \Edit this demo online
 			sub /
