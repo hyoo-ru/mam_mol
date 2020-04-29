@@ -3919,6 +3919,8 @@ declare namespace $.$$ {
         dom_node_actual(): Element;
         dom_tree(): Element;
         title(): string;
+        minimal_width(): number;
+        minimal_height(): number;
     }
 }
 
@@ -4049,6 +4051,7 @@ declare namespace $.$$ {
         Task(id: string): {
             id: string;
             title: string;
+            toJSON: () => string;
         };
         task_rows(): $mol_drag[];
         task_title(task: $mol_drag_demo_task): string;

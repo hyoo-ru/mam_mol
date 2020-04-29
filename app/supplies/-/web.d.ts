@@ -2608,6 +2608,8 @@ declare namespace $.$$ {
         dom_node_actual(): Element;
         dom_tree(): Element;
         title(): string;
+        minimal_width(): number;
+        minimal_height(): number;
     }
 }
 

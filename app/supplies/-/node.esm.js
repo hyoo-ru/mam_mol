@@ -8595,6 +8595,12 @@ var $;
             title() {
                 return this.Sub().title();
             }
+            minimal_width() {
+                return this.Sub().minimal_width();
+            }
+            minimal_height() {
+                return this.Sub().minimal_height();
+            }
         }
         __decorate([
             $.$mol_mem

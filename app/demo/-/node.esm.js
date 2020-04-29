@@ -13686,6 +13686,12 @@ var $;
             title() {
                 return this.Sub().title();
             }
+            minimal_width() {
+                return this.Sub().minimal_width();
+            }
+            minimal_height() {
+                return this.Sub().minimal_height();
+            }
         }
         __decorate([
             $.$mol_mem
@@ -14192,7 +14198,11 @@ var $;
                 return next !== null && next !== void 0 ? next : [...$.$mol_range2(index => this.Task(String(index + 1)), () => this.task_count())];
             }
             Task(id) {
-                return { id: id, title: `Task #${id}` };
+                return {
+                    id: id,
+                    title: `Task #${id}`,
+                    toJSON: () => id,
+                };
             }
             task_rows() {
                 return this.task_list().map(task => this.Task_row(task));
