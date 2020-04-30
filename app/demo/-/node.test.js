@@ -16100,18 +16100,17 @@ var $;
 var $;
 (function ($) {
     class $mol_import extends $.$mol_object2 {
-        static script(uri, next, force) {
-            const doc = $.$mol_dom_context.document;
-            const found = doc.querySelector(`script[src="${uri}"]`);
-            if (found)
-                return $.$mol_dom_context;
-            return $.$mol_fail_hidden(new Promise((done, fail) => {
+        static script(uri) {
+            return $.$mol_fiber_sync(() => {
+                const doc = $.$mol_dom_context.document;
                 const script = doc.createElement('script');
                 script.src = uri;
-                script.onload = () => done($.$mol_dom_context);
-                script.onerror = () => fail(new Error(`Can not import ${uri}`));
                 doc.head.appendChild(script);
-            }));
+                return new Promise((done, fail) => {
+                    script.onload = () => done($.$mol_dom_context);
+                    script.onerror = () => fail(new Error(`Can not import ${uri}`));
+                });
+            })();
         }
     }
     __decorate([
@@ -16196,7 +16195,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/map/yandex/yandex.view.css", "[mol_map_yandex] {\n\tflex: auto;\n\talign-self: stretch;\n\tbox-shadow: var(--mol_skin_light_outline);\n\tmix-blend-mode: exclusion;\n\tfilter: invert(1);\n}\n");
+    $.$mol_style_attach("mol/map/yandex/yandex.view.css", "[mol_map_yandex] {\n\tflex: auto;\n\talign-self: stretch;\n\tbox-shadow: var(--mol_skin_light_outline);\n\tmix-blend-mode: exclusion;\n\tfilter: invert(1) hue-rotate(180deg);\n}\n");
 })($ || ($ = {}));
 //yandex.view.css.js.map
 ;
