@@ -51,7 +51,8 @@ namespace $ {
 			destructor(): void
 		}
 		
-		exists( next? : boolean ) {
+		@ $mol_mem
+		exists( next? : boolean , force? : $mol_mem_force ) {
 			let exists = true
 			try {
 				this.stat()

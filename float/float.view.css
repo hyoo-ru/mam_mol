@@ -6,9 +6,7 @@
 	opacity: 1;
 	transition: opacity .25s ease-in;
 	display: block;
+	background: var(--mol_theme_back);
+	box-shadow: 0 0 .5rem hsla(0,0%,0%,.25);
 }
 
-[mol_float_scrolling] {
-	opacity: 0;
-	transition-duration: 0;
-}

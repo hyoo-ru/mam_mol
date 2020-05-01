@@ -7,9 +7,10 @@
 	box-shadow: none;
 	margin-right: 2px;
 	height: 1em;
+	width: 1em;
 	vertical-align: -10%;
 }
 
 [mol_theme="$mol_theme_dark"] [mol_link_iconed_icon] {
-	filter: invert(1);
+	filter: invert(1) hue-rotate(180deg);
 }

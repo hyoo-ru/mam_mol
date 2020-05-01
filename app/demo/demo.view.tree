@@ -1,9 +1,7 @@
-$mol_app_demo $mol_book
+$mol_app_demo $mol_book2
 	editor_title <= detail_title \$mol
 	source_prefix \https://github.com/eigenmethod/mol/tree/master/
-	Placeholder null
 	Main $mol_app_demo_main
-		event_top?event <=> event_front_up?event
 	pages <= blocks /
 	attr *
 		mol_theme <= theme
@@ -12,9 +10,7 @@ $mol_app_demo $mol_book
 		option!id <= nav_option!id null
 		filter?val <=> filter_string?val \
 		theme?val <=> theme?val \$mol_theme_dark
-		event_top?event <=> event_front_up?event
-	Detail $mol_app_demo_detail
-		minimal_width 600
+	Detail!id $mol_app_demo_detail
 		title <= detail_title
 		source_link <= source_link \
 		body /
@@ -24,9 +20,7 @@ $mol_app_demo $mol_book
 				repository_name \nin-jin/mol_chat
 				title <= title
 				link <= chat_link \
-		event_top?val <=> event_front_up?val
 	Editor!id $mol_app_studio
-		minimal_width 1000
 		title <= editor_title
 		class_name_base <= selected_class_name \
 		tools_main /
@@ -46,7 +40,6 @@ $mol_app_demo $mol_book
 			<= detail_empty_postfix @ \"
 			
 $mol_app_demo_menu $mol_page
-	minimal_width 240
 	title @ \Demos
 	sub /
 		<= Head
@@ -67,9 +60,11 @@ $mol_app_demo_detail $mol_page
 		<= Source_link $mol_link
 			uri <= source_link \
 			target \_blank
-			hint <= source_hint @ \Source code of this demo
 			sub /
-				<= Source_icon $mol_icon_code_not_equal_variant
+				<= Source_button $mol_button_major
+					hint <= source_hint @ \Source code of this demo
+					sub /
+						<= Source_icon $mol_icon_code_braces
 		<= Edit $mol_link
 			hint <= edit_hint @ \Edit this demo online
 			sub /

@@ -3,24 +3,22 @@ namespace $ {
 	export class $mol_import extends $mol_object2 {
 		
 		@ $mol_mem_key
-		static script( uri : string , next? : any , force? : $mol_mem_force ) : any {
-			const doc = $mol_dom_context.document
+		static script( uri : string ) : any {
+			
+			return $mol_fiber_sync( ()=> {
 
-			const found = doc.querySelector( `script[src="${ uri }"]` )
-			if( found ) return $mol_dom_context
-
-			return $mol_fail_hidden( new Promise( ( done , fail ) => {
-
+				const doc = $mol_dom_context.document
+				
 				const script = doc.createElement( 'script' )
 				script.src = uri
-				
-				script.onload = ()=> done( $mol_dom_context )
-				script.onerror = ()=> fail( new Error( `Can not import ${ uri }` ) )
-				
 				doc.head.appendChild( script )
+				
+				return new Promise< typeof $mol_dom_context >( ( done , fail ) => {
+					script.onload = ()=> done( $mol_dom_context )
+					script.onerror = ()=> fail( new Error( `Can not import ${ uri }` ) )
+				} )
 
-			} ) )
-			
+			} )()
 
 		}
 

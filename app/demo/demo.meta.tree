@@ -9,7 +9,7 @@ include \/mol/offline/install
 include \/mol/attach/demo
 include \/mol/bar/demo
 include \/mol/bench/demo
-include \/mol/book/demo
+include \/mol/book2/demo
 include \/mol/button/demo
 include \/mol/calendar/demo/holiday
 include \/mol/calendar/demo/selection
@@ -27,6 +27,7 @@ include \/mol/code/demo
 include \/mol/date/demo
 include \/mol/deck/demo
 include \/mol/dimmer/demo
+include \/mol/drag/demo
 include \/mol/expander/demo
 include \/mol/float/demo
 include \/mol/form/demo/bids

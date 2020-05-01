@@ -1,5 +1,5 @@
 [mol_app_demo_menu] {
-	flex: 1 1 240px;
+	flex: 1 0 20rem;
 }
 
 [mol_app_demo_menu_head] {
@@ -19,7 +19,7 @@
 [mol_app_demo_main],
 [mol_app_demo_detail],
 [mol_app_empty_message] {
-	flex: 1000 1 600px;
+	flex: 1000 0 60rem;
 }
 
 [mol_app_demo_detail] {
@@ -119,4 +119,8 @@
 
 [mol_app_demo_chat] {
 	flex: none;
+}
+
+[mol_app_demo_detail_source_link] {
+	padding: 0;
 }
