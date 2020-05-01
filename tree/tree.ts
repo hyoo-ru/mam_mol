@@ -11,7 +11,7 @@ namespace $ {
 	 * Abstract Syntax Tree with human readable serialization.
 	 * @see https://github.com/nin-jin/tree.d
 	 */
-	export class $mol_tree {
+	export class $mol_tree extends $mol_object2 {
 		
 		readonly type : string
 		readonly data : string
@@ -21,6 +21,8 @@ namespace $ {
 		readonly col : number
 		
 		constructor( config : Partial<$mol_tree> = {} ) {
+
+			super()
 
 			this.type = config.type || ''
 			
@@ -105,7 +107,7 @@ namespace $ {
 				++row
 				
 				var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec( line )
-				if( !chunks || chunks[4] ) throw new Error( `Syntax error at ${baseUri}:${row}\n${line}` )
+				if( !chunks || chunks[4] ) return this.$.$mol_fail( new Error( `Syntax error at ${baseUri}:${row}\n${line}` ) )
 				
 				var indent = chunks[ 1 ]
 				var path = chunks[ 2 ]
@@ -114,14 +116,14 @@ namespace $ {
 				var deep = indent.length
 				var types = path ? path.replace( / $/ , '' ).split( / +/ ) : []
 				
-				if( stack.length <= deep ) throw new Error( `Too many tabs at ${baseUri}:${row}\n${line}` )
+				if( stack.length <= deep ) return this.$.$mol_fail( new Error( `Too many tabs at ${baseUri}:${row}\n${line}` ) )
 				
 				stack.length = deep + 1
 				var parent = stack[ deep ];
 				
 				let col = deep
 				types.forEach( type => {
-					if( !type ) throw new Error( `Unexpected space symbol ${baseUri}:${row}\n${line}` )
+					if( !type ) return this.$.$mol_fail( new Error( `Unexpected space symbol ${baseUri}:${row}\n${line}` ) )
 					var next = new $mol_tree({ type , baseUri , row , col })
 					const parent_sub = parent.sub as $mol_tree[]
 					parent_sub.push( next )	

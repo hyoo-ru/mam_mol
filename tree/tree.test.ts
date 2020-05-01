@@ -54,5 +54,24 @@ namespace $ {
 
 		} ,
 
+		'errors handling'( $ ) {
+
+			const errors = [] as string[]
+
+			class Tree extends $mol_tree {
+				static $ = $.$mol_ambient({
+					$mol_fail: error => errors.push( error.message ) as never
+				})
+			}
+			
+			Tree.fromString( `
+				\t \tfoo
+				bar \\data
+			` , 'test' )
+
+			$mol_assert_like( errors , [ 'Syntax error at test:2\n \tfoo' ] )
+
+		},
+
 	} )	
 }
