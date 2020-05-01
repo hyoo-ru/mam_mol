@@ -1839,8 +1839,9 @@ var $;
 var $;
 (function ($) {
     $.$mol_tree_convert = Symbol('$mol_tree_convert');
-    class $mol_tree {
+    class $mol_tree extends $.$mol_object2 {
         constructor(config = {}) {
+            super();
             this.type = config.type || '';
             if (config.value !== undefined) {
                 var sub = $mol_tree.values(config.value);
@@ -1892,20 +1893,20 @@ var $;
                 ++row;
                 var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec(line);
                 if (!chunks || chunks[4])
-                    throw new Error(`Syntax error at ${baseUri}:${row}\n${line}`);
+                    return this.$.$mol_fail(new Error(`Syntax error at ${baseUri}:${row}\n${line}`));
                 var indent = chunks[1];
                 var path = chunks[2];
                 var data = chunks[3];
                 var deep = indent.length;
                 var types = path ? path.replace(/ $/, '').split(/ +/) : [];
                 if (stack.length <= deep)
-                    throw new Error(`Too many tabs at ${baseUri}:${row}\n${line}`);
+                    return this.$.$mol_fail(new Error(`Too many tabs at ${baseUri}:${row}\n${line}`));
                 stack.length = deep + 1;
                 var parent = stack[deep];
                 let col = deep;
                 types.forEach(type => {
                     if (!type)
-                        throw new Error(`Unexpected space symbol ${baseUri}:${row}\n${line}`);
+                        return this.$.$mol_fail(new Error(`Unexpected space symbol ${baseUri}:${row}\n${line}`));
                     var next = new $mol_tree({ type, baseUri, row, col });
                     const parent_sub = parent.sub;
                     parent_sub.push(next);

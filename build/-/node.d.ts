@@ -447,7 +447,7 @@ declare namespace $ {
     type $mol_tree_hack = (input: $mol_tree, context: $mol_tree_context) => readonly $mol_tree[];
     type $mol_tree_context = Record<string, $mol_tree_hack>;
     type $mol_tree_library = Record<string, $mol_tree_context>;
-    class $mol_tree {
+    class $mol_tree extends $mol_object2 {
         readonly type: string;
         readonly data: string;
         readonly sub: readonly $mol_tree[];
