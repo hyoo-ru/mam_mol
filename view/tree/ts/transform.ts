@@ -6,9 +6,33 @@ namespace $ {
 			'': flatten_props
 		})
 
-		flat_module.hack({
-
+		return flat_module.hack({
+			'': ts_class
 		})
+	}
+
+	const SourceNode = $node['source-map'].SourceNode
+	type SourceNode = InstanceType< typeof SourceNode >
+	type StringNodeArray = (string | SourceNode)[];
+
+	type PropsContext = {
+		propDefs: { [ key : string ] : $mol_tree }
+		members: { [ key : string ] : StringNodeArray }
+	}
+
+	function ts_class(parent: $mol_tree, context: $mol_tree_context) {
+		const propContext: PropsContext = {
+			propDefs: {},
+			members: {}
+		}
+
+		return [ parent.hack({
+			'': ts_props.bind(null, propContext)
+		}) ]
+	}
+
+	function ts_props(propContext: PropsContext, parent: $mol_tree, context: $mol_tree_context) {
+		return []
 	}
 
 	function remove_comment(): readonly $mol_tree[] {
