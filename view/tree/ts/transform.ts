@@ -75,7 +75,7 @@ namespace $ {
 		}
 
 		const view_class = input.sub.length > 0 ? input.sub[0] : undefined
-		if (! view_class) throw input.error('Need an $mol_view class')
+		if (! view_class) throw input.error('Need an $mol_view subclass')
 
 		view_class.hack({
 			...parent_context,
