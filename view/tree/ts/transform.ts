@@ -2,12 +2,12 @@ namespace $ {
 
 	export function $mol_view_tree_ts_transform(tree: $mol_tree) {
 		return tree.hack({
-			'-': comment,
+			'-': remove_comment,
 			'': flatten_props
 		})
 	}
 
-	function comment( input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
+	function remove_comment(): readonly $mol_tree[] {
 		return [ ]
 	}
 
