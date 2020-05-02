@@ -1,9 +1,13 @@
 namespace $ {
 
 	export function $mol_view_tree_ts_transform(tree: $mol_tree) {
-		return tree.hack({
+		const flat_module = tree.hack({
 			'-': remove_comment,
 			'': flatten_props
+		})
+
+		flat_module.hack({
+
 		})
 	}
 
@@ -15,7 +19,7 @@ namespace $ {
 		return [ input.hack(context) ]
 	}
 
-	function flatten_props( input: $mol_tree, parent_context: $mol_tree_context ) {
+	function flatten_props( input: $mol_tree, context: $mol_tree_context ) {
 		if( !/^\$\w+$/.test( input.type ) ) throw input.error( 'Wrong component name' )
 		const roots = new Map<string, $mol_tree>()
 		const nodes: $mol_tree[] = []
@@ -61,7 +65,8 @@ namespace $ {
 
 		function prop(input: $mol_tree, context: $mol_tree_context) {
 			const index = nodes.length
-			nodes.push(input)
+			// keep node order
+			nodes.push(undefined!)
 
 			const result = input.hack( {
 				...context,
@@ -74,17 +79,25 @@ namespace $ {
 			return [ result ]
 		}
 
-		const view_class = input.sub.length > 0 ? input.sub[0] : undefined
-		if (! view_class) throw input.error('Need an $mol_view subclass')
+		function props(input: $mol_tree, context: $mol_tree_context) {
+			input.hack({
+				...context,
+				'': prop,
+				'<=': left,
+				'<=>': left,
+				'=>': right,	
+			})
 
-		view_class.hack({
-			...parent_context,
-			'': prop,
-			'<=': left,
-			'<=>': left,
-			'=>': right,	
-		})
+			return nodes
+		}
 
-		return nodes
+		if (input.sub.length === 0) throw input.error('Need an $mol_view subclass')
+
+		return [
+			input.hack({
+				...context,
+				'': props
+			})
+		]
 	}
 }
