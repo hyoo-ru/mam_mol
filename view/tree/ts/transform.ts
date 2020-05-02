@@ -8,15 +8,14 @@ namespace $ {
 	}
 
 	function comment( input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
-		return [ input.clone({ type: '//' }) ]
+		return [ ]
 	}
 
 	function flatten( input: $mol_tree, parent_context: $mol_tree_context ) {
 		if( !/^\$\w+$/.test( input.type ) ) throw input.error( 'Wrong component name' )
-
 		const roots = new Map<string, $mol_tree>()
 
-		const add = (next: $mol_tree) => {
+		function add(next: $mol_tree) {
 			const type = next.type
 			const prev = roots.get(type)
 			if (prev) {
@@ -29,7 +28,7 @@ namespace $ {
 			roots.set(type, next)
 		}
 
-		const flatten_left = (input: $mol_tree, context: $mol_tree_context) => {
+		function left(input: $mol_tree, context: $mol_tree_context) {
 			const sub = input.sub
 			if (sub.length === 0) return []
 			const child = sub[0]
@@ -40,24 +39,44 @@ namespace $ {
 			return [ input.clone({ sub : [ child.clone({ sub: [] }) ] }) ]
 		}
 
-		const flatten_right = (input: $mol_tree, context: $mol_tree_context) => {
+		function right(input: $mol_tree, context: $mol_tree_context) {
 			const sub = input.sub
 			if (sub.length === 0) return []
 			const child = sub[0]
 
-			if( child.sub[0] ) throw child.error( 'Right binding can not have default value' )
+			if( child.sub.length > 0 ) throw child.error( 'Right binding can not have default value' )
 
 			add(child)
 
 			return [ input.clone({ sub : [ child.clone({ sub: [] }) ] }) ]
 		}
 
-		input.hack({
+		function prop(input: $mol_tree, context: $mol_tree_context) {
+			const prev = roots.get(input.type)
+			if (prev) {
+				roots.delete(input.type)
+				roots.set(input.type, prev)
+			}
+
+			const result = input.hack( {
+				...context,
+				'': (input: $mol_tree, context: $mol_tree_context) => [ input.hack(context) ],
+			} )
+
+			add(result)
+
+			return [ result ]
+		}
+
+		const view_class = input.sub.length > 0 ? input.sub[0] : undefined
+		if (! view_class) throw input.error('Need an $mol_view class')
+
+		view_class.hack({
 			...parent_context,
-			'': (input: $mol_tree, context: $mol_tree_context) => [ input.hack( context ) ],
-			'<=': flatten_left,
-			'<=>': flatten_left,
-			'=>': flatten_right,
+			'': prop,
+			'<=': left,
+			'<=>': left,
+			'=>': right,	
 		})
 
 		return Array.from(roots.values())
