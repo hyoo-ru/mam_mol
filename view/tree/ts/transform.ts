@@ -3,17 +3,22 @@ namespace $ {
 	export function $mol_view_tree_ts_transform(tree: $mol_tree) {
 		return tree.hack({
 			'-': comment,
-			'': flatten
-		})!
+			'': flatten_props
+		})
 	}
 
 	function comment( input : $mol_tree , context : $mol_tree_context ): readonly $mol_tree[] {
 		return [ ]
 	}
 
-	function flatten( input: $mol_tree, parent_context: $mol_tree_context ) {
+	function passthru(input: $mol_tree, context: $mol_tree_context) {
+		return [ input.hack(context) ]
+	}
+
+	function flatten_props( input: $mol_tree, parent_context: $mol_tree_context ) {
 		if( !/^\$\w+$/.test( input.type ) ) throw input.error( 'Wrong component name' )
 		const roots = new Map<string, $mol_tree>()
+		const keys = [] as string[]
 
 		function add(next: $mol_tree) {
 			const type = next.type
@@ -34,6 +39,7 @@ namespace $ {
 			const child = sub[0]
 			if (child.type === '-') return []
 
+			keys.push(child.type)
 			add(child.hack( context ))
 
 			return [ input.clone({ sub : [ child.clone({ sub: [] }) ] }) ]
@@ -46,21 +52,19 @@ namespace $ {
 
 			if( child.sub.length > 0 ) throw child.error( 'Right binding can not have default value' )
 
+			keys.push(child.type)
 			add(child)
 
 			return [ input.clone({ sub : [ child.clone({ sub: [] }) ] }) ]
 		}
 
 		function prop(input: $mol_tree, context: $mol_tree_context) {
-			const prev = roots.get(input.type)
-			if (prev) {
-				roots.delete(input.type)
-				roots.set(input.type, prev)
-			}
+			// roots.set(input.type, undefined!)
+			keys.push(input.type)
 
 			const result = input.hack( {
 				...context,
-				'': (input: $mol_tree, context: $mol_tree_context) => [ input.hack(context) ],
+				'': passthru,
 			} )
 
 			add(result)
@@ -79,6 +83,12 @@ namespace $ {
 			'=>': right,	
 		})
 
-		return Array.from(roots.values())
+		const nodes: $mol_tree[] = []
+		for (const key of keys) {
+			const node = roots.get(key)
+			if (node) nodes.push(node)
+		}
+
+		return nodes
 	}
 }
