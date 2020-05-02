@@ -18,9 +18,9 @@ namespace $ {
 	function flatten_props( input: $mol_tree, parent_context: $mol_tree_context ) {
 		if( !/^\$\w+$/.test( input.type ) ) throw input.error( 'Wrong component name' )
 		const roots = new Map<string, $mol_tree>()
-		const keys = [] as string[]
+		const nodes: $mol_tree[] = []
 
-		function add(next: $mol_tree) {
+		function assert_no_dup(next: $mol_tree) {
 			const type = next.type
 			const prev = roots.get(type)
 			if (prev) {
@@ -39,8 +39,9 @@ namespace $ {
 			const child = sub[0]
 			if (child.type === '-') return []
 
-			keys.push(child.type)
-			add(child.hack( context ))
+			const node = child.hack( context )
+			assert_no_dup(node)
+			nodes.push(node)
 
 			return [ input.clone({ sub : [ child.clone({ sub: [] }) ] }) ]
 		}
@@ -52,22 +53,23 @@ namespace $ {
 
 			if( child.sub.length > 0 ) throw child.error( 'Right binding can not have default value' )
 
-			keys.push(child.type)
-			add(child)
+			assert_no_dup(child)
+			nodes.push(child)
 
 			return [ input.clone({ sub : [ child.clone({ sub: [] }) ] }) ]
 		}
 
 		function prop(input: $mol_tree, context: $mol_tree_context) {
-			// roots.set(input.type, undefined!)
-			keys.push(input.type)
+			const index = nodes.length
+			nodes.push(input)
 
 			const result = input.hack( {
 				...context,
 				'': passthru,
 			} )
 
-			add(result)
+			assert_no_dup(result)
+			nodes[index] = result
 
 			return [ result ]
 		}
@@ -82,12 +84,6 @@ namespace $ {
 			'<=>': left,
 			'=>': right,	
 		})
-
-		const nodes: $mol_tree[] = []
-		for (const key of keys) {
-			const node = roots.get(key)
-			if (node) nodes.push(node)
-		}
 
 		return nodes
 	}
