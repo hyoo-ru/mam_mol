@@ -11,33 +11,33 @@ namespace $ {
 
 		'only field' () {
 			
-			const harp = $mol_harp_query.parse( 'user' )
+			const harp = $mol_harp_query.parse( 'user%20777' )
 			
-			$mol_assert_equal( harp.name , 'user' )
+			$mol_assert_equal( harp.name , 'user 777' )
 
-			$mol_assert_equal( harp.toString() , 'user' )
+			$mol_assert_equal( harp.toString() , 'user%20777' )
 
 		} ,
 		
 		'primary key' () {
 			
-			const harp = $mol_harp_query.parse( 'user=jin' )
+			const harp = $mol_harp_query.parse( 'user=jin%20777' )
 			
 			$mol_assert_equal( harp.name , 'user' )
-			$mol_assert_equal( harp.values[0].min , 'jin' )
-			$mol_assert_equal( harp.values[0].max , 'jin' )
+			$mol_assert_equal( harp.values[0].min , 'jin 777' )
+			$mol_assert_equal( harp.values[0].max , 'jin 777' )
 
-			$mol_assert_equal( harp.toString() , 'user=jin' )
+			$mol_assert_equal( harp.toString() , 'user=jin%20777' )
 
 		} ,
 		
 		'single fetch' () {
 
-			const harp = $mol_harp_query.parse( '[age]' )
+			const harp = $mol_harp_query.parse( '[age%24]' )
 			
-			$mol_assert_equal( harp.fetch.age.name , 'age' )
+			$mol_assert_equal( harp.fetch.age$.name , 'age$' )
 			
-			$mol_assert_equal( harp.toString() , '[age]' )
+			$mol_assert_equal( harp.toString() , '[age%24]' )
 
 		} ,
 		
