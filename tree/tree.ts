@@ -6,6 +6,15 @@ namespace $ {
 	export type $mol_tree_hack = ( input : $mol_tree , context : $mol_tree_context )=> readonly $mol_tree[]
 	export type $mol_tree_context = Record< string , $mol_tree_hack >
 	export type $mol_tree_library = Record< string , $mol_tree_context >
+
+	export class $mol_tree_syntax_error extends Error {
+		constructor( line : string , row : number , col : number , reason : string, baseUri : string = 'unknown' ) {
+			var pos_marker_prefix = line.replace(/[^\t]/, '').slice(0, col);
+			var message = `Syntax error: ${reason}, at ${baseUri}:${row}:${col}\n${line}\n${pos_marker_prefix}^`
+
+			super(message)
+		}
+	}
 	
 	/**
 	 * Abstract Syntax Tree with human readable serialization.
@@ -93,55 +102,127 @@ namespace $ {
 		}
 		
 		/** Parses tree format to AST. */
-		static fromString( str : string , baseUri? : string ) {
-			
+		static fromString( str : string , baseUri? : string  ) : $mol_tree {
 			var root = new $mol_tree( { baseUri : baseUri } )
 			var stack = [ root ]
+
+			var pos = 0, row = 0, min_indent = 0
 			
-			var row = 0
-			var prefix = str.replace( /^\n?(\t*)[\s\S]*/ , '$1' )
-			var lines = str.replace( new RegExp( '^\\t{0,' + prefix.length + '}' , 'mg' ) , '' ).split( '\n' )
+			while( str.length > pos ) {
+				var indent = 0
+				var line_start = pos
 
-			lines.forEach( line => {
+				row++
 
-				++row
-				
-				var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec( line )
-				if( !chunks || chunks[4] ) return this.$.$mol_fail( new Error( `Syntax error at ${baseUri}:${row}\n${line}` ) )
-				
-				var indent = chunks[ 1 ]
-				var path = chunks[ 2 ]
-				var data = chunks[ 3 ]
-				
-				var deep = indent.length
-				var types = path ? path.replace( / $/ , '' ).split( / +/ ) : []
-				
-				if( stack.length <= deep ) return this.$.$mol_fail( new Error( `Too many tabs at ${baseUri}:${row}\n${line}` ) )
-				
-				stack.length = deep + 1
-				var parent = stack[ deep ];
-				
-				let col = deep
-				types.forEach( type => {
-					if( !type ) return this.$.$mol_fail( new Error( `Unexpected space symbol ${baseUri}:${row}\n${line}` ) )
-					var next = new $mol_tree({ type , baseUri , row , col })
-					const parent_sub = parent.sub as $mol_tree[]
-					parent_sub.push( next )	
-					parent = next
-					col += type.length + 1
-				} )
-				
-				if( data ) {
-					var next = new $mol_tree({ data : data.substring( 1 ) , baseUri , row , col })
+				// read indent
+				while( str.length > pos && str[ pos ] == '\t' ) {
+					indent++
+					pos++
+				}
+
+				if( ! root.sub.length ) {
+					min_indent = indent
+				}
+
+				indent -= min_indent
+
+				// invalid tab size
+				if( indent < 0 || indent >= stack.length ) {
+					// skip error line
+					while( str.length > pos && str[ pos ] != '\n' ) {
+						pos++
+					}
+
+					$mol_fail( new $mol_tree_syntax_error(
+						str.slice( line_start , pos ) ,
+						row ,
+						1 ,
+						`too ${indent < 0 ? 'low' : 'many'} tabs` ,
+						baseUri ,
+					) )
+				}
+
+				stack.length = indent + 1
+				var parent = stack[ indent ]
+
+				// parse types
+				while( str.length > pos && str[ pos ] != '\\' && str[ pos ] != '\n' ) {
+					// type can not contain space and tab
+					var error_start = pos
+					while( str.length > pos && ( str[ pos ] == ' ' || str[ pos ] == '\t' ) ) {
+						pos++
+					}
+					if( pos > error_start ) {
+						$mol_fail( new $mol_tree_syntax_error(
+							str.slice( line_start , str.indexOf( '\n' , pos ) ) ,
+							row ,
+							error_start - line_start ,
+							`type expected, '${str.slice( error_start , pos )}' given` ,
+							baseUri ,
+						) )
+					}
+
+					// read type
+					var type_start = pos
+					while( 
+						str.length > pos && 
+						str[ pos ] != '\\' && 
+						str[ pos ] != ' ' && 
+						str[ pos ] != '\t' && 
+						str[ pos ] != '\n'
+					) {
+						pos++
+					}
+					if( pos > type_start ) {
+						let next = new $mol_tree( { 
+							type : str.slice( type_start , pos ) ,
+							baseUri ,
+							row ,
+							col : type_start - line_start ,
+						} )
+						const parent_sub = parent.sub as $mol_tree[]
+						parent_sub.push( next )
+						parent = next
+					}
+
+					// read one space if exists
+					if( str.length > pos && str[ pos ] == ' ' ) {
+						pos++
+					}
+				}
+
+				// read data
+				if( str.length > pos && str[ pos ] == '\\' ) {
+					var data_start = pos
+					while( str.length > pos && str[ pos ] != '\n' ) {
+						pos++
+					}
+					let next = new $mol_tree( { 
+						data : str.slice( data_start + 1 , pos ) ,
+						baseUri ,
+						row ,
+						col : data_start - line_start ,
+					})
 					const parent_sub = parent.sub as $mol_tree[]
 					parent_sub.push( next )
 					parent = next
 				}
-				
+
+				// now must be end of text or new line character
+				if( str.length > pos && str[ pos ] != '\n' ) {
+					$mol_fail( new $mol_tree_syntax_error(
+						str.slice( line_start , str.indexOf( '\n' , pos ) ) ,
+						row ,
+						pos - line_start ,
+						`LF or EOF expected, '${str[pos]}' given` ,
+						baseUri ,
+					) )
+				}
+
 				stack.push( parent )
-				
-			} )
-			
+				pos++
+			}
+
 			return root
 		}
 		
