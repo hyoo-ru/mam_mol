@@ -561,6 +561,10 @@ namespace $.$$ {
 
 Here we linked our properties `message` and `name` through the expression. So now wherever we use `$my_hello`, the value `message` would be depend on `name` property entered by a user.
 
+## IDE Support
+
+* [Language Service for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=valikov.tree-language-service)
+
 ## Articles
 
 * [View formats](https://github.com/eigenmethod/mol/wiki/View-formats) - Comparison of component description formats (tree, xml, json)
