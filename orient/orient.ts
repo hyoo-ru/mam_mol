@@ -1,7 +1,5 @@
 namespace $ {
 
-	const log = $mol_fiber.func( console.log )
-	
 	export class $mol_orient_wrapper< Api > extends $mol_object2 {
 
 		api() : Api {
@@ -132,10 +130,14 @@ namespace $ {
 			} ) )
 		}
 
+		@ $mol_fiber.method
 		query( query : string ) {
-			const res = this.exec( api => api.query( query ) )
-			console.log( 'QUERY:' , query )
-			return res
+			$mol_fiber.run( ()=> this.$.$mol_log3_rise({
+				place: this ,
+				message: 'Query',
+				query ,
+			}) )
+			return this.exec( api => api.query( query ) )
 		}
 
 	}

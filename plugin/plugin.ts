@@ -13,7 +13,7 @@ namespace $ {
 			for( let event_name in events ) {
 				node.addEventListener(
 					event_name ,
-					$mol_log2.func( $mol_fiber_root( events[ event_name ] ) ) ,
+					$mol_fiber_root( events[ event_name ] ) ,
 					{ passive : false } as any ,
 				)
 			}

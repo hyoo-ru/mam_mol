@@ -1,6 +1,9 @@
 namespace $ {
 	
-	export function $mol_build_start( paths : string[] ) {
+	export function $mol_build_start(
+		this: $mol_ambient_context,
+		paths : string[],
+	) {
 		var build = $mol_build.relative( '.' )
 		if( paths.length > 0 ) {
 			try {
@@ -12,7 +15,10 @@ namespace $ {
 				)
 				process.exit(0)
 			} catch(error) {
-				console.log(error)
+				this.$mol_log3_fail({
+					place: '$mol_build_start' , 
+					message: error.message,
+				})
 				process.exit(1)
 			}
 		} else {
@@ -20,7 +26,7 @@ namespace $ {
 		}
 	}
 	
-	setTimeout( $mol_fiber_root( ()=> $mol_fiber_unlimit( ()=> $mol_build_start( process.argv.slice( 2 ) ) as any ) ) )
+	setTimeout( $mol_fiber_root( ()=> $mol_ambient({}).$mol_build_start( process.argv.slice( 2 ) ) as any ) )
 
 	export class $mol_build extends $mol_object {
 		
@@ -57,7 +63,7 @@ namespace $ {
 			let content = ''
 			for( const step of tree.select( 'build' , '' ).sub ) {
 
-				const res = $mol_exec( file.parent().path() , step.value ).stdout.toString().trim()
+				const res = this.$.$mol_exec( file.parent().path() , step.value ).stdout.toString().trim()
 				if( step.type ) content += `let ${ step.type } = ${ JSON.stringify( res ) }`
 
 			}
@@ -358,7 +364,10 @@ namespace $ {
 						this.js_error( diagnostic.file.getSourceFile().fileName.replace( /\.tsx?$/ , '.js' ) , error )
 						
 					} else {
-						console.error( $node.colorette.redBright( String(diagnostic.messageText) ) )
+						this.$.$mol_log3_fail({
+							place : `${this}.tsService()` ,
+							message: String( diagnostic.messageText ) ,
+						})
 					}
 					
 				} ,
@@ -567,22 +576,26 @@ namespace $ {
 							//process.stdout.write( $mol_exec( mod.path() , 'git' , '--no-pager' , 'log' , '--oneline' , 'HEAD..origin/master' ).stdout )
 						} else {
 							for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
-								$mol_exec( mod.path() , 'git' , 'init' )
-								$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , 'master' , 'origin' , repo.value )
-								$mol_exec( mod.path() , 'git' , 'pull' )
+								this.$.$mol_exec( mod.path() , 'git' , 'init' )
+								this.$.$mol_exec( mod.path() , 'git' , 'remote' , 'add' , '--track' , 'master' , 'origin' , repo.value )
+								this.$.$mol_exec( mod.path() , 'git' , 'pull' )
 								mod.reset()
 								return true
 							}
 						}
 					} catch( error ) {
-						console.error( $node.colorette.redBright( error.message ) )
+						this.$.$mol_log3_fail({
+							place: `${this}.modEnsure()` ,
+							path ,
+							message: error.message ,
+						})
 					}
 				}
 				return false
 			}
 
 			for( let repo of mapping.select( 'pack' , mod.name() , 'git' ).sub ) {
-				$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.path() )
+				this.$.$mol_exec( this.root().path() , 'git' , 'clone' , repo.value , mod.path() )
 				mod.reset()
 				return true
 			}
@@ -791,12 +804,14 @@ namespace $ {
 		
 		logBundle( target : $mol_file , duration : number ) {
 
-			const { green , greenBright } = $node.colorette
-			
 			const path = target.relate( this.root() )
-			const time = duration.toString().padStart( 5 )
 			
-			console.log( green( `$mol_build ${ time }ms ${ greenBright( path ) }` ) )
+			this.$.$mol_log3_done({
+				place: this ,
+				duration: `${duration}ms` ,
+				message: `Built` , 
+				path ,
+			})
 
 		}
 		
@@ -922,7 +937,7 @@ namespace $ {
 			if( errors.length ) $mol_fail_hidden( new $mol_error_mix( `Build fail ${path}`, ...errors ) )
 
 			if( bundle === 'node' ) {
-				console.log( $mol_exec( this.root().path() , 'node' , target.path() ).stdout.toString() )
+				this.$.$mol_exec( this.root().path() , 'node' , target.path() ).stdout.toString()
 			}
 			
 			return [ target , targetMap ]
@@ -1055,7 +1070,7 @@ namespace $ {
 			name = json.name || name
 			
 			try {
-				version[2] = $mol_exec( '' , 'npm' , 'view' , name , 'version' ).stdout.toString().trim().split('.')[2]
+				version[2] = this.$.$mol_exec( '' , 'npm' , 'view' , name , 'version' ).stdout.toString().trim().split('.')[2]
 			} catch { }
 
 			version[2] = String( Number( version[2] ) + 1 )
@@ -1221,8 +1236,6 @@ namespace $ {
 				}
 			)
 
-			const { yellow , yellowBright } = $node.colorette
-			
 			const targets = Object.keys( locales ).map( lang => {
 				const start = Date.now()
 				const target = pack.resolve( `-/${bundle}.locale=${ lang }.json` )
@@ -1234,7 +1247,13 @@ namespace $ {
 					for( let key in locale ) {
 						if( key in locales[ 'en' ] ) continue
 						delete locale[ key ]
-						console.warn( yellow( `$mol_build absent in "en" locale ${ yellowBright( key ) }` ) )
+						this.$.$mol_log3_warn({
+							place: `${this}.buildLocale()`,
+							message: `Excess locale key`,
+							hint: 'May be you forgot to remove this key?',
+							lang,
+							key,
+						})
 					}
 
 				}

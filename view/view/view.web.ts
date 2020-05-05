@@ -8,10 +8,10 @@ namespace $ {
 
 		/// Autoattach view roots to loaded DOM.
 		const event_name = self.cordova ? 'deviceready' : 'DOMContentLoaded'
-		Promise.resolve().then( $mol_fiber_root( $mol_log2.func( ()=> {
+		Promise.resolve().then( $mol_fiber_root( ()=> {
 			$mol_view.autobind()
 			$mol_defer.run()
-		} ) ) )
+		} ) )
 		
 		function $mol_view_watch() {
 			$mol_fiber_unlimit( ()=> {

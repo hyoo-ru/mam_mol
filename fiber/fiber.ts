@@ -1,10 +1,10 @@
 namespace $ {
 
 	export const enum $mol_fiber_status {
-		persist = -3 , // 🗹
-		actual = -2 , // ✔
-		doubt = -1 , // �
-		obsolete = 0 , // ✘
+		persist = -3 ,
+		actual = -2 ,
+		doubt = -1 ,
+		obsolete = 0 ,
 	}
 
 	export function $mol_fiber_defer< Value = void >( calculate : ()=> Value ) {
@@ -24,7 +24,11 @@ namespace $ {
 		Args extends any[] ,
 		Result ,
 	>( calculate : ( this : This , ... args : Args )=> Result ) {
-		console.warn( '$mol_fiber_func is deprecated. Use $mol_fiber.func instead.' )
+		$mol_ambient({}).$mol_log3_warn({
+			place: '$mol_fiber_func',
+			message: 'Deprecated' ,
+			hint: 'Use $mol_fiber.func instead',
+		})
 		return $mol_fiber.func( calculate )
 	}
 
@@ -37,6 +41,7 @@ namespace $ {
 		const wrapper = function( ... args : any[] ) {
 			const fiber = new $mol_fiber< Result >()
 			fiber.calculate = calculate.bind( this , ... args )
+			fiber[ Symbol.toStringTag ] = wrapper[ Symbol.toStringTag ]
 			return fiber.wake()
 		} as Calculate
 		
@@ -50,7 +55,11 @@ namespace $ {
 		name : keyof Host ,
 		descr : TypedPropertyDescriptor< ( this : Host , ... args : any[] )=> Value >
 	) {
-		console.warn( '$mol_fiber_method is deprecated. Use $mol_fiber.method instead.' )
+		$mol_ambient({}).$mol_log3_warn({
+			place: '$mol_fiber_method',
+			message: 'Deprecated' ,
+			hint: 'Use $mol_fiber.method instead',
+		})
 		return $mol_fiber.method( obj , name , descr )
 	}
 
@@ -87,8 +96,8 @@ namespace $ {
 				master = new $mol_fiber
 				master.cursor = $mol_fiber_status.persist
 				master.error = ( request.call( this , ... args ) as PromiseLike< Value > ).then(
-					$mol_log2.func( ( next : Value )=> master!.push( next ) ) ,
-					$mol_log2.func( ( error : Error | PromiseLike< Value > )=> master!.fail( error ) ) ,
+					( next : Value )=> master!.push( next ) ,
+					( error : Error )=> master!.fail( error ) ,
 				)
 				const prefix = slave ? `${ slave }/${ slave.cursor / 2 }:` : '/'
 				master[ Symbol.toStringTag ] = prefix + ( request.name || $mol_fiber_sync.name )
@@ -173,6 +182,8 @@ namespace $ {
 	}
 
 	export class $mol_fiber< Value = any > extends $mol_wrapper {
+
+		static logs = false
 
 		static wrap< Func extends ( ... args : any[] )=> any >( task : Func ) {
 			
@@ -260,14 +271,22 @@ namespace $ {
 			$mol_fiber.schedule().then( ()=> this.wake() )
 		}
 
-		@ $mol_log2.method
 		wake() {
+
+			const unscoupe = this.$.$mol_log3_area_lazy({
+				place : this ,
+				message : 'Wake'
+			})
+			
 			try {
 				if( this.cursor > $mol_fiber_status.actual ) return this.get()
 			} catch( error ) {
 				if( 'then' in error ) return
 				$mol_fail_hidden( error )
+			} finally {
+				unscoupe()
 			}
+
 		}
 
 		push( value : Value ) {
@@ -276,14 +295,24 @@ namespace $ {
 			
 			if( this.error || !Object.is( this.value , value ) ) {
 		
-				this.$.$mol_log2.info( this , $mol_fiber_token_changed1 , value , $mol_fiber_token_changed2 , this.error || this.value )
+				if( $mol_fiber.logs ) this.$.$mol_log3_done({
+					place : this ,
+					message : 'Changed',
+					next : value , 
+					value : this.value ,
+					error : this.error ,
+				})
 				
 				this.obsolete_slaves()
 				
 				this.forget()
 				
 			} else {
-				this.$.$mol_log2.info( this , $mol_fiber_token_actualized , value )
+				if( $mol_fiber.logs ) this.$.$mol_log3_done({
+					place : this , 
+					message : 'Same value' ,
+					value ,
+				})
 			}
 			
 			this.error = null
@@ -294,11 +323,14 @@ namespace $ {
 			return value
 		}
 
-		fail( error : Error | PromiseLike< Value > ) : Error | PromiseLike< Value > {
+		fail( error : Error ) : Error {
 			
 			this.complete()	
 			
-			this.$.$mol_log2.info( this , $mol_fiber_token_failed , error )
+			if( $mol_fiber.logs ) this.$.$mol_log3_fail({
+				place : this , 
+				message : error.message ,
+			})
 			
 			this.error = error
 
@@ -309,7 +341,12 @@ namespace $ {
 
 		wait( promise : PromiseLike< Value > ) : PromiseLike< Value > {
 			this.error = promise
-			this.$.$mol_log2.info( this , $mol_fiber_token_sleeped , promise )
+			if( $mol_fiber.logs ) this.$.$mol_log3_warn({
+				place : this ,
+				message : `Wait` ,
+				hint : `Don't panic, it's normal` , 
+				promise ,
+			})
 			this.cursor = $mol_fiber_status.obsolete
 			return promise
 		}
@@ -330,10 +367,16 @@ namespace $ {
 		}
 
 		pull() {
+			
+			if( $mol_fiber.logs ) this.$.$mol_log3_come({
+				place : this ,
+				message : 'Pull' ,
+			})
+
 			this.push( this.calculate() )
+
 		}
 
-		@ $mol_log2_indent.method
 		update() {
 
 			const slave = $mol_fiber.current
@@ -343,8 +386,6 @@ namespace $ {
 				// this.limit()
 				
 				$mol_fiber.current = this
-
-				this.$.$mol_log2.info( this , $mol_fiber_token_runned )
 
 				this.pull()
 
@@ -454,7 +495,11 @@ namespace $ {
 		destructor() {
 			if( !this.abort() ) return
 			
-			this.$.$mol_log2.info( this , $mol_fiber_token_destructed )
+			if( $mol_fiber.logs ) this.$.$mol_log3_done({
+				place : this , 
+				message : 'Destructed' ,
+			})
+
 			this.complete()
 		}
 
@@ -463,20 +508,5 @@ namespace $ {
 		}
 
 	}
-
-	export let $mol_fiber_token_runned = new $mol_log2_token( ' ► ' )
-	export let $mol_fiber_token_changed1 = new $mol_log2_token( ' ˸ ' )
-	export let $mol_fiber_token_changed2 = new $mol_log2_token( ' 🠈 ' )
-	export let $mol_fiber_token_actualized = new $mol_log2_token( ' ✓ ' )
-	export let $mol_fiber_token_sleeped = new $mol_log2_token( ' 💤 ' )
-	export let $mol_fiber_token_failed = new $mol_log2_token( ' 🔥 ' )
-	export let $mol_fiber_token_destructed = new $mol_log2_token( ' 🕱 ' )
-
-	$mol_log2_legend.info( $mol_fiber_token_runned , '$mol_fiber starts execution' )
-	$mol_log2_legend.info( new $mol_log2_line( $mol_fiber_token_changed1 , $mol_fiber_token_changed2 ) , '$mol_fiber value is changed to different value' )
-	$mol_log2_legend.info( $mol_fiber_token_actualized , 'Actual $mol_fiber value is same as before' )
-	$mol_log2_legend.info( $mol_fiber_token_sleeped , '$mol_fiber can not run now and awaits on promise' )
-	$mol_log2_legend.info( $mol_fiber_token_failed , '$mol_fiber is failed and will be throw an Error or Promise' )
-	$mol_log2_legend.info( $mol_fiber_token_destructed , '$mol_fiber fully destructed' )
 
 }

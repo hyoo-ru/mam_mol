@@ -193,6 +193,11 @@ namespace $ {
 						return $mol_tree.fromJSON( json.toJSON() )
 					}
 
+					if( json instanceof Error ) {
+						const { name , message , stack } = json
+						json = { ... json , name , message ,  stack }
+					}
+
 					var sub : $mol_tree[] = []
 					
 					for( var key in json ) {
