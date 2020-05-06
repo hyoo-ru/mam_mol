@@ -52,7 +52,7 @@ namespace $ {
 
 			/** Shadow effects around an element's frame. */
 			shadow?: readonly {
-				inset: boolean
+				inset?: boolean
 				x: Length
 				y: Length
 				blur: Length

@@ -5,7 +5,7 @@
 	border-radius: var(--mol_skin_round);
 	white-space: nowrap;
 	overflow: hidden;
-	padding: .5rem 1rem;
+	padding: .5rem .75rem;
 	text-align: left;
 	position: relative;
 	z-index: 0;

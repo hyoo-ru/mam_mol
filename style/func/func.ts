@@ -48,6 +48,18 @@ namespace $ {
 			)
 		}
 	
+		static rgba(
+			red: number,
+			green: number,
+			blue: number,
+			alpha: number,
+		) {
+			return new $mol_style_func(
+				'rgba',
+				[ red , green , blue , alpha ],
+			)
+		}
+	
 	}
 
 }

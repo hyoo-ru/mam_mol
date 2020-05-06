@@ -1,6 +1,7 @@
 namespace $ {
 
 	const { rem } = $mol_style_unit
+	const { rgba } = $mol_style_func
 
 	$mol_style_define( $mol_link , {
 		
@@ -8,7 +9,7 @@ namespace $ {
 		color: $mol_theme.control,
 		stroke: 'currentcolor',
 		cursor: 'pointer',
-		padding: [ rem(.5) , rem(1) ],
+		padding: [ rem(.5) , rem(.75) ],
 		boxSizing: 'border-box',
 		position: 'relative',
 

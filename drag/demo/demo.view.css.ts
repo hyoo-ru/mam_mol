@@ -34,11 +34,6 @@ namespace $.$$ {
 			},
 		},
 		
-		Task_link: {
-			padding: rem(.5),
-			display: 'block',
-		},
-		
 		Trash: {
 			padding: [ rem(.5) , rem(1) ],
 			display: 'block',

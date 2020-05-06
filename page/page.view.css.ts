@@ -33,8 +33,7 @@ namespace $.$$ {
 			flex: 'none',
 			position: 'relative' ,
 			margin: 0 ,
-			minHeight: calc(`1.5em + 2rem`) ,
-			padding: rem(.5) ,
+			padding: rem(.75) ,
 			background: {
 				color: $mol_theme.back ,
 			},
@@ -49,7 +48,7 @@ namespace $.$$ {
 				shrink: 1,
 				basis: per(50),
 			},
-			padding: rem(.5),
+			padding: [ rem(.5) , rem(.75) ],
 			wordBreak: 'normal',
 			cursor: 'default',
 			textShadow: '0 0',
@@ -65,6 +64,8 @@ namespace $.$$ {
 			flex: 'auto',
 			display: 'flex',
 			justifyContent: 'flex-end',
+			alignItems: 'flex-start',
+			flexWrap: 'wrap',
 
 			':empty': {
 				display: 'none',
