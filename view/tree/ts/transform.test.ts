@@ -13,12 +13,12 @@ $mol_view_tree_test_attributes_subcomponent_page $mol_view
 
 			const ts_tree = $mol_view_tree_ts_transform(tree)
 
-			console.log(ts_tree.sub.map(s => s.toString()).join(''))
-			console.log('--------------------------------------------------')
+			console.log(ts_tree.toString())
+			// console.log('--------------------------------------------------')
 
-			for( let def of $mol_view_tree_classes( tree ).sub ) {
-				console.log($mol_view_tree_class_props( def ).sub.map(s => s.toString()).join(''))
-			}
+			// for( let def of $mol_view_tree_classes( tree ).sub ) {
+			// 	console.log($mol_view_tree_class_props( def ).sub.map(s => s.toString()).join(''))
+			// }
 		},
 	} )
 }
