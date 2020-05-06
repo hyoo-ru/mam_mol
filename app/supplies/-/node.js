@@ -1551,12 +1551,13 @@ var $node = new Proxy({}, { get(target, name, wrapper) {
             return require(name);
         let dir = path.resolve('.');
         const suffix = `./node_modules/${name}`;
+        const $$ = $;
         while (!fs.existsSync(path.join(dir, suffix))) {
             const parent = path.resolve(dir, '..');
             if (parent === dir) {
-                $.$mol_exec('.', 'npm', 'install', name);
+                $$.$mol_exec('.', 'npm', 'install', name);
                 try {
-                    $.$mol_exec('.', 'npm', 'install', '@types/' + name);
+                    $$.$mol_exec('.', 'npm', 'install', '@types/' + name);
                 }
                 catch (_a) { }
                 break;

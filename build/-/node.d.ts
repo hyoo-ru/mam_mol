@@ -1091,7 +1091,7 @@ declare namespace $ {
         expressBodier(): import("connect").NextHandleFunction;
         expressFiler(): import("express-serve-static-core").Handler;
         expressDirector(): unknown;
-        expressIndex(): (req: import("express").Request<import("express-serve-static-core").ParamsDictionary, any, any, import("express-serve-static-core").Query>, res: import("express").Response<any>, next: () => void) => void;
+        expressIndex(): (req: import("express").Request<import("express-serve-static-core").ParamsDictionary, any, any, qs.ParsedQs>, res: import("express").Response<any>, next: () => void) => void;
         expressGenerator(): (req: any, res: any, next: () => void) => void;
         bodyLimit(): string;
         cacheTime(): number;
@@ -1106,10 +1106,10 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_build_server extends $mol_server {
-        expressGenerator(): (req: import("express").Request<import("express-serve-static-core").ParamsDictionary, any, any, import("express-serve-static-core").Query>, res: import("express").Response<any>, next: () => any) => Promise<any> | undefined;
+        expressGenerator(): (req: import("express").Request<import("express-serve-static-core").ParamsDictionary, any, any, qs.ParsedQs>, res: import("express").Response<any>, next: () => any) => Promise<any> | undefined;
         build(): $mol_build;
         generate(url: string): $mol_file[];
-        expressIndex(): (req: import("express").Request<import("express-serve-static-core").ParamsDictionary, any, any, import("express-serve-static-core").Query>, res: import("express").Response<any>, next: () => void) => void;
+        expressIndex(): (req: import("express").Request<import("express-serve-static-core").ParamsDictionary, any, any, qs.ParsedQs>, res: import("express").Response<any>, next: () => void) => void;
         port(): number;
         start(): import("ws").Server;
     }
