@@ -77,6 +77,7 @@ npm install && npm start
 ## Setup your editor
 
 - Use MAM directory as root of your project in editor
+- [Install VScode intellisense plugin for *.view.tree files](https://marketplace.visualstudio.com/items?itemName=valikov.tree-language-service)
 - [Install plugin for *.tree files](https://github.com/nin-jin/tree.d#ide-support)
 - [Install .editorconfig plugin](https://editorconfig.org/#download) or use this preferences: **TABs for indents, LF for line endings**.
 
