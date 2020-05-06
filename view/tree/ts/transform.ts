@@ -25,24 +25,20 @@ namespace $ {
 							sub: []
 						}),
 						class_node.clone({
-							type: 'extends ',
+							type: 'extends',
 							sub: []
 						}),
 						class_node.sub[0].clone({
 							sub: []
 						}),
-
 						class_node.clone({
-							sub: [
-								class_node.clone({
-									type: `${class_node.type} {`,
-									sub: []
-								}),
-								class_node.clone({
-									type: '}',
-									sub: []
-								}),
-							]
+							type: '{',
+							sub: []
+						}),
+						...class_node.sub[0].sub.slice(1),
+						class_node.clone({
+							type: '}',
+							sub: []
 						}),
 					]
 				}),
