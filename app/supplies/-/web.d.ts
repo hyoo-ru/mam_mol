@@ -583,6 +583,7 @@ declare namespace $ {
         static vary<Name extends string>(name: Name): $mol_style_func<"var", Name>;
         static url<Href extends string>(href: Href): $mol_style_func<"url", string>;
         static hsla(hue: number, saturation: number, lightness: number, alpha: number): $mol_style_func<"hsla", (number | $mol_style_unit<"%">)[]>;
+        static rgba(red: number, green: number, blue: number, alpha: number): $mol_style_func<"rgba", number[]>;
     }
 }
 
@@ -1110,7 +1111,7 @@ declare namespace $ {
         };
         box?: {
             shadow?: readonly {
-                inset: boolean;
+                inset?: boolean;
                 x: Length;
                 y: Length;
                 blur: Length;
@@ -1404,14 +1405,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $.$$ {
-}
-
-declare namespace $ {
-    class $mol_float extends $mol_view {
-    }
-}
-
-declare namespace $ {
 }
 
 declare var cordova: any;
@@ -2129,8 +2122,7 @@ declare namespace $ {
 declare namespace $ {
     class $mol_app_supplies_list extends $mol_page {
         supplies(): readonly $mol_app_supplies_domain_supply[];
-        sub(): readonly any[];
-        Search_bar(): $mol_float;
+        head(): readonly any[];
         Search(): $$.$mol_code;
         search_hint(): string;
         search_query(val?: any, force?: $mol_mem_force): any;

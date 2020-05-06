@@ -16,7 +16,7 @@
 }
 
 [mol_bench_col_head] > * {
-	margin: 0 .5rem;
+	margin: .25rem .5rem;
 }
 
 [mol_bench_head] + [mol_bench_row] [mol_portion_indicator] {

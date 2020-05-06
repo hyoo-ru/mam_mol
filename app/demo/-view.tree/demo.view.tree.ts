@@ -333,15 +333,11 @@ namespace $ { export class $mol_app_demo_menu extends $mol_page {
 
 	/**
 	 *  ```
-	 *  sub /
-	 *  	<= Head
-	 *  	<= Filter
-	 *  	<= Nav
-	 *  	<= Themes
+	 *  tools / <= Filter
 	 *  ```
 	 **/
-	sub() {
-		return [this.Head() , this.Filter() , this.Nav() , this.Themes()] as readonly any[]
+	tools() {
+		return [this.Filter()] as readonly any[]
 	}
 
 	/**
@@ -365,6 +361,18 @@ namespace $ { export class $mol_app_demo_menu extends $mol_page {
 	@ $mol_mem
 	filter( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : ""
+	}
+
+	/**
+	 *  ```
+	 *  sub /
+	 *  	<= Head
+	 *  	<= Nav
+	 *  	<= Themes
+	 *  ```
+	 **/
+	sub() {
+		return [this.Head() , this.Nav() , this.Themes()] as readonly any[]
 	}
 
 	/**

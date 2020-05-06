@@ -194,7 +194,7 @@ namespace $ {
 										let [ , their_name , ... their_args ] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
 										their_args = their_args.filter( Boolean )
 										
-										members[ own_name ] = [`\t${ own_name }(${ own_args.join(',') }) {\n\t\treturn this.${ param.type }().${ their_name }( ${ their_args.join(' , ') } )\n\t}\n\n`]
+										members[ own_name ] = [`\t${ own_name }(${ own_args.join(',') }) {\n\t\treturn this.${ propName[1] }(${ propName[2] || '' }).${ their_name }( ${ their_args.join(' , ') } )\n\t}\n\n`]
 										return
 									}
 								}

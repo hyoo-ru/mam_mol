@@ -63,6 +63,7 @@ declare namespace $ {
         static vary<Name extends string>(name: Name): $mol_style_func<"var", Name>;
         static url<Href extends string>(href: Href): $mol_style_func<"url", string>;
         static hsla(hue: number, saturation: number, lightness: number, alpha: number): $mol_style_func<"hsla", (number | $mol_style_unit<"%">)[]>;
+        static rgba(red: number, green: number, blue: number, alpha: number): $mol_style_func<"rgba", number[]>;
     }
 }
 
@@ -832,7 +833,7 @@ declare namespace $ {
         };
         box?: {
             shadow?: readonly {
-                inset: boolean;
+                inset?: boolean;
                 x: Length;
                 y: Length;
                 blur: Length;
@@ -5914,9 +5915,10 @@ declare namespace $ {
 declare namespace $ {
     class $mol_app_demo_menu extends $mol_page {
         title(): string;
-        sub(): readonly any[];
+        tools(): readonly any[];
         Filter(): $$.$mol_search;
         filter(val?: any, force?: $mol_mem_force): any;
+        sub(): readonly any[];
         Nav(): $$.$mol_app_demo_nav;
         hierarchy(): any;
         option(id: any): any;

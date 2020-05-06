@@ -5,9 +5,9 @@
 }
 
 [mol_app_supplies_list] {
-	flex: 1 1 600px;
+	flex: 0 0 40rem;
 }
 
 [mol_app_supplies_detail] {
-	flex: 1000 1 800px;
+	flex: 1000 0 80rem;
 }

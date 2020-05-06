@@ -7,7 +7,7 @@
 	font-weight: inherit;
 	box-shadow: none;
 	text-align: left;
-	padding: .5rem;
+	padding: .5rem .75rem;
 	display: inline-flex;
 	flex-wrap: nowrap;
 }

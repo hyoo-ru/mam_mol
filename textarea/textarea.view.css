@@ -9,7 +9,6 @@
 
 [mol_textarea_view] {
 	max-width: none;
-	padding: 0 .5rem;
 	pointer-events: none;
 	white-space: pre-wrap;
 	z-index: 1;
@@ -18,7 +17,7 @@
 
 [mol_textarea_edit] {
 	z-index: -1 !important;
-	padding: .5rem 1rem;
+	padding: 1.25rem 1.5rem;
 	position: absolute;
 	left: 0;
 	top: 0;

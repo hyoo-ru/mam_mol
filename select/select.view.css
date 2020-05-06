@@ -28,7 +28,7 @@
 }
 
 [mol_select_option_label] {
-	padding: .5rem 1rem;
+	padding: .5rem .75rem;
 	text-align: left;
 	min-height: 1.5em;
 	display: block;
@@ -42,7 +42,7 @@
 }
 
 [mol_select_no_options] {
-	padding: .5em 1rem;
+	padding: .5em .75rem;
 	text-align: left;
 	display: block;
 	color: var(--mol_theme_shade);
@@ -57,7 +57,7 @@
 
 [mol_select_trigger_icon] {
 	transform: rotateZ(90deg);
-	margin: .5rem .5rem .5rem -1rem;
+	margin: .5rem .5rem .5rem -.75rem;
 }
 :hover > [mol_select_trigger_icon] {
 	transform: rotateZ(90deg) scale(1.25);

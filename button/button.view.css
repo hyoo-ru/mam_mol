@@ -21,7 +21,7 @@
 	align-items: center;
 	vertical-align: middle;
 	text-align: center;
-	padding: .5rem 1rem;
+	padding: .5rem .75rem;
 	border-radius: var(--mol_skin_round);
 }
 

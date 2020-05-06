@@ -11,27 +11,14 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 
 	/**
 	 *  ```
-	 *  sub /
-	 *  	<= Head
-	 *  	<= Search_bar
-	 *  	<= Body
+	 *  head /
+	 *  	<= Title
+	 *  	<= Tools
+	 *  	<= Search
 	 *  ```
 	 **/
-	sub() {
-		return [this.Head() , this.Search_bar() , this.Body()] as readonly any[]
-	}
-
-	/**
-	 *  ```
-	 *  Search_bar $mol_float sub / <= Search
-	 *  ```
-	 **/
-	@ $mol_mem
-	Search_bar() {
-		return (( obj )=>{
-			obj.sub = () => [this.Search()] as readonly any[]
-			return obj
-		})( new this.$.$mol_float(  ) )
+	head() {
+		return [this.Title() , this.Tools() , this.Search()] as readonly any[]
 	}
 
 	/**
