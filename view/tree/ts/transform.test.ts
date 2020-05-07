@@ -13,7 +13,7 @@ $mol_view_tree_test_attributes_subcomponent_page $mol_view
 
 			const ts_tree = $mol_view_tree_ts_transform(tree)
 
-			console.log(ts_tree.map(item => item.toString()).join('\n'))
+			console.log(ts_tree.map(item => serialize(item)).join('\n'))
 			// console.log('--------------------------------------------------')
 
 			// for( let def of $mol_view_tree_classes( tree ).sub ) {
@@ -21,4 +21,27 @@ $mol_view_tree_test_attributes_subcomponent_page $mol_view
 			// }
 		},
 	} )
+
+	function serialize( node: $mol_tree, prefix = '' ) : string {
+		var output = ''
+		
+		if( node.type.length ) {
+			if( ! prefix ) prefix = "\t";
+			output += node.type
+			if( node.sub.length == 1 ) {
+				return output + ' ' + serialize(node.sub[ 0 ], prefix)
+			}
+			output += "\n"
+		} else if( node.data.length || prefix.length ) {
+			output += node.data + "\n"
+		}
+
+		for( var child of node.sub ) {
+			output += prefix
+			output += serialize(child, prefix + "\t" )
+		}
+		
+		return output
+	}
+
 }

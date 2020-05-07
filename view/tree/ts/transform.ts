@@ -9,19 +9,19 @@ namespace $ {
 		// const locales: Record<string, string> = {}
 
 		return [
-			tree.clone({ value: 'namespace $ {', sub: []}),
+			tree.make({ data: 'namespace $ {' }),
 			flat_module.hack({
 				'': (cn, context) => [
-					cn.clone({ type: '', data: 'export class', sub: [] }),
-					cn.clone({ sub: [] }),
-					cn.clone({ value: 'extends', sub: [] }),
-					cn.sub[0].clone({ sub: [] }),
-					cn.clone({ value: '{', sub: []}),
+					cn.make({ data: 'export class' }),
+					cn.make({ data: cn.type  }),
+					cn.make({ data: 'extends'  }),
+					cn.sub[0].make({ sub: [] }),
+					cn.make({ data: '{' }),
 					...cn.sub[0].sub.slice(1),
-					cn.clone({ value: '}', sub: []}),
+					cn.make({ data: '}' }),
 				]
 			}),
-			tree.clone({ value: '}', sub: [] }),
+			tree.make({ data: '}' }),
 		]
 	}
 
