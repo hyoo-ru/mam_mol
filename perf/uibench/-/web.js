@@ -1126,7 +1126,10 @@ var $;
             if (prev && this.$.$mol_owning_check(this, prev))
                 prev.destructor();
             if (next && this.$.$mol_owning_catch(this, next)) {
-                next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                try {
+                    next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                }
+                catch (_a) { }
                 next[$.$mol_object_field] = this[$.$mol_object_field];
             }
             this._value = next;
@@ -1464,7 +1467,7 @@ var $;
             if (cache)
                 return cache;
             let cache2 = new $.$mol_atom2;
-            cache2[Symbol.toStringTag] = `${host}.${name}(${JSON.stringify(key)})`;
+            cache2[Symbol.toStringTag] = `${host}.${name}(${$.$mol_dict_key(key)})`;
             cache2.calculate = value.bind(host, key);
             cache2.abort = () => {
                 dict.delete(key);

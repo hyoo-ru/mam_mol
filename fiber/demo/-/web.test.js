@@ -1145,7 +1145,10 @@ var $;
             if (prev && this.$.$mol_owning_check(this, prev))
                 prev.destructor();
             if (next && this.$.$mol_owning_catch(this, next)) {
-                next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                try {
+                    next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                }
+                catch (_a) { }
                 next[$.$mol_object_field] = this[$.$mol_object_field];
             }
             this._value = next;

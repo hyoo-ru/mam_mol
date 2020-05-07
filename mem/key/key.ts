@@ -31,7 +31,7 @@ namespace $ {
 			if( cache ) return cache
 
 			let cache2 = new $mol_atom2
-			cache2[ Symbol.toStringTag ] = `${ host }.${ name }(${JSON.stringify(key)})`
+			cache2[ Symbol.toStringTag ] = `${ host }.${ name }(${$mol_dict_key(key)})`
 			cache2.calculate = value.bind( host , key )
 			cache2.abort = ()=> {
 				dict.delete( key )
