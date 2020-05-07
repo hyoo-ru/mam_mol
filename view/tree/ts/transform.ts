@@ -8,48 +8,23 @@ namespace $ {
 
 		// const locales: Record<string, string> = {}
 
-		return new $mol_tree({
-			type: 'namespace',
-			sub: [
-				tree.clone({
-					type: '$ {',
-					sub: [],
-				}),
-				flat_module.hack({
-					'': (class_node, context) => [
-						class_node.clone({
-							type: `export class`,
-							sub: [],
-						}),
-						class_node.clone({
-							sub: []
-						}),
-						class_node.clone({
-							type: 'extends',
-							sub: []
-						}),
-						class_node.sub[0].clone({
-							sub: []
-						}),
-						class_node.clone({
-							type: '{',
-							sub: []
-						}),
-						...class_node.sub[0].sub.slice(1),
-						class_node.clone({
-							type: '}',
-							sub: []
-						}),
-					]
-				}),
-				tree.clone({
-					type: '}',
-					sub: []
-				}),
-			]
-		})
-		
+		return [
+			tree.clone({ value: 'namespace $ {', sub: []}),
+			flat_module.hack({
+				'': (cn, context) => [
+					cn.clone({ type: '', data: 'export class', sub: [] }),
+					cn.clone({ sub: [] }),
+					cn.clone({ value: 'extends', sub: [] }),
+					cn.sub[0].clone({ sub: [] }),
+					cn.clone({ value: '{', sub: []}),
+					...cn.sub[0].sub.slice(1),
+					cn.clone({ value: '}', sub: []}),
+				]
+			}),
+			tree.clone({ value: '}', sub: [] }),
+		]
 	}
+
 	function remove_comment(): readonly $mol_tree[] {
 		return [ ]
 	}

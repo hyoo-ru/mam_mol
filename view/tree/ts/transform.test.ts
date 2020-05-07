@@ -13,7 +13,7 @@ $mol_view_tree_test_attributes_subcomponent_page $mol_view
 
 			const ts_tree = $mol_view_tree_ts_transform(tree)
 
-			console.log(ts_tree.toString())
+			console.log(ts_tree.map(item => item.toString()).join('\n'))
 			// console.log('--------------------------------------------------')
 
 			// for( let def of $mol_view_tree_classes( tree ).sub ) {
