@@ -1438,7 +1438,7 @@ namespace $ {
 	
 	$mol_build.dependors[ 'view.tree' ] = source => {
 		return {
-			[`./-view.tree/${ source.name() }.ts`]: 0,
+			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.ts`]: 0,
 		}
 	}
 	
