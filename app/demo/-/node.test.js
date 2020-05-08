@@ -18137,11 +18137,12 @@ var $;
             return next;
         }
         static event_result(event) {
-            this.hearer();
             return event || null;
         }
         static recognitions() {
             var _a, _b;
+            if (!this.hearing())
+                return [];
             const result = this.event_result();
             if (!result)
                 return [];

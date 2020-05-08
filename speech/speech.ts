@@ -109,12 +109,13 @@ namespace $ {
 		static event_result( event? : null | Event & {
 			results : Array< { transcript : string }[] & { isFinal : boolean } >
 		} ) {
-			this.hearer()
 			return event || null
 		}
 
 		@ $mol_mem
 		static recognitions() {
+
+			if( !this.hearing() ) return []
 
 			const result = this.event_result()
 			if( !result ) return []
