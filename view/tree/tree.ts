@@ -115,9 +115,10 @@ namespace $ {
 		splittedUri.pop();
 		const fileName = splittedUri.pop()!;
 
-		const SourceNode = $node['source-map'].SourceNode
-		type SourceNode = InstanceType< typeof SourceNode >
-		type StringNodeArray = (string | SourceNode)[];
+		// const SourceNode = $node['source-map'].SourceNode
+		// type SourceNode = InstanceType< typeof SourceNode >
+		const SourceNode = ( row : number , col : number , fileName : string , text : string ) => text
+		type StringNodeArray = string[] //(string | SourceNode)[];
 		
 		var content: StringNodeArray = []
 		var locales : { [ key : string ] : string } = {}
@@ -203,11 +204,11 @@ namespace $ {
 								let args : string[] = []
 								if( overName[2] ) args.push( ` ${ overName[2] } : any ` )
 								if( overName[3] ) args.push( ` ${ overName[3] }? : any ` )
-								overs.push( ...['\t\t\tobj.' , new SourceNode(over.row, over.col, fileName, overName[1]), ' = (', args.join( ',' ), ') => ' , ...(v || []) , '\n'] )
+								overs.push( ...['\t\t\tobj.' , SourceNode(over.row, over.col, fileName, overName[1]), ' = (', args.join( ',' ), ') => ' , ...(v || []) , '\n'] )
 								needSet = ns
 							} )
 							const object_args = value.select( '/' , '' ).sub.map( arg => getValue( arg ) ).join( ' , ' ) as string
-							return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new this.$.', new SourceNode(value.row, value.col, fileName, value.type) , '( ' , object_args , ' ) )']
+							return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new this.$.', SourceNode(value.row, value.col, fileName, value.type) , '( ' , object_args , ' ) )']
 						case( value.type === '*' ) :
 							//needReturn = false
 							var opts : StringNodeArray = []
@@ -222,7 +223,7 @@ namespace $ {
 								var ns = needSet
 								var v = getValue( opt.sub[0] )
 								var arg = key[2] ? ` ( ${ key[2] }? : any )=> ` : ''
-								opts.push( ...['\t\t\t"', new SourceNode(opt.row, opt.col, fileName, key[1]+ '" : '), arg,' ', ...(v || []) , ' ,\n'] )
+								opts.push( ...['\t\t\t"', SourceNode(opt.row, opt.col, fileName, key[1]+ '" : '), arg,' ', ...(v || []) , ' ,\n'] )
 								needSet = ns
 							} )
 							return ['({\n', opts.join( '' ), '\t\t})']
@@ -269,7 +270,7 @@ namespace $ {
 					if( propName[3] ) args.push( ` ${ propName[3] }? : any , force? : $${''}mol_mem_force ` )
 					if( needSet && param.sub[0].type !== '<=>' ) val = [( needReturn ? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : ` : `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t` ) , ...val]
 					if( needReturn ) val = ['return ', ...val]
-					var decl: StringNodeArray = ['\t', new SourceNode(param.row, param.col, fileName, propName[1]),'(', args.join(',') , ') {\n\t\t' , ...val , '\n\t}\n\n']
+					var decl: StringNodeArray = ['\t', SourceNode(param.row, param.col, fileName, propName[1]),'(', args.join(',') , ') {\n\t\t' , ...val , '\n\t}\n\n']
 					if( needCache ) {
 						if( propName[2] ) decl = ['\t@ $' , 'mol_mem_key\n', ...decl]
 						else decl = ['\t@ $', 'mol_mem\n', ...decl]
@@ -287,17 +288,19 @@ namespace $ {
 				const items = members[ name ] ? members[name] : ['\t' , name ,'() { return null as any }\n\t}\n']
 				return [...acc, ...items]
 			}, [] as StringNodeArray)
-			var classes: StringNodeArray = [ 'namespace $ { export class ', new SourceNode(def.row, def.col, fileName, def.type ), ' extends ', new SourceNode(parent.row, parent.col, fileName, parent.type), ' {\n\n', ...body, '} }\n'] 
+			var classes: StringNodeArray = [ 'namespace $ { export class ', SourceNode(def.row, def.col, fileName, def.type ), ' extends ', SourceNode(parent.row, parent.col, fileName, parent.type), ' {\n\n', ...body, '} }\n'] 
 			
 			content = [...content, ...classes]
 		}
 
-		splittedUri.push(`-view.tree`,`${ fileName }.map`)
+		return { script : content.join('') , locales }
 
-		const node = new SourceNode(null as any, null as any, fileName, content as any);
-		node.add(`//@ sourceMappingURL=${splittedUri.join($node.path.sep)}`);
-		const codeWithSourceMap= node.toStringWithSourceMap();
-		return { script : codeWithSourceMap.code, locales : locales, map: codeWithSourceMap.map.toString() }
+		// splittedUri.push(`-view.tree`,`${ fileName }.map`)
+
+		// const node = SourceNode(null as any, null as any, fileName, content as any);
+		// node.add(`//@ sourceMappingURL=${splittedUri.join($node.path.sep)}`);
+		// const codeWithSourceMap= node.toStringWithSourceMap();
+		// return { script : codeWithSourceMap.code, locales : locales, map: codeWithSourceMap.map.toString() }
 	}
 
 }
