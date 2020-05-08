@@ -149,7 +149,7 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	 *  ```
 	 *  submit $mol_button_major
 	 *  	sub / <= submitLabel
-	 *  	event_click?val <=> event_submit?val
+	 *  	click?val <=> event_submit?val
 	 *  	disabled <= submit_blocked
 	 *  ```
 	 **/
@@ -157,7 +157,7 @@ namespace $ { export class $mol_app_supplies_enter extends $mol_view {
 	submit() {
 		return (( obj )=>{
 			obj.sub = () => [this.submitLabel()] as readonly any[]
-			obj.event_click = ( val? : any ) => this.event_submit( val )
+			obj.click = ( val? : any ) => this.event_submit( val )
 			obj.disabled = () => this.submit_blocked()
 			return obj
 		})( new this.$.$mol_button_major(  ) )

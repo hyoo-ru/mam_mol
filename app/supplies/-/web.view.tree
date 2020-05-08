@@ -1,96 +1,18 @@
-$mol_meter $mol_plugin
-	zoom 1
-	-
-	width?val 0
-	height?val 0
-	-
-	left?val 0
-	right?val 0
-	bottom?val 0
-	top?val 0
-
-$mol_touch $mol_plugin
-	start_zoom?val 0
-	start_distance?val 0
-	zoom?val 1
-	-
-	start_pan?val /
-		0
-		0
-	pan?val /
-		0
-		0
-	pos?val /
-		NaN
-		NaN
-	-
-	start_pos?val null
-	swipe_precision 16
-	-
-	swipe_right?val null
-	swipe_bottom?val null
-	swipe_left?val null
-	swipe_top?val null
-	-
-	swipe_from_right?val null
-	swipe_from_bottom?val null
-	swipe_from_left?val null
-	swipe_from_top?val null
-	-
-	swipe_to_right?val null
-	swipe_to_bottom?val null
-	swipe_to_left?val null
-	swipe_to_top?val null
-	-
-	style *
+$mol_scroll $mol_view
+	minimal_height 0
+	_event_scroll_timer?val null
+	field *
 		^
-		touch-action \none
-	-
+		scrollTop <= scroll_top?val 0
+		scrollLeft <= scroll_left?val 0
 	event *
 		^
-		touchstart?event <=> event_start?event null
-		touchmove?event <=> event_move?event null
-		touchend?event <=> event_end?event null
-		mousedown?event <=> event_start?event null
-		mousemove?event <=> event_move?event null
-		mouseup?event <=> event_end?event null
-		mouseleave?event <=> event_leave?event null
-		wheel?event <=> event_wheel?event null
+		scroll?event <=> event_scroll?event null
 
-$mol_ghost $mol_view
-	Sub $mol_view
-
-$mol_book $mol_view
-	sub <= pages_wrapped /$mol_view
+$mol_book2 $mol_scroll
+	sub <= pages /$mol_view
 	minimal_width 0
-	pages /$mol_view
-	plugins /$mol_plugin
-		<= Meter $mol_meter
-			width => width
-		<= Touch $mol_touch
-			swipe_from_left?val <=> event_front_up?val null
-			swipe_to_left?val <=> event_front_down?val null
-	Page!index $mol_book_page
-		Sub <= page!index null
-		visible <= page_visible!index true
-	Placeholder $mol_book_placeholder
-		title <= title
-
-$mol_book_placeholder $mol_view
-	minimal_width 400
-	attr *
-		^
-		tabindex null
-
-$mol_book_page $mol_ghost
-	attr_static *
-		^
-		tabindex 0
-		mol_book_page_visible true
-	attr *
-		^
-		mol_book_page_focused <= focused
-		mol_book_page_visible <= visible true
+	Placeholder $mol_view
 
 $mol_list $mol_view
 	render_visible_only true
@@ -197,19 +119,8 @@ $mol_app_supplies_enter $mol_view
 		buttons /
 			<= submit $mol_button_major
 				sub / <= submitLabel @ \Log In
-				event_click?val <=> event_submit?val null
+				click?val <=> event_submit?val null
 				disabled <= submit_blocked false
-
-$mol_scroll $mol_view
-	minimal_height 0
-	_event_scroll_timer?val null
-	field *
-		^
-		scrollTop <= scroll_top?val 0
-		scrollLeft <= scroll_left?val 0
-	event *
-		^
-		scroll?event <=> event_scroll?event null
 
 $mol_page $mol_view
 	sub /
@@ -228,6 +139,17 @@ $mol_page $mol_view
 			sub <= foot /$mol_view
 
 $mol_bar $mol_view
+
+$mol_meter $mol_plugin
+	zoom 1
+	-
+	width?val 0
+	height?val 0
+	-
+	left?val 0
+	right?val 0
+	bottom?val 0
+	top?val 0
 
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
@@ -667,7 +589,7 @@ $mol_app_supplies_detail $mol_page
 		url_thumb <= attachment_thumb!index \
 		url_load <= attachment_load!index \
 
-$mol_app_supplies $mol_book
+$mol_app_supplies $mol_book2
 	attr *
 		^
 		mol_theme \$mol_theme_auto
@@ -682,7 +604,6 @@ $mol_app_supplies $mol_book
 		title <= list_title @ \Supplies
 		search_query?val <=> supply_id?val \
 	-
-	Detail $mol_app_supplies_detail
+	Detail!id $mol_app_supplies_detail
 		minimal_width 800
 		supply <= supply null
-		event_top?val <=> event_front_up?val

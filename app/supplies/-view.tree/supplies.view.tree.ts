@@ -1,4 +1,4 @@
-namespace $ { export class $mol_app_supplies extends $mol_book {
+namespace $ { export class $mol_app_supplies extends $mol_book2 {
 
 	/**
 	 *  ```
@@ -98,18 +98,16 @@ namespace $ { export class $mol_app_supplies extends $mol_book {
 
 	/**
 	 *  ```
-	 *  Detail $mol_app_supplies_detail
+	 *  Detail!id $mol_app_supplies_detail
 	 *  	minimal_width 800
 	 *  	supply <= supply
-	 *  	event_top?val <=> event_front_up?val
 	 *  ```
 	 **/
-	@ $mol_mem
-	Detail() {
+	@ $mol_mem_key
+	Detail( id : any ) {
 		return (( obj )=>{
 			obj.minimal_width = () => 800
 			obj.supply = () => this.supply()
-			obj.event_top = ( val? : any ) => this.event_front_up( val )
 			return obj
 		})( new this.$.$mol_app_supplies_detail(  ) )
 	}

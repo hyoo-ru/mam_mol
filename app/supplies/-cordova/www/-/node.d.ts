@@ -607,27 +607,295 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_plugin extends $mol_view {
-        dom_node(next?: Element): Element;
-        attr_static(): {
-            [key: string]: string | number | boolean;
+    type $mol_type_error<Message, Info = {}> = Message & {
+        $mol_type_error: Info;
+    };
+}
+
+declare namespace $ {
+    type $mol_type_override<Base, Over> = Omit<Base, keyof Over> & Over;
+}
+
+declare namespace $ {
+    const $mol_colors: {
+        readonly aliceblue: "#f0f8ff";
+        readonly antiquewhite: "#faebd7";
+        readonly aqua: "#00ffff";
+        readonly aquamarine: "#7fffd4";
+        readonly azure: "#f0ffff";
+        readonly beige: "#f5f5dc";
+        readonly bisque: "#ffe4c4";
+        readonly black: "#000000";
+        readonly blanchedalmond: "#ffebcd";
+        readonly blue: "#0000ff";
+        readonly blueviolet: "#8a2be2";
+        readonly brown: "#a52a2a";
+        readonly burlywood: "#deb887";
+        readonly cadetblue: "#5f9ea0";
+        readonly chartreuse: "#7fff00";
+        readonly chocolate: "#d2691e";
+        readonly coral: "#ff7f50";
+        readonly cornflowerblue: "#6495ed";
+        readonly cornsilk: "#fff8dc";
+        readonly crimson: "#dc143c";
+        readonly cyan: "#00ffff";
+        readonly darkblue: "#00008b";
+        readonly darkcyan: "#008b8b";
+        readonly darkgoldenrod: "#b8860b";
+        readonly darkgray: "#a9a9a9";
+        readonly darkgreen: "#006400";
+        readonly darkgrey: "#a9a9a9";
+        readonly darkkhaki: "#bdb76b";
+        readonly darkmagenta: "#8b008b";
+        readonly darkolivegreen: "#556b2f";
+        readonly darkorange: "#ff8c00";
+        readonly darkorchid: "#9932cc";
+        readonly darkred: "#8b0000";
+        readonly darksalmon: "#e9967a";
+        readonly darkseagreen: "#8fbc8f";
+        readonly darkslateblue: "#483d8b";
+        readonly darkslategrey: "#2f4f4f";
+        readonly darkturquoise: "#00ced1";
+        readonly darkviolet: "#9400d3";
+        readonly deeppink: "#ff1493";
+        readonly deepskyblue: "#00bfff";
+        readonly dimgray: "#696969";
+        readonly dimgrey: "#696969";
+        readonly dodgerblue: "#1e90ff";
+        readonly firebrick: "#b22222";
+        readonly floralwhite: "#fffaf0";
+        readonly forestgreen: "#228b22";
+        readonly fuchsia: "#ff00ff";
+        readonly gainsboro: "#dcdcdc";
+        readonly ghostwhite: "#f8f8ff";
+        readonly gold: "#ffd700";
+        readonly goldenrod: "#daa520";
+        readonly gray: "#808080";
+        readonly green: "#008000";
+        readonly greenyellow: "#adff2f";
+        readonly grey: "#808080";
+        readonly honeydew: "#f0fff0";
+        readonly hotpink: "#ff69b4";
+        readonly indianred: "#cd5c5c";
+        readonly indigo: "#4b0082";
+        readonly ivory: "#fffff0";
+        readonly khaki: "#f0e68c";
+        readonly lavender: "#e6e6fa";
+        readonly lavenderblush: "#fff0f5";
+        readonly lawngreen: "#7cfc00";
+        readonly lemonchiffon: "#fffacd";
+        readonly lightblue: "#add8e6";
+        readonly lightcoral: "#f08080";
+        readonly lightcyan: "#e0ffff";
+        readonly lightgoldenrodyellow: "#fafad2";
+        readonly lightgray: "#d3d3d3";
+        readonly lightgreen: "#90ee90";
+        readonly lightgrey: "#d3d3d3";
+        readonly lightpink: "#ffb6c1";
+        readonly lightsalmon: "#ffa07a";
+        readonly lightseagreen: "#20b2aa";
+        readonly lightskyblue: "#87cefa";
+        readonly lightslategray: "#778899";
+        readonly lightslategrey: "#778899";
+        readonly lightsteelblue: "#b0c4de";
+        readonly lightyellow: "#ffffe0";
+        readonly lime: "#00ff00";
+        readonly limegreen: "#32cd32";
+        readonly linen: "#faf0e6";
+        readonly magenta: "#ff00ff";
+        readonly maroon: "#800000";
+        readonly mediumaquamarine: "#66cdaa";
+        readonly mediumblue: "#0000cd";
+        readonly mediumorchid: "#ba55d3";
+        readonly mediumpurple: "#9370db";
+        readonly mediumseagreen: "#3cb371";
+        readonly mediumslateblue: "#7b68ee";
+        readonly mediumspringgreen: "#00fa9a";
+        readonly mediumturquoise: "#48d1cc";
+        readonly mediumvioletred: "#c71585";
+        readonly midnightblue: "#191970";
+        readonly mintcream: "#f5fffa";
+        readonly mistyrose: "#ffe4e1";
+        readonly moccasin: "#ffe4b5";
+        readonly navajowhite: "#ffdead";
+        readonly navy: "#000080";
+        readonly oldlace: "#fdf5e6";
+        readonly olive: "#808000";
+        readonly olivedrab: "#6b8e23";
+        readonly orange: "#ffa500";
+        readonly orangered: "#ff4500";
+        readonly orchid: "#da70d6";
+        readonly palegoldenrod: "#eee8aa";
+        readonly palegreen: "#98fb98";
+        readonly paleturquoise: "#afeeee";
+        readonly palevioletred: "#db7093";
+        readonly papayawhip: "#ffefd5";
+        readonly peachpuff: "#ffdab9";
+        readonly peru: "#cd853f";
+        readonly pink: "#ffc0cb";
+        readonly plum: "#dda0dd";
+        readonly powderblue: "#b0e0e6";
+        readonly purple: "#800080";
+        readonly rebeccapurple: "#663399";
+        readonly red: "#ff0000";
+        readonly rosybrown: "#bc8f8f";
+        readonly royalblue: "#4169e1";
+        readonly saddlebrown: "#8b4513";
+        readonly salmon: "#fa8072";
+        readonly sandybrown: "#f4a460";
+        readonly seagreen: "#2e8b57";
+        readonly seashell: "#fff5ee";
+        readonly sienna: "#a0522d";
+        readonly silver: "#c0c0c0";
+        readonly skyblue: "#87ceeb";
+        readonly slateblue: "#6a5acd";
+        readonly slategray: "#708090";
+        readonly slategrey: "#708090";
+        readonly snow: "#fffafa";
+        readonly springgreen: "#00ff7f";
+        readonly steelblue: "#4682b4";
+        readonly tan: "#d2b48c";
+        readonly teal: "#008080";
+        readonly thistle: "#d8bfd8";
+        readonly tomato: "#ff6347";
+        readonly turquoise: "#40e0d0";
+        readonly violet: "#ee82ee";
+        readonly wheat: "#f5deb3";
+        readonly white: "#ffffff";
+        readonly whitesmoke: "#f5f5f5";
+        readonly yellow: "#ffff00";
+        readonly yellowgreen: "#9acd32";
+    };
+}
+
+declare namespace $ {
+    export type $mol_style_properties = Partial<$mol_type_override<CSSStyleDeclaration, Overrides>>;
+    type Common = 'inherit' | 'initial' | 'unset';
+    type Color = keyof typeof $mol_colors | 'transparent' | 'currentcolor' | $mol_style_func<'hsla' | 'rgba' | 'var'>;
+    type Length = 0 | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>;
+    type Size = 'auto' | 'max-content' | 'min-content' | 'fit-content' | Length | Common;
+    type Directions<Value> = Value | [Value, Value] | {
+        top?: Value;
+        right?: Value;
+        bottom?: Value;
+        left?: Value;
+    };
+    type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
+    interface Overrides {
+        alignContent?: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | ['first' | 'last', 'baseline'] | ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
+        background?: {
+            color?: Color | Common;
+            image?: [$mol_style_func<'url'>][];
         };
+        box?: {
+            shadow?: readonly {
+                inset?: boolean;
+                x: Length;
+                y: Length;
+                blur: Length;
+                spread: Length;
+                color: Color;
+            }[];
+        };
+        color?: Color | Common;
+        display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
+        overflow?: Overflow | {
+            x?: Overflow | Common;
+            y?: Overflow | Common;
+            anchor?: 'auto' | 'none' | Common;
+        };
+        webkitOverflowScrolling?: 'auto' | 'touch';
+        width?: Size;
+        minWidth?: Size;
+        maxWidth?: Size;
+        height?: Size;
+        minHeight?: Size;
+        maxHeight?: Size;
+        margin?: Directions<Length | 'auto'>;
+        padding?: Directions<Length | 'auto'>;
+        flex?: 'none' | 'auto' | {
+            grow?: number | Common;
+            shrink?: number | Common;
+            basis?: Size;
+            direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+            wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common;
+        };
+        zIndex: number;
+    }
+    export {};
+}
+
+declare namespace $ {
+    type $mol_style_pseudo_class = ':active' | ':any' | ':any-link' | ':checked' | ':default' | ':defined' | ':dir(rtl)' | ':dir(ltr)' | ':disabled' | ':empty' | ':enabled' | ':first' | ':first-child' | ':first-of-type' | ':fullscreen' | ':focus' | ':hover' | ':indeterminate' | ':in-range' | ':invalid' | ':last-child' | ':last-of-type' | ':left' | ':link' | ':not()' | ':nth-child(even)' | ':nth-child(odd)' | ':nth-last-child(even)' | ':nth-last-child(odd)' | ':nth-of-type(even)' | ':nth-of-type(odd)' | ':nth-last-of-type(even)' | ':nth-last-of-type(odd)' | ':only-child' | ':only-of-type' | ':optional' | ':out-of-range' | ':read-only' | ':read-write' | ':required' | ':right' | ':root' | ':scope' | ':target' | ':valid' | ':visited';
+}
+
+declare namespace $ {
+    type $mol_style_pseudo_element = '::after' | '::before' | '::cue' | '::first-letter' | '::first-line' | '::selection' | '::slotted' | '::backdrop' | '::placeholder' | '::marker' | '::spelling-error' | '::grammar-error' | '::-webkit-calendar-picker-indicator' | '::-webkit-color-swatch' | '::-webkit-color-swatch-wrapper' | '::-webkit-details-marker' | '::-webkit-file-upload-button' | '::-webkit-image-inner-element' | '::-webkit-inner-spin-button' | '::-webkit-input-placeholder' | '::-webkit-input-speech-button' | '::-webkit-keygen-select' | '::-webkit-media-controls-panel' | '::-webkit-media-controls-timeline-container' | '::-webkit-media-slider-container' | '::-webkit-meter-bar' | '::-webkit-meter-even-less-good-value' | '::-webkit-meter-optimum-value' | '::-webkit-meter-suboptimal-value' | '::-webkit-progress-bar' | '::-webkit-progress-value' | '::-webkit-resizer' | '::-webkit-resizer:window-inactive' | '::-webkit-scrollbar' | '::-webkit-scrollbar-button' | '::-webkit-scrollbar-button:disabled' | '::-webkit-scrollbar-button:double-button:horizontal:end:decrement' | '::-webkit-scrollbar-button:double-button:horizontal:end:increment' | '::-webkit-scrollbar-button:double-button:horizontal:end:increment:corner-present' | '::-webkit-scrollbar-button:double-button:horizontal:start:decrement' | '::-webkit-scrollbar-button:double-button:horizontal:start:increment' | '::-webkit-scrollbar-button:double-button:vertical:end:decrement' | '::-webkit-scrollbar-button:double-button:vertical:end:increment' | '::-webkit-scrollbar-button:double-button:vertical:end:increment:corner-present' | '::-webkit-scrollbar-button:double-button:vertical:start:decrement' | '::-webkit-scrollbar-button:double-button:vertical:start:increment' | '::-webkit-scrollbar-button:end' | '::-webkit-scrollbar-button:end:decrement' | '::-webkit-scrollbar-button:end:increment' | '::-webkit-scrollbar-button:horizontal' | '::-webkit-scrollbar-button:horizontal:decrement' | '::-webkit-scrollbar-button:horizontal:decrement:active' | '::-webkit-scrollbar-button:horizontal:decrement:hover' | '::-webkit-scrollbar-button:horizontal:decrement:window-inactive' | '::-webkit-scrollbar-button:horizontal:end' | '::-webkit-scrollbar-button:horizontal:end:decrement' | '::-webkit-scrollbar-button:horizontal:end:increment' | '::-webkit-scrollbar-button:horizontal:end:increment:corner-present' | '::-webkit-scrollbar-button:horizontal:increment' | '::-webkit-scrollbar-button:horizontal:increment:active' | '::-webkit-scrollbar-button:horizontal:increment:hover' | '::-webkit-scrollbar-button:horizontal:increment:window-inactive' | '::-webkit-scrollbar-button:horizontal:start' | '::-webkit-scrollbar-button:horizontal:start:decrement' | '::-webkit-scrollbar-button:horizontal:start:increment' | '::-webkit-scrollbar-button:start' | '::-webkit-scrollbar-button:start:decrement' | '::-webkit-scrollbar-button:start:increment' | '::-webkit-scrollbar-button:vertical' | '::-webkit-scrollbar-button:vertical:decrement' | '::-webkit-scrollbar-button:vertical:decrement:active' | '::-webkit-scrollbar-button:vertical:decrement:hover' | '::-webkit-scrollbar-button:vertical:decrement:window-inactive' | '::-webkit-scrollbar-button:vertical:end' | '::-webkit-scrollbar-button:vertical:end:decrement' | '::-webkit-scrollbar-button:vertical:end:increment' | '::-webkit-scrollbar-button:vertical:end:increment:corner-present' | '::-webkit-scrollbar-button:vertical:increment' | '::-webkit-scrollbar-button:vertical:increment:active' | '::-webkit-scrollbar-button:vertical:increment:hover' | '::-webkit-scrollbar-button:vertical:increment:window-inactive' | '::-webkit-scrollbar-button:vertical:start' | '::-webkit-scrollbar-button:vertical:start:decrement' | '::-webkit-scrollbar-button:vertical:start:increment' | '::-webkit-scrollbar-corner' | '::-webkit-scrollbar-corner:window-inactive' | '::-webkit-scrollbar-thumb' | '::-webkit-scrollbar-thumb:horizontal' | '::-webkit-scrollbar-thumb:horizontal:active' | '::-webkit-scrollbar-thumb:horizontal:hover' | '::-webkit-scrollbar-thumb:horizontal:window-inactive' | '::-webkit-scrollbar-thumb:vertical' | '::-webkit-scrollbar-thumb:vertical:active' | '::-webkit-scrollbar-thumb:vertical:hover' | '::-webkit-scrollbar-thumb:vertical:window-inactive' | '::-webkit-scrollbar-track' | '::-webkit-scrollbar-track-piece' | '::-webkit-scrollbar-track-piece:disabled' | '::-webkit-scrollbar-track-piece:end' | '::-webkit-scrollbar-track-piece:horizontal:decrement' | '::-webkit-scrollbar-track-piece:horizontal:decrement:active' | '::-webkit-scrollbar-track-piece:horizontal:decrement:hover' | '::-webkit-scrollbar-track-piece:horizontal:end' | '::-webkit-scrollbar-track-piece:horizontal:end:corner-present' | '::-webkit-scrollbar-track-piece:horizontal:end:double-button' | '::-webkit-scrollbar-track-piece:horizontal:end:no-button' | '::-webkit-scrollbar-track-piece:horizontal:end:no-button:corner-present' | '::-webkit-scrollbar-track-piece:horizontal:end:single-button' | '::-webkit-scrollbar-track-piece:horizontal:increment' | '::-webkit-scrollbar-track-piece:horizontal:increment:active' | '::-webkit-scrollbar-track-piece:horizontal:increment:hover' | '::-webkit-scrollbar-track-piece:horizontal:start' | '::-webkit-scrollbar-track-piece:horizontal:start:double-button' | '::-webkit-scrollbar-track-piece:horizontal:start:no-button' | '::-webkit-scrollbar-track-piece:horizontal:start:single-button' | '::-webkit-scrollbar-track-piece:start' | '::-webkit-scrollbar-track-piece:vertical:decrement' | '::-webkit-scrollbar-track-piece:vertical:decrement:active' | '::-webkit-scrollbar-track-piece:vertical:decrement:hover' | '::-webkit-scrollbar-track-piece:vertical:end' | '::-webkit-scrollbar-track-piece:vertical:end:corner-present' | '::-webkit-scrollbar-track-piece:vertical:end:double-button' | '::-webkit-scrollbar-track-piece:vertical:end:no-button' | '::-webkit-scrollbar-track-piece:vertical:end:no-button:corner-present' | '::-webkit-scrollbar-track-piece:vertical:end:single-button' | '::-webkit-scrollbar-track-piece:vertical:increment' | '::-webkit-scrollbar-track-piece:vertical:increment:active' | '::-webkit-scrollbar-track-piece:vertical:increment:hover' | '::-webkit-scrollbar-track-piece:vertical:start' | '::-webkit-scrollbar-track-piece:vertical:start:double-button' | '::-webkit-scrollbar-track-piece:vertical:start:no-button' | '::-webkit-scrollbar-track-piece:vertical:start:single-button' | '::-webkit-scrollbar-track:disabled' | '::-webkit-scrollbar-track:horizontal' | '::-webkit-scrollbar-track:horizontal:disabled' | '::-webkit-scrollbar-track:horizontal:disabled:corner-present' | '::-webkit-scrollbar-track:vertical:disabled' | '::-webkit-scrollbar-track:vertical:disabled:corner-present' | '::-webkit-scrollbar:horizontal' | '::-webkit-scrollbar:horizontal:corner-present' | '::-webkit-scrollbar:horizontal:window-inactive' | '::-webkit-scrollbar:vertical' | '::-webkit-scrollbar:vertical:corner-present' | '::-webkit-scrollbar:vertical:window-inactive' | '::-webkit-search-cancel-button' | '::-webkit-search-decoration' | '::-webkit-search-results-button' | '::-webkit-search-results-decoration' | '::-webkit-slider-container' | '::-webkit-slider-runnable-track' | '::-webkit-slider-thumb' | '::-webkit-slider-thumb:disabled' | '::-webkit-slider-thumb:hover' | '::-webkit-textfield-decoration-container' | '::-webkit-validation-bubble' | '::-webkit-validation-bubble-arrow' | '::-webkit-validation-bubble-arrow-clipper' | '::-webkit-validation-bubble-heading' | '::-webkit-validation-bubble-message' | '::-webkit-validation-bubble-text-block';
+}
+
+declare namespace $ {
+    type Descendant<Name extends keyof $mol_view_all, Config> = $mol_style_guard<Extract<$mol_type_result<$mol_view_all[Name]>, $mol_view>, Config>;
+    type Kids<Config> = {
+        [view in keyof Config]: view extends keyof $mol_view_all ? Descendant<view, Config[view]> : $mol_type_error<'Unknown View'>;
+    };
+    type Attrs<View extends $mol_view, Config> = {
+        [name in keyof Config]: name extends keyof ReturnType<View['attr']> ? {
+            [val in keyof Config[name]]: $mol_style_guard<View, Config[name][val]>;
+        } : $mol_type_error<'Unknown attribute'>;
+    };
+    type Medias<View extends $mol_view, Config> = {
+        [query in keyof Config]: $mol_style_guard<View, Config[query]>;
+    };
+    export type $mol_style_guard<View extends $mol_view, Config> = $mol_style_properties & {
+        [key in keyof Config]: key extends keyof $mol_style_properties ? unknown : key extends $mol_style_pseudo_class | $mol_style_pseudo_element ? $mol_style_guard<View, Config[key]> : key extends '>' ? Kids<Config[key]> : key extends '@' ? Attrs<View, Config[key]> : key extends '@media' ? Medias<View, Config[key]> : key extends keyof $mol_view_all ? Descendant<key, Config[key]> : key extends keyof View ? View[key] extends (id?: any) => infer Sub ? Sub extends $mol_view ? $mol_style_guard<Sub, Config[key]> : $mol_type_error<'Property returns non $mol_view', {
+            Returns: Sub;
+        }> : $mol_type_error<'Field is not a Property'> : $mol_type_error<'Unknown Property or View'>;
+    };
+    export {};
+}
+
+declare namespace $ {
+    function $mol_style_sheet<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config0: Config): string;
+}
+
+declare namespace $ {
+    function $mol_style_define<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config: Config): HTMLStyleElement | null;
+}
+
+declare namespace $ {
+    class $mol_scroll extends $mol_view {
+        minimal_height(): number;
+        _event_scroll_timer(val?: any, force?: $mol_mem_force): any;
+        field(): {
+            scrollTop: any;
+            scrollLeft: any;
+        };
+        scroll_top(val?: any, force?: $mol_mem_force): any;
+        scroll_left(val?: any, force?: $mol_mem_force): any;
         event(): {
-            [key: string]: (event: Event) => void;
+            scroll: (event?: any) => any;
         };
-        render(): void;
+        event_scroll(event?: any, force?: $mol_mem_force): any;
     }
 }
 
 declare namespace $ {
-    class $mol_meter extends $mol_plugin {
-        zoom(): number;
-        width(val?: any, force?: $mol_mem_force): any;
-        height(val?: any, force?: $mol_mem_force): any;
-        left(val?: any, force?: $mol_mem_force): any;
-        right(val?: any, force?: $mol_mem_force): any;
-        bottom(val?: any, force?: $mol_mem_force): any;
-        top(val?: any, force?: $mol_mem_force): any;
+    class $mol_state_session<Value> extends $mol_object {
+        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+        static native(): Storage | {
+            getItem(key: string): any;
+            setItem(key: string, value: string): void;
+            removeItem(key: string): void;
+        };
+        static value<Value>(key: string, next?: Value): Value;
+        prefix(): string;
+        value(key: string, next?: Value): Value;
+    }
+}
+
+declare namespace $ {
+    class $mol_memo extends $mol_wrapper {
+        static wrap<This extends object, Value>(task: (this: This, next?: Value) => Value): (this: This, next?: Value | undefined) => Value | undefined;
     }
 }
 
@@ -641,6 +909,27 @@ declare namespace $ {
     }
 }
 
+declare namespace $.$$ {
+}
+
+declare namespace $.$$ {
+    class $mol_scroll extends $.$mol_scroll {
+        scroll_top(next?: number): number;
+        scroll_left(next?: number): number;
+        _event_scroll_timer(next?: $mol_after_timeout | null): $mol_after_timeout | null | undefined;
+        event_scroll(next?: Event): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_book2 extends $mol_scroll {
+        sub(): readonly $mol_view[];
+        pages(): readonly $mol_view[];
+        minimal_width(): number;
+        Placeholder(): $mol_view;
+    }
+}
+
 declare namespace $ {
     class $mol_after_frame extends $mol_after_timeout {
         task: () => void;
@@ -648,164 +937,13 @@ declare namespace $ {
     }
 }
 
-declare namespace $.$$ {
-    class $mol_meter extends $.$mol_meter {
-        rect(): {
-            left: number;
-            top: number;
-            right: number;
-            bottom: number;
-            width: number;
-            height: number;
-            zoom: number;
-        };
-        top(): number;
-        bottom(): number;
-        left(): number;
-        right(): number;
-        width(): number;
-        height(): number;
-        zoom(): number;
-    }
-}
-
 declare namespace $ {
-    class $mol_touch extends $mol_plugin {
-        start_zoom(val?: any, force?: $mol_mem_force): any;
-        start_distance(val?: any, force?: $mol_mem_force): any;
-        zoom(val?: any, force?: $mol_mem_force): any;
-        start_pan(val?: any, force?: $mol_mem_force): any;
-        pan(val?: any, force?: $mol_mem_force): any;
-        pos(val?: any, force?: $mol_mem_force): any;
-        start_pos(val?: any, force?: $mol_mem_force): any;
-        swipe_precision(): number;
-        swipe_right(val?: any, force?: $mol_mem_force): any;
-        swipe_bottom(val?: any, force?: $mol_mem_force): any;
-        swipe_left(val?: any, force?: $mol_mem_force): any;
-        swipe_top(val?: any, force?: $mol_mem_force): any;
-        swipe_from_right(val?: any, force?: $mol_mem_force): any;
-        swipe_from_bottom(val?: any, force?: $mol_mem_force): any;
-        swipe_from_left(val?: any, force?: $mol_mem_force): any;
-        swipe_from_top(val?: any, force?: $mol_mem_force): any;
-        swipe_to_right(val?: any, force?: $mol_mem_force): any;
-        swipe_to_bottom(val?: any, force?: $mol_mem_force): any;
-        swipe_to_left(val?: any, force?: $mol_mem_force): any;
-        swipe_to_top(val?: any, force?: $mol_mem_force): any;
-        style(): {
-            "touch-action": string;
-        };
-        event(): {
-            touchstart: (event?: any) => any;
-            touchmove: (event?: any) => any;
-            touchend: (event?: any) => any;
-            mousedown: (event?: any) => any;
-            mousemove: (event?: any) => any;
-            mouseup: (event?: any) => any;
-            mouseleave: (event?: any) => any;
-            wheel: (event?: any) => any;
-        };
-        event_start(event?: any, force?: $mol_mem_force): any;
-        event_move(event?: any, force?: $mol_mem_force): any;
-        event_end(event?: any, force?: $mol_mem_force): any;
-        event_leave(event?: any, force?: $mol_mem_force): any;
-        event_wheel(event?: any, force?: $mol_mem_force): any;
-    }
 }
 
 declare namespace $.$$ {
-    class $mol_touch extends $.$mol_touch {
-        rect(): DOMRect;
-        event_start(event: TouchEvent | MouseEvent): void;
-        event_leave(event: TouchEvent | MouseEvent): void;
-        event_move(event: TouchEvent | MouseEvent): void;
-        swipe_left(event?: TouchEvent | MouseEvent): void;
-        swipe_right(event?: TouchEvent | MouseEvent): void;
-        swipe_top(event?: TouchEvent | MouseEvent): void;
-        swipe_bottom(event?: TouchEvent | MouseEvent): void;
-        event_end(event?: TouchEvent | MouseEvent): void;
-        event_wheel(event: WheelEvent): void;
-    }
-}
-
-declare namespace $ {
-    class $mol_ghost extends $mol_view {
-        Sub(): $mol_view;
-    }
-}
-
-declare namespace $ {
-    function $mol_dom_render_events(el: Element, events: {
-        [key: string]: (event: Event) => any;
-    }): void;
-    function $mol_dom_render_events_async(el: Element, events: {
-        [key: string]: (event: Event) => any;
-    }): void;
-}
-
-declare namespace $.$$ {
-    class $mol_ghost extends $.$mol_ghost {
-        dom_node(): Element;
-        dom_node_actual(): Element;
-        dom_tree(): Element;
+    class $mol_book2 extends $.$mol_book2 {
         title(): string;
-        minimal_width(): number;
-        minimal_height(): number;
-    }
-}
-
-declare namespace $ {
-    class $mol_book extends $mol_view {
-        sub(): readonly $mol_view[];
-        pages_wrapped(): readonly $mol_view[];
-        minimal_width(): number;
-        pages(): readonly $mol_view[];
-        plugins(): readonly $mol_plugin[];
-        width(): number;
-        Meter(): $$.$mol_meter;
-        Touch(): $$.$mol_touch;
-        event_front_up(val?: any, force?: $mol_mem_force): any;
-        event_front_down(val?: any, force?: $mol_mem_force): any;
-        Page(index: any): $mol_book_page;
-        page(index: any): any;
-        page_visible(index: any): boolean;
-        Placeholder(): $mol_book_placeholder;
-    }
-}
-declare namespace $ {
-    class $mol_book_placeholder extends $mol_view {
-        minimal_width(): number;
-        attr(): {
-            tabindex: any;
-        };
-    }
-}
-declare namespace $ {
-    class $mol_book_page extends $mol_ghost {
-        attr_static(): {
-            tabindex: number;
-            mol_book_page_visible: boolean;
-        };
-        attr(): {
-            mol_book_page_focused: boolean;
-            mol_book_page_visible: boolean;
-        };
-        visible(): boolean;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $.$$ {
-    class $mol_book extends $.$mol_book {
-        pages_extended(): $mol_view[];
-        break_point(): number;
-        page(index: number): $mol_view;
-        page_visible(index: number): boolean;
-        pages_wrapped(): $mol_view[];
-        title(): string;
-        event_front_up(event?: Event): void;
-        event_front_down(event?: Event): void;
+        sub(): $mol_view[];
     }
 }
 
@@ -1240,311 +1378,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    type $mol_type_error<Message, Info = {}> = Message & {
-        $mol_type_error: Info;
-    };
-}
-
-declare namespace $ {
-    type $mol_type_override<Base, Over> = Omit<Base, keyof Over> & Over;
-}
-
-declare namespace $ {
-    const $mol_colors: {
-        readonly aliceblue: "#f0f8ff";
-        readonly antiquewhite: "#faebd7";
-        readonly aqua: "#00ffff";
-        readonly aquamarine: "#7fffd4";
-        readonly azure: "#f0ffff";
-        readonly beige: "#f5f5dc";
-        readonly bisque: "#ffe4c4";
-        readonly black: "#000000";
-        readonly blanchedalmond: "#ffebcd";
-        readonly blue: "#0000ff";
-        readonly blueviolet: "#8a2be2";
-        readonly brown: "#a52a2a";
-        readonly burlywood: "#deb887";
-        readonly cadetblue: "#5f9ea0";
-        readonly chartreuse: "#7fff00";
-        readonly chocolate: "#d2691e";
-        readonly coral: "#ff7f50";
-        readonly cornflowerblue: "#6495ed";
-        readonly cornsilk: "#fff8dc";
-        readonly crimson: "#dc143c";
-        readonly cyan: "#00ffff";
-        readonly darkblue: "#00008b";
-        readonly darkcyan: "#008b8b";
-        readonly darkgoldenrod: "#b8860b";
-        readonly darkgray: "#a9a9a9";
-        readonly darkgreen: "#006400";
-        readonly darkgrey: "#a9a9a9";
-        readonly darkkhaki: "#bdb76b";
-        readonly darkmagenta: "#8b008b";
-        readonly darkolivegreen: "#556b2f";
-        readonly darkorange: "#ff8c00";
-        readonly darkorchid: "#9932cc";
-        readonly darkred: "#8b0000";
-        readonly darksalmon: "#e9967a";
-        readonly darkseagreen: "#8fbc8f";
-        readonly darkslateblue: "#483d8b";
-        readonly darkslategrey: "#2f4f4f";
-        readonly darkturquoise: "#00ced1";
-        readonly darkviolet: "#9400d3";
-        readonly deeppink: "#ff1493";
-        readonly deepskyblue: "#00bfff";
-        readonly dimgray: "#696969";
-        readonly dimgrey: "#696969";
-        readonly dodgerblue: "#1e90ff";
-        readonly firebrick: "#b22222";
-        readonly floralwhite: "#fffaf0";
-        readonly forestgreen: "#228b22";
-        readonly fuchsia: "#ff00ff";
-        readonly gainsboro: "#dcdcdc";
-        readonly ghostwhite: "#f8f8ff";
-        readonly gold: "#ffd700";
-        readonly goldenrod: "#daa520";
-        readonly gray: "#808080";
-        readonly green: "#008000";
-        readonly greenyellow: "#adff2f";
-        readonly grey: "#808080";
-        readonly honeydew: "#f0fff0";
-        readonly hotpink: "#ff69b4";
-        readonly indianred: "#cd5c5c";
-        readonly indigo: "#4b0082";
-        readonly ivory: "#fffff0";
-        readonly khaki: "#f0e68c";
-        readonly lavender: "#e6e6fa";
-        readonly lavenderblush: "#fff0f5";
-        readonly lawngreen: "#7cfc00";
-        readonly lemonchiffon: "#fffacd";
-        readonly lightblue: "#add8e6";
-        readonly lightcoral: "#f08080";
-        readonly lightcyan: "#e0ffff";
-        readonly lightgoldenrodyellow: "#fafad2";
-        readonly lightgray: "#d3d3d3";
-        readonly lightgreen: "#90ee90";
-        readonly lightgrey: "#d3d3d3";
-        readonly lightpink: "#ffb6c1";
-        readonly lightsalmon: "#ffa07a";
-        readonly lightseagreen: "#20b2aa";
-        readonly lightskyblue: "#87cefa";
-        readonly lightslategray: "#778899";
-        readonly lightslategrey: "#778899";
-        readonly lightsteelblue: "#b0c4de";
-        readonly lightyellow: "#ffffe0";
-        readonly lime: "#00ff00";
-        readonly limegreen: "#32cd32";
-        readonly linen: "#faf0e6";
-        readonly magenta: "#ff00ff";
-        readonly maroon: "#800000";
-        readonly mediumaquamarine: "#66cdaa";
-        readonly mediumblue: "#0000cd";
-        readonly mediumorchid: "#ba55d3";
-        readonly mediumpurple: "#9370db";
-        readonly mediumseagreen: "#3cb371";
-        readonly mediumslateblue: "#7b68ee";
-        readonly mediumspringgreen: "#00fa9a";
-        readonly mediumturquoise: "#48d1cc";
-        readonly mediumvioletred: "#c71585";
-        readonly midnightblue: "#191970";
-        readonly mintcream: "#f5fffa";
-        readonly mistyrose: "#ffe4e1";
-        readonly moccasin: "#ffe4b5";
-        readonly navajowhite: "#ffdead";
-        readonly navy: "#000080";
-        readonly oldlace: "#fdf5e6";
-        readonly olive: "#808000";
-        readonly olivedrab: "#6b8e23";
-        readonly orange: "#ffa500";
-        readonly orangered: "#ff4500";
-        readonly orchid: "#da70d6";
-        readonly palegoldenrod: "#eee8aa";
-        readonly palegreen: "#98fb98";
-        readonly paleturquoise: "#afeeee";
-        readonly palevioletred: "#db7093";
-        readonly papayawhip: "#ffefd5";
-        readonly peachpuff: "#ffdab9";
-        readonly peru: "#cd853f";
-        readonly pink: "#ffc0cb";
-        readonly plum: "#dda0dd";
-        readonly powderblue: "#b0e0e6";
-        readonly purple: "#800080";
-        readonly rebeccapurple: "#663399";
-        readonly red: "#ff0000";
-        readonly rosybrown: "#bc8f8f";
-        readonly royalblue: "#4169e1";
-        readonly saddlebrown: "#8b4513";
-        readonly salmon: "#fa8072";
-        readonly sandybrown: "#f4a460";
-        readonly seagreen: "#2e8b57";
-        readonly seashell: "#fff5ee";
-        readonly sienna: "#a0522d";
-        readonly silver: "#c0c0c0";
-        readonly skyblue: "#87ceeb";
-        readonly slateblue: "#6a5acd";
-        readonly slategray: "#708090";
-        readonly slategrey: "#708090";
-        readonly snow: "#fffafa";
-        readonly springgreen: "#00ff7f";
-        readonly steelblue: "#4682b4";
-        readonly tan: "#d2b48c";
-        readonly teal: "#008080";
-        readonly thistle: "#d8bfd8";
-        readonly tomato: "#ff6347";
-        readonly turquoise: "#40e0d0";
-        readonly violet: "#ee82ee";
-        readonly wheat: "#f5deb3";
-        readonly white: "#ffffff";
-        readonly whitesmoke: "#f5f5f5";
-        readonly yellow: "#ffff00";
-        readonly yellowgreen: "#9acd32";
-    };
-}
-
-declare namespace $ {
-    export type $mol_style_properties = Partial<$mol_type_override<CSSStyleDeclaration, Overrides>>;
-    type Common = 'inherit' | 'initial' | 'unset';
-    type Color = keyof typeof $mol_colors | 'transparent' | 'currentcolor' | $mol_style_func<'hsla' | 'rgba' | 'var'>;
-    type Length = 0 | $mol_style_unit<$mol_style_unit_length> | $mol_style_func<'calc'>;
-    type Size = 'auto' | 'max-content' | 'min-content' | 'fit-content' | Length | Common;
-    type Directions<Value> = Value | [Value, Value] | {
-        top?: Value;
-        right?: Value;
-        bottom?: Value;
-        left?: Value;
-    };
-    type Overflow = 'visible' | 'hidden' | 'clip' | 'scroll' | 'auto' | 'overlay' | Common;
-    interface Overrides {
-        alignContent?: 'baseline' | 'start' | 'end' | 'flex-start' | 'flex-end' | 'center' | 'normal' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | ['first' | 'last', 'baseline'] | ['safe' | 'unsafe', 'start' | 'end' | 'flex-start' | 'flex-end'] | Common;
-        background?: {
-            color?: Color | Common;
-            image?: [$mol_style_func<'url'>][];
-        };
-        box?: {
-            shadow?: readonly {
-                inset?: boolean;
-                x: Length;
-                y: Length;
-                blur: Length;
-                spread: Length;
-                color: Color;
-            }[];
-        };
-        color?: Color | Common;
-        display?: 'block' | 'inline' | 'run-in' | 'list-item' | 'none' | 'flow' | 'flow-root' | 'table' | 'flex' | 'grid' | 'contents' | 'table-row-group' | 'table-header-group' | 'table-footer-group' | 'table-column-group' | 'table-row' | 'table-cell' | 'table-column' | 'table-caption' | 'inline-block' | 'inline-table' | 'inline-flex' | 'inline-grid' | 'ruby' | 'ruby-base' | 'ruby-text' | 'ruby-base-container' | 'ruby-text-container' | Common;
-        overflow?: Overflow | {
-            x?: Overflow | Common;
-            y?: Overflow | Common;
-            anchor?: 'auto' | 'none' | Common;
-        };
-        webkitOverflowScrolling?: 'auto' | 'touch';
-        width?: Size;
-        minWidth?: Size;
-        maxWidth?: Size;
-        height?: Size;
-        minHeight?: Size;
-        maxHeight?: Size;
-        margin?: Directions<Length | 'auto'>;
-        padding?: Directions<Length | 'auto'>;
-        flex?: 'none' | 'auto' | {
-            grow?: number | Common;
-            shrink?: number | Common;
-            basis?: Size;
-            direction?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
-            wrap?: 'wrap' | 'nowrap' | 'wrap-reverse' | Common;
-        };
-        zIndex: number;
-    }
-    export {};
-}
-
-declare namespace $ {
-    type $mol_style_pseudo_class = ':active' | ':any' | ':any-link' | ':checked' | ':default' | ':defined' | ':dir(rtl)' | ':dir(ltr)' | ':disabled' | ':empty' | ':enabled' | ':first' | ':first-child' | ':first-of-type' | ':fullscreen' | ':focus' | ':hover' | ':indeterminate' | ':in-range' | ':invalid' | ':last-child' | ':last-of-type' | ':left' | ':link' | ':not()' | ':nth-child(even)' | ':nth-child(odd)' | ':nth-last-child(even)' | ':nth-last-child(odd)' | ':nth-of-type(even)' | ':nth-of-type(odd)' | ':nth-last-of-type(even)' | ':nth-last-of-type(odd)' | ':only-child' | ':only-of-type' | ':optional' | ':out-of-range' | ':read-only' | ':read-write' | ':required' | ':right' | ':root' | ':scope' | ':target' | ':valid' | ':visited';
-}
-
-declare namespace $ {
-    type $mol_style_pseudo_element = '::after' | '::before' | '::cue' | '::first-letter' | '::first-line' | '::selection' | '::slotted' | '::backdrop' | '::placeholder' | '::marker' | '::spelling-error' | '::grammar-error' | '::-webkit-calendar-picker-indicator' | '::-webkit-color-swatch' | '::-webkit-color-swatch-wrapper' | '::-webkit-details-marker' | '::-webkit-file-upload-button' | '::-webkit-image-inner-element' | '::-webkit-inner-spin-button' | '::-webkit-input-placeholder' | '::-webkit-input-speech-button' | '::-webkit-keygen-select' | '::-webkit-media-controls-panel' | '::-webkit-media-controls-timeline-container' | '::-webkit-media-slider-container' | '::-webkit-meter-bar' | '::-webkit-meter-even-less-good-value' | '::-webkit-meter-optimum-value' | '::-webkit-meter-suboptimal-value' | '::-webkit-progress-bar' | '::-webkit-progress-value' | '::-webkit-resizer' | '::-webkit-resizer:window-inactive' | '::-webkit-scrollbar' | '::-webkit-scrollbar-button' | '::-webkit-scrollbar-button:disabled' | '::-webkit-scrollbar-button:double-button:horizontal:end:decrement' | '::-webkit-scrollbar-button:double-button:horizontal:end:increment' | '::-webkit-scrollbar-button:double-button:horizontal:end:increment:corner-present' | '::-webkit-scrollbar-button:double-button:horizontal:start:decrement' | '::-webkit-scrollbar-button:double-button:horizontal:start:increment' | '::-webkit-scrollbar-button:double-button:vertical:end:decrement' | '::-webkit-scrollbar-button:double-button:vertical:end:increment' | '::-webkit-scrollbar-button:double-button:vertical:end:increment:corner-present' | '::-webkit-scrollbar-button:double-button:vertical:start:decrement' | '::-webkit-scrollbar-button:double-button:vertical:start:increment' | '::-webkit-scrollbar-button:end' | '::-webkit-scrollbar-button:end:decrement' | '::-webkit-scrollbar-button:end:increment' | '::-webkit-scrollbar-button:horizontal' | '::-webkit-scrollbar-button:horizontal:decrement' | '::-webkit-scrollbar-button:horizontal:decrement:active' | '::-webkit-scrollbar-button:horizontal:decrement:hover' | '::-webkit-scrollbar-button:horizontal:decrement:window-inactive' | '::-webkit-scrollbar-button:horizontal:end' | '::-webkit-scrollbar-button:horizontal:end:decrement' | '::-webkit-scrollbar-button:horizontal:end:increment' | '::-webkit-scrollbar-button:horizontal:end:increment:corner-present' | '::-webkit-scrollbar-button:horizontal:increment' | '::-webkit-scrollbar-button:horizontal:increment:active' | '::-webkit-scrollbar-button:horizontal:increment:hover' | '::-webkit-scrollbar-button:horizontal:increment:window-inactive' | '::-webkit-scrollbar-button:horizontal:start' | '::-webkit-scrollbar-button:horizontal:start:decrement' | '::-webkit-scrollbar-button:horizontal:start:increment' | '::-webkit-scrollbar-button:start' | '::-webkit-scrollbar-button:start:decrement' | '::-webkit-scrollbar-button:start:increment' | '::-webkit-scrollbar-button:vertical' | '::-webkit-scrollbar-button:vertical:decrement' | '::-webkit-scrollbar-button:vertical:decrement:active' | '::-webkit-scrollbar-button:vertical:decrement:hover' | '::-webkit-scrollbar-button:vertical:decrement:window-inactive' | '::-webkit-scrollbar-button:vertical:end' | '::-webkit-scrollbar-button:vertical:end:decrement' | '::-webkit-scrollbar-button:vertical:end:increment' | '::-webkit-scrollbar-button:vertical:end:increment:corner-present' | '::-webkit-scrollbar-button:vertical:increment' | '::-webkit-scrollbar-button:vertical:increment:active' | '::-webkit-scrollbar-button:vertical:increment:hover' | '::-webkit-scrollbar-button:vertical:increment:window-inactive' | '::-webkit-scrollbar-button:vertical:start' | '::-webkit-scrollbar-button:vertical:start:decrement' | '::-webkit-scrollbar-button:vertical:start:increment' | '::-webkit-scrollbar-corner' | '::-webkit-scrollbar-corner:window-inactive' | '::-webkit-scrollbar-thumb' | '::-webkit-scrollbar-thumb:horizontal' | '::-webkit-scrollbar-thumb:horizontal:active' | '::-webkit-scrollbar-thumb:horizontal:hover' | '::-webkit-scrollbar-thumb:horizontal:window-inactive' | '::-webkit-scrollbar-thumb:vertical' | '::-webkit-scrollbar-thumb:vertical:active' | '::-webkit-scrollbar-thumb:vertical:hover' | '::-webkit-scrollbar-thumb:vertical:window-inactive' | '::-webkit-scrollbar-track' | '::-webkit-scrollbar-track-piece' | '::-webkit-scrollbar-track-piece:disabled' | '::-webkit-scrollbar-track-piece:end' | '::-webkit-scrollbar-track-piece:horizontal:decrement' | '::-webkit-scrollbar-track-piece:horizontal:decrement:active' | '::-webkit-scrollbar-track-piece:horizontal:decrement:hover' | '::-webkit-scrollbar-track-piece:horizontal:end' | '::-webkit-scrollbar-track-piece:horizontal:end:corner-present' | '::-webkit-scrollbar-track-piece:horizontal:end:double-button' | '::-webkit-scrollbar-track-piece:horizontal:end:no-button' | '::-webkit-scrollbar-track-piece:horizontal:end:no-button:corner-present' | '::-webkit-scrollbar-track-piece:horizontal:end:single-button' | '::-webkit-scrollbar-track-piece:horizontal:increment' | '::-webkit-scrollbar-track-piece:horizontal:increment:active' | '::-webkit-scrollbar-track-piece:horizontal:increment:hover' | '::-webkit-scrollbar-track-piece:horizontal:start' | '::-webkit-scrollbar-track-piece:horizontal:start:double-button' | '::-webkit-scrollbar-track-piece:horizontal:start:no-button' | '::-webkit-scrollbar-track-piece:horizontal:start:single-button' | '::-webkit-scrollbar-track-piece:start' | '::-webkit-scrollbar-track-piece:vertical:decrement' | '::-webkit-scrollbar-track-piece:vertical:decrement:active' | '::-webkit-scrollbar-track-piece:vertical:decrement:hover' | '::-webkit-scrollbar-track-piece:vertical:end' | '::-webkit-scrollbar-track-piece:vertical:end:corner-present' | '::-webkit-scrollbar-track-piece:vertical:end:double-button' | '::-webkit-scrollbar-track-piece:vertical:end:no-button' | '::-webkit-scrollbar-track-piece:vertical:end:no-button:corner-present' | '::-webkit-scrollbar-track-piece:vertical:end:single-button' | '::-webkit-scrollbar-track-piece:vertical:increment' | '::-webkit-scrollbar-track-piece:vertical:increment:active' | '::-webkit-scrollbar-track-piece:vertical:increment:hover' | '::-webkit-scrollbar-track-piece:vertical:start' | '::-webkit-scrollbar-track-piece:vertical:start:double-button' | '::-webkit-scrollbar-track-piece:vertical:start:no-button' | '::-webkit-scrollbar-track-piece:vertical:start:single-button' | '::-webkit-scrollbar-track:disabled' | '::-webkit-scrollbar-track:horizontal' | '::-webkit-scrollbar-track:horizontal:disabled' | '::-webkit-scrollbar-track:horizontal:disabled:corner-present' | '::-webkit-scrollbar-track:vertical:disabled' | '::-webkit-scrollbar-track:vertical:disabled:corner-present' | '::-webkit-scrollbar:horizontal' | '::-webkit-scrollbar:horizontal:corner-present' | '::-webkit-scrollbar:horizontal:window-inactive' | '::-webkit-scrollbar:vertical' | '::-webkit-scrollbar:vertical:corner-present' | '::-webkit-scrollbar:vertical:window-inactive' | '::-webkit-search-cancel-button' | '::-webkit-search-decoration' | '::-webkit-search-results-button' | '::-webkit-search-results-decoration' | '::-webkit-slider-container' | '::-webkit-slider-runnable-track' | '::-webkit-slider-thumb' | '::-webkit-slider-thumb:disabled' | '::-webkit-slider-thumb:hover' | '::-webkit-textfield-decoration-container' | '::-webkit-validation-bubble' | '::-webkit-validation-bubble-arrow' | '::-webkit-validation-bubble-arrow-clipper' | '::-webkit-validation-bubble-heading' | '::-webkit-validation-bubble-message' | '::-webkit-validation-bubble-text-block';
-}
-
-declare namespace $ {
-    type Descendant<Name extends keyof $mol_view_all, Config> = $mol_style_guard<Extract<$mol_type_result<$mol_view_all[Name]>, $mol_view>, Config>;
-    type Kids<Config> = {
-        [view in keyof Config]: view extends keyof $mol_view_all ? Descendant<view, Config[view]> : $mol_type_error<'Unknown View'>;
-    };
-    type Attrs<View extends $mol_view, Config> = {
-        [name in keyof Config]: name extends keyof ReturnType<View['attr']> ? {
-            [val in keyof Config[name]]: $mol_style_guard<View, Config[name][val]>;
-        } : $mol_type_error<'Unknown attribute'>;
-    };
-    type Medias<View extends $mol_view, Config> = {
-        [query in keyof Config]: $mol_style_guard<View, Config[query]>;
-    };
-    export type $mol_style_guard<View extends $mol_view, Config> = $mol_style_properties & {
-        [key in keyof Config]: key extends keyof $mol_style_properties ? unknown : key extends $mol_style_pseudo_class | $mol_style_pseudo_element ? $mol_style_guard<View, Config[key]> : key extends '>' ? Kids<Config[key]> : key extends '@' ? Attrs<View, Config[key]> : key extends '@media' ? Medias<View, Config[key]> : key extends keyof $mol_view_all ? Descendant<key, Config[key]> : key extends keyof View ? View[key] extends (id?: any) => infer Sub ? Sub extends $mol_view ? $mol_style_guard<Sub, Config[key]> : $mol_type_error<'Property returns non $mol_view', {
-            Returns: Sub;
-        }> : $mol_type_error<'Field is not a Property'> : $mol_type_error<'Unknown Property or View'>;
-    };
-    export {};
-}
-
-declare namespace $ {
-    function $mol_style_sheet<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config0: Config): string;
-}
-
-declare namespace $ {
-    function $mol_style_define<Component extends $mol_view, Config extends $mol_style_guard<Component, Config>>(Component: new () => Component, config: Config): HTMLStyleElement | null;
-}
-
-declare namespace $ {
-    class $mol_scroll extends $mol_view {
-        minimal_height(): number;
-        _event_scroll_timer(val?: any, force?: $mol_mem_force): any;
-        field(): {
-            scrollTop: any;
-            scrollLeft: any;
-        };
-        scroll_top(val?: any, force?: $mol_mem_force): any;
-        scroll_left(val?: any, force?: $mol_mem_force): any;
-        event(): {
-            scroll: (event?: any) => any;
-        };
-        event_scroll(event?: any, force?: $mol_mem_force): any;
-    }
-}
-
-declare namespace $ {
-    class $mol_state_session<Value> extends $mol_object {
-        static 'native()': Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
-        static native(): Storage | {
-            getItem(key: string): any;
-            setItem(key: string, value: string): void;
-            removeItem(key: string): void;
-        };
-        static value<Value>(key: string, next?: Value): Value;
-        prefix(): string;
-        value(key: string, next?: Value): Value;
-    }
-}
-
-declare namespace $ {
-    class $mol_memo extends $mol_wrapper {
-        static wrap<This extends object, Value>(task: (this: This, next?: Value) => Value): (this: This, next?: Value | undefined) => Value | undefined;
-    }
-}
-
-declare namespace $.$$ {
-}
-
-declare namespace $.$$ {
-    class $mol_scroll extends $.$mol_scroll {
-        scroll_top(next?: number): number;
-        scroll_left(next?: number): number;
-        _event_scroll_timer(next?: $mol_after_timeout | null): $mol_after_timeout | null | undefined;
-        event_scroll(next?: Event): void;
-    }
-}
-
-declare namespace $ {
     class $mol_page extends $mol_view {
         sub(): readonly any[];
         Head(): $mol_view;
@@ -1825,6 +1658,52 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_plugin extends $mol_view {
+        dom_node(next?: Element): Element;
+        attr_static(): {
+            [key: string]: string | number | boolean;
+        };
+        event(): {
+            [key: string]: (event: Event) => void;
+        };
+        render(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_meter extends $mol_plugin {
+        zoom(): number;
+        width(val?: any, force?: $mol_mem_force): any;
+        height(val?: any, force?: $mol_mem_force): any;
+        left(val?: any, force?: $mol_mem_force): any;
+        right(val?: any, force?: $mol_mem_force): any;
+        bottom(val?: any, force?: $mol_mem_force): any;
+        top(val?: any, force?: $mol_mem_force): any;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_meter extends $.$mol_meter {
+        rect(): {
+            left: number;
+            top: number;
+            right: number;
+            bottom: number;
+            width: number;
+            height: number;
+            zoom: number;
+        };
+        top(): number;
+        bottom(): number;
+        left(): number;
+        right(): number;
+        width(): number;
+        height(): number;
+        zoom(): number;
+    }
 }
 
 declare namespace $ {
@@ -2691,7 +2570,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_app_supplies extends $mol_book {
+    class $mol_app_supplies extends $mol_book2 {
         attr(): {
             mol_theme: string;
         };
@@ -2702,7 +2581,7 @@ declare namespace $ {
         tools_root(): readonly any[];
         list_title(): string;
         supply_id(val?: any, force?: $mol_mem_force): any;
-        Detail(): $$.$mol_app_supplies_detail;
+        Detail(id: any): $$.$mol_app_supplies_detail;
         supply(): any;
     }
 }
@@ -2714,7 +2593,6 @@ declare namespace $.$$ {
     class $mol_app_supplies extends $.$mol_app_supplies {
         entered(next?: boolean): boolean;
         pages(): $mol_view[] | $mol_app_supplies_enter[];
-        Placeholder(): any;
         domain(): $mol_app_supplies_domain_mock;
         supplies(): $mol_app_supplies_domain_supply[];
         supply_id(next?: string): string;

@@ -1774,105 +1774,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_test_mocks.push(context => {
-        class $mol_state_local_mock extends $.$mol_state_local {
-            static value(key, next = this.state[key], force) {
-                return this.state[key] = (next || null);
-            }
-        }
-        $mol_state_local_mock.state = {};
-        __decorate([
-            $.$mol_mem_key
-        ], $mol_state_local_mock, "value", null);
-        context.$mol_state_local = $mol_state_local_mock;
-    });
-})($ || ($ = {}));
-//local.mock.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'local get set delete'() {
-            var key = '$mol_state_local_test:' + Math.random();
-            $.$mol_assert_equal($.$mol_state_local.value(key), null);
-            $.$mol_state_local.value(key, 123);
-            $.$mol_assert_equal($.$mol_state_local.value(key), 123);
-            $.$mol_state_local.value(key, null);
-            $.$mol_assert_equal($.$mol_state_local.value(key), null);
-        },
-    });
-})($ || ($ = {}));
-//local.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'decode utf8 string'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
-            $.$mol_assert_equal($.$mol_charset_decode(encoded), str);
-            $.$mol_assert_equal($.$mol_charset_decode(encoded, 'utf8'), str);
-        },
-        'decode empty string'() {
-            const encoded = new Uint8Array([]);
-            $.$mol_assert_equal($.$mol_charset_decode(encoded), '');
-        },
-    });
-})($ || ($ = {}));
-//decode.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'encode utf8 string'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
-            $.$mol_assert_like($.$mol_charset_encode(str), encoded);
-        },
-    });
-})($ || ($ = {}));
-//encode.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        $.$mol_test({
-            'handle clicks by default'() {
-                let clicked = false;
-                const clicker = $$.$mol_button.make({
-                    event_click: (event) => { clicked = true; },
-                });
-                const element = clicker.dom_tree();
-                const event = $.$mol_dom_context.document.createEvent('mouseevent');
-                event.initEvent('click', true, true);
-                element.dispatchEvent(event);
-                $.$mol_assert_ok(clicked);
-            },
-            'no handle clicks if disabled'() {
-                let clicked = false;
-                const clicker = $$.$mol_button.make({
-                    event_click: (event) => { clicked = true; },
-                    enabled: () => false,
-                });
-                const element = clicker.dom_tree();
-                const event = $.$mol_dom_context.document.createEvent('mouseevent');
-                event.initEvent('click', true, true);
-                element.dispatchEvent(event);
-                $.$mol_assert_not(clicked);
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-//button.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
     class $mol_style_sheet_test1 extends $.$mol_view {
         Item() { return new $.$mol_view; }
     }
@@ -2138,6 +2039,105 @@ var $;
     });
 })($ || ($ = {}));
 //memo.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test_mocks.push(context => {
+        class $mol_state_local_mock extends $.$mol_state_local {
+            static value(key, next = this.state[key], force) {
+                return this.state[key] = (next || null);
+            }
+        }
+        $mol_state_local_mock.state = {};
+        __decorate([
+            $.$mol_mem_key
+        ], $mol_state_local_mock, "value", null);
+        context.$mol_state_local = $mol_state_local_mock;
+    });
+})($ || ($ = {}));
+//local.mock.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'local get set delete'() {
+            var key = '$mol_state_local_test:' + Math.random();
+            $.$mol_assert_equal($.$mol_state_local.value(key), null);
+            $.$mol_state_local.value(key, 123);
+            $.$mol_assert_equal($.$mol_state_local.value(key), 123);
+            $.$mol_state_local.value(key, null);
+            $.$mol_assert_equal($.$mol_state_local.value(key), null);
+        },
+    });
+})($ || ($ = {}));
+//local.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'decode utf8 string'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
+            $.$mol_assert_equal($.$mol_charset_decode(encoded), str);
+            $.$mol_assert_equal($.$mol_charset_decode(encoded, 'utf8'), str);
+        },
+        'decode empty string'() {
+            const encoded = new Uint8Array([]);
+            $.$mol_assert_equal($.$mol_charset_decode(encoded), '');
+        },
+    });
+})($ || ($ = {}));
+//decode.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'encode utf8 string'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
+            $.$mol_assert_like($.$mol_charset_encode(str), encoded);
+        },
+    });
+})($ || ($ = {}));
+//encode.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $.$mol_test({
+            'handle clicks by default'() {
+                let clicked = false;
+                const clicker = $$.$mol_button.make({
+                    event_click: (event) => { clicked = true; },
+                });
+                const element = clicker.dom_tree();
+                const event = $.$mol_dom_context.document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
+                $.$mol_assert_ok(clicked);
+            },
+            'no handle clicks if disabled'() {
+                let clicked = false;
+                const clicker = $$.$mol_button.make({
+                    event_click: (event) => { clicked = true; },
+                    enabled: () => false,
+                });
+                const element = clicker.dom_tree();
+                const event = $.$mol_dom_context.document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
+                $.$mol_assert_not(clicked);
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//button.test.js.map
 ;
 "use strict";
 var $;
