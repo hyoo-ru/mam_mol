@@ -16,15 +16,6 @@ $mol_button $mol_view
 	sub /$mol_view_content
 		<= title
 
-$mol_button_typed $mol_button
-
-$mol_button_major $mol_button_typed
-	attr *
-		^
-		mol_theme \$mol_theme_accent
-
-$mol_button_minor $mol_button_typed
-
 $mol_scroll $mol_view
 	minimal_height 0
 	_event_scroll_timer?val null
@@ -88,6 +79,10 @@ $mol_pop_bubble $mol_scroll
 		^
 		mol_pop_align <= align \
 		tabindex 0
+
+$mol_button_typed $mol_button
+
+$mol_button_minor $mol_button_typed
 
 $mol_dimmer $mol_view
 	haystack \

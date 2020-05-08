@@ -1,6 +1,3 @@
-namespace $ { export class $mol_button_typed extends $mol_button {
-
-} }
 namespace $ { export class $mol_button_major extends $mol_button_typed {
 
 	/**
@@ -18,7 +15,4 @@ namespace $ { export class $mol_button_major extends $mol_button_typed {
 	}
 
 } }
-namespace $ { export class $mol_button_minor extends $mol_button_typed {
-
-} }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/button/-view.tree/button_types.view.tree.map
+//@ sourceMappingURL=/home/runner/work/mol/mol/mol/button/major/-view.tree/major.view.tree.map

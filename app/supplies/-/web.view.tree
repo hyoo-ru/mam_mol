@@ -181,8 +181,6 @@ $mol_button_major $mol_button_typed
 		^
 		mol_theme \$mol_theme_accent
 
-$mol_button_minor $mol_button_typed
-
 $mol_app_supplies_enter $mol_view
 	entered?val false
 	minimal_width 400
@@ -256,6 +254,8 @@ $mol_pop_bubble $mol_scroll
 		^
 		mol_pop_align <= align \
 		tabindex 0
+
+$mol_button_minor $mol_button_typed
 
 $mol_dimmer $mol_view
 	haystack \

@@ -1217,9 +1217,25 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_button extends $.$mol_button {
+        disabled(): boolean;
+        event_activate(next: Event): void;
+        event_key_press(event: KeyboardEvent): void;
+        tab_index(): number;
+    }
+}
+
+declare namespace $ {
     class $mol_button_typed extends $mol_button {
     }
 }
+
+declare namespace $ {
+}
+
 declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
         attr(): {
@@ -1231,21 +1247,8 @@ declare namespace $ {
         };
     }
 }
-declare namespace $ {
-    class $mol_button_minor extends $mol_button_typed {
-    }
-}
 
 declare namespace $ {
-}
-
-declare namespace $.$$ {
-    class $mol_button extends $.$mol_button {
-        disabled(): boolean;
-        event_activate(next: Event): void;
-        event_key_press(event: KeyboardEvent): void;
-        tab_index(): number;
-    }
 }
 
 declare namespace $ {
@@ -1913,6 +1916,14 @@ declare namespace $.$$ {
         align(): string;
         keydown(event: KeyboardEvent): void;
     }
+}
+
+declare namespace $ {
+    class $mol_button_minor extends $mol_button_typed {
+    }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {

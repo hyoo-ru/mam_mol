@@ -110,15 +110,6 @@ $mol_button $mol_view
 	sub /$mol_view_content
 		<= title
 
-$mol_button_typed $mol_button
-
-$mol_button_major $mol_button_typed
-	attr *
-		^
-		mol_theme \$mol_theme_accent
-
-$mol_button_minor $mol_button_typed
-
 $mol_scroll $mol_view
 	minimal_height 0
 	_event_scroll_timer?val null
@@ -207,6 +198,10 @@ $mol_icon_external $mol_icon path \M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V1
 $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
 
 $mol_float $mol_view
+
+$mol_button_typed $mol_button
+
+$mol_button_minor $mol_button_typed
 
 $mol_check $mol_button_minor
 	attr *
