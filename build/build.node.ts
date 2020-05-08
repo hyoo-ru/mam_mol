@@ -1379,7 +1379,7 @@ namespace $ {
 	}
 	
 	$mol_build.dependors[ 'node.ts' ] = $mol_build.dependors[ 'web.ts' ] = source => {
-		var common = './' + source.name().replace( /node\.ts$/ , 'ts' )
+		var common = './' + source.name().replace( /\.(node|web)\.ts$/ , '.ts' )
 		var depends : { [ index : string ] : number } = { [ common ] : 0 }
 		$mol_build_depsMerge( depends , $mol_build.dependors[ 'ts' ]!( source ) )
 		return depends
