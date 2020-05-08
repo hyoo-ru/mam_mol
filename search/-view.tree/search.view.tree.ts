@@ -134,4 +134,3 @@ namespace $ { export class $mol_search extends $mol_bar {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/search/-view.tree/search.view.tree.map

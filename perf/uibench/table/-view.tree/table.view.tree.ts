@@ -269,4 +269,3 @@ namespace $ { export class $mol_perf_uibench_table_cell extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/perf/uibench/table/-view.tree/table.view.tree.map

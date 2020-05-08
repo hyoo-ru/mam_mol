@@ -142,4 +142,3 @@ namespace $ { export class $mol_nav extends $mol_plugin {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/nav/-view.tree/nav.view.tree.map

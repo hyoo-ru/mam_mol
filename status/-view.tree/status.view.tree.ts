@@ -46,4 +46,3 @@ namespace $ { export class $mol_status extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/status/-view.tree/status.view.tree.map

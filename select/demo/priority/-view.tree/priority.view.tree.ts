@@ -52,4 +52,3 @@ namespace $ { export class $mol_select_demo_priority extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/select/demo/priority/-view.tree/priority.view.tree.map

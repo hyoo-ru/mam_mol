@@ -143,4 +143,3 @@ namespace $ { export class $mol_select_colors_color_preview extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/select/demo/colors/-view.tree/colors.view.tree.map

@@ -87,4 +87,3 @@ namespace $ { export class $mol_chart_legend extends $mol_scroll {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/chart/legend/-view.tree/legend.view.tree.map

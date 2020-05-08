@@ -90,4 +90,3 @@ namespace $ { export class $mol_pop_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/pop/demo/-view.tree/demo.view.tree.map

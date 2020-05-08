@@ -91,4 +91,3 @@ namespace $ { export class $mol_infinite_demo extends $mol_demo_large {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/infinite/demo/-view.tree/demo.view.tree.map

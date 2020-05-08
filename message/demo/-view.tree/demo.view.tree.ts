@@ -75,4 +75,3 @@ namespace $ { export class $mol_message_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/message/demo/-view.tree/demo.view.tree.map

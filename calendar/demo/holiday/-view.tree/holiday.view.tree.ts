@@ -76,4 +76,3 @@ namespace $ { export class $mol_calendar_demo_holiday extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/calendar/demo/holiday/-view.tree/holiday.view.tree.map

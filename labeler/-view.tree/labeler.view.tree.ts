@@ -62,4 +62,3 @@ namespace $ { export class $mol_labeler extends $mol_list {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/labeler/-view.tree/labeler.view.tree.map

@@ -197,4 +197,3 @@ namespace $ { export class $mol_app_supplies_card extends $mol_link {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/supplies/card/-view.tree/card.view.tree.map

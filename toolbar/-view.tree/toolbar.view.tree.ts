@@ -71,4 +71,3 @@ namespace $ { export class $mol_toolbar extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/toolbar/-view.tree/toolbar.view.tree.map

@@ -106,4 +106,3 @@ namespace $ { export class $mol_map_yandex_demo extends $mol_demo_large {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/map/yandex/demo/-view.tree/demo.view.tree.map

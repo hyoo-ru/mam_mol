@@ -203,4 +203,3 @@ namespace $ { export class $mol_plot_mark_cross extends $mol_plot_graph {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/mark/cross/-view.tree/cross.view.tree.map

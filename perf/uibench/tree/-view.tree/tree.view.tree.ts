@@ -187,4 +187,3 @@ namespace $ { export class $mol_perf_uibench_tree_leaf extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/perf/uibench/tree/-view.tree/tree.view.tree.map

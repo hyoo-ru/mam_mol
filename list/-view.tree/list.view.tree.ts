@@ -108,4 +108,3 @@ namespace $ { export class $mol_list extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/list/-view.tree/list.view.tree.map

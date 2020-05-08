@@ -125,4 +125,3 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/float/demo/-view.tree/demo.view.tree.map

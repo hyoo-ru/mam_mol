@@ -505,4 +505,3 @@ namespace $ { export class $mol_text_image extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/text/-view.tree/text.view.tree.map

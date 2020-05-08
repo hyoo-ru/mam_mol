@@ -80,4 +80,3 @@ namespace $ { export class $mol_scroll extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/scroll/-view.tree/scroll.view.tree.map

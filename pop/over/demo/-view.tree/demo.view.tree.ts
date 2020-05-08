@@ -229,4 +229,3 @@ namespace $ { export class $mol_pop_over_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/pop/over/demo/-view.tree/demo.view.tree.map

@@ -457,4 +457,3 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/form/demo/bids/-view.tree/bids.view.tree.map

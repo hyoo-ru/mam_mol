@@ -43,4 +43,3 @@ namespace $ { export class $mol_section extends $mol_list {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/section/-view.tree/section.view.tree.map

@@ -142,4 +142,3 @@ namespace $ { export class $mol_page extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/page/-view.tree/page.view.tree.map

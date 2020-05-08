@@ -133,4 +133,3 @@ namespace $ { export class $mol_svg_text_box extends $mol_svg_group {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/svg/text/box/-view.tree/box.view.tree.map

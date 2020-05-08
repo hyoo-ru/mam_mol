@@ -339,4 +339,3 @@ namespace $ { export class $mol_attach_add_input extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/attach/-view.tree/attach.view.tree.map

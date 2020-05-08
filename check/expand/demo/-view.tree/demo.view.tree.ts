@@ -145,4 +145,3 @@ namespace $ { export class $mol_check_expand_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/check/expand/demo/-view.tree/demo.view.tree.map

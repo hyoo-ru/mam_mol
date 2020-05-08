@@ -288,4 +288,3 @@ namespace $ { export class $mol_func_sandbox_demo_snippet extends $mol_link {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/func/sandbox/demo/-view.tree/demo.view.tree.map

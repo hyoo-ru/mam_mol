@@ -211,4 +211,3 @@ namespace $ { export class $mol_chart_demo_forces extends $mol_demo_large {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/chart/demo/forces/-view.tree/forces.view.tree.map

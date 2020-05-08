@@ -55,4 +55,3 @@ namespace $ { export class $mol_bench_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/bench/demo/-view.tree/demo.view.tree.map

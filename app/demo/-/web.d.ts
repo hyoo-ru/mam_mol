@@ -5703,11 +5703,10 @@ declare namespace $ {
     function $mol_view_tree_prop_value(prop: $mol_tree): $mol_tree;
     function $mol_view_tree_value_type(val: $mol_tree): "string" | "object" | "number" | "locale" | "null" | "bool" | "dict" | "get" | "bind" | "put" | "list";
     function $mol_view_tree_compile(tree: $mol_tree): {
-        script: any;
+        script: string;
         locales: {
             [key: string]: string;
         };
-        map: any;
     };
 }
 

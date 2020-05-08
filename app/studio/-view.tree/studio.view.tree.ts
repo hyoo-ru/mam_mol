@@ -718,4 +718,3 @@ namespace $ { export class $mol_app_studio_selector extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/studio/-view.tree/studio.view.tree.map

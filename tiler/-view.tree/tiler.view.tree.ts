@@ -19,4 +19,3 @@ namespace $ { export class $mol_tiler extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/tiler/-view.tree/tiler.view.tree.map

@@ -243,4 +243,3 @@ namespace $ { export class $mol_drag_demo extends $mol_demo_large {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/drag/demo/-view.tree/demo.view.tree.map

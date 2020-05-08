@@ -72,4 +72,3 @@ namespace $ { export class $mol_plot_fill extends $mol_plot_graph {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/fill/-view.tree/fill.view.tree.map

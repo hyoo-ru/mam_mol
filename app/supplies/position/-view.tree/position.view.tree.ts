@@ -365,4 +365,3 @@ namespace $ { export class $mol_app_supplies_position extends $mol_card {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/supplies/position/-view.tree/position.view.tree.map

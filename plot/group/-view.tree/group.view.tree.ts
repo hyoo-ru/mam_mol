@@ -50,4 +50,3 @@ namespace $ { export class $mol_plot_group extends $mol_plot_graph {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/group/-view.tree/group.view.tree.map

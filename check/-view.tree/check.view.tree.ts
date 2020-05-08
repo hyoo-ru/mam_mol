@@ -80,4 +80,3 @@ namespace $ { export class $mol_check extends $mol_button_minor {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/check/-view.tree/check.view.tree.map

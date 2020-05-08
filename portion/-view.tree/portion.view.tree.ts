@@ -67,4 +67,3 @@ namespace $ { export class $mol_portion extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/portion/-view.tree/portion.view.tree.map

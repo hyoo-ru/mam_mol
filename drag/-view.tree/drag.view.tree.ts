@@ -123,4 +123,3 @@ namespace $ { export class $mol_drag extends $mol_ghost {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/drag/-view.tree/drag.view.tree.map

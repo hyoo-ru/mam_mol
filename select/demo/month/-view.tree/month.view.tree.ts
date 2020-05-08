@@ -81,4 +81,3 @@ namespace $ { export class $mol_select_demo_month extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/select/demo/month/-view.tree/month.view.tree.map

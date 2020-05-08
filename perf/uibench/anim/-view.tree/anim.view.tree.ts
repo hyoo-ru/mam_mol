@@ -135,4 +135,3 @@ namespace $ { export class $mol_perf_uibench_anim_box extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/perf/uibench/anim/-view.tree/anim.view.tree.map

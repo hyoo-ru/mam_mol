@@ -102,4 +102,3 @@ namespace $ { export class $mol_code extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/code/-view.tree/code.view.tree.map

@@ -39,4 +39,3 @@ namespace $ { export class $mol_view_tree_test_binding extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/view/tree/test/-view.tree/binding.view.tree.map

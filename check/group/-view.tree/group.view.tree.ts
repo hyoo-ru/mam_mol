@@ -19,4 +19,3 @@ namespace $ { export class $mol_check_group extends $mol_check_box {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/check/group/-view.tree/group.view.tree.map

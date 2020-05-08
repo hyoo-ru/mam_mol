@@ -156,4 +156,3 @@ namespace $ { export class $mol_message extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/message/-view.tree/message.view.tree.map

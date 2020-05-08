@@ -242,4 +242,3 @@ namespace $ { export class $mol_toolbar_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/toolbar/demo/-view.tree/demo.view.tree.map

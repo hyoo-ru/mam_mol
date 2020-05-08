@@ -62,4 +62,3 @@ namespace $ { export class $mol_link_iconed extends $mol_link {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/link/iconed/-view.tree/iconed.view.tree.map

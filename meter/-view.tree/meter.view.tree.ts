@@ -70,4 +70,3 @@ namespace $ { export class $mol_meter extends $mol_plugin {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/meter/-view.tree/meter.view.tree.map

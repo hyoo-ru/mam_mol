@@ -207,4 +207,3 @@ namespace $ { export class $mol_pop_bubble extends $mol_scroll {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/pop/-view.tree/pop.view.tree.map

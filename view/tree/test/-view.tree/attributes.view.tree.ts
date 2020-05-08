@@ -32,4 +32,3 @@ namespace $ { export class $mol_view_tree_test_attributes extends $mol_view_tree
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/view/tree/test/-view.tree/attributes.view.tree.map

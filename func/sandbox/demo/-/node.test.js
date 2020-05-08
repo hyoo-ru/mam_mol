@@ -3164,6 +3164,7 @@ var $;
                     shrink: 1,
                     basis: per(50),
                 },
+                minHeight: rem(2.5),
                 padding: [rem(.5), rem(.75)],
                 wordBreak: 'normal',
                 cursor: 'default',
@@ -3178,9 +3179,6 @@ var $;
                 justifyContent: 'flex-end',
                 alignItems: 'flex-start',
                 flexWrap: 'wrap',
-                ':empty': {
-                    display: 'none',
-                },
             },
             Body: {
                 flex: {

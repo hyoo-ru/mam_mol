@@ -15,4 +15,3 @@ namespace $ { export class $mol_button_major extends $mol_button_typed {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/button/major/-view.tree/major.view.tree.map

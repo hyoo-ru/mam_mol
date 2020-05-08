@@ -189,4 +189,3 @@ namespace $ { export class $mol_bench_head extends $mol_float {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/bench/-view.tree/bench.view.tree.map

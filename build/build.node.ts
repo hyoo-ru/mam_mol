@@ -84,7 +84,7 @@ namespace $ {
 			const res = $mol_view_tree_compile( tree )
 
 			script.text( res.script )
-			sourceMap.text( res.map )
+			// sourceMap.text( res.map )
 			locale.text( JSON.stringify( res.locales , null , '\t' ) )
 				
 			return [ script , locale ]

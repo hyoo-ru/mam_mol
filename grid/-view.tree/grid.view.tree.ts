@@ -399,4 +399,3 @@ namespace $ { export class $mol_grid_cell extends $mol_view {
 namespace $ { export class $mol_grid_number extends $mol_grid_cell {
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/grid/-view.tree/grid.view.tree.map

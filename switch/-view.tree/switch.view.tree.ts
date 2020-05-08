@@ -121,4 +121,3 @@ namespace $ { export class $mol_switch extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/switch/-view.tree/switch.view.tree.map

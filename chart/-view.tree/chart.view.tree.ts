@@ -137,4 +137,3 @@ namespace $ { export class $mol_chart extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/chart/-view.tree/chart.view.tree.map

@@ -79,4 +79,3 @@ namespace $ { export class $mol_labeler_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/labeler/demo/-view.tree/demo.view.tree.map

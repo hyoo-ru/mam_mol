@@ -308,4 +308,3 @@ namespace $ { export class $mol_perf_dbmon_query extends $mol_pop_over {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/perf/dbmon/-view.tree/dbmon.view.tree.map

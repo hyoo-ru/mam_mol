@@ -69,4 +69,3 @@ namespace $ { export class $mol_app_hello extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/hello/-view.tree/hello.view.tree.map

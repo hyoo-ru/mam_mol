@@ -59,4 +59,3 @@ namespace $ { export class $mol_dimmer extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/dimmer/-view.tree/dimmer.view.tree.map

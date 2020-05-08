@@ -32,4 +32,3 @@ namespace $ { export class $mol_map_yandex extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/map/yandex/-view.tree/yandex.view.tree.map

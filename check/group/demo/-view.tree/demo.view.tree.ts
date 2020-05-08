@@ -309,4 +309,3 @@ namespace $ { export class $mol_check_group_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/check/group/demo/-view.tree/demo.view.tree.map

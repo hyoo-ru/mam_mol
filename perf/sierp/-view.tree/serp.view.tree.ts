@@ -290,4 +290,3 @@ namespace $ { export class $mol_perf_sierp_dot extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/perf/sierp/-view.tree/serp.view.tree.map

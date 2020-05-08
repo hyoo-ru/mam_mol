@@ -189,4 +189,3 @@ namespace $ { export class $mol_speck_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/speck/demo/-view.tree/demo.view.tree.map

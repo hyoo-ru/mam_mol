@@ -274,4 +274,3 @@ namespace $ { export class $mol_calendar_day extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/calendar/-view.tree/calendar.view.tree.map

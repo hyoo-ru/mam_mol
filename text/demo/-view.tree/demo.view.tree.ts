@@ -82,4 +82,3 @@ namespace $ { export class $mol_text_demo extends $mol_demo_large {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/text/demo/-view.tree/demo.view.tree.map

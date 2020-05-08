@@ -122,4 +122,3 @@ namespace $ { export class $mol_app_supplies extends $mol_book2 {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/supplies/-view.tree/supplies.view.tree.map

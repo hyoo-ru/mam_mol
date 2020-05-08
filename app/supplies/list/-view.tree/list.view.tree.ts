@@ -133,4 +133,3 @@ namespace $ { export class $mol_app_supplies_list extends $mol_page {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/supplies/list/-view.tree/list.view.tree.map

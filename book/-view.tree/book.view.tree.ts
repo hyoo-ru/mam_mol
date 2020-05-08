@@ -217,4 +217,3 @@ namespace $ { export class $mol_book_page extends $mol_ghost {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/book/-view.tree/book.view.tree.map

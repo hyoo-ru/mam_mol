@@ -6,7 +6,6 @@ interface $node {
 	"chokidar" : typeof import( "chokidar" )
 	"colorette" : typeof import( "colorette" )
 	"child_process" : typeof import( "child_process" )
-	"source-map" : typeof import( "source-map" )
 	"sourcemap-codec" : typeof import( "sourcemap-codec" )
 	"typescript" : typeof import( "typescript" )
 	"express" : typeof import( "express" )

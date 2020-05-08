@@ -298,4 +298,3 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/touch/-view.tree/touch.view.tree.map

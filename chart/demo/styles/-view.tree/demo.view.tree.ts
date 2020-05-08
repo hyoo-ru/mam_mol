@@ -415,4 +415,3 @@ namespace $ { export class $mol_chart_demo_styles extends $mol_demo_large {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/chart/demo/styles/-view.tree/demo.view.tree.map

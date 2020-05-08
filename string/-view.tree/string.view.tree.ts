@@ -195,4 +195,3 @@ namespace $ { export class $mol_string extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/string/-view.tree/string.view.tree.map

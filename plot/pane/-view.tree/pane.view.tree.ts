@@ -523,4 +523,3 @@ namespace $ { export class $mol_plot_pane extends $mol_svg_root {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/pane/-view.tree/pane.view.tree.map

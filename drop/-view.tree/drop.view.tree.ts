@@ -101,4 +101,3 @@ namespace $ { export class $mol_drop extends $mol_ghost {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/drop/-view.tree/drop.view.tree.map

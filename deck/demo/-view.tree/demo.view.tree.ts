@@ -209,4 +209,3 @@ namespace $ { export class $mol_deck_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/deck/demo/-view.tree/demo.view.tree.map

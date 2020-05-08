@@ -340,4 +340,3 @@ namespace $ { export class $mol_app_report_cell extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/report/-view.tree/report.view.tree.map

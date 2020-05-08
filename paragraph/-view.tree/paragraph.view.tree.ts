@@ -19,4 +19,3 @@ namespace $ { export class $mol_paragraph extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/paragraph/-view.tree/paragraph.view.tree.map

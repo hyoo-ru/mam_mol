@@ -781,4 +781,3 @@ namespace $ { export class $mol_app_supplies_detail extends $mol_page {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/app/supplies/detail/-view.tree/detail.view.tree.map

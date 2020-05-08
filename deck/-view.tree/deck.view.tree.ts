@@ -74,4 +74,3 @@ namespace $ { export class $mol_deck extends $mol_list {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/deck/-view.tree/deck.view.tree.map

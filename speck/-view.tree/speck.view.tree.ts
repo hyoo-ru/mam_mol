@@ -30,4 +30,3 @@ namespace $ { export class $mol_speck extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/speck/-view.tree/speck.view.tree.map

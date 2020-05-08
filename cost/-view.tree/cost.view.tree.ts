@@ -88,4 +88,3 @@ namespace $ { export class $mol_cost extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/cost/-view.tree/cost.view.tree.map

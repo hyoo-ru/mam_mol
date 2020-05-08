@@ -352,4 +352,3 @@ namespace $ { export class $mol_select extends $mol_pop {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/select/-view.tree/select.view.tree.map

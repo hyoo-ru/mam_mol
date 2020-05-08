@@ -46,4 +46,3 @@ namespace $ { export class $mol_view_tree_test_simple extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/view/tree/test/-view.tree/simple.view.tree.map

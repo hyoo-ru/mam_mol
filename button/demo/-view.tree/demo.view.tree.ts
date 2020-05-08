@@ -99,4 +99,3 @@ namespace $ { export class $mol_button_demo extends $mol_demo_small {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/button/demo/-view.tree/demo.view.tree.map

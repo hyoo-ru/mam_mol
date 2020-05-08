@@ -164,4 +164,3 @@ namespace $ { export class $mol_date_calendar extends $mol_calendar {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/date/-view.tree/date.view.tree.map

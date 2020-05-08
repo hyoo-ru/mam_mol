@@ -82,4 +82,3 @@ namespace $ { export class $mol_card extends $mol_list {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/card/-view.tree/card.view.tree.map

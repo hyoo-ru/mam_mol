@@ -68,4 +68,3 @@ namespace $ { export class $mol_plot_bar extends $mol_plot_graph {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/plot/bar/-view.tree/bar.view.tree.map

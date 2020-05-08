@@ -134,4 +134,3 @@ namespace $ { export class $mol_paginator extends $mol_view {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/paginator/-view.tree/paginator.view.tree.map

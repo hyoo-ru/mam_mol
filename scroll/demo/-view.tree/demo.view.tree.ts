@@ -84,4 +84,3 @@ namespace $ { export class $mol_scroll_demo extends $mol_demo_large {
 	}
 
 } }
-//@ sourceMappingURL=/home/runner/work/mol/mol/mol/scroll/demo/-view.tree/demo.view.tree.map
