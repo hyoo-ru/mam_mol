@@ -1,4 +1,4 @@
-$mol_app_supplies $mol_book
+$mol_app_supplies $mol_book2
 	attr *
 		^
 		mol_theme \$mol_theme_auto
@@ -13,7 +13,6 @@ $mol_app_supplies $mol_book
 		title <= list_title @ \Supplies
 		search_query?val <=> supply_id?val \
 	-
-	Detail $mol_app_supplies_detail
+	Detail!id $mol_app_supplies_detail
 		minimal_width 800
 		supply <= supply null
-		event_top?val <=> event_front_up?val

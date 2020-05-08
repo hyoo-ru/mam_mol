@@ -11,16 +11,11 @@ namespace $.$$ {
 				
 			const sub : $mol_view[] = [ this.List() ]
 				
-			if( this.supply() ) sub.push( this.Detail() )
+			if( this.supply() ) sub.push( this.Detail( this.supply() ) )
 			
 			return sub
 		}
 
-		Placeholder() {
-			if( !this.entered() ) return null as any
-			return super.Placeholder()
-		}
-		
 		@ $mol_mem
 		domain() {
 			return new $mol_app_supplies_domain_mock()
