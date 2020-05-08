@@ -3847,7 +3847,6 @@ var $;
                 mods.push(child);
                 return true;
             });
-            mods.sort((a, b) => a.name().length - b.name().length);
             return mods;
         }
         sources({ path, exclude }) {
@@ -4651,6 +4650,7 @@ var $;
             }
             const data = {
                 files: list.map(src => src.relate(this.root())),
+                mods: graph.sorted,
                 edgesIn: graph.edgesIn,
                 edgesOut: graph.edgesOut,
                 sloc,
@@ -4846,6 +4846,12 @@ var $;
         $mol_build_depsMerge(depends, $mol_build.dependors['ts'](source));
         return depends;
     };
+    $mol_build.dependors['node.ts'] = $mol_build.dependors['web.ts'] = source => {
+        var common = './' + source.name().replace(/\.(node|web)\.ts$/, '.ts');
+        var depends = { [common]: 0 };
+        $mol_build_depsMerge(depends, $mol_build.dependors['ts'](source));
+        return depends;
+    };
     $mol_build.dependors['view.css'] = source => {
         var treeName = './' + source.name().replace(/css$/, 'tree');
         var depends = { [treeName]: 0 };
@@ -4880,6 +4886,11 @@ var $;
             depends[leaf.value] = -9000;
         });
         return depends;
+    };
+    $mol_build.dependors['view.tree'] = source => {
+        return {
+            [`/${source.parent().relate()}/-view.tree/${source.name()}.ts`]: 0,
+        };
     };
 })($ || ($ = {}));
 //build.node.js.map

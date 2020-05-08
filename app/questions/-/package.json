@@ -7,8 +7,8 @@
   "types": "web.d.ts",
   "dependencies": {
     "jsdom": "*",
-    "node-fetch": "*",
     "chokidar": "*",
-    "colorette": "*"
+    "colorette": "*",
+    "node-fetch": "*"
   }
 }

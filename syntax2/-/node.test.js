@@ -1,12 +1,6 @@
 require( "source-map-support" ).install()
 ;
 process.on( 'unhandledRejection' , up => { throw up } );
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-Error.stackTraceLimit = Infinity;
-module.exports;
-//mol.js.map
-;
 "use strict"
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -21,6 +15,12 @@ var $ = ( typeof module === 'object' ) ? Object.setPrototypeOf( module['export'+
 $.$$ = $
 $.$mol = $  // deprecated
 
+;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+Error.stackTraceLimit = Infinity;
+module.exports;
+//mol.js.map
 ;
 "use strict";
 var $;

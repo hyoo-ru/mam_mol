@@ -1,3 +1,146 @@
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	text_width?text 0
+	font_size 16
+	font_family \
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_group $mol_svg
+	dom_name \g
+
+$mol_plot_graph $mol_svg_group
+	series_x /number
+	series_y /number
+	-
+	attr *
+		^
+		mol_plot_graph_type <= type \solid
+	-
+	style *
+		^
+		color <= color \
+	-
+	viewport $mol_vector_2d /
+		<= viewport_x $mol_vector_range /
+			Infinity
+			-Infinity
+		<= viewport_y $mol_vector_range /
+			Infinity
+			-Infinity
+	shift /number
+		0
+		0
+	scale /number
+		1
+		1
+	cursor_position $mol_vector_2d /
+		NaN
+		NaN
+	dimensions_pane $mol_vector_2d /
+		<= dimensions_pane_x $mol_vector_range /
+			Infinity
+			-Infinity
+		<= dimensions_pane_y $mol_vector_range /
+			Infinity
+			-Infinity
+	dimensions $mol_vector_2d /
+		<= dimensions_x $mol_vector_range /
+			Infinity
+			-Infinity
+		<= dimensions_y $mol_vector_range /
+			Infinity
+			-Infinity
+	size_real $mol_vector_2d /
+		0
+		0
+	gap $mol_vector_2d /
+		<= gap_x $mol_vector_range /
+			0
+			0
+		<= gap_y $mol_vector_range /
+			0
+			0
+	indexes /number
+	points /readonly(number)[]
+	front /$mol_svg
+	back /$mol_svg
+	hue NaN
+	Sample null
+
+$mol_plot_graph_sample $mol_view
+	attr *
+		^
+		mol_plot_graph_type <= type \solid
+	style *
+		^
+		color <= color \black
+
+$mol_meter $mol_plugin
+	zoom 1
+	-
+	width?val 0
+	height?val 0
+	-
+	left?val 0
+	right?val 0
+	bottom?val 0
+	top?val 0
+
+$mol_touch $mol_plugin
+	start_zoom?val 0
+	start_distance?val 0
+	zoom?val 1
+	-
+	start_pan?val /
+		0
+		0
+	pan?val /
+		0
+		0
+	pos?val /
+		NaN
+		NaN
+	-
+	start_pos?val null
+	swipe_precision 16
+	-
+	swipe_right?val null
+	swipe_bottom?val null
+	swipe_left?val null
+	swipe_top?val null
+	-
+	swipe_from_right?val null
+	swipe_from_bottom?val null
+	swipe_from_left?val null
+	swipe_from_top?val null
+	-
+	swipe_to_right?val null
+	swipe_to_bottom?val null
+	swipe_to_left?val null
+	swipe_to_top?val null
+	-
+	style *
+		^
+		touch-action \none
+	-
+	event *
+		^
+		touchstart?event <=> event_start?event null
+		touchmove?event <=> event_move?event null
+		touchend?event <=> event_end?event null
+		mousedown?event <=> event_start?event null
+		mousemove?event <=> event_move?event null
+		mouseup?event <=> event_end?event null
+		mouseleave?event <=> event_leave?event null
+		wheel?event <=> event_wheel?event null
+
 $mol_plot_pane $mol_svg_root
 	aspect \none
 	-
@@ -86,148 +229,12 @@ $mol_plot_pane $mol_svg_root
 		^
 		dblclick?event <=> reset?event null
 
-$mol_svg $mol_view
-	dom_name \svg
-	dom_name_space \http://www.w3.org/2000/svg
-	text_width?text 0
-	font_size 16
-	font_family \
-
-$mol_svg_root $mol_svg
-	dom_name \svg
+$mol_svg_path $mol_svg
+	dom_name \path
 	attr *
 		^
-		viewBox <= view_box \0 0 100 100
-		preserveAspectRatio <= aspect \xMidYMid
+		d <= geometry \
 
-$mol_plot_graph $mol_svg_group
-	series_x /number
-	series_y /number
-	-
-	attr *
-		^
-		mol_plot_graph_type <= type \solid
-	-
-	style *
-		^
-		color <= color \
-	-
-	viewport $mol_vector_2d /
-		<= viewport_x $mol_vector_range /
-			Infinity
-			-Infinity
-		<= viewport_y $mol_vector_range /
-			Infinity
-			-Infinity
-	shift /number
-		0
-		0
-	scale /number
-		1
-		1
-	cursor_position $mol_vector_2d /
-		NaN
-		NaN
-	dimensions_pane $mol_vector_2d /
-		<= dimensions_pane_x $mol_vector_range /
-			Infinity
-			-Infinity
-		<= dimensions_pane_y $mol_vector_range /
-			Infinity
-			-Infinity
-	dimensions $mol_vector_2d /
-		<= dimensions_x $mol_vector_range /
-			Infinity
-			-Infinity
-		<= dimensions_y $mol_vector_range /
-			Infinity
-			-Infinity
-	size_real $mol_vector_2d /
-		0
-		0
-	gap $mol_vector_2d /
-		<= gap_x $mol_vector_range /
-			0
-			0
-		<= gap_y $mol_vector_range /
-			0
-			0
-	indexes /number
-	points /readonly(number)[]
-	front /$mol_svg
-	back /$mol_svg
-	hue NaN
-	Sample null
-
-$mol_plot_graph_sample $mol_view
-	attr *
-		^
-		mol_plot_graph_type <= type \solid
-	style *
-		^
-		color <= color \black
-
-$mol_svg_group $mol_svg
-	dom_name \g
-
-$mol_meter $mol_plugin
-	zoom 1
-	-
-	width?val 0
-	height?val 0
-	-
-	left?val 0
-	right?val 0
-	bottom?val 0
-	top?val 0
-
-$mol_touch $mol_plugin
-	start_zoom?val 0
-	start_distance?val 0
-	zoom?val 1
-	-
-	start_pan?val /
-		0
-		0
-	pan?val /
-		0
-		0
-	pos?val /
-		NaN
-		NaN
-	-
-	start_pos?val null
-	swipe_precision 16
-	-
-	swipe_right?val null
-	swipe_bottom?val null
-	swipe_left?val null
-	swipe_top?val null
-	-
-	swipe_from_right?val null
-	swipe_from_bottom?val null
-	swipe_from_left?val null
-	swipe_from_top?val null
-	-
-	swipe_to_right?val null
-	swipe_to_bottom?val null
-	swipe_to_left?val null
-	swipe_to_top?val null
-	-
-	style *
-		^
-		touch-action \none
-	-
-	event *
-		^
-		touchstart?event <=> event_start?event null
-		touchmove?event <=> event_move?event null
-		touchend?event <=> event_end?event null
-		mousedown?event <=> event_start?event null
-		mousemove?event <=> event_move?event null
-		mouseup?event <=> event_end?event null
-		mouseleave?event <=> event_leave?event null
-		wheel?event <=> event_wheel?event null
 
 $mol_plot_line $mol_plot_graph
 	threshold 4
@@ -240,13 +247,6 @@ $mol_plot_line $mol_plot_graph
 	Sample $mol_plot_graph_sample
 		color <= color
 		type <= type
-
-$mol_svg_path $mol_svg
-	dom_name \path
-	attr *
-		^
-		d <= geometry \
-
 
 $mol_plot_bar $mol_plot_graph
 	style *
@@ -285,41 +285,6 @@ $mol_plot_group $mol_plot_graph
 	Sample $mol_plot_graph_sample
 		sub <= graph_samples /$mol_view
 
-$mol_plot_ruler $mol_plot_graph
-	step 0
-	scale_axis 1
-	scale_step 1
-	shift_axis 1
-	dimensions_axis $mol_vector_range /
-		Infinity
-		-Infinity
-	viewport_axis $mol_vector_range /
-		Infinity
-		-Infinity
-	axis_points /number
-	normalize?val 0
-	precision 1
-	sub /
-		<= Background $mol_svg_rect
-			pos_x <= background_x \0
-			pos_y <= background_y \0
-			width <= background_width \100%
-			height <= background_height \14
-		<= Curve $mol_svg_path
-			geometry <= curve \
-		<= labels_formatted /
-		<= Title $mol_svg_text_box
-			pos_x <= title_pos_x \0
-			pos_y <= title_pos_y \100%
-			align <= title_align \start
-			text <= title
-	Label!index $mol_svg_text
-		pos <= label_pos!index /
-			<= label_pos_x!index \
-			<= label_pos_y!index \
-		text <= label_text!index \
-		align <= label_align \
-
 $mol_svg_rect $mol_svg
 	dom_name \rect
 	pos /
@@ -357,6 +322,41 @@ $mol_svg_text_box $mol_svg_group
 			align <= align \start
 			sub /
 				<= text \
+
+$mol_plot_ruler $mol_plot_graph
+	step 0
+	scale_axis 1
+	scale_step 1
+	shift_axis 1
+	dimensions_axis $mol_vector_range /
+		Infinity
+		-Infinity
+	viewport_axis $mol_vector_range /
+		Infinity
+		-Infinity
+	axis_points /number
+	normalize?val 0
+	precision 1
+	sub /
+		<= Background $mol_svg_rect
+			pos_x <= background_x \0
+			pos_y <= background_y \0
+			width <= background_width \100%
+			height <= background_height \14
+		<= Curve $mol_svg_path
+			geometry <= curve \
+		<= labels_formatted /
+		<= Title $mol_svg_text_box
+			pos_x <= title_pos_x \0
+			pos_y <= title_pos_y \100%
+			align <= title_align \start
+			text <= title
+	Label!index $mol_svg_text
+		pos <= label_pos!index /
+			<= label_pos_x!index \
+			<= label_pos_y!index \
+		text <= label_text!index \
+		align <= label_align \
 
 $mol_plot_ruler_vert $mol_plot_ruler
 	title_align \end

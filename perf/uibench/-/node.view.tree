@@ -1,15 +1,3 @@
-$mol_perf_uibench $mol_scroll
-	attr_static *
-		^
-		class \Main
-	sub /
-		<= Table $mol_perf_uibench_table
-			state <= table_state null
-		<= Anim $mol_perf_uibench_anim
-			state <= anim_state null
-		<= Tree $mol_perf_uibench_tree
-			state <= tree_state null
-
 $mol_scroll $mol_view
 	minimal_height 0
 	_event_scroll_timer?val null
@@ -20,6 +8,17 @@ $mol_scroll $mol_view
 	event *
 		^
 		scroll?event <=> event_scroll?event null
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0
+	sub <= rows /$mol_view
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
 
 $mol_perf_uibench_table $mol_list
 	state null
@@ -57,17 +56,6 @@ $mol_perf_uibench_table_cell $mol_view
 	sub /
 		<= text \
 
-
-$mol_list $mol_view
-	render_visible_only true
-	render_over 0
-	sub <= rows /$mol_view
-	Empty $mol_view
-	Gap_before $mol_view style * paddingTop <= gap_before 0
-	Gap_after $mol_view style * paddingTop <= gap_after 0
-	view_window /
-		0
-		0
 
 $mol_perf_uibench_anim $mol_view
 	state null
@@ -118,3 +106,15 @@ $mol_perf_uibench_tree_leaf $mol_view
 		class \TreeLeaf
 	sub /
 		<= text \
+
+$mol_perf_uibench $mol_scroll
+	attr_static *
+		^
+		class \Main
+	sub /
+		<= Table $mol_perf_uibench_table
+			state <= table_state null
+		<= Anim $mol_perf_uibench_anim
+			state <= anim_state null
+		<= Tree $mol_perf_uibench_tree
+			state <= tree_state null

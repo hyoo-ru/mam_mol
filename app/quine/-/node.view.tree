@@ -1,33 +1,3 @@
-$mol_app_quine $mol_page
-	title @ \Quine - Application that prints self sources
-	body /
-		<= Content $mol_row
-			sub /
-				<= Text $mol_text
-					text <= content \
-	-
-	paths /
-		\mol/app/quine/quine.view.tree
-		\mol/app/quine/quine.view.ts
-		\mol/app/quine/index.html
-		\mol/app/quine/quine.locale=ru.json
-
-$mol_page $mol_view
-	sub /
-		<= Head $mol_view
-			sub <= head /
-				<= Title $mol_button
-					sub /
-						<= title
-					event_click?val <=> event_top?val null
-				<= Tools $mol_view
-					sub <= tools /$mol_view_content
-		<= Body $mol_scroll
-			scroll_top?val <=> body_scroll_top?val 0
-			sub <= body /$mol_view_content
-		<= Foot $mol_view
-			sub <= foot /$mol_view
-
 $mol_button $mol_view
 	enabled true
 	minimal_height 40
@@ -66,7 +36,185 @@ $mol_scroll $mol_view
 		^
 		scroll?event <=> event_scroll?event null
 
+$mol_page $mol_view
+	sub /
+		<= Head $mol_view
+			sub <= head /
+				<= Title $mol_button
+					sub /
+						<= title
+					event_click?val <=> event_top?val null
+				<= Tools $mol_view
+					sub <= tools /$mol_view_content
+		<= Body $mol_scroll
+			scroll_top?val <=> body_scroll_top?val 0
+			sub <= body /$mol_view_content
+		<= Foot $mol_view
+			sub <= foot /$mol_view
+
 $mol_row $mol_view
+
+$mol_list $mol_view
+	render_visible_only true
+	render_over 0
+	sub <= rows /$mol_view
+	Empty $mol_view
+	Gap_before $mol_view style * paddingTop <= gap_before 0
+	Gap_after $mol_view style * paddingTop <= gap_after 0
+	view_window /
+		0
+		0
+
+$mol_float $mol_view
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked?val false
+		aria-checked <= checked?val false
+		role \checkbox
+	sub /
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	text_width?text 0
+	font_size 16
+	font_family \
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
+$mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
+
+$mol_check_expand $mol_check
+	minimal_height 40
+	Icon $mol_icon_chevron
+	level 0
+	style *
+		^
+		paddingLeft <= level_style \0px
+	checked?val <=> expanded?val false
+	enabled <= expandable false
+
+$mol_dimmer $mol_view
+	haystack \
+	needle \
+	sub <= parts /$mol_view_content
+	Low!id $mol_view
+		sub /
+			<= string!id \
+
+$mol_grid $mol_scroll
+	row_height 40
+	row_ids /string[]
+	row_id!index null
+	col_ids /
+	records *
+	record!id null
+	hierarchy null
+	hierarchy_col \
+	-
+	sub /
+		<= Head
+		<= Table $mol_grid_table
+			sub <= rows /$mol_view
+	Head $mol_grid_row
+		cells <= head_cells /$mol_view
+	Row!id $mol_grid_row
+		minimal_height <= row_height
+		cells <= cells!id /$mol_view
+	-
+	Cell!id $mol_view
+	cell!id null
+	Cell_text!id $mol_grid_cell
+		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
+	Cell_number!id $mol_grid_number
+		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
+	Col_head!id $mol_float
+		dom_name \th
+		sub <= col_head_content!id /$mol_view_content
+	Cell_branch!id $mol_check_expand
+		level <= cell_level!id 0
+		label <= cell_content!id /$mol_view_content
+		expanded?val <=> cell_expanded!id?val false
+	Cell_content!id /
+		<= Cell_dimmer!id $mol_dimmer
+			needle <= needle \
+			haystack <= cell_value!id \
+
+$mol_grid_table $mol_list
+	dom_name \table
+
+$mol_grid_row $mol_view
+	dom_name \tr
+	sub <= cells /$mol_view
+
+$mol_grid_cell $mol_view
+	dom_name \td
+	minimal_height 40
+
+$mol_grid_number $mol_grid_cell
+
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 8
+
+$mol_link $mol_view
+	dom_name \a
+	attr *
+		^
+		href <= uri \
+		title <= hint \
+		target <= target \_self
+		download <= file_name \
+		mol_link_current <= current false
+	sub /$mol_view_content
+		<= title
+	arg *
+	event *
+		^
+		click?event <=> click?event <=> event_click?event null
+
+$mol_image $mol_view
+	dom_name \img
+	field *
+		^
+		src <= uri \
+		alt <= title
+
+$mol_link_iconed $mol_link
+	sub /
+		<= Icon $mol_image
+			uri <= icon \
+			title \
+	content /
+		<= title <= uri
+	host \
 
 $mol_text $mol_list
 	uri_base \
@@ -129,164 +277,16 @@ $mol_text_image $mol_view
 	sub /
 		<= title?val \
 
-$mol_list $mol_view
-	render_visible_only true
-	render_over 0
-	sub <= rows /$mol_view
-	Empty $mol_view
-	Gap_before $mol_view style * paddingTop <= gap_before 0
-	Gap_after $mol_view style * paddingTop <= gap_after 0
-	view_window /
-		0
-		0
-
-$mol_grid $mol_scroll
-	row_height 40
-	row_ids /string[]
-	row_id!index null
-	col_ids /
-	records *
-	record!id null
-	hierarchy null
-	hierarchy_col \
+$mol_app_quine $mol_page
+	title @ \Quine - Application that prints self sources
+	body /
+		<= Content $mol_row
+			sub /
+				<= Text $mol_text
+					text <= content \
 	-
-	sub /
-		<= Head
-		<= Table $mol_grid_table
-			sub <= rows /$mol_view
-	Head $mol_grid_row
-		cells <= head_cells /$mol_view
-	Row!id $mol_grid_row
-		minimal_height <= row_height
-		cells <= cells!id /$mol_view
-	-
-	Cell!id $mol_view
-	cell!id null
-	Cell_text!id $mol_grid_cell
-		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
-	Cell_number!id $mol_grid_number
-		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
-	Col_head!id $mol_float
-		dom_name \th
-		sub <= col_head_content!id /$mol_view_content
-	Cell_branch!id $mol_check_expand
-		level <= cell_level!id 0
-		label <= cell_content!id /$mol_view_content
-		expanded?val <=> cell_expanded!id?val false
-	Cell_content!id /
-		<= Cell_dimmer!id $mol_dimmer
-			needle <= needle \
-			haystack <= cell_value!id \
-
-$mol_grid_table $mol_list
-	dom_name \table
-
-$mol_grid_row $mol_view
-	dom_name \tr
-	sub <= cells /$mol_view
-
-$mol_grid_cell $mol_view
-	dom_name \td
-	minimal_height 40
-
-$mol_grid_number $mol_grid_cell
-
-$mol_float $mol_view
-
-$mol_check $mol_button_minor
-	attr *
-		^
-		mol_check_checked <= checked?val false
-		aria-checked <= checked?val false
-		role \checkbox
-	sub /
-		<= Icon null
-		<= label /
-			<= Title $mol_view
-				sub /
-					<= title \
-
-$mol_check_expand $mol_check
-	minimal_height 40
-	Icon $mol_icon_chevron
-	level 0
-	style *
-		^
-		paddingLeft <= level_style \0px
-	checked?val <=> expanded?val false
-	enabled <= expandable false
-
-$mol_icon $mol_svg_root
-	view_box \0 0 24 24
-	minimal_width 16
-	minimal_height 16
-	sub /
-		<= Path $mol_svg_path
-			geometry <= path \
-
-$mol_svg $mol_view
-	dom_name \svg
-	dom_name_space \http://www.w3.org/2000/svg
-	text_width?text 0
-	font_size 16
-	font_family \
-
-$mol_svg_root $mol_svg
-	dom_name \svg
-	attr *
-		^
-		viewBox <= view_box \0 0 100 100
-		preserveAspectRatio <= aspect \xMidYMid
-
-$mol_svg_path $mol_svg
-	dom_name \path
-	attr *
-		^
-		d <= geometry \
-
-
-$mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
-
-$mol_dimmer $mol_view
-	haystack \
-	needle \
-	sub <= parts /$mol_view_content
-	Low!id $mol_view
-		sub /
-			<= string!id \
-
-$mol_paragraph $mol_view
-	line_height 24
-	letter_width 8
-
-$mol_link $mol_view
-	dom_name \a
-	attr *
-		^
-		href <= uri \
-		title <= hint \
-		target <= target \_self
-		download <= file_name \
-		mol_link_current <= current false
-	sub /$mol_view_content
-		<= title
-	arg *
-	event *
-		^
-		click?event <=> click?event <=> event_click?event null
-
-$mol_link_iconed $mol_link
-	sub /
-		<= Icon $mol_image
-			uri <= icon \
-			title \
-	content /
-		<= title <= uri
-	host \
-
-$mol_image $mol_view
-	dom_name \img
-	field *
-		^
-		src <= uri \
-		alt <= title
+	paths /
+		\mol/app/quine/quine.view.tree
+		\mol/app/quine/quine.view.ts
+		\mol/app/quine/index.html
+		\mol/app/quine/quine.locale=ru.json
