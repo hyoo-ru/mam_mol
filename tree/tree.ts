@@ -92,6 +92,16 @@ namespace $ {
 
 		}
 		
+		/** Makes new derived data node. */
+		make_data( value : string , sub? : readonly $mol_tree[] ) {
+			return this.make({ value , sub })
+		}
+		
+		/** Makes new derived structural node. */
+		make_struct( type : string , sub? : readonly $mol_tree[] ) {
+			return this.make({ type , sub })
+		}
+		
 		/** Parses tree format to AST. */
 		static fromString( str : string , baseUri? : string ) {
 			
