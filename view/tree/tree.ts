@@ -191,7 +191,7 @@ namespace $ {
 										if( own_key ) own_args.push( ` ${own_key} : any ` )
 										if( own_next ) own_args.push( ` ${own_next}? : any ` )
 
-										let [ , their_name , ... their_args ] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
+										let prop_[ , their_name , ... their_args ] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
 										their_args = their_args.filter( Boolean )
 										
 										members[ own_name ] = [`\t${ own_name }(${ own_args.join(',') }) {\n\t\treturn this.${ param.type }().${ their_name }( ${ their_args.join(' , ') } )\n\t}\n\n`]

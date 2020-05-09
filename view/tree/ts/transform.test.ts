@@ -22,12 +22,17 @@ $mol_view_tree_test_attributes_subcomponent_page $mol_view
 		},
 	} )
 
-	function serialize( node: $mol_tree, prefix = '' ) : string {
-		if (node.type === 'line') return prefix + node.sub.map(child => serialize(child)).join(' ') + '\n'
+	function serialize( node: $mol_tree, prefix = '') : string {
+		if (node.type === 'line') return prefix + node.sub.map(child => serialize(child)).join(' ')
+		if (node.type === 'inline') return node.sub.map(child => serialize(child)).join('')
 
-		if (node.type === 'block') return node.sub.map(child => serialize(child, prefix + '\t')).join('\n') + '\n'
+		const child_prefix = node.type === 'root' ? prefix : (prefix + '\t')
+		const childs = node.sub.map(child => serialize(child, child_prefix)).join('\n')
 
-		return prefix + node.data + node.sub.map(child => serialize(child, prefix + '\t')).join('\n')
+		if (node.type === 'root') return childs + '\n'
+		if (node.type === 'block') return '\n' + childs + '\n'
+
+		return prefix + (node.data || node.type) + childs
 	}
 
 }
