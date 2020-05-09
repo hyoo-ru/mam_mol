@@ -19318,6 +19318,12 @@ var $;
         make(config) {
             return new $mol_tree(Object.assign({ baseUri: this.baseUri, row: this.row, col: this.col }, config));
         }
+        make_data(value, sub) {
+            return this.make({ value, sub });
+        }
+        make_struct(type, sub) {
+            return this.make({ type, sub });
+        }
         static fromString(str, baseUri) {
             var root = new $mol_tree({ baseUri: baseUri });
             var stack = [root];

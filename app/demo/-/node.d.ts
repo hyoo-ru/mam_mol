@@ -5465,6 +5465,8 @@ declare namespace $ {
         static values(str: string, baseUri?: string): $mol_tree[];
         clone(config?: Partial<$mol_tree>): $mol_tree;
         make(config: Partial<$mol_tree>): $mol_tree;
+        make_data(value: string, sub?: readonly $mol_tree[]): $mol_tree;
+        make_struct(type: string, sub?: readonly $mol_tree[]): $mol_tree;
         static fromString(str: string, baseUri?: string): $mol_tree;
         static fromJSON(json: any, baseUri?: string): $mol_tree;
         get uri(): string;
