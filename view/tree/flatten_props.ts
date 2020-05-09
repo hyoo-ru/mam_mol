@@ -1,9 +1,8 @@
 namespace $ {
 
-	export function $mol_view_tree_ts_transform_flatten_props( input: $mol_tree, context: $mol_tree_context ) {
-		if( !/^\$\w+$/.test( input.type ) ) throw input.error( 'Wrong component name' )
+	export function $mol_view_tree_flatten_props( input: $mol_tree ) {
 		const roots = new Map<string, $mol_tree>()
-		const nodes: $mol_tree[] = []
+		const flatten_props: $mol_tree[] = []
 
 		function assert_no_dup(next: $mol_tree) {
 			const type = next.type
@@ -26,7 +25,7 @@ namespace $ {
 
 			const node = child.hack( context )
 			assert_no_dup(node)
-			nodes.push(node)
+			flatten_props.push(node)
 
 			return [ input.clone({ sub : [ child.clone({ sub: [] }) ] }) ]
 		}
@@ -39,15 +38,15 @@ namespace $ {
 			if( child.sub.length > 0 ) throw child.error( 'Right binding can not have default value' )
 
 			assert_no_dup(child)
-			nodes.push(child)
+			flatten_props.push(child)
 
 			return [ input.clone({ sub : [ child.clone({ sub: [] }) ] }) ]
 		}
 
 		function prop(input: $mol_tree, context: $mol_tree_context) {
-			const index = nodes.length
+			const index = flatten_props.length
 			// keep node order
-			nodes.push(undefined!)
+			flatten_props.push(undefined!)
 
 			const result = input.hack( {
 				...context,
@@ -55,7 +54,7 @@ namespace $ {
 			} )
 
 			assert_no_dup(result)
-			nodes[index] = result
+			flatten_props[index] = result
 
 			return [ result ]
 		}
@@ -71,19 +70,13 @@ namespace $ {
 
 			return [
 				input.clone({
-					sub: nodes,
+					sub: flatten_props,
 				})
 			]
 		}
 
-		if (input.sub.length === 0) throw input.error('Need an $mol_view subclass')
 
-		return [
-			input.hack({
-				...context,
-				'': props
-			})
-		]
+		return input.hack({ '': props })
 	}
 
 	function passthru(input: $mol_tree, context: $mol_tree_context) {
