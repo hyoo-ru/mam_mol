@@ -472,12 +472,14 @@ var $;
             this.baseUri = config.baseUri || '';
             this.row = config.row || 0;
             this.col = config.col || 0;
+            this.length = config.length || 0;
         }
         static values(str, baseUri) {
             return str.split('\n').map((data, index) => new $mol_tree({
                 data: data,
                 baseUri: baseUri,
-                row: index + 1
+                row: index + 1,
+                length: data.length,
             }));
         }
         clone(config = {}) {
@@ -488,11 +490,12 @@ var $;
                 baseUri: ('baseUri' in config) ? config.baseUri : this.baseUri,
                 row: ('row' in config) ? config.row : this.row,
                 col: ('col' in config) ? config.col : this.col,
+                length: ('length' in config) ? config.length : this.length,
                 value: config.value
             });
         }
         make(config) {
-            return new $mol_tree(Object.assign({ baseUri: this.baseUri, row: this.row, col: this.col }, config));
+            return new $mol_tree(Object.assign({ baseUri: this.baseUri, row: this.row, col: this.col, length: this.length }, config));
         }
         make_data(value, sub) {
             return this.make({ value, sub });
@@ -524,14 +527,14 @@ var $;
                 types.forEach(type => {
                     if (!type)
                         return this.$.$mol_fail(new Error(`Unexpected space symbol ${baseUri}:${row}\n${line}`));
-                    var next = new $mol_tree({ type, baseUri, row, col });
+                    var next = new $mol_tree({ type, baseUri, row, col, length: type.length });
                     const parent_sub = parent.sub;
                     parent_sub.push(next);
                     parent = next;
                     col += type.length + 1;
                 });
                 if (data) {
-                    var next = new $mol_tree({ data: data.substring(1), baseUri, row, col });
+                    var next = new $mol_tree({ data: data.substring(1), baseUri, row, col, length: data.length });
                     const parent_sub = parent.sub;
                     parent_sub.push(next);
                     parent = next;

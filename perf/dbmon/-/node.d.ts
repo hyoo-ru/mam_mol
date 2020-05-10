@@ -227,6 +227,7 @@ declare namespace $ {
         readonly baseUri: string;
         readonly row: number;
         readonly col: number;
+        readonly length: number;
         constructor(config?: Partial<$mol_tree>);
         static values(str: string, baseUri?: string): $mol_tree[];
         clone(config?: Partial<$mol_tree>): $mol_tree;
