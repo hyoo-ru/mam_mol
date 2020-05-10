@@ -2,7 +2,10 @@ namespace $ {
 	$.$mol_build_start = ()=> {}
 	$mol_test({
 		'Completed'() {
-			console.log( 'All tests passes.' )
+			$mol_ambient({}).$mol_log3_done({
+				place: '$mol_test' ,
+				message: 'All tests passes',
+			})
 			process.exit(0)
 		}
 	})

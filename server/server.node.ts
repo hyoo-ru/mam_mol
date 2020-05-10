@@ -25,7 +25,11 @@ namespace $ {
 			).then(
 				( ports : number[] ) => {
 					server.listen( ports[ 0 ] )
-					console.log( this.messageStart( ports[ 0 ] ) )
+					this.$.$mol_log3_done({
+						place: `${ this }` ,
+						message: `Started` ,
+						location: `http://127.0.0.1:${ ports[0] }/`
+					})
 				}
 			)
 
@@ -58,11 +62,6 @@ namespace $ {
 
 		}
 
-		messageStart( port : number ) {
-			const { green , greenBright } = $node.colorette
-			return green( `${ this } started at ${ greenBright( `http://127.0.0.1:${ port }/` ) }` )
-		}
-		
 		expressHandlers() : any[] {
 			return [
 				this.expressCompressor() ,
