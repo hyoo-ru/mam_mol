@@ -14,5 +14,5 @@ $mol_app_supplies_enter $mol_view
 		buttons /
 			<= submit $mol_button_major
 				sub / <= submitLabel @ \Log In
-				event_click?val <=> event_submit?val null
+				click?val <=> event_submit?val null
 				disabled <= submit_blocked false

@@ -17,7 +17,7 @@ namespace $ {
 		toString() : string {
 
 			const order = this.order ?? ''
-			const name = this.name ?? ''
+			const name = encodeURIComponent( this.name ?? '' )
 			const filter = this.filter ?? ''
 			
 			const value = this.values.map( ({ min , max }) => {
@@ -70,7 +70,8 @@ namespace $ {
 						
 					} else {
 	
-						const [ , order , name ] = /^([+-]?)(.*)$/.exec( text )!
+						let [ , order , name ] = /^([+-]?)(.*)$/.exec( text )!
+						name = decodeURIComponent( name )
 	
 						query = new this( name , order as any )
 						

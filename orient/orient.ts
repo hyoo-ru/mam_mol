@@ -1,137 +1,146 @@
 namespace $ {
 
-	type ODB = InstanceType< typeof $lib_orientjs.ODB >
-	type OStatement = ReturnType< ODB['select'] >
-	type ORecord = InstanceType< typeof $lib_orientjs.ORecord >
+	const log = $mol_fiber.func( console.log )
+	
+	export class $mol_orient_wrapper< Api > extends $mol_object2 {
 
-	export class $mol_orient_server extends $mol_object2 {
+		api() : Api {
+			return $mol_fail( `${ this }.api() isn't defined` )
+		}
 
-		host() { return 'localhost' }
-		port() { return 2424 }
-		username() { return 'root' }
-		password() { return 'root' }
+	}
+
+	export class $mol_orient_client extends $mol_object2 {
+
+		address() {
+			return {
+				host: 'localhost',
+				port: 2424,
+			}
+		}
+
+		credentials() {
+			return {
+				username: 'root' ,
+				password: 'root' ,
+			}
+		}
 
 		@ $mol_mem
 		api() {
-			return $lib_orientjs({
-				host : this.host() ,
-				port : this.port() ,
-				username : this.username() ,
-				password : this.password() ,
-				useToken : true ,
-			})
+			return new $lib_orientjs.OrientDBClient( this.address() )
 		}
 
-		destructor() {
-			const api = $mol_mem_cached( ()=> this.api() )
-			if( api ) api.close()
-		}
-
-		@ $mol_mem
-		db_all( next? : Record< string , $mol_orient_db > ) {
-
-			if( next ) return next
+		@ $mol_mem_key
+		pool( db : string ) {
 
 			const api = this.api()
-			const list = $mol_fiber_sync( ()=> api.list() )()
-			next = {}
 			
-			for( const item of list ) {
-				next[ item.name ] = $mol_orient_db.create( db => {
-					db.api = $mol_const( item )
-					db.server = $mol_const( this )
-				} )
-			}
-			
-			return next
-		}
+			const res = $mol_fiber_sync( ()=> api.sessions({
+				name : db,
+				... this.credentials(),
+			}) )()
 
-		db( name : string ) {
-			return this.db_all()[ name ]
-		}
-
-		@ $mol_fiber.method
-		db_add( name : string , type = 'document' , storage = 'plocal' ) {
-
-			const api = this.api()
-			const resp = $mol_fiber_sync( ()=> api.create({ name , type , storage }) )()
-
-			const db_all = {
-				... this.db_all(),
-				[ name ] : $mol_orient_db.create( db => {
-					db.api = $mol_const( resp )
-					db.server = $mol_const( this )
-				} ),
-			}
-
-			this.db_all( db_all )
-			
-			return this.db_all()[ name ] = $mol_orient_db.create( db => {
-				db.api = $mol_const( resp )
-				db.server = $mol_const( this )
+			return $mol_orient_pool.create( pool => {
+				pool.db = $mol_const( db )
+				pool.api = $mol_const( res )
+				pool.client = $mol_const( this )
 			} )
 
 		}
 
 		@ $mol_fiber.method
-		db_ensure( name : string , type = 'document' , storage = 'plocal' ) {
-			
-			const db = this.db( name )
-			if( db ) return db
-			
+		db_list() : string[] {
+			return $mol_fiber_sync( ()=> this.api().listDatabases( this.credentials() ) )()
+		}
+
+		@ $mol_fiber.method
+		db_add(
+			name : string ,
+			type : "graph" | "document" = 'document' ,
+			storage :"plocal" | "memory" = 'plocal' ,
+		) {
+			$mol_fiber_sync( ()=> this.api().createDatabase({ name , type , storage }) )()
+			return this
+		}
+
+		@ $mol_fiber.method
+		db_exists(
+			name : string ,
+			type : "graph" | "document" = 'document' ,
+			storage :"plocal" | "memory" = 'plocal' ,
+		) {
+			return $mol_fiber_sync( ()=> this.api().existsDatabase({ name , type , storage }) )()
+		}
+
+		@ $mol_fiber.method
+		db_ensure(
+			name : string ,
+			type : "graph" | "document" = 'document' ,
+			storage :"plocal" | "memory" = 'plocal' ,
+		) {
+			if( this.db_exists( name , type , storage ) ) return this
 			return this.db_add( name , type , storage )
 		}
 
 	}
 
-	export class $mol_orient_db extends $mol_object2 {
+	export class $mol_orient_pool extends $mol_orient_wrapper< $lib_orientjs['ODatabaseSessionPool'] > {
 
-		api() : ODB {
-			return $mol_fail( `${ this }.api() isn't defined` )
+		db() : string {
+			return $mol_fail( `${ this }.db() isn't defined` )
 		}
 
-		server() : $mol_orient_server {
-			return $mol_fail( `${ this }.api() isn't defined` )
-		}
-
-		name() {
-			return this.api().name
+		client() : $mol_orient_client {
+			return $mol_fail( `${ this }.client() isn't defined` )
 		}
 
 		@ $mol_fiber.method
-		query( query : string , params : Record< string , any > = {} , limit = 100 , fetchPlan = '' ) {
-
-			const api = this.api()
-			const resp = $mol_fiber_sync( ()=> api.exec( query , { params , limit , fetchPlan }) as Promise<any> )()
+		session() {
 			
-			return resp
-		}
-
-		@ $mol_fiber.method
-		one( build : ( api : ODB )=> OStatement ) {
-			const api = this.api()
-			const res = $mol_fiber_sync( ()=> build( api ).one< ORecord >() )()
-			return $mol_orient_record.create( rec => {
-				rec.api = $mol_const( res )
+			const api = $mol_fiber_sync( ()=> this.api().acquire() )()
+			
+			return $mol_orient_session.create( client => {
+				client.api = $mol_const( api )
 			} )
-		}
 
-		@ $mol_fiber.method
-		all( build : ( api : ODB )=> OStatement ) {
-			const api = this.api()
-			const res = $mol_fiber_sync( ()=> build( api ).all< ORecord >() )()
-			return res.map( item => $mol_orient_record.create( rec => {
-				rec.api = $mol_const( item )
-			} ) )
 		}
 
 	}
 
-	export class $mol_orient_record extends $mol_object2 {
+	export class $mol_orient_session extends $mol_orient_wrapper< $lib_orientjs['ODatabaseSession'] > {
 
-		api() : ORecord {
-			return $mol_fail( `${ this }.api() isn't defined` )
+		pool() : $mol_orient_pool {
+			return $mol_fail( `${ this }.pool() isn't defined` )
 		}
+
+		client() {
+			return this.pool().client()
+		}
+
+		@ $mol_fiber.method
+		destructor() {
+			this.api().close()
+		}
+
+		@ $mol_fiber.method
+		exec( build : ( api : $lib_orientjs['ODatabaseSession'] )=> $lib_orientjs['OResult'] ) {
+			const api = this.api()
+			const res = $mol_fiber_sync( ()=> build( api ).all() )() as $lib_orientjs['ORecord'][]
+			return res.map( ( item : $lib_orientjs['ORecord'] )=> $mol_orient_record.create( rec => {
+				rec.api = $mol_const( item )
+			} ) )
+		}
+
+		query( query : string ) {
+			const res = this.exec( api => api.query( query ) )
+			console.log( 'QUERY:' , query )
+			return res
+		}
+
+	}
+
+	export class $mol_orient_record extends $mol_orient_wrapper< $lib_orientjs['ORecord'] > {
 
 		field( name : string ) {
 			return this.api()[ name ]
@@ -150,7 +159,6 @@ namespace $ {
 		}
 
 		toJSON() {
-			console.log(this.api())
 			return this.api()
 		}
 

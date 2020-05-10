@@ -16,7 +16,6 @@
 	border-spacing: 0;
 	display: table-row-group;
 	position: relative;
-	box-shadow: inset 0 0 0 .5px var(--mol_theme_line);
 }
 
 [mol_grid_table] > * {

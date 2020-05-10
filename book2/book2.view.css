@@ -7,7 +7,7 @@
 	align-self: stretch;
 	margin: 0;
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
-	transform: transformZ(0);
+	transform: translateZ(0);
 	transition: none;
 	overflow: auto;
 	scroll-snap-type: x proximity;
@@ -26,5 +26,5 @@
 
 [mol_book2_placeholder] {
 	flex: 1 1 0;
-	background: var(--mol_theme_back);
+	/* background: var(--mol_theme_back); */
 }

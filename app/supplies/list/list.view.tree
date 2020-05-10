@@ -1,13 +1,11 @@
 $mol_app_supplies_list $mol_page
 	supplies /$mol_app_supplies_domain_supply
-	sub /
-		<= Head
-		<= Search_bar $mol_float
-			sub /
-				<= Search $mol_code
-					hint <= search_hint @ \Search supply by bar code
-					value?val <=> search_query?val \
-		<= Body
+	head /
+		<= Title
+		<= Tools
+		<= Search $mol_code
+			hint <= search_hint @ \Search supply by bar code
+			value?val <=> search_query?val \
 	body /
 		<= Supply_rows $mol_list
 			rows <= supply_rows /$mol_view

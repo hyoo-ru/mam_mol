@@ -41,10 +41,11 @@ $mol_app_demo $mol_book2
 			
 $mol_app_demo_menu $mol_page
 	title @ \Demos
-	sub /
-		<= Head
+	tools /
 		<= Filter $mol_search
 			query?val <=> filter?val \
+	sub /
+		<= Head
 		<= Nav $mol_app_demo_nav
 			hierarchy <= hierarchy null
 			record!id <= option!id null

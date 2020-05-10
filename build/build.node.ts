@@ -84,7 +84,7 @@ namespace $ {
 			const res = $mol_view_tree_compile( tree )
 
 			script.text( res.script )
-			sourceMap.text( res.map )
+			// sourceMap.text( res.map )
 			locale.text( JSON.stringify( res.locales , null , '\t' ) )
 				
 			return [ script , locale ]
@@ -135,7 +135,7 @@ namespace $ {
 				}
 			)
 			
-			mods.sort( ( a , b )=> a.name().length - b.name().length )
+			//mods.sort( ( a , b )=> a.name().length - b.name().length )
 			
 			return mods
 		}
@@ -1281,6 +1281,7 @@ namespace $ {
 			
 			const data = {
 				files : list.map( src => src.relate( this.root() ) ) ,
+				mods : graph.sorted ,
 				edgesIn : graph.edgesIn ,
 				edgesOut : graph.edgesOut ,
 				sloc ,
@@ -1377,6 +1378,13 @@ namespace $ {
 		return depends
 	}
 	
+	$mol_build.dependors[ 'node.ts' ] = $mol_build.dependors[ 'web.ts' ] = source => {
+		var common = './' + source.name().replace( /\.(node|web)\.ts$/ , '.ts' )
+		var depends : { [ index : string ] : number } = { [ common ] : 0 }
+		$mol_build_depsMerge( depends , $mol_build.dependors[ 'ts' ]!( source ) )
+		return depends
+	}
+	
 	$mol_build.dependors[ 'view.css' ] = source => {
 		var treeName = './' + source.name().replace( /css$/ , 'tree' )
 		var depends : { [ index : string ] : number } = { [ treeName ] : 0 }
@@ -1426,6 +1434,12 @@ namespace $ {
 		} )
 		
 		return depends
+	}
+	
+	$mol_build.dependors[ 'view.tree' ] = source => {
+		return {
+			[`/${ source.parent().relate() }/-view.tree/${ source.name() }.ts`]: 0,
+		}
 	}
 	
 }

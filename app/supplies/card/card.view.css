@@ -2,6 +2,7 @@
 	flex: 0 1 auto;
 	position: relative;
 	display: block;
+	padding: .5rem;
 }
 
 [mol_app_supplies_card_content] {
