@@ -29,6 +29,10 @@ namespace $ {
 
 		}
 
+		toJSON() {
+			return this.message
+		}
+
 	}
 
 }

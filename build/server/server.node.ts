@@ -18,8 +18,11 @@ namespace $ {
 					if( typeof error.then === 'function' ) $mol_fail_hidden( error )
 					
 					if( $mol_fail_catch( error ) ) {
-						console.error( $node.colorette.red( `$mol_build_server fail ${ req.path }` ) )
-						console.error( $node.colorette.redBright( error ) + '\n' )
+						this.$.$mol_log3_fail({
+							place: `${this}.expressGenerator()`,
+							uri: req.path,
+							message: error.message,
+						})
 					}
 					
 					if( req.url.match( /\.js$/ ) ) {
@@ -55,7 +58,13 @@ namespace $ {
 			const [ , rawpath , bundle ] = matched
 			const mod = build.root().resolve( rawpath )
 
-			if( bundle === 'web.css' ) console.warn( $node.colorette.yellow( 'Deprecation: CSS compiles into JS bundle now! You do not need web.css' ) )
+			if( bundle === 'web.css' ) {
+				this.$.$mol_log3_warn({
+					place: `${this}.generate()`,
+					message: 'CSS compiles into JS bundle now',
+					hint: 'Remove link to web.css',
+				})
+			}
 			
 			const path = mod.path()
 
@@ -95,9 +104,11 @@ namespace $ {
 				const build = this.build()
 				const bundle = build.root().resolve( path )
 
-				const { magenta , magentaBright } = $node.colorette
-
-				console.log( magenta( `$mol_build_server connection ${ magentaBright( path ) }` ) )
+				this.$.$mol_log3_rise({
+					place: this ,
+					message: `Connect` ,
+					path ,
+				})
 
 				const autorun = $mol_atom2_autorun( ()=> {
 
@@ -114,7 +125,11 @@ namespace $ {
 					
 					if( !$mol_atom2_value( ()=> autorun.get() ) ) return true
 
-					console.log( magenta( `$mol_build_obsolete ${ magentaBright( path ) }` ) )
+					this.$.$mol_log3_rise({
+						place: `${this}`,
+						message: `$mol_build_obsolete`,
+						path
+					})
 						
 					line.send( '$mol_build_obsolete' )
 
