@@ -3094,11 +3094,15 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        const { per, rem } = $.$mol_style_unit;
+        const { per, rem, px } = $.$mol_style_unit;
         $.$mol_style_define($$.$mol_scroll, {
-            display: 'block',
+            display: 'flex',
             overflow: 'auto',
-            flex: 'auto',
+            flex: {
+                direction: 'column',
+                grow: 1,
+                shrink: 1,
+            },
             alignSelf: 'stretch',
             boxSizing: 'border-box',
             willChange: 'scroll-position',
@@ -3117,12 +3121,12 @@ var $;
             },
             '::-webkit-scrollbar-track': {
                 background: {
-                    color: $.$mol_theme.line,
+                    color: 'transparent',
                 },
             },
             '::-webkit-scrollbar-thumb': {
                 background: {
-                    color: $.$mol_theme.control,
+                    color: $.$mol_theme.current,
                 },
             },
             '@media': {
@@ -3309,9 +3313,6 @@ var $;
                 wordBreak: 'normal',
                 cursor: 'default',
                 textShadow: '0 0',
-                ':empty': {
-                    display: 'none',
-                },
             },
             Tools: {
                 flex: 'auto',
