@@ -54,10 +54,6 @@ namespace $.$$ {
 			cursor: 'default',
 			textShadow: '0 0',
 
-			':empty': {
-				display: 'none',
-			},
-	
 		},
 
 		Tools: {

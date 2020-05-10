@@ -1,14 +1,14 @@
 [mol_app_studio_preview_page] {
-	flex: 1000 1 400px; 
+	flex: 1000 0 60rem; 
 	background: var(--mol_theme_field);
 }
 
 [mol_app_studio_editor_page] {
-	flex: 1000 1 400px;
+	flex: 1000 0 40rem;
 }
 
 [mol_app_studio_source_page] {
-	flex: 1000 1 400px;
+	flex: 1000 0 40rem;
 }
 
 [mol_app_studio_crumbs] {
