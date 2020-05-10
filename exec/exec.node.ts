@@ -1,10 +1,20 @@
 namespace $ {
-	export function $mol_exec( dir : string , command : string , ...args : string[] ) {
+	export function $mol_exec(
+		this : $mol_ambient_context ,
+		dir : string ,
+		command : string ,
+		...args : string[]
+	) {
 
 		let [ app , ... args0 ] = command.split( ' ' )
 		args = [ ... args0 , ... args ]
 
-		console.info( `${ $node.colorette.gray( $node.path.relative( '' , dir ) ) }> ${ $node.colorette.blue( app ) } ${ $node.colorette.cyan( args.join( ' ' ) ) }` )
+		this.$mol_log3_come({
+			place: '$mol_exec' ,
+			dir: $node.path.relative( '' , dir ) ,
+			message: 'Run',
+			command: `${app} ${ args.join(' ') }` ,
+		})
 
 		var res = $node['child_process'].spawnSync(
 			app ,

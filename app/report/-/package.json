@@ -7,7 +7,7 @@
   "types": "web.d.ts",
   "dependencies": {
     "jsdom": "*",
-    "chokidar": "*",
-    "colorette": "*"
+    "colorette": "*",
+    "chokidar": "*"
   }
 }

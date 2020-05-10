@@ -1,6 +1,117 @@
 function require( path ){ return $node[ path ] };
 "use strict";
 var $;
+(function ($) {
+    function $mol_log(path, ...values) {
+        if ($.$mol_log_filter() == null)
+            return;
+        path = String(path);
+        if (path.indexOf($.$mol_log_filter()) === -1)
+            return;
+        const context = $.$mol_log_context();
+        if (context)
+            context();
+        console.debug(path, ...values);
+        if ($.$mol_log_debug() == null)
+            return;
+        if (path.indexOf($.$mol_log_debug()) === -1)
+            return;
+        debugger;
+    }
+    $.$mol_log = $mol_log;
+})($ || ($ = {}));
+//log.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    let context = null;
+    function $mol_log_context(next = context) {
+        return context = next;
+    }
+    $.$mol_log_context = $mol_log_context;
+})($ || ($ = {}));
+//log_context.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_log_debug(next) {
+        if (next !== undefined) {
+            if (next == null) {
+                sessionStorage.removeItem('$mol_log_debug()');
+            }
+            else {
+                sessionStorage.setItem('$mol_log_debug()', next);
+            }
+        }
+        return sessionStorage.getItem('$mol_log_debug()');
+    }
+    $.$mol_log_debug = $mol_log_debug;
+})($ || ($ = {}));
+//log_debug.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    let filter = undefined;
+    $.$mol_log_filter = function $mol_log_filter(next) {
+        if (next !== undefined) {
+            if (next == null) {
+                sessionStorage.removeItem('$mol_log_filter()');
+            }
+            else {
+                sessionStorage.setItem('$mol_log_filter()', next);
+            }
+            filter = next;
+        }
+        if (filter !== undefined)
+            return filter;
+        return filter = sessionStorage.getItem('$mol_log_filter()');
+    };
+    if (typeof sessionStorage === 'undefined')
+        $.$mol_log_filter = (next = null) => filter = next;
+    if ($.$mol_log_filter() == null)
+        console.info('Use $mol_log_filter( needle : string|null ) to toggle logs');
+})($ || ($ = {}));
+//log_filter.web.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_log_group(name, task) {
+        const filter = $.$mol_log_filter();
+        if (filter == null)
+            return task;
+        return function $mol_log_group_wrapper(...args) {
+            let started = false;
+            let prev = $.$mol_log_context();
+            $.$mol_log_context(() => {
+                if (prev)
+                    prev();
+                started = true;
+                if (filter || prev)
+                    console.group(name);
+                else
+                    console.groupCollapsed(name);
+                $.$mol_log_context(prev = null);
+            });
+            try {
+                return task.apply(this, args);
+            }
+            finally {
+                if (started)
+                    console.groupEnd();
+                $.$mol_log_context(prev);
+            }
+        };
+    }
+    $.$mol_log_group = $mol_log_group;
+})($ || ($ = {}));
+//log_group.js.map
+;
+"use strict";
+var $;
 (function ($_1) {
     let $$;
     (function ($$) {
@@ -24,7 +135,11 @@ var $;
                 await mock(context);
             await test(context);
         }
-        console.info('$mol_test completed', $_1.$mol_test_all.length);
+        $_1.$mol_ambient({}).$mol_log3_done({
+            place: '$mol_test',
+            message: 'Completed',
+            count: $_1.$mol_test_all.length,
+        });
     }
     $_1.$mol_test_run = $mol_test_run;
     let scheduled = false;
@@ -78,6 +193,20 @@ var $;
     });
 })($ || ($ = {}));
 //test.test.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
+    $_1.$mol_test_mocks.push($ => {
+        $.$mol_log3_come = () => { };
+        $.$mol_log3_done = () => { };
+        $.$mol_log3_fail = () => { };
+        $.$mol_log3_warn = () => { };
+        $.$mol_log3_rise = () => { };
+        $.$mol_log3_area = () => () => { };
+    });
+})($ || ($ = {}));
+//log3.test.js.map
 ;
 "use strict";
 //assert.test.js.map
@@ -616,35 +745,6 @@ var $;
     });
 })($ || ($ = {}));
 //wrapper.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'all cases of using maybe'() {
-            $.$mol_assert_equal($.$mol_maybe(0)[0], 0);
-            $.$mol_assert_equal($.$mol_maybe(false)[0], false);
-            $.$mol_assert_equal($.$mol_maybe(null)[0], void 0);
-            $.$mol_assert_equal($.$mol_maybe(void 0)[0], void 0);
-            $.$mol_assert_equal($.$mol_maybe(void 0).map(v => v.toString())[0], void 0);
-            $.$mol_assert_equal($.$mol_maybe(0).map(v => v.toString())[0], '0');
-        },
-    });
-})($ || ($ = {}));
-//maybe.test.js.map
-;
-"use strict";
-var $;
-(function ($_1) {
-    $_1.$mol_test_mocks.push($ => {
-        var _a;
-        $.$mol_log2 = (_a = class extends $_1.$mol_log2 {
-            },
-            _a.current = new $_1.$mol_log2(null, '$mol_log2_mock', []),
-            _a);
-    });
-})($ || ($ = {}));
-//log2.test.js.map
 ;
 "use strict";
 var $;
@@ -1412,7 +1512,11 @@ var $;
         pull() {
             if (this.cursor === 0)
                 return super.pull();
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_revalidation);
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_come({
+                    place: this,
+                    message: 'Check doubt masters',
+                });
             const masters = this.masters;
             for (let index = 0; index < masters.length; index += 2) {
                 const master = masters[index];
@@ -1428,10 +1532,18 @@ var $;
                 }
                 if (this.cursor !== 0)
                     continue;
-                this.$.$mol_log2.info(this, $.$mol_atom2_token_stumbled, this._error || this._value);
+                if ($mol_atom2.logs)
+                    this.$.$mol_log3_done({
+                        place: this,
+                        message: 'Obsoleted while checking',
+                    });
                 return super.pull();
             }
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_revalidated, this._error || this._value);
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_done({
+                    place: this,
+                    message: 'Masters not changed',
+                });
             this.cursor = -2;
         }
         get value() { return this._value; }
@@ -1478,7 +1590,12 @@ var $;
             return master.lead(this, master_index);
         }
         lead(slave, master_index) {
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_leaded, slave);
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Leads',
+                    slave,
+                });
             const slave_index = this.slaves.length;
             this.slaves[slave_index] = slave;
             this.slaves[slave_index + 1] = master_index;
@@ -1487,7 +1604,12 @@ var $;
         dislead(slave_index) {
             if (slave_index < 0)
                 return;
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_disleaded, this.slaves[slave_index]);
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Disleads',
+                    slave: this.slaves[slave_index],
+                });
             this.slaves[slave_index] = undefined;
             this.slaves[slave_index + 1] = undefined;
             $.$mol_array_trim(this.slaves);
@@ -1508,7 +1630,11 @@ var $;
             }
             if (this.cursor === 0)
                 return;
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_obsoleted, this._error || this._value);
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Obsoleted',
+                });
             if (this.cursor !== -1)
                 this.doubt_slaves();
             this.cursor = 0;
@@ -1527,7 +1653,11 @@ var $;
             }
             if (this.cursor >= -1)
                 return;
-            this.$.$mol_log2.info(this, $.$mol_atom2_token_doubted, this._error || this._value);
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Doubted',
+                });
             this.cursor = -1;
             this.doubt_slaves();
         }
@@ -1546,12 +1676,12 @@ var $;
             }
         }
         get fresh() {
-            return $.$mol_log2_hidden.func(() => {
+            return () => {
                 if (this.cursor !== -2)
                     return;
                 this.cursor = 0;
                 $.$mol_fiber_solid.run(() => this.update());
-            });
+            };
         }
         get alone() {
             return this.slaves.length === 0;
@@ -1566,37 +1696,22 @@ var $;
         destructor() {
             if (!this.abort())
                 return;
-            this.$.$mol_log2.info(this, $.$mol_fiber_token_destructed);
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Destructed'
+                });
             this.cursor = -3;
             for (let index = 0; index < this.masters.length; index += 2) {
                 this.complete_master(index);
             }
         }
     }
+    $mol_atom2.logs = false;
     $mol_atom2.cached = false;
     $mol_atom2.reap_task = null;
     $mol_atom2.reap_queue = [];
-    __decorate([
-        $.$mol_log2_indent.method
-    ], $mol_atom2.prototype, "obsolete_slaves", null);
-    __decorate([
-        $.$mol_log2_indent.method
-    ], $mol_atom2.prototype, "doubt_slaves", null);
     $.$mol_atom2 = $mol_atom2;
-    $.$mol_atom2_token_revalidation = new $.$mol_log2_token(' ⏭ ');
-    $.$mol_atom2_token_stumbled = new $.$mol_log2_token(' ⏯ ');
-    $.$mol_atom2_token_revalidated = new $.$mol_log2_token(' ✔ ');
-    $.$mol_atom2_token_leaded = new $.$mol_log2_token(' ☍ ');
-    $.$mol_atom2_token_disleaded = new $.$mol_log2_token(' ☌ ');
-    $.$mol_atom2_token_obsoleted = new $.$mol_log2_token(' ✘ ');
-    $.$mol_atom2_token_doubted = new $.$mol_log2_token(' � ');
-    $.$mol_log2_legend.info($.$mol_atom2_token_revalidation, '$mol_atom2 starts masters cheking for changes');
-    $.$mol_log2_legend.info($.$mol_atom2_token_stumbled, '$mol_atom2 is obsoleted while masters checking');
-    $.$mol_log2_legend.info($.$mol_atom2_token_revalidated, '$mol_atom2 is actual becasue there is no changed masters');
-    $.$mol_log2_legend.info($.$mol_atom2_token_leaded, '$mol_atom2 leads some slave');
-    $.$mol_log2_legend.info($.$mol_atom2_token_disleaded, '$mol_atom2 disleads some slave');
-    $.$mol_log2_legend.info($.$mol_atom2_token_obsoleted, '$mol_atom2 is obsoleted because some master is changed');
-    $.$mol_log2_legend.info($.$mol_atom2_token_doubted, '$mol_atom2 is doubted because some master is doubted or obsoleted');
 })($ || ($ = {}));
 //atom2.js.map
 ;
@@ -2083,6 +2198,9 @@ var $;
                 this.stack = `Error: ${this.constructor.name}\n\tat (.) /"""\\\n${tails}\n\tat (.) \\___/\n${head}`;
                 this.message += errors.map(error => '\n' + error.message).join('');
             }
+        }
+        toJSON() {
+            return this.message;
         }
     }
     $.$mol_error_mix = $mol_error_mix;

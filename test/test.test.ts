@@ -29,7 +29,12 @@ namespace $ {
 			await test( context )
 		}
 		
-		console.info( '$mol_test completed' , $mol_test_all.length )
+		$mol_ambient({}).$mol_log3_done({
+			place : '$mol_test' , 
+			message : 'Completed' ,
+			count : $mol_test_all.length ,
+		})
+		
 	}
 	
 	let scheduled = false

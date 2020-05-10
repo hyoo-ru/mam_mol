@@ -2,20 +2,45 @@ declare namespace $ { }
 export = $;
 
 declare namespace $ {
-    function $mol_fail(error: any): never;
-}
-
-declare namespace $ {
-    function $mol_fail_hidden(error: any): never;
-}
-
-declare namespace $ {
     namespace $$ {
         let $$: typeof $;
     }
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = (typeof globalThis) & (typeof $.$$) & (typeof $);
     function $mol_ambient(this: $mol_ambient_context | void, overrides: Partial<$mol_ambient_context>): $mol_ambient_context;
+}
+
+declare namespace $ {
+    type $mol_log3_event<Fields> = {
+        [key in string]: unknown;
+    } & {
+        time?: string;
+        place: unknown;
+        message: string;
+    } & Fields;
+    type $mol_log3_logger<Fields, Res = void> = (this: $mol_ambient_context, event: $mol_log3_event<Fields>) => Res;
+    let $mol_log3_come: $mol_log3_logger<{}>;
+    let $mol_log3_done: $mol_log3_logger<{}>;
+    let $mol_log3_fail: $mol_log3_logger<{}>;
+    let $mol_log3_warn: $mol_log3_logger<{
+        hint: string;
+    }>;
+    let $mol_log3_rise: $mol_log3_logger<{}>;
+    let $mol_log3_area: $mol_log3_logger<{}, () => void>;
+    function $mol_log3_area_lazy(this: $mol_ambient_context, event: $mol_log3_event<{}>): () => void;
+    let $mol_log3_stack: (() => void)[];
+}
+
+declare namespace $ {
+    function $mol_log3_web_make<Close>(level: keyof Console, color: string): (this: $mol_ambient_context, event: $mol_log3_event<{}>) => () => void;
+}
+
+declare namespace $ {
+    function $mol_fail(error: any): never;
+}
+
+declare namespace $ {
+    function $mol_fail_hidden(error: any): never;
 }
 
 declare namespace $ {
@@ -65,99 +90,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_dev_format_register(config: {
-        header: (val: any, config: any) => any;
-        hasBody: (val: any, config: any) => false;
-    } | {
-        header: (val: any, config: any) => any;
-        hasBody: (val: any, config: any) => boolean;
-        body: (val: any, config: any) => any;
-    }): void;
-    let $mol_dev_format_head: symbol;
-    let $mol_dev_format_body: symbol;
-    function $mol_dev_format_native(obj: any): any;
-    function $mol_dev_format_auto(obj: any): any;
-    function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
-    function $mol_dev_format_span(style: object, ...content: any[]): any[];
-    let $mol_dev_format_div: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_ol: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_li: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_table: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_tr: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_td: (style: object, ...content: any[]) => any[];
-    let $mol_dev_format_accent: (...args: any[]) => any[];
-    let $mol_dev_format_strong: (...args: any[]) => any[];
-    let $mol_dev_format_string: (...args: any[]) => any[];
-    let $mol_dev_format_shade: (...args: any[]) => any[];
-    let $mol_dev_format_indent: (...args: any[]) => any[];
-}
-
-declare namespace $ {
-    function $mol_maybe<Value>(value: Value | null | undefined): Value[];
-}
-
-declare namespace $ {
-    function $mol_log(path: any, ...values: any[]): void;
-}
-
-declare namespace $ {
-    function $mol_log_context(next?: (() => void) | null): (() => void) | null;
-}
-
-declare namespace $ {
-    function $mol_log_debug(next?: string): string | null;
-}
-
-declare namespace $ {
-    var $mol_log_filter: (next?: string | null | undefined) => string | null;
-}
-
-declare namespace $ {
-    function $mol_log_group<Task extends Function, This>(name: string, task: Task): Task;
-}
-
-declare namespace $ {
-    class $mol_log2 extends $mol_wrapper {
-        readonly host: any;
-        readonly id: string;
-        readonly args: any[];
-        static current: $mol_log2 | null;
-        static wrap<This extends {
-            $: $mol_ambient_context;
-        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
-        constructor(host: any, id: string, args: any[]);
-        stream: $mol_log2_line[];
-        flush(): void;
-        info(...values: any[]): void;
-        static info(...values: any[]): void;
-        static excludes: (RegExp | undefined)[] | null;
-        static prefix: any[];
-    }
-    class $mol_log2_indent extends $mol_wrapper {
-        static wrap<This extends {
-            $: $mol_ambient_context;
-        }, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
-    }
-    class $mol_log2_table extends $mol_log2 {
-    }
-    class $mol_log2_hidden extends $mol_log2 {
-        flush(): void;
-    }
-    class $mol_log2_line extends Array<any> {
-        constructor(...items: any[]);
-    }
-    class $mol_log2_token extends Array<any> {
-        constructor(...items: any[]);
-    }
-    let $mol_log2_token_empty: $mol_log2_token;
-    let $mol_log2_token_indent: $mol_log2_token;
-    let $mol_log2_legend: $mol_log2_table;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_after_tick extends $mol_object2 {
         task: () => void;
         promise: any;
@@ -189,6 +121,34 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_dev_format_register(config: {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => false;
+    } | {
+        header: (val: any, config: any) => any;
+        hasBody: (val: any, config: any) => boolean;
+        body: (val: any, config: any) => any;
+    }): void;
+    let $mol_dev_format_head: symbol;
+    let $mol_dev_format_body: symbol;
+    function $mol_dev_format_native(obj: any): any;
+    function $mol_dev_format_auto(obj: any): any;
+    function $mol_dev_format_element(element: string, style: object, ...content: any[]): any[];
+    function $mol_dev_format_span(style: object, ...content: any[]): any[];
+    let $mol_dev_format_div: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_ol: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_li: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_table: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_tr: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_td: (style: object, ...content: any[]) => any[];
+    let $mol_dev_format_accent: (...args: any[]) => any[];
+    let $mol_dev_format_strong: (...args: any[]) => any[];
+    let $mol_dev_format_string: (...args: any[]) => any[];
+    let $mol_dev_format_shade: (...args: any[]) => any[];
+    let $mol_dev_format_indent: (...args: any[]) => any[];
+}
+
+declare namespace $ {
     const enum $mol_fiber_status {
         persist = -3,
         actual = -2,
@@ -208,6 +168,7 @@ declare namespace $ {
         static func<This, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
     }
     class $mol_fiber<Value = any> extends $mol_wrapper {
+        static logs: boolean;
         static wrap<Func extends (...args: any[]) => any>(task: Func): (this: ThisParameterType<Func>, ...args: Parameters<Func>) => any;
         static quant: number;
         static deadline: number;
@@ -225,7 +186,7 @@ declare namespace $ {
         schedule(): void;
         wake(): Value | undefined;
         push(value: Value): Value;
-        fail(error: Error | PromiseLike<Value>): Error | PromiseLike<Value>;
+        fail(error: Error): Error;
         wait(promise: PromiseLike<Value>): PromiseLike<Value>;
         complete(): void;
         complete_master(master_index: number): void;
@@ -246,13 +207,6 @@ declare namespace $ {
         abort(): boolean;
         destructor(): void;
     }
-    let $mol_fiber_token_runned: $mol_log2_token;
-    let $mol_fiber_token_changed1: $mol_log2_token;
-    let $mol_fiber_token_changed2: $mol_log2_token;
-    let $mol_fiber_token_actualized: $mol_log2_token;
-    let $mol_fiber_token_sleeped: $mol_log2_token;
-    let $mol_fiber_token_failed: $mol_log2_token;
-    let $mol_fiber_token_destructed: $mol_log2_token;
 }
 
 declare namespace $ {

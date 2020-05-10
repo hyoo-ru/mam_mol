@@ -14,25 +14,23 @@ namespace $ {
 				element = element.parentNode as HTMLElement
 			}
 
-			new $mol_defer( $mol_log2.func( ()=> {
+			new $mol_defer( ()=> {
 
 				const element = $mol_mem_cached( ()=> this.focused() )![0] as HTMLElement
 				
 				if( element ) element.focus()
 				else $mol_dom_context.blur()
 
-			} ) )
+			} )
 
 			return parents
 		}
 		
-		@ $mol_log2.method
 		static focus( event : FocusEvent ) {
 			this.focused( [ event.target as Element ] )
 
 		}
 		
-		@ $mol_log2.method
 		static blur( event : FocusEvent ) {
 			const elements = $mol_mem_cached( ()=> this.focused() )
 			if( elements && elements[0] === event.target ) this.focused( [] )

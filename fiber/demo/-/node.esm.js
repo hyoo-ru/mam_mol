@@ -32,26 +32,6 @@ $node[ "../mol/mol" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {
 "use strict";
 var $;
 (function ($) {
-    function $mol_fail(error) {
-        throw error;
-    }
-    $.$mol_fail = $mol_fail;
-})($ || ($ = {}));
-//fail.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_fail_hidden(error) {
-        throw error;
-    }
-    $.$mol_fail_hidden = $mol_fail_hidden;
-})($ || ($ = {}));
-//hidden.js.map
-;
-"use strict";
-var $;
-(function ($) {
     let $$;
     (function ($$_1) {
     })($$ = $.$$ || ($.$$ = {}));
@@ -62,6 +42,58 @@ var $;
     $.$mol_ambient = $mol_ambient;
 })($ || ($ = {}));
 //ambient.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_log3_area_lazy(event) {
+        const self = this;
+        const stack = self.$mol_log3_stack;
+        const deep = stack.length;
+        let logged = false;
+        stack.push(() => {
+            logged = true;
+            self.$mol_log3_area.call(self, event);
+        });
+        return () => {
+            if (logged)
+                self.console.groupEnd();
+            if (stack.length > deep)
+                stack.length = deep;
+        };
+    }
+    $.$mol_log3_area_lazy = $mol_log3_area_lazy;
+    $.$mol_log3_stack = [];
+})($ || ($ = {}));
+//log3.js.map
+;
+"use strict";
+var $node = new Proxy({}, { get(target, name, wrapper) {
+        const path = require('path');
+        const fs = require('fs');
+        const mod = require('module');
+        if (mod.builtinModules.indexOf(name) >= 0)
+            return require(name);
+        let dir = path.resolve('.');
+        const suffix = `./node_modules/${name}`;
+        const $$ = $;
+        while (!fs.existsSync(path.join(dir, suffix))) {
+            const parent = path.resolve(dir, '..');
+            if (parent === dir) {
+                $$.$mol_exec('.', 'npm', 'install', name);
+                try {
+                    $$.$mol_exec('.', 'npm', 'install', '@types/' + name);
+                }
+                catch (_a) { }
+                break;
+            }
+            else {
+                dir = parent;
+            }
+        }
+        return require(name);
+    } });
+//node.node.js.map
 ;
 "use strict";
 var $;
@@ -113,6 +145,26 @@ var $;
 //owning.js.map
 ;
 "use strict";
+var $;
+(function ($) {
+    function $mol_fail(error) {
+        throw error;
+    }
+    $.$mol_fail = $mol_fail;
+})($ || ($ = {}));
+//fail.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_hidden(error) {
+        throw error;
+    }
+    $.$mol_fail_hidden = $mol_fail_hidden;
+})($ || ($ = {}));
+//hidden.js.map
+;
+"use strict";
 //writable.js.map
 ;
 "use strict";
@@ -157,6 +209,373 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_deprecated(message) {
+        return (host, field, descr) => {
+            const value = descr.value;
+            let warned = false;
+            descr.value = function $mol_deprecated_wrapper(...args) {
+                if (!warned) {
+                    this.$.$mol_log3_warn({
+                        place: `${host.constructor.name}::${field}`,
+                        message: `Deprecated`,
+                        hint: message,
+                    });
+                    warned = true;
+                }
+                return value.call(this, ...args);
+            };
+        };
+    }
+    $.$mol_deprecated = $mol_deprecated;
+})($ || ($ = {}));
+//deprecated.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_tree_convert = Symbol('$mol_tree_convert');
+    class $mol_tree extends $.$mol_object2 {
+        constructor(config = {}) {
+            super();
+            this.type = config.type || '';
+            if (config.value !== undefined) {
+                var sub = $mol_tree.values(config.value);
+                if (config.type || sub.length > 1) {
+                    this.sub = [...sub, ...(config.sub || [])];
+                    this.data = config.data || '';
+                }
+                else {
+                    this.data = sub[0].data;
+                    this.sub = config.sub || [];
+                }
+            }
+            else {
+                this.data = config.data || '';
+                this.sub = config.sub || [];
+            }
+            this.baseUri = config.baseUri || '';
+            this.row = config.row || 0;
+            this.col = config.col || 0;
+        }
+        static values(str, baseUri) {
+            return str.split('\n').map((data, index) => new $mol_tree({
+                data: data,
+                baseUri: baseUri,
+                row: index + 1
+            }));
+        }
+        clone(config = {}) {
+            return new $mol_tree({
+                type: ('type' in config) ? config.type : this.type,
+                data: ('data' in config) ? config.data : this.data,
+                sub: ('sub' in config) ? config.sub : this.sub,
+                baseUri: ('baseUri' in config) ? config.baseUri : this.baseUri,
+                row: ('row' in config) ? config.row : this.row,
+                col: ('col' in config) ? config.col : this.col,
+                value: config.value
+            });
+        }
+        make(config) {
+            return new $mol_tree(Object.assign({ baseUri: this.baseUri, row: this.row, col: this.col }, config));
+        }
+        make_data(value, sub) {
+            return this.make({ value, sub });
+        }
+        make_struct(type, sub) {
+            return this.make({ type, sub });
+        }
+        static fromString(str, baseUri) {
+            var root = new $mol_tree({ baseUri: baseUri });
+            var stack = [root];
+            var row = 0;
+            var prefix = str.replace(/^\n?(\t*)[\s\S]*/, '$1');
+            var lines = str.replace(new RegExp('^\\t{0,' + prefix.length + '}', 'mg'), '').split('\n');
+            lines.forEach(line => {
+                ++row;
+                var chunks = /^(\t*)((?:[^\n\t\\ ]+ *)*)(\\[^\n]*)?(.*?)(?:$|\n)/m.exec(line);
+                if (!chunks || chunks[4])
+                    return this.$.$mol_fail(new Error(`Syntax error at ${baseUri}:${row}\n${line}`));
+                var indent = chunks[1];
+                var path = chunks[2];
+                var data = chunks[3];
+                var deep = indent.length;
+                var types = path ? path.replace(/ $/, '').split(/ +/) : [];
+                if (stack.length <= deep)
+                    return this.$.$mol_fail(new Error(`Too many tabs at ${baseUri}:${row}\n${line}`));
+                stack.length = deep + 1;
+                var parent = stack[deep];
+                let col = deep;
+                types.forEach(type => {
+                    if (!type)
+                        return this.$.$mol_fail(new Error(`Unexpected space symbol ${baseUri}:${row}\n${line}`));
+                    var next = new $mol_tree({ type, baseUri, row, col });
+                    const parent_sub = parent.sub;
+                    parent_sub.push(next);
+                    parent = next;
+                    col += type.length + 1;
+                });
+                if (data) {
+                    var next = new $mol_tree({ data: data.substring(1), baseUri, row, col });
+                    const parent_sub = parent.sub;
+                    parent_sub.push(next);
+                    parent = next;
+                }
+                stack.push(parent);
+            });
+            return root;
+        }
+        static fromJSON(json, baseUri = '') {
+            switch (true) {
+                case typeof json === 'boolean':
+                case typeof json === 'number':
+                case json === null:
+                    return new $mol_tree({
+                        type: String(json),
+                        baseUri: baseUri
+                    });
+                case typeof json === 'string':
+                    return new $mol_tree({
+                        value: json,
+                        baseUri: baseUri
+                    });
+                case Array.isArray(json):
+                    return new $mol_tree({
+                        type: "/",
+                        sub: json.map(json => $mol_tree.fromJSON(json, baseUri))
+                    });
+                case json instanceof Date:
+                    return new $mol_tree({
+                        value: json.toISOString(),
+                        baseUri: baseUri
+                    });
+                default:
+                    if (typeof json[$.$mol_tree_convert] === 'function') {
+                        return json[$.$mol_tree_convert]();
+                    }
+                    if (typeof json.toJSON === 'function') {
+                        return $mol_tree.fromJSON(json.toJSON());
+                    }
+                    if (json instanceof Error) {
+                        const { name, message, stack } = json;
+                        json = Object.assign(Object.assign({}, json), { name, message, stack });
+                    }
+                    var sub = [];
+                    for (var key in json) {
+                        if (json[key] === undefined)
+                            continue;
+                        const subsub = $mol_tree.fromJSON(json[key], baseUri);
+                        if (/^[^\n\t\\ ]+$/.test(key)) {
+                            var child = new $mol_tree({
+                                type: key,
+                                baseUri: baseUri,
+                                sub: [subsub],
+                            });
+                        }
+                        else {
+                            var child = new $mol_tree({
+                                value: key,
+                                baseUri: baseUri,
+                                sub: [subsub],
+                            });
+                        }
+                        sub.push(child);
+                    }
+                    return new $mol_tree({
+                        type: "*",
+                        sub: sub,
+                        baseUri: baseUri
+                    });
+            }
+        }
+        get uri() {
+            return this.baseUri + '#' + this.row + ':' + this.col;
+        }
+        toString(prefix = '') {
+            var output = '';
+            if (this.type.length) {
+                if (!prefix.length) {
+                    prefix = "\t";
+                }
+                output += this.type;
+                if (this.sub.length == 1) {
+                    return output + ' ' + this.sub[0].toString(prefix);
+                }
+                output += "\n";
+            }
+            else if (this.data.length || prefix.length) {
+                output += "\\" + this.data + "\n";
+            }
+            for (var child of this.sub) {
+                output += prefix;
+                output += child.toString(prefix + "\t");
+            }
+            return output;
+        }
+        toJSON() {
+            if (!this.type)
+                return this.value;
+            if (this.type === 'true')
+                return true;
+            if (this.type === 'false')
+                return false;
+            if (this.type === 'null')
+                return null;
+            if (this.type === '*') {
+                var obj = {};
+                for (var child of this.sub) {
+                    if (child.type === '-')
+                        continue;
+                    var key = child.type || child.clone({ sub: child.sub.slice(0, child.sub.length - 1) }).value;
+                    var val = child.sub[child.sub.length - 1].toJSON();
+                    if (val !== undefined)
+                        obj[key] = val;
+                }
+                return obj;
+            }
+            if (this.type === '/') {
+                var res = [];
+                this.sub.forEach(child => {
+                    if (child.type === '-')
+                        return;
+                    var val = child.toJSON();
+                    if (val !== undefined)
+                        res.push(val);
+                });
+                return res;
+            }
+            if (this.type === 'time') {
+                return new Date(this.value);
+            }
+            if (String(Number(this.type)) == this.type.trim())
+                return Number(this.type);
+            throw new Error(`Unknown type (${this.type}) at ${this.uri}`);
+        }
+        get value() {
+            var values = [];
+            for (var child of this.sub) {
+                if (child.type)
+                    continue;
+                values.push(child.value);
+            }
+            return this.data + values.join("\n");
+        }
+        insert(value, ...path) {
+            if (path.length === 0)
+                return value;
+            const type = path[0];
+            if (typeof type === 'string') {
+                let replaced = false;
+                const sub = this.sub.map((item, index) => {
+                    if (item.type !== type)
+                        return item;
+                    replaced = true;
+                    return item.insert(value, ...path.slice(1));
+                });
+                if (!replaced)
+                    sub.push(new $mol_tree({ type }).insert(value, ...path.slice(1)));
+                return this.clone({ sub });
+            }
+            else if (typeof type === 'number') {
+                const sub = this.sub.slice();
+                sub[type] = (sub[type] || new $mol_tree).insert(value, ...path.slice(1));
+                return this.clone({ sub });
+            }
+            else {
+                return this.clone({ sub: ((this.sub.length === 0) ? [new $mol_tree()] : this.sub).map(item => item.insert(value, ...path.slice(1))) });
+            }
+        }
+        select(...path) {
+            var next = [this];
+            for (var type of path) {
+                if (!next.length)
+                    break;
+                var prev = next;
+                next = [];
+                for (var item of prev) {
+                    switch (typeof (type)) {
+                        case 'string':
+                            for (var child of item.sub) {
+                                if (!type || (child.type == type)) {
+                                    next.push(child);
+                                }
+                            }
+                            break;
+                        case 'number':
+                            if (type < item.sub.length)
+                                next.push(item.sub[type]);
+                            break;
+                        default: next.push(...item.sub);
+                    }
+                }
+            }
+            return new $mol_tree({ sub: next });
+        }
+        filter(path, value) {
+            var sub = this.sub.filter(function (item) {
+                var found = item.select(...path);
+                if (value == null) {
+                    return Boolean(found.sub.length);
+                }
+                else {
+                    return found.sub.some(child => child.value == value);
+                }
+            });
+            return new $mol_tree({ sub: sub });
+        }
+        transform(visit, stack = []) {
+            const sub_stack = [this, ...stack];
+            return visit(sub_stack, () => this.sub.map(node => node.transform(visit, sub_stack)).filter(n => n));
+        }
+        hack(context) {
+            const sub = [].concat(...this.sub.map(child => {
+                const handle = context[child.type] || context[''];
+                if (!handle)
+                    $.$mol_fail(child.error('Handler not defined'));
+                return handle(child, context);
+            }));
+            return this.clone({ sub });
+        }
+        error(message) {
+            return new Error(`${message}:\n${this} ${this.baseUri}:${this.row}:${this.col}`);
+        }
+    }
+    __decorate([
+        $.$mol_deprecated('Use $mol_tree:hack')
+    ], $mol_tree.prototype, "transform", null);
+    $.$mol_tree = $mol_tree;
+})($ || ($ = {}));
+//tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_log3_node_make(level, output, type, color) {
+        return function $mol_log3_logger(event) {
+            if (!event.time)
+                event = Object.assign({ time: new Date().toISOString() }, event);
+            const tree = this.$mol_tree.fromJSON(event).clone({ type });
+            let str = tree.toString();
+            if (process[output].isTTY) {
+                str = $node.colorette[color + 'Bright'](str);
+            }
+            this.console[level](str);
+            const self = this;
+            return () => self.console.groupEnd();
+        };
+    }
+    $.$mol_log3_node_make = $mol_log3_node_make;
+    $.$mol_log3_come = $mol_log3_node_make('info', 'stdout', 'come', 'blue');
+    $.$mol_log3_done = $mol_log3_node_make('info', 'stdout', 'done', 'green');
+    $.$mol_log3_fail = $mol_log3_node_make('error', 'stderr', 'fail', 'red');
+    $.$mol_log3_warn = $mol_log3_node_make('warn', 'stderr', 'warn', 'yellow');
+    $.$mol_log3_rise = $mol_log3_node_make('log', 'stdout', 'rise', 'magenta');
+    $.$mol_log3_area = $mol_log3_node_make('log', 'stdout', 'area', 'cyan');
+})($ || ($ = {}));
+//log3.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_wrapper extends $.$mol_object2 {
         static run(task) {
             return this.func(task)();
@@ -190,313 +609,6 @@ var $;
     $.$mol_wrapper = $mol_wrapper;
 })($ || ($ = {}));
 //wrapper.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $['devtoolsFormatters'] = $['devtoolsFormatters'] || [];
-    function $mol_dev_format_register(config) {
-        $['devtoolsFormatters'].push(config);
-    }
-    $.$mol_dev_format_register = $mol_dev_format_register;
-    $.$mol_dev_format_head = Symbol('$mol_dev_format_head');
-    $.$mol_dev_format_body = Symbol('$mol_dev_format_body');
-    $mol_dev_format_register({
-        header: (val, config = false) => {
-            if (config)
-                return null;
-            if (!val)
-                return null;
-            if ($.$mol_dev_format_head in val) {
-                return val[$.$mol_dev_format_head]();
-            }
-            return null;
-        },
-        hasBody: val => val[$.$mol_dev_format_body],
-        body: val => val[$.$mol_dev_format_body](),
-    });
-    function $mol_dev_format_native(obj) {
-        if (typeof obj === 'undefined')
-            return $.$mol_dev_format_shade('undefined');
-        if (typeof obj !== 'object')
-            return obj;
-        return [
-            'object',
-            {
-                object: obj,
-                config: true,
-            },
-        ];
-    }
-    $.$mol_dev_format_native = $mol_dev_format_native;
-    function $mol_dev_format_auto(obj) {
-        if (obj == null)
-            return $.$mol_dev_format_shade(String(obj));
-        if (typeof obj === 'object' && $.$mol_dev_format_head in obj) {
-            return obj[$.$mol_dev_format_head]();
-        }
-        return [
-            'object',
-            {
-                object: obj,
-                config: false,
-            },
-        ];
-    }
-    $.$mol_dev_format_auto = $mol_dev_format_auto;
-    function $mol_dev_format_element(element, style, ...content) {
-        const styles = [];
-        for (let key in style)
-            styles.push(`${key} : ${style[key]}`);
-        return [
-            element,
-            {
-                style: styles.join(' ; '),
-            },
-            ...content,
-        ];
-    }
-    $.$mol_dev_format_element = $mol_dev_format_element;
-    function $mol_dev_format_span(style, ...content) {
-        return $mol_dev_format_element('span', Object.assign({ 'vertical-align': '8%' }, style), ...content);
-    }
-    $.$mol_dev_format_span = $mol_dev_format_span;
-    $.$mol_dev_format_div = $mol_dev_format_element.bind(null, 'div');
-    $.$mol_dev_format_ol = $mol_dev_format_element.bind(null, 'ol');
-    $.$mol_dev_format_li = $mol_dev_format_element.bind(null, 'li');
-    $.$mol_dev_format_table = $mol_dev_format_element.bind(null, 'table');
-    $.$mol_dev_format_tr = $mol_dev_format_element.bind(null, 'tr');
-    $.$mol_dev_format_td = $mol_dev_format_element.bind(null, 'td');
-    $.$mol_dev_format_accent = $mol_dev_format_span.bind(null, {
-        'color': 'magenta',
-    });
-    $.$mol_dev_format_strong = $mol_dev_format_span.bind(null, {
-        'font-weight': 'bold',
-    });
-    $.$mol_dev_format_string = $mol_dev_format_span.bind(null, {
-        'color': 'green',
-    });
-    $.$mol_dev_format_shade = $mol_dev_format_span.bind(null, {
-        'color': 'gray',
-    });
-    $.$mol_dev_format_indent = $.$mol_dev_format_div.bind(null, {
-        'margin-left': '13px'
-    });
-})($ || ($ = {}));
-//format.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_maybe(value) {
-        return (value == null) ? [] : [value];
-    }
-    $.$mol_maybe = $mol_maybe;
-})($ || ($ = {}));
-//maybe.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_log(path, ...values) {
-        if ($.$mol_log_filter() == null)
-            return;
-        path = String(path);
-        if (path.indexOf($.$mol_log_filter()) === -1)
-            return;
-        const context = $.$mol_log_context();
-        if (context)
-            context();
-        console.debug(path, ...values);
-        if ($.$mol_log_debug() == null)
-            return;
-        if (path.indexOf($.$mol_log_debug()) === -1)
-            return;
-        debugger;
-    }
-    $.$mol_log = $mol_log;
-})($ || ($ = {}));
-//log.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    let context = null;
-    function $mol_log_context(next = context) {
-        return context = next;
-    }
-    $.$mol_log_context = $mol_log_context;
-})($ || ($ = {}));
-//log_context.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    let debug;
-    function $mol_log_debug(next = debug) {
-        return debug = next;
-    }
-    $.$mol_log_debug = $mol_log_debug;
-})($ || ($ = {}));
-//log_debug.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    let filter;
-    $.$mol_log_filter = function $mol_log_filter(next = filter) {
-        return filter = next;
-    };
-})($ || ($ = {}));
-//log_filter.node.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_log_group(name, task) {
-        const filter = $.$mol_log_filter();
-        if (filter == null)
-            return task;
-        return function $mol_log_group_wrapper(...args) {
-            let started = false;
-            let prev = $.$mol_log_context();
-            $.$mol_log_context(() => {
-                if (prev)
-                    prev();
-                started = true;
-                if (filter || prev)
-                    console.group(name);
-                else
-                    console.groupCollapsed(name);
-                $.$mol_log_context(prev = null);
-            });
-            try {
-                return task.apply(this, args);
-            }
-            finally {
-                if (started)
-                    console.groupEnd();
-                $.$mol_log_context(prev);
-            }
-        };
-    }
-    $.$mol_log_group = $mol_log_group;
-})($ || ($ = {}));
-//log_group.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_log2 extends $.$mol_wrapper {
-        constructor(host, id, args) {
-            super();
-            this.host = host;
-            this.id = id;
-            this.args = args;
-            this.stream = [];
-            this[Symbol.toStringTag] = host ? `${host}.${id}` : id;
-        }
-        static wrap(task) {
-            const Inner = this;
-            const wrapped = function (...args) {
-                const outer = $mol_log2.current;
-                const inner = $mol_log2.current = new Inner(this, task.name, args);
-                try {
-                    return task.call(this, ...args);
-                }
-                finally {
-                    $mol_log2.current = outer;
-                    inner.flush();
-                }
-            };
-            return wrapped;
-        }
-        flush() {
-            if (this.stream.length === 0)
-                return;
-            console.debug(this);
-        }
-        info(...values) {
-            this.stream.push(new $mol_log2_line(...$mol_log2.prefix, ...values));
-        }
-        [$.$mol_dev_format_head]() {
-            return $.$mol_dev_format_span({}, ...$.$mol_maybe(this.host).map($.$mol_dev_format_auto), '.', $.$mol_dev_format_strong(this.id), '(', ...this.args.map($.$mol_dev_format_auto), ') ', $.$mol_dev_format_auto(this.stream));
-        }
-        static info(...values) {
-            const excludes = $mol_log2.excludes;
-            if (!excludes)
-                return;
-            const skip = excludes.some((regexp, index) => {
-                return regexp && regexp.test(String(values[index])) || false;
-            });
-            if (skip)
-                return;
-            if (!$mol_log2.current) {
-                console.warn(new Error(`$mol_log.current is not defined. Wrap entry point to $mol_log!`));
-                $mol_log2.current = new $mol_log2(null, '$mol_log2_default', []);
-                console.debug($mol_log2.current);
-            }
-            $mol_log2.current.info(...values);
-        }
-    }
-    $mol_log2.current = null;
-    $mol_log2.excludes = null;
-    $mol_log2.prefix = [];
-    $.$mol_log2 = $mol_log2;
-    class $mol_log2_indent extends $.$mol_wrapper {
-        static wrap(task) {
-            const Inner = this;
-            const wrapped = function (...args) {
-                try {
-                    $mol_log2.prefix.push($.$mol_log2_token_indent);
-                    return task.call(this, ...args);
-                }
-                finally {
-                    $mol_log2.prefix.pop();
-                }
-            };
-            return wrapped;
-        }
-    }
-    $.$mol_log2_indent = $mol_log2_indent;
-    class $mol_log2_table extends $mol_log2 {
-        [$.$mol_dev_format_head]() {
-            return $.$mol_dev_format_span({}, $.$mol_dev_format_strong(`${this}(`), ...this.args.map($.$mol_dev_format_auto), $.$mol_dev_format_strong(`) `));
-        }
-        [$.$mol_dev_format_body]() {
-            return $.$mol_dev_format_table({}, ...this.stream.map($.$mol_dev_format_auto));
-        }
-    }
-    $.$mol_log2_table = $mol_log2_table;
-    class $mol_log2_hidden extends $mol_log2 {
-        flush() { }
-    }
-    $.$mol_log2_hidden = $mol_log2_hidden;
-    class $mol_log2_line extends Array {
-        constructor(...items) {
-            super(...items);
-        }
-        [$.$mol_dev_format_head]() {
-            return $.$mol_dev_format_tr({}, ...this.map(item => $.$mol_dev_format_td({}, $.$mol_dev_format_auto(item))));
-        }
-    }
-    $.$mol_log2_line = $mol_log2_line;
-    class $mol_log2_token extends Array {
-        constructor(...items) {
-            super(...items);
-        }
-        [$.$mol_dev_format_head]() {
-            return $.$mol_dev_format_accent(...this);
-        }
-    }
-    $.$mol_log2_token = $mol_log2_token;
-    $.$mol_log2_token_empty = new $mol_log2_token('');
-    $.$mol_log2_token_indent = new $mol_log2_token('\t');
-    $.$mol_log2_legend = new $mol_log2_table(null, '$mol_log2_legend', []);
-    if (!$mol_log2.excludes)
-        $.$mol_log2_legend.info($.$mol_log2_token_empty, 'Use `$mol_log2.excludes : null | RegExp[]` to toggle logs');
-})($ || ($ = {}));
-//log2.js.map
 ;
 "use strict";
 var $;
@@ -647,6 +759,100 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $['devtoolsFormatters'] = $['devtoolsFormatters'] || [];
+    function $mol_dev_format_register(config) {
+        $['devtoolsFormatters'].push(config);
+    }
+    $.$mol_dev_format_register = $mol_dev_format_register;
+    $.$mol_dev_format_head = Symbol('$mol_dev_format_head');
+    $.$mol_dev_format_body = Symbol('$mol_dev_format_body');
+    $mol_dev_format_register({
+        header: (val, config = false) => {
+            if (config)
+                return null;
+            if (!val)
+                return null;
+            if ($.$mol_dev_format_head in val) {
+                return val[$.$mol_dev_format_head]();
+            }
+            return null;
+        },
+        hasBody: val => val[$.$mol_dev_format_body],
+        body: val => val[$.$mol_dev_format_body](),
+    });
+    function $mol_dev_format_native(obj) {
+        if (typeof obj === 'undefined')
+            return $.$mol_dev_format_shade('undefined');
+        if (typeof obj !== 'object')
+            return obj;
+        return [
+            'object',
+            {
+                object: obj,
+                config: true,
+            },
+        ];
+    }
+    $.$mol_dev_format_native = $mol_dev_format_native;
+    function $mol_dev_format_auto(obj) {
+        if (obj == null)
+            return $.$mol_dev_format_shade(String(obj));
+        if (typeof obj === 'object' && $.$mol_dev_format_head in obj) {
+            return obj[$.$mol_dev_format_head]();
+        }
+        return [
+            'object',
+            {
+                object: obj,
+                config: false,
+            },
+        ];
+    }
+    $.$mol_dev_format_auto = $mol_dev_format_auto;
+    function $mol_dev_format_element(element, style, ...content) {
+        const styles = [];
+        for (let key in style)
+            styles.push(`${key} : ${style[key]}`);
+        return [
+            element,
+            {
+                style: styles.join(' ; '),
+            },
+            ...content,
+        ];
+    }
+    $.$mol_dev_format_element = $mol_dev_format_element;
+    function $mol_dev_format_span(style, ...content) {
+        return $mol_dev_format_element('span', Object.assign({ 'vertical-align': '8%' }, style), ...content);
+    }
+    $.$mol_dev_format_span = $mol_dev_format_span;
+    $.$mol_dev_format_div = $mol_dev_format_element.bind(null, 'div');
+    $.$mol_dev_format_ol = $mol_dev_format_element.bind(null, 'ol');
+    $.$mol_dev_format_li = $mol_dev_format_element.bind(null, 'li');
+    $.$mol_dev_format_table = $mol_dev_format_element.bind(null, 'table');
+    $.$mol_dev_format_tr = $mol_dev_format_element.bind(null, 'tr');
+    $.$mol_dev_format_td = $mol_dev_format_element.bind(null, 'td');
+    $.$mol_dev_format_accent = $mol_dev_format_span.bind(null, {
+        'color': 'magenta',
+    });
+    $.$mol_dev_format_strong = $mol_dev_format_span.bind(null, {
+        'font-weight': 'bold',
+    });
+    $.$mol_dev_format_string = $mol_dev_format_span.bind(null, {
+        'color': 'green',
+    });
+    $.$mol_dev_format_shade = $mol_dev_format_span.bind(null, {
+        'color': 'gray',
+    });
+    $.$mol_dev_format_indent = $.$mol_dev_format_div.bind(null, {
+        'margin-left': '13px'
+    });
+})($ || ($ = {}));
+//format.js.map
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_fiber_defer(calculate) {
         const fiber = new $mol_fiber;
         fiber.calculate = calculate;
@@ -656,7 +862,11 @@ var $;
     }
     $.$mol_fiber_defer = $mol_fiber_defer;
     function $mol_fiber_func(calculate) {
-        console.warn('$mol_fiber_func is deprecated. Use $mol_fiber.func instead.');
+        $.$mol_ambient({}).$mol_log3_warn({
+            place: '$mol_fiber_func',
+            message: 'Deprecated',
+            hint: 'Use $mol_fiber.func instead',
+        });
         return $mol_fiber.func(calculate);
     }
     $.$mol_fiber_func = $mol_fiber_func;
@@ -664,6 +874,7 @@ var $;
         const wrapper = function (...args) {
             const fiber = new $mol_fiber();
             fiber.calculate = calculate.bind(this, ...args);
+            fiber[Symbol.toStringTag] = wrapper[Symbol.toStringTag];
             return fiber.wake();
         };
         wrapper[Symbol.toStringTag] = calculate.name;
@@ -671,7 +882,11 @@ var $;
     }
     $.$mol_fiber_root = $mol_fiber_root;
     function $mol_fiber_method(obj, name, descr) {
-        console.warn('$mol_fiber_method is deprecated. Use $mol_fiber.method instead.');
+        $.$mol_ambient({}).$mol_log3_warn({
+            place: '$mol_fiber_method',
+            message: 'Deprecated',
+            hint: 'Use $mol_fiber.method instead',
+        });
         return $mol_fiber.method(obj, name, descr);
     }
     $.$mol_fiber_method = $mol_fiber_method;
@@ -695,7 +910,7 @@ var $;
             if (!master || master.constructor !== $mol_fiber) {
                 master = new $mol_fiber;
                 master.cursor = -3;
-                master.error = request.call(this, ...args).then($.$mol_log2.func((next) => master.push(next)), $.$mol_log2.func((error) => master.fail(error)));
+                master.error = request.call(this, ...args).then((next) => master.push(next), (error) => master.fail(error));
                 const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
                 master[Symbol.toStringTag] = prefix + (request.name || $mol_fiber_sync.name);
             }
@@ -813,6 +1028,10 @@ var $;
             $mol_fiber.schedule().then(() => this.wake());
         }
         wake() {
+            const unscoupe = this.$.$mol_log3_area_lazy({
+                place: this,
+                message: 'Wake'
+            });
             try {
                 if (this.cursor > -2)
                     return this.get();
@@ -822,16 +1041,31 @@ var $;
                     return;
                 $.$mol_fail_hidden(error);
             }
+            finally {
+                unscoupe();
+            }
         }
         push(value) {
             value = this.$.$mol_conform(value, this.value);
             if (this.error || !Object.is(this.value, value)) {
-                this.$.$mol_log2.info(this, $.$mol_fiber_token_changed1, value, $.$mol_fiber_token_changed2, this.error || this.value);
+                if ($mol_fiber.logs)
+                    this.$.$mol_log3_done({
+                        place: this,
+                        message: 'Changed',
+                        next: value,
+                        value: this.value,
+                        error: this.error,
+                    });
                 this.obsolete_slaves();
                 this.forget();
             }
             else {
-                this.$.$mol_log2.info(this, $.$mol_fiber_token_actualized, value);
+                if ($mol_fiber.logs)
+                    this.$.$mol_log3_done({
+                        place: this,
+                        message: 'Same value',
+                        value,
+                    });
             }
             this.error = null;
             this.value = value;
@@ -840,14 +1074,24 @@ var $;
         }
         fail(error) {
             this.complete();
-            this.$.$mol_log2.info(this, $.$mol_fiber_token_failed, error);
+            if ($mol_fiber.logs)
+                this.$.$mol_log3_fail({
+                    place: this,
+                    message: error.message,
+                });
             this.error = error;
             this.obsolete_slaves();
             return error;
         }
         wait(promise) {
             this.error = promise;
-            this.$.$mol_log2.info(this, $.$mol_fiber_token_sleeped, promise);
+            if ($mol_fiber.logs)
+                this.$.$mol_log3_warn({
+                    place: this,
+                    message: `Wait`,
+                    hint: `Don't panic, it's normal`,
+                    promise,
+                });
             this.cursor = 0;
             return promise;
         }
@@ -863,13 +1107,17 @@ var $;
             this.disobey(master_index);
         }
         pull() {
+            if ($mol_fiber.logs)
+                this.$.$mol_log3_come({
+                    place: this,
+                    message: 'Pull',
+                });
             this.push(this.calculate());
         }
         update() {
             const slave = $mol_fiber.current;
             try {
                 $mol_fiber.current = this;
-                this.$.$mol_log2.info(this, $.$mol_fiber_token_runned);
                 this.pull();
             }
             catch (error) {
@@ -953,39 +1201,25 @@ var $;
         destructor() {
             if (!this.abort())
                 return;
-            this.$.$mol_log2.info(this, $.$mol_fiber_token_destructed);
+            if ($mol_fiber.logs)
+                this.$.$mol_log3_done({
+                    place: this,
+                    message: 'Destructed',
+                });
             this.complete();
         }
         [$.$mol_dev_format_head]() {
             return $.$mol_dev_format_native(this);
         }
     }
+    $mol_fiber.logs = false;
     $mol_fiber.quant = 16;
     $mol_fiber.deadline = 0;
     $mol_fiber.liveline = 0;
     $mol_fiber.current = null;
     $mol_fiber.scheduled = null;
     $mol_fiber.queue = [];
-    __decorate([
-        $.$mol_log2.method
-    ], $mol_fiber.prototype, "wake", null);
-    __decorate([
-        $.$mol_log2_indent.method
-    ], $mol_fiber.prototype, "update", null);
     $.$mol_fiber = $mol_fiber;
-    $.$mol_fiber_token_runned = new $.$mol_log2_token(' ► ');
-    $.$mol_fiber_token_changed1 = new $.$mol_log2_token(' ˸ ');
-    $.$mol_fiber_token_changed2 = new $.$mol_log2_token(' 🠈 ');
-    $.$mol_fiber_token_actualized = new $.$mol_log2_token(' ✓ ');
-    $.$mol_fiber_token_sleeped = new $.$mol_log2_token(' 💤 ');
-    $.$mol_fiber_token_failed = new $.$mol_log2_token(' 🔥 ');
-    $.$mol_fiber_token_destructed = new $.$mol_log2_token(' 🕱 ');
-    $.$mol_log2_legend.info($.$mol_fiber_token_runned, '$mol_fiber starts execution');
-    $.$mol_log2_legend.info(new $.$mol_log2_line($.$mol_fiber_token_changed1, $.$mol_fiber_token_changed2), '$mol_fiber value is changed to different value');
-    $.$mol_log2_legend.info($.$mol_fiber_token_actualized, 'Actual $mol_fiber value is same as before');
-    $.$mol_log2_legend.info($.$mol_fiber_token_sleeped, '$mol_fiber can not run now and awaits on promise');
-    $.$mol_log2_legend.info($.$mol_fiber_token_failed, '$mol_fiber is failed and will be throw an Error or Promise');
-    $.$mol_log2_legend.info($.$mol_fiber_token_destructed, '$mol_fiber fully destructed');
 })($ || ($ = {}));
 //fiber.js.map
 ;
@@ -997,34 +1231,6 @@ var $;
 (function ($) {
 })($ || ($ = {}));
 //context.js.map
-;
-"use strict";
-var $node = new Proxy({}, { get(target, name, wrapper) {
-        const path = require('path');
-        const fs = require('fs');
-        const mod = require('module');
-        if (mod.builtinModules.indexOf(name) >= 0)
-            return require(name);
-        let dir = path.resolve('.');
-        const suffix = `./node_modules/${name}`;
-        const $$ = $;
-        while (!fs.existsSync(path.join(dir, suffix))) {
-            const parent = path.resolve(dir, '..');
-            if (parent === dir) {
-                $$.$mol_exec('.', 'npm', 'install', name);
-                try {
-                    $$.$mol_exec('.', 'npm', 'install', '@types/' + name);
-                }
-                catch (_a) { }
-                break;
-            }
-            else {
-                dir = parent;
-            }
-        }
-        return require(name);
-    } });
-//node.node.js.map
 ;
 "use strict";
 var $;
@@ -1223,7 +1429,12 @@ var $;
     function $mol_exec(dir, command, ...args) {
         let [app, ...args0] = command.split(' ');
         args = [...args0, ...args];
-        console.info(`${$node.colorette.gray($node.path.relative('', dir))}> ${$node.colorette.blue(app)} ${$node.colorette.cyan(args.join(' '))}`);
+        this.$mol_log3_come({
+            place: '$mol_exec',
+            dir: $node.path.relative('', dir),
+            message: 'Run',
+            command: `${app} ${args.join(' ')}`,
+        });
         var res = $node['child_process'].spawnSync(app, args, {
             cwd: $node.path.resolve(dir),
             shell: true,
