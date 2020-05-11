@@ -55,7 +55,7 @@ namespace $ {
 
 		}
 
-		repeat(
+		repeated(
 			min = 0 ,
 			max = Number.POSITIVE_INFINITY ,
 		) {
@@ -70,6 +70,10 @@ namespace $ {
 	
 		}
 
+		optional() {
+			return this.repeated( 0 , 1 )
+		}
+
 		static from<
 			Source extends $mol_regexp_source
 		>(
@@ -79,7 +83,7 @@ namespace $ {
 		
 			if( typeof source === 'string' ) {
 
-				return new this( this.escape( source ) , flags )
+				return new this( source.replace( /[.*+?^${}()|[\]\\]/g , '\\$&' ) , flags )
 
 			} else if( source instanceof RegExp ) {
 
@@ -123,12 +127,16 @@ namespace $ {
 	
 		}
 
-		static escape( str : string ) : string {
-			return str.replace( /[.*+?^${}()|[\]\\]/g , '\\$&' )
+		static char_code( code : number ) {
+			return new this( `\\u${ code.toString(16).padStart( 4 , '0' ) }` )
 		}
 
+		static byte = $mol_regexp.from( /[\s\S]/ )
 		static digit = $mol_regexp.from( /\d/ )
 		static letter = $mol_regexp.from( /\w/ )
+		static space = $mol_regexp.from( /\s/ )
+		static word_break = $mol_regexp.from( /\b/ )
+		static line_end = $mol_regexp.from( /\r?\n/ )
 		static begin = $mol_regexp.from( /^/ )
 		static end = $mol_regexp.from( /$/ )
 		
