@@ -32,12 +32,15 @@ namespace $ {
 
 		: never
 
+	/** Type safe reguar expression builder */
 	export class $mol_regexp< Groups extends Record< string , string > > extends RegExp {
 		
+		/** Prefer to use $mol_regexp.from */
 		constructor( source : string , flags : string = '' , readonly groups : ( Extract< keyof Groups , string > )[] = [] ) {
 			super( source , flags )
 		}
 
+		/** Parses input and returns found capture groups or null */
 		parse( str : string , from = 0 ) {
 
 			this.lastIndex = from
@@ -55,6 +58,7 @@ namespace $ {
 
 		}
 
+		/** Makes regexp that repeats this pattern from min to max count */
 		repeated(
 			min = 0 ,
 			max = Number.POSITIVE_INFINITY ,
@@ -70,10 +74,12 @@ namespace $ {
 	
 		}
 
+		/** Makes regexp that allow absent of this pattern */
 		optional() {
 			return this.repeated( 0 , 1 )
 		}
 
+		/** Converts some js values to regexp */
 		static from<
 			Source extends $mol_regexp_source
 		>(
@@ -127,6 +133,7 @@ namespace $ {
 	
 		}
 
+		/** Makes regexp for char code */
 		static char_code( code : number ) {
 			return new this( `\\u${ code.toString(16).padStart( 4 , '0' ) }` )
 		}
