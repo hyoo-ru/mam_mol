@@ -51,7 +51,8 @@ namespace $ {
 			const found = {} as { [ key in keyof Groups ] : string }
 
 			for( let i = 0 ; i < this.groups.length ; ++i ) {
-				found[ this.groups[ i ] ] = res[ i + 1 ]
+				const group = this.groups[ i ]
+				found[ group ] = found[ group ] || res[ i + 1 ] || ''
 			}
 
 			return found
@@ -111,23 +112,24 @@ namespace $ {
 		
 				}
 				
-				return new this( sources.join( '' ) , flags , groups )
+				return new this( `(?:${ sources.join( '' ) })` , flags , groups )
 		
 			} else {
 
-				const list = Object.keys( source ).map( name => {
+				const groups = [] as string[]
+
+				const chunks = Object.keys( source ).map( name => {
+
+					groups.push( name )
 
 					const regexp = $mol_regexp.from( source[ name ] )
+					groups.push( ... regexp.groups )
 					
-					return new this(
-						`(${ regexp.source })` ,
-						regexp.flags ,
-						[ name , ... regexp.groups ] ,
-					)
+					return `(${regexp.source})`
 
 				} ) as any as readonly[ $mol_regexp_source , ... $mol_regexp_source[] ]
 
-				return $mol_regexp.from( list , flags ) as any
+				return new this( `(?:${ chunks.join('|') })` , flags , groups as any[] )
 
 			}
 	
@@ -146,6 +148,7 @@ namespace $ {
 		static line_end = $mol_regexp.from( /\r?\n/ )
 		static begin = $mol_regexp.from( /^/ )
 		static end = $mol_regexp.from( /$/ )
+		static or = $mol_regexp.from( /|/ )
 		
 	}
 	

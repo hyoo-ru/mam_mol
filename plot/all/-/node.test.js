@@ -5911,7 +5911,7 @@ var $;
                         return val;
                     if ('outerHTML' in val)
                         return val.outerHTML;
-                    return val;
+                    return JSON.stringify(val);
                 };
                 return $.$mol_fail(new Error(`Not like\n${print(head)}\n---\n${print(value)}`));
             }

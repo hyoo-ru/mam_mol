@@ -90,31 +90,40 @@ namespace $ {
 
 		'only groups'() {
 
-			const first = $mol_regexp.letter.repeated( 1 )
-			const last = $mol_regexp.letter.repeated( 1 )
+			const regexp = $mol_regexp.from({ dog : '@' })
 
-			const regexp = $mol_regexp.from({ first , space : ' ' , last })
-			const found = regexp.parse( 'nin jin' )
+			$mol_assert_like( regexp.parse( '#' ) , null )
+			$mol_assert_like( regexp.parse( '@' )! , { dog : '@' } )
 
-			$mol_assert_equal( found!.first , 'nin' )
-			$mol_assert_equal( found!.space , ' ' )
-			$mol_assert_equal( found!.last , 'jin' )
+		},
+
+		'enum variants'() {
+
+			enum Sex {
+				male = 'male',
+				female = 'female',
+			}
+
+			const sexism = $mol_regexp.from( Sex )
+
+			$mol_assert_like( sexism.parse( '' ) , null )
+			$mol_assert_like( sexism.parse( 'male' )! , { male : 'male' , female : '' } )
+			$mol_assert_like( sexism.parse( 'female' )! , { male : '' , female : 'female' } )
 
 		},
 
 		'recursive only groups'() {
 
-			const first = $mol_regexp.letter.repeated( 1 )
-			const last = $mol_regexp.letter.repeated( 1 )
-			const space = ' '
+			enum Sex {
+				male = 'male',
+				female = 'female',
+			}
 
-			const regexp = $mol_regexp.from({ first , suffix : { space , last } })
-			const found = regexp.parse( 'nin jin' )
+			const sexism = $mol_regexp.from({ Sex })
 
-			$mol_assert_equal( found!.first , 'nin' )
-			$mol_assert_equal( found!.suffix , ' jin' )
-			$mol_assert_equal( found!.space , ' ' )
-			$mol_assert_equal( found!.last , 'jin' )
+			$mol_assert_like( sexism.parse( '' ) , null )
+			$mol_assert_like( sexism.parse( 'male' )! , { Sex : 'male' , male : 'male' , female : '' } )
+			$mol_assert_like( sexism.parse( 'female' )! , { Sex : 'female' , male : '' , female : 'female' } )
 
 		},
 
@@ -150,6 +159,18 @@ namespace $ {
 			$mol_assert_equal( found!.year , '2020' )
 			$mol_assert_equal( found!.month , '01' )
 			$mol_assert_equal( found!.day , '02' )
+
+		},
+
+		'variants'() {
+
+			const { begin , or , end } = $mol_regexp
+
+			const sexism = $mol_regexp.from([ begin , 'sex = ' , [ { sex : 'male' } , or , { sex : 'female' } ] , end ])
+
+			$mol_assert_like( sexism.parse( 'sex = male' )! , { sex : 'male' } )
+			$mol_assert_like( sexism.parse( 'sex = female' )! , { sex : 'female' } )
+			$mol_assert_like( sexism.parse( 'sex = malefemale' ) , null )
 
 		},
 
