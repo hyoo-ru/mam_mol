@@ -42,9 +42,9 @@ namespace $ {
 		
 		'Define attributes'() {
 			
-			const dom = <div hidden lang="ru" />
+			const dom = <div lang="ru" hidden />
 			
-			$mol_assert_equal( dom.outerHTML , '<div hidden="" lang="ru"></div>' )
+			$mol_assert_equal( dom.outerHTML , '<div lang="ru" hidden=""></div>' )
 
 		} ,
 		

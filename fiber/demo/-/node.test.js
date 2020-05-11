@@ -1697,8 +1697,8 @@ var $;
             $.$mol_assert_equal(dom.outerHTML, '<div data-foo="bar"></div>');
         },
         'Define attributes'() {
-            const dom = $.$mol_jsx_make("div", { hidden: true, lang: "ru" });
-            $.$mol_assert_equal(dom.outerHTML, '<div hidden="" lang="ru"></div>');
+            const dom = $.$mol_jsx_make("div", { lang: "ru", hidden: true });
+            $.$mol_assert_equal(dom.outerHTML, '<div lang="ru" hidden=""></div>');
         },
         'Define child nodes'() {
             const dom = $.$mol_jsx_make("div", null,
