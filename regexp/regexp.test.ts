@@ -75,12 +75,13 @@ namespace $ {
 
 		'sequence'() {
 
+			const { begin , end } = $mol_regexp
 			const year = $mol_regexp.digit.repeated( 4 , 4 )
 			const dash = '-'
 			const month = $mol_regexp.digit.repeated( 2 , 2 )
 			const day = $mol_regexp.digit.repeated( 2 , 2 )
 
-			const date = $mol_regexp.from( [ year , dash , month , dash , day ] , 'i' )
+			const date = $mol_regexp.from( [ begin , year , dash , month , dash , day , end ] , 'i' )
 
 			$mol_assert_like( date.exec( '2020-01-02' )![0] , '2020-01-02' )
 			$mol_assert_like( date.flags , 'i' )
@@ -119,12 +120,13 @@ namespace $ {
 
 		'sequence with groups'() {
 
+			const { begin , end } = $mol_regexp
 			const year = $mol_regexp.digit.repeated( 4 , 4 )
 			const dash = '-'
 			const month = $mol_regexp.digit.repeated( 2 , 2 )
 			const day = $mol_regexp.digit.repeated( 2 , 2 )
 
-			const regexp = $mol_regexp.from([ {year} , dash , {month} , dash , {day} ])
+			const regexp = $mol_regexp.from([ begin , {year} , dash , {month} , dash , {day} , end ])
 			const found = regexp.parse( '2020-01-02' )
 
 			$mol_assert_equal( found!.year , '2020' )
@@ -135,13 +137,14 @@ namespace $ {
 
 		'recursive sequence with groups'() {
 
-			const year = /\d\d\d\d/
-			const dash = /-/
-			const month = /\d\d/
-			const day = /\d\d/
+			const { begin , end } = $mol_regexp
+			const year = $mol_regexp.digit.repeated( 4 , 4 )
+			const dash = '-'
+			const month = $mol_regexp.digit.repeated( 2 , 2 )
+			const day = $mol_regexp.digit.repeated( 2 , 2 )
 
-			const regexp = $mol_regexp.from([ { date : [ {year} , dash , {month} ] } , dash , {day} ])
-			const found = regexp.parse( '#2020-01-02#' )
+			const regexp = $mol_regexp.from([ begin , { date : [ {year} , dash , {month} ] } , dash , {day} , end ])
+			const found = regexp.parse( '2020-01-02' )
 
 			$mol_assert_equal( found!.date , '2020-01' )
 			$mol_assert_equal( found!.year , '2020' )
