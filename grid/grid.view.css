@@ -2,7 +2,6 @@
 	display: block;
 	flex: 1 1 auto;
 	position: relative;
-	background: var(--mol_theme_back);
 }
 
 [mol_grid_gap] {
