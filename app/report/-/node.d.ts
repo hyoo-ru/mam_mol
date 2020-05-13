@@ -554,8 +554,8 @@ declare namespace $ {
         state_key(suffix?: string): string;
         dom_name(): string;
         dom_name_space(): string;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
-        sub_visible(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly $mol_view_content[];
+        sub_visible(): readonly $mol_view_content[];
         minimal_width(): number;
         maximal_width(): number;
         minimal_height(): number;
@@ -871,7 +871,7 @@ declare namespace $ {
         disabled(): boolean;
         tab_index(): number;
         hint(): string;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly $mol_view_content[];
     }
 }
 
@@ -1059,10 +1059,10 @@ declare namespace $ {
         Title(): $$.$mol_button;
         event_top(val?: any, force?: $mol_mem_force): any;
         Tools(): $mol_view;
-        tools(): readonly (string | number | boolean | $mol_view | Node)[];
+        tools(): readonly $mol_view_content[];
         Body(): $$.$mol_scroll;
         body_scroll_top(val?: any, force?: $mol_mem_force): any;
-        body(): readonly (string | number | boolean | $mol_view | Node)[];
+        body(): readonly $mol_view_content[];
         Foot(): $mol_view;
         foot(): readonly $mol_view[];
     }
@@ -1244,14 +1244,14 @@ declare namespace $ {
         Anchor(): any;
         Bubble(): $mol_pop_bubble;
         align(): string;
-        bubble_content(): readonly (string | number | boolean | $mol_view | Node)[];
+        bubble_content(): readonly $mol_view_content[];
         height_max(): number;
     }
 }
 declare namespace $ {
     class $mol_pop_bubble extends $mol_scroll {
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
-        content(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly $mol_view_content[];
+        content(): readonly $mol_view_content[];
         style(): {
             maxHeight: number;
         };
@@ -1296,8 +1296,8 @@ declare namespace $ {
     class $mol_dimmer extends $mol_view {
         haystack(): string;
         needle(): string;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
-        parts(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly $mol_view_content[];
+        parts(): readonly $mol_view_content[];
         Low(id: any): $mol_view;
         string(id: any): string;
     }
@@ -1526,11 +1526,11 @@ declare namespace $ {
         Anchor(): $mol_button_minor;
         Trigger(): $mol_button_minor;
         open(event?: any, force?: $mol_mem_force): any;
-        trigger_content(): readonly (string | number | boolean | $mol_view | Node)[];
+        trigger_content(): readonly $mol_view_content[];
         bubble_content(): readonly any[];
         Menu(): $$.$mol_list;
         menu_content(): readonly $mol_view[];
-        option_content_current(): readonly (string | number | boolean | $mol_view | Node)[];
+        option_content_current(): readonly $mol_view_content[];
         Filter(): $$.$mol_string;
         filter_hint(): string;
         hint(): string;
@@ -1704,7 +1704,7 @@ declare namespace $.$$ {
         rows(): $mol_app_report_rower[];
         formatRow(pos: number[]): $mol_app_report_formatRow;
         rowerCells(pos: number[]): $mol_app_report_cell[];
-        cellCols(pos: number[]): 1 | 0 | 2;
+        cellCols(pos: number[]): 0 | 1 | 2;
         cell_content(pos: number[]): $mol_view;
         cell_options(pos: number[]): never[] | {
             [name: string]: string;

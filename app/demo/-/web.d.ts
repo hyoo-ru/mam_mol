@@ -551,8 +551,8 @@ declare namespace $ {
         state_key(suffix?: string): string;
         dom_name(): string;
         dom_name_space(): string;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
-        sub_visible(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly (string | number | boolean | Node | $mol_view)[];
+        sub_visible(): readonly (string | number | boolean | Node | $mol_view)[];
         minimal_width(): number;
         maximal_width(): number;
         minimal_height(): number;
@@ -647,7 +647,7 @@ declare namespace $ {
         status(): string;
         rows(): readonly $mol_view[];
         Content(): $mol_view;
-        content(): readonly (string | number | boolean | $mol_view | Node)[];
+        content(): readonly (string | number | boolean | Node | $mol_view)[];
         Status(): $mol_view;
         status_text(): string;
     }
@@ -954,7 +954,7 @@ declare namespace $ {
         target(): string;
         file_name(): string;
         current(): boolean;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly (string | number | boolean | Node | $mol_view)[];
         arg(): {};
         event(): {
             click: (event?: any) => any;
@@ -1031,7 +1031,7 @@ declare namespace $ {
         disabled(): boolean;
         tab_index(): number;
         hint(): string;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly (string | number | boolean | Node | $mol_view)[];
     }
 }
 
@@ -1696,8 +1696,8 @@ declare namespace $ {
     class $mol_dimmer extends $mol_view {
         haystack(): string;
         needle(): string;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
-        parts(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly (string | number | boolean | Node | $mol_view)[];
+        parts(): readonly (string | number | boolean | Node | $mol_view)[];
         Low(id: any): $mol_view;
         string(id: any): string;
     }
@@ -1734,12 +1734,12 @@ declare namespace $ {
         Cell(id: any): $mol_view;
         cell(id: any): any;
         Cell_text(id: any): $mol_grid_cell;
-        cell_content_text(id: any): readonly (string | number | boolean | $mol_view | Node)[];
-        cell_content(id: any): readonly (string | number | boolean | $mol_view | Node)[];
+        cell_content_text(id: any): readonly (string | number | boolean | Node | $mol_view)[];
+        cell_content(id: any): readonly (string | number | boolean | Node | $mol_view)[];
         Cell_number(id: any): $mol_grid_number;
-        cell_content_number(id: any): readonly (string | number | boolean | $mol_view | Node)[];
+        cell_content_number(id: any): readonly (string | number | boolean | Node | $mol_view)[];
         Col_head(id: any): $mol_float;
-        col_head_content(id: any): readonly (string | number | boolean | $mol_view | Node)[];
+        col_head_content(id: any): readonly (string | number | boolean | Node | $mol_view)[];
         Cell_branch(id: any): $$.$mol_check_expand;
         cell_level(id: any): number;
         cell_expanded(id: any, val?: any, force?: $mol_mem_force): any;
@@ -1786,7 +1786,7 @@ declare namespace $.$$ {
         col_head_content(colId: string): readonly string[];
         rows(): readonly $mol_view[];
         cells(row_id: string[]): readonly $mol_view[];
-        col_type(col_id: string): "number" | "text" | "branch";
+        col_type(col_id: string): "text" | "number" | "branch";
         Cell(id: {
             row: string[];
             col: string;
@@ -1907,7 +1907,7 @@ declare namespace $.$$ {
         }): number;
         col_head_title(col: string): string;
         event_sort_toggle(col: string, next?: Event): void;
-        col_type(col: string): "number" | "text" | "branch";
+        col_type(col: string): "text" | "number" | "branch";
         cell_content_number(id: {
             row: string[];
             col: string;
@@ -3292,14 +3292,14 @@ declare namespace $ {
         Anchor(): any;
         Bubble(): $mol_pop_bubble;
         align(): string;
-        bubble_content(): readonly (string | number | boolean | $mol_view | Node)[];
+        bubble_content(): readonly (string | number | boolean | Node | $mol_view)[];
         height_max(): number;
     }
 }
 declare namespace $ {
     class $mol_pop_bubble extends $mol_scroll {
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
-        content(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly (string | number | boolean | Node | $mol_view)[];
+        content(): readonly (string | number | boolean | Node | $mol_view)[];
         style(): {
             maxHeight: number;
         };
@@ -3381,11 +3381,11 @@ declare namespace $ {
         Anchor(): $mol_button_minor;
         Trigger(): $mol_button_minor;
         open(event?: any, force?: $mol_mem_force): any;
-        trigger_content(): readonly (string | number | boolean | $mol_view | Node)[];
+        trigger_content(): readonly (string | number | boolean | Node | $mol_view)[];
         bubble_content(): readonly any[];
         Menu(): $$.$mol_list;
         menu_content(): readonly $mol_view[];
-        option_content_current(): readonly (string | number | boolean | $mol_view | Node)[];
+        option_content_current(): readonly (string | number | boolean | Node | $mol_view)[];
         Filter(): $$.$mol_string;
         filter_hint(): string;
         hint(): string;
@@ -3879,7 +3879,7 @@ declare namespace $ {
     class $mol_labeler extends $mol_list {
         rows(): readonly any[];
         Title(): $mol_view;
-        label(): readonly (string | number | boolean | $mol_view | Node)[];
+        label(): readonly (string | number | boolean | Node | $mol_view)[];
         Content(): $mol_view;
         content(): readonly any[];
     }
@@ -4639,10 +4639,10 @@ declare namespace $ {
         Title(): $$.$mol_button;
         event_top(val?: any, force?: $mol_mem_force): any;
         Tools(): $mol_view;
-        tools(): readonly (string | number | boolean | $mol_view | Node)[];
+        tools(): readonly (string | number | boolean | Node | $mol_view)[];
         Body(): $$.$mol_scroll;
         body_scroll_top(val?: any, force?: $mol_mem_force): any;
-        body(): readonly (string | number | boolean | $mol_view | Node)[];
+        body(): readonly (string | number | boolean | Node | $mol_view)[];
         Foot(): $mol_view;
         foot(): readonly $mol_view[];
     }
@@ -5192,11 +5192,11 @@ declare namespace $ {
                 isFinal: boolean;
             }>;
         })): (Event & {
-            results: ({
+            results: Array<{
                 transcript: string;
             }[] & {
                 isFinal: boolean;
-            })[];
+            }>;
         }) | null;
         static recognitions(): ({
             transcript: string;
@@ -5678,7 +5678,7 @@ declare namespace $ {
     function $mol_view_tree_prop_key(prop: $mol_tree): string;
     function $mol_view_tree_prop_next(prop: $mol_tree): string;
     function $mol_view_tree_prop_value(prop: $mol_tree): $mol_tree;
-    function $mol_view_tree_value_type(val: $mol_tree): "string" | "object" | "number" | "locale" | "null" | "bool" | "dict" | "get" | "bind" | "put" | "list";
+    function $mol_view_tree_value_type(val: $mol_tree): "locale" | "bool" | "number" | "string" | "null" | "dict" | "get" | "bind" | "put" | "list" | "object";
     function $mol_view_tree_compile(tree: $mol_tree): {
         script: string;
         locales: {
@@ -5696,7 +5696,7 @@ declare namespace $.$$ {
         title(): string;
         title_arg(): {};
         value(next?: $mol_tree): $mol_tree;
-        type(next?: string): "string" | "object" | "number" | "locale" | "null" | "bool" | "dict" | "get" | "bind" | "put" | "list" | null;
+        type(next?: string): "locale" | "bool" | "number" | "string" | "null" | "dict" | "get" | "bind" | "put" | "list" | "object" | null;
         expanded(next?: boolean): boolean;
         class(next?: string): string;
         bind(next?: string): string;
@@ -5820,7 +5820,7 @@ declare namespace $.$$ {
         };
         prop(path: $mol_tree_path, next?: $mol_tree): $mol_tree;
         prop_self(path: $mol_tree_path): $mol_tree;
-        prop_type(path: $mol_tree_path): "string" | "object" | "number" | "locale" | "null" | "bool" | "dict" | "get" | "bind" | "put" | "list" | null;
+        prop_type(path: $mol_tree_path): "locale" | "bool" | "number" | "string" | "null" | "dict" | "get" | "bind" | "put" | "list" | "object" | null;
         prop_key(path: $mol_tree_path, next?: string): string;
         prop_next(path: $mol_tree_path, next?: string): string;
         prop_default(path: $mol_tree_path, next?: $mol_tree): $mol_tree;

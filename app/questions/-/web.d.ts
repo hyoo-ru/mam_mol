@@ -1759,7 +1759,7 @@ declare namespace $.$$ {
         col_head_content(colId: string): readonly string[];
         rows(): readonly $mol_view[];
         cells(row_id: string[]): readonly $mol_view[];
-        col_type(col_id: string): "number" | "text" | "branch";
+        col_type(col_id: string): "text" | "number" | "branch";
         Cell(id: {
             row: string[];
             col: string;
@@ -2090,7 +2090,7 @@ declare namespace $.$$ {
         };
         questions_count(): number;
         questions_data(page: number): {
-            items: {
+            items: Array<{
                 title: string;
                 creation_date: number;
                 question_id: number;
@@ -2098,7 +2098,7 @@ declare namespace $.$$ {
                 owner: {
                     display_name: string;
                 };
-            }[];
+            }>;
         };
         data_page_size(): number;
         question_full(id: number): {
