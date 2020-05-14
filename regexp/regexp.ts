@@ -149,19 +149,31 @@ namespace $ {
 
 				if( source instanceof $mol_regexp ) return source
 
-				return new $mol_regexp( source.source , source.flags )
+				const test = new $mol_regexp( '|' + source.source )
+				const groups = Array.from( { length : test.exec('')!.length - 1 } , ( _ , i )=> String( i ) )
+
+				return new $mol_regexp( source.source , source.flags , groups as any )
 
 			} if( Array.isArray( source ) ) {
 
 				const sources = [] as string[]
 				const groups = [] as ( Extract< keyof $mol_regexp_groups< Source > , string > )[]
+
+				let index = 0
 		
 				for( const item of source ) {
 					
 					const regexp = $mol_regexp.from( item )
 		
 					sources.push( regexp.source )
-					groups.push( ... regexp.groups )
+
+					for( let group of regexp.groups ) {
+						if( Number( group ) >= 0 ) {
+							groups.push( String( index ++ ) as any )
+						} else {
+							groups.push( group )
+						}
+					}
 		
 				}
 				
