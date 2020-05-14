@@ -131,9 +131,16 @@ namespace $ {
 			Source extends $mol_regexp_source
 		>(
 			source : Source ,
-			flags = '' ,
+			{ ignoreCase , multiline } : Partial< Pick< RegExp , 'ignoreCase' | 'multiline' > > = {
+				ignoreCase : false ,
+				multiline : false ,
+			} ,
 		) : $mol_regexp< $mol_regexp_groups< Source > > {
-		
+
+			let flags = 'gu'
+			if( multiline ) flags += 'm'
+			if( ignoreCase ) flags += 'i'
+
 			if( typeof source === 'string' ) {
 
 				return new this( source.replace( /[.*+?^${}()|[\]\\]/g , '\\$&' ) , flags )
