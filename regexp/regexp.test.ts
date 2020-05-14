@@ -182,6 +182,21 @@ namespace $ {
 
 		},
 
+		'sequence with groups of mixed type'() {
+
+			const prefix = '/'
+			const postfix = '/'
+
+			const regexp = $mol_regexp.from([ {prefix} , /(\w+)/ , {postfix} , /([gumi]*)/ ])
+			const found = regexp.parse( '/foo/mi' )
+
+			$mol_assert_equal( found!.prefix , '/' )
+			$mol_assert_equal( found![0] , 'foo' )
+			$mol_assert_equal( found!.postfix , '/' )
+			$mol_assert_equal( found![1] , 'mi' )
+
+		},
+
 		'recursive sequence with groups'() {
 
 			const { begin , end , digit , repeat } = $mol_regexp
