@@ -59,7 +59,7 @@ namespace $ {
 
 		}
 
-		/** Makes regexp that repeats this pattern from min to max count */
+		/** Makes regexp that non-greedy repeats this pattern from min to max count */
 		static repeat(
 			source : $mol_regexp_source ,
 			min = 0 ,
@@ -77,7 +77,7 @@ namespace $ {
 	
 		}
 
-		/** Makes regexp that repeats this pattern from min to max count */
+		/** Makes regexp that greedy repeats this pattern from min to max count */
 		static repeat_greedy(
 			source : $mol_regexp_source ,
 			min = 0 ,
