@@ -18,14 +18,27 @@ namespace $ {
 
 		'repeat fixed'() {
 
-			const year = $mol_regexp.digit.repeated( 4 , 4 )
+			const { repeat , digit } = $mol_regexp
+
+			const year = repeat( digit , 4 , 4 )
 			$mol_assert_equal( year.exec( '#2020#' )![0] , '2020' )
+
+		},
+
+		'greedy repeat'() {
+
+			const { repeat , repeat_greedy , letter } = $mol_regexp
+
+			$mol_assert_equal( repeat( letter ).exec( 'abc' )![0] , '' )
+			$mol_assert_equal( repeat_greedy( letter ).exec( 'abc' )![0] , 'abc' )
 
 		},
 
 		'repeat range'() {
 
-			const year = $mol_regexp.digit.repeated( 2 , 4 )
+			const { repeat_greedy , digit } = $mol_regexp
+
+			const year = repeat_greedy( digit , 2 , 4 )
 			
 			$mol_assert_equal( year.exec( '#2#' ) , null )
 			$mol_assert_equal( year.exec( '#20#' )![0] , '20' )
@@ -36,7 +49,9 @@ namespace $ {
 
 		'repeat from'() {
 
-			const name = $mol_regexp.letter.repeated( 2 )
+			const { repeat_greedy , letter } = $mol_regexp
+
+			const name = repeat_greedy( letter , 2 )
 
 			$mol_assert_equal( name.exec( '##' ) , null )
 			$mol_assert_equal( name.exec( '#a#' ) , null )
@@ -47,7 +62,9 @@ namespace $ {
 
 		'optional'() {
 
-			const name = $mol_regexp.letter.optional()
+			const { optional , letter } = $mol_regexp
+
+			const name = optional( letter )
 
 			$mol_assert_equal( name.exec( '' )![0] , '' )
 			$mol_assert_equal( name.exec( 'a' )![0] , 'a' )
@@ -75,11 +92,11 @@ namespace $ {
 
 		'sequence'() {
 
-			const { begin , end } = $mol_regexp
-			const year = $mol_regexp.digit.repeated( 4 , 4 )
+			const { begin , end , digit , repeat } = $mol_regexp
+			const year = repeat( digit , 4 , 4 )
 			const dash = '-'
-			const month = $mol_regexp.digit.repeated( 2 , 2 )
-			const day = $mol_regexp.digit.repeated( 2 , 2 )
+			const month = repeat( digit , 2 , 2 )
+			const day = repeat( digit , 2 , 2 )
 
 			const date = $mol_regexp.from( [ begin , year , dash , month , dash , day , end ] , 'i' )
 
@@ -129,11 +146,11 @@ namespace $ {
 
 		'sequence with groups'() {
 
-			const { begin , end } = $mol_regexp
-			const year = $mol_regexp.digit.repeated( 4 , 4 )
+			const { begin , end , digit , repeat } = $mol_regexp
+			const year = repeat( digit , 4 , 4 )
 			const dash = '-'
-			const month = $mol_regexp.digit.repeated( 2 , 2 )
-			const day = $mol_regexp.digit.repeated( 2 , 2 )
+			const month = repeat( digit , 2 , 2 )
+			const day = repeat( digit , 2 , 2 )
 
 			const regexp = $mol_regexp.from([ begin , {year} , dash , {month} , dash , {day} , end ])
 			const found = regexp.parse( '2020-01-02' )
@@ -146,11 +163,11 @@ namespace $ {
 
 		'recursive sequence with groups'() {
 
-			const { begin , end } = $mol_regexp
-			const year = $mol_regexp.digit.repeated( 4 , 4 )
+			const { begin , end , digit , repeat } = $mol_regexp
+			const year = repeat( digit , 4 , 4 )
 			const dash = '-'
-			const month = $mol_regexp.digit.repeated( 2 , 2 )
-			const day = $mol_regexp.digit.repeated( 2 , 2 )
+			const month = repeat( digit , 2 , 2 )
+			const day = repeat( digit , 2 , 2 )
 
 			const regexp = $mol_regexp.from([ begin , { date : [ {year} , dash , {month} ] } , dash , {day} , end ])
 			const found = regexp.parse( '2020-01-02' )
@@ -171,6 +188,28 @@ namespace $ {
 			$mol_assert_like( sexism.parse( 'sex = male' )! , { sex : 'male' } )
 			$mol_assert_like( sexism.parse( 'sex = female' )! , { sex : 'female' } )
 			$mol_assert_like( sexism.parse( 'sex = malefemale' ) , null )
+
+		},
+
+		'force after'() {
+
+			const { letter , force_after } = $mol_regexp
+
+			const regexp = $mol_regexp.from([ letter , force_after( '.' ) ])
+
+			$mol_assert_equal( regexp.exec( 'x.' )![0] , 'x' )
+			$mol_assert_equal( regexp.exec( 'x5' ) , null )
+
+		},
+
+		'forbid after'() {
+
+			const { letter , forbid_after } = $mol_regexp
+
+			const regexp = $mol_regexp.from([ letter , forbid_after( '.' ) ])
+
+			$mol_assert_equal( regexp.exec( 'x.' ) , null )
+			$mol_assert_equal( regexp.exec( 'x5' )![0] , 'x' )
 
 		},
 

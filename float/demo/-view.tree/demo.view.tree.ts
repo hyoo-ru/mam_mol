@@ -35,28 +35,15 @@ namespace $ { export class $mol_float_demo extends $mol_demo_large {
 
 	/**
 	 *  ```
-	 *  Head $mol_float sub / <= Head_card
+	 *  Head $mol_float sub / <= Head_row
 	 *  ```
 	 **/
 	@ $mol_mem
 	Head() {
 		return (( obj )=>{
-			obj.sub = () => [this.Head_card()] as readonly any[]
-			return obj
-		})( new this.$.$mol_float(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  Head_card $mol_card sub / <= Head_row
-	 *  ```
-	 **/
-	@ $mol_mem
-	Head_card() {
-		return (( obj )=>{
 			obj.sub = () => [this.Head_row()] as readonly any[]
 			return obj
-		})( new this.$.$mol_card(  ) )
+		})( new this.$.$mol_float(  ) )
 	}
 
 	/**

@@ -3852,7 +3852,6 @@ declare namespace $ {
         sub(): readonly any[];
         Scroll(): $$.$mol_scroll;
         Head(): $mol_float;
-        Head_card(): $$.$mol_card;
         Head_row(): $mol_row;
         Head_content(): $mol_view;
         Content(): $mol_row;

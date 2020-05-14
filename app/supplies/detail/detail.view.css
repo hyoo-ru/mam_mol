@@ -1,15 +1,14 @@
 [mol_app_supplies_detail_content] {
-	padding: 0 1rem;
+	padding: 0 .75rem;
 	background: var(--mol_theme_field);
-	overflow: hidden;
 }
 
 [mol_app_supplies_detail_content] > * {
-	margin: 1rem 0;
+	margin: .75rem 0;
 }
 
 [mol_app_supplies_detail_positions] > * {
-	margin: 1rem 0;
+	margin: .75rem 0;
 }
 
 [mol_app_supplies_detail_back_icon] {
@@ -39,8 +38,4 @@
 [mol_app_supplies_detail_cost] {
 	text-align: right;
 	margin: 0;
-}
-
-[mol_app_supplies_detail_actions] {
-	padding: 0;
 }
