@@ -60,24 +60,70 @@ namespace $ {
 		}
 
 		/** Makes regexp that repeats this pattern from min to max count */
-		repeated(
+		static repeat(
+			source : $mol_regexp_source ,
 			min = 0 ,
 			max = Number.POSITIVE_INFINITY ,
 		) {
 	
+			const regexp = $mol_regexp.from( source )
 			const upper = Number.isFinite( max ) ? max : ''
 			
 			return new $mol_regexp(
-				`(?:${ this.source }){${ min },${ upper }}` ,
-				this.flags ,
-				this.groups ,
+				`(?:${ regexp.source }){${ min },${ upper }}?` ,
+				regexp.flags ,
+				regexp.groups ,
+			)
+	
+		}
+
+		/** Makes regexp that repeats this pattern from min to max count */
+		static repeat_greedy(
+			source : $mol_regexp_source ,
+			min = 0 ,
+			max = Number.POSITIVE_INFINITY ,
+		) {
+	
+			const regexp = $mol_regexp.from( source )
+			const upper = Number.isFinite( max ) ? max : ''
+			
+			return new $mol_regexp(
+				`(?:${ regexp.source }){${ min },${ upper }}` ,
+				regexp.flags ,
+				regexp.groups ,
 			)
 	
 		}
 
 		/** Makes regexp that allow absent of this pattern */
-		optional() {
-			return this.repeated( 0 , 1 )
+		static optional( source : $mol_regexp_source ) {
+			return $mol_regexp.repeat_greedy( source , 0 , 1 )
+		}
+
+		/** Makes regexp that look ahead for pattern */
+		static force_after( source : $mol_regexp_source ) {
+
+			const regexp = $mol_regexp.from( source )
+			
+			return new $mol_regexp(
+				`(?=${ regexp.source })` ,
+				regexp.flags ,
+				regexp.groups ,
+			)
+
+		}
+
+		/** Makes regexp that look ahead for pattern */
+		static forbid_after( source : $mol_regexp_source ) {
+
+			const regexp = $mol_regexp.from( source )
+			
+			return new $mol_regexp(
+				`(?!${ regexp.source })` ,
+				regexp.flags ,
+				regexp.groups ,
+			)
+
 		}
 
 		/** Converts some js values to regexp */
