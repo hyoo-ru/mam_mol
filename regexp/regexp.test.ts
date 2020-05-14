@@ -77,7 +77,7 @@ namespace $ {
 			const regexp = $mol_regexp.from( '[\\d]' )
 			
 			$mol_assert_equal( regexp.source , '\\[\\\\d\\]' )
-			$mol_assert_equal( regexp.flags , '' )
+			$mol_assert_equal( regexp.flags , 'gu' )
 
 		},
 
@@ -90,6 +90,27 @@ namespace $ {
 
 		},
 
+		'case ignoring'() {
+
+			const xxx = $mol_regexp.from( 'x' , { ignoreCase : true } )
+
+			$mol_assert_like( xxx.flags , 'giu' )
+			$mol_assert_like( xxx.exec( 'xx' )![0] , 'x' )
+			$mol_assert_like( xxx.exec( 'XX' )![0] , 'X' )
+
+		},
+
+		'multiline mode'() {
+
+			const { end } = $mol_regexp
+
+			const xxx = $mol_regexp.from( [ 'x' , end ] , { multiline : true } )
+
+			$mol_assert_like( xxx.exec( 'x\ny' )![0] , 'x' )
+			$mol_assert_like( xxx.flags , 'gmu' )
+
+		},
+
 		'sequence'() {
 
 			const { begin , end , digit , repeat } = $mol_regexp
@@ -98,10 +119,10 @@ namespace $ {
 			const month = repeat( digit , 2 , 2 )
 			const day = repeat( digit , 2 , 2 )
 
-			const date = $mol_regexp.from( [ begin , year , dash , month , dash , day , end ] , 'i' )
+			const date = $mol_regexp.from( [ begin , year , dash , month , dash , day , end ] , { ignoreCase : true } )
 
 			$mol_assert_like( date.exec( '2020-01-02' )![0] , '2020-01-02' )
-			$mol_assert_like( date.flags , 'i' )
+			$mol_assert_like( date.ignoreCase , true )
 
 		},
 
