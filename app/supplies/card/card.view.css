@@ -5,6 +5,10 @@
 	padding: .5rem;
 }
 
+[mol_app_supplies_card_card][mol_card_status_type="approved"] {
+	--mol_theme_line: hsl(140, 50%, 40%);
+}
+
 [mol_app_supplies_card_content] {
 }
 

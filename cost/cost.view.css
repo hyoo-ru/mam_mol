@@ -1,7 +1,7 @@
 [mol_cost] {
 	white-space: nowrap;
 	font-weight: normal;
-	display: inline-block;
+	display: inline-flex;
 }
 
 [mol_cost_main] {

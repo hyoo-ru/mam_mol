@@ -34,6 +34,7 @@
 }
 
 [mol_grid_head] {
+	display: table-row;
 	transform: none;
 }
 

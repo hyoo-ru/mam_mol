@@ -48,7 +48,7 @@ namespace $.$$ {
 				shrink: 1,
 				basis: per(50),
 			},
-			minHeight: rem(2.5),
+			minHeight: rem(2),
 			padding: [ rem(.5) , rem(.75) ],
 			wordBreak: 'normal',
 			cursor: 'default',

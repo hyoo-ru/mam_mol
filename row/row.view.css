@@ -13,6 +13,6 @@
 }
 
 [mol_row] > * {
-	margin: .5rem;
+	margin: .25rem;
 	max-width: 100%;
 }
