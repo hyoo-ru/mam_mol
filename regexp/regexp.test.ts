@@ -130,8 +130,8 @@ namespace $ {
 
 			const regexp = $mol_regexp.from({ dog : '@' })
 
-			$mol_assert_like( regexp.parse( '#' ) , null )
-			$mol_assert_like( regexp.parse( '@' )! , { dog : '@' } )
+			$mol_assert_like( [ ... regexp.parse( '#' ) ] , [] )
+			$mol_assert_like( [ ... regexp.parse( '@' ) ] , [{ dog : '@' }] )
 
 		},
 
@@ -144,9 +144,9 @@ namespace $ {
 
 			const sexism = $mol_regexp.from( Sex )
 
-			$mol_assert_like( sexism.parse( '' ) , null )
-			$mol_assert_like( sexism.parse( 'male' )! , { male : 'male' , female : '' } )
-			$mol_assert_like( sexism.parse( 'female' )! , { male : '' , female : 'female' } )
+			$mol_assert_like( [ ... sexism.parse( '' ) ] , [] )
+			$mol_assert_like( [ ... sexism.parse( 'male' ) ] , [{ male : 'male' , female : '' }] )
+			$mol_assert_like( [ ... sexism.parse( 'female' ) ] , [{ male : '' , female : 'female' }] )
 
 		},
 
@@ -159,9 +159,9 @@ namespace $ {
 
 			const sexism = $mol_regexp.from({ Sex })
 
-			$mol_assert_like( sexism.parse( '' ) , null )
-			$mol_assert_like( sexism.parse( 'male' )! , { Sex : 'male' , male : 'male' , female : '' } )
-			$mol_assert_like( sexism.parse( 'female' )! , { Sex : 'female' , male : '' , female : 'female' } )
+			$mol_assert_like( [ ... sexism.parse( '' ) ] , [] )
+			$mol_assert_like( [ ... sexism.parse( 'male' ) ] , [{ Sex : 'male' , male : 'male' , female : '' }] )
+			$mol_assert_like( [ ... sexism.parse( 'female' ) ] , [{ Sex : 'female' , male : '' , female : 'female' }] )
 
 		},
 
@@ -174,11 +174,13 @@ namespace $ {
 			const day = repeat( digit , 2 , 2 )
 
 			const regexp = $mol_regexp.from([ begin , {year} , dash , {month} , dash , {day} , end ])
-			const found = regexp.parse( '2020-01-02' )
+			const found = [ ... regexp.parse( '2020-01-02' ) ]
 
-			$mol_assert_equal( found!.year , '2020' )
-			$mol_assert_equal( found!.month , '01' )
-			$mol_assert_equal( found!.day , '02' )
+			$mol_assert_like( found , [{
+				year : '2020' ,
+				month : '01' ,
+				day : '02' ,
+			}] )
 
 		},
 
@@ -188,12 +190,14 @@ namespace $ {
 			const postfix = '/'
 
 			const regexp = $mol_regexp.from([ {prefix} , /(\w+)/ , {postfix} , /([gumi]*)/ ])
-			const found = regexp.parse( '/foo/mi' )
+			const found = [ ... regexp.parse( '/foo/mi' ) ]
 
-			$mol_assert_equal( found!.prefix , '/' )
-			$mol_assert_equal( found![0] , 'foo' )
-			$mol_assert_equal( found!.postfix , '/' )
-			$mol_assert_equal( found![1] , 'mi' )
+			$mol_assert_like( found , [{
+				prefix : '/' ,
+				0 : 'foo' ,
+				postfix : '/' ,
+				1 : 'mi' ,
+			}] )
 
 		},
 
@@ -206,12 +210,28 @@ namespace $ {
 			const day = repeat( digit , 2 , 2 )
 
 			const regexp = $mol_regexp.from([ begin , { date : [ {year} , dash , {month} ] } , dash , {day} , end ])
-			const found = regexp.parse( '2020-01-02' )
+			const found = [ ... regexp.parse( '2020-01-02' ) ]
 
-			$mol_assert_equal( found!.date , '2020-01' )
-			$mol_assert_equal( found!.year , '2020' )
-			$mol_assert_equal( found!.month , '01' )
-			$mol_assert_equal( found!.day , '02' )
+			$mol_assert_like( found , [{
+				date : '2020-01' ,
+				year : '2020' ,
+				month : '01' ,
+				day : '02' ,
+			}] )
+
+		},
+
+		'parse multiple'() {
+
+			const { digit } = $mol_regexp
+
+			const regexp = $mol_regexp.from({ digit })
+
+			$mol_assert_like( [ ... regexp.parse( '123' ) ] , [
+				{ digit : '1' },
+				{ digit : '2' },
+				{ digit : '3' },
+			] )
 
 		},
 
@@ -221,9 +241,9 @@ namespace $ {
 
 			const sexism = $mol_regexp.from([ begin , 'sex = ' , [ { sex : 'male' } , or , { sex : 'female' } ] , end ])
 
-			$mol_assert_like( sexism.parse( 'sex = male' )! , { sex : 'male' } )
-			$mol_assert_like( sexism.parse( 'sex = female' )! , { sex : 'female' } )
-			$mol_assert_like( sexism.parse( 'sex = malefemale' ) , null )
+			$mol_assert_like( [ ... sexism.parse( 'sex = male' ) ] , [{ sex : 'male' }] )
+			$mol_assert_like( [ ... sexism.parse( 'sex = female' ) ] , [{ sex : 'female' }] )
+			$mol_assert_like( [ ... sexism.parse( 'sex = malefemale' ) ] , [] )
 
 		},
 
