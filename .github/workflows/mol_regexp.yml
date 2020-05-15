@@ -1,0 +1,28 @@
+name: mol_regexp2
+
+on:
+  push:
+  pull_request:
+  schedule:
+  - cron: "0 7 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - name: Environment Printer
+      uses: managedkaos/print-env@v1.0
+    
+    - name: Build apps
+      uses: hyoo-ru/mam_build@master2
+      with:
+        package: mol
+        modules: regexp
+    
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ secrets.NPM_AUTH_TOKEN }}
+        package: ./mol/regexp/-/package.json
