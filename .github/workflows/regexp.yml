@@ -20,7 +20,7 @@ jobs:
       uses: hyoo-ru/mam_build@master2
       with:
         package: mol
-        modules: mol/regexp
+        modules: regexp
         
     - uses: JS-DevTools/npm-publish@v1
       with:
