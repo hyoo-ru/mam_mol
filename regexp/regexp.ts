@@ -158,7 +158,7 @@ namespace $ {
 
 			} else if( source instanceof RegExp ) {
 
-				if( source instanceof $mol_regexp ) return source
+				if( source instanceof $mol_regexp ) return source as any
 
 				const test = new $mol_regexp( '|' + source.source )
 				const groups = Array.from( { length : test.exec('')!.length - 1 } , ( _ , i )=> String( i ) )
