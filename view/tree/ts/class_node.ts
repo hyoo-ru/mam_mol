@@ -1,25 +1,25 @@
 namespace $ {
-	export function $mol_view_tree_ts_class_node(cn: $mol_tree) {
-		if( !/^\$\w+$/.test( cn.type ) ) throw cn.error( 'Wrong component name' )
-		if (cn.sub.length === 0) throw cn.error('Need an $mol_view subclass')
-		const flatten_class = $mol_view_tree_flatten_props(cn)
-		const body = flatten_class.sub[0]
+	export function $mol_view_tree_ts_class_node(class_node: $mol_tree, locale: $mol_view_tree_ts_locale) {
+		if( !/^\$\w+$/.test( class_node.type ) ) throw class_node.error( 'Wrong class name' )
+		const body = class_node.sub[0]
 
-		return cn.make({
-			type: 'block',
-			sub: [
-				cn.make({ type: 'line', sub: [
-					cn.make({ data: 'export class' }),
-					cn.make({ data: cn.type  }),
-					cn.make({ data: 'extends' }),
-					body.make({ data: body.type }),
-					cn.make({ data: '{' }),	
-				]}),
+		return class_node.make({ type: 'block', sub: [
+			class_node.make({ type: 'line', sub: [
+				class_node.make({ data: 'export class' }),
+				class_node.make({ data: class_node.type }),
+				class_node.make({ data: 'extends' }),
+				body.make({ data: body.type }),
+				class_node.make({ data: '{' }),	
+			]}),
 
-				cn.make({ type: 'block', sub: body.sub.map($mol_view_tree_ts_method) }),
+			class_node.make({
+				type: 'block',
+				sub: $mol_view_tree_props(class_node).map(
+					prop => $mol_view_tree_ts_method(prop, locale)
+				)
+			}),
 
-				cn.make({ data: '}' }),
-			]
-		})
+			class_node.make({ data: '}' }),
+		] })
 	}
 }

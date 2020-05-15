@@ -128,7 +128,7 @@ namespace $ {
 			
 			var parent = def.sub[0]
 			
-			var propDefs : { [ key : string ] : $mol_tree } = {}
+			// var propDefs : { [ key : string ] : $mol_tree } = {}
 			var members : { [ key : string ] : StringNodeArray } = {}
 			
 			for( let param of $mol_view_tree_class_props( def ).sub ) { try {
@@ -192,7 +192,7 @@ namespace $ {
 										if( own_key ) own_args.push( ` ${own_key} : any ` )
 										if( own_next ) own_args.push( ` ${own_next}? : any ` )
 
-										let prop_[ , their_name , ... their_args ] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
+										let [ , their_name , ... their_args ] = /(.*?)(?:\!(\w+))?(?:\?(\w+))?$/.exec( over.type )!
 										their_args = their_args.filter( Boolean )
 										
 										members[ own_name ] = [`\t${ own_name }(${ own_args.join(',') }) {\n\t\treturn this.${ propName[1] }(${ propName[2] || '' }).${ their_name }( ${ their_args.join(' , ') } )\n\t}\n\n`]
@@ -263,12 +263,19 @@ namespace $ {
 					var val = getValue( child , true )
 					if( !val ) return
 					
-					propDefs[ propName[1] ] = param
+					// propDefs[ propName[1] ] = param
 					
 					var args : string[] = []
 					if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
 					if( propName[3] ) args.push( ` ${ propName[3] }? : any , force? : $${''}mol_mem_force ` )
-					if( needSet && param.sub[0].type !== '<=>' ) val = [( needReturn ? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : ` : `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t` ) , ...val]
+					if( needSet && child.type !== '<=>' ) 
+						val = [
+							( needReturn
+								? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : `
+								: `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t`
+							) , 
+							...val
+						]
 					if( needReturn ) val = ['return ', ...val]
 					var decl: StringNodeArray = ['\t', SourceNode(param.row, param.col, fileName, propName[1]),'(', args.join(',') , ') {\n\t\t' , ...val , '\n\t}\n\n']
 					if( needCache ) {

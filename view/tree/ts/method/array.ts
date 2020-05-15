@@ -5,7 +5,7 @@ namespace $ {
 			col: value.col + 1
 		})
 
-		value.hack({
+		return value.hack({
 			'-': () => [],
 			'^': (node, context) => [
 				$mol_view_tree_ts_merge(value)
@@ -15,6 +15,6 @@ namespace $ {
 			]
 		})
 
-		$mol_view_tree_ts(item)
+		// $mol_view_tree_ts(item)
 	}
 }
