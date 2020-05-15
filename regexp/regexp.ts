@@ -41,21 +41,32 @@ namespace $ {
 		}
 
 		/** Parses input and returns found capture groups or null */
-		parse( str : string , from = 0 ) {
+		get parse() { 
 
-			this.lastIndex = from
-			
-			const res = super.exec( str )
-			if( res === null ) return null
+			const self = this
 
-			const found = {} as { [ key in keyof Groups ] : string }
+			return function*( str : string , from = 0 ) {
 
-			for( let i = 0 ; i < this.groups.length ; ++i ) {
-				const group = this.groups[ i ]
-				found[ group ] = found[ group ] || res[ i + 1 ] || ''
+				while( from < str.length ) {
+
+					self.lastIndex = from
+					
+					const res = self.exec( str )
+					if( res === null ) return null
+
+					from = self.lastIndex
+
+					const found = {} as any as { [ key in keyof Groups ] : string } & { [ key : number ] : string }
+
+					for( let i = 0 ; i < self.groups.length ; ++i ) {
+						const group = self.groups[ i ]
+						found[ group ] = found[ group ] || res[ i + 1 ] || '' as any
+					}
+
+					yield found
+				}
+
 			}
-
-			return found
 
 		}
 
