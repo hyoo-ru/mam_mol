@@ -1,4 +1,4 @@
-name: mol_regexp
+name: mol_regexp2
 
 on:
   push:
