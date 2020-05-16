@@ -30,8 +30,8 @@ namespace $ {
 		'hack'() {
 
 			const res = $mol_tree2.fromString( `foo bar xxx` ).hack({
-				'' : ( tree , context )=> [ tree.hack( context ) ] ,
-				'bar' : ( tree , context )=> [ tree.struct( '777' , tree.hack( context ).kids ) ] ,
+				'' : ( tree , context )=> [ tree.clone( tree.hack( context ) ) ] ,
+				'bar' : ( tree , context )=> [ tree.struct( '777' , tree.hack( context ) ) ] ,
 			})
 
 			$mol_assert_equal( res.toString() , 'foo 777 xxx\n' )

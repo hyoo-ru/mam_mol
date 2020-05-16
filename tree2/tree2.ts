@@ -341,9 +341,9 @@ namespace $ {
 		}
 
 		/** Transform tree through context with transformers */
-		hack< Context = never >( belt : $mol_tree2_belt< Context > , context? : Context ) : $mol_tree2 {
+		hack< Context = never >( belt : $mol_tree2_belt< Context > , context? : Context ) {
 			
-			const sub = ( [] as $mol_tree2[] ).concat( ... this.kids.map( child => {
+			return ( [] as readonly $mol_tree2[] ).concat( ... this.kids.map( child => {
 
 				const handle = belt[ child.type ] || belt[ '' ]
 				if( !handle ) {
@@ -354,7 +354,6 @@ namespace $ {
 
 			} ) )
 
-			return this.clone( sub )
 		}
 
 		/** Makes Error with node coordinates. */
