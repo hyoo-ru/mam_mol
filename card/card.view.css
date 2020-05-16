@@ -17,14 +17,11 @@
 [mol_card_status] {
 	background: var(--mol_theme_line);
 	text-transform: capitalize;
-	padding: 0 1rem;
+	padding: .25rem .75rem;
 	line-height: 2;
 	margin: 0;
 }
 
-[mol_card_status_type="approved"] {
-	--mol_theme_line: hsl(140, 50%, 50%);
-}
 [mol_card_status] {
 	background: var(--mol_theme_line);
 }

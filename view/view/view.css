@@ -5,6 +5,7 @@
 	-webkit-appearance: none;
 	word-break: break-word;
 	box-sizing: border-box;
+	display: flex;
 }
 
 [mol_view] > * {

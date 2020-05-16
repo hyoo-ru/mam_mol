@@ -1,5 +1,5 @@
 :root {
-	--mol_skin_font: 1rem/1.5 "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	--mol_skin_font: 1rem/1.5rem "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 	--mol_skin_font_monospace: Monaco, monospace;
 }
 

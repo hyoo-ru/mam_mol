@@ -1,6 +1,7 @@
 [mol_link_iconed] {
 	align-items: center;
 	color: var(--mol_theme_control);
+	display: inline-flex;
 }
 
 [mol_link_iconed_icon] {
@@ -9,6 +10,8 @@
 	height: 1em;
 	width: 1em;
 	vertical-align: -10%;
+	display: inline-block;
+	margin: .25rem 0;
 }
 
 [mol_theme="$mol_theme_dark"] [mol_link_iconed_icon] {

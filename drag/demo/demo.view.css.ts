@@ -15,7 +15,7 @@ namespace $.$$ {
 		},
 
 		List: {
-			padding: rem(.5),
+			padding: rem(.75),
 		},
 		
 		List_drop: {
@@ -35,7 +35,7 @@ namespace $.$$ {
 		},
 		
 		Trash: {
-			padding: [ rem(.5) , rem(1) ],
+			padding: [ rem(1) , rem(1.5) ],
 			display: 'block',
 		},
 

@@ -1,3 +1,8 @@
+[mol_dimmer] {
+	display: block;
+}
+
 [mol_dimmer_low] {
+	display: inline;
 	opacity: 0.66;
 }

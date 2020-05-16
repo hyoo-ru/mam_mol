@@ -1,5 +1,5 @@
 [mol_text] {
-	line-height: 1.5;
+	line-height: 1.5rem;
 	box-sizing: border-box;
 	max-width: 60rem;
 	padding: .75rem;
@@ -15,6 +15,10 @@
 	margin: .5rem .75rem;
 	overflow: auto;
 	max-width: 100%;
+}
+
+[mol_text_span] {
+	display: inline;
 }
 
 [mol_text_type="block"] {
@@ -63,7 +67,7 @@
 	max-width: 100%;
 	max-height: 75vh;
 	overflow: auto;
-	margin: .5rem;
+	margin: .75rem;
 	flex-grow: 0;
 }
 
