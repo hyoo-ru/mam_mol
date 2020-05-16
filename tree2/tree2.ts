@@ -18,13 +18,14 @@ namespace $ {
 
 	/**
 	 * Abstract Syntax Tree with human readable serialization.
+	 * Avoid direct instantiation. Use static factories instead.
 	 * @see https://github.com/nin-jin/tree.d
 	 */
 	export class $mol_tree2 extends $mol_object2 {
 		
 		constructor(
 
-			/** Type of structural node, `data` should be empty */
+			/** Type of structural node, `value` should be empty */
 			readonly type : string ,
 			
 			/** Content of data node, `type` should be empty */
