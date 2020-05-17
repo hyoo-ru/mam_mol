@@ -5,6 +5,7 @@
 	position: relative;
 	font-family: var(--mol_skin_font_monospace);
 	z-index: 0;
+	vertical-align: top;
 }
 
 [mol_textarea_view] {
