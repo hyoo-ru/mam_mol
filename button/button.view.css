@@ -10,6 +10,7 @@
 	box-sizing: border-box;
 	word-break: normal;
 	cursor: default;
+	user-select: none;
 }
 [mol_button]:focus {
 	outline: none;
