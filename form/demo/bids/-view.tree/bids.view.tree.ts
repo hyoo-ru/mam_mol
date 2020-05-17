@@ -528,7 +528,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  Submit $mol_button_major
 	 *  	sub / <= submit_text
 	 *  	click?val <=> submit?val
-	 *  	disabled <= submit_blocked
+	 *  	enabled <= submit_allowed
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -536,7 +536,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 		return (( obj )=>{
 			obj.sub = () => [this.submit_text()] as readonly any[]
 			obj.click = ( val? : any ) => this.submit( val )
-			obj.disabled = () => this.submit_blocked()
+			obj.enabled = () => this.submit_allowed()
 			return obj
 		})( new this.$.$mol_button_major(  ) )
 	}
@@ -552,10 +552,10 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 
 	/**
 	 *  ```
-	 *  submit_blocked true
+	 *  submit_allowed true
 	 *  ```
 	 **/
-	submit_blocked() {
+	submit_allowed() {
 		return true
 	}
 

@@ -3981,7 +3981,7 @@ declare namespace $ {
         mail(val?: any, force?: $mol_mem_force): any;
         Submit(): $mol_button_major;
         submit_text(): string;
-        submit_blocked(): boolean;
+        submit_allowed(): boolean;
         Message(): $mol_view;
         message(val?: any, force?: $mol_mem_force): any;
     }
@@ -4002,7 +4002,7 @@ declare namespace $.$$ {
         sex(next?: string): string;
         sex_bid(): string;
         submit(next?: Event): void;
-        submit_blocked(): boolean;
+        submit_allowed(): boolean;
     }
 }
 

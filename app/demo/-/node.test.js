@@ -14596,14 +14596,14 @@ var $;
                 return ((obj) => {
                     obj.sub = () => [this.submit_text()];
                     obj.click = (val) => this.submit(val);
-                    obj.disabled = () => this.submit_blocked();
+                    obj.enabled = () => this.submit_allowed();
                     return obj;
                 })(new this.$.$mol_button_major());
             }
             submit_text() {
                 return this.$.$mol_locale.text("$mol_form_demo_bids_submit_text");
             }
-            submit_blocked() {
+            submit_allowed() {
                 return true;
             }
             Message() {
@@ -14756,8 +14756,8 @@ var $;
             submit(next) {
                 this.message(`Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()} from  ${this.mail()}!`);
             }
-            submit_blocked() {
-                return this.Form().submit_blocked();
+            submit_allowed() {
+                return !this.Form().submit_blocked();
             }
         }
         $$.$mol_form_demo_bids = $mol_form_demo_bids;
