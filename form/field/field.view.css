@@ -3,7 +3,7 @@
 }
 
 [mol_form_field_bid] {
-	color: var(--mol_skin_accent);
+	color: var(--mol_theme_focus);
 	margin-left: .5rem;
 	display: inline-block;
 }

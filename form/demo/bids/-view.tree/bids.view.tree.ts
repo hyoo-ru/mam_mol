@@ -38,6 +38,60 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 
 	/**
 	 *  ```
+	 *  message_need_at @ \@ is required
+	 *  ```
+	 **/
+	message_need_at() {
+		return this.$.$mol_locale.text( "$mol_form_demo_bids_message_need_at" )
+	}
+
+	/**
+	 *  ```
+	 *  message_only_one_at @ \At most one @
+	 *  ```
+	 **/
+	message_only_one_at() {
+		return this.$.$mol_locale.text( "$mol_form_demo_bids_message_only_one_at" )
+	}
+
+	/**
+	 *  ```
+	 *  message_no_tld @ \At least 2 level domain
+	 *  ```
+	 **/
+	message_no_tld() {
+		return this.$.$mol_locale.text( "$mol_form_demo_bids_message_no_tld" )
+	}
+
+	/**
+	 *  ```
+	 *  message_dots_inside @ \Dots can't be at edge
+	 *  ```
+	 **/
+	message_dots_inside() {
+		return this.$.$mol_locale.text( "$mol_form_demo_bids_message_dots_inside" )
+	}
+
+	/**
+	 *  ```
+	 *  message_no_space_domain @ \No space in domain name
+	 *  ```
+	 **/
+	message_no_space_domain() {
+		return this.$.$mol_locale.text( "$mol_form_demo_bids_message_no_space_domain" )
+	}
+
+	/**
+	 *  ```
+	 *  message_need_username @ \Username required
+	 *  ```
+	 **/
+	message_need_username() {
+		return this.$.$mol_locale.text( "$mol_form_demo_bids_message_need_username" )
+	}
+
+	/**
+	 *  ```
 	 *  sub /
 	 *  	<= Form
 	 *  	<= Message
@@ -56,6 +110,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 *  		<= Name_nick_field
 	 *  		<= Name_second_field
 	 *  		<= Sex_field
+	 *  		<= Mail_field
 	 *  	buttons / <= Submit
 	 *  ```
 	 **/
@@ -63,7 +118,7 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	Form() {
 		return (( obj )=>{
 			obj.submit = ( val? : any ) => this.submit( val )
-			obj.form_fields = () => [this.Name_first_field() , this.Name_nick_field() , this.Name_second_field() , this.Sex_field()] as readonly any[]
+			obj.form_fields = () => [this.Name_first_field() , this.Name_nick_field() , this.Name_second_field() , this.Sex_field() , this.Mail_field()] as readonly any[]
 			obj.buttons = () => [this.Submit()] as readonly any[]
 			return obj
 		})( new this.$.$mol_form(  ) )
@@ -395,6 +450,77 @@ namespace $ { export class $mol_form_demo_bids extends $mol_demo_small {
 	 **/
 	sex_option_female() {
 		return this.$.$mol_locale.text( "$mol_form_demo_bids_sex_option_female" )
+	}
+
+	/**
+	 *  ```
+	 *  Mail_field $mol_form_field
+	 *  	name <= mail_label
+	 *  	bid <= mail_bid
+	 *  	control <= Mail_control
+	 *  ```
+	 **/
+	@ $mol_mem
+	Mail_field() {
+		return (( obj )=>{
+			obj.name = () => this.mail_label()
+			obj.bid = () => this.mail_bid()
+			obj.control = () => this.Mail_control()
+			return obj
+		})( new this.$.$mol_form_field(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  mail_label @ \E-mail
+	 *  ```
+	 **/
+	mail_label() {
+		return this.$.$mol_locale.text( "$mol_form_demo_bids_mail_label" )
+	}
+
+	/**
+	 *  ```
+	 *  mail_bid \
+	 *  ```
+	 **/
+	mail_bid() {
+		return ""
+	}
+
+	/**
+	 *  ```
+	 *  Mail_control $mol_string
+	 *  	hint <= mail_hint
+	 *  	value?val <=> mail?val
+	 *  ```
+	 **/
+	@ $mol_mem
+	Mail_control() {
+		return (( obj )=>{
+			obj.hint = () => this.mail_hint()
+			obj.value = ( val? : any ) => this.mail( val )
+			return obj
+		})( new this.$.$mol_string(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  mail_hint @ \name@domain.com
+	 *  ```
+	 **/
+	mail_hint() {
+		return this.$.$mol_locale.text( "$mol_form_demo_bids_mail_hint" )
+	}
+
+	/**
+	 *  ```
+	 *  mail?val \
+	 *  ```
+	 **/
+	@ $mol_mem
+	mail( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : ""
 	}
 
 	/**

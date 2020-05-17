@@ -3933,6 +3933,12 @@ declare namespace $ {
         message_required(): string;
         message_no_spaces(): string;
         message_need_more_letters(): string;
+        message_need_at(): string;
+        message_only_one_at(): string;
+        message_no_tld(): string;
+        message_dots_inside(): string;
+        message_no_space_domain(): string;
+        message_need_username(): string;
         sub(): readonly any[];
         Form(): $$.$mol_form;
         submit(val?: any, force?: $mol_mem_force): any;
@@ -3967,6 +3973,12 @@ declare namespace $ {
         sex_option_male(): string;
         sex_option_intersex(): string;
         sex_option_female(): string;
+        Mail_field(): $mol_form_field;
+        mail_label(): string;
+        mail_bid(): string;
+        Mail_control(): $$.$mol_string;
+        mail_hint(): string;
+        mail(val?: any, force?: $mol_mem_force): any;
         Submit(): $mol_button_major;
         submit_text(): string;
         submit_blocked(): boolean;
@@ -3985,6 +3997,7 @@ declare namespace $.$$ {
         name_nick(next?: string): string;
         name_second(next?: string): string;
         name_second_bid(): string;
+        mail_bid(): string;
         sex(next?: string): string;
         sex_bid(): string;
         submit(next?: Event): void;

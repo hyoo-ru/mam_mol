@@ -3,6 +3,12 @@
 	"$mol_form_demo_bids_message_required": "Required",
 	"$mol_form_demo_bids_message_no_spaces": "No spaces!",
 	"$mol_form_demo_bids_message_need_more_letters": "{count} or more letters",
+	"$mol_form_demo_bids_message_need_at": "@ is required",
+	"$mol_form_demo_bids_message_only_one_at": "At most one @",
+	"$mol_form_demo_bids_message_no_tld": "At least 2 level domain",
+	"$mol_form_demo_bids_message_dots_inside": "Dots can't be at edge",
+	"$mol_form_demo_bids_message_no_space_domain": "No space in domain name",
+	"$mol_form_demo_bids_message_need_username": "Username required",
 	"$mol_form_demo_bids_name_first_label": "First Name",
 	"$mol_form_demo_bids_name_first_hint": "Jack",
 	"$mol_form_demo_bids_name_nick_label": "Nick Name",
@@ -13,5 +19,7 @@
 	"$mol_form_demo_bids_sex_option_male": "Male",
 	"$mol_form_demo_bids_sex_option_intersex": "Intersex",
 	"$mol_form_demo_bids_sex_option_female": "Female",
+	"$mol_form_demo_bids_mail_label": "E-mail",
+	"$mol_form_demo_bids_mail_hint": "name@domain.com",
 	"$mol_form_demo_bids_submit_text": "Sign Up"
 }

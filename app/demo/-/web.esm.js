@@ -14197,7 +14197,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_skin_accent);\n\tmargin-left: .5rem;\n\tdisplay: inline-block;\n}\n");
+    $.$mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_theme_focus);\n\tmargin-left: .5rem;\n\tdisplay: inline-block;\n}\n");
 })($ || ($ = {}));
 //field.view.css.js.map
 ;
@@ -14307,13 +14307,31 @@ var $;
             message_need_more_letters() {
                 return this.$.$mol_locale.text("$mol_form_demo_bids_message_need_more_letters");
             }
+            message_need_at() {
+                return this.$.$mol_locale.text("$mol_form_demo_bids_message_need_at");
+            }
+            message_only_one_at() {
+                return this.$.$mol_locale.text("$mol_form_demo_bids_message_only_one_at");
+            }
+            message_no_tld() {
+                return this.$.$mol_locale.text("$mol_form_demo_bids_message_no_tld");
+            }
+            message_dots_inside() {
+                return this.$.$mol_locale.text("$mol_form_demo_bids_message_dots_inside");
+            }
+            message_no_space_domain() {
+                return this.$.$mol_locale.text("$mol_form_demo_bids_message_no_space_domain");
+            }
+            message_need_username() {
+                return this.$.$mol_locale.text("$mol_form_demo_bids_message_need_username");
+            }
             sub() {
                 return [this.Form(), this.Message()];
             }
             Form() {
                 return ((obj) => {
                     obj.submit = (val) => this.submit(val);
-                    obj.form_fields = () => [this.Name_first_field(), this.Name_nick_field(), this.Name_second_field(), this.Sex_field()];
+                    obj.form_fields = () => [this.Name_first_field(), this.Name_nick_field(), this.Name_second_field(), this.Sex_field(), this.Mail_field()];
                     obj.buttons = () => [this.Submit()];
                     return obj;
                 })(new this.$.$mol_form());
@@ -14442,6 +14460,33 @@ var $;
             sex_option_female() {
                 return this.$.$mol_locale.text("$mol_form_demo_bids_sex_option_female");
             }
+            Mail_field() {
+                return ((obj) => {
+                    obj.name = () => this.mail_label();
+                    obj.bid = () => this.mail_bid();
+                    obj.control = () => this.Mail_control();
+                    return obj;
+                })(new this.$.$mol_form_field());
+            }
+            mail_label() {
+                return this.$.$mol_locale.text("$mol_form_demo_bids_mail_label");
+            }
+            mail_bid() {
+                return "";
+            }
+            Mail_control() {
+                return ((obj) => {
+                    obj.hint = () => this.mail_hint();
+                    obj.value = (val) => this.mail(val);
+                    return obj;
+                })(new this.$.$mol_string());
+            }
+            mail_hint() {
+                return this.$.$mol_locale.text("$mol_form_demo_bids_mail_hint");
+            }
+            mail(val, force) {
+                return (val !== void 0) ? val : "";
+            }
             Submit() {
                 return ((obj) => {
                     obj.sub = () => [this.submit_text()];
@@ -14510,6 +14555,15 @@ var $;
         ], $mol_form_demo_bids.prototype, "sex", null);
         __decorate([
             $.$mol_mem
+        ], $mol_form_demo_bids.prototype, "Mail_field", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_form_demo_bids.prototype, "Mail_control", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_form_demo_bids.prototype, "mail", null);
+        __decorate([
+            $.$mol_mem
         ], $mol_form_demo_bids.prototype, "Submit", null);
         __decorate([
             $.$mol_mem
@@ -14563,6 +14617,26 @@ var $;
                     return this.message_need_more_letters().replace('{count}', '3');
                 return '';
             }
+            mail_bid() {
+                const value = this.mail().trim();
+                if (!value)
+                    return this.message_required();
+                const parts = value.split('@');
+                if (parts.length < 2)
+                    return this.message_need_at();
+                if (parts.length > 2)
+                    return this.message_only_one_at();
+                if (!parts[0])
+                    return this.message_need_username();
+                if (parts[1].indexOf(' ') !== -1)
+                    return this.message_no_space_domain();
+                const domains = parts[1].split('.');
+                if (domains.length < 2)
+                    return this.message_no_tld();
+                if (!domains.every(Boolean))
+                    return this.message_dots_inside();
+                return '';
+            }
             sex(next) {
                 return $.$mol_state_local.value(this.state_key('sex'), next) || '';
             }
@@ -14572,7 +14646,7 @@ var $;
                 return '';
             }
             submit(next) {
-                this.message(`Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()}!`);
+                this.message(`Hello, ${this.sex()} ${this.name_first()} (${this.name_nick()}) ${this.name_second()} from  ${this.mail()}!`);
             }
             submit_blocked() {
                 return this.Form().submit_blocked();
@@ -22710,7 +22784,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/app/demo/demo.view.css", "[mol_app_demo_menu] {\n\tflex: 1 0 20rem;\n}\n\n[mol_app_demo_menu_head] {\n}\n\n[mol_app_demo_menu_tools] {\n\tpadding: 0;\n}\n\n[mol_app_demo_menu_nav] {\n\tflex: auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-self: stretch;\n}\n\n[mol_app_demo_main],\n[mol_app_demo_detail],\n[mol_app_empty_message] {\n\tflex: 1000 0 60rem;\n}\n\n[mol_app_demo_detail] {\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_app_demo_menu_filter] {\n\talign-self: stretch;\n}\n\n[mol_app_demo_nav_table] {\n\twidth: 100%;\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_nav_row] {\n\tdisplay: flex;\n}\n\n[mol_app_demo_nav_option] {\n\tpadding: 0 .5rem 0 0;\n\tdisplay: flex;\n\tflex: 1;\n\talign-items: center;\n\tbox-shadow: none;\n}\n\n[mol_app_demo_nav_expand] {\n\talign-self: stretch;\n\talign-items: center;\n\tpadding-right: .25rem;\n}\n\n[mol_app_demo_nav_content] {\n\tflex-grow: 1;\n}\n\n[mol_app_demo_menu_themes] {\n\tflex: none;\n}\n\n[mol_app_demo_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tpadding: .5rem;\n\talign-content: flex-start;\n\talign-items: flex-start;\n}\n\n[mol_app_demo_screen] {\n\tmax-height: 45%;\n}\n\n[mol_app_demo_detail_body] {\n\tdisplay: flex;\n\talign-items: stretch;\n\tjustify-content: flex-start;\n\tflex-direction: column;\n}\n\n[mol_app_demo_detail_list] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tmargin: .5rem;\n}\n\n[mol_app_demo_detail_list] > [mol_demo_large] {\n\tmargin: .5rem;\n\theight: calc( 100vh - 100px );\n\twidth: calc( 100% - 1rem );\n}\n\n[mol_app_demo_page_close] {\n\tcolor: inherit;\n\talign-items: center;\n\tpadding: 1rem;\n}\n\n[mol_app_demo_welcome] {\n\tflex: 1 1 auto;\n}\n\n[mol_app_demo_option_link] {\n\tpadding: 0;\n}\n\n[mol_app_demo_sample_large] {\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_detail_empty_message] {\n\tmargin: auto;\n}\n\n[mol_app_demo_chat] {\n\tflex: none;\n}\n\n[mol_app_demo_detail_source_link] {\n\tpadding: 0;\n}\n");
+    $.$mol_style_attach("mol/app/demo/demo.view.css", "[mol_app_demo_menu] {\n\tflex: 1 0 20rem;\n}\n\n[mol_app_demo_menu_head] {\n\tflex-direction: column;\n}\n\n[mol_app_demo_menu_tools] {\n\tpadding: 0;\n}\n\n[mol_app_demo_menu_nav] {\n\tflex: auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-self: stretch;\n}\n\n[mol_app_demo_main],\n[mol_app_demo_detail],\n[mol_app_empty_message] {\n\tflex: 1000 0 60rem;\n}\n\n[mol_app_demo_detail] {\n\tbackground: var(--mol_theme_field);\n}\n\n[mol_app_demo_menu_filter] {\n\talign-self: stretch;\n}\n\n[mol_app_demo_nav_table] {\n\twidth: 100%;\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_nav_row] {\n\tdisplay: flex;\n}\n\n[mol_app_demo_nav_option] {\n\tpadding: 0 .5rem 0 0;\n\tdisplay: flex;\n\tflex: 1;\n\talign-items: center;\n\tbox-shadow: none;\n}\n\n[mol_app_demo_nav_expand] {\n\talign-self: stretch;\n\talign-items: center;\n\tpadding-right: .25rem;\n}\n\n[mol_app_demo_nav_content] {\n\tflex-grow: 1;\n}\n\n[mol_app_demo_menu_themes] {\n\tflex: none;\n}\n\n[mol_app_demo_list] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tpadding: .5rem;\n\talign-content: flex-start;\n\talign-items: flex-start;\n}\n\n[mol_app_demo_screen] {\n\tmax-height: 45%;\n}\n\n[mol_app_demo_detail_body] {\n\tdisplay: flex;\n\talign-items: stretch;\n\tjustify-content: flex-start;\n\tflex-direction: column;\n}\n\n[mol_app_demo_detail_list] {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\tmargin: .5rem;\n}\n\n[mol_app_demo_detail_list] > [mol_demo_large] {\n\tmargin: .5rem;\n\theight: calc( 100vh - 100px );\n\twidth: calc( 100% - 1rem );\n}\n\n[mol_app_demo_page_close] {\n\tcolor: inherit;\n\talign-items: center;\n\tpadding: 1rem;\n}\n\n[mol_app_demo_welcome] {\n\tflex: 1 1 auto;\n}\n\n[mol_app_demo_option_link] {\n\tpadding: 0;\n}\n\n[mol_app_demo_sample_large] {\n\tbox-sizing: border-box;\n}\n\n[mol_app_demo_detail_empty_message] {\n\tmargin: auto;\n}\n\n[mol_app_demo_chat] {\n\tflex: none;\n}\n\n[mol_app_demo_detail_source_link] {\n\tpadding: 0;\n}\n");
 })($ || ($ = {}));
 //demo.view.css.js.map
 ;
