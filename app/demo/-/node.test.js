@@ -14722,6 +14722,9 @@ var $;
                     return this.message_need_more_letters().replace('{count}', '3');
                 return '';
             }
+            mail(next) {
+                return $.$mol_state_local.value(this.state_key('mail'), next) || '';
+            }
             mail_bid() {
                 const value = this.mail().trim();
                 if (!value)

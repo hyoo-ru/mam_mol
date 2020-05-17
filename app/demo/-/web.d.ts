@@ -3997,6 +3997,7 @@ declare namespace $.$$ {
         name_nick(next?: string): string;
         name_second(next?: string): string;
         name_second_bid(): string;
+        mail(next?: string): string;
         mail_bid(): string;
         sex(next?: string): string;
         sex_bid(): string;
