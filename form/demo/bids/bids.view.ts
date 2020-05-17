@@ -34,6 +34,10 @@ namespace $.$$ {
 			return ''
 		}
 
+		mail( next? : string ) {
+			return $mol_state_local.value( this.state_key( 'mail' ) , next ) || ''
+		}
+		
 		mail_bid() {
 			
 			const value = this.mail().trim()
