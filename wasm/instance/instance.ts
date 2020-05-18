@@ -5,14 +5,16 @@ namespace $ {
 		native : WebAssembly.Instance
 
 		constructor(
-			readonly module : WebAssembly.Module
+			readonly module : WebAssembly.Module,
+			readonly imports? : Record<string, Record<string, WebAssembly.ImportValue>>
 		) {
 			super()
-			this.native = new WebAssembly.Instance( module )
+			this.native = new WebAssembly.Instance( module , imports )
 		}
 
-		memory( offset : number , size : number ) {
-			return new Uint8Array( this.native['exports'].memory.buffer , offset , size )
+		memory( offset : number , length : number ) {
+			const memory = this.native['exports'].memory as WebAssembly.Memory
+			return new Uint8Array( memory.buffer , offset , length )
 		}
 
 		string( offset : number , length : number , encoding = 'utf-8' ) {
