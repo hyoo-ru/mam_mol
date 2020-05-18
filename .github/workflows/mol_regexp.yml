@@ -22,7 +22,7 @@ jobs:
         package: mol
         modules: regexp
     
-    - uses: JS-DevTools/npm-publish@v1
-      with:
-        token: ${{ secrets.NPM_AUTH_TOKEN }}
-        package: ./mol/regexp/-/package.json
+#    - uses: JS-DevTools/npm-publish@v1
+#      with:
+#        token: ${{ secrets.NPM_AUTH_TOKEN }}
+#        package: ./mol/regexp/-/package.json
