@@ -210,12 +210,14 @@ namespace $ { export class $mol_touch extends $mol_plugin {
 	 *  style *
 	 *  	^
 	 *  	touch-action \none
+	 *  	overscroll-behavior \none
 	 *  ```
 	 **/
 	style() {
 		return ({
 			...super.style() ,
 			"touch-action" :  "none" ,
+			"overscroll-behavior" :  "none" ,
 		})
 	}
 

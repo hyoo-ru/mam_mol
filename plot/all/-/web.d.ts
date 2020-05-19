@@ -860,6 +860,7 @@ declare namespace $ {
         swipe_to_top(val?: any, force?: $mol_mem_force): any;
         style(): {
             "touch-action": string;
+            "overscroll-behavior": string;
         };
         event(): {
             touchstart: (event?: any) => any;

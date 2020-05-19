@@ -34,6 +34,7 @@ $mol_touch $mol_plugin
 	style *
 		^
 		touch-action \none
+		overscroll-behavior \none
 	-
 	event *
 		^

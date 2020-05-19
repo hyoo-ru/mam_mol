@@ -7,10 +7,14 @@ namespace $ {
 	) : having is Having & {
 		destructor() : void
 	} {
-		if( !having ) return false
-		if( typeof having !== 'object' ) return false
-		if( typeof having['destructor'] !== 'function' ) return false
-		return true
+		try {
+			if( !having ) return false
+			if( typeof having !== 'object' ) return false
+			if( typeof having['destructor'] !== 'function' ) return false
+			return true
+		} catch {
+			return false
+		}
 	}
 
 	export function $mol_owning_get< Having , Owner extends object >( having : Having , Owner? : { new() : Owner } ) : Owner | null {

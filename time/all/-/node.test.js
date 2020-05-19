@@ -1554,13 +1554,18 @@ var $;
 (function ($) {
     $.$mol_owning_map = new WeakMap();
     function $mol_owning_allow(having) {
-        if (!having)
+        try {
+            if (!having)
+                return false;
+            if (typeof having !== 'object')
+                return false;
+            if (typeof having['destructor'] !== 'function')
+                return false;
+            return true;
+        }
+        catch (_a) {
             return false;
-        if (typeof having !== 'object')
-            return false;
-        if (typeof having['destructor'] !== 'function')
-            return false;
-        return true;
+        }
     }
     $.$mol_owning_allow = $mol_owning_allow;
     function $mol_owning_get(having, Owner) {
