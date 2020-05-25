@@ -12,6 +12,40 @@ namespace $ { export class $mol_search extends $mol_bar {
 
 	/**
 	 *  ```
+	 *  plugins / <= Hotkey
+	 *  ```
+	 **/
+	plugins() {
+		return [this.Hotkey()] as readonly any[]
+	}
+
+	/**
+	 *  ```
+	 *  Hotkey $mol_hotkey key * escape?val <=> event_clear?val
+	 *  ```
+	 **/
+	@ $mol_mem
+	Hotkey() {
+		return (( obj )=>{
+			obj.key = () => ({
+			"escape" :  ( val? : any )=>  this.event_clear( val ) ,
+		})
+			return obj
+		})( new this.$.$mol_hotkey(  ) )
+	}
+
+	/**
+	 *  ```
+	 *  event_clear?val null
+	 *  ```
+	 **/
+	@ $mol_mem
+	event_clear( val? : any , force? : $mol_mem_force ) {
+		return ( val !== void 0 ) ? val : null as any
+	}
+
+	/**
+	 *  ```
 	 *  sub /
 	 *  	<= Suggest
 	 *  	<= Clear
@@ -123,16 +157,6 @@ namespace $ { export class $mol_search extends $mol_bar {
 		return (( obj )=>{
 			return obj
 		})( new this.$.$mol_icon_cross(  ) )
-	}
-
-	/**
-	 *  ```
-	 *  event_clear?val null
-	 *  ```
-	 **/
-	@ $mol_mem
-	event_clear( val? : any , force? : $mol_mem_force ) {
-		return ( val !== void 0 ) ? val : null as any
 	}
 
 	/**

@@ -11611,6 +11611,70 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    let $mol_hotkey = (() => {
+        class $mol_hotkey extends $.$mol_plugin {
+            event() {
+                return (Object.assign(Object.assign({}, super.event()), { "keydown": (event) => this.keydown(event) }));
+            }
+            keydown(event, force) {
+                return (event !== void 0) ? event : null;
+            }
+            key() {
+                return ({});
+            }
+            mod_ctrl() {
+                return false;
+            }
+            mod_alt() {
+                return false;
+            }
+            mod_shift() {
+                return false;
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_hotkey.prototype, "keydown", null);
+        return $mol_hotkey;
+    })();
+    $.$mol_hotkey = $mol_hotkey;
+})($ || ($ = {}));
+//hotkey.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_hotkey extends $.$mol_hotkey {
+            key() {
+                return super.key();
+            }
+            keydown(event) {
+                if (!event)
+                    return;
+                if (event.defaultPrevented)
+                    return;
+                let name = $.$mol_keyboard_code[event.keyCode];
+                if (this.mod_ctrl() && !event.ctrlKey)
+                    return;
+                if (this.mod_alt() && !event.altKey)
+                    return;
+                if (this.mod_shift() && !event.shiftKey)
+                    return;
+                const handle = this.key()[name];
+                if (handle)
+                    handle(event);
+            }
+        }
+        $$.$mol_hotkey = $mol_hotkey;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hotkey.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
     let $mol_pop = (() => {
         class $mol_pop extends $.$mol_view {
             event() {
@@ -11741,6 +11805,8 @@ var $;
                 if (event.defaultPrevented)
                     return;
                 if (event.keyCode === $.$mol_keyboard_code.escape) {
+                    if (!this.showed())
+                        return;
                     event.preventDefault();
                     this.showed(false);
                 }
@@ -12261,6 +12327,20 @@ var $;
             query(val, force) {
                 return (val !== void 0) ? val : "";
             }
+            plugins() {
+                return [this.Hotkey()];
+            }
+            Hotkey() {
+                return ((obj) => {
+                    obj.key = () => ({
+                        "escape": (val) => this.event_clear(val),
+                    });
+                    return obj;
+                })(new this.$.$mol_hotkey());
+            }
+            event_clear(val, force) {
+                return (val !== void 0) ? val : null;
+            }
             sub() {
                 return [this.Suggest(), this.Clear()];
             }
@@ -12305,9 +12385,6 @@ var $;
                     return obj;
                 })(new this.$.$mol_icon_cross());
             }
-            event_clear(val, force) {
-                return (val !== void 0) ? val : null;
-            }
             clear_hint() {
                 return this.$.$mol_locale.text("$mol_search_clear_hint");
             }
@@ -12315,6 +12392,12 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_search.prototype, "query", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_search.prototype, "Hotkey", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_search.prototype, "event_clear", null);
         __decorate([
             $.$mol_mem
         ], $mol_search.prototype, "Suggest", null);
@@ -12327,9 +12410,6 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_search.prototype, "Clear_icon", null);
-        __decorate([
-            $.$mol_mem
-        ], $mol_search.prototype, "event_clear", null);
         return $mol_search;
     })();
     $.$mol_search = $mol_search;

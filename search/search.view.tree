@@ -1,5 +1,8 @@
 $mol_search $mol_bar
 	query?val \
+	plugins /
+		<= Hotkey $mol_hotkey
+			key * escape?val <=> event_clear?val null
 	sub /
 		<= Suggest $mol_select
 			value?val <=> suggest_selected?val \

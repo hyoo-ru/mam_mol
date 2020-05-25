@@ -1110,6 +1110,15 @@ $mol_check_icon_demo $mol_demo_small
 			checked true
 			enabled false
 
+$mol_hotkey $mol_plugin
+	event *
+		^
+		keydown?event <=> keydown?event null
+	key *
+	mod_ctrl false
+	mod_alt false
+	mod_shift false
+
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
 	showed?val false
@@ -1196,6 +1205,9 @@ $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12
 
 $mol_search $mol_bar
 	query?val \
+	plugins /
+		<= Hotkey $mol_hotkey
+			key * escape?val <=> event_clear?val null
 	sub /
 		<= Suggest $mol_select
 			value?val <=> suggest_selected?val \

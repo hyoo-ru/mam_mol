@@ -3624,6 +3624,8 @@ var $;
                 if (event.defaultPrevented)
                     return;
                 if (event.keyCode === $.$mol_keyboard_code.escape) {
+                    if (!this.showed())
+                        return;
                     event.preventDefault();
                     this.showed(false);
                 }
