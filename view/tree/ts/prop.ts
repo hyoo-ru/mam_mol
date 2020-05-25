@@ -15,6 +15,14 @@ namespace $ {
 		const key = key_pos === next_pos ? '' : prop_name.substring(key_pos + 1, next_pos)
 		const next = prop_name.substring(next_pos + 1)
 
+		if (
+			! regular_regex.test(name)
+			|| (key && ! regular_regex.test(key))
+			|| (next && ! regular_regex.test(name))
+		) throw src.error(
+			'Only regular chars and digits allowed in the property parts, use `having` or `having!key` or `having!key?value`'
+		)
+
 		return {
 			src,
 			name: src.make_data(name),
@@ -22,6 +30,8 @@ namespace $ {
 			next: next ? src.make({ data: next, col: src.col + next_pos }) : undefined
 		}
 	}
+
+	const regular_regex = /^\w+$/
 
 	export type $mol_view_tree_ts_prop = ReturnType<typeof $mol_view_tree_ts_prop_split>
 }

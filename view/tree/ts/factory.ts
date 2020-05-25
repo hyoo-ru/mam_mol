@@ -30,19 +30,20 @@ namespace $ {
 
 			const operator = child.sub.length === 1 ? child.sub[0] : undefined
 
+			const child_parts = $mol_view_tree_ts_prop_split(child)
+
 			if (operator?.type === '=>') {
-				$mol_view_tree_ts_bind_right(child, factory_parts.name, context)
+				$mol_view_tree_ts_bind_right(child_parts, factory_parts.name, context)
 				continue
 			}
 
-			const info = $mol_view_tree_ts_prop_split(child)
-			const value = $mol_view_tree_ts_value(info, context)
+			const value = $mol_view_tree_ts_value(child_parts, context)
 	
 			const call = child.make_struct('inline', [
 				obj_node,
 				child.make_data('.'),
-				info.name,
-				$mol_view_tree_ts_function_declaration(info),
+				child_parts.name,
+				$mol_view_tree_ts_function_declaration(child_parts),
 				child.make_data(' => '),
 				value,
 			])
