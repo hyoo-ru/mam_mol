@@ -133,7 +133,6 @@ namespace $ {
 			
 			for( let param of $mol_view_tree_class_props( def ).sub ) { try {
 				var needSet = false
-				var needReturn = true
 				var needCache = false
 	
 				if( param.type === '<=>' ) {
@@ -210,7 +209,6 @@ namespace $ {
 							const object_args = value.select( '/' , '' ).sub.map( arg => getValue( arg ) ).join( ' , ' ) as string
 							return ['(( obj )=>{\n', ...overs, '\t\t\treturn obj\n\t\t})( new this.$.', SourceNode(value.row, value.col, fileName, value.type) , '( ' , object_args , ' ) )']
 						case( value.type === '*' ) :
-							//needReturn = false
 							var opts : StringNodeArray = []
 							value.sub.forEach( opt => {
 								if( opt.type === '-' ) return ''
@@ -228,7 +226,6 @@ namespace $ {
 							} )
 							return ['({\n', opts.join( '' ), '\t\t})']
 						case( value.type === '<=>' ) :
-							needSet = true
 							if( value.sub.length === 1 ) {
 								var type = /(.*?)(?:\!(\w+))?(?:\?(\w+))$/.exec( value.sub[0].type )!
 								return ['this.' + type[1] + '(' + ( type[2] ? type[2] + ' ,' : '' ) + ' ' + type[3] + ' )']
@@ -268,15 +265,13 @@ namespace $ {
 					var args : string[] = []
 					if( propName[2] ) args.push( ` ${ propName[2] } : any ` )
 					if( propName[3] ) args.push( ` ${ propName[3] }? : any , force? : $${''}mol_mem_force ` )
-					if( needSet && child.type !== '<=>' ) 
-						val = [
-							( needReturn
-								? `( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : `
-								: `if( ${ propName[3] } !== void 0 ) return ${ propName[3] }\n\t\t`
-							) , 
-							...val
-						]
-					if( needReturn ) val = ['return ', ...val]
+
+					if( needSet )  val = [
+						`( ${ propName[3] } !== void 0 ) ? ${ propName[3] } : `,
+						...val
+					]
+					val = ['return ', ...val]
+
 					var decl: StringNodeArray = ['\t', SourceNode(param.row, param.col, fileName, propName[1]),'(', args.join(',') , ') {\n\t\t' , ...val , '\n\t}\n\n']
 					if( needCache ) {
 						if( propName[2] ) decl = ['\t@ $' , 'mol_mem_key\n', ...decl]

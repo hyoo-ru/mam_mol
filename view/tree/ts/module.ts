@@ -1,22 +1,26 @@
 namespace $ {
 	export function $mol_view_tree_ts_module(tree_module: $mol_tree) {
 		const locales: Record<string, string> = {}
+		const classes: $mol_tree[] = [
+			tree_module.make({ data: 'namespace $ {'})
+		]
 
-		const node = tree_module.make({ sub: [
-			tree_module.make({ data: 'namespace $ {'}),
+		for (const item of tree_module.sub) {
+			if (item.type === '-') {
+				classes.push($mol_view_tree_ts_comment(item))
+				continue
+			}
 
-			...tree_module.sub.map(
-				class_node => class_node.type === '-'
-					? undefined
-					: $mol_view_tree_ts_class_node(
-						class_node,
-						$mol_view_tree_ts_locale_create({ class_node, locales })
-					)
-			).filter($mol_guard_defined),
+			const context = new $mol_view_tree_ts_context(item, locales)
+			const class_node = $mol_view_tree_ts_class_node(item, context)
 
-			tree_module.make({ data: '}'}),
-		] })
+			classes.push(class_node)
+		}
 
-		return { node, locales }
+		classes.push(tree_module.make({ data: '}'}))
+
+		const module = tree_module.make({ sub: classes })
+
+		return { module, locales }
 	}
 }
