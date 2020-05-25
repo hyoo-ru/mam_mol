@@ -29,21 +29,9 @@ namespace $ {
 		const default_value = owner.sub.length === 1 ? owner.sub[0] : undefined
 
 		if (default_value && ! context.has_owner(owner)) {
-			let method: $mol_tree
-
-			if (default_value.type[0] === '$') {
-				const body = $mol_view_tree_ts_op_class(default_value, context)
-				method = $mol_view_tree_ts_method(owner_parts, true, body)
-			} else {
-				const body = [
-					default_value.make_data('return '),
-					$mol_view_tree_ts_op_simple(default_value, context)
-				]
-				const need_cache = owner_parts.next !== undefined
-				method = $mol_view_tree_ts_method(owner_parts, need_cache, body)
-			}
-
-			context.set_owner(owner, method)
+			const index = context.index(owner)
+			const method = $mol_view_tree_ts_value_block(owner_parts, context)
+			context.method(index, method)
 		}
 
 		return operator.make_struct('inline', [
@@ -52,5 +40,5 @@ namespace $ {
 		])
 	}
 
-	const example = 'use `having <= owner` or `having!key <= owner!key`'
+	const example = 'use `having <= owner` or `having <= owner \\default` or `having!key <= owner!key`'
 }

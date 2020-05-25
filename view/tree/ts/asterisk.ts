@@ -1,5 +1,5 @@
 namespace $ {
-	export function $mol_view_tree_ts_op_asterisk(arg: $mol_tree, context: $mol_view_tree_ts_context) {
+	export function $mol_view_tree_ts_asterisk(arg: $mol_tree, context: $mol_view_tree_ts_context) {
 		return arg.make_struct('block', [
 			arg.make_data('{'),
 			arg.make_struct('block', arg.sub.map(opt => {
@@ -13,7 +13,7 @@ namespace $ {
 					opt.make_data(' ,'),
 				])
 
-				const value = $mol_view_tree_ts_op_simple(info, context)
+				const value = $mol_view_tree_ts_value(info, context)
 
 				return opt.make_struct('inline', [
 					$mol_view_tree_ts_quote(info.name),

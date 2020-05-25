@@ -1,5 +1,5 @@
 namespace $ {
-	export function $mol_view_tree_ts_op_array(arg: $mol_tree, context: $mol_view_tree_ts_context) {
+	export function $mol_view_tree_ts_array(arg: $mol_tree, context: $mol_view_tree_ts_context) {
 		return arg.make_struct('block', [
 			arg.make_data('['),
 			arg.make_struct('block', arg.sub.map(opt => {
@@ -10,15 +10,15 @@ namespace $ {
 				if (opt.type === '^') return opt.make_struct('inline', [
 					opt.make_data('...super.'),
 					$mol_view_tree_ts_function_call(info),
-					opt.make_data(' ,'),
+					opt.make_data(','),
 				])
 
-				const value = $mol_view_tree_ts_op_simple(info, context)
+				const value = $mol_view_tree_ts_value(info, context)
 
 				return opt.make_struct('inline', [
 					value,
 					opt.make_data(',')
-				].filter($mol_guard_defined))
+				])
 			})),
 			arg.make_struct('inline', [
 				arg.make_data('] as readonly '),

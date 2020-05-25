@@ -1,4 +1,6 @@
 namespace $ {
+	export type $mol_view_tree_ts_locales = Record<string, string>
+
 	export class $mol_view_tree_ts_context {
 
 		protected added_nodes = new Map<string, $mol_tree>()
@@ -6,12 +8,11 @@ namespace $ {
 		protected prefix: $mol_tree
 
 		constructor(
-			root_class: $mol_tree,
-			readonly locales: Record<string, string>,
-			readonly methods: $mol_tree[] = [],
-			protected depth = 0
+			class_node: $mol_tree,
+			protected locales: $mol_view_tree_ts_locales,
+			protected methods: $mol_tree[]
 		) {
-			this.prefix= root_class.make_data(root_class.type)
+			this.prefix = class_node.make_data(class_node.type)
 		}
 
 		has_owner(owner: $mol_tree) {
@@ -26,9 +27,17 @@ namespace $ {
 			return false
 		}
 
-		set_owner(owner: $mol_tree, method: $mol_tree) {
+		index(owner: $mol_tree) {
 			this.added_nodes.set(owner.type, owner)
-			this.methods.push(method)
+
+			const index = this.methods.length
+			this.methods.push(undefined!)
+
+			return index
+		}
+
+		method(index: number, method: $mol_tree) {
+			this.methods[index] = method
 		}
 
 		locale_call(owner_name: $mol_tree, operator: $mol_tree) {
@@ -39,7 +48,7 @@ namespace $ {
 			return owner_name.make_struct('inline', [
 				operator.make_data('this.$.$mol_locale.text( \''),
 				this.prefix,
-				owner_name.make({ data: '_' }),
+				owner_name.make_data('_'),
 				owner_name,
 				operator.make_data('\' )'),	
 			])

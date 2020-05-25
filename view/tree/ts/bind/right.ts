@@ -25,16 +25,22 @@ namespace $ {
 
 		if (having_parts.key?.data !== owner_parts.key?.data) throw having.error(`Key arguments must be equal, ${example}`)
 
-		if (context.has_owner(owner)) return
+		if (! context.has_owner(owner)) {
+			const index = context.index(owner)
 
-		const body = [
-			owner.make_data('return this.'),
-			parent_factory.make_data(parent_factory.type),
-			owner.make_data('().'),
-			$mol_view_tree_ts_function_call(having_parts),
-		]
+			const body = owner.make_struct('block', [
+				owner.make_struct('inline', [
+					owner.make_data('return this.'),
+					parent_factory.make_data(parent_factory.type),
+					owner.make_data('().'),
+					$mol_view_tree_ts_function_call(having_parts),
+				])
+			])
 
-		context.set_owner(owner, $mol_view_tree_ts_method(owner_parts, false, body))
+			const method = $mol_view_tree_ts_method(owner_parts, body)
+	
+			context.method(index, method)
+		}
 	}
 
 	const example = 'use `having => owner` or `having?next => owner?next` or `having!key => owner!key` or `having!key?next => owner!key?next`'

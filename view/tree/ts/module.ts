@@ -1,8 +1,7 @@
 namespace $ {
-	export function $mol_view_tree_ts_module(tree_module: $mol_tree) {
-		const locales: Record<string, string> = {}
+	export function $mol_view_tree_ts_module(tree_module: $mol_tree, locales: $mol_view_tree_ts_locales) {
 		const classes: $mol_tree[] = [
-			tree_module.make({ data: 'namespace $ {'})
+			tree_module.make_data('namespace $ {')
 		]
 
 		for (const item of tree_module.sub) {
@@ -11,16 +10,13 @@ namespace $ {
 				continue
 			}
 
-			const context = new $mol_view_tree_ts_context(item, locales)
-			const class_node = $mol_view_tree_ts_class_node(item, context)
+			const class_node = $mol_view_tree_ts_class(item, locales)
 
 			classes.push(class_node)
 		}
 
-		classes.push(tree_module.make({ data: '}'}))
+		classes.push(tree_module.make_data('}'))
 
-		const module = tree_module.make({ sub: classes })
-
-		return { module, locales }
+		return tree_module.make({ sub: classes })
 	}
 }
