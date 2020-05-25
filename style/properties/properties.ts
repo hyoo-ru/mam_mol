@@ -38,7 +38,9 @@ namespace $ {
 		| Common
 
 		/** All background style properties. */
-		background?: {
+		background?:
+		| 'none'
+		| {
 
 			/** Background color. */
 			color?: Color | Common
