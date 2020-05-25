@@ -142,6 +142,7 @@
 	"$mol_row_demo_form_title": "Some controls in one row with equal paddings and wrapping support",
 	"$mol_row_demo_products_title": "Product catalog",
 	"$mol_scroll_demo_title": "Simple scroll pane",
+	"$mol_search_clear_hint": "Clear",
 	"$mol_search_demo_title": "Simple search field with suggest ",
 	"$mol_search_hint": "Search...",
 	"$mol_section_demo_title": "Section with header",

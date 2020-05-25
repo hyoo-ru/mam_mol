@@ -12303,6 +12303,7 @@ var $;
                 return ((obj) => {
                     obj.sub = () => [this.Clear_icon()];
                     obj.event_click = (val) => this.event_clear(val);
+                    obj.hint = () => this.clear_hint();
                     return obj;
                 })(new this.$.$mol_button_minor());
             }
@@ -12313,6 +12314,9 @@ var $;
             }
             event_clear(val, force) {
                 return (val !== void 0) ? val : null;
+            }
+            clear_hint() {
+                return this.$.$mol_locale.text("$mol_search_clear_hint");
             }
         }
         __decorate([

@@ -292,6 +292,7 @@ $mol_search $mol_bar
 			sub /
 				<= Clear_icon $mol_icon_cross
 			event_click?val <=> event_clear?val null
+			hint <= clear_hint @ \Clear
 
 $mol_code $mol_view
 	sub /

@@ -3439,6 +3439,7 @@ declare namespace $ {
         Clear(): $mol_button_minor;
         Clear_icon(): $mol_icon_cross;
         event_clear(val?: any, force?: $mol_mem_force): any;
+        clear_hint(): string;
     }
 }
 

@@ -100,6 +100,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 	 *  Clear $mol_button_minor
 	 *  	sub / <= Clear_icon
 	 *  	event_click?val <=> event_clear?val
+	 *  	hint <= clear_hint
 	 *  ```
 	 **/
 	@ $mol_mem
@@ -107,6 +108,7 @@ namespace $ { export class $mol_search extends $mol_bar {
 		return (( obj )=>{
 			obj.sub = () => [this.Clear_icon()] as readonly any[]
 			obj.event_click = ( val? : any ) => this.event_clear( val )
+			obj.hint = () => this.clear_hint()
 			return obj
 		})( new this.$.$mol_button_minor(  ) )
 	}
@@ -131,6 +133,15 @@ namespace $ { export class $mol_search extends $mol_bar {
 	@ $mol_mem
 	event_clear( val? : any , force? : $mol_mem_force ) {
 		return ( val !== void 0 ) ? val : null as any
+	}
+
+	/**
+	 *  ```
+	 *  clear_hint @ \Clear
+	 *  ```
+	 **/
+	clear_hint() {
+		return this.$.$mol_locale.text( "$mol_search_clear_hint" )
 	}
 
 } }
