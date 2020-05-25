@@ -1,4 +1,16 @@
 namespace $ {
+	/**
+	 * ```tree
+	 * arg *
+	 * 	num 1
+	 * 	^
+	 * 	str \str
+	 * 	q1 <= q2 $mo
+	 * 	v1?val <=> s1?val null
+	 * 	prop_a?v <=> a?v $mol_page
+	 * 		test 123
+	 * ```
+	 */
 	export function $mol_view_tree_ts_asterisk(arg: $mol_tree, context: $mol_view_tree_ts_context) {
 		return arg.make_struct('block', [
 			arg.make_data('{'),

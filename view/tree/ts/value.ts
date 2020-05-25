@@ -18,29 +18,30 @@ namespace $ {
 
 		if (type === '*') return $mol_view_tree_ts_asterisk(operator, context)
 
+		if (type[0] === '/') return $mol_view_tree_ts_array(operator, context)
+
 		if (type === '<=') return $mol_view_tree_ts_bind_left(operator, context)
 
 		if (type === '<=>') return $mol_view_tree_ts_bind_both(operator, context)
 
-		if (type[0] === '/') return $mol_view_tree_ts_array(operator, context)
 
 		throw operator.error('Strange operator type, use `false` or `true` or `` or `null` or `@` or `*` or `/` or `<=` or `<=>`')
 	}
 
-	export function $mol_view_tree_ts_value_block(owner_parts: $mol_view_tree_ts_prop, context: $mol_view_tree_ts_context) {
-		const operator = owner_parts.src.sub.length === 1 ? owner_parts.src.sub[0] : undefined
-		if (! operator) throw owner_parts.src.error('Need an operator')
+	export function $mol_view_tree_ts_value_block(prop_parts: $mol_view_tree_ts_prop, context: $mol_view_tree_ts_context) {
+		const operator = prop_parts.src.sub.length === 1 ? prop_parts.src.sub[0] : undefined
+		if (! operator) throw prop_parts.src.error('Need an operator')
 
 		let body: $mol_tree
 
-		if (operator.type[0] === '$') body = $mol_view_tree_ts_factory(operator, owner_parts.src, context)
+		if (operator.type[0] === '$') body = $mol_view_tree_ts_factory(prop_parts, context)
 		else body = operator.make_struct('block', [
 			operator.make_struct('inline', [
 				operator.make_data('return '),
-				$mol_view_tree_ts_value(owner_parts, context)
+				$mol_view_tree_ts_value(prop_parts, context)
 			])
 		])
 
-		return $mol_view_tree_ts_method(owner_parts, body)
+		return $mol_view_tree_ts_method(prop_parts, body)
 	}
 }

@@ -9,7 +9,7 @@ namespace $ {
 		let next_pos = prop_name.indexOf('?')
 		if (next_pos === -1) next_pos = prop_name.length
 		if (key_pos === -1) key_pos = next_pos
-		if (key_pos > next_pos) throw src.error('Index argument must be before next argument, use `inner!k?v <= outer!k?v`')
+		if (key_pos > next_pos) throw src.error('Index argument must be before next argument, use `having!key?next <= owner!key?next`')
 
 		const name = prop_name.substring(0, key_pos)
 		const key = key_pos === next_pos ? '' : prop_name.substring(key_pos + 1, next_pos)
@@ -17,7 +17,7 @@ namespace $ {
 
 		return {
 			src,
-			name: src.make({ data: name }),
+			name: src.make_data(name),
 			key: key ? src.make({ data: key, col: src.col + key_pos }) : undefined,
 			next: next ? src.make({ data: next, col: src.col + next_pos }) : undefined
 		}

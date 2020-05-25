@@ -1,5 +1,15 @@
 namespace $ {
-	export function $mol_view_tree_ts_factory(class_node: $mol_tree, parent_factory: $mol_tree, context: $mol_view_tree_ts_context) {
+	/**
+	 * ```tree
+	 * 	Factory_name!key?next $class
+	 * ```
+	 */
+	export function $mol_view_tree_ts_factory(factory_parts: $mol_view_tree_ts_prop, context: $mol_view_tree_ts_context) {
+		const class_node = factory_parts.src.sub.length === 1 ? factory_parts.src.sub[0] : undefined
+
+		if (! class_node) throw factory_parts.src.error(`Need a class, ${example}`)
+		if (! class_node.type || class_node.type[0] !== '$') throw class_node.error(`Need a valid class name, ${example}`)
+
 		const obj_node = class_node.make_data('obj')
 
 		const sub: $mol_tree[] = [
@@ -12,28 +22,28 @@ namespace $ {
 			]),
 		]
 
-		for (const opt of class_node.sub) {
-			if (opt.type === '-') {
-				sub.push($mol_view_tree_ts_comment(opt))
+		for (const child of class_node.sub) {
+			if (child.type === '-') {
+				sub.push($mol_view_tree_ts_comment(child))
 				continue
 			}
 
-			const operator = opt.sub.length === 1 ? opt.sub[0] : undefined
+			const operator = child.sub.length === 1 ? child.sub[0] : undefined
 
 			if (operator?.type === '=>') {
-				$mol_view_tree_ts_bind_right(opt, parent_factory, context)
+				$mol_view_tree_ts_bind_right(child, factory_parts.name, context)
 				continue
 			}
 
-			const info = $mol_view_tree_ts_prop_split(opt)
+			const info = $mol_view_tree_ts_prop_split(child)
 			const value = $mol_view_tree_ts_value(info, context)
 	
-			const call = opt.make_struct('inline', [
+			const call = child.make_struct('inline', [
 				obj_node,
-				opt.make_data('.'),
+				child.make_data('.'),
 				info.name,
 				$mol_view_tree_ts_function_declaration(info),
-				opt.make_data(' => '),
+				child.make_data(' => '),
 				value,
 			])
 
@@ -49,5 +59,7 @@ namespace $ {
 
 		return class_node.make_struct('block', sub)
 	}
+
+	const example = 'use `Factory_name!key?next $my_class`'
 }
 

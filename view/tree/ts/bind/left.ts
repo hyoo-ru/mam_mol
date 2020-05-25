@@ -1,14 +1,14 @@
 namespace $ {
 
 	/**
-	 * @example
-	 *
-	 * `having <= owner` or `having!key <= owner!key`
+	 * ```tree
+	 * 	having!key <= owner!key
+	 * ```
 	 */
 	export function $mol_view_tree_ts_bind_left(having: $mol_tree, context: $mol_view_tree_ts_context) {
 		const operator = having.sub.length === 1 ? having.sub[0] : undefined
 
-		if (operator?.type !== '<=') throw having.error(`Need an <= operator, ${example}`)
+		if (operator?.type !== '<=') throw having.error(`Need an \`<=\` operator, ${example}`)
 
 		const owner = operator.length === 1 ? operator.sub[0] : undefined
 
@@ -18,8 +18,12 @@ namespace $ {
 		const having_parts = $mol_view_tree_ts_prop_split(having)
 		const owner_parts = $mol_view_tree_ts_prop_split(owner)
 
-		if (having_parts.next || owner_parts.next) throw having.error(
-			`Next argument not allowed in having or owner parts, ${example}`
+		if (having_parts.next) throw having_parts.next.error(
+			`Next argument not allowed in having, ${example}`
+		)
+
+		if (owner_parts.next) throw owner_parts.next.error(
+			`Next argument not allowed in owner, ${example}`
 		)
 
 		if (having_parts.key?.data !== owner_parts.key?.data) throw having.error(

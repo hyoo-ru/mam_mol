@@ -1,8 +1,14 @@
 namespace $ {
+
+	/**
+	 * ```tree
+	 * 	having?next <=> owner?next
+	 * ```
+	 */
 	export function $mol_view_tree_ts_bind_both(having: $mol_tree, context: $mol_view_tree_ts_context) {
 		const operator = having.sub.length === 1 ? having.sub[0] : undefined
 
-		if (operator?.type !== '<=>') throw having.error(`Need an <=> operator, ${example}`)
+		if (operator?.type !== '<=>') throw having.error(`Need an \`<=>\` operator, ${example}`)
 
 		const owner = operator.length === 1 ? operator.sub[0] : undefined
 

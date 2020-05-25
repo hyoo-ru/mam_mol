@@ -1,4 +1,11 @@
 namespace $ {
+	/**
+	 * ```tree
+	 * arg /
+	 * 	\test
+	 * 	<= Some $my_class
+	 * ```
+	 */
 	export function $mol_view_tree_ts_array(arg: $mol_tree, context: $mol_view_tree_ts_context) {
 		return arg.make_struct('block', [
 			arg.make_data('['),
