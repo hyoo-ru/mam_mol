@@ -15,7 +15,7 @@ plugins /
 
 **`key(): { [ key in keyof typeof $mol_keyboard_code ]? : ( event : KeyboardCode )=> void }`**
 
-Handlers dictionary.
+Handlers dictionary. See [$mol_keyboard_code](https://github.com/eigenmethod/mol/blob/master/keyboard/code.ts) for key names.
 
 ## Modifiers
 
