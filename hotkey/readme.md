@@ -22,5 +22,7 @@ Handlers dictionary.
 If true than check for same key are pressed.
 
 **`mod_ctrl() : boolean`**
+
 **`mod_shift() : boolean`**
+
 **`mod_alt() : boolean`**
