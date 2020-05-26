@@ -1358,7 +1358,7 @@ namespace $ {
 		var depends : { [ index : string ] : number } = {}
 		
 		var lines = String( source.text() )
-		.replace( /\/\*[\s\S]*?\*\//g , '' ) // drop block comments except doc-comments
+		.replace( /\/\*(?!\*)[\s\S]*?\*\//g , '' ) // drop block comments except doc-comments
 		.replace( /\/\/.*$/gm , '' ) // drop inline comments
 		.split( '\n' )
 		
