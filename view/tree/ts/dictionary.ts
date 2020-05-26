@@ -11,12 +11,19 @@ namespace $ {
 	 * 		test 123
 	 * ```
 	 */
-	export function $mol_view_tree_ts_asterisk(prop_parts: $mol_view_tree_ts_prop, context: $mol_view_tree_ts_context) {
+	export function $mol_view_tree_ts_dictionary(
+		this: $mol_ambient_context,
+		prop_parts: $mol_view_tree_ts_prop,
+		context: $mol_view_tree_ts_context
+	) {
 		const prop = prop_parts.src
 		const operator = prop.sub.length === 1 ? prop.sub[0] : undefined
-		if (operator?.type !== '*') throw prop.error('Need a `*` operator')
 
-		const super_spread = new $mol_view_tree_ts_spread(prop_parts)
+		if (operator?.type !== '*') return this.$.$mol_fail(
+			prop.error('Need a `*` operator')
+		)
+
+		const super_spread = new $mol_view_tree_ts_spread(this, prop_parts)
 
 		return prop.make_struct('block', [
 			prop.make_data('{'),
@@ -24,9 +31,9 @@ namespace $ {
 				if (opt.type === '-') return $mol_view_tree_ts_comment(opt)
 				if (opt.type === '^') return super_spread.get(opt)
 
-				const info = $mol_view_tree_ts_prop_split(opt)
+				const info = this.$mol_view_tree_ts_prop_split(opt)
 		
-				const value = $mol_view_tree_ts_value(info, context)
+				const value = this.$mol_view_tree_ts_value(info, context)
 
 				return opt.make_struct('inline', [
 					$mol_view_tree_ts_quote(info.name),

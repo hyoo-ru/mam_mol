@@ -1,15 +1,25 @@
 namespace $ {
-	export function $mol_view_tree_ts_class(klass: $mol_tree, locales: $mol_view_tree_ts_locales) {
-		if( !class_regex.test( klass.type ) ) throw klass.error( 'Wrong class name, use something like `$my_component`' )
+	export function $mol_view_tree_ts_class(
+		this: $mol_ambient_context,
+		klass: $mol_tree,
+		locales: $mol_view_tree_ts_locales
+	) {
+		if( !class_regex.test( klass.type ) ) return this.$mol_fail(
+			klass.error( 'Wrong class name, use something like `$my_component`' )
+		)
 
 		const subclass = klass.sub.length === 1 ? klass.sub[0] : undefined
 
-		if (! subclass) throw klass.error('No subclass, use `$my_component $mol_view`')
+		if (! subclass) return this.$mol_fail(
+			klass.error( 'No subclass, use `$my_component $mol_view`' )
+		)
 
-		if( !class_regex.test( subclass.type ) ) throw subclass.error( 'Wrong subclass name, use something like `$mol_view`' )
+		if( !class_regex.test( subclass.type ) ) return this.$mol_fail(
+			subclass.error( 'Wrong subclass name, use something like `$mol_view`' )
+		)
 
 		const methods: $mol_tree[] = []
-		const context = new $mol_view_tree_ts_context(klass, locales, methods)
+		const context = new $mol_view_tree_ts_context(this, klass, locales, methods)
 
 		for (const having of subclass.sub) {
 			if (having.type === '-') {
@@ -19,8 +29,8 @@ namespace $ {
 
 			if (! context.has_owner(having)) {
 				const index = context.index(having)
-				const having_parts = $mol_view_tree_ts_prop_split(having)
-				const method = $mol_view_tree_ts_value_block(having_parts, context)
+				const having_parts = this.$mol_view_tree_ts_prop_split(having)
+				const method = this.$mol_view_tree_ts_value_block(having_parts, context)
 
 				context.method(index, method)	
 			}

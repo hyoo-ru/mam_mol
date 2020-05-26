@@ -1,6 +1,11 @@
 namespace $ {
 
-	export function $mol_view_tree_ts_value_simple(value: $mol_tree, owner_name: $mol_tree, context: $mol_view_tree_ts_context) {
+	export function $mol_view_tree_ts_value_simple(
+		this: $mol_ambient_context,
+		value: $mol_tree,
+		owner_name: $mol_tree,
+		context: $mol_view_tree_ts_context
+	) {
 		const type = value.type
 
 		if (type === '') return value.make_data(JSON.stringify(value.value))
@@ -14,7 +19,9 @@ namespace $ {
 
 		if (type === '@') return context.locale_call(owner_name, value)
 
-		throw value.error(`Strange value, use ${example}`)
+		return this.$mol_fail(
+			value.error(`Strange value, use ${example}`)
+		)
 	}
 
 	const example = '`false` or `true` or 123 or `\\some` or `null` or `@ \\some`'

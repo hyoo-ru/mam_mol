@@ -1,15 +1,19 @@
 namespace $ {
-	export function $mol_view_tree_ts_value_block(prop_parts: $mol_view_tree_ts_prop, context: $mol_view_tree_ts_context) {
+	export function $mol_view_tree_ts_value_block(
+		this: $mol_ambient_context,
+		prop_parts: $mol_view_tree_ts_prop,
+		context: $mol_view_tree_ts_context
+	) {
 		const operator = prop_parts.src.sub.length === 1 ? prop_parts.src.sub[0] : undefined
-		if (! operator) throw prop_parts.src.error('Need an operator')
+		if (! operator) return this.$mol_fail(prop_parts.src.error('Need an operator'))
 
 		let body: $mol_tree
 
-		if (operator.type[0] === '$') body = $mol_view_tree_ts_factory(prop_parts, context)
+		if (operator.type[0] === '$') body = this.$mol_view_tree_ts_factory(prop_parts, context)
 		else body = operator.make_struct('block', [
 			operator.make_struct('inline', [
 				operator.make_data('return '),
-				$mol_view_tree_ts_value(prop_parts, context)
+				this.$mol_view_tree_ts_value(prop_parts, context)
 			])
 		])
 

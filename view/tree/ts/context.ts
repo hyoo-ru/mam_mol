@@ -1,26 +1,30 @@
 namespace $ {
 	export type $mol_view_tree_ts_locales = Record<string, string>
 
-	export class $mol_view_tree_ts_context {
+	export class $mol_view_tree_ts_context extends $mol_object2 {
 
 		protected added_nodes = new Map<string, $mol_tree>()
 
 		protected prefix: $mol_tree
 
 		constructor(
+			$: $mol_ambient_context,
 			class_node: $mol_tree,
 			protected locales: $mol_view_tree_ts_locales,
 			protected methods: $mol_tree[]
 		) {
+			super()
+			this.$ = $
 			this.prefix = class_node.make_data(class_node.type)
 		}
 
 		has_owner(owner: $mol_tree) {
 			const prev = this.added_nodes.get(owner.type)
 			if (prev) {
-				if( prev.toString() !== owner.toString() ) {
-					throw owner.error( 'Property already defined with another default value' + prev.error('').message + '\n---' )
-				}
+				if( prev.toString() !== owner.toString() ) return this.$.$mol_fail(
+					owner.error( 'Property already defined with another default value' + prev.error('').message + '\n---' )
+				)
+
 				return true
 			}
 

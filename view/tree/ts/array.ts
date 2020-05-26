@@ -6,12 +6,19 @@ namespace $ {
 	 * 	<= Some $my_class
 	 * ```
 	 */
-	export function $mol_view_tree_ts_array(prop_parts: $mol_view_tree_ts_prop, context: $mol_view_tree_ts_context) {
+	export function $mol_view_tree_ts_array(
+		this: $mol_ambient_context,
+		prop_parts: $mol_view_tree_ts_prop,
+		context: $mol_view_tree_ts_context
+	) {
 		const prop = prop_parts.src
 		const operator = prop.sub.length === 1 ? prop.sub[0] : undefined
-		if (! operator?.type || operator.type[0] !== '/') throw prop.error('Need a `/` operator')
 
-		const super_spread = new $mol_view_tree_ts_spread(prop_parts)
+		if (! operator?.type || operator.type[0] !== '/') return this.$.$mol_fail(
+			prop.error('Need a `/` operator')
+		)
+
+		const super_spread = new $mol_view_tree_ts_spread(this, prop_parts)
 
 		return prop.make_struct('block', [
 			prop.make_data('['),
@@ -25,16 +32,21 @@ namespace $ {
 
 				if (operator?.type === '<=') {
 					const having = operator.sub.length === 1 ? operator.sub[0] : undefined
-					if (! having) throw operator.error(`Need a child, use ${example}`)
 
-					const having_parts = $mol_view_tree_ts_prop_split(having)
+					if (! having) return this.$.$mol_fail(
+						operator.error(`Need a child, use ${example}`)
+					)
+
+					const having_parts = this.$mol_view_tree_ts_prop_split(having)
 	
-					value = $mol_view_tree_ts_value(having_parts, context)
+					value = this.$mol_view_tree_ts_value(having_parts, context)
 				}
 
-				if (operator && $mol_view_tree_ts_value_simple_detect(operator)) value = $mol_view_tree_ts_value_simple(operator, prop_parts.name, context)
+				if (operator && $mol_view_tree_ts_value_simple_detect(operator)) value = this.$mol_view_tree_ts_value_simple(operator, prop_parts.name, context)
 
-				if (! value) throw child.error(`Need an operator or constant, use ${example}`)
+				if (! value) return this.$.$mol_fail(
+					child.error(`Need an operator or constant, use ${example}`)
+				)
 
 				return child.make_struct('inline', [
 					value,
