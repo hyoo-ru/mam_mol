@@ -3,7 +3,7 @@ namespace $ {
 	 * ```tree
 	 * prop /
 	 * 	\test
-	 * 	<= Some $my_class
+	 * 	<= Some $zzz_class
 	 * ```
 	 */
 	export function $mol_view_tree_ts_array(
@@ -63,5 +63,5 @@ namespace $ {
 		])
 	}
 
-	const example = '`<= test $class` `<= test \\some` or `@ \\test` or `123` or `false` or `true` or `null`'
+	const example = '`<= test ₽s_class` `<= test \\some` or `@ \\test` or `123` or `false` or `true` or `null`'
 }

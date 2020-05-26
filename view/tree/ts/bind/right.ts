@@ -2,7 +2,7 @@ namespace $ {
 
 	/*
 	 * ```tree
-	 * Factory_name $sub
+	 * Factory_name $class2
 	 * 	having!key?next => owner!key?next
 	 * ```
 	 */

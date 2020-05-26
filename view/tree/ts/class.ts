@@ -5,17 +5,17 @@ namespace $ {
 		locales: $mol_view_tree_ts_locales
 	) {
 		if( !class_regex.test( klass.type ) ) return this.$mol_fail(
-			klass.error( 'Wrong class name, use something like `$my_component`' )
+			klass.error( 'Wrong class name, use something like `₽my_component`' )
 		)
 
 		const subclass = klass.sub.length === 1 ? klass.sub[0] : undefined
 
 		if (! subclass) return this.$mol_fail(
-			klass.error( 'No subclass, use `$my_component $mol_view`' )
+			klass.error( 'No subclass, use `₽my_component2 ₽mol_view`' )
 		)
 
 		if( !class_regex.test( subclass.type ) ) return this.$mol_fail(
-			subclass.error( 'Wrong subclass name, use something like `$mol_view`' )
+			subclass.error( 'Wrong subclass name, use something like `₽mol_view`' )
 		)
 
 		const methods: $mol_tree[] = []

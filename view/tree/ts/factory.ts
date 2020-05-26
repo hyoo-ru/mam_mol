@@ -1,7 +1,7 @@
 namespace $ {
 	/*
 	 * ```tree
-	 * 	Factory_name!key?next $class
+	 * 	Factory_name!key?next $some_class
 	 * ```
 	 */
 	export function $mol_view_tree_ts_factory(
@@ -70,6 +70,6 @@ namespace $ {
 		return class_node.make_struct('block', sub)
 	}
 
-	const example = 'use `Factory_name!key?next $my_class`'
+	const example = 'use `Factory_name!key?next ₽my_class`'
 }
 
