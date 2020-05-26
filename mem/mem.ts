@@ -16,12 +16,13 @@ namespace $ {
 	export function $mol_mem<
 		Host extends object ,
 		Field extends keyof Host ,
-		Value ,
+		Prop extends Extract< Host[ Field ] , ( next? : Value )=> Value >,
+		Value extends $mol_type_result< Prop > ,
 	>(
 		proto : Host ,
 		name : Field ,
-		descr? : TypedPropertyDescriptor< ( next? : Value , force? : $mol_mem_force )=> Value >
-	) : any {
+		descr? : TypedPropertyDescriptor< Prop >
+	) {
 
 		const orig = descr!.value!
 		

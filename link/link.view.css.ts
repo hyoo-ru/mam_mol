@@ -30,9 +30,8 @@ namespace $ {
 			mol_link_current: {
 				'true': {
 					background: {
-						color: $mol_theme.current,
+						color: $mol_theme.back,
 					},
-					color: $mol_theme.text,
 				}
 			}
 		},
