@@ -1,5 +1,5 @@
 namespace $ {
-	/**
+	/*
 	 * ```tree
 	 * prop *
 	 * 	num 1

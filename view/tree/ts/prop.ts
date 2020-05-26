@@ -1,5 +1,5 @@
 namespace $ {
-	/**
+	/*
 	 * Extract property parts: page!index?next
 	 */
 	export function $mol_view_tree_ts_prop_split(this: $mol_ambient_context, src: $mol_tree) {

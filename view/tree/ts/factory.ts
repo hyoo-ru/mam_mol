@@ -1,5 +1,5 @@
 namespace $ {
-	/**
+	/*
 	 * ```tree
 	 * 	Factory_name!key?next $class
 	 * ```

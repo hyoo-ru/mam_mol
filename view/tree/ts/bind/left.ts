@@ -1,6 +1,6 @@
 namespace $ {
 
-	/**
+	/*
 	 * ```tree
 	 * 	having!key <= owner!key
 	 * ```

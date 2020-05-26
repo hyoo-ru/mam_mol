@@ -1,6 +1,6 @@
 namespace $ {
 
-	/**
+	/*
 	 * ```tree
 	 * Factory_name $sub
 	 * 	having!key?next => owner!key?next
