@@ -1345,6 +1345,9 @@ var $;
 //atom2.test.js.map
 ;
 "use strict";
+//result.test.js.map
+;
+"use strict";
 var $;
 (function ($) {
     $.$mol_test({
@@ -1471,9 +1474,6 @@ var $;
 ;
 "use strict";
 //param.test.js.map
-;
-"use strict";
-//result.test.js.map
 ;
 "use strict";
 var $;
