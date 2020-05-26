@@ -1436,12 +1436,14 @@ declare namespace $ {
             target: string;
             download: string;
             mol_link_current: boolean;
+            mol_theme: any;
         };
         uri(): string;
         hint(): string;
         target(): string;
         file_name(): string;
         current(): boolean;
+        theme(): any;
         sub(): readonly (string | number | boolean | $mol_view | Node)[];
         arg(): {};
         event(): {
@@ -1485,6 +1487,7 @@ declare namespace $.$$ {
         event_click(event?: Event): void;
         file_name(): string;
         minimal_height(): number;
+        theme(): "$mol_theme_base" | null;
     }
 }
 
@@ -1903,6 +1906,7 @@ declare namespace $ {
             target: string;
             download: string;
             mol_link_current: boolean;
+            mol_theme: any;
         };
         type(val?: any, force?: $mol_mem_force): any;
         uri(): any;

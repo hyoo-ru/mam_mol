@@ -37,6 +37,10 @@ namespace $.$$ {
 		minimal_height() {
 			return Math.max( super.minimal_height() || 40 )
 		}
+
+		theme() {
+			return this.current() ? '$mol_theme_base' : null
+		}
 		
 	}
 	

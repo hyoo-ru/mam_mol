@@ -18,6 +18,7 @@ namespace $ { export class $mol_link extends $mol_view {
 	 *  	target <= target
 	 *  	download <= file_name
 	 *  	mol_link_current <= current
+	 *  	mol_theme <= theme
 	 *  ```
 	 **/
 	attr() {
@@ -28,6 +29,7 @@ namespace $ { export class $mol_link extends $mol_view {
 			"target" :  this.target() ,
 			"download" :  this.file_name() ,
 			"mol_link_current" :  this.current() ,
+			"mol_theme" :  this.theme() ,
 		})
 	}
 
@@ -74,6 +76,15 @@ namespace $ { export class $mol_link extends $mol_view {
 	 **/
 	current() {
 		return false
+	}
+
+	/**
+	 *  ```
+	 *  theme null
+	 *  ```
+	 **/
+	theme() {
+		return null as any
 	}
 
 	/**
