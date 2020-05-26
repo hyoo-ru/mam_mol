@@ -18,6 +18,10 @@ namespace $.$$ {
 		maxHeight: per(100),
 		maxWidth: per(100),
 		webkitOverflowScrolling: 'touch',
+
+		scrollbar: {
+			color: [ $mol_theme.current , 'transparent' ],
+		},
 	
 		'::-webkit-scrollbar': {
 			width: rem(.5),

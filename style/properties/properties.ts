@@ -93,6 +93,10 @@ namespace $ {
 		}
 
 		webkitOverflowScrolling?: 'auto' | 'touch'
+
+		scrollbar: {
+			color: [ Color , Color ] | 'dark' | 'light' | 'auto' | Common
+		}
 		
 		/** Element's width. By default, it sets the width of the content area, but if `boxSizing` is set to `border-box`, it sets the width of the border area. */
 		width?: Size

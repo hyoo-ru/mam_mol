@@ -997,6 +997,9 @@ declare namespace $ {
             anchor?: 'auto' | 'none' | Common;
         };
         webkitOverflowScrolling?: 'auto' | 'touch';
+        scrollbar: {
+            color: [Color, Color] | 'dark' | 'light' | 'auto' | Common;
+        };
         width?: Size;
         minWidth?: Size;
         maxWidth?: Size;
