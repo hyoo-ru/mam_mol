@@ -11,11 +11,11 @@ namespace $ {
 	) {
 		const class_node = factory_parts.src.sub.length === 1 ? factory_parts.src.sub[0] : undefined
 
-		if (! class_node) return this.$.$mol_fail(
+		if (! class_node) return this.$mol_fail(
 			factory_parts.src.error(`Need a class, ${example}`)
 		)
 
-		if (! class_node.type || class_node.type[0] !== '$') return this.$.$mol_fail(
+		if (! class_node.type || class_node.type[0] !== '$') return this.$mol_fail(
 			class_node.error(`Need a valid class name, ${example}`)
 		)
 
@@ -25,7 +25,7 @@ namespace $ {
 			class_node.make_struct('inline', [
 				class_node.make_data('const '),
 				obj_node,
-				class_node.make_data(' = new this.$.'),
+				class_node.make_data(' = new this.'),
 				class_node.make_data(class_node.type),
 				class_node.make_data('()')
 			]),

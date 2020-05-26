@@ -9,7 +9,7 @@ namespace $ {
 		let next_pos = prop_name.indexOf('?')
 		if (next_pos === -1) next_pos = prop_name.length
 		if (key_pos === -1) key_pos = next_pos
-		if (key_pos > next_pos) return this.$.$mol_fail(
+		if (key_pos > next_pos) return this.$mol_fail(
 			src.error('Index argument must be before next argument, use `having!key?next <= owner!key?next`')
 		)
 
@@ -21,7 +21,7 @@ namespace $ {
 			! regular_regex.test(name)
 			|| (key && ! regular_regex.test(key))
 			|| (next && ! regular_regex.test(name))
-		) return this.$.$mol_fail(
+		) return this.$mol_fail(
 			src.error(
 				'Only regular chars and digits allowed in the property parts, use `having` or `having!key` or `having!key?value`'
 			)

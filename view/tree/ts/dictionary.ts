@@ -19,7 +19,7 @@ namespace $ {
 		const prop = prop_parts.src
 		const operator = prop.sub.length === 1 ? prop.sub[0] : undefined
 
-		if (operator?.type !== '*') return this.$.$mol_fail(
+		if (operator?.type !== '*') return this.$mol_fail(
 			prop.error('Need a `*` operator')
 		)
 

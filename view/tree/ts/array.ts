@@ -14,7 +14,7 @@ namespace $ {
 		const prop = prop_parts.src
 		const operator = prop.sub.length === 1 ? prop.sub[0] : undefined
 
-		if (! operator?.type || operator.type[0] !== '/') return this.$.$mol_fail(
+		if (! operator?.type || operator.type[0] !== '/') return this.$mol_fail(
 			prop.error('Need a `/` operator')
 		)
 
@@ -33,7 +33,7 @@ namespace $ {
 				if (operator?.type === '<=') {
 					const having = operator.sub.length === 1 ? operator.sub[0] : undefined
 
-					if (! having) return this.$.$mol_fail(
+					if (! having) return this.$mol_fail(
 						operator.error(`Need a child, use ${example}`)
 					)
 
@@ -44,7 +44,7 @@ namespace $ {
 
 				if (operator && $mol_view_tree_ts_value_simple_detect(operator)) value = this.$mol_view_tree_ts_value_simple(operator, prop_parts.name, context)
 
-				if (! value) return this.$.$mol_fail(
+				if (! value) return this.$mol_fail(
 					child.error(`Need an operator or constant, use ${example}`)
 				)
 

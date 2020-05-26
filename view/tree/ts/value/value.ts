@@ -6,7 +6,7 @@ namespace $ {
 	): $mol_tree {
 		const operator = prop_parts.src.sub.length === 1 ? prop_parts.src.sub[0] : undefined
 
-		if (! operator) return this.$.$mol_fail(
+		if (! operator) return this.$mol_fail(
 			prop_parts.src.error(`Need an operator, use ${example}`)
 		)
 
@@ -22,7 +22,7 @@ namespace $ {
 
 		if ($mol_view_tree_ts_value_simple_detect(operator)) return this.$mol_view_tree_ts_value_simple(operator, prop_parts.name, context)
 
-		return this.$.$mol_fail(operator.error(
+		return this.$mol_fail(operator.error(
 			`Strange operator type, use ${example}`
 		))
 	}

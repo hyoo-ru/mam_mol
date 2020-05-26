@@ -13,35 +13,35 @@ namespace $ {
 		const having = having_parts.src
 		const operator = having.sub.length === 1 ? having.sub[0] : undefined
 
-		if (operator?.type !== '<=>') return this.$.$mol_fail(
+		if (operator?.type !== '<=>') return this.$mol_fail(
 			having.error(`Need an \`<=>\` operator, use ${example}`)
 		)
 
 		const owner = operator.length === 1 ? operator.sub[0] : undefined
 
-		if (! owner ) return this.$.$mol_fail(
+		if (! owner ) return this.$mol_fail(
 			operator.error( `Need an owner part, use ${example}`)
 		)
 
-		if (owner.sub.length > 1) return this.$.$mol_fail(
+		if (owner.sub.length > 1) return this.$mol_fail(
 			owner.error(`Only one sub allowed, use ${example}`)
 		)
 
 		const owner_parts = this.$mol_view_tree_ts_prop_split(owner)
 
-		if (! having_parts.next) return this.$.$mol_fail(
+		if (! having_parts.next) return this.$mol_fail(
 			having.error(
 				`Need a next argument in having part, use ${example}`
 			)
 		)
 
-		if (having_parts.next.data !== owner_parts.next?.data) return this.$.$mol_fail(
+		if (having_parts.next.data !== owner_parts.next?.data) return this.$mol_fail(
 			having.error(
 				`Next arguments must be equal in having and owner parts, use ${example}`
 			)
 		)
 
-		if (having_parts.key?.data !== owner_parts.key?.data) return this.$.$mol_fail(
+		if (having_parts.key?.data !== owner_parts.key?.data) return this.$mol_fail(
 			having.error(
 				`Key arguments must be equal in having and owner parts, use ${example}`
 			)

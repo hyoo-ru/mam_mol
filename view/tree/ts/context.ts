@@ -50,7 +50,7 @@ namespace $ {
 			this.locales[key] = operator.value
 
 			return owner_name.make_struct('inline', [
-				operator.make_data('this.$.$mol_locale.text( \''),
+				operator.make_data('this.$mol_locale.text( \''),
 				this.prefix,
 				owner_name.make_data('_'),
 				owner_name,
