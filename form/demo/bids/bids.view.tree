@@ -3,6 +3,12 @@ $mol_form_demo_bids $mol_demo_small
 	message_required @ \Required
 	message_no_spaces @ \No spaces!
 	message_need_more_letters @ \{count} or more letters
+	message_need_at @ \@ is required
+	message_only_one_at @ \At most one @
+	message_no_tld @ \At least 2 level domain
+	message_dots_inside @ \Dots can't be at edge
+	message_no_space_domain @ \No space in domain name
+	message_need_username @ \Username required
 	sub /
 		<= Form $mol_form
 			submit?val <=> submit?val null
@@ -38,9 +44,16 @@ $mol_form_demo_bids $mol_demo_small
 							male <= sex_option_male @ \Male
 							intersex <= sex_option_intersex @ \Intersex
 							female <= sex_option_female @ \Female
+				-
+				<= Mail_field $mol_form_field
+					name <= mail_label @ \E-mail
+					bid <= mail_bid \
+					control <= Mail_control $mol_string
+						hint <= mail_hint @ \name@domain.com
+						value?val <=> mail?val \
 			buttons /
 				<= Submit $mol_button_major
 					sub / <= submit_text @ \Sign Up
 					click?val <=> submit?val null
-					disabled <= submit_blocked true
+					enabled <= submit_allowed true
 		<= Message $mol_view sub / <= message?val \

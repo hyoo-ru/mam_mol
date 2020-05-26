@@ -27,7 +27,7 @@
 		--mol_theme_control: hsla( 210 , 60% , 70% , 1 );
 		--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );
 		--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
-		--mol_theme_focus: rgba( 204 , 68 , 50 , .75 );
+		--mol_theme_focus: hsl( 15 , 100% , 60% );
 		--mol_theme_field: black;
 	}
 }
@@ -52,7 +52,7 @@
 	--mol_theme_control: hsla( 210 , 60% , 70% , 1 );
 	--mol_theme_shade: rgba( 255 , 255 , 255 , .5 );
 	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
-	--mol_theme_focus: rgba( 204 , 68 , 50 , .75 );
+	--mol_theme_focus: hsl( 15 , 100% , 60% );
 	--mol_theme_field: black;
 }
 
@@ -66,8 +66,8 @@
 }
 
 [mol_theme="$mol_theme_accent"] {
-	--mol_theme_back: rgb(204, 68, 50);
-	--mol_theme_hover: rgb(165, 56, 42);
+	--mol_theme_back: hsl( 15 , 60% , 50% );
+	--mol_theme_hover: hsl( 15 , 60% , 40% );
 	--mol_theme_text: white;
 	--mol_theme_line: rgba( 50 , 50 , 50 , 1 );
 	--mol_theme_control: white;

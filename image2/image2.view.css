@@ -10,4 +10,5 @@
 	display: block;
 	background-size: cover;
 	background-position: top center;
+	flex: auto;
 }

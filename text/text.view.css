@@ -1,5 +1,5 @@
 [mol_text] {
-	line-height: 1.5rem;
+	line-height: 1.5em;
 	box-sizing: border-box;
 	max-width: 60rem;
 	padding: .75rem;
@@ -81,7 +81,7 @@
 [mol_text_type="text-link"] {
 	color: var(--mol_theme_control);
 	text-decoration: none;
-	padding: 0;
+	padding: 0 .25rem 0 0;
 }
 
 [mol_text_link]:hover ,
@@ -96,7 +96,7 @@
 }
 
 [mol_text_type="strong"] {
-	font-weight: bolder;
+	color: var(--mol_theme_focus);
 }
 
 [mol_text_type="emphasis"] {

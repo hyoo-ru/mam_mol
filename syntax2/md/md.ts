@@ -25,14 +25,14 @@ namespace $ {
 		'code-comment-block' : /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/|<![^]*?>)/ ,
 		'code-link' : /\w+:\/\/\S*/ ,
 		'code-comment-inline' : /\/\/.*?$/ ,
-		'code-string' : /(?:".*?"|'.*?'|`.*?`|\/.+?\/[gmi]*|(?:^|[ \t])\\[^\n]*\n)/ ,
+		'code-string' : /(?:".*?"|'.*?'|`.*?`|\/.+?\/[gmi]*\b|(?:^|[ \t])\\[^\n]*\n)/ ,
 		'code-number' : /[+-]?(?:\d*\.)?\d+\w*/ ,
 		'code-call' : /\.?\w+(?=\()/ ,
 		'code-field' : /(?:\.\w+|[\w-]+\??\s*:(?!\/\/))/ ,
-		'code-keyword' : /\b(readonly|unknown|keyof|typeof|never|from|class|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|let|const|for|do|while|until|in|of|new|if|then|else|switch|case|this|return|async|await|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void)\b/ ,
+		'code-keyword' : /\b(throw|readonly|unknown|keyof|typeof|never|from|class|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|let|const|for|do|while|until|in|of|new|if|then|else|switch|case|this|return|async|await|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void)\b/ ,
 		'code-global' : /[$]\w*|\b[A-Z]\w*/ ,
 		'code-decorator' : /@\s*\S+/ ,
-		'code-tag' : /<\/?[\w-]+\/?>?/ ,
+		'code-tag' : /<\/?[\w-]+\/?>?|&\w+;/ ,
 		'code-punctuation' : /[\-\[\]\{\}\(\)<=>`~!\?@#\$%&\*_\+\\\/\|'";:\.,\^]/ ,
 	})
 	

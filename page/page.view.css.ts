@@ -19,8 +19,6 @@ namespace $.$$ {
 		},
 		color: $mol_theme.text ,
 		zIndex: 0 ,
-		overflow: 'hidden',
-		boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)` ,
 
 		':focus': {
 			outline: 'none',
@@ -33,11 +31,12 @@ namespace $.$$ {
 			flex: 'none',
 			position: 'relative' ,
 			margin: 0 ,
+			minHeight: rem(4),
 			padding: rem(.75) ,
 			background: {
 				color: $mol_theme.back ,
 			},
-			boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)` ,
+			boxShadow: `0 0.5rem 0.5rem -0.5rem hsla(0,0%,0%,.25)` ,
 			zIndex: 1,
 		},
 
