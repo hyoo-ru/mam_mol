@@ -39,7 +39,7 @@ $sub $mol_view
 
 			console.log($mol_view_tree_compile(tree).script)
 			console.log('--------------------------------------------------')
-			console.log($mol_view_tree_compile2(tree))
+			console.log($.$mol_view_tree_compile2(tree))
 		},
 	} )
 }
