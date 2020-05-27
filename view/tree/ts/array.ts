@@ -63,5 +63,5 @@ namespace $ {
 		])
 	}
 
-	const example = '`<= test ₽s_class` `<= test \\some` or `@ \\test` or `123` or `false` or `true` or `null`'
+	const example = '`<= test $' + + 's_class` `<= test \\some` or `@ \\test` or `123` or `false` or `true` or `null`'
 }

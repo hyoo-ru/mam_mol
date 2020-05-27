@@ -70,6 +70,6 @@ namespace $ {
 		return class_node.make_struct('block', sub)
 	}
 
-	const example = 'use `Factory_name!key?next ₽my_class`'
+	const example = 'use `Factory_name!key?next $' + 'my_class`'
 }
 
