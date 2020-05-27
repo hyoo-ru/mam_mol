@@ -23,6 +23,16 @@ namespace $.$$ {
 			this.window();
 			return super.render();
 		}
+
+		allow() {
+			return [
+				... this.accelerometer() ? [ 'accelerometer' ] : [] ,
+				... this.autoplay() ? [ 'autoplay' ] : [] ,
+				... this.encription() ? [ 'encrypted-media' ] : [] ,
+				... this.gyroscope() ? [ 'gyroscope' ] : [] ,
+				... this.pip() ? [ 'picture-in-picture' ] : [] ,
+			]
+		}
 		
 	}
 }
