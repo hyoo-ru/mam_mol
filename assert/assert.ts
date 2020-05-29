@@ -38,7 +38,7 @@ namespace $ {
 		$mol_fail( new Error( 'Not failed' ) )
 	}
 	
-	export function $mol_assert_equal< Value >( ... args : [Value, Value, ...Value[]] ) {
+	export function $mol_assert_equal< Value >( ... args : [ Value, Value, ...Value[] ] ) {
 		for( let i = 0 ; i < args.length ; ++i ) {
 			for( let j = 0 ; j < args.length ; ++j ) {
 				if( i === j ) continue
@@ -48,7 +48,7 @@ namespace $ {
 		}
 	}
 	
-	export function $mol_assert_unique( ... args : any[] ) {
+	export function $mol_assert_unique( ... args : [ any, any, ...any[] ] ) {
 		for( let i = 0 ; i < args.length ; ++i ) {
 			for( let j = 0 ; j < args.length ; ++j ) {
 				if( i === j ) continue
