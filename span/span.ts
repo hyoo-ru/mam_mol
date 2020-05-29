@@ -1,14 +1,14 @@
 namespace $ {
 
 	/** Position in any resource. */
-	export class $mol_span {
+	export class $mol_span extends $mol_object2 {
 
 		constructor(
 			readonly uri : string ,
 			readonly row : number ,
 			readonly col : number ,
 			readonly length : number ,
-		) {}
+		) { super() }
 
 		/** Span for begin of unknown resource */
 		static unknown = $mol_span.begin('')
@@ -40,6 +40,19 @@ namespace $ {
 		/** Makes new span after end of this. */
 		after( length : number ) {
 			return new $mol_span( this.uri , this.row , this.col + this.length , length )
+		}
+
+		/** Makes new span between begin and end. */
+		slice(begin: number, end: number) {
+			let len = this.length
+
+			if (begin < 0 || begin > len) return this.$.$mol_fail(`Begin value '${begin}' out of range ${this}`)
+
+			len = len - begin
+
+			if (end < 0 || end > len) return this.$.$mol_fail(`End value '${end}' out of range ${this}`)
+
+			return this.span( this.row , this.col + begin , end )
 		}
 
 	}
