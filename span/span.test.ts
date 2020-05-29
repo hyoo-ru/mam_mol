@@ -1,14 +1,5 @@
 namespace $ {
 	$mol_test( {
-		'creating'( $ ) {
-			const span = new $mol_span('test.ts', 1, 3, 4)
-
-			$mol_assert_equal(span.uri, 'test.ts')
-			$mol_assert_equal(span.row, 1)
-			$mol_assert_equal(span.col, 3)
-			$mol_assert_equal(span.length, 4)
-		},
-
 		'span for same uri'( $ ) {
 			const span = new $mol_span('test.ts', 1, 3, 4)
 			const child = span.span(4, 5, 8)
@@ -20,16 +11,13 @@ namespace $ {
 		},
 
 		'span after of given position'( $ ) {
-			const col = 3
-			const old_len = 4
-			const len = 11
-			const span = new $mol_span('test.ts', 1, col, old_len)
-			const child = span.after(len)
+			const span = new $mol_span('test.ts', 1, 3, 4)
+			const child = span.after(11)
 
 			$mol_assert_equal(child.uri, 'test.ts')
 			$mol_assert_equal(child.row, 1)
-			$mol_assert_equal(child.col, col + old_len)
-			$mol_assert_equal(child.length, len)
+			$mol_assert_equal(child.col, 7)
+			$mol_assert_equal(child.length, 11)
 		},
 
 		'slice span - regular'( $ ) {
