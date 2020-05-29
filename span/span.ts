@@ -43,17 +43,13 @@ namespace $ {
 		}
 
 		/** Makes new span between begin and end. */
-		slice(begin: number, end?: number) {
+		slice(begin: number, end: number) {
 			let len = this.length
 
-			if (begin < 0) begin = len + begin
 			if (begin < 0 || begin > len) return this.$.$mol_fail(`Begin value '${begin}' out of range ${this}`)
 
 			len = len - begin
 
-			if (end === undefined) end = len
-
-			if (end < 0 ) end = len + end
 			if (end < 0 || end > len) return this.$.$mol_fail(`End value '${end}' out of range ${this}`)
 
 			return this.span( this.row , this.col + begin , end )

@@ -28,32 +28,19 @@ namespace $ {
 			$mol_assert_equal(child.col, 4)
 			$mol_assert_equal(child.length, 3)
 
-			const child2 = span.slice(2)
+			const child2 = span.slice(2, 2)
 
 			$mol_assert_equal(child2.col, 5)
-			$mol_assert_equal(child2.length, 3)
+			$mol_assert_equal(child2.length, 2)
 		},
 
 		'slice span - out of range'( $ ) {
 			const span = new $mol_span('test.ts', 1, 3, 5)
 
-			$mol_assert_fail(() => span.slice(1, 6) )
-			$mol_assert_fail(() => span.slice(1, -6) )
-			$mol_assert_fail(() => span.slice(-6) )
-			$mol_assert_fail(() => span.slice(6) )
-		},
-
-		'slice span - relative'( $ ) {
-			const span = new $mol_span('test.ts', 1, 3, 5)
-			const child = span.slice(-1)
-
-			$mol_assert_equal(child.col, 7)
-			$mol_assert_equal(child.length, 1)
-
-			const child2 = span.slice(0, -1)
-
-			$mol_assert_equal(child2.col, 3)
-			$mol_assert_equal(child2.length, 4)
+			$mol_assert_fail(() => span.slice(-1, 4))
+			$mol_assert_fail(() => span.slice(1, 6))
+			$mol_assert_fail(() => span.slice(1, 10))
+			$mol_assert_fail(() => span.slice(1, -1))
 		},
 
 		'error handling'( $ ) {
