@@ -1,10 +1,10 @@
 namespace $ {
 
-	export function $mol_view_tree_ts_simple(
+	export function $mol_view_tree2_simple(
 		this: $mol_ambient_context,
 		value: $mol_tree2,
 		owner_name: $mol_tree2,
-		context: $mol_view_tree_ts_context
+		context: $mol_view_tree2_context
 	) {
 		const type = value.type
 
@@ -32,7 +32,7 @@ namespace $ {
 
 	const example = '`false` or `true` or 123 or `\\some` or `null` or `@ \\some`'
 
-	export function $mol_view_tree_ts_simple_detect(value: $mol_tree2) {
+	export function $mol_view_tree2_simple_detect(value: $mol_tree2) {
 		const type = value.type
 
 		if (Number(type).toString() === type) return true

@@ -6,11 +6,11 @@ namespace $ {
 	 * 	having!key?next => owner!key?next
 	 * ```
 	 */
-	export function $mol_view_tree_ts_bind_right(
+	export function $mol_view_tree2_bind_right(
 		this: $mol_ambient_context,
-		having_parts: $mol_view_tree_ts_prop,
+		having_parts: $mol_view_tree2_prop,
 		factory_name: $mol_tree2,
-		context: $mol_view_tree_ts_context
+		context: $mol_view_tree2_context
 	) {
 		const having = having_parts.src
 		const operator = having.kids.length === 1 ? having.kids[0] : undefined
@@ -29,7 +29,7 @@ namespace $ {
 			owner.error(`Owner can\'t have default value, use ${example}`)
 		)
 
-		const owner_parts = this.$mol_view_tree_ts_prop_split(owner)
+		const owner_parts = this.$mol_view_tree2_prop_split(owner)
 
 		if (having_parts.next?.data !== owner_parts.next?.data) return this.$mol_fail(
 			having.error(`Next arguments must be equal, use ${example}`)
@@ -47,11 +47,11 @@ namespace $ {
 					owner.data('return this.'),
 					factory_name,
 					owner.data('().'),
-					this.$mol_view_tree_ts_function_call(having_parts),
+					this.$mol_view_tree2_function_call(having_parts),
 				])
 			])
 
-			const method = this.$mol_view_tree_ts_method(owner_parts, body)
+			const method = this.$mol_view_tree2_method(owner_parts, body)
 	
 			context.method(index, method)
 		}

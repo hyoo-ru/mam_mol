@@ -1,7 +1,7 @@
 namespace $ {
-	export type $mol_view_tree_ts_locales = Record<string, string>
+	export type $mol_view_tree2_locales = Record<string, string>
 
-	export class $mol_view_tree_ts_context extends $mol_object2 {
+	export class $mol_view_tree2_context extends $mol_object2 {
 
 		protected added_nodes = new Map<string, $mol_tree2>()
 
@@ -10,7 +10,7 @@ namespace $ {
 		constructor(
 			$: $mol_ambient_context,
 			class_node: $mol_tree2,
-			protected locales: $mol_view_tree_ts_locales,
+			protected locales: $mol_view_tree2_locales,
 			protected methods: $mol_tree2[]
 		) {
 			super()

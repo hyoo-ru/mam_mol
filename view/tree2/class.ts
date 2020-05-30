@@ -1,8 +1,8 @@
 namespace $ {
-	export function $mol_view_tree_ts_class(
+	export function $mol_view_tree2_class(
 		this: $mol_ambient_context,
 		klass: $mol_tree2,
-		locales: $mol_view_tree_ts_locales
+		locales: $mol_view_tree2_locales
 	) {
 		if( !class_regex.test( klass.type ) ) return this.$mol_fail(
 			klass.error( 'Wrong class name, use something like `$' + 'my_component`' )
@@ -19,18 +19,18 @@ namespace $ {
 		)
 
 		const body: $mol_tree2[] = []
-		const context = new $mol_view_tree_ts_context(this, klass, locales, body)
+		const context = new $mol_view_tree2_context(this, klass, locales, body)
 
 		for (const having of subclass.kids) {
 			if (having.type === '-') {
-				body.push($mol_view_tree_ts_comment(having))
+				body.push($mol_view_tree2_comment(having))
 				continue
 			}
 
 			if (! context.has_owner(having)) {
 				const index = context.index(having)
-				const having_parts = this.$mol_view_tree_ts_prop_split(having)
-				const method = this.$mol_view_tree_ts_value_block(having_parts, context)
+				const having_parts = this.$mol_view_tree2_prop_split(having)
+				const method = this.$mol_view_tree2_value_block(having_parts, context)
 
 				context.method(index, method)	
 			}

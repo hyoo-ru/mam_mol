@@ -1,10 +1,10 @@
 namespace $ {
-	export class $mol_view_tree_ts_multiple_spread extends $mol_object2 {
+	export class $mol_view_tree2_multiple_spread extends $mol_object2 {
 		protected super_spread: $mol_tree2 | undefined = undefined
 
 		constructor(
 			$: $mol_ambient_context,
-			protected prop_parts: $mol_view_tree_ts_prop
+			protected prop_parts: $mol_view_tree2_prop
 		) {
 			super()
 			this.$ = $
@@ -14,11 +14,11 @@ namespace $ {
 			const spread_prop = prop.kids.length === 1 ? prop.kids[0] : undefined
 
 			if (spread_prop) {
-				const spread_prop_parts = this.$.$mol_view_tree_ts_prop_split(spread_prop)
+				const spread_prop_parts = this.$.$mol_view_tree2_prop_split(spread_prop)
 
 				return prop.struct('inline', [
 					prop.data('...this.'),
-					this.$.$mol_view_tree_ts_function_call(spread_prop_parts),
+					this.$.$mol_view_tree2_function_call(spread_prop_parts),
 					prop.data(','),
 				])
 			}
@@ -31,7 +31,7 @@ namespace $ {
 
 			this.super_spread = prop.struct('inline', [
 				prop.data('...super.'),
-				this.$.$mol_view_tree_ts_function_call(this.prop_parts),
+				this.$.$mol_view_tree2_function_call(this.prop_parts),
 				prop.data(','),
 			])
 

@@ -1,6 +1,6 @@
 namespace $ {
-	export function $mol_view_tree_ts_function_declaration(
-		{ name, key, next }: $mol_view_tree_ts_prop
+	export function $mol_view_tree2_function_declaration(
+		{ name, key, next }: $mol_view_tree2_prop
 	) {
 		return name.struct('inline', [
 			name.data('('),
@@ -14,8 +14,8 @@ namespace $ {
 		].filter($mol_guard_defined))
 	}
 
-	export function $mol_view_tree_ts_function_call(
-		{ name, key, next }: $mol_view_tree_ts_prop
+	export function $mol_view_tree2_function_call(
+		{ name, key, next }: $mol_view_tree2_prop
 	) {
 		const sub: $mol_tree2[] = [
 			name,

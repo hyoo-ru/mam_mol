@@ -6,10 +6,10 @@ namespace $ {
 	 * 	<= Some $zzz_class
 	 * ```
 	 */
-	export function $mol_view_tree_ts_multiple_array(
+	export function $mol_view_tree2_multiple_array(
 		this: $mol_ambient_context,
-		prop_parts: $mol_view_tree_ts_prop,
-		context: $mol_view_tree_ts_context
+		prop_parts: $mol_view_tree2_prop,
+		context: $mol_view_tree2_context
 	) {
 		const prop = prop_parts.src
 		const operator = prop.kids.length === 1 ? prop.kids[0] : undefined
@@ -18,7 +18,7 @@ namespace $ {
 			prop.error('Need a `/` operator')
 		)
 
-		const super_spread = new $mol_view_tree_ts_multiple_spread(this, prop_parts)
+		const super_spread = new $mol_view_tree2_multiple_spread(this, prop_parts)
 
 		const sub: $mol_tree2[] = []
 
@@ -26,7 +26,7 @@ namespace $ {
 			const type = child.type
 
 			if (type === '-') {
-				sub.push($mol_view_tree_ts_comment(child))
+				sub.push($mol_view_tree2_comment(child))
 				continue
 			}
 
@@ -36,8 +36,8 @@ namespace $ {
 			}
 
 			if (type === '*') {
-				const having_parts = this.$mol_view_tree_ts_prop_split(prop.clone([ child ]))	
-				sub.push(add_comma(this.$mol_view_tree_ts_multiple_dictionary(having_parts, context)))
+				const having_parts = this.$mol_view_tree2_prop_split(prop.clone([ child ]))	
+				sub.push(add_comma(this.$mol_view_tree2_multiple_dictionary(having_parts, context)))
 				continue
 			}
 
@@ -48,14 +48,14 @@ namespace $ {
 					child.error(`Need a child, use ${example}`)
 				)
 
-				const having_parts = this.$mol_view_tree_ts_prop_split(having)
+				const having_parts = this.$mol_view_tree2_prop_split(having)
 
-				sub.push(add_comma(this.$mol_view_tree_ts_bind_left(having_parts, context)))
+				sub.push(add_comma(this.$mol_view_tree2_bind_left(having_parts, context)))
 				continue
 			}
 
-			if ($mol_view_tree_ts_simple_detect(child)) {
-				sub.push(add_comma(this.$mol_view_tree_ts_simple(child, prop_parts.name, context)))
+			if ($mol_view_tree2_simple_detect(child)) {
+				sub.push(add_comma(this.$mol_view_tree2_simple(child, prop_parts.name, context)))
 				continue
 			}
 

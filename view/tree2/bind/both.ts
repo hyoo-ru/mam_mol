@@ -5,10 +5,10 @@ namespace $ {
 	 * 	having?next <=> owner?next
 	 * ```
 	 */
-	export function $mol_view_tree_ts_bind_both(
+	export function $mol_view_tree2_bind_both(
 		this: $mol_ambient_context,
-		having_parts: $mol_view_tree_ts_prop,
-		context: $mol_view_tree_ts_context
+		having_parts: $mol_view_tree2_prop,
+		context: $mol_view_tree2_context
 	) {
 		const having = having_parts.src
 		const operator = having.kids.length === 1 ? having.kids[0] : undefined
@@ -27,7 +27,7 @@ namespace $ {
 			owner.error(`Only one sub allowed, use ${example}`)
 		)
 
-		const owner_parts = this.$mol_view_tree_ts_prop_split(owner)
+		const owner_parts = this.$mol_view_tree2_prop_split(owner)
 
 		if (! having_parts.next) return this.$mol_fail(
 			having.error(
@@ -51,13 +51,13 @@ namespace $ {
 
 		if (default_value && ! context.has_owner(owner)) {
 			const index = context.index(owner)
-			const method = this.$mol_view_tree_ts_value_block(owner_parts, context)
+			const method = this.$mol_view_tree2_value_block(owner_parts, context)
 			context.method(index, method)
 		}
 
 		return operator.struct('inline', [
 			operator.data('this.'),
-			this.$mol_view_tree_ts_function_call(owner_parts),
+			this.$mol_view_tree2_function_call(owner_parts),
 		])
 	}
 
