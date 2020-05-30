@@ -1,14 +1,14 @@
 namespace $ {
 	export function $mol_view_tree_ts_class(
 		this: $mol_ambient_context,
-		klass: $mol_tree,
+		klass: $mol_tree2,
 		locales: $mol_view_tree_ts_locales
 	) {
 		if( !class_regex.test( klass.type ) ) return this.$mol_fail(
 			klass.error( 'Wrong class name, use something like `$' + 'my_component`' )
 		)
 
-		const subclass = klass.sub.length === 1 ? klass.sub[0] : undefined
+		const subclass = klass.kids.length === 1 ? klass.kids[0] : undefined
 
 		if (! subclass) return this.$mol_fail(
 			klass.error( 'No subclass, use `$' + 'my_component2 $' + 'mol_view`' )
@@ -18,10 +18,10 @@ namespace $ {
 			subclass.error( 'Wrong subclass name, use something like `$' + 'mol_view`' )
 		)
 
-		const body: $mol_tree[] = []
+		const body: $mol_tree2[] = []
 		const context = new $mol_view_tree_ts_context(this, klass, locales, body)
 
-		for (const having of subclass.sub) {
+		for (const having of subclass.kids) {
 			if (having.type === '-') {
 				body.push($mol_view_tree_ts_comment(having))
 				continue
@@ -36,19 +36,19 @@ namespace $ {
 			}
 		}
 
-		return klass.make_struct('block', [
-			klass.make_struct('inline', [
-				klass.make_data('export class '),
-				klass.make_data(klass.type),
-				klass.make_data(' extends '),
-				subclass.make_data(subclass.type),
-				klass.make_data(' {'),
+		return $mol_tree2.struct('block', [
+			$mol_tree2.struct('inline', [
+				klass.data('export class '),
+				klass.data(klass.type),
+				klass.data(' extends '),
+				subclass.data(subclass.type),
+				klass.data(' {'),
 			]),
 
-			klass.make_struct('block', body),
+			$mol_tree2.struct('block', body),
 
-			klass.make_data('}'),
-			klass.make_data('\n'),
+			klass.data('}'),
+			klass.data(''),
 		])
 	}
 

@@ -11,19 +11,19 @@ namespace $ {
 		context: $mol_view_tree_ts_context
 	) {
 		const having = having_parts.src
-		const operator = having.sub.length === 1 ? having.sub[0] : undefined
+		const operator = having.kids.length === 1 ? having.kids[0] : undefined
 
 		if (operator?.type !== '<=>') return this.$mol_fail(
 			having.error(`Need an \`<=>\` operator, use ${example}`)
 		)
 
-		const owner = operator.sub.length === 1 ? operator.sub[0] : undefined
+		const owner = operator.kids.length === 1 ? operator.kids[0] : undefined
 
 		if (! owner ) return this.$mol_fail(
 			operator.error( `Need an owner part, use ${example}`)
 		)
 
-		if (owner.sub.length > 1) return this.$mol_fail(
+		if (owner.kids.length > 1) return this.$mol_fail(
 			owner.error(`Only one sub allowed, use ${example}`)
 		)
 
@@ -47,7 +47,7 @@ namespace $ {
 			)
 		)
 
-		const default_value = owner.sub.length === 1 ? owner.sub[0] : undefined
+		const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined
 
 		if (default_value && ! context.has_owner(owner)) {
 			const index = context.index(owner)
@@ -55,8 +55,8 @@ namespace $ {
 			context.method(index, method)
 		}
 
-		return operator.make_struct('inline', [
-			operator.make_data('this.'),
+		return operator.struct('inline', [
+			operator.data('this.'),
 			this.$mol_view_tree_ts_function_call(owner_parts),
 		])
 	}

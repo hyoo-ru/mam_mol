@@ -3,7 +3,7 @@ namespace $.$$ {
 
 	$mol_test( {
 		'transform property'( $ ) {
-			const tree = $mol_tree.fromString(`
+			const tree = $mol_tree2.fromString(`
 #hyoo_tree #mol_book2
 	w <= Source_first #sub
 		width!k?v => outer!k?v

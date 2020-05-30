@@ -9,23 +9,23 @@ namespace $ {
 	export function $mol_view_tree_ts_bind_right(
 		this: $mol_ambient_context,
 		having_parts: $mol_view_tree_ts_prop,
-		factory_name: $mol_tree,
+		factory_name: $mol_tree2,
 		context: $mol_view_tree_ts_context
 	) {
 		const having = having_parts.src
-		const operator = having.sub.length === 1 ? having.sub[0] : undefined
+		const operator = having.kids.length === 1 ? having.kids[0] : undefined
 
 		if (operator?.type !== '=>') return this.$mol_fail(
 			having.error(`Need an \`=>\` operator, use ${example}`)
 		)
 
-		const owner = operator.sub.length === 1 ? operator.sub[0] : undefined
+		const owner = operator.kids.length === 1 ? operator.kids[0] : undefined
 
 		if (! owner ) return this.$mol_fail(
 			operator.error(`Need an owner part, use ${example}`)
 		)
 
-		if (owner.sub.length !== 0) return this.$mol_fail(
+		if (owner.kids.length !== 0) return this.$mol_fail(
 			owner.error(`Owner can\'t have default value, use ${example}`)
 		)
 
@@ -42,11 +42,11 @@ namespace $ {
 		if (! context.has_owner(owner)) {
 			const index = context.index(owner)
 
-			const body = owner.make_struct('block', [
-				owner.make_struct('inline', [
-					owner.make_data('return this.'),
+			const body = owner.struct('block', [
+				owner.struct('inline', [
+					owner.data('return this.'),
 					factory_name,
-					owner.make_data('().'),
+					owner.data('().'),
 					this.$mol_view_tree_ts_function_call(having_parts),
 				])
 			])

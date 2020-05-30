@@ -9,7 +9,7 @@ namespace $ {
 		factory_parts: $mol_view_tree_ts_prop,
 		context: $mol_view_tree_ts_context
 	) {
-		const class_node = factory_parts.src.sub.length === 1 ? factory_parts.src.sub[0] : undefined
+		const class_node = factory_parts.src.kids.length === 1 ? factory_parts.src.kids[0] : undefined
 
 		if (! class_node) return this.$mol_fail(
 			factory_parts.src.error(`Need a class, ${example}`)
@@ -19,25 +19,25 @@ namespace $ {
 			class_node.error(`Need a valid class name, ${example}`)
 		)
 
-		const obj_node = class_node.make_data('obj')
+		const obj_node = class_node.data('obj')
 
-		const sub: $mol_tree[] = [
-			class_node.make_struct('inline', [
-				class_node.make_data('const '),
+		const sub: $mol_tree2[] = [
+			class_node.struct('inline', [
+				class_node.data('const '),
 				obj_node,
-				class_node.make_data(' = new this.$.'),
-				class_node.make_data(class_node.type),
-				class_node.make_data('()')
+				class_node.data(' = new this.$.'),
+				class_node.data(class_node.type),
+				class_node.data('()')
 			]),
 		]
 
-		for (const child of class_node.sub) {
+		for (const child of class_node.kids) {
 			if (child.type === '-') {
 				sub.push($mol_view_tree_ts_comment(child))
 				continue
 			}
 
-			const operator = child.sub.length === 1 ? child.sub[0] : undefined
+			const operator = child.kids.length === 1 ? child.kids[0] : undefined
 
 			const child_parts = this.$mol_view_tree_ts_prop_split(child)
 
@@ -51,20 +51,20 @@ namespace $ {
 			let value = this.$mol_view_tree_ts_value(child_parts, context)
 
 			if (type === '*') {
-				value = value.make_struct('inline', [
-					value.make_data('return ('),
+				value = value.struct('inline', [
+					value.data('return ('),
 					value,
-					value.make_data(')'),
+					value.data(')'),
 				])
 			}
 
-			const call = child.make_struct('inline', [
+			const call = child.struct('inline', [
 				obj_node,
-				child.make_data('.'),
+				child.data('.'),
 				child_parts.name,
-				child_parts.name.make_data(' = '),
+				child_parts.name.data(' = '),
 				$mol_view_tree_ts_function_declaration(child_parts),
-				child.make_data(' => '),
+				child.data(' => '),
 				value,
 			])
 
@@ -72,13 +72,13 @@ namespace $ {
 		}
 
 		sub.push(
-			class_node.make_struct('inline', [
-				class_node.make_data('return '),
+			class_node.struct('inline', [
+				class_node.data('return '),
 				obj_node
 			])
 		)
 
-		return class_node.make_struct('block', sub)
+		return class_node.struct('block', sub)
 	}
 
 	const example = 'use `Factory_name!key?next $' + 'my_class`'

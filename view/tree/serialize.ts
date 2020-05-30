@@ -1,19 +1,19 @@
 namespace $ {
 	export function $mol_view_tree_serialize(
 		this: $mol_ambient_context,
-		node: $mol_tree,
+		node: $mol_tree2,
 		prefix = '',
 		parent_is_inline = false
 	) : string {
-		const { type, sub, data } = node
+		const { type, kids, value } = node
 
-		if (! data && ! type) return sub.map(
+		if (! value && ! type) return kids.map(
 			child => this.$mol_view_tree_serialize(child, prefix)
 		).join('\n')
 
 		if (type === 'block') {
 			const child_prefix = prefix + '\t'
-			return sub.map(
+			return kids.map(
 				(child, index) => this.$mol_view_tree_serialize(
 					child,
 					child_prefix,
@@ -22,7 +22,7 @@ namespace $ {
 			).join('\n')
 		}
 
-		if (type === 'lines') return sub.map(
+		if (type === 'lines') return kids.map(
 			(child, index) => this.$mol_view_tree_serialize(
 				child,
 				prefix,
@@ -32,8 +32,8 @@ namespace $ {
 
 		const current_prefix = parent_is_inline ? '' : prefix
 
-		if (type === 'inline') return current_prefix + sub.map(child => this.$mol_view_tree_serialize(child, prefix, true)).join('')
+		if (type === 'inline') return current_prefix + kids.map(child => this.$mol_view_tree_serialize(child, prefix, true)).join('')
 
-		return current_prefix + data
+		return current_prefix + value
 	}
 }

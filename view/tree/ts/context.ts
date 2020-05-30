@@ -3,22 +3,22 @@ namespace $ {
 
 	export class $mol_view_tree_ts_context extends $mol_object2 {
 
-		protected added_nodes = new Map<string, $mol_tree>()
+		protected added_nodes = new Map<string, $mol_tree2>()
 
-		protected prefix: $mol_tree
+		protected prefix: $mol_tree2
 
 		constructor(
 			$: $mol_ambient_context,
-			class_node: $mol_tree,
+			class_node: $mol_tree2,
 			protected locales: $mol_view_tree_ts_locales,
-			protected methods: $mol_tree[]
+			protected methods: $mol_tree2[]
 		) {
 			super()
 			this.$ = $
-			this.prefix = class_node.make_data(class_node.type)
+			this.prefix = class_node.data(class_node.type)
 		}
 
-		has_owner(owner: $mol_tree) {
+		has_owner(owner: $mol_tree2) {
 			const prev = this.added_nodes.get(owner.type)
 			if (prev) {
 				if( prev.toString() !== owner.toString() ) return this.$.$mol_fail(
@@ -31,7 +31,7 @@ namespace $ {
 			return false
 		}
 
-		index(owner: $mol_tree) {
+		index(owner: $mol_tree2) {
 			this.added_nodes.set(owner.type, owner)
 
 			const index = this.methods.length
@@ -40,21 +40,21 @@ namespace $ {
 			return index
 		}
 
-		method(index: number, method: $mol_tree) {
+		method(index: number, method: $mol_tree2) {
 			this.methods[index] = method
 		}
 
-		locale_call(owner_name: $mol_tree, operator: $mol_tree) {
+		locale_call(owner_name: $mol_tree2, operator: $mol_tree2) {
 			const key = `${this.prefix.data}_${owner_name.data}`
 
 			this.locales[key] = operator.value
 
-			return owner_name.make_struct('inline', [
-				operator.make_data('this.$.$mol_locale.text( \''),
+			return owner_name.struct('inline', [
+				operator.data('this.$.$mol_locale.text( \''),
 				this.prefix,
-				owner_name.make_data('_'),
+				owner_name.data('_'),
 				owner_name,
-				operator.make_data('\' )'),	
+				operator.data('\' )'),	
 			])
 		}
 	}

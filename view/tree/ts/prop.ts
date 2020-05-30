@@ -2,7 +2,7 @@ namespace $ {
 	/*
 	 * Extract property parts: page!index?next
 	 */
-	export function $mol_view_tree_ts_prop_split(this: $mol_ambient_context, src: $mol_tree) {
+	export function $mol_view_tree_ts_prop_split(this: $mol_ambient_context, src: $mol_tree2) {
 		const prop_name = src.type
 
 		let key_pos = prop_name.indexOf('!')
@@ -29,9 +29,9 @@ namespace $ {
 
 		return {
 			src,
-			name: src.make_data(name),
-			key: key ? src.make({ data: key, col: src.col + key_pos }) : undefined,
-			next: next ? src.make({ data: next, col: src.col + next_pos }) : undefined
+			name: $mol_tree2.data(name, [], src.span.slice(0, name.length)),
+			key: key ? $mol_tree2.data(key, [], src.span.slice(key_pos, key.length)) : undefined,
+			next: next ? $mol_tree2.data(next, [], src.span.slice(next_pos, next.length)) : undefined
 		}
 	}
 

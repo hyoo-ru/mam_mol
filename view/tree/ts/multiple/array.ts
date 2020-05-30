@@ -6,23 +6,23 @@ namespace $ {
 	 * 	<= Some $zzz_class
 	 * ```
 	 */
-	export function $mol_view_tree_ts_array(
+	export function $mol_view_tree_ts_multiple_array(
 		this: $mol_ambient_context,
 		prop_parts: $mol_view_tree_ts_prop,
 		context: $mol_view_tree_ts_context
 	) {
 		const prop = prop_parts.src
-		const operator = prop.sub.length === 1 ? prop.sub[0] : undefined
+		const operator = prop.kids.length === 1 ? prop.kids[0] : undefined
 
 		if (! operator?.type || operator.type[0] !== '/') return this.$mol_fail(
 			prop.error('Need a `/` operator')
 		)
 
-		const super_spread = new $mol_view_tree_ts_spread(this, prop_parts)
+		const super_spread = new $mol_view_tree_ts_multiple_spread(this, prop_parts)
 
-		const sub: $mol_tree[] = []
+		const sub: $mol_tree2[] = []
 
-		for (const child of operator.sub) {
+		for (const child of operator.kids) {
 			const type = child.type
 
 			if (type === '-') {
@@ -36,13 +36,13 @@ namespace $ {
 			}
 
 			if (type === '*') {
-				const having_parts = this.$mol_view_tree_ts_prop_split(prop.clone({ sub: [ child ] } ))	
-				sub.push(add_comma(this.$mol_view_tree_ts_dictionary(having_parts, context)))
+				const having_parts = this.$mol_view_tree_ts_prop_split(prop.clone([ child ]))	
+				sub.push(add_comma(this.$mol_view_tree_ts_multiple_dictionary(having_parts, context)))
 				continue
 			}
 
 			if (type === '<=') {
-				const having = child.sub.length === 1 ? child.sub[0] : undefined
+				const having = child.kids.length === 1 ? child.kids[0] : undefined
 
 				if (! having) return this.$mol_fail(
 					child.error(`Need a child, use ${example}`)
@@ -54,8 +54,8 @@ namespace $ {
 				continue
 			}
 
-			if ($mol_view_tree_ts_value_simple_detect(child)) {
-				sub.push(add_comma(this.$mol_view_tree_ts_value_simple(child, prop_parts.name, context)))
+			if ($mol_view_tree_ts_simple_detect(child)) {
+				sub.push(add_comma(this.$mol_view_tree_ts_simple(child, prop_parts.name, context)))
 				continue
 			}
 
@@ -64,25 +64,27 @@ namespace $ {
 			)
 		}
 
-		const type = operator.type.length > 1
-			? operator.make({ data: operator.type.substring(1), col: operator.col + 1 })
-			: operator.make_data('any')
+		const type_str = operator.type.substring(1)
 
-		return prop.make_struct('lines', [
-			prop.make_data('['),
-			prop.make_struct('block', sub),
-			prop.make_struct('inline', [
-				operator.make_data('] as readonly '),
+		const type = type_str
+			? $mol_tree2.data(type_str, [], operator.span.slice(1, type_str.length))
+			: operator.data('any')
+
+		return $mol_tree2.struct('lines', [
+			prop.data('['),
+			prop.struct('block', sub),
+			prop.struct('inline', [
+				operator.data('] as readonly '),
 				type,
-				operator.make_data('[]')
+				operator.data('[]')
 			])
 		])
 	}
 
-	function add_comma(value: $mol_tree) {
-		return value.make_struct('inline', [
+	function add_comma(value: $mol_tree2) {
+		return value.struct('inline', [
 			value,
-			value.make_data(',')
+			value.data(',')
 		])
 	}
 

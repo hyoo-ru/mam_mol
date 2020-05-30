@@ -4,15 +4,15 @@ namespace $ {
 		prop_parts: $mol_view_tree_ts_prop,
 		context: $mol_view_tree_ts_context
 	) {
-		const operator = prop_parts.src.sub.length === 1 ? prop_parts.src.sub[0] : undefined
+		const operator = prop_parts.src.kids.length === 1 ? prop_parts.src.kids[0] : undefined
 		if (! operator) return this.$mol_fail(prop_parts.src.error('Need an operator'))
 
-		let body: $mol_tree
+		let body: $mol_tree2
 
 		if (operator.type[0] === '$') body = this.$mol_view_tree_ts_factory(prop_parts, context)
-		else body = operator.make_struct('block', [
-			operator.make_struct('inline', [
-				operator.make_data('return '),
+		else body = operator.struct('block', [
+			operator.struct('inline', [
+				operator.data('return '),
 				this.$mol_view_tree_ts_value(prop_parts, context)
 			])
 		])
