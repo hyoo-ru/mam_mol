@@ -25,11 +25,14 @@ namespace $ {
 
 		const super_spread = new $mol_view_tree_ts_spread(this, prop_parts)
 
-		return prop.make_struct('block', [
+		return prop.make_struct('lines', [
 			prop.make_data('{'),
-			prop.make_struct('block', prop.sub.map(opt => {
+			prop.make_struct('block', operator.sub.map(opt => {
 				if (opt.type === '-') return $mol_view_tree_ts_comment(opt)
 				if (opt.type === '^') return super_spread.get(opt)
+				if (opt.sub.length === 0) return this.$mol_fail(
+					opt.error('Need a key - value pair here, use `prop \\value`')
+				)
 
 				const info = this.$mol_view_tree_ts_prop_split(opt)
 		
@@ -41,7 +44,7 @@ namespace $ {
 					info.next || info.key ? $mol_view_tree_ts_function_declaration(info) : undefined,
 					info.next || info.key ? opt.make_data(' => ') : undefined,
 					value,
-					opt.make_data(', ')
+					opt.make_data(',')
 				].filter($mol_guard_defined))
 			})),
 			prop.make_data('}'),

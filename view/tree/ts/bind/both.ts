@@ -17,7 +17,7 @@ namespace $ {
 			having.error(`Need an \`<=>\` operator, use ${example}`)
 		)
 
-		const owner = operator.length === 1 ? operator.sub[0] : undefined
+		const owner = operator.sub.length === 1 ? operator.sub[0] : undefined
 
 		if (! owner ) return this.$mol_fail(
 			operator.error( `Need an owner part, use ${example}`)

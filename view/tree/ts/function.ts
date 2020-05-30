@@ -3,14 +3,14 @@ namespace $ {
 		{ name, key, next }: $mol_view_tree_ts_prop
 	) {
 		return name.make_struct('inline', [
-			name.make_data('( '),
+			name.make_data('('),
 			key,
-			key?.make_data( ' : any'),
-			key && next ? name.make_data(' , ') : undefined,
+			key?.make_data( ': any'),
+			key && next ? name.make_data(', ') : undefined,
 			next,
 			// Сборщик не различает зависимости в коде и в тексте, без разделения $ включит mol_mem_force как зависимость 
-			next?.make_data(` ? : any`), //  , force? : $${''}mol_mem_force
-			name.make_data(' ) '),
+			next?.make_data(`?: any`), //  , force? : $${''}mol_mem_force
+			name.make_data(') '),
 		].filter($mol_guard_defined))
 	}
 
@@ -19,7 +19,7 @@ namespace $ {
 	) {
 		const sub: $mol_tree[] = [
 			name,
-			name.make_data('( '),
+			name.make_data('('),
 		]
 
 		if (key) sub.push(key)

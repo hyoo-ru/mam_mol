@@ -18,12 +18,12 @@ namespace $ {
 			subclass.error( 'Wrong subclass name, use something like `$' + 'mol_view`' )
 		)
 
-		const methods: $mol_tree[] = []
-		const context = new $mol_view_tree_ts_context(this, klass, locales, methods)
+		const body: $mol_tree[] = []
+		const context = new $mol_view_tree_ts_context(this, klass, locales, body)
 
 		for (const having of subclass.sub) {
 			if (having.type === '-') {
-				methods.push($mol_view_tree_ts_comment(having))
+				body.push($mol_view_tree_ts_comment(having))
 				continue
 			}
 
@@ -45,9 +45,10 @@ namespace $ {
 				klass.make_data(' {'),
 			]),
 
-			klass.make_struct('block', methods),
+			klass.make_struct('block', body),
 
 			klass.make_data('}'),
+			klass.make_data('\n'),
 		])
 	}
 

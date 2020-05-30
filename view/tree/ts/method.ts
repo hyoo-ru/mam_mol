@@ -8,27 +8,35 @@ namespace $ {
 		const is_class = src.sub.length === 1 ? src.sub[0].type[0] === '$' : false
 		const need_cache = next !== undefined || is_class
 
-		return name.make_struct('block', [
-			name.make_data('/**'),
-			name.make_data(src.toString()),
-			name.make_data('**/'),
-			need_cache && key ? name.make_data(`@ $${''}mol_mem_key`) : undefined, 
-			need_cache && ! key ? name.make_data(`@ $${''}mol_mem`) : undefined,
+		const sub: $mol_tree[] = [
+			name.make_data('\n'),
+			$mol_view_tree_ts_comment_doc(src),
+		]
+
+		if (need_cache && key) sub.push(name.make_data(`@ $${''}mol_mem_key`)) 
+		if (need_cache && ! key) sub.push(name.make_data(`@ $${''}mol_mem`))
+
+		sub.push(
 			name.make_struct('inline', [
 				name,
 				$mol_view_tree_ts_function_declaration(owner_parts),
 				name.make_data('{'),
-			]),
-			next && next.make_struct('block', [
+			])
+		)
+
+		if (next) sub.push(
+			next.make_struct('block', [
 				next.make_struct('inline', [
 					next.make_data('if ( '),
 					next,
 					next.make_data(' !== undefined ) return '),
 					next,
 				])
-			]),
-			body,
-			name.make_data('}'),
-		].filter($mol_guard_defined))
+			])
+		)
+
+		sub.push(body, name.make_data('}'))
+
+		return name.make_struct('lines', sub)
 	}
 }
