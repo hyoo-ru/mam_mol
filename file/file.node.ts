@@ -58,7 +58,7 @@ namespace $ {
 					try {
 						actual = buffer_normalize($node.fs.readFileSync( path ))
 					} catch (e) {
-						e.message += ': ' + path
+						e.message += '\n' + path
 						return this.$.$mol_fail_hidden(e)
 					}
 
@@ -110,7 +110,7 @@ namespace $ {
 				stat = next ?? stat_convert($node.fs.statSync( path ))
 			} catch (error) {
 				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found`)
-				error.message += ': ' + path
+				error.message += '\n' + path
 				return this.$.$mol_fail_hidden(error)
 			}
 
@@ -126,7 +126,7 @@ namespace $ {
 				if (next) $node.fs.mkdirSync( path )
 				else $node.fs.unlinkSync( path )
 			} catch (e) {
-				e.message += ': ' + path
+				e.message += '\n' + path
 				return this.$.$mol_fail_hidden(e)
 			}
 
@@ -141,7 +141,7 @@ namespace $ {
 				try {
 					return buffer_normalize($node.fs.readFileSync( path ))
 				} catch (e) {
-					e.message += ': ' + path
+					e.message += '\n' + path
 					return this.$.$mol_fail_hidden(e)
 				}
 			}
@@ -151,7 +151,7 @@ namespace $ {
 			try {
 				$node.fs.writeFileSync( path , next )
 			} catch (e) {
-				e.message += ': ' + path
+				e.message += '\n' + path
 				return this.$.$mol_fail_hidden(e)
 			}
 			
@@ -170,7 +170,7 @@ namespace $ {
 					.filter( name => !/^\.+$/.test( name ) )
 					.map( name => this.resolve( name ) )
 			} catch (e) {
-				e.message += ': ' + path
+				e.message += '\n' + path
 				return this.$.$mol_fail_hidden(e)
 			}
 		}
@@ -188,7 +188,7 @@ namespace $ {
 			try {
 				$node.fs.appendFileSync( path , next )
 			} catch (e) {
-				e.message += ': ' + path
+				e.message += '\n' + path
 				return this.$.$mol_fail_hidden(e)
 			}
 		}		
