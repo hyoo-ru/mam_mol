@@ -22,6 +22,8 @@ namespace $ {
 
 		const sub: $mol_tree2[] = []
 
+		const array_context = context.clone()
+
 		for (const child of operator.kids) {
 			const type = child.type
 
@@ -35,27 +37,31 @@ namespace $ {
 				continue
 			}
 
-			if (type === '*') {
-				const having_parts = this.$mol_view_tree2_prop_split(prop.clone([ child ]))	
-				sub.push(add_comma(this.$mol_view_tree2_multiple_dictionary(having_parts, context)))
-				continue
-			}
+			let value: $mol_tree2 | undefined
 
 			if (type === '<=') {
 				const having = child.kids.length === 1 ? child.kids[0] : undefined
-
-				if (! having) return this.$mol_fail(
-					child.error(`Need a child, use ${example}`)
-				)
-
+				if (! having) return this.$mol_fail(child.error(
+					`Need a child, use ${example}`
+				))
 				const having_parts = this.$mol_view_tree2_prop_split(having)
-
-				sub.push(add_comma(this.$mol_view_tree2_bind_left(having_parts, context)))
-				continue
+				value = this.$mol_view_tree2_bind_left(having_parts, context)
 			}
+			else if (type === '*') {
+				const having_parts = this.$mol_view_tree2_prop_split(prop.clone([ child ]))
+				value = this.$mol_view_tree2_multiple_dictionary(having_parts, array_context)
+			}
+			else if (type[0] === '/') {
+				const having_parts = this.$mol_view_tree2_prop_split(prop.clone([ child ]))	
+				value = this.$mol_view_tree2_multiple_array(having_parts, array_context)
+			}
+			else value = this.$mol_view_tree2_literal(child)
 
-			if ($mol_view_tree2_simple_detect(child)) {
-				sub.push(add_comma(this.$mol_view_tree2_simple(child, prop_parts.name, context)))
+			if (value) {
+				sub.push(value.struct('inline', [
+					value,
+					value.data(',')
+				]))
 				continue
 			}
 
@@ -66,25 +72,27 @@ namespace $ {
 
 		const type_str = operator.type.substring(1)
 
-		const type = type_str
-			? $mol_tree2.data(type_str, [], operator.span.slice(1, type_str.length))
-			: operator.data('any')
+		const type_body = [
+			operator.data('] as '),
+		]
+
+		if (type_str === '') {
+			type_body.push(operator.data('readonly any[]'))
+		} else if (type_str === 'const') {
+			type_body.push(operator.data('const'))
+		} else {
+			const type = $mol_tree2.data(type_str, [], operator.span.slice(1, type_str.length))
+			type_body.push(
+				operator.data('readonly '),
+				type,
+				operator.data('[]')
+			)
+		}
 
 		return $mol_tree2.struct('lines', [
 			prop.data('['),
 			prop.struct('block', sub),
-			prop.struct('inline', [
-				operator.data('] as readonly '),
-				type,
-				operator.data('[]')
-			])
-		])
-	}
-
-	function add_comma(value: $mol_tree2) {
-		return value.struct('inline', [
-			value,
-			value.data(',')
+			prop.struct('inline', type_body)
 		])
 	}
 

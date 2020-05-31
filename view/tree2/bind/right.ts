@@ -39,22 +39,35 @@ namespace $ {
 			having.error(`Key arguments must be equal, use ${example}`)
 		)
 
-		if (! context.has_owner(owner)) {
-			const index = context.index(owner)
+		const prev = context.has_owner(owner)
 
-			const body = owner.struct('block', [
-				owner.struct('inline', [
-					owner.data('return this.'),
-					factory_name,
-					owner.data('().'),
-					this.$mol_view_tree2_function_call(having_parts),
-				])
+		if (prev) return this.$mol_fail(owner.error(
+			`Already defined at ${prev.span}`
+		))
+
+		const index = context.index(owner)
+
+		const body = owner.struct('block', [
+			owner.struct('inline', [
+				owner.data('return this.'),
+				factory_name,
+				owner.data('().'),
+				this.$mol_view_tree2_function_call(having_parts),
 			])
+		])
 
-			const method = this.$mol_view_tree2_method(owner_parts, body)
-	
-			context.method(index, method)
-		}
+		const method = owner_parts.name.struct('lines', [
+			$mol_view_tree2_comment_doc(owner_parts.src),
+			owner_parts.name.struct('inline', [
+				owner_parts.name,
+				$mol_view_tree2_function_declaration(owner_parts),
+				owner_parts.name.data(' {'),
+			]),
+			body,
+			owner_parts.name.data('}'),
+		])
+
+		context.method(index, method)
 	}
 
 	const example = '`having => owner` or `having?next => owner?next` or `having!key => owner!key` or `having!key?next => owner!key?next`'

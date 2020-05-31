@@ -1,3 +1,18 @@
+deploy \/mol/view/tree2/test/sample/empty.view.tree.ex
+deploy \/mol/view/tree2/test/sample/empty.view.ts.ex
 deploy \/mol/view/tree2/test/sample/simple.view.tree.ex
 deploy \/mol/view/tree2/test/sample/simple.view.ts.ex
-
+deploy \/mol/view/tree2/test/sample/factory.view.tree.ex
+deploy \/mol/view/tree2/test/sample/factory.view.ts.ex
+deploy \/mol/view/tree2/test/sample/array.view.tree.ex
+deploy \/mol/view/tree2/test/sample/array.view.ts.ex
+deploy \/mol/view/tree2/test/sample/dictionary.view.tree.ex
+deploy \/mol/view/tree2/test/sample/dictionary.view.ts.ex
+deploy \/mol/view/tree2/test/sample/multiple_class.view.tree.ex
+deploy \/mol/view/tree2/test/sample/multiple_class.view.ts.ex
+deploy \/mol/view/tree2/test/sample/bind/left.view.tree.ex
+deploy \/mol/view/tree2/test/sample/bind/left.view.ts.ex
+deploy \/mol/view/tree2/test/sample/bind/right.view.tree.ex
+deploy \/mol/view/tree2/test/sample/bind/right.view.ts.ex
+deploy \/mol/view/tree2/test/sample/bind/both.view.tree.ex
+deploy \/mol/view/tree2/test/sample/bind/both.view.ts.ex

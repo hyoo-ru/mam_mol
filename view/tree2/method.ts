@@ -19,7 +19,7 @@ namespace $ {
 			name.struct('inline', [
 				name,
 				$mol_view_tree2_function_declaration(owner_parts),
-				name.data('{'),
+				name.data(' {'),
 			])
 		)
 

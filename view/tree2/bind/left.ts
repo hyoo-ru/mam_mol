@@ -41,11 +41,11 @@ namespace $ {
 			)
 		)
 
-		if (having_parts.key?.data !== owner_parts.key?.data) return this.$mol_fail(
-			having.error(
-				`Key arguments must be equal in having or owner parts, use ${example}`
-			)
-		)
+		// if (having_parts.key?.data !== owner_parts.key?.data) return this.$mol_fail(
+		// 	having.error(
+		// 		`Key arguments must be equal in having or owner parts, use ${example}`
+		// 	)
+		// )
 
 		const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined
 

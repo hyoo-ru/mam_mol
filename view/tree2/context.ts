@@ -5,30 +5,39 @@ namespace $ {
 
 		protected added_nodes = new Map<string, $mol_tree2>()
 
-		protected prefix: $mol_tree2
+		protected prefixes_key: string | undefined
 
 		constructor(
 			$: $mol_ambient_context,
-			class_node: $mol_tree2,
+			protected prefixes: readonly $mol_tree2[] | undefined,
 			protected locales: $mol_view_tree2_locales,
 			protected methods: $mol_tree2[]
 		) {
 			super()
 			this.$ = $
-			this.prefix = class_node.data(class_node.type)
+			this.prefixes_key = prefixes ? (prefixes.map(p => p.value).join('') + '_') : undefined
+		}
+
+		clone(prefix?: $mol_tree2) {
+			const prefixes = prefix && this.prefixes ? [
+				...this.prefixes,
+				prefix.data('_'),
+				prefix,
+			] : undefined
+
+			return new $mol_view_tree2_context(this.$, prefixes, this.locales, this.methods)
 		}
 
 		has_owner(owner: $mol_tree2) {
 			const prev = this.added_nodes.get(owner.type)
+
 			if (prev) {
-				if( prev.toString() !== owner.toString() ) return this.$.$mol_fail(
-					owner.error( 'Property already defined with another default value' + prev.error('').message + '\n---' )
-				)
+				if ( prev.toString() !== owner.toString() ) return this.$.$mol_fail(owner.error(
+					`Property already defined with another default value in ${prev.span}\n---`
+				))
 
-				return true
+				return prev
 			}
-
-			return false
 		}
 
 		index(owner: $mol_tree2) {
@@ -44,14 +53,34 @@ namespace $ {
 			this.methods[index] = method
 		}
 
-		locale_call(owner_name: $mol_tree2, operator: $mol_tree2) {
-			const key = `${this.prefix.data}_${owner_name.data}`
+		protected locale_nodes = new Map<string, $mol_tree2>()
 
-			this.locales[key] = operator.value
+		locale_call(owner_name: $mol_tree2, operator: $mol_tree2) {
+			const key = this.prefixes_key + owner_name.value
+
+			const val = operator.kids.length === 1 ? operator.kids[0] : undefined
+
+			if (! val) return this.$.$mol_fail(operator.error(
+				'Need a one child, use `some @ \\localized value`'
+			))
+
+			if (! this.prefixes) return this.$.$mol_fail(operator.error(
+				'Can\'t use `@` operator inside array subtree'
+			))
+
+			const prev = this.locale_nodes.get(key)
+
+			if (prev) return this.$.$mol_fail(operator.error(
+				`Locale key \`${key}\` conflicts with same at ${prev.span}`
+			))
+
+			this.locale_nodes.set(key, val)
+
+			this.locales[key] = val.value
 
 			return owner_name.struct('inline', [
 				operator.data('this.$.$mol_locale.text( \''),
-				this.prefix,
+				...this.prefixes,
 				owner_name.data('_'),
 				owner_name,
 				operator.data('\' )'),	

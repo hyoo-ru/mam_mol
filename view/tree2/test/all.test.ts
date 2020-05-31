@@ -1,12 +1,29 @@
 namespace $.$$ {
 
 	$mol_test( {
-		...generate_tests([
-			'simple',
-		]),
+		async 'localized - simple'( $ ) {
+			const rec = await compile_module($, 'mol/view/tree2/test/sample/simple' )
 
-		'localized'( $ ) {
+			$mol_assert_equal(rec.locales['$mol_view_tree2_test_sample_simple_localized'], 'localized value')
 		},
+
+		async 'localized - factory'( $ ) {
+			const rec = await compile_module($, 'mol/view/tree2/test/sample/factory' )
+
+			$mol_assert_equal(rec.locales['$mol_view_tree2_test_sample_factory_Simple_localized'], 'localized value')
+		},
+
+		...generate_tests([
+			'empty',
+			'simple',
+			'factory',
+			'array',
+			'dictionary',
+			'multiple_class',
+			'bind/left',
+			'bind/right',
+			'bind/both',
+		]),
 	} )
 
 	function generate_tests(tests: string[]) {
@@ -30,7 +47,7 @@ namespace $.$$ {
 			return data
 		})()
 
-		const tree = $mol_tree2.fromString(tree_data)
+		const tree = $mol_tree2.fromString(tree_data, new $mol_span(file_path + '.view.tree.ex', 0, 0, tree_data.length))
 		const compiled = $.$mol_view_tree2_compile(tree)
 
 		const sample = await $mol_fiber_async(() => {
