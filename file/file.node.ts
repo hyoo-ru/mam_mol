@@ -96,12 +96,13 @@ namespace $ {
 		@ $mol_mem
 		stat( next? : $mol_file_stat, force? : $mol_mem_force ) {
 			let stat = next
+			const path = this.path()
 
 			try {
-				stat = next ?? stat_convert($node.fs.statSync( this.path() ))
+				stat = next ?? stat_convert($node.fs.statSync( path ))
 			} catch (error) {
-				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found: ${this.path()}`)
-
+				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found`)
+				error += ': ' + path
 				return $mol_fail_hidden(error)
 			}
 
@@ -111,23 +112,40 @@ namespace $ {
 		}
 
 		ensure(next?: boolean) {
-			if (next) $node.fs.mkdirSync( this.path() )
-			else $node.fs.unlinkSync( this.path() )
+			const path = this.path()
+
+			try {
+				if (next) $node.fs.mkdirSync( path )
+				else $node.fs.unlinkSync( path )
+			} catch (e) {
+				e.message += ': ' + path
+				return $.$mol_fail_hidden(e)
+			}
 
 			return true
 		}
 		
 		@ $mol_mem
 		buffer( next? : Uint8Array , force? : $mol_mem_force ) {
+			const path = this.path()
 			if( next === undefined ) {
 				this.stat()
-
-				return buffer_normalize($node.fs.readFileSync( this.path() ))
+				try {
+					return buffer_normalize($node.fs.readFileSync( path ))
+				} catch (e) {
+					e.message += ': ' + path
+					return $.$mol_fail_hidden(e)
+				}
 			}
 			
 			this.parent().exists( true )
 
-			$node.fs.writeFileSync( this.path() , next )
+			try {
+				$node.fs.writeFileSync( path , next )
+			} catch (e) {
+				e.message += ': ' + path
+				return $.$mol_fail_hidden(e)
+			}
 			
 			return next
 		}
@@ -137,9 +155,16 @@ namespace $ {
 			if (! this.exists() ) return []
 			if ( this.type() !== 'dir') return []
 
-			return $node.fs.readdirSync( this.path() )
-				.filter( name => !/^\.+$/.test( name ) )
-				.map( name => this.resolve( name ) )
+			const path = this.path()
+
+			try {
+				return $node.fs.readdirSync( path )
+					.filter( name => !/^\.+$/.test( name ) )
+					.map( name => this.resolve( name ) )
+			} catch (e) {
+				e.message += ': ' + path
+				return $.$mol_fail_hidden(e)
+			}
 		}
 		
 		resolve( path : string ) {
@@ -151,7 +176,13 @@ namespace $ {
 		}
 		
 		append( next : Uint8Array | string ) {
-			$node.fs.appendFileSync( this.path() , next )
+			const path = this.path()
+			try {
+				$node.fs.appendFileSync( path , next )
+			} catch (e) {
+				e.message += ': ' + path
+				return $.$mol_fail_hidden(e)
+			}
 		}		
 	}
 
