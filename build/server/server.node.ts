@@ -1,14 +1,15 @@
 namespace $ {
 	
 	export class $mol_build_server extends $mol_server {
-		
+
+		static log = false
+
 		expressGenerator() {
 			return $mol_fiber_root( (
 				req : typeof $node.express.request ,
 				res : typeof $node.express.response ,
 				next : () => any
 			)=> {
-
 				try {
 
 					return $mol_fiber_unlimit( ()=> this.generate( req.url ) && Promise.resolve().then( next ) )
@@ -34,9 +35,14 @@ namespace $ {
 						res.send( script ).end()
 
 					} else {
-
-						res.status(500).send( error.message ).end()
-
+						error.message += '\n' + 'Set $mol_build_server.log = true for stacktraces'
+						res.status(500).send( error.toString() ).end()
+						this.$.$mol_log3_fail({
+							place: `${this}.expressGenerator()`,
+							uri: req.path,
+							stack: this.$.$mol_build_server.log ? error.stack : undefined,
+							message: error.message,
+						})
 					}
 
 				}
