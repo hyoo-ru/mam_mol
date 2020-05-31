@@ -1,1 +1,3 @@
-deploy \/mol/view/tree2/test/sample/sample.view.tree.ex
+deploy \/mol/view/tree2/test/sample/simple.view.tree.ex
+deploy \/mol/view/tree2/test/sample/simple.view.ts.ex
+
