@@ -959,6 +959,13 @@ var $;
         await $_1.$mol_fiber_warp();
         $_1.$mol_fiber.deadline = Date.now() + 100;
     });
+    $_1.$mol_test({
+        'sync to async': async ($) => {
+            const sum = $_1.$mol_fiber_async((a, b) => a + b);
+            const res = await sum(1, 2);
+            $_1.$mol_assert_equal(res, 3);
+        },
+    });
 })($ || ($ = {}));
 //fiber.test.js.map
 ;
