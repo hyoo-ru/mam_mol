@@ -1135,7 +1135,7 @@ declare namespace $ {
         reset(): void;
         version(): string;
         abstract ensure(next?: boolean): boolean;
-        abstract watcher(): {
+        watcher(): {
             destructor(): void;
         };
         exists(next?: boolean, force?: $mol_mem_force): boolean;
@@ -1192,9 +1192,6 @@ declare namespace $ {
         static relative(path: string): $mol_file_web;
         static base: string;
         buffer(next?: Uint8Array, force?: $mol_mem_force): Uint8Array;
-        watcher(): {
-            destructor(): void;
-        };
         stat(next?: $mol_file_stat, force?: $mol_mem_force): $mol_file_stat;
         resolve(path: string): $mol_file_web;
         ensure(next?: boolean): boolean;

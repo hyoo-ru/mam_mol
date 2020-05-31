@@ -4150,6 +4150,12 @@ var $;
             version() {
                 return this.stat().mtime.getTime().toString(36).toUpperCase();
             }
+            watcher() {
+                console.warn('$mol_file_web.watcher() not implemented');
+                return {
+                    destructor() { }
+                };
+            }
             exists(next, force) {
                 let exists = true;
                 try {
@@ -4415,9 +4421,6 @@ var $;
                 if (response.native.status === 404)
                     throw new $.$mol_file_not_found(`File not found: ${this.path()}`);
                 return new Uint8Array(response.buffer());
-            }
-            watcher() {
-                throw new Error('$mol_file_web.watcher() not implemented');
             }
             stat(next, force) {
                 let stat = next;

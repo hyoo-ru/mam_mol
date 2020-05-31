@@ -1186,7 +1186,7 @@ declare namespace $ {
         reset(): void;
         version(): string;
         abstract ensure(next?: boolean): boolean;
-        abstract watcher(): {
+        watcher(): {
             destructor(): void;
         };
         exists(next?: boolean, force?: $mol_mem_force): boolean;
@@ -1223,7 +1223,7 @@ declare namespace $ {
         sub(): $mol_file[];
         resolve(path: string): $mol_file;
         relate(base?: $mol_file): any;
-        append(next: Uint8Array | string): void;
+        append(next: Uint8Array | string): undefined;
     }
 }
 

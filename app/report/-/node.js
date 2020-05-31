@@ -3522,6 +3522,12 @@ var $;
             version() {
                 return this.stat().mtime.getTime().toString(36).toUpperCase();
             }
+            watcher() {
+                console.warn('$mol_file_web.watcher() not implemented');
+                return {
+                    destructor() { }
+                };
+            }
             exists(next, force) {
                 let exists = true;
                 try {
@@ -3672,7 +3678,15 @@ var $;
                     const file = $.$mol_file.relative(path.replace(/\\/g, '/'));
                     if (type === 'change') {
                         const cached = $.$mol_mem_cached(() => file.buffer());
-                        const actual = buffer_normalize($node.fs.readFileSync(file.path()));
+                        const path = file.path();
+                        let actual;
+                        try {
+                            actual = buffer_normalize($node.fs.readFileSync(path));
+                        }
+                        catch (e) {
+                            e.message += '\n' + path;
+                            return this.$.$mol_fail_hidden(e);
+                        }
                         if (cached && $.$mol_compare_array(cached, actual))
                             return;
                         this.$.$mol_log3_rise({
@@ -3699,37 +3713,59 @@ var $;
                 });
                 return {
                     destructor() {
-                        watcher.removeAllListeners();
+                        watcher.close();
                     }
                 };
             }
             stat(next, force) {
                 let stat = next;
+                const path = this.path();
                 try {
-                    stat = next !== null && next !== void 0 ? next : stat_convert($node.fs.statSync(this.path()));
+                    stat = next !== null && next !== void 0 ? next : stat_convert($node.fs.statSync(path));
                 }
                 catch (error) {
                     if (error.code === 'ENOENT')
-                        error = new $.$mol_file_not_found(`File not found: ${this.path()}`);
-                    return $.$mol_fail_hidden(error);
+                        error = new $.$mol_file_not_found(`File not found`);
+                    error.message += '\n' + path;
+                    return this.$.$mol_fail_hidden(error);
                 }
                 this.parent().watcher();
                 return stat;
             }
             ensure(next) {
-                if (next)
-                    $node.fs.mkdirSync(this.path());
-                else
-                    $node.fs.unlinkSync(this.path());
+                const path = this.path();
+                try {
+                    if (next)
+                        $node.fs.mkdirSync(path);
+                    else
+                        $node.fs.unlinkSync(path);
+                }
+                catch (e) {
+                    e.message += '\n' + path;
+                    return this.$.$mol_fail_hidden(e);
+                }
                 return true;
             }
             buffer(next, force) {
+                const path = this.path();
                 if (next === undefined) {
                     this.stat();
-                    return buffer_normalize($node.fs.readFileSync(this.path()));
+                    try {
+                        return buffer_normalize($node.fs.readFileSync(path));
+                    }
+                    catch (e) {
+                        e.message += '\n' + path;
+                        return this.$.$mol_fail_hidden(e);
+                    }
                 }
                 this.parent().exists(true);
-                $node.fs.writeFileSync(this.path(), next);
+                try {
+                    $node.fs.writeFileSync(path, next);
+                }
+                catch (e) {
+                    e.message += '\n' + path;
+                    return this.$.$mol_fail_hidden(e);
+                }
                 return next;
             }
             sub() {
@@ -3737,9 +3773,16 @@ var $;
                     return [];
                 if (this.type() !== 'dir')
                     return [];
-                return $node.fs.readdirSync(this.path())
-                    .filter(name => !/^\.+$/.test(name))
-                    .map(name => this.resolve(name));
+                const path = this.path();
+                try {
+                    return $node.fs.readdirSync(path)
+                        .filter(name => !/^\.+$/.test(name))
+                        .map(name => this.resolve(name));
+                }
+                catch (e) {
+                    e.message += '\n' + path;
+                    return this.$.$mol_fail_hidden(e);
+                }
             }
             resolve(path) {
                 return this.constructor.relative($node.path.join(this.path(), path));
@@ -3748,7 +3791,14 @@ var $;
                 return $node.path.relative(base.path(), this.path()).replace(/\\/g, '/');
             }
             append(next) {
-                $node.fs.appendFileSync(this.path(), next);
+                const path = this.path();
+                try {
+                    $node.fs.appendFileSync(path, next);
+                }
+                catch (e) {
+                    e.message += '\n' + path;
+                    return this.$.$mol_fail_hidden(e);
+                }
             }
         }
         __decorate([

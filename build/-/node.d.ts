@@ -401,7 +401,7 @@ declare namespace $ {
         reset(): void;
         version(): string;
         abstract ensure(next?: boolean): boolean;
-        abstract watcher(): {
+        watcher(): {
             destructor(): void;
         };
         exists(next?: boolean, force?: $mol_mem_force): boolean;
@@ -434,7 +434,7 @@ declare namespace $ {
         sub(): $mol_file[];
         resolve(path: string): $mol_file;
         relate(base?: $mol_file): string;
-        append(next: Uint8Array | string): void;
+        append(next: Uint8Array | string): undefined;
     }
 }
 
@@ -1071,6 +1071,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_build_server extends $mol_server {
+        static log: boolean;
         expressGenerator(): (req: typeof $node.express.request, res: typeof $node.express.response, next: () => any) => Promise<any> | undefined;
         build(): $mol_build;
         generate(url: string): $mol_file[];
