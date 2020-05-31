@@ -39,6 +39,7 @@ namespace $ {
 							uri: req.path,
 							message: error.message,
 						})
+						console.error(error.stack)
 					}
 
 				}
