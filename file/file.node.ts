@@ -52,7 +52,15 @@ namespace $ {
 				if( type === 'change' ) {
 
 					const cached = $mol_mem_cached( ()=> file.buffer() )
-					const actual = buffer_normalize($node.fs.readFileSync( file.path() ))
+					const path = file.path()
+					let actual: Uint8Array
+
+					try {
+						actual = buffer_normalize($node.fs.readFileSync( path ))
+					} catch (e) {
+						e.message += '\n' + path
+						return this.$.$mol_fail_hidden(e)
+					}
 
 					if( cached && $mol_compare_array( cached , actual ) ) return
 
@@ -102,8 +110,8 @@ namespace $ {
 				stat = next ?? stat_convert($node.fs.statSync( path ))
 			} catch (error) {
 				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found`)
-				error.message += ': ' + path
-				return $mol_fail_hidden(error)
+				error.message += '\n' + path
+				return this.$.$mol_fail_hidden(error)
 			}
 
 			this.parent().watcher()
@@ -118,8 +126,8 @@ namespace $ {
 				if (next) $node.fs.mkdirSync( path )
 				else $node.fs.unlinkSync( path )
 			} catch (e) {
-				e.message += ': ' + path
-				return $.$mol_fail_hidden(e)
+				e.message += '\n' + path
+				return this.$.$mol_fail_hidden(e)
 			}
 
 			return true
@@ -133,8 +141,8 @@ namespace $ {
 				try {
 					return buffer_normalize($node.fs.readFileSync( path ))
 				} catch (e) {
-					e.message += ': ' + path
-					return $.$mol_fail_hidden(e)
+					e.message += '\n' + path
+					return this.$.$mol_fail_hidden(e)
 				}
 			}
 			
@@ -143,13 +151,13 @@ namespace $ {
 			try {
 				$node.fs.writeFileSync( path , next )
 			} catch (e) {
-				e.message += ': ' + path
-				return $.$mol_fail_hidden(e)
+				e.message += '\n' + path
+				return this.$.$mol_fail_hidden(e)
 			}
 			
 			return next
-		}
 
+		}
 		@ $mol_mem
 		sub() : $mol_file[] {
 			if (! this.exists() ) return []
@@ -162,8 +170,8 @@ namespace $ {
 					.filter( name => !/^\.+$/.test( name ) )
 					.map( name => this.resolve( name ) )
 			} catch (e) {
-				e.message += ': ' + path
-				return $.$mol_fail_hidden(e)
+				e.message += '\n' + path
+				return this.$.$mol_fail_hidden(e)
 			}
 		}
 		
@@ -180,8 +188,8 @@ namespace $ {
 			try {
 				$node.fs.appendFileSync( path , next )
 			} catch (e) {
-				e.message += ': ' + path
-				return $.$mol_fail_hidden(e)
+				e.message += '\n' + path
+				return this.$.$mol_fail_hidden(e)
 			}
 		}		
 	}

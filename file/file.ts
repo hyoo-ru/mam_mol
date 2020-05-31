@@ -47,8 +47,12 @@ namespace $ {
 
 		abstract ensure(next?: boolean): boolean
 
-		abstract watcher(): {
-			destructor(): void
+		watcher() {
+			console.warn('$mol_file_web.watcher() not implemented')
+
+			return {
+				destructor() {}
+			}
 		}
 		
 		@ $mol_mem

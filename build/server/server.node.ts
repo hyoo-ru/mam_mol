@@ -40,7 +40,7 @@ namespace $ {
 						this.$.$mol_log3_fail({
 							place: `${this}.expressGenerator()`,
 							uri: req.path,
-							stack: $mol_build_server.log ? error.stack : undefined,
+							stack: this.$.$mol_build_server.log ? error.stack : undefined,
 							message: error.message,
 						})
 					}
