@@ -52,7 +52,15 @@ namespace $ {
 				if( type === 'change' ) {
 
 					const cached = $mol_mem_cached( ()=> file.buffer() )
-					const actual = buffer_normalize($node.fs.readFileSync( file.path() ))
+					const path = file.path()
+					let actual: Uint8Array
+
+					try {
+						actual = buffer_normalize($node.fs.readFileSync( path ))
+					} catch (e) {
+						e.message += ': ' + path
+						return this.$.$mol_fail_hidden(e)
+					}
 
 					if( cached && $mol_compare_array( cached , actual ) ) return
 
@@ -103,7 +111,7 @@ namespace $ {
 			} catch (error) {
 				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found`)
 				error.message += ': ' + path
-				return $mol_fail_hidden(error)
+				return this.$.$mol_fail_hidden(error)
 			}
 
 			this.parent().watcher()
@@ -119,7 +127,7 @@ namespace $ {
 				else $node.fs.unlinkSync( path )
 			} catch (e) {
 				e.message += ': ' + path
-				return $.$mol_fail_hidden(e)
+				return this.$.$mol_fail_hidden(e)
 			}
 
 			return true
@@ -134,7 +142,7 @@ namespace $ {
 					return buffer_normalize($node.fs.readFileSync( path ))
 				} catch (e) {
 					e.message += ': ' + path
-					return $.$mol_fail_hidden(e)
+					return this.$.$mol_fail_hidden(e)
 				}
 			}
 			
@@ -144,7 +152,7 @@ namespace $ {
 				$node.fs.writeFileSync( path , next )
 			} catch (e) {
 				e.message += ': ' + path
-				return $.$mol_fail_hidden(e)
+				return this.$.$mol_fail_hidden(e)
 			}
 			
 			return next
@@ -163,7 +171,7 @@ namespace $ {
 					.map( name => this.resolve( name ) )
 			} catch (e) {
 				e.message += ': ' + path
-				return $.$mol_fail_hidden(e)
+				return this.$.$mol_fail_hidden(e)
 			}
 		}
 		
@@ -181,7 +189,7 @@ namespace $ {
 				$node.fs.appendFileSync( path , next )
 			} catch (e) {
 				e.message += ': ' + path
-				return $.$mol_fail_hidden(e)
+				return this.$.$mol_fail_hidden(e)
 			}
 		}		
 	}
