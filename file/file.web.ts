@@ -27,10 +27,6 @@ namespace $ {
 			return new Uint8Array(response.buffer())
 		}
 
-		watcher(): { destructor(): void } {
-			throw new Error('$mol_file_web.watcher() not implemented')
-		}
-
 		@ $mol_mem
 		stat( next? : $mol_file_stat, force? : $mol_mem_force ) {
 			let stat = next
