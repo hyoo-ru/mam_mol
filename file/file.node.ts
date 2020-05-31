@@ -102,7 +102,7 @@ namespace $ {
 				stat = next ?? stat_convert($node.fs.statSync( path ))
 			} catch (error) {
 				if (error.code === 'ENOENT') error = new $mol_file_not_found(`File not found`)
-				error += ': ' + path
+				error.message += ': ' + path
 				return $mol_fail_hidden(error)
 			}
 
@@ -148,8 +148,8 @@ namespace $ {
 			}
 			
 			return next
-		}
 
+		}
 		@ $mol_mem
 		sub() : $mol_file[] {
 			if (! this.exists() ) return []
