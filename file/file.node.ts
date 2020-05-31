@@ -88,7 +88,7 @@ namespace $ {
 			
 			return {
 				destructor() {
-					watcher.removeAllListeners()
+					watcher.close()
 				}
 			}
 		}

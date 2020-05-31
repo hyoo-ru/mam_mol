@@ -28,7 +28,11 @@ namespace $ {
 		}
 
 		watcher(): { destructor(): void } {
-			throw new Error('$mol_file_web.watcher() not implemented')
+			console.warn('$mol_file_web.watcher() not implemented')
+
+			return {
+				destructor() {}
+			}
 		}
 
 		@ $mol_mem

@@ -19,8 +19,8 @@ namespace $ {
 			classes.push(class_node)
 		}
 
-		classes.push(tree2_module.data('}'))
+		classes.push(tree2_module.data('}'), tree2_module.data(''))
 
-		return tree2_module.clone(classes)
+		return tree2_module.list(classes)
 	}
 }
