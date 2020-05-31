@@ -8,7 +8,6 @@ namespace $ {
 				res : typeof $node.express.response ,
 				next : () => any
 			)=> {
-
 				try {
 
 					return $mol_fiber_unlimit( ()=> this.generate( req.url ) && Promise.resolve().then( next ) )
@@ -34,9 +33,12 @@ namespace $ {
 						res.send( script ).end()
 
 					} else {
-
-						res.status(500).send( error.message ).end()
-
+						res.status(500).send( error.toString() ).end()
+						this.$.$mol_log3_fail({
+							place: `${this}.expressGenerator()`,
+							uri: req.path,
+							message: error.message,
+						})
 					}
 
 				}
