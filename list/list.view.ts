@@ -17,7 +17,9 @@ namespace $.$$ {
 		view_window() : [ number , number ] {
 			
 			const kids = this.sub()
+			
 			if( kids.length < 3 ) return [ 0 , kids.length ]
+			if( this.$.$mol_print.active() ) return [ 0 , kids.length ]
 			
 			let [ min , max ] = $mol_mem_cached( ()=> this.view_window() ) ?? [ 0 , 0 ]
 
