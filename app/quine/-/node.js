@@ -3965,6 +3965,63 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_dom_listener extends $.$mol_object {
+        constructor(_node, _event, _handler, _config = { passive: true }) {
+            super();
+            this._node = _node;
+            this._event = _event;
+            this._handler = _handler;
+            this._config = _config;
+            this._node.addEventListener(this._event, this._handler, this._config);
+        }
+        destructor() {
+            this._node.removeEventListener(this._event, this._handler, this._config);
+            super.destructor();
+        }
+    }
+    $.$mol_dom_listener = $mol_dom_listener;
+})($ || ($ = {}));
+//listener.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    let $mol_print = (() => {
+        class $mol_print extends $.$mol_object {
+            static before() {
+                return new $.$mol_dom_listener(this.$.$mol_dom_context, 'beforeprint', () => {
+                    this.active(true);
+                });
+            }
+            static after() {
+                return new $.$mol_dom_listener(this.$.$mol_dom_context, 'afterprint', () => {
+                    this.active(false);
+                });
+            }
+            static active(next) {
+                this.before();
+                this.after();
+                return next || false;
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_print, "before", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_print, "after", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_print, "active", null);
+        return $mol_print;
+    })();
+    $.$mol_print = $mol_print;
+})($ || ($ = {}));
+//print.js.map
+;
+"use strict";
+var $;
+(function ($) {
     $.$mol_style_attach("mol/list/list.view.css", "[mol_list] {\n\twill-change: contents;\n\tdisplay: block;\n\t/* display: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\talign-content: stretch; */\n\ttransition: none;\n}\n\n[mol_list_gap_before] ,\n[mol_list_gap_after] {\n\tdisplay: block !important;\n\tflex: none;\n\ttransition: none;\n\toverflow-anchor: none;\n}\n\n[mol_list] > * {\n\tdisplay: block;\n}\n");
 })($ || ($ = {}));
 //list.view.css.js.map
@@ -3989,6 +4046,8 @@ var $;
                     var _a, _b, _c, _d, _e, _f;
                     const kids = this.sub();
                     if (kids.length < 3)
+                        return [0, kids.length];
+                    if (this.$.$mol_print.active())
                         return [0, kids.length];
                     let [min, max] = (_a = $.$mol_mem_cached(() => this.view_window())) !== null && _a !== void 0 ? _a : [0, 0];
                     let max2 = max = Math.min(max, kids.length);
