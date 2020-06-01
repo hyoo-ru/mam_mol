@@ -3,32 +3,44 @@ namespace $ {
 
 	export class $mol_view_tree2_context extends $mol_object2 {
 
-		protected added_nodes = new Map<string, $mol_tree2>()
-
 		protected prefixes_key: string | undefined
 
 		constructor(
 			$: $mol_ambient_context,
-			protected prefixes: readonly $mol_tree2[] | undefined,
+			protected prefixes: readonly $mol_tree2[],
 			protected locales: $mol_view_tree2_locales,
-			protected methods: $mol_tree2[]
+			protected methods: $mol_tree2[],
+			protected no_locale = false,
+			protected added_nodes = new Map<string, $mol_tree2>()
 		) {
 			super()
 			this.$ = $
-			this.prefixes_key = prefixes ? (prefixes.map(p => p.value).join('') + '_') : undefined
+			this.prefixes_key = prefixes.map(p => p.value).join('') + '_'
 		}
 
-		clone(prefix?: $mol_tree2) {
-			const prefixes = prefix && this.prefixes ? [
-				...this.prefixes,
+		clone(prefixes: readonly $mol_tree2[], no_locale = this.no_locale) {
+			return new this.$.$mol_view_tree2_context(this.$, prefixes, this.locales, this.methods, no_locale, this.added_nodes)
+		}
+
+		prefix_add(prefix: $mol_tree2) {
+			const prefixes = this.prefixes.slice()
+			prefixes.push(
 				prefix.data('_'),
 				prefix,
-			] : undefined
+			)
 
-			return new $mol_view_tree2_context(this.$, prefixes, this.locales, this.methods)
+			return this.clone(prefixes)
 		}
 
-		has_owner(owner: $mol_tree2) {
+		prefix_root() {
+			return this.clone(this.prefixes.slice(0, 1), false)
+		}
+
+		locale_disable() {
+			return this.clone(this.prefixes, true)
+		}
+
+		get_owner(owner: $mol_tree2) {
 			const prev = this.added_nodes.get(owner.type)
 
 			if (prev) {
@@ -64,7 +76,7 @@ namespace $ {
 				'Need a one child, use `some @ \\localized value`'
 			))
 
-			if (! this.prefixes) return this.$.$mol_fail(operator.error(
+			if (this.no_locale) return this.$.$mol_fail(operator.error(
 				'Can\'t use `@` operator inside array subtree'
 			))
 

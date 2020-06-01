@@ -27,7 +27,7 @@ namespace $ {
 				continue
 			}
 
-			if (context.has_owner(having)) continue
+			if (context.get_owner(having)) continue
 
 			const index = context.index(having)
 			const having_parts = this.$mol_view_tree2_prop_split(having)

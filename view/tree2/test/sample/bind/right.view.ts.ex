@@ -32,7 +32,7 @@ namespace $ {
 		 * writable_outer?val
 		 * ```
 		 */
-		writable_outer(val: any) {
+		writable_outer(val?: any) {
 			return this.Cls().writable(val)
 		}
 
@@ -50,7 +50,7 @@ namespace $ {
 		 * indexed_writable_outer!key?val
 		 * ```
 		 */
-		indexed_writable_outer(key: any, val: any) {
+		indexed_writable_outer(key: any, val?: any) {
 			return this.Cls().indexed_writable(key, val)
 		}
 

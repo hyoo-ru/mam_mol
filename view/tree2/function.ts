@@ -6,7 +6,7 @@ namespace $ {
 
 		if (key) sub.push(key, key.data( ': any'))
 		if (key && next) sub.push(name.data(', '))
-		if (next) sub.push(next, next.data( ': any'))
+		if (next) sub.push(next, next.data( '?: any'))
 		sub.push(name.data(')'))
 
 		return name.struct('inline', sub)

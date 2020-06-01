@@ -39,7 +39,7 @@ namespace $ {
 			having.error(`Key arguments must be equal, use ${example}`)
 		)
 
-		const prev = context.has_owner(owner)
+		const prev = context.get_owner(owner)
 
 		if (prev) return this.$mol_fail(owner.error(
 			`Already defined at ${prev.span}`

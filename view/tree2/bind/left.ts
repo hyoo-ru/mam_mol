@@ -41,17 +41,17 @@ namespace $ {
 			)
 		)
 
-		// if (having_parts.key?.data !== owner_parts.key?.data) return this.$mol_fail(
-		// 	having.error(
-		// 		`Key arguments must be equal in having or owner parts, use ${example}`
-		// 	)
-		// )
+		if (having_parts.key && having_parts.key.data !== owner_parts.key?.data) return this.$mol_fail(
+			having.error(
+				`Key arguments must be equal in having or owner parts, use ${example}`
+			)
+		)
 
 		const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined
 
-		if (default_value && ! context.has_owner(owner)) {
+		if (default_value && ! context.get_owner(owner)) {
 			const index = context.index(owner)
-			const method = this.$mol_view_tree2_value_block(owner_parts, context)
+			const method = this.$mol_view_tree2_value_block(owner_parts, context.prefix_root())
 			context.method(index, method)
 		}
 

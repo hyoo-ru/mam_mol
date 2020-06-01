@@ -19,7 +19,7 @@ namespace $ {
 			class_node.error(`Need a valid class name, ${example}`)
 		)
 
-		const context_prefixed = context.clone(factory_parts.name)
+		const context_prefixed = context.prefix_add(factory_parts.name)
 		const obj_node = class_node.data('obj')
 
 		const sub: $mol_tree2[] = [

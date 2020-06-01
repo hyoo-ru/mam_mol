@@ -22,7 +22,7 @@ namespace $ {
 
 		const sub: $mol_tree2[] = []
 
-		const array_context = context.clone()
+		const array_context = context.locale_disable()
 
 		for (const child of operator.kids) {
 			const type = child.type

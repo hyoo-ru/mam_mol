@@ -146,6 +146,33 @@ namespace $ {
 		chain2() {
 			return null as any
 		}
+
+		/**
+		 * ```tree
+		 * arr /
+		 * 	* loc <= loc_outer @ \test localize
+		 * 	* loc <= loc_outer @ \test localize
+		 * ```
+		 */
+		arr() {
+			return [
+				{
+					loc: this.loc_outer(),
+				},
+				{
+					loc: this.loc_outer(),
+				},
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * loc_outer @ \test localize
+		 * ```
+		 */
+		loc_outer() {
+			return this.$.$mol_locale.text( '$mol_view_tree2_test_sample_bind_left_loc_outer' )
+		}
 	}
 
 }

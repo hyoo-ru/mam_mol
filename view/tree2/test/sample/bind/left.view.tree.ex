@@ -10,3 +10,8 @@ $mol_view_tree2_test_sample_bind_left $mol_view
 		some <= twice
 		localized <= localized_owner!key @ \some1
 		chain <= chain1 <= chain2 null
+	arr /
+		*
+			loc <= loc_outer @ \test localize
+		*
+			loc <= loc_outer @ \test localize

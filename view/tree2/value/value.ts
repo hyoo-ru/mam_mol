@@ -17,7 +17,9 @@ namespace $ {
 		if (type === '<=') return this.$mol_view_tree2_bind_left(prop_parts, context)
 		if (type === '<=>') return this.$mol_view_tree2_bind_both(prop_parts, context)
 		if (type === '@') return context.locale_call(prop_parts.name, operator)
-
+		if (type === '=>') return this.$mol_fail(operator.error(
+			`Not allowed here, use ${example}`
+		))
 		const value = this.$mol_view_tree2_literal(operator)
 		if (value) return value
 

@@ -23,7 +23,7 @@ namespace $ {
 			prop.error('Need a `*` operator')
 		)
 
-		const context_prefixed = context.clone(prop_parts.name)
+		const context_prefixed = context.prefix_add(prop_parts.name)
 		const super_spread = new $mol_view_tree2_multiple_spread(this, prop_parts)
 
 		const sub: $mol_tree2[] = []

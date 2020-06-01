@@ -7,12 +7,12 @@ namespace $ {
 		const type = value.type
 
 		if (value.kids.length !== 0) return this.$mol_fail(
-			value.error(`Simple value can\'t have child, use ${example}`)
+			value.error(`Childs not allowed, use ${example}`)
 		)
 
 		if (type === '') return value.data(JSON.stringify(value.value))
 
-		if (type === 'false' || type === 'true') return value.data( type )
+		if (type === 'false' || type === 'true') return value.data(type)
 
 		if (type === 'null') return value.struct('inline', [
 			value.data(value.type),

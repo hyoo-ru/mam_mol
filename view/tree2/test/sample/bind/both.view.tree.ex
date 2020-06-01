@@ -7,3 +7,8 @@ $mol_view_tree2_test_sample_bind_both $mol_view
 		some?val <=> twice?val
 		localized?val <=> localized_owner?val @ \some1
 		chain?v <=> chain1?v <=> chain2?v null
+	arr /
+		*
+			loc?v <=> loc_outer?v @ \test localize
+		*
+			loc?v <=> loc_outer?v @ \test localize

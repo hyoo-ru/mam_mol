@@ -7,7 +7,7 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		writable(val: any) {
+		writable(val?: any) {
 			if ( val !== undefined ) return val
 			return this.writable_owner(val)
 		}
@@ -18,7 +18,7 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		writable_default(val: any) {
+		writable_default(val?: any) {
 			if ( val !== undefined ) return val
 			return this.writable_default_owner(val)
 		}
@@ -29,7 +29,7 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		writable_default_owner(val: any) {
+		writable_default_owner(val?: any) {
 			if ( val !== undefined ) return val
 			return null as any
 		}
@@ -40,7 +40,7 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		class(val: any) {
+		class(val?: any) {
 			if ( val !== undefined ) return val
 			return this.class_owner(val)
 		}
@@ -51,7 +51,7 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		class_owner(val: any) {
+		class_owner(val?: any) {
 			if ( val !== undefined ) return val
 			const obj = new this.$.$mol_view()
 
@@ -77,7 +77,7 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		class_writable(val: any) {
+		class_writable(val?: any) {
 			if ( val !== undefined ) return val
 			return this.class_writable_owner(val)
 		}
@@ -91,13 +91,13 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		class_writable_owner(val: any) {
+		class_writable_owner(val?: any) {
 			if ( val !== undefined ) return val
 			const obj = new this.$.$mol_view()
 
-			obj.some = (val: any) => this.twice(val)
-			obj.localized = (val: any) => this.localized_owner(val)
-			obj.chain = (v: any) => this.chain1(v)
+			obj.some = (val?: any) => this.twice(val)
+			obj.localized = (val?: any) => this.localized_owner(val)
+			obj.chain = (v?: any) => this.chain1(v)
 
 			return obj
 		}
@@ -108,7 +108,7 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		localized_owner(val: any) {
+		localized_owner(val?: any) {
 			if ( val !== undefined ) return val
 			return this.$.$mol_locale.text( '$mol_view_tree2_test_sample_bind_both_localized_owner' )
 		}
@@ -119,7 +119,7 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		chain1(v: any) {
+		chain1(v?: any) {
 			if ( v !== undefined ) return v
 			return this.chain2(v)
 		}
@@ -130,9 +130,38 @@ namespace $ {
 		 * ```
 		 */
 		@ $mol_mem
-		chain2(v: any) {
+		chain2(v?: any) {
 			if ( v !== undefined ) return v
 			return null as any
+		}
+
+		/**
+		 * ```tree
+		 * arr /
+		 * 	* loc?v <=> loc_outer?v @ \test localize
+		 * 	* loc?v <=> loc_outer?v @ \test localize
+		 * ```
+		 */
+		arr() {
+			return [
+				{
+					loc: (v?: any) => this.loc_outer(v),
+				},
+				{
+					loc: (v?: any) => this.loc_outer(v),
+				},
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * loc_outer?v @ \test localize
+		 * ```
+		 */
+		@ $mol_mem
+		loc_outer(v?: any) {
+			if ( v !== undefined ) return v
+			return this.$.$mol_locale.text( '$mol_view_tree2_test_sample_bind_both_loc_outer' )
 		}
 	}
 
