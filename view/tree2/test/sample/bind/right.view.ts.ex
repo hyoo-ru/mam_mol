@@ -14,7 +14,6 @@ namespace $ {
 		Cls() {
 			const obj = new this.$.$mol_view()
 
-
 			return obj
 		}
 
@@ -71,7 +70,6 @@ namespace $ {
 		@ $mol_mem
 		Cls2() {
 			const obj = new this.$.$mol_view()
-
 
 			return obj
 		}

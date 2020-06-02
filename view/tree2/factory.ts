@@ -33,6 +33,8 @@ namespace $ {
 			class_node.data(''),
 		]
 
+		const sub_length = sub.length
+
 		for (const child of class_node.kids) {
 			if (child.type === '-') {
 				sub.push($mol_view_tree2_comment(child))
@@ -81,8 +83,11 @@ namespace $ {
 			sub.push(call)
 		}
 
-		sub.push(
+		if (sub_length !== sub.length) sub.push(
 			class_node.data(''),
+		)
+
+		sub.push(
 			class_node.struct('inline', [
 				class_node.data('return '),
 				obj_node

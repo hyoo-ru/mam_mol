@@ -55,6 +55,26 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * indexed!key?val <=> indexed_owner!key?val null
+		 * ```
+		 */
+		indexed(key: any, val?: any) {
+			return this.indexed_owner(key, val)
+		}
+
+		/**
+		 * ```tree
+		 * indexed_owner!key?val null
+		 * ```
+		 */
+		@ $mol_mem_key
+		indexed_owner(key: any, val?: any) {
+			if ( val !== undefined ) return val
+			return null as any
+		}
+
+		/**
+		 * ```tree
 		 * twice null
 		 * ```
 		 */

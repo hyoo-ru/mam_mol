@@ -73,7 +73,6 @@ namespace $ {
 		class_owner() {
 			const obj = new this.$.$mol_view()
 
-
 			return obj
 		}
 
