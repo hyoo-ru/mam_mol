@@ -6,9 +6,7 @@ namespace $ {
 		 * writable?val <=> writable_owner?val
 		 * ```
 		 */
-		@ $mol_mem
 		writable(val?: any) {
-			if ( val !== undefined ) return val
 			return this.writable_owner(val)
 		}
 
@@ -17,9 +15,7 @@ namespace $ {
 		 * writable_default?val <=> writable_default_owner?val null
 		 * ```
 		 */
-		@ $mol_mem
 		writable_default(val?: any) {
-			if ( val !== undefined ) return val
 			return this.writable_default_owner(val)
 		}
 
@@ -39,9 +35,7 @@ namespace $ {
 		 * class?val <=> class_owner?val $mol_view
 		 * ```
 		 */
-		@ $mol_mem
 		class(val?: any) {
-			if ( val !== undefined ) return val
 			return this.class_owner(val)
 		}
 
@@ -76,9 +70,7 @@ namespace $ {
 		 * 	chain?v <=> chain1?v <=> chain2?v null
 		 * ```
 		 */
-		@ $mol_mem
 		class_writable(val?: any) {
-			if ( val !== undefined ) return val
 			return this.class_writable_owner(val)
 		}
 
@@ -118,9 +110,7 @@ namespace $ {
 		 * chain1?v <=> chain2?v null
 		 * ```
 		 */
-		@ $mol_mem
 		chain1(v?: any) {
-			if ( v !== undefined ) return v
 			return this.chain2(v)
 		}
 

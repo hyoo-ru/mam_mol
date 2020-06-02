@@ -5,8 +5,15 @@ namespace $ {
 		body: $mol_tree2,
 	) {
 		const { name, key, next, src } = owner_parts
-		const is_class = src.kids.length === 1 ? src.kids[0].type[0] === '$' : false
-		const need_cache = next !== undefined || is_class
+		const operator = src.kids.length === 1 ? src.kids[0] : undefined
+		const type = operator?.type
+		const is_class = type && type[0] === '$'
+		const is_delegate = type === '<=' || type === '<=>'
+
+		let need_cache = false
+		if (is_delegate) need_cache = false
+		else if (next !== undefined) need_cache = true
+		else if (is_class) need_cache = true
 
 		const sub: $mol_tree2[] = [
 			$mol_view_tree2_comment_doc(src),
@@ -23,7 +30,7 @@ namespace $ {
 			])
 		)
 
-		if (next) sub.push(
+		if (next && need_cache) sub.push(
 			next.struct('block', [
 				next.struct('inline', [
 					next.data('if ( '),
