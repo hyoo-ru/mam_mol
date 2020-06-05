@@ -1061,41 +1061,38 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let $mol_object2 = (() => {
-        var _a;
-        class $mol_object2 {
-            constructor(init) {
-                this[_a] = null;
-                if (init)
-                    init(this);
-            }
-            get $() {
-                if (this[$.$mol_ambient_ref])
-                    return this[$.$mol_ambient_ref];
-                const owner = $.$mol_owning_get(this);
-                return this[$.$mol_ambient_ref] = (owner === null || owner === void 0 ? void 0 : owner.$) || $mol_object2.$;
-            }
-            set $(next) {
-                if (this[$.$mol_ambient_ref])
-                    $.$mol_fail_hidden(new Error('Context already defined'));
-                this[$.$mol_ambient_ref] = next;
-            }
-            static create(init) {
-                return new this(init);
-            }
-            static toString() { return this[Symbol.toStringTag] || this.name; }
-            destructor() { }
-            toString() {
-                return this[Symbol.toStringTag] || this.constructor.name + '()';
-            }
-            toJSON() {
-                return this.toString();
-            }
+    var _a;
+    class $mol_object2 {
+        constructor(init) {
+            this[_a] = null;
+            if (init)
+                init(this);
         }
-        _a = $.$mol_ambient_ref;
-        $mol_object2.$ = $;
-        return $mol_object2;
-    })();
+        get $() {
+            if (this[$.$mol_ambient_ref])
+                return this[$.$mol_ambient_ref];
+            const owner = $.$mol_owning_get(this);
+            return this[$.$mol_ambient_ref] = (owner === null || owner === void 0 ? void 0 : owner.$) || $mol_object2.$;
+        }
+        set $(next) {
+            if (this[$.$mol_ambient_ref])
+                $.$mol_fail_hidden(new Error('Context already defined'));
+            this[$.$mol_ambient_ref] = next;
+        }
+        static create(init) {
+            return new this(init);
+        }
+        static toString() { return this[Symbol.toStringTag] || this.name; }
+        destructor() { }
+        toString() {
+            return this[Symbol.toStringTag] || this.constructor.name + '()';
+        }
+        toJSON() {
+            return this.toString();
+        }
+    }
+    _a = $.$mol_ambient_ref;
+    $mol_object2.$ = $;
     $.$mol_object2 = $mol_object2;
 })($ || ($ = {}));
 //object2.js.map
@@ -1170,29 +1167,23 @@ var $;
             $.$mol_assert_equal(obj.pow(2), 5);
         },
         'decorate field getter'() {
-            let Plus1 = (() => {
-                class Plus1 extends $.$mol_wrapper {
-                    static wrap(task) {
-                        return function (...args) {
-                            return Plus1.last = (task.call(this, ...args) || 0) + 1;
-                        };
-                    }
+            class Plus1 extends $.$mol_wrapper {
+                static wrap(task) {
+                    return function (...args) {
+                        return Plus1.last = (task.call(this, ...args) || 0) + 1;
+                    };
                 }
-                Plus1.last = 0;
-                return Plus1;
-            })();
-            let Foo = (() => {
-                class Foo {
-                    static get two() {
-                        return 1;
-                    }
-                    static set two(next) { }
+            }
+            Plus1.last = 0;
+            class Foo {
+                static get two() {
+                    return 1;
                 }
-                __decorate([
-                    Plus1.field
-                ], Foo, "two", null);
-                return Foo;
-            })();
+                static set two(next) { }
+            }
+            __decorate([
+                Plus1.field
+            ], Foo, "two", null);
             $.$mol_assert_equal(Foo.two, 2);
             Foo.two = 3;
             $.$mol_assert_equal(Plus1.last, 2);
@@ -1206,20 +1197,17 @@ var $;
                     };
                 }
             }
-            let Foo1 = (() => {
-                class Foo1 {
-                    constructor() {
-                        this.level = 2;
-                    }
-                    pow(a) {
-                        return a ** this.level;
-                    }
+            class Foo1 {
+                constructor() {
+                    this.level = 2;
                 }
-                __decorate([
-                    Plus1.method
-                ], Foo1.prototype, "pow", null);
-                return Foo1;
-            })();
+                pow(a) {
+                    return a ** this.level;
+                }
+            }
+            __decorate([
+                Plus1.method
+            ], Foo1.prototype, "pow", null);
             const Foo2 = Foo1;
             const foo = new Foo2;
             $.$mol_assert_equal(foo.pow(2), 5);
@@ -1232,18 +1220,15 @@ var $;
                     };
                 }
             }
-            let Foo = (() => {
-                class Foo {
-                    static pow(a) {
-                        return a ** this.level;
-                    }
+            class Foo {
+                static pow(a) {
+                    return a ** this.level;
                 }
-                Foo.level = 2;
-                __decorate([
-                    Plus1.method
-                ], Foo, "pow", null);
-                return Foo;
-            })();
+            }
+            Foo.level = 2;
+            __decorate([
+                Plus1.method
+            ], Foo, "pow", null);
             $.$mol_assert_equal(Foo.pow(2), 5);
         },
         'decorate class'() {
@@ -1256,17 +1241,14 @@ var $;
                     };
                 }
             }
-            let Foo = (() => {
-                let Foo = class Foo {
-                    constructor(bar) {
-                        this.bar = bar;
-                    }
-                };
-                Foo = __decorate([
-                    BarInc.class
-                ], Foo);
-                return Foo;
-            })();
+            let Foo = class Foo {
+                constructor(bar) {
+                    this.bar = bar;
+                }
+            };
+            Foo = __decorate([
+                BarInc.class
+            ], Foo);
             $.$mol_assert_equal(new Foo(2).bar, 3);
         },
     });
@@ -1892,254 +1874,251 @@ var $;
         }
     }
     $.$mol_fiber_solid = $mol_fiber_solid;
-    let $mol_fiber = (() => {
-        class $mol_fiber extends $.$mol_wrapper {
-            constructor() {
-                super(...arguments);
-                this.value = undefined;
-                this.error = null;
-                this.cursor = 0;
-                this.masters = [];
+    class $mol_fiber extends $.$mol_wrapper {
+        constructor() {
+            super(...arguments);
+            this.value = undefined;
+            this.error = null;
+            this.cursor = 0;
+            this.masters = [];
+        }
+        static wrap(task) {
+            return function $mol_fiber_wrapper(...args) {
+                const slave = $mol_fiber.current;
+                let master = slave && slave.master;
+                if (!master || master.constructor !== $mol_fiber) {
+                    master = new $mol_fiber;
+                    master.calculate = task.bind(this, ...args);
+                    const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
+                    master[Symbol.toStringTag] = `${prefix}${task.name}`;
+                }
+                return master.get();
+            };
+        }
+        static async tick() {
+            while ($mol_fiber.queue.length > 0) {
+                const now = Date.now();
+                if (now >= $mol_fiber.deadline) {
+                    $mol_fiber.schedule();
+                    $mol_fiber.liveline = now;
+                    return;
+                }
+                const task = $mol_fiber.queue.shift();
+                await task();
             }
-            static wrap(task) {
-                return function $mol_fiber_wrapper(...args) {
-                    const slave = $mol_fiber.current;
-                    let master = slave && slave.master;
-                    if (!master || master.constructor !== $mol_fiber) {
-                        master = new $mol_fiber;
-                        master.calculate = task.bind(this, ...args);
-                        const prefix = slave ? `${slave}/${slave.cursor / 2}:` : '/';
-                        master[Symbol.toStringTag] = `${prefix}${task.name}`;
-                    }
-                    return master.get();
-                };
-            }
-            static async tick() {
-                while ($mol_fiber.queue.length > 0) {
+        }
+        static schedule() {
+            if (!$mol_fiber.scheduled) {
+                $mol_fiber.scheduled = new $.$mol_after_tick(async () => {
                     const now = Date.now();
-                    if (now >= $mol_fiber.deadline) {
-                        $mol_fiber.schedule();
-                        $mol_fiber.liveline = now;
-                        return;
+                    let quant = $mol_fiber.quant;
+                    if ($mol_fiber.liveline) {
+                        quant = Math.max(quant, Math.floor((now - $mol_fiber.liveline) / 2));
+                        $mol_fiber.liveline = 0;
                     }
-                    const task = $mol_fiber.queue.shift();
-                    await task();
-                }
-            }
-            static schedule() {
-                if (!$mol_fiber.scheduled) {
-                    $mol_fiber.scheduled = new $.$mol_after_tick(async () => {
-                        const now = Date.now();
-                        let quant = $mol_fiber.quant;
-                        if ($mol_fiber.liveline) {
-                            quant = Math.max(quant, Math.floor((now - $mol_fiber.liveline) / 2));
-                            $mol_fiber.liveline = 0;
-                        }
-                        $mol_fiber.deadline = now + quant;
-                        $mol_fiber.scheduled = null;
-                        await $mol_fiber.tick();
-                    });
-                }
-                const promise = new this.$.Promise(done => this.queue.push(() => (done(), promise)));
-                return promise;
-            }
-            schedule() {
-                $mol_fiber.schedule().then(() => this.wake());
-            }
-            wake() {
-                const unscoupe = this.$.$mol_log3_area_lazy({
-                    place: this,
-                    message: 'Wake'
+                    $mol_fiber.deadline = now + quant;
+                    $mol_fiber.scheduled = null;
+                    await $mol_fiber.tick();
                 });
-                try {
-                    if (this.cursor > -2)
-                        return this.get();
-                }
-                catch (error) {
-                    if ('then' in error)
-                        return;
-                    $.$mol_fail_hidden(error);
-                }
-                finally {
-                    unscoupe();
-                }
             }
-            push(value) {
-                value = this.$.$mol_conform(value, this.value);
-                if (this.error || !Object.is(this.value, value)) {
-                    if ($mol_fiber.logs)
-                        this.$.$mol_log3_done({
-                            place: this,
-                            message: 'Changed',
-                            next: value,
-                            value: this.value,
-                            error: this.error,
-                        });
-                    this.obsolete_slaves();
-                    this.forget();
-                }
-                else {
-                    if ($mol_fiber.logs)
-                        this.$.$mol_log3_done({
-                            place: this,
-                            message: 'Same value',
-                            value,
-                        });
-                }
-                this.error = null;
-                this.value = value;
-                this.complete();
-                return value;
-            }
-            fail(error) {
-                this.complete();
-                if ($mol_fiber.logs)
-                    this.$.$mol_log3_fail({
-                        place: this,
-                        message: error.message,
-                    });
-                this.error = error;
-                this.obsolete_slaves();
-                return error;
-            }
-            wait(promise) {
-                this.error = promise;
-                if ($mol_fiber.logs)
-                    this.$.$mol_log3_warn({
-                        place: this,
-                        message: `Wait`,
-                        hint: `Don't panic, it's normal`,
-                        promise,
-                    });
-                this.cursor = 0;
-                return promise;
-            }
-            complete() {
-                if (this.cursor <= -2)
-                    return;
-                for (let index = 0; index < this.masters.length; index += 2) {
-                    this.complete_master(index);
-                }
-                this.cursor = -2;
-            }
-            complete_master(master_index) {
-                this.disobey(master_index);
-            }
-            pull() {
-                if ($mol_fiber.logs)
-                    this.$.$mol_log3_come({
-                        place: this,
-                        message: 'Pull',
-                    });
-                this.push(this.calculate());
-            }
-            update() {
-                const slave = $mol_fiber.current;
-                try {
-                    $mol_fiber.current = this;
-                    this.pull();
-                }
-                catch (error) {
-                    if ('then' in error) {
-                        if (!slave) {
-                            const listener = () => this.wake();
-                            error = error.then(listener, listener);
-                        }
-                        this.wait(error);
-                    }
-                    else {
-                        this.fail(error);
-                    }
-                }
-                finally {
-                    $mol_fiber.current = slave;
-                }
-            }
-            get() {
-                if (this.cursor > 0) {
-                    this.$.$mol_fail(new Error(`Cyclic dependency at ${this}`));
-                }
-                const slave = $mol_fiber.current;
-                if (slave)
-                    slave.master = this;
+            const promise = new this.$.Promise(done => this.queue.push(() => (done(), promise)));
+            return promise;
+        }
+        schedule() {
+            $mol_fiber.schedule().then(() => this.wake());
+        }
+        wake() {
+            const unscoupe = this.$.$mol_log3_area_lazy({
+                place: this,
+                message: 'Wake'
+            });
+            try {
                 if (this.cursor > -2)
-                    this.update();
-                if (this.error)
-                    return this.$.$mol_fail_hidden(this.error);
-                return this.value;
+                    return this.get();
             }
-            limit() {
-                if (!$mol_fiber.deadline)
+            catch (error) {
+                if ('then' in error)
                     return;
-                if (!$mol_fiber.current)
-                    return;
-                if (Date.now() < $mol_fiber.deadline)
-                    return;
-                this.$.$mol_fail_hidden($mol_fiber.schedule());
+                $.$mol_fail_hidden(error);
             }
-            get master() {
-                return this.masters[this.cursor];
+            finally {
+                unscoupe();
             }
-            set master(next) {
-                if (this.cursor === -1)
-                    return;
-                const cursor = this.cursor;
-                const prev = this.masters[this.cursor];
-                if (prev !== next) {
-                    if (prev)
-                        this.rescue(prev, cursor);
-                    this.masters[cursor] = next;
-                    this.masters[cursor + 1] = this.obey(next, cursor);
-                }
-                this.cursor = cursor + 2;
-            }
-            rescue(master, master_index) { }
-            obey(master, master_index) { return -1; }
-            lead(slave, master_index) { return -1; }
-            dislead(slave_index) {
-                this.destructor();
-            }
-            disobey(master_index) {
-                const master = this.masters[master_index];
-                if (!master)
-                    return;
-                master.dislead(this.masters[master_index + 1]);
-                this.masters[master_index] = undefined;
-                this.masters[master_index + 1] = undefined;
-                this.$.$mol_array_trim(this.masters);
-            }
-            obsolete_slaves() { }
-            obsolete(master_index) { }
-            forget() {
-                this.value = undefined;
-            }
-            abort() {
-                this.forget();
-                return true;
-            }
-            destructor() {
-                if (!this.abort())
-                    return;
+        }
+        push(value) {
+            value = this.$.$mol_conform(value, this.value);
+            if (this.error || !Object.is(this.value, value)) {
                 if ($mol_fiber.logs)
                     this.$.$mol_log3_done({
                         place: this,
-                        message: 'Destructed',
+                        message: 'Changed',
+                        next: value,
+                        value: this.value,
+                        error: this.error,
                     });
-                this.complete();
+                this.obsolete_slaves();
+                this.forget();
             }
-            [$.$mol_dev_format_head]() {
-                return $.$mol_dev_format_native(this);
+            else {
+                if ($mol_fiber.logs)
+                    this.$.$mol_log3_done({
+                        place: this,
+                        message: 'Same value',
+                        value,
+                    });
+            }
+            this.error = null;
+            this.value = value;
+            this.complete();
+            return value;
+        }
+        fail(error) {
+            this.complete();
+            if ($mol_fiber.logs)
+                this.$.$mol_log3_fail({
+                    place: this,
+                    message: error.message,
+                });
+            this.error = error;
+            this.obsolete_slaves();
+            return error;
+        }
+        wait(promise) {
+            this.error = promise;
+            if ($mol_fiber.logs)
+                this.$.$mol_log3_warn({
+                    place: this,
+                    message: `Wait`,
+                    hint: `Don't panic, it's normal`,
+                    promise,
+                });
+            this.cursor = 0;
+            return promise;
+        }
+        complete() {
+            if (this.cursor <= -2)
+                return;
+            for (let index = 0; index < this.masters.length; index += 2) {
+                this.complete_master(index);
+            }
+            this.cursor = -2;
+        }
+        complete_master(master_index) {
+            this.disobey(master_index);
+        }
+        pull() {
+            if ($mol_fiber.logs)
+                this.$.$mol_log3_come({
+                    place: this,
+                    message: 'Pull',
+                });
+            this.push(this.calculate());
+        }
+        update() {
+            const slave = $mol_fiber.current;
+            try {
+                $mol_fiber.current = this;
+                this.pull();
+            }
+            catch (error) {
+                if ('then' in error) {
+                    if (!slave) {
+                        const listener = () => this.wake();
+                        error = error.then(listener, listener);
+                    }
+                    this.wait(error);
+                }
+                else {
+                    this.fail(error);
+                }
+            }
+            finally {
+                $mol_fiber.current = slave;
             }
         }
-        $mol_fiber.logs = false;
-        $mol_fiber.quant = 16;
-        $mol_fiber.deadline = 0;
-        $mol_fiber.liveline = 0;
-        $mol_fiber.current = null;
-        $mol_fiber.scheduled = null;
-        $mol_fiber.queue = [];
-        return $mol_fiber;
-    })();
+        get() {
+            if (this.cursor > 0) {
+                this.$.$mol_fail(new Error(`Cyclic dependency at ${this}`));
+            }
+            const slave = $mol_fiber.current;
+            if (slave)
+                slave.master = this;
+            if (this.cursor > -2)
+                this.update();
+            if (this.error)
+                return this.$.$mol_fail_hidden(this.error);
+            return this.value;
+        }
+        limit() {
+            if (!$mol_fiber.deadline)
+                return;
+            if (!$mol_fiber.current)
+                return;
+            if (Date.now() < $mol_fiber.deadline)
+                return;
+            this.$.$mol_fail_hidden($mol_fiber.schedule());
+        }
+        get master() {
+            return this.masters[this.cursor];
+        }
+        set master(next) {
+            if (this.cursor === -1)
+                return;
+            const cursor = this.cursor;
+            const prev = this.masters[this.cursor];
+            if (prev !== next) {
+                if (prev)
+                    this.rescue(prev, cursor);
+                this.masters[cursor] = next;
+                this.masters[cursor + 1] = this.obey(next, cursor);
+            }
+            this.cursor = cursor + 2;
+        }
+        rescue(master, master_index) { }
+        obey(master, master_index) { return -1; }
+        lead(slave, master_index) { return -1; }
+        dislead(slave_index) {
+            this.destructor();
+        }
+        disobey(master_index) {
+            const master = this.masters[master_index];
+            if (!master)
+                return;
+            master.dislead(this.masters[master_index + 1]);
+            this.masters[master_index] = undefined;
+            this.masters[master_index + 1] = undefined;
+            this.$.$mol_array_trim(this.masters);
+        }
+        obsolete_slaves() { }
+        obsolete(master_index) { }
+        forget() {
+            this.value = undefined;
+        }
+        abort() {
+            this.forget();
+            return true;
+        }
+        destructor() {
+            if (!this.abort())
+                return;
+            if ($mol_fiber.logs)
+                this.$.$mol_log3_done({
+                    place: this,
+                    message: 'Destructed',
+                });
+            this.complete();
+        }
+        [$.$mol_dev_format_head]() {
+            return $.$mol_dev_format_native(this);
+        }
+    }
+    $mol_fiber.logs = false;
+    $mol_fiber.quant = 16;
+    $mol_fiber.deadline = 0;
+    $mol_fiber.liveline = 0;
+    $mol_fiber.current = null;
+    $mol_fiber.scheduled = null;
+    $mol_fiber.queue = [];
     $.$mol_fiber = $mol_fiber;
 })($ || ($ = {}));
 //fiber.js.map
@@ -2147,54 +2126,51 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let $mol_defer = (() => {
-        class $mol_defer extends $.$mol_object {
-            constructor(run) {
-                super();
-                this.run = run;
-                $mol_defer.add(this);
-            }
-            destructor() {
-                $mol_defer.drop(this);
-            }
-            static schedule() {
-                if (this.timer)
-                    return;
-                this.timer = this.scheduleNative(() => {
-                    this.timer = null;
-                    this.run();
-                });
-            }
-            static unschedule() {
-                if (!this.timer)
-                    return;
-                cancelAnimationFrame(this.timer);
-                this.timer = null;
-            }
-            static add(defer) {
-                this.all.push(defer);
-                this.schedule();
-            }
-            static drop(defer) {
-                var index = this.all.indexOf(defer);
-                if (index >= 0)
-                    this.all.splice(index, 1);
-            }
-            static run() {
-                if (this.all.length === 0)
-                    return;
-                this.schedule();
-                for (var defer; defer = this.all.shift();)
-                    defer.run();
-            }
+    class $mol_defer extends $.$mol_object {
+        constructor(run) {
+            super();
+            this.run = run;
+            $mol_defer.add(this);
         }
-        $mol_defer.all = [];
-        $mol_defer.timer = null;
-        $mol_defer.scheduleNative = (typeof requestAnimationFrame == 'function')
-            ? handler => requestAnimationFrame(handler)
-            : handler => setTimeout(handler, 16);
-        return $mol_defer;
-    })();
+        destructor() {
+            $mol_defer.drop(this);
+        }
+        static schedule() {
+            if (this.timer)
+                return;
+            this.timer = this.scheduleNative(() => {
+                this.timer = null;
+                this.run();
+            });
+        }
+        static unschedule() {
+            if (!this.timer)
+                return;
+            cancelAnimationFrame(this.timer);
+            this.timer = null;
+        }
+        static add(defer) {
+            this.all.push(defer);
+            this.schedule();
+        }
+        static drop(defer) {
+            var index = this.all.indexOf(defer);
+            if (index >= 0)
+                this.all.splice(index, 1);
+        }
+        static run() {
+            if (this.all.length === 0)
+                return;
+            this.schedule();
+            for (var defer; defer = this.all.shift();)
+                defer.run();
+        }
+    }
+    $mol_defer.all = [];
+    $mol_defer.timer = null;
+    $mol_defer.scheduleNative = (typeof requestAnimationFrame == 'function')
+        ? handler => requestAnimationFrame(handler)
+        : handler => setTimeout(handler, 16);
     $.$mol_defer = $mol_defer;
 })($ || ($ = {}));
 //defer.js.map
@@ -2230,172 +2206,145 @@ var $;
 (function ($_1) {
     $_1.$mol_test({
         'Value has js-path name'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get title() { return new $_1.$mol_object2; }
-                }
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "title", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static get title() { return new $_1.$mol_object2; }
+            }
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "title", null);
             $_1.$mol_assert_equal(`${App.title}`, 'App.title');
         },
         'Simple property'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                }
-                App.value = 1;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "value", void 0);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+            }
+            App.value = 1;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "value", void 0);
             $_1.$mol_assert_equal(App.value, 1);
             App.value = 2;
             $_1.$mol_assert_equal(App.value, 2);
         },
         'Instant actualization'() {
-            let Source = (() => {
-                class Source extends $_1.$mol_object2 {
-                    constructor() {
-                        super(...arguments);
-                        this.value = 1;
-                    }
+            class Source extends $_1.$mol_object2 {
+                constructor() {
+                    super(...arguments);
+                    this.value = 1;
                 }
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], Source.prototype, "value", void 0);
-                return Source;
-            })();
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get source() { return Source.create(); }
-                    static get value() { return this.source.value + 1; }
-                }
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "source", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "value", null);
-                return App;
-            })();
+            }
+            __decorate([
+                $_1.$mol_atom2_field
+            ], Source.prototype, "value", void 0);
+            class App extends $_1.$mol_object2 {
+                static get source() { return Source.create(); }
+                static get value() { return this.source.value + 1; }
+            }
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "source", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "value", null);
             $_1.$mol_assert_equal(App.value, 2);
             App.source.value = 2;
             $_1.$mol_assert_equal(App.value, 3);
         },
         'Access to cached value'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get value() { return 1; }
-                }
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "value", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static get value() { return 1; }
+            }
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "value", null);
             $_1.$mol_assert_equal($_1.$mol_atom2_value(() => App.value), undefined);
             $_1.$mol_assert_equal(App.value, 1);
             $_1.$mol_assert_equal($_1.$mol_atom2_value(() => App.value), 1);
         },
         'Do not recalc slaves on equal changes'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get result() { return this.first[0] + this.counter++; }
-                }
-                App.first = [1];
-                App.counter = 0;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static get result() { return this.first[0] + this.counter++; }
+            }
+            App.first = [1];
+            App.counter = 0;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 1);
             App.first = [1];
             $_1.$mol_assert_equal(App.result, 1);
         },
         'Do not recalc grand slave on equal direct slave result '() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get second() { return Math.abs(this.first); }
-                    static get result() { return this.second + ++this.counter; }
-                }
-                App.first = 1;
-                App.counter = 0;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "second", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static get second() { return Math.abs(this.first); }
+                static get result() { return this.second + ++this.counter; }
+            }
+            App.first = 1;
+            App.counter = 0;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "second", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 2);
             App.first = -1;
             $_1.$mol_assert_equal(App.result, 2);
         },
         'Recalc when [not changed master] changes [following master]'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get second() {
-                        this.third = this.first;
-                        return 0;
-                    }
-                    static get result() { return this.second + this.third + ++this.counter; }
+            class App extends $_1.$mol_object2 {
+                static get second() {
+                    this.third = this.first;
+                    return 0;
                 }
-                App.first = 1;
-                App.third = 0;
-                App.counter = 0;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "second", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "third", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+                static get result() { return this.second + this.third + ++this.counter; }
+            }
+            App.first = 1;
+            App.third = 0;
+            App.counter = 0;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "second", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "third", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 2);
             App.first = 5;
             $_1.$mol_assert_equal(App.result, 7);
         },
         'Branch switching'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get second() { return 2; }
-                    static get result() {
-                        return (this.condition ? this.first : this.second) + this.counter++;
-                    }
+            class App extends $_1.$mol_object2 {
+                static get second() { return 2; }
+                static get result() {
+                    return (this.condition ? this.first : this.second) + this.counter++;
                 }
-                App.first = 1;
-                App.condition = true;
-                App.counter = 0;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "second", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "condition", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            }
+            App.first = 1;
+            App.condition = true;
+            App.counter = 0;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "second", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "condition", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 1);
             App.condition = false;
             $_1.$mol_assert_equal(App.result, 3);
@@ -2403,85 +2352,73 @@ var $;
             $_1.$mol_assert_equal(App.result, 3);
         },
         'Forbidden self invalidation'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get second() { return this.first + 1; }
-                    static get result() {
-                        this.second;
-                        return this.first++;
-                    }
+            class App extends $_1.$mol_object2 {
+                static get second() { return this.first + 1; }
+                static get result() {
+                    this.second;
+                    return this.first++;
                 }
-                App.first = 1;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "second", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            }
+            App.first = 1;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "second", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_fail(() => App.result);
         },
         'Side effect inside computation'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static increase() { return ++this.first; }
-                    static get result() {
-                        return this.increase() + 1;
-                    }
+            class App extends $_1.$mol_object2 {
+                static increase() { return ++this.first; }
+                static get result() {
+                    return this.increase() + 1;
                 }
-                App.first = 1;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_fiber.method
-                ], App, "increase", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            }
+            App.first = 1;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_fiber.method
+            ], App, "increase", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 3);
         },
         'Forbidden cyclic dependency'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get first() { return this.second - 1; }
-                    static get second() { return this.first + 1; }
-                }
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "second", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static get first() { return this.second - 1; }
+                static get second() { return this.first + 1; }
+            }
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "second", null);
             $_1.$mol_assert_fail(() => App.first);
         },
         'Forget sub fibers on complete'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static count() { return this.counter++; }
-                    static get result() { return this.count() + this.data; }
-                }
-                App.counter = 0;
-                App.data = 1;
-                __decorate([
-                    $_1.$mol_fiber.method
-                ], App, "count", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "data", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static count() { return this.counter++; }
+                static get result() { return this.count() + this.data; }
+            }
+            App.counter = 0;
+            App.data = 1;
+            __decorate([
+                $_1.$mol_fiber.method
+            ], App, "count", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "data", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 1);
             App.data = 2;
             $_1.$mol_assert_equal(App.result, 3);
@@ -2491,27 +2428,24 @@ var $;
             class Having extends $_1.$mol_object2 {
                 destructor() { counter++; }
             }
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get having() { return Having.create(); }
-                    static get result() {
-                        if (this.condition)
-                            this.having;
-                        return 0;
-                    }
+            class App extends $_1.$mol_object2 {
+                static get having() { return Having.create(); }
+                static get result() {
+                    if (this.condition)
+                        this.having;
+                    return 0;
                 }
-                App.condition = true;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "having", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "condition", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            }
+            App.condition = true;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "having", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "condition", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             App.result;
             App.condition = false;
             App.result;
@@ -2520,24 +2454,21 @@ var $;
             $_1.$mol_assert_equal(counter, 1);
         },
         async 'Do not destroy putted value'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get target() {
-                        return this.condition ? this.source : 0;
-                    }
+            class App extends $_1.$mol_object2 {
+                static get target() {
+                    return this.condition ? this.source : 0;
                 }
-                App.condition = true;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "source", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "condition", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "target", null);
-                return App;
-            })();
+            }
+            App.condition = true;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "source", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "condition", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "target", null);
             App.source = 1;
             $_1.$mol_assert_equal(App.target, 1);
             App.condition = false;
@@ -2547,27 +2478,24 @@ var $;
             $_1.$mol_assert_equal(App.target, 1);
         },
         'Restore after error'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get broken() {
-                        if (this.condition)
-                            $_1.$mol_fail(new Error('test error'));
-                        return 1;
-                    }
-                    static get result() { return this.broken; }
+            class App extends $_1.$mol_object2 {
+                static get broken() {
+                    if (this.condition)
+                        $_1.$mol_fail(new Error('test error'));
+                    return 1;
                 }
-                App.condition = false;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "condition", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "broken", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+                static get result() { return this.broken; }
+            }
+            App.condition = false;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "condition", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "broken", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 1);
             App.condition = true;
             $_1.$mol_assert_fail(() => App.result);
@@ -2612,256 +2540,253 @@ var $;
         }
     }
     $.$mol_atom2_value = $mol_atom2_value;
-    let $mol_atom2 = (() => {
-        class $mol_atom2 extends $.$mol_fiber {
-            constructor() {
-                super(...arguments);
-                this.slaves = [];
-                this._value = undefined;
-                this._error = null;
-            }
-            static get current() {
-                const atom = $.$mol_fiber.current;
-                if (atom instanceof $mol_atom2)
-                    return atom;
-                return null;
-            }
-            static reap(atom) {
-                this.reap_queue.push(atom);
-                if (this.reap_task)
-                    return;
-                this.reap_task = $.$mol_fiber_defer(() => {
-                    this.reap_task = null;
-                    while (true) {
-                        const atom = this.reap_queue.pop();
-                        if (!atom)
-                            break;
-                        if (!atom.alone)
-                            continue;
-                        atom.destructor();
-                    }
-                });
-            }
-            rescue(master, cursor) {
-                if (!(master instanceof $mol_atom2))
-                    return;
-                const master_index = this.masters.length;
-                const slave_index = this.masters[cursor + 1] + 1;
-                master.slaves[slave_index] = master_index;
-                this.masters.push(master, this.masters[cursor + 1]);
-            }
-            get() {
-                if ($mol_atom2.cached)
-                    return this.value;
-                const value = super.get();
-                if (value === undefined)
-                    $.$mol_fail(new Error(`Not defined: ${this}`));
-                return value;
-            }
-            pull() {
-                if (this.cursor === 0)
-                    return super.pull();
-                if ($mol_atom2.logs)
-                    this.$.$mol_log3_come({
-                        place: this,
-                        message: 'Check doubt masters',
-                    });
-                const masters = this.masters;
-                for (let index = 0; index < masters.length; index += 2) {
-                    const master = masters[index];
-                    if (!master)
+    class $mol_atom2 extends $.$mol_fiber {
+        constructor() {
+            super(...arguments);
+            this.slaves = [];
+            this._value = undefined;
+            this._error = null;
+        }
+        static get current() {
+            const atom = $.$mol_fiber.current;
+            if (atom instanceof $mol_atom2)
+                return atom;
+            return null;
+        }
+        static reap(atom) {
+            this.reap_queue.push(atom);
+            if (this.reap_task)
+                return;
+            this.reap_task = $.$mol_fiber_defer(() => {
+                this.reap_task = null;
+                while (true) {
+                    const atom = this.reap_queue.pop();
+                    if (!atom)
+                        break;
+                    if (!atom.alone)
                         continue;
-                    try {
-                        master.get();
-                    }
-                    catch (error) {
-                        if ('then' in error)
-                            $.$mol_fail_hidden(error);
-                        this.cursor = 0;
-                    }
-                    if (this.cursor !== 0)
-                        continue;
-                    if ($mol_atom2.logs)
-                        this.$.$mol_log3_done({
-                            place: this,
-                            message: 'Obsoleted while checking',
-                        });
-                    return super.pull();
+                    atom.destructor();
                 }
+            });
+        }
+        rescue(master, cursor) {
+            if (!(master instanceof $mol_atom2))
+                return;
+            const master_index = this.masters.length;
+            const slave_index = this.masters[cursor + 1] + 1;
+            master.slaves[slave_index] = master_index;
+            this.masters.push(master, this.masters[cursor + 1]);
+        }
+        get() {
+            if ($mol_atom2.cached)
+                return this.value;
+            const value = super.get();
+            if (value === undefined)
+                $.$mol_fail(new Error(`Not defined: ${this}`));
+            return value;
+        }
+        pull() {
+            if (this.cursor === 0)
+                return super.pull();
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_come({
+                    place: this,
+                    message: 'Check doubt masters',
+                });
+            const masters = this.masters;
+            for (let index = 0; index < masters.length; index += 2) {
+                const master = masters[index];
+                if (!master)
+                    continue;
+                try {
+                    master.get();
+                }
+                catch (error) {
+                    if ('then' in error)
+                        $.$mol_fail_hidden(error);
+                    this.cursor = 0;
+                }
+                if (this.cursor !== 0)
+                    continue;
                 if ($mol_atom2.logs)
                     this.$.$mol_log3_done({
                         place: this,
-                        message: 'Masters not changed',
+                        message: 'Obsoleted while checking',
                     });
-                this.cursor = -2;
+                return super.pull();
             }
-            get value() { return this._value; }
-            set value(next) {
-                const prev = this._value;
-                if (prev && this.$.$mol_owning_check(this, prev))
-                    prev.destructor();
-                if (next && this.$.$mol_owning_catch(this, next)) {
-                    try {
-                        next[Symbol.toStringTag] = this[Symbol.toStringTag];
-                    }
-                    catch (_a) { }
-                    next[$.$mol_object_field] = this[$.$mol_object_field];
-                }
-                this._value = next;
-            }
-            get error() { return this._error; }
-            set error(next) {
-                const prev = this._error;
-                if (prev && this.$.$mol_owning_check(this, prev))
-                    prev.destructor();
-                if (next && this.$.$mol_owning_catch(this, next)) {
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_done({
+                    place: this,
+                    message: 'Masters not changed',
+                });
+            this.cursor = -2;
+        }
+        get value() { return this._value; }
+        set value(next) {
+            const prev = this._value;
+            if (prev && this.$.$mol_owning_check(this, prev))
+                prev.destructor();
+            if (next && this.$.$mol_owning_catch(this, next)) {
+                try {
                     next[Symbol.toStringTag] = this[Symbol.toStringTag];
-                    next[$.$mol_object_field] = this[$.$mol_object_field];
                 }
-                this._error = next;
+                catch (_a) { }
+                next[$.$mol_object_field] = this[$.$mol_object_field];
             }
-            put(next) {
-                this.cursor = this.masters.length;
-                next = this.push(next);
-                this.cursor = -3;
-                return next;
+            this._value = next;
+        }
+        get error() { return this._error; }
+        set error(next) {
+            const prev = this._error;
+            if (prev && this.$.$mol_owning_check(this, prev))
+                prev.destructor();
+            if (next && this.$.$mol_owning_catch(this, next)) {
+                next[Symbol.toStringTag] = this[Symbol.toStringTag];
+                next[$.$mol_object_field] = this[$.$mol_object_field];
             }
-            complete_master(master_index) {
-                if (this.masters[master_index] instanceof $mol_atom2) {
-                    if (master_index >= this.cursor)
-                        this.disobey(master_index);
-                }
-                else {
+            this._error = next;
+        }
+        put(next) {
+            this.cursor = this.masters.length;
+            next = this.push(next);
+            this.cursor = -3;
+            return next;
+        }
+        complete_master(master_index) {
+            if (this.masters[master_index] instanceof $mol_atom2) {
+                if (master_index >= this.cursor)
                     this.disobey(master_index);
-                }
             }
-            obey(master, master_index) {
-                return master.lead(this, master_index);
-            }
-            lead(slave, master_index) {
-                if ($mol_atom2.logs)
-                    this.$.$mol_log3_rise({
-                        place: this,
-                        message: 'Leads',
-                        slave,
-                    });
-                const slave_index = this.slaves.length;
-                this.slaves[slave_index] = slave;
-                this.slaves[slave_index + 1] = master_index;
-                return slave_index;
-            }
-            dislead(slave_index) {
-                if (slave_index < 0)
-                    return;
-                if ($mol_atom2.logs)
-                    this.$.$mol_log3_rise({
-                        place: this,
-                        message: 'Disleads',
-                        slave: this.slaves[slave_index],
-                    });
-                this.slaves[slave_index] = undefined;
-                this.slaves[slave_index + 1] = undefined;
-                $.$mol_array_trim(this.slaves);
-                if (this.cursor > -3 && this.alone)
-                    $mol_atom2.reap(this);
-            }
-            obsolete(master_index = -1) {
-                if (this.cursor > 0) {
-                    if (master_index >= this.cursor - 2)
-                        return;
-                    const path = [];
-                    let current = this;
-                    collect: while (current) {
-                        path.push(current);
-                        current = current.masters[current.cursor - 2];
-                    }
-                    this.$.$mol_fail(new Error(`Obsoleted while calculation \n\n${path.join('\n')}\n`));
-                }
-                if (this.cursor === 0)
-                    return;
-                if ($mol_atom2.logs)
-                    this.$.$mol_log3_rise({
-                        place: this,
-                        message: 'Obsoleted',
-                    });
-                if (this.cursor !== -1)
-                    this.doubt_slaves();
-                this.cursor = 0;
-            }
-            doubt(master_index = -1) {
-                if (this.cursor > 0) {
-                    if (master_index >= this.cursor - 2)
-                        return;
-                    const path = [];
-                    let current = this;
-                    collect: while (current) {
-                        path.push(current);
-                        current = current.masters[current.cursor - 2];
-                    }
-                    this.$.$mol_fail(new Error(`Doubted while calculation \n\n${path.join('\n')}\n`));
-                }
-                if (this.cursor >= -1)
-                    return;
-                if ($mol_atom2.logs)
-                    this.$.$mol_log3_rise({
-                        place: this,
-                        message: 'Doubted',
-                    });
-                this.cursor = -1;
-                this.doubt_slaves();
-            }
-            obsolete_slaves() {
-                for (let index = 0; index < this.slaves.length; index += 2) {
-                    const slave = this.slaves[index];
-                    if (slave)
-                        slave.obsolete(this.slaves[index + 1]);
-                }
-            }
-            doubt_slaves() {
-                for (let index = 0; index < this.slaves.length; index += 2) {
-                    const slave = this.slaves[index];
-                    if (slave)
-                        slave.doubt(this.slaves[index + 1]);
-                }
-            }
-            get fresh() {
-                return () => {
-                    if (this.cursor !== -2)
-                        return;
-                    this.cursor = 0;
-                    $.$mol_fiber_solid.run(() => this.update());
-                };
-            }
-            get alone() {
-                return this.slaves.length === 0;
-            }
-            get derived() {
-                for (let index = 0; index < this.masters.length; index += 2) {
-                    if (this.masters[index])
-                        return true;
-                }
-                return false;
-            }
-            destructor() {
-                if (!this.abort())
-                    return;
-                if ($mol_atom2.logs)
-                    this.$.$mol_log3_rise({
-                        place: this,
-                        message: 'Destructed'
-                    });
-                this.cursor = -3;
-                for (let index = 0; index < this.masters.length; index += 2) {
-                    this.complete_master(index);
-                }
+            else {
+                this.disobey(master_index);
             }
         }
-        $mol_atom2.logs = false;
-        $mol_atom2.cached = false;
-        $mol_atom2.reap_task = null;
-        $mol_atom2.reap_queue = [];
-        return $mol_atom2;
-    })();
+        obey(master, master_index) {
+            return master.lead(this, master_index);
+        }
+        lead(slave, master_index) {
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Leads',
+                    slave,
+                });
+            const slave_index = this.slaves.length;
+            this.slaves[slave_index] = slave;
+            this.slaves[slave_index + 1] = master_index;
+            return slave_index;
+        }
+        dislead(slave_index) {
+            if (slave_index < 0)
+                return;
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Disleads',
+                    slave: this.slaves[slave_index],
+                });
+            this.slaves[slave_index] = undefined;
+            this.slaves[slave_index + 1] = undefined;
+            $.$mol_array_trim(this.slaves);
+            if (this.cursor > -3 && this.alone)
+                $mol_atom2.reap(this);
+        }
+        obsolete(master_index = -1) {
+            if (this.cursor > 0) {
+                if (master_index >= this.cursor - 2)
+                    return;
+                const path = [];
+                let current = this;
+                collect: while (current) {
+                    path.push(current);
+                    current = current.masters[current.cursor - 2];
+                }
+                this.$.$mol_fail(new Error(`Obsoleted while calculation \n\n${path.join('\n')}\n`));
+            }
+            if (this.cursor === 0)
+                return;
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Obsoleted',
+                });
+            if (this.cursor !== -1)
+                this.doubt_slaves();
+            this.cursor = 0;
+        }
+        doubt(master_index = -1) {
+            if (this.cursor > 0) {
+                if (master_index >= this.cursor - 2)
+                    return;
+                const path = [];
+                let current = this;
+                collect: while (current) {
+                    path.push(current);
+                    current = current.masters[current.cursor - 2];
+                }
+                this.$.$mol_fail(new Error(`Doubted while calculation \n\n${path.join('\n')}\n`));
+            }
+            if (this.cursor >= -1)
+                return;
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Doubted',
+                });
+            this.cursor = -1;
+            this.doubt_slaves();
+        }
+        obsolete_slaves() {
+            for (let index = 0; index < this.slaves.length; index += 2) {
+                const slave = this.slaves[index];
+                if (slave)
+                    slave.obsolete(this.slaves[index + 1]);
+            }
+        }
+        doubt_slaves() {
+            for (let index = 0; index < this.slaves.length; index += 2) {
+                const slave = this.slaves[index];
+                if (slave)
+                    slave.doubt(this.slaves[index + 1]);
+            }
+        }
+        get fresh() {
+            return () => {
+                if (this.cursor !== -2)
+                    return;
+                this.cursor = 0;
+                $.$mol_fiber_solid.run(() => this.update());
+            };
+        }
+        get alone() {
+            return this.slaves.length === 0;
+        }
+        get derived() {
+            for (let index = 0; index < this.masters.length; index += 2) {
+                if (this.masters[index])
+                    return true;
+            }
+            return false;
+        }
+        destructor() {
+            if (!this.abort())
+                return;
+            if ($mol_atom2.logs)
+                this.$.$mol_log3_rise({
+                    place: this,
+                    message: 'Destructed'
+                });
+            this.cursor = -3;
+            for (let index = 0; index < this.masters.length; index += 2) {
+                this.complete_master(index);
+            }
+        }
+    }
+    $mol_atom2.logs = false;
+    $mol_atom2.cached = false;
+    $mol_atom2.reap_task = null;
+    $mol_atom2.reap_queue = [];
     $.$mol_atom2 = $mol_atom2;
 })($ || ($ = {}));
 //atom2.js.map
@@ -2875,17 +2800,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let $mol_mem_force = (() => {
-        class $mol_mem_force extends Object {
-            constructor() {
-                super();
-                this.$mol_mem_force = true;
-            }
-            static toString() { return this.name; }
+    class $mol_mem_force extends Object {
+        constructor() {
+            super();
+            this.$mol_mem_force = true;
         }
-        $mol_mem_force.$mol_mem_force = true;
-        return $mol_mem_force;
-    })();
+        static toString() { return this.name; }
+    }
+    $mol_mem_force.$mol_mem_force = true;
     $.$mol_mem_force = $mol_mem_force;
     class $mol_mem_force_cache extends $mol_mem_force {
     }
@@ -2904,43 +2826,37 @@ var $;
 (function ($) {
     $.$mol_test({
         'Property method'() {
-            let App = (() => {
-                class App extends $.$mol_object2 {
-                    static value(next = 1) { return next + 1; }
-                }
-                __decorate([
-                    $.$mol_mem
-                ], App, "value", null);
-                return App;
-            })();
+            class App extends $.$mol_object2 {
+                static value(next = 1) { return next + 1; }
+            }
+            __decorate([
+                $.$mol_mem
+            ], App, "value", null);
             $.$mol_assert_equal(App.value(), 2);
             App.value(2);
             $.$mol_assert_equal(App.value(), 3);
         },
         'auto sync of properties'() {
-            let X = (() => {
-                class X extends $.$mol_object2 {
-                    foo(next) {
-                        return next || 1;
-                    }
-                    bar() {
-                        return this.foo() + 1;
-                    }
-                    xxx() {
-                        return this.bar() + 1;
-                    }
+            class X extends $.$mol_object2 {
+                foo(next) {
+                    return next || 1;
                 }
-                __decorate([
-                    $.$mol_mem
-                ], X.prototype, "foo", null);
-                __decorate([
-                    $.$mol_mem
-                ], X.prototype, "bar", null);
-                __decorate([
-                    $.$mol_mem
-                ], X.prototype, "xxx", null);
-                return X;
-            })();
+                bar() {
+                    return this.foo() + 1;
+                }
+                xxx() {
+                    return this.bar() + 1;
+                }
+            }
+            __decorate([
+                $.$mol_mem
+            ], X.prototype, "foo", null);
+            __decorate([
+                $.$mol_mem
+            ], X.prototype, "bar", null);
+            __decorate([
+                $.$mol_mem
+            ], X.prototype, "xxx", null);
             const x = new X;
             $.$mol_assert_equal(x.bar(), 2);
             $.$mol_assert_equal(x.xxx(), 3);
@@ -2950,35 +2866,32 @@ var $;
         async 'must be deferred destroyed when no longer referenced'() {
             let foo;
             let foo_destroyed = false;
-            let B = (() => {
-                class B extends $.$mol_object2 {
-                    showing(next) {
-                        if (next === void 0)
-                            return true;
-                        return next;
-                    }
-                    foo() {
-                        return foo = new class extends $.$mol_object {
-                            destructor() {
-                                foo_destroyed = true;
-                            }
-                        };
-                    }
-                    bar() {
-                        return this.showing() ? this.foo() : null;
-                    }
+            class B extends $.$mol_object2 {
+                showing(next) {
+                    if (next === void 0)
+                        return true;
+                    return next;
                 }
-                __decorate([
-                    $.$mol_mem
-                ], B.prototype, "showing", null);
-                __decorate([
-                    $.$mol_mem
-                ], B.prototype, "foo", null);
-                __decorate([
-                    $.$mol_mem
-                ], B.prototype, "bar", null);
-                return B;
-            })();
+                foo() {
+                    return foo = new class extends $.$mol_object {
+                        destructor() {
+                            foo_destroyed = true;
+                        }
+                    };
+                }
+                bar() {
+                    return this.showing() ? this.foo() : null;
+                }
+            }
+            __decorate([
+                $.$mol_mem
+            ], B.prototype, "showing", null);
+            __decorate([
+                $.$mol_mem
+            ], B.prototype, "foo", null);
+            __decorate([
+                $.$mol_mem
+            ], B.prototype, "bar", null);
             var b = new B;
             var bar = b.bar();
             $.$mol_assert_ok(bar);
@@ -2992,29 +2905,26 @@ var $;
             $.$mol_assert_unique(b.bar(), bar);
         },
         async 'wait for data'() {
-            let Test = (() => {
-                class Test extends $.$mol_object2 {
-                    source() {
-                        return $.$mol_fiber_sync(() => new Promise(done => done('Jin')))();
-                    }
-                    middle() {
-                        return this.source();
-                    }
-                    target() {
-                        return this.middle();
-                    }
+            class Test extends $.$mol_object2 {
+                source() {
+                    return $.$mol_fiber_sync(() => new Promise(done => done('Jin')))();
                 }
-                __decorate([
-                    $.$mol_mem
-                ], Test.prototype, "source", null);
-                __decorate([
-                    $.$mol_mem
-                ], Test.prototype, "middle", null);
-                __decorate([
-                    $.$mol_mem
-                ], Test.prototype, "target", null);
-                return Test;
-            })();
+                middle() {
+                    return this.source();
+                }
+                target() {
+                    return this.middle();
+                }
+            }
+            __decorate([
+                $.$mol_mem
+            ], Test.prototype, "source", null);
+            __decorate([
+                $.$mol_mem
+            ], Test.prototype, "middle", null);
+            __decorate([
+                $.$mol_mem
+            ], Test.prototype, "target", null);
             const t = new Test;
             $.$mol_assert_fail(() => t.target().valueOf(), Promise);
             await $.$mol_fiber_warp();
@@ -3157,23 +3067,20 @@ var $;
 (function ($) {
     $.$mol_test({
         async 'Autorun'() {
-            let App = (() => {
-                class App extends $.$mol_object2 {
-                    static get init() {
-                        ++this.counter;
-                        return this.state;
-                    }
+            class App extends $.$mol_object2 {
+                static get init() {
+                    ++this.counter;
+                    return this.state;
                 }
-                App.state = 1;
-                App.counter = 0;
-                __decorate([
-                    $.$mol_atom2_field
-                ], App, "state", void 0);
-                __decorate([
-                    $.$mol_atom2_field
-                ], App, "init", null);
-                return App;
-            })();
+            }
+            App.state = 1;
+            App.counter = 0;
+            __decorate([
+                $.$mol_atom2_field
+            ], App, "state", void 0);
+            __decorate([
+                $.$mol_atom2_field
+            ], App, "init", null);
             const autorun = $.$mol_atom2_autorun(() => App.init);
             try {
                 await $.$mol_fiber_warp();
@@ -3264,33 +3171,27 @@ var $;
         },
         async 'Reactive attached view'() {
             const doc = $.$mol_dom_parse('<html><body id="/foo"></body></html>');
-            let Task = (() => {
-                class Task {
-                    title(next) { return next || 'foo'; }
+            class Task {
+                title(next) { return next || 'foo'; }
+            }
+            __decorate([
+                $.$mol_mem
+            ], Task.prototype, "title", null);
+            class App extends $.$mol_jsx_view {
+                task() { return new Task; }
+                valueOf() {
+                    return super.valueOf();
                 }
-                __decorate([
-                    $.$mol_mem
-                ], Task.prototype, "title", null);
-                return Task;
-            })();
-            let App = (() => {
-                class App extends $.$mol_jsx_view {
-                    task() { return new Task; }
-                    valueOf() {
-                        return super.valueOf();
-                    }
-                    render() {
-                        return $.$mol_jsx_make("div", null, this.task().title());
-                    }
+                render() {
+                    return $.$mol_jsx_make("div", null, this.task().title());
                 }
-                __decorate([
-                    $.$mol_mem
-                ], App.prototype, "task", null);
-                __decorate([
-                    $.$mol_mem
-                ], App.prototype, "valueOf", null);
-                return App;
-            })();
+            }
+            __decorate([
+                $.$mol_mem
+            ], App.prototype, "task", null);
+            __decorate([
+                $.$mol_mem
+            ], App.prototype, "valueOf", null);
             const task = new Task;
             $.$mol_atom2_autorun(() => $.$mol_jsx_attach(doc, () => $.$mol_jsx_make(App, { id: "/foo", task: () => task })));
             await $.$mol_fiber_warp();

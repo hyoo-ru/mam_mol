@@ -692,29 +692,23 @@ var $;
             $.$mol_assert_equal(obj.pow(2), 5);
         },
         'decorate field getter'() {
-            let Plus1 = (() => {
-                class Plus1 extends $.$mol_wrapper {
-                    static wrap(task) {
-                        return function (...args) {
-                            return Plus1.last = (task.call(this, ...args) || 0) + 1;
-                        };
-                    }
+            class Plus1 extends $.$mol_wrapper {
+                static wrap(task) {
+                    return function (...args) {
+                        return Plus1.last = (task.call(this, ...args) || 0) + 1;
+                    };
                 }
-                Plus1.last = 0;
-                return Plus1;
-            })();
-            let Foo = (() => {
-                class Foo {
-                    static get two() {
-                        return 1;
-                    }
-                    static set two(next) { }
+            }
+            Plus1.last = 0;
+            class Foo {
+                static get two() {
+                    return 1;
                 }
-                __decorate([
-                    Plus1.field
-                ], Foo, "two", null);
-                return Foo;
-            })();
+                static set two(next) { }
+            }
+            __decorate([
+                Plus1.field
+            ], Foo, "two", null);
             $.$mol_assert_equal(Foo.two, 2);
             Foo.two = 3;
             $.$mol_assert_equal(Plus1.last, 2);
@@ -728,20 +722,17 @@ var $;
                     };
                 }
             }
-            let Foo1 = (() => {
-                class Foo1 {
-                    constructor() {
-                        this.level = 2;
-                    }
-                    pow(a) {
-                        return a ** this.level;
-                    }
+            class Foo1 {
+                constructor() {
+                    this.level = 2;
                 }
-                __decorate([
-                    Plus1.method
-                ], Foo1.prototype, "pow", null);
-                return Foo1;
-            })();
+                pow(a) {
+                    return a ** this.level;
+                }
+            }
+            __decorate([
+                Plus1.method
+            ], Foo1.prototype, "pow", null);
             const Foo2 = Foo1;
             const foo = new Foo2;
             $.$mol_assert_equal(foo.pow(2), 5);
@@ -754,18 +745,15 @@ var $;
                     };
                 }
             }
-            let Foo = (() => {
-                class Foo {
-                    static pow(a) {
-                        return a ** this.level;
-                    }
+            class Foo {
+                static pow(a) {
+                    return a ** this.level;
                 }
-                Foo.level = 2;
-                __decorate([
-                    Plus1.method
-                ], Foo, "pow", null);
-                return Foo;
-            })();
+            }
+            Foo.level = 2;
+            __decorate([
+                Plus1.method
+            ], Foo, "pow", null);
             $.$mol_assert_equal(Foo.pow(2), 5);
         },
         'decorate class'() {
@@ -778,17 +766,14 @@ var $;
                     };
                 }
             }
-            let Foo = (() => {
-                let Foo = class Foo {
-                    constructor(bar) {
-                        this.bar = bar;
-                    }
-                };
-                Foo = __decorate([
-                    BarInc.class
-                ], Foo);
-                return Foo;
-            })();
+            let Foo = class Foo {
+                constructor(bar) {
+                    this.bar = bar;
+                }
+            };
+            Foo = __decorate([
+                BarInc.class
+            ], Foo);
             $.$mol_assert_equal(new Foo(2).bar, 3);
         },
     });
@@ -983,172 +968,145 @@ var $;
 (function ($_1) {
     $_1.$mol_test({
         'Value has js-path name'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get title() { return new $_1.$mol_object2; }
-                }
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "title", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static get title() { return new $_1.$mol_object2; }
+            }
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "title", null);
             $_1.$mol_assert_equal(`${App.title}`, 'App.title');
         },
         'Simple property'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                }
-                App.value = 1;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "value", void 0);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+            }
+            App.value = 1;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "value", void 0);
             $_1.$mol_assert_equal(App.value, 1);
             App.value = 2;
             $_1.$mol_assert_equal(App.value, 2);
         },
         'Instant actualization'() {
-            let Source = (() => {
-                class Source extends $_1.$mol_object2 {
-                    constructor() {
-                        super(...arguments);
-                        this.value = 1;
-                    }
+            class Source extends $_1.$mol_object2 {
+                constructor() {
+                    super(...arguments);
+                    this.value = 1;
                 }
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], Source.prototype, "value", void 0);
-                return Source;
-            })();
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get source() { return Source.create(); }
-                    static get value() { return this.source.value + 1; }
-                }
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "source", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "value", null);
-                return App;
-            })();
+            }
+            __decorate([
+                $_1.$mol_atom2_field
+            ], Source.prototype, "value", void 0);
+            class App extends $_1.$mol_object2 {
+                static get source() { return Source.create(); }
+                static get value() { return this.source.value + 1; }
+            }
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "source", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "value", null);
             $_1.$mol_assert_equal(App.value, 2);
             App.source.value = 2;
             $_1.$mol_assert_equal(App.value, 3);
         },
         'Access to cached value'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get value() { return 1; }
-                }
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "value", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static get value() { return 1; }
+            }
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "value", null);
             $_1.$mol_assert_equal($_1.$mol_atom2_value(() => App.value), undefined);
             $_1.$mol_assert_equal(App.value, 1);
             $_1.$mol_assert_equal($_1.$mol_atom2_value(() => App.value), 1);
         },
         'Do not recalc slaves on equal changes'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get result() { return this.first[0] + this.counter++; }
-                }
-                App.first = [1];
-                App.counter = 0;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static get result() { return this.first[0] + this.counter++; }
+            }
+            App.first = [1];
+            App.counter = 0;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 1);
             App.first = [1];
             $_1.$mol_assert_equal(App.result, 1);
         },
         'Do not recalc grand slave on equal direct slave result '() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get second() { return Math.abs(this.first); }
-                    static get result() { return this.second + ++this.counter; }
-                }
-                App.first = 1;
-                App.counter = 0;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "second", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static get second() { return Math.abs(this.first); }
+                static get result() { return this.second + ++this.counter; }
+            }
+            App.first = 1;
+            App.counter = 0;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "second", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 2);
             App.first = -1;
             $_1.$mol_assert_equal(App.result, 2);
         },
         'Recalc when [not changed master] changes [following master]'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get second() {
-                        this.third = this.first;
-                        return 0;
-                    }
-                    static get result() { return this.second + this.third + ++this.counter; }
+            class App extends $_1.$mol_object2 {
+                static get second() {
+                    this.third = this.first;
+                    return 0;
                 }
-                App.first = 1;
-                App.third = 0;
-                App.counter = 0;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "second", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "third", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+                static get result() { return this.second + this.third + ++this.counter; }
+            }
+            App.first = 1;
+            App.third = 0;
+            App.counter = 0;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "second", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "third", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 2);
             App.first = 5;
             $_1.$mol_assert_equal(App.result, 7);
         },
         'Branch switching'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get second() { return 2; }
-                    static get result() {
-                        return (this.condition ? this.first : this.second) + this.counter++;
-                    }
+            class App extends $_1.$mol_object2 {
+                static get second() { return 2; }
+                static get result() {
+                    return (this.condition ? this.first : this.second) + this.counter++;
                 }
-                App.first = 1;
-                App.condition = true;
-                App.counter = 0;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "second", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "condition", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            }
+            App.first = 1;
+            App.condition = true;
+            App.counter = 0;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "second", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "condition", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 1);
             App.condition = false;
             $_1.$mol_assert_equal(App.result, 3);
@@ -1156,85 +1114,73 @@ var $;
             $_1.$mol_assert_equal(App.result, 3);
         },
         'Forbidden self invalidation'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get second() { return this.first + 1; }
-                    static get result() {
-                        this.second;
-                        return this.first++;
-                    }
+            class App extends $_1.$mol_object2 {
+                static get second() { return this.first + 1; }
+                static get result() {
+                    this.second;
+                    return this.first++;
                 }
-                App.first = 1;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "second", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            }
+            App.first = 1;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "second", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_fail(() => App.result);
         },
         'Side effect inside computation'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static increase() { return ++this.first; }
-                    static get result() {
-                        return this.increase() + 1;
-                    }
+            class App extends $_1.$mol_object2 {
+                static increase() { return ++this.first; }
+                static get result() {
+                    return this.increase() + 1;
                 }
-                App.first = 1;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", void 0);
-                __decorate([
-                    $_1.$mol_fiber.method
-                ], App, "increase", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            }
+            App.first = 1;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", void 0);
+            __decorate([
+                $_1.$mol_fiber.method
+            ], App, "increase", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 3);
         },
         'Forbidden cyclic dependency'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get first() { return this.second - 1; }
-                    static get second() { return this.first + 1; }
-                }
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "first", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "second", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static get first() { return this.second - 1; }
+                static get second() { return this.first + 1; }
+            }
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "first", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "second", null);
             $_1.$mol_assert_fail(() => App.first);
         },
         'Forget sub fibers on complete'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static count() { return this.counter++; }
-                    static get result() { return this.count() + this.data; }
-                }
-                App.counter = 0;
-                App.data = 1;
-                __decorate([
-                    $_1.$mol_fiber.method
-                ], App, "count", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "data", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            class App extends $_1.$mol_object2 {
+                static count() { return this.counter++; }
+                static get result() { return this.count() + this.data; }
+            }
+            App.counter = 0;
+            App.data = 1;
+            __decorate([
+                $_1.$mol_fiber.method
+            ], App, "count", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "data", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 1);
             App.data = 2;
             $_1.$mol_assert_equal(App.result, 3);
@@ -1244,27 +1190,24 @@ var $;
             class Having extends $_1.$mol_object2 {
                 destructor() { counter++; }
             }
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get having() { return Having.create(); }
-                    static get result() {
-                        if (this.condition)
-                            this.having;
-                        return 0;
-                    }
+            class App extends $_1.$mol_object2 {
+                static get having() { return Having.create(); }
+                static get result() {
+                    if (this.condition)
+                        this.having;
+                    return 0;
                 }
-                App.condition = true;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "having", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "condition", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+            }
+            App.condition = true;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "having", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "condition", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             App.result;
             App.condition = false;
             App.result;
@@ -1273,24 +1216,21 @@ var $;
             $_1.$mol_assert_equal(counter, 1);
         },
         async 'Do not destroy putted value'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get target() {
-                        return this.condition ? this.source : 0;
-                    }
+            class App extends $_1.$mol_object2 {
+                static get target() {
+                    return this.condition ? this.source : 0;
                 }
-                App.condition = true;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "source", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "condition", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "target", null);
-                return App;
-            })();
+            }
+            App.condition = true;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "source", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "condition", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "target", null);
             App.source = 1;
             $_1.$mol_assert_equal(App.target, 1);
             App.condition = false;
@@ -1300,27 +1240,24 @@ var $;
             $_1.$mol_assert_equal(App.target, 1);
         },
         'Restore after error'() {
-            let App = (() => {
-                class App extends $_1.$mol_object2 {
-                    static get broken() {
-                        if (this.condition)
-                            $_1.$mol_fail(new Error('test error'));
-                        return 1;
-                    }
-                    static get result() { return this.broken; }
+            class App extends $_1.$mol_object2 {
+                static get broken() {
+                    if (this.condition)
+                        $_1.$mol_fail(new Error('test error'));
+                    return 1;
                 }
-                App.condition = false;
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "condition", void 0);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "broken", null);
-                __decorate([
-                    $_1.$mol_atom2_field
-                ], App, "result", null);
-                return App;
-            })();
+                static get result() { return this.broken; }
+            }
+            App.condition = false;
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "condition", void 0);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "broken", null);
+            __decorate([
+                $_1.$mol_atom2_field
+            ], App, "result", null);
             $_1.$mol_assert_equal(App.result, 1);
             App.condition = true;
             $_1.$mol_assert_fail(() => App.result);
@@ -1359,43 +1296,37 @@ var $;
 (function ($) {
     $.$mol_test({
         'Property method'() {
-            let App = (() => {
-                class App extends $.$mol_object2 {
-                    static value(next = 1) { return next + 1; }
-                }
-                __decorate([
-                    $.$mol_mem
-                ], App, "value", null);
-                return App;
-            })();
+            class App extends $.$mol_object2 {
+                static value(next = 1) { return next + 1; }
+            }
+            __decorate([
+                $.$mol_mem
+            ], App, "value", null);
             $.$mol_assert_equal(App.value(), 2);
             App.value(2);
             $.$mol_assert_equal(App.value(), 3);
         },
         'auto sync of properties'() {
-            let X = (() => {
-                class X extends $.$mol_object2 {
-                    foo(next) {
-                        return next || 1;
-                    }
-                    bar() {
-                        return this.foo() + 1;
-                    }
-                    xxx() {
-                        return this.bar() + 1;
-                    }
+            class X extends $.$mol_object2 {
+                foo(next) {
+                    return next || 1;
                 }
-                __decorate([
-                    $.$mol_mem
-                ], X.prototype, "foo", null);
-                __decorate([
-                    $.$mol_mem
-                ], X.prototype, "bar", null);
-                __decorate([
-                    $.$mol_mem
-                ], X.prototype, "xxx", null);
-                return X;
-            })();
+                bar() {
+                    return this.foo() + 1;
+                }
+                xxx() {
+                    return this.bar() + 1;
+                }
+            }
+            __decorate([
+                $.$mol_mem
+            ], X.prototype, "foo", null);
+            __decorate([
+                $.$mol_mem
+            ], X.prototype, "bar", null);
+            __decorate([
+                $.$mol_mem
+            ], X.prototype, "xxx", null);
             const x = new X;
             $.$mol_assert_equal(x.bar(), 2);
             $.$mol_assert_equal(x.xxx(), 3);
@@ -1405,35 +1336,32 @@ var $;
         async 'must be deferred destroyed when no longer referenced'() {
             let foo;
             let foo_destroyed = false;
-            let B = (() => {
-                class B extends $.$mol_object2 {
-                    showing(next) {
-                        if (next === void 0)
-                            return true;
-                        return next;
-                    }
-                    foo() {
-                        return foo = new class extends $.$mol_object {
-                            destructor() {
-                                foo_destroyed = true;
-                            }
-                        };
-                    }
-                    bar() {
-                        return this.showing() ? this.foo() : null;
-                    }
+            class B extends $.$mol_object2 {
+                showing(next) {
+                    if (next === void 0)
+                        return true;
+                    return next;
                 }
-                __decorate([
-                    $.$mol_mem
-                ], B.prototype, "showing", null);
-                __decorate([
-                    $.$mol_mem
-                ], B.prototype, "foo", null);
-                __decorate([
-                    $.$mol_mem
-                ], B.prototype, "bar", null);
-                return B;
-            })();
+                foo() {
+                    return foo = new class extends $.$mol_object {
+                        destructor() {
+                            foo_destroyed = true;
+                        }
+                    };
+                }
+                bar() {
+                    return this.showing() ? this.foo() : null;
+                }
+            }
+            __decorate([
+                $.$mol_mem
+            ], B.prototype, "showing", null);
+            __decorate([
+                $.$mol_mem
+            ], B.prototype, "foo", null);
+            __decorate([
+                $.$mol_mem
+            ], B.prototype, "bar", null);
             var b = new B;
             var bar = b.bar();
             $.$mol_assert_ok(bar);
@@ -1447,29 +1375,26 @@ var $;
             $.$mol_assert_unique(b.bar(), bar);
         },
         async 'wait for data'() {
-            let Test = (() => {
-                class Test extends $.$mol_object2 {
-                    source() {
-                        return $.$mol_fiber_sync(() => new Promise(done => done('Jin')))();
-                    }
-                    middle() {
-                        return this.source();
-                    }
-                    target() {
-                        return this.middle();
-                    }
+            class Test extends $.$mol_object2 {
+                source() {
+                    return $.$mol_fiber_sync(() => new Promise(done => done('Jin')))();
                 }
-                __decorate([
-                    $.$mol_mem
-                ], Test.prototype, "source", null);
-                __decorate([
-                    $.$mol_mem
-                ], Test.prototype, "middle", null);
-                __decorate([
-                    $.$mol_mem
-                ], Test.prototype, "target", null);
-                return Test;
-            })();
+                middle() {
+                    return this.source();
+                }
+                target() {
+                    return this.middle();
+                }
+            }
+            __decorate([
+                $.$mol_mem
+            ], Test.prototype, "source", null);
+            __decorate([
+                $.$mol_mem
+            ], Test.prototype, "middle", null);
+            __decorate([
+                $.$mol_mem
+            ], Test.prototype, "target", null);
             const t = new Test;
             $.$mol_assert_fail(() => t.target().valueOf(), Promise);
             await $.$mol_fiber_warp();
@@ -1569,39 +1494,33 @@ var $;
     $.$mol_test({
         'keyed reactive properties'() {
             $.$mol_fiber_warp();
-            let Fib = (() => {
-                class Fib extends $.$mol_object2 {
-                    static value(index, next) {
-                        if (next)
-                            return next;
-                        if (index < 2)
-                            return 1;
-                        return this.value(index - 1) + this.value(index - 2);
-                    }
+            class Fib extends $.$mol_object2 {
+                static value(index, next) {
+                    if (next)
+                        return next;
+                    if (index < 2)
+                        return 1;
+                    return this.value(index - 1) + this.value(index - 2);
                 }
-                __decorate([
-                    $.$mol_mem_key
-                ], Fib, "value", null);
-                return Fib;
-            })();
+            }
+            __decorate([
+                $.$mol_mem_key
+            ], Fib, "value", null);
             $.$mol_assert_equal(Fib.value(10), 89);
             Fib.value(1, 2);
             $.$mol_assert_equal(Fib.value(10), 144);
         },
         'cached property with simple key'() {
-            let X = (() => {
-                class X extends $.$mol_object2 {
-                    foo(id, next) {
-                        if (next == null)
-                            return new Number(123);
-                        return new Number(next);
-                    }
+            class X extends $.$mol_object2 {
+                foo(id, next) {
+                    if (next == null)
+                        return new Number(123);
+                    return new Number(next);
                 }
-                __decorate([
-                    $.$mol_mem_key
-                ], X.prototype, "foo", null);
-                return X;
-            })();
+            }
+            __decorate([
+                $.$mol_mem_key
+            ], X.prototype, "foo", null);
             const x = new X;
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
             $.$mol_assert_equal(x.foo(0), x.foo(0));
@@ -1612,17 +1531,14 @@ var $;
             $.$mol_assert_equal(x.foo(0).valueOf(), 123);
         },
         'cached property with complex key'() {
-            let X = (() => {
-                class X extends $.$mol_object2 {
-                    foo(ids) {
-                        return Math.random();
-                    }
+            class X extends $.$mol_object2 {
+                foo(ids) {
+                    return Math.random();
                 }
-                __decorate([
-                    $.$mol_mem_key
-                ], X.prototype, "foo", null);
-                return X;
-            })();
+            }
+            __decorate([
+                $.$mol_mem_key
+            ], X.prototype, "foo", null);
             const x = new X;
             $.$mol_assert_equal(x.foo([0, 1]), x.foo([0, 1]));
             $.$mol_assert_unique(x.foo([0, 1]), x.foo([0, 2]));
@@ -1689,23 +1605,20 @@ var $;
 (function ($) {
     $.$mol_test({
         async 'Autorun'() {
-            let App = (() => {
-                class App extends $.$mol_object2 {
-                    static get init() {
-                        ++this.counter;
-                        return this.state;
-                    }
+            class App extends $.$mol_object2 {
+                static get init() {
+                    ++this.counter;
+                    return this.state;
                 }
-                App.state = 1;
-                App.counter = 0;
-                __decorate([
-                    $.$mol_atom2_field
-                ], App, "state", void 0);
-                __decorate([
-                    $.$mol_atom2_field
-                ], App, "init", null);
-                return App;
-            })();
+            }
+            App.state = 1;
+            App.counter = 0;
+            __decorate([
+                $.$mol_atom2_field
+            ], App, "state", void 0);
+            __decorate([
+                $.$mol_atom2_field
+            ], App, "init", null);
             const autorun = $.$mol_atom2_autorun(() => App.init);
             try {
                 await $.$mol_fiber_warp();
@@ -1760,17 +1673,14 @@ var $;
         'id auto generation'() {
             class $mol_view_test_item extends $.$mol_view {
             }
-            let $mol_view_test_block = (() => {
-                class $mol_view_test_block extends $.$mol_view {
-                    element(id) {
-                        return new $mol_view_test_item();
-                    }
+            class $mol_view_test_block extends $.$mol_view {
+                element(id) {
+                    return new $mol_view_test_item();
                 }
-                __decorate([
-                    $.$mol_mem_key
-                ], $mol_view_test_block.prototype, "element", null);
-                return $mol_view_test_block;
-            })();
+            }
+            __decorate([
+                $.$mol_mem_key
+            ], $mol_view_test_block.prototype, "element", null);
             var x = $mol_view_test_block.Root(0);
             $.$mol_assert_equal(x.dom_node().id, '$mol_view_test_block.Root(0)');
             $.$mol_assert_equal(x.element(0).dom_node().id, '$mol_view_test_block.Root(0).element(0)');
@@ -1793,17 +1703,14 @@ var $;
         'bem attributes generation'() {
             class $mol_view_test_item extends $.$mol_view {
             }
-            let $mol_view_test_block = (() => {
-                class $mol_view_test_block extends $.$mol_view {
-                    Element(id) {
-                        return new $mol_view_test_item();
-                    }
+            class $mol_view_test_block extends $.$mol_view {
+                Element(id) {
+                    return new $mol_view_test_item();
                 }
-                __decorate([
-                    $.$mol_mem_key
-                ], $mol_view_test_block.prototype, "Element", null);
-                return $mol_view_test_block;
-            })();
+            }
+            __decorate([
+                $.$mol_mem_key
+            ], $mol_view_test_block.prototype, "Element", null);
             var x = new $mol_view_test_block();
             $.$mol_assert_equal(x.dom_node().getAttribute('mol_view_test_block'), '');
             $.$mol_assert_equal(x.dom_node().getAttribute('mol_view'), '');
@@ -2054,33 +1961,27 @@ var $;
         },
         async 'Reactive attached view'() {
             const doc = $.$mol_dom_parse('<html><body id="/foo"></body></html>');
-            let Task = (() => {
-                class Task {
-                    title(next) { return next || 'foo'; }
+            class Task {
+                title(next) { return next || 'foo'; }
+            }
+            __decorate([
+                $.$mol_mem
+            ], Task.prototype, "title", null);
+            class App extends $.$mol_jsx_view {
+                task() { return new Task; }
+                valueOf() {
+                    return super.valueOf();
                 }
-                __decorate([
-                    $.$mol_mem
-                ], Task.prototype, "title", null);
-                return Task;
-            })();
-            let App = (() => {
-                class App extends $.$mol_jsx_view {
-                    task() { return new Task; }
-                    valueOf() {
-                        return super.valueOf();
-                    }
-                    render() {
-                        return $.$mol_jsx_make("div", null, this.task().title());
-                    }
+                render() {
+                    return $.$mol_jsx_make("div", null, this.task().title());
                 }
-                __decorate([
-                    $.$mol_mem
-                ], App.prototype, "task", null);
-                __decorate([
-                    $.$mol_mem
-                ], App.prototype, "valueOf", null);
-                return App;
-            })();
+            }
+            __decorate([
+                $.$mol_mem
+            ], App.prototype, "task", null);
+            __decorate([
+                $.$mol_mem
+            ], App.prototype, "valueOf", null);
             const task = new Task;
             $.$mol_atom2_autorun(() => $.$mol_jsx_attach(doc, () => $.$mol_jsx_make(App, { id: "/foo", task: () => task })));
             await $.$mol_fiber_warp();
