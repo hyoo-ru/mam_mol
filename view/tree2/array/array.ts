@@ -30,11 +30,13 @@ namespace $ {
 			type_body.push(operator.data('const'))
 		} else {
 			const type = $mol_tree2.data(type_str, [], operator.span.slice(1, type_str.length))
-			type_body.push(
-				operator.data('readonly '),
-				type,
-				operator.data('[]')
-			)
+			const is_array = type.value.indexOf('[') !== -1
+
+			type_body.push(operator.data('readonly '))
+			if (is_array) type_body.push(operator.data('('))
+			type_body.push(type)
+			if (is_array) type_body.push(operator.data(')'))
+			type_body.push(operator.data('[]'))
 		}
 
 		const body = this.$mol_view_tree2_array_body(operator, context, super_method)

@@ -31,17 +31,17 @@ namespace $ {
 		)
 
 		const owner_parts = this.$mol_view_tree2_prop_split(owner)
-		context.check_scope_vars(owner_parts.key)
+		const owner_call_parts = owner_parts.next
+			? {...owner_parts, next: undefined}
+			: owner_parts
+
+		context.check_scope_vars(owner_call_parts)
 
 		const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined
 
 		if (default_value && ! context.get_owner(owner)) {
 			this.$mol_view_tree2_method_body(owner_parts, context.root())
 		}
-
-		const owner_call_parts = owner_parts.next
-			? {...owner_parts, next: undefined}
-			: owner_parts
 
 		return $mol_tree2.struct('inline', [
 			owner.data('this.'),

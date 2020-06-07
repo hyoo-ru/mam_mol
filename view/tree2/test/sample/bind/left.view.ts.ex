@@ -109,6 +109,7 @@ namespace $ {
 		 * ```tree
 		 * class_indexed!key <= class_indexed_owner!key $mol_view
 		 * 	title @ \some1
+		 * 	same <= same?val \
 		 * 	some <= twice
 		 * 	localized <= localized_owner!key @ \some1
 		 * 	chain <= chain1 <= chain2 null
@@ -122,6 +123,7 @@ namespace $ {
 		 * ```tree
 		 * class_indexed_owner!key $mol_view
 		 * 	title @ \some1
+		 * 	same <= same?val \
 		 * 	some <= twice
 		 * 	localized <= localized_owner!key @ \some1
 		 * 	chain <= chain1 <= chain2 null
@@ -132,11 +134,23 @@ namespace $ {
 			const obj = new this.$.$mol_view()
 
 			obj.title = () => this.$.$mol_locale.text( '$mol_view_tree2_test_sample_bind_left_class_indexed_owner_title' )
+			obj.same = () => this.same()
 			obj.some = () => this.twice()
 			obj.localized = () => this.localized_owner(key)
 			obj.chain = () => this.chain1()
 
 			return obj
+		}
+
+		/**
+		 * ```tree
+		 * same?val \
+		 * ```
+		 */
+		@ $mol_mem
+		same(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
 		}
 
 		/**

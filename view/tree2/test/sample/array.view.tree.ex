@@ -15,6 +15,7 @@ $mol_view_tree2_test_sample_array $mol_view
 		12317
 		true
 		null
+	arr /readonly(number)[]
 	complex /
 		/
 			\test1

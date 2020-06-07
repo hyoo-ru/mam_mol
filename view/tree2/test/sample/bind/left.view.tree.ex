@@ -8,6 +8,7 @@ $mol_view_tree2_test_sample_bind_left $mol_view
 	writable <= writable_owner?val \
 	class_indexed!key <= class_indexed_owner!key $mol_view
 		title @ \some1
+		same <= same?val \
 		some <= twice
 		localized <= localized_owner!key @ \some1
 		chain <= chain1 <= chain2 null

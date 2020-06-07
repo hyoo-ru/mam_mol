@@ -7,3 +7,4 @@ $mol_view_tree2_test_sample_simple $mol_view
 	multi_str \
 		\one
 		\two
+	same?val \

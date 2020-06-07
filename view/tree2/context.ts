@@ -56,21 +56,29 @@ namespace $ {
 			}
 		}
 
-		check_scope_vars(key: $mol_tree2 | undefined, next?: $mol_tree2) {
+		check_scope_vars({name, key, next}: $mol_view_tree2_prop) {
 			let finded_key: $mol_tree2 | undefined
 			let finded_next: $mol_tree2 | undefined
 
-			for (const parent of this.parents) {
+			const parents = this.parents
+			for (let i = 1 ; i < parents.length; i++) {
+				const parent = parents[i]
 				if (key && key.value === parent.key?.value) finded_key = parent.key
 				if (next && next.value === parent.next?.value) finded_next = parent.next
 			}
 
 			if (key && ! finded_key) return this.$.$mol_fail(
-				err`Key at ${key.span} not found at ${this.parents.map(parent => parent.src.span)}`
+				err`Key ${key.value} at ${key.span} not found at ${this.parents.map(parent => parent.src.span)}`
 			)
 
 			if (next && ! finded_next) return this.$.$mol_fail(
-				err`Next at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`
+				err`Next ${next.value} at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`
+			)
+
+			const first_method = parents.length > 1 ? parents[1] : undefined
+
+			if (name.value === first_method?.name.value) return this.$.$mol_fail(
+				err`Method ${name.value} at ${name.span} already defined at ${first_method.name.span}`
 			)
 		}
 

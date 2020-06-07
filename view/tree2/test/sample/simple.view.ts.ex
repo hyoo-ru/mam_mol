@@ -56,6 +56,17 @@ namespace $ {
 		multi_str() {
 			return "one\ntwo"
 		}
+
+		/**
+		 * ```tree
+		 * same?val \
+		 * ```
+		 */
+		@ $mol_mem
+		same(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
+		}
 	}
 
 }

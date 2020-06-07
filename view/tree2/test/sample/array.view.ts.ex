@@ -67,6 +67,17 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * arr /readonly(number)[]
+		 * ```
+		 */
+		arr() {
+			return [
+
+			] as readonly (readonly(number)[])[]
+		}
+
+		/**
+		 * ```tree
 		 * complex /
 		 * 	/
 		 * 		\test1

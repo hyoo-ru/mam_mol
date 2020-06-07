@@ -32,7 +32,7 @@ namespace $ {
 			err`Next argument required at ${owner.span}, use ${example}`
 		)
 
-		context.check_scope_vars(owner_parts.key, owner_parts.next)
+		context.check_scope_vars(owner_parts)
 
 		const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined
 
