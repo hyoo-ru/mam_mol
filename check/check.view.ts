@@ -13,5 +13,9 @@ namespace $.$$ {
 			]
 		}
 
+		label() {
+			return this.title() ? super.label() : []
+		}
+
 	}
 }
