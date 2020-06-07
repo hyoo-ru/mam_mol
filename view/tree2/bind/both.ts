@@ -27,11 +27,12 @@ namespace $ {
 		)
 
 		const owner_parts = this.$mol_view_tree2_prop_split(owner)
+
 		if (!owner_parts.next) return this.$mol_fail(
 			err`Next argument required at ${owner.span}, use ${example}`
 		)
 
-		context.check_scope_vars(owner_parts)
+		context.check_scope_vars(owner_parts.key, owner_parts.next)
 
 		const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined
 

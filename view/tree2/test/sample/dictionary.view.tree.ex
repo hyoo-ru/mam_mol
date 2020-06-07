@@ -1,5 +1,5 @@
 $mol_view_tree2_test_sample_dictionary $mol_view
-	super *
+	super_prop *
 		str \some
 		^
 		str2 \some

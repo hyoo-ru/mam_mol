@@ -27,7 +27,7 @@ namespace $ {
 
 		for (const having of subclass.kids) {
 			if (having.type === '-') {
-				body.push($mol_view_tree2_comment(having))
+				body.push(this.$mol_view_tree2_comment(having))
 				continue
 			}
 

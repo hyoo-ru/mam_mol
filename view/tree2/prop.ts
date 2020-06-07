@@ -27,12 +27,9 @@ namespace $ {
 			err`Only regular chars and digits allowed at ${src.span}, use ${example2}`
 		)
 
-		let name_quoted = name
-		if (! regular_regex.test(name)) name_quoted = JSON.stringify(name)
-
 		return {
 			src,
-			name: $mol_tree2.data(name_quoted, [], src.span.slice(0, name.length)),
+			name: $mol_tree2.data(name, [], src.span.slice(0, name.length)),
 			key: key ? $mol_tree2.data(key, [], src.span.slice(key_pos, key.length)) : undefined,
 			next: next ? $mol_tree2.data(next, [], src.span.slice(next_pos, next.length)) : undefined
 		}
@@ -51,4 +48,10 @@ namespace $ {
 	const regular_regex = /^\w+$/
 
 	export type $mol_view_tree2_prop = ReturnType<typeof $mol_view_tree2_prop_split>
+
+	export function $mol_view_tree2_prop_quote(name: $mol_tree2) {
+		if (regular_regex.test(name.value)) return name
+
+		return name.data(JSON.stringify(name.value))
+	}
 }

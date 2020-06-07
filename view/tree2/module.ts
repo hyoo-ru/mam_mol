@@ -12,7 +12,7 @@ namespace $ {
 
 		for (const item of tree2_module.kids) {
 			if (item.type === '-') {
-				classes.push($mol_view_tree2_comment(item))
+				classes.push(this.$mol_view_tree2_comment(item))
 				continue
 			}
 

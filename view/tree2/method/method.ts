@@ -1,8 +1,9 @@
 namespace $ {
 
 	export function $mol_view_tree2_method(
+		this: $mol_ambient_context,
 		owner_parts: $mol_view_tree2_prop,
-		body: $mol_tree2,
+		body: $mol_tree2
 	) {
 		const { name, key, next, src } = owner_parts
 		const operator = src.kids.length === 1 ? src.kids[0] : undefined
@@ -16,7 +17,7 @@ namespace $ {
 		else if (is_class) need_cache = true
 
 		const sub: $mol_tree2[] = [
-			$mol_view_tree2_comment_doc(src),
+			this.$mol_view_tree2_comment_doc(src),
 		]
 
 		if (need_cache && key) sub.push(name.data(`@ $${''}mol_mem_key`)) 

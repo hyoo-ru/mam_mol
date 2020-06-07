@@ -16,24 +16,23 @@ namespace $ {
 	 */
 	export function $mol_view_tree2_dictionary(
 		this: $mol_ambient_context,
-		operator: $mol_tree2,
+		dictionary: $mol_tree2,
 		dictionary_context: $mol_view_tree2_context,
 		super_method?: $mol_view_tree2_prop
 	) {
-		if (operator.type !== '*') return this.$mol_fail(
-			err`Need a \`*\` operator at ${operator.span}`
+		if (dictionary.type !== '*') return this.$mol_fail(
+			err`Need a \`*\` operator at ${dictionary.span}`
 		)
 		const sub: $mol_tree2[] = []
 
-		const kids = operator.kids
+		const kids = dictionary.kids
 		const last = kids.length > 0 ? kids[ kids.length - 1 ] : undefined
 
 		const spread_factory = new this.$.$mol_view_tree2_spread_factory(this, super_method)
 
 		for (const opt of kids) {
-			const type = opt.type
-			if (type === '-') {
-				sub.push($mol_view_tree2_comment(opt))
+			if (opt.type === '-') {
+				sub.push(this.$mol_view_tree2_comment(opt))
 				continue
 			}
 
@@ -41,18 +40,30 @@ namespace $ {
 
 			const info = this.$mol_view_tree2_prop_split(opt)
 
-			const context = dictionary_context.parent(info)
+			if (opt.type === '^') {
+				const child_sub = [ spread_factory.create(opt) ]
+				if (opt !== last) child_sub.push(opt.data(','))
+				sub.push($mol_tree2.struct('inline', child_sub))
+				continue
+			}
 
-			if (type === '^') value = spread_factory.create(opt)
-			else if (type === '<=') value = this.$mol_view_tree2_bind_left(operator, context)
+			const context = dictionary_context.parent(info)
+			const operator = opt.kids.length > 0 ? opt.kids[0] : undefined
+
+			if (! operator) return this.$mol_fail(
+				err`Need a one child at ${opt.span}`
+			)
+			const type = operator.type
+
+			if (type === '<=') value = this.$mol_view_tree2_bind_left(operator, context)
 			else if (type === '*') value = this.$mol_view_tree2_dictionary(operator, context)
 			else if (type[0] === '/') value = this.$mol_view_tree2_array(operator, context)
 			else if (type === '<=>') value = this.$mol_view_tree2_bind_both(operator, context)
 			else if (type === '@') value = context.locale(operator)
-			else value = this.$mol_view_tree2_literal(operator)
+			else value = this.$mol_view_tree2_literal(operator)	
 
 			const child_sub = [
-				info.name,
+				$mol_view_tree2_prop_quote(info.name),
 				info.name.data(': '),
 			]
 
@@ -69,9 +80,10 @@ namespace $ {
 		}
 
 		return $mol_tree2.struct('lines', [
-			operator.data('{'),
+			dictionary.data('{'),
 			$mol_tree2.struct('block', sub),
-			operator.data('}'),
+			dictionary.data('}'),
 		])
 	}
+
 }

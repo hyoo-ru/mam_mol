@@ -30,7 +30,7 @@ namespace $ {
 			const type = opt.type
 
 			if (type === '-') {
-				sub.push($mol_view_tree2_comment(opt))
+				sub.push(this.$mol_view_tree2_comment(opt))
 				continue
 			}
 

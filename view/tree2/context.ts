@@ -16,7 +16,7 @@ namespace $ {
 			this.$ = $
 		}
 
-		protected clone(prefixes: readonly $mol_view_tree2_prop[], array = this.array) {
+		protected clone(prefixes: readonly $mol_view_tree2_prop[], array?: $mol_tree2) {
 			return new this.$.$mol_view_tree2_context(
 				this.$,
 				prefixes,
@@ -31,11 +31,11 @@ namespace $ {
 			const parents = this.parents.slice()
 			parents.push(prefix)
 
-			return this.clone(parents)
+			return this.clone(parents, this.array)
 		}
 
 		root() {
-			return this.clone(this.parents.slice(0, 1), undefined)
+			return this.clone(this.parents.slice(0, 1))
 		}
 
 		locale_disable(array: $mol_tree2) {
@@ -56,23 +56,21 @@ namespace $ {
 			}
 		}
 
-		check_scope_vars(owner_parts: Pick<$mol_view_tree2_prop, 'key' | 'next'>) {
-			if (! owner_parts.key && ! owner_parts.next) return
-
+		check_scope_vars(key: $mol_tree2 | undefined, next?: $mol_tree2) {
 			let finded_key: $mol_tree2 | undefined
 			let finded_next: $mol_tree2 | undefined
 
 			for (const parent of this.parents) {
-				if (owner_parts.key && owner_parts.key.value === parent.key?.value) finded_key = parent.key
-				if (owner_parts.next && owner_parts.next.value === parent.next?.value) finded_next = parent.next
+				if (key && key.value === parent.key?.value) finded_key = parent.key
+				if (next && next.value === parent.next?.value) finded_next = parent.next
 			}
 
-			if (owner_parts.key && ! finded_key) return this.$.$mol_fail(
-				err`Key at ${owner_parts.key.span} not found at ${this.parents.map(parent => parent.src.span)}`
+			if (key && ! finded_key) return this.$.$mol_fail(
+				err`Key at ${key.span} not found at ${this.parents.map(parent => parent.src.span)}`
 			)
 
-			if (owner_parts.next && ! finded_next) return this.$.$mol_fail(
-				err`Next at ${owner_parts.next.span} not found at ${this.parents.map(parent => parent.src.span)}`
+			if (next && ! finded_next) return this.$.$mol_fail(
+				err`Next at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`
 			)
 		}
 
@@ -92,6 +90,7 @@ namespace $ {
 		protected locale_nodes = new Map<string, $mol_tree2>()
 
 		locale(operator: $mol_tree2) {
+			const parents = this.parents
 			const val = operator.kids.length === 1 ? operator.kids[0] : undefined
 
 			if (! val) return this.$.$mol_fail(
@@ -108,9 +107,14 @@ namespace $ {
 				operator.data('this.$.$mol_locale.text( \'')
 			]
 
-			for (const parent of this.parents) {
-				body.push(parent.name, parent.name.data('_'))
-				key += parent.name.value + '_'
+			const last = parents.length > 0 ? parents[parents.length - 1] : undefined
+
+			for (const parent of parents) {
+				body.push(parent.name)
+				key += parent.name.value
+				if (parent === last) break
+				body.push(parent.name.data('_'))
+				key += '_'
 			}
 
 			body.push(operator.data('\' )'))

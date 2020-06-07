@@ -3,19 +3,19 @@ namespace $ {
 
 		/**
 		 * ```tree
-		 * super *
+		 * super_prop *
 		 * 	str \some
 		 * 	^
 		 * 	str2 \some
 		 * 	^ test
 		 * ```
 		 */
-		super() {
+		super_prop() {
 			return {
 				str: "some",
-				...super.super(),
+				...super.super_prop(),
 				str2: "some",
-				...this.test(),
+				...this.test()
 			}
 		}
 
@@ -35,7 +35,7 @@ namespace $ {
 				"n-um": 12317,
 				bool: true,
 				nul: null as any,
-				localized: this.$.$mol_locale.text( '$mol_view_tree2_test_sample_dictionary_simple_localized' ),
+				localized: this.$.$mol_locale.text( '$mol_view_tree2_test_sample_dictionary_simple_localized' )
 			}
 		}
 
@@ -57,15 +57,15 @@ namespace $ {
 			return {
 				arr: [
 					"test1",
-					"test2",
+					"test2"
 				] as readonly any[],
 				child: {
 					str: "some",
 					num: 12317,
 					bool: true,
 					nul: null as any,
-					localized: this.$.$mol_locale.text( '$mol_view_tree2_test_sample_dictionary_complex_child_localized' ),
-				},
+					localized: this.$.$mol_locale.text( '$mol_view_tree2_test_sample_dictionary_complex_child_localized' )
+				}
 			}
 		}
 	}

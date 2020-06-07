@@ -5,7 +5,7 @@ $mol_view_tree2_test_sample_array $mol_view
 	const /const
 		\some1
 		\some2
-	super /
+	super_prop /
 		\some1
 		^
 		\some2

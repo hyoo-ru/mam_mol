@@ -83,6 +83,21 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * class_indexed!key?val $mol_view expanded <=> cell_expanded!key?val
+		 * ```
+		 */
+		@ $mol_mem_key
+		class_indexed(key: any, val?: any) {
+			if ( val !== undefined ) return val
+			const obj = new this.$.$mol_view()
+
+			obj.expanded = () => this.cell_expanded(key, val)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
 		 * class_writable?val <=> class_writable_owner?val $mol_view
 		 * 	some?val <=> twice?val
 		 * 	localized?val <=> localized_owner?val @ \some1
@@ -154,11 +169,11 @@ namespace $ {
 		arr() {
 			return [
 				{
-					loc: (v?: any) => this.loc_outer(v),
+					loc: (v?: any) => this.loc_outer(v)
 				},
 				{
-					loc: (v?: any) => this.loc_outer(v),
-				},
+					loc: (v?: any) => this.loc_outer(v)
+				}
 			] as readonly any[]
 		}
 

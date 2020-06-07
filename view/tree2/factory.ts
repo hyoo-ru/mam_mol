@@ -27,7 +27,7 @@ namespace $ {
 
 		for (const child of klass.kids) {
 			if (child.type === '-') {
-				body.push($mol_view_tree2_comment(child))
+				body.push(this.$mol_view_tree2_comment(child))
 				continue
 			}
 
@@ -53,7 +53,7 @@ namespace $ {
 
 			let value: $mol_tree2
 
-			if (type === '<=') value = this.$mol_view_tree2_bind_left(operator, context)
+			if (type === '<=') value = this.$mol_view_tree2_bind_left(operator, context, child_parts)
 			else if (type === '<=>') value = this.$mol_view_tree2_bind_both(operator, context)
 			else if (type === '=>') {
 				this.$mol_view_tree2_bind_right(operator, child_parts, factory, factory_context)
@@ -81,10 +81,6 @@ namespace $ {
 			body.push(call)
 		}
 
-		if (body.length > 0) body.push(
-			klass.data(''),
-		)
-
 		const init = [
 			klass.data('const '),
 			obj_node,
@@ -93,21 +89,30 @@ namespace $ {
 		]
 
 		if (constructor_args) init.push(
-			klass.data('('),
-			constructor_args,
-			klass.data(')'),
+			$mol_tree2.struct('lines', [
+				klass.data('('),
+				constructor_args,
+				klass.data(')'),
+			])
 		)
 		else init.push(klass.data('()'))
 
-		return $mol_tree2.struct('block', [
+		const sub = [
 			$mol_tree2.struct('inline', init),
 			klass.data(''),
-			$mol_tree2.struct('lines', body),
+		]
+		if (body.length > 0) sub.push($mol_tree2.struct('lines', body))
+
+		if (body.length > 0 && ! constructor_args) sub.push(klass.data(''))
+
+		sub.push(
 			$mol_tree2.struct('inline', [
 				klass.data('return '),
 				obj_node
 			])
-		])
+		)
+
+		return $mol_tree2.struct('block', sub)
 	}
 
 	const example = new $mol_view_tree2_error_suggestions([

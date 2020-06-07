@@ -21,7 +21,7 @@ namespace $ {
 		) {}
 
 		toString() {
-			return this.suggestions.map(suggestion => `\`${suggestion}\``).join(' or ')
+			return this.suggestions.map(suggestion => `\`${suggestion}\``).join(', ')
 		}
 
 		toJSON() {

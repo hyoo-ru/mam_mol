@@ -87,6 +87,26 @@ namespace $ {
 
 		/**
 		 * ```tree
+		 * writable <= writable_owner?val \
+		 * ```
+		 */
+		writable() {
+			return this.writable_owner()
+		}
+
+		/**
+		 * ```tree
+		 * writable_owner?val \
+		 * ```
+		 */
+		@ $mol_mem
+		writable_owner(val?: any) {
+			if ( val !== undefined ) return val
+			return ""
+		}
+
+		/**
+		 * ```tree
 		 * class_indexed!key <= class_indexed_owner!key $mol_view
 		 * 	title @ \some1
 		 * 	some <= twice
@@ -158,11 +178,11 @@ namespace $ {
 			return [
 				this.Detail_list(),
 				{
-					loc: this.loc_outer(),
+					loc: this.loc_outer()
 				},
 				{
-					loc: this.loc_outer(),
-				},
+					loc: this.loc_outer()
+				}
 			] as readonly any[]
 		}
 

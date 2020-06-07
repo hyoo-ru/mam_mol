@@ -70,7 +70,7 @@ namespace $ {
 		])
 
 		const method = $mol_tree2.struct('lines', [
-			$mol_view_tree2_comment_doc(owner),
+			this.$mol_view_tree2_comment_doc(owner),
 			$mol_tree2.struct('inline', [
 				owner_parts.name,
 				$mol_view_tree2_function_declaration(owner_parts),

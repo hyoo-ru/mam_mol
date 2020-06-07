@@ -6,13 +6,7 @@ namespace $ {
 	 * ^ name
 	 * ```
 	 */
-	export function $mol_view_tree2_spread(this: $mol_ambient_context, operator: $mol_tree2) {
-		const spread_prop = operator.kids.length === 1 ? operator.kids[0] : undefined
-
-		if (! spread_prop) return this.$mol_fail(
-			err`Need a method name at ${operator.span}, use ${example}`
-		)
-
+	export function $mol_view_tree2_spread(this: $mol_ambient_context, spread_prop: $mol_tree2) {
 		const spread_prop_parts = this.$mol_view_tree2_prop_split(spread_prop)
 
 		return $mol_tree2.struct('inline', [

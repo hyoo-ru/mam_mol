@@ -5,7 +5,7 @@ $mol_view_tree2_test_sample_bind_left $mol_view
 	indexed_default!key <= indexed_default_owner!key null
 	class <= class_owner $mol_view
 	twice null
-	writable?val <= writable_owner?val \
+	writable <= writable_owner?val \
 	class_indexed!key <= class_indexed_owner!key $mol_view
 		title @ \some1
 		some <= twice

@@ -21,7 +21,7 @@ namespace $ {
 
 		let body: $mol_tree2
 
-		if (type === '<=') body = add_return(this.$mol_view_tree2_bind_left(operator, context))
+		if (type === '<=') body = add_return(this.$mol_view_tree2_bind_left(operator, context, having_parts))
 		else if (type === '<=>') body = add_return(this.$mol_view_tree2_bind_both(operator, context))
 		else if (type === '@') body = add_return(context.locale(operator))
 		else if (type === '*') body = add_return(this.$mol_view_tree2_dictionary(operator, context, having_parts))

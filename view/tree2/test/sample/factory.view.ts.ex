@@ -41,12 +41,67 @@ namespace $ {
 
 			obj.arr = () => [
 				"test1",
-				"test2",
+				"test2"
 			] as readonly any[]
 			obj.dict = () => ({
 				str: "some2",
-				localized: this.$.$mol_locale.text( '$mol_view_tree2_test_sample_factory_Complex_dict_localized' ),
+				localized: this.$.$mol_locale.text( '$mol_view_tree2_test_sample_factory_Complex_dict_localized' )
 			})
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * Arr $mol_vector_2d /
+		 * 	<= viewport_x $mol_vector_range /
+		 * 		Infinity
+		 * 		-Infinity
+		 * 	<= viewport_y $mol_vector_range /
+		 * 		Infinity
+		 * 		-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		Arr() {
+			const obj = new this.$.$mol_vector_2d(
+				this.viewport_x(),
+				this.viewport_y()
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * viewport_x $mol_vector_range /
+		 * 	Infinity
+		 * 	-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		viewport_x() {
+			const obj = new this.$.$mol_vector_range(
+				Infinity,
+				-Infinity
+			)
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * viewport_y $mol_vector_range /
+		 * 	Infinity
+		 * 	-Infinity
+		 * ```
+		 */
+		@ $mol_mem
+		viewport_y() {
+			const obj = new this.$.$mol_vector_range(
+				Infinity,
+				-Infinity
+			)
 
 			return obj
 		}

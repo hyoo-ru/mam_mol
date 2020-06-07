@@ -11,7 +11,7 @@ namespace $ {
 		typed() {
 			return [
 				"some1",
-				"some2",
+				"some2"
 			] as readonly string[]
 		}
 
@@ -25,25 +25,25 @@ namespace $ {
 		const() {
 			return [
 				"some1",
-				"some2",
+				"some2"
 			] as const
 		}
 
 		/**
 		 * ```tree
-		 * super /
+		 * super_prop /
 		 * 	\some1
 		 * 	^
 		 * 	\some2
 		 * 	^ test
 		 * ```
 		 */
-		super() {
+		super_prop() {
 			return [
 				"some1",
-				...super.super(),
+				...super.super_prop(),
 				"some2",
-				...this.test(),
+				...this.test()
 			] as readonly any[]
 		}
 
@@ -61,7 +61,7 @@ namespace $ {
 				"some",
 				12317,
 				true,
-				null as any,
+				null as any
 			] as readonly any[]
 		}
 
@@ -80,12 +80,12 @@ namespace $ {
 			return [
 				[
 					"test1",
-					"test2",
+					"test2"
 				] as readonly any[],
 				{
 					str: "some",
-					nul: null as any,
-				},
+					nul: null as any
+				}
 			] as readonly any[]
 		}
 	}
