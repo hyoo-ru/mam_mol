@@ -11,3 +11,7 @@
 	background: var(--mol_theme_field);
 	color: var(--mol_theme_text);
 }
+
+[mol_check_box_title] {
+	margin-left: .25rem;
+}
