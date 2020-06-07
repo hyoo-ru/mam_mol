@@ -1,4 +1,7 @@
 namespace $ {
+
+	const err = $mol_view_tree2_error_str
+
 	/*
 	 * ```tree
 	 * 	Factory_name!key?next $some_class
@@ -6,71 +9,66 @@ namespace $ {
 	 */
 	export function $mol_view_tree2_factory(
 		this: $mol_ambient_context,
-		factory_parts: $mol_view_tree2_prop,
-		context: $mol_view_tree2_context
+		klass: $mol_tree2,
+		factory: $mol_view_tree2_prop,
+		factory_context: $mol_view_tree2_context,
 	) {
-		const class_node = factory_parts.src.kids.length === 1 ? factory_parts.src.kids[0] : undefined
-
-		if (! class_node) return this.$mol_fail(
-			factory_parts.src.error(`Need a class, ${example}`)
+		if (klass.type[0] !== '$') return this.$mol_fail(
+			err`Need a valid class name at ${klass.span}, use ${example}`
 		)
 
-		if (! class_node.type || class_node.type[0] !== '$') return this.$mol_fail(
-			class_node.error(`Need a valid class name, ${example}`)
-		)
+		const obj_node = klass.data('obj')
 
-		const context_prefixed = context.prefix_add(factory_parts.name)
-		const obj_node = class_node.data('obj')
+		const body: $mol_tree2[] = []
 
-		const sub: $mol_tree2[] = [
-			class_node.struct('inline', [
-				class_node.data('const '),
-				obj_node,
-				class_node.data(' = new this.$.'),
-				class_node.data(class_node.type),
-				class_node.data('()')
-			]),
-			class_node.data(''),
-		]
+		let last_array: $mol_tree2 | undefined
 
-		const sub_length = sub.length
+		let constructor_args: $mol_tree2 | undefined
 
-		for (const child of class_node.kids) {
+		for (const child of klass.kids) {
 			if (child.type === '-') {
-				sub.push($mol_view_tree2_comment(child))
+				body.push($mol_view_tree2_comment(child))
+				continue
+			}
+
+			const child_parts = this.$mol_view_tree2_prop_split(child)
+			const context = factory_context.parent(child_parts)
+
+			if (child.type[0] === '/') {
+				if (last_array) return this.$mol_fail(
+					err`Only one \`/\` operator allowed in factory at ${child.span}, prev at ${last_array.span}`
+				)
+				last_array = child
+				constructor_args = this.$mol_view_tree2_array_body(child, context)
 				continue
 			}
 
 			const operator = child.kids.length === 1 ? child.kids[0] : undefined
 
-			if (! operator) return this.$mol_fail(child.error(
-				`Need an a child here, use ${example}`
-			))
-
-			const child_parts = this.$mol_view_tree2_prop_split(child)
+			if (! operator) return this.$mol_fail(
+				err`Need an a operator at ${child.span}, use ${example}`
+			)
 
 			const type = operator.type
 
-			let value: $mol_tree2 | undefined
+			let value: $mol_tree2
 
-			if (type === '*') value = $mol_tree2.struct('inline', [
-				child.data('('),
-				this.$mol_view_tree2_multiple_dictionary(child_parts, context_prefixed),
-				child.data(')'),
-			])
-			else if (type === '@') value = context_prefixed.locale_call(child_parts.name, operator)
-			else if (type === '<=') value = this.$mol_view_tree2_bind_left(child_parts, context)
+			if (type === '<=') value = this.$mol_view_tree2_bind_left(operator, context)
+			else if (type === '<=>') value = this.$mol_view_tree2_bind_both(operator, context)
 			else if (type === '=>') {
-				this.$mol_view_tree2_bind_right(child_parts, factory_parts.name, context)
+				this.$mol_view_tree2_bind_right(operator, child_parts, factory, factory_context)
 				continue
 			}
-			else if (type === '<=>') value = this.$mol_view_tree2_bind_both(child_parts, context)
-			else if (type[0] === '/') value = this.$mol_view_tree2_multiple_array(child_parts, context_prefixed)
+			else if (type === '@') value = context.locale(operator)
+			else if (type === '*') value = $mol_tree2.struct('inline', [
+				child.data('('),
+				this.$mol_view_tree2_dictionary(operator, context),
+				child.data(')'),
+			])
+			else if (type[0] === '/') value = this.$mol_view_tree2_array(operator, context)
 			else value = this.$mol_view_tree2_literal(operator)
 
-			if (! value) return this.$mol_fail(operator.error('Unknown operator in factory'))
-
-			const call = child.struct('inline', [
+			const call = $mol_tree2.struct('inline', [
 				obj_node,
 				child.data('.'),
 				child_parts.name,
@@ -80,23 +78,40 @@ namespace $ {
 				value,
 			])
 
-			sub.push(call)
+			body.push(call)
 		}
 
-		if (sub_length !== sub.length) sub.push(
-			class_node.data(''),
+		if (body.length > 0) body.push(
+			klass.data(''),
 		)
 
-		sub.push(
-			class_node.struct('inline', [
-				class_node.data('return '),
+		const init = [
+			klass.data('const '),
+			obj_node,
+			klass.data(' = new this.$.'),
+			klass.data(klass.type),
+		]
+
+		if (constructor_args) init.push(
+			klass.data('('),
+			constructor_args,
+			klass.data(')'),
+		)
+		else init.push(klass.data('()'))
+
+		return $mol_tree2.struct('block', [
+			$mol_tree2.struct('inline', init),
+			klass.data(''),
+			$mol_tree2.struct('lines', body),
+			$mol_tree2.struct('inline', [
+				klass.data('return '),
 				obj_node
 			])
-		)
-
-		return class_node.struct('block', sub)
+		])
 	}
 
-	const example = 'use `Factory_name!key?next $' + 'my_class`'
+	const example = new $mol_view_tree2_error_suggestions([
+		'Factory_name!key?next $' + 'my_class'
+	])
 }
 

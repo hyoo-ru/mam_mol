@@ -149,18 +149,45 @@ namespace $ {
 		/**
 		 * ```tree
 		 * arr /
+		 * 	<= Detail_list $mol_list rows <= main_content /
 		 * 	* loc <= loc_outer @ \test localize
 		 * 	* loc <= loc_outer @ \test localize
 		 * ```
 		 */
 		arr() {
 			return [
+				this.Detail_list(),
 				{
 					loc: this.loc_outer(),
 				},
 				{
 					loc: this.loc_outer(),
 				},
+			] as readonly any[]
+		}
+
+		/**
+		 * ```tree
+		 * Detail_list $mol_list rows <= main_content /
+		 * ```
+		 */
+		@ $mol_mem
+		Detail_list() {
+			const obj = new this.$.$mol_list()
+
+			obj.rows = () => this.main_content()
+
+			return obj
+		}
+
+		/**
+		 * ```tree
+		 * main_content /
+		 * ```
+		 */
+		main_content() {
+			return [
+
 			] as readonly any[]
 		}
 

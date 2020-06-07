@@ -1,6 +1,6 @@
 namespace $ {
 	export function $mol_view_tree2_function_declaration(
-		{ name, key, next }: $mol_view_tree2_prop
+		{ name, key, next }: Pick<$mol_view_tree2_prop, 'name' | 'key' | 'next'>
 	) {
 		const sub = [ name.data('(') ]
 
@@ -13,7 +13,7 @@ namespace $ {
 	}
 
 	export function $mol_view_tree2_function_call(
-		{ name, key, next }: $mol_view_tree2_prop
+		{ name, key, next }: Pick<$mol_view_tree2_prop, 'name' | 'key' | 'next'>
 	) {
 		const sub = [
 			name,

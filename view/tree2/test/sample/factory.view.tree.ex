@@ -12,3 +12,10 @@ $mol_view_tree2_test_sample_factory $mol_view
 		dict *
 			str \some2
 			localized @ \localized value
+	Arr $mol_vector_2d /
+		<= viewport_x $mol_vector_range /
+			Infinity
+			-Infinity
+		<= viewport_y $mol_vector_range /
+			Infinity
+			-Infinity

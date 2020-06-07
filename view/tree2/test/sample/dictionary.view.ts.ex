@@ -22,8 +22,8 @@ namespace $ {
 		/**
 		 * ```tree
 		 * simple *
-		 * 	str \some
-		 * 	num 12317
+		 * 	$str \some
+		 * 	n-um 12317
 		 * 	bool true
 		 * 	nul null
 		 * 	localized @ \localized value1
@@ -31,8 +31,8 @@ namespace $ {
 		 */
 		simple() {
 			return {
-				str: "some",
-				num: 12317,
+				"$str": "some",
+				"n-um": 12317,
 				bool: true,
 				nul: null as any,
 				localized: this.$.$mol_locale.text( '$mol_view_tree2_test_sample_dictionary_simple_localized' ),

@@ -1,5 +1,7 @@
 namespace $ {
 
+	const err = $mol_view_tree2_error_str
+
 	/*
 	 * ```tree
 	 * 	having?next <=> owner?next
@@ -7,59 +9,45 @@ namespace $ {
 	 */
 	export function $mol_view_tree2_bind_both(
 		this: $mol_ambient_context,
-		having_parts: $mol_view_tree2_prop,
+		operator: $mol_tree2,
 		context: $mol_view_tree2_context
 	) {
-		const having = having_parts.src
-		const operator = having.kids.length === 1 ? having.kids[0] : undefined
-
-		if (operator?.type !== '<=>') return this.$mol_fail(
-			having.error(`Need an \`<=>\` operator, use ${example}`)
+		if (operator.type !== '<=>') return this.$mol_fail(
+			err`Need an \`<=>\` at ${operator.span}, use ${example}`
 		)
 
 		const owner = operator.kids.length === 1 ? operator.kids[0] : undefined
 
 		if (! owner ) return this.$mol_fail(
-			operator.error( `Need an owner part, use ${example}`)
+			err`Need an owner part at ${operator.span}, use ${example}`
 		)
 
 		if (owner.kids.length > 1) return this.$mol_fail(
-			owner.error(`Only one sub allowed, use ${example}`)
+			err`Only one sub allowed at ${owner.span}, use ${example}`
 		)
 
 		const owner_parts = this.$mol_view_tree2_prop_split(owner)
-
-		if (! having_parts.next) return this.$mol_fail(
-			having.error(
-				`Need a next argument in having part, use ${example}`
-			)
+		if (!owner_parts.next) return this.$mol_fail(
+			err`Next argument required at ${owner.span}, use ${example}`
 		)
 
-		if (having_parts.next.data !== owner_parts.next?.data) return this.$mol_fail(
-			having.error(
-				`Next arguments must be equal in having and owner parts, use ${example}`
-			)
-		)
-
-		if (having_parts.key?.data !== owner_parts.key?.data) return this.$mol_fail(
-			having.error(
-				`Key arguments must be equal in having and owner parts, use ${example}`
-			)
-		)
+		context.check_scope_vars(owner_parts)
 
 		const default_value = owner.kids.length === 1 ? owner.kids[0] : undefined
 
 		if (default_value && ! context.get_owner(owner)) {
-			const index = context.index(owner)
-			const method = this.$mol_view_tree2_value_block(owner_parts, context.prefix_root())
-			context.method(index, method)
+			this.$mol_view_tree2_method_body(owner_parts, context.root())
 		}
 
-		return operator.struct('inline', [
-			operator.data('this.'),
+		return $mol_tree2.struct('inline', [
+			owner_parts.name.data('this.'),
 			this.$mol_view_tree2_function_call(owner_parts),
 		])
 	}
 
-	const example = '`having?next <=> owner?next` or `having?next <=> owner?next \\default` or `having!key?next <=> owner!key?next`'
+	const example = new $mol_view_tree2_error_suggestions([
+		'having?next <=> owner?next',
+		'having?next <=> owner?next \\default',
+		'having!key?next <=> owner!key?next',
+	])
 }

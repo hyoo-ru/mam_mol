@@ -1,4 +1,6 @@
 namespace $ {
+	const err = $mol_view_tree2_error_str
+
 	/*
 	 * Extract property parts: page!index?next
 	 */
@@ -9,8 +11,9 @@ namespace $ {
 		let next_pos = prop_name.indexOf('?')
 		if (next_pos === -1) next_pos = prop_name.length
 		if (key_pos === -1) key_pos = next_pos
+
 		if (key_pos > next_pos) return this.$mol_fail(
-			src.error('Index argument must be before next argument, use `having!key?next <= owner!key?next`')
+			err`Index argument must be before next argument at ${src.span}, use ${example1}`
 		)
 
 		const name = prop_name.substring(0, key_pos)
@@ -18,22 +21,32 @@ namespace $ {
 		const next = prop_name.substring(next_pos + 1)
 
 		if (
-			! regular_regex.test(name)
-			|| (key && ! regular_regex.test(key))
+			(key && ! regular_regex.test(key))
 			|| (next && ! regular_regex.test(name))
 		) return this.$mol_fail(
-			src.error(
-				'Only regular chars and digits allowed in the property parts, use `having` or `having!key` or `having!key?value`'
-			)
+			err`Only regular chars and digits allowed at ${src.span}, use ${example2}`
 		)
+
+		let name_quoted = name
+		if (! regular_regex.test(name)) name_quoted = JSON.stringify(name)
 
 		return {
 			src,
-			name: $mol_tree2.data(name, [], src.span.slice(0, name.length)),
+			name: $mol_tree2.data(name_quoted, [], src.span.slice(0, name.length)),
 			key: key ? $mol_tree2.data(key, [], src.span.slice(key_pos, key.length)) : undefined,
 			next: next ? $mol_tree2.data(next, [], src.span.slice(next_pos, next.length)) : undefined
 		}
 	}
+
+	const example1 = new $mol_view_tree2_error_suggestions([
+		'having!key?next <= owner!key?next'
+	])
+
+	const example2 = new $mol_view_tree2_error_suggestions([
+		'having!key',
+		'having!key?next',
+		'having',
+	])
 
 	const regular_regex = /^\w+$/
 

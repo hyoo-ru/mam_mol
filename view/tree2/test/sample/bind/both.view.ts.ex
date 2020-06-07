@@ -49,7 +49,6 @@ namespace $ {
 			if ( val !== undefined ) return val
 			const obj = new this.$.$mol_view()
 
-
 			return obj
 		}
 

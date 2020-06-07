@@ -86,10 +86,11 @@ namespace $ {
 			const sourceMap = file.parent().resolve( `-view.tree/${ name }.map` )
 			const locale = file.parent().resolve( `-view.tree/${ name }.locale=en.json` )
 			
-			const tree = $mol_tree.fromString( file.text() , file.path() )
-			const res = $mol_view_tree_compile( tree )
+			const text = file.text()
+			const tree = $mol_tree2.fromString( text , new $mol_span(file.path(), 0, 0, text.length) )
+			const res = this.$.$mol_view_tree2_compile( tree )
 
-			script.text( res.script )
+			script.text( res.content )
 			// sourceMap.text( res.map )
 			locale.text( JSON.stringify( res.locales , null , '\t' ) )
 				
