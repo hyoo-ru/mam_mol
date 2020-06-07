@@ -28,7 +28,7 @@ namespace $ {
 		const kids = dictionary.kids
 		const last = kids.length > 0 ? kids[ kids.length - 1 ] : undefined
 
-		const spread_factory = new this.$.$mol_view_tree2_spread_factory(this, super_method)
+		const spread_factory = new this.$mol_view_tree2_spread_factory(this, super_method)
 
 		for (const opt of kids) {
 			if (opt.type === '-') {

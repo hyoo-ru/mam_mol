@@ -7,12 +7,17 @@ namespace $ {
 		value: $mol_tree2,
 	) {
 		const type = value.type
+		const kids = value.kids
 
-		if (value.kids.length !== 0) return this.$mol_fail(
+		if (type === '') {
+			if (kids.length === 0) return value.data(JSON.stringify(value.value))
+
+			return value.data(JSON.stringify(kids.map(node => node.value).join('\n')))
+		}
+
+		if (kids.length !== 0) return this.$mol_fail(
 			err`Childs not allowed at ${value.span}, use ${example}`
 		)
-
-		if (type === '') return value.data(JSON.stringify(value.value))
 
 		if (type === 'false' || type === 'true') return value.data(type)
 
@@ -28,5 +33,11 @@ namespace $ {
 		)
 	}
 
-	const example = '`false` or `true` or 123 or `\\some` or `null`'
+	const example = new $mol_view_tree2_error_suggestions([
+		'fales',
+		'true',
+		'123',
+		'null',
+		'\\some'
+	])
 }

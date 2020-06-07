@@ -4,3 +4,6 @@ $mol_view_tree2_test_sample_simple $mol_view
 	bool true
 	nul null
 	localized @ \localized value
+	multi_str \
+		\one
+		\two

@@ -45,6 +45,17 @@ namespace $ {
 		localized() {
 			return this.$.$mol_locale.text( '$mol_view_tree2_test_sample_simple_localized' )
 		}
+
+		/**
+		 * ```tree
+		 * multi_str \
+		 * 	\one
+		 * 	\two
+		 * ```
+		 */
+		multi_str() {
+			return "one\ntwo"
+		}
 	}
 
 }

@@ -18,7 +18,7 @@ namespace $ {
 			err`Need a \`/\` at ${operator.span}`
 		)
 
-		const spread = new this.$.$mol_view_tree2_spread_factory(this, super_method)
+		const spread = new this.$mol_view_tree2_spread_factory(this, super_method)
 
 		const context = parent_context.locale_disable(operator)
 

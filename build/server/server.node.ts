@@ -2,7 +2,7 @@ namespace $ {
 	
 	export class $mol_build_server extends $mol_server {
 
-		static log = false
+		static log = true
 
 		expressGenerator() {
 			return $mol_fiber_root( (
@@ -35,7 +35,10 @@ namespace $ {
 						res.send( script ).end()
 
 					} else {
-						error.message += '\n' + 'Set $mol_build_server.log = true for stacktraces'
+						if (! this.$.$mol_build_server.log) {
+							error.message += '\n' + 'Set $mol_build_server.log = true for stacktraces'
+						}
+
 						res.status(500).send( error.toString() ).end()
 						this.$.$mol_log3_fail({
 							place: `${this}.expressGenerator()`,
