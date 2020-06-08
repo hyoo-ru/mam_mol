@@ -13,6 +13,21 @@ namespace $.$$ {
 			} , {
 				preset : "islands#redStretchyIcon" ,
 			} )
+
+		}
+
+		@ $mol_mem
+		found() {
+			return $mol_geo_search({ query : this.address() })[0] ?? null
+		}
+
+		pos() {
+			return this.found()?.coord ?? super.pos()
+		}
+
+		@ $mol_mem
+		box() {
+			return this.found()?.box ?? super.pos()
 		}
 
 	}

@@ -1,6 +1,6 @@
 namespace $ {
 
-	export function $mol_data_boolean( val : boolean ) {
+	export let $mol_data_boolean = ( val : boolean )=> {
 		
 		if( typeof val === 'boolean' ) return val
 		
